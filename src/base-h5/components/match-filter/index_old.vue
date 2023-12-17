@@ -15,7 +15,7 @@
           <div class="bg-f6f7f8" ref="bg_f6f7f8" v-if="item1.title">{{ item1.title }}</div>
           <!-- 联赛国家Tab栏目 -->
           <div class="row justify-between tittle_text items-center half-border-bottom" ref="tittle_text"
-            v-if="item1.title !== $t('search.hot_league')" @click.stop.prevent="is_hide(item1, index)">
+            v-if="item1.title !== i18n_t('search.hot_league')" @click.stop.prevent="is_hide(item1, index)">
             <!-- 左边联赛箭头及名称  -->
             <span>
               <img class="arrow_up" :class="{ collapse: !item1.hide }"
@@ -67,9 +67,9 @@
 
     <!-- 右边字母切换按钮 quasar提供的平移上下左右操作v-touch-pan.-->
     <ul class="right-side" v-touch-pan.vertical.prevent="handler" v-show="!no_find_content && !list_data_loading">
-      <li @click.stop.prevent="bar_click(item)" :class="{ actived: active_index == item, hot: item == $t('search.hot') }"
+      <li @click.stop.prevent="bar_click(item)" :class="{ actived: active_index == item, hot: item == i18n_t('search.hot') }"
         v-for="(item, index) in anchor_arr" :key="index + 'letter'">
-        <template v-if="item == $t('search.hot')">
+        <template v-if="item == i18n_t('search.hot')">
           <img style="width: 28px;"
           :src="compute_img_url(active_index == item?'match-filter-s':'match-filter')"
             alt="">
@@ -90,13 +90,13 @@
         <!-- <template> -->
         <img class="icon-search" @click="all_checked_click"
         :src="compute_img_url(all_checked?'checkbox-box-s':'checkbox-box')"  />
-        <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
+        <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ i18n_t('common.all_select') }}</span>
         <!-- </template> -->
-        <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ $t('filter.reverse_election') }}</span>
+        <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ i18n_t('filter.reverse_election') }}</span>
       </div>
       <!-- 确定选择按钮 -->
       <div class="right-box" @click="search_btn">
-        <p class="confirm">{{ $t('common.ok') }}</p>
+        <p class="confirm">{{ i18n_t('common.ok') }}</p>
         <p class="round-box">{{ select_num }}</p>
       </div>
     </div>

@@ -12,7 +12,7 @@
     <div class="tip-content" v-if="is_show_content">
       <div class="content-wrap relative-position">
         <div class="yb-icon-triangle"></div>
-        <div class="content">{{$root.$t('common.live_notice')}}</div>
+        <div class="content">{{i18n_t('common.live_notice')}}</div>
       </div>
     </div>
     <div class="virtual-video yb-flex-center" :class="'csid'+vsport_ctr.info.csid">
@@ -44,7 +44,7 @@
             </div>
             <!-- 已完赛 -->
             <div class="yb-flex-center">
-              <div class="end">{{$root.$t('list.match_end')}}</div>
+              <div class="end">{{i18n_t('list.match_end')}}</div>
             </div>
           </div>
         </div>

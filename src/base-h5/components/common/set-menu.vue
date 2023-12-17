@@ -40,17 +40,17 @@
           menu_type !== 3000
           ">
           <div class="icon set-icon-1" :style="compute_css_obj('menu-left-menu-image', 1)"></div>
-          <div class="name">{{ $t("setting_menu.footer_t_sort") }}</div>
+          <div class="name">{{ i18n_t("setting_menu.footer_t_sort") }}</div>
           <div class="option" @click="sort_type_changed">
             <div class="op-item active">
               {{
-                sort_type == 2 ? $t("footer_menu.time2") : $t("footer_menu.hot2")
+                sort_type == 2 ? i18n_t("footer_menu.time2") : i18n_t("footer_menu.hot2")
               }}
             </div>
             <div class="op-icon" :style="compute_css_obj({key:'menu-set-switch'})"></div>
             <div class="op-item">
               {{
-                sort_type == 2 ? $t("footer_menu.hot2") : $t("footer_menu.time2")
+                sort_type == 2 ? i18n_t("footer_menu.hot2") : i18n_t("footer_menu.time2")
               }}
             </div>
           </div>
@@ -58,21 +58,21 @@
         <!-- 盘口 -->
         <div class="set-item">
           <div class="icon set-icon-2" :style="compute_css_obj('menu-left-menu-image', 2)"></div>
-          <div class="name">{{ $t("setting_menu.handicap") }}</div>
+          <div class="name">{{ i18n_t("setting_menu.handicap") }}</div>
           <div class="option" @click="change_odd">
             <div class="op-item active">
               {{
                 cur_odd == "EU"
-                ? $t("setting_menu.odd_europe2")
-                : $t("setting_menu.odd_hong_kong2")
+                ? i18n_t("setting_menu.odd_europe2")
+                : i18n_t("setting_menu.odd_hong_kong2")
               }}
             </div>
             <div class="op-icon" :style="compute_css_obj({key:'menu-set-switch'})"></div>
             <div class="op-item">
               {{
                 cur_odd == "EU"
-                ? $t("setting_menu.odd_hong_kong2")
-                : $t("setting_menu.odd_europe2")
+                ? i18n_t("setting_menu.odd_hong_kong2")
+                : i18n_t("setting_menu.odd_europe2")
               }}
             </div>
           </div>
@@ -80,21 +80,21 @@
         <!-- 赔率 -->
         <div class="set-item no-border">
           <div class="icon set-icon-4" :style="compute_css_obj('menu-left-menu-image', 4)"></div>
-          <div class="name">{{ $t("setting_menu.footer_t_odds") }}</div>
+          <div class="name">{{ i18n_t("setting_menu.footer_t_odds") }}</div>
           <div class="option" @click="BetData.set_bet_is_accept">
             <div class="op-item active">
               {{
                 bet_is_accept
-                ? $t("setting_menu.odd_any2")
-                : $t("setting_menu.odd_optimal2")
+                ? i18n_t("setting_menu.odd_any2")
+                : i18n_t("setting_menu.odd_optimal2")
               }}
             </div>
             <div class="op-icon" :style="compute_css_obj({key:'menu-set-switch'})"></div>
             <div class="op-item">
               {{
                 bet_is_accept
-                ? $t("setting_menu.odd_optimal2")
-                : $t("setting_menu.odd_any2")
+                ? i18n_t("setting_menu.odd_optimal2")
+                : i18n_t("setting_menu.odd_any2")
               }}
             </div>
           </div>
@@ -103,21 +103,21 @@
         <!-- 版本 -->
         <div class="set-item">
           <div class="icon set-icon-3" :style="compute_css_obj('menu-left-menu-image', 3)"></div>
-          <div class="name">{{ $t("setting_menu.version") }}</div>
+          <div class="name">{{ i18n_t("setting_menu.version") }}</div>
           <div class="option" @click="UserCtr.set_standard_edition">
             <div class="op-item active">
               {{
                 standard_edition == 2
-                ? $t("setting_menu.standard")
-                : $t("setting_menu.concise")
+                ? i18n_t("setting_menu.standard")
+                : i18n_t("setting_menu.concise")
               }}
             </div>
             <div class="op-icon" :style="compute_css_obj({key:'menu-set-switch'})"></div>
             <div class="op-item">
               {{
                 standard_edition == 2
-                ? $t("setting_menu.concise")
-                : $t("setting_menu.standard")
+                ? i18n_t("setting_menu.concise")
+                : i18n_t("setting_menu.standard")
               }}
             </div>
           </div>
@@ -125,13 +125,13 @@
         <!-- 语言 -->
         <div class="set-item no-border">
           <div class="icon set-icon-5" :style="compute_css_obj('menu-left-menu-image', 5)"></div>
-          <div class="name">{{ $t("setting_menu.chan_lan") }}</div>
+          <div class="name">{{ i18n_t("setting_menu.chan_lan") }}</div>
 
           <div class="option option3" @click="is_show_lang = !is_show_lang">
             <i class="lang-icon yb_mr4" :style="compute_css_obj('menu-lang')" :class="`lang-${lang}`"></i>
             <div class="op-icon op-icon2" :style="compute_css_obj('menu-set-sort')"></div>
             <div class="op-item active" style="font-size: 0.14rem">
-              <!-- {{ $t("setting_menu.lang") }} -->
+              <!-- {{ i18n_t("setting_menu.lang") }} -->
               {{ lang_obj[lang] }}
             </div>
           </div>
@@ -149,7 +149,7 @@
         <!-- 规则说明 -->
         <div class="set-item no-border" @click="go_description">
           <div class="icon set-icon-6" :style="compute_css_obj('menu-left-menu-image', 6)"></div>
-          <div class="name">{{ $t("setting_menu.rule_description") }}</div>
+          <div class="name">{{ i18n_t("setting_menu.rule_description") }}</div>
           <div class="option option2">
             <div class="yb-icon-arrow right"></div>
           </div>
@@ -158,7 +158,7 @@
         <!-- 换肤 -->
         <div class="set-item">
           <div class="icon set-icon-7" :style="compute_css_obj('menu-left-menu-image', 7)"></div>
-          <div class="name">{{ $t("setting_menu.skin") }}</div>
+          <div class="name">{{ i18n_t("setting_menu.skin") }}</div>
           {{
             lodash.get(theme_map[theme], `i18n.${lang}`, '-')
           }}
@@ -348,7 +348,7 @@ const change_show_status = () => {
  */
 const sort_type_changed = () => {
   if (!GlobalAccessConfig.get_sortCut()) {
-    $toast(t(`common.temporarily_unavailable`), 2000);
+    $toast(i18n_t(`common.temporarily_unavailable`), 2000);
     return;
   }
   let status = sort_type.value == 1 ? 2 : 1;

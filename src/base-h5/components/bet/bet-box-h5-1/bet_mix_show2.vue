@@ -68,19 +68,19 @@
         <template v-if="BetData.is_bet_success_status && BetData.bet_list.length == 1">
           <!-- 投注成功 -->
           <span v-if="get_bet_status == 3" class="color1"><img src="image/wwwassets/bw3/svg/bet_chengg.svg"
-              class="img0">{{ $t('bet.bet_suc') }}</span>
+              class="img0">{{ i18n_t('bet.bet_suc') }}</span>
           <!-- 投注失败 -->
           <span v-if="get_bet_status == 8" class="color3"><img src="image/wwwassets/bw3/svg/bet_shib.svg" class="img0">{{
             i18n_t('bet.bet_err') }}</span>
           <!-- 提交成功 -->
           <span v-if="get_bet_status == 6" class="color2">
               <i class="img0" :style="compute_css_obj('icon-tojiao')"></i>
-              {{ $t('bet.submitted_successfully') }}
+              {{ i18n_t('bet.submitted_successfully') }}
             </span>
         </template>
         <template v-else>
           <!-- 失效 -->
-          <span v-if="pankou_change == 2" class="invalid-span">{{ $t('bet.invalidation') }}</span>
+          <span v-if="pankou_change == 2" class="invalid-span">{{ i18n_t('bet.invalidation') }}</span>
         </template>
       </div>
 

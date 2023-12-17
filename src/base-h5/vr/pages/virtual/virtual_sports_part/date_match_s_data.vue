@@ -10,7 +10,7 @@
       <div class="i-c-title row justify-between virtual-title-ended">
         <!--<img class='angle' src="image/wwwassets/bw3/images/angle-l.png" alt="">-->
         <div class='i-c-w'>
-          {{$t('virtual_sports.match_status.ended')}}
+          {{i18n_t('virtual_sports.match_status.ended')}}
         </div>
         <!--<img class='angle' src="image/wwwassets/bw3/images/angle-r.png" alt="">-->
       </div>

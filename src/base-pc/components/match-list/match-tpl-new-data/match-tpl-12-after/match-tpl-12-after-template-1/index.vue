@@ -76,7 +76,7 @@
             <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
             
           </div>
-          <div class="sr-link-icon-w" v-tooltip="{content:t('common.analysis')}" v-if="is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
+          <div class="sr-link-icon-w" v-tooltip="{content:i18n_t('common.analysis')}" v-if="is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
             <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
           </div>
         </div>
@@ -135,7 +135,7 @@ const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
     return `+${ match.mc || 0}`
   }else{
-    return  t('match_info.more')
+    return  i18n_t('match_info.more')
   }
 })
 

@@ -241,15 +241,15 @@ export default {
   },
   created() {
     this.lang_results = {
-      one: this.$t('results.one'),
-      two: this.$t('results.two'),
-      three: this.$t('results.three'),
-      four: this.$t('results.four'),
-      five: this.$t('results.five'),
-      six: this.$t('results.six'),
-      seven: this.$t('results.seven'),
-      eight: this.$t('results.eight'),
-      nine: this.$t('results.nine'),           
+      one: i18n_t('results.one'),
+      two: i18n_t('results.two'),
+      three: i18n_t('results.three'),
+      four: i18n_t('results.four'),
+      five: i18n_t('results.five'),
+      six: i18n_t('results.six'),
+      seven: i18n_t('results.seven'),
+      eight: i18n_t('results.eight'),
+      nine: i18n_t('results.nine'),           
     }
   },
 };

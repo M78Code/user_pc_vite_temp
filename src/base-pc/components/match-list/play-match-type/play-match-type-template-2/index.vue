@@ -107,14 +107,14 @@ const cur_title_info = computed(() => {
     },
     //滚球标题
     play_title: {
-      name: t("menu.match_play"),
+      name: i18n_t("menu.match_play"),
       match_count,
       show_num: true,
       func_name:recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie
     },
     //未开赛标题
     no_start_title: {
-      name: t("list.match_no_start"),
+      name: i18n_t("list.match_no_start"),
       match_count,
       show_num: true,
       func_name:recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie

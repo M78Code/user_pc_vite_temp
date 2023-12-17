@@ -22,7 +22,7 @@
         <div class="score-num match-home">
           {{ lodash.get(match_info, "msc.S107.home") || 0 }}
         </div>
-        <div class="score-tips">2 {{ $t("common.score") }}</div>
+        <div class="score-tips">2 {{ i18n_t("common.score") }}</div>
         <!-- 客队2分次数 -->
         <div class="score-num match-away">
           {{ lodash.get(match_info, "msc.S107.away") || 0 }}
@@ -44,7 +44,7 @@
         <div class="score-num match-home" >
           {{ lodash.get(match_info, "msc.S108.home") || 0 }}
         </div>
-        <div class="score-tips">3 {{ $t("common.score") }}</div>
+        <div class="score-tips">3 {{ i18n_t("common.score") }}</div>
         <!-- 客队3分次数 -->
         <div class="score-num match-away">
           {{ lodash.get(match_info, "msc.S108.away") || 0 }}
@@ -62,7 +62,7 @@
       <!-- 犯规 -->
       <div class="score-item score-num-wrap">
         <div class="score-num match-home">{{ lodash.get(match_info, "msc.S106.home", 0) }}</div>
-        <div class="score-tips">{{ $t("common.foul") }}</div>
+        <div class="score-tips">{{ i18n_t("common.foul") }}</div>
         <div class="score-num match-away">{{ lodash.get(match_info, "msc.S106.away", 0) }}</div>
       </div>
       <!-- 犯规条 -->
@@ -109,11 +109,11 @@
       </div>
       <div class="score-item last-item">
         <!-- 主队暂停 -->
-        <div class="status-tips flex-3"> {{ $t("basketball.pause") }} </div>
+        <div class="status-tips flex-3"> {{ i18n_t("basketball.pause") }} </div>
         <!-- 罚球 -->
-        <div class="status-tips flex-4"> {{ $t("basketball.penalty") }} </div>
+        <div class="status-tips flex-4"> {{ i18n_t("basketball.penalty") }} </div>
          <!-- 客队暂停 -->
-        <div class="status-tips flex-3"> &nbsp;{{ $t("basketball.pause") }} </div>
+        <div class="status-tips flex-3"> &nbsp;{{ i18n_t("basketball.pause") }} </div>
       </div>
     </div>
   </div>

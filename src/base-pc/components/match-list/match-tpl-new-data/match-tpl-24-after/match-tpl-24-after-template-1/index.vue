@@ -72,7 +72,7 @@ const bet_col = computed(() => {
         start -= 1
         end -= 1
     }
-    bet_col = [...t('list.match_tpl_title.tpl1.15minutes_bet_col')]
+    bet_col = [...i18n_t('list.match_tpl_title.tpl1.15minutes_bet_col')]
     bet_col.splice(2,1)
     bet_col.splice(bet_col.length-1,1,"")
     bet_col = bet_col.slice(start,end)

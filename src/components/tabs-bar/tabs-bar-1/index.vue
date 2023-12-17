@@ -46,7 +46,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{ $t('icon_tips.column')}}</q-tooltip>
+          >{{ i18n_t('icon_tips.column')}}</q-tooltip>
           <!-- 一栏布局 -->
         </span>
         <span>
@@ -62,7 +62,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{ $t('icon_tips.multicolumn')}}</q-tooltip>
+          >{{ i18n_t('icon_tips.multicolumn')}}</q-tooltip>
           <!-- 两栏布局 -->
         </span>
       </div>

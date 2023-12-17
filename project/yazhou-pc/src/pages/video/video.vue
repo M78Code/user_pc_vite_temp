@@ -35,7 +35,7 @@
           v-if="!$is_eports_csid($route.params.csid) && $route.params.video_size != 1">
           <div class="img"></div>
           <!-- 本场数据 -->
-          <div>{{ $t('video.data') }}</div>
+          <div>{{ i18n_t('video.data') }}</div>
         </div>
         <!-- 比分板 -->
         <div v-if="$route.params.video_size != 1">

@@ -9,19 +9,19 @@
 
     <div class="panel">
       <!-- 有利情报 -->
-      <div class="panel-title">{{ $t('analysis.Favorable_information') }}</div>
+      <div class="panel-title">{{ i18n_t('analysis.Favorable_information') }}</div>
       <div class="item" v-for="(item, index) in lineupData[0]" :key="index">{{ item.content }}</div>
     </div>
 
     <div class="panel">
       <!-- 不利情报 -->
-      <div class="panel-title FF7373">{{ $t('analysis.Unfavorable_information') }}</div>
+      <div class="panel-title FF7373">{{ i18n_t('analysis.Unfavorable_information') }}</div>
       <div class="item" v-for="(item, index) in lineupData[1]" :key="index">{{ item.content }}</div>
     </div>
 
     <div class="panel">
       <!-- 中立情报 -->
-      <div class="panel-title">{{ $t('analysis.Neutral_Information') }}</div>
+      <div class="panel-title">{{ i18n_t('analysis.Neutral_Information') }}</div>
       <div class="item" v-for="(item, index) in lineupData[2]" :key="index">{{ item.content }}</div>
     </div>
   </div>

@@ -12,10 +12,10 @@
         <!--箭头图标-->
         <icon-wapper name="icon-back" size="14px" />
         <!--返回菜单-->
-        <div class="back-text ellipsis" v-if="BetData.is_bet_single">返回 {{ $t('common.return_sports') }}</div>
+        <div class="back-text ellipsis" v-if="BetData.is_bet_single">返回 {{ i18n_t('common.return_sports') }}</div>
         <div class="back-text2 ellipsis"
           v-tooltip="{ content: '&nbsp;' + i18n_t('common.return_spo r ts')+'&nbsp;' ,   overflow:1}" v-else>
-          {{ $t('common.return_sports') }}</div>
+          {{ i18n_t('common.return_sports') }}</div>
       </div>
       <div v-else  @click="set_menu_back('menu')">
         <!--bet-zone-head-width虚拟体育投注框宽度-->
@@ -24,14 +24,14 @@
           <!--箭头图标-->
           <icon-wapper name="icon-back" size="14px" />
           <!--返回菜单-->
-          <div class="back-text ellipsis">{{ $t('common.return_sports') }}</div>
+          <div class="back-text ellipsis">{{ i18n_t('common.return_sports') }}</div>
         </div>
       </div>
 
        <!--右边的单关或者复式串关按钮-->
       <template v-if="!BetData.is_virtual_bet && (LayOutMain_pc.layout_left_show != 'bet_history')">
         <div class="bet-series-box" @click="set_change_bet_single">
-          <span class="bet-series-text" :class="!BetData.is_bet_single ? 'actions':'' ">{{$t('bet.bet_series')}}</span>
+          <span class="bet-series-text" :class="!BetData.is_bet_single ? 'actions':'' ">{{i18n_t('bet.bet_series')}}</span>
             <!--复式串关已改为串关-->
           <div class="bet-series-switch" :class="!BetData.is_bet_single ? 'actions':'' ">
             <div class="bet-series-ok" :class="!BetData.is_bet_single ? 'actions':'' "></div>

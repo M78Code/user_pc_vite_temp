@@ -15,7 +15,7 @@
 
         <div class="bet-mode-zone" v-if="BetData.is_bet_single">
           <div class="left">
-            <span>{{ $t("bet.bet_one_") }}</span>
+            <span>{{ i18n_t("bet.bet_one_") }}</span>
             <span class="bet-single-count">
               {{ BetData.bet_single_list.length }}
             </span>
@@ -24,7 +24,7 @@
             <!-- 单关 合并 -->
             <span class="check-box" @click="toggle_merge">
               <span class="check-wrap relative-position" :class="{ 'active': BetData.is_bet_merge }" />
-              <span>{{ $t('bet.merge') }}</span>
+              <span>{{ i18n_t('bet.merge') }}</span>
             </span>
 
             <span @mouseover="show_merge_info = true" @mouseout="show_merge_info = false">
@@ -49,7 +49,7 @@
     <q-tooltip content-class="bet-bg-tooltip" anchor="bottom left" self="top left" :offset="[181, 10]" target="#merge-info"
       v-if="show_merge_info">
       <div style="width:170px;min-height:60px;padding-top:5px;padding-bottom:10px;padding-left:5px;word-break:break-all;">
-        {{ $t('bet.merge_info') }}
+        {{ i18n_t('bet.merge_info') }}
       </div>
     </q-tooltip>
 

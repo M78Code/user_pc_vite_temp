@@ -7,7 +7,7 @@
     <div class="nick_name t_nick_name">{{ computed_name }}</div>
     <!-- 渲染注单消息标题 -->
     <!-- <div class="bet_info_container" v-if="msgItem.type == msgType.bet">
-      <div class="title">{{ t('chatroom.post_bet_info1') }}</div>
+      <div class="title">{{ i18n_t('chatroom.post_bet_info1') }}</div>
     </div> -->
     <!-- 渲染普通消息 -->
     <div class="msg_container t_msg_container" v-if="msgItem.type == msgType.normal">

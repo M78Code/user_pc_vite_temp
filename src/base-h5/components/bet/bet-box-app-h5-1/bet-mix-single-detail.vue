@@ -8,9 +8,9 @@
     <div class="content-box2 yb_px14 row items-center">
       <!-- 左 -->
       <div class="content-t">
-        <p class="yb_fontsize16 black-color">{{ $t('bet.single_more') }}</p>
+        <p class="yb_fontsize16 black-color">{{ i18n_t('bet.single_more') }}</p>
  
-        <p style="font-size:0.11rem">{{ $t('bet.total_win2') }} <span
+        <p style="font-size:0.11rem">{{ i18n_t('bet.total_win2') }} <span
             :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }"
             class="yb_fontsize12">&thinsp;{{  format_money2(four_five_six_double(max_win_money) ) }}</span></p>
       </div>

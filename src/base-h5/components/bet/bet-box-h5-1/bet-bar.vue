@@ -12,9 +12,9 @@
       <span class="bet-num">{{ BetData.bet_single_list.length}}</span>
       <!-- 投注单 -->
       <span class="yb_fontsize16 yb_ml8">
-        <template v-if="get_bet_status != 0"><span>{{$t('bet.bet_record')}}</span></template>
+        <template v-if="get_bet_status != 0"><span>{{i18n_t('bet.bet_record')}}</span></template>
         <template v-else>
-          <span class="odds-wrapper">{{$t("footer_menu.bet_record")}}
+          <span class="odds-wrapper">{{i18n_t("footer_menu.bet_record")}}
             <span class='odds'>{{ mix_sum_odds }}</span>
           </span>
         </template>
@@ -24,7 +24,7 @@
     <div class="row items-center" v-else>
       <div class="account-wrap yb_pr16 text-right relative-position" @click.stop="get_balance">
         <!-- 账户余额 -->
-        <p class="text-right account-p">{{$t("bet.account_balance")}}</p>
+        <p class="text-right account-p">{{i18n_t("bet.account_balance")}}</p>
         <p class="yb_fontsize16">{{ format_money2(userData.balance) }}</p>
       </div>
       <!-- 金额刷新按钮 -->

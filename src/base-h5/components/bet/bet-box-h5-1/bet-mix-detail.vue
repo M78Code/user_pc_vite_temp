@@ -7,9 +7,9 @@
     <div class="content-box2 yb_px14 row items-center">
       <!-- 左 -->
       <div class="content-t">
-        <p class="yb_fontsize16">{{ $t(`bet.bet_${value_.id}`) }} X {{ value_.count }}&nbsp;&nbsp;&nbsp;{{ mix_odds
+        <p class="yb_fontsize16">{{ i18n_t(`bet.bet_${value_.id}`) }} X {{ value_.count }}&nbsp;&nbsp;&nbsp;{{ mix_odds
         }}</p>
-        <p style="font-size:0.11rem">{{ $t('bet.total_win2') }} <span
+        <p style="font-size:0.11rem">{{ i18n_t('bet.total_win2') }} <span
             :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }"
             class="yb_fontsize12">&thinsp;{{ format_money2() }}</span></p>
       </div>

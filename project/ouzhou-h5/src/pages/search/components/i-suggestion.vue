@@ -17,7 +17,7 @@
         <div class="score-time">
           <span class="score" v-if="item.msc.S1">{{ lodash.get(item, "msc.S1.home", "0") }}-{{ lodash.get(item,
             "msc.S1.away", "0") }}</span>
-          <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
+          <span class="time" v-else>{{ (new Date(+item.mgt)).Format(i18n_t('time4')) }}</span>
           <img :src="compute_local_project_file_path('image/list/league-collapse-icon.svg')" alt="">
         </div>
       </li>
@@ -37,7 +37,7 @@
           <div class="score-time">
             <span class="score" v-if="item.msc.S1">{{ lodash.get(item, "msc.S1.home", "0") }}-{{ lodash.get(item,
               "msc.S1.away", "0") }}</span>
-            <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
+            <span class="time" v-else>{{ (new Date(+item.mgt)).Format(i18n_t('time4')) }}</span>
             <img :src="`/${compute_local_project_file_path}/image/list/league-collapse-icon.svg`" alt="">
           </div>
         </li>
@@ -72,7 +72,7 @@
             <template v-else>
               <span class="score" v-if="item.msc.S1">{{ lodash.get(item, "msc.S1.home", "0") }}-{{ lodash.get(item,
                 "msc.S1.away", "0") }}</span>
-              <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
+              <span class="time" v-else>{{ (new Date(+item.mgt)).Format(i18n_t('time4')) }}</span>
             </template>
             <img :src="`/${compute_local_project_file_path}/image/list/league-collapse-icon.svg`" alt="">
           </div>

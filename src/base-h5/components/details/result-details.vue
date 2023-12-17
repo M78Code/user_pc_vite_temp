@@ -262,7 +262,7 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
         if(!data || data.length == 0){
 
             set_toast({
-              txt: t("bet_record.bet_match_tishi"),
+              txt: i18n_t("bet_record.bet_match_tishi"),
               is_show: true
             });
 

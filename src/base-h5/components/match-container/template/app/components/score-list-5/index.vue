@@ -57,7 +57,7 @@
             <!--分差-->
             <div class="row" style="margin-right:.05rem" v-if="[2].includes(+match.csid) && score_sub_win_faild">
               <div style="margin-right:.03rem">
-                {{ $t('list.score-disparity') }}
+                {{ i18n_t('list.score-disparity') }}
               </div>
               <div class="important-color-number sub">
                 {{ score_sub_win_faild.score_sub ? score_sub_win_faild.score_sub : 0 }}
@@ -66,7 +66,7 @@
             <!--总分-->
             <div class="row" v-if="[2, 6].includes(+match.csid)">
               <div style="margin-right:.03rem">
-                {{ $t('list.total_pp_score_count') }}
+                {{ i18n_t('list.total_pp_score_count') }}
               </div>
               <div class="important-color-number total">
                 <span>
@@ -78,11 +78,11 @@
             <div class="score last" v-if='![1, 2, 3, 11].includes(+match.csid)'>
               <!-- 总局数 -->
               <span v-if="![4, 5, 6, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
-                {{ $t('list.total_play_count') }}
+                {{ i18n_t('list.total_play_count') }}
               </span>
               <!-- 总分   5--网球， 5--美式足球， 7--斯诺克， 8--乒乓球， 9--排球， 10--羽毛球，-->
               <span class="score-l-total2" v-if="[8, 9, 10, 13, 15, 16].includes(+match.csid) && get_total_scores">
-                {{ $t('list.total_pp_score_count') }}
+                {{ i18n_t('list.total_pp_score_count') }}
               </span>
               <span v-if="[8, 9, 10, 13, 14, 15, 16].includes(+match.csid) && get_total_scores" class="score-important">
                 {{ get_total_scores }}

@@ -19,7 +19,7 @@
           <span class="record-icon" :style="compute_css_obj({key: 'pc-img-bet-record'})" alt=""></span>
 
           <div class="col">
-            {{ $t("common.betting_record") }}
+            {{ i18n_t("common.betting_record") }}
           </div>
           <span class="bet-count" v-show="bet_record_count > 0">{{ bet_record_count }}</span>
         </div>
@@ -28,7 +28,7 @@
           <div @click="change_left_menu('bet_list')" class="menu-item menu-top menu-border item bet_history bet-record-count">
 
             <span class="col">
-              {{ $t("bet.bet_my_count") }}
+              {{ i18n_t("bet.bet_my_count") }}
             </span>
             <span class="bet-count">{{ bet_count }}</span>
           </div>
@@ -72,7 +72,7 @@
           padding-left: 5px;
           word-break: break-all;
         ">
-        {{ $t('bet.merge_info') }}
+        {{ i18n_t('bet.merge_info') }}
       </div>
     </q-tooltip>
   </div>

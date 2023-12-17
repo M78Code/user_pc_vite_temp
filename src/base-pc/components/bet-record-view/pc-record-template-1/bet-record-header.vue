@@ -8,7 +8,7 @@
           <!--箭头图标-->
           <icon-wapper name="icon-back" size="14px" />
           <!--返回菜单-->
-          <div class="back-text ellipsis">{{ $t('common.return_sports') }}</div>
+          <div class="back-text ellipsis">{{ i18n_t('common.return_sports') }}</div>
         </div>
       </div>
 
@@ -17,7 +17,7 @@
       <div class="row bet-record-item cursor-pointer">
         <!--点选未结算0-->
         <div class="col text-center" :class="{'active': BetRecord.selected==0}" @click.stop="set_record_selected(0)">
-          {{$t('common.no_settlement')}}
+          {{i18n_t('common.no_settlement')}}
           <!--未结算-->
         </div>
         <!--点选预约2-->
@@ -26,14 +26,14 @@
         </div>
         <!--点选已结算1-->
         <div class="col text-center" :class="{'active': BetRecord.selected==1}" @click.stop="set_record_selected(1)">
-          {{$t('common.settlement_')}}
+          {{i18n_t('common.settlement_')}}
           <!--已结算-->
         </div>
         <div class="col-auto menu-tab-line" v-if="BetRecord.selected==0">
           <div class="line"></div>
         </div>
         <div class="col text-center"  :class="{'active': BetRecord.selected==2}"  @click.stop="set_record_selected(2)">
-          {{ $t('bet.bet_book2') }}
+          {{ i18n_t('bet.bet_book2') }}
           <!--预约-->
         </div>
       </div>
@@ -42,7 +42,7 @@
           <div class="col text-center"
             :class="{'active': BetRecord.appoint_order_status==0}"
             @click.stop="set_record_appoint_order_status(0)">
-            {{ $t('bet.bet_process') }}
+            {{ i18n_t('bet.bet_process') }}
             <template v-if="BetRecord.appoint_order_status==0">
               <div class="tabs-line"></div>
             </template>
@@ -53,7 +53,7 @@
           <div class="col text-center"
             :class="{'active': BetRecord.appoint_order_status==2}"
             @click.stop="set_record_appoint_order_status(2)">
-            {{ $t('bet.bet_invalid') }}
+            {{ i18n_t('bet.bet_invalid') }}
             <template v-if="BetRecord.appoint_order_status==2">
               <div class="tabs-line"></div>
             </template>

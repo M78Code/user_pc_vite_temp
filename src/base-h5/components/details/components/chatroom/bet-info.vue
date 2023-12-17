@@ -23,7 +23,7 @@
           <!-- 输、赢、走水...-->
           <span v-if="[2, 3, 4, 5, 6].includes(+bet_data.outcome)" :class="[4, 5].includes(+bet_data.outcome) ? 'highlight' : 'normal'">{{outcome2[bet_data.outcome]}}</span>
           <!--跟单-->
-          <span class="bet-submit" @click="handle_bet" v-else>{{t('chatroom.follow_bet')}}</span>
+          <span class="bet-submit" @click="handle_bet" v-else>{{i18n_t('chatroom.follow_bet')}}</span>
         </div>
         <div class="content-item font-size14">
           <template v-if="bet_data.playOptionName&&bet_data.playOptionName.includes(' ')">
@@ -50,16 +50,16 @@
       <!-- 底部 -->
       <div class="bet-footer">
         <!-- 投注额 -->
-        <span class="label">{{t('bet_record.bet_val')}}:
+        <span class="label">{{i18n_t('bet_record.bet_val')}}:
           <span>{{ format_currency(bet_data.originalOrderAmountTotal)}}</span>
         </span>
         <!-- 返还 -->
         <template v-if="[2, 3, 4, 5, 6].includes(+bet_data.outcome)">
-          <span class="label">{{ t('bet_record.go_back') }}: <span :class="[4, 5].includes(+bet_data.outcome) ? 'highlight' : null">{{ format_currency(bet_data.settleAmount) }}</span></span>
+          <span class="label">{{ i18n_t('bet_record.go_back') }}: <span :class="[4, 5].includes(+bet_data.outcome) ? 'highlight' : null">{{ format_currency(bet_data.settleAmount) }}</span></span>
         </template>
         <!-- 最高可赢 -->
         <template v-else-if="msgInfo.status == 1">
-          <span class="label">{{t('bet_record.bet_max_win')}}:
+          <span class="label">{{i18n_t('bet_record.bet_max_win')}}:
             <span>{{ format_currency(bet_data.originalMaxWinAmount) }}</span>
           </span>
         </template>
@@ -98,11 +98,11 @@ export default defineComponent({
     let data = reactive({
       outcome2: {
         // #TODO $root
-        // "2": t("bet_record.bet_no_status02"), //'走水',
-        // "3": t("bet_record.bet_no_status03"), //'输',
-        // "4": t("bet_record.bet_no_status04"), //'赢',
-        // "5": t("bet_record.bet_no_status05"), //'赢半',
-        // "6": t("bet_record.bet_no_status06"), //'输半',
+        // "2": i18n_t("bet_record.bet_no_status02"), //'走水',
+        // "3": i18n_t("bet_record.bet_no_status03"), //'输',
+        // "4": i18n_t("bet_record.bet_no_status04"), //'赢',
+        // "5": i18n_t("bet_record.bet_no_status05"), //'赢半',
+        // "6": i18n_t("bet_record.bet_no_status06"), //'输半',
       },
     });
     // #TODO vuex
@@ -128,9 +128,9 @@ export default defineComponent({
       const lang = 'zh';
       return {
         // #TODO $root
-        // sport_name: t(`common_lang.${lang}.sport2`)[bet_data.sportId],
-        // type: t(`common_lang.${lang}.matchtype`)[bet_data.matchType],
-        // market_type_name: t(`common_lang.${lang}.odds`)[bet_data.marketType]
+        // sport_name: i18n_t(`common_lang.${lang}.sport2`)[bet_data.sportId],
+        // type: i18n_t(`common_lang.${lang}.matchtype`)[bet_data.matchType],
+        // market_type_name: i18n_t(`common_lang.${lang}.odds`)[bet_data.marketType]
       }
     });
     // 用户是否已点赞
@@ -203,7 +203,7 @@ export default defineComponent({
             const flag = mhs == 1 || mhs == 2 || hs == 1 || hs == 2 || os == 2 || os == 3
             if (flag) {  // 提示盘口失效
               // #TODO $root
-              // set_toast({ 'txt': t('bet.msg12')});
+              // set_toast({ 'txt': i18n_t('bet.msg12')});
               return
             }
             data_details.hps = [ol_field_data]
@@ -213,7 +213,7 @@ export default defineComponent({
             set_bet_obj_config(data_details, ol_field_data, ol_item)
           } else {  // 提示盘口失效
             // #TODO $root
-            // set_toast({ 'txt': t('bet.msg12')});
+            // set_toast({ 'txt': i18n_t('bet.msg12')});
           }
         }
       })

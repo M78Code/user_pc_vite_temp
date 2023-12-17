@@ -45,9 +45,9 @@
           <template v-if="BetData.is_bet_success_status">
             <!-- 单关投注完成后底部的显示（包括投注失败8，投注成功3，提交成功6） -->
             <div class="row justify-between yb_px14 yb_fontsize14 yb_mb8 bottom-bar">
-              <p><span>{{ $t('bet_record.bet_max_win') }}</span><span class="yb_fontsize14 yb_ml8 bottom-bar-sp">{{
+              <p><span>{{ i18n_t('bet_record.bet_max_win') }}</span><span class="yb_fontsize14 yb_ml8 bottom-bar-sp">{{
                 (max_winmoney / 100).toFixed(2) }}</span></p>
-              <p><span>{{ $t('bet.bet_val') }}</span><span class="yb_fontsize14 yb_ml8 bottom-bar-sp2">{{ (bet_money
+              <p><span>{{ i18n_t('bet.bet_val') }}</span><span class="yb_fontsize14 yb_ml8 bottom-bar-sp2">{{ (bet_money
                 / 100).toFixed(2) }}</span></p>
             </div>
           </template>
@@ -75,25 +75,25 @@
         <div class="add-box" :class="{ 'add-box2': BetData.bet_list.length >= 2 || BetData.is_bet_success_status, 'add-box3': calc_class }"
           @click.stop="pack_up(2)">
           <template v-if="!BetData.is_bet_success_status">
-            <span v-if="BetData.bet_list.length > 1">{{ $t('bet.delete_all') }}</span>
+            <span v-if="BetData.bet_list.length > 1">{{ i18n_t('bet.delete_all') }}</span>
             <span class="kushikatsu-text" v-else>
-              {{ $t('bet.kushikatsu') }}
+              {{ i18n_t('bet.kushikatsu') }}
               <i class="bet-add"></i>
             </span>
           </template>
           <template v-else>
-            <span>{{ $t('bet.save') }}</span>
+            <span>{{ i18n_t('bet.save') }}</span>
           </template>
         </div>
         <!-- 右边 -->
         <div class="bet-box">
           <template v-if="exist_code == '666'">
-            <p @click="go_record" class="yb_fontsize16">{{ $t('bet.msg13') }}</p>
+            <p @click="go_record" class="yb_fontsize16">{{ i18n_t('bet.msg13') }}</p>
           </template>
           <template v-else-if="is_conflict">
             <!-- 投注 -->
             <div class="row justify-center items-center content-center set-opacity">
-              <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
+              <p class="yb_fontsize12 yb_mr10">{{ i18n_t('bet_record.bet_val') }}</p>
               <p class="yb_fontsize20">{{  format_money2(BetData.bet_money_total.toFixed(2))}}</p>
             </div>
           </template>
@@ -101,25 +101,25 @@
             <!-- 投注 -->
             <div v-if="btn_show == 0" @click="submit_order" :class="{ 'set-opacity': get_money_notok_list.length }"
               class="row justify-center items-center content-center">
-              <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
+              <p class="yb_fontsize12 yb_mr10">{{ i18n_t('bet_record.bet_val') }}</p>
               <p class="yb_fontsize20">{{  format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
             </div>
             <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
             <div v-if="btn_show == 5" class="row justify-center items-center content-center set-opacity">
-              <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
+              <p class="yb_fontsize12 yb_mr10">{{ i18n_t('bet_record.bet_val') }}</p>
               <p class="yb_fontsize20">{{ format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
             </div>
             <!-- 确定 -->
-            <p v-if="btn_show == 1" @click="pack_up" class="yb_fontsize16">{{ $t('common.ok') }}</p>
+            <p v-if="btn_show == 1" @click="pack_up" class="yb_fontsize16">{{ i18n_t('common.ok') }}</p>
             <!-- 处理中 -->
             <div v-if="btn_show == 2" class="yb_fontsize16 row justify-center items-center">
-              <p class="yb_mr8">{{ $t('bet_record.submitting_bet') }}</p>
+              <p class="yb_mr8">{{ i18n_t('bet_record.submitting_bet') }}</p>
               <ball-spin />
             </div>
             <!-- 接受变化 -->
-            <p v-if="btn_show == 3" @click="agree_change" class="yb_fontsize16">{{ $t('bet.agree_change') }}</p>
+            <p v-if="btn_show == 3" @click="agree_change" class="yb_fontsize16">{{ i18n_t('bet.agree_change') }}</p>
             <!-- 接受变化并投注 -->
-            <p v-if="btn_show == 4" @click="submit_order" class="yb_fontsize16">{{ $t('bet.agree_change2') }}</p>
+            <p v-if="btn_show == 4" @click="submit_order" class="yb_fontsize16">{{ i18n_t('bet.agree_change2') }}</p>
           </template>
         </div>
       </div>

@@ -63,10 +63,10 @@ export const video_info = () => {
     is_expand_video_list: false,
     // 事件类型菜单选项
     tab_list: [
-      { title: t('footer_menu.all') },
-      { title: t('match_result.goal') },
-      { title: t('match_result.corner_kick') },
-      { title: t('football_playing_way.penalty_cards') },
+      { title: i18n_t('footer_menu.all') },
+      { title: i18n_t('match_result.goal') },
+      { title: i18n_t('match_result.corner_kick') },
+      { title: i18n_t('football_playing_way.penalty_cards') },
     ],
     // 当前播放视频信息
     current_event_video: {
@@ -800,7 +800,7 @@ export const video_info = () => {
       if (this.send_gcuuid != res.gcuuid) return;
       if (!data.animationUrl) {
         this.set_toast({
-          txt: t("match_info.m_anima_not_start"),
+          txt: i18n_t("match_info.m_anima_not_start"),
         });
         return
       }
@@ -899,11 +899,11 @@ export const video_info = () => {
   const event_name = (type) => {
     let event_name
     switch (type) {
-      case 'goal': event_name = t('highlights.type.goal'); break;  // 进球
-      case 'corner': event_name = t('highlights.type.corner'); break;  // 角球
-      case "red_card": event_name = t('highlights.type.card_red'); break;  // 红牌
-      case "yellow_card": event_name = t('highlights.type.card_yellow'); break;  // 黄牌
-      case "yellow_red_card": event_name = t('highlights.type.card_yellow_red'); break;  // 黄红牌
+      case 'goal': event_name = i18n_t('highlights.type.goal'); break;  // 进球
+      case 'corner': event_name = i18n_t('highlights.type.corner'); break;  // 角球
+      case "red_card": event_name = i18n_t('highlights.type.card_red'); break;  // 红牌
+      case "yellow_card": event_name = i18n_t('highlights.type.card_yellow'); break;  // 黄牌
+      case "yellow_red_card": event_name = i18n_t('highlights.type.card_yellow_red'); break;  // 黄红牌
       default: event_name = ''; break;
     }
     return event_name;
