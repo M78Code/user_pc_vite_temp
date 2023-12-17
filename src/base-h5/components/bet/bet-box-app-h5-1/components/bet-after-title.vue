@@ -18,21 +18,33 @@ import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
 import { IconWapper } from 'src/components/icon/index.js'
 
 let title = ref('')
-
+// 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效 6-预约中 7-预约成功  8-预约取消
 const set_bet_order_status = computed(()=> status => {
   // 2-投注中状态,
-  if(status == 2){
+  if([2,6].includes(status*1)){
     title.value = i18n_t('bet.bet_loading')
+    // 6-预约中 
+    if(status == 6){
+      title.value = i18n_t('pre_record.booking')
+    }
     return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_loading.png`
   }
   //3-投注成功状态(主要控制完成按钮)
-  if(status == 3){
+  if([3,7].includes(status*1)){
     title.value = i18n_t('app_h5.bet.bet_confirm')
+    // 7-预约成功
+    if(status == 7){
+      title.value = i18n_t('pre_record.booked')
+    }
     return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_success.png`
   }
   // ,4-投注失败状态,5-投注项失效
-  if([4,5].includes(+status)){
+  if([4,5,8].includes(+status)){
     title.value = i18n_t('app_h5.bet.bet_error')
+    //  8-预约取消
+    if(status == 8){
+      title.value = i18n_t('pre_record.booked_fail')
+    }
     return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_error.png`
   }
 })

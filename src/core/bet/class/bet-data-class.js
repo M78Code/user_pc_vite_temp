@@ -17,6 +17,7 @@ class BetData {
    
   }
   init_core() {
+    console.error('init_core')
     this.deviceType = 1  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
     // 当前赔率
     this.cur_odd = "eu";
@@ -199,6 +200,8 @@ this.bet_appoint_ball_head= null */
     this.bet_keyboard_config = {}
     // 键盘状态
     this.bet_keyboard_show = true;
+    // h5 投注栏默认隐藏
+    this.h5_bet_box_show = false
 
     // 获取缓存信息
     this.set_loacl_config()
@@ -221,8 +224,13 @@ this.bet_appoint_ball_head= null */
     this.set_bet_data_class_version()
   }
 
+  set_h5_bet_box_show(val) {
+    this.h5_bet_box_show = val
+    this.set_bet_data_class_version()
+  }
 
   set_bet_box_h5_show (value) {
+    
     this.bet_box_h5_show = value
     this.set_bet_data_class_version()
   }
@@ -391,6 +399,7 @@ this.bet_appoint_ball_head= null */
     this.is_virtual_bet = is_virtual_bet
     // 设置 投注内容
     this.bet_read_write_refer_obj[custom_id] = bet_refer_obj
+    console.error('bet_read_write_refer_obj')
     // 单关/串关 投注
     if (this.is_bet_single) {
       // 单关 不合并 只有一条 
@@ -493,6 +502,18 @@ this.bet_appoint_ball_head= null */
   }
 
   /*
+  设置 是否接受更好赔率
+  */
+  set_is_accept(value) {
+    value = Number(value)
+    if (isNaN(value)) {
+      this.is_accept = value == 1 ? 2 : 1
+    } else {
+      this.is_accept = value;
+    }
+    this.set_bet_data_class_version()
+  }
+  /*
   设置 赔率类型
   */
   set_cur_odd(cur_odd) {
@@ -518,7 +539,7 @@ this.bet_appoint_ball_head= null */
 
   // 设置可预约的投注项
   set_bet_pre_list(val) {
-    this.bet_pre_list = val || []
+    this.bet_pre_list = val
     this.set_bet_data_class_version()
   }
 
@@ -604,6 +625,7 @@ this.bet_appoint_ball_head= null */
     nextTick(()=>{
       LocalStorage.set('bet_data_class',this)
     })
+    console.error('set_bet_data_class_version',JSON.parse(JSON.stringify(this)))
   }, 5)
 
   // 投注成功后 不保留投注项 需要清空投注数据 
@@ -929,8 +951,8 @@ this.bet_appoint_ball_head= null */
 
               // console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
               // 投注项和状态一致不更新数据 
-              if(ol_obj.odds == ws_ol_obj.ov){
-                ol_obj.red_green = ''
+              if(ol_obj.odds == ws_ol_obj.ov && ws_ol_obj.os == ol_obj.ol_os && item.hs == ol_obj.hl_hs ){
+               return
               }
               // 重新设置赔率
               ol_obj.odds = parseFloat(ws_ol_obj.ov) ? ws_ol_obj.ov*1 : ol_obj.odds
@@ -951,6 +973,7 @@ this.bet_appoint_ball_head= null */
               ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, ol_obj.playId, '', ol_obj.sportId)
               // 更新投注项内容
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
+              console.error('ol_obj',ol_obj)
 
               // 5秒后清除 红升绿降
               time_out = setTimeout(()=>{
