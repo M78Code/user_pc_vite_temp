@@ -8,7 +8,7 @@
     <div class="sub-menu-date-w">
         <div class="sport-m-container">
           <div class="s-menu-container flex" >
-            <template  v-for="(item,index) in scrollDataList" :key="index">
+            <template  v-for="(item,index) in scrollDataListNew" :key="index">
               <!-- 全部 vr 收藏 电竞显示  -->
               <div v-if="item?.ct > 0 || menu_show_id.includes(+item.mi) || +item.mi>2000" ref="scrollTab" 
                 :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] " 
@@ -36,7 +36,7 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref,reactive,onMounted,onUnmounted,nextTick } from "vue";
+import { ref,reactive,onMounted,onUnmounted,computed } from "vue";
 // import lodash_ from "lodash";
 // import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj, MenuData } from "src/output/index.js";
@@ -64,7 +64,10 @@ const props = defineProps({
     default: true
   },
 })
-
+const scrollDataListNew = computed(()=>{
+  if(MenuData.is_esports())return props.scrollDataList;
+  return [...[{mi:50000,btn:1,ct:0,title:"收藏"}],...props.scrollDataList]
+})
 const emits = defineEmits(['changeList','changeMenu'])
 /**
  * 二级菜单事件
@@ -82,10 +85,10 @@ function set_menu_lv2(item = {},event) {
   // if (item.mi == MenuData.current_lv_2_menu_i) return;
   scrollMenuEvent(event,".s-menu-container",".current");
   emits('changeMenu',item)
-  nextTick(()=>{ //收藏是没有change的相当于是页面
-    // 设置菜单点击事件
-    useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
-  })
+  // nextTick(()=>{ //收藏是没有change的相当于是页面
+  //   // 设置菜单点击事件
+  //   useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
+  // })
 }
 
 /**
@@ -126,7 +129,7 @@ const format_type = ( item = {} ) => {
  */
 const get_menu_ws_list = (list) =>{
     list = list.filter((item)=>{return item.mi});
-    let wsList = props.scrollDataList.map((item)=>{
+    let wsList = props.scrollDataList?.map((item)=>{
         list.forEach((n)=>{
             if(item.mi == n.mi){
                 item.ct = n.count;
@@ -157,6 +160,7 @@ onUnmounted(()=>{
     z-index: 501;
     width: 100%;
     max-height: 1.35rem;
+    height: 0.5rem;
     padding: 0 0.05rem;
     transition: transform 0.6s, max-height 0.3s;
 

@@ -142,13 +142,15 @@ class MenuData {
     // 默认设置二级菜单id
     // this.set_current_lv_2_menu_i( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
     // 今日 加入 收藏/vr体育/电竞 滚球加入全部
+    // menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
     if(mid == 1){
       const all_ct = menu_lv_mi_lsit.map((item)=>{return item.ct||0}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
-      menu_lv_mi_lsit.unshift({mi:0,btn:1, ct:all_ct,title:"全部"})
-      menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
+      menu_lv_mi_lsit.splice(0,0,{mi:0,btn:1, ct:all_ct,title:"全部"})
+      // menu_lv_mi_lsit.unshift({mi:0,btn:1, ct:all_ct,title:"全部"})
+      // menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
     }
     if(mid == 2){
-      menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
+      // menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
       menu_lv_mi_lsit.splice(3,0,{mi:300,btn:1,ct:0,title:"VR体育"})
       menu_lv_mi_lsit.splice(4,0,{mi:2000,btn:1,ct:0,title:"电竞"})
     }
@@ -172,6 +174,9 @@ class MenuData {
   // 设置 收藏 /vr体育 /电竞头部
   set_top_menu_title(val){
     this.top_menu_title = val;
+    // const obj = val?.mi?{}:{
+    //   current_lv_2_menu:{}
+    // }
     this.set_cache_class({
       top_menu_title:val
     });
@@ -404,7 +409,7 @@ class MenuData {
       })
       // 根据 菜单id 获取euid
       mid_list.forEach(item=>{
-        euid += BaseData.mi_euid_map_res[item] && BaseData.mi_euid_map_res[item].h + ','
+        euid += BaseData.mi_euid_map_res?.[item] && BaseData.mi_euid_map_res?.[item]?.h + ','
       })
       return euid
     }
@@ -422,7 +427,6 @@ class MenuData {
       }[mi];
     }
   }
-
   /**
    * 菜单名称 国际化获取菜单名称
    * 这里获取大部分菜单的名称 有些是固定名称的这里获取不到
@@ -710,7 +714,7 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_kemp(mi) {
-    return this._is_cur_mi(100, mi)
+    return this._is_cur_mi(400, mi)
   }
   /**
    * 是否选中了冠军
