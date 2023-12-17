@@ -304,6 +304,7 @@ function key_down(event) {
 		border: 1px solid var(--q-gb-bg-c-18);
 		height: 0.25rem;
 		padding-left: 0.12rem;
+        background: var(--q-gb-bg-c-28);
 	}
 	::placeholder {
 		color: var(--q-gb-t-c-16);
