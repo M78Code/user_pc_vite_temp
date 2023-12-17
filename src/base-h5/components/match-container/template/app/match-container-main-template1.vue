@@ -945,6 +945,7 @@ export default {
   height: auto;
   position: relative;
   height: 1.12rem;
+  z-index: 100;
 
   .right-content-style {
     position: relative;

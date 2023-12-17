@@ -72,6 +72,9 @@ export default defineComponent({
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
     // }),
+    const sub_menu_type = computed(() => {
+      return props.csid;
+    });
     const get_cur_odd = computed(() => {
       return ""
     });
@@ -140,7 +143,8 @@ export default defineComponent({
       is_select,
       get_odds,
       go_to_fun,
-      play_obj
+      play_obj,
+      sub_menu_type
     }
   }
 })

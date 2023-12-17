@@ -2,20 +2,20 @@
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
         <div class="bet-content">
-            <div >
-                <div class="w-100 f-a-c">
+            <div class="left">
+                <div class="w-100 f-a-c left-l">
                     <span>{{ items.seriesValue}}</span> 
-                    <span v-if="items.orderStatusCode == 1">成功</span>
+                    <span v-if="items.orderStatusCode == 1" class="left-l-typ">成功</span>
                 </div>
-                <div class="w-100">
+                <div class="w-100 left-r">
                     <span>{{ format_money2(mathJs.divide(items.betAmount,100))}}</span>
-                    <span> x{{ items.seriesSum }} </span>
+                    <span class="left-rx"> x{{ items.seriesSum }} </span>
                 </div>
             </div>
 
-            <div>
+            <div class="right">
                 <div >
-                    <span>预计可赢：{{ format_money2(mathJs.divide(items.maxWinAmount,100))}}</span>
+                    <span>预计可赢：<span class="red">{{ format_money2(mathJs.divide(items.maxWinAmount,100))}}</span></span>
                 </div>
                 <div>
                     <span>小计：{{ items.seriesBetAmount }} </span>
@@ -47,11 +47,52 @@ const props = defineProps({
     .bet-content {
         min-height: 76px;
         padding: 12px;
-        padding-left: 34px;
+        //padding-left: 34px;
+        padding-bottom: 6px;
         font-size: 13px;
         font-weight: 500;
         font-style: normal;
         position: relative;
+        background: var(--q-gb-bg-c-22);
+        border-radius: 0.12rem;
+        margin-bottom: 0.05rem;
+        
+        .left{
+            font-size: 0.14rem;
+            display: flex;
+            justify-content: space-between;
+            .left-l{
+                font-size: 0.14rem;
+                font-weight: 500;
+                margin-top: 0.04rem;
+                .left-l-typ{
+                    font-size: 0.12rem;
+                    color: var(--q-gb-t-c-1);
+                    margin-left: 0.05rem;
+                }
+            }
+            .left-r{
+                text-align: right;
+                font-weight: 700;
+                font-size: 0.2rem;
+                .left-rx{
+                    font-size: 0.14rem;
+                    font-style: normal;
+                    font-weight: 500;
+                    color: var(--q-gb-t-c-3);
+                }
+            }
+        }
+        .right{
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.12rem;
+            color: var(--q-gb-t-c-3);
+            margin-top: 0.05rem;
+            .red{
+                color: var(--q-gb-bd-c-8);
+            }
+        }
 
         .bet-money {
             height: 34px;
