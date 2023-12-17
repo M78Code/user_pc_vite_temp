@@ -2,16 +2,19 @@
     display: flex;
     justify-content: space-between;
     border-bottom: .01rem solid var(--q-gb-bd-c-6);
+    color: var(--q-gb-t-c-20);
     .switch-item {
         flex:1;
         display: flex;
         justify-content: center;
+        color: var(--q-gb-t-c-20);
         span {
             padding: .14rem .16rem;
             font-size: .16rem;
         }
     }
     .switch-item-active {
+        color: var(--q-gb-t-c-18);
         span {
             border-bottom: .02rem solid var(--q-gb-t-c-1);
         }
@@ -25,16 +28,18 @@
     width: 100%;
     overflow-x: scroll;
     border-bottom: .08rem solid var(--q-gb-bg-c-11);
+    color: var(--q-gb-t-c-18);
 
     .slide-item-active {
         span {
             background-color: var(--q-gb-t-c-1);
             border-radius: .2rem;
-            color: var(--q-gb-bg-c-15);
+            color: var(--q-gb-t-c-18);
         }
     }
     .slide-item {
         flex:0 0 .74rem;
+        color: var(--q-gb-t-c-18);
         span {
             display: flex;
             justify-content: center;
@@ -55,6 +60,7 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: .24rem;
+    color: var(--q-gb-t-c-18);
     .ht-button {
         width: 3.12rem;
         height: .44rem;

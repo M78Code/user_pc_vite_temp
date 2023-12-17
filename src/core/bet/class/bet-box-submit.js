@@ -21,11 +21,12 @@ import {
 import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/output/module/constant-utils.js"
 import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
-import { MenuData } from 'src/output/module/menu-data.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t,i18n_tc } from "src/boot/i18n.js"
-import { only_win } from 'src/core/format/project/module/format-odds-conversion-mixin.js'
+import { only_win } from "src/core/constant/common/module/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import PageSourceData from "src/core/page-source/page-source.js";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 let time_out = null
@@ -127,7 +128,7 @@ const set_bet_order_list = (bet_list, is_single) => {
             })
 
             let obj_s = {
-                "seriesSum": 1,   // 串关数量
+                "seriesSum": obj.count,   // 串关数量
                 "seriesType": obj.id,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
                 "fullBet": 0,   // 是否满额投注，1：是，0：否
                 "orderDetailList": bet_s_list
@@ -181,7 +182,6 @@ const set_bet_order_list = (bet_list, is_single) => {
             })
 
         }) 
-        
     }
 
     return order_list
@@ -492,22 +492,47 @@ const submit_handle = type => {
                     return item
                 })
                 set_orderNo_bet_obj(orderDetailRespList)
-                // 订单状态 0:投注失败 1: 投注成功 2: 订单确认中
-                let status_code = orderDetailRespList[0].orderStatusCode
+                
+                // 投注 注单状态
+                let status_code = 0
+                // 投注状态
                 let status = 2
-                // 设置投注中状态 后续用ws推送改变
-                switch (+status_code) {
-                    case 0:
-                        status = 5;
-                        break;
-                    case 1:
-                        status = 3;
-                        break;
-                    default:
-                        break;
+                 // 预约
+                if(BetData.is_bet_pre){
+                    // 预约状态 0:预约中 1: 预约成功 2: 预约取消
+                    status_code = orderDetailRespList[0].preOrderDetailStatus
+                    // 设置投注中状态 后续用ws推送改变
+                    switch (+status_code) {
+                        case 0:
+                            status = 6;
+                            break;
+                        case 1:
+                            status = 7;
+                            break;
+                        case 2:
+                            status = 8;
+                            break;
+                        default:
+                            break;
+                    }
+                }else{
+                    // 订单状态 0:投注失败 1: 投注成功 2: 订单确认中
+                    status_code = orderDetailRespList[0].orderStatusCode
+                    // 设置投注中状态 后续用ws推送改变
+                    switch (+status_code) {
+                        case 0:
+                            status = 5;
+                            break;
+                        case 1:
+                            status = 3;
+                            break;
+                        default:
+                            break;
+                    }
                 }
+               
                 order_state = status
-                // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
+                // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效 6-预约中 7-预约成功  8-预约取消
                 BetViewDataClass.set_bet_order_status(status)
             }else{
                 set_orderNo_bet_obj(orderDetailRespList)
@@ -524,10 +549,11 @@ const submit_handle = type => {
                 }
 
             }
-             // 投注成功 更新余额
-             UserCtr.get_balance()
+            // 投注成功 更新余额
+            UserCtr.get_balance()
             // 投注成功 获取余额 获取投注记录数量
-            if(order_state == 3){
+            // 7 预约成功 3 投注成功
+            if([3,7].includes(order_state*1)){
                
                 // pc 有的 
                 if(params.deviceType == 2){
@@ -536,7 +562,8 @@ const submit_handle = type => {
                 }
             }
             // 投注确认中 ws请求
-            if(order_state == 2){
+            // 6 预约确认中 3 投注确认中
+            if( [2,6].includes(order_state*1)){
                 let order_no =  lodash_.get(orderDetailRespList,'[0].orderNo', '')
                 set_order_status_info(order_no)
 
@@ -546,13 +573,13 @@ const submit_handle = type => {
                 // 盘口Id，多个Id使用逗号分隔
                 // 赛事Id，多个Id使用逗号分隔
                 if(BetData.is_bet_single){
-                    seriesOrders.orderDetailList.forEach( item => {
-                        obj.hid = item.marketId 
-                        obj.mid = item.matchId 
-                    })
+                    let series_orders = lodash_.get(seriesOrders,'[0].orderDetailList', {})
+                    obj.hid = series_orders.marketId 
+                    obj.mid = series_orders.matchId 
+                   
                     // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_single_list))
                 } else {
-                    seriesOrders[0].orderDetailList.forEach( item => {
+                    seriesOrders.orderDetailList.forEach( item => {
                         obj.hid = item.marketId 
                         obj.mid = item.matchId 
                     })
@@ -606,14 +633,14 @@ const set_error_message_config = (res ={},type,order_state) => {
                  
                 case 3:
                     obj = {
-                        code: 200,
+                        code: '200',
                         message: "bet_message.success"
                     }
                     break
             
                 case 4:
                     obj = {
-                        code: 500,
+                        code: '500',
                         message: "bet_message.error"
                     }
                     break
@@ -625,8 +652,13 @@ const set_error_message_config = (res ={},type,order_state) => {
     }
     // 获取限额失败的信息
     if(PROJECT_NAME == 'app-h5'){
-        console.error('sssss',obj.message)
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t(obj.message));
+        console.error('ssss')
+        let text =  obj.message 
+        // 没有做国际化的code
+        if(BetViewDataClass.error_code_list.includes(res.code)){
+            text = i18n_t(obj.message)
+        }
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
     }else{
         BetViewDataClass.set_bet_before_message(obj)
     }
@@ -784,7 +816,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
         hl_hs: hl_obj.hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
-        mid_mhs: mid_obj.mhs, // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
+        mid_mhs: ol_obj._mhs, // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
         match_ctr: other.match_data_type, // 数据仓库 获取比分
         device_type: BetData.deviceType, // 设备号
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
@@ -1097,7 +1129,18 @@ const get_market_is_show = (obj={}) =>{
     return !!hl_obj.hid
 }
 const   go_to_bet=(ol_item)=>{
+    debugger
+    // 如果是赛果详情
+    if(PageSourceData.route_name == 'match_result') return
     const {oid,_hid,_hn,_mid,_hpid } = ol_item
+    let bet_type = 'common_bet'
+    if(MenuData.is_esports()){
+        bet_type ="esports_bet"
+    }else if(MenuData.is_kemp()){
+        bet_type ="guanjun_bet"
+    }else if(MenuData.is_vr()){
+        bet_type ="“vr_bet”，"
+    }
     let params = {
       oid, // 投注项id ol_obj
       _hid, // hl_obj 
@@ -1108,7 +1151,7 @@ const   go_to_bet=(ol_item)=>{
       is_detail: true,
       // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
       // 根据赛事纬度判断当前赛事属于 那种投注类型
-      bet_type: 'common_bet',
+      bet_type,
       // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
       device_type: 1,  
       // 数据仓库类型

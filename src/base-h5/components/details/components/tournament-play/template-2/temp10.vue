@@ -54,6 +54,9 @@ export default defineComponent({
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
     // }),
+    const sub_menu_type = computed(() => {
+      return props.csid;
+    });
     const get_bet_list = computed(() => {
       return []
     });
@@ -104,7 +107,8 @@ export default defineComponent({
       get_bet_list,
       get_curr_sub_menu_type,
       temp_odds,
-      LOCAL_PROJECT_FILE_PREFIX
+      LOCAL_PROJECT_FILE_PREFIX,
+      sub_menu_type
     }
   }
 })
@@ -141,15 +145,15 @@ export default defineComponent({
   text-align: center;
 
   margin-right: 0.01rem;
-  background: var(--q-color-com-img-bg-20) no-repeat 0 0 / 100%;
+  background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png")  no-repeat 0 0 / 100%;
   --per: -0.3rem;
 }
 
 /*************** 马数字结束 *************** -E*/
 /*************** 赔率开始 *************** -S*/
 .odds-style {
-
-  font-size: 0.16rem;
+  color: #303442;
+  font-size: 0.12rem;
 
   letter-spacing: 0;
   text-align: center;
@@ -159,10 +163,15 @@ export default defineComponent({
 .virtual-bet-wrapper {
   border-radius: 0.08rem;
   overflow: hidden;
+  display: grid;
+  gap: 0.1rem;
+  grid-template-columns: 33.3% 33.3% 33.3%;
 }
 
 .item-height {
   height: 0.52rem;
+  background: #F2F2F6;
+  width: auto;
 
   &:nth-child(3n) {
     border-right: none;

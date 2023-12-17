@@ -8,6 +8,7 @@
   <early-settle-tips v-if="calc_show" />
   <!-- 提前兑换按钮 -->
   <div class="early-settle" v-if="calc_show">
+    <div class="un-success" v-if="unSuccessTips">{{ i18n_t('early.info2') }}</div>
     <div class="early-button">
       <button @click="submit_click" :class="{'disabled-btn': status == 4 || status == 5}">
         <!-- 暂停提前结算 -->
@@ -67,6 +68,10 @@ const props = defineProps({
 let queryorderpresettleconfirm_data = inject('queryorderpresettleconfirm_data')
 // 1 - 初始状态，2 - 确认提前结算， 3 - 确认中..., 4 - 已提前结算, 5 - 暂停提前结算(置灰), 6 - 仅支持全额结算, 7 - 按钮不显示
 let status = ref(1)
+// 是否展示提前结算
+let calc_show = ref(false)
+// 提前结算申请未通过提示
+let unSuccessTips = ref(false)
 // 滑块是否显示
 let slider_show = ref(false)
 // 0  100
@@ -123,11 +128,7 @@ const cashout_stake = computed(() => {
 const min_bet_money = computed(() => {
   return lodash.get(UserCtr, "cvo.single.min") || 10;
 })
-// 计算提前结算按钮是否显示
-const calc_show = computed(() => {
-  return BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle
-  // return /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordClass.selected + props.item_data.enablePreSettle + status.value);
-})
+
 watch(() => expected_profit.value, (_new, _old) => {
   // 小于 1 时暂停提前结算
   if (_new < 1) {
@@ -156,6 +157,10 @@ watch(() => queryorderpresettleconfirm_data.value, (_new) => {
 
 
 onMounted(() => {
+  // 计算提前结算按钮是否显示
+  calc_show.value = (BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle)
+  //  /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordClass.selected + props.item_data.enablePreSettle + status.value);
+
   // 接口：当 enablePreSettle=true && hs = 0  提前结算显示高亮， 当 enablePreSettle=true && hs != 0  显示置灰， 当 enablePreSettle=false 不显示，
   ordervos_ = lodash.get(props.item_data, "orderVOS[0]", {});
   if (ordervos_.hs != 0) {
@@ -171,6 +176,12 @@ onMounted(() => {
    * 给expected_profit赋值
    */
   mitt_expected_profit = useMittOn(MITT_TYPES.EMIT_EARLY_MONEY_LIST_CHANGE, (early_money_list_data) => {
+    // 如果early_money_list_data为null, 隐藏提前结算按钮
+    if(!early_money_list_data) {
+      calc_show.value = false
+      return
+    }
+    // 获取当前订单的最新结算值
     let _maxCashout = props.item_data.maxCashout
     const moneyData = lodash.find(early_money_list_data, (item) => {
       return props.item_data.orderNo == item.orderNo
@@ -283,11 +294,9 @@ const submit_early_settle = () => {
     let res = reslut.status ? reslut.data : reslut
     if (res.code == 200) {
       status.value = 4;
-      message = i18n_t('early.info10');
     } else if (res.code == "0400524") {
       // 注单确认中···
-      status.value = 4;
-      message = i18n_t('early.info10');
+
     } else if (res.code == "0400527") {
       // 不支持提前结算或者暂停
       status.value = 5;
@@ -304,14 +313,13 @@ const submit_early_settle = () => {
     } else {
       // 提前结算申请未通过
       status.value = 1;
-      message = i18n_t('early.info2');
+      unSuccessTips.value = true
     }
-    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
+    message && useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
   }).catch((err) => {
     // 提前结算申请未通过
     status.value = 1;
-    message = i18n_t('early.info2');
-    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
+    unSuccessTips.value = true
   });
 }
 /**
@@ -343,6 +351,11 @@ template {
   display: block;
 }
 .early-settle {
+  .un-success {
+    padding: 0 0.14rem;
+    color: red;
+    line-height: 2;
+  }
   .early-button {
     padding: 0 0.14rem;
     margin-bottom: 0.1rem;

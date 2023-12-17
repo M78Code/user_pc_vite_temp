@@ -698,7 +698,7 @@ export default {
     flex-wrap: nowrap;
     display: flex;
     font-size: 0.1rem;
-    color: #303442;
+    color: var(--q-gb-t-c-18);
     flex-direction: row-reverse;
     background: var(--q-gb-bg-c-17);
     border-top: 1px solid var(--q-gb-bg-c-19);
@@ -783,6 +783,7 @@ export default {
     }
 
     .league-t-wrapper {
+      color: var(--q-gb-t-c-18);
       line-height: 1;
       min-width: 1.18rem;
       display: flex;
@@ -915,6 +916,7 @@ export default {
       }
 
       &.team_title {
+        color: var(--q-gb-t-c-18);
         .team-title-inner-con {
           width: 1.8rem !important;
         }
@@ -1007,7 +1009,7 @@ export default {
         position: relative;
 
         &.simple {
-          width: 1.72rem;
+          // width: 1.72rem;
 
           &:first-child {
             margin-bottom: -0.04rem !important;
@@ -1072,10 +1074,14 @@ export default {
 
           .team-t-title-w {
             font-size: 0.12rem;
-            // height: 0.3rem;
+            display: block;
             -webkit-line-clamp: 2;
-            display: flex;
+            // display: flex;
             flex-direction: column-reverse;
+            overflow: hidden;
+            width: 1.6rem;
+            text-overflow: ellipsis;
+            flex-wrap: nowrap;
             &.is-handicap {
               font-weight: bold;
             }
@@ -1085,7 +1091,7 @@ export default {
         .score-punish {
           width: 0.12rem;
           height: 0.14rem;
-          color: var(--q-gb-t-c-18);
+          color: var(--q-gb-t-c-20);
           flex-shrink: 0;
           background: var(--q-color-com-bg-color-43);
           display: flex;
@@ -1469,13 +1475,14 @@ export default {
       // flex: 0 0 calc(33.33% - .02rem);
       width: .6rem;
       height: .32rem;
-      background: var(--q-gb-bg-c-15) !important;
+      background: var(--q-gb-bg-c-28) !important;
       border-radius: .04rem;
       margin-bottom: .02rem;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: .12rem;
+      color: var(--q-gb-t-c-18);
       .dmrr-item-fail {
         color: var(--q-match-fs-color-13);
       }

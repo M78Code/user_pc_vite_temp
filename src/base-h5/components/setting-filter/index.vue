@@ -67,7 +67,8 @@
 </template>
 <script setup>
 import { useRouter, useRoute } from "vue-router";
-import { useMittEmit, MITT_TYPES,SessionStorage,UserCtr,LOCAL_PROJECT_FILE_PREFIX, project_name } from "src/output/index.js";
+import {  useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import {SessionStorage,UserCtr,LOCAL_PROJECT_FILE_PREFIX, project_name } from "src/output/index.js";
 import {ref,computed,nextTick} from "vue";
 import Switch from "./components/switch.vue";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
@@ -257,15 +258,19 @@ const activity_handle = item => {
   //   border-radius: 0.16rem 0.16rem 0 0;
   position: absolute;
   bottom: 0;
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-23);
   backdrop-filter: blur(5px);
   z-index: 99;
 
   .setting-top.setting-item {
-    border-bottom: 0.08rem solid var(--q-gb-t-c-8);
+    border-bottom: 0.08rem solid var(--q-gb-bg-c-21);
     padding: 0.14rem;
     margin: 0;
     height: 0.5rem;
+    background: var(--q-gb-bg-c-25);
+  }
+  .setting-list{
+    background: var(--q-gb-bg-c-25);
   }
 
   .setting-item {
@@ -275,16 +280,16 @@ const activity_handle = item => {
     font-size: 0.14rem;
     padding: 0.14rem 0;
     margin: 0 0.14rem;
-
+    // background: var(--q-gb-bg-c-25);
     &.border {
-      border-bottom: 1px solid var(--q-gb-bd-c-4);
+      border-bottom: 1px solid var(--q-gb-bd-c-6);
     }
 
     .title {
-      color: var(--q-gb-t-c-20);
+      color: var(--q-gb-t-c-18);
 
       span {
-        color: var(--q-gb-bd-c-4);
+        color: var(--q-gb-t-c-19);
       }
     }
 
@@ -310,8 +315,9 @@ const activity_handle = item => {
     padding: 0.13rem;
     align-items: center;
     justify-content: center;
-    border-top: 0.08rem solid var(--q-gb-t-c-8);
-
+    border-top: 0.08rem solid var(--q-gb-bg-c-21);
+    background: var(--q-gb-bg-c-25);
+    color: var(--q-gb-t-c-18);
     span {
       font-size: 0.18rem;
     }

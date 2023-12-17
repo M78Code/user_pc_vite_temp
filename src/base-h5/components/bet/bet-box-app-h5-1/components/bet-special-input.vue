@@ -8,16 +8,16 @@
     </div>
     <div class="bet_single_detail f-b-c">
       <div>{{ items.count }}x</div>
-      <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
+      <div class="content-b" :class="{ 'red-color': !money_ok }" @click="input_click">
         
         <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
-        <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
         <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ items.min_money }}-{{ items.max_money }}</span>
+        <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
       </div>
     </div>
   </div>
-  <div class="f-b-c" v-if="items.show_quick">
-    <div>预计可赢：<span> {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} </span>RMB</div>
+  <div class="toltal f-b-c" v-if="items.show_quick">
+    <div>预计可赢：<span class="total-money"> {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} </span>RMB</div>
     <div>小计：{{items.bet_amount}}RMB</div>
   </div>
   
@@ -34,6 +34,7 @@ import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 const props = defineProps({
     items:{},
+    index:{}
 })
 
 let flicker_timer = null
@@ -65,15 +66,15 @@ onMounted(() => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = (new_money) => {
-  console.error('change_money_handle-single',new_money)
-  if( new_money.money*1 > props.items.max_money *1){
-    ref_data.money =  props.items.max_money
-  }else{
-    ref_data.money = new_money.money
+  if(props.items.id == new_money.params.id){
+    if( new_money.money*1 > props.items.max_money *1){
+      ref_data.money =  props.items.max_money
+    }else{
+      ref_data.money = new_money.money
+    }
+    BetData.set_bet_amount(ref_data.money)
+    set_special_series('edit',new_money.params.id)
   }
-  BetData.set_bet_amount(ref_data.money)
-  set_special_series('edit',new_money.params.id)
-  set_special_series('edit')
 }
 
 onUnmounted(() => {
@@ -106,7 +107,6 @@ const set_special_series = (money,ty_id) => {
   list.filter(item => {
     item.show_quick = false
       // 显示指定投注项的快捷金额按钮
-      console.error('ssssset_special_seriesss',id)
     if(item.id == id){
         item.show_quick = true
         if(money == 'edit'){
@@ -145,24 +145,35 @@ const set_special_series = (money,ty_id) => {
     font-size: .16rem;
     background: var(--q-gb-bg-c-22);
     border-radius: 0.12rem;
-    border-radius: 10px;
     height: 0.38rem;
-    margin-top: 0.1rem;
+    margin-top: 0.04rem;
     //margin-left: .08rem;
     padding: 0 .12rem;
   }
-
+  .toltal {
+    border-top: 1px solid var(--q-gb-bg-c-18);
+    background: var(--q-gb-bg-c-22);
+    border-radius: 0 0 .12rem .12rem;
+    height: 0.24rem;
+    line-height: .24rem;
+    color: var(--q-gb-t-c-11);
+    padding: 0 .12rem;
+    .total-money {
+      color: #F53F3F;
+    }
+  }
   .bet_single_detail{
     //margin-top: 0.08rem;
     height: 0.44rem;
     width: 1.68rem;
+    font-size: 0.14rem;
   }
 
   /* ************** 右边内容 ************** -S */
   .content-b {
-    height: 0.3rem;
+    height: 0.32rem;
     width: 1.50rem;
-    border-radius: 4px;
+    border-radius: 0.08rem;
     font-size: 0.16rem;
     overflow: hidden;
     //padding-left: 0.1rem;
@@ -174,7 +185,8 @@ const set_special_series = (money,ty_id) => {
     background: var(--q-gb-bg-c-15);
     margin-left: 0.05rem;
     .limit-txt {
-      color: #C9CDDB;
+      color: var(--q-gb-t-c-5);
+      font-size: 0.16rem;
     }
   }
   /* ************** 右边内容 ************** -E */
@@ -191,7 +203,7 @@ const set_special_series = (money,ty_id) => {
     width: 0.02rem;
     height: 0.16rem;
     margin: 0 1px;
-    background: var(--q-gb-bg-c-1);
+    background: var(--q-gb-t-c-1);
     &.money-span3{
       background: transparent;
     }

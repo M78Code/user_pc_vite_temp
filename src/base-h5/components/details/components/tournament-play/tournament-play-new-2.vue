@@ -105,9 +105,9 @@
           </div>
         </q-slide-transition>
       </template>
-      <template v-else-if="item_data.hotName" :class="[judage_hshow != 'Yes'?'show_border_r':'hide_border_r' ]">
+      <template v-else-if="item_data.hotName">
         <q-slide-transition :duration="200">
-          <div v-show="judage_hshow == 'Yes'">
+          <div v-show="judage_hshow == 'Yes'" :class="[judage_hshow != 'Yes'?'show_border_r':'hide_border_r' ]">
             <!-- 模板id=8 --用于虚拟体育-热门 -->
             <temp8
                 v-show="item_data.hotName"
@@ -810,7 +810,7 @@ export default defineComponent({
 }
 .tournament-play {
   &.tournament-play-outer {
-    background: var(--q-gb-bg-c-19) !important;
+    background: var(--q-gb-bg-c-25) !important;
     .play-name-outer-wrapper {
       padding: 0 0.05rem 0.04rem 0.05rem;
     }
@@ -821,9 +821,10 @@ export default defineComponent({
     }
     .hide_border_r{
       :deep(.hairline-border,), :deep(.item-wrap) {
-      background-color: #F8F9FA !important;
+      background-color: var(--q-gb-bg-c-29) !important;
       border-radius:0 0 0.04rem 0.04rem!important;
       border-top:0.5px solid #F2F2F6;
+      color:var(--q-gb-bg-c-18)
       }
     }
     .play-name {
@@ -831,7 +832,7 @@ export default defineComponent({
       min-width: 3.55rem;
 
       padding: 0 0.12rem 0 0.18rem;
-      background:#F8F9FA !important;
+      background:var(--q-gb-bg-c-29) !important;
       border-radius: 0.04rem;
 
       &::after {
@@ -880,7 +881,7 @@ export default defineComponent({
  /* 卡片边距背景色 */
  :deep(.mg-4-bg){
   margin:0.04rem;
-  background:var(--q-gb-bg-c-15) !important;
+  background:  !important;
   border-radius: 4px;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
 }

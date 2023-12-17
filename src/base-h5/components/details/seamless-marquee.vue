@@ -135,6 +135,7 @@ const move = (text_width, scroll) => {
     position: absolute;
     opacity: 0;
     top: 0;
+    color: var(--q-gb-t-c-18);
   }
 }
 </style>

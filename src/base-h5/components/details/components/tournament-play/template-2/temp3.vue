@@ -159,12 +159,13 @@ export default defineComponent({
 
   .item2 {
     flex: 1;
+    background: #F2F2F6;
   }
 
   .item-wrap {
     display: flex;
     flex-wrap: wrap;
-
+    gap: 0.1rem;
     min-height: 0.32rem;
     height: auto;
     border-radius: 4px;
@@ -190,7 +191,7 @@ export default defineComponent({
     width: 100%;
     height: 0.52rem;
     line-height: 0.52rem;
-    background:var(--q-gb-bg-c-15) !important;
+    background:var(--q-gb-bg-c-28) !important;
     padding: 0 0.15rem;
     display: flex;
     justify-content: center;

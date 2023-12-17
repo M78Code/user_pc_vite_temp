@@ -89,6 +89,9 @@ import { format_total_score } from 'src/output/index.js'
 import { useRoute, useRouter } from "vue-router"
 let route = useRoute()
 let router = useRouter()
+  // 延时器
+let  timer1_ = null;
+let  timer2_ = null;
 export default {
   name: "result_details_dialog",
   props:['detail_data','math_list_data'],
@@ -97,9 +100,7 @@ export default {
     }
   },
   created () {
-    // 延时器
-    timer1_ = null;
-    timer2_ = null;
+  
   },
   components: {
     "dialog-header": dialog_header,
@@ -167,9 +168,9 @@ export default {
   },
   mounted () {
     // 解决三星手机图片不出来问题
-    $forceUpdate();
+    this.$forceUpdate();
     clearInterval(timer2_);
-    timer2_ = setInterval($forceUpdate, 2000);
+    timer2_ = setInterval(this.$forceUpdate, 2000);
   },
   beforeDestroy () {
     clearInterval(timer2_)

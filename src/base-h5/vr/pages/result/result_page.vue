@@ -247,7 +247,7 @@ export default {
   height: 0.48rem;
   line-height: 0.48rem;
   border-radius: 4px;
-  background: #F2F2F6;
+  background: var(--q-gb-bg-c-18);
 }
 
 /*************** 赛马名称结束 *************** -E*/
@@ -296,7 +296,7 @@ export default {
   height: 0.2rem;
   line-height: 0.2rem;
   text-align: center;
-  background: var(--q-color-com-img-bg-20) no-repeat 0 0 / 100%;
+  background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png")  no-repeat 0 0 / 100%;
   --per: -0.3rem;
 }
 

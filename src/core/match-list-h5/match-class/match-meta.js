@@ -16,7 +16,6 @@ import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive
 import { PageSourceData, GlobalAccessConfig, ServerTime } from "src/output/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import { useMittEmit, MITT_TYPES, project_name} from "src/output/module/constant-utils.js"
-
 import { 
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
@@ -74,7 +73,6 @@ class MatchMeta {
    * @param { Number } md 时间
    */
   async set_origin_match_data(params = {}) {
-    console.log(222222222222222)
     const { md = '', is_match = true } = params
     this.init()
     let menu_lv_v1 = ''
@@ -522,8 +520,9 @@ class MatchMeta {
   * @description 赛事详情精选赛事列表
   */
   async get_details_result_match() {
+    console.log(MenuData.menu_csid,'MenuData.menu_csid');
      const res = await api_analysis.get_result_match_care_list({
-      sportId: 1,
+      sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
       cuid: UserCtr.get_uid(),
      })
      if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
@@ -1217,21 +1216,25 @@ class MatchMeta {
    * @description 删除赛事不能防抖， 删除赛事会同时同事多个 C102 , 但只有一个状态 为 999 
    */
   handle_remove_match (data) {
+
     // mhs === 2  || mmp === 999 为关盘 则移除赛事
- 
     const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
+
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
-      // const item = this.match_mids.find(t => t === mid) match_mids是可视区域id
+      // match_mids是可视区域id
+      const active_index = this.match_mids.findIndex(t => t === mid) 
+
       const index = this.complete_matchs.findIndex(t => t.mid == mid)
-      if (index>-1) {
-        const _index = this.match_mids.findIndex(t => t === mid)
-        this.match_mids.splice(_index, 1)
-        this.complete_matchs.splice(index, 1)
+      index > -1 && this.complete_matchs.splice(index, 1)
+
+      if (active_index > -1) {
+        this.match_mids.splice(active_index, 1)
         // 复刻版 新手版 使用的是 observer-wrapper 组件模式 不需要重新计算
         if (project_name == 'app-h5' && UserCtr.standard_edition == 1) return;
 
         // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
         if (this.debounce_timer) return
+
         this.debounce_timer = setTimeout(() => {
           this.is_ws_trigger = true
           this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
@@ -1261,10 +1264,10 @@ class MatchMeta {
     }
     // 调用 mids  接口
     if (['C303', 'C114'].includes(cmd)) {
-      const { mid = '' } = data
-      if (this.match_mids.includes(mid)) this.get_match_base_hps_by_mids({})
+      const { mid = '' } = data.cd || {};
+      let _mids = String(mid).split(',')
+      if (_mids.some((_mid)=>this.match_mids.includes(_mid))) this.get_match_base_hps_by_mids({})
     }
-
   }
   /**
    * @description 获取赛事赔率
@@ -1273,7 +1276,7 @@ class MatchMeta {
   async get_match_base_hps_by_mids ({ mids = [], warehouse, is_again = true }) {
     try {
       // 赛果页不需要获取赔率
-      if (MenuData.is_results()) return
+      if (MenuData.is_results() && PageSourceData.route_name == 'matchResults') return
       if (this.match_mids.length < 1 && mids.length < 1) return
       const match_mids = this.match_mids.join(',')
       // 冠军不需要调用
@@ -1287,6 +1290,13 @@ class MatchMeta {
         euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
         device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
       };
+      //如果是赛果详情精选列表
+      if(PageSourceData.route_name == 'match_result'){
+        delete params.euid;
+        params.versionNewStatus = 'matcheHandpick';
+        params.sort = 1;
+      }
+
       let res = ''
       // 赛果
       if (MenuData.is_esports()) {

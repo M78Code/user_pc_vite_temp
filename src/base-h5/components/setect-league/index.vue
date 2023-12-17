@@ -37,6 +37,7 @@
     </div>
     <!-- <div class="sl-filter-content"> -->
     <match-filter ref="matchRef" :search_val="search_val"></match-filter>
+    <!-- <match-filter-old ref="matchRefOld" :search_val="search_val"></match-filter-old> -->
     <!-- </div> -->
   </div>
 </template>
@@ -44,6 +45,7 @@
 import { i18n_t, compute_css_obj } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import matchFilter from "src/base-h5/components/match-filter/index.vue";
+import matchFilterOld from "src/base-h5/components/match-filter/index_old.vue";
 import { reactive, toRefs, ref } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/output/index.js";
 import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from "src/output/index.js";
@@ -110,7 +112,7 @@ defineProps({});
   border-radius: 0.16rem 0.16rem 0 0;
   position: absolute;
   bottom: 0;
-  background: var(--q-gb-bg-c-15) !important;
+  background: var(--q-gb-bg-c-23) ;
   backdrop-filter: blur(5px);
   .sl-header {
     display: flex;
@@ -119,11 +121,11 @@ defineProps({});
     align-items: baseline;
     .sl-title {
       font-size: 0.18rem;
+      color: var(--q-gb-t-c-18);
     }
     .sl-btn {
       font-size: 0.16rem;
       color: var(--q-gb-t-c-1);
-      color: #74C4FF;
     }
   }
   .sl-search {
@@ -132,7 +134,7 @@ defineProps({});
     .sl-input-content {
       height: 0.4rem;
       width: 100%;
-      background: #f2f2f6;
+      background: var(--q-gb-bg-c-18);
       border-radius: 0.4rem;
       padding: 0 0.42rem;
       display: flex;
@@ -158,14 +160,14 @@ defineProps({});
         }
       }
       .sl-input {
-        background:#f2f2f6;
+        background: transparent;
         outline: none;
         border: none;
         width: 100%;
         caret-color: #179CFF;
         font-size: 0.14rem;
         &::placeholder{
-          color: #C9CDDB;
+          color: var(--q-gb-t-c-16);
         }
       }
     }

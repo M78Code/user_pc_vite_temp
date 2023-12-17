@@ -34,14 +34,13 @@
                     <!-- (开盘_mhs=0或者锁盘_mhs=11 -->
                     <div v-if="append_single._mhs == 0 || append_single._mhs == 11" style="flex:1;">
                       <template v-if="append_single._hs == 0 || append_single._hs == 11">
-                        <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_fun(append_single)"
-                               :class="[BetData.bet_oid_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
-                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':append_single.show_bgc}]">  
+                               :class="[BetData.bet_oid_list.includes(append_single.oid)?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
+                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':BetData.bet_oid_list.includes(append_single.oid)}]">  
                               <div class="single-name">
                                 <!-- <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
-                                <span :class="BetData.bet_oid_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_14">
+                                <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_14">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -75,7 +74,7 @@
                         <template v-else>
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="bet-item-ky-container">  
-                              <div class="single-name" v-show="get_detail_data.csid != 1">111
+                              <div class="single-name" v-show="get_detail_data.csid != 1">
                                 <!-- <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
                                 <span class="fz_14 night-style">
                                 {{append_single.on}}
@@ -145,11 +144,11 @@
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_fun(append_single)"
-                               :class="[BetData.bet_oid_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
-                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':append_single.show_bgc}]">
+                               :class="[BetData.bet_oid_list.includes(append_single.oid)?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
+                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':BetData.bet_oid_list.includes(append_single.oid)}]" >
                               <div class="single-name">
                                 <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
-                                <span :class="BetData.bet_oid_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_14">
+                                <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_14">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -650,9 +649,9 @@ export default defineComponent({
       margin: 0.04rem;
       text-align: center;
       font-size: 0.14rem;
-      background:var(--q-gb-bg-c-15);
+      background:var(--q-gb-bg-c-28);
       border-radius: 4px;
-      color:#7981A4;
+      color:var(--q-gb-t-c-10);
       width: 0.85rem;
       box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     }
@@ -689,11 +688,12 @@ export default defineComponent({
 .bet-item-ky-container {
   display:flex;
   justify-content:center;
-  background:var(--q-gb-bg-c-15);
+  background:var(--q-gb-bg-c-28);
   border-radius: 4px;
   align-items:center;
   padding:0 0.04rem;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+  color: var(--q-gb-t-c-18);
 }
 .bet-card-play-container{
   height:0.48rem

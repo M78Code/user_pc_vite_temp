@@ -280,7 +280,7 @@ function key_down(event) {
             text-align: center;
 						position: absolute;
 						right: 0;
-						background-color: #fff;
+						background-color: var(--q-gb-bg-c-27);
             img {
                 width: 0.18rem;
                 height: 0.18rem;
@@ -296,7 +296,7 @@ function key_down(event) {
 	flex: 1 1;
   font-size: 12px;
 	font-family: PingFang SC;
-	color: var(--q-gb-t-c-19);
+	color: var(--q-gb-t-c-17);
 	.search-input {
 		width: 90%;
 		border-radius: .25rem;
@@ -304,9 +304,10 @@ function key_down(event) {
 		border: 1px solid var(--q-gb-bg-c-18);
 		height: 0.25rem;
 		padding-left: 0.12rem;
+        background: var(--q-gb-bg-c-28);
 	}
 	::placeholder {
-		color: var(--q-gb-t-c-19);
+		color: var(--q-gb-t-c-16);
 	}
 	span {
     margin-left: 0.12rem;

@@ -34,7 +34,6 @@
       </div>
 </template>
 <script setup>
-import { useRouter } from 'vue-router'
 import { ref,reactive,onMounted,onUnmounted,computed ,nextTick } from "vue";
 // import lodash_ from "lodash";
 // import BaseData from "src/core/base-data/base-data.js";
@@ -44,7 +43,6 @@ import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
 const ref_data = reactive({
     emit_lsit:{}
 })
-const router = useRouter()
 const menu_show_id = reactive([0,300,50000,2000,28]);//全部 vr 收藏 电竞显示
 const scrollTab = ref(null);
 const props = defineProps({
@@ -73,10 +71,10 @@ const emits = defineEmits(['changeList','changeMenu'])
 */
 function set_menu_lv2(item = {},event) {
   // vr跳转
-  if(item.mi == 300){
-    router.push('/virtual');
-    return;
-  }
+  // if(item.mi == 300){
+  //   router.push('/virtual');
+  //   return;
+  // }
   if (props.current_mi === item.mi) return
   // if (item.mi === 2000) router.push('/esports')
   event = event || scrollTab.value[0];
@@ -184,14 +182,14 @@ onUnmounted(()=>{
 
         .sport-menu-item {
           min-width: 0.52rem;
+          position: relative;
           height: 100%;
           flex-shrink: 0;
-          position:relative;
-          background-color: var(--q-gb-bg-c-15);
+          background-color: var(--q-gb-bg-c-27);
           color: var(--q-gb-t-c-19);
           &.current {
             //color: var(--q-gb-bd-c-2);
-            color: var(--q-gb-t-c-20);
+            color: var(--q-gb-t-c-18);
             position: -webkit-sticky;
             position: sticky;
             right: 0;

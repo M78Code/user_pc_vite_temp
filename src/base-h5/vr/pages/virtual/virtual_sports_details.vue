@@ -33,7 +33,8 @@
           </virtual-sports-stage>
         </div>
         <!--历史战绩，投注，排行榜tab键-->
-        <virtual-sports-detail-tab @virtual_play_height="virtual_play_height" @change_tab="change_tab" />
+        <virtual-sports-detail-tab :current_match="current_match"
+         @virtual_play_height="virtual_play_height" @change_tab="change_tab" />
         <div class="debug-test" v-if="show_debug">
           {{`batchNo:${current_batch.batchNo}-csid:${sub_menuid}-mid:${current_match.mid}`}}<br />
           {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
@@ -208,8 +209,8 @@ export default {
     //   'set_is_show_details_analyse'
     // ]),
     set_menu_type(){},
-    set_goto_detail_matchid(){ return VR_CTR.set_goto_detail_matchid() },
-    set_detail_data(){},
+    set_goto_detail_matchid(data){ return VR_CTR.set_goto_detail_matchid(data) },
+    set_detail_data(data){ return VR_CTR.set_detail_data(data) },
     set_current_sub_menuid(data){return VR_CTR.set_current_sub_menuid(data)},
     set_curr_sub_menu_type(data){ return VR_CTR.set_curr_sub_menu_type(data) },
     set_current_gotodetail_match(data){ return VR_CTR.set_current_gotodetail_match(data) },

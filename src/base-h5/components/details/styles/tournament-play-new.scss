@@ -353,7 +353,7 @@
       padding: 0 0.1rem 0.04rem 0.1rem;
     }
     :deep(.hairline-border,), :deep(.item-wrap) {
-      background-color: #ffffff;
+      // background-color: #ffffff;
     }
     .play-name {
       position: relative;
@@ -411,19 +411,20 @@
 
       .rad-style {
         position: relative;
-        background-color: var(--q-match-page-bg-color-107);
+        // background-color: var(--q-match-page-bg-color-107);
         overflow: initial;
       }
 
       .play-box {
         margin-bottom: 0;
+        color: var(--q-gb-t-c-19);
       }
 
       .play-box,
       .play-box-sty,
       .play-box-style {
         &.win {
-          background-color: var(--q-color-page-bg-color-14) !important;
+          // background-color: var(--q-color-page-bg-color-14) !important;
         }
         &.details-bg5 {
           background-color: #D1EBFF !important;
@@ -508,7 +509,7 @@
     }
 
     :deep(.temp0) {
-      background-color: transparent;
+      // background-color: var(--q-gb-bg-c-29);
 
       .bor-style {
         border-bottom: 0;
@@ -584,6 +585,7 @@
 
         flex: 0 0 auto;
         margin-right: 0.1rem;
+        color: var(--q-gb-t-c-19);
       }
 
       .is-like-bodan-play {
@@ -674,7 +676,7 @@
       .rad-style {
         border-radius: 0.08rem;
         overflow: hidden;
-        background-color: #F8F9FA;
+        // background-color: var(--q-gb-bg-c-28);
         ::after {
           border: 0;
         }

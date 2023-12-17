@@ -72,6 +72,9 @@ export default defineComponent({
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
     // }),
+    const sub_menu_type = computed(() => {
+      return props.csid;
+    });
     const get_cur_odd = computed(() => {
       return ""
     });
@@ -140,7 +143,8 @@ export default defineComponent({
       is_select,
       get_odds,
       go_to_fun,
-      play_obj
+      play_obj,
+      sub_menu_type
     }
   }
 })
@@ -165,7 +169,7 @@ export default defineComponent({
   white-space: nowrap;
   line-height: 0.52rem;
   margin-left: 0.08rem;
-
+  color: #303442;
   font-size: 0.14rem;
 }
 
@@ -198,7 +202,7 @@ export default defineComponent({
   text-align: center;
 
   margin-left: 0.12rem;
-  background: var(--q-color-com-img-bg-20) no-repeat 0 0 / 100%;
+  background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png")  no-repeat 0 0 / 100%;
   --per: -0.3rem;
 }
 

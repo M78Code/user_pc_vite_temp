@@ -43,7 +43,7 @@
           :class="[(' match-indent league')]">
           <div class="league-t-wrap right-border">
             <!-- 联赛收藏 -->
-            <template v-if="![3000, 900].includes(menu_type)" @click.stop="handle_league_collect">
+            <template v-if="![3000, 900].includes(menu_type)">
               <img v-if="!league_collect_state" class="favorited-icon"
                 src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt="" @click.stop="handle_league_collect" />
               <img v-if='league_collect_state' class="favorited-icon" src="/src/base-h5/assets/match-list/ico_fav_sel.png"
@@ -86,14 +86,14 @@
                   <!-- 动画状态大于-1时，显示动画按钮 i18n_t('match_info.animation')是国际化取值 -->
 
                   <!-- icon_click_animationUrl media_button_handle -->
-                  <img v-if="match.mvs > -1" class="" src='/src/base-h5/assets/match-list/ico_animate_nor.png'
+                  <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_animate_nor.png'
                     @click="media_button_handle_by_type(ButtonTypes.animationUrl)" />
                   <!-- 视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 -->
-                  <img v-if="match.mms > 1" class="live-icon-btn" src='/src/base-h5/assets/match-list/ico_live_nor.png'
+                  <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_live_nor.png'
                     @click="media_button_handle_by_type(ButtonTypes.muUrl)" />
                   <!--icon_click_muUrl  -->
                   <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
-                  <img v-if="match.lvs == 2" class="" src='/src/base-h5/assets/match-list/ico_liveshow_nor.png'
+                  <img :class="[match.lvs !== 2 && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_liveshow_nor.png'
                     @click="media_button_handle_by_type(ButtonTypes.lvs)" />
                   <!-- icon_click_lvs -->
                 </template>
@@ -196,10 +196,9 @@
           </div>
           <!--  新手版-赛事比分信息 -->
           <div class="match-score-info">
-            <div v-show="match?.ms != 0 && match?.csid != 1">
+            <template v-if="match?.ms != 0 && match?.csid != 1">
               <score-list :main_source="main_source" :match="match"></score-list>
-            </div>
-
+            </template>
           </div>
         </div>
       </div>
@@ -375,6 +374,13 @@ export default {
   
    
 <style scoped lang="scss">
+.iconGrayFillStyle {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  pointer-events: none;
+}
+
+
 /* ********赛事容器相关********** -S*/
 
 .counting-down-up-container {
@@ -915,6 +921,10 @@ export default {
         display: flex;
         justify-content: flex-end;
         align-items: center;
+      }
+      :deep(.score-se-inner2){
+        display: flex;
+        margin-left: -5px;
       }
     }
 

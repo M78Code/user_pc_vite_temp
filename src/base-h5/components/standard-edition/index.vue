@@ -95,14 +95,14 @@ function set_standard_edition(v) {
     }
 
     .btn {
-        background: #179CFF;
+        background: var(--q-gb-bg-c-13);
         text-align: center;
         margin: 16px auto 0;
         height: 36px;
         line-height: 36px;
         font-size: 14px;
         font-weight: 500;
-        color: #fff;
+        color: var(--q-gb-t-c-14);
         border-radius: 20px;
         width: 76px;
     }

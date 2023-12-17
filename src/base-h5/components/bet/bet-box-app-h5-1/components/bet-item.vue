@@ -4,40 +4,41 @@
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
         <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
             <div class="fw-s-s bet-left">
-                <div class="w-100 f-s-c  ">
+                <div class="w-100 f-s-c font14 ">
                     <span class="text-flow-none" v-html="items.handicap"></span> 
                 </div>
                 <div class="my-left">
                     <div class="w-100 handicap my-4">
                         <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bet_inplay") + ']'}}</span>
-                        <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}
+                        <span class="text-a1a text-flow-none mr-4 font400">{{ items.playName }}
                             <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                         </span>
                         <!-- 盘口 -->
                         <span class="text-a1a text-flow-none text-009 font400" v-if="only_win[items.sportId].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span> 
                         <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
                     </div>
-                    <div class="w-100 fon12 font400 ">{{ items.tid_name }}</div>
+                    <div class="w-100 fon12 font400 text-a1a-i">{{ items.tid_name }}</div>
                     <div class="w-100 fon12 font400 " v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
                     </div>
                 </div>
             </div>
+           
             <div class="fw-e-s bet-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                 <div class="f-c-c bet-money">
-                    <span class="font14 font700 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
-                        @{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}
+                    <span class="font14 font700 bet-odds-value f-c-c" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
+                       <span class="font14">@</span>{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}
                     </span>
 
                     <div class="show_img">
-                        <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
-                        <img v-if="items.red_green == 'green_down'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_down.png`" alt=""/>
+                        <img v-if="items.red_green == 'red_up'" :src="is_up_app" alt=""/>
+                        <img v-if="items.red_green == 'green_down'" :src="is_down_app" alt=""/>
                     </div>
                 </div>
             </div>
 
             <div class="fw-e-s bet-right bet-invalid" v-else>
                 <div class="bet-disabled">
-                    <span>{{ i18n_t('bet.bet_invalid') }}</span>
+                    <span>{{ i18n_t('bet.disabled') }}</span>
                 </div>
             </div>
 
@@ -58,11 +59,12 @@
 
 <script setup>
 
-import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney,only_win } from "src/output/index.js"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
-
+import { is_up_app, is_down_app } from 'src/base-h5/core/utils/local-image.js'
 import betSingleInput from "./bet-single-input.vue"
+import { only_win } from "src/core/constant/common/module/csid.js"
 
 const props = defineProps({
     items:{},
@@ -81,6 +83,9 @@ const set_delete = () => {
 </style>
 
 <style scoped lang="scss">
+.font22{
+    font-size: 0.2rem;
+}
 .bet-list {
    
     .bet-content {
@@ -152,24 +157,23 @@ const set_delete = () => {
                         font-size: 12px;
                         font-weight: 500;
                         letter-spacing: 0px;
-                        color: var(--q-gb-t-c-8);
+                        color: var(--q-gb-t-c-9);
                     }
                 }
             }
         }
 
         .bet-left {
-            width: 230px;
+            width: 2.70rem;
             .my-left{
                 padding-left: 0.1rem;
                 border-left: 2px solid var(--q-gb-bg-c-13);
                 margin-top: 0.06rem;
-                color: var(--q-gb-t-c-3);
+                color: var(--q-gb-t-c-11);
                 font-size: 0.12rem;
-                font-family: PingFang SC;
             }
             .text-a1a-i {
-                //color: var(--q-gb-t-c-5) !important;
+                margin: .04rem 0;
             }
         }
 
@@ -177,7 +181,6 @@ const set_delete = () => {
     }
 
     .bet-market{
-        font-family: DIN;
         font-size: 13px;
         font-weight: 500;
         line-height: 16px;
@@ -190,36 +193,34 @@ const set_delete = () => {
         overflow: hidden;
         white-space: nowrap;
         :deep(.ty-span) {
-            margin-left: 4px;
-            color: var(--q-gb-t-c-2);
+            margin-left: .04rem;
+            //color: var(--q-gb-t-c-2);
         }
     }
     .handicap{
-        max-width: 190px;
+        max-width: 1.90rem;
     }
     .text-flow-none{
         max-width: 84%;
-        line-height: 16px;
+        line-height: .16rem;
         word-wrap: break-word;
-        font-family: PingFang SC;
         :deep(.ty-span) {
-            margin-left: 4px;
-            color: var(--q-gb-t-c-2);
+            margin-left: .04rem;
+            //color: var(--q-gb-t-c-2);
         }
     }
     .bet-odds-value{
-        color: var(--q-gb-t-c-2);
-        margin-right: 7px;
-    }
-    .red-up{
-        color: var(--q-gb-t-c-7);
-    }
-    .green-down{
-        color: var(--q-gb-t-c-6);
+        margin-right: .02rem;
+        font-size: .22rem;
+        &.red-up{
+            color:#F53F3F;
+        }
+        &.green-down{
+            color: #00B42A
+        }
     }
     .show_img{
-        width:12px;
-        padding: 3px;
+        width: .10rem;
         img{
             width: 100%;
             height: 100%;

@@ -42,9 +42,8 @@ import {
   watch,
   nextTick
 } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute,useRouter } from "vue-router";
 import lodash_ from "lodash";
-
 import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js";
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
@@ -61,6 +60,7 @@ import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 
 const is_first = ref(true)
 const route = useRoute();
+const router = useRouter() 
 const inner_height = window.innerHeight;  // 视口高度
 const select_dialog = ref(false);//暂时筛选窗口dJ
 const dateTabMenu = ref(null);//时间dom
@@ -92,7 +92,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   const dataList = reactive({
     3: dateTabList(new Date()),
     6: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date().getTime()}),
-    2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date().getTime()})
+    2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"所有日期",val:''})
   });
 
   const ref_data = reactive({
@@ -119,55 +119,52 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   }
   // 设置滑动菜单的选中id
   const set_scroll_current = (val,type) => {
-    // 设置菜单属性
-    if([300,2000].includes(+val.mi)){
-      // 设置 对应菜单的数据
-      switch(+val.mi){
-        case 300:
-          ref_data.scroll_data_list = MenuData.get_menu_lvmi_special_list(val.mi)
-          break
-
-        case 2000:
-          ref_data.scroll_data_list = [];
-          MenuData.set_current_lv1_menu(2000);
-          // ref_data.scroll_data_list = BaseData.dianjing_sublist
-          nextTick(()=>{
-            const index = type && MenuData.data_tab_index?MenuData.data_tab_index:0;
-            dJdateTabMenu.value.set_active_val();
-            dJdateTabMenu.value.changeTabMenu(BaseData.dianjing_sublist[index],index,'',type);
-          })
-          break  
-        
-        // case 50000:
-        //   val.title = '我的收藏'
-        //   let menu_list_res = MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i)
-        //   const all_ct = menu_list_res.map((item)=>{return item.ct||0}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
-        //   menu_list_res.unshift({mi:0,btn:1, ct:all_ct,title:"全部"})
-        //   ref_data.scroll_data_list = menu_list_res
+    switch (+val.mi) {
+      case 2000:
+        ref_data.scroll_data_list = [];
+        MenuData.set_current_lv1_menu(2000);
+        // ref_data.scroll_data_list = BaseData.dianjing_sublist
+        nextTick(()=>{
+          const index = type && MenuData.data_tab_index?MenuData.data_tab_index:0;
+          dJdateTabMenu.value.set_active_val();
+          dJdateTabMenu.value.changeTabMenu(BaseData.dianjing_sublist[index],index,'',type);
+        })
+        // 设置vr /收藏 电竞 头信息
+        MenuData.set_top_menu_title(val)
+        let obj = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
+        // 设置选中菜单的id
+        ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
+        // 设置二级菜单 
+        !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj)
+        set_menu_mi_change_get_api_data()
+        break;
+      case 300:
+      // ref_data.scroll_data_list = MenuData.get_menu_lvmi_special_list(val.mi)
+        router.push('/virtual');
+        break;
+      case 50000: //收藏
+          ////////////////////////////////////
+          // val.title = '我的收藏'
+          // let menu_list_res = MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i)
+          // const all_ct = menu_list_res.map((item)=>{return item.ct||0}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
+          // menu_list_res.unshift({mi:0,btn:1, ct:all_ct,title:"全部"})
+          // ref_data.scroll_data_list = menu_list_res
           
-        //   MenuData.set_collect_list(menu_list_res)
-        //   MenuData.set_collect_menu_type(50000)
-        //   break  
-      }
-
-      // 设置vr /收藏 电竞 头信息
-      MenuData.set_top_menu_title(val)
-      // 清空一级菜单显示 用于后续更新
-      // if (![50000].includes(+val.mi)) MenuData.set_current_lv1_menu('');
-     
-      let obj = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
-      // 设置选中菜单的id
-      ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
-      // 设置二级菜单 
-      !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj)
-    }else{
-      ref_data.current_mi = val.mi
-      // 设置二级菜单 
-      MenuData.set_current_lv_2_menu_i(val)
+          // MenuData.set_collect_list(menu_list_res)
+          // MenuData.set_collect_menu_type(50000)
+          ref_data.current_mi = val.mi;
+          MenuData.set_current_lv_2_menu_i(val);
+          set_menu_mi_change_get_api_data()
+        break  
+      default:
+          ref_data.current_mi = val.mi
+        // 设置二级菜单 
+          MenuData.set_current_lv_2_menu_i(val)
+          set_menu_mi_change_get_api_data()
+        break;
     }
-    
     // 收藏页 不调用 元数据逻辑
-    set_menu_mi_change_get_api_data()
+    // set_menu_mi_change_get_api_data()
   }
   /**
    * 
@@ -257,24 +254,27 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
   // 菜单变化页面请求数据
   const set_menu_mi_change_get_api_data = () => {
+    // 收藏
+    if(MenuData.is_collect()){
+      return MatchMeta.get_collect_match()
+    }
     // 今日 / 滚球 早盘 串关 
     if([1,2,3,6].includes(MenuData.current_lv_1_menu_mi.value)){
       if (MenuData.top_menu_title.mi !== 2000) handle_match_render_data()
+      return;
     }
     // 冠军
-    if(MenuData.current_lv_1_menu_mi.value == 400){
-      MatchMeta.get_champion_match()
+    if(MenuData.is_kemp_mi()){
+      return MatchMeta.get_champion_match();
     }
     // 电竞
-    if(MenuData.top_menu_title.mi == 2000){
+    if(MenuData.is_esports()){
       const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
       // 初始进入会调多次接口
-      if (csid) MatchMeta.get_esports_match()
+      if (csid) MatchMeta.get_esports_match();
+      return;
     }
-    // // 收藏
-    // if(MenuData.top_menu_title.mi == 50000){
-    //   MatchMeta.get_collect_match()
-    // }
+    
   }
   /**
    * @description 处理赛事列表渲染数据

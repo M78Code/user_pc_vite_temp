@@ -138,7 +138,6 @@ const get_balance = () => {
     justify-content: center;
   }
   .yb-left-title{
-    font-family: PingFang SC;
     font-size: 16px;
     font-weight: 500;
     color: rgba(48, 52, 66, 1);
