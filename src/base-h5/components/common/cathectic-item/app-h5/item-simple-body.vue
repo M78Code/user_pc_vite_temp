@@ -105,6 +105,7 @@ template {
 }
 .item-body {
   padding: 0.12rem;
+  color: var(--q-gb-t-c-18);
   .body-title {
     display: flex;
     justify-content: space-around;

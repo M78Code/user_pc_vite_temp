@@ -159,14 +159,16 @@ export const category_info = (category_arr=[]) => {
   });
   // 置顶列表
   const match_list_new = () => {
+    match_id.value = component_data.matchInfoCtr.mid?component_data.matchInfoCtr.mid:match_id.value
     // TODO: 还未调试待修改
-    match_list_new_data.value = MatchDataWarehouseInstance.value.listSortNew(route.params.mid);
+    match_list_new_data.value = MatchDataWarehouseInstance.value.listSortNew(match_id.value);
   };
   // 非置顶列表
   const match_list_normal = () => {
+     match_id.value = component_data.matchInfoCtr.mid?component_data.matchInfoCtr.mid:match_id.value
     // return component_data.matchInfoCtr.listSortNormal();
     // match_list_normal_data.value = lodash.get(MatchDataWarehouseInstance.value, `list_to_obj.mid_obj[${route.params.mid}_].odds_info`);
-    match_list_normal_data.value = MatchDataWarehouseInstance.value.listSortNormal(route.params.mid);
+    match_list_normal_data.value = MatchDataWarehouseInstance.value.listSortNormal(match_id.value);
   };
   let message_fun = null
   onMounted(() => {
@@ -325,6 +327,8 @@ export const category_info = (category_arr=[]) => {
    * @returns {Promise<void>}
    */
   const initEvent = async (to_refresh, init_req) => {
+    match_id.value = component_data.matchInfoCtr.mid?component_data.matchInfoCtr.mid:match_id.value
+
     // console.error("初始化方法");
     if (to_refresh) {
       component_data.to_refresh = to_refresh;
@@ -480,7 +484,6 @@ export const category_info = (category_arr=[]) => {
       details_data_cache[`${match_id.value}-${get_details_item.value}`] = temp;
       SessionStorage.set("DETAILS_DATA_CACHE", details_data_cache)
       // 切换tab时变更mid_obj里面的odds_info对象数据
-      console.log(temp,'temp');
       MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(params.mid) ,temp)
       // set_details_data_cache(details_data_cache);
       

@@ -127,6 +127,10 @@ class MenuData {
       is_results_kemp:val
     })
   }
+  get_results_kemp(){
+    return this.is_results_kemp
+  }
+  
   // 根据菜单id获取下级菜单id 二级菜单
   // mid 顶级菜单id
   get_menu_lvmi_list(mid){

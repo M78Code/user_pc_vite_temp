@@ -204,7 +204,7 @@ onUnmounted(() => {
     display: flex;
     font-size: 20px;
     font-weight: 700;
-    color: var(--q-gb-t-c-20);
+    color: var(--q-gb-t-c-18);
     font-family: Akrobat;
 }
 .nonebox4-first-right-window-img {
