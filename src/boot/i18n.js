@@ -40,7 +40,6 @@ const map_lang = {
 const PROJECT_NAME = BUILDIN_CONFIG.PROJECT_NAME
 const IS_PC = PROJECT_NAME.includes('pc')
 
-
 let browser_lang = String(navigator.language).slice(0, 2) //获取浏览器语言
 browser_lang = map_lang[browser_lang] ? browser_lang : 'en' //兜底 如果url带语言就是url语言  浏览器语言存在就是浏览器语言 不然就默认en英语
 

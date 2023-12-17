@@ -81,7 +81,7 @@ let handler_func = null
 
 onMounted(() => {
 
-  BaseData.is_emit && MatchMeta.set_origin_match_data()
+  if (BaseData.is_emit && !is_kemp.value) MatchMeta.set_origin_match_data()
 
   // 接口请求防抖
   handler_func = lodash.debounce(({ cmd, data }) => {

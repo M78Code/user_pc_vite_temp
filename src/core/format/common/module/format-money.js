@@ -123,6 +123,9 @@ export const formatMoney = function (num,bit = 2){
             num1 = num1 + result;
         }
         let str = num.includes(".") ? num1 + "." + num2 : num1
+        if(str == 0){
+          str = '0.00'
+        }
         return str
     } catch (error) {
         console.error(error);

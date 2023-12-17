@@ -5,7 +5,7 @@
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1">
                     <span class="text-flow-none">{{ items.playOptionName}}</span> 
-                    <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
+                    <span class="bet-market mx-4 text-ff7">{{ items.marketValues }}</span>
                 </div>
                 <div class="w-100 my-4">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
@@ -24,9 +24,6 @@
                 <div class="bet-odds">
                     <span class="font14 font700 mr-10">@{{ items.oddsValues }}</span>
                 </div>
-                <div class="bet-loading mr-10" v-if="items.orderStatusCode == 2">投注中</div>
-                <div class="bet-failure mr-10" v-if="items.orderStatusCode == 0">投注失败</div>
-                <div class="bet-success mr-10" v-if="items.orderStatusCode == 1">投注成功</div>
               
             </div>
             <div class="bet-delete bet-icon">
@@ -42,16 +39,23 @@
         </div>
 
         <div class="bet-result f-b-c" >
-            <div class="bet-result-info">
-                <span class="font12 font500 bet-returm mr-4">{{ i18n_t("bet.total_bet")}}</span>
-                <span class="font14 font500 bet-money ">{{ format_money2(mathJs.divide(items.betMoney,100)) }}</span>
-            </div>
-            <div class="bet-result-info">
-                <span class="font12 font400 bet-returm mr-4">{{ i18n_t("common.maxn_amount_val") }}</span>
-                <span class="font14 font500">{{ format_money2(mathJs.divide(items.maxWinMoney,100))}}</span>
-            </div>
+            <span class="font12 font500 bet-returm mr-4">投注金额</span>
+            
+            <span class="font14 font500">{{ format_money2(mathJs.divide(items.betMoney,100))}}</span>
         </div>
-      
+
+        <div class="bet-result f-b-c" >
+            <span class="font12 font500 bet-returm mr-4">可赢金额</span>
+            
+            <span class="font14 font500">{{ format_money2(mathJs.divide(items.maxWinMoney,100))}}</span>
+        </div>
+
+        <div class="bet-result f-b-c" >
+            <span class="font12 font500 bet-returm mr-4">注单号</span>
+            
+            <span class="font14 font500">{{ items.orderNo }}</span>
+        </div>
+
     </div>
 </template>
 
@@ -198,8 +202,8 @@ const props = defineProps({
 .bet-result{
     width: 100%;
     background: var(--q-gb-bg-c-15);    
-    padding: 0 20px;
-    height: 50px;
+    padding: 0 .2rem;
+    height: .22rem;
     .bet-result-info{
         color: var(--q-gb-t-c-5);
         .bet-money{
@@ -207,8 +211,8 @@ const props = defineProps({
         }
     }
     .icon_loading{
-        width: 12px;
-        height: 12px;
+        width: .12rem;
+        height: .12rem;
     }
 }
 </style>

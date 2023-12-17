@@ -218,10 +218,10 @@ function change(index) {
       if (data_ref.showActivity) {
         // 5秒后自动消失
         let time = 5;
-        data_ref.userBannerTimer = i18n_t("common.auto_close").replace("%s", time);
+        // data_ref.userBannerTimer = i18n_t("common.auto_close").replace("%s", time);
         let timer = setInterval(() => {
           time--;
-          data_ref.userBannerTimer = i18n_t("common.auto_close").replace("%s", time);
+        //   data_ref.userBannerTimer = i18n_t("common.auto_close").replace("%s", time);
           if (time == 0) {
             data_ref.showActivity = false;
             clearInterval(timer);
