@@ -92,7 +92,7 @@ const set_delete = () => {
         font-style: normal;
         position: relative;
         background: var(--q-gb-bg-c-22);
-        margin-top: .1rem;
+       // margin-top: .1rem;
         border-radius: 0.12rem;
         &.bet-disable{
             align-items: center;
@@ -158,6 +158,7 @@ const set_delete = () => {
                 margin-top: 0.06rem;
                 color: var(--q-gb-t-c-3);
                 font-size: 0.12rem;
+                font-family: PingFang SC;
             }
             .text-a1a-i {
                 //color: var(--q-gb-t-c-5) !important;
@@ -192,6 +193,7 @@ const set_delete = () => {
         max-width: 84%;
         line-height: 16px;
         word-wrap: break-word;
+        font-family: PingFang SC;
         :deep(.ty-span) {
             margin-left: 4px;
             color: var(--q-gb-t-c-2);
