@@ -252,6 +252,7 @@ class UserCtr {
     const old_theme = LocalStorage.get("theme") || sessionStorage.getItem("theme") || theme == 'day' ? 'theme02' : 'theme01';
     document.getElementById('ty-app').classList.replace(old_theme, theme)
     LocalStorage.set("theme", theme.value || theme)
+    LocalStorage.set("default-theme", theme.value || theme)
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
     // 设置主题

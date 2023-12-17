@@ -863,7 +863,7 @@ export default {
         overflow: hidden;
         border-radius: 0.02rem;
         margin-bottom: 0.02rem;
-        background-color: var(--q-gb-bg-c-18);
+        background-color: var(--q-gb-bg-c-28);
         :deep(.odd-column-item .odd-title){
           color: #AFB3C8;
         }

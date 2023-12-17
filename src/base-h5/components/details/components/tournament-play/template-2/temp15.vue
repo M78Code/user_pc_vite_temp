@@ -225,7 +225,7 @@ export default defineComponent({
     // border-bottom:1px solid  var(--q-gb-bd-c-7);
     height: 0.48rem;
     text-align: center;
-    background:var(--q-gb-bg-c-15);
+    background:var(--q-gb-bg-c-28);
     border-radius: 4px;
     color:#7981A4;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);

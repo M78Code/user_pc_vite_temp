@@ -125,7 +125,7 @@
   
   .head-top {
     height: 0.4rem;
-    background:var(--q-gb-bg-c-15);
+    background:var(--q-gb-bg-c-27);
     border-radius: 1rem;
   
     & > div {
@@ -139,9 +139,10 @@
       height: 0.34rem;
       line-height: 0.34rem;
       width: 30%;
+      color: var(--q-gb-t-c-24);
       &.active-p {
         background: var(--q-gb-bg-c-13);
-        color: var(--q-gb-bg-c-15);
+        color: var(--q-gb-t-c-14);
       }
     }
   }
