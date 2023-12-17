@@ -25,7 +25,7 @@
           <div class="middle font16">
             {{ i18n_t('bet.betting') }}
             <span class="yb-info-money font14">
-            {{ i18n_tc('app_h5.bet.bet_win',BetData.bet_amount,{"total":BetData.bet_amount}) }}</span>
+            {{ i18n_tc('app_h5.bet.bet_win',{"total":BetData.bet_amount}) }}</span>
           </div>
           <img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt="">
         </div>
