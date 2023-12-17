@@ -47,7 +47,7 @@ const toggle = () => {
     width: 1.04rem;
     height: 0.28rem;
     border-radius: 0.14rem;
-    background-color: #7981a4;
+    background-color: var(--q-gb-bg-c-30);
     cursor: pointer;
 }
 
@@ -59,7 +59,7 @@ const toggle = () => {
     width: 0.5rem;
     height: 0.24rem;
     border-radius: 0.14rem;
-    background-color: #fff;
+    background-color: var(--q-gb-bg-c-28);
     transition: transform 0.4s;
 }
 
