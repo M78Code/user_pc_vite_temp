@@ -290,6 +290,19 @@ export default {
             margin-left: 5px;
           }
         }
+        .to-be-completed-stata{
+          color: var(--qq--activity-text-color-4);
+        }
+        &.receive{
+          width: 120px;
+          height: 38px;
+          margin-top: 11px;
+          color: #fff;
+          background-size: contain;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-image: var(--qq--activity-btn-bg-img2);
+        }
       }
 
       .task-matters{

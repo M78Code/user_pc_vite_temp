@@ -530,6 +530,7 @@ export const details_main = () => {
             //lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value),"odds_info",[]) 防止oddinfo接口先获取到数据（matchdetail接口限频导致可能会失败）
             MatchDataWarehouseInstance.set_match_details(res_data,lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value),"odds_info",[]))
             //如果是切换tab页
+            //切换tab页 应该不需要重新get_match_detials吧?
             if (state_data.refresh) {
               //获取玩法集 
               get_odds_list()
@@ -658,9 +659,7 @@ export const details_main = () => {
    *@return {obj} init_req 是否是初次进入详情
    */
   const get_odds_list = async (
-    params = { sportId: sport_id.value, mid: matchid.value },
-    init_req
-  ) => {
+    params = { sportId: sport_id.value, mid: matchid.value }, init_req) => {
     // state_data.data_list = Level_one_category_list();
     const get_details_category_list = () => {
       api_common

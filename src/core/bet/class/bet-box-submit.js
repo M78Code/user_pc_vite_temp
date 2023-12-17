@@ -127,7 +127,7 @@ const set_bet_order_list = (bet_list, is_single) => {
             })
 
             let obj_s = {
-                "seriesSum": 1,   // 串关数量
+                "seriesSum": obj.count,   // 串关数量
                 "seriesType": obj.id,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
                 "fullBet": 0,   // 是否满额投注，1：是，0：否
                 "orderDetailList": bet_s_list
@@ -181,7 +181,6 @@ const set_bet_order_list = (bet_list, is_single) => {
             })
 
         }) 
-        
     }
 
     return order_list
@@ -625,7 +624,6 @@ const set_error_message_config = (res ={},type,order_state) => {
     }
     // 获取限额失败的信息
     if(PROJECT_NAME == 'app-h5'){
-        console.error('sssss',obj.message)
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t(obj.message));
     }else{
         BetViewDataClass.set_bet_before_message(obj)

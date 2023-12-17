@@ -59,7 +59,7 @@ import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { UserCtr ,format_money2,compute_local_project_file_path} from "src/output/index.js"
-import { i18n_t,i18n_tc } from "src/boot/i18n.js"
+import { i18n_tc } from "src/boot/i18n.js"
 
 let timer;
 // 向右滑动投注

@@ -13,7 +13,7 @@
           <div class="back-wrap">
             <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})"></div>
             <!-- 虚拟体育 -->
-            <div class="col">{{i18n_t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
+            <div class="col virtual-title">{{i18n_t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
             <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
             <div class="no-single" @click="click_event()"></div>
             <!-- 复刻版暂时用不到先注释了 -->
@@ -393,6 +393,11 @@ export default {
         background-size: 0.1rem auto;
         margin-left: 0.05rem;
         margin-right: 0.1rem;
+      }
+
+      .virtual-title{
+        text-align: center;
+        text-indent: 0.55rem;
       }
 
       /*  刷新按钮 */

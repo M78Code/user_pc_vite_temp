@@ -388,7 +388,7 @@ export default defineComponent({
         // #TODO $utils
         // $send_zhuge_event('H5_情报分析', data.UserCtr);
         if(val == 'bet'){
-          initEvent(true)
+          initEvent({refresh:true})
         }
       }
     );
