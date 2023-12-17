@@ -36,8 +36,8 @@
       </div>
     </div>
     <!-- <div class="sl-filter-content"> -->
-    <!-- <match-filter ref="matchRef" :search_val="search_val"></match-filter> -->
-    <match-filter-old ref="matchRefOld" :search_val="search_val"></match-filter-old>
+    <match-filter ref="matchRef" :search_val="search_val"></match-filter>
+    <!-- <match-filter-old ref="matchRefOld" :search_val="search_val"></match-filter-old> -->
     <!-- </div> -->
   </div>
 </template>
