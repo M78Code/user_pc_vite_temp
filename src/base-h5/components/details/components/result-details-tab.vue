@@ -207,7 +207,6 @@ onUnmounted(() => {
 .result-details-tab {
   height: 0.4rem;
   width: 100vw;
-  max-width:3.78rem;
   border-bottom: 1px solid #edeef1; //var(--q-gb-bg-c-13);
   background-color: var(--q-gb-bg-c-15);
 }
@@ -299,7 +298,7 @@ onUnmounted(() => {
   letter-spacing: 0;
   text-align: center;
   font-weight: bold;
-  color: var(--q-gb-t-c-12);
+  color: var(--q-gb-t-c-1);
   &:after {
     content: ' ';
     display: block;
@@ -310,7 +309,7 @@ onUnmounted(() => {
     transform: translateX(-50%);
     bottom: 0;
     border-radius: 1.5px;
-    background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
+    background: var(--q-gb-t-c-1);
   }
 }
 </style>

@@ -18,7 +18,7 @@
       <layoutTop />
       
       <router-view />
-      <BetBoxWapper  use_component_key='BetBoxAppH5_1' />
+      <BetBoxWapper />
 
       <!--页脚-->
       <Tabbar id="page-footer" class="m-layout" v-if="['sport_menu', 'matchList', 'virtual_sports', 'esports_sports'].includes(route.name)">
@@ -44,7 +44,7 @@
         <settle-dialog></settle-dialog>
       </div>
       
-      <div v-show="flase">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
+      <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
 
 
       <!-- 串关投注 --> 

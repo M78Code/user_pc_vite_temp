@@ -62,9 +62,6 @@ export default {
         cf: match_state ? 0 : 1,
         cuid: UserCtr.get_uid()
       }).then(res => {
-        // if(res && res.code == '200' && MenuData.is_collect()){
-        //   useMittEmit(MITT_TYPES.EMIT_COLLECT_MATCH_OZ);
-        // }
         if (+res.code !== 200) return
       })
       // 收藏页手动处理数据

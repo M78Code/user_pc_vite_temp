@@ -42,8 +42,8 @@
       <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub">确认</div>
       <!--  串关  -->
       <div v-else>
-        <div @click="set_confirm" >注单已确认 <span>合计17,650.00</span></div>
-        <div @click="set_retain_selection">保留选项，继续投注</div>
+        <div @click="set_confirm" class="sub">注单已确认 <span class="sub-total">合计17,650.00</span></div>
+        <div @click="set_retain_selection" class="reserve">保留选项，继续投注</div>
       </div>
 
     </div>
@@ -59,7 +59,7 @@ import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { UserCtr ,format_money2,compute_local_project_file_path} from "src/output/index.js"
-import { i18n_t,i18n_tc } from "src/boot/i18n.js"
+import { i18n_tc } from "src/boot/i18n.js"
 
 let timer;
 // 向右滑动投注
@@ -153,6 +153,17 @@ onMounted(()=>{
 </style>
 
 <style scoped lang="scss">
+.reserve{
+  width: calc(100% - 0.1rem);
+  background: var(--q-gb-bg-c-22);
+  margin-left: 0.05rem;
+  padding: 0.1rem 0;
+  text-align: center;
+  margin-top: 0.1rem;
+  border-radius: 0.12rem;
+  font-size: 0.16rem;
+  color: var(--q-gb-t-c-1);
+}
 .sub{
   width: calc(100% - 0.1rem);
   background: var(--q-gb-t-c-1);
@@ -163,6 +174,10 @@ onMounted(()=>{
   border-radius: 0.12rem;
   font-size: 0.16rem;
   color: var(--q-gb-t-c-14);
+}
+.sub-total{
+  font-size: 0.14rem;
+  color: var(--q-gb-t-c-6);
 }
 
 .yb-info{

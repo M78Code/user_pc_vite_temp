@@ -4,7 +4,7 @@
  */
 import { ref } from 'vue'
 import lodash from 'lodash'
-import { api_common, api_match_list, api_match, api_home } from "src/api/index.js";
+import { api_common, api_match_list, api_match, api_home, api_analysis } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchFold from 'src/core/match-fold'
@@ -517,6 +517,19 @@ class MatchMeta {
     const list = lodash.get(res, 'data', [])
     return this.handler_match_list_data({ list: list })
   }
+
+  /**
+  * @description 赛事详情精选赛事列表
+  */
+  async get_details_result_match() {
+     const res = await api_analysis.get_result_match_care_list({
+      sportId: 1,
+      cuid: UserCtr.get_uid(),
+     })
+     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
+     const list = lodash.get(res, 'data', [])
+     return this.handler_match_list_data({ list: list, is_virtual: false, type: 1 })
+   }
 
   /**
    * @description 获取实际渲染赛事
@@ -1205,13 +1218,14 @@ class MatchMeta {
    */
   handle_remove_match (data) {
     // mhs === 2  || mmp === 999 为关盘 则移除赛事
+ 
     const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
-      const item = this.match_mids.find(t => t === mid)
-      if (item) {
-        const index = this.match_mids.findIndex(t => t === mid)
+      // const item = this.match_mids.find(t => t === mid) 203行取的前10条 为什么是视图id查找 确删除complete_matchs里的值
+      const index = this.complete_matchs.findIndex(t => t.mid == mid)
+      if (index>-1) {
+        // const index = this.match_mids.findIndex(t => t === mid)
         this.complete_matchs.splice(index, 1)
-
         // 复刻版 新手版 使用的是 observer-wrapper 组件模式 不需要重新计算
         if (project_name == 'app-h5' && UserCtr.standard_edition == 1) return;
 

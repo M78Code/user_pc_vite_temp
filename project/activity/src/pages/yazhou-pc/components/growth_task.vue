@@ -66,7 +66,8 @@
       </div>
       <div class="table">
         <div class="table-header text-333">
-          <p>任务事项</p>
+          <p  v-if="actId === 1">每日任务</p>
+          <p class="task-matters" :class="`task-matters-${actId}`">任务事项</p>
           <p>状态</p>
           <p>奖券数量</p>
           <p>领取状态</p>
@@ -79,7 +80,8 @@
             :class="{ 'last-row': i == get_everyDay_list.length - 1 }"
             class="table-body relative-position"
           >
-            <p class="" v-html="v.taskName"></p>
+          <p v-if="actId === 1" class="text-left mission-name">{{v?.taskTittle}}</p>
+            <p class="text-left task-matters" :class="`task-matters-text-${actId}`" v-html="v.taskName"></p>
             <p
               class="td-item"
               :class="{
@@ -288,7 +290,30 @@ export default {
             margin-left: 5px;
           }
         }
+        .to-be-completed-stata{
+          color: var(--qq--activity-text-color-4);
+        }
+        &.receive{
+          width: 120px;
+          height: 38px;
+          margin-top: 11px;
+          color: #fff;
+          background-size: contain;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-image: var(--qq--activity-btn-bg-img2);
+        }
       }
+
+      .task-matters{
+            flex: 3 !important;
+            justify-content: flex-start !important;
+          
+        }
+        .task-matters-text-2 {
+          padding-left: 20px !important;
+        }
+
       .table-header {
         background: var(--qq--activity-bg-color-4);
         height: 100%;
@@ -319,7 +344,8 @@ export default {
         }
 
         p:nth-child(1) {
-          flex: 2;
+          flex: 1;
+          justify-content: center;
         }
 
         &.table-body {
@@ -349,7 +375,7 @@ export default {
 
           p:nth-child(1) {
             text-align: left;
-            padding-left: 20px;
+            // padding-left: 20px;
             display: flex;
             align-items: center;
           }
@@ -658,14 +684,14 @@ export default {
         font-family: DINPro-Medium;
 
         p:nth-child(1) {
-          flex: 2;
-          padding-left: 20px;
-        }
-
-        p:nth-child(2),
-        p:nth-child(3) {
           flex: 1;
+          justify-content: center;
+          // padding-left: 20px;
         }
+        // p:nth-child(2),
+        // p:nth-child(3) {
+        //   flex: 1;
+        // }
       }
 
       .table_content {
