@@ -116,12 +116,13 @@ export default {
 <style lang="scss">
 //@import "./y0_activity.scss";
 .five-activity-action {
-  min-width: 1200px;
+  // min-width: 1200px;
+  width: 100%;
   height: 100vh;
   margin: 0 auto;
   color: var(--qq--activity-text-color);
   background-color: var(--qq--activity-bg-color);
-  overflow-y: scroll;
+  // overflow-y: scroll;
   .q-scrollarea__thumb {
     opacity: 1 !important;
     background: #d8d9dc;
@@ -381,4 +382,9 @@ p {
 .text-red {
   color: var(--qq--activity-text-color-red) !important;
 }
+.q-scrollarea { 
+    overflow: hidden !important;
+    position: initial !important;
+    contain: inline-size !important;
+  }
 </style>

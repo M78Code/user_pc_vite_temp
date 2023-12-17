@@ -8,7 +8,7 @@
     <div class="sub-menu-date-w">
         <div class="sport-m-container">
           <div class="s-menu-container flex" >
-            <template  v-for="(item,index) in scrollDataList" :key="index">
+            <template  v-for="(item,index) in scrollDataListNew" :key="index">
               <!-- 全部 vr 收藏 电竞显示  -->
               <div v-if="item?.ct > 0 || menu_show_id.includes(+item.mi) || +item.mi>2000" ref="scrollTab" 
                 :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] " 
@@ -16,18 +16,17 @@
               <!-- <div ref="scrollTab" :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] "  @click="set_menu_lv2(item, $event)" > -->
                 <div class="inner-w flex justify-between items-center">
                   <div class="sport-w-icon">
-                   
                     <span class="sport-icon-wrap"
                       :style="compute_css_obj({key:current_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
-                    <div v-if="props.is_show_badge" v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000" class="sport-match-count">
-                      {{ item.ct || 0 }}
-                    </div>
                   </div>
+                
                   <div class="s-w-i-title">
                     {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item) }}
                   </div>
                 </div>
-
+                <div v-if="props.is_show_badge" v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000" class="sport-match-count">
+                  {{ item.ct || 0 }}
+                </div>
               </div>
             </template>
           </div>
@@ -36,7 +35,7 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref,reactive,onMounted,onUnmounted,nextTick } from "vue";
+import { ref,reactive,onMounted,onUnmounted,computed } from "vue";
 // import lodash_ from "lodash";
 // import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj, MenuData } from "src/output/index.js";
@@ -64,7 +63,10 @@ const props = defineProps({
     default: true
   },
 })
-
+const scrollDataListNew = computed(()=>{
+  if(MenuData.is_esports())return props.scrollDataList;
+  return [...[{mi:50000,btn:1,ct:0,title:"收藏"}],...props.scrollDataList]
+})
 const emits = defineEmits(['changeList','changeMenu'])
 /**
  * 二级菜单事件
@@ -82,10 +84,10 @@ function set_menu_lv2(item = {},event) {
   // if (item.mi == MenuData.current_lv_2_menu_i) return;
   scrollMenuEvent(event,".s-menu-container",".current");
   emits('changeMenu',item)
-  nextTick(()=>{ //收藏是没有change的相当于是页面
-    // 设置菜单点击事件
-    useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
-  })
+  // nextTick(()=>{ //收藏是没有change的相当于是页面
+  //   // 设置菜单点击事件
+  //   useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
+  // })
 }
 
 /**
@@ -126,7 +128,7 @@ const format_type = ( item = {} ) => {
  */
 const get_menu_ws_list = (list) =>{
     list = list.filter((item)=>{return item.mi});
-    let wsList = props.scrollDataList.map((item)=>{
+    let wsList = props.scrollDataList?.map((item)=>{
         list.forEach((n)=>{
             if(item.mi == n.mi){
                 item.ct = n.count;
@@ -157,6 +159,7 @@ onUnmounted(()=>{
     z-index: 501;
     width: 100%;
     max-height: 1.35rem;
+    height: 0.5rem;
     padding: 0 0.05rem;
     transition: transform 0.6s, max-height 0.3s;
 
@@ -182,6 +185,7 @@ onUnmounted(()=>{
           min-width: 0.52rem;
           height: 100%;
           flex-shrink: 0;
+          position:relative;
           background-color: var(--q-gb-bg-c-15);
           color: var(--q-gb-t-c-19);
           &.current {
@@ -217,16 +221,7 @@ onUnmounted(()=>{
                 background-size: 0.22rem auto;
               }
 
-              .sport-match-count {
-                width: 1px;
-                height: 1px;
-                line-height: 1;
-                position: absolute;
-                // right: -0.03rem;
-                right:0;
-                top: 0;
-                font-size: 0.11rem;
-              }
+            
             }
 
             .s-w-i-title {
@@ -240,6 +235,14 @@ onUnmounted(()=>{
               padding: 0 1px;
             }
           }
+          
+        .sport-match-count {
+                line-height: 1;
+                position: absolute;
+                right: 0;
+                top: 0;
+                font-size: 0.11rem;
+        }
         }
       }
     }

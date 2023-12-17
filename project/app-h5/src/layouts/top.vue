@@ -11,14 +11,14 @@
     <TopMenu />
 
     <div v-show="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
-      <DateTab ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
+      <DateTab @changeDate="set_scroll_early_single" ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
     <!-- <div v-if="+MenuData.get_menu_type_special() == 2000"> -->
     <div v-show="[2000].includes(MenuData.top_menu_title?.mi)">
-        <DateTab ref="dJdateTabMenu" :dataList="dataList[2000]"  />
+        <DateTab @changeDate="set_scroll_early_single" ref="dJdateTabMenu" :dataList="dataList[2000]"  />
     </div>
     <!-- 滑动菜单组件 -->
-    <ScrollMenu ref="scrollTabMenu" :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" :current_mi="ref_data.current_mi" />
+    <ScrollMenu ref="scrollTabMenu" :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" @changeMenu="set_scroll_current" :current_mi="ref_data.current_mi" />
     <!--  -->
     <!-- <SwitchWap /> -->
     <!--  -->
@@ -54,6 +54,9 @@ import { useMittOn,MITT_TYPES, useMittEmit } from "src/core/mitt/index.js"
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
 import { TopMenu,ScrollMenu,SearchTab,DateTab } from 'src/base-h5/components/menu/app-h5-menu/index'
+
+import { is_kemp } from 'src/base-h5/mixin/menu.js'
+
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 
 const is_first = ref(true)
@@ -73,13 +76,14 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,1)
     init_data(MenuData.current_lv_1_menu_mi.value,1)
     useMittOn(MITT_TYPES.EMIT_MENU_GO_BACK, menu_go_back)
-    useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
-    useMittOn(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, set_scroll_early_single)
+    // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
+    // useMittOn(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, set_scroll_early_single)
   })
 
   onUnmounted(()=>{
-    useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
-    useMittOn(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE).off
+    // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
+    // useMittOn(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE).off
+    useMittOn(MITT_TYPES.EMIT_MENU_GO_BACK).off
   })
 
   /**
@@ -114,9 +118,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     ref_data.scroll_data_list = list;
   }
   // 设置滑动菜单的选中id
-  const set_scroll_current = (val,type) => {
+  const set_scroll_current = async (val,type) => {
     // 设置菜单属性
-    if([300,2000,50000].includes(+val.mi)){
+    if([300,2000].includes(+val.mi)){
       // 设置 对应菜单的数据
       switch(+val.mi){
         case 300:
@@ -124,6 +128,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
           break
 
         case 2000:
+          ref_data.scroll_data_list = [];
           // ref_data.scroll_data_list = BaseData.dianjing_sublist
           nextTick(()=>{
             const index = type && MenuData.data_tab_index?MenuData.data_tab_index:0;
@@ -132,22 +137,23 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
           })
           break  
         
-        case 50000:
-          val.title = '我的收藏'
-          let menu_list_res = MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i)
-          const all_ct = menu_list_res.map((item)=>{return item.ct||0}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
-          menu_list_res.unshift({mi:0,btn:1, ct:all_ct,title:"全部"})
-          ref_data.scroll_data_list = menu_list_res
+        // case 50000:
+        //   val.title = '我的收藏'
+        //   let menu_list_res = MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i)
+        //   const all_ct = menu_list_res.map((item)=>{return item.ct||0}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
+        //   menu_list_res.unshift({mi:0,btn:1, ct:all_ct,title:"全部"})
+        //   ref_data.scroll_data_list = menu_list_res
           
-          MenuData.set_collect_list(menu_list_res)
-          MenuData.set_collect_menu_type(50000)
-          break  
+        //   MenuData.set_collect_list(menu_list_res)
+        //   MenuData.set_collect_menu_type(50000)
+        //   break  
       }
 
       // 设置vr /收藏 电竞 头信息
       MenuData.set_top_menu_title(val)
       // 清空一级菜单显示 用于后续更新
-      if (![50000].includes(+val.mi)) MenuData.set_current_lv1_menu('');
+      // if (![50000].includes(+val.mi)) MenuData.set_current_lv1_menu('');
+      MenuData.set_current_lv1_menu('');
       let obj = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
       // 设置选中菜单的id
       ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
@@ -181,7 +187,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
         dateTabMenu.value.changeTabMenu(dataList[MenuData.current_lv_1_menu_i]?.[index],index,'',type)
       })
     }
-    if(type && [300,2000,50000].includes(MenuData.top_menu_title?.mi)){
+    if(type && [300,2000].includes(MenuData.top_menu_title?.mi)){
       set_scroll_current(MenuData.top_menu_title,type)
     }
     //球种滚动初始化
@@ -204,15 +210,16 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     if(Object.keys(val).length){
       for(let item in val){
         let mi = is_lv_1?100+ item*1 +''+ MenuData.current_lv_1_menu_i:2000+ item*1 +'';
+        let mif = is_lv_1?100+ item*1 +'':2000+ item*1 +'';
         let obj = menu_list.find(page => page.mi == mi) || {}
         if(obj.mi){
           obj.ct = val[item]
+          obj.mif = mif;
           early_single.push(obj)
         }
       }
     }
     ref_data.scroll_data_list = early_single
-
     if(early_single.length){
       let obj_ = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
       // 设置选中菜单的id
@@ -230,17 +237,16 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     ref_data.scroll_data_list = MenuData.get_menu_lvmi_list(mid)
     let index = 0
     // 今日/滚球第一位是收藏 默认选中足球/全部 
-    if( [1,2].includes(mid*1) ){
-      index = 1
-    }
+    // if( [1,2].includes(mid*1) ){
+    //   index = 1
+    // }
     let obj = lodash_.get(ref_data.scroll_data_list,`[${index}]`,{})
     // 设置二级菜单 
     MenuData.set_current_lv_2_menu_i(obj,type)
     // 设置选中菜单的id
     ref_data.current_mi = type?MenuData.current_lv_2_menu_i:obj.mi
-
     // 刷新页面避免触发2次 set_origin_match_data
-    if (is_first.value) {
+    if (is_first.value && !is_kemp) {
       is_first.value = false
     } else {
       set_menu_mi_change_get_api_data()
@@ -264,10 +270,10 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       // 初始进入会调多次接口
       if (csid) MatchMeta.get_esports_match()
     }
-    // 收藏
-    if(MenuData.top_menu_title.mi == 50000){
-      MatchMeta.get_collect_match()
-    }
+    // // 收藏
+    // if(MenuData.top_menu_title.mi == 50000){
+    //   MatchMeta.get_collect_match()
+    // }
   }
   /**
    * @description 处理赛事列表渲染数据
@@ -276,7 +282,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // 清除赛事折叠信息
     MatchDataBaseH5.init()
     MatchFold.clear_fold_info()
-
     // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
     if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
     // 赛果不走元数据， 直接拉取接口
@@ -287,9 +292,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
     if (lodash_.isEmpty(mi_tid_mids_res)) return
 
-    // 设置菜单对应源数据 以及 获取数据
-      if (MenuData.top_menu_title.mi === 50000) return
-      MatchMeta.set_origin_match_data({ md: MenuData.data_time })
+    // // 设置菜单对应源数据 以及 获取数据
+    // if (MenuData.top_menu_title.mi === 50000) return
+    MatchMeta.set_origin_match_data({ md: MenuData.data_time })
 
     // 今日 下 得足球  提前设置 热门联赛
     if (MenuData.current_lv_2_menu_i === '1012') MatchMeta.set_tid_map_mids()

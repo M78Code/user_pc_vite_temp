@@ -32,7 +32,7 @@ import { LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/output/index.js"
 const pack_up = (val) => {
   // TODO: 临时调试用
   BetViewDataClass.set_is_finally(true)
-  BetData.set_h5_bet_box_show(false)
+  BetData.set_bet_box_h5_show(false)
   BetData.set_clear_bet_info()
   BetViewDataClass.set_clear_bet_view_config()
 }
