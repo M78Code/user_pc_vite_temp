@@ -86,14 +86,14 @@
                   <!-- 动画状态大于-1时，显示动画按钮 i18n_t('match_info.animation')是国际化取值 -->
 
                   <!-- icon_click_animationUrl media_button_handle -->
-                  <img v-if="match.mvs > -1" class="" src='/src/base-h5/assets/match-list/ico_animate_nor.png'
+                  <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_animate_nor.png'
                     @click="media_button_handle_by_type(ButtonTypes.animationUrl)" />
                   <!-- 视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 -->
-                  <img v-if="match.mms > 1" class="live-icon-btn" src='/src/base-h5/assets/match-list/ico_live_nor.png'
+                  <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_live_nor.png'
                     @click="media_button_handle_by_type(ButtonTypes.muUrl)" />
                   <!--icon_click_muUrl  -->
                   <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
-                  <img v-if="match.lvs == 2" class="" src='/src/base-h5/assets/match-list/ico_liveshow_nor.png'
+                  <img :class="[match.lvs !== 2 && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_liveshow_nor.png'
                     @click="media_button_handle_by_type(ButtonTypes.lvs)" />
                   <!-- icon_click_lvs -->
                 </template>
@@ -374,6 +374,13 @@ export default {
   
    
 <style scoped lang="scss">
+.iconGrayFillStyle {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  pointer-events: none;
+}
+
+
 /* ********赛事容器相关********** -S*/
 
 .counting-down-up-container {

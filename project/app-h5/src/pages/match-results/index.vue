@@ -77,7 +77,7 @@ const state = reactive({
 const switchHandle = val => {
     state.currentSwitchValue = val
     MenuData.set_result_menu_lv1_mi(val)
-    MatchMeta.clear_match_info()
+    // MatchMeta.clear_match_info()
     state.matchs_data = []
     if (val) {
         MenuData.set_results_kemp(1)
@@ -148,8 +148,8 @@ const selectFinishHandle = (val) => {
 onMounted(()=>{
     MenuData.set_current_lv1_menu(28)
     // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
-    VirtualList.set_is_show_ball(false)
-    VirtualList.set_is_change_handicap_height(-22)
+    // VirtualList.set_is_show_ball(false)
+    // VirtualList.set_is_change_handicap_height(-22)
     switchHandle(0)
 })
 
