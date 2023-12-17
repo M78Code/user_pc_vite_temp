@@ -11,7 +11,7 @@
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 开赛标题  -->
-      <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
+      <div v-if="is_show_opening_title"
         :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
@@ -21,7 +21,7 @@
           <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
         <!-- 未开赛 -->
-        <template v-else>
+        <template  v-if="+match.start_flag === 2">
           <div class="match-status-title">
             <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
           </div>
@@ -35,8 +35,8 @@
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div>
-      <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="show_sport_title" @click.stop
+      <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 @click.stop-->
+      <div v-if="show_sport_title" @click.stop="handle_ball_seed_fold"
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span">
           {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }})

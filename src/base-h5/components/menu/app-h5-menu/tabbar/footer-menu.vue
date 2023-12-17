@@ -95,10 +95,12 @@ const menu_item_click = (item = {}) => {
       break;
     case 5:
       //每日活动
+      
       if (UserCtr.daily_activities){
       useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
           text: "activities",
         });
+        router.push( {name: 'activity' } );
       }else {
         // 刷新
         //加载中

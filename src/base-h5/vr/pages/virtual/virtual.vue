@@ -228,6 +228,9 @@ export default {
       this.current_sub_menu = this.sub_menu_list[i];
       this.virtual_sports_params.csid = this.current_sub_menu.menuId;
 
+      // console.log("this.current_sub_menu===");
+      // console.log(this.current_sub_menu);
+
       // 足蓝跳转到其他虚拟赛种前， 给状态一个标识
       this.v_menu_changed = ([1001, 1004].includes(this.get_curr_sub_menu_type) ? 'zu_lan_' : '') + Math.random();
       console.log(this.get_curr_sub_menu_type, 'this.get_curr_sub_menu_type')

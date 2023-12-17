@@ -719,7 +719,12 @@
     "auto_close": "%s 秒后自动关闭",
     "HD": "高清",
     "return": "返回",
-    "SD": "标清"
+    "SD": "标清",
+    "zhuanye":"专业版",
+    "xinshou":"新手版",
+    "gongnengwanshan":"功能完善,实用性强",
+    "yemianjianjie":"页面简洁,操作简单",
+    "use":"使用"
   },
   "detail": {
     "less": "小于",

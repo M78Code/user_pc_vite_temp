@@ -78,7 +78,8 @@ export default {
   },
   props:[
     "virtual_match_list",
-    "batch" //赛马期
+    "batch", //赛马期
+    "mid"
   ],
   created(){
     // 延时器
@@ -198,7 +199,7 @@ export default {
         if(this.batch){
           new_mid =  this.batch
         }else{
-          new_mid = this.$route.query.mid
+          new_mid = this.$route.query.mid || this.mid;
         }
         let params = { sportId: this.sub_menu_type,mid: new_mid};
         api_common.get_category_list(params).then(res =>{

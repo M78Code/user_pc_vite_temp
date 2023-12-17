@@ -268,7 +268,7 @@ export default {
    
 <style scoped lang="scss">
 .match-container-main-template3{
-  border-top: 0.05rem solid var(--q-gb-bg-c-21)
+  // border-top: 0.05rem solid var(--q-gb-bg-c-21)
 }
 /* ********赛事容器相关********** -S*/
 .play-icon {
@@ -327,7 +327,7 @@ export default {
     align-items: center;
     background: var(--q-gb-bg-c-18) !important;
     .buffer-container{
-      background: var(--q-gb-bg-c-21);
+      background: var(--q-gb-bg-c-18);
       height: 5px;
       width: 100%;
     }

@@ -69,7 +69,7 @@
         <div class="block" :class="{selected:standard_odd_status == 1}"></div>
       </div>
       <!--标准版 才有的样式  动态图方向箭头-->
-      <template v-if="theme.includes('theme-2')">
+      <template v-if="theme && theme.includes('theme-2')">
         <!-- <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i> -->
         <img class="slide_icon slide_icon_l animate-effect" :src="slide_icon_0" alt="" v-if="is_show_scroll_dir(0)">
         <!-- <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i> -->
@@ -483,7 +483,6 @@ const fill_empty_hps = (hpsArr) => {
   if ((hpsArr || []).length == 0) {
     return [{ hl: [{}] }, { hl: [{}] }, { hl: [{}] }];
   }
-  console.log(hpsArr)
   return hpsArr;
 };
 // 5分钟玩法

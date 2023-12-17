@@ -3,7 +3,7 @@ import lodash from 'lodash'
 import { defineComponent } from 'vue'
 import { api_common } from "src/api/index.js";
 import store from "src/store-redux/index.js";
-import { useMittEmit, MITT_TYPES, UserCtr } from  "src/output"
+import { useMittEmit, MITT_TYPES, UserCtr, project_name } from  "src/output"
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
 import PageSourceData from "src/core/page-source/page-source.js";
@@ -187,7 +187,7 @@ export default defineComponent({
     collapsed () {
       if (is_hot.value) return false
       const key = MatchFold.get_match_fold_key(this.match_of_list)
-      const show_card = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_card`)
+      const show_card = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_card`, true)
       return show_card
     },
     eports_scoring() {
@@ -206,8 +206,12 @@ export default defineComponent({
     // 是否显示赛事阶段标题
     is_show_opening_title () {
       const menu_lv_v1 = MenuData.current_lv_1_menu_i
-      // 今日、早盘、串关
-      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(+this.match_of_list.start_flag) && (MenuData.is_today() || MenuData.is_mix())
+      let result = false
+      if (project_name === 'app-h5') {
+        // 今日、早盘、串关
+        result = ([1,2,3,6].includes(+menu_lv_v1) && (MenuData.is_today() || MenuData.is_mix()) || MenuData.is_esports()) && [1,2].includes(+this.match_of_list.start_flag)
+      }
+      return result
     },
     // 获取赛事数量
     get_match_count () {
