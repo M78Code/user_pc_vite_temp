@@ -6,6 +6,7 @@
       // "@/*":["src/*"],
       "src/*":["src/*"],
       "base_path/*":["src/base-h5/*", "src/base-pc/*"],
-    }
+    },
+    "lib": ["ESNext","DOM"]
   }
 }
