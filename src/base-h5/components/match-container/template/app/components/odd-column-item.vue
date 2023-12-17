@@ -8,7 +8,7 @@
   <div class="odd-column-item" :class="odds_class_object()" @click.stop="item_click3" :id="dom_id_show && `list-${lodash.get(odd_item, 'oid')}`">
     <!-- 占位  或者  关盘 -->
     <div v-if="placeholder == 1 || is_close(get_odd_status())" class="item-inner">
-      <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock" />
+      <img class="icon-lock 1" :class="{standard:n_s}" :src="match_icon_lock" />
     </div>
 
     <!-- 全封(不显示盘口值) 占位时显示封-->
@@ -16,10 +16,10 @@
       <!--csid:1足球全封,不显示盘口名-->
       <div class='odd-title'
         :class="{three:column_ceil > 2,standard:n_s == 2}"
-        v-if="(!is_fengpan(get_odd_status()) && [18,19].includes(+lodash.get(current_tab_item, 'id'))) || ((odd_item.on || convert_num(odd_item) === 0) && match.csid != 1)"
+        v-if="is_show_fenpan"
         v-html="transfer_on(odd_item)">
       </div>
-      <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock" />
+      <img class="icon-lock 2" :class="{standard:n_s}" :src="match_icon_lock" />
     </div>
 
     <!-- 半封(显示盘口值)与赔率显示 -->
@@ -149,6 +149,14 @@ const is_down = computed(() => {
   return red_green_status.value === -1 && no_lock()
 })
 
+const is_show_fenpan = computed(() => {
+  // console.log(is_fengpan(get_odd_status()))
+  // console.log([18,19].includes(+lodash.get(props.current_tab_item, 'id')))
+  // console.log((props.odd_item.on || convert_num(props.odd_item) === 0))
+  // console.log(((props.odd_item.on || convert_num(props.odd_item) === 0) && props.match.csid != 1))
+  return !(is_fengpan(get_odd_status()) && [18,19].includes(+lodash.get(props.current_tab_item, 'id'))) || ((props.odd_item.on || convert_num(props.odd_item) === 0) && props.match.csid != 1)
+})
+
 // 判断边框border-radius样式
 const odds_class_object = () => {
   let result = {
@@ -156,7 +164,7 @@ const odds_class_object = () => {
     'is-standard':PageSourceData.get_newer_standard_edition() === 2,
     'first-radius': props.odd_item_i === 0,
     'last-radius': props.odd_item_i > 1,
-    'is-jiaoqiu':MenuData.footer_sub_menu_id == 114, 
+    'is-jiaoqiu': MenuData.get_footer_sub_menu_id() == 114, 
     'active': BetData.bet_oid_list.includes(odd_item.value.oid)
   };
   if(PageSourceData.get_newer_standard_edition() == 2){

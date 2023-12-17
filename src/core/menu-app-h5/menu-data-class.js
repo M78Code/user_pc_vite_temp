@@ -76,6 +76,8 @@ class MenuData {
     //当前的菜单 lv4
     this.current_lv_4_menu = {};
     this.current_lv_4_menu_mi = '';
+    // 页脚菜单
+    this.footer_sub_menu_id = ""; //页脚子菜单id
     //================主列表用的  结束==================
     this.menu_list = []
     this.menu_type = ref(3)
