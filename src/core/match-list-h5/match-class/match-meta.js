@@ -1205,13 +1205,14 @@ class MatchMeta {
    */
   handle_remove_match (data) {
     // mhs === 2  || mmp === 999 为关盘 则移除赛事
+ 
     const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
-      const item = this.match_mids.find(t => t === mid)
-      if (item) {
-        const index = this.match_mids.findIndex(t => t === mid)
+      // const item = this.match_mids.find(t => t === mid) 203行取的前10条 为什么是视图id查找 确删除complete_matchs里的值
+      const index = this.complete_matchs.findIndex(t => t.mid == mid)
+      if (index>-1) {
+        // const index = this.match_mids.findIndex(t => t === mid)
         this.complete_matchs.splice(index, 1)
-
         // 复刻版 新手版 使用的是 observer-wrapper 组件模式 不需要重新计算
         if (project_name == 'app-h5' && UserCtr.standard_edition == 1) return;
 

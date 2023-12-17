@@ -1,28 +1,24 @@
 <template>
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
-        <div class="f-b-s bet-content">
-            <div class="fw-s-s bet-left">
-                <div class="w-100 f-s-c text-1a1">
-                    <span class="text-flow-none">{{ items.playOptionName}}</span> 
-                    <span class="bet-market mx-4 text-ff7">{{ items.marketValues }}</span>
+        <div class="bet-content">
+            <div >
+                <div class="w-100 f-a-c">
+                    <span>{{ items.seriesValue}}</span> 
+                    <span v-if="items.orderStatusCode == 1">成功</span>
                 </div>
-                <div class="w-100 my-4">
-                    <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bet_inplay") + ']'}}</span>
-                    <span class="text-a1a text-flow-none font400">{{ items.playName }}
-                        <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
-                    </span>
-                    
-                    <span class="mr-4 text-009"> [{{ i18n_t(`odds.${items.marketType}`) }}]</span>
-                </div>
-                <div class="w-100 text-8a8 fon12 font400" v-if="items.matchType != 3">{{items.matchName}}</div>
-                <div class="w-100 text-8a8 fon12 font400">{{ items.matchInfo }}
+                <div class="w-100">
+                    <span>{{ format_money2(mathJs.divide(items.betAmount,100))}}</span>
+                    <span> x{{ items.seriesSum }} </span>
                 </div>
             </div>
 
-            <div class="bet-right">
-                <div class="bet-odds">
-                    <span class="font14 font700 mr-10">@{{ items.oddsValues }}</span>
+            <div>
+                <div >
+                    <span>预计可赢：{{ format_money2(mathJs.divide(items.maxWinAmount,100))}}</span>
+                </div>
+                <div>
+                    <span>小计：{{ items.seriesBetAmount }} </span>
                 </div>
             </div>
         </div>
@@ -33,7 +29,6 @@
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import {i18n_t,format_money2,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
-import { IconWapper } from 'src/components/icon/index.js'
 
 const props = defineProps({
     items:{
