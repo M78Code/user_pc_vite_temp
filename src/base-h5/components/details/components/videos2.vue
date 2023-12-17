@@ -284,8 +284,9 @@
 
           </div>
           <!-- 固钉 -->
-          <img @click.stop="fix_top"
-            v-if="fix_status && show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/no_pin.svg`" alt="" class="w-24 h-24 ml-8">
+          <!-- TODO: 暂无固定按钮图片 -->
+          <!-- <img @click.stop="fix_top"
+            v-if="fix_status && show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/no_pin.svg`" alt="" class="w-24 h-24 ml-8"> -->
 
            <!-- 全屏按钮 -->
           <div 

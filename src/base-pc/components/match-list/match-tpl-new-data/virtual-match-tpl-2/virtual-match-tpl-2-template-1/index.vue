@@ -34,7 +34,7 @@
     <!-- 跳转详情 -->
     <div @click.stop="on_go_detail" class="more-row row items-center justify-end cursor-pointer">
       <!-- 显示所有盘口 -->
-      {{ t("list.show_more_handicap") }}
+      {{ i18n_t("list.show_more_handicap") }}
       <icon-wapper name="icon-triangle3" color="#99A3B1" />
     </div>
   </div>

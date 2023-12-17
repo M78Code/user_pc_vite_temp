@@ -5,7 +5,7 @@
 <template>
   <div class="may_also_like" v-if="slide_list.length">
     <div class="title">
-      {{ $t('home_popular.you_may_also_like') }}
+      {{ i18n_t('home_popular.you_may_also_like') }}
     </div>
     <div class="scroll-list">
       <div class="card2" :key="i" v-for="(item, i) in slide_list" @click="goto_detail_video(item)">

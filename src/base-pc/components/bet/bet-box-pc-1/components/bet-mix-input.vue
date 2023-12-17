@@ -9,7 +9,7 @@
         <div class="line"></div>
         <div class="col bet-mix-info">
           <!--单注-->
-          {{ $t('bet')[`bet_${id}`] }}
+          {{ i18n_t('bet')[`bet_${id}`] }}
         </div>
         <span v-if="index == 0" class="odds-value yb-number-bold">
           <!--串关赔率(欧赔)-->

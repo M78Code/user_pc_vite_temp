@@ -24,7 +24,7 @@
         <div class="row">
           <div class="col bet-play-game">
             <!--玩法名称以及盘口-->
-            <label class="bet-play-text"><template v-if="match_type===2"><label class="bet-match-playing">[{{ $t('menu.match_playing')}}]</label></template>{{lodash.trim(item_obj.playName)}}<template v-if="item_obj.scoreBenchmark!='' && match_type===2">({{item_obj.scoreBenchmark.replace(':','-')}})</template><label class="bet-handicap-name">[{{ $t('odds')[item_obj.marketType]}}]</label></label>
+            <label class="bet-play-text"><template v-if="match_type===2"><label class="bet-match-playing">[{{ i18n_t('menu.match_playing')}}]</label></template>{{lodash.trim(item_obj.playName)}}<template v-if="item_obj.scoreBenchmark!='' && match_type===2">({{item_obj.scoreBenchmark.replace(':','-')}})</template><label class="bet-handicap-name">[{{ i18n_t('odds')[item_obj.marketType]}}]</label></label>
           </div>
           <div class="col-auto"></div>
         </div>

@@ -19,7 +19,7 @@ const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
     return `+${ props.match.mc || 0}`
   }else{
-    return t('match_info.more')
+    return i18n_t('match_info.more')
   }
 })
 

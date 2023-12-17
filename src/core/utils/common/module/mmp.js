@@ -71,7 +71,7 @@ export const get_mmp_name = (sport_id, mmp) => {
       return "";
     }
     if (mmp) {
-      return lodash.get(t('msc'), `${parseInt(sport_id)}.${mmp}`, "");
+      return lodash.get(i18n_t('msc'), `${parseInt(sport_id)}.${mmp}`, "");
     }
   } catch (error) {
     console.error(error);

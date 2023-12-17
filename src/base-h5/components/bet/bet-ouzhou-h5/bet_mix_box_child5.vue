@@ -30,7 +30,7 @@
                         <div class="nonebox4-content-right">
                             <div class="nonebox4-content-right-profit">{{item.oddsValues}}</div>
                         </div>
-                        <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">{{$t('bet.bet_suc')}}</div>
+                        <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">{{i18n_t('bet.bet_suc')}}</div>
                     </div>
                   </div>
               </div>

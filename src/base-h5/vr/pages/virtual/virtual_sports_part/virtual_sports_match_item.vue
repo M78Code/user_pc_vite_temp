@@ -236,7 +236,7 @@ export default {
     //   "set_details_item",
     // ]),
     // ...mapMutations(['set_current_gotodetail_match','set_toast']),
-    set_details_item(){},
+    set_details_item(data){ VR_CTR.set_details_item(data)  },
     set_current_gotodetail_match(data){ return VR_CTR.set_current_gotodetail_match(data) },
     set_toast(){},
     /**

@@ -20,7 +20,7 @@
         <!-- <div class="empty-favorite-bg" :style="compute_css_obj(lodash.get(arr_const[which], 'key'))"> </div> -->
         <img class="no_data_img" :class="[{ 'no-wifi': which === 'noWifi' }]" :src="no_data_icon" alt="">
          <!-- 有消息用消息 没有信息 用默认信息 -->
-        <p> {{ msg ? $t(msg) : lodash.get(arr_const[which], 'txt') }} </p>
+        <p> {{ msg ? i18n_t(msg) : lodash.get(arr_const[which], 'txt') }} </p>
     </div>
 </template>
 

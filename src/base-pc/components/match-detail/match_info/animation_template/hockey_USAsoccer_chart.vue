@@ -40,7 +40,7 @@
             <span class="text-blue">{{chart_center.away}}</span>
           </div>
           <!-- 射门 -->
-          <div class="text-c"> {{ $t('common.shot_num')}}</div>
+          <div class="text-c"> {{ i18n_t('common.shot_num')}}</div>
         </div>
 
         <div class="round-item">
@@ -64,7 +64,7 @@
       <!-- 达阵比分 -->
       <div class="wrap-down" v-if="!is_hockey">
         <!-- 达阵 -->
-        <div class="text-c"> {{ $t('common.touchdown')}}</div>
+        <div class="text-c"> {{ i18n_t('common.touchdown')}}</div>
         <div class="chart-bar">
           <span class="text-orange">{{lodash.get(match_info, 'msc.S6014.home')||0}}</span>
           <div class="bar-progress relative-position">

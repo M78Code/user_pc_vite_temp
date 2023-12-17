@@ -595,7 +595,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
         if (!data || data.length == 0) {
           set_toast({
             // #TODO IMIT
-            // txt: t("bet_record.bet_match_tishi"),
+            // txt: i18n_t("bet_record.bet_match_tishi"),
           });
 
           sessionStorage.setItem("match_list_ofdetails", "");

@@ -6,7 +6,7 @@
 <template>
   <div class="detail-bread">
     <div class="detail-bread-item " style="cursor: pointer;" @click="jumpTo">
-      <span >{{ $t(breadCrumbs_firstOne) }}</span>
+      <span >{{ i18n_t(breadCrumbs_firstOne) }}</span>
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/t_left.png`" alt="">
     </div>
     <div class="detail-bread-item" @click="jumpToLeagues()">

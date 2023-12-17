@@ -10,23 +10,23 @@
     <div class="header">
       <div class="col1"></div>
       <!-- 球队 -->
-      <div class="col2">{{ $t('vsport.gtab1')}}</div>
+      <div class="col2">{{ i18n_t('vsport.gtab1')}}</div>
       <!-- 比赛 -->
-      <div class="col3">{{ $t('vsport.gtab2')}}</div>
+      <div class="col3">{{ i18n_t('vsport.gtab2')}}</div>
       <!-- 胜/平/负 -->
-      <div class="col4">{{ $t('vsport.gtab3')}}</div>
+      <div class="col4">{{ i18n_t('vsport.gtab3')}}</div>
       <!-- 进 -->
-      <div class="col5">{{ $t('vsport.gtab4')}}</div>
+      <div class="col5">{{ i18n_t('vsport.gtab4')}}</div>
       <!-- 失 -->
-      <div class="col6">{{ $t('vsport.gtab5')}}</div>
+      <div class="col6">{{ i18n_t('vsport.gtab5')}}</div>
       <!-- 净胜球 -->
-      <div class="col7">{{ $t('vsport.gtab6')}}</div>
+      <div class="col7">{{ i18n_t('vsport.gtab6')}}</div>
       <!-- 积分 -->
-      <div class="col8">{{ $t('vsport.gtab7')}}</div>
+      <div class="col8">{{ i18n_t('vsport.gtab7')}}</div>
     </div>
     <!-- 小组 -->
     <div class="group-item" v-for="(item,index) in vsport_ctr.group_rank_list" :key="index">
-      <div class="group-name">{{ $t('vsport.xgroup').replace('%s',item.groupId)}}</div>
+      <div class="group-name">{{ i18n_t('vsport.xgroup').replace('%s',item.groupId)}}</div>
       <div class="team-item" v-for="(match,key) in item.sVirtualSportXZTeamRankingDetailPOList" :key="key">
         <div class="col1 din-medium">{{match.ranking}}</div>
         <div class="col2 relative-position">

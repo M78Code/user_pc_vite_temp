@@ -105,7 +105,7 @@ export default {
           return;
         } else if (["0401038"].includes(code)) {
           // const msg_nodata_22 = i18n_t("msg.msg_nodata_22");
-          const msg_nodata_22 = this.$t("msg.msg_nodata_22");
+          const msg_nodata_22 = i18n_t("msg.msg_nodata_22");
           this.$toast(msg_nodata_22, 1500);
         } else {
           this.$toast("暂无历史记录数据", 1500);
@@ -166,7 +166,7 @@ export default {
           this.get_everyDay_list = [];
           this.has_data = false;
           if (["0401038"].includes(code)) {
-            const msg_nodata_22 = this.$t("msg.msg_nodata_22");
+            const msg_nodata_22 = i18n_t("msg.msg_nodata_22");
             this.$toast(msg_nodata_22, 1500);
           }
         }

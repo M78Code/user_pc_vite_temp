@@ -172,7 +172,7 @@ const bet_col = computed(() => {
     // 波胆
   } else if (_play_current_key == 'hpsBold') {
     let { mhn, man } = match.value
-    let [draw, ht_draw] = t('list.match_tpl_title.tpl1.bold_bet_col')
+    let [draw, ht_draw] = i18n_t('list.match_tpl_title.tpl1.bold_bet_col')
     bet_col = [mhn, draw, man, mhn, ht_draw, man]
     if (multi_column) {
       bet_col.push(...['', '', '', '', '', '', ''])
@@ -181,7 +181,7 @@ const bet_col = computed(() => {
   } else if (_play_current_key == 'hps15Minutes') {
     let start = match.value.hSpecial - 1,
       end = match.value.hSpecial + (multi_column ? 3 : 1);
-    bet_col = [...t('list.match_tpl_title.tpl1.15minutes_bet_col')]
+    bet_col = [...i18n_t('list.match_tpl_title.tpl1.15minutes_bet_col')]
     if (match.value.hSpecial > 3) {
       start -= 1
       end -= 1
@@ -208,43 +208,43 @@ const bet_col = computed(() => {
     }
     // 冠军
   } else if (_play_current_key == 'hpsOutright') {
-    bet_col = [t('list.outright'), '', '', '', '', '']
+    bet_col = [i18n_t('list.outright'), '', '', '', '', '']
     if (multi_column) {
       bet_col.push(...['', '', '', '', '', '', ''])
     }
     // 晋级
   } else if (_play_current_key == 'hpsPromotion') {
-    bet_col = [t('list.promotion'), '', '', '', '', '']
+    bet_col = [i18n_t('list.promotion'), '', '', '', '', '']
     if (multi_column) {
       bet_col.push(...['', '', '', '', '', '', ''])
     }
     //角球
   } else if (_play_current_key === 'hpsCorner') {
-    bet_col = [...t('list.match_tpl_title.tpl1.corner_bet_col')]
+    bet_col = [...i18n_t('list.match_tpl_title.tpl1.corner_bet_col')]
     if (multi_column) {
-      bet_col.push(...[...t('list.match_tpl_title.tpl13_m.corner_col'), '', '', ''])
+      bet_col.push(...[...i18n_t('list.match_tpl_title.tpl13_m.corner_col'), '', '', ''])
     }
     //点球
   } else if (_play_current_key == 'hpsPenalty') {
-    bet_col = [...t('list.match_tpl_title.tpl1.penalty_bet_col')]
+    bet_col = [...i18n_t('list.match_tpl_title.tpl1.penalty_bet_col')]
     if (multi_column) {
       bet_col = bet_col.slice(0, 3)
-      bet_col.push(...[...t('list.match_tpl_title.tpl13_m.penalty_col'), '', '', '', '', '', '', '', ''])
+      bet_col.push(...[...i18n_t('list.match_tpl_title.tpl13_m.penalty_col'), '', '', '', '', '', '', '', ''])
     }
     //加时赛
   } else if (_play_current_key == 'hpsOvertime') {
-    bet_col = [...t('list.match_tpl_title.tpl1.overtime_bet_col')]
+    bet_col = [...i18n_t('list.match_tpl_title.tpl1.overtime_bet_col')]
     if (multi_column) {
-      bet_col.push(...[...t('list.match_tpl_title.tpl13_m.overtime_col'), '', '', '', '', ''])
+      bet_col.push(...[...i18n_t('list.match_tpl_title.tpl13_m.overtime_col'), '', '', '', '', ''])
     }
     // 罚牌
   } else if (_play_current_key == 'hpsPunish') {
-    bet_col = [...t('list.match_tpl_title.tpl1.punish_bet_col')]
+    bet_col = [...i18n_t('list.match_tpl_title.tpl1.punish_bet_col')]
     if (multi_column) {
-      bet_col.push(...[...t('list.match_tpl_title.tpl13_m.punish_col'), '', '', ''])
+      bet_col.push(...[...i18n_t('list.match_tpl_title.tpl13_m.punish_col'), '', '', ''])
     }
   } else {
-    bet_col = [...t('list.match_tpl_title.tpl1.bet_col')]
+    bet_col = [...i18n_t('list.match_tpl_title.tpl1.bet_col')]
     if (multi_column) {
       bet_col.push(...['', '', '', '', '', '', ''])
     }
@@ -261,23 +261,23 @@ function set_play_name_list(tab_play_keys = '') {
   if (typeof tab_play_keys !== 'string') return;
   let play_name_obj = {
     // 角球
-    hpsCorner: { play_name: t('list.corner'), field: 'hpsCorner' },
+    hpsCorner: { play_name: i18n_t('list.corner'), field: 'hpsCorner' },
     // 罚牌
-    hpsPunish: { play_name: t('list.punish'), field: 'hpsPunish' },
+    hpsPunish: { play_name: i18n_t('list.punish'), field: 'hpsPunish' },
     // 晋级赛
-    hpsPromotion: { play_name: t('list.promotion'), field: 'hpsPromotion' },
+    hpsPromotion: { play_name: i18n_t('list.promotion'), field: 'hpsPromotion' },
     // 冠军
-    hpsOutright: { play_name: t('list.outright'), field: 'hpsOutright' },
+    hpsOutright: { play_name: i18n_t('list.outright'), field: 'hpsOutright' },
     // 加时赛
-    hpsOvertime: { play_name: t('list.overtime'), field: 'hpsOvertime' },
+    hpsOvertime: { play_name: i18n_t('list.overtime'), field: 'hpsOvertime' },
     // 点球大战
-    hpsPenalty: { play_name: t('list.penalty'), field: 'hpsPenalty' },
+    hpsPenalty: { play_name: i18n_t('list.penalty'), field: 'hpsPenalty' },
     // 15分钟玩法
-    hps15Minutes: { play_name: t('list.15minutes'), field: 'hps15Minutes' },
+    hps15Minutes: { play_name: i18n_t('list.15minutes'), field: 'hps15Minutes' },
     // 波胆
-    hpsBold: { play_name: t('list.bold'), field: 'hpsBold' },
+    hpsBold: { play_name: i18n_t('list.bold'), field: 'hpsBold' },
     // 5分钟玩法 5minutes_roll
-    hps5Minutes: { play_name: get_match_status(lodash.get(match.value, 'ms'), [110]) == 1 ? t('list.5minutes_roll') : t('list.5minutes'), field: 'hps5Minutes' },
+    hps5Minutes: { play_name: get_match_status(lodash.get(match.value, 'ms'), [110]) == 1 ? i18n_t('list.5minutes_roll') : i18n_t('list.5minutes'), field: 'hps5Minutes' },
   }
   tab_play_keys = tab_play_keys.split(',')
   tab_play_keys.forEach(key => {

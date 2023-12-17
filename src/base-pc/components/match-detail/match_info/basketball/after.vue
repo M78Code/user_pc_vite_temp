@@ -60,7 +60,7 @@
                 <span>Q1</span>
                 <span>Q2</span>
                 <!-- 半场 -->
-                <span>{{ $t("common.half_") }}</span>
+                <span>{{ i18n_t("common.half_") }}</span>
                 <span>Q3</span>
                 <span>Q4</span>
               </template>
@@ -71,7 +71,7 @@
               <span>1</span>
               <span>2</span>
               <!-- 半场 -->
-              <span>{{ $t("common.half_") }}</span>
+              <span>{{ i18n_t("common.half_") }}</span>
               <span>3</span>
               <span>4</span>
             </template>
@@ -99,7 +99,7 @@
           }}</span>
         </template>
         <!-- 总分 -->
-        <span class="common-score score">{{ $t("common.total") }}</span>
+        <span class="common-score score">{{ i18n_t("common.total") }}</span>
       </div>
     </div>
 

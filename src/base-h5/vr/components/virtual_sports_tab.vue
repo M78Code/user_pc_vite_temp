@@ -54,7 +54,7 @@ export default {
     //   sub_menu_type: 'get_curr_sub_menu_type',
     //   is_show_analyse: 'get_is_show_details_analyse'
     // }),
-    get_details_item(){return },
+    get_details_item(){return VR_CTR.get_details_item()  },
     get_uid(){return },
     get_tab_fix(){return },
     get_fewer(){return },

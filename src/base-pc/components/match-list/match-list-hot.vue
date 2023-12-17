@@ -11,7 +11,7 @@
   >
     <div class="detais-hot-head">
       <img :src="compute_local_project_file_path('/image/svg/hot.svg')" />
-      <div>{{ $t('list.hot_match')}}</div>
+      <div>{{ i18n_t('list.hot_match')}}</div>
     </div>
      <!-- 列表容器 -->
     <load-data :state="load_data_state">

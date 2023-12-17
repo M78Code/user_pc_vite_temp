@@ -5,7 +5,7 @@
       <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="index">
         <div class="filter-label" @click="choose_filter_tab(item, index)" :class="{ 'checked': MenuData.mid_menu_result.md == item.label }">
           {{item.name}}
-          <!-- {{ $t(item.value, {month: $t(`ouzhou.time.month_` + item.month), day: item.day}) }} -->
+          <!-- {{ i18n_t(item.value, {month: i18n_t(`ouzhou.time.month_` + item.month), day: item.day}) }} -->
           <div class="current-mark" :class="{'show-mark':  MenuData.mid_menu_result.md == item.label}"></div>
         </div>
         <div class="filter-tab-split-line" v-show="index != current_filter_list.length - 1"></div>

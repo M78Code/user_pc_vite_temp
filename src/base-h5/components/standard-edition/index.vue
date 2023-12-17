@@ -1,21 +1,24 @@
 <template>
     <div class="dialog" v-if="isShow">
         <div class="standard-edition">
-            <div class="item-box">
-                <div class="bg">
-                    <div class="title">{{ $t('common.zhuanye') }}</div>
-                    <div class="desc">{{ $t('common.gongnengwanshan') }}</div>
-                    <img :src="compute_img_url('noob_version')" alt="" />
-                </div>
-                <div class="btn" @click="set_standard_edition(1)">{{ $t('common.use') }}</div>
+            <div class="close" @click="isShow=false">
+                <img :src="compute_local_project_file_path('/image/common/dialog_close.png')" alt="">
             </div>
             <div class="item-box">
                 <div class="bg">
-                    <div class="title">{{ $t('common.xinshou') }}</div>
-                    <div class="desc">{{ $t('common.yemianjianjie') }}</div>
-                    <img :src="compute_img_url('vocational_version')" alt="" />
+                    <div class="title">{{ i18n_t('common.zhuanye') }}</div>
+                    <div class="desc">{{ i18n_t('common.gongnengwanshan') }}</div>
+                    <img class='version_img' :src="compute_img_url('noob_version')" alt="" />
                 </div>
-                <div class="btn" @click="set_standard_edition(2)">{{ $t('common.use') }}</div>
+                <div class="btn" @click="set_standard_edition(2)">{{ i18n_t('common.use') }}</div>
+            </div>
+            <div class="item-box">
+                <div class="bg">
+                    <div class="title">{{ i18n_t('common.xinshou') }}</div>
+                    <div class="desc">{{ i18n_t('common.yemianjianjie') }}</div>
+                    <img class='version_img' :src="compute_img_url('vocational_version')" alt="" />
+                </div>
+                <div class="btn" @click="set_standard_edition(1)">{{ i18n_t('common.use') }}</div>
             </div>
         </div>
     </div>
@@ -23,7 +26,7 @@
 <script setup>
 import { ref } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import {LocalStorage,compute_img_url} from 'src/output/'
+import {LocalStorage,compute_img_url,compute_local_project_file_path} from 'src/output/'
 const isShow = ref(!LocalStorage.get('standard_edition'));
 const emits = defineEmits(["change"])
 function set_standard_edition(v) {
@@ -47,12 +50,21 @@ function set_standard_edition(v) {
     background: #00000050;
 }
 .standard-edition {
+    position: relative;
     display: flex;
     border-radius: 20px;
     padding: 24px 16px 16px;
     justify-content: space-between;
     background-color: var(--q-gb-bg-c-15);
     width: 348px;
+    .close{
+        position: absolute;
+        top: -38px;
+        right: 0;
+        width: 28px;
+        height: 28px;
+        img{width: 100%;}
+    }
     .item-box {
         text-align: center;
         width: 150px;
@@ -75,7 +87,7 @@ function set_standard_edition(v) {
         margin-top: 4px;
     }
 
-    img {
+    .version_img {
         display: block;
         width: 150px;
         height: 90px;
