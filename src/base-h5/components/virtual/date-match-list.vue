@@ -12,14 +12,14 @@
       </div>
       <!-- 滚球结束倒计时 -->
       <div class="date-title row justify-center items-center end">
-        <div class="d-t-c" v-html="$root.$t('virtual_sports.match_status.x_to_ended').replace('%s',basketball_end_time)"></div>
+        <div class="d-t-c" v-html="i18n_t('virtual_sports.match_status.x_to_ended').replace('%s',basketball_end_time)"></div>
       </div>
 
       <div class="data-wrapper-list">
         <div class="d-h-w">
           <div class="stage-wrapper row justify-center">
             <div class="s-w-title" :class="{focus:(status - 1) <= m_status}" v-for="(status, index) of 3" :key="index">
-              {{$t(`virtual_sports.match_status[${status-1}]`)}}
+              {{i18n_t(`virtual_sports.match_status[${status-1}]`)}}
             </div>
           </div>
           <!-- 线性进度 -->

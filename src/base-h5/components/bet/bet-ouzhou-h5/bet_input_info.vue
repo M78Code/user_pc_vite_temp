@@ -2,9 +2,9 @@
 <template>
     <div class="bet_input_info flex_input component bet-input-info">
        <div class="info_left">
-       <div class="size_16 color_a1a1">{{$t('bet.bet')}}</div>
+       <div class="size_16 color_a1a1">{{i18n_t('bet.bet')}}</div>
         <div class="size_14">
-            <span>{{$t('bet.total_win2')}}</span>
+            <span>{{i18n_t('bet.total_win2')}}</span>
             <!-- <span class="margin_left_4">&thinsp;{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span> -->
             <span class="margin_left_4" v-if="[1].includes(item.playId*1)">
                 {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,item.oddFinally), BetData.bet_amount)) || '0.00' }}

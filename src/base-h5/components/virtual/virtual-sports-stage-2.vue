@@ -91,7 +91,7 @@
           <!-- 已完赛 -->
           <div :style="{visibility: ![1002, 1011, 1010, 1009].includes(current_sub_menu_id) ? 'hidden':'visible'}"
             v-if="source != 'detail'"
-            class="match-over">{{ $t('collect.match_end')}}</div>
+            class="match-over">{{ i18n_t('collect.match_end')}}</div>
           <div v-for="(score,i) in get_score_list()" :key="i">
             <div class="score-box row justify-center items-center" :class="get_rank_background(score,current_sub_menu_id)"></div>
           </div>
@@ -103,7 +103,7 @@
             <img v-img="([lodash.get(current_match,'mhlu'), lodash.get(current_match,'frmhn')])" />
           </div>
           <div class="msc-wrap yb-flex-center">
-            <div class="match-end">{{ $t('collect.match_end')}}</div>
+            <div class="match-end">{{ i18n_t('collect.match_end')}}</div>
             <div class="match-msc">
               <span>{{home_score}}</span>
               <span class="heng">-</span>
@@ -113,7 +113,7 @@
                 v-show="current_match && (current_match.s170_home > 0 || current_match.s170_away > 0)"
                 class="match-msc match-penalty" >
               <!--<span>-->
-              <!--  {{ $t('mmp[1][50]')}}:&nbsp;-->
+              <!--  {{ i18n_t('mmp[1][50]')}}:&nbsp;-->
               <!--</span>-->
               <i class="icon icon-penalty"></i>
               <div class="penalty-score">

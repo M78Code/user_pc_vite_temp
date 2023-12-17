@@ -8,17 +8,17 @@
   <div class="basketball-result">
     <!-- 比赛时间 -->
     <div class="time yb-flex-center" :class="{end:vsport_ctr.basketball_line_width == 100}" v-if="vsport_ctr.info.mmp == 'PREGAME'">
-      <div>{{$root.$t('vsport.period')}}</div>
+      <div>{{i18n_t('vsport.period')}}</div>
       <div>{{vsport_ctr.basketball_strat_time}}</div>
     </div>
     <!-- 比赛结束 -->
-    <div class="match-end" v-if="vsport_ctr.info.mmp == 'INGAME'">{{$root.$t('vsport.full_time')}}</div>
+    <div class="match-end" v-if="vsport_ctr.info.mmp == 'INGAME'">{{i18n_t('vsport.full_time')}}</div>
     <!-- 比赛进度 -->
     <div class="progress" v-if="vsport_ctr.info.mmp == 'PREGAME' || vsport_ctr.status == 2">
       <div class="text yb-flex-center">
-        <div class="col">{{$root.$t('vsport.start')}}</div>
-        <div class="col">{{$root.$t('vsport.last_minute')}}</div>
-        <div class="col">{{$root.$t('vsport.end')}}</div>
+        <div class="col">{{i18n_t('vsport.start')}}</div>
+        <div class="col">{{i18n_t('vsport.last_minute')}}</div>
+        <div class="col">{{i18n_t('vsport.end')}}</div>
       </div>
       <div class="line-wrap">
         <div class="round active"></div>

@@ -8,24 +8,24 @@ export const enum_time_type = [1, 2, 3, 4]
 
 
 export const bet_result = {
-    "2": t("bet_record.bet_no_status02"), //'走水',
-    "3": t("bet_record.bet_no_status03"), //'输',
-    "4": t("bet_record.bet_no_status04"), //'赢',
-    "5": t("bet_record.bet_no_status05"), //'赢半',
-    "6": t("bet_record.bet_no_status06"), //'输半',
-    "7": t("bet_record.bet_no_status07"), //'比赛取消',
-    "8": t("bet_record.bet_no_status08"), //'比赛延期',
-    "11": t("bet_record.bet_no_status11"), // '比赛延迟',
-    "12": t("bet_record.bet_no_status12"), // '比赛中断',
-    "15": t("bet_record.bet_no_status15"), // '比赛放弃'
+    "2": i18n_t("bet_record.bet_no_status02"), //'走水',
+    "3": i18n_t("bet_record.bet_no_status03"), //'输',
+    "4": i18n_t("bet_record.bet_no_status04"), //'赢',
+    "5": i18n_t("bet_record.bet_no_status05"), //'赢半',
+    "6": i18n_t("bet_record.bet_no_status06"), //'输半',
+    "7": i18n_t("bet_record.bet_no_status07"), //'比赛取消',
+    "8": i18n_t("bet_record.bet_no_status08"), //'比赛延期',
+    "11": i18n_t("bet_record.bet_no_status11"), // '比赛延迟',
+    "12": i18n_t("bet_record.bet_no_status12"), // '比赛中断',
+    "15": i18n_t("bet_record.bet_no_status15"), // '比赛放弃'
 }
 
 export const outcome = {
-    "2": t("bet_record.bet_no_status02"), //'走水',
-    "3": t("bet_record.bet_no_status03"), //'输',
-    "4": t("bet_record.bet_no_status04"), //'赢',
-    "5": t("bet_record.bet_no_status05"), //'赢半',
-    "6": t("bet_record.bet_no_status06"), //'输半',
+    "2": i18n_t("bet_record.bet_no_status02"), //'走水',
+    "3": i18n_t("bet_record.bet_no_status03"), //'输',
+    "4": i18n_t("bet_record.bet_no_status04"), //'赢',
+    "5": i18n_t("bet_record.bet_no_status05"), //'赢半',
+    "6": i18n_t("bet_record.bet_no_status06"), //'输半',
 }
 
 /**
@@ -39,7 +39,7 @@ export const calc_text = (data_b) => {
     let text = ''
     switch (data_b.orderStatus) {
         case '0':
-            text = t('bet_record.successful_betting')
+            text = i18n_t('bet_record.successful_betting')
             color = 'green'
             break;
         case '1':
@@ -62,7 +62,7 @@ export const calc_text = (data_b) => {
                 }
                 let betresult = data_b.orderVOS[0]?.betResult || ''
                 if (betresult == 13 || betresult == 16) {
-                    text = t('bet_record.invalid')
+                    text = i18n_t('bet_record.invalid')
                 } else {
                     if (betresult == 4 || betresult == 5) {
                         color = 'red'
@@ -73,19 +73,19 @@ export const calc_text = (data_b) => {
                 if (data_b.outcome == 4 || data_b.outcome == 5) {
                     color = 'red'
                 }
-                text = outcome[data_b.outcome] || t('bet_record.successful_betting')
+                text = outcome[data_b.outcome] || i18n_t('bet_record.successful_betting')
             }
             break;
         case '2':
-            text = t('bet_record.invalid_bet')
+            text = i18n_t('bet_record.invalid_bet')
             color = 'gray'
             break
         case '3':
-            text = t('bet_record.confirming')
+            text = i18n_t('bet_record.confirming')
             color = 'orange'
             break
         case '4':
-            text = t('bet.bet_err')
+            text = i18n_t('bet.bet_err')
             color = 'red'
             break
         default:

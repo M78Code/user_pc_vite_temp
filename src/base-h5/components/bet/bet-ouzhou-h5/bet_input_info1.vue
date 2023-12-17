@@ -3,9 +3,9 @@
     <div class="component bet-input-info1">
         <div class="bet_input_info flex_input">
        <div class="info_left">
-       <div class="size_16 color_a1a1">{{$t('bet.bet')}}</div>
+       <div class="size_16 color_a1a1">{{i18n_t('bet.bet')}}</div>
         <div class="size_14">
-            <span>{{$t('bet.total_win2')}}</span>
+            <span>{{i18n_t('bet.total_win2')}}</span>
             <span class="margin_left_4">{{}}</span>
         </div>
        </div>

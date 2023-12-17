@@ -20,11 +20,11 @@
           </div>
           <!-- 头部 -->
           <div class="header">
-            <div class="col1">{{ $t('analysis_football_matches.rank') }}</div>
-            <div class="col2">{{ $t('analysis_football_matches.team') }}</div>
-            <div class="alliance—col3">{{ $t('analysis_football_matches.victory') }}</div>
-            <div class="alliance—col3">{{ $t('analysis_football_matches.negative') }}</div>
-            <div class="col5">{{ $t('home_popular.win_rate') }}</div>
+            <div class="col1">{{ i18n_t('analysis_football_matches.rank') }}</div>
+            <div class="col2">{{ i18n_t('analysis_football_matches.team') }}</div>
+            <div class="alliance—col3">{{ i18n_t('analysis_football_matches.victory') }}</div>
+            <div class="alliance—col3">{{ i18n_t('analysis_football_matches.negative') }}</div>
+            <div class="col5">{{ i18n_t('home_popular.win_rate') }}</div>
           </div>
           <!-- 主内容 -->
           <div class="group-item">
@@ -49,9 +49,9 @@
         <div class="table-score">
           <!-- 头部 -->
           <div class="header">
-            <div class="col1">{{ $t('analysis_football_matches.rank') }}</div>
-            <div class="col2">{{ $t('home_popular.player') }}</div>
-            <div class="rebounds—col3">{{ $t('analysis_football_matches.team') }}</div>
+            <div class="col1">{{ i18n_t('analysis_football_matches.rank') }}</div>
+            <div class="col2">{{ i18n_t('home_popular.player') }}</div>
+            <div class="rebounds—col3">{{ i18n_t('analysis_football_matches.team') }}</div>
             <div class="col5">
               {{public_form_title.type == '2' ? i18n_t('home_popular.assist') : public_form_title.type == '5' ? i18n_t('match_result.goal') : i18n_t('home_popular.average')}}
             </div>
@@ -78,15 +78,15 @@
         <div class="table-score">
           <!-- 头部 -->
           <div class="header">
-            <div class="col1">{{ $t('analysis_football_matches.rank') }}</div>
-            <div class="col2">{{ $t('analysis_football_matches.team') }}</div>
-            <div class="col3">{{ $t('analysis_football_matches.game') }}</div>
-            <div class="col3">{{ $t('analysis_football_matches.victory') }}</div>
-            <div class="col3">{{ $t('analysis_football_matches.negative') }}</div>
-            <div class="col3">{{ $t('analysis_football_matches.flat') }}</div>
-            <div class="col4">{{ $t('analysis_football_matches.gain_loss') }}</div>
-            <div class="col4">{{ $t('analysis_football_matches.net_win') }}</div>
-            <div class="col5">{{ $t('analysis_football_matches.integral') }}</div>
+            <div class="col1">{{ i18n_t('analysis_football_matches.rank') }}</div>
+            <div class="col2">{{ i18n_t('analysis_football_matches.team') }}</div>
+            <div class="col3">{{ i18n_t('analysis_football_matches.game') }}</div>
+            <div class="col3">{{ i18n_t('analysis_football_matches.victory') }}</div>
+            <div class="col3">{{ i18n_t('analysis_football_matches.negative') }}</div>
+            <div class="col3">{{ i18n_t('analysis_football_matches.flat') }}</div>
+            <div class="col4">{{ i18n_t('analysis_football_matches.gain_loss') }}</div>
+            <div class="col4">{{ i18n_t('analysis_football_matches.net_win') }}</div>
+            <div class="col5">{{ i18n_t('analysis_football_matches.integral') }}</div>
           </div>
           <!-- 主内容 -->
           <div class="group-item">

@@ -13,10 +13,10 @@
     
   </div> 
   <div class="bet_content_bottom">
-    <p class="bet_cancel"  @click.self="set_retain_selection">{{$t('bet.save')}}</p>
-    <!-- <p class="bet_cancel"  @touchmove.prevent>{{$t('bet.save')}}</p> -->
+    <p class="bet_cancel"  @click.self="set_retain_selection">{{i18n_t('bet.save')}}</p>
+    <!-- <p class="bet_cancel"  @touchmove.prevent>{{i18n_t('bet.save')}}</p> -->
     <p class="place_bet" @click="pack_up">
-      <span>{{$t('bet.understand')}}</span>
+      <span>{{i18n_t('bet.understand')}}</span>
     </p>
   </div>
   <div style="display:none">{{ BetData.bet_data_class_version }}-{{UserCtr.user_version}}</div>

@@ -69,7 +69,7 @@
             <q-item-section class="personal-content">
               <div class="flex title">
                 <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
-                <div>{{ $t('ouzhou.setting_menu.language') }}</div>
+                <div>{{ i18n_t('ouzhou.setting_menu.language') }}</div>
               </div>
               <img :class="['arrow', { expend: visible }]" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/arrow.png`"
                 alt="" />

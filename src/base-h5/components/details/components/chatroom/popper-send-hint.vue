@@ -7,14 +7,14 @@
   <div class="popper t-popper">
     <div class="popper_content">
       <template v-if="type === 'condition'">
-        <div class="popper_text">{{  t('chatroom.pop_send_hint1')  }}</div>
-        <div class="popper_text">{{  t('chatroom.pop_send_hint2')  }}</div>
-        <div class="popper_text">{{  t('chatroom.pop_send_hint3')  }}</div>
+        <div class="popper_text">{{  i18n_t('chatroom.pop_send_hint1')  }}</div>
+        <div class="popper_text">{{  i18n_t('chatroom.pop_send_hint2')  }}</div>
+        <div class="popper_text">{{  i18n_t('chatroom.pop_send_hint3')  }}</div>
       </template>
       <template v-if="type === 'rules'">
         <div v-if="ban_placeholder" class="popper_text_ban">{{ ban_placeholder }}</div>
-        <div class="popper_text">{{  t('chatroom.pop_send_hint4')  }}</div>
-        <div class="popper_text">{{  t('chatroom.pop_send_hint5')  }}</div>
+        <div class="popper_text">{{  i18n_t('chatroom.pop_send_hint4')  }}</div>
+        <div class="popper_text">{{  i18n_t('chatroom.pop_send_hint5')  }}</div>
       </template>
     </div>
   </div>

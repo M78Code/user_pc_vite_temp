@@ -12,7 +12,7 @@
         <div class="loading-wrap">
           <div class="img-loading"></div>
           <div class="text-center loading-text flex items-end justify-center">
-            {{ $t("bet.bet_loading") + "..." }}
+            {{ i18n_t("bet.bet_loading") + "..." }}
             <!-- 内容加载中... -->
           </div>
         </div>

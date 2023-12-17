@@ -19,7 +19,7 @@
         <div class="d-h-w">
           <div class="stage-wrapper row justify-center">
             <div class="s-w-title" :class="{focus:(status - 1) <= m_status}" v-for="(status, index) of 3" :key="index">
-              {{$t(`virtual_sports.match_status[${status-1}]`)}}
+              {{i18n_t(`virtual_sports.match_status[${status-1}]`)}}
             </div>
           </div>
           <!-- 线性进度 -->

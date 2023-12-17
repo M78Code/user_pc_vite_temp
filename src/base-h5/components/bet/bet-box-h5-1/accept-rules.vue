@@ -6,12 +6,12 @@
   <!-- 自动接受更好赔率规则 -->
   <div class="accept-rules fullscreen" @click.self="change_show" @touchstart="touchstart_handle($event)">
     <div class="fixed-center content-box" :class="{'hengping-content-box': get_is_hengping}">
-      <header>{{ $t("ac_rules.auto")}}</header>
-      <p><span>1</span> {{ $t('accept_rules.if_bet_when') }}<span class="chu">{{ $t('accept_rules.increased_odds')}}</span> ，{{ $t('accept_rules.system_default') }}<span class="chu">{{ $t('accept_rules.accept_odds')}}</span>，{{ $t('accept_rules.will_interrupt_behavior') }}</p>
-      <p><span>2</span>{{ $t('accept_rules.if_bet_when') }}<span class="chu">{{ $t('accept_rules.lower_odds')}}</span>，{{ $t('accept_rules.system_default') }}<span class="chu">{{ $t('accept_rules.do_not_accept_odds')}}</span>，{{ $t('accept_rules.interrupt_your_betting') }}</p>
-      <p><span>3</span>{{ $t('accept_rules.if') }}<span class="chu">{{ $t('accept_rules.feature_not_checked')}}</span>，{{ $t('accept_rules.system_will_think') }}<span class="chu">{{ $t('accept_rules.automatically_odds')}}</span>{{ $t('accept_rules.matter_placing_content') }}</p>
-      <p v-if="get_chat_bet"><span>4</span>{{ $t('accept_rules.chat_msg')}}</p>
-      <footer @click="change_show">{{ $t("ac_rules.understand")}}</footer>
+      <header>{{ i18n_t("ac_rules.auto")}}</header>
+      <p><span>1</span> {{ i18n_t('accept_rules.if_bet_when') }}<span class="chu">{{ i18n_t('accept_rules.increased_odds')}}</span> ，{{ i18n_t('accept_rules.system_default') }}<span class="chu">{{ i18n_t('accept_rules.accept_odds')}}</span>，{{ i18n_t('accept_rules.will_interrupt_behavior') }}</p>
+      <p><span>2</span>{{ i18n_t('accept_rules.if_bet_when') }}<span class="chu">{{ i18n_t('accept_rules.lower_odds')}}</span>，{{ i18n_t('accept_rules.system_default') }}<span class="chu">{{ i18n_t('accept_rules.do_not_accept_odds')}}</span>，{{ i18n_t('accept_rules.interrupt_your_betting') }}</p>
+      <p><span>3</span>{{ i18n_t('accept_rules.if') }}<span class="chu">{{ i18n_t('accept_rules.feature_not_checked')}}</span>，{{ i18n_t('accept_rules.system_will_think') }}<span class="chu">{{ i18n_t('accept_rules.automatically_odds')}}</span>{{ i18n_t('accept_rules.matter_placing_content') }}</p>
+      <p v-if="get_chat_bet"><span>4</span>{{ i18n_t('accept_rules.chat_msg')}}</p>
+      <footer @click="change_show">{{ i18n_t("ac_rules.understand")}}</footer>
     </div>
   </div>
 </template>

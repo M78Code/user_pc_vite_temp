@@ -3,19 +3,19 @@
         <div class="standard-edition">
             <div class="item-box">
                 <div class="bg">
-                    <div class="title">{{ $t('common.zhuanye') }}</div>
-                    <div class="desc">{{ $t('common.gongnengwanshan') }}</div>
+                    <div class="title">{{ i18n_t('common.zhuanye') }}</div>
+                    <div class="desc">{{ i18n_t('common.gongnengwanshan') }}</div>
                     <img :src="compute_img_url('noob_version')" alt="" />
                 </div>
-                <div class="btn" @click="set_standard_edition(1)">{{ $t('common.use') }}</div>
+                <div class="btn" @click="set_standard_edition(1)">{{ i18n_t('common.use') }}</div>
             </div>
             <div class="item-box">
                 <div class="bg">
-                    <div class="title">{{ $t('common.xinshou') }}</div>
-                    <div class="desc">{{ $t('common.yemianjianjie') }}</div>
+                    <div class="title">{{ i18n_t('common.xinshou') }}</div>
+                    <div class="desc">{{ i18n_t('common.yemianjianjie') }}</div>
                     <img :src="compute_img_url('vocational_version')" alt="" />
                 </div>
-                <div class="btn" @click="set_standard_edition(2)">{{ $t('common.use') }}</div>
+                <div class="btn" @click="set_standard_edition(2)">{{ i18n_t('common.use') }}</div>
             </div>
         </div>
     </div>
