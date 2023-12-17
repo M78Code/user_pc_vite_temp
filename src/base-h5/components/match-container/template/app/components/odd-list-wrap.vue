@@ -45,8 +45,9 @@
         :class="['standard-odd-l-w',{'status2':standard_odd_status == 1}]" >
         <!--标准版-->
         <div class="standard-odd-list row"  :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
-          <div class="odd-column-w" :key="hp_i_i+''+standard_odd_status" :class="{'boxing':match.csid == 12 } "
+          <div class="odd-column-w" :class="[{ clounm2: ![1,4,16].includes(+match.csid) }, {'boxing':match.csid == 12 }]" :key="hp_i_i+''+standard_odd_status"
                v-for="(hp_item_obj,hp_i_i) in fill_empty_hps(get_hp_list(standard_odd_status))">
+            <!-- 足球 1，水球 16， 冰球 4 有三行 -->
             <div class="odd-wrap-min" :class="[`hp-${get_ol_length(hp_item_obj,hp_i_i)}`, { 'is-small': match.csid != 1 }]"
                 :key="ol_item_i" v-for="(ol_item,ol_item_i) in get_ol_list(hp_item_obj,hp_i_i)">
               <odd-column-item
@@ -1222,6 +1223,11 @@ onUnmounted(() => {
       &.boxing {
         .odd-wrap-min {
           width: 0.91rem;
+        }
+      }
+      &.clounm2{
+        .odd-wrap-min{
+          height: 0.36rem;
         }
       }
     }

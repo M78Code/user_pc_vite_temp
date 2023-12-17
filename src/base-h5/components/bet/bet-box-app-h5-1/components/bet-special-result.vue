@@ -22,7 +22,7 @@
 
             <div class="bet-right">
                 <div class="bet-odds">
-                    <span class="font14 font700 mr-10">@{{ items.oddsValues }}</span>
+                    <span class="font14 font700 mr-10">@<span class="font22">{{ items.oddsValues }}</span></span>
                 </div>
             </div>
         </div>
@@ -48,11 +48,15 @@ const props = defineProps({
 </style>
 
 <style scoped lang="scss">
+.font22{
+    font-size: 0.2rem;
+}
 .bet-list {
+    margin-bottom: 0.05rem;
     .bet-content {
         min-height: 76px;
         padding: 12px;
-        // padding-left: 34px;
+        //padding-left: 34px;
         font-size: 13px;
         font-weight: 500;
         font-style: normal;
@@ -94,6 +98,14 @@ const props = defineProps({
         .bet-left {
             width: 230px;
             color: var(--q-gb-t-c-11);
+            .my-left{
+                padding-left: 0.1rem;
+                border-left: 2px solid var(--q-gb-bg-c-13);
+                margin-top: 0.06rem;
+                color: var(--q-gb-t-c-3);
+                font-size: 0.12rem;
+                font-family: PingFang SC;
+            }
         }
         .bet-loading{
             color: var(--q-gb-t-c-2);

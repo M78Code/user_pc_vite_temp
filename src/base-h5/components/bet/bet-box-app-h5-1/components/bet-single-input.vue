@@ -182,11 +182,11 @@ onUnmounted(() => {
 }
 .bet_single_info_btn{
     width: 25%;
-    font-size: 16px;
+    font-size: 14px;
     background: var(--q-gb-t-c-1);
     color: var(--q-gb-t-c-14);
     border-radius: 10px;
-    height: 0.38rem;
+    height: 0.44rem;
     margin-top: 0.1rem;
     margin-left: .08rem;
     display: flex;

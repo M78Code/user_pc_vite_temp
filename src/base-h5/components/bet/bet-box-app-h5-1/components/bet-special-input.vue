@@ -11,8 +11,8 @@
       <div class="content-b" :class="{ 'red-color': !money_ok }" @click="input_click">
         
         <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
-        <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
         <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ items.min_money }}-{{ items.max_money }}</span>
+        <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
       </div>
     </div>
   </div>
@@ -66,7 +66,6 @@ onMounted(() => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = (new_money) => {
-  console.error('change_money_handle-single',new_money,new_money.params.id,props.items.max_money,new_money.money)
   if(props.items.id == new_money.params.id){
     if( new_money.money*1 > props.items.max_money *1){
       ref_data.money =  props.items.max_money
@@ -108,7 +107,6 @@ const set_special_series = (money,ty_id) => {
   list.filter(item => {
     item.show_quick = false
       // 显示指定投注项的快捷金额按钮
-      console.error('ssssset_special_seriesss',id)
     if(item.id == id){
         item.show_quick = true
         if(money == 'edit'){

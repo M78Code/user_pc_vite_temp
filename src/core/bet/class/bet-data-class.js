@@ -17,7 +17,6 @@ class BetData {
    
   }
   init_core() {
-    console.error('init_core')
     this.deviceType = 1  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
     // 当前赔率
     this.cur_odd = "eu";
@@ -392,7 +391,6 @@ this.bet_appoint_ball_head= null */
     this.is_virtual_bet = is_virtual_bet
     // 设置 投注内容
     this.bet_read_write_refer_obj[custom_id] = bet_refer_obj
-    console.error('bet_read_write_refer_obj')
     // 单关/串关 投注
     if (this.is_bet_single) {
       // 单关 不合并 只有一条 
@@ -606,7 +604,6 @@ this.bet_appoint_ball_head= null */
     nextTick(()=>{
       LocalStorage.set('bet_data_class',this)
     })
-    console.error('set_bet_data_class_version',JSON.parse(JSON.stringify(this)))
   }, 5)
 
   // 投注成功后 不保留投注项 需要清空投注数据 
