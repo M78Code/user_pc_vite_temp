@@ -41,6 +41,8 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
+import { compute_value_by_cur_odd_type } from "src/output/index.js"
+
 export default defineComponent({
   name: "temp10",
   props: ["item_data", "title"],
@@ -63,7 +65,7 @@ export default defineComponent({
     });
     watch(
       // 深度监听数据的变化及时执行os修改函数
-      () => item_data,
+      () => props.item_data,
       () => {
         temp_odds()
       },
@@ -72,8 +74,8 @@ export default defineComponent({
       }
     );
     const temp_odds = () => {
-      hsw_single = lodash.get(item_data,'hsw').toString()
-      let odd_ol_list = lodash.get(item_data,'hl[0].ol')
+      data.hsw_single = lodash.get(props.item_data,'hsw').toString()
+      let odd_ol_list = lodash.get(props.item_data,'hl[0].ol')
       let odds_list = []
       lodash.forEach(odd_ol_list,(ol_item,i) => {
         let odds_obj = {}
@@ -85,12 +87,13 @@ export default defineComponent({
         Object.assign(odds_obj,ol_item);
         odds_list.push(odds_obj);
       });
-      odds_list = odds_list
+      data.odds_list = odds_list
     };
     return {
       ...toRefs(data),
       BetData,
       get_curr_sub_menu_type,
+      compute_value_by_cur_odd_type,
       lodash,
       temp_odds,
       LOCAL_PROJECT_FILE_PREFIX,

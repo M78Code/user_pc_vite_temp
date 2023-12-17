@@ -42,7 +42,7 @@
           <template>
             <div v-if="[1, 2, 3, 4].includes(lodash.get(match_info,'ms')*1)" class="started">
               <template v-if="scoring">
-                <span class="text-judging">{{ $t('mmp.100.scoring') }}</span>
+                <span class="text-judging">{{ i18n_t('mmp.100.scoring') }}</span>
               </template>
               <template v-else>
                 <span class="text-big">{{lodash.get(match_info,'msc[S1].home')}}</span>

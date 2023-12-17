@@ -23,7 +23,8 @@ os: 1 开盘 ，2 封盘
 
 <script setup name="template4">
 import olStatus from "../ol_status.vue";
-import {defineProps, computed, defineEmits, ref} from "vue"
+// import {defineProps, computed, defineEmits, ref} from "vue"
+import {computed, ref} from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/output/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";

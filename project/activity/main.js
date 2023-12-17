@@ -7,7 +7,7 @@ import App from './App.vue'
  
 import _ from 'lodash';
  
-import { i18n, loadLanguageAsync } from "./src/boot/i18n.js";
+import { i18n, loadLanguageAsync, i18n_t } from "./src/boot/i18n.js";
 import global from './src/boot/globals';
 
 
@@ -19,10 +19,8 @@ window.vue = app;
 
 app.use(global);
 app.use(i18n);
-app.config.globalProperties.t = i18n.global.t;
-window.t = i18n.global.t;
-app.config.globalProperties.i18n_t = i18n.global.t;
-window.i18n_t = i18n.global.t;
+app.config.globalProperties.i18n_t = i18n_t;
+window.i18n_t = i18n_t;
 app.use(Quasar, {
   plugins: {
     Notify

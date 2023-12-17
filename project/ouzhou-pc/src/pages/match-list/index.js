@@ -4,7 +4,7 @@ import {
   MatchDataWarehouse_ouzhou_PC_hots_List_Common,
   MatchDataWarehouse_PC_List_Common,
   LayOutMain_pc,
-  MenuData, axios_loop, get_match_status, SessionStorage
+  MenuData, axios_loop, get_match_status,LocalStorage
 } from "src/output";
 
 import { ref } from 'vue'
@@ -134,21 +134,21 @@ const filter_20_match_new = (data) => {
 
   return result;
 }
-const matches_15mins_list = ref(SessionStorage.get('matches_15mins_list', []))
+const matches_15mins_list = ref(LocalStorage.get('matches_15mins_list', []))
 let match_count = ref(0);
 if (matches_15mins_list.value.length) {
   MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(matches_15mins_list.value);
 }
 // 获取首页数据
-export const init_home_matches = async () => {
+export const init_home_matches = async (is_socket=true) => {
   const params = {
     type: 1,
     sort: 2,
     // hasFlag: 0
   };
   const match_list = []
-  const get_home_matches = SessionStorage.get('get_home_matches', [])
-  const get_five_leagues_list = SessionStorage.get('get_five_leagues_list', [])
+  const get_home_matches = LocalStorage.get('get_home_matches', [])
+  const get_five_leagues_list = LocalStorage.get('get_five_leagues_list', [])
   if (get_home_matches.length > 0) { //数据缓存先
     MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
     MatchDataWarehouse_PC_List_Common.set_list(get_home_matches.concat(get_five_leagues_list));
@@ -169,7 +169,7 @@ export const init_home_matches = async () => {
         MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(data.p15);
         // 如果有数据加上特色赛事的高度 防止可视区域计算不对
         MatchListScrollClass.set_special_offset(205, true)
-        SessionStorage.get('matches_15mins_list', data.p15 || [])
+        LocalStorage.get('matches_15mins_list', data.p15 || [])
         //获取15mins 数据
         const mids_15 = []
         matches_15mins_list.value = data.p15.slice(0, 5).map(item => {
@@ -187,13 +187,13 @@ export const init_home_matches = async () => {
         set_league_list_obj(match_list)
         // 将球种排序
         MatchDataWarehouse_PC_List_Common.set_list(match_list);
-        SessionStorage.set('get_home_matches', sort_list)
+        LocalStorage.set('get_home_matches', sort_list,12*3600)
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(sort_list);
       } catch (error) {
         console.log(error);
       }
     }, fun_catch() {
-      set_load_data_state("refresh")
+      !is_socket&&set_load_data_state("refresh")
     }
   })
   // 暂时隐藏五大联赛
@@ -210,7 +210,7 @@ export const init_home_matches = async () => {
         }
         match_list.push(...res)
         set_league_list_obj(match_list)
-        SessionStorage.set('get_five_leagues_list', res)
+        LocalStorage.set('get_five_leagues_list', res,12*3600)
         MatchDataWarehouse_PC_List_Common.set_list(match_list);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
           res, null, null, true

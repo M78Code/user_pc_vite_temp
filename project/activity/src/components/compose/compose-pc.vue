@@ -505,7 +505,7 @@ export default {
         .then((res) => {
           let { code } = { ...res.data };
           if (code == "0401038") {
-            this.toast(this.$t("common.limited"));
+            this.toast(i18n_t("common.limited"));
             return;
           }
 

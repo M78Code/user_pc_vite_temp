@@ -47,5 +47,20 @@ function loadLanguageAsync (lang){
     return lang;
   })
 }
-export { i18n, loadLanguageAsync}
+// 新增
+function t(key, args, options) {
+  if (!i18n) return key;
+  return i18n.global.tm(key, args, options);
+}
+// 新增
+function i18n_t(key, args, options) {
+  if (!i18n) return key;
+  return i18n.global.tm(key, args, options);
+}
+// 新增
+function i18n_tc(key, args, options) {
+  if (!i18n) return key;
+  return i18n.global.tc(key, args, options);
+}
+export { i18n, loadLanguageAsync, t, i18n_t, i18n_tc }
 

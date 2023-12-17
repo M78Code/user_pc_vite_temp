@@ -5,7 +5,7 @@
  * @Description:
  */
 import lodash from "lodash";
-import { MatchDetailCalss }  from "src/output/module/project-single.js"
+import  MatchDetailCalss   from "src/core/match-detail/match-detail-class.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import GlobalSwitchClass  from "src/core/global/global.js";
 //统计分析URL

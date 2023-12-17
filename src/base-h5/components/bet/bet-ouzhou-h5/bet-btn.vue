@@ -9,9 +9,9 @@
     </div>
   </div> 
     <div class="bet_content_bottom component bet-btn-item">
-      <p class="bet_cancel" @click="pack_up">{{$t('bet.bet_retract')}}</p>
+      <p class="bet_cancel" @click="pack_up">{{i18n_t('bet.bet_retract')}}</p>
       <p class="place_bet"  @click="place_bet">
-        <span>{{$t('bet_record.bet_val')}}</span> 
+        <span>{{i18n_t('bet_record.bet_val')}}</span> 
         <span class="right_amount">{{BetData.bet_amount}}</span> 
       </p>
     </div>

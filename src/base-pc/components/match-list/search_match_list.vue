@@ -35,7 +35,7 @@
           <div class="pager-wrap row justify-end">
             <div class="go-top-btn yb-flex-center" @click="on_go_top">
               <icon-wapper name="icon-go_top" size="14px" />
-              <div class="msg">{{ $t("common.back_top") || "" }}</div>
+              <div class="msg">{{ i18n_t("common.back_top") || "" }}</div>
             </div>
           </div>
         </template>

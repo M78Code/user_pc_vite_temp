@@ -6,11 +6,11 @@
 <template>
   <div ref='details_tab' class="row vir-details-tab" v-cloak>
     <!-- 收起的箭头 -->
-    <div class="fat-btn" @click="change_btn()">
+    <!-- <div class="fat-btn" @click="change_btn()">
       <div class="tab-btn" :class="{collapsed:get_fewer != 2}"></div>
-    </div>
+    </div> -->
     <!-- 灰色间隔线 -->
-    <div class="menu-third"></div>
+    <!-- <div class="menu-third"></div> -->
     <!-- 玩法集 -->
     <div class="menu-s" ref="reset_scroll_dom">
       <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
@@ -18,9 +18,9 @@
       </div>
     </div>
     <!-- 分析icon(详情页面的时候显示分析,在其他页面不显示分析按钮) -->
-    <div v-if="anlyse_show" class="icon-style" @click="analyse_btn">
+    <!-- <div v-if="anlyse_show" class="icon-style" @click="analyse_btn">
       <div :class="[analyse ? 'analyse-icon':'analyse-close-icon']"></div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -54,7 +54,7 @@ export default {
     //   sub_menu_type: 'get_curr_sub_menu_type',
     //   is_show_analyse: 'get_is_show_details_analyse'
     // }),
-    get_details_item(){return },
+    get_details_item(){return VR_CTR.get_details_item()  },
     get_uid(){return },
     get_tab_fix(){return },
     get_fewer(){return },
@@ -78,7 +78,8 @@ export default {
   },
   props:[
     "virtual_match_list",
-    "batch" //赛马期
+    "batch", //赛马期
+    "mid"
   ],
   created(){
     // 延时器
@@ -99,7 +100,7 @@ export default {
     //   'set_fewer',
     //   'set_is_show_details_analyse'
     // ]),
-    set_details_item(data){},
+    set_details_item(data){ return VR_CTR.set_details_item(data) },
     set_first_details_item(data){},
     set_fewer(data){},
     set_is_show_details_analyse(data){},
@@ -198,7 +199,7 @@ export default {
         if(this.batch){
           new_mid =  this.batch
         }else{
-          new_mid = this.$route.query.mid
+          new_mid = this.$route.query.mid || this.mid;
         }
         let params = { sportId: this.sub_menu_type,mid: new_mid};
         api_common.get_category_list(params).then(res =>{
@@ -231,7 +232,7 @@ export default {
 }
 
 .menu-s {
-  max-width: 2.85rem;
+  max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: auto;

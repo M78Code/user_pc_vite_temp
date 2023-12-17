@@ -12,13 +12,13 @@
       <!-- 投注单和金额 -->
       <div class="title row justify-between yb_fontsize14">
         <template v-if="BetData.is_bet_success_status">
-          <span>{{ $t("bet.bet_information") }}</span>
+          <span>{{ i18n_t("bet.bet_information") }}</span>
           <img src="image/wwwassets/bw3/svg/bet_close.svg" alt="" @click.stop="remove">
         </template>
         <template v-else>
-          <div class="left">{{ $t("bet.bet_record") }}</div>
+          <div class="left">{{ i18n_t("bet.bet_record") }}</div>
           <div class="right">
-            <span class="yb_fontsize10">{{ $t('common.money') }}：</span>
+            <span class="yb_fontsize10">{{ i18n_t('common.money') }}：</span>
             <span class="money-span">{{ format_money2(UserCtr.balance) }}</span>
           </div>
         </template>
@@ -59,7 +59,7 @@
             <!-- 左 -->
             <span class="col-7">
               <!-- 滚球 -->
-              <template v-if="hl0.hmt == 0">{{ $t('bet_record.ing') }}&thinsp;</template>
+              <template v-if="hl0.hmt == 0">{{ i18n_t('bet_record.ing') }}&thinsp;</template>
               <!-- 投注成功后的玩法名称用接口返回的 -->
               <template v-if="playname && [3, 6].includes(+get_bet_status)">{{ playname }}</template>
               <template v-else>{{ value_show.hps[0].hpnb || value_show.hps[0].hpn }}</template>
@@ -70,18 +70,18 @@
             <template v-if="[3, 6, 8].includes(+get_bet_status)">
               <!-- 投注成功 -->
               <span v-if="get_bet_status == 3" class="color1"><img src="image/wwwassets/bw3/svg/bet_chengg.svg">{{
-                $t('bet.bet_suc') }}</span>
+                i18n_t('bet.bet_suc') }}</span>
               <!-- 投注失败 -->
               <span v-if="get_bet_status == 8" class="color3"><img src="image/wwwassets/bw3/svg/bet_shib.svg">{{
-                $t('bet.bet_err') }}</span>
+                i18n_t('bet.bet_err') }}</span>
               <!-- 提交成功 -->
               <span v-if="get_bet_status == 6" class="color2">
                 <img class="img" :src="compute_img_url('icon-tojiao')">{{
-                    $t('bet.submitted_successfully') }}</span>
+                    i18n_t('bet.submitted_successfully') }}</span>
             </template>
             <template v-else-if="pankou_change == 2">
               <!-- 失效 -->
-              <span class="invalidation">{{ $t('bet.invalidation') }}</span>
+              <span class="invalidation">{{ i18n_t('bet.invalidation') }}</span>
             </template>
           </div>
           <!-- 下 -->
@@ -96,9 +96,9 @@
       <template v-if="BetData.is_bet_success_status">
         <!-- 单关投注完成后底部的显示（包括投注失败8，投注成功3，提交成功6） -->
         <div class="bet-after row justify-between yb_fontsize12">
-          <p><span>{{ $t('bet_record.bet_max_win') }}:</span><span class="color3 yb_ml8">{{ (max_winmoney /
+          <p><span>{{ i18n_t('bet_record.bet_max_win') }}:</span><span class="color3 yb_ml8">{{ (max_winmoney /
             100).toFixed(2) }}</span></p>
-          <p><span>{{ $t('bet.bet_val') }}:</span><span class="color4 yb_ml8">{{ (bet_money / 100).toFixed(2) }}</span>
+          <p><span>{{ i18n_t('bet.bet_val') }}:</span><span class="color4 yb_ml8">{{ (bet_money / 100).toFixed(2) }}</span>
           </p>
         </div>
       </template>
@@ -118,13 +118,13 @@
 
         <!-- 最高可赢和常用金额 -->
         <div class="win row justify-between yb_mb6">
-          <div>{{ $t('bet.total_win2') }}
+          <div>{{ i18n_t('bet.total_win2') }}
 
             <span :class="{ 'color2': money_ok && money }">{{ format_money2(max_win_money) }}</span>
           </div>
           <div class="usedmoney">
             <i class="select" :class="{ 'select2': get_used_money != 0 }" @click="set_used_money(null)"></i>
-            {{ $t('bet.used_money2') }}
+            {{ i18n_t('bet.used_money2') }}
           </div>
         </div>
 
@@ -152,7 +152,7 @@
         <!-- 自动接受更好赔率 -->
         <div class="accept yb_my4">
           <i class="select" :class="{ 'select2': BetData.bet_is_accept == 2 }" @click="BetData.bet_is_accept"></i>
-          <span class="yb_mx4">{{ $t("ac_rules.auto") }}</span>
+          <span class="yb_mx4">{{ i18n_t("ac_rules.auto") }}</span>
           <img src="image/wwwassets/bw3/svg/bd_xuanzhong2.svg" alt="" @click="change_accept">
         </div>
       </template>
@@ -167,29 +167,29 @@
 
         <!-- 左边 -->
         <div class="save yb_mr10 row text-center" @click.stop="bet_save" v-if="BetData.is_bet_success_status">
-          <span>{{ $t('bet.save') }}</span>
+          <span>{{ i18n_t('bet.save') }}</span>
         </div>
         <!-- 右边 -->
         <div class="btn row" :class="{ 'btn2': btn_show == 5 }">
           <!-- 投注 -->
           <div v-if="btn_show == 0" @click="submit_order" style="flex:1" class="text-center">
-            <p class="yb_fontsize12">{{ $t('common.bet') }}</p>
+            <p class="yb_fontsize12">{{ i18n_t('common.bet') }}</p>
           </div>
           <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
           <div v-if="btn_show == 5">
-            <p class="yb_fontsize12">{{ $t('common.bet') }}</p>
+            <p class="yb_fontsize12">{{ i18n_t('common.bet') }}</p>
           </div>
           <!-- 确定 -->
-          <div v-if="btn_show == 1" @click="bet_end" style="flex:1" class="text-center">{{ $t('common.ok') }}</div>
+          <div v-if="btn_show == 1" @click="bet_end" style="flex:1" class="text-center">{{ i18n_t('common.ok') }}</div>
           <!-- 处理中 -->
           <div v-if="btn_show == 2" class="row justify-center items-center">
-            <p class="yb_mr8">{{ $t('bet_record.submitting_bet') }} </p>
+            <p class="yb_mr8">{{ i18n_t('bet_record.submitting_bet') }} </p>
             <ball-spin />
           </div>
           <!-- 接受变化 -->
-          <p v-if="btn_show == 3" @click="agree_change" style="flex:1" class="text-center">{{ $t('bet.agree_change') }}</p>
+          <p v-if="btn_show == 3" @click="agree_change" style="flex:1" class="text-center">{{ i18n_t('bet.agree_change') }}</p>
           <!-- 接受变化并投注 -->
-          <p v-if="btn_show == 4" @click="submit_order" style="flex:1" class="text-center">{{ $t('bet.agree_change2') }}
+          <p v-if="btn_show == 4" @click="submit_order" style="flex:1" class="text-center">{{ i18n_t('bet.agree_change2') }}
           </p>
         </div>
       </div>

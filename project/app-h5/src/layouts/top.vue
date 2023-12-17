@@ -54,6 +54,9 @@ import { useMittOn,MITT_TYPES, useMittEmit } from "src/core/mitt/index.js"
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
 import { TopMenu,ScrollMenu,SearchTab,DateTab } from 'src/base-h5/components/menu/app-h5-menu/index'
+
+import { is_kemp } from 'src/base-h5/mixin/menu.js'
+
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 
 const is_first = ref(true)
@@ -147,7 +150,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       // 设置vr /收藏 电竞 头信息
       MenuData.set_top_menu_title(val)
       // 清空一级菜单显示 用于后续更新
-      if (+val.mi !== 50000) MenuData.set_current_lv1_menu('');
+      if (![50000].includes(+val.mi)) MenuData.set_current_lv1_menu('');
       let obj = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
       // 设置选中菜单的id
       ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
@@ -238,9 +241,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     MenuData.set_current_lv_2_menu_i(obj,type)
     // 设置选中菜单的id
     ref_data.current_mi = type?MenuData.current_lv_2_menu_i:obj.mi
-
     // 刷新页面避免触发2次 set_origin_match_data
-    if (is_first.value) {
+    if (is_first.value && !is_kemp) {
       is_first.value = false
     } else {
       set_menu_mi_change_get_api_data()
@@ -252,7 +254,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   const set_menu_mi_change_get_api_data = () => {
     // 今日 / 滚球 早盘 串关 
     if([1,2,3,6].includes(MenuData.current_lv_1_menu_mi.value)){
-      handle_match_render_data()
+      if (MenuData.top_menu_title.mi !== 2000) handle_match_render_data()
     }
     // 冠军
     if(MenuData.current_lv_1_menu_mi.value == 400){
@@ -260,8 +262,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     }
     // 电竞
     if(MenuData.top_menu_title.mi == 2000){
+      const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
       // 初始进入会调多次接口
-      // MatchMeta.get_esports_match()
+      if (csid) MatchMeta.get_esports_match()
     }
     // 收藏
     if(MenuData.top_menu_title.mi == 50000){
@@ -275,7 +278,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // 清除赛事折叠信息
     MatchDataBaseH5.init()
     MatchFold.clear_fold_info()
-
     // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
     if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
     // 赛果不走元数据， 直接拉取接口
@@ -286,17 +288,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
     if (lodash_.isEmpty(mi_tid_mids_res)) return
 
-    if (MenuData.is_esports()) {
-      // 电竞 初始调用时没值 不掉接口
-      const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
-      if (csid) MatchMeta.get_esports_match()
-    } else {
-      // 设置菜单对应源数据 以及 获取数据
-      if (MenuData.top_menu_title.mi === 50000) return
-      MatchMeta.set_origin_match_data({ md: MenuData.data_time })
-      // MatchMeta.filter_match_by_time(item?.val)
-      // MatchMeta.get_target_match_data(!item?.val ? {} : { md: item?.val })
-    }
+    // 设置菜单对应源数据 以及 获取数据
+    if (MenuData.top_menu_title.mi === 50000) return
+    MatchMeta.set_origin_match_data({ md: MenuData.data_time })
 
     // 今日 下 得足球  提前设置 热门联赛
     if (MenuData.current_lv_2_menu_i === '1012') MatchMeta.set_tid_map_mids()

@@ -550,7 +550,7 @@
       :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/showCard.mp3`"
       ref="showCard"
     ></audio>
-    <!-- <Toast v-if="showToast" :text="$t('common.limited')" /> -->
+    <!-- <Toast v-if="showToast" :text="i18n_t('common.limited')" /> -->
   </div>
 </template>
 <script>

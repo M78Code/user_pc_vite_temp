@@ -32,7 +32,7 @@
                   <!-- 角球玩法名称 -->
                   <div class="corner-ball-weg">{{ item_data.hpn }}</div>
                   <!-- 角球总比分 -->
-                  <div class="basic-score" v-if="corner_ball_show && new_score"> {{ $t('match_info.total_score')}}:&nbsp;{{ new_score }}</div>
+                  <div class="basic-score" v-if="corner_ball_show && new_score"> {{ i18n_t('match_info.total_score')}}:&nbsp;{{ new_score }}</div>
                 </div>
                 <!-- 罚牌比分 -->
                 <div v-else-if="is_show_info"    :style="{ '--q-position-left-before':other_way_style.offset_icon_position_before,'--q-position-left-after':other_way_style.offset_icon_position_after}" class="corner-ball">
@@ -45,7 +45,7 @@
                     </div>
                   </div>
                   <!-- 罚牌比分 -->
-                  <div class="basic-score" v-if="is_show_info && new_score"> {{ $t('match_info.total_score')}}:&nbsp;{{ new_score }}</div>
+                  <div class="basic-score" v-if="is_show_info && new_score"> {{ i18n_t('match_info.total_score')}}:&nbsp;{{ new_score }}</div>
 
                   <!-- 罚牌玩法说明弹窗 -->
                   <div 
@@ -57,11 +57,11 @@
                     <div class="penalty">
                       <!-- 角球 -->
                       <div v-if="['125','230'].includes(item_data.hpid)" class="ply-cd">
-                        {{ $t('football_playing_way.corner')}}
+                        {{ i18n_t('football_playing_way.corner')}}
                       </div>
                       <!-- 罚牌 -->
                       <div v-else class="ply-cd">
-                        {{ $t('football_playing_way.penalty_cards')}}
+                        {{ i18n_t('football_playing_way.penalty_cards')}}
                       </div>
                       <!-- 关闭按钮 -->
                       <i   @click="info_icon_close"
@@ -69,9 +69,9 @@
                       
                     </div>
                     <!-- 角球说明文本 -->
-                    <div v-if="['125','230'].includes(item_data.hpid)" class="info-content">{{ $t('play_way_info.6')}}</div>
+                    <div v-if="['125','230'].includes(item_data.hpid)" class="info-content">{{ i18n_t('play_way_info.6')}}</div>
                     <!-- 罚牌说明文本 -->
-                    <div v-else class="info-content">{{ $t('play_way_info.5')}}</div>
+                    <div v-else class="info-content">{{ i18n_t('play_way_info.5')}}</div>
                   </div>
                 </div>
                 <!-- 普通赛事基准分 -->

@@ -9,7 +9,7 @@
         <div class="bet-input-failure">
             <!--投注金额输入框-->
             <input v-model="ref_data.money" type="number" @input="set_win_money"
-                :placeholder="`${$t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
+                :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
             <!--清除输入金额按钮-->
             <div class="bet-input-close" @click.stop="bet_clear_handle">
                 <icon-wapper name="icon-failure" size="12px" />
@@ -22,7 +22,7 @@
             <div class="row bet-win yb-fontsize12">
                 <div class="col df-jb">
                     <!--最高可赢额-->
-                    {{ $t('common.maxn_amount_val') }}
+                    {{ i18n_t('common.maxn_amount_val') }}
                 </div>
                 <!--金额-->
                 <div class="col-auto bet-win-money yb-number-bold">{{ set_bet_money }}</div>

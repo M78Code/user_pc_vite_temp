@@ -38,11 +38,11 @@
             <div style="width:40px"></div>
             <div class="col">{{VrSportCtr.info.no}}</div>
             <!-- 冠军 -->
-            <div class="horse-col">{{$root.$t('list.virtual_match_type_title.type1011.bet_col.0')}}</div>
+            <div class="horse-col">{{i18n_t('list.virtual_match_type_title.type1011.bet_col.0')}}</div>
             <!-- 前二 -->
-            <div class="horse-col">{{$root.$t('list.virtual_match_type_title.type1011.bet_col.1')}}</div>
+            <div class="horse-col">{{i18n_t('list.virtual_match_type_title.type1011.bet_col.1')}}</div>
             <!-- 前三 -->
-            <div class="horse-col" v-if="VrSportCtr.info.csid !='1009'">{{$root.$t('list.virtual_match_type_title.type1011.bet_col.2')}}</div>
+            <div class="horse-col" v-if="VrSportCtr.info.csid !='1009'">{{i18n_t('list.virtual_match_type_title.type1011.bet_col.2')}}</div>
           </div>
           <horse-replay :VrSportCtr="VrSportCtr" :key="VrSportCtr.vue_key" />
         </template>
@@ -66,12 +66,12 @@
             <div class="item" 
               :class="{active:VrSportCtr.cup_tab == 'group'}"
               @click="VrSportCtr.set_cup_tab('group')"
-            >{{$root.$t('vsport.group')}}</div>
+            >{{i18n_t('vsport.group')}}</div>
             <!-- 淘汰赛 -->
             <div class="item" 
               :class="{active:VrSportCtr.cup_tab == 'elimination',disable:VrSportCtr.info.mmp == 'GROUPS'}"
               @click="VrSportCtr.set_cup_tab('elimination')"
-            >{{$root.$t('vsport.elimination')}}</div>
+            >{{i18n_t('vsport.elimination')}}</div>
           </div>
           <!-- 小组赛积分榜 -->
           <group-rank v-if="VrSportCtr.cup_tab == 'group'" :VrSportCtr="VrSportCtr" />

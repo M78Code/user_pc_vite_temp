@@ -57,6 +57,13 @@
                     </div>
                   </div>
           </div>
+          <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
+          <template v-else-if="current_match">
+            <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
+            <dynamic-ranking v-if="current_match.match_status == 0 || current_match.match_status == 1" :virtual_match_list="[current_match]" />
+            <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
+            <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
+        </template>
         </div>
       </div>
       <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
@@ -82,34 +89,8 @@
                 @switch_match="switch_match_handle"  @start="match_start_handle">
               </v-s-match-list>
 
-              <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
-              <template v-if="current_match.mid == match_item_batch.matchs[0].mid && ![1001,1004].includes(sub_menu_type)">
-                   <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
-                  <div v-if="current_match.match_status == 0">
-                    <!-- 赛马切换玩法集tab组件 -->
-                    <virtual-sports-tab
-                      :batch="current_match_id">
-                    </virtual-sports-tab>
-                    <!-- 打印请勿删除 -->
-                    <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
-                    <!-- 赛马投注区域 -->
-                    <div v-if="match_list_by_no && match_list_by_no.length">
-                      <virtual-sports-category
-                          :top_menu_changed="top_menu_changed"
-                          :current_match="match_list_by_no[0]"
-                          source='sports'
-                          @top_menu_change="handle_top_menu_change"
-                      />
-                    </div>
-                  </div>
-                  <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
-                  <dynamic-ranking v-if="current_match.match_status == 1" :virtual_match_list="[current_match]" />
-                  <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
-                  <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
-              </template>
               <!-- 除当前赛事外，展示赔率信息 -->
-              <template v-else>
-                <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
+              <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
                   <div>
                     <!-- 赛马切换玩法集tab组件 -->
                     <!-- <virtual-sports-tab
@@ -126,7 +107,6 @@
                     </div>
                   </div>
                 </div>
-              </template>
             </div>
             <!-- 排行榜页面,小组赛淘汰赛页面  -->
             <div v-else class="list-wrapper">
@@ -194,6 +174,8 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import ServerTime from "src/core/server-time/server-time.js"
 import { IconWapper } from 'src/components/icon'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+import { api_common } from "src/api/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -515,7 +497,29 @@ export default {
       // 足蓝展开列表时，数据仓库增加list
       if([1001,1004].includes(this.sub_menu_type)){
         item.is_expend && this.sub_nav_click_handle(item.batchNo);
+      }else {
+        item.is_expend && this.get_detail_odds(item);
       }
+    },
+    // 赛马，赛狗展开时，获取赔率
+    get_detail_odds(item){
+      const match = item.matchs[0];
+      console.log('match', match);
+      let params = {
+          // 当前选中玩法项的id
+          mcid: 0,
+          // 赛事id
+          mid: match.mid,
+          // userId或者uuid
+          cuid: UserCtr.uid,
+        }
+        api_common.get_matchDetail_getVirtualMatchOddsInfo(params).then(res => {
+          if(res.data.length){
+            match.hps = res.data[0]?.plays || [];
+            // 按照hpid从小到大排序 
+            match.hps.sort((x, y) => x.hpid - y.hpid);
+          }
+        })
     },
     set_detail_data(data){
       // TODO 需要对应
@@ -736,6 +740,9 @@ export default {
   background: #fff;
   border-radius: 4px;
   margin-bottom: .08rem;
+  &:last-of-type {
+    padding-bottom: 0.7rem;
+  }
 }
 
 

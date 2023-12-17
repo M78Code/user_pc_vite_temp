@@ -15,7 +15,7 @@
       </span>
       <!-- 出局 -->
       <div class="result">
-        {{ $t("common.out") }}
+        {{ i18n_t("common.out") }}
         <span class="yb-text-color1">{{ match.mbcn }}</span>
       </div>
     </template>
@@ -43,10 +43,10 @@
             <!-- // csid：1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
             {{
               match.csid == 5
-              ? $t("list.total_play_count")
+              ? i18n_t("list.total_play_count")
               : [8, 9, 10].includes(match.csid * 1)
-                ? $t("list.total_pp_score_count2")
-                : $t("list.total_pp_score_count")
+                ? i18n_t("list.total_pp_score_count2")
+                : i18n_t("list.total_pp_score_count")
             }}&nbsp;
           </span>
           <span class="active-text">{{ score_list[1] }}</span>

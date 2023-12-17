@@ -74,6 +74,7 @@ class MatchMeta {
    * @param { Number } md 时间
    */
   async set_origin_match_data(params = {}) {
+    console.log(222222222222222)
     const { md = '', is_match = true } = params
     this.init()
     let menu_lv_v1 = ''
@@ -97,6 +98,9 @@ class MatchMeta {
     // 清除上一轮赛事
     this.clear_match_info()
 
+    // 电竞、赛果、冠军 return
+    if (MenuData.is_esports() || MenuData.is_results() || MenuData.is_kemp()) return
+
     // 获取真实数据
     this.http_params.md = md
 
@@ -111,8 +115,6 @@ class MatchMeta {
    
     // 对应 球种 mi 
     if (typeof menu_lv_v2 !== 'string') return
-    // 电竞、赛果 return
-    if (MenuData.is_esports() || MenuData.is_results()) return
 
     this.get_origin_match_mids_by_mi(menu_lv_v2)
   }
@@ -297,8 +299,10 @@ class MatchMeta {
     const { tid, csid, mid, ms } = match
     // 初始化赛事折叠
     // MatchFold.set_match_mid_fold_obj(match)
-    
     MatchResponsive.set_show_match_info(`mid_${match.mid}`, index < 20 ? true : false)
+
+    // 球种数量
+    MatchResponsive.set_default_ball_seed_count(match)
 
     const key = MatchFold.get_match_fold_key(match)
     if (!(key in MatchFold.match_mid_fold_obj.value)) MatchFold.set_match_mid_fold_obj(match)
@@ -410,14 +414,6 @@ class MatchMeta {
   }
 
   /**
-   * @description 筛选联赛
-   * @param { tid } 联赛 ID 
-   */
-  filter_match_by_tids (tids = []) {
-    
-  }
-
-  /**
    * 
    * @description 获取赛事请求参数
    * @returns { Object }
@@ -446,6 +442,7 @@ class MatchMeta {
    * @description 获取冠军赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_champion_match() {
+    console.log(333333333333333333333)
     MatchFold.clear_fold_info()
     MatchDataBaseH5.clear()
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
@@ -458,6 +455,7 @@ class MatchMeta {
       // "sort": PageSourceData.sort_type,
       "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
     })
+    
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
     const list = lodash.get(res, 'data', [])
     if (list.length < 1) return
@@ -528,15 +526,20 @@ class MatchMeta {
    *  yazhou-h5 需要
    */
   async get_target_match_data ({scroll_top = 0, md = '', is_error = false, tid = ''}) {
+    // 有的项目菜单类不存在 data_time
+    const data_time = String(md || MenuData?.data_time || this.http_params.md)
+    // 球种 euid
     const euid = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
-    const params = this.get_base_params()
     this.http_params.md = md
+    const params = this.get_base_params()
     if (!is_error) this.current_euid = `${euid}_${md}_${tid}`
     const other_params = {
       category: 1
     }
-    if (tid) Object.assign(other_params, { tid })
-    if (this.http_params.md) Object.assign(other_params, {  md: this.http_params.md + '' })
+    // tid 有值 则 加上 tid
+    tid &&  Object.assign(other_params, { tid })
+    // data_time 有值 则 加上 md
+    data_time && Object.assign(other_params, {  md: data_time })
     try {
       const res = await api_common.post_match_full_list({ 
         ...params,
@@ -846,7 +849,7 @@ class MatchMeta {
       // 滚球不需要
       if (MenuData.is_scroll_ball() || MenuData.is_zaopan()) {
         is_classify = false
-      } else if (MenuData.is_today() || MenuData.is_mix()) {
+      } else if (MenuData.is_today() || MenuData.is_mix() || MenuData.is_esports()) {
         // 今日、串关需要 开赛、未开赛归类
         is_classify = true
       }
@@ -900,6 +903,7 @@ class MatchMeta {
     
     // 重置折叠对象
     MatchFold.clear_fold_info()
+    MatchResponsive.clear_ball_seed_count()
     target_list.forEach((t, i) => {
       Object.assign(t, {
         is_show_league: MatchUtils.get_match_is_show_league(i, target_list)
@@ -931,6 +935,8 @@ class MatchMeta {
     } else {
       MatchResponsive.clear_ball_seed_league_count()
     }
+    MatchResponsive.clear_ball_seed_count()
+
     const length = lodash.get(list, 'length', 0)
     
     if (length < 1) return this.set_page_match_empty_status({ state: true });

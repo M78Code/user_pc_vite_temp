@@ -124,7 +124,7 @@ export default {
     //   'get_is_show_details_analyse',
     // ]),
     get_detail_data(){ return VR_CTR.get_detail_data() },
-    get_details_item(){},
+    get_details_item(){ return VR_CTR.get_details_item()  },
     get_first_details_item(){},
     get_goto_detail_matchid(){ VR_CTR.get_goto_detail_matchid() },
     get_uid(){},

@@ -159,21 +159,21 @@ const cur_video_icon = computed(() => {
     } else if (lss === 0 && !is_play) {
       cur_video_icon = {
         type: "topic",
-        // text: this.$root.$t("common.topic"),
+        // text: i18n_t("common.topic"),
       };
     }
     //主播
   } else if (tvs == 2) {
     cur_video_icon = {
       type: "anchor",
-      // text: this.$root.$t("common.anchor"),
+      // text: i18n_t("common.anchor"),
     };
     //源视频                       非电竞 或者电竞有url
   }
   if (mms == 2 && is_play) {
     cur_video_icon = {
       type: "video",
-      // text: this.$root.$t("common.o_video"),
+      // text: i18n_t("common.o_video"),
     };
   }
   return cur_video_icon;

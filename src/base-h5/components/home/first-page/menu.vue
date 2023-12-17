@@ -7,7 +7,7 @@
           <div class="item" v-for="(item, index) in menu_list" :key="`menu-${index}`"
             :class="{ active: menu_type == item.mi }" :style="compute_css_obj('home-item-' + (menu_type == item.mi ? 'active' : 'unchecked'))
               " @click="change_menu(item, index)" v-show="calc_show2(item)">
-            <span class="label" :class="{ is_chinise: ['zh', 'tw'].includes(lang) }">{{ $t(`new_menu.${item.mi}`)
+            <span class="label" :class="{ is_chinise: ['zh', 'tw'].includes(lang) }">{{ i18n_t(`new_menu.${item.mi}`)
             }}</span>
             <span class="num" v-if="![407, 408, 410].includes(item.mi * 1)">{{
               MenuData.count_menu(item)
@@ -25,11 +25,11 @@
             <div class="item-bg" :style="compute_css_obj('home-item-all')" :class="MenuData.recombine_menu_bg(item)"></div>
             <div class="item-info" :class="{ 'is-english': lang == 'en' }">
               <div class="column items-center">
-                <!-- <span class="match-type">{{t(`menu_list.${filter_meunu_desc(item.mi)}`) }}</span> -->
+                <!-- <span class="match-type">{{i18n_t(`menu_list.${filter_meunu_desc(item.mi)}`) }}</span> -->
                 <span class="match-type">{{ item.name || MenuData.get_menus_i18n_map(item.mi) }}</span>
                 <span class="match-num ellipsis">{{ item.ct || 0 }}</span>
                 <span class="match-label ellipsis-2-lines">{{
-                  $t("home.can_bet")
+                  i18n_t("home.can_bet")
                 }}</span>
               </div>
             </div>
@@ -218,7 +218,7 @@ const to_list = (item, index) => {
       },
     });
   } else {
-    $toast(t("home.match_no_has"), 800);
+    $toast(i18n_t("home.match_no_has"), 800);
   }
   return;
 };

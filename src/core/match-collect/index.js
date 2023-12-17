@@ -21,25 +21,6 @@ class MatchCollect {
     this.match_collect_obj = { 1: [], 2: [], 3: [] }
   }
 
-  handle_match_collect (value) {
-    const { mid,tid } = value
-      const match_state = this.get_match_collect_state(value)
-      // console.log('handle_match_collecthandle_match_collecthandle_match_collect', match_state)
-      api_common.add_or_cancel_tournament({
-        mid,
-        cf: match_state ? 0 : 1,
-        cuid: UserCtr.get_uid()
-      }).then(res => {
-        if(res && res.code == '200' && MenuData.is_collect()){
-          useMittEmit(MITT_TYPES.EMIT_COLLECT_MATCH_OZ);
-        }
-        if (+res.code !== 200) return
-      })
-      // 收藏页手动处理数据
-      MenuData.is_collect() && MatchMeta.set_collect_match(value, 2)
-      this.set_match_collect_state(value, !match_state)
-  }
-
   /**
    * @description 设置联赛收藏状态
    * @param { match } 赛事对象 
@@ -108,7 +89,7 @@ class MatchCollect {
 
   /**
    * @description 获取 赛事 收藏数据
-   * @params list 赛事数据
+   * @params list 赛事数据  matchType 0  获取全部
    * @returns 
    */
   get_collect_match_data (list = []) {
@@ -121,24 +102,24 @@ class MatchCollect {
           this.clear_collect_info()
           const data = lodash.get(res,'data');
           Object.assign(this.match_collect_obj, { ...data })
-          Object.keys(data).forEach(key => {
-            const item = data[key]
-            if (item.tids && item.tids.length > 0) {
-              item.tids.forEach(i => {
-                this.set_league_collect_state(i, true)
-              })
-            }
-            if (item.mids && item.mids.length > 0) {
-              item.mids.forEach(i => {
-                this.set_match_collect_state(i, true)
-              })
-            }
-          })
+          // Object.keys(data).forEach(key => {
+          //   const item = data[key]
+          //   if (item.tids && item.tids.length > 0) {
+          //     item.tids.forEach(i => {
+          //       this.set_league_collect_state(i, true)
+          //     })
+          //   }
+          //   if (item.mids && item.mids.length > 0) {
+          //     item.mids.forEach(i => {
+          //       this.set_match_collect_state(i, true)
+          //     })
+          //   }
+          // })
           // console.log('get_new_collect_matchesget_new_collect_matches', this.match_mid_collect_obj.value, this.league_tid_collect_obj.value)
           this.set_is_get_collect(true)
-          // list && list.length > 0 && list.forEach(match => {
-          // this.handle_collect_state(match)
-          // })
+          list && list.length > 0 && list.forEach(match => {
+            this.handle_collect_state(match)
+          })
           resolve()
         }
       })
@@ -149,49 +130,59 @@ class MatchCollect {
    * @param { match } 赛事对象
    * @remarks: 1. 根据 collectMatchesPB， tids 有值，则根据 tid 及 exclude 判断
    *           2. mids 均需要判断
+   *           3. 1：常规，2：冠军，3：电竞
    */
   handle_collect_state (match) {
     this.match_collect_obj.value
+    const match_type  = this.get_menu_map_type()
+    const collect_obj = lodash.get(this.match_collect_obj, `${match_type}`)
+    const { tid, mid } = match
+    let league_collect_state = false
+    let match_collect_state = false
+    if (collect_obj) {
+      const { mids = [], exclude = [], tids = [] } = collect_obj
+      // 根据 tid 是否是收藏赛事
+      league_collect_state = tids.includes(tid)
+      if (league_collect_state) match_collect_state = true
+      if (tids.length > 0) {
+        if (league_collect_state && exclude.length > 0) {
+          // 根据剔除的数据，继续判断该赛事的收藏状态
+          const exclude_obj = lodash.find(exclude, e => e.tids === tid)
+          if (exclude_obj) {
+            const length = lodash.get(exclude_obj.mids, 'length', 0)
+            match_collect_state = !(length > 0 && exclude_obj.mids.includes(mid))
+          }
+        }
+      }
+      if (mids.length > 0 && mids.includes(mid)) {
+        match_collect_state = true
+      }
+    }
+    // 该联赛是否收藏
+    this.set_league_collect_state(tid, league_collect_state)
+    // 该赛事是否收藏
+    this.set_match_collect_state(match, match_collect_state)
+  }
 
-    // const map_menu = { 100: 2, 3000: 3 }
-    // const menu_lv_v1 = lodash.get(MenuData.current_lv_1_menu, 'mi')
-    // const match_type = lodash.get(map_menu, `${menu_lv_v1}`, 1)
-    // console.log('handle_collect_statehandle_collect_statehandle_collect_state', match_type, MenuData)
-    // const collect_obj = lodash.get(this.match_collect_obj, `${match_type}`)
-    // const { tid, mid } = match
-    // let league_collect_state = false
-    // let match_collect_state = false
-    // if (collect_obj) {
-    //   const { mids = [], exclude = [], tids = [] } = collect_obj
-    //   // 根据 tid 是否是收藏赛事
-    //   league_collect_state = tids.includes(tid)
-    //   if (league_collect_state) match_collect_state = true
-    //   if (tids.length > 0) {
-    //     if (league_collect_state && exclude.length > 0) {
-    //       // 根据剔除的数据，继续判断该赛事的收藏状态
-    //       const exclude_obj = lodash.find(exclude, e => e.tids === tid)
-    //       if (exclude_obj) {
-    //         const length = lodash.get(exclude_obj.mids, 'length', 0)
-    //         match_collect_state = !(length > 0 && exclude_obj.mids.includes(mid))
-    //       }
-    //     }
-    //   }
-    //   if (mids.length > 0 && mids.includes(mid)) {
-    //     match_collect_state = true
-    //   }
-    // }
-    // // 该联赛是否收藏
-    // this.set_league_collect_state(tid, league_collect_state)
-    // // 该赛事是否收藏
-    // this.set_match_collect_state(match, match_collect_state)
+  /**
+   * @description 获取菜单对应的类型
+   */
+  get_menu_map_type () {
+    let result = 1
+    if (MenuData.is_esports()) {
+      result = 3
+    } else if (MenuData.is_kemp_mi()) {
+      result = 2
+    }
+    return result
   }
   /**
    * @description 重置收藏对象
    */
   clear_collect_info () {
-    // this.league_tid_collect_obj.value = {}
-    // this.match_mid_collect_obj.value = {}
-    // this.match_collect_obj = { 1: [], 2: [], 3: [] }
+    this.league_tid_collect_obj.value = {}
+    this.match_mid_collect_obj.value = {}
+    this.match_collect_obj = { 1: [], 2: [], 3: [] }
   }
 
   /**

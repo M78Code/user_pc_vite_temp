@@ -11,7 +11,7 @@
         <div class="money-wrap" @click="get_balance">
           <div class="balance-wrap">
             <i class="icon-balance" :style="compute_css_obj('icon-balance')"></i>
-            <span class="balance">{{ $t("common.money") }}</span>
+            <span class="balance">{{ i18n_t("common.money") }}</span>
           </div>
           <div class="money">
             <span class="int">{{ balance_obj.int || "0" }}</span>

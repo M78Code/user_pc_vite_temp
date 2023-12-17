@@ -36,21 +36,21 @@
         <div
           v-if="matches_15mins_list.length && MenuData.is_featured() && !(MenuData.is_kemp() && !MenuData.is_common_kemp())"
           class="match-list-item">
-          <CurrentMatchTitle :title_value="$t('ouzhou.match.15_mins')" :show_more_icon="false" />
+          <CurrentMatchTitle :title_value="i18n_t('ouzhou.match.15_mins')" :show_more_icon="false" />
           <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
         </div>
         <!-- 头部Featured Matches模块 -->
         <FeaturedMatches v-if="MenuData.is_featured() && !(MenuData.is_kemp() && !MenuData.is_common_kemp())" />
         <!-- </template> -->
         <!-- 滚球标题 -->
-        <Match-Main-Title :title="$t('menu.match_playing')" :match_count="match_count"
+        <Match-Main-Title :title="i18n_t('menu.match_playing')" :match_count="match_count"
           v-show="match_list_card_key_arr.length && MenuData.is_home()" />
 
         <div v-for="card_key in match_list_card_key_arr" :key="card_key"
           :class="{ 'have_margin': card_key.indexOf('sport_title') != -1 && card_key != 'sport_title_1' && MenuData.is_home() }">
           <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
         </div>
-        <Match-Main-Title :title="$t('ouzhou.match.top_leagues')"
+        <Match-Main-Title :title="i18n_t('ouzhou.match.top_leagues')"
           v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
         <div v-for="card_key in five_leagues_card_key_arr" :key="card_key" :class="`card_key_${card_key}`">
           <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
@@ -163,9 +163,11 @@ export default {
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
-      MenuData.is_home()&&get_data_info()//欧洲版只有首页才执行  其他是由菜单驱动列表的
+      MenuData.is_home() && get_data_info({ is_socket: false })//欧洲版只有首页才执行  其他是由菜单驱动列表的
       mitt_list = [
-        useMittOn(MITT_TYPES.EMIT_SET_HOME_MATCHES, get_data_info,).off, // 15分钟赛事数据
+        useMittOn(MITT_TYPES.EMIT_SET_HOME_MATCHES, (type) => [
+          get_data_info({ is_socket: true, type })
+        ]).off, // 15分钟赛事数据
       ]
       mounted_fn(get_data_info);
       MatchListCardDataClass_match_list_card_key_arr();
@@ -182,10 +184,10 @@ export default {
     watch(MatchListCardDataClass.list_version, () => {
       MatchListCardDataClass_match_list_card_key_arr();
     });
-    async function get_data_info(type = 0) {
+    async function get_data_info({ is_socket, type }) {
       // 判断是不是首页下的 featured 页面
       if (MenuData.is_featured() || type == 1001) {
-        await init_home_matches();
+        await init_home_matches(is_socket);
       } else {
         useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, { is_socket: true })
       }

@@ -7,7 +7,7 @@
     </div>
     <p>
       <!-- 有消息用消息 没有信息 用默认信息 -->
-      {{ msg ? $t(msg) : lodash.get(arr[which], 'txt') }}
+      {{ msg ? i18n_t(msg) : lodash.get(arr[which], 'txt') }}
     </p>
   </div>
 </template>

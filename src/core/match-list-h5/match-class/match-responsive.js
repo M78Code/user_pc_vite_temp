@@ -85,7 +85,7 @@ class MatchResponsive {
   }
 
   /**
-   * @description 设置对应球种的key
+   * @description 设置开赛、未开赛对应球种的数量
    * @param {string} key 
    * @param {number} length 
    */
@@ -93,6 +93,29 @@ class MatchResponsive {
     Object.assign(this.ball_seed_count.value, {
       [key]: length
     })
+  }
+
+   /**
+   * @description 设置球种的 数量
+   * @param {Object} match 
+   */
+   set_default_ball_seed_count (match) {
+    const { csid } = match
+    const key = `default_csid_${csid}`
+    if (this.ball_seed_count.value[key]) {
+      this.ball_seed_count.value[key]++
+    } else {
+      Object.assign(this.ball_seed_count.value, {
+        [key]: 1
+      })
+    }
+  }
+
+  /**
+   * @description 重置球种的 数量
+   */
+  clear_ball_seed_count () {
+    this.ball_seed_count.value = {}
   }
 
   /**

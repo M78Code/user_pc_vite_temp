@@ -19,7 +19,7 @@
               :class="{'disabled-toggle': expend_disable}"              
               @click="mix_toggle_handle"
             >
-              {{ $t('bet.bet_n_')}}
+              {{ i18n_t('bet.bet_n_')}}
               <!-- 复式连串过关投注 -->
             </div>
             <div class="col-auto">

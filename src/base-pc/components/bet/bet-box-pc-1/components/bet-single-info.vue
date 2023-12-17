@@ -86,7 +86,7 @@
           <!--+/1.5-->
            <!--【预约】-->
            <label class="appoint" style="margin-left:10px" v-if="ref_data.show_appoint">
-            +{{ `${$t('bet.bet_book2')}` }}
+            +{{ `${i18n_t('bet.bet_book2')}` }}
           </label>
         </div>
         <!-- 预约投注组件 -->
@@ -106,7 +106,7 @@
           </div>
           <!--【预约】-->
           <label class="appoint appoint_cursor" v-if="pending_order_status(item.playOptionsId)" @click="set_show_appoint">
-            +{{ `${$t('bet.bet_book2')}` }}
+            +{{ `${i18n_t('bet.bet_book2')}` }}
           </label>
         </div>
        

@@ -52,6 +52,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { useRoute, useRouter } from "vue-router"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
+import {compute_value_by_cur_odd_type} from "src/output/index.js"
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -61,6 +62,12 @@ export default defineComponent({
 
   },
   setup(props, evnet) {
+    // 冠军/前二/前三赔率
+    const play_obj = reactive({});
+    //组装的盘口数据
+    const play_obj2 = reactive({});
+    // hsw对象
+    const hsw_obj = reactive({});
     // #TODO vuex
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
@@ -89,13 +96,12 @@ export default defineComponent({
         return BetData.bet_oid_list.includes(play_obj && play_obj[id] && play_obj[id].oid)
       }
     }
-    const play_obj = ref({})
     onMounted(() => {
       get_odds()
     });
     const get_odds = () => {
     // plays集合
-      let play_ = lodash.get(item_data,'plays')
+      let play_ = lodash.get(props.item_data,'plays')
       let play_obj = {}
       lodash.each(play_,(item) => {
         lodash.each(lodash.get(item,'hl[0].ol'), ol_item => {
@@ -122,7 +128,9 @@ export default defineComponent({
       // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
-      
+      hsw_obj,
+      play_obj2,
+      compute_value_by_cur_odd_type,
       lodash,
       BetData,
       get_cur_odd,

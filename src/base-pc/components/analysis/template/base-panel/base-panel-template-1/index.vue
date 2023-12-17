@@ -5,43 +5,43 @@
       <div class="panel-title">
         <!-- 联赛积分(无数字) 杯赛积分(有数字) -->
         <span
-          v-if="tournamentTypeFinish">{{ t(`analysis.cup_points${lodash.get(vs_info, '[0].tournamentType') == 2 ? '1' : ''}`) }}</span>
+          v-if="tournamentTypeFinish">{{ i18n_t(`analysis.cup_points${lodash.get(vs_info, '[0].tournamentType') == 2 ? '1' : ''}`) }}</span>
         <!-- 查看更多 -->
         <span class="ranking-more" v-if="lodash.get(vs_info, '[0].tournamentType') == 1"
-          @click="show_more">{{ t('analysis.show_more') }}</span>
+          @click="show_more">{{ i18n_t('analysis.show_more') }}</span>
       </div>
       <div class="d-header d-tr">
         <!-- 排名 -->
-        <div class="d-td">{{ t('analysis.ranking') }}</div>
+        <div class="d-td">{{ i18n_t('analysis.ranking') }}</div>
         <!-- 球队 -->
-        <div class="d-td">{{ t('analysis.team') }}</div>
+        <div class="d-td">{{ i18n_t('analysis.team') }}</div>
         <!-- 足球 -->
         <template v-if="match.csid == '1'">
           <!-- 联赛 -->
-          <div class="d-td">{{ t('analysis.league') }}</div>
+          <div class="d-td">{{ i18n_t('analysis.league') }}</div>
           <!-- 场数 -->
-          <div class="d-td">{{ t('analysis.game') }}</div>
+          <div class="d-td">{{ i18n_t('analysis.game') }}</div>
           <!-- 胜 -->
-          <div class="d-td">{{ t('analysis.victory') }}</div>
+          <div class="d-td">{{ i18n_t('analysis.victory') }}</div>
           <!-- 负 -->
-          <div class="d-td">{{ t('analysis.negative') }}</div>
+          <div class="d-td">{{ i18n_t('analysis.negative') }}</div>
           <!-- 平 -->
-          <div class="d-td">{{ t('analysis.flat') }}</div>
+          <div class="d-td">{{ i18n_t('analysis.flat') }}</div>
           <!-- 进/失 -->
-          <div class="d-td">{{ t('analysis.gain_loss') }}</div>
+          <div class="d-td">{{ i18n_t('analysis.gain_loss') }}</div>
           <!-- 净胜 -->
-          <div class="d-td">{{ t('analysis.net_win') }}</div>
+          <div class="d-td">{{ i18n_t('analysis.net_win') }}</div>
           <!-- 积分 -->
-          <div class="d-td">{{ t('analysis.integral') }}</div>
+          <div class="d-td">{{ i18n_t('analysis.integral') }}</div>
         </template>
         <!-- 篮球 -->
         <template v-else>
           <!-- 胜 -->
-          <div class="d-td">{{ t('analysis.victory') }}</div>
+          <div class="d-td">{{ i18n_t('analysis.victory') }}</div>
           <!-- 负 -->
-          <div class="d-td">{{ t('analysis.negative') }}</div>
+          <div class="d-td">{{ i18n_t('analysis.negative') }}</div>
           <!-- 赢盘率 -->
-          <div class="d-td">{{ t('analysis.Win_rate') }}</div>
+          <div class="d-td">{{ i18n_t('analysis.Win_rate') }}</div>
         </template>
       </div>
       <div class="d-body d-tr" v-for="(item, index) in vs_info" :key="index">
@@ -75,7 +75,7 @@
     <div class="panel history before">
       <div class="panel-title">
         <!-- 历史交战 -->
-        <span>{{ t('analysis.historical_war') }}</span>
+        <span>{{ i18n_t('analysis.historical_war') }}</span>
         <m-select name="vs" @click="selectedFn(arguments)" />
       </div>
       <div class="content">
@@ -89,13 +89,13 @@
               <span class="label">
                 {{ lodash.get(team_vs_history_result, 'home.win') }}
                 <!-- 胜 -->
-                {{ t('analysis.victory') }}
+                {{ i18n_t('analysis.victory') }}
                 {{ lodash.get(team_vs_history_result, 'home.dogfall') }}
                 <!-- 平 -->
-                {{ t('analysis.flat') }}
+                {{ i18n_t('analysis.flat') }}
                 {{ lodash.get(team_vs_history_result, 'home.lose') }}
                 <!-- 负 -->
-                {{ t('analysis.negative') }}
+                {{ i18n_t('analysis.negative') }}
               </span>
             </div>
           </div>
@@ -109,13 +109,13 @@
               <span class="label">
                 {{ lodash.get(team_vs_history_result, 'away.win') }}
                 <!-- 胜 -->
-                {{ t('analysis.victory') }}
+                {{ i18n_t('analysis.victory') }}
                 {{ lodash.get(team_vs_history_result, 'away.dogfall') }}
                 <!-- 平 -->
-                {{ t('analysis.flat') }}
+                {{ i18n_t('analysis.flat') }}
                 {{ lodash.get(team_vs_history_result, 'away.lose') }}
                 <!-- 负 -->
-                {{ t('analysis.negative') }}
+                {{ i18n_t('analysis.negative') }}
               </span>
             </div>
           </div>
@@ -123,11 +123,11 @@
         <div class="d-title">
           <div>
             <!-- 赛果 -->
-            <span>{{ t("results.result") }}</span>
+            <span>{{ i18n_t("results.result") }}</span>
             <!-- 盘口 -->
-            <span>{{ t("analysis.picks") }}</span>
+            <span>{{ i18n_t("analysis.picks") }}</span>
             <!-- 大小 -->
-            <span>{{ t("analysis.size") }}</span>
+            <span>{{ i18n_t("analysis.size") }}</span>
           </div>
         </div>
         <div class="d-tr" v-for="(item, index) in team_vs_history" :key="index">
@@ -163,7 +163,7 @@
     <div class="panel history near">
       <div class="panel-title">
         <!-- 近期战绩 -->
-        <span>{{ t('analysis.recent_record') }}</span>
+        <span>{{ i18n_t('analysis.recent_record') }}</span>
         <m-select name="other" @click="selectedFn(arguments)" />
       </div>
       <div class="content">
@@ -177,13 +177,13 @@
               <span class="label">
                 {{ lodash.get(team_vs_other_team_result, 'home.win') }}
                 <!-- 胜 -->
-                {{ t('analysis.victory') }}
+                {{ i18n_t('analysis.victory') }}
                 {{ lodash.get(team_vs_other_team_result, 'home.dogfall') }}
                 <!-- 平 -->
-                {{ t('analysis.flat') }}
+                {{ i18n_t('analysis.flat') }}
                 {{ lodash.get(team_vs_other_team_result, 'home.lose') }}
                 <!-- 负 -->
-                {{ t('analysis.negative') }}
+                {{ i18n_t('analysis.negative') }}
               </span>
             </div>
           </div>
@@ -196,13 +196,13 @@
               <span class="label">
                 {{ lodash.get(team_vs_other_team_result, 'away.win') }}
                 <!-- 胜 -->
-                {{ t('analysis.victory') }}
+                {{ i18n_t('analysis.victory') }}
                 {{ lodash.get(team_vs_other_team_result, 'away.dogfall') }}
                 <!-- 平 -->
-                {{ t('analysis.flat') }}
+                {{ i18n_t('analysis.flat') }}
                 {{ lodash.get(team_vs_other_team_result, 'away.lose') }}
                 <!-- 负 -->
-                {{ t('analysis.negative') }}
+                {{ i18n_t('analysis.negative') }}
               </span>
             </div>
           </div>
@@ -212,11 +212,11 @@
             <div class="d-title">
               <div>
                 <!-- 赛果 -->
-                <span>{{ t("results.result") }}</span>
+                <span>{{ i18n_t("results.result") }}</span>
                 <!-- 盘口 -->
-                <span>{{ t("analysis.picks") }}</span>
+                <span>{{ i18n_t("analysis.picks") }}</span>
                 <!-- 大小 -->
-                <span>{{ t("analysis.size") }}</span>
+                <span>{{ i18n_t("analysis.size") }}</span>
               </div>
             </div>
             <div class="d-tr" v-for="(item, index) in team_vs_other_team.home" :key="index">
@@ -254,11 +254,11 @@
             <div class="d-title">
               <div>
                 <!-- 赛果 -->
-                <span>{{ t("results.result") }}</span>
+                <span>{{ i18n_t("results.result") }}</span>
                 <!-- 盘口 -->
-                <span>{{ t("analysis.picks") }}</span>
+                <span>{{ i18n_t("analysis.picks") }}</span>
                 <!-- 大小 -->
-                <span>{{ t("analysis.size") }}</span>
+                <span>{{ i18n_t("analysis.size") }}</span>
               </div>
             </div>
             <div class="d-tr" v-for="(item, index) in team_vs_other_team.away" :key="index">
@@ -299,7 +299,7 @@
     <!-- 未来赛程 -->
     <div class="panel future details" v-if="match.csid == '1'">
       <!-- 未来赛程 -->
-      <div class="panel-title">{{ t('analysis.Future_schedule') }}</div>
+      <div class="panel-title">{{ i18n_t('analysis.Future_schedule') }}</div>
       <div class="simple-title">
         <div class="home">
           <img v-img="([lodash.get(match, 'mhlu[0]'), lodash.get(match, 'frmhn[0]')])" class="logo" alt />
@@ -319,7 +319,7 @@
             <div class="match-time ellipsis">
               <span>{{ item.beginTime ? formatTime(item.beginTime, 'yy-mm-dd') : '-' }}</span>
               <!-- X天后 -->
-              <span>{{ item.intervalDay || '-' }} {{ t("analysis.day_later") }}</span><br>
+              <span>{{ item.intervalDay || '-' }} {{ i18n_t("analysis.day_later") }}</span><br>
               <span>{{ item.tournamentName || '-' }}</span>
             </div>
             <div class="both">
@@ -350,7 +350,7 @@
             <div class="match-time ellipsis">
               <span>{{ item.beginTime ? formatTime(item.beginTime, 'yy-mm-dd') : '-' }}</span>
               <!-- 天后 -->
-              <span>{{ item.intervalDay || '-' }} {{ t("analysis.day_later") }}</span><br>
+              <span>{{ item.intervalDay || '-' }} {{ i18n_t("analysis.day_later") }}</span><br>
               <span>{{ item.tournamentName || '-' }}</span>
             </div>
             <div class="both">
@@ -380,7 +380,7 @@
     <!-- 伤停情况 -->
     <div class="panel hurt details" v-if="match.csid == '1'">
       <!-- 伤停情况 -->
-      <div class="panel-title">{{ t('analysis.injury') }}</div>
+      <div class="panel-title">{{ i18n_t('analysis.injury') }}</div>
       <div class="simple-title "
         :class="{ 'simple-team': (lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.1') && lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.1').length) && (lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.2') && lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.2').length) }">
         <div class="home">
@@ -416,8 +416,8 @@
         </div>
       </div>
       <div class="content no_data" v-else>
-        <div class="wrap-home">{{ t('analysis.no_data') }}</div>
-        <div class="wrap-away">{{ t('analysis.no_data') }}</div>
+        <div class="wrap-home">{{ i18n_t('analysis.no_data') }}</div>
+        <div class="wrap-away">{{ i18n_t('analysis.no_data') }}</div>
       </div>
     </div>
   </div>

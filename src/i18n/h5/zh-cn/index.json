@@ -719,7 +719,12 @@
     "auto_close": "%s 秒后自动关闭",
     "HD": "高清",
     "return": "返回",
-    "SD": "标清"
+    "SD": "标清",
+    "zhuanye":"专业版",
+    "xinshou":"新手版",
+    "gongnengwanshan":"功能完善,实用性强",
+    "yemianjianjie":"页面简洁,操作简单",
+    "use":"使用"
   },
   "detail": {
     "less": "小于",
@@ -2460,6 +2465,7 @@
   "time8": "yyyy年MM月dd日 hh:mm:ss",
   "time9": "hh:mm",
   "time10": "yyyy/MM/dd hh:mm",
+  "time11": "MM月dd日 hh:mm",
   "tips": {
     "msg1": "合并投注项",
     "msg2": "勾选后，单/串关可自由切换，多个投注项会同时展示在投注栏里，同一玩法的盘口投注项会替换原投注项。"

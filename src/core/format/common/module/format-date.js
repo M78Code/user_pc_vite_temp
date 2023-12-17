@@ -63,9 +63,9 @@ export const format_how_many_days = (val) => {
   let difValue_time = Math.floor(dateDiff_time / (24 * 3600 * 1000));
   let day_value;
   if (difValue_time == 0) {
-    day_value = t('today')
+    day_value = i18n_t('today')
   } else if (difValue_time == '-1') {
-    day_value = t('tomorrow')
+    day_value = i18n_t('tomorrow')
   }
   return day_value
 }

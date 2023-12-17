@@ -8,9 +8,9 @@
 
     <div class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
       <div class="row col items-center justify-center">
-        <p class="yb_mr10" @click="change_record(0)" :class="get_main_item == 0 && 'active-p'">{{t('bet_record.no_account')}}<span></span></p>
-        <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="get_main_item == 1 && 'active-p'">{{t('bet_record.account')}}<span></span></p>
-        <p class="yb_ml10" v-if="authorityFlag" @click="change_record(2)" :class="get_main_item == 2 && 'active-p'">{{t('pre_record.book')}}<span></span></p>
+        <p class="yb_mr10" @click="change_record(0)" :class="get_main_item == 0 && 'active-p'">{{i18n_t('bet_record.no_account')}}<span></span></p>
+        <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="get_main_item == 1 && 'active-p'">{{i18n_t('bet_record.account')}}<span></span></p>
+        <p class="yb_ml10" v-if="authorityFlag" @click="change_record(2)" :class="get_main_item == 2 && 'active-p'">{{i18n_t('pre_record.book')}}<span></span></p>
       </div>
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">

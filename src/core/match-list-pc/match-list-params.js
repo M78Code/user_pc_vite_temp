@@ -84,7 +84,7 @@ function match_list_all_params() {
         // 前端关    后台开       >关
         // 前端关    后台关       >关
         if (!GlobalAccessConfig.GET_ENABLE_COLLECT_API() || !GlobalAccessConfig.get_collectSwitch()) {
-            return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
+            return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
         }
         apiType = 2
         api_name = api_params[menu_root] ? api_params[menu_root].colloet : api_params.other.colloet

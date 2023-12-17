@@ -55,7 +55,7 @@
       "
     >
       <!-- 当前总分： -->
-      {{ $t("match_info.current_score") }}：{{ score_formate }}
+      {{ i18n_t("match_info.current_score") }}：{{ score_formate }}
     </div>
     <!-- 置顶排序 -->
     <div style="width: 37px">

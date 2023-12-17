@@ -46,7 +46,7 @@ store.dispatch({
 
 store.dispatch({
   type: "INIT_LANG",
-  data: t("isoName"),
+  data: i18n_t("isoName"),
 });
 //获取服务器时间
 // store.dispatch(set_remote_server_time());
