@@ -649,7 +649,9 @@ onUnmounted(() => {
   display: none;
 }
 .active {
-  background: var(--q-gb-bg-c-24) !important;
+  // 需要替换成变量
+  color: #127DCC;
+  background: #D1EBFF !important;
   .odd-title {
     color: var(--q-gb-t-c-25) !important;  
   }
