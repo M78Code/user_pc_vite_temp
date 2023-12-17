@@ -11,7 +11,7 @@
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 开赛标题  -->
-      <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
+      <div v-if="is_show_opening_title"
         :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
@@ -21,7 +21,7 @@
           <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
         <!-- 未开赛 -->
-        <template v-else>
+        <template  v-if="+match.start_flag === 2">
           <div class="match-status-title">
             <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
           </div>
@@ -35,8 +35,8 @@
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div>
-      <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="show_sport_title" @click.stop
+      <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 @click.stop-->
+      <div v-if="show_sport_title" @click.stop="handle_ball_seed_fold"
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span">
           {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }})
@@ -117,7 +117,8 @@
 
                     <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                     <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                      {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
+                      <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} -->
+                      {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
                     </div>
                     <!--一小时内开赛 -->
                     <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
@@ -297,12 +298,12 @@ import { ref, computed, watch, nextTick } from 'vue'
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
-import ScoreList from 'src/base-h5/components/match-container/template/app/components/score-list-5/index.vue';
+import ScoreList from 'src/base-h5/components/match-container/template/app/components/score-list.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { i18n_t, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData } from "src/output/index.js"
 import { format_time_zone } from "src/output/index.js"
-import OddListWrap from 'src/base-h5/components/match-container/template/app/components/default-odd-template/odd-list-wrap.vue';
+import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
 import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 

@@ -187,7 +187,7 @@
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import v_s_odd_item from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_odd_item.vue"
 import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue"
-import odd_column_item from "src/base-h5/components/match-container/template/app/components/default-odd-template/odd-column-item.vue"
+import odd_column_item from "src/base-h5/components/match-container/template/app/components/odd-column-item.vue"
 // import betting from 'project_path/mixins/betting/betting.js';
 import virtual_sports_m_item_mixin from 'src/base-h5/vr/mixin/virtual_sports/virtual_sports_m_item_mixin.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
@@ -209,10 +209,14 @@ export default {
       vsports:null,
       standard_odd_status:0,
       is_basketball_score:false,
-      arrows: "image/wwwassets/bw3/common/slide_icon_y0.svg",
-      arrows_default: "image/wwwassets/bw3/common/slide_icon.svg",
-      arrows_reverse: "image/wwwassets/bw3/common/slide_icon_reverse_y0.svg",
-      arrows_default_balck:"image/wwwassets/bw3/common/slide_icon_r.svg",
+      // arrows: "image/wwwassets/bw3/common/slide_icon_y0.svg",
+      arrows: "/public/app-h5/image/common/slide_icon_y0.svg",
+      // arrows_default: "image/wwwassets/bw3/common/slide_icon.svg",
+      arrows_default: "/public/app-h5/image/common/slide_icon.svg",
+      // arrows_reverse: "image/wwwassets/bw3/common/slide_icon_reverse_y0.svg",
+      arrows_reverse: "/public/app-h5/image/common/slide_icon_reverse_y0.svg",
+      // arrows_default_balck:"image/wwwassets/bw3/common/slide_icon_r.svg",
+      arrows_default_balck:"/public/app-h5/image/common/slide_icon_r.svg",
       standard_edition  //新手版1    标准版  2
     }
   },
@@ -815,9 +819,11 @@ export default {
         width: 1.92rem;
         flex-shrink: 0;
         display: flex;
+        transition: all 0.2s;
         -webkit-transition: all 0.2s;
 
         &.status2 {
+          transform: translateX(-1.84rem);
           -webkit-transform: translateX(-1.84rem);
         }
       }
@@ -917,13 +923,13 @@ export default {
       // white-space: nowrap;
       // position: relative;
 
-      .ellipsis {
+      // .ellipsis {
         // position: absolute;
         // left: 0;
         // top: 0;
         // width: 100%;
         // height: 100%;
-      }
+      // }
     }
   }
 

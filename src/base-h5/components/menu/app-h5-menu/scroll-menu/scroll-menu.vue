@@ -82,7 +82,7 @@ function set_menu_lv2(item = {},event) {
   // if (item.mi == MenuData.current_lv_2_menu_i) return;
   scrollMenuEvent(event,".s-menu-container",".current");
   emits('changeMenu',item)
-  item.mi&&nextTick(()=>{ //收藏是没有change的相当于是页面
+  nextTick(()=>{ //收藏是没有change的相当于是页面
     // 设置菜单点击事件
     useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
   })

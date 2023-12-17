@@ -132,7 +132,7 @@
                 </div>
               </div>
               <!-- 比分版 -->
-              <div class="score-title-text" v-if="home_score == 0 || away_score == 0 || home_score || away_score">{{ home_score }} - {{
+              <div class="score-title-text" v-if="get_match_status(match.ms)">{{ home_score }} - {{
                 away_score }}</div>
             </div>
             <!--玩法数量-->
@@ -182,7 +182,7 @@
             </div>
             <!-- 比分选项 -->
             <div class="odds">
-              <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
+              <!-- <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
                 <img v-if="!match_collect_state" class="favorited-icon"
                   src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt="" @click.stop="handle_match_collect" />
                 <img v-if='match_collect_state' class="favorited-icon"
@@ -204,8 +204,8 @@
                     </div>
                   </div>
                 </template>
-              </div>
-              <!-- <OddListWrap :main_source="main_source" :match="match_of_list" /> -->
+              </div> -->
+              <OddListWrap :main_source="main_source" :match="match_of_list" />
             </div>
 
 
@@ -228,8 +228,9 @@
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
-import ScoreList from 'src/base-h5/components/match-container/template/app/components/score-list-5/index.vue';
-import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
+import ScoreList from 'src/base-h5/components/match-container/template/app/components/score-list.vue';
+// import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
+import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 
@@ -246,6 +247,7 @@ import { ref, watch, onMounted, onUnmounted, computed } from 'vue';
 import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, useMittOn, compute_css_obj } from "src/output/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
+import { get_match_status } from 'src/core/utils/common/index'
 
 import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
@@ -379,7 +381,8 @@ export default {
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id, LOCAL_PROJECT_FILE_PREFIX,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, footer_menu_id,
       in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item, show_sport_title, compute_css_obj,
-      normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app
+      normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app,
+      get_match_status
     }
   }
 }

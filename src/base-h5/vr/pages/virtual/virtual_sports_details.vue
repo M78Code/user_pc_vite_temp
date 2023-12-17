@@ -43,7 +43,10 @@
      <!--玩法集区域 -->
     <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
       <!-- 赔率列表页面 -->
-      <virtual-sports-category v-if="match && tabs_name == 'bet'" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
+      <template  v-if="match && tabs_name == 'bet'">
+        <virtual-sports-tab :mid="mid" />
+        <virtual-sports-category :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
+      </template>
       <!-- 历史战绩页面 -->
       <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
       <!-- 足球排行榜页面  :tid="menu_list[tab_item_i].field1"-->
