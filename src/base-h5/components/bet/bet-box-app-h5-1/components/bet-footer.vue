@@ -5,12 +5,13 @@
     <div v-show="false">  {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{UserCtr.user_version}}</div>
     
     <!-- 自动接受更好的赔率 -->
-    <div class="accept" @click="set_bet_is_accept()">
+    <div class="accept" @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
         <div :class="BetData.bet_is_accept ? 'active':'' "></div>
         自动接受更好的赔率
     </div>
 
-   <div class="f-e-c bet-submit">
+    <!-- 投注前 -->
+    <div class="f-e-c bet-submit" v-if="BetViewDataClass.bet_order_status == 1">
         <div class="bet-silider">
             <q-page-sticky ref="silider" position="bottom-left" :offset="fab_pos">
                 <div class="jiantou" :disable="dragging_fab" v-touch-pan.right.prevent.mouse="handle_silider">
@@ -29,18 +30,29 @@
           </div>
           <img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt="">
         </div>
-        <!-- <div @click="set_bet_submit" class="bet-betting  f-c-c font500">{{ i18n_t('bet.betting') }}</div> -->
+        
 
         <div @click="set_bet_single" class="bet-single f-c-c font500" :class="BetData.is_bet_single ? 'font14':'font16'">
           <p>{{ BetData.is_bet_single ? '单关投注':'+串' }}</p>
         </div>
+    </div>
 
-   </div>
+    <!-- 投注后 -->
+    <div v-else>
+      <!--  单关 -->
+      <div v-if="BetData.is_bet_single" @click="set_confirm">确认</div>
+      <!--  串关  -->
+      <div v-else>
+        <div @click="set_confirm" >注单已确认</div>
+        <div  @click="set_retain_selection">保留选项，继续投注</div>
+      </div>
 
+    </div>
     
 </template>
 
 <script setup>
+import lodash_ from "lodash"
 import { onMounted, ref } from "vue"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
@@ -88,12 +100,16 @@ const reset_silider = () => {
 // 滑块初始化坐标
 // 处理单关和串关投注的silider位置
 const init_silider_position = () => {
-  if(BetData.is_bet_single) {
-    fab_pos.value[0] = 20
-    silider.value.offset[0] = 20
-  } else {
-    fab_pos.value[0] = 77
-    silider.value.offset[0] = 77
+  let offset = lodash_.get( silider,'value',{})
+  if(offset?.offset){
+    if(BetData.is_bet_single) {
+      fab_pos.value[0] = 20
+      offset.offset[0] = 20
+    } else {
+      fab_pos.value[0] = 77
+      offset.offset[0] = 77
+    }
+    silider.value = offset
   }
 }
 
@@ -107,18 +123,6 @@ const set_bet_is_accept = () => {
 const set_bet_single = () => {
   BetData.set_is_bet_single()
   init_silider_position()
-}
-
-// 提交投注信息
-const set_bet_submit = () => {
-    // 未投注之前 可以点击
-    if(BetViewDataClass.bet_order_status == 1){
-        submit_handle()
-    }
-}
-// 取消投注
-const set_bet_cancel = () => {
-    BetData.set_clear_bet_info()
 }
 
 // 保留投注项
@@ -137,6 +141,7 @@ const set_confirm = () => {
     BetViewDataClass.set_is_finally(true)
     BetData.set_clear_bet_info()
     BetViewDataClass.set_clear_bet_view_config()
+    BetData.set_bet_box_h5_show(false)
 }
 
 </script>
