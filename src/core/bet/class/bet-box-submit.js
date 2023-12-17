@@ -61,7 +61,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             // "userId": UserCtr.get_uid()
         }
         // 冠军没有赛事阶段
-        if(MenuData.is_kemp()){
+        if(item.bet_type == 'guanjun_bet'){
             delete obj.matchProcessId
         }
         // 串关没有 这个字段 
@@ -780,7 +780,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     }
             
     // 冠军 
-    if(MenuData.is_kemp()){
+    if(bet_obj.bet_type == 'guanjun_bet'){
         bet_obj.handicap = ol_obj.on
     }
 
@@ -811,7 +811,7 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     }else{
         let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
           // 冠军玩法 部分玩法hpid相同 
-        if(MenuData.is_kemp()){
+        if(other.bet_type == 'guanjun_bet'){
             let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])
             if(hpn_list.length < 1){
                 hpn_list = lodash_.get(mid_obj,`hps`,[])
