@@ -40,7 +40,7 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import { ref, computed, watch } from 'vue'
 import { compute_value_by_cur_odd_type, MatchDetailCalss } from "src/output/index.js"
 import common, { state } from './common.js'
@@ -55,26 +55,24 @@ import {
 import ResultOlItem from '../../result/ResultOlItem.vue';
 import { calcOlResult } from 'src/output/index'
 
-const props = withDefaults(defineProps<{
-  value: TYPES.OlResult|TYPES.Ol,
-  type?: TYPES.OlItemType
-}>(), {
-  type: 'default'
+/** @type {{value: TYPES.OlResult|TYPES.Ol,type?: TYPES.OlItemType}} */
+const props = defineProps({
+  value:Object,
+  type:String,
 })
 const sportId = MatchDetailCalss.params.sportId
 // @ts-ignore
 const vif =computed(()=>props.value._mhs == 0||props.value._mhs == 11)
 const olName = (function(){
   if(props.type == 'fill'){
-    // @ts-ignore
     return props.value.otv || props.value.on || props.value.ott
   }
   return props.value.on || props.value.ott
 })()
-const placeholder = olName.slice(0,1)
 // const active = computed(()=> BetData.bet_oid_list.includes(props.value.oid))
 const active = computed(() => state.active == props.value.oid)
-const status: Ref<'up' | 'down' | 'none'> = ref('none')
+/** @type {Ref<'up' | 'down' | 'none'>} */
+const status = ref('none')
 const oddUp = ref(false)
 
 watch(() => props.value?.ov, (newVal, oldVal) => {
