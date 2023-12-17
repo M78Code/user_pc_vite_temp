@@ -17,7 +17,7 @@
             </q-page-sticky>
         </div>
 
-        <div v-show="!BetData.is_bet_single" class="bet-single del">
+        <div v-show="!BetData.is_bet_single" class="bet-single del" @click="BetData.set_clear_bet_info()">
           <img :src="compute_local_project_file_path('/image/svg/delete5.svg')" alt="">
         </div>
 
