@@ -502,12 +502,13 @@ export default defineComponent({
 .play-box-style {
   width: 100%;
   height: 0.52rem;
-
-
+  line-height: 0.52rem;
+  background:var(--q-gb-bg-c-15) !important;
   padding: 0 0.15rem;
   display: flex;
   justify-content: center;
-  align-items: center;
+  border-radius: 4px;
+  box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
 }
 
 .bor-style {
