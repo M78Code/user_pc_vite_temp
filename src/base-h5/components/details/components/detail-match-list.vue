@@ -15,6 +15,7 @@ import match_main from "src/base-h5/components/match-list/index.vue"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { defineComponent, onMounted, ref } from "vue";
 import { rem } from "src/output/index.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 export default defineComponent({
   // mixins:[common],
   props:{
@@ -26,6 +27,7 @@ export default defineComponent({
   setup(props, even) {
     const container_height = ref(0)
     onMounted(() => {
+      PageSourceData.set_page_source("match_result");
       MatchMeta.get_details_result_match()
       if(props.invoke == 'category'){
       container_height.value = 'auto';
@@ -48,5 +50,8 @@ export default defineComponent({
   overflow-x: hidden;
   overflow-y: auto;
   height:100%;
+  :deep(.scroll-wrapper .scroll-i-con .s-w-item){
+    position:relative !important
+  }
 }
 </style>

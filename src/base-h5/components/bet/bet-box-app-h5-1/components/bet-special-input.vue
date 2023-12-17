@@ -166,13 +166,14 @@ const set_special_series = (money,ty_id) => {
     //margin-top: 0.08rem;
     height: 0.44rem;
     width: 1.68rem;
+    font-size: 0.14rem;
   }
 
   /* ************** 右边内容 ************** -S */
   .content-b {
-    height: 0.3rem;
+    height: 0.32rem;
     width: 1.50rem;
-    border-radius: 4px;
+    border-radius: 0.08rem;
     font-size: 0.16rem;
     overflow: hidden;
     //padding-left: 0.1rem;
@@ -184,7 +185,8 @@ const set_special_series = (money,ty_id) => {
     background: var(--q-gb-bg-c-15);
     margin-left: 0.05rem;
     .limit-txt {
-      color: #C9CDDB;
+      color: var(--q-gb-t-c-5);
+      font-size: 0.16rem;
     }
   }
   /* ************** 右边内容 ************** -E */

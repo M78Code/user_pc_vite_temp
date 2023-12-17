@@ -282,14 +282,14 @@ const activity_handle = item => {
     margin: 0 0.14rem;
     // background: var(--q-gb-bg-c-25);
     &.border {
-      border-bottom: 1px solid var(--q-gb-bd-c-4);
+      border-bottom: 1px solid var(--q-gb-bd-c-6);
     }
 
     .title {
       color: var(--q-gb-t-c-18);
 
       span {
-        color: var(--q-gb-bd-c-4);
+        color: var(--q-gb-t-c-19);
       }
     }
 
@@ -317,6 +317,7 @@ const activity_handle = item => {
     justify-content: center;
     border-top: 0.08rem solid var(--q-gb-bg-c-21);
     background: var(--q-gb-bg-c-25);
+    color: var(--q-gb-t-c-18);
     span {
       font-size: 0.18rem;
     }

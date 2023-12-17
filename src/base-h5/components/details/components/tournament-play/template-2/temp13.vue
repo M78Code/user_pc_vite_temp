@@ -38,7 +38,7 @@
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_fun(append_single)"
                                :class="[BetData.bet_oid_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
-                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':append_single.show_bgc}]">  
+                            <div class="bet-item-ky-container" >  
                               <div class="single-name">
                                 <!-- <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
                                 <span :class="BetData.bet_oid_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_14">
@@ -146,7 +146,7 @@
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_fun(append_single)"
                                :class="[BetData.bet_oid_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
-                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':append_single.show_bgc}]">
+                            <div class="bet-item-ky-container" >
                               <div class="single-name">
                                 <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
                                 <span :class="BetData.bet_oid_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_14">
