@@ -73,10 +73,10 @@ const emits = defineEmits(['changeList','changeMenu'])
 */
 function set_menu_lv2(item = {},event) {
   // vr跳转
-  if(item.mi == 300){
-    router.push('/virtual');
-    return;
-  }
+  // if(item.mi == 300){
+  //   router.push('/virtual');
+  //   return;
+  // }
   if (props.current_mi === item.mi) return
   // if (item.mi === 2000) router.push('/esports')
   event = event || scrollTab.value[0];
