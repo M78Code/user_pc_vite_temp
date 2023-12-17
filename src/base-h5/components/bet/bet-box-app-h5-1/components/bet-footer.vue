@@ -39,7 +39,7 @@
     <!-- 投注后 -->
     <div v-else>
       <!--  单关 -->
-      <div v-if="BetData.is_bet_single" @click="set_confirm">确认</div>
+      <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub">确认</div>
       <!--  串关  -->
       <div v-else>
         <div @click="set_confirm" >注单已确认 <span>合计17,650.00</span></div>
@@ -153,7 +153,17 @@ onMounted(()=>{
 </style>
 
 <style scoped lang="scss">
-
+.sub{
+  width: calc(100% - 0.1rem);
+  background: var(--q-gb-t-c-1);
+  margin-left: 0.05rem;
+  padding: 0.1rem 0;
+  text-align: center;
+  margin-top: 0.05rem;
+  border-radius: 0.12rem;
+  font-size: 0.16rem;
+  color: var(--q-gb-t-c-14);
+}
 
 .yb-info{
     background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%) !important;
