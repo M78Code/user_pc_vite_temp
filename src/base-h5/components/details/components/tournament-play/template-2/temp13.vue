@@ -650,7 +650,7 @@ export default defineComponent({
       margin: 0.04rem;
       text-align: center;
       font-size: 0.14rem;
-      background:var(--q-gb-bg-c-15);
+      background:var(--q-gb-bg-c-28);
       border-radius: 4px;
       color:var(--q-gb-t-c-10);
       width: 0.85rem;
@@ -689,7 +689,7 @@ export default defineComponent({
 .bet-item-ky-container {
   display:flex;
   justify-content:center;
-  background:var(--q-gb-bg-c-15);
+  background:var(--q-gb-bg-c-28);
   border-radius: 4px;
   align-items:center;
   padding:0 0.04rem;

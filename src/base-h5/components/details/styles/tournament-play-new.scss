@@ -353,7 +353,7 @@
       padding: 0 0.1rem 0.04rem 0.1rem;
     }
     :deep(.hairline-border,), :deep(.item-wrap) {
-      background-color: #ffffff;
+      // background-color: #ffffff;
     }
     .play-name {
       position: relative;
@@ -411,7 +411,7 @@
 
       .rad-style {
         position: relative;
-        background-color: var(--q-match-page-bg-color-107);
+        // background-color: var(--q-match-page-bg-color-107);
         overflow: initial;
       }
 
@@ -676,7 +676,7 @@
       .rad-style {
         border-radius: 0.08rem;
         overflow: hidden;
-        background-color: #F8F9FA;
+        // background-color: var(--q-gb-bg-c-28);
         ::after {
           border: 0;
         }

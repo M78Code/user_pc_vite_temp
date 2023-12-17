@@ -195,7 +195,7 @@ export default defineComponent({
 
   .play-box {
     height: 0.52rem;
-
+background: var(--q-gb-bg-c-28);
 
     padding: 0.06rem 0.05rem 0;
 

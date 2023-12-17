@@ -28,4 +28,5 @@ export default {
     'gb-bg-c-26': 'rgba(255, 255, 255, 0.9)',
     'gb-bg-c-27': 'rgba(255,255,255,0.9)',
     'gb-bg-c-28': '#ffffff', //夜间配色不同
+    'gb-bg-c-29': '#f8f9fa', //夜间配色不同
   } 

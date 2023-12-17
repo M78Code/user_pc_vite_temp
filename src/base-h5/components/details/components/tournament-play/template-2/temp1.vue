@@ -408,7 +408,7 @@ export default defineComponent({
 }
 
 .details_color {
-  background-color: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-28);
 }
 
 .fat-warp {
@@ -481,7 +481,7 @@ export default defineComponent({
 }
 .item-bet-ky {
   padding:0.08rem;
-  background-color: #F8F9FA;
+  background-color: var(--q-gb-bg-c-29);
   .fat-warp {
     margin:0.04rem;
     background:var(--q-gb-bg-c-15);
