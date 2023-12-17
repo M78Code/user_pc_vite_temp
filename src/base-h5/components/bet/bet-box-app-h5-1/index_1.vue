@@ -64,7 +64,7 @@
 
             <template v-else>
               <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
-                <betSpecialresult :items="item" :key="index" :index="index" />
+                <betSpecialResult :items="item" :key="index" :index="index" />
               </div>
 
               <div v-for="(item, index) in BetViewDataClass.orderNo_bet_single_obj" :key="item.orderNo">
