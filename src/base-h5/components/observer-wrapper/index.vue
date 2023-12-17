@@ -236,7 +236,7 @@ const get_item_style = (item, index) => {
   const skeleton = get_background_image(item) 
   return {
     // height: `${height}px`,
-    backgroundImage: `url(${skeleton})`
+    // backgroundImage: `url(${skeleton})`   //注释原因暂时没有夜间图片
   }
 }
 
