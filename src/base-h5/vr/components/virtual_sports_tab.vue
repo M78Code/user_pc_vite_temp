@@ -261,7 +261,13 @@ export default {
   font-size: 0.14rem;
   letter-spacing: 0;
   text-align: center;
-  font-weight: bold;
+  background: #179CFF;
+  color: #fff;
+  width: 0.74rem;
+  height: 0.3rem;
+  line-height: 0.3rem;
+  border-radius: 0.22rem;
+  padding: 0;
 
   &:after {
     content: ' ';

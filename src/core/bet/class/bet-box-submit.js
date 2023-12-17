@@ -545,13 +545,13 @@ const submit_handle = type => {
                 // 盘口Id，多个Id使用逗号分隔
                 // 赛事Id，多个Id使用逗号分隔
                 if(BetData.is_bet_single){
-                    seriesOrders.orderDetailList.forEach( item => {
-                        obj.hid = item.marketId 
-                        obj.mid = item.matchId 
-                    })
+                    let series_orders = lodash_.get(seriesOrders,'[0].orderDetailList', {})
+                    obj.hid = series_orders.marketId 
+                    obj.mid = series_orders.matchId 
+                   
                     // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_single_list))
                 } else {
-                    seriesOrders[0].orderDetailList.forEach( item => {
+                    seriesOrders.orderDetailList.forEach( item => {
                         obj.hid = item.marketId 
                         obj.mid = item.matchId 
                     })
@@ -624,6 +624,7 @@ const set_error_message_config = (res ={},type,order_state) => {
     }
     // 获取限额失败的信息
     if(PROJECT_NAME == 'app-h5'){
+        console.error('obj.message',obj.message)
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t(obj.message));
     }else{
         BetViewDataClass.set_bet_before_message(obj)
@@ -782,7 +783,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
         hl_hs: hl_obj.hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
-        mid_mhs: mid_obj.mhs, // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
+        mid_mhs: ol_obj._mhs, // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
         match_ctr: other.match_data_type, // 数据仓库 获取比分
         device_type: BetData.deviceType, // 设备号
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效

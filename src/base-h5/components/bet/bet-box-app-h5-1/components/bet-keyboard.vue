@@ -112,7 +112,6 @@ watch(() => pre_odds_value, (new_) => {
 })
 
 watch(() => money.value, (new_) => {
-  console.error('ssnew_s,new_',new_)
   let emit_name = 'EMIT_INPUT_BET_MONEY'
   if(BetData.is_bet_single){
     emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'

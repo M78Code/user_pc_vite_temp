@@ -262,7 +262,7 @@ export default defineComponent({
   }
 
   .item-fat {
-    color: var(--q-color-com-fs-color-26);
+    color: var(--q-gb-t-c-24);
   }
 
   .play-box-lock {

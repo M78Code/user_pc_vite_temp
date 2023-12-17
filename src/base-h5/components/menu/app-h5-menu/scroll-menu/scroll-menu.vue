@@ -184,8 +184,7 @@ onUnmounted(()=>{
           min-width: 0.52rem;
           height: 100%;
           flex-shrink: 0;
-          position:relative;
-          background-color: var(--q-gb-bg-c-15);
+          background-color: var(--q-gb-bg-c-27);
           color: var(--q-gb-t-c-19);
           &.current {
             //color: var(--q-gb-bd-c-2);
