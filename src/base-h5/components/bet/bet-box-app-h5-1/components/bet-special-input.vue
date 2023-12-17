@@ -16,8 +16,8 @@
       </div>
     </div>
   </div>
-  <div class="f-b-c" v-if="items.show_quick">
-    <div>预计可赢：<span> {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} </span>RMB</div>
+  <div class="toltal f-b-c" v-if="items.show_quick">
+    <div>预计可赢：<span class="total-money"> {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} </span>RMB</div>
     <div>小计：{{items.bet_amount}}RMB</div>
   </div>
   
@@ -145,13 +145,23 @@ const set_special_series = (money,ty_id) => {
     font-size: .16rem;
     background: var(--q-gb-bg-c-22);
     border-radius: 0.12rem;
-    border-radius: 10px;
     height: 0.38rem;
-    margin-top: 0.1rem;
+    margin-top: 0.04rem;
     //margin-left: .08rem;
     padding: 0 .12rem;
   }
-
+  .toltal {
+    border-top: 1px solid var(--q-gb-bg-c-18);
+    background: var(--q-gb-bg-c-22);
+    border-radius: 0 0 .12rem .12rem;
+    height: 0.24rem;
+    line-height: .24rem;
+    color: var(--q-gb-t-c-11);
+    padding: 0 .12rem;
+    .total-money {
+      color: #F53F3F;
+    }
+  }
   .bet_single_detail{
     //margin-top: 0.08rem;
     height: 0.44rem;

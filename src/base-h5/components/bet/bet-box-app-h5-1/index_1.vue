@@ -157,11 +157,14 @@ const show_merge_change = () => {
   padding-bottom: .2rem;
 }
 
-.bet-scroll {
+:deep(.bet-scroll) {
   max-height: 4rem;
   overflow-y: auto;
   &.h188{
     height: 1.8rem;
+  }
+  .bet_single_info:nth-last-child(2) {
+    border-radius: .12rem .12rem 0 0;
   }
 }
 
