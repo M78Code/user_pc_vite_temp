@@ -588,7 +588,7 @@ export default {
 
         margin-right: 0.04rem;
         display: none;
-        background: var(--q-color-com-img-bg-20) no-repeat 0 0 / 100%;
+        background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png")  no-repeat 0 0 / 100%;
         --per: -0.3rem;
       }
 

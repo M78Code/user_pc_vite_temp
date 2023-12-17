@@ -81,7 +81,7 @@ const handle_silider = (e) => {
     if(BetViewDataClass.bet_order_status == 1){
       submit_handle()
     }
-    reset_silider()
+    // reset_silider()
   }
   fab_pos.value[0] = e.distance.x
   silider.value.offset[0] = e.distance.x
@@ -206,6 +206,7 @@ onMounted(()=>{
     color: var(--q-gb-t-c-7);
   }
   .accept {
+    color: var(--q-gb-t-c-11);
     margin: .08rem 0;
 		text-indent: .24rem;
 		background: url($SCSSPROJECTPATH+"/image/bet/select_b.svg") no-repeat left / contain;

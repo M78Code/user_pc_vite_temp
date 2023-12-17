@@ -202,7 +202,7 @@ export default defineComponent({
   text-align: center;
 
   margin-left: 0.12rem;
-  background: var(--q-color-com-img-bg-20) no-repeat 0 0 / 100%;
+  background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png")  no-repeat 0 0 / 100%;
   --per: -0.3rem;
 }
 

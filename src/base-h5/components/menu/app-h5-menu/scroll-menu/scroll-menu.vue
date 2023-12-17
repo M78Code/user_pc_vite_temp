@@ -182,6 +182,7 @@ onUnmounted(()=>{
 
         .sport-menu-item {
           min-width: 0.52rem;
+          position: relative;
           height: 100%;
           flex-shrink: 0;
           background-color: var(--q-gb-bg-c-27);

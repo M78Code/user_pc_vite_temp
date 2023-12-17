@@ -96,6 +96,7 @@
         <q-slide-transition :duration="200">
           <div v-show="judage_hshow == 'Yes'" :class="[judage_hshow != 'Yes'?'show_border_r':'hide_border_r' ]">
             <!-- 模板id  hpt -->
+            temp:{{ item_data.hpt }}
             <component
                 :is="`temp${item_data.hpt}`"
                 :item_data="item_data"
@@ -105,9 +106,9 @@
           </div>
         </q-slide-transition>
       </template>
-      <template v-else-if="item_data.hotName" :class="[judage_hshow != 'Yes'?'show_border_r':'hide_border_r' ]">
+      <template v-else-if="item_data.hotName">
         <q-slide-transition :duration="200">
-          <div v-show="judage_hshow == 'Yes'">
+          <div v-show="judage_hshow == 'Yes'" :class="[judage_hshow != 'Yes'?'show_border_r':'hide_border_r' ]">
             <!-- 模板id=8 --用于虚拟体育-热门 -->
             <temp8
                 v-show="item_data.hotName"
