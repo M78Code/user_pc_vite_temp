@@ -154,11 +154,11 @@ export default {
   margin: 0 auto;
   background: var(--q-gb-bg-c-18);
   border-radius: 0.05rem;
+  margin-bottom: 0.07rem;
 
   .league-container {
     height: 0.26rem;
     // margin: 0 0.07rem;
-    margin-top: 0.07rem;
     &.collapsed{
       border-bottom: 1px solid #e9e9e9;
     }

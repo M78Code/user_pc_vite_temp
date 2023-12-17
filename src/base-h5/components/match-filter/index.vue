@@ -32,9 +32,12 @@
           <q-slide-transition>
             <div v-if="!item.hide">
               <div :key="index + 'League-name'" class="row  items-center content_box1">
-                <div class="row justify-between items-center content_box2"
-                  :class="{ 'content_box3': item.title && item.spell }">
-                  <div class="name-overhide">{{ item.nameText }}</div>
+                <div class="row justify-between items-center content_box2" :class="{ 'content_box3': item.title && item.spell }">
+                  <!-- <img :src="get_pic_url_thumb(item)" alt=""> -->
+                  <div class="left">
+                    <ImageCacheLoad :path="item.picUrlthumb" type="default_league_icon"></ImageCacheLoad>
+                    <div class="name-overhide">{{ item.nameText }}</div>
+                  </div>
                   <div>
                     <div class="nums"
                         v-show="!(type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type))">
@@ -103,6 +106,8 @@ import { i18n_t, MITT_TYPES, compute_css_obj, useMittEmit, MenuData, compute_img
 import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted, toRefs } from 'vue';
 import search from "src/core/search-class/search.js"
 import { api_search } from 'src/api/'
+
+import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 
 const default_url = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup.svg` //默认图片地址
 // 无联赛logo图标黑色版
@@ -174,6 +179,10 @@ watch(select_num, (new_) => {
     emit("selectHandle",select_num);
   }
 })
+
+const get_pic_url_thumb = (item) => {
+
+}
 
 // ...mapMutations([
 //   "set_filter_list", // 联赛筛选入参tid
@@ -715,6 +724,8 @@ if (type.value == 30) {
   align-items: center;
   font-size: .14rem;
   color: var(--q-gb-bg-c-6);
+  position: relative;
+  z-index: 11;
   span {
     margin-right: .04rem;
     color: #AFB3C8;
@@ -751,7 +762,7 @@ if (type.value == 30) {
   .content_box2 {
     width: 100%;
     font-size: 0.16rem;
-    margin: 0 .6rem 0 .4rem;
+    margin: 0 .6rem 0 .3rem;
     height: 100%;
     position: relative;
 
@@ -771,6 +782,10 @@ if (type.value == 30) {
       &:before {
         display: none;
       }
+    }
+    .left{
+      display: flex;
+      align-items: center;
     }
 
     .name-overhide {
@@ -902,8 +917,6 @@ if (type.value == 30) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-left: 0.15rem;
-
   font-size: 0.16rem;
 }
 
