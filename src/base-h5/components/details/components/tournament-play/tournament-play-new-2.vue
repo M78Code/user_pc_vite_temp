@@ -96,7 +96,6 @@
         <q-slide-transition :duration="200">
           <div v-show="judage_hshow == 'Yes'" :class="[judage_hshow != 'Yes'?'show_border_r':'hide_border_r' ]">
             <!-- 模板id  hpt -->
-            temp:{{ item_data.hpt }}
             <component
                 :is="`temp${item_data.hpt}`"
                 :item_data="item_data"

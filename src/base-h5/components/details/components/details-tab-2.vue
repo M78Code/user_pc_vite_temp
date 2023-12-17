@@ -223,8 +223,8 @@ export default defineComponent({
   letter-spacing: 0;
   text-align: center;
   font-weight: bold;
-  color: var(--q-gb-t-c-14);
-  background:var(--q-gb-bg-c-13);
+  color: var(--q-gb-t-c-1);
+  background: #e8f5ff;
   border-radius: 0.22rem;
   height:0.30rem;
   line-height:0.30rem;

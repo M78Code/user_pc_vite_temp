@@ -1,7 +1,7 @@
 .line-up {
 
     padding-bottom: 0.2rem;
-    background: var(--q-analysis-text-color-25);
+    background: var(--q-gb-bg-c-15);
     > .header {
       display: flex;
       justify-content: center;
@@ -301,7 +301,7 @@
       padding-left: 0.09rem;
       color: var(--q-gb-t-c-20);
       font-size: 0.12rem;
-      background-color:var(--q-gb-bg-c-15);
+      background-color:var(--q-gb-bg-c-25);
       letter-spacing: 0;
   
       font-weight: bold;
@@ -323,7 +323,7 @@
     .public_form {
       position: relative;
       margin-bottom: 0.1rem;
-      background-color:var(--q-gb-bg-c-15);
+      background-color:var(--q-gb-bg-c-25);
       /*  头部 */
       .header {
         height: 0.3rem;

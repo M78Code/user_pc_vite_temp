@@ -815,7 +815,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
         width: 50%;
         .team-item {
           justify-content: space-between;
-          background-color: #f2f2f6;
+          background-color: var(--q-gb-bg-c-18);
           border-radius: 0.04rem;
           margin-top: 0.06rem;
           & > div:first-child {
