@@ -189,7 +189,7 @@ export default {
           is_detail: false,
           // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
           // 根据赛事纬度判断当前赛事属于 那种投注类型
-          bet_type: 'common_bet',
+          bet_type: 'guanjun_bet',
           // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
           device_type: 1,  
           // 数据仓库类型

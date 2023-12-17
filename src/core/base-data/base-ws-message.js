@@ -56,19 +56,20 @@ class BaseWsMessage {
         }
         // 发起订阅前 查看ws是否链接中 没有就发起订阅
         // console.error('WsMan.ws.ws_status',WsMan.ws.ws_status)
-        if(WsMan.ws.ws_status){
-          this.count = 0
+        // let ws_ws = lodash_.get(WsMan,'ws',{}) || {}
+        // if(ws_ws.ws_status){
+        //   this.count = 0
           window.postMessage({event: 'WS', cmd:`WS_MSG_SEND`, data},'*');
-        }else{
-          // 断线重连 
-          if(this.count < 5){
-            WsMan.ws.connect('vue_hidden_to_show')
-            nextTick(()=>{
-              this.send_msg(data,type)
-              this.count++
-            })
-          }
-        }
+        // }else{
+        //   // 断线重连 
+        //   if(this.count < 5){
+        //     ws_ws.connect('vue_hidden_to_show')
+        //     nextTick(()=>{
+        //       this.send_msg(data,type)
+        //       this.count++
+        //     })
+        //   }
+        // }
       }
     }
 
