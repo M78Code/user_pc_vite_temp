@@ -110,7 +110,6 @@ import keyboard from "./components/bet-keyboard.vue";
 // 隐藏投注栏
 const pack_up = () => {
   let sss = !BetData.bet_box_h5_show;
-  console.error("sss", sss);
   BetData.set_bet_box_h5_show(sss);
 };
 
@@ -158,6 +157,9 @@ const show_merge_change = () => {
 
 :deep(.bet-scroll) {
   max-height: 4rem;
+  }
+.bet-scroll {
+  max-height: 4rem;
   overflow-y: auto;
   &.h188{
     height: 1.8rem;
@@ -177,7 +179,7 @@ const show_merge_change = () => {
   top: -0.1rem;
   width: .2rem;
   height: .2rem;
-  z-index: 99;
+  z-index: -1000;
   transition: .3s;
   img {
     width: 100%;
@@ -216,6 +218,7 @@ const show_merge_change = () => {
   height: 0.44rem;
   margin-top: 0.1rem;
   padding: 0 .12rem;
+  font-family: PingFang SC;
   .icon-add:before {
     color: var(--q-gb-t-c-1);
   }

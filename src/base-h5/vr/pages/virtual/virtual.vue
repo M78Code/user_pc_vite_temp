@@ -32,7 +32,7 @@
                   <div class="icon" :class="['icon'+tab.field1, get_theme.includes('y0')?'icon_y0':'']">
                     <img v-if="false" class="menu-new-icon" src="image/bw3/svg/virtual-sports/new.svg" />
                   </div>
-                  <span>{{ tab.name }}</span>
+                  <span>VR{{ tab.name }}</span>
                 </div>
               </div>
             </div>
@@ -496,10 +496,10 @@ export default {
             font-family: PingFangSC-Medium;
             font-size: 0.1rem;
             text-align: center;
-            color: #C9CDDB;
+            color: var(--q-gb-t-c-19);
           }
           &.tabs-active > span {
-            color: #303442;
+            color: var(--q-gb-t-c-18);
           }
           
         }

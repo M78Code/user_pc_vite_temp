@@ -340,7 +340,7 @@ onUnmounted(() => {
   justify-content: flex-start;
   width: 70%;
   .limit-txt {
-    color: #C9CDDB;
+    color: var(--q-gb-t-c-6);
   }
 }
 /* ************** 右边内容 ************** -E */
@@ -372,7 +372,7 @@ onUnmounted(() => {
   text-align: center;
   margin-top: -0.09rem;
   background: gray;
-  color: #FFFFFF;
+  color: var(--q-gb-t-c-14);
   border-radius: 50%;
   font-size: 13px;
 }

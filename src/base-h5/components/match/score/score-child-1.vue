@@ -51,8 +51,8 @@
 <script>
 // import { mapGetters } from "vuex"
 import lodash from "lodash"
-import { LOCAL_PROJECT_FILE_PREFIX, project_name } from 'src/output/index.js'
-import { i18n_t } from "src/boot/i18n.js";
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
+import {project_name } from 'src/output/module/constant-utils-common.js'
 
 export default {
   name: 'score_child_1',
@@ -78,7 +78,6 @@ export default {
       add_score: false,
       // 点球比分是否有
       shoot_score: false,
-      i18n_t
     }
   },
   computed: {
