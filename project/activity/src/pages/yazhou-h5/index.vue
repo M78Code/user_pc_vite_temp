@@ -170,7 +170,6 @@ export default {
     width: 100%;
     padding-top: 100%;
     background: var(--qq--com-img-bg-148) no-repeat;
-    // backgrounurl($SCSSPROJECTPATH+"/ty/activity/yazhou-h5/activity/activity-header_slot.png") no-repeat;
     background-size: 100% auto;
     background-color: #fdfcfa;
     background-position: center;
@@ -293,5 +292,10 @@ export default {
     }
   }
 }
+</style>
+<style lang="scss">
+ .absolute-right{
+    position: initial !important;
+  }
 </style>
  

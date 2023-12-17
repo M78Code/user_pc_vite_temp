@@ -5,26 +5,28 @@
 -->
 <template>
 <div class="choose-carefully-wrapper" :style="{height:container_height=='auto'?'auto':`${container_height}px`}">
-  <!-- <match-main :class="invoke?invoke:''" invok_source="detail_match_list" /> -->
+  <match-main :class="invoke?invoke:''" invok_source="detail_match_list" />
 </div>
 </template>
 
 <script>
 // import common from "src/project/mixins/constant/module/common.js"
-// import match_main from "src/base-h5/components/match-list/index.vue"
+import match_main from "src/base-h5/components/match-list/index.vue"
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { defineComponent, onMounted, ref } from "vue";
-
+import { rem } from "src/output/index.js";
 export default defineComponent({
   // mixins:[common],
   props:{
     invoke:String
   },
   components:{
-    // "match-main":match_main,
+    "match-main":match_main,
   },
   setup(props, even) {
     const container_height = ref(0)
     onMounted(() => {
+      MatchMeta.get_details_result_match()
       if(props.invoke == 'category'){
       container_height.value = 'auto';
     }
@@ -45,5 +47,6 @@ export default defineComponent({
   border-top: 1px solid transparent;
   overflow-x: hidden;
   overflow-y: auto;
+  height:100%;
 }
 </style>

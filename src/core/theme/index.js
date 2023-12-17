@@ -42,7 +42,7 @@ if (default_theme) {
   default_theme_key = theme_list[0].key
 }
 // 设置默认主题
-LocalStorage.set('default-theme',default_theme_key)
+LocalStorage.set('default-theme', LocalStorage.get('default-theme') || default_theme_key)
 
 export {
   theme_list,

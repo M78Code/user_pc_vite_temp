@@ -157,8 +157,8 @@ export default defineComponent({
       (to, from) => {
         // 1. 非赛果页 且 不是通过搜索进入 2.搜索进入且已切换过玩法集
         if (
-            get_menu_type.value != 28 && !to.search_term && to.mid == from.mid
-            || to.search_term && component_data.match_play_item_changed
+            get_menu_type.value != 28 && !to.search_term && to.mid == from.mid && route.name != "match_result"
+            || to.search_term && component_data.match_play_item_changed 
         ) {
           initEvent();
         }

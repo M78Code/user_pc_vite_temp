@@ -8,7 +8,7 @@
                     <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
                 </div>
                 <div class="w-100 my-4">
-                    <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
+                    <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bet_inplay") + ']'}}</span>
                     <span class="text-a1a text-flow-none font400">{{ items.playName }}
                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                     </span>
@@ -24,21 +24,7 @@
                 <div class="bet-odds">
                     <span class="font14 font700 mr-10">@<span class="font22">{{ items.oddsValues }}</span></span>
                 </div>
-                <!-- <div class="bet-loading mr-10" v-if="items.orderStatusCode == 2">投注中</div>
-                <div class="bet-failure mr-10" v-if="items.orderStatusCode == 0">投注失败</div>
-                <div class="bet-success mr-10" v-if="items.orderStatusCode == 1">投注成功</div> -->
-              
             </div>
-            <!-- <div class="bet-delete bet-icon"> -->
-                <!-- 投注确认中 -->
-                <!-- <img class="icon_loading" v-if="items.orderStatusCode == 2" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt="" /> -->
-                <!-- <icon-wapper v-if="BetViewDataClass.bet_order_status == 3" class="icon-loading-no" size="12px" color="#FF7000" /> -->
-                <!-- 投注失败 -->
-                <!-- <icon-wapper v-if="items.orderStatusCode == 0" name="icon-failure" size="12px" color="#FF4646" /> -->
-                <!-- 投注成功 -->
-                <!-- <icon-wapper v-if="items.orderStatusCode == 1" name="icon-success" size="12px" color="#4FC140" /> -->
-            <!-- </div> -->
-           
         </div>
 
         <div class="bet-content">
