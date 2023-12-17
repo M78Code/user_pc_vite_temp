@@ -488,7 +488,7 @@ export default {
             font-family: PingFangSC-Medium;
             font-size: 0.1rem;
             text-align: center;
-            color: var(--q-gb-t-c-14);
+            color: var(--q-gb-t-c-19);
           }
           &.tabs-active > span {
             color: var(--q-gb-t-c-20);

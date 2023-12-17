@@ -128,6 +128,7 @@ export default defineComponent({
   background: #F2F2F6;
   margin-top: 0.08rem;
   border-radius: 0.04rem;
+  color: var(--q-gb-t-c-18);
 
   &:nth-child(2), &:nth-child(1) {
     border-top: 0px solid red;
