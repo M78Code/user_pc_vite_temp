@@ -184,10 +184,8 @@ class BetRecord {
     let params = { orderNo: tempList.join(',') }
     api_betting.get_cashout_max_amount_list(params).then(reslut => {
       let res = reslut.status ? reslut.data : reslut
-      if (res.code == 200 && res.data) {
-        // 通知提前结算组件 => 数据金额变化
-        useMittEmit(MITT_TYPES.EMIT_EARLY_MONEY_LIST_CHANGE, res.data)
-      }
+      // 通知提前结算组件 => 数据金额变化
+      useMittEmit(MITT_TYPES.EMIT_EARLY_MONEY_LIST_CHANGE, res.data)
     })
   }
 
