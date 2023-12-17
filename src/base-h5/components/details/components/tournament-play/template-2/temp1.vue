@@ -417,7 +417,7 @@ export default defineComponent({
 
 .led {
   flex:1;
-  color: #999999; //var(--q-detials-color-7);
+  color: var(--q-gb-t-c-19); //var(--q-detials-color-7);
   // padding-bottom: 0.02rem;
   font-size: 0.13rem;
 

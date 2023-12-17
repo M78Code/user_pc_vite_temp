@@ -491,7 +491,7 @@ export default {
             color: var(--q-gb-t-c-19);
           }
           &.tabs-active > span {
-            color: var(--q-gb-t-c-20);
+            color: var(--q-gb-t-c-18);
           }
           
         }
