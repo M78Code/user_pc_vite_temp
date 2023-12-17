@@ -778,6 +778,7 @@ export default {
     }
 
     .league-t-wrapper {
+      color: var(--q-gb-t-c-18);
       line-height: 1;
       min-width: 1.18rem;
       display: flex;
@@ -910,6 +911,7 @@ export default {
       }
 
       &.team_title {
+        color: var(--q-gb-t-c-18);
         .team-title-inner-con {
           width: 1.8rem !important;
         }
@@ -1471,6 +1473,7 @@ export default {
       align-items: center;
       justify-content: center;
       font-size: .12rem;
+      color: var(--q-gb-t-c-18);
       .dmrr-item-fail {
         color: var(--q-match-fs-color-13);
       }

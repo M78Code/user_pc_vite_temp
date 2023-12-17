@@ -79,7 +79,7 @@ const toggle = () => {
 
         &.active {
             //color: #7981a4;
-            color: var(--q-gb-t-c-24);
+            color: var(--q-gb-t-c-10);
         }
     }
 }
