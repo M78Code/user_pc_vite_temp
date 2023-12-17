@@ -52,6 +52,7 @@ const requestHook = {
     const requestId = SessionStorage.get(token_key) || SessionStorage.get("token") ||get_query_string.token || "";
     config.headers["requestId"] = requestId;
     //请求语言
+    
     config.headers["lang"] = LocalStorage.get(lang_key,LocalStorage.get('lang')); // 语言调整
     config.headers["checkId"] = `pc-${requestId}-${(UserCtr.get_uid()).replace(/-/g, "")}-${Date.now()}`;
     config.time = new Date().getTime();

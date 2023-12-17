@@ -4,20 +4,22 @@
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
         <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
             <div class="fw-s-s bet-left">
-                <div class="w-100 f-s-c text-1a1 ">
+                <div class="w-100 f-s-c  ">
                     <span class="text-flow-none" v-html="items.handicap"></span> 
                 </div>
-                <div class="w-100 handicap my-4">
-                    <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
-                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}
-                        <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
-                    </span>
-                    <!-- 盘口 -->
-                    <span class="text-a1a text-flow-none text-009 font400" v-if="only_win[items.sportId].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span> 
-                    <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
-                </div>
-                <div class="w-100 fon12 font400 text-8a8">{{ items.tid_name }}</div>
-                <div class="w-100 fon12 font400 text-8a8" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
+                <div class="my-left">
+                    <div class="w-100 handicap my-4">
+                        <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
+                        <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}
+                            <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
+                        </span>
+                        <!-- 盘口 -->
+                        <span class="text-a1a text-flow-none text-009 font400" v-if="only_win[items.sportId].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span> 
+                        <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
+                    </div>
+                    <div class="w-100 fon12 font400 ">{{ items.tid_name }}</div>
+                    <div class="w-100 fon12 font400 " v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
+                    </div>
                 </div>
             </div>
             <div class="fw-e-s bet-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
@@ -38,25 +40,17 @@
                     <span>{{ i18n_t('bet.bet_invalid') }}</span>
                 </div>
             </div>
-          
 
-            <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1" @click="set_delete">
+            <!--  串关 投注 删除投注项 -->
+            <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1 && !BetData.is_bet_single" @click="set_delete">
                 <span class="icon-delete"></span>
             </div>
-
-            <div class="bet-delete bet-icon" v-else>
-                <!-- 投注确认中 -->
-                <img v-if="BetViewDataClass.bet_order_status == 2" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`" alt=""/>
-                <!-- 投注失败 -->
-                <img v-if="BetViewDataClass.bet_order_status == 3" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`" alt=""/>
-                <!-- 投注成功 -->
-                <img v-if="BetViewDataClass.bet_order_status == 4" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`" alt=""/>
-            </div>
-           
+          
         </div>
         
         <div v-if="BetData.is_bet_single">
-            <betInput :items="items"></betInput>
+            <!-- 输入框 -->
+            <bet-single-input :item="items"></bet-single-input>
         </div>
        
     </div>
@@ -64,12 +58,11 @@
 
 <script setup>
 
-import { onMounted, onUnmounted, reactive } from "vue"
 import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney,only_win } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 
-import betInput from "./bet-input.vue"
+import betSingleInput from "./bet-single-input.vue"
 
 const props = defineProps({
     items:{},
@@ -80,6 +73,7 @@ const set_delete = () => {
     BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
 }
 
+
 </script>
 
 <style scoped lang="scss">
@@ -88,15 +82,18 @@ const set_delete = () => {
 
 <style scoped lang="scss">
 .bet-list {
-    
+   
     .bet-content {
         min-height: 76px;
-        padding: 12px;
-        padding-left: 34px;
+        padding: 0.12rem;
+        //padding-left: 34px;
         font-size: 13px;
         font-weight: 500;
         font-style: normal;
         position: relative;
+        background: var(--q-gb-bg-c-22);
+       // margin-top: .1rem;
+        border-radius: 0.12rem;
         &.bet-disable{
             align-items: center;
         }
@@ -155,8 +152,16 @@ const set_delete = () => {
 
         .bet-left {
             width: 230px;
+            .my-left{
+                padding-left: 0.1rem;
+                border-left: 2px solid var(--q-gb-bg-c-13);
+                margin-top: 0.06rem;
+                color: var(--q-gb-t-c-3);
+                font-size: 0.12rem;
+                font-family: PingFang SC;
+            }
             .text-a1a-i {
-                color: var(--q-gb-t-c-5) !important;
+                //color: var(--q-gb-t-c-5) !important;
             }
         }
 
@@ -188,6 +193,7 @@ const set_delete = () => {
         max-width: 84%;
         line-height: 16px;
         word-wrap: break-word;
+        font-family: PingFang SC;
         :deep(.ty-span) {
             margin-left: 4px;
             color: var(--q-gb-t-c-2);

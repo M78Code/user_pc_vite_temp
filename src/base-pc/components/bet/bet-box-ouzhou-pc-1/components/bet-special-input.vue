@@ -1,32 +1,32 @@
 
 
 <template>
-    <div v-if="(!BetData.is_bet_single && BetData.bet_s_list.length >1) || BetData.is_bet_single">
+    <div >
         <div class="px-12 bet-money" >
             <div class="f-b-c pl-18 bet-input-info">
                 <div>
-                    <div class="font14">单关</div>
+                    <div class="font14">{{items.name}} X{{items.count}} {{items.seriesOdds}}</div>
                     <div class="font12 h12">
                         <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
                         <span class="text-8A8986-i font500" v-if="[1].includes(items.playId*1)"> 
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally), items.bet_amount))  }} 
+                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} 
                         </span>
                         <span class="text-8A8986-i font500" v-else>
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : items.bet_amount))) }} 
+                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds),(UserCtr.odds.cur_odds == 'HK' ? 0 : items.bet_amount))) }} 
                         </span>
                     </div>
                 </div>
         
                 <div>
-                    <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
-                    :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money}~${format_money3(ref_data.max_money)}`" maxLength="11"  />
+                    <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount()" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
+                    :placeholder="`${i18n_t('bet.money_range')} ${format_money3(items.min_money)}~${format_money3(items.max_money)}`" maxLength="11"  />
                 </div>
             
             </div>
-            <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
+            <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         </div>
         <div>
-            <ul class="bet-bet-money f-b-c" v-show="items.ol_os == 1">
+            <ul class="bet-bet-money f-b-c" v-show="items.show_quick">
                 <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="bet_money_btn_class(obj, index)" >
                     {{index == 'max' ? '' : '+' }}{{obj}}
                 </li>
@@ -40,7 +40,8 @@ import { reactive,onMounted,onUnmounted } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { useMittEmit,useMittOn,MITT_TYPES,UserCtr,formatMoney, format_money3 } from "src/output/index.js"
+
+import { UserCtr,formatMoney, format_money3 } from "src/output/index.js"
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 const props = defineProps({
@@ -56,14 +57,6 @@ const ref_data = reactive({
     seriesOdds: '', // 赔率
     show_quick: false, // 显示快捷金额
     emit_lsit: {},
-    show_money: true,
-})
-
-// 复式连串过关投注
-const special_series = reactive({
-  id: '',
-  name: '',
-  count: "",
 })
 
 // 开启/停止拖拽
@@ -73,22 +66,17 @@ const stop_drap_fn = (state) => {
         draggable: state
     }
     BetData.set_bet_box_draggable(obj)
-
 }
 
 onMounted(() => {
-    set_ref_data_bet_money()
-    show_quick_amount(true)
+    // show_quick_amount(true)
     // // 单关 单注可以默认展开
     // if(BetData.is_bet_single && !BetData.is_bet_merge){
     //     show_quick_amount(true)
     // }
-
+    show_quick_amount()
     ref_data.money = props.items.bet_amount
-      // 监听 限额变化
-    ref_data.emit_lsit = {
-        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
-    }
+    
 })
 
 
@@ -98,18 +86,17 @@ onUnmounted(() => {
 
 // 快捷金额 显示隐藏
 const set_show_quick_money = (obj = {}) => {
-    ref_data.show_money = obj.show
     obj.money_list.max = 'MAX'
     ref_data.money_list = obj.money_list
-    ref_data.max_money = obj.max_money
+    props.items.max_money = obj.max_money
 }
 
 
 // 判断快捷金额按钮是否可点击
 const bet_money_btn_class = (obj, index) => {
     let className = '';
-    if(ref_data.max_money > 0) {
-        if(index != 'max' && (ref_data.max_money < obj || ref_data.max_money < props.items.bet_amount || UserCtr.balance < obj)) {
+    if(props.items.max_money > 0) {
+        if(index != 'max' && (props.items.max_money < obj || props.items.max_money < props.items.bet_amount || UserCtr.balance < obj)) {
             className = 'disabled'
         }
     }
@@ -118,30 +105,30 @@ const bet_money_btn_class = (obj, index) => {
 
 // 快捷金额
 const set_bet_money = obj => {
+    console.error('sss',obj)
     // 获取当前投注金额
     let money = props.items.bet_amount
     let money_ = obj
     // 设置最大投注金额
     if(obj == "MAX"){
-        money_ = ref_data.max_money
+        money_ = props.items.max_money
     }
+    let items_obj = lodash_.get(props,'items',{})
     // 计算投注金额
     let money_amount = mathJs.add(money,money_)
     // 投注金额 不能大于最大投注金额 也不能大于用户约
-    if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
-        BetData.set_bet_obj_amount(mathJs.add(money,money_),props.items.playOptionsId)
-
-        ref_data.money = money_amount
+    if(money_amount < props.items.max_money && money_amount < UserCtr.balance){
+        items_obj.bet_amount = mathJs.add(money,money_)
     }else{
         // 最大限额不能大于余额
-        let money_a = ref_data.max_money
-        if(UserCtr.balance < ref_data.max_money){
-            money_a = UserCtr.balance
+        money_amount = props.items.max_money
+        if(UserCtr.balance < props.items.max_money){
+            money_amount = UserCtr.balance
         }
-        BetData.set_bet_obj_amount(money_a,props.items.playOptionsId)
-
-        ref_data.money = money_a
+        items_obj.bet_amount = money_amount
     }
+    ref_data.money = money_amount
+    BetViewDataClass.set_bet_special_series_item(items_obj)
     
 }
 
@@ -154,68 +141,50 @@ const keydown = (e) => {
     }
 }
 
-// 限额改变 修改限额内容
-const set_ref_data_bet_money = () => {
-    let value = props.items.playOptionsId
-    // 串关获取 复试连串
-    if (!BetData.is_bet_single) {
-
-        // 复式连串关投注
-        const { id, name, count } = lodash_.get(BetViewDataClass.bet_special_series, `[${props.index}]`, {}) 
-        special_series.id = id
-        special_series.name = name
-        special_series.count = count
-        // 串关 type
-        value = id
-    }
-
-    const { min_money = 10, max_money = 8888, seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
-    // 最小限额
-    ref_data.min_money = min_money
-    // 最大限额
-    ref_data.max_money = max_money
-    // 复试串关赔率
-    ref_data.seriesOdds = seriesOdds
-    // 限额改变 重置投注金额
-    ref_data.money = ''
-
-    if(ref_data.show_quick){
-        show_quick_amount(ref_data.show_quick)
-    }
-}
-
 // 输入判断
 const set_win_money = () => {
+    let items_obj = lodash_.get(props,'items',{})
     // 输入控制
-    if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
-        BetData.set_bet_obj_amount(ref_data.money,props.items.playOptionsId)
+    if( ref_data.money < props.items.max_money &&  ref_data.money < UserCtr.balance){
+        items_obj.bet_amount = ref_data.money
     }else{
         // 最大限额不能大于余额
-        let money_a = ref_data.max_money
-        if(UserCtr.balance < ref_data.max_money){
+        let money_a = props.items.max_money
+        if(UserCtr.balance < props.items.max_money){
             money_a = UserCtr.balance
         }
         ref_data.money = money_a
-        BetData.set_bet_obj_amount(money_a,props.items.playOptionsId)
+        items_obj.bet_amount = money_a
     }
+    BetViewDataClass.set_bet_special_series_item(items_obj)
 }
 
 // 快捷金额 state true   false
-const show_quick_amount = state => {
-    ref_data.show_quick = state
+const show_quick_amount = () => {
     let money_list = []
-    if(state){
-        if (BetData.bet_is_single) {
-           money_list = lodash.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200 })
-        } else {
-           money_list = lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
-        }
+    if (BetData.bet_is_single) {
+        money_list = lodash_.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200 })
+    } else {
+        money_list = lodash_.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
     }
+
     let obj = {
-        show: state,    
         money_list,
-        max_money: ref_data.max_money,
+        max_money: props.items.max_money,
     }
+
+    // 取消全部的快捷金额按钮
+    let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
+    let id = lodash_.get(props,'items.id','')
+    list.filter(item => {
+        item.show_quick = false
+         // 显示指定投注项的快捷金额按钮
+        if(item.id == id){
+            item.show_quick = true
+        }
+    })
+    BetViewDataClass.set_bet_special_series(list)
+
     set_show_quick_money(obj)
 }
 

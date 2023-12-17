@@ -42,16 +42,23 @@
         </div>
 
         <div class="bet-result f-b-c" >
-            <div class="bet-result-info">
-                <span class="font12 font500 bet-returm mr-4">{{ i18n_t("bet.total_bet")}}</span>
-                <span class="font14 font500 bet-money ">{{ format_money2(mathJs.divide(items.betMoney,100)) }}</span>
-            </div>
-            <div class="bet-result-info">
-                <span class="font12 font400 bet-returm mr-4">{{ i18n_t("common.maxn_amount_val") }}</span>
-                <span class="font14 font500">{{ format_money2(mathJs.divide(items.maxWinMoney,100))}}</span>
-            </div>
+            <span class="font12 font500 bet-returm mr-4">投注金额</span>
+            
+            <span class="font14 font500">{{ format_money2(mathJs.divide(items.betMoney,100))}}</span>
         </div>
-      
+
+        <div class="bet-result f-b-c" >
+            <span class="font12 font500 bet-returm mr-4">可赢金额</span>
+            
+            <span class="font14 font500">{{ format_money2(mathJs.divide(items.maxWinMoney,100))}}</span>
+        </div>
+
+        <div class="bet-result f-b-c" >
+            <span class="font12 font500 bet-returm mr-4">注单号</span>
+            
+            <span class="font14 font500">{{ items.orderNo }}</span>
+        </div>
+
     </div>
 </template>
 
@@ -198,8 +205,8 @@ const props = defineProps({
 .bet-result{
     width: 100%;
     background: var(--q-gb-bg-c-15);    
-    padding: 0 20px;
-    height: 50px;
+    padding: 0 .2rem;
+    height: .22rem;
     .bet-result-info{
         color: var(--q-gb-t-c-5);
         .bet-money{
@@ -207,8 +214,8 @@ const props = defineProps({
         }
     }
     .icon_loading{
-        width: 12px;
-        height: 12px;
+        width: .12rem;
+        height: .12rem;
     }
 }
 </style>
