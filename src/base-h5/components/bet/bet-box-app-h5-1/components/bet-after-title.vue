@@ -5,8 +5,8 @@
     <div class="ty-bet-after-status-title" :class="{active: bet_order_status_active}">{{title}}</div>
   </div>
 
-  <div v-else class="f-c-c">
-    <icon-wapper name="icon-success" size="15px" color="#4FC140" /> <span style="margin-left: 0.05rem">订单已确认</span>
+  <div v-else class="order-title f-c-c font16">
+    <icon-wapper name="icon-success" size="16px" color="#77C48F" /> <span style="margin-left: 0.05rem">注单已确认</span>
   </div>
 </template>
 
@@ -63,6 +63,15 @@ const bet_order_status_active = computed(()=>{
     &.active{
       color: var(--q-gb-t-c-1);
     }
+  }
+}
+.order-title {
+  padding-top: .12rem;
+  height: 0.28rem;
+  line-height: .28rem;
+  margin-bottom: .08rem;
+  .icon-success {
+    margin-right: .12rem;
   }
 }
 </style>
