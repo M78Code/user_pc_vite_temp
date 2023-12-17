@@ -122,7 +122,7 @@ export default {
 .all_league_title{
   display: flex;
   height: 30px;
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-25);
   padding: 0 10px;
   align-items: center;
   justify-content: space-between;
@@ -300,7 +300,7 @@ export default {
       padding-left: 0.07rem;
       // padding-bottom: 0.08rem;
       .ol-li-item{
-        background: var(--q-gb-bg-c-15);
+        background: var(--q-gb-bg-c-28);
       }
     }
 

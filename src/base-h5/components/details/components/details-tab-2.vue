@@ -185,7 +185,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .details-tab {
   min-height: 0.4rem;
-  background-color: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-25);
   // border-bottom: 0.01rem solid var(--q-gb-bd-c-5);
 }
 

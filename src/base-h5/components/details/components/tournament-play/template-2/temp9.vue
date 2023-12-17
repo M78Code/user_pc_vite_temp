@@ -125,7 +125,7 @@ export default defineComponent({
   padding: 0 0.15rem;
   align-items: center;
   width: 49%;
-  background: #F2F2F6;
+  background: var(--q-gb-bg-c-18);
   margin-top: 0.08rem;
   border-radius: 0.04rem;
   color: var(--q-gb-t-c-18);
