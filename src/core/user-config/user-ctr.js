@@ -248,13 +248,14 @@ class UserCtr {
     console.error('theme',theme)
     this.theme = theme;
     useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, theme);
-
     // 替换body上className
     const old_theme = LocalStorage.get("theme") || sessionStorage.getItem("theme") || theme == 'day' ? 'theme02' : 'theme01';
     document.getElementById('ty-app').classList.replace(old_theme, theme)
     LocalStorage.set("theme", theme.value || theme)
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
+    // 设置主题
+    LocalStorage.set('default-theme', theme)
   }
   /**
    * 联赛赛选的数据发生变化
