@@ -171,7 +171,7 @@ class MatchCollect {
     let result = 1
     if (MenuData.is_esports()) {
       result = 3
-    } else if (MenuData.is_kemp_mi()) {
+    } else if (MenuData.is_kemp()) {
       result = 2
     }
     return result

@@ -366,9 +366,9 @@ export default defineComponent({
         cf: match_state ? 0 : 1,
         cuid: UserCtr.get_uid()
       }).then(res => {
-        if(res && res.code == '200' && MenuData.is_collect()){
-          useMittEmit(MITT_TYPES.EMIT_COLLECT_MATCH_OZ);
-        }
+        // if(res && res.code == '200' && MenuData.is_collect()){
+        //   useMittEmit(MITT_TYPES.EMIT_COLLECT_MATCH_OZ);
+        // }
         if (+res.code !== 200) return
       })
       // 收藏页手动处理数据
@@ -644,7 +644,8 @@ export default defineComponent({
      * @return {Number}
      */
     get_match_mc (item) {
-      return (item.mc * 1) < 1 ? 0 : item.mc;
+      //mc为undefined会显示空 所以要 ||0
+      return (item.mc * 1) < 1 ? 0 : item.mc||0;
     },
     /**
      * 包装获取图片路径的方法
