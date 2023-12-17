@@ -236,7 +236,7 @@
 <script>
 import lodash from "lodash";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
-import {LOCAL_PROJECT_FILE_PREFIX ,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,calc_win} from 'src/output/index.js';
+import {LOCAL_PROJECT_FILE_PREFIX ,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,calc_win,is_integer} from 'src/output/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -364,25 +364,25 @@ export default defineComponent({
         let temp_num = props.item_data.hl.length / 3
 
         // 是整数则减一，否则向下取整
-        if (init_data.is_integer(temp_num)) {
+        if (is_integer(temp_num)) {
           slide_num = temp_num - 1
         } else {
           slide_num = Math.floor(temp_num)
         }
 
         // 左滑最大距离
-        let max_left = dom_width * slide_num
+        let max_left = 85 * slide_num
         if (Math.abs(init_data.left) >= max_left) {
           return
         }
-        init_data.left -= dom_width
+        init_data.left -= max_left
 
       } else {
         // 右滑
         if (init_data.left >= 0) {
           return
         }
-        init_data.left += dom_width
+        init_data.left += 90
       }
     }, 500);
     const go_to_fun = (ol_item) => {
