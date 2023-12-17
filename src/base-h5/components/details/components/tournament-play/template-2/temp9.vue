@@ -57,7 +57,7 @@ export default defineComponent({
     watch(
       () => props.item_data,
       (new_) => {
-        this.init()
+        init()
       },
       {deep: true}
     );

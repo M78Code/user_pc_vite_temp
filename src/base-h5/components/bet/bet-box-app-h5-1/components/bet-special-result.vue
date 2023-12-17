@@ -3,26 +3,28 @@
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
-                <div class="w-100 f-s-c text-1a1">
+                <div class="w-100 f-s-c">
                     <span class="text-flow-none">{{ items.playOptionName}}</span> 
                     <span class="bet-market mx-4 text-ff7">{{ items.marketValues }}</span>
                 </div>
-                <div class="w-100 my-4">
-                    <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bet_inplay") + ']'}}</span>
-                    <span class="text-a1a text-flow-none font400">{{ items.playName }}
-                        <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
-                    </span>
-                    
-                    <span class="mr-4 text-009"> [{{ i18n_t(`odds.${items.marketType}`) }}]</span>
-                </div>
-                <div class="w-100 text-8a8 fon12 font400" v-if="items.matchType != 3">{{items.matchName}}</div>
-                <div class="w-100 text-8a8 fon12 font400">{{ items.matchInfo }}
+                <div class="my-left">
+                    <div class="w-100 my-4">
+                        <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bet_inplay") + ']'}}</span>
+                        <span class="text-a1a text-flow-none font400">{{ items.playName }}
+                            <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
+                        </span>
+                        
+                        <span class="mr-4 text-009"> [{{ i18n_t(`odds.${items.marketType}`) }}]</span>
+                    </div>
+                    <div class="w-100 fon12 font400" v-if="items.matchType != 3">{{items.matchName}}</div>
+                    <div class="w-100 fon12 font400">{{ items.matchInfo }}
+                    </div>
                 </div>
             </div>
 
             <div class="bet-right">
                 <div class="bet-odds">
-                    <span class="font14 font700 mr-10">@{{ items.oddsValues }}</span>
+                    <span class="font14 font700 mr-10">@<span class="font22">{{ items.oddsValues }}</span></span>
                 </div>
             </div>
         </div>
@@ -48,15 +50,21 @@ const props = defineProps({
 </style>
 
 <style scoped lang="scss">
+.font22{
+    font-size: 0.2rem;
+}
 .bet-list {
+    margin-bottom: 0.05rem;
     .bet-content {
         min-height: 76px;
         padding: 12px;
-        padding-left: 34px;
+        //padding-left: 34px;
         font-size: 13px;
         font-weight: 500;
         font-style: normal;
         position: relative;
+        background: var(--q-gb-bg-c-22);
+        border-radius: 0.12rem;
 
         .bet-money {
             height: 34px;
@@ -89,6 +97,14 @@ const props = defineProps({
 
         .bet-left {
             width: 230px;
+            .my-left{
+                padding-left: 0.1rem;
+                border-left: 2px solid var(--q-gb-bg-c-13);
+                margin-top: 0.06rem;
+                color: var(--q-gb-t-c-3);
+                font-size: 0.12rem;
+                font-family: PingFang SC;
+            }
         }
         .bet-loading{
             color: var(--q-gb-t-c-2);

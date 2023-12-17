@@ -26,7 +26,7 @@
             <div class="fw-e-s bet-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                 <div class="f-c-c bet-money">
                     <span class="font14 font700 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
-                        @{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}
+                        @<span class="font22">{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}</span>
                     </span>
 
                     <div class="show_img">
@@ -82,6 +82,9 @@ const set_delete = () => {
 </style>
 
 <style scoped lang="scss">
+.font22{
+    font-size: 0.2rem;
+}
 .bet-list {
    
     .bet-content {
