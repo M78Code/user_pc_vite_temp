@@ -915,8 +915,9 @@ export default {
         justify-content: flex-end;
         align-items: center;
       }
-      .score-se-inner2{
+      :deep(.score-se-inner2){
         display: flex;
+        margin-left: -5px;
       }
     }
 
