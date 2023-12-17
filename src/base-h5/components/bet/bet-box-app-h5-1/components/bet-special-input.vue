@@ -34,6 +34,7 @@ import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 const props = defineProps({
     items:{},
+    index:{}
 })
 
 let flicker_timer = null
@@ -65,15 +66,16 @@ onMounted(() => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = (new_money) => {
-  console.error('change_money_handle-single',new_money)
-  if( new_money.money*1 > props.items.max_money *1){
-    ref_data.money =  props.items.max_money
-  }else{
-    ref_data.money = new_money.money
+  console.error('change_money_handle-single',new_money,new_money.params.id,props.items.max_money,new_money.money)
+  if(props.items.id == new_money.params.id){
+    if( new_money.money*1 > props.items.max_money *1){
+      ref_data.money =  props.items.max_money
+    }else{
+      ref_data.money = new_money.money
+    }
+    BetData.set_bet_amount(ref_data.money)
+    set_special_series('edit',new_money.params.id)
   }
-  BetData.set_bet_amount(ref_data.money)
-  set_special_series('edit',new_money.params.id)
-  set_special_series('edit')
 }
 
 onUnmounted(() => {
