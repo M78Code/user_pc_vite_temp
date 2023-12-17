@@ -1,6 +1,6 @@
 
 <template>
-    <div class="bet-list bor-b">
+    <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
         <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
             <div class="fw-s-s bet-left">
@@ -9,7 +9,7 @@
                 </div>
                 <div class="my-left">
                     <div class="w-100 handicap my-4">
-                        <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
+                        <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bet_inplay") + ']'}}</span>
                         <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}
                             <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                         </span>
@@ -43,7 +43,7 @@
 
             <!--  串关 投注 删除投注项 -->
             <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1 && !BetData.is_bet_single" @click="set_delete">
-                <span class="icon-delete"></span>
+                <img :src="compute_local_project_file_path('/image/svg/delete4.svg')" alt="">
             </div>
           
         </div>
@@ -58,7 +58,7 @@
 
 <script setup>
 
-import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney,only_win } from "src/output/index.js"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney,only_win } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 
@@ -86,6 +86,7 @@ const set_delete = () => {
     .bet-content {
         min-height: 76px;
         padding: 0.12rem;
+        margin-bottom: .04rem;
         //padding-left: 34px;
         font-size: 13px;
         font-weight: 500;
@@ -104,13 +105,20 @@ const set_delete = () => {
 
         .bet-delete {
             position: absolute;
-            top: 11px;
-            left: 12px;
+            bottom: 0;
+            right: 0;
             cursor: pointer;
+            width: 0.3rem;
+            height: 0.2rem;
+            background-color: var(--q-gb-bg-c-19);
+            border-radius: .16rem 0 .12rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             img {
-                width: 12px;
-                height: 12px;
+                width: .1rem;
+                height: .1rem;
             }
 
             &.bet-icon {

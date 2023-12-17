@@ -5,13 +5,10 @@
     <div v-show="false">  {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{UserCtr.user_version}}</div>
     
     <!-- 自动接受更好的赔率 -->
-    <div class="accept" @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
-        <div :class="BetData.bet_is_accept ? 'active':'' "></div>
+    <div class="accept" :class="BetData.bet_is_accept ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
         自动接受更好的赔率
     </div>
-
-    <!-- 投注前 -->
-    <div class="f-e-c bet-submit" v-if="BetViewDataClass.bet_order_status == 1">
+   <div class="f-e-c bet-submit" v-if="BetViewDataClass.bet_order_status == 1">
         <div class="bet-silider">
             <q-page-sticky ref="silider" position="bottom-left" :offset="fab_pos">
                 <div class="jiantou" :disable="dragging_fab" v-touch-pan.right.prevent.mouse="handle_silider">
@@ -20,7 +17,9 @@
             </q-page-sticky>
         </div>
 
-        <div v-show="!BetData.is_bet_single" class="bet-single del"></div>
+        <div v-show="!BetData.is_bet_single" class="bet-single del">
+          <img :src="compute_local_project_file_path('/image/svg/delete5.svg')" alt="">
+        </div>
 
         <div class="bet-box-line">
           <div class="middle font16">
@@ -40,11 +39,11 @@
     <!-- 投注后 -->
     <div v-else>
       <!--  单关 -->
-      <div v-if="BetData.is_bet_single" @click="set_confirm">确认</div>
+      <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub">确认</div>
       <!--  串关  -->
       <div v-else>
-        <div @click="set_confirm" >注单已确认 <span>合计17,650.00</span></div>
-        <div @click="set_retain_selection">保留选项，继续投注</div>
+        <div @click="set_confirm" class="sub">注单已确认 <span class="sub-total">合计17,650.00</span></div>
+        <div @click="set_retain_selection" class="reserve">保留选项，继续投注</div>
       </div>
 
     </div>
@@ -68,10 +67,6 @@ const fab_pos = ref([20, 23])
 const dragging_fab = ref(false)
 // 滑块组件数据
 const silider = ref(null)
-
-onMounted(()=>{
-    init_silider_position()
-})
 
 // 滑动投注
 const handle_silider = (e) => {
@@ -147,6 +142,10 @@ const set_confirm = () => {
     BetData.set_bet_box_h5_show(false)
 }
 
+onMounted(()=>{
+  init_silider_position()
+})
+
 </script>
 
 <style scoped lang="scss">
@@ -154,7 +153,32 @@ const set_confirm = () => {
 </style>
 
 <style scoped lang="scss">
-
+.reserve{
+  width: calc(100% - 0.1rem);
+  background: var(--q-gb-bg-c-22);
+  margin-left: 0.05rem;
+  padding: 0.1rem 0;
+  text-align: center;
+  margin-top: 0.1rem;
+  border-radius: 0.12rem;
+  font-size: 0.16rem;
+  color: var(--q-gb-t-c-1);
+}
+.sub{
+  width: calc(100% - 0.1rem);
+  background: var(--q-gb-t-c-1);
+  margin-left: 0.05rem;
+  padding: 0.1rem 0;
+  text-align: center;
+  margin-top: 0.05rem;
+  border-radius: 0.12rem;
+  font-size: 0.16rem;
+  color: var(--q-gb-t-c-14);
+}
+.sub-total{
+  font-size: 0.14rem;
+  color: var(--q-gb-t-c-6);
+}
 
 .yb-info{
     background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%) !important;
@@ -181,9 +205,13 @@ const set_confirm = () => {
     color: var(--q-gb-t-c-7);
   }
   .accept {
-    margin: .08rem 0.26rem;
-    font-size: 0.12rem;
+    margin: .08rem 0;
+		text-indent: .24rem;
+		background: url($SCSSPROJECTPATH+"/image/bet/select_b.svg") no-repeat left / contain;
   }
+	.active {
+		background-image: url($SCSSPROJECTPATH+"/image/bet/select_fuke.svg");
+	}
   .jiantou{
     height: 0.44rem;
     width: 0.44rem;
@@ -214,6 +242,9 @@ const set_confirm = () => {
     padding: 0 .25rem !important;
     margin-left: 0 !important;
     margin-right: .08rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .bet-box-line{

@@ -34,20 +34,21 @@
               <!-- 复式连串过关投注 限额 -->
               <template v-if="BetData.bet_s_list.length > 1"  >
                 <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
-                  <div class="bor-b">
-                    <betSpecialInput :items="item" />
+                  <div>
+                    <betSpecialInput :items="item" :key="index+'_'+item.id"/>
                   </div>
                 </template>
               </template>
 
-              <div class="f-s-c cursor h44 pl-30 bor-b cursor" @click="set_show_single()">
-                <sapn class="fon12 font400 text-8a8 f-e-c">
-                  <span class="re icon-mid ">
+              <div class="add-match fw-c-c cursor h44 pl-30" @click="set_show_single()">
+                <span class="fon12 font500 f-e-c">
+                  <span class="re icon-mid mx-6">
                     <i class="icon-del1 icon-add" />
                   </span> 
                   添加赛事  
-              </sapn>
+              </span>
               </div>
+             
             </template>
           </div>
 
@@ -56,28 +57,34 @@
             <div v-show="false"> {{ UserCtr.user_version }} -- {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version}}-{{ BetData.bet_box_h5_show }}</div>
            
             <template v-if="BetData.is_bet_single">
-              <div
-                v-for="(item, index) in BetViewDataClass.orderNo_bet_obj"
-                :key="item.orderNo"
-              >
+              <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo" >
                 <betResult :items="item" :key="index" :index="index" />
               </div>
             </template>
+
             <template v-else>
+              <div>1111111</div>
               <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
-                <bet-special-result :items="item" :key="index" :index="index" />
+                <betSpecialResult :items="item" :key="index" :index="index" />
               </div>
+
+              <div v-for="(item, index) in BetViewDataClass.orderNo_bet_single_obj" :key="item.orderNo">
+                <bet-special-state :items="item" :key="index" :index="index" />
+              </div>
+
             </template>
           </template>
         </div>
 
         <!-- 串关投注 键盘 -->
         <template v-if="!BetData.is_bet_single && BetViewDataClass.bet_order_status == 1">
-          <keyboard v-if="BetData.bet_keyboard_show"/>
+          <div class="re">
+            <keyboard  class="bet-key-board" v-if="BetData.bet_keyboard_show"/>
+            <div class="scroll-down">
+              <img :src="compute_local_project_file_path('/image/common/slide_icon_y1.svg')" alt="">
+            </div>
+          </div>
         </template>
-
-<!-- {{ BetViewDataClass.orderNo_bet_obj }} -->
-    
 
         <!-- 底部投注信息 -->
         <betFooter />
@@ -88,7 +95,7 @@
 
 <script setup>
 import { reactive, ref } from "vue";
-import { UserCtr } from "src/output/index.js";
+import { UserCtr, compute_local_project_file_path } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import betTitle from "./components/bet-title.vue"; // 投注头部
@@ -96,15 +103,11 @@ import betAfterTitle from "./components/bet-after-title.vue";
 import betItem from "./components/bet-item.vue"; // 投注列表
 import betFooter from "./components/bet-footer.vue"; // 投注底部信息
 import betResult from "./components/bet-result.vue"; // 投注结果
-import betSpecialresult from "./components/bet-special-result.vue"; // 投注结果
+import betSpecialResult from "./components/bet-special-result.vue"; // 串关投注结果
+import betSpecialState from "./components/bet-special-state.vue"; // 串关投注结果状态
 import betSpecialInput from "./components/bet-special-input.vue";
 import keyboard from "./components/bet-keyboard.vue";
 
-const ref_data = reactive({
-  show_single: false,
-});
-
-// BetData.set_bet_box_h5_show(true)
 // 隐藏投注栏
 const pack_up = () => {
   let sss = !BetData.bet_box_h5_show;
@@ -162,6 +165,24 @@ const show_merge_change = () => {
   }
 }
 
+.bet-key-board{
+  position: relative;
+  z-index: 999;
+}
+.scroll-down {
+  position: absolute;
+  left: 50%;
+  top: -0.1rem;
+  width: .2rem;
+  height: .2rem;
+  z-index: 99;
+  transition: .3s;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .bet-box-content {
   background: var(--q-gb-bg-c-15);
   border-top: none;
@@ -183,5 +204,18 @@ const show_merge_change = () => {
 .icon-mid{
   position: relative;
   transform: rotate(45deg);
+}
+.add-match {
+  width: 100%;
+  font-size: .16rem;
+  color: var(--q-gb-t-c-1);
+  background: var(--q-gb-bg-c-22);
+  border-radius: 0.12rem;
+  height: 0.44rem;
+  margin-top: 0.1rem;
+  padding: 0 .12rem;
+  .icon-add:before {
+    color: var(--q-gb-t-c-1);
+  }
 }
 </style>

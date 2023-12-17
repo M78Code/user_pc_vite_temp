@@ -140,28 +140,31 @@ const set_special_series = (money) => {
     border-radius: 10px;
     height: 0.38rem;
     margin-top: 0.1rem;
-    margin-left: .08rem;
+    //margin-left: .08rem;
     padding: 0 .12rem;
   }
 
   .bet_single_detail{
-    margin-top: 0.08rem;
+    //margin-top: 0.08rem;
     height: 0.44rem;
     width: 1.68rem;
   }
 
   /* ************** 右边内容 ************** -S */
   .content-b {
-    height: 0.4rem;
+    height: 0.3rem;
     width: 1.50rem;
     border-radius: 4px;
     font-size: 0.16rem;
     overflow: hidden;
-    padding-left: 0.1rem;
+    //padding-left: 0.1rem;
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-end;
+    padding-right: 0.1rem;
+    background: var(--q-gb-bg-c-15);
+    margin-left: 0.05rem;
     .limit-txt {
       color: #C9CDDB;
     }

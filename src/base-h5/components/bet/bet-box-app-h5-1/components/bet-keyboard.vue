@@ -31,8 +31,8 @@
               </div>
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='max' style="font-size: 0.14rem;">{{ i18n_t('bet.max')}}</div>
-                  <div class="nonebox4-fourth-num-sun key-cell" data-num="x" @click.stop="_handleDeleteKey()">
-                    <img class="key-cell-img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del.svg`" alt="" data-num="x">
+                  <div class="nonebox4-fourth-num-sun key-cell" data-number="x">
+                    <img class="key-cell-img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del.svg`" alt="" data-number="x">
                   </div>
                   <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/pack_up-keyboard.svg`" alt=""></div>
               </div>
@@ -179,6 +179,10 @@ const _handleDecimalPoint = () => {
 
 // MAX键
 const _handmaxKey = () => {
+  let dom = document.querySelectorAll('.nonebox4-fourth-a-son')
+  for(let i = 0; i < dom.length; i++) {
+    dom[i].classList.remove('active')
+  }
   let old = BetData.bet_keyboard_config.playOptionsId
   money.value = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
 
@@ -201,11 +205,12 @@ const _handleNumberKey = (num, e) => {
   let money_ = BetData.bet_amount
   if (['qon', 'qtw', 'qth','qfo','qfi'].includes(num)) {
     e.target.classList.add('active')
-    if (!money_) {
-      money_ = ref_data.add_num[num]
-    } else {
-      money_ = (+money_ + ref_data.add_num[num]).toString();
-    }
+    money_ = ref_data.add_num[num]
+    // if (!money_) {
+    //   money_ = ref_data.add_num[num]
+    // } else {
+    //   money_ = (+money_ + ref_data.add_num[num]).toString();
+    // }
   } else {
     if (!money_) { // 输入第一位
       money_ = num === '0' ? '0.' : num // 第一位输入0 则显示0.  其他的正常显示

@@ -82,7 +82,6 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             }
         })
     }
-    console.error('order_min_max_money', order_min_max_money)
     return order_min_max_money
 }
 
@@ -240,21 +239,15 @@ const set_order_status_info = (orderNo) => {
 // 获取限额 常规 / 冠军
 // obj 投注数据
 const get_query_bet_amount_common = (obj) => {
-    // console.error('chufa',obj)
     let params = {
         orderMaxBetMoney: []
     }
     // 获取限额请求参数数据
     params.orderMaxBetMoney = get_query_bet_amount_params()
-    // params.orderMaxBetMoney[0].matchType = 3
 
     // 获取额度接口合并
     api_betting.query_bet_amount(params).then((res = {}) => {
-        //https://api.0yeex2e.com/yewu13/v1/betOrder/queryBetAmount?t=1702623780432
-        //https://api-c.sportxxx1zx.com/yewu13/v1/betOrder/queryBetAmount?t=1702625369663
-        console.error('res.code', res.code)
         if (res.code == 200) {
-            // alert(11111)
             BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
             // 串关不更新
@@ -356,18 +349,14 @@ const get_query_bet_amount_pre = () => {
 
 //设置获取限额参数 
 const get_query_bet_amount_params = () =>{
-    console.error('11111111111111111111')
-    console.error('单穿', BetData.is_bet_merge)
     let order_min_max_money = []
     // 单关 
     if (BetData.is_bet_single) {
         // 单关 合并 多条数据 
         if (BetData.is_bet_merge) {
-            console.error(111)
             // 参数 投注列表 +  是否单关/串关  + 是否单关合并
             order_min_max_money = set_min_max_money(BetData.bet_single_list, true, true)
         } else {
-            console.error(222)
             // 单关 不合并 只有一条
             order_min_max_money = set_min_max_money(BetData.bet_single_list, true, false)
         }
@@ -376,7 +365,6 @@ const get_query_bet_amount_params = () =>{
         // 参数 投注列表 +  是否单关/串关  + 是否单关合并
         order_min_max_money = set_min_max_money(BetData.bet_s_list, false, false)
     }
-    console.error('order_min_max_money', order_min_max_money)
     return order_min_max_money
 }
 
@@ -397,10 +385,8 @@ const set_bet_pre_list = bet_appoint => {
 
 // 提交投注信息 
 const submit_handle = type => {
-    // console.error('进来了')
     // 
     if(submit_btn) return
-    // console.error('111111')
     // 单关才有预约投注
      // 是否预约投注  1 预约  0 不预约
     //  是否合并投注  bet_single_list。length  0:1个 1:多个
@@ -637,7 +623,6 @@ const set_error_message_config = (res ={},type,order_state) => {
             obj.message = BetViewDataClass.set_code_message_config(res.code,res.message)
         }
     }
-    // console.error('set_bet_before_message',obj)
     // 获取限额失败的信息
     if(PROJECT_NAME == 'app-h5'){
         console.error('sssss',obj.message)
