@@ -23,7 +23,7 @@
                   <template v-if="((hide_show_more_layout || (!hide_show_more_layout && (show_more || (!show_more && ol_index<5)))))">
                     {{void (line1++)}}
                     <template v-if="ol_list_0[ol_index0 - 1]">
-                      <div v-if="lodash.get(item_data.title,'[0].otd') == ol_list_0[ol_index0 - 1].otd" :key="ol_index">
+                      <div v-if="lodash.get(item_data.title,'[0].otd') == ol_list_0[ol_index0 - 1].otd" :key="ol_index" class="item-col-item">
                         <!--  0开 2关 1封 11锁 -->
                         <!-- 开盘or锁盘 正常显示 -->
                         <template v-if="ol_list_0[ol_index0 - 1]._mhs == 0 || ol_list_0[ol_index0 - 1]._mhs == 11">
@@ -107,7 +107,7 @@
                   <template v-if="((hide_show_more_layout || (!hide_show_more_layout && (show_more || (!show_more && ol_index<5)))))">
                     <template v-if="ol_list_1[ol_index1 - 1]">
                       <div
-                          v-if="lodash.get(item_data.title,'[1].otd') == ol_list_1[ol_index1 - 1].otd" :key="ol_index">
+                          v-if="lodash.get(item_data.title,'[1].otd') == ol_list_1[ol_index1 - 1].otd" :key="ol_index"  class="item-col-item">
                         <!--  0开 2关 1封 11锁 -->
                         <!-- 开盘or锁盘 正常显示 -->
                         <template v-if="ol_list_1[ol_index1 - 1]._mhs == 0 || ol_list_1[ol_index1 - 1]._mhs == 11">
@@ -479,9 +479,10 @@ export default defineComponent({
 
 .item-col {
   flex: 1;
-
+  padding-left: 0.04rem;
   &:nth-child(2n) {
     margin-right: 0;
+    padding-right: 0.04rem;
   }
 }
 
@@ -490,6 +491,10 @@ export default defineComponent({
   height: auto;
   border-radius: 4px;
   overflow: hidden;
+}
+
+.item-col-item {
+  padding:0.04rem;
 }
 
 .show-more {
