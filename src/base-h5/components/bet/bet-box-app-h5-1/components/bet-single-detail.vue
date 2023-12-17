@@ -259,7 +259,8 @@ onUnmounted(() => {
   justify-content: flex-start;
   width: 70%;
   .limit-txt {
-    color: #C9CDDB;
+    color: var(--q-gb-t-c-19);
+    font-family: PingFang SC;
   }
 }
 /* ************** 右边内容 ************** -E */

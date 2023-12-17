@@ -300,7 +300,9 @@ onUnmounted(() => {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-bottom: .08rem;
+    margin-bottom: .04rem;
+    padding-bottom: 0.04rem;
+    border-bottom: 1px solid var(--q-gb-bg-c-18);
 }
 .nonebox4-fourth-a:last-child {
   margin-bottom: 0;
@@ -316,8 +318,9 @@ onUnmounted(() => {
     font-weight: 700;
     border-radius: 0.08rem;
     margin: 0 .02rem;
-    padding: .05rem 0;
+    padding: .06rem 0.08rem;
     border: 1px solid transparent;
+    height: 0.36rem;
     //box-shadow: 0 2px 2px #eeeeee;
   &.active {
     background: url( $SCSSPROJECTPATH+"/image/svg/selected.svg") no-repeat bottom right / .2rem .2rem var(--q-gb-bg-c-15);
@@ -350,11 +353,12 @@ onUnmounted(() => {
     justify-content: center;
     background-color: var(--q-gb-bg-c-15);
     //box-shadow: 0 2px 2px #eeeeee;
-    color: #333;
+    color: var(--q-gb-t-c-20);
     font-size: 0.22rem;
     font-weight: 700;
     border-radius: .08rem;
     margin: .02rem 0;
+    
 }
 .nonebox4-fourth-num-sun2 {
     width: 100%;

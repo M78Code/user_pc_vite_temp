@@ -181,7 +181,8 @@ const set_confirm = () => {
     color: var(--q-gb-t-c-7);
   }
   .accept {
-    margin: .08rem 0;
+    margin: .08rem 0.26rem;
+    font-size: 0.12rem;
   }
   .jiantou{
     height: 0.44rem;
