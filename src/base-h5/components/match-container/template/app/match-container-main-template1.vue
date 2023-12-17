@@ -142,7 +142,6 @@
                 </div>
                 <!--玩法数量-->
                 <div class="right-score">
-                  <score-list :main_source="main_source" :match="match"></score-list>
                   <div class="goto-detail" @click='goto_details(match)'>
                     <span class="count_span" :class="{ esports: 3000 == menu_type }">
                       <span class="mc-n">
@@ -168,7 +167,8 @@
                     <div class='team-title-container' :class="{
                       simple: show_newer_edition && !is_results,
                       standard: !show_newer_edition && !is_results,
-                      result: is_results
+                      result: is_results,
+                      column2: ![1,4,16].includes(+match.csid)
                     }">
                       <div class="team-title-inner-con">
                         <div class='team-t-title-w' :class="{
@@ -207,7 +207,8 @@
                     <div class='team-title-container' :class="{
                       simple: show_newer_edition,
                       standard: !show_newer_edition && !is_results,
-                      result: is_results
+                      result: is_results,
+                      column2: ![1,4,16].includes(+match.csid)
                     }">
                       <div class="team-title-inner-con">
                         <div class='team-t-title-w' :class="{
@@ -274,14 +275,18 @@
                     </div>
                   </div>
                 </div>
-
+                <!--  -->
                 <div class="right-content-style">
                   <!-- 右边盘口组件 -->
                   <OddListWrap :main_source="main_source" :match="match_of_list" />
                 </div>
-                
                 </div>
               </div>
+              <template v-if="match.csid != 1">
+                <div class="score-content">
+                  <ScoreList :main_source="main_source" :match="match" />
+                </div>
+              </template>
             </div>
           </div>
         </div>
@@ -943,10 +948,6 @@ export default {
 
   .right-content-style {
     position: relative;
-    .score-section {
-      position: absolute;
-      bottom: .02rem;
-    }
   }
 
   &.simple,
@@ -1125,7 +1126,9 @@ export default {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         word-break: break-all;
-
+        &.column2{
+          height: 0.35rem;
+        }
         &.simple {
           width: 1.72rem;
 
@@ -1340,6 +1343,15 @@ export default {
     }
   }
 }
+.score-content{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  :deep(.score-se-inner2){
+    display: flex;
+    flex-direction: row-reverse;
+  }
+}
 
 /* **************收藏********************** -E*/
 
@@ -1362,21 +1374,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    :deep(.score-section){
-      height: 100%;
-      flex: 1;
-      .scroll-container-w{
-        height: 100%;
-        .score-se-inner{
-          height: 100%;
-          width: auto;
-          display: flex;
-          .score-se-inner2{
-            width: auto;
-          }
-        }
-      }
-    }
   }
 
   &.simple {

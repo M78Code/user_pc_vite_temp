@@ -55,12 +55,12 @@
 
             v-if="[2, 6, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
             <!--分差-->
-            <div class="row" style="margin-right:.05rem" v-if="[2].includes(+match.csid) && score_sub_win_faild">
+            <div class="row" style="margin-right:.1rem" v-if="[2].includes(+match.csid) && get_total_scores">
               <div style="margin-right:.03rem">
                 {{ i18n_t('list.score-disparity') }}
               </div>
               <div class="important-color-number sub">
-                {{ score_sub_win_faild.score_sub ? score_sub_win_faild.score_sub : 0 }}
+                {{ get_total_scores.score_sub ? get_total_scores.score_sub : 0 }}
               </div>
             </div>
             <!--总分-->
@@ -187,15 +187,15 @@ const all_s1 = computed(() => {
 const score_sub_win_faild = computed(() => {
   let r = 0;
   let scores = get_total_scores;
-  if (scores) {
-    if (typeof scores.score_sub != 'undefined') {
-      r = scores.score_sub;
+  if (scores.value) {
+    if (typeof scores.value.score_sub != 'undefined') {
+      r = scores.value.score_sub;
     }
     else {
-      r = scores;
+      r = scores.value;
     }
   }
-  return r;
+  return scores.value;
 })
 
 
@@ -205,6 +205,8 @@ const get_total_scores = computed(() => {
   //4冰球 8乒乓球 9排球 10羽毛球 13 16不统计S1
   let csid = Number(props.match.csid);
   let { home, away } = get_match_total_score();
+ 
+  // let { home_score = 0, away_score = 0 } = props.match;
   if (msc_format && msc_format.length) {
     let t = home + away;
     let total_sum = t ? `[${t}]` : '';
@@ -594,12 +596,11 @@ onUnmounted(() => {
     }
 
     .score-se-inner2 {
-      width: 366px;
-        // height: 100%;
-      line-height: 1;
-      display: flex;
-      flex-shrink: 0;
-      justify-content: space-between;
+      // width: 366px;
+      // line-height: 1;
+      // display: flex;
+      // flex-shrink: 0;
+      // justify-content: space-between;
 
       .basket-ball {
         // color: var(--q-color-com-fs-color-29);
@@ -611,10 +612,10 @@ onUnmounted(() => {
         flex-wrap: nowrap;
         flex-shrink: 0;
         color: var(--sys-brand-secodary-secondary-800, #303442);
-          font-family: Akrobat;
-          font-size: 10px;
-          font-weight: 700;
-
+        font-family: Akrobat;
+        font-size: 10px;
+        font-weight: 700;
+        margin-left: 0.08rem;
         &.result {
           .score {
             &:last-child {

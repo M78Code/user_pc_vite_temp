@@ -6,7 +6,7 @@
   </div>
 
   <div v-else class="f-c-c">
-    <icon-wapper name="icon-success" size="12px" color="#4FC140" /> 订单已确认
+    <icon-wapper name="icon-success" size="15px" color="#4FC140" /> <span style="margin-left: 0.05rem">订单已确认</span>
   </div>
 </template>
 
@@ -58,7 +58,7 @@ const bet_order_status_active = computed(()=>{
     width: 100%;
     padding: 0.08rem 0;
     // 注单失败颜色样式
-    color: #AFB3C8;
+    color: var(--q-gb-t-c-4);
     font-family: PingFang SC;
     &.active{
       color: var(--q-gb-t-c-1);
