@@ -220,7 +220,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       }
     }
     ref_data.scroll_data_list = early_single
-    console.log(early_single)
     if(early_single.length){
       let obj_ = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
       // 设置选中菜单的id
@@ -295,7 +294,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
     // // 设置菜单对应源数据 以及 获取数据
     // if (MenuData.top_menu_title.mi === 50000) return
-    // MatchMeta.set_origin_match_data({ md: MenuData.data_time })
+    MatchMeta.set_origin_match_data({ md: MenuData.data_time })
 
     // 今日 下 得足球  提前设置 热门联赛
     if (MenuData.current_lv_2_menu_i === '1012') MatchMeta.set_tid_map_mids()
