@@ -169,7 +169,7 @@ export default defineComponent({
   white-space: nowrap;
   line-height: 0.52rem;
   margin-left: 0.08rem;
-
+  color: #303442;
   font-size: 0.14rem;
 }
 
