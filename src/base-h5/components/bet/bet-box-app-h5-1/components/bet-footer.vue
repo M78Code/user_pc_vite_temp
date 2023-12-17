@@ -5,7 +5,7 @@
     <div v-show="false">  {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{UserCtr.user_version}}</div>
     
     <!-- 自动接受更好的赔率 -->
-    <div class="accept" :class="BetData.bet_is_accept ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
+    <div class="accept" :class="!BetData.bet_is_accept ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
         自动接受更好的赔率
     </div>
    <div class="f-e-c bet-submit" v-if="BetViewDataClass.bet_order_status == 1">
@@ -17,7 +17,7 @@
             </q-page-sticky>
         </div>
 
-        <div v-show="!BetData.is_bet_single" class="bet-single del">
+        <div v-show="!BetData.is_bet_single" class="bet-single del" @click="BetData.set_clear_bet_info()">
           <img :src="compute_local_project_file_path('/image/svg/delete5.svg')" alt="">
         </div>
 
@@ -31,19 +31,19 @@
         </div>
         
 
-        <div @click="set_bet_single" class="bet-single f-c-c font500" :class="BetData.is_bet_single ? 'font14':'font16'">
-          <p>{{ BetData.is_bet_single ? '单关投注':'+串' }}</p>
+        <div @click="set_bet_single" class="bet-single f-c-c font500" :class="!BetData.is_bet_single ? 'font14':'font16'">
+          <p>{{ !BetData.is_bet_single ? '单关投注':'+串' }}</p>
         </div>
     </div>
 
     <!-- 投注后 -->
     <div v-else>
       <!--  单关 -->
-      <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub">确认</div>
+      <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub font500">确认</div>
       <!--  串关  -->
       <div v-else>
         <div @click="set_confirm" class="sub">注单已确认 <span class="sub-total">合计17,650.00</span></div>
-        <div @click="set_retain_selection" class="reserve">保留选项，继续投注</div>
+        <div @click="set_retain_selection" class="reserve font500">保留选项，继续投注</div>
       </div>
 
     </div>
@@ -175,11 +175,10 @@ onMounted(()=>{
   font-size: 0.16rem;
   color: var(--q-gb-t-c-14);
   font-family: PingFang SC;
-  font-weight: 600;
 }
 .sub-total{
   font-size: 0.14rem;
-  color: var(--q-gb-t-c-6);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .yb-info{

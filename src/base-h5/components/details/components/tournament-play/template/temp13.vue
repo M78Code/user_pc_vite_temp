@@ -34,10 +34,10 @@
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
-                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
+                               :class="[BetData.bet_oid_list.includes(append_single.oid)?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
                             <div class="single-name">
                               <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span>
-                              <span :class="get_bet_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_16">
+                              <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_16">
                               {{append_single.on}}
                             </span>
                             </div>
@@ -130,10 +130,10 @@
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
-                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
+                               :class="[BetData.bet_oid_list.includes(append_single.oid)?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
                             <div class="single-name">
                               <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
-                              <span :class="get_bet_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_16">
+                              <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_16">
                               {{append_single.on}}
                             </span>
                             </div>
@@ -219,6 +219,7 @@ import {LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import BetData from "src/core/bet/class/bet-data-class.js"
 
 export default defineComponent({
   name: "temp13",
@@ -387,6 +388,7 @@ export default defineComponent({
       ...toRefs(init_data),
       lodash,
       get_bet_list,
+      BetData,
       get_detail_data,
       get_is_hengping,
       devote_value_d,

@@ -789,7 +789,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        color: #303442;
+        color:var(--q-gb-t-c-20);
         font-size: 0.12rem;
         &:first-child {
           // border-right: 0.005rem solid #f2f2f6;
@@ -835,7 +835,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
           // // }
           & > div:nth-child(3) {
             justify-content: flex-end;
-            color: #179CFF !important;
+            color:var(--q-gb-t-c-1);
           }
         }
         
@@ -846,7 +846,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
             justify-content: flex-start;
             &:last-child {
               font-size: 0.1rem;
-              color: #afb3cb !important;
+              color: var(--q-gb-t-c-18);
             }
           }
         }
@@ -857,7 +857,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
       align-items: center;
       justify-content: center;
       height: 2.5rem;
-      color:#AFB3C8;
+      color:var(--q-gb-t-c-19);
       img {
         width: 1.8rem;
         height: 1.8rem;
@@ -872,7 +872,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
     .not-data-starter {
       width: 100%;
       height: 0.5rem;
-      color: #ffffff;
+      color:var(--q-gb-t-c-14);
       text-align: center;
       font-size: 14px;
       font-weight: 400;
@@ -882,14 +882,14 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
       background: linear-gradient(270deg, rgba(57, 80, 20, 0.00) 0%, rgba(57, 80, 20, 0.92) 34.58%, rgba(57, 80, 20, 0.92) 65.24%, rgba(57, 80, 20, 0.00) 100%);
     }
     .referee {
-      color: #ffffff;
+      color:var(--q-gb-t-c-14);
       opacity: 0.7194;
       position: absolute;
       top: 0.47rem;
       left: 0.4rem;
     }
     .home-team-top, .away-team-top {
-      color: #ffffff;
+      color:var(--q-gb-t-c-14);
       width: 100%;
       font-size: 0.12rem;
       font-weight: 400;
@@ -994,7 +994,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
         width: 0.16rem;
         height: 0.16rem;
         border-radius: 8px;
-        color: #ffffff;
+        color:var(--q-gb-t-c-14);
         background: rgba(0, 0, 0, 0.40);
         position: absolute;
         bottom: 0.02rem;
@@ -1038,16 +1038,16 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
             width: 100%;
             text-align: left;
             font-size: 0.12rem;
-            color: #303442; //#TODO: css var
+            color:var(--q-gb-t-c-20); //#TODO: css var
           }
           .position-name{
             font-size: 0.10rem;
-            color: #AFB3C8; //#TODO: css var
+            color:var(--q-gb-t-c-19); //#TODO: css var
           }
         }
 
         .end-btn{
-          color: #179CFF !important; //#TODO: css var
+          color:var(--q-gb-t-c-1); //#TODO: css var
           justify-content: flex-end;
           text-align: right;
           width: 0.21rem;

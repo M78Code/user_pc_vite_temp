@@ -1,25 +1,24 @@
 <template>
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
-        <div class="bet-content">
-            <div class="left">
-                <div class="w-100 f-a-c left-l">
-                    <span>{{ items.seriesValue}}</span> 
-                    <span v-if="items.orderStatusCode == 1" class="left-l-typ">成功</span>
+        <div class="bet-info">
+            <div class="f-b-c px-12">
+                <div class="f-a-c">
+                    <span class="font14 font500">{{ items.seriesValue}}</span> 
+                    <span class="text-45B0FF ml-4" v-if="items.orderStatusCode == 1">注单已确认</span>
                 </div>
-                <div class="w-100 left-r">
+                <div>
                     <span>{{ format_money2(mathJs.divide(items.betAmount,100))}}</span>
                     <span class="left-rx"> x{{ items.seriesSum }} </span>
                 </div>
             </div>
-
-            <div class="right">
-                <div >
-                    <span>预计可赢：<span class="red">{{ format_money2(mathJs.divide(items.maxWinAmount,100))}}</span></span>
-                </div>
-                <div>
-                    <span>小计：{{ items.seriesBetAmount }} </span>
-                </div>
+        </div>
+        <div class="toltal f-b-c">
+            <div >
+                <span>预计可赢：{{ format_money2(mathJs.divide(items.maxWinAmount,100))}} RMB</span>
+            </div>
+            <div>
+                <span>小计：{{ items.seriesBetAmount }} RMB</span>
             </div>
         </div>
     </div>
@@ -135,6 +134,31 @@ const props = defineProps({
         .bet-success{
             color: var(--q-gb-t-c-10);
         }
+    }
+    
+    .bet-info {
+        text-indent: .2rem;
+        height: 0.44rem;
+        border-radius: .12rem .12rem 0 0;
+        background: url($SCSSPROJECTPATH + "/image/bet/rules3.svg") no-repeat .12rem / .15rem var(--q-gb-bg-c-22);
+        .f-b-c {
+            height: 0.44rem;
+            
+        }
+        .text-45B0FF {
+            color: #45B0FF;
+        }
+    }
+    
+    .toltal {
+        border-top: 1px solid var(--q-gb-bg-c-18);
+        background: var(--q-gb-bg-c-22);
+        border-radius: 0 0 .12rem .12rem;
+        height: 0.24rem;
+        line-height: .24rem;
+        color: var(--q-gb-t-c-11);
+        padding: 0 .12rem;
+        margin-bottom: .04rem;
     }
 
     .bet-bet-money {
