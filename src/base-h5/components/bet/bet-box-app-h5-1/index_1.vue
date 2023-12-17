@@ -35,7 +35,7 @@
               <template v-if="BetData.bet_s_list.length > 1"  >
                 <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
                   <div>
-                    <betSpecialInput :items="item" :key="index+'_'+item.id"/>
+                    <betSpecialInput :items="item" :index="index" :key="index+'_'+item.id"/>
                   </div>
                 </template>
               </template>
@@ -63,7 +63,6 @@
             </template>
 
             <template v-else>
-              <div>1111111</div>
               <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
                 <betSpecialResult :items="item" :key="index" :index="index" />
               </div>
@@ -111,7 +110,6 @@ import keyboard from "./components/bet-keyboard.vue";
 // 隐藏投注栏
 const pack_up = () => {
   let sss = !BetData.bet_box_h5_show;
-  console.error("sss", sss);
   BetData.set_bet_box_h5_show(sss);
 };
 
@@ -159,6 +157,9 @@ const show_merge_change = () => {
 
 :deep(.bet-scroll) {
   max-height: 4rem;
+  }
+.bet-scroll {
+  max-height: 4rem;
   overflow-y: auto;
   &.h188{
     height: 1.8rem;
@@ -178,7 +179,7 @@ const show_merge_change = () => {
   top: -0.1rem;
   width: .2rem;
   height: .2rem;
-  z-index: 99;
+  z-index: -1000;
   transition: .3s;
   img {
     width: 100%;
@@ -217,6 +218,7 @@ const show_merge_change = () => {
   height: 0.44rem;
   margin-top: 0.1rem;
   padding: 0 .12rem;
+  font-family: PingFang SC;
   .icon-add:before {
     color: var(--q-gb-t-c-1);
   }

@@ -22,15 +22,16 @@
                     </div>
                 </div>
             </div>
+           
             <div class="fw-e-s bet-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                 <div class="f-c-c bet-money">
                     <span class="font14 font700 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
-                        @{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}
+                        @<span class="font22">{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}</span>
                     </span>
 
                     <div class="show_img">
-                        <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
-                        <img v-if="items.red_green == 'green_down'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_down.png`" alt=""/>
+                        <img v-if="items.red_green == 'red_up'" :src="is_up_app" alt=""/>
+                        <img v-if="items.red_green == 'green_down'" :src="is_down_app" alt=""/>
                     </div>
                 </div>
             </div>
@@ -61,7 +62,7 @@
 import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney,only_win } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
-
+import { is_up_app, is_down_app } from 'src/base-h5/core/utils/local-image.js'
 import betSingleInput from "./bet-single-input.vue"
 
 const props = defineProps({
@@ -81,6 +82,9 @@ const set_delete = () => {
 </style>
 
 <style scoped lang="scss">
+.font22{
+    font-size: 0.2rem;
+}
 .bet-list {
    
     .bet-content {
@@ -201,21 +205,19 @@ const set_delete = () => {
         max-width: 84%;
         line-height: 16px;
         word-wrap: break-word;
-        font-family: PingFang SC;
         :deep(.ty-span) {
             margin-left: 4px;
-            color: var(--q-gb-t-c-2);
+            //color: var(--q-gb-t-c-2);
         }
     }
     .bet-odds-value{
-        color: var(--q-gb-t-c-2);
         margin-right: 7px;
-    }
-    .red-up{
-        color: var(--q-gb-t-c-7);
-    }
-    .green-down{
-        color: var(--q-gb-t-c-6);
+        &.red-up{
+            color:#F53F3F;
+        }
+        &.green-down{
+            color: #00B42A
+        }
     }
     .show_img{
         width:12px;

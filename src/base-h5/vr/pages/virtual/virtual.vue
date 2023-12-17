@@ -14,10 +14,18 @@
             <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})"></div>
             <!-- 虚拟体育 -->
             <div class="col virtual-title">{{i18n_t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
-            <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
-            <div class="no-single" @click="click_event()"></div>
+            <!-- <div class="virtual-ref" style="background-color: blue;" :class="{'refreshing':refreshing}" @click="vir_refresh"></div> -->
+            <!-- <div class="no-single" style="background-color: red;" @click="click_event()"></div> -->
             <!-- 复刻版暂时用不到先注释了 -->
             <!-- <set-menu /> -->
+
+            <!-- 从macth顶部 搬运过来的  用户金额 -->
+            <div class="main-menu-right"  @click.stop>
+                <!-- <span class="main-menu-right-symbol">￥</span> -->
+                <img :src="compute_local_project_file_path('image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
+                <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
+            </div>
+
           </div>
           <!-- 虚拟体育菜单 -->
           <div class="virtual-menu-list" ref='virtual_menu_list'>
@@ -32,7 +40,7 @@
                   <div class="icon" :class="['icon'+tab.field1, get_theme.includes('y0')?'icon_y0':'']">
                     <img v-if="false" class="menu-new-icon" src="image/bw3/svg/virtual-sports/new.svg" />
                   </div>
-                  <span>{{ tab.name }}</span>
+                  <span>VR{{ tab.name }}</span>
                 </div>
               </div>
             </div>
@@ -73,6 +81,8 @@ import tab_move from "src/core/tab-move/tab-move.js";
 import { useRouter, useRoute } from "vue-router";
 import { go_where } from "src/output/index.js";
 
+import { format_money2, compute_local_project_file_path, UserCtr } from "src/output/index.js";
+
 export default {
   name:'match_main',
   data() {
@@ -100,6 +110,8 @@ export default {
       list_scroll_top: 0,
       router: useRouter(),
       route: useRoute(),
+      // 用户余额
+      balance: 0
     };
   },
   created(){
@@ -170,6 +182,14 @@ export default {
     clearTimeout(this.timer_super27);
     clearTimeout(this.timer_super28);
   },
+  watch: {
+    "UserCtr.user_version": {
+      handler(){
+        this.set_balance(UserCtr.balance)
+      },
+      immediate: true
+    }
+  },
   methods: {
     // ...mapMutations([
     //   "set_list_scroll_top_iconshow", // 设置滚动图标显示
@@ -180,6 +200,9 @@ export default {
     //   'set_current_esport_csid',   // 设置电竞游戏csid
     //   'set_is_user_refreshing',    // 设置用户刷新状态
     // ]),
+    set_balance(balance){
+      this.balance = balance;
+    },
     set_list_scroll_top_iconshow(){},
     set_menu_type(){},
     set_virtual_current_sub_menuid(data){VR_CTR.set_virtual_current_sub_menuid(data)},
@@ -324,7 +347,9 @@ export default {
         this[timer] = null
       }
     },
-    go_where
+    go_where,
+    format_money2, 
+    compute_local_project_file_path
   },
   computed: {
     // ...mapGetters({
@@ -427,6 +452,35 @@ export default {
         background-size: 0.2rem auto;
       }
 
+      .main-menu-right {
+        height: 0.22rem;
+        line-height: 0.22rem;
+        border-radius: 25px;
+        float: right;
+        background: var(--q-gb-bg-c-18);
+        color: var(--q-gb-t-c-20);
+        text-align: center;
+        display: flex;
+        align-items: center;
+        padding: 0 0.1rem 0 0.03rem;
+        margin-right: 0.1rem;
+        .main-menu-right-symbol{
+            font-family: 'Akrobat';
+            font-style: normal;
+            font-weight: 600;
+        }
+        .main-menu-right-money{
+            font-family: 'Akrobat';
+            font-style: normal;
+            font-weight: 700;
+            flex: 1;
+            line-height: 0.26rem;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+        }
+      }
+
       .set-menu {
         :deep(.filter-icon-wrapper) {
           width: 0.4rem;
@@ -496,10 +550,10 @@ export default {
             font-family: PingFangSC-Medium;
             font-size: 0.1rem;
             text-align: center;
-            color: #C9CDDB;
+            color: var(--q-gb-t-c-19);
           }
           &.tabs-active > span {
-            color: #303442;
+            color: var(--q-gb-t-c-18);
           }
           
         }

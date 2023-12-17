@@ -37,7 +37,6 @@
         <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
         <setect-league @closedHandle="state.select_dialog = false" @finishHandle="selectFinishHandle"></setect-league>
     </div> -->
-    
 
 </template>
 <script setup>
@@ -77,10 +76,14 @@ const state = reactive({
 
 const switchHandle = val => {
     state.currentSwitchValue = val
-
     MenuData.set_result_menu_lv1_mi(val)
-    // MenuData.set_current_lv1_menu(val)
-
+    MatchMeta.clear_match_info()
+    state.matchs_data = []
+    if (val) {
+        MenuData.set_results_kemp(1)
+    } else {
+        MenuData.set_results_kemp(0)
+    }
     //获取 赛果菜单
     api_analysis.get_match_result_menu( {menuType:val} ).then( ( res = {} ) => {
         if(res.code == 200){
@@ -133,6 +136,7 @@ const set_scroll_current = async item => {
 const goBackAssign = () => {
     MenuData.set_top_menu_title({})
     MenuData.set_init_menu_list()
+    MenuData.set_results_kemp(0)
 }
 
 
@@ -152,6 +156,7 @@ onMounted(()=>{
 onUnmounted(()=>{
     VirtualList.set_is_show_ball(true)
     VirtualList.set_is_change_handicap_height(0)
+    // MenuData.set_results_kemp(0)
     // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
 })
 

@@ -3,7 +3,7 @@
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
-                <div class="w-100 f-s-c text-1a1">
+                <div class="w-100 f-s-c text-1a1 font14">
                     <span class="text-flow-none">{{ items.playOptionName}}</span> 
                     <span class="bet-market mx-4 text-ff7">{{ items.marketValues }}</span>
                 </div>
@@ -15,14 +15,14 @@
                     
                     <span class="mr-4 text-009"> [{{ i18n_t(`odds.${items.marketType}`) }}]</span>
                 </div>
-                <div class="w-100 text-8a8 fon12 font400" v-if="items.matchType != 3">{{items.matchName}}</div>
-                <div class="w-100 text-8a8 fon12 font400">{{ items.matchInfo }}
+                <div class="w-100 font12 font400" v-if="items.matchType != 3">{{items.matchName}}</div>
+                <div class="w-100 font12 font400">{{ items.matchInfo }}
                 </div>
             </div>
 
             <div class="bet-right">
                 <div class="bet-odds">
-                    <span class="font14 font700 mr-10">@{{ items.oddsValues }}</span>
+                    <span class="font14 font700 mr-10">@<span class="font22">{{ items.oddsValues }}</span></span>
                 </div>
             </div>
         </div>
@@ -48,15 +48,22 @@ const props = defineProps({
 </style>
 
 <style scoped lang="scss">
+.font22{
+    font-size: 0.2rem;
+}
 .bet-list {
+    margin-bottom: 0.05rem;
     .bet-content {
         min-height: 76px;
         padding: 12px;
-        padding-left: 34px;
+        //padding-left: 34px;
         font-size: 13px;
         font-weight: 500;
         font-style: normal;
         position: relative;
+        background: var(--q-gb-bg-c-22);
+        margin-bottom: .04rem;
+        border-radius: .12rem;
 
         .bet-money {
             height: 34px;
@@ -85,10 +92,20 @@ const props = defineProps({
         .bet-right {
             width: 160px;
             text-align: right;
+            color: var(--q-gb-t-c-17);
         }
 
         .bet-left {
             width: 230px;
+            color: var(--q-gb-t-c-11);
+            .my-left{
+                padding-left: 0.1rem;
+                border-left: 2px solid var(--q-gb-bg-c-13);
+                margin-top: 0.06rem;
+                color: var(--q-gb-t-c-3);
+                font-size: 0.12rem;
+                font-family: PingFang SC;
+            }
         }
         .bet-loading{
             color: var(--q-gb-t-c-2);
@@ -143,6 +160,7 @@ const props = defineProps({
     .text-flow-none{
         max-width: 84%;
         line-height: 16px;
+        color: var(--q-gb-t-c-17);
         :deep(.ty-span) {
             margin-left: 4px;
             color: var(--q-gb-t-c-2);

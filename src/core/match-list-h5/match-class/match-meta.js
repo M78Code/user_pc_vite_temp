@@ -73,7 +73,6 @@ class MatchMeta {
    * @param { Number } md 时间
    */
   async set_origin_match_data(params = {}) {
-    console.log(222222222222222)
     const { md = '', is_match = true } = params
     this.init()
     let menu_lv_v1 = ''
@@ -1220,7 +1219,7 @@ class MatchMeta {
 
     // mhs === 2  || mmp === 999 为关盘 则移除赛事
     const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
-    
+
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
       // match_mids是可视区域id
       const active_index = this.match_mids.findIndex(t => t === mid) 
@@ -1265,10 +1264,10 @@ class MatchMeta {
     }
     // 调用 mids  接口
     if (['C303', 'C114'].includes(cmd)) {
-      const { mid = '' } = data
-      if (this.match_mids.includes(mid)) this.get_match_base_hps_by_mids({})
+      const { mid = '' } = data.cd || {};
+      let _mids = String(mid).split(',')
+      if (_mids.some((_mid)=>this.match_mids.includes(_mid))) this.get_match_base_hps_by_mids({})
     }
-
   }
   /**
    * @description 获取赛事赔率

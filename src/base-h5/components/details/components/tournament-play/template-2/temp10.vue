@@ -54,6 +54,9 @@ export default defineComponent({
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
     // }),
+    const sub_menu_type = computed(() => {
+      return props.csid;
+    });
     const get_bet_list = computed(() => {
       return []
     });
@@ -104,7 +107,8 @@ export default defineComponent({
       get_bet_list,
       get_curr_sub_menu_type,
       temp_odds,
-      LOCAL_PROJECT_FILE_PREFIX
+      LOCAL_PROJECT_FILE_PREFIX,
+      sub_menu_type
     }
   }
 })

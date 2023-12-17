@@ -1,25 +1,24 @@
 <template>
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
-        <div class="bet-content">
-            <div >
-                <div class="w-100 f-a-c">
-                    <span>{{ items.seriesValue}}</span> 
-                    <span v-if="items.orderStatusCode == 1">成功</span>
-                </div>
-                <div class="w-100">
-                    <span>{{ format_money2(mathJs.divide(items.betAmount,100))}}</span>
-                    <span> x{{ items.seriesSum }} </span>
-                </div>
-            </div>
-
-            <div>
-                <div >
-                    <span>预计可赢：{{ format_money2(mathJs.divide(items.maxWinAmount,100))}}</span>
+        <div class="bet-info">
+            <div class="f-b-c px-12">
+                <div class="f-a-c">
+                    <span class="font14 font500">{{ items.seriesValue}}</span> 
+                    <span class="text-45B0FF ml-4" v-if="items.orderStatusCode == 1">注单已确认</span>
                 </div>
                 <div>
-                    <span>小计：{{ items.seriesBetAmount }} </span>
+                    <span>{{ format_money2(mathJs.divide(items.betAmount,100))}}</span>
+                    <span class="left-rx"> x{{ items.seriesSum }} </span>
                 </div>
+            </div>
+        </div>
+        <div class="toltal f-b-c">
+            <div >
+                <span>预计可赢：{{ format_money2(mathJs.divide(items.maxWinAmount,100))}} RMB</span>
+            </div>
+            <div>
+                <span>小计：{{ items.seriesBetAmount }} RMB</span>
             </div>
         </div>
     </div>
@@ -47,11 +46,52 @@ const props = defineProps({
     .bet-content {
         min-height: 76px;
         padding: 12px;
-        padding-left: 34px;
+        //padding-left: 34px;
+        padding-bottom: 6px;
         font-size: 13px;
         font-weight: 500;
         font-style: normal;
         position: relative;
+        background: var(--q-gb-bg-c-22);
+        border-radius: 0.12rem;
+        margin-bottom: 0.05rem;
+        
+        .left{
+            font-size: 0.14rem;
+            display: flex;
+            justify-content: space-between;
+            .left-l{
+                font-size: 0.14rem;
+                font-weight: 500;
+                margin-top: 0.04rem;
+                .left-l-typ{
+                    font-size: 0.12rem;
+                    color: var(--q-gb-t-c-1);
+                    margin-left: 0.05rem;
+                }
+            }
+            .left-r{
+                text-align: right;
+                font-weight: 700;
+                font-size: 0.2rem;
+                .left-rx{
+                    font-size: 0.14rem;
+                    font-style: normal;
+                    font-weight: 500;
+                    color: var(--q-gb-t-c-3);
+                }
+            }
+        }
+        .right{
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.12rem;
+            color: var(--q-gb-t-c-3);
+            margin-top: 0.05rem;
+            .red{
+                color: var(--q-gb-bd-c-8);
+            }
+        }
 
         .bet-money {
             height: 34px;
@@ -94,6 +134,31 @@ const props = defineProps({
         .bet-success{
             color: var(--q-gb-t-c-10);
         }
+    }
+    
+    .bet-info {
+        text-indent: .2rem;
+        height: 0.44rem;
+        border-radius: .12rem .12rem 0 0;
+        background: url($SCSSPROJECTPATH + "/image/bet/rules3.svg") no-repeat .12rem / .15rem var(--q-gb-bg-c-22);
+        .f-b-c {
+            height: 0.44rem;
+            
+        }
+        .text-45B0FF {
+            color: #45B0FF;
+        }
+    }
+    
+    .toltal {
+        border-top: 1px solid var(--q-gb-bg-c-18);
+        background: var(--q-gb-bg-c-22);
+        border-radius: 0 0 .12rem .12rem;
+        height: 0.24rem;
+        line-height: .24rem;
+        color: var(--q-gb-t-c-11);
+        padding: 0 .12rem;
+        margin-bottom: .04rem;
     }
 
     .bet-bet-money {
