@@ -202,6 +202,8 @@ const set_confirm = () => {
   .bet-submit{
     width: 100%;
     height: .5rem ;
+    justify-content: space-between;
+    margin-top: 0.08rem;
   }
 
   .del {
@@ -231,7 +233,7 @@ const set_confirm = () => {
   }
   .bet-single{
     width: 0.5rem;
-    height: .5rem;
+    height: 0.5rem;
     border-radius: 50%;
     background: #E8F5FF;
     color: var(--q-gb-t-c-1);
