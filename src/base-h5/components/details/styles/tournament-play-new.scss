@@ -424,7 +424,7 @@
       .play-box-sty,
       .play-box-style {
         &.win {
-          background-color: var(--q-color-page-bg-color-14) !important;
+          // background-color: var(--q-color-page-bg-color-14) !important;
         }
         &.details-bg5 {
           background-color: #D1EBFF !important;
@@ -509,7 +509,7 @@
     }
 
     :deep(.temp0) {
-      background-color: transparent;
+      // background-color: var(--q-gb-bg-c-29);
 
       .bor-style {
         border-bottom: 0;

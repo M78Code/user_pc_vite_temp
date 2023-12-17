@@ -247,7 +247,7 @@ export default {
   height: 0.48rem;
   line-height: 0.48rem;
   border-radius: 4px;
-  background: #F2F2F6;
+  background: var(--q-gb-bg-c-18);
 }
 
 /*************** 赛马名称结束 *************** -E*/

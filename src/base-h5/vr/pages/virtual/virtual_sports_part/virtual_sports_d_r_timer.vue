@@ -158,7 +158,7 @@ export default {
       top: 0;
       transition: top 0.4s;
       border-radius: 4px;
-      background: #F2F2F6;
+      background: var(--q-gb-bg-c-18);
 
       // &::after {
       //   content: '';
@@ -226,7 +226,7 @@ export default {
   letter-spacing: 0;
   border-radius: 0 4px 4px 0;
   border-radius: 4px;
-  background: #F2F2F6;
+  background: var(--q-gb-bg-c-18);
 
   // &::after {
   //   content: "";
