@@ -168,12 +168,14 @@ onMounted(()=>{
   width: calc(100% - 0.1rem);
   background: var(--q-gb-t-c-1);
   margin-left: 0.05rem;
-  padding: 0.1rem 0;
+  padding: 0.12rem 0;
   text-align: center;
   margin-top: 0.05rem;
   border-radius: 0.12rem;
   font-size: 0.16rem;
   color: var(--q-gb-t-c-14);
+  font-family: PingFang SC;
+  font-weight: 600;
 }
 .sub-total{
   font-size: 0.14rem;
