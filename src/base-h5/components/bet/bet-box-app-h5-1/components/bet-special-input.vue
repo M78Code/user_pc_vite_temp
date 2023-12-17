@@ -4,7 +4,7 @@
   <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
   <div class="bet_single_info f-b-c">
     <div>
-      {{ items.name }}
+      {{ items.name }} {{ items.id }}
     </div>
     <div class="bet_single_detail f-b-c">
       <div>{{ items.count }}x</div>
@@ -15,6 +15,11 @@
         <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ items.min_money }}-{{ items.max_money }}</span>
       </div>
     </div>
+  </div>
+  <div class="f-b-c" v-if="items.show_quick">
+    <div>预计可赢：<span> {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} </span>RMB</div>
+    <div>小计：{{items.bet_amount}}RMB</div>
+ 
   </div>
 </template>
 
@@ -60,14 +65,14 @@ onMounted(() => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = (new_money) => {
-  console.error('change_money_handle-single',new_money)
+  console.error('change_money_handle-single',new_money,new_money.params.id)
   if( new_money.money*1 > props.items.max_money *1){
     ref_data.money =  props.items.max_money
   }else{
     ref_data.money = new_money.money
   }
   BetData.set_bet_amount(ref_data.money)
-  set_special_series('edit')
+  set_special_series('edit',new_money.params.id)
 }
 
 onUnmounted(() => {
@@ -93,12 +98,14 @@ const set_show_quick_money = (obj = {}) => {
 }
 
 // 修改数据内容
-const set_special_series = (money) => {
+const set_special_series = (money,ty_id) => {
   let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
-  let id = lodash_.get(props,'items.id','')
+  // 键盘输入会传修改的数据id
+  let id = ty_id ? ty_id : lodash_.get(props,'items.id','')
   list.filter(item => {
     item.show_quick = false
       // 显示指定投注项的快捷金额按钮
+      console.error('ssssset_special_seriesss',id)
     if(item.id == id){
         item.show_quick = true
         if(money == 'edit'){
@@ -107,6 +114,7 @@ const set_special_series = (money) => {
         
     }
   })
+  console.error('list',lodash_.cloneDeep(list))
   BetViewDataClass.set_bet_special_series(list)
 }
 /**

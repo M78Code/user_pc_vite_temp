@@ -35,7 +35,7 @@
               <template v-if="BetData.bet_s_list.length > 1"  >
                 <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
                   <div class="bor-b">
-                    <betSpecialInput :items="item" />
+                    <betSpecialInput :items="item" :key="index+'_'+item.id"/>
                   </div>
                 </template>
               </template>

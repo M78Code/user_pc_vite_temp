@@ -9,7 +9,7 @@
                 </div>
                 <div class="my-left">
                     <div class="w-100 handicap my-4">
-                        <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
+                        <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bet_inplay") + ']'}}</span>
                         <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}
                             <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                         </span>
