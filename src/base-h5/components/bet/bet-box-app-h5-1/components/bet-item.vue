@@ -4,7 +4,7 @@
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
         <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
             <div class="fw-s-s bet-left">
-                <div class="w-100 f-s-c  ">
+                <div class="w-100 f-s-c font14 ">
                     <span class="text-flow-none" v-html="items.handicap"></span> 
                 </div>
                 <div class="my-left">
@@ -25,8 +25,8 @@
            
             <div class="fw-e-s bet-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                 <div class="f-c-c bet-money">
-                    <span class="font14 font700 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
-                        @{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}
+                    <span class="font14 font700 bet-odds-value f-c-c" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
+                       <span class="font14">@</span>{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}
                     </span>
 
                     <div class="show_img">
@@ -38,7 +38,7 @@
 
             <div class="fw-e-s bet-right bet-invalid" v-else>
                 <div class="bet-disabled">
-                    <span>{{ i18n_t('bet.bet_invalid') }}</span>
+                    <span>{{ i18n_t('bet.disabled') }}</span>
                 </div>
             </div>
 
@@ -59,11 +59,12 @@
 
 <script setup>
 
-import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney,only_win } from "src/output/index.js"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { is_up_app, is_down_app } from 'src/base-h5/core/utils/local-image.js'
 import betSingleInput from "./bet-single-input.vue"
+import { only_win } from "src/core/constant/common/module/csid.js"
 
 const props = defineProps({
     items:{},
@@ -153,14 +154,14 @@ const set_delete = () => {
                         font-size: 12px;
                         font-weight: 500;
                         letter-spacing: 0px;
-                        color: var(--q-gb-t-c-8);
+                        color: var(--q-gb-t-c-9);
                     }
                 }
             }
         }
 
         .bet-left {
-            width: 230px;
+            width: 2.70rem;
             .my-left{
                 padding-left: 0.1rem;
                 border-left: 2px solid var(--q-gb-bg-c-13);
@@ -178,7 +179,6 @@ const set_delete = () => {
     }
 
     .bet-market{
-        font-family: DIN;
         font-size: 13px;
         font-weight: 500;
         line-height: 16px;
@@ -191,24 +191,25 @@ const set_delete = () => {
         overflow: hidden;
         white-space: nowrap;
         :deep(.ty-span) {
-            margin-left: 4px;
-            color: var(--q-gb-t-c-2);
+            margin-left: .04rem;
+            //color: var(--q-gb-t-c-2);
         }
     }
     .handicap{
-        max-width: 190px;
+        max-width: 1.90rem;
     }
     .text-flow-none{
         max-width: 84%;
-        line-height: 16px;
+        line-height: .16rem;
         word-wrap: break-word;
         :deep(.ty-span) {
-            margin-left: 4px;
+            margin-left: .04rem;
             //color: var(--q-gb-t-c-2);
         }
     }
     .bet-odds-value{
-        margin-right: 7px;
+        margin-right: .02rem;
+        font-size: .22rem;
         &.red-up{
             color:#F53F3F;
         }
@@ -217,8 +218,7 @@ const set_delete = () => {
         }
     }
     .show_img{
-        width:12px;
-        padding: 3px;
+        width: .10rem;
         img{
             width: 100%;
             height: 100%;
