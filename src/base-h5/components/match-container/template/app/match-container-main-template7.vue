@@ -852,6 +852,7 @@ export default {
     justify-content: space-between;
     position: relative;
     overflow: hidden;
+    color: var(--q-gb-t-c-18);
 
     .triangle-wrapper {
       width: 0.24rem;

@@ -189,7 +189,7 @@ onUnmounted(()=>{
           color: var(--q-gb-t-c-19);
           &.current {
             //color: var(--q-gb-bd-c-2);
-            color: var(--q-gb-t-c-20);
+            color: var(--q-gb-t-c-18);
             position: -webkit-sticky;
             position: sticky;
             right: 0;

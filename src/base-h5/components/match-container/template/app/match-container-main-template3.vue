@@ -698,7 +698,7 @@ export default {
     flex-wrap: nowrap;
     display: flex;
     font-size: 0.1rem;
-    color: #303442;
+    color: var(--q-gb-t-c-18);
     flex-direction: row-reverse;
     background: var(--q-gb-bg-c-18);
     border-top: 1px solid var(--q-gb-bg-c-19);
