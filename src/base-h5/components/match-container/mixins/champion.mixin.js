@@ -1,7 +1,9 @@
  
  
 import lodash from 'lodash'
-import {MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,get_odds_active } from "src/output/index.js"
+import { api_common } from "src/api/index.js";
+import UserCtr from 'src/core/user-config/user-ctr.js'
+import {MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,get_odds_active, MenuData } from "src/output/index.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { menu_type } from 'src/base-h5/mixin/menu.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
@@ -42,7 +44,6 @@ export default {
      * @description 赛事收藏
      */
     match_collect_state () {
-      // 获取当前收藏状态
       return MatchCollect.get_match_collect_state(this.match_of_list)
     },
     is_collect() {
@@ -51,10 +52,21 @@ export default {
   },
   methods: {
     /**
-     * @description 赛事收藏
+     * @description: 设置 赛事收藏与否
      */
-    handle_match_collect ()  {
-      MatchCollect.handle_match_collect(this.match_of_list)
+    async handle_match_collect () {
+      const { mid,tid } = this.match_of_list
+      const match_state = MatchCollect.get_match_collect_state(this.match_of_list)
+      api_common.add_or_cancel_tournament({
+        mid,
+        cf: match_state ? 0 : 1,
+        cuid: UserCtr.get_uid()
+      }).then(res => {
+        if (+res.code !== 200) return
+      })
+      // 收藏页手动处理数据
+      MenuData.is_collect() && MatchMeta.set_collect_match(this.match_of_list, 2)
+      MatchCollect.set_match_collect_state(this.match_of_list, !match_state)
     },
     /**
      * @description 球种折叠
@@ -174,7 +186,7 @@ export default {
           is_detail: false,
           // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
           // 根据赛事纬度判断当前赛事属于 那种投注类型
-          bet_type: 'common_bet',
+          bet_type: 'guanjun_bet',
           // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
           device_type: 1,  
           // 数据仓库类型

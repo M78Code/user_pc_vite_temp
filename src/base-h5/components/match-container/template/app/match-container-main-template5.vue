@@ -182,29 +182,13 @@
             </div>
             <!-- 比分选项 -->
             <div class="odds">
-              <!-- <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
-                <img v-if="!match_collect_state" class="favorited-icon"
-                  src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt="" @click.stop="handle_match_collect" />
-                <img v-if='match_collect_state' class="favorited-icon"
-                  src="/src/base-h5/assets/match-list/ico_fav_sel.png" @click.stop="handle_match_collect" />
+              <!--赛事列表收藏-->
+              <div class="collect favorite-icon-top match list-m" @click.stop="handle_match_collect">
+                <!-- 未收藏图标 compute_img_url('icon-favorite')-->
+                <img v-if="!match_collect_state" :src="not_favorite_app" alt="">
+                <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
+                <img v-if='match_collect_state' :src="normal_img_is_favorite">
               </div>
-              <div class="bet_btn">
-                <template v-if="curMatchOdds?.length">
-                  <div v-for="item in curMatchOdds" :key="item.oid" class="item"
-                    :class="{ active: active_score === `${item._mid}${item.oid}` }" @click="go_to_bet(item)">
-                    <div v-if='item.onb || item.on' class='on'>{{ item.onb || item.on }}</div>
-                    <div class='num'>{{ format_odds_value(item) }}</div>
-                  </div>
-                </template>
-                <template v-else>
-                  <div v-for="item in 3" :key="item.oid" class="item">
-                    <div class='num'>
-                      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock2.svg`" />
-
-                    </div>
-                  </div>
-                </template>
-              </div> -->
               <OddListWrap :main_source="main_source" :match="match_of_list" />
             </div>
 
@@ -889,59 +873,35 @@ export default {
       }
 
       .odds {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        /* justify-content: space-between; */
-        /* padding-right: 46px; */
-        margin: .08rem 0;
-
-        .bet_btn {
+        margin-top: .1rem;
+        margin-bottom: .1rem;
+        position: relative;
+        :deep(.odd-list-wrap) {
           display: flex;
-          align-items: center;
-          width: 274px;
-          gap: 2px;
           justify-content: center;
-
-          .active {
-            background: var(--sys-neutral-white-white, #FFF);
-          }
-
-          .item {
-            padding: 2px 0px;
-            flex: 1;
-            height: 32px;
-            flex-shrink: 0;
-            border-radius: 2px;
-            background: var(--q-gb-bg-c-15);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.04);
-            &.active {
-              background: var(--sys-brand-secodary-secondary-200, #C9CDDB);
+          .odd-list-container {
+            width: 2.74rem;
+            height: .32rem;
+            .odd-column-item {
+              background: var(--q-gb-bg-c-15);
+              margin-left: .04rem;
             }
-
-            .on {
-              color: var(--sys-brand-secodary-secondary-300, #AFB3C8);
-              text-align: center;
-              font-size: 10px;
-              font-weight: 500;
+            .odd-title {
+              font-size: .1rem;
+              margin-bottom: .02rem;
             }
-
-            .num {
-              color: var(--sys-brand-secodary-secondary-800, #303442);
-              text-align: center;
-              font-size: 10px;
-              font-weight: 700;
+            .odd-value {
+              font-size: .12rem;
             }
           }
         }
+        .collect {
+          position: absolute;
+          top: 9px;
+          left: 3px;
+          z-index: 10;
+        }
       }
-
-
-
     }
 
     .match-score-info {

@@ -132,7 +132,7 @@ defineProps({});
     .sl-input-content {
       height: 0.4rem;
       width: 100%;
-      background: var(--q-gb-t-c-6);
+      background: #f2f2f6;
       border-radius: 0.4rem;
       padding: 0 0.42rem;
       display: flex;
@@ -158,10 +158,11 @@ defineProps({});
         }
       }
       .sl-input {
-        background: var(--q-gb-t-c-6);
+        background:#f2f2f6;
         outline: none;
         border: none;
         width: 100%;
+        caret-color: #179CFF;
         font-size: 0.14rem;
         &::placeholder{
           color: #C9CDDB;
