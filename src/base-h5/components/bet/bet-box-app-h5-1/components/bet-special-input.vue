@@ -19,13 +19,8 @@
   <div class="f-b-c" v-if="items.show_quick">
     <div>预计可赢：<span> {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} </span>RMB</div>
     <div>小计：{{items.bet_amount}}RMB</div>
- 
   </div>
-  <div class="f-b-c" v-if="items.show_quick">
-    <div>预计可赢：<span> {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} </span>RMB</div>
-    <div>小计：{{items.bet_amount}}RMB</div>
- 
-  </div>
+  
 </template>
 
 <script setup> 
