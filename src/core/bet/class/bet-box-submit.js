@@ -705,12 +705,24 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // let other = { bet_type:'common_bet'}
     // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
     let matchType = 1
-    if ([1, 2].includes(Number(mid_obj.ms))) {
-        matchType = 2
-    }
     // 冠军
-    if(MenuData.is_kemp()){
+    if(other.bet_type == 'common_bet'){
+        if ([1, 2].includes(Number(mid_obj.ms))) {
+            matchType = 2
+        }
+    }
+    
+    // 冠军
+    if(other.bet_type == 'guanjun_bet'){
         matchType = 3
+    }
+    // 电竞赛事
+    if(other.bet_type == 'esports_bet'){
+        matchType = 5
+    }
+    // 虚拟赛事
+    if(other.bet_type == 'vr_bet'){
+        matchType = 4
     }
 
     const play_config = {
