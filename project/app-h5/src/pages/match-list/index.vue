@@ -89,7 +89,7 @@ onMounted(() => {
   }, 1000)
 
   // 增加监听接受返回的监听函数
-  message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+  message_fun = ws_message_listener.addWsMessageListener((cmd, data) => {
     if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
       MatchMeta.handle_remove_match(data)
     } else {
@@ -225,6 +225,7 @@ onDeactivated(() => {
 });
 
 onUnmounted(() => {
+  message_fun&&message_fun()
   destroy_handle();
   unsubscribe();
   MatchDataBaseH5.clear()

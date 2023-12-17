@@ -67,7 +67,8 @@
 </template>
 <script setup>
 import { useRouter, useRoute } from "vue-router";
-import { useMittEmit, MITT_TYPES,SessionStorage,UserCtr,LOCAL_PROJECT_FILE_PREFIX, project_name } from "src/output/index.js";
+import {  useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import {SessionStorage,UserCtr,LOCAL_PROJECT_FILE_PREFIX, project_name } from "src/output/index.js";
 import {ref,computed,nextTick} from "vue";
 import Switch from "./components/switch.vue";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
@@ -257,7 +258,7 @@ const activity_handle = item => {
   //   border-radius: 0.16rem 0.16rem 0 0;
   position: absolute;
   bottom: 0;
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-23);
   backdrop-filter: blur(5px);
   z-index: 99;
 
@@ -281,7 +282,7 @@ const activity_handle = item => {
     }
 
     .title {
-      color: var(--q-gb-t-c-20);
+      color: var(--q-gb-t-c-18);
 
       span {
         color: var(--q-gb-bd-c-4);

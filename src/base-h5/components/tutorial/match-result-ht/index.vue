@@ -119,7 +119,7 @@ const state = reactive({
         }
 
         .title {
-            color: var(--q-gb-bg-c-3);
+            color: var(--q-gb-t-c-20);
             font-size: .14rem;
             margin-right: .08rem;
             font-weight: 500;
@@ -145,7 +145,7 @@ const state = reactive({
         .center,
         .right {
             flex: 1;
-            color: var(--q-gb-bg-c-3);
+            color: var(--q-gb-t-c-18);
         }
 
         .left {
@@ -239,7 +239,7 @@ const state = reactive({
 
                 .title {
                     font-size: .12rem;
-                    color: var(--q-gb-bg-c-8);
+                    color: var(--q-gb-t-c-20);
                     text-align: center;
                 }
 

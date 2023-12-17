@@ -127,6 +127,10 @@ class MenuData {
       is_results_kemp:val
     })
   }
+  get_results_kemp(){
+    return this.is_results_kemp
+  }
+  
   // 根据菜单id获取下级菜单id 二级菜单
   // mid 顶级菜单id
   get_menu_lvmi_list(mid){
@@ -285,6 +289,7 @@ class MenuData {
   set_date_time(index,time){
     this.data_tab_index = index;
     this.data_time = time;
+    this.current_lv_3_menu = {field1:time};
     this.set_menu_match_date()
     this.set_cache_class({
       data_tab_index:index,
@@ -421,7 +426,8 @@ class MenuData {
       })
       // 根据 菜单id 获取euid
       mid_list.forEach(item=>{
-        euid += BaseData.mi_euid_map_res?.[item] && BaseData.mi_euid_map_res?.[item]?.h + ','
+        const item_euid = BaseData.mi_euid_map_res?.[item] && BaseData.mi_euid_map_res?.[item]?.h?BaseData.mi_euid_map_res?.[item]?.h:'';
+        euid += item_euid + ','
       })
       return euid
     }
@@ -1035,7 +1041,7 @@ class MenuData {
    * @returns 
    */
   get_sub_is_all() {
-    return lodash_.isArray(this.current_lv_2_menu)
+    return !this.current_lv_2_menu_i;
   }
   //获取二级菜单 menuid
   get_current_sub_menuid() {

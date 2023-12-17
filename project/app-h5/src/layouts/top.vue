@@ -42,9 +42,8 @@ import {
   watch,
   nextTick
 } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute,useRouter } from "vue-router";
 import lodash_ from "lodash";
-
 import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js";
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
@@ -61,6 +60,7 @@ import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 
 const is_first = ref(true)
 const route = useRoute();
+const router = useRouter() 
 const inner_height = window.innerHeight;  // 视口高度
 const select_dialog = ref(false);//暂时筛选窗口dJ
 const dateTabMenu = ref(null);//时间dom
@@ -92,7 +92,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   const dataList = reactive({
     3: dateTabList(new Date()),
     6: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date().getTime()}),
-    2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date().getTime()})
+    2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"所有日期",val:''})
   });
 
   const ref_data = reactive({

@@ -145,6 +145,7 @@ const clear_timer = () => {
 .match-list-container {
   overflow: hidden;
   position: relative;
+  height: 100%;
   .main-container{
     height: 100%;
   }

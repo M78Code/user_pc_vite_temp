@@ -187,6 +187,7 @@ export default defineComponent({
     border-radius: 0.08rem;
     overflow: hidden;
     padding:0.04rem;
+    color: var(--q-bd-t-c-18);
     .border-style{
       border-right: 1px solid var(--q-gb-bd-c-7);
     }
@@ -194,7 +195,7 @@ export default defineComponent({
 
   .play-box {
     height: 0.52rem;
-
+background: var(--q-gb-bg-c-28);
 
     padding: 0.06rem 0.05rem 0;
 
