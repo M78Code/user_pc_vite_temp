@@ -578,7 +578,7 @@ background: var(--q-gb-t-c-5) !important;
   -webkit-overflow-scrolling: touch;
   border-radius: 24px 24px 0 0;
   //border: 1px solid;
-  background-color: var(--q-gb-bg-c-23);
+  background-color: var(--q-gb-bg-c-15);
 
   .yb_pl14 {
     margin-right: 0.01rem;

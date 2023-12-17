@@ -47,7 +47,7 @@ onMounted(() => {
   DOM_ID_SHOW.value =  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
 })
 
-watch(() => props.ol_item.ov, () => {
+watch(() => props.ol_item.ov, (v1,v0) => {
   let curr = Number(v1);
   let old = Number(v0);
 

@@ -5,24 +5,12 @@
         <div class="px-12 bet-money" >
             <div class="f-b-c pl-18 bet-input-info">
                 <div>
-                    <div class="font14">单关</div>
-                    <div class="font12 h12">
-                        <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
-                        <span class="text-8A8986-i font500" v-if="[1].includes(items.playId*1)"> 
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally), items.bet_amount))  }} 
-                        </span>
-                        <span class="text-8A8986-i font500" v-else>
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : items.bet_amount))) }} 
-                        </span>
-                    </div>
-                </div>
-        
-                <div>
                     <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
                     :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money}~${format_money3(ref_data.max_money)}`" maxLength="11"  />
                 </div>
-            
+                <div class="font14">+预约</div>
             </div>
+            
             <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
         </div>
         <div>
