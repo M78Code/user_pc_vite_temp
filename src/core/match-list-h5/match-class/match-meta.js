@@ -522,15 +522,20 @@ class MatchMeta {
    *  yazhou-h5 需要
    */
   async get_target_match_data ({scroll_top = 0, md = '', is_error = false, tid = ''}) {
+    // 有的项目菜单类不存在 data_time
+    const data_time = String(md || MenuData?.data_time || this.http_params.md)
+    // 球种 euid
     const euid = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
-    const params = this.get_base_params()
     this.http_params.md = md
+    const params = this.get_base_params()
     if (!is_error) this.current_euid = `${euid}_${md}_${tid}`
     const other_params = {
       category: 1
     }
-    if (tid) Object.assign(other_params, { tid })
-    if (this.http_params.md) Object.assign(other_params, {  md: this.http_params.md + '' })
+    // tid 有值 则 加上 tid
+    tid &&  Object.assign(other_params, { tid })
+    // data_time 有值 则 加上 md
+    data_time && Object.assign(other_params, {  md: data_time })
     try {
       const res = await api_common.post_match_full_list({ 
         ...params,

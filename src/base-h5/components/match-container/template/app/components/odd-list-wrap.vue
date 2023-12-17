@@ -19,7 +19,7 @@
         <!--角球未选中标志1白色版3黑色版-->
       <img class="icon-jiaoqiu"
         :style="{
-          display:match.csid == 1 && MenuData.footer_sub_menu_id == 114 ? 'block':'none',
+          display:match.csid == 1 && MenuData.get_footer_sub_menu_id() == 114 ? 'block':'none',
           ...compute_css_obj('icon-jiaoqiu')
       }"
         />
@@ -274,93 +274,93 @@ const ol_list = computed(() => {
   switch (sport_id) {
     // 网球
     case 5:
-      if (MenuData.footer_sub_menu_id == 1) {
+      if (footer_sub_menu_id() == 1) {
         sport_id_convert = 153; //独赢
-      } else if (MenuData.footer_sub_menu_id == 4) {
+      } else if (footer_sub_menu_id() == 4) {
         sport_id_convert = 154; //让盘
-      } else if (MenuData.footer_sub_menu_id == 2) {
+      } else if (footer_sub_menu_id() == 2) {
         sport_id_convert = 169; // 大小
-      } else if (MenuData.footer_sub_menu_id == 114) {
+      } else if (footer_sub_menu_id() == 114) {
         sport_id_convert = 153; //角球变独赢
       }
       break;
     // 羽毛球
     case 10:
-      if (MenuData.footer_sub_menu_id == 1) {
+      if (footer_sub_menu_id() == 1) {
         sport_id_convert = 153; //独赢
-      } else if (MenuData.footer_sub_menu_id == 4) {
+      } else if (footer_sub_menu_id() == 4) {
         sport_id_convert = 172; //让盘
-      } else if (MenuData.footer_sub_menu_id == 2) {
+      } else if (footer_sub_menu_id() == 2) {
         sport_id_convert = 173; // 大小
-      } else if (MenuData.footer_sub_menu_id == 114) {
+      } else if (footer_sub_menu_id() == 114) {
         sport_id_convert = 153; //角球变独赢
       }
       break;
     case 8: // 乒乓球
     case 9: //排
     case 13: { // 沙滩排球
-      if (MenuData.footer_sub_menu_id == 1) {
+      if (footer_sub_menu_id() == 1) {
         sport_id_convert = 153;
-      } else if (MenuData.footer_sub_menu_id == 4) {
+      } else if (footer_sub_menu_id() == 4) {
         sport_id_convert = 172;
-      } else if (MenuData.footer_sub_menu_id == 2) {
+      } else if (footer_sub_menu_id() == 2) {
         sport_id_convert = 173;
-      } else if (MenuData.footer_sub_menu_id == 114) {
+      } else if (footer_sub_menu_id() == 114) {
         sport_id_convert = 153; //角球独赢
       }
       break;
     }
     // 斯诺克
     case 7:
-      if (MenuData.footer_sub_menu_id == 1) {
+      if (footer_sub_menu_id() == 1) {
         sport_id_convert = 153;
-      } else if (MenuData.footer_sub_menu_id == 4) {
+      } else if (footer_sub_menu_id() == 4) {
         sport_id_convert = 181;
-      } else if (MenuData.footer_sub_menu_id == 2) {
+      } else if (footer_sub_menu_id() == 2) {
         sport_id_convert = 182;
-      } else if (MenuData.footer_sub_menu_id == 114) {
+      } else if (footer_sub_menu_id() == 114) {
         sport_id_convert = 153; //角球独赢
       }
       break;
     // 篮球
     case 2:
     case 6: //美
-      if (MenuData.footer_sub_menu_id == 1) {
+      if (footer_sub_menu_id() == 1) {
         sport_id_convert = 37;
-      } else if (MenuData.footer_sub_menu_id == 4) {
+      } else if (footer_sub_menu_id() == 4) {
         sport_id_convert = 39;
-      } else if (MenuData.footer_sub_menu_id == 2) {
+      } else if (footer_sub_menu_id() == 2) {
         sport_id_convert = 38;
-      } else if (MenuData.footer_sub_menu_id == 114) {
+      } else if (footer_sub_menu_id() == 114) {
         sport_id_convert = 37; //角球独赢
       }
       break;
     // 足球
     case 1: // hpid 1(独赢) 4(让球) 2(大小) 114(角球)
-      sport_id_convert = MenuData.footer_sub_menu_id;
+      sport_id_convert = footer_sub_menu_id();
       break;
     // 3、4、6、9棒冰美排
     case 3: //棒
-      if (MenuData.footer_sub_menu_id == 1) {
+      if (footer_sub_menu_id() == 1) {
         sport_id_convert = 242;
-      } else if (MenuData.footer_sub_menu_id == 4) {
+      } else if (footer_sub_menu_id() == 4) {
         sport_id_convert = 243;
-      } else if (MenuData.footer_sub_menu_id == 2) {
+      } else if (footer_sub_menu_id() == 2) {
         sport_id_convert = 244;
-      } else if (MenuData.footer_sub_menu_id == 114) {
+      } else if (footer_sub_menu_id() == 114) {
         sport_id_convert = 242; //角球独赢
       }
       break;
     case 4: //冰
-      sport_id_convert = MenuData.footer_sub_menu_id;
-      if (MenuData.footer_sub_menu_id == 114) {
+      sport_id_convert = footer_sub_menu_id();
+      if (footer_sub_menu_id() == 114) {
         sport_id_convert = 1; //角球独赢
       }
       break;
     case 12: // 拳击
-      if (MenuData.footer_sub_menu_id == 1) {
+      if (footer_sub_menu_id() == 1) {
         sport_id_convert = 153;
-      } else if (MenuData.footer_sub_menu_id == 2) {
+      } else if (footer_sub_menu_id() == 2) {
         sport_id_convert = 2;
       }
       break;
@@ -368,18 +368,18 @@ const ol_list = computed(() => {
     case 100: //电竞lol
     case 102: //CS GO
     case 103: //王者荣耀1
-      if (MenuData.footer_sub_menu_id == 1) {
+      if (footer_sub_menu_id() == 1) {
         sport_id_convert = 30001; //独赢
-      } else if (MenuData.footer_sub_menu_id == 4) {
+      } else if (footer_sub_menu_id() == 4) {
         sport_id_convert = 30002; //让盘
-      } else if (MenuData.footer_sub_menu_id == 2) {
+      } else if (footer_sub_menu_id() == 2) {
         sport_id_convert = 30003; // 大小
-      } else if (MenuData.footer_sub_menu_id == 114) {
+      } else if (footer_sub_menu_id() == 114) {
         sport_id_convert = 30001; //角球变独赢
       }
       break;
     default:
-      sport_id_convert = MenuData.footer_sub_menu_id;
+      sport_id_convert = footer_sub_menu_id();
       break;
   }
 
@@ -423,13 +423,13 @@ const ol_list = computed(() => {
   if (sport_id == 1) {
     if ([32, 33, 41, 42].includes(+props.match.mmp)) {
       // hpid 1(独赢) 4(让球) 2(大小) 114(角球)
-      if (MenuData.footer_sub_menu_id == 1) {
+      if (footer_sub_menu_id() == 1) {
         sport_id_convert = 126;
-      } else if (MenuData.footer_sub_menu_id == 4) {
+      } else if (footer_sub_menu_id() == 4) {
         sport_id_convert = 128;
-      } else if (MenuData.footer_sub_menu_id == 2) {
+      } else if (footer_sub_menu_id() == 2) {
         sport_id_convert = 127;
-      } else if (MenuData.footer_sub_menu_id == 114) {
+      } else if (footer_sub_menu_id() == 114) {
         sport_id_convert = 114; //角球独赢
       }
     }
@@ -776,7 +776,7 @@ const select_column_change_handle = ($event) => {
     }
   });
   if (flag) {
-    flag = MenuData.footer_sub_menu_id == 114;
+    flag = footer_sub_menu_id() == 114;
   }
   show_lock_selected.value = flag;
 };
@@ -797,14 +797,19 @@ const modify_overtime_status = (vuex_status) => {
  */
 const show_3_space = () => {
   let r = false;
-  if (MenuData.footer_sub_menu_id == 1) {
+  if (footer_sub_menu_id() == 1) {
     r = [1, 4, 11, 16].includes(props.match.csid * 1);
   }
   if (PageSourceData.page_source == "detail_match_list") {
     r = false;
   }
+  
   return r;
 };
+
+const footer_sub_menu_id = () => {
+  return MenuData.get_footer_sub_menu_id()
+}
 
 onUnmounted(() => {
   unsubscribe()
