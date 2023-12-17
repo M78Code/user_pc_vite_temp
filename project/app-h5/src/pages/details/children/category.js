@@ -455,7 +455,7 @@ export const category_info = (category_arr=[]) => {
       }
 
       if (temp && temp.length) {
-        if (to_refresh == "details_refresh" && arr_hshow.length > 0) {
+        if (to_refresh == "details_refresh" && component_data.arr_hshow.length > 0) {
           save_expanded_state(temp);
         }
         component_data.playlist_length = temp.length;

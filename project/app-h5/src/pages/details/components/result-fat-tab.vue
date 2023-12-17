@@ -8,7 +8,7 @@
     <!-- 所有赛果 -->
     <category v-if="filtration(1)"></category>
     <!-- 精选赛事 -->
-    <!-- <detailMatchList v-if="filtration(2)"></detailMatchList> -->
+    <detailMatchList v-if="filtration(2)"></detailMatchList>
     <!-- 注单 -->
     <!-- <myNoteSheet v-if="filtration(3)"></myNoteSheet> -->
     <!-- 精彩回放 -->
