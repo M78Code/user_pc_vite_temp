@@ -644,7 +644,8 @@ export default defineComponent({
      * @return {Number}
      */
     get_match_mc (item) {
-      return (item.mc * 1) < 1 ? 0 : item.mc;
+      //mc为undefined会显示空 所以要 ||0
+      return (item.mc * 1) < 1 ? 0 : item.mc||0;
     },
     /**
      * 包装获取图片路径的方法
