@@ -1,7 +1,7 @@
 
 <template>
     <div class="bet-bar row justify-between items-center" :class="{ 'fixed-bottom': $route.name != 'matchList'}">
-    <div v-show="false">{{ UserCtr.user_version }}</div>
+    <div v-show="false">{{ UserCtr.user_version }} {{BetData.bet_data_class_version}}</div>
     <div class="nonebox4-first">
         <div class="nonebox4-first-left">
             <div class="nonebox4-first-left-img">{{BetData.is_bet_single? i18n_t('app_h5.bet.odd') : i18n_t('app_h5.bet.parlay')}}</div>
@@ -61,7 +61,6 @@ const get_balance = () => {
     align-items: center;
 }
 .nonebox4-first-left-img {
-    display: flex;
     width: 0.22rem;
     height: 0.22rem;
     display: flex;
