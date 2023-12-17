@@ -1276,7 +1276,6 @@ class MatchMeta {
   async get_match_base_hps_by_mids ({ mids = [], warehouse, is_again = true }) {
     try {
       // 赛果页不需要获取赔率
-      console.log(PageSourceData.route_name ,'PageSourceData');
       if (MenuData.is_results() && PageSourceData.route_name == 'matchResults') return
       if (this.match_mids.length < 1 && mids.length < 1) return
       const match_mids = this.match_mids.join(',')
