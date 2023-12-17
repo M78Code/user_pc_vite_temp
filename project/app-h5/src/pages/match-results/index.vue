@@ -21,7 +21,7 @@
     <div class="slide-box">
         <div v-for="(item, index) in state.slideMenu" @click="slideHandle(item,$event)" :class="['slide-item', state.currentSlideValue == item.field1 &&
             'slide-item-active']" :key="'slide-' + index">
-            <span>{{ item.date }}</span>
+            <span>{{ index? item.date:i18n_t('menu_itme_name.today') }}</span>
         </div>
     </div>
 

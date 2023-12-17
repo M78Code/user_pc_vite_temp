@@ -20,33 +20,36 @@
                 </div>
             </div>
 
-            <div class="fw-e-s bet-right">
-                <div class="f-c-c bet-odds">
+            <div class="bet-right">
+                <div class="bet-odds">
                     <span class="font14 font700 mr-10">@{{ items.oddsValues }}</span>
                 </div>
-                <div class="bet-result" >
-                    <div class="w-100 fw-s-b">
-                        <div class="w-100 bet-result-info fw-b-c">
-                            <div class="font12 font400 bet-returm f-s-c">{{ i18n_t("bet.total_bet")}}</div>
-                            <div class="font12 font500 bet-money f-s-c">{{ format_money2(mathJs.divide(items.betMoney,100)) || '0.00' }}</div>
-                        </div>
-                        <div class="w-100 bet-result-info fw-b-c mt-8">
-                            <div class="font12 font400 bet-returm f-s-c">{{ i18n_t("common.maxn_amount_val") }}</div>
-                            <div class="font12 font500 bet-money f-s-c">{{ format_money2(mathJs.divide(items.maxWinMoney,100)) || '0.00' }}</div>
-                        </div>
-                    </div>
-                </div>
+                <div class="bet-loading mr-10" v-if="items.orderStatusCode == 2">投注中</div>
+                <div class="bet-failure mr-10" v-if="items.orderStatusCode == 0">投注失败</div>
+                <div class="bet-success mr-10" v-if="items.orderStatusCode == 1">投注成功</div>
+              
             </div>
             <div class="bet-delete bet-icon">
                 <!-- 投注确认中 -->
-                <img class="icon_loading" v-if="BetViewDataClass.bet_order_status == 2" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt="" />
+                <img class="icon_loading" v-if="items.orderStatusCode == 2" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt="" />
                 <!-- <icon-wapper v-if="BetViewDataClass.bet_order_status == 3" class="icon-loading-no" size="12px" color="#FF7000" /> -->
                 <!-- 投注失败 -->
-                <icon-wapper v-if="BetViewDataClass.bet_order_status == 4" name="icon-failure" size="12px" color="#FF4646" />
+                <icon-wapper v-if="items.orderStatusCode == 0" name="icon-failure" size="12px" color="#FF4646" />
                 <!-- 投注成功 -->
-                <icon-wapper v-if="BetViewDataClass.bet_order_status == 3" name="icon-success" size="12px" color="#4FC140" />
+                <icon-wapper v-if="items.orderStatusCode == 1" name="icon-success" size="12px" color="#4FC140" />
             </div>
            
+        </div>
+
+        <div class="bet-result f-b-c" >
+            <div class="bet-result-info">
+                <span class="font12 font500 bet-returm mr-4">{{ i18n_t("bet.total_bet")}}</span>
+                <span class="font14 font500 bet-money ">{{ format_money2(mathJs.divide(items.betMoney,100)) }}</span>
+            </div>
+            <div class="bet-result-info">
+                <span class="font12 font400 bet-returm mr-4">{{ i18n_t("common.maxn_amount_val") }}</span>
+                <span class="font14 font500">{{ format_money2(mathJs.divide(items.maxWinMoney,100))}}</span>
+            </div>
         </div>
       
     </div>
@@ -102,17 +105,26 @@ const props = defineProps({
         }
 
         .bet-odds {
-            height: 34px;
+            height: 24px;
         }
 
         .bet-right {
             width: 160px;
+            text-align: right;
         }
 
         .bet-left {
             width: 230px;
         }
-
+        .bet-loading{
+            color: var(--q-gb-t-c-2);
+        }
+        .bet-failure{
+            color: var(--q-gb-t-c-7);
+        }
+        .bet-success{
+            color: var(--q-gb-t-c-10);
+        }
     }
 
     .bet-bet-money {
@@ -184,19 +196,14 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .bet-result{
-    width: 99px;
-    border-left: 0.5px solid var(--q-gb-bd-c-6);
-    padding-left: 16px;
+    width: 100%;
+    background: var(--q-gb-bg-c-15);    
+    padding: 0 20px;
+    height: 50px;
     .bet-result-info{
-        height: 30px;
-        .bet-returm{
-            height: 16px;
-            margin-bottom: 4px;
-            color: var(--q-gb-t-c-8);
-        }
+        color: var(--q-gb-t-c-5);
         .bet-money{
-            color: var(--q-gb-t-c-5);
-            height: 12px;
+            color: var(--q-gb-t-c-2);
         }
     }
     .icon_loading{

@@ -40,7 +40,7 @@ const props = defineProps({
 });
 const dateTab = ref(null)
 const activeOn = ref(MenuData.data_tab_index);//默认值
-
+const emits = defineEmits(['changeDate'])
 // onMounted(() => {
 //     nextTick(()=>{
 //         changeTabMenu(props.dataList?.[0],0)
@@ -78,8 +78,9 @@ const set_menu_match_date = (type) => {
     // 获取菜单中的数据 进去接口请求
     const { menu_match_date_api_config: { api, params } } = MenuData
     api_common[api](params).then(res => {
+        emits('changeDate',{val:res.data ||{},type:type})
         // if(res.code == 200 ){
-        useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, {val:res.data ||{},type:type})
+        // useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, {val:res.data ||{},type:type})
         // }
     })
 }
