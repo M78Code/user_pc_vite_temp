@@ -4,7 +4,7 @@
   <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
   <div class="bet_single_info f-b-c">
     <div>
-      {{ items.name }} {{ items.id }}
+      {{ items.name }}
     </div>
     <div class="bet_single_detail f-b-c">
       <div>{{ items.count }}x</div>
@@ -15,11 +15,6 @@
         <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ items.min_money }}-{{ items.max_money }}</span>
       </div>
     </div>
-  </div>
-  <div class="f-b-c" v-if="items.show_quick">
-    <div>预计可赢：<span> {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} </span>RMB</div>
-    <div>小计：{{items.bet_amount}}RMB</div>
- 
   </div>
 </template>
 
@@ -65,14 +60,14 @@ onMounted(() => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = (new_money) => {
-  console.error('change_money_handle-single',new_money,new_money.params.id)
+  console.error('change_money_handle-single',new_money)
   if( new_money.money*1 > props.items.max_money *1){
     ref_data.money =  props.items.max_money
   }else{
     ref_data.money = new_money.money
   }
   BetData.set_bet_amount(ref_data.money)
-  set_special_series('edit',new_money.params.id)
+  set_special_series('edit')
 }
 
 onUnmounted(() => {
@@ -98,14 +93,12 @@ const set_show_quick_money = (obj = {}) => {
 }
 
 // 修改数据内容
-const set_special_series = (money,ty_id) => {
+const set_special_series = (money) => {
   let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
-  // 键盘输入会传修改的数据id
-  let id = ty_id ? ty_id : lodash_.get(props,'items.id','')
+  let id = lodash_.get(props,'items.id','')
   list.filter(item => {
     item.show_quick = false
       // 显示指定投注项的快捷金额按钮
-      console.error('ssssset_special_seriesss',id)
     if(item.id == id){
         item.show_quick = true
         if(money == 'edit'){
@@ -114,7 +107,6 @@ const set_special_series = (money,ty_id) => {
         
     }
   })
-  console.error('list',lodash_.cloneDeep(list))
   BetViewDataClass.set_bet_special_series(list)
 }
 /**
@@ -145,34 +137,34 @@ const set_special_series = (money,ty_id) => {
     font-size: .16rem;
     background: var(--q-gb-bg-c-22);
     border-radius: 0.12rem;
-    height: 0.44rem;
-    margin-top: 0.04rem;
+    border-radius: 10px;
+    height: 0.38rem;
+    margin-top: 0.1rem;
+    //margin-left: .08rem;
     padding: 0 .12rem;
   }
 
   .bet_single_detail{
+    //margin-top: 0.08rem;
     height: 0.44rem;
     width: 1.68rem;
   }
 
   /* ************** 右边内容 ************** -S */
   .content-b {
-    height: 0.32rem;
+    height: 0.3rem;
     width: 1.50rem;
-    border-radius: .08rem;
+    border-radius: 4px;
     font-size: 0.16rem;
-    // overflow: hidden;
-    padding-left: 0.1rem;
+    overflow: hidden;
+    //padding-left: 0.1rem;
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    border: 1px solid #D1EBFF;
-    margin-left: .04rem;
-
-    &:hover {
-      border-color: var(--q-gb-t-c-1);
-    }
+    justify-content: flex-end;
+    padding-right: 0.1rem;
+    background: var(--q-gb-bg-c-15);
+    margin-left: 0.05rem;
     .limit-txt {
       color: #C9CDDB;
     }
@@ -191,7 +183,7 @@ const set_special_series = (money,ty_id) => {
     width: 0.02rem;
     height: 0.16rem;
     margin: 0 1px;
-    background: var(--q-gb-t-c-1);
+    background: var(--q-gb-bg-c-1);
     &.money-span3{
       background: transparent;
     }

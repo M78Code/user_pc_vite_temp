@@ -42,8 +42,8 @@
       <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub">确认</div>
       <!--  串关  -->
       <div v-else>
-        <div @click="set_confirm" >注单已确认 <span>合计17,650.00</span></div>
-        <div @click="set_retain_selection">保留选项，继续投注</div>
+        <div @click="set_confirm" class="sub">注单已确认 <span class="sub-total">合计17,650.00</span></div>
+        <div @click="set_retain_selection" class="reserve">保留选项，继续投注</div>
       </div>
 
     </div>
@@ -153,6 +153,17 @@ onMounted(()=>{
 </style>
 
 <style scoped lang="scss">
+.reserve{
+  width: calc(100% - 0.1rem);
+  background: var(--q-gb-bg-c-22);
+  margin-left: 0.05rem;
+  padding: 0.1rem 0;
+  text-align: center;
+  margin-top: 0.1rem;
+  border-radius: 0.12rem;
+  font-size: 0.16rem;
+  color: var(--q-gb-t-c-1);
+}
 .sub{
   width: calc(100% - 0.1rem);
   background: var(--q-gb-t-c-1);
@@ -163,6 +174,10 @@ onMounted(()=>{
   border-radius: 0.12rem;
   font-size: 0.16rem;
   color: var(--q-gb-t-c-14);
+}
+.sub-total{
+  font-size: 0.14rem;
+  color: var(--q-gb-t-c-6);
 }
 
 .yb-info{

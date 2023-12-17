@@ -34,7 +34,7 @@
               <!-- 复式连串过关投注 限额 -->
               <template v-if="BetData.bet_s_list.length > 1"  >
                 <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
-                  <div class="bor-b">
+                  <div>
                     <betSpecialInput :items="item" :key="index+'_'+item.id"/>
                   </div>
                 </template>
@@ -63,6 +63,7 @@
             </template>
 
             <template v-else>
+              <div>1111111</div>
               <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
                 <bet-special-result :items="item" :key="index" :index="index" />
               </div>
