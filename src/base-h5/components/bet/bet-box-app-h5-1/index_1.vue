@@ -41,12 +41,12 @@
               </template>
 
               <div class="add-match fw-c-c cursor h44 pl-30" @click="set_show_single()">
-                <sapn class="fon12 font500 f-e-c">
+                <span class="fon12 font500 f-e-c">
                   <span class="re icon-mid mx-6">
                     <i class="icon-del1 icon-add" />
                   </span> 
                   添加赛事  
-              </sapn>
+              </span>
               </div>
              
             </template>
@@ -65,7 +65,7 @@
             <template v-else>
               <div>1111111</div>
               <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
-                <bet-special-result :items="item" :key="index" :index="index" />
+                <betSpecialResult :items="item" :key="index" :index="index" />
               </div>
 
               <div v-for="(item, index) in BetViewDataClass.orderNo_bet_single_obj" :key="item.orderNo">
