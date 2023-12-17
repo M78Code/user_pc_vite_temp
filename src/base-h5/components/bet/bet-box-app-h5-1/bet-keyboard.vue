@@ -369,7 +369,7 @@ onUnmounted(() => {
     justify-content: center;
     background-color: var(--q-gb-bg-c-15);
     //box-shadow: 0 2px 2px #eeeeee;
-    color: #333;
+    color: var(--q-gb-t-c-18);
     font-size: 0.22rem;
     font-weight: 700;
     border-radius: .08rem;

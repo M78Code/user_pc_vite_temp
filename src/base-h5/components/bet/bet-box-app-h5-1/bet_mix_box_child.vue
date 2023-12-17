@@ -431,7 +431,7 @@ onUnmounted(() => {
   line-height: 0.36rem;
 
  .bet-error {
-    color: #FF0000;
+    color: var(--q-gb-bd-c-21);
   }
 
   .bet-success {
@@ -592,7 +592,7 @@ background: var(--q-gb-t-c-5) !important;
 .dele-wrap {
   justify-content: flex-start;
   width: 100%;
-  color: var(--q-gb-t-c-11);
+  color: var(--q-gb-t-c-10);
 }
 
 .full-shadow {
@@ -764,12 +764,12 @@ background: var(--q-gb-t-c-5) !important;
 }
 
 .one_text_color {
-  color: #99A3B1 !important;
+  color: var(--q-gb-bd-c-10);
   border: 1px solid #CBCED8;
 }
 
 .linkUp_text_color {
-  color: #99A3B1 !important;
+  color: var(--q-gb-bd-c-10);
   border: 1px solid #CBCED8;
 }
 
