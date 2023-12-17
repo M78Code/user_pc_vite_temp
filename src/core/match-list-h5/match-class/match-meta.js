@@ -74,6 +74,7 @@ class MatchMeta {
    * @param { Number } md 时间
    */
   async set_origin_match_data(params = {}) {
+    console.log(222222222222222)
     const { md = '', is_match = true } = params
     this.init()
     let menu_lv_v1 = ''
@@ -97,6 +98,9 @@ class MatchMeta {
     // 清除上一轮赛事
     this.clear_match_info()
 
+    // 电竞、赛果、冠军 return
+    if (MenuData.is_esports() || MenuData.is_results() || MenuData.is_kemp()) return
+
     // 获取真实数据
     this.http_params.md = md
 
@@ -111,8 +115,6 @@ class MatchMeta {
    
     // 对应 球种 mi 
     if (typeof menu_lv_v2 !== 'string') return
-    // 电竞、赛果 return
-    if (MenuData.is_esports() || MenuData.is_results()) return
 
     this.get_origin_match_mids_by_mi(menu_lv_v2)
   }
@@ -440,6 +442,7 @@ class MatchMeta {
    * @description 获取冠军赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_champion_match() {
+    console.log(333333333333333333333)
     MatchFold.clear_fold_info()
     MatchDataBaseH5.clear()
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
@@ -452,6 +455,7 @@ class MatchMeta {
       // "sort": PageSourceData.sort_type,
       "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
     })
+    
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
     const list = lodash.get(res, 'data', [])
     if (list.length < 1) return
@@ -767,6 +771,7 @@ class MatchMeta {
    * @description 获取收藏赛事
    */
   async get_collect_match () {
+    console.log(11111111)
     this.clear_match_info()
     const mid = MenuData.current_lv_2_menu_i
     let mid_list = lodash.get(MenuData,'collect_list')
@@ -1213,13 +1218,14 @@ class MatchMeta {
    */
   handle_remove_match (data) {
     // mhs === 2  || mmp === 999 为关盘 则移除赛事
+ 
     const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
-      const item = this.match_mids.find(t => t === mid)
-      if (item) {
-        const index = this.match_mids.findIndex(t => t === mid)
+      // const item = this.match_mids.find(t => t === mid) 203行取的前10条 为什么是视图id查找 确删除complete_matchs里的值
+      const index = this.complete_matchs.findIndex(t => t.mid == mid)
+      if (index>-1) {
+        // const index = this.match_mids.findIndex(t => t === mid)
         this.complete_matchs.splice(index, 1)
-
         // 复刻版 新手版 使用的是 observer-wrapper 组件模式 不需要重新计算
         if (project_name == 'app-h5' && UserCtr.standard_edition == 1) return;
 

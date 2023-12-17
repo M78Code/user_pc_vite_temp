@@ -21,7 +21,7 @@ import {
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js";
 const Cache_key = {
-  CACHE_CRRENT_MEN_KEY: "CACHE_CRRENT_MEN_KEY", //缓存当前菜单的key
+  CACHE_CRRENT_MEN_KEY: "CACHE_CRRENT_MENU_KEY_FK", //缓存当前菜单的key
   RESULT_SUB_MENU_CACHE: "RESULT_SUB_MENU_CACHE", //赛果 缓存
 };
 const menu_type_config = {
@@ -99,12 +99,11 @@ class MenuData {
         menu_list.push(item)
       }
     })
+    this.menu_list = menu_list
+    this.set_current_lv1_menu(current.current_lv_1_menu_i||2)
     if(current){
       this.set_cache_class(current)
     }
-    this.menu_list = menu_list
-    this.set_current_lv1_menu(current.current_lv_1_menu_i || 2)
-    
   }
 
   set_collect_list (list) {
@@ -130,10 +129,10 @@ class MenuData {
       menu_lv_mi_lsit = (BaseData.mew_menu_list_res.find(item=> item.mi == 400 ) || {}).sl
     }else{
       this.menu_list.forEach(item => {
-        (item.sl || {}).find(obj=>{
+        (item.sl || []).find(obj=>{
           // 菜单id最后一位为顶级菜单的id
           if(obj.mi.substr(obj.mi.length-1,1) == mid){
-            obj.mif = item.mi
+            obj.mif = item.mi;
             menu_lv_mi_lsit.push(obj)
           }
         })
@@ -142,13 +141,15 @@ class MenuData {
     // 默认设置二级菜单id
     // this.set_current_lv_2_menu_i( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
     // 今日 加入 收藏/vr体育/电竞 滚球加入全部
+    // menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
     if(mid == 1){
       const all_ct = menu_lv_mi_lsit.map((item)=>{return item.ct||0}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
-      menu_lv_mi_lsit.unshift({mi:0,btn:1, ct:all_ct,title:"全部"})
-      menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
+      menu_lv_mi_lsit.splice(0,0,{mi:0,btn:1, ct:all_ct,title:"全部"})
+      // menu_lv_mi_lsit.unshift({mi:0,btn:1, ct:all_ct,title:"全部"})
+      // menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
     }
     if(mid == 2){
-      menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
+      // menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
       menu_lv_mi_lsit.splice(3,0,{mi:300,btn:1,ct:0,title:"VR体育"})
       menu_lv_mi_lsit.splice(4,0,{mi:2000,btn:1,ct:0,title:"电竞"})
     }
@@ -172,8 +173,14 @@ class MenuData {
   // 设置 收藏 /vr体育 /电竞头部
   set_top_menu_title(val){
     this.top_menu_title = val;
+    const obj = val?.mi?{}:{
+      current_lv_1_menu_i:2
+      // current_lv_2_menu:{},
+      // current_lv_2_menu_i:''
+    }
     this.set_cache_class({
-      top_menu_title:val
+      top_menu_title:val,
+      ...obj
     });
     this.update()
   }
@@ -195,13 +202,13 @@ class MenuData {
   set_current_lv_2_menu_i(val = {},type=0){
     const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
     val = type?current.current_lv_2_menu:val;
-    this.current_lv_2_menu_i = val.mi;
+    this.current_lv_2_menu_i = val?.mi;
     this.current_lv_2_menu = val;
     this.set_cache_class({
       current_lv_2_menu:val,
-      current_lv_2_menu_i:val.mi,
+      current_lv_2_menu_i:val?.mi,
     });
-    this.set_menu_csid(val.mi);
+    this.set_menu_csid(val?.mi);
     this.update()
   }
    // 设置三级菜单id
@@ -235,7 +242,7 @@ class MenuData {
    * item [object]当前点击对象
    */
   set_current_lv1_menu(lv1_mi) {
-    const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
+    // const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
     this.current_lv_1_menu_mi.value = lv1_mi  
     this.current_lv_1_menu_i = lv1_mi
     this.menu_type.value = menu_type_config[lv1_mi]  
@@ -243,19 +250,19 @@ class MenuData {
       current_lv_1_menu_i:lv1_mi
     });
     // 早盘 /串关 不走此逻辑
-    if([1,2,400].includes(lv1_mi*1)){
+    // if([1,2,400].includes(lv1_mi*1)){
 
-      this.get_menu_lvmi_list(lv1_mi)
-      let index = 0
-      // 今日/滚球第一位是收藏 默认选中足球/全部 
-      if([1,2].includes(lv1_mi*1)) {
-        index = 1
-      }
-      if([1].includes(lv1_mi*1)) {
-        this.menu_csid = '';
-      }
-      this.set_current_lv_2_menu_i( current.current_lv_2_menu || lodash_.get(this.menu_lv_mi_lsit,`[${index}]`,{}))
-    }
+    //   this.get_menu_lvmi_list(lv1_mi)
+    //   let index = 0
+    //   // 今日/滚球第一位是收藏 默认选中足球/全部 
+    //   if([1,2].includes(lv1_mi*1)) {
+    //     index = 1
+    //   }
+    //   if([1].includes(lv1_mi*1)) {
+    //     this.menu_csid = '';
+    //   }
+    //   this.set_current_lv_2_menu_i( current.current_lv_2_menu || lodash_.get(this.menu_lv_mi_lsit,`[${index}]`,{}))
+    // }
     this.update();
   }
 
@@ -404,7 +411,7 @@ class MenuData {
       })
       // 根据 菜单id 获取euid
       mid_list.forEach(item=>{
-        euid += BaseData.mi_euid_map_res[item] && BaseData.mi_euid_map_res[item].h + ','
+        euid += BaseData.mi_euid_map_res?.[item] && BaseData.mi_euid_map_res?.[item]?.h + ','
       })
       return euid
     }
@@ -422,7 +429,6 @@ class MenuData {
       }[mi];
     }
   }
-
   /**
    * 菜单名称 国际化获取菜单名称
    * 这里获取大部分菜单的名称 有些是固定名称的这里获取不到
@@ -710,7 +716,7 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_kemp(mi) {
-    return this._is_cur_mi(100, mi)
+    return this._is_cur_mi(400, mi)
   }
   /**
    * 是否选中了冠军

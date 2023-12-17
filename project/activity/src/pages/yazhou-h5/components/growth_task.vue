@@ -129,8 +129,8 @@
           <span>
             <div v-if="v.bonusType == 1">已领取</div>
             <div v-else-if="v.bonusType == 2" class="to-be-completed">
-              待完成
-            </div>
+              待完成 
+            </div> 
             <div
               v-else-if="v.bonusType == 3"
               class="receive flex align_items justify-center"
@@ -674,6 +674,9 @@ export default {
   bottom: 0.8rem;
   left: 50%;
   transform: translate(-50%);
+}
+.align_items {
+  align-items: center;
 }
 </style>
  

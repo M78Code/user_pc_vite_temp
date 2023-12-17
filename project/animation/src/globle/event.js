@@ -88,6 +88,7 @@ const awaySvgAnimationConfig = {
     colors: ['rgba(255,255,255,0)', 'url(#gradient);rgba(255,255,255,.8)']
   }
 }
+// 主场默认动画
 const homeSvgAnimationDefaultConfig = {
   textParams: {
     x: 110,
@@ -99,6 +100,7 @@ const homeSvgAnimationDefaultConfig = {
     y: 140,
   }
 }
+// 客场默认动画
 const awaySvgAnimationDefaultConfig = {
   textParams: {
     x: 440,
@@ -110,6 +112,7 @@ const awaySvgAnimationDefaultConfig = {
     y: 140,
   }
 }
+// 默认动画
 const svgAnimationDefaultConfig = {
   textParams: {
     x: 275,
@@ -362,8 +365,10 @@ export const event_animation = {
 export const svgAnimationConfig = {
   homeSvgAnimationConfig,
   awaySvgAnimationConfig,
-  // 默认动画
+  // 主场默认动画
   homeSvgAnimationDefaultConfig,
+  // 客场默认动画
   awaySvgAnimationDefaultConfig,
+  // 默认动画
   svgAnimationDefaultConfig,
 }

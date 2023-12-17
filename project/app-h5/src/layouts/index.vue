@@ -3,7 +3,7 @@
  * @Description:
 -->
 <template>
-  <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
+  <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
   <q-layout view="lHh Lpr lFf" class="layout_container">
     <q-page-container id="app-h5" class="page_container" :style="`height:${inner_height}px`">
       <!-- <layout-header /> -->
@@ -18,7 +18,7 @@
       <layoutTop />
       
       <router-view />
-      <BetBoxWapper use_component_key='BetBoxAppH5_1' />
+      <BetBoxWapper />
 
       <!--页脚-->
       <Tabbar id="page-footer" class="m-layout" v-if="['sport_menu', 'matchList', 'virtual_sports', 'esports_sports'].includes(route.name)">
@@ -43,10 +43,13 @@
         <!-- 结算弹窗 -->
         <settle-dialog></settle-dialog>
       </div>
-    
+      
+      <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
+
+
       <!-- 串关投注 --> 
       <div class="chain_bet" @click="show_chain_bet" v-if="!BetData.is_bet_single">
-        <span class="count">1</span>
+        <span class="count">{{BetData.bet_s_list.length}}</span>
       </div>
 
     </q-page-container>
@@ -220,7 +223,7 @@ const init_local_server_time = () => {
 }
 
 const show_chain_bet = () => {
-  BetData.set_bet_state_show(1)
+  BetData.set_bet_box_h5_show(true)
 }
 
 onMounted(() => {
@@ -426,7 +429,7 @@ if (UserCtr.get_user_token()) {
   position: fixed;
   bottom: .72rem;
   right: .14rem;
-  z-index: 9999;
+  z-index: 999;
   // background-color: #f00;
   background: url($SCSSPROJECTPATH+"/image/bet/chuan_bet.png") no-repeat center / contain;
   // position: relative;

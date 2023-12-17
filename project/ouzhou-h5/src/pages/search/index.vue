@@ -276,6 +276,7 @@ import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { formatTime } from 'src/output/index.js';
 import BaseData from "src/core/base-data/base-data.js";
 
+const input_ref = ref(null)
 const input_value = ref('');
 const tab_growp = ref(null);
 const show_history = ref(true);
@@ -604,6 +605,8 @@ const _delete_history_search = (keyword) => {
 }
 
 onMounted(() => {
+	// console.log('fdsfdsafdsaf', input_ref.value.focus())
+	if (input_ref.value) input_ref.value.focus()
 	get_hot_search();
 	get_history();
 	get_sport_kind();

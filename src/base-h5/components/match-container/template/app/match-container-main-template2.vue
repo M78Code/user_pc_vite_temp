@@ -14,9 +14,9 @@
       <div class="league-wrapper champion flex items-center">
         <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
           <!-- 未收藏图标 compute_img_url('icon-favorite')-->
-          <img v-if="!league_collect_state" :src="not_favorite_app" alt="">
+          <img v-if="!match_collect_state" :src="not_favorite_app" alt="">
           <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
-          <img v-if='league_collect_state' :src="normal_img_is_favorite">
+          <img v-if='match_collect_state' :src="normal_img_is_favorite">
         </div>
         <span class="league-title-text row justify-between" 
           :class="{'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch())}" >
@@ -154,11 +154,11 @@ export default {
   margin: 0 auto;
   background: var(--q-gb-bg-c-18);
   border-radius: 0.05rem;
+  margin-bottom: 0.07rem;
 
   .league-container {
     height: 0.26rem;
     // margin: 0 0.07rem;
-    margin-top: 0.07rem;
     &.collapsed{
       border-bottom: 1px solid #e9e9e9;
     }

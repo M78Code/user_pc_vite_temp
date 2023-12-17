@@ -21,25 +21,6 @@ class MatchCollect {
     this.match_collect_obj = { 1: [], 2: [], 3: [] }
   }
 
-  handle_match_collect (value) {
-    const { mid,tid } = value
-      const match_state = this.get_match_collect_state(value)
-      // console.log('handle_match_collecthandle_match_collecthandle_match_collect', match_state)
-      api_common.add_or_cancel_tournament({
-        mid,
-        cf: match_state ? 0 : 1,
-        cuid: UserCtr.get_uid()
-      }).then(res => {
-        if(res && res.code == '200' && MenuData.is_collect()){
-          useMittEmit(MITT_TYPES.EMIT_COLLECT_MATCH_OZ);
-        }
-        if (+res.code !== 200) return
-      })
-      // 收藏页手动处理数据
-      MenuData.is_collect() && MatchMeta.set_collect_match(value, 2)
-      this.set_match_collect_state(value, !match_state)
-  }
-
   /**
    * @description 设置联赛收藏状态
    * @param { match } 赛事对象 
@@ -108,7 +89,7 @@ class MatchCollect {
 
   /**
    * @description 获取 赛事 收藏数据
-   * @params list 赛事数据
+   * @params list 赛事数据  matchType 0  获取全部
    * @returns 
    */
   get_collect_match_data (list = []) {
@@ -149,13 +130,11 @@ class MatchCollect {
    * @param { match } 赛事对象
    * @remarks: 1. 根据 collectMatchesPB， tids 有值，则根据 tid 及 exclude 判断
    *           2. mids 均需要判断
+   *           3. 1：常规，2：冠军，3：电竞
    */
   handle_collect_state (match) {
     this.match_collect_obj.value
-    const map_menu = { 100: 2, 3000: 3 }
-    const menu_lv_v1 = lodash.get(MenuData.current_lv_1_menu, 'mi')
-    const match_type = lodash.get(map_menu, `${menu_lv_v1}`, 1)
-    // console.log('handle_collect_statehandle_collect_statehandle_collect_state', match_type, MenuData)
+    const match_type  = this.get_menu_map_type()
     const collect_obj = lodash.get(this.match_collect_obj, `${match_type}`)
     const { tid, mid } = match
     let league_collect_state = false
@@ -184,13 +163,26 @@ class MatchCollect {
     // 该赛事是否收藏
     this.set_match_collect_state(match, match_collect_state)
   }
+
+  /**
+   * @description 获取菜单对应的类型
+   */
+  get_menu_map_type () {
+    let result = 1
+    if (MenuData.is_esports()) {
+      result = 3
+    } else if (MenuData.is_kemp()) {
+      result = 2
+    }
+    return result
+  }
   /**
    * @description 重置收藏对象
    */
   clear_collect_info () {
-    // this.league_tid_collect_obj.value = {}
-    // this.match_mid_collect_obj.value = {}
-    // this.match_collect_obj = { 1: [], 2: [], 3: [] }
+    this.league_tid_collect_obj.value = {}
+    this.match_mid_collect_obj.value = {}
+    this.match_collect_obj = { 1: [], 2: [], 3: [] }
   }
 
   /**

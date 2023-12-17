@@ -3,13 +3,15 @@
  * 这个类是多个 实例 ，每一个投注对象 就是一个实例
  *
  */
-import { ref } from "vue";
+import { ref,nextTick } from "vue";
 import lodash_ from "lodash"
 import BetData from "./bet-data-class.js"
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 
 class BetViewData {
   constructor() { 
     this.init()
+    
   }
   init() {
     // 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
@@ -66,7 +68,7 @@ class BetViewData {
     };
 
     // 串关  专用参数
-    this.bet_special_series = {};
+    this.bet_special_series = [];
     // 普通单关 专用参数
     this.bet_special_single = {};
     // 合并单关 专用参数
@@ -77,7 +79,9 @@ class BetViewData {
     };
     //pc 专用参数
     this.bet_special_pc = {
-      //
+      bet_count: 0,
+      bet_total: 0,
+      bet_win: 0,
     };
     // 是否显示全屏下投注弹窗
     this.bet_show = ref(false)
@@ -99,6 +103,27 @@ class BetViewData {
     '0402019','0402038','0400450','132113','0402035','0400454','0400455','0402042','0400453','0400459','0400460','0400464','0400475','0400468','0400469','M400004',
     'M400005','M400007','M400009','M400010','DJ002','M400011','M400012','0401038','DJ001','DJ003','DJ004','DJ005']
 
+    // 获取缓存信息
+    nextTick(()=>{
+      this.set_loacl_config()
+    })
+  }
+
+  // 根据缓存信息 设置数据
+  set_loacl_config(){
+    // 获取数据缓存
+    let session_info = LocalStorage.get('bet_view_class');
+    if (!session_info) {
+      return;
+    }
+    if (Object.keys(session_info).length) {
+      for(let item in session_info){
+        if(!['bet_view_version'].includes(item) ){
+          this[item] = session_info[item]
+        }
+      }
+    }
+    this.set_bet_view_version()
   }
   /**
    * 计算确定按钮显示
@@ -119,6 +144,10 @@ class BetViewData {
   set_bet_view_version = lodash_.debounce(() => {
     this.bet_view_version.value = Date.now()
     // console.error('set_bet_view_version',this)
+    nextTick(()=>{
+      LocalStorage.set('bet_view_class',this)
+    })
+    console.error('set_bet_view_version',JSON.parse(JSON.stringify(this)))
   }, 5)
 
   // 设置 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
@@ -138,18 +167,36 @@ class BetViewData {
       bet_amount_list = obj
     }
     let bet_amount = {}
-    bet_amount_list.forEach(item => {
-      // 单关 使用 投注项作为 key值 在投注列表做对应关系
-      //  串关使用 type 复连串 30001
-      let value = BetData.is_bet_single ? item.playOptionsId : item.type
-      bet_amount[value] = {
-        min_money: item.minBet, // 最小限额
-        max_money: item.orderMaxPay, // 最大限额
-        globalId: item.globalId,  //  风控响应id
-        seriesOdds: item.seriesOdds, // 赔率  // 串关使用 3串1
-      }
-    })
-    this.bet_min_max_money = bet_amount
+    // 串关 投注限额
+    if( BetData.is_bet_single){
+      bet_amount_list.forEach(item => {
+        // 单关 使用 投注项作为 key值 在投注列表做对应关系
+        bet_amount[item.playOptionsId] = {
+          min_money: item.minBet, // 最小限额
+          max_money: item.orderMaxPay, // 最大限额
+          globalId: item.globalId,  //  风控响应id
+        }
+      })
+      this.bet_min_max_money = bet_amount
+      
+    }else{
+      let special_series = this.bet_special_series.map((item,index)=>{
+        //  串关使用 type 复连串 30001
+        let obj = bet_amount_list.find(page => page.type == item.id) || {}
+        if(obj.type){
+          return {
+            ...item,
+            min_money: obj.minBet, // 最小限额
+            max_money: obj.orderMaxPay, // 最大限额
+            globalId: obj.globalId,  //  风控响应id
+            seriesOdds: obj.seriesOdds, // 赔率  // 串关使用 3串1
+            bet_amount: '', // 投注金额
+            show_quick: false, // 快捷金额
+          }
+        }
+      })
+      this.bet_special_series = special_series
+    }
 
     // console.error("最大最小值",this.bet_min_max_money)
     this.set_bet_view_version()
@@ -226,6 +273,7 @@ class BetViewData {
       case '0402006':
       case '0402007':
       case '0402008':
+        //盘口已失效
         text = "bet_message.m_0402001"
         break
       case '0402011':
@@ -254,9 +302,11 @@ class BetViewData {
       case '0402023':
       case '0402027':
       case '0402028':
+        // 投注项盘口、赔率或有效性产生变化!
         text = "bet_message.m_0402009"
         break
       case '0402014':
+        // 网络异常，请在注单中查看投注结果
         text = "bet_message.m_0402014"
         break
 
@@ -275,6 +325,7 @@ class BetViewData {
       case '0400500':
       case 'XXXXXX':
       case 'DJ999':
+        // 投注未成功~再试一次吧
         text = "bet_message.m_0402015"
         break
 
@@ -282,45 +333,55 @@ class BetViewData {
       case '0402019':
       case '0402038':
       case '0400450':
+        // 投注未成功，请稍后再试
         text = "bet_message.m_0402018"
         break
 
       case '132113':
+        // 投注失败，请重新选择投注项
         text = "bet_message.m_132113"
         break
         
       case '0402035':
       case '0400454':
       case '0400455':
+        // 余额不足，请您先充值
         text = "bet_message.m_0402035"
         break
 
       case '0402042':
+        // 网络异常，请联系客服
         text = "bet_message.m_0402042"
         break
 
       case '0400453':
+        //  "m_0400453": "账户异常，请联系客服",
         text = "bet_message.m_0400453"
         break
 
       case '0400459':
+        //  "m_0400459": "盘口确认中，请稍等",
         text = "bet_message.m_0400459"
         break
 
       case '0400460':
+        //  "m_0400460": "拒绝投注",
         text = "bet_message.m_0400460"
         break
 
       case '0400464':
       case '0400475':
+        // "m_0400464": "额度已变更，再试一次吧~",
         text = "bet_message.m_0400464"
         break
 
       case '0400468':
+        //  "m_0400468": "比分已变更，再试一次吧",
         text = "bet_message.m_0400468"
         break
 
       case '0400469':
+        // "m_0400469": "投注项盘口、赔率或有效性产生变化!",
         text = "bet_message.m_0400469"
         break
 
@@ -383,6 +444,7 @@ class BetViewData {
 
   // 串关专用参数
   set_bet_special_series(array) {
+    console.error('sss',array)
     this.bet_special_series = array
     this.set_bet_view_version()
   }

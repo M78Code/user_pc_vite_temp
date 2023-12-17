@@ -23,8 +23,10 @@ import { ALL_SPORT_PLAY } from "src/output/module/constant-utils.js"
 import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
 import { MenuData } from 'src/output/module/menu-data.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { i18n_t } from "src/boot/i18n.js"
+import { i18n_t,i18n_tc } from "src/boot/i18n.js"
 import { only_win } from 'src/core/format/project/module/format-odds-conversion-mixin.js'
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 let time_out = null
 let time_api_out = null
@@ -61,7 +63,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             // "userId": UserCtr.get_uid()
         }
         // 冠军没有赛事阶段
-        if(MenuData.is_kemp()){
+        if(item.bet_type == 'guanjun_bet'){
             delete obj.matchProcessId
         }
         // 串关没有 这个字段 
@@ -80,7 +82,6 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             }
         })
     }
-    console.error('order_min_max_money', order_min_max_money)
     return order_min_max_money
 }
 
@@ -135,13 +136,13 @@ const set_bet_order_list = (bet_list, is_single) => {
         })
 
     } else {
-        let single_list = bet_list.map((item, index) => {
+        bet_list.forEach((item, index) => {
            let bet_s_obj = {
                 "sportId": item.sportId,   // 赛种id
                 "matchId": item.matchId,   // 赛事id
                 "tournamentId": item.tournamentId,   // 联赛id
                 "scoreBenchmark": "",    // 基准分
-                "betAmount": BetData.bet_amount,  //投注金额         
+                "betAmount": item.bet_amount,  //投注金额         
                 "placeNum": item.placeNum, //盘口坑位
                 "marketId": item.marketId,  //盘口id
                 "playOptionsId": item.playOptionsId,   // 投注项id
@@ -171,18 +172,16 @@ const set_bet_order_list = (bet_list, is_single) => {
                 ...bet_s_obj,
                 ...BetData.bet_pre_obj[item.playOptionsId]
             }
+            order_list.push({
+                "seriesSum": 1,   // 串关数量
+                "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
+                "seriesValues": "单关",  // 串关值 2串1 3串1...
+                "fullBet": 0,   // 是否满额投注，1：是，0：否
+                "orderDetailList": bet_s_obj 
+            })
 
-            return bet_s_obj
-
-        }) || []
+        }) 
         
-        order_list = {
-            "seriesSum": 1,   // 串关数量
-            "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
-            "seriesValues": "单关",  // 串关值 2串1 3串1...
-            "fullBet": 0,   // 是否满额投注，1：是，0：否
-            "orderDetailList": single_list
-        }
     }
 
     return order_list
@@ -240,21 +239,15 @@ const set_order_status_info = (orderNo) => {
 // 获取限额 常规 / 冠军
 // obj 投注数据
 const get_query_bet_amount_common = (obj) => {
-    // console.error('chufa',obj)
     let params = {
         orderMaxBetMoney: []
     }
     // 获取限额请求参数数据
     params.orderMaxBetMoney = get_query_bet_amount_params()
-    // params.orderMaxBetMoney[0].matchType = 3
 
     // 获取额度接口合并
     api_betting.query_bet_amount(params).then((res = {}) => {
-        //https://api.0yeex2e.com/yewu13/v1/betOrder/queryBetAmount?t=1702623780432
-        //https://api-c.sportxxx1zx.com/yewu13/v1/betOrder/queryBetAmount?t=1702625369663
-        console.error('res.code', res.code)
         if (res.code == 200) {
-            // alert(11111)
             BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
             // 串关不更新
@@ -356,18 +349,14 @@ const get_query_bet_amount_pre = () => {
 
 //设置获取限额参数 
 const get_query_bet_amount_params = () =>{
-    console.error('11111111111111111111')
-    console.error('单穿', BetData.is_bet_merge)
     let order_min_max_money = []
     // 单关 
     if (BetData.is_bet_single) {
         // 单关 合并 多条数据 
         if (BetData.is_bet_merge) {
-            console.error(111)
             // 参数 投注列表 +  是否单关/串关  + 是否单关合并
             order_min_max_money = set_min_max_money(BetData.bet_single_list, true, true)
         } else {
-            console.error(222)
             // 单关 不合并 只有一条
             order_min_max_money = set_min_max_money(BetData.bet_single_list, true, false)
         }
@@ -376,7 +365,6 @@ const get_query_bet_amount_params = () =>{
         // 参数 投注列表 +  是否单关/串关  + 是否单关合并
         order_min_max_money = set_min_max_money(BetData.bet_s_list, false, false)
     }
-    console.error('order_min_max_money', order_min_max_money)
     return order_min_max_money
 }
 
@@ -405,6 +393,8 @@ const submit_handle = type => {
     let pre_type = 0
     let milt_single = 0
     submit_btn = true
+    // 是否投注中遇到了问题 
+    let is_bet_error = false
     if(BetData.is_bet_single){
         let ol_obj = lodash_.get(BetData.bet_single_list,'[0]','')
         // 投注项状态 1：开 2：封 3：关 4：锁
@@ -414,20 +404,31 @@ const submit_handle = type => {
             set_submit_btn()
             return set_error_message_config({code:"0402001"},'bet')
         }
-        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${ol_obj.playOptionId}`, {})
-        if(BetData.bet_amount){
-            // 投注金额未达最低限额
-            if(BetData.bet_amount*1 < min_max.min_money*1 ){
-                set_submit_btn()
-                return set_error_message_config({code:"M400010"},'bet')
-            }
-        }else{
+        // 投注金额未达最低限额
+        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${ol_obj.playOptionsId}`, {})
+       
+        // 投注金额未达最低限额
+        if(ol_obj.bet_amount*1 < min_max.min_money*1 ){
+            set_submit_btn()
+            // 已失效
+            return set_error_message_config({code:"M400010"},'bet')
+        }
+        
+        // 投注金额 验证
+        if(!ol_obj.bet_amount){
+            is_bet_error = true
             set_submit_btn()
             // 请您输入投注金额
             return set_error_message_config({code:"M400005"},'bet')
         }
+
         pre_type = BetData.is_bet_pre ? 1 : 0
         milt_single = BetData.bet_single_list.length > 1 ? 1 : 0
+    }
+
+    // 有问题 不能继续下去了 
+    if( is_bet_error ){
+        return
     }
 
     let params = {
@@ -509,7 +510,7 @@ const submit_handle = type => {
                 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
                 BetViewDataClass.set_bet_order_status(status)
             }else{
-                BetViewDataClass.set_orderNo_bet_obj(orderDetailRespList)
+                set_orderNo_bet_obj(orderDetailRespList)
                 BetViewDataClass.set_orderNo_bet_single_obj(seriesOrderRespList)
 
                 let number_list = []
@@ -550,7 +551,7 @@ const submit_handle = type => {
                         obj.mid = item.matchId 
                     })
                     // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_single_list))
-                }else{
+                } else {
                     seriesOrders[0].orderDetailList.forEach( item => {
                         obj.hid = item.marketId 
                         obj.mid = item.matchId 
@@ -622,10 +623,14 @@ const set_error_message_config = (res ={},type,order_state) => {
             obj.message = BetViewDataClass.set_code_message_config(res.code,res.message)
         }
     }
-    // console.error('set_bet_before_message',obj)
     // 获取限额失败的信息
-    BetViewDataClass.set_bet_before_message(obj)
-
+    if(PROJECT_NAME == 'app-h5'){
+        console.error('sssss',obj.message)
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t(obj.message));
+    }else{
+        BetViewDataClass.set_bet_before_message(obj)
+    }
+    
     // 需求清除
     if(clear_time){
         time_out = setTimeout(()=>{
@@ -676,7 +681,14 @@ const set_bet_obj_config = (params = {}, other = {}) => {
 
     // 有数据的再次点击 为取消投注项
     if(BetData.bet_oid_list.includes(oid)){
-       return BetData.set_delete_bet_info(oid)
+        let index_ = 0
+        // 单串关 筛选
+        if(BetData.is_bet_single){
+            index_ = BetData.bet_single_list.findIndex(item=> item.playOptionsId == oid)
+        }else{
+            index_ = BetData.bet_s_list.findIndex(item=> item.playOptionsId == oid)
+        }
+        return BetData.set_delete_bet_info(oid,index_)
     }
     // 点击投注项 展开投注栏
     BetData.set_bet_state_show(true)
@@ -687,8 +699,11 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         query = h5_match_data_switch(other.match_data_type)
         // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
         // BetViewDataClass.set_bet_show(true)
-        // 点击投注项 显示投注栏
-        BetData.set_h5_bet_box_show(true)
+        // app-复刻版 逻辑不同
+        if(!PROJECT_NAME =='app-h5' || BetData.is_bet_single){
+            // 点击投注项 显示投注栏
+            BetData.set_bet_box_h5_show(true)
+        }
       
         BetData.set_bet_keyboard_show(false)
         // BetViewDataClass.set_bet_keyboard_show(true)
@@ -705,12 +720,24 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // let other = { bet_type:'common_bet'}
     // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
     let matchType = 1
-    if ([1, 2].includes(Number(mid_obj.ms))) {
-        matchType = 2
-    }
     // 冠军
-    if(MenuData.is_kemp()){
+    if(other.bet_type == 'common_bet'){
+        if ([1, 2].includes(Number(mid_obj.ms))) {
+            matchType = 2
+        }
+    }
+    
+    // 冠军
+    if(other.bet_type == 'guanjun_bet'){
         matchType = 3
+    }
+    // 电竞赛事
+    if(other.bet_type == 'esports_bet'){
+        matchType = 5
+    }
+    // 虚拟赛事
+    if(other.bet_type == 'vr_bet'){
+        matchType = 4
     }
 
     const play_config = {
@@ -747,6 +774,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         ot: ol_obj.ot, //投注項类型
         placeNum: hl_obj.hn, //盘口坑位
         // 以下为 投注显示或者逻辑计算用到的参数
+        bet_amount: '', // 投注金额
         bet_type: other.bet_type, // 投注类型
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
@@ -768,8 +796,31 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     }
             
     // 冠军 
-    if(MenuData.is_kemp()){
+    if(bet_obj.bet_type == 'guanjun_bet'){
         bet_obj.handicap = ol_obj.on
+    }
+
+    // 串关数据 提示
+    if(!BetData.is_bet_single){
+        // 获取商户配置的 串关投注项
+        let min_series = lodash_.get(UserCtr.user_info,'configVO.minSeriesNum',2)
+        let man_series = lodash_.get(UserCtr.user_info,'configVO.maxSeriesNum',10)
+        // 串关 数量不是大于1条投注项 则提示
+        if( BetData.bet_s_list.length +1 < min_series){
+            BetViewDataClass.set_bet_before_message({
+                code: 'sasdasd',
+                message: i18n_tc('bet.bet_min_item',min_series,{ 'num': min_series})
+            })
+        }else if(BetData.bet_s_list.length >= man_series){
+            // 串关 数量不能大于设置的数量
+            BetViewDataClass.set_bet_before_message({
+                code: 'sasdasd',
+                message: i18n_tc('bet.bet_max_item',man_series,{ 'num': man_series})
+            })
+            return
+        } else{
+            BetViewDataClass.set_bet_before_message({})
+        }
     }
 
     // 设置投注内容 
@@ -781,10 +832,10 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 判断获取限额接口类型
     if(["C01","B03","O01"].includes(bet_obj.dataSource) || [2,4].includes(Number(bet_obj.mbmty)) ||  ['esports_bet','vr_bet'].includes(other.bet_type)){
         // C01/B03/O01  电竞/电竞冠军/VR体育
-        get_query_bet_amount_esports_or_vr(bet_obj)
+        get_query_bet_amount_esports_or_vr()
     }else{
         // 获取限额 常规
-        get_query_bet_amount_common(bet_obj)
+        get_query_bet_amount_common()
     }
 }
 
@@ -799,7 +850,7 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     }else{
         let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
           // 冠军玩法 部分玩法hpid相同 
-        if(MenuData.is_kemp()){
+        if(other.bet_type == 'guanjun_bet'){
             let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])
             if(hpn_list.length < 1){
                 hpn_list = lodash_.get(mid_obj,`hps`,[])
@@ -996,7 +1047,7 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
 
     return text
 }
-
+        
 // 是否显示基准分 
 const get_mark_score = (ol_obj,mid_obj) => {
     // debugger

@@ -9,8 +9,8 @@ import { i18n_t, i18n } from "src/boot/i18n.js";
 import { dianjing_sublist } from "src/output/module/constant-utils.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import BaseWsMessage from "./base-ws-message"
-
-const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+const { PROJECT_NAME,BUILD_VERSION,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+// console.error('BUILD_VERSION_CONFIG',BUILD_VERSION_CONFIG)
 
 //   约定 四个 值
 
