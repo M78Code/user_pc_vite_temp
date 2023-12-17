@@ -285,6 +285,7 @@ class MenuData {
   set_date_time(index,time){
     this.data_tab_index = index;
     this.data_time = time;
+    this.current_lv_3_menu = {field1:time};
     this.set_menu_match_date()
     this.set_cache_class({
       data_tab_index:index,
@@ -421,7 +422,8 @@ class MenuData {
       })
       // 根据 菜单id 获取euid
       mid_list.forEach(item=>{
-        euid += BaseData.mi_euid_map_res?.[item] && BaseData.mi_euid_map_res?.[item]?.h + ','
+        const item_euid = BaseData.mi_euid_map_res?.[item] && BaseData.mi_euid_map_res?.[item]?.h?BaseData.mi_euid_map_res?.[item]?.h:'';
+        euid += item_euid + ','
       })
       return euid
     }
