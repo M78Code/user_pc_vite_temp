@@ -233,7 +233,7 @@ watch(() => odds_value.value, () => {
 watch(() => props.match, () => {
   let ol_list = get_ollist_no_close(props.odd_field);
   if(ol_list.length > 0){
-    if([18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
+    if([11,18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
       odd_item.value = props.ol_list_item
     }else{
       if(odd_item.value) {
@@ -375,7 +375,7 @@ const get_odd_data = () => {
     console.error(e);
   }
   if(ol && ol.length){
-    if([18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
+    if([11,18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
       odd_item.value = props.ol_list_item
     }else{
       odd_item.value = ol[props.odd_item_i];
