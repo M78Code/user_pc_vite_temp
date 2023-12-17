@@ -238,6 +238,10 @@ export default {
       return (width) / 100 + 'rem'
     },
     filterScoreHandle (list) {
+      const gameplay = {
+        '1' : ['S1','S2','S3'],
+        '2' : ['S1','S2','S3']
+      }
       const result = list.filter(i => ['S1','S2','S3'].includes(i[0])).map(i => ({
         round: i[0],
         home: i[1],
@@ -248,6 +252,7 @@ export default {
         return numa - numb
       })
       this.matchResultsData = result
+      console.log('resultresultresultresultresult', result)
     }
   },
   setup (ctx) {
