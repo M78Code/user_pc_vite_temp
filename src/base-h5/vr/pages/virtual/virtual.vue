@@ -14,10 +14,18 @@
             <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})"></div>
             <!-- 虚拟体育 -->
             <div class="col virtual-title">{{i18n_t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
-            <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
-            <div class="no-single" @click="click_event()"></div>
+            <!-- <div class="virtual-ref" style="background-color: blue;" :class="{'refreshing':refreshing}" @click="vir_refresh"></div> -->
+            <!-- <div class="no-single" style="background-color: red;" @click="click_event()"></div> -->
             <!-- 复刻版暂时用不到先注释了 -->
             <!-- <set-menu /> -->
+
+            <!-- 从macth顶部 搬运过来的  用户金额 -->
+            <div class="main-menu-right"  @click.stop>
+                <!-- <span class="main-menu-right-symbol">￥</span> -->
+                <img :src="compute_local_project_file_path('image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
+                <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
+            </div>
+
           </div>
           <!-- 虚拟体育菜单 -->
           <div class="virtual-menu-list" ref='virtual_menu_list'>
@@ -72,6 +80,8 @@ import lodash from "lodash"
 import tab_move from "src/core/tab-move/tab-move.js";
 import { useRouter, useRoute } from "vue-router";
 import { go_where } from "src/output/index.js";
+
+import { format_money2, compute_local_project_file_path } from "src/output/index.js";
 
 export default {
   name:'match_main',
@@ -324,7 +334,9 @@ export default {
         this[timer] = null
       }
     },
-    go_where
+    go_where,
+    format_money2, 
+    compute_local_project_file_path 
   },
   computed: {
     // ...mapGetters({
@@ -425,6 +437,35 @@ export default {
         width: 0.4rem;
         height: 100%;
         background-size: 0.2rem auto;
+      }
+
+      .main-menu-right {
+        height: 0.22rem;
+        line-height: 0.22rem;
+        border-radius: 25px;
+        float: right;
+        background: var(--q-gb-bg-c-18);
+        color: var(--q-gb-t-c-20);
+        text-align: center;
+        display: flex;
+        align-items: center;
+        padding: 0 0.1rem 0 0.03rem;
+        margin-right: 0.1rem;
+        .main-menu-right-symbol{
+            font-family: 'Akrobat';
+            font-style: normal;
+            font-weight: 600;
+        }
+        .main-menu-right-money{
+            font-family: 'Akrobat';
+            font-style: normal;
+            font-weight: 700;
+            flex: 1;
+            line-height: 0.26rem;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+        }
       }
 
       .set-menu {

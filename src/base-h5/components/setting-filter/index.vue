@@ -263,10 +263,14 @@ const activity_handle = item => {
   z-index: 99;
 
   .setting-top.setting-item {
-    border-bottom: 0.08rem solid var(--q-gb-t-c-8);
+    border-bottom: 0.08rem solid var(--q-gb-bg-c-23);
     padding: 0.14rem;
     margin: 0;
     height: 0.5rem;
+    background: var(--q-gb-bg-c-25);
+  }
+  .setting-list{
+    background: var(--q-gb-bg-c-25);
   }
 
   .setting-item {
@@ -276,7 +280,7 @@ const activity_handle = item => {
     font-size: 0.14rem;
     padding: 0.14rem 0;
     margin: 0 0.14rem;
-
+    // background: var(--q-gb-bg-c-25);
     &.border {
       border-bottom: 1px solid var(--q-gb-bd-c-4);
     }
@@ -311,8 +315,8 @@ const activity_handle = item => {
     padding: 0.13rem;
     align-items: center;
     justify-content: center;
-    border-top: 0.08rem solid var(--q-gb-t-c-8);
-
+    border-top: 0.08rem solid var(--q-gb-bg-c-23);
+    background: var(--q-gb-bg-c-25);
     span {
       font-size: 0.18rem;
     }
