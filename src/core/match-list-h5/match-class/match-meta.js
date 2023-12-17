@@ -1221,10 +1221,11 @@ class MatchMeta {
  
     const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
-      // const item = this.match_mids.find(t => t === mid) 203行取的前10条 为什么是视图id查找 确删除complete_matchs里的值
+      // const item = this.match_mids.find(t => t === mid) match_mids是可视区域id
       const index = this.complete_matchs.findIndex(t => t.mid == mid)
       if (index>-1) {
-        // const index = this.match_mids.findIndex(t => t === mid)
+        const _index = this.match_mids.findIndex(t => t === mid)
+        this.match_mids.splice(_index, 1)
         this.complete_matchs.splice(index, 1)
         // 复刻版 新手版 使用的是 observer-wrapper 组件模式 不需要重新计算
         if (project_name == 'app-h5' && UserCtr.standard_edition == 1) return;
