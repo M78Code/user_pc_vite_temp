@@ -16,6 +16,16 @@
       </div>
     </div>
   </div>
+  <div class="f-b-c" v-if="items.show_quick">
+    <div>预计可赢：<span> {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} </span>RMB</div>
+    <div>小计：{{items.bet_amount}}RMB</div>
+ 
+  </div>
+  <div class="f-b-c" v-if="items.show_quick">
+    <div>预计可赢：<span> {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} </span>RMB</div>
+    <div>小计：{{items.bet_amount}}RMB</div>
+ 
+  </div>
 </template>
 
 <script setup> 
@@ -67,6 +77,7 @@ onMounted(() => {
     ref_data.money = new_money.money
   }
   BetData.set_bet_amount(ref_data.money)
+  set_special_series('edit',new_money.params.id)
   set_special_series('edit')
 }
 
@@ -93,12 +104,14 @@ const set_show_quick_money = (obj = {}) => {
 }
 
 // 修改数据内容
-const set_special_series = (money) => {
+const set_special_series = (money,ty_id) => {
   let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
-  let id = lodash_.get(props,'items.id','')
+  // 键盘输入会传修改的数据id
+  let id = ty_id ? ty_id : lodash_.get(props,'items.id','')
   list.filter(item => {
     item.show_quick = false
       // 显示指定投注项的快捷金额按钮
+      console.error('ssssset_special_seriesss',id)
     if(item.id == id){
         item.show_quick = true
         if(money == 'edit'){
