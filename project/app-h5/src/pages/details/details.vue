@@ -68,6 +68,10 @@
             :get_details_item="get_details_item"
             :new_match_detail_ctr="new_match_detail_ctr"
             ></details-tab>
+            <!-- 精彩回放 -->
+            <template v-if="viewTab === 'playback'">
+              <highlights :detail_data="detail_data" />
+            </template>
           </div>
           <!-- tab 激活投注展示内容 -->
           <!-- 投注展示内容 -->
@@ -99,10 +103,6 @@
                 <!-- 篮球赛事分析 页面-->
                 <!-- <basketball-match-analysis  :detail_data="detail_data" v-if="detail_data.csid == '2'"></basketball-match-analysis> -->
             </div>
-          </template>
-          <!-- 精彩回放 -->
-          <template v-if="viewTab === 'playback'">
-            <highlights :detail_data="detail_data" />
           </template>
         </div>
 
