@@ -349,8 +349,7 @@ export default {
     },
     go_where,
     format_money2, 
-    compute_local_project_file_path,
-    UserCtr
+    compute_local_project_file_path
   },
   computed: {
     // ...mapGetters({
