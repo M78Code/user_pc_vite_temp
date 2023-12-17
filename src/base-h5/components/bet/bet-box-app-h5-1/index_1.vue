@@ -35,7 +35,7 @@
               <template v-if="BetData.bet_s_list.length > 1"  >
                 <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
                   <div>
-                    <betSpecialInput :items="item" :key="index+'_'+item.id"/>
+                    <betSpecialInput :items="item" :index="index" :key="index+'_'+item.id"/>
                   </div>
                 </template>
               </template>
@@ -63,7 +63,6 @@
             </template>
 
             <template v-else>
-              <div>1111111</div>
               <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
                 <betSpecialResult :items="item" :key="index" :index="index" />
               </div>

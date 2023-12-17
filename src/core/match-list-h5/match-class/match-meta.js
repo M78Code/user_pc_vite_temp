@@ -1265,10 +1265,10 @@ class MatchMeta {
     }
     // 调用 mids  接口
     if (['C303', 'C114'].includes(cmd)) {
-      const { mid = '' } = data
-      if (this.match_mids.includes(mid)) this.get_match_base_hps_by_mids({})
+      const { mid = '' } = data.cd || {};
+      let _mids = String(mid).split(',')
+      if (_mids.some((_mid)=>this.match_mids.includes(_mid))) this.get_match_base_hps_by_mids({})
     }
-
   }
   /**
    * @description 获取赛事赔率
