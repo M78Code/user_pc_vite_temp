@@ -29,7 +29,7 @@ export default {
       // 活动tab选项卡
       tab_list:  [] ,
       // 当前的活动id
-      tab_Id: 10008,
+      tab_Id: "10007",
       // 当前的活动选择下标
       activity_index: 0,
       // 当前活动开始时间
@@ -86,7 +86,7 @@ export default {
     this.timer2_ = 0;
     // 初始化tab 选项卡
 
-    let act = "10008";
+    let act = this.tab_Id;
     // 获取设置支持的参数activity
     let activity = SEARCH_PARAMS.init_param.get('activity');
     if(activity){
