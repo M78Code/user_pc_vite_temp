@@ -258,7 +258,7 @@ const activity_handle = item => {
   //   border-radius: 0.16rem 0.16rem 0 0;
   position: absolute;
   bottom: 0;
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-23);
   backdrop-filter: blur(5px);
   z-index: 99;
 

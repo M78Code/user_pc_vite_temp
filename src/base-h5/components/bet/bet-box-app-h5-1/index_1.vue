@@ -110,7 +110,6 @@ import keyboard from "./components/bet-keyboard.vue";
 // 隐藏投注栏
 const pack_up = () => {
   let sss = !BetData.bet_box_h5_show;
-  console.error("sss", sss);
   BetData.set_bet_box_h5_show(sss);
 };
 
