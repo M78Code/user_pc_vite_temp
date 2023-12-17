@@ -183,7 +183,7 @@ export default {
     clearTimeout(this.timer_super28);
   },
   watch: {
-    "UserCtr.version": {
+    "UserCtr.user_version": {
       handler(){
         this.set_balance(UserCtr.balance)
       },
