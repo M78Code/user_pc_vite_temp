@@ -128,11 +128,11 @@
           <span class="ticket-num">{{ v.ticketNum }}</span>
           <span>
             <div v-if="v.bonusType == 1">已领取</div>
-            <!-- <div v-else-if="v.bonusType == 2" class="to-be-completed">
-              待完成 -->
-            <!-- </div> v-else-if="v.bonusType == 3" -->
+            <div v-else-if="v.bonusType == 2" class="to-be-completed">
+              待完成 
+            </div> 
             <div
-             
+              v-else-if="v.bonusType == 3"
               class="receive flex align_items justify-center"
               :class="{ 'Ash-grey': isDuringDate(inStartTime, inEndTime) == 3 }"
               @click.stop="task_receive_btn(v.bonusId)"
