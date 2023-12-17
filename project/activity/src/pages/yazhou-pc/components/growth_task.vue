@@ -53,7 +53,7 @@
         <div
           v-for="(item, i) in cumulative_betting_list"
           :key="i + '_iid'"
-          :class="i == 1 ? `relative-position`: i + '_iid'"
+          :class="i == 1 ? `relative-position` : i + '_iid'"
         >
           <p class="relative-position">
             <span> {{ i == 1 ? "本周" : "本月" }}累计 {{ item.name2 }} </span>
@@ -88,7 +88,7 @@
               }"
             >
               <template v-if="[1, 3].includes(v.bonusType)">
-                <span class=" to-be-completed-stata">已完成</span>
+                <span class="to-be-completed-stata">已完成</span>
                 <img
                   class="completed"
                   :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_box${
@@ -132,121 +132,121 @@
           >
         </p>
       </div>
-
-      <div class="activity_rules text-gray">
-        <div class="content_title">活动规则</div>
-        <p>
-          {{
-            actId == 1
-              ? "会员每日达成指定任务，即可获得对应数量的普通奖券；"
-              : "会员周期内达成指定任务，即可获得对应数量的普通奖券；"
-          }}
-        </p>
-        <p v-if="actId == 1">
-          每日在本场馆累计投注<span>≥100</span>元，即视为投注1天；
-        </p>
-        <p v-else>
-          单笔注单投注<span>≥100</span>元，方可视为每日任务活动有效注单；
-        </p>
-        <p v-if="actId == 1">
-          成长任务数据每小时更新一次，在下个自然周/自然月数据将自动清零重新计算，请会员于自然周期最后一天提前<span>一小时</span>完成任务并领取奖券，避免因数据延迟导致领取失败；
-        </p>
-        <p v-else>
-          每日任务数据每<span>5</span>分钟更新一次，在次日数据将自动清零重新计算，请会员每日提前<span>30</span>分钟完成任务并领取奖券，避免因数据延迟导致领取失败；
-        </p>
-        <p v-if="actId == 1">
-          成长任务活动有效注单以结算时间为准。任何低于欧洲盘<span>1.5</span>(香港盘<span>0.5</span>)水位、同场赛事中投注对等盘口、串关注单，皆不予计算；
-        </p>
-        <p v-else>
-          每日任务活动有效注单以结算时间为准，且需满足单笔投注金额<span>≥100</span>元。任何低于欧洲盘<span>1.5</span>(香港盘<span>0.5</span>)水位、同场赛事中投注对等盘口、串关注单，皆不予计算；
-        </p>
-        <p>
-          每位有效会员、每个手机号、每个电子邮箱、每张银行卡、每个IP地址、每台电脑使用者，仅可享受1次优惠，如会员使用一切不正当投注、套利等违规行为，我们将保留无限期审核扣回奖金及所产生利润的权利；
-        </p>
-        <p>为避免文字理解差异，本场馆保留本活动最终解释权。</p>
-      </div>
-      <!-- 历史记录弹框 -->
-      <q-dialog v-model="history_alert">
-        <q-layout view="Lhh lpR fff" container class="receiveHistory">
-          <img
-            class="close"
-            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png`"
-            alt=""
-            @click.self="history_alert = false"
-            width="30px"
-          />
-          <div class="betting_history">
-            <div class="content_title text-center text-333">领取记录</div>
-            <div class="table table_history relative-position">
-              <div class="text-333 text-center">
-                <p>任务</p>
-                <p>奖券数量</p>
-                <p>领取时间</p>
-              </div>
-              <load-data state="data">
-                <div
-                  class="text-666 text-center table_content"
-                  v-for="(item, index) in history_records"
-                  :key="index"
-                >
-                  <p>
-                    <span>{{ item.taskName }}</span>
-                  </p>
-                  <p>
-                    <span>{{ item.ticketNum }}</span>
-                  </p>
-                  <p>
-                    <span>{{ item.receiveTime }}</span>
-                  </p>
-                </div>
-              </load-data>
-            </div>
-            <div class="pagination_wrap" v-if="history_records.length > 0">
-              <DataPager
-                class="record-data-pager"
-                :total="result_page_info.total"
-                :pageSize="7"
-                @change="data_page_changed"
-              />
-            </div>
-          </div>
-        </q-layout>
-      </q-dialog>
-      <!-- 领取奖券弹窗 -->
-      <q-dialog v-model="daily_task_success">
-        <div class="daily_task_dialog" @click.self="daily_task_success = false">
-          <div class="task_success">
-            <div class="title">
-              {{
-                pop_parameter.ticket >= 0
-                  ? `恭喜您，获得 ${pop_parameter.ticket} 张奖券`
-                  : "领取失败，请重新领取奖券"
-              }}
-            </div>
-            <img
-              :src="
-                pop_parameter.ticket >= 0
-                  ? pop_parameter.success
-                  : pop_parameter.failure
-              "
-              alt=""
-            />
-            <div
-              class="Go-to-lottery"
-              :class="{ failure: pop_parameter.ticket < 0 }"
-              @click="Reclaim"
-            >
-              {{ pop_parameter.ticket >= 0 ? "我知道了" : "重新领取" }}
-            </div>
-          </div>
-          <img
-            class="colse2"
-            @click="daily_task_success = false"
-            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/colse2.png`"
-          />
-        </div>
-      </q-dialog>
     </div>
+    <div class="activity_rules text-gray">
+      <div class="content_title">活动规则</div>
+      <p>
+        {{
+          actId == 1
+            ? "会员每日达成指定任务，即可获得对应数量的普通奖券；"
+            : "会员周期内达成指定任务，即可获得对应数量的普通奖券；"
+        }}
+      </p>
+      <p v-if="actId == 1">
+        每日在本场馆累计投注<span>≥100</span>元，即视为投注1天；
+      </p>
+      <p v-else>
+        单笔注单投注<span>≥100</span>元，方可视为每日任务活动有效注单；
+      </p>
+      <p v-if="actId == 1">
+        成长任务数据每小时更新一次，在下个自然周/自然月数据将自动清零重新计算，请会员于自然周期最后一天提前<span>一小时</span>完成任务并领取奖券，避免因数据延迟导致领取失败；
+      </p>
+      <p v-else>
+        每日任务数据每<span>5</span>分钟更新一次，在次日数据将自动清零重新计算，请会员每日提前<span>30</span>分钟完成任务并领取奖券，避免因数据延迟导致领取失败；
+      </p>
+      <p v-if="actId == 1">
+        成长任务活动有效注单以结算时间为准。任何低于欧洲盘<span>1.5</span>(香港盘<span>0.5</span>)水位、同场赛事中投注对等盘口、串关注单，皆不予计算；
+      </p>
+      <p v-else>
+        每日任务活动有效注单以结算时间为准，且需满足单笔投注金额<span>≥100</span>元。任何低于欧洲盘<span>1.5</span>(香港盘<span>0.5</span>)水位、同场赛事中投注对等盘口、串关注单，皆不予计算；
+      </p>
+      <p>
+        每位有效会员、每个手机号、每个电子邮箱、每张银行卡、每个IP地址、每台电脑使用者，仅可享受1次优惠，如会员使用一切不正当投注、套利等违规行为，我们将保留无限期审核扣回奖金及所产生利润的权利；
+      </p>
+      <p>为避免文字理解差异，本场馆保留本活动最终解释权。</p>
+    </div>
+
+    <!-- 历史记录弹框 -->
+    <q-dialog v-model="history_alert">
+      <q-layout view="Lhh lpR fff" container class="receiveHistory">
+        <img
+          class="close"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png`"
+          alt=""
+          @click.self="history_alert = false"
+          width="30px"
+        />
+        <div class="betting_history">
+          <div class="content_title text-center text-333">领取记录</div>
+          <div class="table table_history relative-position">
+            <div class="text-333 text-center">
+              <p>任务</p>
+              <p>奖券数量</p>
+              <p>领取时间</p>
+            </div>
+            <load-data state="data">
+              <div
+                class="text-666 text-center table_content"
+                v-for="(item, index) in history_records"
+                :key="index"
+              >
+                <p>
+                  <span>{{ item.taskName }}</span>
+                </p>
+                <p>
+                  <span>{{ item.ticketNum }}</span>
+                </p>
+                <p>
+                  <span>{{ item.receiveTime }}</span>
+                </p>
+              </div>
+            </load-data>
+          </div>
+          <div class="pagination_wrap" v-if="history_records.length > 0">
+            <DataPager
+              class="record-data-pager"
+              :total="result_page_info.total"
+              :pageSize="7"
+              @change="data_page_changed"
+            />
+          </div>
+        </div>
+      </q-layout>
+    </q-dialog>
+    <!-- 领取奖券弹窗 -->
+    <q-dialog v-model="daily_task_success">
+      <div class="daily_task_dialog" @click.self="daily_task_success = false">
+        <div class="task_success">
+          <div class="title">
+            {{
+              pop_parameter.ticket >= 0
+                ? `恭喜您，获得 ${pop_parameter.ticket} 张奖券`
+                : "领取失败，请重新领取奖券"
+            }}
+          </div>
+          <img
+            :src="
+              pop_parameter.ticket >= 0
+                ? pop_parameter.success
+                : pop_parameter.failure
+            "
+            alt=""
+          />
+          <div
+            class="Go-to-lottery"
+            :class="{ failure: pop_parameter.ticket < 0 }"
+            @click="Reclaim"
+          >
+            {{ pop_parameter.ticket >= 0 ? "我知道了" : "重新领取" }}
+          </div>
+        </div>
+        <img
+          class="colse2"
+          @click="daily_task_success = false"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/colse2.png`"
+        />
+      </div>
+    </q-dialog>
   </div>
 </template>
 
@@ -278,13 +278,13 @@ export default {
       overflow: hidden;
       font-size: 16px;
 
-      .td-item{
+      .td-item {
         flex: 1;
         align-items: center;
         justify-content: center;
-        &.completed{
+        &.completed {
           display: flex;
-          .completed{
+          .completed {
             margin-left: 5px;
           }
         }
@@ -547,7 +547,7 @@ export default {
     border-radius: 2px;
   }
 
-  :deep(.q-btn:not(.text-white)){
+  :deep(.q-btn:not(.text-white)) {
     & > div {
       &:before {
         border: 0.5px solid var(--qq--activity-bd-color-6);
