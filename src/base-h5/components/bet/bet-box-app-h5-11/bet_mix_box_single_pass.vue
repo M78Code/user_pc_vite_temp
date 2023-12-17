@@ -61,11 +61,12 @@
       display: flex;
       justify-content: space-between;
       background: var(--q-gb-bg-c-22);
+      color: var(--q-gb-t-c-24);
       padding: 10px;
       border-radius: 0.12rem;
   }
   .nonebox4-content-left-title{
-      color: var(--q-gb-t-c-20);
+      color: var(--q-gb-t-c-18);
       font-size: 0.14rem;
 			font-weight: 500;
   }
@@ -94,6 +95,7 @@
       font-weight: bold;
       display: flex;
       align-items: center;
+      color: var(--q-gb-t-c-18);
   }
   .nonebox4-content-right-profit-type{
       font-size: 0.14rem;

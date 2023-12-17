@@ -93,6 +93,7 @@ class BetWsMessage {
 
   r_ws_msg(obj){
     // 获取window.postMessage自定义命令
+    
     const cmd = lodash_.get(obj, 'data.cmd');
     if(cmd == 'WS_MSG_REV'){
       // 是ws推送过来的消息

@@ -376,7 +376,7 @@ export default {
   padding: 0 10px;
   align-items: center;
   justify-content: space-between;
-  border-top: 2px solid rgba(254, 174, 43, 0.5);
+  border-top: 2px solid var(--q-gb-bd-c-3);
   > div {
     display: flex;
     align-items: center;
@@ -414,14 +414,14 @@ export default {
     padding-left: 0.17rem;
     display: flex;
     align-items: center;
-    color: var(--q-gb-t-c-20);
+    color: var(--q-gb-t-c-18);
     background: var(--q-gb-bg-c-25);
     justify-content: space-between;
     &.progress{
-      border-top: 2px solid rgba(116, 196, 255, 0.5);
+      border-top: 2px solid var(--q-gb-bd-c-1);
     }
     &.not_begin{
-      border-top: 2px solid rgba(233, 91, 91, 0.51);
+      border-top: 2px solid var(--q-gb-bd-c-13);
     }
 
     img {
@@ -455,7 +455,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--q-gb-bg-c-15);
+    // background: var(--q-gb-bg-c-15);
 
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
     &.show-sport {
@@ -465,25 +465,20 @@ export default {
     .match-content{
       width: 100%;
       padding: 0 10px;
-      border-top: 1px solid #E4E6ED;
-      background: var(--q-gb-bg-c-18);
+      border-top: 1px solid var(--q-gb-bd-c-4);
+      // background: var(--q-gb-bg-c-18);
       border-radius: 0 0 8px 8px;
-      border: 1px solid #fff;
       &.collapsed{
         border-top: none;
       }
       &.border-top{
-        border-top: 1px solid #E4E6ED;
+        border-top: 1px solid var(--q-gb-bd-c-4);
       }
     }
     > .match-indent{
-      border: 1px solid #fff;
       border-radius: 8px 8px 0 0;
-      border-bottom: 1px solid #E4E6ED !important;
       &.collapsed{
         border-radius: 8px;
-        border-bottom: 1px solid #fff !important;
-        border: 1px solid #fff;
       }
     }
     
@@ -507,7 +502,7 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    background: var(--q-gb-bg-c-18);
+    // background: var(--q-gb-bg-c-18);
 
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -570,7 +565,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: var(--q-gb-bg-c-17);
+    // background: var(--q-gb-bg-c-17);
     &.bottom{
       margin-top: 0.05rem;
     }
@@ -826,8 +821,8 @@ export default {
     font-size: 0.1rem;
     color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
-    background: var(--q-gb-bg-c-18);
-    border-bottom: 1px solid #E4E6ED;
+    // background: var(--q-gb-bg-c-18);
+    border-bottom: 1px solid var(--q-gb-bd-c-4);
 
     .odd-title-i-w {
       width: 1.84rem;
@@ -917,7 +912,7 @@ export default {
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
-      color: #303442;
+      color: var(--q-gb-t-c-18);
       line-height: 0.14rem;
       &.match-main-league {
         //max-width: 1.4rem;
@@ -1215,7 +1210,7 @@ export default {
             -webkit-box-orient: vertical;
             text-overflow: ellipsis;
             word-break: break-all;
-            color: var(--q-gb-t-c-20) !important;
+            color: var(--q-gb-t-c-18);
 
             &.is-handicap {
               font-weight: bold;
@@ -1255,7 +1250,6 @@ export default {
           background: var(--q-color-page-bg-color-59);
           flex-shrink: 0;
           margin: 0.13rem 0.05rem 0;
-
           &.simple {
             margin-right: 0.03rem;
           }
@@ -1570,6 +1564,7 @@ export default {
       .match-type {
         margin-right: 0.14rem;
       }
+      
       :deep(.counting-down-wrap){
         color: #AFB3C8 !important;
         width: 150px !important;

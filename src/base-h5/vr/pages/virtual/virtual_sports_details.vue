@@ -208,8 +208,8 @@ export default {
     //   'set_is_show_details_analyse'
     // ]),
     set_menu_type(){},
-    set_goto_detail_matchid(){ return VR_CTR.set_goto_detail_matchid() },
-    set_detail_data(){},
+    set_goto_detail_matchid(data){ return VR_CTR.set_goto_detail_matchid(data) },
+    set_detail_data(data){ return VR_CTR.set_detail_data(data) },
     set_current_sub_menuid(data){return VR_CTR.set_current_sub_menuid(data)},
     set_curr_sub_menu_type(data){ return VR_CTR.set_curr_sub_menu_type(data) },
     set_current_gotodetail_match(data){ return VR_CTR.set_current_gotodetail_match(data) },

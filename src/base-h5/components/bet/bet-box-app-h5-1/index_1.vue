@@ -110,7 +110,6 @@ import keyboard from "./components/bet-keyboard.vue";
 // 隐藏投注栏
 const pack_up = () => {
   let sss = !BetData.bet_box_h5_show;
-  console.error("sss", sss);
   BetData.set_bet_box_h5_show(sss);
 };
 
@@ -151,7 +150,7 @@ const show_merge_change = () => {
   -webkit-overflow-scrolling: touch;
   border-radius: .24rem .24rem 0 0;
   //border: 1px solid;
-  background-color: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-23);
   z-index: 1999;
   padding-bottom: .2rem;
 }

@@ -440,7 +440,7 @@ export default {
         height: auto;
         font-size: 0.1rem;
         padding: 0.06rem 0;
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: var(--q-gb-bg-c-23);
       }
 
       .d-row-item {
