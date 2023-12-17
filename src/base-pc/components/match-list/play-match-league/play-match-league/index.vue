@@ -134,7 +134,7 @@ const bet_col = computed(() => {
   let bet_col = []
   if (match_style_obj.data_tpl_id == 13) {
     match_style_obj.data_tpl_id = 1
-    bet_col = [...t('list.match_tpl_title.tpl13_m.bet_col')]
+    bet_col = [...i18n_t('list.match_tpl_title.tpl13_m.bet_col')]
   }
   let title_name = 'bet_col'
   //角球

@@ -7,16 +7,16 @@
   <div class="bet-all-detele">
     <div class="del-info" @click.stop="clear">
       <span class="icon-delete del-info-icon"></span>
-      <div class="del-info-name">{{ $t('bet.delete_all')}}</div>
+      <div class="del-info-name">{{ i18n_t('bet.delete_all')}}</div>
     </div>
-    <div class="bet-type">{{$t('bet.bet')}}</div>
+    <div class="bet-type">{{i18n_t('bet.bet')}}</div>
     <div class="del-info" style="display:none">
       <div class="dropdown">
-        <button class="dropbtn">{{BetData.is_bet_single?$t('bet.bet'):$t('bet.kushikatsu')}}</button>
+        <button class="dropbtn">{{BetData.is_bet_single?i18n_t('bet.bet'):i18n_t('bet.kushikatsu')}}</button>
         <div class="dropdown-content">
-          <a href="#" :class="BetData.is_bet_single?'dropdown-content-che':''" @click.stop="set_is_bet_single(true)">{{$t('bet.bet')}}</a>
-          <!-- <a href="#" :class="BetData.is_bet_merge?'dropdown-content-che':''" @click.stop="set_is_bet_merge">{{ $t('bet.single_more') }}</a> -->
-          <a href="#" :class="!BetData.is_bet_single?'dropdown-content-che':''" @click.stop="set_is_bet_single(false)">{{$t('bet.kushikatsu')}}</a>
+          <a href="#" :class="BetData.is_bet_single?'dropdown-content-che':''" @click.stop="set_is_bet_single(true)">{{i18n_t('bet.bet')}}</a>
+          <!-- <a href="#" :class="BetData.is_bet_merge?'dropdown-content-che':''" @click.stop="set_is_bet_merge">{{ i18n_t('bet.single_more') }}</a> -->
+          <a href="#" :class="!BetData.is_bet_single?'dropdown-content-che':''" @click.stop="set_is_bet_single(false)">{{i18n_t('bet.kushikatsu')}}</a>
         </div>
       </div>
 

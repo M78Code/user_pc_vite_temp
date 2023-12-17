@@ -13,22 +13,22 @@
         </p>
         <p class="yb_fontsize14 text-right status-mark" :style="calc_color">
           <!-- 投注成功 -->
-          <span v-if="order_tatus == 1" class="color1"><img  src="image/wwwassets/bw3/svg/bet_chengg.svg">{{ $t('bet.bet_suc')}}</span>
+          <span v-if="order_tatus == 1" class="color1"><img  src="image/wwwassets/bw3/svg/bet_chengg.svg">{{ i18n_t('bet.bet_suc')}}</span>
           <!-- 投注失败 -->
-          <span v-if="order_tatus == 0" class="color3"><img  src="image/wwwassets/bw3/svg/bet_shib.svg">{{ $t('bet.bet_err')}}</span>
+          <span v-if="order_tatus == 0" class="color3"><img  src="image/wwwassets/bw3/svg/bet_shib.svg">{{ i18n_t('bet.bet_err')}}</span>
            <!-- 提交成功 -->
           <!-- <span v-if="order_tatus == 2" class="color2">
              <img class="img" :style="compute_img_url('icon-tojiao')">
            
-            {{ $t('bet.submitted_successfully')}}</span> -->
+            {{ i18n_t('bet.submitted_successfully')}}</span> -->
         </p>
       </div>
       <!-- 下 -->
       <div class="row justify-between items-center yb_fontsize14 money-d">
         <!-- 最高可赢 -->
-        <p>{{ $t('bet.total_win2')}}：<span :class="len == 1?'color4':'color5'"><template v-if="len == 1"></template>{{max_win_money}}</span></p>
+        <p>{{ i18n_t('bet.total_win2')}}：<span :class="len == 1?'color4':'color5'"><template v-if="len == 1"></template>{{max_win_money}}</span></p>
         <!-- 投注金额 -->
-        <p class="text-right">{{ $t('bet.bet_val')}}：<span class="color6"><template v-if="len == 1"></template>{{(item_.seriesBetAmount / 100).toFixed(2)}}</span> </p>
+        <p class="text-right">{{ i18n_t('bet.bet_val')}}：<span class="color6"><template v-if="len == 1"></template>{{(item_.seriesBetAmount / 100).toFixed(2)}}</span> </p>
     </div>
   </div>
 </template>

@@ -35,7 +35,7 @@
 
 <script>
 import { debounce } from "lodash";
-import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+import { standard_edition, lang } from 'src/base-h5/mixin/userctr.js'
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 
 export default {
@@ -47,7 +47,8 @@ export default {
       sub_footer_menu_i:0,
       //上一次的
       prev_floating_sub:'prev-floating-sub-i',
-      standard_edition
+      standard_edition,
+      lang
     }
   },
   created(){
@@ -108,11 +109,10 @@ export default {
     get_show_favorite_list(){return ''},
     get_curr_sub_menu_type(){ return VR_CTR.get_curr_sub_menu_type() },
     get_theme(){return 'theme01'},
-
     footer_sub_m_list(){
       return [
         {
-          title:this.get_lang=='en'?'':i18n_t('footer_menu.full_time'),
+          title:this.lang=='en'?'':i18n_t('footer_menu.full_time'),
           title1:i18n_t('footer_menu.win_alone'),
           icon0:'f-icon-sub-duying0.svg',
           icon:'f-icon-sub-duying.svg',
@@ -120,7 +120,7 @@ export default {
           id:1   // hpid 独赢
         },
         {
-          title:this.get_lang=='en'?'':i18n_t('footer_menu.full_time'),
+          title:this.lang=='en'?'':i18n_t('footer_menu.full_time'),
           title1:i18n_t('footer_menu.rangqiu'),
           icon0:'f-icon-sub-rang0.svg',
           icon:'f-icon-sub-rang.svg',
@@ -128,7 +128,7 @@ export default {
           id:4    // hpid 让球
         },
         {
-          title:this.get_lang=='en'?'':i18n_t('footer_menu.full_time'),
+          title:this.lang=='en'?'':i18n_t('footer_menu.full_time'),
           title1:i18n_t('footer_menu.daxiao'),
           icon0:'f-icon-sub-daxiao0.svg',
           icon:'f-icon-sub-daxiao.svg',

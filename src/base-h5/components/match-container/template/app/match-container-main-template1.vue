@@ -11,7 +11,7 @@
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 开赛标题  -->
-      <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
+      <div v-if="is_show_opening_title" @click.stop
         :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
@@ -21,7 +21,7 @@
           <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
         <!-- 未开赛 -->
-        <template v-else>
+        <template  v-if="+match.start_flag === 2">
           <div class="match-status-title">
             <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
           </div>
@@ -35,8 +35,8 @@
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div>
-      <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="show_sport_title" @click.stop
+      <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 @click.stop-->
+      <div v-if="show_sport_title" @click.stop="handle_ball_seed_fold"
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span">
           {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }})
@@ -117,7 +117,8 @@
 
                     <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                     <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                      {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
+                      <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} -->
+                      {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
                     </div>
                     <!--一小时内开赛 -->
                     <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
@@ -140,15 +141,18 @@
                   </div>
                 </div>
                 <!--玩法数量-->
-                <div class="goto-detail" @click='goto_details(match)'>
-                  <span class="count_span" :class="{ esports: 3000 == menu_type }">
-                    <span class="mc-n">
-                      {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}+
+                <div class="right-score">
+                  <score-list :main_source="main_source" :match="match"></score-list>
+                  <div class="goto-detail" @click='goto_details(match)'>
+                    <span class="count_span" :class="{ esports: 3000 == menu_type }">
+                      <span class="mc-n">
+                        {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}+
+                      </span>
+                      <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">
+                        <IconWapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
+                      </span>
                     </span>
-                    <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">
-                      <IconWapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
-                    </span>
-                  </span>
+                  </div>
                 </div>
               </div>
               <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
@@ -274,7 +278,6 @@
                 <div class="right-content-style">
                   <!-- 右边盘口组件 -->
                   <OddListWrap :main_source="main_source" :match="match_of_list" />
-                  <!-- <score-list :main_source="main_source" :match="match"></score-list> -->
                 </div>
                 
                 </div>
@@ -295,12 +298,11 @@ import { ref, computed, watch, nextTick } from 'vue'
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
-import ScoreList from 'src/base-h5/components/match-container/template/app/components/score-list-5/index.vue';
+import ScoreList from 'src/base-h5/components/match-container/template/app/components/score-list.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { i18n_t, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData } from "src/output/index.js"
-import { format_time_zone } from "src/output/index.js"
-import OddListWrap from 'src/base-h5/components/match-container/template/app/components/default-odd-template/odd-list-wrap.vue';
+import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
+import { i18n_t, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData, format_time_zone } from "src/output/index.js"
 import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
@@ -408,7 +410,7 @@ export default {
     display: flex;
     align-items: center;
     color: var(--q-gb-t-c-20);
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-25);
     justify-content: space-between;
     &.progress{
       border-top: 2px solid rgba(116, 196, 255, 0.5);
@@ -1020,7 +1022,7 @@ export default {
     .team-wrapper {
       min-height: 100%;
       height: auto;
-      width: 1.61rem;
+      width: 1.72rem;
       position: relative;
       z-index: 1;
 
@@ -1361,6 +1363,28 @@ export default {
   align-items: center;
   justify-content: space-between;
 
+  .right-score{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    :deep(.score-section){
+      height: 100%;
+      flex: 1;
+      .scroll-container-w{
+        height: 100%;
+        .score-se-inner{
+          height: 100%;
+          width: auto;
+          display: flex;
+          .score-se-inner2{
+            width: auto;
+          }
+        }
+      }
+    }
+  }
+
   &.simple {
     height: 0.34rem;
 
@@ -1436,6 +1460,7 @@ export default {
     }
 
     .goto-detail {
+      width: 30px;
       .count_span {
         .mc-n {
           width: 0.14rem;
@@ -1446,6 +1471,8 @@ export default {
   }
 
   .timer-wrapper-c {
+    position: relative;
+    top: 1px;
     height: 100%;
     color: var(--q-gb-t-c-19);
 
@@ -1457,6 +1484,8 @@ export default {
       height: auto;
     }
     .date-time{
+      position: relative;
+      top: 1px;
       font-size: 12px
     }
   }

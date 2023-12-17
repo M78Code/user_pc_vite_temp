@@ -1,19 +1,17 @@
 <template>
-  <div v-show="false">
-    {{ UserCtr.user_version }} -- {{ BetData.bet_data_class_version }}-{{
-      BetViewDataClass.bet_view_version
-    }}-{{ BetData.bet_box_h5_show }}
-  </div>
+  <div v-show="false"> {{ UserCtr.user_version }} -- {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version}}-{{ BetData.bet_box_h5_show }}</div>
   <div v-if="BetData.bet_box_h5_show">
     <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <div class="bet-box-info">
       <!-- 头部信息 -->
-      <betTitle />
+      <betTitle v-if="BetViewDataClass.bet_order_status == 1"/>
+      <!-- 投注状态 -->
+      <bet-after-title v-else />
       <!-- 展开项 -->
       <div class="bet-box-content">
         <!-- {{BetData.is_bet_single}}-{{BetViewDataClass.bet_order_status}}-{{ BetViewDataClass.orderNo_bet_obj}}-{{ BetData.bet_s_list.length > 1 }}-{{ BetViewDataClass.bet_special_series }} -->
         <!-- 单关 投注 -->
-        <div class="bet-scroll" :class="!BetData.is_bet_single && BetData.bet_keyboard_show ?'h188':''">
+        <div class="bet-scroll" :class="!BetData.is_bet_single && BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1  ?'h188':''">
           <div v-if="BetViewDataClass.bet_order_status == 1">
             <template v-if="BetData.is_bet_single">
               <div
@@ -58,6 +56,8 @@
 
           <!-- 投注后的结果 -->
           <template v-else>
+            <div v-show="false"> {{ UserCtr.user_version }} -- {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version}}-{{ BetData.bet_box_h5_show }}</div>
+           
             <template v-if="BetData.is_bet_single">
               <div
                 v-for="(item, index) in BetViewDataClass.orderNo_bet_obj"
@@ -67,20 +67,20 @@
               </div>
             </template>
             <template v-else>
-              <div
-                v-for="(item, index) in BetViewDataClass.orderNo_bet_single_obj"
-                :key="item.orderNo"
-              >
-                <betResult :items="item" :key="index" :index="index" />
+              <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
+                <bet-special-result :items="item" :key="index" :index="index" />
               </div>
             </template>
           </template>
         </div>
 
         <!-- 串关投注 键盘 -->
-        <template v-if="!BetData.is_bet_single">
+        <template v-if="!BetData.is_bet_single && BetViewDataClass.bet_order_status == 1">
           <keyboard v-if="BetData.bet_keyboard_show"/>
         </template>
+
+<!-- {{ BetViewDataClass.orderNo_bet_obj }} -->
+    
 
         <!-- 底部投注信息 -->
         <betFooter />
@@ -95,9 +95,11 @@ import { UserCtr, compute_local_project_file_path } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import betTitle from "./components/bet-title.vue"; // 投注头部
+import betAfterTitle from "./components/bet-after-title.vue";
 import betItem from "./components/bet-item.vue"; // 投注列表
 import betFooter from "./components/bet-footer.vue"; // 投注底部信息
 import betResult from "./components/bet-result.vue"; // 投注结果
+import betSpecialresult from "./components/bet-special-result.vue"; // 投注结果
 import betSpecialInput from "./components/bet-special-input.vue";
 import keyboard from "./components/bet-keyboard.vue";
 

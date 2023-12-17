@@ -43,16 +43,16 @@
                     <!-- 选择全部赛事 -->
                     <div class="cursor-pointer width140" @click.stop="all_click()">
                         <fliter-checkbox :checked="all_select" />
-                        <div class="country-name">{{ $t('common.match_checked_all') }}</div>
+                        <div class="country-name">{{ i18n_t('common.match_checked_all') }}</div>
                         <div class="all-count">{{ total }}</div>
                     </div>
                     <div class="col yb-flex-center">
                         <!-- 确定 -->
                         <div class="btn btn1 btn3" :class="!is_active && 'dis'" @click="ok_click()"
-                            :id="DOM_ID_SHOW && `but-enter-filter`">{{ $t('common.confirm') }}</div>
+                            :id="DOM_ID_SHOW && `but-enter-filter`">{{ i18n_t('common.confirm') }}</div>
                         <!-- 关闭 -->
                         <div class="btn btn2" @click="colse_filter" :id="DOM_ID_SHOW && `but-close-filter`">
-                            {{ $t('common.close') }}</div>
+                            {{ i18n_t('common.close') }}</div>
                     </div>
                     <div class="width140"></div>
                 </div>
@@ -61,16 +61,16 @@
                 <!-- 选择全部联赛 -->
                 <div class="cursor-pointer width140 border1" @click.stop="all_click()">
                     <fliter-checkbox :checked="all_select" />
-                    <div class="country-name">{{ $t('common.match_checked_all') }}</div>
+                    <div class="country-name">{{ i18n_t('common.match_checked_all') }}</div>
                     <div class="all-count">{{ total }}</div>
                 </div>
                 <div class="col yb-flex-center">
                     <!-- 确定 -->
                     <div class="btn btn1 btn3" :class="!is_active && 'dis'" @click="ok_click()"
-                        :id="DOM_ID_SHOW && `but-enter-filter`">{{ $t('common.confirm') }}</div>
+                        :id="DOM_ID_SHOW && `but-enter-filter`">{{ i18n_t('common.confirm') }}</div>
                     <!-- 关闭 -->
                     <div class="btn btn2" @click="colse_filter" :id="DOM_ID_SHOW && `but-close-filter`">
-                        {{ $t('common.close') }}</div>
+                        {{ i18n_t('common.close') }}</div>
                 </div>
                 <div class="width140 border1"></div>
             </div>

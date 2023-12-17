@@ -151,7 +151,6 @@ export function fetch_match_list(is_socket = false) {
 						// // 收藏列表，遇到限频提示'当前访问人数过多，请稍后再试'
 						if (MenuData.is_collect && res.code == '0401038') {
 							set_load_data_state("api_limited")
-
 						}
 						if (!is_socket) {
 							set_load_data_state("api_limited")
@@ -260,12 +259,17 @@ function mounted_fn(fun) {
 	// is_vr_numer.value = 0;
 	function default_fun() {
 		//默认加载方式
-		useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, { is_socket: true })
+		if (lodash.isFunction(fun)) {
+			fun({ is_socket: true })
+		}
+		else {
+			useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, { is_socket: true })
+		}
 	}
 	mitt_list = [
 		// 站点 tab 休眠状态转激活
-		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, fun || default_fun).off,
-		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, fun || default_fun).off, //语言切换
+		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, default_fun).off,
+		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, default_fun).off, //语言切换
 	]
 	//每30秒检查一次可视区域赛事数据最后更新时间 
 	check_match_last_update_timer_id = setInterval(

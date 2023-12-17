@@ -33,7 +33,7 @@
       </template>
       <!-- 到底了容器-->
       <div :class="['loading-more-container']" v-if="is_show_out">
-        <div style="color:#AAAEB8;font-size:.12rem;"> {{ $t("scroll_wrapper.is_footer") }} </div>
+        <div style="color:#AAAEB8;font-size:.12rem;"> {{ i18n_t("scroll_wrapper.is_footer") }} </div>
       </div>
     </div>
     <!-- <div class="err_box" v-if="MatchMeta.match_mids.length < 1">

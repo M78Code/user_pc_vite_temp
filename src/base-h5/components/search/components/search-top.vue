@@ -12,9 +12,9 @@
         <div>
           <!-- 搜索input 输入框 -->
           <q-input class="quasar_input" maxlength="15" borderless outlined v-model="text"
-            :input-class="{ 'search-keyword-input': true }" type="search" @keydown.stop="key_down($event)" :placeholder="show_tab == 'saiguo_xunitiyu' ? $t('search.search_qihao') : (details_search && details_search.word ?
+            :input-class="{ 'search-keyword-input': true }" type="search" @keydown.stop="key_down($event)" :placeholder="show_tab == 'saiguo_xunitiyu' ? i18n_t('search.search_qihao') : (details_search && details_search.word ?
               details_search?.word :
-              $t('search.search_title_bw3'))" @keyup.enter="changeStr"
+              i18n_t('search.search_title_bw3'))" @keyup.enter="changeStr"
             @focus="search_input_focus_or_blur($event, true)" @blur="search_input_focus_or_blur">
             <!-- 输入框的扩大镜图片 -->
             <template v-slot:append>
@@ -25,7 +25,7 @@
             </template>
           </q-input>
           <!--取消按钮 -->
-          <span class="cancleBtn" @click="cancle_btn()">{{ $t('common.cancel') }}</span>
+          <span class="cancleBtn" @click="cancle_btn()">{{ i18n_t('common.cancel') }}</span>
         </div>
       </div>
       <!-- 球类tab 选项卡 -->

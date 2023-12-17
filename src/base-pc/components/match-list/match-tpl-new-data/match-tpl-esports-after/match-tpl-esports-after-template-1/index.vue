@@ -11,7 +11,7 @@
         <div class="match-parlay">
           <template v-if="lodash.get(match,'ispo', 0) != 0">
             <div v-if="parlay_overflow" class="wd1" v-tooltip="{content:'Parlay',overflow:1}">P&nbsp;</div>
-            <div class="wd" v-else>{{ $t('match_info.match_parlay') }}</div>
+            <div class="wd" v-else>{{ i18n_t('match_info.match_parlay') }}</div>
           </template>          
           <div>{{match.mfo}}</div>
         </div>

@@ -6,7 +6,7 @@
 <template>
     <div v-if="show" class="cancle-confirm-pop fullscreen" @click.self="change_show" @touchmove.prevent>
         <div class="main-box fixed-center text-center">
-            <p class="text-left yb_fontsize14">{{ t("pre_record.confirm_matchinfo", [teamname]) }}</p>
+            <p class="text-left yb_fontsize14">{{ i18n_t("pre_record.confirm_matchinfo", [teamname]) }}</p>
             <footer class="yb_fontsize16">
                 <span class="cancle-button button" @click.self="cancle_handle">{{ i18n_t("common.cancel") }}</span>
                 <span class="confirm-button button" @click.self="confirm_handle">{{ i18n_t("common.ok") }}</span>

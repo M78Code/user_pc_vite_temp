@@ -191,7 +191,7 @@
                             <!-- 进球图标 -->
                             <template v-if="is_show_home_goal">
                                <div class="yb-goal-gif yb-goal-yo"></div>
-                              <div class="gif-text">{{$root.$t('match_result.goal')}}</div>
+                              <div class="gif-text">{{i18n_t('match_result.goal')}}</div>
                             </template>
                             <!-- VAR事件 -->
                             <!-- <template v-if="is_show_home_var && is_show_var_event">
@@ -242,7 +242,7 @@
                             <!-- 进球图标 -->
                             <template v-if="is_show_away_goal">
                               <div class="yb-goal-gif yb-goal-yo"></div>
-                              <div class="gif-text">{{$root.$t('match_result.goal')}}</div>
+                              <div class="gif-text">{{i18n_t('match_result.goal')}}</div>
                             </template>
                             <!-- VAR事件 -->
                             <!-- <template v-if="is_show_away_var && is_show_var_event">

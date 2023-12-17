@@ -23,7 +23,7 @@
     <q-dialog v-model="is_show_bulletin_dialog" >
       <q-card class="dialog-wrap" >
         <div  class="card-header">
-          <div class="text-center">{{t('chatroom.bulletin')}}</div>
+          <div class="text-center">{{i18n_t('chatroom.bulletin')}}</div>
         </div>
         <q-card-section class="card-body">
           <div class="dialog-scroll">
@@ -33,7 +33,7 @@
         </q-card-section>
 
         <div class="card-footer">
-          <div class="btn"  @click.stop="is_show_bulletin_dialog = false">{{ t('chatroom.close') }}</div>
+          <div class="btn"  @click.stop="is_show_bulletin_dialog = false">{{ i18n_t('chatroom.close') }}</div>
         </div>
       </q-card>
     </q-dialog>

@@ -3,18 +3,18 @@
     <div class="header relative-position">
       <!--   体育菜单-->
       <div class="menu-item menu-top menu-item-title disable-hover">
-        {{ $t('common.menu_title') }}
+        {{ i18n_t('common.menu_title') }}
         <!-- <span @click="send_user">user</span> <span @click="send_vr">vr</span> <span @click="send_menu">菜单</span> -->
       </div>
       <!--   今日、早盘、 -->
       <div class="menu-item menu-tab disable-hover double">
         <div class="item yb-flex-center" :style="compute_css_obj(`today_menu_bg_1${jinri_zaopan_ == 2 ? '_active' : ''}`)" :class="jinri_zaopan_ == 2 ? 'active' : ''"
           @click="handle_click_jinri_zaopan(2)">
-          {{ $t("menu.match_today") }}
+          {{ i18n_t("menu.match_today") }}
         </div>
         <div class="item yb-flex-center" :style="compute_css_obj(`today_menu_bg_1${jinri_zaopan_ == 3 ? '_active' : ''}`)" :class="jinri_zaopan_ == 3 ? 'active' : ''"
           @click="handle_click_jinri_zaopan(3)">
-          {{ $t("menu.match_early") }}
+          {{ i18n_t("menu.match_early") }}
         </div>
       </div>
     </div>

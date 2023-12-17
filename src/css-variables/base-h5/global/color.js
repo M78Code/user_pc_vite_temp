@@ -19,4 +19,6 @@ export default {
   'gb-t-c-18': '#414655',
   'gb-t-c-19': '#AFB3C8',
   'gb-t-c-20': '#303442',
+  'gb-t-c-21': '#E95B5B',
+  'gb-t-c-25': '#127dcc',
 }

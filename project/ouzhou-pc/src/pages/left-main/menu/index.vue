@@ -7,7 +7,7 @@
       <!-- 现场滚球盘 -->
       <span class="record-icon" :style="compute_css_obj({key: 'pc-img-play-match'})"></span>
       <div class="col">
-        {{ $t("common.in_plays") }}
+        {{ i18n_t("common.in_plays") }}
       </div>
 
       <div class="col-right">
@@ -26,7 +26,7 @@
       <!-- 热门赛事图标 -->
       <span class="record-icon" :style="compute_css_obj({key: 'pc-img-hot-match'})"></span>
       <div class="col">
-        {{ $t("menu.match_hot") }}
+        {{ i18n_t("menu.match_hot") }}
       </div>
       <div class="col-right">
         <!-- 热门赛事数量 -->

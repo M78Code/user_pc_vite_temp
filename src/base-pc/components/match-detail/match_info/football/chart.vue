@@ -22,7 +22,7 @@
           <span class="text-blue">{{lodash.get(match_info, 'msc.S104.away')}}</span>
         </div>
         <div class="text-c">
-          {{ $t('common.assault')}}
+          {{ i18n_t('common.assault')}}
           <!-- 进攻 -->
         </div>
       </div>
@@ -41,7 +41,7 @@
           <span class="text-blue">{{lodash.get(match_info, 'msc.S8.away')}}</span>
         </div>
         <div class="text-c">
-          {{ $t('common.dangerous_assault')}}
+          {{ i18n_t('common.dangerous_assault')}}
           <!-- 危险进攻 -->
         </div>
       </div>
@@ -60,7 +60,7 @@
           <span class="text-blue">{{lodash.get(match_info, 'msc.S105.away')}}</span>
         </div>
         <div class="text-c">
-          {{ $t('common.possession_ball')}}
+          {{ i18n_t('common.possession_ball')}}
           <!-- 球权 -->
         </div>
       </div>
@@ -69,7 +69,7 @@
       <div class="goal">
         <div class="on_goal" :class="{'line_num_zero': lodash.get(match_info, 'msc.S18.home') == 0 && lodash.get(match_info, 'msc.S18.away') == 0}">
           <div class="text-c">
-            {{ $t('common.shots_on_goal')}}
+            {{ i18n_t('common.shots_on_goal')}}
             <!-- 射正球门 -->
           </div>
           <div class="chart-bar">
@@ -86,7 +86,7 @@
         </div>
         <div class="wide_goal" :class="{'line_num_zero': lodash.get(match_info, 'msc.S17.home') == 0 && lodash.get(match_info, 'msc.S17.away') == 0}">
           <div class="text-c">
-            {{ $t('common.shot_wide_goal')}}
+            {{ i18n_t('common.shot_wide_goal')}}
             <!-- 射偏球门 -->
           </div>
           <div class="chart-bar">

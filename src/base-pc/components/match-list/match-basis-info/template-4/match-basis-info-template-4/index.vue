@@ -64,15 +64,15 @@ const props = defineProps({
 const addition_name = computed(() => {
   let addition_name_obj = {
     //角球
-    hpsCorner: t('list.corner'),
+    hpsCorner: i18n_t('list.corner'),
     //罚牌
-    hpsPunish: t('list.punish'),
+    hpsPunish: i18n_t('list.punish'),
     //15分钟
-    hps15Minutes: t('list.15minutes'),
+    hps15Minutes: i18n_t('list.15minutes'),
     //波胆
-    hpsBold: t('list.bold'),
+    hpsBold: i18n_t('list.bold'),
       //5分钟
-    hps5Minutes: t('list.5minutes'),
+    hps5Minutes: i18n_t('list.5minutes'),
   }
   let name = addition_name_obj[props.match.play_current_key]
   return name ? ' - ' + name : ""

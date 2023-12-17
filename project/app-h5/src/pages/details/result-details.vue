@@ -23,14 +23,12 @@
       <result-details-tab :tab_index="route.params.index" :result_detail_data="result_detail_data" />
     </div>
     <!-- 下拉联赛列表 -->
-    <template>
       <q-dialog v-model="is_dialog_details" position="top" v-cloak>
         <result-details-dialog
           :detail_data="result_detail_data"
           :math_list_data="math_list_data"
         ></result-details-dialog>
       </q-dialog>
-    </template>
     <!--玩法集cagetory-->
     <div :class="get_detail_data.csid == 3 ?'baseball-play-pad':'play-pad'">
       <router-view v-if="loading"/>
@@ -43,7 +41,7 @@
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
 import { api_common } from "src/api/index.js";
-// import resultHeader from "src/base-h5/components/details/components/result-header.vue";
+import resultHeader from "src/base-h5/components/details/components/result-header.vue";
 import resultDetailsTab from "src/base-h5/components/details/components/result-details-tab.vue";
 // TODO: src/components有相同的组件
 import resultDetailsDialog from "src/base-h5/components/details/result-details-dialog.vue";
@@ -262,7 +260,7 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
         if(!data || data.length == 0){
 
             set_toast({
-              txt: t("bet_record.bet_match_tishi"),
+              txt: i18n_t("bet_record.bet_match_tishi"),
               is_show: true
             });
 

@@ -5,7 +5,7 @@
       <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="index">
         <div class="filter-label" @click="choose_filter_tab(item, index)" :class="{ 'checked': MenuData.mid_menu_result.md == item.label }">
           {{item.name}}
-          <!-- {{ $t(item.value, {month: $t(`ouzhou.time.month_` + item.month), day: item.day}) }} -->
+          <!-- {{ i18n_t(item.value, {month: i18n_t(`ouzhou.time.month_` + item.month), day: item.day}) }} -->
           <div class="current-mark" :class="{'show-mark':  MenuData.mid_menu_result.md == item.label}"></div>
         </div>
         <div class="filter-tab-split-line" v-show="index != current_filter_list.length - 1"></div>
@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-  import { ref,onMounted,onUnmounted } from 'vue';
+  import { ref,onMounted,onUnmounted, watch } from 'vue';
   import { MenuData, useMittOn,MITT_TYPES, i18n_t} from 'src/output/index.js'
   import { get_data_menu_result,handle_click_menu_mi_3_date } from "src/base-pc/components/tab/date-tab/index.js"
   import { compute_img_url } from 'src/core/server-img/index.js'
@@ -53,7 +53,9 @@
       show_right_btn.value = true;
     }
     // time = LocalStorage.get('server_time') || new Date().getTime()
-    mitt_list = [ useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,update_time).off ]
+    mitt_list = [ 
+      useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,update_time).off,
+      useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,update_time).off ]
   })
   onUnmounted(()=>{
     mitt_list.forEach(item => item());
@@ -117,6 +119,12 @@
     }
   }
 
+  // watch(
+  //   () => window.vue.lang,
+  //   () => {
+  //     update_time()
+  //   }
+  // )
  
  const choose_filter_tab = (item ,index) => {
   handle_click_menu_mi_3_date(item)

@@ -99,7 +99,7 @@ export default defineComponent({
     const odds_value = () => {
       if(props.ol_data.result || props.ol_data.result == 0){
         let result_ = props.ol_data.result
-        return t(`virtual_sports.result.${result_}`)
+        return i18n_t(`virtual_sports.result.${result_}`)
       }else{
         let r = '';
         let r1 = compute_value_by_cur_odd_type(

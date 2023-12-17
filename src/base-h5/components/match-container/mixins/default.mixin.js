@@ -3,7 +3,7 @@ import lodash from 'lodash'
 import { defineComponent } from 'vue'
 import { api_common } from "src/api/index.js";
 import store from "src/store-redux/index.js";
-import { useMittEmit, MITT_TYPES, UserCtr } from  "src/output"
+import { useMittEmit, MITT_TYPES, UserCtr, project_name } from  "src/output"
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
 import PageSourceData from "src/core/page-source/page-source.js";
@@ -187,7 +187,7 @@ export default defineComponent({
     collapsed () {
       if (is_hot.value) return false
       const key = MatchFold.get_match_fold_key(this.match_of_list)
-      const show_card = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_card`)
+      const show_card = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_card`, true)
       return show_card
     },
     eports_scoring() {
@@ -206,13 +206,22 @@ export default defineComponent({
     // 是否显示赛事阶段标题
     is_show_opening_title () {
       const menu_lv_v1 = MenuData.current_lv_1_menu_i
-      // 今日、早盘、串关
-      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(+this.match_of_list.start_flag) && (MenuData.is_today() || MenuData.is_mix())
+      let result = false
+      if (project_name === 'app-h5') {
+        // 今日、早盘、串关
+        result = ([1,2,3,6].includes(+menu_lv_v1) && (MenuData.is_today() || MenuData.is_mix()) || MenuData.is_esports()) && [1,2].includes(+this.match_of_list.start_flag)
+      }
+      return result
     },
     // 获取赛事数量
     get_match_count () {
       const { csid, start_flag } = this.match_of_list
-      const key = start_flag === 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
+      let key = ''
+      if ([1,2].includes(+start_flag)) {
+        key = start_flag === 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
+      } else {
+        key = `default_csid_${csid}`
+      }
       return lodash.get(MatchResponsive.ball_seed_count.value, `${key}`, 1)
     },
      // 获取联赛赛事数量
@@ -352,7 +361,7 @@ export default defineComponent({
     async handle_match_collect () {
       const { mid,tid } = this.match_of_list
       const match_state = MatchCollect.get_match_collect_state(this.match_of_list)
-      api_common.add_or_cancel_match({
+      api_common.add_or_cancel_tournament({
         mid,
         cf: match_state ? 0 : 1,
         cuid: UserCtr.get_uid()
@@ -937,7 +946,6 @@ export default defineComponent({
       // 进入详情前，将当前赛事信息存入仓库
       // store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: item });
       //元数据存入本地
-      debugger
       LocalStorage.set("YUAN_MATCH_DETAIL_DATA",MatchDataBaseH5.get_quick_mid_obj(item.mid))
       if (MenuData.current_menu && MenuData.current_menu.main && is_results.value) {
         this.$router.push(`/result_details/${item.mid}/0`);

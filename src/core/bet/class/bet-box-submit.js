@@ -63,7 +63,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             // "userId": UserCtr.get_uid()
         }
         // 冠军没有赛事阶段
-        if(MenuData.is_kemp()){
+        if(item.bet_type == 'guanjun_bet'){
             delete obj.matchProcessId
         }
         // 串关没有 这个字段 
@@ -425,7 +425,7 @@ const submit_handle = type => {
         if(ol_obj.bet_amount*1 < min_max.min_money*1 ){
             set_submit_btn()
             // 已失效
-            set_error_message_config({code:"0402001"},'bet')
+            return set_error_message_config({code:"M400010"},'bet')
         }
         
         // 投注金额 验证
@@ -433,7 +433,7 @@ const submit_handle = type => {
             is_bet_error = true
             set_submit_btn()
             // 请您输入投注金额
-            set_error_message_config({code:"M400005"},'bet')
+            return set_error_message_config({code:"M400005"},'bet')
         }
 
         pre_type = BetData.is_bet_pre ? 1 : 0
@@ -524,7 +524,7 @@ const submit_handle = type => {
                 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
                 BetViewDataClass.set_bet_order_status(status)
             }else{
-                BetViewDataClass.set_orderNo_bet_obj(orderDetailRespList)
+                set_orderNo_bet_obj(orderDetailRespList)
                 BetViewDataClass.set_orderNo_bet_single_obj(seriesOrderRespList)
 
                 let number_list = []
@@ -640,6 +640,7 @@ const set_error_message_config = (res ={},type,order_state) => {
     // console.error('set_bet_before_message',obj)
     // 获取限额失败的信息
     if(PROJECT_NAME == 'app-h5'){
+        console.error('sssss',obj.message)
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t(obj.message));
     }else{
         BetViewDataClass.set_bet_before_message(obj)
@@ -734,12 +735,24 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // let other = { bet_type:'common_bet'}
     // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
     let matchType = 1
-    if ([1, 2].includes(Number(mid_obj.ms))) {
-        matchType = 2
-    }
     // 冠军
-    if(MenuData.is_kemp()){
+    if(other.bet_type == 'common_bet'){
+        if ([1, 2].includes(Number(mid_obj.ms))) {
+            matchType = 2
+        }
+    }
+    
+    // 冠军
+    if(other.bet_type == 'guanjun_bet'){
         matchType = 3
+    }
+    // 电竞赛事
+    if(other.bet_type == 'esports_bet'){
+        matchType = 5
+    }
+    // 虚拟赛事
+    if(other.bet_type == 'vr_bet'){
+        matchType = 4
     }
 
     const play_config = {
@@ -798,7 +811,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     }
             
     // 冠军 
-    if(MenuData.is_kemp()){
+    if(bet_obj.bet_type == 'guanjun_bet'){
         bet_obj.handicap = ol_obj.on
     }
 
@@ -852,7 +865,7 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     }else{
         let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
           // 冠军玩法 部分玩法hpid相同 
-        if(MenuData.is_kemp()){
+        if(other.bet_type == 'guanjun_bet'){
             let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])
             if(hpn_list.length < 1){
                 hpn_list = lodash_.get(mid_obj,`hps`,[])

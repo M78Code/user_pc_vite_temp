@@ -3,7 +3,7 @@
  * @Description:
 -->
 <template>
-  <div v-show="true">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
+  <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
   <q-layout view="lHh Lpr lFf" class="layout_container">
     <q-page-container id="app-h5" class="page_container" :style="`height:${inner_height}px`">
       <!-- <layout-header /> -->
@@ -44,7 +44,7 @@
         <settle-dialog></settle-dialog>
       </div>
       
-      <div v-show="true">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
+      <div v-show="flase">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
 
 
       <!-- 串关投注 --> 
@@ -60,6 +60,7 @@
   <!-- 商户活动的弹层,只在home页展示，两个都已 脱离文档流-->
   <activity-layer v-if="activity_status" @activity_hide="activity_status = false" :activity_layerimg="activity_layerimg"
     :count_down_time="userBannerTimer" />
+  <StandardEdition></StandardEdition>
 </template>
 
 <script setup>
@@ -70,6 +71,7 @@ import {
   defineAsyncComponent,
   nextTick,
 } from "vue";
+import StandardEdition from 'src/base-h5/components/standard-edition/index.vue'
 import { useMittOn, MITT_TYPES, i18n_t, MenuData } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js"; 
 // import { FooterWapper } from "src/components/footer/index.js";

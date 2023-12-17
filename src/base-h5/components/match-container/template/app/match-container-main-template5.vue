@@ -132,7 +132,7 @@
                 </div>
               </div>
               <!-- 比分版 -->
-              <div class="score-title-text" v-if="home_score == 0 || away_score == 0 || home_score || away_score">{{ home_score }} - {{
+              <div class="score-title-text" v-if="get_match_status(match.ms)">{{ home_score }} - {{
                 away_score }}</div>
             </div>
             <!--玩法数量-->
@@ -182,30 +182,7 @@
             </div>
             <!-- 比分选项 -->
             <div class="odds">
-              <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
-                <img v-if="!match_collect_state" class="favorited-icon"
-                  src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt="" @click.stop="handle_match_collect" />
-                <img v-if='match_collect_state' class="favorited-icon"
-                  src="/src/base-h5/assets/match-list/ico_fav_sel.png" @click.stop="handle_match_collect" />
-              </div>
-              <div class="bet_btn">
-                <template v-if="curMatchOdds?.length">
-                  <div v-for="item in curMatchOdds" :key="item.oid" class="item"
-                    :class="{ active: active_score === `${item._mid}${item.oid}` }" @click="go_to_bet(item)">
-                    <div v-if='item.onb || item.on' class='on'>{{ item.onb || item.on }}</div>
-                    <div class='num'>{{ format_odds_value(item) }}</div>
-                  </div>
-                </template>
-                <template v-else>
-                  <div v-for="item in 3" :key="item.oid" class="item">
-                    <div class='num'>
-                      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock2.svg`" />
-
-                    </div>
-                  </div>
-                </template>
-              </div>
-              <!-- <OddListWrap :main_source="main_source" :match="match_of_list" /> -->
+              <OddListWrap :main_source="main_source" :match="match_of_list" />
             </div>
 
 
@@ -228,8 +205,9 @@
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
-import ScoreList from 'src/base-h5/components/match-container/template/app/components/score-list-5/index.vue';
-import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
+import ScoreList from 'src/base-h5/components/match-container/template/app/components/score-list.vue';
+// import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
+import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 
@@ -246,6 +224,7 @@ import { ref, watch, onMounted, onUnmounted, computed } from 'vue';
 import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, useMittOn, compute_css_obj } from "src/output/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
+import { get_match_status } from 'src/core/utils/common/index'
 
 import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
@@ -379,7 +358,8 @@ export default {
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id, LOCAL_PROJECT_FILE_PREFIX,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, footer_menu_id,
       in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item, show_sport_title, compute_css_obj,
-      normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app
+      normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app,
+      get_match_status
     }
   }
 }
@@ -886,59 +866,28 @@ export default {
       }
 
       .odds {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        /* justify-content: space-between; */
-        /* padding-right: 46px; */
-        margin: .08rem 0;
-
-        .bet_btn {
+        margin-top: .1rem;
+        margin-bottom: .1rem;
+        :deep(.odd-list-wrap) {
           display: flex;
-          align-items: center;
-          width: 274px;
-          gap: 2px;
           justify-content: center;
-
-          .active {
-            background: var(--sys-neutral-white-white, #FFF);
-          }
-
-          .item {
-            padding: 2px 0px;
-            flex: 1;
-            height: 32px;
-            flex-shrink: 0;
-            border-radius: 2px;
-            background: var(--q-gb-bg-c-15);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.04);
-            &.active {
-              background: var(--sys-brand-secodary-secondary-200, #C9CDDB);
+          .odd-list-container {
+            width: 2.74rem;
+            height: .32rem;
+            .odd-column-item {
+              background: var(--q-gb-bg-c-15);
+              margin-left: .04rem;
             }
-
-            .on {
-              color: var(--sys-brand-secodary-secondary-300, #AFB3C8);
-              text-align: center;
-              font-size: 10px;
-              font-weight: 500;
+            .odd-title {
+              font-size: .1rem;
+              margin-bottom: .02rem;
             }
-
-            .num {
-              color: var(--sys-brand-secodary-secondary-800, #303442);
-              text-align: center;
-              font-size: 10px;
-              font-weight: 700;
+            .odd-value {
+              font-size: .12rem;
             }
           }
         }
       }
-
-
-
     }
 
     .match-score-info {

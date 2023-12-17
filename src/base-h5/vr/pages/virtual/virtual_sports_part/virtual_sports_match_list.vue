@@ -67,7 +67,7 @@ export default {
     //   // 设置玩法项默认选中
     //   "set_details_item",
     // ]),
-    set_details_item(){},
+    set_details_item(data){ VR_CTR.set_details_item(data)  },
     /**
      * 切换赛事
      * @param {Number} i 赛事下标
@@ -138,9 +138,11 @@ export default {
       height: 100%;
       float: right;
       flex-wrap: nowrap;
+      transition: transform 0.2s;
       -webkit-transition: transform 0.2s;
 
       &.status2 {
+        transform: translateX(-1.84rem);
         -webkit-transform: translateX(-1.84rem);
       }
 

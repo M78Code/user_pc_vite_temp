@@ -6,16 +6,16 @@
         <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/image/image/logout_notice.png`"  alt="" width="100%">
 
         <div class="row items-center relative-position">
-          <div class="text">{{t("login.login_out_dear_user")}}</div>
+          <div class="text">{{i18n_t("login.login_out_dear_user")}}</div>
           <ul class="text-left relative-position" v-if="!isMaintaining">
-            <li>{{t("login.login_out_text1")}}</li>
-            <li>{{t("login.login_out_text2")}}</li>
-            <li>{{t("login.login_out_text3")}}</li>
+            <li>{{i18n_t("login.login_out_text1")}}</li>
+            <li>{{i18n_t("login.login_out_text2")}}</li>
+            <li>{{i18n_t("login.login_out_text3")}}</li>
           </ul>
           <ul class="text-left" v-else>
             <li>活动现已维护，感谢您的支持</li>
           </ul>
-          <div class="btn" @click="confirm">{{t("login.logout_alert_close")}}</div>
+          <div class="btn" @click="confirm">{{i18n_t("login.logout_alert_close")}}</div>
         </div>
       </div> -->
     </div>

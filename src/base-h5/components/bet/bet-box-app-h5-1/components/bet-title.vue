@@ -53,7 +53,7 @@ const get_balance = () => {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 0.02rem 0;
+    //padding: 0.12rem ;
 }
 .nonebox4-first-left {
     display: flex;
@@ -74,8 +74,9 @@ const get_balance = () => {
     margin-left: 0.05rem;
     display: flex;
     font-size: .16rem;
-    font-weight: 500;
+    font-weight: 600;
     font-family: PingFang SC;
+    color: var(--q-gb-t-c-20);
 }
 .nonebox4-first-right {
     display: flex;

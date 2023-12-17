@@ -25,15 +25,13 @@ class MatchFold {
   set_match_mid_fold_obj (match) {
     if (!match) return
     const key = this.get_match_fold_key(match)
-    // 除欧洲版，都默认折叠
-    const show_card = PROJECT_NAME === 'ouzhou-h5'
     // 次要玩法头部是否显示
     const show_tab = this.compute_show_tab_play(match)
     Object.assign(this.match_mid_fold_obj.value, {
       [key]: {
         show_tab,
         // 赛事区域
-        show_card,
+        show_card: true,
         // 次要玩法内容区
         show_tab_content: false
       }
@@ -43,7 +41,7 @@ class MatchFold {
    * @description h5 设置球种折叠映射对象
    * @param { flag } 展开/ 折叠
    */
-  set_ball_seed_csid_fold_obj (csid_key, flag = undefined) {
+  set_ball_seed_csid_fold_obj (csid_key, flag = true) {
     const state = this.get_default_fold_state_by_csid(flag)
     Object.assign(this.ball_seed_csid_fold_obj.value, {
       [csid_key]: state
@@ -51,14 +49,14 @@ class MatchFold {
     // console.log(this.ball_seed_csid_fold_obj.value)
   }
   // 进行中球种折叠映射对象
-  set_progress_csid_fold_obj (csid_key, flag = undefined) {
+  set_progress_csid_fold_obj (csid_key, flag = true) {
     const state = this.get_default_fold_state_by_csid(flag)
     Object.assign(this.progress_csid_fold_obj.value, {
       [csid_key]: state
     })
   }
   // 未开赛球种折叠映射对象
-  set_not_begin_csid_fold_obj (csid_key, flag = undefined) {
+  set_not_begin_csid_fold_obj (csid_key, flag = true) {
     const state = this.get_default_fold_state_by_csid(flag)
     Object.assign(this.not_begin_csid_fold_obj.value, {
       [csid_key]: state
@@ -66,8 +64,9 @@ class MatchFold {
   }
   // 获取默认的球种折叠对象
   get_default_fold_state_by_csid (flag) {
-    const state = PROJECT_NAME === 'ouzhou-h5'
-    return flag !== undefined ? flag : state
+    // const state = PROJECT_NAME === 'ouzhou-h5'
+    // return flag !== undefined ? flag : state
+    return flag
   }
  
   /**

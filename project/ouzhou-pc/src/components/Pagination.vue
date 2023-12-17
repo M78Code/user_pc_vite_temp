@@ -75,7 +75,8 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, toRefs, onMounted, watch, computed, defineProps } from 'vue'
+// import { defineComponent, ref, reactive, toRefs, onMounted, watch, computed, defineProps } from 'vue'
+import { defineComponent, ref, reactive, toRefs, onMounted, watch, computed } from 'vue'
 export default defineComponent({
   name: "CPagination",
   props: {

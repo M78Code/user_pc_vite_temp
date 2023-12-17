@@ -10,30 +10,30 @@
       <template
         v-if="['0400459', '0400475', '0400486', '0400517', '0400519', '0400540'].includes(BetViewDataClass.error_code)">
         <!--确定按钮-->
-        {{ $t('common.confirm') }}
+        {{ i18n_t('common.confirm') }}
       </template>
       <template v-else>
         <!-- 投注 -->
-        {{ $t('common.betting') }}
+        {{ i18n_t('common.betting') }}
       </template>
     </div>
 
     <div class="full-width cursor-pointer bet-delete-all" @click.stop="cancel_handle">
       <!-- 取消投注 -->
-      {{ $t('bet.bet_cancel') }}
+      {{ i18n_t('bet.bet_cancel') }}
     </div>
 
     <div class="bet-footer-check">
       <span class="check-box" >
         <span class="check-wrap relative-position" :class="{ 'active': BetData.is_bet_merge }" />
-        <span>{{$t('bet.bet_auto_msg_1')}}</span>
+        <span>{{i18n_t('bet.bet_auto_msg_1')}}</span>
       </span>
     </div>
 
     <div>
       <span class="check-box" >
         <span class="check-wrap relative-position" :class="{ 'active': BetData.is_bet_merge }" />
-        <span>{{ $t('bet.common_amount') }}</span>
+        <span>{{ i18n_t('bet.common_amount') }}</span>
       </span>
     </div>
 

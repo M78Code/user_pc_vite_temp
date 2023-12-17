@@ -581,7 +581,12 @@
     "virtual_sports": "VR Sports",
     "auto_close": "Auto close after %s s",
     "HD": "HD",
-    "SD": "SD"
+    "SD": "SD",
+    "zhuanye": "Pro",
+    "xinshou": "Novice",
+    "gongnengwanshan": "Functional & Practical",
+    "yemianjianjie": "Simple content, Easy to use ",
+    "use":"Use"
   },
   "detail": {
     "less": "<",

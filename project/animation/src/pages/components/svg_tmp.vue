@@ -124,12 +124,14 @@ export default defineComponent({
     };
   },
   computed: {
+    // 是否当前用默认动画
     isHadConfigAni(){
       const code = this.current_event_code
       if(!code)return true;
       const obj = event_animation[code]
       return !!obj;
     },
+    // 获取当前动画
     getAniConfig(){
       const code = this.current_event_code
       const obj = event_animation[code]
@@ -138,6 +140,7 @@ export default defineComponent({
         this.isShowDefaultSvg = true
         return svgAnimationConfig;
       }
+      // 有配置，走配置动画
       this.isShowDefaultSvg = false
       return {
         // svgAnimationDefaultConfig,
@@ -146,6 +149,7 @@ export default defineComponent({
         awaySvgAnimationConfig: obj.svg_path_config
       };
     },
+    // 获取动画默认配置
     svgDefaultConfig(){
       const {homeAway} = this.current_event_obj
       const {svgAnimationDefaultConfig, awaySvgAnimationDefaultConfig, homeSvgAnimationDefaultConfig} = this.getAniConfig
@@ -194,24 +198,29 @@ export default defineComponent({
       
       return pathAnimateParams || {};
     },
+    // 动画背景颜色
     pathAnimateColors(){
       return this.pathAnimateParams.colors || [];
     },
+    // 文字动画参数
     textAnimateParams(){
       // return this.animateParams;
       const svg_path_config = this.animateParams
       const {textAnimateParams} = svg_path_config || {}
       return textAnimateParams || {};
     },
+    // 文颜色动画参数
     textAnimateColors(){
       return this.textAnimateParams.colors || [];
     },
   },
   watch: {
+    // 监听推送的 code
     current_event_code(n,o) {
       if(n !== o){
         this.key_1 = !this.key_1
       }
+      // 是否需要默认动画，没有配置走默认动画
       this.isShowDefaultSvg = this.isHadConfigAni
       this.key_1 = Math.random()
       this.key_2 = Math.random()
@@ -247,6 +256,7 @@ export default defineComponent({
       // console.log('st str', str)
       return str;
     },
+    // 动态创建路径
     createPath(move = 0){
       const svg_path_config = this.animateParams
       const {init,beforePath, startInit} = svg_path_config
@@ -291,6 +301,7 @@ export default defineComponent({
      
       // return path;
     },
+    // 动态创建动画合动画路径
     rightPath(){
       if(!this.current_event_code)return '';
       const svg_path_config = this.animateParams
@@ -307,7 +318,6 @@ export default defineComponent({
         values: `${path};${this.createPath(move)}`,
       }
     },
-    rightPathValues(){},
   }
 })
 </script>

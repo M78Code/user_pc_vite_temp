@@ -59,14 +59,14 @@
         </span>
 
         <!-- 11手球，16水球、15曲棍球、14橄榄球 -->
-        <div class="add-stage" v-if="['11','16','15','14'].includes(lodash.get(match_info, 'csid'))">{{ $t('common.half_')}}</div>
+        <div class="add-stage" v-if="['11','16','15','14'].includes(lodash.get(match_info, 'csid'))">{{ i18n_t('common.half_')}}</div>
         <!-- 半场 -->
         <!-- 4冰球、11手球16水球、15曲棍球、14橄榄球 加时赛、点球大战 -->
         <div class="hockey_add" v-if="['4','11','16','15','14'].includes(lodash.get(match_info, 'csid'))">
           <!-- 加时 -->
-          <span v-if="lodash.get(match_info,'msc.S7')">{{ $t('common.add_time')}}</span>
+          <span v-if="lodash.get(match_info,'msc.S7')">{{ i18n_t('common.add_time')}}</span>
           <!-- 点球 -->
-          <span v-if="lodash.get(match_info,'msc.S170')">{{ $t('icon_tips.penalty_kick')}}</span>
+          <span v-if="lodash.get(match_info,'msc.S170')">{{ i18n_t('icon_tips.penalty_kick')}}</span>
         </div>
         <!-- 冰球加时赛、点球大战 -->
 

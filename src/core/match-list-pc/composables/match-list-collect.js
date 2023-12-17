@@ -160,7 +160,7 @@ const mx_collect_match = (match) => {
   // 前端关    后台关       >关
   if (!enable_collect_api.value || !collect_switch.value) {
     // 临时注释，参数可能又问题 会return
-    // return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
+    // return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
   }
 
   let cur_collect_state = Number(!match.mf);
@@ -445,7 +445,7 @@ const mx_collect_leagues = async (match, is_champion) => {
   // } else {
   //   useMittEmit(
   //     MITT_TYPES.EMIT_SHOW_TOAST_CMD,
-  //     t("common.collect_toast")
+  //     i18n_t("common.collect_toast")
   //   );
   // }
   // 获取列表最新的收藏数量
@@ -456,7 +456,7 @@ const mx_collect_leagues = async (match, is_champion) => {
   //   console.error(err)
   //   useMittEmit(
   //     MITT_TYPES.EMIT_SHOW_TOAST_CMD,
-  //     t("common.collect_toast")
+  //     i18n_t("common.collect_toast")
   //   );
   // });
 };
@@ -473,7 +473,7 @@ const mx_collect = ({ type = "match", match, match_index }) => {
   // 前端关    后台关       >关
   if (!enable_collect_api.value || !collect_switch.value) {
     // 临时注释，参数可能又问题 会return
-    // return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
+    // return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
   }
   if (MenuData.is_kemp()) {
     type = "champion";
