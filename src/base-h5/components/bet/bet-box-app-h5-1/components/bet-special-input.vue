@@ -66,7 +66,6 @@ onMounted(() => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = (new_money) => {
-  console.error('change_money_handle-single',new_money,new_money.params.id,props.items.max_money,new_money.money)
   if(props.items.id == new_money.params.id){
     if( new_money.money*1 > props.items.max_money *1){
       ref_data.money =  props.items.max_money
@@ -108,7 +107,6 @@ const set_special_series = (money,ty_id) => {
   list.filter(item => {
     item.show_quick = false
       // 显示指定投注项的快捷金额按钮
-      console.error('ssssset_special_seriesss',id)
     if(item.id == id){
         item.show_quick = true
         if(money == 'edit'){
