@@ -425,7 +425,7 @@ const submit_handle = type => {
         if(ol_obj.bet_amount*1 < min_max.min_money*1 ){
             set_submit_btn()
             // 已失效
-            set_error_message_config({code:"0402001"},'bet')
+            return set_error_message_config({code:"M400010"},'bet')
         }
         
         // 投注金额 验证
@@ -433,7 +433,7 @@ const submit_handle = type => {
             is_bet_error = true
             set_submit_btn()
             // 请您输入投注金额
-            set_error_message_config({code:"M400005"},'bet')
+            return set_error_message_config({code:"M400005"},'bet')
         }
 
         pre_type = BetData.is_bet_pre ? 1 : 0
@@ -640,6 +640,7 @@ const set_error_message_config = (res ={},type,order_state) => {
     // console.error('set_bet_before_message',obj)
     // 获取限额失败的信息
     if(PROJECT_NAME == 'app-h5'){
+        console.error('sssss',obj.message)
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t(obj.message));
     }else{
         BetViewDataClass.set_bet_before_message(obj)

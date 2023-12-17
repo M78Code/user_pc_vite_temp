@@ -185,9 +185,10 @@ const _handmaxKey = () => {
 }
 // 删除键
 const _handleDeleteKey = () => {
-  if (!money.value) return   
+  console.error('ssss')
+  if (!BetData.bet_amount) return   
   //删除最后一个
-  let s = money.value.toString()
+  let s = BetData.bet_amount.toString()
   money.value = s.substring(0, s.length - 1);
 }
 // 数字建

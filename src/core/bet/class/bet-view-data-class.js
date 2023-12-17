@@ -273,6 +273,7 @@ class BetViewData {
       case '0402006':
       case '0402007':
       case '0402008':
+        //盘口已失效
         text = "bet_message.m_0402001"
         break
       case '0402011':
@@ -301,9 +302,11 @@ class BetViewData {
       case '0402023':
       case '0402027':
       case '0402028':
+        // 投注项盘口、赔率或有效性产生变化!
         text = "bet_message.m_0402009"
         break
       case '0402014':
+        // 网络异常，请在注单中查看投注结果
         text = "bet_message.m_0402014"
         break
 
@@ -322,6 +325,7 @@ class BetViewData {
       case '0400500':
       case 'XXXXXX':
       case 'DJ999':
+        // 投注未成功~再试一次吧
         text = "bet_message.m_0402015"
         break
 
@@ -329,45 +333,55 @@ class BetViewData {
       case '0402019':
       case '0402038':
       case '0400450':
+        // 投注未成功，请稍后再试
         text = "bet_message.m_0402018"
         break
 
       case '132113':
+        // 投注失败，请重新选择投注项
         text = "bet_message.m_132113"
         break
         
       case '0402035':
       case '0400454':
       case '0400455':
+        // 余额不足，请您先充值
         text = "bet_message.m_0402035"
         break
 
       case '0402042':
+        // 网络异常，请联系客服
         text = "bet_message.m_0402042"
         break
 
       case '0400453':
+        //  "m_0400453": "账户异常，请联系客服",
         text = "bet_message.m_0400453"
         break
 
       case '0400459':
+        //  "m_0400459": "盘口确认中，请稍等",
         text = "bet_message.m_0400459"
         break
 
       case '0400460':
+        //  "m_0400460": "拒绝投注",
         text = "bet_message.m_0400460"
         break
 
       case '0400464':
       case '0400475':
+        // "m_0400464": "额度已变更，再试一次吧~",
         text = "bet_message.m_0400464"
         break
 
       case '0400468':
+        //  "m_0400468": "比分已变更，再试一次吧",
         text = "bet_message.m_0400468"
         break
 
       case '0400469':
+        // "m_0400469": "投注项盘口、赔率或有效性产生变化!",
         text = "bet_message.m_0400469"
         break
 

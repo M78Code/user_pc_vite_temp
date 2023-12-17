@@ -3,7 +3,7 @@
  * @Description:
 -->
 <template>
-  <div v-show="true">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
+  <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
   <q-layout view="lHh Lpr lFf" class="layout_container">
     <q-page-container id="app-h5" class="page_container" :style="`height:${inner_height}px`">
       <!-- <layout-header /> -->
@@ -44,7 +44,7 @@
         <settle-dialog></settle-dialog>
       </div>
       
-      <div v-show="true">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
+      <div v-show="flase">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
 
 
       <!-- 串关投注 --> 

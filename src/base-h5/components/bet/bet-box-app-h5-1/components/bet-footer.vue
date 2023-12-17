@@ -24,7 +24,7 @@
 
         <div class="bet-box-line">
           <div class="middle font16">
-            {{ i18n_tc('bet.betting') }}
+            {{ i18n_t('bet.betting') }}
             <span class="yb-info-money font14">
             {{ i18n_tc('app_h5.bet.bet_win',BetData.bet_amount,{"total":BetData.bet_amount}) }}</span>
           </div>
@@ -43,8 +43,8 @@
       <div v-if="BetData.is_bet_single" @click="set_confirm">确认</div>
       <!--  串关  -->
       <div v-else>
-        <div @click="set_confirm" >注单已确认</div>
-        <div  @click="set_retain_selection">保留选项，继续投注</div>
+        <div @click="set_confirm" >注单已确认 <span>合计17,650.00</span></div>
+        <div @click="set_retain_selection">保留选项，继续投注</div>
       </div>
 
     </div>
@@ -59,8 +59,8 @@ import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
-import { i18n_t,UserCtr ,format_money2,compute_local_project_file_path} from "src/output/index.js"
-import { i18n_tc } from "src/boot/i18n.js"
+import { UserCtr ,format_money2,compute_local_project_file_path} from "src/output/index.js"
+import { i18n_t,i18n_tc } from "src/boot/i18n.js"
 
 let timer;
 // 向右滑动投注
@@ -82,7 +82,10 @@ const handle_silider = (e) => {
   }
   // console.log('e', e, silider);
   if(e.distance.x > 180) {
-    submit_handle()
+    // 未投注之前 可以点击
+    if(BetViewDataClass.bet_order_status == 1){
+      submit_handle()
+    }
     reset_silider()
   }
   fab_pos.value[0] = e.distance.x
