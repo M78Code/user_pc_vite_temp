@@ -126,7 +126,8 @@ export default {
   padding: 0 10px;
   align-items: center;
   justify-content: space-between;
-  border-top: 2px solid #FEBE55;
+  border-top: 2px solid var(--q-gb-bd-c-3);
+  color: var(--q-gb-t-c-18);
   > div {
     display: flex;
     align-items: center;
@@ -154,14 +155,14 @@ export default {
   margin: 0 auto;
   background: var(--q-gb-bg-c-18);
   border-radius: 0.05rem;
-  color: var(--q-gb-t-c-20);
+  color: var(--q-gb-t-c-18);
 
   .league-container {
     height: 0.26rem;
     // margin: 0 0.07rem;
     margin-top: 0.07rem;
     &.collapsed{
-      border-bottom: 1px solid #e9e9e9;
+      border-bottom: 1px solid var(--q-gb-bd-c-5);
     }
 
     .league-wrapper {
@@ -264,7 +265,8 @@ export default {
   .hps-wrap {
 
     > .title {
-      border-bottom: 1px solid #e9e9e9;
+      border-bottom: 1px solid var(--q-gb-bd-c-5);
+      //border-bottom: 1px solid var(--q-gb-bd-c-4);
     }
 
     .match-title {
@@ -274,8 +276,6 @@ export default {
       position: relative;
       display: flex;
       width: 50%;
-    
-
       // &:before {
       //   width: 0.03rem;
       //   height: 0.16rem;
@@ -287,7 +287,7 @@ export default {
       // }
 
       .hpn-wrap {
-        color: var(--q-gb-t-c-20);
+        color: var(--q-gb-t-c-18);
         font-size: 11px;
       }
     }
