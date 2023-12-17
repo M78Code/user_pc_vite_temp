@@ -54,7 +54,7 @@
               <betSpecialInput :items="BetViewDataClass.bet_special_series[0]" />
 
               <div class="f-s-c cursor h44 pl-30 bor-b" @click="set_show_single()">
-                <sapn class="fon12 font400 text-8a8">{{ i18n_t('bet.bet_n_') }}</sapn>
+                <span class="fon12 font400 text-8a8">{{ i18n_t('bet.bet_n_') }}</span>
                 <span class="icon-arrow icon-arrow-series" :class="ref_data.show_single ?'arrow':''"></span>
               </div>
               <!-- 复式连串过关投注 限额 -->
