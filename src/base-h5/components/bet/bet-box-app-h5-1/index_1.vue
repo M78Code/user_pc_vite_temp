@@ -48,9 +48,7 @@
                   添加赛事  
               </sapn>
               </div>
-              <div class="scroll-down">
-                <img :src="compute_local_project_file_path('/image/common/slide_icon_y1.svg')" alt="">
-              </div>
+             
             </template>
           </div>
 
@@ -59,28 +57,33 @@
             <div v-show="false"> {{ UserCtr.user_version }} -- {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version}}-{{ BetData.bet_box_h5_show }}</div>
            
             <template v-if="BetData.is_bet_single">
-              <div
-                v-for="(item, index) in BetViewDataClass.orderNo_bet_obj"
-                :key="item.orderNo"
-              >
+              <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo" >
                 <betResult :items="item" :key="index" :index="index" />
               </div>
             </template>
+
             <template v-else>
               <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
                 <bet-special-result :items="item" :key="index" :index="index" />
               </div>
+
+              <div v-for="(item, index) in BetViewDataClass.orderNo_bet_single_obj" :key="item.orderNo">
+                <bet-special-state :items="item" :key="index" :index="index" />
+              </div>
+
             </template>
           </template>
         </div>
 
         <!-- 串关投注 键盘 -->
         <template v-if="!BetData.is_bet_single && BetViewDataClass.bet_order_status == 1">
-          <keyboard v-if="BetData.bet_keyboard_show"/>
+          <div class="re">
+            <keyboard  class="bet-key-board" v-if="BetData.bet_keyboard_show"/>
+            <div class="scroll-down">
+              <img :src="compute_local_project_file_path('/image/common/slide_icon_y1.svg')" alt="">
+            </div>
+          </div>
         </template>
-
-<!-- {{ BetViewDataClass.orderNo_bet_obj }} -->
-    
 
         <!-- 底部投注信息 -->
         <betFooter />
@@ -99,15 +102,11 @@ import betAfterTitle from "./components/bet-after-title.vue";
 import betItem from "./components/bet-item.vue"; // 投注列表
 import betFooter from "./components/bet-footer.vue"; // 投注底部信息
 import betResult from "./components/bet-result.vue"; // 投注结果
-import betSpecialresult from "./components/bet-special-result.vue"; // 投注结果
+import betSpecialResult from "./components/bet-special-result.vue"; // 串关投注结果
+import betSpecialState from "./components/bet-special-state.vue"; // 串关投注结果状态
 import betSpecialInput from "./components/bet-special-input.vue";
 import keyboard from "./components/bet-keyboard.vue";
 
-const ref_data = reactive({
-  show_single: false,
-});
-
-// BetData.set_bet_box_h5_show(true)
 // 隐藏投注栏
 const pack_up = () => {
   let sss = !BetData.bet_box_h5_show;
@@ -163,19 +162,23 @@ const show_merge_change = () => {
   &.h188{
     height: 1.8rem;
   }
-  
-  .scroll-down {
-    position: fixed;
-    left: 50%;
-    bottom: 50%;
-    width: .2rem;
-    height: .2rem;
-    transform: translateY(-.4rem);
-    z-index: 999;
-    img {
-      width: 100%;
-      height: 100%;
-    }
+}
+
+.bet-key-board{
+  position: relative;
+  z-index: 999;
+}
+.scroll-down {
+  position: absolute;
+  left: 50%;
+  top: -0.1rem;
+  width: .2rem;
+  height: .2rem;
+  z-index: 99;
+  transition: .3s;
+  img {
+    width: 100%;
+    height: 100%;
   }
 }
 
