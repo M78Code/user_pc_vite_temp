@@ -595,7 +595,7 @@ export default defineComponent({
   }
 
   .size-color {
-    color: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-10);
   }
 
   .size-color-wit {
