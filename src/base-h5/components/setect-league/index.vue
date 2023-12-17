@@ -112,7 +112,7 @@ defineProps({});
   border-radius: 0.16rem 0.16rem 0 0;
   position: absolute;
   bottom: 0;
-  background: var(--q-gb-bg-c-15) ;
+  background: var(--q-gb-bg-c-23) ;
   backdrop-filter: blur(5px);
   .sl-header {
     display: flex;
@@ -159,7 +159,7 @@ defineProps({});
         }
       }
       .sl-input {
-        background: var(--q-gb-bg-c-18);
+        background: transparent;
         outline: none;
         border: none;
         width: 100%;

@@ -263,7 +263,7 @@ const activity_handle = item => {
   z-index: 99;
 
   .setting-top.setting-item {
-    border-bottom: 0.08rem solid var(--q-gb-bg-c-23);
+    border-bottom: 0.08rem solid var(--q-gb-bg-c-21);
     padding: 0.14rem;
     margin: 0;
     height: 0.5rem;
@@ -282,14 +282,14 @@ const activity_handle = item => {
     margin: 0 0.14rem;
     // background: var(--q-gb-bg-c-25);
     &.border {
-      border-bottom: 1px solid var(--q-gb-bd-c-4);
+      border-bottom: 1px solid var(--q-gb-bd-c-6);
     }
 
     .title {
       color: var(--q-gb-t-c-18);
 
       span {
-        color: var(--q-gb-bd-c-4);
+        color: var(--q-gb-t-c-19);
       }
     }
 
@@ -315,8 +315,9 @@ const activity_handle = item => {
     padding: 0.13rem;
     align-items: center;
     justify-content: center;
-    border-top: 0.08rem solid var(--q-gb-bg-c-23);
+    border-top: 0.08rem solid var(--q-gb-bg-c-21);
     background: var(--q-gb-bg-c-25);
+    color: var(--q-gb-t-c-18);
     span {
       font-size: 0.18rem;
     }

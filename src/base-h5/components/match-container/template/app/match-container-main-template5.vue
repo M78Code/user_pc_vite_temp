@@ -43,7 +43,7 @@
           :class="[(' match-indent league')]">
           <div class="league-t-wrap right-border">
             <!-- 联赛收藏 -->
-            <template v-if="![3000, 900].includes(menu_type)" @click.stop="handle_league_collect">
+            <template v-if="![3000, 900].includes(menu_type)">
               <img v-if="!league_collect_state" class="favorited-icon"
                 src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt="" @click.stop="handle_league_collect" />
               <img v-if='league_collect_state' class="favorited-icon" src="/src/base-h5/assets/match-list/ico_fav_sel.png"
@@ -196,10 +196,9 @@
           </div>
           <!--  新手版-赛事比分信息 -->
           <div class="match-score-info">
-            <div v-show="match?.ms != 0 && match?.csid != 1">
+            <template v-if="match?.ms != 0 && match?.csid != 1">
               <score-list :main_source="main_source" :match="match"></score-list>
-            </div>
-
+            </template>
           </div>
         </div>
       </div>
@@ -915,6 +914,9 @@ export default {
         display: flex;
         justify-content: flex-end;
         align-items: center;
+      }
+      .score-se-inner2{
+        display: flex;
       }
     }
 

@@ -14,9 +14,10 @@
           <q-slide-transition>
             <template>
               <div v-for="(item2, key) in value.data" :key="key" :item_data="item2" class="cathectic-item">
-              <!-- 单关、串关内容显示 -->
               <template>
-                <item-simple-body v-if="item2.seriesType == '1'" :data_b="item2"></item-simple-body>
+                <!-- 单关、冠军 -->
+                <item-simple-body v-if="item2.seriesType == '1' || item2.seriesType == '3'" :data_b="item2"></item-simple-body>
+                <!-- 串关内容显示 -->
                 <item-multiple-body v-else :data_b="item2"></item-multiple-body>
               </template>
               <template>
