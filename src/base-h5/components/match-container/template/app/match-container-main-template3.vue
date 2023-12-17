@@ -1007,7 +1007,7 @@ export default {
         position: relative;
 
         &.simple {
-          width: 1.72rem;
+          // width: 1.72rem;
 
           &:first-child {
             margin-bottom: -0.04rem !important;
@@ -1072,10 +1072,14 @@ export default {
 
           .team-t-title-w {
             font-size: 0.12rem;
-            // height: 0.3rem;
+            display: block;
             -webkit-line-clamp: 2;
-            display: flex;
+            // display: flex;
             flex-direction: column-reverse;
+            overflow: hidden;
+            width: 1.6rem;
+            text-overflow: ellipsis;
+            flex-wrap: nowrap;
             &.is-handicap {
               font-weight: bold;
             }
