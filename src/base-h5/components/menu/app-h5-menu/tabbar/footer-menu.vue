@@ -4,7 +4,7 @@
       <div class="footer-menu-item" @click="menu_item_click(item)" v-for="(item, k) of footer_menu_list" :key="k">
         <div class="m-item-inner">
           <div class="item-img-wrapper c-refresh">
-            <img class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading}" :src="item.icon" alt="" />
+            <img class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading }" :src="item.icon" alt="" />
           </div>
           <div class="menu-item-title" >
             <span class="title-p1">  {{ item.title }}</span>
@@ -66,6 +66,7 @@ watch(UserCtr.user_version, () => {
   footer_menu_list.value.forEach(item=>{
     if (item.id === 5){
       item.title = UserCtr.daily_activities ? '每日活动' : i18n_t('footer_menu.refresh')
+      item.icon = UserCtr.daily_activities ? `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_05_change_nor.svg` : `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_05_nor.png`;
     }
   })
 })
