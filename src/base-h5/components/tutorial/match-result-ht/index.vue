@@ -4,9 +4,9 @@
 <template>
     <div :class="['ht-content', state.source === 'bigAndSmallBall' && 'ht-border']">
         <div class="ht-title">
-            <div class="pattern"></div>
+            <!-- <div class="pattern"></div> -->
             <div class="title">
-                {{ option.ballNumber }}
+                <span>{{ option.ballNumber }}</span>
                 <span>{{ option.title }}</span>
             </div>
             <div class="hint" v-if="state.source === 'bigAndSmallBall'">{{ i18n_t('app_h5.handicap_tutorial.big_small_ball_tip') }}</div>
@@ -95,6 +95,9 @@ const state = reactive({
 
 .ht-content {
     padding-bottom: .2rem;
+    margin: 0 .2rem .16rem .2rem;
+    background-color: var(--q-gb-bg-c-23);
+    border-radius: .2rem;
     border-top: .01rem solid transparent;
     .pb20 {
         padding-bottom: .2rem !important;
@@ -107,7 +110,7 @@ const state = reactive({
         padding-bottom: .15rem;
         display: flex;
         align-items: center;
-        border-bottom: .01rem solid var(--q-gb-bd-c-6);
+        justify-content: center;
 
         .pattern {
             width: .03rem;
@@ -126,6 +129,7 @@ const state = reactive({
 
             span {
                 font-weight: bold;
+                margin-right: .04rem;
             }
         }
 

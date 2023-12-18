@@ -1,22 +1,28 @@
+.ht-bg-color {
+    background-color: var(--q-gb-bg-c-18);
+}
 .ht-switch-box {
     display: flex;
     justify-content: space-between;
-    border-bottom: .01rem solid var(--q-gb-bd-c-6);
+    // border-bottom: .01rem solid var(--q-gb-bd-c-6);
     color: var(--q-gb-t-c-20);
+    align-items: center;
+    width: 2rem;
     .switch-item {
         flex:1;
         display: flex;
         justify-content: center;
-        color: var(--q-gb-t-c-20);
+        color: var(--q-gb-bg-c-8);
         span {
-            padding: .14rem .16rem;
+            // padding: .14rem .16rem;
             font-size: .16rem;
         }
     }
     .switch-item-active {
         color: var(--q-gb-t-c-18);
         span {
-            border-bottom: .02rem solid var(--q-gb-t-c-1);
+            font-size: .18rem;
+            font-weight: 500;
         }
     }
 }
@@ -27,19 +33,21 @@
     padding: .14rem .15rem;
     width: 100%;
     overflow-x: scroll;
-    border-bottom: .08rem solid var(--q-gb-bg-c-11);
     color: var(--q-gb-t-c-18);
 
     .slide-item-active {
         span {
-            background-color: var(--q-gb-t-c-1);
+            background-color: var(--q-gb-bg-c-4);
             border-radius: .2rem;
-            color: var(--q-gb-t-c-18);
+            color: var(--q-gb-bg-c-25);
         }
     }
     .slide-item {
         flex:0 0 .74rem;
         color: var(--q-gb-t-c-18);
+        border-radius: .2rem;
+        border: .01rem solid var(--q-gb-bg-c-4);
+        margin-right: .12rem;
         span {
             display: flex;
             justify-content: center;
