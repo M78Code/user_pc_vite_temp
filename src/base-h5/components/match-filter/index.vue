@@ -428,13 +428,17 @@ function type_select(li_item) {
 // 获取已选择的联赛数据
 const get_league_select_list = ()=>{
   list.value = list.value.map(sub=>{
-    UserCtr.league_select_list.forEach(item=>{
+    UserCtr.league_select_list?.forEach(item=>{
       if (sub.id === item.id){
         sub.select = item.select
       }
     })
      return sub
   })
+  // 如果全部勾选 再次进来 全部取消勾选
+  if (list.value.every(({ select }) => select)) {
+    list.value.forEach(item => item.select = false)
+  }
 }
 // 获取筛选数据外层列表
 function fetch_filter_match() {
