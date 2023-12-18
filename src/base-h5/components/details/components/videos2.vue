@@ -210,7 +210,7 @@
           <template v-else>
             <div class="row justify-between full-height mx-15"  @click.stop="click_mask">
                <!-- 缩放按钮 -->
-              <!-- <img v-if="get_is_full_screen" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/> -->
+              <img v-if="get_is_full_screen && show_exit_btn" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
             
               <div class="col-1 go-back-btn-wrap" @click="close_video" >
                 <div class="video_back"></div>
@@ -568,6 +568,7 @@ export default {
     'detail_data', //详情数据
     'show_icon_status', // 是否展示图标
     'fix_status', // 是否显示固钉
+    'show_exit_btn', // 欧洲版显示旧的退出全屏
   ],
   watch: {
     get_is_full_screen(value) {
@@ -1963,6 +1964,7 @@ export default {
     position: absolute;
     right: 0px;
     bottom: 2px;
+    z-index:9991;
   }
   .ml-8 {
     margin-left: 8px;
