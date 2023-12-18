@@ -2188,7 +2188,15 @@
     "top_32": "16th-finals",
     "top_64": "32nd-finals",
     "vitality_performance": "Performance",
-    "win_tie_loss": "W/D/L"
+    "win_tie_loss": "W/D/L",
+    "balance": "Seimbang",
+    "matching": "Dalam permainan",
+    "show_all_markets": "Tunjukkan semua pasaran",
+    "match_detail": {
+      "leaderboard": "Senarai kedudukan",
+      "historical_results": "Keputusan sejarah",
+      "bet": "pertaruhan"
+    }
   },
   "new_menu": {
     "1": "InPlay",

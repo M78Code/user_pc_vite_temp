@@ -441,6 +441,10 @@ export const category_info = (category_arr=[]) => {
           temp = get_details_data_cache_fillter(
             details_data_cache[`${match_id.value}-0`]
           );
+          if (temp.length==0) {
+            temp = details_data_cache[`${match_id.value}-0`];
+          }
+         
         }
       } catch (error) {
         console.error(error);
@@ -483,7 +487,7 @@ export const category_info = (category_arr=[]) => {
       details_data_cache[`${match_id.value}-${get_details_item.value}`] = temp;
       SessionStorage.set("DETAILS_DATA_CACHE", details_data_cache)
       // 切换tab时变更mid_obj里面的odds_info对象数据
-      MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(params.mid) ,temp)
+      MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(match_id.value) ,temp)
       // set_details_data_cache(details_data_cache);
       
     } catch (err) {

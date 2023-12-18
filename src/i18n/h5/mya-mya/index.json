@@ -2176,7 +2176,15 @@
     "top_32": "၃၂ သင်း",
     "top_64": "၆၄ ကြိမ်မြောက်",
     "win_tie_loss": "နိုင်/သရေ/အရှုံး",
-    "vitality_performance": "တက်ကြွမှု"
+    "vitality_performance": "တက်ကြွမှု",
+    "balance": "လက်ကျန်",
+    "matching": "ဂိမ်းထဲမှာ",
+    "show_all_markets": "စျေးကွက်အားလုံးကိုပြသပါ။",
+    "match_detail": {
+      "leaderboard": "အဆင့်စာရင်း",
+      "historical_results": "သမိုင်းဝင်ရလဒ်များ",
+      "bet": "အလောင်းအစား"
+    }
   },
   "section_play": "",
   "pan_paly": ""

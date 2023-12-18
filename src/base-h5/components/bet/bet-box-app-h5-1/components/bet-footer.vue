@@ -2,7 +2,7 @@
 
 <template>
 
-    <div v-show="false">  {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{UserCtr.user_version}}</div>
+    <div v-show="false">{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{UserCtr.user_version}}</div>
     
     <!-- 自动接受更好的赔率 -->
     <div class="accept" :class="!BetData.bet_is_accept ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
@@ -21,14 +21,20 @@
           <img :src="compute_local_project_file_path('/image/svg/delete5.svg')" alt="">
         </div>
 
+     
         <div class="bet-box-line">
           <div class="middle font16">
             {{ i18n_t('bet.betting') }}
-            <span class="yb-info-money font14">
-            {{ i18n_tc('app_h5.bet.bet_win',{"total":BetData.bet_amount}) }}</span>
+            <!-- 单关 -->
+            <span class="yb-info-money font14" v-if="BetData.is_bet_single"> {{ i18n_tc('app_h5.bet.bet_win',{"total": bet_win_money(BetData.bet_data_class_version) }) }}</span>
+            <span class="yb-info-money font14" v-else>{{ i18n_t('bet.sum') }}{{bet_total(BetViewDataClass.bet_view_version) }}</span>
           </div>
           <img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt="">
         </div>
+
+        <!-- 串关 -->
+       
+        
         
 
         <div @click="set_bet_single" class="bet-single f-c-c font500" :class="!BetData.is_bet_single ? 'font14':'font16'">
@@ -42,7 +48,7 @@
       <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub font500">确认</div>
       <!--  串关  -->
       <div v-else>
-        <div @click="set_confirm" class="sub">注单已确认 <span class="sub-total">合计17,650.00</span></div>
+        <div @click="set_confirm" class="sub">注单已确认 <span class="sub-total">合计{{bet_total(BetViewDataClass.bet_view_version)}}</span></div>
         <div @click="set_retain_selection" class="reserve font500">保留选项，继续投注</div>
       </div>
 
@@ -52,13 +58,14 @@
 
 <script setup>
 import lodash_ from "lodash"
-import { onMounted, ref } from "vue"
+import { computed, onMounted, ref } from "vue"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { UserCtr ,format_money2,compute_local_project_file_path} from "src/output/index.js"
+import { odds_table } from "src/core/constant/common/module/csid.js"
 import { i18n_tc } from "src/boot/i18n.js"
 
 let timer;
@@ -67,6 +74,30 @@ const fab_pos = ref([20, 23])
 const dragging_fab = ref(false)
 // 滑块组件数据
 const silider = ref(null)
+
+// status 是响应式的 可以用于重新计算
+const bet_win_money = computed(()=> status => {
+  // 获取单关投注的数据
+  const { bet_amount, oddFinally, odds_hsw } = lodash_.get(BetData,'bet_single_list[0]',{})
+  let bet_win = bet_amount
+  // 香港赔 不用减去投注金额
+  if(odds_hsw.includes(odds_table[UserCtr.odds.cur_odds]) && UserCtr.odds.cur_odds == 'HK' ){
+    bet_win = 0
+  }
+  // 计算出可赢金额
+  return format_money2(mathJs.subtract(mathJs.multiply(bet_amount,oddFinally), bet_win)) 
+})
+
+// status 是响应式的 可以用于重新计算
+const bet_total = computed(()=> status => {
+  // 获取串关投注的数据
+  let bet_total_money = BetViewDataClass.bet_special_series.reduce((pre, cur) => {
+    return pre*1 + (cur.bet_amount * cur.count || 0)*1;
+  }, 0)
+  // 计算出合计金额
+  return format_money2(bet_total_money)
+})
+
 
 // 滑动投注
 const handle_silider = (e) => {

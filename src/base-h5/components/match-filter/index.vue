@@ -438,13 +438,17 @@ function type_select(li_item) {
 // 获取已选择的联赛数据
 const get_league_select_list = ()=>{
   list.value = list.value.map(sub=>{
-    UserCtr.league_select_list.forEach(item=>{
+    UserCtr.league_select_list?.forEach(item=>{
       if (sub.id === item.id){
         sub.select = item.select
       }
     })
      return sub
   })
+  // 如果全部勾选 再次进来 全部取消勾选
+  if (list.value.every(({ select }) => select)) {
+    list.value.forEach(item => item.select = false)
+  }
 }
 // 获取筛选数据外层列表
 function fetch_filter_match() {
@@ -699,17 +703,17 @@ if (type.value == 30) {
     width: 0.48rem;
     height: 0.48rem;
     font-size: 0.28rem;
-    background: var(--q-gb-bg-c-13) no-repeat center / 98%;
+    background: var(--q-gb-bg-c-30) no-repeat center / 98%;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: .48rem;
-    color: var(--q-gb-bg-c-15);
+    color: var(--q-gb-t-c-14);
     &::after {
       content: ' ';
       border-top:  .20rem solid transparent;
       border-bottom:  .20rem solid transparent;
-      border-left:  .20rem solid var(--q-gb-bg-c-13);
+      border-left:  .20rem solid var(--q-gb-bg-c-30);
       position: absolute;
       right: -0.1rem;
       border-radius: 0.16rem;
@@ -904,7 +908,7 @@ if (type.value == 30) {
 
   .scroll-title {
     height: .4rem;
-    background-color: var(--q-gb-bg-c-11);
+    background-color: var(--q-gb-bg-c-23);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -990,7 +994,7 @@ if (type.value == 30) {
 }
 
 .content_box1 {
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-23);
   color: var(--q-color-fs-color-3);
 
   .content_box2 {
@@ -1048,4 +1052,4 @@ if (type.value == 30) {
 .icon_keep:before {
   color: var(--q-color-fs-color-50);
 }
-</style>src/output
+</style>

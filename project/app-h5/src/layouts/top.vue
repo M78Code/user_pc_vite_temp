@@ -287,7 +287,13 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   const set_menu_mi_change_get_api_data = () => {
     // 收藏
     if(MenuData.is_collect()){
-      return MatchMeta.get_collect_match()
+      // 电竞收藏
+      if (MenuData.is_esports()) {
+        MatchMeta.get_esports_collect_match()
+      } else {
+        MatchMeta.get_collect_match()
+      }
+      return 
     }
     // 今日 / 滚球 早盘 串关 
     if([1,2,3,6].includes(MenuData.current_lv_1_menu_mi.value)){

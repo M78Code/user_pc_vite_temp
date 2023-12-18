@@ -58,10 +58,10 @@ const bigAndSmallBallData = [
         awayTeamScore: "",
         condition: i18n_t('app_h5.handicap_tutorial.handicapData_condition'), 
         matchList: [
-            { homeTeam: i18n_t('app_h5.handicap_tutorial.all_win'), awayTeam: i18n_t('app_h5.handicap_tutorial.all_lose'), matchResult: '3', winIsWho: 'homeTeam', note: '', homeTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '2.5'), awayTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '2.5') },
-            { homeTeam: i18n_t('app_h5.handicap_tutorial.win_half'), awayTeam: i18n_t('app_h5.handicap_tutorial.lose_half'), matchResult: '3', winIsWho: 'homeTeam', note: '', homeTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '2.5/3'), awayTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '2.5/3')},
-            { homeTeam: i18n_t('app_h5.handicap_tutorial.lose_half'), awayTeam: i18n_t('app_h5.handicap_tutorial.win_half'), matchResult: '3', winIsWho: 'awayTeam', note: '', homeTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '3/3.5'), awayTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '3/3.5')},
-            { homeTeam: i18n_t('app_h5.handicap_tutorial.return_principal_discount'), awayTeam: i18n_t('app_h5.handicap_tutorial.return_principal_discount'), matchResult: '3', winIsWho: '', note: '', homeTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '3'), awayTeamText: i18n_t('app_h5.handicap_tutorial.small_bet').replace('%s', '3')}
+            { ballNumber: i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '2.5'), homeTeam: i18n_t('app_h5.handicap_tutorial.all_win'), awayTeam: i18n_t('app_h5.handicap_tutorial.all_lose'), matchResult: '3', winIsWho: 'homeTeam', note: '', homeTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '2.5'), awayTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '2.5'), note: i18n_t('app_h5.handicap_tutorial.note_2') },
+            { ballNumber: i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '2.5/3'), homeTeam: i18n_t('app_h5.handicap_tutorial.win_half'), awayTeam: i18n_t('app_h5.handicap_tutorial.lose_half'), matchResult: '3', winIsWho: 'homeTeam', note: '', homeTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '2.5/3'), awayTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '2.5/3'), note: i18n_t('app_h5.handicap_tutorial.note_2')},
+            { ballNumber: i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '3/3.5'), homeTeam: i18n_t('app_h5.handicap_tutorial.lose_half'), awayTeam: i18n_t('app_h5.handicap_tutorial.win_half'), matchResult: '3', winIsWho: 'awayTeam', note: '', homeTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '3/3.5'), awayTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '3/3.5'), note: i18n_t('app_h5.handicap_tutorial.note_2')},
+            { ballNumber: i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '3'), homeTeam: i18n_t('app_h5.handicap_tutorial.return_principal_discount'), awayTeam: i18n_t('app_h5.handicap_tutorial.return_principal_discount'), matchResult: '3', winIsWho: '', note: '', homeTeamText: i18n_t('app_h5.handicap_tutorial.big_bet').replace('%s', '3'), awayTeamText: i18n_t('app_h5.handicap_tutorial.small_bet').replace('%s', '3'), note: i18n_t('app_h5.handicap_tutorial.note_2')}
         ]
     },
 ]
@@ -74,7 +74,7 @@ const handicapData = [
         condition: i18n_t('app_h5.handicap_tutorial.handicapData_condition'),
         matchList: [
             { homeTeam: i18n_t('app_h5.handicap_tutorial.all_win'), awayTeam: i18n_t('app_h5.handicap_tutorial.all_lose'), matchResult: '1 - 0', winIsWho: 'homeTeam', note: i18n_t('app_h5.handicap_tutorial.note_1'), },
-            { homeTeam: i18n_t('app_h5.handicap_tutorial.return_principal'), awayTeam: i18n_t('app_h5.handicap_tutorial.return_principal'), matchResult: '0 - 0', winIsWho: '', note: '' },
+            { homeTeam: i18n_t('app_h5.handicap_tutorial.return_principal'), awayTeam: i18n_t('app_h5.handicap_tutorial.return_principal'), matchResult: '0 - 0', winIsWho: '', note: i18n_t('app_h5.handicap_tutorial.note_2') },
         ]
     },
     {
