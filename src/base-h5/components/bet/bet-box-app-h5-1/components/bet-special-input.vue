@@ -161,8 +161,10 @@ const set_special_series = (money,ty_id) => {
     line-height: .24rem;
     color: var(--q-gb-t-c-11);
     padding: 0 .12rem;
+    font-weight: 700;
+    font-family: PingFang SC;
     .total-money {
-      color: #F53F3F;
+      color: var(--q-gb-t-c-21);
     }
   }
   .bet_single_detail{
