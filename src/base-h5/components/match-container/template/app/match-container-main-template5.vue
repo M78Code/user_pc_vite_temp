@@ -498,7 +498,7 @@ export default {
   .date-container {
     background-color: var(--q-color-com-bg-color-12);
     width: 100%;
-    color: #999;
+    color: var(--q-gb-t-c-4);
     padding: 0 0 0 0.08rem;
     height: 0.2rem;
     display: flex;
@@ -584,7 +584,7 @@ export default {
 
       .goto-detail {
         .count_span {
-          color: var(--sys-brand-secodary-secondary-300, #AFB3C8);
+          color: var(--sys-brand-secodary-secondary-300, --q-gb-t-c-19);
           text-align: right;
           font-family: Akrobat;
           font-size: 10px;
@@ -599,7 +599,7 @@ export default {
 
     .timer-wrapper-c {
       height: 100%;
-      color: #999;
+      color: var(--q-gb-t-c-4);
 
       &.newer {
         margin-left: 0;
@@ -817,7 +817,7 @@ export default {
       .match-league {
         max-width: 2.8rem;
         line-height: 0.14rem;
-        color: var(--sys-brand-secodary-secondary-800, #303442);
+        color: var(--q-gb-t-c-18);
         font-family: PingFang SC;
         font-size: 12px;
         font-weight: 600;
@@ -837,7 +837,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #303442;
+        color: var(--q-gb-t-c-18);
         font-size: 12px;
         font-weight: 400;
 
@@ -962,7 +962,7 @@ export default {
 
         .timer-wrapper-c {
           height: 100%;
-          color: #999;
+          color: var(--q-gb-t-c-4);
           gap: 2px;
 
           &.newer {
@@ -979,7 +979,7 @@ export default {
         .count_span {
           font-size: 10px;
           font-weight: 500;
-          color: #afb3c8;
+          color: var(--q-gb-t-c-19);
           display: flex;
           align-items: center;
         }
