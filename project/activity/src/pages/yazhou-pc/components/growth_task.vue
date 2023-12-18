@@ -762,7 +762,7 @@ export default {
       }
 
       .text-666 {
-        height: 60px;
+        min-height: 60px;
         line-height: 60px;
         font-size: 16px;
       }
