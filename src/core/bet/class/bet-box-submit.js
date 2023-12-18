@@ -656,13 +656,16 @@ const set_error_message_config = (res ={},type,order_state) => {
     }
     // 获取限额失败的信息
     if(PROJECT_NAME == 'app-h5'){
-        console.error('ssss')
         let text =  obj.message 
         // 没有做国际化的code
         if(BetViewDataClass.error_code_list.includes(res.code)){
             text = i18n_t(obj.message)
         }
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
+        // 投注前 提示 投注完成后不提示
+        if(BetViewDataClass.bet_order_status == 1){
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
+        }
+        
     }else{
         BetViewDataClass.set_bet_before_message(obj)
     }
@@ -886,7 +889,12 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     let play_id = [4]
     // 详情 并且本地没有配置玩法
     if(other.is_detail){
-        play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,play_name)
+        play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+        if(!play_name){
+            let odds_info_list = lodash_.get(mid_obj,`odds_info`,[])
+            odds_info_list.find()
+
+        }
     }else{
         let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,play_name)
           // 冠军玩法 部分玩法hpid相同 
@@ -1148,8 +1156,7 @@ const get_market_is_show = (obj={}) =>{
 
     return !!hl_obj.hid
 }
-const   go_to_bet=(ol_item)=>{
-    debugger
+const go_to_bet = (ol_item) => {
     // 如果是赛果详情
     if(PageSourceData.route_name == 'match_result') return
     const {oid,_hid,_hn,_mid,_hpid } = ol_item
