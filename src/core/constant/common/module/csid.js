@@ -316,6 +316,16 @@ export const league_sprite_images_postion = {
   8:39,//中超
 }
 
+// 赔率映射值
+export const odds_table = {
+  EU: '1',
+  HK: '2',
+  MY: '3',
+  GB: '4',
+  US: '5',
+  ID: '6',
+}
+
 // 独赢类玩法
 export const only_win = {
   1:[1,13,17,25,32,101,105,106,111,119,126,129,231,310,311,326,329,333,345,346,353,370,384],
