@@ -1038,6 +1038,7 @@ export default {
       display: flex;
       align-items: center;
       font-size: 0.1rem;
+      
     }
 
     .team-wrapper {
@@ -1178,6 +1179,7 @@ export default {
           line-height: 0.14rem;
           display: flex;
           align-items: center;
+          color: var(--q-gb-t-c-18);
           .yb-flex-center{
             padding-left: 2px;
             .yb-goal-gif{
