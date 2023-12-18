@@ -1,6 +1,6 @@
 <template>
     <div class="handicap-tutorial ht-bg-color">
-        <navigation-bar class="ht-bg-color" borderBottomNoShow centerContentType="switch">
+        <navigation-bar class="ht-bg-color" :title="i18n_t('app_h5.handicap_tutorial.answer_question')" borderBottomNoShow :centerContentType="state.inAnswerQuestion ? 'text' : 'switch'">
             <!-- '让球', '大小球' -->
             <template v-slot:center>
                 <div class="ht-switch-box">
@@ -16,7 +16,7 @@
 
 
         <!-- 球数 -->
-        <div class="ht-slide-box ht-bg-color">
+        <div v-if="!state.inAnswerQuestion" class="ht-slide-box ht-bg-color">
             <div v-for="(item, index) in state.currentSwitchValue !== 1 ? slideMenu : bigSmallBallMenu"
                 @click="slideHandle(index, $event)" :class="['slide-item', state.currentSlideValue === index &&
                     'slide-item-active']" :key="'ht-slide-' + index">
@@ -36,7 +36,7 @@
         <template v-else>
             <template v-if="!state.inAnswerQuestion">
                 <div class="ht-bsball-text">{{ i18n_t('app_h5.handicap_tutorial.big_small_ball_tip') }}</div>
-                <div class="ht-bg-color">
+                <div class="ht-bsball-scroll ht-bg-color">
                     <match-result-ht v-for="(item, index) in bigAndSmallBallData" :option="item"
                         :key="'matchResultHtBalls' + index" :source="'bigAndSmallBall'"></match-result-ht>
                 </div>
@@ -82,13 +82,14 @@ const slideMenu = [
     '0.5/1',
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1/1.5'),
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1.5'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1.5/2')
 ]
 const bigSmallBallMenu = [
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '2.5'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '2.5/3'),
-    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '3'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '3/3.5'),
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '3'),
 ]
 
 const router = useRouter()
@@ -107,16 +108,26 @@ const go_back = () => {
 
 const switchHandle = (val) => {
     state.currentSwitchValue = val
+    state.currentSlideValue = 0
     state.inAnswerQuestion = false // 切换swtich 重置答题状态
 }
 
 const slideHandle = (val, e) => {
+    let topH = 0
     state.currentSlideValue = val
-    scrollMenuEvent(e, ".ht-slide-box", ".slide-item-active");
-    const scrollContainer = document.getElementsByClassName('ht-scroll')[0]
-    const contentContainer = document.getElementsByClassName('ht-content')[val]
-    const topH = contentContainer.offsetTop - scrollContainer.offsetTop
-    scrollContainer.scrollTop = topH
+    if (state.currentSwitchValue) {
+        scrollMenuEvent(e, ".ht-slide-box", ".slide-item-active");
+        const scrollContainer = document.getElementsByClassName('ht-bsball-scroll')[0]
+        const contentContainer = document.getElementsByClassName('bsball-list')[val]
+        topH = contentContainer.offsetTop - scrollContainer.offsetTop
+        scrollContainer.scrollTop = topH
+    } else {
+        scrollMenuEvent(e, ".ht-slide-box", ".slide-item-active");
+        const scrollContainer = document.getElementsByClassName('ht-scroll')[0]
+        const contentContainer = document.getElementsByClassName('ht-content')[val]
+        topH = contentContainer.offsetTop - scrollContainer.offsetTop
+        scrollContainer.scrollTop = topH
+    }
 }
 
 const handleScroll = (e) => {
