@@ -26,7 +26,7 @@ import { i18n_t,i18n_tc } from "src/boot/i18n.js"
 import { odds_table } from "src/core/constant/common/module/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import PageSourceData from "src/core/page-source/page-source.js";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { MenuData } from 'src/output/module/menu-data.js'
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 let time_out = null
@@ -1147,7 +1147,7 @@ const   go_to_bet=(ol_item)=>{
     }else if(MenuData.is_kemp()){
         bet_type ="guanjun_bet"
     }else if(MenuData.is_vr()){
-        bet_type ="“vr_bet”，"
+        bet_type ="vr_bet"
     }
     let params = {
       oid, // 投注项id ol_obj

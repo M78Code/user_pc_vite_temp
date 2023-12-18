@@ -465,7 +465,7 @@ const item_click3 = lodash.debounce(() => {
   } else if (MenuData.is_kemp()) {
     bet_type = 'guanjun_bet'
   } else if (MenuData.is_vr()) {
-    bet_type = '“vr_bet”，'
+    bet_type = 'vr_bet'
   }
   if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
     if (MenuData.get_menu_type() == 900 && $route.name == 'virtual_sports') { //虚拟体育走这里逻辑
