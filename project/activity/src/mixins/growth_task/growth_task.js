@@ -4,6 +4,7 @@ import { api_activity } from "src/api/index.js";
 import acticity_mixin from "project/activity/src/mixins/acticity_mixin/acticity_mixin";
 import { UserCtr } from "project_path/src/core/index.js";
 import { GATAG, is_time_limit } from "project_path/src/core/index.js";
+import dayjs from 'dayjs'
 
 
 export default {
@@ -89,13 +90,17 @@ export default {
         // 跟产品沟通接口有限频，前端不用做限制
         if (is_time_limit.call(this, null)) return; //  防止调用多次接口
         let parameter = { current, size: 7, actId: this.actId };
-        let { code, data } = await api_activity.get_activity_receive_record(parameter);
+        let res = await api_activity.get_activity_receive_record(parameter);
+        const { code, data, message } = res
         if (code == 200 && data.records.length > 0) {
-          // data.records.map((item, index) => {
-          //   if (item.taskName.includes("\n")) {
-          //     item.taskName = item.taskName.replace(/\n/g, "<br/>")
-          //   }
-          // })
+          data.records.forEach((item, index) => {
+            if (item.taskName.includes("\n")) {
+              item.taskName = item.taskName.replace(/\n/g, "<br/>")
+            }
+            if(item.receiveTime){
+              item.receiveTime = dayjs(+item.receiveTime).format('YYYY-MM-DD HH:mm:ss')
+            }
+          })
           this.history_records = data.records;
           // this.result_page_info  "total"  +data.total
           this.history_alert = true;
@@ -106,7 +111,7 @@ export default {
         } else if (["0401038"].includes(code)) {
           // const msg_nodata_22 = i18n_t("msg.msg_nodata_22");
           const msg_nodata_22 = i18n_t("msg.msg_nodata_22");
-          this.$toast(msg_nodata_22, 1500);
+          this.$toast(typeof msg_nodata_22 === 'string' ? msg_nodata_22 : message, 1500);
         } else {
           this.$toast("暂无历史记录数据", 1500);
         }

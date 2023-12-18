@@ -17,6 +17,7 @@
         "copy-html": "node ./job/copy-html.js",
         "export-html": "node ./job/export-html.js",
         "export-css-project-path": "node ./job/export-css-project-path.js",
+        "export-check-json": "node ./job/export-check-json.js",
         
         "divider--1--2": "echo  -------------------------通用基础命令  结束----------------------------- ",
         "divider--2--1": "echo  -------------------------服务端配置拆分命令  开始----------------------------- ",
@@ -43,7 +44,7 @@
         "dev-activity-inner": "vite    --config  ./entries/activity/activity.vite.config.js",
         "build-activity-inner": "vite   build --config  ./entries/activity/activity.vite.config.js  --mode  production",
         "dev-activity": "run-s remove-output  env-dev  export-build-version-activity   remove-dist copy-oss-backup   copy-oss-output  export-build-in-config  export-css-project-path   export-html dev-activity-inner",
-        "build-activity": "run-s remove-output env-prod  export-build-version-activity   remove-dist copy-oss-backup   copy-oss-output export-build-in-config  export-css-project-path   export-html   build-activity-inner   copy-html copy-oss-dist   remove-dist-assets",
+        "build-activity": "run-s remove-output env-prod  export-build-version-activity   remove-dist copy-oss-backup   copy-oss-output export-build-in-config  export-css-project-path   export-html   build-activity-inner   copy-html copy-oss-dist   remove-dist-assets export-check-json",
         "divider--12--2": "echo  -------------------------活动项目  结束----------------------------- ",
         "divider--13--1": "echo  -------------------------动画项目  开始----------------------------- ",
         "export-build-version-animation": "node ./job/export-build-version-animation.js",
