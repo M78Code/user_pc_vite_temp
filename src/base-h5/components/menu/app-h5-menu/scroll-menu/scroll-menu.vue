@@ -63,7 +63,7 @@ const props = defineProps({
   },
 })
 const scrollDataListNew = computed(()=>{
-  // if(MenuData.is_esports())return props.scrollDataList;
+  if(MenuData.is_results())return props.scrollDataList;
   return [...[{mi:50000,btn:1,ct:0,title:"收藏"}],...props.scrollDataList]
 })
 const emits = defineEmits(['changeList','changeMenu'])
