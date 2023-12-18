@@ -751,22 +751,46 @@ class MatchMeta {
    * @description 获取最近一组15分玩法数据
    * @param {*} payload 正在比赛的数据
    */
-    assemble_15_minute_data = (payload) => {
-      return payload.map((item) => {
-        const { ms, mst } = item
-        const { title, isLock } = MatchUtils.get_match_15_minute_stage(ms, mst)
-        return {
-          title,
-          isLock,
-          ...item,
-          match_data_type: 'h5_ten_five_mins',
-          icon: String(Number(item.csid ) + 100)
-        }
-      })
-    }
+  assemble_15_minute_data = (payload) => {
+    return payload.map((item) => {
+      const { ms, mst } = item
+      const { title, isLock } = MatchUtils.get_match_15_minute_stage(ms, mst)
+      return {
+        title,
+        isLock,
+        ...item,
+        match_data_type: 'h5_ten_five_mins',
+        icon: String(Number(item.csid ) + 100)
+      }
+    })
+  }
 
   /**
-   * @description 获取收藏赛事
+   * @description 获取电竞收藏赛事
+   */
+  async get_esports_collect_match() {
+    this.clear_match_info()
+    try { 
+      const dianjing_list = lodash.get(BaseData, 'dianjing_sublist', [])
+      const csids = dianjing_list.map(item => item.csid).join(',')
+      const euid_arr = dianjing_list.map(item => item.mi && MenuData.get_euid(item.mi+'')).join(',')
+      const params = this.get_base_params()
+      const res = await api_common.post_esport_collect({
+        ...params,
+        type: 3000,
+        csid: csids,
+        euid: euid_arr,
+        md: MenuData.data_time,
+      })
+      this.handler_collect_match_list(res)
+    } catch (err) {
+      console.error(err)
+      this.set_page_match_empty_status({ state: true, type: 'noWifi' }); 
+    }
+  }
+
+  /**
+   * @description 获取常规赛事收藏赛事
    */
   async get_collect_match () {
     this.clear_match_info()
@@ -777,11 +801,7 @@ class MatchMeta {
     // 复刻版收藏
     if (project_name === 'app-h5' && lv_2_menu_i == 50000) {
       const menu_list = lodash.get(MenuData,'menu_list')
-      const euid_arr = []
-      menu_list.forEach(item => {
-        item.mi && euid_arr.push(MenuData.get_euid(item.mi+''+lv1_mi))
-      })
-      euid = euid_arr.join(',')
+      euid = menu_list.map(item => MenuData.get_euid(item.mi+''+lv1_mi)).join(',')
     } else if(lv_2_menu_i == 0){
       // 根据 菜单id 获取euid
       mid_list.forEach(item => {
@@ -795,25 +815,36 @@ class MatchMeta {
     const params = this.get_base_params(euid)
     delete params.hpsFlag
     try {
-      const res = await api_common.get_collect_matches(params)
-      if (res.code !== '200') return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
-      // 频繁切换菜单， 收藏接口比较慢时 会影响其他页面， 故加上判断
-      if (!MenuData.is_collect()) return
-      const list = lodash.get(res, 'data', [])
-      
-      if (list && list.length > 0) {
-        const is_virtual = project_name === 'app-h5' ? true : false
-        this.handler_match_list_data({ list: list, is_virtual, merge: 'cover' })
-        await MatchCollect.get_collect_match_data(list)
-        // 该赛事是否收藏
-        // list.forEach((t) => {
-        //   MatchCollect.set_match_collect_state(t, true)
-        // })
-      } else {
-        this.set_page_match_empty_status({ state: true });
-      }
-    } catch {
+      const res = await api_common.get_collect_matches({
+        ...params,
+        md: MenuData.data_time
+      })
+      this.handler_collect_match_list(res)
+    } catch (err) {
+      console.error(err)
       this.set_page_match_empty_status({ state: true, type: 'noWifi' }); 
+    }
+  }
+
+  /**
+   * @description 处理收藏赛事
+   */
+  async handler_collect_match_list (res = {}) {
+    if (res.code !== '200') return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
+    // 频繁切换菜单， 收藏接口比较慢时 会影响其他页面， 故加上判断
+    if (!MenuData.is_collect()) return
+    const list = lodash.get(res, 'data', [])
+    
+    if (list && list.length > 0) {
+      const is_virtual = project_name === 'app-h5' ? true : false
+      this.handler_match_list_data({ list: list, is_virtual, merge: 'cover' })
+      await MatchCollect.get_collect_match_data(list)
+      // 该赛事是否收藏
+      // list.forEach((t) => {
+      //   MatchCollect.set_match_collect_state(t, true)
+      // })
+    } else {
+      this.set_page_match_empty_status({ state: true });
     }
   }
 
