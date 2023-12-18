@@ -2,14 +2,13 @@
  * @Description:盘口教程比分展示组件
 -->
 <template>
-    <div :class="['ht-content', state.source === 'bigAndSmallBall' && 'ht-border']">
-        <div class="ht-title">
+    <div :class="['ht-content', state.source === 'bigAndSmallBall' && 'ht-border bsball-content']">
+        <div v-if="state.source !== 'bigAndSmallBall'" class="ht-title">
             <!-- <div class="pattern"></div> -->
             <div class="title">
                 <span>{{ option.ballNumber }}</span>
                 <span>{{ option.title }}</span>
             </div>
-            <div class="hint" v-if="state.source === 'bigAndSmallBall'">{{ i18n_t('app_h5.handicap_tutorial.big_small_ball_tip') }}</div>
         </div>
 
 
@@ -37,21 +36,22 @@
 
         
 
-
-        <div class="match-result-list" v-for="(item, index) in option.matchList" :key="'matchResult' + index">
+        
+        <div :class="['match-result-list', state.source === 'bigAndSmallBall' && 'bsball-list']" v-for="(item, index) in option.matchList" :key="'matchResult' + index">
+            <div class="title" v-if="state.source === 'bigAndSmallBall'">
+                <span>{{ item.ballNumber }}</span>
+            </div>
             <div class="note" v-html="item.note"></div>
             <div :class="['match-result', state.source === 'bigAndSmallBall' && 'mb20']">
                 <div class="left">
                     <div class="home-team teams">
-                        <div class="teams-logo"><img :src="compute_local_project_file_path('/image/svg/home-team-icon.svg')" alt=""></div>
+                        <div v-if="state.source !== 'bigAndSmallBall'" class="teams-logo"><img src="./teams-icon.svg" alt=""></div>
                         <div class="title">{{ i18n_t('app_h5.handicap_tutorial.bet_home_team') }}</div>
-                        <div :class="['result', item.winIsWho === 'homeTeam' && 'win']">{{ item.homeTeam }}</div>
+                        <div :class="['result', item.winIsWho === 'homeTeam' ? 'win' : item.winIsWho ? 'lose' : 'default']">{{ item.homeTeam }}</div>
                     </div>
-                    <!-- <div v-if="item.winIsWho === 'homeTeam'" class="win-icon"><img :src="compute_local_project_file_path('/image/png/coin.png')" alt=""></div> -->
                 </div>
                 <div class="center">
                     <div class="round-ball">
-                        <!-- <div class="title">{{state.source !== 'bigAndSmallBall' ? i18n_t('menu_itme_name.results') : i18n_t('app_h5.handicap_tutorial.enter_ball')}}</div> -->
                         <div class="score">{{ item.matchResult }}</div>
 
                         <div class="text-style" v-html="option.condition"></div>
@@ -59,11 +59,10 @@
                 </div>
                 <div class="right">
                     <div class="away-team teams">
+                        <div v-if="state.source !== 'bigAndSmallBall'" class="teams-logo"><img src="./teams-icon.svg" alt=""></div>
                         <div class="title">{{ i18n_t('app_h5.handicap_tutorial.bet_away_team') }}</div>
-                        <div :class="['result', item.winIsWho === 'awayTeam' && 'win']">{{ item.awayTeam }}</div>
+                        <div :class="['result', item.winIsWho === 'awayTeam' ? 'win' : item.winIsWho ? 'lose' : 'default']">{{ item.awayTeam }}</div>
                     </div>
-                    <!-- <div v-if="item.winIsWho === 'awayTeam'" class="win-icon"><img :src="compute_local_project_file_path('/image/png/coin.png')" alt=""></div> -->
-                    <!-- <div class="win-icon"></div> -->
                 </div>
             </div>
         </div>
@@ -99,6 +98,8 @@ const state = reactive({
 .ht-border {
     border-top: .08rem solid var(--q-gb-bg-c-11);
 }
+
+
 
 .ht-content {
     padding-bottom: .2rem;
@@ -142,85 +143,100 @@ const state = reactive({
         }
     }
 
-    .ht-both-teams {
-        display: flex;
-        justify-content: space-around;
-        padding-top: .2rem;
-        padding-bottom: .56rem;
+    // .ht-both-teams {
+    //     display: flex;
+    //     justify-content: space-around;
+    //     padding-top: .2rem;
+    //     padding-bottom: .56rem;
 
-        .left,
-        .center,
-        .right {
-            flex: 1;
-            color: var(--q-gb-t-c-18);
-        }
+    //     .left,
+    //     .center,
+    //     .right {
+    //         flex: 1;
+    //         color: var(--q-gb-t-c-18);
+    //     }
 
-        .left {
+    //     .left {
+    //         display: flex;
+    //         justify-content: flex-end;
+
+    //         .teams-logo {
+    //             margin-left: .1rem;
+    //             margin-right: -.1rem;
+    //         }
+    //     }
+
+    //     .center {
+    //         display: flex;
+    //         flex-direction: column;
+    //         justify-content: center;
+    //         align-items: center;
+
+    //         .vs {
+    //             font-size: .12rem;
+    //             color: var(--q-gb-bg-c-8);
+    //         }
+
+    //         .text-style {
+    //             text-align: center;
+    //             color: var(--q-gb-t-c-1);
+    //             ;
+    //             font-size: .10rem;
+    //         }
+    //     }
+
+    //     .right {
+    //         display: flex;
+
+    //         .teams-logo {
+    //             margin-left: -.1rem;
+    //             margin-right: .1rem;
+    //         }
+    //     }
+
+    //     .teams {
+    //         display: flex;
+    //         flex-direction: column;
+    //         justify-content: center;
+    //         align-items: center;
+
+    //         .score {
+    //             margin-top: .04rem;
+    //         }
+    //     }
+
+    //     // .teams-logo {
+    //     //     width: .4rem;
+    //     //     height: .4rem;
+    //     //     background-color: var(--q-gb-t-c-1);
+    //     //     border-radius: .4rem;
+    //     //     display: flex;
+    //     //     justify-content: center;
+    //     //     align-items: center;
+    //     // }
+    // }
+
+    .bsball-list {
+        margin-bottom: .16rem;
+        background-color: var(--q-gb-bg-c-23);
+        padding-bottom: .25rem;
+        border-radius: .2rem;
+        .title {
+            font-size: .18rem;
+            font-weight: 600;
             display: flex;
-            justify-content: flex-end;
-
-            .teams-logo {
-                margin-left: .1rem;
-                margin-right: -.1rem;
-            }
-        }
-
-        .center {
-            display: flex;
-            flex-direction: column;
             justify-content: center;
+            height:.49rem;
             align-items: center;
-
-            .vs {
-                font-size: .12rem;
-                color: var(--q-gb-bg-c-8);
-            }
-
-            .text-style {
-                text-align: center;
-                color: var(--q-gb-t-c-1);
-                ;
-                font-size: .10rem;
-            }
+            border: .01rem solid var(--q-gb-bd-c-7);
         }
-
-        .right {
-            display: flex;
-
-            .teams-logo {
-                margin-left: -.1rem;
-                margin-right: .1rem;
-            }
-        }
-
-        .teams {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            .score {
-                margin-top: .04rem;
-            }
-        }
-
-        // .teams-logo {
-        //     width: .4rem;
-        //     height: .4rem;
-        //     background-color: var(--q-gb-t-c-1);
-        //     border-radius: .4rem;
-        //     display: flex;
-        //     justify-content: center;
-        //     align-items: center;
-        // }
     }
-
     .match-result-list {
         .note {
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--q-gb-t-c-1);
+            color: var(--q-gb-bg-c-8);
             padding: .08rem 0;
         }
 
@@ -246,7 +262,7 @@ const state = reactive({
             .left,
             .right {
                 width: 1.44rem;
-                height: .56rem;
+                // height: .56rem;
                 display: flex;
                 position: relative;
 
@@ -258,13 +274,21 @@ const state = reactive({
 
                 .result {
                     font-size: .12rem;
-                    color: var(--q-gb-bg-c-4);
+                    color: #afafaf;
+                    background-color: var(--q-gb-bd-c-7);
                     text-align: center;
                     margin-top: .03rem;
+                    padding: .01rem .04rem;
                 }
 
                 .win {
-                    color: var(--q-gb-bd-c-8);
+                    background-color: rgb(from var(--q-gb-bd-c-2) r g b / 10%);
+                    color: var(--q-gb-bd-c-2);
+                }
+
+                .lose {
+                    background-color: rgb(from var(--q-gb-t-c-2) r g b / 10%);
+                    color: var(--q-gb-t-c-2);
                 }
             }
 
@@ -311,13 +335,14 @@ const state = reactive({
                     }
 
                     .score {
-                        font-size: .16rem;
-                        color: var(--q-gb-t-c-1);
+                        font-size: .32rem;
+                        color: var(--q-gb-bg-c-4);
                     }
 
                     .text-style {
-                        font-size: .1rem;
+                        font-size: .12rem;
                         color: var(--q-gb-t-c-4);
+                        white-space: nowrap;
                     }
                 }
             }
@@ -332,5 +357,9 @@ const state = reactive({
         }
     }
 
+}
+
+.bsball-content {
+    background-color: var(--q-gb-bg-c-18);
 }
 </style>

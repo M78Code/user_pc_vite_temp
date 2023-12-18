@@ -47,7 +47,7 @@ export const details_main = () => {
     refreshing: false,
     // 固定的状态
     fixed_status: false,
-    // 默认接口数据
+    /** @type {TYPES.MatchDetail} 默认接口数据 */
     detail_data: null,
     // 固定高度
     fixedHeight: "",

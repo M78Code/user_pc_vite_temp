@@ -37,11 +37,7 @@ import knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/knockout.
 export default {
   name: "virtual_sports_part",
   props:{
-    tid: {
-      type: Number|String,
-      default: null,
-      require: true
-    },
+    tid:  Number|String,
     current_match:Object,
   },
   components: {

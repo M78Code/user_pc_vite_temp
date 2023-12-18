@@ -4,9 +4,8 @@
 -->
 <template>
   <div ref='details_tab' class="row vir-details-tab" v-cloak>
-    <q-tabs v-model="viewTab" inline-label narrow-indicator class="bg-tabs" active-color="active-tab"
-      @update:model-value="change_tab">
-      <q-tab v-for="item in tab_list" :label="item.label" :name="item.name" :key="item.id" />
+    <q-tabs v-model="viewTab" inline-label narrow-indicator class="bg-tabs" active-color="active-tab" @update:model-value="change_tab">
+      <q-tab v-for="item in tab_list" :label="i18n_t(item.label_i18n_key)" :name="item.name" :key="item.id" />
     </q-tabs>
 
   </div>
@@ -22,9 +21,9 @@ export default {
     return {
       viewTab: 'bet',
       tab_list: [
-        { label: "历史战绩", id: 1, name: 'lszj' },
-        { label: "投注", id: 2, name: 'bet' },
-        { label: "排行榜", id: 3, name: 'rank' }
+        { label_i18n_key: 'virtual_sports.match_detail.historical_results', id: 1, name: 'lszj' },
+        { label_i18n_key: 'virtual_sports.match_detail.bet', id: 2, name: 'bet' },
+        { label_i18n_key: 'virtual_sports.match_detail.leaderboard', id: 3, name: 'rank' }
       ]
     }
   },
@@ -42,8 +41,8 @@ export default {
         
         if(new_?.csid == "1011"){
           this.tab_list = [
-          { label: "投注", id: 2, name: 'bet' },
-          { label: "历史战绩", id: 1, name: 'lszj' },
+          { label_i18n_key: 'match_detail.bet', id: 2, name: 'bet' },
+          { label_i18n_key: 'match_detail.historical_results', id: 1, name: 'lszj' },
           ]
         }
       },

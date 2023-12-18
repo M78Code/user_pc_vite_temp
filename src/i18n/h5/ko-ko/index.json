@@ -2182,7 +2182,15 @@
     "top_32": "32 라운드",
     "top_64": "64 라운드",
     "win_tie_loss": "승/무승부/패배",
-    "vitality_performance": "활기찬 성능"
+    "vitality_performance": "활기찬 성능",
+    "balance": "균형",
+    "matching": "게임에서",
+    "show_all_markets": "모든 시장 보기",
+    "match_detail": {
+      "leaderboard": "순위 목록",
+      "historical_results": "과거 결과",
+      "bet": "내기"
+    }
   },
   "section_play": "%s회",
   "pan_paly": "%s판"

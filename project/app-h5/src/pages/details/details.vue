@@ -76,7 +76,7 @@
           <!-- tab 激活投注展示内容 -->
           <!-- 投注展示内容 -->
           <div
-              v-if="viewTab === 'bet' || get_is_hengping"
+              v-show="viewTab === 'bet' || get_is_hengping"
               class="content-box play-items"
               :class="[{baseball: detail_data.csid == '3'},  'details-f']"
               ref="content_box">
@@ -86,10 +86,12 @@
                 :class="{'details-tab-list-scroll': fixed_status, 'details-tab-list-scroll-zhiding': get_zhiding_info}"
                 @scroll="full_screen_detail_scrolling">
               <div style="height:inherit" ref="scroll_box">
-                <div>
+                <div v-show="viewTab === 'bet'">
                   <!-- ms 为0 或者 1时，表示未开赛或进行中 -->
-                  <category v-if="[0,1,110].includes(+detail_data.ms) && viewTab === 'bet'" :category_arr="matchDetailCtr.category_arr" ref="category"></category>
-                  <no-data v-else which='noMatch' height='500'></no-data>
+                  <category v-if="[0,1,110].includes(+detail_data.ms)" 
+                  :category_arr="matchDetailCtr.category_arr" ref="category"></category>
+                  <no-data v-else-if="detail_data.ms!=undefined" which='noMatch' height='500'></no-data>
+                  <!-- detail_data.ms!=undefined 不然会闪现no-data哦 -->
                 </div>
               </div>
             </div>
@@ -388,7 +390,7 @@ export default defineComponent({
         // #TODO $utils
         // $send_zhuge_event('H5_情报分析', data.UserCtr);
         if(val == 'bet'){
-          initEvent({refresh:true})
+          // initEvent({refresh:true})
         }
       }
     );
