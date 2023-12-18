@@ -904,7 +904,7 @@ if (type.value == 30) {
 
   .scroll-title {
     height: .4rem;
-    background-color: var(--q-gb-bg-c-11);
+    background-color: var(--q-gb-bg-c-23);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -990,7 +990,7 @@ if (type.value == 30) {
 }
 
 .content_box1 {
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-23);
   color: var(--q-color-fs-color-3);
 
   .content_box2 {
