@@ -91,7 +91,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
    */
   const dataList = reactive({
     3: dateTabList(new Date()),
-    6: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"今日",val:new Date().getTime()}]),
+    6: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"今日",val:0}]),
     2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"所有日期",val:''},{name:"今日",val:new Date().getTime()}])
   });
 
@@ -226,36 +226,36 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     init_data(new_)
   })
   // 早盘 串关  电竞
-  const set_scroll_early_single = (params) => {
-    const {val={},type=0} = params;
-    const is_lv_1 = [3,6].includes(+MenuData.current_lv_1_menu_i);
-    const menu_list = is_lv_1?MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i):BaseData.dianjing_sublist;
-    let early_single = []
-    if(Object.keys(val).length){
-      for(let item in val){
-        let mi = is_lv_1?100+ item*1 +''+ MenuData.current_lv_1_menu_i:2000+ item*1 +'';
-        let mif = is_lv_1?100+ item*1 +'':2000+ item*1 +'';
-        let obj = menu_list.find(page => page.mi == mi) || {}
-        if(obj.mi){
-          obj.ct = val[item]
-          obj.mif = mif;
-          early_single.push(obj)
-        }
-      }
-    }
-    ref_data.scroll_data_list = early_single
-    if(early_single.length){
-      let obj_ = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
-      // 设置选中菜单的id
-      ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj_.mi
-      // 设置二级菜单 
-      !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj_)
+  // const set_scroll_early_single = (params) => {
+  //   const {val={},type=0} = params;
+  //   const is_lv_1 = [3,6].includes(+MenuData.current_lv_1_menu_i);
+  //   const menu_list = is_lv_1?MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i):BaseData.dianjing_sublist;
+  //   let early_single = []
+  //   if(Object.keys(val).length){
+  //     for(let item in val){
+  //       let mi = is_lv_1?100+ item*1 +''+ MenuData.current_lv_1_menu_i:2000+ item*1 +'';
+  //       let mif = is_lv_1?100+ item*1 +'':2000+ item*1 +'';
+  //       let obj = menu_list.find(page => page.mi == mi) || {}
+  //       if(obj.mi){
+  //         obj.ct = val[item]
+  //         obj.mif = mif;
+  //         early_single.push(obj)
+  //       }
+  //     }
+  //   }
+  //   ref_data.scroll_data_list = early_single
+  //   if(early_single.length){
+  //     let obj_ = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
+  //     // 设置选中菜单的id
+  //     ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj_.mi
+  //     // 设置二级菜单 
+  //     !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj_)
       
-      handle_match_render_data()
-    } else {
-      useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: true, type: 'noMatch' });
-    }
-  }
+  //     handle_match_render_data()
+  //   } else {
+  //     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: true, type: 'noMatch' });
+  //   }
+  // }
 
   // 根据一级菜单 设置滑动菜单数据
   const set_scroll_data_list = (mid,type) => {
@@ -265,11 +265,15 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // if( [1,2].includes(mid*1) ){
     //   index = 1
     // }
-    let obj = lodash_.get(ref_data.scroll_data_list,`[${0}]`,{})
-    // 设置二级菜单 
-    MenuData.set_current_lv_2_menu_i(obj,type)
-    // 设置选中菜单的id
-    ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
+    if(MenuData.is_collect() && [3,6].includes(MenuData.current_lv_1_menu_mi.value)){
+      ref_data.current_mi =MenuData.current_lv_2_menu_i;
+    }else{
+      let obj = lodash_.get(ref_data.scroll_data_list,`[${0}]`,{})
+      // 设置二级菜单 
+      MenuData.set_current_lv_2_menu_i(obj,type)
+      // 设置选中菜单的id
+      ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
+    }
     // 刷新页面避免触发2次 set_origin_match_data
     if (is_first.value && !is_kemp) {
       is_first.value = false
@@ -310,6 +314,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // 清除赛事折叠信息
     MatchDataBaseH5.init()
     MatchFold.clear_fold_info()
+    if(MenuData.is_collect()) return MatchMeta.get_collect_match()
     // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
     if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
     // 赛果不走元数据， 直接拉取接口
