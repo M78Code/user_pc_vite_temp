@@ -30,11 +30,13 @@ class MatchCollect {
     // 联赛收藏状态
     const league_collect = !this.get_league_collect_state(tid)
     this.set_league_collect_state(tid, league_collect)
-    // 赛事 mids
-    const match_mids = lodash.get(MatchMeta, 'match_mids', [])
-    match_mids.forEach(mid => {
+    // 赛事 mids //收藏是所有的都收藏 不是可视区域match_mids收藏 如果是折叠的呢
+    const match_mids =lodash.filter(lodash.get(MatchMeta, 'complete_matchs', []),function(v){
+      return v.tid==tid;
+    }) 
+    match_mids.forEach(_match => {
       // 获取赛事对象信息
-      const match = MatchDataBaseH5.get_quick_mid_obj(mid)
+      const match = MatchDataBaseH5.get_quick_mid_obj(_match.mid)
       if (!match || match.tid !== tid) return
       // 赛事收藏状态
       this.set_match_collect_state(match, league_collect)

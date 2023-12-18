@@ -176,6 +176,7 @@ import { IconWapper } from 'src/components/icon'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -518,6 +519,7 @@ export default {
             match.hps = res.data[0]?.plays || [];
             // 按照hpid从小到大排序 
             match.hps.sort((x, y) => x.hpid - y.hpid);
+            MatchDataBaseH5.set_list([match]);
           }
         })
     },

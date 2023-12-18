@@ -11,9 +11,9 @@
     <div class="hairline-border">
       <div v-for="(titles,index) in item_data.title" :key="index" class="content">
         <div class="row tittle">
-          <span class="col ellipsis yb_px4">{{item_data.title[index][0].osn}}</span>
-          <span class="col ellipsis yb_px4">{{item_data.title[index][1].osn}}</span>
-          <span class="col ellipsis yb_px4" v-if="titles.length > 2">{{item_data.title[index][2].osn}}</span>
+          <span class="col ellipsis yb_px4">{{item_data.title[index][0]?.osn}}</span>
+          <span class="col ellipsis yb_px4">{{item_data.title[index][1]?.osn}}</span>
+          <span class="col ellipsis yb_px4" v-if="titles.length > 2">{{item_data.title[index][2]?.osn}}</span>
         </div>
 
         <div class="row row-bet-wrapper">

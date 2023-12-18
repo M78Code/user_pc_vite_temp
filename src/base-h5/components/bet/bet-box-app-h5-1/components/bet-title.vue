@@ -181,11 +181,11 @@ const get_balance = () => {
   }
 }
 
-.fixed-bottom {
-  position: fixed;
-  z-index: 400;
-  bottom: -2px;
-}
+// .fixed-bottom {
+//   position: fixed;
+//   z-index: 400;
+//   bottom: -2px;
+// }
 
 .bet-num {
   width: 0.2rem;

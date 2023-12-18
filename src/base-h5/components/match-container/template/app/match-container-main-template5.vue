@@ -23,17 +23,9 @@
           <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
       </div>
-      <!-- 已开赛标题  -->
-      <!-- <div class="match-status-fixed flex items-center" v-else>
-        <img src='../../../../../base-h5/assets/match-list/icon_started.svg' />
-        <span class="din-regular">
-          {{ i18n_t('list.match_start') }}&nbsp;&nbsp;
-          <span v-show="in_progress_total">(0)</span>
-        </span>
-      </div> -->
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
       <div v-if="show_sport_title" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
-        <span class="score-inner-span"> {{ match_of_list.csna }}{{ '(' + menu_lv2.ct + ')' }} </span>
+        <span class="score-inner-span"> {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }}) </span>
       </div>
 
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->

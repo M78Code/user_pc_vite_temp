@@ -490,7 +490,6 @@ const item_click3 = lodash.debounce(() => {
 
     }
       set_bet_obj_config(params,other)
-      console.log('asbudasfhbaf', BetData, oid);
     }
   }
 }, 450, {'leading': true, trailing: false})
@@ -607,7 +606,7 @@ onUnmounted(() => {
     }
   }
   .fontbold{
-    font-weight: 600;
+    font-weight: 700;
     font-family: Akrobat;
     font-size: 12px;
   }
