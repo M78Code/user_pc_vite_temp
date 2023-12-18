@@ -559,18 +559,18 @@ export default defineComponent({
   .play-box-style {
     text-align: center;
     width: 100%;
-    height: 0.40;
-    line-height: 0.40;
+    height: 0.40rem;
+    line-height: 0.40rem;
   }
 
   .play-box-sty {
-    height: 0.40;
+    height: 0.40rem;
     text-align: center;
     // padding:0.08rem 0.04rem ;
   }
 
   .odds-lock {
-    line-height: 0.40;
+    line-height: 0.40rem;
   }
 
   .remark {
