@@ -627,7 +627,7 @@ export default {
         margin-top: 0.1rem;
         span {
           font-size: 0.12rem;
-          color: var(--q-gb-bg-c-18);
+          color: var(--q-gb-bg-c-8);
         }
         span + span {
           font-size: 0.1rem;

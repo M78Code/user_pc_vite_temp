@@ -776,4 +776,14 @@ if (get_menu_type.value == 30) {
 </script>
 <style lang="scss" scoped>
 @import url('./index_old.scss');
+.boss-box {
+  // padding: 0.5rem 0 0.64rem;
+  //margin-top: 1.03rem;
+  position: absolute;
+  top: 1.03rem;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-top: 1px solid transparent;
+}
 </style>src/output

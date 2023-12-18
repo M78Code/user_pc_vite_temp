@@ -35,14 +35,12 @@ export default {
   },
   watch: {
     // 赛马详情，不显示排行榜
-    "current_match": {
+    "current_match.csid": {
       handler(new_){
-        console.log('new_', new_, new_?.csid);
-        
-        if(new_?.csid == "1011"){
+        if(new_ == "1011"){
           this.tab_list = [
-          { label_i18n_key: 'match_detail.bet', id: 2, name: 'bet' },
-          { label_i18n_key: 'match_detail.historical_results', id: 1, name: 'lszj' },
+          { label_i18n_key: 'virtual_sports.match_detail.bet', id: 2, name: 'bet' },
+          { label_i18n_key: 'virtual_sports.match_detail.historical_results', id: 1, name: 'rank' },
           ]
         }
       },
