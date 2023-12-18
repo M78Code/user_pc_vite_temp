@@ -159,12 +159,13 @@ export default defineComponent({
 
   .item2 {
     flex: 1;
+    background: #F2F2F6;
   }
 
   .item-wrap {
     display: flex;
     flex-wrap: wrap;
-
+    gap: 0.1rem;
     min-height: 0.32rem;
     height: auto;
     border-radius: 4px;

@@ -10,15 +10,14 @@
             v-for="item, index in match_list" 
             :key="item.mid" 
             :data-mid="item.mid" 
-            :data-index="index"
-            :style="get_item_style(item, index)">
-            <!-- 赛事卡片 -->
+            :data-index="index">
+            <!-- 赛事卡片 :style="get_item_style(item, index)" -->
             <slot name="content" :item="item" :index="index">
               <template v-if="is_show_match_item(index)">
-                <!-- <ObserverItem3 :index="index" :item="item"></ObserverItem3> -->
                 <component :is="target_com" :index="index" :item="get_match_item(item)"></component>
               </template>
             </slot>
+            <img v-if="!is_show_match_item(index)" :src="get_background_image(item) " alt="">
           </div>
       </section>
     </template>
@@ -86,7 +85,6 @@ const com_config = {
 
 // 所渲染的组件
 const target_com = computed(() => {
-  console.log(props.com_type)
   return com_config[props.com_type]
 })
 
@@ -103,16 +101,6 @@ onMounted(() => {
     emitter_3: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, upd_match_is_empty).off,
   }
 })
-
-/**
- * @description: 赛事列表为空通知事件函数
- */
- const upd_match_is_empty = (obj = {}) => {
-  // 当是赛果菜单,三级菜单数据没有时,发送列表赛事数据为空消息,收到消息后页面显示为空页面
-  const { state = false, type = 'noMatch' } = obj
-  which.value = type
-  // match_is_empty.value = state;
-}
 
 /**
  * @description 开启 IntersectionObserver 赛事卡片监听
@@ -186,7 +174,7 @@ const handler = (key, falg) => {
   const start = Date.now()
   requestAnimationFrame(() => {
     // 当前渲染帧 有剩余 则 执行渲染任务
-    if (Date.now() - start < 30) {
+    if (Date.now() - start < 16.6) {
       MatchResponsive.set_show_match_info(key, falg)
     }  else {
       handler(key, falg)
@@ -199,8 +187,8 @@ const handler = (key, falg) => {
  */
 const is_show_match_item = computed(() => {
   return (index) => {
-    // defer_render(index)
-    return true
+    // 
+    return defer_render(index)
   }
 })
 
@@ -249,9 +237,19 @@ const get_item_style = (item, index) => {
   const height = get_inner_height(item, index)
   const skeleton = get_background_image(item) 
   return {
-    // height: `${height}px`,
-    // backgroundImage: `url(${skeleton})`   //注释原因暂时没有夜间图片
+    height: `${height}px`,
+    backgroundImage: `url(${skeleton})`   //注释原因暂时没有夜间图片
   }
+}
+
+/**
+ * @description: 赛事列表为空通知事件函数
+ */
+ const upd_match_is_empty = (obj = {}) => {
+  // 当是赛果菜单,三级菜单数据没有时,发送列表赛事数据为空消息,收到消息后页面显示为空页面
+  const { state = false, type = 'noMatch' } = obj
+  which.value = type
+  // match_is_empty.value = state;
 }
 
 // 触发本组件销毁之前回调
@@ -274,7 +272,6 @@ onUnmounted(() => {
       content-visibility: auto;
       background-size: 100% 100%;
       .empty {
-        height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;

@@ -23,17 +23,9 @@
           <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
       </div>
-      <!-- 已开赛标题  -->
-      <!-- <div class="match-status-fixed flex items-center" v-else>
-        <img src='../../../../../base-h5/assets/match-list/icon_started.svg' />
-        <span class="din-regular">
-          {{ i18n_t('list.match_start') }}&nbsp;&nbsp;
-          <span v-show="in_progress_total">(0)</span>
-        </span>
-      </div> -->
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
       <div v-if="show_sport_title" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
-        <span class="score-inner-span"> {{ match_of_list.csna }}{{ '(' + menu_lv2.ct + ')' }} </span>
+        <span class="score-inner-span"> {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }}) </span>
       </div>
 
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
@@ -86,14 +78,16 @@
                   <!-- 动画状态大于-1时，显示动画按钮 i18n_t('match_info.animation')是国际化取值 -->
 
                   <!-- icon_click_animationUrl media_button_handle -->
-                  <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_animate_nor.png'
+                  <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']" :src="compute_local_project_file_path('/image/list/ico_animate_nor.png')"
                     @click="media_button_handle_by_type(ButtonTypes.animationUrl)" />
                   <!-- 视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 -->
-                  <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_live_nor.png'
+                  <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']"
+                  :src="compute_local_project_file_path('/image/list/ico_live_nor.png')"
                     @click="media_button_handle_by_type(ButtonTypes.muUrl)" />
                   <!--icon_click_muUrl  -->
                   <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
-                  <img :class="[match.lvs !== 2 && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_liveshow_nor.png'
+                  <img :class="[match.lvs !== 2 && 'iconGrayFillStyle']" 
+                  :src="compute_local_project_file_path('/image/list/ico_liveshow_nor.png')"
                     @click="media_button_handle_by_type(ButtonTypes.lvs)" />
                   <!-- icon_click_lvs -->
                 </template>
@@ -224,7 +218,7 @@ import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
-import { compute_value_by_cur_odd_type } from "src/output/index.js";
+import { compute_value_by_cur_odd_type,compute_local_project_file_path } from "src/output/index.js";
 import lodash from 'lodash';
 import { ref, watch, onMounted, onUnmounted, computed } from 'vue';
 import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, useMittOn, compute_css_obj } from "src/output/index.js"

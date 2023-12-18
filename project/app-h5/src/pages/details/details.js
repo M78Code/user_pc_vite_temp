@@ -193,7 +193,7 @@ export const details_main = () => {
   });
   // mid 
   const matchid = computed(() => {
-    return state_data.detail_data?.mid || route.params.mid || route.query.mid
+    return state_data.detail_data?.mid || route.params.mid ||  route.query.mid
   });
   // 当前tab
   const curr_active_tab = computed(() => {
@@ -448,6 +448,7 @@ export const details_main = () => {
     state_data.refresh = param?.refresh || false
     // get_uid为空时循环检测进行拉取逻辑处理
     if (UserCtr.uid || state_data.init_event_timer_count > 30) {
+      console.log(matchDetailCtr.value.mid ,matchid.value,'params');
       // 请求接口数据
       get_match_details({
         // 赛事id
@@ -659,7 +660,8 @@ export const details_main = () => {
    *@return {obj} init_req 是否是初次进入详情
    */
   const get_odds_list = async (
-    params = { sportId: sport_id.value, mid: matchid.value }, init_req) => {
+    params = { sportId: sport_id.value, mid: matchDetailCtr.value.mid || matchid.value }, init_req) => {
+      console.log(params,'params',matchid.value,route);
     // state_data.data_list = Level_one_category_list();
     const get_details_category_list = () => {
       api_common
@@ -933,7 +935,11 @@ export const details_main = () => {
       useMittOn(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL, set_details_scroll),
       useMittOn(MITT_TYPES.EMIT_MATCHINFO_LOADING, loading_list),
       useMittOn(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED, tab_changed_handle),
-      useMittOn(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE, get_odds_list),
+      useMittOn(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE,()=>{
+        matchid.value = route.params.mid
+        sport_id.value = route.params.csid
+        get_odds_list()
+      }),
       // // 监听页面高度的变化 及时动态更新最新的页面高度
       useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, detail_scroller_height),
 
@@ -970,7 +976,6 @@ export const details_main = () => {
       interval_timer_arr[timer] = null;
     }
   };
-
   return {
     state_data,
     is_highlights,

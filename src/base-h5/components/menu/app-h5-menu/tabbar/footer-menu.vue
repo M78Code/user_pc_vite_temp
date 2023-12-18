@@ -4,7 +4,7 @@
       <div class="footer-menu-item" @click="menu_item_click(item)" v-for="(item, k) of footer_menu_list" :key="k">
         <div class="m-item-inner">
           <div class="item-img-wrapper c-refresh">
-            <img class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading}" :src="item.icon" alt="" />
+            <img class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading }" :src="item.icon" alt="" />
           </div>
           <div class="menu-item-title" >
             <span class="title-p1">  {{ item.title }}</span>

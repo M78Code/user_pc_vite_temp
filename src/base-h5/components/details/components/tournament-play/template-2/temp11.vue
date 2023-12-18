@@ -152,7 +152,8 @@ export default defineComponent({
 
 .item-style2 {
   height: 0.52rem;
-
+  background: #F2F2F6;
+  
   &:nth-child(5n) {
     border-right: none;
   }

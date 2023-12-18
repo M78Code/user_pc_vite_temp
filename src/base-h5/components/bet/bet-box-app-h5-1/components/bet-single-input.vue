@@ -19,7 +19,7 @@
         </div>
         <div class="content-rmb">RMB</div>
       </div>
-      <div class="bet_single_info_btn" v-if="BetData.bet_pre_list.includes(item.playOptionsId)">
+      <div class="bet_single_info_btn" :class="ref_data.is_bet_pre ? 'focus' : ''" v-if="BetData.bet_pre_list.includes(item.playOptionsId)">
         <div class="" v-if="ref_data.is_bet_pre" @click="set_bet_pre">{{ i18n_t('app_h5.bet.cancel_appoint') }}</div>
         <div class="" v-else @click="set_bet_pre">+{{ i18n_t('pre_record.book')}}</div>
       </div>
@@ -187,11 +187,16 @@ onUnmounted(() => {
     color: var(--q-gb-t-c-14);
     border-radius: 10px;
     height: 0.44rem;
-    margin-top: 0.1rem;
+    margin-top: 0.05rem;
     margin-left: .08rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    &.focus {
+      background: none;
+      border: 1px solid var(--q-gb-t-c-1);
+      color: var(--q-gb-t-c-1);
+    }
 }
 .nonebox4-third {
     width: 100%;
@@ -275,7 +280,7 @@ onUnmounted(() => {
   width: 0.02rem;
   height: 0.16rem;
   margin: 0 1px;
-  background: var(--q-gb-bg-c-1);
+  background: var(--q-gb-t-c-1);
   &.money-span3{
     background: transparent;
   }

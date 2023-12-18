@@ -625,7 +625,7 @@ this.bet_appoint_ball_head= null */
     nextTick(()=>{
       LocalStorage.set('bet_data_class',this)
     })
-    console.error('set_bet_data_class_version',JSON.parse(JSON.stringify(this)))
+    // console.error('set_bet_data_class_version',JSON.parse(JSON.stringify(this)))
   }, 5)
 
   // 投注成功后 不保留投注项 需要清空投注数据 
