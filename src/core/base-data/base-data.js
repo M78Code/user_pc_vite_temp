@@ -38,7 +38,7 @@ import menu_i18n_default from "./config/menu-i18n.json";
 import ws_user_info from "./config/user_info.json";
 //vr 默认的 用于ws模拟
 import vr_menu_info from "./config/vr_menu_info.json";
-import { MenuData } from "src/output/module/menu-data.js"
+// import { MenuData } from "src/output/module/menu-data.js"
 import { LocalStorage } from 'src/core/utils/common/module/web-storage.js'
 import {
   useMittOn,
@@ -507,11 +507,10 @@ class BaseData {
 
     // 设置新菜单
     this.set_left_menu_init(menu_old_or_nem_data_list);
-
     // app-h5使用
-    if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
-      MenuData.set_init_menu_list()
-    }
+    // if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
+    //   MenuData.set_init_menu_list()
+    // }
 
     // 计算   冠军 数据  对象形式   commn_sport_guanjun_obj
     // 计算虚拟体育 的 数据对象
