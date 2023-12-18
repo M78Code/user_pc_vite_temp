@@ -78,14 +78,16 @@
                   <!-- 动画状态大于-1时，显示动画按钮 i18n_t('match_info.animation')是国际化取值 -->
 
                   <!-- icon_click_animationUrl media_button_handle -->
-                  <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_animate_nor.png'
+                  <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']"
+                  :src="compute_local_project_file_path('image/list/ico_animate_nor.png')"
                     @click="media_button_handle_by_type(ButtonTypes.animationUrl)" />
                   <!-- 视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 -->
-                  <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_live_nor.png'
+                  <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']"
+                  :src="compute_local_project_file_path('image/list/ico_live_nor.png')"
                     @click="media_button_handle_by_type(ButtonTypes.muUrl)" />
                   <!--icon_click_muUrl  -->
                   <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
-                  <img :class="[match.lvs !== 2 && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_liveshow_nor.png'
+                  <img :class="[match.lvs !== 2 && 'iconGrayFillStyle']" :src="compute_local_project_file_path('image/list/ico_liveshow_nor.png')"
                     @click="media_button_handle_by_type(ButtonTypes.lvs)" />
                   <!-- icon_click_lvs -->
                 </template>
@@ -219,7 +221,7 @@ import default_mixin from '../../mixins/default.mixin.js'
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import lodash from 'lodash';
 import { ref, watch, onMounted, onUnmounted, computed } from 'vue';
-import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, useMittOn, compute_css_obj } from "src/output/index.js"
+import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path, useMittOn, compute_css_obj } from "src/output/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { get_match_status } from 'src/core/utils/common/index'

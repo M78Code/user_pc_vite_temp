@@ -17,7 +17,7 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
 import {pako_pb} from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
- 
+import { odds_table } from "src/core/constant/common/module/csid.js"
  
 import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
@@ -1369,6 +1369,16 @@ class UserCtr {
     let ts = lodash.get(res,'ts','')
     LocalStorage.set('server_time',ts)
     return ts
+  }
+  // 是否支持当前赔率
+  is_cur_odds (odds) {
+    // 获取当前的盘口赔率
+    let cur_odds = lodash.get(odds_table,`${this.odds.cur_odds}`, '1' )
+    // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
+    if(odds_table[odds] == cur_odds){
+      return true 
+    }
+    return false
   }
 }
 

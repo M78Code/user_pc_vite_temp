@@ -39,7 +39,7 @@
 
                   <template v-if="ol?.os == 1 && ol?._hs != 11">
                     <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
-                    <span class="ol-ov-text"> {{compute_value_by_cur_odd_type(ol.ov,ol._hpid,'',MatchDetailCalss.params.sportId)}}</span>
+                    <span class="ol-ov-text"> {{compute_value_by_cur_odd_type(ol.ov,ol._hpid,ol._hsw,MatchDetailCalss.params.sportId)}}</span>
                     <olStatus :item_ol_data="ol" :active="ol.oid == active" />
                   </template>
                   <span v-if="ol?.os == 2 || ol?._hs == 11">
@@ -60,7 +60,7 @@
             <div class="ol_ov else" @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }]">
               <template v-if="ol?.os == 1">
                 <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
-                <span class="ol-ov-text"> {{compute_value_by_cur_odd_type(ol.ov,ol._hpid,'',MatchDetailCalss.params.sportId)}}</span>
+                <span class="ol-ov-text"> {{compute_value_by_cur_odd_type(ol.ov,ol._hpid,ol._hsw,MatchDetailCalss.params.sportId)}}</span>
                 <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />
               </template>
               <span v-if="ol?.os == 2"> <lockImg :ol_item="ol" /></span>
