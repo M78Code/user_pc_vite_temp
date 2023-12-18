@@ -280,7 +280,7 @@ onUnmounted(() => {
   width: 0.02rem;
   height: 0.16rem;
   margin: 0 1px;
-  background: var(--q-gb-bg-c-1);
+  background: var(--q-gb-t-c-1);
   &.money-span3{
     background: transparent;
   }
