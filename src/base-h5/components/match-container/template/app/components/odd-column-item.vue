@@ -302,18 +302,19 @@ const match_result_data_loaded = (data) => {
 }
 // 获取赔率或赛果
 const get_odd_append_value = (ol_item) => {
-  let r = "";
-  if(ol_item.result === "0" || ol_item.result){
-    r = i18n_t(`virtual_sports.result[${ol_item.result}]`);
-  } else{
-    let dict_result = ol_dictionary.value[ol_item.oid];
-    if(dict_result === "0" || dict_result){
-      r = i18n_t(`virtual_sports.result[${dict_result}]`);
-    } else{
-      r = odds_value.value;
-    }
-  }
-  odd_append_value.value = r.toFixed(2);
+  // let r = "";
+  // if(ol_item.result === "0" || ol_item.result){
+  //   r = i18n_t(`virtual_sports.result[${ol_item.result}]`);
+  // } else{
+  //   let dict_result = ol_dictionary.value[ol_item.oid];
+  //   if(dict_result === "0" || dict_result){
+  //     r = i18n_t(`virtual_sports.result[${dict_result}]`);
+  //   } else{
+  //     r = odds_value.value;
+  //   }
+  // }
+  odd_append_value.value = compute_value_by_cur_odd_type(ol_item.ov,ol_item._hpid,ol_item._hsw,props.match.csid)
+  
 }
 const arrived10_handle = () => {
   virtual_odds_state.value = 1;
@@ -598,11 +599,11 @@ onUnmounted(() => {
       height: 11px;
     }
     .is_up{
-      color: #E95B5B;
+      color: #F53F3F;
       // color: var(--q-gb-t-c-21);
     }
     .is_down{
-      color: #4AB06A;
+      color: #00B42A;
     }
   }
   .fontbold{

@@ -2214,7 +2214,15 @@
     "top_32": "Top 32",
     "top_64": "Top 64",
     "vitality_performance": "Performa",
-    "win_tie_loss": "Ｍ/S/K"
+    "win_tie_loss": "Ｍ/S/K",
+    "balance": "Keseimbangan",
+    "matching": "Dalam permainan",
+    "show_all_markets":"Tampilkan semua pasar",
+    "match_detail": {
+      "leaderboard": "Daftar peringkat",
+      "historical_results": "Hasil sejarah",
+      "bet": "bertaruh"
+    }
   },
   "highlights": {
     "title": "Highlight",
