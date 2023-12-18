@@ -1,5 +1,5 @@
 <template>
-    <div class="orientation">
+    <div class="orientation" v-if="!orientation">
         <img :src="imgUrl" alt="" class="img">
         {{ i18n_t('common.hengping_tip') }}
     </div>
@@ -7,8 +7,31 @@
 
 <script setup>
 import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output';
-
+import { onMounted, onUnmounted,ref } from 'vue';
 const imgUrl = `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/hengpin.svg`
+const orientation = ref(false);
+const listener = () => {
+    console.log(window.screen.orientation, "设备方向");
+    switch (window.screen.orientation.angle) {
+    case 90:
+    case -90:
+        orientation.value = false;
+        break;
+    default:
+        orientation.value = true;
+        break;
+    }
+}
+
+onUnmounted(() => {
+    window.removeEventListener('orientationchange', listener)
+})
+
+onMounted(() => {
+    listener();
+    window.addEventListener('orientationchange', listener)
+
+})
 </script>
 
 <style scoped lang="scss">
@@ -23,10 +46,14 @@ const imgUrl = `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/hengpin.svg`
     background-color: #666;
     color: #fff;
     font-size:14px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
     .img{
         width: 90px;
-    height: 108px;
-    margin-bottom: 10px;
+        height: 108px;
+        margin-bottom: 10px;
     }
 }
 </style>
