@@ -223,7 +223,7 @@ const props = defineProps({
     }
 }
     .text-8a8{
-        color: var(--q-gb-t-c-3) !important;
+        color: var(--q-gb-t-c-11) !important;
     }
     .color000{
         color: var(--q-gb-t-c-17) !important;

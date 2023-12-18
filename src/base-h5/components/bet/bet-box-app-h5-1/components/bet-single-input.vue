@@ -187,7 +187,7 @@ onUnmounted(() => {
     color: var(--q-gb-t-c-14);
     border-radius: 10px;
     height: 0.44rem;
-    margin-top: 0.1rem;
+    margin-top: 0.05rem;
     margin-left: .08rem;
     display: flex;
     align-items: center;
