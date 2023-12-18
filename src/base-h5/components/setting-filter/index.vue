@@ -40,6 +40,7 @@
             :leftVal="item.leftVal"
             :rightVal="item.rightVal"
             @change_value="switch_handle(item)"
+            :class="{disabled:item.mark ==='Handicap'&&MenuData.current_lv_1_menu_i== 400 }"
           />
         </div>
       </div>
@@ -77,6 +78,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { i18n_t } from "src/boot/i18n.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { is_vr } from 'src/base-h5/mixin/menu.js'
+import MenuData from "src/core/menu-app-h5/menu-data-class.js";
 
 defineOptions({
   name: "settingFilter" // 设置组件名称
@@ -295,6 +297,9 @@ const activity_handle = item => {
 
     .more {
       color: var(--q-gb-t-c-19);
+    }
+    .disabled{
+      pointer-events: none;
     }
 
     .goto-website {

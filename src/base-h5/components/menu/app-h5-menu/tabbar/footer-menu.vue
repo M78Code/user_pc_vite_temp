@@ -64,8 +64,15 @@ const footer_menu_list = ref(footer_list)
 */
 watch(UserCtr.user_version, () => {
   footer_menu_list.value.forEach(item=>{
-    if (item.id === 5){
-      item.title = UserCtr.daily_activities ? '每日活动' : i18n_t('footer_menu.refresh')
+    // 展示每日活动
+    if (item.id === 5 && UserCtr.daily_activities){
+      item.title = i18n_t('footer_menu.daily_activities')
+      item.icon = `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/activity.png`
+    }
+    // 展示刷新
+    if (item.id === 5 && !UserCtr.daily_activities){
+      item.title = i18n_t('footer_menu.refresh')
+      item.icon = `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_05_nor.png`
     }
   })
 })
