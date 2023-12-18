@@ -80,7 +80,7 @@ const props = defineProps({
         default: 'handicap' // handicap：让球   bigAndSmallBall：大小球
     },
     option: {
-        type: String,
+        type: [Object, String],
         default: '0'
     }
 })
