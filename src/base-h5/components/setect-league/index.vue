@@ -5,9 +5,12 @@
   <!-- :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon-black.svg`" alt=""> -->
   <div class="select-league" :style="bounced_high">
     <div class="sl-header">
-      <div class="sl-btn" @click="closed">取消</div>
-      <div class="sl-title">选择联赛</div>
-      <div class="sl-btn" @click="finishHandle">完成</div>
+    <!-- 取消 -->
+      <div class="sl-btn" @click="closed">{{ i18n_t('common.cancel') }}</div>
+      <!-- 选择联赛 -->
+      <div class="sl-title">{{ i18n_t('filter.match_select_title') }}</div>
+      <!-- 完成 -->
+      <div class="sl-btn" @click="finishHandle">{{ i18n_t('common.finish') }}</div>
     </div>
     <div class="sl-search">
       <div class="sl-input-content">
@@ -36,8 +39,10 @@
       </div>
     </div>
     <!-- <div class="sl-filter-content"> -->
-    <match-filter ref="matchRef" :search_val="search_val"></match-filter>
-    <!-- <match-filter-old ref="matchRefOld" :search_val="search_val"></match-filter-old> -->
+    <!-- 只有滚球全部走的这个 -->
+    <match-filter-old ref="matchRef" :search_val="search_val" v-if="MenuData.get_sub_is_all()"></match-filter-old>
+    <!-- 今日早盘串关等 走新逻辑 -->
+    <match-filter ref="matchRefOld" :search_val="search_val" v-else></match-filter>
     <!-- </div> -->
   </div>
 </template>
@@ -47,7 +52,7 @@ import { useRouter, useRoute } from "vue-router";
 import matchFilter from "src/base-h5/components/match-filter/index.vue";
 import matchFilterOld from "src/base-h5/components/match-filter/index_old.vue";
 import { reactive, toRefs, ref } from "vue";
-import { useMittEmit, MITT_TYPES } from "src/output/index.js";
+import { useMittEmit, MITT_TYPES, MenuData } from "src/output/index.js";
 import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from "src/output/index.js";
 import { UserCtr } from "src/output/index.js";
 defineOptions({
