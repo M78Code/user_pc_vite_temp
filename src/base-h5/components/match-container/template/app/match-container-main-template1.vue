@@ -1376,6 +1376,15 @@ export default {
     display: flex;
     flex-direction: row-reverse;
   }
+  :deep(.scroll-container-w){
+  .score-se-inner{
+      max-width: 100%;
+      .score-se-inner2{
+        display: flex;
+        margin-left: -5px;
+      }
+    }
+  }
 }
 
 /* **************收藏********************** -E*/
