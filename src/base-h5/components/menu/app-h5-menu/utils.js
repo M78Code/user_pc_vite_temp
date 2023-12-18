@@ -33,8 +33,8 @@ export const dateWeekFormat = (day) => {
  * @param {*} next tab末尾
  * @returns 
  */
-export const dateTabList = (day,pre={name:"全部",val:""},next={name:"其他",val:'-1703563200000'}) => {
-    return [pre,...dateWeekFormat(day),next];
+export const dateTabList = (day,pre=[{name:"全部",val:""}],next=[{name:"其他",val:'-1703563200000'}]) => {
+    return [...pre,...dateWeekFormat(day),...next];
 };
 /**
  *  tab滚动动画
