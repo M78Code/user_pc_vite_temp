@@ -189,7 +189,7 @@
                         </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
-                          <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
+                          <div class="yb-goal-gif" :class="{ 'yb-goal-yo': (theme || []).includes('y0') }"></div>
                           <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                         </div>
                       </div>

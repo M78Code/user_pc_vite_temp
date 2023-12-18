@@ -155,12 +155,12 @@ export default {
               v.bonusType = 2;
             });
           }
-          // data.forEach( (item, index)=> {
-          //   // 把列表任务事项有1/2/3点的断行展示
-          //     if (item.taskName.includes("\n")) {
-          //       item.taskName = item.taskName.replace(/\n/g, "<br/>")
-          //     }
-          //   })
+          data.forEach( (item, index)=> {
+            // 把列表任务事项有1/2/3点的断行展示
+              if (item.taskName.includes("\n")) {
+                item.taskName = item.taskName.replace(/\n/g, "<br/>")
+              }
+            })
           this.get_everyDay_list = data;
         } else {
           this.get_everyDay_list = [];

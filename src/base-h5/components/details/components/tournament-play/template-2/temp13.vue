@@ -699,6 +699,6 @@ export default defineComponent({
   height:0.48rem
 }
 .click-bet-bgc{
-  background:#D1EBFF;
+  background: var(--q-gb-bg-c-24);
 }
 </style>
