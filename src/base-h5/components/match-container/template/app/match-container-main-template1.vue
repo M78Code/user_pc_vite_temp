@@ -284,7 +284,7 @@
               </div>
               <template v-if="match.csid != 1">
                 <div class="score-content">
-                  <ScoreList :main_source="main_source" :match="match" />
+                  <ScoreList :main_source="main_source" :match="match_of_list" />
                 </div>
               </template>
             </div>
@@ -1375,6 +1375,15 @@ export default {
   :deep(.score-se-inner2){
     display: flex;
     flex-direction: row-reverse;
+  }
+  :deep(.scroll-container-w){
+  .score-se-inner{
+      max-width: 100%;
+      .score-se-inner2{
+        display: flex;
+        margin-left: -5px;
+      }
+    }
   }
 }
 
