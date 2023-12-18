@@ -2430,7 +2430,15 @@
     "top_32": "Top 32",
     "top_64": "Top 64",
     "vitality_performance": "Vitality Performance",
-    "win_tie_loss": "W/D/L"
+    "win_tie_loss": "W/D/L",
+    "balance": "Balance",
+    "matching": "At the match",
+    "show_all_markets":"Show all markets",
+    "match_detail": {
+      "leaderboard": "Ranking list",
+      "historical_results": "Historical results",
+      "bet": "bet"
+    }
   },
   "highlights": {
     "title": "Highlight",

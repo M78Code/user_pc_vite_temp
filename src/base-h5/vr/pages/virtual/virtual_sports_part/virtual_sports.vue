@@ -21,7 +21,7 @@
           <div class="league-name right-border">{{ lengue_name }}</div>
           <div class="status">
             <span class="num">{{current_match.no}}</span>
-            <span class="state">比赛中</span>
+            <span class="state">{{i18n_t('virtual_sports.match_status.playing')}}</span>
             <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
           </div>
         </div>
