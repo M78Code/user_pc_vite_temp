@@ -2305,7 +2305,15 @@
     "top_32": "Top 32",
     "top_64": "Top 64",
     "win_tie_loss": "W/D/L",
-    "vitality_performance": "Rendimiento Vitalidad"
+    "vitality_performance": "Rendimiento Vitalidad",
+    "balance": "Balance",
+    "matching": "En el juego",
+    "show_all_markets":"Mostrar todos los mercados",
+    "match_detail": {
+      "leaderboard": "lista de clasificación",
+      "historical_results": "Resultados históricos",
+      "bet": "apuesta"
+    }
   },
   "key_name_chinese": "西班牙语",
   "key_name_english": "Spanish",
