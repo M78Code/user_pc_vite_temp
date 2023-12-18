@@ -88,8 +88,10 @@
               <div style="height:inherit" ref="scroll_box">
                 <div v-show="viewTab === 'bet'">
                   <!-- ms 为0 或者 1时，表示未开赛或进行中 -->
-                  <category v-if="[0,1,110].includes(+detail_data.ms)" :category_arr="matchDetailCtr.category_arr" ref="category"></category>
-                  <no-data v-else which='noMatch' height='500'></no-data>
+                  <category v-if="[0,1,110].includes(+detail_data.ms)" 
+                  :category_arr="matchDetailCtr.category_arr" ref="category"></category>
+                  <no-data v-else-if="detail_data.ms!=undefined" which='noMatch' height='500'></no-data>
+                  <!-- detail_data.ms!=undefined 不然会闪现no-data哦 -->
                 </div>
               </div>
             </div>

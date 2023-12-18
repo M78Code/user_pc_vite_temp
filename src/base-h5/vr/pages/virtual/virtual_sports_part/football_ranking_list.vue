@@ -41,11 +41,7 @@ export default {
     "no-data": no_data
   },
   props:{
-    tid: {
-      type: Number|String,
-      default: null,
-      require: true
-    },
+    tid: Number|String
   },
   data() {
     return {

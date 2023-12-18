@@ -55,7 +55,7 @@
         <div v-if="[1001,1004].includes(sub_menu_type)">
           <!--  足球小组赛,淘汰赛页面  -->
           <group-knockout
-            v-if="false"
+            v-if="current_league ? current_league.field3 != '': false"
             :tid="current_league.field1"
             :current_match="current_match"
           />
