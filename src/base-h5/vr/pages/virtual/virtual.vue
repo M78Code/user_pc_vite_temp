@@ -422,7 +422,7 @@ export default {
 
       .virtual-title{
         text-align: center;
-        text-indent: 0.55rem;
+        text-indent: 0.56rem;
       }
 
       /*  刷新按钮 */
@@ -478,6 +478,7 @@ export default {
             overflow:hidden;
             text-overflow:ellipsis;
             white-space:nowrap;
+            font-size: 0.14rem;
         }
       }
 
