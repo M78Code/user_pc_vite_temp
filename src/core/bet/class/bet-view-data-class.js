@@ -6,7 +6,7 @@
 import { ref,nextTick } from "vue";
 import lodash_ from "lodash"
 import BetData from "./bet-data-class.js"
-import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
+import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
 
 class BetViewData {
   constructor() { 
@@ -112,7 +112,7 @@ class BetViewData {
   // 根据缓存信息 设置数据
   set_loacl_config(){
     // 获取数据缓存
-    let session_info = LocalStorage.get('bet_view_class');
+    let session_info = SessionStorage.get('bet_view_class');
     if (!session_info) {
       return;
     }
@@ -145,7 +145,7 @@ class BetViewData {
     this.bet_view_version.value = Date.now()
     // console.error('set_bet_view_version',this)
     nextTick(()=>{
-      LocalStorage.set('bet_view_class',this)
+      SessionStorage.set('bet_view_class',this)
     })
   }, 5)
 
