@@ -63,7 +63,13 @@
 .ht-scroll {
     overflow-y: scroll;
     height: calc(100% - 1.02rem);
-    padding-bottom: .70rem;
+    padding-bottom: .8rem;
+}
+
+.ht-bsball-scroll {
+    overflow-y: scroll;
+    height: calc(100% - 2.98rem);
+    border-radius: .2rem;
 }
 
 .ht-bsball-text {
@@ -80,25 +86,27 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: .24rem;
+    margin-bottom: .12rem;
+    margin-top: .12rem;
     color: var(--q-gb-t-c-18);
     .ht-button {
-        width: 3.12rem;
+        width: 2.4rem;
         height: .44rem;
-        background-color: var(--q-gb-t-c-1);
-        border-radius: .04rem;
+        background-color: var(--q-gb-bg-c-4);
+        border-radius: .44rem;
         font-size: .16rem;
-        color: var(--q-gb-t-c-2);
+        color: var(--q-gb-bd-c-12);
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: .12rem;
+        margin-top: .12rem;
         border: 1px solid transparent;
     }
     .default {
-        background-color: var(--q-gb-t-c-2);
-        border-color: var(--q-gb-t-c-1);
-        color: var(--q-gb-t-c-1);
+        background-color: var(--q-gb-bg-c-16);
+        border: none;
+        color: var(--q-gb-bg-c-4);
+        font-weight: 600;
     }
 }
 
