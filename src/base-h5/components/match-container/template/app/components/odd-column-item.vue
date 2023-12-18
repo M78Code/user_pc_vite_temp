@@ -490,7 +490,6 @@ const item_click3 = lodash.debounce(() => {
 
     }
       set_bet_obj_config(params,other)
-      console.log('asbudasfhbaf', BetData, oid);
     }
   }
 }, 450, {'leading': true, trailing: false})
