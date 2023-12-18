@@ -187,7 +187,7 @@ onUnmounted(() => {
     color: var(--q-gb-t-c-14);
     border-radius: 10px;
     height: 0.44rem;
-    margin-top: 0.1rem;
+    margin-top: 0.05rem;
     margin-left: .08rem;
     display: flex;
     align-items: center;
@@ -216,7 +216,7 @@ onUnmounted(() => {
 }
 @import url("src/base-h5/css/bet/bet_single_detail.scss");
 .bet_single_detail{
-  margin-top: 0.08rem;
+  margin-top: 0.04rem;
   background: var(--q-gb-bg-c-22);
   border-radius: 0.01rem;
   display: flex;

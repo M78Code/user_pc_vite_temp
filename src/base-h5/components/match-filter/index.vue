@@ -863,7 +863,7 @@ if (type.value == 30) {
 }
 
 .scroll-area {
-  height: 100%;
+  height: calc(100% - 40px);
   min-width: 400px;
   overflow-x: hidden;
   overflow-y: auto;

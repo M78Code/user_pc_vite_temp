@@ -130,7 +130,7 @@ export default defineComponent({
   text-align: center;
 
   margin-right: 0.01rem;
-  background: var(--q-color-com-img-bg-20) no-repeat 0 0 / 100%;
+  background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png")  no-repeat 0 0 / 100%;
   --per: -0.3rem;
 }
 
@@ -152,7 +152,8 @@ export default defineComponent({
 
 .item-style2 {
   height: 0.52rem;
-
+  background: #F2F2F6;
+  
   &:nth-child(5n) {
     border-right: none;
   }

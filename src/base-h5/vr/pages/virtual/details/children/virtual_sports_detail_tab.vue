@@ -15,6 +15,9 @@
 <script>
 export default {
   name: 'virtual_sports_detail_tab',
+  props: {
+    current_match :Object,
+  },
   data() {
     return {
       viewTab: 'bet',
@@ -30,7 +33,23 @@ export default {
       this.viewTab =val
       this.$emit('change_tab',val)
     }
-  }
+  },
+  watch: {
+    // 赛马详情，不显示排行榜
+    "current_match": {
+      handler(new_){
+        console.log('new_', new_, new_?.csid);
+        
+        if(new_?.csid == "1011"){
+          this.tab_list = [
+          { label: "投注", id: 2, name: 'bet' },
+          { label: "历史战绩", id: 1, name: 'lszj' },
+          ]
+        }
+      },
+      immediate: true
+    }
+  },
 }
 </script>
 <style lang="scss" scoped>

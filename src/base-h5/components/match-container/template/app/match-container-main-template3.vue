@@ -443,7 +443,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: var(--q-gb-bg-c-18) !important;
+    background: var(--q-gb-bg-c-17) !important;
     &.bottom{
       margin-top: 0.05rem;
     }
@@ -698,9 +698,9 @@ export default {
     flex-wrap: nowrap;
     display: flex;
     font-size: 0.1rem;
-    color: #303442;
+    color: var(--q-gb-t-c-18);
     flex-direction: row-reverse;
-    background: var(--q-gb-bg-c-18);
+    background: var(--q-gb-bg-c-17);
     border-top: 1px solid var(--q-gb-bg-c-19);
     border-bottom: 1px solid var(--q-gb-bg-c-19);
 

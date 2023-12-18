@@ -67,7 +67,7 @@
       <div class="table">
         <div class="table-header text-333">
           <p  v-if="actId === 1">每日任务</p>
-          <p class="task-matters" :class="`task-matters-${actId}`">任务事项</p>
+          <p class="task-matters task-matters-title">任务事项</p>
           <p>状态</p>
           <p>奖券数量</p>
           <p>领取状态</p>
@@ -81,7 +81,7 @@
             class="table-body relative-position"
           >
           <p v-if="actId === 1" class="text-left mission-name">{{v?.taskTittle}}</p>
-            <p class="text-left task-matters" :class="`task-matters-text-${actId}`" v-html="v.taskName"></p>
+            <p class="text-left task-matters task-matters-content" :class="`task-matters-text-${actId}`" v-html="v.taskName"></p>
             <p
               class="td-item"
               :class="{
@@ -308,11 +308,17 @@ export default {
       .task-matters{
             flex: 3 !important;
             justify-content: flex-start !important;
-          
+            text-align: left;
         }
         .task-matters-text-2 {
           padding-left: 20px !important;
         }
+      .task-matters-title {
+        text-align: center;
+      }
+      .task-matters-content {
+        padding-left: 20px !important;
+      }
 
       .table-header {
         background: var(--qq--activity-bg-color-4);

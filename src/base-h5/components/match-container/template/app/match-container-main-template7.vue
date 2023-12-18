@@ -364,7 +364,7 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    background: var(--q-match-page-bg-color-10);
+    // background: var(--q-match-page-bg-color-10);
 
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -852,6 +852,7 @@ export default {
     justify-content: space-between;
     position: relative;
     overflow: hidden;
+    color: var(--q-gb-t-c-18);
 
     .triangle-wrapper {
       width: 0.24rem;
@@ -1464,7 +1465,7 @@ export default {
       // flex: 0 0 calc(33.33% - .02rem);
       width: .6rem;
       height: .32rem;
-      background: var(--q-gb-bg-c-15) !important;
+      background: var(--q-gb-bg-c-28) !important;
       border-radius: .04rem;
       margin-bottom: .02rem;
       display: flex;

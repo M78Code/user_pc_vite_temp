@@ -26,6 +26,7 @@ import { i18n_t,i18n_tc } from "src/boot/i18n.js"
 import { odds_table } from "src/core/constant/common/module/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import PageSourceData from "src/core/page-source/page-source.js";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 let time_out = null
@@ -1136,7 +1137,7 @@ const get_market_is_show = (obj={}) =>{
     return !!hl_obj.hid
 }
 const   go_to_bet=(ol_item)=>{
-    debugger
+    // debugger
     // 如果是赛果详情
     if(PageSourceData.route_name == 'match_result') return
     const {oid,_hid,_hn,_mid,_hpid } = ol_item

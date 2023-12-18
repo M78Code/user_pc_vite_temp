@@ -422,7 +422,7 @@ export default {
 
       .virtual-title{
         text-align: center;
-        text-indent: 0.55rem;
+        text-indent: 0.56rem;
       }
 
       /*  刷新按钮 */
@@ -478,6 +478,7 @@ export default {
             overflow:hidden;
             text-overflow:ellipsis;
             white-space:nowrap;
+            font-size: 0.14rem;
         }
       }
 
@@ -588,7 +589,7 @@ export default {
 
         margin-right: 0.04rem;
         display: none;
-        background: var(--q-color-com-img-bg-20) no-repeat 0 0 / 100%;
+        background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png")  no-repeat 0 0 / 100%;
         --per: -0.3rem;
       }
 
