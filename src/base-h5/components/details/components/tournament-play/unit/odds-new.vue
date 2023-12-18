@@ -155,11 +155,11 @@ export default defineComponent({
 }
 
 .is_up{
-    // color: #E95B5B;
-      color: var(--q-gb-t-c-21);
+    color: #E95B5B;
+      // color: var(--q-gb-t-c-21);
     }
  .is_down{
-   //color: #4AB06A;
-   color: var(--gb-t-c-2);
+   color: #4AB06A;
+  //  color: var(--gb-t-c-2);
  }
 </style>
