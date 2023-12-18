@@ -86,7 +86,7 @@ watch(() => props.value?.ov, (newVal, oldVal) => {
 
 const ov = computed(() => {
   // @ts-ignore
-  return compute_value_by_cur_odd_type(props.value.ov, props.value._hpid, '', sportId)
+  return compute_value_by_cur_odd_type(props.value.ov, props.value._hpid, props.value._hsw, sportId)
 })
 // 反波胆玩法增加'非'
 const txt_ol_name = computed(() => {

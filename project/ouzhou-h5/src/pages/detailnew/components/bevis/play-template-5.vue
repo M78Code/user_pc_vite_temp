@@ -85,7 +85,7 @@ const go_betting = (data) => {
                         <li class="bet" @click="go_betting(info)"
                             :class="{ 'is-active': BetData.bet_oid_list.includes(info?.oid ) }">
                             <span>{{ useOtv.includes(info._hpid) ? `${info.otv}` : `${info?.on}  ${info?.ott}` }}</span>
-                            <span class="ov-text">{{ compute_value_by_cur_odd_type(info.ov, info._hpid, '', MatchDetailCalss.params.sportId) }}</span>
+                            <span class="ov-text">{{ compute_value_by_cur_odd_type(info.ov, info._hpid, info._hsw, MatchDetailCalss.params.sportId) }}</span>
                         </li>
                     </template>
                     <figure v-if="info?.os == 2 || info._hs == 11">
@@ -99,7 +99,7 @@ const go_betting = (data) => {
                 <li v-if="otherChild.os == 1" class="bet" @click="go_betting(otherChild)"
                     :class="{ 'is-active': BetData.bet_oid_list.includes(otherChild?.oid ) }">
                     <span class="on-text">{{ useOtv.includes(otherChild._hpid) ? `${otherChild.otv}` : `${otherChild?.on}  ${otherChild?.ott}` }}</span>
-                    <span class="ov-text">{{ compute_value_by_cur_odd_type(otherChild.ov, otherChild._hpid, '', MatchDetailCalss.params.sportId) }}</span>
+                    <span class="ov-text">{{ compute_value_by_cur_odd_type(otherChild.ov, otherChild._hpid, otherChild._hsw, MatchDetailCalss.params.sportId) }}</span>
                 </li>
                 <figure class="bet" v-if="otherChild?.os == 2">
                    <lockImg :ol_item="otherChild" />

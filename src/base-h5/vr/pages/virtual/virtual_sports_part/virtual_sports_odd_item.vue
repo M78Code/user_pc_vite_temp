@@ -68,7 +68,7 @@ export default {
       let ov = this.ol_item.ov,
         hsw = this.hl_item ? this.hl_item.hsw : 0,
         csid = this.ol_item.csid;
-      let r1 = this.compute_value_by_cur_odd_type(ov / 100000,null, hsw,null, csid);
+      let r1 = this.compute_value_by_cur_odd_type(ov / 100000,null, hsw, csid);
       return r1 || '';
     },
   }

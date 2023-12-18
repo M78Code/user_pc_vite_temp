@@ -104,20 +104,6 @@ class MatchCollect {
           this.clear_collect_info()
           const data = lodash.get(res,'data');
           Object.assign(this.match_collect_obj, { ...data })
-          // Object.keys(data).forEach(key => {
-          //   const item = data[key]
-          //   if (item.tids && item.tids.length > 0) {
-          //     item.tids.forEach(i => {
-          //       this.set_league_collect_state(i, true)
-          //     })
-          //   }
-          //   if (item.mids && item.mids.length > 0) {
-          //     item.mids.forEach(i => {
-          //       this.set_match_collect_state(i, true)
-          //     })
-          //   }
-          // })
-          // console.log('get_new_collect_matchesget_new_collect_matches', this.match_mid_collect_obj.value, this.league_tid_collect_obj.value)
           this.set_is_get_collect(true)
           list && list.length > 0 && list.forEach(match => {
             this.handle_collect_state(match)

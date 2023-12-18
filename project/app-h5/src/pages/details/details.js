@@ -448,7 +448,6 @@ export const details_main = () => {
     state_data.refresh = param?.refresh || false
     // get_uid为空时循环检测进行拉取逻辑处理
     if (UserCtr.uid || state_data.init_event_timer_count > 30) {
-      console.log(matchDetailCtr.value.mid ,matchid.value,'params');
       // 请求接口数据
       get_match_details({
         // 赛事id
@@ -661,7 +660,6 @@ export const details_main = () => {
    */
   const get_odds_list = async (
     params = { sportId: sport_id.value, mid: matchDetailCtr.value.mid || matchid.value }, init_req) => {
-      console.log(params,'params',matchid.value,route);
     // state_data.data_list = Level_one_category_list();
     const get_details_category_list = () => {
       api_common

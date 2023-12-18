@@ -216,7 +216,7 @@ const is_selected = computed(() => {
 const odds_value = computed(() => {
   if(!props.odd_field) return 0;
   let ov = odd_item.value?.ov
-   let r1 = compute_value_by_cur_odd_type(ov||0, odd_item.value?._hpid, '' ,props.match.csid,UserCtr.user_version.value);
+   let r1 = compute_value_by_cur_odd_type(ov||0, odd_item.value?._hpid,odd_item.value?._hsw,props.match.csid);
   return Number(r1 || 0);
 })
 
@@ -357,7 +357,7 @@ const transfer_on = (odd_item) => {
   }
   let replaced = on
   if(![18].includes(+lodash.get(props.current_tab_item, 'id'))){
-    replaced = on.replace(/[\/0-9\+\-\.]/ig,found => {
+    replaced = on && on.replace(/[\/0-9\+\-\.]/ig,found => {
       return `<span style="color:${color}">${found}</span>`
     });
   }
