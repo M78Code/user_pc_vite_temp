@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import { MenuData } from "src/output";
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -137,5 +138,16 @@ const router = createRouter({
     }
   ],
 });
-
+/**
+ * 路由切换清除默认球种
+ */
+router.beforeEach((to, from, next) => {
+    if(to.name == "virtual_sports"){
+      MenuData.set_current_lv1_menu(300);//设置菜单
+    }
+    if(from.name=="virtual_sports" && to.name == "matchList"){
+       MenuData.set_current_lv1_menu(2);//设置菜单
+    }
+    next()
+})
 export default router;
