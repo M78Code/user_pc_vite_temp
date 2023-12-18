@@ -791,24 +791,24 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         tournamentId: mid_obj.tid,  // 联赛id
         scoreBenchmark: lodash_.get(mid_obj, 'msc[0]'),  //比分
         marketId: hl_obj.hid, //盘口ID
-        marketValue: hl_obj.hv,
+        marketValue: hl_obj.hv || '',
         playOptionsId: ol_obj.oid, //投注项id
         marketTypeFinally: UserCtr.odds.cur_odds,  // 欧洲版默认是欧洲盘 HK代表香港盘
         odds: ol_obj.ov,  //十万位赔率
         oddFinally: compute_value_by_cur_odd_type(ol_obj.ov,ol_obj._hpid, ol_obj._hsw, mid_obj.csid), //最终赔率
-        sportName: mid_obj.csna, //球种名称
+        sportName: mid_obj.csna || '', //球种名称
         matchType,  //赛事类型
-        matchName: mid_obj.tn, //赛事名称
-        playOptionName: ol_obj.on, // 投注项名称
-        playOptions: ol_obj.on,   // 投注项
+        matchName: mid_obj.tn || '', //赛事名称
+        playOptionName: ol_obj.on || '', // 投注项名称
+        playOptions: ol_obj.on || '',  // 投注项
         tournamentLevel: mid_obj.tlev, //联赛级别
         playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
         playName: set_play_name(play_config), //玩法名称
         dataSource: mid_obj.cds, //数据源
-        home: mid_obj.mhn, //主队名称
-        away: mid_obj.man, //客队名称
+        home: mid_obj.mhn || '', //主队名称
+        away: mid_obj.man || '', //客队名称
         ot: ol_obj.ot, //投注項类型
-        placeNum: hl_obj.hn, //盘口坑位
+        placeNum: hl_obj.hn || '', //盘口坑位
         // 以下为 投注显示或者逻辑计算用到的参数
         bet_amount: '', // 投注金额
         bet_type: other.bet_type, // 投注类型
