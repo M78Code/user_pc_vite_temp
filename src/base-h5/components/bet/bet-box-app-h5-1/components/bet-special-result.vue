@@ -14,9 +14,10 @@
                     </span>
                     
                     <span class="mr-4 text-009"> [{{ i18n_t(`odds.${items.marketType}`) }}]</span>
-                </div>
+                
                 <div class="w-100 font12 font400" v-if="items.matchType != 3">{{items.matchName}}</div>
                 <div class="w-100 font12 font400">{{ items.matchInfo }}
+                </div>
                 </div>
             </div>
 
@@ -117,7 +118,12 @@ const props = defineProps({
             color: var(--q-gb-t-c-10);
         }
     }
-
+      .my-4 {
+            margin: 4px 0;
+            margin: 0.04rem 0;
+            border-left: 2px solid var(--q-gb-bg-c-13);
+            padding: 0 0.04rem;
+      }
     .bet-bet-money {
         width: 100%;
         padding: 10px 12px;

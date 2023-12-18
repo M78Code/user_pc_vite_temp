@@ -281,6 +281,10 @@ class UserCtr {
   get_loaded_user_id() {
     return this.user_logined_id;
   }
+  // 获取约
+  get_set_balance() {
+    return this.balance
+  }
   get_user() {
     return this.user_info;
   }

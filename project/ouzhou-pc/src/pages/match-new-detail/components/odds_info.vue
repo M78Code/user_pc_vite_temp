@@ -94,7 +94,7 @@
                             }"
                             @click="betItemClick(item.hl[0], ol, item.hpn)"
                           >
-                            <span><lable v-if="txt_ol_name_fun(ol)" class="txt-ol-name">{{txt_ol_name_fun(ol)}}</lable>{{ ol.on }}</span>
+                            <span><span v-if="txt_ol_name_fun(ol)" class="txt-ol-name">{{txt_ol_name_fun(ol)}}</span>{{ ol.on }}</span>
                             <span>
                               <bet-item
                                 :key="`bet_4_${ol.hild}`"

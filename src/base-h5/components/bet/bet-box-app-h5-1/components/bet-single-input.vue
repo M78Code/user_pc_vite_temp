@@ -15,7 +15,7 @@
 
           <span class="money-span" ref="money_span" v-if="show_money_span" :style="{ opacity: '1' }"></span>
           
-          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
+          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ ref_data.min_money }}-{{ format_money3(ref_data.max_money) }}</span>
         </div>
         <div class="content-rmb">RMB</div>
       </div>
@@ -45,7 +45,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { ref, reactive, onMounted,computed, onUnmounted } from 'vue';
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
-import { i18n_t } from "src/output/index.js"
+import { i18n_t, format_money3 } from "src/output/index.js"
 
 
 let flicker_timer = null

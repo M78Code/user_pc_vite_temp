@@ -88,8 +88,10 @@
               <div style="height:inherit" ref="scroll_box">
                 <div>
                   <!-- ms 为0 或者 1时，表示未开赛或进行中 -->
-                  <category v-if="[0,1,110].includes(+detail_data.ms) && viewTab === 'bet'" :category_arr="matchDetailCtr.category_arr" ref="category"></category>
-                  <no-data v-else which='noMatch' height='500'></no-data>
+                  <category v-if="[0,1,110].includes(+detail_data.ms) && viewTab === 'bet'" 
+                  :category_arr="matchDetailCtr.category_arr" ref="category"></category>
+                  <no-data v-else-if="detail_data.ms!=undefined" which='noMatch' height='500'></no-data>
+                  <!-- detail_data.ms!=undefined 不然会闪现no-data哦 -->
                 </div>
               </div>
             </div>
@@ -608,11 +610,12 @@ export default defineComponent({
   height:0;
 }
 .details-fat {
-  background-color: var(--q-gb-bg-c-19);
+  background-color: var(--q-gb-bg-c-20);
 .details-f9 {
   // background: var(--q-color-page-bg-color-9);
 }
 .details-f {
+  background-color: var(--q-gb-bg-c-20);
   // background: $details-odds-bg-color;
 }
 }

@@ -74,7 +74,7 @@ const handicapData = [
         condition: i18n_t('app_h5.handicap_tutorial.handicapData_condition'),
         matchList: [
             { homeTeam: i18n_t('app_h5.handicap_tutorial.all_win'), awayTeam: i18n_t('app_h5.handicap_tutorial.all_lose'), matchResult: '1 - 0', winIsWho: 'homeTeam', note: i18n_t('app_h5.handicap_tutorial.note_1'), },
-            { homeTeam: i18n_t('app_h5.handicap_tutorial.return_principal'), awayTeam: i18n_t('app_h5.handicap_tutorial.return_principal'), matchResult: '0 - 0', winIsWho: '', note: '' },
+            { homeTeam: i18n_t('app_h5.handicap_tutorial.return_principal'), awayTeam: i18n_t('app_h5.handicap_tutorial.return_principal'), matchResult: '0 - 0', winIsWho: '', note: i18n_t('app_h5.handicap_tutorial.note_2'), },
         ]
     },
     {

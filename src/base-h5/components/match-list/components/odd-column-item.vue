@@ -294,7 +294,8 @@ const get_odd_append_value = (ol_item) => {
       r = odds_value.value;
     }
   }
-  odd_append_value.value = r.toFixed(2);
+  odd_append_value.value = compute_value_by_cur_odd_type(ol_item.ov,ol_item._hpid,ol_item._hsw,props.match.csid)
+  // odd_append_value.value = r.toFixed(2);
 }
 const arrived10_handle = () => {
   virtual_odds_state.value = 1;

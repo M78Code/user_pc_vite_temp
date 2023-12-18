@@ -427,7 +427,7 @@
           // background-color: var(--q-color-page-bg-color-14) !important;
         }
         &.details-bg5 {
-          background-color: #D1EBFF !important;
+          background: var(--q-gb-bg-c-24) !important;
         }
       }
 
@@ -440,6 +440,7 @@
         line-height: 0.35rem;
         margin-bottom: 0;
         background-color: var(--q-match-page-bg-color-105);
+        color: var(--q-gb-t-c-18);
       }
 
       .fam {

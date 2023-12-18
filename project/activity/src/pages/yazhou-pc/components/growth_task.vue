@@ -320,6 +320,7 @@ export default {
           background-position: center;
           background-repeat: no-repeat;
           background-image: var(--qq--activity-btn-bg-img2);
+          cursor: pointer;
         }
       }
 
@@ -762,7 +763,7 @@ export default {
       }
 
       .text-666 {
-        height: 60px;
+        min-height: 60px;
         line-height: 60px;
         font-size: 16px;
       }

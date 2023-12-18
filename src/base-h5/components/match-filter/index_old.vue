@@ -165,6 +165,15 @@ const get_sport_all_selected = MenuData.get_sport_all_selected
 const get_md = ref(MenuData.current_lv_3_menu)    //TODO三级日期菜单时间戳
 
 // ]),
+const emit = defineEmits(["selectHandle"]);
+//暴露出去的方法和数据
+defineExpose({list})
+const props = defineProps({
+  search_val: {
+    type: String,
+    default: "",
+  },
+});
 
 
 // 活动的下标监听
@@ -633,12 +642,13 @@ function fetch_filter_match() {
   } else {
     params = {
       type: m_type == 28 && get_curr_sub_menu_type.value == 29 ? '29' : type.value, // 29 是代表 赛果里边的 我的投注的选项
-      euid: m_type == 30 ? m_id : MenuData.get_current_sub_menuid(), // menuType 30竞足
-      inputText: '',
-      cuid: get_uid.value,
+      euid: MenuData.is_jinzu(m_type) ? m_id : MenuData.get_euid(MenuData.get_current_sub_menuid()), // menuType 30竞足
+      inputText: props.search_val,
+      cuid: UserCtr.get_uid(),
       device: 'v2_h5',
-      md: lodash.get(get_current_menu.value, 'date_menu.field1')
+      md: lodash.get(MenuData.current_lv_3_menu, 'field1')
     };
+    console.log('asdnushfafaf', params);
     api_match_filter = api_filter.get_fetch_filter_match_old
     //三级日期菜单时间戳
     get_md.value > -1 && m_type != 1 && Object.assign(params, { md: get_md.value });
