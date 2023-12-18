@@ -478,7 +478,6 @@ export const category_info = (category_arr=[]) => {
           listItemAddCustomAttr(item);
         });
       }
-
       temp = save_hshow(temp); // 保存当前相关hshow状态;
       // 当前玩法集下数据缓存和所有的投注项
       details_data_cache[`${match_id.value}-${get_details_item.value}`] = temp;

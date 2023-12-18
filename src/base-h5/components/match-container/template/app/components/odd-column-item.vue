@@ -606,7 +606,7 @@ onUnmounted(() => {
     }
   }
   .fontbold{
-    font-weight: 600;
+    font-weight: 700;
     font-family: Akrobat;
     font-size: 12px;
   }

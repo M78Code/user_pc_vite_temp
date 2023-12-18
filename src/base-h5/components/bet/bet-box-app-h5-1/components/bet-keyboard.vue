@@ -310,6 +310,8 @@ onUnmounted(() => {
 }
 .nonebox4-fourth-a:last-child {
   margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 .nonebox4-fourth-a-son {
     display: flex;
