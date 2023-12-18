@@ -213,6 +213,7 @@ const _handleNumberKey = (num, e) => {
   } else {
     if (!money_) { // 输入第一位
       money_ = num === '0' ? '0.' : num // 第一位输入0 则显示0.  其他的正常显示
+      if(num === '00') return // 初次输入不能输入00
     } else {
       money_ = money_ + num
     }
