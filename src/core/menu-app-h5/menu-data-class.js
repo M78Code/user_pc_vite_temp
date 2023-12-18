@@ -697,7 +697,7 @@ class MenuData {
    * 没有传递对比当前菜单
   */
   is_vr(mi) {
-    return this._is_cur_mi_special(300, mi)
+    return this._is_cur_mi(300, mi)
   }
   /**
    * 是否选中了赛果
