@@ -50,8 +50,21 @@
       </template>
       <!-- 历史战绩页面 -->
       <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
-      <!-- 足球排行榜页面  :tid="menu_list[tab_item_i].field1"-->
-      <football-ranking-list  v-if="match && tabs_name == 'rank'" :tid="current_league.field1" />
+      <!-- 排行榜页面,小组赛淘汰赛页面  -->
+      <div v-if="match && tabs_name == 'rank'" class="list-wrapper">
+        <div v-if="[1001,1004].includes(sub_menu_type)">
+          <!--  足球小组赛,淘汰赛页面  -->
+          <group-knockout
+            v-if="false"
+            :tid="current_league.field1"
+            :current_match="current_match"
+          />
+          <!--  足球排行榜页面  -->
+          <football-ranking-list v-else :tid="current_league.field1"/>
+        </div>
+        <!--  非足球排行榜页面  -->
+        <ranking-list-start v-else :mid="current_match.mid"/>
+      </div>
     </div>
   </div>
 </template>
@@ -74,7 +87,10 @@ import { reactive } from 'vue'
 import { go_where } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/output/index.js"
-import footballRankingList from "src/base-h5/vr/pages/virtual/virtual_sports_part/football-ranking-list-2.vue"
+import ranking_list_start from "src/base-h5/vr/pages/virtual/virtual_sports_part/ranking_list_start.vue"
+import group_knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/group_knockout.vue"
+import football_ranking_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/football_ranking_list.vue"
+
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -110,7 +126,9 @@ export default {
     'virtual-sports-stage': virtual_sports_stage,
     'virtual-sports-category': virtual_sports_category,
     'virtual-sports-detail-tab': virtual_sports_detail_tab,
-    'football-ranking-list': footballRankingList
+    'ranking-list-start':ranking_list_start,
+    'football-ranking-list':football_ranking_list,
+    'group-knockout':group_knockout,
   },
   data(){
     return{

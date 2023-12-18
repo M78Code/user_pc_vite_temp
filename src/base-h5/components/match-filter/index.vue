@@ -10,7 +10,9 @@
     <!-- 全选 -->
       <div class="scroll-setect-all" v-if="!no_find_content && !list_data_loading">
           <span>{{ i18n_t('common.all_select') }}</span>
-          <div @click="all_checked_click" class="scroll-setect-options" :class="all_checked ? 'sso-active' : ''"></div>
+          <div @click="all_checked_click" class="scroll-setect-options">
+           <img :src="compute_local_project_file_path(all_checked ? '/image/list/icon_unselected_onlight.svg' : '/image/list/icon_selected_theme_type.svg')" alt="">
+          </div>
         </div>
     <!-- 中间滚动选择项 -->
     <q-scroll-area class="scroll-area" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
@@ -24,8 +26,11 @@
               <span>{{ item.title }}</span>
             </div>
             <div class="scroll-setect">
-              <div class="scroll-setect-options" :class="item.checked ? 'sso-active':'' "
-                   @click="type_select(item)"></div>
+              <!-- <div class="scroll-setect-options" :class="item.checked ? 'sso-active':'' "
+                   @click="type_select(item)"></div> -->
+              <div class="scroll-setect-options"
+                   @click="type_select(item)">
+                   <img :src="compute_local_project_file_path(item.checked ? '/image/list/icon_unselected_onlight.svg' : '/image/list/icon_selected_theme_type.svg')" alt=""></div>
             </div>
           </div>
           <!-- 联赛名称部分 -->
@@ -43,8 +48,13 @@
                         v-show="!(type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type))">
                         （{{ item.num }}）
                         <!-- <img class="icon-search" :src="compute_img_url(item.select ? 'checkbox-box-s' : 'checkbox-box')" /> -->
-                        <div class="scroll-setect-options" :class="item.select ? 'sso-active':'' "
-                             @click="select_li_ctr(item)"></div>
+                        <!-- <div class="scroll-setect-options" :class="item.select ? 'sso-active':'' "
+                             @click="select_li_ctr(item)"></div> -->
+                        <div @click="select_li_ctr(item)">
+                          <img :src="compute_local_project_file_path(item.select ? '/image/list/icon_unselected_onlight.svg' : '/image/list/icon_selected_theme_type.svg')" alt="">
+
+                        </div>
+
                       </div>
                   </div>
                 </div>
@@ -693,17 +703,17 @@ if (type.value == 30) {
     width: 0.48rem;
     height: 0.48rem;
     font-size: 0.28rem;
-    background: var(--q-gb-bg-c-13) no-repeat center / 98%;
+    background: var(--q-gb-bg-c-30) no-repeat center / 98%;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: .48rem;
-    color: var(--q-gb-bg-c-15);
+    color: var(--q-gb-t-c-14);
     &::after {
       content: ' ';
       border-top:  .20rem solid transparent;
       border-bottom:  .20rem solid transparent;
-      border-left:  .20rem solid var(--q-gb-bg-c-13);
+      border-left:  .20rem solid var(--q-gb-bg-c-30);
       position: absolute;
       right: -0.1rem;
       border-radius: 0.16rem;
@@ -767,9 +777,10 @@ if (type.value == 30) {
   .content_box2 {
     width: 100%;
     font-size: 0.16rem;
-    margin: 0 .6rem 0 .3rem;
+    padding: 0 0.58rem 0 0.14rem;
     height: 100%;
     position: relative;
+    color: var(--q-gb-t-c-18);
 
     &:before {
       content: "";
@@ -791,6 +802,7 @@ if (type.value == 30) {
     .left{
       display: flex;
       align-items: center;
+      
     }
 
     .name-overhide {
@@ -896,7 +908,7 @@ if (type.value == 30) {
 
   .scroll-title {
     height: .4rem;
-    background-color: var(--q-gb-bg-c-11);
+    background-color: var(--q-gb-bg-c-23);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -982,11 +994,10 @@ if (type.value == 30) {
 }
 
 .content_box1 {
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-23);
   color: var(--q-color-fs-color-3);
 
   .content_box2 {
-    margin-right: 20px;
     &:before {
       background: var(--q-color-border-color-5);
     }
@@ -1041,4 +1052,4 @@ if (type.value == 30) {
 .icon_keep:before {
   color: var(--q-color-fs-color-50);
 }
-</style>src/output
+</style>
