@@ -140,9 +140,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
         set_menu_mi_change_get_api_data()
         break;
       case 300:
-        nextTick(()=>{
-          MenuData.set_current_lv1_menu(300);
-        })
         // ref_data.scroll_data_list = MenuData.get_menu_lvmi_special_list(val.mi)
         router.push('/virtual');
         break;
@@ -175,11 +172,11 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
    * @param {*} type 
    */
   const setDate = (type) =>{
-      if([3,6].includes(MenuData.current_lv_1_menu_mi.value)){
-        set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,type)
-      }else{
-        handle_match_render_data();
-      }
+    if([3,6].includes(MenuData.current_lv_1_menu_mi.value)){
+      set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,type)
+    }else{
+      handle_match_render_data();
+    }
   }
   /**
    * 
@@ -297,6 +294,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       }
       return 
     }
+    console.log(111111111)
     // 今日 / 滚球 早盘 串关 
     if([1,2,3,6].includes(MenuData.current_lv_1_menu_mi.value)){
       if (MenuData.top_menu_title.mi !== 2000) handle_match_render_data()
@@ -322,7 +320,15 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // 清除赛事折叠信息
     MatchDataBaseH5.init()
     MatchFold.clear_fold_info()
-    if(MenuData.is_collect()) return MatchMeta.get_collect_match()
+    if(MenuData.is_collect()) {
+      // 电竞收藏
+      if (MenuData.is_esports()) {
+        MatchMeta.get_esports_collect_match()
+      } else {
+        MatchMeta.get_collect_match()
+      }
+      return 
+    }
     // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
     if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
     // 赛果不走元数据， 直接拉取接口

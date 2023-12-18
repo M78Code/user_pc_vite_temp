@@ -51,7 +51,7 @@
           <div class="league-t-wrap right-border">
           <!-- <div class="league-t-tubiao"></div> -->
             <!-- 联赛收藏 -->
-            <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
+            <div v-if="![3000, 900].includes(menu_type) && !is_esports" class="favorited-icon" @click.stop="handle_league_collect">
               <!-- 未收藏 compute_img_url('icon-favorite')-->
               <img v-if="!league_collect_state" :src="not_favorite_app" alt="">
               <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
@@ -284,7 +284,7 @@
               </div>
               <template v-if="match.csid != 1">
                 <div class="score-content">
-                  <ScoreList :main_source="main_source" :match="match" />
+                  <ScoreList :main_source="main_source" :match="match_of_list" />
                 </div>
               </template>
             </div>
@@ -932,6 +932,7 @@ export default {
       font-size: .12rem;
       &.export {
         min-width: 1.1rem;
+        margin-left: 0.1rem;
       }
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
@@ -1375,6 +1376,15 @@ export default {
   :deep(.score-se-inner2){
     display: flex;
     flex-direction: row-reverse;
+  }
+  :deep(.scroll-container-w){
+  .score-se-inner{
+      max-width: 100%;
+      .score-se-inner2{
+        display: flex;
+        margin-left: -5px;
+      }
+    }
   }
 }
 
