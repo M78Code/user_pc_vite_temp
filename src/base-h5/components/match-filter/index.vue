@@ -462,8 +462,8 @@ function fetch_filter_match() {
     api_match_filter = api_filter.get_filter_match_list
   } else {
     params = {
-      // 29 是代表 赛果里边的 我的投注的选项
-      type: MenuData.is_results(m_type) && get_curr_sub_menu_type.value == 29 ? '29' : type.value,
+      // 29 是代表 赛果里边的 我的投注的选项  筛选type入参 1滚球 3今日 4早盘 滚球走index_old.vue
+      type: MenuData.is_results(m_type) && get_curr_sub_menu_type.value == 29 ? '29' : type.value + 1,
       euid: MenuData.is_jinzu(m_type) ? m_id : MenuData.get_euid(MenuData.get_current_sub_menuid()), // menuType 30竞足
       inputText: props.search_val,
       cuid: UserCtr.get_uid(),
