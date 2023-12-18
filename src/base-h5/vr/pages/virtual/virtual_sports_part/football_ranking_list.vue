@@ -8,22 +8,22 @@
     <span class="navigation-title">{{ i18n_t('virtual_sports.leaderboard') }}</span>
     <!-- header -->
     <div class="header">
-      <div class="col1"></div>
-      <div class="col2">{{ i18n_t('virtual_sports.team') }}</div>
-      <div class="col3">{{ i18n_t('virtual_sports.game') }}</div>
-      <div class="col4">{{ i18n_t('virtual_sports.win_tie_loss') }}</div>
-      <div class="col5">{{ i18n_t('virtual_sports.integral') }}</div>
+      <div class="col1 col-label"></div>
+      <div class="col2 col-label">{{ i18n_t('virtual_sports.team') }}</div>
+      <div class="col3 col-label">{{ i18n_t('virtual_sports.game') }}</div>
+      <div class="col4 col-label">{{ i18n_t('virtual_sports.win_tie_loss') }}</div>
+      <div class="col5 col-label">{{ i18n_t('virtual_sports.integral') }}</div>
     </div>
     <!-- 小组 -->
     <div class="group-item" v-if="!no_data">
       <div class="team-item" v-for="(item, i) in ranking_data" :key="i">
-        <div class="col1">{{+i + 1}}</div>
-        <div class="col2 ellipsis">
+        <div class="col1 col-field">{{+i + 1}}</div>
+        <div class="col2 ellipsis col-field">
           {{item.virtualTeamName}}
         </div>
-        <div class="col3">{{ item.totalCount }}</div>
-        <div class="col4">{{ item.winDrawLostDescription }}</div>
-        <div class="col5">{{ item.points }}</div>
+        <div class="col3 col-field">{{ item.totalCount }}</div>
+        <div class="col4 col-field">{{ item.winDrawLostDescription }}</div>
+        <div class="col5 col-field">{{ item.points }}</div>
       </div>
     </div>
     <!-- 没有数据 组件 -->
@@ -109,6 +109,11 @@ export default {
     }
   }
 
+  .col-label{
+    font-size: 0.1rem;
+    color: #949AB6;
+  }
+
   .col1 {
     width: 0.4rem;
   }
@@ -146,9 +151,14 @@ export default {
     line-height: 0.32rem;
     margin: 0 0.1rem;
 
+    /* label字段 设计稿上是字体 10px，font-weight 400 */
     > div {
-
-      font-size: 0.12rem;
+      font-family: PingFang SC;
+      font-weight: 400;
+      font-size: 0.10rem;
+      // line-height: 0.14rem;
+      letter-spacing: 0;
+      // text-align: left;
     }
   }
 
@@ -168,13 +178,18 @@ export default {
     height: 0.48rem;
     text-align: center;
 
+    /* 列字段 设计稿上是字体 12px，font-weight 500 */
     div {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.13rem;
+      font-size: 0.12rem;
+      font-weight: 500;
     }
 
+    /*  .field{} */
+
+    /*
     &:nth-child(-n+3) {
 
       font-weight: bold;
@@ -184,6 +199,7 @@ export default {
         color: var(--q-color-fs-color-3);
       }
     }
+    */
 
     .col1 {
       font-size: 0.12rem;
