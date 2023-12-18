@@ -284,7 +284,7 @@
               </div>
               <template v-if="match.csid != 1">
                 <div class="score-content">
-                  <ScoreList :main_source="main_source" :match="match" />
+                  <ScoreList :main_source="main_source" :match="match_of_list" />
                 </div>
               </template>
             </div>
