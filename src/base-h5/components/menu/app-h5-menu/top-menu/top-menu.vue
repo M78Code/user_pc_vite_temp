@@ -7,8 +7,8 @@
 <template>
     <div>
         <div v-show="false">   {{MenuData.update_time}} {{UserCtr.user_version}}</div>
-
-        <TopHeader v-if="[300,2000,50000].includes(+MenuData.top_menu_title.mi )">
+        <!-- 300, -->
+        <TopHeader v-if="[2000,50000].includes(+MenuData.top_menu_title.mi )">
             <template #right>
                 <div class="main-menu-right" @click.stop>
                     <!-- <span class="main-menu-right-symbol">￥</span> -->

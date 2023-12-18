@@ -12,7 +12,9 @@
             <div class="hint" v-if="state.source === 'bigAndSmallBall'">{{ i18n_t('app_h5.handicap_tutorial.big_small_ball_tip') }}</div>
         </div>
 
-        <div :class="['ht-both-teams', state.source === 'bigAndSmallBall' && 'pb20']">
+
+
+        <!-- <div :class="['ht-both-teams', state.source === 'bigAndSmallBall' && 'pb20']">
             <div class="left">
                 <div class="teams">
                     <div>{{ i18n_t('app_h5.handicap_tutorial.home_team') }}</div>
@@ -31,23 +33,28 @@
                     <div v-if="state.source !== 'bigAndSmallBall'" class="score">{{ option.awayTeamScore }}</div>
                 </div>
             </div>
-        </div>
+        </div> -->
+
+        
+
 
         <div class="match-result-list" v-for="(item, index) in option.matchList" :key="'matchResult' + index">
             <div class="note" v-html="item.note"></div>
             <div :class="['match-result', state.source === 'bigAndSmallBall' && 'mb20']">
                 <div class="left">
                     <div class="home-team teams">
+                        <div class="teams-logo"><img :src="compute_local_project_file_path('/image/svg/home-team-icon.svg')" alt=""></div>
                         <div class="title">{{ i18n_t('app_h5.handicap_tutorial.bet_home_team') }}</div>
                         <div :class="['result', item.winIsWho === 'homeTeam' && 'win']">{{ item.homeTeam }}</div>
                     </div>
-                    <div v-if="item.winIsWho === 'homeTeam'" class="win-icon"><img :src="compute_local_project_file_path('/image/png/coin.png')" alt=""></div>
+                    <!-- <div v-if="item.winIsWho === 'homeTeam'" class="win-icon"><img :src="compute_local_project_file_path('/image/png/coin.png')" alt=""></div> -->
                 </div>
                 <div class="center">
                     <div class="round-ball">
-                        <div class="title">{{state.source !== 'bigAndSmallBall' ? i18n_t('menu_itme_name.results') : i18n_t('app_h5.handicap_tutorial.enter_ball')}}</div>
+                        <!-- <div class="title">{{state.source !== 'bigAndSmallBall' ? i18n_t('menu_itme_name.results') : i18n_t('app_h5.handicap_tutorial.enter_ball')}}</div> -->
                         <div class="score">{{ item.matchResult }}</div>
-                        <div v-if="item.matchResult === '0 - 0'" class="text-style">{{ i18n_t('app_h5.handicap_tutorial.vice_versa') }}</div>
+
+                        <div class="text-style" v-html="option.condition"></div>
                     </div>
                 </div>
                 <div class="right">
@@ -55,7 +62,7 @@
                         <div class="title">{{ i18n_t('app_h5.handicap_tutorial.bet_away_team') }}</div>
                         <div :class="['result', item.winIsWho === 'awayTeam' && 'win']">{{ item.awayTeam }}</div>
                     </div>
-                    <div v-if="item.winIsWho === 'awayTeam'" class="win-icon"><img :src="compute_local_project_file_path('/image/png/coin.png')" alt=""></div>
+                    <!-- <div v-if="item.winIsWho === 'awayTeam'" class="win-icon"><img :src="compute_local_project_file_path('/image/png/coin.png')" alt=""></div> -->
                     <!-- <div class="win-icon"></div> -->
                 </div>
             </div>
@@ -106,8 +113,7 @@ const state = reactive({
         margin-bottom: .2rem !important;
     }
     .ht-title {
-        margin: .15rem .15rem 0 .3rem;
-        padding-bottom: .15rem;
+        height: .49rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -116,17 +122,14 @@ const state = reactive({
             width: .03rem;
             height: .14rem;
             border-radius: .08rem;
-            background-color: var(--q-gb-t-c-1);
-            ;
+            background-color: var(--q-gb-t-c-1);;
             margin-right: .08rem;
         }
 
         .title {
             color: var(--q-gb-t-c-20);
             font-size: .14rem;
-            margin-right: .08rem;
             font-weight: 500;
-
             span {
                 font-weight: bold;
                 margin-right: .04rem;
@@ -232,6 +235,12 @@ const state = reactive({
             .right {
                 // flex: 1;
                 display: flex;
+                .teams-logo {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-bottom: .04rem;
+                }
             }
 
             .left,
@@ -273,10 +282,6 @@ const state = reactive({
             .left {
                 justify-content: center;
                 align-items: center;
-                background-image: linear-gradient(90deg, #e7edfe 0%, #fff 100%);
-                border-top-left-radius: .56rem;
-                border-bottom-left-radius: .56rem;
-                margin-right: -.24rem;
 
                 .win-icon {
                     left: .16rem;
@@ -292,9 +297,7 @@ const state = reactive({
                     display: flex;
                     width: .66rem;
                     height: .66rem;
-                    border-radius: .66rem;
                     flex-direction: column;
-                    background-image: linear-gradient(270deg, #f3f6fe 0%, #f6f8fd 49.27%, #f4f6fb 100%);
                     justify-content: center;
                     align-items: center;
 
@@ -322,10 +325,6 @@ const state = reactive({
             .right {
                 justify-content: center;
                 align-items: center;
-                background-image: linear-gradient(120deg, #fff 0%, #e7edfe 100%);
-                border-top-right-radius: .56rem;
-                border-bottom-right-radius: .56rem;
-                margin-left: -24px;
                 .win-icon {
                     right: .16rem;
                 }

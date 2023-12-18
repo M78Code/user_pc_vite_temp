@@ -10,7 +10,7 @@
           <div class="s-menu-container flex" >
             <template  v-for="(item,index) in scrollDataListNew" :key="index">
               <!-- 全部 vr 收藏 电竞显示  -->
-              <div v-if="item?.ct > 0 || menu_show_id.includes(+item.mi) || +item.mi>2000" ref="scrollTab" 
+              <div :key="index" v-if="item?.ct > 0 || menu_show_id.includes(+item.mi) || +item.mi>2000" ref="scrollTab" 
                 :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] " 
                  @click="set_menu_lv2(item, $event)" >
               <!-- <div ref="scrollTab" :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] "  @click="set_menu_lv2(item, $event)" > -->
