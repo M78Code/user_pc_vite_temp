@@ -140,7 +140,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
         set_menu_mi_change_get_api_data()
         break;
       case 300:
-        
+        nextTick(()=>{
+          MenuData.set_current_lv1_menu(300);
+        })
         // ref_data.scroll_data_list = MenuData.get_menu_lvmi_special_list(val.mi)
         router.push('/virtual');
         break;
