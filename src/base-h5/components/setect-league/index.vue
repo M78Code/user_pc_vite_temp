@@ -5,9 +5,12 @@
   <!-- :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon-black.svg`" alt=""> -->
   <div class="select-league" :style="bounced_high">
     <div class="sl-header">
-      <div class="sl-btn" @click="closed">取消</div>
-      <div class="sl-title">选择联赛</div>
-      <div class="sl-btn" @click="finishHandle">完成</div>
+    <!-- 取消 -->
+      <div class="sl-btn" @click="closed">{{ i18n_t('common.cancel') }}</div>
+      <!-- 选择联赛 -->
+      <div class="sl-title">{{ i18n_t('filter.match_select_title') }}</div>
+      <!-- 完成 -->
+      <div class="sl-btn" @click="finishHandle">{{ i18n_t('common.finish') }}</div>
     </div>
     <div class="sl-search">
       <div class="sl-input-content">
