@@ -22,7 +22,10 @@
           <div class="bg-f6f7f8 scroll-title" ref="bg_f6f7f8" v-if="item.title">
             <div class="scroll-title-text">
               <!-- <img class="scroll-title-icon" :src="compute_local_project_file_path('image/list/league-collapse-icon.svg')" alt=""> -->
-              <img class="scroll-title-icon" :src="compute_local_project_file_path('/image/list/league-collapse-icon-top.svg')" alt="">
+              <img class="scroll-title-icon"  
+                   :class="{'is_fold':item.hide}" 
+                   @click="is_fold_fn(item)"
+                   :src="compute_local_project_file_path('/image/list/league-collapse-icon-top.svg')" alt="">
               <span>{{ item.title }}</span>
             </div>
             <div class="scroll-setect">
@@ -593,7 +596,22 @@ function dynamic_letters(arr) {
     console.error(e);
   }
 }
-
+/*
+ * @Description: 是否折叠联赛
+ */
+const is_fold_fn = (item)=>{
+  if (item.hide){
+    item.hide = false;
+  }else{
+    item.hide = true;
+  }
+  list.value = (list.value || []).map(i => {
+    if (i.spell === item.title){
+       i.hide = item.hide
+    }
+     return i
+  });
+}
 // 组件销毁时
 onBeforeUnmount(() => {
   clearTimeout(timer2)
@@ -950,6 +968,9 @@ if (type.value == 30) {
 }
 
 .icon-search:before {}
+.is_fold{
+  transform: rotate(180deg);
+}
 </style>
 
 

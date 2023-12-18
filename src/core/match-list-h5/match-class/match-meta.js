@@ -798,8 +798,8 @@ class MatchMeta {
     let mid_list = lodash.get(MenuData,'collect_list')
     let lv1_mi = lodash.get(MenuData,'current_lv_1_menu_i')
     let euid = ''
-    // 复刻版收藏
-    if (project_name === 'app-h5' && lv_2_menu_i == 50000) {
+    // 复刻版非冠军收藏
+    if (project_name === 'app-h5' && lv_2_menu_i == 50000 && !MenuData.is_kemp()) {
       const menu_list = lodash.get(MenuData,'menu_list')
       euid = menu_list.map(item => MenuData.get_euid(item.mi+''+lv1_mi)).join(',')
     } else if(lv_2_menu_i == 0){
