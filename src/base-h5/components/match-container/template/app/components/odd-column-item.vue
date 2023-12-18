@@ -357,7 +357,7 @@ const transfer_on = (odd_item) => {
   }
   let replaced = on
   if(![18].includes(+lodash.get(props.current_tab_item, 'id'))){
-    replaced = on.replace(/[\/0-9\+\-\.]/ig,found => {
+    replaced = on && on.replace(/[\/0-9\+\-\.]/ig,found => {
       return `<span style="color:${color}">${found}</span>`
     });
   }
@@ -606,7 +606,7 @@ onUnmounted(() => {
     }
   }
   .fontbold{
-    font-weight: 600;
+    font-weight: 700;
     font-family: Akrobat;
     font-size: 12px;
   }
