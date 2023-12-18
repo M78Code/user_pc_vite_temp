@@ -7,7 +7,7 @@
         flex: 1;
         display: flex;
         justify-content: center;
-        color: #C9CDDB var(--q-gb-t-c-14);
+        color: var(--q-gb-t-c-24);
 
         span {
             padding: .06rem 0;
@@ -20,8 +20,7 @@
         span {
             border-bottom: .02rem solid var(--q-gb-t-c-1);
             font-weight: 600;
-            //color: #303442;
-            color: var(--q-gb-t-c-20);
+            color: var(--q-gb-t-c-18);
         }
     }
 }

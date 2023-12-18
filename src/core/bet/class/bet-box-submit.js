@@ -26,7 +26,7 @@ import { i18n_t,i18n_tc } from "src/boot/i18n.js"
 import { odds_table } from "src/core/constant/common/module/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import PageSourceData from "src/core/page-source/page-source.js";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { MenuData } from 'src/output/module/menu-data.js'
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 let time_out = null
@@ -886,9 +886,9 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     let play_id = [4]
     // 详情 并且本地没有配置玩法
     if(other.is_detail){
-        play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+        play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,play_name)
     }else{
-        let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+        let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,play_name)
           // 冠军玩法 部分玩法hpid相同 
         if(other.bet_type == 'guanjun_bet'){
             let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])
@@ -1147,7 +1147,7 @@ const   go_to_bet=(ol_item)=>{
     }else if(MenuData.is_kemp()){
         bet_type ="guanjun_bet"
     }else if(MenuData.is_vr()){
-        bet_type ="“vr_bet”，"
+        bet_type ="vr_bet"
     }
     let params = {
       oid, // 投注项id ol_obj

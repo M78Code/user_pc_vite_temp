@@ -290,7 +290,7 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
      */
   const change_bool = (bool) => {
     // bool 的值为true或者是false
-    is_dialog_details.value = bool;
+    // is_dialog_details.value = bool;
   }
   // 监听是否下拉联赛列表
   const { off: change_bool_off } =  useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, change_bool);

@@ -67,7 +67,7 @@ const bigAndSmallBallData = [
 ]
 const handicapData = [
     {
-        ballNumber: '0',
+        ballNumber: i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '0'),
         title: i18n_t('app_h5.handicap_tutorial.tie_handicap'),
         homeTeamScore: '0',
         awayTeamScore: "0",
@@ -78,7 +78,7 @@ const handicapData = [
         ]
     },
     {
-        ballNumber: '0/0.5',
+        ballNumber: i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '0/0.5'),
         title: i18n_t('app_h5.handicap_tutorial.tie_half_plate'),
         homeTeamScore: '-0/0.5',
         awayTeamScore: '+0/0.5',
@@ -89,7 +89,7 @@ const handicapData = [
         ]
     },
     {
-        ballNumber: '0.5',
+        ballNumber: i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '0.5'),
         title: i18n_t('app_h5.handicap_tutorial.ball_plate_1'),
         homeTeamScore: '-0.5',
         awayTeamScore: '+0.5',
@@ -100,7 +100,7 @@ const handicapData = [
         ]
     },
     {
-        ballNumber: '0.5/1',
+        ballNumber: i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '0.5/1'),
         title: i18n_t('app_h5.handicap_tutorial.ball_plate_2'),
         homeTeamScore: '-0.5/1',
         awayTeamScore: '+0.5/1',
@@ -112,7 +112,7 @@ const handicapData = [
         ]
     },
     {
-        ballNumber: '1',
+        ballNumber: i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1'),
         title: i18n_t('app_h5.handicap_tutorial.ball_plate_3'),
         homeTeamScore: '-1',
         awayTeamScore: '+1',

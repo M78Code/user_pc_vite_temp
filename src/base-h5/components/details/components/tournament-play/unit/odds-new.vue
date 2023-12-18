@@ -95,7 +95,7 @@ export default defineComponent({
       component_data.DOM_ID_SHOW = "DOM_ID_SHOW";
     });
     const odds_value = () => {
-      return compute_value_by_cur_odd_type(props.ol_data?.ov,props.ol_data?._hpid,'',MatchDetailCalss.params.sportId)
+      return compute_value_by_cur_odd_type(props.ol_data?.ov,props.ol_data?._hpid,props.ol_data?._hsw,MatchDetailCalss.params.sportId)
     };
     onUnmounted(() => {
       clearTimeout(component_data.clear_status_timeout);

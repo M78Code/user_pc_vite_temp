@@ -42,7 +42,7 @@
         {{ compute_value_by_cur_odd_type(
           ol_data.ov,
           ol_data._hpid,
-          '',
+          ol_data._hsw,
           csid || match?.csid
         ) }}
       </span>
@@ -276,15 +276,25 @@ const bet_click_ol = () => {
     _hn,  // hn_obj
     _mid,  //赛事id mid_obj
   }
-
-  //点击后再次点击，取消选中状态
-  const current_id = `${_mid}${oid}`;
-  if (props.active_score === current_id) {
-    emit('update_score', '')
-  } else {
-    emit('update_score', current_id)
-  }
-  set_bet_obj_config(params, { match_data_type: props.match_data_type })
+  let other = {
+        is_detail: false,
+        // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
+        // 根据赛事纬度判断当前赛事属于 那种投注类型
+        bet_type: 'common_bet',
+        // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+        device_type: 2,
+        // 数据仓库类型
+        match_data_type: props.match_data_type, // h5_detail
+        // match_data_type: "h5_list", // h5_detail
+    }
+  // //点击后再次点击，取消选中状态
+  // const current_id = `${_mid}${oid}`;
+  // if (props.active_score === current_id) {
+  //   emit('update_score', '')
+  // } else {
+  //   emit('update_score', current_id)
+  // }
+  set_bet_obj_config(params, other )
   BetData.set_bet_state_show(true)
 };
 

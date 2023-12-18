@@ -112,7 +112,7 @@ defineExpose({set_active_val,changeTabMenu})
             }
 
             li {
-                width: 0.58rem;
+                width: 0.52rem;
                 height: 100%;
                 flex-shrink: 0;
                 text-align: center;

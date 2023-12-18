@@ -20,7 +20,7 @@
                       </div>
                       <div>
                           <div class="nonebox4-content-right">
-                              <div class="nonebox4-content-right-profit">{{compute_value_by_cur_odd_type(item.odds,item.playId,'',item.sportId)}}</div>
+                              <div class="nonebox4-content-right-profit">{{compute_value_by_cur_odd_type(item.odds,item.playId,item.odds_hsw,item.sportId)}}</div>
                           </div>
                       </div>
                     </div>

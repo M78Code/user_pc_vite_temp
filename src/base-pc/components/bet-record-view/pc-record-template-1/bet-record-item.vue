@@ -522,7 +522,7 @@ const match_type = (type, langCode = UserCtr.lang) => {
       text = `common_lang.${langCode}.bet.morning_session`; //"早盘赛事";
       break;
     case 2:
-      text = `common_lang.${langCode}.bet.bowls`; //"滚球盘赛事";
+      text = `common_lang.${langCode}.bet.bet_inplay`; //"滚球盘赛事";
       break;
   }
   return i18n_t(text);

@@ -21,7 +21,7 @@
       </div>
       <div class="bet_single_info_btn" :class="ref_data.is_bet_pre ? 'focus' : ''" v-if="BetData.bet_pre_list.includes(item.playOptionsId)">
         <div class="" v-if="ref_data.is_bet_pre" @click="set_bet_pre">{{ i18n_t('app_h5.bet.cancel_appoint') }}</div>
-        <div class="" v-else @click="set_bet_pre">+{{ i18n_t('pre_record.book')}}</div>
+        <div v-else @click="set_bet_pre"><span class="space">+</span>{{ i18n_t('pre_record.book')}}</div>
       </div>
     </div>
 
@@ -181,8 +181,8 @@ onUnmounted(() => {
   justify-content: space-between;
 }
 .bet_single_info_btn{
-    width: 25%;
-    font-size: 14px;
+    width: .96rem;
+    font-size: .16rem;
     background: var(--q-gb-t-c-1);
     color: var(--q-gb-t-c-14);
     border-radius: 10px;
@@ -196,6 +196,10 @@ onUnmounted(() => {
       background: none;
       border: 1px solid var(--q-gb-t-c-1);
       color: var(--q-gb-t-c-1);
+    }
+    .space {
+      margin-right: .04rem; 
+      font-size: .18rem;
     }
 }
 .nonebox4-third {
@@ -227,7 +231,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: space-between;
   border-radius: 0.12rem;
-  width: 100%;
+  flex: 1;
   height: 0.44rem;
   .content-rmb{
     font-family: PingFang SC;
@@ -280,7 +284,7 @@ onUnmounted(() => {
   width: 0.02rem;
   height: 0.16rem;
   margin: 0 1px;
-  background: var(--q-gb-bg-c-1);
+  background: var(--q-gb-t-c-1);
   &.money-span3{
     background: transparent;
   }

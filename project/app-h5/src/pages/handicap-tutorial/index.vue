@@ -1,14 +1,19 @@
 <template>
-    <navigation-bar :title="i18n_t('app_h5.cathectic.handicap_tutorial')"></navigation-bar>
+    <navigation-bar class="ht-bg-color" borderBottomNoShow centerContentType="switch">
+        <!-- '让球', '大小球' -->
+        <template v-slot:center>
+            <div class="ht-switch-box">
+                <div v-for="(item, index) in switchMenu" :key="'ht-swtich-' + index" @click="switchHandle(index, $event)"
+                    :class="['switch-item', state.currentSwitchValue === index && 'switch-item-active']"><span>{{ item
+                    }}</span>
+                </div>
+            </div>
+        </template>
+    </navigation-bar>
 
-    <!-- '让球', '大小球' -->
-    <div class="ht-switch-box">
-        <div v-for="(item, index) in switchMenu" :key="'ht-swtich-' + index" @click="switchHandle(index, $event)"
-            :class="['switch-item', state.currentSwitchValue === index && 'switch-item-active']"><span>{{ item }}</span>
-        </div>
-    </div>
+
     <!-- 球数 -->
-    <div v-if="state.currentSwitchValue !== 1" class="ht-slide-box">
+    <div v-if="state.currentSwitchValue !== 1" class="ht-slide-box ht-bg-color">
         <div v-for="(item, index) in slideMenu" @click="slideHandle(index, $event)" :class="['slide-item', state.currentSlideValue === index &&
             'slide-item-active']" :key="'ht-slide-' + index">
             <span>{{ item }}</span>
@@ -17,7 +22,7 @@
 
     <!-- '让球', '大小球' 内容-->
     <template v-if="!state.currentSwitchValue">
-        <div class="ht-scroll" @scroll="handleScroll">
+        <div class="ht-scroll ht-bg-color" @scroll="handleScroll">
             <match-result-ht v-for="(item, index) in handicapData" :option="item"
                 :key="'matchResultHt' + index"></match-result-ht>
         </div>
@@ -38,10 +43,10 @@
         <!-- 没有进入答题 或 没有点击选项回答时 -->
         <div v-if="!state.inAnswerQuestion" class="ht-handle">
             <div class="ht-button" @click='go_back'>
-                {{i18n_t('app_h5.handicap_tutorial.actual_combat')}}
+                {{ i18n_t('app_h5.handicap_tutorial.actual_combat') }}
             </div>
             <div class="ht-button default" @click="() => { state.inAnswerQuestion = true }">
-                {{i18n_t('app_h5.handicap_tutorial.practise')}}
+                {{ i18n_t('app_h5.handicap_tutorial.practise') }}
             </div>
         </div>
 
@@ -59,16 +64,16 @@ import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.
 import matchResultHt from 'src/base-h5/components/tutorial/match-result-ht/index.vue'
 import answerQuestions from 'src/base-h5/components/tutorial/answer-questions/index.vue'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
-import {questionsData, bigAndSmallBallData, handicapData} from "./config.js"
+import { questionsData, bigAndSmallBallData, handicapData } from "./config.js"
 
 const switchMenu = [i18n_t('footer_menu.rangqiu'), i18n_t('app_h5.handicap_tutorial.big_small_ball')]
 const slideMenu = [
-    '0', 
-    '0/0.5', 
-    '0.5', 
-    '0.5/1', 
-    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1'), 
-    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1/1.5'), 
+    '0',
+    '0/0.5',
+    '0.5',
+    '0.5/1',
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1'),
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1/1.5'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1.5/2')
 ]
 

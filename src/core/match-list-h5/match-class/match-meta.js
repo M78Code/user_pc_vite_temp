@@ -96,6 +96,8 @@ class MatchMeta {
     // 清除上一轮赛事
     this.clear_match_info()
 
+    console.log(11111111)
+
     // 电竞、赛果、冠军 return
     if (MenuData.is_esports() || MenuData.is_results() || MenuData.is_kemp()) return
 
@@ -564,7 +566,7 @@ class MatchMeta {
       const length = lodash.get(list, 'length', 0)
       // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
       if (length < 1) return this.set_page_match_empty_status({ state: true });
-      if (!MatchCollect.is_get_collect) MatchCollect.get_collect_match_data(list)
+      MatchCollect.get_collect_match_data(list)
       this.handler_match_list_data({ list: list, scroll_top })
 
       // 模拟删除赛事
@@ -769,39 +771,51 @@ class MatchMeta {
    * @description 获取收藏赛事
    */
   async get_collect_match () {
-    console.log(11111111)
     this.clear_match_info()
-    const mid = MenuData.current_lv_2_menu_i
+    const lv_2_menu_i = MenuData.current_lv_2_menu_i
     let mid_list = lodash.get(MenuData,'collect_list')
     let lv1_mi = lodash.get(MenuData,'current_lv_1_menu_i')
     let euid = ''
-    if(mid == 0){
+    // 复刻版收藏
+    if (project_name === 'app-h5' && lv_2_menu_i == 50000) {
+      const menu_list = lodash.get(MenuData,'menu_list')
+      const euid_arr = []
+      menu_list.forEach(item => {
+        item.mi && euid_arr.push(MenuData.get_euid(item.mi+''+lv1_mi))
+      })
+      euid = euid_arr.join(',')
+    } else if(lv_2_menu_i == 0){
       // 根据 菜单id 获取euid
       mid_list.forEach(item => {
         if(BaseData.mi_euid_map_res[item.mi] && BaseData.mi_euid_map_res[item.mi].h){
           euid += BaseData.mi_euid_map_res[item.mi].h + ','
         }
       })
-    }else{
-      euid = MenuData.get_euid(mid+''+lv1_mi)
+    } else{
+      euid = MenuData.get_euid(lv_2_menu_i+''+lv1_mi)
     }
     const params = this.get_base_params(euid)
     delete params.hpsFlag
-    const res = await api_common.get_collect_matches(params)
-    if (res.code !== '200') return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
-    // 频繁切换菜单， 收藏接口比较慢时 会影响其他页面， 故加上判断
-    if (!MenuData.is_collect()) return
-    const list = lodash.get(res, 'data', [])
-    
-    if (list && list.length > 0) {
-      this.handler_match_list_data({ list: list, is_virtual: false, merge: 'cover' })
-      await MatchCollect.get_collect_match_data(list)
-      // 该赛事是否收藏
-      // list.forEach((t) => {
-      //   MatchCollect.set_match_collect_state(t, true)
-      // })
-    } else {
-      this.set_page_match_empty_status({ state: true });
+    try {
+      const res = await api_common.get_collect_matches(params)
+      if (res.code !== '200') return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
+      // 频繁切换菜单， 收藏接口比较慢时 会影响其他页面， 故加上判断
+      if (!MenuData.is_collect()) return
+      const list = lodash.get(res, 'data', [])
+      
+      if (list && list.length > 0) {
+        const is_virtual = project_name === 'app-h5' ? true : false
+        this.handler_match_list_data({ list: list, is_virtual, merge: 'cover' })
+        await MatchCollect.get_collect_match_data(list)
+        // 该赛事是否收藏
+        // list.forEach((t) => {
+        //   MatchCollect.set_match_collect_state(t, true)
+        // })
+      } else {
+        this.set_page_match_empty_status({ state: true });
+      }
+    } catch {
+      this.set_page_match_empty_status({ state: true, type: 'noWifi' }); 
     }
   }
 
