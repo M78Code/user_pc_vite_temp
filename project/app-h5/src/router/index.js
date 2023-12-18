@@ -96,7 +96,7 @@ const router = createRouter({
             component: () => import("../pages/details/result-details.vue"),
             children: [
               {
-                path: "/result_details/:mid/:csid/:index",
+                path: "/result_details/:mid/:csid/:mcid?/:index",
                 name: "match_result",
                 component: () => import("../pages/details/components/result-fat-tab.vue")
               }
