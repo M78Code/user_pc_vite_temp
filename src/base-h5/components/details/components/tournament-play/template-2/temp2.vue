@@ -219,7 +219,7 @@ background: var(--q-gb-bg-c-28);
   }
 
   .size-color {
-    color: var(--q-color-fs-color-50);
+    color: var(--q-gb-t-c-1);
   }
 
   .play-box-lock {

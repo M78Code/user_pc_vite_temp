@@ -39,6 +39,7 @@
             :value="item.switchValue"
             :leftVal="item.leftVal"
             :rightVal="item.rightVal"
+            :disabled="is_disabled(item)"
             @change_value="switch_handle(item)"
             :class="{disabled:item.mark ==='Handicap'&&MenuData.current_lv_1_menu_i== 400 }"
           />
@@ -69,7 +70,7 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router";
 import {  useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import {SessionStorage,UserCtr,LOCAL_PROJECT_FILE_PREFIX, project_name } from "src/output/index.js";
+import {SessionStorage,UserCtr,LOCAL_PROJECT_FILE_PREFIX, project_name, MenuData } from "src/output/index.js";
 import {ref,computed,nextTick} from "vue";
 import Switch from "./components/switch.vue";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
@@ -78,7 +79,6 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { i18n_t } from "src/boot/i18n.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { is_vr } from 'src/base-h5/mixin/menu.js'
-import MenuData from "src/core/menu-app-h5/menu-data-class.js";
 
 defineOptions({
   name: "settingFilter" // 设置组件名称
@@ -95,6 +95,12 @@ const jumpHandle = () => {
   router.push({ name: "handicapTutorial" }); // 
   closedHandle();
 };
+
+const is_disabled = (item) => {
+  if(item.mark == "Handicap" && MenuData.is_esports()){
+    return true
+  }
+}
 /**
  * @description 跳转网页版
  * @param 

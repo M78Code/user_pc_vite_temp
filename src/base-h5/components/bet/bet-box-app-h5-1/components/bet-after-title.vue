@@ -49,7 +49,7 @@ const set_bet_order_status = computed(()=> status => {
   }
 })
 const bet_order_status_active = computed(()=>{
-  return [2, 3, 7].includes(+BetViewDataClass.bet_order_status);
+  return [2, 3, 6, 7].includes(+BetViewDataClass.bet_order_status);
 })
 
 </script> 
