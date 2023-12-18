@@ -96,8 +96,6 @@ class MatchMeta {
     // 清除上一轮赛事
     this.clear_match_info()
 
-    console.log(11111111)
-
     // 电竞、赛果、冠军 return
     if (MenuData.is_esports() || MenuData.is_results() || MenuData.is_kemp()) return
 
@@ -1019,7 +1017,7 @@ class MatchMeta {
       // 清除虚拟计算信息
       VirtualList.clear_virtual_info()
       this.match_mids = lodash.uniq(result_mids)
-      if (type === 2){
+      if (type === 2 || this.is_observer_type()){
         // 不获取赔率  type 删除收藏赛事 需要以最新的为准 提交仓库需设置 merge: 'cover'
         this.handle_update_match_info({ list: matchs_data, warehouse, merge: merge })
       } else if (type === 1) {

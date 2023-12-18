@@ -199,9 +199,10 @@ const version_handle = item => {
   // 新手版
   if (status === 1) {
     if (project_name === 'app-h5') {
-      nextTick(() => {
-        useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-      })
+      MatchMeta.set_origin_match_data()
+      // nextTick(() => {
+      //   useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
+      // })
     }
   } else {
     VirtualList.set_is_show_ball(true)
