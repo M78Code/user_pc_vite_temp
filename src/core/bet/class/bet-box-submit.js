@@ -815,7 +815,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
-        handicap: get_handicap(ol_obj,hl_obj,mid_obj,other.is_detail), // 投注项名称
+        handicap: get_handicap(ol_obj,hl_obj,mid_obj,other), // 投注项名称
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
@@ -1017,7 +1017,7 @@ const set_orderNo_bet_obj = order_no_list => {
 }
 
 // 获取盘口值 附加值
-const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
+const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
     // ## 详情页的取值，直接取 ol 层级的 `ott` + `on`,当遇到下面几种玩法时，直接取 `otv`,
     // 3-全场让球赛果  69-上半场让球赛果  71-下半场让球赛果  
     // 220-球员得分 221-球员三分球 271-球员助攻 272-球员篮板
@@ -1038,7 +1038,7 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
     let lsit_mark = [2,173,38,114]
     let list_head = [359,31,340,383,13,102]
     // 详情
-    if(is_detail){
+    if(other.is_detail){
         // 有球头 球头需要变色
         if(hl_obj.hv){
             text = `${ol_obj.ott || ''} <span class='ty-span'>${ol_obj.on}</span>`  
@@ -1056,12 +1056,24 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
     }else{
         let a = '' ,b = '' 
         b = ol_obj.on 
-        if(ol_obj.ots == 'T1'){
-            a = mid_obj.mhn 
+        // vr 赛事 特殊处理
+        if(other.bet_type == 'vr_bet'){
+
+            if(ol_obj.ots == 'T1'){
+                a = mid_obj.teams[0]
+            }
+            if(ol_obj.ots == 'T2'){
+                a = mid_obj.teams[1]
+            }
+        } else {
+            if(ol_obj.ots == 'T1'){
+                a = mid_obj.mhn 
+            }
+            if(ol_obj.ots == 'T2'){
+                a = mid_obj.man
+            }
         }
-        if(ol_obj.ots == 'T2'){
-            a = mid_obj.man
-        }
+      
         // 加入是否有球头判断 
         if(['T1','T2'].includes(ol_obj.ots) && !hl_obj.hv){
             b = ''
