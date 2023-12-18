@@ -49,7 +49,7 @@ setTimeout(function (){
                         :class="{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }"
                     >
                         <span class="on-text textOverflow2">{{ olChild?.on || olChild?.ott }}</span>
-                        <span class="ov-text">{{ compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) }}</span>
+                        <span class="ov-text">{{ compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, olChild._hsw, MatchDetailCalss.params.sportId) }}</span>
                         <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                     </li>
                     <li v-else class="list-item">
