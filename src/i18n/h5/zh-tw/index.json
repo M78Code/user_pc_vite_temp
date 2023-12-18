@@ -2106,7 +2106,10 @@
       "2": "結束",
       "ended": "比賽結束",
       "playing": "進行中",
-      "x_to_ended": "距離結束 %s"
+      "x_to_ended": "距離結束 %s",
+      "balance": "餘額",
+      "matching": "比賽中",
+      "show_all_markets":"顯示所有盤口"
     },
     "matchDay": "第%s輪",
     "next_batch_no": "第%s輪",
@@ -2130,7 +2133,15 @@
     "top_32": "32強",
     "top_64": "64強",
     "vitality_performance": "活力表現",
-    "win_tie_loss": "勝/平/負"
+    "win_tie_loss": "勝/平/負",
+    "balance": "餘額",
+    "matching": "比賽中",
+    "show_all_markets":"顯示所有盤口",
+    "match_detail": {
+      "leaderboard": "排行榜",
+      "historical_results": "歷史戰績",
+      "bet": "投注"
+    }
   },
   "new_menu": {
     "1": "滾球",

@@ -27,7 +27,7 @@
             {{ i18n_t('bet.betting') }}
             <!-- 单关 -->
             <span class="yb-info-money font14" v-if="BetData.is_bet_single"> {{ i18n_tc('app_h5.bet.bet_win',{"total": bet_win_money(BetData.bet_data_class_version) }) }}</span>
-            <span class="yb-info-money font14" v-else>{{ i18n_t('bet.sum') }}{{ format_money2(BetData.bet_amount) }}</span>
+            <span class="yb-info-money font14" v-else>{{ i18n_t('bet.sum') }}{{bet_total(BetViewDataClass.bet_view_version) }}</span>
           </div>
           <img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt="">
         </div>
@@ -48,7 +48,7 @@
       <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub font500">确认</div>
       <!--  串关  -->
       <div v-else>
-        <div @click="set_confirm" class="sub">注单已确认 <span class="sub-total">合计17,650.00</span></div>
+        <div @click="set_confirm" class="sub">注单已确认 <span class="sub-total">合计{{bet_total(BetViewDataClass.bet_view_version)}}</span></div>
         <div @click="set_retain_selection" class="reserve font500">保留选项，继续投注</div>
       </div>
 
@@ -87,6 +87,17 @@ const bet_win_money = computed(()=> status => {
   // 计算出可赢金额
   return format_money2(mathJs.subtract(mathJs.multiply(bet_amount,oddFinally), bet_win)) 
 })
+
+// status 是响应式的 可以用于重新计算
+const bet_total = computed(()=> status => {
+  // 获取串关投注的数据
+  let bet_total_money = BetViewDataClass.bet_special_series.reduce((pre, cur) => {
+    return pre*1 + (cur.bet_amount * cur.count || 0)*1;
+  }, 0)
+  // 计算出合计金额
+  return format_money2(bet_total_money)
+})
+
 
 // 滑动投注
 const handle_silider = (e) => {

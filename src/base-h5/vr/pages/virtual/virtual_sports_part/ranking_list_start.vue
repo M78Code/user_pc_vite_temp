@@ -62,11 +62,7 @@ export default {
     "no-data": no_data
   },
   props:{
-    mid: {
-      type: Number|String,
-      default: null,
-      require: true
-    },
+    mid: Number|String,
   },
   data() {
     return {
