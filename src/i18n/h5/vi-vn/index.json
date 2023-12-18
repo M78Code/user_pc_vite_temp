@@ -2120,7 +2120,15 @@
     "top_32": "Vòng 32 đội",
     "top_64": "Vòng 64 đội",
     "vitality_performance": "Sức sống ảo",
-    "win_tie_loss": "T/H/B"
+    "win_tie_loss": "T/H/B",
+    "balance": "Sự cân bằng",
+    "matching": "Trong cuộc thi",
+    "show_all_markets":"Hiển thị tất cả các thị trường",
+    "match_detail": {
+      "leaderboard": "Danh sách xếp hạng",
+      "historical_results": "Kết quả lịch sử",
+      "bet": "cá cược"
+    }
   },
   "new_menu": {
     "1": "Trong Trận",

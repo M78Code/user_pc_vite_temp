@@ -599,11 +599,11 @@ onUnmounted(() => {
       height: 11px;
     }
     .is_up{
-      color: #E95B5B;
+      color: #F53F3F;
       // color: var(--q-gb-t-c-21);
     }
     .is_down{
-      color: #4AB06A;
+      color: #00B42A;
     }
   }
   .fontbold{

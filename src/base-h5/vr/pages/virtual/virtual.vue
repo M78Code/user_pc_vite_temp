@@ -286,6 +286,7 @@ export default {
               sub_menu.menuName = sub_menu.name;
             });
             this.sub_menu_list = lodash.cloneDeep(res.data);
+            // console.log('this.sub_menu_list', api_v_sports.get_virtual_menus)
 
             this.sub_menu_i = this.get_sub_menu_c_index();
             if(this.sub_menu_list.length){
