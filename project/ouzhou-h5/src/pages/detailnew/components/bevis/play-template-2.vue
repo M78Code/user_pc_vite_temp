@@ -36,7 +36,7 @@ const go_betting = (data) => {
                                 {{ olChild.on }}
                             </span>
                                 <span class="ov-text" @click="go_betting(olChild)">
-                                {{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}
+                                {{ compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, olChild._hsw, MatchDetailCalss.params.sportId) }}
                             </span>
                             <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )" @click="go_betting(olChild)"/>
                         </template>

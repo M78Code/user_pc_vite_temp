@@ -46,14 +46,6 @@ const routes = [
         },
       },
       {
-        path: "/text",
-        name: "text",
-        component: () => import('../pages/test/index.vue'),
-        meta: {
-          keepAlive: true, // 需要缓存
-        },
-      },
-      {
         path: "/details/:mid/:csid/:tid?",
         name: "details",
         component: () => import('../pages/match-new-detail/index.vue')

@@ -18,7 +18,7 @@
       <span v-show="red_green_status"
         :class="['change-icon', {'icon-red':red_green_status === 1,'icon-green':red_green_status === -1}]">
       </span>
-      {{ compute_value_by_cur_odd_type(ol_item.ov,ol_item._hpid,'',csid) }}
+      {{ compute_value_by_cur_odd_type(ol_item.ov,ol_item._hpid,ol_item._hsw,csid) }}
     </div>
     <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
   </div>

@@ -42,7 +42,7 @@
         {{ compute_value_by_cur_odd_type(
           ol_data.ov,
           ol_data._hpid,
-          '',
+          ol_data._hsw,
           csid || match?.csid
         ) }}
       </span>
