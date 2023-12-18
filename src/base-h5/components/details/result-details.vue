@@ -301,7 +301,9 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
 
   onUnmounted(() => {
     // 清除刷新详情页;
+   if(route.name == 'match_result'){
     useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info).off;
+   }
     // 组件销毁时设置vuex的值为空对象
     // set_detail_data({})
     useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show).off
