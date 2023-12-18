@@ -14,7 +14,7 @@ import { only_win } from "src/core/constant/common/module/csid.js"
  
 // import global_mixin from "project_path/src/pages/match-details/global_mixin.js";
 const float_3_csid = esports_csid // 需要显示三位小数点的,赛种编号(电竞)
-const oddsTable = {
+export const odds_table = {
   EU: '1',
   HK: '2',
   MY: '3',
@@ -58,7 +58,7 @@ const acc_sub = (num1, num2 = num1) => {
 //   odds_coversion_map = store.getState().odds_coversion_map || {}
 //   vx_get_chat_room_type = store.getState().chat_room_type || {}
 // },
-export const compute_value_by_cur_odd_type = (val, hpid, arr=[], csid = 1) => {
+export const compute_value_by_cur_odd_type = (val, hpid, arr = '', csid = 1) => {
   let cur_odd = UserCtr.odds.cur_odds;//当前赔率"EU" /HK
   /**
    * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
@@ -71,23 +71,33 @@ export const compute_value_by_cur_odd_type = (val, hpid, arr=[], csid = 1) => {
   // PS-9881赔率优化
   let str = "";
   let breakVal = ""; // 断档值废弃
+
+  // 获取当前的盘口赔率
+  let cur_odds_num = lodash_.get(odds_table,`${cur_odd}`, '1' )
+
   // 从欧盘转到港盘
-  if ([2].includes(oddsTable[cur_odd]*1) && cur_odd == 'HK') {
+  if ([2].includes(cur_odds_num*1) && cur_odd == 'HK') {
     str = calc_odds(odds_val, csid);
-    // 独赢类玩法 没有欧赔 冠军也没有
-    let only_win_csid = lodash_.get(only_win,`${csid}`,[])
-    if(!only_win_csid.includes(parseInt(hpid)) || MenuData.is_kemp()){
+    
+    // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
+    if(arr.includes(cur_odds_num)){
       str = change_EU_HK(str);
       //聊天室跟单特殊处理
-      if (arr && arr.includes(oddsTable[cur_odd]) && bet_chat_room_type == "HK") {
+      if (arr && arr.includes(cur_odds_num) && bet_chat_room_type == "HK") {
         str = change_EU_HK(str);
       }
     }
+    
     return format_odds(str,csid);
   }
 
-  if (arr.includes(oddsTable[cur_odd]) && cur_odd) {
-    cur_odd == 'EU' ? str = calc_odds(odds_val, csid) : str = compute_value_by_odd_type(breakVal ? breakVal : odds_val, cur_odd, csid);
+  // 非港赔
+  if (arr.includes(cur_odds_num) && cur_odd) {
+    if( cur_odd == 'EU' ){
+      str = calc_odds(odds_val, csid)
+    } else {
+      str = compute_value_by_odd_type( odds_val, cur_odd, csid);
+    }
   } else {
     str = calc_odds(odds_val, csid);
   }

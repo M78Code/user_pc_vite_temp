@@ -252,7 +252,6 @@ export default {
         return numa - numb
       })
       this.matchResultsData = result
-      console.log('resultresultresultresultresult', result)
     }
   },
   setup (ctx) {

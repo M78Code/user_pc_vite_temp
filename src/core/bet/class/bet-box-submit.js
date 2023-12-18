@@ -23,7 +23,7 @@ import { ALL_SPORT_PLAY } from "src/output/module/constant-utils.js"
 import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t,i18n_tc } from "src/boot/i18n.js"
-import { only_win } from "src/core/constant/common/module/csid.js"
+import { odds_table } from "src/core/constant/common/module/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
@@ -48,7 +48,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             "marketId": item.marketId,  //盘口id
             "deviceType": BetData.deviceType,  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
             "matchId": item.matchId,  // 赛事id
-            "oddsFinally": compute_value_by_cur_odd_type(item.odds, item.playId, '', item.sportId),  //赔率
+            "oddsFinally": compute_value_by_cur_odd_type(item.odds, item.playId, item.odds_hsw, item.sportId),  //赔率
             "oddsValue": item.odds,  // 赔率 万位
             "playId": item.playId,   // 玩法id
             "playOptionId": item.playOptionsId,   // 投注项id
@@ -108,7 +108,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "playOptionsId": item.playOptionsId,   // 投注项id
                     "marketTypeFinally": UserCtr.odds.cur_odds,     // 欧洲版默认是欧洲盘 HK代表香港盘
                     "odds": item.odds,  // 赔率 万位
-                    "oddFinally": compute_value_by_cur_odd_type(item.odds, item.playId, '', item.sportId),  //赔率
+                    "oddFinally": compute_value_by_cur_odd_type(item.odds, item.playId, item.odds_hsw, item.sportId),  //赔率
                     "playName": item.playName, //玩法名称
                     "sportName": item.sportName,  // 球种名称
                     "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
@@ -119,11 +119,14 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "playId": item.playId,   // 玩法id
                     "dataSource": item.dataSource,   // 数据源
                 }
-                // 独赢类玩法 只有欧洲版
-                let only_win_csid = lodash_.get(only_win,`${item.sportId}`,[])
-                if(only_win_csid.includes(item.playId *1)){
+                
+                // 获取当前的盘口赔率
+                let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
+                // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
+                if(!item.odds_hsw.includes(cur_odds)){
                     bet_s_obj.marketTypeFinally = 'EU'
                 }
+               
                 bet_s_list.push(bet_s_obj)
             })
 
@@ -149,7 +152,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "playOptionsId": item.playOptionsId,   // 投注项id
                 "marketTypeFinally": UserCtr.odds.cur_odds,     // 欧洲版默认是欧洲盘 HK代表香港盘
                 "odds": item.odds,  // 赔率 万位
-                "oddFinally": compute_value_by_cur_odd_type(item.odds, item.playId, '', item.sportId),  //赔率
+                "oddFinally": compute_value_by_cur_odd_type(item.odds, item.playId, item.odds_hsw, item.sportId),  //赔率
                 "playName": item.playName, //玩法名称
                 "sportName": item.sportName,  // 球种名称
                 "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
@@ -161,11 +164,12 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "dataSource": item.dataSource,   // 数据源
             }
 
-            // 独赢类玩法 只有欧洲版
-            let only_win_csid = lodash_.get(only_win,`${item.sportId}`,[])
-            if(only_win_csid.includes(item.playId *1)){
-                bet_s_obj.marketTypeFinally = 'EU'
-            }
+             // 获取当前的盘口赔率
+             let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
+             // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
+             if(!item.odds_hsw.includes(cur_odds)){
+                 bet_s_obj.marketTypeFinally = 'EU'
+             }
 
             // 预约投注
             // 需要用对应的数据 对投注数据进行覆盖
@@ -791,7 +795,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         playOptionsId: ol_obj.oid, //投注项id
         marketTypeFinally: UserCtr.odds.cur_odds,  // 欧洲版默认是欧洲盘 HK代表香港盘
         odds: ol_obj.ov,  //十万位赔率
-        oddFinally: compute_value_by_cur_odd_type(ol_obj.ov,ol_obj._hpid, '', mid_obj.csid), //最终赔率
+        oddFinally: compute_value_by_cur_odd_type(ol_obj.ov,ol_obj._hpid, ol_obj._hsw, mid_obj.csid), //最终赔率
         sportName: mid_obj.csna, //球种名称
         matchType,  //赛事类型
         matchName: mid_obj.tn, //赛事名称
@@ -819,14 +823,18 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         mid_mhs: ol_obj._mhs, // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
         match_ctr: other.match_data_type, // 数据仓库 获取比分
         device_type: BetData.deviceType, // 设备号
+        odds_hsw: ol_obj._hsw, // 投注项支持的赔率
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
-    // 独赢类玩法 只有欧洲版
-    let only_win_csid = lodash_.get(only_win,`${bet_obj.sportId}`,[])
-    if(only_win_csid.includes(bet_obj.playId *1)){
+
+     // 获取当前的盘口赔率
+     let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
+     // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
+     if(!bet_obj.odds_hsw.includes(cur_odds)){
         bet_obj.marketTypeFinally = 'EU'
-    }
-            
+     }
+
+
     // 冠军 
     if(bet_obj.bet_type == 'guanjun_bet'){
         bet_obj.handicap = ol_obj.on

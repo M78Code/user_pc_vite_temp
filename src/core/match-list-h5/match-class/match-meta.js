@@ -440,7 +440,6 @@ class MatchMeta {
    * @description 获取冠军赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_champion_match() {
-    console.log(333333333333333333333)
     MatchFold.clear_fold_info()
     MatchDataBaseH5.clear()
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
@@ -1002,26 +1001,25 @@ class MatchMeta {
       this.complete_mids = result_mids
     }
 
+    if (!is_virtual || this.is_observer_type()) {
+      // 清除虚拟计算信息
+      VirtualList.clear_virtual_info()
+      this.match_mids = lodash.uniq(result_mids)
+      if (type === 2){
+        // 不获取赔率  type 删除收藏赛事 需要以最新的为准 提交仓库需设置 merge: 'cover'
+        this.handle_update_match_info({ list: matchs_data, warehouse, merge: merge })
+      } else if (type === 1) {
+        // 获取赔率
+        this.handle_submit_warehouse({ list: matchs_data, warehouse })
+      }
+    } else {
+      // 计算所需渲染数据
+      this.compute_page_render_list({ scrollTop: scroll_top, merge, type }) 
+    }
+
     // 复刻版 下的 新手版
     if (this.is_observer_type()) {
       useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-    } else {
-      if (!is_virtual) {
-        // 清除虚拟计算信息
-        VirtualList.clear_virtual_info()
-        this.match_mids = lodash.uniq(result_mids)
-        if (type === 2){
-          // 不获取赔率  type 删除收藏赛事 需要以最新的为准 提交仓库需设置 merge: 'cover'
-          this.handle_update_match_info({ list: matchs_data, warehouse, merge: merge })
-        } else if (type === 1) {
-          // 获取赔率
-          this.handle_submit_warehouse({ list: matchs_data, warehouse })
-        }
-      } else {
-        // 计算所需渲染数据
-        this.compute_page_render_list({ scrollTop: scroll_top, merge, type }) 
-        
-      }
     }
     
     // 重置数据为空状态
