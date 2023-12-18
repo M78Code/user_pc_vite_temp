@@ -75,7 +75,7 @@ export default defineComponent({
       let ov = ol_item.ov,
         hsw = hl_item ? hl_item.hsw : 0,
         csid = ol_item.csid;
-      let r1 = compute_value_by_cur_odd_type(ov, ov._hpid, hsw,null, csid);
+      let r1 = compute_value_by_cur_odd_type(ov, ov._hpid, hsw, csid);
       return r1 || '';
     })
     return {

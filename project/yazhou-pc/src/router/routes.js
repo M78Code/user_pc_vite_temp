@@ -18,15 +18,6 @@ const routes = [
           keepAlive: true, // 需要缓存
         },
       },
-      //       // 首页
-      {
-        path: "/bet",
-        name: "bet",
-        component: () => import('../pages/test/index.vue'),
-        meta: {
-          keepAlive: true, // 需要缓存
-        },
-      },
       //       // 搜索
       //       {
       //         path: "/search/:keyword/:time?",

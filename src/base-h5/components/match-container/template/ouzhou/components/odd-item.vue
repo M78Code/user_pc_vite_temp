@@ -89,7 +89,7 @@ const reset_status = () => {
 
 // 显示的赔率
 const get_odd_os = (s) => {
-  return compute_value_by_cur_odd_type(s.ov,s._hpid,'',props.match_info.csid)
+  return compute_value_by_cur_odd_type(s.ov,s._hpid,s._hsw,props.match_info.csid)
 }
 
 const get_item_hpn = (s) => {

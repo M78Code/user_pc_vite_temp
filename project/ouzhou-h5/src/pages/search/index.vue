@@ -95,7 +95,7 @@
 											<div class="flex_1"
 												v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
 												<div>{{ sports_id.includes(i.csid) ? lodash.get(i, 'hps[0].hl[0].ol[0].ot') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(i, 'hps[0].hl[0].ol[1].on', '') }}</div>
-												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[0].ov')) }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[0]')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -104,7 +104,7 @@
 												<div class="flex_1"
 													v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-													<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[2].ov', '')) }}</div>
+													<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[2]', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -113,7 +113,7 @@
 											<div class="flex_1"
 												v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
 												<div>{{ sports_id.includes(i.csid) ? lodash.get(i, 'hps[0].hl[0].ol[1].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(i, 'hps[0].hl[0].ol[1].on', '') }}</div>
-												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[1].ov', '')) }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[1]', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -151,7 +151,7 @@
 											<div class="flex_1"
 												v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[0].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[0].os', '') === 1">
 												<div>{{ sports_id.includes(i.csid) ? lodash.get(i, 'hps[0].hl[0].ol[0].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(i, 'hps[0].hl[0].ol[0].on', '') }}</div>
-												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[0].ov', '')) }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[0]', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -160,7 +160,7 @@
 												<div class="flex_1"
 													v-if="lodash.get(i, 'hps[0].hl.length', '') > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-													<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[2].ov', '')) }}</div>
+													<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[2]', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -169,7 +169,7 @@
 											<div class="flex_1"
 												v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
 												<div>{{ sports_id.includes(i.csid) ? lodash.get(i, 'hps[0].hl[0].ol[1].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(i, 'hps[0].hl[0].ol[1].on', '') }}</div>
-												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[1].ov', '')) }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[1]', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -205,7 +205,7 @@
 											<div class="flex_1"
 												v-if="lodash.get(item, 'hps[0].hl.length', 0) > 0 && lodash.get(item, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(item, 'hps[0].hl[0].ol[1].os', '') === 1">
 												<div>{{ sports_id.includes(item.csid) ? lodash.get(item, 'hps[0].hl[0].ol[0].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(item, 'hps[0].hl[0].ol[0].on', '') }}</div>
-												<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[0].ov', '')) }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[0]', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -214,7 +214,7 @@
 												<div class="flex_1"
 													v-if="lodash.get(item, 'hps[0].hl.length', 0) > 0 && lodash.get(item, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(item, 'hps[0].hl[0].ol[1].os', '') === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-													<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[2].ov', '')) }}</div>
+													<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[2]', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -223,7 +223,7 @@
 											<div class="flex_1"
 												v-if="lodash.get(item, 'hps[0].hl.length', 0) > 0 && lodash.get(item, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(item, 'hps[0].hl[0].ol[1].os', '') === 1">
 												<div>{{ sports_id.includes(item.csid) ? lodash.get(item, 'hps[0].hl[0].ol[1].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(item, 'hps[0].hl[0].ol[1].on', '') }}</div>
-												<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[1].ov', '')) }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[1]', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -591,7 +591,8 @@ const get_match_base_hps_by_mids = async () => {
 
 // 显示的赔率
 const get_odd_os = (ov) => {
-	return compute_value_by_cur_odd_type(ov, '', '', sport_kind_id)
+	console.error('ov',ov)
+	return compute_value_by_cur_odd_type(ov.ov, '', '', sport_kind_id)
 }
 
 // 删除单个历史

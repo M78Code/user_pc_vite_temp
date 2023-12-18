@@ -42,7 +42,7 @@ const go_betting = (data) => {
                         <span class="on-text textOverflow1">
                             {{ olChild?.on || olChild.ott }}
                         </span>
-                        <span class="ov-text" v-if="olChild.os == 1 && compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) > 0">
+                        <span class="ov-text" v-if="olChild.os == 1 && compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, olChild._hsw, MatchDetailCalss.params.sportId) > 0">
                             {{ compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) }}
                         </span>
                         <lockImg :ol_item="olChild" />
