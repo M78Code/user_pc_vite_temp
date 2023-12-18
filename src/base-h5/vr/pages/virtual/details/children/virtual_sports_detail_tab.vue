@@ -21,9 +21,9 @@ export default {
     return {
       viewTab: 'bet',
       tab_list: [
-        { label: "历史战绩", label_i18n_key: 'virtual_sports.match_detail.leaderboard', id: 1, name: 'lszj' },
-        { label: "投注", label_i18n_key: 'virtual_sports.match_detail.bet', id: 2, name: 'bet' },
-        { label: "排行榜", label_i18n_key: 'virtual_sports.match_detail.historical_results', id: 3, name: 'rank' }
+        { label_i18n_key: 'virtual_sports.match_detail.historical_results', id: 1, name: 'lszj' },
+        { label_i18n_key: 'virtual_sports.match_detail.bet', id: 2, name: 'bet' },
+        { label_i18n_key: 'virtual_sports.match_detail.leaderboard', id: 3, name: 'rank' }
       ]
     }
   },
@@ -41,8 +41,8 @@ export default {
         
         if(new_?.csid == "1011"){
           this.tab_list = [
-          { label: "投注", label_i18n_key: 'match_detail.bet', id: 2, name: 'bet' },
-          { label: "历史战绩", label_i18n_key: 'match_detail.leaderboard', id: 1, name: 'lszj' },
+          { label_i18n_key: 'match_detail.bet', id: 2, name: 'bet' },
+          { label_i18n_key: 'match_detail.historical_results', id: 1, name: 'lszj' },
           ]
         }
       },
