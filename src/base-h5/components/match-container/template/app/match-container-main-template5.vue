@@ -78,15 +78,17 @@
                   <!-- 动画状态大于-1时，显示动画按钮 i18n_t('match_info.animation')是国际化取值 -->
 
                   <!-- icon_click_animationUrl media_button_handle -->
-                  <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_animate_nor.png'
+                  <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']"
+                  :src="compute_local_project_file_path('image/list/ico_animate_nor.png')"
                     @click="media_button_handle_by_type(ButtonTypes.animationUrl)" />
                   <!-- 视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 -->
-                  <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_live_nor.png'
+                  <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']"
+                  :src="compute_local_project_file_path('image/list/ico_live_nor.png')"
                     @click="media_button_handle_by_type(ButtonTypes.muUrl)" />
                   <!--icon_click_muUrl  -->
                   <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
-                  <img :class="[match.lvs !== 2 && 'iconGrayFillStyle']" src='/src/base-h5/assets/match-list/ico_liveshow_nor.png'
-                    @click="media_button_handle_by_type(ButtonTypes.lvs)" />
+                  <!-- <img :class="[match.lvs !== 2 && 'iconGrayFillStyle']" :src="compute_local_project_file_path('image/list/ico_liveshow_nor.png')"
+                    @click="media_button_handle_by_type(ButtonTypes.lvs)" /> -->
                   <!-- icon_click_lvs -->
                 </template>
               </div>
@@ -144,7 +146,7 @@
             <div class="name">
               <div class='left'>
                 <span>
-                  {{ match.man }}
+                  {{ match.mhn }}
                 </span>
                 <!--发球方绿点-->
                 <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
@@ -152,13 +154,13 @@
                 </span>
 
                 <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
-                <image-cache-load v-if="match?.mhlu?.length && !([5, 10, 7, 8].includes(Number(match.csid)))"
+                <image-cache-load v-if="match?.mhlu?.length && !([5, 10, 7].includes(Number(match.csid)))"
                   :csid="+match.csid" :path="match.mhlu" type="home"></image-cache-load>
                 <!-- <img v-if="match?.mhlu?.length" class="logo" v-img="([match.mhlu[0], match.frmhn[0], match.csid])" /> -->
               </div>
               <span class="vs">VS</span>
               <div class='right'>
-                <image-cache-load v-if="match?.malu?.length && !([5, 10, 7, 8].includes(Number(match.csid)))"
+                <image-cache-load v-if="match?.malu?.length && !([5, 10, 7].includes(Number(match.csid)))"
                   :csid="+match.csid" :path="match.malu" type="home"></image-cache-load>
 
                 <!-- <img v-if="match?.malu?.length" class="logo" v-img="([match.malu[0], match.frman[0], match.csid])" /> -->
@@ -167,7 +169,7 @@
                   v-show="set_serving_side(match, 'away')">
                 </span>
                 <span>
-                  {{ match.mhn }}
+                  {{ match.man }}
                 </span>
 
               </div>
@@ -219,7 +221,7 @@ import default_mixin from '../../mixins/default.mixin.js'
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import lodash from 'lodash';
 import { ref, watch, onMounted, onUnmounted, computed } from 'vue';
-import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, useMittOn, compute_css_obj } from "src/output/index.js"
+import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path, useMittOn, compute_css_obj } from "src/output/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { get_match_status } from 'src/core/utils/common/index'
@@ -884,6 +886,7 @@ export default {
             .odd-column-item {
               background: var(--q-gb-bg-c-15);
               margin-left: .04rem;
+              border-radius: 4px;
             }
             .odd-title {
               font-size: .1rem;
@@ -915,9 +918,12 @@ export default {
         justify-content: flex-end;
         align-items: center;
       }
-      :deep(.score-se-inner2){
-        display: flex;
-        margin-left: -5px;
+      :deep(.score-se-inner){
+        max-width: 100%;
+        .score-se-inner2{
+          display: flex;
+          margin-left: -5px;
+        }
       }
     }
 
@@ -982,6 +988,11 @@ export default {
           position: relative;
           transform: rotate(-90deg);
         }
+      }
+    }
+    :deep(.start-counting-down) {
+      .counting-down-start{
+        font-size: 0.12rem;
       }
     }
   }

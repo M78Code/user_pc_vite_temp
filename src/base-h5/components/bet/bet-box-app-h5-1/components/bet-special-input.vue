@@ -150,6 +150,9 @@ const set_special_series = (money,ty_id) => {
     //margin-left: .08rem;
     padding: 0 .12rem;
   }
+  .bet_single_info:nth-last-child(2) {
+    border-radius: 0.12rem 0.12rem 0 0;
+  }
   .toltal {
     border-top: 1px solid var(--q-gb-bg-c-18);
     background: var(--q-gb-bg-c-22);
@@ -184,9 +187,13 @@ const set_special_series = (money,ty_id) => {
     padding-right: 0.1rem;
     background: var(--q-gb-bg-c-15);
     margin-left: 0.05rem;
+    border: 1px solid var(--q-gb-bg-c-24);
     .limit-txt {
       color: var(--q-gb-t-c-5);
       font-size: 0.16rem;
+    }
+    &:hover {
+      border-color: var(--q-gb-t-c-1);
     }
   }
   /* ************** 右边内容 ************** -E */

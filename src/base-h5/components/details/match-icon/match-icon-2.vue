@@ -13,14 +13,14 @@
       <!-- 动画或视频icon -->
       <template v-if="icon_class == 'donghua'">
           <img
-          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/donghua.svg`"
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/new_ani.png`"
           alt=""
           class="icon-style"
         >
       </template>
       <template v-if="icon_class == 'shipin'">
         <img
-          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/shipin.svg`"
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/new_live.png`"
           alt=""
           class="icon-style"
         >
@@ -357,21 +357,23 @@ export default defineComponent({
 }
 
 .icon-style {
-  width: 0.16rem;
-  height: 0.16rem;
+  width: 0.2rem;
+  height: 0.2rem;
   margin-right: 0.04rem;
 }
 .match-icon{
   display: flex;
-  width: 0.80rem;
+  // width: 0.80rem;
   height: 0.24rem;
   // padding: 0.045rem 0.10rem 0.055rem 0.10rem;
   justify-content: center;
   align-items: center;
   gap: 4px;
   flex-shrink: 0;
-  border-radius: 10px;
-  background: linear-gradient(180deg, #179CFF 0%, #127DCC 100%);
+  border-radius: 48px;
+  background: rgba(0, 0, 0, 0.50);
+  backdrop-filter: blur(2px);
+  // background: linear-gradient(180deg, #179CFF 0%, #127DCC 100%);
   margin-right:4px;
   &:after {
     background:none !important
