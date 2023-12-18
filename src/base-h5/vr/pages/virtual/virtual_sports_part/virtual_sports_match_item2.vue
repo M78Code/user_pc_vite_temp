@@ -33,7 +33,7 @@
             <div v-for="(data_i,i) of match_item.hps" :key="i" class="dddd">
               <div class="hpn-title" @click="goto_details(match_item)">
                 <span>{{ data_i.hpn }}</span>
-                <span>{{ i18n_t("virtual_sport.show_all_markets") }} ></span>
+                <span>{{ i18n_t("virtual_sports.show_all_markets") }} ></span>
               </div>
               <temp9
                 :item_data="data_i||{}"
