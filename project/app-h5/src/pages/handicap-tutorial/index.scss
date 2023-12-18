@@ -1,6 +1,9 @@
 .ht-bg-color {
     background-color: var(--q-gb-bg-c-18);
 }
+.handicap-tutorial {
+    overflow-y: scroll;
+}
 .ht-switch-box {
     display: flex;
     justify-content: space-between;
@@ -30,7 +33,7 @@
 .ht-slide-box {
     display: flex;
     justify-content: space-between;
-    padding: .14rem .15rem;
+    padding: .14rem .2rem;
     width: 100%;
     overflow-x: scroll;
     color: var(--q-gb-t-c-18);
@@ -61,6 +64,16 @@
     overflow-y: scroll;
     height: calc(100% - 1.02rem);
     padding-bottom: .70rem;
+}
+
+.ht-bsball-text {
+    font-size: .14rem;
+    width: 3.1rem;
+    margin: 0 auto;
+    text-align: center;
+    background-color: var(--q-gb-bg-c-18);
+    color: var(--q-gb-bg-c-8);
+    margin-bottom: .16rem;
 }
 
 .ht-handle {
