@@ -62,7 +62,7 @@ const changeTabMenu = (item, i, event,type) => {
     activeOn.value = i;
     // 设置日期
     MenuData.set_date_time(i,props.dataList?.[i]?.val)
-    emits('changeDate')
+    emits('changeDate',type)
     // set_menu_match_date(type)
 
     scrollMenuEvent(event, ".date-tab-content-ul", ".active");   

@@ -239,7 +239,7 @@ class MenuData {
   // 设置二级菜单id
   set_current_lv_2_menu_i(val = {},type=0){
     const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
-    val = type?current.current_lv_2_menu:val;
+    val = type && current.current_lv_2_menu?.mi?current.current_lv_2_menu:val;
     this.current_lv_2_menu_i = val?.mi;
     this.current_lv_2_menu = val;
     this.set_cache_class({
