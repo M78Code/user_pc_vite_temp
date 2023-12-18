@@ -9,7 +9,7 @@
 <template>
     <div class="switch" :class="{ 'switch-on': value === 'rightVal' }" @click="toggle">
         <div class="switch-toggle"></div>
-        <div class="switch-content">
+        <div class="switch-content" :class="{'disabled' : disabled }">
             <div class="left-val" :class="{ 'active': value === 'leftVal' }">{{ leftVal }}</div>
             <div class="right-val" :class="{ 'active': value === 'rightVal' }">{{ rightVal }}</div>
         </div>
@@ -32,10 +32,15 @@ const props = defineProps({
         required: true,
         default: ''
     },
+    disabled: {
+        type: Boolean,
+        default: false,
+    }
 })
 const emit = defineEmits(["change_value"]);
 
 const toggle = () => {
+    if(props.disabled) return
     emit('change_value')
 }
 </script>
@@ -68,6 +73,10 @@ const toggle = () => {
     justify-content: space-between;
     align-items: center;
     height: 0.28rem;
+
+    &.disabled {
+        background-color: #eee;
+    }
 
     div {
         width: 50%;
