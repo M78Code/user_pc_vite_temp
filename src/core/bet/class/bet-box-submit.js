@@ -26,7 +26,7 @@ import { i18n_t,i18n_tc } from "src/boot/i18n.js"
 import { odds_table } from "src/core/constant/common/module/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import PageSourceData from "src/core/page-source/page-source.js";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { MenuData } from 'src/output/module/menu-data.js'
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 let time_out = null
@@ -656,13 +656,16 @@ const set_error_message_config = (res ={},type,order_state) => {
     }
     // 获取限额失败的信息
     if(PROJECT_NAME == 'app-h5'){
-        console.error('ssss')
         let text =  obj.message 
         // 没有做国际化的code
         if(BetViewDataClass.error_code_list.includes(res.code)){
             text = i18n_t(obj.message)
         }
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
+        // 投注前 提示 投注完成后不提示
+        if(BetViewDataClass.bet_order_status == 1){
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
+        }
+        
     }else{
         BetViewDataClass.set_bet_before_message(obj)
     }
@@ -791,31 +794,31 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         tournamentId: mid_obj.tid,  // 联赛id
         scoreBenchmark: lodash_.get(mid_obj, 'msc[0]'),  //比分
         marketId: hl_obj.hid, //盘口ID
-        marketValue: hl_obj.hv,
+        marketValue: hl_obj.hv || '',
         playOptionsId: ol_obj.oid, //投注项id
         marketTypeFinally: UserCtr.odds.cur_odds,  // 欧洲版默认是欧洲盘 HK代表香港盘
         odds: ol_obj.ov,  //十万位赔率
         oddFinally: compute_value_by_cur_odd_type(ol_obj.ov,ol_obj._hpid, ol_obj._hsw, mid_obj.csid), //最终赔率
-        sportName: mid_obj.csna, //球种名称
+        sportName: mid_obj.csna || '', //球种名称
         matchType,  //赛事类型
-        matchName: mid_obj.tn, //赛事名称
-        playOptionName: ol_obj.on, // 投注项名称
-        playOptions: ol_obj.on,   // 投注项
+        matchName: mid_obj.tn || '', //赛事名称
+        playOptionName: ol_obj.on || '', // 投注项名称
+        playOptions: ol_obj.on || '',  // 投注项
         tournamentLevel: mid_obj.tlev, //联赛级别
         playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
         playName: set_play_name(play_config), //玩法名称
         dataSource: mid_obj.cds, //数据源
-        home: mid_obj.mhn, //主队名称
-        away: mid_obj.man, //客队名称
+        home: mid_obj.mhn || '', //主队名称
+        away: mid_obj.man || '', //客队名称
         ot: ol_obj.ot, //投注項类型
-        placeNum: hl_obj.hn, //盘口坑位
+        placeNum: hl_obj.hn || '', //盘口坑位
         // 以下为 投注显示或者逻辑计算用到的参数
         bet_amount: '', // 投注金额
         bet_type: other.bet_type, // 投注类型
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
-        handicap: get_handicap(ol_obj,hl_obj,mid_obj,other.is_detail), // 投注项名称
+        handicap: get_handicap(ol_obj,hl_obj,mid_obj,other), // 投注项名称
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
@@ -886,7 +889,12 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     let play_id = [4]
     // 详情 并且本地没有配置玩法
     if(other.is_detail){
-        play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,play_name)
+        play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+        if(!play_name){
+            let odds_info_list = lodash_.get(mid_obj,`odds_info`,[])
+            odds_info_list.find()
+
+        }
     }else{
         let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,play_name)
           // 冠军玩法 部分玩法hpid相同 
@@ -1017,7 +1025,7 @@ const set_orderNo_bet_obj = order_no_list => {
 }
 
 // 获取盘口值 附加值
-const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
+const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
     // ## 详情页的取值，直接取 ol 层级的 `ott` + `on`,当遇到下面几种玩法时，直接取 `otv`,
     // 3-全场让球赛果  69-上半场让球赛果  71-下半场让球赛果  
     // 220-球员得分 221-球员三分球 271-球员助攻 272-球员篮板
@@ -1038,7 +1046,7 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
     let lsit_mark = [2,173,38,114]
     let list_head = [359,31,340,383,13,102]
     // 详情
-    if(is_detail){
+    if(other.is_detail){
         // 有球头 球头需要变色
         if(hl_obj.hv){
             text = `${ol_obj.ott || ''} <span class='ty-span'>${ol_obj.on}</span>`  
@@ -1056,12 +1064,24 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
     }else{
         let a = '' ,b = '' 
         b = ol_obj.on 
-        if(ol_obj.ots == 'T1'){
-            a = mid_obj.mhn 
+        // vr 赛事 特殊处理
+        if(other.bet_type == 'vr_bet'){
+
+            if(ol_obj.ots == 'T1'){
+                a = mid_obj.teams[0]
+            }
+            if(ol_obj.ots == 'T2'){
+                a = mid_obj.teams[1]
+            }
+        } else {
+            if(ol_obj.ots == 'T1'){
+                a = mid_obj.mhn 
+            }
+            if(ol_obj.ots == 'T2'){
+                a = mid_obj.man
+            }
         }
-        if(ol_obj.ots == 'T2'){
-            a = mid_obj.man
-        }
+      
         // 加入是否有球头判断 
         if(['T1','T2'].includes(ol_obj.ots) && !hl_obj.hv){
             b = ''
@@ -1136,8 +1156,7 @@ const get_market_is_show = (obj={}) =>{
 
     return !!hl_obj.hid
 }
-const   go_to_bet=(ol_item)=>{
-    // debugger
+const go_to_bet = (ol_item) => {
     // 如果是赛果详情
     if(PageSourceData.route_name == 'match_result') return
     const {oid,_hid,_hn,_mid,_hpid } = ol_item
@@ -1147,7 +1166,7 @@ const   go_to_bet=(ol_item)=>{
     }else if(MenuData.is_kemp()){
         bet_type ="guanjun_bet"
     }else if(MenuData.is_vr()){
-        bet_type ="“vr_bet”，"
+        bet_type ="vr_bet"
     }
     let params = {
       oid, // 投注项id ol_obj
