@@ -36,9 +36,18 @@
         <template v-else>
             <template v-if="!state.inAnswerQuestion">
                 <div class="ht-bsball-text">{{ i18n_t('app_h5.handicap_tutorial.big_small_ball_tip') }}</div>
-                <div class="ht-bsball-scroll ht-bg-color">
+                <div class="ht-bsball-scroll ht-bg-color" @scroll="handleScroll">
                     <match-result-ht v-for="(item, index) in bigAndSmallBallData" :option="item"
-                        :key="'matchResultHtBalls' + index" :source="'bigAndSmallBall'"></match-result-ht>
+                        :key="'matchResultHtBalls' + index" :source="'bigAndSmallBall'">
+                    </match-result-ht>
+                    <div class="ht-handle">
+                        <div class="ht-button" @click='go_back'>
+                            {{ i18n_t('app_h5.handicap_tutorial.actual_combat') }}
+                        </div>
+                        <div class="ht-button default" @click="() => { state.inAnswerQuestion = true }">
+                            {{ i18n_t('app_h5.handicap_tutorial.practise') }}
+                        </div>
+                    </div>
                 </div>
             </template>
             <template v-else>
@@ -48,14 +57,14 @@
             <!-- <div v-if="state.inAnswerQuestion" class="ht-congrats">{{i18n_t('app_h5.handicap_tutorial.actual_combat')}}</div> -->
 
             <!-- 没有进入答题 或 没有点击选项回答时 -->
-            <div v-if="!state.inAnswerQuestion" class="ht-handle">
+            <!-- <div v-if="!state.inAnswerQuestion" class="ht-handle">
                 <div class="ht-button" @click='go_back'>
                     {{ i18n_t('app_h5.handicap_tutorial.actual_combat') }}
                 </div>
                 <div class="ht-button default" @click="() => { state.inAnswerQuestion = true }">
                     {{ i18n_t('app_h5.handicap_tutorial.practise') }}
                 </div>
-            </div>
+            </div> -->
 
             <!-- <div v-if="state.inAnswerQuestion" class="ht-again">
             再学一次
@@ -66,7 +75,7 @@
     </div>
 </template>
 <script setup>
-import { onMounted, onBeforeMount, reactive } from "vue";
+import { onMounted, onBeforeMount, reactive, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router"
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 import matchResultHt from 'src/base-h5/components/tutorial/match-result-ht/index.vue'
@@ -98,7 +107,9 @@ const state = reactive({
     currentSwitchValue: 0, // 让球：0 大小球：1 对应switchMenu index
     currentSlideValue: 0, // 球数 目前slideMenu写死
     inAnswerQuestion: false, // 是否进入了答题状态
-    htContentHeightList: []
+    htContentHeightList: [],
+    bsHtContentHeightList: [],
+    isClickFlag: false
 })
 
 // 返回上一页
@@ -109,35 +120,52 @@ const go_back = () => {
 const switchHandle = (val) => {
     state.currentSwitchValue = val
     state.currentSlideValue = 0
+    if (val) {
+        nextTick(() => {
+            const scrollContainer = document.getElementsByClassName('ht-bsball-scroll')[0]
+            const bsContentContainer = document.getElementsByClassName('bsball-list')
+            state.bsHtContentHeightList = Array.from(bsContentContainer).map(i => {
+                return i.offsetTop - scrollContainer.offsetTop
+            })
+            console.log('state.bsHtContentHeightListstate.bsHtContentHeightList', state.bsHtContentHeightList)
+        })
+    }
     state.inAnswerQuestion = false // 切换swtich 重置答题状态
 }
 
 const slideHandle = (val, e) => {
+    state.isClickFlag = true
     let topH = 0
+    let scrollContainer = void 0
+    let contentContainer = void 0
     state.currentSlideValue = val
     if (state.currentSwitchValue) {
         scrollMenuEvent(e, ".ht-slide-box", ".slide-item-active");
-        const scrollContainer = document.getElementsByClassName('ht-bsball-scroll')[0]
-        const contentContainer = document.getElementsByClassName('bsball-list')[val]
-        topH = contentContainer.offsetTop - scrollContainer.offsetTop
-        scrollContainer.scrollTop = topH
+        scrollContainer = document.getElementsByClassName('ht-bsball-scroll')[0]
+        contentContainer = document.getElementsByClassName('bsball-list')[val]
     } else {
         scrollMenuEvent(e, ".ht-slide-box", ".slide-item-active");
-        const scrollContainer = document.getElementsByClassName('ht-scroll')[0]
-        const contentContainer = document.getElementsByClassName('ht-content')[val]
-        topH = contentContainer.offsetTop - scrollContainer.offsetTop
-        scrollContainer.scrollTop = topH
+        scrollContainer = document.getElementsByClassName('ht-scroll')[0]
+        contentContainer = document.getElementsByClassName('ht-content')[val]
     }
+    topH = contentContainer.offsetTop - scrollContainer.offsetTop
+    scrollContainer.scrollTop = topH
 }
 
 const handleScroll = (e) => {
-    const index = state.htContentHeightList.findIndex(v => v > e.target.scrollTop) - 1
+    if (state.isClickFlag) {
+        state.isClickFlag = false
+        return
+    }
+    const arr = state.currentSwitchValue ? state.bsHtContentHeightList : state.htContentHeightList
+    const index = arr.findIndex(v => v > e.target.scrollTop) - 1
     if (state.currentSlideValue === index) return
     if (index < 0) return
     const dom = document.getElementsByClassName('slide-item')[index]
     state.currentSlideValue = index
     scrollMenuEvent(dom, ".ht-slide-box", ".slide-item-active");
 }
+
 
 onMounted(() => {
     const scrollContainer = document.getElementsByClassName('ht-scroll')[0]
