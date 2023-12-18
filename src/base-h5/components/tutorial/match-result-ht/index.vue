@@ -38,7 +38,7 @@
 
         
         <div :class="['match-result-list', state.source === 'bigAndSmallBall' && 'bsball-list']" v-for="(item, index) in option.matchList" :key="'matchResult' + index">
-            <div class="title" v-if="state.source === 'bigAndSmallBall'">
+            <div class="head-title" v-if="state.source === 'bigAndSmallBall'">
                 <span>{{ item.ballNumber }}</span>
             </div>
             <div class="note" v-html="item.note"></div>
@@ -46,7 +46,7 @@
                 <div class="left">
                     <div class="home-team teams">
                         <div v-if="state.source !== 'bigAndSmallBall'" class="teams-logo"><img src="./teams-icon.svg" alt=""></div>
-                        <div class="title">{{ i18n_t('app_h5.handicap_tutorial.bet_home_team') }}</div>
+                        <div class="title">{{ state.source !== 'bigAndSmallBall' ? i18n_t('app_h5.handicap_tutorial.bet_home_team') : i18n_t('app_h5.handicap_tutorial.ball').replace('%s', item.big) }} </div>
                         <div :class="['result', item.winIsWho === 'homeTeam' ? 'win' : item.winIsWho ? 'lose' : 'default']">{{ item.homeTeam }}</div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                 <div class="right">
                     <div class="away-team teams">
                         <div v-if="state.source !== 'bigAndSmallBall'" class="teams-logo"><img src="./teams-icon.svg" alt=""></div>
-                        <div class="title">{{ i18n_t('app_h5.handicap_tutorial.bet_away_team') }}</div>
+                        <div class="title">{{ state.source !== 'bigAndSmallBall' ? i18n_t('app_h5.handicap_tutorial.bet_away_team') : i18n_t('app_h5.handicap_tutorial.ball').replace('%s', item.small) }}</div>
                         <div :class="['result', item.winIsWho === 'awayTeam' ? 'win' : item.winIsWho ? 'lose' : 'default']">{{ item.awayTeam }}</div>
                     </div>
                 </div>
@@ -221,14 +221,18 @@ const state = reactive({
         background-color: var(--q-gb-bg-c-23);
         padding-bottom: .25rem;
         border-radius: .2rem;
-        .title {
-            font-size: .18rem;
+        .head-title {
+            font-size: .18rem !important;
             font-weight: 600;
             display: flex;
             justify-content: center;
             height:.49rem;
             align-items: center;
             border: .01rem solid var(--q-gb-bd-c-7);
+        }
+        .title {
+            font-size: .16rem !important;
+            font-weight: 500;
         }
     }
     .match-result-list {

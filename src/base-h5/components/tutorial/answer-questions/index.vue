@@ -1,29 +1,38 @@
 <template>
     <div class="ht-content ht-border">
-        <div class="ht-title">
+        <!-- <div class="ht-title">
             <div class="pattern"></div>
             <div class="title">{{ title }}</div>
             <div class="hint"></div>
-        </div>
+        </div> -->
         <template v-for="(item, index) in questionsData" :key="'questions' + index">
             <div v-if="state.currentQuestion === index" class="ht-questions">
                 <!-- 题目 -->
+                <div class="ht-topic-type">{{ !item.questionsType && '单选' }}</div>
                 <div class="ht-topic">
                     <div class="ht-topic-text">
-                        <div class="ht-topic-type">{{ !item.questionsType && '单选' }}</div>
-                        <span>当出现这样的赛果：{{ item.homeTeam }}</span>
-                        <div class="team-logo"></div>
-                        <span>{{ item.matchResult }}</span>
-                        <div class="team-logo"></div>
-                        <span>{{ item.awayTeam }}，</span>
-                        <span>{{ item.questions }}</span>
+                        <span>1、当出现这样的赛果：{{ item.questions }}</span>
+                    </div>
+                </div>
+                <div class="teams-content">
+                    <div class="teams">
+                        <img src="./manlian.svg">
+                        <div>{{ i18n_t('app_h5.handicap_tutorial.m_chesester_untied') }}</div>
+                    </div>
+                    <div class="score">
+                        <div>1</div>
+                        <div class="line">-</div>
+                        <div>1</div>
+                    </div>
+                    <div class="teams">
+                        <img src="./qieerxi.svg">
+                        <div>{{ i18n_t('app_h5.handicap_tutorial.chelsea') }}</div>
                     </div>
                 </div>
                 <!-- 答题选项 -->
                 <div class="ht-answer-options">
                     <div v-for="(i, index) in item.options" :key="'answer' + index" :class="['ht-anwser-item', i.label === state.currentOption && 'selected']" @click="selectOptionHandle(i)">
-                        <div class="option">
-                            <!-- 此处分为 没答题时 答对时 答错时 -->
+                        <!-- <div class="option">
                             <template v-if="!state.afterAnswerQuestion">
                                 <div>{{ i.label }}.</div>
                             </template>
@@ -34,7 +43,7 @@
                             <template v-else>
                                 <div class="options-icon">{{ i.isRight === 'success' ? '√' : 'x' }}</div>
                             </template>
-                        </div>
+                        </div> -->
                         <div class="option-content">
                             <div class="text-style">{{ i.option }}</div>
                             <div :class="['point', !i.isWin ? 'win' : 'fail']">
@@ -173,56 +182,74 @@ const go_back = () => {
     }
 
     .ht-questions {
-        padding-top: .16rem;
-        margin-bottom: .11rem;
+        padding: .2rem;
+        margin: 0 .2rem .11rem .2rem;
+        background-color: var(--q-gb-bg-c-15);
+        border-radius: .2rem;
+        .ht-topic-type {
+            width: .4rem;
+            height: .18rem;
+            background-color: var(--q-gb-bg-c-18);
+            font-size: .12rem;
+            color: var(--q-gb-bg-c-4);
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            border-radius: .04rem;
+            margin-bottom: .04rem;
+        }
+        .teams-content {
+            display: flex;
+            justify-content: center;
+            margin-top: .28rem;
+            .teams {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                img {
+                    margin-bottom: .1rem;
+                }
+            }
+            .score {
+                display: flex;
+                align-items: center;
+                font-size: .32rem;
+                font-weight: 700;
+                margin: 0 .4rem;
+                .line {
+                    margin: 0 .02rem;
+                }
+            }
+        }
         .ht-topic {
             display: flex;
-            padding: 0 .3rem;
-
-            .ht-topic-type {
-                width: .28rem;
-                height: .14rem;
-                background-color: var(--q-gb-t-c-1);
-                font-size: .09rem;
-                color: var(--q-gb-t-c-14);
-                display: flex;
-                align-items: end;
-                justify-content: center;
-                border-radius: .04rem;
-                margin-right: .02rem;
-                margin-top: -.01rem;
-            }
+            // padding: 0 .3rem;
 
             .ht-topic-text {
                 display: flex;
-                font-size: .14rem;
+                font-size: .16rem;
                 flex-wrap: wrap;
                 align-items: center;
-
-                .team-logo {
-                    display: inline-block;
-                    width: .14rem;
-                    height: .21rem;
-                    background-color: var(--q-gb-t-c-1);
-                    margin: 0 .02rem;
-                    margin-top: -.04rem;
-                }
+                font-weight: 500;
             }
         }
 
         .ht-answer-options {
-            padding: 0 .3rem;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             flex-wrap: wrap;
             margin-top: .2rem;
-            margin-bottom: 1.24rem;
+            justify-content: space-between;
+            box-shadow: 0px 4px 12px 0px rgba(27, 30, 38, 0.02);
 
             .ht-anwser-item {
                 display: flex;
-                flex: 50%;
-                margin-bottom: .14rem;
+                width: 1.48rem;
+                height: .7rem;
                 align-items: center;
+                justify-content: center;
+                border:.01rem solid var(--q-gb-bd-c-4);
+                border-radius: .08rem;
 
                 .option {
                     margin-right: .04rem;
@@ -305,9 +332,8 @@ const go_back = () => {
             }
 
             .selected {
-                .option-content {
-                    background-color: var(--q-gb-t-c-7);
-                }
+                background-color: rgb(from var(--q-gb-bg-c-13) r g b / 10%);
+                border: .02rem solid var(--q-gb-bg-c-13);
             }
         }
 

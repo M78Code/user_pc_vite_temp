@@ -448,7 +448,7 @@ const get_league_select_list = ()=>{
     })
      return sub
   })
-  // 如果全部勾选 再次进来 全部取消勾选
+  // 如果全部勾选 再次进来 全部取消勾选 
   if (list.value.every(({ select }) => select)) {
     list.value.forEach(item => item.select = false)
   }

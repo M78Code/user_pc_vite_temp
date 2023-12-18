@@ -1,5 +1,6 @@
 <template>
   <div id="q-app" class="theme0">
+    <!-- 横屏显示 -->
     <Orientation />
      <!-- 未带token -->
     <NotLogin v-if="!token"></NotLogin>
