@@ -244,7 +244,7 @@ const columnTotal = (item) => {
 
 // 反波胆玩法增加'非'
 const txt_ol_name_fun = (data) => {
-  let res = (['367','368','369'].includes(data._hpid))?i18n_t('common.non') : '';
+  let res = (['367','368','369'].includes(data._hpid) && (data.ot != 'Other'))?i18n_t('common.non') : '';
   return res;
 };
 //  模板4 数据处理

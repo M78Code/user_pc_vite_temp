@@ -110,6 +110,7 @@ export default {
       list_scroll_top: 0,
       router: useRouter(),
       route: useRoute(),
+      UserCtr,
       // 用户余额
       balance: 0
     };

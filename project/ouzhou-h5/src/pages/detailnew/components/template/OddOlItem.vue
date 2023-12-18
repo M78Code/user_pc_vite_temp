@@ -90,7 +90,7 @@ const ov = computed(() => {
 })
 // 反波胆玩法增加'非'
 const txt_ol_name = computed(() => {
-  let res = (['367','368','369'].includes(props.value._hpid))?i18n_t('detail.non') : '';
+  let res = (['367','368','369'].includes(props.value._hpid) && (props.value.ot != 'Other'))?i18n_t('detail.non') : '';
   return res;
 })
 const isLock = computed(() => {
