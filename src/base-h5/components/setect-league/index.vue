@@ -68,6 +68,7 @@ const search_val = ref('')
 const select_list = ref([])
 //组件数据
 let matchRef = ref(null);
+let matchRefOld = ref(null);
 
 let rem_1 = (window.innerWidth * 100) / 375;
 const bounced_high = {
@@ -81,7 +82,11 @@ const emit = defineEmits(["search_fn","closedHandle"]);
  * @param {Array} select_list 选中的数据
  */
 const finishHandle = () => {
-  select_list.value = matchRef.value.list.filter(v=>v.select)
+  if (MenuData.get_sub_is_all()) {
+    select_list.value = matchRef.value.list.filter(v=>v.select)
+  } else {
+    select_list.value = matchRefOld.value.list.filter(v=>v.select)
+  }
   // 派发首页设置菜单展开事件
   useMittEmit(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, {
     open: true
