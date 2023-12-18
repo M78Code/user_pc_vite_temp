@@ -224,7 +224,7 @@ export default defineComponent({
   text-align: center;
   font-weight: bold;
   color: var(--q-gb-t-c-1);
-  background: #e8f5ff;
+  background: var(--q-gb-bg-c-31);
   border-radius: 0.22rem;
   height:0.30rem;
   line-height:0.30rem;

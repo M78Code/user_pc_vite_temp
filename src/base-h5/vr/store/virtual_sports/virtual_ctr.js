@@ -14,8 +14,7 @@ class VirtualCtr {
    * @return {undefined} undefined
    */
   init(){
-    // 所有赛事列表数据转obj对象
-    this.state = reactive({ 
+    let init_data = { 
       // 虚拟体育赛事接口请求中, 用于防治重复请求
       virtual_data_loading: 0,
       //当前选中的联赛
@@ -58,7 +57,29 @@ class VirtualCtr {
       is_show_menu: false,   
       // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
       details_item: 0,
-    });
+    };
+    // 数据持久化
+    let str = sessionStorage.getItem('VirtualCtr');
+    if(str){
+      try {
+        let json_data = JSON.parse(str);
+        // 数据合并
+        json_data && Object.assign(init_data,json_data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    // 所有赛事列表数据转obj对象
+    let data = reactive(init_data);
+    // 设置代理
+    this.state = new Proxy(data, {
+      set: function (target, key, value, receiver) {
+        // 数据持久化
+        let res = Reflect.set(target, key, value, receiver);
+        sessionStorage.setItem('VirtualCtr',JSON.stringify(target));
+        return res;
+      }
+    })
   }
 
   //get方法

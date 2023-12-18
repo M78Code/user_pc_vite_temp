@@ -49,7 +49,7 @@ const set_bet_order_status = computed(()=> status => {
   }
 })
 const bet_order_status_active = computed(()=>{
-  return [2, 3].includes(+BetViewDataClass.bet_order_status);
+  return [2, 3, 7].includes(+BetViewDataClass.bet_order_status);
 })
 
 </script> 
@@ -64,13 +64,13 @@ const bet_order_status_active = computed(()=>{
   flex-wrap: wrap;
   .ty-bet-after-status-title{
     font-size: .16rem;
-    font-weight: 600;
+    font-weight: 500;
     line-height: .24rem;
     letter-spacing: 0;
     width: 100%;
     padding: 0.08rem 0;
     // 注单失败颜色样式
-    color: var(--q-gb-t-c-4);
+    color: var(--q-gb-t-c-19);
     font-family: PingFang SC;
     &.active{
       color: var(--q-gb-t-c-1);

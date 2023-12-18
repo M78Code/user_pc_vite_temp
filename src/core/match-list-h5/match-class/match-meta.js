@@ -96,6 +96,8 @@ class MatchMeta {
     // 清除上一轮赛事
     this.clear_match_info()
 
+    console.log(11111111)
+
     // 电竞、赛果、冠军 return
     if (MenuData.is_esports() || MenuData.is_results() || MenuData.is_kemp()) return
 
