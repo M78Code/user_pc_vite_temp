@@ -18,7 +18,7 @@
         <span class="league-title-text row justify-between"
           :class="{ 'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch()) }">
           <!-- {{ menu_type == 100 ? match_of_list.onTn : match_of_list.tn }} -->
-          {{(new Date(+match_of_list.med)).Format(i18n_t('time8')).split(' ')[0]}}
+          {{(new Date(+match_of_list.mgt)).Format(i18n_t('time8')).split(' ')[0]}}
         </span>
       </div>
 

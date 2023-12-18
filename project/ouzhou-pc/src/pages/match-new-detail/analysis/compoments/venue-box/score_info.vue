@@ -11,7 +11,7 @@
       :columns="columns"
       row-key="name"
       hide-pagination
-      :no-data-label="i18n_t('match_info.no_score_data')"
+      :no-data-label="'no data'"
       :table-header-style="{
         backgroundColor: '#F1F1F1',
         height: '28px',
