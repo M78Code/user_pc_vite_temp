@@ -666,6 +666,11 @@ export const details_main = () => {
         .get_category_list(params)
         .then((res) => {
           const res_data = lodash.get(res, "data",[]);
+          if (res_data.code=='0401038') {  //限频
+            setTimeout(() => {
+              get_odds_list()
+            }, 800);
+          }
           state_data.data_list = res_data;
           // set_details_tabs_list(res_data);
           matchDetailCtr.value.compute_category_refer(res_data)

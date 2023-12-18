@@ -118,9 +118,13 @@ export default {
   margin: 0 auto;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   ul {
     display: flex;
+    li{
+      list-style: none;
+    }
 
     .active {
       background: #e69c41;

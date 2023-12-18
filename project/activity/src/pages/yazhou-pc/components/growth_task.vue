@@ -181,7 +181,7 @@
         <div class="betting_history">
           <div class="content_title text-center text-333">领取记录</div>
           <div class="table table_history relative-position">
-            <div class="text-333 text-center">
+            <div class="records-header text-333 text-center">
               <p>任务</p>
               <p>奖券数量</p>
               <p>领取时间</p>
@@ -266,6 +266,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.betting_history{
+  .records-header,.table_content{
+    p:nth-child(1){
+      flex: 2;
+    }
+    p:nth-child(2){
+      flex: 1;
+    }
+    p:nth-child(3){
+      flex: 1;
+    }
+  }
+  .table_content{
+    p:nth-child(2){
+      //background: url("~public/image/activity_imgs/imgs/juan_red.png")
+    }
+  }
+}
 .tabs_content {
   .activity-date-time {
     span {
@@ -355,7 +373,7 @@ export default {
         }
 
         &.table-body {
-          height: 60px;
+          min-height: 60px;
           border: 1px solid var(--qq--activity-bd-color-5);
           border-top: 0 none;
 

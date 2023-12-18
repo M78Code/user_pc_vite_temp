@@ -355,7 +355,7 @@ export default {
             text = i18n_t(`common_lang.${langCode}.bet.morning_session`); //"早盘赛事";
             break;
           case 2:
-            text = i18n_t(`common_lang.${langCode}.bet.bowls`); //"滚球盘赛事";
+            text = i18n_t(`common_lang.${langCode}.bet.bet_inplay`); //"滚球盘赛事";
             break;
         }
         return text;
