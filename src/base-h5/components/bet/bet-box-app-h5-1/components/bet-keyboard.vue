@@ -178,13 +178,20 @@ const _handleDecimalPoint = () => {
 
 // MAX键
 const _handmaxKey = () => {
+  console.error('sssss')
   let dom = document.querySelectorAll('.nonebox4-fourth-a-son')
   for(let i = 0; i < dom.length; i++) {
     dom[i].classList.remove('active')
   }
   let old = BetData.bet_keyboard_config.playOptionsId
-  money.value = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
-
+  let money_ = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
+  // 判断当前余额 是否小于最多投注金额
+  if(money_*1 > UserCtr.get_set_balance()*1 ){
+    money.value = UserCtr.get_set_balance()
+  } else {
+    money.value = money_
+  }
+  
 }
 // 删除键
 const _handleDeleteKey = () => {
@@ -248,9 +255,14 @@ const _handleNumberKey = (num, e) => {
     }
   }
 
-  // 显示最大金额
-  if (money_ && +money_ >= +max_money) {
-    money_ = max_money
+  // 输入金额大于限额 或者 大于用户余额
+  if(money_ && (money_*1 > max_money*1 || money_*1 > UserCtr.get_set_balance()*1) ){
+    // 判断当前余额 是否小于最多投注金额
+    if(max_money*1 > UserCtr.get_set_balance()*1 ){
+      money_ = UserCtr.get_set_balance()
+    } else {
+      money_ = max_money
+    }
   }
 
   money.value = money_

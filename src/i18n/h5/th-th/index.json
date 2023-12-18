@@ -2195,7 +2195,15 @@
     "top_32": "รอบ 32 ทีม",
     "top_64": "รอบ 64 ทีม",
     "vitality_performance": "พลังเสมือน",
-    "win_tie_loss": "ชนะ/เสมอ/แพ้"
+    "win_tie_loss": "ชนะ/เสมอ/แพ้",
+    "balance": "ยอดคงเหลือ",
+    "matching": "ในการแข่งขัน",
+    "show_all_markets":"แสดงตลาดทั้งหมด",
+    "match_detail": {
+      "leaderboard": "รายการจัดอันดับ",
+      "historical_results": "ผลลัพธ์ทางประวัติศาสตร์",
+      "bet": "เดิมพัน"
+    }
   },
   "highlights": {
     "title": "ไฮไลท์",

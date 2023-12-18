@@ -3,6 +3,7 @@
  */
 import * as fs from "node:fs";
 import colors from "colors"
+import path from "node:path"
 // 输出目录
 // let write_folder = "./job/output/env";
 /**

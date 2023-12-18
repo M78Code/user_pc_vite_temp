@@ -9,7 +9,7 @@ import { compute_value_by_cur_odd_type } from "src/core/format/project/module/fo
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { nextTick, ref } from "vue"
 import lodash_ from "lodash"
-import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
+import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
 
 
 class BetData {
@@ -210,7 +210,7 @@ this.bet_appoint_ball_head= null */
   // 根据缓存信息 设置数据
   set_loacl_config(){
     // 获取数据缓存
-    let session_info = LocalStorage.get('bet_data_class');
+    let session_info = SessionStorage.get('bet_data_class');
     if (!session_info) {
       return;
     }
@@ -623,7 +623,7 @@ this.bet_appoint_ball_head= null */
   set_bet_data_class_version = lodash_.debounce(() => {
     this.bet_data_class_version.value = Date.now()
     nextTick(()=>{
-      LocalStorage.set('bet_data_class',this)
+      SessionStorage.set('bet_data_class',this)
     })
     // console.error('set_bet_data_class_version',JSON.parse(JSON.stringify(this)))
   }, 5)

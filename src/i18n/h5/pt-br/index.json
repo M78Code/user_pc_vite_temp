@@ -2186,7 +2186,15 @@
     "top_32": "Ronda de 32",
     "top_64": "Top 64",
     "win_tie_loss": "Ganho / Sorteio / Perda",
-    "vitality_performance": "Desempenho vigoroso"
+    "vitality_performance": "Desempenho vigoroso",
+    "balance": "equilíbrio",
+    "matching": "Durante a competição",
+    "show_all_markets": "Mostrar todos os mercados",
+    "match_detail": {
+      "leaderboard": "Lista de classificação",
+      "historical_results": "Resultados históricos",
+      "bet": "aposta"
+    }
   },
   "key_name_chinese": "葡萄牙语",
   "key_name_english": "Portuguese",

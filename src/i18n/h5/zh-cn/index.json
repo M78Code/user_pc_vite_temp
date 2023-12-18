@@ -2553,7 +2553,15 @@
     "top_32": "32强",
     "top_64": "64强",
     "vitality_performance": "活力表现",
-    "win_tie_loss": "胜/平/负"
+    "win_tie_loss": "胜/平/负",
+    "balance": "余额",
+    "matching": "比赛中",
+    "show_all_markets":"显示所有盘口",
+    "match_detail": {
+      "leaderboard": "排行榜",
+      "historical_results": "历史战绩",
+      "bet": "投注"
+    }
   },
   "chatroom": {
     "read_more": "查看更多消息",

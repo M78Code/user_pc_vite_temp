@@ -116,9 +116,6 @@
                   </div>
                 </div>
               </template>
-              <template v-if="lodash.get(item_data,'hl.length') !=2 && !get_is_hengping">
-                <div class="col" v-for="(item,index2) in null_box_list" :key="'bb'+index2"></div>
-              </template>
             </div>
           </div>
         </div>
@@ -220,9 +217,6 @@
                     <template v-if="append_single._mhs == 2"></template>
                   </div>
                 </div>
-              </template>
-              <template v-if="lodash.get(item_data,'hl.length') !=2 && !get_is_hengping">
-                <div class="col" v-for="(item,index2) in null_box_list" :key="'bb'+index2"></div>
               </template>
             </div>
           </div>
@@ -565,18 +559,18 @@ export default defineComponent({
   .play-box-style {
     text-align: center;
     width: 100%;
-    height: 0.40;
-    line-height: 0.40;
+    height: 0.40rem;
+    line-height: 0.40rem;
   }
 
   .play-box-sty {
-    height: 0.40;
+    height: 0.40rem;
     text-align: center;
     // padding:0.08rem 0.04rem ;
   }
 
   .odds-lock {
-    line-height: 0.40;
+    line-height: 0.40rem;
   }
 
   .remark {
@@ -699,6 +693,6 @@ export default defineComponent({
   height:0.48rem
 }
 .click-bet-bgc{
-  background:#D1EBFF;
+  background: var(--q-gb-bg-c-24);
 }
 </style>
