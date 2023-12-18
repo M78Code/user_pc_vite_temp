@@ -6,7 +6,7 @@
 <template>
   <div class="bet-mix-show">
     <div @click="reduce_btn">-</div>
-    <div class="bet-mix-show-value"><span class="bet-mix-show-box">@</span>{{ format_odds(ref_custom.oddFinally, item.sportId) }}</div>
+    <div class="bet-mix-show-value font700"><span class="bet-mix-show-box">@</span>{{ format_odds(ref_custom.oddFinally, item.sportId) }}</div>
     <div @click="add_btn">+</div>
   </div>
 </template>
@@ -78,23 +78,24 @@ const set_bet_obj_config = () => {
     .bet-mix-show{
         height: 0.4rem;
         border-radius: 4px;
-        font-size: 0.16rem;
         overflow: hidden;
-        padding-left: 0.1rem;
-        padding-right: 0.1rem;
+        padding-left: .24rem;
+        padding-right: .24rem;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        background: var(--q-gb-t-c-7);
+        background: var(--q-gb-bg-c-22);
         border-radius: 12px;
         margin: 0.1rem 0;
-        color: var(--q-gb-t-c-3);
-        font-size: 18px;
+        color: var(--q-gb-t-c-11);
+        font-size: .2rem;
     }
     .bet-mix-show-value{
-        color: var(--q-gb-t-c-3);
+        color: var(--q-gb-t-c-17);
+        display: flex;
+        align-items: center;
     }
     .bet-mix-show-box{
         font-size: 0.12rem;
