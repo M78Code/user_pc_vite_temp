@@ -116,9 +116,6 @@
                   </div>
                 </div>
               </template>
-              <template v-if="lodash.get(item_data,'hl.length') !=2 && !get_is_hengping">
-                <div class="col" v-for="(item,index2) in null_box_list" :key="'bb'+index2"></div>
-              </template>
             </div>
           </div>
         </div>
@@ -220,9 +217,6 @@
                     <template v-if="append_single._mhs == 2"></template>
                   </div>
                 </div>
-              </template>
-              <template v-if="lodash.get(item_data,'hl.length') !=2 && !get_is_hengping">
-                <div class="col" v-for="(item,index2) in null_box_list" :key="'bb'+index2"></div>
               </template>
             </div>
           </div>
