@@ -71,7 +71,6 @@ export default defineComponent({
           item.ov,
           props.item_data._hpid,
           props.item_data.hsw,
-          false,
           props.item_data.csid || props.csid
         )
       }

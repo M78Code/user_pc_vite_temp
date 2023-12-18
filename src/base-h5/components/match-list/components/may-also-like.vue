@@ -189,7 +189,7 @@ const normal_ = computed(() => {
     try {
       if(item.hps && item.hps[0].hl[0]&& item.hps[0].hl[0].ol){
         let val = item.hps[0].hl[0].ol[index].ov / 100000, hsw = item.hps[0].hsw;
-        return compute_value_by_cur_odd_type(val, null, hsw,null,item.ciid) ? compute_value_by_cur_odd_type(val, null, hsw,null,item.csid) : '';
+        return compute_value_by_cur_odd_type(val, null, hsw,item.ciid) ? compute_value_by_cur_odd_type(val, null, hsw,item.csid) : '';
       }
     }catch (e){
       console.error(e);

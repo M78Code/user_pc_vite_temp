@@ -346,7 +346,7 @@ const odds_value = computed(() => {
       hsw = '1'
     }
 
-    let S = compute_value_by_cur_odd_type(val, null, hsw, null, value_show.csid);
+    let S = '' //compute_value_by_cur_odd_type(val, null, hsw, null, value_show.csid);
     return S ? S : '';
   }
 })

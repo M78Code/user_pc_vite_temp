@@ -68,7 +68,7 @@
           
           }"
         >
-          {{ compute_value_by_cur_odd_type(ol_data.ov, ol_data._hpid, "", ol_data.csid) }}
+          {{ compute_value_by_cur_odd_type(ol_data.ov, ol_data._hpid, ol_data._hsw, ol_data.csid) }}
         </span>
         <span class="default-point" v-if="!odds_lift"></span>
         <div v-if="odds_state != 'seal'">

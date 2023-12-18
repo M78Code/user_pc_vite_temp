@@ -353,6 +353,7 @@ export default {
       format_odds_value,
       curMatchOdds,
       isCollectMenuTab,
+      compute_local_project_file_path,
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id, LOCAL_PROJECT_FILE_PREFIX,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, footer_menu_id,
       in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item, show_sport_title, compute_css_obj,
@@ -988,4 +989,3 @@ export default {
 
 /* ********赛事容器相关********** -E*/
 </style>
- src/output/index.js

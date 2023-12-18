@@ -80,7 +80,7 @@ const AssembleData = computed(() => {
                 >
                     <template v-if="_item.os == 1 && _item._hs != 1 ">
                         <span class="ov-text">
-                            {{ compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) }}
+                            {{ compute_value_by_cur_odd_type(_item.ov, _item._hpid, _item._hsw, MatchDetailCalss.params.sportId) }}
                         </span>
                         <olStatus :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )"/>
                     </template>
@@ -96,16 +96,16 @@ const AssembleData = computed(() => {
                 class="list-item onePxBorder"
                 @click="go_betting(_item)"
             >
-                <template v-if="_item.os == 1 && compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) > 0">
+                <template v-if="_item.os == 1 && compute_value_by_cur_odd_type(_item.ov, _item._hpid,_item._hsw, MatchDetailCalss.params.sportId) > 0">
                     <span class="on-text textOverflow1">
                         {{ useOtv.includes(_item._hpid) ? `${_item.otv}` : `${_item?.on}${_item?.ott}` }}
                     </span>
                     <span class="ov-text">
-                        {{ compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) }}
+                        {{ compute_value_by_cur_odd_type(_item.ov, _item._hpid, _item._hsw, MatchDetailCalss.params.sportId) }}
                     </span>
                     <olStatus :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )"/>
                 </template>
-                <template v-if="_item?.os == 2 || compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) == 0 || _item?._hs == 1 ">
+                <template v-if="_item?.os == 2 || compute_value_by_cur_odd_type(_item.ov, _item._hpid, _item._hsw, MatchDetailCalss.params.sportId) == 0 || _item?._hs == 1 ">
                     <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                 </template>
                 <ResultOlItem :value="_item" :hpt="1"></ResultOlItem>
