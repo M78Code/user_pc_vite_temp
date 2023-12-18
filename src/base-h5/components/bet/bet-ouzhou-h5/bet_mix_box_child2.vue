@@ -19,7 +19,7 @@
                     </div>
                     <div>
                         <div class="nonebox4-content-right">
-                            <div class="nonebox4-content-right-profit" v-if="type != 4">{{compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId)}}</div>
+                            <div class="nonebox4-content-right-profit" v-if="type != 4">{{compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId)}}</div>
                             <!-- <div v-if="type == 2" class="content-right-duo"></div>
                             <div v-else-if="type == 3" class="content-right-shao"></div>
                             <div v-else-if="type == 4" class="content-right-closed" @click.stop="BetData.bet_list_remove(items.id)">closed</div> -->

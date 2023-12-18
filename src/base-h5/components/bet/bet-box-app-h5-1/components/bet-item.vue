@@ -14,19 +14,19 @@
                             <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                         </span>
                         <!-- 盘口 -->
-                        <span class="text-a1a text-flow-none text-009 font400" v-if="only_win[items.sportId].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span> 
-                        <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
+                        <span class="text-a1a text-flow-none text-009 font400" v-if="UserCtr.is_cur_odds(items.marketTypeFinally)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
+                        <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
                     </div>
-                    <div class="w-100 fon12 font400 text-a1a-i">{{ items.tid_name }}</div>
                     <div class="w-100 fon12 font400 " v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
                     </div>
+                    <div class="w-100 fon12 font400 text-a1a-i">{{ items.tid_name }}</div>
                 </div>
             </div>
            
             <div class="fw-e-s bet-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                 <div class="f-c-c bet-money">
                     <span class="font14 font700 bet-odds-value f-c-c" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
-                       <span class="font14">@</span>{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}
+                       <span class="font14">@</span>{{ compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId) }}
                     </span>
 
                     <div class="show_img">
