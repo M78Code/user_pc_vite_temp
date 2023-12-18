@@ -37,7 +37,7 @@ if (current_env == 'idc_online' || current_env == 'idc_ylcs') {
         }
     
 // 访问路由拼接 
-const  acticity_src_url  = url.value  +'?gr='+gr+'&token='+token
+const  acticity_src_url  = url.value  +'?'+ UserCtr.get_user_url_parames();
 acticity_src.value = acticity_src_url
 // console.error(token,'token',acticity_src);
 </script>
