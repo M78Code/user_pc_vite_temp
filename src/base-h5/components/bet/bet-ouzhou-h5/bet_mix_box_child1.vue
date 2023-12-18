@@ -34,7 +34,7 @@
                        <span class="text-two-span">{{items.playName}}
                          <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                         </span>
-                        <span v-if="UserCtr.is_cur_odds(items.marketTypeFinally)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]</span> 
+                        <span v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]</span> 
                         <span v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
                         
                       </div>

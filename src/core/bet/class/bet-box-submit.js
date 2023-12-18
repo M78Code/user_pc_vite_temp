@@ -886,9 +886,9 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     let play_id = [4]
     // 详情 并且本地没有配置玩法
     if(other.is_detail){
-        play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+        play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,play_name)
     }else{
-        let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+        let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,play_name)
           // 冠军玩法 部分玩法hpid相同 
         if(other.bet_type == 'guanjun_bet'){
             let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])

@@ -80,8 +80,8 @@ let message_fun = null
 let handler_func = null
 
 onMounted(() => {
-
-  if (BaseData.is_emit && !is_kemp.value) MatchMeta.set_origin_match_data()
+  
+  if (BaseData.is_emit && !is_kemp.value && !is_esports.value) MatchMeta.set_origin_match_data()
 
   // 接口请求防抖
   handler_func = lodash.debounce(({ cmd, data }) => {

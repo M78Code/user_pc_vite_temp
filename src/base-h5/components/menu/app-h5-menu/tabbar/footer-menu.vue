@@ -75,7 +75,7 @@ watch(UserCtr.user_version, () => {
       item.icon = `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_05_nor.png`
     }
   })
-})
+}, { immediate: true })
 const menu_item_click = (item = {}) => {
   switch(item.id){
 
