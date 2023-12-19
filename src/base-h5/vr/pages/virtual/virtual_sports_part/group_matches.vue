@@ -112,7 +112,7 @@ export default {
   background-color: #F8F9FA;
 
   .col1 {
-    width: 7%;
+    width: 10%;
   }
 
   .col2 {
