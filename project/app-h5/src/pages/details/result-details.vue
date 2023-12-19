@@ -312,7 +312,7 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
 <style lang="scss" scoped>
 .match-header-result {
   height: calc(var(--vh, 1vh) * 100);
-  overflow: auto;
+  overflow: auto; 
 }
 
 .header-tab {
@@ -323,12 +323,12 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
 }
 
 .play-pad {
-  padding-top: 1.8rem;
+  padding-top: 1.61rem;
   background: var(--q-gb-bg-c-19) !important;
 }
 
 .baseball-play-pad {
-  padding-top: 1.8rem;
+  padding-top: 1.61rem;
   background: var(--q-gb-bg-c-19) !important;
 }
 :deep(.skeleton-wrap) {

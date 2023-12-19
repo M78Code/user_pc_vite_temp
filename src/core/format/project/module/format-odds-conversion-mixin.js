@@ -9,6 +9,7 @@
 import lodash_ from "lodash"
 import { esports_csid } from "src/core/constant/common/module/csid.js"
 import UserCtr from 'src/core/user-config/user-ctr'
+import mathJs from 'src/core/bet/common/mathjs.js'
 import { MenuData } from "src/output"
 import { only_win } from "src/core/constant/common/module/csid.js"
  
@@ -59,7 +60,8 @@ const acc_sub = (num1, num2 = num1) => {
 //   vx_get_chat_room_type = store.getState().chat_room_type || {}
 // },
 export const compute_value_by_cur_odd_type = (val, hpid, arr = '', csid = 1) => {
-  let cur_odd = UserCtr.odds.cur_odds;//当前赔率"EU" /HK
+  //当前赔率"EU" /HK
+  let cur_odd = UserCtr.odds.cur_odds;
   /**
    * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
    * 是 对全局 赔率转换的 基础设定
@@ -67,10 +69,9 @@ export const compute_value_by_cur_odd_type = (val, hpid, arr = '', csid = 1) => 
    * csid ：赛种ID
    */
   if (!val) return
-  let odds_val = (Math.floor(val / 1000) / 100)
+  let odds_val = mathJs.divide(mathJs.divide(val,1000),100)
   // PS-9881赔率优化
   let str = "";
-  let breakVal = ""; // 断档值废弃
 
   // 获取当前的盘口赔率
   let cur_odds_num = lodash_.get(odds_table,`${cur_odd}`, '1' )
