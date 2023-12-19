@@ -208,7 +208,7 @@ export default {
   display: inline-block;
   position: relative;
   margin-bottom:-0.1rem;
-
+  
   .sport-icon-wrap {
     --per: -0.285rem;
     display: block;
