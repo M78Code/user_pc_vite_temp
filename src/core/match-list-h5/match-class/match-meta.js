@@ -1407,6 +1407,8 @@ class MatchMeta {
       const length = lodash.get(data, 'length', 0)
       if (length > 0) {
         data.forEach(t => {
+          // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
+          t.handicap_index = MatchUtils.get_handicap_index_by(t);
           const item = lodash.find(this.complete_matchs, (match) => match.mid === t.mid)
           if (item) {
             const index = lodash.findIndex(this.complete_matchs, (match) => match.mid === t.mid)
