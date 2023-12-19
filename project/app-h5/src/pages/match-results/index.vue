@@ -25,9 +25,9 @@
         </div>
     </div>
 
-    <ScrollMenu :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/>
+    <ScrollMenu v-if="!state.currentSwitchValue" :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/>
 
-     <ObserverWrapper class="match-result-contant" :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper>
+    <ObserverWrapper class="match-result-contant" :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper>
     <!-- <div class="match-results-container-styles">
        
         <match-container />
@@ -74,26 +74,37 @@ const state = reactive({
     matchs_data: []
 })
 
-const switchHandle = val => {
+const switchHandle = async val => {
     state.currentSwitchValue = val
     MenuData.set_result_menu_lv1_mi(val)
     // MatchMeta.clear_match_info()
     state.matchs_data = []
+    //获取 赛果菜单
     if (val) {
         MenuData.set_results_kemp(1)
     } else {
         MenuData.set_results_kemp(0)
     }
-    //获取 赛果菜单
-    api_analysis.get_match_result_menu( {menuType:val} ).then( ( res = {} ) => {
+    api_analysis.get_match_result_menu( {menuType:val} ).then( async ( res = {} ) => {
         if(res.code == 200){
             state.slideMenu = res.data || {}
             // 设置时间默认选中
             state.currentSlideValue = lodash_.get(res.data,'[0].field1', '')
-            // 设置赛种数据
-            set_scroll_data_list(lodash_.get(res.data,'[0].sportList', []))
+            if (val) {
+                MenuData.set_result_menu_api_params({
+                    mi: 10000,
+                    md:state.currentSlideValue,
+                    sport: 1
+                })
+                // 冠军赛果
+                state.matchs_data = await MatchMeta.get_champion_match_result()
+            } else {
+                // 设置赛种数据
+                set_scroll_data_list(lodash_.get(res.data,'[0].sportList', []))
+            }
         }
     })
+    
 }
 const slideHandle = (val, e) => {
     if (state.currentSlideValue === val) return
@@ -121,16 +132,29 @@ const set_scroll_data_list = (data_list = []) => {
 
 // 设置滑动菜单的选中id
 const set_scroll_current = async item => {
-    if (!item) return
-    state.current_mi = item.mi
-    let params = {
-        mi:item.mi,
-        md:state.currentSlideValue,
-        sport:item.sport
+    if (MenuData.get_results_kemp()) {
+        // 冠军赛果
+        MenuData.set_result_menu_api_params({
+            mi: 10000,
+            md:state.currentSlideValue,
+            sport: 1
+        })
+        state.matchs_data = await MatchMeta.get_champion_match_result()
+        if (state.matchs_data.length > 0)  useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
+    } else {
+        // 常规赛果
+        if (!item) return
+        state.current_mi = item.mi
+        let params = {
+            mi:item.mi,
+            md:state.currentSlideValue,
+            sport:item.sport
+        }
+        MenuData.set_result_menu_api_params(params)
+        state.matchs_data = await MatchMeta.get_results_match()
+        if (state.matchs_data.length > 0)  useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
     }
-    MenuData.set_result_menu_api_params(params)
-    state.matchs_data = await MatchMeta.get_results_match()
-    useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
+   
 }
 
 const goBackAssign = () => {
