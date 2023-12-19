@@ -46,31 +46,44 @@
           />
         </div>
       </div>
-      <div class="match-detail-score">
-        <div class="match-detail-team-name">
-         <span v-if="get_match_detail.csid == 5 " :class="[set_serving_side(props.get_match_detail, 'home') ? 'active-circle':'circle']"></span> 
-         <span>{{ get_match_detail.mhn }}</span>
+      <div class="flex justify-between">
+        <div>
+
+          <div class="match-detail-score">
+            <div class="match-detail-team-name">
+            <span v-if="get_match_detail.csid == 5 " :class="[set_serving_side(props.get_match_detail, 'home') ? 'active-circle':'circle']"></span> 
+            <span>{{ get_match_detail.mhn }}</span>
+            </div>
+            <!-- <div class="match-detail-num" >
+              <span class="active-num"> {{ detail_count?.home }}</span>
+              <span v-if="get_match_detail.csid == 5 " class="default-num">{{ tennis_point[0] }}</span>
+            </div> -->
+          </div>
+          <div class="match-detail-score">
+            <div class="match-detail-team-name">
+              <span v-if="get_match_detail.csid == 5 " :class="[set_serving_side(props.get_match_detail, 'away')? 'active-circle':'circle']"></span> 
+              <span>{{ get_match_detail.man }}</span>
+            </div>
+            <!-- <div class="match-detail-num" v-if=" get_match_detail.man">
+              <span class="active-num"> {{ detail_count?.away }}</span>
+              <span v-if="get_match_detail.csid == 5 " class="default-num">{{ tennis_point[1] }}</span>
+            </div> -->
+          </div>
         </div>
-        <span v-if="false">{{ detail_count }}</span>
-        <div class="match-detail-num" >
-          <!-- {{ scoew_icon_list["S1"].home }} -->
-          <span class="active-num"> {{ detail_count?.home }}</span>
-          <span v-if="get_match_detail.csid == 5 " class="default-num">{{ tennis_point[0] }}</span>
-        </div>
-      </div>
-      <div class="match-detail-score">
-        <div class="match-detail-team-name">
-         <span v-if="get_match_detail.csid == 5 " :class="[set_serving_side(props.get_match_detail, 'away')? 'active-circle':'circle']"></span> 
-          <span>{{ get_match_detail.man }}</span>
+        <!-- 新的比分 -->
+        <div class="flex mr-20 text-18">
+          <div class="match-detail-num" >
+            <p class="active-num"> {{ detail_count?.home }}</p>
+            <p class="active-num"> {{ detail_count?.away }}</p>
+
+          </div>
+          <div class="match-detail-num ml-14 align-right " v-if=" get_match_detail.man">
+            <!-- {{ scoew_icon_list["S1"].away }} -->
+            <p v-if="get_match_detail.csid == 5 " class="default-num">{{ tennis_point[0] }}</p>
+            <p v-if="get_match_detail.csid == 5 " class="default-num">{{ tennis_point[1] }}</p>
 
           
-        </div>
-        <div class="match-detail-num" v-if=" get_match_detail.man">
-          <!-- {{ scoew_icon_list["S1"].away }} -->
-          <span class="active-num"> {{ detail_count?.away }}</span>
-          <span v-if="get_match_detail.csid == 5 " class="default-num">{{ tennis_point[1] }}</span>
-
-         
+          </div>
         </div>
       </div>
       <!-- 疑似某些情况下 get_match_detail.ms 不为1导致比分板消失 -->
@@ -627,13 +640,7 @@ const getLongTime=computed(()=>{
         
       }
 
-      .active-num {
-        @extend .current-score-color;
-      }
-      .default-num {
-        color: black;
-        margin-left: 14px;
-      }
+      
     }
     .match-detail-item-list {
       height: 34px;
@@ -734,5 +741,35 @@ const getLongTime=computed(()=>{
   width: 14px;
   height: 14px;
 }
+.flex {
+  display: flex;
+}
 
+.justify-between {
+  justify-content: space-between;
+}
+
+.mr-20 {
+  margin-right: 20px;
+}
+
+.text-18 {
+  font-size: 18px;
+}
+
+.ml-14 {
+  margin-left: 14px;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.active-num {
+  @extend .current-score-color;
+}
+.default-num {
+  color: black;
+  // margin-left: 14px;
+}
 </style>
