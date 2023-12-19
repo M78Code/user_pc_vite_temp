@@ -464,14 +464,14 @@ export default {
     &.collapsed{
       > .match-indent{
         border-radius: 8px !important;
-        border-bottom: 1px solid #fff !important;
-        border: 1px solid #fff;
+        border-bottom: 1px solid var(--q-gb-bd-c-15) !important;
+        border: 1px solid var(--q-gb-bd-c-15);
       }
     }
     > .match-indent{
-      border: 1px solid #fff;
+      border: 1px solid var(--q-gb-bd-c-15);
       border-radius: 8px 8px 0 0 !important;
-      border-bottom: 1px solid #E4E6ED !important;
+      border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
     }
   }
 
@@ -725,9 +725,9 @@ export default {
     margin: 0 auto;
     // background: var(--q-gb-bg-c-15) !important;
     height: 25px;
-    border-bottom: 1px solid var(--q-gb-bg-c-19);
-    border-top: 1px solid var(--q-gb-bg-c-19);
-    border-color: var(--q-gb-bg-c-19) !important;
+    // border-bottom: 1px solid var(--q-gb-bg-c-19);
+    // border-top: 1px solid var(--q-gb-bg-c-19);
+    // border-color: var(--q-gb-bg-c-19) !important;
     margin-top: 0.05rem;
     &.bottom {
       margin-top: 0.05rem;
@@ -911,7 +911,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: .01rem solid var(--q-gb-bg-c-19);
+      border-bottom: .01rem solid var(--q-gb-bd-c-4);
       // padding: 4px 0 0;
 
       .right {
