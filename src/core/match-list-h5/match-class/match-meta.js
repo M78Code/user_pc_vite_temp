@@ -456,7 +456,7 @@ class MatchMeta {
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
     const list = lodash.get(res, 'data', [])
     if (list.length < 1) return
-    await MatchCollect.get_collect_match_data(list)
+    MatchCollect.get_collect_match_data(list)
     this.handle_custom_matchs(res)
   }
 
@@ -501,7 +501,7 @@ class MatchMeta {
     const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
     const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "")
     const params = this.get_base_params()
-    this.current_euid = `${csid}_${md}`
+    // this.current_euid = `${csid}_${md}`
     const res = await api_common.post_esports_match({
       ...params,
       md,
@@ -510,8 +510,9 @@ class MatchMeta {
       "type":3000,
     })
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
-    if (this.current_euid != `${csid}_${md}`) return
+    // if (this.current_euid != `${csid}_${md}`) return
     const list = lodash.get(res, 'data', [])
+    MatchCollect.get_collect_match_data(list)
     return this.handler_match_list_data({ list: list })
   }
 
@@ -802,6 +803,10 @@ class MatchMeta {
     if (project_name === 'app-h5' && lv_2_menu_i == 50000 && !MenuData.is_kemp()) {
       const menu_list = lodash.get(MenuData,'menu_list')
       euid = menu_list.map(item => MenuData.get_euid(item.mi+''+lv1_mi)).join(',')
+    // 复刻版冠军收藏
+    } else if (project_name === 'app-h5' && lv_2_menu_i == 50000 && MenuData.is_kemp()) {
+      const menu_lv_mi_lsit = lodash.get(MenuData,'menu_lv_mi_lsit')
+      euid = menu_lv_mi_lsit.map(item => MenuData.get_euid(item.mi+'')).join(',')
     } else if(lv_2_menu_i == 0){
       // 根据 菜单id 获取euid
       mid_list.forEach(item => {
@@ -819,7 +824,14 @@ class MatchMeta {
         ...params,
         md: String(MenuData.data_time)
       })
-      this.handler_collect_match_list(res)
+      // 冠军
+      if (MenuData.is_kemp()) {
+        const list = lodash.get(res, 'data', [])
+        MatchCollect.get_collect_match_data(list)
+        this.handle_custom_matchs(res)
+      } else {
+        this.handler_collect_match_list(res)
+      }
     } catch (err) {
       console.error(err)
       this.set_page_match_empty_status({ state: true, type: 'noWifi' }); 
@@ -834,11 +846,10 @@ class MatchMeta {
     // 频繁切换菜单， 收藏接口比较慢时 会影响其他页面， 故加上判断
     if (!MenuData.is_collect()) return
     const list = lodash.get(res, 'data', [])
-    
     if (list && list.length > 0) {
       const is_virtual = project_name === 'app-h5' ? true : false
       this.handler_match_list_data({ list: list, is_virtual, merge: 'cover' })
-      await MatchCollect.get_collect_match_data(list)
+      MatchCollect.get_collect_match_data(list)
       // 该赛事是否收藏
       // list.forEach((t) => {
       //   MatchCollect.set_match_collect_state(t, true)
@@ -1031,6 +1042,8 @@ class MatchMeta {
       this.match_assistance_operations(match, index)
       return match
     })
+
+    console.log(match_list)
 
     // 最终赛事数据
     const matchs_data = lodash.uniqBy(match_list, 'mid')
