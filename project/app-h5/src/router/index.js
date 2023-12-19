@@ -27,6 +27,15 @@ const router = createRouter({
               keepAlive: true // 需要缓存
             },
           },
+          // 规则说明
+          {
+            path: "/rules",
+            name: "rules",
+            component: () => import("../pages/handicap-tutorial/index.vue"),
+            meta: {
+              keepAlive: true // 需要缓存
+            },
+          },
           {
             path: "/matchResults",
             name: "matchResults",
@@ -72,7 +81,7 @@ const router = createRouter({
         },
        
         {
-          path: "/rule_description/:name",
+          path: "/rule_description",
           name: "rule_description",
           component: () =>
             import(

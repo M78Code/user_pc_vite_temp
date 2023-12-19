@@ -37,8 +37,8 @@ const componentId = defineAsyncComponent(() => import(`./score/score-child-${id}
 </script>
 <style lang="scss" scoped>
 .match_score {
-  height: 0.38rem;
-  line-height: 0.38rem;
+  // height: 0.38rem;
+  // line-height: 0.38rem;
   width: 100%;
 }
 
