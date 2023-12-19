@@ -57,6 +57,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { computed, onMounted, onUnmounted, watch, ref, reactive } from "vue";
 import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss } from "src/output/index.js";
 
+
 let route = useRoute()
 // 赛果详情初始化数据仓库数据
 const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
@@ -118,12 +119,12 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
       }
     })
     // 监听is_dialog_details(控制是否显示联赛列表)
-   watch(() => is_dialog_details.value, (new_value, old_value) => {
+   watch(is_dialog_details, (new_value, old_value) => {
       // 新的值等于true的时候也就是点击下三角准备查看联赛列表 此时调用接口:详情页下拉列表接口(/v1/m/matchDetail/getMatchDetailByTournamentIdPB)
       if (new_value) {
         let time_,mgt,date_,dateTime;  //菜单里取不到dateTime 就去详情数据对象里取
         try {
-          mgt = Number(get_detail_data.mgt);
+          mgt = Number(result_detail_data.value.mgt);
           date_ = new Date(mgt).toLocaleDateString()
           time_ = new Date(date_).getTime()
         } catch (error) {
@@ -290,7 +291,7 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
      */
   const change_bool = (bool) => {
     // bool 的值为true或者是false
-    // is_dialog_details.value = bool;
+     is_dialog_details.value = bool;
   }
   // 监听是否下拉联赛列表
   const { off: change_bool_off } =  useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, change_bool);

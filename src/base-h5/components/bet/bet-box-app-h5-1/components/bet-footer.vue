@@ -33,11 +33,8 @@
         </div>
 
         <!-- 串关 -->
-       
         
-        
-
-        <div @click="set_bet_single" class="bet-single f-c-c font500" :class="!BetData.is_bet_single ? 'font14':'font16'">
+        <div @click="set_bet_single" class="bet-single f-c-c font500" :class="{'disabled': MenuData.is_kemp(),'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
           <p>{{ !BetData.is_bet_single ? '单关投注':'+串' }}</p>
         </div>
     </div>
@@ -64,7 +61,7 @@ import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
-import { UserCtr ,format_money2,compute_local_project_file_path} from "src/output/index.js"
+import { UserCtr ,format_money2,compute_local_project_file_path,MenuData} from "src/output/index.js"
 import { odds_table } from "src/core/constant/common/module/csid.js"
 import { i18n_tc } from "src/boot/i18n.js"
 
@@ -150,6 +147,10 @@ const set_bet_is_accept = () => {
 
 // 投注模式切换
 const set_bet_single = () => {
+  // 冠军没有串关
+  if(MenuData.is_kemp()){
+    return
+  }
   BetData.set_is_bet_single()
   init_silider_position()
 }
@@ -309,6 +310,10 @@ onMounted(()=>{
     text-align: center;
     line-height: 16px;
     margin-left: .08rem;
+    &.disabled{
+      background: var(--q-gb-bg-c-18);
+      color: var(--q-gb-t-c-19);
+    }
     p {
       width: 0.34rem;
     }

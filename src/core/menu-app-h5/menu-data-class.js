@@ -99,8 +99,11 @@ class MenuData {
     // 时间api接口及参数信息 
     this.menu_match_date_api_config = {}
 
+
     this.set_menu_h5_key_refresh()
   }
+
+
 
   // 刷新后 获取缓存数据
   set_menu_h5_key_refresh() {
@@ -182,7 +185,9 @@ class MenuData {
     // 今日 加入 收藏/vr体育/电竞 滚球加入全部
     // menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
     if([1,2,3,6].includes(mid)){
-      let type = mid==1?5:4;//插入位置
+      const is_number = [BaseData.show_e_soprts.football,BaseData.show_e_soprts.basketball];//是否有电子球种
+      let num = is_number.filter((n)=>{return !!n}).length+2;
+      let type = mid==1?num+1:num;//插入位置
       if(mid == 1){
         const all_ct = menu_lv_mi_lsit.map((item)=>{return item.ct||0}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
         menu_lv_mi_lsit.splice(0,0,{mi:0,btn:1, ct:all_ct,title:"全部"})

@@ -453,12 +453,12 @@
       }
 
       .bor-style {
-        border-bottom: 1px solid var(--q-gb-bd-c-7);
+        border-bottom: 1px solid var(--q-gb-bd-c-5);
       }
 
       .margin-other {
         .play-box-style {
-          border-top: 1px solid var(--q-gb-bd-c-7);
+          border-top: 1px solid var(--q-gb-bd-c-5);
           justify-content: center;
 
           .details_t_color6 {
@@ -484,7 +484,7 @@
           transform: scale(0.5);
           -webkit-transform-origin: left top;
           transform-origin: left top;
-          border: 1px solid rgb(207, 207, 207);
+          border: 1px solid var(--q-gb-bd-c-5);
           border-radius: 0; //复刻版不需要 圆角 todo
           overflow: hidden;
         }
@@ -623,7 +623,7 @@
       .col {
         .play-box-style {
           // margin-bottom: 1px;
-          border-bottom: 1px solid var(--q-gb-bd-c-7);
+          border-bottom: 1px solid var(--q-gb-bd-c-5);
         }
       }
     }
@@ -726,7 +726,6 @@
           border-radius: 0.08rem;
         }
         .many-item-border {
-          // border-top:1px solid  var(--q-gb-bd-c-7);
           background: var(--q-match-page-bg-color-104);
           &:first-child{
             border-radius: 0.08rem 0.08rem 0 0;

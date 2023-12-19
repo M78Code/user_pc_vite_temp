@@ -45,7 +45,7 @@ import {
 } from "vue";
 import { useRoute,useRouter } from "vue-router";
 import lodash_ from "lodash";
-import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js";
+import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, UserCtr } from "src/output/index.js";
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
@@ -126,6 +126,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     }
     switch (+val.mi) {
       case 2000:
+        UserCtr.sort_type==1&&UserCtr.set_sort_type(2) //电竞没有热门排序 只有时间
         // ref_data.scroll_data_list = [];
         MenuData.set_current_lv1_menu(val.mi);
         ref_data.scroll_data_list = BaseData.dianjing_sublist;
