@@ -125,11 +125,27 @@ export default {
 
 <style lang="scss" scoped>
 .group_knockout {
+  
+  background-color: #F8F9FA;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   .tabs {
+    // width: 3.52rem;
+    width: 98vw;
     height: 0.4rem;
     margin: 0.11rem 0 0.05rem 0;
     border-radius: 0.08rem;
     position: relative;
+    background-color: #F2F2F6;
+    color: #7981A4;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
     > div {
       flex: 1;
@@ -137,6 +153,8 @@ export default {
       align-items: center;
       justify-content: center;
       font-size: 0.14rem;
+      // background-color: orange;
+
 
       &:nth-child(1) {
         border-radius: 0.08rem 0 0 0.08rem;
@@ -146,11 +164,14 @@ export default {
         border-radius: 0 0.08rem 0.08rem 0;
       }
 
-      // &.is-active {
-      //   background: var(--q-color-page-bg-color-9);
-      //   color: var(--q-color-fs-color-6);
-
-      // }
+      &.is-active {
+        // background: var(--q-color-page-bg-color-9);
+        color: var(--q-color-fs-color-6);
+        background-color: #FFFFFF;
+        border-radius: 0.08rem;
+        height: 0.36rem;
+        color: #303442;
+      }
     }
   }
   :deep(.q-carousel__slide) {
