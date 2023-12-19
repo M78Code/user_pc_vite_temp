@@ -2,7 +2,7 @@
   <div
     class="relative-position header-top"
     @touchmove.prevent
-    :class="[MenuData.get_menu_type() == 3000 && 'header_DJ']"
+    :class="[MenuData.get_menu_type() == 3000 && 'header_DJ', `header-top-${detail_data.csid}`]"
   >
     <!-- 队徽 -->
     <div class="row mx-30 top-style">

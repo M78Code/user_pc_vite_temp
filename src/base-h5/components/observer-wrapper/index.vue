@@ -245,7 +245,6 @@ const get_item_style = (item, index) => {
  * @description: 赛事列表为空通知事件函数
  */
  const set_empty_page = (obj = {}) => {
-  console.log(obj)
   const { state = false, type = 'noMatch' } = obj
   which.value = type
   // match_is_empty.value = state;

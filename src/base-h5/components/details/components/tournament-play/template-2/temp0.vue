@@ -372,4 +372,10 @@ export default defineComponent({
   height: 0.14rem;
   vertical-align: middle;
 }
+.details_t_color6 {
+  color: var(--q-gb-t-c-11);
+}
+.details_color {
+  background:var(--q-gb-bg-c-28);
+}
 </style>
