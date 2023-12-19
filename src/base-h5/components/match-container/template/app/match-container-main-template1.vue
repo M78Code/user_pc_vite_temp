@@ -382,6 +382,7 @@ export default {
     align-items: center;
     > span {
       padding-left: 5px;
+      color:var(--q-gb-t-c-18);
     }
   }
   .expand_item{
