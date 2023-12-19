@@ -14,13 +14,14 @@
       <DateTab @changeDate="setDate" ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
     <!-- <div v-if="+MenuData.get_menu_type_special() == 2000"> -->
-    <div v-show="[2000].includes(MenuData.top_menu_title?.mi)">
-        <DateTab @changeDate="setDate" ref="dJdateTabMenu" :dataList="dataList[2000]"  />
+    <div v-if="[2000].includes(MenuData.top_menu_title?.mi)">
+      <!-- dataList[2000] -->
+        <DateTab @changeDate="setDate" ref="dJdateTabMenu" :dataList="dataListEsports"  />
     </div>
     <!-- 滑动菜单组件 -->
     <ScrollMenu ref="scrollTabMenu" :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" @changeMenu="set_scroll_current" :current_mi="ref_data.current_mi" />
     <!--  -->
-    <!-- <SwitchWap /> -->
+    <SwitchWap />
     <!--  -->
     <!-- v-if="MenuData.current_lv_1_menu_i =='2'" -->
     <SearchTab ref="searchTabMenu" v-if="MenuData.menu_csid === 1 && MenuData.current_lv_1_menu_mi.value != 400"/>
@@ -52,7 +53,7 @@ import { useMittOn,MITT_TYPES, useMittEmit } from "src/core/mitt/index.js"
 
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
-import { TopMenu,ScrollMenu,SearchTab,DateTab } from 'src/base-h5/components/menu/app-h5-menu/index'
+import { TopMenu,ScrollMenu,SearchTab,DateTab,SwitchWap } from 'src/base-h5/components/menu/app-h5-menu/index'
 
 import { is_kemp } from 'src/base-h5/mixin/menu.js'
 
@@ -94,7 +95,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     6: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"今日",val:0}]),
     2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"所有日期",val:''},{name:"今日",val:new Date().getTime()}])
   });
-
+  const dataListEsports = ref([]);
   const ref_data = reactive({
     // 滑动菜单需要的数据
     scroll_data_list: [],
@@ -118,7 +119,11 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     ref_data.scroll_data_list = list;
   }
   // 设置滑动菜单的选中id
-  const set_scroll_current = (val,type) => {
+  const set_scroll_current = async (val,type) => {
+    if(MenuData.is_esports()){
+      const data_list_esports = await MenuData.getDateList(val?.csid);
+      dataListEsports.value = data_list_esports;
+    }
     switch (+val.mi) {
       case 2000:
         UserCtr.sort_type==1&&UserCtr.set_sort_type(2) //电竞没有热门排序 只有时间
@@ -138,6 +143,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
         ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
         // 设置二级菜单 
         !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj)
+        const data_list_esports = await MenuData.getDateList(val?.csid);
+        dataListEsports.value = data_list_esports;
         set_menu_mi_change_get_api_data()
         break;
       case 300:
@@ -198,6 +205,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     //     dateTabMenu.value.changeTabMenu(dataList[MenuData.current_lv_1_menu_i]?.[index],index,'',type)
     //   })
     // }
+    if(new_ == 300)return;
     if(!MenuData.top_menu_title?.mi){
       ref_data.scroll_data_list = [];
       if( [3,6].includes(1*new_)){
@@ -222,7 +230,10 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       } catch(_) {} 
     })
   }
-  watch(()=> MenuData.current_lv_1_menu_mi.value, new_ => {
+  watch(()=> MenuData.current_lv_1_menu_mi.value, (new_,old_) => {
+    if([2000,300].includes(new_)){//电竞vr记录旧菜单id
+      MenuData.set_old_current_lv_1_menu_i(old_);
+    }
     init_data(new_)
   })
   // 早盘 串关  电竞
