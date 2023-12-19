@@ -100,7 +100,7 @@ export const skeleton_white_app_177 = compute_local_project_file_path('/image/sk
 export const scroll_top_icon = compute_local_project_file_path('/image/list/icon-top.png')
 
 // 复刻版回到顶部
-export const scroll_top_icon_app = compute_local_project_file_path('/image/list/icon-top-app.jpg')
+export const scroll_top_icon_app = compute_local_project_file_path('/image/list/icon-top-app.png')
 
 // ouzhou 收藏 - 空
 export const no_collect_ouzhou = compute_local_project_file_path('/image/list/collect.png')

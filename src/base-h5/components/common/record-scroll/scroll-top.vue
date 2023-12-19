@@ -7,7 +7,7 @@
 <template>
   <Teleport to="#page-footer" v-if="!disabled">
     <img class="component scroll-top list-scroll-to-top"
-      :class="is_show_btn?'show':'hide'"
+      :class="[is_show_btn?'show':'hide', { 'app-h5': PROJECT_NAME === 'app-h5' }]"
       :src="scroll_top_image" @click="back_top"
     />
   </Teleport>
@@ -40,7 +40,7 @@ const is_show_btn = computed(() => {
 const disabled= ref(true)
 const watchHandle = watch(is_show_btn,(val)=>{
   if(val){
-    disabled.value = false
+     disabled.value = false
     watchHandle()
   }
 })
@@ -106,6 +106,10 @@ onUnmounted(() => {
   transition: bottom var(--private-transition-duration);
   &.show{
     bottom: calc(100% + .2rem);
+  }
+  &.app-h5{
+    bottom: calc(100% + 0.85rem);
+    background: transparent;
   }
 }
 </style>

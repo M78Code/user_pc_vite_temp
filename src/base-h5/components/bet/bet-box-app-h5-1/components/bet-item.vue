@@ -100,6 +100,7 @@ const set_delete = () => {
         background: var(--q-gb-bg-c-22);
        // margin-top: .1rem;
         border-radius: 0.12rem;
+        color: var(--q-gb-t-c-18);
         &.bet-disable{
             align-items: center;
         }
