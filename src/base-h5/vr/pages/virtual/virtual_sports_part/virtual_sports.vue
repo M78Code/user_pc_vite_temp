@@ -747,7 +747,7 @@ export default {
   background: var(--q-gb-bg-c-21);
 }
 .virtual-sports-card {
-  background: var(--q-gb-bg-c-18) ;
+  background: var(--q-gb-bg-c-23) ;
   border-radius: 4px;
   margin-bottom: .08rem;
   &:last-of-type {
