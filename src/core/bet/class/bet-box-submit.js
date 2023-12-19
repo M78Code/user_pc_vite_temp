@@ -1180,7 +1180,7 @@ const go_to_bet = (ol_item, match_data_type) => {
       _mid,  //赛事id mid_obj
     }
     let other = {
-      is_detail: true,
+      is_detail: (match_data_type && match_data_type == "h5_list") ? false : true,
       // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
       // 根据赛事纬度判断当前赛事属于 那种投注类型
       bet_type,
