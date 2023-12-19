@@ -60,15 +60,17 @@ export const remove_file = (file_path) => {
 
  
 
+
  
  
-// 复制文件
-const copyFile = function(src,copy){
- 
-  fs.copyFile(src,copy,function(err){
-    if(err) console.log('error')
-  })
+ // 复制文件
+ const copyFile =(src_path,target_path)=>{
+  let  file_content= fs.readFileSync(src_path);
+  write_file( target_path ,file_content)
 }
+
+ 
+ 
 
 // 复制文件夹
 export  const copyDir = function(src,dist){

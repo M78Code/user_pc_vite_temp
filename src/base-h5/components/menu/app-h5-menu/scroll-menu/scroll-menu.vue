@@ -148,7 +148,7 @@ onMounted(()=>{
     }
     nextTick(() => {
       let index = scrollDataListNew.value.findIndex(item => item.mi == props.current_mi)
-      scrollMenuEvent(scrollTab.value[index],".s-menu-container",".sport-menu-item");
+      index>-1&&scrollMenuEvent(scrollTab.value[index],".s-menu-container",".sport-menu-item");
     })
 })
 onUnmounted(()=>{
