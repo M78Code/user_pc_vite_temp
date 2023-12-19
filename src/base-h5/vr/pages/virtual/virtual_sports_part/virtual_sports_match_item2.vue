@@ -21,14 +21,14 @@
         :class="{standard:standard_edition == 2,simple:standard_edition == 1}"
       >
         <!--专业版-->
-        <div v-if="standard_edition == 2">
+        <div>
           <template v-if="get_hp_list(1).length">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" v-if="standard_odd_status == 0" :src="get_theme.includes('y0')?arrows:arrows_default">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="get_theme.includes('y0')?arrows_reverse:arrows_default_balck" v-else>
           </template>
           <!--标准版赔率容器-->
           <div v-touch-pan.horizontal.prevent.mouse="odd_wrapper_pan"
-            :class="{'status2':standard_odd_status == 1}" v-if="standard_edition == 2">
+            :class="{'status2':standard_odd_status == 1}" >
             <!--标准版-->
             <div v-for="(data_i,i) of match_item.hps" :key="i" class="dddd">
               <div class="hpn-title" @click="goto_details(match_item)">
@@ -47,40 +47,6 @@
             </div>
           </div>
         </div>
-        <!-- 新手版 -->
-        <div class="event-team" v-else-if="standard_edition == 1">
-          <div class="name">
-            <div class='left'>
-              <span>
-                {{match_item.teams ? match_item.teams[0] : ''}}
-              </span>
-              <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
-              <image-cache-load v-if="match_item?.mhlu?.length && !([5, 10, 7, 8].includes(Number(match_item.csid)))"
-                :csid="+match_item.csid" :path="match_item.mhlu" type="home"></image-cache-load>
-              <!-- <img v-if="match?.mhlu?.length" class="logo" v-img="([match_item.mhlu[0], match_item.frmhn[0], match_item.csid])" /> -->
-            </div>
-            <span class="vs">VS</span>
-            <div class='right'>
-              <image-cache-load v-if="match_item?.malu?.length && !([5, 10, 7, 8].includes(Number(match_item.csid)))"
-                :csid="+match_item.csid" :path="match_item.malu" type="home"></image-cache-load>
-              <span>
-                {{match_item.teams ? match_item.teams[1] : ''}}
-              </span>
-            </div>
-          </div>
-        </div>
-        <!--新手版-->
-        <div v-if="standard_edition == 1" class="bet-item-wrap row border-radius4">
-          <v-s-odd-item :ol_item="ol_item" :hl_item="get_hl_item(match_item)" @click.native="item_click4(match_item,ol_item)"
-            :match_invalid="match_item.invalid" :match="match_item"
-            v-for="(ol_item,o_i) of get_ol_list_f_match(match_item)" :key="o_i">
-          </v-s-odd-item>
-        </div>
-        <div v-if="standard_edition == 1"
-          class="match-play-count column justify-center items-center simple" @click="goto_details(match_item)">
-          <div v-if="match_item.mc">{{match_item.mc}}+</div>
-        </div>
-
       </div>
     </div>
   </div>

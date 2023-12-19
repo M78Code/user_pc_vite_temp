@@ -1161,7 +1161,7 @@ const get_market_is_show = (obj={}) =>{
 
     return !!hl_obj.hid
 }
-const go_to_bet = (ol_item) => {
+const go_to_bet = (ol_item, match_data_type) => {
     // 如果是赛果详情
     if(PageSourceData.route_name == 'match_result') return
     const {oid,_hid,_hn,_mid,_hpid } = ol_item
@@ -1180,14 +1180,14 @@ const go_to_bet = (ol_item) => {
       _mid,  //赛事id mid_obj
     }
     let other = {
-      is_detail: true,
+      is_detail: (match_data_type && match_data_type == "h5_list") ? false : true,
       // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
       // 根据赛事纬度判断当前赛事属于 那种投注类型
       bet_type,
       // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
       device_type: 1,  
       // 数据仓库类型
-      match_data_type: "h5_detail",
+      match_data_type: match_data_type || "h5_detail",
   }
     set_bet_obj_config(params,other)
 }   

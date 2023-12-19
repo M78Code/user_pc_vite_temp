@@ -824,7 +824,7 @@ export default defineComponent({
       background-color: var(--q-gb-bg-c-29) !important;
       border-radius:0 0 0.04rem 0.04rem!important;
       border-top:0.5px solid var(--q-gb-bd-c-5);
-      color:var(--q-gb-bg-c-18)
+      color:var(--q-gb-t-c-19)
       }
     }
     .play-name {
