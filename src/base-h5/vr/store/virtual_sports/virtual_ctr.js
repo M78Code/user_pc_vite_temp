@@ -57,6 +57,8 @@ class VirtualCtr {
       is_show_menu: false,   
       // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
       details_item: 0,
+      // 页脚子菜单id
+      footer_sub_menu_id :1,
     };
     // 数据持久化
     let str = sessionStorage.getItem('VirtualCtr');
@@ -140,7 +142,9 @@ class VirtualCtr {
   get_details_item() {
     return this.state.details_item;
   }
-
+  get_footer_sub_menu_id(){
+    return this.state.footer_sub_menu_id;
+  }
   
 
   // get发放2
@@ -255,6 +259,9 @@ class VirtualCtr {
   }
   set_details_item(payload) {
     this.state.details_item = payload;
+  }
+  set_footer_sub_menu_id(value){
+    this.state.footer_sub_menu_id = value;
   }
 }
 const VR_CTR = new VirtualCtr();
