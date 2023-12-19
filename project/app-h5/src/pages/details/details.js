@@ -144,7 +144,7 @@ export const details_main = () => {
     get_golistpage: "get_golistpage",// TODO: 待处理
     get_godetailpage: "get_godetailpage",// TODO: 待处理
     get_betbar_show: true,
-
+    /** 是否横屏 */
     get_is_hengping: false,
     get_is_dp_video_full_screen: false,// TODO: 待处理
     get_match_base_info_obj: "get_match_base_info_obj",// TODO: 待处理
@@ -666,7 +666,7 @@ export const details_main = () => {
         .get_category_list(params)
         .then((res) => {
           const res_data = lodash.get(res, "data",[]);
-          if (res_data.code=='0401038') {  //限频
+          if (res.code=='0401038') {  //限频
             setTimeout(() => {
               get_odds_list()
             }, 800);
