@@ -36,8 +36,8 @@ export default {
   watch: {
     // 赛马详情，不显示排行榜
     "current_match.csid": {
-      handler(new_){
-        if(new_ == "1011"){
+      handler(new_csid){
+        if(new_csid == "1011"){
           this.tab_list = [
           { label_i18n_key: 'virtual_sports.match_detail.bet', id: 2, name: 'bet' },
           { label_i18n_key: 'virtual_sports.match_detail.historical_results', id: 1, name: 'rank' },
