@@ -97,9 +97,13 @@ const jumpHandle = () => {
 };
 
 const is_disabled = (item) => {
-  if(item.mark == "Handicap" && MenuData.is_esports()){
-    return true
+  if(MenuData.is_esports()){
+    //电竞 不会排序 和 盘口
+    if(['Handicap','sort'].includes(item.mark )){
+      return true
+    }
   }
+  return false
 }
 /**
  * @description 跳转网页版
