@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 import path from "path";
+import viteCompression from 'vite-plugin-compression';
 
   
 //本地开发端口
@@ -28,7 +29,7 @@ export default defineConfig({
         quasar({
             sassVariables: `app/job/output/css/variables.scss`,
           }),
-       
+        viteCompression(),
     ],
     css: {
         devSourcemap: true,

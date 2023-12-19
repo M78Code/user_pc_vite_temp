@@ -57,6 +57,7 @@ export default defineComponent({
       favorite_loading: false,
     });
     const get_detail_data = reactive(props.detail_data)
+
     // #TODO vuex
     // computed:{
     // ...mapGetters([
@@ -153,11 +154,12 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .team-match-icon {
-  height: 0.26rem;
+  // height: 0.26rem;
   line-height: 0.24rem;
   display: flex;
-  justify-content: center;
-  margin-top: 0.07rem;
+  // justify-content: center;
+  // margin-top: 0.08rem;
+  // margin-bottom: 0.08rem;
 }
 
 .icon-wrap {

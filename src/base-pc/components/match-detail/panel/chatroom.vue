@@ -428,7 +428,7 @@ export default {
         const script = document.createElement('script');
         let  BUILD_VERSION=  window.env.config.BUILD_VERSION;
 
-        script.src = `${BUILD_VERSION ? '/' + BUILD_VERSION : ''}/lib/js/mqtt.min.js`;
+        script.src = `${BUILD_VERSION ? '/' + BUILD_VERSION : ''}/other-assets/lib/js/mqtt.min.js`;
         script.async = false;
         script.id = 'mqtt-js'
 

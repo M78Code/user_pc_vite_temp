@@ -200,8 +200,6 @@ this.bet_appoint_ball_head= null */
     this.bet_keyboard_config = {}
     // 键盘状态
     this.bet_keyboard_show = true;
-    // h5 投注栏默认隐藏
-    this.h5_bet_box_show = false
 
     // 获取缓存信息
     this.set_loacl_config()
@@ -221,11 +219,6 @@ this.bet_appoint_ball_head= null */
         }
       }
     }
-    this.set_bet_data_class_version()
-  }
-
-  set_h5_bet_box_show(val) {
-    this.h5_bet_box_show = val
     this.set_bet_data_class_version()
   }
 
