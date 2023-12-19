@@ -305,6 +305,9 @@ const url_param_ctr_init = (vue_that)=>{
       window.history.replaceState('', '', url);
       to_corresponding_router_ouzhou_pc(vue_that, search_params);
       break;
+    case 'activity':
+      window.history.replaceState('', '', url);
+      break;
     default:
       break;
   }

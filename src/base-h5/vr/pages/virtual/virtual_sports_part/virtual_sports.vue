@@ -716,7 +716,7 @@ export default {
   justify-content: space-between;
   padding-right: 9px;
   &.tab-border {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--q-gb-bd-c-4);
   }
   .league-name{
     color: var(--q-gb-t-c-18);
@@ -747,7 +747,7 @@ export default {
   background: var(--q-gb-bg-c-21);
 }
 .virtual-sports-card {
-  background: var(--q-gb-bg-c-18) ;
+  background: var(--q-gb-bg-c-23) ;
   border-radius: 4px;
   margin-bottom: .08rem;
   &:last-of-type {

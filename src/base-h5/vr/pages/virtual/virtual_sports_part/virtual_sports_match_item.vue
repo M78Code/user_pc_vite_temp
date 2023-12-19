@@ -662,10 +662,10 @@ export default {
 
 .match-item-wrap {
   width: 3.61rem;
-  min-height: 0.9rem;
+  min-height: 1.05rem;
   margin: 0 auto 0.08rem auto;
-  border-radius: 0.08rem;
-  border-bottom: 1px solid #e9e9e9;
+  border-radius: 0;
+  border-bottom: 1px solid var(--q-gb-bd-c-4);
   position: relative;
 
   &.standard {
@@ -773,6 +773,9 @@ export default {
           display: flex;
           justify-content: center;
           flex-wrap: nowrap;
+          gap: 0.02rem;
+          width: 2.74rem;
+          margin: 0 auto;
         }
       }
 
