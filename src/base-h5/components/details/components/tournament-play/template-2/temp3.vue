@@ -266,5 +266,7 @@ export default defineComponent({
 
   font-size: 0.14rem;
 }
-
+.details_t_color6 {
+  color: var(--q-gb-t-c-11);
+}
 </style>
