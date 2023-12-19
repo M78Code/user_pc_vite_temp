@@ -5,20 +5,23 @@
 -->
 <template>
   <div class="group-rank">
-    <!-- header -->
-    <div class="header">
-      <div class="col1"></div>
-      <div class="col2">{{ i18n_t('virtual_sports.team') }}</div>
-      <div class="col3">{{ i18n_t('virtual_sports.game') }}</div>
-      <div class="col4">{{ i18n_t('virtual_sports.win_tie_loss') }}</div>
-      <div class="col5">{{ i18n_t('virtual_sports.advance') }}</div>
-      <div class="col6">{{ i18n_t('virtual_sports.lose') }}</div>
-      <div class="col7">{{ i18n_t('virtual_sports.goal_difference') }}</div>
-      <div class="col8">{{ i18n_t('virtual_sports.integral') }}</div>
-    </div>
+
     <!-- 小组 -->
     <div class="group-item hairline-border" v-for="(detail_list,index) in group_stage_list" :key="index" v-show="!no_data">
       <div class="group-name">{{get_lang == 'vi' ? (i18n_t('virtual_sports.group')+ '  ' + detail_list.groupId) : (detail_list.groupId+ '  ' +i18n_t('virtual_sports.group'))}}</div>
+      
+      <!-- header -->
+      <div class="header">
+        <div class="col1"></div>
+        <div class="col2">{{ i18n_t('virtual_sports.team') }}</div>
+        <div class="col3">{{ i18n_t('virtual_sports.game') }}</div>
+        <div class="col4">{{ i18n_t('virtual_sports.win_tie_loss') }}</div>
+        <div class="col5">{{ i18n_t('virtual_sports.advance') }}</div>
+        <div class="col6">{{ i18n_t('virtual_sports.lose') }}</div>
+        <div class="col7">{{ i18n_t('virtual_sports.goal_difference') }}</div>
+        <div class="col8">{{ i18n_t('virtual_sports.integral') }}</div>
+      </div>
+
       <div class="team-item" v-for="(item,i) in detail_list.sVirtualSportXZTeamRankingDetailPOList" :key="i">
         <div class="col1">{{+i + 1}}</div>
         <div class="col2">
@@ -98,47 +101,59 @@ export default {
 
 <style lang="scss" scoped>
 .group-rank {
+  // width: 3.5rem;
+  // height: 2.22rem;
+  width: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  // background-color: yellowgreen;
+  background-color: #F8F9FA;
+
   .col1 {
-    width: 0.4rem;
+    width: 7%;
   }
 
   .col2 {
-    width: 1rem;
+    width: 23%;
     height: 100%;
     text-align: left;
 
     .ellipsis {
-      width: 1rem;
+      // width: 1rem;
+      width: 100%;
     }
   }
 
   /*  3~8 总宽度220px */
   .col3 {
-    width: 0.34rem;
+    width: 10%;
   }
 
   .col4 {
-    width: 0.58rem;
+    width: 20%;
   }
 
   .col5 {
-    width: 0.35rem;
+    width: 10%;
   }
 
   .col6 {
-    width: 0.24rem;
+    width: 10%;
   }
 
   .col7 {
-    width: 0.46rem;
+    width: 10%;
   }
 
   .col8 {
-    width: 0.34rem;
+    width: 10%;
   }
 
   /*  头部 */
   .header {
+    width: 100%;
     height: 0.32rem;
 
     display: flex;
@@ -147,29 +162,46 @@ export default {
     padding-right: 0.05rem;
 
     > div {
-
-      font-size: 0.12rem;
-
+      font-size: 0.1rem;
+      font-weight: 400;
+      color: #949AB6;
       &.col2 {
-        width: 1.084rem;
+        // width: 1.084rem;
+        width: 23%;
       }
     }
   }
 
   .group-item {
+    // width: 3.5rem;
+    width: 98vw;
     position: relative;
-
     margin-bottom: 0.08rem;
+    background-color: #fff;
+
+    // background-color: yellow;
+    box-shadow: 0rem 0rem 0.02rem 0.01rem #F2F2F6;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
   }
 
   .group-name {
+    width: 100vw;
     height: 0.42rem;
     line-height: 0.42rem;
-    padding-left: 0.15rem;
-    font-size: 0.14rem;
+    padding-left: 0.35rem;
+    font-size: 0.12rem;
+    font-weight: 600;
+    
+    border-bottom: 0.01rem solid #F2F2F6;
   }
 
   .team-item {
+    width: 100%;
     display: flex;
     align-items: center;
     padding-right: 0.05rem;
@@ -178,18 +210,25 @@ export default {
     line-height: 0.34rem;
     text-align: center;
 
+
+    > div {
+      font-size: 0.12rem;
+      font-weight: 400;
+      color: #303442;
+    }
+
     &:last-child {
       border-bottom: unset;
     }
 
     .col1 {
-      font-size: 0.12rem;
+      font-weight: 500;
       text-align: right;
       padding-right: 0.145rem;
     }
 
     .col2 {
-      font-size: 0.14rem;
+      font-weight: 500;
     }
   }
 }

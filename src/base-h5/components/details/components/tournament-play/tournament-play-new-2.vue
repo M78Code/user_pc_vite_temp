@@ -886,6 +886,10 @@ export default defineComponent({
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
 }
 :deep(.win .odds-new2) {
-      color: var(--q-gb-t-c-21) !important;
-    }
+    color: var(--q-gb-t-c-21) !important;
+  }
+:deep(.details_color){
+  background:var(--q-gb-bg-c-28);
+}
+
 </style>
