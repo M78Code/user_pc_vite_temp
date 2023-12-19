@@ -946,7 +946,7 @@ get_quick_mid_obj_ref(mid){
                   item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                 }
                 // 玩法对象补偿
-                let play_obj_key = `hpid_${item2.hpid}`;
+                let play_obj_key = `hpid_${item2.chpid?item2.chpid:item2.hpid}`;
                 if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
                   if(!item.play_obj){
                     item.play_obj = {};
@@ -1026,7 +1026,7 @@ get_quick_mid_obj_ref(mid){
                   item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                 }
                 // 玩法对象补偿
-                let play_obj_key = `hpid_${item2.hpid}`;
+                let play_obj_key = `hpid_${item2.chpid?item2.chpid:item2.hpid}`;
                 if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
                   if(!item.play_obj){
                     item.play_obj = {};
@@ -1146,7 +1146,7 @@ get_quick_mid_obj_ref(mid){
                     item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                   }
                   // 玩法对象补偿
-                  let play_obj_key = `hpid_${item2.hpid}`;
+                  let play_obj_key = `hpid_${item2.chpid?item2.chpid:item2.hpid}`;
                   if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
                     if(!item.play_obj){
                       item.play_obj = {};
@@ -1221,7 +1221,7 @@ get_quick_mid_obj_ref(mid){
                     item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                   }
                   // 玩法对象补偿
-                  let play_obj_key = `hpid_${item2.hpid}`;
+                  let play_obj_key = `hpid_${item2.chpid?item2.chpid:item2.hpid}`;
                   if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
                     if(!item.play_obj){
                       item.play_obj = {};
