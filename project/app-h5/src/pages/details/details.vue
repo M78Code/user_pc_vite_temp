@@ -610,25 +610,25 @@ export default defineComponent({
   height:0;
 }
 .details-fat {
-  background-color: var(--q-gb-bg-c-20);
+  // background-color: var(--q-gb-bg-c-20);
 .details-f9 {
   // background: var(--q-color-page-bg-color-9);
 }
 .details-f {
-  background-color: var(--q-gb-bg-c-20);
+  // background-color: var(--q-gb-bg-c-20);
   // background: $details-odds-bg-color;
 }
 }
 .bg-tabs {
     background: var(--q-gb-bg-c-23);
-   
+    box-shadow: 0px 2px 8px 0px var(--q-gb-bd-c-14);
   .bg-active-tab {
     background: var(--q-gb-bg-c-15);
   
   }
   }
  .details-tab{
-  border-top:0.5px solid #F2F2F6;
+  // border-top:0.5px solid #F2F2F6;
   background: var(--q-gb-bg-c-23);
  } 
 </style>

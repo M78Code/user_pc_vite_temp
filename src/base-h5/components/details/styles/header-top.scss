@@ -4,7 +4,7 @@
   line-height: 1.3;
   padding-top: .02rem;
   position: relative;
-  top: 30px;
+  top: 10px;
   &.header_DJ {
     margin-top: 0.25rem;
   }
@@ -202,3 +202,15 @@
 }
 
 /*************** 不显示绿色小点 *************** -S*/
+
+/*************** Bug: 51293 ***************/
+.header-top-6 {
+  .top-style {
+    .col-6 {
+      padding-top: 22px;
+    }
+  }
+  .score-style {
+    bottom: 0.11rem;
+  }
+}

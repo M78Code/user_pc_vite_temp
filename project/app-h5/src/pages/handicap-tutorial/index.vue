@@ -159,8 +159,7 @@ const handleScroll = (e) => {
     const arr = state.currentSwitchValue ? state.bsHtContentHeightList : state.htContentHeightList
     let index = arr.findIndex(v => v > e.target.scrollTop) - 1
     if (state.currentSlideValue === index) return
-    if (index < 0 && !state.currentSwitchValue) {index = 7}
-    else {return}
+    if (index < 0) return
     const dom = document.getElementsByClassName('slide-item')[index]
     state.currentSlideValue = index
     scrollMenuEvent(dom, ".ht-slide-box", ".slide-item-active");
@@ -173,6 +172,7 @@ onMounted(() => {
     state.htContentHeightList = Array.from(contentContainer).map(i => {
         return i.offsetTop - scrollContainer.offsetTop
     })
+    state.htContentHeightList.push(state.htContentHeightList[state.htContentHeightList.length - 1] + 200)
 })
 </script>
 <style scoped lang="scss">

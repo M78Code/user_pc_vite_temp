@@ -2,7 +2,7 @@
   <div
     class="relative-position header-top"
     @touchmove.prevent
-    :class="[MenuData.get_menu_type() == 3000 && 'header_DJ']"
+    :class="[MenuData.get_menu_type() == 3000 && 'header_DJ', `header-top-${detail_data.csid}`]"
   >
     <!-- 队徽 -->
     <div class="row mx-30 top-style">
@@ -167,7 +167,7 @@
       ></span>
 
       <!-- 局间比分 -->
-      <!-- <match-between-score :detail_data="detail_data"></match-between-score> -->
+      <match-between-score :detail_data="detail_data"></match-between-score>
     </div>
 
     <!-- 队名 -->
@@ -242,7 +242,7 @@ import TeamImg from "src/base-h5/components/details/team-img.vue";   // 详情�
 import TeamText from "src/base-h5/components/details/team-text.vue";   // 中立场赛事展示
 // import TeamName from "src/base-h5/components/details/team-name.vue";   // 详情页背景上的队伍名称
 // import msc from "src/base-h5/mixins/common/msc.js";    // 国际化比赛阶段比分转换工具
-// import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
+import matchBetweenScore from 'src/base-h5/components/match/match-between-score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
 import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 // 公共方法
 import { MenuData, UserCtr } from "src/output/index.js";

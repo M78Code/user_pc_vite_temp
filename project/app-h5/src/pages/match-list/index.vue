@@ -42,7 +42,7 @@ import { MenuData, score_switch_handle,  MatchDataWarehouse_H5_List_Common as Ma
 import {pre_load_video  } from "src/core/pre-load/module/pre-load-video.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;  
-import { menu_type, menu_lv2, is_hot, is_detail, is_zaopan, is_jinzu, is_esports, is_kemp } from 'src/base-h5/mixin/menu.js'
+import { menu_type, menu_lv2, is_hot, is_detail, is_zaopan, is_jinzu, is_esports, is_kemp, is_collect } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
 import  GATAG  from "src/core/http/gtag-tag.js";
@@ -84,7 +84,7 @@ onMounted(() => {
   if (BaseData.is_emit) {
     if (is_esports.value) {
       MatchMeta.get_esports_match()
-    } else if (!is_kemp.value){
+    } else if (!is_kemp.value && !is_collect){
       MatchMeta.set_origin_match_data()
     }
   }

@@ -676,6 +676,7 @@ if (type.value == 30) {
     z-index: 200;
     list-style: none;
     text-align: center;
+    color: var(--q-gb-t-c-24);
 
     li {
       width: 0.14rem;
@@ -830,7 +831,7 @@ if (type.value == 30) {
       display: flex;
       align-items: center;
       font-size: .1rem;
-      color: var(--q-gb-bg-c-6);
+      color: var(--q-gb-t-c-26);
     }
   }
 
@@ -931,6 +932,7 @@ if (type.value == 30) {
     align-items: center;
     justify-content: space-between;
     padding: 0 .6rem 0 .14rem;
+    color: var(--q-gb-t-c-18);
     .scroll-title-text {
       display: flex;
       align-items: center;

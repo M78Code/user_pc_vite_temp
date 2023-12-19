@@ -5,6 +5,7 @@
 <template>
   <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
   <div style="display: none;">{{BetData.bet_data_class_version}}</div>
+  <div style="display: none;">{{UserCtr.user_version}}</div>
   <div class="odd-column-item" :class="odds_class_object()" @click.stop="item_click3" :id="dom_id_show && `list-${lodash.get(odd_item, 'oid')}`">
     <!-- 占位  或者  关盘 -->
     <div v-if="placeholder == 1 || is_close(get_odd_status())" class="item-inner">
@@ -47,7 +48,7 @@
         <!-- 红升绿降 -->
         <img class="up_down" v-if="is_up" :src="is_up_app" alt="" />
         <img class="up_down" v-if="is_down" :src="is_down_app" alt="" />
-        <span :class="[{ 'is_up': is_up }, { 'is_down': is_down }]"> {{ odd_append_value }}</span>
+        <span :class="[{ 'is_up': is_up }, { 'is_down': is_down }]"> {{ compute_value_by_cur_odd_type(odd_item.ov,odd_item._hpid,odd_item._hsw,match.csid) }}</span>
         <!--获取赔率或赛果-->
         <span class="change-icon" v-show="red_green_status" :class="{'icon-red':red_green_status === 1,'icon-green':red_green_status === -1}"></span>
       </div>
@@ -150,11 +151,7 @@ const is_down = computed(() => {
 })
 
 const is_show_fenpan = computed(() => {
-  // console.log(is_fengpan(get_odd_status()))
-  // console.log([18,19].includes(+lodash.get(props.current_tab_item, 'id')))
-  // console.log((props.odd_item.on || convert_num(props.odd_item) === 0))
-  // console.log(((props.odd_item.on || convert_num(props.odd_item) === 0) && props.match.csid != 1))
-  return !(is_fengpan(get_odd_status()) && [18,19].includes(+lodash.get(props.current_tab_item, 'id'))) || ((props.odd_item.on || convert_num(props.odd_item) === 0) && props.match.csid != 1)
+  return !(is_fengpan(get_odd_status()) && [18,19].includes(+lodash.get(props.current_tab_item, 'id'))) || ((odd_item.value.on || convert_num(odd_item.value) === 0) && props.match.csid != 1)
 })
 
 // 判断边框border-radius样式
@@ -618,7 +615,10 @@ onUnmounted(() => {
     margin-bottom: 0.09rem;
     font-size: 0.14rem;
     line-height: 1;
-    color: #AFB3C8 !important;
+    color: var(---q-gb-t-c-26);
+    span{
+     color: var(---q-gb-t-c-19);
+    }
     &.standard {
       margin-bottom: 0.03rem;
       font-size: 0.12rem;
@@ -654,15 +654,18 @@ onUnmounted(() => {
 .flag-random {
   display: none;
 }
+
 .active {
   // 需要替换成变量
-  color: #127DCC;
-  background: #D1EBFF !important;
+  background: var(--q-gb-bg-c-24) !important;
   .odd-title {
-    color: var(--q-gb-t-c-25) !important;  
+     color: var(--q-gb-t-c-1) !important;
+    span{
+      color: var(--q-gb-t-c-1) !important;
+    }
   }
   .odd-value {
-    color: var(--q-gb-t-c-25) !important;  
+    color: var(--q-gb-t-c-1) !important;  
   }
 }
 </style>
