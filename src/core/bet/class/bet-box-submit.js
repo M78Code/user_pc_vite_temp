@@ -788,7 +788,6 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         hn_obj,
         mid_obj,
         ol_obj,
-        hpid: hn_obj.hpid || ol_obj._hpid,
         other,
     }
 
@@ -887,18 +886,14 @@ const set_bet_obj_config = (params = {}, other = {}) => {
 }
 
 // 设置玩法名称
-const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
-    let play_name = ALL_SPORT_PLAY[hpid] //玩法名称
-    // 需要配置玩法比分的 玩法
-    let play_id = [4]
+const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,other}) => {
+    // chpid 优先于hpid
+    let hpid = ol_obj._chpid ?  ol_obj._chpid : ol_obj._hpid
+     //玩法名称
+    let play_name = ALL_SPORT_PLAY[ol_obj]
     // 详情 并且本地没有配置玩法
     if(other.is_detail){
         play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
-        if(!play_name){
-            let odds_info_list = lodash_.get(mid_obj,`odds_info`,[])
-            // odds_info_list.find()
-
-        }
     }else{
         let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,play_name)
           // 冠军玩法 部分玩法hpid相同 
