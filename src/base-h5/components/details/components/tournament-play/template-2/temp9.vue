@@ -88,7 +88,7 @@ export default defineComponent({
     const go_to_fun = (index) =>{
       let ol_item = data.champion_list[index]
       ol_item.num = index + 1
-      go_to_bet(ol_item)
+      go_to_bet(ol_item, 'h5_list')
     };
     onMounted(() => {
       init()

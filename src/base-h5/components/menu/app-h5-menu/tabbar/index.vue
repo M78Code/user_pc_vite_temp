@@ -1,12 +1,12 @@
 <template>
-    <div class="container-menu-w black2" :class="{
+    <div class="component container-menu-w black2" :class="{
       'scrolling-up': scroll_dir > 0,
       'scrolling-down': scroll_dir < 0,
     }">
       <!-- 底部菜单资源配置图片 -->
       <div v-if="isshow_bottom_banner" class="bottom-banner">
         <img :src="calc_resources_obj.img_src" alt="" class="banner" @click="jump" />
-        <img :src="compute_local_project_file_path('/image/svg/close9.svg"') alt="" class="close" @click.self="isshow_bottom_banner = false" />
+        <img :src="compute_local_project_file_path('/image/svg/close9.svg')" alt="" class="close" @click.self="isshow_bottom_banner = false" />
       </div>
       <div class="floating-menu">
         <div class="footer-menu-item" @click="menu_item_click(item, k)" v-for="(item, k) of footer_menulist" :key="k"
