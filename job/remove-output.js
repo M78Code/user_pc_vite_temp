@@ -13,3 +13,7 @@ console.log(colors.red('删除脚本生成文件 目录：/job/output'))
  
 let full_path = `./job/output`;
 remove_file(full_path);
+
+
+ 
+remove_file(`./dist/`);

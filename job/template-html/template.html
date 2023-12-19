@@ -13,6 +13,7 @@
     <meta name="version-build_tag" content="%VITE_APP_BUILD_TAG%" />
     <meta name="version-PROJECT_NAME" content="%VITE_APP_PROJECT_NAME%" />
     <meta name="version-BUILD_VERSION" content="%VITE_APP_BUILD_VERSION%" />
+    <meta name="version-LOCAL_COMMON_FILE_PREFIX" content="%VITE_APP_LOCAL_COMMON_FILE_PREFIX%" />
     <meta
       name="version-MODULE_SDK_VERSION"
       content="%VITE_APP_MODULE_SDK_VERSION%"
@@ -31,11 +32,11 @@
       rel="icon"
       id="link_icon"
       type="image/png"
-      href="%VITE_APP_BUILD_VERSION%/image/common/favicon.ico"
+      href="%VITE_APP_LOCAL_COMMON_FILE_PREFIX%/image/common/favicon.ico"
     />
     <link
       rel="stylesheet"
-      href="%VITE_APP_BUILD_VERSION%/font/font-roboto.min.css"
+      href="%VITE_APP_LOCAL_COMMON_FILE_PREFIX%/other-assets/font/font-roboto.min.css"
     />
  
     meta1_html_placeholder
@@ -470,7 +471,8 @@
       }
     </style>
     <style type="text/css"  id="root-var"></style>
-    <script src="/url-param.js"></script>
+    <script src="%VITE_APP_LOCAL_COMMON_FILE_PREFIX%/other-assets/lib/js/url-param.js"></script>
+ 
     <script async type="text/javascript" src="%VITE_APP_hidApi%"></script>
 
  
@@ -479,7 +481,7 @@
     <script>
       window.CURRENT_ENV_BUILD_IN_OSS = "%VITE_APP_current_env_build_in_oss%";
     </script>
-    <script src="%VITE_APP_BUILD_VERSION%/lib/js/crypto-js.min.js"></script>
+    <script src="%VITE_APP_LOCAL_COMMON_FILE_PREFIX%/other-assets/lib/js/crypto-js.min.js"></script>
 
     <script>
       //版本兼容判定
@@ -493,10 +495,10 @@
           var chrome_version = parseInt(chrome_agent[0].split("/")[1]);
           // 谷歌版本小于56
           if (chrome_version < 56) {
-            location.href = "%VITE_APP_BUILD_VERSION%/page/tips.html";
+            location.href = "%VITE_APP_LOCAL_COMMON_FILE_PREFIX%/other-assets/page/tips.html";
           }
         } else if (ie_agent && ie_agent[0]) {
-          location.href = "%VITE_APP_BUILD_VERSION%/page/tips.html";
+          location.href = "%VITE_APP_LOCAL_COMMON_FILE_PREFIX%/other-assets/page/tips.html";
         }
       })();
 

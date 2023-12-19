@@ -95,9 +95,9 @@
               <!-- 赛事日期标准版 -->
               <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
                 <!-- 赛事回合数mfo -->
-                <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
+                <!-- <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
                   {{ match.mfo }}
-                </div>
+                </div> -->
 
                 <!--即将开赛 ms = 110-->
                 <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
@@ -381,13 +381,12 @@ export default {
 /* ********赛事容器相关********** -S*/
 
 .counting-down-up-container {
-  width: 0.8rem;
 
   :deep(.counting-down-wrap) {
-    /* width: auto !important; */
     // gap: 4px;
-
     /* width:0.9rem!important; */
+    width: auto !important;
+    position: static;
     >span {
       display: inline-block;
       white-space: nowrap;
