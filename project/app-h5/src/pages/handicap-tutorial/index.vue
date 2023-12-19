@@ -127,7 +127,6 @@ const switchHandle = (val) => {
             state.bsHtContentHeightList = Array.from(bsContentContainer).map(i => {
                 return i.offsetTop - scrollContainer.offsetTop
             })
-            console.log('state.bsHtContentHeightListstate.bsHtContentHeightList', state.bsHtContentHeightList)
         })
     }
     state.inAnswerQuestion = false // 切换swtich 重置答题状态
@@ -158,7 +157,7 @@ const handleScroll = (e) => {
         return
     }
     const arr = state.currentSwitchValue ? state.bsHtContentHeightList : state.htContentHeightList
-    const index = arr.findIndex(v => v > e.target.scrollTop) - 1
+    let index = arr.findIndex(v => v > e.target.scrollTop) - 1
     if (state.currentSlideValue === index) return
     if (index < 0) return
     const dom = document.getElementsByClassName('slide-item')[index]
@@ -173,6 +172,7 @@ onMounted(() => {
     state.htContentHeightList = Array.from(contentContainer).map(i => {
         return i.offsetTop - scrollContainer.offsetTop
     })
+    state.htContentHeightList.push(state.htContentHeightList[state.htContentHeightList.length - 1] + 200)
 })
 </script>
 <style scoped lang="scss">

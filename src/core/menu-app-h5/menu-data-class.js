@@ -98,8 +98,11 @@ class MenuData {
     // 时间api接口及参数信息 
     this.menu_match_date_api_config = {}
 
+
     this.set_menu_h5_key_refresh()
   }
+
+
 
   // 刷新后 获取缓存数据
   set_menu_h5_key_refresh() {
@@ -187,9 +190,27 @@ class MenuData {
       // menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
     }
     if(mid == 2){
+      console.error('asdasdasd')
       // menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
-      menu_lv_mi_lsit.splice(3,0,{mi:300,btn:1,ct:0,title:"VR体育"})
-      menu_lv_mi_lsit.splice(4,0,{mi:2000,btn:1,ct:0,title:"电竞"})
+      // vr体育插入的位置
+      let vr_index = 2
+      // 电竞菜单插入的位置
+      let esport_index = 3
+      // 有电子足球 没有电子篮球 
+      if(BaseData.show_e_soprts.football && !BaseData.show_e_soprts.basketball){
+        vr_index = 3
+      }
+        // 有电子篮球  没有电子足球 
+      if(!BaseData.show_e_soprts.football && BaseData.show_e_soprts.basketball){
+        esport_index = 3
+      }
+      // 两个都有
+      if(BaseData.show_e_soprts.football && BaseData.show_e_soprts.basketball){
+        vr_index = 4
+        esport_index = 5
+      }
+      menu_lv_mi_lsit.splice(vr_index,0,{mi:300,btn:1,ct:0,title:"VR体育"})
+      menu_lv_mi_lsit.splice(esport_index,0,{mi:2000,btn:1,ct:0,title:"电竞"})
     }
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
     return menu_lv_mi_lsit
@@ -454,7 +475,9 @@ class MenuData {
       // 根据 菜单id 获取euid
       mid_list.forEach(item=>{
         const item_euid = BaseData.mi_euid_map_res?.[item] && BaseData.mi_euid_map_res?.[item]?.h?BaseData.mi_euid_map_res?.[item]?.h:'';
-        euid += item_euid + ','
+        if(item_euid){
+          euid += item_euid + ',';
+        }
       })
       return euid
     }

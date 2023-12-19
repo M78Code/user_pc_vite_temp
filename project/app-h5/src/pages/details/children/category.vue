@@ -113,6 +113,7 @@ export default defineComponent({
     detailMatchList
   },
   props: ['category_arr'],
+  data(){},
   setup(props, evnet) {
     // 路由
     const router = useRouter();

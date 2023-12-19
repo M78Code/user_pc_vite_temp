@@ -3,6 +3,7 @@
 }
 .handicap-tutorial {
     overflow-y: scroll;
+    height: 100%;
 }
 .ht-switch-box {
     display: flex;
@@ -63,7 +64,7 @@
 .ht-scroll {
     overflow-y: scroll;
     height: calc(100% - 1.04rem);
-    padding-bottom: .8rem;
+    padding-bottom: 1.4rem;
 }
 
 .ht-bsball-scroll {

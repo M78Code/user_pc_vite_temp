@@ -139,6 +139,12 @@ class BaseData {
     this.is_emit = false
 
     this.conventionalType = [101,102,105,190,191]; 
+
+    // 电子足球 电子篮球
+    this.show_e_soprts = {
+      football: false,
+      basketball: false,
+    }
   }
   /**
    * 初始化数据
@@ -189,6 +195,15 @@ class BaseData {
     // ws请求订阅
     BaseWsMessage.init()
   }
+
+
+  set_show_e_soprts(val){
+    this.show_e_soprts = {
+      ...this.show_e_soprts,
+      ...val
+    }
+  }
+
   /**
    * 新旧菜单映射关系
    * @returns 
@@ -569,6 +584,9 @@ class BaseData {
           esport_menu.push(obj);
         }
       });
+
+      console.error('sss')
+
       // openElectronicTy 电子体育 openElectronicFootball 电子足球 openElectronicBasketball 电子篮球  filterSport 关闭的赛种
       let {openElectronicTy,openElectronicFootball,openElectronicBasketball,filterSport} = lodash_.get(UserCtr,'user_info',{})
       let filter_list = []
@@ -591,6 +609,19 @@ class BaseData {
         filter_list = [90,91]
       }
 
+      // 是否有电子足球
+      let football = true
+      // 是否有电子篮球  
+      let basketball = true
+
+      if(filter_list.includes(90)){
+        football = false
+      }
+      if(filter_list.includes(91)){
+        basketball = false
+      }
+      // 设置状态
+      this.set_show_e_soprts({ football,basketball })
      
       let left_menu_list = []
       

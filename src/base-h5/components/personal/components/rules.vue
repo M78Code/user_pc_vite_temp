@@ -38,20 +38,20 @@
         const lang2 = lang_map[UserCtr.lang] || 'zh_cn';
         let url = '';
         const [theme2, get_merchant_style] = UserCtr.theme.split('_')
-        let domain = lodash.get(window, `env.config.static_serve[0]`)
-        if (current_env == 'idc_online' || current_env == 'idc_ylcs') {
-            // 生产环境
-            domain = "https://9wutrx6jpfaslmvi.9ps7bak.com"
-        } else if (current_env == 'idc_sandbox' || current_env == 'idc_pre') {
-            // 试玩环境
-            // domain = "https://sports-rules-new-shiwan.sportxxx3pk.com"
-            domain = "http://sports-rules-ouzhou-test.sportxxx3pk.com"
+        let domain = lodash.get(window, `BUILDIN_CONFIG.DOMAIN_RESULT.topic.sports_rules`);
+        // if (current_env == 'idc_online' || current_env == 'idc_ylcs') {
+        //     // 生产环境
+        //     domain = "https://9wutrx6jpfaslmvi.9ps7bak.com"
+        // } else if (current_env == 'idc_sandbox' || current_env == 'idc_pre') {
+        //     // 试玩环境
+        //     // domain = "https://sports-rules-new-shiwan.sportxxx3pk.com"
+        //     domain = "http://sports-rules-ouzhou-test.sportxxx3pk.com"
 
-        } else {
-            // 其他环境，测试和开发 等
-            domain = "http://sports-rules-ouzhou-test.sportxxx3pk.com"
+        // } else {
+        //     // 其他环境，测试和开发 等
+        //     domain = "http://sports-rules-ouzhou-test.sportxxx3pk.com"
 
-        }
+        // }
         let obj = {rdm:(new Date().getTime())};
         obj.source = 'ouzhou';
         if (!!get_merchant_style) {

@@ -10,7 +10,6 @@
       <dialog-header v-if="detail_data.tn" :tn="detail_data.tn"></dialog-header>
       <!-- 赛事列表部分 -->
       <div class="scroll" style="margin-top: 0.44rem; max-width: 600px;min-height:.35rem; max-height:520px;" ref="details_dialog_content">
-
         <div v-for="(item,index) in math_list_data" :key="index" @click="change_active(item)">
           <!-- 赛事列表里面每一项赛事 -->
           <div class="mx-12 new-dialog-item" :data-mid="item.mid">
@@ -87,7 +86,7 @@ import match_dialog_stage from 'src/base-h5/components/match/match-dialog-stage.
 import show_start_time from 'src/base-h5/components/details/wight/show-start-time.vue'
 import { format_total_score } from 'src/output/index.js'
 import { useRoute, useRouter } from "vue-router"
-let route = useRoute()
+import { MenuData } from 'src/output/module/menu-data.js'
 let router = useRouter()
   // 延时器
 let  timer1_ = null;
@@ -97,9 +96,11 @@ export default {
   props:['detail_data','math_list_data'],
   data(){
     return {
+      route:null
     }
   },
   created () {
+    this.route = useRoute()
   
   },
   components: {
@@ -113,7 +114,7 @@ export default {
   computed: {
     // ...mapGetters(['get_menu_type', 'get_current_menu', 'get_details_tabs_list']),
     is_match_result(){
-      return ['result_details', 'match_result'].includes(route.name)
+      return ['result_details', 'match_result'].includes(this.route.name)
     }
   },
   methods: {
@@ -139,7 +140,8 @@ export default {
       //比分判断处理
       let scoring = false
       //如果是电竞，则进行比分判定处理
-      if(get_menu_type == 3000) {
+    
+      if(MenuData.menu_type.value == 3000) {
         const mmp_state = item.mmp || 1
         if(mmp_state != (Number(home) + Number(away) +1)) {
           scoring = true
@@ -181,6 +183,7 @@ export default {
 <style lang="scss" scoped>
 .result-details-dialog {
   max-width: 600px;
+  background-color: #ffffff;
 
   .detail-d-container {
     width: 100%;
@@ -242,5 +245,9 @@ export default {
 
 .q-dialog__inner--left > div, .q-dialog__inner--top > div {
   border-bottom-right-radius: 0.1rem;
+}
+
+.result-details-dialog-bg{
+  background-color: #f7f7f7;
 }
 </style>

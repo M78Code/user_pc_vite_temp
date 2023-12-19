@@ -192,8 +192,7 @@
                 v-for="(item, index) in history_records"
                 :key="index"
               >
-                <p>
-                  <span>{{ item.taskName }}</span>
+                <p v-html="item.taskName">
                 </p>
                 <p>
                   <span>{{ item.ticketNum }}</span>
@@ -299,6 +298,7 @@ export default {
       font-size: 16px;
 
       .td-item {
+        display: flex;
         flex: 1;
         align-items: center;
         justify-content: center;

@@ -265,7 +265,7 @@
                         </div>
                         <!-- 此赛事支持提前结算 -->
                         <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
-                          <img :src="mearlys_icon_app" alt="" style="width:0.2rem">
+                          <img :src="mearlys_icon_app" alt="">
                         </div>
                         <!-- 角球 -->
                         <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()" v-if="match.csid == 1 && get_corner_kick">
@@ -382,6 +382,7 @@ export default {
     align-items: center;
     > span {
       padding-left: 5px;
+      color:var(--q-gb-t-c-18);
     }
   }
   .expand_item{
@@ -465,25 +466,25 @@ export default {
     .match-content{
       width: 100%;
       padding: 0 10px;
-      border-top: 1px solid #E4E6ED;
+      border-top: 1px solid var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
       border-radius: 0 0 8px 8px;
-      border: 1px solid #fff;
+      border: 1px solid var(--q-gb-bd-c-15);
       &.collapsed{
         border-top: none;
       }
       &.border-top{
-        border-top: 1px solid #E4E6ED;
+        border-top: 1px solid var(--q-gb-bd-c-4);
       }
     }
     > .match-indent{
-      border: 1px solid #fff;
+      border: 1px solid var(--q-gb-bd-c-15);
       border-radius: 8px 8px 0 0;
-      border-bottom: 1px solid #E4E6ED !important;
+      border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
       &.collapsed{
         border-radius: 8px;
-        border-bottom: 1px solid #fff !important;
-        border: 1px solid #fff;
+        border-bottom: 1px solid var(--q-gb-bd-c-15) !important;
+        border: 1px solid var(--q-gb-bd-c-15);
       }
     }
   }
