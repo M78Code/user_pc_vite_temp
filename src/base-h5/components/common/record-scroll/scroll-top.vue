@@ -17,7 +17,7 @@
 import { PROJECT_NAME } from 'src/output/module/menu-data.js'
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } from 'vue'
-import { scroll_top_icon } from 'src/base-h5/core/utils/local-image.js'
+import { scroll_top_icon, scroll_top_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 import { utils } from 'src/core/utils/common/module/utils.js'
 
@@ -67,6 +67,8 @@ const scroll_top_image = computed(() => {
   let img_src = ''
   if (PROJECT_NAME === 'ouzhou-h5') {
     img_src = scroll_top_icon
+  } else if (PROJECT_NAME === 'app-h5') {
+    img_src = scroll_top_icon_app
   }
   return img_src
 })
