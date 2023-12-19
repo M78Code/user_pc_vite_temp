@@ -218,6 +218,7 @@
       "confirm_cancel_reservation": "确定取消本场比赛预约？"
     },
     "handicap_tutorial": {
+      "answer_question": "大小球模拟训练",
       "football_master": "恭喜，您已进阶为足球大师",
       "training_camp": "训练营",
       "actual_combat": "实战来一注",
@@ -233,6 +234,7 @@
       "big_small_ball": "大小球",
       "big_small_ball_tip": "全场90分钟（含伤停补时）两队进球数的总和即为大小球",
       "handicapData_condition": "均不让球即0",
+      "handicapData_condition_1": "进球之和",
       "all_win": "全赢",
       "home_team": "主队",
       "bet_home_team": "投注主队",
@@ -269,6 +271,10 @@
       "note_11": "投注主队全输，投注客队全赢",
       "note_12": "投注主队赢一半，投注客队输一半",
       "note_13": "投注主队全赢，投注客队全输",
+      "note_14": "投注大2.5全赢，投注小2.5全输赢",
+      "note_15": "投注大2.5/3赢一半，投注小2.5/3输一半",
+      "note_16": "投注大3/3.5输一半，投注小3/3.5赢一半",
+      "note_17": "投注大3退回本金（走水），投注小3退回本金（走水）",
       "questionsData": {
         "1": {
           "note_1": "进球数2，小于2.5",
@@ -287,6 +293,7 @@
       "real_madrid": "皇马",
       "m_chesester_city": "曼城",
       "m_chesester_untied": "曼联",
+      "chelsea": "切尔西",
       "barcelona": "巴萨"
     },
     "bet": {
