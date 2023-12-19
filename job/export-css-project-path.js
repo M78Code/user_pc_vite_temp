@@ -11,7 +11,7 @@ import {
 
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
-const { LOCAL_PROJECT_FILE_PREFIX } = BUILD_VERSION_CONFIG;
+const { LOCAL_COMMON_FILE_PREFIX,LOCAL_PROJECT_FILE_PREFIX } = BUILD_VERSION_CONFIG;
 
 console.log(colors.bgRed("export-css-project-path.js----------  ----"));
 
@@ -41,6 +41,7 @@ $info      : #31CCEC;
 $warning   : #F2C037;
 
 
+$SCSSCOMMONPATH   : "${LOCAL_COMMON_FILE_PREFIX}";
 $SCSSPROJECTPATH  : "${LOCAL_PROJECT_FILE_PREFIX}";
   
   `;
