@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 import path from "path";
-
+import viteCompression from 'vite-plugin-compression';
 
 //本地开发端口
 const port = 28300
@@ -30,6 +30,7 @@ export default defineConfig({
       sassVariables: `app/job/output/css/variables.scss`,
       
     }),
+    viteCompression(),
   ],
   css:{
     devSourcemap: true,
@@ -53,6 +54,11 @@ export default defineConfig({
       },
     },
   },
+  esbuild:{
+    pure: ['console.log'], // 删除 console.log
+    drop: ['debugger'], // 删除 debugger
+    // drop: ['console,'debugger'], // 删除 所有的console 和 debugger
+ },
   resolve: {
     alias: {
       src: path.resolve(process.cwd(), "./src"),
