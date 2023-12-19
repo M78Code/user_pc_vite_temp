@@ -508,8 +508,6 @@ const submit_handle = type => {
                     // 设置投注中状态 后续用ws推送改变
                     switch (+status_code) {
                         case 0:
-                            status = 6;
-                            break;
                         case 1:
                             status = 7;
                             break;
@@ -773,6 +771,12 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 电竞赛事
     if(other.bet_type == 'esports_bet'){
         matchType = 5
+        // 电竞赛事
+        // C01赛事不支持串关
+        // if(lodash.get(mid_obj, 'cds') == "C01" && lodash_.get(BetData,'bet_list.length',0)>0){
+        //     useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('bet.bet_no_support'));
+        //     return;
+        // }
     }
     // 虚拟赛事
     if(other.bet_type == 'vr_bet'){
@@ -1044,7 +1048,8 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
     // 展示用的 + 投注项
     let detail_mark = [3,13,69,71,102,107,101,106,105,171,216,220,221,271,272,339]
     let lsit_mark = [2,173,38,114]
-    let list_head = [359,31,340,383,13,102]
+    // 特殊玩法 
+    let list_head = [359,31,340,383,13,102,351,101,107,347,105,106,345,346,348,349,353,360,384]
     // 详情
     if(other.is_detail){
         // 有球头 球头需要变色

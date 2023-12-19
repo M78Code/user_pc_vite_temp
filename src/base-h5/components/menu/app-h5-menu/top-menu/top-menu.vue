@@ -47,6 +47,8 @@ import lodash_ from "lodash";
 import { reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { format_money2 } from "src/output/index.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { is_kemp } from 'src/base-h5/mixin/menu.js'
 import { i18n_t, compute_css_obj, MenuData,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
@@ -100,6 +102,11 @@ const set_menu_lv1 = item => {
     // 复刻版早盘，串关需要等待时间接口返回在调用， 在这不调用set_origin_match_data
     // if ([3,6].includes(item.mi) || is_kemp.value) return
     // MatchMeta.set_origin_match_data()
+    if(item.mi == 400){
+        BetData.set_clear_bet_info()
+        BetViewDataClass.set_clear_bet_view_config()
+        BetData.set_is_bet_single()
+    }
 }
 
 /**

@@ -666,7 +666,7 @@ export const details_main = () => {
         .get_category_list(params)
         .then((res) => {
           const res_data = lodash.get(res, "data",[]);
-          if (res_data.code=='0401038') {  //限频
+          if (res.code=='0401038') {  //限频
             setTimeout(() => {
               get_odds_list()
             }, 800);

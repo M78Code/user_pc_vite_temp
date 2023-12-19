@@ -193,6 +193,7 @@ import virtual_sports_m_item_mixin from 'src/base-h5/vr/mixin/virtual_sports/vir
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 
 export default {
   // mixins:[betting,virtual_sports_m_item_mixin],
@@ -477,7 +478,6 @@ export default {
         }
 
       }
-
       if(match.hps && match.hps.length && this.footer_sub_menu_id != 114){
         let hp_item = match.hps.filter(hp => hp.hpid == hp_id_convert)[0];
         if(hp_item && hp_item.hl && hp_item.hl.length){
@@ -502,6 +502,8 @@ export default {
           }
         }
       }
+      console.log('ol_list', ol_list);
+      
       return ol_list;
     },
     /**
@@ -542,8 +544,30 @@ export default {
       if (!hl_item) return;
       ol_item.id_ = lodash.get(hl_item,'hl[0].hn') ?
         `${match_item.mid}_${hl_item.chpid || hl_item.hpid}_${ol_item.ot}_${hl_item.hl[0].hn}` : ol_item.oid;
-      this.bet_click3(match_item, hl_item, ol_item);
+      // this.bet_click3(match_item, hl_item, ol_item);
+      this.go_to_bet(ol_item);
+      
+    },
+    go_to_bet (ol_item) {
+      const {oid,_hid,_hn,_mid,_hpid } = ol_item
+      let params = {
+        oid, // 投注项id ol_obj
+        _hid, // hl_obj 
+        _hn,  // hn_obj
+        _mid,  //赛事id mid_obj
+      }
+      let other = {
+        is_detail: false,
+        // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
+        // 根据赛事纬度判断当前赛事属于 那种投注类型
+        bet_type: 'vr_bet',
+        // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+        device_type: 1,  
+        // 数据仓库类型
+        match_data_type: "h5_list",
     }
+      set_bet_obj_config(params,other)
+  }
   },
   computed:{
     // ...mapGetters({
@@ -555,7 +579,7 @@ export default {
     //   get_theme:'get_theme',
     //   get_access_config:'get_access_config',
     // }),
-    footer_sub_menu_id(){return false;},
+    footer_sub_menu_id(){return VR_CTR.get_footer_sub_menu_id() },
     get_video_process_data(){return VR_CTR.get_video_process_data();},
     get_n_s_changed_loaded(){return false;},
     get_curr_sub_menu_type(){ return VR_CTR.get_curr_sub_menu_type() },

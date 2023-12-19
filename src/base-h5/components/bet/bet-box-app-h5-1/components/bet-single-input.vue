@@ -101,6 +101,7 @@ const set_bet_pre = () => {
   // 预约开启 获取预约数据
   if(ref_data.is_bet_pre){
     get_query_bet_amount_pre()
+    BetData.set_bet_amount(0)
   }
   // 设置是否开启预约
   BetData.set_is_bet_pre(true)
