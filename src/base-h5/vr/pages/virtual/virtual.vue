@@ -480,11 +480,7 @@ export default {
             overflow:hidden;
             text-overflow:ellipsis;
             white-space:nowrap;
-<<<<<<< HEAD
             font-size: 0.12rem;
-=======
-            font-size: 0.120rem;
->>>>>>> 9b1ca66ffac81ec19a25bb4be3244401298ef50f
         }
       }
 
