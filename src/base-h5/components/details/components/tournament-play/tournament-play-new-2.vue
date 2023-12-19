@@ -823,7 +823,7 @@ export default defineComponent({
       :deep(.hairline-border,), :deep(.item-wrap) {
       background-color: var(--q-gb-bg-c-29) !important;
       border-radius:0 0 0.04rem 0.04rem!important;
-      border-top:0.5px solid #F2F2F6;
+      border-top:0.5px solid var(--q-gb-bd-c-5);
       color:var(--q-gb-bg-c-18)
       }
     }
@@ -881,7 +881,7 @@ export default defineComponent({
  /* 卡片边距背景色 */
  :deep(.mg-4-bg){
   margin:0.04rem;
-  background:  !important;
+  // background:  !important;
   border-radius: 4px;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
 }
