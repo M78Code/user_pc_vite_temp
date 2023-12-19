@@ -361,7 +361,7 @@ export default defineComponent({
     async handle_match_collect () {
       const { mid,tid } = this.match_of_list
       const match_state = MatchCollect.get_match_collect_state(this.match_of_list)
-      api_common.add_or_cancel_tournament({
+      api_common.add_or_cancel_match({
         mid,
         cf: match_state ? 0 : 1,
         cuid: UserCtr.get_uid()

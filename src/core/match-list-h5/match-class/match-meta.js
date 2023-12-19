@@ -780,7 +780,7 @@ class MatchMeta {
         type: 3000,
         csid: csids,
         euid: euid_arr,
-        md: MenuData.data_time,
+        md: String(MenuData.data_time)
       })
       this.handler_collect_match_list(res)
     } catch (err) {
@@ -798,8 +798,8 @@ class MatchMeta {
     let mid_list = lodash.get(MenuData,'collect_list')
     let lv1_mi = lodash.get(MenuData,'current_lv_1_menu_i')
     let euid = ''
-    // 复刻版收藏
-    if (project_name === 'app-h5' && lv_2_menu_i == 50000) {
+    // 复刻版非冠军收藏
+    if (project_name === 'app-h5' && lv_2_menu_i == 50000 && !MenuData.is_kemp()) {
       const menu_list = lodash.get(MenuData,'menu_list')
       euid = menu_list.map(item => MenuData.get_euid(item.mi+''+lv1_mi)).join(',')
     } else if(lv_2_menu_i == 0){
@@ -817,7 +817,7 @@ class MatchMeta {
     try {
       const res = await api_common.get_collect_matches({
         ...params,
-        md: MenuData.data_time
+        md: String(MenuData.data_time)
       })
       this.handler_collect_match_list(res)
     } catch (err) {
@@ -1241,7 +1241,7 @@ class MatchMeta {
         }
         break;
       case "mid-refresh": // 赔率刷新
-        this.get_match_base_hps_by_mids({ mids: [obj.mid] });
+        this.get_match_base_hps_by_mids({ mids: obj.mid });
         break;
       case "footer-follow":
         if (!obj.before_status) {
@@ -1307,6 +1307,7 @@ class MatchMeta {
     if (['C303', 'C114'].includes(cmd)) {
       const { mid = '' } = data.cd || {};
       let _mids = String(mid).split(',')
+      console.log(11111111111)
       if (_mids.some((_mid)=>this.match_mids.includes(_mid))) this.get_match_base_hps_by_mids({})
     }
   }

@@ -91,7 +91,6 @@ const scroll_main = ref(null)
 let timer_super1 = null
 let timer_super2 = null
 onMounted(() => {
-  MenuData.set_current_lv1_menu(300);//设置菜单
   // 获取虚拟体育菜单数据
   // get_virtual_menus()
   get_virtual_menus_data()
@@ -226,7 +225,6 @@ const clear_timer = () => {
 
 onUnmounted(() => {
   clear_timer()
-  MenuData.set_current_lv1_menu(2);//设置菜单
   // 删除虚拟体育赛狗和赛马玩法缓存
   for (const key in sessionStorage) {
     if (key.match(/^\d.+-cache$/)) {
