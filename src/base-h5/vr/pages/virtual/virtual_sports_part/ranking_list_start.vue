@@ -6,7 +6,7 @@
 <template>
   <div class="ranking_list_satrt">
     <template v-if="!no_data">
-      <span class="navigation-title">{{ i18n_t('virtual_sports.leaderboard') }}</span>
+      <!-- <span class="navigation-title">{{ i18n_t('virtual_sports.leaderboard') }}</span> -->
       <div class="ranking-item hairline-border" v-for="(item, index) in ranking_data" :key="index">
       <div class="ranking-item-top">
         <div class="left ellipsis">
@@ -36,10 +36,8 @@
             style="min-width:.85rem"
             :value="Number(item.star)"
             size="3.5em"
-            :icon="`img:${ $g_image_preffix }/image/bw3/svg/match-list/m-list-favorite.svg`"
-            :icon-selected="get_theme.includes('y0') ? `img:${ $g_image_preffix 
-            }/image/bw3/svg/match-list/m-list-favorite-s_y0.svg`: 
-            `img:${ $g_image_preffix }/image/bw3/svg/match-list/m-list-favorite-s.svg`"
+            :icon="`img:${LOCAL_PROJECT_FILE_PREFIX}/image/png/m-list-favorite.png`"
+            :icon-selected="`img:${LOCAL_PROJECT_FILE_PREFIX}/image/png/m-list-favorite-red.png`"
             readonly
           />
         </div>
@@ -55,6 +53,7 @@
 import { api_v_sports } from "src/base-h5/vr/api";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import no_data from "src/base-h5/vr/components/common/no_data.vue"
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 
 export default {
   name: "ranking_list_start",
@@ -67,7 +66,8 @@ export default {
   data() {
     return {
       ranking_data:[],
-      no_data: false
+      no_data: false,
+      LOCAL_PROJECT_FILE_PREFIX
     }
   },
   watch: {
@@ -206,10 +206,39 @@ export default {
           display: flex;
           align-items: center;
 
+          .virtual-num {
+            background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png") no-repeat 0 0 / 100%;
+            --per: -0.3rem;
+          }
+          .match-horse1 {
+            background-position-y: calc(var(--per) * 6);
+          }
+          
+          .match-horse2 {
+            background-position-y: calc(var(--per) * 7);
+          }
+          
+          .match-horse3 {
+            background-position-y: calc(var(--per) * 8);
+          }
+          
+          .match-horse4 {
+            background-position-y: calc(var(--per) * 9);
+          }
+          
+          .match-horse5 {
+            background-position-y: calc(var(--per) * 10);
+          }
+          
+          .match-horse6 {
+            background-position-y: calc(var(--per) * 11);
+          }
+          
+
           > span {
             &:nth-child(1) {
-              width: 0.16rem;
-              height: 0.16rem;
+              width: 0.2rem;
+              height: 0.2rem;
 
               display: flex;
               align-items: center;
@@ -220,9 +249,6 @@ export default {
               text-align: center;
               line-height: 0.1rem;
               border-radius: 0.02rem;
-              background-size: 100% 100%;
-              background-repeat: no-repeat;
-              background-position: center;
             }
 
             &:nth-child(2) {
@@ -348,4 +374,5 @@ export default {
     }
   }
 }
+
 </style>
