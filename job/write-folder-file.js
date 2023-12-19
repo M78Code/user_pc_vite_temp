@@ -61,29 +61,20 @@ export const remove_file = (file_path) => {
  
 
  
-
-// 递归创建文件夹
-const mkdir = function(dirname) {
-  if (fs.existsSync(dirname)) {
-    return true;
-  } else {
-    if (mkdir(path.dirname(dirname))) {
-      fs.mkdirSync(dirname);
-      return true;
-    }
-  }
-}
-
+ 
 // 复制文件
 const copyFile = function(src,copy){
-  mkdir(path.dirname(copy));//创建目录
+ 
   fs.copyFile(src,copy,function(err){
     if(err) console.log('error')
   })
 }
 
 // 复制文件夹
-const copyDir = function(src,dist){
+export  const copyDir = function(src,dist){
+
+  ensure_write_folder_exist(dist);//创建目录
+
   var paths = fs.readdirSync(src)
   paths.forEach( p => {
     var _src = src + '/' +p;

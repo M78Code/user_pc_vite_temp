@@ -94,7 +94,7 @@ onBeforeMount(() => {
     let BUILD_VERSION = window.BUILDIN_CONFIG.BUILD_VERSION;
 
     script.src = `${BUILD_VERSION ? "/" + BUILD_VERSION : ""
-      }/lib/js/vconsole.min.js`;
+      }/other-assets/lib/js/vconsole.min.js`;
     script.async = false;
 
     script.onload = function () {

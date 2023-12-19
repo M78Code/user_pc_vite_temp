@@ -6,13 +6,11 @@
 <template>
 <!-- 斯诺克 -->
   <div class='score_child_7 mx-12 font-style menu-s'>
-    <template>
       <span v-for="(item, key) of score_array" :key="key">
         <span>&nbsp;&nbsp;</span>
         <span :class="(score_array.length == key + 1&&detail_data.mo != 1)? 'activeText': '' ">{{ $filters.score_format(item)}}</span>
         <span>&nbsp;&nbsp;</span>
       </span>
-    </template>
   </div>
 </template>
 

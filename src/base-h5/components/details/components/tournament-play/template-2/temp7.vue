@@ -30,10 +30,10 @@
                           <div
                               class="play-box-style details_color warp"
                               @click="go_to_bet(ol_item)"
-                              :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','first-rad']:'',{'win': calc_win(ol_item.result)}]"
+                              :class="[BetData.bet_oid_list.includes(ol_item.oid)?['details-bg5','first-rad']:'',{'win': calc_win(ol_item.result)}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_16">
-                            <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)},'size-color']">
+                            <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.oid)},'size-color']">
                               {{ol_item.on}}
                             </span>
                             </div>
@@ -107,10 +107,10 @@
                           <div
                               class="play-box-style details_color warp"
                               @click="go_to_bet(ol_item)"
-                              :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','first-rad']:'',{'win':calc_win(ol_item.result)}]"
+                              :class="[BetData.bet_oid_list.includes(ol_item.oid)?['details-bg5','first-rad']:'',{'win':calc_win(ol_item.result)}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_16">
-                            <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)},'size-color']">
+                            <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.oid)},'size-color']">
                               {{ol_item.on}}
                             </span>
                             </div>
@@ -184,10 +184,10 @@
                           <div
                               class="play-box-style details_color warp"
                               @click="go_to_bet(ol_item)"
-                              :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result)}]"
+                              :class="[BetData.bet_oid_list.includes(ol_item.oid)?'details-bg5':'',{'win':calc_win(ol_item.result)}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_16">
-                            <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)},'size-color']">
+                            <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.oid)},'size-color']">
                               {{ol_item.on || ol_item.otv || ol_item.ott}}
                             </span>
                             </div>

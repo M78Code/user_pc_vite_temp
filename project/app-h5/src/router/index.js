@@ -27,6 +27,15 @@ const router = createRouter({
               keepAlive: true // 需要缓存
             },
           },
+          // 规则说明
+          {
+            path: "/rules",
+            name: "rules",
+            component: () => import("../pages/handicap-tutorial/index.vue"),
+            meta: {
+              keepAlive: true // 需要缓存
+            },
+          },
           {
             path: "/matchResults",
             name: "matchResults",
@@ -72,7 +81,7 @@ const router = createRouter({
         },
        
         {
-          path: "/rule_description/:name",
+          path: "/rule_description",
           name: "rule_description",
           component: () =>
             import(
@@ -141,13 +150,12 @@ const router = createRouter({
 /**
  * 路由切换清除默认球种
  */
-router.beforeEach((to, from, next) => {
-    if(to.name == "virtual_sports"){
-      MenuData.set_current_lv1_menu(300);//设置菜单
-    }
-    if(from.name=="virtual_sports" && to.name == "matchList"){
-       MenuData.set_current_lv1_menu(2);//设置菜单
-    }
-    next()
+router.afterEach((to, from) => {
+  if(from.name=="virtual_sports" && to.name == "matchList"){
+    MenuData.set_top_menu_title({});//设置菜单
+ }
+  if(to.name == "virtual_sports"){
+    MenuData.set_current_lv1_menu(300);//设置菜单
+  }
 })
 export default router;

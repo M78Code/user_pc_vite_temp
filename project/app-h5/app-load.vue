@@ -5,7 +5,7 @@
 -->
 <template>
   <!-- 右侧菜单 -->
-  <div :class="['bw3', { rightMenu: right_menu_show }]" @click.stop="appclick($event)" :style="page_style.style">
+  <div :class="['bw3', { rightMenu: right_menu_show }]" @click.stop="appclick($event)" >
     <ws />
     <!-- 页面路由开始 页面路由开始 页面路由开始 -->
     <!-- 页面路由开始 -->
@@ -20,7 +20,7 @@ import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 import { wslog } from "src/core/log/";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
-import { PageSourceData, GlobalAccessConfig, ServerTime } from "src/output/index.js";
+import { PageSourceData, GlobalAccessConfig, ServerTime,set_css } from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
@@ -73,7 +73,7 @@ watch(
 // 设置主题
 const set_global_theme_change = (a) => {
   console.error('set_global_theme_changeset_global_theme_change',a)
-  Object.assign(page_style.style , global_color_obj());
+  set_css(document.getElementsByTagName('html')[0], global_color_obj())
 }
 
 onBeforeMount(() => {
@@ -86,7 +86,7 @@ onBeforeMount(() => {
   // this.init_version_name();
   on_listeners();
   // 公共主题色
-  page_style.style = global_color_obj()
+  // page_style.style = global_color_obj()
   set_global_theme_change()
   // 初始化启动日志系统--开发模式时日志打开
   // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
@@ -114,7 +114,7 @@ onBeforeMount(() => {
     let BUILD_VERSION = window.BUILDIN_CONFIG.BUILD_VERSION;
 
     script.src = `${BUILD_VERSION ? "/" + BUILD_VERSION : ""
-      }/lib/js/vconsole.min.js`;
+      }/other-assets/lib/js/vconsole.min.js`;
     script.async = false;
 
     script.onload = function () {

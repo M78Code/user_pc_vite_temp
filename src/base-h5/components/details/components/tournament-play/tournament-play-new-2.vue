@@ -771,7 +771,7 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
   @import "../../styles/tournament-play-new.scss";
-  @import "src/base-h5/components/details/styles/details-theme/temp.scss";
+  
 .icon_zd_select {
   width: 0.16rem;
   height: 0.14rem;
@@ -823,8 +823,8 @@ export default defineComponent({
       :deep(.hairline-border,), :deep(.item-wrap) {
       background-color: var(--q-gb-bg-c-29) !important;
       border-radius:0 0 0.04rem 0.04rem!important;
-      border-top:0.5px solid #F2F2F6;
-      color:var(--q-gb-bg-c-18)
+      border-top:0.5px solid var(--q-gb-bd-c-5);
+      color:var(--q-gb-t-c-19)
       }
     }
     .play-name {
@@ -881,9 +881,15 @@ export default defineComponent({
  /* 卡片边距背景色 */
  :deep(.mg-4-bg){
   margin:0.04rem;
-  background:  !important;
+  // background:  !important;
   border-radius: 4px;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+}
+:deep(.win .odds-new2) {
+    color: var(--q-gb-t-c-21) !important;
+  }
+:deep(.details_color){
+  background:var(--q-gb-bg-c-28);
 }
 
 </style>

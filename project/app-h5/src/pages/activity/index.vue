@@ -43,5 +43,4 @@ acticity_src.value = acticity_src_url
 </script>
 <style lang="scss" scoped>
 
-
 </style>

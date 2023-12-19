@@ -86,7 +86,7 @@ onMounted(() => {
   // 刷新数据后 设置限制 再设置金额
   set_ref_data_bet_money()
   ref_data.money = BetData.bet_amount
-
+  BetData.bet_keyboard_show = true
   //监听键盘金额改变事件
 
   ref_data.emit_lsit = {
@@ -266,6 +266,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: flex-start;
   width: 70%;
+  color: var(--q-gb-t-c-18);
   .limit-txt {
     color: var(--q-gb-t-c-19);
     font-family: PingFang SC;
@@ -278,6 +279,7 @@ onUnmounted(() => {
 }
 .money-number {
   margin-top: 1px;
+  color:var(--q-gb-t-c-18);
   font-family: Akrobat;
   font-weight: 700;
 }

@@ -461,6 +461,44 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取冠军赛果
+   */
+  async get_champion_match_result () {
+    this.clear_match_info()
+    const md = lodash.get(MenuData.result_menu_api_params, 'md')
+    const { start_time, end_time } =  MatchUtils.get_match_time_start_time(md)
+    this.current_euid = `10000_${md}`
+    if (!md) return []
+    const params = this.get_base_params()
+    const res = await api_analysis.get_champion_match_result_api({
+      ...params,
+      type: 28,
+      orderBy: 1,
+      category: 1,
+      euid: "10000",
+      md: String(start_time),
+      startTime: String(start_time),
+      endTime: String(end_time),
+      sportType: 10000,
+      isVirtualSport: 1
+    })
+    if (this.current_euid !== `10000_${md}`) return []
+    if (+res.code !== 200) {
+      this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
+      return []
+    }
+    // 避免接口慢导致的数据错乱
+    const list = lodash.get(res, 'data', [])
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) {
+      this.set_page_match_empty_status({ state: true });
+      return []
+    }
+    const matchs = MatchUtils.handler_champion_match_classify_by_sport_id(list)
+    return matchs
+  }
+
+  /**
    * @description 赛果不走元数据， 直接掉接口 不需要走模板计算以及获取赔率，需要虚拟列表计算
    */
   async get_results_match ({ tid = '' } = {}) {
@@ -470,7 +508,7 @@ class MatchMeta {
     // 电竞的冠军
     const category = MenuData.result_menu_lv1_mi ? 0 : 1
     this.current_euid = `${euid}_${md}`
-    if (!md) return
+    if (!md) return []
     const params = this.get_base_params()
     const res = await api_common.get_match_result_api({
       ...params,
@@ -481,12 +519,18 @@ class MatchMeta {
       euid: euid,
       showem: 1, // 新增的参数
     })
-    if (this.current_euid !== `${euid}_${md}`) return
-    if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
+    if (this.current_euid !== `${euid}_${md}`) return []
+    if (+res.code !== 200) {
+      this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
+      return []
+    }
     // 避免接口慢导致的数据错乱
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
-    if (length < 1) return this.set_page_match_empty_status({ state: true });
+    if (length < 1) {
+      this.set_page_match_empty_status({ state: true });
+      return []
+    }
     return this.handler_match_list_data({ list: list, type: 2, is_virtual: false })
   }
 
@@ -990,7 +1034,7 @@ class MatchMeta {
    * @param { warehouse } 仓库类型 示例 因欧洲版首页同时存在2个类别赛事， 折叠、收藏 不能相互影响
    */
   handler_match_list_data(config) {
-
+    
     const { list = [], type = 1, is_virtual = true, warehouse = MatchDataBaseH5, scroll_top = 0 ,merge = '' } = config
 
     const is_classify = this.get_is_classify()
@@ -1042,8 +1086,6 @@ class MatchMeta {
       this.match_assistance_operations(match, index)
       return match
     })
-
-    console.log(match_list)
 
     // 最终赛事数据
     const matchs_data = lodash.uniqBy(match_list, 'mid')
@@ -1320,7 +1362,6 @@ class MatchMeta {
     if (['C303', 'C114'].includes(cmd)) {
       const { mid = '' } = data.cd || {};
       let _mids = String(mid).split(',')
-      console.log(11111111111)
       if (_mids.some((_mid)=>this.match_mids.includes(_mid))) this.get_match_base_hps_by_mids({})
     }
   }
@@ -1366,6 +1407,8 @@ class MatchMeta {
       const length = lodash.get(data, 'length', 0)
       if (length > 0) {
         data.forEach(t => {
+          // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
+          t.handicap_index = MatchUtils.get_handicap_index_by(t);
           const item = lodash.find(this.complete_matchs, (match) => match.mid === t.mid)
           if (item) {
             const index = lodash.findIndex(this.complete_matchs, (match) => match.mid === t.mid)

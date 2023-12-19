@@ -59,7 +59,8 @@ class MenuData {
     this.menu_lv4 = []; //4级菜单列表
     //当前的菜单 lv1
     this.current_lv_1_menu_mi = ref('0')
-    this.current_lv_1_menu_i = ''
+    this.current_lv_1_menu_i = '';
+    this.old_current_lv_1_menu_i = '';
     //当前的菜单 lv2
     //当前的菜单 lv2  注意  二级菜单 可能 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = {};
@@ -98,8 +99,11 @@ class MenuData {
     // 时间api接口及参数信息 
     this.menu_match_date_api_config = {}
 
+
     this.set_menu_h5_key_refresh()
   }
+
+
 
   // 刷新后 获取缓存数据
   set_menu_h5_key_refresh() {
@@ -168,8 +172,8 @@ class MenuData {
     }else{
       this.menu_list.forEach(item => {
         (item.sl || []).find(obj=>{
-          // 菜单id最后一位为顶级菜单的id
-          if(obj.mi.substr(obj.mi.length-1,1) == mid){
+          // 菜单id最后一位为顶级菜单的id  早盘没有电足电篮
+          if(obj.mi.substr(obj.mi.length-1,1) == mid && ![1903,1913].includes(+obj.mi)){
             obj.mif = item.mi;
             menu_lv_mi_lsit.push(obj)
           }
@@ -180,16 +184,19 @@ class MenuData {
     // this.set_current_lv_2_menu_i( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
     // 今日 加入 收藏/vr体育/电竞 滚球加入全部
     // menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
-    if(mid == 1){
-      const all_ct = menu_lv_mi_lsit.map((item)=>{return item.ct||0}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
-      menu_lv_mi_lsit.splice(0,0,{mi:0,btn:1, ct:all_ct,title:"全部"})
-      // menu_lv_mi_lsit.unshift({mi:0,btn:1, ct:all_ct,title:"全部"})
-      // menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
-    }
-    if(mid == 2){
-      // menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
-      menu_lv_mi_lsit.splice(3,0,{mi:300,btn:1,ct:0,title:"VR体育"})
-      menu_lv_mi_lsit.splice(4,0,{mi:2000,btn:1,ct:0,title:"电竞"})
+    if([1,2,3,6].includes(mid)){
+      let _this = this;
+      const is_football = menu_lv_mi_lsit.some((n)=>{return n.mi == `190${_this.current_lv_1_menu_i}`}) && _this.current_lv_1_menu_i !=3;
+      const is_basketball = menu_lv_mi_lsit.some((n)=>{return n.mi == `191${_this.current_lv_1_menu_i}`})&& _this.current_lv_1_menu_i !=3;
+      const is_number = [BaseData.show_e_soprts.football && is_football ,BaseData.show_e_soprts.basketball && is_basketball];//是否有电子球种
+      let num = is_number.filter((n)=>{return !!n}).length+2;
+      let type = mid==1?num+1:num;//插入位置
+      if(mid == 1){
+        const all_ct = menu_lv_mi_lsit.map((item)=>{return item.ct||0}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
+        menu_lv_mi_lsit.splice(0,0,{mi:0,btn:1, ct:all_ct,title:"全部"})
+      }
+      menu_lv_mi_lsit.splice(type,0,{mi:300,btn:1,ct:0,title:"VR体育"})
+      menu_lv_mi_lsit.splice(type+1,0,{mi:2000,btn:1,ct:0,title:"电竞"})
     }
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
     return menu_lv_mi_lsit
@@ -207,12 +214,22 @@ class MenuData {
     })
     return menu_lv_mi_lsit
   }
-
+  /**
+   * 设置旧id
+   */
+  set_old_current_lv_1_menu_i(mid){
+    this.old_current_lv_1_menu_i = mid ||2;
+    this.set_cache_class({
+      old_current_lv_1_menu_i:mid ||2
+    });
+  }
   // 设置 收藏 /vr体育 /电竞头部
   set_top_menu_title(val){
     this.top_menu_title = val;
     const obj = val?.mi?{}:{
-      current_lv_1_menu_i:2
+      current_lv_1_menu_i:this.old_current_lv_1_menu_i || 2,
+      current_lv_1_menu_mi:this.old_current_lv_1_menu_i || 2,
+      data_tab_index:0
       // current_lv_2_menu:{},
       // current_lv_2_menu_i:''
     }
@@ -271,9 +288,12 @@ class MenuData {
     else if(+mi>400 && +mi<1000){
       csid = +mi-400
     }//冠军
+    else if(+mi>2000){
+      csid = +mi-2000
+    }//vr 电竞球种
     else{
       csid = mi
-    };//vr 电竞球种
+    }
     this.menu_csid = csid;
     this.update()
   }
@@ -288,7 +308,8 @@ class MenuData {
     // this.menu_type.value = menu_type_config[lv1_mi]  
     this.menu_type.value = lv1_mi;
     this.set_cache_class({
-      current_lv_1_menu_i:lv1_mi
+      current_lv_1_menu_i:lv1_mi,
+      current_lv_1_menu_mi:lv1_mi
     });
     // 早盘 /串关 不走此逻辑
     // if([1,2,400].includes(lv1_mi*1)){
@@ -306,7 +327,27 @@ class MenuData {
     // }
     this.update();
   }
-
+  /**
+ * 获取对应日期
+ */
+  async getDateList(csid){
+    const params = {
+      csid:csid || this.menu_csid,
+      device:"H5"
+    };
+    const res = await api_common.get_esports_date_menu(params);
+    if(res?.code == '200'){
+        const data = res?.data?.map((item)=>{
+            return {
+                name: item.menuName,
+                val: item.field1
+            }
+        })||[];
+        // return [...[{name:i18n_t('ouzhou.match.today'),val:'',type:0}],...data]
+        return data
+    }
+    return [];
+  };
   // 设置 menu_types
   set_collect_menu_type (lv1_mi) {
     this.menu_type.value = menu_type_config[lv1_mi]  
@@ -1120,7 +1161,7 @@ class MenuData {
     set_cache_class(obj, is_cache = true) {
       for (const key in obj) {
         if (Object.hasOwnProperty.call(this, key)) {
-          if (["menu_type"].includes(key)) {
+          if (["menu_type","current_lv_1_menu_mi"].includes(key)) {
             this[key].value = obj[key];
           } else {
             this[key] = obj[key];

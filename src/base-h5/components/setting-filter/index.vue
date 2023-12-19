@@ -54,6 +54,16 @@
          srcset="">
         </div>
       </div>
+      <div class="setting-item border" @click="jump_rule">
+        {{get_lang}}
+      <!-- 体育规则 -->
+        <div class="title">{{ i18n_t('common.rule_description') }}</div>
+        <div class="more">
+        <img  
+        :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/left_icon.svg`"
+         srcset="">
+        </div>
+      </div>
       <!-- <div class="setting-item" @click="jump_webpage"> -->
       <!-- 前往旧版 -->
         <!-- <div class="title"> {{ i18n_t('app_h5.filter.go_old_version') }}</div> -->
@@ -95,11 +105,24 @@ const jumpHandle = () => {
   router.push({ name: "handicapTutorial" }); // 
   closedHandle();
 };
+/**
+ * @description 跳转至规则说明页面
+ * @param 
+ * @return 
+ */
+const jump_rule = () => {
+  router.push({ name: "rule_description" }); 
+  closedHandle();
+};
 
 const is_disabled = (item) => {
-  if(item.mark == "Handicap" && MenuData.is_esports()){
-    return true
+  if(MenuData.is_esports()){
+    //电竞 不会排序 和 盘口
+    if(['Handicap','sort'].includes(item.mark )){
+      return true
+    }
   }
+  return false
 }
 /**
  * @description 跳转网页版
@@ -205,10 +228,9 @@ const version_handle = item => {
   // 新手版
   if (status === 1) {
     if (project_name === 'app-h5') {
-      !MenuData.is_collect() && MatchMeta.set_origin_match_data()
-      // nextTick(() => {
-      //   useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-      // })
+      nextTick(() => {
+        !MenuData.is_collect() && MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+      })
     }
   } else {
     VirtualList.set_is_show_ball(true)
@@ -228,7 +250,7 @@ const sort_handle = item => {
  *@return {Undefined} undefined
  */
 const Handicap_handle = item => {
-  const status = item.switchValue === "rightVal" ? "HK" : "EU";
+  const status = item.switchValue === "rightVal" ? "EU" : "HK";
   UserCtr.set_cur_odds(status);
 };
 /**
