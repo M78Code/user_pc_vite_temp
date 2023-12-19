@@ -43,5 +43,5 @@ const componentId = defineAsyncComponent(() => import(`./score/score-child-${id}
 }
 
 .back_mask {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 8e-05) 0%, rgba(0, 0, 0, 0.8) 100%);
+  // background: linear-gradient(180deg, rgba(0, 0, 0, 8e-05) 0%, rgba(0, 0, 0, 0.8) 100%);
 }</style>
