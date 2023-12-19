@@ -494,7 +494,6 @@ class MatchMeta {
       this.set_page_match_empty_status({ state: true });
       return []
     }
-    console.log(list)
     const matchs = MatchUtils.handler_champion_match_classify_by_sport_id(list)
     return matchs
   }

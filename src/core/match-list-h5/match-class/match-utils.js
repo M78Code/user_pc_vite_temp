@@ -85,7 +85,6 @@ class MatchUtils {
    * @param {*} list 赛事数据
    */
   handler_champion_match_classify_by_sport_id (list) {
-    debugger
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return []
     const result_tids = lodash.uniq(list.map(l => l.sportId))
