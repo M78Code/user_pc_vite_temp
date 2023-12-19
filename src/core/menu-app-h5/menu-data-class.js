@@ -454,7 +454,9 @@ class MenuData {
       // 根据 菜单id 获取euid
       mid_list.forEach(item=>{
         const item_euid = BaseData.mi_euid_map_res?.[item] && BaseData.mi_euid_map_res?.[item]?.h?BaseData.mi_euid_map_res?.[item]?.h:'';
-        euid += item_euid + ','
+        if(item_euid){
+          euid += item_euid + ',';
+        }
       })
       return euid
     }

@@ -508,8 +508,6 @@ const submit_handle = type => {
                     // 设置投注中状态 后续用ws推送改变
                     switch (+status_code) {
                         case 0:
-                            status = 6;
-                            break;
                         case 1:
                             status = 7;
                             break;
