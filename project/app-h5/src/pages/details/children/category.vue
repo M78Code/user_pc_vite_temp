@@ -43,31 +43,31 @@
       <!-- <div slot="scrollList"> -->
       <div slot="scrollList">
         <!-- 置顶操作时增加动画 -->
-        <transition-group name="transition-play-list" tag="div" class="transition-zhiding">
+        <TransitionGroup tag="div" class="transition-zhiding">
           <!-- 置顶 -->
           <template v-for="(item,keyscorll) in match_list_new_data">
             <template v-if="item.hton!=0">
-              <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
+              <TournamentPlayNew @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></TournamentPlayNew>
             </template>
           </template>
           <!-- 非置顶 -->
           <template v-for="(item, keyscorll) in match_list_normal_data">
             <template v-if="item.hton==0">
               <template v-if="match_list_new_data.length == 0">
-                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
+                <TournamentPlayNew @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></TournamentPlayNew>
               </template>
               <template v-else>
-                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item"></tournament-play-new>
+                <TournamentPlayNew @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item"></TournamentPlayNew>
               </template>
             </template>
           </template>
-        </transition-group>
+        </TransitionGroup>
       <!-- </div> -->
       </div>
     </div>
     <!-- 详情玩法投注项无数据 -->
     <div v-if="!is_loading && is_no_data && !show_recommend" class="no-data-style">
-      <no-data which='noMatch' height='500'></no-data>
+      <NoData which='noMatch' height='500'></NoData>
     </div>
   </div>
 </template>
@@ -81,7 +81,7 @@ import { api_common, api_analysis} from 'src/api/index.js'
 // 引入国际化
 import { i18n_t } from "src/boot/i18n.js";;
 //  无数据显示组件
-import no_data from "src/base-h5/components/common/no-data.vue"
+import NoData from "src/base-h5/components/common/no-data.vue"
 
 // #TODO mixins
 // 引入skt_data_info
@@ -101,14 +101,14 @@ import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path, com
 // import { Level_one_detail_odd_info } from "../category-list.js";
 import { category_info } from "./category.js"
 import { reactive, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue";
+import TournamentPlayNew from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue";
 export default defineComponent({
   name: "category",
   // #TODO mixins
   // mixins:[websocket_data, betting],
   components: {
-    'tournament-play-new': tournament_play_new,
-    'no-data':no_data,
+    TournamentPlayNew,
+    NoData,
     loading,
     detailMatchList
   },
@@ -394,12 +394,12 @@ export default defineComponent({
   max-width: 7rem;
 }
 
-.play-list-enter, .play-list-leave-to {
+.v-list-enter,.v-list-leave-to {
   opacity: 0;
   transform: translateY(20px);
 }
 
-.play-list-leave-active {
+.v-leave-active {
   position: absolute;
 }
 </style>

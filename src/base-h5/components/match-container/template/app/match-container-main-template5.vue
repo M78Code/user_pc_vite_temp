@@ -35,7 +35,7 @@
           :class="[(' match-indent league')]">
           <div class="league-t-wrap right-border">
             <!-- 联赛收藏 -->
-            <template v-if="![3000, 900].includes(menu_type)">
+            <template v-if="![3000, 900].includes(menu_type) && !is_esports">
               <img v-if="!league_collect_state" class="favorited-icon"
                 src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt="" @click.stop="handle_league_collect" />
               <img v-if='league_collect_state' class="favorited-icon" src="/src/base-h5/assets/match-list/ico_fav_sel.png"
@@ -810,6 +810,7 @@ export default {
 
         &.export {
           min-width: 1.1rem;
+          margin-left: 0.1rem;
         }
       }
 
