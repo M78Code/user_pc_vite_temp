@@ -11,7 +11,7 @@
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 开赛标题  -->
-      <div v-if="is_show_opening_title" @click.stop
+      <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
         :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
@@ -463,50 +463,30 @@ export default {
       border-top-left-radius: 0.08rem;
       border-top-right-radius: 0.08rem;
     }
-     .match-content{
-       width: 100%;
-       padding: 0 10px;
-       border-top: 1px solid var(--q-gb-bd-c-4);
-       background: var(--q-gb-bg-c-18);
-       border-radius: 0 0 8px 8px;
-       border: 1px solid var(--q-gb-bd-c-12);
-       &.collapsed{
-         border-top: none;
-       }
-       &.border-top{
-         border-top: 1px solid var(--q-gb-bd-c-4);
-       }
-     }
-     > .match-indent{
-       border: 1px solid var(--q-gb-bd-c-12);
-       border-radius: 8px 8px 0 0;
-       border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
-       &.collapsed{
-         border-radius: 8px;
-         border-bottom: 1px solid var(--q-gb-bd-c-12) !important;
-         border: 1px solid var(--q-gb-bd-c-12);
-       }
-     }
     .match-content{
       width: 100%;
       padding: 0 10px;
-      border-top: 1px solid var(--q-gb-bd-c-4);
-      // background: var(--q-gb-bg-c-18);
+      border-top: 1px solid #E4E6ED;
+      background: var(--q-gb-bg-c-18);
       border-radius: 0 0 8px 8px;
+      border: 1px solid #fff;
       &.collapsed{
         border-top: none;
       }
       &.border-top{
-        border-top: 1px solid var(--q-gb-bd-c-4);
+        border-top: 1px solid #E4E6ED;
       }
     }
     > .match-indent{
+      border: 1px solid #fff;
       border-radius: 8px 8px 0 0;
+      border-bottom: 1px solid #E4E6ED !important;
       &.collapsed{
         border-radius: 8px;
+        border-bottom: 1px solid #fff !important;
+        border: 1px solid #fff;
       }
     }
-    
   }
 
   &.started_and_un_started {
