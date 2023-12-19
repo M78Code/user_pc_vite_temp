@@ -994,6 +994,7 @@ get_quick_mid_obj_ref(mid){
                           // 押注项设置盘口状态
                           Object.assign(item4, {
                             _hpid: item2.hpid,
+                            _chpid: item2.chpid,
                             _hs: (item3.hs ? item3.hs : 0),
                             _mhs: (item.mhs ? item.mhs : 0),
                             _mid: item.mid,
@@ -1071,6 +1072,7 @@ get_quick_mid_obj_ref(mid){
                           // 押注项设置盘口状态
                           Object.assign(item4, {
                             _hpid: item2.hpid,
+                            _chpid: item2.chpid,
                             _hs: (item3.hs ? item3.hs : 0),
                             _mhs: (item.mhs ? item.mhs : 0),
                             _mid: item.mid,
@@ -1192,6 +1194,7 @@ get_quick_mid_obj_ref(mid){
                               // 押注项设置盘口状态
                               Object.assign(item4, {
                                 _hpid: item2.hpid,
+                                _chpid: item2.chpid,
                                 _hs: (item3.hs ? item3.hs : 0),
                                 _mhs: (item.mhs ? item.mhs : 0),
                                 _mid: item.mid,
@@ -1262,6 +1265,7 @@ get_quick_mid_obj_ref(mid){
                               // 押注项设置盘口状态
                             Object.assign(item4, {
                               _hpid: item2.hpid,
+                              _chpid: item2.chpid,
                               _hs: (item3.hs ? item3.hs : 0),
                               _mhs: (item.mhs ? item.mhs : 0),
                               _mid: item.mid,
