@@ -824,7 +824,7 @@ export default defineComponent({
       background-color: var(--q-gb-bg-c-29) !important;
       border-radius:0 0 0.04rem 0.04rem!important;
       border-top:0.5px solid var(--q-gb-bd-c-5);
-      color:var(--q-gb-bg-c-18)
+      color:var(--q-gb-t-c-19)
       }
     }
     .play-name {
@@ -886,6 +886,10 @@ export default defineComponent({
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
 }
 :deep(.win .odds-new2) {
-      color: var(--q-gb-t-c-21) !important;
-    }
+    color: var(--q-gb-t-c-21) !important;
+  }
+:deep(.details_color){
+  background:var(--q-gb-bg-c-28);
+}
+
 </style>

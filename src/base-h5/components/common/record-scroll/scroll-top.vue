@@ -40,7 +40,7 @@ const is_show_btn = computed(() => {
 const disabled= ref(true)
 const watchHandle = watch(is_show_btn,(val)=>{
   if(val){
-     disabled.value = false
+    disabled.value = false
     watchHandle()
   }
 })
@@ -106,10 +106,16 @@ onUnmounted(() => {
   transition: bottom var(--private-transition-duration);
   &.show{
     bottom: calc(100% + .2rem);
+    opacity: 1;
+    &.app-h5{
+      bottom: calc(100% + 0.85rem);
+      background: transparent;
+    }
   }
-  &.app-h5{
-    bottom: calc(100% + 0.85rem);
-    background: transparent;
+  &.hide{
+    opacity: 0;
+    pointer-events: none;
   }
+  
 }
 </style>
