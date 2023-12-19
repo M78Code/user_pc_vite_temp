@@ -183,9 +183,9 @@
                             {{ home_red_score }}
                           </span>
                           <!-- 黄牌 -->
-                          <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
+                          <!-- <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
                             {{ home_yellow_score }}
-                          </span>
+                          </span> -->
                         </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
@@ -264,7 +264,7 @@
                           <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
                         </div>
                         <!-- 此赛事支持提前结算 -->
-                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
+                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
                           <img :src="mearlys_icon_app" alt="" style="width:0.2rem">
                         </div>
                         <!-- 角球 -->
