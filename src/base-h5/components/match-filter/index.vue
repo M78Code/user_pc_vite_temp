@@ -676,6 +676,7 @@ if (type.value == 30) {
     z-index: 200;
     list-style: none;
     text-align: center;
+    color: var(--q-gb-t-c-24);
 
     li {
       width: 0.14rem;
