@@ -136,14 +136,14 @@
                   </div>
 
                   <!-- 电竞串关标识 -->
-                  <div v-if="menu_type == 3000 && match.ispo" class="flag-chuan"
+                  <div v-if="is_esports && match.ispo" class="flag-chuan"
                     :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ i18n_t('match_info.match_parlay') }}
                   </div>
                 </div>
                 <!--玩法数量-->
                 <div class="right-score">
                   <div class="goto-detail" @click='goto_details(match)'>
-                    <span class="count_span" :class="{ esports: 3000 == menu_type }">
+                    <span class="count_span" :class="{ esports: is_esports }">
                       <span class="mc-n">
                         {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}+
                       </span>
@@ -1222,6 +1222,7 @@ export default {
             color: var(--q-gb-t-c-18);
 
             &.is-handicap {
+              color: #000;
               font-weight: bold;
             }
           }

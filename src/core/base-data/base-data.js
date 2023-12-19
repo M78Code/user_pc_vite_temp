@@ -585,8 +585,6 @@ class BaseData {
         }
       });
 
-      console.error('sss')
-
       // openElectronicTy 电子体育 openElectronicFootball 电子足球 openElectronicBasketball 电子篮球  filterSport 关闭的赛种
       let {openElectronicTy,openElectronicFootball,openElectronicBasketball,filterSport} = lodash_.get(UserCtr,'user_info',{})
       let filter_list = []

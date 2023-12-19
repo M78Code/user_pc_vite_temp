@@ -1,5 +1,5 @@
 <template>
-  <div class="container-menu-w black2" >
+  <div class="component container-menu-w black2" >
     <div class="floating-menu">
       <div class="footer-menu-item" @click="menu_item_click(item)" v-for="(item, k) of footer_menu_list" :key="k">
         <div class="m-item-inner">
