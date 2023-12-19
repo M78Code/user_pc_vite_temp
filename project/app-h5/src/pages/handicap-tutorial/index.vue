@@ -127,7 +127,6 @@ const switchHandle = (val) => {
             state.bsHtContentHeightList = Array.from(bsContentContainer).map(i => {
                 return i.offsetTop - scrollContainer.offsetTop
             })
-            console.log('state.bsHtContentHeightListstate.bsHtContentHeightList', state.bsHtContentHeightList)
         })
     }
     state.inAnswerQuestion = false // 切换swtich 重置答题状态
@@ -158,9 +157,10 @@ const handleScroll = (e) => {
         return
     }
     const arr = state.currentSwitchValue ? state.bsHtContentHeightList : state.htContentHeightList
-    const index = arr.findIndex(v => v > e.target.scrollTop) - 1
+    let index = arr.findIndex(v => v > e.target.scrollTop) - 1
     if (state.currentSlideValue === index) return
-    if (index < 0) return
+    if (index < 0 && !state.currentSwitchValue) {index = 7}
+    else {return}
     const dom = document.getElementsByClassName('slide-item')[index]
     state.currentSlideValue = index
     scrollMenuEvent(dom, ".ht-slide-box", ".slide-item-active");
