@@ -99,7 +99,7 @@
                     border-radius: 25px;
                     // background:var(--q-gb-bg-c-11); 
                     color: var(--q-gb-t-c-20);
-                    background: linear-gradient(180deg, #FFFFFF 32.81%, #EEF1F9 73.63%, #F9FDFF 100%);
+                    background: var(--q-gb-bg-c-28);
                     box-shadow: 0px 2px 4px rgba(121, 129, 164, 0.2);
                 }
             }

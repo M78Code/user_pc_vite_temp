@@ -260,8 +260,10 @@ function change_active(item) {
 
 const { ctx } = getCurrentInstance()
 // 解决三星手机图片不出来问题
-onMounted(() => ctx.$forceUpdate())
-onMounted(() => Object.assign(page_style, global_color_obj()))
+onMounted(() =>{
+  Object.assign(page_style, global_color_obj())
+  lodash.isFunction(ctx.$forceUpdate)&&ctx.$forceUpdate() //报错 不是 function
+})
 timer2_.value = setInterval(ctx.$forceUpdate, 2000);
 </script>
 

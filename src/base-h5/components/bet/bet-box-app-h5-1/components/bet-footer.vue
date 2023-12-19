@@ -304,7 +304,7 @@ onMounted(()=>{
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
-    background: #E8F5FF;
+    background: var(--q-gb-bg-c-31);
     color: var(--q-gb-t-c-1);
     padding: .03rem 0.1rem;
     text-align: center;
