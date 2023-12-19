@@ -8,7 +8,12 @@
 
     <!-- 小组 -->
     <div class="group-item hairline-border" v-for="(detail_list,index) in group_stage_list" :key="index" v-show="!no_data">
-      <div class="group-name">{{get_lang == 'vi' ? (i18n_t('virtual_sports.group')+ '  ' + detail_list.groupId) : (detail_list.groupId+ '  ' +i18n_t('virtual_sports.group'))}}</div>
+      <div class="group-name">
+        <span></span>
+        <span>
+          {{get_lang == 'vi' ? (i18n_t('virtual_sports.group')+ '  ' + detail_list.groupId) : (detail_list.groupId+ '  ' +i18n_t('virtual_sports.group'))}}
+        </span>
+      </div>
       
       <!-- header -->
       <div class="header">
@@ -190,14 +195,30 @@ export default {
   }
 
   .group-name {
-    width: 100vw;
-    height: 0.42rem;
-    line-height: 0.42rem;
-    padding-left: 0.35rem;
+    width: 98vw;
+    height: 0.28rem;
+    line-height: 0.24rem;
+    
     font-size: 0.12rem;
     font-weight: 600;
-    
     border-bottom: 0.01rem solid #F2F2F6;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    span {
+      &:nth-child(1){
+        display: inline-block;
+        height: 0.12rem;
+        width: 0.02rem;
+        background-color: #179CFF;
+      }
+      &:nth-child(2){
+        padding-left: 0.06rem;
+      }
+    }
   }
 
   .team-item {
