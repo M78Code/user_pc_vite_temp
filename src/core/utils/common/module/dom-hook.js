@@ -61,7 +61,7 @@ export const useImageElmentHook = (imgdom, config = {}) => {
 export const set_css = (element, css) => {
   const style = element.style
   Object.keys(css).forEach(prop => {
-    style[prop] = css[prop]
+    style.setProperty(prop,css[prop])
   })
 }
 /**
