@@ -13,6 +13,11 @@
       favorite_un_start_title: favorite_un_start_title(i, match_of_list.ms),
     }]">
     <template v-if="match" >
+      <!-- 全部 -->
+      <div class="all-league-title" v-if="i === 0" @click.stop="handle_ball_seed_fold">
+        <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
+        <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
+      </div>
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
       <div :class="['match-inner-container', {'collapsed': !collapsed}]">
          <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
@@ -195,7 +200,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
 import { i18n_t, compute_img_url, compute_css_obj, PageSourceData } from "src/output/index.js"
 import { format_time_zone } from "src/output/index.js"
-import { mearlys_icon, in_progress, not_begin, normal_img_not_favorite_white, normal_img_is_favorite } from 'src/base-h5/core/utils/local-image.js'
+import { mearlys_icon, in_progress, not_begin, normal_img_not_favorite_white, normal_img_is_favorite, icon_date, expand_item } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { format_msc, foot_ball_score_handle } from "src/output/index.js"
@@ -263,7 +268,7 @@ export default {
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, mearlys_icon, compute_css_obj, show_sport_title,
-      normal_img_not_favorite_white, normal_img_is_favorite, PageSourceData
+      normal_img_not_favorite_white, normal_img_is_favorite, PageSourceData, icon_date, expand_item
     }
   }
 }
@@ -281,6 +286,31 @@ export default {
   width: 0.14rem;
   height: 0.14rem;
   margin-top: 0.07rem;
+}
+
+.all-league-title{
+  display: flex;
+  height: 30px;
+  background: var(--q-gb-bg-c-15);
+  padding: 0 10px;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 2px solid var(--q-gb-bd-c-3);
+  > div {
+    display: flex;
+    align-items: center;
+    > span {
+      padding-left: 5px;
+      color:var(--q-gb-t-c-18);
+    }
+  }
+  .expand_item{
+    transition: transform 0.25s ease;
+     transform: rotate(-180deg);
+  }
+  .ball_seed_collapsed{
+    transform: rotate(0);
+  }
 }
 
 .auto-full-width-100 {

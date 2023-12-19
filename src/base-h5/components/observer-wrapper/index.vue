@@ -4,7 +4,7 @@
 
 <template>
   <main class="main-container">
-    <template v-if="match_list">
+    <template v-if="match_list.length > 0">
       <section class="observer-container" ref="container" @scroll="handler_container_scroll">
           <div class="observer-item" 
             v-for="item, index in match_list" 
@@ -98,7 +98,7 @@ onMounted(() => {
     emitter_2: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, () => {
       nextTick(() => go_to_top())
     }).off,
-    emitter_3: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, upd_match_is_empty).off,
+    emitter_3: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, set_empty_page).off,
   }
 })
 
@@ -244,8 +244,8 @@ const get_item_style = (item, index) => {
 /**
  * @description: 赛事列表为空通知事件函数
  */
- const upd_match_is_empty = (obj = {}) => {
-  // 当是赛果菜单,三级菜单数据没有时,发送列表赛事数据为空消息,收到消息后页面显示为空页面
+ const set_empty_page = (obj = {}) => {
+  console.log(obj)
   const { state = false, type = 'noMatch' } = obj
   which.value = type
   // match_is_empty.value = state;

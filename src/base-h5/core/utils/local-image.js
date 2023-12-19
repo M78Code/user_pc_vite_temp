@@ -59,9 +59,9 @@ export const in_progress = compute_local_project_file_path('/image/list/in_progr
 export const not_begin = compute_local_project_file_path('/image/list/not_begin.png')
 
 // 动画icon
-export const animation_icon = compute_local_project_file_path('/image/list/animate_icon.jpg')
+export const animation_icon = compute_local_project_file_path('/image/list/animate_icon.png')
 // 视频icon
-export const video_icon = compute_local_project_file_path('/image/list/video_icon.jpg')
+export const video_icon = compute_local_project_file_path('/image/list/video_icon.png')
 // 日期
 export const icon_date = compute_local_project_file_path('/image/list/icon_date.png')
 export const expand_item = compute_local_project_file_path('/image/list/expand_item.png')
@@ -78,7 +78,7 @@ export const no_wifi = compute_local_project_file_path('/image/list/no-wifi.png'
 // 角球图标
 export const corner_icon = compute_local_project_file_path('/image/list/corner_icon.png')
 // app-h5 提前结算
-export const mearlys_icon_app = compute_local_project_file_path('/image/list/mearlys_icon_app.jpg')
+export const mearlys_icon_app = compute_local_project_file_path('/image/list/mearlys_icon_app.png')
 
 export const midfield_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
 // app-h5 中立场
@@ -96,8 +96,11 @@ export const skeleton_white_app_117 = compute_local_project_file_path('/image/sk
 // 复刻版 177 赛事高度 骨架屏
 export const skeleton_white_app_177 = compute_local_project_file_path('/image/skeleton/height-177.jpg')
 
-// 回到顶部
+// 欧洲版回到顶部
 export const scroll_top_icon = compute_local_project_file_path('/image/list/icon-top.png')
+
+// 复刻版回到顶部
+export const scroll_top_icon_app = compute_local_project_file_path('/image/list/icon-top-app.png')
 
 // ouzhou 收藏 - 空
 export const no_collect_ouzhou = compute_local_project_file_path('/image/list/collect.png')

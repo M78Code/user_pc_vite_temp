@@ -45,7 +45,7 @@
                     }">
                       {{ score[1] }}-{{ score[2] }}
                     </span>
-                      <div class="divider"></div>
+                      <!-- <div class="divider"></div> -->
                   </div>
                 </template>
               </div>
