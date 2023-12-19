@@ -771,9 +771,12 @@ class AllDomain {
       } else {
         data["img"] = [];
       }
-
+      //解密 topic ,  正确结构：["xsxsax"]
+      let topic = lodash.get(data, "topic")
+      if(lodash.isArray(topic)&&topic[0]&&lodash.isString( topic[0])) { this.get_oss_decrypt_obj(topic);}else{
+        data["topic"]=[]
+      }
       //解密 static , 正确结构：["xsxsax"]
-
       let stc = lodash.get(data, "static");
       if (lodash.isArray(stc) && stc[0] && lodash.isString(stc[0])) {
         this.get_oss_decrypt_obj(stc);
@@ -823,6 +826,13 @@ class AllDomain {
     // 设置oss_img_domains
     if (img && img.length) {
       this.check_img_domain(img);
+    }
+    // 设置topic
+    let topic = lodash.get(oss_data, "topic");
+    if (topic && topic.length) {
+      this.toppic_fast(topic,(api_obj)=>{
+        BUILDIN_CONFIG.DOMAIN_RESULT.topic = api_obj;
+      });
     }
     // 处理 api  逻辑
     this.set_all_config_from_oss_file_data_2_api(oss_data);
@@ -1169,6 +1179,100 @@ class AllDomain {
       };
       img.src = url;
     });
+  }
+
+  /**
+   * 找到toppic中最快的域名
+   * @param {*} api
+   */
+  async toppic_fast(api=[], callback, count=0) {
+    count++;
+    console.log('toppic_fast->',count);
+    // 清除计时器
+    clearTimeout(this.timer_toppic_fast);
+    let reqs = [];
+    api.map((x) => {
+      // 循环对api进行测试访问处理
+      let t = new Date().getTime();
+      // 请求的地址
+      let url = `${x}/check.json?t=${t}`;
+      reqs.push(axios_instance.get(url, { timeout: 5000 }));
+    });
+    try {
+      let res = await Promise.any(reqs);
+      // 最快toppic的域名
+      let c_url = new URL(res.config.url).origin;
+      clearTimeout(this.timer_toppic_fast);
+      let obj_ = {sports_rules:''}
+      // 体育规则配置 
+      // 布局规则
+      // --2021亚洲H5+PC	common
+      // --2023亚洲PC	23-as
+      // --2023欧洲H5+PC	23-eu
+      // --2023KYAPP复刻版	23-app
+      // 路径规则：最优域名/sports-rules/布局/内容 （内容字段需要接口下发，默认common）
+      // 比如 https://test-topic.sportxxxifbdxm2.com/sports-rules/common/common
+      // 获取项目信息
+      const PROJECT_NAME = window.BUILDIN_CONFIG.PROJECT_NAME;
+      switch (PROJECT_NAME) {
+        case 'yazhou-h5':
+          obj_.sports_rules = `${c_url}/sports-rules/23-as/common`;
+          break;
+        case 'yazhou-pc':
+          obj_.sports_rules = `${c_url}/sports-rules/23-as/common`;
+          break;
+        case 'ouzhou-h5':
+          obj_.sports_rules = `${c_url}/sports-rules/23-eu/common`;
+          break;
+        case 'ouzhou-pc':
+          obj_.sports_rules = `${c_url}/sports-rules/23-eu/common`;
+          break;
+        case 'app-h5':
+          obj_.sports_rules = `${c_url}/sports-rules/23-app/common`;
+          break;
+        case 'new-pc':
+          obj_.sports_rules = `${c_url}/sports-rules/23-as/common`;
+          break;
+        default:
+          obj_.sports_rules = `${c_url}/sports-rules/common/common`;
+          break;
+      }
+      callback && callback(obj_);
+      return;
+    } catch (error) {
+      // 所有  全部请求失败
+      // console.log(error);
+    }
+    try {
+      let results = await Promise.allSettled(reqs);
+      //      // 异步操作成功时
+      // {status: 'fulfilled', value: value}
+      // // 异步操作失败时
+      // {status: 'rejected', reason: reason}
+      // console.log(" 域名时间戳检测逻辑结果 results----------", results);
+      //失败次数
+      let rejected_num = 0;
+      let tr = new Date().getTime();
+      results.map((x, i) => {
+        //'fulfilled' 异步操作成功时
+        if (x.status == "fulfilled") {
+          // 刷新 域名的创建时间 ，刷新理论存活时间
+        } else {
+          // 'rejected'  异步操作失败时
+          rejected_num++;
+        }
+      });
+      //全部错误
+      if (rejected_num == api.length) {
+        // 失败 页面  没网 之类的 错误页面
+        this.timer_toppic_fast = setTimeout(() => {
+          this.toppic_fast(api, callback, count);
+        }, 5000);
+      } else {
+      }
+    } catch (error) {
+      // console.log(error);
+    }
   }
 }
 export default new AllDomain();
