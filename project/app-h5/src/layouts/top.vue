@@ -211,8 +211,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       if( [3,6].includes(1*new_)){
         nextTick(()=>{
           const index = type && MenuData.data_tab_index?MenuData.data_tab_index:0;
-          dateTabMenu.value.set_active_val()
-          dateTabMenu.value.changeTabMenu(dataList[MenuData.current_lv_1_menu_i]?.[index],index,'',type)
+          dateTabMenu.value?.set_active_val()
+          dateTabMenu.value?.changeTabMenu(dataList[MenuData.current_lv_1_menu_i]?.[index],index,'',type)
         })
       }else{
         set_scroll_data_list(new_,type)
@@ -225,8 +225,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     //球种滚动初始化
     nextTick(()=>{
       try {
-        scrollTabMenu.value.scrollTabMenu()
-        searchTabMenu.value.searchTabMenu()
+        scrollTabMenu.value?.scrollTabMenu()
+        searchTabMenu.value?.searchTabMenu()
       } catch(_) {} 
     })
   }
