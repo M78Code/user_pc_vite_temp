@@ -618,7 +618,10 @@ onUnmounted(() => {
     margin-bottom: 0.09rem;
     font-size: 0.14rem;
     line-height: 1;
-    color: #AFB3C8 !important;
+    color: var(---q-gb-t-c-26);
+    span{
+     color: var(---q-gb-t-c-19);
+    }
     &.standard {
       margin-bottom: 0.03rem;
       font-size: 0.12rem;
@@ -654,15 +657,18 @@ onUnmounted(() => {
 .flag-random {
   display: none;
 }
+
 .active {
   // 需要替换成变量
-  color: #127DCC;
-  background: #D1EBFF !important;
+  background: var(--q-gb-bg-c-24) !important;
   .odd-title {
-    color: var(--q-gb-t-c-25) !important;  
+     color: var(--q-gb-t-c-1) !important;
+    span{
+      color: var(--q-gb-t-c-1) !important;
+    }
   }
   .odd-value {
-    color: var(--q-gb-t-c-25) !important;  
+    color: var(--q-gb-t-c-1) !important;  
   }
 }
 </style>
