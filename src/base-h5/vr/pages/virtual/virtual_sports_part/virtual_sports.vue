@@ -716,7 +716,7 @@ export default {
   justify-content: space-between;
   padding-right: 9px;
   &.tab-border {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--q-gb-bd-c-4);
   }
   .league-name{
     color: var(--q-gb-t-c-18);
