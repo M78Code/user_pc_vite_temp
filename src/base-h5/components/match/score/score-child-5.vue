@@ -7,10 +7,8 @@
 <!-- 网球 -->
 <!-- 可能会产生滚动，故用class  menu-s -->
   <div class='score_child_5 mx-12 font-style menu-s'>
-      <span v-for="(item, key) of score_array" :key="key">
-        <span>&nbsp;&nbsp;</span>
+      <span v-for="(item, key) of score_array" :key="key" class="mr-10">
         <span :class="{'activeText':(score_array.length == key + 1 && detail_data.mo != 1)}" style="letter-spacing: 0.015rem">{{ $filters.score_format(item)}}</span>
-        <span>&nbsp;&nbsp;</span>
       </span>
   </div>
 </template>
@@ -153,7 +151,7 @@ export default {
 /*************** 字体样式 *************** -E*/
 /*************** 比分字体颜色 *************** -S*/
 .activeText {
-  color: #FF9124;
+  color: #179CFF;
 }
 
 /*************** 比分字体颜色 *************** -E*/
@@ -163,7 +161,11 @@ export default {
   overflow-y: hidden;
   -webkit-overflow-scrolling: auto;
   white-space: nowrap;
+  font-size: 12px;
+  font-weight: 700;
 }
-
+.mr-10 {
+  margin-right: 10px;
+}
 /*************** 超出显示范围横向滚动样式 *************** -E*/
 </style>
