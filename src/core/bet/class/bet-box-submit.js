@@ -896,7 +896,7 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
         play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
         if(!play_name){
             let odds_info_list = lodash_.get(mid_obj,`odds_info`,[])
-            odds_info_list.find()
+            // odds_info_list.find()
 
         }
     }else{

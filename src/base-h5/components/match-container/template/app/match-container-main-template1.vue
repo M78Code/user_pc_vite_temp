@@ -1482,7 +1482,7 @@ export default {
 
   .timer-wrapper-c {
     position: relative;
-    top: 1px;
+    top: 0px;
     height: 100%;
     color: var(--q-gb-t-c-19);
 
@@ -1637,7 +1637,6 @@ export default {
     height: 0.16rem;
     line-height: .16rem;
     border-radius: .03rem;
-
     &.special-lang {
       margin-left: .06rem;
     }
