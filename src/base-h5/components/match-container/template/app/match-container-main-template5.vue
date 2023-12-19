@@ -154,13 +154,15 @@
                 </span>
 
                 <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
-                <image-cache-load v-if="match?.mhlu?.length && !([5, 7].includes(Number(match.csid)))"
+                <!-- <image-cache-load v-if="match?.mhlu?.length && !([5, 7].includes(Number(match.csid)))" -->
+                <image-cache-load v-if="match?.mhlu?.length"
                   :csid="+match.csid" :path="match.mhlu" type="home"></image-cache-load>
                 <!-- <img v-if="match?.mhlu?.length" class="logo" v-img="([match.mhlu[0], match.frmhn[0], match.csid])" /> -->
               </div>
               <span class="vs">VS</span>
               <div class='right'>
-                <image-cache-load v-if="match?.malu?.length && !([5, 7].includes(Number(match.csid)))"
+                <!-- <image-cache-load v-if="match?.malu?.length && !([5, 7].includes(Number(match.csid)))" -->
+                <image-cache-load v-if="match?.malu?.length"
                   :csid="+match.csid" :path="match.malu" type="home"></image-cache-load>
 
                 <!-- <img v-if="match?.malu?.length" class="logo" v-img="([match.malu[0], match.frman[0], match.csid])" /> -->
@@ -840,7 +842,6 @@ export default {
         color: var(--q-gb-t-c-18);
         font-size: 12px;
         font-weight: 400;
-
         .serving-party {
           border-radius: 2px;
           background: var(--sys-feedback-success-success-400, #4AB06A);
@@ -865,6 +866,7 @@ export default {
 
           &.left {
             justify-content: flex-end;
+
           }
 
           &.right {
