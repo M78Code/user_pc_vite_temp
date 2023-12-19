@@ -172,8 +172,8 @@ class MenuData {
     }else{
       this.menu_list.forEach(item => {
         (item.sl || []).find(obj=>{
-          // 菜单id最后一位为顶级菜单的id
-          if(obj.mi.substr(obj.mi.length-1,1) == mid){
+          // 菜单id最后一位为顶级菜单的id  早盘没有电足电篮
+          if(obj.mi.substr(obj.mi.length-1,1) == mid && ![1903,1913].includes(+obj.mi)){
             obj.mif = item.mi;
             menu_lv_mi_lsit.push(obj)
           }
@@ -185,7 +185,10 @@ class MenuData {
     // 今日 加入 收藏/vr体育/电竞 滚球加入全部
     // menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
     if([1,2,3,6].includes(mid)){
-      const is_number = [BaseData.show_e_soprts.football,BaseData.show_e_soprts.basketball];//是否有电子球种
+      let _this = this;
+      const is_football = menu_lv_mi_lsit.some((n)=>{return n.mi == `190${_this.current_lv_1_menu_i}`}) && _this.current_lv_1_menu_i !=3;
+      const is_basketball = menu_lv_mi_lsit.some((n)=>{return n.mi == `191${_this.current_lv_1_menu_i}`})&& _this.current_lv_1_menu_i !=3;
+      const is_number = [BaseData.show_e_soprts.football && is_football ,BaseData.show_e_soprts.basketball && is_basketball];//是否有电子球种
       let num = is_number.filter((n)=>{return !!n}).length+2;
       let type = mid==1?num+1:num;//插入位置
       if(mid == 1){
