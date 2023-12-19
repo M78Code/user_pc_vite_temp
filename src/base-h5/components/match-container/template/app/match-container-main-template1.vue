@@ -1222,6 +1222,7 @@ export default {
             color: var(--q-gb-t-c-18);
 
             &.is-handicap {
+              color: #000;
               font-weight: bold;
             }
           }
