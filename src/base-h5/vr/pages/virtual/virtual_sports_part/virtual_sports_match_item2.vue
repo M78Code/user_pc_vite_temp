@@ -451,7 +451,7 @@ export default {
     //   get_theme:'get_theme',
     //   get_access_config:'get_access_config',
     // }),
-    footer_sub_menu_id(){return false;},
+    footer_sub_menu_id(){return VR_CTR.get_footer_sub_menu_id() },
     get_video_process_data(){return VR_CTR.get_video_process_data();},
     get_n_s_changed_loaded(){return false;},
     get_curr_sub_menu_type(){ return VR_CTR.get_curr_sub_menu_type() },

@@ -65,7 +65,7 @@ export default {
     // ...mapMutations([
     //   'set_footer_sub_menu_id',
     // ]),
-    set_footer_sub_menu_id(){},
+    set_footer_sub_menu_id(data){ return VR_CTR.set_goto_detail_matchid(data) },
     /**
      * 初始化玩法选中项
      */
