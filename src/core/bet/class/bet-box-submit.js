@@ -771,6 +771,12 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 电竞赛事
     if(other.bet_type == 'esports_bet'){
         matchType = 5
+        // 电竞赛事
+        // C01赛事不支持串关
+        // if(lodash.get(mid_obj, 'cds') == "C01" && lodash_.get(BetData,'bet_list.length',0)>0){
+        //     useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('bet.bet_no_support'));
+        //     return;
+        // }
     }
     // 虚拟赛事
     if(other.bet_type == 'vr_bet'){
