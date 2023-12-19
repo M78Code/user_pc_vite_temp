@@ -1161,7 +1161,7 @@ const get_market_is_show = (obj={}) =>{
 
     return !!hl_obj.hid
 }
-const go_to_bet = (ol_item) => {
+const go_to_bet = (ol_item, match_data_type) => {
     // 如果是赛果详情
     if(PageSourceData.route_name == 'match_result') return
     const {oid,_hid,_hn,_mid,_hpid } = ol_item
@@ -1187,7 +1187,7 @@ const go_to_bet = (ol_item) => {
       // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
       device_type: 1,  
       // 数据仓库类型
-      match_data_type: "h5_detail",
+      match_data_type: match_data_type || "h5_detail",
   }
     set_bet_obj_config(params,other)
 }   
