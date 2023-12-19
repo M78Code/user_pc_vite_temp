@@ -17,7 +17,7 @@
                 <component :is="target_com" :index="index" :item="get_match_item(item)"></component>
               </template>
             </slot>
-            <img v-if="!is_show_match_item(index)" :src="get_background_image(item) " alt="">
+            <img v-show="!is_show_match_item(index)" :src="get_background_image(item) " alt="">
           </div>
       </section>
     </template>
@@ -119,7 +119,7 @@ const handle_start_observer = () => {
         get_match_base_by_mids()
       } else {
         // 可视区外 删除 DOM 节点
-        handler(key, false)
+        // handler(key, false)
         remove_match(mid)
       }
     }
@@ -187,7 +187,6 @@ const handler = (key, falg) => {
  */
 const is_show_match_item = computed(() => {
   return (index) => {
-    // 
     return defer_render(index)
   }
 })
