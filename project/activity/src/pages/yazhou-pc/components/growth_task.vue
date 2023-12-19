@@ -192,8 +192,7 @@
                 v-for="(item, index) in history_records"
                 :key="index"
               >
-                <p>
-                  <span>{{ item.taskName }}</span>
+                <p v-html="item.taskName">
                 </p>
                 <p>
                   <span>{{ item.ticketNum }}</span>
