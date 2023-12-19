@@ -507,8 +507,8 @@ export default {
   width: 3.61rem;
   min-height: 0.9rem;
   margin: 0 auto 0.08rem auto;
-  border-radius: 0.08rem;
-  border-bottom: 1px solid #e9e9e9;
+  border-radius: 0;
+  border-bottom: 1px solid var(--q-gb-bd-c-4);
   position: relative;
 
   .test-line {
