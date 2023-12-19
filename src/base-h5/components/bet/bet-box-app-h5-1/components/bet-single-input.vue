@@ -266,6 +266,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: flex-start;
   width: 70%;
+  color: var(--q-gb-t-c-18);
   .limit-txt {
     color: var(--q-gb-t-c-19);
     font-family: PingFang SC;
