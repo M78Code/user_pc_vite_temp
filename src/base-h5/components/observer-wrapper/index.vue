@@ -4,7 +4,7 @@
 
 <template>
   <main class="main-container">
-    <template v-if="match_list">
+    <template v-if="match_list.length > 0">
       <section class="observer-container" ref="container" @scroll="handler_container_scroll">
           <div class="observer-item" 
             v-for="item, index in match_list" 
@@ -17,7 +17,7 @@
                 <component :is="target_com" :index="index" :item="get_match_item(item)"></component>
               </template>
             </slot>
-            <img v-if="!is_show_match_item(index)" :src="get_background_image(item) " alt="">
+            <img v-show="!is_show_match_item(index)" :src="get_background_image(item) " alt="">
           </div>
       </section>
     </template>
@@ -98,7 +98,7 @@ onMounted(() => {
     emitter_2: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, () => {
       nextTick(() => go_to_top())
     }).off,
-    emitter_3: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, upd_match_is_empty).off,
+    emitter_3: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, set_empty_page).off,
   }
 })
 
@@ -119,7 +119,7 @@ const handle_start_observer = () => {
         get_match_base_by_mids()
       } else {
         // 可视区外 删除 DOM 节点
-        handler(key, false)
+        // handler(key, false)
         remove_match(mid)
       }
     }
@@ -187,7 +187,6 @@ const handler = (key, falg) => {
  */
 const is_show_match_item = computed(() => {
   return (index) => {
-    // 
     return defer_render(index)
   }
 })
@@ -245,8 +244,8 @@ const get_item_style = (item, index) => {
 /**
  * @description: 赛事列表为空通知事件函数
  */
- const upd_match_is_empty = (obj = {}) => {
-  // 当是赛果菜单,三级菜单数据没有时,发送列表赛事数据为空消息,收到消息后页面显示为空页面
+ const set_empty_page = (obj = {}) => {
+  console.log(obj)
   const { state = false, type = 'noMatch' } = obj
   which.value = type
   // match_is_empty.value = state;

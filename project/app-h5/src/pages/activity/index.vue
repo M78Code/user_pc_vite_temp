@@ -42,6 +42,8 @@ acticity_src.value = acticity_src_url
 // console.error(token,'token',acticity_src);
 </script>
 <style lang="scss" scoped>
-
+.acticity-content{
+  background: #fff;
+}
 
 </style>

@@ -59,9 +59,9 @@ export const in_progress = compute_local_project_file_path('/image/list/in_progr
 export const not_begin = compute_local_project_file_path('/image/list/not_begin.png')
 
 // 动画icon
-export const animation_icon = compute_local_project_file_path('/image/list/animate_icon.jpg')
+export const animation_icon = compute_local_project_file_path('/image/list/animate_icon.png')
 // 视频icon
-export const video_icon = compute_local_project_file_path('/image/list/video_icon.jpg')
+export const video_icon = compute_local_project_file_path('/image/list/video_icon.png')
 // 日期
 export const icon_date = compute_local_project_file_path('/image/list/icon_date.png')
 export const expand_item = compute_local_project_file_path('/image/list/expand_item.png')
@@ -78,7 +78,7 @@ export const no_wifi = compute_local_project_file_path('/image/list/no-wifi.png'
 // 角球图标
 export const corner_icon = compute_local_project_file_path('/image/list/corner_icon.png')
 // app-h5 提前结算
-export const mearlys_icon_app = compute_local_project_file_path('/image/list/mearlys_icon_app.jpg')
+export const mearlys_icon_app = compute_local_project_file_path('/image/list/mearlys_icon_app.png')
 
 export const midfield_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
 // app-h5 中立场

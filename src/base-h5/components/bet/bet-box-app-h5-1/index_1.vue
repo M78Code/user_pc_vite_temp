@@ -109,8 +109,13 @@ import keyboard from "./components/bet-keyboard.vue";
 
 // 隐藏投注栏
 const pack_up = () => {
-  let sss = !BetData.bet_box_h5_show;
-  BetData.set_bet_box_h5_show(sss);
+  let box_show = !BetData.bet_box_h5_show;
+  BetData.set_bet_box_h5_show(box_show);
+  // 单关 隐藏投注 需要清空数据 复刻版需要
+  if(BetData.is_bet_single){
+    BetData.set_clear_bet_info()
+    BetViewDataClass.set_clear_bet_view_config()
+  }
 };
 
 // 关闭弹窗

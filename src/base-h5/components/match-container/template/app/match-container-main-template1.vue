@@ -11,7 +11,7 @@
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 开赛标题  -->
-      <div v-if="is_show_opening_title" @click.stop
+      <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
         :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
@@ -183,9 +183,9 @@
                             {{ home_red_score }}
                           </span>
                           <!-- 黄牌 -->
-                          <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
+                          <!-- <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
                             {{ home_yellow_score }}
-                          </span>
+                          </span> -->
                         </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
@@ -264,8 +264,8 @@
                           <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
                         </div>
                         <!-- 此赛事支持提前结算 -->
-                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
-                          <img :src="mearlys_icon_app" alt="" style="width:0.2rem">
+                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
+                          <img :src="mearlys_icon_app" alt="">
                         </div>
                         <!-- 角球 -->
                         <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()" v-if="match.csid == 1 && get_corner_kick">
@@ -382,6 +382,7 @@ export default {
     align-items: center;
     > span {
       padding-left: 5px;
+      color:var(--q-gb-t-c-18);
     }
   }
   .expand_item{
@@ -462,36 +463,13 @@ export default {
       border-top-left-radius: 0.08rem;
       border-top-right-radius: 0.08rem;
     }
-    // .match-content{
-    //   width: 100%;
-    //   padding: 0 10px;
-    //   border-top: 1px solid #E4E6ED;
-    //   background: var(--q-gb-bg-c-18);
-    //   border-radius: 0 0 8px 8px;
-    //   border: 1px solid #fff;
-    //   &.collapsed{
-    //     border-top: none;
-    //   }
-    //   &.border-top{
-    //     border-top: 1px solid #E4E6ED;
-    //   }
-    // }
-    // > .match-indent{
-    //   border: 1px solid #fff;
-    //   border-radius: 8px 8px 0 0;
-    //   border-bottom: 1px solid #E4E6ED !important;
-    //   &.collapsed{
-    //     border-radius: 8px;
-    //     border-bottom: 1px solid #fff !important;
-    //     border: 1px solid #fff;
-    //   }
-    // }
     .match-content{
       width: 100%;
       padding: 0 10px;
       border-top: 1px solid var(--q-gb-bd-c-4);
-      // background: var(--q-gb-bg-c-18);
+      background: var(--q-gb-bg-c-18);
       border-radius: 0 0 8px 8px;
+      border: 1px solid var(--q-gb-bd-c-15);
       &.collapsed{
         border-top: none;
       }
@@ -500,12 +478,15 @@ export default {
       }
     }
     > .match-indent{
+      border: 1px solid var(--q-gb-bd-c-15);
       border-radius: 8px 8px 0 0;
+      border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
       &.collapsed{
         border-radius: 8px;
+        border-bottom: 1px solid var(--q-gb-bd-c-15) !important;
+        border: 1px solid var(--q-gb-bd-c-15);
       }
     }
-    
   }
 
   &.started_and_un_started {
