@@ -64,7 +64,7 @@ export default {
 <style lang="scss" scoped>
 .dialog-header {
   width: 3.75rem;
-  background: url($SCSSPROJECTPATH + "/image/svg/go-back-icon.svg") no-repeat 50%/96% 96%;
+  //background: url($SCSSPROJECTPATH + "/image/svg/go-back-icon.svg") no-repeat 50%/96% 96%;
   height: 0.44rem;
   line-height: 0.44rem;
 
@@ -75,10 +75,11 @@ export default {
   .triangle-down {
     width: 0;
     height: 0;
-    border-width: 0.05rem;
-    border-style: solid;
+    border: 0.05rem solid;
+    border-color: #050505 transparent transparent transparent;
     display: inline-block;
-    transform: translateY(-0.02rem);
+    transform: rotate(180deg);
+  
   }
 }
 
