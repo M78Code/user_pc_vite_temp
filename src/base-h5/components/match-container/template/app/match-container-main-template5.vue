@@ -958,6 +958,7 @@ export default {
           height:100%;
           display: flex;
           align-items: center;
+          color:var(--q-gb-t-c-18)
           // margin-top: .02rem;
         }
 
