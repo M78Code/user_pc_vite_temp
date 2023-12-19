@@ -35,7 +35,7 @@
       </div>
 </template>
 <script setup>
-import { ref,reactive,onMounted,onUnmounted,computed ,nextTick } from "vue";
+import { ref,reactive,onMounted,onUnmounted,computed ,nextTick,watch } from "vue";
 // import lodash_ from "lodash";
 // import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj, MenuData } from "src/output/index.js";
@@ -142,11 +142,15 @@ const get_menu_ws_list = (list) =>{
     if(index !== -1)wsList[index].ct = wsList.map((item)=>{return is_not_ct.includes(item.mi)?0:item.ct}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
     emits('changeList',wsList)
 }
+
 onMounted(()=>{
     ref_data.emit_lsit = {
         emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, get_menu_ws_list).off,
     }
-   
+    nextTick(() => {
+      let index = scrollDataListNew.value.findIndex(item => item.mi == props.current_mi)
+      scrollMenuEvent(scrollTab.value[index],".s-menu-container",".sport-menu-item");
+    })
 })
 onUnmounted(()=>{
     Object.values(ref_data.emit_lsit).map((x) => x());

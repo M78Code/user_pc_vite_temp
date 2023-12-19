@@ -55,7 +55,7 @@
 
             v-if="[2, 6, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
             <!--分差-->
-            <div class="row" style="margin-right:.1rem" v-if="[2].includes(+match.csid) && get_total_scores">
+            <div class="row color18" style="margin-right:.1rem" v-if="[2].includes(+match.csid) && get_total_scores">
               <div style="margin-right:.03rem">
                 {{ i18n_t('list.score-disparity') }}
               </div>
@@ -64,7 +64,7 @@
               </div>
             </div>
             <!--总分-->
-            <div class="row" v-if="[2, 6].includes(+match.csid)">
+            <div class="row color18" v-if="[2, 6].includes(+match.csid)">
               <div style="margin-right:.03rem">
                 {{ i18n_t('list.total_pp_score_count') }}
               </div>
@@ -700,7 +700,9 @@ onUnmounted(() => {
 
     border: none !important;
   }
-
+  .color18{
+    color: var(--q-gb-t-c-18);
+  }
   /* ******比分区域样式********* -E*/
 }
 </style>

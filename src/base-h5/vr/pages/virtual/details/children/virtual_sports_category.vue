@@ -167,7 +167,6 @@ export default {
         this.created_init_event = false
         // return
       }
-
       // 当赛事结束时:切换玩法集调用赛事结果的接口
       if(this.match_status == 2){
         this.get_match_result()
@@ -562,6 +561,7 @@ export default {
       }else if(this.$route.name == "virtual_sports_details"){
         mid = this.$route.query.mid
       }
+      this.mid && (mid = this.mid);
 
       this.match_mid = mid;
       let params = {

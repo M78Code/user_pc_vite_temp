@@ -183,9 +183,9 @@
                             {{ home_red_score }}
                           </span>
                           <!-- 黄牌 -->
-                          <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
+                          <!-- <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
                             {{ home_yellow_score }}
-                          </span>
+                          </span> -->
                         </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
@@ -264,7 +264,7 @@
                           <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
                         </div>
                         <!-- 此赛事支持提前结算 -->
-                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
+                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
                           <img :src="mearlys_icon_app" alt="" style="width:0.2rem">
                         </div>
                         <!-- 角球 -->
@@ -462,30 +462,30 @@ export default {
       border-top-left-radius: 0.08rem;
       border-top-right-radius: 0.08rem;
     }
-    // .match-content{
-    //   width: 100%;
-    //   padding: 0 10px;
-    //   border-top: 1px solid #E4E6ED;
-    //   background: var(--q-gb-bg-c-18);
-    //   border-radius: 0 0 8px 8px;
-    //   border: 1px solid #fff;
-    //   &.collapsed{
-    //     border-top: none;
-    //   }
-    //   &.border-top{
-    //     border-top: 1px solid #E4E6ED;
-    //   }
-    // }
-    // > .match-indent{
-    //   border: 1px solid #fff;
-    //   border-radius: 8px 8px 0 0;
-    //   border-bottom: 1px solid #E4E6ED !important;
-    //   &.collapsed{
-    //     border-radius: 8px;
-    //     border-bottom: 1px solid #fff !important;
-    //     border: 1px solid #fff;
-    //   }
-    // }
+     .match-content{
+       width: 100%;
+       padding: 0 10px;
+       border-top: 1px solid var(--q-gb-bd-c-4);
+       background: var(--q-gb-bg-c-18);
+       border-radius: 0 0 8px 8px;
+       border: 1px solid var(--q-gb-bd-c-12);
+       &.collapsed{
+         border-top: none;
+       }
+       &.border-top{
+         border-top: 1px solid var(--q-gb-bd-c-4);
+       }
+     }
+     > .match-indent{
+       border: 1px solid var(--q-gb-bd-c-12);
+       border-radius: 8px 8px 0 0;
+       border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
+       &.collapsed{
+         border-radius: 8px;
+         border-bottom: 1px solid var(--q-gb-bd-c-12) !important;
+         border: 1px solid var(--q-gb-bd-c-12);
+       }
+     }
     .match-content{
       width: 100%;
       padding: 0 10px;
@@ -1039,6 +1039,7 @@ export default {
       display: flex;
       align-items: center;
       font-size: 0.1rem;
+      
     }
 
     .team-wrapper {
@@ -1179,6 +1180,7 @@ export default {
           line-height: 0.14rem;
           display: flex;
           align-items: center;
+          color: var(--q-gb-t-c-18);
           .yb-flex-center{
             padding-left: 2px;
             .yb-goal-gif{
