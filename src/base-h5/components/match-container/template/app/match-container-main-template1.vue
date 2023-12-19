@@ -265,7 +265,7 @@
                         </div>
                         <!-- 此赛事支持提前结算 -->
                         <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
-                          <img :src="mearlys_icon_app" alt="" style="width:0.2rem">
+                          <img :src="mearlys_icon_app" alt="">
                         </div>
                         <!-- 角球 -->
                         <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()" v-if="match.csid == 1 && get_corner_kick">
