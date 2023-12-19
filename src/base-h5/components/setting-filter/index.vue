@@ -97,9 +97,13 @@ const jumpHandle = () => {
 };
 
 const is_disabled = (item) => {
-  if(item.mark == "Handicap" && MenuData.is_esports()){
-    return true
+  if(MenuData.is_esports()){
+    //电竞 不会排序 和 盘口
+    if(['Handicap','sort'].includes(item.mark )){
+      return true
+    }
   }
+  return false
 }
 /**
  * @description 跳转网页版
@@ -205,10 +209,9 @@ const version_handle = item => {
   // 新手版
   if (status === 1) {
     if (project_name === 'app-h5') {
-      !MenuData.is_collect() && MatchMeta.set_origin_match_data()
-      // nextTick(() => {
-      //   useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-      // })
+      nextTick(() => {
+        !MenuData.is_collect() && MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+      })
     }
   } else {
     VirtualList.set_is_show_ball(true)
