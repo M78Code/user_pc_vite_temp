@@ -278,6 +278,7 @@ onUnmounted(() => {
 }
 .money-number {
   margin-top: 1px;
+  color:var(--q-gb-t-c-18);
   font-family: Akrobat;
   font-weight: 700;
 }
