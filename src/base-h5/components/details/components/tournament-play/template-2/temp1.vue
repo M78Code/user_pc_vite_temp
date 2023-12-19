@@ -371,6 +371,7 @@ export default defineComponent({
   width: 100%;
   display: flex;
   padding:0.04rem;
+  border-radius: 12px;
 }
 .remark {
   flex: 1;
