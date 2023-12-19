@@ -231,7 +231,7 @@ const sort_handle = item => {
  *@return {Undefined} undefined
  */
 const Handicap_handle = item => {
-  const status = item.switchValue === "rightVal" ? "HK" : "EU";
+  const status = item.switchValue === "rightVal" ? "EU" : "HK";
   UserCtr.set_cur_odds(status);
 };
 /**
