@@ -174,7 +174,7 @@ onMounted(() => {
   font-family: "Material Icons";
   font-style: normal;
   font-weight: 400;
-  src: url("/font/roboto/v20/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2")
+  src: url("/other-assets/font/roboto/v20/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2")
     format("woff2");
 }
 

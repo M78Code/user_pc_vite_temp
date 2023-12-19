@@ -132,6 +132,9 @@ export default {
       color: #999;
       line-height: 24px;
     }
+    li{
+      list-style: none;
+    }
   }
 
   .btn_number {

@@ -37,11 +37,11 @@ const componentId = defineAsyncComponent(() => import(`./score/score-child-${id}
 </script>
 <style lang="scss" scoped>
 .match_score {
-  height: 0.38rem;
-  line-height: 0.38rem;
+  // height: 0.38rem;
+  // line-height: 0.38rem;
   width: 100%;
 }
 
 .back_mask {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 8e-05) 0%, rgba(0, 0, 0, 0.8) 100%);
+  // background: linear-gradient(180deg, rgba(0, 0, 0, 8e-05) 0%, rgba(0, 0, 0, 0.8) 100%);
 }</style>

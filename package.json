@@ -18,7 +18,7 @@
         "export-html": "node ./job/export-html.js",
         "export-css-project-path": "node ./job/export-css-project-path.js",
         "export-check-json": "node ./job/export-check-json.js",
-        
+        "copy-assets": "node ./job/copy-assets.js",
         "divider--1--2": "echo  -------------------------通用基础命令  结束----------------------------- ",
         "divider--2--1": "echo  -------------------------服务端配置拆分命令  开始----------------------------- ",
         "export-build-in-config": "node ./job/export-build-in-config.js",
@@ -44,7 +44,7 @@
         "dev-activity-inner": "vite    --config  ./entries/activity/activity.vite.config.js",
         "build-activity-inner": "vite   build --config  ./entries/activity/activity.vite.config.js  --mode  production",
         "dev-activity": "run-s remove-output  env-dev  export-build-version-activity   remove-dist copy-oss-backup   copy-oss-output  export-build-in-config  export-css-project-path   export-html dev-activity-inner",
-        "build-activity": "run-s remove-output env-prod  export-build-version-activity   remove-dist copy-oss-backup   copy-oss-output export-build-in-config  export-css-project-path   export-html   build-activity-inner   copy-html copy-oss-dist   remove-dist-assets export-check-json",
+        "build-activity": "run-s remove-output env-prod  export-build-version-activity   remove-dist copy-oss-backup   copy-oss-output export-build-in-config  export-css-project-path   export-html   build-activity-inner   copy-html copy-oss-dist   remove-dist-assets copy-assets export-check-json",
         "divider--12--2": "echo  -------------------------活动项目  结束----------------------------- ",
         "divider--13--1": "echo  -------------------------动画项目  开始----------------------------- ",
         "export-build-version-animation": "node ./job/export-build-version-animation.js",
@@ -138,11 +138,11 @@
         "colors": "^1.4.0",
         "cross-env": "^7.0.3",
         "current-device": "^0.10.2",
-        "http-server": "^14.1.1",
         "npm-run-all": "^4.1.5",
         "randomstring": "^1.3.0",
         "sass": "^1.32.12",
         "vite": "^4.4.5",
+        "vite-plugin-compression": "^0.5.1",
         "vue-json-viewer": "^3.0.4"
     }
 }
