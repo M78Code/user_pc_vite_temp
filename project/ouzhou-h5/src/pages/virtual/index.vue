@@ -93,6 +93,7 @@ onMounted(() => {
   // get_virtual_menus()
   get_virtual_menus_data()
   // 首页跳转虚拟体育设置menu_type为900
+  
   // 不让浏览器记住上次的滚动位置
   if ('scrollRestoration' in History){
     history.scrollRestoration = 'manual'

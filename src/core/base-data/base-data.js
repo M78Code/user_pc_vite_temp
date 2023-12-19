@@ -578,15 +578,16 @@ class BaseData {
         let obj = dianjing_sublist().find((page) => page.mi == item.mi) || {};
 
         if (obj.mi) {
+          //电竞总数量 取今日 早盘下数量
+          obj.ct = item.sl?.filter(n=>{return [2,3].includes(n.st)})?.map((n)=>{return n.ct||0})?.reduce((n1,n2)=>{return n1+n2}) || 0;
           // mid
           sports_mi.push(Number(obj.mi));
           // 电子竞技 菜单数据
           esport_menu.push(obj);
         }
       });
-
-      console.error('sss')
-
+      this.dianjing_sublist = [...esport_menu];
+      
       // openElectronicTy 电子体育 openElectronicFootball 电子足球 openElectronicBasketball 电子篮球  filterSport 关闭的赛种
       let {openElectronicTy,openElectronicFootball,openElectronicBasketball,filterSport} = lodash_.get(UserCtr,'user_info',{})
       let filter_list = []
