@@ -31,19 +31,25 @@
                 </div>
                 <!-- 答题选项 -->
                 <div class="ht-answer-options">
-                    <div v-for="(i, index) in item.options" :key="'answer' + index" :class="['ht-anwser-item', i.label === state.currentOption && 'selected']" @click="selectOptionHandle(i)">
-                        <!-- <div class="option">
+                    <div v-for="(i, index) in item.options" :key="'answer' + index" :class="['ht-anwser-item', filterOptionsState(i), state.currentOption === i.label && 'selected']" @click="selectOptionHandle(i)">
+                        <div class="option">
                             <template v-if="!state.afterAnswerQuestion">
-                                <div>{{ i.label }}.</div>
                             </template>
                             <template v-else-if="state.afterAnswerQuestion === 'success'">
-                                <div v-if="i.isRight === 'error'">{{ i.label }}.</div>
-                                <div v-else class="options-icon">√</div>
+                                <div v-if="i.isRight === 'error'"></div>
+                                <div v-else class="options-icon">
+                                    <img v-if="i.isRight === 'success'" src="./sccuess.svg">
+                                    <img v-else src="./fail.svg">
+                                </div>
                             </template>
                             <template v-else>
-                                <div class="options-icon">{{ i.isRight === 'success' ? '√' : 'x' }}</div>
+                                <div class="options-icon">
+                                    <img v-if="i.isRight === 'success'" src="./sccuess.svg">
+                                    <img v-else src="./fail.svg">
+                                    <!-- {{ i.isRight === 'success' ? '√' : 'x' }} -->
+                                </div>
                             </template>
-                        </div> -->
+                        </div>
                         <div class="option-content">
                             <div class="text-style">{{ i.option }}</div>
                             <div :class="['point', !i.isWin ? 'win' : 'fail']">
@@ -56,7 +62,10 @@
 
                 <div v-if="state.afterAnswerQuestion" class="ht-answer-result">
                     <div :class="['result', state.afterAnswerQuestion === 'success' ? 'win' : 'fail']">
-                        <div class="result-icon"></div>
+                        <div class="result-icon">
+                            <img v-if="state.afterAnswerQuestion === 'success'" src="./sccuess_round.svg">
+                            <img v-else src="./fail_round.svg">
+                        </div>
                         <div class="text-style">{{state.afterAnswerQuestion === 'success' ? '恭喜红单' : '很遗憾，您还未完全掌握'}}</div>
                     </div>
 
@@ -65,24 +74,28 @@
                         <div v-html="item.note1"></div>
                     </div>
                 </div>
+
+                <div v-if="state.afterAnswerQuestion" class="ht-button default" @click="nextQuestionsHandle">
+                {{ nextQuestionsText() }}
+                </div>
             </div>
         </template>
 
-        <div v-if="state.currentAnswer === props.questionsData.length && state.recordSuccess === props.questionsData.length" class="ht-congrats">恭喜，您已进阶为足球大师</div>
+        <!-- <div v-if="state.currentAnswer === props.questionsData.length && state.recordSuccess === props.questionsData.length" class="ht-congrats">恭喜，您已进阶为足球大师</div> -->
 
         <div v-if="state.afterAnswerQuestion" class="ht-handle">
             <div class="ht-button" @click='go_back'>
                 实战来一注
             </div>
-            <div class="ht-button default" @click="nextQuestionsHandle">
+            <!-- <div class="ht-button default" @click="nextQuestionsHandle">
                 {{state.currentAnswer === props.questionsData.length && state.recordSuccess === props.questionsData.length ? i18n_t('app_h5.handicap_tutorial.return_home') : i18n_t('app_h5.handicap_tutorial.next')}}
-            </div>
+            </div> -->
         </div>
 
-        <div v-if="state.currentAnswer === props.questionsData.length && state.recordSuccess !== props.questionsData.length" class="ht-again" @click="resetHandle">
+        <!-- <div v-if="state.currentAnswer === props.questionsData.length && state.recordSuccess !== props.questionsData.length" class="ht-again" @click="resetHandle">
             {{ i18n_t('app_h5.handicap_tutorial.again') }}
             <div class="icon"></div>
-        </div>
+        </div> -->
 
     </div>
 </template>
@@ -125,7 +138,14 @@ const selectOptionHandle = (v) => {
 }
 
 const nextQuestionsHandle = () => {
-    if (state.currentAnswer === props.questionsData.length && state.recordSuccess === props.questionsData.length) go_back()
+    if (state.currentAnswer === props.questionsData.length && state.recordSuccess === props.questionsData.length) {
+        go_back()
+        return
+    }
+    if (state.currentAnswer === props.questionsData.length && state.recordSuccess !== props.questionsData.length) {
+        resetHandle()
+        return
+    }
     if (state.currentQuestion === (props.questionsData.length - 1)) return
     ++state.currentQuestion
     state.afterAnswerQuestion = ''
@@ -138,6 +158,25 @@ const resetHandle = () => {
     state.afterAnswerQuestion = ''
     state.recordSuccess = 0 
     state.currentOption = ''
+}
+
+const nextQuestionsText = () => {
+    if (state.currentAnswer === props.questionsData.length && state.recordSuccess === props.questionsData.length) {
+        return i18n_t('app_h5.handicap_tutorial.return_home')
+    } else if (state.currentAnswer === props.questionsData.length && state.recordSuccess !== props.questionsData.length) {
+        return i18n_t('app_h5.handicap_tutorial.again')
+    } else {
+        return i18n_t('app_h5.handicap_tutorial.next')
+    }
+}
+
+const filterOptionsState = (i) => {
+    if (state.currentOption && i.isRight === 'error') {
+        return 'error'
+    }
+    if (state.currentOption && i.isRight === 'success') {
+        return 'sccuess'
+    }
 }
 
 const go_back = () => {
@@ -240,7 +279,7 @@ const go_back = () => {
             flex-wrap: wrap;
             margin-top: .2rem;
             justify-content: space-between;
-            box-shadow: 0px 4px 12px 0px rgba(27, 30, 38, 0.02);
+            padding-bottom: .2rem;
 
             .ht-anwser-item {
                 display: flex;
@@ -250,11 +289,16 @@ const go_back = () => {
                 justify-content: center;
                 border:.01rem solid var(--q-gb-bd-c-4);
                 border-radius: .08rem;
-
+                box-shadow: 0px 4px 12px 0px rgba(27, 30, 38, 0.02);
+                position: relative;
+                // background-color: rgb(from var(--q-gb-bg-c-13) r g b / 10%);
+                // border: .02rem solid var(--q-gb-bg-c-13);
                 .option {
                     margin-right: .04rem;
                     font-size: .14rem;
-
+                    position: absolute;
+                    right: .02rem;
+                    top: .02rem;
                     div {
                         width: .2rem;
                         height: .2rem;
@@ -262,7 +306,6 @@ const go_back = () => {
                     }
 
                     .options-icon {
-                        background-color: var(--q-gb-t-c-1);
                         border-radius: .2rem;
                     }
                 }
@@ -279,7 +322,7 @@ const go_back = () => {
                     background-color: var(--q-gb-bd-c-);
 
                     .text-style {
-                        font-size: .12rem;
+                        font-size: .14rem;
                         color: var(--q-gb-t-c-3);
                     }
 
@@ -287,6 +330,7 @@ const go_back = () => {
                         display: flex;
                         justify-content: center;
                         align-items: center;
+                        font-size: .18rem;
 
                         .arrow {
                             margin-right: .02rem;
@@ -333,7 +377,17 @@ const go_back = () => {
 
             .selected {
                 background-color: rgb(from var(--q-gb-bg-c-13) r g b / 10%);
-                border: .02rem solid var(--q-gb-bg-c-13);
+                &.sccuess {
+                    border: .02rem solid var(--q-gb-bg-c-13);
+                }
+                &.error {
+                    background-color: rgb(from var(--q-gb-bd-c-2) r g b / 10%);
+                    border: .02rem solid var(--q-gb-bd-c-2);
+                }
+            }
+
+            .sccuess {
+                background-color: rgb(from var(--q-gb-bg-c-13) r g b / 10%);
             }
         }
 
@@ -343,40 +397,45 @@ const go_back = () => {
 
 
         .ht-answer-result {
-            border-top: 0.01rem solid var(--q-gb-bd-c-6);
+            // border-top: 0.01rem solid var(--q-gb-bd-c-6);
             padding: 0.1rem .3rem;
             padding-bottom: .13rem;
+            margin-top: .2rem;
 
             .result {
                 display: flex;
                 align-items: center;
-                font-size: .14rem;
+                font-size: .16rem;
                 margin-bottom: .14rem;
+                color: var(--q-gb-bg-c-4);
+                font-weight: 600;
+                flex-direction: column;
 
                 .result-icon {
-                    width: .2rem;
-                    height: .2rem;
-                    background-color: var(--q-gb-t-c-1);
-                    margin-right: .06rem;
+                    img {
+                        width: .34rem;
+                        height: .34rem;
+                    }
                 }
             }
 
-            .win {
-                color: var(--q-gb-t-c-1);
-            }
-
-            .fail {
-                color: var(--q-gb-bd-c-8);
-            }
-
             .info {
-                font-size: .12rem;
+                font-size: .14rem;
+                text-align: center;
 
                 span {
                     color: var(--q-gb-t-c-1);
                 }
             }
         }
+
+        .ht-button {
+            font-size: .16rem;
+            color: var(--q-gb-t-c-1);
+            font-weight: 500;
+            text-align: center;
+            margin-top: .27rem;
+        } 
     }
 
     .ht-congrats {
@@ -391,26 +450,20 @@ const go_back = () => {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: .24rem;
+        margin-top: .29rem;
 
         .ht-button {
-            width: 3.12rem;
+            width: 2.4rem;
             height: .44rem;
-            background-color: var(--q-gb-t-c-1);
-            border-radius: .04rem;
+            background-color: var(--q-gb-bg-c-4);
+            border-radius: .44rem;
             font-size: .16rem;
-            color: var(--q-gb-t-c-14);
+            color: var(--q-gb-bd-c-12);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: .12rem;
+            margin-top: .12rem;
             border: 1px solid transparent;
-        }
-
-        .default {
-            background-color: var(--q-gb-t-c-14);
-            border-color: var(--q-gb-t-c-1);
-            color: var(--q-gb-t-c-1);
         }
     }
 

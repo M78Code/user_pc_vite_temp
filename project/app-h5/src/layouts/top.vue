@@ -294,7 +294,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       }
       return 
     }
-    console.log(111111111)
     // 今日 / 滚球 早盘 串关 
     if([1,2,3,6].includes(MenuData.current_lv_1_menu_mi.value)){
       if (MenuData.top_menu_title.mi !== 2000) handle_match_render_data()

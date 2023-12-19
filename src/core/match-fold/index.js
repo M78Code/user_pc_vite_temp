@@ -89,10 +89,10 @@ class MatchFold {
       const show_card = !lodash.get(this.match_mid_fold_obj.value, `${key}.show_card`, false)
       // 全部
       if (!type) return this.set_match_fold(key, { show_card })
-      // 进行中
-      if ([1,3].includes(type) && [1,110].includes(+item.ms)) return this.set_match_fold(key, { show_card })
-      // 未开赛
-      if ([2,4].includes(type) && ![1,110].includes(+item.ms)) return this.set_match_fold(key, { show_card })
+      // 进行中  && [1,110].includes(+item.ms)
+      if ([1,3].includes(type)) return this.set_match_fold(key, { show_card })
+      // 未开赛  && ![1,110].includes(+item.ms)
+      if ([2,4].includes(type)) return this.set_match_fold(key, { show_card })
     })
     if (csid) {
       let flag = true
