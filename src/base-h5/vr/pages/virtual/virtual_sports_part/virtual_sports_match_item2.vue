@@ -33,7 +33,11 @@
             <div v-for="(data_i,i) of match_item.hps" :key="i" class="dddd">
               <div class="hpn-title" @click="goto_details(match_item)">
                 <span>{{ data_i.hpn }}</span>
-                <span>{{ i18n_t("virtual_sports.show_all_markets") }} ></span>
+                <span v-if="i == 0">{{ i18n_t("virtual_sports.show_all_markets") }} ></span>
+                <!-- 赛马类截止时间 -->
+                <span v-else>
+                  {{(new Date(+match_item.mgt)).Format(i18n_t('time7'))}} {{ i18n_t('match_main.cut_off')}}
+                </span>
               </div>
               <temp9
                 :item_data="data_i||{}"

@@ -154,13 +154,15 @@
                 </span>
 
                 <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
-                <image-cache-load v-if="match?.mhlu?.length && !([5, 7].includes(Number(match.csid)))"
+                <!-- <image-cache-load v-if="match?.mhlu?.length && !([5, 7].includes(Number(match.csid)))" -->
+                <image-cache-load v-if="match?.mhlu?.length"
                   :csid="+match.csid" :path="match.mhlu" type="home"></image-cache-load>
                 <!-- <img v-if="match?.mhlu?.length" class="logo" v-img="([match.mhlu[0], match.frmhn[0], match.csid])" /> -->
               </div>
               <span class="vs">VS</span>
               <div class='right'>
-                <image-cache-load v-if="match?.malu?.length && !([5, 7].includes(Number(match.csid)))"
+                <!-- <image-cache-load v-if="match?.malu?.length && !([5, 7].includes(Number(match.csid)))" -->
+                <image-cache-load v-if="match?.malu?.length"
                   :csid="+match.csid" :path="match.malu" type="home"></image-cache-load>
 
                 <!-- <img v-if="match?.malu?.length" class="logo" v-img="([match.malu[0], match.frman[0], match.csid])" /> -->
@@ -464,14 +466,14 @@ export default {
     &.collapsed{
       > .match-indent{
         border-radius: 8px !important;
-        border-bottom: 1px solid #fff !important;
-        border: 1px solid #fff;
+        border-bottom: 1px solid var(--q-gb-bd-c-15) !important;
+        border: 1px solid var(--q-gb-bd-c-15);
       }
     }
     > .match-indent{
-      border: 1px solid #fff;
+      border: 1px solid var(--q-gb-bd-c-15);
       border-radius: 8px 8px 0 0 !important;
-      border-bottom: 1px solid #E4E6ED !important;
+      border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
     }
   }
 
@@ -725,9 +727,9 @@ export default {
     margin: 0 auto;
     // background: var(--q-gb-bg-c-15) !important;
     height: 25px;
-    border-bottom: 1px solid var(--q-gb-bg-c-19);
-    border-top: 1px solid var(--q-gb-bg-c-19);
-    border-color: var(--q-gb-bg-c-19) !important;
+    // border-bottom: 1px solid var(--q-gb-bg-c-19);
+    // border-top: 1px solid var(--q-gb-bg-c-19);
+    // border-color: var(--q-gb-bg-c-19) !important;
     margin-top: 0.05rem;
     &.bottom {
       margin-top: 0.05rem;
@@ -841,7 +843,6 @@ export default {
         color: var(--q-gb-t-c-18);
         font-size: 12px;
         font-weight: 400;
-
         .serving-party {
           border-radius: 2px;
           background: var(--sys-feedback-success-success-400, #4AB06A);
@@ -866,6 +867,7 @@ export default {
 
           &.left {
             justify-content: flex-end;
+
           }
 
           &.right {
@@ -911,7 +913,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: .01rem solid var(--q-gb-bg-c-19);
+      border-bottom: .01rem solid var(--q-gb-bd-c-4);
       // padding: 4px 0 0;
 
       .right {
