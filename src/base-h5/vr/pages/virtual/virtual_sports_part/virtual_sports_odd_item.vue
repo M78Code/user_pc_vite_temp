@@ -77,13 +77,14 @@ export default {
 
 <style lang="scss" scoped>
 .odd-item-w {
-  width: 0.58rem;
-  height: 0.56rem;
+  height: 0.32rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
+  flex: 1;
+  background: #F2F2F6;
 
   .result-focus, .o-i-inner {
     width: 100%;
@@ -103,10 +104,15 @@ export default {
   }
 
   .on {
-    font-size: 0.12rem;
+    font-size: 0.1rem;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    color: #AFB3C8;
+  }
+  .odds-value {
+    font-size: 0.1rem;
+    color: #303442;
   }
 
   .lock {
