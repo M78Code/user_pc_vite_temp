@@ -22,7 +22,7 @@
           <!-- 三个活动的 tab 切换 -->
           <div class="tabs">
             <div
-              v-for="(item, i) in tab_list"
+              v-for="(item, i) in _tab_list_"
               :key="i + '_'"
               class="tab-item text-gray relative-position"
               :class="tab_Id == item.activityId ? 'isActive' : ''"
@@ -111,6 +111,12 @@ export default {
       showAlert: false, // 展示登录失效弹窗
     };
   },
+  computed: {
+    _tab_list_(){
+      // 不显示幸运盲盒
+      return (this.tab_list || []).filter(v => v.activityId != '10009');
+    }
+  }
 };
 </script>
 <style lang="scss">

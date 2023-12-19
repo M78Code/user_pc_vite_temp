@@ -63,7 +63,7 @@ class MatchUtils {
     return csid_matchs
   }
 
-   /**
+  /**
    * @description 赛事联赛归类 
    * @param {*} list 赛事数据
    */
@@ -78,6 +78,23 @@ class MatchUtils {
       cur_tid_arr.length > 0 && tids_matchs.push(...cur_tid_arr)
     })
     return tids_matchs
+  }
+
+  /**
+   * @description 赛事联赛归类 
+   * @param {*} list 赛事数据
+   */
+  handler_champion_match_classify_by_sport_id (list) {
+    debugger
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) return []
+    const result_tids = lodash.uniq(list.map(l => l.sportId))
+    const result_matchs = []
+    result_tids.forEach(sport_id => {
+      const cur_sport_arr = list.filter(item => item.sportId == sport_id)
+      cur_sport_arr.length > 0 && result_matchs.push(...cur_sport_arr)
+    })
+    return result_matchs
   }
 
   /**
@@ -281,6 +298,26 @@ class MatchUtils {
       }
     })
     return result
+  }
+  /**
+   * @description 时间戳 转 当前时间的 开始时间
+   * @param {*} md 
+   * @returns 
+   */
+  get_match_time_start_time (md) {
+    // 创建Date对象并传入时间戳作为参数
+    const time = new Date(Number(md));
+    // 获取年份
+    const year = time.getFullYear();
+    // 获取月份
+    const month = (time.getMonth() + 1).toString().padStart(2, '0');
+    // 获取天数
+    const day = time.getDate().toString().padStart(2, '0')
+    // 当前时间
+    const now_date = `${year}-${month}-${day}`
+    const start_time = new Date(now_date).getTime();
+    const end_time = new Date(`${year}-${month}-${day} 23:59:59`).getTime();
+    return { start_time, end_time }
   }
   /**
    * @description 获取赛事红黄牌
