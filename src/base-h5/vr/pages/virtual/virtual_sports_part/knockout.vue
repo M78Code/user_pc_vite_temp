@@ -203,8 +203,11 @@ export default {
 <style lang="scss" scoped>
 .elimination-rank {
 
-  height: 100%;
   min-height: 3.2rem;
+
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
 
   &.vi-lang {
     .tabs-bar {

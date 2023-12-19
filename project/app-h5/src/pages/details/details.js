@@ -122,7 +122,7 @@ export const details_main = () => {
     // 登录用户Id
     get_uid: "505915677417900030",
     // 早盘或者串关日期参数
-    get_md: "get_md", // TODO: 待处理
+    get_md:MenuData.current_lv_3_menu, // TODO: 待处理
     // 菜单
     get_current_sub_menuid: "get_current_sub_menuid",// TODO: 待处理
     // 排序
@@ -820,7 +820,7 @@ export const details_main = () => {
       // 查找参数 1:赛事列表(非滚球:今日 早盘...) 2:赛事详情(滚球) 3:赛事筛选 4:赛事搜索(int) 如果不传默认 1:赛事列表
       sm: 2,
       // 菜单ID 多个用逗号分割(字符串)
-      euid: state_data.get_current_sub_menuid,
+      euid: MenuData.get_euid(MenuData.current_lv_2_menu_i),
       // 早盘日期的参数 早盘 和 串关都要加 (字符串)
       md: state_data.get_md != -1 ? state_data.get_md : "",
       // 赛事种类id
@@ -832,7 +832,7 @@ export const details_main = () => {
       // 搜索关键词 赛事搜索(字符串)
       keyword: state_data.get_search_txt || "",
       // 用户id或者uuid
-      // cuid: state_data.get_uid,
+      cuid: UserCtr.get_uid(),
       // 赛事id
       mid: matchid.value,
     };

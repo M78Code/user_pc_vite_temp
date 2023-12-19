@@ -20,7 +20,6 @@
                     <span class="sport-icon-wrap"
                       :style="compute_css_obj({key:current_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
                   </div>
-                
                   <div class="s-w-i-title">
                     {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item) }}
                   </div>
@@ -137,7 +136,7 @@ const get_menu_ws_list = (list) =>{
         return item;
     })
     const index = wsList.findIndex((item)=>{return item.mi == 0}),
-          is_not_ct = [0,50000];
+          is_not_ct = [0,50000,2000,300];
     //全部增加数量
     if(index !== -1)wsList[index].ct = wsList.map((item)=>{return is_not_ct.includes(item.mi)?0:item.ct}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
     emits('changeList',wsList)
