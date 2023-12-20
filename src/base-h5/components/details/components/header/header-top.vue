@@ -608,7 +608,7 @@ export default defineComponent({
 }
 
 .logo-double{
-  ::v-deep .team-img{
+  :deep(.team-img){
     .img-style{
       background-position-y: inherit !important;
     }
