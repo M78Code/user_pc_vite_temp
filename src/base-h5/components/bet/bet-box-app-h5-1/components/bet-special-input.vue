@@ -192,7 +192,7 @@ const set_special_series = (money,ty_id) => {
     border: 1px solid var(--q-gb-bd-c-16);
     .limit-txt {
       color: var(--q-gb-t-c-5);
-      font-size: 0.16rem;
+      //font-size: 0.16rem;
     }
     &:hover {
       border-color: var(--q-gb-t-c-1);
