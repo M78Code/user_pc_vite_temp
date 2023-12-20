@@ -3,14 +3,13 @@
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
 
-        <div class="handicap-closed" v-if="BetData.is_bet_single && (items.ol_os == 2 && items.hl_hs == 0 && items.mid_mhs == 0)">
+        <div class="handicap-closed" v-if="BetData.is_bet_single && !(items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0)">
             <img :src="compute_local_project_file_path('/image/bet/handicap-closed.png')" alt="">
             <p>{{ i18n_t('bet.close') }}</p>
         </div>
         <div v-else class="f-b-s bet-content" :class="[
-                items.ol_os != 1 && items.hl_hs == 0 && items.mid_mhs == 0 ? 'bet-disable' : '',
                 items.is_serial && !BetData.is_bet_single ? 'not-chain-bet' : '',
-                items.ol_os == 2 && items.hl_hs == 0 && items.mid_mhs == 0 ? 'not-chain-bet' : ''
+                !(items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0) ? 'not-chain-bet' : ''
             ]">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c font14 ">
@@ -41,7 +40,7 @@
                        <span class="font14">@</span>{{ compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId) }}
                     </span>
 
-                    <div class="show_img">
+                    <div class="show_img" v-if="items.red_green">
                         <img v-if="items.red_green == 'red_up'" :src="is_up_app" alt=""/>
                         <img v-if="items.red_green == 'green_down'" :src="is_down_app" alt=""/>
                     </div>
@@ -247,7 +246,7 @@ const set_delete = () => {
         }
     }
     .bet-odds-value{
-        margin-right: .02rem;
+       
         font-size: .22rem;
         &.red-up{
             color:#F53F3F;
@@ -258,6 +257,7 @@ const set_delete = () => {
     }
     .show_img{
         width: .10rem;
+        margin-left: .02rem;
         img{
             width: 100%;
             height: 100%;
