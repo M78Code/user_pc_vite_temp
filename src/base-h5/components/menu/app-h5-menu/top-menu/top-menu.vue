@@ -340,6 +340,7 @@ const set_menu_lv1 = item => {
             overflow:hidden;
             text-overflow:ellipsis;
             white-space:nowrap;
+            color: var(--q-gb-t-c-18);
         }
     }
 </style>
