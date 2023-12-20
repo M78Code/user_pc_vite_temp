@@ -7,7 +7,7 @@
   <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
       <div class="nonebox4-fourth">
           <div class="nonebox4-fourth-a">
-              <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum" :key='item' :data-number='index'>{{item}}</div>
+              <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum(BetData.bet_data_class_version)" :key='item' :data-number='index'>{{item}}</div>
           </div>
           
           <div class="nonebox4-fourth-a"> 
@@ -227,7 +227,7 @@ const _handleNumberKey = (num, e) => {
   }
   if (!num) return
   let money_ = BetData.bet_amount
-  if (['qon', 'qtw', 'qth','qfo','qfi'].includes(num)) {
+  if (['qon', 'qtw', 'qth','qfo','qfi','qsi'].includes(num)) {
     e.target.classList.add('active')
     money_ = ref_data.add_num[num]
     // if (!money_) {
@@ -287,12 +287,14 @@ const _handleNumberKey = (num, e) => {
 }
 
 // 获取商户配置的 快捷金额
-const addnum = computed(() => {
-  if (BetData.bet_is_single) {
-    ref_data.add_num = lodash.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200, qfi: 500 })
+const addnum = computed(()=> status => {
+  if (BetData.is_bet_single) {
+    const { qon,qtw,qth,qfo,qfi } = lodash.get(UserCtr, 'user_info.cvo.single', { qon: 200, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })  
+    ref_data.add_num = {qon,qtw,qth,qfo,qfi} 
     return ref_data.add_num
   } else {
-    ref_data.add_num = lodash.get(UserCtr, 'cvo.single', { qon: 200, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })
+    const {qtw,qth,qfo,qfi,qsi } = lodash.get(UserCtr, 'user_info.cvo.series', {  qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
+    ref_data.add_num = { qtw,qth,qfo,qfi,qsi}
     return ref_data.add_num
   }
 })
