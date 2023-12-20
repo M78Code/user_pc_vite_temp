@@ -120,7 +120,7 @@ const props = defineProps({
 })
 
 const scoreWrapScroller = ref(null)
-const store_state = store.getState()
+// const store_state = store.getState()
 const timer_1 = ref(null)   
 const timer_2 = ref(null)   
 //斯诺克比分编号为S1的结果
@@ -135,10 +135,10 @@ const get_menu_type = ref(MenuData.get_menu_type())
 
 const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
 
-const unsubscribe = store.subscribe(() => {
-  const new_state = store.getState()
-  get_newer_standard_edition.value = new_state.get_newer_standard_edition
-})
+// const unsubscribe = store.subscribe(() => {
+//   const new_state = store.getState()
+//   get_newer_standard_edition.value = new_state.get_newer_standard_edition
+// })
 
 
 onMounted(() => {
@@ -409,7 +409,7 @@ const get_snooker_score_space_data = () => {
 }
 
 onUnmounted(() => {
-  unsubscribe()
+  // unsubscribe()
   clearTimeout(timer_1.value);
   timer_1.value = null;
 

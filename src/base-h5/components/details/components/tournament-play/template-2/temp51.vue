@@ -7,8 +7,8 @@
   <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp2 temp51 mx-5 text-center">
     <div class="hairline-border">
-      <div class="esport-bet-wrapper">
-        <div v-for="(item,index) in item_data.hl" :key="index" class="row">
+      <div class="esport-bet-wrapper item-wrap">
+        <div v-for="(item,index) in item_data.hl" :key="index" class="row gap20">
           <template v-if="item">
             <template v-for="(ol_item, ol_index) in item.ol" :key="ol_index">
               <div class="col">
@@ -20,7 +20,7 @@
                     <!-- os: 1、开盘 2、封盘 -->
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box" @click="go_to_fun(ol_item)" :class="[BetData.bet_oid_list.includes(ol_item.id_)?'active_play':'',{'win':calc_win(ol_item.result)}]">
+                      <div class="play-box details_color " @click="go_to_fun(ol_item)" :class="[BetData.bet_oid_list.includes(ol_item.oid)?'details-bg5':'',{'win':calc_win(ol_item.result)}]">
                         <div class="ellipsis">
                           <span class="size-color">{{ol_item.on || ol_item.ott}}</span>
                         </div>
@@ -30,7 +30,7 @@
                     </template>
                     <template v-if="ol_item.os == 2">
                       <!-- lock 锁状态 start -->
-                      <div class="play-box">
+                      <div class="play-box ">
                         <div class="ellipsis">{{ol_item.on || ol_item.ott}}</div>
                         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`">
                       </div>
@@ -97,7 +97,6 @@ export default defineComponent({
   // mixins:[odd_convert],
   setup(props, evnet) {
     let data = reactive({
-      utils
     });
     onUnmounted(() => {
       // #TODO $data
@@ -124,6 +123,7 @@ export default defineComponent({
   .esport-bet-wrapper {
     border-radius: 0.08rem;
     overflow: hidden;
+    padding: 0.08rem;
   }
 
   .play-box {
@@ -162,6 +162,9 @@ export default defineComponent({
 
   .win :deep(.odds-new2) {
     color: #FF4A4A !important;
+  }
+  .gap20{
+    gap: 20px;
   }
 }
 </style>

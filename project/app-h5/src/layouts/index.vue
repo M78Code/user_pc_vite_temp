@@ -91,6 +91,7 @@ import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
+import { bet_special_series_change } from "src/core/bet/class/bet-box-submit.js"
 import {debounce} from "lodash";
 // import betMixBoxChild from "src/base-h5/components/bet/bet-box-app-h5-1/bet_mix_box_child.vue";
 
@@ -194,17 +195,7 @@ const change_settle_status = (val) => {
   // set_virtual_video_show(!val)
   if (val) {
     record_show.value = true;
-    nextTick(() => {
-      store.dispatch({
-        type: "SET_SETTLE_DIALOG_BOOL",
-        data: true,
-      });
-    });
   } else {
-    store.dispatch({
-      type: "SET_SETTLE_DIALOG_BOOL",
-      data: false,
-    });
     timer_3.value = setTimeout(() => {
       record_show.value = false;
     }, 300);
@@ -226,6 +217,10 @@ const init_local_server_time = () => {
 
 // 显示串关投注弹框
 const show_chain_bet = () => {
+  // 不满足串关条件 不允许 展开投注项
+  if(!bet_special_series_change()){
+    return
+  }
   BetData.set_bet_box_h5_show(true)
 }
 
@@ -487,7 +482,7 @@ if (UserCtr.get_user_token()) {
     justify-content: center;
     border: 1px solid var(--q-gb-bg-c-15);
     border-radius: 50%;
-    color: var(--q-gb-bg-c-15);
+    color: var(--q-gb-t-c-14);
     background-color: #f76565;
     position: absolute;
     top: -.06rem;

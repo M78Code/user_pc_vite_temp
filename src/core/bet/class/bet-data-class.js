@@ -414,7 +414,12 @@ this.bet_appoint_ball_head= null */
       this.single_list_copy.push(bet_refer_obj)
     } else {
       // 串关
-      // 串关逻辑 TODO
+      // 串关逻辑 不支持串关的数据 增加标识 ，在页面上做提示
+      // mbmty 2 or 4 为电子赛事  足球 篮球
+      if([1,2].includes(Number(obj.sportId)) && [2,4].includes(Number(obj.mbmty))){
+        // 串关投注中 有这个需要显示不支持串关投注 
+        bet_refer_obj.is_serial = true
+      }
       // 同场赛事不能串 部分数据源赛事不能串 
       if (this.bet_s_list.length) {
         let obj = this.bet_s_list.find(item => item.matchId == bet_refer_obj.matchId) || {}

@@ -17,7 +17,7 @@ import { ref,computed } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
 import { IconWapper } from 'src/components/icon/index.js'
 
-let title = ref('')
+let title = ref('') 
 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效 6-预约中 7-预约成功  8-预约取消
 const set_bet_order_status = computed(()=> status => {
   // 2-投注中状态,
@@ -36,7 +36,7 @@ const set_bet_order_status = computed(()=> status => {
     if(status == 7){
       title.value = i18n_t('pre_record.booked')
     }
-    return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_success.png`
+    return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_success-y.png`
   }
   // ,4-投注失败状态,5-投注项失效
   if([4,5,8].includes(+status)){
@@ -51,6 +51,7 @@ const set_bet_order_status = computed(()=> status => {
 const bet_order_status_active = computed(()=>{
   return [2, 3, 6, 7].includes(+BetViewDataClass.bet_order_status);
 })
+
 
 </script> 
 

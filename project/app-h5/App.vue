@@ -11,7 +11,7 @@
 import appload from "./app-load.vue";
 import app_mixin from "src/base-h5/mixin/app-mixin.js";
 import NotLogin from 'src/base-h5/components/common/not-login.vue';
-import Orientation from "src/base-h5/components/common/orientation.vue";
+import Orientation from "src/base-h5/components/common/orientation/orientation.vue";
 export default {
   mixins: [app_mixin],
   components: {
