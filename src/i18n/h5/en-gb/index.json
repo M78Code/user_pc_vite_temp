@@ -352,6 +352,7 @@
     "clear": "Clear",
     "delete_all": "Remove All",
     "disabled": "Invalid",
+    "close": "Handicap Closed",
     "bet_upd": "The odds are being updated!",
     "err_msg01": "The odds are being updated~",
     "err_msg02": "The network is abnormal, please try again",
