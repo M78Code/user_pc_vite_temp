@@ -27,7 +27,7 @@
                           <div
                             class="play-box-style details_color"
                             @click="go_to_bet(ol_item)"
-                            :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':true,'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                            :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_13 odds-on">
                               <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">

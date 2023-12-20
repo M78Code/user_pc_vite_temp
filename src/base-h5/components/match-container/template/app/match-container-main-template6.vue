@@ -27,54 +27,7 @@
       </div>
     </div>
 
-    <template v-for="(hp, index) of match_of_list.hps">
-      <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && !collapsed" :key="index">
-        <div class="flex items-center justify-between" :class="{ 'is-favorite': false }">
-
-          
-          <div class="match-title items-center">
-            <div class="debug-head" style="color:red;position:absolute;right:0;">
-              {{ get_key_by_obg(hp) }}
-            </div>
-            <div class="hpn-wrap ellipsis">
-              联赛
-            </div>
-          </div>
-          <div class="match-title items-center">
-            <div class="debug-head" style="color:red;position:absolute;right:0;">
-              {{ get_key_by_obg(hp) }}
-            </div>
-            <div class="hpn-wrap ellipsis">
-              {{ hp.hps }}
-            </div>
-          </div>
-        </div>
-
-        <div v-if="!collapsed && hp.hmed" class="limit-time">
-          <div class="limit-t-i">
-            <template v-if="!['zh', 'tw'].includes(lang)">
-              {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} 
-            </template>
-            <template v-else>
-              {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} 
-            </template>
-          </div>
-        </div>
-
-        <div class="ol-list-wrap flex" :data-ol="hp.ol.length" v-if="hp.ol">
-          <div class="ol-list-left">
-            <div class="ol-list-left-title">
-              <span>{{ menu_type == 100 ? match_of_list.onTn : match_of_list.tn }}</span>
-            </div>
-          </div>
-          <div class="ol-list-right">
-            <!-- 右侧赔率组件 -->
-            <OddItemChampion v-for="(ol_item, i) of hp.ol" :key="i" :hs="hp.hs" :data-i="i" :ol_item="ol_item"
-              :csid="match_of_list.csid" @click.stop="item_click(match_of_list, hp, ol_item)">
-            </OddItemChampion>
-          </div>
-        </div>
-      </div>
+    <template v-for="(hp, index) of match_of_list">
     </template>
 
   </div>

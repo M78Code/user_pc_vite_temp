@@ -1,7 +1,7 @@
 <!--
  * @Author: 'jacques' 'jacques@itcom888.com'
  * @Date: 2023-10-02 16:12:29
- * @LastEditors: Please set LastEditors
+ * @LastEditors: lowen pmtylowen@itcom888.com
  * @FilePath: \user-pc-vite\src\components\analysis\index.vue
  * @Description: 足篮赛事分析页
 -->
@@ -399,9 +399,7 @@ export default {
   .rule-scroll-area {
     flex: 1;
   }
-
-  :deep {
-    .panel {
+    :deep(.panel) {
       border-top: transparent;
 
       .panel-title {
@@ -488,6 +486,5 @@ export default {
         }
       }
     }
-  }
 }
 </style>

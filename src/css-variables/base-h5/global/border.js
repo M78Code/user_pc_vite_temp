@@ -16,5 +16,6 @@
         'gb-bd-c-13': 'transparent',
         'gb-bd-c-14': 'rgba(0, 0, 0, 0.08)',
         'gb-bd-c-15': '#ffffff',
+        'gb-bd-c-16': '#D1EBFF',
       }
  

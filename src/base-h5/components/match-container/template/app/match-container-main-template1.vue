@@ -466,7 +466,7 @@ export default {
     .match-content{
       width: 100%;
       padding: 0 10px;
-      border-top: 1px solid var(--q-gb-bd-c-4);
+      border-top: 1px solid  var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
       border-radius: 0 0 8px 8px;
       border: 1px solid var(--q-gb-bd-c-15);
@@ -474,13 +474,13 @@ export default {
         border-top: none;
       }
       &.border-top{
-        border-top: 1px solid var(--q-gb-bd-c-4);
+        border-top: 1px solid  var(--q-gb-bd-c-4);
       }
     }
     > .match-indent{
       border: 1px solid var(--q-gb-bd-c-15);
       border-radius: 8px 8px 0 0;
-      border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
+      border-bottom: 1px solid  var(--q-gb-bd-c-4) !important;
       &.collapsed{
         border-radius: 8px;
         border-bottom: 1px solid var(--q-gb-bd-c-15) !important;

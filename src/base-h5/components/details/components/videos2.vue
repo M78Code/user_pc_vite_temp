@@ -329,7 +329,7 @@ import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import slider from "src/base-h5/components/details/components/slider/slider.vue"
-
+import OrientationSubscrbe from 'src/base-h5/components/common/orientation/orientation-subscribe'
 export default {
   name: "videos",
   components: {
@@ -573,6 +573,9 @@ export default {
   watch: {
     get_is_full_screen(value) {
       this.$emit('change_fullscreen', value)
+    },
+    iframe_src(value) {
+      console.log(value, "value======");
     },
     // 监听用户是否长时间未操作
     get_is_user_no_handle(res){
@@ -1064,6 +1067,7 @@ export default {
       if (rfs) {
         rfs.call(video_dm);
       }
+      OrientationSubscrbe.instance.change_status(true);
     },
     /**
      * @Description 退出浏览器全屏
@@ -1075,6 +1079,8 @@ export default {
       if(cfs) {
         cfs.call(video_dm);
       }
+      OrientationSubscrbe.instance.change_status(false);
+
     },
     // 接收精彩回放iframe消息
     handle_replay_message(e) {
@@ -2127,15 +2133,13 @@ export default {
     transform: rotate(360deg);
     transition: all 1s;
   }
-
-  :deep {
-    .tabs-wrapper {
+    :deep(.tabs-wrapper) {
       position: absolute;
       bottom: 1.18rem;
       left: 0.3rem;
       z-index: 100000;
     }
-    .slider-x {
+    :deep(.slider-x) {
       position: absolute;
       bottom: .45rem;
       left: 0.3rem;
@@ -2189,7 +2193,6 @@ export default {
         }
       }
     }
-  }
 }
 
 .switch-video-wrap {
@@ -2298,11 +2301,10 @@ export default {
   top: 0;
   width: 100%;
   height: 100%;
-  :deep {
-    .dplayer-icons-right {
+  :deep(.dplayer-icons-right) {
       display: none !important;
     }
-    .dplayer-controller {
+    :deep(.dplayer-controller) {
       .dplayer-bar-wrap {
         width: 4.5rem;
         bottom: 15.5px;
@@ -2314,7 +2316,7 @@ export default {
         transform: scale(0.8);
       }
     }
-  }
+  
 }
 
 .toggle-replay-video-wrap {
