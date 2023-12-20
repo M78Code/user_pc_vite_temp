@@ -48,9 +48,11 @@
 
 
       <!-- 串关投注 --> 
-      <div class="chain_bet" @click="show_chain_bet" v-if="!BetData.is_bet_single">
-        <span class="count">{{BetData.bet_s_list.length}}</span>
-      </div>
+      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single">
+          <div class="chain_bet" @click="show_chain_bet" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
+            <span class="count">{{BetData.bet_s_list.length}}</span>
+          </div>
+      </q-page-sticky>
 
     </q-page-container>
   </q-layout>
@@ -89,6 +91,7 @@ import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
+import { bet_special_series_change } from "src/core/bet/class/bet-box-submit.js"
 import {debounce} from "lodash";
 // import betMixBoxChild from "src/base-h5/components/bet/bet-box-app-h5-1/bet_mix_box_child.vue";
 
@@ -192,17 +195,7 @@ const change_settle_status = (val) => {
   // set_virtual_video_show(!val)
   if (val) {
     record_show.value = true;
-    nextTick(() => {
-      store.dispatch({
-        type: "SET_SETTLE_DIALOG_BOOL",
-        data: true,
-      });
-    });
   } else {
-    store.dispatch({
-      type: "SET_SETTLE_DIALOG_BOOL",
-      data: false,
-    });
     timer_3.value = setTimeout(() => {
       record_show.value = false;
     }, 300);
@@ -222,8 +215,52 @@ const init_local_server_time = () => {
   });
 }
 
+// 显示串关投注弹框
 const show_chain_bet = () => {
+  // 不满足串关条件 不允许 展开投注项
+  if(!bet_special_series_change()){
+    return
+  }
   BetData.set_bet_box_h5_show(true)
+}
+
+// 串关投注按钮拖拽
+const fabPos = ref([15, 8]);
+const draggingFab = ref(false)
+const moveFab = (e) => {
+  draggingFab.value = e.isFirst !== true && e.isFinal !== true
+  // console.log(e, e.distance, e.position, 'eee', e.isFinal);
+  e.evt.target.style.opacity = '0.6'
+  // 处理左右边界条件
+  if(e.position.left <= 30) {
+    fabPos.value[0] = 300
+  } else if (e.position.left >= 300) {
+    fabPos.value[0] = 15
+  }
+  // 处理上下边界条件
+  if(e.position.top <= 70) {
+    fabPos.value[1] = 505
+  } else if (e.position.top >= 600) {
+    fabPos.value[1] = -20
+  };
+  fabPos.value = [
+    fabPos.value[0] - e.delta.x,
+    fabPos.value[1] - e.delta.y
+  ]
+  if(e.isFinal) {
+    e.evt.target.style.opacity = '1'
+    stickyAside(e.position.left)
+  }
+}
+
+// 贴紧到侧边栏
+const stickyAside = (x) => {
+  // console.log(1111, x, y, fabPos.value);
+  if(x <= 145) {
+    fabPos.value[0] = 300
+  } else {
+    fabPos.value[0] = 15
+  }
 }
 
 onMounted(() => {
@@ -423,6 +460,10 @@ if (UserCtr.get_user_token()) {
   /* **********注单记录********************* *-E*/
 }
 // 串关按钮
+.q-page-sticky {
+  z-index: 599;
+  transition: .4s ease-out;
+}
 .chain_bet {
   width: 0.48rem;
   height: 0.48rem;
@@ -441,7 +482,7 @@ if (UserCtr.get_user_token()) {
     justify-content: center;
     border: 1px solid var(--q-gb-bg-c-15);
     border-radius: 50%;
-    color: var(--q-gb-bg-c-15);
+    color: var(--q-gb-t-c-14);
     background-color: #f76565;
     position: absolute;
     top: -.06rem;

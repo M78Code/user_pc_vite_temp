@@ -278,8 +278,7 @@ onUnmounted(() => {
       font-weight: 600;
     }
 
-    .article {
-      :deep {
+    :deep(.article) {
         * {
           max-width: 100%;
         }
@@ -309,7 +308,7 @@ onUnmounted(() => {
         img {
           max-width: 100%;
         }
-      }
+      
 
     }
   }

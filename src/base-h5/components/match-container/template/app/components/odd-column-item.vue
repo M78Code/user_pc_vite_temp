@@ -9,7 +9,7 @@
   <div class="odd-column-item" :class="odds_class_object()" @click.stop="item_click3" :id="dom_id_show && `list-${lodash.get(odd_item, 'oid')}`">
     <!-- 占位  或者  关盘 -->
     <div v-if="placeholder == 1 || is_close(get_odd_status())" class="item-inner">
-      <img class="icon-lock 1" :class="{standard:n_s}" :src="match_icon_lock" />
+      <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock" />
     </div>
 
     <!-- 全封(不显示盘口值) 占位时显示封-->
@@ -20,7 +20,7 @@
         v-if="is_show_fenpan"
         v-html="transfer_on(odd_item)">
       </div>
-      <img class="icon-lock 2" :class="{standard:n_s}" :src="match_icon_lock" />
+      <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock" />
     </div>
 
     <!-- 半封(显示盘口值)与赔率显示 -->
@@ -162,13 +162,20 @@ const odds_class_object = () => {
     'first-radius': props.odd_item_i === 0,
     'last-radius': props.odd_item_i > 1,
     'is-jiaoqiu': MenuData.get_footer_sub_menu_id() == 114, 
-    'active': BetData.bet_oid_list.includes(odd_item.value.oid)
+    'active': BetData.bet_oid_list.includes(odd_item.value.oid),
+    'item-lock': is_lock()
   };
   if(PageSourceData.get_newer_standard_edition() == 2){
     delete result['first-radius'];
     delete result['last-radius'];
   }
   return result;
+}
+
+const is_lock = () => {
+  if(props?.match?.mhs == 1) return true;
+  if(props?.hl_hs == 1) return true;
+  return odd_s == 2;
 }
 
 /**
@@ -667,5 +674,18 @@ onUnmounted(() => {
   .odd-value {
     color: var(--q-gb-t-c-1) !important;  
   }
+  &.item-lock{
+    background: transparent !important;
+    .odd-title {
+      color: var(--q-gb-t-c-19) !important;
+      span{
+        color: var(--q-gb-t-c-19) !important;
+      }
+    }
+    .odd-value {
+      color: var(--q-gb-t-c-19) !important;  
+    }
+  }
 }
+
 </style>

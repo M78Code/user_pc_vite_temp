@@ -91,7 +91,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
    * 早盘串关日期格式
    */
   const dataList = reactive({
-    3: dateTabList(new Date()),
+    3: dateTabList(new Date(new Date().getTime()+24*60*60*1000)), //早盘下一天开始
     6: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"今日",val:0}]),
     2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"所有日期",val:''},{name:"今日",val:new Date().getTime()}])
   });
@@ -123,6 +123,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     if(MenuData.is_esports()){
       const data_list_esports = await MenuData.getDateList(val?.csid);
       dataListEsports.value = data_list_esports;
+      nextTick(()=>{
+        dJdateTabMenu.value.changeTabMenu({},0,'',type);
+      })
     }
     switch (+val.mi) {
       case 2000:
@@ -231,7 +234,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     })
   }
   watch(()=> MenuData.current_lv_1_menu_mi.value, (new_,old_) => {
-      MenuData.set_old_current_lv_1_menu_i([2000,300].includes(new_)?old_:'');//电竞vr记录旧菜单id
+    MenuData.set_old_current_lv_1_menu_i([2000,300].includes(new_)?old_:'');//电竞vr记录旧菜单id
     init_data(new_)
   })
   // 早盘 串关  电竞
@@ -284,7 +287,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
     }
     // 刷新页面避免触发2次 set_origin_match_data
-    if (is_first.value && !is_kemp) {
+    if (is_first.value && !is_kemp.value) {
       is_first.value = false
     } else {
       set_menu_mi_change_get_api_data()

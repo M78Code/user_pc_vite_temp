@@ -92,7 +92,10 @@ onMounted(() => {
   emitters.value = {
     // 重新设置监听对象
     emitter_1: useMittOn(MITT_TYPES.EMIT_HANDLE_START_OBSERVER, () => {
-      nextTick(() => handle_start_observer())
+      // nextTick(() => handle_start_observer())
+      setTimeout(() => {
+        handle_start_observer()
+      }, 1500)
     }).off,
     // 回到顶部
     emitter_2: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, () => {
@@ -120,6 +123,7 @@ const handle_start_observer = () => {
       } else {
         // 可视区外 删除 DOM 节点
         // handler(key, false)
+        handler_match_show_state()
         remove_match(mid)
       }
     }
@@ -147,6 +151,16 @@ const remove_match = (mid) => {
   }
 }
 
+const handler_match_show_state = lodash.debounce(() => {
+  props.match_list.forEach(match => {
+    const index = lodash.findIndex(active_mids.value, (t) => t === match.mid)
+    if (index === -1) {
+      const key = `mid_${match.mid}`
+      MatchResponsive.set_show_match_info(key, false)
+    }
+  })
+}, 2000)
+
 /**
  * @description 获取数据仓库赛事数据
  */
@@ -173,8 +187,8 @@ const get_match_base_by_mids = lodash.debounce(() => {
 const handler = (key, falg) => {
   const start = Date.now()
   requestAnimationFrame(() => {
-    // 当前渲染帧 有剩余 则 执行渲染任务
-    if (Date.now() - start < 16.6) {
+    // 当前渲染帧 有剩余 则 执行渲染任务 16.6
+    if (Date.now() - start < 52) {
       MatchResponsive.set_show_match_info(key, falg)
     }  else {
       handler(key, falg)

@@ -16,16 +16,16 @@
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
           <div class="match-status-title">
-            <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
+            <img :src="in_progress" /> <span class="din-regular">进行中</span>
           </div>
-          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
+          <img :class="['expand_item', {collapsed: progress_seed_collapsed}]" :src="expand_item" alt="">
         </template>
         <!-- 未开赛 -->
         <template  v-if="+match.start_flag === 2">
           <div class="match-status-title">
             <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
           </div>
-          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
+          <img :class="['expand_item', {collapsed: not_begin_collapsed}]" :src="expand_item" alt="">
         </template>
       </div>
       <!-- 全部 -->
@@ -466,7 +466,7 @@ export default {
     .match-content{
       width: 100%;
       padding: 0 10px;
-      border-top: 1px solid var(--q-gb-bd-c-4);
+      border-top: 1px solid  var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
       border-radius: 0 0 8px 8px;
       border: 1px solid var(--q-gb-bd-c-15);
@@ -474,13 +474,13 @@ export default {
         border-top: none;
       }
       &.border-top{
-        border-top: 1px solid var(--q-gb-bd-c-4);
+        border-top: 1px solid  var(--q-gb-bd-c-4);
       }
     }
     > .match-indent{
       border: 1px solid var(--q-gb-bd-c-15);
       border-radius: 8px 8px 0 0;
-      border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
+      border-bottom: 1px solid  var(--q-gb-bd-c-4) !important;
       &.collapsed{
         border-radius: 8px;
         border-bottom: 1px solid var(--q-gb-bd-c-15) !important;
@@ -1156,7 +1156,7 @@ export default {
         }
 
         .team-title-inner-con {
-          width: 1.21rem;
+          width: 1.19rem;
           position: relative;
           line-height: 0.14rem;
           display: flex;
@@ -1222,8 +1222,7 @@ export default {
             color: var(--q-gb-t-c-18);
 
             &.is-handicap {
-              color: #000;
-              font-weight: bold;
+              color: #74C4FF !important;
             }
           }
         }
