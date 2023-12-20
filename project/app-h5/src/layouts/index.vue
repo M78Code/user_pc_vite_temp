@@ -441,7 +441,7 @@ if (UserCtr.get_user_token()) {
     justify-content: center;
     border: 1px solid var(--q-gb-bg-c-15);
     border-radius: 50%;
-    color: var(--q-gb-bg-c-15);
+    color: var(--q-gb-t-c-14);
     background-color: #f76565;
     position: absolute;
     top: -.06rem;
