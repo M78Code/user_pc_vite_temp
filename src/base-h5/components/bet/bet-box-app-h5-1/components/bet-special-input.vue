@@ -189,7 +189,7 @@ const set_special_series = (money,ty_id) => {
     padding-right: 0.1rem;
     background: var(--q-gb-bg-c-15);
     margin-left: 0.05rem;
-    border: 1px solid var(--q-gb-bg-c-24);
+    border: 1px solid var(--q-gb-bd-c-16);
     .limit-txt {
       color: var(--q-gb-t-c-5);
       font-size: 0.16rem;
