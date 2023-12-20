@@ -185,7 +185,7 @@ onUnmounted(()=>{
         scrollbar-width: none; // 去除滚动条火狐浏览器兼容性问题
 
         .sport-menu-item {
-          min-width: 0.52rem;
+          min-width: 0.55rem;
           position: relative;
           height: 100%;
           flex-shrink: 0;
@@ -242,9 +242,9 @@ onUnmounted(()=>{
         .sport-match-count {
                 line-height: 1;
                 position: absolute;
-                right: 0;
-                top: 0;
-                font-size: 0.11rem;
+                left: 0.36rem;
+                font-size: 0.1rem;
+                font-family: "Akrobat";
         }
         }
       }

@@ -396,12 +396,13 @@ export default defineComponent({
 }
 
 .v-list-enter,.v-list-leave-to {
-  opacity: 0;
+  // opacity: 0;
   transform: translateY(20px);
 }
 
 .v-leave-active {
   position: absolute;
+  // height: 0;
   width: 100%;
 }
 </style>
