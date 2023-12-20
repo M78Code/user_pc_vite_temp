@@ -47,6 +47,7 @@ let alertTips = ref(false)
   border-radius: 0.1rem;
   width: 90%;
   padding: 0 0.14rem;
+  box-shadow: 1px 1px 3px var(--q-gb-bg-c-6);
   h2 {
     font-size: 0.2rem;
     font-weight: bold;
