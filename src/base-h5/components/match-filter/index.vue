@@ -497,6 +497,7 @@ function fetch_filter_match() {
   api_match_filter(params).then(({ code, data }) => {
 
     try {
+      console.error('datadatadatadatadata123',data)
       list_data_loading.value = false;
       if (data && data.length > 0) {
         no_find_content.value = false;
