@@ -80,8 +80,8 @@
             :class="{ 'last-row': i == get_everyDay_list.length - 1 }"
             class="table-body relative-position"
           >
-          <p v-if="actId === 1" class="text-left mission-name">{{v?.taskTittle}}</p>
-            <p class="text-left task-matters task-matters-content" :class="`task-matters-text-${actId}`" v-html="v.taskName"></p>
+          <p v-if="actId === 1" class="td-item text-left mission-name">{{v?.taskTittle}}</p>
+            <p class="td-item td-item-taskName text-left task-matters task-matters-content" :class="`task-matters-text-${actId}`" v-html="v.taskName"></p>
             <p
               class="td-item"
               :class="{
@@ -109,11 +109,11 @@
             </div>
             <div
               v-else-if="v.bonusType == 3"
-              class="td-item receive flex align_items justify-center"
+              class="td-item td-item-receive  flex align_items justify-center"
               :class="{ 'Ash-grey': isDuringDate(inStartTime, inEndTime) == 3 }"
               @click.stop="task_receive_btn(v.bonusId)"
             >
-              领取
+              <span class="receive">领取</span>
             </div>
           </div>
         </load-data>
@@ -192,12 +192,12 @@
                 v-for="(item, index) in history_records"
                 :key="index"
               >
-                <p v-html="item.taskName">
+                <p class="p-tast-name" v-html="item.taskName">
                 </p>
-                <p>
+                <p class="td-item">
                   <span>{{ item.ticketNum }}</span>
                 </p>
-                <p>
+                <p class="td-item">
                   <span>{{ item.receiveTime }}</span>
                 </p>
               </div>
@@ -311,7 +311,10 @@ export default {
         .to-be-completed-stata{
           color: var(--qq--activity-text-color-4);
         }
-        &.receive{
+        .receive{
+          display: flex;
+          align-items: center;
+          justify-content: center;
           width: 120px;
           height: 38px;
           margin-top: 11px;
@@ -406,7 +409,7 @@ export default {
           }
 
           p:not(:first-child) {
-            line-height: 60px;
+            //line-height: 60px;
           }
 
           .getLottery {
@@ -702,6 +705,13 @@ export default {
         border-bottom: 0 none;
       }
 
+      .load-data-wrap{
+        height: 420px;
+        overflow-y: auto;
+      }
+      ::-webkit-scrollbar {
+        display: none;
+      }
       div {
         display: flex;
         justify-content: space-between;
@@ -723,6 +733,14 @@ export default {
         border: 1px solid var(--qq--activity-bd-color-5);
         border-top: 0 none;
 
+        .td-item{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .p-tast-name{
+          justify-content: flex-start;
+        }
         &:nth-child(odd) {
           background: var(--qq--activity-bg-color-5);
         }
@@ -756,7 +774,6 @@ export default {
 
       .text-333 {
         height: 46px;
-        line-height: 46px;
         background: var(--qq--activity-text-color-6);
         font-family: PingFangSC-Medium;
         font-size: 16px;

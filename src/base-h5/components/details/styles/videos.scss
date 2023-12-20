@@ -262,15 +262,13 @@
     transform: rotate(360deg);
     transition: all 1s;
   }
-
-  :deep {
-    .tabs-wrapper {
+    :deep(.tabs-wrapper) {
       position: absolute;
       bottom: 1.18rem;
       left: 0.3rem;
       z-index: 100000;
     }
-    .slider-x {
+    :deep(.slider-x) {
       position: absolute;
       bottom: .45rem;
       left: 0.3rem;
@@ -324,7 +322,6 @@
         }
       }
     }
-  }
 }
 
 .switch-video-wrap {

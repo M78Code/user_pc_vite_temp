@@ -269,7 +269,6 @@ onUnmounted(() => {
   color: var(--q-gb-t-c-18);
   .limit-txt {
     color: var(--q-gb-t-c-19);
-    font-family: PingFang SC;
   }
 }
 /* ************** 右边内容 ************** -E */

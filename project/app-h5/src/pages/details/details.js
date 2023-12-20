@@ -12,7 +12,8 @@ import {SessionStorage,
    useMittOn, useMittEmit,
    useMittEmitterGenerator,
    MITT_TYPES,
-   UserCtr
+   UserCtr,
+   SearchData
   } from "src/output/index.js";
   import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 export const details_main = () => {
@@ -828,9 +829,9 @@ export const details_main = () => {
       // 联赛id
       tid: state_data.detail_data.tid,
       // 排序 int 类型 1按热门排序 2按时间排序(整型)
-      sort: state_data.get_sort_type,
+      sort: 1,
       // 搜索关键词 赛事搜索(字符串)
-      keyword: state_data.get_search_txt || "",
+      keyword: lodash.trim(SearchData.search_txt) || "",
       // 用户id或者uuid
       cuid: UserCtr.get_uid(),
       // 赛事id
@@ -860,7 +861,7 @@ export const details_main = () => {
             }
           }
         }
-
+        console.log(data, "=====data=====");
         // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
         get_match_details({ mid: event_data.mid, cuid: data.get_uid });
         // 重新调用 详情页面玩法集接口(/v1/m/category/getCategoryList)

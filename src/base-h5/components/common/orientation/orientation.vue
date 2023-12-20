@@ -8,20 +8,30 @@
 <script setup>
 import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output';
 import { onMounted, onUnmounted,ref } from 'vue';
+import OrientationSubscrbe from './orientation-subscribe.js'
 const imgUrl = `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/hengpin.svg`
-const orientation = ref(false);
+const orientation = ref(true);
 const listener = () => {
-    console.log(window.screen.orientation, "设备方向");
+    console.log(window.screen.orientation, isFullScreen(), "设备方向");
     switch (window.screen.orientation.angle) {
     case 90:
     case -90:
-        orientation.value = false;
+        // 不是视频全屏， 不支持旋转
+        if (!OrientationSubscrbe.instance.status) {
+            orientation.value = false;
+        }
         break;
     default:
         orientation.value = true;
         break;
     }
 }
+
+// 判断是否全屏
+const isFullScreen = () => {
+  return document.fullscreenElement !== null || document.webkitFullscreenElement !== null || document.mozFullScreenElement !== null || document.msFullscreenElement !== null;
+}
+
 
 onUnmounted(() => {
     window.removeEventListener('orientationchange', listener)
@@ -30,7 +40,6 @@ onUnmounted(() => {
 onMounted(() => {
     listener();
     window.addEventListener('orientationchange', listener)
-
 })
 </script>
 

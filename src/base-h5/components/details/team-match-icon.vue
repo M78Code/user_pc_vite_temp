@@ -13,7 +13,6 @@
 
       <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
       <template v-if="get_detail_data.mvs > -1 || (get_detail_data.mms > 1 && [1,2,7,10,110].includes(get_detail_data.ms*1))">
-
         <!-- 视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 -->
         <match-icon v-if="get_detail_data.mms > 1" class="fl" :status="get_detail_data.mms"
           which="muUrl" icon_class="shipin" :detail_data="detail_data" :text="i18n_t('match_info.video_info')">

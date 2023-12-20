@@ -2,12 +2,13 @@ import { createApp } from 'vue'
 import { Quasar, Notify } from "quasar";
 import "./src/css/app.scss";
 import "quasar/dist/quasar.css";
+import lodash from "lodash";
 // import './style.css'
 import App from './App.vue'
  
 import _ from 'lodash';
  
-import { i18n, loadLanguageAsync, i18n_t } from "./src/boot/i18n.js";
+import { i18n, loadLanguageAsync, i18n_t, i18n_tc } from "./src/boot/i18n.js";
 import global from './src/boot/globals';
 
 
@@ -19,8 +20,12 @@ window.vue = app;
 
 app.use(global);
 app.use(i18n);
+window.lodash = lodash;
+app.config.globalProperties.lodash = lodash;
 app.config.globalProperties.i18n_t = i18n_t;
 window.i18n_t = i18n_t;
+app.config.globalProperties.i18n_tc = i18n_tc;
+window.i18n_tc = i18n_tc;
 app.use(Quasar, {
   plugins: {
     Notify

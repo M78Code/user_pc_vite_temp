@@ -217,11 +217,7 @@ const get_match_top_by_mid1 = (mid) => {
 
 const get_match_top_by_mid = (mid) => {
   const key = VirtualList.get_match_height_key(mid)
-  let r = 0;
-  if (key in VirtualList.mid_top_map) {
-    r = VirtualList.mid_top_map[key].toFixed(6);
-  }
-  return r;
+  return lodash.get(VirtualList,`mid_top_map.${key}`,0);
 }
 
 // 设置是否快速滚动显示骨架屏背景

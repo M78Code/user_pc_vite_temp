@@ -32,9 +32,9 @@
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='max' style="font-size: 0.14rem;">{{ i18n_t('bet.max')}}</div>
                   <div class="nonebox4-fourth-num-sun key-cell" data-number="x">
-                    <img class="key-cell-img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del.svg`" alt="" data-number="x">
+                    <img class="key-cell-img" :src="jpimg" alt="" data-number="x">
                   </div>
-                  <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/pack_up-keyboard.svg`" alt=""></div>
+                  <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)"><img :src="delimg" alt=""></div>
               </div>
           </div>
          
@@ -49,6 +49,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr, LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 
 const active_index = ref(BetData.active_index)
 const money = ref('') //用户输入金额
@@ -70,6 +71,23 @@ const shou = (item,evnet) => {
   // BetData.set_bet_keyboard_config(item)
   BetData.set_bet_keyboard_show(false)
 }
+
+const local = ref(LocalStorage.get('default-theme'))
+const delimg = computed(() => {
+  if(local.value == "theme-2"){
+    return `${LOCAL_PROJECT_FILE_PREFIX}/image/bet/pack_up-keyboard.svg`
+  }else {
+    return `${LOCAL_PROJECT_FILE_PREFIX}/image/bet/pack_up_y.svg`
+  }
+})  
+
+const jpimg = computed(() => {
+  if(local.value == "theme-2"){
+    return `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del.svg`
+  }else {
+    return `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del_y.svg`
+  }
+})
 
 // 预约输入赔率或者盘口
 watch(() => pre_odds_value, (new_) => {
@@ -408,10 +426,10 @@ onUnmounted(() => {
   box-sizing: border-box;
   text-align: center;
 }
-.key-cell-img{
-  width: 0.2rem;
-  height: 0.2rem;
-}
+// .key-cell-img{
+//   width: 0.2rem;
+//   height: 0.2rem;
+// }
 
 .del-key {
   // background: url('../../../assets/images/bet/bet_key_delect.png') no-repeat 50%;

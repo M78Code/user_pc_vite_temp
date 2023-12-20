@@ -22,20 +22,20 @@ const  url = ref('')
 const  token = UserCtr.get_user_token()
 //用户分组
 const  gr = window.SEARCH_PARAMS.init_param.get('gr')?.toLocaleUpperCase()
-if (current_env == 'idc_online' || current_env == 'idc_ylcs') {
-            // 生产环境
-          url.value =  'http://front-test-100.dbsportxxx2li.com/activity'
-        } else if (current_env == 'idc_sandbox') {
-            // 试玩环境
-          url.value = 'http://front-test-99.dbsportxxx2li.com/activity'
-        }else if(current_env == 'idc_lspre'){
-          //隔离环境
-          url.value = 'http://front-test-98.dbsportxxx2li.com/activity'
-        } else {
-            // 其他环境，测试和开发 等
-          url.value =  'http://test-topic.sportxxxifbdxm2.com/activity'
-        }
-    
+// if (current_env == 'idc_online' || current_env == 'idc_ylcs') {
+//     // 生产环境
+//   url.value =  'http://front-test-100.dbsportxxx2li.com/activity'
+// } else if (current_env == 'idc_sandbox') {
+//     // 试玩环境
+//   url.value = 'http://front-test-99.dbsportxxx2li.com/activity'
+// }else if(current_env == 'idc_lspre'){
+//   //隔离环境
+//   url.value = 'http://front-test-98.dbsportxxx2li.com/activity'
+// } else {
+//     // 其他环境，测试和开发 等
+//   url.value =  'http://test-topic.sportxxxifbdxm2.com/activity'
+// }
+url.value  = lodash.get(window, `BUILDIN_CONFIG.DOMAIN_RESULT.topic.activity`);
 // 访问路由拼接 
 const  acticity_src_url  = url.value  +'?'+ UserCtr.get_user_url_parames();
 acticity_src.value = acticity_src_url
