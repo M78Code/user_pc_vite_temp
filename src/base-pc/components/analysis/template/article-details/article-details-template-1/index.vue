@@ -143,8 +143,7 @@ onUnmounted(() => {
     }
   }
 
-  .article {
-    :deep {
+  :deep(.article) {
       * {
         max-width: 100%;
         color: var(--q-analysis-color-10);
@@ -162,7 +161,7 @@ onUnmounted(() => {
       img {
         max-width: 100%;
       }
-    }
+    
 
   }
 }
