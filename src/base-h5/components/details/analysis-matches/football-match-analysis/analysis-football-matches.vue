@@ -12,7 +12,7 @@
       @tab_click="tab_click"
       ref="head-tab"
       class="football-tab-header"
-    ></head-tab>{{currentContent}}
+    ></head-tab>
     <!-- 顶部切换 下边的内容组件 -->
     <component :is="currentContent" :detail_data="detail_data" />
   </div>
@@ -92,6 +92,11 @@ export default defineComponent({
     // TODO: 临时用
     const get_event_list = ref(MatchDetailCalss.playback_video_list)
     const get_analyze_show = ref(false)
+
+    const rem = (value) => {
+    let font_size = (innerWidth * 100) / 375;
+    return Math.ceil(value * font_size);
+  };
 
     onMounted(() => {
       nextTick(() => {

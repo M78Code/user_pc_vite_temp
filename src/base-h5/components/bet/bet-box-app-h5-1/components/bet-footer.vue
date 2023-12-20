@@ -82,7 +82,7 @@ const ref_data = reactive({
 // status 是响应式的 可以用于重新计算
 const bet_win_money = computed(()=> status => {
   // 获取单关投注的数据
-  const { bet_amount, oddFinally, odds_hsw } = lodash_.get(BetData,'bet_single_list[0]',{})
+  const { bet_amount ='', oddFinally = '', odds_hsw = '' } = lodash_.get(BetData,'bet_single_list[0]',{})
   let bet_win = bet_amount
   // 香港赔 不用减去投注金额
   if(odds_hsw.includes(odds_table[UserCtr.odds.cur_odds]) && UserCtr.odds.cur_odds == 'HK' ){
@@ -196,19 +196,26 @@ const set_bet_single = () => {
     return
   }
 
-  BetData.set_is_bet_single()
-  BetData.set_clear_bet_info()
-  BetViewDataClass.set_clear_bet_view_config()
-  BetData.set_bet_box_h5_show(false)
-  // 切换到串关 进入到串关页面 
-  if(BetData.is_bet_single){
-    MenuData.set_current_lv1_menu(2);
-  }
+  // 电竞vr切换 单/串关 不跳转和设置一级菜单
+  if(MenuData.is_esports() || MenuData.is_vr()){
+    BetData.set_bet_box_h5_show(false)
+    BetData.set_is_bet_single()
+  }else{
+    BetData.set_is_bet_single()
+    BetData.set_clear_bet_info()
+    BetViewDataClass.set_clear_bet_view_config()
 
-  // 切换到串关 进入到串关页面 
-  if(!BetData.is_bet_single){
-    MenuData.set_current_lv1_menu(6);
+    // 切换到串关 进入到串关页面 
+    if(BetData.is_bet_single){
+      MenuData.set_current_lv1_menu(2);
+    }
+
+    // 切换到串关 进入到串关页面 
+    if(!BetData.is_bet_single){
+      MenuData.set_current_lv1_menu(6);
+    }
   }
+  
   
   init_silider_position()
 }

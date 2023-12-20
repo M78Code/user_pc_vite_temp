@@ -3,33 +3,42 @@
 -->
 <template>
   <div class="champion-wrap-2 component match-container-main-template6" v-if="is_show">
-    <div class="sport-title match-indent" v-if="get_sport_show(i)" @click="handle_ball_seed_fold">
-      <span class="score-inner-span"> {{ match_of_list.csna }} </span>
+    <div class="sport-title match-indent" v-if="!i" @click="handle_ball_seed_fold">
+      <span class="score-inner-span"> {{ match_of_list.csna + '('+ match_of_list._total +')' }} </span>
       <div class="collapse-dire">
-        <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' />
+        <!-- <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' /> -->
       </div>
     </div>
-    <div v-if="is_show_league(i)"
-      :class="['league-container flex items-center justify-between right-border', { collapsed: !collapsed }]"
-      @click="handle_league_fold">
-      <div class="league-wrapper champion flex items-center">
-        <div v-if="menu_type === 100 && GlobalAccessConfig.get_collectSwitch()" class="favorite"
-          :class="[{ favorited: match_of_list.tf }, theme]" @click.stop="handle_league_fold"></div>
-        <span class="league-title-text row justify-between"
-          :class="{ 'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch()) }">
-          <!-- {{ menu_type == 100 ? match_of_list.onTn : match_of_list.tn }} -->
-          {{(new Date(+match_of_list.mgt)).Format(i18n_t('time8')).split(' ')[0]}}
-        </span>
+    <div class="cw2-bg-content">
+      <div v-if="is_show_league(i)"
+        :class="['league-container flex items-center justify-between right-border', { collapsed: !collapsed }]"
+        @click="handle_league_fold">
+        <div class="league-wrapper champion flex items-center">
+          <div v-if="menu_type === 100 && GlobalAccessConfig.get_collectSwitch()" class="favorite"
+            :class="[{ favorited: match_of_list.tf }, theme]" @click.stop="handle_league_fold"></div>
+          <span class="league-title-text row justify-between"
+            :class="{ 'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch()) }">
+            {{ match_of_list.tournamentName }}
+          </span>
+        </div>
+
+        <div class="collapse-dire">
+          <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', { 'collapsed': !collapsed }]" />
+        </div>
       </div>
 
-      <div class="collapse-dire">
-        <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', { 'collapsed': !collapsed }]" />
+      <div class="champion-match-results-content" v-if="collapsed">
+        <div class="cmrc-title">
+          <div class="cmrc-t-league">
+            <img :src="get_server_file_path(match_of_list.picUrl)">
+            {{ match_of_list.tournamentName }}
+          </div>
+          <div>{{ match_of_list.playName }}</div>
+        </div>
+        <div class="cmrc-t-teams">{{ match_of_list.scoreResult }}</div>
+        <div class="cmrc-t-time">{{ format_time_zone(+match_of_list.matchTime).Format(i18n_t('time11')) }}</div>
       </div>
     </div>
-
-    <template v-for="(hp, index) of match_of_list">
-    </template>
-
   </div>
 </template>
 
@@ -43,9 +52,11 @@ import { compute_img_url } from "src/output/index.js"
 import { IconWapper } from 'src/components/icon'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import OddItemChampion from "src/base-h5/components/match-list/components/odd-item-champion.vue";
+import { format_time_zone } from "src/output/index.js"
 
 import champion_mixin from '../../mixins/champion.mixin.js'
 import 'src/base-h5/css/pages/match-container-champion.scss'
+import { get_server_file_path } from "src/core/file-path/file-path.js"
 
 export default {
   name: "match-container-main-template4",
@@ -68,18 +79,24 @@ export default {
       menu_type,
       compute_img_url,
       GlobalAccessConfig,
+      format_time_zone,
+      get_server_file_path
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
+.cw2-bg-content {
+  background: var(--q-gb-bg-c-17);
+  margin: 0 .08rem;
+}
 .champion-wrap-2 {
   //width: 3.61rem;
   //margin: 0 0 0 0.07rem;
   //border-radius: 0.08rem;
   //overflow: hidden;
-  width: calc(100% - 0.1rem);
+  // width: calc(100% - 0.1rem);
   height: auto;
   position: relative;
   margin: 0 auto;
@@ -287,7 +304,6 @@ export default {
 }
 
 .sport-title {
-  width: calc(100% - 0.07rem * 2);
   display: flex;
   align-items: center;
   padding-left: 0.1rem;
@@ -296,7 +312,7 @@ export default {
   background-image: var(--q-gb-bg-lg-19);
   /*transform: translateY(3px);*/
   margin: 0 auto;
-  border-radius: 0.06rem;
+  justify-content:space-between;
 
   &.hidden_sport {
     display: none !important;
@@ -350,7 +366,7 @@ export default {
   }
 
   .collapse-dire {
-    margin: 0.05rem 0.11rem 0.07rem 0;
+    margin: 0.05rem 0.12rem 0.07rem 0;
 
     .icon-arrow {
       width: 0.12rem;
@@ -360,4 +376,29 @@ export default {
     }
   }
 }
+
+.champion-match-results-content {
+  padding:.08rem;
+    .cmrc-title {
+      display:flex;
+      justify-content: space-between;
+      margin-bottom:.1rem;
+      .cmrc-t-league {
+        display:flex;
+        align-items:center;
+        img {
+          width:.18rem;
+          height:.18rem;
+          margin-right: .04rem;
+        }
+      }
+    }
+    .cmrc-t-teams {
+      font-weight:500;
+      margin-bottom:.1rem;
+    }
+    .cmrc-t-time {
+      color:#AFB3C8;
+    }
+  }
 </style>

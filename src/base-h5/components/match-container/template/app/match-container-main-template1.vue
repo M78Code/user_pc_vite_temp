@@ -16,16 +16,16 @@
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
           <div class="match-status-title">
-            <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
+            <img :src="in_progress" /> <span class="din-regular">进行中</span>
           </div>
-          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
+          <img :class="['expand_item', {collapsed: progress_seed_collapsed}]" :src="expand_item" alt="">
         </template>
         <!-- 未开赛 -->
         <template  v-if="+match.start_flag === 2">
           <div class="match-status-title">
             <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
           </div>
-          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
+          <img :class="['expand_item', {collapsed: not_begin_collapsed}]" :src="expand_item" alt="">
         </template>
       </div>
       <!-- 全部 -->
@@ -39,7 +39,7 @@
       <div v-if="show_sport_title" @click.stop="handle_ball_seed_fold"
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span">
-          {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }})
+          {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }}) 
         </span>
       </div>
 
@@ -1156,7 +1156,7 @@ export default {
         }
 
         .team-title-inner-con {
-          width: 1.21rem;
+          width: 1.19rem;
           position: relative;
           line-height: 0.14rem;
           display: flex;
@@ -1222,8 +1222,7 @@ export default {
             color: var(--q-gb-t-c-18);
 
             &.is-handicap {
-              color: #000;
-              font-weight: bold;
+              color: #74C4FF !important;
             }
           }
         }
@@ -1257,9 +1256,11 @@ export default {
           width: 4px;
           height: 4px;
           border-radius: 50%;
-          background: var(--q-color-page-bg-color-59);
+          background: var(--sys-feedback-success-success-400, #4AB06A);
           flex-shrink: 0;
-          margin: 0.13rem 0.05rem 0;
+          position: absolute;
+          left: 1.25rem;
+          top: 0.16rem;
           &.simple {
             margin-right: 0.03rem;
           }
