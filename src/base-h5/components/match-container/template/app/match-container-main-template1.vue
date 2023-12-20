@@ -106,7 +106,7 @@
                   <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
                     <!-- 赛事回合数mfo -->
-                    <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
+                    <div v-if="match.mfo && ![ 1, 110 ].includes(+match.ms)" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
                       {{ match.mfo }}
                     </div>
 
@@ -177,6 +177,10 @@
                         }">
                           {{ match.mhn }}
                         </div>
+                        <!--发球方绿点-->
+                        <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                          v-show="set_serving_side(match_of_list, 'home')">
+                        </span>
                         <template v-if="home_red_score || home_yellow_score">
                           <!-- 红牌 -->
                           <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
@@ -198,10 +202,7 @@
                         :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
                         {{ home_score }}
                       </div>
-                      <!--发球方绿点-->
-                      <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                        v-show="set_serving_side(match_of_list, 'home')">
-                      </span>
+
                     </div>
                     <!--客队图片和名称-->
                     <div class='team-title-container' :class="{
@@ -217,6 +218,10 @@
                         }">
                           <span>{{ match.man }}</span>
                         </div>
+                        <!--发球方绿点-->
+                        <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                          v-show="set_serving_side(match_of_list, 'away')">
+                        </span>
                         <template v-if="home_red_score || home_yellow_score">
                           <!-- 红牌 -->
                           <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
@@ -239,10 +244,7 @@
                       :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
                       {{ away_score }}
                     </div>
-                    <!--发球方绿点-->
-                    <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                      v-show="set_serving_side(match_of_list, 'away')">
-                    </span>
+
                   </div>
                   <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
                   <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
@@ -1256,9 +1258,10 @@ export default {
           width: 4px;
           height: 4px;
           border-radius: 50%;
-          background: var(--q-color-page-bg-color-59);
+          // background: var(--q-color-page-bg-color-59);
+          background: var(--sys-feedback-success-success-400, #4AB06A);
           flex-shrink: 0;
-          margin: 0.13rem 0.05rem 0;
+          margin: 0.03rem 0.05rem 0;
           &.simple {
             margin-right: 0.03rem;
           }
