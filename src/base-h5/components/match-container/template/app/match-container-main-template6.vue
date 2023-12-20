@@ -9,35 +9,36 @@
         <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' />
       </div>
     </div>
-    <div v-if="is_show_league(i)"
-      :class="['league-container flex items-center justify-between right-border', { collapsed: !collapsed }]"
-      @click="handle_league_fold">
-      <div class="league-wrapper champion flex items-center">
-        <div v-if="menu_type === 100 && GlobalAccessConfig.get_collectSwitch()" class="favorite"
-          :class="[{ favorited: match_of_list.tf }, theme]" @click.stop="handle_league_fold"></div>
-        <span class="league-title-text row justify-between"
-          :class="{ 'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch()) }">
-          {{ match_of_list.tournamentName }}
-        </span>
-      </div>
-
-      <div class="collapse-dire">
-        <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', { 'collapsed': !collapsed }]" />
-      </div>
-    </div>
-
-    <div class="champion-match-results-content" v-if="collapsed">
-      <div class="cmrc-title">
-        <div class="cmrc-t-league">
-          <img :src="get_server_file_path(match_of_list.picUrl)">
-          {{ match_of_list.tournamentName }}
+    <div class="cw2-bg-content">
+      <div v-if="is_show_league(i)"
+        :class="['league-container flex items-center justify-between right-border', { collapsed: !collapsed }]"
+        @click="handle_league_fold">
+        <div class="league-wrapper champion flex items-center">
+          <div v-if="menu_type === 100 && GlobalAccessConfig.get_collectSwitch()" class="favorite"
+            :class="[{ favorited: match_of_list.tf }, theme]" @click.stop="handle_league_fold"></div>
+          <span class="league-title-text row justify-between"
+            :class="{ 'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch()) }">
+            {{ match_of_list.tournamentName }}
+          </span>
         </div>
-        <div>{{ match_of_list.playName }}</div>
-      </div>
-      <div class="cmrc-t-teams">{{ match_of_list.scoreResult }}</div>
-      <div class="cmrc-t-time">{{ format_time_zone(+match_of_list.matchTime).Format(i18n_t('time11')) }}</div>
-    </div>
 
+        <div class="collapse-dire">
+          <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', { 'collapsed': !collapsed }]" />
+        </div>
+      </div>
+
+      <div class="champion-match-results-content" v-if="collapsed">
+        <div class="cmrc-title">
+          <div class="cmrc-t-league">
+            <img :src="get_server_file_path(match_of_list.picUrl)">
+            {{ match_of_list.tournamentName }}
+          </div>
+          <div>{{ match_of_list.playName }}</div>
+        </div>
+        <div class="cmrc-t-teams">{{ match_of_list.scoreResult }}</div>
+        <div class="cmrc-t-time">{{ format_time_zone(+match_of_list.matchTime).Format(i18n_t('time11')) }}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -86,16 +87,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.cw2-bg-content {
+  background: var(--q-gb-bg-c-17);
+  margin: 0 .08rem;
+}
 .champion-wrap-2 {
   //width: 3.61rem;
   //margin: 0 0 0 0.07rem;
   //border-radius: 0.08rem;
   //overflow: hidden;
-  width: calc(100% - 0.1rem);
+  // width: calc(100% - 0.1rem);
   height: auto;
   position: relative;
   margin: 0 auto;
-  background: var(--q-gb-bg-c-17);
+  background: var(--q-gb-bg-c-18);
   border-radius: 0.05rem;
 
   .league-container {
@@ -299,7 +304,6 @@ export default {
 }
 
 .sport-title {
-  width: calc(100% - 0.07rem * 2);
   display: flex;
   align-items: center;
   padding-left: 0.1rem;
@@ -308,7 +312,7 @@ export default {
   background-image: var(--q-gb-bg-lg-19);
   /*transform: translateY(3px);*/
   margin: 0 auto;
-  border-radius: 0.06rem;
+  justify-content:space-between;
 
   &.hidden_sport {
     display: none !important;
@@ -362,7 +366,7 @@ export default {
   }
 
   .collapse-dire {
-    margin: 0.05rem 0.11rem 0.07rem 0;
+    margin: 0.05rem 0.12rem 0.07rem 0;
 
     .icon-arrow {
       width: 0.12rem;
