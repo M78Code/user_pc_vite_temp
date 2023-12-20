@@ -195,16 +195,15 @@ const set_bet_single = () => {
   if(MenuData.is_kemp()){
     return
   }
+  BetData.set_bet_box_h5_show(false)
+  BetData.set_is_bet_single()
+  BetData.set_clear_bet_info()
+  BetViewDataClass.set_clear_bet_view_config()
 
   // 电竞vr切换 单/串关 不跳转和设置一级菜单
   if(MenuData.is_esports() || MenuData.is_vr()){
-    BetData.set_bet_box_h5_show(false)
-    BetData.set_is_bet_single()
+    // 后续优化逻辑 
   }else{
-    BetData.set_is_bet_single()
-    BetData.set_clear_bet_info()
-    BetViewDataClass.set_clear_bet_view_config()
-
     // 切换到串关 进入到串关页面 
     if(BetData.is_bet_single){
       MenuData.set_current_lv1_menu(2);
@@ -215,7 +214,6 @@ const set_bet_single = () => {
       MenuData.set_current_lv1_menu(6);
     }
   }
-  
   
   init_silider_position()
 }
