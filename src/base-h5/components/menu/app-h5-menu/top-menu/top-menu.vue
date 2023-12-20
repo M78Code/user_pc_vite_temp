@@ -47,6 +47,7 @@ import lodash_ from "lodash";
 import { reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { format_money2 } from "src/output/index.js";
+import MatchFold from 'src/core/match-fold'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
@@ -97,6 +98,7 @@ watch(UserCtr.user_version, () => {
  * @param {*} type 
  */
 const set_menu_lv1 = item => {
+    MatchFold.set_all_csid_fold_status(true)
     MenuData.set_current_lv1_menu(item.mi);
     // MenuData.get_menu_lvmi_list(item.mi)
     // 复刻版早盘，串关需要等待时间接口返回在调用， 在这不调用set_origin_match_data

@@ -494,7 +494,6 @@ class MatchMeta {
       i.mid = i.marketId
       i.csna = i.sportName
     })
-    console.log('handler_champion_match_classify_by_sport_id', list)
     const length = lodash.get(list, 'length', 0)
     if (length < 1) {
       this.set_page_match_empty_status({ state: true });
