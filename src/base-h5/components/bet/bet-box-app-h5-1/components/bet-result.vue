@@ -31,12 +31,12 @@
         <div class="bet-content">
             <div class="bet-result f-b-c" >
                 <span class="font12 font400 bet-returm mr-4">投注金额</span>
-                <span class="font16 font600">{{ format_money2(mathJs.divide(items.betMoney,100))}}</span>
+                <span class="font16 font600 bet-returms">{{ format_money2(mathJs.divide(items.betMoney,100))}}</span>
             </div>
 
             <div class="bet-result f-b-c" >
                 <span class="font12 font400 bet-returm mr-4">可赢金额</span>
-                <span class="font16 font600">{{ format_money2(mathJs.divide(items.maxWinMoney,100))}}</span>
+                <span class="font16 font600 bet-returms">{{ format_money2(mathJs.divide(items.maxWinMoney,100))}}</span>
             </div>
 
             <div class="bet-result f-b-c" >
@@ -102,6 +102,7 @@ const props = defineProps({
 
         .bet-odds {
             height: 24px;
+            color:var(--q-gb-t-c-17);
             span {
                 vertical-align: middle;
             }
@@ -217,6 +218,9 @@ const props = defineProps({
     }
     .bet-returm {
         color: var(--q-gb-t-c-11);
+    }
+    .bet-returms{
+        color: var(--q-gb-t-c-18);
     }
     .order {
         color: var(--q-gb-t-c-11);

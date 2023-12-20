@@ -33,12 +33,14 @@ let  DEV_TARGET_VERSION = ''
 
 //----------------------------------分割线  复刻版-H5-KYAPP  app-h5  5 -------------------------------------------
 // 测试环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1702898785270-test";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703055848384-test";
 // 试玩环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1702898586015-shiwan";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703049252374-shiwan";
+// 隔离环境  
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1702898801798-geli";
 // 生产环境
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1702898816752-online";
+
 //----------------------------------亚洲版-PC-202310新平坦化版本  new-pc 6-------------------------------------------
 // 测试环境
 // DEV_TARGET_VERSION = "project_6-652e26e71ca4973781121a07-1701853997206-test";
@@ -66,9 +68,9 @@ DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1702176206745-online";
 // 测试环境  
 // DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1703043330510-test";
 // 试玩环境  
-// DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1703043524243-shiwan";
-// 试玩环境  
-// DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1703043507252-geli";
+// DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1702359106395-shiwan";
+// 隔离环境  
+// DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1700716624534-geli";
 // 生产环境
 // DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1703043542072-online";
 

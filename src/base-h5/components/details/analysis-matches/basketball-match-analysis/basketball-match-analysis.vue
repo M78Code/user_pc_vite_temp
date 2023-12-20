@@ -84,6 +84,11 @@ const props = defineProps({
         currentContent.value = clone_currentCont
       })
   })
+
+  const rem = (value) => {
+    let font_size = (innerWidth * 100) / 375;
+    return Math.ceil(value * font_size);
+  };
   onMounted(() => {
     nextTick(() => {
       // TODO: 后续修改调整 $refs $utils
