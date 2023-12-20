@@ -33,8 +33,12 @@ export const dateWeekFormat = (day) => {
  * @param {*} next tab末尾
  * @returns 
  */
-export const dateTabList = (day,pre=[{name:"全部",val:""}],next=[{name:"其他",val:'-1703563200000'}]) => {
-    return [...pre,...dateWeekFormat(day),...next];
+export const dateTabList = (day,pre=[{name:"全部",val:""}],next) =>
+ {
+    const _dateWeekFormat=dateWeekFormat(day)
+    //其他是负数 最后一天时间  例:2000-1-1  其他就是 "-2000-1-2"
+    const _next=Array.isArray(next)?next:[{name:"其他",val:'-'+(_dateWeekFormat[_dateWeekFormat.length-1].val+86400000)}] 
+    return [...pre,..._dateWeekFormat,..._next];
 };
 /**
  *  tab滚动动画
