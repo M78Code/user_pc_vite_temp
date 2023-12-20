@@ -489,6 +489,13 @@ class MatchMeta {
     }
     // 避免接口慢导致的数据错乱
     const list = lodash.get(res, 'data', [])
+    list.forEach(i => {
+      i.tid = i.tournamentId
+      i.csid = i.sportId
+      i.mid = i.matchId
+      i.csna = i.sportName
+    })
+    console.log('handler_champion_match_classify_by_sport_id', list)
     const length = lodash.get(list, 'length', 0)
     if (length < 1) {
       this.set_page_match_empty_status({ state: true });
