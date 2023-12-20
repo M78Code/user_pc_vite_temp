@@ -9,6 +9,8 @@ import { PROJECT_NAME } from 'src/output/module/menu-data.js'
 
 class MatchFold {
   constructor () {
+    // 全部球种折叠状态
+    this.all_csid_fold_status = ref(true)
     // 球种折叠对象
     this.ball_seed_csid_fold_obj = ref({})
     // 赛事折叠对象
@@ -139,6 +141,26 @@ class MatchFold {
     if (type === 2) return this.set_not_begin_csid_fold_obj(csid_key, !status)
 
   }
+
+  /**
+   * @description 折叠全部赛事
+   */
+  handler_fold_all_matchs_csid () {
+    const matchs = lodash.get(MatchMeta, 'complete_matchs', [])
+    if (matchs.length < 1) return
+    const status = this.all_csid_fold_status.value
+    matchs.forEach(item => {
+      if (!item) return
+      const key = this.get_match_fold_key(item)
+      this.set_match_fold(key, { show_card: !status })
+    })
+    this.all_csid_fold_status.value = !this.all_csid_fold_status.value
+  }
+
+  set_all_csid_fold_status (val) {
+    this.all_csid_fold_status.value = val
+  }
+
   /**
    * @description 设置赛事次要玩法是否展开
    * @param { match } 赛事对象 

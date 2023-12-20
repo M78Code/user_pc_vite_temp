@@ -29,7 +29,7 @@ export const outcome = {
 }
 
 /**
- * 返回订单状态
+ * 返回订单状态(带有输赢和其他状态)
  * orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败)
  * @param {*} data_b 
  * @returns 
@@ -75,6 +75,39 @@ export const calc_text = (data_b) => {
                 }
                 text = outcome[data_b.outcome] || i18n_t('bet_record.successful_betting')
             }
+            break;
+        case '2':
+            text = i18n_t('bet_record.invalid_bet')
+            color = 'gray'
+            break
+        case '3':
+            text = i18n_t('bet_record.confirming')
+            color = 'orange'
+            break
+        case '4':
+            text = i18n_t('bet.bet_err')
+            color = 'red'
+            break
+        default:
+            break
+    }
+    return { text, color }
+}
+
+/**
+ * 返回订单状态(只显示投注成功、投注失败)
+ * orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败)
+ * @param {*} data_b 
+ * @returns 
+ */
+export const calc_text_only_status = (data_b) => {
+    let color = 'black'
+    let text = ''
+    switch (data_b.orderStatus) {
+        case '0':
+        case '1':
+            text = i18n_t('bet_record.successful_betting')
+            color = 'green'
             break;
         case '2':
             text = i18n_t('bet_record.invalid_bet')
