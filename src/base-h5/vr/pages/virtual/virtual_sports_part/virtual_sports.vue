@@ -15,6 +15,16 @@
         <div>{{tab_item.name}}</div>
       </div>
     </div>
+    <!-- 全部联赛折叠 -->
+    <div class="all-leagues">
+      <div class="left">
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rili.png`" alt="">
+        <span>{{i18n_t('filter.all_leagues')}}</span>
+      </div>
+      <div class="right">
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" alt="">
+      </div>
+    </div>
     <div class="virtual-content-wrapper">
       <div class="virtual-sports-card">
         <div class="tab-title" @click.stop="expend_video = !expend_video">
@@ -176,8 +186,7 @@ import { IconWapper } from 'src/components/icon'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
-
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 export default {
   mixins:[common,virtual_sports_mixin],
   props:{
@@ -240,7 +249,8 @@ export default {
       // 是否展开视频
       expend_video: true,
       // 1:新手版 2:专业版
-      standard_edition
+      standard_edition,
+      LOCAL_PROJECT_FILE_PREFIX
     }
   },
   created() {
@@ -747,6 +757,30 @@ export default {
       &.expend_icon {
         transform: rotate(90deg);
       }
+    }
+  }
+}
+
+.all-leagues {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.15rem;
+  height: 0.24rem;
+  border-top: 2px solid #FEAE2B;
+  .left {
+    font-size: 0.12rem;
+    color: #303442;
+    img {
+      width: 0.12rem;
+      height: 0.12rem;
+      margin-right: 0.04rem;
+    }
+  }
+  .right {
+    img {
+      width: 0.2rem;
+      height: 0.16rem;
     }
   }
 }
