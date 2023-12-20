@@ -1156,7 +1156,7 @@ export default {
         }
 
         .team-title-inner-con {
-          width: 1.21rem;
+          width: 1.19rem;
           position: relative;
           line-height: 0.14rem;
           display: flex;
@@ -1222,8 +1222,7 @@ export default {
             color: var(--q-gb-t-c-18);
 
             &.is-handicap {
-              color: #000;
-              font-weight: bold;
+              color: #74C4FF !important;
             }
           }
         }
