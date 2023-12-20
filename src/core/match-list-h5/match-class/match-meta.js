@@ -491,7 +491,7 @@ class MatchMeta {
     list.forEach(i => {
       i.tid = i.tournamentId
       i.csid = i.sportId
-      i.mid = i.matchId
+      i.mid = i.marketId
       i.csna = i.sportName
     })
     console.log('handler_champion_match_classify_by_sport_id', list)
@@ -500,8 +500,8 @@ class MatchMeta {
       this.set_page_match_empty_status({ state: true });
       return []
     }
-    const matchs = MatchUtils.handler_champion_match_classify_by_sport_id(list)
-    return matchs
+    // const matchs = MatchUtils.handler_champion_match_classify_by_sport_id(list)
+    return this.handler_match_list_data({ list: list, type: 2, is_virtual: false })
   }
 
   /**
