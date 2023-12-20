@@ -265,7 +265,9 @@ const size_handle = item => {
  *@return {Undefined} undefined
  */
 const theme_handle = item => {
+
   const status = item.switchValue === "rightVal" ? "theme-1" : "theme-2";
+  console.log(status)
   UserCtr.set_theme(status);
   // 切换主题色
   useMittEmit(MITT_TYPES.EMIT_THE_THEME_CHANGE)

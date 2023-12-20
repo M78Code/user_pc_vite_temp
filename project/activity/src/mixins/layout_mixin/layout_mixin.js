@@ -57,7 +57,7 @@ export default defineComponent({
       let res = '';
       // 默认 白色版
       const default_theme = SEARCH_PARAMS.init_param.get('theme') || _.get(UserCtr.user_info, 'configVO.h5Default', 1)
-      if(default_theme && default_theme.startsWith('theme0')){
+      if(default_theme && lodash.startsWith(default_theme,'theme0')){
         res = default_theme;
       } else {
         // 商户 主题色系

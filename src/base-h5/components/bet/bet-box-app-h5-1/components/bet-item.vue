@@ -22,7 +22,7 @@
                     <div class="w-100 fon12 font400 text-a1a-i">{{ items.tid_name }}</div>
                 </div>
             </div>
-           
+            
             <div class="fw-e-s bet-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                 <div class="f-c-c bet-money">
                     <span class="font14 font700 bet-odds-value f-c-c" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
@@ -34,6 +34,7 @@
                         <img v-if="items.red_green == 'green_down'" :src="is_down_app" alt=""/>
                     </div>
                 </div>
+                <div v-if="items.is_serial" class="bet-serial font12">不支持串关</div>
             </div>
 
             <div class="fw-e-s bet-right bet-invalid" v-else>
@@ -41,6 +42,8 @@
                     <span>{{ i18n_t('bet.disabled') }}</span>
                 </div>
             </div>
+
+            <div v-if="items.is_serial" class="bet-layer-serial"></div>
 
             <!--  串关 投注 删除投注项 -->
             <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1 && !BetData.is_bet_single" @click="set_delete">
@@ -121,6 +124,7 @@ const set_delete = () => {
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 100;
 
             img {
                 width: .1rem;
@@ -178,6 +182,20 @@ const set_delete = () => {
             }
         }
 
+        .bet-serial {
+            color: var(--q-gb-bd-c-2);
+        }
+
+        .bet-layer-serial{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--q-gb-bg-c-21);
+            opacity: 0.5;
+            z-index: 80;
+        }
        
     }
 
