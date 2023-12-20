@@ -80,11 +80,10 @@ let message_fun = null
 let handler_func = null
 
 onMounted(() => {
-
   if (BaseData.is_emit) {
     if (is_esports.value) {
       MatchMeta.get_esports_match()
-    } else if (!is_kemp.value && !is_collect){
+    } else if (!is_kemp.value && !is_collect.value){
       MatchMeta.set_origin_match_data()
     }
   }

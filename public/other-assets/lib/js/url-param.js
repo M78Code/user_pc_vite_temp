@@ -78,14 +78,18 @@ function get_location_href_param() {
 
   // 当前可以使用的url参数对象
   let search_params = null;
+  let search_params_new_temp = new URLSearchParams('');
   // 发现有token时重新同步sessionStorage中LOCATION_SEARCH值数据
   if(token){
     // 同步允许在url中直接累加的参数key(部分旧数据同步到新数据中)
     PARAM_ADD_KEY.forEach(key => {
       const val = search_params_old.get(key);
-      val && search_params_new.set(key, val);
+      val && search_params_new_temp.set(key, val);
     });
-    search_params = search_params_new;
+    search_params_new.forEach((val, key)=> {
+      search_params_new_temp.set(key, val);
+    });
+    search_params = search_params_new_temp;
     sessionStorage.setItem('LOCATION_SEARCH', decodeURIComponent(search_params.toString()))
   } else {
     // 同步允许在url中直接累加的参数key(部分新数据同步到旧数据中)

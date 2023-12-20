@@ -231,9 +231,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     })
   }
   watch(()=> MenuData.current_lv_1_menu_mi.value, (new_,old_) => {
-    if([2000,300].includes(new_)){//电竞vr记录旧菜单id
-      MenuData.set_old_current_lv_1_menu_i(old_);
-    }
+      MenuData.set_old_current_lv_1_menu_i([2000,300].includes(new_)?old_:'');//电竞vr记录旧菜单id
     init_data(new_)
   })
   // 早盘 串关  电竞

@@ -346,7 +346,7 @@ export default defineComponent({
 
     .empty-m-list-w {
       text-align: center;
-      color: var(--q-color-com-fs-color-49);
+      color: var(--q-gb-t-c-19);
       /*
       2023.11.12 bevis取消
       position: absolute;
