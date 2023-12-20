@@ -17,7 +17,7 @@
           
           <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ ref_data.min_money }}-{{ format_money3(ref_data.max_money) }}</span>
         </div>
-        <div class="content-rmb">RMB</div>
+        <div class="content-rmb">{{ currency_code[UserCtr.currency] }}</div>
       </div>
       <div class="bet_single_info_btn" :class="ref_data.is_bet_pre ? 'focus' : ''" v-if="BetData.bet_pre_list.includes(item.playOptionsId)">
         <div class="" v-if="ref_data.is_bet_pre" @click="set_bet_pre">{{ i18n_t('app_h5.bet.cancel_appoint') }}</div>
@@ -45,8 +45,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { ref, reactive, onMounted,computed, onUnmounted } from 'vue';
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
-import { i18n_t, format_money3 } from "src/output/index.js"
-
+import { format_money3,currency_code,UserCtr } from "src/output/index.js"
 
 let flicker_timer = null
 
