@@ -447,8 +447,7 @@ function refresh_data() {
     margin-bottom: 1px;
 
     &.iframe-video-bottom-panel {
-      .panel-wrapper {
-        :deep {
+      :deep(.panel-wrapper) {
           .chatroom {
             margin-top: 0;
 
@@ -466,7 +465,6 @@ function refresh_data() {
               padding: 29px 40px 33px 40px;
             }
           }
-        }
       }
     }
 
@@ -484,18 +482,17 @@ function refresh_data() {
         // border: 1px solid var(--qq--match-border-color2);
       }
 
-      :deep {
-        .video-history-line {
+        :deep(.video-history-line) {
           margin-bottom: 4px;
         }
 
-        .stats-wrapper,
+        :deep(.stats-wrapper,
         .chatroom,
-        .video-history-line {
+        .video-history-line) {
           border: 1px solid var(--qq--match-border-color2);
         }
 
-        .chatroom {
+        :deep(.chatroom) {
           margin-top: 0;
 
           .chat-scroll-area {
@@ -509,7 +506,7 @@ function refresh_data() {
           }
         }
 
-        .total_chart {
+        :deep(.total_chart) {
           .wrap-score {
             //padding: 57px 40px 70px 40px;
             padding: 29px 40px 33px 40px;
@@ -523,7 +520,6 @@ function refresh_data() {
             font-size: 54px;
           }
         }
-      }
     }
   }
 }

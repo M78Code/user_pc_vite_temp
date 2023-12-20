@@ -113,7 +113,7 @@ export default defineComponent({
     detailMatchList
   },
   props: ['category_arr'],
-  data(){},
+  data:()=>({}),
   setup(props, evnet) {
     // 路由
     const router = useRouter();
@@ -402,5 +402,6 @@ export default defineComponent({
 
 .v-leave-active {
   position: absolute;
+  width: 100%;
 }
 </style>
