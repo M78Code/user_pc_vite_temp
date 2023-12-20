@@ -98,18 +98,23 @@ const bet_total = computed(()=> status => {
 
 // 滑动投注
 const handle_silider = (e) => {
+  // console.log('e', e, e.distance, fab_pos.value, silider.value?.offset);
   dragging_fab.value = e.isFirst !== true && e.isFinal !== true
-  if (e.distance.x > 234 || e.isFinal) {
+  // 拖拽超过滑板或放开重置silider位置 255 235
+  if(e.isFinal && e.distance.x < 255) {
     reset_silider()
     return
   }
-  // console.log('e', e, silider);
-  if(e.distance.x > 180) {
+  if(e.distance.x >= 255 && e.isFinal) {
     // 未投注之前 可以点击
     if(BetViewDataClass.bet_order_status == 1){
       submit_handle()
     }
-    // reset_silider()
+    reset_silider()
+  }
+  if (e.distance.x > 256 || e.isFinal) {
+    reset_silider()
+    return
   }
   fab_pos.value[0] = e.distance.x
   silider.value.offset[0] = e.distance.x

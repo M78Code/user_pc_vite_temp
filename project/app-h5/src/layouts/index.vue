@@ -48,8 +48,7 @@
 
 
       <!-- 串关投注 --> 
-      <q-page-sticky position="bottom-right" :offset="fabPos">
-        <!--  v-if="!BetData.is_bet_single" -->
+      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single">
           <div class="chain_bet" @click="show_chain_bet" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
             <span class="count">{{BetData.bet_s_list.length}}</span>
           </div>
