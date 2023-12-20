@@ -15,10 +15,10 @@
         </div>
         <div class="toltal f-b-c">
             <div >
-                <span>预计可赢：{{ format_money2(mathJs.divide(items.maxWinAmount,100))}} RMB</span>
+                <span>预计可赢：{{ format_money2(mathJs.divide(items.maxWinAmount,100))}} {{currency_code[UserCtr.currency]}}</span>
             </div>
             <div>
-                <span>小计：{{ items.seriesBetAmount }} RMB</span>
+                <span>小计：{{ items.seriesBetAmount }} {{currency_code[UserCtr.currency]}}</span>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
 
 <script setup> 
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
-import {i18n_t,format_money2,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+import {UserCtr,format_money2,LOCAL_PROJECT_FILE_PREFIX,currency_code } from "src/output/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 
 const props = defineProps({

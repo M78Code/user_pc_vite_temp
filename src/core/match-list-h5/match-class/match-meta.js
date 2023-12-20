@@ -493,6 +493,7 @@ class MatchMeta {
       i.csid = i.sportId
       i.mid = i.marketId
       i.csna = i.sportName
+      i._total = list.length
     })
     console.log('handler_champion_match_classify_by_sport_id', list)
     const length = lodash.get(list, 'length', 0)

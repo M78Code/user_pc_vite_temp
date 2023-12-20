@@ -693,7 +693,7 @@
     }
   },
   "filter": {
-    "all_leagues": "All Leagues",
+    "all_leagues": "全部聯賽",
     "match_key": "請輸入聯賽名",
     "match_select_title": "選擇聯賽",
     "please_select_league": "請選擇聯賽",
