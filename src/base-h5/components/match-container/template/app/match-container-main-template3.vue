@@ -496,7 +496,7 @@ export default {
       overflow: hidden;
     }
     &.border-top{
-      border-top: 1px solid #e9e9e9;
+      border-top: 1px solid var(--q-gb-bd-c-4);
     }
 
     .eports_scoring_tip {
