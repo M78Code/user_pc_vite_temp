@@ -237,6 +237,7 @@ export default {
   overflow-y: hidden;
   -webkit-overflow-scrolling: auto;
   white-space: nowrap;
+  padding-left: 0.05rem;
 
   &::-webkit-scrollbar {
     display: none;

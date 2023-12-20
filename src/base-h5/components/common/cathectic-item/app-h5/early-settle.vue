@@ -87,6 +87,7 @@ let expected_profit = ref(0)
 // 接口调用次数计数 // 概率，用于计算钮下的预计返还（盈利），注意，查询订单记录接口是直接返回的金额，而ws推送返回的是概率，所以概率更新了需要重新计算钮下的预计返还（盈利）
 // 延时器
 let timer = null
+let timer2 = null
 
 let mitt_c201_handle = null
 let mitt_c210_handle = null
@@ -313,13 +314,15 @@ const submit_early_settle = () => {
     } else {
       // 提前结算申请未通过
       status.value = 1;
-      unSuccessTips.value = true
+      // 提示未通过
+      showUnSuccessTips()
     }
     message && useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
   }).catch((err) => {
     // 提前结算申请未通过
     status.value = 1;
-    unSuccessTips.value = true
+    // 提示未通过
+    showUnSuccessTips()
   });
 }
 /**
@@ -341,9 +344,21 @@ const submit_click = () => {
   }
 }
 
+/**
+ * 提前结算申请未通过的提示
+ * 5s后消失
+ */
+const showUnSuccessTips = () => {
+  unSuccessTips.value = true
+  timer2 = setTimeout(() => {
+    unSuccessTips.value = false
+  }, 5000);
+}
+
 // 批量清除定时器
 const clear_timer = () => {
   clearTimeout(timer)
+  clearTimeout(timer2)
 }
 </script>
 <style lang="scss" scoped>
