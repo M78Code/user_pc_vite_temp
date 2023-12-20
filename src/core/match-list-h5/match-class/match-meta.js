@@ -488,6 +488,13 @@ class MatchMeta {
     }
     // 避免接口慢导致的数据错乱
     const list = lodash.get(res, 'data', [])
+    list.forEach(i => {
+      i.tid = i.tournamentId
+      i.csid = i.sportId
+      i.mid = i.matchId
+      i.csna = i.sportName
+    })
+    console.log('handler_champion_match_classify_by_sport_id', list)
     const length = lodash.get(list, 'length', 0)
     if (length < 1) {
       this.set_page_match_empty_status({ state: true });
@@ -563,7 +570,6 @@ class MatchMeta {
   * @description 赛事详情精选赛事列表
   */
   async get_details_result_match() {
-    console.log(MenuData.menu_csid,'MenuData.menu_csid');
      const res = await api_analysis.get_result_match_care_list({
       sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
       cuid: UserCtr.get_uid(),
