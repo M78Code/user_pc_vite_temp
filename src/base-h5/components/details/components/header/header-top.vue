@@ -37,7 +37,7 @@
       <div class="col-3 logo-double">
         <!-- 右侧双打图标 type 1 表示客队,malu 客队的url -->
         <team-img
-          :type="0"
+          :type="1"
           :csid="detail_data.csid"
           :url="lodash.get(detail_data,'malu[0]')"
           :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frman[0]') : detail_data.frman"
@@ -167,7 +167,7 @@
       ></span>
 
       <!-- 局间比分 -->
-      <!-- <match-between-score :detail_data="detail_data"></match-between-score> -->
+      <match-between-score :detail_data="detail_data"></match-between-score>
     </div>
 
     <!-- 队名 -->
@@ -246,7 +246,7 @@ import TeamImg from "src/base-h5/components/details/team-img.vue";   // 详情�
 import TeamText from "src/base-h5/components/details/team-text.vue";   // 中立场赛事展示
 // import TeamName from "src/base-h5/components/details/team-name.vue";   // 详情页背景上的队伍名称
 // import msc from "src/base-h5/mixins/common/msc.js";    // 国际化比赛阶段比分转换工具
-// import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
+ import matchBetweenScore from 'src/base-h5/components/match/match-between-score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
 import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 // 公共方法
 import { MenuData, UserCtr } from "src/output/index.js";
@@ -605,5 +605,13 @@ export default defineComponent({
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
+}
+
+.logo-double{
+  ::v-deep .team-img{
+    .img-style{
+      background-position-y: inherit !important;
+    }
+  }
 }
 </style>

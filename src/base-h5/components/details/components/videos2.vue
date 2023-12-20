@@ -192,8 +192,7 @@
           <template v-if="get_is_full_screen && get_video_url.active == 'muUrl' && get_is_hengping">
             <div class="hengping-title row">
               <!-- 返回按钮 -->
-              
-                <div class="video_back yb_mx10" @click="close_video" style="height: 0.16rem"></div>
+              <div class="video_back yb_mx10" @click="close_video" style="height: 0.16rem"></div>
               
               <!-- 对阵信息 -->
               <span class="hengping-duiming ellipsis">{{title.mhn}}</span>
@@ -1238,7 +1237,7 @@ export default {
     close_video() {
       this.get_is_full_screen = false
       this.exit_browser_full_screen();
-
+      this.$emit('change_fullscreen', false)
       // iPhone Safari 不兼容screen.orientation
       if (screen.orientation) {
         screen.orientation.unlock()
