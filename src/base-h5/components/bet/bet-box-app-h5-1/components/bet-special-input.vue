@@ -17,8 +17,8 @@
     </div>
   </div>
   <div class="toltal f-b-c" v-if="items.show_quick">
-    <div>预计可赢：<span class="total-money"> {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} </span>RMB</div>
-    <div>小计：{{ format_money2(items.bet_amount * items.count) }}RMB</div>
+    <div>预计可赢：<span class="total-money"> {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} </span>{{currency_code[UserCtr.currency]}} </div>
+    <div>小计：{{ format_money2(items.bet_amount * items.count) }}{{currency_code[UserCtr.currency]}} </div>
   </div>
   
 </template>
@@ -29,7 +29,7 @@ import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { UserCtr,formatMoney, format_money3,format_money2 } from "src/output/index.js"
+import { UserCtr,formatMoney, format_money3,format_money2,currency_code } from "src/output/index.js"
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 const props = defineProps({

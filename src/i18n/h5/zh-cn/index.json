@@ -1083,7 +1083,7 @@
     }
   },
   "filter": {
-    "all_leagues": "All leagues",
+    "all_leagues": "全部联赛",
     "match_key": "请输入联赛名",
     "match_select_title": "选择联赛",
     "please_select_league": "请选择联赛",

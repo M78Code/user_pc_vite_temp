@@ -39,7 +39,7 @@
       <div v-if="show_sport_title" @click.stop="handle_ball_seed_fold"
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span">
-          {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }})
+          {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }}) 
         </span>
       </div>
 
@@ -1260,9 +1260,11 @@ export default {
           width: 4px;
           height: 4px;
           border-radius: 50%;
-          background: var(--q-color-page-bg-color-59);
+          background: var(--sys-feedback-success-success-400, #4AB06A);
           flex-shrink: 0;
-          margin: 0.13rem 0.05rem 0;
+          position: absolute;
+          left: 1.25rem;
+          top: 0.16rem;
           &.simple {
             margin-right: 0.03rem;
           }

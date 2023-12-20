@@ -493,6 +493,7 @@ class MatchMeta {
       i.csid = i.sportId
       i.mid = i.marketId
       i.csna = i.sportName
+      i._total = list.length
     })
     const length = lodash.get(list, 'length', 0)
     if (length < 1) {
