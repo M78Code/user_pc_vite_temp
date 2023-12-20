@@ -604,7 +604,7 @@ const _delete_history_search = (keyword) => {
 		get_history()
 	})
 }
-
+let mitt_list=[]
 onMounted(() => {
 	// console.log('fdsfdsafdsaf', input_ref.value.focus())
 	if (input_ref.value) input_ref.value.focus()
@@ -620,7 +620,7 @@ onMounted(() => {
 	}
 	if (is_results.value) {
 		VirtualList.set_is_show_ball(false)
-		useMittOn(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, resultsJumpDetailHandle)
+		mitt_list.push(useMittOn(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, resultsJumpDetailHandle).off)
 	}
 })
 
@@ -629,8 +629,9 @@ onUnmounted(() => {
 	go_detail_or_result_timer = null
 	input_value.value = ''
 	if (is_results.value) {
+		
 		VirtualList.set_is_show_ball(true)
-		useMittOn(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, resultsJumpDetailHandle).off
+		mitt_list.forEach(i=>i())
 	}
 })
 </script>

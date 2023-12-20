@@ -36,9 +36,11 @@ const switchData = [
                 changeFun:(val)=>{
                     // 1 新手版 2 专业版
                     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
-                    UserCtr.set_standard_edition(val)
-                    VirtualList.set_is_show_ball(true)
-                    MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
+                    nextTick(()=>{
+                        UserCtr.set_standard_edition(val)
+                        VirtualList.set_is_show_ball(true)
+                        MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
+                    })
                 }
             },
             {
