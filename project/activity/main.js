@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { Quasar, Notify } from "quasar";
 import "./src/css/app.scss";
 import "quasar/dist/quasar.css";
+import lodash from "lodash";
 // import './style.css'
 import App from './App.vue'
  
@@ -19,6 +20,8 @@ window.vue = app;
 
 app.use(global);
 app.use(i18n);
+window.lodash = lodash;
+app.config.globalProperties.lodash = lodash;
 app.config.globalProperties.i18n_t = i18n_t;
 window.i18n_t = i18n_t;
 app.use(Quasar, {

@@ -246,7 +246,6 @@ class UserCtr {
   * 设置主题变化
  */
   set_theme(theme) {
-    console.error('theme',theme)
     this.theme = theme;
     useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, theme);
     // 替换body上className
