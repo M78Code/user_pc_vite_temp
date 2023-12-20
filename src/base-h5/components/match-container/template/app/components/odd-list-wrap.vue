@@ -1148,11 +1148,11 @@ onUnmounted(() => {
     .block {
       width:4px;
       height: 0.02rem;
-      background: #E4E6ED !important;
+      background: var(--q-gb-bd-c-16)!important;
       border-radius: 0.01rem;
       &.selected {
         width: 8px;
-        background: #C9CDDB !important;
+        background:  var(--q-gb-bd-c-17) !important;
       }
 
       &:last-child {

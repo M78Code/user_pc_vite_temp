@@ -50,8 +50,8 @@
         {{confirming.text}}
       </p>
       <!-- 订单状态(非确认中) -->
-      <p v-else :class="calc_text(data_f).color" class="yb_fontsize14 fw_700">
-        {{calc_text(data_f).text}}
+      <p v-else :class="calc_text_only_status(data_f).color" class="yb_fontsize14 fw_700">
+        {{calc_text_only_status(data_f).text}}
       </p>
     </div>
 
@@ -64,7 +64,7 @@ import { format_money2 } from "src/output/index.js"
 import { i18n_t } from "src/boot/i18n.js";
 import { reactive, onMounted, onUnmounted } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { calc_text } from "src/core/bet-record/util.js";
+import { calc_text_only_status } from "src/core/bet-record/util.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 
   const props = defineProps({

@@ -10,7 +10,8 @@
   let godetailpage = false
 // =============================================
 import { MatchDetailCalss } from "src/output/module/project-single.js";
-
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 // 返回首页
 const go_home = ({back_to, route_name, route, router}) => {
   if(get_show_favorite_list){
@@ -55,7 +56,9 @@ const go_back_from_virtual = ({back_to, route_name, route, router}) => {
   } else if(is_banner_jump){ // 从视频直播进来返回时
     // router.push({name: 'home'});       // 返回到视频直播页
     router.push({name: 'match'});       // 返回到视频直播页
-  } else {
+  } else if(PROJECT_NAME == 'app-h5'){//复刻版
+    router.push({name: 'matchList'});
+  }else{
     router.go(-1);        // 返回上一级菜单
   }
 } 

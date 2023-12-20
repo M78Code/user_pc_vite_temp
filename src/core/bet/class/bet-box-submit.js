@@ -22,11 +22,12 @@ import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/output/module/constant-utils.js"
 import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { i18n_t,i18n_tc } from "src/boot/i18n.js"
 import { odds_table } from "src/core/constant/common/module/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import PageSourceData from "src/core/page-source/page-source.js";
+import { currency_code } from "src/core/constant/common/module/keyword.js"
 import { MenuData } from 'src/output/module/menu-data.js'
+import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 let time_out = null
@@ -473,12 +474,19 @@ const submit_handle = type => {
         return
     }
 
+    let currency = "CNY"
+    // 获取当前赛种
+    let cur_code = SessionStorage.get('currency_code',1)
+    // 人民币 使用CNY 不使用 RMB
+    if( cur_code != 1){
+        currency = currency_code[cur_code]
+    }
     let params = {
         // "userId": UserCtr.get_uid(),
         "acceptOdds": 2,  // 接受赔率变化情况
         "tenantId": 1,
         "deviceType": BetData.deviceType,  // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
-        "currencyCode": "CNY",  // 币种
+        "currencyCode": currency ,  // 币种
         "deviceImei": "",   // 设备imei码，只有手机有，没有不添加
         "fpId": "",  // 指纹55555555id 
         "openMiltSingle": milt_single,  // 是否为多个单关 0:1个 1:多个
