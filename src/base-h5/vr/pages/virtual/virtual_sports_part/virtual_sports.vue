@@ -684,7 +684,7 @@ export default {
 
 /*  联赛菜单 */
 .tab-wrapper {
-  height: 0.42rem;
+  height: 0.32rem;
   display: flex;
   flex-wrap: nowrap;
   overflow: auto;
@@ -700,10 +700,19 @@ export default {
     padding: 0 0.1rem;
     flex-shrink: 0;
     color:var(--q-gb-t-c-24);
+    position: relative;
     &.active {
       color: var(--q-gb-t-c-1);
-      >div {
-        border-bottom: 2px solid var(--q-gb-t-c-1);
+      &:after {
+        content: "";
+        display: block;
+        width: 0.32rem;
+        height: 0.02rem;
+        background: var(--q-gb-t-c-1);
+        position: absolute;
+        bottom: -0.03rem;
+        left: 50%;
+        margin-left: -0.16rem;
       }
     }
   }
