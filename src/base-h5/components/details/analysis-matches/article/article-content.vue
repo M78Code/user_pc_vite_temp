@@ -34,9 +34,8 @@ import { formete_date  } from "src/output/index.js";
 </script>
 
 <style scoped lang="scss">
-.article-content {
+:deep(.article-content) {
   /* ************** 富文本框 quill 样式 ************** -S */
-  :deep {
     * {
       color: unset;
       line-height: inherit;
@@ -411,7 +410,7 @@ import { formete_date  } from "src/output/index.js";
       position: absolute;
       right: 0.15rem;
     }
-  }
+  
   /* ************** 富文本框 quill 样式 ************** -E */
 }
 .touxiang {

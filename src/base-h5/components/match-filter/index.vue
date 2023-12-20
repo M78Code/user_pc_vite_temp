@@ -11,7 +11,7 @@
       <div class="scroll-setect-all" v-if="!no_find_content && !list_data_loading">
           <span>{{ i18n_t('common.all_select') }}</span>
           <div @click="all_checked_click" class="scroll-setect-options">
-           <img :src="compute_local_project_file_path(all_checked ? '/image/list/icon_unselected_onlight.svg' : '/image/list/icon_selected_theme_type.svg')" alt="">
+           <img :src="compute_local_project_file_path(all_checked ? '/image/list/icon_selected_theme_type.svg' : '/image/list/icon_unselected_onlight.svg' )" alt="">
           </div>
         </div>
     <!-- 中间滚动选择项 -->
@@ -33,7 +33,7 @@
                    @click="type_select(item)"></div> -->
               <div class="scroll-setect-options"
                    @click="type_select(item)">
-                   <img :src="compute_local_project_file_path(item.checked ? '/image/list/icon_unselected_onlight.svg' : '/image/list/icon_selected_theme_type.svg')" alt=""></div>
+                   <img :src="compute_local_project_file_path(item.checked ? '/image/list/icon_selected_theme_type.svg' : '/image/list/icon_unselected_onlight.svg')" alt=""></div>
             </div>
           </div>
           <!-- 联赛名称部分 -->
@@ -54,7 +54,7 @@
                         <!-- <div class="scroll-setect-options" :class="item.select ? 'sso-active':'' "
                              @click="select_li_ctr(item)"></div> -->
                         <div @click="select_li_ctr(item)">
-                          <img :src="compute_local_project_file_path(item.select ? '/image/list/icon_unselected_onlight.svg' : '/image/list/icon_selected_theme_type.svg')" alt="">
+                          <img :src="compute_local_project_file_path(item.select ? '/image/list/icon_selected_theme_type.svg' : '/image/list/icon_unselected_onlight.svg')" alt="">
 
                         </div>
 

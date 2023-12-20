@@ -450,11 +450,10 @@ export default {
 }
 .detail-loading {
   height: 100%;
-  & :deep {
-    .loading_box {
+  & :deep(.loading_box) {
       padding-top: 330px;
     }
-  }
+  
 }
 .match-name-list {
   background-color: var(--q-gb-bg-c-8);

@@ -48,9 +48,12 @@
 
 
       <!-- 串关投注 --> 
-      <div class="chain_bet" @click="show_chain_bet" v-if="!BetData.is_bet_single">
-        <span class="count">{{BetData.bet_s_list.length}}</span>
-      </div>
+      <q-page-sticky position="bottom-right" :offset="fabPos">
+        <!--  v-if="!BetData.is_bet_single" -->
+          <div class="chain_bet" @click="show_chain_bet" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
+            <span class="count">{{BetData.bet_s_list.length}}</span>
+          </div>
+      </q-page-sticky>
 
     </q-page-container>
   </q-layout>
@@ -222,8 +225,48 @@ const init_local_server_time = () => {
   });
 }
 
+// 显示串关投注弹框
 const show_chain_bet = () => {
   BetData.set_bet_box_h5_show(true)
+}
+
+// 串关投注按钮拖拽
+const fabPos = ref([15, 8]);
+const draggingFab = ref(false)
+const moveFab = (e) => {
+  draggingFab.value = e.isFirst !== true && e.isFinal !== true
+  // console.log(e, e.distance, e.position, 'eee', e.isFinal);
+  e.evt.target.style.opacity = '0.6'
+  // 处理左右边界条件
+  if(e.position.left <= 30) {
+    fabPos.value[0] = 300
+  } else if (e.position.left >= 300) {
+    fabPos.value[0] = 15
+  }
+  // 处理上下边界条件
+  if(e.position.top <= 70) {
+    fabPos.value[1] = 505
+  } else if (e.position.top >= 600) {
+    fabPos.value[1] = -20
+  };
+  fabPos.value = [
+    fabPos.value[0] - e.delta.x,
+    fabPos.value[1] - e.delta.y
+  ]
+  if(e.isFinal) {
+    e.evt.target.style.opacity = '1'
+    stickyAside(e.position.left)
+  }
+}
+
+// 贴紧到侧边栏
+const stickyAside = (x) => {
+  // console.log(1111, x, y, fabPos.value);
+  if(x <= 145) {
+    fabPos.value[0] = 300
+  } else {
+    fabPos.value[0] = 15
+  }
 }
 
 onMounted(() => {
@@ -423,6 +466,10 @@ if (UserCtr.get_user_token()) {
   /* **********注单记录********************* *-E*/
 }
 // 串关按钮
+.q-page-sticky {
+  z-index: 599;
+  transition: .4s ease-out;
+}
 .chain_bet {
   width: 0.48rem;
   height: 0.48rem;
