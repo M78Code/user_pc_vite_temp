@@ -14,7 +14,7 @@
 </template>
 <script setup>
 import SwitchNav from "./switch-nav.vue";
-import { ref, computed, onUnmounted, watch } from "vue";
+import { ref, nextTick, onUnmounted, watch } from "vue";
 import { theme_list, theme_map } from "src/core/theme/"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { lang } from "src/base-h5/mixin/userctr";
@@ -28,18 +28,21 @@ const switchData = [
         list:[
             {
                 name:"专业版",
-                val:0,
+                val:2,
                 changeFun:(val)=>{
                     // 1 新手版 2 专业版
-                    const value = val === 1 ? 1 : 2
-                    UserCtr.set_standard_edition(value)
+                   nextTick(()=>{
+                    UserCtr.set_standard_edition(2)
+                   })
                 }
             },
             {
                 name:"新手版",
                 val:1,
                 changeFun:(val)=>{
-                    return console.log(`执行新手版-${val}`)
+                    nextTick(()=>{
+                        UserCtr.set_standard_edition(1)
+                    })
                 }
             }
         ]
