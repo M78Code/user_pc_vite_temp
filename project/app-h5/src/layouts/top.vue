@@ -284,7 +284,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
     }
     // 刷新页面避免触发2次 set_origin_match_data
-    if (is_first.value && !is_kemp) {
+    if (is_first.value && !is_kemp.value) {
       is_first.value = false
     } else {
       set_menu_mi_change_get_api_data()
