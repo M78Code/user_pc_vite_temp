@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <ScrollMenu v-if="!state.currentSwitchValue" :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/>
+    <ScrollMenu :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/>
 
     <ObserverWrapper class="match-result-contant" :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper>
     <!-- <div class="match-results-container-styles">
@@ -90,18 +90,18 @@ const switchHandle = async val => {
             state.slideMenu = res.data || {}
             // 设置时间默认选中
             state.currentSlideValue = lodash_.get(res.data,'[0].field1', '')
-            if (val) {
-                MenuData.set_result_menu_api_params({
-                    mi: 10000,
-                    md:state.currentSlideValue,
-                    sport: 1
-                })
-                // 冠军赛果
-                state.matchs_data = await MatchMeta.get_champion_match_result()
-            } else {
+            // if (val) {
+            //     MenuData.set_result_menu_api_params({
+            //         mi: 10000,
+            //         md:state.currentSlideValue,
+            //         sport: 1
+            //     })
+            //     // 冠军赛果
+            //     state.matchs_data = await MatchMeta.get_champion_match_result()
+            // } else {
                 // 设置赛种数据
-                set_scroll_data_list(lodash_.get(res.data,'[0].sportList', []))
-            }
+            set_scroll_data_list(lodash_.get(res.data,'[0].sportList', []))
+            // }
         }
     })
     
@@ -132,12 +132,14 @@ const set_scroll_data_list = (data_list = []) => {
 
 // 设置滑动菜单的选中id
 const set_scroll_current = async item => {
+    console.log('set_scroll_currentMenuData.get_results_kemp()', MenuData.get_results_kemp(), item)
+    if (!item) return
     if (MenuData.get_results_kemp()) {
         // 冠军赛果
         MenuData.set_result_menu_api_params({
             mi: 10000,
             md:state.currentSlideValue,
-            sport: 1
+            sport: item.sport
         })
         state.matchs_data = await MatchMeta.get_champion_match_result()
         if (state.matchs_data.length > 0)  useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
