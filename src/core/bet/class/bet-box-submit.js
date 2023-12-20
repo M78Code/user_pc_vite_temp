@@ -102,7 +102,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "matchId": item.matchId,   // 赛事id
                     "tournamentId": item.tournamentId,   // 联赛id
                     "scoreBenchmark": "",    // 基准分
-                    "betAmount": obj.bet_amount || 10,  //投注金额         
+                    "betAmount": obj.bet_amount,  //投注金额         
                     "placeNum": item.placeNum, //盘口坑位
                     "marketId": item.marketId,  //盘口id
                     "playOptionsId": item.playOptionsId,   // 投注项id
@@ -428,6 +428,44 @@ const submit_handle = type => {
 
         pre_type = BetData.is_bet_pre ? 1 : 0
         milt_single = BetData.bet_single_list.length > 1 ? 1 : 0
+    } else {
+        // 未满足串关条件 不允许投注
+        if(!bet_special_series_change()){
+            set_submit_btn()
+            return
+        }
+        for (let item of BetData.bet_s_list) {
+            // 投注项状态 1：开 2：封 3：关 4：锁
+            // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+            // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
+            if(item.ol_os != 1 || item.hl_hs != 0 || item.mid_mhs != 0){
+                set_submit_btn()
+                return set_error_message_config({code:"0402001"},'bet')
+            }
+            // 串关 中不能包含不能串关的投注项
+            if(item.is_serial){
+                set_submit_btn()
+                return set_error_message_config({code:"is_serial",message:'有不支持串关的赛事'})
+            }
+        }
+        // 判断是否有投注金额   
+        // 串关投注 有且至少有一个投注金额 就可以投注
+        const count = BetViewDataClass.bet_special_series.reduce((pre, cur) => {
+            return pre + (cur.bet_amount || 0 );
+        }, 0)
+        // 请输入投注金额
+        if( count == 0 ) {
+            set_submit_btn()
+            return set_error_message_config({code:"M400005"},'bet')
+        }
+        // 有金额的情况下 判断限额
+        for ( let item of BetViewDataClass.bet_special_series ) {
+            // 投注金额 小于最小限额
+            if( item.bet_amount && (item.bet_amount*1 < item.min_money*1) ) {
+                set_submit_btn()
+                return set_error_message_config({code:"M400010"},'bet')
+            }
+        }
     }
 
     // 有问题 不能继续下去了 
@@ -830,6 +868,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         match_ctr: other.match_data_type, // 数据仓库 获取比分
         device_type: BetData.deviceType, // 设备号
         odds_hsw: ol_obj._hsw, // 投注项支持的赔率
+        mbmty: mid_obj.mbmty, // mbmty 2 or 4 为电子赛事 
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
 
@@ -846,27 +885,9 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         bet_obj.handicap = ol_obj.on
     }
 
-    // 串关数据 提示
-    if(!BetData.is_bet_single){
-        // 获取商户配置的 串关投注项
-        let min_series = lodash_.get(UserCtr.user_info,'configVO.minSeriesNum',2)
-        let man_series = lodash_.get(UserCtr.user_info,'configVO.maxSeriesNum',10)
-        // 串关 数量不是大于1条投注项 则提示
-        if( BetData.bet_s_list.length +1 < min_series){
-            BetViewDataClass.set_bet_before_message({
-                code: 'sasdasd',
-                message: i18n_tc('bet.bet_min_item',min_series,{ 'num': min_series})
-            })
-        }else if(BetData.bet_s_list.length >= man_series){
-            // 串关 数量不能大于设置的数量
-            BetViewDataClass.set_bet_before_message({
-                code: 'sasdasd',
-                message: i18n_tc('bet.bet_max_item',man_series,{ 'num': man_series})
-            })
-            return
-        } else{
-            BetViewDataClass.set_bet_before_message({})
-        }
+    //  pc 串关数据 提示 
+    if(PROJECT_NAME.indexOf('pc') > -1){
+        bet_special_series_change()
     }
 
     // 设置投注内容 
@@ -883,6 +904,37 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // 获取限额 常规
         get_query_bet_amount_common()
     }
+}
+
+const bet_special_series_change = () => {
+    let state = true
+    // 串关数据 提示
+    if(!BetData.is_bet_single){
+        // 获取商户配置的 串关投注项
+        let min_series = lodash_.get(UserCtr.user_info,'configVO.minSeriesNum',2)
+        let man_series = lodash_.get(UserCtr.user_info,'configVO.maxSeriesNum',10)
+
+        let obj = {}
+        // 串关 数量不是大于1条投注项 则提示
+        if( BetData.bet_s_list.length < min_series){
+            obj = {
+                code: 'sasdasd',
+                message: i18n_tc('bet.bet_min_item',{ 'num': min_series})
+            }
+            state = false
+        }else if(BetData.bet_s_list.length >= man_series){
+            // 串关 数量不能大于设置的数量
+            obj = {
+                code: 'sasdasd',
+                message: i18n_tc('bet.bet_max_item',{ 'num': man_series})
+            }
+            state = false
+        }
+       
+        set_error_message_config(obj)
+    }
+
+    return state
 }
 
 // 设置玩法名称
@@ -1196,5 +1248,6 @@ export {
     get_market_is_show,
     // 订阅投注项的 ws
     set_market_id_to_ws,
+    bet_special_series_change,
     go_to_bet
 }

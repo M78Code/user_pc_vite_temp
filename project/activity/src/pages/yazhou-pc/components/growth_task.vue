@@ -192,12 +192,12 @@
                 v-for="(item, index) in history_records"
                 :key="index"
               >
-                <p v-html="item.taskName">
+                <p class="p-tast-name" v-html="item.taskName">
                 </p>
-                <p>
+                <p class="td-item">
                   <span>{{ item.ticketNum }}</span>
                 </p>
-                <p>
+                <p class="td-item">
                   <span>{{ item.receiveTime }}</span>
                 </p>
               </div>
@@ -705,6 +705,13 @@ export default {
         border-bottom: 0 none;
       }
 
+      .load-data-wrap{
+        height: 420px;
+        overflow-y: auto;
+      }
+      ::-webkit-scrollbar {
+        display: none;
+      }
       div {
         display: flex;
         justify-content: space-between;
@@ -726,6 +733,14 @@ export default {
         border: 1px solid var(--qq--activity-bd-color-5);
         border-top: 0 none;
 
+        .td-item{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .p-tast-name{
+          justify-content: flex-start;
+        }
         &:nth-child(odd) {
           background: var(--qq--activity-bg-color-5);
         }
@@ -759,7 +774,6 @@ export default {
 
       .text-333 {
         height: 46px;
-        line-height: 46px;
         background: var(--qq--activity-text-color-6);
         font-family: PingFangSC-Medium;
         font-size: 16px;
