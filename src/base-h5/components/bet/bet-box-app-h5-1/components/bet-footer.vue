@@ -80,7 +80,7 @@ const ref_data = reactive({
 // status 是响应式的 可以用于重新计算
 const bet_win_money = computed(()=> status => {
   // 获取单关投注的数据
-  const { bet_amount, oddFinally, odds_hsw } = lodash_.get(BetData,'bet_single_list[0]',{})
+  const { bet_amount ='', oddFinally = '', odds_hsw = '' } = lodash_.get(BetData,'bet_single_list[0]',{})
   let bet_win = bet_amount
   // 香港赔 不用减去投注金额
   if(odds_hsw.includes(odds_table[UserCtr.odds.cur_odds]) && UserCtr.odds.cur_odds == 'HK' ){
