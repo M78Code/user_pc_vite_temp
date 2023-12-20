@@ -6,14 +6,14 @@
 <template>
   <div
     ref="video_height"
-    class="player"
+    class="component videos2 player"
     :class="{
       'across-height': get_is_full_screen && get_video_url.active == 'muUrl' && get_is_hengping,
     }"
   >
-    <div :class="{'top-space':nail && get_zhiding}">
+    <div class="icontainer-wrap" :class="{'top-space':nail && get_zhiding}">
       <!-- 播放出错 -->
-      <div v-if="video_iframe_status == 'error'" class="video_reload_box">
+      <div v-if="video_iframe_status == 'error'" class="video_reload_box icontainer">
         <!-- 展示球队名称、比分 -->
         <div class="title">
           <div class="row full-height mx-15">
@@ -56,7 +56,7 @@
       </div>
 
       <!-- 播放正常 -->
-      <div v-else style="width:100%;height:2.11rem;" class="iframe-wrap DJ-score-information" :class="{stickyed:nail && get_zhiding,'full-screen':get_is_full_screen}">
+      <div v-else style="width:100%" class="iframe-wrap DJ-score-information icontainer" :class="{stickyed:nail && get_zhiding,'full-screen':get_is_full_screen}">
         <!-- 电竞的背景 -->
         <div class="show_DJ_back_css" v-if="get_menu_type == 3000" @click.self.stop="show_DJ_back()"></div>
         <!-- 第一次显示 用户指导页 -->
@@ -192,8 +192,7 @@
           <template v-if="get_is_full_screen && get_video_url.active == 'muUrl' && get_is_hengping">
             <div class="hengping-title row">
               <!-- 返回按钮 -->
-              
-                <div class="video_back yb_mx10" @click="close_video" style="height: 0.16rem"></div>
+              <div class="video_back yb_mx10" @click="close_video" style="height: 0.16rem"></div>
               
               <!-- 对阵信息 -->
               <span class="hengping-duiming ellipsis">{{title.mhn}}</span>
@@ -1238,7 +1237,7 @@ export default {
     close_video() {
       this.get_is_full_screen = false
       this.exit_browser_full_screen();
-
+      this.$emit('change_fullscreen', false)
       // iPhone Safari 不兼容screen.orientation
       if (screen.orientation) {
         screen.orientation.unlock()
@@ -2440,5 +2439,15 @@ export default {
 }
 .mr-14 {
   margin-right: 14px;
+}
+.icontainer-wrap{
+  position: relative;
+  width: 100%;
+  padding-bottom: 56%;
+  .icontainer{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

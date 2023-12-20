@@ -73,7 +73,6 @@ const shou = (item,evnet) => {
 }
 
 const local = ref(LocalStorage.get('default-theme'))
-
 const delimg = computed(() => {
   if(local.value == "theme-2"){
     return `${LOCAL_PROJECT_FILE_PREFIX}/image/bet/pack_up-keyboard.svg`

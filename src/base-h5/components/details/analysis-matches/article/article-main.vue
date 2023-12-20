@@ -44,6 +44,7 @@ import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { get_server_file_path } from "src/core/file-path/file-path.js"
+import ZHUGE from "src/core/http/zhuge-tag";
 
   // 弹框是否显示
   let is_show_dialog = ref(false)
@@ -238,7 +239,7 @@ const handle_stay_duration = (article_id) => {
       return
     }
     // TODO: $utils 后续修改调整
-    send_zhuge_event(EVENT_NAME, UserCtr, zhuge_obj)
+    ZHUGE.send_zhuge_event(EVENT_NAME, UserCtr, zhuge_obj)
     enter_article_time.value = Date.now()
   }
   /**

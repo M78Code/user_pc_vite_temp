@@ -31,4 +31,5 @@ export default {
     'gb-bg-c-29': '#f8f9fa', //夜间配色不同
     'gb-bg-c-30': '#7981a4', //夜间配色不同
     'gb-bg-c-31': '#e8f5ff', 
+    'gb-bg-c-32': '#f7f7f7', 
   } 
