@@ -86,6 +86,10 @@ class UserCtr {
       // 当前赔率
       cur_odds: "EU",
     };
+    // 当前币种类型 
+    // src/core/constant/common/module/keyword.js
+    this.currency = 1
+
     this.test=1;
     //排序	 int 类型 1 按热门排序 2 按时间排序 欧洲版默认时间排序
     this.sort_type = 2;
@@ -346,6 +350,13 @@ class UserCtr {
   set_is_user_no_handle({ commit }, val) {
     this.is_user_no_handle = val;
   }
+
+  // 设置当前币种
+  set_currency_code () {
+    // 获取当前商户设置的币种
+    let currency = lodash.get(this.user_info,'cvo.series.code',1)
+    this.currency = currency
+  }
   /**
    * 刷新用户信息
    */
@@ -366,6 +377,7 @@ class UserCtr {
     this.set_user_info(obj);
     this.update()
     this.get_balance()
+    this.set_currency_code()
     const gr = lodash.get(this.user_info,'gr');
     gr && SessionStorage.set('gr', gr);
     callback && callback(obj);
