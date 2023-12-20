@@ -2,7 +2,7 @@
     <div class="top-header">
         <div class="top-header-left">
             <div class="top-header-left-img" @click="goBack()">
-                <img class="img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/back.svg`" alt="" />
+                <img class="img" :src="delimg" alt="" />
             </div>
         </div>
         <div class="top-header-content">
@@ -17,6 +17,8 @@
 import { MenuData,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { useRoute , useRouter } from "vue-router";
 import { useMittOn,MITT_TYPES, useMittEmit } from "src/core/mitt/index.js"
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
+import { ref, computed } from 'vue';
 const route = useRoute()
 const router = useRouter()
   /**
@@ -28,6 +30,16 @@ const router = useRouter()
     useMittEmit(MITT_TYPES.EMIT_MENU_GO_BACK)
     if (route.name === 'esports_sports') router.back()
   }
+
+const local = ref(LocalStorage.get('default-theme'))
+const delimg = computed(() => {
+  if(local.value == "theme-2"){
+    return `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/back.svg`
+  }else {
+    return `${LOCAL_PROJECT_FILE_PREFIX}/image/common/go_back.svg`
+  }
+}) 
+
 </script>
 <style lang="scss" scoped>
     .top-header{
@@ -63,6 +75,7 @@ const router = useRouter()
             text-align: center;
             overflow: hidden;
             text-overflow: ellipsis;
+            color: var(--q-gb-t-c-18);
         }
         .top-header-right{
             text-align: right;

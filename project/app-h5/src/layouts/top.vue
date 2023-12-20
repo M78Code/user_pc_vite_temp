@@ -123,9 +123,12 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     if(MenuData.is_esports()){
       const data_list_esports = await MenuData.getDateList(val?.csid);
       dataListEsports.value = data_list_esports;
+      ref_data.current_mi = val.mi
+      MenuData.set_current_lv_2_menu_i(val)
       nextTick(()=>{
         dJdateTabMenu.value.changeTabMenu({},0,'',type);
       })
+      return;
     }
     switch (+val.mi) {
       case 2000:
