@@ -230,7 +230,7 @@ const go_back = () => {
             height: .18rem;
             background-color: var(--q-gb-bg-c-18);
             font-size: .12rem;
-            color: var(--q-gb-bg-c-4);
+            color: var(--q-gb-t-c-27);
             display: flex;
             align-items: end;
             justify-content: center;
@@ -241,6 +241,7 @@ const go_back = () => {
             display: flex;
             justify-content: center;
             margin-top: .28rem;
+            color: var(--q-gb-t-c-27);
             .teams {
                 display: flex;
                 flex-direction: column;
@@ -270,6 +271,7 @@ const go_back = () => {
                 flex-wrap: wrap;
                 align-items: center;
                 font-weight: 500;
+                color: var(--q-gb-t-c-27);
             }
         }
 
