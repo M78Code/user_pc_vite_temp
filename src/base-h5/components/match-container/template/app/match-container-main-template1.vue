@@ -29,9 +29,9 @@
         </template>
       </div>
       <!-- 全部 -->
-      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_ball_seed_fold">
+      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
-        <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
+        <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div>
@@ -117,8 +117,7 @@
 
                     <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                     <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                      <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} -->
-                      {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
+                      {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
                     </div>
                     <!--一小时内开赛 -->
                     <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
@@ -386,10 +385,15 @@ export default {
     }
   }
   .expand_item{
+    width: 18px;
+    height: 16px;
     transition: transform 0.25s ease;
-     transform: rotate(-180deg);
+    transform: rotate(-180deg);
   }
   .ball_seed_collapsed{
+    transform: rotate(0);
+  }
+  .all_ball_seed_collapsed {
     transform: rotate(0);
   }
 }
