@@ -185,10 +185,14 @@ const change_btn = () => {
     // 设置vuex变量值,当选中"所有赛果"时才可以点击
     if (item_index.value != 0) return;
     if(get_fewer.value == 1 || get_fewer.value == 3){
-      get_fewer.value = 2
-    }else{
-      get_fewer.value = 1
-    }
+        get_fewer.value = 2
+        useMittEmit(MITT_TYPES.EMIT_DETAILS_TOGGLE_HANDICAP, 2);
+        SessionStorage.set("SET_FEWER", 2)
+      }else{
+        get_fewer.value = 1
+        useMittEmit(MITT_TYPES.EMIT_DETAILS_TOGGLE_HANDICAP, 1);
+        SessionStorage.set("SET_FEWER", 1)
+      }
   }
   // 刷新 注单记录----请求
 const update_order_list = () => {
