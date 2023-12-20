@@ -718,7 +718,7 @@ const get_ol_length = (hp_item_obj, hp_i_i) => {
       return 2;
     }
   } else {
-    if ([1, 4, 11, 16].includes(+props.match.csid)) {
+    if ([1, 4, 11, 16,14].includes(+props.match.csid)) {
       if (props.match.hps && props.match.hps[hp_i_i]) {
         if (props.match.hps[hp_i_i].hpid == 1) {
           return 3;
@@ -753,7 +753,7 @@ const get_ol_list = (hp_item, hp_i_i) => {
         ol_list = [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }];
       }
     } else {
-      if ([1, 4, 11, 16].includes(+props.match.csid)) {
+      if ([1, 4, 11, 16,14].includes(+props.match.csid)) {
         if (props.match.hps && props.match.hps[hp_i_i]) {
           if (props.match.hps[hp_i_i].hpid == 1) {
             ol_list = [
