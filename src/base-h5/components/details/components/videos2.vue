@@ -329,7 +329,7 @@ import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import slider from "src/base-h5/components/details/components/slider/slider.vue"
-
+import OrientationSubscrbe from 'src/base-h5/components/common/orientation/orientation-subscribe'
 export default {
   name: "videos",
   components: {
@@ -573,6 +573,9 @@ export default {
   watch: {
     get_is_full_screen(value) {
       this.$emit('change_fullscreen', value)
+    },
+    iframe_src(value) {
+      console.log(value, "value======");
     },
     // 监听用户是否长时间未操作
     get_is_user_no_handle(res){
@@ -1064,6 +1067,7 @@ export default {
       if (rfs) {
         rfs.call(video_dm);
       }
+      OrientationSubscrbe.instance.change_status(true);
     },
     /**
      * @Description 退出浏览器全屏
@@ -1075,6 +1079,8 @@ export default {
       if(cfs) {
         cfs.call(video_dm);
       }
+      OrientationSubscrbe.instance.change_status(false);
+
     },
     // 接收精彩回放iframe消息
     handle_replay_message(e) {

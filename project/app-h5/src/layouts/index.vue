@@ -195,17 +195,7 @@ const change_settle_status = (val) => {
   // set_virtual_video_show(!val)
   if (val) {
     record_show.value = true;
-    nextTick(() => {
-      store.dispatch({
-        type: "SET_SETTLE_DIALOG_BOOL",
-        data: true,
-      });
-    });
   } else {
-    store.dispatch({
-      type: "SET_SETTLE_DIALOG_BOOL",
-      data: false,
-    });
     timer_3.value = setTimeout(() => {
       record_show.value = false;
     }, 300);

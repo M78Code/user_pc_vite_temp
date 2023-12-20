@@ -22,7 +22,7 @@
         </div>
 
      
-        <div class="bet-box-line">
+        <div class="bet-box-line" :class="{'disabled': set_special_state(BetData.bet_data_class_version) }">
           <div class="middle font16">
             {{ i18n_t('bet.betting') }}
             <!-- 单关 -->
@@ -55,7 +55,7 @@
 
 <script setup>
 import lodash_ from "lodash"
-import { computed, onMounted, ref } from "vue"
+import { computed, onMounted, reactive, ref } from "vue"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
@@ -71,6 +71,11 @@ const fab_pos = ref([20, 23])
 const dragging_fab = ref(false)
 // 滑块组件数据
 const silider = ref(null)
+
+const ref_data = reactive({
+  is_bet_single: true,
+  show_title: ''
+})
 
 // status 是响应式的 可以用于重新计算
 const bet_win_money = computed(()=> status => {
@@ -95,9 +100,42 @@ const bet_total = computed(()=> status => {
   return format_money2(bet_total_money)
 })
 
+// status 是响应式的 可以用于重新计算
+const set_special_state = computed(()=> status => {
+  let bet_list = []
+  if( BetData.is_bet_single ) {
+    bet_list = lodash_.cloneDeep(BetData.bet_single_list)
+  } else {
+    bet_list = lodash_.cloneDeep(BetData.bet_s_list)
+  } 
+
+  for(let item of  bet_list) {
+    // 盘口已关闭 盘口关闭不允许投注
+    if(item.ol_os != 1 || item.hl_hs != 0 || item.mid_mhs != 0){
+      ref_data.show_title = "盘口已关闭"
+      // 不允许投注
+      ref_data.is_bet_single = false
+      return true
+    }
+    // 当前投注项中混入不能串关的投注项
+    if(item.is_serial){
+      // 不允许投注
+      ref_data.is_bet_single = false
+      return true
+    }
+  }
+})
+
+
+
+
 
 // 滑动投注
 const handle_silider = (e) => {
+  // 不允许投注
+  if(!ref_data.is_bet_single) {
+    return
+  }
   dragging_fab.value = e.isFirst !== true && e.isFinal !== true
   if (e.distance.x > 234 || e.isFinal) {
     reset_silider()
@@ -151,7 +189,21 @@ const set_bet_single = () => {
   if(MenuData.is_kemp()){
     return
   }
+
   BetData.set_is_bet_single()
+  BetData.set_clear_bet_info()
+  BetViewDataClass.set_clear_bet_view_config()
+  BetData.set_bet_box_h5_show(false)
+  // 切换到串关 进入到串关页面 
+  if(BetData.is_bet_single){
+    MenuData.set_current_lv1_menu(2);
+  }
+
+  // 切换到串关 进入到串关页面 
+  if(!BetData.is_bet_single){
+    MenuData.set_current_lv1_menu(6);
+  }
+  
   init_silider_position()
 }
 

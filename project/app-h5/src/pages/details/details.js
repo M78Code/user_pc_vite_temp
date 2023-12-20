@@ -861,7 +861,7 @@ export const details_main = () => {
             }
           }
         }
-
+        console.log(data, "=====data=====");
         // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
         get_match_details({ mid: event_data.mid, cuid: data.get_uid });
         // 重新调用 详情页面玩法集接口(/v1/m/category/getCategoryList)
