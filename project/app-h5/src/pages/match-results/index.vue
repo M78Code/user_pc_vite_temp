@@ -1,33 +1,35 @@
 <template>
-    <navigation-bar centerContentType="switch" borderBottomNoShow :goBackAssign="goBackAssign">
-        <template v-slot:center>
-            <div class="switch-box">
-                <div v-for="(item, index) in switchMenu" :key="'swtich-' + index" @click="switchHandle(index)"
-                    :class="['switch-item', state.currentSwitchValue === index && 'switch-item-active']">
-                    <span> {{ item }} </span>
+    <template v-if="MenuData.is_results()">
+        <navigation-bar centerContentType="switch" borderBottomNoShow :goBackAssign="goBackAssign">
+            <template v-slot:center>
+                <div class="switch-box">
+                    <div v-for="(item, index) in switchMenu" :key="'swtich-' + index" @click="switchHandle(index)"
+                        :class="['switch-item', state.currentSwitchValue === index && 'switch-item-active']">
+                        <span> {{ item }} </span>
+                    </div>
                 </div>
+            </template>
+            <template v-slot:right>
+                <img
+                    class="right-icon"
+                    @click="state.select_dialog = true"
+                    :src="compute_local_project_file_path('/image/svg/navbar_icon.svg')"
+                    alt=""
+                />
+            </template>
+        </navigation-bar>
+        
+        <div class="slide-box">
+            <div v-for="(item, index) in state.slideMenu" @click="slideHandle(item,$event)" :class="['slide-item', state.currentSlideValue == item.field1 &&
+                'slide-item-active']" :key="'slide-' + index">
+                <span>{{ index? item.date:i18n_t('menu_itme_name.today') }}</span>
             </div>
-        </template>
-        <template v-slot:right>
-            <img
-                class="right-icon"
-                @click="state.select_dialog = true"
-                :src="compute_local_project_file_path('/image/svg/navbar_icon.svg')"
-                alt=""
-            />
-        </template>
-    </navigation-bar>
-    
-    <div class="slide-box">
-        <div v-for="(item, index) in state.slideMenu" @click="slideHandle(item,$event)" :class="['slide-item', state.currentSlideValue == item.field1 &&
-            'slide-item-active']" :key="'slide-' + index">
-            <span>{{ index? item.date:i18n_t('menu_itme_name.today') }}</span>
         </div>
-    </div>
 
-    <ScrollMenu :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/>
+        <ScrollMenu :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/>
 
-    <ObserverWrapper class="match-result-contant" :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper>
+        <ObserverWrapper class="match-result-contant" :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper>
+    </template>
     <!-- <div class="match-results-container-styles">
        
         <match-container />
@@ -162,6 +164,7 @@ const set_scroll_current = async item => {
 const goBackAssign = () => {
     MenuData.set_top_menu_title({})
     MenuData.set_init_menu_list()
+    MenuData.set_current_lv1_menu(2);
     MenuData.set_results_kemp(0)
 }
 
