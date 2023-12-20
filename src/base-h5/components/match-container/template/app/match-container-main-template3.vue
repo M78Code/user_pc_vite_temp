@@ -1142,7 +1142,7 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
             font-weight: 500;
-            color: #1A1A1A;
+            color: var(--q-gb-t-c-18);
             &.visiting {
               // color: #8a8986;
             }
@@ -1551,7 +1551,7 @@ export default {
   }
 }
 .mcmt-text {
-  color: #1A1A1A;
+  color: var(--q-gb-t-c-18);
   font-size: .12rem;
   display: flex;
   justify-content: center;
