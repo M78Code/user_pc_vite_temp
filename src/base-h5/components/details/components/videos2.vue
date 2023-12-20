@@ -2127,15 +2127,13 @@ export default {
     transform: rotate(360deg);
     transition: all 1s;
   }
-
-  :deep {
-    .tabs-wrapper {
+    :deep(.tabs-wrapper) {
       position: absolute;
       bottom: 1.18rem;
       left: 0.3rem;
       z-index: 100000;
     }
-    .slider-x {
+    :deep(.slider-x) {
       position: absolute;
       bottom: .45rem;
       left: 0.3rem;
@@ -2189,7 +2187,6 @@ export default {
         }
       }
     }
-  }
 }
 
 .switch-video-wrap {
@@ -2298,11 +2295,10 @@ export default {
   top: 0;
   width: 100%;
   height: 100%;
-  :deep {
-    .dplayer-icons-right {
+  :deep(.dplayer-icons-right) {
       display: none !important;
     }
-    .dplayer-controller {
+    :deep(.dplayer-controller) {
       .dplayer-bar-wrap {
         width: 4.5rem;
         bottom: 15.5px;
@@ -2314,7 +2310,7 @@ export default {
         transform: scale(0.8);
       }
     }
-  }
+  
 }
 
 .toggle-replay-video-wrap {
