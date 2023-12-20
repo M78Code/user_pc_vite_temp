@@ -8,7 +8,7 @@
 <template>
     <div class="switch-nav">
         <ul>
-            <li v-for="(item,index) in list" :key="index" :class="{active:activeOn == index}" @click="changeActive(item.val,index,item.changeFun,item.isSort)">
+            <li v-for="(item,index) in list" :key="index" :class="{active:activeOn == item.val}" @click="changeActive(item.val,index,item.changeFun,item.isSort)">
                 {{  item.name }}
                 <template v-if="item.isSort">
                     <span>
@@ -48,7 +48,7 @@
         },
         defaultVal:{
             type: Number,
-            default:0
+            default: 1
         }
     });
     const activeOn = ref(props.defaultVal);//选中值
@@ -60,16 +60,16 @@
      * @param {*} sort  排序值
      */
     const changeActive = (val,i,callback,sort) => {
-        if(sort){
-            if(activeOn.value !== val)sortVal.value=0;
-            // sortVal.value = sortVal.value === 0?1:sortVal.value === 1?2:1;
-            sortVal.value = sortVal.value === 1?2:1;
-            activeOn.value = val;
-            const enVal = sortJson.filter((item)=>{return item.val === sortVal.value })?.[0].enVal;
-            return callback(val,enVal);
-        }
-        if(activeOn.value === i)return;
-        activeOn.value = i;
+        // if(sort){
+        //     if(activeOn.value !== val) sortVal.value=1;
+        //     // sortVal.value = sortVal.value === 0?1:sortVal.value === 1?2:1;
+        //     sortVal.value = sortVal.value === 1?2:1;
+        //     activeOn.value = val;
+        //     const enVal = sortJson.filter((item)=>{return item.val === sortVal.value })?.[0].enVal;
+        //     return callback(val,enVal);
+        // }
+        if(activeOn.value === val)return;
+        activeOn.value = val;
         callback(val);
     }
 </script>
@@ -94,7 +94,7 @@
                 // color: var(--q-gb-bd-c-4);
                 margin: 0.02rem;
                 color: #AFB3C8;
-                line-height: 0.22rem;
+                line-height: 0.2rem;
                 &.active{
                     border-radius: 25px;
                     // background:var(--q-gb-bg-c-11); 

@@ -830,6 +830,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         match_ctr: other.match_data_type, // 数据仓库 获取比分
         device_type: BetData.deviceType, // 设备号
         odds_hsw: ol_obj._hsw, // 投注项支持的赔率
+        mbmty: mid_obj.mbmty, // mbmty 2 or 4 为电子赛事 
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
 
