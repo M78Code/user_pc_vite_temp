@@ -245,6 +245,15 @@ export default defineComponent({
     ball_seed_collapsed ()  {
       return !lodash.get(MatchFold.ball_seed_csid_fold_obj.value, `csid_${this.match_of_list.csid}`, true)
     },
+    // 进行中折叠状态
+    progress_seed_collapsed ()  {
+      return lodash.every(Object.values(MatchFold.progress_csid_fold_obj.value),Boolean)
+    },
+    // 未开赛折叠状态
+    not_begin_collapsed ()  {
+      return lodash.every(Object.values(MatchFold.not_begin_csid_fold_obj.value),Boolean)
+
+    },
   },
   watch: {
     match_of_list: {

@@ -7,8 +7,8 @@
 -->
 <template>
     <div class="switch-wap">
-        <div class="switch-content" v-for="(item , index) in switchData" :key="index">
-            <SwitchNav :list = "item.list" :defaultVal="item.defaultVal"/>
+        <div class="switch-content" v-for="(item, index) in switchData" :key="index">
+            <SwitchNav :list="item.list" :defaultVal="item.defaultVal" />
         </div>
     </div>
 </template>
@@ -95,14 +95,15 @@ const switchData = [
 ]
 </script>
 <style scoped lang="scss">
-    .switch-wap{
-        width: 100%;
-        height: 0.24rem;
-        display: flex;
-        margin: 0.05rem 0;
-        .switch-content{
-            flex: 1;
-            margin: 0 0.1rem;
-        }
+.switch-wap {
+    width: 100%;
+    height: 0.24rem;
+    display: flex;
+    margin: 0.05rem 0;
+
+    .switch-content {
+        flex: 1;
+        margin: 0 0.1rem;
     }
+}
 </style>

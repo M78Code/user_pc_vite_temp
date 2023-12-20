@@ -29,6 +29,7 @@ import { ref, nextTick, computed, onUnmounted, onMounted, inject } from "vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import lodash from "lodash"
+import TabMove from "src/core/tab-move/tab-move.js";
 
 
   const props = defineProps({
@@ -71,7 +72,7 @@ import lodash from "lodash"
       emit('tab_click',[tab, type]);
       // 滚动目标到屏幕显示区域
       nextTick(()=>{
-        tab_move(i, tab_ul_scroller, tab_item)
+        TabMove.tab_move(i, tab_ul_scroller, tab_item)
       })
     }
   const handle_show_tab = (item, index) => {

@@ -80,7 +80,7 @@ const ref_data = reactive({
 // status 是响应式的 可以用于重新计算
 const bet_win_money = computed(()=> status => {
   // 获取单关投注的数据
-  const { bet_amount, oddFinally, odds_hsw } = lodash_.get(BetData,'bet_single_list[0]',{})
+  const { bet_amount ='', oddFinally = '', odds_hsw = '' } = lodash_.get(BetData,'bet_single_list[0]',{})
   let bet_win = bet_amount
   // 香港赔 不用减去投注金额
   if(odds_hsw.includes(odds_table[UserCtr.odds.cur_odds]) && UserCtr.odds.cur_odds == 'HK' ){
@@ -137,17 +137,21 @@ const handle_silider = (e) => {
     return
   }
   dragging_fab.value = e.isFirst !== true && e.isFinal !== true
-  if (e.distance.x > 234 || e.isFinal) {
+  // 拖拽超过滑板或放开重置silider位置 255 235
+  if(e.isFinal && e.distance.x < 255) {
     reset_silider()
     return
   }
-  // console.log('e', e, silider);
-  if(e.distance.x > 180) {
+  if(e.distance.x >= 255 && e.isFinal) {
     // 未投注之前 可以点击
     if(BetViewDataClass.bet_order_status == 1){
       submit_handle()
     }
-    // reset_silider()
+    reset_silider()
+  }
+  if (e.distance.x > 256 || e.isFinal) {
+    reset_silider()
+    return
   }
   fab_pos.value[0] = e.distance.x
   silider.value.offset[0] = e.distance.x

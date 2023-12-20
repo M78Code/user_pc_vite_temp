@@ -32,8 +32,12 @@ const props = defineProps({
     default: () => { }
   },
 })
+let componentId =null
 const id = props.detail_data.csid || 101
-const componentId = defineAsyncComponent(() => import(`./score/score-child-${id}.vue`))
+if(id != 100 && id != 101){
+ componentId = defineAsyncComponent(() => import(`./score/score-child-${id}.vue`))
+}
+
 </script>
 <style lang="scss" scoped>
 .match_score {

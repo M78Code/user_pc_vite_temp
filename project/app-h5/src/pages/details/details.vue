@@ -49,16 +49,16 @@
                 v-if="show_match_analysis_tab"
                 name="shoufa"
                 :ripple="false"
-                label="首发"
+                label="赛事分析"
                />
 
               <!-- 根据中文，繁体、聊天室ID不为空以及 chatRoomSwitch 打开 才显示聊天室Tab -->
-              <q-tab
+              <!-- <q-tab
                 v-if="get_event_list.length>0"
                 name="playback"
                 :ripple="false"
                 label="精彩回放"
-               />
+               /> -->
             </q-tabs>
             <!-- 玩法集展示内容 -->
             <details-tab
@@ -100,10 +100,10 @@
           <template v-if="viewTab == 'shoufa' && (!get_is_hengping || get_is_dp_video_full_screen)">
             <div>
                 <!-- 足球赛事分析 页面-->
-                <!-- <analysis-football-matches :detail_data="detail_data" v-if="detail_data.csid == '1'"></analysis-football-matches> -->
-                <line-up :detail_data="detail_data" ></line-up>
+                <analysis-football-matches :detail_data="detail_data" v-if="detail_data.csid == '1'"></analysis-football-matches>
+                <!-- <line-up :detail_data="detail_data" ></line-up> -->
                 <!-- 篮球赛事分析 页面-->
-                <!-- <basketball-match-analysis  :detail_data="detail_data" v-if="detail_data.csid == '2'"></basketball-match-analysis> -->
+                <basketball-match-analysis  :detail_data="detail_data" v-if="detail_data.csid == '2'"></basketball-match-analysis>
             </div>
           </template>
         </div>
