@@ -356,6 +356,8 @@ class UserCtr {
     // 获取当前商户设置的币种
     let currency = lodash.get(this.user_info,'cvo.series.code',1)
     this.currency = currency
+    // 去耦合性
+    SessionStorage.set('currency_code',currency)
   }
   /**
    * 刷新用户信息
