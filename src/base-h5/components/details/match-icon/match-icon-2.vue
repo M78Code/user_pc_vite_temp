@@ -1,3 +1,4 @@
+
 <!--
  * @Author: Supermark
  * @Date: 2020-08-20 18:35:53
@@ -20,7 +21,7 @@
       </template>
       <template v-if="icon_class == 'shipin'">
         <img
-          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/new_live.png`"
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/video_1.png`"
           alt=""
           class="icon-style"
         >
@@ -371,8 +372,8 @@ export default defineComponent({
   gap: 4px;
   flex-shrink: 0;
   border-radius: 48px;
-  background: rgba(0, 0, 0, 0.50);
-  backdrop-filter: blur(2px);
+  // background: rgba(0, 0, 0, 0.50);
+  // backdrop-filter: blur(2px);
   // background: linear-gradient(180deg, #179CFF 0%, #127DCC 100%);
   margin-right:4px;
   &:after {

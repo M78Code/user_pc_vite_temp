@@ -91,7 +91,7 @@ watch(UserCtr.user_version, () => {
 })
 
 /**
- * 点击一级菜单
+ * 点击一级菜单 
  * @param {*} item 
  * @param {*} index 
  * @param {*} type 
@@ -106,6 +106,8 @@ const set_menu_lv1 = item => {
         BetData.set_clear_bet_info()
         BetViewDataClass.set_clear_bet_view_config()
         BetData.set_is_bet_single()
+        //冠军盘口切换欧洲盘
+        UserCtr.set_cur_odds("EU");
     }
 }
 
@@ -338,6 +340,7 @@ const set_menu_lv1 = item => {
             overflow:hidden;
             text-overflow:ellipsis;
             white-space:nowrap;
+            color: var(--q-gb-t-c-18);
         }
     }
 </style>

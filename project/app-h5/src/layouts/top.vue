@@ -211,8 +211,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       if( [3,6].includes(1*new_)){
         nextTick(()=>{
           const index = type && MenuData.data_tab_index?MenuData.data_tab_index:0;
-          dateTabMenu.value.set_active_val()
-          dateTabMenu.value.changeTabMenu(dataList[MenuData.current_lv_1_menu_i]?.[index],index,'',type)
+          dateTabMenu.value?.set_active_val()
+          dateTabMenu.value?.changeTabMenu(dataList[MenuData.current_lv_1_menu_i]?.[index],index,'',type)
         })
       }else{
         set_scroll_data_list(new_,type)
@@ -225,15 +225,13 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     //球种滚动初始化
     nextTick(()=>{
       try {
-        scrollTabMenu.value.scrollTabMenu()
-        searchTabMenu.value.searchTabMenu()
+        scrollTabMenu.value?.scrollTabMenu()
+        searchTabMenu.value?.searchTabMenu()
       } catch(_) {} 
     })
   }
   watch(()=> MenuData.current_lv_1_menu_mi.value, (new_,old_) => {
-    if([2000,300].includes(new_)){//电竞vr记录旧菜单id
-      MenuData.set_old_current_lv_1_menu_i(old_);
-    }
+      MenuData.set_old_current_lv_1_menu_i([2000,300].includes(new_)?old_:'');//电竞vr记录旧菜单id
     init_data(new_)
   })
   // 早盘 串关  电竞
@@ -286,7 +284,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
     }
     // 刷新页面避免触发2次 set_origin_match_data
-    if (is_first.value && !is_kemp) {
+    if (is_first.value && !is_kemp.value) {
       is_first.value = false
     } else {
       set_menu_mi_change_get_api_data()

@@ -1,12 +1,13 @@
 <template>
   <div class='header-bottom'>
     <!-- 动画+视频 按钮 收藏按钮 -->
-    <team-match-icon v-if="!['result_details', 'match_result'].includes(route.name)" :detail_data="detail_data"></team-match-icon>
     <!-- ms,赛事状态：0未开赛，1进行中，2暂停，3结束，4关闭; (mcg栏目类型：| mcg =1 滚球 | mcg=2 即将开赛| mcg=3 今日赛事| mcg=4 早盘) -->
     <span v-if="[1, 2, 3, 4].includes(+detail_data.ms) || detail_data.ms == 0 || detail_data.mo == 1">
       <!-- 根据球类id: csid显示相应的比分详情 -->
       <match-score :detail_data="detail_data"></match-score>
     </span>
+    <team-match-icon v-if="!['result_details', 'match_result'].includes(route.name)" :detail_data="detail_data"></team-match-icon>
+
   </div>
 </template>
 
@@ -37,6 +38,9 @@ export default defineComponent({
 .header-bottom {
   overflow: hidden;
   height: 0.71rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
   /*  高度 */
 }
 </style>

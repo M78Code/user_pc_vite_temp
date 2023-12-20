@@ -184,7 +184,7 @@
                 <span v-else>{{ "---" }}</span>
                 <span>{{ v.ticketNum }}</span>
                 <span>{{
-                  new Date(+v.receiveTime).Format("yyyy-MM-dd hh:mm")
+                    v.receiveTime
                 }}</span>
               </p>
             </div>
@@ -444,7 +444,7 @@ export default {
         align-items: center;
         > div {
           font-family: PingFangSC-Regular;
-          color: #ff7000;
+          color: var(--qq--activity-text-color-4);
         }
       }
     }

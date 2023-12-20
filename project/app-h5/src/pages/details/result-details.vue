@@ -146,21 +146,23 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
         get_match_list(params);
       }
     })
-     
+     let mitt_list=[]
   onMounted(() => {
     // 默认加载赛事详情页面接口getMatchDetail
     get_match_detail_info()
+    mitt_list=[
     // 监听调用赛事详情页面接口
-    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info);
-    useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show);
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info).off,
+    useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show).off,
 
     useMittOn(MITT_TYPES.EMIT_RESULT_LIST_LOADING,()=>{
       skeleton.list = true
-    });
+    }).off,
 
     useMittOn(MITT_TYPES.EMIT_CHANGE_TAB, ()=>{
       skeleton.changeTab = true
-    });
+    }).off
+    ]
 
   }) 
     // ...mapMutations([
@@ -295,17 +297,14 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
   }
   // 监听是否下拉联赛列表
   const { off: change_bool_off } =  useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, change_bool);
-  // 清除监听下拉联赛列表
-  onUnmounted(change_bool_off)
 
   onUnmounted(() => {
+    mitt_list.forEach(i=>i())
+    // 清除监听下拉联赛列表
+    change_bool_off()
     // 清除刷新详情页;
-    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info).off;
     // 组件销毁时设置vuex的值为空对象
     // set_detail_data({})
-    useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show).off
-    useMittOn(MITT_TYPES.EMIT_RESULT_LIST_LOADING).off
-    useMittOn(MITT_TYPES.EMIT_CHANGE_TAB).off
     // set_event_list([])
   }) 
 </script>

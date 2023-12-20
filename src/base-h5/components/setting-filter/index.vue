@@ -54,6 +54,16 @@
          srcset="">
         </div>
       </div>
+      <div class="setting-item border" @click="jump_rule">
+        {{get_lang}}
+      <!-- 体育规则 -->
+        <div class="title">{{ i18n_t('common.rule_description') }}</div>
+        <div class="more">
+        <img  
+        :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/left_icon.svg`"
+         srcset="">
+        </div>
+      </div>
       <!-- <div class="setting-item" @click="jump_webpage"> -->
       <!-- 前往旧版 -->
         <!-- <div class="title"> {{ i18n_t('app_h5.filter.go_old_version') }}</div> -->
@@ -93,6 +103,15 @@ const router = useRouter();
  */
 const jumpHandle = () => {
   router.push({ name: "handicapTutorial" }); // 
+  closedHandle();
+};
+/**
+ * @description 跳转至规则说明页面
+ * @param 
+ * @return 
+ */
+const jump_rule = () => {
+  router.push({ name: "rule_description" }); 
   closedHandle();
 };
 
