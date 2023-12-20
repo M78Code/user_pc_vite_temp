@@ -676,7 +676,7 @@ export const details_main = () => {
           // set_details_tabs_list(res_data);
           matchDetailCtr.value.compute_category_refer(res_data)
           // 当玩法集存在激活得项，循环找到对用得id，找得到就不管，找不到就赋值为玩法集第一项
-          if (state_data.get_details_item && res_data.length) {
+          if (state_data.get_details_item && res_data?.length) {
             const set_details_item_flag = res_data.some(
               (item) => item.id == SessionStorage.get("DETAIL_TAB_ID")
             );
