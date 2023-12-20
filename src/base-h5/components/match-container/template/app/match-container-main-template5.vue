@@ -83,12 +83,10 @@
                   <!-- 动画状态大于-1时，显示动画按钮 i18n_t('match_info.animation')是国际化取值 -->
 
                   <!-- icon_click_animationUrl media_button_handle -->
-                  <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']"
-                  :src="compute_local_project_file_path('image/list/ico_animate_nor.png')"
+                  <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']" :src="animation_icon"
                     @click="media_button_handle_by_type(ButtonTypes.animationUrl)" />
                   <!-- 视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 -->
-                  <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']"
-                  :src="compute_local_project_file_path('image/list/ico_live_nor.png')"
+                  <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']" :src="video_icon"
                     @click="media_button_handle_by_type(ButtonTypes.muUrl)" />
                   <!--icon_click_muUrl  -->
                   <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
@@ -112,6 +110,7 @@
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                 <div class="date-time"
                   v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
+                  <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} -->
                   {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
                 </div>
                 <!--一小时内开赛 -->
@@ -150,7 +149,7 @@
           <div class="event-team">
             <div class="name">
               <div class='left'>
-                <span>
+                <span :class="{ 'is-handicap': match.handicap_index == 1, 'is-handicap-1': match.handicap_index == 2 }">
                   {{ match.mhn }}
                 </span>
                 <!--发球方绿点-->
@@ -175,7 +174,7 @@
                 <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
                   v-show="set_serving_side(match, 'away')">
                 </span>
-                <span>
+                <span :class="{ 'is-handicap': match.handicap_index == 2, 'is-handicap-1': match.handicap_index == 1 }">
                   {{ match.man }}
                 </span>
 
@@ -897,7 +896,9 @@ export default {
 
           &.left {
             justify-content: flex-end;
-
+            .is-handicap {
+              color: #74C4FF;
+            }
           }
 
           &.right {
