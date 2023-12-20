@@ -822,9 +822,9 @@ export default defineComponent({
      * @description 设置scrollTop最终滚动距离, 保证详情返回的赛事出现在视图窗口内
      */
     set_scroll_top (scrollTop) {
-      clearTimeout(scroll_top_timer)
+      clearTimeout(this.scroll_top_timer)
       this.$nextTick (() => {
-        scroll_top_timer = setTimeout(() => {
+        this.scroll_top_timer = setTimeout(() => {
           let matchId = 'mid-' + this.get_goto_detail_matchid
           const mid_dom = $refs[matchId]
           //若存在赛事dom，则执行相应滚动逻辑
@@ -850,8 +850,8 @@ export default defineComponent({
               store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: -1 });
 
               // 第二次延时计算是为了保证滚动距离正确
-              clearTimeout(scroll_top_timer2)
-              scroll_top_timer2 = setTimeout(() => {
+              clearTimeout(this.scroll_top_timer2)
+              this.scroll_top_timer2 = setTimeout(() => {
                 const top2 = mid_dom.getBoundingClientRect().top
 
                 if (Math.floor(top2) > view_top) {
@@ -866,12 +866,12 @@ export default defineComponent({
             let not_found_target_dom_count = get_not_found_target_dom_count.value
             if (not_found_target_dom_count >= 0) {
               not_found_target_dom_count++
-              store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: not_found_target_dom_count });
+              // store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: not_found_target_dom_count });
 
               // 当由详情返回后，未滚动至目标计数 和 赛事展示数量相等时，让列表滑动一些距离，防止页面列表展示空白
               if (not_found_target_dom_count === MatchMeta.match_mids.length) {
                 document.querySelector('.match-list-container').scrollTop += 1
-                store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: '' });
+                // store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: '' });
               }
             } else {
 
@@ -930,6 +930,7 @@ export default defineComponent({
       if (this.is_on_go_detail) {
         return; //  防止急速点击两次
       }
+      
       this.is_on_go_detail = true;
       if (is_results.value || this.$route.name == "matchList") useMittEmit(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, item)
       // 如果是非赛果电竞赛事，需要设置菜单类型
@@ -944,9 +945,10 @@ export default defineComponent({
       // 进入详情前，将当前赛事信息存入仓库
       // store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: item });
       //元数据存入本地
+      
       LocalStorage.set("YUAN_MATCH_DETAIL_DATA",MatchDataBaseH5.get_quick_mid_obj(item.mid))
-      if (MenuData.current_menu && MenuData.current_menu.main && is_results.value) {
-        this.$router.push(`/result_details/${item.mid}/0`);
+      if (is_results.value) { //冠军跳冠军详情页
+          this.$router.push(`/result_details/${item.mid}/0`);
       }
       else {
         if (this.$route.name == "category") {
@@ -985,18 +987,18 @@ export default defineComponent({
     clear_timer() {
       // timeout定时器列表
       const timeout_timer_arr = [
-        'this.timer_super11',
-        'this.match_change_timer',
-        'this.is_new_init_timer2',
-        'this.scroll_top_timer',
-        'this.scroll_top_timer2',
-        'this.need_scroll_height_timer',
+        this.timer_super11,
+        this.match_change_timer,
+        this.is_new_init_timer2,
+        this.scroll_top_timer,
+        this.scroll_top_timer2,
+        this.need_scroll_height_timer,
       ]
 
       // 批量清除timeout定时器
       for (let timer of timeout_timer_arr) {
         clearTimeout(timer)
-        timer = null
+        // timer = null
       }
     }
   },
