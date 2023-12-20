@@ -4,9 +4,9 @@
 <template>
   <div class="champion-wrap-2 component match-container-main-template6" v-if="is_show">
     <div class="sport-title match-indent" v-if="!i" @click="handle_ball_seed_fold">
-      <span class="score-inner-span"> {{ match_of_list.csna }} </span>
+      <span class="score-inner-span"> {{ match_of_list.csna + '('+ match_of_list._total +')' }} </span>
       <div class="collapse-dire">
-        <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' />
+        <!-- <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' /> -->
       </div>
     </div>
     <div class="cw2-bg-content">

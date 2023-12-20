@@ -592,7 +592,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid var(--q-gb-bd-c-4);
         height: 0.25rem;
         margin-top: 0.1rem;
         span {

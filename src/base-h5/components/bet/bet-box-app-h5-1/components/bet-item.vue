@@ -2,7 +2,10 @@
 <template>
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
-        <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
+        <div class="f-b-s bet-content" :class="[
+                items.ol_os != 1 ? 'bet-disable' : '',
+                items.is_serial ? 'not-chain-bet' : ''
+            ]">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c font14 ">
                     <span class="text-flow-none" v-html="items.handicap"></span> 
@@ -106,6 +109,10 @@ const set_delete = () => {
         color: var(--q-gb-t-c-18);
         &.bet-disable{
             align-items: center;
+        }
+
+        &.not-chain-bet {
+            background-color: var(--q-gb-bg-c-20);
         }
 
         .bet-money {

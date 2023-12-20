@@ -11,8 +11,9 @@
    <div class="f-e-c bet-submit" v-if="BetViewDataClass.bet_order_status == 1">
         <div class="bet-silider">
             <q-page-sticky ref="silider" position="bottom-left" :offset="fab_pos">
-                <div class="jiantou" :disable="dragging_fab" v-touch-pan.right.prevent.mouse="handle_silider">
-                    <img :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt="" draggable="false">
+                <div class="jiantou" :class="{'disabled-silider-bg': set_special_state(BetData.bet_data_class_version)}" :disable="dragging_fab" v-touch-pan.right.prevent.mouse="handle_silider">
+                    <img v-if="!set_special_state(BetData.bet_data_class_version)" :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt="" draggable="false">
+                    <img v-else :src="compute_local_project_file_path('/image/bet/right-arrow1.svg')" alt="" draggable="false">
                 </div>
             </q-page-sticky>
         </div>
@@ -22,14 +23,15 @@
         </div>
 
      
-        <div class="bet-box-line" :class="{'disabled': set_special_state(BetData.bet_data_class_version) }">
+        <div class="bet-box-line" :class="{'disabled-line': set_special_state(BetData.bet_data_class_version) }">
           <div class="middle font16">
             {{ i18n_t('bet.betting') }}
             <!-- 单关 -->
             <span class="yb-info-money font14" v-if="BetData.is_bet_single"> {{ i18n_tc('app_h5.bet.bet_win',{"total": bet_win_money(BetData.bet_data_class_version) }) }}</span>
             <span class="yb-info-money font14" v-else>{{ i18n_t('bet.sum') }}{{bet_total(BetViewDataClass.bet_view_version) }}</span>
           </div>
-          <img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt="">
+          <!-- <img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt=""> -->
+          <img :src="compute_local_project_file_path('/image/bet/roll-right-arrow.png')" alt="">
         </div>
 
         <!-- 串关 -->
@@ -149,7 +151,7 @@ const handle_silider = (e) => {
     }
     reset_silider()
   }
-  if (e.distance.x > 256 || e.isFinal) {
+  if (e.isFinal || e.distance.x > 256) {
     reset_silider()
     return
   }
@@ -319,6 +321,13 @@ onMounted(()=>{
     font-size: 0.2rem;
     border: 3px solid #50B5FF;
     margin-right: -.2rem;
+    &.disabled-silider-bg {
+      background: rgba(255, 255, 255, 0.96);
+      border-color: rgba(201, 205, 219, 0.8);
+      img {
+        fill: rgba(201, 205, 219, 0.8);
+      }
+    }
   }
 
   .bet-silider{
@@ -345,11 +354,16 @@ onMounted(()=>{
   .bet-box-line{
     display: flex;
     justify-content: space-around;
+    align-items: center;
     width: 100%;
     height: .5rem;
     border-radius: 30px;
     background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%);
     box-shadow: 0px 2px 12px 0px rgba(0, 174, 255, 0.10);
+    
+    &.disabled-line {
+      background: #C9CDDB;
+    }
     .middle {
       display: flex;
       justify-content: center;
@@ -357,8 +371,12 @@ onMounted(()=>{
       margin-left: .55rem;
       color: var(--q-gb-bg-c-15);
     }
+    // img {
+    //   width: 0.5rem;
+    // }
     img {
-      width: 0.5rem;
+      width: 0.4rem;
+      height: 0.16rem;
     }
   }
   .bet-single{
