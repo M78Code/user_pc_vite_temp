@@ -601,7 +601,14 @@ export default {
     // 当前联赛的全部轮次
     match_list_all_batches(){
       const match_list_all_batches = [...this.virtual_match_list];
-      match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
+      // 足蓝全部展开，赛马类只展开第一个
+      if(this.sub_menu_type == '1001' || this.sub_menu_type == '1004'){
+          match_list_all_batches.forEach(batch=> {
+          batch.is_expend = true
+        })
+      }else {
+        match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
+      }
       return match_list_all_batches
     },
 

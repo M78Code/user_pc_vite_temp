@@ -817,7 +817,7 @@ export default {
 
 <style lang="scss" scoped>
 .virtual-sports-stage {
-  min-height: 2.02rem;
+  min-height: 1.9rem;
   position: relative;
   background: var(--q-gb-bg-c-28);
 }
@@ -840,9 +840,9 @@ export default {
 }
 
 .banner {
-  border-radius: 0.05rem;
-  width: 3.6rem;
-  height: 2.02rem;
+  border-radius: 0;
+  width: 100%;
+  height: 1.9rem;
   margin: auto;
   overflow: hidden;
   background-image: url($SCSSPROJECTPATH+"/image/png/virtual_football.png"); //todo 后续上传到服务器
