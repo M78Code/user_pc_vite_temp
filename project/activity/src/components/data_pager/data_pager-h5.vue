@@ -123,7 +123,7 @@ export default {
     display: flex;
 
     .active {
-      background: #e69c41;
+      background: var(--qq--activity-bg-color-7);
       color: #fff;
     }
 
