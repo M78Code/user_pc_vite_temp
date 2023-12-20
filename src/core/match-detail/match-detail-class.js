@@ -451,6 +451,9 @@ class MatchDetailCtr {
   get_show_ol_handcip(ol){
     return o.os == 1 && o._hs != 11
   }
+  get_parmas(){
+    return this.params
+  }
 }
 
 
