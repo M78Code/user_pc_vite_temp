@@ -173,8 +173,8 @@ const odds_class_object = () => {
 }
 
 const is_lock = () => {
-  if(props.match.mhs == 1) return true;
-  if(props.hl_hs == 1) return true;
+  if(props?.match?.mhs == 1) return true;
+  if(props?.hl_hs == 1) return true;
   return odd_s == 2;
 }
 
