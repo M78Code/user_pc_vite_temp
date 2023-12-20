@@ -546,15 +546,17 @@ class MatchMeta {
   async get_esports_match() {
     this.clear_match_info()
     VirtualList.clear_virtual_info()
+    //兼容复刻版电竞冠军
+    const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "");
+    const is_kemp = md == '100';
     // 电竞的冠军
-    const category = MenuData.get_menu_type() === 100 ? 2 : 1
+    const category = MenuData.get_menu_type() === 100 || is_kemp? 2 : 1
     const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
-    const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "")
     const params = this.get_base_params()
     // this.current_euid = `${csid}_${md}`
     const res = await api_common.post_esports_match({
       ...params,
-      md,
+      md:is_kemp?'':md,
       csid,
       category,
       "type":3000,
