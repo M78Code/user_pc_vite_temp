@@ -114,7 +114,6 @@ const handler_match_container_scroll = lodash.throttle(($ev) => {
   if (get_is_static() || length < 17) return
   if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 200) || Math.abs(scrollTop - prev_scroll.value) >= 200) {
     prev_scroll.value = scrollTop
-    console.log("jiffy",'handler_match_container_scroll')
     MatchMeta.compute_page_render_list({ scrollTop: $ev.target.scrollTop, type: 2, is_again: false, merge: 'cover' })
     if (!is_esports.value) get_match_base_hps()
   }
