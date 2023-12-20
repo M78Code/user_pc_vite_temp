@@ -2,7 +2,16 @@
 <template>
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
-        <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
+
+        <div class="handicap-closed" v-if="BetData.is_bet_single && (items.ol_os == 2 && items.hl_hs == 0 && items.mid_mhs == 0)">
+            <img :src="compute_local_project_file_path('/image/bet/handicap-closed.png')" alt="">
+            <p>{{ i18n_t('bet.close') }}</p>
+        </div>
+        <div v-else class="f-b-s bet-content" :class="[
+                items.ol_os != 1 && items.hl_hs == 0 && items.mid_mhs == 0 ? 'bet-disable' : '',
+                items.is_serial && !BetData.is_bet_single ? 'not-chain-bet' : '',
+                items.ol_os == 2 && items.hl_hs == 0 && items.mid_mhs == 0 ? 'not-chain-bet' : ''
+            ]">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c font14 ">
                     <span class="text-flow-none" v-html="items.handicap"></span> 
@@ -23,6 +32,9 @@
                 </div>
             </div>
             
+            <!-- 
+                ol_os: 1 盘口正常 2 盘口失效
+            -->
             <div class="fw-e-s bet-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                 <div class="f-c-c bet-money">
                     <span class="font14 font700 bet-odds-value f-c-c" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
@@ -34,16 +46,17 @@
                         <img v-if="items.red_green == 'green_down'" :src="is_down_app" alt=""/>
                     </div>
                 </div>
-                <div v-if="items.is_serial" class="bet-serial font12">不支持串关</div>
+                <!-- 电子赛事不支持串关 -->
+                <div v-if="items.is_serial && !BetData.is_bet_single" class="bet-serial font12">不支持串关</div>
             </div>
 
             <div class="fw-e-s bet-right bet-invalid" v-else>
                 <div class="bet-disabled">
-                    <span>{{ i18n_t('bet.disabled') }}</span>
+                    <span>{{ i18n_t('bet.close') }}</span>
                 </div>
             </div>
 
-            <div v-if="items.is_serial" class="bet-layer-serial"></div>
+            <div v-if="items.is_serial && !BetData.is_bet_single" class="bet-layer-serial"></div>
 
             <!--  串关 投注 删除投注项 -->
             <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1 && !BetData.is_bet_single" @click="set_delete">
@@ -108,6 +121,11 @@ const set_delete = () => {
             align-items: center;
         }
 
+        &.not-chain-bet {
+            background-color: var(--q-gb-bg-c-20);
+            opacity: .8;
+        }
+
         .bet-money {
             height: 34px;
         }
@@ -158,11 +176,11 @@ const set_delete = () => {
                         display: inline-block;
                         border-radius: 2px;
                         line-height: 26px;
-                        background: var(--q-gb-bg-c-10);
+                        // background: var(--q-gb-bg-c-10);
                         font-size: 12px;
                         font-weight: 500;
                         letter-spacing: 0px;
-                        color: var(--q-gb-t-c-9);
+                        color: #949AB6;
                     }
                 }
             }
@@ -246,6 +264,18 @@ const set_delete = () => {
         }
     }
 }
-
+.handicap-closed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--q-gb-bd-c-6);
+    border-radius: 0.12rem;
+    color: var(--q-gb-t-c-10);
+    padding: .12rem;
+    img {
+        width: 0.74rem;
+        height: 0.74rem;
+    }
+}
 
 </style>

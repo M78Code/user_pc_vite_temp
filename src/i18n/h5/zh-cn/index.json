@@ -496,6 +496,7 @@
     "clear": "清除",
     "delete_all": "删除全部",
     "disabled": "已失效",
+    "close": "盘口关闭",
     "bet_upd": "赔率更新中!",
     "err_msg01": "赔率更新中~",
     "err_msg02": "网络异常，请重试",
@@ -1083,7 +1084,7 @@
     }
   },
   "filter": {
-    "all_leagues": "All leagues",
+    "all_leagues": "全部联赛",
     "match_key": "请输入联赛名",
     "match_select_title": "选择联赛",
     "please_select_league": "请选择联赛",

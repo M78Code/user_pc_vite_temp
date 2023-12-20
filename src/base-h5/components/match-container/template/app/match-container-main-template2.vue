@@ -136,8 +136,10 @@ export default {
     }
   }
   .expand_item{
+    width: 18px;
+    height: 16px;
     transition: transform 0.25s ease;
-     transform: rotate(-180deg);
+    transform: rotate(-180deg);
   }
   .ball_seed_collapsed{
     transform: rotate(0);

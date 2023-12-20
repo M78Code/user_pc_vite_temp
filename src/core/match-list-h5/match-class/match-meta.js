@@ -20,7 +20,7 @@ import { MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlay
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
 } from 'src/output/module/match-data-base.js'
-
+import matchDetail from "src/core/match-detail/match-detail-class.js";
 
 class MatchMeta {
 
@@ -493,8 +493,8 @@ class MatchMeta {
       i.csid = i.sportId
       i.mid = i.marketId
       i.csna = i.sportName
+      i._total = list.length
     })
-    console.log('handler_champion_match_classify_by_sport_id', list)
     const length = lodash.get(list, 'length', 0)
     if (length < 1) {
       this.set_page_match_empty_status({ state: true });
@@ -546,15 +546,17 @@ class MatchMeta {
   async get_esports_match() {
     this.clear_match_info()
     VirtualList.clear_virtual_info()
+    //兼容复刻版电竞冠军
+    const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "");
+    const is_kemp = md == '100';
     // 电竞的冠军
-    const category = MenuData.get_menu_type() === 100 ? 2 : 1
+    const category = MenuData.get_menu_type() === 100 || is_kemp? 2 : 1
     const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
-    const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "")
     const params = this.get_base_params()
     // this.current_euid = `${csid}_${md}`
     const res = await api_common.post_esports_match({
       ...params,
-      md,
+      md:is_kemp?'':md,
       csid,
       category,
       "type":3000,
@@ -570,8 +572,9 @@ class MatchMeta {
   * @description 赛事详情精选赛事列表
   */
   async get_details_result_match() {
+    console.log(matchDetail.get_parmas(),'');
      const res = await api_analysis.get_result_match_care_list({
-      sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
+      sportId: lodash.get(matchDetail.get_parmas(),'sportId',1),
       cuid: UserCtr.get_uid(),
      })
      if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
