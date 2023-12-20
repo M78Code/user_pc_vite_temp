@@ -37,7 +37,7 @@
       <div class="col-3 logo-double">
         <!-- 右侧双打图标 type 1 表示客队,malu 客队的url -->
         <team-img
-          :type="0"
+          :type="1"
           :csid="detail_data.csid"
           :url="lodash.get(detail_data,'malu[0]')"
           :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frman[0]') : detail_data.frman"
@@ -605,5 +605,13 @@ export default defineComponent({
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
+}
+
+.logo-double{
+  ::v-deep .team-img{
+    .img-style{
+      background-position-y: inherit !important;
+    }
+  }
 }
 </style>
