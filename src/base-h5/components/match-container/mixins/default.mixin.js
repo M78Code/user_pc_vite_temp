@@ -966,7 +966,13 @@ export default defineComponent({
       // 进入详情前，将当前赛事信息存入仓库
       // store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: item });
       //元数据存入本地
-      
+      MatchDetailCalss.set_match_details_params( {
+        mid:item.mid,
+        tid:item.tid, // 联赛 id
+        sportId:item.csid, //球类id
+        media_type:"auto", // 直播类型
+        time: Date.now()
+      })
       LocalStorage.set("YUAN_MATCH_DETAIL_DATA",MatchDataBaseH5.get_quick_mid_obj(item.mid))
       if (is_results.value) { //冠军跳冠军详情页
           this.$router.push(`/result_details/${item.mid}/0`);
@@ -976,13 +982,6 @@ export default defineComponent({
           this.$router.push({ name: 'category_loading', params: { mid: item.mid } });
         }
         else {
-          MatchDetailCalss.set_match_details_params( {
-            mid:item.mid,
-            tid:item.tid, // 联赛 id
-            sportId:item.csid, //球类id
-            media_type:"auto", // 直播类型
-            time: Date.now()
-          })
           let params= flag ? { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } : { mid: item.mid, csid: item.csid, tid: item.tid }
           // this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } });
           let name = 'category' //赛事详情
