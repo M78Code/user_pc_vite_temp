@@ -23,6 +23,11 @@
           <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
       </div>
+      <!-- 全部 -->
+      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_ball_seed_fold">
+        <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
+        <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
+      </div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
       <div v-if="show_sport_title" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span"> {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }}) </span>
@@ -78,12 +83,10 @@
                   <!-- 动画状态大于-1时，显示动画按钮 i18n_t('match_info.animation')是国际化取值 -->
 
                   <!-- icon_click_animationUrl media_button_handle -->
-                  <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']"
-                  :src="compute_local_project_file_path('image/list/ico_animate_nor.png')"
+                  <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']" :src="animation_icon"
                     @click="media_button_handle_by_type(ButtonTypes.animationUrl)" />
                   <!-- 视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 -->
-                  <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']"
-                  :src="compute_local_project_file_path('image/list/ico_live_nor.png')"
+                  <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']" :src="video_icon"
                     @click="media_button_handle_by_type(ButtonTypes.muUrl)" />
                   <!--icon_click_muUrl  -->
                   <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
@@ -107,7 +110,8 @@
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                 <div class="date-time"
                   v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                  {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
+                  <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} -->
+                  {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
                 </div>
                 <!--一小时内开赛 -->
                 <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
@@ -145,7 +149,7 @@
           <div class="event-team">
             <div class="name">
               <div class='left'>
-                <span>
+                <span :class="{ 'is-handicap': match.handicap_index == 1, 'is-handicap-1': match.handicap_index == 2 }">
                   {{ match.mhn }}
                 </span>
                 <!--发球方绿点-->
@@ -170,7 +174,7 @@
                 <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
                   v-show="set_serving_side(match, 'away')">
                 </span>
-                <span>
+                <span :class="{ 'is-handicap': match.handicap_index == 2, 'is-handicap-1': match.handicap_index == 1 }">
                   {{ match.man }}
                 </span>
 
@@ -430,10 +434,36 @@ export default {
     .expand_item{
       transition: transform 0.25s ease;
       transform: rotate(-180deg);
-      width: 20px;
+      width: 18px;
       height: 16px;
     }
     .collapsed{
+      transform: rotate(0);
+    }
+  }
+  .all-league-title{
+    display: flex;
+    height: 30px;
+    background: var(--q-gb-bg-c-15);
+    padding: 0 10px;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 2px solid var(--q-gb-bd-c-3);
+    > div {
+      display: flex;
+      align-items: center;
+      > span {
+        padding-left: 5px;
+        color:var(--q-gb-t-c-18);
+      }
+    }
+    .expand_item{
+      width: 18px;
+      height: 16px;
+      transition: transform 0.25s ease;
+      transform: rotate(-180deg);
+    }
+    .ball_seed_collapsed{
       transform: rotate(0);
     }
   }
@@ -866,7 +896,9 @@ export default {
 
           &.left {
             justify-content: flex-end;
-
+            .is-handicap {
+              color: #74C4FF;
+            }
           }
 
           &.right {

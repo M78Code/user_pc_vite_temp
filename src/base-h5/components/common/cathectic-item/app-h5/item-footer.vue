@@ -1,4 +1,5 @@
 <template>
+  <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <!-- 投注额 -->
   <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_f.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p>
   
@@ -34,8 +35,8 @@
     </template>
   </template>
 
-  <!-- 非单关 -->
-  <template v-if="data_f.seriesType !== '1'">
+  <!-- 串关显示 -->
+  <template v-if="data_f.seriesType !== '1' || data_f.seriesType !== '3'">
     <p>
       <!-- 投注单号 -->
       <label>{{i18n_t('bet.order_no')}}：</label> 
@@ -50,7 +51,6 @@
 
   <!-- 注单状态： -->
   <p>
-    <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
     <label>{{ i18n_t('app_h5.cathectic.bet_status') }}：</label>
     <template>
       <!-- 预约中、预约失效页 -->
@@ -63,12 +63,12 @@
       <!-- 未结算页、已结算页 -->
       <template v-else>
         <!-- 订单状态(确认中。。) -->
-        <span v-if="data_f.orderStatus == '3'">
+        <span v-if="data_f.orderStatus == '3'" :class="confirming.color">
           {{ confirming.text }}
         </span>
         <!-- 订单状态(非确认中) -->
-        <span v-else>
-          {{ calc_text(data_f).text }}
+        <span v-else :class="calc_text_only_status(data_f).color">
+          {{ calc_text_only_status(data_f).text }}
         </span>
       </template>
     </template>
@@ -78,7 +78,7 @@
 <script setup>
 import { reactive, onMounted, onUnmounted } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { calc_text, outcome } from "src/core/bet-record/util.js";
+import { calc_text_only_status, outcome } from "src/core/bet-record/util.js";
 import { i18n_t } from "src/boot/i18n.js";;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 import { formatTime, format_money2, format_balance } from 'src/output/index.js'
@@ -137,20 +137,12 @@ p {
       color: var(--q-gb-t-c-1);
     }
 }
-.green {
-    color: #69C969
-  }
-
   .red {
-    color: #E93D3D
+    color: #D2D2D2
   }
 
   .black {
     color: #666666
-  }
-
-  .orange {
-    color: #FFB001
   }
 
   .gray {
