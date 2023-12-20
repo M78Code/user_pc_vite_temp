@@ -14,86 +14,87 @@
         detail_data.mmp != 999
       "
     >
-      <!-- 发球方icon 不管字段mat存在与否 前端都不展示冰球发球方 -->
-      <!-- <span
-        v-if="detail_data.csid != '4'"
-        :class="detail_data.mat == 'home' ? 's-active-dot' : 's-touming'"
-        style="position: relative; right: 0.06rem"
-      >
-    </span> -->
-    <div class="sport-w-icon" v-if="detail_data.mat == 'home'">
-        <span
-          class="sport-icon-wrap"
-          :style="
-            compute_css_obj({
-              key: 'menu-sport-active-image',
-              position: format_type(MenuData.current_lv_2_menu),
-            })
-          "
-        ></span>
-      </div>
-  
-        <!-- 当前局比分 -->
-        <div style="display: inline-block">
-        <!-- 网球取S103 -->
-        <span
-          style="fontsize: 0.11rem"
-          v-if="detail_data.csid == 5 && current_score('S103')"
-          >({{ format_score(current_score("S103")) }})</span
+     
+
+      <!-- 当前局比分 此处主要用于复刻版，其余版本自行看适配不 -->
+      <div class="match-score">
+        <div class="sport-w-icon" v-if="detail_data.mat == 'home'">
+          <span
+            class="sport-icon-wrap"
+            :style="
+              compute_css_obj({
+                key: 'menu-sport-active-image',
+                position: format_type(MenuData.current_lv_2_menu),
+              })
+            "
+          ></span>
+        </div>
+        <div v-else class="sport-w-icon" ></div>
+        <div class="score-main">
+          <!-- 网球取S103 -->
+          <span
+            style="fontsize: 0.11rem"
+            v-if="detail_data.csid == 5 && current_score('S103')"
+            >({{ format_score(current_score("S103")) }})</span
+          >
+          <!-- 斯诺克, 乒乓球, 羽毛球, 排球, 沙滩排球 取赛事阶段范围内的最大为当前比分 -->
+          <span
+            style="fontsize: 0.11rem"
+            v-if="
+              detail_data.csid == 7 ||
+              detail_data.csid == 8 ||
+              detail_data.csid == 9 ||
+              detail_data.csid == 10 ||
+              detail_data.csid == 13
+            "
+            >({{ format_score(current_score(current_score_common())) }})</span
+          >
+          <!-- 冰球三节-局比分 -->
+          <span
+            style="fontsize: 0.11rem"
+            v-if="detail_data.csid == 4 && mmp_arr1.includes(detail_data.mmp)"
+            >({{ format_score(current_score(current_score_common())) }})</span
+          >
+          <!-- 冰球+橄榄球+曲棍球 加时赛比分 -->
+          <span
+            style="fontsize: 0.11rem"
+            v-if="
+              ['4', '14', '15'].includes(detail_data.csid) &&
+              ['40', '440', '41', '33', '42'].includes(detail_data.mmp) &&
+              current_score('S7')
+            "
+            >({{ format_score(current_score("S7")) }})</span
+          >
+          <!-- 冰球+橄榄球+曲棍球+水球 点球大战比分 -->
+          <span
+            style="fontsize: 0.11rem"
+            v-if="
+              ['4', '14', '15', '16'].includes(detail_data.csid) &&
+              (detail_data.mmp == 34 || detail_data.mmp == 50) &&
+              current_score('S170')
+            "
+            >({{ format_score(current_score("S170")) }})</span
+          >
+        </div>
+        <div
+          class="sport-w-icon"
+          v-if="detail_data.mat == 'away'"
+          
         >
-        <!-- 斯诺克, 乒乓球, 羽毛球, 排球, 沙滩排球 取赛事阶段范围内的最大为当前比分 -->
-        <span
-          style="fontsize: 0.11rem"
-          v-if="
-            detail_data.csid == 7 ||
-            detail_data.csid == 8 ||
-            detail_data.csid == 9 ||
-            detail_data.csid == 10 ||
-            detail_data.csid == 13
-          "
-          >({{ format_score(current_score(current_score_common())) }})</span
-        >
-        <!-- 冰球三节-局比分 -->
-        <span
-          style="fontsize: 0.11rem"
-          v-if="detail_data.csid == 4 && mmp_arr1.includes(detail_data.mmp)"
-          >({{ format_score(current_score(current_score_common())) }})</span
-        >
-        <!-- 冰球+橄榄球+曲棍球 加时赛比分 -->
-        <span
-          style="fontsize: 0.11rem"
-          v-if="
-            ['4', '14', '15'].includes(detail_data.csid) &&
-            ['40', '440', '41', '33', '42'].includes(detail_data.mmp) &&
-            current_score('S7')
-          "
-          >({{ format_score(current_score("S7")) }})</span
-        >
-        <!-- 冰球+橄榄球+曲棍球+水球 点球大战比分 -->
-        <span
-          style="fontsize: 0.11rem"
-          v-if="
-            ['4', '14', '15', '16'].includes(detail_data.csid) &&
-            (detail_data.mmp == 34 || detail_data.mmp == 50) &&
-            current_score('S170')
-          "
-          >({{ format_score(current_score("S170")) }})</span
-        >
+          <span
+            class="sport-icon-wrap"
+            :style="
+              compute_css_obj({
+                key: 'menu-sport-active-image',
+                position: format_type(MenuData.current_lv_2_menu),
+              })
+            "
+          ></span>
+        </div>
+        <div v-else class="sport-w-icon" ></div>
       </div>
 
     
-      <!-- 发球方icon 不管字段mat存在与否 前端都不展示冰球发球方 -->
-      <div class="sport-w-icon" v-if="detail_data.mat == 'away'" style="margin-left: 10px;">
-        <span
-          class="sport-icon-wrap"
-          :style="
-            compute_css_obj({
-              key: 'menu-sport-active-image',
-              position: format_type(MenuData.current_lv_2_menu),
-            })
-          "
-        ></span>
-      </div>
     </span>
   </div>
 </template>
@@ -207,8 +208,8 @@ export default {
   width: 0.27rem;
   display: inline-block;
   position: relative;
-  margin-bottom:-0.1rem;
-  
+  margin-bottom: -0.1rem;
+
   .sport-icon-wrap {
     --per: -0.285rem;
     display: block;
@@ -258,4 +259,18 @@ export default {
     font-size: 0.11rem;
   }
 }
+
+.match-score {
+  display: flex;
+  margin-bottom: -20px;
+  align-items: center;
+  height: 50px;
+}
+.score-main{
+    margin-top: 8px;
+    // margin-left: 8px;
+    // margin-right: 8px;
+    min-width: 0.5rem;
+
+  }
 </style>
