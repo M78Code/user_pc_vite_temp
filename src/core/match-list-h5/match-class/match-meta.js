@@ -16,10 +16,9 @@ import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive
 import { PageSourceData, GlobalAccessConfig, ServerTime } from "src/output/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import { useMittEmit, MITT_TYPES, project_name} from "src/output/module/constant-utils.js"
-import { 
+import { MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
-  MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5
 } from 'src/output/module/match-data-base.js'
 
 
@@ -1324,7 +1323,6 @@ class MatchMeta {
       index > -1 && this.complete_matchs.splice(index, 1)
 
       if (active_index > -1) {
-        this.match_mids.splice(active_index, 1)
         // 复刻版 新手版 使用的是 observer-wrapper 组件模式 不需要重新计算
         if (project_name == 'app-h5' && UserCtr.standard_edition == 1) return;
 
