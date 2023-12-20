@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <Teleport to="#page-footer" v-if="!disabled">
+  <Teleport to="body" v-if="!disabled">
     <img class="component scroll-top list-scroll-to-top"
       :class="[is_show_btn?'show':'hide', { 'app-h5': PROJECT_NAME === 'app-h5' }]"
       :src="scroll_top_image" @click="back_top"
@@ -105,17 +105,12 @@ onUnmounted(() => {
   --private-transition-duration: 1s;
   transition: bottom var(--private-transition-duration);
   &.show{
-    bottom: calc(100% + .2rem);
+    bottom:  .85rem;
     opacity: 1;
-    &.app-h5{
-      bottom: calc(100% + 0.85rem);
-      background: transparent;
-    }
   }
   &.hide{
     opacity: 0;
     pointer-events: none;
   }
-  
 }
 </style>

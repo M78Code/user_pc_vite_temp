@@ -643,7 +643,7 @@ export default {
   .title {
     font-family: PingFangSC-Medium;
     font-size: 0.14rem;
-    color: #e69c41;
+    color: var(--qq--activity-bg-color-7);
     text-align: right;
     margin-bottom: 0.14rem;
   }

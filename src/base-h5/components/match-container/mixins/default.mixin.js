@@ -241,6 +241,10 @@ export default defineComponent({
       })
       return is_show
     },
+    // 全部球种折叠状态
+    all_ball_seed_collapsed () {
+      return !MatchFold.all_csid_fold_status.value
+    },
     // 联赛折叠状态
     ball_seed_collapsed ()  {
       return !lodash.get(MatchFold.ball_seed_csid_fold_obj.value, `csid_${this.match_of_list.csid}`, true)
@@ -380,6 +384,14 @@ export default defineComponent({
       // 收藏页手动处理数据
       MenuData.is_collect() && MatchMeta.set_collect_match(this.match_of_list, 2)
       MatchCollect.set_match_collect_state(this.match_of_list, !match_state)
+    },
+
+    /**
+     * @description 全部联赛折叠
+     */
+    handle_all_ball_seed_fold () {
+      MatchFold.handler_fold_all_matchs_csid()
+      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
     },
 
     /**

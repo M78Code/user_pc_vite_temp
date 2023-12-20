@@ -93,6 +93,7 @@ onMounted(() => {
     // 重新设置监听对象
     emitter_1: useMittOn(MITT_TYPES.EMIT_HANDLE_START_OBSERVER, () => {
       // nextTick(() => handle_start_observer())
+      observer.value && observer.value.disconnect()
       setTimeout(() => {
         handle_start_observer()
       }, 1500)

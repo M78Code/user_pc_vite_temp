@@ -294,7 +294,7 @@ const mitt_list = [
   useMittOn(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, function (value) {
     // this.select_cleck = type
     //   this.select_dialog = val
-    setting_dialog.value = value
+    setting_dialog.value = value.open
   }).off,
   // 监听搜索框状态
   // useMittOn(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, function (value) {

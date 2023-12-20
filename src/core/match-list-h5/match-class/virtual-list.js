@@ -222,15 +222,16 @@ class VirtualList {
         position = scrollTop - 200
       }
     } else if (PROJECT_NAME === 'app-h5') { // 复刻版
+      const status = MatchFold.all_csid_fold_status.value
       if (is_result) {
         // 赛果
         position = scrollTop - 800
-      } else if (csid_status) {
+      } else if (status) {
         // 球种非折叠状态
         position = scrollTop - 234 * 5
       } else {
         // 球种折叠
-        position = scrollTop - 234 * 5
+        position = scrollTop - 200
       }
     }
     return position
