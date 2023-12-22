@@ -9,13 +9,12 @@
     width: 100%;
     height: auto;
     margin: 0 auto;
-    position: sticky;
     // top: 1.22rem;
-    padding: 0.2rem 0.48rem;
+    // padding: 0.2rem 0.48rem;
     z-index: 15;
     background-color: var(--q-gb-bg-c-17);
     &.is-result-details {
-      top: 1.62rem;
+      // top: 1.62rem;
     }
     &.no-z-index {
       z-index: 0;
@@ -26,7 +25,6 @@
     .heade {
       position: relative;
       display: flex;
-      justify-content: center;
       align-items: center;
       border-radius: 0.08rem;
       background-color: var(--q-gb-bg-c-15);
@@ -38,8 +36,6 @@
         top: 0;
         border: 1px solid var(--q-gb-bd-c-5);
         border-radius: 0.16rem;
-        width: 200%;
-        height: 200%;
         -webkit-transform: scale(0.5);
         transform: scale(0.5);
         -webkit-transform-origin: left top;
@@ -47,14 +43,11 @@
       }
   
       > span {
-        height: 0.3rem;
-        line-height: 0.3rem;
-        flex: 1;
         letter-spacing: 0;
         text-align: center;
-        font-size: 0.14rem;
+        font-size: 0.12rem;
         border-radius: 0.08rem;
-        padding: 0 .15rem;
+        padding: .04rem .1rem;
         background-color: var(--q-gb-bg-c-15);
         color: var(--q-gb-t-c-3);
   
@@ -64,7 +57,7 @@
           &:before {
             content: '';
             width: 0.01rem;
-            height: 0.14rem;
+            height: 0.12rem;
             position: absolute;
             left: 0;
             top: 0.08rem;
@@ -80,10 +73,10 @@
         }
   
         &.is-active {
-          height: 0.29rem;
           border-radius: 0.08rem;
-          color: var(--q-gb-t-c-14);
-          background-color: var(--q-gb-bg-c-13);
+          color: #179CFF;
+          border-radius: 6px;
+          background: #E8F5FF;
         }
       }
     }
@@ -580,3 +573,115 @@
   //     transform: translateX(-50%);
   //   }
   // }
+
+  .wonderful {
+    background: #fff;
+    border-radius: 8px;
+    margin: 8px 5px;
+    position: relative;
+    .wonderful-header {
+      padding: 5px 8px;
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 0.5px solid #F2F2F6;
+    }
+    .border-left {
+      position: absolute;
+      left: 0;
+      width: 2px;
+      height: 12px;
+      transform: translateY(100%);
+    }
+
+    .wonderful-tabs {
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #F2F2F6;
+      overflow: hidden;
+      box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
+      li {
+        padding: 2px 8px;
+        font-size: 12px;
+      }
+
+      .disable-text {
+        color: #AFB3C8;
+      }
+
+      .wonderful-active {
+        background-color: #fff;
+        border-radius: 10px;
+      }
+    }
+
+    .wonderful-content {
+      padding: 8px;
+    }
+
+    .wonderful-list {
+      display: flex;
+      overflow-x: scroll;
+      .row {
+        flex-shrink: 0;
+        .fragment-pic {
+          width: 126px;
+          height: 70px;
+          border-radius: 8px;
+          overflow: hidden;
+          background-size: cover;
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          margin-right: 8px;
+          margin-top: 12px;
+          .score {
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 700;
+            color: #fff;
+            padding-left: 6px;
+          }
+          .time {
+            padding-right: 4px;
+            font-size: 10px;
+            font-style: normal;
+            font-weight: 500;
+            color: #FFFFFF;
+            opacity: .6;
+          }
+          
+        }
+      }
+      .text-scroller {
+        width: 126px;
+        .text {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          span {
+            white-space: nowrap;
+            width: 50%;
+            font-size: 10px;
+            font-style: normal;
+            font-weight: 700;
+            text-overflow: ellipsis;
+            color: #303442;
+            padding: 2px 0;
+            &:nth-child(2) {
+              text-align: right;
+              font-size: 10px;
+              font-style: normal;
+              font-weight: 400;
+              color: #7981A4;
+            }
+          }
+        }
+      }
+
+    }
+  }

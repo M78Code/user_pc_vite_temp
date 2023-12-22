@@ -447,7 +447,7 @@ export default {
     display: flex;
     align-items: center;
     color: var(--q-gb-t-c-20);
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-25);
     justify-content: space-between;
     &.progress{
       border-top: 2px solid rgba(116, 196, 255, 0.5);
@@ -512,7 +512,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--q-gb-bg-c-18) !important;
+    // background: var(--q-gb-bg-c-34) !important;
     // box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
     // border-radius: .04rem;
     .buffer-container {
@@ -522,6 +522,7 @@ export default {
     }
     .match-content{
       border-radius: 0 0 8px 8px;
+      background: var(--q-gb-bg-c-18);
       &.collapsed{
         border-top: none;
       }
@@ -537,6 +538,7 @@ export default {
       border: 1px solid var(--q-gb-bd-c-15);
       border-radius: 8px 8px 0 0 !important;
       border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
+      background: var(--q-gb-bg-c-18);
     }
   }
 
@@ -807,13 +809,13 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: var(--q-gb-bg-c-18);
+    background: var(--q-gb-bg-c-21);
     line-height: 19px;
     font-size: 11px;
     margin-bottom: -.05rem;
     margin-top: 0;
     border-bottom: 0;
-
+    color: var(--q-gb-t-c-24);
     .score-inner-span {
       width: 100%;
       //transform: translateY(-3px);
@@ -826,7 +828,7 @@ export default {
   .league {
     height: 0.26rem;
     border-radius: .08rem .08rem 0 0;
-    background-color: var(--q-gb-bg-c-17) !important;
+    // background-color: var(--q-gb-bg-c-34) !important;
 
     .league-t-wrap {
       width: 100%;
@@ -893,7 +895,7 @@ export default {
 
   .match-content {
     width: 100%;
-    background: var(--q-gb-bg-c-17);
+    // background: var(--q-gb-bg-c-34);
     padding: 4px 9px 0;
 
     .event-team {

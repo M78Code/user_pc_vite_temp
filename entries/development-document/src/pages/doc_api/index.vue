@@ -10,7 +10,7 @@
 </template>
   
 <script setup>
-import { ref, watch, computed } from "vue";
+import { ref, watch } from "vue";
 import isComponent from "basesrc/pages/doc_api/is_compont.vue";
 
 const props = defineProps({

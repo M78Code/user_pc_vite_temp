@@ -36,7 +36,6 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from "vue";
 
 defineProps({
   menudata: Array,
