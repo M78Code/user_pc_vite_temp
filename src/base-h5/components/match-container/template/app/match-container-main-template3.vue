@@ -1193,7 +1193,7 @@ export default {
           bottom: 0;
           height: 24px;
           font-weight: 600;
-
+          color: var(--q-gb-t-c-18);
           &.simple {
             right: 0.08rem;
           }

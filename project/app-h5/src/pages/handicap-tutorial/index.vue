@@ -46,6 +46,7 @@
                         </div>
                         <div class="ht-button default" @click="() => { state.inAnswerQuestion = true }">
                             {{ i18n_t('app_h5.handicap_tutorial.practise') }}
+                            <span class="arrow"></span>
                         </div>
                     </div>
                 </div>
@@ -97,8 +98,8 @@ const slideMenu = [
 const bigSmallBallMenu = [
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '2.5'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '2.5/3'),
-    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '3/3.5'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '3'),
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '3/3.5'),
 ]
 
 const router = useRouter()
