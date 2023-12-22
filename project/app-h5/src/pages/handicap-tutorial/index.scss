@@ -101,7 +101,25 @@
         align-items: center;
         justify-content: center;
         margin-top: .12rem;
-        border: 1px solid transparent;
+        border: .01rem solid transparent;
+        .arrow {
+            position: relative;
+            &::after {
+                display: inline-block;
+                content: "";
+                width: .08rem;
+                height: .08rem;
+                border-width: 0 .02rem .02rem 0;
+                color: var(--q-gb-t-c-18);
+                border-style: solid;
+                transform: matrix(.71,.71,-.71,.71,0,0);
+                position: absolute;
+                top: 50%;
+                right: -0.12rem;
+                margin-top: -0.05rem;
+                transform: rotate(-45deg);
+            }
+        }
     }
     .default {
         background-color: var(--q-gb-bg-c-16);

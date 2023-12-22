@@ -105,8 +105,8 @@
                   <!-- 赛事日期标准版 -->
                   <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
-                    <!-- 赛事回合数mfo -->
-                    <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
+                    <!-- 赛事回合数mfo match.ms != 1(不为开赛)-->
+                    <div v-if="match.mfo && match.ms != 1" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
                       {{ match.mfo }}
                     </div>
 
