@@ -2222,7 +2222,12 @@
       "corner": "ลูกเตะมุมที่ {X}",
       "red_card": "ใบแดง {X}",
       "yellow_card": "ใบเหลือง {X}",
-      "yellow_red_card": "ใบเหลืองแดง {X}"
+      "yellow_red_card": "ใบเหลืองแดง {X}",
+      "new_gloal": "進球{X}",
+      "new_corner": "角球{X}",
+      "new_red_card": "紅牌{X}",
+      "new_yellow_card": "黃牌{X}",
+      "new_yellow_red_card": "黃紅牌{X}"
     },
     "back_live": "กลับไปที่ไลฟ์"
   },

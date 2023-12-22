@@ -2204,7 +2204,12 @@
       "corner": "第{X}個角球",
       "red_card": "第{X}個紅牌",
       "yellow_card": "第{X}個黃牌",
-      "yellow_red_card": "第{X}個黃紅牌"
+      "yellow_red_card": "第{X}個黃紅牌",
+      "new_gloal": "進球{X}",
+      "new_corner": "角球{X}",
+      "new_red_card": "紅牌{X}",
+      "new_yellow_card": "黃牌{X}",
+      "new_yellow_red_card": "黃紅牌{X}"
     },
     "back_live": "返回直播"
   },

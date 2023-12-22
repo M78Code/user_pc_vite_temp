@@ -2227,7 +2227,12 @@
       "corner": "Corner ke-{X}",
       "red_card": "Red card ke-{X}",
       "yellow_card": "Yellow card ke-{X}",
-      "yellow_red_card": "Yellow Red card ke-{X}"
+      "yellow_red_card": "Yellow Red card ke-{X}",
+      "new_gloal": "Goal{X}",
+      "new_corner": "Corner{X}",
+      "new_red_card": "Red card{X}",
+      "new_yellow_card": "Yellow card{X}",
+      "new_yellow_red_card": "Yellow Red card{X}"
     },
     "back_live": "Back to Live"
   },

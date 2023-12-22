@@ -2917,7 +2917,12 @@
       "corner": "第{X}个角球",
       "red_card": "第{X}个红牌",
       "yellow_card": "第{X}个黄牌",
-      "yellow_red_card": "第{X}个黄红牌"
+      "yellow_red_card": "第{X}个黄红牌",
+      "new_goal": "进球{X}",
+      "new_corner": "角球{X}",
+      "new_red_card": "红牌{X}",
+      "new_yellow_card": "黄牌{X}",
+      "new_yellow_red_card": "黄红牌{X}"
     },
     "back_live": "返回直播",
     "reconnect": "稍等一下，马上回来"
