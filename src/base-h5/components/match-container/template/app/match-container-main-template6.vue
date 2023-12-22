@@ -109,7 +109,7 @@ export default {
     margin-top: 0.07rem;
 
     &.collapsed {
-      border-bottom: 1px solid var(--q-gb-t-c-6);
+      border-bottom: 1px solid var(--q-gb-t-c-4);
     }
 
     .league-wrapper {
@@ -227,7 +227,7 @@ export default {
   .hps-wrap {
 
     >div {
-      border-bottom: 1px solid var(--q-gb-t-c-6);
+      border-bottom: 1px solid var(--q-gb-t-c-4);
     }
 
     .match-title {

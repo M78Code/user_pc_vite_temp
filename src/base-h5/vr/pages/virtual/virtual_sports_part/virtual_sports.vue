@@ -21,8 +21,8 @@
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rili.png`" alt="">
         <span>{{i18n_t('filter.all_leagues')}}</span>
       </div>
-      <div class="right">
-        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" alt="">
+      <div class="right" @click="handle_all_league">
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" :class="[!is_expend_all && 'expend_all_league']" alt="">
       </div>
     </div>
     <div class="virtual-content-wrapper">
@@ -250,7 +250,9 @@ export default {
       expend_video: true,
       // 1:新手版 2:专业版
       standard_edition,
-      LOCAL_PROJECT_FILE_PREFIX
+      LOCAL_PROJECT_FILE_PREFIX,
+      // 是否全部折叠
+      is_expend_all: true
     }
   },
   created() {
@@ -269,6 +271,15 @@ export default {
 	set_video_process_data(data){VR_CTR.set_video_process_data(data)},
 	set_prev_v_sports_params(data){VR_CTR.set_prev_v_sports_params(data)},
 	set_current_mid(data){VR_CTR.set_current_mid(data)},
+
+    //全部轮次展开折叠 
+    handle_all_league(){
+      this.expend_video = this.is_expend_all ? false : true;
+      this.match_list_all_batches.forEach(item=>{
+        item.is_expend = this.is_expend_all ? false : true;
+      })
+      this.is_expend_all = !this.is_expend_all;
+    },
     // 顶部菜单切换状态改变
     handle_top_menu_change(status) {
       this.top_menu_changed = status
@@ -590,7 +601,14 @@ export default {
     // 当前联赛的全部轮次
     match_list_all_batches(){
       const match_list_all_batches = [...this.virtual_match_list];
-      match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
+      // 足蓝全部展开，赛马类只展开第一个
+      if(this.sub_menu_type == '1001' || this.sub_menu_type == '1004'){
+          match_list_all_batches.forEach(batch=> {
+          batch.is_expend = true
+        })
+      }else {
+        match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
+      }
       return match_list_all_batches
     },
 
@@ -781,6 +799,9 @@ export default {
     img {
       width: 0.2rem;
       height: 0.16rem;
+      &.expend_all_league {
+        transform: rotate(-90deg);
+      }
     }
   }
 }

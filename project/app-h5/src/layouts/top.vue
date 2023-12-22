@@ -92,7 +92,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
    */
   const dataList = reactive({
     3: dateTabList(new Date(new Date().getTime()+24*60*60*1000)), //早盘下一天开始
-    6: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"今日",val:0}]),
+    6: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"今日",val:'0'}]),
     2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"所有日期",val:''},{name:"今日",val:new Date().getTime()}])
   });
   const dataListEsports = ref([]);
@@ -123,9 +123,12 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     if(MenuData.is_esports()){
       const data_list_esports = await MenuData.getDateList(val?.csid);
       dataListEsports.value = data_list_esports;
+      ref_data.current_mi = val.mi
+      MenuData.set_current_lv_2_menu_i(val)
       nextTick(()=>{
         dJdateTabMenu.value.changeTabMenu({},0,'',type);
       })
+      return;
     }
     switch (+val.mi) {
       case 2000:

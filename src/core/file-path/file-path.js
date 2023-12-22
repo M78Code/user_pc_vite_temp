@@ -1,7 +1,7 @@
 import lodash from 'lodash'
 // 电竞赛种csid
 const e_sport_csids = [101, 100, 102, 103];
-
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
  
 import {GLOBAL_CONSTANT } from "src/core/constant/global/index.js"
 // 目前环境信息
@@ -44,6 +44,7 @@ const letter_num = {
  * @return {String} csid 球种类型
  */
 const get_server_file_path = (path, csid = 0) => {
+
   if (!path || path == 'undefined') {
     return '';
   }
@@ -58,7 +59,13 @@ const get_server_file_path = (path, csid = 0) => {
   // }
   // 电竞图片域名模式
   if (e_sport_csids.includes(1 * csid)) {
-    return `${GLOBAL_CONSTANT.E_SPORTS_DOMAIN_IMG}/${path}`;
+    const e_sports_domain_img = LocalStorage.get('e_sports_domain_img')
+    if(GLOBAL_CONSTANT.E_SPORTS_DOMAIN_IMG){
+      return `${GLOBAL_CONSTANT.E_SPORTS_DOMAIN_IMG}/${path}`;
+    }
+    if(e_sports_domain_img){
+      return `${e_sports_domain_img}/${path}`;
+    }
   }
   //新配置是 数组
   let DOMAIN_RESULT_ = lodash.get(window.BUILDIN_CONFIG,'DOMAIN_RESULT') 

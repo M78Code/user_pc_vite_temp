@@ -20,7 +20,7 @@ import { MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlay
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
 } from 'src/output/module/match-data-base.js'
-
+import matchDetail from "src/core/match-detail/match-detail-class.js";
 
 class MatchMeta {
 
@@ -572,8 +572,9 @@ class MatchMeta {
   * @description 赛事详情精选赛事列表
   */
   async get_details_result_match() {
+    console.log(matchDetail.get_parmas(),'');
      const res = await api_analysis.get_result_match_care_list({
-      sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
+      sportId: lodash.get(matchDetail.get_parmas(),'sportId',1),
       cuid: UserCtr.get_uid(),
      })
      if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });

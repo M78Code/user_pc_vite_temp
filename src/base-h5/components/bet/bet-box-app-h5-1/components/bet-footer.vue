@@ -327,9 +327,6 @@ onMounted(()=>{
     &.disabled-silider-bg {
       background: rgba(255, 255, 255, 0.96);
       border-color: rgba(201, 205, 219, 0.8);
-      img {
-        fill: rgba(201, 205, 219, 0.8);
-      }
     }
   }
 
