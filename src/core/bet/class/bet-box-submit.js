@@ -1049,9 +1049,9 @@ const set_market_id_to_ws = () => {
     let bet_list = []
     // 单关
     if(BetData.is_bet_single){
-        bet_list = lodash_.get( BetData,'bet_single_list')
+        bet_list = lodash_.get( BetData,'bet_single_list',[])
     }else{
-        bet_list = lodash_.get( BetData,'bet_s_list')
+        bet_list = lodash_.get( BetData,'bet_s_list',[])
     }
     // 获取盘口id
     hid = bet_list.map(item => item.marketId)
