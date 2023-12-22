@@ -317,7 +317,7 @@ class MatchUtils {
     const day = time.getDate().toString().padStart(2, '0')
     // 当前时间
     const now_date = `${year}-${month}-${day}`
-    const start_time = new Date(now_date).getTime();
+    const start_time = new Date(`${now_date} 00:00:00`).getTime();
     const end_time = new Date(`${year}-${month}-${day} 23:59:59`).getTime();
     return { start_time, end_time }
   }
