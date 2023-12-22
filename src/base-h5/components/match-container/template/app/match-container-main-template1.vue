@@ -173,6 +173,7 @@
                         <div class='team-t-title-w' :class="{
                           'is-handicap': match.handicap_index == 1,
                           'is-handicap-1': match.handicap_index == 2,
+                          'goal-style': is_show_home_goal && is_new_init2 && (!is_show_away_goal)
                         }">
                           <span>{{ match.mhn }}</span>
 
@@ -215,6 +216,7 @@
                         <div class='team-t-title-w' :class="{
                           'is-handicap': match.handicap_index == 2,
                           'is-handicap-1': match.handicap_index == 1,
+                          'goal-style': is_show_away_goal && is_new_init2 && (!is_show_home_goal),
                         }">
                           <span>{{ match.man }}</span>
                         </div>
@@ -1230,6 +1232,9 @@ export default {
 
             &.is-handicap {
               color: #74C4FF !important;
+            }
+            &.goal-style{
+              max-width: 90px;
             }
           }
         }
