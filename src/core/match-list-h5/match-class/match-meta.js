@@ -821,6 +821,35 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取收藏接口的 euid
+   */
+  get_collect_euid () {
+    const lv_2_menu_i = MenuData.current_lv_2_menu_i
+    let mid_list = lodash.get(MenuData,'collect_list')
+    let lv1_mi = lodash.get(MenuData,'current_lv_1_menu_i')
+    let euid = ''
+    // 复刻版非冠军收藏
+    if (project_name === 'app-h5' && lv_2_menu_i == 50000 && !MenuData.is_kemp()) {
+      const menu_list = lodash.get(MenuData,'menu_list')
+      euid = menu_list.map(item => MenuData.get_euid(item.mi+''+lv1_mi)).join(',')
+    // 复刻版冠军收藏
+    } else if (project_name === 'app-h5' && lv_2_menu_i == 50000 && MenuData.is_kemp()) {
+      const menu_lv_mi_lsit = lodash.get(MenuData,'menu_lv_mi_lsit')
+      euid = menu_lv_mi_lsit.map(item => MenuData.get_euid(item.mi+'')).join(',')
+    } else if(lv_2_menu_i == 0){
+      // 根据 菜单id 获取euid
+      mid_list.forEach(item => {
+        if(BaseData.mi_euid_map_res[item.mi] && BaseData.mi_euid_map_res[item.mi].h){
+          euid += BaseData.mi_euid_map_res[item.mi].h + ','
+        }
+      })
+    } else{
+      euid = MenuData.get_euid(lv_2_menu_i+''+lv1_mi)
+    }
+    return euid
+  }
+
+  /**
    * @description 获取电竞收藏赛事
    */
   async get_esports_collect_match() {
@@ -849,35 +878,16 @@ class MatchMeta {
    */
   async get_collect_match () {
     this.clear_match_info()
-    const lv_2_menu_i = MenuData.current_lv_2_menu_i
-    let mid_list = lodash.get(MenuData,'collect_list')
-    let lv1_mi = lodash.get(MenuData,'current_lv_1_menu_i')
-    let euid = ''
-    // 复刻版非冠军收藏
-    if (project_name === 'app-h5' && lv_2_menu_i == 50000 && !MenuData.is_kemp()) {
-      const menu_list = lodash.get(MenuData,'menu_list')
-      euid = menu_list.map(item => MenuData.get_euid(item.mi+''+lv1_mi)).join(',')
-    // 复刻版冠军收藏
-    } else if (project_name === 'app-h5' && lv_2_menu_i == 50000 && MenuData.is_kemp()) {
-      const menu_lv_mi_lsit = lodash.get(MenuData,'menu_lv_mi_lsit')
-      euid = menu_lv_mi_lsit.map(item => MenuData.get_euid(item.mi+'')).join(',')
-    } else if(lv_2_menu_i == 0){
-      // 根据 菜单id 获取euid
-      mid_list.forEach(item => {
-        if(BaseData.mi_euid_map_res[item.mi] && BaseData.mi_euid_map_res[item.mi].h){
-          euid += BaseData.mi_euid_map_res[item.mi].h + ','
-        }
-      })
-    } else{
-      euid = MenuData.get_euid(lv_2_menu_i+''+lv1_mi)
-    }
+    const euid = this.get_collect_euid()
     const params = this.get_base_params(euid)
     delete params.hpsFlag
+    const target_params = {
+      ...params,
+      md: String(MenuData.data_time)
+    }
+    if (!MenuData.data_time) delete target_params.md
     try {
-      const res = await api_common.get_collect_matches({
-        ...params,
-        md: String(MenuData.data_time)
-      })
+      const res = await api_common.get_collect_matches(target_params)
       // 冠军
       if (MenuData.is_kemp()) {
         const list = lodash.get(res, 'data', [])
@@ -1277,6 +1287,7 @@ class MatchMeta {
   clear_match_info () {
     this.match_mids = []
     this.complete_matchs = []
+    this.current_matchs = []
     this.complete_mids = []
   }
 
