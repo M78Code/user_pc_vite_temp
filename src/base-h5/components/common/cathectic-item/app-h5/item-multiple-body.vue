@@ -19,6 +19,7 @@
           </div>
           <p class="list">
             <span>{{item.playName}}</span>
+            <p>{{ item.matchInfo }}</p>
           </p>
           <!-- 结算页面显示 -->
           <div class="list score" v-if="BetRecordClass.selected == 3">
@@ -142,10 +143,13 @@ template {
         display: flex;
         justify-content: space-between;
         font-size: 0.15rem;
-        font-weight: bold;
         position: relative;
         padding-left: 0.14rem;
 
+        p {
+          color: var(--q-gb-t-c-17);
+          padding-bottom: .04rem;
+        }
         span {
           color: var(--q-gb-bg-c-13);
         }
@@ -153,10 +157,15 @@ template {
 
       .list {
         line-height: 1.5;
-        font-weight: bold;
         padding-left: 0.1rem;
         margin-left: 0.04rem;
         border-left: 1px solid var(--q-gb-bg-c-13);
+        color: var(--q-gb-t-c-17);
+
+        p {
+          color: var(--q-gb-t-c-19);
+          padding: .04rem 0;
+        }
 
         &.score {
           display: flex;
@@ -217,6 +226,7 @@ template {
   }
   .foot-main {
     padding: 0 0.14rem 0.14rem;
+    color: var(--q-gb-t-c-17);
     p {
       line-height: 2;
       display: flex;
