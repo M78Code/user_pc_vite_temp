@@ -981,7 +981,7 @@ export default defineComponent({
       })
       LocalStorage.set("YUAN_MATCH_DETAIL_DATA",MatchDataBaseH5.get_quick_mid_obj(item.mid))
       if (is_results.value) { //冠军跳冠军详情页
-          this.$router.push(`/result_details/${item.mid}/0`);
+          this.$router.push(`/result_details/${item.mid}/${item.csid}`);
       }
       else {
         if (this.$route.name == "category") {
