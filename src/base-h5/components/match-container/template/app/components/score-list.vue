@@ -46,7 +46,7 @@
             <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
               {{ match.mfo }}
             </div>
-            <div class="score last" :class="{'total_games' : total_games }" v-if='![1, 2, 3, 11].includes(+match.csid)'>
+            <div class="score last" v-if='![1, 2, 3, 11].includes(+match.csid)'>
               <!-- 总局数 -->
               <span v-if="![4, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
                 {{ i18n_t('list.total_play_count') }} {{ total_games }}
