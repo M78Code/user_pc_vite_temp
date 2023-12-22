@@ -78,6 +78,8 @@ class PageSourceData {
       // search_txt ：搜索传参 字符串 
       // filter_list ： 筛选 ： all  或者 [tid]
     }
+    //详情路由参数
+    this.route_parmas = {}
   }
   
   compute_other_property_by_page_source() {}
@@ -176,6 +178,22 @@ class PageSourceData {
    */
   is_show_favorite_list(){
     return   this.page_source.includes('collect') 
+  }
+  /**
+   * @description: 方便页面刷新获取路由参数
+   * @param {*} parmas
+   * @return {*}
+   */  
+  set_route_parmas(parmas){
+    this.route_parmas = parmas
+  }
+   /**
+   * @description: 方便页面刷新获取路由参数
+   * @param {*} parmas
+   * @return {*}
+   */  
+  get_route_parmas(){
+   return this.route_parmas 
   }
 }
 
