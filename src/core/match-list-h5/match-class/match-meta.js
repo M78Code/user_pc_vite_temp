@@ -441,6 +441,7 @@ class MatchMeta {
    * @description 获取冠军赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_champion_match() {
+    console.log(1111111111111111)
     MatchFold.clear_fold_info()
     MatchDataBaseH5.clear()
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
@@ -1381,7 +1382,7 @@ class MatchMeta {
         this.debounce_timer = setTimeout(() => {
           this.is_ws_trigger = true
           if (MenuData.is_kemp()) {
-            this.handle_custom_matchs({ list: this.complete_matchs })
+            // this.handle_custom_matchs({ list: this.complete_matchs })
           } else {
             this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
           }
@@ -1407,7 +1408,7 @@ class MatchMeta {
       if (item) {
         this.is_ws_trigger = true
         if (MenuData.is_kemp()) {
-          this.get_champion_match()
+          // this.get_champion_match()
         } else {
           this.get_target_match_data({scroll_top: this.prev_scroll, md: this.http_params.md})
         }
