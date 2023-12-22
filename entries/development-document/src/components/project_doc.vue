@@ -54,8 +54,6 @@
 </template>
 
 <script setup>
-import { ref, reactive, toRefs, computed, watch, onMounted } from "vue";
-
 const props = defineProps({
   docData: {
     type: Array,

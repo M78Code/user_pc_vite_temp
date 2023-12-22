@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
+  <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;">
       <div class="nonebox4-fourth">
           <div class="nonebox4-fourth-a">
               <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum(BetData.bet_data_class_version)" :key='item' :data-number='index'>{{item}}</div>
@@ -390,7 +390,7 @@ onUnmounted(() => {
     flex: 1;
     align-items: center;
     justify-content: center;
-    background-color: var(--q-gb-bg-c-15);
+    background-color: var(--q-gb-bg-c-25);
     //box-shadow: 0 2px 2px #eeeeee;
     color: var(--q-gb-t-c-18);
     font-size: 0.22rem;

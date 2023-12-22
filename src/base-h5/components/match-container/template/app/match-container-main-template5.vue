@@ -25,7 +25,7 @@
       </div>
       <!-- 全部 -->
       <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_ball_seed_fold">
-        <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
+        <div> <img :src="icon_date" alt=""> <span>{{get_date_title}}</span> </div>
         <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
@@ -42,8 +42,8 @@
             <!-- 联赛收藏 -->
             <template v-if="![3000, 900].includes(menu_type) && !is_esports">
               <img v-if="!league_collect_state" class="favorited-icon"
-                src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt="" @click.stop="handle_league_collect" />
-              <img v-if='league_collect_state' class="favorited-icon" src="/src/base-h5/assets/match-list/ico_fav_sel.png"
+                :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/ico_fav_nor.png`" alt="" @click.stop="handle_league_collect" />
+              <img v-if='league_collect_state' class="favorited-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/ico_fav_sel.png`"
                 @click.stop="handle_league_collect" />
             </template>
             <!-- 电竞图标 写死 -->
@@ -159,16 +159,49 @@
 
                 <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
                 <!-- <image-cache-load v-if="match?.mhlu?.length && !([5, 7].includes(Number(match.csid)))" -->
-                <image-cache-load v-if="match?.mhlu?.length"
-                  :csid="+match.csid" :path="match.mhlu" type="home"></image-cache-load>
+                <!-- <image-cache-load v-if="match?.mhlu?.length"
+                  :csid="+match.csid" :path="match.mhlu" type="home"></image-cache-load> -->
                 <!-- <img v-if="match?.mhlu?.length" class="logo" v-img="([match.mhlu[0], match.frmhn[0], match.csid])" /> -->
+                <team-img
+                  v-if="!lodash.isEmpty(match)"
+                    :type="0"
+                    :csid="match.csid"
+                    :url="lodash.get(match,'mhlu[0]')"
+                    :fr="lodash.get(match,'frmhn[0]')"
+                    :size="18"
+                  ></team-img>
+                  <team-img
+                    v-if="lodash.get(match,'mhlu.length') > 1&& !lodash.isEmpty(match)"
+                    :type="0"
+                    :csid="match.csid"
+                    :url="match.mhlu[1]"
+                    :fr="match.frmhn[1]"
+                    :size="18"
+                    style="margin-left:-0.09rem;"
+                  ></team-img>
               </div>
               <span class="vs">VS</span>
               <div class='right'>
                 <!-- <image-cache-load v-if="match?.malu?.length && !([5, 7].includes(Number(match.csid)))" -->
-                <image-cache-load v-if="match?.malu?.length"
-                  :csid="+match.csid" :path="match.malu" type="home"></image-cache-load>
-
+                <!-- <image-cache-load v-if="match?.malu?.length"
+                  :csid="+match.csid" :path="match.malu" type="home"></image-cache-load> -->
+                 <!-- 右侧双打图标 type 1 表示客队,malu 客队的url -->
+                <team-img
+                  :type="1"
+                  :csid="match.csid"
+                  :url="lodash.get(match,'malu[0]')"
+                  :fr="lodash.get(match,'frman[0]')"
+                  :size="18"
+                ></team-img>
+                <team-img
+                  v-if="lodash.get(match,'malu.length') > 1"
+                  :type="1"
+                  :csid="match.csid"
+                  :url="match.malu[1]"
+                  :fr="match.frman[1]"
+                  :size="18"
+                  style="margin-left:-0.09rem;"
+                ></team-img>
                 <!-- <img v-if="match?.malu?.length" class="logo" v-img="([match.malu[0], match.frman[0], match.csid])" /> -->
                 <!--发球方绿点-->
                 <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
@@ -207,7 +240,7 @@
 </template>
 
 <script>
-
+import TeamImg from "src/base-h5/components/details/team-img.vue";   // 详情页蓝色背景上的大型字母图标
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
@@ -218,10 +251,10 @@ import ImageCacheLoad from "src/base-h5/components/match-list/components/public-
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 
 import { i18n_t, compute_img_url } from "src/output/index.js"
-import { format_time_zone } from "src/output/index.js"
+import { format_time_zone,format_M_D } from "src/output/index.js"
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2,date_time, is_detail,is_zaopan, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
@@ -248,6 +281,7 @@ export default {
     main_source: String,
   },
   components: {
+    TeamImg,
     ScoreList,
     IconWapper,
     OddListWrap,
@@ -340,6 +374,9 @@ export default {
       return format_odds(ov, obv)
 
     }
+    const get_date_title =computed(() => {
+      return is_zaopan.value&&Number(date_time.value)>0?format_M_D(date_time.value):i18n_t("filter.all_leagues")
+    })
     let mitt_list=[]
     onMounted(() => {
      mitt_list=[useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, e => {
@@ -354,7 +391,9 @@ export default {
       VirtualList.set_is_show_ball(true)
       VirtualList.set_is_change_handicap_height(0)
     })
+    
     return {
+      get_date_title,
       active_score,
       go_to_bet,
       ButtonTypes,
@@ -413,7 +452,7 @@ export default {
     display: flex;
     align-items: center;
     color: var(--q-gb-t-c-20);
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-25);
     justify-content: space-between;
     &.progress{
       border-top: 2px solid rgba(116, 196, 255, 0.5);
@@ -478,7 +517,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--q-gb-bg-c-18) !important;
+    // background: var(--q-gb-bg-c-34) !important;
     // box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
     // border-radius: .04rem;
     .buffer-container {
@@ -488,6 +527,7 @@ export default {
     }
     .match-content{
       border-radius: 0 0 8px 8px;
+      background: var(--q-gb-bg-c-18);
       &.collapsed{
         border-top: none;
       }
@@ -503,6 +543,7 @@ export default {
       border: 1px solid var(--q-gb-bd-c-15);
       border-radius: 8px 8px 0 0 !important;
       border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
+      background: var(--q-gb-bg-c-18);
     }
   }
 
@@ -773,13 +814,13 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: var(--q-gb-bg-c-18);
+    background: var(--q-gb-bg-c-21);
     line-height: 19px;
     font-size: 11px;
     margin-bottom: -.05rem;
     margin-top: 0;
     border-bottom: 0;
-
+    color: var(--q-gb-t-c-24);
     .score-inner-span {
       width: 100%;
       //transform: translateY(-3px);
@@ -792,7 +833,7 @@ export default {
   .league {
     height: 0.26rem;
     border-radius: .08rem .08rem 0 0;
-    background-color: var(--q-gb-bg-c-17) !important;
+    // background-color: var(--q-gb-bg-c-34) !important;
 
     .league-t-wrap {
       width: 100%;
@@ -859,7 +900,7 @@ export default {
 
   .match-content {
     width: 100%;
-    background: var(--q-gb-bg-c-17);
+    // background: var(--q-gb-bg-c-34);
     padding: 4px 9px 0;
 
     .event-team {
@@ -903,6 +944,9 @@ export default {
 
           &.right {
             justify-content: flex-start;
+            .is-handicap {
+              color: #74C4FF;
+            }
           }
         }
       }

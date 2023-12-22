@@ -59,7 +59,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .result-header {
   width: 100vw;
-  height: 1.23rem;
+  height: 1.3rem;
 
   &.baseball {
     height: 1.4rem;
@@ -77,6 +77,7 @@ const props = defineProps({
     line-height: 0.17rem;
     width: 2.45rem;
     overflow-x: auto;
+    margin-top: .07rem;
 
     .font-style {
       margin: unset;
@@ -91,7 +92,7 @@ const props = defineProps({
 
   &.margin_left_bottom {
     .match_score {
-      margin-left: 0.7rem;
+      margin-left: 0.55rem;
       width: 2.91rem;
     }
   }

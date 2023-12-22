@@ -14,7 +14,7 @@
       <DateTab @changeDate="setDate" ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
     <!-- <div v-if="+MenuData.get_menu_type_special() == 2000"> -->
-    <div v-if="[2000].includes(MenuData.top_menu_title?.mi)">
+    <div v-show="[2000].includes(MenuData.top_menu_title?.mi)">
       <!-- dataList[2000] -->
         <DateTab @changeDate="setDate" ref="dJdateTabMenu" :dataList="dataListEsports"  />
     </div>
@@ -120,7 +120,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   }
   // 设置滑动菜单的选中id
   const set_scroll_current = async (val,type) => {
-    if(MenuData.is_esports()){
+    if(MenuData.is_esports() && !type){
       const data_list_esports = await MenuData.getDateList(val?.csid);
       dataListEsports.value = data_list_esports;
       ref_data.current_mi = val.mi
@@ -292,13 +292,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       // 设置选中菜单的id
       ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
     }
-    // 刷新页面避免触发2次 set_origin_match_data
-    if (is_first.value && !is_kemp.value) {
-      is_first.value = false
-    } else {
-      set_menu_mi_change_get_api_data()
-    }
-    
+  
+    !type && set_menu_mi_change_get_api_data()
   }
 
   // 菜单变化页面请求数据
@@ -324,9 +319,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     }
     // 电竞
     if(MenuData.is_esports()){
-      const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
+      // const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
       // 初始进入会调多次接口
-      if (csid) MatchMeta.get_esports_match();
+      // if (csid) MatchMeta.get_esports_match();
       return;
     }
     

@@ -1,47 +1,57 @@
 <!--
- * @Description: app-h5 赛果
+ * @Description: app-h5 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
-  <div class="match-container component match-container-main-template7"
-    :style="{ marginTop: is_hot ? '0' : '' }" 
+  <div class="match-container component match-container-main-template1"
     :class="[{
-      first: i == 0,
-      match_status_bar: match.is_show_no_play,
-      is_league_tail: get_league_show(i + 1),
-      started_un_started_next: get_m_status_show(i + 1),
-      started_and_un_started: match.is_show_no_play,
-      favorite_un_start_title: favorite_un_start_title(i, match_of_list.ms),
-    }]">
+      jinri: MenuData.is_today(),
+      zaopan: MenuData.is_zaopan(),
+      gunqiu: MenuData.is_scroll_ball()
+    }]" 
+    :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
+      <!-- 开赛标题  -->
+      <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
+        :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
+        <!-- 进行中 -->
+        <template v-if="+match.start_flag === 1">
+          <div class="match-status-title">
+            <img :src="in_progress" /> <span class="din-regular">进行中</span>
+          </div>
+          <img :class="['expand_item', {collapsed: progress_seed_collapsed}]" :src="expand_item" alt="">
+        </template>
+        <!-- 未开赛 -->
+        <template  v-if="+match.start_flag === 2">
+          <div class="match-status-title">
+            <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
+          </div>
+          <img :class="['expand_item', {collapsed: not_begin_collapsed}]" :src="expand_item" alt="">
+        </template>
+      </div>
+      <!-- 全部 -->
+      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
+        <div> <img :src="icon_date" alt=""> <span>{{ title }}</span> </div>
+        <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt="">
+      </div>
+      <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
+      <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div>
+  
+
+
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
       <div :class="['match-inner-container', {'collapsed': !collapsed}]">
-         <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
-        <div class="buffer-container" v-if="match.is_show_league && i !== 0"></div>
         <!--联赛标题 -->
-        <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
-          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'no-border': !collapsed}]">
-          <div class="league-t-wrap right-border">
-            <span class="league-title-text row justify-between">
-              <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
-                <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
-                  {{ match.tn }}
-                </span>
-              </span>
-              <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': collapsed}]" />
-            </span>
-          </div>
-          
-        </div>
+ 
         <!-- 卡片主内容 -->
         <!-- <q-slide-transition> -->
-        <div style="width: 100%;" v-if="collapsed">
+        <div :class="['match-content', { 'collapsed': collapsed }, {'border-top': !match.is_show_league}]" v-if="collapsed">
           <!--标准版 赔率标题栏-->
           <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
             <div class="odd-title-i-w flex">
               <div class="odd-t-i-wrapper flex items-center"
-                :class="{ 'status2': get_standard_odd_status == 1 && match_of_list_ascertain.length > 3 }">
+                :class="{ 'status2': PageSourceData.standard_odd_status.value == 1 && match_of_list_ascertain.length > 3 }">
                 <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
-                  :key="i" v-for="(hpl_title, i) of i18n_t('match_results_title.' + match.csid + '.title')">
+                  :key="i" v-for="(hpl_title, i) of i18n_t('list_title.' + match.csid + '.title')">
                   <div class="hpl-t-inner">
                     {{ hpl_title }}
                   </div>
@@ -50,8 +60,7 @@
             </div>
           </div>
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
-            <!-- <div style="border-top: 1px solid #000; width: 96%;"></div>  ！-->
-          <div :class="['match-odds-container study_height_s hairline-border', {'border-top': !match.is_show_league}]">
+          <div :class="['match-odds-container study_height_s hairline-border']">
             <div class="match-odds-container-border-radius">
               <!-- 上边的 赛事日期标准版,包含 比分组件 -->
               <div class="date-container match-indent" v-if="!show_newer_edition && !is_results">
@@ -60,11 +69,18 @@
                   <div class="week-mcid row items-center" v-if="menu_type == 30">
                     <span class="din-regular"> {{ lodash.get(match,'mcid')}} </span>
                   </div>
+                  <!--赛事列表收藏-->
+                  <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
+                    <!-- 未收藏图标 compute_img_url('icon-favorite')-->
+                    <img v-if="!match_collect_state" :src="not_favorite_app" alt="">
+                    <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
+                    <img v-if='match_collect_state' :src="normal_img_is_favorite">
+                  </div>
                   <!-- 赛事日期标准版 -->
                   <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
-                    <!-- 赛事回合数mfo -->
-                    <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
+                    <!-- 赛事回合数mfo match.ms != 1(不为开赛)-->
+                    <div v-if="match.mfo && match.ms != 1" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
                       {{ match.mfo }}
                     </div>
 
@@ -82,7 +98,7 @@
                       <CountingDownStart :match="match" :index="i" :mgt_time="match.mgt"></CountingDownStart>
                     </div>
                     <!--倒计时或正计时-->
-                    <div v-if="match.ms != 110 && show_counting_down(match)" 
+                    <div v-if="match.ms != 110 && show_counting_down(match)"
                       :class="['counting-down-up-container relative-position', { 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }]">
                       <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
                       <CountingDownSecond ref="counting-down-second" :title="mmp_map_title" :mmp="match.mmp"
@@ -91,16 +107,28 @@
                       </CountingDownSecond>
                     </div>
                   </div>
-                  <!-- mng 是否中立场   1:是中立场，0:非中立场-->
-                  <div class="live-i-b-wrap v-mode-span row items-center"
-                    v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
-                    <img class="neutral-icon-btn l-bottom" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/m-list-neutral.svg`" />
+
+                  <!-- 电竞串关标识 -->
+                  <div v-if="is_esports && match.ispo" class="flag-chuan"
+                    :class="{ 'special-lang': ['zh', 'tw'].includes(lang) }">{{ i18n_t('match_info.match_parlay') }}
+                  </div>
+                </div>
+                <!--玩法数量-->
+                <div class="right-score">
+                  <div class="goto-detail" @click='goto_details(match)'>
+                    <span class="count_span" :class="{ esports: is_esports }">
+                      <span class="mc-n">
+                        {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}+
+                      </span>
+                      <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">
+                        <IconWapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
+                      </span>
+                    </span>
                   </div>
                 </div>
               </div>
               <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
               <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_results }">
-                <span class="odd-list-time">{{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} </span>
                 <div class="odd-list-inner odd" :class="{ 'n-s-edition': !show_newer_edition, result: is_results }">
                   <!--赛果-->
                   <div v-if="is_results && match.tonum && menu_lv2.mi == 29" class="triangle-wrapper flex items-center justify-center">
@@ -112,64 +140,131 @@
                     <div class='team-title-container' :class="{
                       simple: show_newer_edition && !is_results,
                       standard: !show_newer_edition && !is_results,
-                      result: is_results
+                      result: is_results,
+                      column2: ![1,4,16].includes(+match.csid)
                     }">
                       <div class="team-title-inner-con">
                         <div class='team-t-title-w' :class="{
                           'is-handicap': match.handicap_index == 1,
                           'is-handicap-1': match.handicap_index == 2,
+                          'goal-style': is_show_home_goal && is_new_init2 && (!is_show_away_goal)
                         }">
-                          {{ match.mhn }}
+                          <span>{{ match.mhn }}</span>
+
+                        </div>
+                        <!--发球方绿点-->
+                        <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                          v-show="set_serving_side(match_of_list, 'home')">
+                        </span>
+                        <template v-if="home_red_score || home_yellow_score">
+                          <!-- 红牌 -->
+                          <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
+                            {{ home_red_score }}
+                          </span>
+                          <!-- 黄牌 -->
+                          <!-- <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
+                            {{ home_yellow_score }}
+                          </span> -->
+                        </template>
+                        <!-- 进球动画 -->
+                        <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
+                          <div class="yb-goal-gif" :class="{ 'yb-goal-yo': (theme || []).includes('y0') }"></div>
+                          <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                         </div>
                       </div>
+                      <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
+                      <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
+                        :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
+                        {{ home_score }}
+                      </div>
+
                     </div>
                     <!--客队图片和名称-->
                     <div class='team-title-container' :class="{
                       simple: show_newer_edition,
                       standard: !show_newer_edition && !is_results,
-                      result: is_results
+                      result: is_results,
+                      column2: ![1,4,16].includes(+match.csid)
                     }">
                       <div class="team-title-inner-con">
                         <div class='team-t-title-w' :class="{
                           'is-handicap': match.handicap_index == 2,
                           'is-handicap-1': match.handicap_index == 1,
+                          'goal-style': is_show_away_goal && is_new_init2 && (!is_show_home_goal),
                         }">
-                          {{ match.man }}
+                          <span>{{ match.man }}</span>
                         </div>
+                        <!--发球方绿点-->
+                        <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                          v-show="set_serving_side(match_of_list, 'away')">
+                        </span>
+                        <template v-if="home_red_score || home_yellow_score">
+                          <!-- 红牌 -->
+                          <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
+                            {{ away_red_score }}
+                          </span>
+                          <!-- 黄牌 -->
+                          <!-- <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
+                            {{ away_yellow_score }}
+                          </span> -->
+                        </template>
+                        <!-- 进球动画 -->
+                        <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
+                          <!-- 进球图标 -->
+                          <div class="yb-goal-gif yb-goal-yo"></div>
+                          <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
+                        </div>
+                      </div>
+                    <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
+                    <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
+                      :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
+                      {{ away_score }}
+                    </div>
+
                   </div>
+                  <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
+                  <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
+                    v-show="footer_menu_id != 114">
+                    <div class="r row no-wrap">
+                      <div class="go-container-w flex no-wrap new-standard">
+                        <!-- 直播 主播 视频 动画  icon 栏目   -->
+                        <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
+                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.animationUrl }]" :src='animation_icon' />
+                        </div>
+                        <!-- 视频 -->
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
+                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.muUrl }]" :src='video_icon' />
+                        </div>
+                        <!-- mng 是否中立场   1:是中立场，0:非中立场-->
+                        <div class="live-i-b-wrap v-mode-span row items-center"
+                          v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
+                          <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
+                        </div>
+                        <!-- 角球 -->
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle" v-if="match.csid == 1 && get_corner_kick">
+                          <img :class="['live-icon-btn']" :src='corner_icon' />
+                        </div>
+                        <!-- 此赛事支持提前结算 -->
+                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
+                          <img :src="mearlys_icon_app" alt="">
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <!-- 右边盘口组件 -->
-                <!-- <odd-list-wrap :main_source="main_source" :match="match_of_list" /> -->
-                <!-- 右边赛果结构 -->
-                <template v-if="matchResultsData.length">
-                  <div @click='goto_details(match)' class="default-match-results-right">
-                    <div class="dmrr-list" v-for="(item, index) in matchResultsData" :key="'dmrr'+index">
-                      <div class="dmrr-item">
-                        <span>{{item.home}}</span>
-                      </div>
-                      <div class="dmrr-item">
-                        <span>{{item.away}}</span>
-                      </div>
-                    </div>
-                  </div>
-                </template>
-                <template v-else>
-                  <div class="default-match-results-right">
-                    <div class="dmrr-list" v-for="(item, index) in 3" :key="'dmrr'+index">
-                      <div class="dmrr-item">
-                        <span>-</span>
-                      </div>
-                      <div class="dmrr-item">
-                        <span>-</span>
-                      </div>
-                    </div>
-                  </div>
-                </template>
-                  
-
+                <!--  -->
+                <div class="right-content-style">
+                  <!-- 右边盘口组件 -->
+                  <OddListWrap :main_source="main_source" :match="match_of_list" />
+                </div>
                 </div>
               </div>
+              <template v-if="match.csid != 1">
+                <div class="score-content">
+                  <ScoreList :main_source="main_source" :match="match_of_list" />
+                </div>
+              </template>
             </div>
           </div>
         </div>
@@ -182,29 +277,25 @@
   
 <script>
 
-import { ref, computed, onMounted } from 'vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from  "src/output/index.js"
-
+import { ref, computed, watch, nextTick } from 'vue'
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
-import ScoreList from 'src/base-h5/components/match-list/components/score-list.vue';
-import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
+import ScoreList from 'src/base-h5/components/match-container/template/app/components/score-list.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-
-import { i18n_t, compute_img_url, compute_css_obj  } from "src/output/index.js"
-import { format_time_zone } from "src/output/index.js"
-import { mearlys_icon, in_progress, not_begin, normal_img_not_favorite_white, normal_img_is_favorite } from 'src/base-h5/core/utils/local-image.js'
+import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
+import { i18n_t,format_M_D, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData, format_time_zone } from "src/output/index.js"
+import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
+  normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { format_msc, foot_ball_score_handle } from "src/output/index.js"
-import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id, is_zaopan } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 
 export default {
-  name: "match-container-main-template7",
+  name: "match-container-main-template1",
   mixins: [default_mixin],
   props: {
     // 当前组件的赛事数据对应列表的赛事
@@ -223,43 +314,21 @@ export default {
     CountingDownStart,
     CountingDownSecond,
   },
-  data () {
-    return {
-      matchResultsLength: 3,
-      matchResultsData:[]
-    }
-  },
-  mounted() {
-    if (this.match_of_list.mmp === '999') this.filterScoreHandle(foot_ball_score_handle(this.match_of_list))
-  },
-  methods: {
-    needMatchResultsRowNumber(val) {
-      const width = 60
-      return (width) / 100 + 'rem'
-    },
-    filterScoreHandle (list) {
-      const result = list.filter(i => ['S1','S2','S3'].includes(i[0])).map(i => ({
-        round: i[0],
-        home: i[1],
-        away: i[2]
-      })).sort((a,b) => {
-        const numa = parseInt(a.round.slice(1))
-        const numb = parseInt(b.round.slice(1))
-        return numa - numb
-      })
-      this.matchResultsData = result
-    }
-  },
+  
   setup (ctx) {
     // 是否显示球种标题
     const show_sport_title = computed(() => {
-      return [1,2].includes(+ctx.match_of_list.start_flag)
+      const { is_show_ball_title } = ctx.match_of_list
+      return is_show_ball_title
     })
-
-    return { 
-      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
-      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, mearlys_icon, compute_css_obj, show_sport_title,
-      normal_img_not_favorite_white, normal_img_is_favorite
+    const title=computed(()=>{
+      //早盘日期 显示的是日期  全部是全部
+      return is_zaopan.value&&lodash.isNumber(MenuData.current_lv_3_menu.field1)?format_M_D(MenuData.current_lv_3_menu.field1):i18n_t("filter.all_leagues")
+    })
+    return { title,
+      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin, MenuData,
+      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,icon_date,
+      normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan, expand_item
     }
   }
 }
@@ -267,9 +336,6 @@ export default {
 </script>
    
 <style scoped lang="scss">
-.match-container-main-template7{
-  // border-top: 0.05rem solid var(--q-gb-bg-c-21)
-}
 /* ********赛事容器相关********** -S*/
 .play-icon {
   background-image: var(--q-color-img-bg-103);
@@ -282,28 +348,69 @@ export default {
 .auto-full-width-100 {
   width: 100%;
 }
+.match-status-title {
+  display: flex;
+  align-items: center;
+}
+.all-league-title{
+  display: flex;
+  height: 30px;
+  background: var(--q-gb-bg-c-15);
+  padding: 0 10px;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 2px solid var(--q-gb-bd-c-3);
+  > div {
+    display: flex;
+    align-items: center;
+    > span {
+      padding-left: 5px;
+      color:var(--q-gb-t-c-18);
+    }
+  }
+  .expand_item{
+    width: 18px;
+    height: 16px;
+    transition: transform 0.25s ease;
+    transform: rotate(-180deg);
+  }
+  .ball_seed_collapsed{
+    transform: rotate(0);
+  }
+  .all_ball_seed_collapsed {
+    transform: rotate(0);
+  }
+}
 
 .match-container {
   width: 100%;
   height: auto;
   position: relative;
+  &.border_top{
+    border-top: 1px solid rgba(175, 179, 200, 0.1);
+  }
+  &.is_zaopan{
+    .progress{
+      border-color: #FEBE55;
+    }
+  }
 
   .match-status-fixed {
     width: 100%;
     height: 0.25rem;
     line-height: 1;
     font-size: 0.11rem;
-    padding-left: 0.20rem;
+    padding-left: 0.17rem;
     display: flex;
     align-items: center;
-    color: var(--q-color-com-fs-color-38);
-    background: var(--q-gb-bg-c-15);
+    color: var(--q-gb-t-c-18);
+    background: var(--q-gb-bg-c-25);
+    justify-content: space-between;
     &.progress{
-      border-top: 2px solid rgba(116, 196, 255, 0.5);
+      border-top: 2px solid var(--q-gb-bd-c-1);
     }
     &.not_begin{
-      border-top: 2px solid rgba(233, 91, 91, 0.51);
-      
+      border-top: 2px solid var(--q-gb-bd-c-13);
     }
 
     img {
@@ -311,26 +418,33 @@ export default {
       width: .13rem;
       height: .13rem;
     }
+    .expand_item{
+      transition: transform 0.25s ease;
+      transform: rotate(-180deg);
+      width: 20px;
+      height: 16px;
+    }
+    .collapsed{
+      transform: rotate(0);
+    }
   }
 
   .v-mode-span {
     margin-right: 0.1rem;
   }
-
+  .buffer-container{
+    background: var(--q-gb-bg-c-17);
+    height: 5px;
+  }
   .match-inner-container {
+    padding: 0 0.05rem;
     margin: 0 auto;
     /* 兼容iPhone11边框显示不全 */
     //width: 100%;
     display: flex;
-    padding: 0 0.05rem;
     flex-direction: column;
     align-items: center;
-    background: var(--q-gb-bg-c-18) !important;
-    .buffer-container{
-      background: var(--q-gb-bg-c-18);
-      height: 5px;
-      width: 100%;
-    }
+    // background: var(--q-gb-bg-c-15);
 
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
     &.show-sport {
@@ -338,17 +452,34 @@ export default {
       border-top-right-radius: 0.08rem;
     }
     .match-content{
-      background: var(--q-gb-bg-c-15);
-      padding: 0 0.1rem;
+      width: 100%;
+      padding: 0 10px;
+      border-top: 1px solid  var(--q-gb-bd-c-4);
+      background: var(--q-gb-bg-c-18);
+      border-radius: 0 0 8px 8px;
+      border: 1px solid var(--q-gb-bd-c-15);
+      &.collapsed{
+        border-top: none;
+      }
+      &.border-top{
+        border-top: 1px solid  var(--q-gb-bd-c-4);
+      }
+    }
+    > .match-indent{
+      border: 1px solid var(--q-gb-bd-c-15);
+      border-radius: 8px 8px 0 0;
+      border-bottom: 1px solid  var(--q-gb-bd-c-4) !important;
+      &.collapsed{
+        border-radius: 8px;
+        border-bottom: 1px solid var(--q-gb-bd-c-15) !important;
+        border: 1px solid var(--q-gb-bd-c-15);
+      }
     }
   }
 
   &.started_and_un_started {
     display: block;
-
-    &.match_status_bar {
-      /*margin-top: 0.07rem;*/
-    }
+  
   }
 
   &.show_un_started {
@@ -364,7 +495,7 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    // background: var(--q-match-page-bg-color-10);
+    // background: var(--q-gb-bg-c-18);
 
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -384,8 +515,8 @@ export default {
   &.is_league_tail {
     .match-inner-container {
       box-shadow: var(--q-color-box-shadow-color-4);
-      // border-bottom-left-radius: 0.08rem;
-      // border-bottom-right-radius: 0.08rem;
+      border-bottom-left-radius: 0.08rem;
+      border-bottom-right-radius: 0.08rem;
       //overflow: hidden;
     }
   }
@@ -402,9 +533,6 @@ export default {
 
     .no-radius {
       border-radius: unset;
-    }
-    .no-border{
-      border: none !important;
     }
 
     .odd-list-inner.odd {
@@ -427,18 +555,10 @@ export default {
     margin-top: 0 !important;
   }
 
-  &.match_status_bar {
-    .league {
-
-      //overflow: hidden;
-      margin-top: 0.08rem;
-    }
-  }
-
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: var(--q-gb-bg-c-17) !important;
+    // background: var(--q-gb-bg-c-17);
     &.bottom{
       margin-top: 0.05rem;
     }
@@ -475,8 +595,8 @@ export default {
     height: 20px;
     border-radius: 0;
     font-size: 12px;
-    padding: 0 5px 0 20px;
-    background: rgba(175, 179, 200, 0.1);
+    padding: 0 5px 0 17px;
+    background: var(--q-gb-bg-c-21);
     line-height: 20px;
     font-size: 11px;
     .league-collapse-dir{
@@ -621,7 +741,7 @@ export default {
       display: flex;
       align-items: center;
       flex-wrap: nowrap;
-      padding-left: 0.08rem;
+      //padding-left: 0.08rem;
       .esport {
         margin: 0.01rem 0.07rem 0 0rem;
         position: relative;
@@ -646,8 +766,7 @@ export default {
         width: 0.02rem;
         background-color:var(--q-gb-bg-c-13);
         border-radius: 10px;
-
-
+        width: 200px; 
       }
       .league-collapse-dir {
         width: 0.12rem;
@@ -660,10 +779,10 @@ export default {
         }
       }
       .favorited-icon{
-        height: 100%;
-        margin: 0 10px 0 12px;
+        width: 14px;
+        height: 14px;
+        margin: 0 10px 0 11px;
         position: relative;
-        top: 1px;
         flex-shrink: 0;
         > img {
           width: 0.14rem;
@@ -693,14 +812,13 @@ export default {
     flex-wrap: nowrap;
     display: flex;
     font-size: 0.1rem;
-    color: #303442;
+    color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
-    background: var(--q-gb-bg-c-17);
-    border-top: 1px solid var(--q-gb-bd-c-4);
+    // background: var(--q-gb-bg-c-18);
     border-bottom: 1px solid var(--q-gb-bd-c-4);
 
     .odd-title-i-w {
-      width: 50%;
+      width: 1.84rem;
       overflow: hidden;
 
       .odd-t-i-wrapper {
@@ -727,8 +845,7 @@ export default {
       line-height: 1;
       margin-left: 0.01rem;
       font-size: 0.1rem;
-      color: var(--q-color-com-fs-color-1);
-      flex-shrink: 0;
+       flex-shrink: 0;
 
       &.boxing {
         width: 0.95rem;
@@ -769,7 +886,7 @@ export default {
     flex-wrap: nowrap;
     align-items: center;
     overflow: hidden;
-    color: var(--q-gb-bg-c-3) !important;
+    font-weight: 600;
     .icon-wapper{
       transform: rotate(90deg);
     }
@@ -784,21 +901,17 @@ export default {
       font-size: .12rem;
       &.export {
         min-width: 1.1rem;
+        margin-left: 0.1rem;
       }
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
-      max-width: 2.8rem;
+      color: var(--q-gb-t-c-18);
       line-height: 0.14rem;
       &.match-main-league {
         //max-width: 1.4rem;
       }
     }
-
-
-    color: var(--q-color-com-fs-color-26);
-
-    font-weight: 600;
   }
 
   .match-type {
@@ -825,12 +938,11 @@ export default {
   background-color: var(--q-color-com-bg-color-12);
   height: auto;
   position: relative;
-  min-height: 1.11rem;
+  height: 1.12rem;
+  z-index: 100;
 
-  .odd-list-time {
-    display: block;
-    color: var(--q-gb-t-c-4);
-    padding: 0.12rem 2% 0 2%;
+  .right-content-style {
+    position: relative;
   }
 
   &.simple,
@@ -847,12 +959,11 @@ export default {
   .odd-list-inner {
     height: 0.2rem;
     width: 100%;
-    padding: 0.1rem 2% 0 2%;
     display: flex;
     justify-content: space-between;
     position: relative;
     overflow: hidden;
-    color: var(--q-gb-t-c-18);
+    padding-left: 2px;
 
     .triangle-wrapper {
       width: 0.24rem;
@@ -897,12 +1008,13 @@ export default {
       display: flex;
       align-items: center;
       font-size: 0.1rem;
+      
     }
 
     .team-wrapper {
       min-height: 100%;
       height: auto;
-      width: 1.61rem;
+      width: 1.72rem;
       position: relative;
       z-index: 1;
 
@@ -917,9 +1029,8 @@ export default {
       }
 
       .score-wrapper {
-        margin-top: 0.04rem;
         position: absolute;
-        bottom: 0;
+        bottom: 2px;
 
         .score-section {
           padding-left: 0;
@@ -927,6 +1038,9 @@ export default {
         }
 
         .go-container-w {
+          .disabled{
+            filter: grayscale(100%);
+          }
           .goto-detail {
             display: flex;
             height: auto;
@@ -955,8 +1069,8 @@ export default {
               margin-right: 0.05rem;
 
               img {
-                height: 0.14rem;
-                width: 0.18rem;
+                height: 0.16rem;
+                width: 0.16rem;
               }
 
               .live-icon-btn {
@@ -997,11 +1111,20 @@ export default {
       }
 
       .team-title-container {
-        height: 0.31rem;
+        height: 0.32rem;
         display: flex;
         justify-content: space-between;
         position: relative;
-
+        text-overflow:ellipsis;
+        white-space: wrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        word-break: break-all;
+        &.column2{
+          height: 0.35rem;
+        }
         &.simple {
           width: 1.72rem;
 
@@ -1021,11 +1144,19 @@ export default {
         }
 
         .team-title-inner-con {
-          width: 1.31rem;
+          width: 1.19rem;
           position: relative;
           line-height: 0.14rem;
           display: flex;
           align-items: center;
+          color: var(--q-gb-t-c-18);
+          .yb-flex-center{
+            padding-left: 2px;
+            .yb-goal-gif{
+              background-image: url($SCSSPROJECTPATH+"/image/common/goal_gif.png");
+            }
+          }
+          
 
           /*图标*/
           .team-icon {
@@ -1067,13 +1198,22 @@ export default {
           }
 
           .team-t-title-w {
+            overflow: hidden;
+            display: -webkit-box;
             font-size: 0.12rem;
-            // height: 0.3rem;
+            flex-shrink: 0;
+            max-width: 100%;
             -webkit-line-clamp: 2;
-            display: flex;
-            flex-direction: column-reverse;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            color: var(--q-gb-t-c-18);
+
             &.is-handicap {
-              font-weight: bold;
+              color: #74C4FF !important;
+            }
+            &.goal-style{
+              max-width: 90px;
             }
           }
         }
@@ -1081,18 +1221,20 @@ export default {
         .score-punish {
           width: 0.12rem;
           height: 0.14rem;
-          color: var(--q-gb-t-c-18);
           flex-shrink: 0;
-          background: var(--q-color-com-bg-color-43);
-          display: flex;
+          display: inline-flex;
           justify-content: center;
           align-items: center;
           font-size: 0.1rem;
           border-radius: 0.02rem;
           margin-left: 0.04rem;
+          color: var(--q-gb-t-c-14);
 
           &.yellow {
-            background: var(--q-color-com-bg-color-23);
+            background: #FFA800;
+          }
+          &.red{
+            background: #f00;
           }
 
           &.flash {
@@ -1101,13 +1243,20 @@ export default {
         }
 
         .serving-party {
-          display: block;
+        //   display: block;
+        //   width: 4px;
+        //   height: 4px;
+        //   border-radius: 50%;
+        //   background: var(--sys-feedback-success-success-400, #4AB06A);
+        //   flex-shrink: 0;
+        //   position: absolute;
+        //   left: 1.25rem;
+        //   top: 0.16rem;
+          border-radius: 2px;
+          background: var(--sys-feedback-success-success-400, #4AB06A);
           width: 4px;
           height: 4px;
-          border-radius: 50%;
-          background: var(--q-color-page-bg-color-59);
-          flex-shrink: 0;
-          margin: 0.13rem 0.05rem 0;
+          margin-left: 4px;
 
           &.simple {
             margin-right: 0.03rem;
@@ -1120,8 +1269,9 @@ export default {
           display: flex;
           align-items: center;
           position: absolute;
-          right: 0.12rem;
-          top: 0;
+          right: 0.07rem;
+          bottom: 0;
+          font-weight: 600;
 
           &.simple {
             right: 0.08rem;
@@ -1201,15 +1351,33 @@ export default {
     }
   }
 }
+.score-content{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  :deep(.score-se-inner2){
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  :deep(.scroll-container-w){
+  .score-se-inner{
+      max-width: 100%;
+      .score-se-inner2{
+        display: flex;
+        margin-left: -5px;
+      }
+    }
+  }
+}
 
 /* **************收藏********************** -E*/
 
 /* **************日期********************** -S*/
 .date-container {
-  background-color: var(--q-color-com-bg-color-12);
+  background-color: var(--q-color-com-bg-color-12);  
   width: 100%;
-  color: #999;
-  padding-left: 6px;
+  color: var(--q-gb-t-c-19);
+  padding-left: 1px;
   height: 0.2rem;
   display: flex;
   align-items: center;
@@ -1217,6 +1385,13 @@ export default {
   font-size: 0.1rem;
   align-items: center;
   justify-content: space-between;
+
+  .right-score{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
   &.simple {
     height: 0.34rem;
@@ -1253,6 +1428,7 @@ export default {
     white-space: nowrap;
     height: 100%;
     flex-wrap: nowrap;
+
   }
 
   .go-container-w {
@@ -1292,17 +1468,21 @@ export default {
     }
 
     .goto-detail {
+      width: 30px;
       .count_span {
         .mc-n {
           width: 0.14rem;
         }
       }
     }
+   
   }
 
   .timer-wrapper-c {
+    position: relative;
+    top: 0px;
     height: 100%;
-    color: #999;
+    color: var(--q-gb-t-c-19);
 
     &.newer {
       margin-left: 0;
@@ -1310,6 +1490,11 @@ export default {
 
     &>div {
       height: auto;
+    }
+    .date-time{
+      position: relative;
+      top: 1px;
+      font-size: 12px
     }
   }
 
@@ -1320,7 +1505,6 @@ export default {
     flex-shrink: 0;
     margin-right: .07rem;
     position: relative;
-    top: 1px;
 
     img {
       width: 100%;
@@ -1363,16 +1547,23 @@ export default {
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    font-size: 0.1rem;
 
     .favorite-icon {
       position: relative;
-      top: -.01rem;
     }
 
     .date-time {
       white-space: nowrap;
       color: var(--q-color-com-fs-color-37);
+    }
+    .coming-soon{
+      font-size: 11px;
+    }
+
+    :deep(.start-counting-down){
+      .counting-down-start{
+        font-size: 11px;
+      }
     }
 
     .counting-down-up-container {
@@ -1389,6 +1580,18 @@ export default {
 
       .match-type {
         margin-right: 0.14rem;
+      }
+      
+      :deep(.counting-down-wrap){
+        color: #AFB3C8 !important;
+        width: 150px !important;
+        .counting{
+          font-size: 11px;
+          color: var(--q-gb-t-c-19);
+        }
+        .special{
+          font-size: 12px;
+        }
       }
     }
 
@@ -1432,7 +1635,6 @@ export default {
     height: 0.16rem;
     line-height: .16rem;
     border-radius: .03rem;
-
     &.special-lang {
       margin-left: .06rem;
     }
@@ -1448,38 +1650,5 @@ export default {
 /* **************日期********************** -E*/
 
 /* ********赛事容器相关********** -E*/
-
-
-/* ********右边赛果相关样式********** -S*/
-
-.default-match-results-right {
-  display: flex;
-  justify-content: end;
-  .dmrr-list {
-    display: flex;
-    flex-wrap: wrap;
-    flex: 0 0;
-    margin-right: 0.02rem;
-    // width: 1.84rem;
-    .dmrr-item {
-      // flex: 0 0 calc(33.33% - .02rem);
-      width: .6rem;
-      height: .32rem;
-      background: var(--q-gb-bg-c-28) !important;
-      border-radius: .04rem;
-      margin-bottom: .02rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: .12rem;
-      .dmrr-item-fail {
-        color: var(--q-match-fs-color-13);
-      }
-    }
-  }
-}
-
-
-/* ********右边赛果相关样式********** -E*/
 </style>
   

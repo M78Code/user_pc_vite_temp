@@ -4,7 +4,7 @@
 -->
 <template>
   <div class="setting-filter">
-    <div class="setting-top setting-item">
+    <div class="setting-top setting-item" v-if="!MenuData.is_collect()">
       <div class="title">
     <!-- 联赛筛选 -->
          {{ i18n_t('footer_menu.league_filter') }}
@@ -15,7 +15,7 @@
       </div>
       <div>
       </div>
-      <div v-if="!is_vr" class="more row items-center justify-between"  @click="searchClick">
+      <div v-if="!MenuData.is_vr()" class="more row items-center justify-between"  @click="searchClick">
        <img
             class="league-icon"
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league_icon.svg`"
@@ -55,7 +55,6 @@
         </div>
       </div>
       <div class="setting-item border" @click="jump_rule">
-        {{get_lang}}
       <!-- 体育规则 -->
         <div class="title">{{ i18n_t('common.rule_description') }}</div>
         <div class="more">
@@ -250,7 +249,7 @@ const sort_handle = item => {
  *@return {Undefined} undefined
  */
 const Handicap_handle = item => {
-  const status = item.switchValue === "rightVal" ? "EU" : "HK";
+  const status = item.switchValue === "rightVal" ? "HK" : "EU";
   UserCtr.set_cur_odds(status);
 };
 /**

@@ -1189,6 +1189,7 @@
       "437": "Babak 9 2H",
       "438": "Tunggu ET",
       "999": "Selesai",
+      "999_app_h5": "Selesai",
       "41910": "Babak 10 1H",
       "41911": "Babak 11 1H",
       "41912": "Babak 12 1H",
@@ -2241,7 +2242,12 @@
       "corner": "Sudut ke-{X}",
       "red_card": "Kartu Merah ke-{X}",
       "yellow_card": "Kartu Kuning ke-{X}",
-      "yellow_red_card": "Kartu Kuning Merah ke-{X}"
+      "yellow_red_card": "Kartu Kuning Merah ke-{X}",
+      "new_gloal": "Gol{X}",
+      "new_corner": "Sudut{X}",
+      "new_red_card": "Kartu Merah{X}",
+      "new_yellow_card": "Kartu Kuning{X}",
+      "new_yellow_red_card": "Kartu Kuning Merah{X}"
     },
     "back_live": "Balik Livestream"
   },
