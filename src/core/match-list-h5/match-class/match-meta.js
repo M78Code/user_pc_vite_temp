@@ -39,6 +39,8 @@ class MatchMeta {
     this.complete_mids = []
     // 赛事全量数据
     this.complete_matchs = []
+    // 列表渲染数据
+    this.current_matchs = []
     // 上一次滚动得距离
     this.prev_scroll = 0
     // 其他仓库的全量赛事
@@ -1016,6 +1018,7 @@ class MatchMeta {
     const custom_match_mids = target_list.map(t => t.mid)
 
     this.complete_matchs = target_list
+    this.current_matchs = target_list
     this.complete_mids = lodash.uniq(custom_match_mids)
     this.match_mids = lodash.uniq(custom_match_mids)
     
@@ -1104,6 +1107,7 @@ class MatchMeta {
       this.other_complete_mids = result_mids
     } else {
       this.complete_matchs = matchs_data
+      this.current_matchs = matchs_data
       this.complete_mids = result_mids
     }
 
@@ -1161,6 +1165,7 @@ class MatchMeta {
         is_show_ball_title
       }
     })
+    this.current_matchs = this.complete_matchs
 
     const length = lodash.get(this.complete_matchs, 'length', 0)
     this.set_page_match_empty_status({ state: length > 0 ? false : true });
@@ -1205,6 +1210,25 @@ class MatchMeta {
     // 获取赔率
     if (type === 1) return this.handle_submit_warehouse({ list: match_datas, warehouse, is_again })
   
+  }
+
+  /**
+   * @description 计算当前赛事数据
+   */
+  compute_current_matchs () {
+    const complete_matchs = lodash.get(this, 'complete_matchs', [])
+    // 折叠对象
+    const fold_data = MatchFold.match_mid_fold_obj.value
+    this.current_matchs = []
+    complete_matchs.forEach((match) => {
+      const { mid, is_show_league } = match
+      if (!mid) return
+      // 赛事折叠信息
+      const fold_key = MatchFold.get_match_fold_key(match)
+      // 赛事是否显示
+      const show_card = lodash.get(fold_data[fold_key], `show_card`)
+      if (is_show_league || show_card) this.current_matchs.push(match)
+    })
   }
 
   /**
@@ -1420,6 +1444,12 @@ class MatchMeta {
           if (item) {
             const index = lodash.findIndex(this.complete_matchs, (match) => match.mid === t.mid)
             if (index > -1) this.complete_matchs[index] = Object.assign({}, item, t)
+          }
+          // TODO: 测试代码， 先别动
+          const c_item = lodash.find(this.current_matchs, (match) => match.mid === t.mid)
+          if (c_item) {
+            const c_index = lodash.findIndex(this.current_matchs, (match) => match.mid === t.mid)
+            if (c_index > -1) this.current_matchs[c_index] = Object.assign({}, c_item, t)
           }
         })
         // 设置仓库渲染数据

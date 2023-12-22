@@ -391,6 +391,8 @@ export default defineComponent({
      */
     handle_all_ball_seed_fold () {
       MatchFold.handler_fold_all_matchs_csid()
+      // app-h5 简版 先试运行看效果
+      if (project_name === 'app-h5' && standard_edition.value == 1) MatchMeta.compute_current_matchs()
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
     },
 
@@ -402,6 +404,8 @@ export default defineComponent({
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
       // 不需要虚拟计算，欧洲版五大联赛
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
+      // app-h5 简版 先试运行看效果
+      if (project_name === 'app-h5' && standard_edition.value == 1) MatchMeta.compute_current_matchs()
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
       // 赛事个数小于18 不需要继续获取赔率
       if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
@@ -416,6 +420,8 @@ export default defineComponent({
       MatchFold.set_league_fold(this.match_of_list, start_flag)
       // 不需要虚拟计算，欧洲版五大联赛
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
+      // app-h5 简版 先试运行看效果
+      if (project_name === 'app-h5' && standard_edition.value == 1) MatchMeta.compute_current_matchs()
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false})
       // 赛事个数小于18 不需要继续获取赔率
       if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
