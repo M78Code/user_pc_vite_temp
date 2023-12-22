@@ -30,7 +30,7 @@
       </div>
       <!-- 全部 -->
       <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
-        <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
+        <div> <img :src="icon_date" alt=""> <span>{{ title }}</span> </div>
         <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
@@ -267,13 +267,13 @@
                           v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
                           <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
                         </div>
-                        <!-- 此赛事支持提前结算 -->
-                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
-                          <img :src="mearlys_icon_app" alt="">
-                        </div>
                         <!-- 角球 -->
                         <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle" v-if="match.csid == 1 && get_corner_kick">
                           <img :class="['live-icon-btn']" :src='corner_icon' />
+                        </div>
+                        <!-- 此赛事支持提前结算 -->
+                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
+                          <img :src="mearlys_icon_app" alt="">
                         </div>
                       </div>
                     </div>
@@ -311,7 +311,7 @@ import ScoreList from 'src/base-h5/components/match-container/template/app/compo
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
-import { i18n_t, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData, format_time_zone } from "src/output/index.js"
+import { i18n_t,format_M_D, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData, format_time_zone } from "src/output/index.js"
 import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
@@ -340,13 +340,18 @@ export default {
     CountingDownStart,
     CountingDownSecond,
   },
+  
   setup (ctx) {
     // 是否显示球种标题
     const show_sport_title = computed(() => {
       const { is_show_ball_title } = ctx.match_of_list
       return is_show_ball_title
     })
-    return { 
+    const title=computed(()=>{
+      //早盘日期 显示的是日期  全部是全部
+      return is_zaopan.value&&lodash.isNumber(MenuData.current_lv_3_menu.field1)?format_M_D(MenuData.current_lv_3_menu.field1):i18n_t("filter.all_leagues")
+    })
+    return { title,
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin, MenuData,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,icon_date,
       normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan, expand_item

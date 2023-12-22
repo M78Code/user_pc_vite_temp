@@ -77,11 +77,12 @@
         </div>
       </div>
       <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
+       <div v-if="match_item_batch.remaining_time > 0">
         <div class="tab-title tab-border" @click.stop="expend_match(match_item_batch)">
           <div class="league-name right-border">{{ lengue_name }}</div>
           <div class="status">
             <span class="num">{{ match_item_batch.no }}</span>
-            <!-- <span class="state">比赛中</span> -->
+            <span class="state">{{ match_item_batch.timer_format }}</span>
             <icon-wapper class="icon" :class="[!match_item_batch.is_expend && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
           </div>
         </div>
@@ -135,6 +136,7 @@
               <ranking-list-start v-else :mid="current_match.mid"/>
             </div>
         </template>
+       </div>
       </div>
       <template v-if="!no_virtual_match">
         <!--赛事轮|期菜单-->
@@ -187,6 +189,7 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+
 export default {
   mixins:[common,virtual_sports_mixin],
   props:{
@@ -252,7 +255,9 @@ export default {
       standard_edition,
       LOCAL_PROJECT_FILE_PREFIX,
       // 是否全部折叠
-      is_expend_all: true
+      is_expend_all: true,
+      // 存储定时器id的映射
+      interval_ids: new Map()
     }
   },
   created() {
@@ -518,7 +523,7 @@ export default {
       item.is_expend = !item.is_expend;
       // 足蓝展开列表时，数据仓库增加list
       if([1001,1004].includes(this.sub_menu_type)){
-        item.is_expend && this.sub_nav_click_handle(item.batchNo);
+        // item.is_expend && this.sub_nav_click_handle(item.batchNo);
       }else {
         item.is_expend && this.get_detail_odds(item);
       }
@@ -577,6 +582,41 @@ export default {
         }
       }
     },
+    /**
+     * 处理开赛时间
+     */
+    handle_match_time(batch){
+      const match = batch.matchs[0];
+      if(match){
+        let remaining_time = Number(match.mgt) - ServerTime.get_remote_time();
+        //毫秒格式化为: 分钟'秒''
+        let minutes = Math.floor(remaining_time / (1000 * 60));
+        let sub_ms_r = remaining_time - minutes * 60 * 1000;
+        let seconds_f = Math.floor(sub_ms_r / 1000);
+        minutes = String(minutes);
+        seconds_f = String(seconds_f);
+
+        let minutes_format = minutes.padStart(2, '0');
+        let seconds_f_format = seconds_f.padStart(2, '0');
+        batch.remaining_time = remaining_time;
+        batch.timer_format = `${minutes_format}'${seconds_f_format}"`;
+      }
+    },
+    /**
+     * 开赛时间定时器控制
+     */
+     set_batch_timer(batch){
+      if(this.interval_ids.has(batch.batchNo)){
+        clearInterval(this.interval_ids.get(batch.batchNo));
+      }
+
+      // 创建一个新的定时器来更新时间
+      const interval_id = setInterval(()=>{
+        this.handle_match_time(batch)
+      }, 1000)
+
+      this.interval_ids.set(batch.batchNo, interval_id);
+     }
   },
   computed:{
     //
@@ -601,6 +641,12 @@ export default {
     // 当前联赛的全部轮次
     match_list_all_batches(){
       const match_list_all_batches = [...this.virtual_match_list];
+      match_list_all_batches.forEach(batch=> {
+        this.handle_match_time(batch);
+        this.set_batch_timer(batch);
+      })
+      console.log(this.interval_ids, 'sss')
+
       // 足蓝全部展开，赛马类只展开第一个
       if(this.sub_menu_type == '1001' || this.sub_menu_type == '1004'){
           match_list_all_batches.forEach(batch=> {
@@ -703,6 +749,12 @@ export default {
     for (const key in this.$data) {
       this.$data[key] = null
     }
+  },
+  beforeUnmount(){
+    this.interval_ids.forEach(id=>{
+      clearInterval(id)
+    })
+    this.interval_ids.clear()
   }
 }
 </script>
@@ -763,7 +815,7 @@ export default {
   .status{
     .state{
       margin: 0 5px;
-      color: var(--q-gb-bd-c-14);
+      color: #fff;
       padding: 0 6px;
       border-radius: 3px;
       font-size: 0.11rem;

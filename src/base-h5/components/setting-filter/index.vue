@@ -55,7 +55,6 @@
         </div>
       </div>
       <div class="setting-item border" @click="jump_rule">
-        {{get_lang}}
       <!-- 体育规则 -->
         <div class="title">{{ i18n_t('common.rule_description') }}</div>
         <div class="more">
@@ -250,7 +249,7 @@ const sort_handle = item => {
  *@return {Undefined} undefined
  */
 const Handicap_handle = item => {
-  const status = item.switchValue === "rightVal" ? "EU" : "HK";
+  const status = item.switchValue === "rightVal" ? "HK" : "EU";
   UserCtr.set_cur_odds(status);
 };
 /**
