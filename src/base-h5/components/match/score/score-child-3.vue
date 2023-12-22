@@ -160,7 +160,7 @@ export default {
 }
 
 .active-text {
-  color: #FF9124;
+  color: #ffce63;
 }
 
 .menu-s {

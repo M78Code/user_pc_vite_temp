@@ -441,6 +441,7 @@ class MatchMeta {
    * @description 获取冠军赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_champion_match() {
+    console.log(1111111111111111)
     MatchFold.clear_fold_info()
     MatchDataBaseH5.clear()
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
@@ -470,6 +471,7 @@ class MatchMeta {
     this.current_euid = `10000_${md}`
     if (!md) return []
     const params = this.get_base_params()
+    delete params.hpsFlag
     const res = await api_analysis.get_champion_match_result_api({
       ...params,
       type: 28,
@@ -573,9 +575,9 @@ class MatchMeta {
   * @description 赛事详情精选赛事列表
   */
   async get_details_result_match() {
-    console.log(matchDetail.get_parmas(),'');
+    console.log(PageSourceData.get_route_parmas(),'');
      const res = await api_analysis.get_result_match_care_list({
-      sportId: lodash.get(matchDetail.get_parmas(),'sportId',1),
+      sportId: lodash.get(PageSourceData.get_route_parmas,'csid',1),
       cuid: UserCtr.get_uid(),
      })
      if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
@@ -1380,7 +1382,7 @@ class MatchMeta {
         this.debounce_timer = setTimeout(() => {
           this.is_ws_trigger = true
           if (MenuData.is_kemp()) {
-            this.handle_custom_matchs({ list: this.complete_matchs })
+            // this.handle_custom_matchs({ list: this.complete_matchs })
           } else {
             this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
           }
@@ -1406,7 +1408,7 @@ class MatchMeta {
       if (item) {
         this.is_ws_trigger = true
         if (MenuData.is_kemp()) {
-          this.get_champion_match()
+          // this.get_champion_match()
         } else {
           this.get_target_match_data({scroll_top: this.prev_scroll, md: this.http_params.md})
         }

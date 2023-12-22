@@ -18,8 +18,8 @@ import commonCathecticItem from "src/base-h5/components/common/common-cathectic-
 // import {mapGetters} from "vuex";
 import settleVoid from "src/base-h5/components/cathectic/settle-void.vue";
 import  matchDetail from "src/core/match-detail/match-detail-class.js"
-import { onUnmounted,onMounted,ref  } from "vue";
-// provide("queryorderpresettleconfirm_data") // 待确认中的提前结算订单，实际上赛果页面不会有未结算的订单，这里是占位，避免报错
+import { onMounted,ref,provide  } from "vue";
+provide("queryorderpresettleconfirm_data","") // 待确认中的提前结算订单，实际上赛果页面不会有未结算的订单，这里是占位，避免报错
 const  list_data = ref({})  //列表数据
 const container_height =ref(0)
 const  get_note_sheet_records_data= ref(matchDetail.get_my_sheet())

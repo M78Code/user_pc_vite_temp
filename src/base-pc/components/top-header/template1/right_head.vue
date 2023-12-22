@@ -246,16 +246,7 @@ export default defineComponent({
 
     const settingclick = (s) => {
 
-      let params = {
-        userMarketPrefer: s
-      }
-      api_betting.record_user_preference(params).then((res = {}) => {
-        if (res.code == 200) {
-          UserCtr.set_cur_odds(s)
-        } else {
-          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '请稍后再试！')
-        }
-      })
+      UserCtr.set_cur_odds(s)
     }
 
     // 切换语言

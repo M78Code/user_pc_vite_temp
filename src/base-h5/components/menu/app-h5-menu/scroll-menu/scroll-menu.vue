@@ -240,12 +240,12 @@ onUnmounted(()=>{
           }
           
         .sport-match-count {
-          line-height: 1;
-          position: absolute;
-          left: 0.4rem;
-          font-size: 0.1rem;
-          font-family: "Akrobat";
-          z-index: 4;
+                line-height: 1;
+                position: absolute;
+                left: 0.4rem;
+                font-size: 0.1rem;
+                font-family: "Akrobat";
+                z-index: 11;
         }
         }
       }
