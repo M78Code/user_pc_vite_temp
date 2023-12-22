@@ -787,7 +787,7 @@ export default {
   .status{
     .state{
       margin: 0 5px;
-      color: var(--q-gb-bd-c-14);
+      color: #fff;
       padding: 0 6px;
       border-radius: 3px;
       font-size: 0.11rem;
