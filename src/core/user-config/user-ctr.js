@@ -144,6 +144,8 @@ class UserCtr {
     this.c305_data_change = ''
     // var事件国际化信息
     this.var_event_i18n = []
+    //监听设置菜单发生变化时
+    this.set_menu_init = 1
 
     nextTick(()=>{
       this.get_system_time()
@@ -219,6 +221,13 @@ class UserCtr {
       text: "sortRules",
       data,
     });
+    this.update()
+  }
+  /**
+   * 排序变化      //排序	 int 类型 1 按热门排序 2 按时间排序
+  */
+  set_menu_init_change() {
+    this.set_menu_init += 1;
     this.update()
   }
   /**
