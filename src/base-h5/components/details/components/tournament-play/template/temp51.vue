@@ -93,10 +93,6 @@ export default defineComponent({
   // #TODO mixins
   // mixins:[odd_convert],
   setup(props, evnet) {
-    const store_state = store.getState()
-    let data = reactive({
-      utils
-    });
     // #TODO vuex
     // computed: {
     //   ...mapGetters(["get_bet_list"])

@@ -167,19 +167,13 @@ const goBackAssign = () => {
     MenuData.set_current_lv1_menu(2);
     MenuData.set_results_kemp(0)
 }
-
-
-const selectFinishHandle = (val) => {
-    console.log('选择完成')
-    state.select_dialog = false
-}
-
+MenuData.set_top_menu_title({})//从电竞过来 这个菜单没有制空 所以菜单不对 判断了是 电竞
+MenuData.set_current_lv1_menu(28)//设置为赛果
+switchHandle(0)
 onMounted(()=>{
-    MenuData.set_current_lv1_menu(28)
     // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
     // VirtualList.set_is_show_ball(false)
     // VirtualList.set_is_change_handicap_height(-22)
-    switchHandle(0)
 })
 
 onUnmounted(()=>{

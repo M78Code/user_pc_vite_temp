@@ -126,7 +126,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       ref_data.current_mi = val.mi
       MenuData.set_current_lv_2_menu_i(val)
       nextTick(()=>{
-        dJdateTabMenu.value.changeTabMenu({},0,'',type);
+        dJdateTabMenu.value?.changeTabMenu({},0,'',type);
       })
       return;
     }
