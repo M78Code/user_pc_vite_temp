@@ -17,7 +17,7 @@
     <div class="body-info">
       <div>
         <p>
-          {{ i18n_t('app_h5.cathectic.bets') }}:{{Item.sportName}}:<template v-if="data_b.seriesType != '3' && Item.matchType != 4">
+          {{ i18n_t('app_h5.cathectic.bets') }}:[{{Item.sportName}}]:<template v-if="data_b.seriesType != '3' && Item.matchType != 4">
             {{ i18n_t(`matchtype.${Item.matchType}`) }}
           </template>
         </p>
