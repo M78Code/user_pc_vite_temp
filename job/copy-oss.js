@@ -17,7 +17,7 @@ import { import_json_data } from "./util.js";
 
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
-const { BUILD_VERSION, CURRENT_ENV,BUILD_DIR_NAME ,BUILD_OUTDIR } = BUILD_VERSION_CONFIG;
+const { BUILD_VERSION, CURRENT_ENV,BUILD_DIR_NAME ,BUILD_OUTDIR,IS_TOPIC_PROJECT } = BUILD_VERSION_CONFIG;
  
 
 // return  false
@@ -70,7 +70,17 @@ if (is_dist) {
   //生产构建 删除 构建生成目录下的的OSS 目录，也就是打包的时候从public/oss内拷贝过来的
   remove_file(`./${BUILD_OUTDIR}/oss`);
   server_oss_url_arr = compute_oss_file_path_arr(CURRENT_ENV);
+
+  if(IS_TOPIC_PROJECT){ 
+
+ 
+  local_oss_target_dir = `./dist/oss`;
+
+  }else{
+ 
+
   local_oss_target_dir = `./dist/${BUILD_DIR_NAME}/oss`;
+  }
 }
 //本地备份OSS文件 
 if (is_backup) {
