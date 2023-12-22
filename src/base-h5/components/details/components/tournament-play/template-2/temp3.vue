@@ -1,6 +1,6 @@
 <template>
   <div v-show="false">{{BetData.bet_data_class_version}}</div>
-  <div class="temp3 mx-5 box-style">
+  <div class="component temp3 mx-5 box-style">
     <!-- ms: 0开 1封 2关 11锁 -->
     <!-- hs: 0开 1封 2关 11锁 -->
     <!-- os: 1开 2封 3隐藏不显示不占地方-->
