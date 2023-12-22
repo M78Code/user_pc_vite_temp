@@ -106,7 +106,7 @@
                   <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
                     <!-- 赛事回合数mfo -->
-                    <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
+                    <div v-if="match.mfo && [5].includes(csid)" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
                       {{ match.mfo }}
                     </div>
 
