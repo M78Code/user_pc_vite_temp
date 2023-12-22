@@ -46,7 +46,7 @@
                 <div class="left">
                     <div class="home-team teams">
                         <div v-if="state.source !== 'bigAndSmallBall'" class="teams-logo"><img src="./teams-icon.svg" alt=""></div>
-                        <div class="title">{{ state.source !== 'bigAndSmallBall' ? i18n_t('app_h5.handicap_tutorial.bet_home_team') : i18n_t('app_h5.handicap_tutorial.ball').replace('%s', item.big) }} </div>
+                        <div class="title">{{ state.source !== 'bigAndSmallBall' ? i18n_t('app_h5.handicap_tutorial.bet_home_team') : item.big }} </div>
                         <div :class="['result', item.winIsWho === 'homeTeam' ? 'win' : item.winIsWho ? 'lose' : 'default']">{{ item.homeTeam }}</div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                 <div class="right">
                     <div class="away-team teams">
                         <div v-if="state.source !== 'bigAndSmallBall'" class="teams-logo"><img src="./teams-icon.svg" alt=""></div>
-                        <div class="title">{{ state.source !== 'bigAndSmallBall' ? i18n_t('app_h5.handicap_tutorial.bet_away_team') : i18n_t('app_h5.handicap_tutorial.ball').replace('%s', item.small) }}</div>
+                        <div class="title">{{ state.source !== 'bigAndSmallBall' ? i18n_t('app_h5.handicap_tutorial.bet_away_team') : item.small }}</div>
                         <div :class="['result', item.winIsWho === 'awayTeam' ? 'win' : item.winIsWho ? 'lose' : 'default']">{{ item.awayTeam }}</div>
                     </div>
                 </div>
@@ -118,6 +118,7 @@ const state = reactive({
         display: flex;
         align-items: center;
         justify-content: center;
+        border-bottom: 0.01rem solid #fbfbfb;
 
         .pattern {
             width: .03rem;
@@ -242,7 +243,7 @@ const state = reactive({
             justify-content: center;
             align-items: center;
             color: var(--q-gb-t-c-29);
-            padding: .08rem 0;
+            padding: .12rem 0;
         }
 
         .match-result {
