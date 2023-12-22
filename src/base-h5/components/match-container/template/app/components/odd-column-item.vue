@@ -664,15 +664,15 @@ onUnmounted(() => {
 
 .active {
   // 需要替换成变量
-  background: var(--q-gb-bg-c-24) !important;
+  background: var(--q-gb-bg-c-33) !important;
   .odd-title {
-     color: var(--q-gb-t-c-1) !important;
+     color: var(--q-gb-t-c-30) !important;
     span{
-      color: var(--q-gb-t-c-1) !important;
+      color: var(--q-gb-t-c-30) !important;
     }
   }
   .odd-value {
-    color: var(--q-gb-t-c-1) !important;  
+    color: var(--q-gb-t-c-33) !important;  
   }
   &.item-lock{
     background: transparent !important;
