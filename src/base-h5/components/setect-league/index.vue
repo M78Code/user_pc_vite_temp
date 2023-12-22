@@ -34,6 +34,7 @@
             class="clear-icon"
             :src="compute_local_project_file_path('/image/list/league-close-icon.svg')"
             alt=""
+            @click="clear_text"
           />
         </div>
       </div>
@@ -109,6 +110,13 @@ const closed = () => {
     useMittEmit(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, {
     open: true,
   });
+};
+/**
+ * @description: 清空所有值
+ * @param 
+ */
+const clear_text = () => {
+  search_val.value = ''
 };
 defineProps({});
 </script>

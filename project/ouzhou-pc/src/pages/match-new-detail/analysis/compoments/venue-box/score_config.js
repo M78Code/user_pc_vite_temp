@@ -355,6 +355,7 @@ export const sport_columns = {
     {
       name: "q1",
       align: "left",
+      course: "Set 1",
       label: "1",
       field: "q1",
       headerStyle: "width: 33px",
@@ -364,6 +365,7 @@ export const sport_columns = {
       align: "left",
       label: "2",
       field: "q2",
+      course: "Set 2",
       headerStyle: "width: 33px",
     },
     {
@@ -371,6 +373,7 @@ export const sport_columns = {
       align: "left",
       label: "3",
       field: "q3",
+      course: "Set 3",
       headerStyle: "width: 33px",
     },
     {
@@ -378,6 +381,7 @@ export const sport_columns = {
       align: "left",
       label: "4",
       field: "q4",
+       course: "Set 4",
       headerStyle: "width: 33px",
     },
     {
@@ -385,12 +389,14 @@ export const sport_columns = {
       align: "left",
       label: "5",
       field: "q5",
+      course: "Set 5",
       headerStyle: "width: 33px",
     },
     {
       name: "set",
       align: "left",
       label: "G",
+      language:'common.bureau_',
       field: "set",
       headerStyle: "width: 33px",
     },
@@ -398,6 +404,7 @@ export const sport_columns = {
       name: "p",
       align: "left",
       label: "T",
+      language:'common.total',
       field: "p",
       headerStyle: { width: "33px", color: "#ff7000" },
     },

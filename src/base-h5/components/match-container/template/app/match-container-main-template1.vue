@@ -30,7 +30,7 @@
       </div>
       <!-- 全部 -->
       <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
-        <div> <img :src="icon_date" alt=""> <span>{{ title }}</span> </div>
+        <div> <img :src="icon_date" alt=""> <span>{{ get_date_time }}</span> </div>
         <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
@@ -173,7 +173,6 @@
                         <div class='team-t-title-w' :class="{
                           'is-handicap': match.handicap_index == 1,
                           'is-handicap-1': match.handicap_index == 2,
-                          'goal-style': is_show_home_goal && is_new_init2 && (!is_show_away_goal)
                         }">
                           <span>{{ match.mhn }}</span>
 
@@ -216,7 +215,6 @@
                         <div class='team-t-title-w' :class="{
                           'is-handicap': match.handicap_index == 2,
                           'is-handicap-1': match.handicap_index == 1,
-                          'goal-style': is_show_away_goal && is_new_init2 && (!is_show_home_goal),
                         }">
                           <span>{{ match.man }}</span>
                         </div>
@@ -316,7 +314,7 @@ import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_i
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id, is_zaopan } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id, is_zaopan, date_time } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 
@@ -340,19 +338,17 @@ export default {
     CountingDownStart,
     CountingDownSecond,
   },
-  
   setup (ctx) {
     // 是否显示球种标题
     const show_sport_title = computed(() => {
       const { is_show_ball_title } = ctx.match_of_list
       return is_show_ball_title
     })
-    const title=computed(()=>{
-      //早盘日期 显示的是日期  全部是全部
-      return is_zaopan.value&&lodash.isNumber(MenuData.current_lv_3_menu.field1)?format_M_D(MenuData.current_lv_3_menu.field1):i18n_t("filter.all_leagues")
+    const get_date_time =computed(() => {
+      return is_zaopan.value&&Number(date_time.value)>0?format_M_D(date_time.value):i18n_t("filter.all_leagues")
     })
-    return { title,
-      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin, MenuData,
+    return { 
+      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin, MenuData, get_date_time,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,icon_date,
       normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan, expand_item
     }
@@ -752,7 +748,7 @@ export default {
     height: 0.26rem;
     border-radius: 0;
     // padding: 0 0.1rem;
-
+    background:var(--q-gb-bg-c-18);
     &.show-sport {
       border-radius: 0.12rem 0.12rem 0 0;
     }
@@ -1238,9 +1234,6 @@ export default {
             &.is-handicap {
               color: #74C4FF !important;
             }
-            &.goal-style{
-              max-width: 90px;
-            }
           }
         }
 
@@ -1381,6 +1374,7 @@ export default {
   position: absolute;
   bottom: 0;
   width: 100%;
+  z-index: 100;
   :deep(.score-se-inner2){
     display: flex;
     flex-direction: row-reverse;

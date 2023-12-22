@@ -4,7 +4,7 @@
 -->
 <template>
   <div class="setting-filter">
-    <div class="setting-top setting-item">
+    <div class="setting-top setting-item" v-if="!MenuData.is_collect()">
       <div class="title">
     <!-- 联赛筛选 -->
          {{ i18n_t('footer_menu.league_filter') }}
@@ -15,7 +15,7 @@
       </div>
       <div>
       </div>
-      <div v-if="!is_vr" class="more row items-center justify-between"  @click="searchClick">
+      <div v-if="!MenuData.is_vr()" class="more row items-center justify-between"  @click="searchClick">
        <img
             class="league-icon"
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league_icon.svg`"

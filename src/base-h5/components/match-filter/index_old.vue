@@ -127,7 +127,8 @@ const default_url = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup.svg` //默
 const none_league_icon_black = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup_black.svg`
 
 const list_data_loading = ref(false)     //数据加载中
-const list = ref([]) //数据列表整个赛事
+const list = ref([]) //
+let list_copy = [] //初始化的数据列表整个赛事
 const type = MenuData.menu_type  // 100（冠军）  3000（电竞） 赛果29  滚球:1 今日:3 早盘:4 串关:11 冠军:100  竞足 30
 const anchor_arr = ref([i18n_t('search.hot'), "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]) //右边字母数组
 const active_index = ref("")  //活动的下标
@@ -143,6 +144,18 @@ const change = ref(true) //是否显示全选按钮
 const selected = ref({})   //选中的赛事集合 //TODO get_filter_list
 const select_num = ref(0) //选中的赛事数量
 // const { get_hotselect3 } = api_search || {};
+// 热门联赛只展示九大联赛 其余联赛需要塞到 地域级List 或  球种级list
+const orderArray = [
+  { id: "28206" },
+  { id: "6408" },
+  { id: "18031" },
+  { id: "32070" },
+  { id: "180" },
+  { id: "320" },
+  { id: "239" },
+  { id: "276" },
+  { id: "79" },
+]; //固定排序数组
 
 //ref对象
 const scrollArea = ref(null);
@@ -435,6 +448,10 @@ function type_select(li_item) {
     if (i.spell === li_item.title){
        i.select = li_item.checked
     }
+    //筛选热门联赛
+    if (li_item.title === i18n_t('search.hot_league') && i.spell === 'HOT'){
+        i.select = li_item.checked
+     }
      return i
   }); // 初始化select
 }
@@ -494,7 +511,6 @@ function fetch_filter_match() {
   list_data_loading.value = true;
   //调用：v1/m/getFilterMatchList接口
   api_match_filter(params).then(({ code, data }) => {
-
     try {
       let data_list = []
       data[0].sportVOs.forEach(item=>{
@@ -512,6 +528,14 @@ function fetch_filter_match() {
       //   change.value = false;
       //   return
       // }
+       //过滤热门联赛
+      list.value = list.value.map(item=>{
+      if (orderArray.some(sub => sub.id == item.id)) {
+        item.spell = 'HOT'
+          return item
+        } 
+          return item
+      })
       //排序
       data_list.sort((a, b) => {
         if (a.spell == 'HOT' || b.spell == 'HOT') {
@@ -524,13 +548,13 @@ function fetch_filter_match() {
         }
       }
       );
-
       list.value = (data_list || []).map(i => ({ ...i, select: i.id in selected.value })); // 初始化select
-      console.error('list.value',list.value)
       // 筛选时，把首字母相同的集合 放在第一个item 上,
       filter_alphabet(list.value)
       // 动态生成有联赛的字母，并非A - Z 全量字母；
       dynamic_letters(list.value)
+      //拷贝一份数据做筛选用
+      list_copy = list.value
       scroll_obj_fn(-1);
       get_league_select_list()
     } catch (e) {
@@ -549,16 +573,13 @@ function fetch_filter_match() {
  * @return {Undefined} Undefined
  */
 function get_search_result(keyword) {
-    list_data_loading.value = true;
-    //调用接口获取获取搜索结果数据
-    search.get_search_result(keyword, '').then(res => {
-        const { state, list } = res
-        list_data_loading.value = false;
-        console.log('resresresres',res)
-        // load_data_state.value = state
-        // res_list = list
-
-    })
+      //去除所有空格
+      keyword = keyword.replace(/\s*/g,"");
+        list.value = (list_copy || []).filter(item=>{
+        if (item.nameText.toLocaleLowerCase().indexOf(keyword.toLocaleLowerCase()) != -1){
+          return item
+        }
+      })
 }
 // 首字母过滤放在放在第一个item 上
 function filter_alphabet(arr) {

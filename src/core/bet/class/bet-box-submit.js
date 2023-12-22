@@ -905,7 +905,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     set_market_id_to_ws()
     
     // 判断获取限额接口类型
-    if(["C01","B03","O01"].includes(bet_obj.dataSource) || [2,4].includes(Number(bet_obj.mbmty)) ||  ['esports_bet','vr_bet'].includes(other.bet_type)){
+    if(["C01","B03","O01"].includes(bet_obj.dataSource) || [2,4].includes(Number(bet_obj.mbmty)) || ['esports_bet','vr_bet'].includes(other.bet_type)){
         // C01/B03/O01  电竞/电竞冠军/VR体育
         get_query_bet_amount_esports_or_vr()
     }else{
