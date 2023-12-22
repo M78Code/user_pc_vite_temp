@@ -226,7 +226,6 @@ import teamImg from "src/base-h5/components/details/team-img.vue"
 import titleX from "src/base-h5/components/details/analysis-matches/components/title-x.vue" 
 // 事件类型菜单
 import tabs from "src/base-h5/components/details/analysis-matches/components/tabs.vue" 
-
 // 精彩回放视频滚动列表
 export default {
   name: "highlights",
@@ -320,7 +319,7 @@ setup(props, context){
   // 是否是dplayer视频全屏
   const is_dp_video_full_screen = ref(false)
   // 赛果详情数据
-  const get_detail_data = ref(props.detail_data)
+  const get_detail_data = ref(matchDetailData.get_quick_mid_obj(route.params.mid))
   onMounted(() => {
     pre_load_video.load_player_js()
     store.dispatch({

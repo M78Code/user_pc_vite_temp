@@ -14,6 +14,7 @@
     :class="$route.name == 'match_result' ? '' : 'back_mask'"
     v-cloak
   >
+    <span class="tag">N</span>
     <!-- component 自定义标签:动态绑定组件,根据数据的不同更换不同的组件 'is' 关键字用来动态切换组件 -->
     <component
       :is="componentId"
@@ -44,8 +45,23 @@ if(id != 100 && id != 101){
   // height: 0.38rem;
   // line-height: 0.38rem;
   width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .back_mask {
   // background: linear-gradient(180deg, rgba(0, 0, 0, 8e-05) 0%, rgba(0, 0, 0, 0.8) 100%);
-}</style>
+}
+
+.tag{
+  border: 1px solid var(--q-gb-bg-c-15);
+  height: .15rem;
+  width: .15rem;
+  border-radius: .03rem;
+  text-align: center;
+  line-height: .15rem;
+  color: var(--q-gb-bg-c-15);
+}
+
+
+</style>
