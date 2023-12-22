@@ -159,16 +159,49 @@
 
                 <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
                 <!-- <image-cache-load v-if="match?.mhlu?.length && !([5, 7].includes(Number(match.csid)))" -->
-                <image-cache-load v-if="match?.mhlu?.length"
-                  :csid="+match.csid" :path="match.mhlu" type="home"></image-cache-load>
+                <!-- <image-cache-load v-if="match?.mhlu?.length"
+                  :csid="+match.csid" :path="match.mhlu" type="home"></image-cache-load> -->
                 <!-- <img v-if="match?.mhlu?.length" class="logo" v-img="([match.mhlu[0], match.frmhn[0], match.csid])" /> -->
+                <team-img
+                  v-if="!lodash.isEmpty(match)"
+                    :type="0"
+                    :csid="match.csid"
+                    :url="lodash.get(match,'mhlu[0]')"
+                    :fr="lodash.get(match,'frmhn[0]')"
+                    :size="18"
+                  ></team-img>
+                  <team-img
+                    v-if="lodash.get(match,'mhlu.length') > 1&& !lodash.isEmpty(match)"
+                    :type="0"
+                    :csid="match.csid"
+                    :url="match.mhlu[1]"
+                    :fr="match.frmhn[1]"
+                    :size="18"
+                    style="margin-left:-0.09rem;"
+                  ></team-img>
               </div>
               <span class="vs">VS</span>
               <div class='right'>
                 <!-- <image-cache-load v-if="match?.malu?.length && !([5, 7].includes(Number(match.csid)))" -->
-                <image-cache-load v-if="match?.malu?.length"
-                  :csid="+match.csid" :path="match.malu" type="home"></image-cache-load>
-
+                <!-- <image-cache-load v-if="match?.malu?.length"
+                  :csid="+match.csid" :path="match.malu" type="home"></image-cache-load> -->
+                 <!-- 右侧双打图标 type 1 表示客队,malu 客队的url -->
+                <team-img
+                  :type="1"
+                  :csid="match.csid"
+                  :url="lodash.get(match,'malu[0]')"
+                  :fr="lodash.get(match,'frman[0]')"
+                  :size="18"
+                ></team-img>
+                <team-img
+                  v-if="lodash.get(match,'malu.length') > 1"
+                  :type="1"
+                  :csid="match.csid"
+                  :url="match.malu[1]"
+                  :fr="match.frman[1]"
+                  :size="18"
+                  style="margin-left:-0.09rem;"
+                ></team-img>
                 <!-- <img v-if="match?.malu?.length" class="logo" v-img="([match.malu[0], match.frman[0], match.csid])" /> -->
                 <!--发球方绿点-->
                 <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
@@ -207,7 +240,7 @@
 </template>
 
 <script>
-
+import TeamImg from "src/base-h5/components/details/team-img.vue";   // 详情页蓝色背景上的大型字母图标
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
@@ -248,6 +281,7 @@ export default {
     main_source: String,
   },
   components: {
+    TeamImg,
     ScoreList,
     IconWapper,
     OddListWrap,
