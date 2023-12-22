@@ -85,10 +85,10 @@ import { questionsData, bigAndSmallBallData, handicapData } from "./config.js"
 
 const switchMenu = [i18n_t('footer_menu.rangqiu') + i18n_t('app_h5.handicap_tutorial.introdution'), i18n_t('app_h5.handicap_tutorial.big_small_ball') + i18n_t('app_h5.handicap_tutorial.introdution')]
 const slideMenu = [
-    '0',
-    '0/0.5',
-    '0.5',
-    '0.5/1',
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '0'),
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '0/0.5'),
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '0.5'),
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '0.5/1'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1/1.5'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1.5'),
