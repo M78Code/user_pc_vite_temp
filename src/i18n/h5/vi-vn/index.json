@@ -2160,7 +2160,12 @@
       "corner": "Quả phạt góc thứ {X}",
       "red_card": "Thẻ Đỏ thứ {X}",
       "yellow_card": "Thẻ Vàng thứ {X}",
-      "yellow_red_card": "Thẻ Vàng Đỏ thứ {X}"
+      "yellow_red_card": "Thẻ Vàng Đỏ thứ {X}",
+      "new_gloal": "進球{X}",
+      "new_corner": "角球{X}",
+      "new_red_card": "紅牌{X}",
+      "new_yellow_card": "黃牌{X}",
+      "new_yellow_red_card": "黃紅牌{X}"
     },
     "back_live": "Trở về Livestream"
   },

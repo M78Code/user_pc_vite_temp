@@ -4,7 +4,7 @@
     --用于无盘口&区分主客的多个投注项玩法 比如最后进球球员
 -->
 <script setup name="play-template-6">
-import {computed, defineProps, onMounted, reactive, ref} from "vue"
+import {computed, onMounted, reactive, ref} from "vue"
 import lodash from "lodash";
 const props = defineProps({
     item_data: {

@@ -25,8 +25,8 @@
       <!-- 角球数 -->
       <span v-if="red_flag">
         <span>&nbsp;&nbsp;</span>
-        <q-img v-if="project_name == 'app-h5'" style="width: 0.17rem;height: 0.17rem;margin-top:-8px;"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`"></q-img>
-        <span v-else><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`" ></q-img></span>
+        <!-- <q-img v-if="project_name == 'app-h5'" style="width: 0.17rem;height: 0.17rem;margin-top:-8px;"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`"></q-img> -->
+        <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`" ></q-img></span>
         <!-- <span>&nbsp;&nbsp;{{project_name == 'app-h5' ? i18n_t('match_result.corner_kick') : ''}}</span> -->
         <span>{{ $filters.score_format(score_array_status[0])}}</span>
       </span>
