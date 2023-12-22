@@ -20,6 +20,7 @@ import * as socket_api from "./module/socket/socket_api.js"; // router
 
 import * as api_match_list from  "./module/matches_list/index.js"
 
+import * as api_hide from "./module/hide-api/index.js"; // hanmar
 
 export {
   api_base_data,
@@ -55,7 +56,8 @@ export {
   api_activity,
   // 
   socket_api,
-
+  // 埋点api
+  api_hide,
   //15分钟赛事数据
   api_match_list
 };
