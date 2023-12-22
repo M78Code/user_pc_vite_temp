@@ -39,7 +39,7 @@
   </template>
 
   <!-- 串关显示 -->
-  <template v-if="data_f.seriesType !== '1' || data_f.seriesType !== '3'">
+  <template v-if="data_f.seriesType !== '1' && data_f.seriesType !== '3'">
     <p>
       <!-- 投注单号 -->
       <label>{{i18n_t('bet.order_no')}}：</label> 
