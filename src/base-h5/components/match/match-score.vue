@@ -11,10 +11,10 @@
   <!-- 当是赛果页面时蒙版不一致需要隐藏 back_mask属性-->
   <div
     class='match_score '
-    :class="$route.name == 'match_result' ? '' : 'back_mask'"
+    :class="route.name == 'match_result' ? '' : 'back_mask'"
     v-cloak
   >
-    <span class="tag">N</span>
+    <span class="tag" v-if="route.name == 'match_result'">N</span>
     <!-- component 自定义标签:动态绑定组件,根据数据的不同更换不同的组件 'is' 关键字用来动态切换组件 -->
     <component
       :is="componentId"
@@ -26,7 +26,8 @@
 
 <script setup>
 import { defineComponent, computed, defineAsyncComponent } from 'vue';
-
+import { useRoute } from "vue-router";
+let route = useRoute()
 const props = defineProps({
   detail_data: {
     type: Object,

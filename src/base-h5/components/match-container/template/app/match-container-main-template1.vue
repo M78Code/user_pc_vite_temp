@@ -748,7 +748,7 @@ export default {
     height: 0.26rem;
     border-radius: 0;
     // padding: 0 0.1rem;
-
+    background:var(--q-gb-bg-c-18);
     &.show-sport {
       border-radius: 0.12rem 0.12rem 0 0;
     }
