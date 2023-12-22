@@ -31,7 +31,9 @@
           <div class="league-name right-border">{{ lengue_name }}</div>
           <div class="status">
             <span class="num">{{current_match.no}}</span>
-            <span class="state">{{i18n_t('virtual_sports.match_status.playing')}}</span>
+            <span class="state">
+             {{ current_match.match_status == 2 ? i18n_t('collect.match_end') : i18n_t('virtual_sports.match_status.playing') }}
+            </span>
             <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
           </div>
         </div>
@@ -616,6 +618,12 @@ export default {
       }, 1000)
 
       this.interval_ids.set(batch.batchNo, interval_id);
+     },
+     reset_timers(){
+      this.interval_ids.forEach(id=>{
+      clearInterval(id)
+      })
+      this.interval_ids.clear()
      }
   },
   computed:{
@@ -701,6 +709,7 @@ export default {
       if(this.current_league){
         prev_league_id = this.current_league.menuId;
       }
+      this.reset_timers();
       this.set_current_batch({});
       this.set_league_i_by_id(prev_league_id);
       this.tab_item_click_handle(this.tab_item_i);
@@ -751,10 +760,7 @@ export default {
     }
   },
   beforeUnmount(){
-    this.interval_ids.forEach(id=>{
-      clearInterval(id)
-    })
-    this.interval_ids.clear()
+    this.reset_timers()
   }
 }
 </script>
@@ -860,12 +866,15 @@ export default {
 .virtual-content-wrapper {
   padding: 0.08rem 0.05rem 0;
   color: var(--q-gb-t-c-18);
-  background: var(--q-gb-bg-c-21);
+  background: #F2F2F6;
 }
 .virtual-sports-card {
-  background: var(--q-gb-bg-c-23) ;
-  border-radius: 4px;
-  margin-bottom: .08rem;
+  >div {
+    background: #F8F9FA;
+    border-radius: .08rem;
+    margin-bottom: .08rem;
+    border: 1px solid #fff;
+  }
   &:last-of-type {
     padding-bottom: 0.7rem;
   }
