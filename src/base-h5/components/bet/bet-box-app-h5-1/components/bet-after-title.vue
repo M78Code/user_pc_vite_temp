@@ -1,7 +1,6 @@
 <template>
   <div class="ty-bet-after-status" v-if="BetData.is_bet_single">
     <div v-show="false">{{BetViewDataClass.bet_view_version}} - {{ BetData.bet_data_class_version }} </div>
-    {{ set_bet_order_status(BetViewDataClass.bet_order_status) }}
     <img :src="set_bet_order_status(BetViewDataClass.bet_order_status)" alt="" />
     <div class="ty-bet-after-status-title" :class="{active: bet_order_status_active}">{{title}}</div>
   </div>
