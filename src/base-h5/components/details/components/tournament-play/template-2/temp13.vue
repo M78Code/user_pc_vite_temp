@@ -681,6 +681,7 @@ export default defineComponent({
 }
 .bet-item-ky-container {
   display:flex;
+  flex-direction: column;
   justify-content:center;
   background:var(--q-gb-bg-c-28);
   border-radius: 4px;
@@ -688,6 +689,9 @@ export default defineComponent({
   padding:0 0.04rem;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   color: var(--q-gb-t-c-18);
+  .single-name {
+    line-height: normal;
+  }
 }
 .bet-card-play-container{
   height:0.48rem
