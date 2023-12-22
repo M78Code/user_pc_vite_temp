@@ -4,45 +4,55 @@
  * @Description: 赛狗类 排行榜页面  只需要传个 mid 赛事id进来
 -->
 <template>
+  <div style="height: 0.08rem; width: 100vw; background-color: #F2F2F6;"></div>
   <div class="ranking_list_satrt">
     <template v-if="!no_data">
       <!-- <span class="navigation-title">{{ i18n_t('virtual_sports.leaderboard') }}</span> -->
       <div class="ranking-item hairline-border" v-for="(item, index) in ranking_data" :key="index">
-      <div class="ranking-item-top">
-        <div class="left ellipsis">
-          <span class="virtual-num" :class="get_rank_background(item.number,get_curr_sub_menu_type)"></span>
-          <span class="ellipsis">{{ item.name }}</span>
+        <div class="ranking-item-left">
+          <div class="left-item ellipsis">
+            <span class="virtual-num" :class="get_rank_background(item.number, get_curr_sub_menu_type)"></span>
+            <span class="ellipsis">{{ item.name }}</span>
+          </div>
         </div>
-        <div class="right">
-          <span>{{ i18n_t('virtual_sports.vitality_performance') }}</span>
-          <!-- <q-linear-progress :value="Number(item.form/100)" color="warning" class="q-mt-sm"/> -->
-          <div class="virtual-progress-bg">
-            <div class="virtual-progress-bar" :style="{width:`${item.form}%`}">
+
+        <div class="ranking-item-right">
+
+          <div class="right-item results_previous">
+            <span class="right-item-label">{{ i18n_t('virtual_sports.results_previous') }}</span>
+            <div class="right-item-content results_previous_result">
+              <span v-for="(results, i) in item.forecast" :key="i" :class="results != 0 ? 'score-number' : 'score-x'">{{results != 0 ? results : 'X'}}</span>
             </div>
           </div>
-          <span>{{ item.form }}%</span>
-        </div>
-      </div>
-      <div class="ranking-item-bottom">
-        <div class="left">
-          <span>{{ i18n_t('virtual_sports.results_previous') }}</span>
-          <div v-for="(results, i) in item.forecast" :key="i">
-            <span :class="results != 0 ? 'score-number' : 'score-x'">{{results != 0 ? results : 'X'}}</span>
+          
+          <div class="right-item comprehensive_rating">
+            <span class="right-item-label">{{i18n_t('virtual_sports.comprehensive_rating')}}</span>
+            <div class="right-item-content">
+              <q-rating
+                style="min-width:.85rem"
+                :value="Number(item.star)"
+                size="3.5em"
+                :icon="`img:${LOCAL_PROJECT_FILE_PREFIX}/image/png/m-list-favorite.png`"
+                :icon-selected="`img:${LOCAL_PROJECT_FILE_PREFIX}/image/png/m-list-favorite-red.png`"
+                readonly
+              />
+            </div>
           </div>
+
+          <div class="right-item vitality_performance">
+            <span class="right-item-label">{{ i18n_t('virtual_sports.vitality_performance') }}</span>
+            <div class="right-item-content">
+              <q-linear-progress :value="Number(item.form/100)" color="warning" class="q-mt-sm"/>
+              <div class="virtual-progress-bg">
+                <div class="virtual-progress-bar" :style="{width:`${item.form}%`}"></div>
+              </div>
+              <span class="rate_percent">{{ item.form }}%</span>
+            </div>
+          </div>
+
         </div>
-        <div class="right">
-          <span>{{i18n_t('virtual_sports.comprehensive_rating')}}</span>
-          <q-rating
-            style="min-width:.85rem"
-            :value="Number(item.star)"
-            size="3.5em"
-            :icon="`img:${LOCAL_PROJECT_FILE_PREFIX}/image/png/m-list-favorite.png`"
-            :icon-selected="`img:${LOCAL_PROJECT_FILE_PREFIX}/image/png/m-list-favorite-red.png`"
-            readonly
-          />
-        </div>
+
       </div>
-    </div>
     </template>
     <!-- 没有数据 组件 -->
     <no-data v-if="no_data" which='noMatch' height='500' class="no-list"></no-data>
@@ -143,6 +153,14 @@ export default {
 
 <style lang="scss" scoped>
 .ranking_list_satrt {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.08rem;
+  background-color: #fff;
+
   .navigation-title {
     font-size: 0.14rem;
     display: block;
@@ -185,31 +203,55 @@ export default {
   }
 
   .ranking-item {
-    height: 0.7rem;
-    padding: 0.15rem 0.12rem 0.15rem 0.13rem;
+    width: 97vw;
+    // height: 0.7rem;
+    height: 0.87rem;
+    // padding: 0.15rem 0.12rem 0.15rem 0.13rem;
     box-sizing: border-box;
     font-size: 0.1rem;
     text-align: center;
     line-height: 0.16rem;
     border-radius: 0.08rem;
-    margin-bottom: 0.08rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
 
-    > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+
+    .ranking-item-left{
+      width: 40%;
+      height: 100%;
+      // background-color: red;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
 
-      &.ranking-item-top {
-        margin-bottom: 0.09rem;
-        height: 0.16rem;
+      padding:0 0.12rem;
 
-        .left {
-          display: flex;
-          align-items: center;
+      .left-item{
+        // background-color: aquamarine;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        color: #303442;
+        font-size: 0.12rem;
+        font-weight: 400;
 
           .virtual-num {
+            width: 0.2rem;
+            height: 0.2rem;
             background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png") no-repeat 0 0 / 100%;
             --per: -0.3rem;
           }
+
+          .ellipsis{
+            margin-left: 0.08rem;
+          }
+
           .match-horse1 {
             background-position-y: calc(var(--per) * 6);
           }
@@ -233,63 +275,67 @@ export default {
           .match-horse6 {
             background-position-y: calc(var(--per) * 11);
           }
-          
+        
+      }
+    }
 
-          > span {
-            &:nth-child(1) {
-              width: 0.2rem;
-              height: 0.2rem;
+    .ranking-item-right{
+      width: 60%;
+      height: 100%;
+      // background-color: #179CFF;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #F2F2F6;
+      border-radius: 0.08rem;
 
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              margin-right: 0.1rem;
+      padding: 0.01rem 0.1rem;
 
-              font-size: 0.1rem;
-              text-align: center;
-              line-height: 0.1rem;
-              border-radius: 0.02rem;
-            }
+      .right-item{
+        // background: yellow;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
 
-            &:nth-child(2) {
-
-              font-size: 0.14rem;
-
-              font-weight: bold;
-              line-height: 0.16rem;
-            }
-          }
+        .right-item-label{
+          display: block;
+          width: 0.48rem;
+          color: #303442;
+          font-weight: 400;
+          font-size: 0.12rem;
+          font-family: PingFang SC;
+          // background-color: yellowgreen;
         }
 
-        .right {
-          width: 1.78rem;
+        .right-item-content{
+          width: 60%;
+          margin-left: 0.08rem;
+          // background-color: purple;
           display: flex;
-          max-width: 1.96rem;
-          min-width: 1.63rem;
+          flex-direction: row;
+          justify-content: center;
           align-items: center;
 
-          > span {
-            min-width: fit-content;
-
-            font-size: 0.12rem;
-
-            text-align: center;
-            line-height: 0.16rem;
-
-            &:nth-child(1) {
-
-              font-size: 0.1rem;
-
-              text-align: center;
-              line-height: 0.16rem;
-            }
+          .q-mt-sm{
+            margin: 0rem;
           }
 
+          .rate_percent{
+            font-weight: 500;
+            color: #7981A4;
+            margin-left: 0.08rem;
+          }
+
+
           .virtual-progress-bg {
-            width: 0.8rem;
-            height: 0.04rem;
-            margin: 0 0.1rem 0 0.08rem;
-            border-radius: 0.06rem;
+            // width: 0.8rem;
+            // height: 0.04rem;
+            // margin: 0 0.1rem 0 0.08rem;
+            // border-radius: 0.06rem;
+            border-radius: 0.2rem;
 
             .virtual-progress-bar {
               border-radius: 0.06rem;
@@ -302,76 +348,64 @@ export default {
             width: 0.8rem;
             margin: 0 0.1rem 0 0.08rem;
             transition: all 0.3s linear;
+            color: #E95B5B !important;
+            
 
             .absolute-full {
               height: 0.04rem;
             }
           }
+
         }
+
+        .results_previous_result{
+            // width: 0.54rem;
+            font-family: PingFang SC;
+            color: #179CFF;
+            font-weight: 500;
+            font-size: 0.12rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            // background-color: pink;
+
+            > span {
+              padding-left: 0.08rem;
+              
+            }
+
+        }
+
       }
 
-      &.ranking-item-bottom {
-        height: 0.16rem;
+      
 
-        .left {
-          display: flex;
-          min-width: fit-content;
+      .comprehensive_rating{
+        :deep(.q-rating) {
+              > i {
+                font-size: 0.12rem;
+              }
 
-          > span {
-            margin-right: 0.08rem;
-          }
+              .q-rating__icon {
+                width: 0.1rem;
+                height: 0.1rem;
 
-          > div {
+                margin-right: 0.05rem;
 
-            font-size: 0.1rem;
-            line-height: 0.16rem;
+                &.q-rating__icon--active {
 
-            span {
-              margin: 0 0.02rem;
-            }
+                }
+              }
 
-            .score-x {
-              color: #B0B8C2;
-              font-size: 0.1rem;
-            }
-          }
-        }
-
-        .right {
-          width: 1.78rem;
-          max-width: 1.96rem;
-          min-width: 1.63rem;
-          display: flex;
-          align-items: center;
-
-          > span {
-            margin-right: 0.05rem;
-          }
-
-          :deep(.q-rating) {
-            > i {
-              font-size: 0.12rem;
-            }
-
-            .q-rating__icon {
-              width: 0.1rem;
-              height: 0.1rem;
-
-              margin-right: 0.05rem;
-
-              &.q-rating__icon--active {
-
+              img {
+                width: 100%;
+                height: 100%;
               }
             }
-
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
         }
-      }
+
     }
+
   }
 }
 
