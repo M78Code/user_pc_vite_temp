@@ -11,7 +11,7 @@ import { api_details } from "project/animation/src/public/api/index"
 import courseData from "src/core/match-detail/match-detail-h5/config/course.js";
 import { ref,onMounted ,onUnmounted} from "vue";
 import lodash from "lodash";
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { useRoute } from "vue-router";
 const route =  useRoute()
 let token =lodash.get(JSON.parse(sessionStorage.getItem("formData")),"token","bea5eddf73b1549cb330af08cd5255fd7b3e2ba4") 
