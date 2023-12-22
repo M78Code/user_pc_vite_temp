@@ -668,7 +668,7 @@ export const details_main = () => {
         .then((res) => {
           const res_data = lodash.get(res, "data",[]);
           if (res.code=='0401038') {  //限频
-            setTimeout(() => {
+            return  setTimeout(() => {
               get_odds_list()
             }, 800);
           }
@@ -681,13 +681,13 @@ export const details_main = () => {
               (item) => item.id == SessionStorage.get("DETAIL_TAB_ID")
             );
             // 找不到就赋值为玩法集第一项
-            if (!set_details_item_flag) {
+            if (!set_details_item_flag&&res_data.length) {
               matchDetailCtr.value.category_tab_click(res_data[0]);
             }
           } else {
             // 当第一次进来就会走这里默认赋值第一项
             // res_data && set_details_item(res_data[0]["id"]);
-            matchDetailCtr.value.category_tab_click(res_data[0])
+            res_data.length&&matchDetailCtr.value.category_tab_click(res_data[0])
           }
           let search_term = route.query && route.query.search_term;
           if (search_term) {

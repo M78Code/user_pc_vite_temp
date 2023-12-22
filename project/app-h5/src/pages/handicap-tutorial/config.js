@@ -143,8 +143,8 @@ const handicapData = [
                 note: i18n_t('app_h5.handicap_tutorial.note_3'), 
             },
             { 
-                homeTeam: i18n_t('app_h5.handicap_tutorial.lose_half'), 
-                awayTeam: i18n_t('app_h5.handicap_tutorial.win_half'), 
+                homeTeam: i18n_t('app_h5.handicap_tutorial.all_lose'), 
+                awayTeam: i18n_t('app_h5.handicap_tutorial.all_win'), 
                 matchResult: '0 - 0', 
                 winIsWho: 'awayTeam', 
                 note: i18n_t('app_h5.handicap_tutorial.note_4'), 
