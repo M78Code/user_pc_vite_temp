@@ -47,25 +47,28 @@ const is_hot = computed(() => {
 });
 // 是否 收藏
 const is_collect = computed(() => {
-return MenuData.is_collect(menu_type.value);
+    return MenuData.is_collect(menu_type.value);
 });
+
 //是否 详情页 用途： 赛事列表、热门、详情 引入赛事列表组件
 const is_detail = computed(() => {
     return page_source.value === 'detail_match_list';
 });
 
 const footer_menu_id = ''
-
 const menu_lv1 = ref(MenuData.current_lv_1_menu)//1级 大类
 const menu_lv2 = ref(MenuData.current_lv_2_menu)//2级 球种
 const menu_lv3 = ref(MenuData.current_lv_3_menu)//3级 日期
 const menu_lv4 = ref(MenuData.current_lv_4_menu)//4级 联赛
+// 所选日期
+const date_time = ref(MenuData?.data_time)
 watch(update_time, () => {
     menu_lv1.value = MenuData.current_lv_1_menu;//1级
     menu_lv2.value = MenuData.current_lv_2_menu;//2级
     menu_lv3.value = MenuData.current_lv_3_menu;//3级
     menu_lv4.value = MenuData.current_lv_4_menu;//4级
+    date_time.value = MenuData.data_time
 });
-export { update_time, footer_menu_id,
+export { update_time, footer_menu_id, date_time,
     is_jinzu, is_kemp, is_mix, is_vr, is_zaopan, is_esports, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2, is_hot, is_detail, is_collect
 }

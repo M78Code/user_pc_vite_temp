@@ -95,6 +95,7 @@ class MenuData {
     this.menu_lv_mi_lsit = []
     // 选中的当前时间
     this.date_time = ""
+    this.data_time = ""
     this.data_tab_index = 0;
     // 时间api接口及参数信息 
     this.menu_match_date_api_config = {}
@@ -362,6 +363,7 @@ class MenuData {
     this.set_cache_class({
       data_tab_index:index,
     });
+    this.update();
   }
 
   // 设置时间请求参数

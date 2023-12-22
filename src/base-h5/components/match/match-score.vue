@@ -11,10 +11,14 @@
   <!-- 当是赛果页面时蒙版不一致需要隐藏 back_mask属性-->
   <div
     class='match_score '
-    :class="$route.name == 'match_result' ? '' : 'back_mask'"
+    :class="route.name == 'match_result' ? '' : 'back_mask'"
     v-cloak
   >
-    <span v-if="project_name == 'app-h5'" class="tag">N</span>
+    <!-- mng 是否中立场 1:是中立场，0:非中立场 --- 仅足球 -->
+    <span v-if="project_name == 'app-h5' && ['result_details', 'match_result'].includes(route.name) && detail_data.mng == 1"
+      class="tag">
+      N
+    </span>
     <!-- component 自定义标签:动态绑定组件,根据数据的不同更换不同的组件 'is' 关键字用来动态切换组件 -->
     <component
       :is="componentId"
@@ -27,7 +31,8 @@
 <script setup>
 import { defineAsyncComponent } from 'vue';
 import {project_name } from 'src/output/module/constant-utils-common.js'
-
+import { useRoute } from "vue-router";
+let route = useRoute()
 const props = defineProps({
   detail_data: {
     type: Object,
