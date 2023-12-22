@@ -315,11 +315,15 @@ export default {
 
       .leagal-time {
         margin-left: 5px;
-        background-color: var(--q-gb-bg-c-10);
-        color: var(--q-gb-t-c-5);
+        // background-color: var(--q-gb-bg-c-10);
+        // color: var(--q-gb-t-c-5);
         padding: 2px 5px 2px 0px;
         :deep(.date-wrap) {
           display: flex;
+        }
+        :deep(.c-match-process) {
+          background-color: var(--q-gb-bg-c-10);
+          color: var(--q-gb-t-c-5);
         }
       }
     }

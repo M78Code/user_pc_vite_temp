@@ -718,18 +718,14 @@ const get_ol_length = (hp_item_obj, hp_i_i) => {
       return 2;
     }
   } else {
-    if ([1, 4, 11, 16,14].includes(+props.match.csid)) {
+    if ([1, 4, 11, 14, 16].includes(+props.match.csid)) {
       if (props.match.hps && props.match.hps[hp_i_i]) {
         if (props.match.hps[hp_i_i].hpid == 1) {
           return 3;
         }
       }
     }
-    if (
-      [1].includes(+props.match.csid) &&
-      hp_i_i == 0 &&
-      !lodash.get(props.match, "hps.length")
-    ) {
+    if ([1, 4, 11, 14, 16].includes(+props.match.csid) && hp_i_i == 0 && !lodash.get(props.match, "hps.length")) {
       return 3;
     }
   }
@@ -742,7 +738,8 @@ const get_ol_length = (hp_item_obj, hp_i_i) => {
  * @return Undefined Undefined
  */
 const get_ol_list = (hp_item, hp_i_i) => {
-  let ol_list = props.match.csid == 1 ? [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }] : [{ placeholder: 1 }, { placeholder: 1 }];
+  // let ol_list = props.match.csid == 1 ? [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }] : [{ placeholder: 1 }, { placeholder: 1 }];
+  let ol_list = [1, 4, 11, 16,14].includes(+props.match.csid) ? [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }] : [{ placeholder: 1 }, { placeholder: 1 }];
   if (lodash.get(hp_item, "hl[0].ol")) {
     ol_list = hp_item.hl[0].ol;
   } else {
@@ -766,6 +763,7 @@ const get_ol_list = (hp_item, hp_i_i) => {
       }
     }
   }
+  console.log(ol_list)
   return ol_list;
 };
 // 简版投注项选中时角球标志
@@ -800,7 +798,7 @@ const modify_overtime_status = (vuex_status) => {
 const show_3_space = () => {
   let r = false;
   if (footer_sub_menu_id() == 1) {
-    r = [1, 4, 11, 16].includes(props.match.csid * 1);
+    r = [1, 4, 11, 16, 14].includes(props.match.csid * 1);
   }
   if (PageSourceData.page_source == "detail_match_list") {
     r = false;
