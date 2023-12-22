@@ -4,7 +4,7 @@ import { fileds_map_common } from "src/output/module/constant-utils.js";
 import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
 import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class.js"
-import { get_score_config,get_market_is_show } from "./bet-box-submit.js"
+import { get_score_config,get_query_bet_amount_esports_or_vr,get_query_bet_amount_common } from "./bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/project/module/format-odds-conversion-mixin.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { nextTick, ref } from "vue"
@@ -882,12 +882,16 @@ this.bet_appoint_ball_head= null */
   // 删除投注项
   // oid 投注项id  index 投注项下标
   set_delete_bet_info(oid,index) {
-    
+    let single = false
+    let single_list = []
     // 删除投注项中的数据
     if(this.is_bet_single){
+      single = true
       this.bet_single_list.splice(index,1)
+      single_list = this.bet_single_list
     }else{
       this.bet_s_list.splice(index,1)
+      single_list = this.bet_s_list
     }
     
     // 获取oid在投注项id集合中的位置
@@ -896,6 +900,36 @@ this.bet_appoint_ball_head= null */
       this.bet_oid_list.splice(index_,1)
     }
     this.set_bet_data_class_version()
+    console.error('sadasdasdasd')
+    // 删除后的数据 是否可以去获取限额
+    let single_length = single_list.length
+    // 单关且有数据 才能去请求限额
+    if(single && single_length) {
+      let obj = single_list.find(item => ["C01","B03","O01"].includes(item.dataSource)) || {}
+      // 合并投注 多项
+      if(this.is_bet_merge ){
+        get_query_bet_amount_common()
+      }else {
+        // 电子赛事 走这个接口
+        if(obj.dataSource){
+          get_query_bet_amount_esports_or_vr()
+        }else{
+          get_query_bet_amount_common()
+        }
+      }
+    }
+
+    // 串关要大于1条才能去请求限额
+    if(!single && single_length > 1){
+      let obj = single_list.find(item => ['esports_bet','vr_bet'].includes(item.bet_type)) || {}
+      // 串关 在vr或者电竞里面 
+      if(obj.bet_type){
+        get_query_bet_amount_esports_or_vr()
+      }else{
+        get_query_bet_amount_common()
+      }
+    }
+    
   }
 
   // 投注项赔率变动

@@ -2461,7 +2461,12 @@
       "corner": "{X} Corner",
       "red_card": "{X} Red card",
       "yellow_card": "{X} Yellow card",
-      "yellow_red_card": "{X} Yellow Red card"
+      "yellow_red_card": "{X} Yellow Red card",
+      "new_gloal": "{X}Goal",
+      "new_corner": "{X}Corner",
+      "new_red_card": "{X}Red card",
+      "new_yellow_card": "{X}Yellow card",
+      "new_yellow_red_card": "{X}Yellow Red card"
     },
     "back_live": "Back to Live"
   },

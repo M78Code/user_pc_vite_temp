@@ -2242,7 +2242,12 @@
       "corner": "Sudut ke-{X}",
       "red_card": "Kartu Merah ke-{X}",
       "yellow_card": "Kartu Kuning ke-{X}",
-      "yellow_red_card": "Kartu Kuning Merah ke-{X}"
+      "yellow_red_card": "Kartu Kuning Merah ke-{X}",
+      "new_gloal": "Gol{X}",
+      "new_corner": "Sudut{X}",
+      "new_red_card": "Kartu Merah{X}",
+      "new_yellow_card": "Kartu Kuning{X}",
+      "new_yellow_red_card": "Kartu Kuning Merah{X}"
     },
     "back_live": "Balik Livestream"
   },

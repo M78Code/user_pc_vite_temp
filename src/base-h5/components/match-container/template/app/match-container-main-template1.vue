@@ -75,7 +75,7 @@
           <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
             <div class="odd-title-i-w flex">
               <div class="odd-t-i-wrapper flex items-center"
-                :class="{ 'status2': PageSourceData.standard_odd_status.value == 1 && match_of_list_ascertain.length > 3 }">
+                :class="{ 'status2': PageSourceData.standard_odd_status.value == 1 && i18n_t('list_title.' + match.csid + '.title').length > 3 }">
                 <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
                   :key="i" v-for="(hpl_title, i) of i18n_t('list_title.' + match.csid + '.title')">
                   <div class="hpl-t-inner">
@@ -117,7 +117,7 @@
 
                     <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                     <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                      {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
+                      {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
                     </div>
                     <!--一小时内开赛 -->
                     <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
@@ -1374,6 +1374,7 @@ export default {
   position: absolute;
   bottom: 0;
   width: 100%;
+  z-index: 100;
   :deep(.score-se-inner2){
     display: flex;
     flex-direction: row-reverse;
