@@ -14,9 +14,10 @@
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { computed } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
-import { IconWapper } from 'src/components/icon/index.js'
+import { LOCAL_PROJECT_FILE_PREFIX, i18n_t, LocalStorage } from "src/output/index.js";
+import { IconWapper } from 'src/components/icon/index.js';
 
+const theme = LocalStorage.get('theme');
 let title = ''
 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效 6-预约中 7-预约成功  8-预约取消
 const set_bet_order_status = computed(() => status => {
@@ -27,7 +28,11 @@ const set_bet_order_status = computed(() => status => {
     if(status == 6){
       title = i18n_t('pre_record.booking')
     }
-    return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_loading.png`
+    if(theme === 'theme-1') {
+      return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/img_order_loading_night.png`
+    } else {
+      return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/img_order_loading.png`
+    }
   }
   //3-投注成功状态(主要控制完成按钮)
   if([3,7].includes(status*1)){
@@ -36,7 +41,11 @@ const set_bet_order_status = computed(() => status => {
     if(status == 7){
       title = i18n_t('pre_record.booked')
     }
-    return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_success-y.png`
+    if(theme === 'theme-1') {
+      return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/img_order_success_night.png`
+    } else {
+      return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/img_order_success.png`
+    }
   }
   // ,4-投注失败状态,5-投注项失效
   if([4,5,8].includes(+status)){
@@ -45,7 +54,11 @@ const set_bet_order_status = computed(() => status => {
     if(status == 8){
       title = i18n_t('pre_record.booked_fail')
     }
-    return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_error.png`
+    if(theme === 'theme-1') {
+      return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/img_order_error_night.png`
+    } else {
+      return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/img_order_error.png`
+    }
   }
 })
 const bet_order_status_active = computed(()=>{
@@ -63,6 +76,10 @@ const bet_order_status_active = computed(()=>{
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  img {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
   .ty-bet-after-status-title{
     font-size: .16rem;
     font-weight: 500;
