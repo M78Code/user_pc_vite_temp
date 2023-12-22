@@ -1,200 +1,214 @@
 <template>
   <div class="highlights analysis-odds">
-    <!-- tab菜单 -->
-    <div class="heade-wrapper" :class="[{'is-result-details': menu_type == 28}, {'is-hidden': is_full_screen}]" v-if="lodash.get(get_detail_data, 'csid') == 1">
-      <div class="heade">
-        <span v-for="(item,i) in tab_list" :key="i"
-              :class="['ellipsis', {'is-active' : tabIndex == i}]"
-              @click="tab_click(item, i)"
-        >
-          {{ item.title }}
-        </span>
+    <!-- 精彩集锦 -->
+    <div class="wonderful">
+      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/border_left.svg`" alt="" class="border-left">
+      <div class="wonderful-header">
+        <p>精彩集锦</p>
+        <ul class="wonderful-tabs">
+          <li v-for="(item, i) in wonderful_tabs" :key="i" @click="change_wonderful_active(i)"
+              :class="[wonderful_active == i ? 'wonderful-active':'disable-text']">
+            {{ item.name }}
+          </li>
+        </ul>
       </div>
-    </div>
 
-    <div v-if="events_list.length" class="events-scroller" ref="events_scroller">
-      <div class="events-list">
-
-        <!-- 赛果详情页显示内容 -->
-        <template v-if="menu_type == 28">
-          <div class="row game-over">
-            <div class="time-line half-line"></div>
-            <div class="dot-game-over"></div>
-            <div class="item-flag icon-flag-game-over"></div>
-            <div class="item-content real-time-contv-ifent hairline-border">
-
-              <span class="time" v-if="get_detail_data.mmp==31">{{ i18n_t('mmp.1.31') }}</span>
-              <span class="time" v-else>{{ $filters.format_mgt_time(lodash.get(get_detail_data, 'mststr'))}}</span>
-              <span class="score">[{{ format_total_score(get_detail_data, 0) }}-{{ format_total_score(get_detail_data, 1) }}]</span>
-              <span class="text">{{ i18n_t('match_info.match_over') }}</span>
-            </div>
+      <!-- 内容 -->
+      <div class="wonderful-content">
+        <!-- tab菜单 -->
+        <div class="heade-wrapper" :class="[{'is-result-details': menu_type == 28}, {'is-hidden': is_full_screen}]" v-if="lodash.get(get_detail_data, 'csid') == 1">
+          <div class="heade">
+            <span v-for="(item,i) in tab_list" :key="i"
+                  :class="['ellipsis', {'is-active' : tabIndex == i}]"
+                  @click="tab_click(item, i)"
+            >
+              {{ item.title }}
+            </span>
           </div>
-        </template>
+        </div>
 
-        <!-- 常规详情页显示内容 -->
-        <template v-else>
-          <div class="row real-time">
-            <div class="time-line half-line start-half-line"></div>
-            <div class="dot-real-time"></div>
-            <div class="item-flag item-flag-real-time"></div>
-            <div class="item-content real-time-content hairline-border">
-              <span class="time" v-if="get_detail_data.mmp==31">{{ i18n_t('mmp.1.31') }}</span>
-              <span class="time" v-else>{{ real_time }}</span>
-              <span class="score">[{{ format_total_score(get_detail_data, 0) }}-{{ format_total_score(get_detail_data, 1) }}]</span>
-              <span class="text" >{{ i18n_t('msc.S1') }}</span>
+        <div class="wonderful-list" ref="wonderfulListRef">
+          <!-- 精彩回放列表 -->
+          <div class="row" v-for="(event, i) in events_list_vertical" :key="i">
+            <div class="time-line"></div>
+            <div class="time-line-ball"></div>
+            <div :class="['item-flag', flag_icon(event.eventCode)]"></div>
+            <div class="item-content hairline-border"  @click="handle_click_event(i, event)">
+              <!-- 背景图 -->
+              <div :style="{
+                'background-image': `url(${event.fragmentPic})`
+              }" class="fragment-pic">
+              <!-- 播放视频按钮 -->
+              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/play.svg`" alt="" class="play"/>
+              <span class="score">{{ event.t1 }}-{{ event.t2 }}</span>
+              <span class="time">{{ $filters.format_mgt_time(+event.secondsFromStart) }}</span>
             </div>
-          </div>
-        </template>
+              <div class="text-wrapper">
+                <!-- 点球大战 -->
+                <div class="text-scroller" v-if="event.matchPeriodId==50">
+                  <span class="text" v-scroll-text>
 
-        <!-- 精彩回放列表 -->
-        <div class="row" v-for="(event, i) in events_list_vertical" :key="i">
-          <div class="time-line"></div>
-          <div class="time-line-ball"></div>
-          <div :class="['item-flag', flag_icon(event.eventCode)]"></div>
-          <div class="item-content hairline-border"  @click="handle_click_event(i, event)">
-            <span class="time">{{ $filters.format_mgt_time(+event.secondsFromStart) }}</span>
-            <span class="score">[{{ event.t1 }}-{{ event.t2 }}]</span>
-            <div class="text-wrapper">
-              <!-- 点球大战 -->
-              <div class="text-scroller" v-if="event.matchPeriodId==50">
-                <span class="text" v-scroll-text>{{i18n_t('mmp')[1][event.matchPeriodId]}}</span>
+                     {{i18n_t('mmp')[1][event.matchPeriodId]}}
+                  </span>
+                </div>
+                <!-- 加时赛 -->
+                <div class="text-scroller" v-else-if="event.matchPeriodId==41||event.matchPeriodId==42">
+                  <span class="text" v-scroll-text>{{i18n_t('mmp')[2][40]}} {{event.homeAway}} {{i18n_tc(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
+                </div>
+                <div class="text-scroller" v-else>
+                  <span class="text" v-scroll-text>
+                    <span>{{event.homeAway}}</span>
+                    <span> {{  i18n_tc(`highlights.event_type.new_${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
+                  </span>
+                </div>
               </div>
-              <!-- 加时赛 -->
-              <div class="text-scroller" v-else-if="event.matchPeriodId==41||event.matchPeriodId==42">
-                <span class="text" v-scroll-text>{{i18n_t('mmp')[2][40]}} {{event.homeAway}} {{i18n_tc(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
-              </div>
-              <div class="text-scroller" v-else>
-                <span class="text" v-scroll-text>{{event.homeAway}} {{  i18n_tc(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
-              </div>
-            </div>
-            <i class="icon icon-replay-red"></i>
-          </div>
-
-          <div
-              v-show="i == event_index"
-              class="replay-wrapper"
-              :class="[
-                i == event_index && is_expand ? 'expand' : 'expand pack-up',
-                {
-                  'full-screen-replay-wrapper': is_hengping,
-                  'full-screen-portrait': is_full_screen && !is_hengping,
-                }
-              ]">
-            <div class="load-error-mask" v-show="is_expand && is_replay_load_error">
-              <div><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details/reconnect.svg`" /></div>
-              <div>{{ i18n_t('highlights.reconnect') }}</div>
+              <i class="icon icon-replay-red"></i>
             </div>
 
-            <!-- 精彩回放视频iframe -->
-            <iframe
-                v-if="i == event_index && is_expand"
-                v-show="!is_replay_load_error"
-                id="replayIframe"
-                :src="replay_video_src+'&rdm='+iframe_rdm"
-                style="width:100%;height:100%;"
-                allow="autoplay"
-                frameborder="0"
-                scrolling="no"
-                @load="handle_replay_video_loaded"
-            ></iframe>
+            <div
+                v-show="i == event_index"
+                class="replay-wrapper"
+                :class="[
+                  i == event_index && is_expand ? 'expand' : 'expand pack-up',
+                  {
+                    'full-screen-replay-wrapper': is_hengping,
+                    'full-screen-portrait': is_full_screen && !is_hengping,
+                  }
+                ]">
+              <div class="load-error-mask" v-show="is_expand && is_replay_load_error">
+                <div><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details/reconnect.svg`" /></div>
+                <div>{{ i18n_t('highlights.reconnect') }}</div>
+              </div>
 
-            <template v-if="i == event_index && is_expand">
-              <div v-show="is_controller_show" class="event-title-wrapper" :class="{'is-full-screen': is_full_screen}">
-                <!-- 事件title -->
-                <div class="event-title">{{event.homeAway}} {{i18n_tc(`highlights.event_type.${event.eventCode}`, {X: event.firstNum})}}</div>
-                <!-- 主客队比分 -->
-                <div class="home-away-score-wrapper">
-                  <team-img :type="0" :csid="lodash.get(get_detail_data, 'csid')" :url="lodash.get(get_detail_data, 'mhlu[0]')" :fr="menu_type != 3000 ? lodash.get(get_detail_data, 'frmhn[0]'): lodash.get(get_detail_data, 'frmhn')" :size="13"></team-img>
-                  <div class="score">
-                    <span>{{ event.t1 }}</span>
-                    <span class="colon">:</span>
-                    <span>{{ event.t2 }}</span>
+              <!-- 精彩回放视频iframe -->
+              <iframe
+                  v-if="i == event_index && is_expand"
+                  v-show="!is_replay_load_error"
+                  id="replayIframe"
+                  :src="replay_video_src+'&rdm='+iframe_rdm"
+                  style="width:100%;height:100%;"
+                  allow="autoplay"
+                  frameborder="0"
+                  scrolling="no"
+                  @load="handle_replay_video_loaded"
+              ></iframe>
+
+              <template v-if="i == event_index && is_expand">
+                <div v-show="is_controller_show" class="event-title-wrapper" :class="{'is-full-screen': is_full_screen}">
+                  <!-- 事件title -->
+                  <div class="event-title">{{event.homeAway}} {{i18n_tc(`highlights.event_type.${event.eventCode}`, {X: event.firstNum})}}</div>
+                  <!-- 主客队比分 -->
+                  <div class="home-away-score-wrapper">
+                    <team-img :type="0" :csid="lodash.get(get_detail_data, 'csid')" :url="lodash.get(get_detail_data, 'mhlu[0]')" :fr="menu_type != 3000 ? lodash.get(get_detail_data, 'frmhn[0]'): lodash.get(get_detail_data, 'frmhn')" :size="13"></team-img>
+                    <div class="score">
+                      <span>{{ event.t1 }}</span>
+                      <span class="colon">:</span>
+                      <span>{{ event.t2 }}</span>
+                    </div>
+                    <team-img :type="0" :csid="lodash.get(get_detail_data, 'csid')" :url="lodash.get(get_detail_data, 'malu[0]')" :fr="menu_type != 3000 ? lodash.get(get_detail_data, 'frman[0]'): lodash.get(get_detail_data, 'frman')" :size="13"></team-img>
                   </div>
-                  <team-img :type="0" :csid="lodash.get(get_detail_data, 'csid')" :url="lodash.get(get_detail_data, 'malu[0]')" :fr="menu_type != 3000 ? lodash.get(get_detail_data, 'frman[0]'): lodash.get(get_detail_data, 'frman')" :size="13"></team-img>
                 </div>
-              </div>
 
 
-              <!-- 顶部title、比分 -->
-              <title-x v-if="is_hengping && is_controller_show" @handle_callback="close_video" :get_detail_data="get_detail_data"></title-x>
+                <!-- 顶部title、比分 -->
+                <title-x v-if="is_hengping && is_controller_show" @handle_callback="close_video" :get_detail_data="get_detail_data"></title-x>
 
-              <!-- 精彩回放事件类型切换 -->
-              <tabs v-show="is_expand_video_list" :tabs="tab_list" @click="get_video_list" ref="tabs" :isChange="true"></tabs>
+                <!-- 精彩回放事件类型切换 -->
+                <tabs v-show="is_expand_video_list" :tabs="tab_list" @click="get_video_list" ref="tabs" :isChange="true"></tabs>
 
-              <!-- 精彩回放视频滚动列表 -->
-              <slider-x
-                v-if="is_hengping"
-                v-show="slider_events_list[0].eventId"
-                :slider_list="slider_events_list"
-                image_key="fragmentPic"
-                background-image
-                @click="change_event_video"
-                :class="{
-                  'video-move-in': is_expand_video_list,
-                  'video-move-in-middle': is_expand_video_list && is_slider_in_screen
-                }"
-                ref="slider_video"
-              >
-                <template v-slot:default="slotProps">
-                  <div class="score"><span>{{ slotProps.item.t1 }}</span><span class="colon">:</span><span>{{ slotProps.item.t2 }}</span></div>
-                  <div class="event-team ellipsis">{{ slotProps.item.homeAway }}</div>
-                  <div class="event-name">{{ event_name(slotProps.item.eventCode) }}: {{ slotProps.item.firstNum }}</div>
-                  <div class="event-time">{{ $filters.format_mgt_time(+slotProps.item.secondsFromStart) }}</div>
+                <!-- 精彩回放视频滚动列表 -->
+                <slider-x
+                  v-if="is_hengping"
+                  v-show="slider_events_list[0].eventId"
+                  :slider_list="slider_events_list"
+                  image_key="fragmentPic"
+                  background-image
+                  @click="change_event_video"
+                  :class="{
+                    'video-move-in': is_expand_video_list,
+                    'video-move-in-middle': is_expand_video_list && is_slider_in_screen
+                  }"
+                  ref="slider_video"
+                >
+                  <template v-slot:default="slotProps">
+                    <div class="score"><span>{{ slotProps.item.t1 }}</span><span class="colon">:</span><span>{{ slotProps.item.t2 }}</span></div>
+                    <div class="event-team ellipsis">{{ slotProps.item.homeAway }}</div>
+                    <div class="event-name">{{ event_name(slotProps.item.eventCode) }}: {{ slotProps.item.firstNum }}</div>
+                    <div class="event-time">{{ $filters.format_mgt_time(+slotProps.item.secondsFromStart) }}</div>
+                  </template>
+                </slider-x>
+
+                <!-- 回放视频标识logo -->
+                <div class="replay-logo-wrap" v-if="is_full_screen">
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details/replay_logo.svg`" />
+                </div>
+
+                <template v-if="is_hengping">
+                  <!--（精彩/收起）回放 -->
+                  <div class="toggle-replay-video-wrap hairline-border" :class="{'move-up': is_expand_video_list}" @click="toggle_slider_btn">
+                    <img src="image/bw3/svg/details/replay_toggle.svg" />
+                    <span>{{ !is_expand_video_list ? i18n_t('highlights.title') : i18n_t('highlights.collapse_replay') }}</span>
+                  </div>
+
+                  <!-- 关闭回放视频 -->
+                  <div class="close-video-wrap" @click="close_video">
+                    <img src="image/bw3/svg/details/close.svg" />
+                  </div>
                 </template>
-              </slider-x>
 
-              <!-- 回放视频标识logo -->
-              <div class="replay-logo-wrap" v-if="is_full_screen">
-                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details/replay_logo.svg`" />
-              </div>
-
-              <template v-if="is_hengping">
-                <!--（精彩/收起）回放 -->
-                <div class="toggle-replay-video-wrap hairline-border" :class="{'move-up': is_expand_video_list}" @click="toggle_slider_btn">
-                  <img src="image/bw3/svg/details/replay_toggle.svg" />
-                  <span>{{ !is_expand_video_list ? i18n_t('highlights.title') : i18n_t('highlights.collapse_replay') }}</span>
-                </div>
-
-                <!-- 关闭回放视频 -->
-                <div class="close-video-wrap" @click="close_video">
-                  <img src="image/bw3/svg/details/close.svg" />
+                <div v-show="is_controller_show && !is_replay_load_error" :class="{'bottom-controller-bar': is_full_screen && !get_is_hengping}">
+                  <!-- 视频声音 -->
+                  <div class="voice-wrap" @click="set_video_voice">
+                    <svg v-if="!current_event_video.voice" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 21 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8z"></path></svg>
+                    <svg v-else xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 21 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528zM25.152 16q0 2.72-1.536 5.056t-4 3.36q-0.256 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.704 0.672-1.056 1.024-0.512 1.376-0.8 1.312-0.96 2.048-2.4t0.736-3.104-0.736-3.104-2.048-2.4q-0.352-0.288-1.376-0.8-0.672-0.352-0.672-1.056 0-0.448 0.32-0.8t0.8-0.352q0.224 0 0.48 0.096 2.496 1.056 4 3.36t1.536 5.056z"></path></svg>
+                  </div>
+                  <!-- 视频info说明弹窗 -->
+                  <!--<div v-show="!is_hengping" class="tips-wrap" @click="change_info">-->
+                  <!--  <img src="image/bw3/svg/details/tips.svg" />-->
+                  <!--</div>-->
+                  <!-- 全屏按钮 -->
+                  <div class="full-screen-btn" @click="set_full_screen">
+                    <img v-if="is_full_screen"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`">
+                    <img v-else  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/full_screen.svg`">
+                  </div>
                 </div>
               </template>
-
-              <div v-show="is_controller_show && !is_replay_load_error" :class="{'bottom-controller-bar': is_full_screen && !get_is_hengping}">
-                <!-- 视频声音 -->
-                <div class="voice-wrap" @click="set_video_voice">
-                  <svg v-if="!current_event_video.voice" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 21 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8z"></path></svg>
-                  <svg v-else xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 21 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528zM25.152 16q0 2.72-1.536 5.056t-4 3.36q-0.256 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.704 0.672-1.056 1.024-0.512 1.376-0.8 1.312-0.96 2.048-2.4t0.736-3.104-0.736-3.104-2.048-2.4q-0.352-0.288-1.376-0.8-0.672-0.352-0.672-1.056 0-0.448 0.32-0.8t0.8-0.352q0.224 0 0.48 0.096 2.496 1.056 4 3.36t1.536 5.056z"></path></svg>
-                </div>
-                <!-- 视频info说明弹窗 -->
-                <!--<div v-show="!is_hengping" class="tips-wrap" @click="change_info">-->
-                <!--  <img src="image/bw3/svg/details/tips.svg" />-->
-                <!--</div>-->
-                <!-- 全屏按钮 -->
-                <div class="full-screen-btn" @click="set_full_screen">
-                  <img v-if="is_full_screen"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`">
-                  <img v-else  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/full_screen.svg`">
-                </div>
-              </div>
-            </template>
+            </div>
           </div>
         </div>
+      </div>
 
-        <!-- 赛事开始展示视图 -->
-        <div class="row game-start">
-          <div class="time-line half-line"></div>
-          <div class="dot-game-start"></div>
-          <div class="item-flag icon-flag-game-start"></div>
-          <div class="item-content">
-            <span class="time">00:00</span>
-            <span class="score">[0-0]</span>
-            <span class="text">{{ i18n_t('game.start') }}</span>
-          </div>
-        </div>
-
+      
+    </div>
+    
+    <div class="wonderful">
+      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/border_left.svg`" alt="" class="border-left">
+      <div class="wonderful-header" @click="change_event_active">
+        <p>赛事事件</p>
+        <!-- <ul class="wonderful-tabs">
+          <li v-for="(item, i) in wonderful_tabs" :key="i" @click="change_wonderful_active(i)"
+              :class="[wonderful_active == i ? 'wonderful-active':'disable-text']">
+            {{ item.name }}
+          </li>
+        </ul> -->
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/arrow.svg`" :class="['arrow', event_active ? 'rotate-90':'']"/>
+          
       </div>
     </div>
+
+    <div class="wonderful">
+      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/border_left.svg`" alt="" class="border-left">
+      <div class="wonderful-header">
+        <p>技术统计</p>
+        <ul class="wonderful-tabs">
+          <li v-for="(item, i) in bureau_tabs" :key="i" @click="change_bureau_tabs(i)"
+              :class="[bureau_active == i ? 'wonderful-active':'disable-text']">
+            {{ item.name }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    
   </div>
 </template>
 
@@ -266,8 +280,11 @@ setup(props, context){
   const update_slider_index_timer = ref(null)
   const is_controller_show_timer = ref(null)
   const is_replay_load_error_timer = ref(null)
+  /** @type {import('vue').Ref<HTMLDivElement>} */
+  const wonderfulListRef = ref(null);
   // 锚点
   const events_scroller = ref(null)
+  const event_active = ref(true);
   const tabs = ref(null)
   const slider_video = ref(null)
   // TODO:待调试处理
@@ -299,6 +316,20 @@ setup(props, context){
     event_id: '',
     slider_index: 0,
   })
+  // 局进度
+  const bureau_active = ref(0);
+  const bureau_tabs = computed(() => [
+    {name: '全场', id: 0},
+    {name: '上半场', id: 1},
+    {name: '下半场', id: 2},
+  ])
+  // 顶部tabs
+  const wonderful_tabs = computed(() => [
+    {name: '常规', id: 0},
+    {name: '加时', id: 1},
+    {name: '点球', id: 2},
+  ])
+  const wonderful_active = ref(0);
   // 是否是全屏
   const is_full_screen = ref(false)
   // 是否展示slider列表(全屏)
@@ -321,7 +352,8 @@ setup(props, context){
   // 赛果详情数据
   const get_detail_data = ref(matchDetailData.get_quick_mid_obj(route.params.mid))
   onMounted(() => {
-    pre_load_video.load_player_js()
+    pre_load_video.load_player_js(true);
+    console.log(get_detail_data, "get_detail_data");
     store.dispatch({
       type: 'SET_EVENT_LIST',
       data: []
@@ -351,6 +383,12 @@ setup(props, context){
         break;
     }
   }
+
+
+  const change_event_active = () => {
+    event_active.value = !event_active.value;
+  }
+
   // 检测精彩回放视频资源加载状态
   const check_replay_url = (url) => {
     api_common.get_full_url(url)
@@ -365,6 +403,10 @@ setup(props, context){
           is_replay_load_error.value = true
         }, 200)
       })
+  }
+
+  const change_wonderful_active = (value) => {
+    wonderful_active.value = value;
   }
   // 第X个——英文下转换
   const trans_num = (num) => {
@@ -391,6 +433,9 @@ setup(props, context){
     if (!is_full_screen.value) {
       is_expand.value = false
     }
+    wonderfulListRef.value.scrollTo({
+      left: 0
+    })
   }
   // 横屏下精彩回放的事件tab切换
   const get_video_list = ({ tab, index }) => {
@@ -711,6 +756,7 @@ setup(props, context){
   // 事件列表（非全屏）
   const events_list_vertical = computed(() => {
     const curr_tab_index = tabEvenCode.value
+    console.log(events_list.value, "events_list====");
     let new_events_list
     if (curr_tab_index == 0) {
       new_events_list = lodash.cloneDeep(events_list.value)
@@ -758,6 +804,10 @@ setup(props, context){
     return slider_events_list.length * Math.ceil(1.44 * font_size) < full_screen_width
   })
 
+  const change_bureau_tabs = (value) => {
+    bureau_active.value = value;
+  }
+
   onUnmounted(() => {
       clearInterval(get_football_replay_timer.value)
       get_football_replay_timer.value = null
@@ -775,8 +825,17 @@ setup(props, context){
     update_slider_index_timer,
     is_controller_show_timer,
     is_replay_load_error_timer,
+    wonderful_tabs,
+    wonderful_active,
+    wonderfulListRef,
+    change_event_active,
+    bureau_tabs,
+    change_bureau_tabs,
+    bureau_active,
+    event_active,
     // 锚点
     events_scroller,
+    change_wonderful_active,
     tabs,
     slider_video,
     // TODO:待调试处理
