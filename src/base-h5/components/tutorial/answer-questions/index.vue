@@ -285,7 +285,7 @@ const go_back = () => {
 
             .ht-anwser-item {
                 display: flex;
-                width: 1.48rem;
+                width: 1.46rem;
                 height: .7rem;
                 align-items: center;
                 justify-content: center;
