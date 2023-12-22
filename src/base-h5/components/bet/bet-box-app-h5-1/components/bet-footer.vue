@@ -36,7 +36,7 @@
 
         <!-- 串关 -->
         
-        <div @click="set_bet_single" class="bet-single f-c-c font500" :class="{'disabled': MenuData.is_kemp(),'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
+        <div @click="set_bet_single" class="bet-single f-c-c font500" :class="{'disabled': MenuData.is_kemp() || set_special_state(BetData.bet_data_class_version),'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
           <p>{{ !BetData.is_bet_single ? '单关投注':'+串' }}</p>
         </div>
     </div>
