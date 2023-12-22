@@ -14,7 +14,7 @@
       <DateTab @changeDate="setDate" ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
     <!-- <div v-if="+MenuData.get_menu_type_special() == 2000"> -->
-    <div v-if="[2000].includes(MenuData.top_menu_title?.mi)">
+    <div v-show="[2000].includes(MenuData.top_menu_title?.mi)">
       <!-- dataList[2000] -->
         <DateTab @changeDate="setDate" ref="dJdateTabMenu" :dataList="dataListEsports"  />
     </div>
@@ -120,7 +120,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   }
   // 设置滑动菜单的选中id
   const set_scroll_current = async (val,type) => {
-    if(MenuData.is_esports()){
+    if(MenuData.is_esports() && !type){
       const data_list_esports = await MenuData.getDateList(val?.csid);
       dataListEsports.value = data_list_esports;
       ref_data.current_mi = val.mi
