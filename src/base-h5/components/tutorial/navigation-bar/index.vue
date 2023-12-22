@@ -19,7 +19,7 @@
         <div v-else :style="{'flex' : ['switch', 'select'].includes(centerContentType) && 3}" class="navigation-bar-center navigation-bar-center-slot">
             <slot name="center"></slot>
         </div>
-        <div class="navigation-bar-right">
+        <div class="navigation-bar-right" @click="searchClick">
             <slot name="right"></slot>
         </div>
     </div>
@@ -29,7 +29,7 @@ import { i18n_t, compute_css_obj } from "src/output/index.js";
 import { useRouter,useRoute } from "vue-router";
 import {compute_local_project_file_path} from "src/output/index.js";
 import { MenuData } from "src/output/module/menu-data.js"
-
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 defineOptions({
     name: 'navigationBar' // 设置组件名称
 })
@@ -64,7 +64,15 @@ const set_back = () => {
         props.goBackAssign()
     }
 }
-
+/**
+ * 打开联赛筛选框
+ */
+const searchClick = () => {
+    // 派发首页设置菜单展开事件
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, {
+      open: true,
+    });
+}
 </script>
 <style scoped lang="scss">
 // 组件样式
