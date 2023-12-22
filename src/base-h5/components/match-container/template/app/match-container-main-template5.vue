@@ -25,7 +25,7 @@
       </div>
       <!-- 全部 -->
       <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_ball_seed_fold">
-        <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
+        <div> <img :src="icon_date" alt=""> <span>{{get_date_title}}</span> </div>
         <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
@@ -251,10 +251,10 @@ import ImageCacheLoad from "src/base-h5/components/match-list/components/public-
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 
 import { i18n_t, compute_img_url } from "src/output/index.js"
-import { format_time_zone } from "src/output/index.js"
+import { format_time_zone,format_M_D } from "src/output/index.js"
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2,date_time, is_detail,is_zaopan, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
@@ -374,6 +374,9 @@ export default {
       return format_odds(ov, obv)
 
     }
+    const get_date_title =computed(() => {
+      return is_zaopan.value&&Number(date_time.value)>0?format_M_D(date_time.value):i18n_t("filter.all_leagues")
+    })
     let mitt_list=[]
     onMounted(() => {
      mitt_list=[useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, e => {
@@ -388,7 +391,9 @@ export default {
       VirtualList.set_is_show_ball(true)
       VirtualList.set_is_change_handicap_height(0)
     })
+    
     return {
+      get_date_title,
       active_score,
       go_to_bet,
       ButtonTypes,
