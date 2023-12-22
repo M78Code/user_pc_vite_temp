@@ -30,7 +30,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { onMounted, onUnmounted, ref, watch } from "vue"
 import { MenuData } from "src/output/index.js";
 //国际化
-
+import  matchDetail from "src/core/match-detail/match-detail-class.js"
 const router = useRouter()
 const route = useRoute()
 
@@ -119,14 +119,15 @@ const result_tab = (index,tab_item) => {
         orderStatus: '1',
         orderBy: 2,
         }
-      let {code , data} = await api_betting.post_getOrderList(params)
+      let {code , data} = await api_betting.post_getH5OrderList(params)
       useMittEmit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, true)
-
+      
       if(code == 200) {
         tab_data_init()
-        if (data && data.record) {
+        if (data && !lodash.isEmpty(data.record)){
           list_data.value = data.record
-          set_note_sheet_records_data(list_data.value)
+          matchDetail.set_my_sheet(list_data.value)
+          // set_note_sheet_records_data(list_data.value)
           if(Object.keys(list_data.value).length>0) {
             tab_item_list.value.push({
               id:3,
@@ -144,7 +145,8 @@ const result_tab = (index,tab_item) => {
       console.error(error)
       useMittEmit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, false)
       tab_data_init()
-    } finally {
+    } 
+    finally {
       const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && lodash.get(props.result_detail_data, 'csid') == 1) {
         get_football_replay(0)

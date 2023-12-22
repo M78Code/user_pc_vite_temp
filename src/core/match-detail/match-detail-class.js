@@ -106,7 +106,9 @@ class MatchDetailCtr {
     // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
     this.fewer = 1;
      // 详情玩法集第一个
-     this.first_details_item = '0';
+    this.first_details_item = '0';
+    //赛果详情我的注单
+    this.note_sheet_records_data ={}
     /* =========H5 */
   }
 
@@ -168,7 +170,8 @@ class MatchDetailCtr {
       obj[`id_${x.id}`]=x
      })
      this.category_obj=obj
-     this.category_tab_click(obj[this.current_category_id])
+     if(obj[this.current_category_id])
+      this.category_tab_click(obj[this.current_category_id])
     }
   /**
    * 计算 所有投注 的 玩法级别 排序参照对象
@@ -451,8 +454,26 @@ class MatchDetailCtr {
   get_show_ol_handcip(ol){
     return o.os == 1 && o._hs != 11
   }
+  /**
+   * @description: 获取详情入参
+   * @return {*}
+   */
   get_parmas(){
     return this.params
+  }
+  /**
+   * @description: 设置赛果注单
+   * @return {*}
+   */
+  set_my_sheet(val){
+      this.note_sheet_records_data =val
+  }
+  /**
+   * @description: 设置赛果注单
+   * @return {*}
+   */
+  get_my_sheet(){
+    return this.note_sheet_records_data 
   }
 }
 

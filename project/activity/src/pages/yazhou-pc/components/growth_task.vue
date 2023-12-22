@@ -204,12 +204,18 @@
             </load-data>
           </div>
           <div class="pagination_wrap" v-if="history_records.length > 0">
-            <DataPager
-              class="record-data-pager"
-              :total="result_page_info.total"
-              :pageSize="7"
-              @change="data_page_changed"
-            />
+            <div class="pagination_with_input">
+              <q-pagination class="pagination pager"
+                            :model-value="result_page_info.current"
+                            @update:model-value="changeCurrnet"
+                            :max="hisToryTotal"
+                            boundary-numbers
+                            :max-pages="10"
+              ></q-pagination>
+              <p class="goto_page text-666">
+                <span @click="goToHistoryPage(null)">&nbsp;&nbsp;跳转至</span>&nbsp;&nbsp;<input type="number" v-model="goToPage" :max="hisToryTotal" @keyup="goToHistoryPage($event)">&nbsp;&nbsp;页
+              </p>
+            </div>
           </div>
         </div>
       </q-layout>
@@ -674,6 +680,11 @@ export default {
     box-shadow: var(--qq--activity-box-shadow-2);
     border-radius: 30px;
     height: 630px;
+    .pagination_with_input{
+      :deep(.bg-primary) {
+        background: var(--qq--activity-bg-color-7) !important;
+      }
+    }
 
     .content_title {
       width: 260px;
