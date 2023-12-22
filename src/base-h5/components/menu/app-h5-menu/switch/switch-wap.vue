@@ -28,7 +28,7 @@ import { project_name, MenuData } from "src/output/index.js";
  */
 const switchData = [
     {
-        defaultVal:2,
+        defaultVal:UserCtr.standard_edition,
         list:[
             {
                 name:"专业版",
@@ -59,7 +59,7 @@ const switchData = [
         ]
     },
     {
-        defaultVal:1,
+        defaultVal:UserCtr.sort_type,
         list:[
             {
                 name:"热门",
@@ -93,6 +93,7 @@ const switchData = [
         }).reverse()
     },
 ]
+
 </script>
 <style scoped lang="scss">
 .switch-wap {

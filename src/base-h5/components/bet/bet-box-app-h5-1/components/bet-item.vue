@@ -2,11 +2,12 @@
 <template>
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
-
+        <!-- 单关 盘口关闭状态 -->
         <div class="handicap-closed" v-if="BetData.is_bet_single && !(items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0)">
             <img :src="compute_local_project_file_path('/image/bet/handicap-closed.png')" alt="">
             <p>{{ i18n_t('bet.close') }}</p>
         </div>
+        <!-- 串关 盘口展示 及 盘口关闭状态 -->
         <div v-else class="f-b-s bet-content" :class="[
                 items.is_serial && !BetData.is_bet_single ? 'not-chain-bet' : '',
                 !(items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0) ? 'not-chain-bet' : ''
@@ -31,9 +32,6 @@
                 </div>
             </div>
             
-            <!-- 
-                ol_os: 1 盘口正常 2 盘口失效
-            -->
             <div class="fw-e-s bet-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                 <div class="f-c-c bet-money">
                     <span class="font14 font700 bet-odds-value f-c-c" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
@@ -104,11 +102,11 @@ const set_delete = () => {
 .bet-list {
    
     .bet-content {
-        min-height: 76px;
+        min-height: .76rem;
         padding: 0.12rem;
         margin-bottom: .04rem;
-        //padding-left: 34px;
-        font-size: 13px;
+        //padding-left: .34rem;
+        font-size: .13rem;
         font-weight: 500;
         font-style: normal;
         position: relative;
@@ -126,7 +124,7 @@ const set_delete = () => {
         }
 
         .bet-money {
-            height: 34px;
+            height: .34rem;
         }
 
         .bet-delete {
@@ -154,11 +152,11 @@ const set_delete = () => {
         }
 
         .bet-odds {
-            height: 34px;
+            height: .34rem;
         }
 
         .bet-right {
-            width: 160px;
+            width: 1.6rem;
             &.bet-invalid{
                 height: 100%;
                 .bet-disabled{
@@ -170,15 +168,15 @@ const set_delete = () => {
                     align-items: center;
                     span{
                         display: inline-block;
-                        padding: 0 20px;
-                        height: 26px;
+                        // padding: 0 .2rem;
+                        height: .26rem;
                         display: inline-block;
-                        border-radius: 2px;
-                        line-height: 26px;
+                        border-radius: .02rem;
+                        line-height: .26rem;
                         // background: var(--q-gb-bg-c-10);
-                        font-size: 12px;
+                        font-size: .12rem;
                         font-weight: 500;
-                        letter-spacing: 0px;
+                        letter-spacing: 0;
                         color: #949AB6;
                     }
                 }
@@ -217,10 +215,10 @@ const set_delete = () => {
     }
 
     .bet-market{
-        font-size: 13px;
+        font-size: .13rem;
         font-weight: 500;
-        line-height: 16px;
-        letter-spacing: 0px;
+        line-height: .16rem;
+        letter-spacing: 0;
         //http://api.sportxxxvo3.com/
     }
     .text-flow{

@@ -491,13 +491,11 @@ function fetch_filter_match() {
     //三级日期菜单时间戳
     get_md.value > -1 && m_type != 1 && Object.assign(params, { md: get_md.value });
   }
-  console.log('dsahfbadjfbafj',MenuData.get_euid(MenuData.get_current_sub_menuid()),11, MenuData);
   list_data_loading.value = true;
   //调用：v1/m/getFilterMatchList接口
   api_match_filter(params).then(({ code, data }) => {
 
     try {
-      console.error('datadatadatadatadata',data)
       let data_list = []
       data[0].sportVOs.forEach(item=>{
        item.tournamentList.forEach(sub=>{
@@ -505,7 +503,6 @@ function fetch_filter_match() {
         data_list.push(sub)
        }) 
       })
-      console.log('data_listdata_listdata_list',data_list)
       list_data_loading.value = false;
       // if (data[1] && data[1].length > 0) {
       //   no_find_content.value = false;
