@@ -98,7 +98,10 @@ class MatchMeta {
     this.clear_match_info()
 
     // 电竞、赛果、冠军 return
-    if (MenuData.is_esports() || MenuData.is_results() || MenuData.is_kemp()) return
+    if (MenuData.is_esports() || MenuData.is_results()) return
+
+    // 冠军
+    if (MenuData.is_kemp()) return this.get_champion_match()
 
     // 获取真实数据
     this.http_params.md = md
@@ -441,24 +444,38 @@ class MatchMeta {
    * @description 获取冠军赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_champion_match() {
-    console.log(1111111111111111)
     MatchFold.clear_fold_info()
     MatchDataBaseH5.clear()
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
-    const res = await api_common.post_match_full_list({
-      euid,
-      "cuid": UserCtr.get_uid(),
-      "type": 100,
-      "sort": UserCtr.sort_type,
-      "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
-    })
-    
-    if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
-    const list = lodash.get(res, 'data', [])
-    if (list.length < 1) return
-    MatchCollect.get_collect_match_data(list)
-    this.handle_custom_matchs(list)
+    try {
+      const res = await api_common.post_match_full_list({
+        euid,
+        "cuid": UserCtr.get_uid(),
+        "type": 100,
+        "sort": UserCtr.sort_type,
+        "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
+      })
+      
+      if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
+      const list = lodash.get(res, 'data', [])
+      if (list.length < 1) return
+      MatchCollect.get_collect_match_data(list)
+      this.handle_custom_matchs(list)
+    } catch (err) {
+      console.log(err)
+      // 当接口 报错，或者出现限频， 调用3次
+      if (this.error_http_count.match >= 3) {
+        if (this.match_mids.length < 1) this.set_page_match_empty_status({ state: true, type: 'noWifi' }); 
+      } else {
+        this.error_http_count.match++
+        let timer = setTimeout(() => {
+          this.get_champion_match()
+          clearTimeout(timer)
+          timer = null
+        }, 3000)
+      }
+    }
   }
 
   /**
@@ -888,7 +905,7 @@ class MatchMeta {
       ...params,
       md: String(MenuData.data_time)
     }
-    if (!MenuData.data_time) delete target_params.md
+    if(![3,6].includes(MenuData.current_lv_1_menu_mi.value) || !MenuData.data_time) delete target_params.md
     try {
       const res = await api_common.get_collect_matches(target_params)
       if (res.code !== '200') return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 

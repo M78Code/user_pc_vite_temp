@@ -184,6 +184,7 @@ defineProps({});
         width: 100%;
         caret-color: #179CFF;
         font-size: 0.14rem;
+        color: var(--q-gb-t-c-18);
         &::placeholder{
           color: var(--q-gb-t-c-16);
         }

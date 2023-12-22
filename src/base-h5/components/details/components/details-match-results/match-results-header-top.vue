@@ -8,7 +8,12 @@
         {{ format_total_score(data.data_list, 0)}}-{{ format_total_score(data.data_list, 1)}}
       </span>
     </div>
-    <span class="team-time" v-if="['result_details', 'match_result'].includes(Route.name) && project_name == 'app-h5'">{{ formatTime(+detail_data.mgt, 'mm/dd HH:MM')}}</span>
+    <template v-if="project_name == 'app-h5' && detail_data.csid == 1">
+      <span class="team-time" v-if="['result_details', 'match_result'].includes(Route.name)">
+        {{ formatTime(+detail_data.mgt, 'mm/dd HH:MM')}}
+      </span>
+    </template>
+    
     <!-- 描述比赛进度相关start -->
     <div class="team-text" :class="{baseball: detail_data.csid == '3' }">
         {{ match_status }}
