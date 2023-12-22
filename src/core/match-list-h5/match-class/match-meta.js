@@ -470,6 +470,7 @@ class MatchMeta {
     this.current_euid = `10000_${md}`
     if (!md) return []
     const params = this.get_base_params()
+    delete params.hpsFlag
     const res = await api_analysis.get_champion_match_result_api({
       ...params,
       type: 28,
