@@ -98,7 +98,7 @@ const odd_status = computed(() => {
   }
 
   .on {
-    color: var(--q-gb-t-c-20);
+    color: var(--q-gb-t-c-18);
     max-width: 1.06rem;
     text-overflow: ellipsis;
     overflow: hidden;
