@@ -15,9 +15,8 @@
                     
                     <span class="mr-4 text-009"> [{{ i18n_t(`odds.${items.marketType}`) }}]</span>
                
-                <div class="w-100 text-8a8 fon12 font400" style="margin: .04rem 0;" v-if="items.matchType != 3">{{items.matchName}}</div>
-                <div class="w-100 text-8a8 fon12 font400">{{ items.matchInfo }}
-                </div>
+                    <div class="w-100 text-8a8 fon12 font400" style="margin: .04rem 0;">{{ items.matchInfo }}</div>
+                    <div class="w-100 text-8a8 fon12 font400" v-if="items.matchType != 3">{{items.matchName}}</div>
                 </div>
             </div>
 
