@@ -4,12 +4,12 @@
  * @Description: 详情页蓝色背景上的大型字母图标
 -->
 <template>
-  <div class="team-img" :class="size == 22? 'team-img-s': ''">
+  <div class="team-img"  :style="sizeStyle" :class="size == 22? 'team-img-s': ''">
     <!-- 字母图标 -->
     <!-- {{url}}{{fr}}{{csid}} -->
     <!-- <img class="img-style" v-img="([url, fr, csid])" :class="[size == 22 && `img-style-s`]" alt /> -->
           <div
-              :style="compute_css_obj({key:'pc-team-logo-image',position:[url,fr, csid, ]})"  
+              :style="[compute_css_obj({key:'pc-team-logo-image',position:[url,fr, csid, ]}),sizeStyle]"  
               :class="[size == 22 && `img-style-s`]"
               class="img-style"
             ></div>
@@ -43,7 +43,7 @@ export default {
     },
     size: {
       type: Number,
-      default: 44
+      default: 18
     },
     fr: {
       type: String,
@@ -54,6 +54,14 @@ export default {
       default: ''
     }
   },
+  computed:{
+    sizeStyle(){
+      return  {
+        width:"0."+this.size+'rem',
+        height:"0."+this.size+'rem',
+      }
+    }
+  }
 };
 </script>
 
@@ -76,14 +84,14 @@ export default {
 }
 
 .team-img-s {
-  width: 0.3rem;
-  height: 0.3rem;
+  width: 0.3rem !important;
+  height: 0.3rem!important;
   margin: 0 auto;
   display: inline-block;
 }
 
 .img-style-s {
-  width: 0.3rem;
-  height: 0.3rem;
+  width: 0.3rem!important;
+  height: 0.3rem!important;
 }
 </style>

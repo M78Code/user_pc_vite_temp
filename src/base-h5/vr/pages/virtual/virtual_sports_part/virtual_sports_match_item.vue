@@ -194,6 +194,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 
 export default {
   // mixins:[betting,virtual_sports_m_item_mixin],
@@ -210,14 +211,14 @@ export default {
       vsports:null,
       standard_odd_status:0,
       is_basketball_score:false,
-      // arrows: "image/wwwassets/bw3/common/slide_icon_y0.svg",
-      arrows: "/public/app-h5/image/common/slide_icon_y0.svg",
-      // arrows_default: "image/wwwassets/bw3/common/slide_icon.svg",
-      arrows_default: "/public/app-h5/image/common/slide_icon.svg",
-      // arrows_reverse: "image/wwwassets/bw3/common/slide_icon_reverse_y0.svg",
-      arrows_reverse: "/public/app-h5/image/common/slide_icon_reverse_y0.svg",
-      // arrows_default_balck:"image/wwwassets/bw3/common/slide_icon_r.svg",
-      arrows_default_balck:"/public/app-h5/image/common/slide_icon_r.svg",
+      // arrows: `image/wwwassets/bw3/common/slide_icon_y0.svg",
+      arrows: `${LOCAL_PROJECT_FILE_PREFIX}/image/common/slide_icon_y0.svg`,
+      // arrows_default: `image/wwwassets/bw3/common/slide_icon.svg`,
+      arrows_default: `${LOCAL_PROJECT_FILE_PREFIX}/image/common/slide_icon.svg`,
+      // arrows_reverse: `image/wwwassets/bw3/common/slide_icon_reverse_y0.svg`,
+      arrows_reverse: `${LOCAL_PROJECT_FILE_PREFIX}/image/common/slide_icon_reverse_y0.svg`,
+      // arrows_default_balck:`image/wwwassets/bw3/common/slide_icon_r.svg`,
+      arrows_default_balck:`${LOCAL_PROJECT_FILE_PREFIX}/image/common/slide_icon_r.svg`,
       standard_edition  //新手版1    标准版  2
     }
   },

@@ -152,6 +152,26 @@
               >{{ props.row.q5 }}</span
             >
           </q-td>
+          <q-td key="q6" :props="props">
+            <span
+              :class="[
+                course === props.cols[csid == 2 ? 7 : 6]?.course
+                  ? 'heightLight'
+                  : '',
+              ]"
+              >{{ props.row.q6 }}</span
+            >
+          </q-td>
+          <q-td key="q7" :props="props">
+            <span
+              :class="[
+                course === props.cols[csid == 2 ? 8 : 7]?.course
+                  ? 'heightLight'
+                  : '',
+              ]"
+              >{{ props.row.q7 }}</span
+            >
+          </q-td>
           <!--新增加时赛比分和点球大战比分 end-->
           <q-td key="set" :props="props">
             <span>{{ props.row.set }}</span>
@@ -187,7 +207,7 @@
 import { onMounted, ref, computed, watch } from "vue";
 import { sport_columns, socre_dict } from "./score_config";
 import {
-  i18n_t,
+
   LOCAL_PROJECT_FILE_PREFIX,
 } from "src/output/index.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
@@ -355,6 +375,8 @@ const get_msc_data = (msc_data, current_data) => {
           q3: msc_data[2] ? msc_data[2][item.key] : "",
           q4: msc_data[3] ? msc_data[3][item.key] : "",
           q5: msc_data[4] ? msc_data[4][item.key] : "",
+          q6: msc_data[5] ? msc_data[5][item.key] : "",
+          q7: msc_data[6] ? msc_data[6][item.key] : "",
           set: score_list.S1 ? score_list?.S1[item.key] : 0, //
           p: current_data[item.key], //
         };
@@ -650,7 +672,7 @@ watch(
 }
 .table-name {
   margin-left: 15px;
-  width: 180px;
+  width: 160px;
   overflow: hidden;
   display: flex;
   align-items: center;

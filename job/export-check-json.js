@@ -31,7 +31,7 @@ console.log(colors.bgRed("export-check-json.js----------   ----"));
  
 
 // 商户配置 输出目录
-let write_folder = `./dist/${PROJECT_NAME}/`;
+let write_folder = `./dist/`;
 
  
 //确保配置 输出目录存在
