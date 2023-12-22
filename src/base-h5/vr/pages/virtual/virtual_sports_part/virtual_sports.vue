@@ -81,7 +81,7 @@
           <div class="league-name right-border">{{ lengue_name }}</div>
           <div class="status">
             <span class="num">{{ match_item_batch.no }}</span>
-            <!-- <span class="state">比赛中</span> -->
+            <span class="state">{{ match_item_batch.timer_format }}</span>
             <icon-wapper class="icon" :class="[!match_item_batch.is_expend && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
           </div>
         </div>
@@ -187,6 +187,7 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+
 export default {
   mixins:[common,virtual_sports_mixin],
   props:{
@@ -577,6 +578,25 @@ export default {
         }
       }
     },
+    /**
+     * 处理开赛时间
+     */
+    handle_match_time(batch){
+      const match = batch.matchs[0];
+      if(match){
+        let remaining_time = Number(match.mgt) - ServerTime.get_remote_time();
+        //毫秒格式化为: 分钟'秒''
+        let minutes = Math.floor(remaining_time / (1000 * 60));
+        let sub_ms_r = remaining_time - minutes * 60 * 1000;
+        let seconds_f = Math.floor(sub_ms_r / 1000);
+        minutes = String(minutes);
+        seconds_f = String(seconds_f);
+
+        let minutes_format = minutes.padStart(2, '0');
+        let seconds_f_format = seconds_f.padStart(2, '0');
+        batch.timer_format = `${minutes_format}'${seconds_f_format}"`;
+      }
+    }
   },
   computed:{
     //
@@ -601,6 +621,10 @@ export default {
     // 当前联赛的全部轮次
     match_list_all_batches(){
       const match_list_all_batches = [...this.virtual_match_list];
+      match_list_all_batches.forEach(batch=> {
+        this.handle_match_time(batch)
+      })
+
       // 足蓝全部展开，赛马类只展开第一个
       if(this.sub_menu_type == '1001' || this.sub_menu_type == '1004'){
           match_list_all_batches.forEach(batch=> {
