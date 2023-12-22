@@ -46,6 +46,7 @@
                         </div>
                         <div class="ht-button default" @click="() => { state.inAnswerQuestion = true }">
                             {{ i18n_t('app_h5.handicap_tutorial.practise') }}
+                            <span class="arrow"></span>
                         </div>
                     </div>
                 </div>
@@ -85,10 +86,10 @@ import { questionsData, bigAndSmallBallData, handicapData } from "./config.js"
 
 const switchMenu = [i18n_t('footer_menu.rangqiu') + i18n_t('app_h5.handicap_tutorial.introdution'), i18n_t('app_h5.handicap_tutorial.big_small_ball') + i18n_t('app_h5.handicap_tutorial.introdution')]
 const slideMenu = [
-    '0',
-    '0/0.5',
-    '0.5',
-    '0.5/1',
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '0'),
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '0/0.5'),
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '0.5'),
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '0.5/1'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1/1.5'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1.5'),
@@ -97,8 +98,8 @@ const slideMenu = [
 const bigSmallBallMenu = [
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '2.5'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '2.5/3'),
-    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '3/3.5'),
     i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '3'),
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '3/3.5'),
 ]
 
 const router = useRouter()

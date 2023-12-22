@@ -419,6 +419,7 @@ import { formete_date  } from "src/output/index.js";
 }
 .title {
   font-weight: 600;
+  color:var(--q-gb-t-c-18)
 }
 hr {
   margin: 0;

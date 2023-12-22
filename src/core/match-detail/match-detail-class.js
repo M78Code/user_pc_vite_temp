@@ -170,7 +170,8 @@ class MatchDetailCtr {
       obj[`id_${x.id}`]=x
      })
      this.category_obj=obj
-     this.category_tab_click(obj[this.current_category_id])
+     if(obj[this.current_category_id])
+      this.category_tab_click(obj[this.current_category_id])
     }
   /**
    * 计算 所有投注 的 玩法级别 排序参照对象

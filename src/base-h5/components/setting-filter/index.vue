@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="setting-item border" @click="jump_rule">
-        {{get_lang}}
+        <!-- {{get_lang}} -->
       <!-- 体育规则 -->
         <div class="title">{{ i18n_t('common.rule_description') }}</div>
         <div class="more">
