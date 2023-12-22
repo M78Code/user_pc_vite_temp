@@ -285,6 +285,7 @@ const state = reactive({
                     text-align: center;
                     margin-top: .03rem;
                     padding: .01rem .04rem;
+                    border-radius: .06rem;
                 }
 
                 .win {
