@@ -149,7 +149,6 @@ const result_tab = (index,tab_item) => {
     finally {
       const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && lodash.get(props.result_detail_data, 'csid') == 1) {
-        debugger
         get_football_replay(0)
       }
     }
