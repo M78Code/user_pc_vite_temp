@@ -103,7 +103,7 @@
               </v-s-match-list>
 
               <!-- 除当前赛事外，展示赔率信息 -->
-              <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
+              <div class="v-sports-ranking" v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)">
                   <div>
                     <!-- 赛马切换玩法集tab组件 -->
                     <!-- <virtual-sports-tab
@@ -113,7 +113,7 @@
                     <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
                     <!-- 赛马投注区域 -->
                     <div>
-                      <v-s-match-list2 v-if="![1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
+                      <v-s-match-list2 v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
                         :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
                         @switch_match="switch_match_handle"  @start="match_start_handle">
                       </v-s-match-list2>
