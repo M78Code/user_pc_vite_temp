@@ -100,7 +100,7 @@ const set_bet_pre = () => {
   // 预约开启 获取预约数据
   if(ref_data.is_bet_pre){
     get_query_bet_amount_pre()
-    BetData.set_bet_amount(0)
+    // BetData.set_bet_amount(0) //预约不重置金额
   }
   // 设置是否开启预约
   BetData.set_is_bet_pre(true)
@@ -147,9 +147,9 @@ const set_ref_data_bet_money = () => {
   ref_data.max_money = max_money
   // 复试串关赔率
   ref_data.seriesOdds = seriesOdds
-  // 限额改变 重置投注金额
-  ref_data.money = ''
-
+  // 限额改变 重置投注金额 如果大于当前额度为最大额度 如果最小额度旧是最小 否则保持
+  if(ref_data.money)
+    ref_data.money = ref_data.money>max_money?max_money: ref_data.money<min_money?min_money:ref_data.money
   // 设置键盘设置的限额和数据
   BetData.set_bet_keyboard_config({playOptionsId:props.item.playOptionsId})
 }
