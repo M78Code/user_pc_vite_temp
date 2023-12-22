@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineComponent, onUnmounted, watch, defineAsyncComponent,markRaw } from 'vue';
+import { ref, defineComponent, onUnmounted, watch } from 'vue';
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { i18n_t } from "src/boot/i18n.js"
 // import stage_child_1 from "./stage/stage-child-1.vue";  // 详情页显示足球赛事第几节以及赛事时间
