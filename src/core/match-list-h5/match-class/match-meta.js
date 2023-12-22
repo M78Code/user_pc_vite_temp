@@ -39,6 +39,8 @@ class MatchMeta {
     this.complete_mids = []
     // 赛事全量数据
     this.complete_matchs = []
+    // 列表渲染数据
+    this.current_matchs = []
     // 上一次滚动得距离
     this.prev_scroll = 0
     // 其他仓库的全量赛事
@@ -819,6 +821,35 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取收藏接口的 euid
+   */
+  get_collect_euid () {
+    const lv_2_menu_i = MenuData.current_lv_2_menu_i
+    let mid_list = lodash.get(MenuData,'collect_list')
+    let lv1_mi = lodash.get(MenuData,'current_lv_1_menu_i')
+    let euid = ''
+    // 复刻版非冠军收藏
+    if (project_name === 'app-h5' && lv_2_menu_i == 50000 && !MenuData.is_kemp()) {
+      const menu_list = lodash.get(MenuData,'menu_list')
+      euid = menu_list.map(item => MenuData.get_euid(item.mi+''+lv1_mi)).join(',')
+    // 复刻版冠军收藏
+    } else if (project_name === 'app-h5' && lv_2_menu_i == 50000 && MenuData.is_kemp()) {
+      const menu_lv_mi_lsit = lodash.get(MenuData,'menu_lv_mi_lsit')
+      euid = menu_lv_mi_lsit.map(item => MenuData.get_euid(item.mi+'')).join(',')
+    } else if(lv_2_menu_i == 0){
+      // 根据 菜单id 获取euid
+      mid_list.forEach(item => {
+        if(BaseData.mi_euid_map_res[item.mi] && BaseData.mi_euid_map_res[item.mi].h){
+          euid += BaseData.mi_euid_map_res[item.mi].h + ','
+        }
+      })
+    } else{
+      euid = MenuData.get_euid(lv_2_menu_i+''+lv1_mi)
+    }
+    return euid
+  }
+
+  /**
    * @description 获取电竞收藏赛事
    */
   async get_esports_collect_match() {
@@ -847,35 +878,16 @@ class MatchMeta {
    */
   async get_collect_match () {
     this.clear_match_info()
-    const lv_2_menu_i = MenuData.current_lv_2_menu_i
-    let mid_list = lodash.get(MenuData,'collect_list')
-    let lv1_mi = lodash.get(MenuData,'current_lv_1_menu_i')
-    let euid = ''
-    // 复刻版非冠军收藏
-    if (project_name === 'app-h5' && lv_2_menu_i == 50000 && !MenuData.is_kemp()) {
-      const menu_list = lodash.get(MenuData,'menu_list')
-      euid = menu_list.map(item => MenuData.get_euid(item.mi+''+lv1_mi)).join(',')
-    // 复刻版冠军收藏
-    } else if (project_name === 'app-h5' && lv_2_menu_i == 50000 && MenuData.is_kemp()) {
-      const menu_lv_mi_lsit = lodash.get(MenuData,'menu_lv_mi_lsit')
-      euid = menu_lv_mi_lsit.map(item => MenuData.get_euid(item.mi+'')).join(',')
-    } else if(lv_2_menu_i == 0){
-      // 根据 菜单id 获取euid
-      mid_list.forEach(item => {
-        if(BaseData.mi_euid_map_res[item.mi] && BaseData.mi_euid_map_res[item.mi].h){
-          euid += BaseData.mi_euid_map_res[item.mi].h + ','
-        }
-      })
-    } else{
-      euid = MenuData.get_euid(lv_2_menu_i+''+lv1_mi)
-    }
+    const euid = this.get_collect_euid()
     const params = this.get_base_params(euid)
     delete params.hpsFlag
+    const target_params = {
+      ...params,
+      md: String(MenuData.data_time)
+    }
+    if (!MenuData.data_time) delete target_params.md
     try {
-      const res = await api_common.get_collect_matches({
-        ...params,
-        md: String(MenuData.data_time)
-      })
+      const res = await api_common.get_collect_matches(target_params)
       // 冠军
       if (MenuData.is_kemp()) {
         const list = lodash.get(res, 'data', [])
@@ -1016,6 +1028,7 @@ class MatchMeta {
     const custom_match_mids = target_list.map(t => t.mid)
 
     this.complete_matchs = target_list
+    this.current_matchs = target_list
     this.complete_mids = lodash.uniq(custom_match_mids)
     this.match_mids = lodash.uniq(custom_match_mids)
     
@@ -1104,6 +1117,7 @@ class MatchMeta {
       this.other_complete_mids = result_mids
     } else {
       this.complete_matchs = matchs_data
+      this.current_matchs = matchs_data
       this.complete_mids = result_mids
     }
 
@@ -1161,6 +1175,7 @@ class MatchMeta {
         is_show_ball_title
       }
     })
+    this.current_matchs = this.complete_matchs
 
     const length = lodash.get(this.complete_matchs, 'length', 0)
     this.set_page_match_empty_status({ state: length > 0 ? false : true });
@@ -1205,6 +1220,25 @@ class MatchMeta {
     // 获取赔率
     if (type === 1) return this.handle_submit_warehouse({ list: match_datas, warehouse, is_again })
   
+  }
+
+  /**
+   * @description 计算当前赛事数据
+   */
+  compute_current_matchs () {
+    const complete_matchs = lodash.get(this, 'complete_matchs', [])
+    // 折叠对象
+    const fold_data = MatchFold.match_mid_fold_obj.value
+    this.current_matchs = []
+    complete_matchs.forEach((match) => {
+      const { mid, is_show_league } = match
+      if (!mid) return
+      // 赛事折叠信息
+      const fold_key = MatchFold.get_match_fold_key(match)
+      // 赛事是否显示
+      const show_card = lodash.get(fold_data[fold_key], `show_card`)
+      if (is_show_league || show_card) this.current_matchs.push(match)
+    })
   }
 
   /**
@@ -1253,6 +1287,7 @@ class MatchMeta {
   clear_match_info () {
     this.match_mids = []
     this.complete_matchs = []
+    this.current_matchs = []
     this.complete_mids = []
   }
 
@@ -1420,6 +1455,12 @@ class MatchMeta {
           if (item) {
             const index = lodash.findIndex(this.complete_matchs, (match) => match.mid === t.mid)
             if (index > -1) this.complete_matchs[index] = Object.assign({}, item, t)
+          }
+          // TODO: 测试代码， 先别动
+          const c_item = lodash.find(this.current_matchs, (match) => match.mid === t.mid)
+          if (c_item) {
+            const c_index = lodash.findIndex(this.current_matchs, (match) => match.mid === t.mid)
+            if (c_index > -1) this.current_matchs[c_index] = Object.assign({}, c_item, t)
           }
         })
         // 设置仓库渲染数据

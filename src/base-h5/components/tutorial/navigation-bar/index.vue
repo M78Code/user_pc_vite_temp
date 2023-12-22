@@ -95,6 +95,7 @@ const set_back = () => {
         justify-content: center;
         overflow: hidden;
         color: var(--q-gb-t-c-18);
+        flex: 2;
         span {
             font-size: .18rem;
             width: 100%;
