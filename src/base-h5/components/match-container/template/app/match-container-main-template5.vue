@@ -939,6 +939,9 @@ export default {
 
           &.right {
             justify-content: flex-start;
+            .is-handicap {
+              color: #74C4FF;
+            }
           }
         }
       }
