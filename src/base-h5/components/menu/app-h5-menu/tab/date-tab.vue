@@ -58,7 +58,7 @@ onUnmounted(()=>{
  */
 const changeTabMenu = (item, i, event,type) => {
     event = event || dateTab.value[0];
-    if(activeOn.value === i)return;
+    // if(activeOn.value === i && !type)return;
     activeOn.value = i;
     // 设置日期
     MenuData.set_date_time(i,props.dataList?.[i]?.val)

@@ -14,7 +14,7 @@
       <DateTab @changeDate="setDate" ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
     <!-- <div v-if="+MenuData.get_menu_type_special() == 2000"> -->
-    <div v-if="[2000].includes(MenuData.top_menu_title?.mi)">
+    <div v-show="[2000].includes(MenuData.top_menu_title?.mi)">
       <!-- dataList[2000] -->
         <DateTab @changeDate="setDate" ref="dJdateTabMenu" :dataList="dataListEsports"  />
     </div>
@@ -120,13 +120,13 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   }
   // 设置滑动菜单的选中id
   const set_scroll_current = async (val,type) => {
-    if(MenuData.is_esports()){
+    if(MenuData.is_esports() && !type){
       const data_list_esports = await MenuData.getDateList(val?.csid);
       dataListEsports.value = data_list_esports;
       ref_data.current_mi = val.mi
       MenuData.set_current_lv_2_menu_i(val)
       nextTick(()=>{
-        dJdateTabMenu.value.changeTabMenu({},0,'',type);
+        dJdateTabMenu.value?.changeTabMenu({},0,'',type);
       })
       return;
     }
@@ -274,7 +274,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
   // 根据一级菜单 设置滑动菜单数据
   const set_scroll_data_list = (mid,type) => {
-    ref_data.scroll_data_list = MenuData.get_menu_lvmi_list(mid)
+    ref_data.scroll_data_list = MenuData.get_menu_lvmi_list(mid);
+    const is_sport_id = ref_data.scroll_data_list.some(n=>{return MenuData.recombine_menu_desc(n.mi) == MenuData.recombine_menu_desc(MenuData.current_lv_2_menu_i)});
     // let index = 0
     // 今日/滚球第一位是收藏 默认选中足球/全部 
     // if( [1,2].includes(mid*1) ){
@@ -282,6 +283,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // }
     if(MenuData.is_collect() && [3,6].includes(MenuData.current_lv_1_menu_mi.value)){
       ref_data.current_mi =MenuData.current_lv_2_menu_i;
+    }else if(is_sport_id && [1,2,3,6].includes(MenuData.current_lv_1_menu_mi.value)){
+      ref_data.current_mi =`${MenuData.recombine_menu_desc(MenuData.current_lv_2_menu_i)}${MenuData.current_lv_1_menu_mi.value}`;
     }else{
       let obj = lodash_.get(ref_data.scroll_data_list,`[${0}]`,{})
       // 设置二级菜单 

@@ -30,7 +30,7 @@
       </div>
       <!-- 全部 -->
       <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
-        <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
+        <div> <img :src="icon_date" alt=""> <span>{{ title }}</span> </div>
         <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
@@ -105,8 +105,8 @@
                   <!-- 赛事日期标准版 -->
                   <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
-                    <!-- 赛事回合数mfo -->
-                    <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
+                    <!-- 赛事回合数mfo match.ms != 1(不为开赛)-->
+                    <div v-if="match.mfo && match.ms != 1" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
                       {{ match.mfo }}
                     </div>
 
@@ -174,8 +174,13 @@
                           'is-handicap': match.handicap_index == 1,
                           'is-handicap-1': match.handicap_index == 2,
                         }">
-                          {{ match.mhn }}
+                          <span>{{ match.mhn }}</span>
+
                         </div>
+                        <!--发球方绿点-->
+                        <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                          v-show="set_serving_side(match_of_list, 'home')">
+                        </span>
                         <template v-if="home_red_score || home_yellow_score">
                           <!-- 红牌 -->
                           <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
@@ -197,10 +202,7 @@
                         :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
                         {{ home_score }}
                       </div>
-                      <!--发球方绿点-->
-                      <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                        v-show="set_serving_side(match_of_list, 'home')">
-                      </span>
+
                     </div>
                     <!--客队图片和名称-->
                     <div class='team-title-container' :class="{
@@ -216,15 +218,19 @@
                         }">
                           <span>{{ match.man }}</span>
                         </div>
+                        <!--发球方绿点-->
+                        <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                          v-show="set_serving_side(match_of_list, 'away')">
+                        </span>
                         <template v-if="home_red_score || home_yellow_score">
                           <!-- 红牌 -->
                           <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
                             {{ away_red_score }}
                           </span>
                           <!-- 黄牌 -->
-                          <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
+                          <!-- <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
                             {{ away_yellow_score }}
-                          </span>
+                          </span> -->
                         </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
@@ -238,10 +244,7 @@
                       :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
                       {{ away_score }}
                     </div>
-                    <!--发球方绿点-->
-                    <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                      v-show="set_serving_side(match_of_list, 'away')">
-                    </span>
+
                   </div>
                   <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
                   <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
@@ -262,13 +265,13 @@
                           v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
                           <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
                         </div>
-                        <!-- 此赛事支持提前结算 -->
-                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
-                          <img :src="mearlys_icon_app" alt="">
-                        </div>
                         <!-- 角球 -->
                         <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle" v-if="match.csid == 1 && get_corner_kick">
                           <img :class="['live-icon-btn']" :src='corner_icon' />
+                        </div>
+                        <!-- 此赛事支持提前结算 -->
+                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
+                          <img :src="mearlys_icon_app" alt="">
                         </div>
                       </div>
                     </div>
@@ -306,7 +309,7 @@ import ScoreList from 'src/base-h5/components/match-container/template/app/compo
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
-import { i18n_t, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData, format_time_zone } from "src/output/index.js"
+import { i18n_t,format_M_D, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData, format_time_zone } from "src/output/index.js"
 import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
@@ -335,13 +338,18 @@ export default {
     CountingDownStart,
     CountingDownSecond,
   },
+  
   setup (ctx) {
     // 是否显示球种标题
     const show_sport_title = computed(() => {
       const { is_show_ball_title } = ctx.match_of_list
       return is_show_ball_title
     })
-    return { 
+    const title=computed(()=>{
+      //早盘日期 显示的是日期  全部是全部
+      return is_zaopan.value&&lodash.isNumber(MenuData.current_lv_3_menu.field1)?format_M_D(MenuData.current_lv_3_menu.field1):i18n_t("filter.all_leagues")
+    })
+    return { title,
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin, MenuData,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,icon_date,
       normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan, expand_item
@@ -1256,15 +1264,21 @@ export default {
         }
 
         .serving-party {
-          display: block;
+        //   display: block;
+        //   width: 4px;
+        //   height: 4px;
+        //   border-radius: 50%;
+        //   background: var(--sys-feedback-success-success-400, #4AB06A);
+        //   flex-shrink: 0;
+        //   position: absolute;
+        //   left: 1.25rem;
+        //   top: 0.16rem;
+          border-radius: 2px;
+          background: var(--sys-feedback-success-success-400, #4AB06A);
           width: 4px;
           height: 4px;
-          border-radius: 50%;
-          background: var(--sys-feedback-success-success-400, #4AB06A);
-          flex-shrink: 0;
-          position: absolute;
-          left: 1.25rem;
-          top: 0.16rem;
+          margin-left: 4px;
+
           &.simple {
             margin-right: 0.03rem;
           }
