@@ -640,7 +640,7 @@ const info_icon_click = ($event, mid) => {
  * @param {Number} dir 0 向左; 1 向右
  */
 const is_show_scroll_dir = (dir) => {
-  let have_2_part = get_hp_list(1).length;
+  let have_2_part = get_hp_list(dir).length;
   if (!have_2_part) return false;
   // 增加水球csid：16 联合式橄榄球14 的显示
   if (dir == 0) {
@@ -763,7 +763,6 @@ const get_ol_list = (hp_item, hp_i_i) => {
       }
     }
   }
-  console.log(ol_list)
   return ol_list;
 };
 // 简版投注项选中时角球标志
