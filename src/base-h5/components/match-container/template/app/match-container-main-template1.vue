@@ -1374,6 +1374,7 @@ export default {
   position: absolute;
   bottom: 0;
   width: 100%;
+  z-index: 100;
   :deep(.score-se-inner2){
     display: flex;
     flex-direction: row-reverse;
