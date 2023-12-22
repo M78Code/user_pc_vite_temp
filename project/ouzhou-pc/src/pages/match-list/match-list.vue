@@ -109,7 +109,8 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 
 import {
   compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES, useMittEmit,
-  GlobalAccessConfig, MatchDataWarehouse_ouzhou_PC_five_league_List_Common
+  GlobalAccessConfig, MatchDataWarehouse_ouzhou_PC_five_league_List_Common,
+  into_home_event,UserCtr
 } from "src/output/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import MatchMainTitle from "src/base-pc/components/match-list/match_main_title.vue";
@@ -161,6 +162,9 @@ export default {
 
 
     onMounted(() => {
+      console.error('ou pc',UserCtr);
+      // 发送进入首页埋点消息
+      lodash.get(UserCtr,'user_info.userId') && into_home_event();
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
       MenuData.is_home() && get_data_info({ is_socket: false })//欧洲版只有首页才执行  其他是由菜单驱动列表的

@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
+  <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;">
       <div class="nonebox4-fourth">
           <div class="nonebox4-fourth-a">
               <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum(BetData.bet_data_class_version)" :key='item' :data-number='index'>{{item}}</div>

@@ -58,7 +58,7 @@ all_resolve_fn.resolve_topic_project_build_type_1=(config,params,result)=>{
     //          需要全素材版本隔离
     //          如果确认只会有一个版本可以采用这种方案
 
-    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${BUILD_VERSION}/`
+    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_VERSION}/`
     // BUILD_BASE： 开发或生产环境服务的公共基础路径，用于 js 和 css 
 
     result.BUILD_BASE = `/${BUILD_DIR_NAME}/${BUILD_VERSION}/` 
@@ -73,19 +73,17 @@ all_resolve_fn.resolve_topic_project_build_type_1=(config,params,result)=>{
     //html path  打包后的 html 文件 原地址  
     result.BUILD_HTML_FILE_RAW_PATH = `./${result.BUILD_OUTDIR}/project/${PROJECT_NAME}/index.html`
     //html path  打包后的 html 文件 需要拷贝 到的 目标地址
-    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/index.html` 
+    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/index.html` 
     
 
     //原 public 下的 静态素材   打包后的   原地址  
     result.BUILD_STATIC_DIR_PATH = `./${result.BUILD_OUTDIR}`
     //原 public 下的 静态素材   打包后的  文件 需要拷贝 到的 目标地址
-    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist/${BUILD_DIR_NAME}${result.LOCAL_COMMON_FILE_PREFIX}/`
+    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist${result.LOCAL_COMMON_FILE_PREFIX}/`
     
-    //原 public 下的 静态素材   打包后的 地址  是否 需要进行改变
-    result.BUILD_STATIC_DIR_NEED_CHANGE =false
-
+ 
     //运维传输目录 
-    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/`
+    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/`
 
 
 }
@@ -121,7 +119,7 @@ all_resolve_fn.resolve_topic_project_build_type_2=(config,params,result)=>{
 
   
 
-    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}`
+    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}`
     // BUILD_BASE： 开发或生产环境服务的公共基础路径，用于 js 和 css 
 
     result.BUILD_BASE =     `/${BUILD_DIR_NAME}/` 
@@ -134,19 +132,18 @@ all_resolve_fn.resolve_topic_project_build_type_2=(config,params,result)=>{
     //html path  打包后的 html 文件 原地址  
     result.BUILD_HTML_FILE_RAW_PATH = `./${result.BUILD_OUTDIR}/project/${PROJECT_NAME}/index.html`
     //html path  打包后的 html 文件 需要拷贝 到的 目标地址
-    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/index.html` 
+    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/index.html` 
 
  
     //原 public 下的 静态素材   打包后的   原地址  
     result.BUILD_STATIC_DIR_PATH = `./${result.BUILD_OUTDIR}`
     //原 public 下的 静态素材   打包后的  文件 需要拷贝 到的 目标地址
-    result.BUILD_STATIC_DIR_TARGET_PATH =`./dist/${BUILD_DIR_NAME}${result.LOCAL_COMMON_FILE_PREFIX}/`
+    result.BUILD_STATIC_DIR_TARGET_PATH =`./dist${result.LOCAL_COMMON_FILE_PREFIX}/`
     
-    //原 public 下的 静态素材   打包后的 地址  是否 需要进行改变
-    result.BUILD_STATIC_DIR_NEED_CHANGE =false
+ 
 
     //运维传输目录 
-    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/`
+    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/`
 
 
 }
@@ -189,7 +186,7 @@ all_resolve_fn.resolve_topic_project_build_type_3=(config,params,result)=>{
   
   
 
-    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/` 
+    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/` 
     //BUILD_BASE： 开发或生产环境服务的公共基础路径，用于 js 和 css 
 
     result.BUILD_BASE =   `/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/` 
@@ -204,20 +201,19 @@ all_resolve_fn.resolve_topic_project_build_type_3=(config,params,result)=>{
     //html path  打包后的 html 文件 原地址  
     result.BUILD_HTML_FILE_RAW_PATH = `./${result.BUILD_OUTDIR}/project/${PROJECT_NAME}/index.html`
     //html path  打包后的 html 文件 需要拷贝 到的 目标地址
-    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/index.html` 
+    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/index.html` 
   
 
      
     //原 public 下的 静态素材   打包后的   原地址  
     result.BUILD_STATIC_DIR_PATH = `./${result.BUILD_OUTDIR}`
     //原 public 下的 静态素材   打包后的  文件 需要拷贝 到的 目标地址
-    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist/${BUILD_DIR_NAME}${result.LOCAL_COMMON_FILE_PREFIX}/`
+    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist${result.LOCAL_COMMON_FILE_PREFIX}/`
     
-    //原 public 下的 静态素材   打包后的 地址  是否 需要进行改变
-    result.BUILD_STATIC_DIR_NEED_CHANGE =true
+
 
     //运维传输目录 
-    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/`
+    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/`
   }
   
   
@@ -251,12 +247,12 @@ all_resolve_fn.resolve_topic_project_build_type_3=(config,params,result)=>{
     //           拷贝提升原代码内的这个项目的静态素材到  外层（topic.根域/activity/版本号/）公用  ，区分版本号 ，做静态素材版本隔离 
     //           如果确认有多个版本 并且符合上述 特征 可以采用这种方案
     //  打包后 所有 项目级别  BUILD_OUTDIR   目录下的 静态素材（原public 目录下 拷贝过来的 ） 需要删除
-    //  打包完成后 需要 拷贝 原public 目录下的这个项目的静态素材 到  dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/ 内
+    //  打包完成后 需要 拷贝 原public 目录下的这个项目的静态素材 到  dist/${BUILD_DIR_NAME}/ 内
 
   
   
 
-    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/` 
+    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/` 
     //BUILD_BASE： 开发或生产环境服务的公共基础路径，用于 js 和 css 
 
     result.BUILD_BASE =   `/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/` 
@@ -272,20 +268,19 @@ all_resolve_fn.resolve_topic_project_build_type_3=(config,params,result)=>{
     //html path  打包后的 html 文件 原地址  
     result.BUILD_HTML_FILE_RAW_PATH = `./${result.BUILD_OUTDIR}/project/${PROJECT_NAME}/index.html`
     //html path  打包后的 html 文件 需要拷贝 到的 目标地址
-    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/index.html` 
+    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/index.html` 
   
   
      
     //原 public 下的 静态素材   打包后的   原地址  
     result.BUILD_STATIC_DIR_PATH = `./${result.BUILD_OUTDIR}`
     //原 public 下的 静态素材   打包后的  文件 需要拷贝 到的 目标地址
-    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist/${BUILD_DIR_NAME}${result.LOCAL_COMMON_FILE_PREFIX}/`
+    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist${result.LOCAL_COMMON_FILE_PREFIX}/`
     
-    //原 public 下的 静态素材   打包后的 地址  是否 需要进行改变
-    result.BUILD_STATIC_DIR_NEED_CHANGE =true
+
 
     //运维传输目录 
-    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/`
+    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/`
 
   
   }
@@ -331,7 +326,7 @@ all_resolve_fn.resolve_topic_project_build_type_3=(config,params,result)=>{
   
   
 
-    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${BUILD_VERSION}/` 
+    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${BUILD_VERSION}/` 
     //BUILD_BASE： 开发或生产环境服务的公共基础路径，用于 js 和 css 
 
     result.BUILD_BASE =   `/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${BUILD_VERSION}/`  
@@ -347,7 +342,7 @@ all_resolve_fn.resolve_topic_project_build_type_3=(config,params,result)=>{
     //html path  打包后的 html 文件 原地址  
     result.BUILD_HTML_FILE_RAW_PATH = `./${result.BUILD_OUTDIR}/project/${PROJECT_NAME}/index.html`
     //html path  打包后的 html 文件 需要拷贝 到的 目标地址
-    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/index.html` 
+    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/index.html` 
   
 
 
@@ -356,13 +351,12 @@ all_resolve_fn.resolve_topic_project_build_type_3=(config,params,result)=>{
     //原 public 下的 静态素材   打包后的   原地址  
     result.BUILD_STATIC_DIR_PATH = `./${result.BUILD_OUTDIR}`
     //原 public 下的 静态素材   打包后的  文件 需要拷贝 到的 目标地址
-    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist/${BUILD_DIR_NAME}${result.LOCAL_COMMON_FILE_PREFIX}/`
+    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist${result.LOCAL_COMMON_FILE_PREFIX}/`
     
-    //原 public 下的 静态素材   打包后的 地址  是否 需要进行改变
-    result.BUILD_STATIC_DIR_NEED_CHANGE =true
+
 
     //运维传输目录 
-    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/`
+    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/`
     
   
   }
@@ -406,7 +400,7 @@ all_resolve_fn.resolve_topic_project_build_type_3=(config,params,result)=>{
   
   
 
-    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${BUILD_VERSION}/` 
+    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${BUILD_VERSION}/` 
     //BUILD_BASE： 开发或生产环境服务的公共基础路径，用于 js 和 css 
 
     result.BUILD_BASE =   `/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${BUILD_VERSION}/`  
@@ -420,7 +414,7 @@ all_resolve_fn.resolve_topic_project_build_type_3=(config,params,result)=>{
     //html path  打包后的 html 文件 原地址  
     result.BUILD_HTML_FILE_RAW_PATH = `./${result.BUILD_OUTDIR}/project/${PROJECT_NAME}/index.html`
     //html path  打包后的 html 文件 需要拷贝 到的 目标地址
-    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/index.html` 
+    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/index.html` 
   
   
   
@@ -428,13 +422,12 @@ all_resolve_fn.resolve_topic_project_build_type_3=(config,params,result)=>{
     //原 public 下的 静态素材   打包后的   原地址  
     result.BUILD_STATIC_DIR_PATH = `./${result.BUILD_OUTDIR}`
     //原 public 下的 静态素材   打包后的  文件 需要拷贝 到的 目标地址
-    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist/${BUILD_DIR_NAME}${result.LOCAL_COMMON_FILE_PREFIX}/`
+    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist${result.LOCAL_COMMON_FILE_PREFIX}/`
     
-    //原 public 下的 静态素材   打包后的 地址  是否 需要进行改变
-    result.BUILD_STATIC_DIR_NEED_CHANGE =true
+
 
     //运维传输目录 
-    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/`
+    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/`
     
   
   
@@ -496,7 +489,7 @@ all_resolve_fn.resolve_topic_project_build_type_7=(config,params,result)=>{
   
  
 
-    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/` 
+    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/` 
     //BUILD_BASE： 开发或生产环境服务的公共基础路径，用于 js 和 css 
 
     result.BUILD_BASE =   `/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/` 
@@ -511,7 +504,7 @@ all_resolve_fn.resolve_topic_project_build_type_7=(config,params,result)=>{
     //html path  打包后的 html 文件 原地址  
     result.BUILD_HTML_FILE_RAW_PATH = `./${result.BUILD_OUTDIR}/project/${PROJECT_NAME}/index.html`
     //html path  打包后的 html 文件 需要拷贝 到的 目标地址
-    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/index.html` 
+    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/index.html` 
 
 
       
@@ -519,13 +512,12 @@ all_resolve_fn.resolve_topic_project_build_type_7=(config,params,result)=>{
     //原 public 下的 静态素材   打包后的   原地址  
     result.BUILD_STATIC_DIR_PATH = `./${result.BUILD_OUTDIR}`
     //原 public 下的 静态素材   打包后的  文件 需要拷贝 到的 目标地址
-    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist/${BUILD_DIR_NAME}${result.LOCAL_COMMON_FILE_PREFIX}/`
+    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist${result.LOCAL_COMMON_FILE_PREFIX}/`
     
-    //原 public 下的 静态素材   打包后的 地址  是否 需要进行改变
-    result.BUILD_STATIC_DIR_NEED_CHANGE =true
+
 
     //运维传输目录 
-    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/`
+    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/`
 
 }
 
@@ -565,7 +557,7 @@ all_resolve_fn.resolve_topic_project_build_type_8=(config,params,result)=>{
   
  
 
-    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/` 
+    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/` 
     //BUILD_BASE： 开发或生产环境服务的公共基础路径，用于 js 和 css 
 
     result.BUILD_BASE =   `/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/` 
@@ -581,18 +573,17 @@ all_resolve_fn.resolve_topic_project_build_type_8=(config,params,result)=>{
     //html path  打包后的 html 文件 原地址  
     result.BUILD_HTML_FILE_RAW_PATH = `./${result.BUILD_OUTDIR}/project/${PROJECT_NAME}/index.html`
     //html path  打包后的 html 文件 需要拷贝 到的 目标地址
-    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/index.html` 
+    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/index.html` 
 
     //原 public 下的 静态素材   打包后的   原地址  
     result.BUILD_STATIC_DIR_PATH = `./${result.BUILD_OUTDIR}`
     //原 public 下的 静态素材   打包后的  文件 需要拷贝 到的 目标地址
-    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist/${BUILD_DIR_NAME}${result.LOCAL_COMMON_FILE_PREFIX}/`
+    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist${result.LOCAL_COMMON_FILE_PREFIX}/`
     
-    //原 public 下的 静态素材   打包后的 地址  是否 需要进行改变
-    result.BUILD_STATIC_DIR_NEED_CHANGE =true
+
 
     //运维传输目录 
-    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/`
+    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/`
 
 }
 
@@ -647,7 +638,7 @@ all_resolve_fn.resolve_topic_project_build_type_9=(config,params,result)=>{
   
  
 
-    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/${BUILD_VERSION}/` 
+    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/${BUILD_VERSION}/` 
     //BUILD_BASE： 开发或生产环境服务的公共基础路径，用于 js 和 css 
 
     result.BUILD_BASE =   `/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/${BUILD_VERSION}/`  
@@ -663,19 +654,18 @@ all_resolve_fn.resolve_topic_project_build_type_9=(config,params,result)=>{
     //html path  打包后的 html 文件 原地址  
     result.BUILD_HTML_FILE_RAW_PATH = `./${result.BUILD_OUTDIR}/project/${PROJECT_NAME}/index.html`
     //html path  打包后的 html 文件 需要拷贝 到的 目标地址
-    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/index.html` 
+    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/index.html` 
 
 
         //原 public 下的 静态素材   打包后的   原地址  
         result.BUILD_STATIC_DIR_PATH = `./${result.BUILD_OUTDIR}`
         //原 public 下的 静态素材   打包后的  文件 需要拷贝 到的 目标地址
-        result.BUILD_STATIC_DIR_TARGET_PATH = `./dist/${BUILD_DIR_NAME}${result.LOCAL_COMMON_FILE_PREFIX}/`
+        result.BUILD_STATIC_DIR_TARGET_PATH = `./dist${result.LOCAL_COMMON_FILE_PREFIX}/`
         
-        //原 public 下的 静态素材   打包后的 地址  是否 需要进行改变
-        result.BUILD_STATIC_DIR_NEED_CHANGE =true
+
     
         //运维传输目录 
-        result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/`
+        result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/`
 }
 
 
@@ -729,7 +719,7 @@ all_resolve_fn.resolve_topic_project_build_type_10=(config,params,result)=>{
   
  
 
-    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/${BUILD_VERSION}/` 
+    result.BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/${BUILD_VERSION}/` 
     //BUILD_BASE： 开发或生产环境服务的公共基础路径，用于 js 和 css 
 
     result.BUILD_BASE =   `/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/${BUILD_VERSION}/`  
@@ -743,20 +733,19 @@ all_resolve_fn.resolve_topic_project_build_type_10=(config,params,result)=>{
     //html path  打包后的 html 文件 原地址  
     result.BUILD_HTML_FILE_RAW_PATH = `./${result.BUILD_OUTDIR}/project/${PROJECT_NAME}/index.html`
     //html path  打包后的 html 文件 需要拷贝 到的 目标地址
-    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/index.html` 
+    result.BUILD_HTML_FILE_TARGET_PATH = `./dist/${BUILD_DIR_NAME}/${TOPIC_PROJECT_LAYOUT_KEY}/${TOPIC_PROJECT_CONTENT_KEY}/index.html` 
 
 
 
     //原 public 下的 静态素材   打包后的   原地址  
     result.BUILD_STATIC_DIR_PATH = `./${result.BUILD_OUTDIR}`
     //原 public 下的 静态素材   打包后的  文件 需要拷贝 到的 目标地址
-    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist/${BUILD_DIR_NAME}${result.LOCAL_COMMON_FILE_PREFIX}/`
+    result.BUILD_STATIC_DIR_TARGET_PATH = `./dist${result.LOCAL_COMMON_FILE_PREFIX}/`
     
-    //原 public 下的 静态素材   打包后的 地址  是否 需要进行改变
-    result.BUILD_STATIC_DIR_NEED_CHANGE =true
+
 
     //运维传输目录 
-    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/`
+    result.BUILD_YUNWEI_COPY_ROOT_DIR = `./dist/${BUILD_DIR_NAME}/`
 
 
 }
