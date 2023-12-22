@@ -7,7 +7,7 @@
   <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
       <div class="nonebox4-fourth">
           <div class="nonebox4-fourth-a">
-              <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum" :key='item' :data-number='index'>{{item}}</div>
+              <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum(BetData.bet_data_class_version)" :key='item' :data-number='index'>{{item}}</div>
           </div>
           
           <div class="nonebox4-fourth-a"> 
@@ -32,9 +32,9 @@
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='max' style="font-size: 0.14rem;">{{ i18n_t('bet.max')}}</div>
                   <div class="nonebox4-fourth-num-sun key-cell" data-number="x">
-                    <img class="key-cell-img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del.svg`" alt="" data-number="x">
+                    <img class="key-cell-img" :src="jpimg" alt="" data-number="x">
                   </div>
-                  <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/pack_up-keyboard.svg`" alt=""></div>
+                  <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)"><img :src="delimg" alt=""></div>
               </div>
           </div>
          
@@ -49,6 +49,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr, LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 
 const active_index = ref(BetData.active_index)
 const money = ref('') //用户输入金额
@@ -70,6 +71,23 @@ const shou = (item,evnet) => {
   // BetData.set_bet_keyboard_config(item)
   BetData.set_bet_keyboard_show(false)
 }
+
+const local = ref(LocalStorage.get('default-theme'))
+const delimg = computed(() => {
+  if(local.value == "theme-2"){
+    return `${LOCAL_PROJECT_FILE_PREFIX}/image/bet/pack_up-keyboard.svg`
+  }else {
+    return `${LOCAL_PROJECT_FILE_PREFIX}/image/bet/pack_up_y.svg`
+  }
+})  
+
+const jpimg = computed(() => {
+  if(local.value == "theme-2"){
+    return `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del.svg`
+  }else {
+    return `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del_y.svg`
+  }
+})
 
 // 预约输入赔率或者盘口
 watch(() => pre_odds_value, (new_) => {
@@ -209,7 +227,7 @@ const _handleNumberKey = (num, e) => {
   }
   if (!num) return
   let money_ = BetData.bet_amount
-  if (['qon', 'qtw', 'qth','qfo','qfi'].includes(num)) {
+  if (['qon', 'qtw', 'qth','qfo','qfi','qsi'].includes(num)) {
     e.target.classList.add('active')
     money_ = ref_data.add_num[num]
     // if (!money_) {
@@ -269,12 +287,14 @@ const _handleNumberKey = (num, e) => {
 }
 
 // 获取商户配置的 快捷金额
-const addnum = computed(() => {
-  if (BetData.bet_is_single) {
-    ref_data.add_num = lodash.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200, qfi: 500 })
+const addnum = computed(()=> status => {
+  if (BetData.is_bet_single) {
+    const { qon,qtw,qth,qfo,qfi } = lodash.get(UserCtr, 'user_info.cvo.single', { qon: 200, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })  
+    ref_data.add_num = {qon,qtw,qth,qfo,qfi} 
     return ref_data.add_num
   } else {
-    ref_data.add_num = lodash.get(UserCtr, 'cvo.single', { qon: 200, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })
+    const {qtw,qth,qfo,qfi,qsi } = lodash.get(UserCtr, 'user_info.cvo.series', {  qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
+    ref_data.add_num = { qtw,qth,qfo,qfi,qsi}
     return ref_data.add_num
   }
 })
@@ -408,10 +428,10 @@ onUnmounted(() => {
   box-sizing: border-box;
   text-align: center;
 }
-.key-cell-img{
-  width: 0.2rem;
-  height: 0.2rem;
-}
+// .key-cell-img{
+//   width: 0.2rem;
+//   height: 0.2rem;
+// }
 
 .del-key {
   // background: url('../../../assets/images/bet/bet_key_delect.png') no-repeat 50%;

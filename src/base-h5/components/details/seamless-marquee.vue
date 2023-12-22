@@ -126,6 +126,7 @@ const move = (text_width, scroll) => {
     p {
       word-break: keep-all;
       white-space: nowrap;
+      // color: var(--q-gb-t-c-18);
     }
   }
 

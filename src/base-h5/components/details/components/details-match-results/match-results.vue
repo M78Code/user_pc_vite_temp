@@ -106,6 +106,11 @@ const props = defineProps({
     {score_type:'S110', text: i18n_t('match_result.Free_throw'), home: 0, away: 0, proportion: 0 }
   ])
 
+  const rem = (value) => {
+    let font_size = (innerWidth * 100) / 375;
+    return Math.ceil(value * font_size);
+  };
+
   // computed: {
   //   ...mapGetters([
   //     'get_analyze_show',

@@ -816,7 +816,7 @@ export default defineComponent({
     }
     .show_border_r{
       :deep(.hairline-border,), :deep(.item-wrap) {
-      background-color: #ffffff;
+      // background-color: #ffffff;
       }
     }
     .hide_border_r{

@@ -128,7 +128,7 @@ const state = reactive({
         }
 
         .title {
-            color: var(--q-gb-t-c-20);
+            color: var(--q-gb-t-c-27);
             font-size: .14rem;
             font-weight: 500;
             span {
@@ -229,6 +229,7 @@ const state = reactive({
             height:.49rem;
             align-items: center;
             border: .01rem solid var(--q-gb-bd-c-7);
+            color: var(--q-gb-t-c-27);
         }
         .title {
             font-size: .16rem !important;
@@ -240,7 +241,7 @@ const state = reactive({
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--q-gb-bg-c-8);
+            color: var(--q-gb-t-c-29);
             padding: .08rem 0;
         }
 
@@ -260,6 +261,7 @@ const state = reactive({
                     justify-content: center;
                     align-items: center;
                     margin-bottom: .04rem;
+                    color: var(--q-gb-t-c-27);
                 }
             }
 
@@ -272,7 +274,7 @@ const state = reactive({
 
                 .title {
                     font-size: .12rem;
-                    color: var(--q-gb-t-c-20);
+                    color: var(--q-gb-t-c-27);
                     text-align: center;
                 }
 
@@ -340,12 +342,12 @@ const state = reactive({
 
                     .score {
                         font-size: .32rem;
-                        color: var(--q-gb-bg-c-4);
+                        color: var(--q-gb-t-c-27);
                     }
 
                     .text-style {
                         font-size: .12rem;
-                        color: var(--q-gb-t-c-4);
+                        color: var(--q-gb-t-c-28);
                         white-space: nowrap;
                     }
                 }

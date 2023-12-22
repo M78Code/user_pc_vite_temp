@@ -188,7 +188,7 @@ const covert_mct = ({ mct, mmp, ms }) => {
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    ::v-deep(.counting-down-wrap){
+    :deep(.counting-down-wrap){
         position: relative !important;
         width: auto !important;
     }

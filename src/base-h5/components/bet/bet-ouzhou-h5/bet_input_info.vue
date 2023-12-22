@@ -84,6 +84,8 @@ onUnmounted(()=>{
  */
  const change_money_handle = (new_money = {}) => {
   ref_data.money = new_money.money
+  BetData.set_bet_obj_amount(ref_data.money,props.item.playOptionsId)
+  BetData.set_bet_amount(ref_data.money)
 }
 
 

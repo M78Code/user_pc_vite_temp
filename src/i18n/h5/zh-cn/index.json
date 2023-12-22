@@ -496,6 +496,7 @@
     "clear": "清除",
     "delete_all": "删除全部",
     "disabled": "已失效",
+    "close": "盘口关闭",
     "bet_upd": "赔率更新中!",
     "err_msg01": "赔率更新中~",
     "err_msg02": "网络异常，请重试",
@@ -567,8 +568,9 @@
     "bet_retract": "赌注收回",
     "bet_inplay": "滚球",
     "bet_limit":"限额",
-    "error_message": "投注项盘口、赔率或有效性产生变化！"
-
+    "error_message": "投注项盘口、赔率或有效性产生变化！",
+    "bet_min_item": "至少选择{num}场比赛",
+    "bet_max_item": "最多选择{num}场比赛"
   },
   "bet_message":{
     "success": "投注成功",
@@ -1082,7 +1084,7 @@
     }
   },
   "filter": {
-    "all_leagues": "All leagues",
+    "all_leagues": "全部联赛",
     "match_key": "请输入联赛名",
     "match_select_title": "选择联赛",
     "please_select_league": "请选择联赛",

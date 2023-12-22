@@ -13,37 +13,37 @@
 <script setup>
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { ref,computed } from "vue";
+import { computed } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
 import { IconWapper } from 'src/components/icon/index.js'
 
-let title = ref('')
+let title = ''
 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效 6-预约中 7-预约成功  8-预约取消
-const set_bet_order_status = computed(()=> status => {
+const set_bet_order_status = computed(() => status => {
   // 2-投注中状态,
   if([2,6].includes(status*1)){
-    title.value = i18n_t('bet.bet_loading')
+    title = i18n_t('bet.bet_loading')
     // 6-预约中 
     if(status == 6){
-      title.value = i18n_t('pre_record.booking')
+      title = i18n_t('pre_record.booking')
     }
     return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_loading.png`
   }
   //3-投注成功状态(主要控制完成按钮)
   if([3,7].includes(status*1)){
-    title.value = i18n_t('app_h5.bet.bet_confirm')
+    title = i18n_t('app_h5.bet.bet_confirm')
     // 7-预约成功
     if(status == 7){
-      title.value = i18n_t('pre_record.booked')
+      title = i18n_t('pre_record.booked')
     }
-    return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_success.png`
+    return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_success-y.png`
   }
   // ,4-投注失败状态,5-投注项失效
   if([4,5,8].includes(+status)){
-    title.value = i18n_t('app_h5.bet.bet_error')
+    title = i18n_t('app_h5.bet.bet_error')
     //  8-预约取消
     if(status == 8){
-      title.value = i18n_t('pre_record.booked_fail')
+      title = i18n_t('pre_record.booked_fail')
     }
     return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_error.png`
   }
@@ -51,6 +51,7 @@ const set_bet_order_status = computed(()=> status => {
 const bet_order_status_active = computed(()=>{
   return [2, 3, 6, 7].includes(+BetViewDataClass.bet_order_status);
 })
+
 
 </script> 
 

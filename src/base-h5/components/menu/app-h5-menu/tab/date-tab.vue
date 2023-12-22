@@ -118,7 +118,7 @@ defineExpose({set_active_val,changeTabMenu})
                 text-align: center;
                 font-weight: 400;
                 font-size: 12px;
-                color: #7981A4;
+                color: var(--q-gb-t-c-24);
                 // &:first-child {
                 //     width: 0.4rem;
                 // }

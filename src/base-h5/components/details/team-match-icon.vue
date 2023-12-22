@@ -4,23 +4,22 @@
  * @Description: 动画,视频按钮，收藏的展示
 -->
 <template>
-  <div class='team-match-icon'>
+  <div class='team-match-icon' style="color: #fff;">
     <div class="icon-wrap">
           <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
         <match-icon v-if="show_lvs" class="fl"
           which="lvs" icon_class="lvs" :text="lodash.get(get_detail_data,'lss') == 1 ? i18n_t('match_info.lvs') : i18n_t('match_info.topic')">
         </match-icon>
-
+      
       <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
-      <template v-if="get_detail_data.mvs > -1 || (get_detail_data.mms > 1 && [1,2,7,10,110].includes(get_detail_data.ms*1))">
-
+      <template v-if="detail_data.mvs > -1 || (detail_data.mms > 1 && [1,2,7,10,110].includes(detail_data.ms*1))">
         <!-- 视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 -->
-        <match-icon v-if="get_detail_data.mms > 1" class="fl" :status="get_detail_data.mms"
+        <match-icon v-if="detail_data.mms > 1" class="fl" :status="detail_data.mms"
           which="muUrl" icon_class="shipin" :detail_data="detail_data" :text="i18n_t('match_info.video_info')">
         </match-icon>
 
         <!-- 动画状态大于-1时，显示动画按钮 i18n_t('match_info.animation')是国际化取值 -->
-        <match-icon v-if="get_detail_data.mvs > -1" class="fl" :status="get_detail_data.mvs" :detail_data="detail_data"
+        <match-icon v-if="detail_data.mvs > -1" class="fl" :status="detail_data.mvs" :detail_data="detail_data"
           which="animationUrl" icon_class="donghua" :text="i18n_t('match_info.animation_info')">
         </match-icon>
       </template>
@@ -57,6 +56,7 @@ export default defineComponent({
       favorite_loading: false,
     });
     const get_detail_data = reactive(props.detail_data)
+
     // #TODO vuex
     // computed:{
     // ...mapGetters([
@@ -153,11 +153,12 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .team-match-icon {
-  height: 0.26rem;
+  // height: 0.26rem;
   line-height: 0.24rem;
   display: flex;
-  justify-content: center;
-  margin-top: 0.07rem;
+  // justify-content: center;
+  // margin-top: 0.08rem;
+  // margin-bottom: 0.08rem;
 }
 
 .icon-wrap {

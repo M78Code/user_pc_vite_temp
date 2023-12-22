@@ -200,8 +200,6 @@ this.bet_appoint_ball_head= null */
     this.bet_keyboard_config = {}
     // 键盘状态
     this.bet_keyboard_show = true;
-    // h5 投注栏默认隐藏
-    this.h5_bet_box_show = false
 
     // 获取缓存信息
     this.set_loacl_config()
@@ -221,11 +219,6 @@ this.bet_appoint_ball_head= null */
         }
       }
     }
-    this.set_bet_data_class_version()
-  }
-
-  set_h5_bet_box_show(val) {
-    this.h5_bet_box_show = val
     this.set_bet_data_class_version()
   }
 
@@ -364,6 +357,7 @@ this.bet_appoint_ball_head= null */
       is_dianjing: false,
       is_common: false,
       is_vr: false,
+      is_serial:false,
       ...obj,
       // virtual_bet_mode: obj.virtual_bet_mode || -1, //操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球 bet后接口返回
 
@@ -399,7 +393,14 @@ this.bet_appoint_ball_head= null */
     this.is_virtual_bet = is_virtual_bet
     // 设置 投注内容
     this.bet_read_write_refer_obj[custom_id] = bet_refer_obj
-    console.error('bet_read_write_refer_obj')
+
+    // 串关逻辑 不支持串关的数据 增加标识 ，在页面上做提示
+    // mbmty 2 or 4 为电子赛事  足球 篮球
+    if([1,2].includes(Number(obj.sportId)) && [2,4].includes(Number(obj.mbmty))){
+      // 串关投注中 有这个需要显示不支持串关投注 
+      bet_refer_obj.is_serial = true
+    }
+
     // 单关/串关 投注
     if (this.is_bet_single) {
       // 单关 不合并 只有一条 
@@ -421,7 +422,7 @@ this.bet_appoint_ball_head= null */
       this.single_list_copy.push(bet_refer_obj)
     } else {
       // 串关
-      // 串关逻辑 TODO
+      
       // 同场赛事不能串 部分数据源赛事不能串 
       if (this.bet_s_list.length) {
         let obj = this.bet_s_list.find(item => item.matchId == bet_refer_obj.matchId) || {}

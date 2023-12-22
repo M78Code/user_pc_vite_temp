@@ -395,8 +395,10 @@ export default {
     }
   }
   .expand_item{
+    width: 18px;
+    height: 16px;
     transition: transform 0.25s ease;
-     transform: rotate(-180deg);
+    transform: rotate(-180deg);
   }
   .ball_seed_collapsed{
     transform: rotate(0);
@@ -494,7 +496,7 @@ export default {
       overflow: hidden;
     }
     &.border-top{
-      border-top: 1px solid #e9e9e9;
+      border-top: 1px solid var(--q-gb-bd-c-4);
     }
 
     .eports_scoring_tip {
@@ -1140,7 +1142,7 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
             font-weight: 500;
-            color: #1A1A1A;
+            color: var(--q-gb-t-c-18);
             &.visiting {
               // color: #8a8986;
             }
@@ -1549,7 +1551,7 @@ export default {
   }
 }
 .mcmt-text {
-  color: #1A1A1A;
+  color: var(--q-gb-t-c-18);
   font-size: .12rem;
   display: flex;
   justify-content: center;

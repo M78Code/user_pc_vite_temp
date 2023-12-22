@@ -15,6 +15,16 @@
         <div>{{tab_item.name}}</div>
       </div>
     </div>
+    <!-- 全部联赛折叠 -->
+    <div class="all-leagues">
+      <div class="left">
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rili.png`" alt="">
+        <span>{{i18n_t('filter.all_leagues')}}</span>
+      </div>
+      <div class="right" @click="handle_all_league">
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" :class="[!is_expend_all && 'expend_all_league']" alt="">
+      </div>
+    </div>
     <div class="virtual-content-wrapper">
       <div class="virtual-sports-card">
         <div class="tab-title" @click.stop="expend_video = !expend_video">
@@ -176,8 +186,7 @@ import { IconWapper } from 'src/components/icon'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
-
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 export default {
   mixins:[common,virtual_sports_mixin],
   props:{
@@ -240,7 +249,10 @@ export default {
       // 是否展开视频
       expend_video: true,
       // 1:新手版 2:专业版
-      standard_edition
+      standard_edition,
+      LOCAL_PROJECT_FILE_PREFIX,
+      // 是否全部折叠
+      is_expend_all: true
     }
   },
   created() {
@@ -259,6 +271,15 @@ export default {
 	set_video_process_data(data){VR_CTR.set_video_process_data(data)},
 	set_prev_v_sports_params(data){VR_CTR.set_prev_v_sports_params(data)},
 	set_current_mid(data){VR_CTR.set_current_mid(data)},
+
+    //全部轮次展开折叠 
+    handle_all_league(){
+      this.expend_video = this.is_expend_all ? false : true;
+      this.match_list_all_batches.forEach(item=>{
+        item.is_expend = this.is_expend_all ? false : true;
+      })
+      this.is_expend_all = !this.is_expend_all;
+    },
     // 顶部菜单切换状态改变
     handle_top_menu_change(status) {
       this.top_menu_changed = status
@@ -580,7 +601,14 @@ export default {
     // 当前联赛的全部轮次
     match_list_all_batches(){
       const match_list_all_batches = [...this.virtual_match_list];
-      match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
+      // 足蓝全部展开，赛马类只展开第一个
+      if(this.sub_menu_type == '1001' || this.sub_menu_type == '1004'){
+          match_list_all_batches.forEach(batch=> {
+          batch.is_expend = true
+        })
+      }else {
+        match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
+      }
       return match_list_all_batches
     },
 
@@ -684,7 +712,7 @@ export default {
 
 /*  联赛菜单 */
 .tab-wrapper {
-  height: 0.42rem;
+  height: 0.32rem;
   display: flex;
   flex-wrap: nowrap;
   overflow: auto;
@@ -700,10 +728,19 @@ export default {
     padding: 0 0.1rem;
     flex-shrink: 0;
     color:var(--q-gb-t-c-24);
+    position: relative;
     &.active {
       color: var(--q-gb-t-c-1);
-      >div {
-        border-bottom: 2px solid var(--q-gb-t-c-1);
+      &:after {
+        content: "";
+        display: block;
+        width: 0.32rem;
+        height: 0.02rem;
+        background: var(--q-gb-t-c-1);
+        position: absolute;
+        bottom: -0.03rem;
+        left: 50%;
+        margin-left: -0.16rem;
       }
     }
   }
@@ -716,7 +753,7 @@ export default {
   justify-content: space-between;
   padding-right: 9px;
   &.tab-border {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--q-gb-bd-c-4);
   }
   .league-name{
     color: var(--q-gb-t-c-18);
@@ -741,13 +778,40 @@ export default {
     }
   }
 }
+
+.all-leagues {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.15rem;
+  height: 0.24rem;
+  border-top: 2px solid #FEAE2B;
+  .left {
+    font-size: 0.12rem;
+    color: #303442;
+    img {
+      width: 0.12rem;
+      height: 0.12rem;
+      margin-right: 0.04rem;
+    }
+  }
+  .right {
+    img {
+      width: 0.2rem;
+      height: 0.16rem;
+      &.expend_all_league {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+}
 .virtual-content-wrapper {
   padding: 0.08rem 0.05rem 0;
   color: var(--q-gb-t-c-18);
   background: var(--q-gb-bg-c-21);
 }
 .virtual-sports-card {
-  background: var(--q-gb-bg-c-18) ;
+  background: var(--q-gb-bg-c-23) ;
   border-radius: 4px;
   margin-bottom: .08rem;
   &:last-of-type {

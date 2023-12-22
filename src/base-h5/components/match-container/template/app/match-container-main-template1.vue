@@ -16,22 +16,22 @@
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
           <div class="match-status-title">
-            <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
+            <img :src="in_progress" /> <span class="din-regular">进行中</span>
           </div>
-          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
+          <img :class="['expand_item', {collapsed: progress_seed_collapsed}]" :src="expand_item" alt="">
         </template>
         <!-- 未开赛 -->
         <template  v-if="+match.start_flag === 2">
           <div class="match-status-title">
             <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
           </div>
-          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
+          <img :class="['expand_item', {collapsed: not_begin_collapsed}]" :src="expand_item" alt="">
         </template>
       </div>
       <!-- 全部 -->
-      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_ball_seed_fold">
+      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
-        <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
+        <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div>
@@ -39,7 +39,7 @@
       <div v-if="show_sport_title" @click.stop="handle_ball_seed_fold"
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span">
-          {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }})
+          {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }}) 
         </span>
       </div>
 
@@ -117,8 +117,7 @@
 
                     <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                     <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                      <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} -->
-                      {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
+                      {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
                     </div>
                     <!--一小时内开赛 -->
                     <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
@@ -137,7 +136,7 @@
 
                   <!-- 电竞串关标识 -->
                   <div v-if="is_esports && match.ispo" class="flag-chuan"
-                    :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ i18n_t('match_info.match_parlay') }}
+                    :class="{ 'special-lang': ['zh', 'tw'].includes(lang) }">{{ i18n_t('match_info.match_parlay') }}
                   </div>
                 </div>
                 <!--玩法数量-->
@@ -175,8 +174,13 @@
                           'is-handicap': match.handicap_index == 1,
                           'is-handicap-1': match.handicap_index == 2,
                         }">
-                          {{ match.mhn }}
+                          <span>{{ match.mhn }}</span>
+
                         </div>
+                        <!--发球方绿点-->
+                        <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                          v-show="set_serving_side(match_of_list, 'home')">
+                        </span>
                         <template v-if="home_red_score || home_yellow_score">
                           <!-- 红牌 -->
                           <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
@@ -198,10 +202,7 @@
                         :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
                         {{ home_score }}
                       </div>
-                      <!--发球方绿点-->
-                      <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                        v-show="set_serving_side(match_of_list, 'home')">
-                      </span>
+
                     </div>
                     <!--客队图片和名称-->
                     <div class='team-title-container' :class="{
@@ -217,15 +218,19 @@
                         }">
                           <span>{{ match.man }}</span>
                         </div>
+                        <!--发球方绿点-->
+                        <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                          v-show="set_serving_side(match_of_list, 'away')">
+                        </span>
                         <template v-if="home_red_score || home_yellow_score">
                           <!-- 红牌 -->
                           <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
                             {{ away_red_score }}
                           </span>
                           <!-- 黄牌 -->
-                          <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
+                          <!-- <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
                             {{ away_yellow_score }}
-                          </span>
+                          </span> -->
                         </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
@@ -239,10 +244,7 @@
                       :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
                       {{ away_score }}
                     </div>
-                    <!--发球方绿点-->
-                    <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                      v-show="set_serving_side(match_of_list, 'away')">
-                    </span>
+
                   </div>
                   <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
                   <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
@@ -251,11 +253,11 @@
                       <div class="go-container-w flex no-wrap new-standard">
                         <!-- 直播 主播 视频 动画  icon 栏目   -->
                         <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
-                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()">
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
                           <img :class="['live-icon-btn', { disabled: !media_button_state_obj.animationUrl }]" :src='animation_icon' />
                         </div>
                         <!-- 视频 -->
-                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()">
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
                           <img :class="['live-icon-btn', { disabled: !media_button_state_obj.muUrl }]" :src='video_icon' />
                         </div>
                         <!-- mng 是否中立场   1:是中立场，0:非中立场-->
@@ -268,7 +270,7 @@
                           <img :src="mearlys_icon_app" alt="">
                         </div>
                         <!-- 角球 -->
-                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()" v-if="match.csid == 1 && get_corner_kick">
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle" v-if="match.csid == 1 && get_corner_kick">
                           <img :class="['live-icon-btn']" :src='corner_icon' />
                         </div>
                       </div>
@@ -386,10 +388,15 @@ export default {
     }
   }
   .expand_item{
+    width: 18px;
+    height: 16px;
     transition: transform 0.25s ease;
-     transform: rotate(-180deg);
+    transform: rotate(-180deg);
   }
   .ball_seed_collapsed{
+    transform: rotate(0);
+  }
+  .all_ball_seed_collapsed {
     transform: rotate(0);
   }
 }
@@ -466,7 +473,7 @@ export default {
     .match-content{
       width: 100%;
       padding: 0 10px;
-      border-top: 1px solid var(--q-gb-bd-c-4);
+      border-top: 1px solid  var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
       border-radius: 0 0 8px 8px;
       border: 1px solid var(--q-gb-bd-c-15);
@@ -474,13 +481,13 @@ export default {
         border-top: none;
       }
       &.border-top{
-        border-top: 1px solid var(--q-gb-bd-c-4);
+        border-top: 1px solid  var(--q-gb-bd-c-4);
       }
     }
     > .match-indent{
       border: 1px solid var(--q-gb-bd-c-15);
       border-radius: 8px 8px 0 0;
-      border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
+      border-bottom: 1px solid  var(--q-gb-bd-c-4) !important;
       &.collapsed{
         border-radius: 8px;
         border-bottom: 1px solid var(--q-gb-bd-c-15) !important;
@@ -1156,7 +1163,7 @@ export default {
         }
 
         .team-title-inner-con {
-          width: 1.21rem;
+          width: 1.19rem;
           position: relative;
           line-height: 0.14rem;
           display: flex;
@@ -1222,8 +1229,7 @@ export default {
             color: var(--q-gb-t-c-18);
 
             &.is-handicap {
-              color: #000;
-              font-weight: bold;
+              color: #74C4FF !important;
             }
           }
         }
@@ -1253,13 +1259,21 @@ export default {
         }
 
         .serving-party {
-          display: block;
+        //   display: block;
+        //   width: 4px;
+        //   height: 4px;
+        //   border-radius: 50%;
+        //   background: var(--sys-feedback-success-success-400, #4AB06A);
+        //   flex-shrink: 0;
+        //   position: absolute;
+        //   left: 1.25rem;
+        //   top: 0.16rem;
+          border-radius: 2px;
+          background: var(--sys-feedback-success-success-400, #4AB06A);
           width: 4px;
           height: 4px;
-          border-radius: 50%;
-          background: var(--q-color-page-bg-color-59);
-          flex-shrink: 0;
-          margin: 0.13rem 0.05rem 0;
+          margin-left: 4px;
+
           &.simple {
             margin-right: 0.03rem;
           }

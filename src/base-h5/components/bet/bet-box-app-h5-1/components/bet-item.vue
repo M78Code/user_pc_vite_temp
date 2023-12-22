@@ -2,7 +2,16 @@
 <template>
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
-        <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
+        <!-- 单关 盘口关闭状态 -->
+        <div class="handicap-closed" v-if="BetData.is_bet_single && !(items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0)">
+            <img :src="compute_local_project_file_path('/image/bet/handicap-closed.png')" alt="">
+            <p>{{ i18n_t('bet.close') }}</p>
+        </div>
+        <!-- 串关 盘口展示 及 盘口关闭状态 -->
+        <div v-else class="f-b-s bet-content" :class="[
+                items.is_serial && !BetData.is_bet_single ? 'not-chain-bet' : '',
+                !(items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0) ? 'not-chain-bet' : ''
+            ]">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c font14 ">
                     <span class="text-flow-none" v-html="items.handicap"></span> 
@@ -22,25 +31,29 @@
                     <div class="w-100 fon12 font400 text-a1a-i">{{ items.tid_name }}</div>
                 </div>
             </div>
-           
+            
             <div class="fw-e-s bet-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                 <div class="f-c-c bet-money">
                     <span class="font14 font700 bet-odds-value f-c-c" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
                        <span class="font14">@</span>{{ compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId) }}
                     </span>
 
-                    <div class="show_img">
+                    <div class="show_img" v-if="items.red_green">
                         <img v-if="items.red_green == 'red_up'" :src="is_up_app" alt=""/>
                         <img v-if="items.red_green == 'green_down'" :src="is_down_app" alt=""/>
                     </div>
                 </div>
+                <!-- 电子赛事不支持串关 -->
+                <div v-if="items.is_serial && !BetData.is_bet_single" class="bet-serial font12">不支持串关</div>
             </div>
 
             <div class="fw-e-s bet-right bet-invalid" v-else>
                 <div class="bet-disabled">
-                    <span>{{ i18n_t('bet.disabled') }}</span>
+                    <span>{{ i18n_t('bet.close') }}</span>
                 </div>
             </div>
+
+            <div v-if="items.is_serial && !BetData.is_bet_single" class="bet-layer-serial"></div>
 
             <!--  串关 投注 删除投注项 -->
             <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1 && !BetData.is_bet_single" @click="set_delete">
@@ -89,11 +102,11 @@ const set_delete = () => {
 .bet-list {
    
     .bet-content {
-        min-height: 76px;
+        min-height: .76rem;
         padding: 0.12rem;
         margin-bottom: .04rem;
-        //padding-left: 34px;
-        font-size: 13px;
+        //padding-left: .34rem;
+        font-size: .13rem;
         font-weight: 500;
         font-style: normal;
         position: relative;
@@ -105,8 +118,13 @@ const set_delete = () => {
             align-items: center;
         }
 
+        &.not-chain-bet {
+            background-color: var(--q-gb-bg-c-20);
+            opacity: .8;
+        }
+
         .bet-money {
-            height: 34px;
+            height: .34rem;
         }
 
         .bet-delete {
@@ -121,6 +139,7 @@ const set_delete = () => {
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 100;
 
             img {
                 width: .1rem;
@@ -133,11 +152,11 @@ const set_delete = () => {
         }
 
         .bet-odds {
-            height: 34px;
+            height: .34rem;
         }
 
         .bet-right {
-            width: 160px;
+            width: 1.6rem;
             &.bet-invalid{
                 height: 100%;
                 .bet-disabled{
@@ -149,16 +168,16 @@ const set_delete = () => {
                     align-items: center;
                     span{
                         display: inline-block;
-                        padding: 0 20px;
-                        height: 26px;
+                        // padding: 0 .2rem;
+                        height: .26rem;
                         display: inline-block;
-                        border-radius: 2px;
-                        line-height: 26px;
-                        background: var(--q-gb-bg-c-10);
-                        font-size: 12px;
+                        border-radius: .02rem;
+                        line-height: .26rem;
+                        // background: var(--q-gb-bg-c-10);
+                        font-size: .12rem;
                         font-weight: 500;
-                        letter-spacing: 0px;
-                        color: var(--q-gb-t-c-9);
+                        letter-spacing: 0;
+                        color: #949AB6;
                     }
                 }
             }
@@ -178,14 +197,28 @@ const set_delete = () => {
             }
         }
 
+        .bet-serial {
+            color: var(--q-gb-bd-c-2);
+        }
+
+        .bet-layer-serial{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--q-gb-bg-c-21);
+            opacity: 0.5;
+            z-index: 80;
+        }
        
     }
 
     .bet-market{
-        font-size: 13px;
+        font-size: .13rem;
         font-weight: 500;
-        line-height: 16px;
-        letter-spacing: 0px;
+        line-height: .16rem;
+        letter-spacing: 0;
         //http://api.sportxxxvo3.com/
     }
     .text-flow{
@@ -211,7 +244,7 @@ const set_delete = () => {
         }
     }
     .bet-odds-value{
-        margin-right: .02rem;
+       
         font-size: .22rem;
         &.red-up{
             color:#F53F3F;
@@ -222,12 +255,25 @@ const set_delete = () => {
     }
     .show_img{
         width: .10rem;
+        margin-left: .02rem;
         img{
             width: 100%;
             height: 100%;
         }
     }
 }
-
+.handicap-closed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--q-gb-bd-c-6);
+    border-radius: 0.12rem;
+    color: var(--q-gb-t-c-10);
+    padding: .12rem;
+    img {
+        width: 0.74rem;
+        height: 0.74rem;
+    }
+}
 
 </style>

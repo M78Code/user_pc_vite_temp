@@ -2,7 +2,7 @@
   <div
     class="relative-position header-top"
     @touchmove.prevent
-    :class="[MenuData.get_menu_type() == 3000 && 'header_DJ', `header-top-${detail_data.csid}`]"
+    :class="[MenuData.get_menu_type() == 3000 && 'header_DJ']"
   >
     <!-- 队徽 -->
     <div class="row mx-30 top-style">
@@ -37,7 +37,7 @@
       <div class="col-3 logo-double">
         <!-- 右侧双打图标 type 1 表示客队,malu 客队的url -->
         <team-img
-          :type="0"
+          :type="1"
           :csid="detail_data.csid"
           :url="lodash.get(detail_data,'malu[0]')"
           :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frman[0]') : detail_data.frman"
@@ -231,6 +231,10 @@
         </div>
       </div>
     </div>
+    <!-- mng 是否中立场   1:是中立场，0:非中立场-->
+    <div class="midfield-container" v-if="![5, 10, 7, 8, 13].includes(Number(detail_data.csid)) && detail_data.mng * 1" >
+        <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
+    </div>
   </div>
 </template>
 
@@ -242,7 +246,7 @@ import TeamImg from "src/base-h5/components/details/team-img.vue";   // 详情�
 import TeamText from "src/base-h5/components/details/team-text.vue";   // 中立场赛事展示
 // import TeamName from "src/base-h5/components/details/team-name.vue";   // 详情页背景上的队伍名称
 // import msc from "src/base-h5/mixins/common/msc.js";    // 国际化比赛阶段比分转换工具
-import matchBetweenScore from 'src/base-h5/components/match/match-between-score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
+ import matchBetweenScore from 'src/base-h5/components/match/match-between-score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
 import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 // 公共方法
 import { MenuData, UserCtr } from "src/output/index.js";
@@ -250,7 +254,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import store from "src/store-redux/index.js";
 import { format_total_score, format_time_zone_time, format_time_zone, formatTime } from "src/output/index.js"
 import { i18n_t,i18n_tc } from "src/boot/i18n.js"
-
+import { midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 const props = defineProps({
   detail_data: {
     type: Object,
@@ -595,4 +599,19 @@ export default defineComponent({
 <style scoped lang="scss">
 /****************** 横屏投注弹窗*******************/
 @import "../../styles/header-top.scss";
+.midfield-container {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.logo-double{
+  :deep(.team-img){
+    .img-style{
+      background-position-y: inherit !important;
+    }
+  }
+}
 </style>

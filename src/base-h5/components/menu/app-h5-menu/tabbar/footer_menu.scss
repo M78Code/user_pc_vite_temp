@@ -28,6 +28,9 @@
   .floating-menu {
     background:var(--q-gb-bg-c-26);
     box-shadow: var(--q-gb-b-s-1);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    overflow: hidden;
     .footer-menu-item {
       .menu-item-title {
         //color: var(--q-color-com-fs-color-2);

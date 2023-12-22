@@ -6,14 +6,14 @@
 <template>
   <div
     ref="video_height"
-    class="player"
+    class="component videos2 player"
     :class="{
       'across-height': get_is_full_screen && get_video_url.active == 'muUrl' && get_is_hengping,
     }"
   >
-    <div :class="{'top-space':nail && get_zhiding}">
+    <div class="icontainer-wrap" :class="{'top-space':nail && get_zhiding}">
       <!-- 播放出错 -->
-      <div v-if="video_iframe_status == 'error'" class="video_reload_box">
+      <div v-if="video_iframe_status == 'error'" class="video_reload_box icontainer">
         <!-- 展示球队名称、比分 -->
         <div class="title">
           <div class="row full-height mx-15">
@@ -56,7 +56,7 @@
       </div>
 
       <!-- 播放正常 -->
-      <div v-else style="width:100%;height:2.11rem;" class="iframe-wrap DJ-score-information" :class="{stickyed:nail && get_zhiding,'full-screen':get_is_full_screen}">
+      <div v-else style="width:100%" class="iframe-wrap DJ-score-information icontainer" :class="{stickyed:nail && get_zhiding,'full-screen':get_is_full_screen}">
         <!-- 电竞的背景 -->
         <div class="show_DJ_back_css" v-if="get_menu_type == 3000" @click.self.stop="show_DJ_back()"></div>
         <!-- 第一次显示 用户指导页 -->
@@ -192,8 +192,7 @@
           <template v-if="get_is_full_screen && get_video_url.active == 'muUrl' && get_is_hengping">
             <div class="hengping-title row">
               <!-- 返回按钮 -->
-              
-                <div class="video_back yb_mx10" @click="close_video" style="height: 0.16rem"></div>
+              <div class="video_back yb_mx10" @click="close_video" style="height: 0.16rem"></div>
               
               <!-- 对阵信息 -->
               <span class="hengping-duiming ellipsis">{{title.mhn}}</span>
@@ -329,7 +328,7 @@ import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import slider from "src/base-h5/components/details/components/slider/slider.vue"
-
+import OrientationSubscrbe from 'src/base-h5/components/common/orientation/orientation-subscribe'
 export default {
   name: "videos",
   components: {
@@ -573,6 +572,9 @@ export default {
   watch: {
     get_is_full_screen(value) {
       this.$emit('change_fullscreen', value)
+    },
+    iframe_src(value) {
+      console.log(value, "value======");
     },
     // 监听用户是否长时间未操作
     get_is_user_no_handle(res){
@@ -1064,6 +1066,7 @@ export default {
       if (rfs) {
         rfs.call(video_dm);
       }
+      OrientationSubscrbe.instance.change_status(true);
     },
     /**
      * @Description 退出浏览器全屏
@@ -1075,6 +1078,8 @@ export default {
       if(cfs) {
         cfs.call(video_dm);
       }
+      OrientationSubscrbe.instance.change_status(false);
+
     },
     // 接收精彩回放iframe消息
     handle_replay_message(e) {
@@ -1232,7 +1237,7 @@ export default {
     close_video() {
       this.get_is_full_screen = false
       this.exit_browser_full_screen();
-
+      this.$emit('change_fullscreen', false)
       // iPhone Safari 不兼容screen.orientation
       if (screen.orientation) {
         screen.orientation.unlock()
@@ -2127,15 +2132,13 @@ export default {
     transform: rotate(360deg);
     transition: all 1s;
   }
-
-  :deep {
-    .tabs-wrapper {
+    :deep(.tabs-wrapper) {
       position: absolute;
       bottom: 1.18rem;
       left: 0.3rem;
       z-index: 100000;
     }
-    .slider-x {
+    :deep(.slider-x) {
       position: absolute;
       bottom: .45rem;
       left: 0.3rem;
@@ -2189,7 +2192,6 @@ export default {
         }
       }
     }
-  }
 }
 
 .switch-video-wrap {
@@ -2298,11 +2300,10 @@ export default {
   top: 0;
   width: 100%;
   height: 100%;
-  :deep {
-    .dplayer-icons-right {
+  :deep(.dplayer-icons-right) {
       display: none !important;
     }
-    .dplayer-controller {
+    :deep(.dplayer-controller) {
       .dplayer-bar-wrap {
         width: 4.5rem;
         bottom: 15.5px;
@@ -2314,7 +2315,7 @@ export default {
         transform: scale(0.8);
       }
     }
-  }
+  
 }
 
 .toggle-replay-video-wrap {
@@ -2438,5 +2439,15 @@ export default {
 }
 .mr-14 {
   margin-right: 14px;
+}
+.icontainer-wrap{
+  position: relative;
+  width: 100%;
+  padding-bottom: 56%;
+  .icontainer{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

@@ -16,12 +16,11 @@ import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive
 import { PageSourceData, GlobalAccessConfig, ServerTime } from "src/output/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import { useMittEmit, MITT_TYPES, project_name} from "src/output/module/constant-utils.js"
-import { 
+import { MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
-  MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5
 } from 'src/output/module/match-data-base.js'
-
+import matchDetail from "src/core/match-detail/match-detail-class.js";
 
 class MatchMeta {
 
@@ -489,13 +488,20 @@ class MatchMeta {
     }
     // 避免接口慢导致的数据错乱
     const list = lodash.get(res, 'data', [])
+    list.forEach(i => {
+      i.tid = i.tournamentId
+      i.csid = i.sportId
+      i.mid = i.marketId
+      i.csna = i.sportName
+      i._total = list.length
+    })
     const length = lodash.get(list, 'length', 0)
     if (length < 1) {
       this.set_page_match_empty_status({ state: true });
       return []
     }
-    const matchs = MatchUtils.handler_champion_match_classify_by_sport_id(list)
-    return matchs
+    // const matchs = MatchUtils.handler_champion_match_classify_by_sport_id(list)
+    return this.handler_match_list_data({ list: list, type: 2, is_virtual: false })
   }
 
   /**
@@ -540,15 +546,17 @@ class MatchMeta {
   async get_esports_match() {
     this.clear_match_info()
     VirtualList.clear_virtual_info()
+    //兼容复刻版电竞冠军
+    const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "");
+    const is_kemp = md == '100';
     // 电竞的冠军
-    const category = MenuData.get_menu_type() === 100 ? 2 : 1
+    const category = MenuData.get_menu_type() === 100 || is_kemp? 2 : 1
     const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
-    const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "")
     const params = this.get_base_params()
     // this.current_euid = `${csid}_${md}`
     const res = await api_common.post_esports_match({
       ...params,
-      md,
+      md:is_kemp?'':md,
       csid,
       category,
       "type":3000,
@@ -564,9 +572,9 @@ class MatchMeta {
   * @description 赛事详情精选赛事列表
   */
   async get_details_result_match() {
-    console.log(MenuData.menu_csid,'MenuData.menu_csid');
+    console.log(matchDetail.get_parmas(),'');
      const res = await api_analysis.get_result_match_care_list({
-      sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
+      sportId: lodash.get(matchDetail.get_parmas(),'sportId',1),
       cuid: UserCtr.get_uid(),
      })
      if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
@@ -1324,7 +1332,6 @@ class MatchMeta {
       index > -1 && this.complete_matchs.splice(index, 1)
 
       if (active_index > -1) {
-        this.match_mids.splice(active_index, 1)
         // 复刻版 新手版 使用的是 observer-wrapper 组件模式 不需要重新计算
         if (project_name == 'app-h5' && UserCtr.standard_edition == 1) return;
 

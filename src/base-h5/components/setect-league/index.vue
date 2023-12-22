@@ -89,7 +89,7 @@ const finishHandle = () => {
   }
   // 派发首页设置菜单展开事件
   useMittEmit(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, {
-    open: true
+    open: false
   });
   // 触发联赛选择完成事件
   useMittEmit(MITT_TYPES.EMIT_SELECT_LEAGUE_COMPLETE, {

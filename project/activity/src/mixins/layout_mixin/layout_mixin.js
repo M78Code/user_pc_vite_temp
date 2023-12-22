@@ -57,12 +57,16 @@ export default defineComponent({
       let res = '';
       // 默认 白色版
       const default_theme = SEARCH_PARAMS.init_param.get('theme') || _.get(UserCtr.user_info, 'configVO.h5Default', 1)
-      // 商户 主题色系
-      let is_y0 = (SEARCH_PARAMS.init_param.get('stm') == 'blue' || UserCtr.user_info.stm === 'blue') 
-      if (is_y0) {
-        res = `theme0${default_theme}_y0`;
+      if(default_theme && lodash.startsWith(default_theme,'theme0')){
+        res = default_theme;
       } else {
-        res = `theme0${default_theme}`;
+        // 商户 主题色系
+        let is_y0 = (SEARCH_PARAMS.init_param.get('stm') == 'blue' || UserCtr.user_info.stm === 'blue') 
+        if (is_y0) {
+          res = `theme0${default_theme}_y0`;
+        } else {
+          res = `theme0${default_theme}`;
+        }
       }
       return res;
     },

@@ -11,8 +11,9 @@
    <div class="f-e-c bet-submit" v-if="BetViewDataClass.bet_order_status == 1">
         <div class="bet-silider">
             <q-page-sticky ref="silider" position="bottom-left" :offset="fab_pos">
-                <div class="jiantou" :disable="dragging_fab" v-touch-pan.right.prevent.mouse="handle_silider">
-                    <img :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt="" draggable="false">
+                <div class="jiantou" :class="{'disabled-silider-bg': set_special_state(BetData.bet_data_class_version)}" :disable="dragging_fab" v-touch-pan.right.prevent.mouse="handle_silider">
+                    <img v-if="!set_special_state(BetData.bet_data_class_version)" :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt="" draggable="false">
+                    <img v-else :src="compute_local_project_file_path('/image/bet/right-arrow1.svg')" alt="" draggable="false">
                 </div>
             </q-page-sticky>
         </div>
@@ -22,14 +23,15 @@
         </div>
 
      
-        <div class="bet-box-line">
+        <div class="bet-box-line" :class="{'disabled-line': set_special_state(BetData.bet_data_class_version) }">
           <div class="middle font16">
             {{ i18n_t('bet.betting') }}
             <!-- 单关 -->
             <span class="yb-info-money font14" v-if="BetData.is_bet_single"> {{ i18n_tc('app_h5.bet.bet_win',{"total": bet_win_money(BetData.bet_data_class_version) }) }}</span>
             <span class="yb-info-money font14" v-else>{{ i18n_t('bet.sum') }}{{bet_total(BetViewDataClass.bet_view_version) }}</span>
           </div>
-          <img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt="">
+          <!-- <img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt=""> -->
+          <img :src="compute_local_project_file_path('/image/bet/roll-right-arrow.png')" alt="">
         </div>
 
         <!-- 串关 -->
@@ -55,7 +57,7 @@
 
 <script setup>
 import lodash_ from "lodash"
-import { computed, onMounted, ref } from "vue"
+import { computed, onMounted, reactive, ref } from "vue"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
@@ -72,10 +74,15 @@ const dragging_fab = ref(false)
 // 滑块组件数据
 const silider = ref(null)
 
+const ref_data = reactive({
+  is_bet_single: true,
+  show_title: ''
+})
+
 // status 是响应式的 可以用于重新计算
 const bet_win_money = computed(()=> status => {
   // 获取单关投注的数据
-  const { bet_amount, oddFinally, odds_hsw } = lodash_.get(BetData,'bet_single_list[0]',{})
+  const { bet_amount ='', oddFinally = '', odds_hsw = '' } = lodash_.get(BetData,'bet_single_list[0]',{})
   let bet_win = bet_amount
   // 香港赔 不用减去投注金额
   if(odds_hsw.includes(odds_table[UserCtr.odds.cur_odds]) && UserCtr.odds.cur_odds == 'HK' ){
@@ -95,21 +102,58 @@ const bet_total = computed(()=> status => {
   return format_money2(bet_total_money)
 })
 
+// status 是响应式的 可以用于重新计算
+const set_special_state = computed(()=> status => {
+  let bet_list = []
+  if( BetData.is_bet_single ) {
+    bet_list = lodash_.cloneDeep(BetData.bet_single_list)
+  } else {
+    bet_list = lodash_.cloneDeep(BetData.bet_s_list)
+  } 
+
+  for(let item of  bet_list) {
+    // 盘口已关闭 盘口关闭不允许投注
+    if(item.ol_os != 1 || item.hl_hs != 0 || item.mid_mhs != 0){
+      ref_data.show_title = "盘口已关闭"
+      // 不允许投注
+      ref_data.is_bet_single = false
+      return true
+    }
+    // 当前投注项中混入不能串关的投注项
+    if(item.is_serial && !BetData.is_bet_single ){
+      // 不允许投注
+      ref_data.is_bet_single = false
+      return true
+    }
+  }
+})
+
+
+
+
 
 // 滑动投注
 const handle_silider = (e) => {
+  // 不允许投注
+  if(!ref_data.is_bet_single) {
+    return
+  }
   dragging_fab.value = e.isFirst !== true && e.isFinal !== true
-  if (e.distance.x > 234 || e.isFinal) {
+  // 拖拽超过滑板或放开重置silider位置 255 235
+  if(e.isFinal && e.distance.x < 255) {
     reset_silider()
     return
   }
-  // console.log('e', e, silider);
-  if(e.distance.x > 180) {
+  if(e.distance.x >= 255 && e.isFinal) {
     // 未投注之前 可以点击
     if(BetViewDataClass.bet_order_status == 1){
       submit_handle()
     }
-    // reset_silider()
+    reset_silider()
+  }
+  if (e.isFinal || e.distance.x > 256) {
+    reset_silider()
+    return
   }
   fab_pos.value[0] = e.distance.x
   silider.value.offset[0] = e.distance.x
@@ -151,7 +195,29 @@ const set_bet_single = () => {
   if(MenuData.is_kemp()){
     return
   }
+  
   BetData.set_is_bet_single()
+  // 电竞vr切换 单/串关 不跳转和设置一级菜单
+  if(MenuData.is_esports() || MenuData.is_vr()){
+    // 后续优化逻辑 
+  }else{
+    // 切换到串关 进入到串关页面 
+    if(BetData.is_bet_single){
+      BetData.set_clear_bet_info()
+      BetViewDataClass.set_clear_bet_view_config()
+      MenuData.set_current_lv1_menu(2);
+    }
+
+    // 切换到串关 进入到串关页面 
+    if(!BetData.is_bet_single){
+      // 额额额 单关切换串关 需要把单关的数据 赋值给串关
+      BetData.bet_s_list = lodash_.cloneDeep(BetData.bet_single_list)
+      MenuData.set_current_lv1_menu(6);
+    }
+  }
+
+  BetData.set_bet_box_h5_show(false)
+  
   init_silider_position()
 }
 
@@ -258,6 +324,10 @@ onMounted(()=>{
     font-size: 0.2rem;
     border: 3px solid #50B5FF;
     margin-right: -.2rem;
+    &.disabled-silider-bg {
+      background: rgba(255, 255, 255, 0.96);
+      border-color: rgba(201, 205, 219, 0.8);
+    }
   }
 
   .bet-silider{
@@ -284,11 +354,16 @@ onMounted(()=>{
   .bet-box-line{
     display: flex;
     justify-content: space-around;
+    align-items: center;
     width: 100%;
     height: .5rem;
     border-radius: 30px;
     background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%);
     box-shadow: 0px 2px 12px 0px rgba(0, 174, 255, 0.10);
+    
+    &.disabled-line {
+      background: #C9CDDB;
+    }
     .middle {
       display: flex;
       justify-content: center;
@@ -296,8 +371,12 @@ onMounted(()=>{
       margin-left: .55rem;
       color: var(--q-gb-bg-c-15);
     }
+    // img {
+    //   width: 0.5rem;
+    // }
     img {
-      width: 0.5rem;
+      width: 0.4rem;
+      height: 0.16rem;
     }
   }
   .bet-single{
