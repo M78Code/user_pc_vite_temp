@@ -390,7 +390,7 @@ onUnmounted(() => {
     flex: 1;
     align-items: center;
     justify-content: center;
-    background-color: var(--q-gb-bg-c-15);
+    background-color: var(--q-gb-bg-c-25);
     //box-shadow: 0 2px 2px #eeeeee;
     color: var(--q-gb-t-c-18);
     font-size: 0.22rem;
