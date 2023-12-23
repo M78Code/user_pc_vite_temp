@@ -386,6 +386,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   border-top: 2px solid var(--q-gb-bd-c-3);
+  margin-bottom: .05rem;
   > div {
     display: flex;
     align-items: center;
@@ -413,6 +414,7 @@ export default {
   width: 100%;
   height: auto;
   position: relative;
+  background: var(--q-gb-bg-c-18);
 
   .match-status-fixed {
     width: 100%;
@@ -564,7 +566,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: var(--q-gb-bg-c-17) !important;
+    background: var(--q-gb-bg-c-21) !important;
     &.bottom{
       margin-top: 0.05rem;
     }
@@ -1132,7 +1134,7 @@ export default {
           }
 
           .team-t-title-w {
-            font-size: 14px;
+            font-size: 12px;
             height: 24px;
             line-height: 24px;
             width: 100%;
@@ -1185,7 +1187,7 @@ export default {
         }
 
         .score {
-          font-size: 0.14rem;
+          font-size: 0.12rem;
           display: flex;
           align-items: center;
           position: absolute;

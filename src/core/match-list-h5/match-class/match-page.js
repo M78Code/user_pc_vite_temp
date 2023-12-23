@@ -135,7 +135,20 @@ class MatchPage {
     if (obj && obj.text == "sortRules") {
       //TODO DOM滚动到顶部的方法不应该在这里
       // this.scroll_list_wrapper_by(0) 
-      this.get_match_data_list();
+      // 收藏
+      // if(MenuData.is_collect()){
+      //   // 电竞收藏
+      //   if (MenuData.is_esports()) {
+      //     MatchMeta.get_esports_collect_match()
+      //   } else {
+      //     MatchMeta.get_collect_match()
+      //   }
+      //   return 
+      // }
+      //此方法是获取列联表的数据  收藏的不是走此接口所以不能调用这个
+      //不然就要把上面的注释解开  
+      //排序 其实就是刷新 接口会增加获取数据
+      // this.get_match_data_list(); 
       this.footer_refresh_match_list();
       useMittEmit(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT);
     }
@@ -438,6 +451,8 @@ class MatchPage {
    * @return {Undefined} Undefined
    */
   get_match_data_list(cb) {
+
+
     // console.error('get_match_data_list')
     // 接口请求前置处理，接口参数处理
     const params = MatchListParams.get_match_list_params_all();

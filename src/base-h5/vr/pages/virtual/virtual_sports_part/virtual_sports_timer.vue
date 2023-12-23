@@ -149,7 +149,7 @@ export default {
       seconds_f = String(seconds_f);
       let minutes_format = minutes.padStart(2, '0');
       let seconds_f_format = seconds_f.padStart(2, '0');
-      this.timer_format = `${minutes_format}'${seconds_f_format}"`;
+      this.timer_format = `${minutes_format}:${seconds_f_format}`;
       this.path_d = this.get_path_d(remaining_time);
       if(remaining_time < 1000){
         this.$emit("time_ended",this.mid);
@@ -213,7 +213,8 @@ export default {
 
     .timer-format {
       // color: #ffb001;
-      font-size: 0.24rem;
+      font-size: 0.3rem;
+      font-weight: 500;
       color: var(--q-gb-t-c-12) !important;
       &.last {
         // color: #E23E3E;
