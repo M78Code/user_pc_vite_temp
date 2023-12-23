@@ -27,6 +27,7 @@
     import asc2 from "./img/asc2.svg";
     import desc1 from "./img/desc1.svg";
     import desc2 from "./img/desc2.svg";
+    import { watch } from "vue";
     const sortJson = [//排序数据
         {
             val:1,
@@ -53,6 +54,14 @@
     });
     const activeOn = ref(props.defaultVal);//选中值
     const sortVal = ref(1);//排序code
+    /**
+     * @description 监听传送过来的值发生改变
+     * @param {props.defaultVal} number
+     * @return 
+     */
+    watch(()=>props.defaultVal,(val)=>{
+        activeOn.value = val
+    })
     /**
      * 点击事件
      * @param {*} val  值0 1
