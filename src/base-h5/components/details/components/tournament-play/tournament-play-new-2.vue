@@ -810,7 +810,7 @@ export default defineComponent({
 }
 .tournament-play {
   &.tournament-play-outer {
-    background: var(--q-gb-bg-c-25) !important;
+    background: var(--q-gb-bg-c-27) !important;
     .play-name-outer-wrapper {
       padding: 0 0.05rem 0.04rem 0.05rem;
     }
@@ -879,10 +879,9 @@ export default defineComponent({
   margin-right:0.2rem
  }
  /* 卡片边距背景色 */
- :deep(.mg-4-bg){
+:deep(.mg-4-bg){
   margin:0.04rem;
   // background:  !important;
-  border-radius: 4px;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
 }
 :deep(.win .odds-new2) {
@@ -891,5 +890,23 @@ export default defineComponent({
 :deep(.details_color){
   background:var(--q-gb-bg-c-28);
 }
-
+/* Bug: 51232 投注项加圆角 */
+:deep(.mg-4-bg){
+  border-radius: 8px !important;
+}
+:deep(.play-box-style){
+  border-radius: 8px !important;
+}
+:deep(.bet-box-bg){
+  border-radius: 8px !important;
+}
+:deep(.bet-item-ky-container){
+  border-radius: 8px !important;
+}
+:deep(.item-bet-ky .fat-warp){
+  border-radius: 8px !important;
+}
+:deep(.play-box){
+  border-radius: 8px !important;
+}
 </style>
