@@ -3,9 +3,9 @@
     <div class="wonderful">
       <div class="wonderful-header">
         <ul class="wonderful-tabs">
-          <li v-for="(item, i) in wonderful_tabs" :key="i" @click="change_wonderful_active(i)"
-              :class="[wonderful_active == i ? 'wonderful-active':'disable-text']">
-            {{ item.name }}
+          <li v-for="(item, i) in tab_list" :key="i" @click="tab_click(item, i)"
+              :class="[tabIndex == i ? 'wonderful-active':'disable-text']">
+            {{ item.title }}
           </li>
         </ul>
       </div>
@@ -425,7 +425,11 @@ setup(props, context){
         }, 200)
       })
   }
-
+  /**
+   * 播放视频
+   * @param {*} item 
+   * @param {*} status true, 可以播放，false，不显示，不播放
+   */
   const play_video = (item, status) => {
     if (!status) {
       return;
@@ -433,8 +437,9 @@ setup(props, context){
     console.log(item, "item===");
   }
 
-  const change_wonderful_active = (value) => {
+  const change_wonderful_active = (value, item) => {
     wonderful_active.value = value;
+    tabEvenCode.value = Number(item.code)
   }
   // 第X个——英文下转换
   const trans_num = (num) => {
