@@ -77,7 +77,7 @@ export default defineComponent({
       return ov ? ov : '';
     };
     const init = () =>{
-      data.champion_list =  props.item_data.hl[0].ol
+      data.champion_list = lodash.get(props.item_data,'hl[0].ol',[])
       data.hsw_obj = props.item_data.hsw
     };
     /**

@@ -98,7 +98,7 @@
           </div>
           <!-- 赛事首发展示内容 -->
           <template v-if="viewTab == 'shoufa' && (!get_is_hengping || get_is_dp_video_full_screen)">
-            <div class="analysis">
+            <div>
                 <!-- 足球赛事分析 页面-->
                 <analysis-football-matches :detail_data="detail_data" v-if="detail_data.csid == '1'"></analysis-football-matches>
                 <!-- <line-up :detail_data="detail_data" ></line-up> -->

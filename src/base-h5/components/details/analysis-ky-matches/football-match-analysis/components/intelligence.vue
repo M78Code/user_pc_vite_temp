@@ -152,7 +152,7 @@ import { i18n_t } from "src/boot/i18n.js";
       }
 
       &.active {
-        background: var(--q-analysis-text-color-16);
+        background: var(--q-gb-bg-c-13);
         border: unset;
 
         .ellipsis {

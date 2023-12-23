@@ -3,7 +3,7 @@
 -->
 <template>
   <!-- 全部联赛标题 -->
-  <div class="all_league_title component match-container-main-template2" v-if="i === 0" @click.stop="handle_ball_seed_fold">
+  <div class="all_league_title component match-container-main-template2" v-if="i === 0" @click.stop="handle_all_ball_seed_fold">
     <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
     <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
   </div>
@@ -167,7 +167,7 @@ export default {
     }
 
     .league-wrapper {
-      padding-left: 0.1rem;
+      padding-left: 0.11rem;
       .favorite {
         width: 0.16rem;
         height: 0.16rem;
@@ -199,7 +199,7 @@ export default {
         height: 100%;
         height: 0.14rem;
         flex-shrink: 0;
-        margin-right: .04rem;
+        margin-right: .06rem;
         position: relative;
 
         img {
@@ -251,7 +251,7 @@ export default {
     font-size: 0.11rem;
     text-align: right;
     margin-top: 0.02rem;
-    margin-right: 0.08rem;
+    //margin-right: 0.08rem;
     display: flex;
     align-items: center;
 
@@ -266,13 +266,14 @@ export default {
   .hps-wrap {
 
     > .title {
+      margin: 0 0.08rem 0 0.11rem;
       border-bottom: 1px solid var(--q-gb-bd-c-5);
       //border-bottom: 1px solid var(--q-gb-bd-c-4);
     }
 
     .match-title {
       height: 0.24rem;
-      padding-left: 0.11rem;
+      //padding-left: 0.11rem;
       // padding-top: 0.12rem;
       position: relative;
       display: flex;
