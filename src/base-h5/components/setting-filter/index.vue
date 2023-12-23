@@ -214,6 +214,8 @@ const switch_handle = item => {
     activity: activity_handle
   };
   typeMap[item.mark] && typeMap[item.mark](item);
+  //监听改变
+  UserCtr.set_menu_init_change()
 };
 /**
  *@description 处理版本改变
@@ -266,7 +268,6 @@ const size_handle = item => {
 const theme_handle = item => {
 
   const status = item.switchValue === "rightVal" ? "theme-1" : "theme-2";
-  console.log(status)
   UserCtr.set_theme(status);
   // 切换主题色
   useMittEmit(MITT_TYPES.EMIT_THE_THEME_CHANGE)

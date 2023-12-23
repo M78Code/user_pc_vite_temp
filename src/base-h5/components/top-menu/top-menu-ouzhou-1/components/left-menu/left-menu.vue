@@ -60,7 +60,7 @@
   </div>
 </template>
 <script setup>
-import {ref ,reactive, defineEmits,onMounted,onUnmounted } from "vue";
+import {ref ,reactive, onMounted,onUnmounted } from "vue";
 import sportIcon from "./sport-icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from "src/output/index.js";

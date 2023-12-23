@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { reactive, defineProps, computed, unref, nextTick, watch, ref, onUpdated, watchEffect, onMounted, onUnmounted } from 'vue'
+import { reactive, computed, unref, nextTick, watch, ref, onUpdated, watchEffect, onMounted, onUnmounted } from 'vue'
 
 const props = defineProps({
     className: {

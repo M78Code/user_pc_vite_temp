@@ -33,13 +33,13 @@ let  DEV_TARGET_VERSION = ''
 
 //----------------------------------分割线  复刻版-H5-KYAPP  app-h5  5 -------------------------------------------
 // 测试环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703055848384-test";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703252362096-test";
 // 试玩环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703049252374-shiwan";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703253308519-shiwan";
 // 隔离环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1702898801798-geli";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703253330113-geli";
 // 生产环境
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1702898816752-online";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703253345739-online";
 
 //----------------------------------亚洲版-PC-202310新平坦化版本  new-pc 6-------------------------------------------
 // 测试环境

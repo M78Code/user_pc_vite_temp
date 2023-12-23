@@ -15,10 +15,13 @@
     v-cloak
   >
     <!-- mng 是否中立场 1:是中立场，0:非中立场 --- 仅足球 -->
-    <span v-if="project_name == 'app-h5' && ['result_details', 'match_result'].includes(route.name) && detail_data.mng == 1"
-      class="tag">
-      N
-    </span>
+    <template v-if="project_name == 'app-h5' && ['result_details', 'match_result'].includes(route.name)">
+      <span v-if="![5, 10, 7, 8, 13].includes(Number(detail_data.csid)) && detail_data.mng * 1"
+        class="tag">
+        N
+      </span>
+    </template>
+    
     <!-- component 自定义标签:动态绑定组件,根据数据的不同更换不同的组件 'is' 关键字用来动态切换组件 -->
     <component
       :is="componentId"

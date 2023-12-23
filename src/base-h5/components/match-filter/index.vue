@@ -21,7 +21,6 @@
         <div class="scroll-area1" v-for="(item, index) in list" :key="index" ref="scroll_area1">
           <div class="bg-f6f7f8 scroll-title" ref="bg_f6f7f8" v-if="item.title">
             <div class="scroll-title-text">
-              <!-- <img class="scroll-title-icon" :src="compute_local_project_file_path('image/list/league-collapse-icon.svg')" alt=""> -->
               <img class="scroll-title-icon"  
                    :class="{'is_fold':item.hide}" 
                    @click="is_fold_fn(item)"
@@ -29,8 +28,6 @@
               <span>{{ item.title }}</span>
             </div>
             <div class="scroll-setect">
-              <!-- <div class="scroll-setect-options" :class="item.checked ? 'sso-active':'' "
-                   @click="type_select(item)"></div> -->
               <div class="scroll-setect-options"
                    @click="type_select(item)">
                    <img :src="compute_local_project_file_path(item.checked ? '/image/list/icon_selected_theme_type.svg' : '/image/list/icon_unselected_onlight.svg')" alt=""></div>
@@ -41,7 +38,6 @@
             <div v-if="!item.hide">
               <div :key="index + 'League-name'" class="row  items-center content_box1">
                 <div class="row justify-between items-center content_box2" :class="{ 'content_box3': item.title && item.spell }">
-                  <!-- <img :src="get_pic_url_thumb(item)" alt=""> -->
                   <div class="left">
                     <ImageCacheLoad :path="item.picUrlthumb" type="default_league_icon"></ImageCacheLoad>
                     <div class="name-overhide">{{ item.nameText }}</div>
@@ -50,9 +46,6 @@
                     <div class="nums"
                         v-show="!(type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type))">
                         （{{ item.num }}）
-                        <!-- <img class="icon-search" :src="compute_img_url(item.select ? 'checkbox-box-s' : 'checkbox-box')" /> -->
-                        <!-- <div class="scroll-setect-options" :class="item.select ? 'sso-active':'' "
-                             @click="select_li_ctr(item)"></div> -->
                         <div @click="select_li_ctr(item)">
                           <img :src="compute_local_project_file_path(item.select ? '/image/list/icon_selected_theme_type.svg' : '/image/list/icon_unselected_onlight.svg')" alt="">
 
@@ -83,22 +76,6 @@
     <div v-if="is_show" class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
       <span>{{ active_index }}</span>
     </div>
-
-    <!-- 底部固定部分 -->
-    <!-- 全选/反选/确定 -->
-    <!-- <div class="allCheck row justify-between items-center" v-if="change && !list_data_loading">
-      <div class="row items-center"
-        :style="{ lineHeight: ['vi', 'en', 'th', 'ms', 'ad'].includes(get_lang) ? '1' : 'unset' }">
-        <img class="icon-search" @click="all_checked_click"
-          :src="compute_img_url(all_checked ? 'checkbox-box-s' : 'checkbox-box')" />
-        <  class="txt ellipsis-2-lines" @click="all_checked_click">{{ i18n_t('common.all_select') }}</span>
-        <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ i18n_t('filter.reverse_election') }}</span>
-      </div>
-      <div class="right-box" @click="search_btn">
-        <p class="confirm">{{ i18n_t('common.ok') }}</p>
-        <p class="round-box">{{ select_num }}</p>
-      </div>
-    </div> -->
     <!-- 无数据展示 -->
     <no-data which="noMatch" style="margin-top: 0.26rem" :height="100"
       v-if="!list_data_loading && no_find_content"></no-data>
@@ -128,6 +105,8 @@ const none_league_icon_black = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup
 
 const list_data_loading = ref(false)     //数据加载中
 const list = ref([]) //数据列表整个赛事
+let list_copy = [] //初始化的数据列表整个赛事
+let hot_list = ref([])  //初始化的数据列表整个赛事
 const type = MenuData.menu_type  // 100（冠军）  3000（电竞） 赛果29  滚球:1 今日:3 早盘:4 串关:11 冠军:100  竞足 30
 const anchor_arr = ref([i18n_t('search.hot'), "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]) //右边字母数组
 const active_index = ref("")  //活动的下标
@@ -143,6 +122,19 @@ const change = ref(true) //是否显示全选按钮
 const selected = ref({})   //选中的赛事集合 //TODO get_filter_list
 const select_num = ref(0) //选中的赛事数量
 // const { get_hotselect3 } = api_search || {};
+
+// 热门联赛只展示九大联赛 其余联赛需要塞到 地域级List 或  球种级list
+const orderArray = [
+  { id: "28206" },
+  { id: "6408" },
+  { id: "18031" },
+  { id: "32070" },
+  { id: "180" },
+  { id: "320" },
+  { id: "239" },
+  { id: "276" },
+  { id: "79" },
+]; //固定排序数组
 
 //ref对象
 const scrollArea = ref(null);
@@ -241,8 +233,6 @@ function scrolled(position) {
     active_index_position.value = '' // 复原数据
     return
   }
-
-
   is_scroll_right.value = false;
   let position2;
   for (let i = 0; i < scroll_obj2_val.value.length; i++) {
@@ -435,6 +425,10 @@ function type_select(li_item) {
     if (i.spell === li_item.title){
        i.select = li_item.checked
     }
+    //筛选热门联赛
+    if (li_item.title === i18n_t('search.hot_league') && i.spell === 'HOT'){
+        i.select = li_item.checked
+     }
      return i
   }); // 初始化select
 }
@@ -507,6 +501,14 @@ function fetch_filter_match() {
         change.value = false;
         return
       }
+      //过滤热门联赛
+      data = data.map(item=>{
+      if (orderArray.some(sub => sub.id == item.id)) {
+        item.spell = 'HOT'
+          return item
+        } 
+          return item
+      })
       //排序
       data.sort((a, b) => {
         if (a.spell == 'HOT' || b.spell == 'HOT') {
@@ -524,8 +526,14 @@ function fetch_filter_match() {
       filter_alphabet(list.value)
       // 动态生成有联赛的字母，并非A - Z 全量字母；
       dynamic_letters(list.value)
+
+    //拷贝一份数据做筛选用
+     list_copy = list.value
       scroll_obj_fn(-1);
       get_league_select_list()
+  
+      //排序
+      // hot_list.value = customSortAndMerge(hot_list.value)
     } catch (e) {
       list_data_loading.value = false;
       console.error(e);
@@ -542,16 +550,13 @@ function fetch_filter_match() {
  * @return {Undefined} Undefined
  */
 function get_search_result(keyword) {
-    list_data_loading.value = true;
-    //调用接口获取获取搜索结果数据
-    search.get_search_result(keyword, '').then(res => {
-        const { state, list } = res
-        list_data_loading.value = false;
-        console.log('resresresres',res)
-        // load_data_state.value = state
-        // res_list = list
-
-    })
+      //去除所有空格
+      keyword = keyword.replace(/\s*/g,"");
+        list.value = (list_copy || []).filter(item=>{
+        if (item.nameText.toLocaleLowerCase().indexOf(keyword.toLocaleLowerCase()) != -1){
+          return item
+        }
+      })
 }
 // 首字母过滤放在放在第一个item 上
 function filter_alphabet(arr) {
