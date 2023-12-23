@@ -120,11 +120,22 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
    * 调用后通过传参判断是否是 ws 调用
    */
   const m_init = (param = { is_ws: false }) => {
+    console.trace(2222)
     //给仓库类设置id
-    MatchDetailCalss.set_match_details_params(param)
+    MatchDetailCalss.set_match_details_params({mid:param})
     allData.details_params = param
     clearTimeout(allData.get_match_details_timer);
-    let { mid, is_ws } = param;
+    //如果是ws推送
+    let mid =null
+    let is_ws = false
+    if( lodash.isObject(param)){
+       mid  = param.mid;
+       is_ws  = param.is_ws;
+    }else{
+      //如果是mitt 列表触发
+        mid = param;
+    }
+    
     // 如果有传参，并且不是 ws 调用
     if (mid) {
       allData.mid = mid;

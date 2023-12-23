@@ -201,6 +201,9 @@ export default defineComponent({
       type: Number,
     },
   },
+  data(){
+    return {}
+  },
   components: {
     temp0,
     temp1,
@@ -810,7 +813,7 @@ export default defineComponent({
 }
 .tournament-play {
   &.tournament-play-outer {
-    background: var(--q-gb-bg-c-25) !important;
+    background: var(--q-gb-bg-c-27) !important;
     .play-name-outer-wrapper {
       padding: 0 0.05rem 0.04rem 0.05rem;
     }

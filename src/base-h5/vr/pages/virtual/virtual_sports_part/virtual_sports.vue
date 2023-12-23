@@ -157,7 +157,6 @@ import v_s_match_list2 from "src/base-h5/vr/pages/virtual/virtual_sports_part/vi
 import virtualSportsTab from "src/base-h5/vr/components/virtual_sports_tab.vue"
 import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue"
 import { utils } from "src/core/utils/common/module/utils.js";
-import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import virtual_sports_stage from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue"
 import dynamic_ranking from "src/base-h5/vr/pages/virtual/virtual_sports_part/dynamic_ranking.vue"
 import result_page from "src/base-h5/vr/pages/result/result_page.vue"
@@ -251,7 +250,6 @@ export default {
       useMittOn(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2, this.match_ended_status2_handle).off,
     ]
     this.match_ended_status2_handle();
-    pre_load_video.load_player_js('old')
   },
   methods:{
 	set_current_league(data){VR_CTR.set_current_league(data)},
@@ -289,7 +287,7 @@ export default {
       if(this.match_list_by_no && this.match_list_by_no.length){
         this.match_list_by_no.forEach(m => {
           if(m.batchNo == batchNo){
-            m.mhs = 1;
+            m.mhs = 1;  //赛事级别状态
           }
         });
       }
@@ -835,7 +833,7 @@ export default {
       width: 0.2rem;
       height: 0.16rem;
       &.expend_all_league {
-        transform: rotate(-90deg);
+        transform: rotate(-180deg);
       }
     }
   }
@@ -878,7 +876,7 @@ export default {
     border-bottom-left-radius: .04rem;
     border-bottom-right-radius: .04rem;
     .vsm-options {
-      width: 48%;
+      width: 49%;
       height: .4rem;
       background: var(--q-gb-bg-c-18);
       border-radius: .04rem;
@@ -890,7 +888,7 @@ export default {
       font-size: .12rem;
       padding: .02rem .12rem;
       &.active {
-        background: #C9CDDB;
+        background: #D1EBFF;
       }
       .teams {
         display: flex;

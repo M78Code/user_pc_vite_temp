@@ -161,7 +161,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     // 获取玩法集
     get_category_list(() => {
       // 设置选中玩法集
-      //set_cur_match_plays_list();
+            //set_cur_match_plays_list();
       if (param.is_refresh) {
         //   this.get_mattch_details({id: this.mcid, round: this.currentRound});
         // 玩法投注项列表;
@@ -366,12 +366,12 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
       // max_loop: is_init ? 3 : 1,
       max_loop:  1,
       // axios中then回调方法
-      fun_then: (res,data) => {
+      fun_then: (res) => {
         set_details_loading_time_record("ok");
         // 检查gcuuid
         // if (state.send_gcuuid != res.config.gcuuid) return;
         // 玩法列表数据处理
-        get_match_details(data);
+        get_match_details(res);
       },
       // axios中catch回调方法
       fun_catch: (err) => {
@@ -413,6 +413,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    * @description 玩法列表数据处理--电竞和其他赛事通用
    */
   const get_match_details = (res) => {
+    debugger
     state.err_time = 0;
     state.match_details = [];
     state.data_loaded = true;
@@ -602,16 +603,15 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
         if (!MatchDataWarehouseInstance) {
           return;
         }
-        // const code = lodash.get(res, "code");
-        // if (code == "0400500") {
-        //   emit_autoset_match(0);
-        //   return;
-        // }
-        // const data = lodash.get(res, "data");
-        // if (code === 200 && data.length) {
-        if ( res?.length) {
-          state.category_list = res;
-          handicap_this.value['category_list'] = res
+        const code = lodash.get(res, "code");
+        if (code == "0400500") {
+          emit_autoset_match(0);
+          return;
+        }
+        const data = lodash.get(res, "data");
+        if (code == 200 && data.length) {
+          state.category_list = res.data;
+          handicap_this.value['category_list'] = res.data
           // 初始化玩法列表
           if (callback) {
             callback();
@@ -687,6 +687,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     MatchDataWarehouseInstance.set_match_details(state.match_infoData, data);
     let str =state.mid+'_'
     match_details_data_set([lodash.get(MatchDataWarehouseInstance.list_to_obj.mid_obj,str)]);
+    debugger
     state.handicap_state = "data";
     // 同步投注项
     if (!get_lang_change.value) {

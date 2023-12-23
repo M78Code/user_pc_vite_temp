@@ -24,7 +24,7 @@
 import { onMounted, onUnmounted, ref, watch, nextTick, defineComponent, shallowRef } from 'vue'
 import lodash from 'lodash'
 // 详情页 或者 赛果 赛事分析 公共tab 组件
-import headTab from "src/base-h5/components/details/match-analysis/head-tab.vue";
+import headTab from "src/base-h5/components/details/analysis-ky-matches/components/head-tab.vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
 import store from "src/store-redux/index.js"
@@ -32,19 +32,19 @@ import zhuge from "src/core/http/zhuge-tag.js"
 import { MatchDetailCalss } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 // 资讯页
-import articleMain from "src/base-h5/components/details/analysis-matches/article/article-main.vue"
+import articleMain from "src/base-h5/components/details/analysis-ky-matches/article/article-main.vue"
 // 赛果详情 赛况统计 和 事件
 import matchResult from "src/base-h5/components/details/components/details-match-results/match-results.vue"
 // 详情页  足球赛事分析 战绩 模块
-import standings from "src/base-h5/components/details/analysis-matches/components/standings.vue"
+import standings from "src/base-h5/components/details/analysis-ky-matches/components/standings.vue"
 // 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
-import lineUp from "src/base-h5/components/details/analysis-matches/components/line-up.vue"
+import lineUp from "src/base-h5/components/details/analysis-ky-matches/components/line-up.vue"
 // 详情页足球赛事分析情报页面
-import intelligence from "src/base-h5/components/details/analysis-matches/football-match-analysis/components/intelligence.vue"
+import intelligence from "src/base-h5/components/details/analysis-ky-matches/football-match-analysis/components/intelligence.vue"
 // 详情页足球赛事分析赔率页面
-import analysisOdds from "src/base-h5/components/details/analysis-matches/football-match-analysis/components/analysis-odds.vue"
+import analysisOdds from "src/base-h5/components/details/analysis-ky-matches/football-match-analysis/components/analysis-odds.vue"
 // 精彩回放
-import highlights from "src/base-h5/components/details/analysis-matches/highlights/highlights.vue"
+import highlights from "src/base-h5/components/details/analysis-ky-matches/highlights/highlights.vue"
 
 export default defineComponent({
   components: {

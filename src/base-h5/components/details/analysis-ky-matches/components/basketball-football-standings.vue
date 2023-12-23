@@ -226,7 +226,7 @@ const props = defineProps({
       position: absolute;
       left: 0.16rem;
       top: 0.15rem;
-      background: var(--q-analysis-text-color-16);
+      background: var(--q-gb-bg-c-13);
       border-radius: 1.5px;
     }
   }
