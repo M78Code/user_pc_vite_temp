@@ -311,7 +311,7 @@ export default {
   padding-left: 0.1rem;
   height: 0.26rem;
   font-size: 0.11rem;
-  background-image: var(--q-gb-bg-lg-19);
+  background: var(--q-gb-bg-c-21);
   /*transform: translateY(3px);*/
   margin: 0 auto;
   justify-content:space-between;

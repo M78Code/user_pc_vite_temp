@@ -251,7 +251,7 @@ export default {
     font-size: 0.11rem;
     text-align: right;
     margin-top: 0.02rem;
-    margin-right: 0.08rem;
+    //margin-right: 0.08rem;
     display: flex;
     align-items: center;
 
@@ -266,13 +266,14 @@ export default {
   .hps-wrap {
 
     > .title {
+      margin: 0 0.08rem 0 0.11rem;
       border-bottom: 1px solid var(--q-gb-bd-c-5);
       //border-bottom: 1px solid var(--q-gb-bd-c-4);
     }
 
     .match-title {
       height: 0.24rem;
-      padding-left: 0.11rem;
+      //padding-left: 0.11rem;
       // padding-top: 0.12rem;
       position: relative;
       display: flex;
