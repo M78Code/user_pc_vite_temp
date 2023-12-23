@@ -33,4 +33,7 @@ export default {
   'fkh5_bg_jiesuan': {
     default: "fkh5_bg_jiesuan",     
   },
+  'h5-kyapp-open-lague': {
+    default: "h5-kyapp-open-lague",     
+  },
 }
