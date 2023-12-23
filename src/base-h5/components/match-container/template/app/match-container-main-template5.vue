@@ -128,9 +128,7 @@
               <!-- 赛事日期标准版 -->
               <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
                 <!-- 赛事回合数mfo -->
-                <!-- <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
-                  {{ match.mfo }}
-                </div> -->
+                
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                 <div class="date-time"
                   v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
@@ -146,6 +144,9 @@
                 <!--一小时内开赛 -->
                 <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
                   <CountingDownStart :match="match" :index="i" :mgt_time="match.mgt"></CountingDownStart>
+                </div>
+                <div v-if="match.mfo&&match.ms != 110&&show_start_counting_down(match)" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
+                  &nbsp;{{ match.mfo }}
                 </div>
                 <!--倒计时或正计时-->
                 <div v-if="match.ms != 110 && show_counting_down(match)"
