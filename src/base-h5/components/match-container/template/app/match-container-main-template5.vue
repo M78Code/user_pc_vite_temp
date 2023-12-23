@@ -40,12 +40,12 @@
           :class="[(' match-indent league')]">
           <div class="league-t-wrap right-border">
             <!-- 联赛收藏 -->
-            <template v-if="![3000, 900].includes(menu_type) && !is_esports">
-              <img v-if="!league_collect_state" class="favorited-icon"
-                :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/ico_fav_nor.png`" alt="" @click.stop="handle_league_collect" />
-              <img v-if='league_collect_state' class="favorited-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/ico_fav_sel.png`"
-                @click.stop="handle_league_collect" />
-            </template>
+            <div v-if="![3000, 900].includes(menu_type) && !is_esports" class="favorited-icon" @click.stop="handle_league_collect">
+              <!-- 未收藏 compute_img_url('icon-favorite')-->
+              <img v-if="!league_collect_state" :src="not_favorite_app" alt="">
+              <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
+              <img v-if='league_collect_state' :src="normal_img_is_favorite">
+            </div>
             <!-- 电竞图标 写死 -->
             <div class="esport" v-if="match_of_list.csid == 101"
               :style="compute_css_obj('menu-sport-active-image', 2101)"></div>
@@ -852,6 +852,10 @@ export default {
         /* position: relative;
         top: 1px; */
         flex-shrink: 0;
+        > img {
+          width: 100%;
+          height: 100%;
+        }
 
       }
     }
