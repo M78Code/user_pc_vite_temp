@@ -4,24 +4,22 @@
 
 <template>
   <!-- <ObserverWrapper :match_list="MatchMeta.complete_matchs" com_type="app-h5-new"></ObserverWrapper> -->
-  <base-virtual-list :data="matchs_data" :item-height="50" @onUpdate="handlerUpdate" dynamic>
+  <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate" >
     <template #default="{ item, index }">
-      <template v-if="defer_render(index)">
-        <template v-if="is_kemp">
-          <MatchContainerMainTemplate2
-            :i="index"
-            :match_of_list="get_match_item(item)">
-          </MatchContainerMainTemplate2>
-        </template>
-        <template v-else>
-          <MatchContainerMainTemplate5
-            :i="index"
-            :match_of_list="get_match_item(item)">
-          </MatchContainerMainTemplate5>
-        </template>
+      <template v-if="is_kemp">
+        <MatchContainerMainTemplate2
+          :i="index"
+          :match_of_list="get_match_item(item)">
+        </MatchContainerMainTemplate2>
+      </template>
+      <template v-else>
+        <MatchContainerMainTemplate5
+          :i="index"
+          :match_of_list="get_match_item(item)">
+        </MatchContainerMainTemplate5>
       </template>
     </template>
-  </base-virtual-list>
+  </BaseVirtualList>
 </template>
  
 <script setup>
