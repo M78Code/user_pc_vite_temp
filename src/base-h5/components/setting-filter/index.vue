@@ -39,9 +39,8 @@
             :value="item.switchValue"
             :leftVal="item.leftVal"
             :rightVal="item.rightVal"
-            :disabled="is_disabled(item)"
             @change_value="switch_handle(item)"
-            :class="{disabled:item.mark ==='Handicap'&&MenuData.current_lv_1_menu_i== 400 }"
+            :class="{disabled:(item.mark ==='Handicap'&& MenuData.current_lv_1_menu_i== 400) || is_disabled(item)}"
           />
         </div>
       </div>

@@ -13,7 +13,7 @@
       <div class="tips-main">
         <h2>{{ i18n_t('app_h5.cathectic.cash_rules') }}</h2>
         <p>{{ i18n_t('app_h5.cathectic.explain1') }}</p>
-        <p>{{ i18n_t('app_h5.cathectic.explain2') }}</p>
+        <!-- <p>{{ i18n_t('app_h5.cathectic.explain2') }}</p> -->
         <span @click="alertTips=false;">{{ i18n_t("ac_rules.understand")}}</span>
       </div>
     </q-dialog>

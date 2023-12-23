@@ -98,7 +98,7 @@
           </div>
           <!-- 赛事首发展示内容 -->
           <template v-if="viewTab == 'shoufa' && (!get_is_hengping || get_is_dp_video_full_screen)">
-            <div>
+            <div class="analysis">
                 <!-- 足球赛事分析 页面-->
                 <analysis-football-matches :detail_data="detail_data" v-if="detail_data.csid == '1'"></analysis-football-matches>
                 <!-- <line-up :detail_data="detail_data" ></line-up> -->
@@ -152,8 +152,8 @@ import info_rules from "src/base-h5/components/details/components/info-rules.vue
 import SDetails from "src/base-h5/components/skeleton/skeleton-details.vue"  // 详情骨架屏
 import category from "./children/category.vue";
 // import chatroom from "src/base-h5/components/details/components/chatroom/chatroom.vue"
-import analysisFootballMatches from "src/base-h5/components/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"
-import basketballMatchAnalysis from "src/base-h5/components/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue"
+import analysisFootballMatches from "src/base-h5/components/details/analysis-ky-matches/football-match-analysis/analysis-football-matches.vue"
+import basketballMatchAnalysis from "src/base-h5/components/details/analysis-ky-matches/basketball-match-analysis/basketball-match-analysis.vue"
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
