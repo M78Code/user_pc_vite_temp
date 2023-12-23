@@ -162,7 +162,6 @@ export default {
 
     let timer = 0;
     onMounted(() => {
-      console.error('ou pc',UserCtr);
       // 发送进入首页埋点消息
       clearTimeout(timer)
       timer = setTimeout(() => {
