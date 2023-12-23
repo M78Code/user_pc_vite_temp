@@ -35,7 +35,6 @@ const data = ref([
                 name:i18n_t('footer_menu.new_v'),
                 val:2,
                 changeFun:(val)=>{
-                     //  2 专业版
                     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
                     nextTick(()=>{
                         UserCtr.set_standard_edition(val)

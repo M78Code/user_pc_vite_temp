@@ -6,6 +6,10 @@ import { LocalStorage } from 'src/core/utils/common/module/web-storage.js'
 import { createI18n } from "vue-i18n";
 import lodash from 'lodash'
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const PROJECT_NAME = BUILDIN_CONFIG.PROJECT_NAME
+const IS_PC = PROJECT_NAME.includes('pc')
+
+
 //服务器语言打包key对应本地语言key
 const server_key_map = {
   "en-gb": "en",
@@ -37,8 +41,7 @@ const map_lang = {
   ko: "ko-kr",
   es: "es-es",
 };
-const PROJECT_NAME = BUILDIN_CONFIG.PROJECT_NAME
-const IS_PC = PROJECT_NAME.includes('pc')
+
 
 let browser_lang = String(navigator.language).slice(0, 2) //获取浏览器语言
 browser_lang = map_lang[browser_lang] ? browser_lang : 'en' //兜底 如果url带语言就是url语言  浏览器语言存在就是浏览器语言 不然就默认en英语
@@ -77,6 +80,8 @@ const loadLanguageAsync = async (lang) => {
   lang = lang || locale
   try {
     const langfile = await import( /* webpackChunkName: "lang-[request]" */ `../i18n/${IS_PC ? 'pc' : 'h5'}/${map_lang[lang]}/index.json`)
+    console.log(langfile,'langfile');
+    const commLang = await import( /* webpackChunkName: "lang-[request]" */ `../i18n/${IS_PC ? 'pc' : 'h5'}/common-lang/index.json`)
     // 动态加载对应的语言包
     // let langFile = langfile.default || langfile;
     // 设置语言信息
@@ -90,7 +95,7 @@ const loadLanguageAsync = async (lang) => {
       }
     }
     // console.error('ssss',lang)
-    i18n.global.setLocaleMessage(lang, { ...langfile, ...msg });
+    i18n.global.setLocaleMessage(lang, { ...langfile, ...msg,...commLang });
     i18n.global.locale = lang;
     // 设置语种
     i18n.locale = lang;

@@ -55,13 +55,14 @@
 // mixins:[match_basis_info_mixin],
 
 import { computed } from 'vue';
+import { useRouter,useRoute } from "vue-router";
 import lodash from 'lodash';
-import { t ,compute_local_project_file_path} from "src/output/index.js";
+
+import { t ,compute_local_project_file_path, is_show_sr_flg} from "src/output/index.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import details  from "src/core/match-list-pc/details-class/details.js"
-import { useRouter,useRoute } from "vue-router";
 const router = useRouter()
 const route = useRoute()
 const props = defineProps({

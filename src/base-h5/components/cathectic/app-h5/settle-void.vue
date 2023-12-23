@@ -5,7 +5,7 @@
 -->
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-  <div class="settle-void" @touchmove.prevent>
+  <div class="settle-void" @touchmove.prevent >
     <!-- <img :src="compute_local_project_file_path('/image/bet/no-data.png')"> -->
     <img :src="compute_local_project_file_path('/image/bet/def_nobetrecord.png')">
     <template>
@@ -55,7 +55,8 @@ template {
   align-items: center;
   min-height: 4rem;
   border-radius: 0.1rem;
-  background-color: var(--q-gb-bg-c-23);
+  background: url($SCSSPROJECTPATH+'/image/png/cathectic-item-all_bg.png');
+  background-size: cover;
   opacity: 0;
   animation: opacityAnimate 0.5s linear;
   animation-fill-mode: forwards;

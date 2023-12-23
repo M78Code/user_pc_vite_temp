@@ -34,6 +34,15 @@ export default {
     default: "fkh5_bg_jiesuan",     
   },
   'h5-kyapp-open-lague': {
-    default: "h5-kyapp-open-lague",     
+    default: "h5-kyapp-open-lague",
+  },   
+  'h5-keyboard': {
+    default: "h5-keyboard",    
+  },
+  'h5_pack_keyboard': {
+    default: "h5_pack_keyboard",    
+  },
+  'h5_back_img': {
+    default: "h5_back_img",    
   },
 }

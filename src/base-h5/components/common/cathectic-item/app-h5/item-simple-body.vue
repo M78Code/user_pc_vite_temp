@@ -127,6 +127,7 @@ template {
   }
   .body-main {
     margin-top: 0.1rem;
+    font-size: .12rem;
     p {
       line-height: 2;
       display: flex;

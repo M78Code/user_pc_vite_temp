@@ -137,6 +137,8 @@ const play_name_list = ref([]);
 //当前选中的次要玩法
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+console.log('match_style_obj', match_list_tpl_size);
+
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
 match.value && set_play_name_list(match.value.tab_play_keys)
 const is_mounted = ref(true);

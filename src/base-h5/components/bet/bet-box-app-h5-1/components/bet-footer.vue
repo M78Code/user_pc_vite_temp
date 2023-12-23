@@ -369,7 +369,7 @@ onMounted(()=>{
       justify-content: center;
       align-items: center;
       margin-left: .55rem;
-      color: var(--q-gb-bg-c-15);
+      color: var(--q-gb-bg-c-14);
     }
     // img {
     //   width: 0.5rem;
