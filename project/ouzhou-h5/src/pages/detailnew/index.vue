@@ -85,7 +85,7 @@ import detail_header_tem2 from "./detail_header/detail_header_tem2.vue";
 import detail_tabs from "./components/detail_tabs.vue";
 import detail_event_tabs from "./components/detail_event_tabs.vue";
 // import odds_info from "./components/odds_info.vue";
-import odds_info from "./components/bevis_odds_info.vue";
+// import odds_info from "./components/bevis_odds_info.vue";
 import OddsListContrainer from "./components/OddsListContrainer.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
@@ -100,7 +100,7 @@ export default {
     detail_header_tem2,
     detail_tabs,
     detail_event_tabs,
-    odds_info,
+    // odds_info,
     loading_page,
     event_analysis,
     OddsListContrainer,

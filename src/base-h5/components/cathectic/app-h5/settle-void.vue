@@ -5,7 +5,7 @@
 -->
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-  <div class="settle-void" @touchmove.prevent>
+  <div class="settle-void" @touchmove.prevent >
     <!-- <img :src="compute_local_project_file_path('/image/bet/no-data.png')"> -->
     <img :src="compute_local_project_file_path('/image/bet/def_nobetrecord.png')">
     <template>

@@ -38,6 +38,8 @@
               <div :style="{
                 'background-image': `url(${event.fragmentPic})`
               }" class="fragment-pic">
+              <!-- 播放视频按钮 -->
+              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/play.svg`" alt="" class="play"/>
               <span class="score">{{ event.t1 }}-{{ event.t2 }}</span>
               <span class="time">{{ $filters.format_mgt_time(+event.secondsFromStart) }}</span>
             </div>
@@ -175,8 +177,37 @@
           </div>
         </div>
       </div>
+
+      
     </div>
     
+    <div class="wonderful">
+      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/border_left.svg`" alt="" class="border-left">
+      <div class="wonderful-header" @click="change_event_active">
+        <p>赛事事件</p>
+        <!-- <ul class="wonderful-tabs">
+          <li v-for="(item, i) in wonderful_tabs" :key="i" @click="change_wonderful_active(i)"
+              :class="[wonderful_active == i ? 'wonderful-active':'disable-text']">
+            {{ item.name }}
+          </li>
+        </ul> -->
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/arrow.svg`" :class="['arrow', event_active ? 'rotate-90':'']"/>
+          
+      </div>
+    </div>
+
+    <div class="wonderful">
+      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/border_left.svg`" alt="" class="border-left">
+      <div class="wonderful-header">
+        <p>技术统计</p>
+        <ul class="wonderful-tabs">
+          <li v-for="(item, i) in bureau_tabs" :key="i" @click="change_bureau_tabs(i)"
+              :class="[bureau_active == i ? 'wonderful-active':'disable-text']">
+            {{ item.name }}
+          </li>
+        </ul>
+      </div>
+    </div>
     
   </div>
 </template>
@@ -253,6 +284,7 @@ setup(props, context){
   const wonderfulListRef = ref(null);
   // 锚点
   const events_scroller = ref(null)
+  const event_active = ref(true);
   const tabs = ref(null)
   const slider_video = ref(null)
   // TODO:待调试处理
@@ -284,6 +316,13 @@ setup(props, context){
     event_id: '',
     slider_index: 0,
   })
+  // 局进度
+  const bureau_active = ref(0);
+  const bureau_tabs = computed(() => [
+    {name: '全场', id: 0},
+    {name: '上半场', id: 1},
+    {name: '下半场', id: 2},
+  ])
   // 顶部tabs
   const wonderful_tabs = computed(() => [
     {name: '常规', id: 0},
@@ -344,6 +383,12 @@ setup(props, context){
         break;
     }
   }
+
+
+  const change_event_active = () => {
+    event_active.value = !event_active.value;
+  }
+
   // 检测精彩回放视频资源加载状态
   const check_replay_url = (url) => {
     api_common.get_full_url(url)
@@ -759,6 +804,10 @@ setup(props, context){
     return slider_events_list.length * Math.ceil(1.44 * font_size) < full_screen_width
   })
 
+  const change_bureau_tabs = (value) => {
+    bureau_active.value = value;
+  }
+
   onUnmounted(() => {
       clearInterval(get_football_replay_timer.value)
       get_football_replay_timer.value = null
@@ -779,6 +828,11 @@ setup(props, context){
     wonderful_tabs,
     wonderful_active,
     wonderfulListRef,
+    change_event_active,
+    bureau_tabs,
+    change_bureau_tabs,
+    bureau_active,
+    event_active,
     // 锚点
     events_scroller,
     change_wonderful_active,

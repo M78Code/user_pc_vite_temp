@@ -75,7 +75,7 @@
           <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
             <div class="odd-title-i-w flex">
               <div class="odd-t-i-wrapper flex items-center"
-                :class="{ 'status2': PageSourceData.standard_odd_status.value == 1 && match_of_list_ascertain.length > 3 }">
+                :class="{ 'status2': PageSourceData.standard_odd_status.value == 1 && i18n_t('list_title.' + match.csid + '.title').length > 3 }">
                 <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
                   :key="i" v-for="(hpl_title, i) of i18n_t('list_title.' + match.csid + '.title')">
                   <div class="hpl-t-inner">

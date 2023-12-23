@@ -2,11 +2,11 @@
  * @Description: ouzhou H5 赛果组件
 -->
 <template>
-  <div class="match-container m-3 component match-container-main-template3" 
+  <div class="component match-container-main-template3 match-container m-3" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match">
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
-      <div :class="['match-inner-container', {'collapsed': !collapsed}]">
+      <div class="match-inner-container" :class="[{'collapsed': !collapsed}]">
         <!--联赛标题 -->
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
           :class="[('league match-indent hairline-border'), { 'no-border': !collapsed}]">
@@ -21,11 +21,11 @@
           </div>
           
         </div>
-        <div :class="['league-line', {'collapsed': !collapsed}]"></div>
+        <div class="league-line" :class="[{'collapsed': !collapsed}]"></div>
         <!-- 卡片主内容 -->
           <div style="width: 100%;" v-if="collapsed">
             <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
-            <div :class="['match-odds-container study_height_s hairline-border']">
+            <div class="match-odds-container study_height_s hairline-border">
               <div class="match-odds-container-border-radius">
                 <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
                 <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_results }">
@@ -228,6 +228,9 @@ export default {
     // 赛事列表相关操作的类型封装对象
     matchCtr: Object,
     main_source:String,
+  },
+  data(){
+    return {}
   },
   components: {
     IconWapper,

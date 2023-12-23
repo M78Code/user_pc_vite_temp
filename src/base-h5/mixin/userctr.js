@@ -9,6 +9,7 @@ const sort_type = ref(UserCtr.sort_type)    //排序	 int 类型 1 按热门排�
 const standard_edition = ref(UserCtr.standard_edition)//标准版本2  简易版1
 const resources_obj = ref(UserCtr.resources_obj)//商户配置的广告信息
 const match_mids = ref(MatchMeta.match_mids) // 当前页面赛事列表 mids
+const set_menu_init = ref(UserCtr.set_menu_init) // 当前页面赛事列表 mids
 
 //用戶信息變化
 const cancel = watch(UserCtr.user_version, () => {
@@ -16,6 +17,7 @@ const cancel = watch(UserCtr.user_version, () => {
     user_info.value = UserCtr.user_info;
     sort_type.value = UserCtr.sort_type;
     resources_obj.value = UserCtr.resources_obj
+    set_menu_init.value = UserCtr.set_menu_init
 })
 //有 触发mitt的 可以不用更新版本号
 const mitt_list = [
@@ -40,5 +42,5 @@ const mitt_list = [
 // })
 
 export {
-    theme, lang, show_favorite_list, user_info, sort_type, standard_edition, resources_obj, match_mids
+    theme, lang, show_favorite_list, user_info, sort_type, standard_edition, resources_obj, match_mids,set_menu_init
 }
