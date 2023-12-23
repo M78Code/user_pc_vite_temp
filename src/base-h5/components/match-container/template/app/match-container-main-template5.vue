@@ -818,7 +818,7 @@ export default {
     background: var(--q-gb-bg-c-21);
     line-height: 19px;
     font-size: 11px;
-    margin-bottom: -.05rem;
+    // margin-bottom: -.05rem;
     margin-top: 0;
     border-bottom: 0;
     color: var(--q-gb-t-c-24);
