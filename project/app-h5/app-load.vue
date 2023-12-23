@@ -78,7 +78,6 @@ watch(
 
 // 设置主题
 const set_global_theme_change = (a) => {
-  console.error('set_global_theme_changeset_global_theme_change',a)
   set_css(document.getElementsByTagName('html')[0], global_color_obj())
 }
 

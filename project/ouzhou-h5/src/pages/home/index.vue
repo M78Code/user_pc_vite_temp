@@ -118,9 +118,13 @@ const set_init_sport = (val) =>{
     state.current_mi = MenuData.menu_mi.value ||MenuData.top_events_list[0]?.mi;
   }
 }
+let timer = 0;
 onMounted(async () => {
   // 发送进入首页埋点消息
-  lodash.get(UserCtr,'user_info.userId') && into_home_event();
+  clearTimeout(timer)
+  timer = setTimeout(() => {
+    lodash.get(UserCtr,'user_info.userId') && into_home_event();
+  }, 2000);
   if (tabValue.value === 'top_events') {
     // 设置 元数据计算 流程
     state.current_mi = MenuData.top_events_list?.[0]?.mi;
@@ -341,6 +345,7 @@ onUnmounted(() => {
   ws_message_listener.ws_remove_message_listener(message_fun)
   message_fun = null
   message_fun_connect()
+  clearTimeout(timer)
 })
 
 </script>

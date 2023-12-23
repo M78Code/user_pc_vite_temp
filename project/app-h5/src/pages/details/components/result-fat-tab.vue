@@ -4,7 +4,7 @@
  * @Description:赛果详情bottom区域组价分离
 -->
 <template>
-  <div>
+  <div class="h-full">
     <!-- 所有赛果 -->
     <category v-if="filtration(1)"></category>
     <!-- 精选赛事 -->
