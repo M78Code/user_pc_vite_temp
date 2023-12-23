@@ -138,7 +138,6 @@ let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-console.log('match_tpl_info', match_tpl_info);
 match.value && set_play_name_list(match.value.tab_play_keys)
 const is_mounted = ref(true);
 let compute_other_play_data = get_compute_other_play_data(match.value) //玩法数据
