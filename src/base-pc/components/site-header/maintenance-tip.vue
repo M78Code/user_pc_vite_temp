@@ -17,9 +17,9 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { i18n_t } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { get_remote_time } from "src/output/index.js"
-
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 /** 是否内嵌 */
-const is_iframe = ref(is_iframe)
+const is_iframe = ref(utils_info.is_iframe)
 
 /** 定时器 */
 const countDownTimer = ref(null)
