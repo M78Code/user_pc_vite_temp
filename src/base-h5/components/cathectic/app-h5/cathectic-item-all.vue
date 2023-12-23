@@ -5,9 +5,10 @@
 <template>
   <div class="cathectic">
     <!-- 加载中 -->
-    <!-- <SRecord v-if="BetRecordClass.is_loading" /> -->
-    <scroll ref="myScroll" :on-pull="onPull">
-      <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
+    <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
+    <settle-loading v-if="BetRecordClass.is_loading"></settle-loading>
+    <template v-else>
+      <scroll ref="myScroll" :on-pull="onPull">
       <template v-if="!lodash.isEmpty(BetRecordClass.list_data)">
         <!-- 订单内容 -->
         <div v-for="(value, name, index) in BetRecordClass.list_data" :key="index" class="cathectic-list">
@@ -36,6 +37,8 @@
       <!-- 没有数据 -->
       <settle-void v-else></settle-void>
     </scroll>
+    </template>
+    
   </div>
 </template>
 
@@ -47,6 +50,7 @@ import BetRecordWs from "src/core/bet-record/bet-record-ws.js";
 import { enum_order_by, enum_time_type } from "src/core/bet-record/util.js";
 import { itemSimpleBody, itemMultipleBody, earlySettle, earlySettledDetail, cancelReserve } from "src/base-h5/components/common/cathectic-item/app-h5/index";
 import settleVoid from "src/base-h5/components/cathectic/app-h5/settle-void.vue";
+import settleLoading from "src/base-h5/components/cathectic/app-h5/settle-loading.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";
 import { ref, watch, onMounted, onUnmounted,computed } from 'vue'

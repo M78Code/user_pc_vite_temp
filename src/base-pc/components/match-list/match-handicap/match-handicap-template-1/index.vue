@@ -100,7 +100,6 @@ const col_ols_data = computed(() => {
         return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config]||{};
       })
       col.csid=csid;
-      console.log('coasfjansfaf', col);
       return col
     })
   } catch (e) {
