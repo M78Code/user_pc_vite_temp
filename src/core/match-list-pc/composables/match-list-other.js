@@ -66,11 +66,12 @@ export const get_compute_other_play_data = (match) => {
 * @param {String} play_key 次要玩法key
 */
 export function get_template_data({ match, handicap_list, type = 1, play_key }, MatchListData = MatchDataWarehouse_PC_List_Common) {
-  let length = handicap_list.length
+  let handicap_list_clone = lodash.cloneDeep(handicap_list);
+  let length = handicap_list_clone.length
   let { mid, hSpecial5min, hSpecial } = match
-  const many_obj = get_match_to_map_obj(match)
+  const many_obj = get_match_to_map_obj(match, null, type)
   const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
-  handicap_list.forEach((col, col_index) => {
+  handicap_list_clone.forEach((col, col_index) => {
     col.ols.forEach((ol, ol_index) => {
       let { hn, _hpid, hpid, ot } = ol
       let handicap_type = hn || type
@@ -88,14 +89,18 @@ export function get_template_data({ match, handicap_list, type = 1, play_key }, 
   })
   // 波胆置顶
   if ('hpsBold' == play_key) {
-    handicap_list = data_topping(handicap_list)
+    handicap_list_clone = data_topping(handicap_list_clone)
   }
   // 滚球-下一个进球玩法，后边的依次往前移动
   if ('hps5Minutes' == play_key && hSpecial5min == 5) {
-    handicap_list = data_move_up(handicap_list)
+    handicap_list_clone = data_move_up(handicap_list_clone)
   }
-  return handicap_list
+  return handicap_list_clone
 }
+
+/**
+ * 获取
+ */
 /**
    * @Description 获取6列 十五分钟玩法 handicap_type 值
    * @param {Number} hSpecial 赛事阶段

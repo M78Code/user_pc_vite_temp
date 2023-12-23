@@ -287,7 +287,7 @@ export default {
       if(this.match_list_by_no && this.match_list_by_no.length){
         this.match_list_by_no.forEach(m => {
           if(m.batchNo == batchNo){
-            m.mhs = 1;
+            m.mhs = 1;  //赛事级别状态
           }
         });
       }
