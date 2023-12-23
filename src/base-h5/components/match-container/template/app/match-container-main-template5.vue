@@ -68,7 +68,7 @@
 
         </div>
         <!-- 赛事内容 -->
-        <div class="match-content" v-if="collapsed">
+        <div :class="['match-content', { 'collapsed': collapsed }]" v-if="collapsed">
           <!-- 比分版 | 视频 icon | 赛事阶段 | 比分| 盘口 -->
           <div class="title-details">
             <div class="details">
@@ -528,6 +528,7 @@ export default {
     .match-content{
       border-radius: 0 0 8px 8px;
       background: var(--q-gb-bg-c-18);
+      border: 1px solid var(--q-gb-bd-c-15);
       &.collapsed{
         border-top: none;
       }
