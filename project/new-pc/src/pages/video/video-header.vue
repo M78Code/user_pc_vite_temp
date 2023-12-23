@@ -57,7 +57,7 @@
     <!-- 右边按钮 -->
     <div class="right-wrap">
       <!-- 统计分析 -->
-      <div class="yb-flex-center" v-show="$is_show_sr_flg(match_info)" @click="sr_click_handle">
+      <div class="yb-flex-center" v-show="is_show_sr_flg(match_info)" @click="sr_click_handle">
         <icon size="14px" name="icon-signal" />
         <q-tooltip v-if="version_name == 'zhuanye'" anchor="top middle" self="center middle" :content-style="tooltip_style">{{i18n_t('common.analysis')}}</q-tooltip>
       </div>
@@ -76,7 +76,7 @@
 
 <script>
 import {MatchProcessFullVersionWapper as MatchProgress} from "src/components/match-process/index.js"
-
+import { is_show_sr_flg } from "src/core/utils/project/module/other.js";
 import details from "src/core/match-list-pc/details-class/details.js"
 import video from "src/core/video/video.js"
 import refresh from "src/components/refresh/refresh.vue"

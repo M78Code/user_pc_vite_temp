@@ -144,6 +144,11 @@ import {mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_h
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { PageSourceData,compute_css_obj } from 'src/output/index.js';
 import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/output/index.js";
+import {
+  mounted_fn,
+  load_data_state,
+  handle_destroyed 
+} from "src/core/match-list-pc/match-list-composition.js";
 import "./match_list.scss";
 const { page_source } = PageSourceData;
 export default {

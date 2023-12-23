@@ -140,7 +140,7 @@ import match_list_card from "src/core/match-list-pc/match-card/match-list-card-c
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import {mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh } from "src/core/match-list-pc/match-list-composition.js";
+import {mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh,handle_destroyed } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { PageSourceData,compute_css_obj } from 'src/output/index.js';
 import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/output/index.js";
