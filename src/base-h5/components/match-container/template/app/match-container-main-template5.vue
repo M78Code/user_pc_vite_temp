@@ -73,28 +73,58 @@
           <div class="title-details">
             <div class="details">
               <!-- 图标 -->
-              <div class="operate-icon">
+              <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
+              <div class="score-wrapper flex items-center" v-if=" !is_results"
+                    v-show="footer_menu_id != 114">
+                    <div class="r row no-wrap">
+                      <div class="go-container-w flex no-wrap new-standard">
+                        <!-- 直播 主播 视频 动画  icon 栏目   -->
+                        <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
+                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.animationUrl }]" :src='animation_icon' />
+                        </div>
+                        <!-- 视频 -->
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
+                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.muUrl }]" :src='video_icon' />
+                        </div>
+                        <!-- mng 是否中立场   1:是中立场，0:非中立场-->
+                        <div class="live-i-b-wrap v-mode-span row items-center"
+                          v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
+                          <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
+                        </div>
+                        <!-- 角球 -->
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle" v-if="match.csid == 1 && get_corner_kick">
+                          <img :class="['live-icon-btn']" :src='corner_icon' />
+                        </div>
+                        <!-- 此赛事支持提前结算 -->
+                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
+                          <img :src="mearlys_icon_app" alt="">
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              <!-- <div class="operate-icon"> -->
                 <!-- 直播 主播 视频 动画  icon 栏目   -->
                 <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
 
 
                 <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
-                <template v-if="match.mvs > -1 || (match.mms > 1 && [1, 2, 7, 10, 110].includes(match.ms * 1))">
+                <!-- <template v-if="match.mvs > -1 || (match.mms > 1 && [1, 2, 7, 10, 110].includes(match.ms * 1))"> -->
                   <!-- 动画状态大于-1时，显示动画按钮 i18n_t('match_info.animation')是国际化取值 -->
 
                   <!-- icon_click_animationUrl media_button_handle -->
-                  <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']" :src="animation_icon"
-                    @click="media_button_handle_by_type(ButtonTypes.animationUrl)" />
+                  <!-- <img :class="[!(match.mvs > -1) && 'iconGrayFillStyle']" :src="animation_icon"
+                    @click="media_button_handle_by_type(ButtonTypes.animationUrl)" /> -->
                   <!-- 视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 -->
-                  <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']" :src="video_icon"
-                    @click="media_button_handle_by_type(ButtonTypes.muUrl)" />
+                  <!-- <img :class="['live-icon-btn', !(match.mms > 1) && 'iconGrayFillStyle']" :src="video_icon"
+                    @click="media_button_handle_by_type(ButtonTypes.muUrl)" /> -->
                   <!--icon_click_muUrl  -->
                   <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
                   <!-- <img :class="[match.lvs !== 2 && 'iconGrayFillStyle']" :src="compute_local_project_file_path('image/list/ico_liveshow_nor.png')"
                     @click="media_button_handle_by_type(ButtonTypes.lvs)" /> -->
                   <!-- icon_click_lvs -->
-                </template>
-              </div>
+                <!-- </template>
+              </div> -->
               <!-- 赛事日期标准版 -->
               <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
                 <!-- 赛事回合数mfo -->
@@ -231,7 +261,7 @@
           </div>
           <!--  新手版-赛事比分信息 -->
           <div class="match-score-info">
-            <template v-if="match?.ms != 0 && match?.csid != 1">
+            <template v-if="match.csid != 1">
               <score-list :main_source="main_source" :match="match"></score-list>
             </template>
           </div>
@@ -1052,6 +1082,86 @@ export default {
             height: 16px;
           }
         }
+
+        .score-wrapper {
+
+        .score-section {
+          padding-left: 0;
+          transform: translateX(-0.02rem);
+        }
+
+        .go-container-w {
+          .disabled{
+            filter: grayscale(100%);
+          }
+          .goto-detail {
+            display: flex;
+            height: auto;
+            align-items: center;
+
+            .count_span {
+              height: 0.11rem;
+              display: flex;
+              align-items: flex-end;
+              margin-right: 0.04rem;
+              line-height: 1;
+              top: 2px;
+              position: relative;
+            }
+
+            .icon_arrow_down {
+              width: 0.04rem;
+              height: 0.07rem;
+              display: block;
+            }
+          }
+
+          &.new-standard {
+            .live-i-b-wrap {
+              width: 0.18rem;
+              margin-right: 0.05rem;
+
+              img {
+                height: 0.16rem;
+                width: 0.16rem;
+              }
+
+              .live-icon-btn {
+                width: 100%;
+              }
+
+              .live-icon-play-btn {
+                width: 100%;
+                height: 0.14rem;
+              }
+            }
+          }
+
+          .favorite-icon {
+            width: 0.14rem;
+            height: 0.14rem;
+            margin-right: 0.05rem;
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+
+            .f-icon {
+              display: none;
+            }
+          }
+        }
+
+        .week-mcid {
+          margin: 0 0 0 0.09rem;
+
+          span {
+            height: 0.12rem;
+            line-height: 1;
+          }
+        }
+      }
 
         .score-title-text {
           height:100%;
