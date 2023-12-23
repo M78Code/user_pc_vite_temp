@@ -3,7 +3,7 @@
     z-index: 0;
   }
   .events-scroller{
-    background-color: var(--q-gb-bd-c-1); // var(--q-detials-color-8)
+    background-color: var(--q-gb-bg-c-28) ; // var(--q-detials-color-8)  var(--q-gb-bd-c-1)
   }
   .heade-wrapper {
     width: 100%;
@@ -575,7 +575,7 @@
   // }
 
   .wonderful {
-    background: #fff;
+    // background: var(--q-gb-bg-c-25);
     border-radius: 8px;
     margin: 8px 5px;
     position: relative;
@@ -604,6 +604,7 @@
       background-color: #F2F2F6;
       overflow: hidden;
       box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
+      background: var(--q-gb-bg-c-25);
       li {
         padding: 2px 8px;
         font-size: 12px;
@@ -614,7 +615,7 @@
       }
 
       .wonderful-active {
-        background-color: #fff;
+        background-color: var(--q-gb-bg-c-13);
         border-radius: 10px;
       }
     }
