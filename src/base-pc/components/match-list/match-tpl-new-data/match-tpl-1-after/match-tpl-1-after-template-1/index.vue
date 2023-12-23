@@ -35,7 +35,7 @@
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap
-          :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" />
+          :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" :add_type="2" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -47,7 +47,7 @@
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap
-          :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" />
+          :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" :add_type="3" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -138,10 +138,10 @@ let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-console.log('match_tpl_info', match_tpl_info);
 match.value && set_play_name_list(match.value.tab_play_keys)
 const is_mounted = ref(true);
 let compute_other_play_data = get_compute_other_play_data(match.value) //玩法数据
+
 const has_other_play = computed(() => { //是否有其他玩法
   return play_name_list.value&&play_name_list.value.length > 0
 });

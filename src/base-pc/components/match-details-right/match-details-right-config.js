@@ -4,6 +4,7 @@ import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js";
 import  { computed_background } from  "src/output/index.js"
+import axios_api_loop from "src/core/http/axios-loop.js"
 import {
   useMittOn,
   MITT_TYPES,
@@ -119,11 +120,23 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
    * 调用后通过传参判断是否是 ws 调用
    */
   const m_init = (param = { is_ws: false }) => {
+    console.log(MatchDataWarehouseInstance.get_quick_mid_obj(param),'11111');
+    console.trace(2222)
     //给仓库类设置id
-    MatchDetailCalss.set_match_details_params(param)
+   
     allData.details_params = param
     clearTimeout(allData.get_match_details_timer);
-    let { mid, is_ws } = param;
+    //如果是ws推送
+    let mid =null
+    let is_ws = false
+    if( lodash.isObject(param)){
+       mid  = param.mid;
+       is_ws  = param.is_ws;
+    }else{
+      //如果是mitt 列表触发
+        mid = param;
+    }
+    
     // 如果有传参，并且不是 ws 调用
     if (mid) {
       allData.mid = mid;
@@ -139,7 +152,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     allData.countMatchDetailErr = 0;
     let params = allData.details_params; //vx_details_params，列表页点击进入详情所保存的赛事参数
     // allData.details_params.mid = mid;
-    allData.sportId = params.sportId; //球类id
+    allData.sportId =MatchDataWarehouseInstance.get_quick_mid_obj(mid).csid; //球类id
 
     // 1. C104 mhs 0  仅开盘 循环四次调用  每两次发起之间次间隔最低3秒 一共 理论上9秒以上，
     // 两个原则：
@@ -455,7 +468,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
                   }
                 }
                 // 同步数据到详情
-                let msc = detailbuild_msc(match_obj);
+                let msc = detailUtils.build_msc(match_obj);
                 match_obj.msc = msc;
                 Object.assign(
                   MatchDataWarehouseInstance.match_obj,
@@ -827,13 +840,16 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
              * @description 格式化msc数据
              * msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
              */
-            data.msc = detailbuild_msc(data);
+            data.msc = detailUtils.build_msc(data);
             MatchDataWarehouseInstance.set_match_details(data,[]);
             allData.match_infoData = MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid);
+          
             let mid = lodash.get(data, "mid");
+            let csid = lodash.get(data, "csid");
             let mst = lodash.get(data, "mst");
             let mstst = lodash.get(data, "mstst");
             let mststs = lodash.get(data, "mststs");
+            MatchDetailCalss.set_match_details_params({mid,csid,media_type:'auto'})
             //获取赔率
             get_match_detail_base();
             //同步赛事时间
@@ -841,7 +857,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
             let { media_type, play_id } = allData.details_params;
             MatchDetailCalss.set_play_media( {
               mid: data.mid,
-              media_type,
+              media_type:'auto',
               play_id,
               time: new Date() * 1,
             })

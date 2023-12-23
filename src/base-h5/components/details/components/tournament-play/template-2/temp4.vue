@@ -6,7 +6,7 @@
 -->
 <template>
    <div v-show="false">{{BetData.bet_data_class_version}}</div>
-  <div class="temp4 mx-5">
+  <div class="component temp4 mx-5">
     <div class="hairline-border">
       <div class="row title-style ">
         <div class="col text-center ellipsis fam">{{item_data.title[0].osn}}</div>
@@ -178,7 +178,7 @@
                     </div>
                   </template>
                   <template v-else>
-                    <div :key="ol_index" class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ? 'bor-style':''"></div>
+                    <div :key="ol_index" class="play-box-style details_color warp mg-4-bg" :class="ol_index != max_count_ol-1 ? 'bor-style':''"></div>
                   </template>
                 </template>
               </div>

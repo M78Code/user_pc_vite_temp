@@ -541,7 +541,7 @@ export default defineComponent({
       let state_obj = {
         lvs: this.match_of_list["lvs"] && this.match_of_list["lvs"] != -1,
         muUrl: this.is_show_video_icon,
-        animationUrl: this.match_of_list.mms <= 1 && this.match_of_list.mvs > -1,
+        animationUrl: this.match_of_list.mms >= 1,
         icon_path: '',
         final_button_type: '',
       }

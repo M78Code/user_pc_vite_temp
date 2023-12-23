@@ -71,7 +71,7 @@ const changeTabMenu = (item, i, event,type) => {
  * 默认值
  */
 const set_active_val = () =>{
-    activeOn.value = '';
+    activeOn.value = 0;
 }
 // 根据菜单数据 请求接口    
 const set_menu_match_date = (type) => {

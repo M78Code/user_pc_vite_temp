@@ -83,42 +83,6 @@ const col_ols_data = computed(() => {
 })
 // 组件是否已挂载
 const cur_esports_mode = ref(BetData.cur_esports_mode);
-function deal_width_handicap_ols(payload, many_obj) {
-  let { hn, mid } = match.value
-  /*let handicap_type = hn || 1
-  const hn_obj = lodash.get(MatchListDataInfo, "list_to_obj.hn_obj", {})
-  let new_ols = payload.map(item => {
-    if (item.empty) { return }
-    // 投注项数据拼接
-    let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
-    // 获取投注项内容 
-    return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
-  })*/
-
-  let new_ols = payload
-  return new_ols
-}
-
-// function deal_width_handicap_ols (payload) {
-//   const { match } = props;
-//   let handicap_type = 1
-//   let { hn, mid } =  match
-//   if(hn){
-//     handicap_type =  hn
-//   }else{
-//     handicap_type = 1
-//   }
-//   let new_ols = payload.map(item => {
-//     if (item.empty) { return }
-//     // 投注项数据拼接
-//     let hn_obj_config = `list_to_obj.hn_obj.${mid}_${mid}_${item._hpid}_${handicap_type}_${item.ot}`
-//     // 获取投注项内容 
-//       item = lodash.get(MatchListDataInfo, hn_obj_config,{})
-//     return item;
-//   })
-//   return new_ols
-// }
-
 /**
  * @description 获取5分钟玩法时的类名，滚球时不需要背景色，早盘时需要背景色
  */

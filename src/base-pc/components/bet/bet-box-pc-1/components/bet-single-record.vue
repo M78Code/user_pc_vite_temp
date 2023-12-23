@@ -53,12 +53,7 @@
               <label class="bet-match-playing">[{{ i18n_t('menu.match_playing')}}]</label>
             </template>
             {{item.playName}}
-            <template v-if="item.scoreBenchmark!=''
-            && item.matchType===2 &&
-            !((item.preOrderDetailStatus != null) && MARKET_RANG_FLAG_LIST.includes(BetData.pre_bet_list.playId.toString())) &&!
-            MARKET_NO_SCORE_LIST.includes(item.playId)">
-              ({{item.scoreBenchmark.replace(':','-')}})
-            </template>
+            <label class="bet-team-handicap">{{item.playOptionName}}</label>
              <!--盘口类型-->
             <label class="bet-handicap-name">[{{ i18n_t('odds')[item.marketType]}}]</label>
           </label>
@@ -69,7 +64,7 @@
             <!--投注项名称(可能待盘口值或者比分等)-->
             <template v-if="!lodash.isEmpty(item.playOptionName)">
               <div class="bet-team-handicap">
-                {{part1}} {{lodash.trim(part2)}}
+                {{ item.playOptionName }}
               </div>
               <!-- <span class="part-one">{{part1}}</span><span class="part-two">{{lodash.trim(part2)}}</span> -->
             </template>
@@ -124,6 +119,7 @@
 import lodash from 'lodash'
  
 import { IconWapper } from 'src/components/icon'
+import { format_currency,formatTime } from "src/output/index.js"
  
 import { i18n_t } from "src/boot/i18n.js"
 

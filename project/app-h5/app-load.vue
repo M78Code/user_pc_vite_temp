@@ -28,6 +28,7 @@ import { useRoute } from "vue-router";
 import './src/css/common/app.scss'
 import './src/css/common/public.scss'
 import './src/css/common/common.scss'
+import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 
 window.wslog = wslog;
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
@@ -48,11 +49,15 @@ let background_run_time = "";
 // 代表今日足球下边距离触发埋点的时间
 let buried_time = 0;
 
-let timer, timer2;
+let timer, timer2, timer3;
 
 const route = useRoute();
 
 onMounted(()=>{
+  clearTimeout(timer3);
+  timer3 = setTimeout(() => {
+    pre_load_video.load_player_js('old')
+  }, 5000);
     emitters.value = {
     // 接受ws断开命令
     emitter_1: useMittOn(
@@ -139,6 +144,8 @@ onUnmounted(() => {
   }
   clearTimeout(timer2);
   timer2 = null;
+  clearTimeout(timer3);
+  timer3 = null;
   off_listeners();
 });
 

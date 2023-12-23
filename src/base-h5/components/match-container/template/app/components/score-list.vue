@@ -20,49 +20,7 @@
         'is-volley-ball': match.csid == 9 || match.csid == 13
       }" @scroll="score_inner2_scrolling($event, match)">
         <div class="score-se-inner2" :ref="`score_se_inner2_${match.mid}`">
-                    <!-- <div class="row items-center basket-ball" :class="{ 'b-score-wrapper': match.csid != 14 }" -->
-          <div class="row items-center " :class="{ 'b-score-wrapper': match.csid != 14 }" v-if="[2, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
-            <!--分差-->
-            <div class="row color18" style="margin-right:.1rem" v-if="[2].includes(+match.csid) && get_total_scores">
-              <div style="margin-right:.03rem">
-                {{ i18n_t('list.score-disparity') }}
-              </div>
-              <div class="important-color-number sub">
-                {{ get_total_scores.score_sub ? get_total_scores.score_sub : 0 }}
-              </div>
-            </div>
-            <!--总分-->
-            <div class="row color18" v-if="[2, 6].includes(+match.csid)">
-              <div style="margin-right:.03rem">
-                {{ i18n_t('list.total_pp_score_count') }}
-              </div>
-              <div class="important-color-number total">
-                <span>
-                  {{ get_total_scores.total }}
-                </span>
-              </div>
-            </div>
-            <!-- 赛事回合数mfo -->
-            <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
-              {{ match.mfo }}
-            </div>
-            <div class="score last" v-if='![1, 2, 3, 11].includes(+match.csid)'>
-              <!-- 总局数 -->
-              <span v-if="![4, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
-                <span class="total-play-count"> {{ i18n_t('list.total_play_count') }} </span> 
-                <span class="total-games"> {{ total_games }} </span>
-              </span>
-              
-              <!-- 总分   5--网球， 5--美式足球， 7--斯诺克， 8--乒乓球， 9--排球， 10--羽毛球，-->
-              <span class="total-play-count" v-if="[7, 8, 9, 10, 13, 15, 16].includes(+match.csid) && get_total_scores">
-                {{ i18n_t('list.total_pp_score_count') }}
-              </span>
-              <span v-if="[7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid) && get_total_scores" class="score-important">
-                {{ get_total_scores }}
-              </span>
-            </div>
-
-          </div>
+        
           <!-- 比分 -->
           <div class="row items-center score-fle-container-1"
             :class="{ result: get_menu_type == 28 && main_source !== 'detail_match_list', }">
@@ -92,6 +50,49 @@
                   <!-- <div class="divider"></div> -->
               </div>
             </template>
+          </div>
+                    <!-- <div class="row items-center basket-ball" :class="{ 'b-score-wrapper': match.csid != 14 }" -->
+          <div class="row items-center " :class="{ 'b-score-wrapper': match.csid != 14 }" v-if="[2, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
+            <!--分差-->
+            <div class="row color18" style="margin-right:.1rem" v-if="[2].includes(+match.csid) && get_total_scores">
+              <div style="margin-right:.03rem">
+                {{ i18n_t('list.score-disparity') }}
+              </div>
+              <div class="important-color-number sub">
+                {{ get_total_scores.score_sub ? get_total_scores.score_sub : 0 }}
+              </div>
+            </div>
+            <!--总分-->
+            <div class="row color18" v-if="[2, 6].includes(+match.csid)">
+              <div style="margin-right:.03rem">
+                {{ i18n_t('list.total_pp_score_count') }}
+              </div>
+              <div class="important-color-number total">
+                <span>
+                  {{ get_total_scores.total }}
+                </span>
+              </div>
+            </div>
+            <!-- 赛事回合数mfo -->
+            <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
+              {{ match.mfo }}
+            </div>
+            <div class="score last" v-if='![1, 2, 3, 11].includes(+match.csid)'>
+              <!-- 总局数 -->
+              <span v-if="![4, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
+                <span class="total-play-count" > {{ i18n_t('list.total_play_count') }} </span> 
+                <span class="total-games"> {{ total_games }} </span>
+              </span>
+              
+              <!-- 总分   5--网球， 5--美式足球， 7--斯诺克， 8--乒乓球， 9--排球， 10--羽毛球，-->
+              <span class="total-play-count" v-if="[7, 8, 9, 10, 13, 15, 16].includes(+match.csid) && get_total_scores">
+                {{ i18n_t('list.total_pp_score_count') }}
+              </span>
+              <span v-if="[7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid) && get_total_scores" class="score-important">
+                {{ get_total_scores }}
+              </span>
+            </div>
+
           </div>
         </div>
       </div>
@@ -615,9 +616,9 @@ onUnmounted(() => {
     .score-se-inner2 {
       // width: 366px;
       // line-height: 1;
-      // display: flex;
+      display: flex;
       // flex-shrink: 0;
-      // justify-content: space-between;
+      justify-content: space-between;
 
       .basket-ball {
         // color: var(--q-color-com-fs-color-29);
@@ -628,7 +629,7 @@ onUnmounted(() => {
       .score-fle-container-1 {
         flex-wrap: nowrap;
         flex-shrink: 0;
-        color: var(--sys-brand-secodary-secondary-800, --q-gb-t-c-18);
+        color: var(--q-gb-t-c-18);
         font-family: Akrobat;
         font-size: 10px;
         font-weight: 700;
@@ -644,7 +645,7 @@ onUnmounted(() => {
 
       .b-score-wrapper {
         margin-left: 0.05rem;
-        color: var(--sys-brand-secodary-secondary-800, --q-gb-t-c-18);
+        color: var(--q-gb-t-c-18);
           font-family: PingFang SC;
           font-size: 10px;
           font-weight: 400;
@@ -668,7 +669,7 @@ onUnmounted(() => {
       // margin-left: 3px;
 
       .total-play-count{
-        color: #000000 !important;
+        color: var(--q-gb-t-c-18);
         margin: 0 3px;
       }
       .total-games{

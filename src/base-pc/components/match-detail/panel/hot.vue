@@ -228,6 +228,7 @@ import { IconWapper } from 'src/components/icon/index.js'
 import bet_item from "src/base-pc/components/bet-item/bet_item.vue";
 // import skt_data_list_hot from "src/public/mixins/websocket/data/skt_data_list_hot.js";  todo  ws更新
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
+import { is_show_sr_flg } from "src/core/utils/project/module/other.js";
 import {
   GlobalSwitchClass,
   UserCtr,
@@ -252,6 +253,7 @@ export default {
   },
   data() {
     return {
+      is_show_sr_flg,
       tooltip_style,
       i18n_t,
       // 菜单数据

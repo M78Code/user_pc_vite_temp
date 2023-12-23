@@ -1,10 +1,12 @@
 <template>
+  <div v-show="false">{{ BetData.bet_data_class_version }}{{UserCtr.user_version}}</div>
   <div
     v-if="is_mounted && odds_state != 'close'"
     class="c-bet-item yb-flex-center relative-position yb-family-odds"
     :class="[
       ol_data.class,
       odds_state,
+      BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : '',
       `csid${ol_data.csid}`,
       odds_lift,
       { 'show-odds-icon': odds_state != 'seal' },
@@ -60,6 +62,7 @@
 
 <script setup>
 // import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, onUnmounted, computed, watch } from "vue";
 import lodash from 'lodash'
 import {
@@ -67,7 +70,7 @@ import {
 } from "src/output/index.js";
 import { format_odds_value } from 'src/output/index.js';
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
-import { compute_value_by_cur_odd_type } from "src/output/index.js";
+import { compute_value_by_cur_odd_type, UserCtr } from "src/output/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 
@@ -88,6 +91,10 @@ const props = defineProps({
   ol_data: {
     type: [Object, Array],
     default: () => {},
+  },
+  match_data_type: {
+    type: String,
+    default: () => 'MatchDataWarehouse_PC_List_Common'
   },
 });
 
@@ -245,15 +252,35 @@ const get_odds_state = (mhs, hs, os) => {
  * @description 投注项点击
  * @return {undefined} undefined  组装投注项的数据
  */
-const bet_click_ol = () => {
-  const {oid,_hid,_hn,_mid } = props.ol_data
+ const bet_click_ol = () => {
+  if (!props.ol_data.oid || odds_state.value == "lock" || odds_state.value == "seal") return
+  const { oid, _hid, _hn, _mid } = props.ol_data
   let params = {
     oid, // 投注项id ol_obj
     _hid, // hl_obj 
     _hn,  // hn_obj
     _mid,  //赛事id mid_obj
   }
-  set_bet_obj_config(params,{})
+  let other = {
+        is_detail: false,
+        // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
+        // 根据赛事纬度判断当前赛事属于 那种投注类型
+        bet_type: 'common_bet',
+        // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+        device_type: 2,
+        // 数据仓库类型
+        match_data_type: props.match_data_type, // h5_detail
+        // match_data_type: "h5_list", // h5_detail
+    }
+  // //点击后再次点击，取消选中状态
+  // const current_id = `${_mid}${oid}`;
+  // if (props.active_score === current_id) {
+  //   emit('update_score', '')
+  // } else {
+  //   emit('update_score', current_id)
+  // }
+  set_bet_obj_config(params, other )
+  // BetData.set_bet_state_show(true)
 };
 
 onUnmounted(() => {
@@ -376,4 +403,8 @@ onUnmounted(() => {
 .left_cell {
   text-align: left !important;
 }
-</style>src/core/format/common/module/format-odds.jssrc/core/format/common/module/format-odds-conversion-mixin.js
+.active {
+  background: var(--q-gb-bg-c-13);
+  color: var(--q-gb-t-c-18);
+}
+</style>

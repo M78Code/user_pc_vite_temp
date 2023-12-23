@@ -8,12 +8,11 @@
         {{ format_total_score(data.data_list, 0)}}-{{ format_total_score(data.data_list, 1)}}
       </span>
     </div>
-    <template v-if="project_name == 'app-h5' && detail_data.csid == 1">
+    <template v-if="project_name == 'app-h5'">
       <span class="team-time" v-if="['result_details', 'match_result'].includes(Route.name)">
         {{ formatTime(+detail_data.mgt, 'mm/dd HH:MM')}}
       </span>
     </template>
-    
     <!-- 描述比赛进度相关start -->
     <div class="team-text" :class="{baseball: detail_data.csid == '3' }">
         {{ match_status }}
@@ -68,6 +67,7 @@ const match_status = computed(() => {
     // '999': 'mmp.3.999',
     '999': 'mmp.3.999_app_h5',
   }
+  // 只在足球详情页面 显示
 
   // 赛事中断 单独判断
   if (ms == 10) {
