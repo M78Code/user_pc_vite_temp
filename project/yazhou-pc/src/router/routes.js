@@ -84,7 +84,7 @@ const routes = [
   {
     path: '/activity',
     name: "activity",
-    component: () => import(`../pages/test/index.vue`),
+    // component: () => import(`../pages/test/index.vue`),
   },
   // // 活动维护页面
   // {

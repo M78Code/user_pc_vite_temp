@@ -11,9 +11,17 @@
   <!-- 当是赛果页面时蒙版不一致需要隐藏 back_mask属性-->
   <div
     class='match_score '
-    :class="$route.name == 'match_result' ? '' : 'back_mask'"
+    :class="route.name == 'match_result' ? '' : 'back_mask'"
     v-cloak
   >
+    <!-- mng 是否中立场 1:是中立场，0:非中立场 --- 仅足球 -->
+    <template v-if="project_name == 'app-h5' && ['result_details', 'match_result'].includes(route.name)">
+      <span v-if="![5, 10, 7, 8, 13].includes(Number(detail_data.csid)) && detail_data.mng * 1"
+        class="tag">
+        N
+      </span>
+    </template>
+    
     <!-- component 自定义标签:动态绑定组件,根据数据的不同更换不同的组件 'is' 关键字用来动态切换组件 -->
     <component
       :is="componentId"
@@ -24,8 +32,10 @@
 </template>
 
 <script setup>
-import { defineComponent, computed, defineAsyncComponent } from 'vue';
-
+import { defineAsyncComponent } from 'vue';
+import {project_name } from 'src/output/module/constant-utils-common.js'
+import { useRoute } from "vue-router";
+let route = useRoute()
 const props = defineProps({
   detail_data: {
     type: Object,
@@ -44,8 +54,23 @@ if(id != 100 && id != 101){
   // height: 0.38rem;
   // line-height: 0.38rem;
   width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .back_mask {
   // background: linear-gradient(180deg, rgba(0, 0, 0, 8e-05) 0%, rgba(0, 0, 0, 0.8) 100%);
-}</style>
+}
+
+.tag{
+  border: 1px solid var(--q-gb-bg-c-15);
+  height: .15rem;
+  width: .15rem;
+  border-radius: .03rem;
+  text-align: center;
+  line-height: .15rem;
+  color: var(--q-gb-bg-c-15);
+}
+
+
+</style>

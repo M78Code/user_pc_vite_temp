@@ -54,8 +54,6 @@
 
 <script setup>
 import {onMounted, ref, markRaw, watch, nextTick,computed} from "vue";
-import temp3 from "./template/tem3.vue";
-import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
 import setTop from "./set_top.vue";
 import {playTemplate0, playTemplate1, playTemplate2, playTemplate3, playTemplate4, playTemplate5} from "./bevis/index.js"

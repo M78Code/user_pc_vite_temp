@@ -980,23 +980,19 @@ export default defineComponent({
         time: Date.now()
       })
       LocalStorage.set("YUAN_MATCH_DETAIL_DATA",MatchDataBaseH5.get_quick_mid_obj(item.mid))
-      if (is_results.value) { //冠军跳冠军详情页
-          this.$router.push(`/result_details/${item.mid}/0`);
+      // if (is_results.value) { 
+      if (this.$route.name == "category") {
+        this.$router.push({ name: 'category_loading', params: { mid: item.mid } });
       }
       else {
-        if (this.$route.name == "category") {
-          this.$router.push({ name: 'category_loading', params: { mid: item.mid } });
+        let params= flag ? { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } : { mid: item.mid, csid: item.csid, tid: item.tid }
+        // this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } });
+        let name = 'category' //赛事详情
+        if(this.$route.name == 'matchResults' ||item.ms==4){
+          name = 'result'
         }
-        else {
-          let params= flag ? { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } : { mid: item.mid, csid: item.csid, tid: item.tid }
-          // this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } });
-          let name = 'category' //赛事详情
-          if(this.$route.name == 'matchResults' ||item.ms==4){
-            name = 'result'
-          }
 
-          this.$router.push({name,params})
-        }
+        this.$router.push({name,params})
       }
     },
 

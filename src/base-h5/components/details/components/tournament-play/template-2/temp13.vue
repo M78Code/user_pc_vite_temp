@@ -571,6 +571,10 @@ export default defineComponent({
 
   .odds-lock {
     line-height: 0.40rem;
+    .bet-item-ky-container {
+      padding-top: 0.12rem;
+      padding-bottom: 0.11rem;
+    }
   }
 
   .remark {

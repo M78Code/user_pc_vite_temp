@@ -186,8 +186,7 @@ export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
     //原 public 下的 静态素材   打包后的  文件 需要拷贝 到的 目标地址
     let   BUILD_STATIC_DIR_TARGET_PATH =   `./dist/${BUILD_DIR_NAME}${ LOCAL_COMMON_FILE_PREFIX}/` 
 
-    //原 public 下的 静态素材   打包后的 地址  是否 需要进行改变
-    let   BUILD_STATIC_DIR_NEED_CHANGE =  BUILD_STATIC_DIR_PATH != BUILD_STATIC_DIR_TARGET_PATH
+
 
     //运维传输目录 
     let  BUILD_YUNWEI_COPY_ROOT_DIR =    `./dist/${BUILD_DIR_NAME}/`
@@ -233,8 +232,7 @@ export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
     //原 public 下的 静态素材   打包后的  文件 需要拷贝 到的 目标地址
     BUILD_STATIC_DIR_TARGET_PATH =  result.BUILD_STATIC_DIR_TARGET_PATH   
 
-    //原 public 下的 静态素材   打包后的 地址  是否 需要进行改变
-    BUILD_STATIC_DIR_NEED_CHANGE =  result.BUILD_STATIC_DIR_NEED_CHANGE  
+ 
 
     //运维传输目录 
     BUILD_YUNWEI_COPY_ROOT_DIR =   result.BUILD_YUNWEI_COPY_ROOT_DIR   
@@ -243,13 +241,16 @@ export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
 
    }
   
-   
-
 
 
 
 
 }
+
+   
+    //原 public 下的 静态素材   打包后的 地址  是否 需要进行改变
+const   BUILD_STATIC_DIR_NEED_CHANGE =  BUILD_STATIC_DIR_PATH != BUILD_STATIC_DIR_TARGET_PATH
+
 
 
     return {

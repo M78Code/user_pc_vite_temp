@@ -37,7 +37,8 @@
                      :class="[sub_menu_i == i ? 'tabs-active' : '']"
                      @click="virtual_menu_changed(i)"
                 >
-                  <div class="icon" :class="['icon'+tab.field1, get_theme.includes('y0')?'icon_y0':'']">
+                <!--class="icon" :class="['icon'+tab.field1, get_theme.includes('y0')?'icon_y0':'']" -->
+                  <div class="sport-icon-wrap" :style="compute_css_obj({key:sub_menu_i == i ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type({...tab,mi:`3${tab.field1}`})})" >
                     <img v-if="false" class="menu-new-icon" src="image/bw3/svg/virtual-sports/new.svg" />
                   </div>
                   <span>VR{{ tab.name }}</span>
@@ -80,9 +81,8 @@ import lodash from "lodash"
 import tab_move from "src/core/tab-move/tab-move.js";
 import { useRouter, useRoute } from "vue-router";
 import { go_where } from "src/output/index.js";
-
 import { format_money2, compute_local_project_file_path, UserCtr } from "src/output/index.js";
-
+import { compute_css_obj, MenuData } from "src/output/index.js";
 export default {
   name:'match_main',
   data() {
@@ -351,6 +351,10 @@ export default {
     },
     go_where,
     format_money2, 
+    compute_css_obj,
+    format_type:(item)=>{
+      return MenuData.recombine_menu_bg(item, true)
+    },
     compute_local_project_file_path
   },
   computed: {
@@ -522,7 +526,15 @@ export default {
           &:last-child {
             padding-right: 0.2rem;
           }
-
+          .sport-icon-wrap{
+            --per: -0.22rem;
+            display: block;
+            width: auto;
+            height: 0.22rem;
+            width: 0.22rem;
+            background-position: 0 0;
+            background-size: 0.22rem auto;
+          }
           .icon {
             position: relative;
             width: 0.22rem;

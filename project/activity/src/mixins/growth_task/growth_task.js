@@ -23,7 +23,7 @@ export default {
   mixins: [acticity_mixin],
   data() {
     return {
-  
+      hisToryTotal: 10,
       cumulative_betting_list: [
         { name2: "有效投注天数", mBet: "-" },
         { name2: "有效投注额", mBet: "-" },
@@ -77,6 +77,18 @@ export default {
     }
   },
   methods: {
+    changeCurrnet(val){
+      this.result_page_info.current = val
+      this.show_dialog(val)
+    },
+    showReceiveHistoryList(){},
+    goToHistoryPage(e){
+      if(e){
+        this.result_page_info.current = +e.target.value
+        this.show_dialog(+e.target.value)
+      }
+    },
+    goToPage(){},
     set_user(args) {
       return UserCtr.set_user_info(args);
     },
@@ -102,7 +114,7 @@ export default {
             }
           })
           this.history_records = data.records;
-          // this.result_page_info  "total"  +data.total
+          this.result_page_info.total = +data.total
           this.history_alert = true;
         } else if (["0410505"].includes(code)) {
           // 活动突然挂维护时，触发下边方法，刷新活动页面，变成活动维护页面

@@ -35,7 +35,7 @@ export default {
     collapsed() {
       const key = MatchFold.get_match_fold_key(this.match_of_list)
       const show_card = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_card`)
-      return !show_card
+      return show_card
     },
     league_collect_state ()  {
       return MatchCollect.get_league_collect_state(this.match_of_list.tid)

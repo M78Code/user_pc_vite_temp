@@ -26,7 +26,7 @@ import {GLOBAL_CONSTANT } from "src/core/constant/global/index.js"
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 // #TODO 接口统一管理的文件，后续替换
-import { api_details, api_account } from "src/api/index.js";
+import { api_details, api_account,api_betting } from "src/api/index.js";
 import * as api_common from 'src/api/module/common/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 
@@ -144,6 +144,8 @@ class UserCtr {
     this.c305_data_change = ''
     // var事件国际化信息
     this.var_event_i18n = []
+    //监听设置菜单发生变化时
+    this.set_menu_init = 1
 
     nextTick(()=>{
       this.get_system_time()
@@ -222,6 +224,13 @@ class UserCtr {
     this.update()
   }
   /**
+   * 排序变化      //排序	 int 类型 1 按热门排序 2 按时间排序
+  */
+  set_menu_init_change() {
+    this.set_menu_init += 1;
+    this.update()
+  }
+  /**
    * 每日活动    //开启关闭	 Boolean 类型 true 开启 false 关闭
   */
   set_daily_activities(status) {
@@ -270,9 +279,18 @@ class UserCtr {
     this.update()
   }
   set_cur_odds(odd) {
-    this.set_pre_odds(this.odds.cur_odds)
-    this.odds.cur_odds = odd;
-    this.update()
+    let params = {
+      userMarketPrefer: odd
+    }
+    api_betting.record_user_preference(params).then((res = {}) => {
+      if (res.code == 200) {
+        this.set_pre_odds(this.odds.cur_odds)
+        this.odds.cur_odds = odd;
+        this.update()
+      } else {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '请稍后再试！')
+      }
+    })
   }
   set_pre_odds(odd) {
     this.odds.pre_odds = odd

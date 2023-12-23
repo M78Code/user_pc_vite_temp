@@ -66,6 +66,7 @@ watch(
   () => route.name,
   () => {
     PageSourceData.set_route_name(route.name)
+    PageSourceData.set_route_parmas(route.params)
   },
   { immediate: true }
 );

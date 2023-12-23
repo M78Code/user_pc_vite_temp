@@ -171,7 +171,7 @@ import refresh from "src/components/refresh/refresh.vue";
 import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass,MatchDetailCalss,get_media_icon_index,LayOutMain_pc} from "src/output/index.js";
 import { compute_css_obj } from "src/core/server-img/index.js";
 import filterHeader from "src/core/filter-header/filter-header.js";
-import { debounce_throttle_cancel } from "src/core/utils/module/other.js";
+import { debounce_throttle_cancel } from "src/core/utils/commmon/module/other.js";
 import { useRoute, useRouter } from "vue-router";
 const  route = useRoute()
 const  router= useRouter()

@@ -36,3 +36,6 @@ export * from "./module/match-list-card.js"
 export * from "./module/match-list-card-data.js"
 
 export * from "./module/project-single.js"
+
+// 埋点相关
+export * from "./module/hide-api.js"

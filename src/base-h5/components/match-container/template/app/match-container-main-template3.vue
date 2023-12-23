@@ -2,7 +2,7 @@
  * @Description: app-h5 赛果
 -->
 <template>
-  <div class="match-container component match-container-main-template3"
+  <div class="component match-container-main-template3 match-container"
     :style="{ marginTop: is_hot ? '0' : '' }" 
     :class="[{
       first: i == 0,

@@ -88,6 +88,8 @@ let expected_profit = ref(0)
 // 延时器
 let timer = null
 let timer2 = null
+let timer3 = null
+let timer4 = null
 
 let mitt_c201_handle = null
 let mitt_c210_handle = null
@@ -290,15 +292,26 @@ const submit_early_settle = () => {
     frontSettleAmount: String(front_settle_amount.value || expected_profit.value),
   };
   let message = ''
-  // 响应码【0000000 成功（仅在测试模式出现） | 0400524 确认中（仅在非测试模式出现）| 0400500 提交申请失败，提示msg信息】
+  // 响应码【0000000 成功（仅在测试模式出现） | 0400524 确认中（仅在非测试模式出现）| 0400500 提交申请失败，提示message信息】
   api_betting.post_pre_bet_order(params).then((reslut) => {
     let res = reslut.status ? reslut.data : reslut
     if (res.code == 200) {
       status.value = 4;
     } else if (res.code == "0400524") {
       // 注单确认中···
-
-    } else if (res.code == "0400527") {
+      timer3 = setTimeout(() => {
+        unSuccessTips.value = false
+        message = res.message
+      }, 5000);
+    } else if (res.code == "0400501") {
+      // 不足提取金额额度
+      unSuccessTips.value = true
+      timer4 = setTimeout(() => {
+        unSuccessTips.value = false
+        message = res.message
+      }, 5000);
+    } 
+     else if (res.code == "0400527") {
       // 不支持提前结算或者暂停
       status.value = 5;
     } else if (res.code == "0400537") {
@@ -359,6 +372,8 @@ const showUnSuccessTips = () => {
 const clear_timer = () => {
   clearTimeout(timer)
   clearTimeout(timer2)
+  clearTimeout(timer3)
+  clearTimeout(timer4)
 }
 </script>
 <style lang="scss" scoped>

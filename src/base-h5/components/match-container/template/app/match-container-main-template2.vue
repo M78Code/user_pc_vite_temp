@@ -9,7 +9,7 @@
   </div>
   <div class="champion-wrap-2" v-if="is_show">
     <div v-if="is_show_league(i)" 
-      :class="['league-container flex items-center justify-between right-border', {collapsed: !collapsed}]"
+      :class="['league-container flex items-center justify-between right-border collapsed']"
       @click="handle_league_fold">
       <div class="league-wrapper champion flex items-center">
         <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
@@ -25,12 +25,12 @@
       </div>
 
       <div class="collapse-dire">
-        <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'collapsed': !collapsed}]" />
+        <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'collapsed': collapsed}]" />
       </div>
     </div>
 
     <template v-for="(hp,index) of match_of_list.hps">
-      <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && !collapsed" :key="index">
+      <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && collapsed" :key="index">
         <div class="title flex items-center justify-between"
           :class="{'is-favorite': false}">
           <div class="match-title items-center">
@@ -41,7 +41,7 @@
               {{hp.hps}}
             </div>
           </div>
-          <div v-if="!collapsed && hp.hmed" class="limit-time">
+          <div v-if="collapsed && hp.hmed" class="limit-time">
             <div class="limit-t-i">
               <template v-if="!['zh', 'tw'].includes(lang)">
                 {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ i18n_t('match_main.cut_off')}}
@@ -157,7 +157,6 @@ export default {
   margin: 0 auto;
   background: var(--q-gb-bg-c-18);
   border-radius: 0.05rem;
-  margin-bottom: 0.07rem;
   color: var(--q-gb-t-c-18);
 
   .league-container {

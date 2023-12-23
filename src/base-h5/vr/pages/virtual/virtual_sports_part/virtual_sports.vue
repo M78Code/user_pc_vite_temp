@@ -31,7 +31,9 @@
           <div class="league-name right-border">{{ lengue_name }}</div>
           <div class="status">
             <span class="num">{{current_match.no}}</span>
-            <span class="state">{{i18n_t('virtual_sports.match_status.playing')}}</span>
+            <span class="state">
+             {{ current_match.match_status == 2 ? i18n_t('collect.match_end') : i18n_t('virtual_sports.match_status.playing') }}
+            </span>
             <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
           </div>
         </div>
@@ -54,7 +56,7 @@
           <div class="test-line" v-if="show_debug">
             {{current_match.mid}}
           </div>
-          <div class="virtual-video-play-team" v-if="[1001,1004].includes(sub_menu_type)">
+          <div class="virtual-video-play-team" v-if="sub_menu_type && [1001,1004].includes(sub_menu_type)">
                   <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']"
                   v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
                     <div class="teams">
@@ -68,7 +70,7 @@
                   </div>
           </div>
           <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
-          <template v-else-if="current_match">
+          <template v-else-if="sub_menu_type && current_match">
             <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
             <dynamic-ranking v-if="current_match.match_status == 0 || current_match.match_status == 1" :virtual_match_list="[current_match]" />
             <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
@@ -89,7 +91,6 @@
         <template v-if="match_item_batch.is_expend">
             <!--  虚拟体育主列表页面  -->
             <div
-                v-if="!ranking_list_change"
                 class="v-sports-main-list"
                 :class="{'v-sports-main-list-style': standard_edition === 1}"
                 :style="{'padding-bottom': get_betbar_show ? '0' : '0'}"
@@ -101,7 +102,7 @@
               </v-s-match-list>
 
               <!-- 除当前赛事外，展示赔率信息 -->
-              <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
+              <div class="v-sports-ranking" v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)">
                   <div>
                     <!-- 赛马切换玩法集tab组件 -->
                     <!-- <virtual-sports-tab
@@ -111,29 +112,13 @@
                     <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
                     <!-- 赛马投注区域 -->
                     <div>
-                      <v-s-match-list2 v-if="![1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
+                      <v-s-match-list2 v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
                         :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
                         @switch_match="switch_match_handle"  @start="match_start_handle">
                       </v-s-match-list2>
                     </div>
                   </div>
                 </div>
-            </div>
-            <!-- 排行榜页面,小组赛淘汰赛页面  -->
-            <div v-else class="list-wrapper">
-              <!--  足球 页面  -->
-              <div v-if="[1001,1004].includes(sub_menu_type)">
-                <!--  足球小组赛,淘汰赛页面  -->
-                <group-knockout
-                  v-if="tab_items[tab_item_i] ? tab_items[tab_item_i].field3 != '': false"
-                  :tid="menu_list[tab_item_i].field1"
-                  :current_match="current_match"
-                />
-                <!--  足球排行榜页面  -->
-                <football-ranking-list v-else :tid="menu_list[tab_item_i].field1"/>
-              </div>
-              <!--  非足球排行榜页面  -->
-              <ranking-list-start v-else :mid="current_match.mid"/>
             </div>
         </template>
        </div>
@@ -169,9 +154,6 @@ import noData from "src/base-h5/vr/components/common/no_data.vue";
 import matchTab from "src/base-h5/vr/pages/virtual/virtual_sports_part/match_tab.vue"
 import v_s_match_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list.vue"
 import v_s_match_list2 from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list2.vue"
-import ranking_list_start from "src/base-h5/vr/pages/virtual/virtual_sports_part/ranking_list_start.vue"
-import group_knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/group_knockout.vue"
-import football_ranking_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/football_ranking_list.vue"
 import virtualSportsTab from "src/base-h5/vr/components/virtual_sports_tab.vue"
 import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue"
 import { utils } from "src/core/utils/common/module/utils.js";
@@ -616,6 +598,12 @@ export default {
       }, 1000)
 
       this.interval_ids.set(batch.batchNo, interval_id);
+     },
+     reset_timers(){
+      this.interval_ids.forEach(id=>{
+      clearInterval(id)
+      })
+      this.interval_ids.clear()
      }
   },
   computed:{
@@ -701,6 +689,7 @@ export default {
       if(this.current_league){
         prev_league_id = this.current_league.menuId;
       }
+      this.reset_timers();
       this.set_current_batch({});
       this.set_league_i_by_id(prev_league_id);
       this.tab_item_click_handle(this.tab_item_i);
@@ -726,9 +715,6 @@ export default {
     'match-tab':matchTab,
     'v-s-match-list':v_s_match_list,
     'v-s-match-list2':v_s_match_list2,
-    'ranking-list-start':ranking_list_start,
-    'football-ranking-list':football_ranking_list,
-    'group-knockout':group_knockout,
     'virtual-sports-tab':virtualSportsTab,
     'virtual-sports-stage':virtual_sports_stage,
     'dynamic-ranking': dynamic_ranking,
@@ -751,10 +737,7 @@ export default {
     }
   },
   beforeUnmount(){
-    this.interval_ids.forEach(id=>{
-      clearInterval(id)
-    })
-    this.interval_ids.clear()
+    this.reset_timers()
   }
 }
 </script>
@@ -860,12 +843,15 @@ export default {
 .virtual-content-wrapper {
   padding: 0.08rem 0.05rem 0;
   color: var(--q-gb-t-c-18);
-  background: var(--q-gb-bg-c-21);
+  background: #F2F2F6;
 }
 .virtual-sports-card {
-  background: var(--q-gb-bg-c-23) ;
-  border-radius: 4px;
-  margin-bottom: .08rem;
+  >div {
+    background: #F8F9FA;
+    border-radius: .08rem;
+    margin-bottom: .08rem;
+    border: 1px solid #fff;
+  }
   &:last-of-type {
     padding-bottom: 0.7rem;
   }

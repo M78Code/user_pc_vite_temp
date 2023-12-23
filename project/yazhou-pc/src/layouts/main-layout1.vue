@@ -69,7 +69,7 @@ import { BetBoxWapper } from "src/base-pc/components/bet";
 /**组件*/
 import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
-import layoutRight from "./layout-right.vue";
+// import layoutRight from "./layout-right.vue";
 import toastComponents from "src/base-pc/components/toast/toast.vue";
 import alertComponents from "src/base-pc/components/toast/alert.vue";
 import confirmComponents from "src/base-pc/components/toast/confirm.vue";
