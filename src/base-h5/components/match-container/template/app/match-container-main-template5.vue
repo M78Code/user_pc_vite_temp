@@ -834,7 +834,6 @@ export default {
     // border-bottom: 1px solid var(--q-gb-bg-c-19);
     // border-top: 1px solid var(--q-gb-bg-c-19);
     // border-color: var(--q-gb-bg-c-19) !important;
-    margin-top: 0.05rem;
     &.bottom {
       margin-top: 0.05rem;
     }
@@ -847,9 +846,9 @@ export default {
     height: 20px;
     border-radius: 0;
     font-size: 12px;
-    padding: 0 5px 0 20px;
+    padding: 0 5px 0 17px;
     background: var(--q-gb-bg-c-21);
-    line-height: 19px;
+    line-height: 20px;
     font-size: 11px;
     // margin-bottom: -.05rem;
     margin-top: 0;
