@@ -48,6 +48,8 @@ import headerSelect from 'src/base-pc/components/site-header/header-select.vue'
 import gift_package from '/yazhou-pc/image/common/activity_banner/gift_package.png'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BaseData from "src/core/base-data/base-data.js";
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
+
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
 
@@ -86,7 +88,7 @@ const menu_obj = ref({})
 //  const { menu_obj } = betReducer
 
 /** 是否内嵌 */
-const is_iframe = ref(is_iframe)
+const is_iframe = ref(utils_info.is_iframe)
 
 /** 
  * siteHeader组件props数据

@@ -103,14 +103,14 @@
 <script setup>
 
 import { computed, ref, onUnmounted } from 'vue';
+import { useRouter,useRoute } from "vue-router";
 import lodash from 'lodash'
+
 import { get_match_status } from 'src/core/utils/common/index'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-import { MenuData } from "src/output/index.js"
+import { MenuData, is_show_sr_flg, i18n_t, compute_local_project_file_path  } from "src/output/index.js"
 import details from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { i18n_t, compute_local_project_file_path } from "src/output/index.js";
-import { useRouter,useRoute } from "vue-router";
 import {get_main_score} from 'src/core/match-list-pc/match-handle-data.js'
 
 const router = useRouter()

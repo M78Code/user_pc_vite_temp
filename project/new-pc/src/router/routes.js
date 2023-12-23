@@ -81,11 +81,11 @@ const routes = [
     component: () => import("../pages/rule/index.vue"),
   },
   // 每日成长任务
-  {
-    path: '/activity',
-    name: "activity",
-    component: () => import(`../pages/test/index.vue`),
-  },
+  // {
+  //   path: '/activity',
+  //   name: "activity",
+  //   component: () => import(`../pages/test/index.vue`),
+  // },
   // // 活动维护页面
   // {
   //   path: '/activity_aegis',
