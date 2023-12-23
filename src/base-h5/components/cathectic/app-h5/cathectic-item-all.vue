@@ -13,7 +13,7 @@
         <div v-for="(value, name, index) in BetRecordClass.list_data" :key="index" class="cathectic-list">
           <q-slide-transition>
             <template>
-              <div v-for="(item2, key) in value.data" :key="key" :item_data="item2" class="cathectic-item">
+              <div v-for="(item2, key) in value.data" :key="key" :item_data="item2" class="cathectic-item" :style="compute_css_obj({key: 'fkh5_bg_jiesuan'})">
               <template>
                 <!-- 单关、冠军 -->
                 <item-simple-body v-if="item2.seriesType == '1' || item2.seriesType == '3'" :data_b="item2"></item-simple-body>
@@ -49,9 +49,10 @@ import { itemSimpleBody, itemMultipleBody, earlySettle, earlySettledDetail, canc
 import settleVoid from "src/base-h5/components/cathectic/app-h5/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted,computed } from 'vue'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import {useMittEmit, useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
+import { LOCAL_PROJECT_FILE_PREFIX , compute_css_obj } from "src/output/index.js";
 // 锚点
 const myScroll = ref(null)
 
@@ -172,7 +173,6 @@ template {
   width: 100%;
   border-radius: 0.1rem;
   //background: var(--q-gb-bg-c-15);
-  background: url($SCSSPROJECTPATH + "/image/png/cathectic-item-all_bg.png");
   background-size: cover;
   overflow: hidden;
   margin: 0 0 0.1rem;

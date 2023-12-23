@@ -8,7 +8,12 @@
         {{ format_total_score(data.data_list, 0)}}-{{ format_total_score(data.data_list, 1)}}
       </span>
     </div>
-    <span class="team-time" v-if="['result_details', 'match_result'].includes(Route.name)">{{ formatTime(+detail_data.mgt, 'mm/dd HH:MM')}}</span>
+    <template v-if="project_name == 'app-h5' && detail_data.csid == 1">
+      <span class="team-time" v-if="['result_details', 'match_result'].includes(Route.name)">
+        {{ formatTime(+detail_data.mgt, 'mm/dd HH:MM')}}
+      </span>
+    </template>
+    
     <!-- 描述比赛进度相关start -->
     <div class="team-text" :class="{baseball: detail_data.csid == '3' }">
         {{ match_status }}
@@ -22,11 +27,12 @@
 <script setup>
 import lodash from "lodash";
 // import msc from "src/base-h5/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, computed, watch } from "vue";
 import { i18n_t } from "src/boot/i18n.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { useRoute } from "vue-router";
 import { format_total_score, format_time_zone_time, format_time_zone, formatTime } from "src/output/index.js"
+import {project_name } from 'src/output/module/constant-utils-common.js'
 
 const props = defineProps({
   detail_data: {

@@ -34,6 +34,7 @@
             class="clear-icon"
             :src="compute_local_project_file_path('/image/list/league-close-icon.svg')"
             alt=""
+            @click="clear_text"
           />
         </div>
       </div>
@@ -110,6 +111,13 @@ const closed = () => {
     open: true,
   });
 };
+/**
+ * @description: 清空所有值
+ * @param 
+ */
+const clear_text = () => {
+  search_val.value = ''
+};
 defineProps({});
 </script>
 <style scoped lang="scss">
@@ -176,6 +184,7 @@ defineProps({});
         width: 100%;
         caret-color: #179CFF;
         font-size: 0.14rem;
+        color: var(--q-gb-t-c-18);
         &::placeholder{
           color: var(--q-gb-t-c-16);
         }

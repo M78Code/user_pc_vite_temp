@@ -68,11 +68,11 @@ import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt'
 import {  MenuData, LayOutMain_pc, GlobalSwitchClass,SearchPCClass } from 'src/output/index.js'
-
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 // import { component_symbol, need_register_props } from "src/components/search/config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
+// useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({})
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 // const tableClass_computed = useComputed.tableClass_computed(props)
@@ -101,7 +101,7 @@ const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
 
 /** 是否内嵌 */
-const is_iframe = ref(is_iframe);
+const is_iframe = ref(utils_info.is_iframe);
 /** 左侧列表显示形式 normal：展开 mini：收起 */
 const main_menu_toggle = ref(MenuData.main_menu_toggle)
 

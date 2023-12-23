@@ -80,13 +80,8 @@ let message_fun = null
 let handler_func = null
 
 onMounted(() => {
-  if (BaseData.is_emit) {
-    if (is_esports.value) {
-      MatchMeta.get_esports_match()
-    } else if (!is_kemp.value && !is_collect.value){
-      MatchMeta.set_origin_match_data()
-    }
-  }
+
+  BaseData.is_emit && get_page_match_data()
 
   // 接口请求防抖
   handler_func = lodash.debounce(({ cmd, data }) => {
@@ -115,6 +110,29 @@ onMounted(() => {
   // 事件初始化
   event_init();
 });
+
+// 获取页面所需数据
+const get_page_match_data = () => {
+  if (!MenuData.is_collect()) {
+    // 非收藏页
+    if (MenuData.is_esports()) {
+      // 电竞赛事
+      MatchMeta.get_esports_match()
+    } else {
+      // 常规赛事
+      MatchMeta.set_origin_match_data()
+    }
+  } else {
+    // 收藏页
+    if (MenuData.is_esports()) {
+      // 电竞收藏
+      MatchMeta.get_esports_collect_match()
+    } else { 
+      // 常规收藏
+      MatchMeta.get_collect_match()
+    }
+  }
+}
 
 // 页脚子菜单
 watch(() => MenuData.footer_sub_menu_id, () => {

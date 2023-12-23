@@ -2,7 +2,8 @@
     <div class="top-header">
         <div class="top-header-left">
             <div class="top-header-left-img" @click="goBack()">
-                <img class="img" :src="delimg" alt="" />
+                <!-- <img class="img" :src="delimg" alt="" /> -->
+                <div class="img" :style="compute_css_obj({key: 'h5_back_img'})"></div>
             </div>
         </div>
         <div class="top-header-content">
@@ -14,11 +15,9 @@
     </div>
 </template>
 <script setup>
-import { MenuData,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { MenuData,LOCAL_PROJECT_FILE_PREFIX , compute_css_obj } from "src/output/index.js";
 import { useRoute , useRouter } from "vue-router";
 import { useMittOn,MITT_TYPES, useMittEmit } from "src/core/mitt/index.js"
-import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
-import { ref, computed } from 'vue';
 const route = useRoute()
 const router = useRouter()
   /**
@@ -31,14 +30,6 @@ const router = useRouter()
     if (route.name === 'esports_sports') router.back()
   }
 
-const local = ref(LocalStorage.get('default-theme'))
-const delimg = computed(() => {
-  if(local.value == "theme-2"){
-    return `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/back.svg`
-  }else {
-    return `${LOCAL_PROJECT_FILE_PREFIX}/image/common/go_back.svg`
-  }
-}) 
 
 </script>
 <style lang="scss" scoped>
@@ -58,8 +49,6 @@ const delimg = computed(() => {
             align-items: center;
             flex: 1 1;
             .top-header-left-img{
-                width: 0.2rem;
-                height: 0.36rem;
                 .img {
                     width: 0.08rem;
                     height: 0.14rem;

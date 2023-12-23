@@ -45,7 +45,6 @@ export const pako_pb = {
     let res = null;
     try {
       if (data) {
-        console.log()
         let binData = to_Uint8Array(data);
         if (binData) {
           data = pako.inflate(binData);

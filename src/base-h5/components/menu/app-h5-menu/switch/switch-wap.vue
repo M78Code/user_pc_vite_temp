@@ -22,19 +22,20 @@ import {  useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { project_name, MenuData } from "src/output/index.js";
-
+import { set_menu_init } from 'src/base-h5/mixin/userctr.js'
 /**
  * 首页switch wap
  */
-const switchData = [
+const switchData = ref([])
+const data = ref([
     {
         defaultVal:UserCtr.standard_edition,
         list:[
-            {
-                name:"专业版",
+            {// 1 新手版
+                name:i18n_t('footer_menu.new_v'),
                 val:2,
                 changeFun:(val)=>{
-                    // 1 新手版 2 专业版
+                     //  2 专业版
                     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
                     nextTick(()=>{
                         UserCtr.set_standard_edition(val)
@@ -44,7 +45,7 @@ const switchData = [
                 }
             },
             {
-                name:"新手版",
+                name:i18n_t('footer_menu.pro_v'),
                 val:1,
                 changeFun:(val)=>{
                     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
@@ -62,7 +63,8 @@ const switchData = [
         defaultVal:UserCtr.sort_type,
         list:[
             {
-                name:"热门",
+                //热门
+                name:i18n_t('footer_menu.hot'),
                 val:1,
                 isSort:1,
                 changeFun:(val,sort)=>{
@@ -70,7 +72,8 @@ const switchData = [
                 }
             },
             {
-                name:"时间",
+                //时间
+                name:i18n_t('footer_menu.time'),
                 val:2,
                 isSort:1,
                 changeFun:(val,sort)=>{
@@ -92,7 +95,12 @@ const switchData = [
             return item;
         }).reverse()
     },
-]
+])
+watch(()=>set_menu_init.value,()=>{
+    nextTick(()=>{
+      switchData.value = data.value;
+    })
+},{immediate:true})
 
 </script>
 <style scoped lang="scss">

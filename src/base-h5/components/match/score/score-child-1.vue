@@ -8,8 +8,16 @@
     <div>
       <!-- 上半场，全场，加时赛，点球大战-->
       <span>&nbsp;&nbsp;</span>
-      <!-- <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> {{project_name == 'app-h5' ? i18n_t('app_h5.detail.half') : i18n_t('match_info.half')}}</span> -->
-      <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> {{i18n_t('match_info.half')}}</span>
+      <template v-if="['result_details', 'match_result'].includes($route.name)">
+        <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> {{i18n_t('match_info.half')}}</span>
+      </template>
+      <template v-else>
+        <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> 
+          {{project_name == 'app-h5' ? i18n_t('app_h5.detail.half') : i18n_t('match_info.half')}}
+        </span>
+      </template>
+      
+      
       <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)">/{{i18n_t('match_info.full')}}</span>
       <span v-if="add_score && collection_c.includes(detail_data.mmp)">/{{i18n_t('match_info.add')}}</span>
       <span v-if="shoot_score && collection_c.includes(detail_data.mmp) && ['result_details', 'match_result'].includes($route.name)">/{{i18n_t('match_info.shoot_out')}}</span>
@@ -25,23 +33,34 @@
       <!-- 角球数 -->
       <span v-if="red_flag">
         <span>&nbsp;&nbsp;</span>
-        <q-img v-if="project_name == 'app-h5'" style="width: 0.17rem;height: 0.17rem;margin-top:-8px;"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`"></q-img>
+        <template v-if="project_name == 'app-h5'">
+          <q-img
+            v-if="['result_details', 'match_result'].includes($route.name)"
+            style="width: 0.17rem;height: 0.17rem;margin-top:-8px;" 
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`"
+          />
+          <q-img 
+            v-else
+            style="width: 0.17rem;height: 0.17rem;margin-top:-8px;"  
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`" 
+          />
+        </template>
         <span v-else><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`" ></q-img></span>
-        <!-- <span>&nbsp;&nbsp;{{project_name == 'app-h5' ? i18n_t('match_result.corner_kick') : ''}}</span> -->
+        <span v-if="!['result_details', 'match_result'].includes($route.name)">&nbsp;&nbsp;{{project_name == 'app-h5' ? i18n_t('match_result.corner_kick') : ''}}</span>
         <span>{{ $filters.score_format(score_array_status[0])}}</span>
       </span>
       <!-- 黄牌数 -->
       <span v-if="yellow_card">
         <span>&nbsp;&nbsp;</span>
         <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  class="rounded-borders" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details_yellow.svg`" ></q-img></span>
-        <!-- <span>&nbsp;&nbsp;{{project_name == 'app-h5' ? i18n_t('match_result.yellow_card') : ''}}</span> -->
+        <span v-if="!['result_details', 'match_result'].includes($route.name)">&nbsp;&nbsp;{{project_name == 'app-h5' ? i18n_t('match_result.yellow_card') : ''}}</span>
         <span>{{ $filters.score_format(score_array_status[2])}}</span>
       </span>
       <!-- 红牌数 -->
       <span v-if="red_card">
         <span>&nbsp;&nbsp;</span>
         <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  class="rounded-borders"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details_red_card.svg`" ></q-img></span>
-        <!-- <span>&nbsp;&nbsp;{{project_name == 'app-h5' ? i18n_t('match_result.red_card') : ''}}</span> -->
+        <span v-if="!['result_details', 'match_result'].includes($route.name)">&nbsp;&nbsp;{{project_name == 'app-h5' ? i18n_t('match_result.red_card') : ''}}</span>
         <span>{{ $filters.score_format(score_array_status[1])}}</span>
       </span>
 
@@ -50,7 +69,6 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex"
 import lodash from "lodash"
 import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 import {project_name } from 'src/output/module/constant-utils-common.js'
@@ -186,6 +204,11 @@ export default {
     }
   }
 }
+</script>
+
+<script setup>
+import { useRoute } from "vue-router"
+const route = useRoute()
 </script>
 
 <style lang="scss" scoped>

@@ -15,7 +15,7 @@
  */
 import { api_v_sports } from "src/base-h5/vr/api";
 import LoopCallback from "src/base-h5/vr/class/loop_callback.js";
-
+import PageSourceData from "src/core/page-source/page-source.js";
 import licia from "licia";
 export default class VSport {
   /**
@@ -135,11 +135,11 @@ export default class VSport {
    * @description: 实时同步最新时间
    */  
   upd_current_time(){
-    if(this.sport_data && window.vue){
+    if (this.sport_data) {
       let mgt = Number(this.sport_data.mgt);
-      let remote_time = Number(window.vue.get_local_server_time.server_time);
-      let local_time = Number(window.vue.get_local_server_time.local_time_init);
-      this.current_time = (remote_time+(new Date().getTime()-local_time)-mgt);
+      let remote_time = Number(PageSourceData.init_time.server_time);
+      let local_time = Number(PageSourceData.init_time.local_time);
+      this.current_time = (remote_time + (new Date().getTime() - local_time) - mgt);
     }
   }
 
