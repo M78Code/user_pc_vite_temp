@@ -1,11 +1,11 @@
 
 <template>
-  <div class="q-gutter-xs keyboard-zone bet-keyboard-content" :class="{ 'is_big_vedio': is_big_vedio }">
-    <div class="keyboard-btn " v-for="(item, index) in ref_data.keyboard_data" :data-num="item" :key="`xs-${index + 1}`"
-      @click="keypress_handle(item, $event)" @keydown="is_keydown = true" @keyup="is_keydown = false">
+  <div class="q-gutter-xs keyboard-zone bet-keyboard-content">
+    <div class="keyboard-btn " v-for="(item, index) in ref_data.keyboard_data" :key="index" @click="set_click_keybord(item)">
       <!--键盘按键文本显示 如果无效则置灰 以及MAX按钮文本显示-->
-      <div class="keyboard-btn-text" :class="{ 'text-disable': item.disabled }"><template
-          v-if="item != 'MAX'">+</template>{{ item }}</div>
+      <div class="keyboard-btn-text" :class="{ 'text-disable': item.disabled }">
+        <template v-if="item != 'MAX'">+</template>{{ item }}
+      </div>
     </div>
   </div>
 </template>
@@ -13,34 +13,18 @@
 <script setup>
 // 公共主题文件引入
 import { onMounted, reactive, ref } from "vue"
-import { useMittEmit,MITT_TYPES } from 'src/core/mitt/index.js'
 import { UserCtr } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
-
-const is_keydown = ref(false)
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 const ref_data = reactive({
   // 键盘数据以及默认键盘数据
-  keyboard_data:[]
-})
-
-const props = defineProps({
-  // 当前按键值
-  number: String,
-  status: {
-    type: Number,
-    default: 1
-  },
-  is_big_vedio: {
-    type: Boolean,
-    default: false
-  }
+  keyboard_data: [],
 })
 
 onMounted(()=>{
   addnum()
 })
-
 
 // 获取商户配置的 快捷金额
 const addnum = () => {
@@ -53,18 +37,29 @@ const addnum = () => {
   }
 }
 
-const emit = defineEmits(['keypress_handle'])
-
-/**
- * @description: 键盘按下事件
- * @param {Object} obj 点击的按钮对象
- * @param {Event} e 按钮事件
- * @return {undefined} undefined
- */
-const keypress_handle = (obj, e) => {
-  //投注按钮是否失效事件
-  emit('keypress_handle', obj)
+// 快捷金额
+const set_click_keybord = obj => {
+  // 快捷金额 max 使用限额最大金额作为投注金额
+  let key_board_obj = lodash.get(BetData,'bet_keyboard_config',{})
+  let money = ''
+  if (obj == 'MAX') {
+      money = key_board_obj.max_money
+  } else {
+    // 投注金额 = 快捷金额 加上 原有的投注金额
+    let max_money = money * 1 + obj
+    // 投注金额 大于 最大投注限额 则 使用最大限额作为投注金额
+    if (max_money > key_board_obj.max_money) {
+        money = key_board_obj.max_money
+    } else {
+        money = max_money
+    }
+    // 记录投注金额 单关 不合并
+    BetData.set_bet_amount(money)
+  }
+  let keyboard = { params:key_board_obj, money: money }
+  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD,keyboard)
 }
+
 
 </script>
 

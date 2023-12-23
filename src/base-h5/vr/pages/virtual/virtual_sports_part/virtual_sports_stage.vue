@@ -1038,7 +1038,7 @@ export default {
 }
 
 .mmp-status {
-  margin-top: 0.4rem;
+  margin-top: 0.3rem;
   margin-right: 0.12rem;
 
   .inner {
@@ -1077,10 +1077,10 @@ export default {
 
 /*  足球赛果 */
 .football-score {
-  background-image: var(--q-color-com-img-bg-115);
+  background-color: rgba(0, 0, 0, 0.6);
   background-size: 100% 100%;
-  height: 0.86rem;
-  margin-top: 0.38rem;
+  height: 0.54rem;
+  margin-top: 0.68rem;
 
   .name-wrap {
     flex: 1;

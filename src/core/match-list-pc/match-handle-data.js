@@ -269,7 +269,7 @@ export function get_history_score_list(match) {
    * @param {Array} key_arr 需要获取的值key ["hpsBold","hpsOvertime"]等
    * @return {undefined} undefined
    */
-export function get_match_to_map_obj(match, key_arr) {
+export function get_match_to_map_obj(match, key_arr, type = 1) {
     let map_obj = {}
     // const match=MatchListData.get_quick_mid_obj(mid)
     if (lodash.get(match, 'mid')) {
@@ -335,7 +335,7 @@ export function get_match_to_map_obj(match, key_arr) {
                                                     }
                                                     // 设置坑位信息
                                                     if (!item3.hn) {
-                                                        let _hn = `${match.mid}_${item2.hpid}_1_${ot}`;
+                                                        let _hn = `${match.mid}_${item2.hpid}_${type}_${ot}`;
                                                         // 押注项设置盘口状态
                                                         Object.assign(item4, {
                                                             _hpid: item2.hpid,
@@ -392,7 +392,7 @@ export function get_match_to_map_obj(match, key_arr) {
 
                                                     // 设置非坑位信息
                                                     if (!item3.hn) {
-                                                        let _hn = `${match.mid}_${item2.hpid}_1_${ot}`;
+                                                        let _hn = `${match.mid}_${item2.hpid}_${type}_${ot}`;
                                                         // 押注项设置盘口状态
                                                         Object.assign(item4, {
                                                             _hpid: item2.hpid,
