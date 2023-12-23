@@ -20,7 +20,7 @@
         </navigation-bar>
         
         <div class="slide-box">
-            <div v-for="(item, index) in state.slideMenu" @click="slideHandle(item,$event)" :class="['slide-item', state.currentSlideValue == item.field1 &&
+            <div v-for="(item, index) in state.slideMenu" @click="slideHandle(item,index,$event)" :class="['slide-item', state.currentSlideValue == item.field1 &&
                 'slide-item-active']" :key="'slide-' + index">
                 <span>{{ index? item.date:i18n_t('menu_itme_name.today') }}</span>
             </div>
@@ -90,8 +90,9 @@ const switchHandle = async val => {
     api_analysis.get_match_result_menu( {menuType:val} ).then( async ( res = {} ) => {
         if(res.code == 200){
             state.slideMenu = res.data || {}
+            const index = MenuData.data_tab_index || 0;
             // 设置时间默认选中
-            state.currentSlideValue = lodash_.get(res.data,'[0].field1', '')
+            state.currentSlideValue = lodash_.get(res.data,`[${index}].field1`, '')
             // if (val) {
             //     MenuData.set_result_menu_api_params({
             //         mi: 10000,
@@ -102,14 +103,15 @@ const switchHandle = async val => {
             //     state.matchs_data = await MatchMeta.get_champion_match_result()
             // } else {
                 // 设置赛种数据
-            set_scroll_data_list(lodash_.get(res.data,'[0].sportList', []))
+            set_scroll_data_list(lodash_.get(res.data,`[${index}].sportList`, []))
             // }
         }
     })
     
 }
-const slideHandle = (val, e) => {
+const slideHandle = (val, i,e) => {
     if (state.currentSlideValue === val) return
+    MenuData.set_date_time(i,val.field1);
     state.currentSlideValue = val.field1
     set_scroll_data_list(val.sportList)
     scrollMenuEvent(e, ".slide-box", ".switch-item-active");
@@ -128,14 +130,15 @@ const set_scroll_data_list = (data_list = []) => {
         }
     })
     state.slideMenu_sport = scroll_data
-    state.current_mi = scroll_data[0]?.mi
-    set_scroll_current(scroll_data[0])
+    state.current_mi = MenuData.current_lv_2_menu_i || scroll_data[0]?.mi
+    set_scroll_current(MenuData.current_lv_2_menu?.mi ?MenuData.current_lv_2_menu:scroll_data[0])
 }
 
 // 设置滑动菜单的选中id
 const set_scroll_current = async item => {
     console.log('set_scroll_currentMenuData.get_results_kemp()', MenuData.get_results_kemp(), item)
     if (!item) return
+    MenuData.set_current_lv_2_menu_i(item)
     if (MenuData.get_results_kemp()) {
         // 冠军赛果
         MenuData.set_result_menu_api_params({
@@ -147,7 +150,6 @@ const set_scroll_current = async item => {
         if (state.matchs_data.length > 0)  useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
     } else {
         // 常规赛果
-        if (!item) return
         state.current_mi = item.mi
         let params = {
             mi:item.mi,
@@ -165,9 +167,10 @@ const goBackAssign = () => {
     MenuData.set_top_menu_title({})
     MenuData.set_init_menu_list()
     MenuData.set_current_lv1_menu(2);
+    MenuData.set_current_lv_2_menu_i({});
     MenuData.set_results_kemp(0)
 }
-MenuData.set_top_menu_title({})//从电竞过来 这个菜单没有制空 所以菜单不对 判断了是 电竞
+MenuData.is_esports() && MenuData.set_top_menu_title({})//从电竞过来 这个菜单没有制空 所以菜单不对 判断了是 电竞
 MenuData.set_current_lv1_menu(28)//设置为赛果
 switchHandle(0)
 onMounted(()=>{
