@@ -67,7 +67,7 @@
             <label class="bet-team-handicap">
               <template v-if="item.handicap !== ''">{{ lodash.trim(item.team_name) }}<template v-if="item.team_name != item.handicap"><label
                     class="handicap yb-number-bold bet-text-nowrap"
-                    :class="{ 'margin-left-0': item.team_name == '', 'bet-handicap': item.handicap_change }">{{ item.handicap }}</label></template>
+                    :class="{ 'margin-left-0': item.team_name == '', 'bet-handicap': item.handicap_change }" v-html="item.handicap"></label></template>
               </template>
               <template v-else>
                 <!--所选的投注项名称-->
@@ -86,19 +86,20 @@
               <span>@</span>{{ format_odds(item.oddFinally,item.csid) }}
             </span>
           </div>
-          <!--右侧无效按钮  当ref_data.active不是激活和锁盘时-->
-          <div class="auto-col" v-if="!(ref_data.active == 1 || ref_data.active == 4)">
-            <span class="invalid">
-              {{ i18n_t('common.invalid') }}
-              <!-- 无效 -->
-            </span>
-          </div>
-          <div class="auto-col" v-else-if="!ref_data.serial_type">
+          <!--右侧无效按钮  -->
+          <div class="auto-col" v-if="item.is_serial && !BetData.is_bet_single">
             <span class="invalid serial-msg">
               <!--不支持串关-->
               {{ i18n_t('bet.no_support_serial') }}
             </span>
           </div>
+          <div class="auto-col" v-else-if="!(item.ol_os == 1 && item.hl_hs == 0 && item.mid_mhs == 0)">
+            <span class="invalid">
+              {{ i18n_t('common.invalid') }}
+              <!-- 无效 -->
+            </span>
+          </div>
+         
         </div>
       </div>
     </q-card-section>
@@ -169,7 +170,7 @@ const del_bet_item = () => {
       /*  玩法及队名部分样式 */
       .bet-play-game {
         display: flex;
-        align-items: flex-start;
+        align-item: flex-start;
         padding: 0;
         margin: 0;
         word-break: break-word;
@@ -193,7 +194,7 @@ const del_bet_item = () => {
       /*  队伍名称 */
       .bet-play-team {
         display: flex;
-        align-items: center;
+        align-item: center;
         padding-right: 5px !important;
         min-height: 20px;
 
