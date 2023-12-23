@@ -107,6 +107,10 @@ export default {
   methods: {
     // 点击菜单切换
     tab_click(tab) {
+      console.log(tab);
+      // this.tabIndex = 1
+      // this.currentContent = 'knockout'
+      // return
       if(tab.index==1 && tab.disable) return
       this.tabIndex = tab.index
       this.currentContent = tab.value

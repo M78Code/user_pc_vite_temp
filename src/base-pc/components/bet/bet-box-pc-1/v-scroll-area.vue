@@ -42,7 +42,7 @@ import { useRouter } from "vue-router";
 import {LayOutMain_pc } from 'src/output/index.js'
 
 import { useMittEmit, useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
-
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 const router = useRouter()
 const props = defineProps({
   // 固定区域 1：头部 2：尾部 3：头和尾
@@ -57,7 +57,7 @@ const props = defineProps({
 })
 
 // 是否内嵌
-const is_iframe = ref(is_iframe)
+const is_iframe = ref(utils_info.is_iframe)
 
 const ref_bet_scroll_area_bet_list = ref(null);
 const header_height = ref(0);
@@ -167,7 +167,7 @@ const on_scroll = (position) => {
 }
 // 设置滚动位置
 const set_scroll_position = (position) => {
-  ref_bet_scroll_area_bet_list.value.setScrollPosition(position[0], position[1])
+  // ref_bet_scroll_area_bet_list.value.setScrollPosition(position[0], position[1])
 }
 
 onMounted(() => {

@@ -49,7 +49,7 @@
       </div>
       <div class="main-finals" v-if="list_data.length == 1 && !list_data[0].list">
         <div class="finals-team">
-          <img  :src="`/${project_name}image/svg/finals.svg`" alt="">
+          <img  :src="`/${project_name}/image/svg/finals.svg`" alt="">
           <span>{{ list_data[0].homeName }}</span>
         </div>
         <div class="middle">

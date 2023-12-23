@@ -149,9 +149,9 @@
           <div class="event-team">
             <div class="name">
               <div class='left'>
-                <span :class="{ 'is-handicap': match.handicap_index == 1, 'is-handicap-1': match.handicap_index == 2 }">
+                <div class="match-name" :class="{ 'is-handicap': match.handicap_index == 1, 'is-handicap-1': match.handicap_index == 2 }">
                   {{ match.mhn }}
-                </span>
+                </div>
                 <!--发球方绿点-->
                 <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
                   v-show="set_serving_side(match, 'home')">
@@ -207,9 +207,9 @@
                 <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
                   v-show="set_serving_side(match, 'away')">
                 </span>
-                <span :class="{ 'is-handicap': match.handicap_index == 2, 'is-handicap-1': match.handicap_index == 1 }">
+                <div  class="match-name" :class="{ 'is-handicap': match.handicap_index == 2, 'is-handicap-1': match.handicap_index == 1 }">
                   {{ match.man }}
-                </span>
+                </div>
 
               </div>
             </div>
@@ -916,8 +916,9 @@ export default {
         .serving-party {
           border-radius: 2px;
           background: var(--sys-feedback-success-success-400, #4AB06A);
-          width: 4px;
+          width: 4px !important;
           height: 4px;
+          position: absolute;
         }
 
         .logo {
@@ -937,15 +938,29 @@ export default {
 
           &.left {
             justify-content: flex-end;
+            position: relative;
             .is-handicap {
               color: #74C4FF;
+            }
+            .match-name {
+              width: 1rem;
+            }
+            .serving-party {
+              right: 0.28rem;
             }
           }
 
           &.right {
             justify-content: flex-start;
+            position: relative;
             .is-handicap {
               color: #74C4FF;
+            }
+            .match-name {
+              width: 1rem;
+            }
+            .serving-party {
+              left: 0.28rem;
             }
           }
         }

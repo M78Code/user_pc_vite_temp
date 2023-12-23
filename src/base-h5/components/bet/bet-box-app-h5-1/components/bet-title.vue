@@ -5,7 +5,7 @@
     <div class="nonebox4-first">
         <div class="nonebox4-first-left">
             <div class="nonebox4-first-left-img">{{BetData.is_bet_single? i18n_t('app_h5.bet.odd') : i18n_t('app_h5.bet.parlay')}}</div>
-            <div class="nonebox4-first-left-text">{{ i18n_t('app_h5.bet.pm_sport') }}</div>
+            <!-- <div class="nonebox4-first-left-text">{{ i18n_t('app_h5.bet.pm_sport') }}</div> -->
         </div>
         <div class="nonebox4-first-right">
             <div class="nonebox4-first-right-window" @click.stop="get_balance">

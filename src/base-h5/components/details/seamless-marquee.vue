@@ -122,7 +122,7 @@ const move = (text_width, scroll) => {
 
   .scroll_wrap {
     display: flex;
-    //color: var(--q-color-com-fs-color-11);
+    color: var(--q-gb-bd-c-12);
     p {
       word-break: keep-all;
       white-space: nowrap;
@@ -136,7 +136,11 @@ const move = (text_width, scroll) => {
     position: absolute;
     opacity: 0;
     top: 0;
-    color: var(--q-gb-t-c-18);
+  }
+
+  .copy {
+    // color: var(--q-gb-bg-c-12);
+
   }
 }
 </style>
