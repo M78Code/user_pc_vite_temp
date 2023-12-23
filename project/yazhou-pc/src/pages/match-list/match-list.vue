@@ -135,7 +135,7 @@ import EsportsHeader from "src/base-pc/components/match-list/esports-header/inde
 // import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
 // import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
 // import { VirtualMatchTpl2FullVersionWapper as VirtualMatchTpl2 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟赛马 、 虚拟赛狗
-// import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
+import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 
@@ -182,13 +182,14 @@ export default {
       is_show_hot,
       page_source,
       GlobalAccessConfig,
-      on_refresh
+      match_list_card,
+      on_refresh,
     };
   },
   data() {
     return {
       compute_css_obj,
-      MatchListCardDataClass   ,
+      MatchListCardDataClass,
       load_data_state,
       match_list_card_key_arr:[]
     }

@@ -50,13 +50,10 @@
             <left-main-menu />
           </div>
         </v-scroll-area>
-
-        <div>sadasdasd</div>
         <!-- 投注栏 -->
         <div class="bet-box-pc-1" v-if="LayOutMain_pc.layout_left_show == 'bet_list'">
           <bet-box-wapper use_component_key="BetBoxYaZhouPC_1"  />
         </div>
-
         <!-- 投注记录 -->
         <bet-record-view-wapper use_component_key="PcRecordTemplate1" v-if="LayOutMain_pc.layout_left_show == 'bet_history'" />
 

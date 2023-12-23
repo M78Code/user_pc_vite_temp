@@ -217,7 +217,7 @@ onUnmounted(() => {
  *@param {Object} · orderNo - 订单号, orderStatus - 订单状态
  */
 const c201_handle = ({ orderNo, orderStatus }) => {
-  if (props.item_data.orderNo == orderNo && status.value == 3) {
+  if (props.item_data.orderNo == orderNo) {
     if (orderStatus == 1) {
       // 成功
       status.value = 4;
@@ -281,6 +281,7 @@ const change_percentage = (val) => {
 const submit_early_settle = () => {
   if (cashout_stake.value < 0.01) return;
   status.value = 3;
+  unSuccessTips.value = false
   let params = {
     // 订单号
     orderNo: props.item_data.orderNo,
@@ -299,19 +300,8 @@ const submit_early_settle = () => {
       status.value = 4;
     } else if (res.code == "0400524") {
       // 注单确认中···
-      timer3 = setTimeout(() => {
-        unSuccessTips.value = false
-        message = res.message
-      }, 5000);
-    } else if (res.code == "0400501") {
-      // 不足提取金额额度
-      unSuccessTips.value = true
-      timer4 = setTimeout(() => {
-        unSuccessTips.value = false
-        message = res.message
-      }, 5000);
-    } 
-     else if (res.code == "0400527") {
+      // 等到ws推送，c201_handle处理后续注单状态
+    } else if (res.code == "0400527") {
       // 不支持提前结算或者暂停
       status.value = 5;
     } else if (res.code == "0400537") {
