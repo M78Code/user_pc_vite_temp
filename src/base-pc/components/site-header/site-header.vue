@@ -96,6 +96,7 @@ import { format_money2 } from "src/output/index.js"
 import { i18n_t } from "src/boot/i18n.js"
 /** api */
 import { api_account } from "src/api/index.js";
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 
 const emit = defineEmits(['navigate'])
 
@@ -137,7 +138,7 @@ const menu_data = reactive({})
 /** 地址栏隐藏logo */
 const is_hide_icon = ref(false)
 /** 是否内嵌 */
-const is_iframe = ref(is_iframe)
+const is_iframe = ref(utils_info.is_iframe)
 /** 刷新组件loading */
 const data_loaded = ref(false)
 /** 当前顶部菜单选中的索引 */

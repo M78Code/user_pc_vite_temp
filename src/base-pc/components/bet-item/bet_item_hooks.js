@@ -17,13 +17,13 @@ import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
-import { i18n_t, is_eports_csid,compute_value_by_cur_odd_type } from "src/output/index.js";
+import { i18n_t, is_eports_csid,compute_value_by_cur_odd_type, get_odds_active } from "src/output/index.js";
 import math  from "src/core/bet/common/mathjs.js"
 
 import ZHUGE from "src/core/http/zhuge-tag";
 // import { useGetStore } from "src/core/match-detail-pc/use_get_store.js";
 import { useRoute, useRouter } from "vue-router";
-import {get_odds_active}from 'src/core/bet/module/status.js'
+// import {get_odds_active}from 'src/core/bet/module/status.js'
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
