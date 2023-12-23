@@ -11,7 +11,13 @@
         <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
           <!-- 返回按钮 及 刷新 注单  设置 按钮 -->
           <div class="back-wrap">
-            <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})"></div>
+            <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})">
+              <img
+                class="img"
+                :src="compute_local_project_file_path('/image/svg/go-back-icon.svg')"
+                alt=""
+              />
+            </div>
             <!-- 虚拟体育 -->
             <div class="col virtual-title">{{i18n_t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
             <!-- <div class="virtual-ref" style="background-color: blue;" :class="{'refreshing':refreshing}" @click="vir_refresh"></div> -->
