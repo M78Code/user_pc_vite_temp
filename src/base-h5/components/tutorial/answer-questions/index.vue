@@ -142,10 +142,10 @@ const nextQuestionsHandle = () => {
         go_back()
         return
     }
-    if (state.currentAnswer === props.questionsData.length && state.recordSuccess !== props.questionsData.length) {
-        resetHandle()
-        return
-    }
+    // if (state.currentAnswer === props.questionsData.length && state.recordSuccess !== props.questionsData.length) {
+    //     resetHandle()
+    //     return
+    // }
     if (state.currentQuestion === (props.questionsData.length - 1)) return
     ++state.currentQuestion
     state.afterAnswerQuestion = ''
@@ -164,7 +164,7 @@ const nextQuestionsText = () => {
     if (state.currentAnswer === props.questionsData.length && state.recordSuccess === props.questionsData.length) {
         return i18n_t('app_h5.handicap_tutorial.return_home')
     } else if (state.currentAnswer === props.questionsData.length && state.recordSuccess !== props.questionsData.length) {
-        return i18n_t('app_h5.handicap_tutorial.again')
+        return ''
     } else {
         return i18n_t('app_h5.handicap_tutorial.next')
     }
@@ -285,7 +285,7 @@ const go_back = () => {
 
             .ht-anwser-item {
                 display: flex;
-                width: 1.48rem;
+                width: 1.46rem;
                 height: .7rem;
                 align-items: center;
                 justify-content: center;

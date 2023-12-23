@@ -32,7 +32,7 @@
                 </div>
             </div>
             
-            <div class="fw-e-s bet-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
+            <div class="fw-e-s bet-right" :class="{'width100': items.is_serial && !BetData.is_bet_single}" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                 <div class="f-c-c bet-money">
                     <span class="font14 font700 bet-odds-value f-c-c" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
                        <span class="font14">@</span>{{ compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId) }}
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <!-- 电子赛事不支持串关 -->
-                <div v-if="items.is_serial && !BetData.is_bet_single" class="bet-serial font12">不支持串关</div>
+                <div v-if="items.is_serial && !BetData.is_bet_single" class="bet-serial font12">不支持串关投注</div>
             </div>
 
             <div class="fw-e-s bet-right bet-invalid" v-else>
@@ -180,6 +180,9 @@ const set_delete = () => {
                         color: #949AB6;
                     }
                 }
+            }
+            &.width100 {
+                width: 1rem;
             }
         }
 

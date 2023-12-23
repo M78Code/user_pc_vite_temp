@@ -2,7 +2,7 @@
  * @Description: app-h5 赛果
 -->
 <template>
-  <div class="match-container component match-container-main-template3"
+  <div class="component match-container-main-template3 match-container"
     :style="{ marginTop: is_hot ? '0' : '' }" 
     :class="[{
       first: i == 0,
@@ -1193,7 +1193,7 @@ export default {
           bottom: 0;
           height: 24px;
           font-weight: 600;
-
+          color: var(--q-gb-t-c-18);
           &.simple {
             right: 0.08rem;
           }

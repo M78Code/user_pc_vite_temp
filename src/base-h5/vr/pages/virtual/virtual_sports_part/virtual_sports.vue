@@ -31,7 +31,9 @@
           <div class="league-name right-border">{{ lengue_name }}</div>
           <div class="status">
             <span class="num">{{current_match.no}}</span>
-            <span class="state">{{i18n_t('virtual_sports.match_status.playing')}}</span>
+            <span class="state">
+             {{ current_match.match_status == 2 ? i18n_t('collect.match_end') : i18n_t('virtual_sports.match_status.playing') }}
+            </span>
             <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
           </div>
         </div>
@@ -54,7 +56,7 @@
           <div class="test-line" v-if="show_debug">
             {{current_match.mid}}
           </div>
-          <div class="virtual-video-play-team" v-if="[1001,1004].includes(sub_menu_type)">
+          <div class="virtual-video-play-team" v-if="sub_menu_type && [1001,1004].includes(sub_menu_type)">
                   <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']"
                   v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
                     <div class="teams">
@@ -68,7 +70,7 @@
                   </div>
           </div>
           <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
-          <template v-else-if="current_match">
+          <template v-else-if="sub_menu_type && current_match">
             <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
             <dynamic-ranking v-if="current_match.match_status == 0 || current_match.match_status == 1" :virtual_match_list="[current_match]" />
             <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
@@ -77,18 +79,18 @@
         </div>
       </div>
       <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
+       <div v-if="match_item_batch.remaining_time > 0">
         <div class="tab-title tab-border" @click.stop="expend_match(match_item_batch)">
           <div class="league-name right-border">{{ lengue_name }}</div>
           <div class="status">
             <span class="num">{{ match_item_batch.no }}</span>
-            <!-- <span class="state">比赛中</span> -->
+            <span class="state">{{ match_item_batch.timer_format }}</span>
             <icon-wapper class="icon" :class="[!match_item_batch.is_expend && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
           </div>
         </div>
         <template v-if="match_item_batch.is_expend">
             <!--  虚拟体育主列表页面  -->
             <div
-                v-if="!ranking_list_change"
                 class="v-sports-main-list"
                 :class="{'v-sports-main-list-style': standard_edition === 1}"
                 :style="{'padding-bottom': get_betbar_show ? '0' : '0'}"
@@ -100,7 +102,7 @@
               </v-s-match-list>
 
               <!-- 除当前赛事外，展示赔率信息 -->
-              <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
+              <div class="v-sports-ranking" v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)">
                   <div>
                     <!-- 赛马切换玩法集tab组件 -->
                     <!-- <virtual-sports-tab
@@ -110,7 +112,7 @@
                     <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
                     <!-- 赛马投注区域 -->
                     <div>
-                      <v-s-match-list2 v-if="![1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
+                      <v-s-match-list2 v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
                         :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
                         @switch_match="switch_match_handle"  @start="match_start_handle">
                       </v-s-match-list2>
@@ -118,23 +120,8 @@
                   </div>
                 </div>
             </div>
-            <!-- 排行榜页面,小组赛淘汰赛页面  -->
-            <div v-else class="list-wrapper">
-              <!--  足球 页面  -->
-              <div v-if="[1001,1004].includes(sub_menu_type)">
-                <!--  足球小组赛,淘汰赛页面  -->
-                <group-knockout
-                  v-if="tab_items[tab_item_i] ? tab_items[tab_item_i].field3 != '': false"
-                  :tid="menu_list[tab_item_i].field1"
-                  :current_match="current_match"
-                />
-                <!--  足球排行榜页面  -->
-                <football-ranking-list v-else :tid="menu_list[tab_item_i].field1"/>
-              </div>
-              <!--  非足球排行榜页面  -->
-              <ranking-list-start v-else :mid="current_match.mid"/>
-            </div>
         </template>
+       </div>
       </div>
       <template v-if="!no_virtual_match">
         <!--赛事轮|期菜单-->
@@ -167,9 +154,6 @@ import noData from "src/base-h5/vr/components/common/no_data.vue";
 import matchTab from "src/base-h5/vr/pages/virtual/virtual_sports_part/match_tab.vue"
 import v_s_match_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list.vue"
 import v_s_match_list2 from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list2.vue"
-import ranking_list_start from "src/base-h5/vr/pages/virtual/virtual_sports_part/ranking_list_start.vue"
-import group_knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/group_knockout.vue"
-import football_ranking_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/football_ranking_list.vue"
 import virtualSportsTab from "src/base-h5/vr/components/virtual_sports_tab.vue"
 import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue"
 import { utils } from "src/core/utils/common/module/utils.js";
@@ -187,6 +171,7 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+
 export default {
   mixins:[common,virtual_sports_mixin],
   props:{
@@ -252,7 +237,9 @@ export default {
       standard_edition,
       LOCAL_PROJECT_FILE_PREFIX,
       // 是否全部折叠
-      is_expend_all: true
+      is_expend_all: true,
+      // 存储定时器id的映射
+      interval_ids: new Map()
     }
   },
   created() {
@@ -518,7 +505,7 @@ export default {
       item.is_expend = !item.is_expend;
       // 足蓝展开列表时，数据仓库增加list
       if([1001,1004].includes(this.sub_menu_type)){
-        item.is_expend && this.sub_nav_click_handle(item.batchNo);
+        // item.is_expend && this.sub_nav_click_handle(item.batchNo);
       }else {
         item.is_expend && this.get_detail_odds(item);
       }
@@ -577,6 +564,47 @@ export default {
         }
       }
     },
+    /**
+     * 处理开赛时间
+     */
+    handle_match_time(batch){
+      const match = batch.matchs[0];
+      if(match){
+        let remaining_time = Number(match.mgt) - ServerTime.get_remote_time();
+        //毫秒格式化为: 分钟'秒''
+        let minutes = Math.floor(remaining_time / (1000 * 60));
+        let sub_ms_r = remaining_time - minutes * 60 * 1000;
+        let seconds_f = Math.floor(sub_ms_r / 1000);
+        minutes = String(minutes);
+        seconds_f = String(seconds_f);
+
+        let minutes_format = minutes.padStart(2, '0');
+        let seconds_f_format = seconds_f.padStart(2, '0');
+        batch.remaining_time = remaining_time;
+        batch.timer_format = `${minutes_format}'${seconds_f_format}"`;
+      }
+    },
+    /**
+     * 开赛时间定时器控制
+     */
+     set_batch_timer(batch){
+      if(this.interval_ids.has(batch.batchNo)){
+        clearInterval(this.interval_ids.get(batch.batchNo));
+      }
+
+      // 创建一个新的定时器来更新时间
+      const interval_id = setInterval(()=>{
+        this.handle_match_time(batch)
+      }, 1000)
+
+      this.interval_ids.set(batch.batchNo, interval_id);
+     },
+     reset_timers(){
+      this.interval_ids.forEach(id=>{
+      clearInterval(id)
+      })
+      this.interval_ids.clear()
+     }
   },
   computed:{
     //
@@ -601,6 +629,12 @@ export default {
     // 当前联赛的全部轮次
     match_list_all_batches(){
       const match_list_all_batches = [...this.virtual_match_list];
+      match_list_all_batches.forEach(batch=> {
+        this.handle_match_time(batch);
+        this.set_batch_timer(batch);
+      })
+      console.log(this.interval_ids, 'sss')
+
       // 足蓝全部展开，赛马类只展开第一个
       if(this.sub_menu_type == '1001' || this.sub_menu_type == '1004'){
           match_list_all_batches.forEach(batch=> {
@@ -655,6 +689,7 @@ export default {
       if(this.current_league){
         prev_league_id = this.current_league.menuId;
       }
+      this.reset_timers();
       this.set_current_batch({});
       this.set_league_i_by_id(prev_league_id);
       this.tab_item_click_handle(this.tab_item_i);
@@ -680,9 +715,6 @@ export default {
     'match-tab':matchTab,
     'v-s-match-list':v_s_match_list,
     'v-s-match-list2':v_s_match_list2,
-    'ranking-list-start':ranking_list_start,
-    'football-ranking-list':football_ranking_list,
-    'group-knockout':group_knockout,
     'virtual-sports-tab':virtualSportsTab,
     'virtual-sports-stage':virtual_sports_stage,
     'dynamic-ranking': dynamic_ranking,
@@ -703,6 +735,9 @@ export default {
     for (const key in this.$data) {
       this.$data[key] = null
     }
+  },
+  beforeUnmount(){
+    this.reset_timers()
   }
 }
 </script>
@@ -763,7 +798,7 @@ export default {
   .status{
     .state{
       margin: 0 5px;
-      color: var(--q-gb-bd-c-14);
+      color: #fff;
       padding: 0 6px;
       border-radius: 3px;
       font-size: 0.11rem;
@@ -808,12 +843,15 @@ export default {
 .virtual-content-wrapper {
   padding: 0.08rem 0.05rem 0;
   color: var(--q-gb-t-c-18);
-  background: var(--q-gb-bg-c-21);
+  background: #F2F2F6;
 }
 .virtual-sports-card {
-  background: var(--q-gb-bg-c-23) ;
-  border-radius: 4px;
-  margin-bottom: .08rem;
+  >div {
+    background: #F8F9FA;
+    border-radius: .08rem;
+    margin-bottom: .08rem;
+    border: 1px solid #fff;
+  }
   &:last-of-type {
     padding-bottom: 0.7rem;
   }

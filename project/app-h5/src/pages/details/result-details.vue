@@ -323,12 +323,13 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
 }
 
 .play-pad {
-  padding-top: 1.61rem;
+  padding-top: 1.71rem;
   background: var(--q-gb-bg-c-19) !important;
+  height: 100%;
 }
 
 .baseball-play-pad {
-  padding-top: 1.61rem;
+  padding-top: 1.71rem;
   background: var(--q-gb-bg-c-19) !important;
 }
 :deep(.skeleton-wrap) {

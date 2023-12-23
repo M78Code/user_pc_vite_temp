@@ -391,6 +391,8 @@ export default defineComponent({
      */
     handle_all_ball_seed_fold () {
       MatchFold.handler_fold_all_matchs_csid()
+      // app-h5 简版 先试运行看效果
+      if (project_name === 'app-h5' && standard_edition.value == 1) MatchMeta.compute_current_matchs()
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
     },
 
@@ -402,6 +404,8 @@ export default defineComponent({
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
       // 不需要虚拟计算，欧洲版五大联赛
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
+      // app-h5 简版 先试运行看效果
+      if (project_name === 'app-h5' && standard_edition.value == 1) MatchMeta.compute_current_matchs()
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
       // 赛事个数小于18 不需要继续获取赔率
       if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
@@ -416,6 +420,8 @@ export default defineComponent({
       MatchFold.set_league_fold(this.match_of_list, start_flag)
       // 不需要虚拟计算，欧洲版五大联赛
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
+      // app-h5 简版 先试运行看效果
+      if (project_name === 'app-h5' && standard_edition.value == 1) MatchMeta.compute_current_matchs()
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false})
       // 赛事个数小于18 不需要继续获取赔率
       if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
@@ -974,23 +980,19 @@ export default defineComponent({
         time: Date.now()
       })
       LocalStorage.set("YUAN_MATCH_DETAIL_DATA",MatchDataBaseH5.get_quick_mid_obj(item.mid))
-      if (is_results.value) { //冠军跳冠军详情页
-          this.$router.push(`/result_details/${item.mid}/0`);
+      // if (is_results.value) { 
+      if (this.$route.name == "category") {
+        this.$router.push({ name: 'category_loading', params: { mid: item.mid } });
       }
       else {
-        if (this.$route.name == "category") {
-          this.$router.push({ name: 'category_loading', params: { mid: item.mid } });
+        let params= flag ? { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } : { mid: item.mid, csid: item.csid, tid: item.tid }
+        // this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } });
+        let name = 'category' //赛事详情
+        if(this.$route.name == 'matchResults' ||item.ms==4){
+          name = 'result'
         }
-        else {
-          let params= flag ? { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } : { mid: item.mid, csid: item.csid, tid: item.tid }
-          // this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } });
-          let name = 'category' //赛事详情
-          if(this.$route.name == 'matchResults' ||item.ms==4){
-            name = 'result'
-          }
 
-          this.$router.push({name,params})
-        }
+        this.$router.push({name,params})
       }
     },
 

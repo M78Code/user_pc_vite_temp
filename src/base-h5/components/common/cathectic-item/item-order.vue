@@ -23,7 +23,7 @@ import { ref, onUnmounted } from 'vue'
 import { formatTime } from 'src/output/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 import store from "src/store-redux/index.js";
-import { project_name } from "src/output/index.js"
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 //国际化
 
 

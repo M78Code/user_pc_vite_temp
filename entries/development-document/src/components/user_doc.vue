@@ -300,7 +300,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, watch } from "vue";
 import userProps from "basesrc/components/user_props.vue"; // API文档展示卡片
 const props = defineProps({
   docData: {

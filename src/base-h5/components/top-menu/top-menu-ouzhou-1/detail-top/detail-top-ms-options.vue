@@ -2,7 +2,6 @@
 import teamImg from 'src/base-h5/components/details/team-img.vue'    // 详情页蓝色背景上的大型字母图标
 import EventDateStandard from "./event-date-standard.vue"
 
-import {computed, defineProps, defineEmits} from "vue"
 import {useRouter, useRoute} from "vue-router"
 import {format_total_score} from "src/output/index.js"
 import {MenuData} from "src/output/index.js"

@@ -21,22 +21,25 @@
     <!-- 在已结算页 -->
     <template v-else>
       <!-- 结算  -->
-      <p class="acount">
-        <label>{{i18n_t('app_h5.cathectic.settle')}}：</label> 
-        <span>{{ format_balance(data_f.profitAmount) }}{{i18n_t('common.unit')}}</span>
+      <p>
+        <label class="acount">{{i18n_t('app_h5.cathectic.settle')}}：</label> 
+        <span :class="{'acount': data_f.profitAmount > 0}">
+          {{ data_f.profitAmount > 0 ? i18n_t('bet_record.bet_no_status04') : i18n_t('bet_record.bet_no_status03') }}
+          {{ format_balance(data_f.profitAmount) }}
+          {{i18n_t('common.unit')}}</span>
       </p>
       <!-- 输/赢  -->
-      <p>
+      <!-- <p>
         <label>{{i18n_t('bet_record.l/w')}}：</label> 
-        <span :class="{'red': data_f.profit > 0}">
-          {{ data_f.profit > 0 ? i18n_t('bet_record.bet_no_status04') : i18n_t('bet_record.bet_no_status03') }}
+        <span>
+          {{ calc_text(data_f).text }}
         </span>
-      </p>
+      </p> -->
     </template>
   </template>
 
   <!-- 串关显示 -->
-  <template v-if="data_f.seriesType !== '1' || data_f.seriesType !== '3'">
+  <template v-if="data_f.seriesType !== '1' && data_f.seriesType !== '3'">
     <p>
       <!-- 投注单号 -->
       <label>{{i18n_t('bet.order_no')}}：</label> 
@@ -78,7 +81,7 @@
 <script setup>
 import { reactive, onMounted, onUnmounted } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { calc_text_only_status, outcome } from "src/core/bet-record/util.js";
+import { calc_text_only_status, calc_text, outcome } from "src/core/bet-record/util.js";
 import { i18n_t } from "src/boot/i18n.js";;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 import { formatTime, format_money2, format_balance } from 'src/output/index.js'
@@ -133,10 +136,10 @@ p {
   line-height: 2;
   display: flex;
   justify-content: space-between;
-  &.acount {
+}
+.acount {
       color: var(--q-gb-t-c-1);
     }
-}
   .red {
     color: #D2D2D2
   }

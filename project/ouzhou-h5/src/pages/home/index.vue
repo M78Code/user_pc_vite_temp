@@ -72,7 +72,7 @@ import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;
 import { api_match } from "src/api/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { i18n_t } from "src/output/index.js"
+import { i18n_t, into_home_event } from "src/output/index.js"
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
@@ -119,7 +119,8 @@ const set_init_sport = (val) =>{
   }
 }
 onMounted(async () => {
-
+  // 发送进入首页埋点消息
+  lodash.get(UserCtr,'user_info.userId') && into_home_event();
   if (tabValue.value === 'top_events') {
     // 设置 元数据计算 流程
     state.current_mi = MenuData.top_events_list?.[0]?.mi;

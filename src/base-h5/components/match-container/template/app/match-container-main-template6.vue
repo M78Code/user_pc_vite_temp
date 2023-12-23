@@ -146,7 +146,7 @@ export default {
         white-space: nowrap;
         font-size: 0.13rem;
         font-weight: bold;
-
+        
         .league-icon-mini {
           width: 0.22rem;
           height: 0.22rem;
@@ -172,6 +172,7 @@ export default {
 
       .league-title-text {
         font-weight: 600;
+        color: var(--q-gb-t-c-18);
       }
 
       .collect-img {
@@ -383,6 +384,7 @@ export default {
       display:flex;
       justify-content: space-between;
       margin-bottom:.1rem;
+      color: var(--q-gb-t-c-18);
       .cmrc-t-league {
         display:flex;
         align-items:center;
@@ -396,6 +398,7 @@ export default {
     .cmrc-t-teams {
       font-weight:500;
       margin-bottom:.1rem;
+      color: var(--q-gb-t-c-18);
     }
     .cmrc-t-time {
       color:#AFB3C8;

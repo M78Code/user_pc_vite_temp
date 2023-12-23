@@ -4,7 +4,7 @@
 -->
 <template>
   <div class="setting-filter">
-    <div class="setting-top setting-item">
+    <div class="setting-top setting-item" v-if="!MenuData.is_collect()">
       <div class="title">
     <!-- 联赛筛选 -->
          {{ i18n_t('footer_menu.league_filter') }}
@@ -15,7 +15,7 @@
       </div>
       <div>
       </div>
-      <div v-if="!is_vr" class="more row items-center justify-between"  @click="searchClick">
+      <div v-if="!MenuData.is_vr()" class="more row items-center justify-between"  @click="searchClick">
        <img
             class="league-icon"
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league_icon.svg`"
@@ -55,7 +55,6 @@
         </div>
       </div>
       <div class="setting-item border" @click="jump_rule">
-        {{get_lang}}
       <!-- 体育规则 -->
         <div class="title">{{ i18n_t('common.rule_description') }}</div>
         <div class="more">
@@ -215,6 +214,8 @@ const switch_handle = item => {
     activity: activity_handle
   };
   typeMap[item.mark] && typeMap[item.mark](item);
+  //监听改变
+  UserCtr.set_menu_init_change()
 };
 /**
  *@description 处理版本改变
@@ -250,7 +251,7 @@ const sort_handle = item => {
  *@return {Undefined} undefined
  */
 const Handicap_handle = item => {
-  const status = item.switchValue === "rightVal" ? "EU" : "HK";
+  const status = item.switchValue === "rightVal" ? "HK" : "EU";
   UserCtr.set_cur_odds(status);
 };
 /**
@@ -267,7 +268,6 @@ const size_handle = item => {
 const theme_handle = item => {
 
   const status = item.switchValue === "rightVal" ? "theme-1" : "theme-2";
-  console.log(status)
   UserCtr.set_theme(status);
   // 切换主题色
   useMittEmit(MITT_TYPES.EMIT_THE_THEME_CHANGE)

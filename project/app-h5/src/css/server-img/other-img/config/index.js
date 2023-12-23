@@ -30,4 +30,16 @@ export default {
   'h5-close-handicip-bg': {
     default: "h5-close-handicip-bg",
   },
+  'fkh5_bg_jiesuan': {
+    default: "fkh5_bg_jiesuan",     
+  },
+  'h5-keyboard': {
+    default: "h5-keyboard",    
+  },
+  'h5_pack_keyboard': {
+    default: "h5_pack_keyboard",    
+  },
+  'h5_back_img': {
+    default: "h5_back_img",    
+  },
 }
