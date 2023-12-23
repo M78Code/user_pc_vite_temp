@@ -672,7 +672,10 @@ onUnmounted(() => {
     }
   }
   .odd-value {
-    color: var(--q-gb-t-c-33) !important;  
+    color: var(--q-gb-t-c-33) !important;
+    span{
+      color: var(--q-gb-t-c-30) !important;
+    }
   }
   &.item-lock{
     background: transparent !important;

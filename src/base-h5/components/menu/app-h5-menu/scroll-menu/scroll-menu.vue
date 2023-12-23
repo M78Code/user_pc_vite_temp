@@ -198,7 +198,7 @@ onUnmounted(()=>{
             position: sticky;
             right: 0;
             left: 0;
-            z-index: 2;
+            z-index: 12;
             .inner-w {
               position: relative;
               font-size: 0.1rem;

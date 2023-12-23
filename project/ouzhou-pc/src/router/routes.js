@@ -77,11 +77,6 @@ const routes = [
         name: "virtual_details",
         component: () => import(`../pages/virtual-details/index.vue`),
       },
-      //       {
-      //         path: "/video/:mid/:tid/:csid/:play_type/:video_size",
-      //         name: "video",
-      //         component: () => import(`../pages/test/index.vue`),
-      //       },
     ],
   },
   //赛事分析
@@ -116,37 +111,6 @@ const routes = [
     name: "secondary",
     component: () => import("../pages/secondary/index.vue"),
   },
-  // // 每日成长任务
-  // {
-  //   path: '/activity',
-  //   name: "activity",
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
-  // // 活动维护页面
-  // {
-  //   path: '/activity_aegis',
-  //   name: "activity_aegis",
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
-  // {
-  //   path: '/article_details/:id/:count',
-  //   name: "article_details",
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
-  // {
-  //   path: "/no_network",
-  //   name: "no_network",
-
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
-  // {
-  //   path: "/error404",
-  //   name: "error404",
-  //   redirect: {
-  //     name: "home"
-  //   },
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
   {
     path: '/:catchAll(.*)*',
     redirect: {
