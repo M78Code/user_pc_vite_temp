@@ -8,7 +8,7 @@
     <div>
       <!-- 上半场，全场，加时赛，点球大战-->
       <span>&nbsp;&nbsp;</span>
-      <template v-if="['result_details', 'match_result'].includes($route.name)">
+      <template v-if="project_name == 'app-h5' && ['result_details', 'match_result'].includes($route.name)">
         <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> {{i18n_t('match_info.half')}}</span>
       </template>
       <template v-else>
@@ -36,8 +36,8 @@
         <template v-if="project_name == 'app-h5'">
           <q-img
             v-if="['result_details', 'match_result'].includes($route.name)"
-            style="width: 0.17rem;height: 0.17rem;margin-top:-8px;" 
-            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`"
+            style="width: 0.17rem;height: 0.17rem;margin-top:-8px;"
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick_red.svg`"
           />
           <q-img 
             v-else
