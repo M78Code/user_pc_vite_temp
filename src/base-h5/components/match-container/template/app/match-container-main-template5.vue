@@ -1052,6 +1052,18 @@ export default {
         .score-se-inner2{
           display: flex;
           margin-left: -5px;
+          overflow-x: auto;
+          justify-content: space-between;
+          .score-fle-container-1{
+            position: relative;
+            top: 1px;
+          }
+          .b-score-wrapper{
+            flex-wrap: nowrap;
+            .mfo-title{
+              flex-shrink: 0;
+            }
+          }
         }
       }
     }

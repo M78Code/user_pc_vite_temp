@@ -125,7 +125,7 @@ const onScroll = (e) => {
 
     const endIndex = Math.max(0, Math.min(unref(total), startIndex + unref(clientCount) + cacheCount));
 
-    console.log(startIndex, cacheCount)
+    // console.log(startIndex, cacheCount)
     if (startIndex > cacheCount) {
         startIndex = startIndex - cacheCount;
     }
