@@ -35,7 +35,7 @@ import { i18n_t } from "src/boot/i18n.js"
 import { get_server_file_path } from "src/core/file-path/file-path.js"
 import { api_activity, api_account } from "src/api/index";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
-
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 /** 组件 */
 import siteHeader from 'src/base-pc/components/site-header/site-header.vue'
 import headerSearch from 'src/base-pc/components/site-header/header-search.vue'
@@ -86,7 +86,7 @@ const menu_obj = ref({})
 //  const { menu_obj } = betReducer
 
 /** 是否内嵌 */
-const is_iframe = ref(is_iframe)
+const is_iframe = ref(utils_info.is_iframe)
 
 /** 
  * siteHeader组件props数据

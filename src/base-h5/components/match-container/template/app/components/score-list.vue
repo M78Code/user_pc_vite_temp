@@ -50,7 +50,7 @@
               <!-- 总局数 -->
               <span v-if="![4, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
                 <span class="total-play-count"> {{ i18n_t('list.total_play_count') }} </span> 
-                <span> {{ total_games }} </span>
+                <span class="total-games"> {{ total_games }} </span>
               </span>
               
               <!-- 总分   5--网球， 5--美式足球， 7--斯诺克， 8--乒乓球， 9--排球， 10--羽毛球，-->
@@ -671,6 +671,10 @@ onUnmounted(() => {
         color: #000000 !important;
         margin: 0 3px;
       }
+      .total-games{
+        color: var(--sys-brand-primary-primary-300, #74C4FF) !important;
+
+      }
       .score-value {}
       
         .divider {
@@ -716,8 +720,8 @@ onUnmounted(() => {
 
   .score-important {
     height: 0.1rem;
-
-    border: none !important;
+    color: var(--sys-brand-primary-primary-300, #74C4FF) !important;
+    // border: none !important;
   }
 
   .score-important2 {

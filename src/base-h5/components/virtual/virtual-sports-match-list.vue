@@ -22,7 +22,7 @@ import VirtualSportsMatchItem from "src/base-h5/components/virtual/virtual-sport
 // #TODO MIXINS 
 // import betting from 'project_path/mixins/betting/betting.js';
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, defineEmits } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 
 
 const props = defineProps({
