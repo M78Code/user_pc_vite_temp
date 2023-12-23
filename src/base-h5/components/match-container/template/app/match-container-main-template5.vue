@@ -941,7 +941,7 @@ export default {
     padding: 4px 9px 0;
 
     .event-team {
-      padding: 8px 0;
+      padding: 8px 0 5px;
 
       .name {
         display: flex;
@@ -1039,7 +1039,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: .01rem solid var(--q-gb-bd-c-4);
+      // border-bottom: .01rem solid var(--q-gb-bd-c-4);
       // padding: 4px 0 0;
 
       .right {
@@ -1047,8 +1047,15 @@ export default {
         justify-content: flex-end;
         align-items: center;
       }
+      :deep(.score-section){
+        height: 20px;
+        .scroll-container-w{
+          height: 100%;
+        }
+      }
       :deep(.score-se-inner){
         max-width: 100%;
+        height: auto;
         .score-se-inner2{
           display: flex;
           margin-left: -5px;

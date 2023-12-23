@@ -1382,23 +1382,39 @@ export default {
 }
 .score-content{
   position: absolute;
-  bottom: 0;
-  width: 100%;
+  bottom: 0px;
+  width: 80%;
   z-index: 100;
+  height: 26px;
+  overflow-x: auto;
+  right: 0;
   :deep(.score-se-inner2){
     display: flex;
-    flex-direction: row-reverse;
+    // flex-direction: row-reverse;
   }
   :deep(.scroll-container-w){
-  .score-se-inner{
-      max-width: 100%;
-      .score-se-inner2{
-        display: flex;
-        margin-left: -5px;
+    .score-fle-container-1{
+      position: relative;
+      top: 1px;
+    }
+    .score-se-inner{
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        .score-se-inner2{
+          height: 25px;
+          justify-content: end;
+          margin-left: -5px;
+          .b-score-wrapper{
+            flex-wrap: nowrap;
+            .mfo-title{
+              flex-shrink: 0;
+            }
+          }
+        }
       }
     }
   }
-}
 
 /* **************收藏********************** -E*/
 
