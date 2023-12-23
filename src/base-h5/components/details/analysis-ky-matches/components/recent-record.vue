@@ -27,7 +27,7 @@
     </div>
     <template v-for="(item, index) in recent_record_data" :key="index+'team'">
       <div class="team-recent" >
-        <div>
+        <div class="team-image-box">
           <template v-if="index == 0">
             <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
             <team-img :type="0" :csid="lodash.get(get_detail_data,'csid')" :url="lodash.get(get_detail_data, 'mhlu[0]')" :fr="lodash.get(get_detail_data, 'frmhn[0]')" :size="22"></team-img>
@@ -397,4 +397,14 @@ onMounted(() => {
     }
   }
 }
+
+
+.team-image-box{
+  :deep(.team-img){
+    .img-style{
+      background-position-y: inherit !important;
+    }
+  }
+}
+
 </style>
