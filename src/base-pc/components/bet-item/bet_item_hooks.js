@@ -23,7 +23,7 @@ import math  from "src/core/bet/common/mathjs.js"
 import ZHUGE from "src/core/http/zhuge-tag";
 // import { useGetStore } from "src/core/match-detail-pc/use_get_store.js";
 import { useRoute, useRouter } from "vue-router";
-import {get_odds_active}from 'src/core/bet/module/status.js'
+import {get_odds_active}from 'src/core/bet/common/status.js'
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
