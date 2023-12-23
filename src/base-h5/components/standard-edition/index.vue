@@ -8,7 +8,7 @@
                 <div class="bg">
                     <div class="title">{{ i18n_t('common.zhuanye') }}</div>
                     <div class="desc">{{ i18n_t('common.gongnengwanshan') }}</div>
-                    <img class='version_img' :src="compute_img_url('noob_version')" alt="" />
+                    <img class='version_img' :src="compute_img_url('vocational_version')" alt="" />
                 </div>
                 <div class="btn" @click="set_standard_edition(2)">{{ i18n_t('common.use') }}</div>
             </div>
@@ -16,7 +16,7 @@
                 <div class="bg">
                     <div class="title">{{ i18n_t('common.xinshou') }}</div>
                     <div class="desc">{{ i18n_t('common.yemianjianjie') }}</div>
-                    <img class='version_img' :src="compute_img_url('vocational_version')" alt="" />
+                    <img class='version_img' :src="compute_img_url('noob_version')" alt="" />
                 </div>
                 <div class="btn" @click="set_standard_edition(1)">{{ i18n_t('common.use') }}</div>
             </div>

@@ -405,24 +405,30 @@ export const pingpong_score_handle = (match) => {
  * @return {Object}
  */
 export const snoocker_score_handle = (match) => {
-  let key_str = '1,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140';
-  let key_array = key_str.split(',');
 
-  let count = 0;
-  try {
-    if (match.mfo) {
-      count = match.mfo.match(/\d*/)[0] * 1;
-    }
-  } catch (e) { console.error(e); }
-  if (isNaN(count) || count < 6) {
-    count = 6;
-  } else {
-    count = 12;
+  let key_str = '1,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140';
+  // let key_array = key_str.split(',');
+
+  // let count = 0;
+  // try {
+  //   if (match.mfo) {
+  //     count = match.mfo.match(/\d*/)[0] * 1;
+  //   }
+  // } catch (e) { console.error(e); }
+  // if (isNaN(count) || count < 6) {
+  //   count = 6;
+  // } else {
+  //   count = 12;
+  // }
+
+  // key_array = key_array.slice(0, count);
+
+  const msc_array = []
+  for(let i = 120; i<= 159; i ++){
+    msc_array.push(`${i}`);
   }
 
-  key_array = key_array.slice(0, count);
-
-  let msc_dict = key_array.map(k => `S${k}`);
+  let msc_dict = msc_array.map(k => `S${k}`);
   full_msc(match, msc_dict);
 
   let msc_list = [], s1_score = null, dict_msc_list = [];
@@ -437,7 +443,7 @@ export const snoocker_score_handle = (match) => {
     });
     score_list.forEach((f_score) => {
       let code = f_score[0];
-      if (key_array.includes(code.replace('S', ''))) {
+      if (msc_array.includes(code.replace('S', ''))) {
         msc_list.push(f_score);
       }
     });
