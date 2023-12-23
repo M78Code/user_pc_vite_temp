@@ -48,6 +48,7 @@ import { IconWapper } from 'src/components/icon'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import mathJs from 'src/core/bet/common/mathjs.js'
+import { UserCtr } from "src/output/index.js"
 
 const ref_data = reactive({
     DOM_ID_SHOW: false,
@@ -152,16 +153,18 @@ const set_click_keybord = obj => {
 
 // 输入判断
 const set_win_money = () => {
-    // 输入控制 在2位小数 todo
-    if (ref_data.money > ref_data.max_money) {
-        // 超出最大限额 使用 最大限额 作为投注金额
-        ref_data.money = ref_data.max_money
-        // 修改页面提示 1: 输入金额超出最大限额时
-        BetViewDataClass.set_input_money_state(1)
+    // 输入控制
+    if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
+        BetData.set_bet_obj_amount(ref_data.money,props.item.playOptionsId)
+    }else{
+        // 最大限额不能大于余额
+        let money_a = ref_data.max_money
+        if(UserCtr.balance < ref_data.max_money){
+            money_a = UserCtr.balance
+        }
+        ref_data.money = money_a
+        BetData.set_bet_obj_amount(money_a,props.item.playOptionsId)
     }
-    BetData.set_bet_amount(ref_data.money)
-    // 计算最高可赢金额
-    // ref_data.win_money = ref_data.money * props.item.oddFinally
 }
 </script>
 
@@ -268,7 +271,7 @@ input[type="number"] {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-item: center;
     margin-bottom: 10px;
 }
 

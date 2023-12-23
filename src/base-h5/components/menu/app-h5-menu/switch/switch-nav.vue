@@ -8,7 +8,7 @@
 <template>
     <div class="switch-nav">
         <ul>
-            <li v-for="(item,index) in list" :key="index" :class="{active:activeOn == item.val}" @click="changeActive(item.val,index,item.changeFun,item.isSort)">
+            <li v-for="(item,index) in list" :key="index" :class="{active:activeOn == item.val,disabled:item.disabled}" @click="changeActive(item,index,item.changeFun,item.isSort)">
                 {{  item.name }}
                 <template v-if="item.isSort">
                     <span>
@@ -22,12 +22,11 @@
     </div>
 </template>
 <script setup>
-    import {ref} from "vue";
+    import {ref,watch} from "vue";
     import asc1 from "./img/asc1.svg";
     import asc2 from "./img/asc2.svg";
     import desc1 from "./img/desc1.svg";
     import desc2 from "./img/desc2.svg";
-    import { watch } from "vue";
     const sortJson = [//排序数据
         {
             val:1,
@@ -68,7 +67,7 @@
      * @param {*} callback  执行方法
      * @param {*} sort  排序值
      */
-    const changeActive = (val,i,callback,sort) => {
+    const changeActive = (item,i,callback,sort) => {
         // if(sort){
         //     if(activeOn.value !== val) sortVal.value=1;
         //     // sortVal.value = sortVal.value === 0?1:sortVal.value === 1?2:1;
@@ -77,9 +76,9 @@
         //     const enVal = sortJson.filter((item)=>{return item.val === sortVal.value })?.[0].enVal;
         //     return callback(val,enVal);
         // }
-        if(activeOn.value === val)return;
-        activeOn.value = val;
-        callback(val);
+        if(activeOn.value === item.val||item.disabled)return;
+        activeOn.value = item.val;
+        callback(item.val,item);
     }
 </script>
 <style scoped lang="scss">

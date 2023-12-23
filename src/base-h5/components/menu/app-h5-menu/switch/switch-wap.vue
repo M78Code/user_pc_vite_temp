@@ -22,7 +22,9 @@ import {  useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { project_name, MenuData } from "src/output/index.js";
-import { set_menu_init } from 'src/base-h5/mixin/userctr.js'
+import { set_menu_init,sort_type,standard_edition } from 'src/base-h5/mixin/userctr.js'
+import { is_esports } from 'src/base-h5/mixin/menu.js'
+
 /**
  * 首页switch wap
  */
@@ -59,7 +61,7 @@ const switchData = ref([
         ]
     },
     {
-        defaultVal:UserCtr.sort_type,
+        defaultVal:sort_type,
         mark:'sort_type',
         list:[
             {
@@ -67,7 +69,11 @@ const switchData = ref([
                 name:i18n_t('footer_menu.hot'),
                 val:1,
                 isSort:1,
+                disabled:is_esports,
                 changeFun:(val,sort)=>{
+                    if(is_esports.value){//电竞 不会热门排序 和 盘口
+                        return;
+                    }
                     return UserCtr.set_sort_type(val);
                 }
             },

@@ -49,7 +49,7 @@
             <div class="score last" v-if='![1, 2, 3, 11].includes(+match.csid)'>
               <!-- 总局数 -->
               <span v-if="![4, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
-                <span class="total-play-count"> {{ i18n_t('list.total_play_count') }} </span> 
+                <span class="total-play-count" > {{ i18n_t('list.total_play_count') }} </span> 
                 <span class="total-games"> {{ total_games }} </span>
               </span>
               
@@ -668,7 +668,7 @@ onUnmounted(() => {
       // margin-left: 3px;
 
       .total-play-count{
-        color: #000000 !important;
+        color: #000000;
         margin: 0 3px;
       }
       .total-games{

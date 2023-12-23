@@ -288,7 +288,7 @@ export default defineComponent({
 }
 
 .new-dialog-item {
-  height: 1rem;
+  height: 0.88rem;
   font-size: 0.12rem;
   position: relative;
 
@@ -302,11 +302,16 @@ export default defineComponent({
 }
 
 .new-dialog-item-main {
-  height: 0.88rem;
-  border-radius: 0.04rem;
+  height: 100%;
 }
 
-.new-dialog-item-line {}
+.new-dialog-item-line {
+
+}
+
+.details-border1-bottom {
+  border-bottom: 1px solid var(--q-gb-bd-c-6);
+}
 
 .dialog-text-style {
   width: 100%;

@@ -15,7 +15,7 @@
           <!-- 投注项组件 -->
           <template
             v-if="match_style_obj.data_tpl_id != 'esports' || (match_style_obj.data_tpl_id == 'esports' && getCurState(ol_data._hipo))">
-            <bet-item v-if="is_mounted && ol_data && ol_data._hpid" :ol_data="ol_data" />
+            <bet-item v-if="is_mounted && ol_data && ol_data._hpid" match_data_type="pc_list" :ol_data="ol_data" />
           </template>
         </div>
       </div>
