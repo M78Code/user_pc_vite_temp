@@ -2,7 +2,6 @@
   <div class="c-match-item  match-tpl1-bg"
     :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
     <!-- <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }"> -->
-    <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
@@ -137,9 +136,9 @@ const play_name_list = ref([]);
 //当前选中的次要玩法
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-console.log('match_style_obj', match_list_tpl_size);
 
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
+console.log('match_tpl_info', match_tpl_info);
 match.value && set_play_name_list(match.value.tab_play_keys)
 const is_mounted = ref(true);
 let compute_other_play_data = get_compute_other_play_data(match.value) //玩法数据
