@@ -429,7 +429,6 @@ const get_snooker_score_space_data = () => {
     }
     result = `${snoocker_s1.value[1]}-${snoocker_s1.value[2]}[${+snoocker_s1.value[1] + +snoocker_s1.value[2]}]`;
   }
-  console.log(result)
   return result;
 }
 
