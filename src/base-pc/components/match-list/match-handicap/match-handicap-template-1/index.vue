@@ -5,13 +5,12 @@
 -->
 <template>
   <div :class="['c-match-handicap', { 'unfold_multi_column': match_style_obj.data_tpl_id == 13 }, get_5min_classname()]">
-    <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="row no-wrap">
       <!-- 玩法列表 -->
-      <div class="handicap-col" v-for="(col, col_index) in handicap_list" :key="col_index">
+      <div class="handicap-col" v-for="(col, col_index) in col_ols_data" :key="col_index">
         <div :class="['bet-item-wrap',]" :style="get_bet_style(col_index, lodash.get(col, 'ols.length'))"
-          v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)" :key="col_index+'_'+ol_index">
+          v-for="(ol_data, ol_index) in col.ols" :key="col_index+'_'+ol_index">
           <!-- 投注项组件 -->
           <template
             v-if="match_style_obj.data_tpl_id != 'esports' || (match_style_obj.data_tpl_id == 'esports' && getCurState(ol_data._hipo))">
@@ -63,6 +62,11 @@ const props = defineProps({
     type: Boolean,
     default: () => false,
   },
+  // 是否是附加盘 且有type
+  add_type: {
+    type: [ String, Number ],
+    default: () => 1,
+  },
   // 是否主球次要玩法
   other_play: {
     type: Boolean,
@@ -72,10 +76,8 @@ const props = defineProps({
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-let MatchListDataInfo = MatchListData
 let many_obj = get_match_to_map_obj(props.match.mid)
 watch(() => MatchListData.data_version.version, () => {
-  MatchListDataInfo = MatchListData;
   many_obj = get_match_to_map_obj(props.match.mid)
 })
 // 组件是否已挂载
@@ -87,20 +89,28 @@ onMounted(() => {
   //   is_mounted.value = true
   // })
 })
-function deal_width_handicap_ols(payload) {
-  const { match } = props;
-  let { hn, mid } = match
-  let handicap_type = hn || 1
-  const hn_obj = lodash.get(MatchListDataInfo, "list_to_obj.hn_obj", {})
-  let new_ols = payload.map(item => {
-    if (item.empty) { return }
-    // 投注项数据拼接
-    let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
-    // 获取投注项内容 
-    return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
-  })
-  return new_ols
-}
+const col_ols_data = computed(() => {
+  try {
+    let { hn, mid,csid } = props.match
+    let handicap_type = hn || props.add_type
+    const many_obj = get_match_to_map_obj(props.match, null, props.add_type); //非坑位对象
+    const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
+    return lodash.cloneDeep(props.handicap_list || []).map(col => {
+      col.ols = col.ols.map(item => {
+        if (item.empty) { return }
+        // 投注项数据拼接
+        let hn_obj_config = MatchListData.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
+        // 获取投注项内容 
+        return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config]||{};
+      })
+      col.csid=csid;
+      return col
+    })
+  } catch (e) {
+    console.error('deal_width_handicap_ols', e)
+    return []
+  }
+})
 
 /**
  * @description 获取5分钟玩法时的类名，滚球时不需要背景色，早盘时需要背景色

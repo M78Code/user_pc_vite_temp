@@ -308,13 +308,12 @@ export default {
   align-items: center;
   padding-left: 0.1rem;
   height: 0.2rem;
-  color: var(--q-gb-t-c-24);
   font-size: 0.11rem;
-  background: var(--q-gb-bg-c-18);
+  background-color: var(--q-gb-bg-c-21);
+  color: var(--q-gb-t-c-24);
   /*transform: translateY(3px);*/
   margin: 0 auto;
   justify-content:space-between;
-
   &.hidden_sport {
     display: none !important;
   }
