@@ -425,7 +425,11 @@ setup(props, context){
         }, 200)
       })
   }
-
+  /**
+   * 播放视频
+   * @param {*} item 
+   * @param {*} status true, 可以播放，false，不显示，不播放
+   */
   const play_video = (item, status) => {
     if (!status) {
       return;
