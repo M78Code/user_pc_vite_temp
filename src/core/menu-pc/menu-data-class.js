@@ -718,6 +718,7 @@ class MenuData {
 
     // 设置投注类别
     this.set_bet_category();
+    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
 
     // 菜单数据缓存 //从元数据拿值
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})

@@ -22,6 +22,7 @@
 import { ref } from 'vue'
 import { api_betting } from "src/api/index.js";
 import { i18n_t } from "src/output/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 const props = defineProps({
   orderNumber: {
@@ -42,8 +43,9 @@ const cancle_pre_order = () => {
         if (res.code == 200) {
             alertTips.value = false
             emit('success')
-        } else if (['0400546', '0400547'].includes(res.code)) {
+        } else {
           alertTips.value = false
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, res.msg)
         }
     }).catch(() => {
       alertTips.value = false
