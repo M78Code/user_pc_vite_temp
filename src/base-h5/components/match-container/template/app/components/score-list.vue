@@ -628,7 +628,7 @@ onUnmounted(() => {
       .score-fle-container-1 {
         flex-wrap: nowrap;
         flex-shrink: 0;
-        color: var(--sys-brand-secodary-secondary-800, --q-gb-t-c-18);
+        color: var(--q-gb-t-c-18);
         font-family: Akrobat;
         font-size: 10px;
         font-weight: 700;
@@ -644,7 +644,7 @@ onUnmounted(() => {
 
       .b-score-wrapper {
         margin-left: 0.05rem;
-        color: var(--sys-brand-secodary-secondary-800, --q-gb-t-c-18);
+        color: var(--q-gb-t-c-18);
           font-family: PingFang SC;
           font-size: 10px;
           font-weight: 400;
@@ -668,7 +668,7 @@ onUnmounted(() => {
       // margin-left: 3px;
 
       .total-play-count{
-        color: #000000;
+        color: var(--q-gb-t-c-18);
         margin: 0 3px;
       }
       .total-games{

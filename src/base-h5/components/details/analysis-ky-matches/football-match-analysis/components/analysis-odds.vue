@@ -278,7 +278,7 @@ const route = useRoute()
 
         &.is-active {
           height: 0.29rem;
-          background: var(--q-analysis-text-color-16);
+          background: var(--q-gb-bg-c-13);
           color: var(--q-analysis-bg-color-1);
           &:nth-child(2) {
             &:before, &:after {
