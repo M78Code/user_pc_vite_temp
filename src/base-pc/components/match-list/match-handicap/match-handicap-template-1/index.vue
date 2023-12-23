@@ -76,10 +76,6 @@ const props = defineProps({
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-let many_obj = get_match_to_map_obj(props.match.mid)
-watch(() => MatchListData.data_version.version, () => {
-  many_obj = get_match_to_map_obj(props.match.mid)
-})
 // 组件是否已挂载
 const is_mounted = ref(true);
 const cur_esports_mode = ref(BetData.cur_esports_mode);
@@ -104,6 +100,7 @@ const col_ols_data = computed(() => {
         return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config]||{};
       })
       col.csid=csid;
+      console.log('coasfjansfaf', col);
       return col
     })
   } catch (e) {
