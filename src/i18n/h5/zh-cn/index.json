@@ -201,6 +201,7 @@
       "no_data_unsettle": "您暂无未结算数据",
       "no_data_settle": "您暂无已结算数据",
       "no_data_invalid": "您暂无已失效数据",
+      "data_loading": "数据加载中。。。",
       "kind_tips": "温馨提示",
       "adjustment_amount": "调整金额",
       "winnable": "可赢额",
