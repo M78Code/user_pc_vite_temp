@@ -592,9 +592,8 @@ class MatchMeta {
   * @description 赛事详情精选赛事列表
   */
   async get_details_result_match() {
-    console.log(PageSourceData.get_route_parmas(),'');
      const res = await api_analysis.get_result_match_care_list({
-      sportId: lodash.get(PageSourceData.get_route_parmas,'csid',1),
+      sportId: lodash.get(PageSourceData.get_route_parmas(),'csid',1),
       cuid: UserCtr.get_uid(),
      })
      if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
