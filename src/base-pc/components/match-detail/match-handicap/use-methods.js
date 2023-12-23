@@ -148,7 +148,7 @@ export const useMethods = ({ props,emit }) => {
   watch(
     () => props.match_details,
     (res) => {
-         state.load_detail_statu = props.handicap_state;
+      state.load_detail_statu = props.handicap_state;
       if(!lodash.get(res,'[0].odds_info'))  return false
       
    
@@ -159,7 +159,7 @@ export const useMethods = ({ props,emit }) => {
       }
       change_detail(res[0].odds_info);
     },
-    // {  deep: true }
+    {  deep: true }
   );
   // watch(get_right_zoom, (val) => {
   //   this.wrap_tabs_width = this.$refs.warp.offsetWidth;
