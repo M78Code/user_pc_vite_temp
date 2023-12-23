@@ -52,10 +52,15 @@
         }
     });
     const activeOn = ref(props.defaultVal);//选中值
+    const sortVal = ref(1);//排序code
+    /**
+     * @description 监听传送过来的值发生改变
+     * @param {props.defaultVal} number
+     * @return 
+     */
     watch(()=>props.defaultVal,(val)=>{
         activeOn.value = val
     })
-    const sortVal = ref(1);//排序code
     /**
      * 点击事件
      * @param {*} val  值0 1
