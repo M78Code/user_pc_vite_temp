@@ -802,7 +802,7 @@ if (type.value == 30) {
   .content_box2 {
     width: 100%;
     font-size: 0.16rem;
-    padding: 0 0.58rem 0 0.14rem;
+    padding: 0 0.44rem 0 0.14rem;
     height: 100%;
     position: relative;
     color: var(--q-gb-t-c-18);
@@ -927,7 +927,7 @@ if (type.value == 30) {
     height: 0.3rem;
     line-height: 0.3rem;
     padding-left: 0.2rem;
-    padding-right: 0.61rem;
+    padding-right: 0.46rem;
     font-size: 0.14rem;
   }
 
@@ -937,7 +937,7 @@ if (type.value == 30) {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 .6rem 0 .14rem;
+    padding: 0 .46rem 0 .14rem;
     color: var(--q-gb-t-c-18);
     .scroll-title-text {
       display: flex;

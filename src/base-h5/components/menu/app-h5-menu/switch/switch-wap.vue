@@ -120,7 +120,7 @@ watch(()=>set_menu_init.value,()=>{
         item.defaultVal = UserCtr[mark[index]];
         return item
       })
-},{immediate:true})
+},{immediate:true,deep:true})
 
 </script>
 <style scoped lang="scss">
