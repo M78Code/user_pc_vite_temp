@@ -68,10 +68,9 @@ const set_back = () => {
  * 打开联赛筛选框
  */
 const searchClick = () => {
-    // 派发首页设置菜单展开事件
-    useMittEmit(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, {
-      open: true,
-    });
+    // useMittEmit(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, {
+    //   open: true,
+    // });
 }
 </script>
 <style scoped lang="scss">
