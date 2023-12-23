@@ -329,6 +329,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .category {
   width: 100%;
+  height: 100%;
   min-height: 3.38rem;
   overflow-x: hidden;
   overflow-y: auto;
