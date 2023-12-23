@@ -835,7 +835,7 @@ export default {
       width: 0.2rem;
       height: 0.16rem;
       &.expend_all_league {
-        transform: rotate(-90deg);
+        transform: rotate(-180deg);
       }
     }
   }
@@ -878,7 +878,7 @@ export default {
     border-bottom-left-radius: .04rem;
     border-bottom-right-radius: .04rem;
     .vsm-options {
-      width: 48%;
+      width: 49%;
       height: .4rem;
       background: var(--q-gb-bg-c-18);
       border-radius: .04rem;
@@ -890,7 +890,7 @@ export default {
       font-size: .12rem;
       padding: .02rem .12rem;
       &.active {
-        background: #C9CDDB;
+        background: #D1EBFF;
       }
       .teams {
         display: flex;
