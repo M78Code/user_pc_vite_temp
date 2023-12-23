@@ -35,7 +35,7 @@ import { i18n_t } from "src/boot/i18n.js"
 import { get_server_file_path } from "src/core/file-path/file-path.js"
 import { api_activity, api_account } from "src/api/index";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
-
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 /** 组件 */
 import siteHeader from 'src/base-pc/components/site-header/site-header.vue'
 import headerSearch from 'src/base-pc/components/site-header/header-search.vue'
@@ -48,8 +48,6 @@ import headerSelect from 'src/base-pc/components/site-header/header-select.vue'
 import gift_package from '/yazhou-pc/image/common/activity_banner/gift_package.png'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BaseData from "src/core/base-data/base-data.js";
-import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
-
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
 

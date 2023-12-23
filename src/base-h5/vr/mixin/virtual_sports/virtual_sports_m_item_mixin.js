@@ -88,8 +88,8 @@ export default {
     //}),
 	get_video_process_data(){return VR_CTR.get_video_process_loaded()},
 	sub_menu_type(){return VR_CTR.get_curr_sub_menu_type()},
-	get_video_process_data(){return VR_CTR.get_current_league()},
-	get_video_process_data(){return VR_CTR.get_current_batch()},
+	current_league(){return VR_CTR.get_current_league()},
+	current_batch(){return VR_CTR.get_current_batch()},
   },
   watch:{
     get_video_process_data(){
