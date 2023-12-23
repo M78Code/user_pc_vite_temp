@@ -45,9 +45,9 @@ template {
   border-radius: 0.1rem;
   background: url($SCSSPROJECTPATH+'/image/png/cathectic-item-all_bg.png');
   background-size: cover;
-  opacity: 0;
-  animation: opacityAnimate 0.5s linear;
-  animation-fill-mode: forwards;
+  // opacity: 0;
+  // animation: opacityAnimate 0.2s linear;
+  // animation-fill-mode: forwards;
   img {
     width: 1.8rem;
     height: auto;
