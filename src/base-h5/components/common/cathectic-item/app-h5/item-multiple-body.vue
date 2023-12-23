@@ -14,7 +14,7 @@
       <template v-for="(item, index) in show_data_orderVOS" :key="index">
         <div class="items" v-if="item.isBoolean">
           <div class="top">
-            <p>{{item.matchName}}<template v-if="item.sportId == 1001">{{item.matchDay}}&ensp;{{item.batchNo}}</template></p>
+            <p>{{item.matchName}}11<template v-if="item.sportId == 1001">{{item.matchDay}}&ensp;{{item.batchNo}}</template></p>
             <span>{{ item.oddFinally }}</span>
           </div>
           <p class="list">
@@ -36,6 +36,7 @@
             </template>
             &ensp;[{{i18n_t(`odds.${item.marketType}`)}}]
           </span>
+          <div class="match-info">{{item.matchInfo}}</div>
         </div>
       </template>
       <!-- 串关时大于3条时,显示 展开收起按钮-->
@@ -104,12 +105,32 @@ const toggle_box = () => {
   const calc_item_bet_result = (item) => {
     let text = ''
     let color = 'red'
-    text = bet_result[item.betResult]
+  // 文字调整
+    switch (item.betResult) {
+      case 4:
+        text = "已结算赢";
+        break;
+      case 3:
+        text = "已结算输";
+        break;
+      case 5:
+        text = "已结算赢一半";
+        break;
+      case 6:
+        text = "已结算输一半";
+        break;
+      case 2:
+        text = "已结算和";
+        break;
+      default:
+        text = bet_result[item.betResult]
+    }
     if(item.betResult == 3 || item.betResult == 6) {
       // 输、输半
       color = 'black'
     }
     return { text, color }
+    
   }
 
 
@@ -131,6 +152,8 @@ template {
     padding: 0.12rem;
 
     .items {
+      line-height: 0.2rem;
+      margin-bottom: 0.08rem;
       &:last-child {
 
         .list,
@@ -143,6 +166,7 @@ template {
         display: flex;
         justify-content: space-between;
         font-size: 0.15rem;
+        font-weight: 400;
         position: relative;
         padding-left: 0.14rem;
 
@@ -154,9 +178,14 @@ template {
           color: var(--q-gb-bg-c-13);
         }
       }
-
+      .match-info {
+        color: var(--q-gb-t-c-19);
+        padding-left: 0.14rem;
+         font-size: 0.12rem;
+       }
       .list {
         line-height: 1.5;
+        font-weight: 400;
         padding-left: 0.1rem;
         margin-left: 0.04rem;
         border-left: 1px solid var(--q-gb-bg-c-13);
