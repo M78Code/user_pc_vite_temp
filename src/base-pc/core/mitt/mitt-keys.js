@@ -204,8 +204,7 @@ export const EMIT_RELOAD_MATCH_LIST_CMD = "EMIT_RELOAD_MATCH_LIST_CMD";
 
 
 /******************************************** 投注 开始 *************************************************************************/
-// 限额
-export const EMIT_REF_DATA_BET_MONEY = "EMIT_REF_DATA_BET_MONEY"
+
 
 /******************************************** 投注 结束 *************************************************************************/
 
@@ -328,6 +327,10 @@ export const EMIT_GET_ODDS_ACTIVE = "EMIT_GET_ODDS_ACTIVE";
 export const EMIT_TICKRTS_COUNT_CONFIG = "EMIT_TICKRTS_COUNT_CONFIG"
 // 投注记录获取
 export const EMIT_GET_RECORD_LIST = "EMIT_GET_RECORD_LIST"
+// 限额
+export const EMIT_REF_DATA_BET_MONEY = "EMIT_REF_DATA_BET_MONEY"
+// 键盘输入
+export const EMIT_INPUT_BET_MONEY_KEYBOARD = "EMIT_INPUT_BET_MONEY_KEYBOARD"
 
 // ------------------------------------------------------------------详情相关-----------------------------------------------------------------------------------
 
