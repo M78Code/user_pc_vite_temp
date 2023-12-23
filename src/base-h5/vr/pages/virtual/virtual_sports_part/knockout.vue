@@ -42,7 +42,9 @@
             </template>
           </div>
           <div class="row align_items right_side_win">
-            <div class="left-line"></div>
+            <div class="left-line">
+              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rectangle_113.png`"/>
+            </div>
             <div class="final flex flex-center">
               <div class="name" v-if="tabs[tab_index+1]">
                 {{ tabs[tab_index+1].name }}
@@ -54,15 +56,18 @@
       </div>
       <div class="main-finals" v-if="list_data.length == 1 && !list_data[0].list">
         <div class="finals-team">
-          <img  src="image/wwwassets/bw3/svg/finals.svg" alt="">
+          <!-- <img  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/wwwassets/bw3/svg/finals.svg`" alt=""> -->
+          <img  :src="`/${project_name}image/svg/finals.svg`" alt="">
           <span>{{ list_data[0].homeName }}</span>
         </div>
         <div class="middle">
-          <img src="image/wwwassets/bw3/images/v-s-finals.png" alt="">
+          <!-- <img src="image/wwwassets/bw3/images/v-s-finals.png" alt=""> -->
+          <img  :src="`/${project_name}image/svg/v-s-finals.svg`" alt="">
           <span>VS</span>
         </div>
         <div class="finals-team">
-          <img  src="image/wwwassets/bw3/svg/finals.svg" alt="">
+          <!-- <img  src="image/wwwassets/bw3/svg/finals.svg" alt=""> -->
+          <img  :src="`/${project_name}/image/svg/finals.svg`" alt="">
           <span>{{ list_data[0].awayName }}</span>
         </div>
       </div>
@@ -72,10 +77,12 @@
     </div>
     <!-- 没有数据 组件 -->
     <no-data v-if="no_data" which='noMatch' height='500' class="no-list"/>
+
   </div>
 </template>
 
 <script>
+import { LOCAL_PROJECT_FILE_PREFIX,calc_win, project_name, i18n_t } from 'src/output/index.js'
 import { api_v_sports } from "src/base-h5/vr/api";
 import no_data from "src/base-h5/vr/components/common/no_data.vue";
 
@@ -99,6 +106,7 @@ export default {
         {name: i18n_t('virtual_sports.semifinals'), key: 'SEMIFINAL'},
         {name: i18n_t('virtual_sports.finals'), key: 'FINAL'}
       ],
+      // tab_index: -1,
       tab_index: -1,
       visible: false,
       no_data: false,
@@ -116,8 +124,17 @@ export default {
       immediate: true
     }
   },
+  created() {
+    this.list_data = [{"list":[{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065700105539587","awayScore":["3"],"homeName":"阿根挺少年队","homeNameCode":"125065699660943363","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":0},{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125019543669067779","awayScore":["1"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125065700134899720","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":1}]},{"list":[{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065699941961731","awayScore":["2"],"homeName":"阿拉维预备","homeNameCode":"125065699677720578","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":2},{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065699195375619","awayScore":["2"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125065699178598404","homeScore":["0"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":3}]},{"list":[{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065700524969987","awayScore":["2"],"homeName":"卡利阿美利加","homeNameCode":"125065700814376965","homeScore":["0"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":4},{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065699711275012","awayScore":["0"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125065699199569922","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":5}]},{"list":[{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065699145043971","awayScore":["1"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125019543769731075","homeScore":["0"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":6},{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065700139094019","awayScore":["1"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125065700533358594","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":7}]}]
+  },
+  setup() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
+  },
   methods: {
     tabClick(item, i) {
+      console.log("this.list_data+++===", this.list_data);
       if(this.tab_index == i) return
       // 判断选项卡里边有没有数据
       if (!Object.keys(this.check_if_there_tab).includes(item.key)) {
@@ -138,6 +155,7 @@ export default {
           mmp: this.current_match.mmp,
           beginTime: this.current_match.mgt,
         }
+        console.log(params);
         // this.json_list  调试用的, data 才是真实数据
         let {code, data} = await api_v_sports.get_match_sorce(params)
         this.visible = false
@@ -177,6 +195,7 @@ export default {
       } else {
         this.list_data = [...arr]
       }
+      console.log("this.list_data---knockout+++=====", JSON.stringify(this.list_data))
     },
     // 加工每一轮的比分
     processing_score(arr) {
@@ -205,9 +224,14 @@ export default {
 
   min-height: 3.2rem;
 
-  width: 100vw;
+  width: 98vw;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  // background-color: red;
+  border-radius: 0.05rem;
 
   &.vi-lang {
     .tabs-bar {
@@ -218,27 +242,43 @@ export default {
   }
 
   .tabs-bar {
-    height: 0.4rem;
+    width: 100%;
+    height: 0.44rem;
     margin: 0.11rem 0.03rem 0.15rem 0.03rem;
 
+    // background-color: goldenrod;
+    // background-color: orangered !important;
+    // border: 1px solid paleturquoise;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
     > div {
-      flex: 1;
+      // flex: 1;
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: space-evenly;
       font-size: 0.14rem;
 
-      margin: 0 0.02rem;
+      // margin: 0 0.02rem;
 
+      width: 24%;
+
+      // background-color: yellow;
       i {
         width: 100%;
         height: 0.04rem;
+        border-bottom: 0.05rem solid #ccc;
       }
-
+      
       &.progress_bar {
+        color: #179CFF;
         i {
-
+          border-bottom: 0.05rem solid #179CFF;
         }
       }
     }
@@ -247,9 +287,18 @@ export default {
   .gam_report {
     position: relative;
     min-height: 150px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // background-color: palegoldenrod;
+    
   }
 
   .match-item {
+    width: 100%;
+    // background-color: yellow;
     display: flex;
     align-items: center;
     margin-bottom: 0.2rem;
@@ -324,44 +373,29 @@ export default {
         }
       }
     }
-		/*  战队信息 */
-    .team {
-      position: relative;
+
+    .left_contend{
+
+      // background-color: yellowgreen;
       display: flex;
-      width: 2.2rem;
-      height: 0.4rem;
-      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    
 
-
-      font-size: 0.13rem;
-
-      &::after {
-        content: "";
-        pointer-events: none;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 200%;
-        height: 200%;
-        -webkit-transform: scale(0.5);
-        transform: scale(0.5);
-        -webkit-transform-origin: left top;
-        transform-origin: left top;
-        border: 1px solid;
-        border-bottom: 0;
-        border-radius: 0.08rem 0.08rem 0 0;
-        overflow: hidden;
-      }
-
-      &:nth-of-type(odd) {
-
-      }
-
-      &:nth-child(2n) {
+      .team {
         position: relative;
-        margin-bottom: 0.08rem;
+        display: flex;
+        width: 2.2rem;
+        height: 0.4rem;
+        align-items: center;
 
-        &::before {
+        // background-color: paleturquoise;
+
+
+        font-size: 0.13rem;
+
+        &::after {
           content: "";
           pointer-events: none;
           position: absolute;
@@ -374,54 +408,91 @@ export default {
           -webkit-transform-origin: left top;
           transform-origin: left top;
           border: 1px solid;
-          border-top: 0;
-          border-radius: 0 0 0.08rem 0.08rem;
+          border-bottom: 0;
+          border-radius: 0.08rem 0.08rem 0 0;
           overflow: hidden;
         }
 
-        &::after {
-          content: '';
-          width: auto;
-          height: 1px;
+        &:nth-of-type(odd) {
+// background-color: pink;
+          border-bottom: 0.01rem solid #ccc;
 
-          position: absolute;
-          top: -0.01rem;
-          left: -0.69rem;
+          &:nth-child(2n){
+            background-color: red;
+          }
+
+        }
+
+        &:nth-child(2n) {
+          position: relative;
+          margin-bottom: 0.08rem;
+
+          &::before {
+            content: "";
+            pointer-events: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 200%;
+            height: 200%;
+            -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+            -webkit-transform-origin: left top;
+            transform-origin: left top;
+            border: 1px solid;
+            border-top: 0;
+            border-radius: 0 0 0.08rem 0.08rem;
+            overflow: hidden;
+          }
+
+          &::after {
+            content: '';
+            width: auto;
+            height: 1px;
+
+            position: absolute;
+            top: -0.01rem;
+            left: -0.69rem;
+          }
+        }
+
+        .number {
+          position: relative;
+          z-index: 10;
+          width: 0.3rem;
+          padding-left: 0.1rem;
+
+          top: 0.19rem;
+          left: -0.02rem;
+
+          font-size: 0.2rem;
+        }
+
+        .name {
+          width: 0.9rem;
+          height: 100%;
+          line-height: 0.32rem;
+
+          .ellipsis {
+
+            font-size: 0.13rem;
+          }
+        }
+
+        .score {
+          width: 0.28rem;
+          text-align: center;
+
+          font-size: 0.12rem;
+
+          line-height: 0.14rem;
         }
       }
 
-      .number {
-        position: relative;
-        z-index: 10;
-        width: 0.3rem;
-        padding-left: 0.1rem;
-
-        top: 0.19rem;
-        left: -0.02rem;
-
-        font-size: 0.2rem;
-      }
-
-      .name {
-        width: 0.9rem;
-        height: 100%;
-        line-height: 0.32rem;
-
-        .ellipsis {
-
-          font-size: 0.13rem;
-        }
-      }
-
-      .score {
-        width: 0.28rem;
-        text-align: center;
-
-        font-size: 0.12rem;
-
-        line-height: 0.14rem;
-      }
     }
+
+		/*  战队信息 */
+
   }
 
   .main-finals {

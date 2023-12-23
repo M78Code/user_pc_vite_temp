@@ -7,7 +7,6 @@
     <q-tabs v-model="viewTab" inline-label narrow-indicator class="bg-tabs" active-color="active-tab" @update:model-value="change_tab">
       <q-tab v-for="item in tab_list" :label="i18n_t(item.label_i18n_key)" :name="item.name" :key="item.id" />
     </q-tabs>
-
   </div>
 </template>
 

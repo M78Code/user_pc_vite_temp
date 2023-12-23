@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <ScrollMenu :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/>
+        <ScrollMenu v-if="state.slideMenu_sport.length" :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/>
 
         <ObserverWrapper class="match-result-contant" :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper>
     </template>
@@ -46,9 +46,6 @@ import lodash_ from 'lodash'
 import { onMounted, onUnmounted, reactive } from "vue";
 import { ScrollMenu } from 'src/base-h5/components/menu/app-h5-menu/index'
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
-// import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
-// import matchContainer from "src/base-h5/components/match-list/index.vue";
-// import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
@@ -79,11 +76,15 @@ const state = reactive({
 const switchHandle = async val => {
     state.currentSwitchValue = val
     MenuData.set_result_menu_lv1_mi(val)
-    // MatchMeta.clear_match_info()
     state.matchs_data = []
     //获取 赛果菜单
     if (val) {
         MenuData.set_results_kemp(1)
+        state.slideMenu_sport = []
+        MenuData.set_result_menu_api_params({
+            md:state.currentSlideValue
+        })
+        state.matchs_data = await MatchMeta.get_champion_match_result()
     } else {
         MenuData.set_results_kemp(0)
     }
@@ -140,11 +141,9 @@ const set_scroll_current = async item => {
     if (!item) return
     MenuData.set_current_lv_2_menu_i(item)
     if (MenuData.get_results_kemp()) {
-        // 冠军赛果
+        state.slideMenu_sport = []
         MenuData.set_result_menu_api_params({
-            mi: 10000,
-            md:state.currentSlideValue,
-            sport: item.sport
+            md:state.currentSlideValue
         })
         state.matchs_data = await MatchMeta.get_champion_match_result()
         if (state.matchs_data.length > 0)  useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
@@ -173,18 +172,6 @@ const goBackAssign = () => {
 MenuData.is_esports() && MenuData.set_top_menu_title({})//从电竞过来 这个菜单没有制空 所以菜单不对 判断了是 电竞
 MenuData.set_current_lv1_menu(28)//设置为赛果
 switchHandle(0)
-onMounted(()=>{
-    // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
-    // VirtualList.set_is_show_ball(false)
-    // VirtualList.set_is_change_handicap_height(-22)
-})
-
-onUnmounted(()=>{
-    VirtualList.set_is_show_ball(true)
-    VirtualList.set_is_change_handicap_height(0)
-    // MenuData.set_results_kemp(0)
-    // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
-})
 
 </script>
 <style scoped lang="scss">
