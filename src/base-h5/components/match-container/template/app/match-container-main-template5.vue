@@ -956,7 +956,6 @@ export default {
           background: var(--sys-feedback-success-success-400, #4AB06A);
           width: 4px !important;
           height: 4px;
-          position: absolute;
         }
 
         .logo {
