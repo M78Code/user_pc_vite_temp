@@ -20,6 +20,15 @@ let url =  'http://api-doc-server-new.sportxxxw1box.com/openapi/getRecentPack'
 
 let recent_pack_config={}
 
+
+ const ENVSTR_MAP = {
+    dev: "开发环境",
+    test: "测试环境",
+    geli: "隔离环境",
+    mini: "mini环境",
+    shiwan: "试玩环境",
+    online: "生产环境",
+  };
 let result_str= `
 //本地开发 目标项目
  
@@ -67,7 +76,8 @@ const resolve_recent_pack_config=()=>{
         for(let env_key in  project_config){
          let item = project_config[env_key]
             result_str +=`
-// 打包配置生成时间： ${ format_date(new Date(item.createdAt).getTime())  }
+// ${ ENVSTR_MAP[env_key]}  : ${env_key}
+// 打包配置生成时间 ： ${ format_date(new Date(item.createdAt).getTime())  }
 // DEV_TARGET_VERSION = "${item.base_name}"              
             `      
             
