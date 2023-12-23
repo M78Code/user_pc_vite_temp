@@ -49,11 +49,12 @@
             <div class="score last" v-if='![1, 2, 3, 11].includes(+match.csid)'>
               <!-- 总局数 -->
               <span v-if="![4, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
-                {{ i18n_t('list.total_play_count') }} {{ total_games }}
+                <span class="total-play-count"> {{ i18n_t('list.total_play_count') }} </span> 
+                <span> {{ total_games }} </span>
               </span>
               
               <!-- 总分   5--网球， 5--美式足球， 7--斯诺克， 8--乒乓球， 9--排球， 10--羽毛球，-->
-              <span class="score-l-total2" v-if="[7, 8, 9, 10, 13, 15, 16].includes(+match.csid) && get_total_scores">
+              <span class="total-play-count" v-if="[7, 8, 9, 10, 13, 15, 16].includes(+match.csid) && get_total_scores">
                 {{ i18n_t('list.total_pp_score_count') }}
               </span>
               <span v-if="[7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid) && get_total_scores" class="score-important">
@@ -225,7 +226,7 @@ const get_total_scores = computed(() => {
   // let { home_score = 0, away_score = 0 } = props.match;
   if (msc_format && msc_format.length) {
     let t = home + away;
-    let total_sum = t ? `[${t}]` : '';
+    let total_sum = t ? `(${t})` : '';
     // 斯诺克
     if (props.match.csid == 7 || props.match.csid == 12) {
       return get_snooker_score_space_data();
@@ -664,8 +665,12 @@ onUnmounted(() => {
       font-size: 0.11rem;
       color: var(--q-color-com-fs-color-29);
       align-items: center;
-      margin-left: 5px;
+      // margin-left: 3px;
 
+      .total-play-count{
+        color: #000000 !important;
+        margin: 0 3px;
+      }
       .score-value {}
       
         .divider {
