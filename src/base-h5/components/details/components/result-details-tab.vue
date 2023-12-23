@@ -214,7 +214,7 @@ onUnmounted(() => {
   height: 0.4rem;
   width: 100vw;
   border-bottom: 1px solid var(--q-gb-bd-c-15); //var(--q-gb-bg-c-13);
-  background-color: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-23);
 }
 
 .menu-s {
@@ -223,6 +223,7 @@ onUnmounted(() => {
   flex-wrap: nowrap;
   white-space: nowrap;
   overflow-x: auto;
+  color: var(--q-gb-t-c-18);
 }
 
 /*************** 选中的玩法集 *************** -S*/

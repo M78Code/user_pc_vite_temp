@@ -19,15 +19,15 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 // 文章页
-import articleMain from "src/base-h5/components/details/analysis-matches/article/article-main.vue"
+import articleMain from "src/base-h5/components/details/analysis-ky-matches/article/article-main.vue"
 // 赛果详情 赛况统计 和 事件
 import matchResult from "src/base-h5/components/details/components/details-match-results/match-results.vue"
 // 详情页  足球赛事分析 战绩 模块
-import standings from "src/base-h5/components/details/analysis-matches/components/standings.vue"
+import standings from "src/base-h5/components/details/analysis-ky-matches/components/standings.vue"
 // 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
-import lineUp from "src/base-h5/components/details/analysis-matches/components/line-up.vue"
+import lineUp from "src/base-h5/components/details/analysis-ky-matches/components/line-up.vue"
 // 详情页 或者 赛果 赛事分析 公共tab 组件
-import headTab from  "src/base-h5/components/details/match-analysis/head-tab.vue";
+import headTab from "src/base-h5/components/details/analysis-ky-matches/components/head-tab.vue";
 
 
 // 获取详情数据
@@ -136,7 +136,7 @@ const tab_click = ([tab, type]) => {
 .analysis-football-matches {
   position: relative;
   z-index: 80;
-  background-color: var(--q-gb-bd-c-15);
+  background-color: var(--q-gb-bg-c-13);
 }
 
 .clear-bg {

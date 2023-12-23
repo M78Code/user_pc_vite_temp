@@ -59,7 +59,7 @@ import { onMounted, ref, reactive } from "vue";
 // 详情页蓝色背景上的大型字母图标
 import teamImg from "src/base-h5/components/details/team-img.vue";
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
-import publicForm from "src/base-h5/components/details/analysis-matches/components/public-form.vue";
+import publicForm from "src/base-h5/components/details/analysis-ky-matches/components/public-form.vue";
 import { computed } from "vue";
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";

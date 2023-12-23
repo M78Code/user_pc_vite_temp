@@ -4,7 +4,12 @@
 <template>
   <div class="bet-menu-wrap" :class="{ 'bet-menu-wrap-mix': !BetData.is_bet_single }">
     <!-- 错误信息 -->
-    <div class="bet-message">{{ i18n_t(BetViewDataClass.error_message) }}</div>
+    <div class="bet-message" v-if="BetViewDataClass.error_message">
+      <div class="w-100 f-c-c bet-title" :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
+          {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
+      </div>
+    </div>
+
 
     <div class="full-width cursor-pointer bet-submit" @click.stop="submit_handle('submit')">
       <template
@@ -38,7 +43,7 @@
     </div>
 
 
-    <div style="display:none">{{ BetViewDataClass.bet_view_version }}</div>
+    <div v-show="false">{{ BetViewDataClass.bet_view_version }}-{{BetData.bet_data_class_version}}</div>
 
   </div>
 </template>

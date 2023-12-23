@@ -72,7 +72,7 @@ import { i18n_t } from "src/boot/i18n.js";
       left: 0.16rem;
       top: 0.14rem;
       border-radius: 1.5px;
-      background: var(--q-analysis-text-color-16);
+      background: var(--q-gb-bg-c-13);
     }
   }
 

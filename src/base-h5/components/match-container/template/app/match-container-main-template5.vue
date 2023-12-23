@@ -40,12 +40,12 @@
           :class="[(' match-indent league')]">
           <div class="league-t-wrap right-border">
             <!-- 联赛收藏 -->
-            <template v-if="![3000, 900].includes(menu_type) && !is_esports">
-              <img v-if="!league_collect_state" class="favorited-icon"
-                :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/ico_fav_nor.png`" alt="" @click.stop="handle_league_collect" />
-              <img v-if='league_collect_state' class="favorited-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/ico_fav_sel.png`"
-                @click.stop="handle_league_collect" />
-            </template>
+            <div v-if="![3000, 900].includes(menu_type) && !is_esports" class="favorited-icon" @click.stop="handle_league_collect">
+              <!-- 未收藏 compute_img_url('icon-favorite')-->
+              <img v-if="!league_collect_state" :src="not_favorite_app" alt="">
+              <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
+              <img v-if='league_collect_state' :src="normal_img_is_favorite">
+            </div>
             <!-- 电竞图标 写死 -->
             <div class="esport" v-if="match_of_list.csid == 101"
               :style="compute_css_obj('menu-sport-active-image', 2101)"></div>
@@ -68,7 +68,7 @@
 
         </div>
         <!-- 赛事内容 -->
-        <div class="match-content" v-if="collapsed">
+        <div :class="['match-content', { 'collapsed': collapsed }]" v-if="collapsed">
           <!-- 比分版 | 视频 icon | 赛事阶段 | 比分| 盘口 -->
           <div class="title-details">
             <div class="details">
@@ -149,13 +149,10 @@
           <div class="event-team">
             <div class="name">
               <div class='left'>
-                <span :class="{ 'is-handicap': match.handicap_index == 1, 'is-handicap-1': match.handicap_index == 2 }">
+                <span class="match-name" :class="{ 'is-handicap': match.handicap_index == 1, 'is-handicap-1': match.handicap_index == 2 }">
                   {{ match.mhn }}
                 </span>
-                <!--发球方绿点-->
-                <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                  v-show="set_serving_side(match, 'home')">
-                </span>
+
 
                 <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
                 <!-- <image-cache-load v-if="match?.mhlu?.length && !([5, 7].includes(Number(match.csid)))" -->
@@ -180,7 +177,15 @@
                     style="margin-left:-0.09rem;"
                   ></team-img>
               </div>
+              <!--发球方绿点-->
+              <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                v-show="set_serving_side(match, 'home')">
+              </span>
               <span class="vs">VS</span>
+              <!--发球方绿点-->
+              <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                v-show="set_serving_side(match, 'away')">
+              </span>
               <div class='right'>
                 <!-- <image-cache-load v-if="match?.malu?.length && !([5, 7].includes(Number(match.csid)))" -->
                 <!-- <image-cache-load v-if="match?.malu?.length"
@@ -203,10 +208,7 @@
                   style="margin-left:-0.09rem;"
                 ></team-img>
                 <!-- <img v-if="match?.malu?.length" class="logo" v-img="([match.malu[0], match.frman[0], match.csid])" /> -->
-                <!--发球方绿点-->
-                <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                  v-show="set_serving_side(match, 'away')">
-                </span>
+
                 <span :class="{ 'is-handicap': match.handicap_index == 2, 'is-handicap-1': match.handicap_index == 1 }">
                   {{ match.man }}
                 </span>
@@ -528,6 +530,7 @@ export default {
     .match-content{
       border-radius: 0 0 8px 8px;
       background: var(--q-gb-bg-c-18);
+      border: 1px solid var(--q-gb-bd-c-15);
       &.collapsed{
         border-top: none;
       }
@@ -817,7 +820,7 @@ export default {
     background: var(--q-gb-bg-c-21);
     line-height: 19px;
     font-size: 11px;
-    margin-bottom: -.05rem;
+    // margin-bottom: -.05rem;
     margin-top: 0;
     border-bottom: 0;
     color: var(--q-gb-t-c-24);
@@ -849,6 +852,10 @@ export default {
         /* position: relative;
         top: 1px; */
         flex-shrink: 0;
+        > img {
+          width: 100%;
+          height: 100%;
+        }
 
       }
     }
@@ -916,8 +923,9 @@ export default {
         .serving-party {
           border-radius: 2px;
           background: var(--sys-feedback-success-success-400, #4AB06A);
-          width: 4px;
+          width: 4px !important;
           height: 4px;
+          position: absolute;
         }
 
         .logo {
@@ -937,15 +945,29 @@ export default {
 
           &.left {
             justify-content: flex-end;
+            position: relative;
             .is-handicap {
               color: #74C4FF;
+            }
+            .match-name {
+              width: 1rem;
+            }
+            .serving-party {
+              right: 0.28rem;
             }
           }
 
           &.right {
             justify-content: flex-start;
+            position: relative;
             .is-handicap {
               color: #74C4FF;
+            }
+            .match-name {
+              width: 1rem;
+            }
+            .serving-party {
+              left: 0.28rem;
             }
           }
         }

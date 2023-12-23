@@ -22,18 +22,20 @@ import {  useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { project_name, MenuData } from "src/output/index.js";
-import { set_menu_init } from 'src/base-h5/mixin/userctr.js'
+import { set_menu_init,sort_type,standard_edition } from 'src/base-h5/mixin/userctr.js'
+import { is_esports } from 'src/base-h5/mixin/menu.js'
+
 /**
  * 首页switch wap
  */
-const switchData = ref([])
-const data = ref([
+const switchData = ref([
     {
         defaultVal:UserCtr.standard_edition,
+        mark:'standard_edition',
         list:[
             {// 1 新手版
                 name:i18n_t('footer_menu.new_v'),
-                val:2,
+                val:1,
                 changeFun:(val)=>{
                     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
                     nextTick(()=>{
@@ -45,7 +47,7 @@ const data = ref([
             },
             {
                 name:i18n_t('footer_menu.pro_v'),
-                val:1,
+                val:2,
                 changeFun:(val)=>{
                     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
                     UserCtr.set_standard_edition(val)
@@ -59,14 +61,19 @@ const data = ref([
         ]
     },
     {
-        defaultVal:UserCtr.sort_type,
+        defaultVal:sort_type,
+        mark:'sort_type',
         list:[
             {
                 //热门
                 name:i18n_t('footer_menu.hot'),
                 val:1,
                 isSort:1,
+                disabled:is_esports,
                 changeFun:(val,sort)=>{
+                    if(is_esports.value){//电竞 不会热门排序 和 盘口
+                        return;
+                    }
                     return UserCtr.set_sort_type(val);
                 }
             },
@@ -83,6 +90,7 @@ const data = ref([
     },
     {
         defaultVal: UserCtr.theme,
+         mark:'theme',
         list:theme_list.map((item)=>{
             item.name = item.i18n[lang.value];
             item.val = item.key;
@@ -95,10 +103,17 @@ const data = ref([
         }).reverse()
     },
 ])
+/**
+ * @description 监听设置菜单里面 菜单的改变
+ * @param {set_menu_init} number
+ * @return 
+ */
 watch(()=>set_menu_init.value,()=>{
-    nextTick(()=>{
-      switchData.value = data.value;
-    })
+    const mark = ['standard_edition','sort_type','theme']
+      switchData.value = switchData.value.map((item,index)=>{
+        item.defaultVal = UserCtr[mark[index]];
+        return item
+      })
 },{immediate:true})
 
 </script>

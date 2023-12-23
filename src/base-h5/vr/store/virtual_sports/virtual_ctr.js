@@ -72,7 +72,7 @@ class VirtualCtr {
       }
     }
     // 所有赛事列表数据转obj对象
-    let data = reactive(init_data);
+    let data = init_data;
     // 设置代理
     this.state = new Proxy(data, {
       set: function (target, key, value, receiver) {
@@ -264,5 +264,5 @@ class VirtualCtr {
     this.state.footer_sub_menu_id = value;
   }
 }
-const VR_CTR = new VirtualCtr();
+const VR_CTR = reactive(new VirtualCtr());
 export default VR_CTR
