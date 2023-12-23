@@ -79,9 +79,9 @@
         <template v-if="!BetData.is_bet_single && BetViewDataClass.bet_order_status == 1">
           <div class="re">
             <keyboard  class="bet-key-board" v-if="BetData.bet_keyboard_show"/>
-            <div class="scroll-down">
+            <!-- <div class="scroll-down">
               <img :src="compute_local_project_file_path('/image/common/slide_icon_y1.svg')" alt="">
-            </div>
+            </div> -->
           </div>
         </template>
 
@@ -184,7 +184,7 @@ const show_merge_change = () => {
   top: -0.1rem;
   width: .2rem;
   height: .2rem;
-  z-index: -1000;
+  z-index: 1000;
   transition: .3s;
   img {
     width: 100%;
