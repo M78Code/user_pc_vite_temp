@@ -68,7 +68,7 @@
 
         </div>
         <!-- 赛事内容 -->
-        <div class="match-content" v-if="collapsed">
+        <div :class="['match-content', { 'collapsed': collapsed }]" v-if="collapsed">
           <!-- 比分版 | 视频 icon | 赛事阶段 | 比分| 盘口 -->
           <div class="title-details">
             <div class="details">
@@ -149,13 +149,10 @@
           <div class="event-team">
             <div class="name">
               <div class='left'>
-                <div class="match-name" :class="{ 'is-handicap': match.handicap_index == 1, 'is-handicap-1': match.handicap_index == 2 }">
+                <span class="match-name" :class="{ 'is-handicap': match.handicap_index == 1, 'is-handicap-1': match.handicap_index == 2 }">
                   {{ match.mhn }}
-                </div>
-                <!--发球方绿点-->
-                <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                  v-show="set_serving_side(match, 'home')">
                 </span>
+
 
                 <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
                 <!-- <image-cache-load v-if="match?.mhlu?.length && !([5, 7].includes(Number(match.csid)))" -->
@@ -180,7 +177,15 @@
                     style="margin-left:-0.09rem;"
                   ></team-img>
               </div>
+              <!--发球方绿点-->
+              <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                v-show="set_serving_side(match, 'home')">
+              </span>
               <span class="vs">VS</span>
+              <!--发球方绿点-->
+              <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                v-show="set_serving_side(match, 'away')">
+              </span>
               <div class='right'>
                 <!-- <image-cache-load v-if="match?.malu?.length && !([5, 7].includes(Number(match.csid)))" -->
                 <!-- <image-cache-load v-if="match?.malu?.length"
@@ -203,13 +208,10 @@
                   style="margin-left:-0.09rem;"
                 ></team-img>
                 <!-- <img v-if="match?.malu?.length" class="logo" v-img="([match.malu[0], match.frman[0], match.csid])" /> -->
-                <!--发球方绿点-->
-                <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                  v-show="set_serving_side(match, 'away')">
-                </span>
-                <div  class="match-name" :class="{ 'is-handicap': match.handicap_index == 2, 'is-handicap-1': match.handicap_index == 1 }">
+
+                <span :class="{ 'is-handicap': match.handicap_index == 2, 'is-handicap-1': match.handicap_index == 1 }">
                   {{ match.man }}
-                </div>
+                </span>
 
               </div>
             </div>
@@ -528,6 +530,7 @@ export default {
     .match-content{
       border-radius: 0 0 8px 8px;
       background: var(--q-gb-bg-c-18);
+      border: 1px solid var(--q-gb-bd-c-15);
       &.collapsed{
         border-top: none;
       }
