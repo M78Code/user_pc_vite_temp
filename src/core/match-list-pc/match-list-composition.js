@@ -132,7 +132,7 @@ export function fetch_match_list(is_socket = false) {
 								is_socket,
 							);
 							//不是ws就通知已经加载完成 连同返回接口数据
-							!is_socket && useMittEmit(MITT_TYPESEMIT_FETCH_MATCH_LIST_FINISHED, res)
+							// !is_socket && useMittEmit(MITT_TYPESEMIT_FETCH_MATCH_LIST_FINISHED, res)
 						} finally {
 							if (!is_socket) {
 								if (lodash.get(res, "data.length") != undefined || lodash.get(res, "data.data.length") != undefined) {

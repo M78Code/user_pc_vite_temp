@@ -2,16 +2,17 @@
   <!--赛事玩法模板-->
   <div v-show="false">{{ LayOutMain_pc.layout_version}}</div>
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
+  <div v-show="false">{{ match_style_obj }}</div>
   <div
     class="c-match-card relative-position"
     :id="`list-mid-${mid}`"
     :style="`height:${lodash.get(get_match_style(), `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
     v-if="get_match_style().is_show_card"
   >
-  <!--改成101用来打包调试-->
     <component
       :is="`MatchTpl${get_match_style().view_tpl_id}After`"
       :mid="mid"
+      v-if="[1, 2].includes(get_match_style().show_level)"
     />
     <!-- {{`MatchTpl${match_style_obj.view_tpl_id}After`}} -->
   </div>
@@ -69,8 +70,9 @@ export default {
   },
   setup(props) {
     // 赛事样式对象
-    let match_style_obj = 
     provide("match",MatchDataWarehouse_PC_List_Common.get_quick_mid_obj_ref(props.mid))
+    let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
+
     // 组件是否加载完成
     const is_mounted = ref(true);
     // 显示部分dom ID
