@@ -435,6 +435,8 @@ export default {
       .virtual-title{
         text-align: center;
         text-indent: 0.56rem;
+        font-weight: 500;
+        font-size: 0.18rem;
       }
 
       /*  刷新按钮 */
