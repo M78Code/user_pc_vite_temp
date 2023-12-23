@@ -18,15 +18,6 @@ const routes = [
           keepAlive: true, // 需要缓存
         },
       },
-      //       // 搜索
-      //       {
-      //         path: "/search/:keyword/:time?",
-      //         name: "search",
-      //         component: () => import(`../pages/test/index.vue`),
-      //           meta: {
-      //             keepAlive: true // 需要缓存
-      //           }
-      //       },
       {
         path: "/details/:mid/:csid/:tid?",
         name: "details",
@@ -37,16 +28,6 @@ const routes = [
         name: "video",
         component: () =>import("../pages/video/video.vue")   
       },
-      //       {
-      //         path: "/virtual_details/:mid/:tid/:csid",
-      //         name: "virtual_details",
-      //         component: () => import(`../pages/test/index.vue`),
-      //       },
-      //       {
-      //         path: "/video/:mid/:tid/:csid/:play_type/:video_size",
-      //         name: "video",
-      //         component: () => import(`../pages/test/index.vue`),
-      //       },
     ],
   },
   //赛事分析
@@ -80,37 +61,6 @@ const routes = [
     name: "rule",
     component: () => import("../pages/rule/index.vue"),
   },
-  // 每日成长任务
-  {
-    path: '/activity',
-    name: "activity",
-    // component: () => import(`../pages/test/index.vue`),
-  },
-  // // 活动维护页面
-  // {
-  //   path: '/activity_aegis',
-  //   name: "activity_aegis",
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
-  // {
-  //   path: '/article_details/:id/:count',
-  //   name: "article_details",
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
-  // {
-  //   path: "/no_network",
-  //   name: "no_network",
-
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
-  // {
-  //   path: "/error404",
-  //   name: "error404",
-  //   redirect: {
-  //     name: "home"
-  //   },
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
   {
     path: '/:catchAll(.*)*',
     redirect: {
