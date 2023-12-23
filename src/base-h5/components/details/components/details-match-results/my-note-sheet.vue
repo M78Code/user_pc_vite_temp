@@ -37,5 +37,6 @@ onMounted(()=>{
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
+  background: var(--q-gb-t-c-14);
 }
 </style>
