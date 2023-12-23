@@ -3,7 +3,7 @@
     <div class="match-detail-head">
       <div
         v-show="get_match_detail?.csid"
-        :class="['sport_bg', `${get_sports_bg(get_match_detail?.csid)}`]"
+        :class="['sport_bg', `sports_bg${get_match_detail?.csid}`]"
       ></div>
      
       <div class="match-detail-time">
@@ -360,6 +360,7 @@ const get_sports_bg = (csid) => {
   if (![1, 2, 5].includes(Number(csid))) {
     num = 0;
   }
+  console.log(`sports_bg${num}`,"`sports_bg${num}`")
   return `sports_bg${num}`;
 };
 
@@ -559,30 +560,56 @@ const getLongTime=computed(()=>{
       position: absolute;
       right: 0;
     }
-    .sports_bg2 {
-      background: url($SCSSPROJECTPATH + "/image/detail/basketball_bg.png")
-        no-repeat;
+    
+    // .sports_bg1 {
+    //   background: url($SCSSPROJECTPATH + "/image/detail/football_bg.png")
+    //     no-repeat;
+    // }
+    // 1:足球   2:篮球   3:棒球   4:冰球   5:网球   6:美式足球   7:斯诺克 8:兵乓球   9:排球   10:羽毛球
+    .sports_bg0 {
+      background-position-y: -156px;
     }
     .sports_bg1 {
-      background: url($SCSSPROJECTPATH + "/image/detail/football_bg.png")
-        no-repeat;
+      background-position-y: 0;
+    }
+    .sports_bg2 {
+      background-position-y: -80px;
+    }
+    .sports_bg3 {
+      background-position-y: -380px;
+    }
+    .sports_bg4 {
+      background-position-y: -760px;
     }
     .sports_bg5 {
-      background: url($SCSSPROJECTPATH + "/image/detail/tennis_bg.png")
-        no-repeat;
+      background-position-y: -450px;
     }
-    .sports_bg0 {
-      background: url($SCSSPROJECTPATH + "/image/detail/other_bg.png") no-repeat;
+    .sports_bg7 {
+      background-position-y: -990px;
     }
+    .sports_bg8 {
+      background-position-y: -150px;
+    }
+    .sports_bg9 {
+      background-position-y: -230px;
+    }
+    .sports_bg8 {
+      background-position-y: -300px;
+    }
+    
+
     .sport_bg {
-      width: 140px;
-      height: 90px;
+      width: 190px;
+      height: 70px;
       overflow: hidden;
       background-size: 140px 100px;
       position: absolute;
-      top: 0;
+      top: 32px;
       right: 0;
       z-index: 1;
+      background-image: url($SCSSPROJECTPATH + '/image/detail/icon_sport_bg.png');
+      background-repeat: no-repeat;
+      background-size: cover;
     }
     // padding-bottom: 10px;
     .match-detail-time {
