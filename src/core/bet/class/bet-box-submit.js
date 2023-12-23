@@ -809,7 +809,6 @@ const set_bet_obj_config = (params = {}, other = {}) => {
             matchType = 2
         }
     }
-    
     // 冠军
     if(other.bet_type == 'guanjun_bet'){
         matchType = 3

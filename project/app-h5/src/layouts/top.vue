@@ -76,7 +76,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   onMounted(()=>{
     // set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,1)
     init_data(MenuData.current_lv_1_menu_mi.value,1)
-    // useMittOn(MITT_TYPES.EMIT_MENU_GO_BACK, menu_go_back)
+    useMittOn(MITT_TYPES.EMIT_MENU_GO_BACK, menu_go_back)
     // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
     // useMittOn(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, set_scroll_early_single)
   })
@@ -107,7 +107,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
    * @description 左侧菜单回退
    */
   const menu_go_back = (val) => {
-    init_data(MenuData.current_lv_1_menu_mi.value,1)
+    nextTick(()=>{
+      dJdateTabMenu.value.set_active_val();
+    })
   }
   /**
    * 联赛筛选处理-关闭
@@ -151,7 +153,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
         !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj)
         const data_list_esports = await MenuData.getDateList(val?.csid);
         dataListEsports.value = data_list_esports;
-        set_menu_mi_change_get_api_data()
+        set_menu_mi_change_get_api_data(type)
         break;
       case 300:
         // ref_data.scroll_data_list = MenuData.get_menu_lvmi_special_list(val.mi)
@@ -297,7 +299,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   }
 
   // 菜单变化页面请求数据
-  const set_menu_mi_change_get_api_data = () => {
+  const set_menu_mi_change_get_api_data = (type) => {
     // 收藏
     if(MenuData.is_collect()){
       // 电竞收藏
@@ -318,12 +320,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       return MatchMeta.get_champion_match();
     }
     // 电竞
-    if(MenuData.is_esports()){
-      // const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
-      // 初始进入会调多次接口
-      // if (csid) MatchMeta.get_esports_match();
-      return;
-    }
+    if(MenuData.is_esports() && !type)return MatchMeta.get_esports_match();
     
   }
   /**
