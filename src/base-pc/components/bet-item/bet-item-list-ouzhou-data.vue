@@ -58,7 +58,7 @@
 <script setup>
 import { onMounted, ref, onUnmounted, computed, watch, inject } from "vue";
 import lodash from 'lodash'
-import { get_odds_active } from "src/output/index.js";
+import { get_odds_active, MenuData } from "src/output/index.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
@@ -276,11 +276,24 @@ const bet_click_ol = () => {
     _hn,  // hn_obj
     _mid,  //赛事id mid_obj
   }
+  let bet_type = 'common_bet'
+  // 冠军
+  if(MenuData.is_kemp()){
+    bet_type = 'guanjun_bet'
+  }
+  // 电竞
+  if(MenuData.is_esports()){
+    bet_type = 'esports_bet'
+  }
+  // vr体育
+  if(MenuData.is_vr()){
+    bet_type = 'vt_bet'
+  }
   let other = {
         is_detail: false,
-        // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
+        // 投注类型 "vt_bet", "common_bet", "guanjun_bet", "esports_bet"
         // 根据赛事纬度判断当前赛事属于 那种投注类型
-        bet_type: 'common_bet',
+        bet_type,
         // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
         device_type: 2,
         // 数据仓库类型

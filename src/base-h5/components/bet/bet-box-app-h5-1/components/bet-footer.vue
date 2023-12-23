@@ -236,6 +236,11 @@ const set_confirm = () => {
     BetData.set_clear_bet_info()
     BetViewDataClass.set_clear_bet_view_config()
     BetData.set_bet_box_h5_show(false)
+    //电竞、VR串关投注成功后转为单关 并清空数据
+    if(MenuData.old_current_lv_1_menu_i==6) {
+      BetData.set_is_bet_single('single')
+      BetData.set_clear_bet_info()
+   }
 }
 
 onMounted(()=>{

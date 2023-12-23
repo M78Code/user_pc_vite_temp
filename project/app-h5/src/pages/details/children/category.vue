@@ -17,7 +17,9 @@
       <div class="empty-m-list-w">
         <!-- 当前赛事盘口已全部关闭-->
         <span v-if="get_details_item == 0">
-          {{i18n_t('detail.odd_all_closed')}}
+          {{i18n_t('detail.odd_closed')}}
+          <br><br>
+          {{i18n_t('detail.no_way_bet')}}
         </span>
         <!-- 盘口已关闭 -->
         <span v-else>

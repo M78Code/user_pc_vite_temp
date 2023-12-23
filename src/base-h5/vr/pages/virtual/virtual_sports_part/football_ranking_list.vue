@@ -17,7 +17,10 @@
     <!-- 小组 -->
     <div class="group-item" v-if="!no_data">
       <div class="team-item" v-for="(item, i) in ranking_data" :key="i">
-        <div class="col1 col-field">{{+i + 1}}</div>
+        <div class="col1 col-field" v-if="+i > 2">{{+i + 1}}</div>
+        <div class="col1 col-field rank-img" v-else>
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rank${+i+1}.png`"/>
+        </div>
         <div class="col2 ellipsis col-field">
           {{item.virtualTeamName}}
         </div>
@@ -34,6 +37,7 @@
 <script>
 import {api_v_sports} from "src/base-h5/vr/api";
 import no_data from "src/base-h5/vr/components/common/no_data.vue";
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 
 export default {
   name: "ranking_list",
@@ -46,7 +50,8 @@ export default {
   data() {
     return {
       ranking_data: [],
-      no_data: false
+      no_data: false,
+      LOCAL_PROJECT_FILE_PREFIX
     }
   },
   mounted() {
@@ -177,6 +182,11 @@ export default {
     font-size: 0.13rem;
     height: 0.48rem;
     text-align: center;
+    border-bottom: 1px solid #F2F2F6;
+    .rank-img img{
+      width: 14px;
+      height: 20px;
+    }
 
     /* 列字段 设计稿上是字体 12px，font-weight 500 */
     div {

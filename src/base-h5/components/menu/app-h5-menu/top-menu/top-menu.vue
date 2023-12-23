@@ -13,7 +13,7 @@
                 <div class="main-menu-right" @click.stop>
                     <!-- <span class="main-menu-right-symbol">￥</span> -->
                     <img :src="compute_local_project_file_path('/image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
-                    <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
+                    <span class="main-menu-right-money">{{ format_money2(balance) }}1</span>
                 </div>
             </template>
         </TopHeader>
@@ -112,6 +112,7 @@ const set_menu_lv1 = item => {
     // vr 电竞 可以单 可串 数据清空 默认为单
     if(item.mi == 6){
         BetData.set_is_bet_single('serial')
+        if(BetData.bet_s_list.length===0) BetData.is_bet_single = true
     }else{
         BetData.set_is_bet_single('single')
     }
