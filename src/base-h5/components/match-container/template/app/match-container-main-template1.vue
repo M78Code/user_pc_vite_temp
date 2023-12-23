@@ -18,8 +18,7 @@
           <div class="match-status-title">
             <img :src="in_progress" /> <span class="din-regular">进行中</span>
           </div>
-          <!-- <img :class="['expand_item', {collapsed: progress_seed_collapsed}]" :src="expand_item" alt=""> -->
-          <div :class="['expand_item', {collapsed: progress_seed_collapsed}]" :style="compute_css_obj('h5-kyapp-open-lague')"></div>
+          <img :class="['expand_item', {collapsed: progress_seed_collapsed}]" :src="expand_item" alt="">
         </template>
         <!-- 未开赛 -->
         <template  v-if="+match.start_flag === 2">
@@ -420,7 +419,7 @@ export default {
 
   .match-status-fixed {
     width: 100%;
-    height: 0.25rem;
+    height: 25px;
     line-height: 1;
     font-size: 0.11rem;
     padding-left: 0.17rem;
@@ -456,7 +455,7 @@ export default {
     margin-right: 0.1rem;
   }
   .buffer-container{
-    background: var(--q-gb-bg-c-17);
+    background: var(--q-gb-bg-c-18);
     height: 5px;
   }
   .match-inner-container {
@@ -517,7 +516,7 @@ export default {
     width: 100%;
     display: block;
     position: relative;
-    transition: max-height 0.3s;
+    height: 132px;
     // background: var(--q-gb-bg-c-18);
 
     .match-odds-container-border-radius {
@@ -830,7 +829,7 @@ export default {
   }
 
   .odd-title-wraper {
-    height: 0.2rem;
+    height: 20px;
     position: relative;
     flex-wrap: nowrap;
     display: flex;
