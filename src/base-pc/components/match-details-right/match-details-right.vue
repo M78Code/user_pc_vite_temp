@@ -447,7 +447,7 @@ watch(
       //         play_id:MatchDetailCalss.params.play_id,
       //         time: new Date() * 1,
       //       })
-				useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, MatchDetailCalss.params);
+				// useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, MatchDetailCalss.params);
     }
   },
   { deep: true }
