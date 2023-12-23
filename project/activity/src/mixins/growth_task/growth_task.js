@@ -51,6 +51,11 @@ export default {
       change_time: null
     };
   },
+  computed: {
+    pagenationMax(){
+      return Math.ceil(this.result_page_info.total / this.hisToryTotal);
+    },
+  },
   created() {
     // 5分钟更新一次接口
     this.up_date_Info = 0;
@@ -84,8 +89,9 @@ export default {
     showReceiveHistoryList(){},
     goToHistoryPage(e){
       if(e){
-        this.result_page_info.current = +e.target.value
-        this.show_dialog(+e.target.value)
+        const val = Math.min(+e.target.value, this.pagenationMax)
+        this.result_page_info.current = val
+        this.show_dialog(val)
       }
     },
     goToPage(){},

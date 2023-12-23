@@ -208,12 +208,12 @@
               <q-pagination class="pagination pager"
                             :model-value="result_page_info.current"
                             @update:model-value="changeCurrnet"
-                            :max="hisToryTotal"
+                            :max="pagenationMax"
                             boundary-numbers
                             :max-pages="10"
               ></q-pagination>
               <p class="goto_page text-666">
-                <span @click="goToHistoryPage(null)">&nbsp;&nbsp;跳转至</span>&nbsp;&nbsp;<input type="number" v-model="goToPage" :max="hisToryTotal" @keyup="goToHistoryPage($event)">&nbsp;&nbsp;页
+                <span @click="goToHistoryPage(null)">&nbsp;&nbsp;跳转至</span>&nbsp;&nbsp;<input type="number" v-model="goToPage" :max="pagenationMax" @keyup="goToHistoryPage($event)">&nbsp;&nbsp;页
               </p>
             </div>
           </div>
