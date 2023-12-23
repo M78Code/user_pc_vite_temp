@@ -149,7 +149,7 @@
           <div class="event-team">
             <div class="name">
               <div class='left'>
-                <span :class="{ 'is-handicap': match.handicap_index == 1, 'is-handicap-1': match.handicap_index == 2 }">
+                <span class="match-name" :class="{ 'is-handicap': match.handicap_index == 1, 'is-handicap-1': match.handicap_index == 2 }">
                   {{ match.mhn }}
                 </span>
 
@@ -918,8 +918,9 @@ export default {
         .serving-party {
           border-radius: 2px;
           background: var(--sys-feedback-success-success-400, #4AB06A);
-          width: 4px;
+          width: 4px !important;
           height: 4px;
+          position: absolute;
         }
 
         .logo {
@@ -939,15 +940,29 @@ export default {
 
           &.left {
             justify-content: flex-end;
+            position: relative;
             .is-handicap {
               color: #74C4FF;
+            }
+            .match-name {
+              width: 1rem;
+            }
+            .serving-party {
+              right: 0.28rem;
             }
           }
 
           &.right {
             justify-content: flex-start;
+            position: relative;
             .is-handicap {
               color: #74C4FF;
+            }
+            .match-name {
+              width: 1rem;
+            }
+            .serving-party {
+              left: 0.28rem;
             }
           }
         }
