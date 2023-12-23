@@ -201,6 +201,9 @@ export default defineComponent({
       type: Number,
     },
   },
+  data(){
+    return {}
+  },
   components: {
     temp0,
     temp1,

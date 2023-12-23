@@ -106,8 +106,6 @@ export default {
 
   .league-container {
     height: 0.26rem;
-    // margin: 0 0.07rem;
-    margin-top: 0.07rem;
 
     &.collapsed {
       // border-bottom: 1px solid var(--q-gb-t-c-4);
@@ -309,9 +307,10 @@ export default {
   display: flex;
   align-items: center;
   padding-left: 0.1rem;
-  height: 0.26rem;
+  height: 0.2rem;
+  color: var(--q-gb-t-c-24);
   font-size: 0.11rem;
-  background-image: var(--q-gb-bg-lg-19);
+  background: var(--q-gb-bg-c-18);
   /*transform: translateY(3px);*/
   margin: 0 auto;
   justify-content:space-between;
