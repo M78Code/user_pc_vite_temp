@@ -5,7 +5,7 @@
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 font14">
                     <span class="text-flow-none">{{ items.playOptionName}}</span> 
-                    <span class="bet-market mx-4 text-ff7">{{ items.marketValues }}</span>
+                    <!-- <span class="bet-market mx-4 text-ff7">{{ items.marketValues }}</span> -->
                 </div>
                 <div class="w-100 my-4">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bet_inplay") + ']'}}</span>

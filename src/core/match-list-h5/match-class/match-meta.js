@@ -1361,16 +1361,35 @@ class MatchMeta {
     }
   }
 
+  /**
+   * @deprecated 处理数据
+   * @param { String } tid 联赛 ID
+   */
   handler_again_matchs (tid = '') {
-    if (MenuData.is_results()) {
-      // 赛果
-      this.get_results_match({tid});
-    } else if (MenuData.is_kemp()) {
-      // 冠军
-      this.get_champion_match();
+    if (MenuData.is_collect()) {
+      // 收藏页
+      if (MenuData.is_esports()) {
+        // 电竞收藏
+        this.get_esports_collect_match()
+      } else { 
+        // 常规收藏
+        this.get_collect_match()
+      }
     } else {
-      // 常规
-      this.get_target_match_data({tid});
+      // 非收藏页
+      if (MenuData.is_esports()) {
+        // 电竞
+        this.get_esports_match()
+      } else if (MenuData.is_results()) {
+        // 赛果
+        this.get_results_match({tid});
+      } else if (MenuData.is_kemp()) {
+        // 冠军
+        this.get_champion_match();
+      } else {
+        // 常规
+        this.get_target_match_data({tid});
+      }
     }
   }
 
