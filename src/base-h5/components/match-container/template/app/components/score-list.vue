@@ -51,7 +51,7 @@
               </div>
             </template>
           </div>
-                    <!-- <div class="row items-center basket-ball" :class="{ 'b-score-wrapper': match.csid != 14 }" -->
+          <!-- <div class="row items-center basket-ball" :class="{ 'b-score-wrapper': match.csid != 14 }" -->
           <div class="row items-center " :class="{ 'b-score-wrapper': match.csid != 14 }" v-if="[2, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
             <!--分差-->
             <div class="row color18" style="margin-right:.1rem" v-if="[2].includes(+match.csid) && get_total_scores">
