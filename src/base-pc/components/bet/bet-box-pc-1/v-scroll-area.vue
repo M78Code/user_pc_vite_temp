@@ -167,7 +167,7 @@ const on_scroll = (position) => {
 }
 // 设置滚动位置
 const set_scroll_position = (position) => {
-  ref_bet_scroll_area_bet_list.value.setScrollPosition(position[0], position[1])
+  // ref_bet_scroll_area_bet_list.value.setScrollPosition(position[0], position[1])
 }
 
 onMounted(() => {
