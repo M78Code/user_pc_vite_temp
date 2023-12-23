@@ -20,6 +20,37 @@
         'is-volley-ball': match.csid == 9 || match.csid == 13
       }" @scroll="score_inner2_scrolling($event, match)">
         <div class="score-se-inner2" :ref="`score_se_inner2_${match.mid}`">
+        
+          <!-- 比分 -->
+          <div class="row items-center score-fle-container-1"
+            :class="{ result: get_menu_type == 28 && main_source !== 'detail_match_list', }">
+            <template v-for="(score, i) of msc_converted">
+              <div v-if="is_show_score(match, score)" class="score row items-start"
+                :class="{
+                  //  'basket-ball': match.csid == 2, 
+                  'important-color-number': i == msc_converted.length - 1 && match.csid == 2 && get_menu_type != 28
+                }"
+                :key="i" :data-scores="`${i}-${msc_converted.length}-${match.csid}`">
+                <!--角球图标-->
+                <img class="kk-icon" alt="" v-if="match.csid == 1 && score[0] == 'S5' && score[4]"
+                  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/m-list-jiaoqiu.svg`" />
+                <!--HT(半场)或FT(全场)或OT-->
+                <span class="f-ht-ot" style="margin-right:.02rem" :score="`${match.csid}-${score[4]}`"
+                  v-show="[1, 11, 14, 15, 16].includes(+match.csid) && score[4] && score[0] != 'S5'">
+                  {{ score[4] }}
+                </span>
+                <!--比分-->
+                <span class="score-value" :class="{
+                  'jiaoqiu-score-value': [1, 11, 14].includes(+match.csid) && score[0] == 'S5' && score[4],
+                  'orange': ([1, 11, 14].includes(+match.csid) && score[4] && score[0] != 'S5') || ([3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 16].includes(+match.csid) && msc_converted.length == i + 1 && match.mo != 1),
+                  'last-color': i == msc_converted.length - 1,
+                }">
+                  {{ score[1] }}-{{ score[2] }}
+                </span>
+                  <!-- <div class="divider"></div> -->
+              </div>
+            </template>
+          </div>
                     <!-- <div class="row items-center basket-ball" :class="{ 'b-score-wrapper': match.csid != 14 }" -->
           <div class="row items-center " :class="{ 'b-score-wrapper': match.csid != 14 }" v-if="[2, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
             <!--分差-->
@@ -62,36 +93,6 @@
               </span>
             </div>
 
-          </div>
-          <!-- 比分 -->
-          <div class="row items-center score-fle-container-1"
-            :class="{ result: get_menu_type == 28 && main_source !== 'detail_match_list', }">
-            <template v-for="(score, i) of msc_converted">
-              <div v-if="is_show_score(match, score)" class="score row items-start"
-                :class="{
-                  //  'basket-ball': match.csid == 2, 
-                  'important-color-number': i == msc_converted.length - 1 && match.csid == 2 && get_menu_type != 28
-                }"
-                :key="i" :data-scores="`${i}-${msc_converted.length}-${match.csid}`">
-                <!--角球图标-->
-                <img class="kk-icon" alt="" v-if="match.csid == 1 && score[0] == 'S5' && score[4]"
-                  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/m-list-jiaoqiu.svg`" />
-                <!--HT(半场)或FT(全场)或OT-->
-                <span class="f-ht-ot" style="margin-right:.02rem" :score="`${match.csid}-${score[4]}`"
-                  v-show="[1, 11, 14, 15, 16].includes(+match.csid) && score[4] && score[0] != 'S5'">
-                  {{ score[4] }}
-                </span>
-                <!--比分-->
-                <span class="score-value" :class="{
-                  'jiaoqiu-score-value': [1, 11, 14].includes(+match.csid) && score[0] == 'S5' && score[4],
-                  'orange': ([1, 11, 14].includes(+match.csid) && score[4] && score[0] != 'S5') || ([3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 16].includes(+match.csid) && msc_converted.length == i + 1 && match.mo != 1),
-                  'last-color': i == msc_converted.length - 1,
-                }">
-                  {{ score[1] }}-{{ score[2] }}
-                </span>
-                  <!-- <div class="divider"></div> -->
-              </div>
-            </template>
           </div>
         </div>
       </div>
@@ -615,9 +616,9 @@ onUnmounted(() => {
     .score-se-inner2 {
       // width: 366px;
       // line-height: 1;
-      // display: flex;
+      display: flex;
       // flex-shrink: 0;
-      // justify-content: space-between;
+      justify-content: space-between;
 
       .basket-ball {
         // color: var(--q-color-com-fs-color-29);
@@ -628,7 +629,7 @@ onUnmounted(() => {
       .score-fle-container-1 {
         flex-wrap: nowrap;
         flex-shrink: 0;
-        color: var(--sys-brand-secodary-secondary-800, --q-gb-t-c-18);
+        color: var(--q-gb-t-c-18);
         font-family: Akrobat;
         font-size: 10px;
         font-weight: 700;
@@ -644,7 +645,7 @@ onUnmounted(() => {
 
       .b-score-wrapper {
         margin-left: 0.05rem;
-        color: var(--sys-brand-secodary-secondary-800, --q-gb-t-c-18);
+        color: var(--q-gb-t-c-18);
           font-family: PingFang SC;
           font-size: 10px;
           font-weight: 400;
@@ -668,7 +669,7 @@ onUnmounted(() => {
       // margin-left: 3px;
 
       .total-play-count{
-        color: #000000;
+        color: var(--q-gb-t-c-18);
         margin: 0 3px;
       }
       .total-games{

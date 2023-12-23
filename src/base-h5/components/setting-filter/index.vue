@@ -176,9 +176,9 @@ const setting_list = ref([
 
 const closedHandle = () => {
   emit("closedHandle");
-    useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
-    text: "footer-refresh"
-  })
+  // useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+  //   text: "footer-refresh"
+  // })
 };
 /**
  * 选中的联赛数量

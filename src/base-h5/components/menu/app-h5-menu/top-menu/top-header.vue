@@ -3,7 +3,12 @@
         <div class="top-header-left">
             <div class="top-header-left-img" @click="goBack()">
                 <!-- <img class="img" :src="delimg" alt="" /> -->
-                <div class="img" :style="compute_css_obj({key: 'h5_back_img'})"></div>
+                <!-- <div class="img" :style="compute_css_obj({key: 'h5_back_img'})"></div> -->
+                <img
+                    class="img"
+                    :src="compute_local_project_file_path('/image/svg/go-back-icon.svg')"
+                    alt=""
+                />
             </div>
         </div>
         <div class="top-header-content">
@@ -15,7 +20,7 @@
     </div>
 </template>
 <script setup>
-import { MenuData,LOCAL_PROJECT_FILE_PREFIX , compute_css_obj } from "src/output/index.js";
+import { MenuData,LOCAL_PROJECT_FILE_PREFIX , compute_css_obj, compute_local_project_file_path } from "src/output/index.js";
 import { useRoute , useRouter } from "vue-router";
 import { useMittOn,MITT_TYPES, useMittEmit } from "src/core/mitt/index.js"
 const route = useRoute()

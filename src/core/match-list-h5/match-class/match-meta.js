@@ -1247,7 +1247,7 @@ class MatchMeta {
     const complete_matchs = lodash.get(this, 'complete_matchs', [])
     // 折叠对象
     const fold_data = MatchFold.match_mid_fold_obj.value
-    this.current_match = complete_matchs.filter((match) => {
+    this.current_matchs = complete_matchs.filter((match) => {
       const { mid, is_show_league } = match
       if (!mid) return false
       // 赛事折叠信息
