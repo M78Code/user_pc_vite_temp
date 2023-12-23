@@ -36,11 +36,8 @@
       </div>
 
      
-
+      {{ LayOutMain_pc.layout_left_show }}
       <div class="left-scroll-area">
-111
-111
-
         <!-- 菜单项 -->
         <v-scroll-area ref="ref_bet_scroll_area" position="menu" :observer_area="3"
           v-show="LayOutMain_pc.layout_left_show == 'menu'" :observer_middle="LayOutMain_pc.layout_left_show == 'menu'">
