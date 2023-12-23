@@ -460,7 +460,9 @@
           }
           .score-fle-container-1 {
             .last-color {
-              color:var(--q-match-fs-color-135);
+              // color:var(--q-match-fs-color-135);
+              color: var(--sys-brand-primary-primary-300, #74C4FF);
+
             }
             .basket-ball {
               &:last-child {
