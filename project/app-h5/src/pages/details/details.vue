@@ -64,6 +64,7 @@
             <!-- 玩法集展示内容 -->
             <details-tab
             v-show="viewTab === 'bet' || get_is_hengping"
+            v-if="category?.is_no_data === false"
             :data_list="data_list"
             :scroller_scroll_top="scroller_scroll_top"
             :get_details_item="get_details_item"
@@ -97,6 +98,7 @@
               </div>
             </div>
           </div>
+
           <!-- 赛事首发展示内容 -->
           <template v-if="viewTab == 'match_analysis' && (!get_is_hengping || get_is_dp_video_full_screen)">
             <div>
