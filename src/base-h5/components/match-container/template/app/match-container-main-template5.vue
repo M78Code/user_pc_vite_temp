@@ -160,8 +160,8 @@
                   </CountingDownSecond>
                 </div>
               </div>
-              <!-- 比分版 -->
-              <div class="score-title-text" v-if="get_match_status(match.ms)">{{ home_score }} - {{
+              <!-- 比分版, 即将开赛时不展示比分-->
+              <div class="score-title-text" v-if="match.ms != 110 && get_match_status(match.ms)">{{ home_score }} - {{
                 away_score }}</div>
             </div>
             <!--玩法数量-->

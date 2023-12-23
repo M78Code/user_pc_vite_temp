@@ -404,6 +404,7 @@ class MatchMeta {
    * @param { tid } 联赛 ID 
    */
   filter_hot_match_by_tid (tid = '') {
+    tid = tid || MenuData.search_tab_i_tid;
     const tid_info = this.tid_map_mids[`tid_${tid}`]
     this.get_target_match_data({ tid })
     if (!tid_info) return

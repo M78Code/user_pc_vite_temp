@@ -12,7 +12,7 @@
         <div class="search-tab-content">
             <ul class="search-tab-content-ul" v-show="!drawerRight">
                 <li ref="searchTab" :class="{ active: activeOn === index }" v-for="(item, index) in dataList" :key="index"
-                    @click="changeTab(item.tid,index,$event)">
+                    @click="changeTab(index,$event)">
                     <!-- <img v-show="item.img" :src="item.img" /> -->
                     <span v-if="item.tid !== '0'" class="sport-icon-wrap"
                       :style="compute_css_obj({key: activeOn === index ? 'league-sport-active-image' : 'league-sport-icon-image', position:format_type(item)})"></span>
@@ -56,7 +56,7 @@ import {scrollMenuEvent} from "../utils";
 // import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import  screenModal from './screen-modal.vue';
 // import { MenuData } from "src/output/index.js";
-import { i18n_t, compute_css_obj,league_sprite_images_postion } from "src/output/index.js";
+import { i18n_t, compute_css_obj,league_sprite_images_postion,MenuData  } from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 const props = defineProps({
     dataList: {
@@ -123,7 +123,7 @@ const props = defineProps({
             }
         ]
     },
-    defaultVal: {
+    activeOn: {
         type: Number,
         default: 0
     }
@@ -132,7 +132,7 @@ const drawerRight = ref(false)
 const searchTab = ref(null)
 const keyword = ref('')
 
-const activeOn = ref(props.defaultVal || 0);//默认值
+const activeOn = ref(MenuData.search_tab_index || 0);//默认值
 const league_data = ref([])
 
 /**
@@ -162,24 +162,26 @@ const select_change = (value) => {
  * 选中事件
  * @param {*} val
  */
-const changeTab = (tid,i,event) => {
-    if(activeOn.value === i)return;
+const changeTab = (i,event) => {
+    // if(activeOn.value === i)return;
     activeOn.value = i;
+    const tid = props.dataList[i].tid;
     event && scrollMenuEvent(event,".search-tab-content-ul",".active");
     if (tid === '0') {
         MatchMeta.set_origin_match_data({})
     } else {
+        MenuData.search_data_tab_index(i,tid)
         MatchMeta.filter_hot_match_by_tid(tid)
     }
 }
 /**
  * 初始化滚动条
  */
- const searchTabMenu = () =>{
-    activeOn.value = 0;
-    scrollMenuEvent(searchTab.value[0],".search-tab-content-ul",".active");
+ const searchTabMenu = (val) =>{
+    activeOn.value = val;
+    scrollMenuEvent(searchTab.value[activeOn.value||0],".search-tab-content-ul",".active");
 }
-defineExpose({searchTabMenu});
+defineExpose({searchTabMenu,changeTab});
 /**
  * 搜索足球事件
  */
