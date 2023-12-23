@@ -43,15 +43,18 @@
                     <div class="name-overhide">{{ item.nameText }}</div>
                   </div>
                   <div>
-                    <div class="nums"
-                        v-show="!(type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type))">
-                        （{{ item.num }}）
-                        <div @click="select_li_ctr(item)">
-                          <img :src="compute_local_project_file_path(item.select ? '/image/list/icon_selected_theme_type.svg' : '/image/list/icon_unselected_onlight.svg')" alt="">
-
-                        </div>
-
+                    <div 
+                      class="nums" 
+                      v-show="!(type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type))"
+                    >
+                      <span>({{ item.num }})</span>
+                      <div @click="select_li_ctr(item)">
+                        <img 
+                          :src="compute_local_project_file_path(item.select ? '/image/list/icon_selected_theme_type.svg' : '/image/list/icon_unselected_onlight.svg')" 
+                          alt=""
+                        >
                       </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -694,7 +697,7 @@ if (type.value == 30) {
       font-size: 0.10rem;
       box-sizing: content-box;
       border: 2px solid transparent;
-      color:var(--q-gb-bg-c-6);;
+      color:var(--q-gb-t-c-10);
 
       .t-wrap {
         width: 0.14rem;
@@ -776,7 +779,6 @@ if (type.value == 30) {
   width: .16rem;
   height: .16rem;
   border-radius: 50%;
-  border: .01rem solid var(--q-gb-bg-c-8);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -802,7 +804,7 @@ if (type.value == 30) {
   .content_box2 {
     width: 100%;
     font-size: 0.16rem;
-    padding: 0 0.58rem 0 0.14rem;
+    padding: 0 0.44rem 0 0.14rem;
     height: 100%;
     position: relative;
     color: var(--q-gb-t-c-18);
@@ -837,7 +839,13 @@ if (type.value == 30) {
       display: flex;
       align-items: center;
       font-size: .1rem;
-      color: var(--q-gb-t-c-26);
+      span {
+        display: inline-block;
+      }
+      div {
+        width: 0.28rem;
+        height: 0.2rem;
+      }
     }
   }
 
@@ -846,15 +854,6 @@ if (type.value == 30) {
     height: 0.2rem;
     margin-left: 0.08rem;
   }
-
-  .nums {
-
-    font-size: 0.14rem;
-    margin-left: 0.05rem;
-    // position: absolute;
-    right: 0.31rem;
-  }
-
   i {
     position: relative;
   }
@@ -927,7 +926,7 @@ if (type.value == 30) {
     height: 0.3rem;
     line-height: 0.3rem;
     padding-left: 0.2rem;
-    padding-right: 0.61rem;
+    padding-right: 0.46rem;
     font-size: 0.14rem;
   }
 
@@ -937,7 +936,7 @@ if (type.value == 30) {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 .6rem 0 .14rem;
+    padding: 0 .46rem 0 .14rem;
     color: var(--q-gb-t-c-18);
     .scroll-title-text {
       display: flex;
@@ -1033,7 +1032,7 @@ if (type.value == 30) {
   }
 
   .nums {
-    color: var(--q-color-fs-color-110);
+    color: var(--q-gb-t-c-19);
   }
 
   .round-box {
