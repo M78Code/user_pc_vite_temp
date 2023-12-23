@@ -149,6 +149,7 @@ const set_special_series = (money,ty_id) => {
     margin-top: 0.04rem;
     //margin-left: .08rem;
     padding: 0 .12rem;
+    color: var(--q-gb-t-c-18);
   }
   .bet_single_info:nth-last-child(2) {
     border-radius: 0.12rem 0.12rem 0 0;
