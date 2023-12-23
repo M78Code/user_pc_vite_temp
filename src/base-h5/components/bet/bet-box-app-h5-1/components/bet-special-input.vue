@@ -3,8 +3,8 @@
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
   <div class="bet_single_info f-b-c">
-    <div>
-      {{ items.name }}
+    <div class="alert-rules" @click="alertRules(items.name)">
+      <img :src="compute_local_project_file_path('/image/bet/request.svg')" alt="">{{ items.name }}
     </div>
     <div class="bet_single_detail f-b-c">
       <div>{{ items.count }}x</div>
@@ -29,7 +29,7 @@ import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { UserCtr,formatMoney, format_money3,format_money2,currency_code } from "src/output/index.js"
+import { UserCtr,formatMoney, format_money3,format_money2,currency_code, compute_local_project_file_path } from "src/output/index.js"
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 const props = defineProps({
@@ -133,6 +133,11 @@ const set_special_series = (money,ty_id) => {
   BetData.set_bet_amount(ref_data.money)
   BetData.set_bet_keyboard_config(props.items)
 }
+
+// 弹出规则
+const alertRules = (name) => {
+  console.log('name',name);
+}
 </script>
 
 <style scoped lang="scss">
@@ -149,6 +154,10 @@ const set_special_series = (money,ty_id) => {
     margin-top: 0.04rem;
     //margin-left: .08rem;
     padding: 0 .12rem;
+    .alert-rules {
+      display: flex;
+      align-items: center;
+    }
   }
   .bet_single_info:nth-last-child(2) {
     border-radius: 0.12rem 0.12rem 0 0;
