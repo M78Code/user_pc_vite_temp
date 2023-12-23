@@ -3,7 +3,7 @@
 -->
 <template>
   <div class="champion-wrap-2 component match-container-main-template6" v-if="is_show">
-    <div class="sport-title match-indent" @click="handle_ball_seed_fold">
+    <div v-if="is_show_league(i)"  class="sport-title match-indent" @click="handle_ball_seed_fold">
       <span class="score-inner-span"> {{ match_of_list.csna }} </span>
       <div class="collapse-dire">
         <!-- <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' /> -->
@@ -308,13 +308,12 @@ export default {
   align-items: center;
   padding-left: 0.1rem;
   height: 0.2rem;
-  color: var(--q-gb-t-c-24);
   font-size: 0.11rem;
-  background: var(--q-gb-bg-c-18);
+  background-color: var(--q-gb-bg-c-21);
+  color: var(--q-gb-t-c-24);
   /*transform: translateY(3px);*/
   margin: 0 auto;
   justify-content:space-between;
-
   &.hidden_sport {
     display: none !important;
   }
