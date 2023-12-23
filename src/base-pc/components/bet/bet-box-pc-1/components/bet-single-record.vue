@@ -124,6 +124,7 @@
 import lodash from 'lodash'
  
 import { IconWapper } from 'src/components/icon'
+import { format_currency,formatTime } from "src/output/index.js"
  
 import { i18n_t } from "src/boot/i18n.js"
 

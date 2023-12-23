@@ -1,7 +1,6 @@
 <template>
   <!--当前投注-->
   <div class="relative-position bet-list-info">
-    asdasdasdnasdnaisndaosdaniosdnaosofinansiof
     <!-- 投注栏 1 -->
     <v-scroll-area ref="ref_bet_scroll_area_bet_list" position="bet_list" :observer_area="3" :observer_middle="true"
       class="bet-list">

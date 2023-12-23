@@ -69,6 +69,12 @@ export default {
       MatchCollect.set_match_collect_state(this.match_of_list, !match_state)
     },
     /**
+     * @description 全部联赛折叠
+     */
+    handle_all_ball_seed_fold () {
+      MatchFold.handler_fold_all_matchs_csid()
+    },
+    /**
      * @description 球种折叠
      */
     handle_ball_seed_fold() {

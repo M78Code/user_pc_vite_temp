@@ -120,6 +120,7 @@ import {
   LayOutMain_pc,
 } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
+import { mx_get_bet_simple } from "src/core/utils/project/module/bet-util.js";
 export default {
   components: {
     "match-date": MatchProcessFullVersionWapper,
@@ -128,6 +129,7 @@ export default {
   // mixins: [skt_data_list_recent],
   data() {
     return {
+      mx_get_bet_simple,
       recent_data: [], //列表数据
       match_ctr: MatchDetailsData,
       socket_name: "recent", // 接入socket的名称
