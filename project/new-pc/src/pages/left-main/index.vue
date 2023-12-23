@@ -3,10 +3,7 @@
 -->
 <template>
   <div class="c-main-menu column" :class="{ 'bet-menu-upd': LayOutMain_pc.layout_left_show == 'bet_history' }">
-
-    <div style="display:none;"> {{ MenuData.menu_data_version }} --- {{ BetData.bet_data_class_version }} -- {{
-      LayOutMain_pc.layout_version }} </div>
-
+    <div v-show="false">{{ MenuData.menu_data_version }}-{{ BetData.bet_data_class_version }}-{{ LayOutMain_pc.layout_version }}-{{LayOutMain_pc.layout_left_show }}</div>
     <div class="menu-wrap scroll-fixed-bg relative-position border-bottom">
       <div class="left-header-all">
         <!-- 昵称、余额 -->
@@ -36,11 +33,11 @@
       </div>
 
      
-      {{ LayOutMain_pc.layout_left_show }}
+     
       <div class="left-scroll-area">
         <!-- 菜单项 -->
         <v-scroll-area ref="ref_bet_scroll_area" position="menu" :observer_area="3"
-          v-show="LayOutMain_pc.layout_left_show == 'menu'" :observer_middle="LayOutMain_pc.layout_left_show == 'menu'">
+          v-if="LayOutMain_pc.layout_left_show == 'menu'" :observer_middle="LayOutMain_pc.layout_left_show == 'menu'">
           <!-- 滚动：头部 --------------------------------->
           <template v-slot:header>
             <div class="left-bg-box" :style="'height:'+LayOutMain_pc.layout_left_top"></div>
@@ -51,7 +48,6 @@
           </div>
         </v-scroll-area>
 
-        <div>sadasdasd</div>
         <!-- 投注栏 -->
         <div class="bet-box-pc-1" v-if="LayOutMain_pc.layout_left_show == 'bet_list'">
           <bet-box-wapper use_component_key="BetBoxYaZhouPC_1"  />
