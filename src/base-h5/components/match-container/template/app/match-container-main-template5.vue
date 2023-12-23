@@ -29,7 +29,7 @@
         <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="show_sport_title" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
+      <div v-if="show_sport_title" @click.stop :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span"> {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }}) </span>
       </div>
 
@@ -865,7 +865,7 @@ export default {
 
   /* **************联赛展示********************** -S*/
   .league {
-    height: 0.26rem;
+    height: 26px;
     border-radius: .08rem .08rem 0 0;
     // background-color: var(--q-gb-bg-c-34) !important;
 
