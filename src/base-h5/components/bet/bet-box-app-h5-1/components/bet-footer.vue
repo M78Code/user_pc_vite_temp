@@ -128,10 +128,6 @@ const set_special_state = computed(()=> status => {
   }
 })
 
-
-
-
-
 // 滑动投注
 const handle_silider = (e) => {
   // 不允许投注
@@ -151,8 +147,10 @@ const handle_silider = (e) => {
     }
     reset_silider()
   }
-  if (e.isFinal || e.distance.x > 256) {
-    reset_silider()
+  // 最大不能滑出滑动区域
+  if (e.distance.x > 256) {
+    fab_pos.value[0] = 255
+    silider.value.offset[0] = 255
     return
   }
   fab_pos.value[0] = e.distance.x
@@ -164,7 +162,7 @@ const reset_silider = () => {
   clearTimeout(timer);
   timer = setTimeout(() => {
     init_silider_position()
-  }, 300)
+  }, 50)
 }
 
 // 滑块初始化坐标
@@ -241,6 +239,7 @@ const set_confirm = () => {
 }
 
 onMounted(()=>{
+  timer = null
   init_silider_position()
 })
 
