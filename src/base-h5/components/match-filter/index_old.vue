@@ -717,7 +717,7 @@ if (type.value == 30) {
       font-size: 0.10rem;
       box-sizing: content-box;
       border: 2px solid transparent;
-      color:var(--q-gb-bg-c-6);;
+      color:var(--q-gb-t-c-10);
 
       .t-wrap {
         width: 0.14rem;
@@ -860,7 +860,13 @@ if (type.value == 30) {
       display: flex;
       align-items: center;
       font-size: .1rem;
-      color: var(--q-gb-t-c-26);
+      span {
+        display: inline-block;
+      }
+      div {
+        width: 0.28rem;
+        height: 0.2rem;
+      }
     }
   }
 
@@ -869,15 +875,6 @@ if (type.value == 30) {
     height: 0.2rem;
     margin-left: 0.08rem;
   }
-
-  .nums {
-
-    font-size: 0.14rem;
-    margin-left: 0.05rem;
-    // position: absolute;
-    right: 0.31rem;
-  }
-
   i {
     position: relative;
   }
@@ -1056,7 +1053,7 @@ if (type.value == 30) {
   }
 
   .nums {
-    color: var(--q-color-fs-color-110);
+    color: var(--q-gb-t-c-19);
   }
 
   .round-box {
