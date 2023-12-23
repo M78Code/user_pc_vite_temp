@@ -20,7 +20,6 @@ import { MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlay
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
 } from 'src/output/module/match-data-base.js'
-import matchDetail from "src/core/match-detail/match-detail-class.js";
 
 class MatchMeta {
 
@@ -63,8 +62,6 @@ class MatchMeta {
     this.is_ws_trigger = false
     // 防抖定时器
     this.debounce_timer = null
-    // 重置折叠对象
-    MatchFold.clear_fold_info()
     // 重置收藏对象
     MatchCollect.clear_collect_info()
   }
@@ -179,7 +176,7 @@ class MatchMeta {
     // 显示空数据页面  this.set_page_match_empty_status({ state: true });
     if (length < 1) return
     // 重置折叠对象
-    MatchFold.clear_fold_info()
+    // MatchFold.clear_fold_info()
     // 赛事全量数据
     const match_list = result_mids.map((t, index) => {
       // 获取对应赛事数据
@@ -444,7 +441,7 @@ class MatchMeta {
    * @description 获取冠军赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_champion_match() {
-    MatchFold.clear_fold_info()
+    // MatchFold.clear_fold_info()
     MatchDataBaseH5.clear()
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
@@ -1051,7 +1048,7 @@ class MatchMeta {
     this.match_mids = lodash.uniq(custom_match_mids)
     
     // 重置折叠对象
-    MatchFold.clear_fold_info()
+    // MatchFold.clear_fold_info()
     MatchResponsive.clear_ball_seed_count()
     target_list.forEach((t, i) => {
       Object.assign(t, {

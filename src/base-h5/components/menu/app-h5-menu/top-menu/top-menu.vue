@@ -98,7 +98,8 @@ watch(UserCtr.user_version, () => {
  * @param {*} type 
  */
 const set_menu_lv1 = item => {
-    console.log(item)
+      // 重置折叠对象
+    MatchFold.clear_fold_info()
     MatchFold.set_all_csid_fold_status(true)
     MenuData.set_current_lv1_menu(item.mi);
     // MenuData.get_menu_lvmi_list(item.mi)
