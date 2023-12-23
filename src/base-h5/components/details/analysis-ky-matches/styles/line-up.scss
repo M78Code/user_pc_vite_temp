@@ -325,27 +325,39 @@
       background-color:var(--q-gb-bg-c-15);
       /*  头部 */
       .header {
-        height: 0.3rem;
-        display: flex;
-        text-align: center;
+        display: grid;
+        grid-template-columns: 1fr 2fr 6fr 1fr;
+        grid-template-rows: 0.32rem;
+        justify-items: center;
         line-height: 0.32rem;
+        text-align: center;
+        overflow: hidden;
         padding: 0 0.1rem;
+        box-sizing: border-box;
         background-color: var(--q-gb-bg-c-15);
         color:  var(--q-analysis-text-color-22);
         border-bottom: 1px solid  var(--q-analysis-text-color-26);
         border-top: 1px solid var(--q-analysis-text-color-26);
         > div {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           color: var(--q-analysis-text-color-14);
           font-size: 0.1rem;
         }
       }
   
       .team-item {
-        display: flex;
-        align-items: center;
-        padding: 0 0 0 0.1rem;
+        display: grid;
+        grid-template-columns: 1fr 2fr 6fr 1fr;
+        justify-items: center;
+        overflow: hidden;
+        padding: 0 0.1rem;
         font-size: 0.13rem;
         height: 0.48rem;
+        line-height: .48rem;
         text-align: center;
         border-bottom: 1px solid  var(--q-analysis-text-color-24);
         &:nth-child(odd) {
@@ -353,17 +365,18 @@
         }
   
         >div {
+          width: 100%;
+          height: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 0.12rem;
+          text-align: center;
           color: var(--q-analysis-text-color-4) !important;
         }
       }
   
       .col1 {
-        
-  
         > img {
           width: 0.36rem;
           height: 0.348rem;
@@ -371,18 +384,17 @@
         }
       }
   
-      .col2 {
-        flex: 2;
-      }
+      // .col2 {
+      //   flex: 2;
+      // }
   
-      .col3 {
-        flex: 4;
-        text-align: left;
-        justify-content: start !important;
-      }
+      // .col3 {
+      //   flex: 4;
+      //   text-align: left;
+      //   justify-content: start !important;
+      // }
   
       .col4 {
-  
         &.end-btn > span {
           height: 0.2rem;
           line-height: 0.18rem;
