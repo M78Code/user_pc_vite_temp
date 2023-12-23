@@ -73,16 +73,7 @@
         </div>
         <!--队名及盘口区域-->
         <div class="col bet-play-team yb-fontsize13">
-          <!--卡赫利赛哈特 :class="{'bet-handicap': handicap_change}"-->
-          <label class="bet-team-handicap">
-            {{ item.handicap  }}
-             <!-- -- {{ item.handicap_attach }}- {{ item.show_handicap }} -->
-            <label class="yb-number-bold">
-              <span class="bet-handicap-color">{{ item.handicap }}</span>
-              <span v-if="item.show_handicap">{{ item.handicap_attach }}</span>
-            </label>
-
-          </label>
+          <label class="bet-team-handicap" v-html="item.handicap"></label>
           <!--+/1.5-->
            <!--【预约】-->
            <label class="appoint" style="margin-left:10px" v-if="ref_data.show_appoint">
