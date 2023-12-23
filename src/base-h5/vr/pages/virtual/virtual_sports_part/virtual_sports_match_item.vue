@@ -99,7 +99,8 @@
           </template>
            <!-- 玩法数量 -->
            <div v-if="match_item.mc" class="play-count">
-              {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}+ >`: i18n_t('footer_menu.more')}}
+              {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}`: i18n_t('footer_menu.more')}}
+              <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow"  />
             </div>
 
           <!--标准版赔率容器-->
@@ -195,6 +196,7 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { IconWapper } from 'src/components/icon'
 
 export default {
   // mixins:[betting,virtual_sports_m_item_mixin],
@@ -610,6 +612,7 @@ export default {
     'v-s-match-timer':v_s_match_timer,
     "odd-column-item":odd_column_item,
     'image-cache-load': ImageCacheLoad,
+    'icon-wapper': IconWapper,
   },
   watch:{
     other_status(n){
@@ -826,6 +829,10 @@ export default {
           color: #AFB3C8;
           text-align: right;
           padding-right: 0.1rem;
+          i {
+            transform: rotate(90deg);
+            font-size: 0.1rem;
+          }
       }
 
       .slide_icon {

@@ -101,7 +101,7 @@
     is_request:Boolean, //详情接口 是否请求中
     sportId:Number  //球类id
   });
-  
+  import { is_show_sr_flg } from "src/core/utils/project/module/other.js";
   const toggle_panel = ref(true); //比分扳显示|隐藏
   const data_loaded = ref(false); //刷新按钮动画开关
   

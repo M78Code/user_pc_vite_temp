@@ -12,7 +12,7 @@
         <q-resize-observer v-if="observer_area == 1 || observer_area == 3" @resize="on_header_change" :debounce="0" />
       </div>
       <!-- 中 ------------------->
-      <q-scroll-area :visible="true" ref="ref_bet_scroll_area_bet_list"
+      <q-scroll-area :visible="true" ref="ref_v_scroll_area"
         :thumb-style="{ right: is_iframe ? '-8px' : '-10.5px' }" class="fit v-scrollarea">
         <q-scroll-observer @scroll="on_scroll" />
         <div class="middle-content" :style="{
@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue"
+import { ref,  onMounted, onUnmounted } from "vue"
 import { useRouter } from "vue-router";
 
 import {LayOutMain_pc } from 'src/output/index.js'
@@ -59,7 +59,7 @@ const props = defineProps({
 // 是否内嵌
 const is_iframe = ref(utils_info.is_iframe)
 
-const ref_bet_scroll_area_bet_list = ref(null);
+const ref_v_scroll_area = ref('ref_v_scroll_area');
 const header_height = ref(0);
 const middle_height = ref(0);
 // 底部区域位置样式
@@ -126,7 +126,7 @@ const on_footer_change = ({ height }) => {
 const set_footer_position = () => {
   // 监听滚动变化触发逻辑
   if (props.observer_middle) {
-    let left_height = LayOutMain_pc.layout_content_height;
+    let left_height = LayOutMain_pc.layout_content_height ;
     //mac上面
     let dis = 5;
     if (/macintosh|mac os x/i.test(navigator.userAgent)) {
@@ -144,12 +144,14 @@ const set_footer_position = () => {
     } else {
       // 否则设置距离顶部距离
       footer_position.value = {
-        top: scroll_footer_top + "px",
+        top:  scroll_footer_top + "px",
         bottom: "auto",
       };
     }
     // 最后再次设置滚动位置
-    set_scroll_position([scroll_footer_top, 0]);
+    // set_scroll_position([scroll_footer_top, 0]);
+    
+    set_scroll_position([scroll_footer_top,'vertical']);
   } else {
     footer_position.value = {
       bottom: "0px",
@@ -167,7 +169,6 @@ const on_scroll = (position) => {
 }
 // 设置滚动位置
 const set_scroll_position = (position) => {
-  // ref_bet_scroll_area_bet_list.value.setScrollPosition(position[0], position[1])
 }
 
 onMounted(() => {
