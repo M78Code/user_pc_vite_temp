@@ -269,7 +269,7 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
         position: relative;
 
         .number {
-          color: var(--q-analysis-text-color-21);
+          color: var(--q-analysis-text-color-20);
           font-size: 0.12rem;
 
           letter-spacing: 0;
@@ -393,7 +393,7 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
         justify-content: flex-end;
 
         span {
-          color: var(--q-analysis-text-color-21);
+          color: var(--q-analysis-text-color-20);
           font-size: 0.12rem;
 
           text-align: center;
@@ -433,7 +433,7 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
         display: flex;
         align-items: center;
         width: 0.2rem;
-        color: var(--q-analysis-text-color-21);
+        color: var(--q-analysis-text-color-20);
         span {
 
           font-size: 0.12rem;

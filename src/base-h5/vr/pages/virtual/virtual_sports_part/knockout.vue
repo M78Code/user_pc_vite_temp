@@ -21,23 +21,33 @@
         <template v-if="list_data[0].list">
           <div class="left_contend">
             <template v-for="(troops, index) in item.list" :key="index">
-              <div class="team" >
-                <div class="number">{{ String.fromCharCode(+troops.ranking_index +65) }}</div>
-                <div class="name">
-                  <div class="ellipsis yb-absolute-fit">{{ troops.homeName }}</div>
+              <div class="team_box">
+                <div class="left">
+                  <div class="number">{{ String.fromCharCode(+troops.ranking_index +65) }}</div>
                 </div>
-                <div class="score">{{ troops.homeScore[0] || '-'}}</div>
-                <div class="score">{{ troops.homeScore[1] || '-' }}</div>
-                <div class="score">{{ troops.homeScore[2] || '-'}}</div>
-              </div>
-              <div class="team" v-if="tab_index>=0">
-                <div class="number" style="opacity: 0">{{ +troops.ranking_index + 1 }}</div>
-                <div class="name">
-                  <div class="ellipsis yb-absolute-fit">{{ troops.awayName }}</div>
+                <div class="right">
+                  <div class="team" >
+                    <div class="name">
+                      <div class="ellipsis yb-absolute-fit">{{ troops.homeName }}</div>
+                    </div>
+                    <div class="score-box">
+                      <div class="score">{{ troops.awayScore[0] || '-'}}</div>
+                      <div class="score">{{ troops.awayScore[1] || '-'}}</div>
+                      <div class="score">{{ troops.awayScore[2] || '-'}}</div>
+                    </div>
+                  </div>
+                  <div class="team" v-if="tab_index>=0">
+                    <!-- <div class="number" style="opacity: 0">{{ +troops.ranking_index + 1 }}</div> -->
+                    <div class="name">
+                      <div class="ellipsis yb-absolute-fit">{{ troops.awayName }}</div>
+                    </div>
+                    <div class="score-box">
+                      <div class="score">{{ troops.awayScore[0] || '-'}}</div>
+                      <div class="score">{{ troops.awayScore[1] || '-'}}</div>
+                      <div class="score">{{ troops.awayScore[2] || '-'}}</div>
+                    </div>
+                  </div>
                 </div>
-                <div class="score">{{ troops.awayScore[0] || '-'}}</div>
-                <div class="score">{{ troops.awayScore[1] || '-'}}</div>
-                <div class="score">{{ troops.awayScore[2] || '-'}}</div>
               </div>
             </template>
           </div>
@@ -55,19 +65,14 @@
         </template>
       </div>
       <div class="main-finals" v-if="list_data.length == 1 && !list_data[0].list">
+      <!-- <div class="main-finals"> -->
         <div class="finals-team">
-          <!-- <img  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/wwwassets/bw3/svg/finals.svg`" alt=""> -->
-          <img  :src="`/${project_name}image/svg/finals.svg`" alt="">
           <span>{{ list_data[0].homeName }}</span>
         </div>
         <div class="middle">
-          <!-- <img src="image/wwwassets/bw3/images/v-s-finals.png" alt=""> -->
-          <img  :src="`/${project_name}image/svg/v-s-finals.svg`" alt="">
-          <span>VS</span>
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/finals.svg`" alt="">
         </div>
         <div class="finals-team">
-          <!-- <img  src="image/wwwassets/bw3/svg/finals.svg" alt=""> -->
-          <img  :src="`/${project_name}/image/svg/finals.svg`" alt="">
           <span>{{ list_data[0].awayName }}</span>
         </div>
       </div>
@@ -82,9 +87,9 @@
 </template>
 
 <script>
-import { LOCAL_PROJECT_FILE_PREFIX,calc_win, project_name, i18n_t } from 'src/output/index.js'
 import { api_v_sports } from "src/base-h5/vr/api";
 import no_data from "src/base-h5/vr/components/common/no_data.vue";
+import { LOCAL_PROJECT_FILE_PREFIX,calc_win, project_name, i18n_t } from 'src/output/index.js'
 
 export default {
   name: "knockout",
@@ -106,7 +111,6 @@ export default {
         {name: i18n_t('virtual_sports.semifinals'), key: 'SEMIFINAL'},
         {name: i18n_t('virtual_sports.finals'), key: 'FINAL'}
       ],
-      // tab_index: -1,
       tab_index: -1,
       visible: false,
       no_data: false,
@@ -124,9 +128,10 @@ export default {
       immediate: true
     }
   },
-  created() {
-    this.list_data = [{"list":[{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065700105539587","awayScore":["3"],"homeName":"阿根挺少年队","homeNameCode":"125065699660943363","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":0},{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125019543669067779","awayScore":["1"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125065700134899720","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":1}]},{"list":[{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065699941961731","awayScore":["2"],"homeName":"阿拉维预备","homeNameCode":"125065699677720578","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":2},{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065699195375619","awayScore":["2"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125065699178598404","homeScore":["0"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":3}]},{"list":[{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065700524969987","awayScore":["2"],"homeName":"卡利阿美利加","homeNameCode":"125065700814376965","homeScore":["0"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":4},{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065699711275012","awayScore":["0"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125065699199569922","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":5}]},{"list":[{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065699145043971","awayScore":["1"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125019543769731075","homeScore":["0"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":6},{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065700139094019","awayScore":["1"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125065700533358594","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":7}]}]
-  },
+  // mounted() {
+  //   this.tab_index = 0;
+  //   this.list_data = [{"list":[{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065700105539587","awayScore":["3"],"homeName":"阿根挺少年队","homeNameCode":"125065699660943363","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":0},{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125019543669067779","awayScore":["1"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125065700134899720","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":1}]},{"list":[{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065699941961731","awayScore":["2"],"homeName":"阿拉维预备","homeNameCode":"125065699677720578","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":2},{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065699195375619","awayScore":["2"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125065699178598404","homeScore":["0"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":3}]},{"list":[{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065700524969987","awayScore":["2"],"homeName":"卡利阿美利加","homeNameCode":"125065700814376965","homeScore":["0"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":4},{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065699711275012","awayScore":["0"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125065699199569922","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":5}]},{"list":[{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065699145043971","awayScore":["1"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125019543769731075","homeScore":["0"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":6},{"awayName":"Đua Xe Ngựa VR","awayNameCode":"125065700139094019","awayScore":["1"],"homeName":"Đua Xe Ngựa VR","homeNameCode":"125065700533358594","homeScore":["1"],"isSecond":"Y","phase":"Q8","tournamentId":"125019479991144450","ranking_index":7}]}]
+  // },
   setup() {
     return {
       LOCAL_PROJECT_FILE_PREFIX
@@ -155,10 +160,9 @@ export default {
           mmp: this.current_match.mmp,
           beginTime: this.current_match.mgt,
         }
-        console.log(params);
         // this.json_list  调试用的, data 才是真实数据
+        // this.visible = false
         let {code, data} = await api_v_sports.get_match_sorce(params)
-        this.visible = false
         this.check_if_there_tab = data
         // this.check_if_there_tab = this.json_list
         if (code == 200) {
@@ -230,8 +234,8 @@ export default {
   justify-content: center;
   align-items: center;
 
-  // background-color: red;
-  border-radius: 0.05rem;
+  border-radius: 0.08rem;
+  padding-bottom: 0.52rem;
 
   &.vi-lang {
     .tabs-bar {
@@ -244,11 +248,7 @@ export default {
   .tabs-bar {
     width: 100%;
     height: 0.44rem;
-    margin: 0.11rem 0.03rem 0.15rem 0.03rem;
-
-    // background-color: goldenrod;
-    // background-color: orangered !important;
-    // border: 1px solid paleturquoise;
+    margin: 0.08rem 0.03rem 0.12rem 0.03rem;
 
     display: flex;
     flex-direction: row;
@@ -264,19 +264,20 @@ export default {
       justify-content: space-evenly;
       font-size: 0.14rem;
 
-      // margin: 0 0.02rem;
-
       width: 24%;
-
-      // background-color: yellow;
+      color: #AFB3C8;
+      font-size: 0.14rem;
+      font-weight: 500;
       i {
         width: 100%;
         height: 0.04rem;
-        border-bottom: 0.05rem solid #ccc;
+        border-bottom: 0.05rem solid #F2F2F6;
       }
       
       &.progress_bar {
         color: #179CFF;
+        font-size: 0.14rem;
+        font-weight: 600;
         i {
           border-bottom: 0.05rem solid #179CFF;
         }
@@ -285,303 +286,218 @@ export default {
   }
 	/*  赛事 */
   .gam_report {
-    position: relative;
+    // position: relative;
     min-height: 150px;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // background-color: palegoldenrod;
-    
   }
 
   .match-item {
     width: 100%;
-    // background-color: yellow;
     display: flex;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 0.2rem;
+    // margin-bottom: 0.2rem;
+
+    &:nth-child(n+2){
+      margin-top: 0.12rem;
+    }
 
     &:nth-last-child(1) {
 
     }
 
-    .right_side_win {
-      position: relative;
-      top: -0.05rem;
-      flex: 1;
-      height: 0.89rem;
-			/*  右边线条 */
-      .left-line {
-        width: 0.42rem;
-        height: 0.89rem;
-        display: flex;
-        align-items: center;
-        position: relative;
-
-        &:before {
-          content: '';
-          width: 55%;
-          height: 100%;
-
-          border-radius: 0 0.08rem 0.08rem 0;
-          border-left: none;
-          position: relative;
-        }
-
-        &:after {
-          content: '';
-          width: 45%;
-          height: 1px;
-
-          position: absolute;
-          right: 0;
-        }
-      }
-			/*  决赛 */
-      .final {
-        position: absolute;
-        right: 0;
-        font-size: 0.12rem;
-
-        width: 1rem;
-        height: 0.8rem;
-        flex-direction: column;
-        border-radius: 0.08rem;
-
-        &::after {
-          content: "";
-          pointer-events: none;
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 200%;
-          height: 200%;
-          -webkit-transform: scale(0.5);
-          transform: scale(0.5);
-          -webkit-transform-origin: left top;
-          transform-origin: left top;
-          border: 1px solid;
-          border-radius: 0.08rem;
-          overflow: hidden;
-        }
-
-        .number {
-
-          font-size: 0.2rem;
-        }
-      }
-    }
-
     .left_contend{
-
-      // background-color: yellowgreen;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-    
 
-      .team {
-        position: relative;
+      .team_box{
+        width: 2.29rem;
+        height: 0.8rem;
+        border-radius: 0.08rem;
         display: flex;
-        width: 2.2rem;
-        height: 0.4rem;
-        align-items: center;
+        flex-direction: row;
 
-        // background-color: paleturquoise;
-
-
-        font-size: 0.13rem;
-
-        &::after {
-          content: "";
-          pointer-events: none;
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 200%;
-          height: 200%;
-          -webkit-transform: scale(0.5);
-          transform: scale(0.5);
-          -webkit-transform-origin: left top;
-          transform-origin: left top;
-          border: 1px solid;
-          border-bottom: 0;
-          border-radius: 0.08rem 0.08rem 0 0;
-          overflow: hidden;
+        background-color: #F2F2F6;
+        
+        &:nth-child(n+2){
+          margin-top: 0.12rem;
         }
-
-        &:nth-of-type(odd) {
-// background-color: pink;
-          border-bottom: 0.01rem solid #ccc;
-
-          &:nth-child(2n){
-            background-color: red;
-          }
-
-        }
-
-        &:nth-child(2n) {
-          position: relative;
-          margin-bottom: 0.08rem;
-
-          &::before {
-            content: "";
-            pointer-events: none;
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 200%;
-            height: 200%;
-            -webkit-transform: scale(0.5);
-            transform: scale(0.5);
-            -webkit-transform-origin: left top;
-            transform-origin: left top;
-            border: 1px solid;
-            border-top: 0;
-            border-radius: 0 0 0.08rem 0.08rem;
-            overflow: hidden;
-          }
-
-          &::after {
-            content: '';
-            width: auto;
-            height: 1px;
-
-            position: absolute;
-            top: -0.01rem;
-            left: -0.69rem;
+        .left{
+          width: 0.39rem;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          .number {
+            color: #303442;
+            font-size: 0.16rem;
+            font-weight: 600;
           }
         }
 
-        .number {
-          position: relative;
-          z-index: 10;
-          width: 0.3rem;
-          padding-left: 0.1rem;
+        .right{
+          width: 1.78rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          .team {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
 
-          top: 0.19rem;
-          left: -0.02rem;
-
-          font-size: 0.2rem;
-        }
-
-        .name {
-          width: 0.9rem;
-          height: 100%;
-          line-height: 0.32rem;
-
-          .ellipsis {
-
+            width: 100%;
+            height: 100%;
+            align-items: center;
             font-size: 0.13rem;
+
+            > div {
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+            }
+
+            &:nth-of-type(odd) {
+              border-bottom: 0.01rem solid #E4E6ED;
+              &:nth-child(2n){
+                background-color: red;
+              }
+            }
+
+            &:nth-child(2n) {
+              // position: relative;
+              // margin-bottom: 0.08rem;
+            }
+            .name {
+              width: 0.9rem;
+              height: 100%;
+              line-height: 0.32rem;
+              .ellipsis {
+                color: #303442;
+                font-size: 0.14rem;
+                font-weight: 400;
+              }
+            }
+            .score-box{
+              width: 0.84rem;
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              .score {
+                width: 0.28rem;
+                text-align: center;
+                color: #303442;
+                font-size: 0.14rem;
+                font-weight: 500;
+              }
+            }
           }
-        }
-
-        .score {
-          width: 0.28rem;
-          text-align: center;
-
-          font-size: 0.12rem;
-
-          line-height: 0.14rem;
         }
       }
-
     }
+    .right_side_win {
+      // position: relative;
+      // top: -0.05rem;
+      // flex: 1;
+      // height: 0.89rem;
+			/*  右边线条 */
+      .left-line {
+        width: 0.44rem;
+        height: 0.94rem;
+        display: flex;
+        align-items: center;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+			/*  决赛 */
+      .final {
+        width: 0.82rem;
+        height: 0.80rem;
+        border-radius: 0.08rem;
+        background-color: #F2F2F6;
 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .name{
+          font-size: 0.14rem;
+          font-weight: 500;
+        }
+        .number {
+          font-size: 0.16rem;
+          font-weight: 600;
+        }
+      }
+    }
 		/*  战队信息 */
-
   }
 
+
+
+
+
+
   .main-finals {
+    width: 3.56rem;
+    height: .64rem;
+    background-color: #F2F2F6;
+    border-radius: .08rem;
+
     display: flex;
-    padding: 0 0.1rem;
-    margin-top: 0.55rem;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    // padding: 0 0.1rem;
+    margin-top: 0.24rem;
 
     .finals-team {
-      position: relative;
-      width: 1.4rem;
-      height: 0.8rem;
+      width: 1.42rem;
+      height: 0.4rem;
+
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-
-      border-radius: 0.08rem;
-
-      &::after {
-        content: "";
-        pointer-events: none;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 200%;
-        height: 200%;
-        -webkit-transform: scale(0.5);
-        transform: scale(0.5);
-        -webkit-transform-origin: left top;
-        transform-origin: left top;
-        border: 1px solid;
-        border-radius: 0.08rem;
-        overflow: hidden;
-      }
-
-      img {
-        width: 0.3rem;
-        height: 0.3rem;
-      }
-
+      
       span {
+        // width: .56rem;
+        // height: .20rem;
+        display: block;
+        color: #303442;
         font-family: PingFangSC-Regular;
-        font-size: 0.13rem;
+        font-size: 0.14rem;
+        font-weight: 400;
 
         line-height: 14px;
       }
     }
 
     .middle {
+      width: .64rem;
+      height: .64rem;
+
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 0.76rem;
-      position: relative;
 
       > img {
-        width: 0.7rem;
-        height: 0.7rem;
-        position: absolute;
-        top: -0.38rem;
-      }
-
-      > span {
-        font-family: DIN-BoldItalic;
-        font-size: 0.2rem;
-
-        text-align: center;
-        line-height: 14px;
-        position: relative;
-        top: 0.06rem;
-      }
-
-      &:after {
-        content: '';
-        width: 100%;
-        height: 1px;
-
-        position: relative;
-        top: -0.17rem;
-      }
-
-      &:before {
-        content: '';
-        width: 1px;
-        height: 0.1rem;
-
-        position: relative;
-        top: -0.03rem;
+        width: .6309rem;
+        height: .5438rem;
       }
     }
   }
