@@ -481,7 +481,7 @@ const lv_2_click_wapper_1 = (detail = {}) => {
   // let { euid } = BaseData.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`];
   // 当前 pid 和 orpt
   // let lv2_mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`];
-
+  
   let root = jinri_zaopan_.value;
   let config = {
     root,
@@ -553,80 +553,7 @@ const lv_2_click_wapper_1 = (detail = {}) => {
  */
 const lv_2_click_wapper_2 = (detail = {}) => {
   let { lv1_mi } = detail;
-  // console.log(lv1_mi,jinri_zaopan)
-
-  // console.warn("lv_2_click_wapper_2-------- 常规赛种   （含娱乐）  的 冠军玩法     点击-----------",BaseData)
-console.log(BaseData)
-  let lv2_mi = "";
-  // 获取 二级菜单id
-  if (Object.keys(BaseData.commn_sport_guanjun_obj).length) {
-    lv2_mi = BaseData.commn_sport_guanjun_obj[`mi_${lv1_mi}`]["mi"];
-  }
-
-  // 父级euid
-  // let euid;
-  // 娱乐
-  // if (lv1_mi==118) {
-  //   // 娱乐冠军写死
-  //   euid = '3020112' || BaseData.mi_info_map[`mi_${lv2_mi}`].euid;
-  // }else{
-  //   euid = BaseData.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`].euid
-  // }
-  // let { euid } = BaseData.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`];
-
-  let config = {
-    root: jinri_zaopan_.value,
-    lv1_mi,
-    lv2_mi,
-    sports: "common",
-    guanjun: "common-guanjun",
-    mid_menu_show: {
-      list_filter_date: jinri_zaopan_.value == 3,
-    },
-  };
-  // 当前 pid 和 orpt
-  // let lv2_mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`];
-  // 如果
-  if (jinri_zaopan_.value != 3) {
-    let base_params = {
-      cuid: UserCtr.get_uid(), // ??????
-      selectionHour: "", // $store.state.filter.open_select_time,
-      sort: "", // vx_match_sort,
-      apiType: 1,
-      // orpt: 18,
-      sportId: "",
-    };
-    let csid = "" + (1 * lv1_mi - 100);
-    // 没有中间菜单
-    let mid_menu_refer_params = {
-      begin_request: true,
-      is_collect: false,
-      route: "list",
-      root: "400",
-      sports: "common",
-      guanjun: "common-guanjun",
-      // 列表队列 接口
-      match_list: {
-        api_name: "post_league_list",
-        params: {
-          ...base_params,
-          // ...lv2_mi_info,
-          // orpt: lv2_mi_info.orpt || base_params.orpt,
-          // pids: lv2_mi_info.pids,
-          // euid,
-          sportId: csid,
-        },
-      },
-      //
-      bymids: {
-        api_name: "",
-        api_type: "",
-        params: {},
-      },
-    };
-    config.mid_menu_refer_params = mid_menu_refer_params;
-  }
-  lv_2_click_common(config);
+  MenuData.set_menu_current_mi(lv1_mi)
 };
 /**
  *      电竞    子菜单     点击

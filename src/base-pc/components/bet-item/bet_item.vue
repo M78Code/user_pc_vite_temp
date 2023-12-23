@@ -4,6 +4,7 @@
  * @Description: 投注项优化
 -->
 <template>
+  <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div
     v-if="
       ol_data_item &&
@@ -16,6 +17,7 @@
       bet_tpl,
       odds_lift,
       version_name,
+      BetData.bet_oid_list.includes(ol_data_item.oid) ? 'active' : '',
       `csid${match?.csid}`,
       ![367, 368, 369, 7, 20, 74, 103, 241, 341, 342, 343, 236, 344].includes(
         lodash.get(play_data, 'hpid') * 1
@@ -90,6 +92,8 @@
 import lodash from "lodash";
 import { useGetItem } from "./bet_item_hooks.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
+import { MenuData } from 'src/output/module/menu-data.js'
+import BetData from "src/core/bet/class/bet-data-class.js";
 const props = defineProps({
   // 当前玩法信息
   play_data: Object,
@@ -185,18 +189,29 @@ const {
  */
  const bet_click_ol = () => {
   const {oid,_hid,_hn,_mid } = ol_data_item.value
-  let params = {
-    oid, // 投注项id ol_obj
-    _hid, // hl_obj 
-    _hn,  // hn_obj
-    _mid,  //赛事id mid_obj
-  }
-  let other = {
-    is_detail: true,
-    // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
-    // 根据赛事纬度判断当前赛事属于 那种投注类型
-    bet_type: 'common_bet',
-   
+  let bet_type = 'common_bet'
+    if(MenuData.is_esports()){
+        bet_type ="esports_bet"
+    }else if(MenuData.is_kemp()){
+        bet_type ="guanjun_bet"
+    }else if(MenuData.is_vr()){
+        bet_type ="vr_bet"
+    }
+    let params = {
+      oid, // 投注项id ol_obj
+      _hid, // hl_obj 
+      _hn,  // hn_obj
+      _mid,  //赛事id mid_obj
+    }
+    let other = {
+      is_detail:  true,
+      // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
+      // 根据赛事纬度判断当前赛事属于 那种投注类型
+      bet_type,
+      // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+      device_type: 2,  
+      // 数据仓库类型
+      match_data_type: "pc_detail",
   }
   set_bet_obj_config(params,other)
 };
@@ -249,5 +264,9 @@ const {
 .bet-front {
   color: var(--qq--theme-color-handicap-item-title);
   font-size: 12px;
+}
+.active {
+  background: var(--q-gb-bg-c-13);
+  color: var(--q-gb-t-c-18);
 }
 </style>
