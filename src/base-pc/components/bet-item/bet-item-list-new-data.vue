@@ -403,4 +403,8 @@ onUnmounted(() => {
 .left_cell {
   text-align: left !important;
 }
-</style>src/core/format/common/module/format-odds.jssrc/core/format/common/module/format-odds-conversion-mixin.js
+.active {
+  background: var(--q-gb-bg-c-13);
+  color: var(--q-gb-t-c-18);
+}
+</style>

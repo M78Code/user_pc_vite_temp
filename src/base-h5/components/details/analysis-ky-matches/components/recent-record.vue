@@ -27,8 +27,8 @@
     </div>
     <template v-for="(item, index) in recent_record_data" :key="index+'team'">
       <div class="team-recent" >
-        <div>
-          <template v-if="index == 0">
+        <div class="team-image-box">
+          <template>
             <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
             <team-img :type="0" :csid="lodash.get(get_detail_data,'csid')" :url="lodash.get(get_detail_data, 'mhlu[0]')" :fr="lodash.get(get_detail_data, 'frmhn[0]')" :size="22"></team-img>
             <team-img v-if="lodash.get(get_detail_data,'mhlu.length') > 1" :type="0" :csid="lodash.get(get_detail_data,'csid')" :url="lodash.get(get_detail_data,'mhlu[1]')" :fr="lodash.get(get_detail_data,'frmhn[1]')" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
@@ -66,149 +66,152 @@ import { i18n_t } from "src/boot/i18n.js";
 import lodash from "lodash"
 
 
-const get_detail_data = ref({
-        csid: '1',
-        mid: '1',
-    })
+const get_detail_data = computed(()=>{
+  if(props.detail_data){
+    return lodash.cloneDeep()
+  }else{
+    return {
+      csid: '1',
+      mid: '1',
+    }
+  }
+})
 //国际化
+const props = defineProps({
+  detail_data: {
+    type: Object,
+    default: ()=>({})
+  }
+})
 
-
-// 无网络展示组件
-// import no_data from "src/project/components/common/no-data";
-
-  // components: {
-  //   "public-form": public_form,
-  //   "no-data": no_data,
-  //   "team-img": team_img,
-  // },
-  const tab_index = ref(-1)
-  const radio_button_index = ref(0)
-  const progress_bar = ref(false)
-  const tab_radio_button = ref([
-    // TODO: 国际化 后续修改调整
-    {name: `${i18n_t('analysis_football_matches.near')}5`, index: 5},
-    {name: `${i18n_t('analysis_football_matches.near')}10`, index: 10},
-    {name: `${i18n_t('analysis_football_matches.near')}15`, index: 15},
-  ])
-  const if_the_selected = ref([false, false])
-  const tab_check_box = ref([
-    // TODO: 国际化 后续修改调整
-    i18n_t('analysis_football_matches.same_game'),
-    i18n_t('analysis_football_matches.same_host_guest')
-  ])
-  const flag = ref(0)
-  const cps = ref(5)
-  const recent_record_data = ref([])
-  let arr_ = ref([])
-  const no_data = ref(false)
-  const route = useRoute()
+const tab_index = ref(-1)
+const radio_button_index = ref(0)
+const progress_bar = ref(false)
+const tab_radio_button = ref([
+  // TODO: 国际化 后续修改调整
+  {name: `${i18n_t('analysis_football_matches.near')}5`, index: 5},
+  {name: `${i18n_t('analysis_football_matches.near')}10`, index: 10},
+  {name: `${i18n_t('analysis_football_matches.near')}15`, index: 15},
+])
+const if_the_selected = ref([false, false])
+const tab_check_box = ref([
+  // TODO: 国际化 后续修改调整
+  i18n_t('analysis_football_matches.same_game'),
+  i18n_t('analysis_football_matches.same_host_guest')
+])
+const flag = ref(0)
+const cps = ref(5)
+const recent_record_data = ref([])
+let arr_ = ref([])
+const no_data = ref(false)
+const route = useRoute()
 onMounted(() => {
   get_list()
 })
   
-    // mhid   主队id   mhn 主队名称
-    // maid   客队id   man 客队名称
-  const match_id = computed(() => {
-    // 赛事id TODO: 后续修改调整 route get_detail_data
-    return route.params.mid || get_detail_data.value.mid
-  })
-  // 复选框 点击事件
-  const checkBox_click = (index) => {
-      if_the_selected.value[index] = !if_the_selected.value[index]
-      for (let i=0; i < if_the_selected.value.length; i++) {
-        if(if_the_selected.value[0] && if_the_selected.value[1]){
-          flag.value = 3;
-          break
-        }else if(index==0 && if_the_selected.value[index] || index==1 && if_the_selected.value[0]){
-          flag.value = 1;
-          break
-        }else if(index==1 && if_the_selected.value[index] || index==0 && if_the_selected.value[1]){
-          flag.value = 2;
-          break
-        }else{
-          flag.value = 0;
-        }
+  // mhid   主队id   mhn 主队名称
+  // maid   客队id   man 客队名称
+const match_id = computed(() => {
+  // 赛事id TODO: 后续修改调整 route get_detail_data
+  return route.params.mid || get_detail_data.value.mid
+})
+// 复选框 点击事件
+const checkBox_click = (index) => {
+    if_the_selected.value[index] = !if_the_selected.value[index]
+    for (let i=0; i < if_the_selected.value.length; i++) {
+      if(if_the_selected.value[0] && if_the_selected.value[1]){
+        flag.value = 3;
+        break
+      }else if(index==0 && if_the_selected.value[index] || index==1 && if_the_selected.value[0]){
+        flag.value = 1;
+        break
+      }else if(index==1 && if_the_selected.value[index] || index==0 && if_the_selected.value[1]){
+        flag.value = 2;
+        break
+      }else{
+        flag.value = 0;
       }
-      get_list()
-      // TODO: 后续修改调整
-      $forceUpdate()
     }
-  const radioButton = (item, index) => {
-      radio_button_index.value = index
-      cps.value = item.index
-      get_list()
-    }
-    // 初始化获得数据
-  const get_list = async () => {
-    try {
-      let parameter = {
-        // 1940891  赛事ID
-        mid: match_id.value,
-        // 0 = 默认，1=同联赛, 2= 同主客
-        flag: flag.value,
-        // 显示数量： 5场，10场，15场。
-        cps: cps.value
-      }
-      let {code , data} = await api_analysis.get_team_vs_other_team(parameter)
-      if(code == 200 && data != null) {
-        let grouped_collection = [
-          {
-            new_recent_record_data:[],
-            // TODO: 国际化后续修改调整
-            records_list:[
-              {success: 0, name: i18n_t('analysis_football_matches.victory')},
-              {flat: 0, name: i18n_t('analysis_football_matches.flat')},
-              {lose: 0, name: i18n_t('analysis_football_matches.negative')},
-            ]
-          },
-          {
-            new_recent_record_data:[],
-            records_list:[
-              {success: 0, name: i18n_t('analysis_football_matches.victory')},
-              {flat: 0, name: i18n_t('analysis_football_matches.flat')},
-              {lose: 0, name: i18n_t('analysis_football_matches.negative')},
-            ]
-          }
-        ] // host_team_id
-        let host_team_id = data[0].teamGroup
-        data.map( (data_item) => {
-          if(host_team_id == data_item.teamGroup) {
-            grouped_collection[0].new_recent_record_data.push(data_item)
-          }else{
-            grouped_collection[1].new_recent_record_data.push(data_item)
-          }
-        })
-        let arr = [
-              {success: 0, name: i18n_t('analysis_football_matches.victory')},
-              {flat: 0, name: i18n_t('analysis_football_matches.flat')},
-              {lose: 0, name: i18n_t('analysis_football_matches.negative')},
-            ]
-        processing_score(grouped_collection)
-        recent_record_data.value= grouped_collection
-
-        no_data.value = false
-      } else {
-        no_data.value = true
-      }
-    } catch (error) {
-      no_data.value = true
-      console.error(error);
-    }
+    get_list()
+    // TODO: 后续修改调整
+    $forceUpdate()
   }
-    // 加工 胜 平 负的数量
-  const processing_score = (data) => {
-    data.forEach((main_item)=>{
-      main_item.new_recent_record_data.forEach((item)=>{
-        if(item.result == 4){
-          main_item.records_list[0].success = ++main_item.records_list[0].success
-        }else if(item.result == 3){
-          main_item.records_list[2].lose = ++main_item.records_list[2].lose
+const radioButton = (item, index) => {
+    radio_button_index.value = index
+    cps.value = item.index
+    get_list()
+  }
+  // 初始化获得数据
+const get_list = async () => {
+  try {
+    let parameter = {
+      // 1940891  赛事ID
+      mid: match_id.value,
+      // 0 = 默认，1=同联赛, 2= 同主客
+      flag: flag.value,
+      // 显示数量： 5场，10场，15场。
+      cps: cps.value
+    }
+    let {code , data} = await api_analysis.get_team_vs_other_team(parameter)
+    if(code == 200 && data != null) {
+      let grouped_collection = [
+        {
+          new_recent_record_data:[],
+          // TODO: 国际化后续修改调整
+          records_list:[
+            {success: 0, name: i18n_t('analysis_football_matches.victory')},
+            {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+            {lose: 0, name: i18n_t('analysis_football_matches.negative')},
+          ]
+        },
+        {
+          new_recent_record_data:[],
+          records_list:[
+            {success: 0, name: i18n_t('analysis_football_matches.victory')},
+            {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+            {lose: 0, name: i18n_t('analysis_football_matches.negative')},
+          ]
+        }
+      ] // host_team_id
+      let host_team_id = data[0].teamGroup
+      data.map( (data_item) => {
+        if(host_team_id == data_item.teamGroup) {
+          grouped_collection[0].new_recent_record_data.push(data_item)
         }else{
-          main_item.records_list[1].flat = ++main_item.records_list[1].flat
+          grouped_collection[1].new_recent_record_data.push(data_item)
         }
       })
-    })
+      let arr = [
+            {success: 0, name: i18n_t('analysis_football_matches.victory')},
+            {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+            {lose: 0, name: i18n_t('analysis_football_matches.negative')},
+          ]
+      processing_score(grouped_collection)
+      recent_record_data.value= grouped_collection
+
+      no_data.value = false
+    } else {
+      no_data.value = true
+    }
+  } catch (error) {
+    no_data.value = true
+    console.error(error);
   }
+}
+  // 加工 胜 平 负的数量
+const processing_score = (data) => {
+  data.forEach((main_item)=>{
+    main_item.new_recent_record_data.forEach((item)=>{
+      if(item.result == 4){
+        main_item.records_list[0].success = ++main_item.records_list[0].success
+      }else if(item.result == 3){
+        main_item.records_list[2].lose = ++main_item.records_list[2].lose
+      }else{
+        main_item.records_list[1].flat = ++main_item.records_list[1].flat
+      }
+    })
+  })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -397,4 +400,14 @@ onMounted(() => {
     }
   }
 }
+
+
+.team-image-box{
+  :deep(.team-img){
+    .img-style{
+      background-position-y: inherit !important;
+    }
+  }
+}
+
 </style>

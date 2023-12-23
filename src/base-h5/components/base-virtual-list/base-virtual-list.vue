@@ -3,7 +3,7 @@
 -->
 
 <template>
-    <div :class="['base-virtual-wrapper 1', className]" ref="wrapperRef" :style="getWrapperStyle" @scroll="onScroll">
+    <div :class="['base-virtual-wrapper', className]" ref="wrapperRef" :style="getWrapperStyle" @scroll="onScroll">
         <div class="base-virtual-inner" ref="innerRef" :style="getInnerStyle">
             <div class="base-virtual-list" :style="getListStyle" ref="virtualListRef">
                 <div class="base-virtual-item" v-for="(item, index) in clientData" 
@@ -44,7 +44,7 @@ const props = defineProps({
     },
     cache: {
         type: Number,
-        default: 2
+        default: 10
     },
     data: {
         type: Array,
@@ -78,7 +78,7 @@ const getWrapperStyle = computed(() => {
 
 const getInnerStyle = computed(() => {
     return {
-        height: `${unref(getTotalHeight)}px`,
+        // height: `${unref(getTotalHeight)}px`,
         width: "100%"
     };
 });
@@ -103,7 +103,7 @@ const getTotalHeight = computed(() => {
 
 // 当前屏幕显示的数量
 const clientCount = computed(() => {
-    return Math.ceil(props.height / props.itemHeight) + 5;
+    return Math.ceil(props.height / props.itemHeight);
 });
 
 // 当前屏幕显示的数据
@@ -116,6 +116,7 @@ const clientData = computed(() => {
 // 容器滚动处理
 const onScroll = (e) => {
     const { scrollTop } = e.target;
+    
     if (state.scrollOffset === scrollTop) return;
     const { cache, dynamic, itemHeight } = props;
     const cacheCount = Math.max(1, cache);
@@ -124,12 +125,15 @@ const onScroll = (e) => {
 
     const endIndex = Math.max(0, Math.min(unref(total), startIndex + unref(clientCount) + cacheCount));
 
+    // console.log(startIndex, cacheCount)
     if (startIndex > cacheCount) {
         startIndex = startIndex - cacheCount;
     }
 
     // 偏移量
     const offset = dynamic ? getCurrentTop(startIndex) : scrollTop - (scrollTop % itemHeight);
+
+    // console.log(state.scrollOffset, scrollTop, offset)
 
     Object.assign(state, {
         start: startIndex,
@@ -163,6 +167,7 @@ const getCurrentTop = (index) => {
     const lastIndex = state.cacheData.length - 1;
 
     if (Object.hasOwn(state.cacheData, index)) {
+        // console.log(index, state.cacheData[index].top, state.cacheData)
         return state.cacheData[index].top;
     } else if (Object.hasOwn(state.cacheData, index - 1)) {
         return state.cacheData[index - 1].bottom;

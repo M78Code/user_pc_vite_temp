@@ -14,7 +14,7 @@
 </template>
 <script setup>
 import SwitchNav from "./switch-nav.vue";
-import { ref, computed, onUnmounted, watch, nextTick } from "vue";
+import { ref, computed, onUnmounted, watch, nextTick, onMounted } from "vue";
 import { theme_list, theme_map } from "src/core/theme/"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { lang } from "src/base-h5/mixin/userctr";
@@ -28,87 +28,93 @@ import { is_esports } from 'src/base-h5/mixin/menu.js'
 /**
  * 首页switch wap
  */
-const switchData = ref([
-    {
-        defaultVal:UserCtr.standard_edition,
-        mark:'standard_edition',
-        list:[
-            {// 1 新手版
-                name:i18n_t('footer_menu.new_v'),
-                val:1,
-                changeFun:(val)=>{
-                    useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
-                    nextTick(()=>{
-                        UserCtr.set_standard_edition(val)
-                        VirtualList.set_is_show_ball(true)
-                        MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
-                    })
-                }
-            },
-            {
-                name:i18n_t('footer_menu.pro_v'),
-                val:2,
-                changeFun:(val)=>{
-                    useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
-                    UserCtr.set_standard_edition(val)
-                    if (project_name === 'app-h5') {
-                        nextTick(() => {
-                            !MenuData.is_collect() && MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+const get_switch_data = () => {
+    return [
+        {
+            defaultVal:UserCtr.standard_edition,
+            mark:'standard_edition',
+            list:[
+                {// 1 新手版
+                    name:i18n_t('footer_menu.new_v'),
+                    val:1,
+                    changeFun:(val)=>{
+                        useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
+                        nextTick(()=>{
+                            UserCtr.set_standard_edition(val)
+                            VirtualList.set_is_show_ball(true)
+                            MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
                         })
                     }
-                }
-            }
-        ]
-    },
-    {
-        defaultVal:sort_type,
-        mark:'sort_type',
-        list:[
-            {
-                //热门
-                name:i18n_t('footer_menu.hot'),
-                val:1,
-                isSort:1,
-                disabled:is_esports,
-                changeFun:(val,sort)=>{
-                    if(is_esports.value){//电竞 不会热门排序 和 盘口
-                        return;
+                },
+                {
+                    name:i18n_t('footer_menu.pro_v'),
+                    val:2,
+                    changeFun:(val)=>{
+                        useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
+                        UserCtr.set_standard_edition(val)
+                        if (project_name === 'app-h5') {
+                            nextTick(() => {
+                                !MenuData.is_collect() && MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+                            })
+                        }
                     }
-                    return UserCtr.set_sort_type(val);
                 }
-            },
-            {
-                //时间
-                name:i18n_t('footer_menu.time'),
-                val:2,
-                isSort:1,
-                changeFun:(val,sort)=>{
-                    return UserCtr.set_sort_type(val);
+            ]
+        },
+        {
+            defaultVal:sort_type,
+            mark:'sort_type',
+            list:[
+                {
+                    //热门
+                    name:i18n_t('footer_menu.hot'),
+                    val:1,
+                    isSort:1,
+                    disabled:is_esports,
+                    changeFun:(val,sort)=>{
+                        if(is_esports.value){//电竞 不会热门排序 和 盘口
+                            return;
+                        }
+                        return UserCtr.set_sort_type(val);
+                    }
+                },
+                {
+                    //时间
+                    name:i18n_t('footer_menu.time'),
+                    val:2,
+                    isSort:1,
+                    changeFun:(val,sort)=>{
+                        return UserCtr.set_sort_type(val);
+                    }
                 }
-            }
-        ]
-    },
-    {
-        defaultVal: UserCtr.theme,
-        mark:'theme',
-        list:theme_list.map((item)=>{
-            item.name = item.i18n[lang.value];
-            item.val = item.key;
-            item.changeFun = (val)=>{
-                // 切换主题色
-                UserCtr.set_theme(val)
-                return useMittEmit(MITT_TYPES.EMIT_THE_THEME_CHANGE)
-            }
-            return item;
-        }).reverse()
-    },
-])
+            ]
+        },
+        {
+            defaultVal: UserCtr.theme,
+            mark:'theme',
+            list:theme_list.map((item)=>{
+                item.name = item.i18n[lang.value];
+                item.val = item.key;
+                item.changeFun = (val)=>{
+                    // 切换主题色
+                    UserCtr.set_theme(val)
+                    return useMittEmit(MITT_TYPES.EMIT_THE_THEME_CHANGE)
+                }
+                return item;
+            }).reverse()
+        },
+    ]
+}
+
+const switchData = ref(get_switch_data())
+
 /**
  * @description 监听设置菜单里面 菜单的改变
  * @param {set_menu_init} number
  * @return 
  */
 watch(()=>set_menu_init.value,()=>{
+    switchData.value = get_switch_data()
     const mark = ['standard_edition','sort_type','theme']
       switchData.value = switchData.value.map((item,index)=>{
         item.defaultVal = UserCtr[mark[index]];

@@ -13,7 +13,7 @@
                 <template v-if="item.isSort">
                     <span>
                         <i v-for="(n,m) in sortJson" :key="m">
-                            <img :src="`${activeOn}-${sortVal}` === `${index}-${n.val}`?n.activeImg:n.img" />
+                            <img :src="`${activeOn}-${sortVal}` === `${index+1}-${n.val}`?n.activeImg:n.img" />
                         </i>
                     </span>
                 </template>
