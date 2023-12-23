@@ -57,7 +57,7 @@
           :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/machine_silver.png`"
           :style="{
             'z-index':
-              _.get(currentSlotData[currentSlotIndex], 'slotId') == 3 ? 2 : 1,
+              _.get(currentSlotData[currentSlotIndex], 'slotId') == 1 ? 2 : 1,
           }"
           alt=""
         />
@@ -75,7 +75,7 @@
           :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/machine_diamond.png`"
           :style="{
             'z-index':
-              _.get(currentSlotData[currentSlotIndex], 'slotId') == 1 ? 2 : 1,
+              _.get(currentSlotData[currentSlotIndex], 'slotId') == 3 ? 2 : 1,
           }"
           alt=""
         />
