@@ -18,7 +18,8 @@
           <div class="match-status-title">
             <img :src="in_progress" /> <span class="din-regular">进行中</span>
           </div>
-          <img :class="['expand_item', {collapsed: progress_seed_collapsed}]" :src="expand_item" alt="">
+          <!-- <img :class="['expand_item', {collapsed: progress_seed_collapsed}]" :src="expand_item" alt=""> -->
+          <div :class="['expand_item', {collapsed: progress_seed_collapsed}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
         </template>
         <!-- 未开赛 -->
         <template  v-if="+match.start_flag === 2">
@@ -455,6 +456,7 @@ export default {
       transform: rotate(-180deg);
       width: 20px;
       height: 16px;
+      margin-right: 0.06rem;
     }
     .collapsed{
       transform: rotate(0);
