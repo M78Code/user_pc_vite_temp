@@ -40,7 +40,7 @@
           <!--球类名称 赛前还是滚球 玩法名称-->
           {{i18n_data.sport_name}}
           <span
-            v-if="type_.seriesType != '3' && main.matchType != 4 && main.sportId != 1004">&thinsp;{{'123'}}&ensp;</span>
+            v-if="type_.seriesType != '3' && main.matchType != 4 && main.sportId != 1004">&thinsp;&ensp;</span>
           <template v-if="(main.sportId == 1001 || main.sportId == 1004) && type_.seriesType != '1'">&ensp;{{main.matchName}}{{main.matchDay}}&ensp;{{main.batchNo}}</template>
           {{main.playName}}
           <!-- 基准分 -->
@@ -119,7 +119,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";;
 //国际化
-
+import { get_server_file_path } from "src/core/file-path/file-path.js";
 const props =defineProps({
     main: {
       type: Object
@@ -193,7 +193,7 @@ const props =defineProps({
     "17": i18n_t("bet_record.cancel_type_17"),
     "20": i18n_t("bet_record.cancel_type_20")
   })
-  let lang = ref(props.type_.langCode ? (props.type_.langCode == 'zs' ? 'zh': props.type_.langCode) : 'zh')
+  let lang = ref(UserCtr.lang)
   // 3个需要特殊对应的国际化数据写到这里
   const i18n_data = ref({
     sport_name: i18n_t(`common_lang.${lang.value}.sport2`)[props.main.sportId],
