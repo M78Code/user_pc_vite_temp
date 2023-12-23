@@ -779,7 +779,6 @@ if (type.value == 30) {
   width: .16rem;
   height: .16rem;
   border-radius: 50%;
-  border: .01rem solid var(--q-gb-bg-c-8);
   display: flex;
   align-items: center;
   justify-content: center;
