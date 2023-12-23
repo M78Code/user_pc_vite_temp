@@ -69,19 +69,15 @@
         <div class="block" :class="{selected:standard_odd_status == 0}"></div>
         <div class="block" :class="{selected:standard_odd_status == 1}"></div>
       </div>
-      <!--标准版 才有的样式  动态图方向箭头 必须有第二页才会显示箭头-->
-      <template v-if="theme && theme.includes('theme-2')&&get_hp_list(1).length > 0">
-        <!-- <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i> -->
+      <!--标准版 才有的样式  动态图方向箭头-->
+      <template v-if="get_hp_list(1).length > 0">
         <img class="slide_icon slide_icon_l animate-effect" :src="slide_icon_0" alt="" v-if="is_show_scroll_dir(0)">
-        <!-- <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i> -->
         <img class="slide_icon slide_icon_r animate-effect-r" :src="slide_icon_0" alt="" v-if="is_show_scroll_dir(1)">
       </template>
-      <template v-else-if="get_hp_list(1).length>0">
+      <!-- <template v-else>
         <img class="slide_icon slide_icon_r animate-effect-r" :src="slide_icon_1" alt="" v-if="is_show_scroll_dir(1)">
         <img class="slide_icon slide_icon_l animate-effect" :src="slide_icon_1" alt="" v-if="is_show_scroll_dir(0)">
-        <!-- <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i>
-        <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i> -->
-      </template>
+      </template> -->
     </template>
     <!-- 标准版 波胆玩法盘口赔率组件 -->
     <div v-else-if="[18].includes(+lodash.get(current_tab_item, 'id'))" class="correct_style">

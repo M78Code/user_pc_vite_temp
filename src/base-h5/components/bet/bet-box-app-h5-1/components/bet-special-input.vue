@@ -154,6 +154,7 @@ const alertRules = (name) => {
     margin-top: 0.04rem;
     //margin-left: .08rem;
     padding: 0 .12rem;
+    color: var(--q-gb-t-c-18);
     .alert-rules {
       display: flex;
       align-items: center;
