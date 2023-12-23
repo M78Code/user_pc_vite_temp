@@ -75,6 +75,7 @@ import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES,compute_img_url } from "src/output/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 
 const emit = defineEmits(['navigate'])
 const $q = useQuasar()
@@ -101,7 +102,7 @@ const notice_info = reactive({
 })
 
 /** 是否内嵌 */
-const is_iframe = ref(is_iframe)
+const is_iframe = ref(utils_info.is_iframe)
 
 /** 内嵌版 收起左侧菜单 */
 const left_tabs = [

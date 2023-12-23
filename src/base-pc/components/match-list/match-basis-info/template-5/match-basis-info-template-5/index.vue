@@ -73,7 +73,7 @@
 <script setup>
 // import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
 // mixins:[match_basis_info_mixin],
-import { compute_local_project_file_path } from "src/output/index.js";
+import { compute_local_project_file_path, is_show_sr_flg } from "src/output/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'

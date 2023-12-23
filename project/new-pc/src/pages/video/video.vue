@@ -465,6 +465,7 @@ function refresh_data() {
               padding: 29px 40px 33px 40px;
             }
           }
+
       }
     }
 

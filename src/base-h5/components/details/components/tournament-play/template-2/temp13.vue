@@ -39,7 +39,7 @@
                                :class="[BetData.bet_oid_list.includes(append_single.oid)?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
                             <div class="bet-item-ky-container" :class="[{'click-bet-bgc':BetData.bet_oid_list.includes(append_single.oid)}]">  
                               <div class="single-name">
-                                 <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span>
+                                <!-- <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
                                 <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_14">
                                 {{append_single.on}}
                               </span>
@@ -53,7 +53,7 @@
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="bet-item-ky-container">  
                               <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
-                                 <span class="fz_14 ver-ali-top ">{{devote_value_d(append_single.ot)}}</span>
+                                <!-- <span class="fz_14 ver-ali-top ">{{devote_value_d(append_single.ot)}}</span> -->
                                 <span class="fz_14 odd-color">
                                 {{append_single.on}}
                               </span>
@@ -75,7 +75,7 @@
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="bet-item-ky-container">  
                               <div class="single-name" v-show="get_detail_data.csid != 1">
-                                 <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span>
+                                <!-- <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
                                 <span class="fz_14 night-style">
                                 {{append_single.on}}
                               </span>
@@ -102,7 +102,7 @@
                       <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                         <div class="bet-item-ky-container">  
                           <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
-                             <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span>
+                            <!-- <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
                             <span class="size-color fz_14 odd-color">
                             {{append_single.on}}
                           </span>
@@ -144,7 +144,7 @@
                                :class="[BetData.bet_oid_list.includes(append_single.oid)?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
                             <div class="bet-item-ky-container" :class="[{'click-bet-bgc':BetData.bet_oid_list.includes(append_single.oid)}]" >
                               <div class="single-name">
-                                 <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
+                                <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
                                 <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_14">
                                 {{append_single.on}}
                               </span>
@@ -158,7 +158,7 @@
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="bet-item-ky-container">  
                               <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">22
-                                 <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
+                                <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
                                 <span class="fz_14 odd-color">
                                 {{append_single.on}}
                               </span>
@@ -180,7 +180,7 @@
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="bet-item-ky-container">  
                               <div class="single-name" v-show="get_detail_data.csid != 1">
-                                 <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
+                                <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
                                 <span class="fz_14 night-style">
                                 {{append_single.on}}
                               </span>
@@ -204,7 +204,7 @@
                       <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                         <div class="bet-item-ky-container">  
                           <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
-                             <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
+                            <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
                             <span class="size-color fz_14 odd-color">
                             {{append_single.on}}
                           </span>
@@ -571,6 +571,10 @@ export default defineComponent({
 
   .odds-lock {
     line-height: 0.40rem;
+    .bet-item-ky-container {
+      padding-top: 0.12rem;
+      padding-bottom: 0.11rem;
+    }
   }
 
   .remark {
@@ -677,7 +681,6 @@ export default defineComponent({
   }
   .ver-ali-top {
     vertical-align: top;
-    margin-right: 0.03rem;
   }
 }
 .bet-item-ky-container {

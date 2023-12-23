@@ -556,7 +556,7 @@ class MenuData {
    */
   set_bet_category() {
     let type;
-    if (this.is_virtual_sport()) {
+    if (this.is_vr()) {
       type = 2; // 虚拟体育
     } else if (this.is_esports()) {
       type = 3; // 电竞
@@ -590,7 +590,7 @@ class MenuData {
    * @param {undefined} undefined
    * @return {undefined} undefined
    */
-  is_virtual_sport() {
+  is_vr() {
     return (
       this.menu_root == 300 || (this.match_list_api_config || {}).sports == "vr"
     );
@@ -606,6 +606,34 @@ class MenuData {
   }
   is_collect_kemp() {
     return this.is_collect && this.menu_root == 400
+  }
+  /**
+   * 是否选中了滚球
+   *  mi [number|string] 要比对的值
+  */
+  is_scroll_ball() {
+    return this._is_cur_mi(1, this.menu_root)
+  }
+  is_leagues() {
+    return false
+  }
+  /**
+   * 是否选中了今日
+   *  mi [number|string] 要比对的值
+  */
+  is_today(mi) {
+    return this._is_cur_mi(2, mi)
+  }
+  is_left_zaopan(mi) {
+    return this._is_cur_mi(203, mi)
+  }
+  //root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
+  //内部方法
+  _is_cur_mi(mi, param) {
+    if (param) {
+      return mi == param
+    }
+    return this.menu_root == mi
   }
   // is_multi_column(){
   //   return   this.match_list_api_config.is_multi_column ||false
@@ -680,8 +708,8 @@ class MenuData {
    * 计算当前菜单 是否显示  联赛过滤
    */
   compute_if_can_show_league_fliter() {
-    let state = !this.is_esports() && !this.is_virtual_sport();
-    // vx_layout_list_type!='collect' && !is_search_page &&!this.is_esports() && !menu_data.is_virtual_sport && !is_show_hot && get_global_switch.filter_switch
+    let state = !this.is_esports() && !this.is_vr();
+    // vx_layout_list_type!='collect' && !is_search_page &&!this.is_esports() && !menu_data.is_vr && !is_show_hot && get_global_switch.filter_switch
     return state;
   }
   /**
@@ -691,9 +719,9 @@ class MenuData {
   compute_if_can_show_sort() {
     ////  console.warn("冠军 ",this.is_guanjun() )
     ////  console.warn("电子竞技 ",this.is_esports() )
-    ////  console.warn("vr ",this.is_virtual_sport() )
-    let state = !this.is_esports() && !this.is_virtual_sport();
-    // !is_search_page && !this.is_esports() && !menu_data.is_virtual_sport && !is_show_hot &&!vx_show_filter_popup
+    ////  console.warn("vr ",this.is_vr() )
+    let state = !this.is_esports() && !this.is_vr();
+    // !is_search_page && !this.is_esports() && !menu_data.is_vr && !is_show_hot &&!vx_show_filter_popup
     return state;
   }
   /**
