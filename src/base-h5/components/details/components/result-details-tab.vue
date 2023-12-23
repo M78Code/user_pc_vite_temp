@@ -223,6 +223,7 @@ onUnmounted(() => {
   flex-wrap: nowrap;
   white-space: nowrap;
   overflow-x: auto;
+  color: var(--q-gb-t-c-18);
 }
 
 /*************** 选中的玩法集 *************** -S*/

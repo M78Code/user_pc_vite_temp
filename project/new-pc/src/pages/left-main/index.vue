@@ -83,7 +83,7 @@ import LeftMainMenu from "./menu/index.vue";
 import { BetBoxWapper } from "src/base-pc/components/bet";
 import { BetRecordViewWapper } from "src/base-pc/components/bet-record-view";
 // // 通屏垂直滚动
-import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue";
+import vScrollArea from "./v-scroll-area.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { MenuData, LayOutMain_pc } from "src/output/index.js";
 import { api_betting } from "src/api/index.js";
