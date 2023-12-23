@@ -43,7 +43,8 @@ import { IconWapper } from 'src/components/icon/index.js'
 
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
-console.log(globalAccessConfig,'globalAccessConfig');
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
+
 const img_search_icon = compute_local_project_file_path('/image/svg/search-icon.svg')
 const img_search_icon_y0 = compute_local_project_file_path('/image/svg/y0-search-icon.svg')
 
@@ -51,7 +52,7 @@ const img_search_icon_y0 = compute_local_project_file_path('/image/svg/y0-search
 /** 国际化 */
 
 /** 是否内嵌 */
-const is_iframe = ref(is_iframe);
+const is_iframe = ref(utils_info.is_iframe);
 
 /** stroe仓库 */
 const { searchReducer, menuReducer } = store.getState();

@@ -22,11 +22,8 @@ import { Platform } from "quasar";
 import { ref, onUnmounted } from 'vue'
 import { formatTime } from 'src/output/index.js'
 import { i18n_t } from "src/boot/i18n.js";
-import store from "src/store-redux/index.js";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+import { LOCAL_PROJECT_FILE_PREFIX,useMittEmit,MITT_TYPES } from "src/output/index.js"
 //国际化
-
-
   const props = defineProps({
     data_o: {
       type: Object,
@@ -54,11 +51,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
         text: () => orderno
       })
       clipboard.on('success', () => {
-        store.dispatch({
-          type: "SET_TEXT",
-          data: i18n_t('bet_record.copy_suc'),
-        });
-
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('bet_record.copy_suc'))
         // h5嵌入时Safari阻止弹窗
         if (!Platform.is.safari) {
           try {
