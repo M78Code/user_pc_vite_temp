@@ -90,7 +90,7 @@ const switchData = ref([
     },
     {
         defaultVal: UserCtr.theme,
-         mark:'theme',
+        mark:'theme',
         list:theme_list.map((item)=>{
             item.name = item.i18n[lang.value];
             item.val = item.key;
@@ -114,7 +114,7 @@ watch(()=>set_menu_init.value,()=>{
         item.defaultVal = UserCtr[mark[index]];
         return item
       })
-},{immediate:true})
+},{immediate:true,deep:true})
 
 </script>
 <style scoped lang="scss">

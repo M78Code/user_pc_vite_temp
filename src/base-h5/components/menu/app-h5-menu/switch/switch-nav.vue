@@ -27,6 +27,7 @@
     import asc2 from "./img/asc2.svg";
     import desc1 from "./img/desc1.svg";
     import desc2 from "./img/desc2.svg";
+    import UserCtr from "src/core/user-config/user-ctr.js"
     const sortJson = [//排序数据
         {
             val:1,
@@ -59,8 +60,9 @@
      * @return 
      */
     watch(()=>props.defaultVal,(val)=>{
+        console.log('valval',val)
         activeOn.value = val
-    })
+    },{immediate:true})
     /**
      * 点击事件
      * @param {*} val  值0 1
@@ -79,6 +81,8 @@
         if(activeOn.value === item.val||item.disabled)return;
         activeOn.value = item.val;
         callback(item.val,item);
+        //监听改变
+        UserCtr.set_menu_init_change()
     }
 </script>
 <style scoped lang="scss">

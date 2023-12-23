@@ -45,4 +45,7 @@ export default {
   'h5_back_img': {
     default: "h5_back_img",    
   },
+  'h5-kyapp-expand-lague': {
+    default: "h5-kyapp-expand-lague",    
+  },
 }
