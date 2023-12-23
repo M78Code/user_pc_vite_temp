@@ -960,6 +960,7 @@ export default {
     display: block;
     color: var(--q-gb-t-c-4);
     padding: 0.02rem 2% 0 2%;
+    margin-top: 0.02rem;
   }
 
   &.simple,

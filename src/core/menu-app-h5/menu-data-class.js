@@ -230,7 +230,9 @@ class MenuData {
     const obj = val?.mi?{}:{
       current_lv_1_menu_i:this.old_current_lv_1_menu_i || 2,
       current_lv_1_menu_mi:this.old_current_lv_1_menu_i || 2,
-      data_tab_index:0
+      data_tab_index:0,
+      data_time :'',
+      current_lv_3_menu:{field1:''}
       // current_lv_2_menu:{},
       // current_lv_2_menu_i:''
     }
@@ -362,6 +364,7 @@ class MenuData {
     this.set_menu_match_date()
     this.set_cache_class({
       data_tab_index:index,
+      current_lv_3_menu:{field1:time}
     });
     this.update();
   }

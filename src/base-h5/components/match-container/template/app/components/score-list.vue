@@ -51,10 +51,10 @@
               </div>
             </template>
           </div>
-                    <!-- <div class="row items-center basket-ball" :class="{ 'b-score-wrapper': match.csid != 14 }" -->
+          <!-- <div class="row items-center basket-ball" :class="{ 'b-score-wrapper': match.csid != 14 }" -->
           <div class="row items-center " :class="{ 'b-score-wrapper': match.csid != 14 }" v-if="[2, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
             <!--分差-->
-            <div class="row color18" style="margin-right:.1rem" v-if="[2].includes(+match.csid) && get_total_scores">
+            <div class="row color18" style="margin-right:.2rem" v-if="[2].includes(+match.csid) && get_total_scores">
               <div style="margin-right:.03rem">
                 {{ i18n_t('list.score-disparity') }}
               </div>
@@ -89,7 +89,7 @@
                 {{ i18n_t('list.total_pp_score_count') }}
               </span>
               <span v-if="[7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid) && get_total_scores" class="score-important">
-                {{ get_total_scores }}
+                <!-- {{ get_total_scores }} --> {{ total_games }}
               </span>
             </div>
 
@@ -420,8 +420,7 @@ const get_snooker_score_space_data = () => {
   let result = '';
   if (snoocker_s1.value) {
     result = `${snoocker_s1.value[1]}-${snoocker_s1.value[2]}[${+snoocker_s1.value[1] + +snoocker_s1.value[2]}]`;
-  }
-  else {
+  } else {
     let f = score_switch_handle(props.match);
     if (f.s1_score) {
       snoocker_s1.value = f.s1_score;
@@ -618,7 +617,7 @@ onUnmounted(() => {
       // line-height: 1;
       display: flex;
       // flex-shrink: 0;
-      justify-content: space-between;
+      // justify-content: space-between;
 
       .basket-ball {
         // color: var(--q-color-com-fs-color-29);

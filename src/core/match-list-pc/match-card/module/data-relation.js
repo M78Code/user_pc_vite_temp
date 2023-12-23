@@ -181,7 +181,7 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
       // 重置 赛事模板配置  结束
       reset_all_card_data();
     }
-    /**
+        /**
      * 哪种列表类型
      * 1. 列表数据类型为联赛列表   有未开赛 已开赛
      * 2. 列表数据类型为赛事列表   区分赛种

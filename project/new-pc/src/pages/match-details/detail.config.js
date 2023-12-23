@@ -413,7 +413,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    * @description 玩法列表数据处理--电竞和其他赛事通用
    */
   const get_match_details = (res) => {
-    debugger
     state.err_time = 0;
     state.match_details = [];
     state.data_loaded = true;
@@ -687,7 +686,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     MatchDataWarehouseInstance.set_match_details(state.match_infoData, data);
     let str =state.mid+'_'
     match_details_data_set([lodash.get(MatchDataWarehouseInstance.list_to_obj.mid_obj,str)]);
-    debugger
     state.handicap_state = "data";
     // 同步投注项
     if (!get_lang_change.value) {

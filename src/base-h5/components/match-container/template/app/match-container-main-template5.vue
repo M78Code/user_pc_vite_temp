@@ -29,7 +29,7 @@
         <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="show_sport_title" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
+      <div v-if="show_sport_title" @click.stop :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span"> {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }}) </span>
       </div>
 
@@ -834,7 +834,6 @@ export default {
     // border-bottom: 1px solid var(--q-gb-bg-c-19);
     // border-top: 1px solid var(--q-gb-bg-c-19);
     // border-color: var(--q-gb-bg-c-19) !important;
-    margin-top: 0.05rem;
     &.bottom {
       margin-top: 0.05rem;
     }
@@ -847,9 +846,9 @@ export default {
     height: 20px;
     border-radius: 0;
     font-size: 12px;
-    padding: 0 5px 0 20px;
+    padding: 0 5px 0 17px;
     background: var(--q-gb-bg-c-21);
-    line-height: 19px;
+    line-height: 20px;
     font-size: 11px;
     // margin-bottom: -.05rem;
     margin-top: 0;
@@ -865,7 +864,7 @@ export default {
 
   /* **************联赛展示********************** -S*/
   .league {
-    height: 0.26rem;
+    height: 26px;
     border-radius: .08rem .08rem 0 0;
     // background-color: var(--q-gb-bg-c-34) !important;
 
@@ -942,7 +941,7 @@ export default {
     padding: 4px 9px 0;
 
     .event-team {
-      padding: 8px 0;
+      padding: 8px 0 5px;
 
       .name {
         display: flex;
@@ -956,7 +955,6 @@ export default {
           background: var(--sys-feedback-success-success-400, #4AB06A);
           width: 4px !important;
           height: 4px;
-          position: absolute;
         }
 
         .logo {
@@ -1041,7 +1039,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: .01rem solid var(--q-gb-bd-c-4);
+      // border-bottom: .01rem solid var(--q-gb-bd-c-4);
       // padding: 4px 0 0;
 
       .right {
@@ -1049,11 +1047,30 @@ export default {
         justify-content: flex-end;
         align-items: center;
       }
+      :deep(.score-section){
+        height: 20px;
+        .scroll-container-w{
+          height: 100%;
+        }
+      }
       :deep(.score-se-inner){
         max-width: 100%;
+        height: auto;
         .score-se-inner2{
           display: flex;
           margin-left: -5px;
+          overflow-x: auto;
+          justify-content: space-between;
+          .score-fle-container-1{
+            position: relative;
+            top: 1px;
+          }
+          .b-score-wrapper{
+            flex-wrap: nowrap;
+            .mfo-title{
+              flex-shrink: 0;
+            }
+          }
         }
       }
     }

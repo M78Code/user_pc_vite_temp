@@ -63,23 +63,79 @@ let IS_FOR_NEIBU_TEST =    false
 
 
 
+export const PROJECT_MAP_WITH_DESCRIPTION = {
+  project_1: {
+   value:  "project_1",
+   description:"2021亚洲版 H5（旧版）"
+  }, 
+  project_2: {
+    value:  "project_2",
+    description:"2021亚洲版 PC（旧版）"
+   },     
+   project_3: {
+    value:  "yazhou-h5",
+    description:"2021亚洲-H5 重构版本  亚洲版 H5（新版)  "
+   },        
+   project_4: {
+    value:  "yazhou-pc",
+    description:"2021亚洲-PC 重构版本  亚洲版 PC（新版)  "
+   },   
+   project_5: {
+    value:  "app-h5",
+    description:"2023亚洲-H5  复刻版 H5  - KYAPP "
+   },   
+   project_6: {
+    value:  "new-pc",
+    description:"2023亚洲-PC     "
+   },   
+   project_7: {
+    value:  "ouzhou-pc",
+    description:"2023欧洲-PC   "
+   },   
+   project_8: {
+    value:  "ouzhou-h5",
+    description:"2023欧洲-H5  "
+   },   
+ 
+   activity: {
+    value:  "activity",
+    description:"topic 主题项目 ：活动 任务中心    "
+   },   
+   animation: {
+    value:  "animation",
+    description:"自研动画   "
+   },   
+   "client-sdk-dev": {
+    value:  "client-sdk",
+    description:"SDK 本地开发调试  "
+   },   
+   "client-sdk-build": {
+    value:  "client-sdk",
+    description:"SDK 打包  "
+   },   
+   "template-project": {
+    value:  "template-project",
+    description:"客户端单体小项目的 通用模板 "
+   },   
+ 
+ 
+ 
+  
+ 
+ 
+};
+
+ //数字对应的项目
+ let  PROJECT_MAP = {}
+
+for(let key in PROJECT_MAP_WITH_DESCRIPTION){
+  PROJECT_MAP[key] = PROJECT_MAP_WITH_DESCRIPTION[key]['value']
+}
+
+
+
   const RESOLVE_PROJECT_FN = (PROJECT) => {
-  //数字对应的项目
-  const PROJECT_MAP = {
-    // project_1: "-",        // 亚洲版 H5（旧版）
-    // project_2: "-",        // 亚洲版 PC（旧版）
-    "project_3": "yazhou-h5", // 亚洲版 H5（新版)  2021亚洲-H5
-    "project_4": "yazhou-pc", // 亚洲版 PC（新版)  2021亚洲-PC
-    "project_5": "app-h5",    // 复刻版 H5  - KYAPP  2023复刻-H5
-    "project_6": "new-pc",    // 亚洲版 pc           2023亚洲-PC
-    "project_7": "ouzhou-pc", // 欧洲版-PC        2023欧洲-PC
-    "project_8": "ouzhou-h5", // 欧洲版-H5        2023欧洲-H5
-    "activity": "activity",   // 活动  
-    "animation": "animation", // 动画
-    'client-sdk-dev': "client-sdk",   // SDK 本地开发调试
-    'client-sdk-build': "client-sdk", // SDK 本地开发调试
-    "template-project":"template-project"
-  };
+    
   //布局名字
   const PROJECT_NAME = PROJECT_MAP[PROJECT];
   //所有资源项目级别目录
@@ -131,7 +187,7 @@ const ENVSTR_MAP = {
 }
 
  
- const format_date=(value)=>{
+export  const format_date=(value)=>{
     let time = new Date(parseInt(value));
     let y = time.getFullYear();
     let m = (time.getMonth() + 1 + "").padStart(2, 0);

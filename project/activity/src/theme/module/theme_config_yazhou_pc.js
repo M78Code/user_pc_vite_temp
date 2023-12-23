@@ -237,10 +237,10 @@ const theme_different = {
     theme02_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_box_y0.svg))`,
   },
   "activity-btn-bg-img2": {
-    theme01: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_bonus.svg)`,
-    theme01_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_bonus_y0.svg))`,
-    theme02: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_bonus.svg)`,
-    theme02_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_bonus_y0.svg))`,
+    theme01: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_bonus_1.svg)`,
+    theme01_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_bonus_1_y0.svg))`,
+    theme02: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_bonus_1.svg)`,
+    theme02_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_bonus_1_y0.svg))`,
   },
 };
 
