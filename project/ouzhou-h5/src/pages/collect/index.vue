@@ -137,6 +137,7 @@ const changeMenu = (item) =>{
   MenuData.set_menu_mi(item.mi)
   MatchMeta.get_collect_match()
 }
+const mitt_list=[]
 onMounted(()=>{
   let tabList = tabData.value;
   if(!MenuData.menu_list.map((item)=>{return +item.mi}).includes(400)){
@@ -147,11 +148,12 @@ onMounted(()=>{
   const index = tabData.value.findIndex(n=>{return n.val == tabValue.value});
   on_update(tabData.value[index].val,1)
   if(scrollListRef.value) scrollListRef.value.reset(state.current_mi);
-  useMittOn(MITT_TYPES.EMIT_COLLECT_MATCH_OZ, on_update)
+  mitt_list.push(useMittOn(MITT_TYPES.EMIT_COLLECT_MATCH_OZ, on_update).off)
 })
 onUnmounted(() => {
   MenuData.set_collect_id('');
-  useMittOn(MITT_TYPES.EMIT_COLLECT_MATCH_OZ).off
+  mitt_list.forEach(i=>i())
+  // useMittOn(MITT_TYPES.EMIT_COLLECT_MATCH_OZ).off
   // timer.value && clearTimeout(timer.value);
 })
 </script>

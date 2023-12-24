@@ -107,6 +107,7 @@ onUnmounted(() => {
   bottom: 0;
   right: .2rem;
   z-index: 999;
+  background-size:100%;
   --private-transition-duration: 1s;
   transition: bottom var(--private-transition-duration);
   &.show{
