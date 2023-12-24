@@ -122,6 +122,7 @@ export default {
           this.history_records = data.records;
           this.result_page_info.total = +data.total
           this.history_alert = true;
+          this.result_page_info.current = 1;
         } else if (["0410505"].includes(code)) {
           // 活动突然挂维护时，触发下边方法，刷新活动页面，变成活动维护页面
           this.$emit("to_maintenance");

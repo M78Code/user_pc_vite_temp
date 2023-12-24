@@ -153,8 +153,13 @@ const handle_silider = (e) => {
     silider.value.offset[0] = 255
     return
   }
-  fab_pos.value[0] = e.distance.x
-  silider.value.offset[0] = e.distance.x
+  if(e.distance.x < 20) {
+    fab_pos.value[0] = 20
+    silider.value.offset[0] = 20
+  }else{
+    fab_pos.value[0] = e.distance.x
+    silider.value.offset[0] = e.distance.x
+  }
 }
 
 // 重置solider位置
@@ -197,6 +202,8 @@ const set_bet_single = () => {
   BetData.set_is_bet_single()
   // 电竞vr切换 单/串关 不跳转和设置一级菜单
   if(MenuData.is_esports() || MenuData.is_vr()){
+    BetData.set_clear_bet_info()
+    BetViewDataClass.set_clear_bet_view_config()
     // 后续优化逻辑 
   }else{
     // 切换到串关 进入到串关页面 

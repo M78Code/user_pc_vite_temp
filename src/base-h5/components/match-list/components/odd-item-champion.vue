@@ -114,7 +114,7 @@ const odd_status = computed(() => {
   }
 
   .odds {
-    color: var(--q-gb-t-c-20);
+    color: var(--q-gb-t-c-18);
     position: relative;
     font-weight: 600;
 

@@ -6,7 +6,7 @@
 <template>
   <div class='score-child-3 yb_ml12 yb_mr18 font-style row justify-between' v-if="detail_data.mmp != '0'">
     <!-- 坏球 好球 出局 上垒 -->
-    <div :class="['col-7', 'row', 'items-center']">
+    <div :class="['col-7', 'row', 'items-center']" v-if="PROJECT_NAME!='app-h5'">
       <div class="baseball-poi-w">
         <!--二垒-->
         <div class="poi" :class="{p:detail_data.mbtlp == 1}"></div>
@@ -83,6 +83,9 @@ export default {
     score_array() {
       return this.init_event();
     },
+    PROJECT_NAME(){
+      return window.BUILDIN_CONFIG.PROJECT_NAME
+    }
   },
   watch: {
     get_detail_msc_changed(curr) {

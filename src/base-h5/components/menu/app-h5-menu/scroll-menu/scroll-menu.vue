@@ -34,9 +34,7 @@
       </div>
 </template>
 <script setup>
-import { ref,reactive,onMounted,onUnmounted,computed ,nextTick,watch } from "vue";
-// import lodash_ from "lodash";
- import BaseData from "src/core/base-data/base-data.js";
+import { ref,reactive,onMounted,onUnmounted,computed ,nextTick } from "vue";
 import { compute_css_obj, MenuData } from "src/output/index.js";
 import {scrollMenuEvent} from "../utils";
 import MatchFold from 'src/core/match-fold'
@@ -64,7 +62,8 @@ const props = defineProps({
   },
 })
 const scrollDataListNew = computed(()=>{
-  if(MenuData.is_results())return props.scrollDataList;
+  //赛果 串关  不显示收藏
+  if(MenuData.is_results() || MenuData.is_mix())return props.scrollDataList;
   return [...[{mi:50000,btn:1,ct:0,title:"收藏"}],...props.scrollDataList]
 })
 const emits = defineEmits(['changeList','changeMenu'])
@@ -74,11 +73,6 @@ const emits = defineEmits(['changeList','changeMenu'])
 function set_menu_lv2(item = {},event) {
   // 重置折叠对象
   MatchFold.clear_fold_info()
-  // vr跳转
-  // if(item.mi == 300){
-  //   router.push('/virtual');
-  //   return;
-  // }
   if (props.current_mi === item.mi) return
   // if (item.mi === 2000) router.push('/esports')
   event = event || scrollTab.value[0];
@@ -206,9 +200,9 @@ onUnmounted(()=>{
             color: var(--q-gb-t-c-18);
             position: -webkit-sticky;
             position: sticky;
-            right: 0;
-            left: 0;
-            z-index: 12;
+            right: -1px;
+            left: -1px;
+            z-index: 30;
             .inner-w {
               position: relative;
               font-size: 0.1rem;

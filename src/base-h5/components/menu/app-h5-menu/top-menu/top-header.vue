@@ -24,6 +24,7 @@ import { MenuData,LOCAL_PROJECT_FILE_PREFIX , compute_css_obj, compute_local_pro
 import { useRoute , useRouter } from "vue-router";
 import { useMittOn,MITT_TYPES, useMittEmit } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 const route = useRoute()
 const router = useRouter()
   /**
@@ -34,11 +35,11 @@ const router = useRouter()
     MenuData.set_init_menu_list()
     useMittEmit(MITT_TYPES.EMIT_MENU_GO_BACK)
     //电竞返回页面，返回串关显示串关图标，其他页面不显示
-    if(MenuData.old_current_lv_1_menu_i==6) {
-        BetData.set_is_bet_single('serial')
-    }else{
+    if(MenuData.old_current_lv_1_menu_i!=6) {
         BetData.set_is_bet_single('single')
     }
+        BetData.set_clear_bet_info()
+        BetViewDataClass.set_clear_bet_view_config()
     if (route.name === 'esports_sports') router.back()
   }
 
