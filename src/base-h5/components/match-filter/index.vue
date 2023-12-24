@@ -788,7 +788,7 @@ if (type.value == 30) {
 .scroll-setect-all {
   display: flex;
   justify-content: flex-end;
-  padding: 0 0.36rem 0 0.4rem;
+  padding: 0 0.46rem 0 0.14rem;
   height: .4rem;
   align-items: center;
   font-size: .14rem;
@@ -930,7 +930,7 @@ if (type.value == 30) {
 
 .scroll-area {
   height: calc(100% - 40px);
-  min-width: 400px;
+  // min-width: 400px;
   overflow-x: hidden;
   overflow-y: auto;
 

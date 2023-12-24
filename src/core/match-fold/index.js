@@ -131,7 +131,6 @@ class MatchFold {
       // 未开赛
       if (type === 2 && ![1,110].includes(+item.ms)) return this.set_match_fold(key, { show_card: !status })
     })
-
     // 全部
     if (!type) return this.set_ball_seed_csid_fold_obj(csid_key, !status)
     // 进行中
