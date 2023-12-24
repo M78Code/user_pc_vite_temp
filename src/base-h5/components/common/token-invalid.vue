@@ -1,6 +1,6 @@
 <!-- @Description: token失效弹框 -->
 <template>
-  <div class="token-invalid fullscreen" @click.self="isgo_vender_url(false)" @touchmove.prevent>
+  <div class="token-invalid fullscreen" v-if="is_show" @click.self="isgo_vender_url(false)" @touchmove.prevent>
     <div class="fixed-center">
       <div :class="token_bg" :style="{ 'background-image': `url(${token_bg_url})` }"></div>
       <div class="txt-info">
@@ -19,25 +19,26 @@
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue';
-import { useMittEmit, MITT_TYPES } from "src/core/mitt"
+import { defineComponent, computed,ref,onUnmounted  } from 'vue';
+import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+
 // TODO:
 // import { mapMutations, mapGetters } from 'vuex';
-import { invalid_url } from 'src/output/index.js'
-import { i18n_t } from "src/boot/i18n.js";;
+// import { invalid_url } from 'src/output/index.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { i18n_t} from "src/boot/i18n.js";;
 //国际化
 
 
 export default defineComponent({
   name: 'token_invalid',
-  setup() {
-    const emit = defineEmits(['isgo_vender_url'])
+  emits:['isgo_vender_url'],
+  setup(_,{emit}) {
     // TODO: 改为真实的store替换
-    const { get_settle_dialog_bool, get_lang } = useStore()
-
+    // const { get_settle_dialog_bool, get_lang } = useStore()
     /** 失效国际化背景图对应 */
     const token_bg = computed(() => {
-      switch (get_lang) {
+      switch (UserCtr.lang) {
         case 'vi':
           return 'token-vietnam'
         case 'zh':
@@ -53,7 +54,28 @@ export default defineComponent({
           return ''
       }
     })
-    const token_bg_url = computed(() => invalid_url.top[get_lang])
+    // invalid_url.top[get_lang]
+    const token_bg_url = computed(() => "")
+    const is_invalid = ref(UserCtr.is_invalid)
+    /* 是否展示 */
+    const is_show = ref(false)
+    /**
+     * @Description:显示弹窗
+     * @param {object} data 弹窗内容
+     * @return {undefined} undefined
+     */
+    function show_alert() {
+      if (is_show.value) return;
+      is_show.value = true;
+    }
+  /* 监听mitt */
+    const { emitters_off } = useMittEmitterGenerator([
+      {
+        /* 打开弹窗 */
+        type: MITT_TYPES.EMIT_SHOW_ALERT_CMD,
+        callback: show_alert
+      }
+    ])
 
     /**
      * @description 返回app壳或者返回到商户登录页
@@ -61,14 +83,15 @@ export default defineComponent({
      * @return {Undefined} undefined
      */
     function isgo_vender_url(value) {
+      is_show.value=false;
       // TODO: store方法待完善
-      set_bet_obj({});
-      set_bet_list([]);
-      set_show_video(false);
-      //投注记录框出来时，点击让消失
-      if (get_settle_dialog_bool) {
-        useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, false)
-      }
+      // set_bet_obj({});
+      // set_bet_list([]);
+      // set_show_video(false);
+      // //投注记录框出来时，点击让消失
+      // if (get_settle_dialog_bool) {
+      //   useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, false)
+      // }
       //调用安卓或者ios的方法，告知token失效
       if (window.android && window.android.callAndroid || window.callIOSSwitcher) {
         if (/android/i.test(navigator.userAgent) && window.Switcher) {
@@ -80,7 +103,8 @@ export default defineComponent({
         emit('isgo_vender_url', value)
       }
     }
-    return {
+    onUnmounted(emitters_off)
+    return {is_show,
       token_bg,
       token_bg_url,
       isgo_vender_url

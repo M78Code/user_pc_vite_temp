@@ -160,8 +160,8 @@
                   </CountingDownSecond>
                 </div>
               </div>
-              <!-- 比分版 -->
-              <div class="score-title-text" v-if="get_match_status(match.ms)">{{ home_score }} - {{
+              <!-- 比分版, 即将开赛时不展示比分-->
+              <div class="score-title-text" v-if="match.ms != 110 && get_match_status(match.ms)">{{ home_score }} - {{
                 away_score }}</div>
             </div>
             <!--玩法数量-->
@@ -941,7 +941,7 @@ export default {
     padding: 4px 9px 0;
 
     .event-team {
-      padding: 8px 0 5px;
+      padding: 8px 0 0;
 
       .name {
         display: flex;
@@ -980,9 +980,13 @@ export default {
             }
             .match-name {
               width: 1rem;
+              text-align: right;
             }
             .serving-party {
               right: 0.28rem;
+            }
+            .team-img{
+              margin: 0 0 0 3px;
             }
           }
 
@@ -997,6 +1001,9 @@ export default {
             }
             .serving-party {
               left: 0.28rem;
+            }
+            .team-img{
+              margin: 0 3px 0 0;
             }
           }
         }
@@ -1039,6 +1046,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 2px;
       // border-bottom: .01rem solid var(--q-gb-bd-c-4);
       // padding: 4px 0 0;
 

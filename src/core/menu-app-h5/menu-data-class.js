@@ -97,6 +97,8 @@ class MenuData {
     this.date_time = ""
     this.data_time = ""
     this.data_tab_index = 0;
+    this.search_tab_index = 0;
+    this.search_tab_i_tid = '';
     // 时间api接口及参数信息 
     this.menu_match_date_api_config = {}
 
@@ -354,8 +356,15 @@ class MenuData {
   // 设置 menu_types
   set_collect_menu_type (lv1_mi) {
     this.menu_type.value = menu_type_config[lv1_mi]  
-  }
-
+  };
+  search_data_tab_index(i,tid){
+    this.search_tab_index = i||0;
+    this.search_tab_tid = tid||'';
+    this.set_cache_class({
+      search_tab_index:i||0,
+      search_tab_i_tid:tid||''
+    });
+  };
   // 设置时间 并且设置时间请求参数
   set_date_time(index,time){
     this.data_tab_index = index;
