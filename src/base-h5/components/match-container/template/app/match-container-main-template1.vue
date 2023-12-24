@@ -1248,7 +1248,6 @@ export default {
             text-overflow: ellipsis;
             word-break: break-all;
             color: var(--q-gb-t-c-18);
-
             &.is-handicap {
               color: var(--q-gb-t-c-1) !important;
             }

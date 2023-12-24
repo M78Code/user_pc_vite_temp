@@ -46,48 +46,51 @@ import { formete_date  } from "src/output/index.js";
   border-bottom: 1px solid var(--q-gb-bd-c-4);
 }
 
-:deep(.article-content) {
+.article-content {
   /* ************** 富文本框 quill 样式 ************** -S */
     * {
       color: unset;
       line-height: inherit;
     }
+  :deep {
     img {
       max-width: 100%;
     }
-    .ql-editor {
-      box-sizing: border-box;
-      line-height: 1.42;
-      height: 100%;
-      outline: none;
-      overflow-y: auto;
-      tab-size: 4;
-      -moz-tab-size: 4;
-      text-align: left;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      font-size: 0.14rem;
-      background-color: blue;
-
+  }
+  .ql-editor {
+    box-sizing: border-box;
+    line-height: 1.42;
+    height: 100%;
+    outline: none;
+    overflow-y: auto;
+    tab-size: 4;
+    -moz-tab-size: 4;
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 0.14rem;
+      :deep {
+        p,
+        ol,
+        ul,
+        pre,
+        blockquote,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-size: inherit;
+          line-height: normal;
+          margin: 0;
+          padding: 0;
+          counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
+        }
+      }
     }
     .ql-editor > * {
       cursor: text;
-    }
-    .ql-editor p,
-    .ql-editor ol,
-    .ql-editor ul,
-    .ql-editor pre,
-    .ql-editor blockquote,
-    .ql-editor h1,
-    .ql-editor h2,
-    .ql-editor h3,
-    .ql-editor h4,
-    .ql-editor h5,
-    .ql-editor h6 {
-      font-size: inherit;
-      margin: 0;
-      padding: 0;
-      counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8 list-9;
     }
     .ql-editor ol,
     .ql-editor ul {
