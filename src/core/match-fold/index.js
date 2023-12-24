@@ -122,7 +122,7 @@ class MatchFold {
     }
     const matchs = lodash.get(MatchMeta, 'complete_matchs', [])
     matchs.forEach(item => {
-      // if (!item || item.csid != obj.csid) return
+      if (!item || item.csid != obj.csid) return
       const key = this.get_match_fold_key(item)
       // 全部
       if (!type) return this.set_match_fold(key, { show_card: !status })
