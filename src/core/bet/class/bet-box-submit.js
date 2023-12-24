@@ -188,8 +188,6 @@ const set_bet_order_list = (bet_list, is_single) => {
 
         }) 
     }
-		console.log(order_list);
-		debugger
     return order_list
 }
 
@@ -417,6 +415,9 @@ const pre_bet_comparison = () => {
 						oddFinally: pre_obj.oddFinally
 					}
 					BetData.set_bet_single_list_obj(obj)
+					BetData.set_is_bet_pre(false)
+				} else {
+					BetData.set_bet_single_list_obj(pre_obj)
 					BetData.set_is_bet_pre(false)
 				}
 			}
