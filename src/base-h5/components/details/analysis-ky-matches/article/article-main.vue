@@ -35,8 +35,8 @@
 // import { mapGetters } from "vuex";
 import { api_common } from "src/api/index.js";
 import noData from "src/base-h5/components/common/no-data.vue";
-import articleContent from "src/base-h5/components/details/analysis-matches/article/article-content.vue";
-import articleMaylike from "src/base-h5/components/details/analysis-matches/article/article-maylike.vue";
+import articleContent from "src/base-h5/components/details/analysis-ky-matches/article/article-content.vue";
+import articleMaylike from "src/base-h5/components/details/analysis-ky-matches/article/article-maylike.vue";
 // 加载中
 // import loading from "src/base-h5/components/common/loading.vue";
 import { onMounted, onUnmounted, watch, ref } from "vue";

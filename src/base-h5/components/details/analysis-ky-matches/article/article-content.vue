@@ -8,7 +8,7 @@
     <div class="title yb_fontsize20 yb_pt18">
       {{ article_detail.articleTittle }}
     </div>
-    <div class="row yb_mb18 yb_mt8">
+    <div class="row yb_mb18 yb_mt8 category-content" >
       <img src="image/bw3/svg/touxiang.svg" alt="" class="touxiang yb_mr4" />
       <span class="category-name ellipsis">{{ article_detail.categoryName }}</span>
       <span class="yb_ml12">{{ article_detail.readCounts }}阅读</span>
@@ -34,6 +34,18 @@ import { formete_date  } from "src/output/index.js";
 </script>
 
 <style scoped lang="scss">
+:deep(.ql-editor){
+  color: var(--q-gb-t-c-18);
+  img{
+    max-width: 100%;
+  }
+}
+.category-content{
+  color: var(--q-gb-t-c-18);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--q-gb-bd-c-4);
+}
+
 :deep(.article-content) {
   /* ************** 富文本框 quill 样式 ************** -S */
     * {
@@ -55,6 +67,8 @@ import { formete_date  } from "src/output/index.js";
       white-space: pre-wrap;
       word-wrap: break-word;
       font-size: 0.14rem;
+      background-color: blue;
+
     }
     .ql-editor > * {
       cursor: text;
@@ -429,4 +443,6 @@ hr {
   display: inline-block;
   max-width: 1.7rem;
 }
+
+
 </style>

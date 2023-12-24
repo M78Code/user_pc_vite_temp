@@ -988,6 +988,16 @@ class UserCtr {
     //   url_temp.includes("user/getUserInfo"))
     // token失效
     if (res.data.code == "0401013") {
+
+      useMittEmit(MITT_TYPES.EMIT_GO_TO_VENDER, {
+        text: i18n_t("login.login_timeout"),
+        callback: () => {
+          location.href = callbackUrl;
+          // 清除旧的登录信息
+          this.clear_user();
+        },
+      });
+      
       if (url_temp.includes("user/getUserInfo")) {
         //最后一次 调用 getuserinfo 接口 返回用户 token 失效
         this.last_getuserinfo_expired = true;
@@ -1023,6 +1033,7 @@ class UserCtr {
    * 连续累加token失效次数 判定 是否 弹出 token失效框 执行相关流程
    */
   check_if_token_expired_max() {
+
     //统计所有接口 相邻接口累积 报用户token 失效 次数  小于上限 则 不用执行 后面逻辑
     if (this.all_expired_count < this.all_expired_count_max) {
       return false;
@@ -1043,7 +1054,7 @@ class UserCtr {
          this.is_invalid=true;
         //显示登录失效弹窗
         setTimeout(() => {
-          this.show_fail_alert();
+          // this.show_fail_alert();
         }, 100);
         // 关闭WS
         if (window.ws) {
