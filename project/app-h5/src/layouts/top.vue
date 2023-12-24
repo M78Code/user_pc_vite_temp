@@ -154,7 +154,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
         !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj)
         const data_list_esports = await MenuData.getDateList(val?.csid);
         dataListEsports.value = data_list_esports;
-        set_menu_mi_change_get_api_data(type)
+        handle_match_render_data(type)
         break;
       case 300:
         //vr重新设置单关
@@ -174,17 +174,15 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
           // MenuData.set_collect_menu_type(50000)
           ref_data.current_mi = val.mi;
           MenuData.set_current_lv_2_menu_i(val);
-          set_menu_mi_change_get_api_data()
+          handle_match_render_data()
         break 
       default:
           ref_data.current_mi = val.mi
         // 设置二级菜单 
           MenuData.set_current_lv_2_menu_i(val)
-          set_menu_mi_change_get_api_data()
+          handle_match_render_data()
         break;
     }
-    // 收藏页 不调用 元数据逻辑
-    // set_menu_mi_change_get_api_data()
   }
   /**
    * 时间切换
@@ -289,38 +287,38 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
     }
   
-    !type && set_menu_mi_change_get_api_data()
+    !type && handle_match_render_data()
   }
 
   // 菜单变化页面请求数据
-  const set_menu_mi_change_get_api_data = (type) => {
-    // 收藏
-    if(MenuData.is_collect()){
-      // 电竞收藏
-      if (MenuData.is_esports()) {
-        MatchMeta.get_esports_collect_match()
-      } else {
-        MatchMeta.get_collect_match()
-      }
-      return 
-    }
-    // 今日 / 滚球 早盘 串关 
-    if([1,2,3,6].includes(MenuData.current_lv_1_menu_mi.value)){
-      if (MenuData.top_menu_title.mi !== 2000) handle_match_render_data()
-      return;
-    }
-    // 冠军
-    if(MenuData.is_kemp_mi()){
-      return MatchMeta.get_champion_match();
-    }
-    // 电竞
-    if(MenuData.is_esports() && !type)return MatchMeta.get_esports_match();
+  // const set_menu_mi_change_get_api_data = (type) => {
+  //   // 收藏
+  //   if(MenuData.is_collect()){
+  //     // 电竞收藏
+  //     if (MenuData.is_esports()) {
+  //       MatchMeta.get_esports_collect_match()
+  //     } else {
+  //       MatchMeta.get_collect_match()
+  //     }
+  //     return 
+  //   }
+  //   // 今日 / 滚球 早盘 串关 
+  //   if([1,2,3,6].includes(MenuData.current_lv_1_menu_mi.value)){
+  //     if (MenuData.top_menu_title.mi !== 2000) handle_match_render_data()
+  //     return;
+  //   }
+  //   // 冠军
+  //   if(MenuData.is_kemp_mi()){
+  //     return MatchMeta.get_champion_match();
+  //   }
+  //   // 电竞
+  //   if(MenuData.is_esports() && !type)return MatchMeta.get_esports_match();
     
-  }
+  // }
   /**
    * @description 处理赛事列表渲染数据
    */
-  const handle_match_render_data = () => {
+  const handle_match_render_data = (type) => {
     // 清除赛事折叠信息
     MatchDataBaseH5.init()
     // MatchFold.clear_fold_info()
@@ -338,7 +336,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // 赛果不走元数据， 直接拉取接口
     if (MenuData.is_results()) return MatchMeta.get_results_match()
     // 电竞不走元数据， 直接拉取接口
-    if (MenuData.is_esports()) return MatchMeta.get_esports_match()
+    if (MenuData.is_esports() && !type) return MatchMeta.get_esports_match()
 
     const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
     if (lodash_.isEmpty(mi_tid_mids_res)) return
