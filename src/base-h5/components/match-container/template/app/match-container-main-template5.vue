@@ -1064,12 +1064,14 @@ export default {
       }
       :deep(.score-se-inner){
         max-width: 100%;
-        height: auto;
+        height: 100%;
         .score-se-inner2{
           display: flex;
           margin-left: -5px;
           overflow-x: auto;
           justify-content: space-between;
+          height:100%;
+          overflow-y:hidden;
           .score-fle-container-1{
             position: relative;
             top: 1px;
