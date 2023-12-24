@@ -593,7 +593,7 @@ const getLongTime=computed(()=>{
     .sports_bg9 {
       background-position-y: -230px;
     }
-    .sports_bg8 {
+    .sports_bg10 {
       background-position-y: -300px;
     }
     

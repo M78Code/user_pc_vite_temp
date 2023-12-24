@@ -821,7 +821,7 @@ export default {
   justify-content: space-between;
   padding: 0 0.15rem;
   height: 0.24rem;
-  border-top: 2px solid #FEAE2B;
+  border-top: 0.02rem solid #FEAE2B;
   background-color: #FFF;
 
   .left {
