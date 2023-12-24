@@ -248,7 +248,7 @@
            <!-- 视频 info 说明弹窗 -->
            <div class="img-wrap" v-if="show_animation || get_is_full_screen || media_type === 'progress_bar_video'">
              <!-- 视频info说明弹窗 -->
-             <!-- <img :src="tips ? tips_act :tips_def" @click.stop="change_info"/> -->
+             <img :src="tips ? tips_act :`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_b.svg`" @click.stop="change_info"/>
            </div>
 
           <div class="img-wrap" v-if="['1', '2'].includes(get_detail_data.csid) && [0,1,110].includes(+get_detail_data.ms) && get_is_full_screen && get_video_url.active == 'muUrl' && get_is_hengping">
@@ -344,6 +344,7 @@ export default {
     return {
       LOCAL_PROJECT_FILE_PREFIX:LOCAL_PROJECT_FILE_PREFIX,
       tips_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/details/info.svg`,
+      // tips_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_b.svg`,
       tips_act: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_a.svg`,
       voice_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_i.svg`,
       voice_act: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_h.svg`,
