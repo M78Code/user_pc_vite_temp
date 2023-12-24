@@ -124,9 +124,12 @@
         </div>
       </template>
     </div>
-     <div v-show="false">{{ get_match_detail.csid  }}</div>
-     <!-- 比分组件 目前只写了网球比分组件 -->
-     <matchScore v-if="get_match_detail.csid == 5"  :detail_data="get_match_detail" />
+    <div v-show="false">{{ get_match_detail.csid  }}</div>
+    <!-- 比分组件 目前只写了网球比分组件 -->
+    <template v-if="[5,8,9].includes(get_match_detail.csid)">
+      <matchScore :detail_data="get_match_detail" />
+    </template>
+    
   </div>
 </template>
 
