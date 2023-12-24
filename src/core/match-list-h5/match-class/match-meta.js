@@ -20,7 +20,6 @@ import { MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlay
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
 } from 'src/output/module/match-data-base.js'
-import matchDetail from "src/core/match-detail/match-detail-class.js";
 
 class MatchMeta {
 
@@ -63,8 +62,6 @@ class MatchMeta {
     this.is_ws_trigger = false
     // 防抖定时器
     this.debounce_timer = null
-    // 重置折叠对象
-    MatchFold.clear_fold_info()
     // 重置收藏对象
     MatchCollect.clear_collect_info()
   }
@@ -179,7 +176,7 @@ class MatchMeta {
     // 显示空数据页面  this.set_page_match_empty_status({ state: true });
     if (length < 1) return
     // 重置折叠对象
-    MatchFold.clear_fold_info()
+    // MatchFold.clear_fold_info()
     // 赛事全量数据
     const match_list = result_mids.map((t, index) => {
       // 获取对应赛事数据
@@ -407,6 +404,7 @@ class MatchMeta {
    * @param { tid } 联赛 ID 
    */
   filter_hot_match_by_tid (tid = '') {
+    tid = tid || MenuData.search_tab_i_tid;
     const tid_info = this.tid_map_mids[`tid_${tid}`]
     this.get_target_match_data({ tid })
     if (!tid_info) return
@@ -444,7 +442,7 @@ class MatchMeta {
    * @description 获取冠军赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_champion_match() {
-    MatchFold.clear_fold_info()
+    // MatchFold.clear_fold_info()
     MatchDataBaseH5.clear()
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
@@ -592,9 +590,8 @@ class MatchMeta {
   * @description 赛事详情精选赛事列表
   */
   async get_details_result_match() {
-    console.log(PageSourceData.get_route_parmas(),'');
      const res = await api_analysis.get_result_match_care_list({
-      sportId: lodash.get(PageSourceData.get_route_parmas,'csid',1),
+      sportId: lodash.get(PageSourceData.get_route_parmas(),'csid',1),
       cuid: UserCtr.get_uid(),
      })
      if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
@@ -1051,7 +1048,7 @@ class MatchMeta {
     this.match_mids = lodash.uniq(custom_match_mids)
     
     // 重置折叠对象
-    MatchFold.clear_fold_info()
+    // MatchFold.clear_fold_info()
     MatchResponsive.clear_ball_seed_count()
     target_list.forEach((t, i) => {
       Object.assign(t, {

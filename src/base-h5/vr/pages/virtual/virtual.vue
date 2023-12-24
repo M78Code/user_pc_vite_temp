@@ -11,7 +11,7 @@
         <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
           <!-- 返回按钮 及 刷新 注单  设置 按钮 -->
           <div class="back-wrap">
-            <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})">
+            <div class="detail-back-vr" @click="go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})">
               <img
                 class="img"
                 :src="compute_local_project_file_path('/image/svg/go-back-icon.svg')"
@@ -424,7 +424,7 @@ export default {
       font-size: 0.16rem;
       height: 0.44rem;
 
-      .detail-back {
+      .detail-back-vr {
         width: 0.08rem;
         height: 0.14rem;
         background-size: 0.1rem auto;
@@ -521,7 +521,7 @@ export default {
         align-items: center;
         overflow-x: auto;
         overflow-y: hidden;
-        height: 0.65rem;
+        height: 0.45rem;
         padding-left: 0.12rem;
 
         .tabs-tab {

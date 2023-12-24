@@ -18,7 +18,8 @@
           <div class="match-status-title">
             <img :src="in_progress" /> <span class="din-regular">进行中</span>
           </div>
-          <img :class="['expand_item', {collapsed: progress_seed_collapsed}]" :src="expand_item" alt="">
+          <!-- <img :class="['expand_item', {collapsed: progress_seed_collapsed}]" :src="expand_item" alt=""> -->
+          <div :class="['expand_item', {collapsed: progress_seed_collapsed}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
         </template>
         <!-- 未开赛 -->
         <template  v-if="+match.start_flag === 2">
@@ -92,9 +93,11 @@
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
           <div :class="['match-odds-container study_height_s hairline-border']">
             <div class="match-odds-container-border-radius">
+            
               <!-- 上边的 赛事日期标准版,包含 比分组件 -->
               <div class="date-container match-indent" v-if="!show_newer_edition && !is_results">
                 <div class='l standard'>
+                
                   <!--竞彩足球 星期与编号-->
                   <div class="week-mcid row items-center" v-if="menu_type == 30">
                     <span class="din-regular"> {{ lodash.get(match,'mcid')}} </span>
@@ -109,6 +112,10 @@
                   <!-- 赛事日期标准版 -->
                   <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
+                    <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
+                    <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
+                      {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
+                    </div>
                     <!-- 赛事回合数mfo match.ms != 1(不为开赛)-->
                     <div v-if="match.mfo && match.ms != 1" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
                       {{ match.mfo }}
@@ -119,10 +126,6 @@
                       {{ i18n_t(`ms[${match.ms}]`) }}
                     </div>
 
-                    <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
-                    <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                      {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
-                    </div>
                     <!--一小时内开赛 -->
                     <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
                       <CountingDownStart :match="match" :index="i" :mgt_time="match.mgt"></CountingDownStart>
@@ -455,6 +458,7 @@ export default {
       transform: rotate(-180deg);
       width: 20px;
       height: 16px;
+      margin-right: 0.06rem;
     }
     .collapsed{
       transform: rotate(0);
@@ -488,7 +492,7 @@ export default {
       padding: 0 10px;
       border-top: 1px solid  var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
-      border-radius: 0 0 8px 8px;
+      //border-radius: 0 0 8px 8px;
       border: 1px solid var(--q-gb-bd-c-15);
       &.collapsed{
         border-top: none;
@@ -919,6 +923,8 @@ export default {
     align-items: center;
     overflow: hidden;
     font-weight: 600;
+    position: relative;
+    top: 1px;
     .icon-wapper{
       transform: rotate(90deg);
     }
@@ -1672,7 +1678,7 @@ export default {
   }
 
   .mfo-title {
-    margin-right: .05rem;
+    margin: .05rem;
   }
 
   .flag-chuan {

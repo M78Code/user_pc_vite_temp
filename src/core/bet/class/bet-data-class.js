@@ -1076,6 +1076,10 @@ this.bet_appoint_ball_head= null */
         BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet_message.error"})
         BetViewDataClass.set_bet_order_status(4)
       }
+
+      if(this.is_bet_single && [1,2].includes(status*1)){
+        BetViewDataClass.orderNo_bet_obj_config({orderNo: obj.orderNo,status: obj.status})
+      }
     }
   }
 }

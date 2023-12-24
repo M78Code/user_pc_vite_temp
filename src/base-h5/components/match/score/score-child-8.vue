@@ -7,7 +7,6 @@
   <!-- 乒乓球 -->
   <div class='score_child_8 mx-12 font-style menu-s'>
       <span v-for="(item, key) of score_array" :key="key">
-        <span>&nbsp;&nbsp;</span>
         <span style="letter-spacing: 0.01rem" :class="(score_array.length == key + 1&&detail_data.mo != 1)? 'activeText': '' ">{{ $filters.score_format(item)}}</span>
         <span>&nbsp;&nbsp;</span>
       </span>
