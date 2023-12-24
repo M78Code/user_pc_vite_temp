@@ -277,7 +277,7 @@ const show_quick_amount = state => {
     border-radius: 2px;
     padding: 0 0 0 8px;
     display: flex;
-    align-itemss: center;
+    align-items: center;
     transition: .3s;
     caret-color:var(--q-gb-t-c-2) ;
      
@@ -294,7 +294,7 @@ const show_quick_amount = state => {
         font-weight: 400;
         font-size: 12px;
         display: flex;
-        align-itemss: center;
+        align-items: center;
         color: var(--q-gb-t-c-8);
     }
     &::-moz-placeholder {/*Firefox*/
@@ -302,7 +302,7 @@ const show_quick_amount = state => {
         font-weight: 400;
         font-size: 12px;
         display: flex;
-        align-itemss: center;
+        align-items: center;
         color: var(--q-gb-t-c-8);
     }
     &::-ms-input-placeholder {/*IE*/
@@ -310,7 +310,7 @@ const show_quick_amount = state => {
         font-weight: 400;
         font-size: 12px;
         display: flex;
-        align-itemss: center;
+        align-items: center;
         color: var(--q-gb-t-c-8);
     }
 }
