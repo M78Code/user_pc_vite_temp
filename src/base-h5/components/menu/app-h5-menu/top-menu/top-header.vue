@@ -34,9 +34,7 @@ const router = useRouter()
     MenuData.set_init_menu_list()
     useMittEmit(MITT_TYPES.EMIT_MENU_GO_BACK)
     //电竞返回页面，返回串关显示串关图标，其他页面不显示
-    if(MenuData.old_current_lv_1_menu_i==6) {
-        BetData.set_is_bet_single('serial')
-    }else{
+    if(MenuData.old_current_lv_1_menu_i!=6) {
         BetData.set_is_bet_single('single')
     }
     if (route.name === 'esports_sports') router.back()

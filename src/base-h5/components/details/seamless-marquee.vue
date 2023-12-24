@@ -115,14 +115,15 @@ const move = (text_width, scroll) => {
   }) 
 </script>
 <style lang="scss" scoped>
+
 .marquee-wrap {
   max-width: 1.6rem;
   overflow: hidden;
   position: relative;
-
+  color: var(--q-gb-t-c-5);
   .scroll_wrap {
     display: flex;
-    color: var(--q-gb-bd-c-12);
+    // color: #fff;
     p {
       word-break: keep-all;
       white-space: nowrap;
@@ -135,6 +136,9 @@ const move = (text_width, scroll) => {
     white-space: nowrap;
     position: absolute;
     top: 0;
+    // color: var(--q-gb-t-c-13);
+    color: transparent;
+
   }
 
   .copy {
