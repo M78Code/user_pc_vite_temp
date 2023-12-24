@@ -160,8 +160,8 @@
                   </CountingDownSecond>
                 </div>
               </div>
-              <!-- 比分版 -->
-              <div class="score-title-text" v-if="get_match_status(match.ms)">{{ home_score }} - {{
+              <!-- 比分版, 即将开赛时不展示比分-->
+              <div class="score-title-text" v-if="match.ms != 110 && get_match_status(match.ms)">{{ home_score }} - {{
                 away_score }}</div>
             </div>
             <!--玩法数量-->
@@ -941,7 +941,7 @@ export default {
     padding: 4px 9px 0;
 
     .event-team {
-      padding: 8px 0;
+      padding: 8px 0 0;
 
       .name {
         display: flex;
@@ -980,9 +980,13 @@ export default {
             }
             .match-name {
               width: 1rem;
+              text-align: right;
             }
             .serving-party {
               right: 0.28rem;
+            }
+            .team-img{
+              margin: 0 0 0 3px;
             }
           }
 
@@ -997,6 +1001,9 @@ export default {
             }
             .serving-party {
               left: 0.28rem;
+            }
+            .team-img{
+              margin: 0 3px 0 0;
             }
           }
         }
@@ -1013,7 +1020,7 @@ export default {
             width: 2.74rem;
             height: .32rem;
             .odd-column-item {
-              background: var(--q-gb-bg-c-15);
+              background: var(--q-gb-bg-c-28);
               margin-left: .04rem;
               border-radius: 4px;
             }
@@ -1039,7 +1046,8 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: .01rem solid var(--q-gb-bd-c-4);
+      margin-bottom: 2px;
+      // border-bottom: .01rem solid var(--q-gb-bd-c-4);
       // padding: 4px 0 0;
 
       .right {
@@ -1047,8 +1055,15 @@ export default {
         justify-content: flex-end;
         align-items: center;
       }
+      :deep(.score-section){
+        height: 20px;
+        .scroll-container-w{
+          height: 100%;
+        }
+      }
       :deep(.score-se-inner){
         max-width: 100%;
+        height: auto;
         .score-se-inner2{
           display: flex;
           margin-left: -5px;

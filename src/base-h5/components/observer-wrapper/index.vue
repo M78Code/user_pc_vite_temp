@@ -202,7 +202,8 @@ const handler = (key, falg) => {
  */
 const is_show_match_item = computed(() => {
   return (index) => {
-    return defer_render(index)
+    // defer_render(index)
+    return true
   }
 })
 
