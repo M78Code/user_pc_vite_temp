@@ -54,6 +54,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { is_kemp } from 'src/base-h5/mixin/menu.js'
 import { i18n_t, compute_css_obj, MenuData,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path } from  "src/output/index.js"
+import { get_collect_count } from 'src/core/collect/collect-class.js'
 
 import TopHeader from './top-header.vue';
 
@@ -114,6 +115,7 @@ const set_menu_lv1 = item => {
         BetData.set_is_bet_single('serial')
     }else{
         BetData.set_is_bet_single('single')
+        get_collect_count()
     }
     if(item.mi == 400){
         //冠军盘口切换欧洲盘
