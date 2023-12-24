@@ -95,7 +95,7 @@ import showStart_time from 'src/base-h5/components/details/wight/show-start-time
 import { format_total_score } from 'src/output/index.js'
 import { useRoute, useRouter } from "vue-router"
 import { MenuData } from 'src/output/module/menu-data.js'
-import { onUnmounted,onMounted,getCurrentInstance } from 'vue';
+import { onUnmounted,onMounted,getCurrentInstance,computed } from 'vue';
 
 let router = useRouter()
 let route = useRoute()
@@ -160,7 +160,6 @@ function change_active(item) {
 let {ctx:that} = getCurrentInstance()
 onMounted(() => {
   // 解决三星手机图片不出来问题
-  debugger
   that.$forceUpdate();
   clearInterval(timer2_);
   timer2_ = setInterval(that.$forceUpdate, 2000);
