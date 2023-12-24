@@ -50,8 +50,15 @@ export default defineComponent({
   overflow-x: hidden;
   overflow-y: auto;
   height:100%;
+
   :deep(.scroll-wrapper .scroll-i-con .s-w-item){
-    position:relative !important
+    position:relative !important;
+    margin: 5px;
+    width: auto !important;
+    background: none !important;
+   .match-content {
+    border-radius:8px !important;
+ }
   }
 }
 </style>

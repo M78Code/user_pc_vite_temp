@@ -99,7 +99,7 @@ import TabMove from "src/core/tab-move/tab-move.js";
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid var(--q-analysis-text-color-25);
+  border-bottom: 1px solid var(--q-analysis-bd-color-3);
   background: var(--q-analysis-bg-color-1);
 
   position: sticky;

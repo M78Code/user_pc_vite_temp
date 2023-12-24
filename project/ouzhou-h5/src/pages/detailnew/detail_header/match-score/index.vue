@@ -10,7 +10,7 @@
 <script setup name="match_score">
 import { useRoute } from "vue-router";
 import {score_child_5,score_child_8,score_child_9} from "./index.js"
-
+import { onMounted } from "vue"
 import {markRaw} from "vue"
 const route = useRoute()
 const props = defineProps({
