@@ -108,12 +108,10 @@ const set_menu_lv1 = item => {
     // MatchMeta.set_origin_match_data()
     BetData.set_clear_bet_info()
     BetViewDataClass.set_clear_bet_view_config()
-
     // 复刻版 只有串关里面可以投注串关 
     // vr 电竞 可以单 可串 数据清空 默认为单
     if(item.mi == 6){
         BetData.set_is_bet_single('serial')
-        if(BetData.bet_s_list.length===0) BetData.is_bet_single = true
     }else{
         BetData.set_is_bet_single('single')
     }
