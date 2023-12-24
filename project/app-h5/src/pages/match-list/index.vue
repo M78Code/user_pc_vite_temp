@@ -119,8 +119,11 @@ const get_page_match_data = () => {
       // 电竞赛事
       MatchMeta.get_esports_match()
     } else {
-      // 常规赛事
-      MatchMeta.set_origin_match_data()
+      if(MenuData.search_tab_index){
+        MatchMeta.filter_hot_match_by_tid(MenuData.search_tab_i_tid)
+      }else{
+        MatchMeta.set_origin_match_data()
+      }
     }
   } else {
     // 收藏页
