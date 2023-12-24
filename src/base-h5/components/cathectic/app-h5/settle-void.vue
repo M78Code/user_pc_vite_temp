@@ -5,9 +5,12 @@
 -->
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-  <div class="settle-void" @touchmove.prevent >
+  <div class="settle-void" @touchmove.prevent :style="compute_css_obj({key: 'fkh5_bg_jiesuan'})">
+
     <!-- <img :src="compute_local_project_file_path('/image/bet/no-data.png')"> -->
-    <img :src="compute_local_project_file_path('/image/bet/def_nobetrecord.png')">
+    <!-- <img :src="compute_local_project_file_path('/image/bet/def_nobetrecord.png')"> -->
+    <div :style="compute_css_obj({key: 'h5-kyapp-no-data'})"></div>
+
     <template>
       <p class="centerText">{{ i18n_t( 'app_h5.cathectic.' + formatInternationalText(BetRecordClass.selected) ) }}</p>
       <!-- <p>如需查询历史记录，请访问历史记录</p> -->
@@ -55,12 +58,11 @@ template {
   align-items: center;
   min-height: 4rem;
   border-radius: 0.1rem;
-  background: url($SCSSPROJECTPATH+'/image/png/cathectic-item-all_bg.png');
   background-size: cover;
   opacity: 0;
   animation: opacityAnimate 0.5s linear;
   animation-fill-mode: forwards;
-  img {
+  div {
     width: 1.8rem;
     height: 1.8rem;
   }
