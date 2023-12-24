@@ -116,3 +116,76 @@ export function modify_dom_classname(domClassName, newName = '') {
 
 
 
+
+
+/**
+ * 动态 写入 css  变量 样式表
+ * @param {*} content 
+ */
+
+ const set_theme_style_sheet=(content ,id_str='root-var')=> {
+  const theme_style_content = `:root{${ content}\n}` 
+  const root_var_stylesheet = document.getElementById(id_str)
+ 
+  root_var_stylesheet.innerHTML = theme_style_content
+   
+}
+
+
+/**
+ *   动态 写入 css 对象  到  变量 样式表
+ */
+
+export const set_theme_style_sheet_by_css_obj=(obj={},id_str)=>{
+  let str= ``
+  for(let key in obj){
+    str=`\n   ${key } : ${obj[key] ||''};`
+  }
+  set_theme_style_sheet(str,id_str)
+}
+
+
+
+
+
+
+
+
+
+/**
+ * 动态 写入 css  变量 样式表
+ * @param {*} content 
+ */
+
+const set_theme_dom_style=(content ,id_str)=> {
+ 
+  const  dom_style = document.getElementById( id_str)
+ 
+      dom_style
+
+      dom_style.style={
+        ...dom_style.style,
+
+       ...obj
+      }
+ 
+}
+
+
+/**
+ *   动态 写入 css 对象  到  变量 样式表
+ */
+
+export const set_theme_dom_style_by_css_obj=(obj={},id_str)=>{
+
+  if(!id_str){
+    return ''
+  }
+  const  dom_style = document.getElementById( id_str)
+      dom_style.style={
+        ...dom_style.style,
+       ...obj
+      }
+}
+
+
