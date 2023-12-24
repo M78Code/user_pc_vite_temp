@@ -513,7 +513,7 @@ function fetch_filter_match() {
   api_match_filter(params).then(({ code, data }) => {
     try {
       let data_list = []
-      data[0].sportVOs.forEach(item=>{
+            data[0].sportVOs.forEach(item=>{
        item.tournamentList.forEach(sub=>{
         sub.spell = item.spell;
         data_list.push(sub)
@@ -548,7 +548,7 @@ function fetch_filter_match() {
         }
       }
       );
-      list.value = (data_list || []).map(i => ({ ...i, select: i.id in selected.value })); // 初始化select
+            list.value = (data_list || []).map(i => ({ ...i, select: i.id in selected.value })); // 初始化select
       // 筛选时，把首字母相同的集合 放在第一个item 上,
       filter_alphabet(list.value)
       // 动态生成有联赛的字母，并非A - Z 全量字母；
@@ -624,6 +624,29 @@ function dynamic_letters(arr) {
   } catch (e) {
     console.error(e);
   }
+}
+/**
+ * 热门数组排序
+ */
+ function customSortAndMerge(hot_real_list) {
+  // 使用映射将 orderArray 中的元素与其索引关联起来
+  const orderIndexMap = new Map();
+  orderArray.forEach((item, index) => {
+    orderIndexMap.set(item.id, index);
+  });
+  // 对过滤后的数组进行排序
+  hot_real_list.sort((a, b) => {
+    const indexA = orderIndexMap.get(a.id);
+    const indexB = orderIndexMap.get(b.id);
+
+    // 如果元素在 orderArray 中找不到，则默认按原始顺序排列
+    if (indexA === undefined) return 1;
+    if (indexB === undefined) return -1;
+
+    return indexA - indexB;
+  });
+
+  return hot_real_list;
 }
 /*
  * @Description: 是否折叠联赛
@@ -782,7 +805,7 @@ if (type.value == 30) {
 .scroll-setect-all {
   display: flex;
   justify-content: flex-end;
-  padding: 0 0.36rem 0 0.4rem;
+  padding: 0 0.33rem 0 0.4rem;
   height: .4rem;
   align-items: center;
   font-size: .14rem;
@@ -825,7 +848,7 @@ if (type.value == 30) {
   .content_box2 {
     width: 100%;
     font-size: 0.16rem;
-    padding: 0 0.16rem 0 0.14rem;
+    padding: 0 0.41rem 0 0.14rem;
     height: 100%;
     position: relative;
     color: var(--q-gb-t-c-18);
@@ -957,7 +980,7 @@ if (type.value == 30) {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 .16rem 0 .14rem;
+    padding: 0 .43rem 0 .14rem;
     color: var(--q-gb-t-c-18);
     .scroll-title-text {
       display: flex;
