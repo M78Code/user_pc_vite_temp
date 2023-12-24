@@ -103,8 +103,8 @@ onUnmounted(() => {
 .list-scroll-to-top {
   z-index: 86;
   position: absolute;
-  width: 0.3rem;
-  height: 0.2rem;
+  width: 0.4rem;
+  height: 0.4rem;
   bottom: 0;
   right: .2rem;
   z-index: 999;
