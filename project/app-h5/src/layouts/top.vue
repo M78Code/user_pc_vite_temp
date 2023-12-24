@@ -55,8 +55,6 @@ import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
 import { TopMenu,ScrollMenu,SearchTab,DateTab,SwitchWap } from 'src/base-h5/components/menu/app-h5-menu/index'
 
-import { is_kemp } from 'src/base-h5/mixin/menu.js'
-
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 
 const is_first = ref(true)
@@ -200,20 +198,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
    * @param {*} new_ 
    */
   const init_data = (new_,type) =>{
-    // 今日 滚球 冠军
-    // if( [1,2,400].includes(1*new_) ){
-      // ref_data.scroll_data_list = [];
-      // set_scroll_data_list(new_,type)
-    // }
-    //早盘 串关
-    // if( [3,6].includes(1*new_)){
-    //   ref_data.scroll_data_list = [];
-    //   nextTick(()=>{
-    //     const index = type && MenuData.data_tab_index?MenuData.data_tab_index:0;
-    //     dateTabMenu.value.set_active_val()
-    //     dateTabMenu.value.changeTabMenu(dataList[MenuData.current_lv_1_menu_i]?.[index],index,'',type)
-    //   })
-    // }
     if(new_ == 300)return;
     if(!MenuData.top_menu_title?.mi){
       ref_data.scroll_data_list = [];
@@ -234,8 +218,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     //球种滚动初始化
     nextTick(()=>{
       try {
-        scrollTabMenu.value?.scrollTabMenu()
-        searchTabMenu.value?.searchTabMenu(0)
+        scrollTabMenu.value?.scrollTabMenu();
+        searchTabMenu.value?.searchTabMenu(0);//设置联赛未0
+        //缓存存在 并且为足球  调用筛选接口
         if(MenuData.menu_csid === 1 && MenuData.current_lv_1_menu_mi.value != 400 && MenuData.search_tab_index){
           searchTabMenu.value?.changeTab(MenuData.search_tab_index)
         }
