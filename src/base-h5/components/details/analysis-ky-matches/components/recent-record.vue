@@ -28,15 +28,13 @@
     <template v-for="(item, index) in recent_record_data" :key="index+'team'">
       <div class="team-recent" >
         <div class="team-image-box">
-          <template>
+          <template v-if="index === 0">
             <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
-            <team-img :type="0" :csid="lodash.get(get_detail_data,'csid')" :url="lodash.get(get_detail_data, 'mhlu[0]')" :fr="lodash.get(get_detail_data, 'frmhn[0]')" :size="22"></team-img>
-            <team-img v-if="lodash.get(get_detail_data,'mhlu.length') > 1" :type="0" :csid="lodash.get(get_detail_data,'csid')" :url="lodash.get(get_detail_data,'mhlu[1]')" :fr="lodash.get(get_detail_data,'frmhn[1]')" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
+            <team-img :type="0" :csid="lodash.get(get_detail_data,'csid')" :url="lodash.get(get_detail_data, 'mhlu[0]')" :fr="lodash.get(get_detail_data, 'frmhn[0]')" :size="18"></team-img>
           </template>
-          <template v-if="index == 1">
+          <template v-if="index === 1">
             <!-- 右侧双打图标 type 1 表示客队,malu 客队的url  -->
-            <team-img :type="1" :csid="lodash.get(get_detail_data,'csid')" :url="lodash.get(get_detail_data, 'mhlu[0]')" :fr="lodash.get(get_detail_data, 'frmhn[0]')" :size="22"></team-img>
-            <team-img v-if="lodash.get(get_detail_data,'malu.length') > 1" :type="1" :csid="lodash.get(get_detail_data,'csid')" :url="lodash.get(get_detail_data,'malu[1]')" :fr="lodash.get(get_detail_data,'frman[1]')" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
+            <team-img :type="1" :csid="lodash.get(get_detail_data,'csid')" :url="lodash.get(get_detail_data, 'malu[0]')" :fr="lodash.get(get_detail_data, 'frmhn[1]')" :size="18"></team-img>
           </template>
           <span class="team-name-limit ellipsis">{{ index == 0 ? lodash.get(get_detail_data,'mhn') : lodash.get(get_detail_data,'man') }}</span>
         </div>
@@ -68,7 +66,7 @@ import lodash from "lodash"
 
 const get_detail_data = computed(()=>{
   if(props.detail_data){
-    return lodash.cloneDeep()
+    return lodash.cloneDeep(props.detail_data)
   }else{
     return {
       csid: '1',

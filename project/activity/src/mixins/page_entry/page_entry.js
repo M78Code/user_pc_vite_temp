@@ -48,6 +48,11 @@ export default {
     };
   },
   watch: {
+    the_first_time_show(val){
+      if(val){
+        document.getElementById("loading-root-ele").style.visibility = "hidden";
+      }
+    },
     // 监听 get_user 的数据变化
     get_user: {
       handler(n, o) {

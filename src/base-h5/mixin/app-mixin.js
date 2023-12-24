@@ -50,6 +50,11 @@ export default {
     '$route'(to, from) {
       watch_route_fun(to, from);
     },
+    init_load(val){
+      if(val){
+        document.getElementById("loading-root-ele").style.visibility = "hidden";
+      }
+    }
   },
   async beforeMount () {
      

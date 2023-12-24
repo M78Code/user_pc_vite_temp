@@ -90,6 +90,7 @@ import { go_where } from "src/output/index.js";
 import { format_money2, compute_local_project_file_path, UserCtr } from "src/output/index.js";
 import { compute_css_obj, MenuData } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 export default {
   name:'match_main',
   data() {
@@ -121,7 +122,8 @@ export default {
       // 用户余额
       balance: 0,
       // 投注数据
-      BetData
+      BetData,
+      BetViewDataClass
     };
   },
   created(){
@@ -214,6 +216,8 @@ export default {
       if(MenuData.old_current_lv_1_menu_i!=6) {
           BetData.set_is_bet_single('single')
       }
+          BetData.set_clear_bet_info()
+          BetViewDataClass.set_clear_bet_view_config()
     },
     set_balance(balance){
       this.balance = balance;
