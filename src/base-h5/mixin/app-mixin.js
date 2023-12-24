@@ -51,7 +51,7 @@ export default {
       watch_route_fun(to, from);
     },
     init_load(val){
-      if(val){
+      if(val&&document.getElementById("loading-root-ele")){
         document.getElementById("loading-root-ele").style.visibility = "hidden";
       }
     }
