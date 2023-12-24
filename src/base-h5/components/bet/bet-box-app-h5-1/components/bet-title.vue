@@ -104,12 +104,12 @@ const get_balance = () => {
 }
 .nonebox4-first-right-window-img {
     display: flex;
-    border-radius: 30px;
-    width: 24px;
-    height: 24px;
+    border-radius: .3rem;
+    width: .24rem;
+    height: .24rem;
 }
 .nonebox4-first-right-window-img img {
-    border-radius: 30px;
+    border-radius: .3rem;
     width: 100%;
     height: 100%;
 }
@@ -139,7 +139,7 @@ const get_balance = () => {
     justify-content: center;
   }
   .yb-left-title{
-    font-size: 16px;
+    font-size: .16rem;
     font-weight: 500;
     color: rgba(48, 52, 66, 1);
     margin-left: 0.05rem;
@@ -178,7 +178,7 @@ const get_balance = () => {
   line-height: 0.2rem;
   height: 0.2rem;
   line-height: 0.2rem;
-  padding-top: 1px;
+  padding-top: .01rem;
   text-align: center;
   font-size: 0.14rem;
   border-radius: 100%;

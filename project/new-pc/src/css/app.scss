@@ -23,11 +23,20 @@ html {
   font-family: "Number-medium";
   src: url("/other-assets/font/DINPro-Medium.otf");
 }
+
+@font-face {
+  font-family: "Akrobat-Bold";
+  src: url("/other-assets/font/Akrobat-Bold.otf");
+}
+
 .din-regular {
   font-family: "Number-regular";
 }
 .din-medium {
   font-family: "Number-medium";
+}
+.akrobat-blod {
+  font-family: "Akrobat";
 }
 
 /*  公用样式 */
