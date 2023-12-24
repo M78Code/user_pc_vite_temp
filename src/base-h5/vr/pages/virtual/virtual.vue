@@ -396,6 +396,7 @@ export default {
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
+  background-color: #F2F2F6;
 
   /* ************** 列表上滑箭头图标 **************** -S */
   .list-scroll-to-top {
