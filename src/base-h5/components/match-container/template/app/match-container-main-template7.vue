@@ -44,6 +44,80 @@
         <!-- <q-slide-transition> -->
         <div :class="['match-content', { 'collapsed': collapsed }, { 'border-top': !match.is_show_league }]"
           v-if="collapsed">
+          <!-- 赛事日期标准版,包含 比分组件 -->
+          <div class="date-container match-indent">
+            <div class='l standard'>
+              <!--竞彩足球 星期与编号-->
+              <div class="week-mcid row items-center" v-if="menu_type == 30">
+                <span class="din-regular"> {{ lodash.get(match, 'mcid') }} </span>
+              </div>
+              <!-- 赛事日期标准版 -->
+              <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
+
+                <!-- 赛事回合数mfo match.ms != 1(不为开赛)-->
+                <div v-if="match.mfo && match.ms != 1" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
+                  {{ match.mfo }}
+                </div>
+
+                <!--即将开赛 ms = 110-->
+                <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
+                  {{ i18n_t(`ms[${match.ms}]`) }}
+                </div>
+
+                <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
+                <div class="date-time"
+                  v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
+                  {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
+                </div>
+                <!--一小时内开赛 -->
+                <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
+                  <CountingDownStart :match="match" :index="i" :mgt_time="match.mgt"></CountingDownStart>
+                </div>
+                <!--倒计时或正计时-->
+                <div v-if="match.ms != 110 && show_counting_down(match)"
+                  :class="['counting-down-up-container relative-position', { 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }]">
+                  <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
+                  <CountingDownSecond ref="counting-down-second" :title="mmp_map_title" :mmp="match.mmp"
+                    :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+match.csid)" :m_id="match.mid"
+                    :second="match.mst" :match="match" @counting-wrapper-width="update_counting_down_up_wrapper_width">
+                  </CountingDownSecond>
+                </div>
+              </div>
+
+              <!-- 电竞串关标识 -->
+              <div v-if="is_esports && match.ispo" class="flag-chuan"
+                :class="{ 'special-lang': ['zh', 'tw'].includes(lang) }">{{ i18n_t('match_info.match_parlay') }}
+              </div>
+              <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
+              <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle"
+                v-if="!media_button_state_obj.animationUrl">
+                <img :class="['live-icon-btn', { disabled: !media_button_state_obj.animationUrl }]"
+                  :src='animation_icon' />
+              </div>
+              <!-- 视频 -->
+              <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle"
+                v-if="!media_button_state_obj.muUrl">
+                <img :class="['live-icon-btn', { disabled: !media_button_state_obj.muUrl }]" :src='video_icon' />
+              </div>
+              <div class="goto-detail" @click='goto_details(match)'>
+                <span class="count_span" :class="{ esports: is_esports }">
+                  <span class="mc-n">
+                    {{ GlobalAccessConfig.get_handicapNum() ? get_match_mc(match) : i18n_t('footer_menu.more') }}+
+                  </span>
+                </span>
+              </div>
+
+            </div>
+
+            <!--玩法数量-->
+            <div class="right-score">
+              <template v-if="match.csid != 1">
+                <div class="score-content">
+                  <ScoreList :main_source="main_source" :match="match_of_list" />
+                </div>
+              </template>
+            </div>
+          </div>
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
           <div :class="['match-odds-container study_height_s hairline-border']">
             <div class="match-odds-container-border-radius">
@@ -198,67 +272,7 @@
               </div>
 
             </div>
-            <!-- 赛事日期标准版,包含 比分组件 -->
-            <div class="date-container match-indent">
-              <div class='l standard'>
-                <!--竞彩足球 星期与编号-->
-                <div class="week-mcid row items-center" v-if="menu_type == 30">
-                  <span class="din-regular"> {{ lodash.get(match, 'mcid') }} </span>
-                </div>
-                <!-- 赛事日期标准版 -->
-                <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
-                  <!-- 赛事回合数mfo match.ms != 1(不为开赛)-->
-                  <div v-if="match.mfo && match.ms != 1" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
-                    {{ match.mfo }}
-                  </div>
-
-                  <!--即将开赛 ms = 110-->
-                  <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
-                    {{ i18n_t(`ms[${match.ms}]`) }}
-                  </div>
-
-                  <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
-                  <div class="date-time"
-                    v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                    {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
-                  </div>
-                  <!--一小时内开赛 -->
-                  <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
-                    <CountingDownStart :match="match" :index="i" :mgt_time="match.mgt"></CountingDownStart>
-                  </div>
-                  <!--倒计时或正计时-->
-                  <div v-if="match.ms != 110 && show_counting_down(match)"
-                    :class="['counting-down-up-container relative-position', { 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }]">
-                    <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
-                    <CountingDownSecond ref="counting-down-second" :title="mmp_map_title" :mmp="match.mmp"
-                      :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+match.csid)" :m_id="match.mid"
-                      :second="match.mst" :match="match" @counting-wrapper-width="update_counting_down_up_wrapper_width">
-                    </CountingDownSecond>
-                  </div>
-                </div>
-
-                <!-- 电竞串关标识 -->
-                <div v-if="is_esports && match.ispo" class="flag-chuan"
-                  :class="{ 'special-lang': ['zh', 'tw'].includes(lang) }">{{ i18n_t('match_info.match_parlay') }}
-                </div>
-                <div class="goto-detail" @click='goto_details(match)'>
-                  <span class="count_span" :class="{ esports: is_esports }">
-                    <span class="mc-n">
-                      {{ GlobalAccessConfig.get_handicapNum() ? get_match_mc(match) : i18n_t('footer_menu.more') }}+
-                    </span>
-                  </span>
-                </div>
-              </div>
-              <!--玩法数量-->
-              <div class="right-score">
-                <template v-if="match.csid != 1">
-                  <div class="score-content">
-                    <ScoreList :main_source="main_source" :match="match_of_list" />
-                  </div>
-                </template>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -1591,7 +1605,7 @@ export default {
     }
 
     .counting-down-up-container {
-      width: 1rem;
+      width: 0.7rem;
       height: .14rem;
 
       &.intermission {
@@ -1675,7 +1689,6 @@ export default {
   display: flex;
   height: auto;
   align-items: center;
-  margin-left: 10px;
 
   .count_span {
     height: 0.11rem;
@@ -1703,5 +1716,6 @@ export default {
 
 /* **************日期********************** -E*/
 
-/* ********赛事容器相关********** -E*/</style>
+/* ********赛事容器相关********** -E*/
+</style>
   
