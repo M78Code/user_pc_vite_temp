@@ -1075,6 +1075,16 @@ export default {
           .score-fle-container-1{
             position: relative;
             top: 1px;
+            display: block;
+            width: 1.12rem;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            overflow:hidden;
+            .items-start {
+              display: inline-block;
+              height: 100%;
+              line-height: .23rem;
+            }
           }
           .b-score-wrapper{
             flex-wrap: nowrap;
