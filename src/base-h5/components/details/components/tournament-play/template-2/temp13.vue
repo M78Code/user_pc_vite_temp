@@ -345,8 +345,7 @@ export default defineComponent({
      * @param {object} e 滑动参数
      * @param {undefined} undefined
     */
-    const touch_pan = lodash.debounce((e) => {
-      console.log(111111111)
+   const touch_pan =lodash.debounce( (e) =>{
       let dom_width = bet_slide.value?.clientWidth
 
       if ((append_single_list.value.length / 2) < 4) {
@@ -365,21 +364,22 @@ export default defineComponent({
         }
 
         // 左滑最大距离
-        let max_left = 85 * slide_num
+        let max_left = dom_width * slide_num
         if (Math.abs(init_data.left) >= max_left) {
           return
         }
-        init_data.left -= max_left
+
+        init_data.left -= dom_width
 
       } else {
         // 右滑
         if (init_data.left >= 0) {
           return
         }
-        init_data.left += 85
-        
+        init_data.left += dom_width
       }
     }, 50);
+   
     const go_to_fun = (ol_item) => {
       append_single_list.value.map((item)=>{
         ol_item.oid == item.oid ?  item.show_bgc = true: item.show_bgc = false
