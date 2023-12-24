@@ -185,7 +185,7 @@ import { api_betting } from "src/api/index";
 import { format_money2 } from "src/output/index.js";
 import { debounce } from "lodash";
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { loadLanguageAsync, compute_css_obj, useMittOn, useMittEmit, MITT_TYPES, MenuData, UserCtr } from "src/output/index.js";
+import { loadLanguageAsync, compute_css_obj, useMitt, useMittEmit, MITT_TYPES, MenuData, UserCtr } from "src/output/index.js";
 import { useRoute, useRouter } from "vue-router";
 import { lang, sort_type, theme, standard_edition, user_info } from "src/base-h5/mixin/userctr";
 import {is_esports } from "src/base-h5/mixin/menu";
@@ -281,11 +281,10 @@ const window_resize_handle = () => {
 let balance_timer = 0;
 cancel_loading_balance = debounce(cancel_loading_balance, 200);
 calc_width = (window.innerWidth * 100 * 2.6) / 375;
-useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_handle).on;
+useMitt(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_handle);
 onUnmounted(() => {
   clearTimeout(balance_timer);
   balance_timer = null;
-  useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_handle).off;
   // debounce_throttle_cancel(cancel_loading_balance);
 });
 

@@ -794,8 +794,6 @@ export default defineComponent({
       // 取消订阅事件
       // #TODO emit
       emitters.map((x) => x())
-      // useMittOn(MITT_TYPES.EMIT_REF_API, initEvent).off;
-      // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off;
       if(VirtualClass){
         VirtualClass.destroy();
       }
