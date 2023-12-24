@@ -1,7 +1,8 @@
 .highlights{
     position: relative;
     z-index: 0;
-    background: #fff;
+    // background: var(--q-gb-bg-c-27) !important;
+    background: var(--q-gb-bg-c-29) !important;
     margin:8px;
     border-radius: 8px;
     height: 98%;
@@ -501,7 +502,7 @@
       width: 166px;
       height: 64px;
       border-radius: 4px;
-      background: #F4FAFF;
+      background: var(--q-gb-bg-c-28);
     }
     .item-content {
       display: flex;
@@ -510,6 +511,7 @@
       // height: .55rem;
       // line-height: .55rem;
       position: relative;
+      overflow: hidden;
       
       &::before{
         // content: "";
@@ -525,7 +527,8 @@
         margin-right: .04rem;
       }
       .time, .text {
-        color: #414655;//var(--q-detials-color-6);
+        color: var(--q-gb-t-c-18);
+        // color: var(--q-detials-color-6);
       }
       .score {
         color: var(--q-gb-t-c-1);
@@ -623,8 +626,9 @@
       }
 
       .wonderful-active {
-        background-color: var(--q-gb-bg-c-28);;
+        background-color: var(--q-gb-bg-c-28);
         border-radius: 10px;
+        color: var(--q-gb-t-c-18);
       }
     }
 

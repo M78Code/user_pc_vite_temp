@@ -334,7 +334,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   const handle_match_render_data = () => {
     // 清除赛事折叠信息
     MatchDataBaseH5.init()
-    MatchFold.clear_fold_info()
+    // MatchFold.clear_fold_info()
     if(MenuData.is_collect()) {
       // 电竞收藏
       if (MenuData.is_esports()) {

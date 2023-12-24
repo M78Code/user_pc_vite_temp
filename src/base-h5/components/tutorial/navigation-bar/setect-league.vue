@@ -39,11 +39,7 @@
         </div>
       </div>
     </div>
-    <!-- <div class="sl-filter-content"> -->
-    <!-- 只有滚球全部走的这个 -->
-    <match-filter-old ref="matchRef" :search_val="search_val" v-if="MenuData.get_sub_is_all()"></match-filter-old>
-    <!-- 今日早盘串关等 走新逻辑 -->
-    <match-filter ref="matchRefOld" :search_val="search_val" v-else></match-filter>
+    <match-filter ref="matchRefOld" :search_val="search_val"></match-filter>
     <!-- </div> -->
   </div>
 </template>
@@ -51,7 +47,6 @@
 import { i18n_t, compute_css_obj } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import matchFilter from "src/base-h5/components/match-filter/index.vue";
-import matchFilterOld from "src/base-h5/components/match-filter/index_old.vue";
 import { reactive, toRefs, ref } from "vue";
 import { useMittEmit, MITT_TYPES, MenuData } from "src/output/index.js";
 import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from "src/output/index.js";
@@ -88,15 +83,6 @@ const finishHandle = () => {
   } else {
     select_list.value = matchRefOld.value.list.filter(v=>v.select)
   }
-  // 派发首页设置菜单展开事件
-  useMittEmit(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, {
-    open: false
-  });
-  // 触发联赛选择完成事件
-  useMittEmit(MITT_TYPES.EMIT_SELECT_LEAGUE_COMPLETE, {
-    open: true,
-    select_list: select_list.value,
-  });
   //设置选中数据
   UserCtr.set_league_select_list(select_list)
   emit("closedHandle");
@@ -107,9 +93,6 @@ const finishHandle = () => {
  */
 const closed = () => {
   emit("closedHandle");
-    useMittEmit(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, {
-    open: true,
-  });
 };
 /**
  * @description: 清空所有值

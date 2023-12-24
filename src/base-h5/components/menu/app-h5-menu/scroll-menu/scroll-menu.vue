@@ -39,6 +39,7 @@ import { ref,reactive,onMounted,onUnmounted,computed ,nextTick,watch } from "vue
  import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj, MenuData } from "src/output/index.js";
 import {scrollMenuEvent} from "../utils";
+import MatchFold from 'src/core/match-fold'
 import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 const ref_data = reactive({
@@ -71,6 +72,8 @@ const emits = defineEmits(['changeList','changeMenu'])
  * 二级菜单事件
 */
 function set_menu_lv2(item = {},event) {
+  // 重置折叠对象
+  MatchFold.clear_fold_info()
   // vr跳转
   // if(item.mi == 300){
   //   router.push('/virtual');

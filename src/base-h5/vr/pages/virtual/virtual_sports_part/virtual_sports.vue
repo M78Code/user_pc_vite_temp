@@ -9,7 +9,8 @@
     </virtual-skeleton>
     <!-- <setting list_type="vr"/> -->
     <!--联赛tab-->
-    <div class="tab-wrapper">
+    <!--只有足球展示多个联赛菜单 -->
+    <div class="tab-wrapper" v-if="sub_menu_type == 1001">
       <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
         :key="i" @click="tab_item_click_handle(i,null,'user_change')">
         <div>{{tab_item.name}}</div>
@@ -820,7 +821,9 @@ export default {
   justify-content: space-between;
   padding: 0 0.15rem;
   height: 0.24rem;
-  border-top: 2px solid #FEAE2B;
+  border-top: 0.02rem solid #FEAE2B;
+  background-color: #FFF;
+
   .left {
     font-size: 0.12rem;
     color: #303442;
@@ -891,6 +894,9 @@ export default {
       padding: .02rem .12rem;
       &.active {
         background: #D1EBFF;
+        .teams {
+          color: #127DCC;
+        }
       }
       .teams {
         display: flex;
