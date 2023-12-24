@@ -90,8 +90,8 @@
 import dialogHeader from 'src/base-h5/components/details/dialog/dialog-header.vue'
 import teamImg from 'src/base-h5/components/details/team-img.vue'
 import matchStage from 'src/base-h5/components/match/match-stage.vue';
-import matchDialog_stage from 'src/base-h5/components/match/match-dialog-stage.vue';
-import showStart_time from 'src/base-h5/components/details/wight/show-start-time.vue'
+import MatchDialogStage from 'src/base-h5/components/match/match-dialog-stage.vue';
+import ShowStartTime from 'src/base-h5/components/details/wight/show-start-time.vue'
 import { format_total_score } from 'src/output/index.js'
 import { useRoute, useRouter } from "vue-router"
 import { MenuData } from 'src/output/module/menu-data.js'
