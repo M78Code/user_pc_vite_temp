@@ -174,10 +174,10 @@ const set_bet_order_list = (bet_list, is_single) => {
 
             // 预约投注
             // 需要用对应的数据 对投注数据进行覆盖
-            bet_s_obj = {
-                ...bet_s_obj,
-                ...BetData.bet_pre_obj[item.playOptionsId]
-            }
+            // bet_s_obj = {
+            //     ...bet_s_obj,
+            //     ...BetData.bet_pre_obj[item.playOptionsId]
+            // }
             order_list.push({
                 "seriesSum": 1,   // 串关数量
                 "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
@@ -188,7 +188,8 @@ const set_bet_order_list = (bet_list, is_single) => {
 
         }) 
     }
-
+		console.log(order_list);
+		debugger
     return order_list
 }
 
@@ -395,8 +396,37 @@ const set_bet_pre_list = bet_appoint => {
     BetData.set_bet_pre_list(pre_list)
 }
 
+
+// 对比赔率，判断是否是预约投注
+const pre_bet_comparison = () => {
+	// 如果点击预约判断所选赔率和盘口赔率是否一致，一致说明不是预约，切换到对应的盘口id;否则就设置为预约
+	if(BetData.is_bet_pre) {
+		let oid = lodash_.get(BetData,'bet_single_list[0].playOptionsId','')
+		let pre_obj = lodash_.get(BetData,`bet_pre_obj[${oid}]`,{})
+		
+		let pre_list = lodash_.get(	BetData,'bet_appoint_obj.marketList[0].marketOddsList',[])
+	
+
+		if(pre_list.length) {
+			for(let item of pre_list){
+				if(item.oddsValue == pre_obj.odds){
+					let obj = {
+						old_oid: oid,
+						oid: item.id,
+						odds: pre_obj.odds,
+						oddFinally: pre_obj.oddFinally
+					}
+					BetData.set_bet_single_list_obj(obj)
+					BetData.set_is_bet_pre(false)
+				}
+			}
+		}
+	}
+}
+
 // 提交投注信息 
 const submit_handle = type => {
+    pre_bet_comparison()
     // 
     if(submit_btn) return
     // 单关才有预约投注
