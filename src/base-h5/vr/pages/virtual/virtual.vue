@@ -11,7 +11,7 @@
         <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
           <!-- 返回按钮 及 刷新 注单  设置 按钮 -->
           <div class="back-wrap">
-            <div class="detail-back-vr" @click="go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})">
+            <div class="detail-back" @click="go_to_back(),go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})">
               <img
                 class="img"
                 :src="compute_local_project_file_path('/image/svg/go-back-icon.svg')"
@@ -89,6 +89,7 @@ import { useRouter, useRoute } from "vue-router";
 import { go_where } from "src/output/index.js";
 import { format_money2, compute_local_project_file_path, UserCtr } from "src/output/index.js";
 import { compute_css_obj, MenuData } from "src/output/index.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
 export default {
   name:'match_main',
   data() {
@@ -118,7 +119,9 @@ export default {
       route: useRoute(),
       UserCtr,
       // 用户余额
-      balance: 0
+      balance: 0,
+      // 投注数据
+      BetData
     };
   },
   created(){
@@ -207,6 +210,11 @@ export default {
     //   'set_current_esport_csid',   // 设置电竞游戏csid
     //   'set_is_user_refreshing',    // 设置用户刷新状态
     // ]),
+    go_to_back() {
+      if(MenuData.old_current_lv_1_menu_i!=6) {
+          BetData.set_is_bet_single('single')
+      }
+    },
     set_balance(balance){
       this.balance = balance;
     },
@@ -424,7 +432,7 @@ export default {
       font-size: 0.16rem;
       height: 0.44rem;
 
-      .detail-back-vr {
+      .detail-back {
         width: 0.08rem;
         height: 0.14rem;
         background-size: 0.1rem auto;
