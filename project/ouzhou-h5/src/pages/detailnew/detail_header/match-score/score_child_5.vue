@@ -1,5 +1,4 @@
 <script setup name="score_child_5">
-// import {defineProps, computed} from "vue"
 import {computed} from "vue"
 
 const props = defineProps({
@@ -47,7 +46,6 @@ const scoreArray = computed(() => {
     border-top: 1px solid #F5F5F5;
     .score{
         margin-right: 20px;
-       
     }
 }
 </style>

@@ -127,16 +127,9 @@ onUpdated(() => {
 
 watch(() => dataList.value.length, () => {
   nextTick(() => {
-    if (dataList.value.length < 1) return
-    allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
-    positionDataArr = allData.value.map((_, idx) => ({
-      arrPos: idx,
-      startPos: maybeHeight * idx,
-      endPos: maybeHeight * idx + maybeHeight,
-      height: maybeHeight,
-    }))
+    initDataPostion()
   })
-})
+}, { immediate: true })
 
 // 初始化 DOM 节点位置信息
 const initDataPostion = () => {

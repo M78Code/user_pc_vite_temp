@@ -54,4 +54,7 @@ export default {
   'h5-kyapp-no-data': {
     default: "h5-kyapp-no-data",    
   },
+  'h5-kyapp-match-fliter-s': {
+    default: "h5-kyapp-match-fliter-s",    
+  },
 }

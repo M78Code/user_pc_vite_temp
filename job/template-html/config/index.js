@@ -2,7 +2,7 @@
 
 import BUILD_VERSION_CONFIG from "../../output/version/build-version.js";
 let { PROJECT_NAME, IS_PC } = BUILD_VERSION_CONFIG;
-
+ import activity_config from  "./mondule/activity.js"
  import app_h5_config from  "./mondule/app-h5.js"
  import ouzhou_h5_config from  "./mondule/ouzhou-h5.js"
  import ouzhou_pc_config from  "./mondule/ouzhou-pc.js"
@@ -28,6 +28,7 @@ import {default_all_placeholder_obj}from  "./config.js"
 
 
 export const html_config=   {
+     'activity':activity_config,
      'app-h5':app_h5_config,
      'ouzhou-h5':ouzhou_h5_config,
      'ouzhou-pc':ouzhou_pc_config,
