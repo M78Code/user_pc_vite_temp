@@ -356,7 +356,7 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
     }
 
     .linellae {
-      background:  var(--q-analysis-text-color-30);
+      background:  var(--q-analysis-bd-color-3);
       height: 0.01rem;
       margin: 0 0.15rem 0.25rem;
     }

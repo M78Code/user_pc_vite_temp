@@ -410,7 +410,15 @@ const pre_bet_comparison = () => {
 		let pre_obj = lodash_.get(BetData,`bet_pre_obj[${oid}]`,{})
 		
 		let pre_list = lodash_.get(	BetData,'bet_appoint_obj.marketList[0].marketOddsList',[])
-	
+
+		// 设置预约投注数据
+		let pre_data = {
+			oid:  pre_obj.custom_id,
+			odds: pre_obj.odds,
+			oddFinally: pre_obj.oddFinally
+		}
+		BetData.set_bet_single_list_obj(pre_data)
+		BetData.set_is_bet_pre(true)
 
 		if(pre_list.length) {
 			for(let item of pre_list){
@@ -423,9 +431,7 @@ const pre_bet_comparison = () => {
 					}
 					BetData.set_bet_single_list_obj(obj)
 					BetData.set_is_bet_pre(false)
-				} else {
-					BetData.set_bet_single_list_obj(pre_obj)
-					BetData.set_is_bet_pre(false)
+					return
 				}
 			}
 		}
@@ -1226,7 +1232,6 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
         
 // 是否显示基准分 
 const get_mark_score = (ol_obj,mid_obj) => {
-    // debugger
     let score = ''
     // 显示基准分
     // 玩法id 34 33 32 114 92 78 91 77 107 101 13 102 336 28 80 79 11 10 15 5 6 3 12 9 8 14 68 367 7 1 4 2 

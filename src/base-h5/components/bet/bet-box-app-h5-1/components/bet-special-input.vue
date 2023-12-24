@@ -185,7 +185,7 @@ const alertRules = (name) => {
   .bet_single_detail{
     //margin-top: 0.08rem;
     height: 0.44rem;
-    width: 1.68rem;
+    //width: 1.68rem;
     font-size: 0.14rem;
   }
 

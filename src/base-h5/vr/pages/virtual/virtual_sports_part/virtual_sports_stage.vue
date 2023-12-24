@@ -1020,17 +1020,18 @@ export default {
   .match-over {
     position: absolute;
     left: 50%;
-    margin-left: -0.4rem;
+    margin-left: -0.23rem;
     top: -0.43rem;
-    width: 0.8rem;
-    height: 0.26rem;
+    width: 0.46rem;
+    height: 0.24rem;
     line-height: 0.26rem;
     text-align: center;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(5px);
     border-radius: 0.15rem;
     font-size: 0.1rem;
-    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+    color: #fff;
   }
 }
 
