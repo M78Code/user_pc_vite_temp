@@ -7,9 +7,9 @@
   <div class="marquee-wrap" ref="marquee_wrap">
   	<!-- 滚动内容 -->
     <div class="scroll_wrap" ref="scroll_wrap">
-      <p class="marquee" :style="{marginRight: start_roll?'16px':''}">{{content}}11</p>
+      <p class="marquee" :style="{marginRight: start_roll?'16px':''}">{{content}}</p>
       <!-- 文字副本 -->
-      <p class="copy">{{copy_content}}11</p>
+      <p class="copy">{{copy_content}}</p>
     </div>
     <!-- 为了计算总文本宽度，通过css在页面中隐藏 -->
     <p class="full_content" ref="full_content">{{content}}</p>
@@ -115,14 +115,15 @@ const move = (text_width, scroll) => {
   }) 
 </script>
 <style lang="scss" scoped>
+
 .marquee-wrap {
   max-width: 1.6rem;
   overflow: hidden;
   position: relative;
-
+  color: var(--q-gb-t-c-5);
   .scroll_wrap {
     display: flex;
-    // color: var(--q-gb-t-c-18);
+    // color: #fff;
     p {
       word-break: keep-all;
       white-space: nowrap;
@@ -135,6 +136,9 @@ const move = (text_width, scroll) => {
     white-space: nowrap;
     position: absolute;
     top: 0;
+    // color: var(--q-gb-t-c-13);
+    color: transparent;
+
   }
 
   .copy {

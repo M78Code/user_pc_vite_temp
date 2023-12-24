@@ -122,7 +122,8 @@ const get_page_match_data = () => {
       if(MenuData.search_tab_index){
         MatchMeta.filter_hot_match_by_tid(MenuData.search_tab_i_tid)
       }else{
-        MatchMeta.set_origin_match_data()
+        //如果有时间要传时间的
+        MatchMeta.set_origin_match_data({md:MenuData.current_lv_3_menu?.field1})
       }
     }
   } else {
