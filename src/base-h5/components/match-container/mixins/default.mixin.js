@@ -401,7 +401,8 @@ export default defineComponent({
      */
     handle_ball_seed_fold () {
       const { csid, is_virtual = false, start_flag = '', warehouse_type = '' } = this.match_of_list
-      MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
+      const is_fold_all = MenuData.is_collect() && project_name === 'app-h5'
+      MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag, is_fold_all)
       // 不需要虚拟计算，欧洲版五大联赛
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       // app-h5 简版 先试运行看效果
