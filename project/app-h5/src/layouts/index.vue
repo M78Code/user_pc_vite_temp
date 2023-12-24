@@ -47,8 +47,8 @@
       <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
 
 
-      <!-- 串关投注 --> 
-      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single">
+      <!-- 串关投注 赛果不能投注 所以也不展示--> 
+      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single&&!is_results">
           <div class="chain_bet" @click="show_chain_bet" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
             <span class="count">{{BetData.bet_s_list.length}}</span>
           </div>
@@ -63,7 +63,7 @@
   <activity-layer v-if="activity_status" @activity_hide="activity_status = false" :activity_layerimg="activity_layerimg"
     :count_down_time="userBannerTimer" />
   <StandardEdition></StandardEdition>
-  <TokenInvalid></TokenInvalid>
+  <TokenInvalid></TokenInvalid>  <!-- 登录失效的页面-->
 </template>
 
 <script setup>
@@ -115,6 +115,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 // import layoutConent from "./layout-content.vue";
 
 import "./index.scss"
+import { is_results } from "src/base-h5/mixin/menu";
 const inner_height = ref(window.innerHeight);  // 视口高度
 const { footerMenuReducer } = store.getState();
 const route = useRoute();
