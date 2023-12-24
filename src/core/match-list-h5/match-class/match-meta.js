@@ -479,7 +479,7 @@ class MatchMeta {
   /**
    * @description 获取冠军赛果
    */
-  async get_champion_match_result () { 
+  async get_champion_match_result () {
     this.clear_match_info()
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const { start_time, end_time } =  MatchUtils.get_match_time_start_time(md)
@@ -500,8 +500,14 @@ class MatchMeta {
       isVirtualSport: 1
     })
     if (this.current_euid !== `10000_${md}`) return []
+    
     if (+res.code !== 200) {
-      this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
+      this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
+      if (res.code === '0401038') {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('msg.msg_nodata_22')}`)
+        this.set_page_match_empty_status({ state: false});
+        return []
+      }
       return []
     }
     // 避免接口慢导致的数据错乱
