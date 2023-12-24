@@ -31,7 +31,7 @@
         <div class="cmrc-title">
           <div class="cmrc-t-league">
             <img :src="get_server_file_path(match_of_list.picUrl)">
-            {{ match_of_list.tournamentName }}
+            <span class="cmrc-tl-text">{{ match_of_list.tournamentName }}</span>
           </div>
           <div>{{ match_of_list.playName }}</div>
         </div>
@@ -102,7 +102,6 @@ export default {
   margin: 0 auto;
   background: var(--q-gb-bg-c-18);
   border-radius: 0.05rem;
-  padding-bottom: 0.08rem;
 
   .league-container {
     height: 0.26rem;
@@ -387,6 +386,10 @@ export default {
       .cmrc-t-league {
         display:flex;
         align-items:center;
+        margin-right:.2rem;
+        .cmrc-tl-text {
+          width:1.4rem;
+        }
         img {
           width:.18rem;
           height:.18rem;
