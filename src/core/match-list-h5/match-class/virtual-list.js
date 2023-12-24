@@ -87,11 +87,8 @@ class VirtualList {
   // 获取该赛事高度 
   get_match_total_height (match, index) {
     const { is_show_league, mid, csid, start_flag, is_show_ball_title } = match
-    // 赛事折叠信息
-    const fold_key = MatchFold.get_match_fold_key(match)
-    const fold_info = MatchFold.match_mid_fold_obj.value[fold_key]
     // 赛事是否显示
-    const show_card = lodash.get(fold_info, `show_card`)
+    const show_card = this.get_match_show_card(match)
     // 获取模板默认高度
     const template_config = MatchMeta.get_match_default_template_config(csid)
     // 模板预设高度
@@ -144,16 +141,14 @@ class VirtualList {
     let already_folded = 0;
     // 顶部滚动距离减去  上面5个列表赛事  的距离
     const start_position = this.get_scorll_position(scrollTop)
+    const complete_matchs = lodash.get(MatchMeta, `complete_matchs`, [])
+    // 赛事总数
     const match_datas = []
-    // 折叠对象
-    const fold_data = MatchFold.match_mid_fold_obj.value
     // 高度映射 对象
-    MatchMeta.complete_matchs.some((match, index) => {
+    complete_matchs.some((match, index) => {
       const { mid, is_show_league } = match
-      // 赛事折叠信息
-      const fold_key = MatchFold.get_match_fold_key(match)
       // 赛事是否显示
-      const show_card = lodash.get(fold_data[fold_key], `show_card`)
+      const show_card = this.get_match_show_card(match)
       const virtual_key = this.get_match_height_key(mid)
       // 赛事高度
       const match_height = this.get_match_total_height(match, index)
@@ -166,7 +161,6 @@ class VirtualList {
         this.mid_top_map[virtual_key] = accrual_height;
         
         if (match_height > 0 && (is_show_league || show_card)) {
-
           // debugger
           // console.log(`mid-${mid}:::${match_height}`)
 
@@ -198,10 +192,25 @@ class VirtualList {
   compute_container_total_height () {
     let total_height = 0
     MatchMeta.complete_matchs.forEach((match, index) => {
-      const total = this.get_match_total_height(match, index)
-      total_height += total
+      const { mid, is_show_league } = match
+      // 赛事是否显示
+      const show_card = this.get_match_show_card(match)
+      const height = this.get_match_total_height(match, index)
+      // if (mid && height > 0 && (is_show_league || show_card)) console.log(height, mid, is_show_league)
+      if (mid && height > 0 && (is_show_league || show_card)) total_height += height
     })
     this.container_total_height.value = total_height + 181
+  }
+
+  // 赛事是否显示
+  get_match_show_card = (match) => {
+    // 折叠对象
+    const fold_data = MatchFold.match_mid_fold_obj.value
+    // 赛事折叠信息
+    const fold_key = MatchFold.get_match_fold_key(match)
+    // 赛事是否显示
+    const show_card = lodash.get(fold_data[fold_key], `show_card`, false)
+    return show_card
   }
 
   // 计算虚拟滚动初始计算高度
@@ -228,10 +237,10 @@ class VirtualList {
         position = scrollTop - 800
       } else if (status) {
         // 球种非折叠状态
-        position = scrollTop - 234 * 5
+        position = scrollTop - 300
       } else {
         // 球种折叠
-        position = scrollTop - 200
+        position = scrollTop - 300
       }
     }
     return position

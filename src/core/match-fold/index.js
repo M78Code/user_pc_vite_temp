@@ -5,7 +5,6 @@
 import lodash from 'lodash'
 import { ref } from 'vue'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { PROJECT_NAME } from 'src/output/module/menu-data.js'
 
 class MatchFold {
   constructor () {
