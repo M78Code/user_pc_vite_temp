@@ -207,21 +207,21 @@
                     :size="18"
                     style="margin-left:-0.09rem;"
                   ></team-img>
+                  <!--发球方绿点-->
+                  <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                    v-show="set_serving_side(match, 'home')">
+                  </span>
               </div>
-              <!--发球方绿点-->
-              <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                v-show="set_serving_side(match, 'home')">
-              </span>
               <span class="vs">VS</span>
-              <!--发球方绿点-->
-              <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                v-show="set_serving_side(match, 'away')">
-              </span>
               <div class='right'>
                 <!-- <image-cache-load v-if="match?.malu?.length && !([5, 7].includes(Number(match.csid)))" -->
                 <!-- <image-cache-load v-if="match?.malu?.length"
                   :csid="+match.csid" :path="match.malu" type="home"></image-cache-load> -->
                  <!-- 右侧双打图标 type 1 表示客队,malu 客队的url -->
+                <!--发球方绿点-->
+                <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                  v-show="set_serving_side(match, 'away')">
+                </span>
                 <team-img
                   :type="1"
                   :csid="match.csid"
@@ -955,6 +955,7 @@ export default {
           background: var(--sys-feedback-success-success-400, #4AB06A);
           width: 4px !important;
           height: 4px;
+          position: absolute;
         }
 
         .logo {
@@ -983,7 +984,7 @@ export default {
               text-align: right;
             }
             .serving-party {
-              right: 0.28rem;
+              right: -0.1rem;
             }
             .team-img{
               margin: 0 0 0 3px;
@@ -1000,7 +1001,7 @@ export default {
               width: 1rem;
             }
             .serving-party {
-              left: 0.28rem;
+              left: -0.1rem;
             }
             .team-img{
               margin: 0 3px 0 0;
