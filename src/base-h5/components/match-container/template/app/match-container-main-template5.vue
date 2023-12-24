@@ -132,7 +132,7 @@
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                 <div class="date-time"
                   v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                  {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
+                  {{ format_M_D(+match.mgt)}}
                   <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time11')).replaceAll('月', '/').replaceAll('日', '') }} -->
                 </div>
 
@@ -145,7 +145,7 @@
                 <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
                   <CountingDownStart :match="match" :index="i" :mgt_time="match.mgt"></CountingDownStart>
                 </div>
-                <div v-if="match.mfo&&match.ms != 110&&show_start_counting_down(match)" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
+                <div v-if="match.mfo&&!get_match_status(match.ms)" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
                   &nbsp;{{ match.mfo }}
                 </div>
                 <!--倒计时或正计时-->
@@ -434,7 +434,7 @@ export default {
       curMatchOdds,
       isCollectMenuTab,
       compute_local_project_file_path,
-      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id, LOCAL_PROJECT_FILE_PREFIX,
+      lang, theme, i18n_t, compute_img_url,format_M_D, format_time_zone, GlobalAccessConfig, footer_menu_id, LOCAL_PROJECT_FILE_PREFIX,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, footer_menu_id,
       in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item, show_sport_title, compute_css_obj,
       normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app,
