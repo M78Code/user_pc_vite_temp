@@ -866,7 +866,7 @@ export default {
   }
 
   &.dirt_motorcycle {
-    background-image: var(--q-color-com-img-bg-145);
+    background-image: url($SCSSPROJECTPATH+"/image/png/dirt_virtual_match_motorcycle.png");
   }
 
   .wrapper-loading-c {
