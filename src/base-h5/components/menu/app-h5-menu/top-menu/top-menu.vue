@@ -8,12 +8,12 @@
     <div>
         <div v-show="false">   {{MenuData.update_time}} {{UserCtr.user_version}}</div>
         <!-- 300, -->
-        <TopHeader v-if="[2000,50000].includes(+MenuData.top_menu_title.mi )">
+        <TopHeader v-if="[2000].includes(+MenuData.top_menu_title.mi )">
             <template #right>
                 <div class="main-menu-right" @click.stop>
                     <!-- <span class="main-menu-right-symbol">￥</span> -->
                     <img :src="compute_local_project_file_path('/image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
-                    <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
+                    <span class="main-menu-right-money">{{ format_money2(balance) }}1</span>
                 </div>
             </template>
         </TopHeader>
@@ -98,7 +98,8 @@ watch(UserCtr.user_version, () => {
  * @param {*} type 
  */
 const set_menu_lv1 = item => {
-    console.log(item)
+      // 重置折叠对象
+    MatchFold.clear_fold_info()
     MatchFold.set_all_csid_fold_status(true)
     MenuData.set_current_lv1_menu(item.mi);
     // MenuData.get_menu_lvmi_list(item.mi)
@@ -112,6 +113,7 @@ const set_menu_lv1 = item => {
     // vr 电竞 可以单 可串 数据清空 默认为单
     if(item.mi == 6){
         BetData.set_is_bet_single('serial')
+        if(BetData.bet_s_list.length===0) BetData.is_bet_single = true
     }else{
         BetData.set_is_bet_single('single')
     }

@@ -44,7 +44,7 @@ export default {
       isAPP: false,
       // 是否是维护阶段
       is_maintaining: false,
-      the_first_time_show: true,
+      the_first_time_show: false,
     };
   },
   watch: {

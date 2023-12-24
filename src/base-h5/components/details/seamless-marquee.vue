@@ -134,7 +134,6 @@ const move = (text_width, scroll) => {
     word-break: keep-all;
     white-space: nowrap;
     position: absolute;
-    opacity: 0;
     top: 0;
   }
 

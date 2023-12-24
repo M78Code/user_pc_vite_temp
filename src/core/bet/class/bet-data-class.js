@@ -973,7 +973,13 @@ this.bet_appoint_ball_head= null */
             // 查询ws投注项 中 匹配到的投注项id 
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
-            // console.error('sssss',ws_ol_obj)
+            console.error('market_list', item.hs ,ws_ol_obj.os)
+            // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+            if(item.hs != 0 ) {
+              ol_obj.hl_hs = item.hs
+              this.set_ws_message_bet_info(ol_obj,ol_obj_index)
+              return
+            }
             if(ws_ol_obj.ov){
               clearTimeout(time_out)
               // "odds": item.odds,  // 赔率 万位
@@ -1075,6 +1081,10 @@ this.bet_appoint_ball_head= null */
       if(status == 2){
         BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet_message.error"})
         BetViewDataClass.set_bet_order_status(4)
+      }
+
+      if(this.is_bet_single && [1,2].includes(status*1)){
+        BetViewDataClass.orderNo_bet_obj_config({orderNo: obj.orderNo,status: obj.status})
       }
     }
   }

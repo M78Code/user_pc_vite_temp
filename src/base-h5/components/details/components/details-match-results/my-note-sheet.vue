@@ -1,5 +1,5 @@
 <template>
-  <div class="choose-carefully-wrapper" >
+  <div class="choose-carefully-wrapper"  :style="page_style" >
     <div v-if="Object.keys(get_note_sheet_records_data).length > 0">
       <!-- 加载中 -->
       <div v-for="(value,name,index) in get_note_sheet_records_data" :key="index" >
@@ -14,6 +14,9 @@
 </template>
 
 <script setup>
+const page_style = ref('')
+page_style.value = compute_css_variables({ category: 'component', module: 'cathectic' })
+import { compute_css_variables } from "src/core/css-var/index.js"
 import commonCathecticItem from "src/base-h5/components/common/common-cathectic-item.vue";
 // import {mapGetters} from "vuex";
 import settleVoid from "src/base-h5/components/cathectic/settle-void.vue";
@@ -37,6 +40,5 @@ onMounted(()=>{
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
-  background: var(--q-gb-t-c-14);
 }
 </style>
