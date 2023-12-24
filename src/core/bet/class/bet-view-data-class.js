@@ -462,6 +462,14 @@ class BetViewData {
     this.set_bet_view_version()
   }
 
+  // 设置默认限额
+  set_bet_special_series_defalut() {
+    this.bet_special_series.filter(obj=>{
+        obj.min_money = 0
+        obj.max_money = 8888
+    })
+    this.set_bet_view_version()
+  }
   // 投注后的数据
   set_orderNo_bet_obj(array) {
     this.orderNo_bet_obj = array
