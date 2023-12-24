@@ -23,7 +23,9 @@
         <span>{{i18n_t('filter.all_leagues')}}</span>
       </div>
       <div class="right" @click="handle_all_league">
-        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" :class="[!is_expend_all && 'expend_all_league']" alt="">
+        <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" :class="[!is_expend_all && 'expend_all_league']" alt=""> -->
+      <div class='img' :class="[!is_expend_all && 'expend_all_league']" :style="compute_css_obj({key:'h5-kyapp-expand-lague'})"></div>
+      
       </div>
     </div>
     <div class="virtual-content-wrapper">
@@ -172,8 +174,7 @@ import { IconWapper } from 'src/components/icon'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
-
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, LOCAL_PROJECT_FILE_PREFIX,compute_css_obj } from "src/output/index.js"
 export default {
   mixins:[common,virtual_sports_mixin],
   props:{
@@ -238,6 +239,7 @@ export default {
       // 1:新手版 2:专业版
       standard_edition,
       LOCAL_PROJECT_FILE_PREFIX,
+      compute_css_obj,
       // 是否全部折叠
       is_expend_all: true,
       // 存储定时器id的映射
