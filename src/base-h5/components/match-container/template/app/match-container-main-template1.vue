@@ -1389,7 +1389,7 @@ export default {
 .score-content{
   position: absolute;
   bottom: 0px;
-  width: 80%;
+  width: 70%;
   z-index: 100;
   height: 26px;
   overflow-x: auto;
