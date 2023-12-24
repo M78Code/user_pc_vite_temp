@@ -589,7 +589,9 @@ export const details_main = () => {
 
       // #TODO 暂时使用假数据
       // state_data.detail_data = Level_one_detail_data();
-      state_data.math_list_data = [res_data];
+      if(!getMatchListCache()){
+        state_data.math_list_data = [res_data];
+      }
       // updateHotReqTime(Date.now())
 
       // 克隆一份;
@@ -606,6 +608,16 @@ export const details_main = () => {
       // sendSocketInitCmd();
     }
   };
+  function getMatchListCache(){
+    let sessiong_store = sessionStorage.getItem("match_list_ofdetails");
+    if (sessiong_store) {
+      let store_data = JSON.parse(sessiong_store);
+      if (store_data.tId == state_data.detail_data.tid) {
+        state_data.math_list_data = store_data.list;
+        return store_data.list
+      }
+    }
+  }
   /**
    * 联赛下拉选择组件展开时的联赛列表获取
    */
@@ -635,7 +647,10 @@ export const details_main = () => {
           // });
 
           sessionStorage.setItem("match_list_ofdetails", "");
+          /* 这不对吧, 怎么想都不对吧
           data.math_list_data = [];
+          */
+         state_data.math_list_data = [];
           // // 设置详情下拉三角是否显示
           // set_sanjiao_is_bool(false);
         } else {

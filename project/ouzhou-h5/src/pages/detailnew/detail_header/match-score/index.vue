@@ -9,7 +9,7 @@
 
 <script setup name="match_score">
 import { useRoute } from "vue-router";
-import {score_child_5,score_child_8} from "./index.js"
+import {score_child_5,score_child_8,score_child_9} from "./index.js"
 
 import {markRaw} from "vue"
 const route = useRoute()
@@ -22,6 +22,7 @@ const props = defineProps({
 const scoreComponent = {
     ScoreChild_5: markRaw(score_child_5),
     ScoreChild_8: markRaw(score_child_8),
+    ScoreChild_9: markRaw(score_child_9),
 }
 </script>
 
