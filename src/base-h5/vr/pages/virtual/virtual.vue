@@ -521,7 +521,7 @@ export default {
         align-items: center;
         overflow-x: auto;
         overflow-y: hidden;
-        height: 0.65rem;
+        height: 0.45rem;
         padding-left: 0.12rem;
 
         .tabs-tab {
