@@ -132,8 +132,8 @@
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                 <div class="date-time"
                   v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                  <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} -->
-                  {{ format_time_zone(+match.mgt).Format(i18n_t('time11')).replaceAll('月', '/').replaceAll('日', '') }}
+                  {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
+                  <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time11')).replaceAll('月', '/').replaceAll('日', '') }} -->
                 </div>
 
                 <!--即将开赛 ms = 110-->
