@@ -4,7 +4,7 @@
  * @Description: 详情页  足球赛事分析 战绩 模块里边的 公共列表
 -->
 <template>
-  <div class="public_form">
+  <div class="component public_form">
     <!-- 头部 -->
     <div class="header">
       <div class="col1">{{i18n_t('analysis_football_matches.date')}}</div>
@@ -81,7 +81,7 @@ import { onUnmounted, watch, ref } from 'vue'
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { DateForMat } from "src/output/index.js"
-import { project_name } from "src/output/index.js"
+import { project_name,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";

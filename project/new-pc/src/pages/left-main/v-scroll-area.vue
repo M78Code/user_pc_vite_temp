@@ -170,17 +170,17 @@ const on_scroll = (position) => {
 // 设置滚动位置
 const set_scroll_position = (position) => {
 }
-
+const mitt_list=[]
 onMounted(() => {
   // 添加设置滚动位置监听
-  useMittOn(MITT_TYPES.EMIT_SET_SCROLL_POSITION, set_scroll_position)
+  mitt_list.push(useMittOn(MITT_TYPES.EMIT_SET_SCROLL_POSITION, set_scroll_position).off)
   // 监听窗口发生变化解决点击游览器全屏非全屏变化导致的css样式兼容问题
   window.addEventListener('resize', set_footer_position)
 })
 
 onUnmounted(() => {
   // 组件销毁清除设置滚动位置监听
-  useMittOn(MITT_TYPES.EMIT_SET_SCROLL_POSITION, set_scroll_position).off
+  mitt_list.forEach(i=>i())
   // 移除窗口监听，优化组件性能
   window.removeEventListener('resize', set_footer_position)
 })

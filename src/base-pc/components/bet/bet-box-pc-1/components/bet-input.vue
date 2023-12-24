@@ -4,7 +4,7 @@
         <!--金额输入区-->
         <div class="bet-input-failure">
             <!--投注金额输入框-->
-            <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
+            <input class="bet-input input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
                 :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
             <!--清除输入金额按钮-->
             <div class="bet-input-close" @click.stop="bet_clear_handle">
@@ -161,37 +161,11 @@ input[type="number"] {
         width: 100%;
         padding: 4px 6px;
         margin-top: 2px;
+        color: #191c24;
         height: 32px;
         line-height: 18px;
-    &:focus,&:focus-visible{
-        transition: .02s;
-        outline: none;   
+        outline: none;
     }
-    &::-webkit-input-placeholder {/*Chrome/Safari*/
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        color: var(--q-gb-t-c-8);
-    }
-    &::-moz-placeholder {/*Firefox*/
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        color: var(--q-gb-t-c-8);
-    }
-    &::-ms-input-placeholder {/*IE*/
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        color: var(--q-gb-t-c-8);
-    }
-}
     .bet-input-close {
         .icon-failure:before {
             color: var(--q-gb-t-c-18);

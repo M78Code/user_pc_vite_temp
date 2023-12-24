@@ -81,7 +81,7 @@ import { onUnmounted, watch, ref } from 'vue'
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { DateForMat } from "src/output/index.js"
-import { project_name } from "src/output/index.js"
+import { project_name,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";

@@ -66,7 +66,7 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import lodash from 'lodash'
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
-import { project_name } from "src/output/index.js"
+import { project_name,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 
 
 const props = defineProps({

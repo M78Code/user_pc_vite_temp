@@ -65,23 +65,24 @@ const dateTabMenu = ref(null);//时间dom
 const dJdateTabMenu = ref(null);//电竞时间dom
 const scrollTabMenu = ref(null);//滚球dom
 const searchTabMenu = ref(null);//足球tab dom
-// 监听搜索框状态
-useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
-    select_dialog.value = value
-  }).off
+  const mitt_list=[
+    useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
+      select_dialog.value = value
+    }).off
+  ]
+
 
   onMounted(()=>{
-    
     // set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,1)
     init_data(MenuData.current_lv_1_menu_mi.value,1)
-    useMittOn(MITT_TYPES.EMIT_MENU_GO_BACK, menu_go_back)
+    mitt_list.push(useMittOn(MITT_TYPES.EMIT_MENU_GO_BACK, menu_go_back).off)
     // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
     // useMittOn(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, set_scroll_early_single)
   })
   onUnmounted(()=>{
     // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
     // useMittOn(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE).off
-    useMittOn(MITT_TYPES.EMIT_MENU_GO_BACK).off
+    mitt_list.forEach(fun=>fun())
   })
 
   /**

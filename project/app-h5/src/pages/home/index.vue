@@ -78,7 +78,7 @@ export default defineComponent({
       home,
       hot,
     });
-
+    const mitt_list=[]
     /**
      * 动态组件在创建时指定，不能在data中默认为'home'，
      * 否则每次进入到首页路由（home/hot/live_video）都会先创建'home'组件，
@@ -96,10 +96,10 @@ export default defineComponent({
           tab_click(lodash.get(homeReducer, "home_tab_item"), false, false);
         });
       }
-      useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change);
+      mitt_list.push(useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).off) 
     });
     onUnmounted(() => {
-      useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).off;
+      mitt_list.forEach(fun=>fun())
     });
     watch(() => tabIndex.value, () => {
       // 首页、视频直播以及热门下精选不显示背景
