@@ -4,6 +4,10 @@
 
  body {
   /***************************************单关投注部分  **************************************/
+  .c-main-menu {
+    color: var(--q-gb-t-c-8);
+    font-weight: 500;
+  }
   .bet-view {
     /**单关投注*/
     .bet-single {
@@ -277,30 +281,30 @@
           .input-border {
             &:focus {
               background: var(--q-gb-bg-c-11);
-              border: 0.5px solid var(--q-gb-t-c-160);
+              border: 0.5px solid var(--q-gb-bg-c-18);
               border-radius: 6px;
-               color: var(--q-gb-t-c-6);
+              color: var(--q-gb-t-c-6);
             }
           }
           //默认输入框里面说明字体颜色
           input::-webkit-input-placeholder {
             font-size: 14px;
-            color: var(--qq--theme-color-bet-input-placeholder) !important;
+            color: rgba(108,123,168,0.5);
           }
           //默认输入框里面说明字体颜色
           input::-moz-placeholder {
             font-size: 14px;
-            color: var(--qq--theme-color-bet-input-placeholder)  !important;
+            color: rgba(108,123,168,0.5);
           }
           //默认输入框里面说明字体颜色
           input:-moz-placeholder {
             font-size: 14px;
-            color: var(--qq--theme-color-bet-input-placeholder)  !important;
+            color: rgba(108,123,168,0.5);
           }
           //默认输入框里面说明字体颜色
           input:-ms-input-placeholder {
             font-size: 14px;
-            color: var(--qq--theme-color-bet-input-placeholder)  !important;
+            color: rgba(108,123,168,0.5);
           }
           /*  输入边框获取焦点时的样式 */
           /*  校验错误时显示红色边框样式 */

@@ -76,8 +76,8 @@ class MenuData {
      this.result_menu_lv1_mi = ''
      // 赛果 日期/赛中
      this.result_menu_api_params = {}
-     //是否冠军赛果
-     this.is_results_kemp = 0;
+     //赛果类型  0 普通 1冠军 2vr 3电竞
+     this.is_results_type = 0;
       //----------------------------------------------------------------------------------------//
 
     //当前的菜单 lv3
@@ -155,14 +155,14 @@ class MenuData {
   set_result_menu_api_params(val){
     this.result_menu_api_params = val
   }
-  set_results_kemp(val){
-    this.is_results_kemp = val;
+  set_results_type(val){
+    this.is_results_type = val;
     this.set_cache_class({
-      is_results_kemp:val
+      is_results_type:val
     })
   }
-  get_results_kemp(){
-    return this.is_results_kemp
+  get_results_type(){
+    return this.is_results_type
   }
   
   // 根据菜单id获取下级菜单id 二级菜单
@@ -373,6 +373,7 @@ class MenuData {
     this.set_menu_match_date()
     this.set_cache_class({
       data_tab_index:index,
+      data_time:time,
       current_lv_3_menu:{field1:time}
     });
     this.update();

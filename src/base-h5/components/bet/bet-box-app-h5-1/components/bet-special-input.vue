@@ -17,7 +17,12 @@
     </div>
   </div>
   <div class="toltal f-b-c" v-if="items.show_quick">
-    <div>预计可赢：<span class="total-money"> {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} </span>{{currency_code[UserCtr.currency]}} </div>
+    <div>预计可赢：
+      <span v-if="items.seriesOdds">
+        <span class="total-money" > {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount)) }}</span>{{currency_code[UserCtr.currency]}}
+      </span>
+      <sapn v-else>0.00 {{currency_code[UserCtr.currency]}}</sapn>
+    </div>
     <div>小计：{{ format_money2(items.bet_amount * items.count) }}{{currency_code[UserCtr.currency]}} </div>
   </div>
   
@@ -180,7 +185,7 @@ const alertRules = (name) => {
   .bet_single_detail{
     //margin-top: 0.08rem;
     height: 0.44rem;
-    width: 1.68rem;
+    //width: 1.68rem;
     font-size: 0.14rem;
   }
 
