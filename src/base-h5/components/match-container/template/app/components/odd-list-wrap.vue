@@ -63,7 +63,7 @@
           </div>
         </div>
         <!-- 赛果精选列表 -->
-        <div class="standard-odd-list row" v-else  :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
+        <div class="standard-odd-list row reslut-box" v-else  :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
           <div class="odd-column-w w100" :class="[{ clounm2: ![1,4,11,14,16].includes(+match.csid) }, {'boxing':match.csid == 12 }]" :key="hp_i_i+''+standard_odd_status"
                v-for="(hp_item_obj,hp_i_i) in get_match_result_hp_list(standard_odd_status)">
             <!-- 足球 1，水球 16， 冰球 4, 手球 11，橄榄球 14 有三行 -->
@@ -1278,14 +1278,17 @@ onUnmounted(() => {
     }
   }
 }
-.w100{
+.reslut-box{
+  height: 70% !important;
+  .w100{
   width: 100%;
   display: flex;
-  height: 100%;
   gap: 5px;
   .w50{
     width: 50% !important;
-    height: 70% !important;
+    height: 90% !important;
   }
 }
+}
+
 </style>

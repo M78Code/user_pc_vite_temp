@@ -234,10 +234,10 @@ this.bet_appoint_ball_head= null */
     return obj
   }
 
-  // 预约投注 赔率相同的情况下替换投注项id和赔率
+  // 从单关预约投注中找到赔率相同的替换投注项id和赔率
   set_bet_single_list_obj(obj){
     this.bet_single_list.filter(item => {
-      if( item.playOptionsId == obj.oid){
+      if( item.playOptionsId === obj.oid){
         item.playOptionsId = obj.oid
         item.odds = obj.odds
         item.oddFinally = obj.oddFinally
@@ -407,7 +407,8 @@ this.bet_appoint_ball_head= null */
 
     // 串关逻辑 不支持串关的数据 增加标识 ，在页面上做提示
     // mbmty 2 or 4 为电子赛事  足球 篮球
-    if([1,2].includes(Number(obj.sportId)) && [2,4].includes(Number(obj.mbmty))){
+    // 电竞 ispo == 0 不支持串关
+    if([1,2].includes(Number(obj.sportId)) && [2,4].includes(Number(obj.mbmty)) || (obj.bet_type == 'esports_bet' && obj.ispo == 0)){
       // 串关投注中 有这个需要显示不支持串关投注 
       bet_refer_obj.is_serial = true
     }
@@ -911,7 +912,6 @@ this.bet_appoint_ball_head= null */
       this.bet_oid_list.splice(index_,1)
     }
     this.set_bet_data_class_version()
-    console.error('sadasdasdasd')
     // 删除后的数据 是否可以去获取限额
     let single_length = single_list.length
     // 单关且有数据 才能去请求限额

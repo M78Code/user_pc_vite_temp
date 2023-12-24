@@ -479,7 +479,7 @@ class MatchMeta {
   /**
    * @description 获取冠军赛果
    */
-  async get_champion_match_result () {
+  async get_champion_match_result () { 
     this.clear_match_info()
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const { start_time, end_time } =  MatchUtils.get_match_time_start_time(md)

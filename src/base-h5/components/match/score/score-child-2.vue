@@ -41,7 +41,7 @@
             <span class="activeText">{{i18n_t('match_info.add')}}{{$filters.score_format(extraTime)}}</span>
           </span>
         </template>
-        <template v-if="score_array.length == 4">
+        <template v-else-if="score_array.length == 4">
           <span v-for="(item, key) of score_array" :key="key">
             <span>&nbsp;&nbsp;</span>
             <span>{{$filters.score_format(item)}}</span>
@@ -52,6 +52,12 @@
             <span class="activeText">{{i18n_t('match_info.add')}}({{$filters.score_format(extraTime)}})</span>
           </span>
         </template>
+      </template>
+      <template v-else>
+        <span v-for="(item, key) of score_array" :key="key">
+            <span>&nbsp;&nbsp;</span>
+            <span>{{$filters.score_format(item)}}</span>
+          </span>
       </template>
     </template>
   </div>
@@ -68,7 +74,7 @@ export default {
       // 上半场，下半场
       model_a:['1', '2', '31','999'],
       // 常规4节比赛
-      model_b:['13', '14', '15', '16', '301', '302', '303','999'],
+      model_b:['13', '14', '15', '16', '301', '302', '303'],
       // 加时赛比赛
       model_c:['32', '40', '110','999'],
       // 常规4节比赛的比分
