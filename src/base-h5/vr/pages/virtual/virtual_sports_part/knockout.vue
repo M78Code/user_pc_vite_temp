@@ -161,8 +161,8 @@ export default {
           beginTime: this.current_match.mgt,
         }
         // this.json_list  调试用的, data 才是真实数据
-        // this.visible = false
         let {code, data} = await api_v_sports.get_match_sorce(params)
+        this.visible = false
         this.check_if_there_tab = data
         // this.check_if_there_tab = this.json_list
         if (code == 200) {

@@ -83,7 +83,8 @@
             </div>
           </div>
           <div v-if="sub_menu_type == 1004" class="c-s-timer-w basketball row justify-center items-center">
-            <img  src="image/wwwassets/bw3/list/basket_ball_video_playing.svg" alt="">
+            <!-- <img  src="image/wwwassets/bw3/list/basket_ball_video_playing.svg" alt=""> -->
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/basket_ball_video_playing.svg`" alt="">
           </div>
         </div>
       </div>
@@ -170,6 +171,8 @@ import virtualBasketball from 'src/base-h5/vr/pages/virtual/details/children/vir
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import ServerTime from "src/core/server-time/server-time.js"
+import { LOCAL_PROJECT_FILE_PREFIX,calc_win, project_name, i18n_t } from 'src/output/index.js'
+
 
 export default {
   name:'VirtualSportsStage',
@@ -196,6 +199,11 @@ export default {
         return []
       }
     },
+  },
+  setup() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
   },
   data(){
     return {
@@ -840,7 +848,7 @@ export default {
 }
 
 .banner {
-  border-radius: 0;
+  border-radius: 0.05rem;
   width: 100%;
   height: 1.9rem;
   margin: auto;
@@ -866,7 +874,7 @@ export default {
   }
 
   &.dirt_motorcycle {
-    background-image: var(--q-color-com-img-bg-145);
+    background-image: url($SCSSPROJECTPATH+"/image/png/dirt_virtual_match_motorcycle.png");
   }
 
   .wrapper-loading-c {

@@ -48,4 +48,10 @@ export default {
   'h5-kyapp-expand-lague': {
     default: "h5-kyapp-expand-lague",    
   },
+  'h5-kyapp-go-back': {
+    default: "h5-kyapp-go-back",   
+  }, 
+  'h5-kyapp-no-data': {
+    default: "h5-kyapp-no-data",    
+  },
 }

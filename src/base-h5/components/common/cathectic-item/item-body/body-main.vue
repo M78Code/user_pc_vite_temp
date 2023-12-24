@@ -40,7 +40,7 @@
           <!--球类名称 赛前还是滚球 玩法名称-->
           {{i18n_data.sport_name}}
           <span
-            v-if="type_.seriesType != '3' && main.matchType != 4 && main.sportId != 1004">&thinsp;&ensp;</span>
+            v-if="type_.seriesType != '3' && main.matchType != 4 && main.sportId != 1004">&thinsp;{{i18n_data.type}}&ensp;</span>
           <template v-if="(main.sportId == 1001 || main.sportId == 1004) && type_.seriesType != '1'">&ensp;{{main.matchName}}{{main.matchDay}}&ensp;{{main.batchNo}}</template>
           {{main.playName}}
           <!-- 基准分 -->
