@@ -291,7 +291,8 @@
                 </div>
                 </div>
               </div>
-              <template v-if="match.csid != 1">
+              <!-- 展示三行的不展示比分 -->
+              <template v-if="![1, 4, 11, 14, 15, 16].includes(+match.csid)">
                 <div class="score-content">
                   <ScoreList :main_source="main_source" :match="match_of_list" />
                 </div>

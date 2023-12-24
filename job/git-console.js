@@ -52,7 +52,14 @@ let commond4 =`git log --since ='2023-12-10T00:00:00+08:00' --until='${until}'  
   let names=  shell.exec(commond4).split('\n')
 
   names =Array.from(new Set(names))
-  names=  names.map(x=>x.substring(1,x.length-1))
+
+  names=  names.map(x=>{
+    if(x.startsWith("\"'")){
+     return   x.substring(1,x.length-1)
+    }else{
+        return   x
+    }
+  })
   names=names.filter(x=>!!x)
 console.log('names', JSON.stringify(names)  );
 console.log('names',  names.length  );
@@ -125,7 +132,7 @@ write_file(`${write_folder}/index.json`, result_str);
 let force_formart=(str,len=20)=>{
     str= ''+str 
 
-    str = str.padEnd( 20," ")
+    str = str.padEnd( len," ")
     return str
 }
 
@@ -135,15 +142,18 @@ let all_result= Object.values(fial_obj)
 
 all_result.sort((a,b)=>a.add-b.add)
 
-
-let formart_str=  ''
+//git branch  --show-current
+//  git  rev-parse --abbrev-ref HEAD
+let current_branch =  shell.exec('git  rev-parse --abbrev-ref HEAD'  ).toString()
+let formart_str=  `` 
 formart_str+="\n"
 formart_str+="\n"
+formart_str+= `统计分支名字: ${current_branch}`
 formart_str+= `统计开始时间：${since} \n`
 formart_str+= `统计截止时间：${until} \n`
 formart_str+="\n"
 formart_str+="\n"
-  formart_str+=  `${force_formart('名字')}\t${force_formart('新增行数')}\t${force_formart('删除行数')}\t${force_formart('逻辑行数')}\n`
+formart_str+=  `${force_formart('名字',18)}\t${force_formart('新增行数',16)}\t${force_formart('删除行数',16)}\t${force_formart('逻辑行数',16)}\n`
 
 let all_add=0
 let all_subs=0
