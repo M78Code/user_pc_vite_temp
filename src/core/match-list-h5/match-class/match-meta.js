@@ -506,13 +506,22 @@ class MatchMeta {
     }
     // 避免接口慢导致的数据错乱
     const list = lodash.get(res, 'data', [])
+    let obj = {}
     list.forEach(i => {
       i.tid = i.tournamentId
       i.csid = i.sportId
       i.mid = i.marketId
       i.csna = i.sportName
-      i._total = list.length
+      if (obj[i.sportId]) {
+        obj[i.sportId]++
+      } else {
+        obj[i.sportId] = 1
+      }
     })
+    list.forEach(i => {
+      i._total = obj[i.sportId]
+    })
+    console.log('get_champion_match_result_apiget_champion_match_result_apiget_champion_match_result_api', list)
     const length = lodash.get(list, 'length', 0)
     if (length < 1) {
       this.set_page_match_empty_status({ state: true });

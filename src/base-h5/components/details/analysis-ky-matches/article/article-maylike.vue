@@ -65,6 +65,7 @@
   width: min-content;
   line-height: 0.44rem;
   white-space: nowrap;
+  color:  var(--q-gb-t-c-18);
   border-bottom: 2px solid var(--q-gb-bd-c-10);
 }
 hr {
@@ -75,6 +76,7 @@ hr {
 }
 .content {
   height: 0.98rem;
+  color:  var(--q-gb-t-c-18);
   border-bottom: 1px solid var(--q-gb-bd-c-6);
   .detail2 {
     color: var(--q-gb-t-c-4);

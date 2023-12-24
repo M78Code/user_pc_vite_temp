@@ -566,7 +566,7 @@
     <!-- DO NOT touch the following DIV -->
     <div id="ty-app" class="full-height"></div>
     <!--loading 动画-->
-    <!-- <div id="loading-root-ele" class="loading"  >
+    <div id="loading-root-ele" class="loading"  >
       <div id="loading-root-main" class="la-line-scale loading-line">
         <div></div>
         <div></div>
@@ -574,7 +574,7 @@
         <div></div>
         <div></div>
       </div>
-    </div> -->
+    </div>
   </body>
 
   <script>
@@ -594,7 +594,7 @@
       // 不去考虑所谓的  弹出窗口后 主页面再更改 主题 , 弹窗页面刷新不同步问题
       // 主题设置
       let current_theme =
-        sessionStorage.getItem("theme") || url_search.get("theme") || "theme01";
+      url_search.get("theme") || sessionStorage.getItem("theme") || "theme01";
       // 默认日间版
       document.getElementById("ty-body").classList.add(current_theme);
       // 如果 主题  未知
@@ -618,7 +618,7 @@
       //类名拼接
       current_theme = current_theme + "-root-loading";
       //根据 主题 设置节点 类名
-      // document.querySelector('#loading-root-ele').className ="loading "+current_theme
+      document.querySelector('#loading-root-ele').className ="loading "+current_theme
     }
     //对接app跳转需求，当Url地址有传入 token 字段时，认定是初次进入，手动清除掉缓存
     let url_search = SEARCH_PARAMS.init_param;

@@ -75,14 +75,17 @@
           <div class="match-detail-num" >
             <p class="active-num"> {{ detail_count?.home }}</p>
             <p class="active-num"> {{ detail_count?.away }}</p>
-
           </div>
           <div class="match-detail-num ml-14 align-right " v-if=" get_match_detail.man">
             <!-- {{ scoew_icon_list["S1"].away }} -->
-            <p v-if="get_match_detail.csid == 5 " class="default-num">{{ tennis_point[0] }}</p>
-            <p v-if="get_match_detail.csid == 5 " class="default-num">{{ tennis_point[1] }}</p>
-
-          
+            <template v-if="[7,8,9,10,13].includes(get_match_detail.csid)">
+              <p class="default-num">{{ others_point.home }}</p>
+              <p class="default-num">{{ others_point.away }}</p>
+            </template>
+            <template v-if="get_match_detail.csid == 5 ">
+              <p class="default-num">{{ tennis_point[0] }}</p>
+              <p class="default-num">{{ tennis_point[1] }}</p>
+            </template>
           </div>
         </div>
       </div>
@@ -121,9 +124,12 @@
         </div>
       </template>
     </div>
-     <div v-show="false">{{ get_match_detail.csid  }}</div>
-     <!-- 比分组件 目前只写了网球比分组件 -->
-     <matchScore v-if="get_match_detail.csid == 5"  :detail_data="get_match_detail" />
+    <div v-show="false">{{ get_match_detail.csid  }}</div>
+    <!-- 比分组件 目前只写了网球比分组件 -->
+    <template v-if="[5,8,9].includes(get_match_detail.csid)">
+      <matchScore :detail_data="get_match_detail" />
+    </template>
+    
   </div>
 </template>
 
@@ -231,6 +237,13 @@ watch(() => props.get_match_detail, (value) => {
   }
 },{deep:true})
 
+// 斯诺克, 乒乓球, 羽毛球, 排球, 沙滩排球 取赛事阶段范围内的最大为当前比分
+const others_point = computed(()=>{
+  const { msc_obj } = props.get_match_detail
+  const msc_obj_keys = Object.keys(msc_obj)
+  const LastIndex = msc_obj_keys.findLastIndex(current => (current.replace('S','') >= 120 && current.replace('S','') <= 159))
+  return msc_obj[msc_obj_keys[LastIndex]]
+})
 //比分
 const detail_count = computed(() => {
   return scoew_icon_list.value['S1'] || [0,0];
@@ -329,7 +342,7 @@ const sport_ball = {
 const cuid = ref("");
 const bg_img = ref({})
 const detail_store = ref(null);
-console.log(is_collect,'is_collect');
+
 const football_score_icon_list = ref([
   {
     bg_url: "shangbanchang",
