@@ -6,7 +6,7 @@
 <template>
   <div
       v-if="show_bet_record"
-      class="common-cathectic-item hairline-border" :class="{'common-cathectic-item2': key2==0,'common-cathectic-item3': len==key2+1,}" v-show="(!is_early || (is_early && is_show_early_settle)) && !is_show_pre">
+      class="common-cathectic-item hairline-border-ky" :class="{'common-cathectic-item2': key2==0,'common-cathectic-item3': len==key2+1,}" v-show="(!is_early || (is_early && is_show_early_settle)) && !is_show_pre">
     <div v-if="item_data.seriesType != '1'" class="yb_mx10 item-header yb_fontsize14 yb_py4">
       {{item_data.seriesValue}}
       <!-- <template v-if="item_data.seriesType != 3">&nbsp;&nbsp;@&thinsp;{{mix_odds_sum}}</template>  -->
@@ -120,9 +120,25 @@ onUnmounted(() => {
   height: 0.38rem;
   line-height: 0.34rem;
 }
-.hairline-border {
-  &::after {
-    border: 1px solid var(--q-gb-bd-c-3) !important;
+
+.hairline-border-ky {
+    position: relative;
+    border-radius: 0.08rem;
+
+    &::after {
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      left: 0;
+      top: 0;
+      border: 1px solid var(--q-gb-bd-c-3) !important;
+      border-radius: 0.16rem;
+      width: 200%;
+      height: 200%;
+      -webkit-transform: scale(0.5);
+      transform: scale(0.5);
+      -webkit-transform-origin: left top;
+      transform-origin: left top;
+    }
   }
-}
 </style>

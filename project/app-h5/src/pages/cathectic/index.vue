@@ -124,7 +124,7 @@
   
   .head-top {
     height: 0.4rem;
-    background-color:var(--q-gb-bg-c-15);
+    background-color:var(--q-gb-bg-c-23);
     border-radius: 1rem;
   
     & > div {

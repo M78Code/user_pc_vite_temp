@@ -346,6 +346,7 @@ export default defineComponent({
      * @param {undefined} undefined
     */
     const touch_pan = lodash.debounce((e) => {
+      console.log(111111111)
       let dom_width = bet_slide.value?.clientWidth
 
       if ((append_single_list.value.length / 2) < 4) {
@@ -375,9 +376,10 @@ export default defineComponent({
         if (init_data.left >= 0) {
           return
         }
-        init_data.left += 90
+        init_data.left += 85
+        
       }
-    }, 500);
+    }, 50);
     const go_to_fun = (ol_item) => {
       append_single_list.value.map((item)=>{
         ol_item.oid == item.oid ?  item.show_bgc = true: item.show_bgc = false
