@@ -113,7 +113,7 @@ const toggle_merge = () => {
 
     .bet-single-count {
       border-radius: 10px;
-      color: var(--q-gb-t-c-1);
+      color: var(--q-gb-bg-c-11);
       width: 20px;
       height: 20px;
       line-height: 20px;

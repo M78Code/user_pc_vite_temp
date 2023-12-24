@@ -1,11 +1,18 @@
 <!-- @Description: toast弹框 -->
 <template>
-  <div class="text-toast" v-if="is_show">{{ text }}</div>
+  <div class="text-toast" v-if="is_show">
+    <div class="no_data">
+      <img :src="compute_local_project_file_path('/image/svg/warn.svg')" >
+      <div style="text-align: center">{{text}}</div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { onUnmounted, ref } from 'vue';
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt/index.js'
+import {compute_local_project_file_path} from "src/output/index.js";
+
 /* 是否展示 */
 const is_show = ref(false)
 /* 文本内容 */
@@ -107,18 +114,31 @@ export default defineComponent({
 </script> -->
 
 <style lang="scss" scoped>
-.text-toast {
+.text_toast {
   position: fixed;
-  z-index: 10000;
-  top: 41%;
+  z-index: 9999;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.no_data {
+  position: fixed;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  background-color: #414655;
-  padding: 6px 10px;
-  font-size: 0.14rem;
-  border-radius: 5px;
+  transform: translate(-50%, -50%);
+  padding: 0.18rem 0.14rem;
   color: #ffffff;
-  line-height: 1.2;
-  max-width: 2.6rem;
+  background: #040506;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.06rem;
+
+  img {
+    margin-bottom: 0.1rem;
+  }
 }
 </style>

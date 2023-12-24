@@ -217,4 +217,4 @@ const useMittEmitterGenerator = (event_pairs) => {
 
 
 
-export { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES,useMitt };
+export { emitter, useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES,useMitt };

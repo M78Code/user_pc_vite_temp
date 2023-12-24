@@ -723,7 +723,6 @@ const get_hp_list = (type) => {
  * @param {Number} type 0 第一部分; 1 第二部分
  */
  const get_match_result_hp_list = (type) => {
-  debugger
   let hps = [];
   if (type == 0) {
     if (props.match && finally_ol_list.value) {
