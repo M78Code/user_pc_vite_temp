@@ -111,7 +111,7 @@
   </q-card>
 </template>
 <script setup>
-import { reactive, computed, ref } from "vue"
+import { reactive, computed, ref, onMounted } from "vue"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_odds, format_currency, formatTime } from "src/output/index.js"
 import { odds_type_name } from "src/output/index.js"
@@ -147,6 +147,10 @@ const pending_order_status = computed(() => options_id => {
     return 1
   }
   return 0;
+})
+
+onMounted(()=>{
+  console.log(props.item)
 })
 
 const ref_data = reactive({
