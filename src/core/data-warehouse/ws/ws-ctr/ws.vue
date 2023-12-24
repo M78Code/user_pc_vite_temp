@@ -22,6 +22,9 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import { set_market_id_to_ws } from "src/core/bet/class/bet-box-submit.js"
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+
+const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 // 页面 失去 焦点后  WS 断开时间
 const DOCUMENT_HIDDEN_WS_CLOSE_TIME = 5 * 60 * 1000;
@@ -226,10 +229,16 @@ function scmd_c4(type=1) {
 /**
  * @description: 菜单订阅C5-菜单栏目统计(C301)
  * @return {undefined} undefined
+ * `cdt` 设备类型 0:取消订阅 1:移动端188（欧洲版） 3:移动端panda（亚洲版） 4:PC端（专业版/标准版） 5:PC端--弃用（新手版） 6:新手版  7:H5 优化版
+ * `说明:` 订阅后会推送C301,C3011,C501
  */
 function scmd_c5() {
   let obj = {};
-  obj.cdt = "4";
+  let cdt = '4'
+  if(PROJECT_NAME.indexOf('h5') > -1){
+    cdt = '7'
+  }
+  obj.cdt = cdt
   WsMan.skt_send_menu(obj);
 }
 /**

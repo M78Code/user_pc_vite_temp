@@ -9,7 +9,8 @@
     </virtual-skeleton>
     <!-- <setting list_type="vr"/> -->
     <!--联赛tab-->
-    <div class="tab-wrapper">
+    <!--只有足球展示多个联赛菜单 -->
+    <div class="tab-wrapper" v-if="sub_menu_type == 1001">
       <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
         :key="i" @click="tab_item_click_handle(i,null,'user_change')">
         <div>{{tab_item.name}}</div>
@@ -820,10 +821,14 @@ export default {
   justify-content: space-between;
   padding: 0 0.15rem;
   height: 0.24rem;
-  border-top: 2px solid #FEAE2B;
+  border-top: 0.02rem solid var(--q-gb-bd-c-3);
+  background-color: var(--q-gb-bg-c-25);;
+
   .left {
     font-size: 0.12rem;
-    color: #303442;
+    color: var(--q-gb-t-c-18);;
+    display: flex;
+    align-items: center;
     img {
       width: 0.12rem;
       height: 0.12rem;
@@ -831,6 +836,8 @@ export default {
     }
   }
   .right {
+    display: flex;
+    align-items: center;
     img {
       width: 0.2rem;
       height: 0.16rem;
@@ -843,14 +850,15 @@ export default {
 .virtual-content-wrapper {
   padding: 0.08rem 0.05rem 0;
   color: var(--q-gb-t-c-18);
-  background: #F2F2F6;
+  // background: #F2F2F6;
+  background-color: var(--q-gb-bg-c-21) ;
 }
 .virtual-sports-card {
   &-content {
-    background: #F8F9FA;
+    background: var(--q-gb-bg-c-18);
     border-radius: .08rem;
     margin-bottom: .08rem;
-    border: 1px solid #fff;
+    border: 1px solid var(--q-gb-bd-c-15);
   }
   &:last-of-type {
     padding-bottom: 0.7rem;
@@ -891,6 +899,9 @@ export default {
       padding: .02rem .12rem;
       &.active {
         background: #D1EBFF;
+        .teams {
+          color: #127DCC;
+        }
       }
       .teams {
         display: flex;

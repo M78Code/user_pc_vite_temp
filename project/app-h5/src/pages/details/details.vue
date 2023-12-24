@@ -33,7 +33,6 @@
           <!-- 玩法集 start -->
           <div class="details-tab-wrap" :class="{ 'z-index0': get_is_full_screen, 'z-index81': get_bet_show }">
             <!-- 足蓝赛种 才展示 投注/赛事分析 切换tab -->
-            <!--  detail_data.csid !== '2' Bug：50889 -->
             <q-tabs
                 v-if="(!get_is_hengping || get_is_dp_video_full_screen) &&
                 !['BE', 'C01', 'OD'].includes(detail_data.cds)"

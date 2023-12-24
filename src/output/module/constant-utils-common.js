@@ -33,8 +33,7 @@ export {
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 
-export const  PROJECT_NAME =  BUILD_VERSION_CONFIG.PROJECT_NAME
-export const  IS_PC =  BUILD_VERSION_CONFIG.IS_PC
+export const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILD_VERSION_CONFIG;
 export const  project_name = PROJECT_NAME
 
 export {

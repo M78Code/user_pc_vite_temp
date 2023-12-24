@@ -132,7 +132,7 @@
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                 <div class="date-time"
                   v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                  {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
+                  {{ format_M_D(+match.mgt)}}
                   <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time11')).replaceAll('月', '/').replaceAll('日', '') }} -->
                 </div>
 
@@ -145,7 +145,7 @@
                 <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
                   <CountingDownStart :match="match" :index="i" :mgt_time="match.mgt"></CountingDownStart>
                 </div>
-                <div v-if="match.mfo&&match.ms != 110&&show_start_counting_down(match)" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
+                <div v-if="match.mfo&&!get_match_status(match.ms)" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
                   &nbsp;{{ match.mfo }}
                 </div>
                 <!--倒计时或正计时-->
@@ -207,21 +207,21 @@
                     :size="18"
                     style="margin-left:-0.09rem;"
                   ></team-img>
+                  <!--发球方绿点-->
+                  <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                    v-show="set_serving_side(match, 'home')">
+                  </span>
               </div>
-              <!--发球方绿点-->
-              <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                v-show="set_serving_side(match, 'home')">
-              </span>
               <span class="vs">VS</span>
-              <!--发球方绿点-->
-              <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                v-show="set_serving_side(match, 'away')">
-              </span>
               <div class='right'>
                 <!-- <image-cache-load v-if="match?.malu?.length && !([5, 7].includes(Number(match.csid)))" -->
                 <!-- <image-cache-load v-if="match?.malu?.length"
                   :csid="+match.csid" :path="match.malu" type="home"></image-cache-load> -->
                  <!-- 右侧双打图标 type 1 表示客队,malu 客队的url -->
+                <!--发球方绿点-->
+                <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                  v-show="set_serving_side(match, 'away')">
+                </span>
                 <team-img
                   :type="1"
                   :csid="match.csid"
@@ -434,7 +434,7 @@ export default {
       curMatchOdds,
       isCollectMenuTab,
       compute_local_project_file_path,
-      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id, LOCAL_PROJECT_FILE_PREFIX,
+      lang, theme, i18n_t, compute_img_url,format_M_D, format_time_zone, GlobalAccessConfig, footer_menu_id, LOCAL_PROJECT_FILE_PREFIX,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, footer_menu_id,
       in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item, show_sport_title, compute_css_obj,
       normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app,
@@ -955,6 +955,7 @@ export default {
           background: var(--sys-feedback-success-success-400, #4AB06A);
           width: 4px !important;
           height: 4px;
+          position: absolute;
         }
 
         .logo {
@@ -983,7 +984,7 @@ export default {
               text-align: right;
             }
             .serving-party {
-              right: 0.28rem;
+              right: -0.1rem;
             }
             .team-img{
               margin: 0 0 0 3px;
@@ -1000,7 +1001,7 @@ export default {
               width: 1rem;
             }
             .serving-party {
-              left: 0.28rem;
+              left: -0.1rem;
             }
             .team-img{
               margin: 0 3px 0 0;
@@ -1063,15 +1064,27 @@ export default {
       }
       :deep(.score-se-inner){
         max-width: 100%;
-        height: auto;
+        height: 100%;
         .score-se-inner2{
           display: flex;
           margin-left: -5px;
           overflow-x: auto;
           justify-content: space-between;
+          height:100%;
+          overflow-y:hidden;
           .score-fle-container-1{
             position: relative;
             top: 1px;
+            display: block;
+            width: 1.12rem;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            overflow:hidden;
+            .items-start {
+              display: inline-block;
+              height: 100%;
+              line-height: .23rem;
+            }
           }
           .b-score-wrapper{
             flex-wrap: nowrap;
