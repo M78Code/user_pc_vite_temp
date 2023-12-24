@@ -1652,6 +1652,8 @@ export default {
         width: 150px !important;
         .counting{
           font-size: 11px;
+          position: relative;
+          top: -1px;
           color: var(--q-gb-t-c-19);
         }
         .special{
