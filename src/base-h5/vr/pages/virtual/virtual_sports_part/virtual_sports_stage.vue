@@ -83,7 +83,8 @@
             </div>
           </div>
           <div v-if="sub_menu_type == 1004" class="c-s-timer-w basketball row justify-center items-center">
-            <img  src="image/wwwassets/bw3/list/basket_ball_video_playing.svg" alt="">
+            <!-- <img  src="image/wwwassets/bw3/list/basket_ball_video_playing.svg" alt=""> -->
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/basket_ball_video_playing.svg`" alt="">
           </div>
         </div>
       </div>
@@ -170,6 +171,8 @@ import virtualBasketball from 'src/base-h5/vr/pages/virtual/details/children/vir
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import ServerTime from "src/core/server-time/server-time.js"
+import { LOCAL_PROJECT_FILE_PREFIX,calc_win, project_name, i18n_t } from 'src/output/index.js'
+
 
 export default {
   name:'VirtualSportsStage',
@@ -196,6 +199,11 @@ export default {
         return []
       }
     },
+  },
+  setup() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
   },
   data(){
     return {
@@ -567,6 +575,7 @@ export default {
           res.push(item.no)
         }
       }
+      console.log(res ,'res')
       return res;
     },
     /**
@@ -999,19 +1008,20 @@ export default {
 }
 
 .score {
-  width: 2.6rem;
-  height: 0.9rem;
-  background-image: var(--q-color-com-img-bg-115);
+  width: 100%;
+  height: 0.54rem;
+  background: rgba(0,0,0, 0.6);
   background-size: 100% 100%;
   margin: auto;
-  margin-top: 0.38rem;
+  margin-top: 0.68rem;
   position: relative;
   border-radius: 0.04rem;
 
   .match-over {
     position: absolute;
-    left: 0.9rem;
-    top: -0.13rem;
+    left: 50%;
+    margin-left: -0.4rem;
+    top: -0.43rem;
     width: 0.8rem;
     height: 0.26rem;
     line-height: 0.26rem;
@@ -1026,15 +1036,33 @@ export default {
 
 .score-box {
 
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 0.36rem;
+  height: 0.36rem;
 
   border-radius: 4px;
   font-size: 0.24rem;
-  margin: 0 0.075rem;
+  margin: 0 0.1rem;
   border-radius: 2px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  &.match-horse1 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/match_horse1.png");
+  }
+  &.match-horse2 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/match_horse2.png");
+  }
+  &.match-horse3 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/match_horse3.png");
+  }
+  &.match-horse4 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/match_horse4.png");
+  }
+  &.match-horse5 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/match_horse5.png");
+  }
+  &.match-horse6 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/match_horse6.png");
+  }
 }
 
 .mmp-status {

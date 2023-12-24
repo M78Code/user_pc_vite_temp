@@ -8,7 +8,7 @@
  */
 
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-export const { BUILD_VERSION, CURRENT_ENV, PROJECT_NAME, IS_PC } =
+ const {   IS_PC } =
   BUILD_VERSION_CONFIG;
 
 // pc

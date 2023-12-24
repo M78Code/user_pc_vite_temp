@@ -4,10 +4,11 @@
 
 
 import { csid_to_tpl_id } from 'src/core/constant/common/module/csid-util.js'
-import { MenuData, PROJECT_NAME } from 'src/output/module/menu-data.js'
+import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 import { get_match_status } from 'src/output/module/constant-utils.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import BaseData from "src/core/base-data/base-data.js";
+import { MenuData } from 'src/output/module/menu-data.js'
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
 import { match_state_convert_score_dict, history_score_dict } from 'src/core/constant/project/module/data-class-ctr/score-keys.js'
 /**

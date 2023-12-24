@@ -26,7 +26,8 @@
           <div class="match-status-title">
             <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
           </div>
-          <img :class="['expand_item', {collapsed: not_begin_collapsed}]" :src="expand_item" alt="">
+          <!-- <img :class="['expand_item', {collapsed: not_begin_collapsed}]" :src="expand_item" alt=""> -->
+          <div :class="['expand_item', {collapsed: not_begin_collapsed}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
         </template>
       </div>
       <div class="all-league-title" v-if="is_show_opening_title && is_mix_no_today"  @click.stop="handle_ball_seed_fold">
@@ -1249,7 +1250,7 @@ export default {
             color: var(--q-gb-t-c-18);
 
             &.is-handicap {
-              color: #74C4FF !important;
+              color: var(--q-gb-t-c-1) !important;
             }
           }
         }
@@ -1651,6 +1652,8 @@ export default {
         width: 150px !important;
         .counting{
           font-size: 11px;
+          position: relative;
+          top: -1px;
           color: var(--q-gb-t-c-19);
         }
         .special{

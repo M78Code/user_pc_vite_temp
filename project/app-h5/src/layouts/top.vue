@@ -46,16 +46,13 @@ import {
 import { useRoute,useRouter } from "vue-router";
 import lodash_ from "lodash";
 import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, UserCtr } from "src/output/index.js";
-import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { useMittOn,MITT_TYPES, useMittEmit } from "src/core/mitt/index.js"
-
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
 import { TopMenu,ScrollMenu,SearchTab,DateTab,SwitchWap } from 'src/base-h5/components/menu/app-h5-menu/index'
-
-import { is_kemp } from 'src/base-h5/mixin/menu.js'
 
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 
@@ -135,6 +132,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     }
     switch (+val.mi) {
       case 2000:
+        //电竞重新设置单关
+        BetData.set_is_bet_single('single')
         UserCtr.sort_type==1&&UserCtr.set_sort_type(2) //电竞没有热门排序 只有时间
         // ref_data.scroll_data_list = [];
         MenuData.set_current_lv1_menu(val.mi);
@@ -157,6 +156,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
         set_menu_mi_change_get_api_data(type)
         break;
       case 300:
+        //vr重新设置单关
+        BetData.set_is_bet_single('single')
         // ref_data.scroll_data_list = MenuData.get_menu_lvmi_special_list(val.mi)
         router.push('/virtual');
         break;
@@ -173,7 +174,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
           ref_data.current_mi = val.mi;
           MenuData.set_current_lv_2_menu_i(val);
           set_menu_mi_change_get_api_data()
-        break  
+        break 
       default:
           ref_data.current_mi = val.mi
         // 设置二级菜单 
@@ -200,20 +201,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
    * @param {*} new_ 
    */
   const init_data = (new_,type) =>{
-    // 今日 滚球 冠军
-    // if( [1,2,400].includes(1*new_) ){
-      // ref_data.scroll_data_list = [];
-      // set_scroll_data_list(new_,type)
-    // }
-    //早盘 串关
-    // if( [3,6].includes(1*new_)){
-    //   ref_data.scroll_data_list = [];
-    //   nextTick(()=>{
-    //     const index = type && MenuData.data_tab_index?MenuData.data_tab_index:0;
-    //     dateTabMenu.value.set_active_val()
-    //     dateTabMenu.value.changeTabMenu(dataList[MenuData.current_lv_1_menu_i]?.[index],index,'',type)
-    //   })
-    // }
     if(new_ == 300)return;
     if(!MenuData.top_menu_title?.mi){
       ref_data.scroll_data_list = [];
@@ -234,8 +221,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     //球种滚动初始化
     nextTick(()=>{
       try {
-        scrollTabMenu.value?.scrollTabMenu()
-        searchTabMenu.value?.searchTabMenu(0)
+        scrollTabMenu.value?.scrollTabMenu();
+        searchTabMenu.value?.searchTabMenu(0);//设置联赛未0
+        //缓存存在 并且为足球  调用筛选接口
         if(MenuData.menu_csid === 1 && MenuData.current_lv_1_menu_mi.value != 400 && MenuData.search_tab_index){
           searchTabMenu.value?.changeTab(MenuData.search_tab_index)
         }

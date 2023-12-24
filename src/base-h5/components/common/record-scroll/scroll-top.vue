@@ -19,13 +19,12 @@
 </template>
 
 <script setup>
-import { PROJECT_NAME } from 'src/output/module/menu-data.js'
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } from 'vue'
 import { scroll_top_icon, scroll_top_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 import { utils } from 'src/core/utils/common/module/utils.js'
-import { compute_css_obj } from "src/output/index.js"
+import { compute_css_obj, PROJECT_NAME } from "src/output/index.js"
 const emits = defineEmits(['back-top'])
 const props = defineProps({
   // 父组件滚动高度
