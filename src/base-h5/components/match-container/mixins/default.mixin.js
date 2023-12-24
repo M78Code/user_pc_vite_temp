@@ -20,7 +20,7 @@ import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, is_detail, is_results, menu_lv1 } from 'src/base-h5/mixin/menu.js'
 import BaseData from "src/core/base-data/base-data.js";
-
+import { get_collect_count } from 'src/core/collect/collect-class.js'
 
 // i: 每个组件的 props 赛事下标， 来源 === 组件
 // match_of_list: 每个组件的 props 赛事对象， 来源 === 组件
@@ -359,6 +359,7 @@ export default defineComponent({
         cuid: UserCtr.get_uid()
       }).then(res => {
         if (+res.code !== 200) return
+        get_collect_count()
       })
       //先执行删除收藏 再执行删除收藏页数据
       MatchCollect.handle_league_collect_state(tid)
@@ -380,6 +381,7 @@ export default defineComponent({
         cuid: UserCtr.get_uid()
       }).then(res => {
         if (+res.code !== 200) return
+        get_collect_count()
       })
       // 收藏页手动处理数据
       MenuData.is_collect() && MatchMeta.set_collect_match(this.match_of_list, 2)

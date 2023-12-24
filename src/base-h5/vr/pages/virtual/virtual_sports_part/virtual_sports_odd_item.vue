@@ -15,7 +15,7 @@
         <div class="on" :class="{onfocus:ol_item.result == 4 || ol_item.result == 5}" v-if="ol_item.on">
           {{ol_item.on}}
         </div>
-        <div class="lock" v-if="match.mhs == 1">
+        <div class="lock" v-if="is_vr_lock">
           <img src="image/wwwassets/bw3/common/match-icon-lock.svg" class="icon-lock">
         </div>
         <div v-else 
@@ -42,7 +42,8 @@ export default {
     hl_item:Object,
     match_invalid:Boolean,
     // mhs 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
-    match:Object
+    match:Object,
+    is_vr_lock: Boolean //用来控制vr投注项提前10s封盘 
   },
   methods:{
     get_odd_value(ol_item){

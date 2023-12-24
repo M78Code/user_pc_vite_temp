@@ -176,7 +176,7 @@
         <!--新手版-->
         <div v-if="standard_edition == 1" class="bet-item-wrap row border-radius4">
           <v-s-odd-item :ol_item="ol_item" :hl_item="get_hl_item(match_item)" @click.native="item_click4(match_item,ol_item)"
-            :match_invalid="match_item.invalid" :match="match_item" 
+            :match_invalid="match_item.invalid" :match="match_item"  :is_vr_lock="is_vr_lock"
             v-for="(ol_item,o_i) of get_ol_list_f_match(match_item)" :key="o_i">
           </v-s-odd-item>
         </div>
@@ -542,7 +542,7 @@ export default {
      */
     item_click4(match_item,ol_item){
       //对应没有赔率值或者欧赔小于101000,或者虚拟体育赛事状态不为0
-      if (match_item.mhs != 0 || !ol_item.ov || ol_item.ov < 101000 || match_item.match_status){
+      if (match_item.mhs != 0 || !ol_item.ov || ol_item.ov < 101000 || match_item.match_status || this.is_vr_lock){
         return;
       }
 

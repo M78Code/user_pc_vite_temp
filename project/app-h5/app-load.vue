@@ -20,7 +20,7 @@ import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 import { wslog } from "src/core/log/";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
-import { PageSourceData, GlobalAccessConfig, ServerTime,set_css } from "src/output/index.js";
+import { PageSourceData, GlobalAccessConfig, ServerTime,set_css ,set_theme_style_sheet_by_css_obj} from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
@@ -78,7 +78,9 @@ watch(
 
 // 设置主题
 const set_global_theme_change = (a) => {
-  set_css(document.getElementsByTagName('html')[0], global_color_obj())
+ 
+
+  set_theme_style_sheet_by_css_obj(global_color_obj())
 }
 
 onBeforeMount(() => {
