@@ -894,6 +894,9 @@ export default {
       padding: .02rem .12rem;
       &.active {
         background: #D1EBFF;
+        .teams {
+          color: #127DCC;
+        }
       }
       .teams {
         display: flex;
