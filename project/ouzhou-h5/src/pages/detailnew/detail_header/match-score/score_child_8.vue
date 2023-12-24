@@ -1,5 +1,5 @@
 <script setup name="score_child_8">
-import {computed, nextTick, onMounted} from "vue"
+import {computed} from "vue"
 const props = defineProps({
     detail_data: {
         type: Object,

@@ -91,6 +91,8 @@ import { format_money2, compute_local_project_file_path, UserCtr } from "src/out
 import { compute_css_obj, MenuData } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
+
 export default {
   name:'match_main',
   data() {
@@ -127,6 +129,7 @@ export default {
     };
   },
   created(){
+    pre_load_video.load_player_js('old')
     //虚拟体育刷新赛事
     this.timer_super27=0;
     this.timer_super28=0;

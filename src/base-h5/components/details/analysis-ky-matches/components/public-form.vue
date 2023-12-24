@@ -145,8 +145,10 @@ import { project_name } from "src/output/index.js"
     padding: 0 0.1rem;
     background:var(--q-gb-bg-c-15);
     color: var(--q-analysis-text-color-32);
-    border-top: 1px solid var(--q-analysis-text-color-26);
-    border-bottom: 1px solid var(--q-analysis-text-color-26);
+    // border-top: 1px solid var(--q-analysis-text-color-26);
+    // border-bottom: 1px solid var(--q-analysis-text-color-26);
+    border-top: 1px solid var(--q-analysis-bd-color-3);
+    border-bottom: 1px solid var(--q-analysis-bd-color-3);
 
     > div {
 

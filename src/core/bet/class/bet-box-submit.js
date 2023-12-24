@@ -266,7 +266,7 @@ const get_query_bet_amount_common = (obj) => {
                 useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
             }
             // 获取盘口值 
-            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo')
+            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo',[])
             // 获取预约投注项
             set_bet_pre_list(latestMarketInfo)
         } else {
@@ -274,13 +274,19 @@ const get_query_bet_amount_common = (obj) => {
             // set_error_message_config(res)
         }
     }).catch(ws => {
+        let text = '限额获取失败'
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
         set_catch_error_query_bet_max(params)
     })
 }
 
 // 限额错误 设置默认值
 const set_catch_error_query_bet_max = (params ={}) => {
-    let oid = lodash_.get(params.orderMaxBetMoney, '[0].playOptionsId')
+    // 串关设置默认值
+    if(!BetData.is_bet_single){
+       return BetViewDataClass.set_bet_special_series_defalut()
+    }
+    let oid = lodash_.get(params.orderMaxBetMoney, '[0].playOptionId')
     BetViewDataClass.set_bet_min_max_money_default(oid)
     // 通知页面更新 
     // 串关不更新
@@ -298,7 +304,6 @@ const get_query_bet_amount_esports_or_vr = () => {
     }
     // 获取限额请求参数数据
     params.orderMaxBetMoney = get_query_bet_amount_params()
-
     // 获取最大值和最小值接口
     api_betting.post_getBetMinAndMaxMoney(params).then((res = {}) => {
         if (res.code == 200) {
@@ -323,6 +328,8 @@ const get_query_bet_amount_esports_or_vr = () => {
             // set_error_message_config(res)
         }
     }).catch(ws => {
+        let text = '限额获取失败'
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
         set_catch_error_query_bet_max(params)
     })
 }
@@ -336,7 +343,6 @@ const get_query_bet_amount_pre = () => {
     }
     // 获取限额请求参数数据
     params.orderMaxBetMoney = get_query_bet_amount_params()
-
     // 获取额度接口合并
     api_betting.query_pre_bet_amount(params).then((res = {}) => {
         if (res.code == 200) {
@@ -354,6 +360,7 @@ const get_query_bet_amount_pre = () => {
             // set_error_message_config(res)
         }
     }).catch(ws => {
+       
         set_catch_error_query_bet_max(params)
     })
 }
@@ -403,7 +410,15 @@ const pre_bet_comparison = () => {
 		let pre_obj = lodash_.get(BetData,`bet_pre_obj[${oid}]`,{})
 		
 		let pre_list = lodash_.get(	BetData,'bet_appoint_obj.marketList[0].marketOddsList',[])
-	
+
+		// 设置预约投注数据
+		let pre_data = {
+			oid:  pre_obj.custom_id,
+			odds: pre_obj.odds,
+			oddFinally: pre_obj.oddFinally
+		}
+		BetData.set_bet_single_list_obj(pre_data)
+		BetData.set_is_bet_pre(true)
 
 		if(pre_list.length) {
 			for(let item of pre_list){
@@ -416,9 +431,7 @@ const pre_bet_comparison = () => {
 					}
 					BetData.set_bet_single_list_obj(obj)
 					BetData.set_is_bet_pre(false)
-				} else {
-					BetData.set_bet_single_list_obj(pre_obj)
-					BetData.set_is_bet_pre(false)
+					return
 				}
 			}
 		}
@@ -1219,7 +1232,6 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
         
 // 是否显示基准分 
 const get_mark_score = (ol_obj,mid_obj) => {
-    // debugger
     let score = ''
     // 显示基准分
     // 玩法id 34 33 32 114 92 78 91 77 107 101 13 102 336 28 80 79 11 10 15 5 6 3 12 9 8 14 68 367 7 1 4 2 
