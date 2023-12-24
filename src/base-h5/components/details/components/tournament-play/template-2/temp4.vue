@@ -514,6 +514,9 @@ export default defineComponent({
     padding: .06rem .07rem;
     line-height: .2rem;
   }
+  &.warp.mg-4-bg{
+    width: auto;
+  }
 }
 
 .margin-other {
