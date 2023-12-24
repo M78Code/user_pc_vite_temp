@@ -57,7 +57,6 @@ import {onMounted, ref, markRaw, watch, nextTick,computed} from "vue";
 import tem_other from "./template/tem_other.vue";
 import setTop from "./set_top.vue";
 import {playTemplate0, playTemplate1, playTemplate2, playTemplate3, playTemplate4, playTemplate5} from "./bevis/index.js"
-import {storage_bet_info} from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 import {set_bet_obj_config} from "src/core/bet/class/bet-box-submit.js"
 import { useRoute } from "vue-router";
 // import EMITTER from "src/global/mitt.js";
