@@ -95,7 +95,7 @@ const cancel_handle = () => {
     height: 40px;
     line-height: 40px;
     font-size: 14px;
-    color: var(--q-gb-t-c-1);
+    color: var(--q-gb-bd-c-13);
     text-align: center;
     font-weight: 600;
     border-radius: 4px;
