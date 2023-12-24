@@ -69,7 +69,7 @@
       <li @click.stop.prevent="bar_click(item)" :class="{ actived: active_index == item, hot: item == i18n_t('search.hot') }"
         v-for="(item, index) in anchor_arr" :key="index + 'letter'">
         <template v-if="item == i18n_t('search.hot')">
-          <img style="width: 28px;" :src="compute_img_url(active_index == item ? 'match-filter-s' : 'match-filter')" alt="">
+          <img style="width: 28px;" :src="compute_img_url(active_index == item ? 'h5-kyapp-match-fliter-s' : 'match-filter')" alt="">
         </template>
         <div class="t-wrap" v-else>{{ item }}</div>
       </li>
@@ -788,7 +788,7 @@ if (type.value == 30) {
 .scroll-setect-all {
   display: flex;
   justify-content: flex-end;
-  padding: 0 0.36rem 0 0.4rem;
+  padding: 0 0.46rem 0 0.14rem;
   height: .4rem;
   align-items: center;
   font-size: .14rem;
@@ -930,7 +930,7 @@ if (type.value == 30) {
 
 .scroll-area {
   height: calc(100% - 40px);
-  min-width: 400px;
+  // min-width: 400px;
   overflow-x: hidden;
   overflow-y: auto;
 
