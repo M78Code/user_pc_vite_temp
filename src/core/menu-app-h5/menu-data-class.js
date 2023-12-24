@@ -373,6 +373,7 @@ class MenuData {
     this.set_menu_match_date()
     this.set_cache_class({
       data_tab_index:index,
+      data_time:time,
       current_lv_3_menu:{field1:time}
     });
     this.update();

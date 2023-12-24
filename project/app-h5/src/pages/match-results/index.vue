@@ -84,7 +84,10 @@ const switchHandle = async val => {
         MenuData.set_result_menu_api_params({
             md:state.currentSlideValue
         })
-        state.matchs_data = await MatchMeta.get_champion_match_result()
+        state.matchs_data = await lodash_.debounce(()=>{
+            return MatchMeta.get_champion_match_result();
+        },1000) 
+        console.error('get_champion_match_result')
     } else {
         MenuData.set_results_kemp(0)
     }
