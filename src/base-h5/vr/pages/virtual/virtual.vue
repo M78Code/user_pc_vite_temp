@@ -396,6 +396,7 @@ export default {
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
+  background-color: #F2F2F6;
 
   /* ************** 列表上滑箭头图标 **************** -S */
   .list-scroll-to-top {
@@ -521,7 +522,7 @@ export default {
         align-items: center;
         overflow-x: auto;
         overflow-y: hidden;
-        height: 0.65rem;
+        height: 0.45rem;
         padding-left: 0.12rem;
 
         .tabs-tab {

@@ -822,6 +822,8 @@ export default {
   padding: 0 0.15rem;
   height: 0.24rem;
   border-top: 2px solid #FEAE2B;
+  background-color: #FFF;
+
   .left {
     font-size: 0.12rem;
     color: #303442;
@@ -892,6 +894,9 @@ export default {
       padding: .02rem .12rem;
       &.active {
         background: #D1EBFF;
+        .teams {
+          color: #127DCC;
+        }
       }
       .teams {
         display: flex;
