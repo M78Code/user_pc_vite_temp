@@ -132,8 +132,8 @@
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                 <div class="date-time"
                   v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                  <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} -->
-                  {{ format_time_zone(+match.mgt).Format(i18n_t('time11')).replaceAll('月', '/').replaceAll('日', '') }}
+                  {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
+                  <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time11')).replaceAll('月', '/').replaceAll('日', '') }} -->
                 </div>
 
                 <!--即将开赛 ms = 110-->
@@ -160,8 +160,8 @@
                   </CountingDownSecond>
                 </div>
               </div>
-              <!-- 比分版 -->
-              <div class="score-title-text" v-if="get_match_status(match.ms)">{{ home_score }} - {{
+              <!-- 比分版, 即将开赛时不展示比分-->
+              <div class="score-title-text" v-if="match.ms != 110 && get_match_status(match.ms)">{{ home_score }} - {{
                 away_score }}</div>
             </div>
             <!--玩法数量-->
@@ -207,21 +207,21 @@
                     :size="18"
                     style="margin-left:-0.09rem;"
                   ></team-img>
+                  <!--发球方绿点-->
+                  <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                    v-show="set_serving_side(match, 'home')">
+                  </span>
               </div>
-              <!--发球方绿点-->
-              <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                v-show="set_serving_side(match, 'home')">
-              </span>
               <span class="vs">VS</span>
-              <!--发球方绿点-->
-              <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                v-show="set_serving_side(match, 'away')">
-              </span>
               <div class='right'>
                 <!-- <image-cache-load v-if="match?.malu?.length && !([5, 7].includes(Number(match.csid)))" -->
                 <!-- <image-cache-load v-if="match?.malu?.length"
                   :csid="+match.csid" :path="match.malu" type="home"></image-cache-load> -->
                  <!-- 右侧双打图标 type 1 表示客队,malu 客队的url -->
+                <!--发球方绿点-->
+                <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                  v-show="set_serving_side(match, 'away')">
+                </span>
                 <team-img
                   :type="1"
                   :csid="match.csid"
@@ -941,7 +941,7 @@ export default {
     padding: 4px 9px 0;
 
     .event-team {
-      padding: 8px 0 5px;
+      padding: 8px 0 0;
 
       .name {
         display: flex;
@@ -955,6 +955,7 @@ export default {
           background: var(--sys-feedback-success-success-400, #4AB06A);
           width: 4px !important;
           height: 4px;
+          position: absolute;
         }
 
         .logo {
@@ -980,9 +981,13 @@ export default {
             }
             .match-name {
               width: 1rem;
+              text-align: right;
             }
             .serving-party {
-              right: 0.28rem;
+              right: -0.1rem;
+            }
+            .team-img{
+              margin: 0 0 0 3px;
             }
           }
 
@@ -996,7 +1001,10 @@ export default {
               width: 1rem;
             }
             .serving-party {
-              left: 0.28rem;
+              left: -0.1rem;
+            }
+            .team-img{
+              margin: 0 3px 0 0;
             }
           }
         }
@@ -1013,7 +1021,7 @@ export default {
             width: 2.74rem;
             height: .32rem;
             .odd-column-item {
-              background: var(--q-gb-bg-c-15);
+              background: var(--q-gb-bg-c-28);
               margin-left: .04rem;
               border-radius: 4px;
             }
@@ -1039,6 +1047,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 2px;
       // border-bottom: .01rem solid var(--q-gb-bd-c-4);
       // padding: 4px 0 0;
 

@@ -43,15 +43,18 @@
                     <div class="name-overhide">{{ item.nameText }}</div>
                   </div>
                   <div>
-                    <div class="nums"
-                        v-show="!(type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type))">
-                        （{{ item.num }}）
-                        <div @click="select_li_ctr(item)">
-                          <img :src="compute_local_project_file_path(item.select ? '/image/list/icon_selected_theme_type.svg' : '/image/list/icon_unselected_onlight.svg')" alt="">
-
-                        </div>
-
+                    <div 
+                      class="nums" 
+                      v-show="!(type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type))"
+                    >
+                      <span>({{ item.num }})</span>
+                      <div @click="select_li_ctr(item)">
+                        <img 
+                          :src="compute_local_project_file_path(item.select ? '/image/list/icon_selected_theme_type.svg' : '/image/list/icon_unselected_onlight.svg')" 
+                          alt=""
+                        >
                       </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -485,13 +488,12 @@ function fetch_filter_match() {
     //三级日期菜单时间戳
     get_md.value > -1 && m_type != 1 && Object.assign(params, { md: get_md.value });
   }
-  console.log('dsahfbadjfbafj',MenuData.get_euid(MenuData.get_current_sub_menuid()),11, MenuData);
+
   list_data_loading.value = true;
   //调用：v1/m/getFilterMatchList接口
   api_match_filter(params).then(({ code, data }) => {
 
     try {
-      console.error('datadatadatadatadata123',data)
       list_data_loading.value = false;
       if (data && data.length > 0) {
         no_find_content.value = false;
@@ -503,11 +505,10 @@ function fetch_filter_match() {
       }
       //过滤热门联赛
       data = data.map(item=>{
-      if (orderArray.some(sub => sub.id == item.id)) {
-        item.spell = 'HOT'
-          return item
+        if (orderArray.some(sub => sub.id == item.id)) {
+          item.spell = 'HOT'
         } 
-          return item
+        return item
       })
       //排序
       data.sort((a, b) => {
@@ -521,7 +522,12 @@ function fetch_filter_match() {
         }
       }
       );
-      list.value = (data || []).map(i => ({ ...i, select: i.id in selected.value })); // 初始化select
+      // 取出list中的热门联赛元素 需要按照orderArray重新排序
+      let hot_list = lodash.cloneDeep(data).filter(item => item.spell == 'HOT')
+      // 这个是经过排序之后的数据 需要用这个数据去替换原来的热门联赛的数据
+      let sort_hot_list = customSortAndMerge(hot_list);
+      let un_hot_list = lodash.cloneDeep(data).filter(item => item.spell != 'HOT')
+      list.value = ([...sort_hot_list, ...un_hot_list] || []).map(i => ({ ...i, select: i.id in selected.value })); // 初始化select
       // 筛选时，把首字母相同的集合 放在第一个item 上,
       filter_alphabet(list.value)
       // 动态生成有联赛的字母，并非A - Z 全量字母；
@@ -543,6 +549,29 @@ function fetch_filter_match() {
     no_find_content.value = true;
     console.error(err)
   });
+}
+/**
+ * 热门数组排序
+ */
+function customSortAndMerge(hot_real_list) {
+  // 使用映射将 orderArray 中的元素与其索引关联起来
+  const orderIndexMap = new Map();
+  orderArray.forEach((item, index) => {
+    orderIndexMap.set(item.id, index);
+  });
+  // 对过滤后的数组进行排序
+  hot_real_list.sort((a, b) => {
+    const indexA = orderIndexMap.get(a.id);
+    const indexB = orderIndexMap.get(b.id);
+
+    // 如果元素在 orderArray 中找不到，则默认按原始顺序排列
+    if (indexA === undefined) return 1;
+    if (indexB === undefined) return -1;
+
+    return indexA - indexB;
+  });
+
+  return hot_real_list;
 }
 /**
  * @Description:获取搜索结果数据
@@ -694,7 +723,7 @@ if (type.value == 30) {
       font-size: 0.10rem;
       box-sizing: content-box;
       border: 2px solid transparent;
-      color:var(--q-gb-bg-c-6);;
+      color:var(--q-gb-t-c-10);
 
       .t-wrap {
         width: 0.14rem;
@@ -776,7 +805,6 @@ if (type.value == 30) {
   width: .16rem;
   height: .16rem;
   border-radius: 50%;
-  border: .01rem solid var(--q-gb-bg-c-8);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -837,7 +865,13 @@ if (type.value == 30) {
       display: flex;
       align-items: center;
       font-size: .1rem;
-      color: var(--q-gb-t-c-26);
+      span {
+        display: inline-block;
+      }
+      div {
+        width: 0.28rem;
+        height: 0.2rem;
+      }
     }
   }
 
@@ -846,15 +880,6 @@ if (type.value == 30) {
     height: 0.2rem;
     margin-left: 0.08rem;
   }
-
-  .nums {
-
-    font-size: 0.14rem;
-    margin-left: 0.05rem;
-    // position: absolute;
-    right: 0.31rem;
-  }
-
   i {
     position: relative;
   }
@@ -1033,7 +1058,7 @@ if (type.value == 30) {
   }
 
   .nums {
-    color: var(--q-color-fs-color-110);
+    color: var(--q-gb-t-c-19);
   }
 
   .round-box {
