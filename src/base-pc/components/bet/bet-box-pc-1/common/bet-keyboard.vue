@@ -1,7 +1,7 @@
 
 <template>
   <div class="q-gutter-xs keyboard-zone bet-keyboard-content">
-    <div class="keyboard-btn " v-for="(item, index) in ref_data.keyboard_data" :key="index" @click="set_click_keybord(item)">
+    <div class="keyboard-btn" v-for="(item, index) in ref_data.keyboard_data" :key="index" @click="set_click_keybord(item)">
       <!--键盘按键文本显示 如果无效则置灰 以及MAX按钮文本显示-->
       <div class="keyboard-btn-text" :class="{ 'text-disable': item.disabled }">
         <template v-if="item != 'MAX'">+</template>{{ item }}
@@ -92,7 +92,6 @@ const set_click_keybord = obj => {
   margin-bottom: 2px;
   margin-left: 0px;
   margin-right: -2px;
-
   /*  键盘文本前面加号的样式 */
   .keyboard-btn-add {
     margin-right: 20px;
@@ -102,7 +101,9 @@ const set_click_keybord = obj => {
   .keyboard-btn-text {
     line-height: 24px;
   }
+  
 }
+
 
 /*  按键间距设置 */
 .big_keyboard-btn {
