@@ -988,16 +988,6 @@ class UserCtr {
     //   url_temp.includes("user/getUserInfo"))
     // token失效
     if (res.data.code == "0401013") {
-
-      useMittEmit(MITT_TYPES.EMIT_GO_TO_VENDER, {
-        text: i18n_t("login.login_timeout"),
-        callback: () => {
-          location.href = callbackUrl;
-          // 清除旧的登录信息
-          this.clear_user();
-        },
-      });
-      
       if (url_temp.includes("user/getUserInfo")) {
         //最后一次 调用 getuserinfo 接口 返回用户 token 失效
         this.last_getuserinfo_expired = true;
@@ -1054,7 +1044,7 @@ class UserCtr {
          this.is_invalid=true;
         //显示登录失效弹窗
         setTimeout(() => {
-          // this.show_fail_alert();
+          this.show_fail_alert();
         }, 100);
         // 关闭WS
         if (window.ws) {
