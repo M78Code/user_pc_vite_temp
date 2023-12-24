@@ -646,7 +646,7 @@ onUnmounted(() => {
         margin-left: 0.05rem;
         color: var(--q-gb-t-c-18);
           font-family: PingFang SC;
-          font-size: 10px;
+          font-size: 11px;
           font-weight: 400;
         
           .important-color-number {

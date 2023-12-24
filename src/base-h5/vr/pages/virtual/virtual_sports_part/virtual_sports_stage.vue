@@ -840,7 +840,7 @@ export default {
 }
 
 .banner {
-  border-radius: 0;
+  border-radius: 0.05rem;
   width: 100%;
   height: 1.9rem;
   margin: auto;

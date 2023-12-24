@@ -122,7 +122,7 @@ import { project_name } from "src/output/index.js"
     }
     //大于等于3个时，第一个和第二个展开
   const toggle_rule_b = () => {
-      lodash.map(data_b.orderVOS, (item, index) => {
+      lodash.map(props.data_b.orderVOS, (item, index) => {
         item.isBoolean = false;
         if (index == 0 || index == 1) {
           item.isBoolean = true;

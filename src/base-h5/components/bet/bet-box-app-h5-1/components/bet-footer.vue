@@ -153,8 +153,13 @@ const handle_silider = (e) => {
     silider.value.offset[0] = 255
     return
   }
-  fab_pos.value[0] = e.distance.x
-  silider.value.offset[0] = e.distance.x
+  if(e.distance.x < 20) {
+    fab_pos.value[0] = 20
+    silider.value.offset[0] = 20
+  }else{
+    fab_pos.value[0] = e.distance.x
+    silider.value.offset[0] = e.distance.x
+  }
 }
 
 // 重置solider位置

@@ -6,10 +6,15 @@
 
 <template>
   <Teleport to="body" v-if="!disabled">
-    <img class="component scroll-top list-scroll-to-top"
+    <!-- <img class="component scroll-top list-scroll-to-top"
       :class="[is_show_btn?'show':'hide', { 'app-h5': PROJECT_NAME === 'app-h5' }]"
       :src="scroll_top_image" @click="back_top"
-    />
+    /> -->
+    <div class="component scroll-top list-scroll-to-top"
+         :style="compute_css_obj({key: 'h5-kyapp-go-back'})"
+         :class="[is_show_btn?'show':'hide', { 'app-h5': PROJECT_NAME === 'app-h5' }]"
+         :src="scroll_top_image" @click="back_top">
+    </div>
   </Teleport>
 </template>
 
@@ -20,7 +25,7 @@ import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } fro
 import { scroll_top_icon, scroll_top_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 import { utils } from 'src/core/utils/common/module/utils.js'
-
+import { compute_css_obj } from "src/output/index.js"
 const emits = defineEmits(['back-top'])
 const props = defineProps({
   // 父组件滚动高度
@@ -98,7 +103,8 @@ onUnmounted(() => {
 .list-scroll-to-top {
   z-index: 86;
   position: absolute;
-  width: 0.3rem;
+  width: 0.4rem;
+  height: 0.4rem;
   bottom: 0;
   right: .2rem;
   z-index: 999;
