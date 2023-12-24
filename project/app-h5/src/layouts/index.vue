@@ -63,6 +63,7 @@
   <activity-layer v-if="activity_status" @activity_hide="activity_status = false" :activity_layerimg="activity_layerimg"
     :count_down_time="userBannerTimer" />
   <StandardEdition></StandardEdition>
+  <TokenInvalid></TokenInvalid>
 </template>
 
 <script setup>
@@ -74,6 +75,7 @@ import {
   nextTick,
 } from "vue";
 import StandardEdition from 'src/base-h5/components/standard-edition/index.vue'
+import TokenInvalid from "src/base-h5/components/common/token-invalid.vue"
 import { useMittOn, MITT_TYPES, i18n_t, MenuData } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js"; 
 // import { FooterWapper } from "src/components/footer/index.js";
