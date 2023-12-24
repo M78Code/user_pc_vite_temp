@@ -9,7 +9,7 @@
                     </div>
                 </div>
             </template>
-            <template v-slot:right>
+            <template v-if="!state.currentSwitchValue" v-slot:right>
                 <img
                     class="right-icon"
                     @click="state.select_dialog = true"
