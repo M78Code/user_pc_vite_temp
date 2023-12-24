@@ -114,6 +114,9 @@ export default {
     return this.is_mobile?machine_images_h5 :machine_images_pc
 
     },
+    pagenation_max(){
+      return Math.ceil(this.gameHistoryLists.params.total / this.gameHistoryLists.params.size);
+    },
     get_user() {
         return UserCtr.get_user();
     },

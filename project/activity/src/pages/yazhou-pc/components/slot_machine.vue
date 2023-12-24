@@ -495,7 +495,7 @@
               <q-pagination class="pagination pager"
                   :model-value="gameHistoryLists.params.current"
                   @update:model-value="pagination_next"
-                  :max="gameHistoryLists.params.total"
+                  :max="pagenation_max"
                   boundary-numbers
                   :max-pages="10"
               ></q-pagination>
