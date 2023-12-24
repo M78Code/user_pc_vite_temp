@@ -4,7 +4,7 @@ import {placeholder_const , default_content} from  "../config.js"
 export default {
      
     meta1:{
-        placeholder: placeholder_const.meta1 ,
+        placeholder: placeholder_const.meta1,
         content:    default_content.meta1
      },
      style1:{
