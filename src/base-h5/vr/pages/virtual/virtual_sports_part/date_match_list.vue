@@ -86,7 +86,7 @@ import common from 'src/base-h5/vr/mixin/constant/module/common.js';
 import teamImg from 'src/base-h5/vr/components/team_img.vue';
 import dateMatchSdata from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_s_data.vue'
 import { api_v_sports } from "src/base-h5/vr/api";
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import { emitter, useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import ServerTime from "src/core/server-time/server-time.js"
 
 export default {
@@ -181,6 +181,7 @@ export default {
         return
       }
       let start_time = this.start_time + (new Date() * 1 - this.init_time_b)
+      console.log("start_time===+++", start_time);
       if(start_time < 6000){
         this.basketball_end_time = this.get_rest_time_str(600000 - parseInt(start_time * 90))
         this.basketball_line_width = parseInt(start_time / 6000 * 10000) / 100
@@ -190,15 +191,20 @@ export default {
           match.away = Math.ceil(this.basketball_line_width / 100 * score[1])
         })
       }else{
+        console.log("error...MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED", MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED);
         this.basketball_end_time = "01:00"
         this.basketball_line_width = 100
         this.m_status = 1
         clearInterval(this.interval_id_b)
         this.timer4 = setTimeout( () => {
+          console.log("emitter.all========11====", emitter.all);
           useMittEmit(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED);
+          console.log("its a test1!!!");
         },4000)
         this.timer5 = setTimeout( () => {
+          console.log("emitter.all=======22=====", emitter.all);
           useMittEmit(MITT_TYPES.EMIT_INGAME_RESULT_SHOW_END);
+          console.log("its a test2!!!");
         },6000)
       }
     },

@@ -93,10 +93,11 @@ const get_balance = () => {
     padding: .04rem .08rem;
     border-radius: 0.2rem;
     height: 0.28rem;
+    font-family: Akrobat;
 }
 .nonebox4-first-right-window-num {
     display: flex;
-    font-size: 20px;
+    font-size: .2rem;
     font-weight: 700;
     color: var(--q-gb-t-c-18);
     font-family: Akrobat;
@@ -146,24 +147,9 @@ const get_balance = () => {
 }
 .bet-bar {
   width: 100%;
-  height: 0.5rem;
+  padding: .12rem 0 .08rem;
   border-radius: 0.16rem 0.16rem 0 0;
-  border-width: 1px 1px 0 1px;
-  //border-style: solid;
   position: relative;
-
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 0.48rem;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 0.2rem;
-    border-radius: 0.5px;
-    background: rgba(0, 0, 0, 0.1);
-  }
 
   .odds-wrapper {
     display: inline-flex;

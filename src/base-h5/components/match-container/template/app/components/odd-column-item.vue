@@ -630,7 +630,7 @@ onUnmounted(() => {
     }
     &.standard {
       margin-bottom: 0.03rem;
-      font-size: 0.12rem;
+      font-size: 0.1rem;
     }
 
     &.three {

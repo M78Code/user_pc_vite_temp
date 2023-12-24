@@ -51,7 +51,7 @@ import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";
 // import { mapGetters, mapMutations } from 'vuex';
 import { ref, watch, onMounted, onUnmounted } from 'vue'
-import {useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
+import {useMitt, MITT_TYPES} from  "src/core/mitt/index.js"
 import { format_M_D } from 'src/output/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
@@ -117,7 +117,7 @@ const props = defineProps({
         search_early_money()
       }
     },10000)
-    useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
+    useMitt(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
   })
   /**
      * @description 筛选所有提前结算注单
@@ -341,7 +341,6 @@ const props = defineProps({
   }
   onUnmounted(() => {
     clear_timer();
-    useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList).off;
     store.dispatch({
       type: "SET_EARLY_MOEY_DATA",
       data: []

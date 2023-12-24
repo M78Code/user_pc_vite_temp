@@ -26,8 +26,8 @@
 import {defineAsyncComponent} from 'vue'
 import home from "./components/first-page.vue"; // 包网3首页下边（轮播 + 跑马灯 + 赛事框）  榴莲千层盒子（小）300p
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
-import { onUnmounted, watch, ref, computed, onMounted, defineComponent, nextTick, } from "vue";
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+import {  watch, ref, computed, onMounted, defineComponent, nextTick, } from "vue";
+import {  useMitt, MITT_TYPES } from "src/core/mitt/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js"; // mixins: [router_mixins],
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js";
@@ -96,10 +96,7 @@ export default defineComponent({
           tab_click(lodash.get(homeReducer, "home_tab_item"), false, false);
         });
       }
-      useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change);
-    });
-    onUnmounted(() => {
-      useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).off;
+      useMitt(MITT_TYPES.EMIT_HOME_TAB, home_tab_change);
     });
     watch(() => tabIndex.value, () => {
       // 首页、视频直播以及热门下精选不显示背景
