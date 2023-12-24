@@ -216,7 +216,8 @@ const processing_score = (data) => {
 
 <style lang="scss" scoped>
 .recent_record {
-  background-color: var(--q-analysis-text-color-1);
+  // background-color: var(--q-analysis-text-color-1);
+  background-color: var(--q-gb-bg-c-23);
   margin-top: 0.1rem;
 
   .header {
@@ -317,7 +318,7 @@ const processing_score = (data) => {
     height: 0.4rem;
     align-items: center;
     padding: 0 0.15rem;
-    background: var(--q-analysis-text-color-27);
+    // background: var(--q-analysis-text-color-27);
     :deep(.team-img) {
       width: 0.2rem;
       height: 0.2rem;
@@ -357,7 +358,7 @@ const processing_score = (data) => {
     }
   }
   :deep(.public_form) {
-    background-color: var(--q-analysis-text-color-1);
+    // background-color: var(--q-analysis-text-color-1);
     .header {
       > div {
         color: var(--q-analysis-text-color-14);
@@ -365,7 +366,7 @@ const processing_score = (data) => {
     }
     .team-item {
       border-bottom: 1px solid var(--q-analysis-text-color-24);
-      background-color: var(--q-gb-bg-c-15);
+      // background-color: var(--q-gb-bg-c-15);
       div {
         color: var(--q-analysis-text-color-20);
       }
@@ -396,7 +397,8 @@ const processing_score = (data) => {
       }
     }
     .team-item:nth-child(odd) {
-      background-color: var(--q-analysis-text-color-27);
+      background: var(--q-gb-bg-c-23);
+      // background-color: var(--q-analysis-text-color-27);
     }
   }
 }

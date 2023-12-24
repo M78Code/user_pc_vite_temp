@@ -189,7 +189,7 @@ const get_detail_data = ref({
 
 <style lang="scss" scoped>
 .history_engagement {
-  background-color: var(--q-analysis-bg-color-1);
+  // background-color: var(--q-analysis-bg-color-1);
   .header {
     height: 0.4rem;
     padding-left: 0.24rem;
@@ -197,7 +197,7 @@ const get_detail_data = ref({
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    background-color: var(--q-analysis-bg-color-1);
+    // background-color: var(--q-analysis-bg-color-1);
     .title {
       font-size: 0.14rem;
       height: 0.2rem;
@@ -229,7 +229,7 @@ const get_detail_data = ref({
       letter-spacing: 0;
       text-align: center;
       margin-right: 0.1rem;
-      background: var(--q-analysis-bg-color-1);
+      // background: var(--q-analysis-bg-color-1);
       border: 1px solid var(--q-analysis-bd-color-5);
       color: var(--q-analysis-text-color-14);
       &.active {
@@ -251,7 +251,7 @@ const get_detail_data = ref({
       font-size: 0.1rem;
       letter-spacing: 0;
       text-align: center;
-      background: var(--q-analysis-bg-color-1);
+      // background: var(--q-analysis-bg-color-1);
       color: var(--q-analysis-text-color-14);
       border: 1px solid var(--q-analysis-bd-color-5)!important;
       &.active {
@@ -271,7 +271,7 @@ const get_detail_data = ref({
     }
   }
   :deep(.public_form) {
-    background-color: var(--q-analysis-bg-color-1);
+    // background-color: var(--q-analysis-bg-color-1);
     .header {
       > div {
         color: var(--q-analysis-text-color-14);
@@ -279,7 +279,7 @@ const get_detail_data = ref({
     }
     .team-item {
       border-bottom: 1px solid var(--q-analysis-text-color-24);
-      background-color: var(--q-analysis-bg-color-1);
+      // background-color: var(--q-analysis-bg-color-1);
       div {
         color: var(--q-analysis-text-color-20);
       }
@@ -307,7 +307,7 @@ const get_detail_data = ref({
       }
     }
     .team-item:nth-child(odd) {
-      background-color: var(--q-analysis-text-color-27);
+      // background-color: var(--q-analysis-text-color-27);
     }
   }
 }
