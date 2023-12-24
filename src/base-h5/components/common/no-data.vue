@@ -168,12 +168,8 @@ function refresh_data() {
     animation: an_scale 0.25s;
 
     .no_data_img{
-        width: 200px;
-        height: 200px;
-        &.no-wifi{
-            width: 150px;
-            height: 150px;
-        }
+        width: 180px;
+        height: 180px;
     }
 
     .empty-favorite-bg {

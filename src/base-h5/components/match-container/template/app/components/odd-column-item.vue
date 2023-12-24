@@ -7,9 +7,12 @@
   <div style="display: none;">{{BetData.bet_data_class_version}}</div>
   <div style="display: none;">{{UserCtr.user_version}}</div>
   <div class="odd-column-item" :class="odds_class_object()" @click.stop="item_click3" :id="dom_id_show && `list-${lodash.get(odd_item, 'oid')}`">
-    <!-- 占位  或者  关盘 -->
-    <div v-if="placeholder == 1 || is_close(get_odd_status())" class="item-inner">
-      <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock" />
+    <!-- 占位  或者  关盘 (列表简单版时非足球赛事角球菜单时设置为关盘)-->
+    <div v-if="placeholder == 1 || is_close(get_odd_status()) || (lodash.get(odds_class_object,'is-jiaoqiu') && _.get(match,'csid') != 1) && PageSourceData.route_name=='matchList'" class="item-inner">
+      <template  v-if="is_show_lock">
+        -
+      </template>
+      <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock"  v-else/>
     </div>
 
     <!-- 全封(不显示盘口值) 占位时显示封-->
@@ -134,6 +137,12 @@ onMounted(() => {
     emitter_2: useMittOn(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED, match_result_data_loaded).off,
   }
 })
+
+// 是否显示 -
+const is_show_lock = () => {
+  const ol = lodash.get(props.odd_field, 'hl[0].ol', "")
+  return lodash.isEmpty(ol)
+}
 
 // 当前玩法ID
 const hpid = computed(() => {
