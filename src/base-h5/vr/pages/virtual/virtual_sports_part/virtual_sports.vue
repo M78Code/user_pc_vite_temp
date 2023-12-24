@@ -827,6 +827,8 @@ export default {
   .left {
     font-size: 0.12rem;
     color: var(--q-gb-t-c-18);;
+    display: flex;
+    align-items: center;
     img {
       width: 0.12rem;
       height: 0.12rem;
@@ -834,6 +836,8 @@ export default {
     }
   }
   .right {
+    display: flex;
+    align-items: center;
     img {
       width: 0.2rem;
       height: 0.16rem;
@@ -851,10 +855,10 @@ export default {
 }
 .virtual-sports-card {
   &-content {
-    background: #F8F9FA;
+    background: var(--q-gb-bg-c-18);
     border-radius: .08rem;
     margin-bottom: .08rem;
-    border: 1px solid #fff;
+    border: 1px solid var(--q-gb-bd-c-15);
   }
   &:last-of-type {
     padding-bottom: 0.7rem;
