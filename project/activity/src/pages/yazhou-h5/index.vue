@@ -101,18 +101,6 @@
         </div>
       </div>
     </div>
-    <!--loading 动画-->
-    <div
-      v-show="!the_first_time_show"
-      id="loading-root-ele" class="loading"  >
-      <div id="loading-root-main" class="la-line-scale loading-line">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -134,11 +122,6 @@ export default {
  
  
 <style lang="scss" scoped>
-#loading-root-ele{
-}
-#loading-root-main{
-  color: var(--qq--activity-text-color-4);
-}
 .head {
   position: sticky;
   width: 100%;

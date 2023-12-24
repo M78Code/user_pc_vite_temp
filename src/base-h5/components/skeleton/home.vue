@@ -27,7 +27,7 @@
 <script setup>
 import skeleton from './index.vue'
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useMitt, MITT_TYPES } from "src/core/mitt/index.js"
 
 const status = ref({
   carousel: false,
@@ -36,18 +36,14 @@ const status = ref({
 
 const isshow = ref(true)
 
-onMounted(() => {
-  useMittOn(this.MITT_TYPES.EMIT_API_LOAD, api_load())
-})
-
 const api_load = (data) => {
   Object.assign(status.value, data)
   if (status.value.carousel && status.value.menu) {
     isshow.value = false
   }
 }
-onUnmounted(() => {
-  useMittOn(MITT_TYPES.EMIT_API_LOAD, api_load()).off;
+onMounted(() => {
+  useMitt(MITT_TYPES.EMIT_API_LOAD, api_load)
 })
 
 </script>

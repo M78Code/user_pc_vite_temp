@@ -88,7 +88,8 @@ const props = defineProps({
   placeholder:Number,// 是否为占位
   n_s:Number,    // 1新手版 2标准版
   column_ceil:Number, //列数量
-  bet_type: String //投注类型
+  bet_type: String, //投注类型
+  is_vr_lock: Boolean //用来控制vr投注项提前10s封盘 
 })
 
 const match_icon_lock = `${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`
@@ -321,7 +322,7 @@ const get_odd_append_value = (ol_item) => {
   
 }
 const arrived10_handle = () => {
-  virtual_odds_state.value = 1;
+  props.is_vr_lock && (virtual_odds_state.value = 1);
 }
 // 获取 投注项数据，
 const get_odd_status = () => {
@@ -463,6 +464,7 @@ const is_close = (odd_s) => {
  */
 const item_click3 = lodash.debounce(() => {
   if (!odd_item.value.ov || odd_item.value.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
+  if(virtual_odds_state.value == 1) return; //VR倒计时10s时封盘不能点击
   let flag = get_odds_active(props.match.mhs, props.hl_hs, odd_item.value.os);
   let bet_type = 'common_bet'
   if (MenuData.is_esports()) {
@@ -628,7 +630,7 @@ onUnmounted(() => {
     }
     &.standard {
       margin-bottom: 0.03rem;
-      font-size: 0.12rem;
+      font-size: 0.1rem;
     }
 
     &.three {

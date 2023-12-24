@@ -155,7 +155,7 @@ import { Platform } from "quasar";
 import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js"
-import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
+import { useMitt, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
@@ -328,13 +328,11 @@ onMounted(() => {
   }
 
   // 处理ws订单状态推送
-  useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).on;
-  useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).on;
+  useMitt(MITT_TYPES.EMIT_C201_HANDLE, c201_handle);
+  useMitt(MITT_TYPES.EMIT_C210_HANDLE, c210_handle);
 })
 onUnmounted(() => {
   clear_timer();
-  useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).off;
-  useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).off;
 })
 
 // ...mapMutations(["set_toast","set_early_moey_data"]),

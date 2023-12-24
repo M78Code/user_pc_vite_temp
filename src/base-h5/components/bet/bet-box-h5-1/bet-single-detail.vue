@@ -90,7 +90,7 @@ const props = defineProps({
   },
   item: {}
 })
-
+let mitt_off;
 onMounted(() => {
   // 延时器
   timer1 = null;
@@ -122,10 +122,12 @@ onMounted(() => {
       max_money_back.value = true;
     }
   }, 5000);
-
   //监听键盘金额改变事件
-  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle)
-  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
+
+  mitt_off=useMittEmitterGenerator([
+    {type:MITT_TYPES.EMIT_INPUT_BET_MONEY,callback:change_money_handle},
+    {type:MITT_TYPES.EMIT_REF_DATA_BET_MONEY,callback:set_ref_data_bet_money}
+  ]).emitters_off;
 })
 
 /**   ----------------computed 开始-----------------*/
@@ -421,9 +423,7 @@ const set_ref_data_bet_money = () => {
 
 onUnmounted(() => {
   // clear_timer()
-
-  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle).off;
-  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
+  mitt_off&&mitt_off()
 
   // for (const key in $data) {
   //   $data[key] = null
