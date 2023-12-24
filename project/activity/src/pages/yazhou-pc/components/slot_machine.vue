@@ -418,7 +418,7 @@
                     : `奖金${item.prop_times}倍卡`
                 }}</span>
                 <span>{{ Number(item.total_award) / 100 || "-" }}</span>
-                <span>{{ item.create_time || "-" }}</span>
+                <span>{{ new Date(+(item.create_time)).Format('yyyy-MM-dd hh:mm') || "-" }}</span>
               </div>
             </load-data>
           </div>
@@ -455,7 +455,7 @@
                   }}</span
                 >
                 <span v-show="item.source_token + ''">{{
-                  item.create_time || "-"
+                  new Date(+(item.create_time)).Format('yyyy-MM-dd hh:mm') || "-"
                 }}</span>
               </div>
             </load-data>
@@ -477,13 +477,13 @@
                 <span>{{ item.prop_type || "-" }}</span>
                 <span>{{ item.use_token || "-" }}</span>
                 <span>{{ item.use_token_type || "-" }}</span>
-                <span>{{ item.create_time || "-" }}</span>
+                <span>{{ new Date(+(item.create_time)).Format('yyyy-MM-dd hh:mm') || "-" }}</span>
               </div>
             </load-data>
           </div>
           <div class="pagination_wrap" v-if="gameHistoryLists.list.length > 0">
             <div class="pagination_with_input">
-              <q-pagination
+              <!-- <q-pagination
                 class="pagination pager"
                 v-model="gameHistoryLists.params.current"
                 :max="gameHistoryLists.params.total"
@@ -491,6 +491,13 @@
                 boundary-numbers
                 :max-pages="10"
                 @input="pagination_next"
+              ></q-pagination> -->
+              <q-pagination class="pagination pager"
+                  :model-value="gameHistoryLists.params.current"
+                  @update:model-value="pagination_next"
+                  :max="gameHistoryLists.params.total"
+                  boundary-numbers
+                  :max-pages="10"
               ></q-pagination>
               <p class="goto_page text-666" style="display: none;">
                 &nbsp;&nbsp;跳转至&nbsp;&nbsp;<input
