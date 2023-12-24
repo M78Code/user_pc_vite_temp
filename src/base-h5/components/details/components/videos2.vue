@@ -62,12 +62,12 @@
         <!-- 第一次显示 用户指导页 -->
         <div class="floating-layer" v-if="first_login" @click.self.stop="first_login = false">
           <div>
-            <img class="animate-bounce-up" src="image/wwwassets/bw3/svg/one-click.svg" alt="">
+            <img class="animate-bounce-up" :src="`${LOCAL_PROJECT_FILE_PREFIX}/svg/one-click.svg`" alt="">
             <span>{{i18n_t("video.click_on")}}</span>
             <p>{{i18n_t("video.show_hide")}}</p>
           </div>
           <div>
-            <img class="animate-bounce-up" src="image/wwwassets/bw3/svg/double-click.svg" alt="">
+            <img class="animate-bounce-up" :src="`${LOCAL_PROJECT_FILE_PREFIX}/svg/double-click.svg`" alt="">
             <span>{{i18n_t("video.double_click")}}</span>
             <p>{{i18n_t("video.full_screen_play")}}</p>
           </div>
