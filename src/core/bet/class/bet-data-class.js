@@ -234,7 +234,7 @@ this.bet_appoint_ball_head= null */
     return obj
   }
 
-  // 预约投注 赔率相同的情况下替换投注项id和赔率
+  // 从单关预约投注中找到赔率相同的替换投注项id和赔率
   set_bet_single_list_obj(obj){
     this.bet_single_list.filter(item => {
       if( item.playOptionsId === obj.oid){
