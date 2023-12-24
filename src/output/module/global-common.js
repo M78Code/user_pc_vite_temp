@@ -12,8 +12,8 @@ export { default as UserCtr } from "src/core/user-config/user-ctr.js";
 export * from "src/core/http/index.js";
  
   
-  export { default as ServerTime } from "src/core/server-time/server-time.js";
+export { default as ServerTime } from "src/core/server-time/server-time.js";
 
-  export { enter_params} from "src/core/enter-params/index.js"
+export { enter_params} from "src/core/enter-params/index.js"
 
   

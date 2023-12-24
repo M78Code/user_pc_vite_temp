@@ -408,7 +408,7 @@ export default {
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
-  background-color: #F2F2F6;
+  background-color: var(--q-gb-bg-c-21) ;
 
   /* ************** 列表上滑箭头图标 **************** -S */
   .list-scroll-to-top {
@@ -426,7 +426,7 @@ export default {
     top: 0;
     z-index: 540;
     width: 100%;
-
+    background: var(--q-gb-bg-c-27) !important;
     .type-bg {
       background-size: 100% auto;
     }

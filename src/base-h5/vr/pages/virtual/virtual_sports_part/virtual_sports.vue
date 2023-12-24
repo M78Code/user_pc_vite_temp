@@ -821,12 +821,14 @@ export default {
   justify-content: space-between;
   padding: 0 0.15rem;
   height: 0.24rem;
-  border-top: 0.02rem solid #FEAE2B;
-  background-color: #FFF;
+  border-top: 0.02rem solid var(--q-gb-bd-c-3);
+  background-color: var(--q-gb-bg-c-25);;
 
   .left {
     font-size: 0.12rem;
-    color: #303442;
+    color: var(--q-gb-t-c-18);;
+    display: flex;
+    align-items: center;
     img {
       width: 0.12rem;
       height: 0.12rem;
@@ -834,6 +836,8 @@ export default {
     }
   }
   .right {
+    display: flex;
+    align-items: center;
     img {
       width: 0.2rem;
       height: 0.16rem;
@@ -846,14 +850,15 @@ export default {
 .virtual-content-wrapper {
   padding: 0.08rem 0.05rem 0;
   color: var(--q-gb-t-c-18);
-  background: #F2F2F6;
+  // background: #F2F2F6;
+  background-color: var(--q-gb-bg-c-21) ;
 }
 .virtual-sports-card {
   &-content {
-    background: #F8F9FA;
+    background: var(--q-gb-bg-c-18);
     border-radius: .08rem;
     margin-bottom: .08rem;
-    border: 1px solid #fff;
+    border: 1px solid var(--q-gb-bd-c-15);
   }
   &:last-of-type {
     padding-bottom: 0.7rem;
