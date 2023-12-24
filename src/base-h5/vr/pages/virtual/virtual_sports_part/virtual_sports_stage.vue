@@ -848,7 +848,7 @@ export default {
 }
 
 .banner {
-  border-radius: 0;
+  border-radius: 0.05rem;
   width: 100%;
   height: 1.9rem;
   margin: auto;
@@ -874,7 +874,7 @@ export default {
   }
 
   &.dirt_motorcycle {
-    background-image: var(--q-color-com-img-bg-145);
+    background-image: url($SCSSPROJECTPATH+"/image/png/dirt_virtual_match_motorcycle.png");
   }
 
   .wrapper-loading-c {

@@ -25,7 +25,7 @@
  */
 
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/output/module/match-data-base.js'
-import { PROJECT_NAME } from 'src/output/module/menu-data.js'
+import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 import { time_conversion } from 'src/output/module/constant-utils.js'
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
