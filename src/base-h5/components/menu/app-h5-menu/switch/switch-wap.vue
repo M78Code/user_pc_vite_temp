@@ -34,18 +34,6 @@ const get_switch_data = () => {
             defaultVal:UserCtr.standard_edition,
             mark:'standard_edition',
             list:[
-                {// 1 新手版
-                    name:i18n_t('footer_menu.new_v'),
-                    val:1,
-                    changeFun:(val)=>{
-                        useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
-                        nextTick(()=>{
-                            UserCtr.set_standard_edition(val)
-                            VirtualList.set_is_show_ball(true)
-                            MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
-                        })
-                    }
-                },
                 {
                     name:i18n_t('footer_menu.pro_v'),
                     val:2,
@@ -57,6 +45,18 @@ const get_switch_data = () => {
                                 !MenuData.is_collect() && MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
                             })
                         }
+                    }
+                },
+                {// 1 新手版
+                    name:i18n_t('footer_menu.new_v'),
+                    val:1,
+                    changeFun:(val)=>{
+                        useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
+                        nextTick(()=>{
+                            UserCtr.set_standard_edition(val)
+                            VirtualList.set_is_show_ball(true)
+                            MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
+                        })
                     }
                 }
             ]

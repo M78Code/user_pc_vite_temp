@@ -4,7 +4,7 @@
 -->
 <template>
   <div class="setting-filter">
-    <div class="setting-top setting-item" v-if="!MenuData.is_collect()">
+    <div class="setting-top setting-item" v-if="!MenuData.is_collect() && !MenuData.is_esports()">
       <div class="title">
     <!-- 联赛筛选 -->
          {{ i18n_t('footer_menu.league_filter') }}

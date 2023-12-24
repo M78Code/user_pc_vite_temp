@@ -1064,15 +1064,27 @@ export default {
       }
       :deep(.score-se-inner){
         max-width: 100%;
-        height: auto;
+        height: 100%;
         .score-se-inner2{
           display: flex;
           margin-left: -5px;
           overflow-x: auto;
           justify-content: space-between;
+          height:100%;
+          overflow-y:hidden;
           .score-fle-container-1{
             position: relative;
             top: 1px;
+            display: block;
+            width: 1.12rem;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            overflow:hidden;
+            .items-start {
+              display: inline-block;
+              height: 100%;
+              line-height: .23rem;
+            }
           }
           .b-score-wrapper{
             flex-wrap: nowrap;
