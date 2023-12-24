@@ -174,10 +174,10 @@ const set_bet_order_list = (bet_list, is_single) => {
 
             // 预约投注
             // 需要用对应的数据 对投注数据进行覆盖
-            bet_s_obj = {
-                ...bet_s_obj,
-                ...BetData.bet_pre_obj[item.playOptionsId]
-            }
+            // bet_s_obj = {
+            //     ...bet_s_obj,
+            //     ...BetData.bet_pre_obj[item.playOptionsId]
+            // }
             order_list.push({
                 "seriesSum": 1,   // 串关数量
                 "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
@@ -188,7 +188,6 @@ const set_bet_order_list = (bet_list, is_single) => {
 
         }) 
     }
-
     return order_list
 }
 
@@ -395,8 +394,40 @@ const set_bet_pre_list = bet_appoint => {
     BetData.set_bet_pre_list(pre_list)
 }
 
+
+// 对比赔率，判断是否是预约投注
+const pre_bet_comparison = () => {
+	// 如果点击预约判断所选赔率和盘口赔率是否一致，一致说明不是预约，切换到对应的盘口id;否则就设置为预约
+	if(BetData.is_bet_pre) {
+		let oid = lodash_.get(BetData,'bet_single_list[0].playOptionsId','')
+		let pre_obj = lodash_.get(BetData,`bet_pre_obj[${oid}]`,{})
+		
+		let pre_list = lodash_.get(	BetData,'bet_appoint_obj.marketList[0].marketOddsList',[])
+	
+
+		if(pre_list.length) {
+			for(let item of pre_list){
+				if(item.oddsValue == pre_obj.odds){
+					let obj = {
+						old_oid: oid,
+						oid: item.id,
+						odds: pre_obj.odds,
+						oddFinally: pre_obj.oddFinally
+					}
+					BetData.set_bet_single_list_obj(obj)
+					BetData.set_is_bet_pre(false)
+				} else {
+					BetData.set_bet_single_list_obj(pre_obj)
+					BetData.set_is_bet_pre(false)
+				}
+			}
+		}
+	}
+}
+
 // 提交投注信息 
 const submit_handle = type => {
+    pre_bet_comparison()
     // 
     if(submit_btn) return
     // 单关才有预约投注
@@ -808,6 +839,14 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${_mid}_`, {})
     const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${_mid}_${oid}`, {})
     // let other = { bet_type:'common_bet'}
+    // 移动端 并且是串关 点击 非串关赛事 提示信息  
+    // 电子赛事 电竞的不可串关赛事
+    if( PROJECT_NAME.includes('h5') && !BetData.is_bet_single && (( !mid_obj.ispo && other.bet_type == 'esports_bet' ) || (["C01","B03","O01"].includes(mid_obj.cds) || [2,4].includes(Number(mid_obj.mbmty))))){
+        let text = '不支持串关'
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
+        return
+    }
+
     // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
     let matchType = 1
     // 冠军
@@ -882,7 +921,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         match_ctr: other.match_data_type, // 数据仓库 获取比分
         device_type: BetData.deviceType, // 设备号
         odds_hsw: ol_obj._hsw, // 投注项支持的赔率
-        mbmty: mid_obj.mbmty, // mbmty 2 or 4 为电子赛事 
+        ispo: mid_obj.ispo || 0, // 电竞赛事 不支持串关的赛事
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
 
@@ -910,6 +949,10 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 订阅投注项的 ws
     set_market_id_to_ws()
     
+    // 移动端端 串关 点击展开对时候才去请求限额
+    if(PROJECT_NAME.includes('h5') && !BetData.is_bet_single){
+        return
+    }
     // 判断获取限额接口类型
     if(["C01","B03","O01"].includes(bet_obj.dataSource) || [2,4].includes(Number(bet_obj.mbmty)) || ['esports_bet','vr_bet'].includes(other.bet_type)){
         // C01/B03/O01  电竞/电竞冠军/VR体育

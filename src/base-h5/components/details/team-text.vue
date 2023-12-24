@@ -53,6 +53,6 @@ export default defineComponent({
   font-size: 0.12rem;
   color: #FFFFFF;
   letter-spacing: 0;
-  top: 0.12rem;
+  top: 0.32rem;
 }
 </style>

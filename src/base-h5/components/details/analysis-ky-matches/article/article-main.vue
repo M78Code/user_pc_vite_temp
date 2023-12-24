@@ -258,6 +258,10 @@ const handle_hide_dialog = (e) => {
 </script>
 
 <style scoped lang="scss">
+.article-main{
+  // 添加背景色，否则会镂空
+  background-color: var(--q-gb-bg-c-27);
+}
 .article-dialog {
   .dialog-title {
     height: 0.48rem;

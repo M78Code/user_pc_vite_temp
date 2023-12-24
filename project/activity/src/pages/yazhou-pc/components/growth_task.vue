@@ -121,7 +121,7 @@
       <p class="text-center updateInteval">
         <span>每{{ actId == 1 ? "5分钟" : "小时" }}更新一次</span>
       </p>
-      <p class="history text-center text-333" @click="show_dialog(1)">
+      <p class="history text-center text-333" @click="show_dialog(1,1)">
         领取记录
       </p>
       <div class="task_intro">
@@ -213,7 +213,7 @@
                             :max-pages="10"
               ></q-pagination>
               <p class="goto_page text-666">
-                <span @click="goToHistoryPage(null)">&nbsp;&nbsp;跳转至</span>&nbsp;&nbsp;<input type="number" v-model="goToPage" :max="pagenationMax" @keyup="goToHistoryPage($event)">&nbsp;&nbsp;页
+                <span @click="goToHistoryPage(null)">&nbsp;&nbsp;跳转至</span>&nbsp;&nbsp;<input type="number" v-model="page_temp" :max="pagenationMax" @keyup="goToHistoryPage($event)">&nbsp;&nbsp;页
               </p>
             </div>
           </div>
