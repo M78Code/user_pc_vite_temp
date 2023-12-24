@@ -2,7 +2,7 @@
 import { loadLanguageAsync } from "project_path/src/boot/i18n.js";
 import { throttle } from "lodash";
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
- 
+import { UserCtr } from "project_path/src/core/index.js";
 
 import { enter_params,  LocalStorage  ,useMittOn, 
   MITT_TYPES ,http, AllDomain,
@@ -91,6 +91,8 @@ export default {
         // ws和http域名切换逻辑
         http.setApiDomain();
         enter_params(async(user)=>{
+          let theme= this.get_project_theme(user)
+          theme && document.getElementById("ty-body").classList.add(theme);
           await loadLanguageAsync(lang);
          
   
@@ -101,6 +103,26 @@ export default {
      AllDomain.run();
 
 
+    },
+    /**
+     * @description 设置项目主题设置
+     */
+    get_project_theme(user_info) {
+      let res = '';
+      // 默认 白色版
+      const default_theme = SEARCH_PARAMS.init_param.get('theme') || _.get(user_info, 'configVO.h5Default', 1)
+      if(default_theme && lodash.startsWith(default_theme,'theme0')){
+        res = default_theme;
+      } else {
+        // 商户 主题色系
+        let is_y0 = (SEARCH_PARAMS.init_param.get('stm') == 'blue' || user_info.stm === 'blue') 
+        if (is_y0) {
+          res = `theme0${default_theme}_y0`;
+        } else {
+          res = `theme0${default_theme}`;
+        }
+      }
+      return res;
     },
     /**
      * @description: 设置this.init_load变量的状态

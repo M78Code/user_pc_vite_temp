@@ -258,22 +258,27 @@ const handle_hide_dialog = (e) => {
 </script>
 
 <style scoped lang="scss">
-.article-dialog {
-  .dialog-title {
-    height: 0.48rem;
-    width: 3.75rem;
-    margin: 0 -0.16rem;
-    line-height: 0.48rem;
-  }
-  .back {
-    display: inline-block;
-    transform: translateY(0.02rem);
-
-    width: 0.1rem;
-    height: 0.18rem;
-    background: var(--q-color-com-img-bg-3) no-repeat center / 96% 96%;
-    background-size: 100% 100%;
-  }
+.article-main{
+  // 添加背景色，否则会镂空
+  background-color: var(--q-gb-bg-c-27);
+}
+.dialog-title {
+  height: 0.48rem;
+  width: 3.75rem;
+  margin: 0 -0.16rem;
+  line-height: 0.48rem;
+  background: var(--q-gb-bd-c-12);
+}
+.back {
+  display: inline-block;
+  transform: translateY(0.02rem);
+  width: 0.1rem;
+  height: 0.18rem;
+  background: var(--q-color-com-img-bg-3) no-repeat center / 96% 96%;
+  background-size: 100% 100%;
+}
+.dialog-content {
+  background: var(--q-gb-bd-c-12);
 }
 </style>
 

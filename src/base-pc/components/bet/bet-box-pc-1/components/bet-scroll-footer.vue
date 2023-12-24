@@ -30,14 +30,14 @@
 
     <div class="bet-footer-check">
       <span class="check-box" >
-        <span class="check-wrap relative-position" :class="{ 'active': BetData.is_bet_merge }" />
+        <span class="check-wrap relative-position"/>
         <span>{{i18n_t('bet.bet_auto_msg_1')}}</span>
       </span>
     </div>
 
     <div>
       <span class="check-box" >
-        <span class="check-wrap relative-position" :class="{ 'active': BetData.is_bet_merge }" />
+        <span class="check-wrap relative-position"/>
         <span>{{ i18n_t('bet.common_amount') }}</span>
       </span>
     </div>
@@ -95,7 +95,7 @@ const cancel_handle = () => {
     height: 40px;
     line-height: 40px;
     font-size: 14px;
-    color: var(--q-gb-t-c-1);
+    color: var(--q-gb-bd-c-13);
     text-align: center;
     font-weight: 600;
     border-radius: 4px;

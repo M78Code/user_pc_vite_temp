@@ -63,12 +63,13 @@
           </div>
         </div>
         <!-- 赛果精选列表 -->
-        <div class="standard-odd-list row" v-else  :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
+        
+        <div class="standard-odd-list row reslut-box" v-else  :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
           <div class="odd-column-w w100" :class="[{ clounm2: ![1,4,11,14,16].includes(+match.csid) }, {'boxing':match.csid == 12 }]" :key="hp_i_i+''+standard_odd_status"
                v-for="(hp_item_obj,hp_i_i) in get_match_result_hp_list(standard_odd_status)">
             <!-- 足球 1，水球 16， 冰球 4, 手球 11，橄榄球 14 有三行 -->
             <div class="odd-wrap-min w50" :class="[`hp-${get_ol_length(hp_item_obj,hp_i_i)}`, { 'is-small': match.csid != 1 }]"
-                :key="ol_item_i" v-for="(ol_item,ol_item_i) in get_ol_list(hp_item_obj,hp_i_i)">
+                :key="ol_item_i" v-for="(ol_item,ol_item_i) in get_match_result_ol_list(hp_item_obj,hp_i_i)">
               <odd-column-item
                 :placeholder="ol_item.placeholder"
                 :n_s="standard_edition"
@@ -742,6 +743,39 @@ const get_hp_list = (type) => {
   }
   return hps;
 };
+/**
+ * 获取投注项
+ * @param {Object} hp_item
+ * @param {Number} hp_i_i
+ * @return Undefined Undefined
+ */
+ const get_match_result_ol_list = (hp_item, hp_i_i) => {
+  // let ol_list = props.match.csid == 1 ? [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }] : [{ placeholder: 1 }, { placeholder: 1 }];
+  let ol_list = [1, 4, 11, 16,14].includes(+props.match.csid) ? [{ placeholder: 1 }, { placeholder: 1 }] : [{ placeholder: 1 }, { placeholder: 1 }];
+  if (lodash.get(hp_item, "hl[0].ol")) {
+    ol_list = hp_item.hl[0].ol;
+  } else {
+    // 次要玩法
+    if (props.invoke_source == "attached") {
+      //独赢与半场独赢
+      if ([111, 119, 126, 129].includes(+hp_item.hpid)) {
+        ol_list = [{ placeholder: 1 }, { placeholder: 1 }];
+      }
+    } else {
+      if ([1, 4, 11, 16,14].includes(+props.match.csid)) {
+        if (props.match.hps && props.match.hps[hp_i_i]) {
+          if (props.match.hps[hp_i_i].hpid == 1) {
+            ol_list = [
+              { placeholder: 1 },
+              { placeholder: 1 },
+            ];
+          }
+        }
+      }
+    }
+  }
+  return ol_list;
+};
 // 获取hl的hs
 const get_hl_hs = (hp_item_obj) => {
   let hs = 0;
@@ -1278,14 +1312,17 @@ onUnmounted(() => {
     }
   }
 }
-.w100{
+.reslut-box{
+  height: 70% !important;
+  .w100{
   width: 100%;
   display: flex;
-  height: 100%;
   gap: 5px;
   .w50{
     width: 50% !important;
-    height: 70% !important;
+    height: 90% !important;
   }
 }
+}
+
 </style>

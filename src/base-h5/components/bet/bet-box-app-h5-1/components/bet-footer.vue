@@ -368,9 +368,9 @@ onMounted(()=>{
     align-items: center;
     width: 100%;
     height: .5rem;
-    border-radius: 30px;
+    border-radius: .3rem;
     background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%);
-    box-shadow: 0px 2px 12px 0px rgba(0, 174, 255, 0.10);
+    box-shadow: 0rem .02rem .12rem 0rem rgba(0, 174, 255, 0.10);
     
     &.disabled-line {
       background: #C9CDDB;
@@ -398,7 +398,7 @@ onMounted(()=>{
     color: var(--q-gb-t-c-1);
     padding: .03rem 0.1rem;
     text-align: center;
-    line-height: 16px;
+    line-height: .16rem;
     margin-left: .08rem;
     &.disabled{
       background: var(--q-gb-bg-c-18);

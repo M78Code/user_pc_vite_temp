@@ -32,7 +32,7 @@
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='max' style="font-size: 0.14rem;">{{ i18n_t('bet.max')}}</div>
                   <div class="nonebox4-fourth-num-sun key-cell" data-number="x">
-                    <div class="key-cell-img" :style="compute_css_obj({key: 'h5-keyboard'})"></div>
+                    <div class="key-cell-img" data-number="x" :style="compute_css_obj({key: 'h5-keyboard'})"></div>
                   </div>
                   <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)">
                     <div class="key-cell-imgs" :style="compute_css_obj({key: 'h5_pack_keyboard'})"></div>
@@ -351,7 +351,7 @@ onUnmounted(() => {
   }
 }
 .nonebox4-fourth-num {
-    height: 156px;
+    height: 1.56rem;
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -375,7 +375,6 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     background-color: var(--q-gb-bg-c-25);
-    //box-shadow: 0 2px 2px #eeeeee;
     color: var(--q-gb-t-c-18);
     font-size: 0.22rem;
     font-weight: 700;
@@ -383,28 +382,11 @@ onUnmounted(() => {
     margin: .02rem 0;
     
 }
-.nonebox4-fourth-num-sun2 {
-    width: 100%;
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--q-gb-bg-c-15);
-    //box-shadow: 0 2px 2px #eeeeee;
-    color: #333;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 6px;
-    margin: .02rem 0;
-    height: 50px;
-}
 
 .keyboard {
   -webkit-overflow-scrolling: touch;
-  font-size: 20px;
+  font-size: .2rem;
   font-weight: 500;
-  color: #1A1A1A;
-
 }
 
 .key-cell {
@@ -419,44 +401,5 @@ onUnmounted(() => {
 .key-cell-imgs{
   width: 0.25rem;
   height: 0.24rem;
-}
-.del-key {
-  // background: url('../../../assets/images/bet/bet_key_delect.png') no-repeat 50%;
-  background-size: 23px 14px;
-}
-
-.keyboard-box {
-  width: 100%;
-  height: 156px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 4px;
-  grid-template-areas:
-    'one two three max'
-    'one two three max'
-    'one two three max'
-    'four five six max'
-    'four five six delete'
-    'four five six delete'
-    'seven eight nine delete'
-    'seven eight nine delete'
-    'seven eight nine cancel'
-    'zero drop ten cancel'
-    'zero drop ten cancel'
-    'zero drop ten cancel';
-
-  &-item {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--q-gb-bg-c-15);
-    //box-shadow: 0 2px 2px #eeeeee;
-    color: #333;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 6px;
-  }
 }
 </style>
