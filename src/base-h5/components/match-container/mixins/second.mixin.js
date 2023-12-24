@@ -948,8 +948,8 @@ const apply_15min_title = () => {
 // 批量清除定时器
 const clear_timer = () => {
   const timer_arr = [
-    'init_tab_timer.value',
-    'compute_list_dom_time.value',
+    init_tab_timer.value,
+    compute_list_dom_time.value,
   ]
   for (let timer of timer_arr) {
     clearTimeout(timer)

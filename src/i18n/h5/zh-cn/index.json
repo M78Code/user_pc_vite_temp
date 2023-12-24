@@ -309,7 +309,15 @@
       "bet_confirm": "注单已确认",
       "bet_error": "注单失败",
       "reserve_win": "预约金额",
-      "win_amount": "可赢金额"
+      "win_amount": "可赢金额",
+      "toltip1": "什么是",
+      "toltip2": "是由",
+      "toltip3": "场赛事组成的一个注单。",
+      "toltip4": "选择",
+      "toltip5": "场赛事投注",
+      "toltip6": "时，系统将选择的",
+      "toltip7": "场赛事中合并为一个注单，",
+      "toltip8": "场赛事必须全赢才可获得盈利"
     },
     "match": {
       "all": "全部",

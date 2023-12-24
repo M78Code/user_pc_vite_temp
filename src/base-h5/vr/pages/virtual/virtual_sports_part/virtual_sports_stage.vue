@@ -575,7 +575,6 @@ export default {
           res.push(item.no)
         }
       }
-      console.log(res ,'res')
       return res;
     },
     /**
