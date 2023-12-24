@@ -48,7 +48,8 @@ export default {
       // 历史记录分页
       result_page_info: { current: 1, total: 1 },
       day_week_month_time_limit_timer: null,
-      change_time: null
+      change_time: null,
+      page_temp:'',
     };
   },
   computed: {
@@ -89,7 +90,19 @@ export default {
     showReceiveHistoryList(){},
     goToHistoryPage(e){
       if(e){
-        const val = Math.min(+e.target.value, this.pagenationMax)
+        if(!e.target.value){
+          this.page_temp = e.target.value;
+          return;
+        }
+        if(e.target.value=='0'){
+          this.page_temp = '';
+          return;
+        }
+        let val = Math.min(+e.target.value, this.pagenationMax)
+        if(val>this.pagenationMax){
+          val = this.pagenationMax;
+        }
+        this.page_temp = val;
         this.result_page_info.current = val
         this.show_dialog(val)
       }
@@ -103,7 +116,11 @@ export default {
       this.show_dialog($event);
     },
     // 调用领取记录接口
-    async show_dialog(current) {
+    async show_dialog(current, page) {
+      if(page){
+        this.result_page_info.current = 1;
+        this.page_temp = '';
+      }
       try {
         // 跟产品沟通接口有限频，前端不用做限制
         if (is_time_limit.call(this, null)) return; //  防止调用多次接口
@@ -122,7 +139,10 @@ export default {
           this.history_records = data.records;
           this.result_page_info.total = +data.total
           this.history_alert = true;
-          this.result_page_info.current = 1;
+          if(!this.result_page_info.current){
+            this.result_page_info.current = 1;
+          }
+          
         } else if (["0410505"].includes(code)) {
           // 活动突然挂维护时，触发下边方法，刷新活动页面，变成活动维护页面
           this.$emit("to_maintenance");
