@@ -266,7 +266,7 @@
           <img v-if="voice" :src="voice_def">
           <img v-else :src="voice_act">
         </div>
-        <slider class="slider-container" :value="current_event_video.voice" 
+        <slider v-if="false" class="slider-container" :value="current_event_video.voice" 
                 v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay"  @change="change_volumn"/>
 
        
