@@ -985,14 +985,14 @@ export const details_main = () => {
 
     // 批量清除timeout定时器
     for (const timer of timeout_timer_arr) {
-      clearTimeout(timeout_timer_arr[timer]);
-      timeout_timer_arr[timer] = null;
+      clearTimeout(state_data[timer]);
+      state_data[timer] = null;
     }
 
     // 批量清除interval定时器
     for (const timer of interval_timer_arr) {
       clearInterval(interval_timer_arr[timer]);
-      interval_timer_arr[timer] = null;
+      state_data[timer] = null;
     }
   };
   return {
