@@ -137,6 +137,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
         UserCtr.sort_type==1&&UserCtr.set_sort_type(2) //电竞没有热门排序 只有时间
         // ref_data.scroll_data_list = [];
         MenuData.set_current_lv1_menu(val.mi);
+        MenuData.set_date_time(0,'');
         ref_data.scroll_data_list = BaseData.dianjing_sublist;
         // nextTick(()=>{
         //   ref_data.scroll_data_list = BaseData.dianjing_sublist;
