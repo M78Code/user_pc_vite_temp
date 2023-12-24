@@ -54,11 +54,10 @@ let commond4 =`git log --since ='2023-12-10T00:00:00+08:00' --until='${until}'  
   names =Array.from(new Set(names))
 
   names=  names.map(x=>{
-    if(x.startsWith("\"'")){
-     return   x.substring(1,x.length-1)
-    }else{
-        return   x
-    }
+   
+let arr= x.split("")
+ arr =lodash.pullAll(arr,['\'',"\""])
+return arr.join("")
   })
   names=names.filter(x=>!!x)
 console.log('names', JSON.stringify(names)  );
