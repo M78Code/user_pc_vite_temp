@@ -1020,7 +1020,7 @@ export default {
             width: 2.74rem;
             height: .32rem;
             .odd-column-item {
-              background: var(--q-gb-bg-c-15);
+              background: var(--q-gb-bg-c-28);
               margin-left: .04rem;
               border-radius: 4px;
             }
