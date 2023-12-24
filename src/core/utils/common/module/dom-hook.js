@@ -139,7 +139,7 @@ export function modify_dom_classname(domClassName, newName = '') {
 export const set_theme_style_sheet_by_css_obj=(obj={},id_str)=>{
   let str= ``
   for(let key in obj){
-    str=`\n   ${key } : ${obj[key] ||''};`
+    str+=`\n   ${key } : ${obj[key] ||''};`
   }
   set_theme_style_sheet(str,id_str)
 }
