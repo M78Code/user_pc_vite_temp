@@ -32,7 +32,7 @@
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='max' style="font-size: 0.14rem;">{{ i18n_t('bet.max')}}</div>
                   <div class="nonebox4-fourth-num-sun key-cell" data-number="x">
-                    <div class="key-cell-img" :style="compute_css_obj({key: 'h5-keyboard'})"></div>
+                    <div class="key-cell-img" data-number="x" :style="compute_css_obj({key: 'h5-keyboard'})"></div>
                   </div>
                   <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)">
                     <div class="key-cell-imgs" :style="compute_css_obj({key: 'h5_pack_keyboard'})"></div>
