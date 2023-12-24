@@ -247,9 +247,6 @@
                     <span class="mc-n">
                       {{ GlobalAccessConfig.get_handicapNum() ? get_match_mc(match) : i18n_t('footer_menu.more') }}+
                     </span>
-                    <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">
-                      <IconWapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
-                    </span>
                   </span>
                 </div>
               </div>
