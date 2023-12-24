@@ -1,11 +1,11 @@
 <template>
-  <div class="highlights analysis-odds">
+  <div class="highlights analysis-odds  overflow-hidden">
     <div class="wonderful">
       <div class="wonderful-header">
         <ul class="wonderful-tabs">
-          <li v-for="(item, i) in wonderful_tabs" :key="i" @click="change_wonderful_active(i)"
-              :class="[wonderful_active == i ? 'wonderful-active':'disable-text']">
-            {{ item.name }}
+          <li v-for="(item, i) in tab_list" :key="i" @click="tab_click(item, i)"
+              :class="[tabIndex == i ? 'wonderful-active':'disable-text']">
+            {{ item.title }}
           </li>
         </ul>
       </div>
@@ -19,7 +19,7 @@
             <div class="time-line half-line"></div>
             <div class="dot-game-over"></div>
             <div class="item-flag icon-flag-game-over"></div>
-            <div class="item-content real-time-contv-ifent hairline-border">
+            <div class="item-content real-time-contv-ifent hairline-border ">
 
               <span class="time" v-if="get_detail_data.mmp==31">{{ i18n_t('mmp.1.31') }}</span>
               <span class="time" v-else>{{ $filters.format_mgt_time(lodash.get(get_detail_data, 'mststr'))}}</span>
@@ -31,44 +31,93 @@
 
         <!-- 常规详情页显示内容 -->
         <template v-else>
-          <div class="row real-time">
-            <div class="time-line half-line start-half-line"></div>
-            <div class="dot-real-time"></div>
+          <div class="row real-time mb-10 mt-2">
+            <!-- <div class="time-line half-line start-half-line"></div> -->
+            <!-- <div class="dot-real-time"></div> -->
+            
             <div class="item-flag item-flag-real-time"></div>
-            <div class="item-content real-time-content hairline-border">
-              <span class="time" v-if="get_detail_data.mmp==31">{{ i18n_t('mmp.1.31') }}</span>
-              <span class="time" v-else>{{ real_time }}</span>
-              <span class="score">[{{ format_total_score(get_detail_data, 0) }}-{{ format_total_score(get_detail_data, 1) }}]</span>
-              <span class="text" >{{ i18n_t('msc.S1') }}</span>
+            <div class="item-content real-time-content hairline-border text-12">
+              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/whistle.svg`" alt="" class="whistle mr-6">
+              <span class="time mr-6" v-if="get_detail_data.mmp==31">{{ i18n_t('mmp.1.31') }}</span>
+              <span class="time mr-6" v-else>{{ real_time }}</span>
+              <span class="text  mr-6" >{{ i18n_t('msc.S1') }}</span>
+              <span class="score font-bold">[{{ format_total_score(get_detail_data, 0) }}-{{ format_total_score(get_detail_data, 1) }}]</span>
             </div>
           </div>
         </template>
-
         <!-- 精彩回放列表 -->
-        <div class="row" v-for="(event, i) in events_list_vertical" :key="i">
-          <div class="time-line"></div>
-          <div class="time-line-ball"></div>
-          <div :class="['item-flag', flag_icon(event.eventCode)]"></div>
-          <div class="item-content hairline-border"  @click="handle_click_event(i, event)">
-            <span class="time">{{ $filters.format_mgt_time(+event.secondsFromStart) }}</span>
-            <span class="score">[{{ event.t1 }}-{{ event.t2 }}]</span>
-            <div class="text-wrapper">
-              <!-- 点球大战 -->
-              <div class="text-scroller" v-if="event.matchPeriodId==50">
-                <span class="text" v-scroll-text>{{i18n_t('mmp')[1][event.matchPeriodId]}}</span>
+        <div class="row" v-for="(event, i) in events_list_vertical" :key="i" @click="play_video(event, event.homeAway == get_detail_data.mhn)">
+          <!-- <div class="time-line"></div> -->
+          <!-- <div class="time-line-ball"></div> -->
+          <div :class="['item-content hairline-border item-content-defailt', event.homeAway == get_detail_data.mhn?'':'hide']"  @click="handle_click_event(i, event)" >
+            <div :style="{
+              'background-image': `url(${event.fragmentPic})`
+            }" class="item-img">
+            <div class="mask">
+              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/wondleful_play.svg`" alt="" class="wondleful_play"/>
+            </div>  
+          </div>            
+            <div class="sub-text">
+              <div>
+                <span class="time">{{ $filters.format_mgt_time(+event.secondsFromStart) }}</span>
+                <span class="score">[{{ event.t1 }}-{{ event.t2 }}]</span>
               </div>
-              <!-- 加时赛 -->
-              <div class="text-scroller" v-else-if="event.matchPeriodId==41||event.matchPeriodId==42">
-                <span class="text" v-scroll-text>{{i18n_t('mmp')[2][40]}} {{event.homeAway}} {{i18n_tc(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
+              <div class="text-wrapper" >
+                <!-- 点球大战 -->
+                <div class="text-scroller" v-if="event.matchPeriodId==50">
+                  <span class="text" v-scroll-text>{{i18n_t('mmp')[1][event.matchPeriodId]}}</span>
+                </div>
+                <!-- 加时赛 -->
+                <div class="text-scroller" v-else-if="event.matchPeriodId==41||event.matchPeriodId==42">
+                  <span class="text" v-scroll-text>{{i18n_t('mmp')[2][40]}} {{event.homeAway}} {{i18n_tc(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
+                </div>
+                <div class="text-scroller" v-else>
+                  <span class="text" v-scroll-text>{{event.homeAway}} {{  i18n_tc(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
+                </div>
               </div>
-              <div class="text-scroller" v-else>
-                <span class="text" v-scroll-text>{{event.homeAway}} {{  i18n_tc(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
-              </div>
+                
             </div>
-            <i class="icon icon-replay-red"></i>
+            
+            <!-- <i class="icon icon-replay-red"></i> -->
+          </div>
+          <div class="left">
+            <div :class="['item-flag my-4', flag_icon(event.eventCode)]"></div>
+            <div class="lines"></div>
+          </div>
+          <div :class="['item-content hairline-border item-content-defailt', event.homeAway == get_detail_data.man ? '' : 'hide']"  @click="handle_click_event(i, event)" >
+            <div :style="{
+              'background-image': `url(${event.fragmentPic})`
+            }" class="item-img">
+            <div class="mask">
+              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/wondleful_play.svg`" alt="" class="wondleful_play"/>
+            </div>    
+          </div>            
+            <div class="sub-text">
+              <div>
+                <span class="time">{{ $filters.format_mgt_time(+event.secondsFromStart) }}</span>
+                <span class="score">[{{ event.t1 }}-{{ event.t2 }}]</span>
+              </div>
+              <div class="text-wrapper" >
+                <!-- 点球大战 -->
+                <div class="text-scroller" v-if="event.matchPeriodId==50">
+                  <span class="text" v-scroll-text>{{i18n_t('mmp')[1][event.matchPeriodId]}}</span>
+                </div>
+                <!-- 加时赛 -->
+                <div class="text-scroller" v-else-if="event.matchPeriodId==41||event.matchPeriodId==42">
+                  <span class="text" v-scroll-text>{{i18n_t('mmp')[2][40]}} {{event.homeAway}} {{i18n_tc(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
+                </div>
+                <div class="text-scroller" v-else>
+                  <span class="text" v-scroll-text>{{event.homeAway}} {{  i18n_tc(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
+                </div>
+              </div>
+                
+            </div>
+            
+            <!-- <i class="icon icon-replay-red"></i> -->
           </div>
 
           <div
+              v-if="false"
               v-show="i == event_index"
               class="replay-wrapper"
               :class="[
@@ -177,6 +226,8 @@
               </div>
             </template>
           </div>
+        
+        
         </div>
 
         <!-- 赛事开始展示视图 -->
@@ -255,7 +306,8 @@ props: {
   detail_data: {
     type: Object,
     default: {}
-  }
+  },
+  
 },
 setup(props, context){
   let route = useRoute()
@@ -373,9 +425,21 @@ setup(props, context){
         }, 200)
       })
   }
+  /**
+   * 播放视频
+   * @param {*} item 
+   * @param {*} status true, 可以播放，false，不显示，不播放
+   */
+  const play_video = (item, status) => {
+    if (!status) {
+      return;
+    }
+    console.log(item, "item===");
+  }
 
-  const change_wonderful_active = (value) => {
+  const change_wonderful_active = (value, item) => {
     wonderful_active.value = value;
+    tabEvenCode.value = Number(item.code)
   }
   // 第X个——英文下转换
   const trans_num = (num) => {
@@ -794,6 +858,7 @@ setup(props, context){
     change_wonderful_active,
     tabs,
     slider_video,
+    play_video,
     // TODO:待调试处理
     slider_x,
     item_wrapper,

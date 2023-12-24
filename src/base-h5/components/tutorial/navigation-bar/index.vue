@@ -22,6 +22,11 @@
         <div class="navigation-bar-right" @click="searchClick">
             <slot name="right"></slot>
         </div>
+             <!-- 筛选+搜索  已脱离文档流-->
+    <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+        <div style="height:100%;width: 100%" @click="select_dialog = false" />
+        <setect-league @closedHandle="select_dialog = false"></setect-league>
+    </div>
     </div>
 </template>
 <script setup>
@@ -29,7 +34,8 @@ import { i18n_t, compute_css_obj } from "src/output/index.js";
 import { useRouter,useRoute } from "vue-router";
 import {compute_local_project_file_path} from "src/output/index.js";
 import { MenuData } from "src/output/module/menu-data.js"
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import setectLeague from './setect-league.vue'
+import {ref} from "vue";
 defineOptions({
     name: 'navigationBar' // 设置组件名称
 })
@@ -54,6 +60,10 @@ const props = defineProps({
         default: null
     }
 })
+//筛选窗口
+const select_dialog = ref(false);
+// 视口高度
+const inner_height = window.innerHeight;
 
 const set_back = () => {
     MenuData.set_current_lv1_menu('');
@@ -68,10 +78,7 @@ const set_back = () => {
  * 打开联赛筛选框
  */
 const searchClick = () => {
-    // 派发首页设置菜单展开事件
-    useMittEmit(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, {
-      open: true,
-    });
+    select_dialog.value = true
 }
 </script>
 <style scoped lang="scss">
@@ -120,5 +127,13 @@ const searchClick = () => {
     &-right {
         justify-content: flex-end;
     }
+}
+.select-mask {
+  position: fixed;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.4);
+  top: 0;
+  z-index: 2000;
+  left: 0
 }
 </style>

@@ -97,6 +97,8 @@ class MenuData {
     this.date_time = ""
     this.data_time = ""
     this.data_tab_index = 0;
+    this.search_tab_index = 0;
+    this.search_tab_i_tid = '';
     // 时间api接口及参数信息 
     this.menu_match_date_api_config = {}
 
@@ -230,7 +232,9 @@ class MenuData {
     const obj = val?.mi?{}:{
       current_lv_1_menu_i:this.old_current_lv_1_menu_i || 2,
       current_lv_1_menu_mi:this.old_current_lv_1_menu_i || 2,
-      data_tab_index:0
+      data_tab_index:0,
+      data_time :'',
+      current_lv_3_menu:{field1:''}
       // current_lv_2_menu:{},
       // current_lv_2_menu_i:''
     }
@@ -352,8 +356,15 @@ class MenuData {
   // 设置 menu_types
   set_collect_menu_type (lv1_mi) {
     this.menu_type.value = menu_type_config[lv1_mi]  
-  }
-
+  };
+  search_data_tab_index(i,tid){
+    this.search_tab_index = i||0;
+    this.search_tab_tid = tid||'';
+    this.set_cache_class({
+      search_tab_index:i||0,
+      search_tab_i_tid:tid||''
+    });
+  };
   // 设置时间 并且设置时间请求参数
   set_date_time(index,time){
     this.data_tab_index = index;
@@ -362,6 +373,7 @@ class MenuData {
     this.set_menu_match_date()
     this.set_cache_class({
       data_tab_index:index,
+      current_lv_3_menu:{field1:time}
     });
     this.update();
   }

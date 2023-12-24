@@ -36,10 +36,12 @@
 <script setup>
 import { ref,reactive,onMounted,onUnmounted,computed ,nextTick,watch } from "vue";
 // import lodash_ from "lodash";
-// import BaseData from "src/core/base-data/base-data.js";
+ import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj, MenuData } from "src/output/index.js";
 import {scrollMenuEvent} from "../utils";
+import MatchFold from 'src/core/match-fold'
 import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
 const ref_data = reactive({
     emit_lsit:{}
 })
@@ -62,7 +64,7 @@ const props = defineProps({
   },
 })
 const scrollDataListNew = computed(()=>{
-  if(MenuData.is_results())return props.scrollDataList;
+  if(MenuData.is_results() || MenuData.is_mix())return props.scrollDataList;
   return [...[{mi:50000,btn:1,ct:0,title:"收藏"}],...props.scrollDataList]
 })
 const emits = defineEmits(['changeList','changeMenu'])
@@ -70,6 +72,8 @@ const emits = defineEmits(['changeList','changeMenu'])
  * 二级菜单事件
 */
 function set_menu_lv2(item = {},event) {
+  // 重置折叠对象
+  MatchFold.clear_fold_info()
   // vr跳转
   // if(item.mi == 300){
   //   router.push('/virtual');
@@ -87,6 +91,12 @@ function set_menu_lv2(item = {},event) {
     emits('changeMenu',item)
     // useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
   })
+
+  //串关页面跳转电竞，VR强制转单关
+  if(MenuData.is_esports(item.mi) || MenuData.is_vr(item.mi)) {
+    BetData.set_is_bet_single('single')
+    BetData.set_clear_bet_info()
+  }
 }
 
 /**
@@ -245,7 +255,7 @@ onUnmounted(()=>{
                 left: 0.4rem;
                 font-size: 0.1rem;
                 font-family: "Akrobat";
-                z-index: 11;
+                z-index: 20;
         }
         }
       }

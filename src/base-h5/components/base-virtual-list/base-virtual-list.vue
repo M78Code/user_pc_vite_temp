@@ -1,210 +1,331 @@
-<!--
- * @Description: 赛事虚拟列表， 复刻版新手版 试运行
--->
 
 <template>
-    <div :class="['base-virtual-wrapper 1', className]" ref="wrapperRef" :style="getWrapperStyle" @scroll="onScroll">
-        <div class="base-virtual-inner" ref="innerRef" :style="getInnerStyle">
-            <div class="base-virtual-list" :style="getListStyle" ref="virtualListRef">
-                <div class="base-virtual-item" v-for="(item, index) in clientData" 
-                    :key="item.mid" :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index">
-                    <slot name="default" :item="item" :index="index"></slot>
-                </div>
-            </div>
+  <div class="outContainer">
+    <div class="scrollerContainer" ref="scrollerContainerRef" @scroll="onScroll">
+      <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
+      <div class="contentList" :style="styleTranslate" ref="contentListRef">
+        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index">
+           <slot name="default" :item="item" :index="index"></slot>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup>
-import { reactive, computed, unref, nextTick, watch, ref, onUpdated, watchEffect, onMounted, onUnmounted } from 'vue'
+import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, onUpdated, ref, toRefs, watch } from 'vue'
 
 const props = defineProps({
-    className: {
-        type: String,
-        default: ""
-    },
-    style: {
-        type: [Object, String, Array]
-    },
-    height: {
-        type: Number,
-        default: 500
-    },
-    width: {
-        type: [Number, String],
-        default: "100%"
-    },
-    itemHeight: {
-        type: Number,
-        default: 30
-    },
-    dynamic: {
-        type: Boolean,
-        default: false
-    },
-    cache: {
-        type: Number,
-        default: 2
-    },
-    data: {
-        type: Array,
-        default: () => []
-    }
-});
+  cacheCount: {
+    type: Number,
+    default: 5,
+  },
+  dataList: {
+    type: Array,
+    default: () => []
+  }
+})
 
 const emits = defineEmits(["onUpdate"]);
 
-const isNumber = (val) => typeof val === "number";
-const isString = (val) => typeof val === "string";
+const { cacheCount, dataList } = toRefs(props)
 
-const state = reactive({
-    start: 0,
-    end: 15,
-    scrollOffset: 0,
-    cacheData: [],
-    emitters: {}
-});
-const virtualListRef = ref();
+// 猜测高度（预估高度）
+const maybeHeight = 100
 
-const getWrapperStyle = computed(() => {
-    const { style, height, width } = props;
-    const styleObj = isString(style) ? JSON.parse(style) : { ...style };
-    return {
-        // height: `${height}px`,
-        width: isNumber(width) ? `${width}px` : width,
-        ...styleObj
-    };
-});
+// 所有数据
+const allData = ref([])
+let positionDataArr = []
 
-const getInnerStyle = computed(() => {
-    return {
-        height: `${unref(getTotalHeight)}px`,
-        width: "100%"
-    };
-});
+/**
+ * 子节点高度: allData最后一个元素的endPos值
+ * 用于撑开滚动容器的高度
+ */
+const pillarDomHeight = ref(0)
+/**
+ * 内容列表容器dom
+ */
+const contentListRef = ref()
+/**
+ * 滚动容器. 支持显示滚动条的容器。确定虚拟列表的可视区高度
+ */
+const scrollerContainerRef = ref()
+/**
+ * 滚动容器高度(视口高度)。采用计算属性方式动态获取滚动容器高度
+ */
+const scrollerContainerRefHeight = computed(() => {
+  return scrollerContainerRef.value ? scrollerContainerRef.value.offsetHeight : 0
+})
+/**
+ * 当前视口第一个数据在allData数组的索引位置. 默认:0
+ */
+const start = ref(0)
+/**
+ * 视口第一个元素底部位置与与视口顶部(scrollTop)的偏移量
+ */
+let startOffset = 0
+/**
+ * 是否正在修正scrollTop位置
+ */
+let fixingScrollTop = false
+let lastScrollTop = 0
+/**
+ * 是否向下滚动
+ */
+let isPositive = true
+/**
+ * 当前视口最后一个数据在positionDataArr数组的索引位置
+ */
+const end = computed(() => {
+  if (!allData.value || allData.value.length <= 0) return 10
 
-const getListStyle = computed(() => {
-    return {
-        willChange: "transform",
-        transform: `translateY(${state.scrollOffset}px)`
-    };
-});
+  // 将start.value作为遍历positionDataArr的开始位置
+  let endPos = start.value
+  // contentDomTotalHeight存放从start位置开始的dom节点总高度
+  let contentDomTotalHeight = positionDataArr[endPos]?.height
+  // 获取视口高度
+  const viewPortHeight = scrollerContainerRefHeight.value
+  // 从start位置开始遍历positionDataArr的同时，统计数据dom节点的累计高度，直至累计高度超过了视口高度
+  while (contentDomTotalHeight < viewPortHeight) {
+    endPos++
+    contentDomTotalHeight += positionDataArr[endPos]?.height
+  }
+  // 因为数组的slice方法是包头不包尾的所以还需要再endPos上+1，才会是预期的元素数量
+  endPos += 1
+  // 因为存在在某个元素位置开区间滚动的情况，此时该元素不会完全移出视口，但又使得视口多出了位置，因此要再+1，渲染下一个元素来占满视口区域
+  return endPos + 1
+})
+/**
+ * 内容容器的y轴偏移量。当渲染区域第一个元素完全移到了可视区域之外时，需要重新计算startOffset，将第一个元素移动回可视区域
+ */
+const contentListOffset = ref(0)
+const styleTranslate = computed(() => {
+  return `transform:translate(0,${contentListOffset.value}px)`
+})
+/**
+ * 当前视口需要显示的数据
+ */
+const renderData = computed(() => {
+  const _cacheCount = cacheCount.value
+  const realStart = Math.max(0, start.value - _cacheCount)
+  // 避免最后一个元素的数组下标超出实际的数组长度
+  const realEnd = Math.min(end.value + _cacheCount, allData.value.length)
+  const resultData = allData.value.slice(realStart, realEnd)
+  emits("onUpdate", resultData);
+  return resultData
+})
 
-// 数据数量
-const total = computed(() => {
-    return props.data.length;
-});
-
-// 总体高度
-const getTotalHeight = computed(() => {
-    if (!props.dynamic) return unref(total) * props.itemHeight;
-    return getCurrentTop(unref(total));
-});
-
-// 当前屏幕显示的数量
-const clientCount = computed(() => {
-    return Math.ceil(props.height / props.itemHeight) + 5;
-});
-
-// 当前屏幕显示的数据
-const clientData = computed(() => {
-    const result = props.data.slice(state.start, state.end)
-    emits("onUpdate", result);
-    return result
-});
-
-// 容器滚动处理
-const onScroll = (e) => {
-    const { scrollTop } = e.target;
-    if (state.scrollOffset === scrollTop) return;
-    const { cache, dynamic, itemHeight } = props;
-    const cacheCount = Math.max(1, cache);
-
-    let startIndex = dynamic ? getStartIndex(scrollTop) : Math.floor(scrollTop / itemHeight);
-
-    const endIndex = Math.max(0, Math.min(unref(total), startIndex + unref(clientCount) + cacheCount));
-
-    if (startIndex > cacheCount) {
-        startIndex = startIndex - cacheCount;
-    }
-
-    // 偏移量
-    const offset = dynamic ? getCurrentTop(startIndex) : scrollTop - (scrollTop % itemHeight);
-
-    Object.assign(state, {
-        start: startIndex,
-        end: endIndex,
-        scrollOffset: offset
-    });
-};
-
-// 二分法去查找对应的index
-const getStartIndex = (scrollTop = 0) => {
-    let low = 0;
-    let high = state.cacheData.length - 1;
-    while (low <= high) {
-        const middle = low + Math.floor((high - low) / 2);
-        const middleTopValue = getCurrentTop(middle);
-        const middleBottomValue = getCurrentTop(middle + 1);
-
-        if (middleTopValue <= scrollTop && scrollTop <= middleBottomValue) {
-            return middle;
-        } else if (middleBottomValue < scrollTop) {
-            low = middle + 1;
-        } else if (middleBottomValue > scrollTop) {
-            high = middle - 1;
-        }
-    }
-    return Math.min(unref(total) - unref(clientCount), Math.floor(scrollTop / props.itemHeight));
-};
-
-// 计算当前偏移量
-const getCurrentTop = (index) => {
-    const lastIndex = state.cacheData.length - 1;
-
-    if (Object.hasOwn(state.cacheData, index)) {
-        return state.cacheData[index].top;
-    } else if (Object.hasOwn(state.cacheData, index - 1)) {
-        return state.cacheData[index - 1].bottom;
-    } else if (index > lastIndex) {
-        return state.cacheData[lastIndex]?.bottom + Math.max(0, index - state.cacheData[lastIndex]?.index) * props.itemHeight;
-    } else {
-        return index * props.itemHeight;
-    }
-};
+onMounted(() => {
+  // initDataPostion()
+})
 
 onUpdated(() => {
-    if (!props.dynamic) return;
-    const childrenList = virtualListRef.value.children || [];
-    [...childrenList].forEach((node, index) => {
-        const height = node.getBoundingClientRect().height;
-        const currentIndex = state.start + index;
-        if (state.cacheData[currentIndex].height === height) return;
+  nextTick(() => {
+    updateHeightAndPos()
+  })
+})
 
-        state.cacheData[currentIndex].height = height;
-        state.cacheData[currentIndex].top = getCurrentTop(currentIndex);
-        state.cacheData[currentIndex].bottom = state.cacheData[currentIndex].top + state.cacheData[currentIndex].height;
-    });
-});
+watch(() => dataList.value.length, () => {
+  nextTick(() => {
+    if (dataList.value.length < 1) return
+    allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
+    positionDataArr = allData.value.map((_, idx) => ({
+      arrPos: idx,
+      startPos: maybeHeight * idx,
+      endPos: maybeHeight * idx + maybeHeight,
+      height: maybeHeight,
+    }))
+  })
+})
 
-watchEffect(() => {
-    clientData.value.forEach((_, index) => {
-        const currentIndex = state.start + index;
-        if (Object.hasOwn(state.cacheData, currentIndex)) return;
-        state.cacheData[currentIndex] = {
-            top: currentIndex * props.itemHeight,
-            height: props.itemHeight,
-            bottom: (currentIndex + 1) * props.itemHeight,
-            index: currentIndex
-        };
-    });
-});
+// 初始化 DOM 节点位置信息
+const initDataPostion = () => {
+  if (dataList.value.length < 1) return
+  allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
+  positionDataArr = allData.value.map((_, idx) => ({
+    arrPos: idx,
+    startPos: maybeHeight * idx,
+    endPos: maybeHeight * idx + maybeHeight,
+    height: maybeHeight,
+  }))
+}
+
+const updateHeightAndPos = () => {
+  const contentListDom = contentListRef.value
+  if (!contentListDom) return
+
+  const childrenElementArr = contentListDom.children
+  for (let i = 0; i < childrenElementArr.length; i++) {
+    const childEle = childrenElementArr[i]
+    // 获取当前数据dom节点的数据再allData数组中的索引位置
+    const dataIndexStr = childEle.dataset['index']
+    if (!dataIndexStr) continue
+
+    const dataIndex = parseInt(dataIndexStr)
+    // 从allData数据中获取到该数据
+    const dataItem = positionDataArr[dataIndex]
+    if (!dataItem) continue
+
+    // 获取元素的实际高度
+    // const { height } = childEle.getBoundingClientRect()
+    const { offsetHeight: height } = childEle
+    const oldHeight = dataItem.height
+    /*
+     * 计算当前数据dom元素的旧高度和当前高度的差值
+     * 如：
+     * oldHeight为100px，height为50px, 那么dffVal为 50px，那么 oldHeight - dffVal 为 50px
+     * oldHeight为50px，height为100px, 那么dffVal为 -50px，那么 oldHeight - dffVal 为 100px
+     */
+    const dffVal = oldHeight - height
+    if (dffVal != 0) {
+      // 当前dom元素的实际高度与allData中记录的高度不一致，则更新高度以及元素位置信息
+      dataItem.height = oldHeight - dffVal
+      dataItem.endPos = dataItem.endPos - dffVal
+
+      for (let j = dataIndex + 1; j < positionDataArr.length; j++) {
+        const jPosDataItem = positionDataArr[j]
+        // j位置的上一个位置的元素
+        const jPrevPosDataItem = positionDataArr[j - 1]
+
+        jPosDataItem.startPos = jPrevPosDataItem.endPos
+        jPosDataItem.endPos = jPosDataItem.startPos + jPosDataItem.height
+      }
+    }
+  }
+  pillarDomHeight.value = positionDataArr.length > 0 ? positionDataArr[positionDataArr.length - 1].endPos : 0
+}
+
+/**
+ * 当向上滚动时修正scrollTop值
+ */
+const fixScrollTopWhenNotPositive = () => {
+  if (fixingScrollTop) return
+
+  const scrollerContainerDom = scrollerContainerRef.value
+  if (!scrollerContainerDom) return
+
+  // 视口第一个元素底部位置与视口顶部位置存在偏移量，且是向上滚动，则需要修正scrollTop值
+  if (startOffset > 0 && !isPositive) {
+    // 无论新增动态项的实际高度是比记录的高度高还是比记录的高度低，这里都将scrollTop的位置修正为视觉上视口顶部距离视口第一个元素底部有startOffset个间隔的位置
+    const newScrollTop = positionDataArr[start.value].endPos - startOffset
+    fixingScrollTop = true
+    nextTick(() => {
+      scrollerContainerDom.scrollTo({ top: newScrollTop })
+      fixingScrollTop = false
+    })
+  }
+}
+/**
+ * 判断滚动容器是否滚动到了真正的最底部
+ */
+const isScrolledRealBottom = () => {
+  const scrollerContainerDom = scrollerContainerRef.value
+  if (!scrollerContainerDom) return false
+
+  const { scrollTop, scrollHeight, clientHeight } = scrollerContainerDom
+  return isRealScrollEnd(scrollTop, scrollHeight, clientHeight)
+}
+/**
+ * 是否滚动到最底部
+ */
+const isRealScrollEnd = (scrollTop, scrollHeight, clientHeight) => {
+  Math.abs(scrollHeight - clientHeight - scrollTop) < 1
+  return Math.abs(scrollHeight - clientHeight - scrollTop) < 1
+}
+
+const onScroll = (evt) => {
+  // 如果处于修正scrollTop的状态，则不执行scroll回调
+  if (fixingScrollTop) return
+
+  const scrollerContainerDom = evt.target
+  if (!scrollerContainerDom) return
+
+  const { scrollTop } = scrollerContainerDom
+  // 正数或0表示向下滚动
+  isPositive = scrollTop - lastScrollTop >= 0
+  lastScrollTop = scrollTop
+
+  start.value = findStartByBinarySearch(positionDataArr, scrollTop)
+  // 记录视口第一个元素底部位置与scrollTop之间的偏移量，用于onUpdate中修正scrollTop
+  startOffset = positionDataArr[start.value].endPos - scrollTop
+
+  const _cacheCount = cacheCount.value
+  const realStart = Math.max(0, start.value - _cacheCount)
+  contentListOffset.value = positionDataArr[realStart].startPos
+}
+
+/**
+ * 通过二分查找来获取start值
+ *
+ * @param   {ContentPosition[]}  _positionDataArr  [_positionDataArr description]
+ * @param   {number}             scrollTop         [scrollTop description]
+ *
+ * @return  {[]}                                   [return description]
+ */
+const findStartByBinarySearch = (_positionDataArr, scrollTop) => {
+  let startIdx = 0
+  let endIdx = _positionDataArr.length - 1
+  let resultIdx;
+  while (startIdx <= endIdx) {
+    // Math.trunc 去除小数部分，只取整数部分. 取startIdx 到 endIdx的中间索引号
+    const middleIdx = Math.trunc((startIdx + endIdx) / 2)
+    // 获取中间索引号对应元素的位置信息
+    const middleEle = _positionDataArr[middleIdx]
+    // 获取中间索引号对应元素的底部位置
+    const middleEleEndPos = middleEle.endPos
+    if (middleEleEndPos === scrollTop) {
+      // 当前滚动高度等于中间索引号对应元素的底部位置，则start为中间索引号的下一个位置
+      return middleIdx + 1
+    } else if (middleEleEndPos < scrollTop) {
+      // 当前滚动高度大于中间索引号对应元素的底部位置，则调整查找区间为右区间
+      startIdx = middleIdx + 1
+    } else if (middleEleEndPos > scrollTop) {
+      // 当前滚动高度大于中间索引号对应元素的底部位置，则调整查找区间为左区间
+      if (resultIdx === undefined || resultIdx > middleIdx) {
+        // 存储元素 middleEleEndPos>scrollTop 元素的最小数组索引号
+        resultIdx = middleIdx
+      }
+      // 调整查找区间为左区间
+      endIdx = middleIdx - 1
+    }
+  }
+  return resultIdx
+}
 </script>
 
 <style lang="scss" scoped>
-.base-virtual-wrapper {
-    height: 100%;
-    position: relative;
-    overflow-y: auto;
+.outContainer {
+  height: 100%;
+  position: relative;
+  overflow-y: auto;
+}
+.scrollerContainer {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+.pillarDom {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: -1;
+}
+.contentList {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  will-change: transform;
+}
+.item {
+  width: 100%;
+  // 这里同样很重要，盒模型必须为border-box，item元素的高度才不会因为border值而超出设置的高度
+  box-sizing: border-box;
+  &:last-child {
+    border-bottom: none;
+  }
 }
 </style>

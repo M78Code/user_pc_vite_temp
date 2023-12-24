@@ -242,7 +242,7 @@ body {
       .bet-item-wrap {
         border-top: 0.5px solid var(--q-gb-bd-c-8);
         border-right: 0.5px solid var(--q-gb-bd-c-8);
-
+        cursor: pointer;
         &:first-child {
           border-top: 0.5px solid var(--q-gb-bd-c-8);
         }

@@ -24,7 +24,7 @@
         <input
           class="sl-input"
           v-model="search_val"
-          placeholder="请输入联赛名"
+          :placeholder="i18n_t('filter.match_key')" 
           type="text"
           maxlength="15"
         />
@@ -182,7 +182,7 @@ defineProps({});
         outline: none;
         border: none;
         width: 100%;
-        caret-color: #179CFF;
+        caret-color: var(--q-gb-t-c-1);
         font-size: 0.14rem;
         color: var(--q-gb-t-c-18);
         &::placeholder{

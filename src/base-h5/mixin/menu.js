@@ -31,7 +31,7 @@ const is_today = computed(() => {
 });
 //是否 串关
 const is_mix = computed(() => {
-    return MenuData.is_results(menu_type.value);
+    return MenuData.is_mix(menu_type.value);
 });
 //是否 冠军
 const is_kemp = computed(() => {

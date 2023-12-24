@@ -30,7 +30,7 @@
         ></result-details-dialog>
       </q-dialog>
     <!--玩法集cagetory-->
-    <div :class="get_detail_data.csid == 3 ?'baseball-play-pad':'play-pad'">
+    <div :class="[get_detail_data.csid == 3 ?'baseball-play-pad':'play-pad', 'h-full']">
       <router-view v-if="loading"/>
     </div>
     <!--赛果详情骨架屏-->
@@ -313,6 +313,8 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
 .match-header-result {
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto; 
+  display: flex;
+  flex-direction: column;
 }
 
 .header-tab {
@@ -324,8 +326,9 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
 
 .play-pad {
   padding-top: 1.71rem;
-  background: var(--q-gb-bg-c-19) !important;
+  // background: var(--q-gb-bg-c-19) ;
   height: 100%;
+  overflow: hidden;
 }
 
 .baseball-play-pad {
@@ -334,5 +337,9 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
 }
 :deep(.skeleton-wrap) {
   z-index: 10 !important;
+}
+
+.h-full {
+  height: 100%;
 }
 </style>

@@ -5,7 +5,8 @@
   <!-- 全部联赛标题 -->
   <div class="all_league_title component match-container-main-template2" v-if="i === 0" @click.stop="handle_all_ball_seed_fold">
     <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
-    <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
+    <!-- <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt=""> -->
+    <div :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
   </div>
   <div class="champion-wrap-2" v-if="is_show">
     <div v-if="is_show_league(i)" 
@@ -73,7 +74,7 @@
 
 <script>
 
-import { i18n_t} from 'src/output/index.js'
+import { i18n_t , compute_css_obj} from 'src/output/index.js'
 import { lang, theme } from 'src/base-h5/mixin/userctr.js'
 import { menu_type } from 'src/base-h5/mixin/menu.js'
 import { compute_img_url } from "src/output/index.js"
@@ -110,6 +111,7 @@ export default {
       icon_date,
       expand_item,
       compute_img_url,
+      compute_css_obj,
       GlobalAccessConfig,
       not_favorite_app,
       normal_img_is_favorite
@@ -155,7 +157,7 @@ export default {
   height: auto;
   position: relative;
   margin: 0 auto;
-  background: var(--q-gb-bg-c-18);
+  // background: var(--q-gb-bg-c-18);
   border-radius: 0.05rem;
   color: var(--q-gb-t-c-18);
 

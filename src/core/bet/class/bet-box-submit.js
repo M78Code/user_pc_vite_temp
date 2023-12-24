@@ -213,18 +213,25 @@ const set_order_status_info = (orderNo) => {
                 // 待确认数据 2秒后重新拉取
                 time_api_out = setTimeout(()=>{
                     set_order_status_info(orderNo)
-                },2000)
+                },2500)
             }else{
                 count_api = 0
                 clearTimeout(time_api_out)
             }
             // 投注失败
             if([4,2].includes(order_status*1)){
+                if(BetData.is_bet_single){
+                    BetViewDataClass.orderNo_bet_obj_config({orderNo: data_list[0].orderNo,status: 0})
+                }
                 set_error_message_config({code:"0402018",message:''},'bet')
                 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
                 BetViewDataClass.set_bet_order_status(4)
+                
             }
-            if([0,1].includes(order_status*1)){
+            if([1].includes(order_status*1)){
+                if(BetData.is_bet_single){
+                    BetViewDataClass.orderNo_bet_obj_config({orderNo: data_list[0].orderNo,status: 1})
+                }
                 // 获取金额
                 UserCtr.get_balance()
                 set_error_message_config({code:200,message:''},'bet',3)
@@ -809,7 +816,6 @@ const set_bet_obj_config = (params = {}, other = {}) => {
             matchType = 2
         }
     }
-    
     // 冠军
     if(other.bet_type == 'guanjun_bet'){
         matchType = 3

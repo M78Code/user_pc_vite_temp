@@ -11,16 +11,16 @@
     </div>
 
 
-    <div class="full-width cursor-pointer bet-submit" @click.stop="submit_handle('submit')">
-      <template
-        v-if="['0400459', '0400475', '0400486', '0400517', '0400519', '0400540'].includes(BetViewDataClass.error_code)">
-        <!--确定按钮-->
-        {{ i18n_t('common.confirm') }}
-      </template>
-      <template v-else>
+    <div class="full-width cursor-pointer bet-submit">
+     
+      <div @click.stop="submit_handle('submit')" v-if="BetViewDataClass.bet_order_status == 1">
         <!-- 投注 -->
         {{ i18n_t('common.betting') }}
-      </template>
+      </div>
+      <div v-else  @click.stop="cancel_handle()" >
+        <!--确定按钮-->
+        {{ i18n_t('common.confirm') }}
+      </div>
     </div>
 
     <div class="full-width cursor-pointer bet-delete-all" @click.stop="cancel_handle">
@@ -52,8 +52,8 @@
 
 import { ref, onMounted } from "vue"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import BetData from "src/core/bet/class/bet-view-data-class.js";
-import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+import BetData from 'src/core/bet/class/bet-data-class.js'
+import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { LayOutMain_pc } from "src/output/index.js";
 
@@ -73,8 +73,12 @@ const set_lock_btn = value => {
 }
 // 取消投注 返回菜单
 const cancel_handle = () => {
+  BetViewDataClass.set_is_finally(true)
+  BetData.set_clear_bet_info()
+  BetViewDataClass.set_clear_bet_view_config()
   LayOutMain_pc.set_layout_left_show('menu')
 }
+
 
 </script>
 

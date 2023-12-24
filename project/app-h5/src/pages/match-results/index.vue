@@ -137,6 +137,7 @@ const set_scroll_data_list = (data_list = []) => {
 
 // 设置滑动菜单的选中id
 const set_scroll_current = async item => {
+    state.matchs_data = []
     console.log('set_scroll_currentMenuData.get_results_kemp()', MenuData.get_results_kemp(), item)
     if (!item) return
     MenuData.set_current_lv_2_menu_i(item)

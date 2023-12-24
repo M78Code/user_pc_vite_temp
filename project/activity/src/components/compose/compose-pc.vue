@@ -848,7 +848,7 @@ svg {
 }
 
 .compose-wrap {
-  position: fixed;
+  position: fixed !important;
   width: 100%;
   min-width: 1200px;
   height: 100%;

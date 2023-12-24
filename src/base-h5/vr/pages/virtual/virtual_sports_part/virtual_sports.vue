@@ -9,7 +9,8 @@
     </virtual-skeleton>
     <!-- <setting list_type="vr"/> -->
     <!--联赛tab-->
-    <div class="tab-wrapper">
+    <!--只有足球展示多个联赛菜单 -->
+    <div class="tab-wrapper" v-if="sub_menu_type == 1001">
       <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
         :key="i" @click="tab_item_click_handle(i,null,'user_change')">
         <div>{{tab_item.name}}</div>
@@ -27,59 +28,61 @@
     </div>
     <div class="virtual-content-wrapper">
       <div class="virtual-sports-card">
-        <div class="tab-title" @click.stop="expend_video = !expend_video">
-          <div class="league-name right-border">{{ lengue_name }}</div>
-          <div class="status">
-            <span class="num">{{current_match.no}}</span>
-            <span class="state">
-             {{ current_match.match_status == 2 ? i18n_t('collect.match_end') : i18n_t('virtual_sports.match_status.playing') }}
-            </span>
-            <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
+        <div class="virtual-sports-card-content">
+          <div class="tab-title" @click.stop="expend_video = !expend_video">
+            <div class="league-name right-border">{{ lengue_name }}</div>
+            <div class="status">
+              <span class="num">{{current_match.no}}</span>
+              <span class="state">
+              {{ current_match.match_status == 2 ? i18n_t('collect.match_end') : i18n_t('virtual_sports.match_status.playing') }}
+              </span>
+              <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
+            </div>
           </div>
-        </div>
-        <div v-show="expend_video">
-          <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
-          <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
-          <virtual-sports-stage ref="virtual_sports_stage"
-            :is_before_destroy="is_before_destroy"
-            :key="current_match.mid"
-            :m_status="current_match.match_status"
-            :virtual_match_list="match_list_by_no"
-            :current_match="current_match" source='list'
-            :is_video_playing="is_video_playing"
-            :v_match_router_ente="v_match_router_ente"
-            :virtual_result_rank_data="virtual_result_rank_data"
-            @basketball_end="basketball_end_handle"
-            @time_ended="timer_ended_handle"
-            @update_next_batch_match="update_n_batch_handle">
-          </virtual-sports-stage>
-          <div class="test-line" v-if="show_debug">
-            {{current_match.mid}}
-          </div>
-          <div class="virtual-video-play-team" v-if="sub_menu_type && [1001,1004].includes(sub_menu_type)">
-                  <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']"
-                  v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
-                    <div class="teams">
-                      <span>{{item.teams[0]}}</span>
-                      <span>{{item.home || 0}}</span>
+          <div v-show="expend_video">
+            <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
+            <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
+            <virtual-sports-stage ref="virtual_sports_stage"
+              :is_before_destroy="is_before_destroy"
+              :key="current_match.mid"
+              :m_status="current_match.match_status"
+              :virtual_match_list="match_list_by_no"
+              :current_match="current_match" source='list'
+              :is_video_playing="is_video_playing"
+              :v_match_router_ente="v_match_router_ente"
+              :virtual_result_rank_data="virtual_result_rank_data"
+              @basketball_end="basketball_end_handle"
+              @time_ended="timer_ended_handle"
+              @update_next_batch_match="update_n_batch_handle">
+            </virtual-sports-stage>
+            <div class="test-line" v-if="show_debug">
+              {{current_match.mid}}
+            </div>
+            <div class="virtual-video-play-team" v-if="sub_menu_type && [1001,1004].includes(sub_menu_type)">
+                    <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']"
+                    v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
+                      <div class="teams">
+                        <span>{{item.teams[0]}}</span>
+                        <span>{{item.home || 0}}</span>
+                      </div>
+                      <div class="teams">
+                        <span>{{item.teams[1]}}</span>
+                        <span>{{item.away || 0}}</span>
+                      </div>
                     </div>
-                    <div class="teams">
-                      <span>{{item.teams[1]}}</span>
-                      <span>{{item.away || 0}}</span>
-                    </div>
-                  </div>
+            </div>
+            <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
+            <template v-else-if="sub_menu_type && current_match">
+              <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
+              <dynamic-ranking v-if="current_match.match_status == 0 || current_match.match_status == 1" :virtual_match_list="[current_match]" />
+              <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
+              <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
+          </template>
           </div>
-          <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
-          <template v-else-if="sub_menu_type && current_match">
-            <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
-            <dynamic-ranking v-if="current_match.match_status == 0 || current_match.match_status == 1" :virtual_match_list="[current_match]" />
-            <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
-            <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
-        </template>
         </div>
       </div>
       <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
-       <div v-if="match_item_batch.remaining_time > 0">
+       <div v-if="match_item_batch.remaining_time > 0" class="virtual-sports-card-content">
         <div class="tab-title tab-border" @click.stop="expend_match(match_item_batch)">
           <div class="league-name right-border">{{ lengue_name }}</div>
           <div class="status">
@@ -287,7 +290,7 @@ export default {
       if(this.match_list_by_no && this.match_list_by_no.length){
         this.match_list_by_no.forEach(m => {
           if(m.batchNo == batchNo){
-            m.mhs = 1;
+            m.mhs = 1;  //赛事级别状态
           }
         });
       }
@@ -818,7 +821,9 @@ export default {
   justify-content: space-between;
   padding: 0 0.15rem;
   height: 0.24rem;
-  border-top: 2px solid #FEAE2B;
+  border-top: 0.02rem solid #FEAE2B;
+  background-color: #FFF;
+
   .left {
     font-size: 0.12rem;
     color: #303442;
@@ -844,7 +849,7 @@ export default {
   background: #F2F2F6;
 }
 .virtual-sports-card {
-  >div {
+  &-content {
     background: #F8F9FA;
     border-radius: .08rem;
     margin-bottom: .08rem;
@@ -889,6 +894,9 @@ export default {
       padding: .02rem .12rem;
       &.active {
         background: #D1EBFF;
+        .teams {
+          color: #127DCC;
+        }
       }
       .teams {
         display: flex;

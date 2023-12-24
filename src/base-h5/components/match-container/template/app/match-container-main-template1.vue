@@ -11,14 +11,15 @@
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 开赛标题  -->
-      <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
+      <div v-if="is_show_opening_title && !is_mix_no_today" @click.stop="handle_ball_seed_fold"
         :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
           <div class="match-status-title">
             <img :src="in_progress" /> <span class="din-regular">进行中</span>
           </div>
-          <img :class="['expand_item', {collapsed: progress_seed_collapsed}]" :src="expand_item" alt="">
+          <!-- <img :class="['expand_item', {collapsed: progress_seed_collapsed}]" :src="expand_item" alt=""> -->
+          <div :class="['expand_item', {collapsed: progress_seed_collapsed}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
         </template>
         <!-- 未开赛 -->
         <template  v-if="+match.start_flag === 2">
@@ -27,6 +28,10 @@
           </div>
           <img :class="['expand_item', {collapsed: not_begin_collapsed}]" :src="expand_item" alt="">
         </template>
+      </div>
+      <div class="all-league-title" v-if="is_show_opening_title && is_mix_no_today"  @click.stop="handle_ball_seed_fold">
+        <div> <img :src="icon_date" alt=""> <span>{{ is_mix_no_today }}</span> </div>
+        <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
       <!-- 全部 -->
       <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
@@ -88,9 +93,11 @@
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
           <div :class="['match-odds-container study_height_s hairline-border']">
             <div class="match-odds-container-border-radius">
+            
               <!-- 上边的 赛事日期标准版,包含 比分组件 -->
               <div class="date-container match-indent" v-if="!show_newer_edition && !is_results">
                 <div class='l standard'>
+                
                   <!--竞彩足球 星期与编号-->
                   <div class="week-mcid row items-center" v-if="menu_type == 30">
                     <span class="din-regular"> {{ lodash.get(match,'mcid')}} </span>
@@ -105,6 +112,10 @@
                   <!-- 赛事日期标准版 -->
                   <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
+                    <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
+                    <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
+                      {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
+                    </div>
                     <!-- 赛事回合数mfo match.ms != 1(不为开赛)-->
                     <div v-if="match.mfo && match.ms != 1" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
                       {{ match.mfo }}
@@ -115,10 +126,6 @@
                       {{ i18n_t(`ms[${match.ms}]`) }}
                     </div>
 
-                    <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
-                    <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                      {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
-                    </div>
                     <!--一小时内开赛 -->
                     <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
                       <CountingDownStart :match="match" :index="i" :mgt_time="match.mgt"></CountingDownStart>
@@ -314,7 +321,7 @@ import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_i
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id, is_zaopan, date_time } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id, is_zaopan, date_time, is_mix } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 
@@ -347,10 +354,16 @@ export default {
     const get_date_time =computed(() => {
       return is_zaopan.value&&Number(date_time.value)>0?format_M_D(date_time.value):i18n_t("filter.all_leagues")
     })
+
+    const is_mix_no_today = computed(() => {
+      return (is_mix.value && Number(date_time.value)>0) ? format_M_D(date_time.value) : ''
+    })
+
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin, MenuData, get_date_time,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,icon_date,
-      normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan, expand_item
+      normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan, expand_item,
+      is_mix_no_today,
     }
   }
 }
@@ -445,6 +458,7 @@ export default {
       transform: rotate(-180deg);
       width: 20px;
       height: 16px;
+      margin-right: 0.06rem;
     }
     .collapsed{
       transform: rotate(0);
@@ -478,7 +492,7 @@ export default {
       padding: 0 10px;
       border-top: 1px solid  var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
-      border-radius: 0 0 8px 8px;
+      //border-radius: 0 0 8px 8px;
       border: 1px solid var(--q-gb-bd-c-15);
       &.collapsed{
         border-top: none;
@@ -909,6 +923,8 @@ export default {
     align-items: center;
     overflow: hidden;
     font-weight: 600;
+    position: relative;
+    top: 1px;
     .icon-wapper{
       transform: rotate(90deg);
     }
@@ -1372,23 +1388,39 @@ export default {
 }
 .score-content{
   position: absolute;
-  bottom: 0;
-  width: 100%;
+  bottom: 0px;
+  width: 80%;
   z-index: 100;
+  height: 26px;
+  overflow-x: auto;
+  right: 0;
   :deep(.score-se-inner2){
     display: flex;
-    flex-direction: row-reverse;
+    // flex-direction: row-reverse;
   }
   :deep(.scroll-container-w){
-  .score-se-inner{
-      max-width: 100%;
-      .score-se-inner2{
-        display: flex;
-        margin-left: -5px;
+    .score-fle-container-1{
+      position: relative;
+      top: 1px;
+    }
+    .score-se-inner{
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        .score-se-inner2{
+          height: 25px;
+          justify-content: end;
+          margin-left: -5px;
+          .b-score-wrapper{
+            flex-wrap: nowrap;
+            .mfo-title{
+              flex-shrink: 0;
+            }
+          }
+        }
       }
     }
   }
-}
 
 /* **************收藏********************** -E*/
 
@@ -1646,7 +1678,7 @@ export default {
   }
 
   .mfo-title {
-    margin-right: .05rem;
+    margin: .05rem;
   }
 
   .flag-chuan {

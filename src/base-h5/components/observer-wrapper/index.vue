@@ -4,7 +4,7 @@
 
 <template>
   <main class="main-container">
-    <template v-if="match_list.length > 0">
+    <template v-if="!match_is_empty">
       <section class="observer-container" ref="container" @scroll="handler_container_scroll">
           <div class="observer-item" 
             v-for="item, index in match_list" 
@@ -22,7 +22,7 @@
       </section>
     </template>
     <template v-else>
-      <NoData class="empty"  :which='which' height='400'></NoData>
+      <NoData class="empty" :which='which' height='400'></NoData>
     </template>
     <!-- 回到顶部按钮组件 -->
     <ScrollTop :list_scroll_top="scroll_top" @back-top="go_to_top" />
@@ -74,6 +74,7 @@ const page_style = ref(null)
 // 当前可视区的 mids 用于获取赔率
 const active_mids = ref([])
 const which = ref('noMatch')
+const match_is_empty = ref(false)
 
 // 组件配置
 const com_config = {
@@ -202,7 +203,8 @@ const handler = (key, falg) => {
  */
 const is_show_match_item = computed(() => {
   return (index) => {
-    return defer_render(index)
+    // defer_render(index)
+    return true
   }
 })
 
@@ -262,7 +264,7 @@ const get_item_style = (item, index) => {
  const set_empty_page = (obj = {}) => {
   const { state = false, type = 'noMatch' } = obj
   which.value = type
-  // match_is_empty.value = state;
+  match_is_empty.value = state;
 }
 
 // 触发本组件销毁之前回调

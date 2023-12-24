@@ -189,7 +189,7 @@ export default defineComponent({
     padding:0.04rem;
     color: var(--q-bd-t-c-18);
     .border-style{
-      border-right: 1px solid var(--q-gb-bd-c-7);
+      // border-right: 1px solid var(--q-gb-bd-c-7);
     }
   }
 
