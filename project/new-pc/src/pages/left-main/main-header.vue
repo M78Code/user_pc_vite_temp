@@ -80,7 +80,7 @@ onBeforeUnmount(() => {
     padding-right: 10px;
     font-size: 12px;
     .ellipsis{
-      color: var(--q-gb-t-c-3);
+      color: var(--q-gb-t-c-8);
     }
   }
 
