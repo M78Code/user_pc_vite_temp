@@ -76,6 +76,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
  import { format_api_to_obj } from "src/core/format/common/index.js"
 import STANDARD_KEY from "src/core/standard-key";
 import { isFunction } from "lodash";
+import { pako_pb } from "../pb-decode/index";
 // 域名计算逻辑所用的 单独的 axios 实例
 const axios_instance = axios.create();
 
@@ -314,6 +315,14 @@ class AllDomain {
         // console.log(" // 只要有一个   请求成功----", res);
         if (lodash.get(res, "data.code") == "0000000") {
           //当流程一： 当 使用url 内 api 参数  计算一个可用的 api   计算出来之后 后置进程
+          try {
+            let data_temp = pako_pb.unzip_data(lodash.get(res, "data.data"));
+            if(data_temp){
+              res.data.data = data_temp;
+            }
+          } catch (error) {
+            console.error(error);
+          }
           this.begin_process_when_use_url_api_after_process(res);
           //保存 用户数据
           BUILDIN_CONFIG.DOMAIN_RESULT.getuserinfo_res = res;
@@ -408,7 +417,12 @@ class AllDomain {
     }
     // 第一步  拿到 可用api
     // 确保 ossobj .api 字段内  有包含 当前这个可用的  api
-    let c_url = new URL(res.config.url);
+    let c_url = '';
+    if(lodash.startsWith(res.config.url,'http')){
+      c_url = new URL(res.config.url);
+    } else{
+      c_url = new URL(res.config.baseURL);
+    }
     // console.log("c_url------", c_url);
     //当前这个可用的 api
     let use_api = c_url.origin;

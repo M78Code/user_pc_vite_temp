@@ -4,13 +4,13 @@
 -->
 
 <template>
-  <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;">
+  <div class="keyboard" style="opacity: 1;">
       <div class="nonebox4-fourth">
-          <div class="nonebox4-fourth-a">
+          <div class="nonebox4-fourth-a" @click.stop="_handleKeyPress($event)">
               <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum(BetData.bet_data_class_version)" :key='item' :data-number='index'>{{item}}</div>
           </div>
           
-          <div class="nonebox4-fourth-a"> 
+          <div class="nonebox4-fourth-a" @click.stop="_handleKeyPress($event)"> 
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='1'>1</div>
                   <div class="nonebox4-fourth-num-sun" data-number='4'>4</div>
@@ -30,8 +30,8 @@
                   <div class="nonebox4-fourth-num-sun" data-number='00'>00</div>
               </div>
               <div class="nonebox4-fourth-num">
-                  <div class="nonebox4-fourth-num-sun" data-number='max' style="font-size: 0.14rem;">{{ i18n_t('bet.max')}}</div>
-                  <div class="nonebox4-fourth-num-sun key-cell" data-number="x">
+                  <div class="nonebox4-fourth-num-sun" data-number='max' style="font-size: 0.14rem;" @click.stop="_handleKeyPress($event)">{{ i18n_t('bet.max')}}</div>
+                  <div class="nonebox4-fourth-num-sun key-cell" data-number="x" @click.stop="_handleKeyPress($event)">
                     <div class="key-cell-img" data-number="x" :style="compute_css_obj({key: 'h5-keyboard'})"></div>
                   </div>
                   <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)">

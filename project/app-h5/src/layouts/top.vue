@@ -121,6 +121,7 @@ const searchTabMenu = ref(null);//足球tab dom
   }
   // 设置滑动菜单的选中id
   const set_scroll_current = async (val,type) => {
+    handler_go_to_top()
     if(MenuData.is_esports() && !type){
       const data_list_esports = await MenuData.getDateList(val?.csid);
       dataListEsports.value = data_list_esports;
@@ -190,11 +191,17 @@ const searchTabMenu = ref(null);//足球tab dom
    * @param {*} type 
    */
   const setDate = (type) =>{
+    handler_go_to_top()
     if([3,6].includes(MenuData.current_lv_1_menu_mi.value)){
       set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,type)
     }else{
       handle_match_render_data();
     }
+  }
+
+  // 通知回到顶部
+  const handler_go_to_top = () => {
+    useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
   }
   /**
    * 
@@ -269,6 +276,7 @@ const searchTabMenu = ref(null);//足球tab dom
 
   // 根据一级菜单 设置滑动菜单数据
   const set_scroll_data_list = (mid,type) => {
+    handler_go_to_top()
     ref_data.scroll_data_list = MenuData.get_menu_lvmi_list(mid);
     const is_sport_id = ref_data.scroll_data_list.some(n=>{return MenuData.current_lv_2_menu_i && MenuData.recombine_menu_desc(n.mi) == MenuData.recombine_menu_desc(MenuData.current_lv_2_menu_i)});
     // let index = 0

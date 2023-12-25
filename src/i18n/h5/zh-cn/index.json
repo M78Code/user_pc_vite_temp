@@ -328,7 +328,9 @@
       "ligue": "法甲",
       "china_super ": "中超",
       "normal_results": "普通赛果",
-      "championship_results": "普通赛果"
+      "game_results":"电竞赛果",
+      "vr_results":"VR赛果",
+      "championship_results": "冠军赛果"
     },
     "filter": {
       "more": "更多>",
@@ -637,6 +639,8 @@
     "bet_no_status11": "比赛延迟",
     "bet_no_status12": "比赛中断",
     "bet_no_status15": "比赛放弃",
+    "bet_no_status16": "和",
+    "bet_no_status17": "已确认",
     "bet_refund": "返还金额",
     "bet_sum_count": "总单数",
     "bet_sum_val": "总投注额",

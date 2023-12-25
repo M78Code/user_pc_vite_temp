@@ -6,7 +6,7 @@
  *  商户相关
  */
 // #TODO 等后续get_server_file_path、http、infoUpload和pako_pb公共模块开发后再替换
-import { ref,nextTick } from "vue";
+import { ref,nextTick, reactive} from "vue";
 // #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
 import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
@@ -32,6 +32,7 @@ import { i18n_t } from "src/boot/i18n.js";
 
 import STANDARD_KEY from "src/core/standard-key";
 const user_key = STANDARD_KEY.get("user_info");
+import { AllDomain } from "src/core/http/";
 
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
@@ -119,6 +120,8 @@ class UserCtr {
     }
     //弹窗 联赛筛选的数据
     this.league_select_list = []
+    //弹窗 赛果联赛筛选的数据
+    this.amidithion_league_select_list = []
     //获取资源配置(商户后台配置的图片、跳转链接)
     this.resources_obj = {}
     // 用户信息版本
@@ -269,13 +272,20 @@ class UserCtr {
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
     // 设置主题
-    LocalStorage.set('default-theme', theme)
+    // LocalStorage.set('default-theme', theme)
+    this.update()
   }
   /**
    * 联赛赛选的数据发生变化
   */
-  set_league_select_list(val) {
-    this.league_select_list = val.value
+  set_league_select_list(val,type) {
+    //赛果筛选
+    if (type && type === 'amidithion'){
+      this.amidithion_league_select_list = val.value
+    }else{
+      //普通筛选
+      this.league_select_list = val.value
+    }
     this.update()
   }
   set_cur_odds(odd) {
@@ -1010,6 +1020,12 @@ class UserCtr {
       if (url_temp.includes("user/getUserInfo")) {
         let data_temp = pako_pb.unzip_data(lodash.get(res, "data.data"));
         data_temp && (res.data.data = data_temp);
+        let gr = (lodash.get(res, "data.data.gr") || "").toUpperCase();
+        if(gr && BUILDIN_CONFIG.DOMAIN_RESULT.gr != gr){
+          AllDomain.begin_process_when_use_url_api_after_process(res);
+          //保存 用户数据
+          BUILDIN_CONFIG.DOMAIN_RESULT.getuserinfo_res = res;
+        }
         if (window.url_param_lg) {
           res.data.data.languageName = window.url_param_lg;
         }
@@ -1418,5 +1434,5 @@ class UserCtr {
   }
 }
 
-const instance = new UserCtr();
+const instance = reactive(new UserCtr());
 export default instance;
