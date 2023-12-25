@@ -13,9 +13,10 @@ import { MITT_TYPES, MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss, useM
 import UserCtr from "src/core/user-config/user-ctr.js";
 import video from "src/core/video/video.js"   // 视频相关公共方法
 import { useRoute } from 'vue-router';
-import { ref, onMounted, defineProps, computed, watch } from "vue";
+import { ref, onMounted, defineProps, computed, watch, onUnmounted } from "vue";
 import { api_common } from 'src/api';
 import store from "src/store-redux/index.js";
+import OrientationSubscribe from 'src/base-h5/components/common/orientation/orientation-subscribe';
 const props = defineProps({
     get_detail_data: {
         type: Object,
@@ -172,6 +173,10 @@ const check_url = (url, which) => {
 onMounted(() => {
     // get_media_detail();
     icon_click_muUrl();
+})
+
+onUnmounted(() => {
+  OrientationSubscribe.instance.destory_notify();
 })
 // setTimeout(() => {
 //     get_show_video.value = true;
