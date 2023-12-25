@@ -6,7 +6,7 @@
  *  商户相关
  */
 // #TODO 等后续get_server_file_path、http、infoUpload和pako_pb公共模块开发后再替换
-import { ref,nextTick } from "vue";
+import { ref,nextTick, reactive} from "vue";
 // #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
 import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
@@ -272,7 +272,8 @@ class UserCtr {
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
     // 设置主题
-    LocalStorage.set('default-theme', theme)
+    // LocalStorage.set('default-theme', theme)
+    this.update()
   }
   /**
    * 联赛赛选的数据发生变化
@@ -1433,5 +1434,5 @@ class UserCtr {
   }
 }
 
-const instance = new UserCtr();
+const instance = reactive(new UserCtr());
 export default instance;

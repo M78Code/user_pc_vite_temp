@@ -31,10 +31,7 @@ let write_folder_assets = "./job/output/assets/";
 
 //i18n 服务器KEY 对应 本地语言key
 
-//服务器返回的键名  对应 本语言所对应的键名
-remove_file(write_folder_theme); //del  old file
-remove_file(write_folder_css); //del  old file
-remove_file(write_folder_assets); //del  old file
+
  
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder_theme);
