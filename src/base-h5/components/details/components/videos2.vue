@@ -1067,7 +1067,7 @@ export default {
       if (rfs) {
         rfs.call(video_dm);
       }
-      OrientationSubscrbe.instance.change_status(true);
+      // OrientationSubscrbe.instance.change_status(true);
     },
     /**
      * @Description 退出浏览器全屏
@@ -1079,7 +1079,7 @@ export default {
       if(cfs) {
         cfs.call(video_dm);
       }
-      OrientationSubscrbe.instance.change_status(false);
+      // OrientationSubscrbe.instance.change_status(false);
 
     },
     // 接收精彩回放iframe消息
@@ -1847,12 +1847,26 @@ export default {
     click_video_screen(e) {
       this.is_controller_show = !this.$refs.video_wrapper.classList.contains('dplayer-hide-controller')
     },
+    listener(value) {
+      console.log(value, "如果切换横竖屏，会触发此函数");
+      // 如果切换横竖屏，会触发此函数
+     
+      this.set_full_screen();
+
+    }
   },
   mounted() {
+    OrientationSubscrbe.instance.change_status(true);
+    OrientationSubscrbe.instance.add_notify(this.listener);
     this.set_zhiding_info( false )
     this.set_video_zhiding( false )
     this.mitt_obj[MITT_TYPES.EMIT_VIDEO_SWITCHING] = useMittOn(MITT_TYPES.EMIT_VIDEO_SWITCHING,this.icon_click_lvs);
     this.mapFrame = this.$refs.iframe
+  },
+  destroyed() {
+    OrientationSubscrbe.instance.change_status(false);
+    OrientationSubscrbe.instance.destory_notify();
+
   }
 }
 </script>
