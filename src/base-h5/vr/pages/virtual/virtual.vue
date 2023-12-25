@@ -517,6 +517,7 @@ export default {
             text-overflow:ellipsis;
             white-space:nowrap;
             font-size: 0.12rem;
+            color: var(--q-gb-t-c-18);
         }
       }
 

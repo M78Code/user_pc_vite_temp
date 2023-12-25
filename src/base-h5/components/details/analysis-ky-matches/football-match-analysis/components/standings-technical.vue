@@ -126,7 +126,7 @@ import { i18n_t } from "src/boot/i18n.js";;
     letter-spacing: 0;
     font-weight: bold;
     position: relative;
-    color: var(--q-analysis-text-color-15);
+    color: var(--q-analysis-text-color-20);
     border-bottom: 1px solid var(--q-analysis-bd-color-3);
     background-color: var(--q-analysis-bg-color-1);
 
