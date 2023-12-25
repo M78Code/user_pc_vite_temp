@@ -518,29 +518,37 @@ export default {
       if([1001,1004].includes(this.sub_menu_type)){
         // item.is_expend && this.sub_nav_click_handle(item.batchNo);
       }else {
-        item.is_expend && this.get_detail_odds(item);
+        // item.is_expend && this.get_detail_odds(item);
       }
     },
     // 赛马，赛狗展开时，获取赔率
-    get_detail_odds(item){
-      const match = item.matchs[0];
-      console.log('match', match);
-      let params = {
-          // 当前选中玩法项的id
-          mcid: 0,
-          // 赛事id
-          mid: match.mid,
-          // userId或者uuid
-          cuid: UserCtr.uid,
+    // 修改为一次性获取所有赔率。
+    get_detail_odds(){
+      this.match_list_all_batches.forEach(item=>{
+        if(item.matchs){
+          const match = item.matchs[0];
+          //创建闭包，每次循序都有一个新的match，异步接口可以准确赋值
+          (function(match){
+            let params = {
+              // 当前选中玩法项的id
+              mcid: 0,
+              // 赛事id
+              mid: match.mid,
+              // userId或者uuid
+              cuid: UserCtr.uid,
+            }
+            api_common.get_matchDetail_getVirtualMatchOddsInfo(params).then(res => {
+              if(res.data.length){
+                match.hps = res.data[0]?.plays || [];
+                // 按照hpid从小到大排序 
+                match.hps.sort((x, y) => x.hpid - y.hpid);
+                MatchDataBaseH5.set_list([match]);
+              }
+            })
+          })(match)
         }
-        api_common.get_matchDetail_getVirtualMatchOddsInfo(params).then(res => {
-          if(res.data.length){
-            match.hps = res.data[0]?.plays || [];
-            // 按照hpid从小到大排序 
-            match.hps.sort((x, y) => x.hpid - y.hpid);
-            MatchDataBaseH5.set_list([match]);
-          }
-        })
+      })
+      console.log('matchhh', this.match_list_all_batches);
     },
     set_detail_data(data){
       // TODO 需要对应
@@ -686,13 +694,17 @@ export default {
 
         let current_league = this.tab_items[this.tab_item_i];
         this.set_current_league(lodash.cloneDeep(current_league));
-        this.tab_item_click_handle(this.tab_item_i,'is_force');
+        this.lengue_name = current_league.name
+        
+        // 和旧代码逻辑保持一致，此处不调用
+        // this.tab_item_click_handle(this.tab_item_i,'is_force');
       }
     },
     // 赛马类第一次切换菜单时，获取详情赔率
     current_batch(){
       if(this.current_batch?.no && ![1001,1004].includes(this.sub_menu_type)){
-        this.get_detail_odds(this.current_batch)
+        // 后期等赛马类的列表接口加上赔率后，可注释掉
+        this.get_detail_odds()
       }
     },
     current_sub_menu(){
