@@ -34,7 +34,7 @@ const IS_DEV = ("" + process.argv[2]).trim() == "development";
 // 商户配置 输出目录
 let write_folder = "./job/output/node-env/";
 
-remove_file(write_folder); //del  old file
+
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
  
