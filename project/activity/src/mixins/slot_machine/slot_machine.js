@@ -63,7 +63,7 @@ export default {
           total: 0,
           type: 1, // 1、彩金记录 2、合成记录 3、重置记录
           current: 1, // 分页，当前第几页
-          size: 5, //每页多少条数据，默认6条
+          size: 5, //每页多少条数据，默认5条
         }
       },
       goToPage: 1,
