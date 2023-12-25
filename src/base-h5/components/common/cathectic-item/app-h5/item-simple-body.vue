@@ -29,7 +29,11 @@
       </span>
     </div>
     <div class="body-main">
-      <p><label>{{ i18n_t('app_h5.cathectic.bet_number') }}：</label> <span @click="copy">{{data_b.orderNo}}</span></p>
+      <p><label>{{ i18n_t('app_h5.cathectic.bet_number') }}：</label> 
+        <span @click="copy">{{data_b.orderNo}}
+          <img :src="compute_local_project_file_path('/image/svg/copy.svg')" alt=""  style="width:0.1rem" />
+        </span>
+      </p>
       <p><label>{{i18n_t('bet_record.bet_time')}}：</label> <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span></p>
       <p><label>[{{Item.sportName}}] {{Item.matchName}}</label></p>
       <!-- 可赢额、结算, 注单状态： -->
@@ -42,7 +46,7 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { i18n_t } from "src/boot/i18n.js";;
-import { formatTime, format_money2, format_balance } from 'src/output/index.js'
+import { formatTime, format_money2, compute_local_project_file_path } from 'src/output/index.js'
 import { itemFooter } from "src/base-h5/components/common/cathectic-item/app-h5/index";
 import ClipboardJS from "clipboard";
 import { Platform } from "quasar";

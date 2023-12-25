@@ -1,22 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-
-// import langReducer from "./module/languages";
-// import themeReducer from "./module/theme";
- 
-
-// import configReducer from "./module/config";
-import * as project_store from "base_path/store";
+import  {PROJECT_STORE} from "app/job/output/entry/index.js";
 const store = configureStore({
   reducer: {
- 
-    // langReducer,
-    // themeReducer,
-    ...project_store,
+    ...PROJECT_STORE,
   },
   middleware:getDefaultMiddleware=>getDefaultMiddleware({
     //关闭redux序列化检测
     serializableCheck:false
   })
 });
-
 export default store;

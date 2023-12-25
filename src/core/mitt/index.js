@@ -1,54 +1,6 @@
 import mitt from "mitt";
  
-
-// import * as  MITT_TYPES_BASE from "base_path/core/mitt/mitt-keys.js" 
-// import * as  MITT_TYPES_PROJECT from "project_path/src/core/mitt/mitt-keys.js" 
-let  MITT_TYPES_BASE={}
-let  MITT_TYPES_PROJECT={}
-
-
-try {
-  let module_obj =   import.meta.glob("base_path/core/mitt/mitt-keys.js",{ eager: true }) ||{} ;
-
-  let arr= Object.values(module_obj) 
-  if(arr[0]){
-    MITT_TYPES_BASE = arr[0]
-  }
-} catch (error) {
-  
-}
-try {
-  let module_obj =   import.meta.glob("project_path/src/core/mitt/mitt-keys.js",{ eager: true }) ||{} ;
-
-  let arr= Object.values(module_obj) 
-  if(arr[0]){
-    MITT_TYPES_PROJECT = arr[0]
-  }
-} catch (error) {
-  
-}
-
-
- 
-
-
-// console.error('MITT_TYPES_BASE----------',MITT_TYPES_BASE);
-// console.error('MITT_TYPES_PROJECT----------',MITT_TYPES_PROJECT);
-
-// let MITT_TYPES_BASE={} 
-// try {
-//     MITT_TYPES_BASE = await import( "base_path/core/mitt/mitt-keys.js"  );
-// } catch (error) {
-//   console.error('error', error);
-// }
-
-
-// let MITT_TYPES_PROJECT={} 
-// try {
-//     MITT_TYPES_PROJECT = await import( "project_path/src/core/mitt/mitt-keys.js"  );
-// } catch (error) {
-//   console.error('error', error);
-// }
+import  {MITT_TYPES_BASE ,MITT_TYPES_PROJECT} from "app/job/output/entry/index.js";
 
 import { onUnmounted } from "vue";
 
