@@ -524,7 +524,7 @@ export const details_main = () => {
 
         // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
         if (code == "0400500" || !res_data || Object.keys(res_data).length === 0) {
-          // router.push({ name: "matchList" });
+          router.push({ name: "matchList" });
         } else if (code == 200) {
           if (res_data && Object.keys(res_data).length) {
             match_detail_data_handle(res_data)
@@ -552,11 +552,15 @@ export const details_main = () => {
             clearTimeout(state_data.back_main_list_timer)
             state_data.back_main_list_timer = setTimeout(() => {
               // 如果不是演播厅的，才有退出回到 列表
+              debugger
               if (lodash.get(state_data.get_video_url, 'active') != 'lvs') {
                 // $common.go_where({back_to: 'go_to_back'})
+              
               }
             }, 1500)
           }
+        }else{
+          router.go("-1");
         }
       })
       .catch((err) => {

@@ -21,7 +21,6 @@ const  final_merchant_config  = await import_json_data( "./output/merchant/confi
 console.log(colors.bgRed("export-i18n-config.js----------resolve_merchant_config_i18n  ----"));
 // 商户配置 输出目录
 let write_folder = "./job/output/i18n/";
-remove_file(write_folder) //del  old file
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
 function resolve_merchant_config_i18n() {
