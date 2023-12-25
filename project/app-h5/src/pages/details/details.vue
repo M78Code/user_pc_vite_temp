@@ -68,6 +68,7 @@
             :scroller_scroll_top="scroller_scroll_top"
             :get_details_item="get_details_item"
             :new_match_detail_ctr="new_match_detail_ctr"
+            @change-item="change_item"
             ></details-tab>
             <!-- 精彩回放 -->
             <template v-if="viewTab === 'playback'">
@@ -89,7 +90,7 @@
               <div style="height:inherit" ref="scroll_box">
                 <div v-show="viewTab === 'bet'">
                   <!-- ms 为0 或者 1时，表示未开赛或进行中 -->
-                  <category v-if="[0,1,110].includes(+detail_data.ms)" 
+                  <category v-if="[0,1,110].includes(+detail_data.ms)" :active="round"
                   :category_arr="matchDetailCtr.category_arr" ref="category"></category>
                   <no-data v-else-if="detail_data.ms!=undefined" which='noMatch' height='500'></no-data>
                   <!-- detail_data.ms!=undefined 不然会闪现no-data哦 -->
@@ -161,7 +162,7 @@ import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide,defineAsyncComponent } from "vue";
-import {compute_css_obj,compute_img_url,MatchDetailCalss,MenuData} from "src/output/index.js";
+import {compute_css_obj,compute_img_url,MatchDetailCalss,MenuData, SessionStorage} from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import {is_esports } from "src/base-h5/mixin/menu";
@@ -206,7 +207,7 @@ export default defineComponent({
     const fixedHeight = ref(null)
     const scroll_visible_1 = ref(true)
     const page_style = ref('')
-    
+    const round = ref(SessionStorage.get('ACTIVE_TAB') || -1);
     const {
       scroller_scroll_top,
       state_data,
@@ -503,7 +504,9 @@ export default defineComponent({
       // }
     })
 
-    
+    const change_item = (value) => {
+      round.value = value;
+    }
     // #TODO VUEX
     //   ...mapActions([
     //   // 设置玩法tab列表 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
@@ -551,6 +554,8 @@ export default defineComponent({
     return {
       ...toRefs(state_data),
       change_fullscreen,
+      round,
+      change_item,
       i18n_t,compute_css_obj,compute_img_url,
       is_highlights,
       show_match_analysis_tab,

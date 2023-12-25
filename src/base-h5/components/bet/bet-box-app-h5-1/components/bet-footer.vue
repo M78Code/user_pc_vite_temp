@@ -6,7 +6,7 @@
   
   <!-- 自动接受更好的赔率 -->
   <div class="accept" :class="!BetData.bet_is_accept ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
-      自动接受更好的赔率
+      自动接受更好的赔率 
   </div>
 
   <div class="f-e-c bet-submit" v-if="BetViewDataClass.bet_order_status == 1">
@@ -19,7 +19,7 @@
 
       <!-- <q-slider class="bet-box-line" @pan="change_slider_model" v-model="ref_data.basic_model" :inner-min="8" :inner-max="92" :min="0" :max="100"/> -->
       <div class="bet-box-line">
-        <div class="bet-box" :style="{left:ref_data.basic_model/100+'rem' }"></div>
+        <div class="bet-box" :style="{left:ref_data.basic_model/100+'rem', 'disabled-silider-bg': set_special_state(BetData.bet_data_class_version) }"></div>
       </div>
       <div class="bet-info f-b-c" :class="{'disabled-line': set_special_state(BetData.bet_data_class_version) }">
         <div class="middle font16">
@@ -66,7 +66,6 @@ import { UserCtr ,format_money2,compute_local_project_file_path,MenuData} from "
 import { odds_table } from "src/core/constant/common/module/csid.js"
 import { i18n_tc } from "src/boot/i18n.js"
 
-
 const ref_data = reactive({
   // 是否可以投注
   is_bet_single: true,
@@ -74,7 +73,12 @@ const ref_data = reactive({
   // 滑块初始值
   basic_model: 5,
   emit_lsit: {},
+  // 第一次滑动 限频
   count: 0,
+  // 串关/单关 滑动区域
+  move_leng: 255,
+  // 同上
+  end_leng: 200,
 })
 
 onMounted(()=>{
@@ -84,20 +88,24 @@ onMounted(()=>{
 
   window.addEventListener('touchmove',(event)=>{
     let fit = lodash_.get(event,'target.className','')
+    get_leng_px()
     if(fit == 'bet-box'){
       let page_x = lodash_.get(event,'changedTouches[0].pageX',0)
-      if(page_x > 5 && page_x < 255){
+      if(page_x > 5 && page_x < ref_data.move_leng){
         ref_data.basic_model = page_x
       }
     }
+  }, {
+    passive: false
   })
+
   window.addEventListener('touchend',(event)=>{
-    console.error('当前投注项不允许投注')
     let fit = lodash_.get(event,'target.className','')
+    get_leng_px()
     if(fit == 'bet-box' && ref_data.count == 0){
       ref_data.count++
       let page_x = lodash_.get(event,'changedTouches[0].pageX',0)
-      if( page_x < 200){
+      if( page_x < ref_data.end_leng){
         init_slider_config()
       } else {
         //  如果投注项有不允许投注的内容 提示 并且滑动到默认位置 
@@ -113,6 +121,8 @@ onMounted(()=>{
         }
       }
     }
+  }, {
+    passive: false
   })
 })
 
@@ -127,6 +137,17 @@ onUnmounted(() => {
 const init_slider_config = () => {
   ref_data.basic_model = 5
   ref_data.count = 0
+}
+
+// 串关/单关 获取到限制的距离
+const get_leng_px = () => {
+  if(BetData.is_bet_single){
+    ref_data.move_leng = 255
+    ref_data.end_leng = 200
+  } else {
+    ref_data.move_leng = 200
+    ref_data.end_leng = 150
+  }
 }
 
 // status 是响应式的 可以用于重新计算
@@ -369,7 +390,7 @@ const set_confirm = () => {
         font-size: 0.2rem;
         border: 3px solid #50B5FF;
         margin-right: -.2rem;
-        background: #FFFFFF url($SCSSPROJECTPATH+"/image/bet/right-arrow1.svg") center no-repeat;
+        background: #FFFFFF url($SCSSPROJECTPATH+"/image/bet/right-arrow.svg") center no-repeat;
         position: absolute;
         top: .02rem;
       }
@@ -394,7 +415,7 @@ const set_confirm = () => {
         background: #FFFFFF url($SCSSPROJECTPATH+"/image/bet/right-arrow.svg") center no-repeat;
         z-index: 99;
         &.disabled-silider-bg {
-          background: rgba(255, 255, 255, 0.96);
+          background: rgba(255, 255, 255, 0.96) url($SCSSPROJECTPATH+"/image/bet/right-arrow1.svg") center no-repeat;
           border-color: rgba(201, 205, 219, 0.8);
         }
       }
