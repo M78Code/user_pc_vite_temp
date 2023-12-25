@@ -579,8 +579,20 @@ export default {
 
 
 
-
+<style lang="scss">
+.empty-wrap{
+  .img{
+    background: var(--qq--public-bg-image2);
+    margin-bottom: 10px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+}
+</style>
 <style lang="scss" scoped>
+:deep(.bg-primary) {
+  background: var(--qq--activity-bg-color-7) !important;
+}
 .tabs_content {
   .activity-date-time {
     span {
