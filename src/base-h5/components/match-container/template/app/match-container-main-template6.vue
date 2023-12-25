@@ -90,6 +90,8 @@ export default {
 .cw2-bg-content {
   background: var(--q-gb-bg-c-17);
   margin: 0 .08rem;
+  box-shadow: var(--q-color-box-shadow-color-4);
+  border-radius: .08rem;
 }
 .champion-wrap-2 {
   //width: 3.61rem;
@@ -105,6 +107,7 @@ export default {
 
   .league-container {
     height: 0.26rem;
+    border-bottom: 1px solid var(--q-gb-bd-c-4);
 
     &.collapsed {
       // border-bottom: 1px solid var(--q-gb-t-c-4);
@@ -308,7 +311,7 @@ export default {
   padding-left: 0.1rem;
   height: 0.2rem;
   font-size: 0.11rem;
-  background-color: var(--q-gb-bg-c-21);
+  background-color: var(--q-gb-bg-c-18);
   color: var(--q-gb-t-c-24);
   /*transform: translateY(3px);*/
   margin: 0 auto;
