@@ -750,7 +750,6 @@ class MenuData {
   }
   // 如果是赛果，并且是 虚拟体育
   is_results_virtual_sports() {
-    console.log('this.get_current_sub_menuid()',this.get_current_sub_menuid())
     if (
       this.is_results() &&
       [1001, 1002, 1004, 1010, 1011, 1009].includes(
@@ -1148,6 +1147,10 @@ class MenuData {
       if (this.is_jinzu()) {
         const euid = this.get_euid('50101') || 40603; // 获取euid
         return euid;
+      }
+      // 赛果取 赛种id
+      if(this.current_lv_1_menu_i == 28){
+        return this.result_menu_api_params.sport 
       }
       return this.current_lv_2_menu_i || this.current_lv_2_menu?.menuId || "40003";
     }

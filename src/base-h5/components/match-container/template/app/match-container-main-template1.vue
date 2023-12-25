@@ -56,8 +56,9 @@
           :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'collapsed': !collapsed}]">
           <div class="league-t-wrap right-border">
           <!-- <div class="league-t-tubiao"></div> -->
-            <!-- 联赛收藏 -->
-            <div v-if="![3000, 900].includes(menu_type) && !is_esports" class="favorited-icon" @click.stop="handle_league_collect">
+            <!-- 联赛收藏 串关环境下隐藏 !MenuData.is_mix()-->
+            <div v-if="![3000, 900].includes(menu_type) && !is_esports && !MenuData.is_mix()" class="favorited-icon" 
+              @click.stop="handle_league_collect">
               <!-- 未收藏 compute_img_url('icon-favorite')-->
               <img v-if="!league_collect_state" :src="not_favorite_app" alt="">
               <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
@@ -65,7 +66,7 @@
             </div>
             <span class="league-title-text row justify-between">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
-                <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
+                <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28, 'favorited-icon-hidden': MenuData.is_mix() }">
                   {{ match.tn }}
                 </span>
               </span>
@@ -103,8 +104,8 @@
                   <div class="week-mcid row items-center" v-if="menu_type == 30">
                     <span class="din-regular"> {{ lodash.get(match,'mcid')}} </span>
                   </div>
-                  <!--赛事列表收藏-->
-                  <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
+                  <!--赛事列表收藏 串关坏境下隐藏-->
+                  <div class="favorite-icon-top match list-m" v-if="!MenuData.is_mix()" @click.stop="handle_match_collect">
                     <!-- 未收藏图标 compute_img_url('icon-favorite')-->
                     <img v-if="!match_collect_state" :src="not_favorite_app" alt="">
                     <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
@@ -950,6 +951,9 @@ export default {
       line-height: 0.14rem;
       &.match-main-league {
         //max-width: 1.4rem;
+      }
+      &.favorited-icon-hidden{
+        margin-left: 10px;
       }
     }
   }

@@ -64,7 +64,6 @@ const props = defineProps({
 const scrollDataListNew = computed(()=> {
   //赛果 串关  不显示收藏
   if(MenuData.is_results() || MenuData.is_mix())return props.scrollDataList;
-  console.error('MenuData.collect_count.value',MenuData.collect_count.value)
   return [...[{mi:50000,btn:1,ct:MenuData.collect_count.value,title:"收藏"}],...props.scrollDataList]
 })
 const emits = defineEmits(['changeList','changeMenu'])
@@ -256,7 +255,7 @@ onUnmounted(()=>{
                 left: 0.4rem;
                 font-size: 0.1rem;
                 font-family: "Akrobat";
-                z-index: 20;
+                z-index: 33;
         }
         }
       }

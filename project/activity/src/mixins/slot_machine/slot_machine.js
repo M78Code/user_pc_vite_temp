@@ -324,6 +324,9 @@ export default {
      */
     get_activity_slot_get_game_record(current = 1,type = 1, size = 6) {
       if (this.activityTips.status) {return}
+      if(this.gameHistoryLists.params.type !=  Number(type)){
+        this.gameHistoryLists.list = [];
+      }
       const params = {
         type,
         current,
