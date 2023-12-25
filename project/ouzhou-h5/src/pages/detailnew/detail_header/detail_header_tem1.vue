@@ -93,7 +93,7 @@
       <!-- {{get_match_detail.ms }} -->
       <!-- 赛果需要显示比分 添加4 -->
       <template v-if=" [1,3].includes(+get_match_detail.ms)">
-        <div class="match-detail-item-list" v-if="get_match_detail.csid == '1'">
+        <!-- <div class="match-detail-item-list" v-if="get_match_detail.csid == '1'">
           <div
             class="list"
             v-for="item in football_score_icon_list"
@@ -101,11 +101,10 @@
           > 
             <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["home"] : "0" }}</span>
             <span :class="[item.bg_url, 'score-icon']">
-              <!-- <img class="score-icon" :src="item.url" alt="" /> -->
             </span>
             <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["away"] : "0"}}</span>
           </div>
-        </div>
+        </div> -->
         <div
           class="match-detail-item-list baseketball-list"
           :class="{
@@ -126,7 +125,7 @@
     </div>
     <div v-show="false">{{ get_match_detail.csid  }}</div>
     <!-- 1:足球   2:篮球   3:棒球   4:冰球   5:网球   6:美式足球   7:斯诺克 8:兵乓球   9:排球   10:羽毛球 -->
-    <template v-if="[4,5,7,8,9].includes(+get_match_detail?.csid)">
+    <template v-if="[1,4,5,7,8,9].includes(+get_match_detail?.csid)">
       <matchScore :detail_data="get_match_detail" />
     </template>
     

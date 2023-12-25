@@ -14,7 +14,7 @@
           <template v-for="(item, index) in presettleorderdetail_data" :key="index">
             <!-- 注单被取消 -->
             <template v-if="item.orderStatus == 2">
-              <p>{{ i18n_t('app_h5.cathectic.cash_failed') }}</p>
+              <p class="font-style">{{ i18n_t('app_h5.cathectic.cash_failed') }}</p>
               <div class="body-main">
                 <!-- 结算本金 -->
                 <p><label>{{ item.remainingBetAmount ? i18n_t('early.list7') : i18n_t('early.list2') }}：</label> <span>0.00</span></p>
@@ -25,21 +25,21 @@
               </div>              
             </template>
             <template v-else>
-              <p>全部提前兑现成功</p>
+              <p class="font-style">全部提前兑现成功</p>
               <div class="body-main">
                 <!-- 结算本金 -->
-                <p><label>{{ item.remainingBetAmount ? i18n_t('early.list7') : i18n_t('early.list2') }}：</label> <span>{{ (+item.preBetAmount).toFixed(2) }}</span></p>
+                <p><label>{{ item.remainingBetAmount ? i18n_t('early.list7') : i18n_t('early.list2') }}：</label> <span class="font-style">{{ (+item.preBetAmount).toFixed(2) }}</span></p>
                 <!-- 输/赢 -->
-                <p><label>{{ i18n_t('early.list5') }}：</label> <span>{{ (+item.profit).toFixed(2) }}</span></p>
+                <p><label>{{ i18n_t('early.list5') }}：</label> <span class="font-style">{{ (+item.profit).toFixed(2) }}</span></p>
                 <!-- 返还金额 -->
-                <p><label>{{ i18n_t('early.list4') }}：</label> <span>{{ (+item.settleAmount).toFixed(2) }}</span></p>
+                <p><label>{{ i18n_t('early.list4') }}：</label> <span class="font-style">{{ (+item.settleAmount).toFixed(2) }}</span></p>
               </div>
             </template>
           </template>
         </div>
       </q-slide-transition>
       <div class="settle-btn" :class="detail_show_info ? 'up' : 'down'" @click="fetch_early_settle_detail">
-        <span>提前兑现详情</span>
+        <span class="font-style">提前兑现详情</span>
         <img :src="compute_local_project_file_path('/image/gif/change.gif')">
       </div>
     </div>
@@ -115,10 +115,14 @@ template {
       display: flex;
       justify-content: space-between;
       label {
-        color: var(--q-gb-bg-c-6);
+        color: var(--q-gb-t-c-19);
       }
     }
   }
+.font-style{
+  color: var(--q-gb-t-c-18);
+}
+
   .settle-btn {
     font-size: 0.14rem;
     padding-top: 0.1rem;
