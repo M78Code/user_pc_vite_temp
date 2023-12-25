@@ -653,7 +653,7 @@ onUnmounted(() => {
             color: var(--sys-brand-primary-primary-300, #74C4FF);
             text-align: right;
             font-family: Akrobat;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 700;
           }
       }

@@ -267,7 +267,7 @@
           <!--  新手版-赛事比分信息 -->
           <div class="match-score-info">
             <template v-if="match.csid != 1">
-              <score-list :main_source="main_source" :match="match"></score-list>
+              <score-list :class="[match.csid == 7 && 'score-content-snooker']" :main_source="main_source" :match="match"></score-list>
             </template>
           </div>
         </div>
@@ -1088,11 +1088,6 @@ export default {
           .score-fle-container-1{
             position: relative;
             top: 1px;
-            display: block;
-            width: 1.12rem;
-            text-overflow:ellipsis;
-            white-space:nowrap;
-            overflow:hidden;
             .items-start {
               display: inline-block;
               height: 100%;
@@ -1113,6 +1108,18 @@ export default {
               flex-shrink: 0;
             }
           }
+        }
+      }
+    }
+
+    .score-content-snooker {
+      :deep(.scroll-container-w){
+        .score-fle-container-1{
+          display: block;
+          width: 1.06rem;
+          text-overflow:ellipsis;
+          white-space:nowrap;
+          overflow:hidden;
         }
       }
     }
