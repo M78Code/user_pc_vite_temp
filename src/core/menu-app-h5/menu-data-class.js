@@ -1149,6 +1149,10 @@ class MenuData {
         const euid = this.get_euid('50101') || 40603; // 获取euid
         return euid;
       }
+      // 赛果取 赛种id
+      if(this.current_lv_1_menu_i == 28){
+        return this.result_menu_api_params.sport 
+      }
       return this.current_lv_2_menu_i || this.current_lv_2_menu?.menuId || "40003";
     }
   }
