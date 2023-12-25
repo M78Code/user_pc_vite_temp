@@ -100,11 +100,11 @@ template {
 }
 .warp {
   margin: 0 0.14rem;
-  border-top: 1px solid #ebebeb;
+  border-top: 1px solid var(--q-gb-bd-c-4);
 }
 .slider-wrap {
   font-size: 0.14rem;
-  border-bottom: 1px solid #ebebeb;
+  border-bottom: 1px solid var(--q-gb-bd-c-4);
   & > p {
     line-height: 3;
   }

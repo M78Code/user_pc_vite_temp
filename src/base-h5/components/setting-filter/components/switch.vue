@@ -83,7 +83,7 @@ const toggle = () => {
         text-align: center;
         position: relative;
         z-index: 1;
-        color: var(--q-gb-t-c-14);
+        color: var(--q-gb-t-c-31);
         font-size: 0.12rem;
 
         &.active {

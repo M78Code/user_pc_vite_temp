@@ -1,34 +1,42 @@
 <template>
-    <!--金额输入区域包括键盘 -->
-    <div class="row bet-single-input" :data-check-money="BetViewDataClass.input_money_state">
-        <!--金额输入区-->
-        多项单注
-        <div class="bet-input-failure">
-            <!--投注金额输入框-->
-            <input class="bet-input input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
-                :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
-            <!--清除输入金额按钮-->
-            <div class="bet-input-close" @click.stop="bet_clear_handle">
-                <icon-wapper name="icon-failure" size="12px" />
+    <div class="q-card__section">
+        <div class="odds-wrap row">
+            <div class="line"></div>
+            <div class="col">{{i18n_t('bet.bet_multiple')}}</div>
+        </div>
+        <!--金额输入区域包括键盘 -->
+        <div class="row bet-multiple-input yb-flex-nowrap" :data-check-money="BetViewDataClass.input_money_state">
+            <!--金额输入区-->
+            <div class="col bet-count">
+                <span>2</span>
+                <span class="operation-symbol">x</span>
+            </div>
+            <div class="col-auto right-input">
+                <!--投注金额输入框-->
+                <input class="bet-input input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
+                    :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
+                <!--清除输入金额按钮-->
+                <div class="bet-input-close" @click.stop="bet_clear_handle">
+                    <!-- <icon-wapper name="icon-failure" size="12px" /> -->
+                </div>
             </div>
         </div>
-
-        <div v-show="ref_data.keyborard" class="bet-win-key">
-            <div class="row bet-win yb-fontsize12">
+        <div class="row bet-win yb-fontsize12">
                 <div class="col df-jb">
                     <!--最高可赢额-->
                     {{ i18n_t('common.maxn_amount_val') }}
                 </div>
                 <!--金额-->
-                <div class="col-auto bet-win-money yb-number-bold"></div>
+                <div class="col-auto bet-win-money yb-number-bold">00</div>
             </div>
-
-            <!--键盘区域-->
-            <div class="row bet-keyboard bet-keyboard-zone">
-                <bet-keyboard />
+         
+            <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
+                <div class="col">
+                    <bet-keyboard />
+                 </div>
             </div>
-        </div>
     </div>
+    
 </template>
 
 <script setup>
@@ -128,7 +136,6 @@ input[type="number"] {
 
 /**单关金额输入框**/
 .bet-single-input {
-    margin-top: 8px;
     .bet-input{
         width: 100%;
         padding: 4px 6px;
@@ -159,9 +166,9 @@ input[type="number"] {
         height: auto;
     }
 
-    .bet-win-key {
-        margin-top: 10px;
-    }
+    // .bet-win-key {
+    //     margin-top: 10px;
+    // }
 
     /*  投注键盘区域 */
     .bet-keyboard-zone {
