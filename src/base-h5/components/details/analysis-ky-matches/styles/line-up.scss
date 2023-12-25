@@ -37,7 +37,7 @@
           border: unset;
   
           .ellipsis {
-            color: var(--q-gb-t-c-18);
+            color: var(--q-analysis-text-color-20);
             font-weight: bold;
           }
         }
@@ -300,7 +300,7 @@
       height: 0.4rem;
       line-height: 0.4rem;
       padding-left: 0.24rem;
-      color:var(--q-gb-t-c-18);
+      color: var(--q-analysis-text-color-20);
       font-size: 0.14rem;
       background-color:var(--q-gb-bg-c-15);
       letter-spacing: 0;
@@ -411,8 +411,7 @@
       line-height: 0.6rem;
       text-align: center;
       padding-top: 0.05rem !important;
-      color:var(--q-gb-t-c-18);
-  
+      color: var(--q-analysis-text-color-20);
   
       font-size: 12px;
     }

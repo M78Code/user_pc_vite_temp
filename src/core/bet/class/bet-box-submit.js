@@ -700,6 +700,10 @@ const submit_handle = type => {
 
 //错误提示 设置为可以点击
 const set_submit_btn = () => {
+    // 提示错误 初始化滑块
+    if(PROJECT_NAME.includes('app-h5')){
+        useMittEmit(MITT_TYPES.EMIT_INIT_SLIDER_CONFIG)
+    }
     setTimeout(()=>{
         submit_btn = false
     },500)

@@ -478,5 +478,5 @@ export const EMIT_SET_BESE_MENU_COUNT_CHANGE = "EMIT_SET_BESE_MENU_COUNT_CHANGE"
 /**   切换赛事更新   */
 export const EMIT_SWITCH_MATCH = 'EMIT_SWITCH_MATCH'
 
-/**   切换赛事更新   */
+/**   多项注单输入金额   */
 export const EMIT_BET_MULTIPLE_MONEY = 'EMIT_BET_MULTIPLE_MONEY'
