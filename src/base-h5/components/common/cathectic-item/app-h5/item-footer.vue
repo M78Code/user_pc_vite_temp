@@ -24,7 +24,7 @@
       <p>
         <label class="acount">{{i18n_t('app_h5.cathectic.settle')}}：</label> 
         <span :class="{'acount': data_f.profitAmount > 0}">
-          {{ data_f.profitAmount > 0 ? i18n_t('bet_record.bet_no_status04') : i18n_t('bet_record.bet_no_status03') }}
+          {{ showText(data_f) }}
           {{ format_balance(data_f.profitAmount) }}
           {{i18n_t('common.unit')}}</span>
       </p>
@@ -90,6 +90,28 @@ let props = defineProps({
     type: Object
   }
 })
+
+/**
+ * 输/赢 文案
+ */
+const showText = (data_f) => {
+  // 注单无效、失败(显示 已确认)
+  if(data_f.orderStatus == '2' || data_f.orderStatus == '4') {
+    return i18n_t('bet_record.bet_no_status17')
+  }
+  // (和)
+  if(data_f.profitAmount == 0) {
+    return i18n_t('bet_record.bet_no_status16')
+  }
+  // (赢)
+  if(data_f.profitAmount > 0) {
+    return i18n_t('bet_record.bet_no_status04')
+  }
+  // (输)
+  if(data_f.profitAmount < 0) {
+    return i18n_t('bet_record.bet_no_status03')
+  }
+}
 
 // 订单确认中。。。
 const confirming = reactive({
