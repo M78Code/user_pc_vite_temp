@@ -166,10 +166,10 @@ const choose_filter_tab = (item) => {
   // 获取最新的 数据
   if(MenuData.is_kemp()){
     handle_click_menu_mi_400(item)
-    MenuData.set_current_ball_type(item.mif - 300)
+    MenuData.set_current_ball_type(item.mif>400?item.mif-400:BaseData.compute_sport_id(item.mif))
   }else{
     handle_click_menu_mi_1(item)
-    MenuData.set_current_ball_type(item.mif - 100)
+    MenuData.set_current_ball_type(BaseData.compute_sport_id(item.mif))
   }
 };
 
