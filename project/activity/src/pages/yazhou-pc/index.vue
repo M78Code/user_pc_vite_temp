@@ -5,7 +5,7 @@
  * @Author: Echo
 -->
 <template>
-  <q-scroll-area class="five-activity-action" ref="scrollareaRef">
+  <q-scroll-area v-show="layout_show" class="five-activity-action" ref="scrollareaRef">
     <!-- {{ tab_Id }} -->
     <div state="false">
       <!-- 头部 banner 图 -->
@@ -108,7 +108,8 @@ export default {
   },
   data() {
     return {
-      showAlert: false, // 展示登录失效弹窗
+      showAlert: false, // 展示登录失效弹窗,
+      layout_show:false,
     };
   },
   computed: {
@@ -116,6 +117,11 @@ export default {
       // 不显示幸运盲盒
       return (this.tab_list || []).filter(v => v.activityId != '10009');
     }
+  },
+  mounted(){
+    this.$nextTick(()=>{
+      this.layout_show = true;
+    })
   }
 };
 </script>
