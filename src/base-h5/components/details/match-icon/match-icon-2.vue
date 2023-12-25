@@ -82,9 +82,9 @@ const props = defineProps({
   },
 })
 
-const { detailsReducer } = store.getState()
-const hd_sd = ref(detailsReducer.hd_sd)
-const is_in_play = ref(detailsReducer.is_in_play)
+
+const hd_sd = ref()
+
 
 let send_gcuuid = ''
 // 正在直播的

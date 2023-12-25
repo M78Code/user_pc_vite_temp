@@ -350,7 +350,7 @@ export default {
         }else if ( ['0401038'].includes(code) ){
           const msg_nodata_22 = i18n_t('msg.msg_nodata_22')
           this.$toast(msg_nodata_22, 1500)
-          this.historyDataState = 'data';
+          this.historyDataState = 'empty';
         } else {
           this.gameHistoryLists.list = [];
           // 没数据就显示【暂无数据】
