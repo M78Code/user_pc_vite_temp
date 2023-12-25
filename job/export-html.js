@@ -1,6 +1,4 @@
-/**
- * 合并输出商户配置 i18n
- */
+
 import * as path from "node:path";
 import fs from "node:fs";
 import lodash from "lodash";

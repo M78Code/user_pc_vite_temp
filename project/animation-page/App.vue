@@ -7,7 +7,7 @@
 </template>
 <script>
  
-import app_mixin from "src/template-project/mixin/app-mixin.js";
+import app_mixin from "src/animation-page/mixin/app-mixin.js";
 
 import "./src/css/common.scss";
 
