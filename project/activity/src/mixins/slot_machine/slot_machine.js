@@ -20,16 +20,10 @@ let machine_images_h5 = [
   LOCAL_COMMON_FILE_PREFIX+'/activity/yazhou-h5/activity/slot_machine/machine_diamond.png'
 ];
 
-
- 
- 
 export default {
   inject: ['is_mobile'],
-
   setup(props) {
-    
   },
- 
   name: 'slot_machine',
   mixins: [common, formartmixin,acticity_mixin],
   emits:['to_maintenance'],
@@ -67,9 +61,9 @@ export default {
         list: [],
         params: {
           total: 0,
-          type: 1, // 1 彩金记录 2合  成记录 3重置记录
+          type: 1, // 1、彩金记录 2、合成记录 3、重置记录
           current: 1, // 分页，当前第几页
-          size: 6, //每页多少条数据，默认6条
+          size: 5, //每页多少条数据，默认6条
         }
       },
       goToPage: 1,
@@ -322,7 +316,7 @@ export default {
     /**
      * 游戏记录
      */
-    get_activity_slot_get_game_record(current = 1,type = 1, size = 6) {
+    get_activity_slot_get_game_record(current = 1,type = 1, size = 5) {
       if (this.activityTips.status) {return}
       if(this.gameHistoryLists.params.type !=  Number(type)){
         this.gameHistoryLists.list = [];

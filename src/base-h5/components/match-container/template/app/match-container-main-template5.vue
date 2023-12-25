@@ -1099,6 +1099,14 @@ export default {
               line-height: .23rem;
             }
           }
+          .score-fle-container-snooker {
+            display: block;
+            width: 1.06rem;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            overflow:hidden;
+            text-align:right;
+          }
           .b-score-wrapper{
             flex-wrap: nowrap;
             .mfo-title{
