@@ -891,8 +891,8 @@ svg {
   margin: auto;
   position: relative;
   padding-top: 20px;
-  transform: scale(var(--activity-scale));
-  margin-top: var(--activity-margin-top);
+  transform: scale(var(--qq--activity-scale));
+  margin-top: var(--qq--activity-margin-top);
 
   /*  关闭按钮 */
   .close {
