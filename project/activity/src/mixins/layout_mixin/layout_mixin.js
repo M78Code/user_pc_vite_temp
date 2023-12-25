@@ -56,7 +56,7 @@ export default defineComponent({
     get_project_theme() {
       let res = '';
       // 默认 白色版
-      const default_theme = SEARCH_PARAMS.init_param.get('theme') || _.get(UserCtr.user_info, 'configVO.h5Default', 1)
+      const default_theme = SEARCH_PARAMS.init_param.get('theme') || 1 // _.get(UserCtr.user_info, 'configVO.h5Default', 1)
       if(default_theme && lodash.startsWith(default_theme,'theme0')){
         res = default_theme;
       } else {

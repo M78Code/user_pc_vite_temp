@@ -118,7 +118,7 @@ export default {
   margin: 0 auto;
   display: flex;
   justify-content: center;
-
+  align-items: center;
   ul {
     display: flex;
 

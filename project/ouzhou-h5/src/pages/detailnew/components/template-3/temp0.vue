@@ -215,7 +215,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters } from "vuex";
-import odds_new from "base_path/components/details/components/tournament-play/unit/odds-new.vue";
+ 
 // #TODO mixins
 import lodash from "lodash";
 import store from "src/store-redux";
@@ -234,7 +234,7 @@ export default defineComponent({
     // mixins:[odd_convert],
     name: "temp0",
     components: {
-        "odds-new": odds_new
+        "odds-new": {}
     },
     props: ["item_data", "title"],
     setup(props, evnet) {

@@ -88,7 +88,7 @@ const balance = ref(UserCtr.balance)
 /**
  * 监听用户信息版本号
 */
-watch(UserCtr.user_version, () => {
+watch(() => UserCtr.user_version , () => {
     balance.value = UserCtr.balance //获取用户最新余额
 })
 

@@ -21,7 +21,6 @@ const  final_merchant_config  = await import_json_data("./output/merchant/config
 // 商户配置 输出目录
 let write_folder = "./job/output/component/";
 
-remove_file(write_folder); //del  old file
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
 function resolve_merchant_config_component() {

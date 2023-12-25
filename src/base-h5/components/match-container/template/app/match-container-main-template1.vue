@@ -227,7 +227,7 @@
                           'is-handicap': match.handicap_index == 2,
                           'is-handicap-1': match.handicap_index == 1,
                         }">
-                          <span>{{ match.man }}</span>
+                          <span >{{ match.man }}</span>
                         </div>
                         <!--发球方绿点-->
                         <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
@@ -298,7 +298,7 @@
               <!-- 展示三行的不展示比分 -->
               <template v-if="![1, 4, 11, 14, 15, 16].includes(+match.csid)">
                 <div class="score-content">
-                  <ScoreList :main_source="main_source" :match="match_of_list" />
+                  <ScoreList :class="[match.csid == 7 && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
                 </div>
               </template>
             </div>
@@ -1252,7 +1252,7 @@ export default {
             display: -webkit-box;
             font-size: 0.12rem;
             flex-shrink: 0;
-            max-width: 100%;
+            max-width: 100px;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             text-overflow: ellipsis;
@@ -1413,12 +1413,6 @@ export default {
     .score-fle-container-1{
       position: relative;
       top: 1px;
-      display: block;
-      width: 1.06rem;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      overflow:hidden;
-      text-align:right;
       .items-start {
         display: inline-block;
         height: 100%;
@@ -1440,6 +1434,18 @@ export default {
             }
           }
         }
+      }
+    }
+  }
+  .score-content-snooker {
+    :deep(.scroll-container-w){
+      .score-fle-container-1{
+        display: block;
+        width: 1.06rem;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        overflow:hidden;
+        text-align:right;
       }
     }
   }

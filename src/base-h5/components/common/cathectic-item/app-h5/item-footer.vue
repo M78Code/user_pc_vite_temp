@@ -24,7 +24,7 @@
       <p>
         <label class="acount">{{i18n_t('app_h5.cathectic.settle')}}：</label> 
         <span :class="{'acount': data_f.profitAmount > 0}">
-          {{ data_f.profitAmount > 0 ? i18n_t('bet_record.bet_no_status04') : i18n_t('bet_record.bet_no_status03') }}
+          {{ showText(data_f) }}
           {{ format_balance(data_f.profitAmount) }}
           {{i18n_t('common.unit')}}</span>
       </p>
@@ -43,7 +43,9 @@
     <p>
       <!-- 投注单号 -->
       <label>{{i18n_t('bet.order_no')}}：</label> 
-      <span>{{data_f.orderNo}}</span>
+      <span  @click="copy">{{data_f.orderNo}} 
+        <img :src="compute_local_project_file_path('/image/svg/copy.svg')" alt=""  style="width:0.1rem" />
+      </span>
     </p>
     <p>
       <!-- 投注时间 -->
@@ -83,13 +85,64 @@ import { reactive, onMounted, onUnmounted } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { calc_text_only_status, calc_text, outcome } from "src/core/bet-record/util.js";
 import { i18n_t } from "src/boot/i18n.js";;
-import { useMittOn, MITT_TYPES } from "src/core/mitt/"
-import { formatTime, format_money2, format_balance } from 'src/output/index.js'
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
+import { formatTime, format_money2, format_balance, compute_local_project_file_path } from 'src/output/index.js'
+import ClipboardJS from "clipboard";
+import { Platform } from "quasar";
 let props = defineProps({
   data_f: {
     type: Object
   }
 })
+
+/**
+ * 输/赢 文案
+ */
+const showText = (data_f) => {
+  // 注单无效、失败(显示 已确认)
+  if(data_f.orderStatus == '2' || data_f.orderStatus == '4') {
+    return i18n_t('bet_record.bet_no_status17')
+  }
+  // (和)
+  if(data_f.profitAmount == 0) {
+    return i18n_t('bet_record.bet_no_status16')
+  }
+  // (赢)
+  if(data_f.profitAmount > 0) {
+    return i18n_t('bet_record.bet_no_status04')
+  }
+  // (输)
+  if(data_f.profitAmount < 0) {
+    return i18n_t('bet_record.bet_no_status03')
+  }
+}
+
+  /**
+ *@description 复制订单号
+  *@param {Object} evt 事件对象
+  */
+  const copy = (evt) => {
+  let orderno = props.data_f.orderNo
+  const clipboard = new ClipboardJS(".text-left", {
+    text: () => orderno
+  })
+  clipboard.on('success', () => {
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("bet_record.copy_suc"))
+    // h5嵌入时Safari阻止弹窗
+    if (!Platform.is.safari) {
+      try {
+        location.href = `pasteOrderAction://paste?orderSN=${orderno}`;
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    clipboard.destroy()
+  })
+  clipboard.on('error', () => {
+    clipboard.destroy()
+  })
+  clipboard.onClick(evt)
+}
 
 // 订单确认中。。。
 const confirming = reactive({
