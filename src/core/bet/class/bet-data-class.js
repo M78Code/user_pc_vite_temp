@@ -1025,7 +1025,6 @@ this.bet_appoint_ball_head= null */
               ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, ol_obj.playId, ol_obj.odds_hsw, ol_obj.sportId)
               // 更新投注项内容
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
-              console.error('ol_obj',ol_obj)
 
               // 5秒后清除 红升绿降
               time_out = setTimeout(()=>{
