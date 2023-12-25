@@ -49,7 +49,7 @@
                           <template v-if="ol_list_0[ol_index0 - 1].os == 2">
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1?'bor-style':''">
-                              <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
+                              <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
                               <div class="text-left mar-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -63,7 +63,7 @@
                           <template v-else>
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ?'bor-style':''">
-                              <div class="size-color-imp ellipsis remark details_t_color6 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
+                              <div class="size-color-imp ellipsis remark details_t_color6 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
                               <div class="text-left mar-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -81,7 +81,7 @@
                       <template v-if="ol_list_0[ol_index0 - 1]._mhs == 1">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1?'bor-style':''">
-                          <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
+                          <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
                           <div class="text-left mar-left">
                             <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
@@ -134,7 +134,7 @@
                           <template v-if="ol_list_1[ol_index1 - 1].os == 2">
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
-                              <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
+                              <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
                               <div class="text-left mar-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -148,7 +148,7 @@
                           <template v-else>
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
-                              <div class="size-color-imp ellipsis remark details_t_color6 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
+                              <div class="size-color-imp ellipsis remark details_t_color6 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
                               <div class="text-left mar-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -166,7 +166,7 @@
                       <template v-if="ol_list_1[ol_index1 - 1]._mhs == 1">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
-                          <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
+                          <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
                           <div class="text-left mar-left ">
                             <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
@@ -217,7 +217,7 @@
                           <template v-if="ol_list_2[ol_index2 - 1].os == 2">
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
-                              <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
+                              <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
                               <div class="text-left mar-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -231,7 +231,7 @@
                           <template v-else>
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
-                              <div class="size-color-imp ellipsis remark details_t_color6 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
+                              <div class="size-color-imp ellipsis remark details_t_color6 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
                               <div class="text-left mar-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -249,7 +249,7 @@
                       <template v-if="ol_list_2[ol_index2 - 1]._mhs == 1">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
-                          <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
+                          <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
                           <div class="text-left mar-left">
                             <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
@@ -295,7 +295,7 @@
                     <!-- lock 锁状态 start -->
                     <div class="play-box-style details_color">
                       <div
-                        v-show="get_detail_data.csid != 1"
+                        v-show="get_detail_data?.csid != 1"
                         class="ellipsis remark details_t_color7 fz_13"
                         :class="{'text-right': !['344'].includes(item_data.hpid)}"
                        >{{ol_item.on}}</div>
@@ -313,7 +313,7 @@
                     <!-- lock 锁状态 start -->
                     <div class="play-box-style details_color">
                       <div
-                          v-show="get_detail_data.csid != 1"
+                          v-show="get_detail_data?.csid != 1"
                           class="ellipsis remark details_t_color6 fz_13"
                           :class="{'text-right': !['344'].includes(item_data.hpid)}"
                       >{{ol_item.on}}</div>
@@ -335,7 +335,7 @@
                 <!-- lock 锁状态 start -->
                 <div class="play-box-style details_color">
                   <div
-                      v-show="get_detail_data.csid != 1"
+                      v-show="get_detail_data?.csid != 1"
                       class="ellipsis remark details_t_color7 fz_13"
                       :class="{'text-right': !['344'].includes(item_data.hpid)}"
                   >{{ol_item.on}}</div>
