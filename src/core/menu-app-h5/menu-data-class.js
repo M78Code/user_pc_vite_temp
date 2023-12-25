@@ -79,7 +79,7 @@ class MenuData {
      this.result_menu_lv1_mi = ''
      // 赛果 日期/赛中
      this.result_menu_api_params = {}
-     //赛果类型  0 普通 1冠军 2vr 3电竞
+     //赛果类型  0 普通 1电竞 2vr  3冠军 
      this.is_results_type = 0;
       //----------------------------------------------------------------------------------------//
 
