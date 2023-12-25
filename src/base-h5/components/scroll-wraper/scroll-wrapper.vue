@@ -5,6 +5,8 @@
 -->
 
 <template>
+      
+<!-- :style="compute_css_obj({key: 'h5-kyapp-speciality-bg'})"> -->
   <div class="scroll-wrapper" ref="container" @scroll="handler_match_container_scroll">
     <div  :class="['scroll-i-con', {high_scrolling: set_is_high_scrolling && menu_type !== 100 &&
        !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100,
@@ -12,7 +14,7 @@
         'static': get_is_static() 
       }]"
       :style="{ 'height': get_is_static() ? 'auto' : container_total_height}">
-      <template v-if="MatchMeta.match_mids.length > 0" >
+      <template v-if="MatchMeta.match_mids.length > 0">
         <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
           :class="['s-w-item', {last: index == MatchMeta.match_mids.length - 1 }]" 
           :style="{ transform: `translateY(${get_match_top_by_mid(match_mid)}px)`, zIndex: `${100 + index}` }">
@@ -62,7 +64,7 @@ import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive
 import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import { no_data_app } from 'src/base-h5/core/utils/local-image.js'
-
+import { compute_css_obj} from 'src/output/index.js'
 // 避免定时器每次滚动总是触发
 const props = defineProps({
   is_goto_top_random: Number,
@@ -294,9 +296,9 @@ onUnmounted(() => {
     background-repeat: repeat-y;
     &.high_scrolling {
       background-size: contain;
-      background-image: url($SCSSPROJECTPATH + "/image/skeleton/height-177.jpg");
+      background-image: url($SCSSPROJECTPATH + "/image/skeleton/height-177.jpg"); 
       &.simple {
-        background-image: url($SCSSPROJECTPATH + "/image/skeleton/height-117.jpg");
+      background-image: url($SCSSPROJECTPATH + "/image/skeleton/height-117.jpg");
       }
     }
     &.detail_list {
