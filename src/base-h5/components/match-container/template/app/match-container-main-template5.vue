@@ -24,7 +24,7 @@
         </template>
       </div>
       <!-- 全部 -->
-      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_ball_seed_fold">
+      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{get_date_title}}</span> </div>
         <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
@@ -40,7 +40,7 @@
           :class="[(' match-indent league')]">
           <div class="league-t-wrap right-border">
             <!-- 联赛收藏 -->
-            <div v-if="![3000, 900].includes(menu_type) && !is_esports" class="favorited-icon" @click.stop="handle_league_collect">
+            <div v-if="![3000, 900].includes(menu_type) && !is_esports && !is_mix" class="favorited-icon" @click.stop="handle_league_collect">
               <!-- 未收藏 compute_img_url('icon-favorite')-->
               <img v-if="!league_collect_state" :src="not_favorite_app" alt="">
               <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
@@ -55,7 +55,7 @@
               :style="compute_css_obj('menu-sport-active-image', 2102)"></div>
             <div class="esport" v-else-if="match_of_list.csid == 100"
               :style="compute_css_obj('menu-sport-active-image', 2100)"></div>
-            <span class="league-title-text row justify-between">
+            <span :class="['league-title-text row justify-between', { 'no-favorited': is_mix }]">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
                   {{ match.tn }}
@@ -249,7 +249,7 @@
             <!-- 比分选项 -->
             <div class="odds">
               <!--赛事列表收藏-->
-              <div class="collect favorite-icon-top match list-m" @click.stop="handle_match_collect">
+              <div class="collect favorite-icon-top match list-m" @click.stop="handle_match_collect" v-if="!is_mix">
                 <!-- 未收藏图标 compute_img_url('icon-favorite')-->
                 <img v-if="!match_collect_state" :src="not_favorite_app" alt="">
                 <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
@@ -287,7 +287,7 @@ import { i18n_t, compute_img_url } from "src/output/index.js"
 import { format_time_zone,format_M_D } from "src/output/index.js"
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2,date_time, is_detail,is_zaopan, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2,date_time, is_detail,is_zaopan, is_esports, is_results, footer_menu_id, is_mix } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
@@ -426,6 +426,7 @@ export default {
     })
     
     return {
+      is_mix,
       get_date_title,
       active_score,
       go_to_bet,
@@ -902,6 +903,9 @@ export default {
       overflow: hidden;
       color: var(--q-color-com-fs-color-26);
       font-weight: 600;
+      &.no-favorited{
+        padding-left: 15px;
+      }
 
       .icon-wapper {
         transform: rotate(90deg);

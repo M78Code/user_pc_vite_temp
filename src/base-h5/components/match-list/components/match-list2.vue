@@ -8,7 +8,8 @@
     <ScrollWrapper>
       <template v-slot="{ match_item, index }">
         <template v-if="match_item">
-          <div class="data_mid"> <!--此data-mid用于分频订阅赛事,请勿修改-->
+          <!--此data-mid用于分频订阅赛事,请勿修改-->
+          <div class="data_mid"> 
             <!-- 专业版 -->
             <template v-if="standard_edition === 2">
               <!-- 冠军玩法 -->
