@@ -6,8 +6,16 @@
   <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
   <div class="odd-column-item" :class="odds_class_object" @click.stop="item_click3" :id="dom_id_show && `list-${lodash.get(odd_item, 'oid')}`">
     <!-- 占位  或者  关盘 -->
-    <div v-if="placeholder == 1 || is_close(get_odd_status())" class="item-inner">
+    <!-- <div v-if="placeholder == 1 || is_close(get_odd_status())" class="item-inner">
       <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock" />
+    </div> -->
+
+    <!-- 占位  或者  关盘 (列表简单版时非足球赛事角球菜单时设置为关盘)-->
+    <div v-if="placeholder == 1 || is_close(get_odd_status()) || (lodash.get(odds_class_object,'is-jiaoqiu') && _.get(match,'csid') != 1) && PageSourceData.route_name=='matchList'" class="item-inner">
+      <template  v-if="is_show_lock">
+        -
+      </template>
+      <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock"  v-else/>
     </div>
 
     <!-- 全封(不显示盘口值) 占位时显示封-->
@@ -131,6 +139,12 @@ onMounted(() => {
 const hpid = computed(() => {
   return lodash.get(props.odd_field,'hpid');
 })
+
+// 是否显示 -
+const is_show_lock = () => {
+  const ol = lodash.get(props.odd_field, 'hl[0].ol', "")
+  return lodash.isEmpty(ol)
+}
 
 // 判断边框border-radius样式
 const odds_class_object = computed(() => {

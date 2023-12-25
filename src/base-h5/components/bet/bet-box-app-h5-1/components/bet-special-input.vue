@@ -273,14 +273,14 @@ const change_show = () => {
     pointer-events: none;
   }
   .money-number {
-    margin-top: 1px;
+    margin-top: .01rem;
     font-family: Akrobat;
     font-weight: 700;
   }
   .money-span {
     width: 0.02rem;
     height: 0.16rem;
-    margin: 0 1px;
+    margin: 0 .01rem;
     background: var(--q-gb-t-c-1);
     &.money-span3{
       background: transparent;
@@ -298,7 +298,7 @@ const change_show = () => {
     background: gray;
     color: #FFFFFF;
     border-radius: 50%;
-    font-size: 13px;
+    font-size: .13rem;
   }
   /* ************** 左边内容 ************** -S */
   .content-t {
@@ -310,9 +310,9 @@ const change_show = () => {
   
       &::after {
         content: "";
-        width: 3px;
+        width: .03rem;
         height: 0.12rem;
-        border-radius: 2px;
+        border-radius: .02rem;
         position: absolute;
         left: -0.08rem;
         top: 50%;

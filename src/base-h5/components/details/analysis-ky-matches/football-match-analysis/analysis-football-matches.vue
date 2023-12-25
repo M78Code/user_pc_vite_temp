@@ -266,6 +266,7 @@ export default defineComponent({
 }
 
 .football-tab-header {
+  background: var(--q-gb-bg-c-23);
   :deep(.home-tab) {
     width: 100%;
     ul {
@@ -274,6 +275,9 @@ export default defineComponent({
       white-space: nowrap;
       overflow-x: auto;
     }
+  }
+  :deep(.tabs-label) {
+    color: var(--q-analysis-text-color-13);
   }
 }
 

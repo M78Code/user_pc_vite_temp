@@ -114,6 +114,9 @@ export default {
     return this.is_mobile?machine_images_h5 :machine_images_pc
 
     },
+    pagenation_max(){
+      return Math.ceil(this.gameHistoryLists.params.total / this.gameHistoryLists.params.size);
+    },
     get_user() {
         return UserCtr.get_user();
     },
@@ -345,10 +348,12 @@ export default {
           }
         } else if(['0410505'].includes(code)) { // 活动突然挂维护时，触发下边方法，刷新活动页面，变成活动维护页面
           this.$emit('to_maintenance')
+          this.historyDataState = 'data';
           return
         }else if ( ['0401038'].includes(code) ){
           const msg_nodata_22 = i18n_t('msg.msg_nodata_22')
           this.$toast(msg_nodata_22, 1500)
+          this.historyDataState = 'data';
         } else {
           this.gameHistoryLists.list = [];
           // 没数据就显示【暂无数据】
