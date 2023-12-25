@@ -137,7 +137,7 @@ const tab_click = ([tab, type]) => {
   position: relative;
   z-index: 80;
   // background-color: var(--q-gb-bg-c-13);
-  background-color: var(--q-gb-bg-c-23);
+  // background-color: var(--q-gb-bg-c-23);
 
   :deep(.home-tab) {
     color: var(--q-analysis-text-color-20);

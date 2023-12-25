@@ -100,7 +100,7 @@ import TabMove from "src/core/tab-move/tab-move.js";
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid var(--q-analysis-bd-color-3);
-  background: var(--q-analysis-bg-color-1);
+  // background: var(--q-analysis-bg-color-1);
 
   position: sticky;
   top: 0.82rem;
@@ -134,7 +134,9 @@ import TabMove from "src/core/tab-move/tab-move.js";
         .tabs-label {
           font-weight: 700;
           position: relative;
-          color: var(--q-gb-bg-c-13);
+  color: var(--q-gb-t-c-18);
+
+          // color: var(--q-gb-bg-c-13);
           &:after {
             content: "";
             display: block;
