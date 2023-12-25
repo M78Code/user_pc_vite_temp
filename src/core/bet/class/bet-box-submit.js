@@ -860,7 +860,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // let other = { bet_type:'common_bet'}
     // 移动端 并且是串关 点击 非串关赛事 提示信息  
     // 电子赛事 电竞的不可串关赛事
-    if( PROJECT_NAME.includes('h5') && !BetData.is_bet_single && (( !mid_obj.ispo && other.bet_type == 'esports_bet' ) || (["C01","B03","O01"].includes(mid_obj.cds) || [2,4].includes(Number(mid_obj.mbmty))))){
+    if( PROJECT_NAME.includes('h5') && !BetData.is_bet_single && (( !ol_obj._ispo && other.bet_type == 'esports_bet' ) || (["C01","B03","O01"].includes(mid_obj.cds) || [2,4].includes(Number(mid_obj.mbmty))))){
         let text = '不支持串关'
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
         return
@@ -940,7 +940,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         match_ctr: other.match_data_type, // 数据仓库 获取比分
         device_type: BetData.deviceType, // 设备号
         odds_hsw: ol_obj._hsw, // 投注项支持的赔率
-        ispo: mid_obj.ispo || 0, // 电竞赛事 不支持串关的赛事
+        ispo: ol_obj._ispo || 0, // 电竞赛事 不支持串关的赛事
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
 
