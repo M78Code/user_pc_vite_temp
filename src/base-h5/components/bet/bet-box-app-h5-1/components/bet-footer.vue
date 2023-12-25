@@ -19,7 +19,7 @@
 
       <!-- <q-slider class="bet-box-line" @pan="change_slider_model" v-model="ref_data.basic_model" :inner-min="8" :inner-max="92" :min="0" :max="100"/> -->
       <div class="bet-box-line">
-        <div class="bet-box" :style="{left:ref_data.basic_model/100+'rem' }"></div>
+        <div class="bet-box" :style="{left:ref_data.basic_model/100+'rem', 'disabled-silider-bg': set_special_state(BetData.bet_data_class_version) }"></div>
       </div>
       <div class="bet-info f-b-c" :class="{'disabled-line': set_special_state(BetData.bet_data_class_version) }">
         <div class="middle font16">
@@ -89,6 +89,8 @@ onMounted(()=>{
         ref_data.basic_model = page_x
       }
     }
+  }, {
+    passive: false
   })
   window.addEventListener('touchend',(event)=>{
     let fit = lodash_.get(event,'target.className','')
@@ -110,6 +112,8 @@ onMounted(()=>{
         }
       }
     }
+  }, {
+    passive: false
   })
 })
 
@@ -389,7 +393,7 @@ const set_confirm = () => {
         font-size: 0.2rem;
         border: 3px solid #50B5FF;
         margin-right: -.2rem;
-        background: #FFFFFF url($SCSSPROJECTPATH+"/image/bet/right-arrow1.svg") center no-repeat;
+        background: #FFFFFF url($SCSSPROJECTPATH+"/image/bet/right-arrow.svg") center no-repeat;
         position: absolute;
         top: .02rem;
       }
@@ -414,7 +418,7 @@ const set_confirm = () => {
         background: #FFFFFF url($SCSSPROJECTPATH+"/image/bet/right-arrow.svg") center no-repeat;
         z-index: 99;
         &.disabled-silider-bg {
-          background: rgba(255, 255, 255, 0.96);
+          background: rgba(255, 255, 255, 0.96) url($SCSSPROJECTPATH+"/image/bet/right-arrow1.svg") center no-repeat;
           border-color: rgba(201, 205, 219, 0.8);
         }
       }
