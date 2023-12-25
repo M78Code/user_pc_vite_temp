@@ -143,7 +143,10 @@ const move = (text_width, scroll) => {
 
   .copy {
     // color: var(--q-gb-bg-c-12);
-
+    font-weight: 600;
+  }
+  .marquee {
+    font-weight: 600;
   }
 }
 </style>

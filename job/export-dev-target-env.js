@@ -32,10 +32,9 @@ let recent_pack_config={}
 let result_str= `
 //本地开发 目标项目
  
-
 // 这里不一般配置为空 
-let  DEV_TARGET_VERSION = ''
-`
+let  DEV_TARGET_VERSION = ''`
+
 const get_recent_pack= async ()=>{
 
     let {data:{data}} = await axios.get(url) 
@@ -63,12 +62,13 @@ const resolve_recent_pack_config=()=>{
   
     let project_description = PROJECT_MAP_WITH_DESCRIPTION[project_key]
     
-    result_str +=`
-
-//----------------------------------	  ${project_description ['description']}   ${project_description ['value']}-------------------------------------------      
-            
-    `   
-
+    result_str +=`\n`
+    result_str +=`\n`
+   
+    
+    result_str += `//------------------------  ${project_description ['description']}   ${project_description ['value']}   --`.padEnd(100,'-')  
+      
+    result_str +=`\n`
         let project_config = recent_pack_config[project_key]
 
        
@@ -76,10 +76,9 @@ const resolve_recent_pack_config=()=>{
         for(let env_key in  project_config){
          let item = project_config[env_key]
             result_str +=`
-// ${ ENVSTR_MAP[env_key]}  : ${env_key}
-// 打包配置生成时间 ： ${ format_date(new Date(item.createdAt).getTime())  }
-// DEV_TARGET_VERSION = "${item.base_name}"              
-            `      
+// ${ ENVSTR_MAP[env_key]}      ${ env_key.padEnd(8,' ') }   ${ format_date(new Date(item.createdAt).getTime())  }
+// DEV_TARGET_VERSION = "${item.base_name}"  `             
+                 
             
  
         }
@@ -87,7 +86,7 @@ const resolve_recent_pack_config=()=>{
 
 }
 
-''.split()
+
 
 
 
