@@ -95,7 +95,7 @@
                     </div>
                   </template>
                   <template v-else>
-                    <div :key="ol_index" class="play-box-style details_color warp" :class="ol_index != max_count_ol-1?'bor-style':''"></div>
+                    <div :key="ol_index" class="play-box-style details_color warp mg-4-bg" :class="ol_index != max_count_ol-1?'bor-style':''"></div>
                   </template>
                 </template>
               </div>
@@ -261,7 +261,7 @@
                     </div>
                   </template>
                   <template v-else>
-                    <div :key="ol_index" class="play-box-style details_color" :class="ol_index != max_count_ol-1 ? 'bor-style':''" ></div>
+                    <div :key="ol_index" class="play-box-style details_color warp mg-4-bg" :class="ol_index != max_count_ol-1 ? 'bor-style':''" ></div>
                   </template>
                 </template>
               </div>
