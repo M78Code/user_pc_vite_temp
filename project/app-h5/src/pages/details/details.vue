@@ -172,7 +172,7 @@ import lineUp from "src/base-h5/components/details/analysis-matches/components/l
 import highlights from "src/base-h5/components/details/analysis-matches/highlights/highlights.vue"
 import  no_data  from "src/base-h5/components/common/no-data.vue";
 export default defineComponent({
-  name: "details",
+  name: "match-details",
   // mixins: [websocket_data,common],
   components: {
     analysisFootballMatches,

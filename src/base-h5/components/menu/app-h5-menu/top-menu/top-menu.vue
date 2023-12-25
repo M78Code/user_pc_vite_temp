@@ -44,7 +44,7 @@
 </template>
 <script setup>
 import lodash_ from "lodash";
-import { reactive, ref, watch } from "vue";
+import { nextTick, reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { format_money2 } from "src/output/index.js";
 import MatchFold from 'src/core/match-fold'
@@ -88,8 +88,10 @@ const balance = ref(UserCtr.balance)
 /**
  * 监听用户信息版本号
 */
-watch(() => UserCtr.user_version , () => {
-    balance.value = UserCtr.balance //获取用户最新余额
+watch(UserCtr.user_version, () => {
+    nextTick(() => {
+        balance.value = UserCtr.balance //获取用户最新余额
+    })
 })
 
 /**
