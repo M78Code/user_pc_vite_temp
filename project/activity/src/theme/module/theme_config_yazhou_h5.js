@@ -66,6 +66,12 @@ const theme_different = {
     theme02: "#ff7000",
     theme02_y0: "#4276FB",
   },
+  "activity-bg-color-7": {
+    theme01: "#f77000",
+    theme01_y0: "#179CFF",
+    theme02: "#f77000",
+    theme02_y0: "#179CFF",
+  },
   "img-bg-99": {
     theme01: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller.png)`,
     theme02: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller.png)`,

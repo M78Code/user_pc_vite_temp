@@ -22,9 +22,9 @@ const score_array = computed(() => {
 <template>
     <ul class="score_child_8" v-if="(score_array || []).length">
         <li v-for="item of (score_array || [])" :key="item" class="score">
-            <span>{{ item?.home }}</span>
-            <span>-</span>
-            <span>{{ item?.away }}</span>
+            <span>&ensp;</span>
+            <span>{{ item?.home }} - {{ item?.away }}</span>
+            <span>&ensp;</span>
         </li>
     </ul>
 </template>
@@ -32,10 +32,17 @@ const score_array = computed(() => {
 
 <style scoped lang="scss">
 .score_child_8{
+    width: 100%;
+    height: 32px;
     display: flex;
     align-items: center;
-    padding: 0 .2rem;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
     box-sizing: border-box;
-    gap: 4px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: auto;
+    white-space: nowrap;
 }
 </style>

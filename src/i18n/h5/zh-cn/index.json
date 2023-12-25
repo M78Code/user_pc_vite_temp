@@ -328,7 +328,9 @@
       "ligue": "法甲",
       "china_super ": "中超",
       "normal_results": "普通赛果",
-      "championship_results": "普通赛果"
+      "game_results":"电竞赛果",
+      "vr_results":"VR赛果",
+      "championship_results": "冠军赛果"
     },
     "filter": {
       "more": "更多>",
