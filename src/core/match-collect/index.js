@@ -4,7 +4,6 @@
 import { ref } from 'vue'
 import { api_common } from "src/api/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import MatchCtr from "src/core/match-list-h5/match-class/match-ctr.js";
 import { MenuData} from "src/output/module/menu-data.js"
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/output/module/match-data-base.js'
