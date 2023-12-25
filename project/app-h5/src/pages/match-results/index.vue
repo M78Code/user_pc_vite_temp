@@ -1,6 +1,6 @@
 <template>
     <template v-if="MenuData.is_results()">
-        <navigation-bar centerContentType="switch" borderBottomNoShow :goBackAssign="goBackAssign">
+        <navigation-bar centerFlex="6" centerContentType="switch" borderBottomNoShow :goBackAssign="goBackAssign">
             <template v-slot:center>
                 <div class="switch-box">
                     <div v-for="(item, index) in switchMenu" :key="'swtich-' + index" @click="switchHandle(index)"
@@ -60,10 +60,10 @@ import ObserverWrapper from 'src/base-h5/components/observer-wrapper/index.vue';
 
 
 const inner_height = window.innerHeight;  // 视口高度
-const switchMenu = ['普通赛果', '冠军赛果']
+const switchMenu = [i18n_t('app_h5.match.normal_results'), i18n_t('app_h5.match.game_results'), i18n_t('app_h5.match.vr_results'), i18n_t('app_h5.match.championship_results')]
 
 const state = reactive({
-    currentSwitchValue: 0, // 普通赛果：0  冠军赛果：1
+    currentSwitchValue: 0, // 普通赛果：0  电竞赛果：1 vr赛果：2 冠军赛果：3
     currentSlideValue: 0, // 日期数 目前slideMenu写死
     select_dialog:false,
     setting_dialog: false,
@@ -77,41 +77,42 @@ const switchHandle = async val => {
     state.currentSwitchValue = val
     MenuData.set_result_menu_lv1_mi(val)
     state.matchs_data = []
+    MenuData.set_results_type(val)
     //获取 赛果菜单
-    if (val) {
-        MenuData.set_results_type(1)
-        state.slideMenu_sport = []
-        MenuData.set_result_menu_api_params({
-            md:state.currentSlideValue
-        })
-        state.matchs_data = await lodash_.debounce(()=>{
-            return MatchMeta.get_champion_match_result();
-        },1000) 
-        console.error('get_champion_match_result')
-    } else {
-        MenuData.set_results_type(0)
+    switch (+val) {
+        case 0:
+            normalAndChampionApi(0)
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            state.slideMenu_sport = []
+            MenuData.set_result_menu_api_params({
+                md:state.currentSlideValue
+            })
+            state.matchs_data = await lodash_.debounce(()=>{
+                return MatchMeta.get_champion_match_result();
+            },1000) 
+            console.error('get_champion_match_result')
+            normalAndChampionApi(1)
+            break;
     }
+    
+    
+}
+const normalAndChampionApi = (val) => {
+    // 赛果菜单接口 menuType 0 标准赛事，1冠军赛事
     api_analysis.get_match_result_menu( {menuType:val} ).then( async ( res = {} ) => {
         if(res.code == 200){
             state.slideMenu = res.data || {}
             const index = MenuData.data_tab_index || 0;
             // 设置时间默认选中
             state.currentSlideValue = lodash_.get(res.data,`[${index}].field1`, '')
-            // if (val) {
-            //     MenuData.set_result_menu_api_params({
-            //         mi: 10000,
-            //         md:state.currentSlideValue,
-            //         sport: 1
-            //     })
-            //     // 冠军赛果
-            //     state.matchs_data = await MatchMeta.get_champion_match_result()
-            // } else {
-                // 设置赛种数据
             set_scroll_data_list(lodash_.get(res.data,`[${index}].sportList`, []))
-            // }
         }
     })
-    
 }
 const slideHandle = (val, i,e) => {
     if (state.currentSlideValue === val) return
@@ -144,7 +145,7 @@ const set_scroll_current = async item => {
     console.log('set_scroll_currentMenuData.get_results_kemp()', MenuData.get_results_type(), item)
     if (!item) return
     MenuData.set_current_lv_2_menu_i(item)
-    if (MenuData.get_results_type() == 1) {
+    if (MenuData.get_results_type() == 3) {
         state.slideMenu_sport = []
         MenuData.set_result_menu_api_params({
             md:state.currentSlideValue
