@@ -13,10 +13,7 @@ const img_config={
   "com-img-bg-131":"/activity/yazhou-h5/activity/maintain_main/maintain_bg.jpg",
   "com-img-bg-148": "/activity/yazhou-h5/activity/activity-header_slot.png"
 }
-
-
-
-
+import { useMittOn, useMittEmit, MITT_TYPES } from "project_path/src/core/index.js";
 
 import { ref } from "vue";
 import { GATAG, ZHUGE } from "project_path/src/core/index.js";
@@ -50,7 +47,7 @@ export default {
   watch: {
     the_first_time_show(val){
       if(val){
-        document.getElementById("loading-root-ele").style.visibility = "hidden";
+        useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,1)
       }
     },
     // 监听 get_user 的数据变化
@@ -140,8 +137,18 @@ export default {
     } else {
       this.initialization_menu(UserCtr.get_user_info_data().activityList);
     }
+    this.mitt_list = [];
+    this.mitt_list.push(useMittOn(MITT_TYPES.EMIT_LOADING_CTR_CMD, this.hide_loading).off)
   },
   methods: {
+    // 隐藏loading
+    hide_loading(data){
+      if(data){
+        document.getElementById("loading-root-ele").classList.add('transparent-bg');
+      } else {
+        document.getElementById("loading-root-ele").style.visibility = "hidden";
+      }
+    },
     go_where() {
       window.history.back();
     },
@@ -353,6 +360,8 @@ export default {
     }
     // this.$root.$off(MITT_TYPES.EMIT_TO_MAINTENANCE, this.to_maintenance)
     sessionStorage.removeItem("isAPP");
+    // 销毁监听
+    this.mitt_list.forEach(i=>i())
   },
 };
 
