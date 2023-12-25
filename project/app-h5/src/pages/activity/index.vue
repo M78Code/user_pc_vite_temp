@@ -36,10 +36,17 @@ const  gr = window.SEARCH_PARAMS.init_param.get('gr')?.toLocaleUpperCase()
 //   url.value =  'http://test-topic.sportxxxifbdxm2.com/activity'
 // }
 url.value  = lodash.get(window, `BUILDIN_CONFIG.DOMAIN_RESULT.topic.activity`);
+const  theme_value = ref('')
+if(gr == 'COMMON'){
+  theme_value.value = UserCtr.get_user_url_parames().replace("&theme=theme-1", '&theme=theme01_y0')
+}else{
+  theme_value.value =UserCtr.get_user_url_parames()
+}
 // 访问路由拼接 
-const  acticity_src_url  = url.value  +'?'+ UserCtr.get_user_url_parames();
+const  acticity_src_url  = url.value  +'?'+ theme_value.value;
 acticity_src.value = acticity_src_url
-// console.error(token,'token',acticity_src);
+console.error(url.value,'活动跳转',acticity_src.value,'---------',gr);
+
 </script>
 <style lang="scss" scoped>
 
