@@ -213,6 +213,19 @@ export default defineComponent({
       }
       return result
     },
+    // 是否显示缓冲容器
+    is_show_buffer_container () {
+      const { is_show_league } = this.match_of_list
+      let flag = false
+      if (project_name === 'app-h5') {
+        if (MenuData.is_today() || MenuData.is_mix() || MenuData.is_esports()) {
+          flag = !this.is_show_opening_title
+        } else {
+          flag = !(this.i === 0 && this.is_show_all)
+        }
+      }
+      return is_show_league && flag
+    },
     // 获取赛事数量
     get_match_count () {
       const { csid, start_flag } = this.match_of_list

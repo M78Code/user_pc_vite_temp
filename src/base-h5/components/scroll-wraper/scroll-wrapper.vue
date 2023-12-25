@@ -88,6 +88,7 @@ const max_height = ref(false)
 const scroll_timer = ref(0)
 const emitters = ref({})
 const container = ref(null)
+// const scroll_height = ref(0)
 
 onMounted(() => {
   test.value = sessionStorage.getItem('wsl') == '9999';
@@ -197,11 +198,12 @@ const get_is_static = () => {
 }
 
 const is_show_out = computed(() => {
-  return max_height && !get_is_static() && VirtualList.container_total_height.value > window.innerHeight
+  return max_height && !get_is_static() && VirtualList.container_total_height.value > container.value?.offsetHeight
 })
 
 const container_total_height = computed(() => {
-  return `${VirtualList.container_total_height.value}px`
+  const height = is_show_out.value ? VirtualList.container_total_height.value : VirtualList.container_total_height.value - 181
+  return `${height}px`
 })
 
 // 计算每个赛事id 对应的 容器高度 top 值
@@ -360,6 +362,7 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     width: 100%;
+    z-index: 20;
   }
 }
 .err_box{
