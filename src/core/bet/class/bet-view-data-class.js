@@ -443,6 +443,10 @@ class BetViewData {
 
   // 串关专用参数
   set_bet_special_series(array) {
+    array.filter(item=>{
+      item.min_money = item.min_money || 0
+      item.max_money = item.max_money || 8888
+    })
     this.bet_special_series = array
     this.set_bet_view_version()
   }

@@ -32,6 +32,7 @@ import { i18n_t } from "src/boot/i18n.js";
 
 import STANDARD_KEY from "src/core/standard-key";
 const user_key = STANDARD_KEY.get("user_info");
+import { AllDomain } from "src/core/http/";
 
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
@@ -1010,6 +1011,12 @@ class UserCtr {
       if (url_temp.includes("user/getUserInfo")) {
         let data_temp = pako_pb.unzip_data(lodash.get(res, "data.data"));
         data_temp && (res.data.data = data_temp);
+        let gr = (lodash.get(res, "data.data.gr") || "").toUpperCase();
+        if(gr && BUILDIN_CONFIG.DOMAIN_RESULT.gr != gr){
+          AllDomain.begin_process_when_use_url_api_after_process(res);
+          //保存 用户数据
+          BUILDIN_CONFIG.DOMAIN_RESULT.getuserinfo_res = res;
+        }
         if (window.url_param_lg) {
           res.data.data.languageName = window.url_param_lg;
         }
