@@ -499,15 +499,26 @@
                   boundary-numbers
                   :max-pages="10"
               ></q-pagination>
-              <p class="goto_page text-666" style="display: none;">
-                &nbsp;&nbsp;跳转至&nbsp;&nbsp;<input
-                  type="number"
-                  v-model="goToPage"
-                  :max="gameHistoryLists.params.total"
-                  :min="1"
-                  @keyup="get_activity_slot_get_game_record_go_to_page"
-                />&nbsp;&nbsp;页
+
+              <p class="goto_page text-666">
+                <span
+                  @click="goToHistoryPage(null)">
+                  &nbsp;&nbsp;跳转至</span>&nbsp;&nbsp;
+                <input type="number" 
+                       v-model="page_temp"
+                       :max="pagenation_max"
+                       @keyup="goToHistoryPage($event)"
+                >&nbsp;&nbsp;页
               </p>
+<!--              <p class="goto_page text-666">-->
+<!--                &nbsp;&nbsp;跳转至&nbsp;&nbsp;<input-->
+<!--                  type="number"-->
+<!--                  v-model="goToPage"-->
+<!--                  :max="gameHistoryLists.params.total"-->
+<!--                  :min="1"-->
+<!--                  @keyup="get_activity_slot_get_game_record_go_to_page"-->
+<!--                />&nbsp;&nbsp;页-->
+<!--              </p>-->
             </div>
           </div>
         </div>

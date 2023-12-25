@@ -9,8 +9,8 @@
          <!-- 赛果详情精选赛事 -->
         <template v-if="route.name == 'match_result'">
          <MatchContainerMainTemplate7
-                    :i="index"
-                    :match_of_list="MatchDataBaseH5.get_quick_mid_obj(item.mid)">
+            :i="index"
+            :match_of_list="MatchDataBaseH5.get_quick_mid_obj(item.mid)">
         </MatchContainerMainTemplate7>
       </template>
       <template v-else-if="is_kemp">

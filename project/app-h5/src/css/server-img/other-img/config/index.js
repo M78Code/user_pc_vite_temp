@@ -57,4 +57,10 @@ export default {
   'h5-kyapp-match-fliter-s': {
     default: "h5-kyapp-match-fliter-s",    
   },
+  'h5-kyapp-speciality-bg': {
+    default: "h5-kyapp-speciality-bg",    
+  },
+  'h5-kyapp-novice-bg': {
+    default: "h5-kyapp-novice-bg",    
+  },
 }

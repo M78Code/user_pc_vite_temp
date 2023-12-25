@@ -934,6 +934,16 @@ class UserCtr {
     this.set_user_info(lodash.get(res, "data.data", {}))
     //上传数据
     infoUpload.upload_data(lodash.get(res, "data.data", {}));
+
+    // 主题修正
+    if(!this.theme){
+      this.theme = LocalStorage.get("theme",  LocalStorage.get('default-theme'));
+      this.theme && LocalStorage.set("theme", this.theme);
+    }
+    let local_theme = LocalStorage.get("theme");
+    if(this.theme && this.theme != local_theme){
+      LocalStorage.set("theme", this.theme);
+    }
     this.set_web_meta_by_config();
   }
   /**

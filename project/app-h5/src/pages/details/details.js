@@ -552,7 +552,6 @@ export const details_main = () => {
             clearTimeout(state_data.back_main_list_timer)
             state_data.back_main_list_timer = setTimeout(() => {
               // 如果不是演播厅的，才有退出回到 列表
-              debugger
               if (lodash.get(state_data.get_video_url, 'active') != 'lvs') {
                 // $common.go_where({back_to: 'go_to_back'})
               
@@ -617,7 +616,7 @@ export const details_main = () => {
     let sessiong_store = sessionStorage.getItem("match_list_ofdetails");
     if (sessiong_store) {
       let store_data = JSON.parse(sessiong_store);
-      if (store_data.tId == state_data.detail_data.tid) {
+      if (store_data.tId == lodash.get(state_data,"detail_data.tid")) {
         state_data.math_list_data = store_data.list;
         return store_data.list
       }
