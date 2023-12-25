@@ -346,6 +346,8 @@ export default defineComponent({
      * @param {undefined} undefined
     */
    const touch_pan =lodash.debounce( (e) =>{
+    // 初始化 init_data.left 设置为0 
+    init_data.left = 0
       let dom_width = bet_slide.value?.clientWidth
 
       if ((append_single_list.value.length / 2) < 4) {
@@ -369,14 +371,16 @@ export default defineComponent({
           return
         }
 
-        init_data.left -= dom_width
-
+        init_data.left -= dom_width 
+         // init_data.left 左滑距离+12   以免右侧留白
+         init_data.left =  init_data.left + 12
       } else {
         // 右滑
         if (init_data.left >= 0) {
           return
         }
         init_data.left += dom_width
+        init_data.left = init_data.left+ 12
       }
     }, 50);
    

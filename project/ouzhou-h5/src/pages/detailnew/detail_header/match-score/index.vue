@@ -1,3 +1,4 @@
+<!-- 1:足球   2:篮球   3:棒球   4:冰球   5:网球   6:美式足球   7:斯诺克 8:兵乓球   9:排球   10:羽毛球 -->
 <template>
     <!-- 详情页所有球种的细节比分展示条 -->
     <!-- 当是赛果页面时蒙版不一致需要隐藏 back_mask属性-->
@@ -9,8 +10,7 @@
 
 <script setup name="match_score">
 import { useRoute } from "vue-router";
-import {score_child_5,score_child_8,score_child_9} from "./index.js"
-import { onMounted } from "vue"
+import {score_child_4,score_child_5,score_child_8,score_child_9} from "./index.js"
 import {markRaw} from "vue"
 const route = useRoute()
 const props = defineProps({
@@ -20,6 +20,7 @@ const props = defineProps({
     }
 })
 const scoreComponent = {
+    ScoreChild_4: markRaw(score_child_4),
     ScoreChild_5: markRaw(score_child_5),
     ScoreChild_8: markRaw(score_child_8),
     ScoreChild_9: markRaw(score_child_9),
@@ -31,5 +32,7 @@ const scoreComponent = {
     width: 100%;
     // height: 32px;
     overflow: hidden;
+    background-color: var(--q-gb-bg-c-2);
+    padding: 0 .1rem;
 }
 </style>

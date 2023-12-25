@@ -16,7 +16,7 @@
         <div v-if="centerContentType === 'text'" class="navigation-bar-center font-weight-bold text-no-wrap">
             <span>{{ title }}</span>
         </div>
-        <div v-else :style="{'flex' : ['switch', 'select'].includes(centerContentType) && 3}" class="navigation-bar-center navigation-bar-center-slot">
+        <div v-else :style="{'flex' : ['switch', 'select'].includes(centerContentType) && centerFlex}" class="navigation-bar-center navigation-bar-center-slot">
             <slot name="center"></slot>
         </div>
         <div class="navigation-bar-right" @click="searchClick">
@@ -58,6 +58,10 @@ const props = defineProps({
     goBackAssign: {
         type: Function,
         default: null
+    },
+    centerFlex: {
+        type: Number,
+        default: 3
     }
 })
 //筛选窗口
