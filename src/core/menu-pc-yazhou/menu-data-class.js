@@ -10,14 +10,14 @@ import {
   MITT_TYPES,
 } from "src/core/mitt/index.js";
 import LayOutMain_pc from "src/core/layout/index.js";
-import store from "src/store-redux/index.js";
+// import store from "src/store-redux/index.js";
 import { SessionStorage } from "src/output/module/constant-utils.js";
 import STANDARD_KEY from "src/core/standard-key";
 
 const menu_key = STANDARD_KEY.get("menu_pc");
 
 
-const state = store.getState();
+// const state = store.getState();
 // 热门除了50199-30199  赛事、50101-30101 竞足外，
 // 常规联赛原菜单ID：301+联赛ID、新菜单：502+菜单ID；电竞联赛原菜单：30+联赛ID、新菜单ID：联赛ID
 // 这个你可以做个参照

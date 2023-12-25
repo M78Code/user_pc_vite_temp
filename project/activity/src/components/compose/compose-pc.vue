@@ -189,7 +189,7 @@
             </div>
             <div class="add-btn dec" @click="set_volume(1)">-</div>
             <slider
-              v-model="volume"
+              v-model:value="volume"
               @change_is_mousedown="is_mousedown = $event"
               :min="currentSynthConfig.ownBaseTicket == 0 ? 0 : 1"
               :max="
@@ -510,7 +510,7 @@ export default {
             return;
           }
 
-          if (code == 200 && _.get(res, "data.synthConfig.length")) {
+          if ((code == 200 || code == '0000000') && _.get(res, "data.synthConfig.length")) {
             // 所有奖券的配置
             this.synthConfig = _.get(res, "data.synthConfig");
             // 当前选中的奖券的配置，默认选中白银
@@ -632,7 +632,7 @@ export default {
       api_activity
         .get_synth_ticket(params)
         .then((res) => {
-          let { code, data } = { ...res };
+          let { code, data } = res;
           if (code == 200) {
             // 合成成功隐藏卡片列表
             this.is_show_card = false;
@@ -1427,7 +1427,7 @@ svg {
   border-radius: 2px;
   text-align: center;
   transform: translate(-50%, -50%);
-  z-index: 9999;
+  z-index: 10011;
   background: rgba(0, 0, 0, 0.9);
   border-radius: 6px;
   color: #fff;

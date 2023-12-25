@@ -145,7 +145,7 @@ import lodash from "lodash"
 
 <style lang="scss" scoped>
 .football_standings.recent_record {
-  background-color: var(--q-analysis-bg-color-1);
+  background-color: var(--q-gb-bg-c-23);
   .title {
     height: 0.4rem;
     line-height: 0.45rem;
@@ -156,7 +156,7 @@ import lodash from "lodash"
     position: relative;
     color: var(--q-analysis-text-color-20);
     border-bottom: 1px solid var(--q-analysis-bd-color-3);
-    background-color: var(--q-analysis-bg-color-1);
+    background-color: var(--q-gb-bg-c-23);
 
     &:before {
       content: '';
@@ -320,7 +320,7 @@ import lodash from "lodash"
     text-align: center;
     padding-top: 0.05rem !important;
     font-size: 12px;
-    background-color: var(--q-analysis-bg-color-1);
+    background-color: var(--q-gb-bg-c-23);
     color: var(--q-analysis-text-color-14);
   }
 }

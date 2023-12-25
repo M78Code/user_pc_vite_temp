@@ -105,6 +105,7 @@ const theme_common = {
   "activity-drop-shadow-3": "yellow",
   
     'activity-number-bg': `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/common/number.png)`,
+    'public-bg-image2': `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/common/no_data_01.png)`,
 };
 // 主题差异化的
 const theme_different = {

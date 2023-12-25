@@ -8,7 +8,7 @@
                 <!-- <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div> -->
                     <img
                     class="img"
-                    :src="compute_local_project_file_path('/image/svg/go-back-icon.svg')"
+                    :src="compute_local_project_file_path('/image/svg/go-back-icon1.svg')"
                     alt=""
                 />
             </div>
