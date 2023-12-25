@@ -10,6 +10,7 @@ class OrientationSubscribe {
     constructor() {
         // 视频点击是否全屏 
         this.status = false;
+        this.notifyList = [];
     }
 
     /**
@@ -19,6 +20,22 @@ class OrientationSubscribe {
     change_status(status) {
         console.log(status, "status");
         this.status = status;
+        // console.log(this.callback);
+        this.callback(status);
+    }
+
+    add_notify(callback) {
+        this.notifyList.push(callback);
+    }
+
+    /**
+     * 观察者，会把这里的全部发送给监听者
+     * @param {boolean} value true -> 竖屏 false -> 横屏
+     */
+    notify(value) {
+        this.notifyList.forEach(e => {
+            e?.(value);
+        })
     }
 
     /**
@@ -29,6 +46,15 @@ class OrientationSubscribe {
         return Promise.resolve(this.status);
     }
 
+    /**
+     * 视频页面销毁进入函数
+     */
+    destory_notify() {
+        this.callback.call(false, true);
+        this.status = false;
+        // this.notifyList.pop();
+        this.notifyList = [];
+    }
     /**
      * 
      * @param {(status) => void} callback 
