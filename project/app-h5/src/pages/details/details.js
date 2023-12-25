@@ -16,6 +16,7 @@ import {SessionStorage,
    SearchData
   } from "src/output/index.js";
   import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
+import matchDetailClass from "src/core/match-detail/match-detail-class";
 export const details_main = () => {
   const router = useRouter();
   const route = useRoute();
@@ -704,6 +705,7 @@ export const details_main = () => {
             // res_data && set_details_item(res_data[0]["id"]);
             res_data.length&&matchDetailCtr.value.category_tab_click(res_data[0])
           }
+          debugger
           let search_term = route.query && route.query.search_term;
           if (search_term) {
             router.replace({
@@ -838,7 +840,7 @@ export const details_main = () => {
       // 菜单ID 多个用逗号分割(字符串)
       euid: MenuData.get_euid(MenuData.current_lv_2_menu_i),
       // 早盘日期的参数 早盘 和 串关都要加 (字符串)
-      md: state_data.get_md != -1 ? state_data.get_md : "",
+      // md: state_data.get_md != -1 ? state_data.get_md : "",
       // 赛事种类id
       csid: state_data.detail_data.csid,
       // 联赛id
@@ -876,13 +878,16 @@ export const details_main = () => {
             }
           }
         }
-        console.log(data, "=====data=====");
+        console.log(event_data, "=====data=====");
+        router.replace({name:"category",params:{mid:event_data.mid,tid:event_data.tid,csid:event_data.csid}})
         // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
-        get_match_details({ mid: event_data.mid, cuid: data.get_uid });
+        get_match_details({ mid: event_data.mid, cuid: event_data.get_uid });
         // 重新调用 详情页面玩法集接口(/v1/m/category/getCategoryList)
         get_odds_list({ sportId: event_data.csid, mid: event_data.mid });
         // 存储设置新的赛事id
-        set_goto_detail_matchid(event_data.mid);
+        matchDetailClass.set_match_details_params({mid:event_data.mid,sport_id:event_data.csid})
+        useMittEmit( MITT_TYPES.EMIT_REF_API)
+        // set_goto_detail_matchid(event_data.mid);
       } else {
         // 如果不是演播厅的，才有退出回到 列表
         // if (lodash.get(state_data.get_video_url, "active") != "lvs") {
