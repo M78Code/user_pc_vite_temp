@@ -168,13 +168,14 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .standings {
-  background: var(--q-analysis-text-color-19);
+  // background: var(--q-analysis-text-color-19);
   .heade-wrapper {
   width: 100%;
   height: auto;
   z-index: 100;
   margin: 0 auto;
-  background: var(--q-analysis-text-color-19);
+  background: var(--q-gb-bg-c-23);
+  // background: var(--q-analysis-text-color-19);
   position: sticky;
   top: 1.21rem;
   padding: 0.15rem 0.48rem;
@@ -185,7 +186,7 @@ const props = defineProps({
     justify-content: center;
     align-items: center;
     border-radius: 0.08rem;
-    background-color: var(--q-analysis-bg-color-1);
+    // background-color: var(--q-analysis-bg-color-1);
     &::after {
       content: "";
       pointer-events: none;
@@ -211,7 +212,7 @@ const props = defineProps({
       font-size: 0.14rem;
       border-radius: 0.08rem;
       padding: 0 .15rem;
-      background: var(--q-analysis-bg-color-1);
+      // background: var(--q-analysis-bg-color-1);
       color: var(--q-analysis-text-color-20);
       &:nth-child(2) {
         position: relative;

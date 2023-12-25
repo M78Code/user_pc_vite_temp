@@ -881,8 +881,8 @@ svg {
     background-image: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/bg2.png");
     background-size: 1000px auto;
     background-repeat: no-repeat;
-    transform: scale(var(--activity-scale));
-    margin-top: var(--activity-bg-margin-top);
+    transform: scale(var(--qq--activity-scale));
+    margin-top: var(--qq--activity-bg-margin-top);
   }
 }
 
@@ -891,8 +891,8 @@ svg {
   margin: auto;
   position: relative;
   padding-top: 20px;
-  transform: scale(var(--activity-scale));
-  margin-top: var(--activity-margin-top);
+  transform: scale(var(--qq--activity-scale));
+  margin-top: var(--qq--activity-margin-top);
 
   /*  关闭按钮 */
   .close {

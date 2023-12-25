@@ -52,7 +52,7 @@ import { i18n_t } from "src/boot/i18n.js";
 <style lang="scss" scoped>
 .injury-situation {
   margin-top: 0.1rem;
-  background-color: var(--q-analysis-bg-color-1);
+  // background-color: var(--q-analysis-bg-color-1);
   .title {
     height: 0.4rem;
     line-height: 0.4rem;
@@ -61,9 +61,10 @@ import { i18n_t } from "src/boot/i18n.js";
     letter-spacing: 0;
     font-weight: bold;
     position: relative;
-    color: var(--q-analysis-text-color-15);
+    color: var(--q-analysis-text-color-20);
+    // color: var(--q-analysis-text-color-15);
     border-bottom: 1px solid var(--q-analysis-bd-color-3);
-    background-color: var(--q-analysis-bg-color-1);
+    // background-color: var(--q-analysis-bg-color-1);
     &:before {
       content: '';
       width: 0.03rem;

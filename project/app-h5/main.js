@@ -23,6 +23,7 @@ import App from "./App.vue";
 import router from './src/router/index'
 import lodash from "lodash";
 import { i18n_t,i18n_tc } from "src/boot/i18n.js";
+import 'default-passive-events'
 const app = createApp(App);
 app.config.globalProperties.lodash = lodash;
 app.config.globalProperties._ = lodash;
