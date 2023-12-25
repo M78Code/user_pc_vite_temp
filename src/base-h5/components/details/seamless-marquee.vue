@@ -136,8 +136,8 @@ const move = (text_width, scroll) => {
     white-space: nowrap;
     position: absolute;
     top: 0;
-    // color: var(--q-gb-t-c-13);
-    color: transparent;
+    color: var(--q-gb-t-c-18);
+    // color: transparent;
 
   }
 
