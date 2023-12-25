@@ -22,8 +22,9 @@
 </template>
 
 <script setup>
-import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, onUpdated, ref, toRefs, watch } from 'vue'
+import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, onUnmounted, onUpdated, ref, toRefs, watch } from 'vue'
 
+import { useMittOn, MITT_TYPES } from  "src/output"
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 
 const props = defineProps({
@@ -132,8 +133,13 @@ const renderData = computed(() => {
   return resultData
 })
 
+const emitters = ref({})
+
 onMounted(() => {
   // initDataPostion()
+  emitters.value = {
+    emitter_1: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, gotTop).off,
+  };
 })
 
 onUpdated(() => {
@@ -323,6 +329,10 @@ const findStartByBinarySearch = (_positionDataArr, scrollTop) => {
     timer = null
   }, 100)
 }
+
+onUnmounted(() => {
+  Object.values(emitters.value).map((x) => x());
+})
 
 </script>
 

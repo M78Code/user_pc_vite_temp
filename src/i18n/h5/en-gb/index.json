@@ -481,6 +481,8 @@
     "bet_no_status11": "Game Delay",
     "bet_no_status12": "Match Interrupted",
     "bet_no_status15": "Match Abandoned",
+    "bet_no_status16": "Flat",
+    "bet_no_status17": "Confirmed",
     "bet_refund": "Refund Amount",
     "bet_sum_count": "Total Singular",
     "bet_sum_val": "Stake",

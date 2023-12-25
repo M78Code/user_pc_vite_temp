@@ -4,8 +4,8 @@
     "types": ["./types/index.d.ts"],
     "paths": {
       // "@/*":["src/*"],
-      "src/*":["src/*"],
-      "base_path/*":["src/base-h5/*", "src/base-pc/*"],
+      "src/*":["src/*"]
+      
     },
     "lib": ["ESNext","DOM"]
   }

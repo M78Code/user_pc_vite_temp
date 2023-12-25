@@ -13,6 +13,7 @@
 <script>
 import PageH5 from "../pages/yazhou-h5/index.vue";
 import layout_mixin  from "project/activity/src/mixins/layout_mixin/layout_mixin.js";  
+import { useMittOn, useMittEmit, MITT_TYPES } from "project_path/src/core/index.js";
 export default {
   name: "layout-h5",
   components: {
@@ -25,7 +26,11 @@ export default {
       css_var_project_key: 'yazhou_h5'
     }
   },
- 
+  mounted(){
+    this.$nextTick(()=>{
+      useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,0);
+    })
+  }
 }
 </script>
 <style lang="scss">
