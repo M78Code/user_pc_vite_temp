@@ -156,7 +156,7 @@ import { i18n_t } from "src/boot/i18n.js";
         border: unset;
 
         .ellipsis {
-          color: var(--q-analysis-bg-color-1);
+          color: var(--q-analysis-text-color-20);
           font-weight: bold;
         }
       }
