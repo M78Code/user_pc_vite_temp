@@ -11,7 +11,7 @@
        }
       ">
     <!--新手版-->
-    <div class="odd-list-container flex" v-if="show_newer_edition">
+    <div class="odd-list-container flex" v-if="show_newer_edition && !selected_list">
       <!--角球选中标志2白色版4黑色版-->
       <span class="icon-jiaoqiu"
         :class="{'selected show':show_lock_selected}"
@@ -41,7 +41,7 @@
     </div>
     <!--标准版赔率容器  波胆 5分钟  玩法除外-->
     <template v-if="![18,19].includes(+lodash.get(current_tab_item, 'id'))">
-      <div v-if="!show_newer_edition && get_n_s_changed_loaded" v-touch-swipe.mouse="odd_wrapper_pan"
+      <div v-if="(!show_newer_edition && get_n_s_changed_loaded) || selected_list " v-touch-swipe.mouse="odd_wrapper_pan"
         :class="['standard-odd-l-w',{'status2':standard_odd_status == 1}]" >
         <!--标准版-->
         <div class="standard-odd-list row" v-if="!selected_list"  :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
@@ -1321,6 +1321,9 @@ onUnmounted(() => {
   .w50{
     width: 50% !important;
     height: 90% !important;
+    :deep(.odd-column-item2){
+      background: var(--q-gb-bg-c-28) !important;
+    }
   }
 }
 }

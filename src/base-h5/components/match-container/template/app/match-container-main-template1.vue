@@ -65,7 +65,7 @@
             </div>
             <span :class="['league-title-text row justify-between', { 'no-favorited': is_mix }]">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
-                <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
+                <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28, 'favorited-icon-hidden': MenuData.is_mix() }">
                   {{ match.tn }}
                 </span>
               </span>
@@ -103,8 +103,8 @@
                   <div class="week-mcid row items-center" v-if="menu_type == 30">
                     <span class="din-regular"> {{ lodash.get(match,'mcid')}} </span>
                   </div>
-                  <!--赛事列表收藏-->
-                  <div class="favorite-icon-top match list-m" v-if="![6].includes(+menu_type)" @click.stop="handle_match_collect">
+                  <!--赛事列表收藏 串关坏境下隐藏-->
+                  <div class="favorite-icon-top match list-m" v-if="!is_mix" @click.stop="handle_match_collect">
                     <!-- 未收藏图标 compute_img_url('icon-favorite')-->
                     <img v-if="!match_collect_state" :src="not_favorite_app" alt="">
                     <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
@@ -954,6 +954,9 @@ export default {
       line-height: 0.14rem;
       &.match-main-league {
         //max-width: 1.4rem;
+      }
+      &.favorited-icon-hidden{
+        margin-left: 10px;
       }
     }
   }
