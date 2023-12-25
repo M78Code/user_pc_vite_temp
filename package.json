@@ -12,7 +12,7 @@
         "copy-oss-dist": "node ./job/copy-oss.js dist",
         "copy-oss-backup": "node ./job/copy-oss.js backup",
         "remove-output": "node ./job/remove-output.js",
-        "remove-dist": "node ./job/remove-dist.js",
+ 
         "remove-dist-assets": "node ./job/remove-dist-assets.js",
         "copy-html": "node ./job/copy-html.js",
         "export-html": "node ./job/export-html.js",
@@ -22,7 +22,7 @@
         "export-dev-target-env": "node ./job/export-dev-target-env.js",
         "git-console": "node ./job/git-console.js",
         "export-entry": "node ./job/export-entry.js",
-        "common-process-base":"run-s remove-dist copy-oss-backup   copy-oss-output  export-build-in-config  export-css-project-path   ",
+        "common-process-base":"run-s  copy-oss-backup   copy-oss-output  export-build-in-config  export-css-project-path   ",
         "common-process":"run-s common-process-base   export-html export-entry",
         "common-process-merchant":"run-s export-merchant-config resolve-merchant-config   export-full-version-close",
         "divider--1--2": "echo  -------------------------通用基础命令  结束----------------------------- ",
