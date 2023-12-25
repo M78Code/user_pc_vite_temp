@@ -40,7 +40,6 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
 import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from "src/output/index.js";
 import uid from "src/core/uuid/index.js";
-import store from "src/store-redux/index.js";
 
 const props = defineProps({
   // 联赛名
@@ -125,8 +124,6 @@ const details_refresh = () => {
 const { off } = useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh)
 onBeforeUnmount(off)
 
-const set_is_show_settle_tab = (data = false) => store.dispatch({ type: 'detailsSlice.set_is_show_settle_tab', data })
-onBeforeUnmount(set_is_show_settle_tab)
 
 /**
  * @description: 电竞 收藏与取消收藏
@@ -161,10 +158,6 @@ const details_collect = (match_obj) => {
     if (res.code == 200) {
       let cloneData = lodash.clone(get_detail_data.value)
       cloneData.mf = params.cf
-      store.dispatch({
-        type: 'SET_DETAIL_DATA',
-        data: cloneData
-      });
     } else if (res.msg) {
       useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, res.msg)
     }
