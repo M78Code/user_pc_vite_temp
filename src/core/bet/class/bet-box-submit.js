@@ -915,8 +915,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         sportName: mid_obj.csna || '', //球种名称
         matchType,  //赛事类型
         matchName: mid_obj.tn || '', //赛事名称
-        playOptionName: ol_obj.on || '', // 投注项名称
-        playOptions: ol_obj.on || '',  // 投注项
+        playOptionName: ol_obj.on || ol_obj.ott || '', // 投注项名称
+        playOptions: ol_obj.on || ol_obj.ott || '',  // 投注项
         tournamentLevel: mid_obj.tlev, //联赛级别
         playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
         playName: set_play_name(play_config), //玩法名称
