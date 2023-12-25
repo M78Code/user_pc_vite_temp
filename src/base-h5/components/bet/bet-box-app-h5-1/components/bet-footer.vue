@@ -352,7 +352,7 @@ const set_confirm = () => {
         font-size: 0.2rem;
         border: 3px solid #50B5FF;
         margin-right: -.2rem;
-        background: #FFFFFF url($SCSSPROJECTPATH+"/image/bet/right-arrow1.svg") center no-repeat;
+        background: #FFFFFF url($SCSSPROJECTPATH+"/image/bet/right-arrow.svg") center no-repeat;
         z-index: 99;
         &.disabled-silider-bg {
           background: rgba(255, 255, 255, 0.96);
@@ -408,12 +408,5 @@ const set_confirm = () => {
     p {
       width: 0.34rem;
     }
-  }
-//后续删掉
-  .bet-betting{
-    width: 1.2rem;
-    background: var(--q-gb-bg-c-19);
-    color: var(--q-gb-t-c-1);
-    height: 100%;
   }
 </style>
