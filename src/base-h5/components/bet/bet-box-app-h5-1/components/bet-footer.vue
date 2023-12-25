@@ -364,7 +364,7 @@ const set_confirm = () => {
         justify-content: center;
         align-items: center;
         margin-left: .55rem;
-        color: var(--q-gb-bg-c-14);
+        color: var(--q-gb-t-c-14);
       }
       img {
         width: 0.4rem;
