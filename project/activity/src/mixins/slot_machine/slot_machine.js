@@ -5,7 +5,7 @@ import common from "project/activity/src/mixins/common/common.js";
 import formartmixin from 'project/activity/src/mixins/common/formartmixin.js';
 import { UserCtr ,LOCAL_COMMON_FILE_PREFIX } from "project_path/src/core/index.js";
 import {  format_time_zone_time } from "project_path/src/core/index.js"
-import acticity_mixin from "project/activity/src/mixins/acticity_mixin/acticity_mixin.js";
+import acticity_mixin from "project/activity/src/mixins/acticity_mixin/acticity_mixin";
 import { throttle } from "lodash";
 
 let machine_images_pc = [
