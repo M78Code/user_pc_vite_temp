@@ -147,7 +147,7 @@ const event_init = () => {
   // 绑定相关事件监听
   on_listeners();
   // 图标出错与mid映射，初始化为空
-  store.dispatch({ type: 'matchReducer/set_img_error_map_mid', payload: {} })
+  // store.dispatch({ type: 'matchReducer/set_img_error_map_mid', payload: {} })
   // window.vue.scroll_list_wrapper_by = use_router_scroll().scroll_list_wrapper_by
   // 去除参数
   if (!location.search.includes("keep_url")) {

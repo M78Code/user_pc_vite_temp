@@ -139,7 +139,7 @@ export default {
   }
   .expand_item{
     display: block;
-    width: 18px;
+    width: 20px;
     height: 16px;
     transition: transform 0.25s ease;
     transform: rotate(0);
