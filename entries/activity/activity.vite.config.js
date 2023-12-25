@@ -63,7 +63,7 @@ export default defineConfig({
             node_modules: path.resolve(process.cwd(), "./node_modules"),
             public: path.resolve(__dirname, '../../public'),
             project_path: path.resolve(process.cwd(), `./project/${project}`),
-            base_path: path.resolve(process.cwd(), `./project/${project}`),
+      
         },
     },
     server: {

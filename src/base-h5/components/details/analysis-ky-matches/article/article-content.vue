@@ -49,7 +49,7 @@ import { formete_date  } from "src/output/index.js";
 .article-content {
   /* ************** 富文本框 quill 样式 ************** -S */
     * {
-      color: unset;
+      color: var(--q-gb-t-c-18);
       line-height: inherit;
     }
   :deep {
@@ -799,6 +799,7 @@ hr {
   border: 0;
 }
 .category-name {
+  color: var(--q-gb-t-c-18);
   display: inline-block;
   max-width: 1.7rem;
 }
