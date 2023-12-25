@@ -20,7 +20,8 @@ import { ref,watch,computed } from "vue";
 import { useRouter } from "vue-router";
 import { LOCAL_PROJECT_FILE_PREFIX,useMittEmit,MITT_TYPES } from "src/output/index.js";
 import { i18n_t } from "src/boot/i18n.js";;
-import { UserCtr } from "src/output/index.js";
+import { UserCtr,MenuData } from "src/output/index.js";
+
 // 路由
 const router = useRouter();
 //刷新加载中
@@ -81,6 +82,7 @@ const menu_item_click = (item = {}) => {
 
     // 赛果
     case 1:
+      MenuData.set_current_lv_2_menu_i({});
       router.push( {name: item.path_name } );
       break;
 

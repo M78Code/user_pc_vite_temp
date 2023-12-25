@@ -16,7 +16,7 @@
 
 export default {
   props: {
-    value:   String,
+    value: Number | String,
     min:{
       type: Number,
       default:0
@@ -109,7 +109,7 @@ export default {
     set_value(){
       let { min, max, width, left } = this
       let value = parseInt(left / width * (max - min) + min)
-      this.$emit('input',value)
+      this.$emit('update:value',value)
     },
     /**
      * @Description 设置偏移量
