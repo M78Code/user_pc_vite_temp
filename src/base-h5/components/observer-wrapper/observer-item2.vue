@@ -51,7 +51,7 @@ const is_show = computed(() => {
 })
 
 const is_kemp = computed(() => {
- return MenuData.get_results_type() === 1
+ return MenuData.get_results_type() === 3
 })
 
 </script>
