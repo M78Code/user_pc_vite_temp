@@ -30,7 +30,8 @@ const subscribe = (value, status = true) => {
 
 const listener = () => {
     console.log(window.screen.orientation, isFullScreen(),OrientationSubscrbe.instance.status, "设备方向");
-    switch (window.screen.orientation.angle) {
+    let angle = lodash.get(window,'screen.orientation.angle',0)
+    switch (angle) {
     case 90:
     case -90:
         OrientationSubscrbe.instance.notify(false);

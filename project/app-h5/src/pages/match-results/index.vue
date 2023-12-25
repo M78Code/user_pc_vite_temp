@@ -1,6 +1,6 @@
 <template>
     <template v-if="MenuData.is_results()">
-        <navigation-bar centerFlex="6" centerContentType="switch" borderBottomNoShow :goBackAssign="goBackAssign">
+        <navigation-bar :centerFlex="6" centerContentType="switch" borderBottomNoShow :goBackAssign="goBackAssign">
             <template v-slot:center>
                 <div class="switch-box">
                     <div v-for="(item, index) in switchMenu" :key="'swtich-' + index" @click="switchHandle(index)"
@@ -44,7 +44,7 @@
 </template>
 <script setup>
 // import lodash_ from 'lodash'
-import { onMounted, ref, reactive,computed} from "vue";
+import { onMounted, ref, reactive,computed, nextTick } from "vue";
 import { ScrollMenu,DateTab } from 'src/base-h5/components/menu/app-h5-menu/index'
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 // import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
@@ -189,15 +189,13 @@ const get_date_matches_list = async (item)=>{
         }
         MenuData.set_result_menu_api_params(params)
     }
-    switch (state.currentSwitchValue) {
+    switch (+state.currentSwitchValue) {
         case 0:
-            state.matchs_data = await MatchMeta.get_results_match();
-            break;
         case 1:
-            state.matchs_data = await MatchMeta.get_results_match();
-            break;
         case 2:
-            state.matchs_data = await MatchMeta.get_results_match();
+            nextTick(async () => {
+                state.matchs_data = await MatchMeta.get_results_match();
+            })
             break;
         case 3:
             let params = {
@@ -211,6 +209,7 @@ const get_date_matches_list = async (item)=>{
     }
     if (state.matchs_data.length) useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
 }
+
 // 设置滑动菜单的选中id
 const set_scroll_current = item => {
     state.matchs_data = []

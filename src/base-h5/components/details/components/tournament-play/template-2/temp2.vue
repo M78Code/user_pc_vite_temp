@@ -195,8 +195,8 @@ export default defineComponent({
 
   .play-box {
     height: 0.52rem;
-background: var(--q-gb-bg-c-28);
-
+    background: var(--q-gb-bg-c-28);
+    margin: 0.04rem;
     padding: 0.06rem 0.05rem 0;
 
     .ellipsis {
