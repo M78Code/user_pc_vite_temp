@@ -40,7 +40,7 @@ const detail_csid_config= {
       csid: '6',
       mark: '美式足球',
       detail: {
-        B: `background: url("${LOCAL_PROJECT_FILE_PREFIX}/image/jpg/details/american_football.jpg" ) no-repeat 50% calc(50% - 0.32rem) / cover content-box content-box;`
+        B: `background: url("${LOCAL_PROJECT_FILE_PREFIX}/image/jpg/details/american_football.jpg" ) no-repeat 50% calc(50% - 0.22rem) / cover content-box content-box;`
       }
     },
     CSID_7: {
