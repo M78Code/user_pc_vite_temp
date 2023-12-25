@@ -1,6 +1,6 @@
 
 <template>
-  <div class="q-gutter-xs keyboard-zone bet-keyboard-content">
+  <div class="q-gutter-xs keyboard-zone">
     <div class="keyboard-btn" v-for="(item, index) in ref_data.keyboard_data" :key="index" @click="set_click_keybord(item)">
       <!--键盘按键文本显示 如果无效则置灰 以及MAX按钮文本显示-->
       <div class="keyboard-btn-text" :class="{ 'text-disable': item.disabled }">

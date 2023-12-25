@@ -100,6 +100,7 @@ const bet_order_status_active = computed(()=>{
   height: 0.28rem;
   line-height: .28rem;
   margin-bottom: .08rem;
+  color: var(--q-gb-t-c-17);
   .icon-success {
     margin-right: .12rem;
   }

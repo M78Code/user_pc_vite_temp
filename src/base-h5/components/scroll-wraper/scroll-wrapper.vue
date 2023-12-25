@@ -6,8 +6,7 @@
 
 <template>
   <div class="scroll-wrapper" ref="container" @scroll="handler_match_container_scroll">
-    <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
-    <div  :class="['scroll-i-con', {high_scrolling: set_ishigh_scrolling && menu_type !== 100 &&
+    <div  :class="['scroll-i-con', {high_scrolling: set_is_high_scrolling && menu_type !== 100 &&
        !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100,
         detail_list: is_detail, simple: standard_edition == 1,
         'static': get_is_static() 
@@ -221,7 +220,7 @@ const get_match_top_by_mid = (mid) => {
 }
 
 // 设置是否快速滚动显示骨架屏背景
-const set_ishigh_scrolling = computed(() => {
+const set_is_high_scrolling = computed(() => {
   // 滚动过程中，是否显示  骨架屏背景图片
   let flag = false;
   if (is_detail.vlaue || (MatchMeta.match_mids && MatchMeta.match_mids.length <= 0)) {
@@ -233,7 +232,7 @@ const set_ishigh_scrolling = computed(() => {
       flag = true
     }
   }
-  return flag
+  return true
 })
 // 获取滚动到达底部的距离(节流)
 
@@ -295,9 +294,9 @@ onUnmounted(() => {
     background-repeat: repeat-y;
     &.high_scrolling {
       background-size: contain;
-      background-image: var(--q-color-com-img-bg-126);
+      background-image: url($SCSSPROJECTPATH + "/image/skeleton/height-177.jpg");
       &.simple {
-        background-image: var(--q-color-com-img-bg-127);
+        background-image: url($SCSSPROJECTPATH + "/image/skeleton/height-117.jpg");
       }
     }
     &.detail_list {

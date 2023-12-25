@@ -128,9 +128,11 @@
         </template>
        </div>
       </div>
+
       <template v-if="!no_virtual_match">
         <!--赛事轮|期菜单-->
-        <!-- <match-tab
+        <match-tab
+          style="display: none;"
           :is_reset_tab_i="is_reset_tab_i"
           :no_list="no_title_list"
           :is_user_switch_league="is_user_switch_league"
@@ -144,7 +146,7 @@
           @trend_event_change="trend_event_change"
           @time_ended="timer_ended_handle"
           @update_next_batch_match="v_basket_ball_update_n"
-        ></match-tab> -->
+        ></match-tab>
         <!-- 占位撑开高度 -->
       </template>
       </div>
