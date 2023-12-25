@@ -30,14 +30,14 @@
 
     <div class="bet-footer-check">
       <span class="check-box" >
-        <span class="check-wrap relative-position" :class="{ 'active': BetData.is_bet_merge }" />
+        <span class="check-wrap relative-position"/>
         <span>{{i18n_t('bet.bet_auto_msg_1')}}</span>
       </span>
     </div>
 
     <div>
       <span class="check-box" >
-        <span class="check-wrap relative-position" :class="{ 'active': BetData.is_bet_merge }" />
+        <span class="check-wrap relative-position"/>
         <span>{{ i18n_t('bet.common_amount') }}</span>
       </span>
     </div>

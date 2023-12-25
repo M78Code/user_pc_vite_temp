@@ -855,8 +855,8 @@ export const category_info = (category_arr=[]) => {
 
   /** 批量注册mitt */
 const { emitters_off } = useMittEmitterGenerator([
-  { type: MITT_TYPES.EMIT_REF_API, initEvent },
-  { type: MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list },
+  { type: MITT_TYPES.EMIT_REF_API, callback:initEvent },
+  { type: MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, callback:hide_detail_match_list },
 ])
 
   onUnmounted(() => {

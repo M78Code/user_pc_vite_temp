@@ -106,18 +106,22 @@
       <div class="row">
         <bet-input :item="item" />
       </div>
+      <div class="row">
+        <BetMultipleInput />
+      </div>
     </q-card-section>
 
   </q-card>
 </template>
 <script setup>
-import { reactive, computed, ref } from "vue"
+import { reactive, computed, ref, onMounted } from "vue"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_odds, format_currency, formatTime } from "src/output/index.js"
 import { odds_type_name } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { i18n_t } from "src/boot/i18n.js"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
+import BetMultipleInput from "./bet- Multiple-input.vue"
 import BetInput from "./bet-input.vue"
 import { IconWapper } from 'src/components/icon'
 import BetProAppoint from "./bet-pre-appoint.vue"
@@ -147,6 +151,10 @@ const pending_order_status = computed(() => options_id => {
     return 1
   }
   return 0;
+})
+
+onMounted(()=>{
+  console.log(props.item)
 })
 
 const ref_data = reactive({

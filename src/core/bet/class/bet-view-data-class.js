@@ -443,6 +443,10 @@ class BetViewData {
 
   // 串关专用参数
   set_bet_special_series(array) {
+    array.filter(item=>{
+      item.min_money = item.min_money || 0
+      item.max_money = item.max_money || 8888
+    })
     this.bet_special_series = array
     this.set_bet_view_version()
   }
@@ -462,6 +466,14 @@ class BetViewData {
     this.set_bet_view_version()
   }
 
+  // 设置默认限额
+  set_bet_special_series_defalut() {
+    this.bet_special_series.filter(obj=>{
+        obj.min_money = 0
+        obj.max_money = 8888
+    })
+    this.set_bet_view_version()
+  }
   // 投注后的数据
   set_orderNo_bet_obj(array) {
     this.orderNo_bet_obj = array

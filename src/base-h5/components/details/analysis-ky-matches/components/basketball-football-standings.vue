@@ -4,8 +4,8 @@
  * @Description: 详情页 或者 赛果  篮球足球公共组件，杯赛 联赛表格
 -->
 <template>
-  <div class="football_standings" :class="{'football_standings-empty': no_data}">
-    <div class="title" v-if="ranking_data.length>0">
+  <div class="football_standings base-bg" :class="{'football_standings-empty': no_data}">
+    <div class="title " v-if="ranking_data.length>0">
       <!-- 联赛类别(0:其他,1联赛,2杯赛) -->
       {{ranking_data[0].tournamentType == 1 ? i18n_t('analysis_football_matches.league_points') : i18n_t('analysis_football_matches.cup_points') }}
     </div>
@@ -66,7 +66,7 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import lodash from 'lodash'
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
-import { project_name } from "src/output/index.js"
+import { project_name,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 
 
 const props = defineProps({
@@ -198,7 +198,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .football_standings {
-  background: var(--q-analysis-text-color-19);
+  // background: var(--q-analysis-text-color-19);
   margin-bottom: 0.25rem;
 
   &.football_standings-empty {
@@ -209,11 +209,11 @@ const props = defineProps({
     height: 0.4rem;
     line-height: 0.45rem;
     padding-left: 0.24rem;
-    color: var(--q-analysis-text-color-15);
+    // color: var(--q-analysis-text-color-15);
     border-bottom: 1px solid  var(--q-analysis-bd-color-3);
-    background-color:var(--q-analysis-bg-color-1);
+    // background-color:var(--q-analysis-bg-color-1);
     font-size: 0.14rem;
-
+    color: var(--q-analysis-text-color-20);
     letter-spacing: 0;
 
     font-weight: bold;
@@ -233,13 +233,13 @@ const props = defineProps({
 
   .table-score {
     position: relative;
-    background-color: var(--q-analysis-bg-color-1);
+    // background-color: var(--q-analysis-bg-color-1);
     // 头部
     &.backball-table {
       .header {
         color:  var(--q-analysis-text-color-22);
         border-bottom: 1px solid var(--q-analysis-text-color-25);
-        background: var(--q-analysis-text-color-13);
+        // background: var(--q-analysis-text-color-13);
         > div {
           color: var(--q-analysis-text-color-32);
         }
@@ -261,7 +261,10 @@ const props = defineProps({
         color: var(--q-analysis-text-color-2);
       }
       .btn_style {
-        background: var(--q-analysis-text-color-13);
+        // background: var(--q-analysis-text-color-13);
+  background-color: var(--q-gb-bg-c-23);
+  color: var(--q-analysis-text-color-20);
+
         border: 1px solid var(--q-analysis-text-color-23);
       }
     }
@@ -445,7 +448,7 @@ const props = defineProps({
     line-height: 0.6rem;
     text-align: center;
     padding-top: 0.05rem !important;
-    background-color:var(--q-analysis-bg-color-1);
+    // background-color:var(--q-analysis-bg-color-1);
     color: var(--q-analysis-text-color-14);
 
     font-size: 12px;

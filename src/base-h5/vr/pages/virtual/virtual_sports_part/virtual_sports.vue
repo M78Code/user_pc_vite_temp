@@ -289,17 +289,25 @@ export default {
      * @params {Object} mid 赛事id,batchNo 期号
      */
     arrived10_handle({mid,batchNo}){
-      if(this.match_list_by_no && this.match_list_by_no.length){
-        this.match_list_by_no.forEach(m => {
-          if(m.batchNo == batchNo){
-            m.mhs = 1;  //赛事级别状态
-          }
-        });
-      }
-      if(this.sub_menu_type == 1004 && !this.singleton_10second){
-        this.singleton_10second = true;
-        this.get_score_basket_ball();
-      }
+      this.match_list_all_batches.forEach(item=>{
+        if(item.batchNo == batchNo){
+          item.matchs.forEach(match=>{
+            match.is_vr_lock = true;
+          })
+        }
+      })
+      // 旧代码，不适用复刻版倒计时10s封盘
+      // if(this.match_list_by_no && this.match_list_by_no.length){
+      //   this.match_list_by_no.forEach(m => {
+      //     if(m.batchNo == batchNo){
+      //       m.mhs = 1;  //赛事级别状态
+      //     }
+      //   });
+      // }
+      // if(this.sub_menu_type == 1004 && !this.singleton_10second){
+      //   this.singleton_10second = true;
+      //   this.get_score_basket_ball();
+      // }
     },
     /**
      * 赛事结束检查是否该轮赛事全部结束,以便展示赛果

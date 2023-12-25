@@ -77,7 +77,6 @@ const set_bet_obj_config = () => {
 <style lang="scss" scoped>
     .bet-mix-show{
         height: 0.4rem;
-        border-radius: 4px;
         overflow: hidden;
         padding-left: .24rem;
         padding-right: .24rem;
@@ -87,7 +86,7 @@ const set_bet_obj_config = () => {
         justify-content: space-between;
         width: 100%;
         background: var(--q-gb-bg-c-22);
-        border-radius: 12px;
+        border-radius: .12rem;
         margin: 0.1rem 0;
         color: var(--q-gb-t-c-11);
         font-size: .2rem;

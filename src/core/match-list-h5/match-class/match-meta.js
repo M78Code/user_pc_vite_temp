@@ -500,8 +500,14 @@ class MatchMeta {
       isVirtualSport: 1
     })
     if (this.current_euid !== `10000_${md}`) return []
+    
     if (+res.code !== 200) {
-      this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
+      this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
+      if (res.code === '0401038') {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('msg.msg_nodata_22')}`)
+        this.set_page_match_empty_status({ state: false});
+        return []
+      }
       return []
     }
     // 避免接口慢导致的数据错乱

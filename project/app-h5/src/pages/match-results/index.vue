@@ -79,14 +79,17 @@ const switchHandle = async val => {
     state.matchs_data = []
     //获取 赛果菜单
     if (val) {
-        MenuData.set_results_kemp(1)
+        MenuData.set_results_type(1)
         state.slideMenu_sport = []
         MenuData.set_result_menu_api_params({
             md:state.currentSlideValue
         })
-        state.matchs_data = await MatchMeta.get_champion_match_result()
+        state.matchs_data = await lodash_.debounce(()=>{
+            return MatchMeta.get_champion_match_result();
+        },1000) 
+        console.error('get_champion_match_result')
     } else {
-        MenuData.set_results_kemp(0)
+        MenuData.set_results_type(0)
     }
     api_analysis.get_match_result_menu( {menuType:val} ).then( async ( res = {} ) => {
         if(res.code == 200){
@@ -138,10 +141,10 @@ const set_scroll_data_list = (data_list = []) => {
 // 设置滑动菜单的选中id
 const set_scroll_current = async item => {
     state.matchs_data = []
-    console.log('set_scroll_currentMenuData.get_results_kemp()', MenuData.get_results_kemp(), item)
+    console.log('set_scroll_currentMenuData.get_results_kemp()', MenuData.get_results_type(), item)
     if (!item) return
     MenuData.set_current_lv_2_menu_i(item)
-    if (MenuData.get_results_kemp()) {
+    if (MenuData.get_results_type() == 1) {
         state.slideMenu_sport = []
         MenuData.set_result_menu_api_params({
             md:state.currentSlideValue
@@ -168,7 +171,7 @@ const goBackAssign = () => {
     MenuData.set_init_menu_list()
     MenuData.set_current_lv1_menu(2);
     MenuData.set_current_lv_2_menu_i({});
-    MenuData.set_results_kemp(0)
+    MenuData.set_results_type(0)
 }
 MenuData.is_esports() && MenuData.set_top_menu_title({})//从电竞过来 这个菜单没有制空 所以菜单不对 判断了是 电竞
 MenuData.set_current_lv1_menu(28)//设置为赛果

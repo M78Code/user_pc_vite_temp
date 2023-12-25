@@ -66,6 +66,9 @@ class MenuData {
     this.current_lv_2_menu = {};
     this.current_lv_2_menu_i = '';
     this.menu_csid = '';
+
+    // 收藏数量
+    this.collect_count= ref(0)
     //-----------------------------------VR 电竞 收藏--------------------------------------//
     this.top_menu_title = {}
     this.collect_list = []
@@ -76,8 +79,8 @@ class MenuData {
      this.result_menu_lv1_mi = ''
      // 赛果 日期/赛中
      this.result_menu_api_params = {}
-     //是否冠军赛果
-     this.is_results_kemp = 0;
+     //赛果类型  0 普通 1冠军 2vr 3电竞
+     this.is_results_type = 0;
       //----------------------------------------------------------------------------------------//
 
     //当前的菜单 lv3
@@ -110,7 +113,7 @@ class MenuData {
 
   // 刷新后 获取缓存数据
   set_menu_h5_key_refresh() {
-    const notItem = ['menu_type','current_lv_1_menu_mi','update_time']
+    const notItem = ['menu_type','current_lv_1_menu_mi','update_time','collect_count']
     // 获取数据缓存
     let session_info = SessionStorage.get('menu_app_h5');
     if (!session_info) {
@@ -125,6 +128,10 @@ class MenuData {
     }
   }
 
+  // 设置收藏数量
+  set_collect_count(count){
+    this.collect_count.value = count
+  }
 
   // 初始化需要使用的数据
   set_init_menu_list(){
@@ -155,14 +162,14 @@ class MenuData {
   set_result_menu_api_params(val){
     this.result_menu_api_params = val
   }
-  set_results_kemp(val){
-    this.is_results_kemp = val;
+  set_results_type(val){
+    this.is_results_type = val;
     this.set_cache_class({
-      is_results_kemp:val
+      is_results_type:val
     })
   }
-  get_results_kemp(){
-    return this.is_results_kemp
+  get_results_type(){
+    return this.is_results_type
   }
   
   // 根据菜单id获取下级菜单id 二级菜单
@@ -373,6 +380,7 @@ class MenuData {
     this.set_menu_match_date()
     this.set_cache_class({
       data_tab_index:index,
+      data_time:time,
       current_lv_3_menu:{field1:time}
     });
     this.update();
@@ -742,7 +750,6 @@ class MenuData {
   }
   // 如果是赛果，并且是 虚拟体育
   is_results_virtual_sports() {
-    console.log('this.get_current_sub_menuid()',this.get_current_sub_menuid())
     if (
       this.is_results() &&
       [1001, 1002, 1004, 1010, 1011, 1009].includes(
@@ -1140,6 +1147,10 @@ class MenuData {
       if (this.is_jinzu()) {
         const euid = this.get_euid('50101') || 40603; // 获取euid
         return euid;
+      }
+      // 赛果取 赛种id
+      if(this.current_lv_1_menu_i == 28){
+        return this.result_menu_api_params.sport 
       }
       return this.current_lv_2_menu_i || this.current_lv_2_menu?.menuId || "40003";
     }

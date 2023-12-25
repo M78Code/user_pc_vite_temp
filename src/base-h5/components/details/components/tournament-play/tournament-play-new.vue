@@ -712,8 +712,6 @@ export default defineComponent({
     onUnmounted(() => {
       // #TODO emit
       component_data.emitters.map((x) => x())
-      // useMittOn(MITT_TYPES.EMIT_CHANGE_BASE_SCORE).off;
-      // useMittOn(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).off
       // debounce_throttle_cancel(bet_click_);
       clearTimeout(component_data.timer1_)
       clearTimeout(component_data.timer2_)

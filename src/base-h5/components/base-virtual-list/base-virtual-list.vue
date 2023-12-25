@@ -1,19 +1,30 @@
 
 <template>
   <div class="outContainer">
+    <!-- 滚动容器 -->
     <div class="scrollerContainer" ref="scrollerContainerRef" @scroll="onScroll">
       <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
       <div class="contentList" :style="styleTranslate" ref="contentListRef">
         <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index">
            <slot name="default" :item="item" :index="index"></slot>
         </div>
+        <!-- 到底了容器-->
+        <div :class="['loading-more-container']" v-if="isScrolledRealBottom && isShowMoreWrapper">
+          <div style="color:#AAAEB8;font-size:.12rem;"> {{ i18n_t("scroll_wrapper.is_footer") }} </div>
+        </div>
       </div>
     </div>
+    <!-- 回到顶部按钮组件 -->
+    <template v-if="isShowGoTop">
+      <ScrollTop :list_scroll_top="scroll_top" @back-top="gotTop" />
+    </template>
   </div>
 </template>
 
 <script setup>
 import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, onUpdated, ref, toRefs, watch } from 'vue'
+
+import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 
 const props = defineProps({
   cacheCount: {
@@ -23,12 +34,18 @@ const props = defineProps({
   dataList: {
     type: Array,
     default: () => []
-  }
+  },
+  isShowGoTop: {
+    type: Boolean,
+    default: true
+  },
 })
 
 const emits = defineEmits(["onUpdate"]);
 
 const { cacheCount, dataList } = toRefs(props)
+
+const scroll_top = ref(0)
 
 // 猜测高度（预估高度）
 const maybeHeight = 100
@@ -185,7 +202,7 @@ const updateHeightAndPos = () => {
       }
     }
   }
-  pillarDomHeight.value = positionDataArr.length > 0 ? positionDataArr[positionDataArr.length - 1].endPos : 0
+  pillarDomHeight.value = positionDataArr.length > 0 ? positionDataArr[positionDataArr.length - 1]?.endPos : 0
 }
 
 /**
@@ -200,7 +217,7 @@ const fixScrollTopWhenNotPositive = () => {
   // 视口第一个元素底部位置与视口顶部位置存在偏移量，且是向上滚动，则需要修正scrollTop值
   if (startOffset > 0 && !isPositive) {
     // 无论新增动态项的实际高度是比记录的高度高还是比记录的高度低，这里都将scrollTop的位置修正为视觉上视口顶部距离视口第一个元素底部有startOffset个间隔的位置
-    const newScrollTop = positionDataArr[start.value].endPos - startOffset
+    const newScrollTop = positionDataArr[start.value]?.endPos - startOffset
     fixingScrollTop = true
     nextTick(() => {
       scrollerContainerDom.scrollTo({ top: newScrollTop })
@@ -211,13 +228,21 @@ const fixScrollTopWhenNotPositive = () => {
 /**
  * 判断滚动容器是否滚动到了真正的最底部
  */
-const isScrolledRealBottom = () => {
+const isScrolledRealBottom = computed(() => {
   const scrollerContainerDom = scrollerContainerRef.value
   if (!scrollerContainerDom) return false
 
   const { scrollTop, scrollHeight, clientHeight } = scrollerContainerDom
   return isRealScrollEnd(scrollTop, scrollHeight, clientHeight)
-}
+})
+
+/**
+ * 滚动容器是否大于父元素高度
+ */
+const isShowMoreWrapper = computed(() => {
+  return pillarDomHeight.value >= scrollerContainerRef.value?.offsetHeight
+})
+
 /**
  * 是否滚动到最底部
  */
@@ -234,17 +259,20 @@ const onScroll = (evt) => {
   if (!scrollerContainerDom) return
 
   const { scrollTop } = scrollerContainerDom
+
+  scroll_top.value = scrollTop
+
   // 正数或0表示向下滚动
   isPositive = scrollTop - lastScrollTop >= 0
   lastScrollTop = scrollTop
 
   start.value = findStartByBinarySearch(positionDataArr, scrollTop)
   // 记录视口第一个元素底部位置与scrollTop之间的偏移量，用于onUpdate中修正scrollTop
-  startOffset = positionDataArr[start.value].endPos - scrollTop
+  startOffset = positionDataArr[start.value]?.endPos - scrollTop
 
   const _cacheCount = cacheCount.value
   const realStart = Math.max(0, start.value - _cacheCount)
-  contentListOffset.value = positionDataArr[realStart].startPos
+  contentListOffset.value = positionDataArr[realStart]?.startPos
 }
 
 /**
@@ -284,6 +312,18 @@ const findStartByBinarySearch = (_positionDataArr, scrollTop) => {
   }
   return resultIdx
 }
+
+/**
+ * 列表回到顶部
+ */
+ const gotTop = () => {
+  let timer = setTimeout(() => {
+    scrollerContainerRef.value && scrollerContainerRef.value.scrollTo({ top: 0, behavior: 'smooth' });
+    clearTimeout(timer)
+    timer = null
+  }, 100)
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -312,6 +352,15 @@ const findStartByBinarySearch = (_positionDataArr, scrollTop) => {
   left: 0;
   right: 0;
   will-change: transform;
+  .loading-more-container{
+    width: 100%;
+    height: 181px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: var(--q-gb-bg-c-18);
+  }
 }
 .item {
   width: 100%;

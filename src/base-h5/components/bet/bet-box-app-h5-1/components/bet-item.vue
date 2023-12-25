@@ -13,11 +13,11 @@
                 !(items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0) ? 'not-chain-bet' : ''
             ]">
             <div class="fw-s-s bet-left">
-                <div class="w-100 f-s-c font14 ">
+                <div class="w-100 f-s-c font14 font500">
                     <span class="text-flow-none" v-html="items.handicap"></span> 
                 </div>
                 <div class="my-left">
-                    <div class="w-100 handicap my-4">
+                    <div class="w-100 handicap">
                         <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bet_inplay") + ']'}}</span>
                         <span class="text-a1a text-flow-none mr-4 font400">{{ items.playName }}
                             <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
@@ -26,9 +26,9 @@
                         <span class="text-a1a text-flow-none text-009 font400" v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
                         <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
                     </div>
-                    <div class="w-100 fon12 font400 " v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
+                    <div class="w-100 fon12 font400 my-4" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
                     </div>
-                    <div class="w-100 fon12 font400 text-a1a-i">{{ items.tid_name }}</div>
+                    <div class="w-100 fon12 font400">{{ items.tid_name }}</div>
                 </div>
             </div>
             
@@ -189,14 +189,11 @@ const set_delete = () => {
         .bet-left {
             width: 2.70rem;
             .my-left{
-                padding-left: 0.1rem;
+                padding-left: 0.04rem;
                 border-left: 2px solid var(--q-gb-bg-c-13);
                 margin-top: 0.06rem;
                 color: var(--q-gb-t-c-11);
                 font-size: 0.12rem;
-            }
-            .text-a1a-i {
-                margin: .04rem 0;
             }
         }
 

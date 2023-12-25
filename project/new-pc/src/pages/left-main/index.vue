@@ -91,15 +91,16 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
 import { compute_css_obj } from 'src/core/server-img/index.js'
 
-
+const mitt_list=[]
 onMounted(() => {
   // 投注成功后获取投注记录数据 24小时内的
   get_unsettle_tickets_count_config()
-  useMittOn(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG, get_unsettle_tickets_count_config).on
+  mitt_list.push(useMittOn(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG, get_unsettle_tickets_count_config).off)
+  
 })
 
 onUnmounted(() => {
-  useMittOn(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG, get_unsettle_tickets_count_config).off
+  mitt_list.forEach(i=>i())
 })
 
 let bet_record_count = ref(0)

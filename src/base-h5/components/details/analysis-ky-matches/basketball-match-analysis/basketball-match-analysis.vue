@@ -14,7 +14,7 @@
 <script setup>
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
-import { ref, watch, nextTick, onMounted, defineAsyncComponent } from 'vue';
+import { ref, watch, nextTick, onMounted, defineAsyncComponent,shallowRef } from 'vue';
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -59,7 +59,7 @@ const props = defineProps({
       component: lineUp
     }
   ])
-  const currentContent = ref('matchResult')
+  const currentContent = shallowRef('matchResult')
   const analysis_basketball_matches = ref(null)
 
 
@@ -136,7 +136,12 @@ const tab_click = ([tab, type]) => {
 .analysis-football-matches {
   position: relative;
   z-index: 80;
-  background-color: var(--q-gb-bg-c-15);
+  // background-color: var(--q-gb-bg-c-13);
+  // background-color: var(--q-gb-bg-c-23);
+
+  :deep(.home-tab) {
+    color: var(--q-analysis-text-color-20);
+  }
 }
 
 .clear-bg {

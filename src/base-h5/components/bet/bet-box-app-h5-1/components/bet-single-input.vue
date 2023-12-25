@@ -10,7 +10,7 @@
     <!-- {{ item }} -->
     <div class="bet_single_info">
       <div class="bet_single_detail" ref="bet_single_detail">
-        <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
+        <div class="content-b" @click.stop="input_click">
           <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
 
           <span class="money-span" ref="money_span" v-if="show_money_span" :style="{ opacity: '1' }"></span>
@@ -50,7 +50,6 @@ import { format_money3,currency_code,UserCtr } from "src/output/index.js"
 let flicker_timer = null
 
 const get_bet_status = ref()
-
 const bet_single_detail = ref()  // 实列
 const money_span = ref()  // 实列
 const show_money_span = ref(false)
@@ -185,7 +184,7 @@ onUnmounted(() => {
     font-size: .16rem;
     background: var(--q-gb-t-c-1);
     color: var(--q-gb-t-c-14);
-    border-radius: 10px;
+    border-radius: .10rem;
     height: 0.44rem;
     margin-top: 0.05rem;
     margin-left: .08rem;
@@ -201,27 +200,6 @@ onUnmounted(() => {
       margin-right: .04rem; 
       font-size: .18rem;
     }
-}
-.nonebox4-third {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 20px;
-}
-.nonebox4-third-left {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    font-size: 14px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 10px;
-    border-radius: 10px;
-    color: #e8f5fe;
-    background-color: #f4f9ff;
 }
 @import url("src/base-h5/css/bet/bet_single_detail.scss");
 .bet_single_detail{
@@ -256,7 +234,7 @@ onUnmounted(() => {
 /* ************** 右边内容 ************** -S */
 .content-b {
   height: 0.44rem;
-  border-radius: 4px;
+  border-radius: .04rem;
   font-size: 0.16rem;
   overflow: hidden;
   padding-left: 0.1rem;
@@ -276,7 +254,7 @@ onUnmounted(() => {
   pointer-events: none;
 }
 .money-number {
-  margin-top: 1px;
+  margin-top: .01rem;
   color:var(--q-gb-t-c-18);
   font-family: Akrobat;
   font-weight: 700;
@@ -284,7 +262,7 @@ onUnmounted(() => {
 .money-span {
   width: 0.02rem;
   height: 0.16rem;
-  margin: 0 1px;
+  margin: 0 .01rem;
   background: var(--q-gb-t-c-1);
   &.money-span3{
     background: transparent;
@@ -302,7 +280,7 @@ onUnmounted(() => {
   background: gray;
   color: #FFFFFF;
   border-radius: 50%;
-  font-size: 13px;
+  font-size: .13rem;
 }
 /* ************** 左边内容 ************** -S */
 .content-t {
@@ -314,9 +292,9 @@ onUnmounted(() => {
 
     &::after {
       content: "";
-      width: 3px;
+      width: .03rem;
       height: 0.12rem;
-      border-radius: 2px;
+      border-radius: .02rem;
       position: absolute;
       left: -0.08rem;
       top: 50%;

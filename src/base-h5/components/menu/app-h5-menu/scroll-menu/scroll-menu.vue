@@ -61,10 +61,10 @@ const props = defineProps({
     default: true
   },
 })
-const scrollDataListNew = computed(()=>{
+const scrollDataListNew = computed(()=> {
   //赛果 串关  不显示收藏
   if(MenuData.is_results() || MenuData.is_mix())return props.scrollDataList;
-  return [...[{mi:50000,btn:1,ct:0,title:"收藏"}],...props.scrollDataList]
+  return [...[{mi:50000,btn:1,ct:MenuData.collect_count.value,title:"收藏"}],...props.scrollDataList]
 })
 const emits = defineEmits(['changeList','changeMenu'])
 /**

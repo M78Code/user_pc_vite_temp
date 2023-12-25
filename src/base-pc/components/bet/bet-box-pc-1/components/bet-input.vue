@@ -4,7 +4,7 @@
         <!--金额输入区-->
         <div class="bet-input-failure">
             <!--投注金额输入框-->
-            <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
+            <input class="bet-input input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
                 :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
             <!--清除输入金额按钮-->
             <div class="bet-input-close" @click.stop="bet_clear_handle">
@@ -19,7 +19,7 @@
                     {{ i18n_t('common.maxn_amount_val') }}
                 </div>
                 <!--金额-->
-                <div class="col-auto bet-win-money yb-number-bold">{{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)) }}</div>
+                <div class="col-auto bet-win-money yb-number-bold">{{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)) }} RMB</div>
             </div>
 
             <!--键盘区域-->
@@ -33,7 +33,7 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted, computed } from "vue"
 import BetKeyboard from "../common/bet-keyboard.vue"
-
+import { IconWapper } from 'src/components/icon'
 import lodash_ from 'lodash'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { format_odds, formatMoney,format_currency, format_currency2 } from "src/output/index.js"
@@ -69,6 +69,7 @@ onMounted(() => {
     ref_data.emit_lsit = {
         emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
         emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
+        emitter_3: useMittOn(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY, set_bet_multiple_money).off,
     }
     let min_max_obj = lodash_.get(BetViewDataClass,`bet_min_max_money[${props.item.playOptionsId}]`,{})
     BetData.set_bet_keyboard_config(min_max_obj)
@@ -140,6 +141,11 @@ const set_win_money = () => {
         BetData.set_bet_obj_amount(money_a,props.item.playOptionsId)
     }
 }
+
+//获取多项单注金额
+const  set_bet_multiple_money = (val) => {
+    ref_data.money = val
+}
 </script>
 
 <style scoped lang="scss">
@@ -161,37 +167,11 @@ input[type="number"] {
         width: 100%;
         padding: 4px 6px;
         margin-top: 2px;
+        color: #191c24;
         height: 32px;
         line-height: 18px;
-    &:focus,&:focus-visible{
-        transition: .02s;
-        outline: none;   
+        outline: none;
     }
-    &::-webkit-input-placeholder {/*Chrome/Safari*/
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        color: var(--q-gb-t-c-8);
-    }
-    &::-moz-placeholder {/*Firefox*/
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        color: var(--q-gb-t-c-8);
-    }
-    &::-ms-input-placeholder {/*IE*/
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        color: var(--q-gb-t-c-8);
-    }
-}
     .bet-input-close {
         .icon-failure:before {
             color: var(--q-gb-t-c-18);
@@ -233,7 +213,7 @@ input[type="number"] {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    align-item: center;
+    align-items: center;
     margin-bottom: 10px;
 }
 
