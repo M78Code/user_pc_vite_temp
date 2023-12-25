@@ -18,7 +18,12 @@
         v-for="(item, index) in BetData.bet_single_list"
       ></bet-single-info>
     </template>
-    
+    <!-- 多项单注 -->
+    <div v-if="BetData.is_bet_merge && BetData.bet_single_list.length>1">
+      <q-card flat class="relative-position bet-multiple bet-card q-card q-card--flat no-shadow">
+        <BetMultipleInput />
+      </q-card>
+    </div>
     <!-- 已投注 -->
     <template v-else>
       <!--投注后信息-->
@@ -29,9 +34,7 @@
         v-for="(item, index) in BetViewDataClass.orderNo_bet_obj"
       ></bet-single-record>
     </template>
-    <div v-if="BetData.is_bet_merge">
-      <BetMultipleInput />
-    </div>
+    
     
   </div>
 </template>
