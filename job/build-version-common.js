@@ -74,26 +74,33 @@ export const PROJECT_MAP_WITH_DESCRIPTION = {
    },     
    project_3: {
     value:  "yazhou-h5",
+    main_project:1,
     description:"2021亚洲-H5 重构版本  亚洲版 H5（新版)  "
+   
    },        
    project_4: {
     value:  "yazhou-pc",
+    main_project:1,
     description:"2021亚洲-PC 重构版本  亚洲版 PC（新版)  "
    },   
    project_5: {
     value:  "app-h5",
+    main_project:1,
     description:"2023亚洲-H5  复刻版 H5  - KYAPP "
    },   
    project_6: {
     value:  "new-pc",
+    main_project:1,
     description:"2023亚洲-PC     "
    },   
    project_7: {
     value:  "ouzhou-pc",
+    main_project:1,
     description:"2023欧洲-PC   "
    },   
    project_8: {
     value:  "ouzhou-h5",
+    main_project:1,
     description:"2023欧洲-H5  "
    },   
  
@@ -127,9 +134,15 @@ export const PROJECT_MAP_WITH_DESCRIPTION = {
 
  //数字对应的项目
  let  PROJECT_MAP = {}
-
+//客户端主要项目
+ let MAIN_PROJECT_ARR=[]
 for(let key in PROJECT_MAP_WITH_DESCRIPTION){
-  PROJECT_MAP[key] = PROJECT_MAP_WITH_DESCRIPTION[key]['value']
+  let pm = PROJECT_MAP_WITH_DESCRIPTION[key]['value']
+  PROJECT_MAP[key] = pm
+
+  if(PROJECT_MAP_WITH_DESCRIPTION[key]['main_project']){
+    MAIN_PROJECT_ARR.push(pm)
+  }
 }
 
 
@@ -146,11 +159,15 @@ for(let key in PROJECT_MAP_WITH_DESCRIPTION){
   const PUBLIC_STATIC_OTHER_DIR= [ 'other-assets']
   // 默认模版名称
   const DEFAULT_VERSION_NAME = ''
+  //是客户端主要项目
+  const IS_MAIN_PROJECT = MAIN_PROJECT_ARR.includes(PROJECT_NAME)
   return {
     PROJECT_NAME,
     DEFAULT_VERSION_NAME,
     NEED_DELETE_PROJECT,
-    PUBLIC_STATIC_OTHER_DIR
+    PUBLIC_STATIC_OTHER_DIR,
+    MAIN_PROJECT_ARR,
+    IS_MAIN_PROJECT  
   };
 };
 
@@ -328,7 +345,8 @@ const   BUILD_STATIC_DIR_NEED_CHANGE =  BUILD_STATIC_DIR_PATH != BUILD_STATIC_DI
         BUILD_STATIC_DIR_PATH,
         BUILD_STATIC_DIR_TARGET_PATH,
         BUILD_STATIC_DIR_NEED_CHANGE,
-        BUILD_YUNWEI_COPY_ROOT_DIR
+        BUILD_YUNWEI_COPY_ROOT_DIR,
+    
       
 
 

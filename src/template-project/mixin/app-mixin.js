@@ -1,4 +1,4 @@
-import { loadLanguageAsync } from "src/output/index.js";
+import { loadLanguageAsync } from "src/output/module/constant-utils-common.js";
 import { throttle } from "lodash";
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
