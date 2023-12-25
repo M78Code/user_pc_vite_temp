@@ -10,6 +10,7 @@
       :class="[is_show_btn?'show':'hide', { 'app-h5': PROJECT_NAME === 'app-h5' }]"
       :src="scroll_top_image" @click="back_top"
     /> -->
+    <div v-show="false">{{ UserCtr.user_version }}</div>
     <div class="component scroll-top list-scroll-to-top"
          :style="compute_css_obj({key: 'h5-kyapp-go-back'})"
          :class="[is_show_btn?'show':'hide', { 'app-h5': PROJECT_NAME === 'app-h5' }]"
@@ -24,7 +25,7 @@ import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } fro
 import { scroll_top_icon, scroll_top_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 import { utils } from 'src/core/utils/common/module/utils.js'
-import { compute_css_obj, PROJECT_NAME } from "src/output/index.js"
+import { compute_css_obj, PROJECT_NAME, UserCtr } from "src/output/index.js"
 const emits = defineEmits(['back-top'])
 const props = defineProps({
   // 父组件滚动高度
@@ -111,7 +112,7 @@ onUnmounted(() => {
   --private-transition-duration: 1s;
   transition: bottom var(--private-transition-duration);
   &.show{
-    bottom:  .85rem;
+    bottom:  1.5rem;
     opacity: 1;
   }
   &.hide{

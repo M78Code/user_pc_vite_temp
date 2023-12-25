@@ -270,7 +270,8 @@ class UserCtr {
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
     // 设置主题
-    LocalStorage.set('default-theme', theme)
+    // LocalStorage.set('default-theme', theme)
+    this.update()
   }
   /**
    * 联赛赛选的数据发生变化
