@@ -17,15 +17,14 @@
       </div>
     </div>
     <!-- 全部联赛折叠 -->
-    <div class="all-leagues">
+    <div class="all-leagues"  @click="handle_all_league">
       <div class="left">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rili.png`" alt="">
         <span>{{i18n_t('filter.all_leagues')}}</span>
       </div>
-      <div class="right" @click="handle_all_league">
+      <div class="right">
         <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" :class="[!is_expend_all && 'expend_all_league']" alt=""> -->
       <div class='img' :class="[!is_expend_all && 'expend_all_league']" :style="compute_css_obj({key:'h5-kyapp-expand-lague'})"></div>
-      
       </div>
     </div>
     <div class="virtual-content-wrapper">
@@ -550,7 +549,6 @@ export default {
           })(match)
         }
       })
-      console.log('matchhh', this.match_list_all_batches);
     },
     set_detail_data(data){
       // TODO 需要对应
@@ -654,16 +652,20 @@ export default {
         this.handle_match_time(batch);
         this.set_batch_timer(batch);
       })
-      console.log(this.interval_ids, 'sss')
+      
+      // 各球种都全部展开
+      match_list_all_batches.forEach(batch=> {
+        batch.is_expend = true
+      })
 
       // 足蓝全部展开，赛马类只展开第一个
-      if(this.sub_menu_type == '1001' || this.sub_menu_type == '1004'){
-          match_list_all_batches.forEach(batch=> {
-          batch.is_expend = true
-        })
-      }else {
-        match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
-      }
+      // if(this.sub_menu_type == '1001' || this.sub_menu_type == '1004'){
+      //     match_list_all_batches.forEach(batch=> {
+      //     batch.is_expend = true
+      //   })
+      // }else {
+      //   match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
+      // }
       return match_list_all_batches
     },
 
@@ -844,7 +846,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 0 0.15rem;
-  height: 0.24rem;
+  height: 0.27rem;
   border-top: 0.02rem solid var(--q-gb-bd-c-3);
   background-color: var(--q-gb-bg-c-25);;
 
