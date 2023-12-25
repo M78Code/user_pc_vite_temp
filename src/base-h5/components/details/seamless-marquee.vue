@@ -138,7 +138,7 @@ const move = (text_width, scroll) => {
     top: 0;
     color: var(--q-gb-t-c-18);
     // color: transparent;
-
+    opacity: 0;
   }
 
   .copy {
