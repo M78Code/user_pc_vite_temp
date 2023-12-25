@@ -39,6 +39,7 @@ switch (PROJECT_NAME) {
     current_menu_data = MenuData_App_h5
     break;
   case 'yazhou-pc': 
+  case 'new-pc':
     current_menu_data = MenuData_PC_Yazhou
     break;
   case 'ouzhou-pc':
