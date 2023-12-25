@@ -6,14 +6,10 @@
 
 <template>
       
-<!-- :style="compute_css_obj({key: 'h5-kyapp-speciality-bg'})"> -->
+  <!-- high_scrolling: set_is_high_scrolling && menu_type !== 100 && !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100, -->
   <div class="scroll-wrapper" ref="container" @scroll="handler_match_container_scroll">
-    <div  :class="['scroll-i-con', {high_scrolling: set_is_high_scrolling && menu_type !== 100 &&
-       !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100,
-        detail_list: is_detail, simple: standard_edition == 1,
-        'static': get_is_static() 
-      }]"
-      :style="{ 'height': get_is_static() ? 'auto' : container_total_height}">
+    <div  :class="['scroll-i-con', { detail_list: is_detail, simple: standard_edition == 1, 'static': get_is_static() }]"
+      :style="get_container_style">
       <template v-if="MatchMeta.match_mids.length > 0">
         <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
           :class="['s-w-item', {last: index == MatchMeta.match_mids.length - 1 }]" 
@@ -206,6 +202,15 @@ const is_show_out = computed(() => {
 const container_total_height = computed(() => {
   const height = is_show_out.value ? VirtualList.container_total_height.value : VirtualList.container_total_height.value - 181
   return `${height}px`
+})
+
+// 动态 样式 
+const get_container_style = computed(() => {
+  const style_obj = { 'height': get_is_static() ? 'auto' : container_total_height.value}
+  if (menu_type !== 100 && !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi))) Object.assign(style_obj, {
+    ...compute_css_obj({key: 'h5-kyapp-speciality-bg' })
+  })
+  return style_obj
 })
 
 // 计算每个赛事id 对应的 容器高度 top 值
