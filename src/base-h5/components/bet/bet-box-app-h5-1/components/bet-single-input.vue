@@ -10,7 +10,7 @@
     <!-- {{ item }} -->
     <div class="bet_single_info">
       <div class="bet_single_detail" ref="bet_single_detail">
-        <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
+        <div class="content-b" @click.stop="input_click">
           <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
 
           <span class="money-span" ref="money_span" v-if="show_money_span" :style="{ opacity: '1' }"></span>
@@ -50,7 +50,6 @@ import { format_money3,currency_code,UserCtr } from "src/output/index.js"
 let flicker_timer = null
 
 const get_bet_status = ref()
-
 const bet_single_detail = ref()  // 实列
 const money_span = ref()  // 实列
 const show_money_span = ref(false)

@@ -266,7 +266,7 @@ const get_query_bet_amount_common = (obj) => {
                 useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
             }
             // 获取盘口值 
-            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo',[])
+            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo',[]) || []
             // 获取预约投注项
             set_bet_pre_list(latestMarketInfo)
         } else {
@@ -387,7 +387,7 @@ const get_query_bet_amount_params = () =>{
 }
 
 // 设置预约投注显示状态
-const set_bet_pre_list = bet_appoint => {
+const set_bet_pre_list = (bet_appoint = []) => {
     const pre_list = []
     bet_appoint.forEach(item => {
         // 判断是否可以预约

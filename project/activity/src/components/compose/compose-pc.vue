@@ -881,8 +881,8 @@ svg {
     background-image: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/bg2.png");
     background-size: 1000px auto;
     background-repeat: no-repeat;
-    transform: scale(var(--activity-scale));
-    margin-top: var(--activity-bg-margin-top);
+    transform: scale(var(--qq--activity-scale));
+    margin-top: var(--qq--activity-bg-margin-top);
   }
 }
 
