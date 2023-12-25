@@ -1112,10 +1112,10 @@ export default {
     border-radius: 0.08rem;
 
     .icon {
-      width: 0.22rem;
-      height: 0.22rem;
+      width: 0.2rem;
+      height: 0.2rem;
       margin-left: 6px;
-      background: var(--q-color-com-img-bg-116) no-repeat;
+      background: url($SCSSPROJECTPATH+"/image/png/clock.png") no-repeat;
       background-size: 100%;
     }
   }

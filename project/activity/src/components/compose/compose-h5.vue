@@ -167,7 +167,7 @@
             </div>
             <div class="add-btn dec" @click="set_volume(1)">-</div>
             <slider
-              v-model="volume"
+              v-model:value="volume"
               @change_is_mousedown="is_mousedown = $event"
               :min="currentSynthConfig.ownBaseTicket == 0 ? 0 : 1"
               :max="

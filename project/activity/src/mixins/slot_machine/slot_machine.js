@@ -63,7 +63,7 @@ export default {
           total: 0,
           type: 1, // 1、彩金记录 2、合成记录 3、重置记录
           current: 1, // 分页，当前第几页
-          size: 5, //每页多少条数据，默认6条
+          size: 5, //每页多少条数据，默认5条
         }
       },
       goToPage: 1,
@@ -101,6 +101,7 @@ export default {
         msg: ""
       },
       isFirstTime: false, // 是否是首次提示
+      page_temp:'',
     }
   },
   computed: {
@@ -186,7 +187,25 @@ export default {
     document.addEventListener('visibilitychange', this.isHidden)
   },
   methods: {
-       
+    goToHistoryPage(e){
+      if(e){
+        if(!e.target.value){
+          this.page_temp = e.target.value;
+          return;
+        }
+        if(e.target.value=='0'){
+          this.page_temp = '';
+          return;
+        }
+        let val = Math.min(+e.target.value, this.pagenation_max)
+        if(val>this.pagenation_max){
+          val = this.pagenation_max;
+        }
+        this.page_temp = val;
+        this.gameHistoryLists.params.current = val
+        this.get_activity_slot_get_game_record(val,this.gameHistoryLists.params.type, this.gameHistoryLists.params.size)
+      }
+    },
     // lodash debounce防抖函数和throttle节流函数功能cancel函数调用
     debounce_throttle_cancel(fun) {
       if (fun && fun.cancel && typeof fun.cancel == "function") {

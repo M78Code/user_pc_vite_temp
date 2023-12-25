@@ -6,7 +6,7 @@
   
   <!-- 自动接受更好的赔率 -->
   <div class="accept" :class="!BetData.bet_is_accept ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
-      自动接受更好的赔率
+      自动接受更好的赔率 
   </div>
 
   <div class="f-e-c bet-submit" v-if="BetViewDataClass.bet_order_status == 1">
@@ -66,7 +66,6 @@ import { UserCtr ,format_money2,compute_local_project_file_path,MenuData} from "
 import { odds_table } from "src/core/constant/common/module/csid.js"
 import { i18n_tc } from "src/boot/i18n.js"
 
-
 const ref_data = reactive({
   // 是否可以投注
   is_bet_single: true,
@@ -74,6 +73,12 @@ const ref_data = reactive({
   // 滑块初始值
   basic_model: 5,
   emit_lsit: {},
+  // 第一次滑动 限频
+  count: 0,
+  // 串关/单关 滑动区域
+  move_leng: 255,
+  // 同上
+  end_leng: 200,
 })
 
 onMounted(()=>{
@@ -83,27 +88,31 @@ onMounted(()=>{
 
   window.addEventListener('touchmove',(event)=>{
     let fit = lodash_.get(event,'target.className','')
+    get_leng_px()
     if(fit == 'bet-box'){
       let page_x = lodash_.get(event,'changedTouches[0].pageX',0)
-      if(page_x > 5 && page_x < 255){
+      if(page_x > 5 && page_x < ref_data.move_leng){
         ref_data.basic_model = page_x
       }
     }
   }, {
     passive: false
   })
+
   window.addEventListener('touchend',(event)=>{
     let fit = lodash_.get(event,'target.className','')
-    if(fit == 'bet-box'){
+    get_leng_px()
+    if(fit == 'bet-box' && ref_data.count == 0){
+      ref_data.count++
       let page_x = lodash_.get(event,'changedTouches[0].pageX',0)
-      if( page_x < 200){
-        ref_data.basic_model = 5
+      if( page_x < ref_data.end_leng){
+        init_slider_config()
       } else {
         //  如果投注项有不允许投注的内容 提示 并且滑动到默认位置 
         if(!ref_data.is_bet_single) {
+          init_slider_config()
           let text = '当前投注项不允许投注'
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
-          ref_data.basic_model = 8
         } else {
           // 未投注之前 可以点击
           if(BetViewDataClass.bet_order_status == 1){
@@ -119,38 +128,26 @@ onMounted(()=>{
 
 onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());
-
+    window.removeEventListener('touchstart',init_slider_config)
     window.removeEventListener('touchmove',init_slider_config)
     window.removeEventListener('touchend',init_slider_config)
 })
 
-// 滑块滑动 并且松手才会触发
-const change_slider_model = (event) =>{
-  let basic_model = ref_data.basic_model
-  // 按住滑块 放开 如果滑动距离小于 80 则不进行投注处理
-  if(event == 'end'){
-    if(basic_model < 80){
-      ref_data.basic_model = 8
-    } else {
-      //  如果投注项有不允许投注的内容 提示 并且滑动到默认位置 
-      if(!ref_data.is_bet_single) {
-        let text = '当前投注项不允许投注'
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
-        ref_data.basic_model = 8
-      } else {
-        // 未投注之前 可以点击
-        if(BetViewDataClass.bet_order_status == 1){
-          submit_handle()
-          console.error('submit_handle()',submit_handle())
-        }
-      }
-    }
-  }
-}
-
 // 投注验证失败 初始化滑块
 const init_slider_config = () => {
   ref_data.basic_model = 5
+  ref_data.count = 0
+}
+
+// 串关/单关 获取到限制的距离
+const get_leng_px = () => {
+  if(BetData.is_bet_single){
+    ref_data.move_leng = 255
+    ref_data.end_leng = 200
+  } else {
+    ref_data.move_leng = 200
+    ref_data.end_leng = 150
+  }
 }
 
 // status 是响应式的 可以用于重新计算
