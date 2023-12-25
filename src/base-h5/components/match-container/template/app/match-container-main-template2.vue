@@ -4,7 +4,8 @@
 <template>
   <!-- 全部联赛标题 -->
   <div class="all_league_title component match-container-main-template2" v-if="i === 0" @click.stop="handle_all_ball_seed_fold">
-    <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
+   <!-- 全部联赛 -->
+    <div> <img :src="icon_date" alt=""> <span> {{ i18n_t('filter.all_leagues')}}</span> </div> 
     <!-- <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt=""> -->
     <div :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
   </div>
@@ -138,7 +139,7 @@ export default {
     }
   }
   .expand_item{
-    width: 18px;
+    width: 0.2rem;
     height: 16px;
     transition: transform 0.25s ease;
     transform: rotate(-180deg);
