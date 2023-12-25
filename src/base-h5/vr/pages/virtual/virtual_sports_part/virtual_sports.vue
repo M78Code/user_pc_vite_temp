@@ -540,7 +540,7 @@ export default {
               cuid: UserCtr.uid,
             }
             api_common.get_matchDetail_getVirtualMatchOddsInfo(params).then(res => {
-              if(res.data.length){
+              if(res?.data?.length){
                 match.hps = res.data[0]?.plays || [];
                 // 按照hpid从小到大排序 
                 match.hps.sort((x, y) => x.hpid - y.hpid);

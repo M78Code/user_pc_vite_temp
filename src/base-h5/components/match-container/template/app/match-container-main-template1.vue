@@ -227,7 +227,7 @@
                           'is-handicap': match.handicap_index == 2,
                           'is-handicap-1': match.handicap_index == 1,
                         }">
-                          <span>{{ match.man }}</span>
+                          <span >{{ match.man }}</span>
                         </div>
                         <!--发球方绿点-->
                         <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
@@ -959,7 +959,7 @@ export default {
         //max-width: 1.4rem;
       }
       &.favorited-icon-hidden{
-        margin-left: 10px;
+        // margin-left: 10px;
       }
     }
   }
@@ -1252,7 +1252,7 @@ export default {
             display: -webkit-box;
             font-size: 0.12rem;
             flex-shrink: 0;
-            max-width: 100%;
+            max-width: 100px;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             text-overflow: ellipsis;

@@ -412,7 +412,7 @@ export default {
       // this.$refs.showCard.play();
       this.$emit("play_show_card");
       api_activity
-        .get_activity_slot_config()
+        .get_synth_config()
         .then((res) => {
           let { code, data } = { ...res };
           if (code == 200) {
