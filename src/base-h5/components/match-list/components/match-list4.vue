@@ -6,7 +6,14 @@
   <!-- <ObserverWrapper :match_list="MatchMeta.complete_matchs" com_type="app-h5-new"></ObserverWrapper> -->
   <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate" >
     <template #default="{ item, index }">
-      <template v-if="is_kemp">
+         <!-- 赛果详情精选赛事 -->
+        <template v-if="route.name == 'match_result'">
+         <MatchContainerMainTemplate7
+                    :i="index"
+                    :match_of_list="MatchDataBaseH5.get_quick_mid_obj(item.mid)">
+        </MatchContainerMainTemplate7>
+      </template>
+      <template v-else-if="is_kemp">
         <MatchContainerMainTemplate2
           :i="index"
           :match_of_list="get_match_item(item)">
@@ -32,12 +39,15 @@ import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MenuData } from 'src/output/index.js';
 import MatchContainerMainTemplate2 from "src/base-h5/components/match-container/template/app/match-container-main-template2.vue"; 
 import MatchContainerMainTemplate5 from "src/base-h5/components/match-container/template/app/match-container-main-template5.vue"; 
+// app-h5 赛果精选列表
+import MatchContainerMainTemplate7 from "src/base-h5/components/match-container/template/app/match-container-main-template7.vue"; 
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 
 const defer_render = use_defer_render()
 
 const is_first = ref(true)
-
+import { useRoute } from "vue-router";
+const route = useRoute()
 const matchs_data = computed(() =>{
   return MatchMeta.current_matchs
 })

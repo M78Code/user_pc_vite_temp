@@ -1045,7 +1045,7 @@ export default {
   border-radius: 2px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  &.match-horse1 {
+  &.match-horse1,  &.match-dog1 {
     background-image: url($SCSSPROJECTPATH+"/image/png/match_horse1.png");
   }
   &.match-horse2 {
@@ -1062,6 +1062,39 @@ export default {
   }
   &.match-horse6 {
     background-image: url($SCSSPROJECTPATH+"/image/png/match_horse6.png");
+  }
+  &.match-dog2 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/match_dog2.png");
+  }
+  &.match-dog3 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/match_dog3.png");
+  }
+  &.match-dog4 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/match_dog4.png");
+  }
+  &.match-dog5 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/match_dog5.png");
+  }
+  &.match-dog6 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/match_dog6.png");
+  }
+  &.motorcycle5 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/match_motorcycle5.png");
+  }
+  &.motorcycle6 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/match_motorcycle6.png");
+  }
+  &.dirt_motorcycle1 {
+  background-image: url($SCSSPROJECTPATH+"/image/png/dirt_motorcycle1.png");
+  }
+  &.dirt_motorcycle2 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/dirt_motorcycle2.png");
+  }
+  &.dirt_motorcycle3 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/dirt_motorcycle3.png");
+  }
+  &.dirt_motorcycle4 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/dirt_motorcycle4.png");
   }
 }
 
