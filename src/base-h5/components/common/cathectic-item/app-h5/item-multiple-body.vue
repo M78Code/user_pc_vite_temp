@@ -143,7 +143,7 @@ template {
 .item-body {
   .item-header {
     background-color: var(--q-gb-bg-c-13);
-    color: var(--q-gb-bg-c-15);
+    color: var(--q-gb-t-c-14);
     line-height: 0.4rem;
     padding-left: 0.12rem;
   }

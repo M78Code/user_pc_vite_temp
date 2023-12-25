@@ -1,6 +1,6 @@
 <template>
     <div class="q-card__section">
-        <div class="row">
+        <div class="odds-wrap row">
             <div class="line"></div>
             <div class="col">{{i18n_t('bet.bet_multiple')}}</div>
         </div>
