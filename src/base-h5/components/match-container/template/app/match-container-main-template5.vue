@@ -32,6 +32,8 @@
         <div> <img :src="icon_date" alt=""> <span>{{get_date_title}}</span> </div>
         <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
+      <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
+      <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title"></div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
       <div v-if="show_sport_title" @click.stop :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span"> {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }}) </span>
@@ -462,7 +464,11 @@ export default {
   pointer-events: none;
 }
 
-
+.buffer-container {
+  background: var(--q-gb-bg-c-17);
+  height: 5px;
+  width: 100%;
+}
 /* ********赛事容器相关********** -S*/
 
 .counting-down-up-container {
@@ -483,7 +489,7 @@ export default {
   width: 100%;
   height: auto;
   position: relative;
-  background: var(--q-gb-bg-c-18);
+  // background: var(--q-gb-bg-c-18);
 
   .match-status-fixed {
     width: 100%;
@@ -562,11 +568,6 @@ export default {
     // background: var(--q-gb-bg-c-34) !important;
     // box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
     // border-radius: .04rem;
-    .buffer-container {
-      background: var(--q-gb-bg-c-17);
-      height: 5px;
-      width: 100%;
-    }
     .match-content{
       border-radius: 0 0 8px 8px;
       background: var(--q-gb-bg-c-18);
