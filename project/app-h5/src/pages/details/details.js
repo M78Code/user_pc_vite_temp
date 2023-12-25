@@ -705,7 +705,6 @@ export const details_main = () => {
             // res_data && set_details_item(res_data[0]["id"]);
             res_data.length&&matchDetailCtr.value.category_tab_click(res_data[0])
           }
-          debugger
           let search_term = route.query && route.query.search_term;
           if (search_term) {
             router.replace({
