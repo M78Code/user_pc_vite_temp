@@ -26,7 +26,7 @@
     </q-dialog>
     <div class="bet_single_detail f-b-c">
       <div>{{ items.count }}x</div>
-      <div class="content-b" :class="{ 'red-color': !money_ok }" @click="input_click">
+      <div class="content-b" @click="input_click">
         <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
         <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ items.min_money }}-{{ items.max_money }}</span>
         <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
@@ -51,9 +51,9 @@ import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { UserCtr,formatMoney, format_money3,format_money2,currency_code, compute_local_project_file_path } from "src/output/index.js"
-import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
+import { UserCtr,formatMoney,format_money2,currency_code, compute_local_project_file_path } from "src/output/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
+
 const props = defineProps({
     items:{},
     index:{}

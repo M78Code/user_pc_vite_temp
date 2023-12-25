@@ -750,7 +750,6 @@ class MenuData {
   }
   // 如果是赛果，并且是 虚拟体育
   is_results_virtual_sports() {
-    console.log('this.get_current_sub_menuid()',this.get_current_sub_menuid())
     if (
       this.is_results() &&
       [1001, 1002, 1004, 1010, 1011, 1009].includes(
