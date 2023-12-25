@@ -9,16 +9,16 @@ export default {
      },
      style1:{
         placeholder: placeholder_const.style1,
-        content:`      .theme01-root-loading #loading-root-main {
+        content:`      .theme-1-root-loading #loading-root-main {
             color: rgba(23,156,255,0.5);
           }
-          .theme01_y0-root-loading #loading-root-main {
+          .theme-1_y0-root-loading #loading-root-main {
             color: rgba(23,156,255,0.5);
           }
-          .theme02-root-loading #loading-root-main {
+          .theme-2-root-loading #loading-root-main {
             color: rgba(23,156,255,0.5);
           }
-          .theme02_y0-root-loading #loading-root-main {
+          .theme-2_y0-root-loading #loading-root-main {
             color: rgba(23,156,255,0.5);
           }
           html{
