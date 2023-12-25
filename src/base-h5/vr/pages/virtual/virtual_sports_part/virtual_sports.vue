@@ -831,6 +831,9 @@ export default {
     padding-left: 0.07rem;
   }
   .status{
+    .num {
+      color: var(--q-gb-t-c-24);
+    }
     .state{
       margin: 0 5px;
       color: #fff;
@@ -872,11 +875,11 @@ export default {
   .right {
     display: flex;
     align-items: center;
-    img {
+    div {
       width: 0.2rem;
       height: 0.16rem;
       &.expend_all_league {
-        transform: rotate(-180deg);
+        transform: rotate(-90deg);
       }
     }
   }
@@ -921,7 +924,7 @@ export default {
     border-bottom-right-radius: .04rem;
     .vsm-options {
       width: 49%;
-      height: .4rem;
+      height: 0.52rem;
       background: var(--q-gb-bg-c-18);
       border-radius: .04rem;
       margin-bottom: .08rem;
