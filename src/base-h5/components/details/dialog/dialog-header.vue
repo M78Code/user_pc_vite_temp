@@ -17,7 +17,7 @@
         <seamless-marquee :content="tn"/>
         &nbsp;
         <!-- 倒三角收起图标 -->
-        <span class="triangle-down" @click="hide_dialog"></span>
+        <span class="triangle-down triangle-up" @click="hide_dialog"></span>
       </div>
     </div>
   </div>
@@ -79,7 +79,9 @@ export default {
     border-color: #050505 transparent transparent transparent;
     display: inline-block;
     transform: rotate(180deg);
-  
+    &.triangle-up{
+      transform: rotate(0);
+    }
   }
 }
 
