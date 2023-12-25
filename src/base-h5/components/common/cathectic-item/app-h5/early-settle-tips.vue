@@ -35,7 +35,7 @@ let alertTips = ref(false)
     justify-content: right;
     align-items: center;
     margin-bottom: 0.08rem;
-    color: var(--q-gb-bg-c-6);
+    color: var(--q-gb-t-c-18);
     font-size: 0.12rem;
     line-height: 2;
     i {
@@ -43,7 +43,7 @@ let alertTips = ref(false)
     }
   }
 .tips-main {
-  background-color: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-23);
   border-radius: 0.1rem;
   width: 90%;
   padding: 0 0.14rem;
@@ -53,16 +53,18 @@ let alertTips = ref(false)
     font-weight: bold;
     text-align: center;
     line-height: 4;
+    color: var(--q-gb-t-c-18);
   }
   p {
     font-size: 0.16rem;
     line-height: 1.5;
     margin-bottom: 0.2rem;
     text-align: justify;
+    color: var(--q-gb-t-c-24);
   }
   span {
     font-size: 0.20rem;
-    color: var(--q-info);
+    color: var(--q-gb-t-c-1);
     line-height: 2.5;
     border-top: 1px solid #e5e5e5;
     display: block;
