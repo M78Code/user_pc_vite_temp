@@ -554,7 +554,7 @@ class MatchMeta {
       category,
       md,
       tid,
-      type: 28,
+      type: euid ==="0"?29:28,//我的投注 euid为0
       euid: euid,
       showem: 1, // 新增的参数
     })

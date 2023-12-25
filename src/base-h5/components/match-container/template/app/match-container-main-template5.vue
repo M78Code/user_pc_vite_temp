@@ -6,7 +6,7 @@
     <template v-if="match">
       <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
      <!-- 开赛标题  -->
-      <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
+      <div v-if="is_show_opening_title && !is_mix_no_today" @click.stop="handle_ball_seed_fold"
         :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }, i !== 0 && 'mt5px']" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
@@ -23,8 +23,12 @@
           <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
       </div>
+      <div class="all-league-title" v-if="is_show_opening_title && is_mix_no_today"  @click.stop="handle_ball_seed_fold">
+        <div> <img :src="icon_date" alt=""> <span>{{ is_mix_no_today }}</span> </div>
+        <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt="">
+      </div>
       <!-- 全部 -->
-      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_ball_seed_fold">
+      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{get_date_title}}</span> </div>
         <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
@@ -40,7 +44,7 @@
           :class="[(' match-indent league')]">
           <div class="league-t-wrap right-border">
             <!-- 联赛收藏 -->
-            <div v-if="![3000, 900].includes(menu_type) && !is_esports" class="favorited-icon" @click.stop="handle_league_collect">
+            <div v-if="![3000, 900].includes(menu_type) && !is_esports && !is_mix" class="favorited-icon" @click.stop="handle_league_collect">
               <!-- 未收藏 compute_img_url('icon-favorite')-->
               <img v-if="!league_collect_state" :src="not_favorite_app" alt="">
               <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
@@ -55,7 +59,7 @@
               :style="compute_css_obj('menu-sport-active-image', 2102)"></div>
             <div class="esport" v-else-if="match_of_list.csid == 100"
               :style="compute_css_obj('menu-sport-active-image', 2100)"></div>
-            <span class="league-title-text row justify-between">
+            <span :class="['league-title-text row justify-between', { 'no-favorited': is_mix }]">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
                   {{ match.tn }}
@@ -132,10 +136,8 @@
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                 <div class="date-time"
                   v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                  {{ format_M_D(+match.mgt)}}
-                  <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time11')).replaceAll('月', '/').replaceAll('日', '') }} -->
+                  {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
                 </div>
-
                 <!--即将开赛 ms = 110-->
                 <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
                   {{ i18n_t(`ms[${match.ms}]`) }}
@@ -249,7 +251,7 @@
             <!-- 比分选项 -->
             <div class="odds">
               <!--赛事列表收藏-->
-              <div class="collect favorite-icon-top match list-m" @click.stop="handle_match_collect">
+              <div class="collect favorite-icon-top match list-m" @click.stop="handle_match_collect" v-if="!is_mix">
                 <!-- 未收藏图标 compute_img_url('icon-favorite')-->
                 <img v-if="!match_collect_state" :src="not_favorite_app" alt="">
                 <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
@@ -287,7 +289,7 @@ import { i18n_t, compute_img_url } from "src/output/index.js"
 import { format_time_zone,format_M_D } from "src/output/index.js"
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2,date_time, is_detail,is_zaopan, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2,date_time, is_detail,is_zaopan, is_esports, is_results, footer_menu_id, is_mix} from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
@@ -410,6 +412,11 @@ export default {
     const get_date_title =computed(() => {
       return is_zaopan.value&&Number(date_time.value)>0?format_M_D(date_time.value):i18n_t("filter.all_leagues")
     })
+
+    const is_mix_no_today = computed(() => {
+      return (is_mix.value && Number(date_time.value)>0) ? format_M_D(date_time.value) : ''
+    })
+
     let mitt_list=[]
     onMounted(() => {
      mitt_list=[useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, e => {
@@ -426,6 +433,7 @@ export default {
     })
     
     return {
+      is_mix,
       get_date_title,
       active_score,
       go_to_bet,
@@ -438,7 +446,8 @@ export default {
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, footer_menu_id,
       in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item, show_sport_title, compute_css_obj,
       normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app,
-      get_match_status
+      get_match_status,
+      is_mix_no_today
     }
   }
 }
@@ -902,6 +911,9 @@ export default {
       overflow: hidden;
       color: var(--q-color-com-fs-color-26);
       font-weight: 600;
+      &.no-favorited{
+        padding-left: 15px;
+      }
 
       .icon-wapper {
         transform: rotate(90deg);

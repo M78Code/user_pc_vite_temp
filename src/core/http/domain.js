@@ -417,7 +417,12 @@ class AllDomain {
     }
     // 第一步  拿到 可用api
     // 确保 ossobj .api 字段内  有包含 当前这个可用的  api
-    let c_url = new URL(res.config.url);
+    let c_url = '';
+    if(lodash.startsWith(res.config.url,'http')){
+      c_url = new URL(res.config.url);
+    } else{
+      c_url = new URL(res.config.baseURL);
+    }
     // console.log("c_url------", c_url);
     //当前这个可用的 api
     let use_api = c_url.origin;

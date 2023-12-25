@@ -16,7 +16,7 @@
       </div>
     </div>
     <!-- 基本面 -->
-    <div v-if="tabIndex == 0">
+    <div v-if="tabIndex == 0" class="base-bg">
       <!-- 杯赛积分 或者 联赛积分 -->
       <football-standings :detail_data="detail_data"/>
       <!-- 历史交战 -->

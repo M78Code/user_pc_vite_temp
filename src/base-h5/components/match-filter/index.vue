@@ -165,6 +165,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  league_select_list:{
+    type: Array,
+    default:[],
+  }
 });
 
 watch(()=>props.search_val, (newVal) => {
@@ -438,9 +442,11 @@ function type_select(li_item) {
 // 获取已选择的联赛数据
 const get_league_select_list = ()=>{
   list.value = list.value.map(sub=>{
-    UserCtr.league_select_list?.forEach(item=>{
+    props.league_select_list?.forEach(item=>{
       if (sub.id === item.id){
-        sub.select = item.select
+        nextTick(()=>{
+          sub.select = item.select
+        })
       }
     })
      return sub
