@@ -100,9 +100,7 @@ import TabMove from "src/core/tab-move/tab-move.js";
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid var(--q-analysis-bd-color-3);
-  // background: var(--q-analysis-bg-color-1);
-  background-color: var(--q-gb-bg-c-23);
-
+  background: var(--q-analysis-bg-color-1);
   position: sticky;
   top: 0.82rem;
   width: 100%;
