@@ -9,32 +9,32 @@
             <!--金额输入区-->
             <div class="col bet-count">
                 <span>2</span>
-                <span class="operation-symbol">x</span>
+                <span>x</span>
             </div>
             <div class="col-auto right-input">
                 <!--投注金额输入框-->
                 <input class="bet-input input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
                     :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
                 <!--清除输入金额按钮-->
-                <div class="bet-input-close" @click.stop="bet_clear_handle">
-                    <!-- <icon-wapper name="icon-failure" size="12px" /> -->
+                <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money">
+                    <icon-wapper name="icon-failure" size="12px" />
                 </div>
             </div>
         </div>
         <div class="row bet-win yb-fontsize12">
-                <div class="col df-jb">
+            <div class="col df-jb">
                     <!--最高可赢额-->
-                    {{ i18n_t('common.maxn_amount_val') }}
-                </div>
+                 {{ i18n_t('common.maxn_amount_val') }}
+            </div>
                 <!--金额-->
-                <div class="col-auto bet-win-money yb-number-bold">00</div>
-            </div>
+            <div class="col-auto bet-win-money yb-number-bold">00</div>
+        </div>
          
-            <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
-                <div class="col">
-                    <bet-keyboard />
-                 </div>
+        <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
+            <div class="col">
+                <bet-keyboard />
             </div>
+        </div>
     </div>
     
 </template>
@@ -135,7 +135,7 @@ input[type="number"] {
 }
 
 /**单关金额输入框**/
-.bet-single-input {
+.bet-multiple-input {
     .bet-input{
         width: 100%;
         padding: 4px 6px;
@@ -159,7 +159,7 @@ input[type="number"] {
 
     .bet-input-close {
         position: absolute;
-        top: 13px;
+        top: 34px;
         right: 5px;
         cursor: pointer;
         width: auto;
