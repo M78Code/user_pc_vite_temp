@@ -60,15 +60,15 @@
           <div class="league-t-wrap right-border">
           <!-- <div class="league-t-tubiao"></div> -->
             <!-- 联赛收藏 -->
-            <div v-if="![3000, 900].includes(menu_type) && !is_esports" class="favorited-icon" @click.stop="handle_league_collect">
+            <div v-if="![3000, 900].includes(+menu_type) && !is_esports && !is_mix" class="favorited-icon" @click.stop="handle_league_collect">
               <!-- 未收藏 compute_img_url('icon-favorite')-->
               <img v-if="!league_collect_state" :src="not_favorite_app" alt="">
               <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
               <img v-if='league_collect_state' :src="normal_img_is_favorite">
             </div>
-            <span class="league-title-text row justify-between">
+            <span :class="['league-title-text row justify-between', { 'no-favorited': is_mix }]">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
-                <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
+                <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28, 'favorited-icon-hidden': MenuData.is_mix() }">
                   {{ match.tn }}
                 </span>
               </span>
@@ -106,8 +106,8 @@
                   <div class="week-mcid row items-center" v-if="menu_type == 30">
                     <span class="din-regular"> {{ lodash.get(match,'mcid')}} </span>
                   </div>
-                  <!--赛事列表收藏-->
-                  <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
+                  <!--赛事列表收藏 串关坏境下隐藏-->
+                  <div class="favorite-icon-top match list-m" v-if="!is_mix" @click.stop="handle_match_collect">
                     <!-- 未收藏图标 compute_img_url('icon-favorite')-->
                     <img v-if="!match_collect_state" :src="not_favorite_app" alt="">
                     <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
@@ -366,7 +366,7 @@ export default {
 
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin, MenuData, get_date_time,
-      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,icon_date,
+      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,icon_date, is_mix,
       normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan, expand_item,
       is_mix_no_today,
     }
@@ -405,6 +405,7 @@ export default {
     align-items: center;
     > span {
       padding-left: 5px;
+      line-height: 30px;
       color:var(--q-gb-t-c-18);
     }
   }
@@ -822,7 +823,7 @@ export default {
       .favorited-icon{
         width: 14px;
         height: 14px;
-        margin: 0 10px 0 11px;
+        margin: 0 8px 0 11px;
         position: relative;
         flex-shrink: 0;
         > img {
@@ -930,6 +931,9 @@ export default {
     font-weight: 600;
     position: relative;
     top: 1px;
+    &.no-favorited{
+      padding-left: 15px;
+    }
     .icon-wapper{
       transform: rotate(90deg);
     }
@@ -953,6 +957,9 @@ export default {
       line-height: 0.14rem;
       &.match-main-league {
         //max-width: 1.4rem;
+      }
+      &.favorited-icon-hidden{
+        margin-left: 10px;
       }
     }
   }

@@ -32,7 +32,9 @@ const emits = defineEmits(["change"])
 function set_standard_edition(v) {
     isShow.value = false
     UserCtr.set_standard_edition(v)
+    UserCtr.set_menu_init_change()
     emits('change', v);
+    
 }
 </script>
 <style lang="scss" scoped>

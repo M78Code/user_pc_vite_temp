@@ -29,7 +29,10 @@
         v-for="(item, index) in BetViewDataClass.orderNo_bet_obj"
       ></bet-single-record>
     </template>
-
+    <div v-if="BetData.is_bet_merge">
+      <BetMultipleInput />
+    </div>
+    
   </div>
 </template>
 <script setup>
@@ -39,5 +42,6 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import BetSingleInfo from "./bet-single-info.vue";
 // 单关投注后信息
 import BetSingleRecord from "./bet-single-record.vue";
+import BetMultipleInput from "./bet- Multiple-input.vue"
 
 </script>
