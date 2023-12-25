@@ -213,6 +213,19 @@ export default defineComponent({
       }
       return result
     },
+    // 是否显示缓冲容器
+    is_show_buffer_container () {
+      const { is_show_league } = this.match_of_list
+      let flag = false
+      if (project_name === 'app-h5') {
+        if (MenuData.is_today() || MenuData.is_mix() || MenuData.is_esports()) {
+          flag = !this.is_show_opening_title
+        } else {
+          flag = !(this.i === 0 && this.is_show_all)
+        }
+      }
+      return is_show_league && flag
+    },
     // 获取赛事数量
     get_match_count () {
       const { csid, start_flag } = this.match_of_list
@@ -544,7 +557,7 @@ export default defineComponent({
       let state_obj = {
         lvs: this.match_of_list["lvs"] && this.match_of_list["lvs"] != -1,
         muUrl: this.is_show_video_icon,
-        animationUrl: this.match_of_list.mms >= 1,
+        animationUrl: this.match_of_list.mvs > -1,
         icon_path: '',
         final_button_type: '',
       }
@@ -605,12 +618,9 @@ export default defineComponent({
         } else {
           video_url.media_src = this.match_of_list.varl || this.match_of_list.vurl;
         }
-        store.dispatch({ type: 'matchReducer/set_video_url',  payload: video_url });
       }
       // 代表 播放正常视频 标识, 在 match_icon.vue 组件 watch 监听，监听点击直播事件,触发详情页视频直接播放
       //在 match_icon.vue 组件 watch 监听
-      store.dispatch({ type: 'matchReducer/set_play_video',  payload: true });
-      store.dispatch({ type: 'matchReducer/set_show_video',  payload: true });
       this.goto_details(this.match_of_list);
     },
     leaderboard_switch () {

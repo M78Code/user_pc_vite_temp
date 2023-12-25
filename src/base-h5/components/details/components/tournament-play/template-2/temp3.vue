@@ -189,11 +189,12 @@ export default defineComponent({
 
   .play-box-style {
     width: 100%;
-    height: 0.52rem;
-    line-height: 0.52rem;
+    // height: 0.52rem;
+    // line-height: 0.52rem;
     background:var(--q-gb-bg-c-28) !important;
-    padding: 0 0.15rem;
+    padding: 0.05rem;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     border-radius: 4px;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
@@ -211,12 +212,13 @@ export default defineComponent({
 
   .remark {
     flex: 1;
-
     letter-spacing: 0;
+    text-align: center;
   }
 
   .odds-wrap {
-    width: 0.55rem;
+    text-align: center;
+    // width: 0.55rem;
   }
 
   .active {

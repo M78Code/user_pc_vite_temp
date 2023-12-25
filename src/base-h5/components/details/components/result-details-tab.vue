@@ -28,7 +28,7 @@ import lodash from "lodash"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { onMounted, onUnmounted, ref, watch } from "vue"
-import { MenuData } from "src/output/index.js";
+import { MenuData,SessionStorage } from "src/output/index.js";
 //国际化
 import  matchDetail from "src/core/match-detail/match-detail-class.js"
 const router = useRouter()
@@ -249,11 +249,14 @@ onUnmounted(() => {
   position: relative;
   width: 0.4rem;
   height: 0.4rem;
-  background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn.svg");
+  background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn_off.svg");
+  &.collapsed{
+    background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn.svg");
+  }
   background-position: center;
   background-repeat: no-repeat;
   background-size: 0.12rem 0.12rem;
-  transform: rotateZ(180deg);
+  // transform: rotateZ(180deg);
   // @include webkit(transition, transform 0.3s);
 
   // &.collapsed {

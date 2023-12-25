@@ -361,7 +361,7 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   right: 0;
-  will-change: transform;
+  // will-change: transform;
   .loading-more-container{
     width: 100%;
     height: 181px;

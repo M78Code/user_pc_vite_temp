@@ -186,7 +186,7 @@ const event_init = () => {
   // window.vue.scroll_list_wrapper_by = use_router_scroll().scroll_list_wrapper_by
   // 去除参数
   if (!location.search.includes("keep_url")) {
-    history.replaceState(null, "", `${location.pathname}${location.hash}`);
+    history.replaceState(window.history.state, "", `${location.pathname}${location.hash}`);
   }
   // set_hide_skeleton_screen(true)
 };
@@ -215,7 +215,7 @@ const handle_menu_change = () => {
 const destroy_handle = () => {
   // websocket_store.sendSocketCloseCmd();
   matchCtr.value.init();
-  store.dispatch({ type: 'topMenuReducer/set_last_time_sub_menu_type', payload: '' })
+  // store.dispatch({ type: 'topMenuReducer/set_last_time_sub_menu_type', payload: '' })
   off_listeners();
 };
 
