@@ -6,7 +6,6 @@
 <template>
 <!-- 美式足球 -->
   <div class='score_child_2 mx-12 font-style'>
-    <template>
       <!-- 常规4节比赛 -->
       <!-- mmp （13 第一节）（14 301 第二节）（15 302 第三节）（16 303 第四节） -->
       <template v-if="model_a.includes(detail_data.mmp) && detail_data.mo != 1">
@@ -14,7 +13,6 @@
           <span>&ensp;</span>
           <span :class="(score_array.length == key + 1&&detail_data.mo != 1) ? 'active-text': '' " style="letter-spacing: 0.015rem">{{ $filters.score_format(item)}}</span>
         </span>
-      </template>
       <!-- 加时赛 -->
       <!-- mmp 32等待加时 40加时赛 110加时赛结束 100完赛 999完赛 -->
       <template v-if="model_b.includes(detail_data.mmp)">

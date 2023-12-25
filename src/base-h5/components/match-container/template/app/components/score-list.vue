@@ -7,8 +7,8 @@
     :class="{ 'flex-star': [3].includes(+match.csid), standard: get_newer_standard_edition == 2, result: get_menu_type == 28 }">
     <div class="scroll-container-w" :class="{ 'left_scroll': show_left_triangle, 'right_scroll': show_right_triangle,'bq-ball': match.csid == 3, }"
       :ref="`match_score_scroll_w_${match.mid}`">
-      <!-- 需求：棒球，斯诺克，拳击 不显示比分  -->
-      <div class="score-se-inner" ref='scoreWrapScroller' v-if="![3, 12].includes(+match.csid)" :class="{
+      <!-- 需求：棒球3，斯诺克7，拳击12 不显示比分  -->
+      <div class="score-se-inner" ref='scoreWrapScroller' v-if="![3].includes(+match.csid)" :class="{
         standard: get_newer_standard_edition == 2 && get_menu_type != 28,
         result: get_menu_type == 28,
         'is-foot-ball': match.csid == 1 || match.csid == 11,
