@@ -32,6 +32,7 @@ import { i18n_t } from "src/boot/i18n.js";
 
 import STANDARD_KEY from "src/core/standard-key";
 const user_key = STANDARD_KEY.get("user_info");
+import { AllDomain } from "src/core/http/";
 
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
@@ -119,6 +120,8 @@ class UserCtr {
     }
     //弹窗 联赛筛选的数据
     this.league_select_list = []
+    //弹窗 赛果联赛筛选的数据
+    this.amidithion_league_select_list = []
     //获取资源配置(商户后台配置的图片、跳转链接)
     this.resources_obj = {}
     // 用户信息版本
@@ -274,8 +277,14 @@ class UserCtr {
   /**
    * 联赛赛选的数据发生变化
   */
-  set_league_select_list(val) {
-    this.league_select_list = val.value
+  set_league_select_list(val,type) {
+    //赛果筛选
+    if (type && type === 'amidithion'){
+      this.amidithion_league_select_list = val.value
+    }else{
+      //普通筛选
+      this.league_select_list = val.value
+    }
     this.update()
   }
   set_cur_odds(odd) {
@@ -1010,6 +1019,12 @@ class UserCtr {
       if (url_temp.includes("user/getUserInfo")) {
         let data_temp = pako_pb.unzip_data(lodash.get(res, "data.data"));
         data_temp && (res.data.data = data_temp);
+        let gr = (lodash.get(res, "data.data.gr") || "").toUpperCase();
+        if(gr && BUILDIN_CONFIG.DOMAIN_RESULT.gr != gr){
+          AllDomain.begin_process_when_use_url_api_after_process(res);
+          //保存 用户数据
+          BUILDIN_CONFIG.DOMAIN_RESULT.getuserinfo_res = res;
+        }
         if (window.url_param_lg) {
           res.data.data.languageName = window.url_param_lg;
         }

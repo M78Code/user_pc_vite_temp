@@ -39,7 +39,9 @@
         </div>
       </div>
     </div>
-    <match-filter ref="matchRefOld" :search_val="search_val"></match-filter>
+    <match-filter ref="matchRefOld"
+                  :search_val="search_val" 
+                  :league_select_list='UserCtr.amidithion_league_select_list'></match-filter>
     <!-- </div> -->
   </div>
 </template>
@@ -84,7 +86,7 @@ const finishHandle = () => {
     select_list.value = matchRefOld.value.list.filter(v=>v.select)
   }
   //设置选中数据
-  UserCtr.set_league_select_list(select_list)
+  UserCtr.set_league_select_list(select_list,'amidithion')
   emit("closedHandle");
 };
 /**

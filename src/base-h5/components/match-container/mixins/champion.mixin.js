@@ -13,7 +13,6 @@ import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 
 // i: 每个组件的 props 赛事下标， 来源 === 组件
 // match_of_list: 每个组件的 props 赛事对象， 来源 === 组件
-
 export default {
   computed: {
     is_show () {
@@ -28,6 +27,9 @@ export default {
      */
     ball_seed_collapsed ()  {
       return !lodash.get(MatchFold.ball_seed_csid_fold_obj.value, `csid_${this.match_of_list.csid}`, true)
+    },
+    all_ball_seed_collapsed ()  {
+      return MatchFold.all_csid_fold_status.value;
     },
     /**
      * @description 赛事显示/隐藏
