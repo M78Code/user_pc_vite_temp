@@ -16,13 +16,13 @@
 
 export default {
   props: {
-    value: Number  ,
+    value: Number,
     min:{
-      type:Number  ,
+      type:Number,
       default:0
     },
     max: {
-      type:Number  ,
+      type:Number,
       default:100
     },
   },
@@ -62,7 +62,7 @@ export default {
   mounted(){
     this.width = this.$refs.slider.clientWidth
   },
-  beforeUnmount(){
+  beforeDestroy(){
     // 鼠标事件取消监听
     document.removeEventListener("mousemove", this.mousemove);
     document.removeEventListener("mouseup", this.mouseup);

@@ -1,7 +1,7 @@
 import { http, AllDomain } from "src/core/http/";
 import { SessionStorage } from "src/output/index.js";
 import { enter_params } from 'src/core/enter-params/index.js'
-import { loadLanguageAsync,LocalStorage, LayOutMain_pc,MatchDetailCalss,GlobalSwitchClass,MenuData } from "src/output/index.js";
+import { loadLanguageAsync,LocalStorage, LayOutMain_pc,MatchDetailCalss,GlobalSwitchClass,MenuData,useMittOn, MITT_TYPES, useMittEmit } from "src/output/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetWsMessage from "src/core/bet/class/bet-ws-message.js";
@@ -15,6 +15,8 @@ export default {
       }
     },
     created () {
+      this.mitt_list = [];
+      this.mitt_list.push(useMittOn(MITT_TYPES.EMIT_LOADING_CTR_CMD, this.hide_loading).off)
         // 参数控制处理和跳转逻辑
         url_param_ctr_init(this);
         MenuData.get_new_data()
@@ -87,6 +89,17 @@ export default {
         AllDomain.run();
         }
       },
-      
+      // 隐藏loading
+      hide_loading(data){
+        if(data){
+          document.getElementById("loading-root-ele").classList.add('transparent-bg');
+        } else {
+          document.getElementById("loading-root-ele").style.visibility = "hidden";
+        }
+      },
+    },
+    beforeUnmount() {
+      // 销毁监听
+      this.mitt_list.forEach(i=>i());
     },
 }
