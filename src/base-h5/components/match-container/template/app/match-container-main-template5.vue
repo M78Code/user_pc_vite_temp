@@ -11,9 +11,11 @@
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
           <div class="match-status-title">
-            <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
+          <!-- 进行中 -->
+            <img :src="in_progress" /> <span class="din-regular"> {{ i18n_t('list.match_doing') }}</span>
           </div>
-          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
+          <!-- <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt=""> -->
+             <div class="img" :class="['expand_item', {collapsed: collapsed}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
         </template>
         <!-- 未开赛 -->
         <template v-else>
@@ -513,7 +515,7 @@ export default {
       margin-top: .05rem;
     }
 
-    img {
+    img,.img {
       margin-right: .06rem;
       width: .13rem;
       height: .13rem;
