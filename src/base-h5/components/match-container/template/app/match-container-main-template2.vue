@@ -241,7 +241,7 @@ export default {
         height: 0.06rem;
         display: block;
         transition: transform 0.3s;
-
+        transform: rotateZ(90deg);
         &.collapsed {
           transform: rotateZ(180deg);
         }

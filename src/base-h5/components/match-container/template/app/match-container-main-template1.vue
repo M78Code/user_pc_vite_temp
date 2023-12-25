@@ -1413,17 +1413,19 @@ export default {
     .score-fle-container-1{
       position: relative;
       top: 1px;
+      .items-start {
+        display: inline-block;
+        height: 100%;
+        line-height: .23rem;
+      }
+    }
+    .score-fle-container-snooker {
       display: block;
       width: 1.06rem;
       text-overflow:ellipsis;
       white-space:nowrap;
       overflow:hidden;
       text-align:right;
-      .items-start {
-        display: inline-block;
-        height: 100%;
-        line-height: .23rem;
-      }
     }
     .score-se-inner{
         width: 100%;
