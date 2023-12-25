@@ -240,7 +240,7 @@ const searchTabMenu = ref(null);//足球tab dom
   watch(()=> MenuData.current_lv_1_menu_mi.value, (new_,old_) => {
     MenuData.set_old_current_lv_1_menu_i([2000,300].includes(new_)?old_:'');//电竞vr记录旧菜单id
     MenuData.search_data_tab_index();//清除联赛缓存
-    init_data(new_)
+    init_data(new_,old_ == 28?1:0)
   })
   // 早盘 串关  电竞
   // const set_scroll_early_single = (params) => {
@@ -343,7 +343,7 @@ const searchTabMenu = ref(null);//足球tab dom
     // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
     if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
     // 赛果不走元数据， 直接拉取接口
-    if (MenuData.is_results()) return MatchMeta.get_results_match()
+    // if (MenuData.is_results()) return MatchMeta.get_results_match()
     // 电竞不走元数据， 直接拉取接口
     if (MenuData.is_esports() && !type) return MatchMeta.get_esports_match()
 

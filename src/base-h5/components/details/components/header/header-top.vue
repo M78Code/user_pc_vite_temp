@@ -548,18 +548,8 @@ const clear_timer1_ = () => {
 }
 onBeforeUnmount(clear_timer1_)
 
-const { detailsReducer } = store.getState()
-const goto_detail_matchid = ref(detailsReducer.goto_detail_matchid)
-const unsubscribe = store.subscribe(() => {
-  const { detailsReducer: new_detailsReducer } = store.getState()
-  goto_detail_matchid.value = new_detailsReducer.goto_detail_matchid
 
-})
-onBeforeUnmount(unsubscribe)
-watch(
-  () => detailsReducer.value,
-  () => change_match.value = true
-)
+
 
 const set_video_url = (data) => store.dispatch({ type: 'videoReducer.set_video_url', data })
 const set_show_video = (data) => store.dispatch({ type: 'videoReducer.set_show_video', data })

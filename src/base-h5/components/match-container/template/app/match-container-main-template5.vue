@@ -33,7 +33,7 @@
         <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
-      <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title"></div>
+      <div class="buffer-container" v-if="is_show_buffer_container"></div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
       <div v-if="show_sport_title" @click.stop :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span"> {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }}) </span>
@@ -267,7 +267,7 @@
           <!--  新手版-赛事比分信息 -->
           <div class="match-score-info">
             <template v-if="match.csid != 1">
-              <score-list :main_source="main_source" :match="match"></score-list>
+              <score-list :class="[match.csid == 7 && 'score-content-snooker']" :main_source="main_source" :match="match"></score-list>
             </template>
           </div>
         </div>
@@ -1088,11 +1088,6 @@ export default {
           .score-fle-container-1{
             position: relative;
             top: 1px;
-            display: block;
-            width: 1.12rem;
-            text-overflow:ellipsis;
-            white-space:nowrap;
-            overflow:hidden;
             .items-start {
               display: inline-block;
               height: 100%;
@@ -1113,6 +1108,18 @@ export default {
               flex-shrink: 0;
             }
           }
+        }
+      }
+    }
+
+    .score-content-snooker {
+      :deep(.scroll-container-w){
+        .score-fle-container-1{
+          display: block;
+          width: 1.06rem;
+          text-overflow:ellipsis;
+          white-space:nowrap;
+          overflow:hidden;
         }
       }
     }

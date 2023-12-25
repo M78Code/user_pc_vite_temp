@@ -106,7 +106,7 @@ onMounted(() => {
   // 记录埋点，进入列表页
   GATAG.gtag_view_send("H5_match", "/match");
   // 详情精选赛事页需清空map折叠状态
-  store.dispatch({ type: 'topMenuReducer/set_collapse_map_match', payload: {} })
+  // store.dispatch({ type: 'topMenuReducer/set_collapse_map_match', payload: {} })
   // 事件初始化
   event_init();
 });
@@ -182,11 +182,11 @@ const event_init = () => {
   // 绑定相关事件监听
   on_listeners();
   // 图标出错与mid映射，初始化为空
-  store.dispatch({ type: 'matchReducer/set_img_error_map_mid', payload: {} })
+  // store.dispatch({ type: 'matchReducer/set_img_error_map_mid', payload: {} })
   // window.vue.scroll_list_wrapper_by = use_router_scroll().scroll_list_wrapper_by
   // 去除参数
   if (!location.search.includes("keep_url")) {
-    history.replaceState(null, "", `${location.pathname}${location.hash}`);
+    history.replaceState(window.history.state, "", `${location.pathname}${location.hash}`);
   }
   // set_hide_skeleton_screen(true)
 };
@@ -215,7 +215,7 @@ const handle_menu_change = () => {
 const destroy_handle = () => {
   // websocket_store.sendSocketCloseCmd();
   matchCtr.value.init();
-  store.dispatch({ type: 'topMenuReducer/set_last_time_sub_menu_type', payload: '' })
+  // store.dispatch({ type: 'topMenuReducer/set_last_time_sub_menu_type', payload: '' })
   off_listeners();
 };
 

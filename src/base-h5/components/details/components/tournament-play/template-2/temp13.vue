@@ -4,7 +4,7 @@
  *               主盘放第一个，多盘口排序规则维持不变；坑位规则保持不变；
 -->
 <template>
-  <div class="temp13 mx-5">
+  <div class="compoent temp13 mx-5">
     <div v-show="false">{{BetData.bet_data_class_version}}</div>
     <div class="hairline-border">
       <div class="rad-style">
