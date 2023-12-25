@@ -120,6 +120,8 @@ class UserCtr {
     }
     //弹窗 联赛筛选的数据
     this.league_select_list = []
+    //弹窗 赛果联赛筛选的数据
+    this.amidithion_league_select_list = []
     //获取资源配置(商户后台配置的图片、跳转链接)
     this.resources_obj = {}
     // 用户信息版本
@@ -275,8 +277,14 @@ class UserCtr {
   /**
    * 联赛赛选的数据发生变化
   */
-  set_league_select_list(val) {
-    this.league_select_list = val.value
+  set_league_select_list(val,type) {
+    //赛果筛选
+    if (type && type === 'amidithion'){
+      this.amidithion_league_select_list = val.value
+    }else{
+      //普通筛选
+      this.league_select_list = val.value
+    }
     this.update()
   }
   set_cur_odds(odd) {

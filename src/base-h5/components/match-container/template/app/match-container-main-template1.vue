@@ -959,7 +959,7 @@ export default {
         //max-width: 1.4rem;
       }
       &.favorited-icon-hidden{
-        margin-left: 10px;
+        // margin-left: 10px;
       }
     }
   }

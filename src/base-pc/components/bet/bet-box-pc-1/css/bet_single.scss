@@ -421,17 +421,17 @@
             }
             input::-webkit-input-placeholder {
               font-size: 14px;
-              color: var(--qq--theme-color-bet-input-placeholder) !important;
+              color: rgba(255, 255, 255, 0.4);
             }
 
             input::-moz-placeholder {
               font-size: 14px;
-              color: var(--qq--theme-color-bet-input-placeholder)  !important;
+              color: rgba(255, 255, 255, 0.4);
             }
 
             input:-ms-input-placeholder {
               font-size: 14px;
-              color: var(--qq--theme-color-bet-input-placeholder)  !important;
+              color: rgba(255, 255, 255, 0.4);
             }
             .input-money {
               background: var(--q-gb-bg-c-11);
@@ -499,6 +499,10 @@
             margin-left: -10px;
             margin-right: -10px;
           }
+        }
+        .odds-wrap {
+            justify-content: space-between;
+            align-items: center;
         }
       }
     }
