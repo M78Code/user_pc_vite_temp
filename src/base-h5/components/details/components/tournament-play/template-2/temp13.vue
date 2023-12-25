@@ -40,7 +40,7 @@
                             <div class="bet-item-ky-container" :class="[{'click-bet-bgc':BetData.bet_oid_list.includes(append_single.oid)}]">  
                               <div class="single-name">
                                 <!-- <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
-                                <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_14">
+                                <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_12">
                                 {{append_single.on}}
                               </span>
                               </div>

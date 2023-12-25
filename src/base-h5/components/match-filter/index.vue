@@ -739,12 +739,11 @@ if (type.value == 30) {
       }
 
       &.actived {
-
-
-        // background-clip: content-box;
-        // border-radius: 50%;
-
-        // font-size: 0.12rem;
+        background-clip: content-box;
+        border-radius: 50%;
+        font-size: 0.12rem;
+        background:var(--q-gb-t-c-1);
+        color: var(--q-gb-t-c-14);
       }
     }
   }

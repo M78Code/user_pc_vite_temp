@@ -82,7 +82,6 @@ export default defineComponent({
     onUnmounted(() => {
       // #TODO $root
       data.emitters.map((x) => x())
-      useMittOn(MITT_TYPES.EMIT_FOOTBALL_EVENTS, football_events_handle).off;
       clearTimeout(timer)
       timer = null
     })

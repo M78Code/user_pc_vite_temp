@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 import common from 'src/base-h5/vr/mixin/constant/module/common.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import ServerTime from "src/core/server-time/server-time.js"
@@ -98,10 +99,16 @@ export default {
      * @return {Undefined}Undefined
      */
     draw_timer_by_second(){
+      console.log("draw_timer_by_second=========match========", this.match);
       if(!this.match || !this.match.mgt || !this.match.mid){
         return;
       }
-      let ms = Number(this.match.mgt) - ServerTime.get_remote_time();
+      console.log("this.match.mgt==========", this.match.mgt);
+      console.log("ServerTime.get_remote_time()==========", get_now_server());
+      // let ms = ServerTime.get_remote_time() - Number(this.match.mgt);
+      // let ms = Number(this.match.mgt) - ServerTime.get_remote_time();
+      let ms = Number(this.match.mgt) - get_now_server();
+      console.log("ms===========a///=", ms);
       let single_circle = 60 * 1000;
       let now = ServerTime.get_remote_time();
       if(this.start == null) this.start = now;
@@ -136,10 +143,12 @@ export default {
 
       //时钟毫秒数
       let seconds_ms = remaining_time % single_circle;
+      console.log('144 seconds_ms====1', seconds_ms);
       if(seconds_ms < 0) {
         this.$emit("time_ended",this.mid);
         return;
       }
+      console.log('144 seconds_ms====2', seconds_ms);
 
       //毫秒格式化为: 分钟'秒''
       let minutes = Math.floor(remaining_time / (1000 * 60));

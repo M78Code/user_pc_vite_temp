@@ -1,4 +1,8 @@
 import * as all_theme_config from "./all-theme.js";
+import {
+  set_theme_style_sheet_by_css_obj
+} from "project_path/src/core/index.js";
+
 /**
  * 计算单个项目单种 主题的 变量值
  * @param {*} project_config  单个项目的主题色配置对象
@@ -31,36 +35,7 @@ const compute_theme_map = (project_config, theme) => {
 };
 
 
-/**
- * 动态 写入 css  变量 样式表
- * @param {*} content 
- */
-
-const set_theme_style_sheet=(content)=> {
-  const theme_style_content = `:root{${ content}\n}` 
-  const root_var_stylesheet = document.querySelector('#root-var')
-  if (!root_var_stylesheet) {
-      // 创建style标签
-      const style = document.createElement('style')
-      document.create
-      // 设置style属性
-      style.type = 'text/css'
-      style.id = 'root-var'
-      // 将主题样式写入style内
-      style.innerHTML = theme_style_content
-      // 将style样式存放到head标签
-      document.querySelector('head').appendChild(style)
-  } else {
-      root_var_stylesheet.innerHTML = theme_style_content
-  }
-}
-
-
-
-
-
-
-
+ 
 
 // 主题橙色----日间版   theme01
 // 主题橙色----夜间版  theme02
@@ -79,6 +54,6 @@ export const change_theme_variable = (project, theme) => {
   let project_config = all_theme_config[`theme_config_${project}`];
   let {final_content } = compute_theme_map(project_config, theme);
  
-  set_theme_style_sheet(final_content)
+  set_theme_style_sheet_by_css_obj(final_content)
  
 };
