@@ -142,7 +142,13 @@ const get_menu_ws_list = (list) =>{
     const index = wsList.findIndex((item)=>{return item.mi == 0}),
           is_not_ct = [0,50000,2000,300];
     //全部增加数量
-    if(index !== -1)wsList[index].ct = wsList.map((item)=>{return is_not_ct.includes(item.mi)?0:item.ct}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
+    if(index !== -1) {
+      wsList[index].ct = wsList.map((item)=> {
+        return is_not_ct.includes(item.mi)?0:item.ct
+      }).reduce((n1, n2)=> {
+        return n1+n2
+      }) || 0;//全部
+    } 
     emits('changeList',wsList)
 }
 
@@ -249,7 +255,7 @@ onUnmounted(()=>{
                 left: 0.4rem;
                 font-size: 0.1rem;
                 font-family: "Akrobat";
-                z-index: 20;
+                z-index: 33;
         }
         }
       }
