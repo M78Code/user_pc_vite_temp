@@ -1,11 +1,12 @@
 <template>
   <div class="full-height">
-    <appload v-if="init_load"></appload>
+       <!-- 页面路由开始 -->
+       <router-view />
  
   </div>
 </template>
 <script>
-import appload from "./app-load.vue";
+ 
 import app_mixin from "src/template-project/mixin/app-mixin.js";
 
 import "./src/css/common.scss";
@@ -13,7 +14,7 @@ import "./src/css/common.scss";
 export default {
   mixins: [app_mixin],
   components: {
-    appload,
+    // appload,
   },
   data() {
     return {};

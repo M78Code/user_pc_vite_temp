@@ -271,7 +271,7 @@
           </div> -->
           <div class="tab_bar">
             <p v-for="(item, index) in historiesBar" :key="index"
-              @click.stop="get_activity_slot_get_game_record(1, index + 1, 6)"
+              @click.stop="get_activity_slot_get_game_record(1, index + 1, 5)"
               :class="index + 1 == gameHistoryLists.params.type ? 'active' : ''">
               {{ item }}
             </p>
@@ -366,7 +366,7 @@
           <div class="pagination_wrap" v-if="gameHistoryLists.list.length > 0">
             <div class="pagination_with_input">
               <DataPager :key="gameHistoryLists.params.type" class="record-data-pager"
-                :total="gameHistoryLists.params.total" :pageSize="6" @change="pagination_next" />
+                :total="gameHistoryLists.params.total" :pageSize="5" @change="pagination_next" />
             </div>
           </div>
           <img class="close" @click="gameHistory = false"
