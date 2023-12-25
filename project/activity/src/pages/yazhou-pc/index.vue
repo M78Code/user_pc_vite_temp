@@ -152,7 +152,6 @@ export default {
 
   .relative-position {
     .q-scrollarea__content {
-      display: flex;
     }
 
     .full-width {
