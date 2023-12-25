@@ -174,7 +174,7 @@ const props = defineProps({
   height: auto;
   z-index: 100;
   margin: 0 auto;
-  background: var(--q-gb-bg-c-23);
+  background: var(--q-gb-bg-c-21);
   // background: var(--q-analysis-text-color-19);
   position: sticky;
   top: 1.21rem;
@@ -186,6 +186,7 @@ const props = defineProps({
     justify-content: center;
     align-items: center;
     border-radius: 0.08rem;
+    background: var(--q-gb-bg-c-18);
     // background-color: var(--q-analysis-bg-color-1);
     &::after {
       content: "";
@@ -193,7 +194,7 @@ const props = defineProps({
       position: absolute;
       left: 0;
       top: 0;
-      border: 1px solid var(--q-analysis-bd-color-5);
+      // border: 1px solid var(--q-analysis-bd-color-5);
       border-radius: 0.16rem;
       width: 200%;
       height: 200%;
@@ -217,30 +218,30 @@ const props = defineProps({
       &:nth-child(2) {
         position: relative;
 
-        &:before {
-          content: '';
-          width: 0.01rem;
-          height: 0.14rem;
-          position: absolute;
-          left: 0;
-          top: 0.08rem;
-          background: var(--q-analysis-bg-color-18);
-        }
+        // &:before {
+        //   content: '';
+        //   width: 0.01rem;
+        //   height: 0.14rem;
+        //   position: absolute;
+        //   left: 0;
+        //   top: 0.08rem;
+        //   background: var(--q-analysis-bg-color-18);
+        // }
 
-        &:after {
-          content: '';
-          width: 0.01rem;
-          height: 0.14rem;
-          position: absolute;
-          right: 0;
-          top: 0.08rem;
-          background: var(--q-analysis-bg-color-18);
-        }
+        // &:after {
+        //   content: '';
+        //   width: 0.01rem;
+        //   height: 0.14rem;
+        //   position: absolute;
+        //   right: 0;
+        //   top: 0.08rem;
+        //   background: var(--q-analysis-bg-color-18);
+        // }
       }
 
       &.is-active {
         height: 0.29rem;
-        background: var(--q-gb-bg-c-13);
+        background: var(--q-gb-bg-c-28);
         color: var(--q-analysis-text-color-20);
         &:nth-child(2) {
           &:before, &:after {
