@@ -212,6 +212,7 @@ const props = defineProps({
     // color: var(--q-analysis-text-color-15);
     border-bottom: 1px solid  var(--q-analysis-bd-color-3);
     // background-color:var(--q-analysis-bg-color-1);
+    // background-color: var(--q-gb-bg-c-28);
     font-size: 0.14rem;
     color: var(--q-analysis-text-color-20);
     letter-spacing: 0;

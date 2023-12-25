@@ -101,6 +101,7 @@ export default {
 
         color: #000000;
         font-size: 0.12rem;
+        background-color: #E95B5B;
       }
     }
 

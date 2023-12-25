@@ -29,4 +29,5 @@ export default {
   'gb-t-c-28': '#AFAFAF',
   'gb-t-c-29': '#8D8D8D',
   'gb-t-c-30': '#127dcc',
+  'gb-t-c-31': 'rgab(250,250,250,0.5)',
 }

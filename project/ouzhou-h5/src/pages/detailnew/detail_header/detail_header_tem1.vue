@@ -76,7 +76,7 @@
             <p class="active-num"> {{ detail_count?.home }}</p>
             <p class="active-num"> {{ detail_count?.away }}</p>
           </div>
-          <div class="match-detail-num ml-14 align-right " v-if=" get_match_detail.man">
+          <div class="match-detail-num ml-14 align-right " v-if="get_match_detail.man">
             <!-- {{ scoew_icon_list["S1"].away }} -->
             <template v-if="[7,8,9,10,13].includes(get_match_detail.csid)">
               <p class="default-num">{{ others_point.home }}</p>
@@ -125,8 +125,8 @@
       </template>
     </div>
     <div v-show="false">{{ get_match_detail.csid  }}</div>
-    <!-- 比分组件 目前只写了网球比分组件 -->
-    <template v-if="[5,8,9].includes(+get_match_detail?.csid)">
+    <!-- 1:足球   2:篮球   3:棒球   4:冰球   5:网球   6:美式足球   7:斯诺克 8:兵乓球   9:排球   10:羽毛球 -->
+    <template v-if="[4,5,8,9].includes(+get_match_detail?.csid)">
       <matchScore :detail_data="get_match_detail" />
     </template>
     
