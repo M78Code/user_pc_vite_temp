@@ -947,7 +947,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
      // 获取当前的盘口赔率
      let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
      // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
-     if(!bet_obj.odds_hsw.includes(cur_odds)){
+     let hsw = lodash_.get(bet_obj,'odds_hsw','')
+     if(!hsw.includes(cur_odds)){
         bet_obj.marketTypeFinally = 'EU'
      }
 
