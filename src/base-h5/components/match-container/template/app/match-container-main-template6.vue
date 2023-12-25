@@ -4,7 +4,7 @@
 <template>
   <div class="champion-wrap-2 component match-container-main-template6" v-if="is_show" :style="{paddingBottom:is_show_league(i)?'':'0px'}">
     <div v-if="match_of_list.is_show_ball_title"  class="sport-title match-indent" @click="handle_ball_seed_fold">
-      <span class="score-inner-span"> {{ match_of_list.csna }} </span>
+      <span class="score-inner-span"> {{ match_of_list.csna + `(${match_of_list._total})`}} </span>
       <div class="collapse-dire">
         <!-- <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' /> -->
       </div>
@@ -31,7 +31,7 @@
         <div class="cmrc-title">
           <div class="cmrc-t-league">
             <img :src="get_server_file_path(match_of_list.picUrl)">
-            {{ match_of_list.tournamentName }}
+            <span class="cmrc-tl-text">{{ match_of_list.tournamentName }}</span>
           </div>
           <div>{{ match_of_list.playName }}</div>
         </div>
@@ -102,7 +102,6 @@ export default {
   margin: 0 auto;
   background: var(--q-gb-bg-c-18);
   border-radius: 0.05rem;
-  padding-bottom: 0.08rem;
 
   .league-container {
     height: 0.26rem;
@@ -387,6 +386,10 @@ export default {
       .cmrc-t-league {
         display:flex;
         align-items:center;
+        margin-right:.2rem;
+        .cmrc-tl-text {
+          width:1.4rem;
+        }
         img {
           width:.18rem;
           height:.18rem;

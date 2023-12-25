@@ -30,6 +30,9 @@
         <setect-league @closedHandle="select_dialog = false"></setect-league>
       </div> -->
 
+      <!-- token失效弹框 -->
+      <token-invalid v-if="is_token_invalid_show" @is_go_vender_url='is_go_vender_url'></token-invalid>
+
       <div v-if="setting_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="setting_dialog = false"></div>
         <!-- 筛选弹窗 -->
@@ -47,8 +50,8 @@
       <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetData.bet_s_list.length}}-{{BetData.bet_box_h5_show}}</div>
 
 
-      <!-- 串关投注 --> 
-      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single">
+      <!-- 串关投注 只有串关/电竞/VR 才展示--> 
+      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single&&(is_mix||is_esports||is_vr)">
           <div class="chain_bet" @click="show_chain_bet" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
             <span class="count">{{BetData.bet_s_list.length}}</span>
           </div>
@@ -63,7 +66,6 @@
   <activity-layer v-if="activity_status" @activity_hide="activity_status = false" :activity_layerimg="activity_layerimg"
     :count_down_time="userBannerTimer" />
   <StandardEdition></StandardEdition>
-  <TokenInvalid></TokenInvalid>
 </template>
 
 <script setup>
@@ -75,8 +77,8 @@ import {
   nextTick,
 } from "vue";
 import StandardEdition from 'src/base-h5/components/standard-edition/index.vue'
-import TokenInvalid from "src/base-h5/components/common/token-invalid.vue"
 import { useMittOn, MITT_TYPES, i18n_t, MenuData } from "src/output/index.js";
+import {is_mix,is_esports,is_vr} from "src/base-h5/mixin/menu.js"
 import UserCtr from "src/core/user-config/user-ctr.js"; 
 // import { FooterWapper } from "src/components/footer/index.js";
 import { Tabbar } from 'src/base-h5/components/menu/app-h5-menu/index'
@@ -93,7 +95,8 @@ import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { bet_special_series_change } from "src/core/bet/class/bet-box-submit.js"
+import { bet_special_series_change,get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
+import TokenInvalid from "./token-invalid.vue"
 import {debounce} from "lodash";
 // import betMixBoxChild from "src/base-h5/components/bet/bet-box-app-h5-1/bet_mix_box_child.vue";
 
@@ -127,6 +130,7 @@ const setting_dialog = ref(false)//暂时筛选窗口
 const activity_status = ref(false)//首页活动弹框
 const activity_layerimg = ref("") //首页活动图
 const userBannerTimer = ref(5);
+const is_token_invalid_show = ref(false); // token失效
 const timer_3 = ref(null);
 // 开启注单历史弹窗及遮罩
 const settle_dialog_bool = ref(true);
@@ -217,12 +221,33 @@ const init_local_server_time = () => {
   });
 }
 
+// 跳转第三方提供商链接
+const is_go_vender_url = (value) => {
+  is_token_invalid_show.value = false;
+  window.is_token_invalid_show=false;
+  UserCtr.set_user_token('')
+  if (value) goto_vender_url();
+}
+
+// 跳转第三方提供商链接
+const goto_vender_url = () => {
+  // let url = this.user.getCallbackTokenUrl;
+  // if (url) {
+  //   this.$nextTick(() => {
+  //     location.href = url;
+  //   })
+  // } else {
+  //   console.warn('跳转地址不存在！')
+  // }
+}
+
 // 显示串关投注弹框
 const show_chain_bet = () => {
   // 不满足串关条件 不允许 展开投注项
   if(!bet_special_series_change()){
     return
   }
+  get_query_bet_amount_common()
   BetData.set_bet_box_h5_show(true)
 }
 
@@ -279,18 +304,10 @@ onMounted(() => {
   // 阻止双指放大
   document.addEventListener("gesturestart", gesturestart_event_fun);
   init_local_server_time()
-  // 开启注单历史弹窗
-  useMittOn(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, (val) => {
-    // footer中点击，传过来的是对象，根据settle值确定显示未结注单还是已结注单
-    if(typeof(val) === 'object') {
-      const num = val.settle ? 3 : 0;
-      BetRecordClass.set_selected(num);
-    }
-    change_settle_status(Boolean(val));
-  });
   // 设置设备类型
   BetData.set_device_type(1)
 });
+
 const mitt_list = [
   // 监听设置框状态
   useMittOn(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, function (value) {
@@ -327,6 +344,19 @@ const mitt_list = [
   useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, () => {
     UserCtr.fetch_actimg()
     UserCtr.set_e_sports_domain_img()
+  }).off,
+  // 开启注单历史弹窗
+  useMittOn(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, (val) => {
+    // footer中点击，传过来的是对象，根据settle值确定显示未结注单还是已结注单
+    if(typeof(val) === 'object') {
+      const num = val.settle ? 3 : 0;
+      BetRecordClass.set_selected(num);
+    }
+    change_settle_status(Boolean(val));
+  }).off,
+  // 登录失效
+  useMittOn(MITT_TYPES.EMIT_GO_TO_VENDER, () => {
+    if (!is_token_invalid_show.value) is_token_invalid_show.value = true
   }).off
 ]
 // 监听搜索弹框是否展示

@@ -4,7 +4,7 @@
         <!--金额输入区-->
         <div class="bet-input-failure">
             <!--投注金额输入框-->
-            <input v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
+            <input class="bet-input input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
                 :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
             <!--清除输入金额按钮-->
             <div class="bet-input-close" @click.stop="bet_clear_handle">
@@ -157,53 +157,15 @@ input[type="number"] {
 /**单关金额输入框**/
 .bet-single-input {
     margin-top: 8px;
-
-    input {
+    .bet-input{
         width: 100%;
         padding: 4px 6px;
         margin-top: 2px;
+        color: #191c24;
         height: 32px;
         line-height: 18px;
         outline: none;
-        border-radius: 4px;
-        font-size: 16px;
-        background: var(--q-gb-bg-c-11);
-        border: 0.5px solid var(--q-gb-bd-c-7);
-        border-radius: 6px;
-        color: var(--q-gb-t-c-6);
-        caret-color: var(--qq--y0-text-color1);
-
-        // 输入金额时的样式
-        &.bet-input-money {
-            outline: none;
-        }
     }
-
-    // .input-border {
-    //   &:focus {
-    //     border: 0.5px solid rgba(44,178,255,1);
-    //   }
-    // }
-    input::-webkit-input-placeholder {
-        font-size: 14px;
-        color: rgba(108, 123, 168, 0.4);
-    }
-
-    input::-moz-placeholder {
-        font-size: 14px;
-        color: rgba(108, 123, 168, 0.4);
-    }
-
-    input:-moz-placeholder {
-        font-size: 14px;
-        color: rgba(108, 123, 168, 0.4);
-    }
-
-    input:-ms-input-placeholder {
-        font-size: 14px;
-        color: rgba(108, 123, 168, 0.4);
-    }
-
     .bet-input-close {
         .icon-failure:before {
             color: var(--q-gb-t-c-18);

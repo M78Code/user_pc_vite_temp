@@ -23,7 +23,9 @@
         <span>{{i18n_t('filter.all_leagues')}}</span>
       </div>
       <div class="right" @click="handle_all_league">
-        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" :class="[!is_expend_all && 'expend_all_league']" alt="">
+        <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" :class="[!is_expend_all && 'expend_all_league']" alt=""> -->
+      <div class='img' :class="[!is_expend_all && 'expend_all_league']" :style="compute_css_obj({key:'h5-kyapp-expand-lague'})"></div>
+      
       </div>
     </div>
     <div class="virtual-content-wrapper">
@@ -172,8 +174,7 @@ import { IconWapper } from 'src/components/icon'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
-
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, LOCAL_PROJECT_FILE_PREFIX,compute_css_obj } from "src/output/index.js"
 export default {
   mixins:[common,virtual_sports_mixin],
   props:{
@@ -238,6 +239,7 @@ export default {
       // 1:新手版 2:专业版
       standard_edition,
       LOCAL_PROJECT_FILE_PREFIX,
+      compute_css_obj,
       // 是否全部折叠
       is_expend_all: true,
       // 存储定时器id的映射
@@ -821,12 +823,14 @@ export default {
   justify-content: space-between;
   padding: 0 0.15rem;
   height: 0.24rem;
-  border-top: 0.02rem solid #FEAE2B;
-  background-color: #FFF;
+  border-top: 0.02rem solid var(--q-gb-bd-c-3);
+  background-color: var(--q-gb-bg-c-25);;
 
   .left {
     font-size: 0.12rem;
-    color: #303442;
+    color: var(--q-gb-t-c-18);;
+    display: flex;
+    align-items: center;
     img {
       width: 0.12rem;
       height: 0.12rem;
@@ -834,6 +838,8 @@ export default {
     }
   }
   .right {
+    display: flex;
+    align-items: center;
     img {
       width: 0.2rem;
       height: 0.16rem;
@@ -846,14 +852,15 @@ export default {
 .virtual-content-wrapper {
   padding: 0.08rem 0.05rem 0;
   color: var(--q-gb-t-c-18);
-  background: #F2F2F6;
+  // background: #F2F2F6;
+  background-color: var(--q-gb-bg-c-21) ;
 }
 .virtual-sports-card {
   &-content {
-    background: #F8F9FA;
+    background: var(--q-gb-bg-c-18);
     border-radius: .08rem;
     margin-bottom: .08rem;
-    border: 1px solid #fff;
+    border: 1px solid var(--q-gb-bd-c-15);
   }
   &:last-of-type {
     padding-bottom: 0.7rem;

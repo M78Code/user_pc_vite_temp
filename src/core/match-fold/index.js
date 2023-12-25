@@ -5,7 +5,7 @@
 import lodash from 'lodash'
 import { ref } from 'vue'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { PROJECT_NAME } from 'src/output/module/menu-data.js'
+import { MenuData } from 'src/output';
 
 class MatchFold {
   constructor () {
@@ -108,8 +108,9 @@ class MatchFold {
    * @description 球种折叠
    * @param { obj } 赛事信息
    * @param { type } 0 全部；1 进行中； 2 未开赛
+   * @param { is_fold_all } true 全部折叠 false 只折叠该赛种
    */
-  set_ball_seed_match_fold (obj, type) {
+  set_ball_seed_match_fold (obj, type, is_fold_all = false) {
     
     // 赛事 mids
     let status = ''
@@ -123,7 +124,7 @@ class MatchFold {
     }
     const matchs = lodash.get(MatchMeta, 'complete_matchs', [])
     matchs.forEach(item => {
-      // if (!item || item.csid != obj.csid) return
+      if (!is_fold_all && (!item || item.csid != obj.csid)) return
       const key = this.get_match_fold_key(item)
       // 全部
       if (!type) return this.set_match_fold(key, { show_card: !status })
@@ -132,7 +133,6 @@ class MatchFold {
       // 未开赛
       if (type === 2 && ![1,110].includes(+item.ms)) return this.set_match_fold(key, { show_card: !status })
     })
-
     // 全部
     if (!type) return this.set_ball_seed_csid_fold_obj(csid_key, !status)
     // 进行中

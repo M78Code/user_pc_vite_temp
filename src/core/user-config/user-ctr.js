@@ -1023,6 +1023,7 @@ class UserCtr {
    * 连续累加token失效次数 判定 是否 弹出 token失效框 执行相关流程
    */
   check_if_token_expired_max() {
+
     //统计所有接口 相邻接口累积 报用户token 失效 次数  小于上限 则 不用执行 后面逻辑
     if (this.all_expired_count < this.all_expired_count_max) {
       return false;

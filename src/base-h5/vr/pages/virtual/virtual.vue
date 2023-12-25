@@ -90,6 +90,9 @@ import { go_where } from "src/output/index.js";
 import { format_money2, compute_local_project_file_path, UserCtr } from "src/output/index.js";
 import { compute_css_obj, MenuData } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
+
 export default {
   name:'match_main',
   data() {
@@ -121,10 +124,12 @@ export default {
       // 用户余额
       balance: 0,
       // 投注数据
-      BetData
+      BetData,
+      BetViewDataClass
     };
   },
   created(){
+    pre_load_video.load_player_js('old')
     //虚拟体育刷新赛事
     this.timer_super27=0;
     this.timer_super28=0;
@@ -214,6 +219,8 @@ export default {
       if(MenuData.old_current_lv_1_menu_i!=6) {
           BetData.set_is_bet_single('single')
       }
+          BetData.set_clear_bet_info()
+          BetViewDataClass.set_clear_bet_view_config()
     },
     set_balance(balance){
       this.balance = balance;
@@ -404,7 +411,7 @@ export default {
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
-  background-color: #F2F2F6;
+  background-color: var(--q-gb-bg-c-21) ;
 
   /* ************** 列表上滑箭头图标 **************** -S */
   .list-scroll-to-top {
@@ -422,7 +429,7 @@ export default {
     top: 0;
     z-index: 540;
     width: 100%;
-
+    background: var(--q-gb-bg-c-27) !important;
     .type-bg {
       background-size: 100% auto;
     }

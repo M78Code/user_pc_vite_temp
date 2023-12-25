@@ -124,7 +124,7 @@ export default defineComponent({
   padding: 0 0.15rem;
   align-items: center;
   width: 49%;
-  background: var(--q-gb-bg-c-18);
+  background: var(--q-gb-bg-c-15);
   margin-top: 0.08rem;
   border-radius: 0.04rem;
   color: var(--q-gb-t-c-18);
@@ -151,9 +151,9 @@ export default defineComponent({
   }
 
   .temp9-ov {
-
-    font-size: 0.1rem;
-
+    color: var(--q-gb-t-c-20);
+    font-size: 0.14rem;
+    font-weight: 700;;
     letter-spacing: 0;
   }
 }
