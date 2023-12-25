@@ -207,7 +207,7 @@ const container_total_height = computed(() => {
 // 动态 样式 
 const get_container_style = computed(() => {
   const style_obj = { 'height': get_is_static() ? 'auto' : container_total_height.value}
-  if (menu_type !== 100 && !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi))) Object.assign(style_obj, {
+  if (menu_type.value !== 100 && !(menu_type.value == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.value?.mi))) Object.assign(style_obj, {
     ...compute_css_obj({key: 'h5-kyapp-speciality-bg' })
   })
   return style_obj
@@ -300,7 +300,7 @@ onUnmounted(() => {
     width: 100%;
     // height: 10000px;
     position: relative;
-    background-repeat: repeat-y;
+    background-repeat: repeat-y !important;
     &.high_scrolling {
       background-size: contain;
       background-image: url($SCSSPROJECTPATH + "/image/skeleton/height-177.jpg"); 
