@@ -60,7 +60,8 @@ const breadCrumbs_firstOne = computed(()=>{
         let history = JSON.parse(window.sessionStorage.getItem('RouteHistory'))
         firstOneName = ['home','in_play','bet_record'].includes(history[1]?.name) ? history[1]?.i18n : props.detail_info.csna
     }
-    return String(firstOneName||"-")
+   // 滚球的时候需要i18n_t 国际化转换 ，点击菜单其他球种不用
+    return  firstOneName?firstOneName.includes('.')? i18n_t (String(firstOneName)):firstOneName:'-'
 })
 
 const jumpTo = ()=>{

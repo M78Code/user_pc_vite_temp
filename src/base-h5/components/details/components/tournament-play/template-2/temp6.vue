@@ -308,7 +308,7 @@ export default defineComponent({
     let state_data = reactive({
       show_more:true,
     })
-  const element = ref(null)
+  const element = ref()
   const other_item_list = ref([])
   const ol_list_0 = ref([])
   const ol_list_1 = ref([])
@@ -459,7 +459,8 @@ export default defineComponent({
       check_score,
       set_highlight_cls,
       LOCAL_PROJECT_FILE_PREFIX,
-      go_to_bet
+      go_to_bet,
+      element,
     }
   }
 })

@@ -62,7 +62,7 @@ const footer_menu_list = ref(footer_list)
 /**
  * 监听用户信息版本号
 */
-watch(UserCtr.user_version, () => {
+watch(() => UserCtr.user_version, () => {
   footer_menu_list.value.forEach(item=>{
     // 展示每日活动
     if (item.id === 5 && UserCtr.daily_activities){
