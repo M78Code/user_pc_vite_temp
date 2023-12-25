@@ -343,7 +343,7 @@ const searchTabMenu = ref(null);//足球tab dom
     // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
     if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
     // 赛果不走元数据， 直接拉取接口
-    if (MenuData.is_results()) return MatchMeta.get_results_match()
+    // if (MenuData.is_results()) return MatchMeta.get_results_match()
     // 电竞不走元数据， 直接拉取接口
     if (MenuData.is_esports() && !type) return MatchMeta.get_esports_match()
 
