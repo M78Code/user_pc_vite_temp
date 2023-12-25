@@ -332,6 +332,7 @@ const state = reactive({
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
+                    white-space: nowrap;
 
                     div {
                         text-align: center;
