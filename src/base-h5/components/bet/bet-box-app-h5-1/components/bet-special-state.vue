@@ -7,8 +7,8 @@
                     <span class="font14 font500">{{ items.seriesValue}}</span> 
                     <span class="text-45B0FF ml-4" v-if="items.orderStatusCode == 1">注单已确认</span>
                 </div>
-                <div>
-                    <span>{{ format_money2(mathJs.divide(items.betAmount,100))}}</span>
+                <div class="">
+                    <span class="bet-amount-box font700">{{ format_money2(mathJs.divide(items.betAmount,100))}}</span>
                     <span class="left-rx"> x{{ items.seriesSum }} </span>
                 </div>
             </div>
@@ -73,12 +73,7 @@ const props = defineProps({
                 text-align: right;
                 font-weight: 700;
                 font-size: 0.2rem;
-                .left-rx{
-                    font-size: 0.14rem;
-                    font-style: normal;
-                    font-weight: 500;
-                    color: var(--q-gb-t-c-3);
-                }
+                
             }
         }
         .right{
@@ -106,6 +101,19 @@ const props = defineProps({
         .f-b-c {
             height: 0.44rem;
             
+        }
+        .f-a-c {
+            color: var(--q-gb-t-c-17);
+        }
+        .bet-amount-box {
+            font-size: 0.2rem;
+            color: var(--q-gb-t-c-17);
+        }
+        .left-rx{
+            font-size: 0.14rem;
+            font-style: normal;
+            font-weight: 500;
+            color: var(--q-gb-t-c-10);
         }
         .text-45B0FF {
             color: #45B0FF;

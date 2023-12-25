@@ -364,7 +364,7 @@ const processing_score = (data) => {
     }
     .team-item {
       border-bottom: 1px solid var(--q-analysis-text-color-24);
-      background-color: var(--q-analysis-text-color-27);
+      // background-color: var(--q-analysis-text-color-23);
       div {
         color: var(--q-analysis-text-color-20);
       }
