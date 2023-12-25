@@ -233,12 +233,12 @@ const props =defineProps({
             } else {
               if (betStatus == 3 || betStatus == 4) {
                 // return '无效';
-                res = bet_result_3[cancelType] || i18n_t("bet_record.invalid");
+                res = bet_result_3.value[cancelType] || i18n_t("bet_record.invalid");
               } else if (betStatus == 1) {
                 if (betResult == 13 || betResult == 16) {
                   res = i18n_t("bet_record.invalid")
                 } else {
-                  res = bet_result[betResult] || '';
+                  res = bet_result.value[betResult] || '';
                 }
               } else {
                 res = '';
@@ -253,7 +253,7 @@ const props =defineProps({
             } else {
               if (betStatus == 3 || betStatus == 4) {
                 // return '无效';
-                res = bet_result_3[cancelType] || i18n_t("bet_record.invalid");
+                res = bet_result_3.value[cancelType] || i18n_t("bet_record.invalid");
               } else if (betStatus == 1) {
                 if (betResult == 13 || betResult == 16) {
                   res = i18n_t("bet_record.invalid");
@@ -263,7 +263,7 @@ const props =defineProps({
                     res = '';
                     break;
                   }
-                  res = bet_result[betResult] || '';
+                  res = bet_result.value[betResult] || '';
                 }
               } else {
                 res = '';
@@ -277,9 +277,9 @@ const props =defineProps({
             } else {
               if (betStatus == 3 || betStatus == 4) {
                 // return '无效';
-                res = bet_result_3[cancelType] || i18n_t("bet_record.invalid");
+                res = bet_result_3.value[cancelType] || i18n_t("bet_record.invalid");
               } else if (betStatus == 1) {
-                res = bet_result_1[betResult] || i18n_t("bet_record.invalid");
+                res = bet_result_1.value[betResult] || i18n_t("bet_record.invalid");
               } else {
                 res = '';
               }
