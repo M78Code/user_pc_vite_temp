@@ -160,7 +160,6 @@ class VirtualList {
         this.mid_top_map[virtual_key] = accrual_height;
         
         if (match_height > 0 && (is_show_league || show_card)) {
-          console.log(match_height)
           // debugger
           // console.log(`mid-${mid}:::${match_height}`)
 
