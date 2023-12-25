@@ -291,7 +291,7 @@ import { i18n_t, compute_img_url } from "src/output/index.js"
 import { format_time_zone,format_M_D } from "src/output/index.js"
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2,date_time, is_detail,is_zaopan, is_esports, is_results, footer_menu_id, is_mix} from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2,date_time, is_detail,is_zaopan, is_esports, is_results, footer_menu_id, is_mix } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 import { compute_value_by_cur_odd_type } from "src/output/index.js";

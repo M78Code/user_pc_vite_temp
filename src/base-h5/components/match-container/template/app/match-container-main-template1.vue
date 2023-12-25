@@ -6,7 +6,7 @@
     :class="[{
       jinri: MenuData.is_today(),
       zaopan: MenuData.is_zaopan(),
-      gunqiu: MenuData.is_scroll_ball()
+      gunqiu: MenuData.is_scroll_ball(),
     }]" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
@@ -40,7 +40,7 @@
         <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
-      <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div>
+      <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title"></div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 @click.stop="handle_ball_seed_fold"-->
       <div v-if="show_sport_title" @click.stop
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
