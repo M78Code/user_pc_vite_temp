@@ -43,7 +43,9 @@
     <p>
       <!-- 投注单号 -->
       <label>{{i18n_t('bet.order_no')}}：</label> 
-      <span>{{data_f.orderNo}}</span>
+      <span  @click="copy">{{data_f.orderNo}} 
+        <img :src="compute_local_project_file_path('/image/svg/copy.svg')" alt=""  style="width:0.1rem" />
+      </span>
     </p>
     <p>
       <!-- 投注时间 -->
@@ -83,8 +85,10 @@ import { reactive, onMounted, onUnmounted } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { calc_text_only_status, calc_text, outcome } from "src/core/bet-record/util.js";
 import { i18n_t } from "src/boot/i18n.js";;
-import { useMittOn, MITT_TYPES } from "src/core/mitt/"
-import { formatTime, format_money2, format_balance } from 'src/output/index.js'
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
+import { formatTime, format_money2, format_balance, compute_local_project_file_path } from 'src/output/index.js'
+import ClipboardJS from "clipboard";
+import { Platform } from "quasar";
 let props = defineProps({
   data_f: {
     type: Object
@@ -111,6 +115,33 @@ const showText = (data_f) => {
   if(data_f.profitAmount < 0) {
     return i18n_t('bet_record.bet_no_status03')
   }
+}
+
+  /**
+ *@description 复制订单号
+  *@param {Object} evt 事件对象
+  */
+  const copy = (evt) => {
+  let orderno = props.data_f.orderNo
+  const clipboard = new ClipboardJS(".text-left", {
+    text: () => orderno
+  })
+  clipboard.on('success', () => {
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("bet_record.copy_suc"))
+    // h5嵌入时Safari阻止弹窗
+    if (!Platform.is.safari) {
+      try {
+        location.href = `pasteOrderAction://paste?orderSN=${orderno}`;
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    clipboard.destroy()
+  })
+  clipboard.on('error', () => {
+    clipboard.destroy()
+  })
+  clipboard.onClick(evt)
 }
 
 // 订单确认中。。。
