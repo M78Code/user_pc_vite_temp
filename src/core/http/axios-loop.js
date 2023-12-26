@@ -1,6 +1,6 @@
 /*
  * @Author: jiffy
- * @LastEditors: jiffy
+ * @LastEditors: lowen pmtylowen@itcom888.com
  * @Description: 说明
  */
 import { get } from "lodash";
@@ -31,6 +31,7 @@ import { get } from "lodash";
    * @param {*} max_loop 最大循环调用次数(异常时会循环调用),默认3次
    * @param {*} timers 异常调用时延时时间,毫秒数,默认1000
    * @param {*} error_codes 成功请求后的异常码集合
+   * @param {*} fun_finally axios中finally回调方法
    * @return {*}
    */
 export default async function axios_api_loop(opts = {}) {
@@ -42,6 +43,7 @@ export default async function axios_api_loop(opts = {}) {
     params,
     fun_then = null,
     fun_catch = null,
+    fun_finally=null,
     max_loop = 3,
     timers = 1000,
     error_codes = [],
@@ -75,5 +77,7 @@ export default async function axios_api_loop(opts = {}) {
         axios_api_loop(opts);
       }, timers);
     }
+  } finally{
+    fun_finally && fun_finally();
   }
 }

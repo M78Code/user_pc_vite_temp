@@ -158,7 +158,6 @@ import category from "./children/category.vue";
 import analysisFootballMatches from "src/base-h5/components/details/analysis-ky-matches/football-match-analysis/analysis-football-matches.vue"
 import basketballMatchAnalysis from "src/base-h5/components/details/analysis-ky-matches/basketball-match-analysis/basketball-match-analysis.vue"
 import { useRouter, useRoute } from "vue-router";
-import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide,defineAsyncComponent } from "vue";
@@ -474,18 +473,18 @@ export default defineComponent({
       // set_details_tabs_list('');
       // vuex--清空详情页的选中玩法id
       // set_details_item('')
-      store.dispatch({
-        type: 'SET_DETAIL_DATA',
-        data: ''
-      })
-      store.dispatch({
-        type: 'SET_DETAILS_TABS_LIST',
-        data: ''
-      })
-      store.dispatch({
-        type: 'SET_DETAILS_ITEM',
-        data: ''
-      })
+      // store.dispatch({
+      //   type: 'SET_DETAIL_DATA',
+      //   data: ''
+      // })
+      // store.dispatch({
+      //   type: 'SET_DETAILS_TABS_LIST',
+      //   data: ''
+      // })
+      // store.dispatch({
+      //   type: 'SET_DETAILS_ITEM',
+      //   data: ''
+      // })
 
       off_listeners()
       clear_timer()
