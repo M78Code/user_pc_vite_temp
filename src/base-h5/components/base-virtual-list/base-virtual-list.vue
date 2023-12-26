@@ -156,7 +156,7 @@ watch(() => dataList.value.length, () => {
 
 // 初始化 DOM 节点位置信息
 const initDataPostion = () => {
-  if (dataList.value.length < 1) return
+  // if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
   positionDataArr = allData.value.map((_, idx) => ({
     arrPos: idx,
