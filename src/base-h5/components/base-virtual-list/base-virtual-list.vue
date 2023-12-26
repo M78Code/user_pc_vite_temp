@@ -9,9 +9,9 @@
            <slot name="default" :item="item" :index="index"></slot>
         </div>
         <!-- 到底了容器-->
-        <div :class="['loading-more-container']" v-if="isScrolledRealBottom && isShowMoreWrapper">
+        <!-- <div :class="['loading-more-container']" v-if="isScrolledRealBottom && isShowMoreWrapper">
           <div style="color:#AAAEB8;font-size:.12rem;"> {{ i18n_t("scroll_wrapper.is_footer") }} </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- 回到顶部按钮组件 -->

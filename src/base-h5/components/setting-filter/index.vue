@@ -336,11 +336,10 @@ const activity_handle = item => {
       width: 1.04rem;
       height: 0.28rem;
       line-height: 0.28rem;
-      background-color: #f3faff;
+      background-color: var(--q-gb-bg-c-18);
       border-radius: 0.18rem;
       text-align: center;
-      //color: #7981a4;
-      color: var(--q-gb-t-c-11);
+      color: var(--q-gb-t-c-10);
       font-weight: 500;
     }
   }

@@ -75,7 +75,7 @@ const get_balance = () => {
     display: flex;
     font-size: .16rem;
     font-weight: 600;
-    font-family: PingFang SC;
+    
     color: var(--q-gb-t-c-18);
 }
 .nonebox4-first-right {
@@ -93,14 +93,12 @@ const get_balance = () => {
     padding: .04rem .08rem;
     border-radius: 0.2rem;
     height: 0.28rem;
-    font-family: Akrobat;
 }
 .nonebox4-first-right-window-num {
     display: flex;
     font-size: .2rem;
     font-weight: 700;
     color: var(--q-gb-t-c-18);
-    font-family: Akrobat;
 }
 .nonebox4-first-right-window-img {
     display: flex;
