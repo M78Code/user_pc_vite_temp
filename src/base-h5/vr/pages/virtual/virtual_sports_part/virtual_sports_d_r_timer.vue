@@ -54,25 +54,42 @@ export default {
       },
       immediate:true
     },
-
+    'team_list':{
+      handler(new_, old_){
+        // 传进来的初始team只有2条然后更新为6条，会导致赛马类列表只展示2条，所以特殊处理下
+        if(new_.length > 2){
+          this.init_fn()
+        }
+      },
+      immediate:true
+    },
+    // 切换菜单时列表数据初始化，否则赛马切换赛狗的定位get_list_i_top值有问题
+    'sub_menu_type':{
+      handler(new_, old_){
+        this.team_list_sort = null;
+      },
+    },
   },
   mounted(){
-    let obj = {};
-    let list = [];
-    this.team_list.forEach((item,i) => {
-      obj[(i+1)+''] = item;
-    });
-    this.team_obj = obj;
-
-    for (let i = 1; i < 7; i++) {
-      list.push({id:i,name:obj[i]})
-    }
-    this.set_new_poi_to_old(list);
-    if(this.match.upd_data){
-        this.upd_list_sort(this.match.upd_data)
-    }
+    // this.init_fn()
   },
   methods: {
+    init_fn(){
+      let obj = {};
+      let list = [];
+      this.team_list.forEach((item,i) => {
+        obj[(i+1)+''] = item;
+      });
+      this.team_obj = obj;
+
+      for (let i = 1; i < 7; i++) {
+        list.push({id:i,name:obj[i]})
+      }
+      this.set_new_poi_to_old(list);
+      if(this.match.upd_data){
+          this.upd_list_sort(this.match.upd_data)
+      }
+    },
     /**
      * @description: 更新排名列表
      * @param {*} new_ 需要更新的新排名数据

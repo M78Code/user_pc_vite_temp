@@ -62,12 +62,12 @@
          srcset="">
         </div>
       </div>
-      <div class="setting-item" @click="jump_webpage">
+      <!-- <div class="setting-item" @click="jump_webpage"> -->
       <!-- 前往旧版 -->
-        <div class="title"> {{ i18n_t('app_h5.filter.go_old_version') }}</div>
+        <!-- <div class="title"> {{ i18n_t('app_h5.filter.go_old_version') }}</div> -->
         <!-- 前往网页版 -->
-        <div class="goto-website"> {{ i18n_t('app_h5.filter.go_web_version') }}</div>
-      </div>
+        <!-- <div class="goto-website"> {{ i18n_t('app_h5.filter.go_web_version') }}</div>
+      </div> -->
     </div>
     <div class="closed-btn" @click="closedHandle">
     <!-- 关闭 -->

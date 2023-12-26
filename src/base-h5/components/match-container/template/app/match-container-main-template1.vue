@@ -146,8 +146,11 @@
                   </div>
 
                   <!-- 电竞串关标识 -->
-                  <div v-if="is_esports && match.ispo" class="flag-chuan"
-                    :class="{ 'special-lang': ['zh', 'tw'].includes(lang) }">{{ i18n_t('match_info.match_parlay') }}
+                  <!-- <div v-if="is_esports && match.ispo" class="flag-chuan" -->
+                  <div v-if="is_esports && match.ispo"  class="flag-chuan-icon" 
+                    :class="{ 'special-lang': ['zh', 'tw'].includes(lang) }"
+                    :style="compute_css_obj({key:'h5-kyapp-crosstalk-icon'})">
+                    <!-- {{ i18n_t('match_info.match_parlay') }} -->
                   </div>
                 </div>
                 <!--玩法数量-->
@@ -1711,12 +1714,15 @@ export default {
     margin: .05rem;
   }
 
-  .flag-chuan {
+  .flag-chuan-icon {
     margin-left: .1rem;
     padding: 0 .01rem;
-    height: 0.16rem;
+    height: 0.26rem;
+    width: 0.2rem;
     line-height: .16rem;
     border-radius: .03rem;
+    background-size: cover;
+    margin-top: 0.6rem;
     &.special-lang {
       margin-left: .06rem;
     }
