@@ -6,7 +6,7 @@
         <!-- {{ BetData.is_bet_single }}-{{ items.ol_os }}-{{ items.hl_hs  }}-{{ items.mid_mhs }} -->
         <div class="handicap-closed" v-if="BetData.is_bet_single && !(items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0)">
             <img :src="compute_local_project_file_path('/image/bet/handicap-closed.png')" alt="">
-            <p>{{ i18n_t('bet.close') }}</p>
+            <p class="font14">{{ i18n_t('bet.close') }}</p>
         </div>
         <!-- 串关 盘口展示 及 盘口关闭状态 -->
         <div v-else class="f-b-s bet-content" :class="[

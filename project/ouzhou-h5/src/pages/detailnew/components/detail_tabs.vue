@@ -9,9 +9,8 @@
         </template>
       </div>
       <div class="separator"></div>
-      <!--               本来想着如果没有投注项就隐藏一键展开/收起, 但是麻烦啦所以就||true -->
-      <div class="all-change" @click="changeAll" v-if="allCloseState!=(void 0) || true">
-        <span class="odds-hpn-icon" :class="allCloseState?'up':'down'"></span>
+      <div class="all-change" @click="AllCloseControl.unfold = !AllCloseControl.unfold">
+        <span class="odds-hpn-icon" :class="AllCloseControl.unfold?'down':'up'"></span>
       </div>
     </div>
     <q-separator color="orange"/>
@@ -31,8 +30,6 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
-  /** @type {Boolean|(void 0)} */
-  allCloseState: [Boolean, undefined]
 });
 const reset_scroll_dom = ref(null);
 const emit = defineEmits(['detail_tabs_change','update:allCloseState'])
@@ -99,12 +96,6 @@ const tab_move2 = (currentIndex, scrollBox, whether_to_slide) => {
 };
 //#endregion
 
-//#region 一件收起/展开 初始情况为一键收起
-function changeAll(){
-  emit('update:allCloseState',!props.allCloseState)
-  // AllCloseControl.unfold = !AllCloseControl.unfold
-  AllCloseControl.unfold = props.allCloseState
-}
 //#endregion
 
 onMounted(() => {
