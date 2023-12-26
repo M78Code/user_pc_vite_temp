@@ -6,28 +6,28 @@
 <template>
   <div class="keyboard" style="opacity: 1;">
       <div class="nonebox4-fourth number_family">
-          <div class="nonebox4-fourth-a nonebox4-fourth-h-40 number_family" @click.stop="_handleKeyPress($event)">
-              <div class="nonebox4-fourth-a-son number_family" v-for="(item,index) of addnum(BetData.bet_data_class_version)" :key='item' :data-number='index'>{{item}}</div>
+          <div class="nonebox4-fourth-a nonebox4-fourth-h-40" @click.stop="_handleKeyPress($event)">
+              <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum(BetData.bet_data_class_version)" :key='item' :data-number='index'>{{item}}</div>
           </div>
           
-          <div class="nonebox4-fourth-a number_family" @click.stop="_handleKeyPress($event)"> 
+          <div class="nonebox4-fourth-a" @click.stop="_handleKeyPress($event)"> 
               <div class="nonebox4-fourth-num">
-                  <div class="nonebox4-fourth-num-sun number_family" data-number='1'>1</div>
-                  <div class="nonebox4-fourth-num-sun number_family" data-number='4'>4</div>
-                  <div class="nonebox4-fourth-num-sun number_family" data-number='7'>7</div>
-                  <div class="nonebox4-fourth-num-sun number_family" data-number='.'>.</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='1'>1</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='4'>4</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='7'>7</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='.'>.</div>
               </div>
               <div class="nonebox4-fourth-num">
-                  <div class="nonebox4-fourth-num-sun number_family" data-number='2'>2</div>
-                  <div class="nonebox4-fourth-num-sun number_family" data-number='5'>5</div>
-                  <div class="nonebox4-fourth-num-sun number_family" data-number='8'>8</div>
-                  <div class="nonebox4-fourth-num-sun number_family" data-number='0'>0</div>  
+                  <div class="nonebox4-fourth-num-sun" data-number='2'>2</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='5'>5</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='8'>8</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='0'>0</div>  
               </div>
               <div class="nonebox4-fourth-num">
-                  <div class="nonebox4-fourth-num-sun number_family" data-number='3'>3</div>
-                  <div class="nonebox4-fourth-num-sun number_family" data-number='6'>6</div>
-                  <div class="nonebox4-fourth-num-sun number_family" data-number='9'>9</div>
-                  <div class="nonebox4-fourth-num-sun number_family" data-number='00'>00</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='3'>3</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='6'>6</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='9'>9</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='00'>00</div>
               </div>
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='max' style="font-size: 0.14rem;" @click.stop="_handleKeyPress($event)">{{ i18n_t('bet.max')}}</div>

@@ -949,7 +949,9 @@ export default {
       top: 0;
       right: -0.24rem;
       overflow: hidden;
-      background-color: rgb(242, 53, 13);
+      // background-color: rgb(242, 53, 13);
+      // background-color: #179cff;
+      background-color: var(--q-gb-bg-c-13);
 
       .update-timer {
         position: absolute;
@@ -999,6 +1001,9 @@ export default {
   z-index: 1;
   top: 0;
   left: 0;
+  &:deep(.dplayer-video-wrap .dplayer-video){
+    object-fit: fill;
+  }
 }
 
 .fit-box {
