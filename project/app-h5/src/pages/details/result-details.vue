@@ -65,15 +65,10 @@ import videos from "src/base-h5/components/details/components/videos2.vue";   //
 import { useRouter, useRoute } from "vue-router";
 import lodash from "lodash";
 import UserCtr from "src/core/user-config/user-ctr.js";
-<<<<<<< HEAD
 import { computed, onMounted, onUnmounted, watch, ref, reactive, provide } from "vue";
-import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss, useMittOn, useMittEmit, MITT_TYPES } from "src/output/index.js";
+import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss, useMittOn, useMittEmit, MITT_TYPES, MenuData } from "src/output/index.js";
 import { details_main } from "./details.js";
-=======
-import { computed, onMounted, onUnmounted, watch, ref, reactive } from "vue";
-import { MatchDataWarehouse_H5_Detail_Common, MenuData } from "src/output/index.js";
 
->>>>>>> 04288ae97d20e0f7e00fefb4db391c4683af9815
 
 let route = useRoute()
 const { change_go_back, get_show_video, change_fullscreen, set_show_video } = details_main()
