@@ -494,7 +494,10 @@ function fetch_filter_match() {
     //三级日期菜单时间戳
     get_md.value > -1 && m_type != 1 && Object.assign(params, { md: get_md.value });
   }
-
+  //
+  if (!MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))){
+    params.euid = '1';
+  }
   list_data_loading.value = true;
   //调用：v1/m/getFilterMatchList接口
   api_match_filter(params).then(({ code, data }) => {

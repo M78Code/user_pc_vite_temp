@@ -6,10 +6,18 @@
   <template v-if="is_base_virtual_list">
     <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate" >
       <template #default="{ item, index }">
-        <MatchContainerMainTemplate5
-          :i="index"
-          :match_of_list="get_match_item(item)">
-        </MatchContainerMainTemplate5>
+        <template v-if="is_results">
+          <MatchContainerMainTemplate3
+            :i="index"
+            :match_of_list="get_match_item(item)">
+          </MatchContainerMainTemplate3>
+        </template>
+        <template v-else>
+          <MatchContainerMainTemplate5
+            :i="index"
+            :match_of_list="get_match_item(item)">
+          </MatchContainerMainTemplate5>
+        </template>
       </template>
     </BaseVirtualList>
   </template>
@@ -22,7 +30,7 @@
             <!--此data-mid用于分频订阅赛事,请勿修改-->
             <div class="data_mid"> 
               <!-- 冠军玩法 -->
-              <template v-if="is_kemp">
+              <template v-if="is_kemp || MenuData.get_mm_is_champion()">
                 <MatchContainerMainTemplate2
                   :i="index"
                   :match_of_list="match_item">
@@ -92,7 +100,8 @@ const route = useRoute()
 
 // 是否使用 BaseVirtualList 组件
 const is_base_virtual_list = computed(() => {
-  return standard_edition.value == 1 && ! is_results.value && !is_kemp.value && route.name !== 'match_result'
+  return is_results.value || (standard_edition.value == 1 && !is_kemp.value && route.name !== 'match_result')
+  // return standard_edition.value == 1 && ! is_results.value && !is_kemp.value && route.name !== 'match_result'
 })
 
 // 组件 所需 start ·············································

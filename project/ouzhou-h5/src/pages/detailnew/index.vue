@@ -72,7 +72,7 @@
       </q-tab-panels>
     </div>
     <!-- 视频info说明弹窗,和切换高清和标清的 弹框 -->
-    <info-rules v-if="get_info_show"></info-rules>
+    <info-rules v-if="get_info_show" class="info_rules"></info-rules>
   </div>
 </template>
 
@@ -189,6 +189,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.info_rules {
+  :deep(.content-box) {
+    background-color: #fff;
+  }
+}
 .match-detail-container {
   display: flex;
   flex-direction: column;

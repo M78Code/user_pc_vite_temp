@@ -80,18 +80,12 @@ import StandardEdition from 'src/base-h5/components/standard-edition/index.vue'
 import { useMittOn, MITT_TYPES, useMittEmit, i18n_t, MenuData } from "src/output/index.js";
 import {is_mix,is_esports,is_vr} from "src/base-h5/mixin/menu.js"
 import UserCtr from "src/core/user-config/user-ctr.js"; 
-// import { FooterWapper } from "src/components/footer/index.js";
 import { Tabbar } from 'src/base-h5/components/menu/app-h5-menu/index'
-// import { MenuWapper } from "src/base-h5/components/menu";
 import { BetBoxWapper } from "src/base-h5/components/bet";
-// import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
-// import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
-// import selectDia from "src/base-h5/components/match-list/components/select-dia.vue"
+
 import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
-// import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import layoutTop from "./top.vue"
 import { useRoute } from "vue-router";
-import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
@@ -108,21 +102,13 @@ const settleDialog = defineAsyncComponent(() =>
 const toast = defineAsyncComponent(() =>
   import("src/base-h5/components/common/toast.vue")
 );
-// const selectDia = defineAsyncComponent(() =>
-//   import("../pages/match-list/components/select-dia.vue")
-// );
 
 import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
-import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-// import layoutHeader from "./layout-header.vue";
-// import layoutConent from "./layout-content.vue";
 
 import "./index.scss"
 const inner_height = ref(window.innerHeight);  // 视口高度
-const { footerMenuReducer } = store.getState();
 const route = useRoute();
-const get_accept_show = ref(false); // 接受更好赔率变化 弹窗
-const get_combine_tips_show = ref(false); // 合并投注项提示弹框 弹窗
+
 const record_show = ref(false);
 const lastTouchEnd = ref(0);
 // const select_dialog = ref(false)//暂时筛选窗口
@@ -134,22 +120,7 @@ const is_token_invalid_show = ref(false); // token失效
 const timer_3 = ref(null);
 // 开启注单历史弹窗及遮罩
 const settle_dialog_bool = ref(true);
-// let unsubscribe = store.subscribe(() => {
-//   const { footerMenuReducer: new_footer_menu_reducer } = store.getState();
-//   settle_dialog_bool.value = new_footer_menu_reducer.settle_dialog_bool;
-// });
-// 是否展示左侧菜单
-const toggleLeftDrawer = () => {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
-};
 
-
-// useMittOn(MITT_TYPES["change_accept"], (e) => {
-//   get_accept_show.value = e
-// })
-// useMittOn(MITT_TYPES["change_combine_tips"], (e) => {
-//   get_combine_tips_show.value = e
-// })
 /**
  * @description: touchstart事件方法体
  */
@@ -230,14 +201,15 @@ const is_go_vender_url = (value) => {
 }
 // 跳转第三方提供商链接
 const goto_vender_url = () => {
-  let url = lodash.get(UserCtr,'callbackUrl',lodash.get(UserCtr,'loginUrl')) 
-  if (url) {
-    nextTick(()=> {
-      location.href = url;
-    })
-  } else {
-    console.warn('跳转地址不存在！')
-  }
+  // let url = lodash.get(UserCtr,'callbackUrl',lodash.get(UserCtr,'loginUrl')) 
+  // if (url) {
+  //   nextTick(()=> {
+  //     location.href = url;
+  //   })
+  // } else {
+    window.close();
+    // console.warn('跳转地址不存在！')
+  // }
 }
 
 // 显示串关投注弹框
