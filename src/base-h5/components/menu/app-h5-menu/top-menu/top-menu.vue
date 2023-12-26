@@ -13,7 +13,7 @@
                 <div class="main-menu-right" @click.stop>
                     <!-- <span class="main-menu-right-symbol">￥</span> -->
                     <img :src="compute_local_project_file_path('/image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
-                    <span class="main-menu-right-money">{{ format_money2(balance) }}1</span>
+                    <span class="main-menu-right-money">{{ format_money2(UserCtr.balance) }}1</span>
                 </div>
             </template>
         </TopHeader>
@@ -37,7 +37,7 @@
             <div class="main-menu-right"  @click.stop>
                 <!-- <span class="main-menu-right-symbol">￥</span> -->
                 <img :src="compute_local_project_file_path('image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
-                <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
+                <span class="main-menu-right-money">{{ format_money2(UserCtr.balance) }}</span>
             </div>
         </div>
     </div>
@@ -82,17 +82,6 @@ const menu_list = reactive([
         code:"champion"
     },
 ])
-
-// 用户余额
-const balance = ref(UserCtr.balance)
-/**
- * 监听用户信息版本号
-*/
-watch(UserCtr.user_version, () => {
-    nextTick(() => {
-        balance.value = UserCtr.balance //获取用户最新余额
-    })
-})
 
 /**
  * 点击一级菜单 
