@@ -4,6 +4,7 @@
         <div class="bet-info">
             <div class="f-b-c px-12">
                 <div class="f-a-c">
+                    <img :src="compute_local_project_file_path('/image/bet/request.svg')" alt="" @click="alertRules()">
                     <span class="font14 font500">{{ items.seriesValue}}</span> 
                     <span class="text-45B0FF ml-4" v-if="items.orderStatusCode == 1">注单已确认</span>
                 </div>
@@ -21,12 +22,14 @@
                 <span>小计：{{ items.seriesBetAmount }} {{currency_code[UserCtr.currency]}}</span>
             </div>
         </div>
+        <bet-dialog  @close="tooltipbox=false" :item="items" :tooltipboxs="tooltipbox" v-model="tooltipbox"></bet-dialog>
     </div>
 </template>
 
 <script setup> 
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
-import {UserCtr,format_money2,LOCAL_PROJECT_FILE_PREFIX,currency_code } from "src/output/index.js"
+import betDialog from "./bet-dialog.vue"
+import {UserCtr,format_money2,LOCAL_PROJECT_FILE_PREFIX,currency_code ,compute_local_project_file_path } from "src/output/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 
 const props = defineProps({
@@ -35,6 +38,11 @@ const props = defineProps({
         default : () => {}
     }
 })
+const tooltipbox = ref(false)
+// 弹出规则
+const alertRules = () => {
+  tooltipbox.value = !tooltipbox.value
+}
 </script>
 
 <style scoped lang="scss">
@@ -94,16 +102,17 @@ const props = defineProps({
     }
     
     .bet-info {
-        text-indent: .2rem;
+        // text-indent: .2rem;
         height: 0.44rem;
         border-radius: .12rem .12rem 0 0;
-        background: url($SCSSPROJECTPATH + "/image/bet/rules3.svg") no-repeat .12rem / .15rem var(--q-gb-bg-c-22);
+        background: var(--q-gb-bg-c-22);
+        // background: url($SCSSPROJECTPATH + "/image/bet/rules3.svg") no-repeat .12rem / .15rem var(--q-gb-bg-c-22);
         .f-b-c {
             height: 0.44rem;
-            
         }
         .f-a-c {
             color: var(--q-gb-t-c-17);
+            display: flex;
         }
         .bet-amount-box {
             font-size: 0.2rem;

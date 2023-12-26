@@ -3,27 +3,11 @@
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
   <div class="bet_single_info f-b-c">
-    <div class="alert-rules" @click="alertRules(items.name)">
+    <div class="alert-rules" @click="alertRules()">
       <img :src="compute_local_project_file_path('/image/bet/request.svg')" alt="">{{ items.name }}
     </div>
-    <q-dialog v-model="tooltipbox">
-      <div class="toltip">
-        <header>{{ i18n_t('app_h5.bet.toltip1')}}{{ items.name }}</header>
-        <div> {{ items.name }}{{ i18n_t('app_h5.bet.toltip2')}}{{ items.name.trim().slice(0,1) }}{{ i18n_t('app_h5.bet.toltip3')}} </div>
-        <div>
-          {{ i18n_t('app_h5.bet.toltip4')}}
-          {{ items.name.trim().slice(0,1) }} 
-          {{ i18n_t('app_h5.bet.toltip5')}}
-          {{ items.name }} 
-          {{ i18n_t('app_h5.bet.toltip6')}}
-          {{ items.name.trim().slice(0,1) }}
-          {{ i18n_t('app_h5.bet.toltip7')}}
-          {{ items.name.trim().slice(0,1) }}
-          {{ i18n_t('app_h5.bet.toltip8')}}
-        </div>
-        <footer @click="change_show">{{i18n_t("info_rules.i_know")}}</footer>
-      </div>
-    </q-dialog>
+    
+  <bet-dialog @close="tooltipbox=false" :item="items" :tooltipboxs="tooltipbox" v-model="tooltipbox"></bet-dialog>
     <div class="bet_single_detail f-b-c">
       <div>{{ items.count }}x</div>
       <div class="content-b" @click="input_click">
@@ -51,6 +35,7 @@ import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import betDialog from "./bet-dialog.vue"
 import { UserCtr,formatMoney,format_money2,currency_code, compute_local_project_file_path } from "src/output/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 
@@ -160,12 +145,7 @@ const set_special_series = (money,ty_id) => {
 }
 
 // 弹出规则
-const alertRules = (name) => {
-  console.log('name',name);
-  tooltipbox.value = !tooltipbox.value
-}
-//关闭
-const change_show = () => {
+const alertRules = () => {
   tooltipbox.value = !tooltipbox.value
 }
 
