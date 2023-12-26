@@ -25,7 +25,7 @@ import {compute_local_project_file_path} from "src/output/index.js";
 const router = useRouter();
 
 const go_back = () => {
-    router.go(-1)
+    router.push({ name: "matchList" });
 }
 
 </script>
