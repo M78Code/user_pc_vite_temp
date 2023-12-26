@@ -52,7 +52,11 @@ export default {
     },
     init_load(val){
       if(val&&document.getElementById("loading-root-ele")){
-        document.getElementById("loading-root-ele").style.visibility = "hidden";
+        if(BUILDIN_CONFIG.PROJECT_NAME != 'app-h5'){
+          document.getElementById("loading-root-ele").style.visibility = "hidden";
+        }
+        // 隐藏loading动画背景
+        useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,1)
       }
     }
   },

@@ -77,7 +77,7 @@ import {
   nextTick,
 } from "vue";
 import StandardEdition from 'src/base-h5/components/standard-edition/index.vue'
-import { useMittOn, MITT_TYPES, i18n_t, MenuData } from "src/output/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit, i18n_t, MenuData } from "src/output/index.js";
 import {is_mix,is_esports,is_vr} from "src/base-h5/mixin/menu.js"
 import UserCtr from "src/core/user-config/user-ctr.js"; 
 // import { FooterWapper } from "src/components/footer/index.js";
@@ -309,6 +309,10 @@ onMounted(() => {
   init_local_server_time()
   // 设置设备类型
   BetData.set_device_type(1)
+  nextTick(() => {
+    // 隐藏loading动画 
+    useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,0);
+  })
 });
 
 const mitt_list = [
