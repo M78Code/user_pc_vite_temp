@@ -52,7 +52,7 @@ export default {
     },
     init_load(val){
       if(val&&document.getElementById("loading-root-ele")){
-        if(BUILDIN_CONFIG.PROJECT_NAME != 'app-h5'){
+        if(!['app-h5','ouzhou-h5'].includes(BUILDIN_CONFIG.PROJECT_NAME)){
           document.getElementById("loading-root-ele").style.visibility = "hidden";
         }
         // 隐藏loading动画背景
