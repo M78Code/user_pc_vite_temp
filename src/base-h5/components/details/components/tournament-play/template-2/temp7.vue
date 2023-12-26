@@ -409,8 +409,8 @@ export default defineComponent({
 }
 
 .icon-lock {
-  width: 0.12rem;
-  height: 0.14rem;
+  width: 0.16rem;
+  height: 0.16rem;
 
   margin-top: 0.17rem;
 }
