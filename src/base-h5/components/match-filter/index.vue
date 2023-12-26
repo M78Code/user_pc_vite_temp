@@ -641,13 +641,13 @@ function dynamic_letters(arr) {
  * @Description: 是否折叠联赛
  */
 const is_fold_fn = (item)=>{
-  if (item.hide){
-    item.hide = false;
-  }else{
-    item.hide = true;
-  }
+  item.hide = item.hide ? false : true
   list.value = (list.value || []).map(i => {
     if (i.spell === item.title){
+       i.hide = item.hide
+    }
+    //热门联赛处理
+    if (item.title == i18n_t('search.hot_league') && i.spell === 'HOT'){
        i.hide = item.hide
     }
      return i
