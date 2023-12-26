@@ -29,13 +29,9 @@
         <!-- <ScrollMenu v-if="state.slideMenu_sport.length" :scrollDataList="menu_list" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/> -->
         <ScrollMenu v-if="menu_list.length" :scrollDataList="menu_list" :is_show_badge="false" :current_mi="current_mi" @changeMenu="set_scroll_current"/>
 
-        <ObserverWrapper class="match-result-contant" :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper>
-        <match-container />
+        <!-- <ObserverWrapper class="match-result-contant" :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper> -->
+        <MatchContainer/>
     </template>
-    <!-- <div class="match-results-container-styles">
-       
-        <match-container />
-    </div> -->
 
      <!-- 筛选+搜索  已脱离文档流-->
      <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
@@ -59,6 +55,7 @@ import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 import ObserverWrapper from 'src/base-h5/components/observer-wrapper/index.vue';
 import BaseData from "src/core/base-data/base-data.js";
 import setectLeague from 'src/base-h5/components/tutorial/navigation-bar/setect-league.vue'
+import MatchContainer from "src/base-h5/components/match-list/index.vue";
 
 // 新修改
 
