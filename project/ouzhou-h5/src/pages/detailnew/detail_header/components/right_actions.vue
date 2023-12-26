@@ -134,6 +134,7 @@ const list = computed(() => {
         {label: 'score',  value: 1, img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/score.png`,score: [point.value[0], point.value[1]]},
         {label: 'collect', img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collect_gray.png`, active: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`, value: 2},
     ];
+    // 遍历过滤符合项
     let filter_list = res.filter((e) => {
         return mapObj.value[props.status].includes(e.value)
     });
