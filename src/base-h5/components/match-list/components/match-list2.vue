@@ -4,10 +4,6 @@
 
 <template>
   <template v-if="is_base_virtual_list">
-    {{ is_results }}
-    {{ is_match_results_kemp }}
-    {{ is_match_results_virtual }}
-    {{ is_match_results_game }}
     <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate" >
       <template #default="{ item, index }">
         <template v-if="is_match_results_kemp">
