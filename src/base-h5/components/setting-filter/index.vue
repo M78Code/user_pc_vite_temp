@@ -296,49 +296,17 @@ const change_version = async ()=>{
   //    await api_account.get_UserVersion({frontVer:'user-h5-bw3'})
     // 增加loop版本跳转参数
     // location.href = old_url.href;
-    // 发送埋点事件 change-to-pc-new-version change-to-pc-old-version
-    gtag_event_send(`change-to-pc-new-version`,'新版本','新版本',new Date().getTime())
-    console.log('window.env.configwindow.env.config',BUILD_VERSION_CONFIG)
-    const {current_env} = BUILD_VERSION_CONFIG.NODE_ENV
-    const _arr = current_env=='local_test'?'app-h5':'user-h5-bw3'
-    const token = sessionStorage.getItem("token")
-    const gr = (sessionStorage.getItem("gr") ||'').toLocaleLowerCase()
-    console.log('window.location.href',window.location.href)
-    const original_url = sessionStorage.getItem("original_url")
-    let old_url = new URL(original_url)
-    let  host = old_url.host
-    let host_arr = host.split('.')
-    host_arr[0] =  _arr
-    current_version.value = 'new'
-    sessionStorage.setItem("current_version",current_version.value)
-    host = host_arr.join('.')
-    old_url.host = host
-    let search =old_url.search;
-    //加上版本号swv
-    if(!search.includes('swv=')){
-      old_url.search += '&swv='+current_version.value;
-    }
-    else{
-      //替换参数
-      old_url.search=old_url.search.replace(/(swv=)(\w+)/,'$1'+current_version.value);
-    }
-
-    //应对参数丢失 情况
-    if(!search.includes('token=')){
-      if(search){
-        old_url.search +=`&token=${token}&gr=${gr}`
-      }else{
-        old_url.search  =`?token=${token}&gr=${gr}`
-      }
-    }
-    if(!search.includes('goto_loop_v=')){
-      old_url.search += '&goto_loop_v=1';
-    }
-    // 保存跳转参数,以备刷新跳转使用
-    sessionStorage.setItem("goto_loop_v_url",old_url.href)
-    await api_account.get_UserVersion({frontVer:'user-h5-bw3'})
-    // 增加loop版本跳转参数
-    // location.href = old_url.href;
+      let obj = { rdm: (new Date().getTime()) };
+      // 设置参数
+      // let pathname = window.location.pathname.replace('/app-h5','user-h5-bw3')
+      //  pathname = pathname.replace('/project','');
+      //  console.log('pathname',pathname)
+      //  console.log('window.location',window.location.href)
+      let param = UserCtr.get_user_url_parames(obj);
+      // let url = `${pathname}?${param}`;
+      let herf = window.location.href.replace('app-h5','user-h5-bw3')
+      await api_account.get_UserVersion({h5FrontVersion:'1'})
+      location.href = `${herf}${param}`;
   }
   /**
    * @description: 埋点发送事件跟踪信息
