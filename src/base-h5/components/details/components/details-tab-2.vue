@@ -113,13 +113,15 @@ export default defineComponent({
       return route.params.mid || get_detail_data.mid;
     });
 
-    // 列表mid
+    // 列表数据
     const new_list = computed(() => {
+      // 如果需要左侧第一个玩法固定，则将玩法集第一个数据去掉，其余数据滚动
       if (props.fixd_left) {
         const list = JSON.parse(JSON.stringify(props.data_list));
         list.shift();
         return list;
       } else {
+         // 如果不需要则返回所有数据
         return props.data_list;
       }
     });
