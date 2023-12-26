@@ -186,8 +186,9 @@ export default {
   }
 
   .v-m-b-container {
-    width: 3.61rem;
-    margin: 0 auto;
+    width: 100%;
+    // margin: 0 auto;
+    padding: 0 0.05rem;
 
     &.show_title {
       border-top-left-radius: 0.08rem;
@@ -247,7 +248,7 @@ export default {
     }
 
     .v-football-data {
-      width: 3.61rem;
+      width: 100%;
       height: 0.91rem;
       padding: 0.1rem;
       border-width: 1px;
