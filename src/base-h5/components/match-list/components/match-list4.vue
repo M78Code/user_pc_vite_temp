@@ -1,16 +1,16 @@
 <!--
- * @Description: app-h5 新手版赛事组件 临时处理，后续全部替换完  会在 match-list2.vue  组件里
+ * @Description: 废弃： app-h5 新手版赛事组件 临时处理，后续全部替换完  会在 match-list2.vue  组件里
 -->
 
 <template>
   <!-- <ObserverWrapper :match_list="MatchMeta.complete_matchs" com_type="app-h5-new"></ObserverWrapper> -->
   <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate" >
     <template #default="{ item, index }">
-         <!-- 赛果详情精选赛事 -->
-        <template v-if="route.name == 'match_result'">
-         <MatchContainerMainTemplate7
-            :i="index"
-            :match_of_list="MatchDataBaseH5.get_quick_mid_obj(item.mid)">
+      <!-- 赛果详情精选赛事 -->
+      <template v-if="route.name == 'match_result'">
+        <MatchContainerMainTemplate7
+          :i="index"
+          :match_of_list="MatchDataBaseH5.get_quick_mid_obj(item.mid)">
         </MatchContainerMainTemplate7>
       </template>
       <template v-else-if="is_kemp">
@@ -45,14 +45,11 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 
 const defer_render = use_defer_render()
 
-const is_first = ref(true)
 import { useRoute } from "vue-router";
 const route = useRoute()
 const matchs_data = computed(() =>{
   return MatchMeta.current_matchs
 })
-
-const emitters = ref({})
 
 const mids_string = ref('')
 

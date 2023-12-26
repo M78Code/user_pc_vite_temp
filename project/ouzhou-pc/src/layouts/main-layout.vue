@@ -47,7 +47,7 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, onMounted ,onUnmounted,reactive, onBeforeMount } from "vue";
+import { ref, computed, onMounted ,onUnmounted,reactive, onBeforeMount, nextTick } from "vue";
 import lodash_ from "lodash"
 import { useRoute } from "vue-router";
 import { LayOutMain_pc, GlobalAccessConfig } from "src/output/index.js";
@@ -113,7 +113,10 @@ onMounted(() => {
   get_event_info()
   // 全局一秒钟定时器
   upd_time_refresh_timer = setInterval(global_one_second_timer, 1000);
-
+  nextTick(() => {
+    // 隐藏loading动画 
+    useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,0);
+  })
 })
 // 获取var事件国际化
 function get_event_info () {

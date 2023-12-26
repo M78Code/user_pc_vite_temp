@@ -552,11 +552,11 @@ class MatchMeta {
     const res = await api_common.get_match_result_api({
       ...params,
       category,
-      md,
       tid,
-      type: euid === "0" ? 29 : 28,//我的投注 euid为0
-      euid: euid,
-      showem: 1, // 新增的参数
+      md: String(md),
+      showem: 1, // 新增的参数 区分电子赛事
+      euid: euid && String(euid),
+      type: euid ==="0"? String(29) : String(28),//我的投注 euid为0
     })
     if (this.current_euid !== `${euid}_${md}`) return []
     if (+res.code !== 200) {
@@ -674,6 +674,7 @@ class MatchMeta {
     // 有的项目菜单类不存在 data_time
     const data_time = String(md || MenuData?.data_time || this.http_params.md)
     // 球种 euid
+    const params_tid = tid || MenuData.search_tab_tid
     const euid = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
     this.http_params.md = md
     const params = this.get_base_params()
@@ -682,7 +683,8 @@ class MatchMeta {
       category: 1
     }
     // tid 有值 则 加上 tid
-    tid && Object.assign(other_params, { tid })
+    params_tid &&  Object.assign(other_params, { tid: params_tid })
+    tid &&  Object.assign(other_params, { tid })
     // data_time 有值 则 加上 md
     data_time && Object.assign(other_params, { md: data_time })
     try {
@@ -1393,6 +1395,7 @@ class MatchMeta {
         break;
       // 排序
       case "sortRules":
+        this.clear_match_info()
         this.handler_again_matchs()
         break;
       // 筛选

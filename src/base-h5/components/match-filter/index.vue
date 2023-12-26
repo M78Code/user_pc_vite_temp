@@ -959,6 +959,7 @@ if (type.value == 30) {
     padding-left: 0.2rem;
     padding-right: 0.46rem;
     font-size: 0.14rem;
+    background-color: var(--q-gb-bg-c-18) !important;
   }
 
   .scroll-title {

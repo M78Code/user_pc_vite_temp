@@ -107,7 +107,8 @@ export default {
       let ms = Number(this.match.mgt) - get_now_server();
       // console.log("ms===========a///=", ms);
       let single_circle = 60 * 1000;
-      let now = ServerTime.get_remote_time();
+      // let now = ServerTime.get_remote_time();
+      let now = get_now_server();
       if(this.start == null) this.start = now;
       //最初时间(用于计算总圈数)
       let timer_key = `virtual-sports-timer`;

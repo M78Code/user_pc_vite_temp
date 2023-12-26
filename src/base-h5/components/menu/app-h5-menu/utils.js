@@ -15,7 +15,7 @@ export const dateWeekFormat = (day,sort) => {
     Date.prototype.getMonthDay = function () {
         let dateVal = (this.getMonth() + 1) + '/' + this.getDate();
         return {
-          val:new Date(this.setHours(12, 0, 0, 0)).getTime(),
+          val:new Date(sort?this.setHours(0, 0, 0, 0):this.setHours(12, 0, 0, 0)).getTime(),
           name:dateVal
         };
     }
@@ -31,7 +31,7 @@ export const dateWeekFormat = (day,sort) => {
  * @param {*} day 日期new Date()
  * @param {*} pre tab首位
  * @param {*} next tab末尾
- * @param {*} sort 前 后
+ * @param {*} sort 1前7天0点 == 0后7天12点
  * @returns 
  */
 export const dateTabList = (day,pre=[{name:"全部",val:""}],next,sort) =>
