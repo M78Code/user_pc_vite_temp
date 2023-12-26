@@ -160,7 +160,10 @@ const set_delete = () => {
         }
 
         .bet-right {
-            width: 1.5rem;
+            width: 0.9rem;
+            display: flex;
+            flex-wrap: wrap;
+
             &.bet-invalid{
                 height: 100%;
                 .bet-disabled{

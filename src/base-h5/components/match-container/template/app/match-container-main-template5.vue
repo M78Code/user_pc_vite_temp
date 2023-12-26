@@ -1023,7 +1023,7 @@ export default {
             justify-content: flex-start;
             position: relative;
             .is-handicap {
-              color: #74C4FF;
+              color: var(--q-gb-t-c-1) !important;
             }
             .match-name {
               width: 1rem;

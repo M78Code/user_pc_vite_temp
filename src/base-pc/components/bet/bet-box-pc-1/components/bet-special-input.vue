@@ -1,5 +1,5 @@
 <template>
-    <div class="bet-mix-input">
+    <div class="bet-mix-input" :data-check-money="BetViewDataClass.input_money_state">
         <div class="odds-wrap row">
             <div data-v-c14bfede="" class="line"></div>
             <div class="col bet-mix-info">{{ items.name}}</div>
