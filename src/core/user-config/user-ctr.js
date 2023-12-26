@@ -1400,8 +1400,6 @@ class UserCtr {
       let res_ = SessionStorage.get(key) || LocalStorage.get(key);
       return res_;
     }
-    // 参数合并
-    Object.assign(res, obj)
     // token 令牌
     res.token = this.user_token || get_value('token');
     // gr分组
@@ -1418,7 +1416,8 @@ class UserCtr {
       const val = SEARCH_PARAMS.init_param.get(key);
       val && (res[key] = val);
     });
-
+    // 参数合并
+    Object.assign(res, obj)
     // 参数累加
     const searchParams = new URLSearchParams(res);
     // url编码转换
