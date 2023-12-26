@@ -22,7 +22,7 @@
             <!--此data-mid用于分频订阅赛事,请勿修改-->
             <div class="data_mid"> 
               <!-- 冠军玩法 -->
-              <template v-if="is_kemp">
+              <template v-if="is_kemp || MenuData.get_mm_is_champion()">
                 <MatchContainerMainTemplate2
                   :i="index"
                   :match_of_list="match_item">

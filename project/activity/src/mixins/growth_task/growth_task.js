@@ -5,7 +5,9 @@ import acticity_mixin from "project/activity/src/mixins/acticity_mixin/acticity_
 import { UserCtr } from "project_path/src/core/index.js";
 import { GATAG, is_time_limit } from "project_path/src/core/index.js";
 import dayjs from 'dayjs'
-
+import {
+  LOCAL_COMMON_FILE_PREFIX,
+} from "project_path/src/core/index.js";
 
 export default {
   name: "growth_task",
@@ -31,10 +33,11 @@ export default {
       ],
       // 任务领取的弹框
       daily_task_success: false,
+      LOCAL_COMMON_FILE_PREFIX,
       // 任务领取弹框 的图片及奖励
       pop_parameter: {
-        failure: "activity/yazhou-h5/activity/failure.png",
-        success: "activity/yazhou-h5/activity/success.png",
+        failure: LOCAL_COMMON_FILE_PREFIX + "/activity/yazhou-h5/activity/failure.png",
+        success: LOCAL_COMMON_FILE_PREFIX + "/activity/yazhou-h5/activity/success.png",
         ticket: -1,
       },
       // 任务列表
@@ -43,6 +46,7 @@ export default {
       get_data_loading: true,
       // 历史记录
       history_records: [],
+      getLotteryAgain: {}, // 再次领取数据
       // 历史记录弹框
       history_alert: false,
       // 历史记录分页
@@ -224,33 +228,24 @@ export default {
     async task_receive_btn(ids) {
       if (this.isDuringDate(this.inStartTime, this.inEndTime) == 3)
         return this.$toast("任务已结束", 1500);
+      // 每次调用保存一下数据，用于领取失败时再次开箱
+      this.getLotteryAgain = {...ids};
       try {
         const parameter = {
           ids,
           ty: this.actId == 1 ? 0 : 1,
           rdm: new Date().getTime(),
         };
-        let { code, data, msg } = await api_activity.get_tokyo_receive_lottery(
+        let res = await api_activity.get_tokyo_receive_lottery(
           parameter
         );
+        let { code, data } = res
+        let msg = res.msg || res.message
         if (code == 200 && Object.keys(data).length > 0) {
           Object.assign(this.pop_parameter, data);
           this.timer1_ = setTimeout(() => {
             this.get_daily_task_list();
           }, 800);
-          if (this.actId == 1) {
-            this.$gtag_event_send(
-              "H5_edtask_getAwardClick",
-              "H5_活动",
-              "H5_每日任务"
-            );
-          } else {
-            this.$gtag_event_send(
-              "H5_grtask_getAwardClick",
-              "H5_活动",
-              "H5_成长任务"
-            );
-          }
         } else if (["0410501", "0401003"].includes(code)) {
           this.$toast(msg, 3000);
           this.get_daily_task_list();
