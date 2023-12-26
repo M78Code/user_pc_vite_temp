@@ -62,7 +62,7 @@
          srcset="">
         </div>
       </div>
-      <!-- <div class="setting-item" @click="jump_webpage"> -->
+      <!-- <div class="setting-item" @click="change_version"> -->
       <!-- 前往旧版 -->
         <!-- <div class="title"> {{ i18n_t('app_h5.filter.go_old_version') }}</div> -->
         <!-- 前往网页版 -->
@@ -88,13 +88,16 @@ import { i18n_t } from "src/boot/i18n.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { is_vr } from 'src/base-h5/mixin/menu.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
-
+// 本次打包的 客户端版本
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import { api_account } from "src/api/index";
 defineOptions({
   name: "settingFilter" // 设置组件名称
 });
 
 const router = useRouter();
-
+ // 新旧版
+ const current_version= ref('new')
 /**
  * @description 跳转至盘口教程
  * @param 
@@ -282,6 +285,129 @@ const activity_handle = item => {
   const status = item.switchValue === "rightVal" ? false : true;
   UserCtr.set_daily_activities(status);
 };
+      /**
+     * 切换新旧版本
+     */
+const change_version = async ()=>{
+  // https://user-h5-bw3.sportxxx1zx.com/#/home
+  // https://app-h5.sportxxx1zx.com/#/match
+  // const href = window.href;
+  // let param = UserCtr.get_user_url_parames(obj); 
+  //    await api_account.get_UserVersion({frontVer:'user-h5-bw3'})
+    // 增加loop版本跳转参数
+    // location.href = old_url.href;
+    // 发送埋点事件 change-to-pc-new-version change-to-pc-old-version
+    gtag_event_send(`change-to-pc-new-version`,'新版本','新版本',new Date().getTime())
+    console.log('window.env.configwindow.env.config',BUILD_VERSION_CONFIG)
+    const {current_env} = BUILD_VERSION_CONFIG.NODE_ENV
+    const _arr = current_env=='local_test'?'app-h5':'user-h5-bw3'
+    const token = sessionStorage.getItem("token")
+    const gr = (sessionStorage.getItem("gr") ||'').toLocaleLowerCase()
+    console.log('window.location.href',window.location.href)
+    const original_url = sessionStorage.getItem("original_url")
+    let old_url = new URL(original_url)
+    let  host = old_url.host
+    let host_arr = host.split('.')
+    host_arr[0] =  _arr
+    current_version.value = 'new'
+    sessionStorage.setItem("current_version",current_version.value)
+    host = host_arr.join('.')
+    old_url.host = host
+    let search =old_url.search;
+    //加上版本号swv
+    if(!search.includes('swv=')){
+      old_url.search += '&swv='+current_version.value;
+    }
+    else{
+      //替换参数
+      old_url.search=old_url.search.replace(/(swv=)(\w+)/,'$1'+current_version.value);
+    }
+
+    //应对参数丢失 情况
+    if(!search.includes('token=')){
+      if(search){
+        old_url.search +=`&token=${token}&gr=${gr}`
+      }else{
+        old_url.search  =`?token=${token}&gr=${gr}`
+      }
+    }
+    if(!search.includes('goto_loop_v=')){
+      old_url.search += '&goto_loop_v=1';
+    }
+    // 保存跳转参数,以备刷新跳转使用
+    sessionStorage.setItem("goto_loop_v_url",old_url.href)
+    await api_account.get_UserVersion({frontVer:'user-h5-bw3'})
+    // 增加loop版本跳转参数
+    // location.href = old_url.href;
+  }
+  /**
+   * @description: 埋点发送事件跟踪信息
+   * @param {*} action 事件报告中显示为事件操作的字符串
+   * @param {*} category 显示为事件类别的字符串
+   * @param {*} label 显示为事件标签的字符串
+   * @param {*} value 显示为事件价值的非负整数
+   * @return {*}
+   */
+const  gtag_event_send = (action, category, label, value) =>{
+    let user_id = sessionStorage.getItem('user_id');
+    if(user_id && window.gtag_run){
+      // 初始化埋点Google Analytics GA_TRACKING_ID config配置
+      if(!window.INIT_GTAG){
+        gtag_config_send(user_id);
+      }
+      // 埋点发送事件跟踪信息
+      window.gtag('event', action, {
+        'event_category': category,
+        'event_label': label,
+        user_id,// 用户信息
+        value
+      });
+    }
+  }
+  /**
+   * @description: 埋点Google Analytics GA_TRACKING_ID config配置
+   * @param {*} user_id 用户id
+   * @return {*}
+   */
+const gtag_config_send = (user_id)=>{
+    // 设置默认启动参数
+    // GA 埋点开关开启---照常统计，和生产环境保持一致
+    window.gtag_run = 1;
+    try {
+      let url_search = new URLSearchParams(location.search);
+      // 获取诸葛埋点开关
+      let gtag = url_search.get('gtag');
+      if(gtag){
+        // 设置诸葛埋点开关
+        window.gtag_run = 1;
+      }
+    } catch (error) {
+      console.error(error)
+    }
+    // 诸葛埋点开关关闭时,直接终止
+    if(!window.gtag_run){
+      return
+    }
+    if(user_id){
+      // 设置用户ID持久化
+      sessionStorage.setItem('user_id',user_id);
+    } else {
+      // user_id无效时情况上次的缓存
+      sessionStorage.setItem('user_id','');
+      return;
+    }
+    if(!window.INIT_GTAG && window.gtag_run){
+      // 初始化埋点信息
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function gtag() { dataLayer.push(arguments); }
+      window.gtag('js', new Date());
+      // 配置埋点信息
+      window.gtag('config', window.env.config.GA_TRACKING_ID,{user_id});
+      // 设置埋点是否已经配置过
+      window.INIT_GTAG = true;
+    }
+  }
+
 </script>
 <style scoped lang="scss">
 // 组件样式
