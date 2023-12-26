@@ -9,9 +9,9 @@
            <slot name="default" :item="item" :index="index"></slot>
         </div>
         <!-- 到底了容器-->
-        <div :class="['loading-more-container']" v-if="isScrolledRealBottom && isShowMoreWrapper">
+        <!-- <div :class="['loading-more-container']" v-if="isScrolledRealBottom && isShowMoreWrapper">
           <div style="color:#AAAEB8;font-size:.12rem;"> {{ i18n_t("scroll_wrapper.is_footer") }} </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- 回到顶部按钮组件 -->
@@ -22,8 +22,9 @@
 </template>
 
 <script setup>
-import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, onUpdated, ref, toRefs, watch } from 'vue'
+import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, onUnmounted, onUpdated, ref, toRefs, watch } from 'vue'
 
+import { useMittOn, MITT_TYPES } from  "src/output"
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 
 const props = defineProps({
@@ -132,8 +133,13 @@ const renderData = computed(() => {
   return resultData
 })
 
+const emitters = ref({})
+
 onMounted(() => {
   // initDataPostion()
+  emitters.value = {
+    emitter_1: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, gotTop).off,
+  };
 })
 
 onUpdated(() => {
@@ -324,6 +330,10 @@ const findStartByBinarySearch = (_positionDataArr, scrollTop) => {
   }, 100)
 }
 
+onUnmounted(() => {
+  Object.values(emitters.value).map((x) => x());
+})
+
 </script>
 
 <style lang="scss" scoped>
@@ -351,7 +361,7 @@ const findStartByBinarySearch = (_positionDataArr, scrollTop) => {
   top: 0;
   left: 0;
   right: 0;
-  will-change: transform;
+  // will-change: transform;
   .loading-more-container{
     width: 100%;
     height: 181px;

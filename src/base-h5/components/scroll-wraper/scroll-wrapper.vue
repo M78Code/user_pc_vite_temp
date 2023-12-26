@@ -5,14 +5,12 @@
 -->
 
 <template>
+      
+  <!-- high_scrolling: set_is_high_scrolling && menu_type !== 100 && !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100, -->
   <div class="scroll-wrapper" ref="container" @scroll="handler_match_container_scroll">
-    <div  :class="['scroll-i-con', {high_scrolling: set_is_high_scrolling && menu_type !== 100 &&
-       !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100,
-        detail_list: is_detail, simple: standard_edition == 1,
-        'static': get_is_static() 
-      }]"
-      :style="{ 'height': get_is_static() ? 'auto' : container_total_height}">
-      <template v-if="MatchMeta.match_mids.length > 0" >
+    <div  :class="['scroll-i-con', { detail_list: is_detail, simple: standard_edition == 1, 'static': get_is_static() }]"
+      :style="get_container_style">
+      <template v-if="MatchMeta.match_mids.length > 0">
         <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
           :class="['s-w-item', {last: index == MatchMeta.match_mids.length - 1 }]" 
           :style="{ transform: `translateY(${get_match_top_by_mid(match_mid)}px)`, zIndex: `${100 + index}` }">
@@ -35,9 +33,6 @@
         <div style="color:#AAAEB8;font-size:.12rem;"> {{ i18n_t("scroll_wrapper.is_footer") }} </div>
       </div>
     </div>
-    <!-- <div class="err_box" v-if="MatchMeta.match_mids.length < 1">
-       <img class="scroll-title-icon" :src="compute_local_project_file_path('/image/png/no_data_app.png')" alt="">
-    </div> -->
     <!-- 回到顶部按钮组件 -->
     <ScrollTop :list_scroll_top="scroll_top" @back-top="goto_top" />
   </div>
@@ -62,7 +57,7 @@ import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive
 import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import { no_data_app } from 'src/base-h5/core/utils/local-image.js'
-
+import { compute_css_obj} from 'src/output/index.js'
 // 避免定时器每次滚动总是触发
 const props = defineProps({
   is_goto_top_random: Number,
@@ -88,6 +83,7 @@ const max_height = ref(false)
 const scroll_timer = ref(0)
 const emitters = ref({})
 const container = ref(null)
+// const scroll_height = ref(0)
 
 onMounted(() => {
   test.value = sessionStorage.getItem('wsl') == '9999';
@@ -197,11 +193,21 @@ const get_is_static = () => {
 }
 
 const is_show_out = computed(() => {
-  return max_height && !get_is_static() && VirtualList.container_total_height.value > window.innerHeight
+  return max_height && !get_is_static() && VirtualList.container_total_height.value > container.value?.offsetHeight
 })
 
 const container_total_height = computed(() => {
-  return `${VirtualList.container_total_height.value}px`
+  const height = is_show_out.value ? VirtualList.container_total_height.value : VirtualList.container_total_height.value - 181
+  return `${height}px`
+})
+
+// 动态 样式 
+const get_container_style = computed(() => {
+  const style_obj = { 'height': get_is_static() ? 'auto' : container_total_height.value}
+  if (menu_type.value !== 100 && !(menu_type.value == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.value?.mi))) Object.assign(style_obj, {
+    ...compute_css_obj({key: 'h5-kyapp-speciality-bg' })
+  })
+  return style_obj
 })
 
 // 计算每个赛事id 对应的 容器高度 top 值
@@ -291,12 +297,13 @@ onUnmounted(() => {
     width: 100%;
     // height: 10000px;
     position: relative;
-    background-repeat: repeat-y;
+    background-size: contain;
+    background-repeat: repeat-y !important;
     &.high_scrolling {
       background-size: contain;
-      background-image: url($SCSSPROJECTPATH + "/image/skeleton/height-177.jpg");
+      background-image: url($SCSSPROJECTPATH + "/image/skeleton/height-177.jpg"); 
       &.simple {
-        background-image: url($SCSSPROJECTPATH + "/image/skeleton/height-117.jpg");
+      background-image: url($SCSSPROJECTPATH + "/image/skeleton/height-117.jpg");
       }
     }
     &.detail_list {
@@ -360,6 +367,7 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     width: 100%;
+    z-index: 20;
   }
 }
 .err_box{

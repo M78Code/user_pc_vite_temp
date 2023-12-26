@@ -1003,6 +1003,7 @@ get_quick_mid_obj_ref(mid){
                             _hsw:item2.hsw,
                             _hipo:item3.hipo,
                             _csid:item.csid,
+                            _ispo:item2.ispo || item.ispo,
                             os:Object.hasOwnProperty.call(item4,'os')?item4.os:1,
                           });
                           // 快速查询对象ol_obj增加数据
@@ -1081,6 +1082,7 @@ get_quick_mid_obj_ref(mid){
                             _hsw:item2.hsw,
                             _hipo:item3.hipo,
                             _csid:item.csid,
+                            _ispo:item2.ispo || item.ispo,
                             os:Object.hasOwnProperty.call(item4,'os')?item4.os:1,
                           });
                           // 快速查询对象ol_obj增加数据
@@ -1203,6 +1205,7 @@ get_quick_mid_obj_ref(mid){
                                 _hsw:item2.hsw,
                                 _hipo:item3.hipo,
                                 _csid:item.csid,
+                                _ispo:item2.ispo || item.ispo,
                                 os:Object.hasOwnProperty.call(item4,'os')?item4.os:1,
                               });
                               // 快速查询对象hn_obj增加数据
@@ -1274,6 +1277,7 @@ get_quick_mid_obj_ref(mid){
                               _hsw:item2.hsw,
                               _hipo:item3.hipo,
                               _csid:item.csid,
+                              _ispo:item2.ispo || item.ispo,
                               os:Object.hasOwnProperty.call(item4,'os')?item4.os:1,
                             });
                               // 快速查询对象hn_obj增加数据

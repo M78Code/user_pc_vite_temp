@@ -8,11 +8,12 @@
         display: flex;
         justify-content: center;
         color: var(--q-gb-t-c-24);
+        white-space: nowrap;
 
         span {
             padding: .06rem 0;
-            font-size: .16rem;
-            margin: 0 .16rem;
+            font-size: .14rem;
+            margin: 0 .1rem;
         }
     }
 
@@ -75,5 +76,5 @@
     }
 }
 .match-result-contant {
-    background: var(--q-gb-bg-c-18);
+    background: var(--q-gb-bg-c-18) !important;
 }

@@ -189,7 +189,7 @@
             </div>
             <div class="add-btn dec" @click="set_volume(1)">-</div>
             <slider
-              v-model="volume"
+              v-model:value="volume"
               @change_is_mousedown="is_mousedown = $event"
               :min="currentSynthConfig.ownBaseTicket == 0 ? 0 : 1"
               :max="
@@ -362,6 +362,7 @@ import {
   useMittEmit,
   LOCAL_COMMON_FILE_PREFIX,
   MITT_TYPES} from "project/activity/src/core/index.js";
+import _ from 'lodash'
 // 生成随机数
 const random = function (minNum, maxNum) {
   return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
@@ -503,15 +504,15 @@ export default {
       api_activity
         .get_synth_config()
         .then((res) => {
-          let { code } = { ...res.data };
+          let { code } = res;
           if (code == "0401038") {
             this.toast(i18n_t("common.limited"));
             return;
           }
 
-          if (code == 200 && _.get(res, "data.data.synthConfig.length")) {
+          if ((code == 200 || code == '0000000') && _.get(res, "data.synthConfig.length")) {
             // 所有奖券的配置
-            this.synthConfig = _.get(res, "data.data.synthConfig");
+            this.synthConfig = _.get(res, "data.synthConfig");
             // 当前选中的奖券的配置，默认选中白银
             let tokenNum = {};
             this.synthConfig.forEach((item) => {
@@ -531,13 +532,13 @@ export default {
                 Number(this.currentSynthConfig.baseTicketNum)
             );
             // 幸运奖券数量
-            this.luckyTicket = _.get(res, "data.data.luckyTicket");
+            this.luckyTicket = _.get(res, "data.luckyTicket");
           } else if (code == "0410505") {
             this.isMaintaining = true;
             this.showAlert = true;
             this.noticeMsg = "活动现已维护，感谢您的支持";
           } else {
-            this.$toast(res.msg, 1500);
+            this.$toast(res.msg || res.message, 1500);
           }
           // 如果当前基础奖券数量可以合成一张以上上级奖券
           if (
@@ -607,7 +608,7 @@ export default {
             this.noticeMsg = "活动现已维护，感谢您的支持";
             // 其他情况的接口提示
           } else {
-            this.$toast(res.msg, 1500);
+            this.$toast(res.msg || res.message, 1500);
           }
         })
         .catch((err) => {
@@ -621,7 +622,7 @@ export default {
      */
     get_synth_ticket(synthCount) {
       if (!synthCount) {
-        this.$toast(`${this.currentSynthConfig.baseTicketName}数不足`, 1500);
+        this.toast(`${this.currentSynthConfig.baseTicketName}数不足`, 1500);
         return;
       }
       let params = {
@@ -631,7 +632,7 @@ export default {
       api_activity
         .get_synth_ticket(params)
         .then((res) => {
-          let { code, data } = { ...res };
+          let { code, data } = res;
           if (code == 200) {
             // 合成成功隐藏卡片列表
             this.is_show_card = false;
@@ -649,12 +650,12 @@ export default {
             useMittEmit(MITT_TYPES.EMIT_TO_MAINTENANCE);
             return;
           } else {
-            this.$toast(res.msg, 1500);
+            this.toast(res.message, 1500);
           }
         })
         .catch((err) => {
           console.error(err);
-          this.$toast(err, 1500);
+          this.toast(err, 1500);
         });
     },
     /**
@@ -750,6 +751,9 @@ export default {
       this.timer_tips = setTimeout(() => {
         this.tips.statu = false;
       }, 2000);
+    },
+    $toast(message){
+      this.toast(message)
     },
   },
 };
@@ -1423,7 +1427,7 @@ svg {
   border-radius: 2px;
   text-align: center;
   transform: translate(-50%, -50%);
-  z-index: 9999;
+  z-index: 10011;
   background: rgba(0, 0, 0, 0.9);
   border-radius: 6px;
   color: #fff;

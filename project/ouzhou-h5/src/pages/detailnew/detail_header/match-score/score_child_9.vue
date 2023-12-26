@@ -1,5 +1,5 @@
 <script setup name="score_child_9">
-import {computed, onMounted, ref, watch} from "vue"
+import {nextTick, onMounted, reactive, watch, watchEffect} from "vue"
 import {useMittEmit, MITT_TYPES} from "src/core/mitt/index.js";
 
 const props = defineProps({
@@ -9,22 +9,20 @@ const props = defineProps({
     }
 })
 
-const msc_array = ref([])
+const state = reactive({
+    score_array: []
+})
 
-const score_array = computed(() => {
+const InitScore = function (){
     const score_arr = []
-    const msc_obj = props.detail_data?.msc_obj || {};
+    const msc_obj = props.detail_data?.msc_obj;
     const msc_obj_keys = Object.keys(msc_obj).filter(key => (Number(key.replace(/[Ss]/g, '')) > 119 && Number(key.replace(/[Ss]/g, '')) < 160))
     lodash.forEach(msc_obj_keys, item => {
         score_arr.push(msc_obj[item])
     })
-    return score_arr
-})
-
-watch(() => props.detail_data, (newValue) => {
-    validate_stage(newValue.mmp)
-}, {deep: true})
-
+    console.log(score_arr,"score_arr")
+    state.score_array = score_arr
+}
 
 const validate_stage = function (mmp){
     switch(mmp){
@@ -67,29 +65,47 @@ const validate_stage = function (mmp){
     }
 }
 
+watchEffect(()=>{
+    InitScore()
+})
+
+watch(() => props.detail_data, (newValue) => {
+    console.log("score_arr,detail_data")
+    validate_stage(newValue.mmp)
+}, {deep: true,immediate:true})
+
 onMounted(() => {
-    console.log(props.detail_data,"props.detail_data")
     validate_stage(props.detail_data.mmp)
+    nextTick(()=>{
+        InitScore()
+    })
 })
 </script>
 
 <template>
-    <ul class="score_child_8" v-if="(score_array || []).length">
-        <li v-for="item of score_array" :key="item" class="score">
-            <span>{{ item?.home }}</span>
-            <span>-</span>
-            <span>{{ item?.away }}</span>
+    <ul class="score_child_9" v-if="state.score_array">
+        <li v-for="item of state.score_array" :key="item" class="score">
+            <span>&ensp;</span>
+            <span>{{ item?.home }} - {{ item?.away }}</span>
+            <span>&ensp;</span>
         </li>
     </ul>
 </template>
 
 
 <style scoped lang="scss">
-.score_child_8 {
+.score_child_9 {
+    width: 100%;
+    height: 32px;
     display: flex;
     align-items: center;
-    padding: 0 .2rem;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
     box-sizing: border-box;
-    gap: 4px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: auto;
+    white-space: nowrap;
 }
 </style>

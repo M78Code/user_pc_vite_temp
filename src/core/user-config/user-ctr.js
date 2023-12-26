@@ -6,7 +6,7 @@
  *  商户相关
  */
 // #TODO 等后续get_server_file_path、http、infoUpload和pako_pb公共模块开发后再替换
-import { ref,nextTick } from "vue";
+import { ref,nextTick, reactive} from "vue";
 // #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
 import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
@@ -120,6 +120,8 @@ class UserCtr {
     }
     //弹窗 联赛筛选的数据
     this.league_select_list = []
+    //弹窗 赛果联赛筛选的数据
+    this.amidithion_league_select_list = []
     //获取资源配置(商户后台配置的图片、跳转链接)
     this.resources_obj = {}
     // 用户信息版本
@@ -270,13 +272,20 @@ class UserCtr {
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
     // 设置主题
-    LocalStorage.set('default-theme', theme)
+    // LocalStorage.set('default-theme', theme)
+    this.update()
   }
   /**
    * 联赛赛选的数据发生变化
   */
-  set_league_select_list(val) {
-    this.league_select_list = val.value
+  set_league_select_list(val,type) {
+    //赛果筛选
+    if (type && type === 'amidithion'){
+      this.amidithion_league_select_list = val.value
+    }else{
+      //普通筛选
+      this.league_select_list = val.value
+    }
     this.update()
   }
   set_cur_odds(odd) {
@@ -925,6 +934,16 @@ class UserCtr {
     this.set_user_info(lodash.get(res, "data.data", {}))
     //上传数据
     infoUpload.upload_data(lodash.get(res, "data.data", {}));
+
+    // 主题修正
+    if(!this.theme){
+      this.theme = LocalStorage.get("theme",  LocalStorage.get('default-theme'));
+      this.theme && LocalStorage.set("theme", this.theme);
+    }
+    let local_theme = LocalStorage.get("theme");
+    if(this.theme && this.theme != local_theme){
+      LocalStorage.set("theme", this.theme);
+    }
     this.set_web_meta_by_config();
   }
   /**
@@ -1381,8 +1400,6 @@ class UserCtr {
       let res_ = SessionStorage.get(key) || LocalStorage.get(key);
       return res_;
     }
-    // 参数合并
-    Object.assign(res, obj)
     // token 令牌
     res.token = this.user_token || get_value('token');
     // gr分组
@@ -1393,13 +1410,16 @@ class UserCtr {
     res.lang = this.lang || get_value('lang') || '';
     // api 获取默认最快域名进行加密
     res.api = this.api_encrypt(BUILDIN_CONFIG.DOMAIN_RESULT.first_one || get_value('best_api')) || '';
+    // 项目来源;
+    res.project = BUILD_VERSION_CONFIG.PROJECT_NAME;
     // 功能附加参数
     const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
     PARAM_ADD_KEY.forEach(key => {
       const val = SEARCH_PARAMS.init_param.get(key);
       val && (res[key] = val);
     });
-
+    // 参数合并
+    Object.assign(res, obj)
     // 参数累加
     const searchParams = new URLSearchParams(res);
     // url编码转换
@@ -1425,5 +1445,5 @@ class UserCtr {
   }
 }
 
-const instance = new UserCtr();
+const instance = reactive(new UserCtr());
 export default instance;

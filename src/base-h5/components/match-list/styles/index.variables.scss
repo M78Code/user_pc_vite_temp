@@ -4,7 +4,7 @@
     .scroll-wrapper, .observer-container {
       // background: var(--q-gb-bg-c-21);
       .s-w-item {
-        background: var(--q-gb-bg-c-18) !important;
+        background: var(--q-gb-bg-c-18) ;
       }
       .match-container {
         // .odd-list.match-indent.simple {
@@ -228,8 +228,8 @@
           }
           .flag-chuan {
             background: var(--q-color-linear-gradient-bg-25);
-            color: var(--q-gb-bd-c-3);
-            border: .01rem solid var(--q-gb-bd-c-3);
+            color: var(--q-gb-t-c-1);
+            border: .01rem solid var(--q-gb-t-c-1);
           }
         }
         .odd-list {

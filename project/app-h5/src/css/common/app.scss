@@ -94,12 +94,14 @@
   font-style: normal;
   font-display: block;
 }
-
+.number_family {
+  font-family: 'ky-font';
+}
 body {
   //color: #414655;
   // color: #303442;
   font-size: 0.12rem !important;
-  font-family:'ky-font', Arial, Helvetica, sans-serif !important;
+  font-family:'PingFang SC','Microsoft Yahei', Arial, Helvetica, sans-serif ;
 }
 /* 字体大小 */
 .yb_fontsize8 {

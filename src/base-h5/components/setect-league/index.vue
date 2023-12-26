@@ -41,9 +41,14 @@
     </div>
     <!-- <div class="sl-filter-content"> -->
     <!-- 只有滚球全部走的这个 -->
-    <match-filter-old ref="matchRef" :search_val="search_val" v-if="MenuData.get_sub_is_all()"></match-filter-old>
+    <match-filter-old ref="matchRef" 
+                      :search_val="search_val"
+                      v-if="MenuData.get_sub_is_all()"></match-filter-old>
     <!-- 今日早盘串关等 走新逻辑 -->
-    <match-filter ref="matchRefOld" :search_val="search_val" v-else></match-filter>
+    <match-filter  v-else
+                   ref="matchRefOld"
+                  :league_select_list='UserCtr.league_select_list'
+                  :search_val="search_val"></match-filter>
     <!-- </div> -->
   </div>
 </template>

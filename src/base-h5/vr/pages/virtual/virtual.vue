@@ -10,7 +10,7 @@
       <div class="virtual-head">
         <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
           <!-- 返回按钮 及 刷新 注单  设置 按钮 -->
-          <div class="back-wrap">
+          <div class="title-wrap">
             <div class="detail-back" @click="go_to_back(),go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})">
               <img
                 class="img"
@@ -19,9 +19,7 @@
               />
             </div>
             <!-- 虚拟体育 -->
-            <div class="col virtual-title">{{i18n_t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
-            <!-- <div class="virtual-ref" style="background-color: blue;" :class="{'refreshing':refreshing}" @click="vir_refresh"></div> -->
-            <!-- <div class="no-single" style="background-color: red;" @click="click_event()"></div> -->
+            <div class="col virtual-title">{{i18n_t('common.virtual_sports')}}</div>
             <!-- 复刻版暂时用不到先注释了 -->
             <!-- <set-menu /> -->
 
@@ -434,9 +432,10 @@ export default {
       background-size: 100% auto;
     }
 
-    .back-wrap {
+    .title-wrap {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       font-size: 0.16rem;
       height: 0.44rem;
 
@@ -444,15 +443,24 @@ export default {
         width: 0.08rem;
         height: 0.14rem;
         background-size: 0.1rem auto;
-        margin-left: 0.05rem;
+        margin-left: 0.1rem;
         margin-right: 0.1rem;
       }
 
       .virtual-title{
         text-align: center;
-        text-indent: 0.56rem;
         font-weight: 500;
         font-size: 0.18rem;
+        font-family: PingFang SC;
+        position: absolute;
+        width: 1.6rem;
+        height: 0.44rem;
+        line-height: 0.44rem;
+        top: 50%;
+        left: 50%;
+        margin-left: -0.8rem;
+        margin-top: -0.44rem;
+        color: var(--q-gb-t-c-20);
       }
 
       /*  刷新按钮 */
@@ -509,6 +517,7 @@ export default {
             text-overflow:ellipsis;
             white-space:nowrap;
             font-size: 0.12rem;
+            color: var(--q-gb-t-c-18);
         }
       }
 
@@ -546,7 +555,7 @@ export default {
           justify-content: center;
           align-items: center;
           min-width: fit-content;
-          padding-right: 0.38rem;
+          padding-right: 0.18rem;
           &:last-child {
             padding-right: 0.2rem;
           }

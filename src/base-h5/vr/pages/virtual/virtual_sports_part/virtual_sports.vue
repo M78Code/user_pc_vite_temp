@@ -10,22 +10,23 @@
     <!-- <setting list_type="vr"/> -->
     <!--联赛tab-->
     <!--只有足球展示多个联赛菜单 -->
-    <div class="tab-wrapper" v-if="sub_menu_type == 1001">
-      <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
-        :key="i" @click="tab_item_click_handle(i,null,'user_change')">
-        <div>{{tab_item.name}}</div>
+    <div class="fixed-head">
+      <div class="tab-wrapper" v-if="sub_menu_type == 1001">
+        <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
+          :key="i" @click="tab_item_click_handle(i,null,'user_change')">
+          <div>{{tab_item.name}}</div>
+        </div>
       </div>
-    </div>
-    <!-- 全部联赛折叠 -->
-    <div class="all-leagues">
-      <div class="left">
-        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rili.png`" alt="">
-        <span>{{i18n_t('filter.all_leagues')}}</span>
-      </div>
-      <div class="right" @click="handle_all_league">
-        <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" :class="[!is_expend_all && 'expend_all_league']" alt=""> -->
-      <div class='img' :class="[!is_expend_all && 'expend_all_league']" :style="compute_css_obj({key:'h5-kyapp-expand-lague'})"></div>
-      
+      <!-- 全部联赛折叠 -->
+      <div class="all-leagues"  @click="handle_all_league">
+        <div class="left">
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rili.png`" alt="">
+          <span>{{i18n_t('filter.all_leagues')}}</span>
+        </div>
+        <div class="right">
+          <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" :class="[!is_expend_all && 'expend_all_league']" alt=""> -->
+        <div class='img' :class="[!is_expend_all && 'expend_all_league']" :style="compute_css_obj({key:'h5-kyapp-expand-lague'})"></div>
+        </div>
       </div>
     </div>
     <div class="virtual-content-wrapper">
@@ -520,29 +521,36 @@ export default {
       if([1001,1004].includes(this.sub_menu_type)){
         // item.is_expend && this.sub_nav_click_handle(item.batchNo);
       }else {
-        item.is_expend && this.get_detail_odds(item);
+        // item.is_expend && this.get_detail_odds(item);
       }
     },
     // 赛马，赛狗展开时，获取赔率
-    get_detail_odds(item){
-      const match = item.matchs[0];
-      console.log('match', match);
-      let params = {
-          // 当前选中玩法项的id
-          mcid: 0,
-          // 赛事id
-          mid: match.mid,
-          // userId或者uuid
-          cuid: UserCtr.uid,
+    // 修改为一次性获取所有赔率。
+    get_detail_odds(){
+      this.match_list_all_batches.forEach(item=>{
+        if(item.matchs){
+          const match = item.matchs[0];
+          //创建闭包，每次循序都有一个新的match，异步接口可以准确赋值
+          (function(match){
+            let params = {
+              // 当前选中玩法项的id
+              mcid: 0,
+              // 赛事id
+              mid: match.mid,
+              // userId或者uuid
+              cuid: UserCtr.uid,
+            }
+            api_common.get_matchDetail_getVirtualMatchOddsInfo(params).then(res => {
+              if(res?.data?.length){
+                match.hps = res.data[0]?.plays || [];
+                // 按照hpid从小到大排序 
+                match.hps.sort((x, y) => x.hpid - y.hpid);
+                MatchDataBaseH5.set_list([match]);
+              }
+            })
+          })(match)
         }
-        api_common.get_matchDetail_getVirtualMatchOddsInfo(params).then(res => {
-          if(res.data.length){
-            match.hps = res.data[0]?.plays || [];
-            // 按照hpid从小到大排序 
-            match.hps.sort((x, y) => x.hpid - y.hpid);
-            MatchDataBaseH5.set_list([match]);
-          }
-        })
+      })
     },
     set_detail_data(data){
       // TODO 需要对应
@@ -646,16 +654,20 @@ export default {
         this.handle_match_time(batch);
         this.set_batch_timer(batch);
       })
-      // console.log(this.interval_ids, 'sss')
+      
+      // 各球种都全部展开
+      match_list_all_batches.forEach(batch=> {
+        batch.is_expend = true
+      })
 
       // 足蓝全部展开，赛马类只展开第一个
-      if(this.sub_menu_type == '1001' || this.sub_menu_type == '1004'){
-          match_list_all_batches.forEach(batch=> {
-          batch.is_expend = true
-        })
-      }else {
-        match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
-      }
+      // if(this.sub_menu_type == '1001' || this.sub_menu_type == '1004'){
+      //     match_list_all_batches.forEach(batch=> {
+      //     batch.is_expend = true
+      //   })
+      // }else {
+      //   match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
+      // }
       return match_list_all_batches
     },
 
@@ -688,13 +700,17 @@ export default {
 
         let current_league = this.tab_items[this.tab_item_i];
         this.set_current_league(lodash.cloneDeep(current_league));
-        this.tab_item_click_handle(this.tab_item_i,'is_force');
+        this.lengue_name = current_league.name
+        
+        // 和旧代码逻辑保持一致，此处不调用
+        // this.tab_item_click_handle(this.tab_item_i,'is_force');
       }
     },
     // 赛马类第一次切换菜单时，获取详情赔率
     current_batch(){
       if(this.current_batch?.no && ![1001,1004].includes(this.sub_menu_type)){
-        this.get_detail_odds(this.current_batch)
+        // 后期等赛马类的列表接口加上赔率后，可注释掉
+        this.get_detail_odds()
       }
     },
     current_sub_menu(){
@@ -757,6 +773,12 @@ export default {
 
 <style lang="scss" scoped>
 
+.fixed-head {
+  position: sticky;
+  top: 0.89rem;
+  background: var(--q-gb-bg-c-25);
+  z-index: 100;
+}
 
 /*  联赛菜单 */
 .tab-wrapper {
@@ -809,6 +831,9 @@ export default {
     padding-left: 0.07rem;
   }
   .status{
+    .num {
+      color: var(--q-gb-t-c-24);
+    }
     .state{
       margin: 0 5px;
       color: #fff;
@@ -832,7 +857,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 0 0.15rem;
-  height: 0.24rem;
+  height: 0.27rem;
   border-top: 0.02rem solid var(--q-gb-bd-c-3);
   background-color: var(--q-gb-bg-c-25);;
 
@@ -850,11 +875,11 @@ export default {
   .right {
     display: flex;
     align-items: center;
-    img {
+    div {
       width: 0.2rem;
       height: 0.16rem;
       &.expend_all_league {
-        transform: rotate(-180deg);
+        transform: rotate(-90deg);
       }
     }
   }
@@ -899,7 +924,7 @@ export default {
     border-bottom-right-radius: .04rem;
     .vsm-options {
       width: 49%;
-      height: .4rem;
+      height: 0.52rem;
       background: var(--q-gb-bg-c-18);
       border-radius: .04rem;
       margin-bottom: .08rem;
@@ -910,7 +935,7 @@ export default {
       font-size: .12rem;
       padding: .02rem .12rem;
       &.active {
-        background: #D1EBFF;
+        background: var(--q-gb-bg-c-24);
         .teams {
           color: #127DCC;
         }

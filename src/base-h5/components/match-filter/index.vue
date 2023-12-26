@@ -165,6 +165,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  league_select_list:{
+    type: Array,
+    default:[],
+  }
 });
 
 watch(()=>props.search_val, (newVal) => {
@@ -438,9 +442,11 @@ function type_select(li_item) {
 // 获取已选择的联赛数据
 const get_league_select_list = ()=>{
   list.value = list.value.map(sub=>{
-    UserCtr.league_select_list?.forEach(item=>{
+    props.league_select_list?.forEach(item=>{
       if (sub.id === item.id){
-        sub.select = item.select
+        nextTick(()=>{
+          sub.select = item.select
+        })
       }
     })
      return sub
@@ -635,13 +641,13 @@ function dynamic_letters(arr) {
  * @Description: 是否折叠联赛
  */
 const is_fold_fn = (item)=>{
-  if (item.hide){
-    item.hide = false;
-  }else{
-    item.hide = true;
-  }
+  item.hide = item.hide ? false : true
   list.value = (list.value || []).map(i => {
     if (i.spell === item.title){
+       i.hide = item.hide
+    }
+    //热门联赛处理
+    if (item.title == i18n_t('search.hot_league') && i.spell === 'HOT'){
        i.hide = item.hide
     }
      return i

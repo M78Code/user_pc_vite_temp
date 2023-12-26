@@ -121,6 +121,7 @@ const searchTabMenu = ref(null);//足球tab dom
   }
   // 设置滑动菜单的选中id
   const set_scroll_current = async (val,type) => {
+    handler_go_to_top()
     if(MenuData.is_esports() && !type){
       const data_list_esports = await MenuData.getDateList(val?.csid);
       dataListEsports.value = data_list_esports;
@@ -190,11 +191,17 @@ const searchTabMenu = ref(null);//足球tab dom
    * @param {*} type 
    */
   const setDate = (type) =>{
+    handler_go_to_top()
     if([3,6].includes(MenuData.current_lv_1_menu_mi.value)){
       set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,type)
     }else{
       handle_match_render_data();
     }
+  }
+
+  // 通知回到顶部
+  const handler_go_to_top = () => {
+    useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
   }
   /**
    * 
@@ -233,7 +240,7 @@ const searchTabMenu = ref(null);//足球tab dom
   watch(()=> MenuData.current_lv_1_menu_mi.value, (new_,old_) => {
     MenuData.set_old_current_lv_1_menu_i([2000,300].includes(new_)?old_:'');//电竞vr记录旧菜单id
     MenuData.search_data_tab_index();//清除联赛缓存
-    init_data(new_)
+    init_data(new_,old_ == 28?1:0)
   })
   // 早盘 串关  电竞
   // const set_scroll_early_single = (params) => {
@@ -269,6 +276,7 @@ const searchTabMenu = ref(null);//足球tab dom
 
   // 根据一级菜单 设置滑动菜单数据
   const set_scroll_data_list = (mid,type) => {
+    handler_go_to_top()
     ref_data.scroll_data_list = MenuData.get_menu_lvmi_list(mid);
     const is_sport_id = ref_data.scroll_data_list.some(n=>{return MenuData.current_lv_2_menu_i && MenuData.recombine_menu_desc(n.mi) == MenuData.recombine_menu_desc(MenuData.current_lv_2_menu_i)});
     // let index = 0
@@ -335,7 +343,7 @@ const searchTabMenu = ref(null);//足球tab dom
     // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
     if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
     // 赛果不走元数据， 直接拉取接口
-    if (MenuData.is_results()) return MatchMeta.get_results_match()
+    // if (MenuData.is_results()) return MatchMeta.get_results_match()
     // 电竞不走元数据， 直接拉取接口
     if (MenuData.is_esports() && !type) return MatchMeta.get_esports_match()
 

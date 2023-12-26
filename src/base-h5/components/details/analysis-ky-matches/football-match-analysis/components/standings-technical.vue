@@ -117,7 +117,7 @@ import { i18n_t } from "src/boot/i18n.js";;
 
 <style lang="scss" scoped>
 .standings_technical.football_standings {
-  background-color: var(--q-analysis-bg-color-1);
+  background-color: var(--q-gb-bg-c-23);
     .title {
     height: 0.4rem;
     line-height: 0.45rem;
@@ -126,9 +126,9 @@ import { i18n_t } from "src/boot/i18n.js";;
     letter-spacing: 0;
     font-weight: bold;
     position: relative;
-    color: var(--q-analysis-text-color-15);
+    color: var(--q-analysis-text-color-20);
     border-bottom: 1px solid var(--q-analysis-bd-color-3);
-    background-color: var(--q-analysis-bg-color-1);
+    background-color: var(--q-gb-bg-c-23);
 
     &:before {
       content: '';
@@ -183,8 +183,8 @@ import { i18n_t } from "src/boot/i18n.js";;
         padding: 0 0.1rem;
         background-color: var(--q-gb-bg-c-15);
         color: var(--q-analysis-text-color-32);
-        border-bottom: 1px solid var(--q-analysis-text-color-24);
-        border-top: 1px solid var(--q-analysis-text-color-24);
+        border-bottom: 1px solid var(--q-analysis-bd-color-3);
+        border-top: 1px solid var(--q-analysis-bd-color-3);
       }
 
       .team-item {
@@ -249,7 +249,7 @@ import { i18n_t } from "src/boot/i18n.js";;
     text-align: center;
     padding-top: 0.05rem !important;
     font-size: 12px;
-    background-color: var(--q-analysis-bg-color-1);
+    background-color: var(--q-gb-bg-c-23);
     color: var(--q-analysis-text-color-14);
   }
 }

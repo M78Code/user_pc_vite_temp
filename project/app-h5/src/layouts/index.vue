@@ -51,7 +51,7 @@
 
 
       <!-- 串关投注 只有串关/电竞/VR 才展示--> 
-      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single&&(is_mix||is_esports||is_vr)">
+      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single&&(is_mix||is_esports||is_vr) && BetData.bet_s_list.length">
           <div class="chain_bet" @click="show_chain_bet" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
             <span class="count">{{BetData.bet_s_list.length}}</span>
           </div>
@@ -77,7 +77,7 @@ import {
   nextTick,
 } from "vue";
 import StandardEdition from 'src/base-h5/components/standard-edition/index.vue'
-import { useMittOn, MITT_TYPES, i18n_t, MenuData } from "src/output/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit, i18n_t, MenuData } from "src/output/index.js";
 import {is_mix,is_esports,is_vr} from "src/base-h5/mixin/menu.js"
 import UserCtr from "src/core/user-config/user-ctr.js"; 
 // import { FooterWapper } from "src/components/footer/index.js";
@@ -95,7 +95,7 @@ import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { bet_special_series_change,get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
+import { bet_special_series_change,get_query_bet_amount_common,set_market_id_to_ws } from "src/core/bet/class/bet-box-submit.js"
 import TokenInvalid from "./token-invalid.vue"
 import {debounce} from "lodash";
 // import betMixBoxChild from "src/base-h5/components/bet/bet-box-app-h5-1/bet_mix_box_child.vue";
@@ -247,7 +247,10 @@ const show_chain_bet = () => {
   if(!bet_special_series_change()){
     return
   }
+  // 获取限额
   get_query_bet_amount_common()
+  // 订阅推送
+  set_market_id_to_ws()
   BetData.set_bet_box_h5_show(true)
 }
 
@@ -306,6 +309,10 @@ onMounted(() => {
   init_local_server_time()
   // 设置设备类型
   BetData.set_device_type(1)
+  nextTick(() => {
+    // 隐藏loading动画 
+    useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,0);
+  })
 });
 
 const mitt_list = [

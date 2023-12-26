@@ -179,7 +179,7 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
 <style lang="scss" scoped>
 .mathc_results_visuals {
     // 添加背景色，否则会镂空
-    background-color: var(--q-gb-bg-c-27);
+    background-color: var(--q-gb-bg-c-23);
   padding-bottom: 0.31rem;
   border-bottom: 1px solid  var(--q-analysis-bd-color-3);
   .title {

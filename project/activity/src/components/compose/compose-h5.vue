@@ -167,7 +167,7 @@
             </div>
             <div class="add-btn dec" @click="set_volume(1)">-</div>
             <slider
-              v-model="volume"
+              v-model:value="volume"
               @change_is_mousedown="is_mousedown = $event"
               :min="currentSynthConfig.ownBaseTicket == 0 ? 0 : 1"
               :max="
@@ -412,7 +412,7 @@ export default {
       // this.$refs.showCard.play();
       this.$emit("play_show_card");
       api_activity
-        .get_activity_slot_config()
+        .get_synth_config()
         .then((res) => {
           let { code, data } = { ...res };
           if (code == 200) {

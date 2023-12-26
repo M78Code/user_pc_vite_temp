@@ -6,7 +6,7 @@
     :class="[{
       jinri: MenuData.is_today(),
       zaopan: MenuData.is_zaopan(),
-      gunqiu: MenuData.is_scroll_ball()
+      gunqiu: MenuData.is_scroll_ball(),
     }]" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
@@ -43,7 +43,7 @@
         <div :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
-      <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div>
+      <div class="buffer-container" v-if="is_show_buffer_container"></div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 @click.stop="handle_ball_seed_fold"-->
       <div v-if="show_sport_title" @click.stop
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
@@ -79,7 +79,8 @@
         </div>
         <!-- 卡片主内容 -->
         <!-- <q-slide-transition> -->
-        <div :class="['match-content', { 'collapsed': collapsed }, {'border-top': !match.is_show_league}]" v-if="collapsed">
+        <div :class="['match-content', { 'collapsed': collapsed, 'border-button': !match.is_show_league }]" v-if="collapsed">
+          <div class="match-content-line" v-if="!match.is_show_league"></div>
           <!--标准版 赔率标题栏-->
           <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
             <div class="odd-title-i-w flex">
@@ -146,8 +147,11 @@
                   </div>
 
                   <!-- 电竞串关标识 -->
-                  <div v-if="is_esports && match.ispo" class="flag-chuan"
-                    :class="{ 'special-lang': ['zh', 'tw'].includes(lang) }">{{ i18n_t('match_info.match_parlay') }}
+                  <!-- <div v-if="is_esports && match.ispo" class="flag-chuan" -->
+                  <div v-if="is_esports && match.ispo"  class="flag-chuan-icon" 
+                    :class="{ 'special-lang': ['zh', 'tw'].includes(lang) }"
+                    :style="compute_css_obj({key:'h5-kyapp-crosstalk-icon'})">
+                    <!-- {{ i18n_t('match_info.match_parlay') }} -->
                   </div>
                 </div>
                 <!--玩法数量-->
@@ -227,7 +231,7 @@
                           'is-handicap': match.handicap_index == 2,
                           'is-handicap-1': match.handicap_index == 1,
                         }">
-                          <span>{{ match.man }}</span>
+                          <span >{{ match.man }}</span>
                         </div>
                         <!--发球方绿点-->
                         <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
@@ -298,7 +302,7 @@
               <!-- 展示三行的不展示比分 -->
               <template v-if="![1, 4, 11, 14, 15, 16].includes(+match.csid)">
                 <div class="score-content">
-                  <ScoreList :main_source="main_source" :match="match_of_list" />
+                  <ScoreList :class="[match.csid == 7 && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
                 </div>
               </template>
             </div>
@@ -422,13 +426,17 @@ export default {
     transform: rotate(0);
   }
 }
-
+.match-content-line {
+  width: 100%;
+  height: 1px;
+  background: var(--q-gb-bd-c-4);
+}
 .match-container {
   width: 100%;
   height: auto;
   position: relative;
   &.border_top{
-    border-top: 1px solid rgba(175, 179, 200, 0.1);
+    border-top: 1px solid var(--q-gb-bd-c-4);
   }
   &.is_zaopan{
     .progress{
@@ -475,7 +483,7 @@ export default {
     margin-right: 0.1rem;
   }
   .buffer-container{
-    background: var(--q-gb-bg-c-18);
+    // background: var(--q-gb-bg-c-18);
     height: 5px;
   }
   .match-inner-container {
@@ -487,7 +495,7 @@ export default {
     flex-direction: column;
     align-items: center;
     // background: var(--q-gb-bg-c-15);
-
+    // background: var(--q-gb-bg-c-18);
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
     &.show-sport {
       border-top-left-radius: 0.08rem;
@@ -502,9 +510,10 @@ export default {
       border: 1px solid var(--q-gb-bd-c-15);
       &.collapsed{
         border-top: none;
+        // border-radius: 0 0 0.08rem 0.08rem;
       }
-      &.border-top{
-        border-top: 1px solid  var(--q-gb-bd-c-4);
+      &.border-button{
+        // border-radius: 0 0 0.08rem 0.08rem;
       }
     }
     > .match-indent{
@@ -959,7 +968,7 @@ export default {
         //max-width: 1.4rem;
       }
       &.favorited-icon-hidden{
-        margin-left: 10px;
+        // margin-left: 10px;
       }
     }
   }
@@ -1252,7 +1261,7 @@ export default {
             display: -webkit-box;
             font-size: 0.12rem;
             flex-shrink: 0;
-            max-width: 100%;
+            max-width: 100px;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             text-overflow: ellipsis;
@@ -1413,12 +1422,6 @@ export default {
     .score-fle-container-1{
       position: relative;
       top: 1px;
-      display: block;
-      width: 1.06rem;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      overflow:hidden;
-      text-align:right;
       .items-start {
         display: inline-block;
         height: 100%;
@@ -1440,6 +1443,18 @@ export default {
             }
           }
         }
+      }
+    }
+  }
+  .score-content-snooker {
+    :deep(.scroll-container-w){
+      .score-fle-container-1{
+        display: block;
+        width: 1.06rem;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        overflow:hidden;
+        text-align:right;
       }
     }
   }
@@ -1705,12 +1720,15 @@ export default {
     margin: .05rem;
   }
 
-  .flag-chuan {
+  .flag-chuan-icon {
     margin-left: .1rem;
     padding: 0 .01rem;
-    height: 0.16rem;
+    height: 0.26rem;
+    width: 0.2rem;
     line-height: .16rem;
     border-radius: .03rem;
+    background-size: cover;
+    margin-top: 0.6rem;
     &.special-lang {
       margin-left: .06rem;
     }

@@ -68,14 +68,14 @@ const props = defineProps({
                 img: "",
                 tid: '0'
             },
-            {
-                // 世界杯2022(在卡塔尔) FIFA World Cup 2022 (In Qatar) - 10011003169
-                // FIFA足球(10分钟比赛) - 世界杯 FIFA Efootball (10 mins) - World Cup - 10011003541
-                name: "世界杯",
-                val: 1,
-                img: "",
-                tid: '10011003169,10011003541'
-            },
+            // {
+            //     // 世界杯2022(在卡塔尔) FIFA World Cup 2022 (In Qatar) - 10011003169
+            //     // FIFA足球(10分钟比赛) - 世界杯 FIFA Efootball (10 mins) - World Cup - 10011003541
+            //     name: "世界杯",
+            //     val: 1,
+            //     img: "",
+            //     tid: '10011003169,10011003541'
+            // },
             {
                 name: "欧冠",
                 val: 2,

@@ -6,6 +6,9 @@
  .fullscreen {
     z-index: 10010 !important;
   }
+.q-notification,.q-notifications__list{
+  z-index: 10011 !important;
+}
   .q-tooltip {
     z-index: 10003 !important;
   }

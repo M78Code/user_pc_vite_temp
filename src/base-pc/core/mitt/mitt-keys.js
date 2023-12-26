@@ -37,6 +37,8 @@ export const EMIT_API_DOMAIN_UPD_CMD = "EMIT_API_DOMAIN_UPD_CMD";
 export const EMIT_API_USER_PRO_INFO_CMD = "EMIT_API_USER_PRO_INFO_CMD";
 // apis域名全部不可用
 export const EMIT_APIS_DOMAIN_ALL_BAD = "EMIT_APIS_DOMAIN_ALL_BAD";
+// loading动画操作
+export const EMIT_LOADING_CTR_CMD = "EMIT_LOADING_CTR_CMD";
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------
 
 
@@ -478,5 +480,5 @@ export const EMIT_SET_BESE_MENU_COUNT_CHANGE = "EMIT_SET_BESE_MENU_COUNT_CHANGE"
 /**   切换赛事更新   */
 export const EMIT_SWITCH_MATCH = 'EMIT_SWITCH_MATCH'
 
-/**   切换赛事更新   */
+/**   多项注单输入金额   */
 export const EMIT_BET_MULTIPLE_MONEY = 'EMIT_BET_MULTIPLE_MONEY'

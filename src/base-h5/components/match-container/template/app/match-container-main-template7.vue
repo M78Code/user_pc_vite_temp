@@ -90,13 +90,13 @@
               </div>
               <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
               <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle"
-                v-if="!media_button_state_obj.animationUrl">
+                v-if="media_button_state_obj.animationUrl">
                 <img :class="['live-icon-btn', { disabled: !media_button_state_obj.animationUrl }]"
                   :src='animation_icon' />
               </div>
               <!-- 视频 -->
               <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle"
-                v-if="!media_button_state_obj.muUrl">
+                v-if="media_button_state_obj.muUrl">
                 <img :class="['live-icon-btn', { disabled: !media_button_state_obj.muUrl }]" :src='video_icon' />
               </div>
               <div class="goto-detail" @click='goto_details(match)'>

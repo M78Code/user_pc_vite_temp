@@ -89,7 +89,7 @@ const match_status = computed(() => {
     align-items: center;
     height: 0.51rem;
     padding: 0 0.15rem;
-
+    font-weight: 600;
     span {
       letter-spacing: 0;
       font-size: 0.16rem;

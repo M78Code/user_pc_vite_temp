@@ -5,7 +5,7 @@ import common from "project/activity/src/mixins/common/common.js";
 import formartmixin from 'project/activity/src/mixins/common/formartmixin.js';
 import { UserCtr ,LOCAL_COMMON_FILE_PREFIX } from "project_path/src/core/index.js";
 import {  format_time_zone_time } from "project_path/src/core/index.js"
-import acticity_mixin from "project/activity/src/mixins/acticity_mixin/acticity_mixin.js";
+import acticity_mixin from "project/activity/src/mixins/acticity_mixin/acticity_mixin";
 import { throttle } from "lodash";
 
 let machine_images_pc = [
@@ -20,16 +20,10 @@ let machine_images_h5 = [
   LOCAL_COMMON_FILE_PREFIX+'/activity/yazhou-h5/activity/slot_machine/machine_diamond.png'
 ];
 
-
- 
- 
 export default {
   inject: ['is_mobile'],
-
   setup(props) {
-    
   },
- 
   name: 'slot_machine',
   mixins: [common, formartmixin,acticity_mixin],
   emits:['to_maintenance'],
@@ -67,9 +61,9 @@ export default {
         list: [],
         params: {
           total: 0,
-          type: 1, // 1 彩金记录 2合  成记录 3重置记录
+          type: 1, // 1、彩金记录 2、合成记录 3、重置记录
           current: 1, // 分页，当前第几页
-          size: 6, //每页多少条数据，默认6条
+          size: 5, //每页多少条数据，默认5条
         }
       },
       goToPage: 1,
@@ -107,6 +101,7 @@ export default {
         msg: ""
       },
       isFirstTime: false, // 是否是首次提示
+      page_temp:'',
     }
   },
   computed: {
@@ -192,7 +187,25 @@ export default {
     document.addEventListener('visibilitychange', this.isHidden)
   },
   methods: {
-       
+    goToHistoryPage(e){
+      if(e){
+        if(!e.target.value){
+          this.page_temp = e.target.value;
+          return;
+        }
+        if(e.target.value=='0'){
+          this.page_temp = '';
+          return;
+        }
+        let val = Math.min(+e.target.value, this.pagenation_max)
+        if(val>this.pagenation_max){
+          val = this.pagenation_max;
+        }
+        this.page_temp = val;
+        this.gameHistoryLists.params.current = val
+        this.get_activity_slot_get_game_record(val,this.gameHistoryLists.params.type, this.gameHistoryLists.params.size)
+      }
+    },
     // lodash debounce防抖函数和throttle节流函数功能cancel函数调用
     debounce_throttle_cancel(fun) {
       if (fun && fun.cancel && typeof fun.cancel == "function") {
@@ -322,7 +335,7 @@ export default {
     /**
      * 游戏记录
      */
-    get_activity_slot_get_game_record(current = 1,type = 1, size = 6) {
+    get_activity_slot_get_game_record(current = 1,type = 1, size = 5) {
       if (this.activityTips.status) {return}
       if(this.gameHistoryLists.params.type !=  Number(type)){
         this.gameHistoryLists.list = [];
@@ -356,7 +369,7 @@ export default {
         }else if ( ['0401038'].includes(code) ){
           const msg_nodata_22 = i18n_t('msg.msg_nodata_22')
           this.$toast(msg_nodata_22, 1500)
-          this.historyDataState = 'data';
+          this.historyDataState = 'empty';
         } else {
           this.gameHistoryLists.list = [];
           // 没数据就显示【暂无数据】

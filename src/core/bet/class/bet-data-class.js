@@ -887,7 +887,11 @@ this.bet_appoint_ball_head= null */
 
   // ws推送 更新赔率数据
   set_ws_message_bet_info(obj,index){
-    this.bet_single_list[index] = obj
+    if(this.is_bet_single){
+      this.bet_single_list[index] = obj
+    }else{
+      this.bet_s_list[index] = obj
+    }
     this.set_bet_data_class_version()
   }
 
@@ -955,14 +959,22 @@ this.bet_appoint_ball_head= null */
     // 投注项盘口id
     let market_list = []
     let time_out = null
+
+    let single_list = []
     // 单关 切 有投注项
-    if(this.is_bet_single && this.bet_single_list.length){
+    if(this.is_bet_single){
+      single_list = this.bet_single_list || []
+    } else {
+      single_list = this.bet_s_list || []
+    }
+
+    if(single_list.length){
       // 获取单关下的赛事id 多个（单关合并）
-      mid_list = this.bet_single_list.map(item => item.matchId) || []
+      mid_list = single_list.map(item => item.matchId) || []
       // 投注项中有 推送的数据 那么就会对盘口和投注项id进行比对筛选 
       if( mid_list.includes(mid)){
         // 投注项盘口id 多个（单关合并）
-        market_list = this.bet_single_list.map(item => item.marketId) || []
+        market_list = single_list.map(item => item.marketId) || []
         // 查询投注项中的 投注项id 
         // this.bet_single_list.forEach((item,ol_index) => {
         //    // 匹配盘口是否健在
@@ -979,8 +991,8 @@ this.bet_appoint_ball_head= null */
         hls.forEach(item => {
           if(market_list.includes(item.hid)){
             // 查询投注项中的 投注项id
-            let ol_obj = this.bet_single_list.find(obj => obj.marketId == item.hid) || {}
-            let ol_obj_index = this.bet_single_list.findIndex(obj => obj.marketId == item.hid) || 0
+            let ol_obj = single_list.find(obj => obj.marketId == item.hid) || {}
+            let ol_obj_index = single_list.findIndex(obj => obj.marketId == item.hid) || 0
             // 查询ws投注项 中 匹配到的投注项id 
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
@@ -1025,7 +1037,6 @@ this.bet_appoint_ball_head= null */
               ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, ol_obj.playId, ol_obj.odds_hsw, ol_obj.sportId)
               // 更新投注项内容
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
-              console.error('ol_obj',ol_obj)
 
               // 5秒后清除 红升绿降
               time_out = setTimeout(()=>{

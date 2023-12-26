@@ -79,7 +79,7 @@ class MenuData {
      this.result_menu_lv1_mi = ''
      // 赛果 日期/赛中
      this.result_menu_api_params = {}
-     //赛果类型  0 普通 1冠军 2vr 3电竞
+     //赛果类型  0 普通 1电竞 2vr  3冠军 
      this.is_results_type = 0;
       //----------------------------------------------------------------------------------------//
 
@@ -549,6 +549,9 @@ class MenuData {
     //   return BaseData.menus_i18n_map[+mi]
     // }
     // console.error('item',item)
+    if(this.is_results()){
+      return BaseData.menus_i18n_map[item.mi]
+    }
     let text = BaseData.menus_i18n_map[item.mif];
     if(this.is_kemp() || this.is_kemp_mi() || this.is_vr() || this.is_esports()){
       text = BaseData.menus_i18n_map[item.mi]
@@ -587,6 +590,9 @@ class MenuData {
     }
     if (this.is_esports() || this.is_vr()) {
       id = item.mi
+    }
+    if (this.is_results()) {
+      id = item.result_mi;
     }
     // 收藏 vr 电竞 全部 不在此列
     if([0,300,2000,50000].includes(item.mi)){

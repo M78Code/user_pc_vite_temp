@@ -11,27 +11,34 @@
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
           <div class="match-status-title">
-            <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
+          <!-- 进行中 -->
+            <img :src="in_progress" /> <span class="din-regular"> {{ i18n_t('list.match_doing') }}</span>
           </div>
-          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
+          <!-- <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt=""> -->
+             <div class="img" :class="['expand_item', {collapsed: collapsed}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
         </template>
         <!-- 未开赛 -->
         <template v-else>
           <div class="match-status-title">
             <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
           </div>
-          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
+          <!-- <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt=""> -->
+            <div class="img" :class="['expand_item', {collapsed: collapsed}]"  :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
         </template>
       </div>
       <div class="all-league-title" v-if="is_show_opening_title && is_mix_no_today"  @click.stop="handle_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{ is_mix_no_today }}</span> </div>
-        <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt="">
+        <!-- <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt=""> -->
+        <div class="img" :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]"  :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
       </div>
       <!-- 全部 -->
       <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{get_date_title}}</span> </div>
-        <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
+        <!-- <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt=""> -->
+         <div class="img" :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]"  :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
       </div>
+      <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
+      <div class="buffer-container" v-if="is_show_buffer_container"></div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
       <div v-if="show_sport_title" @click.stop :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span"> {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }}) </span>
@@ -136,10 +143,8 @@
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                 <div class="date-time"
                   v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                  {{ format_M_D(+match.mgt)}}
-                  <!-- {{ format_time_zone(+match.mgt).Format(i18n_t('time11')).replaceAll('月', '/').replaceAll('日', '') }} -->
+                  {{ format_time_zone(+match.mgt).Format(i18n_t('time11')) }}
                 </div>
-
                 <!--即将开赛 ms = 110-->
                 <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
                   {{ i18n_t(`ms[${match.ms}]`) }}
@@ -267,7 +272,7 @@
           <!--  新手版-赛事比分信息 -->
           <div class="match-score-info">
             <template v-if="match.csid != 1">
-              <score-list :main_source="main_source" :match="match"></score-list>
+              <score-list :class="[match.csid == 7 && 'score-content-snooker']" :main_source="main_source" :match="match"></score-list>
             </template>
           </div>
         </div>
@@ -291,7 +296,7 @@ import { i18n_t, compute_img_url } from "src/output/index.js"
 import { format_time_zone,format_M_D } from "src/output/index.js"
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2,date_time, is_detail,is_zaopan, is_esports, is_results, footer_menu_id, is_mix} from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2,date_time, is_detail,is_zaopan, is_esports, is_results, footer_menu_id, is_mix } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
@@ -464,7 +469,11 @@ export default {
   pointer-events: none;
 }
 
-
+.buffer-container {
+  background: var(--q-gb-bg-c-17);
+  height: 5px;
+  width: 100%;
+}
 /* ********赛事容器相关********** -S*/
 
 .counting-down-up-container {
@@ -485,7 +494,7 @@ export default {
   width: 100%;
   height: auto;
   position: relative;
-  background: var(--q-gb-bg-c-18);
+  // background: var(--q-gb-bg-c-18);
 
   .match-status-fixed {
     width: 100%;
@@ -509,7 +518,7 @@ export default {
       margin-top: .05rem;
     }
 
-    img {
+    img,.img {
       margin-right: .06rem;
       width: .13rem;
       height: .13rem;
@@ -564,11 +573,6 @@ export default {
     // background: var(--q-gb-bg-c-34) !important;
     // box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
     // border-radius: .04rem;
-    .buffer-container {
-      background: var(--q-gb-bg-c-17);
-      height: 5px;
-      width: 100%;
-    }
     .match-content{
       border-radius: 0 0 8px 8px;
       background: var(--q-gb-bg-c-18);
@@ -1089,16 +1093,19 @@ export default {
           .score-fle-container-1{
             position: relative;
             top: 1px;
-            display: block;
-            width: 1.12rem;
-            text-overflow:ellipsis;
-            white-space:nowrap;
-            overflow:hidden;
             .items-start {
               display: inline-block;
               height: 100%;
               line-height: .23rem;
             }
+          }
+          .score-fle-container-snooker {
+            display: block;
+            width: 1.06rem;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            overflow:hidden;
+            text-align:right;
           }
           .b-score-wrapper{
             flex-wrap: nowrap;
@@ -1106,6 +1113,18 @@ export default {
               flex-shrink: 0;
             }
           }
+        }
+      }
+    }
+
+    .score-content-snooker {
+      :deep(.scroll-container-w){
+        .score-fle-container-1{
+          display: block;
+          width: 1.06rem;
+          text-overflow:ellipsis;
+          white-space:nowrap;
+          overflow:hidden;
         }
       }
     }

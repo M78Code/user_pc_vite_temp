@@ -12,7 +12,7 @@ const match_mids = ref(MatchMeta.match_mids) // 当前页面赛事列表 mids
 const set_menu_init = ref(UserCtr.set_menu_init) // 当前页面赛事列表 mids
 
 //用戶信息變化
-const cancel = watch(UserCtr.user_version, () => {
+const cancel = watch(() => UserCtr.user_version, () => {
     show_favorite_list.value = UserCtr.show_favorite_list;
     user_info.value = UserCtr.user_info;
     sort_type.value = UserCtr.sort_type;

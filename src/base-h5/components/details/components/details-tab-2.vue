@@ -123,11 +123,15 @@ export default defineComponent({
       // 记录当前玩法集ID和玩法集合
       matchDetailCtr.value.category_tab_click(item)
       // 存储tab的id
+      
       SessionStorage.set('DETAIL_TAB_ID', item.id)
+      SessionStorage.set("ACTIVE_TAB", item.round)
       // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer.value == 3){
         get_fewer.value = 1
       }
+      console.log(item, uId, index, "changeItem");
+      evnet.emit('change-item', item.round)
       // 发送埋点
       let zhuge_obj = {
         "玩法集名称": item.marketName,

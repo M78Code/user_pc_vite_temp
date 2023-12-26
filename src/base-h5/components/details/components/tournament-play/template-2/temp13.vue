@@ -4,7 +4,7 @@
  *               主盘放第一个，多盘口排序规则维持不变；坑位规则保持不变；
 -->
 <template>
-  <div class="temp13 mx-5">
+  <div class="compoent temp13 mx-5">
     <div v-show="false">{{BetData.bet_data_class_version}}</div>
     <div class="hairline-border">
       <div class="rad-style">
@@ -346,6 +346,8 @@ export default defineComponent({
      * @param {undefined} undefined
     */
    const touch_pan =lodash.debounce( (e) =>{
+    // 初始化 init_data.left 设置为0 
+    init_data.left = 0
       let dom_width = bet_slide.value?.clientWidth
 
       if ((append_single_list.value.length / 2) < 4) {
@@ -369,14 +371,16 @@ export default defineComponent({
           return
         }
 
-        init_data.left -= dom_width
-
+        init_data.left -= dom_width 
+         // init_data.left 左滑距离+12   以免右侧留白
+         init_data.left =  init_data.left + 12
       } else {
         // 右滑
         if (init_data.left >= 0) {
           return
         }
         init_data.left += dom_width
+        init_data.left = init_data.left+ 12
       }
     }, 50);
    

@@ -124,7 +124,8 @@ const set_bet_order_list = (bet_list, is_single) => {
                 // 获取当前的盘口赔率
                 let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
                 // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
-                if(!item.odds_hsw.includes(cur_odds)){
+                let hsw = lodash_.get(item,'odds_hsw', '')
+                if(!hsw.includes(cur_odds)){
                     bet_s_obj.marketTypeFinally = 'EU'
                 }
                
@@ -168,7 +169,8 @@ const set_bet_order_list = (bet_list, is_single) => {
              // 获取当前的盘口赔率
              let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
              // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
-             if(!item.odds_hsw.includes(cur_odds)){
+             let hsw = lodash_.get(item,'odds_hsw', '')
+             if(!hsw.includes(cur_odds)){
                  bet_s_obj.marketTypeFinally = 'EU'
              }
 
@@ -700,6 +702,10 @@ const submit_handle = type => {
 
 //错误提示 设置为可以点击
 const set_submit_btn = () => {
+    // 提示错误 初始化滑块
+    if(PROJECT_NAME.includes('app-h5')){
+        useMittEmit(MITT_TYPES.EMIT_INIT_SLIDER_CONFIG)
+    }
     setTimeout(()=>{
         submit_btn = false
     },500)
@@ -854,7 +860,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // let other = { bet_type:'common_bet'}
     // 移动端 并且是串关 点击 非串关赛事 提示信息  
     // 电子赛事 电竞的不可串关赛事
-    if( PROJECT_NAME.includes('h5') && !BetData.is_bet_single && (( !mid_obj.ispo && other.bet_type == 'esports_bet' ) || (["C01","B03","O01"].includes(mid_obj.cds) || [2,4].includes(Number(mid_obj.mbmty))))){
+    if( PROJECT_NAME.includes('h5') && !BetData.is_bet_single && (( !ol_obj._ispo && other.bet_type == 'esports_bet' ) || (["C01","B03","O01"].includes(mid_obj.cds) || [2,4].includes(Number(mid_obj.mbmty))))){
         let text = '不支持串关'
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
         return
@@ -909,8 +915,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         sportName: mid_obj.csna || '', //球种名称
         matchType,  //赛事类型
         matchName: mid_obj.tn || '', //赛事名称
-        playOptionName: ol_obj.on || '', // 投注项名称
-        playOptions: ol_obj.on || '',  // 投注项
+        playOptionName: ol_obj.on || ol_obj.ott || '', // 投注项名称
+        playOptions: ol_obj.on || ol_obj.ott || '',  // 投注项
         tournamentLevel: mid_obj.tlev, //联赛级别
         playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
         playName: set_play_name(play_config), //玩法名称
@@ -934,14 +940,15 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         match_ctr: other.match_data_type, // 数据仓库 获取比分
         device_type: BetData.deviceType, // 设备号
         odds_hsw: ol_obj._hsw, // 投注项支持的赔率
-        ispo: mid_obj.ispo || 0, // 电竞赛事 不支持串关的赛事
+        ispo: ol_obj._ispo || 0, // 电竞赛事 不支持串关的赛事
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
 
      // 获取当前的盘口赔率
      let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
      // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
-     if(!bet_obj.odds_hsw.includes(cur_odds)){
+     let hsw = lodash_.get(bet_obj,'odds_hsw','')
+     if(!hsw.includes(cur_odds)){
         bet_obj.marketTypeFinally = 'EU'
      }
 
@@ -959,13 +966,14 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 设置投注内容 
     BetData.set_bet_read_write_refer_obj(bet_obj)
 
-    // 订阅投注项的 ws
-    set_market_id_to_ws()
-    
     // 移动端端 串关 点击展开对时候才去请求限额
     if(PROJECT_NAME.includes('h5') && !BetData.is_bet_single){
         return
     }
+    
+    // 订阅投注项的 ws
+    set_market_id_to_ws()
+
     // 判断获取限额接口类型
     if(["C01","B03","O01"].includes(bet_obj.dataSource) || [2,4].includes(Number(bet_obj.mbmty)) || ['esports_bet','vr_bet'].includes(other.bet_type)){
         // C01/B03/O01  电竞/电竞冠军/VR体育

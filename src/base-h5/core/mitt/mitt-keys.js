@@ -37,6 +37,8 @@ export const EMIT_API_DOMAIN_UPD_CMD = "EMIT_API_DOMAIN_UPD_CMD";
 export const EMIT_API_USER_PRO_INFO_CMD = "EMIT_API_USER_PRO_INFO_CMD";
 // apis域名全部不可用
 export const EMIT_APIS_DOMAIN_ALL_BAD = "EMIT_APIS_DOMAIN_ALL_BAD";
+// loading动画操作
+export const EMIT_LOADING_CTR_CMD = "EMIT_LOADING_CTR_CMD";
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------
 
 
@@ -382,3 +384,6 @@ export const EMIT_WS_STATUS_CHANGE_EVENT  = 'EMIT_WS_STATUS_CHANGE_EVENT'
 
 //ws链接数据
 export const EMIT_MATCH_DETAIL_SOCKET  = 'EMIT_MATCH_DETAIL_SOCKET'
+
+// 初始化 滑块值 app-h5
+export const EMIT_INIT_SLIDER_CONFIG  = 'EMIT_INIT_SLIDER_CONFIG'

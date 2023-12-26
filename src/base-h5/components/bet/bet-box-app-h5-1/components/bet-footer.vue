@@ -2,44 +2,43 @@
 
 <template>
 
-    <div v-show="false">{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{UserCtr.user_version}}</div>
-    
-    <!-- 自动接受更好的赔率 -->
-    <div class="accept" :class="!BetData.bet_is_accept ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
-        自动接受更好的赔率
+  <div v-show="false">{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{UserCtr.user_version}}</div>
+  
+  <!-- 自动接受更好的赔率 -->
+  <div class="accept" :class="!BetData.bet_is_accept ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
+      自动接受更好的赔率
+  </div>
+
+  <div class="f-e-c bet-submit" v-if="BetViewDataClass.bet_order_status == 1">
+
+    <div v-if="!BetData.is_bet_single" class="bet-single del" @click="BetData.set_clear_bet_info()&BetData.set_bet_box_h5_show(false)">
+      <img :src="compute_local_project_file_path('/image/svg/delete5.svg')" alt="">
     </div>
-   <div class="f-e-c bet-submit" v-if="BetViewDataClass.bet_order_status == 1">
-        <div class="bet-silider">
-            <q-page-sticky ref="silider" position="bottom-left" :offset="fab_pos">
-                <div class="jiantou" :class="{'disabled-silider-bg': set_special_state(BetData.bet_data_class_version)}" :disable="dragging_fab" v-touch-pan.right.prevent.mouse="handle_silider">
-                    <img v-if="!set_special_state(BetData.bet_data_class_version)" :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt="" draggable="false">
-                    <img v-else :src="compute_local_project_file_path('/image/bet/right-arrow1.svg')" alt="" draggable="false">
-                </div>
-            </q-page-sticky>
-        </div>
 
-        <div v-show="!BetData.is_bet_single" class="bet-single del" @click="BetData.set_clear_bet_info()&BetData.set_bet_box_h5_show(false)">
-          <img :src="compute_local_project_file_path('/image/svg/delete5.svg')" alt="">
-        </div>
+    <div class="bet-silider_1" :class="{'disabled-line': set_special_state(BetData.bet_data_class_version) }">
 
-     
-        <div class="bet-box-line" :class="{'disabled-line': set_special_state(BetData.bet_data_class_version) }">
-          <div class="middle font16">
-            {{ i18n_t('bet.betting') }}
-            <!-- 单关 -->
-            <span class="yb-info-money font14" v-if="BetData.is_bet_single"> {{ i18n_tc('app_h5.bet.bet_win',{"total": bet_win_money(BetData.bet_data_class_version) }) }}</span>
-            <span class="yb-info-money font14" v-else>{{ i18n_t('bet.sum') }}{{bet_total(BetViewDataClass.bet_view_version) }}</span>
-          </div>
-          <!-- <img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt=""> -->
-          <img :src="compute_local_project_file_path('/image/bet/roll-right-arrow.png')" alt="">
+      <!-- <q-slider class="bet-box-line" @pan="change_slider_model" v-model="ref_data.basic_model" :inner-min="8" :inner-max="92" :min="0" :max="100"/> -->
+      <div class="bet-box-line">
+        <div class="bet-box" :style="{left:ref_data.basic_model/100+'rem'}"></div>
+      </div>
+      <div class="bet-info f-b-c">
+        <div class="middle font16">
+          {{ i18n_t('bet.betting') }}
+          <!-- 单关 -->
+          <span class="yb-info-money font14" v-if="BetData.is_bet_single"> {{ i18n_tc('app_h5.bet.bet_win',{"total": bet_win_money(BetData.bet_data_class_version) }) }}</span>
+          <span class="yb-info-money font14" v-else>{{ i18n_t('bet.sum') }}{{bet_total(BetViewDataClass.bet_view_version) }}</span>
         </div>
+        <img :src="compute_local_project_file_path('/image/bet/roll-right-arrow.png')" alt="">
+      </div>
 
-        <!-- 串关 -->
-        
-        <div @click="set_bet_single" class="bet-single f-c-c font500" :class="{'disabled': MenuData.is_kemp() || set_special_state(BetData.bet_data_class_version),'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
-          <p>{{ !BetData.is_bet_single ? '单关投注':'+串' }}</p>
-        </div>
     </div>
+  
+    <!-- 单关/串关 切换 -->
+    <div @click="set_bet_single" class="bet-single f-c-c font500" :class="{'disabled': MenuData.is_kemp() || !is_bet_special,'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
+      <p>{{ !BetData.is_bet_single ? '单关投注':'+串' }}</p>
+    </div>
+
+  </div>
 
     <!-- 投注后 -->
     <div v-else>
@@ -57,27 +56,103 @@
 
 <script setup>
 import lodash_ from "lodash"
-import { computed, onMounted, reactive, ref } from "vue"
+import { computed, onMounted, reactive, onUnmounted } from "vue"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import { useMittEmit, MITT_TYPES,useMittOn } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { UserCtr ,format_money2,compute_local_project_file_path,MenuData} from "src/output/index.js"
 import { odds_table } from "src/core/constant/common/module/csid.js"
 import { i18n_tc } from "src/boot/i18n.js"
 
-let timer;
-// 向右滑动投注
-const fab_pos = ref([20, 23])
-const dragging_fab = ref(false)
-// 滑块组件数据
-const silider = ref(null)
-
 const ref_data = reactive({
-  is_bet_single: true,
-  show_title: ''
+  show_title: '',
+  // 滑块初始值
+  basic_model: 5,
+  emit_lsit: {},
+  // 第一次滑动 限频
+  count: 0,
+  // 串关/单关 滑动区域
+  move_leng: 255,
+  // 同上
+  end_leng: 200,
 })
+// 是否可以投注
+let is_bet_single = true
+// 是否支持串关
+let is_bet_special = true
+
+onMounted(()=>{
+  ref_data.emit_lsit = {
+    emitter_1: useMittOn(MITT_TYPES.EMIT_INIT_SLIDER_CONFIG, init_slider_config).off,
+  }
+
+  window.addEventListener('touchmove',(event)=>{
+    let fit = lodash_.get(event,'target.className','')
+    get_leng_px()
+    if(fit == 'bet-box'){
+      let page_x = lodash_.get(event,'changedTouches[0].pageX',0)
+      if(page_x > 5 && page_x < ref_data.move_leng){
+        ref_data.basic_model = page_x
+      }
+    }
+  }, {
+    passive: false
+  })
+
+  window.addEventListener('touchend',(event)=>{
+    let fit = lodash_.get(event,'target.className','')
+    get_leng_px()
+    if(fit == 'bet-box' && ref_data.count < 1){
+      ref_data.count++
+      let page_x = lodash_.get(event,'changedTouches[0].pageX',0)
+      if( page_x < ref_data.end_leng){
+        init_slider_config()
+      } else {
+        //  如果投注项有不允许投注的内容 提示 并且滑动到默认位置 
+        if(!is_bet_single) {
+          init_slider_config()
+          let text = '当前投注项不允许投注'
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
+        } else {
+          // 未投注之前 可以点击
+          if(BetViewDataClass.bet_order_status == 1){
+            submit_handle()
+          }
+        }
+      }
+    }
+  }, {
+    passive: false
+  })
+})
+
+onUnmounted(() => {
+    Object.values(ref_data.emit_lsit).map((x) => x());
+    window.removeEventListener('touchstart',init_slider_config)
+    window.removeEventListener('touchmove',init_slider_config)
+    window.removeEventListener('touchend',init_slider_config)
+})
+
+// 投注验证失败 初始化滑块
+const init_slider_config = () => {
+  ref_data.basic_model = 5
+  setTimeout(() => {
+    ref_data.count = 0
+  }, 50);
+}
+
+// 串关/单关 获取到限制的距离
+const get_leng_px = () => {
+  if(BetData.is_bet_single){
+    ref_data.move_leng = 255
+    ref_data.end_leng = 200
+  } else {
+    ref_data.move_leng = 200
+    ref_data.end_leng = 150
+  }
+}
 
 // status 是响应式的 可以用于重新计算
 const bet_win_money = computed(()=> status => {
@@ -104,11 +179,28 @@ const bet_total = computed(()=> status => {
 
 // status 是响应式的 可以用于重新计算
 const set_special_state = computed(()=> status => {
+  is_bet_single = true
+  is_bet_special = true
   let bet_list = []
   if( BetData.is_bet_single ) {
     bet_list = lodash_.cloneDeep(BetData.bet_single_list)
+    let bet_obj = lodash_.get(bet_list,'[0]', {})
+    // 单关 电竞赛事 不支持串关 串关切换按钮置灰
+    if(!bet_obj.ispo && bet_obj.bet_type == 'esports_bet'){
+      is_bet_special = false
+    }
   } else {
     bet_list = lodash_.cloneDeep(BetData.bet_s_list)
+    // 获取商户配置的 串关投注项
+    let min_series = lodash_.get(UserCtr.user_info,'configVO.minSeriesNum',2)
+    let man_series = lodash_.get(UserCtr.user_info,'configVO.maxSeriesNum',10)
+    // 不能超过 用户设置的最大最小串关数量
+    if(min_series > bet_list.length || man_series < bet_list.length){
+      // 不允许投注
+      is_bet_single = false
+      return true
+    }
+   
   } 
 
   for(let item of  bet_list) {
@@ -116,75 +208,19 @@ const set_special_state = computed(()=> status => {
     if(item.ol_os != 1 || item.hl_hs != 0 || item.mid_mhs != 0){
       ref_data.show_title = "盘口已关闭"
       // 不允许投注
-      ref_data.is_bet_single = false
+      is_bet_single = false
       return true
     }
     // 当前投注项中混入不能串关的投注项
     if(item.is_serial && !BetData.is_bet_single ){
       // 不允许投注
-      ref_data.is_bet_single = false
+      is_bet_single = false
       return true
     }
   }
+  return false
 })
 
-// 滑动投注
-const handle_silider = (e) => {
-  // 不允许投注
-  if(!ref_data.is_bet_single) {
-    return
-  }
-  dragging_fab.value = e.isFirst !== true && e.isFinal !== true
-  // 拖拽超过滑板或放开重置silider位置 255 235
-  if(e.isFinal && e.distance.x < 255) {
-    reset_silider()
-    return
-  }
-  if(e.distance.x >= 255 && e.isFinal) {
-    // 未投注之前 可以点击
-    if(BetViewDataClass.bet_order_status == 1){
-      submit_handle()
-    }
-    reset_silider()
-  }
-  // 最大不能滑出滑动区域
-  if (e.distance.x > 256) {
-    fab_pos.value[0] = 255
-    silider.value.offset[0] = 255
-    return
-  }
-  if(e.distance.x < 20) {
-    fab_pos.value[0] = 20
-    silider.value.offset[0] = 20
-  }else{
-    fab_pos.value[0] = e.distance.x
-    silider.value.offset[0] = e.distance.x
-  }
-}
-
-// 重置solider位置
-const reset_silider = () => {
-  clearTimeout(timer);
-  timer = setTimeout(() => {
-    init_silider_position()
-  }, 50)
-}
-
-// 滑块初始化坐标
-// 处理单关和串关投注的silider位置
-const init_silider_position = () => {
-  let offset = lodash_.get( silider,'value',{})
-  if(offset?.offset){
-    if(BetData.is_bet_single) {
-      fab_pos.value[0] = 20
-      offset.offset[0] = 20
-    } else {
-      fab_pos.value[0] = 77
-      offset.offset[0] = 77
-    }
-    silider.value = offset
-  }
-}
 
 // 自动接受更好的赔率
 const set_bet_is_accept = () => {
@@ -194,8 +230,8 @@ const set_bet_is_accept = () => {
 
 // 投注模式切换
 const set_bet_single = () => {
-  // 冠军没有串关
-  if(MenuData.is_kemp()){
+  // 冠军没有串关 电竞不支持串关的赛事 不切换
+  if(MenuData.is_kemp() || !is_bet_special){
     return
   }
   
@@ -223,7 +259,6 @@ const set_bet_single = () => {
 
   BetData.set_bet_box_h5_show(false)
   
-  init_silider_position()
 }
 
 // 保留投注项
@@ -249,11 +284,6 @@ const set_confirm = () => {
       BetData.set_clear_bet_info()
    }
 }
-
-onMounted(()=>{
-  timer = null
-  init_silider_position()
-})
 
 </script>
 
@@ -283,7 +313,7 @@ onMounted(()=>{
   border-radius: 0.12rem;
   font-size: 0.16rem;
   color: var(--q-gb-t-c-14);
-  font-family: PingFang SC;
+  
 }
 .sub-total{
   font-size: 0.14rem;
@@ -323,27 +353,34 @@ onMounted(()=>{
 	.active {
 		background-image: url($SCSSPROJECTPATH+"/image/bet/select_fuke.svg");
 	}
-  .jiantou{
-    height: 0.44rem;
-    width: 0.44rem;
-    border-radius: 50%;
-    background: #FFFFFF;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--q-gb-t-c-1);
-    font-size: 0.2rem;
-    border: 3px solid #50B5FF;
-    margin-right: -.2rem;
-    &.disabled-silider-bg {
-      background: rgba(255, 255, 255, 0.96);
-      border-color: rgba(201, 205, 219, 0.8);
-    }
-  }
+  
 
   .bet-silider{
     height: .44rem;
     position: relative;
+  }
+  .bet-silider_1{
+    width: 100%;
+    height: .44rem;
+    position: relative;
+    width: 100%;
+    height: .5rem !important;
+    border-radius: .3rem;
+    background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%);
+    box-shadow: 0rem .02rem .12rem 0rem rgba(0, 174, 255, 0.10);
+    &.disabled-line{
+      background:#C9CDDB;
+      box-shadow: 0rem .02rem .12rem 0rem rgba(0, 174, 255, 0.10);
+      .bet-box-line{
+        .bet-box{
+          background: rgba(255, 255, 255, 0.96) url($SCSSPROJECTPATH+"/image/bet/right-arrow1.svg") center no-repeat;
+          border-color: rgba(201, 205, 219, 0.8);
+        }
+      }
+      .bet-info{
+        z-index: 100;
+      }
+    }
   }
 
   .bet-submit{
@@ -351,6 +388,89 @@ onMounted(()=>{
     height: .5rem ;
     justify-content: space-between;
     margin-top: 0.08rem;
+    .bet-info{
+      position: absolute;
+      z-index: 22;
+      top: 0;
+      right: 0;
+      height: 0.5rem;
+      width: 100%;
+     
+      .middle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: .55rem;
+        color: var(--q-gb-t-c-14);
+      }
+      img {
+        width: 0.4rem;
+        height: 0.16rem;
+        margin-right: .16rem;
+      }
+    }
+    .bet-box-line{
+      position: relative;
+      z-index: 99;
+      width: 100%;
+      height: 100%;
+
+      .bet-box{
+        height: 0.44rem !important;
+        width: 0.44rem  !important;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--q-gb-t-c-1);
+        font-size: 0.2rem;
+        border: 3px solid #50B5FF;
+        margin-right: -.2rem;
+        background: #FFFFFF url($SCSSPROJECTPATH+"/image/bet/right-arrow.svg") center no-repeat;
+        position: absolute;
+        top: .02rem;
+      }
+      :deep(.q-slider__track-container){
+        padding: 0 !important;
+      }
+
+      :deep(.q-slider__thumb-shape){
+        display: none !important;
+      }
+      :deep(.q-slider__thumb){
+        height: 0.44rem !important;
+        width: 0.44rem  !important;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--q-gb-t-c-1);
+        font-size: 0.2rem;
+        border: 3px solid #50B5FF;
+        margin-right: -.2rem;
+        background: #FFFFFF url($SCSSPROJECTPATH+"/image/bet/right-arrow.svg") center no-repeat;
+        z-index: 99;
+      }
+
+      :deep(.q-slider__track) {
+        width: 100%;
+        height: .5rem !important;
+        border-radius: .3rem;
+        background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%);
+        box-shadow: 0rem .02rem .12rem 0rem rgba(0, 174, 255, 0.10);
+      }
+
+      :deep(.q-slider__selection){
+        background: transparent !important;
+      }
+      :deep(.q-slider__inner){
+        background: transparent !important;
+      }
+     
+      &.disabled-line {
+        background: #C9CDDB;
+      }
+    }
   }
 
   .del {
@@ -362,34 +482,7 @@ onMounted(()=>{
     align-items: center;
   }
 
-  .bet-box-line{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    height: .5rem;
-    border-radius: .3rem;
-    background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%);
-    box-shadow: 0rem .02rem .12rem 0rem rgba(0, 174, 255, 0.10);
-    
-    &.disabled-line {
-      background: #C9CDDB;
-    }
-    .middle {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-left: .55rem;
-      color: var(--q-gb-bg-c-14);
-    }
-    // img {
-    //   width: 0.5rem;
-    // }
-    img {
-      width: 0.4rem;
-      height: 0.16rem;
-    }
-  }
+ 
   .bet-single{
     width: 0.5rem;
     height: 0.5rem;
@@ -407,12 +500,5 @@ onMounted(()=>{
     p {
       width: 0.34rem;
     }
-  }
-//后续删掉
-  .bet-betting{
-    width: 1.2rem;
-    background: var(--q-gb-bg-c-19);
-    color: var(--q-gb-t-c-1);
-    height: 100%;
   }
 </style>

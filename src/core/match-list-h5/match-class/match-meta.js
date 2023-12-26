@@ -527,7 +527,6 @@ class MatchMeta {
     list.forEach(i => {
       i._total = obj[i.sportId]
     })
-    console.log('get_champion_match_result_apiget_champion_match_result_apiget_champion_match_result_api', list)
     const length = lodash.get(list, 'length', 0)
     if (length < 1) {
       this.set_page_match_empty_status({ state: true });
@@ -552,14 +551,19 @@ class MatchMeta {
     const res = await api_common.get_match_result_api({
       ...params,
       category,
-      md,
       tid,
-      type: 28,
-      euid: euid,
-      showem: 1, // 新增的参数
+      md: String(md),
+      showem: 1, // 新增的参数 区分电子赛事
+      euid: euid && String(euid),
+      type: euid ==="0"? String(29) : String(28),//我的投注 euid为0
     })
     if (this.current_euid !== `${euid}_${md}`) return []
     if (+res.code !== 200) {
+      if (res.code === '0401038') {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('msg.msg_nodata_22')}`)
+        this.set_page_match_empty_status({ state: false});
+        return []
+      }
       this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
       return []
     }

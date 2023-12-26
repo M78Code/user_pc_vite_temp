@@ -16,6 +16,7 @@ import {SessionStorage,
    SearchData
   } from "src/output/index.js";
   import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
+import matchDetailClass from "src/core/match-detail/match-detail-class";
 export const details_main = () => {
   const router = useRouter();
   const route = useRoute();
@@ -523,7 +524,7 @@ export const details_main = () => {
 
         // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
         if (code == "0400500" || !res_data || Object.keys(res_data).length === 0) {
-          // router.push({ name: "matchList" });
+          router.push({ name: "matchList" });
         } else if (code == 200) {
           if (res_data && Object.keys(res_data).length) {
             match_detail_data_handle(res_data)
@@ -553,9 +554,12 @@ export const details_main = () => {
               // 如果不是演播厅的，才有退出回到 列表
               if (lodash.get(state_data.get_video_url, 'active') != 'lvs') {
                 // $common.go_where({back_to: 'go_to_back'})
+              
               }
             }, 1500)
           }
+        }else{
+          router.go("-1");
         }
       })
       .catch((err) => {
@@ -612,7 +616,7 @@ export const details_main = () => {
     let sessiong_store = sessionStorage.getItem("match_list_ofdetails");
     if (sessiong_store) {
       let store_data = JSON.parse(sessiong_store);
-      if (store_data.tId == state_data.detail_data.tid) {
+      if (store_data.tId == lodash.get(state_data,"detail_data.tid")) {
         state_data.math_list_data = store_data.list;
         return store_data.list
       }
@@ -838,7 +842,7 @@ export const details_main = () => {
       // 菜单ID 多个用逗号分割(字符串)
       euid: MenuData.get_euid(MenuData.current_lv_2_menu_i),
       // 早盘日期的参数 早盘 和 串关都要加 (字符串)
-      md: state_data.get_md != -1 ? state_data.get_md : "",
+      // md: state_data.get_md != -1 ? state_data.get_md : "",
       // 赛事种类id
       csid: state_data.detail_data.csid,
       // 联赛id
@@ -876,13 +880,16 @@ export const details_main = () => {
             }
           }
         }
-        console.log(data, "=====data=====");
+        console.log(event_data, "=====data=====");
+        router.replace({name:"category",params:{mid:event_data.mid,tid:event_data.tid,csid:event_data.csid}})
         // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
-        get_match_details({ mid: event_data.mid, cuid: data.get_uid });
+        get_match_details({ mid: event_data.mid, cuid: event_data.get_uid });
         // 重新调用 详情页面玩法集接口(/v1/m/category/getCategoryList)
         get_odds_list({ sportId: event_data.csid, mid: event_data.mid });
         // 存储设置新的赛事id
-        set_goto_detail_matchid(event_data.mid);
+        matchDetailClass.set_match_details_params({mid:event_data.mid,sport_id:event_data.csid})
+        useMittEmit( MITT_TYPES.EMIT_REF_API)
+        // set_goto_detail_matchid(event_data.mid);
       } else {
         // 如果不是演播厅的，才有退出回到 列表
         // if (lodash.get(state_data.get_video_url, "active") != "lvs") {

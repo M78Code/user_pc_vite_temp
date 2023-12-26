@@ -5,10 +5,10 @@
 <template>
   <div v-show="show_score_match_line(match)" class="score-section"
     :class="{ 'flex-star': [3].includes(+match.csid), standard: get_newer_standard_edition == 2, result: get_menu_type == 28 }">
-    <div class="scroll-container-w" :class="{ 'left_scroll': show_left_triangle, 'right_scroll': show_right_triangle }"
+    <div class="scroll-container-w" :class="{ 'left_scroll': show_left_triangle, 'right_scroll': show_right_triangle,'bq-ball': match.csid == 3, }"
       :ref="`match_score_scroll_w_${match.mid}`">
-      <!-- 需求：棒球，斯诺克，拳击 不显示比分  -->
-      <div class="score-se-inner" ref='scoreWrapScroller' v-if="![3, 12].includes(+match.csid)" :class="{
+      <!-- 需求：棒球3，斯诺克7，拳击12 不显示比分  -->
+      <div class="score-se-inner" ref='scoreWrapScroller' v-if="![3].includes(+match.csid)" :class="{
         standard: get_newer_standard_edition == 2 && get_menu_type != 28,
         result: get_menu_type == 28,
         'is-foot-ball': match.csid == 1 || match.csid == 11,
@@ -20,7 +20,6 @@
         'is-volley-ball': match.csid == 9 || match.csid == 13
       }" @scroll="score_inner2_scrolling($event, match)">
         <div class="score-se-inner2" :ref="`score_se_inner2_${match.mid}`">
-        
           <!-- 比分 -->
           <div class="row items-center score-fle-container-1"
             :class="{ result: get_menu_type == 28 && main_source !== 'detail_match_list', }">
@@ -96,22 +95,24 @@
           </div>
         </div>
       </div>
-
       <!--滚动条遮罩层-->
       <!--<div class="scroll-cover-f" :class="{simple:get_newer_standard_edition == 1}">-->
       <!--</div>-->
-
     </div>
     <div class="score-scroll-fixed" :class="{ 'is-baseball': [3].includes(+match.csid) }"
       v-if="[3, 8, 9, 10, 13].includes(+match.csid)" :ref="`score_scroll_fixed_${match.mid}`">
-
       <div class="score-important2" v-if="![1, 2, 3, 7, 8, 9, 10, 11, 12, 13].includes(+match.csid)">
         {{ last_list_score }}
       </div>
       <div class="score last score-important" v-if="![1, 2, 3, 4, 6, 7, 8, 9, 10, 13, 11, 12].includes(+match.csid)">
         {{ all_s1 || $filters.score_format(all_s1) }}
       </div>
+      <!-- 棒球3 出局 -->
+      <div class="poi-des" v-if="[3].includes(+match.csid)" style="flex-shrink: 0;">
+        {{ i18n_t('match_info.strike_out') }}&nbsp; <span class="score">{{ match.mbcn }}</span>
+      </div>
     </div>
+  
   </div>
 </template>
  
@@ -457,6 +458,9 @@ onUnmounted(() => {
   align-items: center;
   width: 100%;
 
+  .bq-ball{
+    flex-shrink: 1!important;
+  }
   &.standard {
     justify-content: flex-start;
     padding-left: 0.21rem !important;
@@ -470,7 +474,17 @@ onUnmounted(() => {
   &.flex-star {
     justify-content: flex-start;
   }
-
+  .poi-des {
+    color: var(--q-gb-t-c-17);
+        height: auto;
+        display: flex;
+        align-items: flex-start;
+        font-size: 0.12rem;
+      margin-left: 0.04rem;
+      .score{
+        color: var(--q-gb-t-c-1);
+      }
+  }
   .score-scroll-fixed {
     line-height: 1;
     display: flex;
@@ -513,14 +527,7 @@ onUnmounted(() => {
         }
       }
 
-      .poi-des {
-        color: var(--q-color-com-fs-color-40);
-        height: auto;
-        display: flex;
-        align-items: flex-start;
-        font-size: 0.12rem;
-        margin-left: 0.04rem;
-      }
+     
     }
   }
 
@@ -653,7 +660,7 @@ onUnmounted(() => {
             color: var(--sys-brand-primary-primary-300, #74C4FF);
             text-align: right;
             font-family: Akrobat;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 700;
           }
       }

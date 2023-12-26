@@ -145,7 +145,7 @@ import lodash from "lodash"
 
 <style lang="scss" scoped>
 .football_standings.recent_record {
-  background-color: var(--q-analysis-bg-color-1);
+  background-color: var(--q-gb-bg-c-23);
   .title {
     height: 0.4rem;
     line-height: 0.45rem;
@@ -154,9 +154,9 @@ import lodash from "lodash"
     letter-spacing: 0;
     font-weight: bold;
     position: relative;
-    color: var(--q-analysis-text-color-15);
+    color: var(--q-analysis-text-color-20);
     border-bottom: 1px solid var(--q-analysis-bd-color-3);
-    background-color: var(--q-analysis-bg-color-1);
+    background-color: var(--q-gb-bg-c-23);
 
     &:before {
       content: '';
@@ -206,7 +206,8 @@ import lodash from "lodash"
         display: flex;
         text-align: center;
         line-height: 0.32rem;
-        padding: 0 0.1rem;
+        padding: 0 0.1rem;  
+        color: var(--q-analysis-text-color-34);
       }
 
       .team-item {
@@ -217,6 +218,7 @@ import lodash from "lodash"
         height: 0.48rem;
         text-align: center;
         border-bottom: 1px solid var(--q-gb-bd-c-7);
+        color: var(--q-analysis-text-color-20);
 
         div {
           display: flex;
@@ -318,7 +320,7 @@ import lodash from "lodash"
     text-align: center;
     padding-top: 0.05rem !important;
     font-size: 12px;
-    background-color: var(--q-analysis-bg-color-1);
+    background-color: var(--q-gb-bg-c-23);
     color: var(--q-analysis-text-color-14);
   }
 }
