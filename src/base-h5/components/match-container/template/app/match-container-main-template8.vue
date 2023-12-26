@@ -24,7 +24,7 @@
         </div>
         <!--赛马 赛狗 摩托车 泥地摩托车-->
         <div v-if="[1011, 1002, 1010, 1009].includes(+match.sportId)" v-show="!collapsed" class="data-item-w-wrapper">
-          <!-- <div class="data-title-w row justify-between" :class="{show_title:get_is_show_title}">
+          <div class="data-title-w row justify-between" :class="{show_title:get_is_show_title}">
             <div class="date-number">
             </div>
             <div class="title-i-w row items-center">
@@ -34,7 +34,7 @@
             </div>
             <div class="date-number">
             </div>
-          </div> -->
+          </div>
           <!--数据列表-->
           <div class="data-item-w row justify-between hairline-border" :class="{last:match_list.length - i_list == 1}">
             <div class="date-number">
@@ -124,7 +124,6 @@
 </template>
 
 <script>
-import { ref, computed, watch, nextTick } from 'vue'
 import virtual_mixin from '../../mixins/virtual.mixin1.js'
 
 export default {
@@ -132,11 +131,11 @@ export default {
   mixins: [virtual_mixin],
   props: {
     // 当前组件的赛事数据对应列表的赛事
-    match_of_list: Object,
+    match_of_list: Object, // item
     // 赛事处于列表中的下标
     i: Number,
     // 赛事列表相关操作的类型封装对象
-    matchCtr: Object,
+    matchCtr: Object, 
     main_source: String,
   },
   components: {

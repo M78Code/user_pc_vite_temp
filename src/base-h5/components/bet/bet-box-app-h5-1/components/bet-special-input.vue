@@ -58,6 +58,7 @@ const props = defineProps({
     items:{},
     index:{}
 })
+const emits = defineEmits(['input_click'])
 
 let flicker_timer = null
 let money_span = ref('')
@@ -155,6 +156,7 @@ const set_special_series = (money,ty_id) => {
   // 串关 设置键盘需要设置当前的金额
   BetData.set_bet_amount(ref_data.money)
   BetData.set_bet_keyboard_config(props.items)
+  emits("input_click",event)
 }
 
 // 弹出规则

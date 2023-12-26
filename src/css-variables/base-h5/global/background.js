@@ -36,4 +36,6 @@ export default {
     'gb-bg-c-34': '#e4e6ed', 
     'gb-bg-c-35': '#E95B5B', 
     'gb-bg-c-36': '#FEAE2B', 
+    'gb-bg-c-37': '#D1EBFF', 
+    'gb-bg-c-38': '#f8f9fa', 
   } 
