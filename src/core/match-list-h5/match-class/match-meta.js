@@ -1348,6 +1348,7 @@ class MatchMeta {
         break;
        // 排序
       case "sortRules":
+        this.clear_match_info()
         this.handler_again_matchs()
         break;
       // 筛选
