@@ -28,7 +28,7 @@
       <div>{{ items.count }}x</div>
       <div class="content-b" @click="input_click">
         <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
-        <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}<span class="number_family">{{ items.min_money }}-{{ items.max_money }}</span></span>
+        <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}<em class="number_family">{{ items.min_money }}-{{ items.max_money }}</em></span>
         <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
       </div>
     </div>
@@ -36,11 +36,11 @@
   <div class="toltal f-b-c" v-if="items.show_quick">
     <div>预计可赢：
       <span v-if="items.seriesOdds">
-        <span class="total-money" > {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount)) }}</span>{{currency_code[UserCtr.currency]}}
+        <em class="total-money number_family" > {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount)) }}</em>{{currency_code[UserCtr.currency]}}
       </span>
-      <sapn v-else>0.00 {{currency_code[UserCtr.currency]}}</sapn>
+      <span v-else><em class="number_family">0.00</em> {{currency_code[UserCtr.currency]}}</span>
     </div>
-    <div>小计：{{ format_money2(items.bet_amount * items.count) }}{{currency_code[UserCtr.currency]}} </div>
+    <div>小计：<span class="number_family">{{ format_money2(items.bet_amount * items.count) }}</span>{{currency_code[UserCtr.currency]}} </div>
   </div>
   
 </template>
