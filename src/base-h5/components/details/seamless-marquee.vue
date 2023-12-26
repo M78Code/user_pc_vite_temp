@@ -124,6 +124,7 @@ const move = (text_width, scroll) => {
   .scroll_wrap {
     display: flex;
     // color: #fff;
+    color: var(--q-gb-t-c-18);
     p {
       word-break: keep-all;
       white-space: nowrap;
