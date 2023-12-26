@@ -97,7 +97,6 @@ const props = defineProps({
       }
 
     .bet-market{
-        font-family: DIN;
         font-size: .13rem;
         font-weight: 500;
         line-height: .16rem;

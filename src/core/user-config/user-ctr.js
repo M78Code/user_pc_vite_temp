@@ -1412,7 +1412,6 @@ class UserCtr {
     res.lang = this.lang || get_value('lang') || '';
     // api 获取默认最快域名进行加密
     res.api = this.api_encrypt(BUILDIN_CONFIG.DOMAIN_RESULT.first_one || get_value('best_api')) || '';
-    res.project_name = PROJECT_NAME || ''
     // 功能附加参数
     const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
     PARAM_ADD_KEY.forEach(key => {

@@ -66,7 +66,7 @@ const switchMenu = [i18n_t('app_h5.match.normal_results'), i18n_t('app_h5.match.
 /**
  * 赛果日期格式
  */
- const dataList = reactive(dateTabList(new Date(new Date().getTime()),[],[]));
+ const dataList = reactive(dateTabList(new Date(new Date().getTime()),[],[],1));
 /**
  * 默认值
  */
