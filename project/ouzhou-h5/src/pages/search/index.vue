@@ -256,7 +256,7 @@
 	</div>
 </template>
 <script setup>
-import { onMounted, ref, watch, computed, onUnmounted, reactive } from 'vue';
+import { onMounted, ref, watch, computed, onUnmounted, reactive, nextTick } from 'vue';
 import { compute_local_project_file_path,  compute_img_url, SearchData, MenuData, compute_value_by_cur_odd_type } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
@@ -622,6 +622,10 @@ onMounted(() => {
 		VirtualList.set_is_show_ball(false)
 		mitt_list.push(useMittOn(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, resultsJumpDetailHandle).off)
 	}
+	nextTick(() => {
+		// 隐藏loading动画 
+		useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,0);
+	})
 })
 
 onUnmounted(() => {

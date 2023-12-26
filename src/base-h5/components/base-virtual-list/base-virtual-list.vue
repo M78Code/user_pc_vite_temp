@@ -148,7 +148,7 @@ onUpdated(() => {
   })
 })
 
-watch(() => dataList.value.length, () => {
+watch(dataList, () => {
   nextTick(() => {
     initDataPostion()
   })

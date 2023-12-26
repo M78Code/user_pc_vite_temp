@@ -61,14 +61,14 @@ onUnmounted(() => {
  * @param {*} type
  */
 const changeTabMenu = (item, i, event, type) => {
-  if (item.val === "100") {
-    // 电竞下的冠军
-    MenuData.set_current_lv1_menu("400");
-    //冠军盘口切换欧洲盘
-    UserCtr.set_cur_odds("EU");
-  } else {
-    MenuData.set_current_lv1_menu(MenuData.old_current_lv_1_menu_i);
-  }
+//   if (item.val === "100") {
+//     // 电竞下的冠军
+//     MenuData.set_current_lv1_menu("400");
+//     //冠军盘口切换欧洲盘
+//     UserCtr.set_cur_odds("EU");
+//   } else {
+//     MenuData.set_current_lv1_menu(MenuData.old_current_lv_1_menu_i);
+//   }
 
   event = event || dateTab.value[0];
   // if(activeOn.value === i && !type)return;

@@ -7,15 +7,13 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // import websocket_data from "src/base-h5/mixins/websocket/data/skt_data_info.js";
 // 引入投注逻辑mixin
 // import betting from "src/base-h5/mixins/betting/betting.js";
-import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss,MenuData} from "src/output/index"; 
+import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss,MenuData,axios_loop as axios_api_loop} from "src/output/index"; 
 // 引入redux
 import store from "src/store-redux/index.js";
 // import { Level_one_detail_odd_info } from "../category-list.js";
-import uid from "src/core/uuid/index.js";
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
-import { useMittEmitterGenerator } from "src/output/index.js";
 import { SessionStorage } from "src/output/module/constant-utils.js";
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
 import { details_ws } from "src/core/match-detail/details-ws.js";
@@ -328,7 +326,6 @@ export const category_info = (category_arr=[]) => {
    */
   const initEvent = async (to_refresh, init_req) => {
     match_id.value = component_data.matchInfoCtr.mid?component_data.matchInfoCtr.mid:match_id.value
-
     // console.error("初始化方法");
     if (to_refresh) {
       component_data.to_refresh = to_refresh;
@@ -397,6 +394,78 @@ export const category_info = (category_arr=[]) => {
       component_data.is_cache = true;
       component_data.is_loading = true;
     }
+    let callback =()=>{
+          // 接着正常走历史逻辑
+      try {
+        //getMatchOddsInfo 接口拉取时，联动跟新投注框的数据
+        //投注框初始状态或者锁盘时才跟新数据
+        if (
+          get_bet_status.value == 1 ||
+          get_bet_status.value == 7 ||
+          get_bet_status.value == 5
+        ) {
+          update_ol(null, temp);
+        }
+
+        if (temp && temp.length) {
+          if (to_refresh == "details_refresh" && component_data.arr_hshow.length > 0) {
+            save_expanded_state(temp);
+          }
+          component_data.playlist_length = temp.length;
+          temp.forEach((item) => {
+            // 盘口赔率同级别增加赛事类编号csid
+            if (lodash.isArray(item.hl)) {
+              item.hl.forEach((hls_array) => {
+                if (lodash.isArray(hls_array.ol)) {
+                  hls_array.ol.forEach((ol_item) => {
+                    ol_item.csid = get_detail_data.csid;
+                  });
+                }
+              });
+            }
+            // 附加盘收缩
+            listItemAddCustomAttr(item);
+          });
+        }
+        temp = save_hshow(temp); // 保存当前相关hshow状态;
+        // 当前玩法集下数据缓存和所有的投注项
+        details_data_cache[`${match_id.value}-${get_details_item.value}`] = temp;
+        SessionStorage.set("DETAILS_DATA_CACHE", details_data_cache)
+        // 切换tab时变更mid_obj里面的odds_info对象数据
+        MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(match_id.value) ,temp)
+        // set_details_data_cache(details_data_cache);
+        
+      } catch (err) {
+        console.error(err);
+      } finally {
+        if (component_data.is_cache) {
+          setTimeout(() => {
+            component_data.is_loading = false;
+          }, 100);
+        } else {
+          component_data.is_loading = false;
+        }
+        if (!["result_details", "match_result"].includes(route.name)) {
+          // #TODO emit
+          useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true);
+          // useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true)
+        }
+        const tabs_active_data_cache =
+        details_data_cache[`${match_id.value}-${get_details_item.value}`];
+
+        // 当前赛事对应玩法集存在缓存数据
+        // #TODO
+        // if (tabs_active_data_cache) {
+        //   component_data.matchInfoCtr.setList(
+        //     lodash.cloneDeep(tabs_active_data_cache)
+        //   );
+        // } else {
+        //   // 无数据
+        //   component_data.is_no_data = true;
+        //   component_data.matchInfoCtr.setList([]);
+        // }
+      }
+    }
     // temp.length === 0 在这里更新所有投注得信息
     if (temp.length == 0) {
       try {
@@ -405,121 +474,59 @@ export const category_info = (category_arr=[]) => {
           axios_api: http,
           // axios api对象参数
           params: params,
-          max_loop: init_req ? 3 : 1,
+          max_loop: 3,
           fun_catch: (err) => {
-            component_data.is_loading = false;
-            component_data.is_no_data = true;
+            
+            // component_data.is_loading = false;
+            // component_data.is_no_data = true;
           },
-        };
-        /************** 响应成功则继续往下走，失败则执行fun_catch **************/
-        const res = await axios_api_loop(_obj);
-        component_data.first_load = false;
-        if (!lodash.get(res, "data") || lodash.get(res, "data.length") == 0) {
-          component_data.is_loading = false;
-          component_data.is_no_data = true;
-          return;
-        }
-
-        component_data.is_no_data = false;
-        const data = lodash.get(res, "data");
-        details_data_cache[`${match_id.value}-0`] = data;
-        // chipid进行处理
-        const chpid_obj = {};
-        data.forEach((item) => {
-          if (item.chpid) {
-            chpid_obj[item.chpid] = item.chpid;
-          }
-        });
-        // component_data.matchInfoCtr.setList(data);
-        component_data.match_info_list = data;
-        // console.log(chpid_obj,"chpid_obj");
-        // set_chpid_obj(chpid_obj)
-
-        if (["result_details", "match_result"].includes(route.name)) {
-          temp = details_data_cache[`${match_id.value}-0`];
-        } else {
-          temp = get_details_data_cache_fillter(
-            details_data_cache[`${match_id.value}-0`]
-          );
-          if (temp.length==0) {
-            temp = details_data_cache[`${match_id.value}-0`];
-          }
-         
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    // 接着正常走历史逻辑
-    try {
-      //getMatchOddsInfo 接口拉取时，联动跟新投注框的数据
-      //投注框初始状态或者锁盘时才跟新数据
-      if (
-        get_bet_status.value == 1 ||
-        get_bet_status.value == 7 ||
-        get_bet_status.value == 5
-      ) {
-        update_ol(null, temp);
-      }
-
-      if (temp && temp.length) {
-        if (to_refresh == "details_refresh" && component_data.arr_hshow.length > 0) {
-          save_expanded_state(temp);
-        }
-        component_data.playlist_length = temp.length;
-        temp.forEach((item) => {
-          // 盘口赔率同级别增加赛事类编号csid
-          if (lodash.isArray(item.hl)) {
-            item.hl.forEach((hls_array) => {
-              if (lodash.isArray(hls_array.ol)) {
-                hls_array.ol.forEach((ol_item) => {
-                  ol_item.csid = get_detail_data.csid;
-                });
+          fun_then:(res)=>{
+            /************** 响应成功则继续往下走，失败则执行fun_catch **************/
+            component_data.first_load = false;
+            if (!lodash.get(res, "data") || lodash.get(res, "data.length") == 0) {
+              component_data.is_loading = false;
+              component_data.is_no_data = true;
+              return;
+            }
+            component_data.is_no_data = false;
+            const data = lodash.get(res, "data");
+            details_data_cache[`${match_id.value}-0`] = data;
+            // chipid进行处理
+            const chpid_obj = {};
+            data.forEach((item) => {
+              if (item.chpid) {
+                chpid_obj[item.chpid] = item.chpid;
               }
             });
-          }
-          // 附加盘收缩
-          listItemAddCustomAttr(item);
-        });
-      }
-      temp = save_hshow(temp); // 保存当前相关hshow状态;
-      // 当前玩法集下数据缓存和所有的投注项
-      details_data_cache[`${match_id.value}-${get_details_item.value}`] = temp;
-      SessionStorage.set("DETAILS_DATA_CACHE", details_data_cache)
-      // 切换tab时变更mid_obj里面的odds_info对象数据
-      MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(match_id.value) ,temp)
-      // set_details_data_cache(details_data_cache);
-      
-    } catch (err) {
-      console.error(err);
-    } finally {
-      if (component_data.is_cache) {
-        setTimeout(() => {
-          component_data.is_loading = false;
-        }, 100);
-      } else {
-        component_data.is_loading = false;
-      }
-      if (!["result_details", "match_result"].includes(route.name)) {
-        // #TODO emit
-        useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true);
-        // useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true)
-      }
-      const tabs_active_data_cache =
-      details_data_cache[`${match_id.value}-${get_details_item.value}`];
+            // component_data.matchInfoCtr.setList(data);
+            component_data.match_info_list = data;
+            // console.log(chpid_obj,"chpid_obj");
+            // set_chpid_obj(chpid_obj)
 
-      // 当前赛事对应玩法集存在缓存数据
-      // #TODO
-      // if (tabs_active_data_cache) {
-      //   component_data.matchInfoCtr.setList(
-      //     lodash.cloneDeep(tabs_active_data_cache)
-      //   );
-      // } else {
-      //   // 无数据
-      //   component_data.is_no_data = true;
-      //   component_data.matchInfoCtr.setList([]);
-      // }
+            if (["result_details", "match_result"].includes(route.name)) {
+              temp = details_data_cache[`${match_id.value}-0`];
+            } else {
+              temp = get_details_data_cache_fillter(
+                details_data_cache[`${match_id.value}-0`]
+              );
+              if (temp.length==0) {
+                temp = details_data_cache[`${match_id.value}-0`];
+              } 
+            }
+          },
+          fun_finally:()=>{
+            callback()
+          }
+        };
+        axios_api_loop(_obj)
+      } catch (error) {
+        console.error(error,'11111');
+      }
+    }else{
+      callback()
     }
+
+
 
     // return http(params).then(res => {
     //   if(send_gcuuid != res.gcuuid) return;
@@ -614,51 +621,53 @@ export const category_info = (category_arr=[]) => {
        * @param {*} timer 异常调用时延时器对象(只在内部回调时使用)
        * @return {*}
        */
-  const axios_api_loop = async ({
-    axios_api,
-    params,
-    fun_then = null,
-    fun_catch = null,
-    max_loop = 3,
-    timers = 1000,
-    loop_count = 0,
-    timer = 0,
-    new_params,
-  }) => {
-    // loop_count 当前循环次数(只在内部回调时使用)
-    // timer 异常调用时延时器对象(只在内部回调时使用)
-    // console.log({msg:'axios_api_loop',params,new_params,v:lodash.isEqual(params, new_params)}); // 比较新老参数方法
-    // todo 传进来的params直接干掉,新的param直接在这里调用方法生成
+  // const axios_api_loop = async ({
+  //   axios_api,
+  //   params,
+  //   fun_then = null,
+  //   fun_catch = null,
+  //   max_loop = 3,
+  //   timers = 1000,
+  //   loop_count = 0,
+  //   timer = 0,
+  //   new_params,
+  // }) => {
+  //   // loop_count 当前循环次数(只在内部回调时使用)
+  //   // timer 异常调用时延时器对象(只在内部回调时使用)
+  //   // console.log({msg:'axios_api_loop',params,new_params,v:lodash.isEqual(params, new_params)}); // 比较新老参数方法
+  //   // todo 传进来的params直接干掉,新的param直接在这里调用方法生成
 
-    return new Promise((resolve, reject) => {
-      //调用接口数据
-      axios_api(params)
-        .then((res) => {
-          clearTimeout(timer);
-          resolve(res);
-        })
-        .catch((e) => {
-          // console.error("----请求loop----", e);
-          clearTimeout(timer);
-          if (loop_count++ >= max_loop - 1) {
-            fun_catch && fun_catch();
-          } else {
-            timer = setTimeout(() => {
-              axios_api_loop({
-                axios_api,
-                params,
-                fun_then,
-                fun_catch,
-                max_loop,
-                timers,
-                loop_count,
-                timer,
-              });
-            }, timers);
-          }
-        });
-    });
-  };
+  //   return new Promise((resolve, reject) => {
+  //     //调用接口数据
+  //     axios_api(params)
+  //       .then((res) => {
+  //         clearTimeout(timer);
+  //         resolve(res);
+  //       })
+  //       .catch((e) => {
+  //         // console.error("----请求loop----", e);
+  //         debugger
+  //         clearTimeout(timer);
+  //         if (loop_count++ >= max_loop - 1) {
+  //           debugger
+  //           fun_catch && fun_catch();
+  //         } else {
+  //           timer = setTimeout(() => {
+  //             axios_api_loop({
+  //               axios_api,
+  //               params,
+  //               fun_then,
+  //               fun_catch,
+  //               max_loop,
+  //               timers,
+  //               loop_count,
+  //               timer,
+  //             });
+  //           }, timers);
+  //         }
+  //       });
+  //   });
+  // };
   // 是否隐藏详情热门推荐
   const hide_detail_match_list = (flag) => {
     if (flag) {
