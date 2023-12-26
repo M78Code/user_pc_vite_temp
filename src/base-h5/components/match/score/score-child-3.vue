@@ -157,6 +157,7 @@ export default {
   font-size: 0.12rem;
   color: #FFFFFF;
   letter-spacing: 0;
+  width:100%;
 }
 
 .active-text {

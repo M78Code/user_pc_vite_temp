@@ -9,7 +9,7 @@
         </div>
         <div class="nonebox4-first-right">
             <div class="nonebox4-first-right-window" @click.stop="get_balance">
-                <div class="nonebox4-first-right-window-num">{{ format_money2(UserCtr.balance) }}</div>
+                <div class="nonebox4-first-right-window-num number_family">{{ format_money2(UserCtr.balance) }}</div>
                 <div class="refesh" :class="{ 'refesh2': is_loading_balance }"></div>
             </div>
         </div>
