@@ -45,6 +45,7 @@
                         <img v-if="items.red_green == 'green_down'" :src="is_down_app" alt=""/>
                     </div>
                 </div>
+                <p v-show="items.red_green" class="font500 font12" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">赔率已变更</p>
                 <!-- 电子赛事不支持串关 -->
                 <div v-if="items.is_serial && !BetData.is_bet_single" class="bet-serial font12">不支持串关投注</div>
             </div>
@@ -127,6 +128,7 @@ const set_delete = () => {
 
         .bet-money {
             height: .34rem;
+            margin-bottom: .06rem;
         }
 
         .bet-delete {
@@ -158,7 +160,7 @@ const set_delete = () => {
         }
 
         .bet-right {
-            width: 1.6rem;
+            width: 1.5rem;
             &.bet-invalid{
                 height: 100%;
                 .bet-disabled{
@@ -248,12 +250,6 @@ const set_delete = () => {
     .bet-odds-value{
        
         font-size: .22rem;
-        &.red-up{
-            color:#F53F3F;
-        }
-        &.green-down{
-            color: #00B42A
-        }
     }
     .show_img{
         width: .10rem;
@@ -278,4 +274,10 @@ const set_delete = () => {
     }
 }
 
+.red-up{
+    color:#F53F3F;
+}
+.green-down{
+    color: #00B42A
+}
 </style>
