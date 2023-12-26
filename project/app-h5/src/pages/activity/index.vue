@@ -5,7 +5,7 @@
 -->
 <template>
     <div class="acticity-content" >
-      <iframe style="width:100%;height: 1000px" allow="autoplay" frameborder="0" scrolling="no" :src="acticity_src" ></iframe>
+      <iframe style="width:100%;height: 100vh" allow="autoplay" frameborder="0" scrolling="no" :src="acticity_src" ></iframe>
   </div>
 </template>
 

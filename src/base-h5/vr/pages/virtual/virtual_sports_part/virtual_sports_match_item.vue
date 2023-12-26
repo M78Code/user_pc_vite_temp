@@ -94,7 +94,8 @@
         <!--专业版-->
         <div class="profession" v-if="standard_edition == 2">
            <!--复刻版vr不能滑动-->
-          <template v-if="0 && get_hp_list(1).length">
+          <!-- <template v-if="0 && get_hp_list(1).length"> -->
+          <template v-if="false">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" v-if="standard_odd_status == 0" :src="get_theme.includes('y0')?arrows:arrows_default">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="get_theme.includes('y0')?arrows_reverse:arrows_default_balck" v-else>
           </template>
