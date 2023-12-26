@@ -55,10 +55,12 @@
         </template>
         <span class="team-name">{{ item && item[0] && item[0].coachName }}</span>
       </div>
-      <div>
-        <div class="table-score">
+
+      <!-- item有数据再走下面逻辑 -->
+      <div v-if="item&&item.length>0">
+        <div class="table-score" >
           <div class="standings_technical_header">
-            <div class="col1 flex_start">{{ i18n_t('analysis_football_matches.age') }}</div>
+            <div class="col1 flex_start">{{ i18n_t('analysis_football_matches.age') }}11111</div>
             <div class="col1">{{ i18n_t('analysis_football_matches.Tactical_division') }}</div>
             <div class="col1">{{ i18n_t('analysis_football_matches.Points_per_game') }}</div>
             <div class="col-go-war">{{ i18n_t('analysis_football_matches.Go_to_war') }}</div>
