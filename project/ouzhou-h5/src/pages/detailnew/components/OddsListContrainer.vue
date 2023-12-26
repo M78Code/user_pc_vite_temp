@@ -27,53 +27,11 @@ type Props = {
   match_odds_info: TYPES.OddInfo[]
   match_detail: TYPES.MatchDetail
   loading?: boolean
-  allCloseState?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   loading: false,
-  allCloseState: false,
 })
-
-const emit = defineEmits<{
-  (e:'update:allCloseState',param:boolean)
-}>()
-
-
-//#region 展开收起功能
-const topKey_active = ref({});
-/** 监听一键展开/收起 */
-function useWatchAllCloseState() {
-  return watch(() => props.allCloseState, useWatchAllCloseState.watch)
-}
-useWatchAllCloseState.watch = (val) => {
-  if (!val) topKey_active.value = {}
-}
-let watchAllCloseStateHandle = useWatchAllCloseState()
-/** 切换展开/收起 */
-function ToggleExpend() {
-  // if (props.allCloseState) {
-  //   watchAllCloseStateHandle()
-  //   emit('update:allCloseState', false)
-  //   props.match_odds_info.forEach(v => topKey_active.value[v.topKey] = true)
-  //   delete topKey_active.value[item.topKey]
-  //   nextTick(() => watchAllCloseStateHandle = useWatchAllCloseState())
-  //   return
-  // }
-  // if (topKey_active.value[item.topKey]) {
-  //   delete topKey_active.value[item.topKey]
-  // } else {
-  //   topKey_active.value[item.topKey] = true
-  // }
-  // if (Object.keys(topKey_active.value).length == props.match_odds_info.length) {
-  //   emit('update:allCloseState', true)
-  // }
-}
-function updateUnfold(unfold: boolean){
-  emit('update:allCloseState',unfold)
-}
-
-//#endregion
 
 </script>
 
