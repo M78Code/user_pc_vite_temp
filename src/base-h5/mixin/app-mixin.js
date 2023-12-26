@@ -2,7 +2,7 @@ import { loadLanguageAsync } from "src/output/index.js";
 import { throttle } from "lodash";
 import { LocalStorage } from 'src/core/utils/common/module/web-storage.js'
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import STANDARD_KEY from "src/core/standard-key";
 import { enter_params } from 'src/core/enter-params/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
@@ -28,6 +28,8 @@ export default {
     };
   },
   created() {
+    this.mitt_list = [];
+    this.mitt_list.push(useMittOn(MITT_TYPES.EMIT_LOADING_CTR_CMD, this.hide_loading).off)
     // 参数控制处理和跳转逻辑
     url_param_ctr_init(this);
     // 设置wslog 默认函数防止提前调用报错
@@ -43,8 +45,6 @@ export default {
     this.init_load_timer = setTimeout(() => {
       this.set_init_load(true);
     }, 11000);
-
-    
   },
   watch: {
     '$route'(to, from) {
@@ -52,7 +52,11 @@ export default {
     },
     init_load(val){
       if(val&&document.getElementById("loading-root-ele")){
-        document.getElementById("loading-root-ele").style.visibility = "hidden";
+        if(BUILDIN_CONFIG.PROJECT_NAME != 'app-h5'){
+          document.getElementById("loading-root-ele").style.visibility = "hidden";
+        }
+        // 隐藏loading动画背景
+        useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,1)
       }
     }
   },
@@ -97,6 +101,8 @@ export default {
       // 销毁停止对象功能
       AllDomain.clear_timer && AllDomain.clear_timer();
     }
+    // 销毁监听
+    this.mitt_list.forEach(i=>i());
   },
   methods: {
     /**
@@ -207,6 +213,13 @@ export default {
     unbind_debounce_throttle() {
       this.resetApiDemo.cancel && this.resetApiDemo.cancel();
     },
-   
+    // 隐藏loading
+    hide_loading(data){
+      if(data){
+        document.getElementById("loading-root-ele").classList.add('transparent-bg');
+      } else {
+        document.getElementById("loading-root-ele").style.visibility = "hidden";
+      }
+    },
   },
 };

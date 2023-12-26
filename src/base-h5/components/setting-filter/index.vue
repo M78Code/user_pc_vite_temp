@@ -87,6 +87,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { i18n_t } from "src/boot/i18n.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { is_vr } from 'src/base-h5/mixin/menu.js'
+import BetData from "src/core/bet/class/bet-data-class.js";
 
 defineOptions({
   name: "settingFilter" // 设置组件名称
@@ -100,6 +101,7 @@ const router = useRouter();
  * @return 
  */
 const jumpHandle = () => {
+  BetData.set_is_bet_single('single')
   router.push({ name: "handicapTutorial" }); // 
   closedHandle();
 };
@@ -109,6 +111,7 @@ const jumpHandle = () => {
  * @return 
  */
 const jump_rule = () => {
+  BetData.set_is_bet_single('single')
   router.push({ name: "rule_description" }); 
   closedHandle();
 };
@@ -336,11 +339,10 @@ const activity_handle = item => {
       width: 1.04rem;
       height: 0.28rem;
       line-height: 0.28rem;
-      background-color: #f3faff;
+      background-color: var(--q-gb-bg-c-18);
       border-radius: 0.18rem;
       text-align: center;
-      //color: #7981a4;
-      color: var(--q-gb-t-c-11);
+      color: var(--q-gb-t-c-10);
       font-weight: 500;
     }
   }

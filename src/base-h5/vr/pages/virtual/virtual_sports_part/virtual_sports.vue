@@ -10,21 +10,23 @@
     <!-- <setting list_type="vr"/> -->
     <!--联赛tab-->
     <!--只有足球展示多个联赛菜单 -->
-    <div class="tab-wrapper" v-if="sub_menu_type == 1001">
-      <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
-        :key="i" @click="tab_item_click_handle(i,null,'user_change')">
-        <div>{{tab_item.name}}</div>
+    <div class="fixed-head">
+      <div class="tab-wrapper" v-if="sub_menu_type == 1001">
+        <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
+          :key="i" @click="tab_item_click_handle(i,null,'user_change')">
+          <div>{{tab_item.name}}</div>
+        </div>
       </div>
-    </div>
-    <!-- 全部联赛折叠 -->
-    <div class="all-leagues"  @click="handle_all_league">
-      <div class="left">
-        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rili.png`" alt="">
-        <span>{{i18n_t('filter.all_leagues')}}</span>
-      </div>
-      <div class="right">
-        <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" :class="[!is_expend_all && 'expend_all_league']" alt=""> -->
-      <div class='img' :class="[!is_expend_all && 'expend_all_league']" :style="compute_css_obj({key:'h5-kyapp-expand-lague'})"></div>
+      <!-- 全部联赛折叠 -->
+      <div class="all-leagues"  @click="handle_all_league">
+        <div class="left">
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rili.png`" alt="">
+          <span>{{i18n_t('filter.all_leagues')}}</span>
+        </div>
+        <div class="right">
+          <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" :class="[!is_expend_all && 'expend_all_league']" alt=""> -->
+        <div class='img' :class="[!is_expend_all && 'expend_all_league']" :style="compute_css_obj({key:'h5-kyapp-expand-lague'})"></div>
+        </div>
       </div>
     </div>
     <div class="virtual-content-wrapper">
@@ -771,6 +773,12 @@ export default {
 
 <style lang="scss" scoped>
 
+.fixed-head {
+  position: sticky;
+  top: 0.89rem;
+  background: var(--q-gb-bg-c-25);
+  z-index: 100;
+}
 
 /*  联赛菜单 */
 .tab-wrapper {
@@ -823,6 +831,9 @@ export default {
     padding-left: 0.07rem;
   }
   .status{
+    .num {
+      color: var(--q-gb-t-c-24);
+    }
     .state{
       margin: 0 5px;
       color: #fff;
@@ -864,11 +875,11 @@ export default {
   .right {
     display: flex;
     align-items: center;
-    img {
+    div {
       width: 0.2rem;
       height: 0.16rem;
       &.expend_all_league {
-        transform: rotate(-180deg);
+        transform: rotate(-90deg);
       }
     }
   }
@@ -913,7 +924,7 @@ export default {
     border-bottom-right-radius: .04rem;
     .vsm-options {
       width: 49%;
-      height: .4rem;
+      height: 0.52rem;
       background: var(--q-gb-bg-c-18);
       border-radius: .04rem;
       margin-bottom: .08rem;
@@ -924,7 +935,7 @@ export default {
       font-size: .12rem;
       padding: .02rem .12rem;
       &.active {
-        background: #D1EBFF;
+        background: var(--q-gb-bg-c-24);
         .teams {
           color: #127DCC;
         }

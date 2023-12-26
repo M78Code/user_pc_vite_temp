@@ -16,13 +16,13 @@
 
 export default {
   props: {
-    value: Number  ,
+    value:  Number | String,
     min:{
-      type:Number  ,
+      type:Number,
       default:0
     },
     max: {
-      type:Number  ,
+      type:Number,
       default:100
     },
   },
@@ -62,7 +62,7 @@ export default {
   mounted(){
     this.width = this.$refs.slider.clientWidth
   },
-  beforeUnmount(){
+  beforeDestroy(){
     // 鼠标事件取消监听
     document.removeEventListener("mousemove", this.mousemove);
     document.removeEventListener("mouseup", this.mouseup);
@@ -113,7 +113,7 @@ export default {
     set_value(){
       let { min, max, width, left } = this
       let value = parseInt(left / width * (max - min) + min)
-      this.$emit('input',value)
+      this.$emit('update:value',value)
     },
     /**
      * @Description 设置偏移量

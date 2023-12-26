@@ -295,8 +295,8 @@ const state = reactive({
                 }
 
                 .lose {
-                    background-color: rgb(from var(--q-gb-t-c-2) r g b / 10%);
-                    color: var(--q-gb-t-c-2);
+                    background-color: rgb(from #00B42A r g b / 10%);
+                    color: #00B42A;
                 }
             }
 

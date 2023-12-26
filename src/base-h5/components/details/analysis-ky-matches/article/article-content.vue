@@ -52,12 +52,10 @@ import { formete_date  } from "src/output/index.js";
       color: var(--q-gb-t-c-18);
       line-height: inherit;
     }
-  :deep {
-    img {
+    :deep(img) {
       max-width: 100%;
     }
-  }
-  .ql-editor {
+    :deep(.ql-editor) {
     box-sizing: border-box;
     line-height: 1.42;
     height: 100%;
@@ -69,7 +67,6 @@ import { formete_date  } from "src/output/index.js";
     white-space: pre-wrap;
     word-wrap: break-word;
     font-size: 0.14rem;
-      :deep {
         p,
         ol,
         ul,
@@ -413,7 +410,7 @@ import { formete_date  } from "src/output/index.js";
         .ql-align-right {
           text-align: right;
         }
-      }
+      
     }
     .ql-editor > * {
       cursor: text;

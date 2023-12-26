@@ -934,6 +934,16 @@ class UserCtr {
     this.set_user_info(lodash.get(res, "data.data", {}))
     //上传数据
     infoUpload.upload_data(lodash.get(res, "data.data", {}));
+
+    // 主题修正
+    if(!this.theme){
+      this.theme = LocalStorage.get("theme",  LocalStorage.get('default-theme'));
+      this.theme && LocalStorage.set("theme", this.theme);
+    }
+    let local_theme = LocalStorage.get("theme");
+    if(this.theme && this.theme != local_theme){
+      LocalStorage.set("theme", this.theme);
+    }
     this.set_web_meta_by_config();
   }
   /**
@@ -1390,8 +1400,6 @@ class UserCtr {
       let res_ = SessionStorage.get(key) || LocalStorage.get(key);
       return res_;
     }
-    // 参数合并
-    Object.assign(res, obj)
     // token 令牌
     res.token = this.user_token || get_value('token');
     // gr分组
@@ -1402,13 +1410,16 @@ class UserCtr {
     res.lang = this.lang || get_value('lang') || '';
     // api 获取默认最快域名进行加密
     res.api = this.api_encrypt(BUILDIN_CONFIG.DOMAIN_RESULT.first_one || get_value('best_api')) || '';
+    // 项目来源;
+    res.project = BUILD_VERSION_CONFIG.PROJECT_NAME;
     // 功能附加参数
     const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
     PARAM_ADD_KEY.forEach(key => {
       const val = SEARCH_PARAMS.init_param.get(key);
       val && (res[key] = val);
     });
-
+    // 参数合并
+    Object.assign(res, obj)
     // 参数累加
     const searchParams = new URLSearchParams(res);
     // url编码转换
