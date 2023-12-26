@@ -15,7 +15,7 @@
 
           <span class="money-span" ref="money_span" v-if="show_money_span" :style="{ opacity: '1' }"></span>
           
-          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ ref_data.min_money }}-{{ format_money3(ref_data.max_money) }}</span>
+          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}<span class="number_family"> {{ ref_data.min_money }}-{{ format_money3(ref_data.max_money) }}</span></span>
         </div>
         <div class="content-rmb">{{ currency_code[UserCtr.currency] }}</div>
       </div>
