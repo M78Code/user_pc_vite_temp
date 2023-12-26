@@ -938,8 +938,6 @@ export default {
     align-items: center;
     overflow: hidden;
     font-weight: 600;
-    position: relative;
-    top: 1px;
     &.no-favorited{
       padding-left: 15px;
     }

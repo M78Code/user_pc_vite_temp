@@ -6,7 +6,25 @@
   <template v-if="is_base_virtual_list">
     <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate" >
       <template #default="{ item, index }">
-        <template v-if="is_results">
+        <template v-if="is_match_results_kemp">
+          <MatchContainerMainTemplate6
+            :i="index"
+            :match_of_list="get_match_item(item)">
+          </MatchContainerMainTemplate6>
+        </template>
+        <template v-else-if="is_match_results_virtual">
+          <MatchContainerMainTemplate8
+            :i="index"
+            :match_of_list="get_match_item(item)">
+          </MatchContainerMainTemplate8>
+        </template>
+        <template v-else-if="is_match_results_game">
+          <MatchContainerMainTemplate3
+            :i="index"
+            :match_of_list="get_match_item(item)">
+          </MatchContainerMainTemplate3>
+        </template>
+        <template v-else-if="is_results">
           <MatchContainerMainTemplate3
             :i="index"
             :match_of_list="get_match_item(item)">
@@ -83,7 +101,9 @@ import MatchContainerMainTemplate5 from "src/base-h5/components/match-container/
 // app-h5 冠军赛果
 import MatchContainerMainTemplate6 from "src/base-h5/components/match-container/template/app/match-container-main-template6.vue"; 
 // app-h5 赛果精选列表
-import MatchContainerMainTemplate7 from "src/base-h5/components/match-container/template/app/match-container-main-template7.vue"; 
+import MatchContainerMainTemplate7 from "src/base-h5/components/match-container/template/app/match-container-main-template7.vue";
+// app-h 赛果vr
+import MatchContainerMainTemplate8 from "src/base-h5/components/match-container/template/app/match-container-main-template8.vue"; 
 
 // 赛事滚动组件
 import ScrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue'; 
@@ -133,6 +153,18 @@ const handlerUpdate = lodash.debounce((data) => {
 
 // BaseVirtualList 组件 所需 end ·············································
 
+// 赛果的判断
+const is_match_results_kemp = computed(() => {
+ return MenuData.get_results_type() === 3
+})
+
+const is_match_results_virtual = computed(() => {
+ return MenuData.get_results_type() === 2
+})
+
+const is_match_results_game = computed(() => {
+ return MenuData.get_results_type() === 1
+})
 
 </script>
  

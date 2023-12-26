@@ -141,9 +141,11 @@ const show_merge_change = () => {
 const bet_scroll=ref(null)
 function handle_input_click(e){
   setTimeout(() => {
-   const _h=parseFloat(window.getComputedStyle(bet_scroll.value).height)
-   console.log(_h,e.target.offsetParent.offsetTop,bet_scroll.value.scrollTop,_h- e.target.offsetParent.offsetTop)
-   bet_scroll.value.scrollTop= e.target.offsetParent.offsetTop-_h
+   const _h=bet_scroll.value.offsetHeight
+   const diff=e.target.offsetParent.offsetTop - _h + e.target.offsetParent.offsetHeight;
+   if(diff>0&&bet_scroll.value.scrollTop<diff){
+    bet_scroll.value.scrollTop= diff
+    }
   },50);
 }
 </script>
