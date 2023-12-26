@@ -646,7 +646,7 @@ export default {
         this.handle_match_time(batch);
         this.set_batch_timer(batch);
       })
-      console.log(this.interval_ids, 'sss')
+      // console.log(this.interval_ids, 'sss')
 
       // 足蓝全部展开，赛马类只展开第一个
       if(this.sub_menu_type == '1001' || this.sub_menu_type == '1004'){
