@@ -59,7 +59,7 @@ const acc_sub = (num1, num2 = num1) => {
 //   odds_coversion_map = store.getState().odds_coversion_map || {}
 //   vx_get_chat_room_type = store.getState().chat_room_type || {}
 // },
-export const compute_value_by_cur_odd_type = (val, hpid, arr = '', csid = 1) => {
+export const compute_value_by_cur_odd_type = (val = '0.00', hpid, arr = '', csid = 1) => {
   //当前赔率"EU" /HK
   let cur_odd = UserCtr.odds.cur_odds;
   /**

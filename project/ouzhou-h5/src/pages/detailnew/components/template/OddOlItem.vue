@@ -19,7 +19,7 @@
       <div class="item ol-content">
         <div class="ol-content-ov">
           <span v-if="isLock">0.xx</span>
-          <span v-else>{{ ov }}</span>
+          <span v-else>{{ compute_value_by_cur_odd_type(props.value.ov, props.value._hpid, props.value._hsw, sportId) }}</span>
           <img class="odd-image" v-show="status != 'none'"
             :src="oddUp ? ouzhou_hps_up : ouzhou_hps_down" />
         </div>
@@ -84,10 +84,10 @@ watch(() => props.value?.ov, (newVal, oldVal) => {
   resetStatus()
 });
 
-const ov = computed(() => {
+const ov = (() => {
   // @ts-ignore
   return compute_value_by_cur_odd_type(props.value.ov, props.value._hpid, props.value._hsw, sportId)
-})
+})()
 // 反波胆玩法增加'非'
 const txt_ol_name = computed(() => {
   let res = (['367','368','369'].includes(props.value._hpid) && (props.value.ot != 'Other'))?i18n_t('detail.non') : '';
@@ -100,7 +100,7 @@ const isLock = computed(() => {
     if(_mhs == 0){
       if( _hs == 0){
         if(props.value.os == 1){
-          return Number(ov.value) == 0 
+          return Number(ov) == 0 
         }
       }
     }
