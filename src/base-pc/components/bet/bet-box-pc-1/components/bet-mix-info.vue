@@ -4,7 +4,7 @@
 <template>
   <div>
     <div class="c-bet-mix-info">
-      <div style="display:none"> {{ BetData.bet_data_class_version }} </div>
+      <div v-show="false"> {{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
         <!---串关投注项部分-->
         <bet-mix-item
           :item="item"
@@ -12,7 +12,6 @@
           :key="`${item}-${index}`"
           v-for="(item, index) in BetData.bet_s_list"
         ></bet-mix-item>
-        
       <template v-if="BetViewDataClass.bet_order_success_success && BetViewDataClass.bet_order_success_success.length>0">
         <!--投注结果部分-->
         <!-- <bet-mix-result 
@@ -34,7 +33,7 @@
           ></bet-input>
         </div> -->
         <q-card flat class="bet-mix-item-card" v-if="BetData.bet_s_list.length > 1">
-          <betSpecialInput :items="BetViewDataClass.bet_special_series[0]"/>
+            <betSpecialInput :items="BetViewDataClass.bet_special_series[0]" :index="0" />
         </q-card>
       </template>
     </div>

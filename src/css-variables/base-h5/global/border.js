@@ -18,5 +18,6 @@
         'gb-bd-c-15': '#ffffff',
         'gb-bd-c-16': '#D1EBFF',
         'gb-bd-c-17': '#179CFF',
+        'gb-bd-c-18': '##f2f2f6',
       }
  

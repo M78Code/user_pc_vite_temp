@@ -8,9 +8,9 @@
         :class="{
           show_title:get_is_show_title || get_is_show_league,
           last_of_league:get_is_next_show_league,
-          collapsed:collapsed,
+          collapsed: !collapsed,
         }">
-        <div class="league-row row items-center justify-between hairline-border"
+        <!-- <div class="league-row row items-center justify-between hairline-border"
           :class="{show_title:get_is_show_title || get_is_show_league}">
           <div class="row items-center">
             <div class="sport-icon row items-center justify-center">
@@ -21,9 +21,23 @@
              {{match.tournamentName}}
             </div>
           </div>
+        </div> -->
+        <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
+          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'collapsed': !collapsed}]">
+          <div class="league-t-wrap right-border">
+          <!-- <div class="league-t-tubiao"></div> -->
+            <span :class="['league-title-text row justify-between']">
+              <span :class="['league-t-wrapper']">
+                <span class="match-league ellipsis-2-lines">
+                  {{ match.tournamentName }}
+                </span>
+              </span>
+              <IconWapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': collapsed}]" />
+            </span>
+          </div>
         </div>
         <!--赛马 赛狗 摩托车 泥地摩托车-->
-        <div v-if="[1011, 1002, 1010, 1009].includes(+match.sportId)" v-show="!collapsed" class="data-item-w-wrapper">
+        <div v-if="[1011, 1002, 1010, 1009].includes(+match.sportId)" v-show="collapsed" class="data-item-w-wrapper">
           <!-- <div class="data-title-w row justify-between" :class="{show_title:get_is_show_title}">
             <div class="date-number">
             </div>
@@ -41,17 +55,19 @@
               {{get_batch_no_by_language(match.batchNo)}}
             </div>
             <div class="title-i-w data row items-center">
-              <div v-for="(rank_i,i) of get_match_rank(match)" :key="i"
-                :class="get_rank_background(rank_i,match)">
+              <div v-for="(rank_i,i) of get_match_rank(match)" :key="i" class="title-i-w-r col items-center">
+                <div class="text">{{ i18n_t(`virtual_sports.${i === 0 ? 'champion' : i === 1 ? 'runner_up' : 'third_place'}`)}}</div>
+                <div class="virtual-num" :class="`virtual-num-${get_rank_background(rank_i,match)} ? motorcycle-${get_rank_background(rank_i,match)}`">
+                </div>
               </div>
             </div>
             <div class="date-number">
-              {{(new Date(+match.matchTime)).Format(i18n_t('time4'))}}
+              {{(new Date(+match.matchTime)).Format(i18n_t('time11'))}}
             </div>
           </div>
         </div>
         <!--虚拟足球-->
-        <div v-else-if="[1001,1004].includes(+match.sportId)" v-show="!collapsed"
+        <div v-else-if="[1001,1004].includes(+match.sportId)" v-show="collapsed"
           class="v-football-data">
           <div class="row justify-between">
             <div class="row">
@@ -124,28 +140,24 @@
 </template>
 
 <script>
-import { ref, computed, watch, nextTick } from 'vue'
 import virtual_mixin from '../../mixins/virtual.mixin1.js'
+import { IconWapper } from 'src/components/icon'
 
 export default {
   name: "match-container-main-template8",
   mixins: [virtual_mixin],
   props: {
     // 当前组件的赛事数据对应列表的赛事
-    match_of_list: Object,
+    match_of_list: Object, // item
     // 赛事处于列表中的下标
     i: Number,
     // 赛事列表相关操作的类型封装对象
-    matchCtr: Object,
+    matchCtr: Object, 
     main_source: String,
   },
   components: {
+    IconWapper
   },
-  setup(props) {
-    
-    return {
-    }
-  }
 }
 </script>
 
@@ -174,8 +186,9 @@ export default {
   }
 
   .v-m-b-container {
-    width: 3.61rem;
-    margin: 0 auto;
+    width: 100%;
+    // margin: 0 auto;
+    padding: 0 0.05rem;
 
     &.show_title {
       border-top-left-radius: 0.08rem;
@@ -235,13 +248,15 @@ export default {
     }
 
     .v-football-data {
-      width: 3.61rem;
+      width: 100%;
       height: 0.91rem;
-      margin: 0 auto 0.05rem;
       padding: 0.1rem;
       border-width: 1px;
       border-radius: 0.08rem;
-      border-style: solid;
+      box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
+      border: .01rem solid #E4E6ED;
+      background-color: #F8F9FA;
+      border-radius: 0;
 
       b,
       .row {
@@ -337,12 +352,13 @@ export default {
       .date-number {
         &:first-child {
           width: 1.1rem;
-          padding-left: 0.13rem;
+          padding-left: 0.08rem;
         }
 
         &:last-child {
-          width: 0.9rem;
-          padding-left: 0.14rem;
+          width: 1.1rem;
+          padding-right: 0.08rem;
+          text-align: right;
         }
       }
     }
@@ -353,8 +369,12 @@ export default {
 
     .data-item-w {
       width: 100%;
-      height: 0.4rem;
+      height: 0.54rem;
       position: relative;
+      box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
+      border: .01rem solid #E4E6ED;
+      background-color: #F8F9FA;
+      border-radius: .02rem;
 
       .test-line {
         position: absolute;
@@ -363,18 +383,30 @@ export default {
       }
 
       .date-number {
-        line-height: 0.4rem;
+        line-height: 0.54rem;
         font-size: 0.12rem;
       }
 
       .title-i-w {
         & > div {
           width: 0.2rem;
-          height: 0.2rem;
+          // height: 0.2rem;
           margin: 0 0.16rem;
           border-radius: 0.02rem;
           background-repeat: no-repeat;
           background-size: cover;
+        }
+      }
+      .title-i-w-r {
+        & > div {
+          width: 0.2rem;
+          // margin: 0 0.16rem;
+          border-radius: 0.02rem;
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
+        .text {
+          margin-bottom: .04rem;
         }
       }
     }
@@ -408,4 +440,231 @@ export default {
     height: auto;
   }
 }
+
+
+/*************** 马类编号开始 *************** -S*/
+.virtual-num {
+  width: 0.2rem;
+  height: 0.2rem;
+  line-height: 0.2rem;
+  // margin-left: 0.22rem;
+  text-align: center;
+  background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png")  no-repeat 0 0 / 100%;
+  --per: -0.3rem;
+}
+
+.virtual-on {
+  width: 0.2rem;
+  height: 0.2rem;
+  line-height: 0.2rem;
+  text-align: center;
+  background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png")  no-repeat 0 0 / 100%;
+  --per: -0.3rem;
+}
+
+.border_right {
+  display: flex;
+}
+
+.margin_sty {
+  margin: 0 0.02rem 0 0.02rem;
+}
+
+/*************** 编号结束 *************** -E*/
+/*************** 编号背景色开始 *************** -S*/
+div[class*="virtual-num"] {
+  border-radius: 2px;
+}
+
+.virtual-num-1 {
+  background-position-y: calc(var(--per) * 6);
+
+  &.csid-1009 {
+    background-position-y: calc(var(--per) * 14);
+  }
+}
+
+.virtual-num-2 {
+  background-position-y: calc(var(--per) * 7);
+
+  &.csid-1002 {
+    background-position-y: calc(var(--per) * 1);
+  }
+
+  &.csid-1009 {
+    background-position-y: calc(var(--per) * 15);
+  }
+}
+
+.virtual-num-3 {
+  background-position-y: calc(var(--per) * 8);
+
+  &.csid-1002 {
+    background-position-y: calc(var(--per) * 2);
+  }
+
+  &.csid-1009 {
+    background-position-y: calc(var(--per) * 16);
+  }
+}
+
+.virtual-num-4 {
+  background-position-y: calc(var(--per) * 9);
+
+  &.csid-1002 {
+    background-position-y: calc(var(--per) * 3);
+  }
+
+  &.csid-1009 {
+    background-position-y: calc(var(--per) * 17);
+  }
+}
+
+.virtual-num-5 {
+  background-position-y: calc(var(--per) * 10);
+
+  &.csid-1002 {
+    background-position-y: calc(var(--per) * 4);
+  }
+}
+
+.virtual-num-6 {
+  background-position-y: calc(var(--per) * 11);
+
+  &.csid-1002 {
+    background-position-y: calc(var(--per) * 5);
+  }
+}
+
+/*************** 编号背景色结束 *************** -S*/
+
+.league {
+    height: 0.26rem;
+    border-radius: 0;
+    // padding: 0 0.1rem;
+    background:var(--q-gb-bg-c-18);
+    width: 100%;
+    &.show-sport {
+      border-radius: 0.12rem 0.12rem 0 0;
+    }
+
+    &.home-hot {
+      margin-top: .05rem;
+    }
+
+    .league-t-wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      //padding-left: 0.08rem;
+      .esport {
+        margin: 0.01rem 0.07rem 0 0rem;
+        position: relative;
+        --per: -0.32rem;
+        display: block;
+        width: auto;
+        height: 0.22rem;
+        width: 0.22rem;
+        background-position: 0 0;
+        background-size: 0.22rem 18.88rem;
+        flex-shrink: 0;
+        img {
+          width: 0.22rem;
+          height: 0.22rem;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+      }
+      .league-t-tubiao {
+        height: 0.15rem;
+        width: 0.02rem;
+        background-color:var(--q-gb-bg-c-13);
+        border-radius: 10px;
+        width: 200px; 
+      }
+      .league-collapse-dir {
+        width: 0.12rem;
+        height: 0.06rem;
+        position: relative;
+        right: 0.1rem;
+
+        &.collapsed {
+          transform: rotateZ(180deg);
+        }
+      }
+      .favorited-icon{
+        width: 14px;
+        height: 14px;
+        margin: 0 8px 0 11px;
+        position: relative;
+        flex-shrink: 0;
+        > img {
+          width: 0.14rem;
+          height: 100%;
+        }
+      }
+    }
+    
+    .dir {
+      margin-right: 0.09rem;
+
+      i {
+        display: block;
+        font-size: 0.1rem;
+        transition: transform 0.3s;
+
+        &.collapse {
+          transform: rotateZ(180deg);
+        }
+      }
+    }
+  }
+
+  .league-title-text {
+    font-size: 0.13rem;
+    width: 100%;
+    height: 100%;
+    padding-right: 5px;
+    transform: translateY(1px);
+    text-overflow: ellipsis;
+    flex-wrap: nowrap;
+    align-items: center;
+    overflow: hidden;
+    font-weight: 600;
+    &.no-favorited{
+      padding-left: 15px;
+    }
+    .icon-wapper{
+      transform: rotate(90deg);
+    }
+    .close{
+      transform: rotate(180deg);
+    }
+
+    .league-t-wrapper {
+      line-height: 1;
+      min-width: 1.18rem;
+      display: flex;
+      font-size: .12rem;
+      &.export {
+        min-width: 1.1rem;
+        margin-left: 0.1rem;
+      }
+    }
+     // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
+    .match-league {
+      color: var(--q-gb-t-c-18);
+      line-height: 0.14rem;
+      margin-left: 0.08rem;
+      &.match-main-league {
+        //max-width: 1.4rem;
+      }
+      &.favorited-icon-hidden{
+        // margin-left: 10px;
+      }
+    }
+  }
 </style>

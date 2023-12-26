@@ -37,12 +37,6 @@ export const details_main = (router, route) => {
   const header_fix = ref(null);
   const fixedHeight = ref(null);
   const MatchDataWarehouseInstance = ref(MatchDataWarehouse_H5_Detail_Common);
-  /** @type {Ref<Boolean>} */
-  const allCloseState = ref(void 0); // 值为undefined 则隐藏一键展开/收起
-  allCloseState.value = false;
-
-  /** @type {Promise<any>} 用于控制detail_init加载顺序的Promise */
-  let loadingQueue;
 
   /* 引入ws处理指令 */
   const { handler_ws_cmd } = details_ws(router, route);
@@ -759,7 +753,6 @@ export const details_main = (router, route) => {
     touchend,
     touchstart,
     detail_tabs_change,
-    allCloseState,
     get_info_show
   };
 };

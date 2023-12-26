@@ -43,6 +43,9 @@ branch=os.popen("git symbolic-ref --short HEAD").read()
 print( 'branch: ', branch )
 
 
+#仓库地址
+fetch_remote_address = os.popen( 'git remote -v  ' ).read().split('\n')[0]
+ 
 
 #cmd1 = 'git log --format=\'%aN\' | sort -u | while read name; do echo -en "$name\t"; git log --author="$name" --pretty=tformat: --numstat | awk \'{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }\' -; done'
 #cmd1 = "git log --format=\'%aN\' | sort -u"
@@ -122,8 +125,12 @@ print("result_dict1",result_dict1)
 print("result_dict1",result_dict1.values())
 
 
+result_dict1_values = result_dict1.values()
+# 升序
+result_dict1_values = sorted(result_dict1_values, key=lambda x: x['add_total']) 
+
 # 打开文件
-file_open = open("git-console.txt", 'w', encoding='utf-8')
+file_open = open("git-console.md", 'w', encoding='utf-8')
 
 
 def print_and_write(str1):
@@ -133,21 +140,20 @@ def print_and_write(str1):
 
 print_and_write('')
 print_and_write('')
-print_and_write('统计文件路径：./git-console.txt')
-print_and_write('统计分支为：HEAD/'+branch[0:-1])
+print_and_write('统计文件路径：./git-console.md')
+print_and_write('远程仓库地址：'+fetch_remote_address)
+print_and_write('统计分支名字：HEAD/'+branch[0:-1])
 print_and_write('统计完整天数：'+ str(tianshu))
 print_and_write('统计开始时间：'+since_time)
 print_and_write('统计截止时间：'+until_time)
 
 print_and_write('')
 print_and_write('')
-strf1='{0}\t{1}\t{2}\t{3} '
+strf1='| {0} | {1} | {2} | {3} |'
 # print_and_write('人员 \t 增加行数 \t  删除行数 \t 逻辑行数 ' )
 print_and_write(strf1.format( strl30('人员',28)  ,strl30('增加行数',26),strl30('删除行数',26),strl30('逻辑行数',26) ))
-result_dict1_values = result_dict1.values()
-# 升序
-result_dict1_values = sorted(result_dict1_values, key=lambda x: x['add_total']) 
-print_and_write('')
+print_and_write(strf1.format( strl30('----')  ,strl30('----'),strl30('----'),strl30('----') ))
+
 add_total=0
 subs_total=0
 for obj in result_dict1_values:
@@ -156,7 +162,6 @@ for obj in result_dict1_values:
   # print_and_write('名字: {0},增加行数: {1}, 删除行数:{2} ,逻辑行数:{3}。'.format( obj['name'],obj['add_total'],obj['subs_total'], obj['add_total']-obj['subs_total']))
   # print_and_write(strf1.format( obj['name'],obj['add_total'],obj['subs_total'], obj['add_total']-obj['subs_total']))
   print_and_write(strf1.format( strl30(obj['name'])  ,strl30(obj['add_total']),strl30(obj['subs_total']),strl30(obj['add_total']-obj['subs_total']) ))
-print_and_write('')
 # print_and_write('总计: {0},增加行数: {1}, 删除行数:{2} ,逻辑行数:{3}。'.format(  '所有人',add_total, subs_total, add_total - subs_total ))
 # print_and_write(strf1.format(  '所有人',add_total, subs_total, add_total - subs_total ))
 # print_and_write(strf1.format(  '所有人',add_total, subs_total, add_total - subs_total ))
@@ -176,3 +181,10 @@ file_open_2 = open("git-console.json", 'w', encoding='utf-8')
 
 json_str = json.dumps(result_dict1)
 file_open_2.write(json_str)
+
+# 关闭文件
+file_open_2.close()
+
+
+
+

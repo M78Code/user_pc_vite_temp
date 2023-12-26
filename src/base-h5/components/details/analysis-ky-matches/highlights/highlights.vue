@@ -33,7 +33,8 @@
             <div class="time-line"></div>
             <div class="time-line-ball"></div>
             <div :class="['item-flag', flag_icon(event.eventCode)]"></div>
-            <div class="item-content hairline-border"  @click="handle_click_event(i, event)">
+            <!-- <div class="item-content hairline-border"  @click="handle_click_event(i, event)"> -->
+            <div class="item-content hairline-border"  @click="toPlay(i, event)">
               <!-- 背景图 -->
               <div :style="{
                 'background-image': `url(${event.fragmentPic})`
@@ -221,14 +222,14 @@ import {
   nextTick,
   watch,
   defineAsyncComponent,
+  inject
 } from 'vue'
 import lodash from 'lodash'
 import {api_common, api_analysis} from "src/api/index.js";
-import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+import { MatchDetailCalss, useMittOn, useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import store from "src/store-redux/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { pre_load_video } from "src/core/pre-load/index.js"
-import {  LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 import { format_total_score } from "src/output/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js";;
 import { useRoute } from "vue-router"
@@ -274,6 +275,7 @@ props: {
   }
 },
 setup(props, context){
+  const ChangeVideoKind = inject('ChangeVideoKind')
   let route = useRoute()
     // 定时器
   const get_football_replay_timer = ref(null)
@@ -574,7 +576,8 @@ setup(props, context){
     curr_active_event.value = {
       video_url: event.fragmentVideo,
       event_id: event.eventId,
-      slider_index: events_list_vertical.value.length - 1 - selected_item_index
+      slider_index: events_list_vertical.value.length - 1 - selected_item_index,
+      active: 'muUrl'
     }
 
     is_replay_load_error.value = false
@@ -584,7 +587,8 @@ setup(props, context){
     if (event_index.value == index && !is_expand.value || event_index.value !== index) {
       check_replay_url(replay_video_src.value)
     }
-
+    // 开启视频
+    
     // 收起、展开列表
     if (event_index.value == index) {
       is_expand.value = !is_expand.value
@@ -808,6 +812,14 @@ setup(props, context){
     bureau_active.value = value;
   }
 
+  const toPlay = function(index,replay){
+    const replayData = {
+      item: replay,
+      index
+    }
+    ChangeVideoKind(replayData)
+  }
+
   onUnmounted(() => {
       clearInterval(get_football_replay_timer.value)
       get_football_replay_timer.value = null
@@ -906,6 +918,7 @@ setup(props, context){
     handleMessage,
     format_total_score,
     LOCAL_PROJECT_FILE_PREFIX,
+    toPlay
   }
 }
 }

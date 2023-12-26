@@ -9,10 +9,10 @@
                     </div>
                 </div>
             </template>
-            <template v-if="!state.currentSwitchValue" v-slot:right>
+            <template v-if="state.currentSwitchValue !== 3" v-slot:right>
                 <img
                     class="right-icon"
-                    @click="state.select_dialog = true"
+                    @click="filterChange()"
                     :src="compute_local_project_file_path('/image/svg/navbar_icon.svg')"
                     alt=""
                 />
@@ -29,18 +29,15 @@
         <!-- <ScrollMenu v-if="state.slideMenu_sport.length" :scrollDataList="menu_list" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/> -->
         <ScrollMenu v-if="menu_list.length" :scrollDataList="menu_list" :is_show_badge="false" :current_mi="current_mi" @changeMenu="set_scroll_current"/>
 
-        <ObserverWrapper class="match-result-contant" :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper>
-        <match-container />
+        <!-- <ObserverWrapper class="match-result-contant" :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper> -->
+        <MatchContainer/>
     </template>
-    <!-- <div class="match-results-container-styles">
-       
-        <match-container />
-    </div> -->
 
-    <!-- <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
-        <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
-        <setect-league @closedHandle="state.select_dialog = false" @finishHandle="selectFinishHandle"></setect-league>
-    </div> -->
+     <!-- 筛选+搜索  已脱离文档流-->
+     <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+        <div style="height:100%;width: 100%" @click="select_dialog = false" />
+        <setect-league @closedHandle="state.select_dialog = false"></setect-league>
+    </div>
 
 </template>
 <script setup>
@@ -52,16 +49,19 @@ import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.
 // import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 // import { api_analysis } from "src/api/"
+import MatchFold from 'src/core/match-fold/index.js'
 import { MenuData,compute_local_project_file_path } from "src/output/index.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 import ObserverWrapper from 'src/base-h5/components/observer-wrapper/index.vue';
 import BaseData from "src/core/base-data/base-data.js";
+import setectLeague from 'src/base-h5/components/tutorial/navigation-bar/setect-league.vue'
+import MatchContainer from "src/base-h5/components/match-list/index.vue";
 
 // 新修改
 
 
-// const inner_height = window.innerHeight;  // 视口高度
+const inner_height = window.innerHeight;  // 视口高度
 const switchMenu = [i18n_t('app_h5.match.normal_results'), i18n_t('app_h5.match.game_results'), i18n_t('app_h5.match.vr_results'), i18n_t('app_h5.match.championship_results')]
 /**
  * 赛果日期格式
@@ -105,12 +105,17 @@ const current_mi = ref(MenuData.current_lv_2_menu?.mi||menu_list.value[0]?.mi)
 
 /**
  * 时间切换
- * @param {*} type 
  */
-const setDate = (type) =>{
+const setDate = () =>{
     state.currentSlideValue = MenuData.data_time;
     //调用接口
     get_date_matches_list(MenuData.current_lv_2_menu?.mi?MenuData.current_lv_2_menu:menu_list.value[0]);
+}
+/**
+ * 筛选点击
+ */
+const filterChange = () =>{
+    if(state.currentSwitchValue !==3)state.select_dialog = true;
 }
 const switchHandle = (val,type) => {
     state.currentSwitchValue = val
@@ -182,10 +187,13 @@ const switchHandle = (val,type) => {
  * 获取数据
  */
 const get_date_matches_list = async (item)=>{
+    MatchFold.clear_fold_info()
+    MatchMeta.clear_match_info()
+    useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true);
     if(item?.sport_id){
         let params = {
             mi:item.mif,
-            md:1703520000000+'',
+            md:state.currentSlideValue,
             sport:item.sport_id
         }
         MenuData.set_result_menu_api_params(params)
@@ -195,11 +203,13 @@ const get_date_matches_list = async (item)=>{
         case 1:
             nextTick(async () => {
                 state.matchs_data = await MatchMeta.get_results_match();
+                useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             })
             break;
         case 2:
             nextTick(async () => {
                 state.matchs_data = await MatchMeta.get_virtual_results_match();
+                useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             })
             break;
         case 3:
@@ -208,10 +218,12 @@ const get_date_matches_list = async (item)=>{
             }
             MenuData.set_result_menu_api_params(params)
             state.matchs_data = await MatchMeta.get_champion_match_result()
+            useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             break;
         default:
             break;
     }
+    
     if (state.matchs_data.length) useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
 }
 

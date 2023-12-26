@@ -2,22 +2,24 @@
 import { defineComponent } from 'vue'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { i18n_t} from 'src/output/index.js'
 import data_pager from "src/base-h5/components/common/data-pager.vue"
 import { get_server_file_path } from "src/core/file-path/file-path.js";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import { is_hot, menu_type, is_detail, is_results, menu_lv1 } from 'src/base-h5/mixin/menu.js'
+import MatchFold from 'src/core/match-fold'
+import { useMittEmit, MITT_TYPES, project_name } from  "src/output"
 
 
 export default defineComponent({
   data () {
     return {
       avatar_prefix: '/client/h5/v1/bw3/svg/team-logo-20210202/',
-      collapsed: false,
       home_erroed: false,
       away_erroed: false,
-      get_lang: UserCtr.lang,
-      get_theme: UserCtr.theme,
+      get_lang: lang,
+      get_theme: theme,
     }
   },
   mounted() {
@@ -27,11 +29,17 @@ export default defineComponent({
     match () {
       return this.match_of_list;
     },
-    match_list () {
-      return this.match_of_list;
+    match_list () { //全量
+      return MatchMeta.complete_matchs
     },
     i_list () {
       return this.i
+    },
+    collapsed () {
+      if (is_hot.value) return false
+      const key = MatchFold.get_match_fold_key(this.match_of_list)
+      const show_card = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_card`, true)
+      return show_card
     },
     stage_result () {
       let result = "";
@@ -46,7 +54,7 @@ export default defineComponent({
         if(this.match.matchDay){
           let m_str = i18n_t('virtual_sports.matchDay');
           let append_space = "&nbsp;&nbsp;"
-          if(['zh','tw'].includes(get_lang)){
+          if(['zh','tw'].includes(this.get_lang)){
             append_space = "";
           }
           result = m_str.replace('%s',`<span style="{color:${color_1}">${append_space}${this.match.matchDay}</span>`);
@@ -74,7 +82,7 @@ export default defineComponent({
         if(this.match.legOrder){
           let lang_leg_order = i18n_t('virtual_sports.legOrder');
           let append_space = "&nbsp;&nbsp;"
-          if(['zh','tw'].includes(get_lang)){
+          if(['zh','tw'].includes(this.get_lang)){
             append_space = "";
           }
           let result2 = lang_leg_order.replace('%',`<span style="color:${color_1}">${this.match.legOrder}${append_space}</span>`);
@@ -85,14 +93,14 @@ export default defineComponent({
       else if(this.match.matchDay && !this.match.sportId == '1004'){
         let m_str = i18n_t('virtual_sports.matchDay');
         let append_space = "&nbsp;&nbsp;"
-        if(['zh','tw'].includes(get_lang)){
+        if(['zh','tw'].includes(this.get_lang)){
           append_space = "";
         }
         result = m_str.replace('%s',`<span style="color: ${color_1}">${append_space}${this.match.matchDay}</span>`);
       }
       // 虚拟篮球显示期数matchesGroupId
       else if(this.match.sportId == '1004'){
-        if(get_lang == 'vi'){
+        if(this.get_lang == 'vi'){
           let w = i18n_t('virtual_sports.date_number_title');
           result = w.replace('%s',`&nbsp;<span style="color: ${color_1}">${this.match.batchNo}</span>`);
         }
@@ -133,9 +141,12 @@ export default defineComponent({
         flag = true;
       }
       else{
-        let i = this.i_list - 1;
-        let prev_match = this.match_list[i];
-        flag = prev_match.sportId != this.match.sportId;
+        try {
+          let i = this.i_list - 1;
+          let prev_match = this.match_list[i];
+          console.log('let prev_match = this.match_list[i];', prev_match)
+          flag = prev_match.sportId != this.match.sportId;
+        } catch (_) {}
       }
       return flag;
     },
@@ -151,7 +162,9 @@ export default defineComponent({
         flag = true
       }
       else{
-        flag = next_match.tournamentNameCode != this.match.tournamentNameCode;
+        try {
+          flag = next_match.tournamentNameCode != this.match.tournamentNameCode;
+        } catch(_) {}
       }
       return flag;
     },
@@ -161,9 +174,11 @@ export default defineComponent({
         flag = true;
       }
       else{
-        let i = this.i_list - 1;
-        let prev_match = this.match_list[i];
-        flag = prev_match.tournamentNameCode != this.match.tournamentNameCode;
+        try {
+          let i = this.i_list - 1;
+          let prev_match = this.match_list[i];
+          flag = prev_match.tournamentNameCode != this.match.tournamentNameCode;
+        } catch(_) {}
       }
       return flag;
     }
@@ -182,7 +197,7 @@ export default defineComponent({
     get_batch_no_by_language (batch_no) {
       let lang = `${i18n_t('virtual_sports.date_number_title')}`;
       let r = `${batch_no} ${lang}`;
-      if(get_lang == 'vi'){
+      if(this.get_lang == 'vi'){
         r = lang.replace('%s',batch_no);
       }
       return r;
@@ -218,6 +233,22 @@ export default defineComponent({
         }
       }
       return result;
+    },
+     /**
+     * @description 联赛折叠
+     */
+     handle_league_fold () {
+      const { tid, is_virtual = false, warehouse_type = '', start_flag = '' }  = this.match_of_list
+      // 首页热门，详情页，不需要用到折叠
+      if (is_hot.value || is_detail.value) return;
+      MatchFold.set_league_fold(this.match_of_list, start_flag)
+      // 不需要虚拟计算，欧洲版五大联赛
+      if (is_virtual || ['five_league'].includes(warehouse_type)) return
+      // app-h5 简版 先试运行看效果
+      if (project_name === 'app-h5' && standard_edition.value == 1) MatchMeta.compute_current_matchs()
+      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false})
+      // 赛事个数小于18 不需要继续获取赔率
+      if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },
     team_icon_error (is_away,ev) {
       let result = '';
@@ -266,7 +297,7 @@ export default defineComponent({
       if ([1009].includes(+this.match.sportId)) {
         virtual_sports = `dirt_motorcycle${rank_i.no}`;
       }
-      return `this.match-${s_type}${rank_i.no} ${virtual_sports}`;
+      return `${rank_i.no}`;
     },
     get_match_rank (match) {
       let result = [];

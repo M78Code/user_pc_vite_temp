@@ -46,7 +46,7 @@
                   v-if="index != 0"
                 ></bet-input> -->
                 <q-card flat class="bet-mix-item-card">
-                  <betSpecialInput :index="index" :items="item" :key="item.custom_id" v-if="index!= 0"/>
+                  <betSpecialInput :index="index" :items="item"  v-if="index!= 0"/>
                 </q-card>
               </template>
             </template>
