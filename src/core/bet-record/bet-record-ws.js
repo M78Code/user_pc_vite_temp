@@ -70,7 +70,6 @@ export default class BetRecordWs {
         // }
       }
     }
-
     /**
      * @description: ws消息监听
      * @param {undefined} undefined
@@ -88,7 +87,7 @@ export default class BetRecordWs {
                 const ws_cmd = lodash.get(data, 'cmd')
                 switch (ws_cmd) {
                     case 'C201':
-                        useMittEmit(MITT_TYPES.EMIT_C201_HANDLE_BET_RECORD, obj.cd)
+                        useMittEmit(MITT_TYPES.EMIT_C201_HANDLE_BET_RECORD, data.cd)
                         break;
                     case 'C210':
                         // useMittEmit(MITT_TYPES.EMIT_C210_HANDLE, data)

@@ -215,7 +215,7 @@ export default {
     this.get_video_timer = null;
     // 满足刷新页面保持向上展开的状态
     this.set_fewer(1);
-    if(this.mid || this.$route.name == 'virtual_sports'){
+    if(this.$route.query.mid || this.mid || this.$route.name == 'virtual_sports'){
       this.init_vsport();
     }
 
@@ -628,7 +628,7 @@ export default {
      */
     get_match_result(){
       let params = {
-        mid: this.$route.query.mid,
+        mid: this.$route.query.mid || this.mid,
         mcid: this.get_details_item,
         cuid: this.get_uid, // userId或者uuid
       }
