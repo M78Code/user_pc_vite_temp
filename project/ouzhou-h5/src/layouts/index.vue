@@ -32,7 +32,8 @@ import {
   onMounted,
   onUnmounted,
   defineAsyncComponent,
-  watch
+  watch,
+  nextTick
 } from "vue";
 import { useRoute } from 'vue-router'
 
@@ -43,7 +44,7 @@ import { FooterWapper } from "src/base-h5/components/footer-bar/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 
 import { api_common } from "src/api/index.js";
-import { useMittOn, MITT_TYPES, i18n_t } from "src/output/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit, i18n_t } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 const toast = defineAsyncComponent(() =>
@@ -127,6 +128,10 @@ onMounted(() => {
   init_local_server_time()
   // 设置设备类型
   BetData.set_device_type(1)
+  nextTick(() => {
+    // 隐藏loading动画 
+    useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,0);
+  })
 });
 const mitt_list = [
   // 监听设置框状态
