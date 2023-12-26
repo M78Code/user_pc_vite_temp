@@ -12,7 +12,11 @@
           :key="`${item}-${index}`"
           v-for="(item, index) in BetData.bet_s_list"
         ></bet-mix-item>
-        
+        <div>
+          <q-card flat class="bet-mix-item-card" v-if="BetData.bet_s_list.length > 1">
+            <betSpecialInput :items="BetViewDataClass.bet_special_series[0]" :index="0" />
+          </q-card>
+        </div>
       <template v-if="BetViewDataClass.bet_order_success_success && BetViewDataClass.bet_order_success_success.length>0">
         <!--投注结果部分-->
         <!-- <bet-mix-result 
@@ -33,12 +37,9 @@
             :key="`0-${BetData.bet_s_list[0].custom_id}`"
           ></bet-input>
         </div> -->
-        
       </template>
     </div>
-    <q-card flat class="bet-mix-item-card">
-          <betSpecialInput :item="BetData.bet_s_list[0]"/>
-    </q-card>
+    
   </div>
  
 </template>

@@ -10,18 +10,18 @@
  * @param {*} day 
  * @returns 
  */
-export const dateWeekFormat = (day) => {
+export const dateWeekFormat = (day,sort) => {
     let result = [];
     Date.prototype.getMonthDay = function () {
         let dateVal = (this.getMonth() + 1) + '/' + this.getDate();
         return {
-          val:new Date(this.setHours(12, 0, 0, 0)).getTime(),
+          val:new Date(sort?this.setHours(0, 0, 0, 0):this.setHours(12, 0, 0, 0)).getTime(),
           name:dateVal
         };
     }
     result.push(day.getMonthDay());
     for (let i = 0; i < 6; i++) {
-        day.setDate(day.getDate() + 1);
+        day.setDate(sort?day.getDate() - 1:day.getDate() + 1);
         result.push(day.getMonthDay())
     }
     return result;
@@ -31,11 +31,12 @@ export const dateWeekFormat = (day) => {
  * @param {*} day 日期new Date()
  * @param {*} pre tab首位
  * @param {*} next tab末尾
+ * @param {*} sort 1前7天0点 == 0后7天12点
  * @returns 
  */
-export const dateTabList = (day,pre=[{name:"全部",val:""}],next) =>
+export const dateTabList = (day,pre=[{name:"全部",val:""}],next,sort) =>
  {
-    const _dateWeekFormat=dateWeekFormat(day)
+    const _dateWeekFormat=dateWeekFormat(day,sort)
     //其他是负数 最后一天时间  例:2000-1-1  其他就是 "-2000-1-2"
     const _next=Array.isArray(next)?next:[{name:"其他",val:'-'+(_dateWeekFormat[_dateWeekFormat.length-1].val+86400000)}] 
     return [...pre,..._dateWeekFormat,..._next];

@@ -63,4 +63,7 @@ export default {
   'h5-kyapp-novice-bg': {
     default: "h5-kyapp-novice-bg",    
   },
+  'h5-kyapp-crosstalk-icon': {
+    default: "h5-kyapp-crosstalk-icon",    
+  },
 }

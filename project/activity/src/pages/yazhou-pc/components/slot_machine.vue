@@ -90,7 +90,7 @@
           </span>
         </p>
         <!-- 数字滚轮 -->
-        <div class="scroller">
+        <div class="scroller" ref="scroller">
           <NumberScroll
             :status="tiger_status"
             :result="tiger_result"

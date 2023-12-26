@@ -11,7 +11,7 @@
       <div class="bet-box-content">
         <!-- {{BetData.is_bet_single}}-{{BetViewDataClass.bet_order_status}}-{{ BetViewDataClass.orderNo_bet_obj}}-{{ BetData.bet_s_list.length > 1 }}-{{ BetViewDataClass.bet_special_series }} -->
         <!-- 单关 投注 -->
-        <div class="bet-scroll" :class="!BetData.is_bet_single && BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1  ?'h188':''">
+        <div class="bet-scroll" ref="bet_scroll" :class="!BetData.is_bet_single && BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1  ?'h188':''">
           <div v-if="BetViewDataClass.bet_order_status == 1">
             <template v-if="BetData.is_bet_single">
               <div
@@ -35,7 +35,7 @@
               <template v-if="BetData.bet_s_list.length > 1"  >
                 <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
                   <div>
-                    <betSpecialInput :items="item" :index="index" :key="index+'_'+item.id"/>
+                    <betSpecialInput :items="item" @input_click="handle_input_click" :index="index" :key="index+'_'+item.id"/>
                   </div>
                 </template>
               </template>
@@ -79,9 +79,9 @@
         <template v-if="!BetData.is_bet_single && BetViewDataClass.bet_order_status == 1">
           <div class="re">
             <keyboard  class="bet-key-board" v-if="BetData.bet_keyboard_show"/>
-            <!-- <div class="scroll-down">
+            <div class="scroll-down">
               <img :src="compute_local_project_file_path('/image/common/slide_icon_y1.svg')" alt="">
-            </div> -->
+            </div>
           </div>
         </template>
 
@@ -93,7 +93,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref,nextTick } from "vue";
 import { UserCtr, compute_local_project_file_path } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -138,6 +138,16 @@ const show_merge_change = () => {
   }
   BetData.set_is_bet_merge("merge");
 };
+const bet_scroll=ref(null)
+function handle_input_click(e){
+  setTimeout(() => {
+   const _h=bet_scroll.value.offsetHeight
+   const diff=e.target.offsetParent.offsetTop - _h + e.target.offsetParent.offsetHeight;
+   if(diff>0&&bet_scroll.value.scrollTop<diff){
+    bet_scroll.value.scrollTop= diff
+    }
+  },50);
+}
 </script>
 
 <style scoped lang="scss">
@@ -223,7 +233,6 @@ const show_merge_change = () => {
   height: 0.44rem;
   margin-top: 0.1rem;
   padding: 0 .12rem;
-  font-family: PingFang SC;
   .icon-add:before {
     color: var(--q-gb-t-c-1);
   }

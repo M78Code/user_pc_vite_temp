@@ -37,7 +37,7 @@
           <q-slide-transition>
             <div v-if="!item.hide">
               <div :key="index + 'League-name'" class="row  items-center content_box1">
-                <div class="row justify-between items-center content_box2" :class="{ 'content_box3': item.title && item.spell }">
+                <div class="row justify-between items-center content_box2" :class="{ 'content_box3': item.title && item.spell, 'content_box4': !item.title}">
                   <div class="left">
                     <ImageCacheLoad :path="item.picUrlthumb" type="default_league_icon"></ImageCacheLoad>
                     <div class="name-overhide">{{ item.nameText }}</div>
@@ -494,7 +494,10 @@ function fetch_filter_match() {
     //三级日期菜单时间戳
     get_md.value > -1 && m_type != 1 && Object.assign(params, { md: get_md.value });
   }
-
+  //
+  if (!MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))){
+    params.euid = '1';
+  }
   list_data_loading.value = true;
   //调用：v1/m/getFilterMatchList接口
   api_match_filter(params).then(({ code, data }) => {
@@ -641,13 +644,13 @@ function dynamic_letters(arr) {
  * @Description: 是否折叠联赛
  */
 const is_fold_fn = (item)=>{
-  if (item.hide){
-    item.hide = false;
-  }else{
-    item.hide = true;
-  }
+  item.hide = item.hide ? false : true
   list.value = (list.value || []).map(i => {
     if (i.spell === item.title){
+       i.hide = item.hide
+    }
+    //热门联赛处理
+    if (item.title == i18n_t('search.hot_league') && i.spell === 'HOT'){
        i.hide = item.hide
     }
      return i
@@ -794,7 +797,7 @@ if (type.value == 30) {
   display: flex;
   justify-content: flex-end;
   padding: 0 0.46rem 0 0.14rem;
-  height: .4rem;
+  height: .48rem;
   align-items: center;
   font-size: .14rem;
   color: var(--q-gb-bg-c-6);
@@ -828,10 +831,19 @@ if (type.value == 30) {
 }
   
 .content_box1 {
-  height: 0.40rem;
+  height: 0.48rem;
 
   font-size: 12px;
-
+  .content_box4 {
+    position: relative;
+    &::after {
+      content: ' ';
+      width: 100%;
+      position: absolute;
+      border-top: 1px solid var(--q-gb-bd-c-4);
+      top: 0;
+    }
+  }
   .content_box2 {
     width: 100%;
     font-size: 0.16rem;
@@ -839,7 +851,8 @@ if (type.value == 30) {
     height: 100%;
     position: relative;
     color: var(--q-gb-t-c-18);
-
+    background-color: var(--q-gb-bg-c-28) !important;
+    border-bottom: 0.5px solid var(--q-gb-bd-c-18);
     &:before {
       content: "";
       display: block;
@@ -893,7 +906,7 @@ if (type.value == 30) {
 .right-box {
   flex-shrink: 0;
   width: 1.6rem;
-  height: 0.44rem;
+  height: 0.48rem;
   text-align: center;
 
   border-radius: 0.04rem;
@@ -954,15 +967,23 @@ if (type.value == 30) {
   }
 
   .bg-f6f7f8 {
-    height: 0.3rem;
+    height: 0.48rem;
     line-height: 0.3rem;
-    padding-left: 0.2rem;
     padding-right: 0.46rem;
     font-size: 0.14rem;
+    // margin-left: 0.14rem;
+    position: relative;
+    &::after {
+      content: ' ';
+      width: 100%;
+      position: absolute;
+      border-bottom: 1px solid var(--q-gb-bd-c-4);
+      bottom: 0;
+    }
   }
 
   .scroll-title {
-    height: .4rem;
+    height: .48rem;
     background: var(--q-gb-bg-c-20);
     display: flex;
     align-items: center;
@@ -975,7 +996,7 @@ if (type.value == 30) {
       .scroll-title-icon {
         width: .16rem;
         height: .16rem;
-        -background-color: var(--q-gb-t-c-1);
+        // -background-color: var(--q-gb-t-c-1);
         margin-right: .12rem;
       }
     }
@@ -1007,7 +1028,7 @@ if (type.value == 30) {
 
 .icon-search:before {}
 .is_fold{
-  transform: rotate(180deg);
+  transform: rotate(270deg);
 }
 </style>
 

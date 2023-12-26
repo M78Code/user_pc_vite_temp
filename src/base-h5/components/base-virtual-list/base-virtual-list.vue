@@ -2,29 +2,37 @@
 <template>
   <div class="outContainer">
     <!-- 滚动容器 -->
-    <div class="scrollerContainer" ref="scrollerContainerRef" @scroll="onScroll">
-      <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
-      <div class="contentList" :style="styleTranslate" ref="contentListRef">
-        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index">
-           <slot name="default" :item="item" :index="index"></slot>
-        </div>
-        <!-- 到底了容器-->
-        <div :class="['loading-more-container']" v-if="isScrolledRealBottom && isShowMoreWrapper">
-          <div style="color:#AAAEB8;font-size:.12rem;"> {{ i18n_t("scroll_wrapper.is_footer") }} </div>
+    <template v-if="!show_skeleton_screen">
+      <div v-if="!show_skeleton_screen" class="scrollerContainer" ref="scrollerContainerRef" @scroll="onScroll">
+        <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
+        <div class="contentList" :style="styleTranslate" ref="contentListRef">
+          <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-index="index"
+            :data-source-index="item.source_index">
+            <slot name="default" :item="item" :index="index"></slot>
+          </div>
+          <!-- 到底了容器-->
+          <!-- <div :class="['loading-more-container']" v-if="isScrolledRealBottom && isShowMoreWrapper">
+            <div style="color:#AAAEB8;font-size:.12rem;"> {{ i18n_t("scroll_wrapper.is_footer") }} </div>
+          </div> -->
         </div>
       </div>
-    </div>
-    <!-- 回到顶部按钮组件 -->
-    <template v-if="isShowGoTop">
-      <ScrollTop :list_scroll_top="scroll_top" @back-top="gotTop" />
+    </template>
+    <template v-else>
+      <SList :loading_body="true" />
     </template>
   </div>
+  <!-- 回到顶部按钮组件 -->
+  <template v-if="isShowGoTop">
+    <ScrollTop :list_scroll_top="scroll_top" @back-top="gotTop" />
+  </template>
 </template>
 
 <script setup>
 import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, onUnmounted, onUpdated, ref, toRefs, watch } from 'vue'
 
-import { useMittOn, MITT_TYPES } from  "src/output"
+import { useMittOn, MITT_TYPES } from "src/output"
+
+import SList from "src/base-h5/components/skeleton/skeleton-list.vue" 
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 
 const props = defineProps({
@@ -47,6 +55,7 @@ const emits = defineEmits(["onUpdate"]);
 const { cacheCount, dataList } = toRefs(props)
 
 const scroll_top = ref(0)
+const show_skeleton_screen = ref(false)
 
 // 猜测高度（预估高度）
 const maybeHeight = 100
@@ -140,6 +149,11 @@ onMounted(() => {
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, gotTop).off,
   };
+  emitters.value = {
+    emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, (val) => {
+      show_skeleton_screen.value = val
+    }).off,
+  };
 })
 
 onUpdated(() => {
@@ -148,15 +162,18 @@ onUpdated(() => {
   })
 })
 
-watch(() => dataList.value.length, () => {
-  nextTick(() => {
-    initDataPostion()
-  })
+watch(dataList, (v, o) => {
+  //如果是排序的话 length不会变化 但是mid集合顺序会变 列表变也是一样  赔率变化mid顺序是一样就是一样 不进入
+  if (lodash.map(v, 'mid').join() != lodash.map(o, 'mid').join()) {
+    nextTick(() => {
+      initDataPostion()
+    })
+  }
 }, { immediate: true })
 
 // 初始化 DOM 节点位置信息
 const initDataPostion = () => {
-  if (dataList.value.length < 1) return
+  // if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
   positionDataArr = allData.value.map((_, idx) => ({
     arrPos: idx,
@@ -322,7 +339,7 @@ const findStartByBinarySearch = (_positionDataArr, scrollTop) => {
 /**
  * 列表回到顶部
  */
- const gotTop = () => {
+const gotTop = () => {
   let timer = setTimeout(() => {
     scrollerContainerRef.value && scrollerContainerRef.value.scrollTo({ top: 0, behavior: 'smooth' });
     clearTimeout(timer)
@@ -341,7 +358,18 @@ onUnmounted(() => {
   height: 100%;
   position: relative;
   overflow-y: auto;
+  :deep(.skeleton-wrap){
+    position: absolute;
+    overflow: hidden;
+    margin-top: 0.1rem;
+    height: calc(100% - 0.1rem);
+    padding-top: 0 !important;
+    .version_biaozhun{
+      padding: 0;
+    }
+  }
 }
+
 .scrollerContainer {
   height: 100%;
   width: 100%;
@@ -349,6 +377,7 @@ onUnmounted(() => {
   position: relative;
   -webkit-overflow-scrolling: touch;
 }
+
 .pillarDom {
   position: absolute;
   left: 0;
@@ -356,13 +385,15 @@ onUnmounted(() => {
   right: 0;
   z-index: -1;
 }
+
 .contentList {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
+
   // will-change: transform;
-  .loading-more-container{
+  .loading-more-container {
     width: 100%;
     height: 181px;
     display: flex;
@@ -372,12 +403,13 @@ onUnmounted(() => {
     background: var(--q-gb-bg-c-18);
   }
 }
+
 .item {
   width: 100%;
   // 这里同样很重要，盒模型必须为border-box，item元素的高度才不会因为border值而超出设置的高度
   box-sizing: border-box;
+
   &:last-child {
     border-bottom: none;
   }
-}
-</style>
+}</style>

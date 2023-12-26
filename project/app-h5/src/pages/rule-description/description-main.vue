@@ -25,7 +25,7 @@ import {compute_local_project_file_path} from "src/output/index.js";
 const router = useRouter();
 
 const go_back = () => {
-    router.go(-1)
+    router.push({ name: "matchList" });
 }
 
 </script>
@@ -50,7 +50,7 @@ const go_back = () => {
   .title {
 
     font-size: 0.16rem;
-
+    color: var(--q-gb-t-c-18);
     text-align: center;
     position: absolute;
     left: 50%;

@@ -475,7 +475,7 @@ onUnmounted(() => {
     justify-content: flex-start;
   }
   .poi-des {
-    color: var(--q-gb-t-c-19);
+    color: var(--q-gb-t-c-17);
         height: auto;
         display: flex;
         align-items: flex-start;

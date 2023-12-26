@@ -277,6 +277,8 @@ export default {
   left: 0;
 
   z-index: 3;
+
+  padding-top: 0.6rem;
 }
 
 .vir-bask-head {
@@ -292,7 +294,8 @@ export default {
   color: var(--q-color-com-fs-color-8);
 
   &.vir-end {
-    background-color: #5E88A7;
+    // background-color: #5E88A7;
+    background-color: var(--q-gb-bg-c-35);
   }
 }
 
@@ -302,6 +305,7 @@ export default {
   margin: 0 auto;
   background: rgba(36, 45, 62, 0.9);
   border-radius: 4px 4px 0 0;
+  color: var(--q-gb-t-c-14);
 }
 
 .vir-ending {
@@ -343,7 +347,8 @@ export default {
     background-color: #999999;
 
     &.active {
-      background-color: var(--q-color-page-bg-color-50);
+      // background-color: var(--q-color-page-bg-color-50);
+      background-color: var(--q-gb-bg-c-35);
     }
   }
 
@@ -354,7 +359,8 @@ export default {
 
     .inner-line {
       height: 100%;
-      background-color: var(--q-color-page-bg-color-50);
+      // background-color: var(--q-color-page-bg-color-50);
+      background-color: var(--q-gb-bg-c-35);
     }
   }
 }
@@ -363,9 +369,11 @@ export default {
   width: 3rem;
   height: 0.6rem;
   margin: auto;
-  background: var(--q-color-com-bg-color-12);
+  // background: var(--q-color-com-bg-color-12);
   display: flex;
   align-items: center;
+  // background-color: var(--q-color-com-bg-color-12);
+  background-color: var(--q-gb-bg-c-27);
 }
 
 .against-area {

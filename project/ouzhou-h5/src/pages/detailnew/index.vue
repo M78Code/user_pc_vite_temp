@@ -50,7 +50,7 @@
         <!-- tabs 玩法分类切换 -->
         <div v-if="tab == 'betting' && category_list?.length > 0 ">
           <detail_tabs :category_list="category_list" :active="tab_selected_obj"
-            @detail_tabs_change="detail_tabs_change" v-model:allCloseState="allCloseState"/>
+            @detail_tabs_change="detail_tabs_change"/>
         </div>
         <div v-if="tab == 'event_analysis'">
           <detail_event_tabs :match_detail="match_odds_info" @change="detail_event_tabs_change" />
@@ -62,7 +62,7 @@
           <div ref="fixedHeight" class="match-detail-odds-scroll"
             :class="[match_detail?.mvs > -1 ? 'match-detail-odds-height2' : 'match-detail-odds-height3']">
             <OddsListContrainer :match_odds_info="match_odds_info" :match_detail="match_detail"
-              :loading="loading" v-model:allCloseState="allCloseState"/>
+              :loading="loading"/>
           </div>
           <!-- <div class="match-detail-odds-bottom"></div> -->
         </q-tab-panel>
@@ -72,7 +72,7 @@
       </q-tab-panels>
     </div>
     <!-- 视频info说明弹窗,和切换高清和标清的 弹框 -->
-    <info-rules v-if="get_info_show"></info-rules>
+    <info-rules v-if="get_info_show" class="info_rules"></info-rules>
   </div>
 </template>
 
@@ -111,7 +111,6 @@ export default {
     const route = useRoute();
     const mid = ref(route?.params?.mid)
     const {
-      allCloseState,
       detail_store,
      match_odds_info,
      match_detail,
@@ -178,7 +177,6 @@ export default {
       changeHeader,
       mid,
       MatchDataWarehouseInstance,
-      allCloseState,
       get_info_show
      }
   } 
@@ -189,6 +187,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.info_rules {
+  :deep(.content-box) {
+    background-color: #fff;
+  }
+}
 .match-detail-container {
   display: flex;
   flex-direction: column;

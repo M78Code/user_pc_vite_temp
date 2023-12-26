@@ -18,7 +18,17 @@
       <div >
         <div  class="header-fix">
           <div ref="scroll_video_height" class="relative-position scroll_video_h">
-            <videos :fix_status="true" v-if="get_show_video" @change_fullscreen="change_fullscreen" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  :show_go_back="show_go_back" @change_go_back="change_go_back"></videos>
+            <videos
+              ref="videosRef"
+              :fix_status="true" 
+              v-if="get_show_video" 
+              @change_fullscreen="change_fullscreen" 
+              :detail_data="detail_data" 
+              :tips.sync="tips" 
+              :is_show_text="is_show_text"  
+              :show_go_back="show_go_back" 
+              @change_go_back="change_go_back"
+            ></videos>
             <details-header  @click.stop :detail_data="detail_data" :view_tab="viewTab" :style="{display:get_show_video?'none':'block'}"></details-header>
           </div>
         </div>
@@ -65,6 +75,7 @@
             v-show="viewTab === 'bet' || get_is_hengping"
             v-if="category?.is_no_data === false"
             :data_list="data_list"
+            :fixd_left="true"
             :scroller_scroll_top="scroller_scroll_top"
             :get_details_item="get_details_item"
             :new_match_detail_ctr="new_match_detail_ctr"
@@ -158,10 +169,9 @@ import category from "./children/category.vue";
 import analysisFootballMatches from "src/base-h5/components/details/analysis-ky-matches/football-match-analysis/analysis-football-matches.vue"
 import basketballMatchAnalysis from "src/base-h5/components/details/analysis-ky-matches/basketball-match-analysis/basketball-match-analysis.vue"
 import { useRouter, useRoute } from "vue-router";
-import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
-import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide,defineAsyncComponent } from "vue";
+import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide,defineAsyncComponent,nextTick } from "vue";
 import {compute_css_obj,compute_img_url,MatchDetailCalss,MenuData, SessionStorage} from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
@@ -207,6 +217,7 @@ export default defineComponent({
     const fixedHeight = ref(null)
     const scroll_visible_1 = ref(true)
     const page_style = ref('')
+    const videosRef = ref(null)
     const round = ref(SessionStorage.get('ACTIVE_TAB') || -1);
     const {
       scroller_scroll_top,
@@ -474,18 +485,18 @@ export default defineComponent({
       // set_details_tabs_list('');
       // vuex--清空详情页的选中玩法id
       // set_details_item('')
-      store.dispatch({
-        type: 'SET_DETAIL_DATA',
-        data: ''
-      })
-      store.dispatch({
-        type: 'SET_DETAILS_TABS_LIST',
-        data: ''
-      })
-      store.dispatch({
-        type: 'SET_DETAILS_ITEM',
-        data: ''
-      })
+      // store.dispatch({
+      //   type: 'SET_DETAIL_DATA',
+      //   data: ''
+      // })
+      // store.dispatch({
+      //   type: 'SET_DETAILS_TABS_LIST',
+      //   data: ''
+      // })
+      // store.dispatch({
+      //   type: 'SET_DETAILS_ITEM',
+      //   data: ''
+      // })
 
       off_listeners()
       clear_timer()
@@ -507,6 +518,19 @@ export default defineComponent({
     const change_item = (value) => {
       round.value = value;
     }
+    const ChangeVideoKind = (replay)=>{
+      useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true)
+      useMittEmit(MITT_TYPES.EMIT_SET_PLAY_VIDEO, true)
+      console.log(replay,"replay")
+      nextTick(()=>{
+        try{
+          videosRef.value.is_playing_replay = true
+          videosRef.value.change_event_video(replay)
+        }catch(e){}
+      })
+      
+    }
+    provide('ChangeVideoKind',ChangeVideoKind)
     // #TODO VUEX
     //   ...mapActions([
     //   // 设置玩法tab列表 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
@@ -605,7 +629,8 @@ export default defineComponent({
       matchDetailCtr,
       new_match_detail_ctr,
       page_style,
-      is_esports
+      is_esports,
+      videosRef
     }
   }
 })

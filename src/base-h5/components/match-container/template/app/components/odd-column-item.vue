@@ -569,6 +569,7 @@ onUnmounted(() => {
     justify-content: center;
     align-items: center;
     padding-top: 2px;
+    color: var(--q-gb-t-c-18);
 
     .icon-lock {
       width: 0.14rem;
@@ -675,17 +676,17 @@ onUnmounted(() => {
 
 .active {
   // 需要替换成变量
-  background: var(--q-gb-bg-c-33) !important;
+  background: var(--q-gb-bg-c-37) !important;
   .odd-title {
      color: var(--q-gb-t-c-30) !important;
     span{
-      color: var(--q-gb-t-c-30) !important;
+      color: var(--q-gb-t-c-30);
     }
   }
   .odd-value {
     color: var(--q-gb-t-c-33) !important;
     span{
-      color: var(--q-gb-t-c-30) !important;
+      color: var(--q-gb-t-c-30);
     }
   }
   &.item-lock{

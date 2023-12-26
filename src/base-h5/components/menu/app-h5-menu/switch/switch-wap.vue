@@ -42,7 +42,13 @@ const get_switch_data = () => {
                         UserCtr.set_standard_edition(val)
                         if (project_name === 'app-h5') {
                             nextTick(() => {
-                                !MenuData.is_collect() && MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+                                // !MenuData.is_collect() && MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+                                if (MenuData.is_collect()) {
+                                    MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+                                } else {
+                                    MatchMeta.clear_match_info()
+                                    MatchMeta.set_origin_match_data({})
+                                }
                             })
                         }
                     }
@@ -55,7 +61,13 @@ const get_switch_data = () => {
                         nextTick(()=>{
                             UserCtr.set_standard_edition(val)
                             VirtualList.set_is_show_ball(true)
-                            MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
+                            if (MenuData.is_collect()) {
+                                MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+                            } else {
+                                MatchMeta.clear_match_info()
+                                MatchMeta.set_origin_match_data({})
+                            }
+                            // MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
                         })
                     }
                 }

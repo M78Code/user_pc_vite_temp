@@ -37,7 +37,13 @@
             <div class="status">
               <span class="num">{{current_match.no}}</span>
               <span class="state">
-              {{ current_match.match_status == 2 ? i18n_t('collect.match_end') : i18n_t('virtual_sports.match_status.playing') }}
+                <!-- 未开赛时间 -->
+                <template v-if="current_match.match_status == 0">
+                  {{match_list_all_batches && match_list_all_batches[0] && match_list_all_batches[0].remaining_time > 0 ? match_list_all_batches[0].timer_format :  i18n_t('virtual_sports.match_status.playing')}}
+                </template>
+                <template v-else>
+                  {{ current_match.match_status == 2 ? i18n_t('collect.match_end') : i18n_t('virtual_sports.match_status.playing') }}
+                </template>
               </span>
               <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
             </div>
@@ -62,15 +68,14 @@
               {{current_match.mid}}
             </div>
             <div class="virtual-video-play-team" v-if="sub_menu_type && [1001,1004].includes(sub_menu_type)">
-                    <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']"
-                    v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
+                    <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']" v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
                       <div class="teams">
                         <span>{{item.teams[0]}}</span>
-                        <span>{{item.home || 0}}</span>
+                        <span class="number_family">{{item.home || 0}}</span>
                       </div>
                       <div class="teams">
                         <span>{{item.teams[1]}}</span>
-                        <span>{{item.away || 0}}</span>
+                        <span class="number_family">{{item.away || 0}}</span>
                       </div>
                     </div>
             </div>
@@ -602,7 +607,7 @@ export default {
         let minutes_format = minutes.padStart(2, '0');
         let seconds_f_format = seconds_f.padStart(2, '0');
         batch.remaining_time = remaining_time;
-        batch.timer_format = `${minutes_format}'${seconds_f_format}"`;
+        batch.timer_format = `${minutes_format}:${seconds_f_format}`;
       }
     },
     /**
@@ -776,7 +781,7 @@ export default {
 .fixed-head {
   position: sticky;
   top: 0.89rem;
-  background: var(--q-gb-bg-c-25);
+  background: var(--q-gb-bg-c-21);
   z-index: 100;
 }
 

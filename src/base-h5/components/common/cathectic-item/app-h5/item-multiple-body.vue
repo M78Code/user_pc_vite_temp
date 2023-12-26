@@ -8,7 +8,7 @@
   <!-- 矩形框中部 -->
   <div class="item-body yb_fontsize14">
     <div class="item-header">
-      {{ data_b.seriesValue }}
+      <img :src="compute_local_project_file_path('/image/png/chain_watch_order.png')" alt="">{{ data_b.seriesValue }}
     </div>
     <div class="item-main three-more">
       <template v-for="(item, index) in show_data_orderVOS" :key="index">
@@ -36,7 +36,6 @@
             </template>
             &ensp;[{{i18n_t(`odds.${item.marketType}`)}}]
           </span>
-          <div class="match-info">{{item.matchInfo}}</div>
         </div>
       </template>
       <!-- 串关时大于3条时,显示 展开收起按钮-->
@@ -61,7 +60,7 @@ import { bet_result } from "src/core/bet-record/util.js";
 import { i18n_t } from 'src/output/index.js'
 import { format_money2 } from 'src/output/index.js'
 import { itemFooter } from "src/base-h5/components/common/cathectic-item/app-h5/index";
-import { formatTime } from 'src/output/index.js'
+import { formatTime, compute_local_project_file_path } from 'src/output/index.js'
 //按钮名字
 let btn_text = ref(i18n_t("bet_record.pack_down"))
 //是否展开
@@ -142,10 +141,15 @@ template {
 }
 .item-body {
   .item-header {
+    display: flex;
+    align-items: center;
     background-color: var(--q-gb-bg-c-13);
     color: var(--q-gb-t-c-14);
     line-height: 0.4rem;
     padding-left: 0.12rem;
+    img {
+      margin-right: .04rem;
+    }
   }
 
   .item-main {
