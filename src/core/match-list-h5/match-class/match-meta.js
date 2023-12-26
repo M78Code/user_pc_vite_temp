@@ -1216,7 +1216,6 @@ class MatchMeta {
         this.handle_submit_warehouse({ list: matchs_data, warehouse })
       }
     } else {
-      debugger
       // 计算所需渲染数据
       this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
     }
