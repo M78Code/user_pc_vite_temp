@@ -984,7 +984,7 @@ if (type.value == 30) {
 
   .scroll-title {
     height: .48rem;
-    background-color: var(--q-gb-bg-c-23);
+    background: var(--q-gb-bg-c-20);
     display: flex;
     align-items: center;
     justify-content: space-between;
