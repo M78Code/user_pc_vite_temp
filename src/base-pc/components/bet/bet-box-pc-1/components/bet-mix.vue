@@ -37,14 +37,17 @@
           <div class="bet-single-mix-input" v-show="is_expend">
             <template v-if="BetData.bet_s_list.length > 2">
               <!--金额输入框-->
-              <template v-for="(item, index) in BetData.bet_s_list" :key="item.custom_id">
+              <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
                 <!--2串1以及输入框-->
-                <bet-input
+                <!-- <bet-input
                   :index="index"
                   :item="item"
                   :key="item.custom_id"
                   v-if="index != 0"
-                ></bet-input>
+                ></bet-input> -->
+                <q-card flat class="bet-mix-item-card">
+                  <betSpecialInput :index="index" :items="item" :key="item.custom_id" v-if="index!= 0"/>
+                </q-card>
               </template>
             </template>
           </div>
@@ -62,6 +65,7 @@ import { IconWapper } from 'src/components/icon'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import betSpecialInput from "./bet-special-input.vue"
 
 const bet_flag = ref(true)
 const expend_disable = ref('')

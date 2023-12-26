@@ -103,26 +103,26 @@ const is_iframe = ref(LayOutMain_pc.is_iframe)
 
 /** stroe仓库 */
 const { menuReducer } = store.getState()
-const unsubscribe = store.subscribe(() => {
-    main_menu_toggle.value = menuReducer.main_menu_toggle
-    menu_collapse_status.value = menuReducer.menu_collapse_status
-    // left_menu_toggle.value = betInfoReducer.left_menu_toggle
+// const unsubscribe = store.subscribe(() => {
+//     main_menu_toggle.value = menuReducer.main_menu_toggle
+//     menu_collapse_status.value = menuReducer.menu_collapse_status
+//     // left_menu_toggle.value = betInfoReducer.left_menu_toggle
 
-})
+// })
 /** 销毁监听 */
-onUnmounted(unsubscribe)
+//onUnmounted(unsubscribe)
 const main_width = ref(LayOutMain_pc.layout_main_width * .3)
 // const layout_size = ref(LayOutMain_pc)
 /** 
  * 左侧列表显示形式 -- normal：展开 mini：收起 default: 'normal'
  * 路径: project_path\src\store\module\menu.js
  */
- const main_menu_toggle = ref(menuReducer.main_menu_toggle)
+ //const main_menu_toggle = ref(menuReducer.main_menu_toggle)
 /** 
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js
  */
-const menu_collapse_status = ref(menuReducer.menu_collapse_status)
+// const menu_collapse_status = ref(menuReducer.menu_collapse_status)
 /** 
  * 左侧菜单的切换状态 true: 展开 false: 收缩 default: true
  * 路径: project_path\src\store\module\betInfo.js
