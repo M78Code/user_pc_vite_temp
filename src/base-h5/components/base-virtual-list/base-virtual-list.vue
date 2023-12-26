@@ -364,6 +364,9 @@ onUnmounted(() => {
     margin-top: 0.1rem;
     height: calc(100% - 0.1rem);
     padding-top: 0 !important;
+    .version_biaozhun{
+      padding: 0;
+    }
   }
 }
 
