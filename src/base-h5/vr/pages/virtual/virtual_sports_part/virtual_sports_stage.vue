@@ -1212,6 +1212,13 @@ export default {
     font-size: 0.1rem;
     color: rgba(255, 255, 255, 0.8);
     margin-top: 0.06rem;
+    position: absolute;
+    top: 0.36rem;
+    background: rgba(0, 0, 0, 0.6);
+    width: 0.46rem;
+    height: 0.24rem;
+    line-height: 0.24rem;
+    border-radius: 0.04rem;
   }
 }
 
