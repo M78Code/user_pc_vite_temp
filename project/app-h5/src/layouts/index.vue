@@ -51,7 +51,7 @@
 
 
       <!-- 串关投注 只有串关/电竞/VR 才展示--> 
-      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single&&(is_mix||is_esports||is_vr)">
+      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single&&(is_mix||is_esports||is_vr) && BetData.bet_s_list.length">
           <div class="chain_bet" @click="show_chain_bet" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
             <span class="count">{{BetData.bet_s_list.length}}</span>
           </div>

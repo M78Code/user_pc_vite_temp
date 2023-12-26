@@ -66,11 +66,12 @@ const get_pc_rule_url = () => {
     } else {
         obj.themeColors = theme2;
     }
+    if (['app-h5'].includes(window.BUILDIN_CONFIG.PROJECT_NAME)) {
+        obj.themeColors = theme2.replace('theme-2', 'theme02&sty=y0').replace('theme-1', 'theme01_y0&sty=y0')
+    }
     let param = UserCtr.get_user_url_parames(obj);
     url = `${domain}/#/${lang2}?${param}`;
-    if (['app-h5'].includes(window.BUILDIN_CONFIG.PROJECT_NAME)) {
-        url = url.replace(/theme-2/g, 'theme02&sty=y0').replace('theme-1', 'theme01_y0&sty=y0')
-    }
+    
     rule_url.value = url
     return url;
 }
