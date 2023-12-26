@@ -37,7 +37,9 @@ const state = reactive({
   unfold: true
 })
 
-watch(()=> AllCloseControl.unfold,(val)=>state.unfold = val)
+watch(()=> AllCloseControl.unfold,(val)=>state.unfold = val,{
+  immediate:true,
+})
 
 // const unfold = computed(()=> state.unfold || props.unfold)
 const unfold = computed(()=> state.unfold)

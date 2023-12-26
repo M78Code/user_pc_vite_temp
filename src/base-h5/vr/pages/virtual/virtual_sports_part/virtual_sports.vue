@@ -781,8 +781,8 @@ export default {
 
 .fixed-head {
   position: sticky;
-  top: 0.87rem;
-  background: var(--q-gb-bg-c-25);
+  top: 0.89rem;
+  background: var(--q-gb-bg-c-21);
   z-index: 100;
 }
 

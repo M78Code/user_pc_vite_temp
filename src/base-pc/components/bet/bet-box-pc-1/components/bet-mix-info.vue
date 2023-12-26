@@ -34,7 +34,7 @@
           ></bet-input>
         </div> -->
         <q-card flat class="bet-mix-item-card" v-if="BetData.bet_s_list.length > 1">
-          <betSpecialInput :items="BetViewDataClass.bet_special_series[0]"/>
+          <betSpecialInput :items="BetViewDataClass.bet_special_series[0]" :index="0" />
         </q-card>
       </template>
     </div>

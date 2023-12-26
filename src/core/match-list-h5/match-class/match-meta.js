@@ -584,17 +584,17 @@ class MatchMeta {
   async get_virtual_results_match() {
     this.clear_match_info()
     // vr 足球 
-    const res = await api_common.get_virtual_result({
-      batchNo:"",
-      endTime:1703606399000,
-      isVirtualSport:1,
-      page:{ size: 100, current: 1 },
-      sportType:"1004",
-      startTime:1703520000000,
-      tournamentId:"79430600606371842"
-    })
+    // const res = await api_common.get_virtual_result({
+    //   batchNo:"",
+    //   endTime:1703606399000,
+    //   isVirtualSport:1,
+    //   page:{ size: 100, current: 1 },
+    //   sportType:"1004",
+    //   startTime:1703520000000,
+    //   tournamentId:"79430600606371842"
+    // })
     // vr 马 狗 
-    // const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
+    const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
     if (+res.code !== 200) {
       this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
       if (res.code === '0401038') {
@@ -612,7 +612,6 @@ class MatchMeta {
       }
     });
     
-    console.log('fdsafdsfsdaf2resgfsdagsdagfsd', list)
     const length = lodash.get(list, 'length', 0)
     if (length < 1) {
       this.set_page_match_empty_status({ state: true });
@@ -701,7 +700,11 @@ class MatchMeta {
       // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
       if (length < 1) return this.set_page_match_empty_status({ state: true });
       MatchCollect.get_collect_match_data(list)
-      this.handler_match_list_data({ list: list, scroll_top })
+
+      // 复刻版下的新手版 和 赛果 不需要  虚拟计算
+      const is_virtual = !(project_name === 'app-h5' && (MenuData.is_results() || UserCtr.standard_edition == 1))
+
+      this.handler_match_list_data({ list: list, scroll_top, is_virtual })
 
       // 模拟删除赛事
       // setInterval(() => {
@@ -1202,11 +1205,11 @@ class MatchMeta {
       this.complete_mids = result_mids
     }
 
-    if (!is_virtual || this.is_observer_type()) {
+    if (!is_virtual) {
       // 清除虚拟计算信息
       VirtualList.clear_virtual_info()
       this.match_mids = lodash.uniq(result_mids)
-      if (type === 2 || this.is_observer_type()) {
+      if (type === 2) {
         // 不获取赔率  type 删除收藏赛事 需要以最新的为准 提交仓库需设置 merge: 'cover'
         this.handle_update_match_info({ list: matchs_data, warehouse, merge: merge })
       } else if (type === 1) {
@@ -1218,10 +1221,10 @@ class MatchMeta {
       this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
     }
 
-    // 复刻版 下的 新手版
-    if (this.is_observer_type()) {
-      useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-    }
+    // // 复刻版 下的 新手版
+    // if (this.is_observer_type()) {
+    //   useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
+    // }
 
     // 重置数据为空状态
     this.set_page_match_empty_status({ state: false })
@@ -1601,6 +1604,7 @@ class MatchMeta {
    */
   handle_update_match_info(config) {
     let { list = [], merge = '', warehouse = MatchDataBaseH5 } = config
+
     // 合并前后两次赛事数据
     list = lodash.map(list, t => {
       // MatchResponsive.get_ball_seed_methods(t)
@@ -1628,6 +1632,7 @@ class MatchMeta {
    */
   handle_submit_warehouse(config) {
     let { list = [], warehouse = MatchDataBaseH5, is_again = true } = config
+
     // ws 订阅
     this.set_ws_active_mids({ list: this.match_mids, warehouse })
     warehouse.clear()

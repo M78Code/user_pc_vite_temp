@@ -55,7 +55,7 @@ import { useRouter, useRoute } from "vue-router";
 import lodash from "lodash";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { computed, onMounted, onUnmounted, watch, ref, reactive } from "vue";
-import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss } from "src/output/index.js";
+import { MatchDataWarehouse_H5_Detail_Common, MenuData } from "src/output/index.js";
 
 
 let route = useRoute()
@@ -97,7 +97,7 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
       return ""
     })
    const get_menu_type = computed(() =>{
-      return ""
+      return MenuData.get_menu_type() 
     })
    const get_detail_data = computed(() =>{
       return ""
@@ -194,6 +194,8 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
      */
    const get_match_detail_info = () => {
       // 从url取值赛事id：mid  || get_goto_detail_matchid
+      //赛果类型  0 普通 1电竞 2vr  3冠军
+      // console.log(MenuData.get_results_type() ,'MenuData.is_esports() ');
       let mid = route.params.mid ;
       // if(mid){
       //   set_goto_detail_matchid(mid);
@@ -202,7 +204,7 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
         mid: mid,
         type: 1,
         cuid: UserCtr.uid, // userId或者uuid
-        isESport: (get_menu_type == 28 && [3001,3002,3003,3004].includes(+get_curr_sub_menu_type)) ? 1 : null
+        isESport: MenuData.get_results_type() ==1  ? 1 : null
       }
       api_common.get_matchResultDetail_MatchInfo( params ).then(({ data,code }) => {
         
@@ -249,7 +251,7 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
           math_list_data.value = store_data.list;
         }
       }
-      if(get_menu_type == 28 && [100,101,102,103,104].includes(+get_detail_data.csid)){
+      if(MenuData.get_results_type() ==1 && [100,101,102,103,104].includes(+get_detail_data.csid)){
         params.isESport = 1
       }else{
         params.isESport = null

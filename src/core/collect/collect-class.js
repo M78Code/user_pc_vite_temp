@@ -20,15 +20,14 @@ const get_collect_count = () => {
   // 获取到当前 tab的赛种
   let list = lodash_.get(MenuData,'menu_lv_mi_lsit', [])
   let type = lodash_.get(MenuData,'current_lv_1_menu_i', 2)
-
   let euid_list = ''
   // 获取对应的旧菜单id    
   list.forEach(item =>{
-      if(item.ct){
-        euid_list += MenuData.get_euid(item.mi) + ','
+    const euid = MenuData.get_euid(item.mi);
+      if(item.ct && euid){
+        euid_list += euid + ','
       }
   })
-
   let parmas = {
     //20001 冠军 的收藏id 传固定的
     euid: type == 400 ? 20001 : euid_list,

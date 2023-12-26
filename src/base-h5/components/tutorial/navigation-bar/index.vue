@@ -19,22 +19,17 @@
         <div v-else :style="{'flex' : ['switch', 'select'].includes(centerContentType) && centerFlex}" class="navigation-bar-center navigation-bar-center-slot">
             <slot name="center"></slot>
         </div>
-        <div class="navigation-bar-right" @click="searchClick">
+        <div class="navigation-bar-right">
             <slot name="right"></slot>
         </div>
-             <!-- 筛选+搜索  已脱离文档流-->
-    <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
-        <div style="height:100%;width: 100%" @click="select_dialog = false" />
-        <setect-league @closedHandle="select_dialog = false"></setect-league>
-    </div>
     </div>
 </template>
 <script setup>
-import { i18n_t, compute_css_obj } from "src/output/index.js";
+// import { i18n_t, compute_css_obj } from "src/output/index.js";
 import { useRouter,useRoute } from "vue-router";
 import {compute_local_project_file_path} from "src/output/index.js";
 import { MenuData } from "src/output/module/menu-data.js"
-import setectLeague from './setect-league.vue'
+// import setectLeague from './setect-league.vue'
 import {ref} from "vue";
 defineOptions({
     name: 'navigationBar' // 设置组件名称
@@ -66,8 +61,8 @@ const props = defineProps({
 })
 //筛选窗口
 const select_dialog = ref(false);
-// 视口高度
-const inner_height = window.innerHeight;
+// // 视口高度
+// const inner_height = window.innerHeight;
 
 const set_back = () => {
     MenuData.set_current_lv1_menu('');
@@ -78,12 +73,12 @@ const set_back = () => {
         props.goBackAssign()
     }
 }
-/**
- * 打开联赛筛选框
- */
-const searchClick = () => {
-    select_dialog.value = true
-}
+// /**
+//  * 打开联赛筛选框
+//  */
+// const searchClick = () => {
+//     select_dialog.value = true
+// }
 </script>
 <style scoped lang="scss">
 // 组件样式
