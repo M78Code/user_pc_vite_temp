@@ -135,9 +135,11 @@ export default defineComponent({
         flag = true;
       }
       else{
-        let i = this.i_list - 1;
-        let prev_match = this.match_list[i];
-        flag = prev_match.sportId != this.match.sportId;
+        try {
+          let i = this.i_list - 1;
+          let prev_match = this.match_list[i];
+          flag = prev_match.sportId != this.match.sportId;
+        } catch (_) {}
       }
       return flag;
     },
@@ -153,7 +155,9 @@ export default defineComponent({
         flag = true
       }
       else{
-        flag = next_match.tournamentNameCode != this.match.tournamentNameCode;
+        try {
+          flag = next_match.tournamentNameCode != this.match.tournamentNameCode;
+        } catch(_) {}
       }
       return flag;
     },
@@ -163,9 +167,11 @@ export default defineComponent({
         flag = true;
       }
       else{
-        let i = this.i_list - 1;
-        let prev_match = this.match_list[i];
-        flag = prev_match.tournamentNameCode != this.match.tournamentNameCode;
+        try {
+          let i = this.i_list - 1;
+          let prev_match = this.match_list[i];
+          flag = prev_match.tournamentNameCode != this.match.tournamentNameCode;
+        } catch(_) {}
       }
       return flag;
     }
