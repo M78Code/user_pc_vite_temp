@@ -22,7 +22,7 @@
     <!-- 赛事列表 -->
     <match-container />
     <!-- 回到顶部按钮组件 -->
-    <scroll-top v-show="!get_is_show_menu && list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top" @back-top="back_top" />
+    <!-- <scroll-top v-show="list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top" @back-top="back_top" /> -->
   </div>
 </template>
 <script setup>
@@ -68,13 +68,6 @@ const local_bet_status = ref(0);
 const list_scroll_top = ref(0);
 const timer_super6 = ref(null);
 const subscription_timer1 = ref(null);
-
-// 显示收藏弹窗
-const show_favorite_list = ref(store_state.show_favorite_list);
-
-// 右侧设置菜单显示时 , 不显示骨架屏
-const get_is_show_menu = ref(store_state.get_is_show_menu);
-const get_preload_animation_url = ref(store_state.get_preload_animation_url);
 
 let message_fun = null
 let handler_func = null
@@ -151,7 +144,7 @@ watch(() => MenuData.footer_sub_menu_id, () => {
 );
 
 const calc_show = computed(() => {
-  return  menu_type.value == 1 && !show_favorite_list && !match_is_empty.value && route.name != "home" && is_detail.value
+  return  menu_type.value == 1 && !is_collect.value && !match_is_empty.value && route.name != "home" && is_detail.value
 });
 
 const on_match = computed(() => {
@@ -172,7 +165,7 @@ const back_top = () => {
  */
 const event_init = () => {
   // 详情页的视频预加载
-  pre_load_video.load_video_resources(store_state.get_uid, "is_details_page");
+  // pre_load_video.load_video_resources(store_state.get_uid, "is_details_page");
   // 不让浏览器记住上次的滚动位置
   if ("scrollRestoration" in History) {
     history.scrollRestoration = "manual";
@@ -217,16 +210,6 @@ const destroy_handle = () => {
   matchCtr.value.init();
   // store.dispatch({ type: 'topMenuReducer/set_last_time_sub_menu_type', payload: '' })
   off_listeners();
-};
-
-const unsubscribe = store.subscribe(() => {
-  update_state();
-});
-const update_state = () => {
-  const new_state = store.getState();
-  show_favorite_list.value = new_state.show_favorite_list;
-  get_is_show_menu.value = new_state.get_is_show_menu;
-  get_preload_animation_url.value = new_state.get_preload_animation_url;
 };
 
 // 绑定相关事件监听
