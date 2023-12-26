@@ -201,7 +201,7 @@ const change_show = () => {
     color: var(--q-gb-t-c-11);
     padding: 0 .12rem;
     font-weight: 700;
-    font-family: PingFang SC;
+    
     .total-money {
       color: var(--q-gb-t-c-21);
     }
@@ -274,7 +274,6 @@ const change_show = () => {
   }
   .money-number {
     margin-top: .01rem;
-    font-family: Akrobat;
     font-weight: 700;
   }
   .money-span {

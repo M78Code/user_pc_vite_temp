@@ -89,7 +89,7 @@ const bet_order_status_active = computed(()=>{
     padding: 0.08rem 0;
     // 注单失败颜色样式
     color: var(--q-gb-t-c-19);
-    font-family: PingFang SC;
+    
     &.active{
       color: var(--q-gb-t-c-1);
     }

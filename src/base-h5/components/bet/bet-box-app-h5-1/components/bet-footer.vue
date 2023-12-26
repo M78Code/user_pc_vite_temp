@@ -301,7 +301,7 @@ const set_confirm = () => {
   border-radius: 0.12rem;
   font-size: 0.16rem;
   color: var(--q-gb-t-c-14);
-  font-family: PingFang SC;
+  
 }
 .sub-total{
   font-size: 0.14rem;

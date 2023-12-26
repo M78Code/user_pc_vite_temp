@@ -122,7 +122,6 @@ const props = defineProps({
             padding: 0 0.04rem;
       }
     .bet-market{
-        font-family: DIN;
         font-size: .13rem;
         font-weight: 500;
         line-height: .16rem;
@@ -185,7 +184,7 @@ const props = defineProps({
     .color000{
         color: var(--q-gb-t-c-17) !important;
         font-size: 0.14rem;
-        font-family: PingFang SC;
+        
     }
     .font22{
         font-size: 0.22rem;

@@ -223,7 +223,6 @@ const show_merge_change = () => {
   height: 0.44rem;
   margin-top: 0.1rem;
   padding: 0 .12rem;
-  font-family: PingFang SC;
   .icon-add:before {
     color: var(--q-gb-t-c-1);
   }
