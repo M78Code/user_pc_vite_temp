@@ -6,141 +6,155 @@
  * @Description:  
 -->
 <template>
-    <div class="date-tab-wap">
-        <div class="date-tab-content">
-            <ul class="date-tab-content-ul">
-                <li ref="dateTab" :class="{ active: activeOn === index }" v-for="(item, index) in dataList" :key="index"
-                    @click="changeTabMenu(item, index, $event)">
-                    {{ item.name }}
-                </li>
-            </ul>
-        </div>
+  <div class="date-tab-wap">
+    <div class="date-tab-content">
+      <ul class="date-tab-content-ul">
+        <li
+          ref="dateTab"
+          :class="{ active: activeOn === index }"
+          v-for="(item, index) in dataList"
+          :key="index"
+          @click="changeTabMenu(item, index, $event)"
+        >
+          {{ item.name }}
+        </li>
+      </ul>
     </div>
+  </div>
 </template>
   
 <script setup>
-import lodash from 'lodash'
-import { onMounted, onUnmounted,ref, nextTick } from "vue";
+import lodash from "lodash";
+import { onMounted, onUnmounted, ref, nextTick } from "vue";
 import { scrollMenuEvent } from "../utils";
-import { MenuData } from "src/output/index.js";
-import { api_common } from "src/api/"
+import { MenuData, UserCtr } from "src/output/index.js";
+import { api_common } from "src/api/";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta";
 
 const props = defineProps({
-    defaultVal: {
-        type: Number,
-        default: 0
-    },
-    dataList: {
-        type: Array,
-        default: []
-    },
-
+  defaultVal: {
+    type: Number,
+    default: 0,
+  },
+  dataList: {
+    type: Array,
+    default: [],
+  },
 });
-const dateTab = ref(null)
-const activeOn = ref(MenuData.data_tab_index);//默认值
-const emits = defineEmits(['changeDate'])
+const dateTab = ref(null);
+const activeOn = ref(MenuData.data_tab_index); //默认值
+const emits = defineEmits(["changeDate"]);
 // onMounted(() => {
 //     nextTick(()=>{
 //         changeTabMenu(props.dataList?.[0],0)
 //     })
 // })
-onUnmounted(()=>{
-    set_active_val()
-})
+onUnmounted(() => {
+  set_active_val();
+});
 /**
  * 选中事件
- * @param {*} item 
- * @param {*} i 
- * @param {*} event 
- * @param {*} type 
+ * @param {*} item
+ * @param {*} i
+ * @param {*} event
+ * @param {*} type
  */
-const changeTabMenu = (item, i, event,type) => {
-    event = event || dateTab.value[0];
-    // if(activeOn.value === i && !type)return;
-    activeOn.value = i;
-    // 设置日期
-    MenuData.set_date_time(i,props.dataList?.[i]?.val)
-    emits('changeDate',type)
-    // set_menu_match_date(type)
+const changeTabMenu = (item, i, event, type) => {
+  if (item.val === "100") {
+    // 电竞下的冠军
+    MenuData.set_current_lv1_menu("400");
+    //冠军盘口切换欧洲盘
+    UserCtr.set_cur_odds("EU");
+  } else {
+    MenuData.set_current_lv1_menu(MenuData.old_current_lv_1_menu_i);
+  }
 
-    scrollMenuEvent(event, ".date-tab-content-ul", ".active");   
-}
+  event = event || dateTab.value[0];
+  // if(activeOn.value === i && !type)return;
+  activeOn.value = i;
+  // 设置日期
+  MenuData.set_date_time(i, props.dataList?.[i]?.val);
+  emits("changeDate", type);
+  // set_menu_match_date(type)
+
+  scrollMenuEvent(event, ".date-tab-content-ul", ".active");
+};
 /**
  * 默认值
  */
-const set_active_val = () =>{
-    activeOn.value = 0;
-}
-// 根据菜单数据 请求接口    
+const set_active_val = () => {
+  activeOn.value = 0;
+};
+// 根据菜单数据 请求接口
 const set_menu_match_date = (type) => {
-    // 获取菜单中的数据 进去接口请求
-    const { menu_match_date_api_config: { api, params } } = MenuData
-    api_common[api](params).then(res => {
-        emits('changeDate',{val:res.data ||{},type:type})
-        // if(res.code == 200 ){
-        // useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, {val:res.data ||{},type:type})
-        // }
-    })
-}
-defineExpose({set_active_val,changeTabMenu})
-
-
+  // 获取菜单中的数据 进去接口请求
+  const {
+    menu_match_date_api_config: { api, params },
+  } = MenuData;
+  api_common[api](params).then((res) => {
+    emits("changeDate", { val: res.data || {}, type: type });
+    // if(res.code == 200 ){
+    // useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, {val:res.data ||{},type:type})
+    // }
+  });
+};
+defineExpose({ set_active_val, changeTabMenu });
 </script>
 <style lang="scss" scoped>
 .date-tab-wap {
+  width: 100%;
+  height: 0.32rem;
+  overflow: hidden;
+  padding: 0 0.05rem;
+  position: relative;
+
+  .date-tab-content {
     width: 100%;
     height: 0.32rem;
-    overflow: hidden;
-    padding: 0 0.05rem;
-    position: relative;
+    line-height: 0.32rem;
 
-    .date-tab-content {
-        width: 100%;
-        height: 0.32rem;
-        line-height: 0.32rem;
+    ul {
+      width: 100%;
+      overflow: hidden;
+      overflow-x: auto;
+      display: flex;
 
-        ul {
-            width: 100%;
-            overflow: hidden;
-            overflow-x: auto;
-            display: flex;
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
-            &::-webkit-scrollbar {
-                display: none;
-            }
+      li {
+        width: 0.52rem;
+        height: 100%;
+        flex-shrink: 0;
+        text-align: center;
+        font-weight: 400;
+        font-size: 12px;
+        color: var(--q-gb-t-c-24);
+        // &:first-child {
+        //     width: 0.4rem;
+        // }
+        &.active {
+          color: var(--q-gb-t-c-1);
+          position: relative;
+          font-weight: 500;
 
-            li {
-                width: 0.52rem;
-                height: 100%;
-                flex-shrink: 0;
-                text-align: center;
-                font-weight: 400;
-                font-size: 12px;
-                color: var(--q-gb-t-c-24);
-                // &:first-child {
-                //     width: 0.4rem;
-                // }
-                &.active {
-                    color: var(--q-gb-t-c-1);
-                    position: relative;
-                    font-weight: 500;
-
-                    &::after {
-                        content: "";
-                        position: absolute;
-                        width: 60%;
-                        height: 2px;
-                        background-color: var(--q-gb-t-c-1);
-                        bottom: 1px;
-                        left: 50%;
-                        margin-left: -30%;
-                        border-radius: 25px;
-                    }
-                }
-            }
+          &::after {
+            content: "";
+            position: absolute;
+            width: 60%;
+            height: 2px;
+            background-color: var(--q-gb-t-c-1);
+            bottom: 1px;
+            left: 50%;
+            margin-left: -30%;
+            border-radius: 25px;
+          }
         }
+      }
     }
-}</style>
+  }
+}
+</style>
   src/output/index.js
