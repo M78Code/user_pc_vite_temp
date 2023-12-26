@@ -852,6 +852,7 @@ if (type.value == 30) {
     position: relative;
     color: var(--q-gb-t-c-18);
     background-color: var(--q-gb-bg-c-28) !important;
+    border-bottom: 0.5px solid var(--q-gb-bd-c-18);
     &:before {
       content: "";
       display: block;
@@ -983,7 +984,7 @@ if (type.value == 30) {
 
   .scroll-title {
     height: .48rem;
-    background-color: var(--q-gb-bg-c-23);
+    background: var(--q-gb-bg-c-20);
     display: flex;
     align-items: center;
     justify-content: space-between;
