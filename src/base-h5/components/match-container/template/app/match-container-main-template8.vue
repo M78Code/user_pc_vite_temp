@@ -62,7 +62,7 @@
               </div>
             </div>
             <div class="date-number">
-              {{(new Date(+match.matchTime)).Format(i18n_t('time4'))}}
+              {{(new Date(+match.matchTime)).Format(i18n_t('time11'))}}
             </div>
           </div>
         </div>
@@ -352,12 +352,13 @@ export default {
       .date-number {
         &:first-child {
           width: 1.1rem;
-          padding-left: 0.13rem;
+          padding-left: 0.08rem;
         }
 
         &:last-child {
-          width: 0.9rem;
-          padding-left: 0.14rem;
+          width: 1.1rem;
+          padding-right: 0.08rem;
+          text-align: right;
         }
       }
     }
