@@ -65,6 +65,7 @@
             v-show="viewTab === 'bet' || get_is_hengping"
             v-if="category?.is_no_data === false"
             :data_list="data_list"
+            :fixd_left="true"
             :scroller_scroll_top="scroller_scroll_top"
             :get_details_item="get_details_item"
             :new_match_detail_ctr="new_match_detail_ctr"

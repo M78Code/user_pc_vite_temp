@@ -584,17 +584,17 @@ class MatchMeta {
   async get_virtual_results_match() {
     this.clear_match_info()
     // vr 足球 
-    const res = await api_common.get_virtual_result({
-      batchNo:"",
-      endTime:1703606399000,
-      isVirtualSport:1,
-      page:{ size: 100, current: 1 },
-      sportType:"1004",
-      startTime:1703520000000,
-      tournamentId:"79430600606371842"
-    })
+    // const res = await api_common.get_virtual_result({
+    //   batchNo:"",
+    //   endTime:1703606399000,
+    //   isVirtualSport:1,
+    //   page:{ size: 100, current: 1 },
+    //   sportType:"1004",
+    //   startTime:1703520000000,
+    //   tournamentId:"79430600606371842"
+    // })
     // vr 马 狗 
-    // const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
+    const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
     if (+res.code !== 200) {
       this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
       if (res.code === '0401038') {

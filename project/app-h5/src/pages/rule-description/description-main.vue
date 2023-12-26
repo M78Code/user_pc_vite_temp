@@ -50,7 +50,7 @@ const go_back = () => {
   .title {
 
     font-size: 0.16rem;
-
+    color: var(--q-gb-t-c-18);
     text-align: center;
     position: absolute;
     left: 50%;
