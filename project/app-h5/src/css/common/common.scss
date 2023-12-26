@@ -17,9 +17,9 @@
     overflow: hidden;
     &::before{
       content: "";
-      height: 20px;
+      height: 16px;
       width: 10px;
-      border-radius: 20px;
+      border-radius: 16px;
       background: var(--q-gb-t-c-1);  
       display: block;
       position: absolute;
