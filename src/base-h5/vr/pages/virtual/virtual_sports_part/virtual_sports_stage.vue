@@ -949,7 +949,9 @@ export default {
       top: 0;
       right: -0.24rem;
       overflow: hidden;
-      background-color: rgb(242, 53, 13);
+      // background-color: rgb(242, 53, 13);
+      // background-color: #179cff;
+      background-color: var(--q-gb-bg-c-13);
 
       .update-timer {
         position: absolute;
@@ -999,6 +1001,9 @@ export default {
   z-index: 1;
   top: 0;
   left: 0;
+  &:deep(.dplayer-video-wrap .dplayer-video){
+    object-fit: fill;
+  }
 }
 
 .fit-box {
@@ -1212,6 +1217,13 @@ export default {
     font-size: 0.1rem;
     color: rgba(255, 255, 255, 0.8);
     margin-top: 0.06rem;
+    position: absolute;
+    top: 0.36rem;
+    background: rgba(0, 0, 0, 0.6);
+    width: 0.46rem;
+    height: 0.24rem;
+    line-height: 0.24rem;
+    border-radius: 0.04rem;
   }
 }
 

@@ -68,8 +68,7 @@
               {{current_match.mid}}
             </div>
             <div class="virtual-video-play-team" v-if="sub_menu_type && [1001,1004].includes(sub_menu_type)">
-                    <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']"
-                    v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
+                    <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']" v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
                       <div class="teams">
                         <span>{{item.teams[0]}}</span>
                         <span class="number_family">{{item.home || 0}}</span>
@@ -781,8 +780,8 @@ export default {
 
 .fixed-head {
   position: sticky;
-  top: 0.87rem;
-  background: var(--q-gb-bg-c-25);
+  top: 0.89rem;
+  background: var(--q-gb-bg-c-21);
   z-index: 100;
 }
 

@@ -364,7 +364,6 @@ export default {
   align-items: center;
   justify-content: space-between;
   border-top: 2px solid var(--q-gb-bd-c-3);
-  margin-bottom: .05rem;
   > div {
     display: flex;
     align-items: center;

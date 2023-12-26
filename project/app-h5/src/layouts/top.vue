@@ -21,7 +21,7 @@
     <!-- 滑动菜单组件 -->
     <ScrollMenu ref="scrollTabMenu" :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" @changeMenu="set_scroll_current" :current_mi="ref_data.current_mi" />
     <!--  -->
-    <SwitchWap />
+    <SwitchWap v-if="is_show_switch_wap" />
     <!--  -->
     <!-- v-if="MenuData.current_lv_1_menu_i =='2'" -->
     <SearchTab ref="searchTabMenu"  v-if="MenuData.menu_csid === 1 && MenuData.current_lv_1_menu_mi.value != 400"/>
@@ -41,6 +41,7 @@ import {
   reactive,
   ref,
   watch,
+  computed,
   nextTick
 } from "vue";
 import { useRoute,useRouter } from "vue-router";
@@ -55,6 +56,8 @@ import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 import { TopMenu,ScrollMenu,SearchTab,DateTab,SwitchWap } from 'src/base-h5/components/menu/app-h5-menu/index'
 
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
+
+import { is_esports, is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
 
 const is_first = ref(true)
 const route = useRoute();
@@ -110,6 +113,10 @@ const searchTabMenu = ref(null);//足球tab dom
       dJdateTabMenu.value.set_active_val();
     })
   }
+  // 参考开云 冠军 赛果 电竞 不显示
+  const is_show_switch_wap = computed(() => {
+    return !is_esports.value && !is_results.value && !is_kemp.value
+  })
   /**
    * 联赛筛选处理-关闭
    */

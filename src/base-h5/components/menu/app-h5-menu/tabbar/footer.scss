@@ -35,7 +35,7 @@
 
   &.black2 {
     .floating-menu {
-      backdrop-filter: blur(5px);
+      // backdrop-filter: blur(5px);
     }
     .menu-item-img,
     .play-icon-wrap {
@@ -171,9 +171,9 @@
   /*  单号9070 H5还原度问题 */
   padding-bottom: 0.05rem;
   /* 兼容 IOS<11.2 */
-  height: calc(0.48rem + constant(safe-area-inset-bottom));
+  height: calc(0.66rem + constant(safe-area-inset-bottom));
   /* 兼容 IOS>11.2 */
-  height: calc(0.48rem + env(safe-area-inset-bottom));
+  height: calc(0.66rem + env(safe-area-inset-bottom));
   /* 兼容 IOS<11.2 */
   padding-bottom: calc(0.05rem + constant(safe-area-inset-bottom));
   /* 兼容 IOS>11.2 */
