@@ -66,8 +66,13 @@ const get_pc_rule_url = () => {
     } else {
         obj.themeColors = theme2;
     }
+    const theme_map = {
+        'theme-2': 'theme01&sty=y0',
+        'theme-1': 'theme02&sty=y0',
+    }
     if (['app-h5'].includes(window.BUILDIN_CONFIG.PROJECT_NAME)) {
-        obj.themeColors = theme2.replace('theme-2', 'theme02&sty=y0').replace('theme-1', 'theme01_y0&sty=y0')
+        obj.themeColors = theme_map[theme2] //theme2.replace('theme-2', 'theme02&sty=y0').replace('theme-1', 'theme01_y0&sty=y0')
+
     }
     let param = UserCtr.get_user_url_parames(obj);
     url = `${domain}/#/${lang2}?${param}`;
@@ -92,7 +97,7 @@ onMounted(()=>{
         width: 100%;
         flex: 1;
         background-color: #fff;
-      padding: 0 15px;
+    //   padding: 0 15px;
         
     }
 }

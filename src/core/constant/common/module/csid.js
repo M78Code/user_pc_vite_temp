@@ -310,6 +310,7 @@ export const sprite_images_postion = {
   37:21,
   38:20,
   39:60,
+  40:66,
   50:64,
   90: 62,
   91: 63,

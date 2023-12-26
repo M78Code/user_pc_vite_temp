@@ -42,20 +42,6 @@
         <!-- 卡片主内容 -->
         <!-- <q-slide-transition> -->
         <div style="width: 100%;" v-if="collapsed">
-          <!--标准版 赔率标题栏-->
-          <!-- <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
-            <div class="odd-title-i-w flex">
-              <div class="odd-t-i-wrapper flex items-center"
-                :class="{ 'status2': PageSourceData.standard_odd_status.value == 1 && match_of_list_ascertain.length > 3 }">
-                <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
-                  :key="i" v-for="(hpl_title, i) of i18n_t('match_results_title.' + match.csid + '.title')">
-                  <div class="hpl-t-inner">
-                    {{ hpl_title }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
             <!-- <div style="border-top: 1px solid #000; width: 96%;"></div>  ！-->
           <div :class="['match-odds-container study_height_s hairline-border', {'border-top': !match.is_show_league}]">
@@ -208,11 +194,6 @@
                           }">
                             {{ match.mhn }}
                           </div>
-                          <!-- 进球动画 -->
-                          <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
-                            <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
-                            <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
-                          </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
                         <div class="score full-score"
@@ -245,11 +226,6 @@
                             'is-handicap-1': match.handicap_index == 1,
                           }">
                             {{ match.man }}
-                          </div>
-                          <!-- 进球动画 -->
-                          <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
-                            <div class="yb-goal-gif yb-goal-yo"></div>
-                            <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
