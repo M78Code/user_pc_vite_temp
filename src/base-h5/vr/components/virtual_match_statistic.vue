@@ -176,11 +176,12 @@ export default {
             color: var(--q-gb-t-c-3);
           }
           .line {
-            background:#E95B5B;
+            background:var(--q-gb-bg-c-35);
           }
           &.away {
             .line {
-              background: #74C4FF;
+              // background: #74C4FF;
+              background: var(--q-gb-bg-c-36);
             }
           }
         }
