@@ -11,11 +11,11 @@
     <div class="bet_single_info">
       <div class="bet_single_detail" ref="bet_single_detail">
         <div class="content-b" @click.stop="input_click">
-          <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
+          <span v-if="ref_data.money" class="yb_fontsize20 money-number number_family">{{ ref_data.money }}</span>
 
           <span class="money-span" ref="money_span" v-if="show_money_span" :style="{ opacity: '1' }"></span>
           
-          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}<span class="number_family"> {{ ref_data.min_money }}-{{ format_money3(ref_data.max_money) }}</span></span>
+          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}<em class="number_family">{{ ref_data.min_money }}-{{ format_money3(ref_data.max_money) }}</em></span>
         </div>
         <div class="content-rmb">{{ currency_code[UserCtr.currency] }}</div>
       </div>
