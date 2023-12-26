@@ -85,9 +85,6 @@ export default {
   }
 }
 
-.details-t-color5 {
-
-}
 
 .dialog-text-style {
   display: flex;

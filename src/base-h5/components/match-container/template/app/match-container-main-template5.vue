@@ -22,17 +22,20 @@
           <div class="match-status-title">
             <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
           </div>
-          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
+          <!-- <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt=""> -->
+            <div class="img" :class="['expand_item', {collapsed: collapsed}]"  :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
         </template>
       </div>
       <div class="all-league-title" v-if="is_show_opening_title && is_mix_no_today"  @click.stop="handle_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{ is_mix_no_today }}</span> </div>
-        <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt="">
+        <!-- <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt=""> -->
+        <div class="img" :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]"  :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
       </div>
       <!-- 全部 -->
       <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{get_date_title}}</span> </div>
-        <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
+        <!-- <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt=""> -->
+         <div class="img" :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]"  :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <div class="buffer-container" v-if="is_show_buffer_container"></div>

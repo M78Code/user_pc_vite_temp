@@ -6,7 +6,7 @@
   
   <!-- 自动接受更好的赔率 -->
   <div class="accept" :class="!BetData.bet_is_accept ? 'active':'' " @click="set_bet_is_accept()" v-if="BetViewDataClass.bet_order_status == 1">
-      自动接受更好的赔率 
+      自动接受更好的赔率
   </div>
 
   <div class="f-e-c bet-submit" v-if="BetViewDataClass.bet_order_status == 1">
@@ -15,13 +15,13 @@
       <img :src="compute_local_project_file_path('/image/svg/delete5.svg')" alt="">
     </div>
 
-    <div class="bet-silider_1 ">
+    <div class="bet-silider_1" :class="{'disabled-line': set_special_state(BetData.bet_data_class_version) }">
 
       <!-- <q-slider class="bet-box-line" @pan="change_slider_model" v-model="ref_data.basic_model" :inner-min="8" :inner-max="92" :min="0" :max="100"/> -->
       <div class="bet-box-line">
-        <div class="bet-box" :style="{left:ref_data.basic_model/100+'rem', 'disabled-silider-bg': set_special_state(BetData.bet_data_class_version) }"></div>
+        <div class="bet-box" :style="{left:ref_data.basic_model/100+'rem'}"></div>
       </div>
-      <div class="bet-info f-b-c" :class="{'disabled-line': set_special_state(BetData.bet_data_class_version) }">
+      <div class="bet-info f-b-c">
         <div class="middle font16">
           {{ i18n_t('bet.betting') }}
           <!-- 单关 -->
@@ -34,7 +34,7 @@
     </div>
   
     <!-- 单关/串关 切换 -->
-    <div @click="set_bet_single" class="bet-single f-c-c font500" :class="{'disabled': MenuData.is_kemp() || set_special_state(BetData.bet_data_class_version),'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
+    <div @click="set_bet_single" class="bet-single f-c-c font500" :class="{'disabled': MenuData.is_kemp(),'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
       <p>{{ !BetData.is_bet_single ? '单关投注':'+串' }}</p>
     </div>
 
@@ -180,6 +180,16 @@ const set_special_state = computed(()=> status => {
     bet_list = lodash_.cloneDeep(BetData.bet_single_list)
   } else {
     bet_list = lodash_.cloneDeep(BetData.bet_s_list)
+    // 获取商户配置的 串关投注项
+    let min_series = lodash_.get(UserCtr.user_info,'configVO.minSeriesNum',2)
+    let man_series = lodash_.get(UserCtr.user_info,'configVO.maxSeriesNum',10)
+    // 不能超过 用户设置的最大最小串关数量
+    if(min_series > bet_list.length || man_series < bet_list.length){
+      // 不允许投注
+      ref_data.is_bet_single = false
+      return true
+    }
+   
   } 
 
   for(let item of  bet_list) {
@@ -291,7 +301,7 @@ const set_confirm = () => {
   border-radius: 0.12rem;
   font-size: 0.16rem;
   color: var(--q-gb-t-c-14);
-  font-family: PingFang SC;
+  
 }
 .sub-total{
   font-size: 0.14rem;
@@ -346,6 +356,19 @@ const set_confirm = () => {
     border-radius: .3rem;
     background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%);
     box-shadow: 0rem .02rem .12rem 0rem rgba(0, 174, 255, 0.10);
+    &.disabled-line{
+      background:#C9CDDB;
+      box-shadow: 0rem .02rem .12rem 0rem rgba(0, 174, 255, 0.10);
+      .bet-box-line{
+        .bet-box{
+          background: rgba(255, 255, 255, 0.96) url($SCSSPROJECTPATH+"/image/bet/right-arrow1.svg") center no-repeat;
+          border-color: rgba(201, 205, 219, 0.8);
+        }
+      }
+      .bet-info{
+        z-index: 100;
+      }
+    }
   }
 
   .bet-submit{
@@ -360,6 +383,7 @@ const set_confirm = () => {
       right: 0;
       height: 0.5rem;
       width: 100%;
+     
       .middle {
         display: flex;
         justify-content: center;
@@ -414,10 +438,6 @@ const set_confirm = () => {
         margin-right: -.2rem;
         background: #FFFFFF url($SCSSPROJECTPATH+"/image/bet/right-arrow.svg") center no-repeat;
         z-index: 99;
-        &.disabled-silider-bg {
-          background: rgba(255, 255, 255, 0.96) url($SCSSPROJECTPATH+"/image/bet/right-arrow1.svg") center no-repeat;
-          border-color: rgba(201, 205, 219, 0.8);
-        }
       }
 
       :deep(.q-slider__track) {
