@@ -8,7 +8,7 @@
         :class="{
           show_title:get_is_show_title || get_is_show_league,
           last_of_league:get_is_next_show_league,
-          collapsed:collapsed,
+          collapsed: !collapsed,
         }">
         <!-- <div class="league-row row items-center justify-between hairline-border"
           :class="{show_title:get_is_show_title || get_is_show_league}">
@@ -23,7 +23,7 @@
           </div>
         </div> -->
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
-          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'collapsed': collapsed}]">
+          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'collapsed': !collapsed}]">
           <div class="league-t-wrap right-border">
           <!-- <div class="league-t-tubiao"></div> -->
             <span :class="['league-title-text row justify-between']">
@@ -32,12 +32,12 @@
                   {{ match.tournamentName }}
                 </span>
               </span>
-              <IconWapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': !collapsed}]" />
+              <IconWapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': collapsed}]" />
             </span>
           </div>
         </div>
         <!--赛马 赛狗 摩托车 泥地摩托车-->
-        <div v-if="[1011, 1002, 1010, 1009].includes(+match.sportId)" v-show="!collapsed" class="data-item-w-wrapper">
+        <div v-if="[1011, 1002, 1010, 1009].includes(+match.sportId)" v-show="collapsed" class="data-item-w-wrapper">
           <!-- <div class="data-title-w row justify-between" :class="{show_title:get_is_show_title}">
             <div class="date-number">
             </div>
@@ -67,7 +67,7 @@
           </div>
         </div>
         <!--虚拟足球-->
-        <div v-else-if="[1001,1004].includes(+match.sportId)" v-show="!collapsed"
+        <div v-else-if="[1001,1004].includes(+match.sportId)" v-show="collapsed"
           class="v-football-data">
           <div class="row justify-between">
             <div class="row">
@@ -249,11 +249,13 @@ export default {
     .v-football-data {
       width: 3.61rem;
       height: 0.91rem;
-      margin: 0 auto 0.05rem;
       padding: 0.1rem;
       border-width: 1px;
       border-radius: 0.08rem;
-      border-style: solid;
+      box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
+      border: .01rem solid #E4E6ED;
+      background-color: #F8F9FA;
+      border-radius: 0;
 
       b,
       .row {
@@ -370,7 +372,7 @@ export default {
       box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
       border: .01rem solid #E4E6ED;
       background-color: #F8F9FA;
-      border-radius: 0;
+      border-radius: .02rem;
 
       .test-line {
         position: absolute;
