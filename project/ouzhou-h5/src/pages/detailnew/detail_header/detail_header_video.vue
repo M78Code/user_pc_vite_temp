@@ -36,7 +36,7 @@ const show_go_back = ref(false);
 const get_show_video = ref(false);
 console.log(route.params, "params");
 const { detailsReducer } = store.getState()
-const hd_sd = ref(detailsReducer.hd_sd)
+// const hd_sd = ref(detailsReducer.hd_sd)
 watch(() => route.params.mid, (value) => {
   detail_data = lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid}_]`, {});
   icon_click_muUrl();
@@ -49,7 +49,7 @@ const get_media_detail = async() => {
     }
     api_common.getliveVideoUrl(params).then(res => {
         console.log("点击直播");
-        let media_src = video.get_video_url_h5(res, params.mid, 3, hd_sd.value);
+        // let media_src = video.get_video_url_h5(res, params.mid, 3, hd_sd.value);
         check_url(media_src, 'muUrl')
     })
 }

@@ -39,7 +39,7 @@
               <span class="state">
                 <!-- 未开赛时间 -->
                 <template v-if="current_match.match_status == 0">
-                  {{match_list_all_batches && match_list_all_batches[0] && match_list_all_batches[0].timer_format}}
+                  {{match_list_all_batches && match_list_all_batches[0] && match_list_all_batches[0].remaining_time > 0 ? match_list_all_batches[0].timer_format :  i18n_t('virtual_sports.match_status.playing')}}
                 </template>
                 <template v-else>
                   {{ current_match.match_status == 2 ? i18n_t('collect.match_end') : i18n_t('virtual_sports.match_status.playing') }}
@@ -72,11 +72,11 @@
                     v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
                       <div class="teams">
                         <span>{{item.teams[0]}}</span>
-                        <span>{{item.home || 0}}</span>
+                        <span class="number_family">{{item.home || 0}}</span>
                       </div>
                       <div class="teams">
                         <span>{{item.teams[1]}}</span>
-                        <span>{{item.away || 0}}</span>
+                        <span class="number_family">{{item.away || 0}}</span>
                       </div>
                     </div>
             </div>
@@ -781,7 +781,7 @@ export default {
 
 .fixed-head {
   position: sticky;
-  top: 0.89rem;
+  top: 0.87rem;
   background: var(--q-gb-bg-c-25);
   z-index: 100;
 }

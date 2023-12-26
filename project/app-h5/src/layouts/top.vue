@@ -125,8 +125,8 @@ const searchTabMenu = ref(null);//足球tab dom
     if(MenuData.is_esports() && !type){
       const data_list_esports = await MenuData.getDateList(val?.csid);
       dataListEsports.value = data_list_esports;
-      ref_data.current_mi = val.mi
-      MenuData.set_current_lv_2_menu_i(val)
+      ref_data.current_mi = val.mi;
+      MenuData.set_current_lv_2_menu_i(val);
       nextTick(()=>{
         dJdateTabMenu.value?.changeTabMenu({},0,'',type);
       })
@@ -134,24 +134,19 @@ const searchTabMenu = ref(null);//足球tab dom
     }
     switch (+val.mi) {
       case 2000:
+        const is_session = type && MenuData.current_lv_2_menu?.mi;
         //电竞重新设置单关
         BetData.set_is_bet_single('single')
         UserCtr.sort_type==1&&UserCtr.set_sort_type(2) //电竞没有热门排序 只有时间
         // ref_data.scroll_data_list = [];
         MenuData.set_current_lv1_menu(val.mi);
-        MenuData.set_date_time(0,'');
+        !type && MenuData.set_date_time(0,'');
         ref_data.scroll_data_list = BaseData.dianjing_sublist;
-        // nextTick(()=>{
-        //   ref_data.scroll_data_list = BaseData.dianjing_sublist;
-        //   const index = type && MenuData.data_tab_index?MenuData.data_tab_index:0;
-        //   dJdateTabMenu.value.set_active_val();
-        //   dJdateTabMenu.value.changeTabMenu(BaseData.dianjing_sublist[index],index,'',type);
-        // })
         // 设置vr /收藏 电竞 头信息
         MenuData.set_top_menu_title(val)
         let obj = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
         // 设置选中菜单的id
-        ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
+        ref_data.current_mi =is_session?MenuData.current_lv_2_menu_i:obj.mi
         // 设置二级菜单 
         !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj)
         const data_list_esports = await MenuData.getDateList(val?.csid);
