@@ -629,6 +629,7 @@ class MatchMeta {
     // 有的项目菜单类不存在 data_time
     const data_time = String(md || MenuData?.data_time || this.http_params.md)
     // 球种 euid
+    const params_tid = tid || MenuData.search_tab_tid
     const euid = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
     this.http_params.md = md
     const params = this.get_base_params()
@@ -637,6 +638,7 @@ class MatchMeta {
       category: 1
     }
     // tid 有值 则 加上 tid
+    params_tid &&  Object.assign(other_params, { tid: params_tid })
     tid &&  Object.assign(other_params, { tid })
     // data_time 有值 则 加上 md
     data_time && Object.assign(other_params, {  md: data_time })
@@ -1348,6 +1350,7 @@ class MatchMeta {
         break;
        // 排序
       case "sortRules":
+        this.clear_match_info()
         this.handler_again_matchs()
         break;
       // 筛选

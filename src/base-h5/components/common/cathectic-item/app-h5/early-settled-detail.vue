@@ -6,7 +6,7 @@
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <template v-if="details_show_btn">
     <!-- 提前兑现规则申明 -->
-    <early-settle-tips/>
+    <!-- <early-settle-tips/> -->
     <div class="warp">
       <!-- 滑块 -->
       <q-slide-transition>
