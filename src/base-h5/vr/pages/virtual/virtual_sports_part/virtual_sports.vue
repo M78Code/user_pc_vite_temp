@@ -37,7 +37,13 @@
             <div class="status">
               <span class="num">{{current_match.no}}</span>
               <span class="state">
-              {{ current_match.match_status == 2 ? i18n_t('collect.match_end') : i18n_t('virtual_sports.match_status.playing') }}
+                <!-- 未开赛时间 -->
+                <template v-if="current_match.match_status == 0">
+                  {{match_list_all_batches && match_list_all_batches[0] && match_list_all_batches[0].timer_format}}
+                </template>
+                <template v-else>
+                  {{ current_match.match_status == 2 ? i18n_t('collect.match_end') : i18n_t('virtual_sports.match_status.playing') }}
+                </template>
               </span>
               <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
             </div>
@@ -602,7 +608,7 @@ export default {
         let minutes_format = minutes.padStart(2, '0');
         let seconds_f_format = seconds_f.padStart(2, '0');
         batch.remaining_time = remaining_time;
-        batch.timer_format = `${minutes_format}'${seconds_f_format}"`;
+        batch.timer_format = `${minutes_format}:${seconds_f_format}`;
       }
     },
     /**
