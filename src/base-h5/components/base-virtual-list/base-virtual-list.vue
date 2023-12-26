@@ -5,8 +5,9 @@
     <div class="scrollerContainer" ref="scrollerContainerRef" @scroll="onScroll">
       <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
       <div class="contentList" :style="styleTranslate" ref="contentListRef">
-        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index">
-           <slot name="default" :item="item" :index="index"></slot>
+        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-index="index"
+          :data-source-index="item.source_index">
+          <slot name="default" :item="item" :index="index"></slot>
         </div>
         <!-- 到底了容器-->
         <!-- <div :class="['loading-more-container']" v-if="isScrolledRealBottom && isShowMoreWrapper">
@@ -24,7 +25,7 @@
 <script setup>
 import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, onUnmounted, onUpdated, ref, toRefs, watch } from 'vue'
 
-import { useMittOn, MITT_TYPES } from  "src/output"
+import { useMittOn, MITT_TYPES } from "src/output"
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 
 const props = defineProps({
@@ -148,15 +149,17 @@ onUpdated(() => {
   })
 })
 
-watch(() => dataList.value.length, () => {
-  nextTick(() => {
-    initDataPostion()
-  })
+watch(dataList, (v, o) => {
+  if (lodash.map(v, 'mid').join() != lodash.map(o, 'mid').join()) {
+    nextTick(() => {
+      initDataPostion()
+    })
+  }
 }, { immediate: true })
 
 // 初始化 DOM 节点位置信息
 const initDataPostion = () => {
-  if (dataList.value.length < 1) return
+  // if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
   positionDataArr = allData.value.map((_, idx) => ({
     arrPos: idx,
@@ -322,7 +325,7 @@ const findStartByBinarySearch = (_positionDataArr, scrollTop) => {
 /**
  * 列表回到顶部
  */
- const gotTop = () => {
+const gotTop = () => {
   let timer = setTimeout(() => {
     scrollerContainerRef.value && scrollerContainerRef.value.scrollTo({ top: 0, behavior: 'smooth' });
     clearTimeout(timer)
@@ -342,6 +345,7 @@ onUnmounted(() => {
   position: relative;
   overflow-y: auto;
 }
+
 .scrollerContainer {
   height: 100%;
   width: 100%;
@@ -349,6 +353,7 @@ onUnmounted(() => {
   position: relative;
   -webkit-overflow-scrolling: touch;
 }
+
 .pillarDom {
   position: absolute;
   left: 0;
@@ -356,13 +361,15 @@ onUnmounted(() => {
   right: 0;
   z-index: -1;
 }
+
 .contentList {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
+
   // will-change: transform;
-  .loading-more-container{
+  .loading-more-container {
     width: 100%;
     height: 181px;
     display: flex;
@@ -372,12 +379,13 @@ onUnmounted(() => {
     background: var(--q-gb-bg-c-18);
   }
 }
+
 .item {
   width: 100%;
   // 这里同样很重要，盒模型必须为border-box，item元素的高度才不会因为border值而超出设置的高度
   box-sizing: border-box;
+
   &:last-child {
     border-bottom: none;
   }
-}
-</style>
+}</style>

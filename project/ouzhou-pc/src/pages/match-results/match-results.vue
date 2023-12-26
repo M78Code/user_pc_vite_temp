@@ -90,7 +90,8 @@ import { SimpleHeaderWapper as simpleHeader } from "src/components/common/simple
 import { PaginationWrapper } from "src/components/pagination/index.js";
 import moveVideo from "src/base-pc/components/video-replay/move-video.vue";
 import { ResultHeader } from "src/base-pc/components/match-results/result-header/index.js";
-import { onMounted,ref } from "vue";
+import { onMounted,ref,nextTick } from "vue";
+import { MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 //引入组件样式
 import { compute_css_variables } from "src/core/css-var/index.js"
 const page_style = ref(null)
@@ -150,6 +151,10 @@ const {
 
 onMounted(() => {
   get_serverTime();
+  nextTick(() => {
+    // 隐藏loading动画 
+    useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,0);
+  })
 });
 
 </script>

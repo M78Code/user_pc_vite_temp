@@ -15,6 +15,14 @@
 <script setup>
 import simpleHeader from "src/base-pc/components/site-header/simple-header.vue";
 import analysisPage from "/src/base-pc/components/analysis/index.vue";
+import { onMounted, nextTick } from "vue";
+import { MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+onMounted(() => {
+  nextTick(() => {
+    // 隐藏loading动画 
+    useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,0);
+  })
+})
 </script>
 
 <style lang="scss" scoped>
