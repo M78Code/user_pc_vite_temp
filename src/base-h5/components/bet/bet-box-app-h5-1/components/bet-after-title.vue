@@ -55,7 +55,7 @@ const set_bet_order_status = computed(() => status => {
       title = i18n_t('pre_record.booked_fail')
     }
     if(theme === 'theme-1') {
-      return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/img_order_error_night.png`
+      return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/img_order_error_nigth.png`
     } else {
       return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/img_order_error.png`
     }
@@ -89,7 +89,7 @@ const bet_order_status_active = computed(()=>{
     padding: 0.08rem 0;
     // 注单失败颜色样式
     color: var(--q-gb-t-c-19);
-    font-family: PingFang SC;
+    
     &.active{
       color: var(--q-gb-t-c-1);
     }
