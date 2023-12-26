@@ -230,14 +230,15 @@ const is_go_vender_url = (value) => {
 }
 // 跳转第三方提供商链接
 const goto_vender_url = () => {
-  let url = lodash.get(UserCtr,'callbackUrl',lodash.get(UserCtr,'loginUrl')) 
-  if (url) {
-    nextTick(()=> {
-      location.href = url;
-    })
-  } else {
-    console.warn('跳转地址不存在！')
-  }
+  // let url = lodash.get(UserCtr,'callbackUrl',lodash.get(UserCtr,'loginUrl')) 
+  // if (url) {
+  //   nextTick(()=> {
+  //     location.href = url;
+  //   })
+  // } else {
+    window.close();
+    // console.warn('跳转地址不存在！')
+  // }
 }
 
 // 显示串关投注弹框
