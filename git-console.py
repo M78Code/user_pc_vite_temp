@@ -43,6 +43,9 @@ branch=os.popen("git symbolic-ref --short HEAD").read()
 print( 'branch: ', branch )
 
 
+#仓库地址
+fetch_remote_address = os.popen( 'git remote -v  ' ).read().split('\n')[0]
+ 
 
 #cmd1 = 'git log --format=\'%aN\' | sort -u | while read name; do echo -en "$name\t"; git log --author="$name" --pretty=tformat: --numstat | awk \'{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }\' -; done'
 #cmd1 = "git log --format=\'%aN\' | sort -u"
@@ -138,7 +141,8 @@ def print_and_write(str1):
 print_and_write('')
 print_and_write('')
 print_and_write('统计文件路径：./git-console.md')
-print_and_write('统计分支为：HEAD/'+branch[0:-1])
+print_and_write('远程仓库地址：'+fetch_remote_address)
+print_and_write('统计分支名字：HEAD/'+branch[0:-1])
 print_and_write('统计完整天数：'+ str(tianshu))
 print_and_write('统计开始时间：'+since_time)
 print_and_write('统计截止时间：'+until_time)

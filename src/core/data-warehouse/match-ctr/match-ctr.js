@@ -727,7 +727,8 @@ get_quick_mid_obj_ref(mid){
    * @param {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
    */
   set_list(list, param={}){
-    // console.log('set_list', list,this.name_code)
+    // 这个打印先别删
+    console.log('set_list', list,this.name_code)
     list.forEach(match => {
       // match_collect_status(match)        
     })

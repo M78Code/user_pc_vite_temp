@@ -134,7 +134,15 @@ const list = computed(() => {
         {label: 'score',  value: 1, img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/score.png`,score: [point.value[0], point.value[1]]},
         {label: 'collect', img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collect_gray.png`, active: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`, value: 2},
     ];
-    return res.filter(e => mapObj.value[props.status].includes(e.value));
+    // 遍历过滤符合项
+    let filter_list = res.filter((e) => {
+        return mapObj.value[props.status].includes(e.value)
+    });
+    // 再次遍历，如果只显示视频或者动画
+    filter_list = filter_list.filter((e, i) => {
+        return props.status != 1 & i != 0;
+    });
+    return filter_list;
 })
 
 let select = ref(list.value[0].label);

@@ -7,6 +7,8 @@ import { i18n_t} from 'src/output/index.js'
 import data_pager from "src/base-h5/components/common/data-pager.vue"
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { lang, theme } from 'src/base-h5/mixin/userctr.js'
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
 
 export default defineComponent({
@@ -16,8 +18,8 @@ export default defineComponent({
       collapsed: false,
       home_erroed: false,
       away_erroed: false,
-      get_lang: UserCtr.lang,
-      get_theme: UserCtr.theme,
+      get_lang: lang,
+      get_theme: theme,
     }
   },
   mounted() {
@@ -27,8 +29,8 @@ export default defineComponent({
     match () {
       return this.match_of_list;
     },
-    match_list () {
-      return this.match_of_list;
+    match_list () { //全量
+      return MatchMeta.complete_matchs
     },
     i_list () {
       return this.i
@@ -46,7 +48,7 @@ export default defineComponent({
         if(this.match.matchDay){
           let m_str = i18n_t('virtual_sports.matchDay');
           let append_space = "&nbsp;&nbsp;"
-          if(['zh','tw'].includes(get_lang)){
+          if(['zh','tw'].includes(this.get_lang)){
             append_space = "";
           }
           result = m_str.replace('%s',`<span style="{color:${color_1}">${append_space}${this.match.matchDay}</span>`);
@@ -74,7 +76,7 @@ export default defineComponent({
         if(this.match.legOrder){
           let lang_leg_order = i18n_t('virtual_sports.legOrder');
           let append_space = "&nbsp;&nbsp;"
-          if(['zh','tw'].includes(get_lang)){
+          if(['zh','tw'].includes(this.get_lang)){
             append_space = "";
           }
           let result2 = lang_leg_order.replace('%',`<span style="color:${color_1}">${this.match.legOrder}${append_space}</span>`);
@@ -85,14 +87,14 @@ export default defineComponent({
       else if(this.match.matchDay && !this.match.sportId == '1004'){
         let m_str = i18n_t('virtual_sports.matchDay');
         let append_space = "&nbsp;&nbsp;"
-        if(['zh','tw'].includes(get_lang)){
+        if(['zh','tw'].includes(this.get_lang)){
           append_space = "";
         }
         result = m_str.replace('%s',`<span style="color: ${color_1}">${append_space}${this.match.matchDay}</span>`);
       }
       // 虚拟篮球显示期数matchesGroupId
       else if(this.match.sportId == '1004'){
-        if(get_lang == 'vi'){
+        if(this.get_lang == 'vi'){
           let w = i18n_t('virtual_sports.date_number_title');
           result = w.replace('%s',`&nbsp;<span style="color: ${color_1}">${this.match.batchNo}</span>`);
         }
@@ -133,9 +135,11 @@ export default defineComponent({
         flag = true;
       }
       else{
-        let i = this.i_list - 1;
-        let prev_match = this.match_list[i];
-        flag = prev_match.sportId != this.match.sportId;
+        try {
+          let i = this.i_list - 1;
+          let prev_match = this.match_list[i];
+          flag = prev_match.sportId != this.match.sportId;
+        } catch (_) {}
       }
       return flag;
     },
@@ -151,7 +155,9 @@ export default defineComponent({
         flag = true
       }
       else{
-        flag = next_match.tournamentNameCode != this.match.tournamentNameCode;
+        try {
+          flag = next_match.tournamentNameCode != this.match.tournamentNameCode;
+        } catch(_) {}
       }
       return flag;
     },
@@ -161,9 +167,11 @@ export default defineComponent({
         flag = true;
       }
       else{
-        let i = this.i_list - 1;
-        let prev_match = this.match_list[i];
-        flag = prev_match.tournamentNameCode != this.match.tournamentNameCode;
+        try {
+          let i = this.i_list - 1;
+          let prev_match = this.match_list[i];
+          flag = prev_match.tournamentNameCode != this.match.tournamentNameCode;
+        } catch(_) {}
       }
       return flag;
     }
@@ -182,7 +190,7 @@ export default defineComponent({
     get_batch_no_by_language (batch_no) {
       let lang = `${i18n_t('virtual_sports.date_number_title')}`;
       let r = `${batch_no} ${lang}`;
-      if(get_lang == 'vi'){
+      if(this.get_lang == 'vi'){
         r = lang.replace('%s',batch_no);
       }
       return r;

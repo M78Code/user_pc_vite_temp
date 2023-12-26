@@ -824,7 +824,8 @@ export default defineComponent({
     }
     .hide_border_r{
       :deep(.hairline-border,), :deep(.item-wrap) {
-      background-color: var(--q-gb-bg-c-29) !important;
+      //background-color: var(--q-gb-bg-c-29) !important;
+      background-color: var(--q-gb-bg-c-38) !important;
       border-radius:0 0 0.04rem 0.04rem!important;
       border-top:0.5px solid var(--q-gb-bd-c-5);
       color:var(--q-gb-t-c-19)
