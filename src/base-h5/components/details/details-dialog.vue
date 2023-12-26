@@ -356,6 +356,9 @@ export default defineComponent({
 .q-dialog__inner>.details-dialog {
   border-radius: 0;
 }
+:deep(.marquee){
+  color: var(--q-gb-t-c-18);
+}
 </style>
 <style lang="scss">
 .theme01 {

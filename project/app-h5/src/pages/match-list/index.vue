@@ -237,7 +237,6 @@ onDeactivated(() => {
 onUnmounted(() => {
   message_fun&&message_fun()
   destroy_handle();
-  unsubscribe();
   MatchDataBaseH5.clear()
 });
 

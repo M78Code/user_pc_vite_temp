@@ -55,19 +55,19 @@ export default class BetRecordWs {
           data.type = type;
         }
         // 发起订阅前 查看ws是否链接中 没有就发起订阅
-        if(WsMan.ws.ws_status){
-            this.count = 0
+        // if(WsMan.ws.ws_status){
+        //     this.count = 0
             window.postMessage({event: 'WS', cmd:`WS_MSG_SEND`, data},'*');
-        } else {
+        // } else {
             // 断线重连 
-            if(this.count < 5){
-                WsMan.ws.connect('vue_hidden_to_show')
-                nextTick(()=>{
-                    this.send_msg(data,type)
-                    this.count++
-                })
-            }
-        }
+        //     if(this.count < 5){
+        //         WsMan.ws.connect('vue_hidden_to_show')
+        //         nextTick(()=>{
+        //             this.send_msg(data,type)
+        //             this.count++
+        //         })
+        //     }
+        // }
       }
     }
 

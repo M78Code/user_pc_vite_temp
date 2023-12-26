@@ -74,7 +74,7 @@ const changeTabMenu = (item, i, event, type) => {
   // if(activeOn.value === i && !type)return;
   activeOn.value = i;
   // 设置日期
-  MenuData.set_date_time(i, props.dataList?.[i]?.val);
+  MenuData.set_date_time(i, props.dataList?.[i]?.val,props.dataList?.[i]?.menuType || "");
   emits("changeDate", type);
   // set_menu_match_date(type)
 
