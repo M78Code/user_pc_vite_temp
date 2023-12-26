@@ -260,7 +260,7 @@ const change_show = () => {
     margin-left: 0.05rem;
     border: 1px solid var(--q-gb-bd-c-16);
     .limit-txt {
-      color: var(--q-gb-t-c-5);
+      color: var(--q-gb-t-c-16);
       //font-size: 0.16rem;
     }
     &:hover {
