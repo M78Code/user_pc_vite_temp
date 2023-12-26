@@ -186,6 +186,8 @@ const switchHandle = (val,type) => {
  * 获取数据
  */
 const get_date_matches_list = async (item)=>{
+    MatchMeta.clear_match_info()
+    useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true);
     if(item?.sport_id){
         let params = {
             mi:item.mif,
@@ -199,11 +201,13 @@ const get_date_matches_list = async (item)=>{
         case 1:
             nextTick(async () => {
                 state.matchs_data = await MatchMeta.get_results_match();
+                useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             })
             break;
         case 2:
             nextTick(async () => {
                 state.matchs_data = await MatchMeta.get_virtual_results_match();
+                useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             })
             break;
         case 3:
@@ -212,10 +216,12 @@ const get_date_matches_list = async (item)=>{
             }
             MenuData.set_result_menu_api_params(params)
             state.matchs_data = await MatchMeta.get_champion_match_result()
+            useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             break;
         default:
             break;
     }
+    
     if (state.matchs_data.length) useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
 }
 
