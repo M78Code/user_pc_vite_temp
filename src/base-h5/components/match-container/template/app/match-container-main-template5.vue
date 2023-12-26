@@ -311,7 +311,7 @@ import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_i
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 export default {
-  name: "match-container-main-template8",
+  name: "match-container-main-template5",
   mixins: [default_mixin],
   props: {
     // 当前组件的赛事数据对应列表的赛事
