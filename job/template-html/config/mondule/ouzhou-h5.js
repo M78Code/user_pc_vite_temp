@@ -9,17 +9,17 @@ export default {
      },
      style1:{
         placeholder: placeholder_const.style1,
-        content:`      .theme01-root-loading #loading-root-main {
-            color: #ffb001;
+        content:`      .theme-1-root-loading #loading-root-main {
+            color: rgba(255, 112, 0, 0.8);
           }
-          .theme01_y0-root-loading #loading-root-main {
-            color: #569ffd;
+          .theme-1_y0-root-loading #loading-root-main {
+            color: rgba(255, 112, 0, 0.8);
           }
-          .theme02-root-loading #loading-root-main {
-            color: #ffb001;
+          .theme-2-root-loading #loading-root-main {
+            color: rgba(255, 112, 0, 0.8);
           }
-          .theme02_y0-root-loading #loading-root-main {
-            color: #569ffd;
+          .theme-2_y0-root-loading #loading-root-main {
+            color: rgba(255, 112, 0, 0.8);
           }
           html{
             font-size: 100px; height: 100%

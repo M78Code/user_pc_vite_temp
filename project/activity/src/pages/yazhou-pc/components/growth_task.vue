@@ -221,39 +221,46 @@
       </q-layout>
     </q-dialog>
     <!-- 领取奖券弹窗 -->
-    <q-dialog v-model="daily_task_success">
-      <div class="daily_task_dialog" @click.self="daily_task_success = false">
-        <div class="task_success">
-          <div class="title">
-            {{
-              pop_parameter.ticket >= 0
-                ? `恭喜您，获得 ${pop_parameter.ticket} 张奖券`
-                : "领取失败，请重新领取奖券"
-            }}
-          </div>
-          <img
-            :src="
-              pop_parameter.ticket >= 0
-                ? pop_parameter.success
-                : pop_parameter.failure
-            "
-            alt=""
-          />
-          <div
-            class="Go-to-lottery"
-            :class="{ failure: pop_parameter.ticket < 0 }"
-            @click="Reclaim"
-          >
-            {{ pop_parameter.ticket >= 0 ? "我知道了" : "重新领取" }}
-          </div>
-        </div>
-        <img
-          class="colse2"
-          @click="daily_task_success = false"
-          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/colse2.png`"
-        />
-      </div>
-    </q-dialog>
+<!--    <q-dialog v-model="daily_task_success">-->
+<!--      <div class="daily_task_dialog" @click.self="daily_task_success = false">-->
+<!--        <div class="task_success">-->
+<!--          <div class="title">-->
+<!--            {{-->
+<!--              pop_parameter.ticket >= 0-->
+<!--                ? `恭喜您，获得 ${pop_parameter.ticket} 张奖券`-->
+<!--                : "领取失败，请重新领取奖券"-->
+<!--            }}-->
+<!--          </div>-->
+<!--          <img-->
+<!--            :src="-->
+<!--              pop_parameter.ticket >= 0-->
+<!--                ? pop_parameter.success-->
+<!--                : pop_parameter.failure-->
+<!--            "-->
+<!--            alt=""-->
+<!--          />-->
+<!--          <div-->
+<!--            class="Go-to-lottery"-->
+<!--            :class="{ failure: pop_parameter.ticket < 0 }"-->
+<!--            @click="Reclaim"-->
+<!--          >-->
+<!--            {{ pop_parameter.ticket >= 0 ? "我知道了" : "重新领取" }}-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <img-->
+<!--          class="colse2"-->
+<!--          @click="daily_task_success = false"-->
+<!--          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/colse2.png`"-->
+<!--        />-->
+<!--      </div>-->
+<!--    </q-dialog>-->
+    <LotteryDialog
+      :getLotteryDialog="daily_task_success"
+      :getLotteryNum="pop_parameter.ticket"
+      :getLotterySuc="daily_task_success"
+      :getLotteryAgain="getLotteryAgain"
+      @getLottery="task_receive_btn"
+      @close_lottery_dialog="Reclaim" />
   </div>
 </template>
 
@@ -261,10 +268,12 @@
 import DataPager from "project/activity/src/components/data_pager/data_pager-pc.vue";
 import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-pc.vue";
 import growth_task_mixin from "project/activity/src/mixins/growth_task/growth_task.js";
+import LotteryDialog from "project/activity/src/pages/yazhou-pc/components/lottery_dialog.vue";
 export default {
   mixins: [growth_task_mixin],
   components: {
     DataPager,
+    LotteryDialog,
     ActiveCountDown,
   },
 };
