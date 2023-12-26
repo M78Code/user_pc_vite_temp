@@ -9,10 +9,10 @@
                     </div>
                 </div>
             </template>
-            <template v-if="!state.currentSwitchValue" v-slot:right>
+            <template v-if="state.currentSwitchValue !== 3" v-slot:right>
                 <img
                     class="right-icon"
-                    @click="state.select_dialog = true"
+                    @click="filterChange()"
                     :src="compute_local_project_file_path('/image/svg/navbar_icon.svg')"
                     alt=""
                 />
@@ -37,10 +37,11 @@
         <match-container />
     </div> -->
 
-    <!-- <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
-        <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
-        <setect-league @closedHandle="state.select_dialog = false" @finishHandle="selectFinishHandle"></setect-league>
-    </div> -->
+     <!-- 筛选+搜索  已脱离文档流-->
+     <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+        <div style="height:100%;width: 100%" @click="select_dialog = false" />
+        <setect-league @closedHandle="state.select_dialog = false"></setect-league>
+    </div>
 
 </template>
 <script setup>
@@ -57,11 +58,12 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 import ObserverWrapper from 'src/base-h5/components/observer-wrapper/index.vue';
 import BaseData from "src/core/base-data/base-data.js";
+import setectLeague from 'src/base-h5/components/tutorial/navigation-bar/setect-league.vue'
 
 // 新修改
 
 
-// const inner_height = window.innerHeight;  // 视口高度
+const inner_height = window.innerHeight;  // 视口高度
 const switchMenu = [i18n_t('app_h5.match.normal_results'), i18n_t('app_h5.match.game_results'), i18n_t('app_h5.match.vr_results'), i18n_t('app_h5.match.championship_results')]
 /**
  * 赛果日期格式
@@ -105,12 +107,17 @@ const current_mi = ref(MenuData.current_lv_2_menu?.mi||menu_list.value[0]?.mi)
 
 /**
  * 时间切换
- * @param {*} type 
  */
-const setDate = (type) =>{
+const setDate = () =>{
     state.currentSlideValue = MenuData.data_time;
     //调用接口
     get_date_matches_list(MenuData.current_lv_2_menu?.mi?MenuData.current_lv_2_menu:menu_list.value[0]);
+}
+/**
+ * 筛选点击
+ */
+const filterChange = () =>{
+    if(state.currentSwitchValue !==3)state.select_dialog = true;
 }
 const switchHandle = (val,type) => {
     state.currentSwitchValue = val
