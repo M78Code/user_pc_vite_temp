@@ -49,6 +49,7 @@ import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.
 // import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 // import { api_analysis } from "src/api/"
+import MatchFold from 'src/core/match-fold/index.js'
 import { MenuData,compute_local_project_file_path } from "src/output/index.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
@@ -186,6 +187,7 @@ const switchHandle = (val,type) => {
  * 获取数据
  */
 const get_date_matches_list = async (item)=>{
+    MatchFold.clear_fold_info()
     MatchMeta.clear_match_info()
     useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true);
     if(item?.sport_id){
