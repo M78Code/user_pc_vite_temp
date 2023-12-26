@@ -215,7 +215,7 @@ export default {
     this.get_video_timer = null;
     // 满足刷新页面保持向上展开的状态
     this.set_fewer(1);
-    if(this.$route.query.mid || this.$route.name == 'virtual_sports'){
+    if(this.mid || this.$route.name == 'virtual_sports'){
       this.init_vsport();
     }
 
