@@ -982,7 +982,6 @@ export const details_main = () => {
       useMittOn(MITT_TYPES.EMIT_MATCHINFO_LOADING, loading_list),
       useMittOn(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED, tab_changed_handle),
       useMittOn(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE,()=>{
-        matchid.value = route.params.mid
         sport_id.value = route.params.csid
         get_odds_list()
       }),
