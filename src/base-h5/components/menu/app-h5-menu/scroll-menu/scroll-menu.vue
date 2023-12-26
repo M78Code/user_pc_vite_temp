@@ -24,7 +24,8 @@
                     {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item) }}
                   </div>
                 </div>
-                <div v-if="props.is_show_badge" v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000" class="sport-match-count">
+                <!-- v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000"  -->
+                <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi)" class="sport-match-count">
                   {{ item.ct || 0 }}
                 </div>
               </div>
@@ -43,7 +44,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 const ref_data = reactive({
     emit_lsit:{}
 })
-const menu_show_id = reactive([0,300,50000,2000,28]);//全部 vr 收藏 电竞显示
+const menu_show_id = reactive([300,2000]);//全部 vr 收藏 电竞显示
 const scrollTab = ref(null);
 const props = defineProps({
   // 滑动菜单数据
