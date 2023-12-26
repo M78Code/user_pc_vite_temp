@@ -17,6 +17,17 @@
     <!-- 赛果头部+tab区域 -->
     <div class="header-tab">
       <div class="relative-position scroll-video-h">
+          <videos
+            ref="videosRef"
+            :fix_status="true"
+            v-if="get_show_video"
+            @change_fullscreen="change_fullscreen"
+            :detail_data="result_detail_data"
+            :tips.sync="tips"
+            :is_show_text="is_show_text"
+            :show_go_back="show_go_back"
+            @change_go_back="change_go_back"
+          />
         <result-header :result_detail_data="result_detail_data" />
       </div>
       <!-- 赛果tab集 -->
@@ -49,37 +60,44 @@ import noData from "src/base-h5/components/common/no-data.vue";
 import analysisFootballMatches from "src/base-h5/components/details/analysis-matches/football-match-analysis/analysis-football-matches.vue";
 import basketballMatchAnalysis from "src/base-h5/components/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue";
 // 赛果详情骨架屏
-import SResult from "src/base-h5/components/skeleton/match-result.vue" 
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import SResult from "src/base-h5/components/skeleton/match-result.vue"
+import videos from "src/base-h5/components/details/components/videos2.vue";   // 详情页视频+动画直播区域
 import { useRouter, useRoute } from "vue-router";
 import lodash from "lodash";
 import UserCtr from "src/core/user-config/user-ctr.js";
+<<<<<<< HEAD
+import { computed, onMounted, onUnmounted, watch, ref, reactive, provide } from "vue";
+import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss, useMittOn, useMittEmit, MITT_TYPES } from "src/output/index.js";
+import { details_main } from "./details.js";
+=======
 import { computed, onMounted, onUnmounted, watch, ref, reactive } from "vue";
-import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss } from "src/output/index.js";
+import { MatchDataWarehouse_H5_Detail_Common, MenuData } from "src/output/index.js";
 
+>>>>>>> 04288ae97d20e0f7e00fefb4db391c4683af9815
 
 let route = useRoute()
+const { change_go_back, get_show_video, change_fullscreen, set_show_video } = details_main()
 // 赛果详情初始化数据仓库数据
 const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
-  // 详情接口所有数据
-  const result_detail_data = ref({}) 
-  // 是否显示下拉联赛列表
-  const is_dialog_details = ref(false) 
-  // 赛事列表数据
-  const math_list_data = ref([]) 
-  const loading = ref(false) 
-  // 是否显示分析页面
-  const analysis_show = ref({
+// 详情接口所有数据
+const result_detail_data = ref({})
+// 是否显示下拉联赛列表
+const is_dialog_details = ref(false)
+// 赛事列表数据
+const math_list_data = ref([])
+const loading = ref(false)
+const videosRef = ref(null)
+// 是否显示分析页面
+const analysis_show = ref({
     football: false,
     basketball: false,
-  }) 
+})
   //骨架屏加载状态
-  const skeleton = ref({
+const skeleton = ref({
     header: false,//头部数据
     list: false,//列表数据
     changeTab: false,//切换tab
-  }
-  )
+})
     // ...mapGetters([
     //   // 获取列表页当前选中二级菜单时间
     //   "get_current_menu",
@@ -97,7 +115,7 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
       return ""
     })
    const get_menu_type = computed(() =>{
-      return ""
+      return MenuData.get_menu_type() 
     })
    const get_detail_data = computed(() =>{
       return ""
@@ -194,6 +212,8 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
      */
    const get_match_detail_info = () => {
       // 从url取值赛事id：mid  || get_goto_detail_matchid
+      //赛果类型  0 普通 1电竞 2vr  3冠军
+      // console.log(MenuData.get_results_type() ,'MenuData.is_esports() ');
       let mid = route.params.mid ;
       // if(mid){
       //   set_goto_detail_matchid(mid);
@@ -202,7 +222,7 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
         mid: mid,
         type: 1,
         cuid: UserCtr.uid, // userId或者uuid
-        isESport: (get_menu_type == 28 && [3001,3002,3003,3004].includes(+get_curr_sub_menu_type)) ? 1 : null
+        isESport: MenuData.get_results_type() ==1  ? 1 : null
       }
       api_common.get_matchResultDetail_MatchInfo( params ).then(({ data,code }) => {
         
@@ -249,7 +269,7 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
           math_list_data.value = store_data.list;
         }
       }
-      if(get_menu_type == 28 && [100,101,102,103,104].includes(+get_detail_data.csid)){
+      if(MenuData.get_results_type() ==1 && [100,101,102,103,104].includes(+get_detail_data.csid)){
         params.isESport = 1
       }else{
         params.isESport = null
@@ -297,7 +317,18 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
   }
   // 监听是否下拉联赛列表
   const { off: change_bool_off } =  useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, change_bool);
-
+  // 
+  const ChangeVideoKind = (replay)=>{
+    useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true)
+    useMittEmit(MITT_TYPES.EMIT_SET_PLAY_VIDEO, true)
+    nextTick(()=>{
+      try{
+        videosRef.value.is_playing_replay = true
+        videosRef.value.change_event_video(replay)
+      }catch(e){}
+    })
+  }
+  provide('ChangeVideoKind',ChangeVideoKind)
   onUnmounted(() => {
     mitt_list.forEach(i=>i())
     // 清除监听下拉联赛列表

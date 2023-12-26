@@ -31,16 +31,12 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js"; // mixins: [router_mixins],
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js";
-import store from "src/store-redux/index.js";
 import { MenuData } from "src/output/index.js"
 
 import 'src/base-h5/css/pages/hot-modal.scss'
 // import router_mixins from "src/base-h5/mixins/router-mixins.js";
 const  live_video =defineAsyncComponent(()=>import("src/base-h5/components/home/live-video/index.vue"));
 const  hot =defineAsyncComponent(()=>import("src/base-h5/components/home/hot/index.vue"));
-// 热门页入口主页面
-
-const { homeReducer } = store.getState();
 
 export default defineComponent({
   beforeRouteEnter(to, from, next) {
@@ -220,27 +216,10 @@ export default defineComponent({
       add_animation.value = !!need_animation;
       tabIndex.value = tab.index;
 
-      // 更新last_home_tab_item
-      store.dispatch({
-        type: "SET_LAST_HOME_TAB_ITEM",
-        data: {
-          component: tab.component,
-          index: tab.index,
-          name: tab.name,
-        },
-      });
+     
       // set_last_home_tab_item(get_home_tab_item)
 
-      // set_home_tab_item(tab)
-      store.dispatch({ type: "SET_HOME_TAB_ITEM", data: tab, });
-      hand && store.dispatch({
-        type: "SET_HOME_TAB_ITEM",
-        data: {
-          component: tab.component,
-          index: 0,
-          name: tab.name,
-        },
-      });
+
       currentContent.value = tab.component;
 
       calc_tab_select(tab);

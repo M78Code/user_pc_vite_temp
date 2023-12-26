@@ -169,7 +169,7 @@ export default {
     }
 
     //获取赛事详情数据
-    let mid_ = this.$route.query && this.$route.query.mid;
+    let mid_ = this.$route.query && this.$route.query.mid || this.mid;
     this.mid = mid_;
     if(mid_) this.set_goto_detail_matchid(mid_);
     let parma = {
@@ -296,7 +296,7 @@ export default {
         return
       }
       if(video_p_data){
-        let match_mid = this.$route.query.mid || this.current_match.mid;
+        let match_mid = this.$route.query.mid || this.current_match.mid || this.mid;
         console.log('match_midmatch_mid', match_mid);
         
         if(video_p_data.detail){
@@ -393,7 +393,7 @@ export default {
      */
     get_local_match_process_data(){
       let match = VR_CTR.state.process_changing_match;
-      if(match && match.mid == this.$route.query.mid){
+      if(match && match.mid == (this.mid || this.$route.query.mid)){
         this.current_match = match;
         this.set_current_sub_menuid(this.current_match.csid);
         let detail_setted = false;

@@ -332,7 +332,9 @@ const s1_score = computed(() => {
     if (item.split("|")[0] == "S1") {
       score = {
         home: formatTotalScore(props.detail_data, 0),
-        away: formatTotalScore(props.detail_data, 1)
+        away: formatTotalScore(props.detail_data, 1),
+        // 添加上mid ,为了判断赛事切换是不是同一场赛事显示进球
+        mid:props.detail_data.mid   
       }
     }
   })
@@ -387,6 +389,10 @@ const formatTotalScore = (match, num) => {
 watch(
   () => s1_score.value,
   (new_, old_) => {
+  // 两场赛事不一样，直接返回，不需要监听显示
+   if (new_.mid!=old_.mid) {
+    return
+   }
     if (props.detail_data.csid != 1) return
     // 当前赛事，若比分未变化，则提前退出，不展示进球动画
     if (new_.home === old_.home && new_.away === old_.away && !change_match.value) return

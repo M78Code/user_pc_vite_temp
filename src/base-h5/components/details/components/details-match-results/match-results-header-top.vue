@@ -16,9 +16,10 @@
     <!-- 描述比赛进度相关start -->
     <div class="team-text" :class="{baseball: detail_data.csid == '3' }">
         {{ match_status }}
-      <span class="style_icon" v-if="detail_data.mng == 1">
+         <!-- mng 是否中立场 1:是中立场，0:非中立场 --- 仅足球  这里注释掉，与match-score.vue 组件的中立图标冲突-->
+      <!-- <span class="style_icon" v-if="detail_data.mng == 1">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/zhonglichang.svg`" alt />
-      </span>
+      </span> -->
     </div>
   </div>
 </template>
