@@ -966,13 +966,14 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 设置投注内容 
     BetData.set_bet_read_write_refer_obj(bet_obj)
 
-    // 订阅投注项的 ws
-    set_market_id_to_ws()
-    
     // 移动端端 串关 点击展开对时候才去请求限额
     if(PROJECT_NAME.includes('h5') && !BetData.is_bet_single){
         return
     }
+    
+    // 订阅投注项的 ws
+    set_market_id_to_ws()
+
     // 判断获取限额接口类型
     if(["C01","B03","O01"].includes(bet_obj.dataSource) || [2,4].includes(Number(bet_obj.mbmty)) || ['esports_bet','vr_bet'].includes(other.bet_type)){
         // C01/B03/O01  电竞/电竞冠军/VR体育

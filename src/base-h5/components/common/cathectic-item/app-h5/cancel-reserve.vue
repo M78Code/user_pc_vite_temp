@@ -66,7 +66,7 @@ const cancle_pre_order = () => {
     font-size: 0.14rem;
   }
 .tips-main {
-  background-color: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-23);
   border-radius: 0.1rem;
   width: 90%;
   h2 {
