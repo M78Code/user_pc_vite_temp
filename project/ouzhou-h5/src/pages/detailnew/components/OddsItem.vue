@@ -10,15 +10,18 @@
       <OddsSetTop :value="data"></OddsSetTop>
       <span class="odds-hpn-icon" :class="unfold ?'down':'up'" @click.stop="toggleUnfold"></span>
     </div>
-    <div v-show="unfold">
-      <OddTemplateDynamicComponent :data="data"></OddTemplateDynamicComponent>
-    </div>
+    <QSlideTransition :duration="200">
+      <div v-show="unfold">
+        <OddTemplateDynamicComponent :data="data"></OddTemplateDynamicComponent>
+      </div>
+    </QSlideTransition>
   </div>
 </template>
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch, computed } from "vue";
 import AllCloseControl from "./AllCloseControl";
-import OddsSetTop from './OddsSetTop.vue'
+import OddsSetTop from './OddsSetTop.vue';
+import { QSlideTransition } from 'quasar'
 
 import OddTemplateDynamicComponent from "./template/OddTemplateDynamicComponent.vue";
 
