@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 
 
 import shell from   "shelljs"
+import open from "open";
  
 if (!shell.which('git')) {
     shell.echo('Sorry, this script requires git');
@@ -63,7 +64,7 @@ console.log('names',  names.length  );
 
 
 
-let commond1 =`git log --format='%aN' | sort -u | while read name; do echo -en "$name\t"; git log --author="$name" --pretty=tformat: --since =${since} --until=${until} --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -; done`
+let commond1 =`git log --format='%aN' | sort -u | while read name; do echo -en "$name|"; git log --author="$name" --pretty=tformat: --since =${since} --until=${until} --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -; done`
 
 
  
@@ -145,25 +146,27 @@ let current_branch =  shell.exec('git  rev-parse --abbrev-ref HEAD'  ).toString(
 let formart_str=  `` 
 formart_str+="\n"
 formart_str+="\n"
+formart_str+= `统计文件路径:${write_folder}/formart.md\n`
 formart_str+= `统计分支名字: ${current_branch}`
 formart_str+= `统计完整天数: ${tianshu} \n`
 formart_str+= `统计开始时间：${since} \n`
 formart_str+= `统计截止时间：${until} \n`
 formart_str+="\n"
 formart_str+="\n"
-formart_str+=  `${force_formart('名字',18)}\t${force_formart('新增行数',16)}\t${force_formart('删除行数',16)}\t${force_formart('逻辑行数',16)}\n`
 
+formart_str+=  `| ${force_formart('名字',18)}|${force_formart('新增行数',16)}|${force_formart('删除行数',16)}|${force_formart('逻辑行数',16)}|\n`
+formart_str+= " | ---- | ---- | ---- |---- |\n"
 let all_add=0
 let all_subs=0
 all_result.map(x=>{
 
-formart_str+=`${ force_formart(x.name) } \t${ force_formart(x.add)}\t ${force_formart(x.subs)} \t ${force_formart(x.loc)} \n`
+formart_str+=`|${ force_formart(x.name) } |${ force_formart(x.add)}| ${force_formart(x.subs)} | ${force_formart(x.loc)} |\n`
 all_add+=x.add
 all_subs+=x.subs
 })
 
 
-formart_str+= `${force_formart('总计')}\t${force_formart(all_add)}\t ${force_formart(all_subs)} \t ${ force_formart(all_add-all_subs)   } \n`
+formart_str+= `|${force_formart('总计')}|${force_formart(all_add)}| ${force_formart(all_subs)} | ${ force_formart(all_add-all_subs)   } |\n`
 
 formart_str+="\n"
 formart_str+="\n"
@@ -171,3 +174,6 @@ console.log(formart_str);
 
 
 write_file(`${write_folder}/formart.md`, formart_str);
+
+
+open(`${write_folder}/formart.md`,{wait:true})
