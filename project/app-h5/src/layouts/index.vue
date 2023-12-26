@@ -95,7 +95,7 @@ import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { bet_special_series_change,get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
+import { bet_special_series_change,get_query_bet_amount_common,set_market_id_to_ws } from "src/core/bet/class/bet-box-submit.js"
 import TokenInvalid from "./token-invalid.vue"
 import {debounce} from "lodash";
 // import betMixBoxChild from "src/base-h5/components/bet/bet-box-app-h5-1/bet_mix_box_child.vue";
@@ -247,7 +247,10 @@ const show_chain_bet = () => {
   if(!bet_special_series_change()){
     return
   }
+  // 获取限额
   get_query_bet_amount_common()
+  // 订阅推送
+  set_market_id_to_ws()
   BetData.set_bet_box_h5_show(true)
 }
 
