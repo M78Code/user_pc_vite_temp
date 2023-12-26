@@ -297,5 +297,8 @@ export default {
  .absolute-right{
     position: initial !important;
   }
+  .q-scrollarea__content {
+    overflow: hidden !important;
+}
 </style>
  

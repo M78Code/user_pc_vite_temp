@@ -65,9 +65,15 @@ import videos from "src/base-h5/components/details/components/videos2.vue";   //
 import { useRouter, useRoute } from "vue-router";
 import lodash from "lodash";
 import UserCtr from "src/core/user-config/user-ctr.js";
+<<<<<<< HEAD
 import { computed, onMounted, onUnmounted, watch, ref, reactive, provide } from "vue";
 import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss, useMittOn, useMittEmit, MITT_TYPES } from "src/output/index.js";
 import { details_main } from "./details.js";
+=======
+import { computed, onMounted, onUnmounted, watch, ref, reactive } from "vue";
+import { MatchDataWarehouse_H5_Detail_Common, MenuData } from "src/output/index.js";
+
+>>>>>>> 04288ae97d20e0f7e00fefb4db391c4683af9815
 
 let route = useRoute()
 const { change_go_back, get_show_video, change_fullscreen, set_show_video } = details_main()
@@ -109,7 +115,7 @@ const skeleton = ref({
       return ""
     })
    const get_menu_type = computed(() =>{
-      return ""
+      return MenuData.get_menu_type() 
     })
    const get_detail_data = computed(() =>{
       return ""
@@ -206,6 +212,8 @@ const skeleton = ref({
      */
    const get_match_detail_info = () => {
       // 从url取值赛事id：mid  || get_goto_detail_matchid
+      //赛果类型  0 普通 1电竞 2vr  3冠军
+      // console.log(MenuData.get_results_type() ,'MenuData.is_esports() ');
       let mid = route.params.mid ;
       // if(mid){
       //   set_goto_detail_matchid(mid);
@@ -214,7 +222,7 @@ const skeleton = ref({
         mid: mid,
         type: 1,
         cuid: UserCtr.uid, // userId或者uuid
-        isESport: (get_menu_type == 28 && [3001,3002,3003,3004].includes(+get_curr_sub_menu_type)) ? 1 : null
+        isESport: MenuData.get_results_type() ==1  ? 1 : null
       }
       api_common.get_matchResultDetail_MatchInfo( params ).then(({ data,code }) => {
         
@@ -261,7 +269,7 @@ const skeleton = ref({
           math_list_data.value = store_data.list;
         }
       }
-      if(get_menu_type == 28 && [100,101,102,103,104].includes(+get_detail_data.csid)){
+      if(MenuData.get_results_type() ==1 && [100,101,102,103,104].includes(+get_detail_data.csid)){
         params.isESport = 1
       }else{
         params.isESport = null

@@ -158,21 +158,21 @@ const currentSwipperIndex = ref(0)
 const is_day = computed(() => UserCtr.theme == 'day')
 
 /** stroe仓库 */
-const { menuReducer } = store.getState()
-const unsubscribe = store.subscribe(() => {
-    // is_invalid.value = betInfoReducer.is_invalid
-    // left_menu_toggle.value = betInfoReducer.left_menu_toggle
-    cur_menu_type.value = menuReducer.cur_menu_type || {}
-    menu_collapse_status.value = menuReducer.menu_collapse_status
-    main_menu_toggle.value = menuReducer.main_menu_toggle
-})
+// const { menuReducer } = store.getState()
+// const unsubscribe = store.subscribe(() => {
+//     is_invalid.value = betInfoReducer.is_invalid
+//     left_menu_toggle.value = betInfoReducer.left_menu_toggle
+//     cur_menu_type.value = menuReducer.cur_menu_type || {}
+//     menu_collapse_status.value = menuReducer.menu_collapse_status
+//     main_menu_toggle.value = menuReducer.main_menu_toggle
+// })
 /** 销毁监听 */
-onUnmounted(unsubscribe)
+// onUnmounted(unsubscribe)
 /** 
  * 左侧菜单的切换状态 true: 展开 false: 收缩 default: true
  * 路径: project_path\src\store\module\betInfo.js
  */
-const left_menu_toggle = ref(true)
+//const left_menu_toggle = ref(true)
 /** 
  * 判断是否是登录状态 default: false
  * 路径: project_path\src\store\module\betInfo.js
@@ -182,7 +182,7 @@ const is_invalid = ref(false)
  * 左侧列表显示形式 -- normal：展开 mini：收起 default: 'normal'
  * 路径: project_path\src\store\module\menu.js
  */
-const main_menu_toggle = ref({})
+//const main_menu_toggle = ref({})
 /** 
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js

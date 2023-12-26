@@ -2420,9 +2420,9 @@ export default {
   right: 0.3rem;
   bottom: 0.3rem;
   top: 80vh;
-  width: .15rem;
+  width: .2rem;
   z-index: 99999;
-  height: .15rem;
+  height: .2rem;
 }
 
 /* ************** 视频全屏的样式 ************** -E */

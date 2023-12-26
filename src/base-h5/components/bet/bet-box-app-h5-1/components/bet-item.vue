@@ -6,7 +6,7 @@
         <!-- {{ BetData.is_bet_single }}-{{ items.ol_os }}-{{ items.hl_hs  }}-{{ items.mid_mhs }} -->
         <div class="handicap-closed" v-if="BetData.is_bet_single && !(items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0)">
             <img :src="compute_local_project_file_path('/image/bet/handicap-closed.png')" alt="">
-            <p>{{ i18n_t('bet.close') }}</p>
+            <p class="font14">{{ i18n_t('bet.close') }}</p>
         </div>
         <!-- 串关 盘口展示 及 盘口关闭状态 -->
         <div v-else class="f-b-s bet-content" :class="[
@@ -36,7 +36,8 @@
             <div class="fw-e-s bet-right" :class="{'width100': items.is_serial && !BetData.is_bet_single}" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                 <div class="f-c-c bet-money">
                     <span class="font14 font700 bet-odds-value f-c-c" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
-                       <span class="font14">@</span>{{ compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId) }}
+                       <span class="font14">@</span>
+                       <em class="number_family">{{ compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId) }}</em>
                     </span>
 
                     <div class="show_img" v-if="items.red_green">
@@ -44,6 +45,7 @@
                         <img v-if="items.red_green == 'green_down'" :src="is_down_app" alt=""/>
                     </div>
                 </div>
+                <p v-show="items.red_green" class="font500 font12" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">赔率已变更</p>
                 <!-- 电子赛事不支持串关 -->
                 <div v-if="items.is_serial && !BetData.is_bet_single" class="bet-serial font12">不支持串关投注</div>
             </div>
@@ -126,6 +128,7 @@ const set_delete = () => {
 
         .bet-money {
             height: .34rem;
+            margin-bottom: .06rem;
         }
 
         .bet-delete {
@@ -157,7 +160,7 @@ const set_delete = () => {
         }
 
         .bet-right {
-            width: 1.6rem;
+            width: 1.5rem;
             &.bet-invalid{
                 height: 100%;
                 .bet-disabled{
@@ -247,12 +250,6 @@ const set_delete = () => {
     .bet-odds-value{
        
         font-size: .22rem;
-        &.red-up{
-            color:#F53F3F;
-        }
-        &.green-down{
-            color: #00B42A
-        }
     }
     .show_img{
         width: .10rem;
@@ -277,4 +274,10 @@ const set_delete = () => {
     }
 }
 
+.red-up{
+    color:#F53F3F;
+}
+.green-down{
+    color: #00B42A
+}
 </style>
