@@ -6,19 +6,20 @@
   <template v-if="is_base_virtual_list">
     <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate" >
       <template #default="{ item, index }">
-        <template v-if="is_match_results_kemp">
+        <template v-if="MenuData.is_results_type === 3">
           <MatchContainerMainTemplate6
             :i="index"
             :match_of_list="get_match_item(item)">
           </MatchContainerMainTemplate6>
         </template>
-        <template v-else-if="is_match_results_virtual">
+        <template v-else-if="MenuData.is_results_type === 2">
           <MatchContainerMainTemplate8
+            v-if="get_match_item(item).sportId"
             :i="index"
             :match_of_list="get_match_item(item)">
           </MatchContainerMainTemplate8>
         </template>
-        <template v-else-if="is_match_results_game">
+        <template v-else-if="MenuData.is_results_type === 1">
           <MatchContainerMainTemplate3
             :i="index"
             :match_of_list="get_match_item(item)">
@@ -155,15 +156,15 @@ const handlerUpdate = lodash.debounce((data) => {
 
 // 赛果的判断
 const is_match_results_kemp = computed(() => {
- return MenuData.get_results_type() === 3
+ return MenuData.is_results_type === 3
 })
 
 const is_match_results_virtual = computed(() => {
- return MenuData.get_results_type() === 2
+ return MenuData.is_results_type === 2
 })
 
 const is_match_results_game = computed(() => {
- return MenuData.get_results_type() === 1
+ return MenuData.is_results_type === 1
 })
 
 </script>

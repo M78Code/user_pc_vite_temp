@@ -137,13 +137,6 @@ export default {
     // 赛事列表相关操作的类型封装对象
     matchCtr: Object, 
     main_source: String,
-  },
-  components: {
-  },
-  setup(props) {
-    
-    return {
-    }
   }
 }
 </script>
