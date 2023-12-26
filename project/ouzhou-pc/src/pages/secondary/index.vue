@@ -48,7 +48,8 @@
 <script setup>
 import { LayOutMain_pc } from "src/output/index.js";
 import { compute_local_project_file_path } from "src/output/index.js";
-import { ref, reactive,onMounted } from "vue";
+import { ref, reactive,onMounted,nextTick } from "vue";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import rule from "src/base-pc/components/rule/index.vue";
 import announce from "src/base-pc/components/announce/index.vue";
@@ -75,6 +76,10 @@ onMounted(()=>{
  loadLanguageAsync(LocalStorage.get('lang'));
  const value = SEARCH_PARAMS.init_param.get("secondary_active") || localStorage.getItem("secondary_active") ;
  active_change(value)
+ nextTick(() => {
+    // 隐藏loading动画 
+    useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,0);
+  })
 })
 </script>
 <style lang="scss" scope>

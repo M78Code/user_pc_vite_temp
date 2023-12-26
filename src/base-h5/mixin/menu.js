@@ -70,5 +70,5 @@ watch(update_time, () => {
     date_time.value = MenuData.data_time
 });
 export { update_time, footer_menu_id, date_time,
-    is_jinzu, is_kemp, is_mix, is_vr, is_zaopan, is_esports, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2, is_hot, is_detail, is_collect
+    is_jinzu, is_kemp,is_mix, is_vr, is_zaopan, is_esports, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2, is_hot, is_detail, is_collect
 }
