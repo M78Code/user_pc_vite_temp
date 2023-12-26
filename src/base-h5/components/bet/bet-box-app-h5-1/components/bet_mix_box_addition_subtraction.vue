@@ -6,7 +6,7 @@
 <template>
   <div class="bet-mix-show">
     <div @click="reduce_btn">-</div>
-    <div class="bet-mix-show-value font700"><span class="bet-mix-show-box">@</span>{{ format_odds(ref_custom.oddFinally, item.sportId) }}</div>
+    <div class="bet-mix-show-value font700 number_family"><span class="bet-mix-show-box">@</span>{{ format_odds(ref_custom.oddFinally, item.sportId) }}</div>
     <div @click="add_btn">+</div>
   </div>
 </template>

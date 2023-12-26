@@ -177,3 +177,5 @@ write_file(`${write_folder}/formart.md`, formart_str);
 
 
 open(`${write_folder}/formart.md`,{wait:true})
+
+shell.exit(1)

@@ -1,6 +1,6 @@
 import { api_common, api_analysis } from "src/api/index.js";  // API 公共入口
 import { useRouter, useRoute } from "vue-router";
-import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
+import axios_debounce_cache from "src/core/http/debounce-module/index.js";
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref, onBeforeMount } from "vue";
 import {SessionStorage,
@@ -13,7 +13,8 @@ import {SessionStorage,
    useMittEmitterGenerator,
    MITT_TYPES,
    UserCtr,
-   SearchData
+   SearchData,
+   axios_loop as axios_api_loop
   } from "src/output/index.js";
   import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import matchDetailClass from "src/core/match-detail/match-detail-class";
@@ -678,13 +679,22 @@ export const details_main = () => {
    *@param {obj} params 请求参数
    *@return {obj} init_req 是否是初次进入详情
    */
-  const get_odds_list = async (
+  const get_odds_list =  (
     params = { sportId: sport_id.value, mid: matchDetailCtr.value.mid || matchid.value }, init_req) => {
     // state_data.data_list = Level_one_category_list();
     const get_details_category_list = () => {
-      api_common
-        .get_category_list(params)
-        .then((res) => {
+         //接口调用
+      let obj_ = {
+        // axios api对象
+        axios_api:api_common.get_category_list,
+        // axios api对象参数
+        params: params,
+        // 唯一key值
+        key: "getCategoryList",
+        error_codes: ["0401038"],
+        // axios中then回调方法
+        fun_then: (res) => {
+          console.log(res,'res');
           const res_data = lodash.get(res, "data",[]);
           if (res.code=='0401038') {  //限频
             return  setTimeout(() => {
@@ -703,10 +713,12 @@ export const details_main = () => {
             if (!set_details_item_flag&&res_data.length) {
               matchDetailCtr.value.category_tab_click(res_data[0]);
             }
+            // useMittEmit( MITT_TYPES.EMIT_REF_API)
           } else {
             // 当第一次进来就会走这里默认赋值第一项
             // res_data && set_details_item(res_data[0]["id"]);
             res_data.length&&matchDetailCtr.value.category_tab_click(res_data[0])
+          
           }
           let search_term = route.query && route.query.search_term;
           if (search_term) {
@@ -719,8 +731,12 @@ export const details_main = () => {
           // else{
           // router.replace({name:'category', params:{mcid: data_list[0]['id']}})
           // }
-        })
-        .finally(() => {
+        },
+        // axios中catch回调方法
+        fun_catch: (e) => {
+          console.log(e);
+        },
+        fun_finally:()=>{
           // 玩法集接口请求结果返回后，再请求盘口信息接口
           let get_category_list_req_count = ''
           if (state_data.category) {
@@ -733,16 +749,20 @@ export const details_main = () => {
             //   } else {
             //     state_data.get_category_list_req_count++;
             //   }
-
             //   // 获取赛果数据后，滑动到顶部
             //   if (state_data.get_menu_type === 28 && route.name === "match_result") {
             //     document.querySelector(".match-header-result").scrollTop = 0;
             //   }
             // }).catch(err=> console.error(err));
           }
-        });
-    };
-
+        },
+        // 最大循环调用次数(异常时会循环调用),默认3次
+        max_loop: 3,
+        // 异常调用时延时时间,毫秒数,默认1000
+        timers: 1100,
+      };
+      axios_api_loop(obj_);
+    }
     const get_category_list_debounce = axios_debounce_cache.get_category_list
     if (get_category_list_debounce && get_category_list_debounce['ENABLED']) {
       let info = get_category_list_debounce.can_send_request(params);

@@ -3,7 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+em{
+  font-style: normal;
+}
 /* ************** 数字字体样式  dinLight 到 dinBlack 由细到粗************** -S */
 @font-face {
   font-family: dinLight;

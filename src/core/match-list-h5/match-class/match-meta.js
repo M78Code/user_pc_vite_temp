@@ -551,11 +551,11 @@ class MatchMeta {
     const res = await api_common.get_match_result_api({
       ...params,
       category,
-      md,
       tid,
-      type: euid ==="0"?29:28,//我的投注 euid为0
-      euid: euid,
-      showem: 1, // 新增的参数
+      md: String(md),
+      showem: 1, // 新增的参数 区分电子赛事
+      euid: euid && String(euid),
+      type: euid ==="0"? String(29) : String(28),//我的投注 euid为0
     })
     if (this.current_euid !== `${euid}_${md}`) return []
     if (+res.code !== 200) {
@@ -1348,6 +1348,7 @@ class MatchMeta {
         break;
        // 排序
       case "sortRules":
+        this.clear_match_info()
         this.handler_again_matchs()
         break;
       // 筛选

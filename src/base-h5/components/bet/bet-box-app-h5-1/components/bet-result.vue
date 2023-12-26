@@ -22,7 +22,7 @@
 
             <div class="bet-right">
                 <div class="bet-odds">
-                    <span class="font14 font700">@<span class="font22">{{ items.oddsValues }}</span></span>
+                    <span class="font14 font700">@<span class="font22 number_family">{{ items.oddsValues }}</span></span>
                 </div>
             </div>
         </div>
@@ -30,17 +30,17 @@
         <div class="bet-content">
             <div class="bet-result f-b-c" >
                 <span class="font12 font400 bet-returm mr-4">投注金额</span>
-                <span class="font16 font600 bet-returms">{{ format_money2(mathJs.divide(items.betMoney,100))}}</span>
+                <span class="font16 font600 bet-returms number_family">{{ format_money2(mathJs.divide(items.betMoney,100))}}</span>
             </div>
 
             <div class="bet-result f-b-c" >
                 <span class="font12 font400 bet-returm mr-4">可赢金额</span>
-                <span class="font16 font600 bet-returms">{{ format_money2(mathJs.divide(items.maxWinMoney,100))}}</span>
+                <span class="font16 font600 bet-returms number_family">{{ format_money2(mathJs.divide(items.maxWinMoney,100))}}</span>
             </div>
 
             <div class="bet-result f-b-c" >
                 <span class="font12 font400 bet-returm mr-4">注单号</span>
-                <span class="order font12 font400">{{ items.orderNo }}</span>
+                <span class="order font12 font400 number_family">{{ items.orderNo }}</span>
             </div>
         </div>
 
