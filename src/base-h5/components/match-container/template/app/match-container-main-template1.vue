@@ -79,7 +79,8 @@
         </div>
         <!-- 卡片主内容 -->
         <!-- <q-slide-transition> -->
-        <div :class="['match-content', { 'collapsed': collapsed }, {'border-top': !match.is_show_league}]" v-if="collapsed">
+        <div :class="['match-content', { 'collapsed': collapsed, 'border-button': !match.is_show_league }]" v-if="collapsed">
+          <div class="match-content-line" v-if="!match.is_show_league"></div>
           <!--标准版 赔率标题栏-->
           <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
             <div class="odd-title-i-w flex">
@@ -146,8 +147,11 @@
                   </div>
 
                   <!-- 电竞串关标识 -->
-                  <div v-if="is_esports && match.ispo" class="flag-chuan"
-                    :class="{ 'special-lang': ['zh', 'tw'].includes(lang) }">{{ i18n_t('match_info.match_parlay') }}
+                  <!-- <div v-if="is_esports && match.ispo" class="flag-chuan" -->
+                  <div v-if="is_esports && match.ispo"  class="flag-chuan-icon" 
+                    :class="{ 'special-lang': ['zh', 'tw'].includes(lang) }"
+                    :style="compute_css_obj({key:'h5-kyapp-crosstalk-icon'})">
+                    <!-- {{ i18n_t('match_info.match_parlay') }} -->
                   </div>
                 </div>
                 <!--玩法数量-->
@@ -422,13 +426,17 @@ export default {
     transform: rotate(0);
   }
 }
-
+.match-content-line {
+  width: 100%;
+  height: 1px;
+  background: var(--q-gb-bd-c-4);
+}
 .match-container {
   width: 100%;
   height: auto;
   position: relative;
   &.border_top{
-    border-top: 1px solid rgba(175, 179, 200, 0.1);
+    border-top: 1px solid var(--q-gb-bd-c-4);
   }
   &.is_zaopan{
     .progress{
@@ -487,7 +495,7 @@ export default {
     flex-direction: column;
     align-items: center;
     // background: var(--q-gb-bg-c-15);
-
+    // background: var(--q-gb-bg-c-18);
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
     &.show-sport {
       border-top-left-radius: 0.08rem;
@@ -502,9 +510,10 @@ export default {
       border: 1px solid var(--q-gb-bd-c-15);
       &.collapsed{
         border-top: none;
+        // border-radius: 0 0 0.08rem 0.08rem;
       }
-      &.border-top{
-        border-top: 1px solid  var(--q-gb-bd-c-4);
+      &.border-button{
+        // border-radius: 0 0 0.08rem 0.08rem;
       }
     }
     > .match-indent{
@@ -1711,12 +1720,15 @@ export default {
     margin: .05rem;
   }
 
-  .flag-chuan {
+  .flag-chuan-icon {
     margin-left: .1rem;
     padding: 0 .01rem;
-    height: 0.16rem;
+    height: 0.26rem;
+    width: 0.2rem;
     line-height: .16rem;
     border-radius: .03rem;
+    background-size: cover;
+    margin-top: 0.6rem;
     &.special-lang {
       margin-left: .06rem;
     }

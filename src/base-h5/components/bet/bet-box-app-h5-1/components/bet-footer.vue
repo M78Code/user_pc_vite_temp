@@ -34,7 +34,7 @@
     </div>
   
     <!-- 单关/串关 切换 -->
-    <div @click="set_bet_single" class="bet-single f-c-c font500" :class="{'disabled': MenuData.is_kemp(),'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
+    <div @click="set_bet_single" class="bet-single f-c-c font500" :class="{'disabled': MenuData.is_kemp() || !is_bet_special,'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
       <p>{{ !BetData.is_bet_single ? '单关投注':'+串' }}</p>
     </div>
 
@@ -67,8 +67,6 @@ import { odds_table } from "src/core/constant/common/module/csid.js"
 import { i18n_tc } from "src/boot/i18n.js"
 
 const ref_data = reactive({
-  // 是否可以投注
-  is_bet_single: true,
   show_title: '',
   // 滑块初始值
   basic_model: 5,
@@ -80,6 +78,10 @@ const ref_data = reactive({
   // 同上
   end_leng: 200,
 })
+// 是否可以投注
+let is_bet_single = true
+// 是否支持串关
+let is_bet_special = true
 
 onMounted(()=>{
   ref_data.emit_lsit = {
@@ -102,14 +104,14 @@ onMounted(()=>{
   window.addEventListener('touchend',(event)=>{
     let fit = lodash_.get(event,'target.className','')
     get_leng_px()
-    if(fit == 'bet-box' && ref_data.count == 0){
+    if(fit == 'bet-box' && ref_data.count < 1){
       ref_data.count++
       let page_x = lodash_.get(event,'changedTouches[0].pageX',0)
       if( page_x < ref_data.end_leng){
         init_slider_config()
       } else {
         //  如果投注项有不允许投注的内容 提示 并且滑动到默认位置 
-        if(!ref_data.is_bet_single) {
+        if(!is_bet_single) {
           init_slider_config()
           let text = '当前投注项不允许投注'
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
@@ -136,7 +138,9 @@ onUnmounted(() => {
 // 投注验证失败 初始化滑块
 const init_slider_config = () => {
   ref_data.basic_model = 5
-  ref_data.count = 0
+  setTimeout(() => {
+    ref_data.count = 0
+  }, 50);
 }
 
 // 串关/单关 获取到限制的距离
@@ -175,9 +179,16 @@ const bet_total = computed(()=> status => {
 
 // status 是响应式的 可以用于重新计算
 const set_special_state = computed(()=> status => {
+  is_bet_single = true
+  is_bet_special = true
   let bet_list = []
   if( BetData.is_bet_single ) {
     bet_list = lodash_.cloneDeep(BetData.bet_single_list)
+    let bet_obj = lodash_.get(bet_list,'[0]', {})
+    // 单关 电竞赛事 不支持串关 串关切换按钮置灰
+    if(!bet_obj.ispo && bet_obj.bet_type == 'esports_bet'){
+      is_bet_special = false
+    }
   } else {
     bet_list = lodash_.cloneDeep(BetData.bet_s_list)
     // 获取商户配置的 串关投注项
@@ -186,7 +197,7 @@ const set_special_state = computed(()=> status => {
     // 不能超过 用户设置的最大最小串关数量
     if(min_series > bet_list.length || man_series < bet_list.length){
       // 不允许投注
-      ref_data.is_bet_single = false
+      is_bet_single = false
       return true
     }
    
@@ -197,16 +208,17 @@ const set_special_state = computed(()=> status => {
     if(item.ol_os != 1 || item.hl_hs != 0 || item.mid_mhs != 0){
       ref_data.show_title = "盘口已关闭"
       // 不允许投注
-      ref_data.is_bet_single = false
+      is_bet_single = false
       return true
     }
     // 当前投注项中混入不能串关的投注项
     if(item.is_serial && !BetData.is_bet_single ){
       // 不允许投注
-      ref_data.is_bet_single = false
+      is_bet_single = false
       return true
     }
   }
+  return false
 })
 
 
@@ -218,8 +230,8 @@ const set_bet_is_accept = () => {
 
 // 投注模式切换
 const set_bet_single = () => {
-  // 冠军没有串关
-  if(MenuData.is_kemp()){
+  // 冠军没有串关 电竞不支持串关的赛事 不切换
+  if(MenuData.is_kemp() || !is_bet_special){
     return
   }
   
