@@ -111,7 +111,7 @@
         <template v-if="is_playing_replay">
           <!-- 回放视频标识logo -->
           <div class="replay-logo-wrap" :class="{'replay-logo-wrap-portrait': !get_is_hengping}">
-            <img src="image/bw3/svg/details/replay_logo.svg" />
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bw3/svg/details/replay_logo.svg`" />
           </div>
 
           <div v-show="is_controller_show" class="highlights-controller" :class="{'bottom-controller-bar': !get_is_hengping}">
@@ -275,6 +275,7 @@
           <div
             v-show="!show_animation && !get_is_full_screen && show_icons && !load_error && media_type !== 'progress_bar_video'"
             class="description-popup ml-8"
+            v-if="!is_playing_replay"
           >
             <span class="font_color" @click="show_HD_SD" v-if="get_detail_data.lvs != -1 && lodash.get(get_detail_data,'lss') ==  1&& get_video_url.active == 'lvs'">
               {{get_hd_sd == 1 ? i18n_t("common.HD"): i18n_t("common.SD")}}
@@ -891,21 +892,6 @@ export default {
      * @param index 目标视频索引
      */
     change_event_video({item, index}) {
-      // if (!this.player) {
-      //   this.init_video_player(item)
-      // } else {
-      //   this.player && this.player.switchVideo({
-      //     url: item.fragmentVideo,
-      //     pic: item.fragmentPic,
-      //     thumbnails: item.fragmentPic,
-      //   })
-      //
-      //   // 滚动目标到屏幕显示区域
-      //   this.$nextTick(()=>{
-      //     this.$tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
-      //   })
-      // }
-
       this.is_replay_load_error = false
       this.iframe_rdm = Date.now()
       this.is_user_voice = this.current_event_video.voice
@@ -1870,6 +1856,8 @@ export default {
   }
 }
 </script>
+
+
 
 <style lang="scss" scoped>
 .player {

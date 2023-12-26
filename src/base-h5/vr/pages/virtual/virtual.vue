@@ -438,7 +438,7 @@ export default {
       justify-content: space-between;
       font-size: 0.16rem;
       height: 0.44rem;
-
+      background-color: var(--q-gb-bg-c-21);
       .detail-back {
         width: 0.08rem;
         height: 0.14rem;
@@ -537,7 +537,7 @@ export default {
     flex-wrap: nowrap;
     overflow: auto;
     font-size: 0.12rem;
-
+    background-color: var(--q-gb-bg-c-21);
     .tabs-bar {
       width: 100%;
 

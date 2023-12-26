@@ -3,14 +3,14 @@
         <div class="odds-wrap row">
             <div data-v-c14bfede="" class="line"></div>
             <div class="col bet-mix-info">{{ items.name}}</div>
-            <span class="odds-value yb-number-bold">@{{ items.seriesOdds}}</span>
+            <span class="odds-value yb-number-bold" v-if="index==0"> @{{ items.seriesOdds}}</span>
         </div>
             <!--金额输入区域包括键盘 -->
-        <div class="row " :data-check-money="BetViewDataClass.input_money_state">
+        <div class="row ">
             <!--金额输入区-->
             <div class="bet-input-failure">
                 <!--投注金额输入框-->
-                <input class="bet-input input-border" v-model="ref_data.money" type="number"  @input="set_win_money" @keydown.enter="keydown($event)"
+                <input class="bet-input input-border" v-model="ref_data.money" type="number" @click="show_quick()"  @input="set_win_money" @keydown.enter="keydown($event)"
                 :placeholder="`${i18n_t('bet.money_range')} ${format_money3(items.min_money)}~${format_money3(items.max_money)}`" maxLength="11" />
                 <!--清除输入金额按钮-->
                 <div class="bet-max-btn">X{{ items.count }}</div>
@@ -18,8 +18,8 @@
                     <icon-wapper name="icon-failure" size="12px" />
                 </div>
             </div>
-
-            <div v-show="ref_data.keyborard" class="bet-win-key">
+           
+            <div v-show="items.show_quick" class="bet-win-key">
                 <div class="row bet-win yb-fontsize12">
                     <div class="col df-jb">
                         <!--最高可赢额-->
@@ -63,16 +63,17 @@ const ref_data = reactive({
 })
 
 const props = defineProps({
+    items: {},
     index: {
         type: Number,
         default: 0
     },
-    items: {}
 })
 
 onMounted(() => {
-  
+    show_quick()
     ref_data.money = props.items.bet_amount
+    
 })
 
 onUnmounted(() => {
@@ -112,8 +113,20 @@ const set_win_money = () => {
     }
     BetViewDataClass.set_bet_special_series_item(items_obj)
 }
+//显示隐藏键盘
 
-
+const show_quick = () => {
+    let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
+    let id = lodash_.get(props,'items.id','')
+    list.filter(item => {
+        item.show_quick = false
+         // 显示指定投注项的快捷金额按钮
+        if(item.id == id){
+            item.show_quick = true
+        }
+    })
+    BetViewDataClass.set_bet_special_series(list)
+}
 
 </script>
 
@@ -230,6 +243,7 @@ input[type="number"] {
     /*  投注键盘区域 */
     .bet-keyboard-zone {
         margin-top: 10px;
+        margin-bottom: 10px;
         padding-left: 3px;
         padding-right: 3px
     }

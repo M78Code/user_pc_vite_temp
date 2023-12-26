@@ -27,7 +27,7 @@
                 <!-- 已结算列表 => 提前结算详情 -->
                 <early-settled-detail v-else-if="BetRecordClass.selected === 3" :item_data="item2"></early-settled-detail>
                 <!-- 预约列表 => 取消预约 -->
-                <cancel-reserve v-else-if="BetRecordClass.selected === 1" :orderNumber="item2.orderNo" @success="init_data(1)"></cancel-reserve>
+                <cancel-reserve v-else-if="BetRecordClass.selected === 1" :orderNumber="item2.orderNo" @success="cancelSuccess"></cancel-reserve>
               </template>
             </div>
             </template>
@@ -165,6 +165,12 @@ const onPull = () => {
   // 预约中、已失效(数据需加工)
   const prevData = (_index === 1 || _index === 2)
   BetRecordClass.onPull(params, url_api, ele, prevData)
+}
+
+const cancelSuccess = () => {
+    setTimeout( () => {
+      init_data(1)
+    }, 1000)
 }
 </script>
     
