@@ -50,9 +50,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .vir-details-tab {
-  height: 0.4rem;
+  height: 0.48rem;
   margin-bottom: 0.04rem;
   width: 100%;
+  border-bottom: 8px solid var(--q-gb-bg-c-29);
 }
 .bg-tabs {
   width:100%;

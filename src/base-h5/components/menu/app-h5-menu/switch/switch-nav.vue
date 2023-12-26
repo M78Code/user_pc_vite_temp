@@ -96,7 +96,7 @@
             width: 100%;
             height: 100%;
             border-radius: 25px;    
-            background: var(--q-gb-bg-c-18);
+            background: var(--q-gb-bg-c-23);
             display: flex;
             font-size: 12px;
             font-weight: 500;
@@ -105,12 +105,12 @@
                 text-align: center;
                 // color: var(--q-gb-bd-c-4);
                 margin: 0.02rem;
-                color: #AFB3C8;
+                color: var(--q-gb-t-c-19);
                 line-height: 0.2rem;
                 &.active{
                     border-radius: 25px;
                     // background:var(--q-gb-bg-c-11); 
-                    color: var(--q-gb-t-c-20);
+                    color: var(--q-gb-t-c-23);
                     background: var(--q-gb-bg-c-28);
                     box-shadow: 0px 2px 4px rgba(121, 129, 164, 0.2);
                 }

@@ -110,7 +110,7 @@
           :class="{
             'game-on':[1,2].includes(get_match_detail.ms)
           }"
-          v-if="['2', '6'].includes(get_match_detail.csid+'')"
+          v-if="['6'].includes(get_match_detail.csid+'')"
         >
           <!-- <div class="line"></div> -->
           <template v-for="item in basketball_score_icon_list" :key="item.msc_key">
@@ -125,7 +125,7 @@
     </div>
     <div v-show="false">{{ get_match_detail.csid  }}</div>
     <!-- 1:足球   2:篮球   3:棒球   4:冰球   5:网球   6:美式足球   7:斯诺克 8:兵乓球   9:排球   10:羽毛球 -->
-    <template v-if="[1,4,5,7,8,9].includes(+get_match_detail?.csid)">
+    <template v-if="[1,2,4,5,7,8,9].includes(+get_match_detail?.csid)">
       <matchScore :detail_data="get_match_detail" />
     </template>
     

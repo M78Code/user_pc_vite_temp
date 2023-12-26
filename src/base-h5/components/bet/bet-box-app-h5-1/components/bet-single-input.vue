@@ -1,6 +1,4 @@
 <!--
- * @Author: Router
- * @Date: 2020-11-12 11:46:40
  * @Description: 单关矩形金额输入框
 -->
 <template>
@@ -8,14 +6,16 @@
   <div>
     <div v-show="false">{{BetData.bet_data_class_version}}</div>
     <!-- {{ item }} -->
+    <div class="bet-box-line"></div>
+
     <div class="bet_single_info">
       <div class="bet_single_detail" ref="bet_single_detail">
         <div class="content-b" @click.stop="input_click">
-          <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
+          <span v-if="ref_data.money" class="yb_fontsize20 money-number number_family">{{ ref_data.money }}</span>
 
           <span class="money-span" ref="money_span" v-if="show_money_span" :style="{ opacity: '1' }"></span>
           
-          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ ref_data.min_money }}-{{ format_money3(ref_data.max_money) }}</span>
+          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}<em class="number_family">{{ ref_data.min_money }}-{{ format_money3(ref_data.max_money) }}</em></span>
         </div>
         <div class="content-rmb">{{ currency_code[UserCtr.currency] }}</div>
       </div>
@@ -175,9 +175,15 @@ onUnmounted(() => {
 
 </script>
 <style lang="scss" scoped>
+.bet-box-line{
+  width: 100%;
+  height: 0.04rem;
+}
 .bet_single_info{
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  
 }
 .bet_single_info_btn{
     width: .96rem;
@@ -186,9 +192,8 @@ onUnmounted(() => {
     color: var(--q-gb-t-c-14);
     border-radius: .10rem;
     height: 0.44rem;
-    margin-top: 0.05rem;
-    margin-left: .08rem;
     display: flex;
+    margin-left: 0.08rem;
     align-items: center;
     justify-content: center;
     &.focus {
@@ -203,7 +208,6 @@ onUnmounted(() => {
 }
 @import url("src/base-h5/css/bet/bet_single_detail.scss");
 .bet_single_detail{
-  margin-top: 0.04rem;
   background: var(--q-gb-bg-c-22);
   border-radius: 0.01rem;
   display: flex;
@@ -212,12 +216,12 @@ onUnmounted(() => {
   flex: 1;
   height: 0.44rem;
   .content-rmb{
-    font-family: PingFang SC;
+    
     
     font-weight: 500;
     letter-spacing: 0px;
     text-align: center;
-    height: 0.4rem;
+    height: 0.44rem;
     border-radius: 4px;
     font-size: 0.14rem;
     padding-right: 0.1rem;
@@ -256,7 +260,6 @@ onUnmounted(() => {
 .money-number {
   margin-top: .01rem;
   color:var(--q-gb-t-c-18);
-  font-family: Akrobat;
   font-weight: 700;
 }
 .money-span {
