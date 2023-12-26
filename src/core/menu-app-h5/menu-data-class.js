@@ -113,7 +113,7 @@ class MenuData {
 
   // 刷新后 获取缓存数据
   set_menu_h5_key_refresh() {
-    const notItem = ['menu_type','current_lv_1_menu_mi','update_time','collect_count']
+    const notItem = ['menu_type','current_lv_1_menu_mi','update_time','collect_count','current_lv_3_menu','data_tab_index','data_time','search_tab_i_tid','search_tab_index']
     // 获取数据缓存
     let session_info = SessionStorage.get('menu_app_h5');
     if (!session_info) {
@@ -352,7 +352,8 @@ class MenuData {
         const data = res?.data?.map((item)=>{
             return {
                 name: item.menuName,
-                val: item.field1
+                val: item.field1,
+                menuType:item.menuType
             }
         })||[];
         // return [...[{name:i18n_t('ouzhou.match.today'),val:'',type:0}],...data]
@@ -372,16 +373,21 @@ class MenuData {
       search_tab_i_tid:tid||''
     });
   };
-  // 设置时间 并且设置时间请求参数
-  set_date_time(index,time){
+  /**
+   * 设置时间 并且设置时间请求参数
+   * @param {*} index 
+   * @param {*} time 
+   * @param {*} menuType  电竞冠军下 menuType为100
+   */
+  set_date_time(index,time,menuType){
     this.data_tab_index = index;
     this.data_time = time;
-    this.current_lv_3_menu = {field1:time};
+    this.current_lv_3_menu = {field1:time,menuType:menuType||""};
     this.set_menu_match_date()
     this.set_cache_class({
       data_tab_index:index,
       data_time:time,
-      current_lv_3_menu:{field1:time}
+      current_lv_3_menu:{field1:time,menuType:menuType||""}
     });
     this.update();
   }

@@ -185,7 +185,7 @@ const get_date_matches_list = async (item)=>{
     if(item?.sport_id){
         let params = {
             mi:item.mif,
-            md:state.currentSlideValue,
+            md:1703520000000+'',
             sport:item.sport_id
         }
         MenuData.set_result_menu_api_params(params)
@@ -193,9 +193,13 @@ const get_date_matches_list = async (item)=>{
     switch (+state.currentSwitchValue) {
         case 0:
         case 1:
-        case 2:
             nextTick(async () => {
                 state.matchs_data = await MatchMeta.get_results_match();
+            })
+            break;
+        case 2:
+            nextTick(async () => {
+                state.matchs_data = await MatchMeta.get_virtual_results_match();
             })
             break;
         case 3:

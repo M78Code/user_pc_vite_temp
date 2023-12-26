@@ -199,14 +199,15 @@
                 <!-- <image-cache-load v-if="match?.mhlu?.length"
                   :csid="+match.csid" :path="match.mhlu" type="home"></image-cache-load> -->
                 <!-- <img v-if="match?.mhlu?.length" class="logo" v-img="([match.mhlu[0], match.frmhn[0], match.csid])" /> -->
-                <team-img
-                  v-if="!lodash.isEmpty(match)"
+                  <team-img
+                    v-if="!lodash.isEmpty(match)"
                     :type="0"
                     :csid="match.csid"
                     :url="lodash.get(match,'mhlu[0]')"
                     :fr="lodash.get(match,'frmhn[0]')"
                     :size="18"
                   ></team-img>
+                  <div class="team-icon" v-if="!lodash.isEmpty(match) && !lodash.get(match,'mhlu[0]')" :style="compute_css_obj({key: 'h5-home-icon'})"></div>
                   <team-img
                     v-if="lodash.get(match,'mhlu.length') > 1&& !lodash.isEmpty(match)"
                     :type="0"
@@ -232,12 +233,14 @@
                   v-show="set_serving_side(match, 'away')">
                 </span>
                 <team-img
+                  v-if="lodash.get(match,'malu[0]')"
                   :type="1"
                   :csid="match.csid"
                   :url="lodash.get(match,'malu[0]')"
                   :fr="lodash.get(match,'frman[0]')"
                   :size="18"
                 ></team-img>
+                <div class="team-icon" v-if="!lodash.get(match,'malu[0]')" :style="compute_css_obj({key: 'h5-away-icon'})"></div>
                 <team-img
                   v-if="lodash.get(match,'malu.length') > 1"
                   :type="1"
@@ -311,7 +314,7 @@ import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_i
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 export default {
-  name: "match-container-main-template8",
+  name: "match-container-main-template5",
   mixins: [default_mixin],
   props: {
     // 当前组件的赛事数据对应列表的赛事
@@ -475,7 +478,11 @@ export default {
   width: 100%;
 }
 /* ********赛事容器相关********** -S*/
-
+.team-icon {
+  width: 0.2rem;
+  height: 0.2rem;
+  background-size: 100% 100%;
+}
 .counting-down-up-container {
 
   :deep(.counting-down-wrap) {
@@ -1007,6 +1014,9 @@ export default {
             .team-img{
               margin: 0 0 0 3px;
             }
+            .team-icon {
+              margin: 0 0 0 3px;
+            }
           }
 
           &.right {
@@ -1022,6 +1032,9 @@ export default {
               left: -0.1rem;
             }
             .team-img{
+              margin: 0 3px 0 0;
+            }
+            .team-icon {
               margin: 0 3px 0 0;
             }
           }

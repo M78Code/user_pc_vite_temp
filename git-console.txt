@@ -1,12 +1,48 @@
 
 
+统计文件路径：./git-console.txt
 统计分支为：HEAD/components-1207
-
-统计开始时间：2023-12-05T00:00:00+0800
-统计截止时间：2023-12-25T10:47:05+0800
+统计完整天数：0
+统计开始时间：2023-12-26T00:00:00+0800
+统计截止时间：2023-12-26T15:18:48+0800
 
 
 人员                          	增加行数                      	删除行数                      	逻辑行数                       
 
+jamescarr                     	0                             	0                             	0                              
+oba                           	0                             	0                             	0                              
+leong2023                     	0                             	0                             	0                              
+lockie                        	0                             	0                             	0                              
+jsjinnian                     	0                             	0                             	0                              
+nico                          	0                             	0                             	0                              
+pasta                         	0                             	0                             	0                              
+Y6C-DUNN-3CF0-T\admin         	0                             	0                             	0                              
+dempsey                       	0                             	0                             	0                              
+freeze                        	0                             	0                             	0                              
+xiaopeng                      	1                             	4                             	-3                             
+TY-dunn                       	2                             	1                             	1                              
+tide                          	2                             	1                             	1                              
+nati                          	3                             	1                             	2                              
+Cynthia                       	3                             	0                             	3                              
+crafter                       	4                             	3                             	1                              
+cooper                        	6                             	3                             	3                              
+Jacques                       	7                             	7                             	0                              
+rise                          	8                             	7                             	1                              
+malick                        	9                             	5                             	4                              
+orich                         	12                            	12                            	0                              
+numbers                       	24                            	20                            	4                              
+jiffy                         	29                            	22                            	7                              
+Haku                          	33                            	13                            	20                             
+jamison                       	34                            	21                            	13                             
+elrod                         	40                            	17                            	23                             
+hanmar                        	86                            	34                            	52                             
+tybevis                       	88                            	3                             	85                             
+dolphin                       	90                            	46                            	44                             
+dunn                          	122                           	105                           	17                             
+merry                         	134                           	65                            	69                             
+xingxing                      	172                           	51                            	121                            
+lane                          	172                           	172                           	0                              
+lowen                         	215                           	186                           	29                             
+jinnian                       	319                           	51                            	268                            
 
-所有人                         	0                             	0                             	0                              
+所有人                         	1615                          	850                           	765                            
