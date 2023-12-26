@@ -150,6 +150,7 @@ onUpdated(() => {
 })
 
 watch(dataList, (v, o) => {
+  //如果是排序的话 length不会变化 但是mid集合顺序会变 列表变也是一样  赔率变化mid顺序是一样就是一样 不进入
   if (lodash.map(v, 'mid').join() != lodash.map(o, 'mid').join()) {
     nextTick(() => {
       initDataPostion()
@@ -159,7 +160,7 @@ watch(dataList, (v, o) => {
 
 // 初始化 DOM 节点位置信息
 const initDataPostion = () => {
-  // if (dataList.value.length < 1) return
+  if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
   positionDataArr = allData.value.map((_, idx) => ({
     arrPos: idx,

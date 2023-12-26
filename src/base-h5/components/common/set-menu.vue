@@ -217,7 +217,7 @@ const is_champion = ref(BetData.get_is_champion())//是否冠军玩法
 /**
  * 监听用户信息改变
 */
-watch(UserCtr.user_version, () => {
+watch(()=>UserCtr.user_version, () => {
   lang_obj.value = get_lang_list() //获取语言列联表
 })
 /**
