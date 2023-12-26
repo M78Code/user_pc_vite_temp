@@ -126,6 +126,10 @@ write_file(`${write_folder}/index.json`, result_str);
 
 
 
+//仓库地址
+let fetch_remote_address = shell.exec( 'git remote -v  ' ).toString().split('\n')[0]
+ 
+
 
 let force_formart=(str,len=20)=>{
     str= ''+str 
@@ -146,7 +150,8 @@ let current_branch =  shell.exec('git  rev-parse --abbrev-ref HEAD'  ).toString(
 let formart_str=  `` 
 formart_str+="\n"
 formart_str+="\n"
-formart_str+= `统计文件路径:${write_folder}/formart.md\n`
+formart_str+= `统计文件路径: ${write_folder}/formart.md\n`
+formart_str+= `远程仓库地址: ${fetch_remote_address}\n`
 formart_str+= `统计分支名字: ${current_branch}`
 formart_str+= `统计完整天数: ${tianshu} \n`
 formart_str+= `统计开始时间：${since} \n`
