@@ -11,7 +11,7 @@ import {
 } from "./write-folder-file.js";
 // 商户版本 最终配置
  
- 
+import dayjs from "dayjs"; 
 
 
 import shell from   "shelljs"
@@ -21,30 +21,28 @@ if (!shell.which('git')) {
     shell.exit(1);
   }
   
-
- const format_date=(value)=>{
-    let time = new Date(parseInt(value));
-    let y = time.getFullYear();
-    let m = (time.getMonth() + 1 + "").padStart(2, 0);
-    let d = (time.getDate() + "").padStart(2, 0);
-    let h = (time.getHours() + "").padStart(2, 0);
-    let mm = (time.getMinutes() + "").padStart(2, 0);
-    let s = (time.getSeconds() + "").padStart(2, 0);
-    return `${y}-${m}-${d}T${h}:${mm}:${s}+08:00`;
-  }
-
  
 
+// console.log(process.argv);
+// console.log(process.argv[2]);
+let  argv_2=   parseInt(process.argv[2] )  
+argv_2 = isNaN(argv_2)   ? 0 : argv_2
+console.log('统计天数 -',argv_2);
+//统计天数 
+let tianshu = argv_2
 
-  
-//   YYYY-MM-DD HH:MM   2019-03-06T08:00:00+08:00
+ 
 //统计开始时间：
-let since = '2023-12-24T00:00:00+08:00'
+// let since = '2023-12-26T00:00:00+08:00'
+let since =  dayjs() . subtract(tianshu,'day').format("YYYY-MM-DDT00:00:00Z") 
 //统计截止时间：
 // let until = '2023-12-26T23:59:00+08:00'
-let until =  format_date(Date.now())
+  
+let until =  dayjs(Date.now()).format("YYYY-MM-DDTHH:mm:ssZ")   
+ 
  
 
+ 
 let commond4 =`git log --since ='2023-12-10T00:00:00+08:00' --until='${until}'   --format='%aN' `
 //   let commond4 =`git log --since ='2023-12-23' --until='2023-12-26'   --format='%aN' `
 
@@ -148,6 +146,7 @@ let formart_str=  ``
 formart_str+="\n"
 formart_str+="\n"
 formart_str+= `统计分支名字: ${current_branch}`
+formart_str+= `统计完整天数: ${tianshu} \n`
 formart_str+= `统计开始时间：${since} \n`
 formart_str+= `统计截止时间：${until} \n`
 formart_str+="\n"
