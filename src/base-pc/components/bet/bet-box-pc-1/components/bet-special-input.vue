@@ -10,8 +10,8 @@
             <!--金额输入区-->
             <div class="bet-input-failure">
                 <!--投注金额输入框-->
-                <input class="bet-input input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
-                    :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
+                <input class="bet-input input-border" v-model="ref_data.money" type="number"  @input="set_win_money" @keydown.enter="keydown($event)"
+                :placeholder="`${i18n_t('bet.money_range')} ${format_money3(items.min_money)}~${format_money3(items.max_money)}`" maxLength="11" />
                 <!--清除输入金额按钮-->
                 <div class="bet-max-btn">X{{ items.count }}</div>
                 <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money">
@@ -45,23 +45,20 @@ import BetKeyboard from "../common/bet-keyboard.vue"
 import { IconWapper } from 'src/components/icon'
 import lodash_ from 'lodash'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { format_odds, formatMoney,format_currency, format_currency2 } from "src/output/index.js"
+import { format_odds, formatMoney,format_currency, format_currency2,format_money3 } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { UserCtr } from "src/output/index.js"
 
 const ref_data = reactive({
-    DOM_ID_SHOW: false,
-    active: 1,    //投注项状态
-    appoint: true, // 是否预约
-    odds_change_up: false,  // 赔率上升
-    odds_change_down: false, // 赔率下降
-    min_money: 10, // 最小投注金额
-    max_money: 8888, // 最大投注金额
+    min_money: '', // 最小投注金额
+    max_money: '', // 最大投注金额
     win_money: 0.00, // 最高可赢
     money: '', // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
+    seriesOdds: '', // 赔率
+    show_quick: false, // 显示快捷金额
     emit_lsit: {},
 })
 
@@ -74,33 +71,13 @@ const props = defineProps({
 })
 
 onMounted(() => {
-    // 监听 限额变化
-    ref_data.emit_lsit = {
-        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
-        emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
-    }
-    let min_max_obj = lodash_.get(BetViewDataClass,`bet_min_max_money[${props.items.playOptionsId}]`,{})
-    BetData.set_bet_keyboard_config(min_max_obj)
+  
+    ref_data.money = props.items.bet_amount
 })
 
 onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());
 })
-
-/**
- *@description 金额改变事件
- *@param {Number} new_money 最新金额值
- */
- const change_money_handle = (new_money) => {
-  if(props.items.id == new_money.params.id){
-    if( new_money.money*1 > props.items.max_money *1){
-      ref_data.money =  props.items.max_money
-    }else{
-      ref_data.money = new_money.money
-    }
-    BetData.set_bet_obj_amount(ref_data.money,props.items.playOptionsId)
-  }
-}
 
 // 清空输入框金额
 const bet_clear_handle = () => {
@@ -117,38 +94,25 @@ const keydown = (e) => {
     }
 }
 
-// 限额改变 修改限额内容
-const set_ref_data_bet_money = () => {
-    let value = props.item.playOptionsId
- 
-    const { min_money = 10, max_money = 8888, seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
-    // 最小限额
-    ref_data.min_money = min_money
-    // 最大限额
-    ref_data.max_money = max_money
-    // 复试串关赔率
-    ref_data.seriesOdds = seriesOdds
-    // 限额改变 重置投注金额
-    ref_data.money = ''
-}
-
-
 
 // 输入判断
 const set_win_money = () => {
+    let items_obj = lodash_.get(props,'items',{})
     // 输入控制
-    if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
-        BetData.set_bet_obj_amount(ref_data.money,props.item.playOptionsId)
+    if( ref_data.money < props.items.max_money &&  ref_data.money < UserCtr.balance){
+        items_obj.bet_amount = ref_data.money
     }else{
         // 最大限额不能大于余额
-        let money_a = ref_data.max_money
-        if(UserCtr.balance < ref_data.max_money){
+        let money_a = props.items.max_money
+        if(UserCtr.balance < props.items.max_money){
             money_a = UserCtr.balance
         }
         ref_data.money = money_a
-        BetData.set_bet_obj_amount(money_a,props.item.playOptionsId)
+        items_obj.bet_amount = money_a
     }
+    BetViewDataClass.set_bet_special_series_item(items_obj)
 }
+
 
 
 </script>
