@@ -34,7 +34,7 @@
     </div>
   
     <!-- 单关/串关 切换 -->
-    <div @click="set_bet_single" class="bet-single f-c-c font500" :class="{'disabled': MenuData.is_kemp(),'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
+    <div @click="set_bet_single" class="bet-single f-c-c font500" :class="{'disabled': MenuData.is_kemp() || !is_bet_special,'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
       <p>{{ !BetData.is_bet_single ? '单关投注':'+串' }}</p>
     </div>
 
@@ -80,6 +80,8 @@ const ref_data = reactive({
 })
 // 是否可以投注
 let is_bet_single = true
+// 是否支持串关
+let is_bet_special = true
 
 onMounted(()=>{
   ref_data.emit_lsit = {
@@ -178,9 +180,15 @@ const bet_total = computed(()=> status => {
 // status 是响应式的 可以用于重新计算
 const set_special_state = computed(()=> status => {
   is_bet_single = true
+  is_bet_special = true
   let bet_list = []
   if( BetData.is_bet_single ) {
     bet_list = lodash_.cloneDeep(BetData.bet_single_list)
+    let bet_obj = lodash_.get(bet_list,'[0]', {})
+    // 单关 电竞赛事 不支持串关 串关切换按钮置灰
+    if(!bet_obj.ispo && bet_obj.bet_type == 'esports_bet'){
+      is_bet_special = false
+    }
   } else {
     bet_list = lodash_.cloneDeep(BetData.bet_s_list)
     // 获取商户配置的 串关投注项
@@ -222,8 +230,8 @@ const set_bet_is_accept = () => {
 
 // 投注模式切换
 const set_bet_single = () => {
-  // 冠军没有串关
-  if(MenuData.is_kemp()){
+  // 冠军没有串关 电竞不支持串关的赛事 不切换
+  if(MenuData.is_kemp() || !is_bet_special){
     return
   }
   
