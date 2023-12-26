@@ -1,4 +1,4 @@
-
+//执行命令 npm run  git-console.js  30 ,后面的 30 为天数，统计天数 ，为数字 ，不传默认为 0 
 
 import * as path from "node:path";
 import fs from "node:fs";

@@ -150,6 +150,7 @@ onUpdated(() => {
 })
 
 watch(dataList, (v, o) => {
+  //如果是排序的话 length不会变化 但是mid集合顺序会变 列表变也是一样  赔率变化mid顺序是一样就是一样 不进入
   if (lodash.map(v, 'mid').join() != lodash.map(o, 'mid').join()) {
     nextTick(() => {
       initDataPostion()
