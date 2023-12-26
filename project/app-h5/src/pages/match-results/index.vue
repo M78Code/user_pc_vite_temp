@@ -189,7 +189,7 @@ const get_date_matches_list = async (item)=>{
     if(item?.sport_id){
         let params = {
             mi:item.mif,
-            md:1703520000000+'',
+            md:state.currentSlideValue,
             sport:item.sport_id
         }
         MenuData.set_result_menu_api_params(params)
