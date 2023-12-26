@@ -19,6 +19,7 @@ const football_score_icon_list = [
 const scoreObject = computed(()=>{
     return props.detail_data.msc_obj
 })
+
 </script>
 
 <template>
