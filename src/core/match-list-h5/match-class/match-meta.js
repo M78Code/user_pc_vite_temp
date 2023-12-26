@@ -556,7 +556,7 @@ class MatchMeta {
       md: String(md),
       showem: 1, // 新增的参数 区分电子赛事
       euid: euid && String(euid),
-      type: euid ==="0"? String(29) : String(28),//我的投注 euid为0
+      type: euid ==="0"? 29 : 28,//我的投注 euid为0
     })
     if (this.current_euid !== `${euid}_${md}`) return []
     if (+res.code !== 200) {

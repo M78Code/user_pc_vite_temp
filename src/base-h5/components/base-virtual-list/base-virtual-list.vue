@@ -2,30 +2,37 @@
 <template>
   <div class="outContainer">
     <!-- 滚动容器 -->
-    <div class="scrollerContainer" ref="scrollerContainerRef" @scroll="onScroll">
-      <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
-      <div class="contentList" :style="styleTranslate" ref="contentListRef">
-        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-index="index"
-          :data-source-index="item.source_index">
-          <slot name="default" :item="item" :index="index"></slot>
+    <template v-if="!show_skeleton_screen">
+      <div v-if="!show_skeleton_screen" class="scrollerContainer" ref="scrollerContainerRef" @scroll="onScroll">
+        <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
+        <div class="contentList" :style="styleTranslate" ref="contentListRef">
+          <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-index="index"
+            :data-source-index="item.source_index">
+            <slot name="default" :item="item" :index="index"></slot>
+          </div>
+          <!-- 到底了容器-->
+          <!-- <div :class="['loading-more-container']" v-if="isScrolledRealBottom && isShowMoreWrapper">
+            <div style="color:#AAAEB8;font-size:.12rem;"> {{ i18n_t("scroll_wrapper.is_footer") }} </div>
+          </div> -->
         </div>
-        <!-- 到底了容器-->
-        <!-- <div :class="['loading-more-container']" v-if="isScrolledRealBottom && isShowMoreWrapper">
-          <div style="color:#AAAEB8;font-size:.12rem;"> {{ i18n_t("scroll_wrapper.is_footer") }} </div>
-        </div> -->
       </div>
-    </div>
-    <!-- 回到顶部按钮组件 -->
-    <template v-if="isShowGoTop">
-      <ScrollTop :list_scroll_top="scroll_top" @back-top="gotTop" />
+    </template>
+    <template v-else>
+      <SList :loading_body="true" />
     </template>
   </div>
+  <!-- 回到顶部按钮组件 -->
+  <template v-if="isShowGoTop">
+    <ScrollTop :list_scroll_top="scroll_top" @back-top="gotTop" />
+  </template>
 </template>
 
 <script setup>
 import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, onUnmounted, onUpdated, ref, toRefs, watch } from 'vue'
 
 import { useMittOn, MITT_TYPES } from "src/output"
+
+import SList from "src/base-h5/components/skeleton/skeleton-list.vue" 
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 
 const props = defineProps({
@@ -48,6 +55,7 @@ const emits = defineEmits(["onUpdate"]);
 const { cacheCount, dataList } = toRefs(props)
 
 const scroll_top = ref(0)
+const show_skeleton_screen = ref(false)
 
 // 猜测高度（预估高度）
 const maybeHeight = 100
@@ -141,6 +149,11 @@ onMounted(() => {
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, gotTop).off,
   };
+  emitters.value = {
+    emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, (val) => {
+      show_skeleton_screen.value = val
+    }).off,
+  };
 })
 
 onUpdated(() => {
@@ -160,7 +173,7 @@ watch(dataList, (v, o) => {
 
 // 初始化 DOM 节点位置信息
 const initDataPostion = () => {
-  if (dataList.value.length < 1) return
+  // if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
   positionDataArr = allData.value.map((_, idx) => ({
     arrPos: idx,
@@ -345,6 +358,13 @@ onUnmounted(() => {
   height: 100%;
   position: relative;
   overflow-y: auto;
+  :deep(.skeleton-wrap){
+    position: absolute;
+    overflow: hidden;
+    margin-top: 0.1rem;
+    height: calc(100% - 0.1rem);
+    padding-top: 0 !important;
+  }
 }
 
 .scrollerContainer {
