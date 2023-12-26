@@ -1,4 +1,5 @@
 export { default as score_child_1 } from "./score_child_1.vue"
+export { default as score_child_2 } from "./score_child_2.vue"
 export { default as score_child_4 } from "./score_child_4.vue"
 export { default as score_child_5 } from "./score_child_5.vue"
 export { default as score_child_7 } from "./score_child_7.vue"

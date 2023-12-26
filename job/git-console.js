@@ -41,10 +41,10 @@ let since =  dayjs() . subtract(tianshu,'day').format("YYYY-MM-DDT00:00:00Z")
   
 let until =  dayjs(Date.now()).format("YYYY-MM-DDTHH:mm:ssZ")   
  
- 
+let since_name =  dayjs() . subtract(tianshu+30,'day').format("YYYY-MM-DDT00:00:00Z") 
 
  
-let commond4 =`git log --since ='2023-12-10T00:00:00+08:00' --until='${until}'   --format='%aN' `
+let commond4 =`git log --since ='${since_name}' --until='${until}'   --format='%aN' `
 //   let commond4 =`git log --since ='2023-12-23' --until='2023-12-26'   --format='%aN' `
 
 //git log --since ='2023-12-24-00-00' --until='2023-12-26-23-59'   --format='%aN'
@@ -177,3 +177,5 @@ write_file(`${write_folder}/formart.md`, formart_str);
 
 
 open(`${write_folder}/formart.md`,{wait:true})
+
+shell.exit(1)

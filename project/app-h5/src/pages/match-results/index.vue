@@ -30,6 +30,7 @@
         <ScrollMenu v-if="menu_list.length" :scrollDataList="menu_list" :is_show_badge="false" :current_mi="current_mi" @changeMenu="set_scroll_current"/>
 
         <ObserverWrapper class="match-result-contant" :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper>
+        <match-container />
     </template>
     <!-- <div class="match-results-container-styles">
        
@@ -65,7 +66,7 @@ const switchMenu = [i18n_t('app_h5.match.normal_results'), i18n_t('app_h5.match.
 /**
  * 赛果日期格式
  */
- const dataList = reactive(dateTabList(new Date(new Date().getTime()),[],[]));
+ const dataList = reactive(dateTabList(new Date(new Date().getTime()),[],[],1));
 /**
  * 默认值
  */

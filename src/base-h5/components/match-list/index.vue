@@ -93,7 +93,7 @@ const config = {
 
 const target_com = computed(() => {
   // app 新手版  由于常规赛事还没替换， 故做临时处理， 后续放在 MatchList2里统一处理
-  if (PROJECT_NAME === 'app-h5' && standard_edition.value === 1) return MatchList4
+  // if (PROJECT_NAME === 'app-h5' && standard_edition.value === 1) return MatchList4
   return config[PROJECT_NAME]
 })
 
