@@ -1204,7 +1204,6 @@ class MatchMeta {
       this.current_matchs = matchs_data
       this.complete_mids = result_mids
     }
-
     if (!is_virtual) {
       // 清除虚拟计算信息
       VirtualList.clear_virtual_info()
@@ -1217,6 +1216,7 @@ class MatchMeta {
         this.handle_submit_warehouse({ list: matchs_data, warehouse })
       }
     } else {
+      debugger
       // 计算所需渲染数据
       this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
     }
@@ -1471,11 +1471,10 @@ class MatchMeta {
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
       // match_mids是可视区域id
       const active_index = this.match_mids.findIndex(t => t === mid)
-
+      active_index>-1&& this.match_mids.splice(active_index,1)
       const index = this.complete_matchs.findIndex(t => t.mid == mid)
       index > -1 && this.complete_matchs.splice(index, 1)
-
-      if (active_index > -1) {
+      if (index > -1) {
         // 复刻版 新手版 使用的是 observer-wrapper 组件模式 不需要重新计算
         // if (project_name == 'app-h5' && UserCtr.standard_edition == 1) return;
 

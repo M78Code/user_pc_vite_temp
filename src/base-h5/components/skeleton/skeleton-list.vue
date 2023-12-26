@@ -205,6 +205,7 @@ const poisition_top = computed(() => {
       padding: 0 0.08rem;
       margin-bottom: 0.08rem;
       border-radius: 0.08rem;
+      background-color: #fff;
 
       .title {
         display: flex;

@@ -182,7 +182,7 @@ export default defineComponent({
   }
 
   .every3 {
-    flex-basis: 33.333%;
+    flex-grow: 1;
 
     &:nth-child(2) {
       div {
