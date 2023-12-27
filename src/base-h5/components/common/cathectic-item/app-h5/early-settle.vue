@@ -184,11 +184,18 @@ onMounted(() => {
       calc_show.value = false
       return
     }
-    // 获取当前订单的最新结算值
-    let _maxCashout = props.item_data.maxCashout
+    // 当前单号
     const moneyData = lodash.find(early_money_list_data, (item) => {
       return props.item_data.orderNo == item.orderNo
     })
+    // 如果没有当前单号
+    if(!moneyData) {
+      calc_show.value = false
+      return
+    }
+    // 有当前单号
+    calc_show.value = true
+    let _maxCashout = props.item_data.maxCashout
     if (moneyData && moneyData.orderStatus === 0) {
       if (moneyData.preSettleMaxWin !=  props.item_data.maxCashout) {
         _maxCashout = moneyData.preSettleMaxWin
@@ -223,6 +230,8 @@ const c201_handle = ({ orderNo, orderStatus }) => {
       status.value = 4;
     } else if (orderStatus == 2) {
       // 失败
+      // 提示未通过
+      showUnSuccessTips()
       status.value = 1;
     }
   }
@@ -385,7 +394,7 @@ template {
       align-items: center;
       border: none;
       background-color: var(--q-gb-bg-c-13);
-      color: var(--q-gb-bg-c-15);
+      color: var(--q-gb-t-c-14);
       width: 100%;
       height: 0.4rem;
       line-height: 0.4rem;
