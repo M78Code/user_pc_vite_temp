@@ -5,7 +5,6 @@
             <div class="col bet-mix-info">{{ items.name}}</div>
             <span class="odds-value yb-number-bold" v-if="index==0"> @{{ items.seriesOdds}}</span>
         </div>
-        <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
             <!--金额输入区域包括键盘 -->
         <div class="row ">
             <!--金额输入区-->
@@ -19,7 +18,7 @@
                     <icon-wapper name="icon-failure" size="12px" />
                 </div>
             </div>
-           
+            <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
             <div v-show="items.show_quick" class="bet-win-key">
                 <div class="row bet-win yb-fontsize12">
                     <div class="col df-jb">
@@ -75,10 +74,9 @@ const ref_data = reactive({
 const InputFocus = ref()
 
 onMounted(() => {
-    show_quick()
     ref_data.money = props.items.bet_amount
     InputFocus.value.focus()
-    
+    show_quick()
 })
 
 onUnmounted(() => {
@@ -118,7 +116,7 @@ const set_win_money = () => {
         items_obj.bet_amount = money_a
     }
     BetViewDataClass.set_bet_special_series_item(items_obj)
-    InputFocus.value.focus()
+    show_quick()
 }
 //显示隐藏键盘
 
