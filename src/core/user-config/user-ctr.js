@@ -1434,7 +1434,7 @@ class UserCtr {
     return ts
   }
   // 是否支持当前赔率
-  is_cur_odds (odds) {
+  is_cur_odds (odds='') {
     // 获取当前的盘口赔率
     let cur_odds = lodash.get(odds_table,`${this.odds.cur_odds}`, '1' )
     // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
