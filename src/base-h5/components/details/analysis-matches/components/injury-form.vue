@@ -46,6 +46,7 @@ import lodash from "lodash"
     text-align: left;
     line-height: 0.32rem;
     padding: 0 0.1rem;
+    color:var(--q-analysis-text-color-14);
 
     .col1 {
       padding-left: 0.25rem;
@@ -68,6 +69,7 @@ import lodash from "lodash"
     font-size: 0.13rem;
     height: 0.48rem;
     text-align: left;
+    color:var(--q-analysis-text-color-20);
 
     &:nth-child(odd) {
 
