@@ -481,7 +481,7 @@ export default {
       padding: 0 10px;
       border-top: 1px solid var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
-      border-radius: 0 0 8px 8px;
+      border-radius: 8px;
       border: 1px solid var(--q-gb-bd-c-15);
       margin-top: 5px;
       &.collapsed {
@@ -546,8 +546,7 @@ export default {
   &.is_league_tail {
     .match-inner-container {
       box-shadow: var(--q-color-box-shadow-color-4);
-      border-bottom-left-radius: 0.08rem;
-      border-bottom-right-radius: 0.08rem;
+      border-radius: 0.08rem;
       //overflow: hidden;
     }
   }

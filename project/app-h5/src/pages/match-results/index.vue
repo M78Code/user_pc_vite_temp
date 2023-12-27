@@ -30,7 +30,7 @@
         <ScrollMenu v-if="menu_list.length" :scrollDataList="menu_list" :is_show_badge="false" :current_mi="current_mi" @changeMenu="set_scroll_current"/>
 
         <!-- <ObserverWrapper class="match-result-contant" :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper> -->
-        <MatchContainer class="match-result-contant"/>
+        <MatchContainer/>
     </template>
 
      <!-- 筛选+搜索  已脱离文档流-->
