@@ -180,7 +180,7 @@ export default {
       if(this.timer1_) { clearTimeout(this.timer1_) }
       this.timer1_ = setTimeout(() => {
         try{
-          this.$refs.reset_scroll_dom.scrollLeft = 0
+          this.$refs && (this.$refs.reset_scroll_dom.scrollLeft = 0)
         }catch(e){
           console.error(e)
         }

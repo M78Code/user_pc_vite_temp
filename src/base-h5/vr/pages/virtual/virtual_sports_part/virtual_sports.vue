@@ -68,8 +68,7 @@
               {{current_match.mid}}
             </div>
             <div class="virtual-video-play-team" v-if="sub_menu_type && [1001,1004].includes(sub_menu_type)">
-                    <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']"
-                    v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
+                    <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']" v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
                       <div class="teams">
                         <span>{{item.teams[0]}}</span>
                         <span class="number_family">{{item.home || 0}}</span>
@@ -178,7 +177,7 @@ import virtual_skeleton from "src/base-h5/vr/components/skeleton/virtual_sports/
 // import setting from "src/project/components/common/setting";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-import ServerTime from "src/core/server-time/server-time.js"
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 import { IconWapper } from 'src/components/icon'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { api_common } from "src/api/index.js";
@@ -400,7 +399,7 @@ export default {
     switch_match_handle(i){
       let match = this.match_list_by_no[i];
       if(match){
-        let server_now = ServerTime.get_remote_time()
+        let server_now = get_now_server()
         match.start_now_sub = Number(match.mgt) - server_now;
         if(this.sub_menu_type == 1004){
           if(match.mmp == 'INGAME'){
@@ -597,7 +596,7 @@ export default {
     handle_match_time(batch){
       const match = batch.matchs[0];
       if(match){
-        let remaining_time = Number(match.mgt) - ServerTime.get_remote_time();
+        let remaining_time = Number(match.mgt) - get_now_server();
         //毫秒格式化为: 分钟'秒''
         let minutes = Math.floor(remaining_time / (1000 * 60));
         let sub_ms_r = remaining_time - minutes * 60 * 1000;

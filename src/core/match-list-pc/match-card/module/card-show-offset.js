@@ -9,8 +9,44 @@ import PageSourceData  from  "src/core/page-source/page-source.js"
 import { MenuData} from "src/output/module/menu-data.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
+// 显示等级：
+//     列表分为不同层级 不同维度 组合成为我们的列表
+//     1.我们由赛事卡片组合成我们的列表容器卡片
+//     2.由多个联赛容器卡片和联赛标题卡片组合成我们的赛事列表
+//     3.有关于我们的显示等级 是在我们表征计算之后 此时已经得到了我们每个赛事卡片的表征信息了(例如卡片高度)
+//     4.然后我们会循环我们的表征key组成的数组，去表征类里边取我们的每个key所对应的视图信息
+//     5.例如 第一个卡片高度为200px 那么会计算出来这个卡片的向上偏移量 然后加上自身的高度获得当前卡片距离顶部的偏移量
+//     6.这个时候会把当前的这个卡片的表征信息存储为pre_card_obj
+//     7.然后下一个卡片会根据pre_card_obj去计算当前卡片的顶部向上偏移量及底部向上偏移量 以此类推
+//     8.当我们的表征key的数组里边全部都有offset_top offset_bottom之后 会走进我们的显示等级的算法里边
+//     9.目前我们的显示等级的算法为：
+//         9.1 首先我们规划出了一个我们的显示等级,分为五个显示等级 1~5级
+//         9.2 我们在列表发生滚动的时候，可以拿到我们的当前scrollTop 然后根据scrollTop和当前的页面高度计算出我们每个卡片的显示等级
+//         9.3 我们的显示等级区域计算逻辑为 
+//             9.3.1 scrollTop+当前页面的高度 这是1级显示区域 
+//             9.3.2 2级显示区域的逻辑为 从scrollTop - 500 --》 content_height + 500 * 2 可以理解为向上向上扩展500px 向下扩展500px
+//             9.3.3 然后3级可视区域就是 1000px
+//             9.3.4 其余为4级可视区域
+//             9.3.5 目前没有应用5级可视区域
+//         9.4 例如 当前卡片的offset_top为 300 offset_bottom为600(卡片高度为300px) 然后列表的scrollTop为400
+//             因为offset_bottom > scrollTop && offset_bottom < scrollTop+当前页面高度 所以这张卡片就是在可视区域内的
+//             或者 当前卡片的offset_top为 600 offset_bottom为1000(卡片高度为400px) 然后列表的scrollTop为400
+//             因为offset_top > scrollTop && offset_top < scrollTop+当前页面高度 所以这张卡片也是在可视区域内的
+//             这是显示等级为1的算法
+//         9.5 其余2.3.4 显示等级与1级显示等级计算逻辑一致 只不过用于判断的值 会上下扩展
 
- 
+// 可视区域id获取  
+//     我们根据显示等级获取到可视区域赛事id(show_level 为 1 且当前卡片是展示状态)
+//     会将mid push到一个数组里边 作为我们的可视区域id数组
+//     注意~~~
+//         特殊情况会获取不到可视区域的赛事id
+//         这个时候是有一个补充逻辑在的
+//         补充逻辑为
+//             拿到当前获取到的可视区域id的第一项和最后一项的赛事id
+//             从我们的当前列表的mid队列中取到第一项和最后一项的mid所在位置的下标
+//             如果第一项到最后一项的长度 大于我们的可视区域id数组的长度
+//             那么用这个新数组 去覆盖掉我们原来的可视区域id的数组
+//             只需要补充当前可视区域数组长度小于我们的真正队列中截取出来的长度的时候 才需要处理
 //显示等级 计算参照结果
 const show_level_refer = MatchListCardData.show_level_refer;
 /**

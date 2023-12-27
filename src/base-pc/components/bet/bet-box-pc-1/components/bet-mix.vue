@@ -6,7 +6,7 @@
   <div class="bet-mix height-full" :class="bet_flag?'bet-layout':''">
     <div class="auto-wrap no-wrap column">
       <!-- 下注标识 -->
-      <div style="display:none"> ------ {{ BetData.bet_data_class_version }} -- {{  BetData.bet_s_list.length }} ---- </div>
+      <div style="display:none"> ------ {{ BetData.bet_data_class_version }} -- {{  BetData.bet_s_list.length }} -----{{BetViewDataClass.bet_view_version}} </div>
       <div class="scroll-wrap" :class="{'record-scoll-wrap': !bet_flag}">    
 
         <!--未投注就是bet-mix-info组件-->
@@ -45,9 +45,9 @@
                   :key="item.custom_id"
                   v-if="index != 0"
                 ></bet-input> -->
-                <!-- <q-card flat class="bet-mix-item-card">
+                <q-card flat class="bet-mix-item-card">
                   <betSpecialInput :index="index" :items="item"  v-if="index!= 0"/>
-                </q-card> -->
+                </q-card>
               </template>
             </template>
           </div>

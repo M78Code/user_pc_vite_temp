@@ -586,12 +586,12 @@ class MatchMeta {
     // vr 足球 
     // const res = await api_common.get_virtual_result({
     //   batchNo:"",
-    //   endTime:1703606399000,
-    //   isVirtualSport:1,
-    //   page:{ size: 100, current: 1 },
-    //   sportType:"1004",
-    //   startTime:1703520000000,
-    //   tournamentId:"79430600606371842"
+    //   endTime:1703606399000, 结束时间
+    //   isVirtualSport:1, 是否是虚拟体育
+    //   page:{ size: 100, current: 1 }, 不用管
+    //   sportType:"1004", csid 体育id
+    //   startTime:1703520000000, 开始时间
+    //   tournamentId:"79430600606371842" tid
     // })
     // vr 马 狗 
     const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
@@ -1204,7 +1204,6 @@ class MatchMeta {
       this.current_matchs = matchs_data
       this.complete_mids = result_mids
     }
-
     if (!is_virtual) {
       // 清除虚拟计算信息
       VirtualList.clear_virtual_info()
@@ -1471,11 +1470,10 @@ class MatchMeta {
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
       // match_mids是可视区域id
       const active_index = this.match_mids.findIndex(t => t === mid)
-
+      active_index>-1&& this.match_mids.splice(active_index,1)
       const index = this.complete_matchs.findIndex(t => t.mid == mid)
       index > -1 && this.complete_matchs.splice(index, 1)
-
-      if (active_index > -1) {
+      if (index > -1) {
         // 复刻版 新手版 使用的是 observer-wrapper 组件模式 不需要重新计算
         // if (project_name == 'app-h5' && UserCtr.standard_edition == 1) return;
 

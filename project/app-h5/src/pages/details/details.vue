@@ -510,6 +510,8 @@ export default defineComponent({
         }
       }
 
+      useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, false)
+      useMittEmit(MITT_TYPES.EMIT_SET_PLAY_VIDEO, false)
       // for (const key in $data) {
       //   $data[key] = null
       // }

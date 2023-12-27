@@ -200,7 +200,7 @@
                   :csid="+match.csid" :path="match.mhlu" type="home"></image-cache-load> -->
                 <!-- <img v-if="match?.mhlu?.length" class="logo" v-img="([match.mhlu[0], match.frmhn[0], match.csid])" /> -->
                   <team-img
-                    v-if="!lodash.isEmpty(match)"
+                    v-if="!lodash.isEmpty(match) && lodash.get(match,'mhlu[0]')"
                     :type="0"
                     :csid="match.csid"
                     :url="lodash.get(match,'mhlu[0]')"
@@ -1023,7 +1023,7 @@ export default {
             justify-content: flex-start;
             position: relative;
             .is-handicap {
-              color: #74C4FF;
+              color: var(--q-gb-t-c-1) !important;
             }
             .match-name {
               width: 1rem;

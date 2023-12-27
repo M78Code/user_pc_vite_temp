@@ -3,11 +3,11 @@
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
-                <div class="w-100 f-s-c text-1a1">
+                <div class="w-100 f-s-c text-1a1 m-b-6">
                     <span class="text-flow-none color000 font500">{{ items.playOptionName}}</span> 
                     <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
                 </div>
-                <div class="w-100 my-4 font12">
+                <div class="w-100 font12 content">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bet_inplay") + ']'}}</span>
                     <span class="text-a1a text-flow-none">{{ items.playName }}
                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
@@ -15,7 +15,7 @@
                     
                     <span class="mr-4 text-009"> [{{ i18n_t(`odds.${items.marketType}`) }}]</span>
                
-                    <div class="w-100 text-8a8 fon12 font400" style="margin: .04rem 0;">{{ items.matchInfo }}</div>
+                    <div class="w-100 text-8a8 fon12 font400 my-4">{{ items.matchInfo }}</div>
                     <div class="w-100 text-8a8 fon12 font400" v-if="items.matchType != 3">{{items.matchName}}</div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
 
             <div class="bet-result f-b-c" >
                 <span class="font12 font400 bet-returm mr-4">注单号</span>
-                <span class="order font12 font400 number_family">{{ items.orderNo }}</span>
+                <span class="order font12 font400">{{ items.orderNo }}</span>
             </div>
         </div>
 
@@ -113,13 +113,15 @@ const props = defineProps({
 
         .bet-left {
             width: 2.3rem;
+            .m-b-6 {
+                margin-bottom: .06rem;
+            }
         }
     }
 
-     .my-4 {
-            margin: 0.04rem 0;
-            border-left: 2px solid var(--q-gb-bg-c-13);
-            padding: 0 0.04rem;
+     .content {
+        border-left: 2px solid var(--q-gb-bg-c-13);
+        padding: 0 .04rem;
       }
     .bet-market{
         font-size: .13rem;
