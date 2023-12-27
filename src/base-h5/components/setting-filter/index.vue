@@ -289,7 +289,6 @@ const activity_handle = item => {
      * 切换新旧版本
      */
 const change_version = async ()=>{
-
     // 增加loop版本跳转参数
     // location.href = old_url.href;
       let obj = { rdm: (new Date().getTime()) };
@@ -301,8 +300,12 @@ const change_version = async ()=>{
       let val = origin.substring(start,end)
           origin = origin.replace(val,'user-h5-bw3')
       const url = `${origin}?${param}`
-      await api_account.get_UserVersion({h5FrontVersion:'1'})
+      // const current_env = BUILD_VERSION_CONFIG;
+      // console.log('current_envcurrent_env',current_env)
+      await api_account.get_UserVersion({h5FrontVersion:'0'})
       location.href = url
+      // 复刻  geli user-h5-reprint
+      // 复刻 生产试玩  app-h5
   }
 
 

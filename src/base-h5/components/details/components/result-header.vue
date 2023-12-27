@@ -12,13 +12,21 @@
     <!-- 头部联赛名返回区域 -->
     <common-header :title="result_detail_data.tn"/>
     <!-- 头部联赛名返回区域 -->
-    <match-results-header-top  :detail_data="result_detail_data"/>
-    <header-bottom
-      v-if="!(menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid))"
-      :detail_data="result_detail_data"
-      class="results_header_bottom"
-      :class="{ baseball: result_detail_data.csid == '3',margin_left_bottom: result_detail_data.mng != 1 }"
-    />
+    <!-- <match-results-header-top  :detail_data="result_detail_data"/> -->
+    <div class="match-results-header-top">
+      <ContestName :detail_data="result_detail_data"></ContestName>
+      <ContestTime :detail_data="result_detail_data"></ContestTime>
+    </div>
+    <div class="result-header-bottom-new">
+      <ContestStatus :detail_data="result_detail_data"></ContestStatus>
+      <header-bottom
+        v-if="!(menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid))"
+        :detail_data="result_detail_data"
+        class="results_header_bottom"
+        :class="{ baseball: result_detail_data.csid == '3',margin_left_bottom: result_detail_data.mng != 1 }"
+      />
+    </div>
+    
   </div>
 </template>
 
@@ -29,6 +37,9 @@ import headerTop from "src/base-h5/components/details/components/header/header-t
 import headerBottom from "src/base-h5/components/details/components/header/header-bottom.vue";
 import matchResultsHeaderTop from "src/base-h5/components/details/components/details-match-results/match-results-header-top.vue";
 import { detail_csid_config } from "src/core/match-detail/match-detail-h5/config/details-bg.js";
+import ContestName from "src/base-h5/components/details/components/details-match-results/match-results-header-top/contest-name.vue"
+import ContestStatus from "src/base-h5/components/details/components/details-match-results/match-results-header-top/contest-status.vue"
+import ContestTime from "src/base-h5/components/details/components/details-match-results/match-results-header-top/contest-time.vue"
 import { ref } from "vue"
 import lodash from "lodash"
 import { MenuData } from "src/output/index.js"
@@ -66,54 +77,78 @@ const props = defineProps({
   }
 }
 
-:deep(.results_header_bottom) {
-  &.header-bottom {
-    height: unset;
-  }
+// :deep(.results_header_bottom) {
+//   &.header-bottom {
+//     height: unset;
+//   }
 
-  .match_score {
-    margin-left: 0.92rem;
-    height: unset;
-    line-height: 0.17rem;
-    width: 2.45rem;
-    overflow-x: auto;
-    margin-top: .07rem;
+//   .match_score {
+//     margin-left: 0.92rem;
+//     height: unset;
+//     line-height: 0.17rem;
+//     width: 2.45rem;
+//     overflow-x: auto;
+//     margin-top: .07rem;
 
-    .font-style {
-      margin: unset;
-      display: flex;
-      flex-wrap: nowrap;
+//     .font-style {
+//       margin: unset;
+//       display: flex;
+//       flex-wrap: nowrap;
 
-      > div {
-        white-space: nowrap;
-      }
-    }
-  }
+//       > div {
+//         white-space: nowrap;
+//       }
+//     }
+//   }
 
-  &.margin_left_bottom {
-    .match_score {
-      margin-left: 0.55rem;
-      width: 2.91rem;
-    }
-  }
+//   &.margin_left_bottom {
+//     .match_score {
+//       margin-left: 0.55rem;
+//       width: 2.91rem;
+//     }
+//   }
 
-  &.baseball {
-    .match_score {
-      margin-top: 0.1rem;
-      margin-left: unset;
-      height: 0.38rem;
-      line-height: 0.38rem;
-      width: 100%;
+//   &.baseball {
+//     .match_score {
+//       margin-top: 0.1rem;
+//       margin-left: unset;
+//       height: 0.38rem;
+//       line-height: 0.38rem;
+//       width: 100%;
 
-      .row.items-center {
-        position: relative;
-        left: 0.17rem;
-      }
+//       .row.items-center {
+//         position: relative;
+//         left: 0.17rem;
+//       }
 
-      .col-6.ms-r {
-        left: -0.18rem;
-      }
-    }
+//       .col-6.ms-r {
+//         left: -0.18rem;
+//       }
+//     }
+//   }
+// }
+
+.match-results-header-top{
+  width: 100%;
+  height: .8rem;
+  box-sizing: border-box;
+  padding: 0 .19rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.result-header-bottom-new{
+  width: 100%;
+  height: .32rem;
+  padding: 0 .19rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  position: relative;
+  :deep(.results_header_bottom){
+    height: auto;
+    flex: 1;
   }
 }
 </style>

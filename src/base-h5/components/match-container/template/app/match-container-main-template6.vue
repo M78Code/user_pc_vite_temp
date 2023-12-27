@@ -88,9 +88,10 @@ export default {
 
 <style scoped lang="scss">
 .cw2-bg-content {
-  background: var(--q-gb-bg-c-17);
+  background: var(--q-gb-bg-c-18);
   margin: 0 .08rem;
   box-shadow: var(--q-color-box-shadow-color-4);
+  border: 1px solid var(--q-gb-bd-c-15);
   border-radius: .08rem;
 }
 .champion-wrap-2 {
@@ -102,7 +103,7 @@ export default {
   height: auto;
   position: relative;
   margin: 0 auto;
-  background: var(--q-gb-bg-c-18);
+  background: var(--q-gb-bg-c-21);
   border-radius: 0.05rem;
 
   .league-container {
@@ -311,7 +312,7 @@ export default {
   padding-left: 0.1rem;
   height: 0.2rem;
   font-size: 0.11rem;
-  background-color: var(--q-gb-bg-c-18);
+  background-color: var(--q-gb-bg-c-21);
   color: var(--q-gb-t-c-24);
   /*transform: translateY(3px);*/
   margin: 0 auto;

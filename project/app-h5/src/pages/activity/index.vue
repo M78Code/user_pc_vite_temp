@@ -37,15 +37,22 @@ const  gr = window.SEARCH_PARAMS.init_param.get('gr')?.toLocaleUpperCase()
 // }
 url.value  = lodash.get(window, `BUILDIN_CONFIG.DOMAIN_RESULT.topic.activity`);
 const  theme_value = ref('')
-if(gr == 'COMMON'){
-  theme_value.value = UserCtr.get_user_url_parames().replace("&theme=theme-2", '&theme=theme02_y0')
-}else{
-  theme_value.value =UserCtr.get_user_url_parames()
+// 设置默认主题
+let theme = 'theme01';
+if(UserCtr.theme){
+  // 主题转换
+  theme = UserCtr.theme.replace("-", '0')
 }
+// 暂时强行设置蓝色
+if(1||lodash.get(UserCtr.user_info, 'stm') === 'blue') {
+  // 设置y0样式
+  theme+='_y0'
+}
+theme_value.value =UserCtr.get_user_url_parames({theme})
 // 访问路由拼接 
 const  acticity_src_url  = url.value  +'?'+ theme_value.value;
 acticity_src.value = acticity_src_url
-console.error(url.value,'活动跳转',acticity_src.value,'---------',gr);
+// console.error(url.value,'活动跳转',acticity_src.value,'---------',gr);
 
 </script>
 <style lang="scss" scoped>

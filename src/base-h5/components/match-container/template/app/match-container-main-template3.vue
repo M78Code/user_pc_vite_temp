@@ -16,9 +16,10 @@
       <!-- 全部 -->
       <div class="all-league-title" v-if="i === 0" @click.stop="handle_all_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{ i18n_t('filter.all_leagues')}} </span> </div> 
-        <!-- <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt=""> -->
-        <div :class="['expand_item', {ball_seed_collapsed: !all_ball_seed_collapsed}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
+        <div class="expand_item" :class="{ball_seed_collapsed: !all_ball_seed_collapsed}" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
       </div>
+      <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
+      <div class="buffer-container" v-if="match.is_show_league && i !== 0"></div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 @click.stop="handle_ball_seed_fold"-->
       <div v-if="show_sport_title" @click.stop="handle_ball_seed_fold"
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
@@ -28,11 +29,10 @@
       </div>
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
       <div :class="['match-inner-container', {'collapsed': !collapsed}]">
-         <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
-        <div class="buffer-container" v-if="match.is_show_league && i !== 0"></div>
+         
         <!--联赛标题 -->
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
-          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'no-border': !collapsed}]">
+          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title}]">
           <div class="league-t-wrap right-border">
             <span class="league-title-text row justify-between">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
@@ -439,6 +439,11 @@ export default {
   .v-mode-span {
     margin-right: 0.1rem;
   }
+  .buffer-container{
+      background: var(--q-gb-bg-c-21);
+      height: 5px;
+      width: 100%;
+    }
 
   .match-inner-container {
     margin: 0 auto;
@@ -448,12 +453,8 @@ export default {
     padding: 0 0.05rem;
     flex-direction: column;
     align-items: center;
-    background: var(--q-gb-bg-c-18) !important;
-    .buffer-container{
-      background: var(--q-gb-bg-c-21);
-      height: 5px;
-      width: 100%;
-    }
+    background: var(--q-gb-bg-c-21);
+    border-radius: .08rem;
 
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
     &.show-sport {
@@ -487,7 +488,8 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    background: var(--q-gb-bg-c-18);
+    // background: var(--q-gb-bg-c-18);
+    // background: var(--q-match-page-bg-color-10);
     .match-odds-container-border-radius {
       overflow: hidden;
     }
@@ -728,6 +730,7 @@ export default {
     height: 0.26rem;
     border-radius: 0.08rem 0.08rem 0 0;
     // padding: 0 0.1rem;
+    background-color: var(--q-gb-bg-c-18);
     border-bottom: 1px solid var(--q-gb-bd-c-4);
 
     &.show-sport {
@@ -892,6 +895,7 @@ export default {
     flex-wrap: nowrap;
     align-items: center;
     overflow: hidden;
+    font-weight: 600;
     color: var(--q-gb-bg-c-3) !important;
     .icon-wapper{
       transform: rotate(90deg);
@@ -918,11 +922,6 @@ export default {
         //max-width: 1.4rem;
       }
     }
-
-
-    color: var(--q-color-com-fs-color-26);
-
-    font-weight: 600;
   }
 
   .match-type {
