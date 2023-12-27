@@ -198,10 +198,11 @@ export default {
         width: 0.12rem;
         height: 0.06rem;
         display: block;
-        transition: transform 0.3s;
+        // transition: transform 0.3s;
+        transform: rotateZ(180deg);
 
         &.collapsed {
-          transform: rotateZ(180deg);
+          transform: rotateZ(90deg);
         }
       }
     }
