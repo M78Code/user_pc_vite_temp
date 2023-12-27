@@ -4,13 +4,13 @@
     <div class="wonderful">
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/border_left.svg`" alt="" class="border-left">
       <div class="wonderful-header">
-        <p>精彩集锦</p>
-        <ul class="wonderful-tabs">
+        <p>{{ i18n_t('app_h5.detail.highlights') }}</p>
+        <!-- <ul class="wonderful-tabs">
           <li v-for="(item, i) in wonderful_tabs" :key="i" @click="change_wonderful_active(i)"
               :class="[wonderful_active == i ? 'wonderful-active':'disable-text']">
             {{ item.name }}
           </li>
-        </ul>
+        </ul> -->
       </div>
 
       <!-- 内容 -->
@@ -181,11 +181,11 @@
 
       
     </div>
-    
+    <!-- 赛事事件 -->
     <div class="wonderful">
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/border_left.svg`" alt="" class="border-left">
       <div class="wonderful-header" @click="change_event_active">
-        <p>赛事事件</p>
+        <p>{{ i18n_t('app_h5.detail.events') }}</p>
         <!-- <ul class="wonderful-tabs">
           <li v-for="(item, i) in wonderful_tabs" :key="i" @click="change_wonderful_active(i)"
               :class="[wonderful_active == i ? 'wonderful-active':'disable-text']">
@@ -196,17 +196,17 @@
           
       </div>
     </div>
-
+    <!-- 技术统计 -->
     <div class="wonderful">
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/border_left.svg`" alt="" class="border-left">
       <div class="wonderful-header">
-        <p>技术统计</p>
-        <ul class="wonderful-tabs">
+        <p>{{ i18n_t('app_h5.detail.technical_statistics') }}</p>
+        <!-- <ul class="wonderful-tabs">
           <li v-for="(item, i) in bureau_tabs" :key="i" @click="change_bureau_tabs(i)"
               :class="[bureau_active == i ? 'wonderful-active':'disable-text']">
             {{ item.name }}
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
     
