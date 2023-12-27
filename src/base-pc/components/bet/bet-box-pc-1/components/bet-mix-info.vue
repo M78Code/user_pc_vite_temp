@@ -45,7 +45,6 @@
 import BetMixItem from "./bet-mix-item.vue";
 import BetInput from "./bet-input.vue";
 import BetMixResult from "./bet-mix-result.vue";
-
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import betSpecialInput from "./bet-special-input.vue"
