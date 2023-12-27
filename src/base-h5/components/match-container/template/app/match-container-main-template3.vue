@@ -199,8 +199,7 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score"
-                          :class="{ 'visibility-hidden': match.ms == 110 }">
+                        <div class="score full-score">
                           {{ home_score || 0 }}
                         </div>
                       </div>
@@ -232,8 +231,7 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score"
-                          :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
+                        <div class="score full-score">
                           {{ away_score || 0 }}
                         </div>
                       </div>
