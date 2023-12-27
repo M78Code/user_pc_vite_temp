@@ -92,6 +92,7 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { bet_special_series_change,get_query_bet_amount_common,set_market_id_to_ws } from "src/core/bet/class/bet-box-submit.js"
 import TokenInvalid from "./token-invalid.vue"
 import {debounce} from "lodash";
+import { api_account } from "src/api/index";
 // import betMixBoxChild from "src/base-h5/components/bet/bet-box-app-h5-1/bet_mix_box_child.vue";
 
 // 活动弹出框
@@ -264,7 +265,7 @@ const stickyAside = (x) => {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
     //设置当前默认版本
   set_standard_edition_fun()
   //获取当前版本默认值
@@ -284,6 +285,8 @@ onMounted(() => {
     // 隐藏loading动画 
     useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,0);
   })
+  //当前是新系统还是旧系统
+  await api_account.get_UserVersion({h5FrontVersion:'1'})
 });
 
 const mitt_list = [
