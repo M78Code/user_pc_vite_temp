@@ -488,7 +488,7 @@ function fetch_filter_match() {
       inputText: props.search_val,
       cuid: UserCtr.get_uid(),
       device: 'v2_h5',
-      md: lodash.get(MenuData.current_lv_3_menu, 'field1')
+      md: lodash.get(MenuData.current_lv_3_menu, 'field1') || new Date().setHours(0, 0, 0, 0)
     };
     api_match_filter = api_filter.get_fetch_filter_match
     //三级日期菜单时间戳

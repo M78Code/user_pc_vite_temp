@@ -218,7 +218,6 @@ const football_score_icon_list = ref([
 ])
 
 const handle_change = (value) => {
-  console.log(33333);
   right_actions_label.value = value;
 }
 
