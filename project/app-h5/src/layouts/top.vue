@@ -58,7 +58,7 @@ import { TopMenu,ScrollMenu,SearchTab,DateTab,SwitchWap } from 'src/base-h5/comp
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 
 import { is_esports, is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
-
+import { get_collect_count } from 'src/core/collect/collect-class.js'
 const is_first = ref(true)
 const route = useRoute();
 const router = useRouter() 
@@ -158,6 +158,7 @@ const searchTabMenu = ref(null);//足球tab dom
         !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj)
         const data_list_esports = await MenuData.getDateList(val?.csid);
         dataListEsports.value = data_list_esports;
+        get_collect_count();
         handle_match_render_data(type)
         break;
       case 300:

@@ -216,7 +216,7 @@ export default defineComponent({
     const fixedHeight = ref(null)
     const scroll_visible_1 = ref(true)
     const page_style = ref('')
-    
+    const videosRef = ref(null)
     const {
       scroller_scroll_top,
       state_data,
