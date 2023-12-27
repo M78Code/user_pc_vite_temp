@@ -9,7 +9,6 @@
   <template v-if="['matchList', 'sport_menu', 'esports_sports'].includes(route.name)">
     <!--  顶部菜单 -->
     <TopMenu />
-
     <div v-show="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
       <DateTab @changeDate="setDate" ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
@@ -19,7 +18,7 @@
         <DateTab @changeDate="setDate" ref="dJdateTabMenu" :dataList="dataListEsports"  />
     </div>
     <!-- 滑动菜单组件 -->
-    <ScrollMenu ref="scrollTabMenu" :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" @changeMenu="set_scroll_current" :current_mi="ref_data.current_mi" />
+    <ScrollMenu ref="scrollTabMenu" :is_kemp_esports="is_kemp_esports" :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" @changeMenu="set_scroll_current" :current_mi="ref_data.current_mi" />
     <!--  -->
     <SwitchWap v-if="is_show_switch_wap" />
     <!--  -->
@@ -58,7 +57,7 @@ import { TopMenu,ScrollMenu,SearchTab,DateTab,SwitchWap } from 'src/base-h5/comp
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 
 import { is_esports, is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
-
+import { get_collect_count } from 'src/core/collect/collect-class.js'
 const is_first = ref(true)
 const route = useRoute();
 const router = useRouter() 
@@ -66,6 +65,7 @@ const inner_height = window.innerHeight;  // 视口高度
 const select_dialog = ref(false);//暂时筛选窗口dJ
 const dateTabMenu = ref(null);//时间dom
 const dJdateTabMenu = ref(null);//电竞时间dom
+const is_kemp_esports = ref(false);//电竞冠军
 const scrollTabMenu = ref(null);//滚球dom
 const searchTabMenu = ref(null);//足球tab dom
   const mitt_list=[
@@ -133,6 +133,7 @@ const searchTabMenu = ref(null);//足球tab dom
       const data_list_esports = await MenuData.getDateList(val?.csid);
       dataListEsports.value = data_list_esports;
       ref_data.current_mi = val.mi;
+      val.old_csid =val.csid || MenuData.current_lv_2_menu?.csid;
       MenuData.set_current_lv_2_menu_i(val);
       nextTick(()=>{
         dJdateTabMenu.value?.changeTabMenu({},0,'',type);
@@ -156,8 +157,9 @@ const searchTabMenu = ref(null);//足球tab dom
         ref_data.current_mi =is_session?MenuData.current_lv_2_menu_i:obj.mi
         // 设置二级菜单 
         !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj)
-        const data_list_esports = await MenuData.getDateList(val?.csid);
+        const data_list_esports = await MenuData.getDateList(val?.csid|| MenuData.current_lv_2_menu?.old_csid || BaseData.dianjing_sublist[0].csid);
         dataListEsports.value = data_list_esports;
+        get_collect_count();
         handle_match_render_data(type)
         break;
       case 300:
@@ -197,6 +199,7 @@ const searchTabMenu = ref(null);//足球tab dom
     if([3,6].includes(MenuData.current_lv_1_menu_mi.value)){
       set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,type)
     }else{
+      is_kemp_esports.value = MenuData.get_mm_is_champion()
       handle_match_render_data();
     }
   }

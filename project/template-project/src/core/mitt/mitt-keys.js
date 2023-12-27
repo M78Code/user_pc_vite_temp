@@ -36,5 +36,7 @@ export const EMIT_API_USER_PRO_INFO_CMD = "EMIT_API_USER_PRO_INFO_CMD";
 export const EMIT_APIS_DOMAIN_ALL_BAD = "EMIT_APIS_DOMAIN_ALL_BAD";
 // loading动画操作
 export const EMIT_LOADING_CTR_CMD = "EMIT_LOADING_CTR_CMD";
+// iframe预加载操作
+export const EMIT_IFRAME_BEFORE_LOADING_CMD = "EMIT_IFRAME_BEFORE_LOADING_CMD";
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------
  

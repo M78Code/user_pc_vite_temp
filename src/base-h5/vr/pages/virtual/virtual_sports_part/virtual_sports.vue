@@ -167,7 +167,7 @@ import noData from "src/base-h5/vr/components/common/no_data.vue";
 import matchTab from "src/base-h5/vr/pages/virtual/virtual_sports_part/match_tab.vue"
 import v_s_match_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list.vue"
 import v_s_match_list2 from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list2.vue"
-import virtualSportsTab from "src/base-h5/vr/components/virtual_sports_tab.vue"
+// import virtualSportsTab from "src/base-h5/vr/components/virtual_sports_tab.vue"
 import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue"
 import { utils } from "src/core/utils/common/module/utils.js";
 import virtual_sports_stage from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue"
@@ -749,7 +749,7 @@ export default {
     'match-tab':matchTab,
     'v-s-match-list':v_s_match_list,
     'v-s-match-list2':v_s_match_list2,
-    'virtual-sports-tab':virtualSportsTab,
+    // 'virtual-sports-tab':virtualSportsTab,
     'virtual-sports-stage':virtual_sports_stage,
     'dynamic-ranking': dynamic_ranking,
     'result-page': result_page,
@@ -894,6 +894,7 @@ export default {
   color: var(--q-gb-t-c-18);
   // background: #F2F2F6;
   background-color: var(--q-gb-bg-c-21) ;
+  padding-bottom: 0.66rem;
 }
 .virtual-sports-card {
   &-content {

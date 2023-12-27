@@ -236,7 +236,8 @@ import { i18n_t } from "src/boot/i18n.js";
   height: 0.5rem;
   border-radius: 0.04rem;
   color: var(--q-gb-t-c-3);
-  background: var(--q-cathectic-color-7);
+  // background: var(--q-cathectic-color-7);
+  background: var(--q-gb-bg-c-28);
   .result-p {
     line-height: 0.12rem;
   }

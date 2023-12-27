@@ -197,7 +197,8 @@ const get_match_detail_info = () => {
   // 从url取值赛事id：mid  || get_goto_detail_matchid
   //赛果类型  0 普通 1电竞 2vr  3冠军
   // console.log(MenuData.get_results_type() ,'MenuData.is_esports() ');
-  let mid = route.params.mid ;
+  let mid =  MatchDetailCalss.get_goto_detail_matchid  || route.params.mid;
+  console.log(mid,'mid');
   // if(mid){
   //   set_goto_detail_matchid(mid);
   // }
@@ -349,14 +350,14 @@ onUnmounted(() => {
 }
 
 .play-pad {
-  padding-top: 1.71rem;
+  padding-top: 2.09rem;
   // background: var(--q-gb-bg-c-19) ;
   height: 100%;
   overflow: hidden;
 }
 
 .baseball-play-pad {
-  padding-top: 1.71rem;
+  padding-top: 2.09rem;
   background: var(--q-gb-bg-c-19) !important;
 }
 :deep(.skeleton-wrap) {

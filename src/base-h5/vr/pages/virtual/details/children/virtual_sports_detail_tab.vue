@@ -53,11 +53,13 @@ export default {
   height: 0.48rem;
   margin-bottom: 0.04rem;
   width: 100%;
-  border-bottom: 8px solid var(--q-gb-bg-c-29);
+  background: var(--q-gb-bg-c-27);
+  border-bottom: 0.08rem solid var(--q-gb-bg-c-29);
 }
 .bg-tabs {
   width:100%;
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-23);
+  box-shadow: 0 2px 8px 0 var(--q-gb-bd-c-14);
   
 .bg-active-tab {
   background: var(--q-gb-bg-c-15);

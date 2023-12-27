@@ -17,8 +17,8 @@
         </div>
         <!-- 大 -->
         <div class="row bor-style bet-card-play-container" :class="get_is_hengping?'bor-style2':'' ">
-          <div class="play-name " v-show="!get_is_hengping">
-            <div class="play-name-card ellipsis">
+          <div class="play-name " v-show="!get_is_hengping" :style="{width:rem(0.85)+'px',margin:rem(0.04)+'px'}">
+            <div class="play-name-card ellipsis" >
               {{lodash.get(item_data, 'title[0].osn')}}
             </div>
           </div>
@@ -29,7 +29,7 @@
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length==2 }]"
               :style="{left:`${left}px`}">
               <template v-for="(append_single, index) of append_single_list">
-                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px'}"   :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
+                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px',margin:rem(0.04)+'px'}"   :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
                   <div class="row row-fat">
                     <!-- (开盘_mhs=0或者锁盘_mhs=11 -->
                     <div v-if="append_single._mhs == 0 || append_single._mhs == 11" style="flex:1;">
@@ -121,9 +121,9 @@
         </div>
         <div class="row bet-card-play-container">
           <!-- 小 -->
-          <div class="play-name " v-show="!get_is_hengping">
-              <div class="play-name-card ellipsis">
-                {{lodash.get(item_data, 'title[1].osn')}}+++{{ rem(1)+'px' }}
+          <div class="play-name " v-show="!get_is_hengping" :style="{width:rem(0.85)+'px',margin:rem(0.04)+'px'}">
+              <div class="play-name-card ellipsis" >
+                {{lodash.get(item_data, 'title[1].osn')}}
               </div>
           </div>
           <div class="row slide-con" ref="bet_slide" style="flex:1;" v-touch-pan.horizontal.prevent.mouse="touch_pan">
@@ -133,7 +133,7 @@
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length==2 }]"
             :style="{left:`${left}px`}">
               <template v-for="(append_single,index) of append_single_list">
-                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px'}" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
+                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px',margin:rem(0.04)+'px'}" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                   <div class="row row-fat" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                     <!-- (开盘_mhs=0或者锁盘_mhs=11) -->
                     <div v-if="append_single._mhs == 0 || append_single._mhs == 11" style="flex:1;">
@@ -246,7 +246,10 @@ export default defineComponent({
   setup(props, evnet) {
     const route = useRoute()
     let init_data = reactive({
-      
+
+      prev_left:0,
+      // 记录向右滑动几次
+      index:0,
       // 滑动left
       left: 0
     });
@@ -357,13 +360,19 @@ export default defineComponent({
     */
    const touch_pan =lodash.debounce( (e) =>{
     // 初始化 init_data.left 设置为0 
-    init_data.left = 0
+     init_data.left = 0
+     init_data.left = init_data.prev_left
+    // if ( init_data.left=0) {
+    //   init_data.prev_left = 0
+    // }
       let dom_width = bet_slide.value?.clientWidth
 
       if ((append_single_list.value.length / 2) < 4) {
         return
       }
       if (e?.direction == 'left') {
+    //  滑动次数++
+        init_data.index =  init_data.index+1
         // 左滑
         let slide_num
         let temp_num = props.item_data.hl.length / 3
@@ -380,17 +389,21 @@ export default defineComponent({
         if (Math.abs(init_data.left) >= max_left) {
           return
         }
-
         init_data.left -= dom_width 
-         // init_data.left 左滑距离+12   以免右侧留白
-         init_data.left =  init_data.left +12
+         // init_data.left 左滑距离+13   以免右侧留白
+          init_data.left =  init_data.left - rem (init_data.index* 0.13)
+          init_data.prev_left -= dom_width 
       } else {
+        init_data.index =  init_data.index-1
         // 右滑
         if (init_data.left >= 0) {
+          init_data.index = 0
+          init_data.prev_left = 0
           return
         }
         init_data.left += dom_width
-        init_data.left = init_data.left+12
+         init_data.left = init_data.left-rem (init_data.index* 0.13)
+         init_data.prev_left+= dom_width
       }
     }, 50);
    
@@ -532,9 +545,9 @@ export default defineComponent({
     height: 0.48rem;
     .bet-item {
       // min-width: 0.85rem;   // rem动态计算，这里注释，写在行内
-      margin:0.04rem;
+      // margin:0.04rem;
       &:nth-child(1) {
-          margin-left:0.08rem;
+           margin-left:0.08rem;
         }
     }
    
@@ -661,13 +674,13 @@ export default defineComponent({
  
   }
   .play-name-card{
-      margin: 0.04rem;
+      // margin: 0.04rem;
       text-align: center;
       font-size: 0.14rem;
       background:var(--q-gb-bg-c-28);
       border-radius: 4px;
       color:var(--q-gb-t-c-10);
-      width: 0.85rem;
+      // width: 0.85rem;
       box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     }
   .single-name {

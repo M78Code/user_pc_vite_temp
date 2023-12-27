@@ -3,13 +3,28 @@
 -->
 <template>
   <div class="bet-menu-wrap" :class="{ 'bet-menu-wrap-mix': !BetData.is_bet_single }">
-    <!-- 错误信息 -->
-    <div class="bet-message" v-if="BetViewDataClass.error_message">
-      <div class="w-100 f-c-c bet-title" :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
-          {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
+    <div v-if="!BetData.is_bet_single">
+      <hr class="bet-total-hr">
+      <div class="bet-total-wrap">
+        <div class="row bet-total">
+          <div class="col bet-total-left">{{ i18n_t("bet.total_bet")}}</div>
+          <div class="col-auto bet-total-right"> {{ format_money2(mathJs.divide(BetViewDataClass.bet_special_pc.bet_total)) }}</div>
+        </div>
+        <div class="row bet-total">
+          <div class="col bet-total-left">{{ i18n_t("bet.total_income") }}</div>
+          <div class="col-auto bet-total-right bet-gold-text">{{ format_money2(mathJs.divide(BetViewDataClass.bet_special_pc.bet_win))}}</div>
+        </div>
       </div>
     </div>
-
+    
+    <!-- 错误信息 -->
+    <div class="bet-message" v-if="BetViewDataClass.error_message">
+      <div v-if="BetViewDataClass.bet_order_status == 4"  class="w-100 f-c-c bet-title" :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
+          {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
+      </div>
+      <div v-if="BetViewDataClass.bet_order_status == 3" class="bet-success-order">{{i18n_t("bet.bet_order_info2")}}</div>
+    </div>
+   
 
     <div class="full-width cursor-pointer bet-submit">
      
@@ -23,10 +38,16 @@
       </div>
     </div>
 
-    <div class="full-width cursor-pointer bet-delete-all" @click.stop="cancel_handle">
+    <div class="full-width cursor-pointer bet-delete-all" @click.stop="cancel_handle" v-if="BetViewDataClass.bet_order_status == 1">
       <!-- 取消投注 -->
       {{ i18n_t('bet.bet_cancel') }}
     </div>
+    <div class="full-width cursor-pointer bet-delete-all" @click="set_retain_selection" v-else>
+      <!-- 保留选项 -->
+      {{ i18n_t('bet.save_item') }}
+    </div>
+    
+
 
     <div class="bet-footer-check">
       <span class="check-box" >
@@ -43,7 +64,7 @@
     </div>
 
 
-    <div v-show="false">{{ BetViewDataClass.bet_view_version }}-{{BetData.bet_data_class_version}}</div>
+    <div v-show="false">{{ BetViewDataClass.bet_view_version }}-{{BetData.bet_data_class_version}} - {{ BetViewDataClass.bet_view_version }}</div>
 
   </div>
 </template>
@@ -55,7 +76,9 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
-import { LayOutMain_pc } from "src/output/index.js";
+import mathJs from 'src/core/bet/common/mathjs.js'
+import { LayOutMain_pc, i18n_t,UserCtr,format_money2} from "src/output/index.js"
+
 
 //是否失效
 const lock_btn = ref(false)
@@ -78,6 +101,16 @@ const cancel_handle = () => {
   BetViewDataClass.set_clear_bet_view_config()
   LayOutMain_pc.set_layout_left_show('menu')
 }
+// 保留投注项
+const set_retain_selection = () => {
+    BetViewDataClass.set_bet_order_status(1)
+    BetData.set_bet_amount(0)
+    BetViewDataClass.set_bet_before_message({})
+    BetViewDataClass.set_is_finally(true)
+    setTimeout(() => {
+        useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+    }, 200);
+}
 
 
 </script>
@@ -86,7 +119,34 @@ const cancel_handle = () => {
 .bet-menu-wrap {
   padding: 10px 10px 20px;
   background: var(--q-gb-bg-c-11);
-  border-right: 1px solid var(--q-gb-bd-c-6);
+  border-right: 1px solid var(--q-gb-bg-c-2);
+  .bet-total-hr {
+      height: 0.5px;
+      background: #E4EAFF;;
+      border:0;
+      margin-top: -10px;
+    }
+  .bet-total-wrap {
+    border-bottom: 0.5px solid #E4EAFF;
+    padding: 8px 0;
+    margin-bottom: 30px;
+  }
+  .bet-total {
+    line-height: 1;
+    padding: 0 15px 5px 15px;
+    .bet-total-left {
+      font-size: 12px;
+      color: var(--q-gb-bg-c-2);
+      text-align: left;
+    }
+    .bet-total-right {
+      font-size:16px;
+      text-align: center;
+    }
+    .bet-gold-text {
+      color: var(--q-gb-bg-c-18);
+    }
+  }
   .bet-footer-check{
     margin-top: 20px;
   }
@@ -120,6 +180,17 @@ const cancel_handle = () => {
     line-height: 30px;
     background: transparent;
     font-size: 12px;
+    margin:-15px 0 15px 0;
+    .bet-success {
+      line-height: 30px;
+    }
+    .bet-success-order {
+      background: rgba(100,194,88,0.2);
+      color: #64c258;
+      line-height: 30px;
+      font-size: 12px;
+      border-radius: 0px 0px 6px 6px;
+    }
   }
 }
 .check-box {

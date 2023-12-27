@@ -120,11 +120,10 @@ const move = (text_width, scroll) => {
   max-width: 1.6rem;
   overflow: hidden;
   position: relative;
-  color: var(--q-gb-t-c-5);
+  color: var(--q-gb-t-c-14);
   .scroll_wrap {
     display: flex;
     // color: #fff;
-    color: var(--q-gb-t-c-18);
     p {
       word-break: keep-all;
       white-space: nowrap;

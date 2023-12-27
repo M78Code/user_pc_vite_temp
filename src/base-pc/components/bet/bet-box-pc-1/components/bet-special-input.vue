@@ -5,7 +5,6 @@
             <div class="col bet-mix-info">{{ items.name}}</div>
             <span class="odds-value yb-number-bold" v-if="index==0"> @{{ items.seriesOdds}}</span>
         </div>
-        <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
             <!--金额输入区域包括键盘 -->
         <div class="row ">
             <!--金额输入区-->
@@ -19,7 +18,7 @@
                     <icon-wapper name="icon-failure" size="12px" />
                 </div>
             </div>
-           
+            <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
             <div v-show="items.show_quick" class="bet-win-key">
                 <div class="row bet-win yb-fontsize12">
                     <div class="col df-jb">
@@ -75,9 +74,9 @@ const ref_data = reactive({
 const InputFocus = ref()
 
 onMounted(() => {
-    show_quick()
     ref_data.money = props.items.bet_amount
-    
+    InputFocus.value.focus()
+    show_quick()
 })
 
 onUnmounted(() => {
@@ -102,8 +101,7 @@ const keydown = (e) => {
 
 // 输入判断
 const set_win_money = () => {
-    //获取焦点
-    InputFocus.value = focus()
+
     let items_obj = lodash_.get(props,'items',{})
     // 输入控制
     if( ref_data.money < props.items.max_money &&  ref_data.money < UserCtr.balance){
@@ -125,8 +123,6 @@ const show_quick = () => {
     let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
     let id = lodash_.get(props,'items.id','')
     list.filter(item => {
-        console.log(item.id)
-        console.log(id)
         item.show_quick = false
          // 显示指定投注项的快捷金额按钮
         if(item.id == id){

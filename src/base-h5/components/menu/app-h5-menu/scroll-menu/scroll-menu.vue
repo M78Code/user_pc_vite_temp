@@ -46,6 +46,7 @@ const ref_data = reactive({
 })
 const menu_show_id = reactive([300,2000]);//全部 vr 收藏 电竞显示
 const scrollTab = ref(null);
+
 const props = defineProps({
   // 滑动菜单数据
   scrollDataList:{
@@ -61,12 +62,17 @@ const props = defineProps({
     type: Boolean,
     default: true
   },
+  is_kemp_esports:{
+    type:Boolean,
+    default: false
+  }
 })
 const scrollDataListNew = computed(()=> {
   //赛果 串关  不显示收藏
   //赛果 有数据 展示我的投注
-  if(MenuData.is_results() && props.scrollDataList?.length)return [...[{mi:"200",result_mi:"100",sport_id:"0",btn:1,ct:0,title:"我的投注"}],...props.scrollDataList];
-  if((MenuData.is_results() && !props.scrollDataList?.length)|| MenuData.is_mix())return props.scrollDataList;
+  // if(MenuData.is_results() && props.scrollDataList?.length)return [...[{mi:"200",result_mi:"100",sport_id:"0",btn:1,ct:0,title:"我的投注"}],...props.scrollDataList];
+  // if((MenuData.is_results() && !props.scrollDataList?.length)|| MenuData.is_mix())return props.scrollDataList;
+  if(MenuData.is_results()|| MenuData.is_mix()||props.is_kemp_esports)return props.scrollDataList;
   return [...[{mi:50000,btn:1,ct:MenuData.collect_count.value,title:"收藏"}],...props.scrollDataList]
 })
 const emits = defineEmits(['changeList','changeMenu'])

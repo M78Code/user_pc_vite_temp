@@ -20,7 +20,7 @@ import UserCtr from "src/core/user-config/user-ctr.js"
 import { lang } from "src/base-h5/mixin/userctr";
 import {  useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
+import VirtualList from 'src/core/match-list-h5/match-class/virtual-list' 
 import { project_name, MenuData } from "src/output/index.js";
 import { set_menu_init,sort_type,standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { is_esports } from 'src/base-h5/mixin/menu.js'
@@ -37,39 +37,12 @@ const get_switch_data = () => {
                 {
                     name:i18n_t('footer_menu.pro_v'),
                     val:2,
-                    changeFun:(val)=>{
-                        useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
-                        UserCtr.set_standard_edition(val)
-                        if (project_name === 'app-h5') {
-                            nextTick(() => {
-                                // !MenuData.is_collect() && MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
-                                if (MenuData.is_collect()) {
-                                    MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
-                                } else {
-                                    MatchMeta.clear_match_info()
-                                    MatchMeta.set_origin_match_data({})
-                                }
-                            })
-                        }
-                    }
+                    changeFun:(val)=> hendler_version_change(2)
                 },
                 {// 1 新手版
                     name:i18n_t('footer_menu.new_v'),
                     val:1,
-                    changeFun:(val)=>{
-                        useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
-                        nextTick(()=>{
-                            UserCtr.set_standard_edition(val)
-                            VirtualList.set_is_show_ball(true)
-                            if (MenuData.is_collect()) {
-                                MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
-                            } else {
-                                MatchMeta.clear_match_info()
-                                MatchMeta.set_origin_match_data({})
-                            }
-                            // MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
-                        })
-                    }
+                    changeFun:(val)=> hendler_version_change(1)
                 }
             ]
         },
@@ -119,6 +92,22 @@ const get_switch_data = () => {
 }
 
 const switchData = ref(get_switch_data())
+
+// 版本切换
+const hendler_version_change = (val = 2) => {
+    UserCtr.set_standard_edition(val)
+    useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
+    nextTick(()=>{
+        VirtualList.set_is_show_ball(true)
+        if (MenuData.is_collect()) {
+            MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+        } else {
+            MatchMeta.clear_match_info()
+            MatchMeta.set_origin_match_data({})
+        }
+        // MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
+    })
+}
 
 /**
  * @description 监听设置菜单里面 菜单的改变

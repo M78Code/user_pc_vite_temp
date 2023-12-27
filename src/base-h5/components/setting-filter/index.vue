@@ -90,7 +90,7 @@ import { is_vr } from 'src/base-h5/mixin/menu.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-import { api_account } from "src/api/index";
+
 defineOptions({
   name: "settingFilter" // 设置组件名称
 });
@@ -289,24 +289,24 @@ const activity_handle = item => {
      * 切换新旧版本
      */
 const change_version = async ()=>{
-  // https://user-h5-bw3.sportxxx1zx.com/#/home
-  // https://app-h5.sportxxx1zx.com/#/match
-  // const href = window.href;
-  // let param = UserCtr.get_user_url_parames(obj); 
-  //    await api_account.get_UserVersion({frontVer:'user-h5-bw3'})
     // 增加loop版本跳转参数
     // location.href = old_url.href;
       let obj = { rdm: (new Date().getTime()) };
       // 设置参数
-      // let pathname = window.location.pathname.replace('/app-h5','user-h5-bw3')
-      //  pathname = pathname.replace('/project','');
-      //  console.log('pathname',pathname)
-      //  console.log('window.location',window.location.href)
       let param = UserCtr.get_user_url_parames(obj);
-      // let url = `${pathname}?${param}`;
-      let herf = window.location.href.replace('app-h5','user-h5-bw3')
-      await api_account.get_UserVersion({h5FrontVersion:'1'})
-      location.href = `${herf}${param}`;
+      let origin = window.location.origin
+      const start = origin.indexOf('//')+2
+      const end = origin.indexOf('.')
+      let jump_url = 'user-h5-bw3'
+      //测试环境
+      if (BUILD_VERSION_CONFIG?.CURRENT_ENV === "local_test"){
+         jump_url = 'test-user-h5-bw3'
+      }
+      console.log('jump_urljump_url',jump_url)
+      let val = origin.substring(start,end)
+          origin = origin.replace(val,jump_url)
+      const url = `${origin}?${param}`
+      location.href = url
   }
 
 
