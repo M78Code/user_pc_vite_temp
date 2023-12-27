@@ -89,7 +89,7 @@ import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from
 import ranking_list_start from "src/base-h5/vr/pages/virtual/virtual_sports_part/ranking_list_start.vue"
 import group_knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/group_knockout.vue"
 import football_ranking_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/football_ranking_list.vue"
-
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -191,7 +191,7 @@ export default {
         }
         MatchDataWarehouseInstance.clear(); 
         MatchDataWarehouseInstance.set_match_details(this.current_match);
-        let now_se = ServerTime.get_remote_time();
+        let now_se = get_now_server();
         let mgt_n = Number(data.mgt);
         if(now_se > mgt_n){
           this.get_video_process_by_api(() => {
@@ -307,7 +307,8 @@ export default {
             Object.assign(this.current_match,lodash.cloneDeep(m_o_video));
           }
           if(this.current_match){
-            this.current_match.start_now_sub = Number(this.current_match.mgt) - ServerTime.get_remote_time();
+            this.current_match.start_now_sub = Number(this.current_match.mgt) - get_now_server();
+            
             this.set_current_sub_menuid(this.current_match.csid);
             let detail_setted = false;
             if(this.vsport_operate && typeof this.vsport_operate.destroy == 'function'){
