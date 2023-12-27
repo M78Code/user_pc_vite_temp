@@ -383,14 +383,14 @@ export default defineComponent({
 
         init_data.left -= dom_width 
          // init_data.left 左滑距离+12   以免右侧留白
-         init_data.left =  init_data.left 
+         init_data.left =  init_data.left +12
       } else {
         // 右滑
         if (init_data.left >= 0) {
           return
         }
         init_data.left += dom_width
-        init_data.left = init_data.left
+        init_data.left = init_data.left+12
       }
     }, 50);
    
@@ -531,7 +531,7 @@ export default defineComponent({
     //width: 200%;
     height: 0.48rem;
     .bet-item {
-      // min-width: 0.85rem;   // rem宽度动态计算，这里注释，写在行内
+      // min-width: 0.85rem;   // rem动态计算，这里注释，写在行内
       margin:0.04rem;
       &:nth-child(1) {
           margin-left:0.08rem;
