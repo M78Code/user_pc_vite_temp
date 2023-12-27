@@ -340,10 +340,11 @@ export default {
         }
         if(this.source=='virtual_sports_details')
         {
-          this.set_detail_data_assign((detail_data)=>{
-            // this.$set(detail_data, 'match_status',res.match_status);
-            detail_data.match_status = res.match_status;
-          });
+          // this.set_detail_data_assign((detail_data)=>{
+          //   // this.$set(detail_data, 'match_status',res.match_status);
+          //   detail_data.match_status = res.match_status;
+          // });
+          this.get_detail_data.match_status = res.match_status;
         } else{
           // this.$set(this.current_match, 'match_status',res.match_status);
           this.current_match.match_status = res.match_status
@@ -370,10 +371,11 @@ export default {
             let totalTime = res_data[params.tid]
             if(this.source=='virtual_sports_details')
             {
-              this.set_detail_data_assign((detail_data)=>{
-                // this.$set(detail_data, 'totalTime',totalTime);
-                detail_data.totalTime = totalTime
-              });
+              // this.set_detail_data_assign((detail_data)=>{
+              //   // this.$set(detail_data, 'totalTime',totalTime);
+              //   detail_data.totalTime = totalTime
+              // });
+              this.get_detail_data.totalTime = totalTime
             } else{
               // this.$set(this.current_match, 'totalTime',totalTime);
               this.current_match.totalTime = totalTime;
