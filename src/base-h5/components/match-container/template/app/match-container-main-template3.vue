@@ -451,7 +451,7 @@ export default {
     align-items: center;
     background: var(--q-gb-bg-c-18) !important;
     .buffer-container{
-      background: var(--q-gb-bg-c-18);
+      background: var(--q-gb-bg-c-21);
       height: 5px;
       width: 100%;
     }
@@ -488,7 +488,7 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    background: var(--q-match-page-bg-color-10);
+    background: var(--q-gb-bg-c-18);
 
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -562,7 +562,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: var(--q-gb-bg-c-21) !important;
+    // background: var(--q-gb-bg-c-18) !important;
     &.bottom{
       margin-top: 0.05rem;
     }
