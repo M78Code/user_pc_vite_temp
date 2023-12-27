@@ -30,7 +30,9 @@
       </div>
  <!-- {{ tab_list }} -->
       <!-- 正常活动页面 -->
-      <div v-show="!is_maintaining">
+      <div v-show="!is_maintaining" class="activity_page" :class="{
+        isAPP: isAPP
+      }">
         <header class="activity_task-header"></header>
         <div class="header-tab">
           <div
@@ -122,8 +124,14 @@ export default {
  
  
 <style lang="scss" scoped>
+.activity_page{
+  padding-top: 0.44rem;
+  &.isAPP{
+    padding-top: 0;
+  }
+}
 .head {
-  position: sticky;
+  position: fixed;
   width: 100%;
   line-height: 0.44rem;
   height: 0.44rem;

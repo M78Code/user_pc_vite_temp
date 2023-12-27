@@ -16,6 +16,14 @@
               :match_of_list="get_match_item(item)">
             </MatchContainerMainTemplate8>
           </template>
+          <template v-else-if="MenuData.is_results_type === 3">
+            <!-- vr 赛果 -->
+            <MatchContainerMainTemplate6
+              v-if="get_match_item(item).sportId"
+              :i="index"
+              :match_of_list="get_match_item(item)">
+            </MatchContainerMainTemplate6>
+          </template>
           <!-- 常规赛果 -->
           <template v-else>
             <MatchContainerMainTemplate3
