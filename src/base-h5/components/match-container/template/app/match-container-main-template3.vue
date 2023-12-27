@@ -448,7 +448,7 @@ export default {
     padding: 0 0.05rem;
     flex-direction: column;
     align-items: center;
-    background: var(--q-gb-bg-c-18) !important;
+    background: var(--q-gb-bg-c-41) !important;
     .buffer-container{
       background: var(--q-gb-bg-c-21);
       height: 5px;
@@ -487,7 +487,8 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    background: var(--q-gb-bg-c-18);
+    // background: var(--q-gb-bg-c-18);
+    // background: var(--q-match-page-bg-color-10);
     .match-odds-container-border-radius {
       overflow: hidden;
     }
