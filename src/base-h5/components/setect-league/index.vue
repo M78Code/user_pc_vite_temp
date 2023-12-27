@@ -142,6 +142,7 @@ defineProps({});
     justify-content: space-between;
     padding: 0.18rem 0.2rem;
     align-items: baseline;
+    background:var(--q-gb-bg-c-25);
     .sl-title {
       font-size: 0.18rem;
       color: var(--q-gb-t-c-18);
@@ -154,6 +155,7 @@ defineProps({});
   .sl-search {
     display: flex;
     padding: 0 0.2rem;
+    background:var(--q-gb-bg-c-25);
     .sl-input-content {
       height: 0.4rem;
       width: 100%;
