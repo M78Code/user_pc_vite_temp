@@ -348,12 +348,12 @@ export default {
 
 .match-line-module {
   padding: 0 0.1rem;
-  background-color: var(--q-gb-bg-c-21) !important;
+  // background-color: var(--q-gb-bg-c-21) !important;
   height: 1px;
   .match-line {
     width: 100%;
     height: 0.005rem;
-    background-color: var(--q-gb-bg-c-4);
+    background-color: var(--q-gb-bd-c-4);
   }
 }
 .match-container-main-template3{
