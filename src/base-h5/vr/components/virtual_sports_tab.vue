@@ -254,6 +254,7 @@ export default {
   line-height: 0.4rem;
   padding: 0 0.12rem;
   display: inline-block;
+  color: var(--q-gb-t-c-19);
 }
 
 /*************** 选中的玩法集 *************** -S*/

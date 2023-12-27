@@ -1006,7 +1006,7 @@ this.bet_appoint_ball_head= null */
             // 查询ws投注项 中 匹配到的投注项id 
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
-            console.error('market_list', item.hs ,ws_ol_obj.os,item.hn, ol_obj.placeNum)
+            // console.error('market_list', item.hs ,ws_ol_obj.os,item.hn, ol_obj.placeNum)
             // 坑位变更
             if(item.hn != ol_obj.placeNum){
               // 获取最新的盘口值

@@ -11,7 +11,8 @@
       <div class="bet-box-content">
         <!-- {{BetData.is_bet_single}}-{{BetViewDataClass.bet_order_status}}-{{ BetViewDataClass.orderNo_bet_obj}}-{{ BetData.bet_s_list.length > 1 }}-{{ BetViewDataClass.bet_special_series }} -->
         <!-- 单关 投注 -->
-        <div class="bet-scroll" ref="bet_scroll" :class="!BetData.is_bet_single && BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1  ?'h188':''">
+        <div class="bet-scroll" ref="bet_scroll" @scroll="handle_bet_scroll"
+        :class="!BetData.is_bet_single && BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1  ?'h188':''">
           <div v-if="BetViewDataClass.bet_order_status == 1">
             <template v-if="BetData.is_bet_single">
               <div
@@ -93,7 +94,7 @@
 </template>
 
 <script setup>
-import { reactive, ref,nextTick } from "vue";
+import { watch, ref,nextTick } from "vue";
 import { UserCtr, compute_local_project_file_path } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -122,7 +123,12 @@ const pack_up = () => {
 const set_show_single = () => {
   BetData.set_bet_box_h5_show(false)
 };
-
+//如果隐藏了滚动到底部  再重新展开的话 滚动条会在头部 得重新计算是否显示
+watch(BetData.bet_data_class_version,()=>{
+  if(BetData.bet_box_h5_show){
+    handle_bet_scroll({target:bet_scroll.value})
+  }
+})
 // 单关/串关 切换
 const show_single_change = () => {
   if (BetData.is_bet_single) {
@@ -144,13 +150,28 @@ function handle_input_click(e){
    const _h=bet_scroll.value.offsetHeight
    const diff=e.target.offsetParent.offsetTop - _h + e.target.offsetParent.offsetHeight;
    if(diff>0&&bet_scroll.value.scrollTop<diff){
-    bet_scroll.value.scrollTop= diff
+      bet_scroll.value.scrollTo({
+        top: diff,
+        behavior: "smooth",
+      })
+      handle_bet_scroll({target:bet_scroll.value})
     }
   },50);
 }
-
-// 滑动到底部滚动区域的底部
 let show_img = ref(true);
+/**
+ * 滚动到一定高度就隐藏
+*/
+const handle_bet_scroll=lodash.debounce((e)=>{
+  if(!e.target)return
+  const {offsetHeight,scrollHeight,scrollTop}=e.target;
+  if(scrollTop<(scrollHeight-offsetHeight)*0.5){
+    show_img.value=true;
+  }else{
+    show_img.value=false;
+  }
+},100)
+// 滑动到底部滚动区域的底部
 const scrollTo = () => {
   nextTick(() => {
     bet_scroll.value.scrollTo({

@@ -53,6 +53,7 @@ export default {
   height: 0.48rem;
   margin-bottom: 0.04rem;
   width: 100%;
+  background: var(--q-gb-bg-c-27);
   border-bottom: 0.08rem solid var(--q-gb-bg-c-29);
 }
 .bg-tabs {
