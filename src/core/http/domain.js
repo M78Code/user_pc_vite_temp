@@ -300,7 +300,7 @@ class AllDomain {
     let reqs = [];
     url_api.map((item) =>
       reqs.push(
-        axios_instance.get(`${item}/yewu12/user/getUserInfo`, {
+        axios_instance.get(`${item}/yewu12/user/getUserInfoPB`, {
           params: { token: token },
           timeout: 6000,
           headers: {
