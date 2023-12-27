@@ -395,7 +395,7 @@ export default {
     width: 0.2rem;
     height: 16px;
     transition: transform 0.25s ease;
-    transform: rotate(-180deg);
+    transform: rotate(-90deg);
   }
   .ball_seed_collapsed{
     transform: rotate(0);
@@ -892,6 +892,7 @@ export default {
     flex-wrap: nowrap;
     align-items: center;
     overflow: hidden;
+    font-weight: 600;
     color: var(--q-gb-bg-c-3) !important;
     .icon-wapper{
       transform: rotate(90deg);
@@ -918,11 +919,6 @@ export default {
         //max-width: 1.4rem;
       }
     }
-
-
-    color: var(--q-color-com-fs-color-26);
-
-    font-weight: 600;
   }
 
   .match-type {
