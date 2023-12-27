@@ -336,7 +336,7 @@ const set_menu_lv1 = item => {
         }
         .main-menu-right-money{
             font-family: 'ky-font';
-            font-size: 16px;
+            font-size: 15px;
             letter-spacing: 0.5px;
             font-style: normal;
             font-weight: 700;
