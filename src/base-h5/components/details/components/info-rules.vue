@@ -96,7 +96,7 @@ export default defineComponent({
 
 /*************** 内容父盒子开始 *************** -S*/
 .content-box {
-  background-color: var(--q-gb-bg-c-21);
+  background-color: var(--q-gb-bg-c-23);
   color: #414655;//var(--q-detials-color-6);
   border-radius: 0.16rem;
   width: 3.2rem;
@@ -110,7 +110,7 @@ export default defineComponent({
 .content-box  header {
   font-size: 0.16rem;
   // color:var(--q-color-com-fs-color-1);
-  color: #000000;// var(--q-color-fs-color-35);
+  // color: #000000;// var(--q-color-fs-color-35);
   letter-spacing: 0;
   margin: 0 0.2rem 0.1rem 0.2rem;
   font-weight: 700;

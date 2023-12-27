@@ -342,8 +342,7 @@ export const category_info = (category_arr=[]) => {
     };
     // 如果是 赛果下边的 电竞，则加 isESport 参数
     if (
-      get_menu_type.value == 28 &&
-      [3001, 3002, 3003, 3004].includes(+get_curr_sub_menu_type.value)
+      MenuData.get_results_type() ==1 
     ) {
       params.isESport = 1;
     } else {

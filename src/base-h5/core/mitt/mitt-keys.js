@@ -315,6 +315,8 @@ export const EMIT_MAIN_LIST_MATCH_IS_EMPTY = "EMIT_MAIN_LIST_MATCH_IS_EMPTY";
 export const EMIT_MAIN_LIST_MAX_HEIGHT = "EMIT_MAIN_LIST_MAX_HEIGHT";
 // 赛事列表回到顶部
 export const EMIT_GOT_TO_TOP = "EMIT_GOT_TO_TOP";
+// 显示 骨架图
+export const EMIT_SHOW_SKELETON_DIAGRAM = "EMIT_SHOW_SKELETON_DIAGRAM";
 /**
  * 触发toast弹框
  */

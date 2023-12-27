@@ -938,8 +938,6 @@ export default {
     align-items: center;
     overflow: hidden;
     font-weight: 600;
-    position: relative;
-    top: 1px;
     &.no-favorited{
       padding-left: 15px;
     }
@@ -1724,7 +1722,7 @@ export default {
     margin-left: .1rem;
     padding: 0 .01rem;
     height: 0.26rem;
-    width: 0.2rem;
+    width: 0.3rem;
     line-height: .16rem;
     border-radius: .03rem;
     background-size: cover;

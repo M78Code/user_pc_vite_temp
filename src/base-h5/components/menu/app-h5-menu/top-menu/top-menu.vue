@@ -44,21 +44,18 @@
 </template>
 <script setup>
 import lodash_ from "lodash";
-import { nextTick, reactive, ref, watch } from "vue";
+import {reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { format_money2 } from "src/output/index.js";
 import MatchFold from 'src/core/match-fold'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { is_kemp } from 'src/base-h5/mixin/menu.js'
-import { i18n_t, compute_css_obj, MenuData,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
-import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path } from  "src/output/index.js"
+import { i18n_t,  MenuData,UserCtr } from "src/output/index.js";
+import { compute_local_project_file_path } from  "src/output/index.js"
 import { get_collect_count } from 'src/core/collect/collect-class.js'
 
 import TopHeader from './top-header.vue';
 
-const router = useRouter();
 //一级菜单list
 const menu_list = reactive([
     {
@@ -117,7 +114,10 @@ const set_menu_lv1 = item => {
 /**
  * 初始化数据
  */
-
+ onMounted(()=>{
+    //刷新获取收藏数量
+    get_collect_count()
+ })
 </script>
 <style scoped lang="scss">
 .main-wrap {
@@ -330,12 +330,14 @@ const set_menu_lv1 = item => {
         align-items: center;
         padding: 0 0.1rem 0 0.03rem;
         .main-menu-right-symbol{
-            font-family: 'Akrobat';
+            font-family: 'ky-font';
             font-style: normal;
             font-weight: 600;
         }
         .main-menu-right-money{
-            font-family: 'Akrobat';
+            font-family: 'ky-font';
+            font-size: 15px;
+            letter-spacing: 0.5px;
             font-style: normal;
             font-weight: 700;
             flex: 1;

@@ -93,7 +93,9 @@
         </div>
         <!--专业版-->
         <div class="profession" v-if="standard_edition == 2">
-          <template v-if="get_hp_list(1).length">
+           <!--复刻版vr不能滑动-->
+          <!-- <template v-if="0 && get_hp_list(1).length"> -->
+          <template v-if="false">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" v-if="standard_odd_status == 0" :src="get_theme.includes('y0')?arrows:arrows_default">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="get_theme.includes('y0')?arrows_reverse:arrows_default_balck" v-else>
           </template>
@@ -127,7 +129,8 @@
               </div>
             </div>
             <!--标准版第二部分-->
-            <div class="standard-odd-list row second" :class="{'status2':standard_odd_status == 1}" v-if="get_hp_list(1).length">
+            <!--复刻版vr不能滑动-->
+            <div class="standard-odd-list row second" :class="{'status2':standard_odd_status == 1}" v-if="0 && get_hp_list(1).length"> 
               <div class="odd-column-w" :key="hp_i_i"
                 v-for="(hp_i,hp_i_i) of get_hp_list(1)">
                 <div class="odd-wrap-min" :class="`hp-${get_ol_length(hp_i,hp_i_i)}`"
@@ -313,6 +316,7 @@ export default {
      * @return Undefined Undefined
      */
     odd_wrapper_pan({ direction,isFinal }){
+      return; //复刻版vr不能滑动
       if (this.get_hp_list(1).length && !isFinal) {
         if(direction == "left"){
           this.standard_odd_status = 1;
@@ -1026,7 +1030,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #303442;
+        color: var(--q-gb-t-c-18);
         font-size: 12px;
         font-weight: 400;
 

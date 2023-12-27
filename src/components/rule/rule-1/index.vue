@@ -1,5 +1,5 @@
 <template>
-    <div class="rule-wrap">
+    <div class="rule-wrap" :class="project_name">
         <simple-header :title="i18n_t('common.sports_betting_rules')">
             <!-- <span>{{ i18n_t("common.sports_betting_rules") }}</span> -->
         </simple-header>
@@ -17,7 +17,7 @@ import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
-
+import { PROJECT_NAME } from "src/output/index.js"
 import { loadLanguageAsync } from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 useRegistPropsHelper(component_symbol, need_register_props)
@@ -26,7 +26,7 @@ const props = defineProps({})
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
-
+const project_name = PROJECT_NAME
 /** 环境变量 */
 const current_env = window.BUILDIN_CONFIG.CURRENT_ENV
 /** 体育规则地址-PC */
@@ -66,8 +66,13 @@ const get_pc_rule_url = () => {
     } else {
         obj.themeColors = theme2;
     }
+    const theme_map = {
+        'theme-2': 'theme01&sty=y0',
+        'theme-1': 'theme02&sty=y0',
+    }
     if (['app-h5'].includes(window.BUILDIN_CONFIG.PROJECT_NAME)) {
-        obj.themeColors = theme2.replace('theme-2', 'theme02&sty=y0').replace('theme-1', 'theme01_y0&sty=y0')
+        obj.themeColors = theme_map[theme2] //theme2.replace('theme-2', 'theme02&sty=y0').replace('theme-1', 'theme01_y0&sty=y0')
+
     }
     let param = UserCtr.get_user_url_parames(obj);
     url = `${domain}/#/${lang2}?${param}`;
@@ -91,9 +96,13 @@ onMounted(()=>{
     .rule-content {
         width: 100%;
         flex: 1;
-        background-color: #fff;
-      padding: 0 15px;
+        background-color: var(--q-gb-bg-c-27);
+    //   padding: 0 15px;
         
     }
+}
+// ========复刻版=======
+.app-h5.rule-wrap {
+    height: calc(100vh - 46px);
 }
 </style>

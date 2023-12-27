@@ -1417,7 +1417,6 @@ export default {
   display: flex;
   align-items: center;
   margin: 0 auto;
-  font-size: 0.1rem;
   align-items: center;
   justify-content: space-between;
 
@@ -1519,7 +1518,7 @@ export default {
     top: 0px;
     height: 100%;
     color: var(--q-gb-t-c-19);
-
+    margin-right: 2px;
     &.newer {
       margin-left: 0;
     }
@@ -1530,7 +1529,7 @@ export default {
 
     .date-time {
       position: relative;
-      top: 1px;
+      top: -1px;
       font-size: 12px
     }
   }

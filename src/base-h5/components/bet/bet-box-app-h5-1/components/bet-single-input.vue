@@ -15,7 +15,7 @@
 
           <span class="money-span" ref="money_span" v-if="show_money_span" :style="{ opacity: '1' }"></span>
           
-          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}<em class="number_family">{{ ref_data.min_money }}-{{ format_money3(ref_data.max_money) }}</em></span>
+          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}<em class="yb_fontsize16 number_family">{{ ref_data.min_money }}-{{ format_money3(ref_data.max_money) }}</em></span>
         </div>
         <div class="content-rmb">{{ currency_code[UserCtr.currency] }}</div>
       </div>
@@ -250,6 +250,9 @@ onUnmounted(() => {
   color: var(--q-gb-t-c-18);
   .limit-txt {
     color: var(--q-gb-t-c-19);
+    em {
+      margin-left: .04rem;
+    }
   }
 }
 /* ************** 右边内容 ************** -E */

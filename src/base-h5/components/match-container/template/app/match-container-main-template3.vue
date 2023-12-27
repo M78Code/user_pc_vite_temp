@@ -42,23 +42,12 @@
         <!-- 卡片主内容 -->
         <!-- <q-slide-transition> -->
         <div style="width: 100%;" v-if="collapsed">
-          <!--标准版 赔率标题栏-->
-          <!-- <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
-            <div class="odd-title-i-w flex">
-              <div class="odd-t-i-wrapper flex items-center"
-                :class="{ 'status2': PageSourceData.standard_odd_status.value == 1 && match_of_list_ascertain.length > 3 }">
-                <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
-                  :key="i" v-for="(hpl_title, i) of i18n_t('match_results_title.' + match.csid + '.title')">
-                  <div class="hpl-t-inner">
-                    {{ hpl_title }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
             <!-- <div style="border-top: 1px solid #000; width: 96%;"></div>  ！-->
           <div :class="['match-odds-container study_height_s hairline-border', {'border-top': !match.is_show_league}]">
+            <div class="match-line-module" v-if="!match.is_show_league">
+              <div class="match-line"></div>
+            </div>
             <div class="match-odds-container-border-radius">
               <!-- 上边的 赛事日期标准版,包含 比分组件 -->
               <div class="date-container match-indent" v-if="!show_newer_edition && !is_results">
@@ -208,11 +197,6 @@
                           }">
                             {{ match.mhn }}
                           </div>
-                          <!-- 进球动画 -->
-                          <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
-                            <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
-                            <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
-                          </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
                         <div class="score full-score"
@@ -245,11 +229,6 @@
                             'is-handicap-1': match.handicap_index == 1,
                           }">
                             {{ match.man }}
-                          </div>
-                          <!-- 进球动画 -->
-                          <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
-                            <div class="yb-goal-gif yb-goal-yo"></div>
-                            <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
@@ -368,6 +347,16 @@ export default {
 </script>
    
 <style scoped lang="scss">
+
+.match-line-module {
+  padding: 0 0.1rem;
+  background-color: var(--q-gb-bg-c-21) !important;
+  .match-line {
+    width: 100%;
+    height: 0.005rem;
+    background-color: var(--q-gb-bg-c-4);
+  }
+}
 .match-container-main-template3{
   // border-top: 0.05rem solid var(--q-gb-bg-c-21)
 }
@@ -388,7 +377,6 @@ export default {
   align-items: center;
   justify-content: space-between;
   border-top: 2px solid var(--q-gb-bd-c-3);
-  margin-bottom: .05rem;
   > div {
     display: flex;
     align-items: center;
@@ -411,7 +399,6 @@ export default {
 .auto-full-width-100 {
   width: 100%;
 }
-
 .match-container {
   width: 100%;
   height: auto;
@@ -500,7 +487,7 @@ export default {
       overflow: hidden;
     }
     &.border-top{
-      border-top: 1px solid var(--q-gb-bd-c-4);
+      // border-top: 1px solid var(--q-gb-bd-c-4);
     }
 
     .eports_scoring_tip {
@@ -734,9 +721,9 @@ export default {
   /* **************联赛展示********************** -S*/
   .league {
     height: 0.26rem;
-    border-radius: 0;
+    border-radius: 0.08rem 0.08rem 0 0;
     // padding: 0 0.1rem;
-
+    border-bottom: 1px solid var(--q-gb-bg-c-4);
     &.show-sport {
       border-radius: 0.12rem 0.12rem 0 0;
     }
@@ -962,7 +949,7 @@ export default {
     display: block;
     color: var(--q-gb-t-c-4);
     padding: 0.02rem 2% 0 2%;
-    margin-top: 0.02rem;
+    // margin-top: 0.02rem;
   }
 
   &.simple,
@@ -1032,7 +1019,7 @@ export default {
 
     .team-wrapper {
       padding-right:10px;
-      border-right: 1px solid rgba(88,88,88,.1);
+      border-right: 1px solid var(--q-gb-bg-c-4);
 
       &.simple {
         transform: translateY(-1px);
@@ -1260,7 +1247,7 @@ export default {
       .go-to-i-detail-i {
         width: 0.68rem;
         height: 0.47rem;
-        border-left: 1px solid #f5f5f5;
+        border-left: 1px solid var(--q-gb-bg-c-4);
 
         .word {
           margin-right: 0.08rem;

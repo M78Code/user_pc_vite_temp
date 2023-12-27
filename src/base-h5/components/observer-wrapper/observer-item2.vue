@@ -11,6 +11,12 @@
           :match_of_list="item">
         </MatchContainerMainTemplate6>
       </template>
+      <template v-else-if="is_results && is_virtual">
+        <MatchContainerMainTemplate8
+          :i="index"
+          :match_of_list="item">
+        </MatchContainerMainTemplate8>
+      </template>
       <template v-else-if="is_results && !is_kemp">
         <MatchContainerMainTemplate3
           :i="index"
@@ -34,6 +40,7 @@ import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive
 import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/app/match-container-main-template1.vue"; 
 import MatchContainerMainTemplate3 from "src/base-h5/components/match-container/template/app/match-container-main-template3.vue"; 
 import MatchContainerMainTemplate6 from "src/base-h5/components/match-container/template/app/match-container-main-template6.vue"; 
+import MatchContainerMainTemplate8 from "src/base-h5/components/match-container/template/app/match-container-main-template8.vue"; 
 
 const props = defineProps({
  item: {
@@ -52,6 +59,10 @@ const is_show = computed(() => {
 
 const is_kemp = computed(() => {
  return MenuData.get_results_type() === 3
+})
+
+const is_virtual = computed(() => {
+ return MenuData.get_results_type() === 2
 })
 
 </script>

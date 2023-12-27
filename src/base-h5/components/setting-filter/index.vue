@@ -62,12 +62,12 @@
          srcset="">
         </div>
       </div>
-      <!-- <div class="setting-item" @click="jump_webpage"> -->
+      <div class="setting-item" @click="change_version">
       <!-- 前往旧版 -->
-        <!-- <div class="title"> {{ i18n_t('app_h5.filter.go_old_version') }}</div> -->
+        <div class="title"> {{ i18n_t('app_h5.filter.go_old_version') }}</div>
         <!-- 前往网页版 -->
-        <!-- <div class="goto-website"> {{ i18n_t('app_h5.filter.go_web_version') }}</div>
-      </div> -->
+        <div class="goto-website"> {{ i18n_t('app_h5.filter.go_web_version') }}</div>
+      </div>
     </div>
     <div class="closed-btn" @click="closedHandle">
     <!-- 关闭 -->
@@ -88,13 +88,16 @@ import { i18n_t } from "src/boot/i18n.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { is_vr } from 'src/base-h5/mixin/menu.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
-
+// 本次打包的 客户端版本
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import { api_account } from "src/api/index";
 defineOptions({
   name: "settingFilter" // 设置组件名称
 });
 
 const router = useRouter();
-
+ // 新旧版
+ const current_version= ref('new')
 /**
  * @description 跳转至盘口教程
  * @param 
@@ -282,6 +285,27 @@ const activity_handle = item => {
   const status = item.switchValue === "rightVal" ? false : true;
   UserCtr.set_daily_activities(status);
 };
+      /**
+     * 切换新旧版本
+     */
+const change_version = async ()=>{
+
+    // 增加loop版本跳转参数
+    // location.href = old_url.href;
+      let obj = { rdm: (new Date().getTime()) };
+      // 设置参数
+      let param = UserCtr.get_user_url_parames(obj);
+      let origin = window.location.origin
+      const start = origin.indexOf('//')+2
+      const end = origin.indexOf('.')
+      let val = origin.substring(start,end)
+          origin = origin.replace(val,'user-h5-bw3')
+      const url = `${origin}?${param}`
+      await api_account.get_UserVersion({h5FrontVersion:'1'})
+      location.href = url
+  }
+
+
 </script>
 <style scoped lang="scss">
 // 组件样式
