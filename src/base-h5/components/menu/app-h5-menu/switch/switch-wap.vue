@@ -37,12 +37,12 @@ const get_switch_data = () => {
                 {
                     name:i18n_t('footer_menu.pro_v'),
                     val:2,
-                    changeFun:(val)=> hendler_version_change(val)
+                    changeFun:(val)=> hendler_version_change(2)
                 },
                 {// 1 新手版
                     name:i18n_t('footer_menu.new_v'),
                     val:1,
-                    changeFun:(val)=> hendler_version_change(val)
+                    changeFun:(val)=> hendler_version_change(1)
                 }
             ]
         },
@@ -95,9 +95,9 @@ const switchData = ref(get_switch_data())
 
 // 版本切换
 const hendler_version_change = (val = 2) => {
+    UserCtr.set_standard_edition(val)
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
     nextTick(()=>{
-        UserCtr.set_standard_edition(val)
         VirtualList.set_is_show_ball(true)
         if (MenuData.is_collect()) {
             MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })

@@ -373,7 +373,9 @@
           justify-content: center;
           font-size: 0.12rem;
           text-align: center;
-          color: var(--q-analysis-text-color-4) !important;
+          //color: var(--q-analysis-text-color-4) !important;
+          // Bug: 52498
+          color: var(--q-analysis-text-color-20) !important;
         }
       }
   
