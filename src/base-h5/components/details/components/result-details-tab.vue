@@ -53,7 +53,6 @@ const no_data = ref(false)
   // 监听csid的变化
  watch(() => props.result_detail_data.csid, (n,o) =>{
       // 切换顶部菜单，csid变化，触发tab事件
-      debugger
       result_tab(0, tab_item_list.value[0])
       get_list()
     },
