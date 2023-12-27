@@ -857,7 +857,6 @@ const set_error_message_config = (res ={},type,order_state) => {
         }
         // 投注前 提示 投注完成后不提示
         if(BetViewDataClass.bet_order_status == 1){
-            console.error('asdasd')
             useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
         }
         
