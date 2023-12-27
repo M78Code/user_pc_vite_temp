@@ -14,7 +14,7 @@
     }]">
     <template v-if="match" >
       <!-- 全部 -->
-      <div class="all-league-title" v-if="i === 0" @click.stop="handle_ball_seed_fold">
+      <div class="all-league-title" v-if="i === 0" @click.stop="menu_lv2?.mi==200?handle_all_ball_seed_fold():handle_ball_seed_fold()">
       <!-- 全部联赛 -->
         <div> <img :src="icon_date" alt=""> <span>{{ i18n_t('filter.all_leagues')}} </span> </div> 
         <!-- <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt=""> -->
