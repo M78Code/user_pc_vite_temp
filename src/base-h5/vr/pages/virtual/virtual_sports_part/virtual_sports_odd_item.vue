@@ -85,7 +85,7 @@ export default {
   align-items: center;
   position: relative;
   flex: 1;
-  background: #F2F2F6;
+  background: var(--q-gb-bg-c-28);
 
   .result-focus, .o-i-inner {
     width: 100%;
@@ -113,7 +113,7 @@ export default {
   }
   .odds-value {
     font-size: 0.1rem;
-    color: #303442;
+    color: var(--q-gb-t-c-18);
   }
 
   .lock {

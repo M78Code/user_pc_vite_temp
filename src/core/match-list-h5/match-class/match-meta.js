@@ -556,7 +556,7 @@ class MatchMeta {
       md: String(md),
       showem: 1, // 新增的参数 区分电子赛事
       euid: euid && String(euid),
-      type: euid ==="0"? 29 : 28,//我的投注 euid为0
+      type: euid ==="0"? String(29) : String(28),//我的投注 euid为0
     })
     if (this.current_euid !== `${euid}_${md}`) return []
     if (+res.code !== 200) {
@@ -1204,7 +1204,6 @@ class MatchMeta {
       this.current_matchs = matchs_data
       this.complete_mids = result_mids
     }
-
     if (!is_virtual) {
       // 清除虚拟计算信息
       VirtualList.clear_virtual_info()
@@ -1471,11 +1470,10 @@ class MatchMeta {
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
       // match_mids是可视区域id
       const active_index = this.match_mids.findIndex(t => t === mid)
-
+      active_index>-1&& this.match_mids.splice(active_index,1)
       const index = this.complete_matchs.findIndex(t => t.mid == mid)
       index > -1 && this.complete_matchs.splice(index, 1)
-
-      if (active_index > -1) {
+      if (index > -1) {
         // 复刻版 新手版 使用的是 observer-wrapper 组件模式 不需要重新计算
         // if (project_name == 'app-h5' && UserCtr.standard_edition == 1) return;
 

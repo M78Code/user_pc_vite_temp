@@ -45,6 +45,9 @@
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
             <!-- <div style="border-top: 1px solid #000; width: 96%;"></div>  ！-->
           <div :class="['match-odds-container study_height_s hairline-border', {'border-top': !match.is_show_league}]">
+            <div class="match-line-module" v-if="!match.is_show_league">
+              <div class="match-line"></div>
+            </div>
             <div class="match-odds-container-border-radius">
               <!-- 上边的 赛事日期标准版,包含 比分组件 -->
               <div class="date-container match-indent" v-if="!show_newer_edition && !is_results">
@@ -344,6 +347,16 @@ export default {
 </script>
    
 <style scoped lang="scss">
+
+.match-line-module {
+  padding: 0 0.1rem;
+  background-color: var(--q-gb-bg-c-21) !important;
+  .match-line {
+    width: 100%;
+    height: 0.005rem;
+    background-color: var(--q-gb-bg-c-4);
+  }
+}
 .match-container-main-template3{
   // border-top: 0.05rem solid var(--q-gb-bg-c-21)
 }
@@ -386,7 +399,6 @@ export default {
 .auto-full-width-100 {
   width: 100%;
 }
-
 .match-container {
   width: 100%;
   height: auto;
@@ -475,7 +487,7 @@ export default {
       overflow: hidden;
     }
     &.border-top{
-      border-top: 1px solid var(--q-gb-bd-c-4);
+      // border-top: 1px solid var(--q-gb-bd-c-4);
     }
 
     .eports_scoring_tip {
@@ -709,9 +721,9 @@ export default {
   /* **************联赛展示********************** -S*/
   .league {
     height: 0.26rem;
-    border-radius: 0;
+    border-radius: 0.08rem 0.08rem 0 0;
     // padding: 0 0.1rem;
-
+    border-bottom: 1px solid var(--q-gb-bg-c-4);
     &.show-sport {
       border-radius: 0.12rem 0.12rem 0 0;
     }
@@ -937,7 +949,7 @@ export default {
     display: block;
     color: var(--q-gb-t-c-4);
     padding: 0.02rem 2% 0 2%;
-    margin-top: 0.02rem;
+    // margin-top: 0.02rem;
   }
 
   &.simple,
@@ -1007,7 +1019,7 @@ export default {
 
     .team-wrapper {
       padding-right:10px;
-      border-right: 1px solid rgba(88,88,88,.1);
+      border-right: 1px solid var(--q-gb-bg-c-4);
 
       &.simple {
         transform: translateY(-1px);
@@ -1235,7 +1247,7 @@ export default {
       .go-to-i-detail-i {
         width: 0.68rem;
         height: 0.47rem;
-        border-left: 1px solid #f5f5f5;
+        border-left: 1px solid var(--q-gb-bg-c-4);
 
         .word {
           margin-right: 0.08rem;

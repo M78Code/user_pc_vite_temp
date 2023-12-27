@@ -382,7 +382,7 @@ onUnmounted(() => {
     font-weight: 700;
     border-radius: .08rem;
     margin: .02rem 0;
-    
+    box-shadow: 0 2px 8px #d1ebff;
 }
 
 .keyboard {
@@ -397,8 +397,8 @@ onUnmounted(() => {
   text-align: center;
 }
 .key-cell-img{
-  width: 0.22rem;
-  height: 0.2rem;
+  width: 0.24rem;
+  height: 0.24rem;
 }
 .key-cell-imgs{
   width: 0.25rem;

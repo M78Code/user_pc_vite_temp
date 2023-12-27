@@ -13,8 +13,8 @@
       <div
         class="menu-item-stick"
         v-if="fixd_left"
-        :class="current_category_id == data_list[0]['id']? 't_color' : ''"
-        @click.self="selete_item(data_list[0]['id'], 0, data_list[0])"
+        :class="current_category_id == lodash.get(data_list,'[0][id]') ? 't_color' : ''"
+        @click.self="selete_item(lodash.get(data_list,'[0][id]'), 0, lodash.get(data_list,'[0]'))"
       >
         {{ data_list[0].marketName }}
       </div>

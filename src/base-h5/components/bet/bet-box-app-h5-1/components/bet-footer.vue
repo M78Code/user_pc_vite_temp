@@ -22,19 +22,20 @@
         <div class="bet-box" :style="{left:ref_data.basic_model/100+'rem'}"></div>
       </div>
       <div class="bet-info f-b-c">
-        <div class="middle font16">
+        <div class="middle font16" v-if="!set_special_state(BetData.bet_data_class_version)">
           {{ i18n_t('bet.betting') }}
           <!-- 单关 -->
           <span class="yb-info-money font14" v-if="BetData.is_bet_single"> {{ i18n_tc('app_h5.bet.bet_win',{"total": bet_win_money(BetData.bet_data_class_version) }) }}</span>
           <span class="yb-info-money font14" v-else>{{ i18n_t('bet.sum') }}{{bet_total(BetViewDataClass.bet_view_version) }}</span>
         </div>
+        <div class="middle ml-4" v-else>盘口已关闭</div>
         <img :src="compute_local_project_file_path('/image/bet/roll-right-arrow.png')" alt="">
       </div>
 
     </div>
   
     <!-- 单关/串关 切换 -->
-    <div @click="set_bet_single" class="bet-single f-c-c font500" :class="{'disabled': MenuData.is_kemp() || !is_bet_special,'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
+    <div @click="set_bet_single" class="bet-single f-c-c font600" :class="{'disabled': MenuData.is_kemp() || !is_bet_special,'font16':BetData.is_bet_single,'font14':!BetData.is_bet_single, }">
       <p>{{ !BetData.is_bet_single ? '单关投注':'+串' }}</p>
     </div>
 
@@ -353,8 +354,8 @@ const set_confirm = () => {
   .accept {
     color: var(--q-gb-t-c-11);
     margin: .08rem 0;
-		text-indent: .24rem;
-		background: url($SCSSPROJECTPATH+"/image/bet/select_b.svg") no-repeat left / contain;
+		text-indent: .18rem;
+		background: url($SCSSPROJECTPATH+"/image/bet/select_b.svg") no-repeat left / .14rem;
   }
 	.active {
 		background-image: url($SCSSPROJECTPATH+"/image/bet/select_fuke.svg");
@@ -366,21 +367,22 @@ const set_confirm = () => {
     position: relative;
   }
   .bet-silider_1{
-    width: 100%;
-    height: .44rem;
     position: relative;
     width: 100%;
-    height: .5rem !important;
+    height: .5rem;
     border-radius: .3rem;
     background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%);
     box-shadow: 0rem .02rem .12rem 0rem rgba(0, 174, 255, 0.10);
     &.disabled-line{
-      background:#C9CDDB;
-      box-shadow: 0rem .02rem .12rem 0rem rgba(0, 174, 255, 0.10);
+      background: #e4e6ed;
+      box-shadow: 0 2px 12px rgba(0,0,0,.1);
       .bet-box-line{
         .bet-box{
           background: rgba(255, 255, 255, 0.96) url($SCSSPROJECTPATH+"/image/bet/right-arrow1.svg") center no-repeat;
-          border-color: rgba(201, 205, 219, 0.8);
+          border: none;
+          width: 0.4rem !important;
+          height: 0.4rem !important;
+          margin-top: .03rem;
         }
       }
       .bet-info{
