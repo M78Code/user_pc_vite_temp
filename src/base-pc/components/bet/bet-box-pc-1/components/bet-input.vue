@@ -4,7 +4,7 @@
         <!--金额输入区-->
         <div class="bet-input-failure">
             <!--投注金额输入框-->
-            <input class="bet-input input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
+            <input ref="InputFocus" class="bet-input input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
                 :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
             <!--清除输入金额按钮-->
             <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money">
@@ -64,6 +64,8 @@ const props = defineProps({
     item: {}
 })
 
+const InputFocus = ref()
+
 onMounted(() => {
     // 监听 限额变化
     ref_data.emit_lsit = {
@@ -122,6 +124,8 @@ const set_ref_data_bet_money = () => {
     ref_data.seriesOdds = seriesOdds
     // 限额改变 重置投注金额
     ref_data.money = ''
+    InputFocus.value.focus()
+
 }
 
 

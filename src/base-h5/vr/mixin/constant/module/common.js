@@ -78,23 +78,5 @@ export default {
       let sub = Math.abs(timing.domComplete - timing.connectStart);
       return sub > 2600;
     },
-    /**
-     * 获取当前服务器时间
-     * @param {Undefined} Undefined
-     * @return {Boolean} 
-     */
-    get_now_server(){
-      if(!window.vue.get_local_server_time){
-        let now = new Date();
-        window.vue.get_local_server_time = {
-          server_time:now.getTime(),
-          local_time_init:now.getTime()
-        }
-      }
-      let remote_time = window.vue.get_local_server_time.server_time * 1;
-      let local_time = window.vue.get_local_server_time.local_time_init * 1;
-      let now = new Date().getTime();
-      return remote_time + (now - local_time);
-    }
   }
 };

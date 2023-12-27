@@ -586,12 +586,12 @@ class MatchMeta {
     // vr 足球 
     // const res = await api_common.get_virtual_result({
     //   batchNo:"",
-    //   endTime:1703606399000,
-    //   isVirtualSport:1,
-    //   page:{ size: 100, current: 1 },
-    //   sportType:"1004",
-    //   startTime:1703520000000,
-    //   tournamentId:"79430600606371842"
+    //   endTime:1703606399000, 结束时间
+    //   isVirtualSport:1, 是否是虚拟体育
+    //   page:{ size: 100, current: 1 }, 不用管
+    //   sportType:"1004", csid 体育id
+    //   startTime:1703520000000, 开始时间
+    //   tournamentId:"79430600606371842" tid
     // })
     // vr 马 狗 
     const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
@@ -1359,6 +1359,7 @@ class MatchMeta {
    * @description 设置ws激活的 赛事mids
    */
   set_ws_active_mids({ list = [], warehouse = MatchDataBaseH5 }) {
+    warehouse.set_active_mids([])
     if (MenuData.is_results()) return
     const mids = list.map(t => t)
     warehouse.set_active_mids(mids)
