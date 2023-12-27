@@ -349,6 +349,7 @@ export default {
 .match-line-module {
   padding: 0 0.1rem;
   background-color: var(--q-gb-bg-c-21) !important;
+  height: 1px;
   .match-line {
     width: 100%;
     height: 0.005rem;
@@ -479,7 +480,7 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    background: var(--q-match-page-bg-color-10);
+    // background: var(--q-match-page-bg-color-10);
 
     .match-odds-container-border-radius {
       overflow: hidden;
