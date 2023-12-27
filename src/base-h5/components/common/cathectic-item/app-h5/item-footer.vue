@@ -191,7 +191,7 @@ p {
   justify-content: space-between;
 }
 .acount {
-      color: var(--q-gb-t-c-1);
+      color: var(--q-gb-bg-c-13);
     }
   .red {
     color: #D2D2D2

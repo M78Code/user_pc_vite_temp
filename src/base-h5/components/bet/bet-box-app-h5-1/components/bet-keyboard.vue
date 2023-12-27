@@ -142,7 +142,7 @@ const _handleKeyPress = (e) => {
   switch (num) {
     //最大值
     case "max":
-      _handmaxKey();
+      _handmaxKey(e);
       break;
     //小数点
     case ".":
@@ -189,12 +189,8 @@ const _handleDecimalPoint = () => {
 }
 
 // MAX键
-const _handmaxKey = () => {
-  console.error('sssss')
-  let dom = document.querySelectorAll('.nonebox4-fourth-a-son')
-  for(let i = 0; i < dom.length; i++) {
-    dom[i].classList.remove('active')
-  }
+const _handmaxKey = (e) => {
+  add_or_remove_active(e)
   let old = BetData.bet_keyboard_config.playOptionsId
   let money_ = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
   // 判断当前余额 是否小于最多投注金额
@@ -205,8 +201,21 @@ const _handmaxKey = () => {
   }
   set_money_change_new(money.value)
 }
+
+// 添加或去掉active选中框
+const add_or_remove_active = (e) => {
+  let dom = document.querySelectorAll('.nonebox4-fourth-a-son');
+  for(let i = 0; i < dom.length; i++) {
+    dom[i].classList.remove('active')
+  }
+  if(e) {
+    e.target.classList.add('active')
+  }
+}
+
 // 删除键
-const _handleDeleteKey = () => {
+const _handleDeleteKey = (e) => {
+  add_or_remove_active(e);
   money.value = BetData.bet_amount
   if (!money.value) return   
   //删除最后一个
@@ -216,14 +225,10 @@ const _handleDeleteKey = () => {
 }
 // 数字建
 const _handleNumberKey = (num, e) => {
-  let dom = document.querySelectorAll('.nonebox4-fourth-a-son')
-  for(let i = 0; i < dom.length; i++) {
-    dom[i].classList.remove('active')
-  }
+    add_or_remove_active(e)
   if (!num) return
   let money_ = BetData.bet_amount
   if (['qon', 'qtw', 'qth','qfo','qfi','qsi'].includes(num)) {
-    e.target.classList.add('active')
     money_ = ref_data.add_num[num]
     // if (!money_) {
     //   money_ = ref_data.add_num[num]
@@ -311,21 +316,21 @@ const add_keyboard_shadow = () => {
     sun: document.querySelectorAll('.nonebox4-fourth-num-sun'),
     son: document.querySelectorAll('.nonebox4-fourth-a-son')
   }
-  if(UserCtr.theme === 'theme-2') { 
-    dom.sun.forEach((item) => {
+  
+  dom.sun.forEach((item) => {
+    if(UserCtr.theme === 'theme-2') {
       item.classList.add('shadow')
-    })
-    dom.son.forEach((item) => {
+    } else {
+      item.classList.remove('shadow')
+    }
+  })
+  dom.son.forEach((item) => {
+    if(UserCtr.theme === 'theme-2') {
       item.classList.add('shadow')
-    })
-  } else {
-    dom.sun.forEach((item) => {
+    } else {
       item.classList.remove('shadow')
-    })
-    dom.son.forEach((item) => {
-      item.classList.remove('shadow')
-    })
-  }
+    }
+  })
 }
 useMittOn(MITT_TYPES.EMIT_THE_THEME_CHANGE, add_keyboard_shadow)
 

@@ -8,7 +8,7 @@
 import { ref } from 'vue'
 import { MenuData } from 'src/output/module/menu-data.js'
 import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
-import MatchFold from 'src/core/match-fold'
+import MatchFold from 'src/core/match-fold/index.js'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import PageSourceData from "src/core/page-source/page-source.js";
@@ -135,7 +135,7 @@ class VirtualList {
 
     // 可视区高度
     let match_count = 0
-    let page_count = 18;
+    let page_count = 22;
     let accrual_height = 0
     let already_folded = 0;
     // 顶部滚动距离减去  上面5个列表赛事  的距离
@@ -215,10 +215,10 @@ class VirtualList {
   // 计算虚拟滚动初始计算高度
   get_scorll_position (scrollTop) {
     let position = 0
-    // 是否全部折叠状态
-    const csid_status = MenuData.menu_csid && MatchFold.ball_seed_csid_fold_obj.value[`csid_${MenuData.menu_csid}`]
     const is_result = MenuData.is_results()
     if (PROJECT_NAME === 'ouzhou-h5') {  // 欧洲版
+      // 是否全部折叠状态
+      const csid_status = MenuData.menu_csid && MatchFold.ball_seed_csid_fold_obj.value[`csid_${MenuData.menu_csid}`]
       if (is_result) {
         // 赛果
         position = scrollTop - 800
@@ -230,18 +230,25 @@ class VirtualList {
         position = scrollTop - 200
       }
     } else if (PROJECT_NAME === 'app-h5') { // 复刻版
-      const status = MatchFold.all_csid_fold_status.value
+      const is_show_all = MenuData.is_zaopan() || MenuData.is_scroll_ball()
+      const csid = MenuData.menu_csid || '1' 
+      const all_csid_fold_status = MatchFold.all_csid_fold_status.value
+      const not_begin_collapsed = !lodash.get(MatchFold.not_begin_csid_fold_obj.value, `csid_${csid}`, true)
+      const progress_seed_collapsed = !lodash.get(MatchFold.progress_csid_fold_obj.value, `csid_${csid}`, true)
       if (is_result) {
         // 赛果
         position = scrollTop - 800
-      } else if (status) {
-        // 球种非折叠状态
-        position = scrollTop - 300
       } else {
-        // 球种折叠
         position = scrollTop - 300
+        if (is_show_all) {
+          // 滚球 早盘
+          position = !all_csid_fold_status ? scrollTop - 300 : scrollTop - 6 * 198
+        } else {
+          position = progress_seed_collapsed || not_begin_collapsed ? scrollTop - 300 : scrollTop - 6 * 198
+        }
       }
     }
+    
     return position
   }
 
