@@ -8,7 +8,7 @@ import VSport from "src/base-h5/vr/utils/vsport/vsport.js"
 import { api_common } from "src/api/index.js";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-import ServerTime from "src/core/server-time/server-time.js"
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
 
 export default {
@@ -216,7 +216,7 @@ export default {
             let found = res.data[0];
             if(found){
               let c_match = this.append_init_fields(found.matchs[0]);
-              let server_now = ServerTime.get_remote_time();
+              let server_now = get_now_server();
               c_match.start_now_sub = Number(c_match.mgt) - server_now;
               this.current_match = c_match;
               this.set_current_mid(this.current_match.mid);
@@ -498,7 +498,7 @@ export default {
     check_next_no_start_time(){
       if(this.virtual_match_list && this.virtual_match_list.length > 1){
         let mgt = Number(this.virtual_match_list[1].matchs[0].mgt);
-        let now = ServerTime.get_remote_time();
+        let now = get_now_server();
         let sub = mgt - now;
         //下一轮开赛
         if(sub <= 0){
@@ -566,7 +566,7 @@ export default {
           });
           if(this.match_list_by_no.length){
             this.current_match = this.match_list_by_no[0];
-            let server_now = ServerTime.get_remote_time();
+            let server_now = get_now_server();
             this.current_match.start_now_sub = Number(this.current_match.mgt) - server_now;
             if(this.sub_menu_type == 1004){
               if(this.current_match.mmp == "PREGAME"){
@@ -671,7 +671,7 @@ export default {
           totalTime = totalTime * 1;
           let mgt = match.mgt * 1;
           let future = mgt + totalTime * 1000;
-          let now_server = ServerTime.get_remote_time();
+          let now_server = get_now_server();
           if(future - now_server < 1000){
             this.update_no_title_list();
           }
@@ -714,7 +714,7 @@ export default {
           let first_m_item = first_t_item.match[0];
           if(first_m_item){
             let mgt = first_m_item.mgt * 1;
-            let time_ = ServerTime.get_remote_time() - mgt;
+            let time_ = get_now_server() - mgt;
             if(time_ > -1){
               this.checking_first_delete_batchNo = first_m_item.batchNo;
               invok_video_process(first_m_item);
