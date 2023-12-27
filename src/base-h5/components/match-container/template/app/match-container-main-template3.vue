@@ -884,6 +884,7 @@ export default {
     flex-wrap: nowrap;
     align-items: center;
     overflow: hidden;
+    font-weight: 600;
     color: var(--q-gb-bg-c-3) !important;
     .icon-wapper{
       transform: rotate(90deg);
@@ -910,11 +911,6 @@ export default {
         //max-width: 1.4rem;
       }
     }
-
-
-    color: var(--q-color-com-fs-color-26);
-
-    font-weight: 600;
   }
 
   .match-type {
