@@ -857,6 +857,7 @@ const set_error_message_config = (res ={},type,order_state) => {
         }
         // 投注前 提示 投注完成后不提示
         if(BetViewDataClass.bet_order_status == 1){
+            console.error('asdasd')
             useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
         }
         
@@ -1055,9 +1056,9 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         bet_obj.handicap = ol_obj.on
     }
 
-    //  pc 串关数据 提示 
-    if(PROJECT_NAME.indexOf('pc') > -1){
-        bet_special_series_change()
+    // 串关数据 提示  添加数据之前
+    if( !bet_special_series_change(1) ){
+        return
     }
 
     // 设置投注内容 
@@ -1081,23 +1082,23 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     }
 }
 
-const bet_special_series_change = () => {
+const bet_special_series_change = (count = 0) => {
     let state = true
     // 串关数据 提示
     if(!BetData.is_bet_single){
         // 获取商户配置的 串关投注项
         let min_series = lodash_.get(UserCtr.user_info,'configVO.minSeriesNum',2)
         let man_series = lodash_.get(UserCtr.user_info,'configVO.maxSeriesNum',10)
-
         let obj = {}
         // 串关 数量不是大于1条投注项 则提示
-        if( BetData.bet_s_list.length < min_series){
+        // 并且是在 添加的时候
+        if((BetData.bet_s_list.length < min_series - count ) && !count){
             obj = {
                 code: 'sasdasd',
                 message: i18n_tc('bet.bet_min_item',{ 'num': min_series})
             }
             state = false
-        }else if(BetData.bet_s_list.length >= man_series){
+        }else if(BetData.bet_s_list.length > man_series - count ){
             // 串关 数量不能大于设置的数量
             obj = {
                 code: 'sasdasd',
@@ -1105,8 +1106,10 @@ const bet_special_series_change = () => {
             }
             state = false
         }
-       
-        set_error_message_config(obj)
+        // 数量不对 提示信息
+        if(!state){
+            set_error_message_config(obj)
+        }
     }
 
     return state
