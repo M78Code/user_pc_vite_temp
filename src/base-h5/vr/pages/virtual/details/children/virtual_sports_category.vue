@@ -267,7 +267,7 @@ export default {
     //   'set_is_user_refreshing',
     // ]),
     set_fewer(){},
-    set_detail_data_assign(){},
+    // set_detail_data_assign(){},
     set_is_user_refreshing(){},
 
     /**
