@@ -3,7 +3,7 @@
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
         <div class="bet-info">
             <div class="f-b-c px-12">
-                <div class="f-a-c">
+                <div class="f-s-c">
                     <img :src="compute_local_project_file_path('/image/bet/request.svg')" alt="" @click="alertRules()">
                     <span class="font14 font500">{{ items.seriesValue}}</span> 
                     <span class="text-45B0FF ml-4" v-if="items.orderStatusCode == 1">注单已确认</span>
