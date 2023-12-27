@@ -30,7 +30,7 @@
                   <div class="nonebox4-fourth-num-sun" data-number='00'>00</div>
               </div>
               <div class="nonebox4-fourth-num">
-                  <div class="nonebox4-fourth-num-sun" data-number='max' style="font-size: 0.14rem;" @click.stop="_handleKeyPress($event)">{{ i18n_t('bet.max')}}</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='max' @click.stop="_handleKeyPress($event)">{{ i18n_t('bet.max')}}</div>
                   <div class="nonebox4-fourth-num-sun key-cell" data-number="x" @click.stop="_handleKeyPress($event)">
                     <div class="key-cell-img" data-number="x" :style="compute_css_obj({key: 'h5-keyboard'})"></div>
                   </div>
@@ -46,7 +46,7 @@
   
 <script setup>
 import lodash_ from "lodash"
-import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
+import { ref, reactive, onMounted, watch, computed, onUnmounted, nextTick } from 'vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -293,14 +293,40 @@ const prevent_click = computed((value) => {
   }
 })
 
-
+// 添加键盘shadow，暗夜版移除
+const add_keyboard_shadow = () => {
+  let dom = {
+    sun: document.querySelectorAll('.nonebox4-fourth-num-sun'),
+    son: document.querySelectorAll('.nonebox4-fourth-a-son')
+  }
+  if(UserCtr.theme === 'theme-2') { 
+    dom.sun.forEach((item) => {
+      item.classList.add('shadow')
+    })
+    dom.son.forEach((item) => {
+      item.classList.add('shadow')
+    })
+  } else {
+    dom.sun.forEach((item) => {
+      item.classList.remove('shadow')
+    })
+    dom.son.forEach((item) => {
+      item.classList.remove('shadow')
+    })
+  }
+}
+useMittOn(MITT_TYPES.EMIT_THE_THEME_CHANGE, add_keyboard_shadow)
 
 // 预约投注赔率值可通过键盘输入 max，左侧三个按钮置灰，输入金额时放开
 const has_pre_market = computed(() => {
   return active_index.toString().indexOf('pre') > -1 || active_index.toString().indexOf('market') > -1
 })
 
+onMounted(() => {
+  add_keyboard_shadow();
+})
 onUnmounted(() => {
+  useMittOn(MITT_TYPES.EMIT_THE_THEME_CHANGE, add_keyboard_shadow).off()
 })
 
 </script>
@@ -364,6 +390,7 @@ onUnmounted(() => {
 .nonebox4-fourth-num:last-child {
   .nonebox4-fourth-num-sun:first-child {
     font-weight: 600 !important;
+    font-size: .15rem;
   }
   .nonebox4-fourth-num-sun:nth-child(2) {
     flex: auto;
@@ -382,7 +409,9 @@ onUnmounted(() => {
     font-weight: 700;
     border-radius: .08rem;
     margin: .02rem 0;
-    box-shadow: 0 2px 8px #d1ebff;
+}
+.shadow {
+  box-shadow: 0 2px 8px #d1ebff;
 }
 
 .keyboard {

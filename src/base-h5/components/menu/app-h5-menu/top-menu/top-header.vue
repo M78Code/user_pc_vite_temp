@@ -3,12 +3,12 @@
         <div class="top-header-left">
             <div class="top-header-left-img" @click="goBack()">
                 <!-- <img class="img" :src="delimg" alt="" /> -->
-                <!-- <div class="img" :style="compute_css_obj({key: 'h5_back_img'})"></div> -->
-                <img
+                <div class="img" :style="compute_css_obj({key: 'h5_back_img'})"></div>
+                <!-- <img
                     class="img"
                     :src="compute_local_project_file_path('/image/svg/go-back-icon.svg')"
                     alt=""
-                />
+                /> -->
             </div>
         </div>
         <div class="top-header-content">
@@ -66,7 +66,6 @@ const router = useRouter()
                     width: 0.08rem;
                     height: 0.14rem;
                     background-size: cover;
-                    opacity: .6;
                 }
             }
         }

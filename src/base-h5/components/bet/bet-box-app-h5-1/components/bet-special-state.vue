@@ -19,7 +19,7 @@
                 <span>预计可赢：{{ format_money2(mathJs.divide(items.maxWinAmount,100))}} {{currency_code[UserCtr.currency]}}</span>
             </div>
             <div>
-                <span>小计：{{ items.seriesBetAmount }} {{currency_code[UserCtr.currency]}}</span>
+                <span>小计：{{ format_money2(mathJs.divide(items.seriesBetAmount,100))}} {{currency_code[UserCtr.currency]}}</span>
             </div>
         </div>
         <bet-dialog  @close="tooltipbox=false" :item="items" :tooltipboxs="tooltipbox" v-model="tooltipbox"></bet-dialog>
@@ -31,6 +31,7 @@ import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import betDialog from "./bet-dialog.vue"
 import {UserCtr,format_money2,LOCAL_PROJECT_FILE_PREFIX,currency_code ,compute_local_project_file_path } from "src/output/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
+import { ref } from "vue"
 
 const props = defineProps({
     items:{

@@ -394,7 +394,7 @@ template {
       align-items: center;
       border: none;
       background-color: var(--q-gb-bg-c-13);
-      color: var(--q-gb-bg-c-15);
+      color: var(--q-gb-t-c-14);
       width: 100%;
       height: 0.4rem;
       line-height: 0.4rem;

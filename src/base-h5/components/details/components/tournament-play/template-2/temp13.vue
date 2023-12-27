@@ -123,7 +123,7 @@
           <!-- 小 -->
           <div class="play-name " v-show="!get_is_hengping" :style="{width:rem(0.85)+'px',margin:rem(0.04)+'px'}">
               <div class="play-name-card ellipsis" >
-                {{lodash.get(item_data, 'title[1].osn')}}+++{{ rem(1)+'px' }}
+                {{lodash.get(item_data, 'title[1].osn')}}
               </div>
           </div>
           <div class="row slide-con" ref="bet_slide" style="flex:1;" v-touch-pan.horizontal.prevent.mouse="touch_pan">
