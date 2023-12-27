@@ -5,7 +5,8 @@
     v-cloak
   >
     <div class="fat-btn" @click="change_btn()">
-      <div class="tab-btn" :class="{ collapsed: get_fewer != 2 }"></div>
+      <!-- <div class="tab-btn" :class="{ collapsed: get_fewer != 2 }"></div> -->
+      <div :class="['expand_item', {collapsed: get_fewer != 2}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
     </div>
     <span class="menu-third"></span>
     <div style="display: flex;align-items: center;">
@@ -38,6 +39,7 @@
 import {
   MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,
   csid_to_sport_name,
+  compute_css_obj
 } from "src/output/index.js";
 import {
   useMittEmitterGenerator,
@@ -266,6 +268,7 @@ export default defineComponent({
       get_active_details_play_tab,
       initEvent,
       new_list,
+      compute_css_obj
     };
   },
 });
@@ -276,6 +279,15 @@ export default defineComponent({
   min-height: 0.4rem;
   background-color: var(--q-gb-bg-c-25);
   // border-bottom: 0.01rem solid var(--q-gb-bd-c-5);
+}
+.expand_item{
+  width: 0.2rem;
+  height: 16px;
+  transition: transform 0.25s ease;
+  transform: rotate(-90deg);
+}
+.collapsed {
+  transform: rotate(0deg);
 }
 .menu-item-stick {
   // position: absolute;
@@ -340,27 +352,31 @@ export default defineComponent({
   float: right;
   text-align: center;
   padding-top: 0.06rem;
-
   width: 0.4rem;
+  min-height: 0.44rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.tab-btn {
-  display: inline-block;
-  width: 0.12rem;
-  height: 0.12rem;
-  margin-top: 0.09rem;
-  background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn_off.svg");
+// .tab-btn {
+//   display: inline-block;
+//   width: 0.12rem;
+//   height: 0.12rem;
+//   margin-top: 0.09rem;
+//   background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn_off.svg");
 
-  background-size: 100% 100%;
-  // transform: rotateZ(180deg);
-  transition: transform 0.3s;
-  // @include webkit(transition, transform 0.3s);
+//   background-size: 100% 100%;
+//   // transform: rotateZ(180deg);
+//   transition: transform 0.3s;
+//   // @include webkit(transition, transform 0.3s);
 
-  &.collapsed {
-    background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn.svg");
-    // @include webkit(transition, transform 0.3s);
-  }
-}
+//   &.collapsed {
+//     background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn.svg");
+//     // @include webkit(transition, transform 0.3s);
+//   }
+// }
 
 .menu-third {
   padding-right: 0.1rem;

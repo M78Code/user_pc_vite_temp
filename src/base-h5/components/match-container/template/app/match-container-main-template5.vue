@@ -29,13 +29,13 @@
       <div class="all-league-title" v-if="is_show_opening_title && is_mix_no_today"  @click.stop="handle_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{ is_mix_no_today }}</span> </div>
         <!-- <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt=""> -->
-        <div class="img" :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]"  :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
+        <div class="img" :class="['expand_item', {ball_seed_collapsed: !collapsed}]"  :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
       </div>
       <!-- 全部 -->
       <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{get_date_title}}</span> </div>
         <!-- <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt=""> -->
-         <div class="img" :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]"  :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
+         <div class="img" :class="['expand_item', {ball_seed_collapsed: !collapsed}]"  :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <div class="buffer-container" v-if="is_show_buffer_container"></div>
@@ -532,7 +532,7 @@ export default {
     }
     .expand_item{
       transition: transform 0.25s ease;
-      transform: rotate(-180deg);
+      transform: rotate(-90deg);
       width: 18px;
       height: 16px;
     }
@@ -543,7 +543,7 @@ export default {
   .all-league-title{
     display: flex;
     height: 30px;
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-25);
     padding: 0 10px;
     align-items: center;
     justify-content: space-between;
@@ -560,10 +560,10 @@ export default {
       width: 18px;
       height: 16px;
       transition: transform 0.25s ease;
-      transform: rotate(-180deg);
+      transform: rotate(0deg);
     }
     .ball_seed_collapsed{
-      transform: rotate(0);
+      transform: rotate(-90deg);
     }
   }
 
