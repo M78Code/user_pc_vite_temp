@@ -93,7 +93,6 @@ const props = defineProps({
 
 const poisition_top = computed(() => {
   const menu_type = MenuData.current_menu
-
   if ([4, 11, 3000].includes(menu_type)) {
     return '1.33rem';
   }

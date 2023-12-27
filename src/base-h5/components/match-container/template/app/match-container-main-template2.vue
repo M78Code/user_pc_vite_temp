@@ -13,7 +13,7 @@
       :class="['league-container flex items-center justify-between right-border collapsed']"
       @click="handle_league_fold">
       <div class="league-wrapper champion flex items-center">
-        <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
+        <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect" v-if="!is_esports">
           <!-- 未收藏图标 compute_img_url('icon-favorite')-->
           <img v-if="!match_collect_state" :src="not_favorite_app" alt="">
           <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
@@ -87,6 +87,7 @@ import { icon_date, expand_item } from 'src/base-h5/core/utils/local-image.js'
 import champion_mixin from '../../mixins/champion.mixin.js'
 import 'src/base-h5/css/pages/match-container-champion.scss'
 import { not_favorite_app, normal_img_is_favorite} from 'src/base-h5/core/utils/local-image.js'
+import { is_esports } from 'src/base-h5/mixin/menu.js'
 
 
 export default {
@@ -109,6 +110,7 @@ export default {
       i18n_t,
       menu_type,
       icon_date,
+      is_esports,
       expand_item,
       compute_img_url,
       compute_css_obj,
@@ -170,7 +172,7 @@ export default {
     }
 
     .league-wrapper {
-      padding-left: 0.11rem;
+      padding-left: 0.12rem;
       .favorite {
         width: 0.16rem;
         height: 0.16rem;
@@ -220,6 +222,8 @@ export default {
 
       .league-title-text {
         font-weight: 600;
+        line-height: 0.26rem;
+
       }
       .collect-img{
         width: 16px;
