@@ -362,6 +362,7 @@ onUnmounted(() => {
 /*  赔率样式 */
 .odds {
   flex: 1;
+  font-weight: 600;
 }
 .odds.hv {
   justify-content: flex-start !important;
@@ -389,6 +390,7 @@ onUnmounted(() => {
 .handicap-value-text {
   font-weight: 500;
   white-space: nowrap;
+  color: var(--q-gb-bg-c-13);
 }
 .vertical {
   flex-direction: column;
