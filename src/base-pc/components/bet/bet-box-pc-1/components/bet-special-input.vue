@@ -77,6 +77,7 @@ const InputFocus = ref()
 onMounted(() => {
     show_quick()
     ref_data.money = props.items.bet_amount
+    InputFocus.value.focus()
     
 })
 
@@ -102,8 +103,7 @@ const keydown = (e) => {
 
 // 输入判断
 const set_win_money = () => {
-    //获取焦点
-    InputFocus.value = focus()
+
     let items_obj = lodash_.get(props,'items',{})
     // 输入控制
     if( ref_data.money < props.items.max_money &&  ref_data.money < UserCtr.balance){
@@ -118,6 +118,7 @@ const set_win_money = () => {
         items_obj.bet_amount = money_a
     }
     BetViewDataClass.set_bet_special_series_item(items_obj)
+    InputFocus.value.focus()
 }
 //显示隐藏键盘
 
