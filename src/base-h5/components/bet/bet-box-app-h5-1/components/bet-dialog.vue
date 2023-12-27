@@ -1,29 +1,47 @@
 <template>
     <q-dialog v-model="props.tooltipboxs">
-        <div class="toltip">
-            <header>{{ i18n_t('app_h5.bet.toltip1')}}{{ item.name }}</header>
-            <div> {{ item.name }}{{ i18n_t('app_h5.bet.toltip2')}}{{ item.name.trim().slice(0,1) }}{{ i18n_t('app_h5.bet.toltip3')}} </div>
+        <div class="toltip" >
+          <template v-if="id?.toString().trim().split('00')[1] == 1">
+            <header>{{ i18n_t('app_h5.bet.toltip1')}}{{ item.name || item.seriesValue }}</header>
+            <div> {{ item.name }}{{ i18n_t('app_h5.bet.toltip2')}}{{ item.name || item.seriesValue.trim().slice(0,1) }}{{ i18n_t('app_h5.bet.toltip3')}} </div>
             <div>
             {{ i18n_t('app_h5.bet.toltip4')}}
-            {{ item.name.trim().slice(0,1) }} 
+            {{ item.name || item.seriesValue.trim().slice(0,1) }} 
             {{ i18n_t('app_h5.bet.toltip5')}}
-            {{ item.name }} 
+            {{ item.name || item.seriesValue}} 
             {{ i18n_t('app_h5.bet.toltip6')}}
-            {{ item.name.trim().slice(0,1) }}
+            {{ item.name || item.seriesValue.trim().slice(0,1) }}
             {{ i18n_t('app_h5.bet.toltip7')}}
-            {{ item.name.trim().slice(0,1) }}
+            {{ item.name || item.seriesValue.trim().slice(0,1) }}
             {{ i18n_t('app_h5.bet.toltip8')}}
             </div>
-            <footer @click="handleClose">{{i18n_t("info_rules.i_know")}}</footer>
+          </template>
+          <template v-else>
+            <header>{{ i18n_t('app_h5.bet.toltip1')}}{{ item.name || item.seriesValue }}</header>
+            <div>{{ toltiptitle }}</div>
+            <div>{{ toltipcontent }}</div>
+          </template>
+        <footer @click="handleClose">{{i18n_t("info_rules.i_know")}}</footer>
         </div>
     </q-dialog>
 </template>
 
 <script setup>
-const props = defineProps({
+import { computed } from "vue"
+
+const props = defineProps({ 
     item:{},
-    tooltipboxs:Boolean
+    tooltipboxs:Boolean,
+    id:''
 })
+console.log(props.item,"-----")
+const toltiptitle = computed(() => {
+  return  i18n_t(`app_h5.bet.toltips.${props.id}.title`)
+})
+const toltipcontent = computed(() => {
+  return  i18n_t(`app_h5.bet.toltips.${props.id}.content`)
+})
+
 const emits = defineEmits(["close"]);
 const handleClose = ()=>{
     emits('close')

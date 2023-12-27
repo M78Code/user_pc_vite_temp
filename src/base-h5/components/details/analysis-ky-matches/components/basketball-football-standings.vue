@@ -248,7 +248,7 @@ const props = defineProps({
 
       .group-item {
         .team-item {
-          border-bottom: 1px solid var(--q-analysis-text-color-24);
+          border-bottom: 1px solid var(--q-gb-bd-c-4);;
         }
       }
 

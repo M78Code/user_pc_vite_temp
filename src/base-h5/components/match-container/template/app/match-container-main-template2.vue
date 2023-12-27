@@ -147,7 +147,7 @@ export default {
     transform: rotate(0);
   }
   .ball_seed_collapsed{
-    transform: rotate(-180deg) !important;
+    transform: rotate(-90deg) !important;
   }
 
 }

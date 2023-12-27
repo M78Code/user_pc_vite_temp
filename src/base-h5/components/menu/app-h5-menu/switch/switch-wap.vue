@@ -115,7 +115,6 @@ const hendler_version_change = (val = 2) => {
  * @return 
  */
 watch(()=>set_menu_init.value,()=>{
-    console.log(33333)
     switchData.value = get_switch_data()
     const mark = ['standard_edition','sort_type','theme']
       switchData.value = switchData.value.map((item,index)=>{

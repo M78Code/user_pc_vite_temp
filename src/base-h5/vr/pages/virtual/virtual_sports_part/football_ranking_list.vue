@@ -182,7 +182,8 @@ export default {
     font-size: 0.13rem;
     height: 0.48rem;
     text-align: center;
-    border-bottom: 1px solid #F2F2F6;
+    border-bottom: 1px solid var(--q-gb-bd-c-19);
+
     .rank-img img{
       width: 14px;
       height: 20px;
@@ -195,6 +196,7 @@ export default {
       justify-content: center;
       font-size: 0.12rem;
       font-weight: 500;
+      color: var(--q-gb-t-c-20);
     }
 
     /*  .field{} */

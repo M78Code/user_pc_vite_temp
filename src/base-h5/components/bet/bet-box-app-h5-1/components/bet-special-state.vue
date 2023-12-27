@@ -4,8 +4,8 @@
         <div class="bet-info">
             <div class="f-b-c px-12">
                 <div class="f-s-c">
-                    <img :src="compute_local_project_file_path('/image/bet/request.svg')" alt="" @click="alertRules()">
-                    <span class="font14 font500">{{ items.seriesValue}}</span> 
+                    <img :src="compute_local_project_file_path('/image/bet/request.svg')" alt="" @click="alertRules(items.seriesValue)">
+                    <span class="font14 font500 text-18">{{ items.seriesValue}}</span> 
                     <span class="text-45B0FF ml-4" v-if="items.orderStatusCode == 1">注单已确认</span>
                 </div>
                 <div class="">
@@ -22,7 +22,7 @@
                 <span>小计：{{ format_money2(mathJs.divide(items.seriesBetAmount,100))}} {{currency_code[UserCtr.currency]}}</span>
             </div>
         </div>
-        <bet-dialog  @close="tooltipbox=false" :item="items" :tooltipboxs="tooltipbox" v-model="tooltipbox"></bet-dialog>
+        <bet-dialog  @close="tooltipbox=false" :item="items" :id="itemid" :tooltipboxs="tooltipbox" v-model="tooltipbox"></bet-dialog>
     </div>
 </template>
 
@@ -40,9 +40,15 @@ const props = defineProps({
     }
 })
 const tooltipbox = ref(false)
+const itemid = ref()
 // 弹出规则
-const alertRules = () => {
-  tooltipbox.value = !tooltipbox.value
+const alertRules = (id) => {
+    if(id && id.includes('串')){
+        itemid.value =  id.replace('串','00')
+    }else{
+        itemid.value =  id
+    } 
+    tooltipbox.value = !tooltipbox.value
 }
 </script>
 
@@ -114,6 +120,9 @@ const alertRules = () => {
         .f-a-c {
             color: var(--q-gb-t-c-17);
             display: flex;
+        }
+        .text-18{
+            color:var(--q-gb-t-c-18)
         }
         .bet-amount-box {
             font-size: 0.2rem;
