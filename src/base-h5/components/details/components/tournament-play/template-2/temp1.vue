@@ -482,7 +482,8 @@ export default defineComponent({
 }
 .item-bet-ky {
   padding:0.08rem;
-  background-color: var(--q-gb-bg-c-29);
+  //background-color: var(--q-gb-bg-c-29);
+  background-color: var(--q-gb-bg-c-38);
   .fat-warp {
     margin:0.04rem;
     background:var(--q-gb-bg-c-15);
