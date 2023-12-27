@@ -130,6 +130,8 @@
 <script>
 import data_pager from "src/base-h5/components/common/data-pager.vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import { lang } from 'src/base-h5/mixin/userctr.js'
+
 // import setting from "src/project/components/common/setting";
 const static_serve = window.env.config.static_serve[0];
 export default {
@@ -154,7 +156,7 @@ export default {
     get_batch_no_by_language(batch_no){
       let lang = `${i18n_t('virtual_sports.date_number_title')}`;
       let r = `${batch_no} ${lang}`;
-      if(this.get_lang == 'vi'){
+      if(lang.value == 'vi'){
         r = lang.replace('%s',batch_no);
       }
       return r;
@@ -282,7 +284,7 @@ export default {
   },
   computed:{
     // ...mapGetters(['get_lang', 'get_theme']),
-    get_lang(){return 'zh'},
+    // get_lang(){return 'zh'},
     get_theme(){return 'theme01'},
     stage_result(){
       let result = "";
@@ -298,7 +300,7 @@ export default {
         if(this.match.matchDay){
           let m_str = i18n_t('virtual_sports.matchDay');
           let append_space = "&nbsp;&nbsp;"
-          if(['zh','tw'].includes(this.get_lang)){
+          if(['zh','tw'].includes(lang.value)){
             append_space = "";
           }
           result = m_str.replace('%s',`<span style="{color:${color_1}">${append_space}${this.match.matchDay}</span>`);
@@ -326,7 +328,7 @@ export default {
         if(this.match.legOrder){
           let lang_leg_order = i18n_t('virtual_sports.legOrder');
           let append_space = "&nbsp;&nbsp;"
-          if(['zh','tw', 'hk'].includes(this.get_lang)){
+          if(['zh','tw', 'hk'].includes(lang.value)){
             append_space = "";
           }
           let result2 = lang_leg_order.replace('%',`<span style="color:${color_1}">${this.match.legOrder}${append_space}</span>`);
@@ -337,14 +339,14 @@ export default {
       else if(this.match.matchDay && !this.match.sportId == '1004'){
         let m_str = i18n_t('virtual_sports.matchDay');
         let append_space = "&nbsp;&nbsp;"
-        if(['zh','tw', 'hk'].includes(this.get_lang)){
+        if(['zh','tw', 'hk'].includes(lang.value)){
           append_space = "";
         }
         result = m_str.replace('%s',`<span style="color: ${color_1}">${append_space}${this.match.matchDay}</span>`);
       }
       // 虚拟篮球显示期数matchesGroupId
       else if(this.match.sportId == '1004'){
-        if(this.get_lang == 'vi'){
+        if(lang.value == 'vi'){
           let w = i18n_t('virtual_sports.date_number_title');
           result = w.replace('%s',`&nbsp;<span style="color: ${color_1}">${this.match.batchNo}</span>`);
         }
