@@ -82,7 +82,7 @@ const tab_data_init = () => {
       // 精选赛事
       {id:2, text: i18n_t('match_info.select_event')}
     ];
-    if(MenuData.menu_type == 28 && [100,101,102,103,104].includes(+props.result_detail_data.csid))  {
+    if(MenuData.current_lv_1_menu_i == 28 && [100,101,102,103,104].includes(+props.result_detail_data.csid))  {
       tab_item_list.value =[
         // 所有赛果
         {id:1, text: i18n_t('match_info.all_result')}

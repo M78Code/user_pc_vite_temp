@@ -14,7 +14,7 @@
     }]">
     <template v-if="match" >
       <!-- 全部 -->
-      <div class="all-league-title" v-if="i === 0" @click.stop="handle_ball_seed_fold">
+      <div class="all-league-title" v-if="i === 0" @click.stop="menu_lv2?.mi==200?handle_all_ball_seed_fold():handle_ball_seed_fold()">
       <!-- 全部联赛 -->
         <div> <img :src="icon_date" alt=""> <span>{{ i18n_t('filter.all_leagues')}} </span> </div> 
         <!-- <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt=""> -->
@@ -199,9 +199,8 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score"
-                          :class="{ 'visibility-hidden': match.ms == 110 }">
-                          {{ home_score }}
+                        <div class="score full-score">
+                          {{ home_score || 0 }}
                         </div>
                       </div>
                       <!--客队图片和名称-->
@@ -232,9 +231,8 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score"
-                          :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
-                          {{ away_score }}
+                        <div class="score full-score">
+                          {{ away_score || 0 }}
                         </div>
                       </div>
                     </div>
@@ -350,11 +348,12 @@ export default {
 
 .match-line-module {
   padding: 0 0.1rem;
-  background-color: var(--q-gb-bg-c-21) !important;
+  // background-color: var(--q-gb-bg-c-21) !important;
+  height: 1px;
   .match-line {
     width: 100%;
     height: 0.005rem;
-    background-color: var(--q-gb-bg-c-4);
+    background-color: var(--q-gb-bd-c-4);
   }
 }
 .match-container-main-template3{
@@ -372,7 +371,7 @@ export default {
 .all-league-title{
   display: flex;
   height: 30px;
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-25);
   padding: 0 10px;
   align-items: center;
   justify-content: space-between;
@@ -389,7 +388,7 @@ export default {
     width: 0.2rem;
     height: 16px;
     transition: transform 0.25s ease;
-    transform: rotate(-180deg);
+    transform: rotate(-90deg);
   }
   .ball_seed_collapsed{
     transform: rotate(0);
@@ -444,7 +443,7 @@ export default {
     align-items: center;
     background: var(--q-gb-bg-c-18) !important;
     .buffer-container{
-      background: var(--q-gb-bg-c-18);
+      background: var(--q-gb-bg-c-21);
       height: 5px;
       width: 100%;
     }
@@ -481,8 +480,7 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    background: var(--q-match-page-bg-color-10);
-
+    background: var(--q-gb-bg-c-18);
     .match-odds-container-border-radius {
       overflow: hidden;
     }
@@ -555,7 +553,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: var(--q-gb-bg-c-21) !important;
+    // background: var(--q-gb-bg-c-18) !important;
     &.bottom{
       margin-top: 0.05rem;
     }

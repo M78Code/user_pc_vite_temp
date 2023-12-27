@@ -17,7 +17,7 @@
         :class="current_category_id == lodash.get(data_list,'[0][id]') ? 't_color' : ''"
         @click.self="selete_item(lodash.get(data_list,'[0][id]'), 0, lodash.get(data_list,'[0]'))"
       >
-        {{ data_list[0].marketName }}
+        {{ data_list[0]?.marketName   }}
       </div>
       <div class="menu-s" ref="reset_scroll_dom">
         <div
@@ -347,9 +347,8 @@ export default defineComponent({
 .fat-btn {
   float: right;
   text-align: center;
-  padding-top: 0.06rem;
   width: 0.4rem;
-  min-height: 0.44rem;
+  min-height: 0.4rem;
   line-height: 1;
   display: flex;
   align-items: center;
