@@ -207,7 +207,7 @@ import lodash from "lodash"
         text-align: center;
         line-height: 0.32rem;
         padding: 0 0.1rem;  
-        color: var(--q-analysis-text-color-34);
+        color:var(--q-analysis-text-color-14); 
       }
 
       .team-item {
@@ -217,7 +217,7 @@ import lodash from "lodash"
         font-size: 0.12rem;
         height: 0.48rem;
         text-align: center;
-        border-bottom: 1px solid var(--q-gb-bd-c-7);
+        border-bottom: 1px solid var(--q-gb-bd-c-4); 
         color: var(--q-analysis-text-color-20);
 
         div {
@@ -229,11 +229,11 @@ import lodash from "lodash"
       }
 
       .col1 {
-        // flex: 1;
+         flex: 1;
       }
 
       .col3 {
-        // width: 0.3rem;
+         width: 0.3rem;
       }
 
       .col4 {
@@ -252,7 +252,7 @@ import lodash from "lodash"
         align-items: center;
 
 
-        border-bottom: 1px solid var(--q-gb-bd-c-7);
+        border-bottom: 1px solid var(--q-gb-bd-c-4); 
         padding: 0 0.1rem;
 
         > span {
@@ -293,8 +293,8 @@ import lodash from "lodash"
     }
 
     .item-2nd {
-      border-left: 1px solid var(--q-gb-bd-c-7);
-      border-right: 1px solid var(--q-gb-bd-c-7);
+      border-left: 1px solid var(--q-gb-bd-c-4); 
+      border-right: 1px solid var(--q-gb-bd-c-4); 
       padding: 0 0.05rem;
     }
 
