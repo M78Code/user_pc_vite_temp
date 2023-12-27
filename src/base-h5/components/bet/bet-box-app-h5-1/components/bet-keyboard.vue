@@ -167,8 +167,14 @@ const _handleKeyPress = (e) => {
 // 小数点 .
 const _handleDecimalPoint = () => {
   //超过最大金额  显示最大金额
-  let old = BetData.bet_keyboard_config.playOptionsId
-  let max_money = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
+  let max_money = ''
+  if(BetData.is_bet_single){
+    let old = BetData.bet_keyboard_config.playOptionsId
+    max_money = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
+  }else{
+    max_money = lodash_.get(BetData,`bet_keyboard_config.max_money`,8888)
+  }
+
   let money_ = money.value
   //超过最大金额时不让输入
   if (money_ && money_*1 >= max_money*1) return
@@ -191,8 +197,14 @@ const _handleDecimalPoint = () => {
 // MAX键
 const _handmaxKey = (e) => {
   add_or_remove_active(e)
-  let old = BetData.bet_keyboard_config.playOptionsId
-  let money_ = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
+  let money_ = ''
+  if(BetData.is_bet_single){
+    let old = BetData.bet_keyboard_config.playOptionsId
+    money_ = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
+  }else{
+    money_ = lodash_.get(BetData,`bet_keyboard_config.max_money`,8888)
+  }
+  
   // 判断当前余额 是否小于最多投注金额
   if(money_*1 > UserCtr.get_set_balance()*1 ){
     money.value = UserCtr.get_set_balance()
@@ -250,27 +262,12 @@ const _handleNumberKey = (num, e) => {
   }
 
   //超过最大金额  显示最大金额
-  let ol_id = ''
-  let ol_type = ''
   let max_money = ''
   if(BetData.is_bet_single){
-    ol_type = 'playOptionsId'
+    let old = BetData.bet_keyboard_config.playOptionsId
+    max_money = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
   }else{
-    ol_type = 'id'
-  }
-  ol_id = lodash.get(BetData.bet_keyboard_config,ol_type)
-
-  // 获取限额取值
-  if(BetData.is_bet_single){
-    max_money = lodash.get( BetViewDataClass,`bet_min_max_money[${ol_id}].max_money`,8888)
-  }else{
-    let obj_max = BetViewDataClass.bet_special_series.find(item=> item.id == ol_id) || {}
-    if(obj_max.id){
-      max_money = obj_max.max_money
-    }else{
-      // 设置默认限额
-      max_money = 8888
-    }
+    max_money = lodash_.get(BetData,`bet_keyboard_config.max_money`,8888)
   }
 
   // 输入金额大于限额 或者 大于用户余额
