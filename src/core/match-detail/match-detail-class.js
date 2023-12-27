@@ -277,6 +277,7 @@ class MatchDetailCtr {
       time: Date.now()
     }
     this.mid = mid
+    this.get_goto_detail_matchid = mid
     // this.play_media.media_type = media_type
     this.set_details_data_version()
   }
@@ -404,6 +405,7 @@ class MatchDetailCtr {
   */
   set_goto_detail_matchid(id){
     this.get_goto_detail_matchid = id
+    this.mid = id
     this.set_details_data_version()  
   }
   /**
