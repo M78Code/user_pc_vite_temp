@@ -96,7 +96,7 @@ onMounted(()=>{
     .rule-content {
         width: 100%;
         flex: 1;
-        background-color: #fff;
+        background-color: var(--q-gb-bg-c-27);
     //   padding: 0 15px;
         
     }

@@ -62,12 +62,12 @@
          srcset="">
         </div>
       </div>
-      <!-- <div class="setting-item" @click="change_version"> -->
+      <div class="setting-item" @click="change_version">
       <!-- 前往旧版 -->
-        <!-- <div class="title"> {{ i18n_t('app_h5.filter.go_old_version') }}</div> -->
+        <div class="title"> {{ i18n_t('app_h5.filter.go_old_version') }}</div>
         <!-- 前往网页版 -->
-        <!-- <div class="goto-website"> {{ i18n_t('app_h5.filter.go_web_version') }}</div>
-      </div> -->
+        <div class="goto-website"> {{ i18n_t('app_h5.filter.go_web_version') }}</div>
+      </div>
     </div>
     <div class="closed-btn" @click="closedHandle">
     <!-- 关闭 -->
@@ -308,73 +308,7 @@ const change_version = async ()=>{
       await api_account.get_UserVersion({h5FrontVersion:'1'})
       location.href = `${herf}${param}`;
   }
-  /**
-   * @description: 埋点发送事件跟踪信息
-   * @param {*} action 事件报告中显示为事件操作的字符串
-   * @param {*} category 显示为事件类别的字符串
-   * @param {*} label 显示为事件标签的字符串
-   * @param {*} value 显示为事件价值的非负整数
-   * @return {*}
-   */
-const  gtag_event_send = (action, category, label, value) =>{
-    let user_id = sessionStorage.getItem('user_id');
-    if(user_id && window.gtag_run){
-      // 初始化埋点Google Analytics GA_TRACKING_ID config配置
-      if(!window.INIT_GTAG){
-        gtag_config_send(user_id);
-      }
-      // 埋点发送事件跟踪信息
-      window.gtag('event', action, {
-        'event_category': category,
-        'event_label': label,
-        user_id,// 用户信息
-        value
-      });
-    }
-  }
-  /**
-   * @description: 埋点Google Analytics GA_TRACKING_ID config配置
-   * @param {*} user_id 用户id
-   * @return {*}
-   */
-const gtag_config_send = (user_id)=>{
-    // 设置默认启动参数
-    // GA 埋点开关开启---照常统计，和生产环境保持一致
-    window.gtag_run = 1;
-    try {
-      let url_search = new URLSearchParams(location.search);
-      // 获取诸葛埋点开关
-      let gtag = url_search.get('gtag');
-      if(gtag){
-        // 设置诸葛埋点开关
-        window.gtag_run = 1;
-      }
-    } catch (error) {
-      console.error(error)
-    }
-    // 诸葛埋点开关关闭时,直接终止
-    if(!window.gtag_run){
-      return
-    }
-    if(user_id){
-      // 设置用户ID持久化
-      sessionStorage.setItem('user_id',user_id);
-    } else {
-      // user_id无效时情况上次的缓存
-      sessionStorage.setItem('user_id','');
-      return;
-    }
-    if(!window.INIT_GTAG && window.gtag_run){
-      // 初始化埋点信息
-      window.dataLayer = window.dataLayer || [];
-      window.gtag = function gtag() { dataLayer.push(arguments); }
-      window.gtag('js', new Date());
-      // 配置埋点信息
-      window.gtag('config', window.env.config.GA_TRACKING_ID,{user_id});
-      // 设置埋点是否已经配置过
-      window.INIT_GTAG = true;
-    }
-  }
+
 
 </script>
 <style scoped lang="scss">
