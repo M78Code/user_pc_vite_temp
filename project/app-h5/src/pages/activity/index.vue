@@ -43,6 +43,11 @@ if(UserCtr.theme){
   // 主题转换
   theme = UserCtr.theme.replace("-", '0')
 }
+if(theme === 'theme01'){
+  theme = 'theme02'
+} else {
+  theme = 'theme01'
+}
 // 暂时强行设置蓝色
 if(1||lodash.get(UserCtr.user_info, 'stm') === 'blue') {
   // 设置y0样式
