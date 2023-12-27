@@ -159,7 +159,7 @@ export default defineComponent({
     const current_match_list = computed(() => {
       let arr = match_list_normal_data.value;
       const value = props.active;
-      if (props.active != -1) {
+      if (value && value != -1) {
         arr = match_list_normal_data.value.filter(e => {
           return e.topKey.split('-')[1] == value;
         });
