@@ -113,18 +113,26 @@ watch(() => pre_odds_value, (new_) => {
   }
 })
 
-watch(() => money.value, (new_) => {
-  let emit_name = 'EMIT_INPUT_BET_MONEY'
-  if(BetData.is_bet_single){
-    emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
-  }
-  useMittEmit(MITT_TYPES[emit_name],{ params:BetData.bet_keyboard_config, money: new_ })
-})
+// watch(() => money.value, (new_) => {
+//   let emit_name = 'EMIT_INPUT_BET_MONEY'
+//   if(BetData.is_bet_single){
+//     emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
+//   }
+//   useMittEmit(MITT_TYPES[emit_name],{ params:BetData.bet_keyboard_config, money: new_ })
+// })
 
 watch(() => active_index, (new_) => {
   if (money.value) delete_all.value = true;
 })
 
+// 金额输入到 投注栏里
+const set_money_change_new = (new_) => {
+  let emit_name = 'EMIT_INPUT_BET_MONEY'
+  if(BetData.is_bet_single){
+    emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
+  }
+  useMittEmit(MITT_TYPES[emit_name],{ params:BetData.bet_keyboard_config, money: new_ })
+}
 
 // 点击键盘
 const _handleKeyPress = (e) => {
@@ -175,6 +183,8 @@ const _handleDecimalPoint = () => {
     money_ = money_ + ".";
   }
   money.value = money_
+
+  set_money_change_new(money_)
  
 }
 
@@ -193,7 +203,7 @@ const _handmaxKey = () => {
   } else {
     money.value = money_
   }
-  
+  set_money_change_new(money.value)
 }
 // 删除键
 const _handleDeleteKey = () => {
@@ -202,6 +212,7 @@ const _handleDeleteKey = () => {
   //删除最后一个
   let s = money.value.toString()
   money.value = s.substring(0, s.length - 1);
+  set_money_change_new(money.value)
 }
 // 数字建
 const _handleNumberKey = (num, e) => {
@@ -268,6 +279,7 @@ const _handleNumberKey = (num, e) => {
   }
 
   money.value = money_
+  set_money_change_new(money_)
 }
 
 // 获取商户配置的 快捷金额
