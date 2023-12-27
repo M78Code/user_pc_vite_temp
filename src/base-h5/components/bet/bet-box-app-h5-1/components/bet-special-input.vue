@@ -3,16 +3,16 @@
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
   <div class="bet_single_info f-b-c">
-    <div class="alert-rules" @click="alertRules()">
+    <div class="alert-rules" @click="alertRules(items.id)">
       <img :src="compute_local_project_file_path('/image/bet/request.svg')" alt="">{{ items.name }}
     </div>
     
-  <bet-dialog @close="tooltipbox=false" :item="items" :tooltipboxs="tooltipbox" v-model="tooltipbox"></bet-dialog>
+  <bet-dialog @close="tooltipbox=false" :item="items" :id="itemid" :tooltipboxs="tooltipbox" v-model="tooltipbox"></bet-dialog>
     <div class="bet_single_detail f-b-c">
       <div>{{ items.count }}x</div>
       <div class="content-b" @click="input_click">
         <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
-        <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}<em class="number_family">{{ items.min_money }}-{{ items.max_money }}</em></span>
+        <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}<em class="number_family">{{ items.min_money }}-{{ format_money3(items.max_money) }}</em></span>
         <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
       </div>
     </div>
@@ -36,7 +36,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import betDialog from "./bet-dialog.vue"
-import { UserCtr,formatMoney,format_money2,currency_code, compute_local_project_file_path } from "src/output/index.js"
+import { UserCtr,formatMoney,format_money2,currency_code, compute_local_project_file_path, format_money3 } from "src/output/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 
 const props = defineProps({
@@ -61,6 +61,7 @@ const ref_data = reactive({
 })
 
 const tooltipbox = ref(false)
+const itemid = ref()
 
 onMounted(() => {
   ref_data.money = props.items.bet_amount
@@ -138,7 +139,8 @@ const set_special_series = (money,ty_id) => {
 }
 
 // 弹出规则
-const alertRules = () => {
+const alertRules = (id) => {
+  itemid.value = id
   tooltipbox.value = !tooltipbox.value
 }
 

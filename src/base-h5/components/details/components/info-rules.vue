@@ -109,6 +109,7 @@ export default defineComponent({
 /*************** 文字头开始 *************** -S*/
 .content-box  header {
   font-size: 0.16rem;
+  color: var(--q-analysis-text-color-20);
   // color:var(--q-color-com-fs-color-1);
   // color: #000000;// var(--q-color-fs-color-35);
   letter-spacing: 0;
