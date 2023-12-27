@@ -14,16 +14,22 @@
     }]">
     <template v-if="match" >
       <!-- 全部 -->
-      <div class="all-league-title" v-if="i === 0" @click.stop="handle_ball_seed_fold">
-      <!-- 全部联赛 -->
+      <div class="all-league-title" v-if="i === 0" @click.stop="handle_all_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{ i18n_t('filter.all_leagues')}} </span> </div> 
-        <!-- <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt=""> -->
-        <div :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
+        <div class="expand_item" :class="{ball_seed_collapsed: !all_ball_seed_collapsed}" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
+      </div>
+      <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
+      <div class="buffer-container" v-if="match.is_show_league && i !== 0"></div>
+      <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 @click.stop="handle_ball_seed_fold"-->
+      <div v-if="show_sport_title" @click.stop="handle_ball_seed_fold"
+        :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
+        <span class="score-inner-span">
+          {{ match_of_list.csna || get_current_manu_name() }}
+        </span>
       </div>
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
       <div :class="['match-inner-container', {'collapsed': !collapsed}]">
-         <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
-        <div class="buffer-container" v-if="match.is_show_league && i !== 0"></div>
+         
         <!--联赛标题 -->
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
           :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'no-border': !collapsed}]">
@@ -199,9 +205,8 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score"
-                          :class="{ 'visibility-hidden': match.ms == 110 }">
-                          {{ home_score }}
+                        <div class="score full-score">
+                          {{ home_score || 0 }}
                         </div>
                       </div>
                       <!--客队图片和名称-->
@@ -232,9 +237,8 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score"
-                          :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
-                          {{ away_score }}
+                        <div class="score full-score">
+                          {{ away_score || 0 }}
                         </div>
                       </div>
                     </div>
@@ -269,7 +273,7 @@ import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-w
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
-import { i18n_t, compute_img_url, compute_css_obj, PageSourceData } from "src/output/index.js"
+import { i18n_t, compute_img_url, compute_css_obj, PageSourceData, MenuData } from "src/output/index.js"
 import { format_time_zone } from "src/output/index.js"
 import { mearlys_icon, in_progress, not_begin, normal_img_not_favorite_white, normal_img_is_favorite, icon_date, expand_item } from 'src/base-h5/core/utils/local-image.js'
 
@@ -333,7 +337,8 @@ export default {
   setup (ctx) {
     // 是否显示球种标题
     const show_sport_title = computed(() => {
-      return [1,2].includes(+ctx.match_of_list.start_flag)
+      const { is_show_ball_title } = ctx.match_of_list
+      return is_show_ball_title && menu_lv2.value.mi == '200'
     })
 
     return { 
@@ -350,7 +355,8 @@ export default {
 
 .match-line-module {
   padding: 0 0.1rem;
-  background-color: var(--q-gb-bg-c-21) !important;
+  // background-color: var(--q-gb-bg-c-21) !important;
+  height: 1px;
   .match-line {
     width: 100%;
     height: 0.005rem;
@@ -372,7 +378,7 @@ export default {
 .all-league-title{
   display: flex;
   height: 30px;
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-25);
   padding: 0 10px;
   align-items: center;
   justify-content: space-between;
@@ -389,7 +395,7 @@ export default {
     width: 0.2rem;
     height: 16px;
     transition: transform 0.25s ease;
-    transform: rotate(-180deg);
+    transform: rotate(-90deg);
   }
   .ball_seed_collapsed{
     transform: rotate(0);
@@ -442,9 +448,9 @@ export default {
     padding: 0 0.05rem;
     flex-direction: column;
     align-items: center;
-    background: var(--q-gb-bg-c-18) !important;
+    background: var(--q-gb-bg-c-41) !important;
     .buffer-container{
-      background: var(--q-gb-bg-c-18);
+      background: var(--q-gb-bg-c-21);
       height: 5px;
       width: 100%;
     }
@@ -481,8 +487,8 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    background: var(--q-match-page-bg-color-10);
-
+    // background: var(--q-gb-bg-c-18);
+    // background: var(--q-match-page-bg-color-10);
     .match-odds-container-border-radius {
       overflow: hidden;
     }
@@ -555,7 +561,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: var(--q-gb-bg-c-21) !important;
+    // background: var(--q-gb-bg-c-18) !important;
     &.bottom{
       margin-top: 0.05rem;
     }
@@ -592,8 +598,8 @@ export default {
     height: 20px;
     border-radius: 0;
     font-size: 12px;
-    padding: 0 5px 0 20px;
-    background: rgba(175, 179, 200, 0.1);
+    padding: 0 5px 0 17px;
+    background: var(--q-gb-bg-c-21);
     line-height: 20px;
     font-size: 11px;
     .league-collapse-dir{
@@ -739,7 +745,7 @@ export default {
       display: flex;
       align-items: center;
       flex-wrap: nowrap;
-      padding-left: 0.08rem;
+      padding-left: 0.115rem;
       .esport {
         margin: 0.01rem 0.07rem 0 0rem;
         position: relative;
@@ -887,6 +893,7 @@ export default {
     flex-wrap: nowrap;
     align-items: center;
     overflow: hidden;
+    font-weight: 600;
     color: var(--q-gb-bg-c-3) !important;
     .icon-wapper{
       transform: rotate(90deg);
@@ -913,11 +920,6 @@ export default {
         //max-width: 1.4rem;
       }
     }
-
-
-    color: var(--q-color-com-fs-color-26);
-
-    font-weight: 600;
   }
 
   .match-type {

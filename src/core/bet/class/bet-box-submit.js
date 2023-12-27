@@ -96,8 +96,12 @@ const set_bet_order_list = (bet_list, is_single) => {
     let order_list = [], single_bet = BetViewDataClass.bet_special_series
     // 串关
     if (!is_single) {
-        order_list = single_bet.map(obj => {
+        single_bet.forEach(obj => {
             let bet_s_list = []
+            // 没有金额不进行投注
+            if(!obj.bet_amount){
+              return  
+            }
             bet_list.forEach(item => {
                 let bet_s_obj = {
                     "sportId": item.sportId,   // 赛种id
@@ -139,7 +143,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "fullBet": 0,   // 是否满额投注，1：是，0：否
                 "orderDetailList": bet_s_list
             }
-            return obj_s
+            order_list.push(obj_s) 
         })
 
     } else {
@@ -363,11 +367,7 @@ const get_lastest_market_info = () => {
             BetData.set_bet_single_special(bet_list)
             // 重新订阅ws
             set_market_id_to_ws()
-
-            nextTick(()=>{
-                // 获取限额
-                get_query_bet_amount_common()
-            })
+           
         }
     })
 } 
@@ -680,13 +680,7 @@ const submit_handle = async () => {
            
             // 单关
             if(BetData.is_bet_single){
-                orderDetailList = orderDetailList.map(item=>{
-                    if(item.matchType == 2){
-                        let score = item.scoreBenchmark.split(':')
-                        item.mark_score = `(${score[0]}-${score[1]})`
-                    }
-                    return item
-                })
+               
                 set_orderNo_bet_obj(orderDetailRespList)
                 
                 // 投注 注单状态
@@ -1243,10 +1237,16 @@ const set_orderNo_bet_obj = order_no_list => {
         let match_time = lodash_.get( refer_obj, `match_time`)
         // 玩法id
         let playId = lodash_.get( refer_obj, `playId`)
+        // 基准分
+        let score_benchmark = lodash_.get( item, `scoreBenchmark`, '')
+        if(score_benchmark){
+            score_benchmark = `(${ score_benchmark.replace(':','-') })`
+        }
         return {
             ...item,
             match_time,
             playId,
+            score_benchmark,
         }
     })
     BetViewDataClass.set_orderNo_bet_obj(order_list)

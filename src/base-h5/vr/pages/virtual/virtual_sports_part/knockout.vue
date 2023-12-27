@@ -4,7 +4,7 @@
  * @Description: 虚拟体育 淘汰赛页面 只需要传个 tid 联赛id进来
 -->
 <template>
-  <div class="elimination-rank" :class="{'vi-lang': get_lang == 'vi'}">
+  <div class="elimination-rank" :class="{'vi-lang': lang == 'vi'}">
     <!-- 积分榜tab -->
     <div class="row justify-center tabs-bar">
       <div v-for="(item, index) in tabs" :key="index"
@@ -90,6 +90,7 @@
 import { api_v_sports } from "src/base-h5/vr/api";
 import no_data from "src/base-h5/vr/components/common/no_data.vue";
 import { LOCAL_PROJECT_FILE_PREFIX,calc_win, project_name, i18n_t } from 'src/output/index.js'
+import { lang } from 'src/base-h5/mixin/userctr.js'
 
 export default {
   name: "knockout",
@@ -120,7 +121,7 @@ export default {
   },
   computed: {
     // ...mapGetters(['get_lang']),
-    get_lang(){return 'zh'}
+    // get_lang(){return 'zh'}
   },
   watch: {
     'current_match': {
@@ -134,7 +135,8 @@ export default {
   // },
   setup() {
     return {
-      LOCAL_PROJECT_FILE_PREFIX
+      LOCAL_PROJECT_FILE_PREFIX,
+      lang
     }
   },
   methods: {

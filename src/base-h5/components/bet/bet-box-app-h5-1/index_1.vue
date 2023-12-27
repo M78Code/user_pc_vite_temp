@@ -79,7 +79,7 @@
         <template v-if="!BetData.is_bet_single && BetViewDataClass.bet_order_status == 1">
           <div class="re">
             <keyboard  class="bet-key-board" v-if="BetData.bet_keyboard_show"/>
-            <div class="scroll-down">
+            <div class="scroll-down" v-show="show_img" @click="scrollTo">
               <img :src="compute_local_project_file_path('/image/common/slide_icon_y1.svg')" alt="">
             </div>
           </div>
@@ -148,6 +148,18 @@ function handle_input_click(e){
     }
   },50);
 }
+
+// 滑动到底部滚动区域的底部
+let show_img = ref(true);
+const scrollTo = () => {
+  nextTick(() => {
+    bet_scroll.value.scrollTo({
+      top: 999,
+      behavior: "smooth",
+    })
+    show_img.value = false
+  })
+}
 </script>
 
 <style scoped lang="scss">
@@ -191,14 +203,26 @@ function handle_input_click(e){
 .scroll-down {
   position: absolute;
   left: 50%;
-  top: -0.1rem;
+  top: -0.17rem;
   width: .2rem;
   height: .2rem;
   z-index: 1000;
   transition: .3s;
+  animation: up-and-down 2.5s ease-in-out infinite;
   img {
     width: 100%;
     height: 100%;
+  }
+}
+@keyframes up-and-down {
+  from {
+    top: -.17rem;
+  }
+  50% {
+    top: -.14rem;
+  }
+  to {
+    top: -.17rem;
   }
 }
 
