@@ -238,7 +238,7 @@ export default {
   -webkit-overflow-scrolling: auto;
   white-space: nowrap;
   padding-left: 0.05rem;
-
+  color: var(--q-gb-t-c-19);
   &::-webkit-scrollbar {
     display: none;
   }
@@ -262,8 +262,8 @@ export default {
   font-size: 0.14rem;
   letter-spacing: 0;
   text-align: center;
-  background: #179CFF;
-  color: #fff;
+  color: var(--q-gb-t-c-1);
+  background: var(--q-gb-bg-c-31);
   width: 0.74rem;
   height: 0.3rem;
   line-height: 0.3rem;
