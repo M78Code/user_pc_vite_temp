@@ -184,7 +184,6 @@ const jumpTo = ()=>{
 	}
 	.match_all_matches{
 		color: var(--q-gb-t-c-1);
-		font-family: "PingFang SC";
 		font-size: 18px;
 		font-weight: 500;
 		line-height: 25px;
