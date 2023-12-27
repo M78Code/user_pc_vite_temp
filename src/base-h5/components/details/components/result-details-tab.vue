@@ -45,7 +45,7 @@ const tab_item_list = ref([
     // 所有赛果
     {id:1, text: i18n_t('match_info.all_result')},
     // 精选赛事
-    {id:2, text: i18n_t('match_info.select_event')}
+    // {id:2, text: i18n_t('match_info.select_event')}
   ])
 const list_data = ref([])
 const get_fewer = ref(1)
@@ -76,17 +76,19 @@ let off_ = () => {}
    * 标签数据初始化
    */
 const tab_data_init = () => {
-    tab_item_list.value =[
-      // 所有赛果
-      {id:1, text: i18n_t('match_info.all_result')},
-      // 精选赛事
-      {id:2, text: i18n_t('match_info.select_event')}
-    ];
     if(MenuData.current_lv_1_menu_i == 28 && [100,101,102,103,104].includes(+props.result_detail_data.csid))  {
       tab_item_list.value =[
         // 所有赛果
         {id:1, text: i18n_t('match_info.all_result')}
       ];
+    }else{
+      tab_item_list.value =[
+      // 所有赛果
+      {id:1, text: i18n_t('match_info.all_result')},
+      // 精选赛事
+      {id:2, text: i18n_t('match_info.select_event')}
+    ];
+
     }
   }
   // 点击高亮显示tab
