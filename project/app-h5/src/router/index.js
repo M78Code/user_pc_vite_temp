@@ -44,11 +44,11 @@ const router = createRouter({
               keepAlive: true // 需要缓存
             },
           },
-          {
-            path: "/home",
-            name: "home",
-            component: () => import("../pages/home/index.vue")
-          },
+          // {
+          //   path: "/home",
+          //   name: "home",
+          //   component: () => import("../pages/home/index.vue")
+          // },
           // {
           //   path: "/activity_task",
           //   name: "activity_task",
@@ -101,12 +101,12 @@ const router = createRouter({
         },
           // 赛果详情页
           {
-            path: "/result_details/:mid/:csid/:mcid?",
+            path: "/result_details/:mid/:csid/:mcid?/:index?",
             name: "result_details",
             component: () => import("../pages/details/result-details.vue"),
             children: [
               {
-                path: "/result_details/:mid/:csid/:mcid?/:index",
+                path: "/result_details/:mid/:csid/:mcid?/:index?",
                 name: "match_result",
                 component: () => import("../pages/details/components/result-fat-tab.vue")
               }

@@ -133,6 +133,7 @@ const searchTabMenu = ref(null);//足球tab dom
       const data_list_esports = await MenuData.getDateList(val?.csid);
       dataListEsports.value = data_list_esports;
       ref_data.current_mi = val.mi;
+      val.old_csid =val.csid || MenuData.current_lv_2_menu?.csid;
       MenuData.set_current_lv_2_menu_i(val);
       nextTick(()=>{
         dJdateTabMenu.value?.changeTabMenu({},0,'',type);
@@ -156,7 +157,7 @@ const searchTabMenu = ref(null);//足球tab dom
         ref_data.current_mi =is_session?MenuData.current_lv_2_menu_i:obj.mi
         // 设置二级菜单 
         !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj)
-        const data_list_esports = await MenuData.getDateList(val?.csid);
+        const data_list_esports = await MenuData.getDateList(val?.csid|| MenuData.current_lv_2_menu?.old_csid || BaseData.dianjing_sublist[0].csid);
         dataListEsports.value = data_list_esports;
         get_collect_count();
         handle_match_render_data(type)

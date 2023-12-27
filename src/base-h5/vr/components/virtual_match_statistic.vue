@@ -91,8 +91,6 @@ export default {
     //   match:'get_current_gotodetail_match'
     // }),
     match(){
-      console.log('VR_CTR', VR_CTR);
-      
       return VR_CTR.get_current_gotodetail_match()
     },
   },
