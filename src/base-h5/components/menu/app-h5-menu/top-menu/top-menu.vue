@@ -330,12 +330,14 @@ const set_menu_lv1 = item => {
         align-items: center;
         padding: 0 0.1rem 0 0.03rem;
         .main-menu-right-symbol{
-            font-family: 'Akrobat';
+            font-family: 'ky-font';
             font-style: normal;
             font-weight: 600;
         }
         .main-menu-right-money{
-            font-family: 'Akrobat';
+            font-family: 'ky-font';
+            font-size: 16px;
+            letter-spacing: 0.5px;
             font-style: normal;
             font-weight: 700;
             flex: 1;
