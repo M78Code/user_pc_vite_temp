@@ -29,7 +29,7 @@
 
         <div class="wonderful-list" ref="wonderfulListRef">
           <!-- 精彩回放列表 -->
-          <div class="row" v-for="(event, i) in events_list_vertical" :key="i">
+          <div class="row" v-for="(event, i) in events_list_vertical" :key="i" v-if="events_list_vertical.length > 0">
             <div class="time-line"></div>
             <div class="time-line-ball"></div>
             <div :class="['item-flag', flag_icon(event.eventCode)]"></div>
@@ -176,13 +176,14 @@
               </template>
             </div>
           </div>
+          <noData v-else/>
         </div>
       </div>
 
       
     </div>
     <!-- 赛事事件 -->
-    <div class="wonderful">
+    <div class="wonderful" v-if="false">
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/border_left.svg`" alt="" class="border-left">
       <div class="wonderful-header" @click="change_event_active">
         <p>{{ i18n_t('app_h5.detail.events') }}</p>
@@ -197,7 +198,7 @@
       </div>
     </div>
     <!-- 技术统计 -->
-    <div class="wonderful">
+    <div class="wonderful" v-if="false">
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/border_left.svg`" alt="" class="border-left">
       <div class="wonderful-header">
         <p>{{ i18n_t('app_h5.detail.technical_statistics') }}</p>
@@ -241,6 +242,9 @@ import teamImg from "src/base-h5/components/details/team-img.vue"
 import titleX from "src/base-h5/components/details/analysis-matches/components/title-x.vue" 
 // 事件类型菜单
 import tabs from "src/base-h5/components/details/analysis-matches/components/tabs.vue" 
+import noData from "src/base-h5/components/common/no-data.vue";
+
+
 // 精彩回放视频滚动列表
 export default {
   name: "highlights",
@@ -267,6 +271,7 @@ export default {
     teamImg,
     titleX,
     tabs,
+    noData
   },
 props: {
   detail_data: {
