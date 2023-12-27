@@ -583,18 +583,20 @@ class MatchMeta {
    */
   async get_virtual_results_match() {
     this.clear_match_info()
-    // vr 足球 
-    // const res = await api_common.get_virtual_result({
-    //   batchNo:"",
-    //   endTime:1703606399000, 结束时间
-    //   isVirtualSport:1, 是否是虚拟体育
-    //   page:{ size: 100, current: 1 }, 不用管
-    //   sportType:"1004", csid 体育id
-    //   startTime:1703520000000, 开始时间
-    //   tournamentId:"79430600606371842" tid
-    // })
+    const md = lodash.get(MenuData.result_menu_api_params, 'md')
+    const { start_time, end_time } = MatchUtils.get_match_time_start_time(md)
+    // vr 
+    const res = await api_common.get_virtual_result({
+      batchNo:"",
+      endTime: String(end_time),
+      isVirtualSport:1,
+      page:{ size: 100, current: 1 },
+      sportType:MenuData.current_lv_2_menu?.sport_id,
+      startTime: String(start_time),
+      tournamentId:"79430600606371842"
+    })
     // vr 马 狗 
-    const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
+    // const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
     if (+res.code !== 200) {
       this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
       if (res.code === '0401038') {

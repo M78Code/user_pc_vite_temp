@@ -126,8 +126,6 @@ const show_quick = () => {
     let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
     let id = lodash_.get(props,'items.id','')
     list.filter(item => {
-        console.log(item.id)
-        console.log(id)
         item.show_quick = false
          // 显示指定投注项的快捷金额按钮
         if(item.id == id){

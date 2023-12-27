@@ -469,7 +469,7 @@ export default {
     }
     .expand_item{
       transition: transform 0.25s ease;
-      transform: rotate(-180deg);
+      transform: rotate(-90deg);
       width: 20px;
       height: 16px;
       margin-right: 0.06rem;
