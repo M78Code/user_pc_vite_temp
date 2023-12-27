@@ -395,7 +395,7 @@ export default {
     width: 0.2rem;
     height: 16px;
     transition: transform 0.25s ease;
-    transform: rotate(-180deg);
+    transform: rotate(-90deg);
   }
   .ball_seed_collapsed{
     transform: rotate(0);
