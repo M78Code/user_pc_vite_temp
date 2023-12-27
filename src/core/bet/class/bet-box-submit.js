@@ -96,8 +96,12 @@ const set_bet_order_list = (bet_list, is_single) => {
     let order_list = [], single_bet = BetViewDataClass.bet_special_series
     // 串关
     if (!is_single) {
-        order_list = single_bet.map(obj => {
+        single_bet.forEach(obj => {
             let bet_s_list = []
+            // 没有金额不进行投注
+            if(!obj.bet_amount){
+              return  
+            }
             bet_list.forEach(item => {
                 let bet_s_obj = {
                     "sportId": item.sportId,   // 赛种id
@@ -139,7 +143,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "fullBet": 0,   // 是否满额投注，1：是，0：否
                 "orderDetailList": bet_s_list
             }
-            return obj_s
+            order_list.push(obj_s) 
         })
 
     } else {

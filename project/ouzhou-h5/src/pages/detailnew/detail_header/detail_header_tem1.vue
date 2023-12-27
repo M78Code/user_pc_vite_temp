@@ -46,65 +46,11 @@
           />
         </div>
       </div>
-      <div class="flex justify-between">
-        <div>
-
-          <div class="match-detail-score">
-            <div class="match-detail-team-name">
-            <span v-if="get_match_detail.csid == 5 " :class="[set_serving_side(props.get_match_detail, 'home') ? 'active-circle':'circle']"></span> 
-            <span>{{ get_match_detail.mhn }}</span>
-            </div>
-            <!-- <div class="match-detail-num" >
-              <span class="active-num"> {{ detail_count?.home }}</span>
-              <span v-if="get_match_detail.csid == 5 " class="default-num">{{ tennis_point[0] }}</span>
-            </div> -->
-          </div>
-          <div class="match-detail-score">
-            <div class="match-detail-team-name">
-              <span v-if="get_match_detail.csid == 5 " :class="[set_serving_side(props.get_match_detail, 'away')? 'active-circle':'circle']"></span> 
-              <span>{{ get_match_detail.man }}</span>
-            </div>
-            <!-- <div class="match-detail-num" v-if=" get_match_detail.man">
-              <span class="active-num"> {{ detail_count?.away }}</span>
-              <span v-if="get_match_detail.csid == 5 " class="default-num">{{ tennis_point[1] }}</span>
-            </div> -->
-          </div>
-        </div>
-        <!-- 新的比分 -->
-        <div class="flex mr-20 text-18">
-          <div class="match-detail-num" >
-            <p class="active-num"> {{ detail_count?.home }}</p>
-            <p class="active-num"> {{ detail_count?.away }}</p>
-          </div>
-          <div class="match-detail-num ml-14 align-right " v-if="get_match_detail.man">
-            <!-- {{ scoew_icon_list["S1"].away }} -->
-            <template v-if="[7,8,9,10,13].includes(get_match_detail.csid)">
-              <p class="default-num">{{ others_point.home }}</p>
-              <p class="default-num">{{ others_point.away }}</p>
-            </template>
-            <template v-if="get_match_detail.csid == 5 ">
-              <p class="default-num">{{ tennis_point[0] }}</p>
-              <p class="default-num">{{ tennis_point[1] }}</p>
-            </template>
-          </div>
-        </div>
-      </div>
+      <TeamMatchScore :detail_data="get_match_detail"></TeamMatchScore>
       <!-- 疑似某些情况下 get_match_detail.ms 不为1导致比分板消失 -->
       <!-- {{get_match_detail.ms }} -->
       <!-- 赛果需要显示比分 添加4 -->
       <template v-if=" [1,3].includes(+get_match_detail.ms)">
-        <!-- <div class="match-detail-item-list" v-if="get_match_detail.csid == '1'">
-          <div
-            class="list"
-            v-for="item in football_score_icon_list"
-            :key="item.msc_key"
-          > 
-            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["home"] : "0" }}</span>
-            <span :class="[item.bg_url, 'score-icon']">
-            </span>
-            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["away"] : "0"}}</span>
-          </div>
-        </div> -->
         <div
           class="match-detail-item-list baseketball-list"
           :class="{
@@ -143,6 +89,7 @@ import matchScore from "./match-score/index.vue"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_tc } from "src/boot/i18n";
 import NavbarSubscribe from "src/base-h5/components/top-menu/top-menu-ouzhou-1/detail-top/nav-bar-subscribe";
+import TeamMatchScore from "./components/team-match-score.vue"
 // import UserCtr from 'src/core/user-config/user-ctr.js'
 /** @type {{get_match_detail:TYPES.MatchDetail}} */
 const props = defineProps({
@@ -166,8 +113,6 @@ const set_serving_side = (item, side) => {
   return item.ms == 1 && item.mat == side;
 }
 
-// 网球当前比分
-const tennis_point = ref([0,0])
 
 const emits = defineEmits(['handle-change'])
 
@@ -223,26 +168,8 @@ watch(() => props.get_match_detail, (value) => {
   if ((props.get_match_detail.mgt && +props.get_match_detail.mgt - now > 0)) {
     start_text.value = Math.floor((+props.get_match_detail.mgt - now)) 
   }
-  
-  const s1_data = value.msc.map(e => e.split('|')).reduce((pre, cur) => {
-      pre[cur[0]] = cur[1].split(':');
-      return pre;
-  }, {});
-  if (s1_data['S103']) {
-    console.log('网球比分', s1_data['S103']);
-    tennis_point.value = s1_data['S103'];
-  }else {
-    tennis_point.value =[0,0]
-  }
-},{deep:true})
+},{deep:true,immediate:true})
 
-// 斯诺克, 乒乓球, 羽毛球, 排球, 沙滩排球 取赛事阶段范围内的最大为当前比分
-const others_point = computed(()=>{
-  const { msc_obj } = props.get_match_detail
-  const msc_obj_keys = Object.keys(msc_obj)
-  const LastIndex = msc_obj_keys.findLastIndex(current => (current.replace('S','') >= 120 && current.replace('S','') <= 159))
-  return msc_obj[msc_obj_keys[LastIndex]]
-})
 //比分
 const detail_count = computed(() => {
   return scoew_icon_list.value['S1'] || [0,0];
