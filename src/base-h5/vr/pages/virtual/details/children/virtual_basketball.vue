@@ -56,7 +56,7 @@
 import { api_v_sports } from "src/base-h5/vr/api";
 import common from 'src/base-h5/vr/mixin/constant/module/common.js';
 import teamImg from 'src/base-h5/vr/components/team_img.vue';
-import ServerTime from "src/core/server-time/server-time.js"
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 
 export default {
   name: "virtual_basketball",
@@ -98,7 +98,7 @@ export default {
       }
       return
     }
-    let rest_time = ServerTime.get_remote_time() - this.current_match.mgt
+    let rest_time = get_now_server() - this.current_match.mgt
     let _time = 0
     if(rest_time < 0){
       _time = Math.abs(rest_time) + 100
@@ -131,7 +131,7 @@ export default {
       if(this.interval_id_b){
         clearInterval(this.interval_id_b)
       }
-      this.start_time = ServerTime.get_remote_time() - this.current_match.mgt
+      this.start_time = get_now_server() - this.current_match.mgt
       this.init_time_b = new Date() * 1
       this.interval_id_b = setInterval(()=>{
         this.animation_b()
@@ -191,7 +191,7 @@ export default {
             }
           })
           this.basketball_score = basketball_score
-          let rest_time = ServerTime.get_remote_time() - this.current_match.mgt
+          let rest_time = get_now_server() - this.current_match.mgt
           if(rest_time > 6000){
             let score = lodash.get(this.basketball_score,`${this.current_match.mid}.score`) || [0,0]
             this.score.home = score[0]
@@ -227,7 +227,7 @@ export default {
           if(score_list.length > 0){
             this.basketball_score = score_list[score_list.length-1]
 
-            let rest_time = ServerTime.get_remote_time() - this.current_match.mgt
+            let rest_time = get_now_server() - this.current_match.mgt
             if(rest_time > 60000){
               this.score.home = this.current_match.homeScore
               this.score.away = this.current_match.awayScore
