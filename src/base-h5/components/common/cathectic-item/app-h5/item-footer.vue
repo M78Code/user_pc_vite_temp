@@ -60,9 +60,9 @@
     <template>
       <!-- 预约中、预约失效页 -->
       <span v-if="BetRecordClass.selected === 1 || BetRecordClass.selected === 2">
-        <template v-if="[2, 3].includes(data_f.preOrderStatus)">{{ i18n_t('pre_record.booked_fail') }}</template>
-        <template v-else-if="[4].includes(data_f.preOrderStatus)">{{ i18n_t('pre_record.canceled') }}</template>
-        <template v-else>{{ i18n_t('pre_record.booking') }}</template>
+        <template v-if="[2, 3].includes(data_f.preOrderStatus)"> <span class="font-style">{{ i18n_t('pre_record.booked_fail') }}</span> </template>
+        <template v-else-if="[4].includes(data_f.preOrderStatus)"><span class="font-style">{{ i18n_t('pre_record.canceled') }}</span> </template>
+        <template v-else><span class="font-style-blue">{{ i18n_t('pre_record.booking') }}</span> </template>
       </span>
 
       <!-- 未结算页、已结算页 -->
@@ -206,5 +206,11 @@ p {
   }
   .font500 {
     font-weight: 500;
+  }
+  .font-style{
+    color:#F53F3F
+  }
+  .font-style-blue{
+    color:#127DCC
   }
 </style>
