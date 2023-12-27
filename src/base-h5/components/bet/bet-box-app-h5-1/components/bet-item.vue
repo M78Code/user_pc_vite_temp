@@ -121,8 +121,7 @@ const set_delete = () => {
         }
 
         &.not-chain-bet {
-            background-color: var(--q-gb-bg-c-22);
-            opacity: .8;
+            background-color: var(--q-gb-bg-c-38);
         }
 
         .bet-money {
