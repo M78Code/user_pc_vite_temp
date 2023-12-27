@@ -54,6 +54,7 @@ export default {
   margin-bottom: 0.04rem;
   width: 100%;
   border-bottom: 8px solid var(--q-gb-bg-c-29);
+  background: var(--q-gb-bg-c-27);
 }
 .bg-tabs {
   width:100%;
