@@ -11,7 +11,7 @@
       <div class="group-name">
         <span></span>
         <span>
-          {{get_lang == 'vi' ? (i18n_t('virtual_sports.group')+ '  ' + detail_list.groupId) : (detail_list.groupId+ '  ' +i18n_t('virtual_sports.group'))}}
+          {{lang == 'vi' ? (i18n_t('virtual_sports.group')+ '  ' + detail_list.groupId) : (detail_list.groupId+ '  ' +i18n_t('virtual_sports.group'))}}
         </span>
       </div>
       
@@ -48,6 +48,7 @@
 <script>
 import { api_v_sports } from "src/base-h5/vr/api";
 import no_data from "src/base-h5/vr/components/common/no_data.vue";
+import { lang } from 'src/base-h5/mixin/userctr.js'
 
 export default {
   name: "group_matches",
@@ -56,7 +57,7 @@ export default {
   },
   computed: {
     // ...mapGetters(['get_lang']),
-    get_lang(){ return 'zh' }
+    // get_lang(){ return 'zh' }
   },
   props:{
     tid: Number|String,
@@ -68,7 +69,8 @@ export default {
   data() {
     return {
       group_stage_list: [],
-      no_data: false
+      no_data: false,
+      lang
     }
   },
   mounted() {
