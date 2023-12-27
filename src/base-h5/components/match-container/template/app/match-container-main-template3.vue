@@ -355,7 +355,8 @@ export default {
 
 .match-line-module {
   padding: 0 0.1rem;
-  background-color: var(--q-gb-bg-c-21) !important;
+  // background-color: var(--q-gb-bg-c-21) !important;
+  height: 1px;
   .match-line {
     width: 100%;
     height: 0.005rem;
@@ -377,7 +378,7 @@ export default {
 .all-league-title{
   display: flex;
   height: 30px;
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-25);
   padding: 0 10px;
   align-items: center;
   justify-content: space-between;
@@ -394,7 +395,7 @@ export default {
     width: 0.2rem;
     height: 16px;
     transition: transform 0.25s ease;
-    transform: rotate(-180deg);
+    transform: rotate(-90deg);
   }
   .ball_seed_collapsed{
     transform: rotate(0);
@@ -449,7 +450,7 @@ export default {
     align-items: center;
     background: var(--q-gb-bg-c-18) !important;
     .buffer-container{
-      background: var(--q-gb-bg-c-18);
+      background: var(--q-gb-bg-c-21);
       height: 5px;
       width: 100%;
     }
@@ -486,8 +487,7 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    background: var(--q-match-page-bg-color-10);
-
+    background: var(--q-gb-bg-c-18);
     .match-odds-container-border-radius {
       overflow: hidden;
     }
@@ -560,7 +560,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: var(--q-gb-bg-c-21) !important;
+    // background: var(--q-gb-bg-c-18) !important;
     &.bottom{
       margin-top: 0.05rem;
     }
