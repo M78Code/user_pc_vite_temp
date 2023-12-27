@@ -32,9 +32,13 @@
             :key="`0-${BetData.bet_s_list[0].custom_id}`"
           ></bet-input>
         </div> -->
-        <q-card flat class="bet-mix-item-card" v-if="BetData.bet_s_list.length > 1">
+        <div v-if="BetData.bet_s_list.length > 1">
+          <q-card flat class="bet-mix-item-card">
+            <div v-show="false"> {{BetViewDataClass.bet_view_version}}</div>
             <betSpecialInput  :items="BetViewDataClass.bet_special_series[0]"  />
-        </q-card>
+          </q-card>
+        </div>
+       
       </template>
     </div>
     

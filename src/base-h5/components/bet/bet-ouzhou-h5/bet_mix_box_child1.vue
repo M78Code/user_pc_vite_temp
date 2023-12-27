@@ -13,7 +13,9 @@
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one">
-                        <div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap.replace('undefined','')"></div>
+                        <div class="nonebox4-content-left-content-text-one-tit">
+                          <span class="text-flow-none">{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></span> 
+                        </div>
                         <div>
                             <div class="nonebox4-content-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                               <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">

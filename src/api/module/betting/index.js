@@ -36,7 +36,7 @@ export const get_seriesCountJointNumbe = (params, config={}, url = "/v1/betOrder
 export const fetch_mix_bet_rules = (params, config={}, url = "/v1/betOrder/querySeriesRuleList") => http.get(`${prefix}${url}`, params, config);
  
 // 查询最新的盘口数据 /v1/betOrder/queryLatestMarketInfo
-export const query_last_market_info = (params, config={}, url = "/v1/betOrder/queryLatestMarketInfoPB") => http.post(`${prefix}${url}`, params, config);
+export const query_last_market_info = (params, config={}, url = "/v1/betOrder/queryLatestMarketInfoPB") => http.post(`${prefix3}${url}`, params, config);
 //获取额度接口合并
 export const query_bet_amount = (params, config={}, url = "/v1/betOrder/queryBetAmount") => http.post(`${prefix3}${url}`, params, config);
 

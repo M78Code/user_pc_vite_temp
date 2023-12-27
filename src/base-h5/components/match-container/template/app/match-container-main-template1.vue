@@ -34,7 +34,7 @@
       <div class="all-league-title" v-if="is_show_opening_title && is_mix_no_today"  @click.stop="handle_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{ is_mix_no_today }}</span> </div>
         <!-- <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt=""> -->
-        <!-- <img :class="['expand_item', {all_ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt=""> -->
+        <div :class="['expand_item', {all_ball_seed_collapsed: not_begin_collapsed}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
       </div>
       <!-- 全部 -->
       <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
@@ -399,7 +399,7 @@ export default {
 .all-league-title{
   display: flex;
   height: 30px;
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-25);
   padding: 0 10px;
   align-items: center;
   justify-content: space-between;
@@ -417,7 +417,7 @@ export default {
     width: 0.2rem;
     height: 16px;
     transition: transform 0.25s ease;
-    transform: rotate(-180deg);
+    transform: rotate(-90deg);
   }
   .ball_seed_collapsed{
     transform: rotate(0);

@@ -354,7 +354,7 @@ export default {
   .match-line {
     width: 100%;
     height: 0.005rem;
-    background-color: var(--q-gb-bg-c-4);
+    background-color: var(--q-gb-bd-c-4);
   }
 }
 .match-container-main-template3{
@@ -723,7 +723,8 @@ export default {
     height: 0.26rem;
     border-radius: 0.08rem 0.08rem 0 0;
     // padding: 0 0.1rem;
-    border-bottom: 1px solid var(--q-gb-bg-c-4);
+    border-bottom: 1px solid var(--q-gb-bd-c-4);
+
     &.show-sport {
       border-radius: 0.12rem 0.12rem 0 0;
     }
@@ -1019,7 +1020,7 @@ export default {
 
     .team-wrapper {
       padding-right:10px;
-      border-right: 1px solid var(--q-gb-bg-c-4);
+      border-right: 1px solid var(--q-gb-bd-c-4);
 
       &.simple {
         transform: translateY(-1px);
@@ -1247,7 +1248,7 @@ export default {
       .go-to-i-detail-i {
         width: 0.68rem;
         height: 0.47rem;
-        border-left: 1px solid var(--q-gb-bg-c-4);
+        border-left: 1px solid var(--q-gb-bd-c-4);
 
         .word {
           margin-right: 0.08rem;
