@@ -189,12 +189,12 @@ onMounted(() => {
       return props.item_data.orderNo == item.orderNo
     })
     // 如果没有当前单号
-    if(!moneyData) {
-      calc_show.value = false
-      return
-    }
+    // if(!moneyData) {
+    //   calc_show.value = false
+    //   return
+    // }
     // 有当前单号
-    calc_show.value = true
+    // calc_show.value = true
     let _maxCashout = props.item_data.maxCashout
     if (moneyData && moneyData.orderStatus === 0) {
       if (moneyData.preSettleMaxWin !=  props.item_data.maxCashout) {

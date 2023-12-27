@@ -116,7 +116,6 @@ const set_win_money = () => {
         items_obj.bet_amount = money_a
     }
     BetViewDataClass.set_bet_special_series_item(items_obj)
-    show_quick()
 }
 //显示隐藏键盘
 

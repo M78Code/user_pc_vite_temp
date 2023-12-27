@@ -3,11 +3,11 @@
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
   <div class="bet_single_info f-b-c">
-    <div class="alert-rules" @click="alertRules()">
+    <div class="alert-rules" @click="alertRules(items.id)">
       <img :src="compute_local_project_file_path('/image/bet/request.svg')" alt="">{{ items.name }}
     </div>
     
-  <bet-dialog @close="tooltipbox=false" :item="items" :tooltipboxs="tooltipbox" v-model="tooltipbox"></bet-dialog>
+  <bet-dialog @close="tooltipbox=false" :item="items" :id="itemid" :tooltipboxs="tooltipbox" v-model="tooltipbox"></bet-dialog>
     <div class="bet_single_detail f-b-c">
       <div>{{ items.count }}x</div>
       <div class="content-b" @click="input_click">
@@ -61,6 +61,7 @@ const ref_data = reactive({
 })
 
 const tooltipbox = ref(false)
+const itemid = ref()
 
 onMounted(() => {
   ref_data.money = props.items.bet_amount
@@ -138,7 +139,8 @@ const set_special_series = (money,ty_id) => {
 }
 
 // 弹出规则
-const alertRules = () => {
+const alertRules = (id) => {
+  itemid.value = id
   tooltipbox.value = !tooltipbox.value
 }
 

@@ -55,7 +55,6 @@ const get_media_detail = async() => {
 }
 
 const check_url = (url, which) => {
-  console.log(33333);
   // TODO: 视频源切换先设置fasle，强制重新加载iframe
   get_show_video.value = false;
   // 本地代码连接 调试 时，打开此注释即可播放视频------勿删除此注释
