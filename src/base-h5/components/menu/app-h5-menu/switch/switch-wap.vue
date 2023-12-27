@@ -36,7 +36,7 @@ const get_switch_data = () => {
             list:[
                 {
                     name:i18n_t('footer_menu.pro_v'),
-                    val:1,
+                    val:2,
                     changeFun:(val)=>{
                         useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
                         UserCtr.set_standard_edition(val)
