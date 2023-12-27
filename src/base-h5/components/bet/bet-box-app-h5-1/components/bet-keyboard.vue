@@ -113,18 +113,26 @@ watch(() => pre_odds_value, (new_) => {
   }
 })
 
-watch(() => money.value, (new_) => {
-  let emit_name = 'EMIT_INPUT_BET_MONEY'
-  if(BetData.is_bet_single){
-    emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
-  }
-  useMittEmit(MITT_TYPES[emit_name],{ params:BetData.bet_keyboard_config, money: new_ })
-})
+// watch(() => money.value, (new_) => {
+//   let emit_name = 'EMIT_INPUT_BET_MONEY'
+//   if(BetData.is_bet_single){
+//     emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
+//   }
+//   useMittEmit(MITT_TYPES[emit_name],{ params:BetData.bet_keyboard_config, money: new_ })
+// })
 
 watch(() => active_index, (new_) => {
   if (money.value) delete_all.value = true;
 })
 
+// 金额输入到 投注栏里
+const set_money_change_new = (new_) => {
+  let emit_name = 'EMIT_INPUT_BET_MONEY'
+  if(BetData.is_bet_single){
+    emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
+  }
+  useMittEmit(MITT_TYPES[emit_name],{ params:BetData.bet_keyboard_config, money: new_ })
+}
 
 // 点击键盘
 const _handleKeyPress = (e) => {
@@ -134,7 +142,7 @@ const _handleKeyPress = (e) => {
   switch (num) {
     //最大值
     case "max":
-      _handmaxKey();
+      _handmaxKey(e);
       break;
     //小数点
     case ".":
@@ -159,8 +167,14 @@ const _handleKeyPress = (e) => {
 // 小数点 .
 const _handleDecimalPoint = () => {
   //超过最大金额  显示最大金额
-  let old = BetData.bet_keyboard_config.playOptionsId
-  let max_money = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
+  let max_money = ''
+  if(BetData.is_bet_single){
+    let old = BetData.bet_keyboard_config.playOptionsId
+    max_money = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
+  }else{
+    max_money = lodash_.get(BetData,`bet_keyboard_config.max_money`,8888)
+  }
+
   let money_ = money.value
   //超过最大金额时不让输入
   if (money_ && money_*1 >= max_money*1) return
@@ -175,44 +189,58 @@ const _handleDecimalPoint = () => {
     money_ = money_ + ".";
   }
   money.value = money_
+
+  set_money_change_new(money_)
  
 }
 
 // MAX键
-const _handmaxKey = () => {
-  console.error('sssss')
-  let dom = document.querySelectorAll('.nonebox4-fourth-a-son')
-  for(let i = 0; i < dom.length; i++) {
-    dom[i].classList.remove('active')
+const _handmaxKey = (e) => {
+  add_or_remove_active(e)
+  let money_ = ''
+  if(BetData.is_bet_single){
+    let old = BetData.bet_keyboard_config.playOptionsId
+    money_ = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
+  }else{
+    money_ = lodash_.get(BetData,`bet_keyboard_config.max_money`,8888)
   }
-  let old = BetData.bet_keyboard_config.playOptionsId
-  let money_ = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
+  
   // 判断当前余额 是否小于最多投注金额
   if(money_*1 > UserCtr.get_set_balance()*1 ){
     money.value = UserCtr.get_set_balance()
   } else {
     money.value = money_
   }
-  
+  set_money_change_new(money.value)
 }
+
+// 添加或去掉active选中框
+const add_or_remove_active = (e) => {
+  let dom = document.querySelectorAll('.nonebox4-fourth-a-son');
+  for(let i = 0; i < dom.length; i++) {
+    dom[i].classList.remove('active')
+  }
+  if(e) {
+    e.target.classList.add('active')
+  }
+}
+
 // 删除键
-const _handleDeleteKey = () => {
+const _handleDeleteKey = (e) => {
+  add_or_remove_active(e);
   money.value = BetData.bet_amount
   if (!money.value) return   
   //删除最后一个
   let s = money.value.toString()
   money.value = s.substring(0, s.length - 1);
+  set_money_change_new(money.value)
 }
 // 数字建
 const _handleNumberKey = (num, e) => {
-  let dom = document.querySelectorAll('.nonebox4-fourth-a-son')
-  for(let i = 0; i < dom.length; i++) {
-    dom[i].classList.remove('active')
-  }
+    add_or_remove_active(e)
   if (!num) return
   let money_ = BetData.bet_amount
   if (['qon', 'qtw', 'qth','qfo','qfi','qsi'].includes(num)) {
-    e.target.classList.add('active')
     money_ = ref_data.add_num[num]
     // if (!money_) {
     //   money_ = ref_data.add_num[num]
@@ -234,27 +262,12 @@ const _handleNumberKey = (num, e) => {
   }
 
   //超过最大金额  显示最大金额
-  let ol_id = ''
-  let ol_type = ''
   let max_money = ''
   if(BetData.is_bet_single){
-    ol_type = 'playOptionsId'
+    let old = BetData.bet_keyboard_config.playOptionsId
+    max_money = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
   }else{
-    ol_type = 'id'
-  }
-  ol_id = lodash.get(BetData.bet_keyboard_config,ol_type)
-
-  // 获取限额取值
-  if(BetData.is_bet_single){
-    max_money = lodash.get( BetViewDataClass,`bet_min_max_money[${ol_id}].max_money`,8888)
-  }else{
-    let obj_max = BetViewDataClass.bet_special_series.find(item=> item.id == ol_id) || {}
-    if(obj_max.id){
-      max_money = obj_max.max_money
-    }else{
-      // 设置默认限额
-      max_money = 8888
-    }
+    max_money = lodash_.get(BetData,`bet_keyboard_config.max_money`,8888)
   }
 
   // 输入金额大于限额 或者 大于用户余额
@@ -268,6 +281,7 @@ const _handleNumberKey = (num, e) => {
   }
 
   money.value = money_
+  set_money_change_new(money_)
 }
 
 // 获取商户配置的 快捷金额
@@ -299,21 +313,21 @@ const add_keyboard_shadow = () => {
     sun: document.querySelectorAll('.nonebox4-fourth-num-sun'),
     son: document.querySelectorAll('.nonebox4-fourth-a-son')
   }
-  if(UserCtr.theme === 'theme-2') { 
-    dom.sun.forEach((item) => {
+  
+  dom.sun.forEach((item) => {
+    if(UserCtr.theme === 'theme-2') {
       item.classList.add('shadow')
-    })
-    dom.son.forEach((item) => {
+    } else {
+      item.classList.remove('shadow')
+    }
+  })
+  dom.son.forEach((item) => {
+    if(UserCtr.theme === 'theme-2') {
       item.classList.add('shadow')
-    })
-  } else {
-    dom.sun.forEach((item) => {
+    } else {
       item.classList.remove('shadow')
-    })
-    dom.son.forEach((item) => {
-      item.classList.remove('shadow')
-    })
-  }
+    }
+  })
 }
 useMittOn(MITT_TYPES.EMIT_THE_THEME_CHANGE, add_keyboard_shadow)
 
