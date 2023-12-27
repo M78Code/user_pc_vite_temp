@@ -238,6 +238,8 @@ export default defineComponent({
     color:#7981A4;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     margin:0.04rem;
+    flex-shrink: 0;
+    flex-grow: 1;
   }
 
   .play-box-lock {
