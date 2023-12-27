@@ -409,7 +409,7 @@ export default {
   width: 100%;
   height: auto;
   position: relative;
-  background: var(--q-gb-bg-c-18);
+  background: var(--q-gb-bg-c-21);
 
   .match-status-fixed {
     width: 100%;
@@ -446,15 +446,16 @@ export default {
     }
 
   .match-inner-container {
-    margin: 0 auto;
+    // margin: 0 auto;
     /* 兼容iPhone11边框显示不全 */
     //width: 100%;
     display: flex;
-    padding: 0 0.05rem;
+    margin: 0 0.05rem;
     flex-direction: column;
     align-items: center;
     background: var(--q-gb-bg-c-21);
     border-radius: .08rem;
+    border: 1px solid var(--q-gb-bd-c-15);
 
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
     &.show-sport {
