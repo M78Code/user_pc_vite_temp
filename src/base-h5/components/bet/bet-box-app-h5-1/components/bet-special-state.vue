@@ -3,7 +3,7 @@
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
         <div class="bet-info">
             <div class="f-b-c px-12">
-                <div class="f-a-c">
+                <div class="f-s-c">
                     <img :src="compute_local_project_file_path('/image/bet/request.svg')" alt="" @click="alertRules()">
                     <span class="font14 font500">{{ items.seriesValue}}</span> 
                     <span class="text-45B0FF ml-4" v-if="items.orderStatusCode == 1">注单已确认</span>
@@ -19,7 +19,7 @@
                 <span>预计可赢：{{ format_money2(mathJs.divide(items.maxWinAmount,100))}} {{currency_code[UserCtr.currency]}}</span>
             </div>
             <div>
-                <span>小计：{{ items.seriesBetAmount }} {{currency_code[UserCtr.currency]}}</span>
+                <span>小计：{{ format_money2(mathJs.divide(items.seriesBetAmount,100))}} {{currency_code[UserCtr.currency]}}</span>
             </div>
         </div>
         <bet-dialog  @close="tooltipbox=false" :item="items" :tooltipboxs="tooltipbox" v-model="tooltipbox"></bet-dialog>

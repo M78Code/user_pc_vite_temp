@@ -10,10 +10,7 @@
       <div class="date-title" v-if="m_status != 2 && !is_pre_counting_end">
         {{get_current_batch.no}}
       </div>
-      <!-- 滚球结束倒计时 -->
-      <div class="date-title row justify-center items-center end">
-        <div class="d-t-c" v-html="i18n_t('virtual_sports.match_status.x_to_ended').replace('%s',basketball_end_time)"></div>
-      </div>
+
 
       <div class="data-wrapper-list">
         <div class="d-h-w">
@@ -36,7 +33,7 @@
           </div>
         </div>
         <!-- 列表页 -->
-        <div class="data-c-wrapper" v-if="match_list">
+        <!-- <div class="data-c-wrapper" v-if="match_list">
           <div class="row d-row-item" v-for="(item,i) of match_list" :key="i"
             v-show="i < 6">
             <div class="row team justify-between">
@@ -66,13 +63,19 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- 单个赛事 -->
         <date-match-sdata v-if="source == 'detail'"
           :match_ended="current_match" source='end_0' />
         <!-- 单场赛事结束 -->
         <date-match-sdata v-if="source == 'detail'" :match_ended="match_ended" />
       </div>
+
+      <!-- 滚球结束倒计时 -->
+      <div class="date-title row justify-center items-center end">
+        <div class="d-t-c" v-html="i18n_t('virtual_sports.match_status.x_to_ended').replace('%s',basketball_end_time)"></div>
+      </div>
+
     </div>
     <!-- 单场赛事结束 -->
     <date-match-sdata :match_ended="match_ended" />
@@ -346,6 +349,11 @@ export default {
   left: 0;
   z-index: 2;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   .v-m-container {
     width: 3rem;
     margin: 0 auto;
@@ -353,17 +361,24 @@ export default {
 
     .date-title {
       width: 1.2rem;
-      height: 0.18rem;
-      line-height: 0.18rem;
+      height: 0.3rem;
+      line-height: 0.3rem;
       text-align: center;
-      font-size: 0.1rem;
-      color: #ffffff;
+      font-size: 0.14rem;
+      font-weight: 500;
+      // color: #ffffff;
+      color: var(--q-gb-bg-c-10);
       margin: 0 auto;
-      border-radius: 0.1rem;
+
+      margin-top: 0.08rem;
+
       background-color: #FF0000;
 
       &.end {
-        background-color: #5E88A7;
+        // background-color: #5E88A7;
+        background-color: var(--q-gb-bg-c-90);
+        // opacity: 0.6;
+        border-radius: 0.16rem;
       }
 
       .d-t-c {
@@ -373,19 +388,26 @@ export default {
 
     .data-wrapper-list {
       width: 100%;
+      height: 0.58rem;
       margin-top: 0.04rem;
       border-radius: 0.08rem;
       overflow: hidden;
 
       .d-h-w {
         width: 100%;
-        height: 0.32rem;
+        // height: 0.32rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
         // background-color: #363F4F;
         background-color: #303442;
 
         .stage-wrapper {
           width: 100%;
-          height: 0.21rem;
+          // height: 0.21rem;
           color: #999999;
 
           .s-w-title {

@@ -678,7 +678,7 @@ if (type.value == 30) {
   left: 0;
   bottom: 0;
   right: 0;
-  border-top: 1px solid transparent;
+  // border-top: 1px solid transparent;
 
   .allCheck {
     width: 3.78rem;
@@ -852,7 +852,7 @@ if (type.value == 30) {
     height: 100%;
     position: relative;
     color: var(--q-gb-t-c-18);
-    background-color: var(--q-gb-bg-c-28) !important;
+    background-color: var(--q-gb-bg-c-25) !important;
     &:before {
       content: "";
       display: block;

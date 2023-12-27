@@ -3,9 +3,9 @@
         <navigation-bar :centerFlex="6" centerContentType="switch" borderBottomNoShow :goBackAssign="goBackAssign">
             <template v-slot:center>
                 <div class="switch-box">
-                    <div v-for="(item, index) in switchMenu" :key="'swtich-' + index" @click="switchHandle(index)"
-                        :class="['switch-item', state.currentSwitchValue === index && 'switch-item-active']">
-                        <span> {{ item }} </span>
+                    <div v-for="(item, index) in switchMenu" :key="'swtich-' + index" @click="switchHandle(item.val)"
+                        :class="['switch-item', state.currentSwitchValue === item.val && 'switch-item-active']">
+                        <span> {{ item.name }} </span>
                     </div>
                 </div>
             </template>
@@ -59,10 +59,29 @@ import setectLeague from 'src/base-h5/components/tutorial/navigation-bar/setect-
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 
 // 新修改
-
+// 初始化时间选择
+MenuData.set_date_time(0,'');
 
 const inner_height = window.innerHeight;  // 视口高度
-const switchMenu = [i18n_t('app_h5.match.normal_results'), i18n_t('app_h5.match.game_results'), i18n_t('app_h5.match.vr_results'), i18n_t('app_h5.match.championship_results')]
+// const switchMenu = [i18n_t('app_h5.match.normal_results'), i18n_t('app_h5.match.game_results'), i18n_t('app_h5.match.vr_results'), i18n_t('app_h5.match.championship_results')]
+const switchMenu = [
+    {
+        name:i18n_t('app_h5.match.normal_results'),
+        val:0
+    },
+    {
+        name: i18n_t('app_h5.match.game_results'),
+        val:1
+    },
+    // {
+    //     name:i18n_t('app_h5.match.vr_results'),
+    //     val:2
+    // },
+    {
+        name:i18n_t('app_h5.match.championship_results'),
+        val:3
+    }
+]
 /**
  * 赛果日期格式
  */
