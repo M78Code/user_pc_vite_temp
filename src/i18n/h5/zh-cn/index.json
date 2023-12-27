@@ -283,7 +283,7 @@
         },
         "2": {
           "note_1": "进球数2，小于2/2.5",
-          "note_2": "基本对分原理，投注<span>小2/2.5</span>才能赢一半，投注<span>大2/2.5</span>则输一半"
+          "note_2": "基本对分原理，投注<span>小2/2.5</span>能赢一半"
         }
       },
       "ball": "%s球",
@@ -351,7 +351,10 @@
       "not_data_substitute": "暂无替补名单",
       "not_data_starter": "暂无首发名单",
 
-      "acronym_half": "半"
+      "acronym_half": "半",
+      "highlights": "精彩集锦",
+      "events": "赛事事件",
+      "technical_statistics":"技术统计"
     }
   },
   "ac_rules": {

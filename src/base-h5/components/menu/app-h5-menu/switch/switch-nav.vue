@@ -13,7 +13,7 @@
                 <template v-if="item.isSort">
                     <span>
                         <i v-for="(n,m) in sortJson" :key="m">
-                            <img :src="`${activeOn}-${sortVal}` === `${index+1}-${n.val}`?n.activeImg:n.img" />
+                            <img :src="`${activeOn}` == `${index+1}`? n.activeImg:n.img" />
                         </i>
                     </span>
                 </template>
@@ -61,7 +61,8 @@
      */
     watch(()=>props.defaultVal,(val)=>{
         // console.log('valval',val)
-        activeOn.value = val
+        activeOn.value = val;
+        sortVal.value = val;
     },{immediate:true})
     /**
      * 点击事件

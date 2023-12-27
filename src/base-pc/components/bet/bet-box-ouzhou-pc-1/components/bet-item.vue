@@ -5,7 +5,7 @@
         <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 ">
-                    <span class="text-flow-none" v-html="items.handicap"></span> 
+                    <span class="text-flow-none">{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></span> 
                 </div>
                 <div class="w-100 handicap my-4">
                     <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>

@@ -803,6 +803,7 @@ if (type.value == 30) {
   color: var(--q-gb-bg-c-6);
   position: relative;
   z-index: 11;
+  background:var(--q-gb-bg-c-25);
   span {
     margin-right: .04rem;
     color: #AFB3C8;
@@ -840,7 +841,7 @@ if (type.value == 30) {
       content: ' ';
       width: 100%;
       position: absolute;
-      border-top: 1px solid var(--q-gb-bd-c-4);
+      border-top:  0.005rem solid var(--q-gb-bd-c-18);
       top: 0;
     }
   }
@@ -852,7 +853,6 @@ if (type.value == 30) {
     position: relative;
     color: var(--q-gb-t-c-18);
     background-color: var(--q-gb-bg-c-28) !important;
-    border-bottom: 0.5px solid var(--q-gb-bd-c-18);
     &:before {
       content: "";
       display: block;
@@ -977,7 +977,7 @@ if (type.value == 30) {
       content: ' ';
       width: 100%;
       position: absolute;
-      border-bottom: 1px solid var(--q-gb-bd-c-4);
+      border-bottom: 0.005rem solid var(--q-gb-bd-c-18);
       bottom: 0;
     }
   }

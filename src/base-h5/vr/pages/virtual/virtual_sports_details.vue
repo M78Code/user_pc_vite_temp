@@ -81,7 +81,6 @@ import VSport from 'src/base-h5/vr/utils/vsport/vsport.js';
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { debounce } from "lodash";
-import ServerTime from "src/core/server-time/server-time.js"
 import { reactive } from 'vue'
 import { go_where } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";

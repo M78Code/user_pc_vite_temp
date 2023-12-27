@@ -1,16 +1,17 @@
 <template>
-    <div class="bet-mix-input" :data-check-money="BetViewDataClass.input_money_state">
+    <div class="bet-mix-input">
         <div class="odds-wrap row">
             <div data-v-c14bfede="" class="line"></div>
             <div class="col bet-mix-info">{{ items.name}}</div>
             <span class="odds-value yb-number-bold" v-if="index==0"> @{{ items.seriesOdds}}</span>
         </div>
+        <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
             <!--金额输入区域包括键盘 -->
         <div class="row ">
             <!--金额输入区-->
             <div class="bet-input-failure">
                 <!--投注金额输入框-->
-                <input class="bet-input input-border" v-model="ref_data.money" type="number" @click="show_quick()"  @input="set_win_money" @keydown.enter="keydown($event)"
+                <input ref="InputFocus" class="bet-input input-border" v-model="ref_data.money" type="number" @click="show_quick()"  @input="set_win_money" @keydown.enter="keydown($event)"
                 :placeholder="`${i18n_t('bet.money_range')} ${format_money3(items.min_money)}~${format_money3(items.max_money)}`" maxLength="11" />
                 <!--清除输入金额按钮-->
                 <div class="bet-max-btn">X{{ items.count }}</div>
@@ -35,6 +36,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
     
 </template>
@@ -51,6 +53,14 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { UserCtr } from "src/output/index.js"
 
+const props = defineProps({
+    items: {},
+    index: {
+        type: Number,
+        default: 0
+    },
+})
+
 const ref_data = reactive({
     min_money: '', // 最小投注金额
     max_money: '', // 最大投注金额
@@ -62,17 +72,12 @@ const ref_data = reactive({
     emit_lsit: {},
 })
 
-const props = defineProps({
-    items: {},
-    index: {
-        type: Number,
-        default: 0
-    },
-})
+const InputFocus = ref()
 
 onMounted(() => {
     show_quick()
     ref_data.money = props.items.bet_amount
+    InputFocus.value.focus()
     
 })
 
@@ -98,6 +103,7 @@ const keydown = (e) => {
 
 // 输入判断
 const set_win_money = () => {
+
     let items_obj = lodash_.get(props,'items',{})
     // 输入控制
     if( ref_data.money < props.items.max_money &&  ref_data.money < UserCtr.balance){
@@ -112,6 +118,7 @@ const set_win_money = () => {
         items_obj.bet_amount = money_a
     }
     BetViewDataClass.set_bet_special_series_item(items_obj)
+    InputFocus.value.focus()
 }
 //显示隐藏键盘
 

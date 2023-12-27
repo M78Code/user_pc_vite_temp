@@ -556,7 +556,7 @@ class MatchMeta {
       md: String(md),
       showem: 1, // 新增的参数 区分电子赛事
       euid: euid && String(euid),
-      type: euid ==="0"? String(29) : String(28),//我的投注 euid为0
+      type: euid ==="0"? 29 : 28,//我的投注 euid为0
     })
     if (this.current_euid !== `${euid}_${md}`) return []
     if (+res.code !== 200) {
@@ -583,18 +583,20 @@ class MatchMeta {
    */
   async get_virtual_results_match() {
     this.clear_match_info()
-    // vr 足球 
-    // const res = await api_common.get_virtual_result({
-    //   batchNo:"",
-    //   endTime:1703606399000,
-    //   isVirtualSport:1,
-    //   page:{ size: 100, current: 1 },
-    //   sportType:"1004",
-    //   startTime:1703520000000,
-    //   tournamentId:"79430600606371842"
-    // })
+    const md = lodash.get(MenuData.result_menu_api_params, 'md')
+    const { start_time, end_time } = MatchUtils.get_match_time_start_time(md)
+    // vr 
+    const res = await api_common.get_virtual_result({
+      batchNo:"",
+      endTime: String(end_time),
+      isVirtualSport:1,
+      page:{ size: 100, current: 1 },
+      sportType:MenuData.current_lv_2_menu?.sport_id,
+      startTime: String(start_time),
+      tournamentId:"79430600606371842"
+    })
     // vr 马 狗 
-    const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
+    // const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
     if (+res.code !== 200) {
       this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
       if (res.code === '0401038') {
@@ -719,7 +721,8 @@ class MatchMeta {
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
       // 当接口 报错，或者出现限频， 调用3次
       if (this.error_http_count.match >= 3) {
-        if (this.match_mids.length < 1) this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+        this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+        // if (this.match_mids.length < 1) this.set_page_match_empty_status({ state: true, type: 'noWifi' });
       } else {
         this.error_http_count.match++
         let timer = setTimeout(() => {
@@ -1359,6 +1362,7 @@ class MatchMeta {
    * @description 设置ws激活的 赛事mids
    */
   set_ws_active_mids({ list = [], warehouse = MatchDataBaseH5 }) {
+    warehouse.set_active_mids([])
     if (MenuData.is_results()) return
     const mids = list.map(t => t)
     warehouse.set_active_mids(mids)
