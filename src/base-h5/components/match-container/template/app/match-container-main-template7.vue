@@ -1400,6 +1400,7 @@ export default {
       .score-se-inner2 {
         display: flex;
         margin-left: -5px;
+        margin-top: 10px;
       }
     }
   }
