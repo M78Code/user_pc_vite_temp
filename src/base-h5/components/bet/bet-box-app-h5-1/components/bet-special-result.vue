@@ -93,7 +93,7 @@ const props = defineProps({
         margin: 0.04rem 0;
         border-left: 2px solid var(--q-gb-bg-c-13);
         padding: 0 0.04rem;
-        color: var(--q-gb-bg-c-30);
+        color: var(--q-gb-t-c-11);
       }
 
     .bet-market{
