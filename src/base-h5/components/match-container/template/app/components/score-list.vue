@@ -700,7 +700,7 @@ onUnmounted(() => {
       &.last {
         margin-right: 0;
         position: relative;
-        top: 1px;
+        // top: 1px;
       }
 
       &:last-child {
