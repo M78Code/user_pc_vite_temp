@@ -36,7 +36,7 @@ const get_switch_data = () => {
             list:[
                 {
                     name:i18n_t('footer_menu.pro_v'),
-                    val:2,
+                    val:1,
                     changeFun:(val)=>{
                         useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
                         UserCtr.set_standard_edition(val)
@@ -94,7 +94,7 @@ const get_switch_data = () => {
                     //时间
                     name:i18n_t('footer_menu.time'),
                     val:2,
-                    isSort:1,
+                    isSort:2,
                     changeFun:(val,sort)=>{
                         return UserCtr.set_sort_type(val);
                     }
