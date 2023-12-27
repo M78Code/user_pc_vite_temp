@@ -323,7 +323,7 @@ export default defineComponent({
     // ]),
     //=================TODO: 后续修改===================
     const get_uid = ref(UserCtr.get_uid()); // userId
-    const get_detail_data = ref(lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid}_]`, {})); // userId
+    const get_detail_data = ref(lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid || lodash.get(props.item_data,'mid')}_]`, {})); // userId
     const get_fewer = computed(() => {
       return "";
     });
@@ -618,7 +618,7 @@ export default defineComponent({
           useMittEmit(MITT_TYPES.EMIT_RESET_SET_HTON);
           // 获取最大置顶排序值
           var hton_ = 0;
-          let arr = MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid)?.odds_info
+          let arr = MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid || lodash.get(props.item_data,'mid') )?.odds_info
           for (let i = 0; i < arr.length; i++) {
             var hton = parseInt(arr[i].hton);
             if (hton > hton_) {
@@ -630,7 +630,7 @@ export default defineComponent({
          
         }
         // 置顶状态变化时，更新相应玩法存储状态  todo  后续再优化
-        MatchDataWarehouse_H5_Detail_Common.set_match_details(MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid),MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid).odds_info)
+        MatchDataWarehouse_H5_Detail_Common.set_match_details(MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid || lodash.get(props.item_data,'mid') ),MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid || lodash.get(props.item_data,'mid') ).odds_info)
         const key = `${item_data.mid}-0`
         const all_list_data = lodash.cloneDeep(get_details_data_cache.value[key]) || []
         const target_play_id = item_data.chpid || item_data.hpid
@@ -650,7 +650,7 @@ export default defineComponent({
         })
          // 当前玩法集下数据缓存
         SessionStorage.set("DETAILS_DATA_CACHE", {[key]: all_list_data})
-        // MatchDataWarehouse_H5_Detail_Common.set_match_details(MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid),all_list_data)
+        // MatchDataWarehouse_H5_Detail_Common.set_match_details(MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid || lodash.get(props.item_data,'mid') ),all_list_data)
         let status = item_data.hton != 0 ? "0" : "1",
             playId = item_data.hpid,
             matchId = get_detail_data.value.mid,
