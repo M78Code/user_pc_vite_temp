@@ -349,14 +349,14 @@ onUnmounted(() => {
 }
 
 .play-pad {
-  padding-top: 1.71rem;
+  padding-top: 2.09rem;
   // background: var(--q-gb-bg-c-19) ;
   height: 100%;
   overflow: hidden;
 }
 
 .baseball-play-pad {
-  padding-top: 1.71rem;
+  padding-top: 2.09rem;
   background: var(--q-gb-bg-c-19) !important;
 }
 :deep(.skeleton-wrap) {
