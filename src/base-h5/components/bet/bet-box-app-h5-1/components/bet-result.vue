@@ -10,7 +10,7 @@
                 <div class="w-100 font12 content">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bet_inplay") + ']'}}</span>
                     <span class="text-a1a text-flow-none">{{ items.playName }}
-                        <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
+                        <span v-if="items.score_benchmark">{{items.score_benchmark}}</span>
                     </span>
                     
                     <span class="mr-4 text-009"> [{{ i18n_t(`odds.${items.marketType}`) }}]</span>
