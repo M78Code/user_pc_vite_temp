@@ -168,6 +168,7 @@ const changeTab = (i,event) => {
     const tid = props.dataList[i].tid;
     event && scrollMenuEvent(event,".search-tab-content-ul",".active");
     if (tid === '0') {
+        MenuData.search_data_tab_index(i,'')
         MatchMeta.set_origin_match_data({})
     } else {
         MenuData.search_data_tab_index(i,tid)
