@@ -64,8 +64,8 @@ const tooltipbox = ref(false)
 
 onMounted(() => {
   ref_data.money = props.items.bet_amount
-    //监听键盘金额改变事件
-    ref_data.emit_lsit = {
+  //监听键盘金额改变事件
+  ref_data.emit_lsit = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle).off,
   }
 })
@@ -89,13 +89,6 @@ onMounted(() => {
 onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());
 })
-
-// 快捷金额 显示隐藏
-const set_show_quick_money = (obj = {}) => {
-    obj.money_list.max = 'MAX'
-    ref_data.money_list = obj.money_list
-    props.items.max_money = obj.max_money
-}
 
 /**
  *@description 光标闪动，animation有兼容问题，用函数替代

@@ -678,7 +678,7 @@ if (type.value == 30) {
   left: 0;
   bottom: 0;
   right: 0;
-  border-top: 1px solid transparent;
+  // border-top: 1px solid transparent;
 
   .allCheck {
     width: 3.78rem;

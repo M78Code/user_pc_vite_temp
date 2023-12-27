@@ -367,11 +367,7 @@ const get_lastest_market_info = () => {
             BetData.set_bet_single_special(bet_list)
             // 重新订阅ws
             set_market_id_to_ws()
-
-            nextTick(()=>{
-                // 获取限额
-                get_query_bet_amount_common()
-            })
+           
         }
     })
 } 
