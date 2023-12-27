@@ -657,7 +657,7 @@ onUnmounted(() => {
           font-weight: 400;
         
           .important-color-number {
-            color: var(--sys-brand-primary-primary-300, #74C4FF);
+            color: var(--q-gb-bd-c-1);
             text-align: right;
             font-family: Akrobat;
             font-size: 11px;
@@ -706,7 +706,7 @@ onUnmounted(() => {
       &:last-child {
         border: none !important;
         margin-right: 0.02rem;
-        color: var(--sys-brand-primary-primary-300, var(--sys-brand-primary-primary-300, #74C4FF)) !important;
+        color: var(--sys-brand-primary-primary-300, var(--q-gb-bd-c-1)) !important;
       }
     }
 
