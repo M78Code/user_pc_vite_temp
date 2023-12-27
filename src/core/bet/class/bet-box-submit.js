@@ -680,13 +680,7 @@ const submit_handle = async () => {
            
             // 单关
             if(BetData.is_bet_single){
-                orderDetailList = orderDetailList.map(item=>{
-                    if(item.matchType == 2){
-                        let score = item.scoreBenchmark.split(':')
-                        item.mark_score = `(${score[0]}-${score[1]})`
-                    }
-                    return item
-                })
+               
                 set_orderNo_bet_obj(orderDetailRespList)
                 
                 // 投注 注单状态
@@ -1243,10 +1237,16 @@ const set_orderNo_bet_obj = order_no_list => {
         let match_time = lodash_.get( refer_obj, `match_time`)
         // 玩法id
         let playId = lodash_.get( refer_obj, `playId`)
+        // 基准分
+        let score_benchmark = lodash_.get( item, `scoreBenchmark`, '')
+        if(score_benchmark){
+            score_benchmark = `(${ score_benchmark.replace(':','-') })`
+        }
         return {
             ...item,
             match_time,
             playId,
+            score_benchmark,
         }
     })
     BetViewDataClass.set_orderNo_bet_obj(order_list)
