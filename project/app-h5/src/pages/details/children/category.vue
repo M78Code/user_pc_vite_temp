@@ -53,7 +53,7 @@
             </template>
           </template>
           <!-- 非置顶 -->
-          <template v-for="(item, keyscorll) in current_match_list">
+          <template v-for="(item, keyscorll) in match_list_normal_data">
             <template v-if="item.hton==0">
               <template v-if="match_list_new_data.length == 0">
                 <TournamentPlayNew @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></TournamentPlayNew>
@@ -102,7 +102,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path, compute_img_url } from  "src/output/index.js"
 // import { Level_one_detail_odd_info } from "../category-list.js";
 import { category_info } from "./category.js"
-import { computed, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import TournamentPlayNew from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue";
 export default defineComponent({
   name: "category",
@@ -114,7 +114,7 @@ export default defineComponent({
     loading,
     detailMatchList
   },
-  props: ['category_arr', 'active'],
+  props: ['category_arr'],
   data:()=>({}),
   setup(props, evnet) {
     // 路由
@@ -155,18 +155,6 @@ export default defineComponent({
       remove_session_storage,
       remove_detail_storage,
     } = category_info(props.category_arr);
-    
-    const current_match_list = computed(() => {
-      let arr = match_list_normal_data.value;
-      const value = props.active;
-      if (value && value != -1) {
-        arr = match_list_normal_data.value.filter(e => {
-          return e.topKey.split('-')[1] == value;
-        });
-      }
-      return arr;
-    })
-   
     watch(
       () => route.params,
       (to, from) => {
@@ -224,7 +212,6 @@ export default defineComponent({
         change_minheight()
       }
     );
-    
     onMounted(() => {
       // #TODO 测试假数据
       // console.log("match_list_new", match_list_normal.value)
@@ -301,7 +288,6 @@ export default defineComponent({
     return {
       ...toRefs(component_data),
       i18n_t,
-      current_match_list,
       show_recommend,
       match_list_new_data,
       match_list_normal_data,
