@@ -483,7 +483,7 @@ export default {
       background: var(--q-gb-bg-c-18);
       border-radius: 0 0 8px 8px;
       border: 1px solid var(--q-gb-bd-c-15);
-
+      margin-top: 5px;
       &.collapsed {
         border-top: none;
       }
@@ -984,7 +984,7 @@ export default {
   background-color: var(--q-color-com-bg-color-12);
   height: auto;
   position: relative;
-  height: 0.92rem;
+  // height: 0.92rem;
   z-index: 100;
 
   .right-content-style {

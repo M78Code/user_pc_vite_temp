@@ -17,7 +17,7 @@
         :class="current_category_id == lodash.get(data_list,'[0][id]') ? 't_color' : ''"
         @click.self="selete_item(lodash.get(data_list,'[0][id]'), 0, lodash.get(data_list,'[0]'))"
       >
-        {{ data_list[0].marketName }}
+        {{ data_list[0]?.marketName   }}
       </div>
       <div class="menu-s" ref="reset_scroll_dom">
         <div
@@ -198,15 +198,11 @@ export default defineComponent({
       // 记录当前玩法集ID和玩法集合
       matchDetailCtr.value.category_tab_click(item);
       // 存储tab的id
-
-      SessionStorage.set("DETAIL_TAB_ID", item.id);
-      SessionStorage.set("ACTIVE_TAB", item.round);
+      SessionStorage.set('DETAIL_TAB_ID', item.id)
       // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if (get_fewer.value == 3) {
         get_fewer.value = 1;
       }
-      console.log(item, uId, index, "changeItem");
-      evnet.emit("change-item", item.round);
       // 发送埋点
       let zhuge_obj = {
         玩法集名称: item.marketName,

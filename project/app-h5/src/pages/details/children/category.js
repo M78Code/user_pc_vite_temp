@@ -106,7 +106,7 @@ export const category_info = (category_arr=[]) => {
   });
   const  get_menu_type=ref(lodash.get(MenuData,'top_menu_title.mi'))
   const get_uid = computed(() => {
-    return "get_uid";
+    return UserCtr.get_uid();
   });
   const get_subscript_game_index = computed(() => {
     return "get_subscript_game_index";
@@ -123,9 +123,8 @@ export const category_info = (category_arr=[]) => {
   const get_details_data_cache = computed(() => {
     return "get_details_data_cache";
   });
-  const get_chpid_obj = computed(() => {
-    return "gt_chpid_obj";
-  });
+  const get_chpid_obj = ref({})
+  
   // ==================================
   // 监听详情数据仓库版本号更新odds_info数据
   watch(() => get_detail_data.value, () => {
@@ -296,11 +295,11 @@ export const category_info = (category_arr=[]) => {
     const { plays = [], round = "" } = findItme;
     const res = all_data.filter((item) => {
       // 电竞需要判断第一局和第二局的原因，需要加上chpid判断
-      if (get_menu_type == 2000) {
+      if (get_is_exports()) {
         if (round) {
           return (
             plays.includes(+item.hpid) &&
-            (get_chpid_obj[`${item.hpid}-${round}`] == item.chpid ||
+            (get_chpid_obj.value[`${item.hpid}-${round}`] == item.chpid ||
               item.chpid === item.hpid)
           );
         } else {
@@ -361,7 +360,7 @@ export const category_info = (category_arr=[]) => {
     //赛果页面调用赛果玩法详情接口
     let http = ["result_details", "match_result"].includes(route.name)
       ? api_analysis.get_match_result
-      : get_menu_type.value == 2000
+      : get_is_exports()
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
     component_data.send_gcuuid = UserCtr.get_uid()
@@ -404,7 +403,6 @@ export const category_info = (category_arr=[]) => {
         ) {
           update_ol(null, temp);
         }
-
         if (temp && temp.length) {
           if (to_refresh == "details_refresh" && component_data.arr_hshow.length > 0) {
             save_expanded_state(temp);
@@ -499,8 +497,7 @@ export const category_info = (category_arr=[]) => {
             // component_data.matchInfoCtr.setList(data);
             component_data.match_info_list = data;
             // console.log(chpid_obj,"chpid_obj");
-            // set_chpid_obj(chpid_obj)
-
+            get_chpid_obj.value =chpid_obj
             if (["result_details", "match_result"].includes(route.name)) {
               temp = details_data_cache[`${match_id.value}-0`];
             } else {
@@ -699,7 +696,7 @@ export const category_info = (category_arr=[]) => {
       // userId或者uuid
       cuid: UserCtr.get_uid(),
       round:
-        get_menu_type == 2000
+      get_is_exports()
           ? component_data.matchInfoCtr.category_arr &&
           component_data.matchInfoCtr.category_arr[get_subscript_game_index] &&
           component_data.matchInfoCtr.category_arr[get_subscript_game_index].round
@@ -902,6 +899,18 @@ const off_listeners = () => {
   // #TODO IMIT
   emitters.map((x) => x && x.off());
 };
+// MenuData.get_results_type()
+//赛果类型  0 普通 1电竞 2vr  3冠军
+const get_is_exports=()=>{
+  let res = null
+  if(route.name == "result_details"){
+    res = MenuData.get_results_type() == 1
+  }
+  if(route.name == "category"){
+    res = MenuData.is_esports() 
+  }
+  return res
+}
   onUnmounted(() => {
     off_listeners()
     // 组件销毁时销毁监听函数
