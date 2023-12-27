@@ -29,7 +29,7 @@
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length==2 }]"
               :style="{left:`${left}px`}">
               <template v-for="(append_single, index) of append_single_list">
-                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px'}"   :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
+                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px',margin:rem(0.04)+'px'}"   :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
                   <div class="row row-fat">
                     <!-- (开盘_mhs=0或者锁盘_mhs=11 -->
                     <div v-if="append_single._mhs == 0 || append_single._mhs == 11" style="flex:1;">
@@ -133,7 +133,7 @@
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length==2 }]"
             :style="{left:`${left}px`}">
               <template v-for="(append_single,index) of append_single_list">
-                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px'}" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
+                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px',margin:rem(0.04)+'px'}" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                   <div class="row row-fat" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                     <!-- (开盘_mhs=0或者锁盘_mhs=11) -->
                     <div v-if="append_single._mhs == 0 || append_single._mhs == 11" style="flex:1;">
@@ -356,8 +356,12 @@ export default defineComponent({
      * @param {undefined} undefined
     */
    const touch_pan =lodash.debounce( (e) =>{
+    // console.log
     // 初始化 init_data.left 设置为0 
-    init_data.left = 0
+    // init_data.left = 0
+    // if ( init_data.left>0) {
+    //   init_data.left =  init_data.left+12
+    // }
       let dom_width = bet_slide.value?.clientWidth
 
       if ((append_single_list.value.length / 2) < 4) {
@@ -383,15 +387,17 @@ export default defineComponent({
 
         init_data.left -= dom_width 
          // init_data.left 左滑距离+12   以免右侧留白
-         init_data.left =  init_data.left +12
+        //  init_data.left =  init_data.left +12
       } else {
         // 右滑
         if (init_data.left >= 0) {
           return
         }
         init_data.left += dom_width
-        init_data.left = init_data.left+12
+        // init_data.left = init_data.left+12
       }
+ 
+      // init_data.left =  init_data.left+12
     }, 50);
    
     const go_to_fun = (ol_item) => {
@@ -532,7 +538,7 @@ export default defineComponent({
     height: 0.48rem;
     .bet-item {
       // min-width: 0.85rem;   // rem动态计算，这里注释，写在行内
-      margin:0.04rem;
+      // margin:0.04rem;
       &:nth-child(1) {
           margin-left:0.08rem;
         }
