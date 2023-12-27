@@ -184,6 +184,15 @@ const bet_total = computed(()=> status => {
   let bet_total_money = BetViewDataClass.bet_special_series.reduce((pre, cur) => {
     return pre*1 + (cur.bet_amount * cur.count || 0)*1;
   }, 0)
+  
+  // 串关 复刻串关
+  if(BetViewDataClass.bet_order_status != 1 && !BetData.is_bet_single){
+    bet_total_money = BetViewDataClass.orderNo_bet_single_obj.reduce((pre, cur) => {
+      return pre*1 + (cur.seriesBetAmount || 0)*1;
+    }, 0)
+
+    bet_total_money = mathJs.divide(bet_total_money,100)
+  }
   // 计算出合计金额
   return format_money2(bet_total_money)
 })
