@@ -852,7 +852,7 @@ if (type.value == 30) {
     height: 100%;
     position: relative;
     color: var(--q-gb-t-c-18);
-    background-color: var(--q-gb-bg-c-28) !important;
+    background-color: var(--q-gb-bg-c-25) !important;
     &:before {
       content: "";
       display: block;

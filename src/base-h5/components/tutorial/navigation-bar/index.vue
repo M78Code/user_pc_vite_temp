@@ -5,11 +5,11 @@
     <div class="navigation-bar" :style="{borderBottomColor: borderBottomNoShow && 'transparent'}">
         <div class="navigation-bar-left">
             <div class="navigation-bar-close" @click="set_back">
-                <!-- <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div> -->
-                    <img
+                <div class="img" :style="compute_css_obj({key:'h5_back_img'})"></div>
+                    <!-- <img
                     class="img"
                     :src="compute_local_project_file_path('/image/svg/go-back-icon1.svg')"
-                    alt=""
+                    alt="" -->
                 />
             </div>
         </div>
@@ -25,7 +25,7 @@
     </div>
 </template>
 <script setup>
-// import { i18n_t, compute_css_obj } from "src/output/index.js";
+import { compute_css_obj } from "src/output/index.js";
 import { useRouter,useRoute } from "vue-router";
 import {compute_local_project_file_path} from "src/output/index.js";
 import { MenuData } from "src/output/module/menu-data.js"
