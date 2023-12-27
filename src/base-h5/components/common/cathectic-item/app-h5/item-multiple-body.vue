@@ -196,7 +196,7 @@ template {
         color: var(--q-gb-t-c-17);
 
         p {
-          color: var(--q-gb-t-c-19);
+          color: var(--q-gb-t-c-32);
           padding: .04rem 0;
         }
 
@@ -225,7 +225,7 @@ template {
         margin-left: 0.04rem;
         border-left: 1px solid var(--q-gb-bg-c-13);
         font-size: 0.12rem;
-        color: var(--q-gb-bg-c-6);
+        color: var(--q-gb-t-c-33);;
         display: block;
         &.bot {
           padding-bottom: 0.1rem;
