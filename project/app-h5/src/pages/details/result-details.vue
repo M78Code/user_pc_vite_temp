@@ -36,6 +36,7 @@
     <!-- 下拉联赛列表 -->
       <q-dialog v-model="is_dialog_details" position="top" v-cloak>
         <result-details-dialog
+          class="match-result-details"
           :detail_data="result_detail_data"
           :math_list_data="math_list_data"
         ></result-details-dialog>
@@ -366,5 +367,29 @@ onUnmounted(() => {
 
 .h-full {
   height: 100%;
+}
+
+.match-result-details {
+  background: var(--q-gb-bg-c-23);
+  :deep(.triangle-down) {
+    border-color: var(--q-gb-t-c-17) transparent transparent transparent;
+  }
+  // background: #fff;
+  :deep(.result-details-dialog-bg) {
+    background-color: var(--q-gb-bg-c-23);
+    // background-color: #fff;
+    .match-dialog-stage {
+      color: var(--q-gb-t-c-17);
+    }
+  }
+  :deep(.dialog-text-style) {
+    color: var(--q-gb-t-c-17);
+  }
+  :deep(.match_stage) {
+    color: var(--q-gb-t-c-17);
+  }
+  :deep(.show-font-style-b) {
+    color: var(--q-gb-t-c-17);
+  }
 }
 </style>
