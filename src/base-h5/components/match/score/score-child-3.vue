@@ -182,6 +182,11 @@ export default {
 //   color: #D2B79C;
 // }
 
+// Bug: 52359
+.score-l {
+  color: var(--q-gb-t-c-1)
+}
+
 /* ************** 棒球垒位图标 ************** -S */
 .baseball-poi-w {
   width: 0.14rem;

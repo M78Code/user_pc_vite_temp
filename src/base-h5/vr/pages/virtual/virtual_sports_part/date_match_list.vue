@@ -87,7 +87,7 @@ import teamImg from 'src/base-h5/vr/components/team_img.vue';
 import dateMatchSdata from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_s_data.vue'
 import { api_v_sports } from "src/base-h5/vr/api";
 import { emitter, useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-import ServerTime from "src/core/server-time/server-time.js"
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 
 export default {
   mixins:[common],
@@ -134,7 +134,7 @@ export default {
   },
   mounted(){
     if(this.current_match.mmp == 'PREGAME'){
-      let rest_time = ServerTime.get_remote_time() - this.current_match.mgt
+      let rest_time = get_now_server() - this.current_match.mgt
       let _time = 0
       if(rest_time < 0){
         _time = Math.abs(rest_time) + 100
@@ -164,8 +164,8 @@ export default {
       if(this.interval_id_b){
         clearInterval(this.interval_id_b)
       }
-      let mgt = ServerTime.get_remote_time()
-      this.start_time = ServerTime.get_remote_time() - this.current_match.mgt
+      let mgt = get_now_server()
+      this.start_time = get_now_server() - this.current_match.mgt
       this.init_time_b = new Date() * 1
       this.interval_id_b = setInterval(()=>{
         this.animation_b()
