@@ -10,7 +10,6 @@
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
     <div style="display:none">{{ BetData.bet_data_class_version }}</div>
-
     <q-card-section>
       <!--不是冠军-->
       <div class="row" v-if="item.matchType != 3">
@@ -87,8 +86,8 @@
         <!-- 赔率 -->
         <div class="bet-team-handicap-odd" v-else>
           <div class="col bet-odds-value" :class="{
-            'up-red': ref_data.odds_change_up,
-            'down-green': ref_data.odds_change_down
+            'up-red': item.red_green == 'up-red',
+            'down-green': item.red_green == 'down-green'
           }">
             <!--投注赔率1.87-->
             <span class="odds-value yb-number-bold">
