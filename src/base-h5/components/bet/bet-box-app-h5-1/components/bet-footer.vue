@@ -94,7 +94,6 @@ onMounted(()=>{
 
 // 滑动监听
 const set_touch_move_bet = event => {
-  console.error('set_touch_move_bet',envet)
   let fit = lodash_.get(event,'target.className','')
   get_leng_px()
   if(fit == 'bet-box'){

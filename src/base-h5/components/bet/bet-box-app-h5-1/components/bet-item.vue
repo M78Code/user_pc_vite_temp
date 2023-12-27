@@ -15,7 +15,7 @@
             ]">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c font14 font500">
-                    <span class="text-flow-none" v-html="items.handicap"></span> 
+                    <span class="text-flow-none">{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></span> 
                 </div>
                 <div class="my-left">
                     <div class="w-100 handicap">
@@ -45,6 +45,7 @@
                         <img v-if="items.red_green == 'green_down'" :src="is_down_app" alt=""/>
                     </div>
                 </div>
+                <div v-if="items.red_green" :class="items.red_green" class="font12 bet-odds-change f-e-c">赔率已变更</div>
                 <!-- 电子赛事不支持串关 -->
                 <div v-if="items.is_serial && !BetData.is_bet_single" class="bet-serial font12">不支持串关投注</div>
             </div>
@@ -79,7 +80,6 @@ import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { is_up_app, is_down_app } from 'src/base-h5/core/utils/local-image.js'
 import betSingleInput from "./bet-single-input.vue"
-import { only_win } from "src/core/constant/common/module/csid.js"
 
 const props = defineProps({
     items:{},
@@ -243,6 +243,15 @@ const set_delete = () => {
         :deep(.ty-span) {
             margin-left: .04rem;
             //color: var(--q-gb-t-c-2);
+        }
+    }
+    .bet-odds-change{
+        width: 100%;
+        &.red_up{
+            color:#F53F3F;
+        }
+        &.green_down{
+            color: #00B42A
         }
     }
     .bet-odds-value{
