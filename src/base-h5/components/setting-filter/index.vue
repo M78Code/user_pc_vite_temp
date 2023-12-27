@@ -300,9 +300,8 @@ const change_version = async ()=>{
       let val = origin.substring(start,end)
           origin = origin.replace(val,'user-h5-bw3')
       const url = `${origin}?${param}`
-      const current_env = BUILD_VERSION_CONFIG;
-      console.log('current_envcurrent_env',current_env)
-      returen 
+      // const current_env = BUILD_VERSION_CONFIG;
+      // console.log('current_envcurrent_env',current_env)
       await api_account.get_UserVersion({h5FrontVersion:'0'})
       location.href = url
       // 复刻  geli user-h5-reprint
