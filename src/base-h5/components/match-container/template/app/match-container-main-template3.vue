@@ -199,9 +199,8 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score"
-                          :class="{ 'visibility-hidden': match.ms == 110 }">
-                          {{ home_score }}
+                        <div class="score full-score">
+                          {{ home_score || 0 }}
                         </div>
                       </div>
                       <!--客队图片和名称-->
@@ -232,9 +231,8 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score"
-                          :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
-                          {{ away_score }}
+                        <div class="score full-score">
+                          {{ away_score || 0 }}
                         </div>
                       </div>
                     </div>
@@ -354,7 +352,7 @@ export default {
   .match-line {
     width: 100%;
     height: 0.005rem;
-    background-color: var(--q-gb-bd-c-4);
+    background-color: var(--q-gb-bg-c-4);
   }
 }
 .match-container-main-template3{
@@ -372,7 +370,7 @@ export default {
 .all-league-title{
   display: flex;
   height: 30px;
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-25);
   padding: 0 10px;
   align-items: center;
   justify-content: space-between;
@@ -389,7 +387,7 @@ export default {
     width: 0.2rem;
     height: 16px;
     transition: transform 0.25s ease;
-    transform: rotate(-180deg);
+    transform: rotate(-90deg);
   }
   .ball_seed_collapsed{
     transform: rotate(0);
@@ -723,8 +721,7 @@ export default {
     height: 0.26rem;
     border-radius: 0.08rem 0.08rem 0 0;
     // padding: 0 0.1rem;
-    border-bottom: 1px solid var(--q-gb-bd-c-4);
-
+    border-bottom: 1px solid var(--q-gb-bg-c-4);
     &.show-sport {
       border-radius: 0.12rem 0.12rem 0 0;
     }
@@ -1020,7 +1017,7 @@ export default {
 
     .team-wrapper {
       padding-right:10px;
-      border-right: 1px solid var(--q-gb-bd-c-4);
+      border-right: 1px solid var(--q-gb-bg-c-4);
 
       &.simple {
         transform: translateY(-1px);
@@ -1248,7 +1245,7 @@ export default {
       .go-to-i-detail-i {
         width: 0.68rem;
         height: 0.47rem;
-        border-left: 1px solid var(--q-gb-bd-c-4);
+        border-left: 1px solid var(--q-gb-bg-c-4);
 
         .word {
           margin-right: 0.08rem;
