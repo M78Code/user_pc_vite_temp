@@ -6,7 +6,7 @@
 <template>
   <header class="header">
     <div class="flex justify-between align_items home-tab">
-      <ul ref="tab_ul_scroller">
+      <ul ref="tab_ul_scroller" style="scroll-behavior: smooth;">
         <li
           ref="tab_item"
           v-for="(item, i) in tabList"
