@@ -721,7 +721,8 @@ class MatchMeta {
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
       // 当接口 报错，或者出现限频， 调用3次
       if (this.error_http_count.match >= 3) {
-        if (this.match_mids.length < 1) this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+        this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+        // if (this.match_mids.length < 1) this.set_page_match_empty_status({ state: true, type: 'noWifi' });
       } else {
         this.error_http_count.match++
         let timer = setTimeout(() => {
