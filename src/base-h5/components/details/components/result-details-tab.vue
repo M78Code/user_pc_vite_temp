@@ -28,7 +28,7 @@ import lodash from "lodash"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { onMounted, onUnmounted, ref, watch } from "vue"
-import { MenuData,SessionStorage } from "src/output/index.js";
+import { MenuData,SessionStorage,MatchDetailCalss } from "src/output/index.js";
 //国际化
 import  matchDetail from "src/core/match-detail/match-detail-class.js"
 const router = useRouter()
@@ -53,6 +53,7 @@ const no_data = ref(false)
   // 监听csid的变化
  watch(() => props.result_detail_data.csid, (n,o) =>{
       // 切换顶部菜单，csid变化，触发tab事件
+      debugger
       result_tab(0, tab_item_list.value[0])
       get_list()
     },
@@ -93,23 +94,29 @@ const tab_data_init = () => {
   }
   // 点击高亮显示tab
 const result_tab = (index,tab_item) => {
+  console.trace('tab_item')
     let search_term =route.query.search_term
     // useMittEmit(MITT_TYPES.EMIT_CHANGE_TAB, true)
     if(item_index.value != index){
-      item_index.value = tab_item.id === 4 ? 3 : index
+      item_index.value = tab_item?.id === 4 ? 3 : index
     }
     if(tab_item && tab_item.id == 3 && [100,101,102,103,104].includes(+props.result_detail_data.csid)){
       index = 2
       item_index.value = 1
     }
     if(props.result_detail_data && props.result_detail_data.mid){
-      let mid = props.result_detail_data.mid;
+      let mid = MatchDetailCalss.get_goto_detail_matchid ||  props.result_detail_data.mid;
       // todo 考虑优化此处代码
-      router.replace({
+ 
+      // setTimeout(() => {
+        router.replace({
         name:'match_result',
         params:{mid, index: item_index.value},
         query: {search_term: search_term}
       });
+      // }, 500);
+
+ 
     }
   }
   // 获取订单记录页面接口，判断赛果有没有 订单记录，有则显示在页面

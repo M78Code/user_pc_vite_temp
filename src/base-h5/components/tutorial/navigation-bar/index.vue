@@ -9,8 +9,8 @@
                     <!-- <img
                     class="img"
                     :src="compute_local_project_file_path('/image/svg/go-back-icon1.svg')"
-                    alt="" -->
-                />
+                    alt=""
+                /> -->
             </div>
         </div>
         <div v-if="centerContentType === 'text'" class="navigation-bar-center font-weight-bold text-no-wrap">

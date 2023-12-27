@@ -15,8 +15,7 @@
       <loading v-show="virtual_match_list_data_loading" class="wrapper-loading-c" />
 
       <!-- 0:代表开赛之前倒计时 -->
-      <div v-if="!m_status || m_status == 0"
-        class="row justify-center items-center timetop">
+      <div v-if="!is_pre_counting_end && (!m_status || m_status == 0)" class="row justify-center items-center timetop">
         <virtual-sports-timer
           :title="current_match.no"
           :ms="start_now_sub"
@@ -25,6 +24,7 @@
           :source="source"
           @time_ended="timer_ended_handle" />
       </div>
+
       <!-- 1:赛事进行中(有视频播放中) -->
       <div class="video-playing-container" v-if="m_status === 1">
       <!--<div class="video-playing-container">-->
@@ -146,11 +146,12 @@
         </div>
       </div>
     </div>
-    <!-- 虚拟篮球列表 -->
+    <!-- 虚拟篮球列表 v-if="basketball_status == 0 && sub_menu_type == 1004 && (match_started && !is_video_playing || m_status == 2 || is_pre_counting_end)" /> -->
     <dateMatchList :current_match="current_match" :v_m_status="m_status"
       :virtual_match_list="virtual_match_list" :source="source"
       :is_pre_counting_end="is_pre_counting_end" :match_status="current_batch.mmp"
       v-if="basketball_status == 0 && sub_menu_type == 1004 && (match_started && !is_video_playing || m_status == 2 || is_pre_counting_end)" />
+
     <!-- 虚拟篮球详情组件 -->
     <virtualBasketball
       v-if="basketball_status > 0"

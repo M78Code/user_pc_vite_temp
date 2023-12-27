@@ -32,7 +32,7 @@
          
         <!--联赛标题 -->
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
-          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'no-border': !collapsed}]">
+          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title}]">
           <div class="league-t-wrap right-border">
             <span class="league-title-text row justify-between">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
@@ -409,7 +409,7 @@ export default {
   width: 100%;
   height: auto;
   position: relative;
-  background: var(--q-gb-bg-c-18);
+  background: var(--q-gb-bg-c-21);
 
   .match-status-fixed {
     width: 100%;
@@ -439,21 +439,23 @@ export default {
   .v-mode-span {
     margin-right: 0.1rem;
   }
-
-  .match-inner-container {
-    margin: 0 auto;
-    /* 兼容iPhone11边框显示不全 */
-    //width: 100%;
-    display: flex;
-    padding: 0 0.05rem;
-    flex-direction: column;
-    align-items: center;
-    background: var(--q-gb-bg-c-41) !important;
-    .buffer-container{
+  .buffer-container{
       background: var(--q-gb-bg-c-21);
       height: 5px;
       width: 100%;
     }
+
+  .match-inner-container {
+    // margin: 0 auto;
+    /* 兼容iPhone11边框显示不全 */
+    //width: 100%;
+    display: flex;
+    margin: 0 0.05rem;
+    flex-direction: column;
+    align-items: center;
+    background: var(--q-gb-bg-c-21);
+    border-radius: .08rem;
+    border: 1px solid var(--q-gb-bd-c-15);
 
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
     &.show-sport {
@@ -487,7 +489,7 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    // background: var(--q-gb-bg-c-18);
+    background: var(--q-gb-bg-c-18);
     // background: var(--q-match-page-bg-color-10);
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -729,6 +731,7 @@ export default {
     height: 0.26rem;
     border-radius: 0.08rem 0.08rem 0 0;
     // padding: 0 0.1rem;
+    background-color: var(--q-gb-bg-c-18);
     border-bottom: 1px solid var(--q-gb-bd-c-4);
 
     &.show-sport {

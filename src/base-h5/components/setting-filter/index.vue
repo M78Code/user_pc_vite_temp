@@ -90,7 +90,7 @@ import { is_vr } from 'src/base-h5/mixin/menu.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-import { api_account } from "src/api/index";
+
 defineOptions({
   name: "settingFilter" // 设置组件名称
 });
@@ -297,10 +297,15 @@ const change_version = async ()=>{
       let origin = window.location.origin
       const start = origin.indexOf('//')+2
       const end = origin.indexOf('.')
+      let jump_url = 'user-h5-bw3'
+      //测试环境
+      if (BUILD_VERSION_CONFIG?.CURRENT_ENV === "local_test"){
+         jump_url = 'test-user-h5-bw3'
+      }
+      console.log('jump_urljump_url',jump_url)
       let val = origin.substring(start,end)
-          origin = origin.replace(val,'user-h5-bw3')
+          origin = origin.replace(val,jump_url)
       const url = `${origin}?${param}`
-      await api_account.get_UserVersion({h5FrontVersion:'h5-old'})
       location.href = url
   }
 
