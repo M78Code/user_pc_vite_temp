@@ -55,7 +55,7 @@ const emits = defineEmits(["onUpdate"]);
 const { cacheCount, dataList } = toRefs(props)
 
 const scroll_top = ref(0)
-const show_skeleton_screen = ref(false)
+const show_skeleton_screen = ref(true)
 
 // 猜测高度（预估高度）
 const maybeHeight = 100

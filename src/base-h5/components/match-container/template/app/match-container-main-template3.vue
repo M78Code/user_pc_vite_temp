@@ -395,7 +395,7 @@ export default {
     width: 0.2rem;
     height: 16px;
     transition: transform 0.25s ease;
-    transform: rotate(-180deg);
+    transform: rotate(-90deg);
   }
   .ball_seed_collapsed{
     transform: rotate(0);
@@ -448,7 +448,7 @@ export default {
     padding: 0 0.05rem;
     flex-direction: column;
     align-items: center;
-    background: var(--q-gb-bg-c-18) !important;
+    background: var(--q-gb-bg-c-41) !important;
     .buffer-container{
       background: var(--q-gb-bg-c-21);
       height: 5px;
@@ -487,7 +487,8 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    background: var(--q-gb-bg-c-18);
+    // background: var(--q-gb-bg-c-18);
+    // background: var(--q-match-page-bg-color-10);
     .match-odds-container-border-radius {
       overflow: hidden;
     }
@@ -892,6 +893,7 @@ export default {
     flex-wrap: nowrap;
     align-items: center;
     overflow: hidden;
+    font-weight: 600;
     color: var(--q-gb-bg-c-3) !important;
     .icon-wapper{
       transform: rotate(90deg);
@@ -918,11 +920,6 @@ export default {
         //max-width: 1.4rem;
       }
     }
-
-
-    color: var(--q-color-com-fs-color-26);
-
-    font-weight: 600;
   }
 
   .match-type {

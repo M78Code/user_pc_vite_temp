@@ -57,6 +57,12 @@ const show_tab = ref(true);
 const tab_ul_scroller = ref(null);
 const tab_item = ref(null);
 
+const offset = window.screen.availWidth/2
+function tabMove(index){
+  /** @type {HTMLElement} */ const scrollDom = tab_ul_scroller.value
+  /** @type {HTMLElement} */ const activeItem = scrollDom.children[index]
+  scrollDom.scrollTo(activeItem.offsetLeft - offset + activeItem.offsetWidth/2,0)
+}
 onMounted(() => {
   // 初始化标签选中，足球和篮球在简体中文和繁体中文环境下，下标往后挪动一位,未开赛的赛事，再往后挪动一位
   nextTick(() => {
@@ -79,9 +85,10 @@ const child_tab_click = (tab, i, type, text) => {
   // set_curr_tab_info(tab)
   emit("tab_click", [tab, type]);
   // 滚动目标到屏幕显示区域
-  nextTick(() => {
-    TabMove.tab_move(i, tab_ul_scroller, tab_item);
-  });
+  // nextTick(() => {
+  //   TabMove.tab_move(i, tab_ul_scroller, tab_item);
+  // });
+  tabMove(i)
 };
 const handle_show_tab = (item, index) => {
   let nedw_show_tab = true;
