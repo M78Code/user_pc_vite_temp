@@ -4,7 +4,7 @@ import { fileds_map_common } from "src/output/module/constant-utils.js";
 import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
 import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class.js"
-import { get_score_config,get_query_bet_amount_esports_or_vr,get_query_bet_amount_common } from "./bet-box-submit.js"
+import { get_score_config,get_query_bet_amount_esports_or_vr,get_query_bet_amount_common,get_lastest_market_info } from "./bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/project/module/format-odds-conversion-mixin.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { nextTick, ref } from "vue"
@@ -885,6 +885,16 @@ this.bet_appoint_ball_head= null */
     this.set_bet_data_class_version()
   }
 
+  // 全局替换数据
+  set_bet_single_special(list=[]) {
+    if(this.is_bet_single){
+      this.bet_single_list = lodash_.cloneDeep(list)
+    }else{
+      this.bet_s_list = lodash_.cloneDeep(list)
+    }
+    this.set_bet_data_class_version()
+  }
+
   // ws推送 更新赔率数据
   set_ws_message_bet_info(obj,index){
     if(this.is_bet_single){
@@ -996,9 +1006,16 @@ this.bet_appoint_ball_head= null */
             // 查询ws投注项 中 匹配到的投注项id 
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
-            console.error('market_list', item.hs ,ws_ol_obj.os)
+            console.error('market_list', item.hs ,ws_ol_obj.os,item.hn, ol_obj.placeNum)
+            // 坑位变更
+            if(item.hn != ol_obj.placeNum){
+              // 获取最新的盘口值
+              get_lastest_market_info()
+              return
+            }
             // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
             if(item.hs != 0 ) {
+              // 直接更新状态 设置关盘
               ol_obj.hl_hs = item.hs
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
               return

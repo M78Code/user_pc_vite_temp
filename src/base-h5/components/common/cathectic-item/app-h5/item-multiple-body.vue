@@ -242,7 +242,7 @@ template {
       background-color: var(--q-gb-bg-c-13);
       border-radius: 0.2rem;
       font-size: 0.12rem;
-      color: var(--q-gb-bg-c-15);
+      color: var(--q-gb-t-c-14);
     }
   }
   .toggle::after, .items .top::after {

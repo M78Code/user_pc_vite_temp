@@ -38,5 +38,6 @@ export default {
     'gb-bg-c-36': '#FEAE2B', 
     'gb-bg-c-37': '#D1EBFF', 
     'gb-bg-c-38': '#f8f9fa', 
+    'gb-bg-c-41': '#f8f9fa',
     'gb-bg-c-90': '#00000090', 
   } 

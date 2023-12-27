@@ -351,7 +351,10 @@
       "not_data_substitute": "暂无替补名单",
       "not_data_starter": "暂无首发名单",
 
-      "acronym_half": "半"
+      "acronym_half": "半",
+      "highlights": "精彩集锦",
+      "events": "赛事事件",
+      "technical_statistics":"技术统计"
     }
   },
   "ac_rules": {

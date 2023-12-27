@@ -6,31 +6,33 @@
   <template v-if="is_base_virtual_list">
     <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate" >
       <template #default="{ item, index }">
-        <template v-if="MenuData.is_results_type === 3">
-          <MatchContainerMainTemplate6
-            :i="index"
-            :match_of_list="get_match_item(item)">
-          </MatchContainerMainTemplate6>
+        <!-- 赛果详情精选赛事 -->
+        <template v-if="is_results">
+          <template v-if="MenuData.is_results_type === 2">
+            <!-- vr 赛果 -->
+            <MatchContainerMainTemplate8
+              v-if="get_match_item(item).sportId"
+              :i="index"
+              :match_of_list="get_match_item(item)">
+            </MatchContainerMainTemplate8>
+          </template>
+          <template v-else-if="MenuData.is_results_type === 3">
+            <!-- vr 赛果 -->
+            <MatchContainerMainTemplate6
+              v-if="get_match_item(item).sportId"
+              :i="index"
+              :match_of_list="get_match_item(item)">
+            </MatchContainerMainTemplate6>
+          </template>
+          <!-- 常规赛果 -->
+          <template v-else>
+            <MatchContainerMainTemplate3
+              :i="index"
+              :match_of_list="get_match_item(item)">
+            </MatchContainerMainTemplate3>
+          </template>
         </template>
-        <template v-else-if="MenuData.is_results_type === 2">
-          <MatchContainerMainTemplate8
-            v-if="get_match_item(item).sportId"
-            :i="index"
-            :match_of_list="get_match_item(item)">
-          </MatchContainerMainTemplate8>
-        </template>
-        <template v-else-if="MenuData.is_results_type === 1">
-          <MatchContainerMainTemplate3
-            :i="index"
-            :match_of_list="get_match_item(item)">
-          </MatchContainerMainTemplate3>
-        </template>
-        <template v-else-if="is_results">
-          <MatchContainerMainTemplate3
-            :i="index"
-            :match_of_list="get_match_item(item)">
-          </MatchContainerMainTemplate3>
-        </template>
+        <!-- 常规赛事 -->
         <template v-else>
           <MatchContainerMainTemplate5
             :i="index"
@@ -45,41 +47,30 @@
       <!--列表页 -->
       <ScrollWrapper>
         <template v-slot="{ match_item, index }">
-          <template v-if="match_item">
-            <!--此data-mid用于分频订阅赛事,请勿修改-->
-            <div class="data_mid"> 
-              <!-- 冠军玩法 -->
-              <template v-if="is_kemp || MenuData.get_mm_is_champion()">
-                <MatchContainerMainTemplate2
-                  :i="index"
-                  :match_of_list="match_item">
-                </MatchContainerMainTemplate2>
-              </template>
-              <!-- 赛果玩法 -->
-              <template v-else-if="is_results">
-                <!-- 赛果详情精选赛事 -->
-                <template v-if="route.name == 'match_result'">
-                  <MatchContainerMainTemplate7
-                    :i="index"
-                    :match_of_list="match_item">
-                  </MatchContainerMainTemplate7>
-                </template>
-                <template v-else>
-                  <MatchContainerMainTemplate3
-                    :i="index"
-                    :match_of_list="match_item">
-                  </MatchContainerMainTemplate3>
-                </template>
-              </template>
-              <!-- 真实体育玩法 -->
-              <template v-else>
-                <MatchContainerMainTemplate1
-                  :i="index"
-                  :match_of_list="match_item">
-                </MatchContainerMainTemplate1>
-              </template>
-            </div>
-          </template>
+          <!--此data-mid用于分频订阅赛事,请勿修改-->
+          <div class="data_mid" v-if="match_item"> 
+            <!-- 冠军玩法 -->
+            <template v-if="is_kemp || MenuData.get_mm_is_champion()">
+              <MatchContainerMainTemplate2
+                :i="index"
+                :match_of_list="match_item">
+              </MatchContainerMainTemplate2>
+            </template>
+            <!-- 常规赛果 -->
+            <template v-else-if="is_results">
+              <MatchContainerMainTemplate3
+                :i="index"
+                :match_of_list="match_item">
+              </MatchContainerMainTemplate3>
+            </template>
+            <!-- 真实体育玩法 -->
+            <template v-else>
+              <MatchContainerMainTemplate1
+                :i="index"
+                :match_of_list="match_item">
+              </MatchContainerMainTemplate1>
+            </template>
+          </div>
         </template>
       </ScrollWrapper>
     </div>
@@ -101,8 +92,6 @@ import MatchContainerMainTemplate3 from "src/base-h5/components/match-container/
 import MatchContainerMainTemplate5 from "src/base-h5/components/match-container/template/app/match-container-main-template5.vue"; 
 // app-h5 冠军赛果
 import MatchContainerMainTemplate6 from "src/base-h5/components/match-container/template/app/match-container-main-template6.vue"; 
-// app-h5 赛果精选列表
-import MatchContainerMainTemplate7 from "src/base-h5/components/match-container/template/app/match-container-main-template7.vue";
 // app-h 赛果vr
 import MatchContainerMainTemplate8 from "src/base-h5/components/match-container/template/app/match-container-main-template8.vue"; 
 

@@ -178,7 +178,15 @@ export default defineComponent({
   }
 
   .every2 {
-    flex-basis: 50%;
+    //flex-basis: 50%;
+    // Fix Bug: 52457
+    // 解决方式不够优雅，
+    // 尺寸过大，右边会有留白
+    // 但是看到下面的.every4
+    // 也是22.5%;
+    // 不是25%
+    // 所以就这样了
+    flex-basis: 47.7%;
   }
 
   .every3 {

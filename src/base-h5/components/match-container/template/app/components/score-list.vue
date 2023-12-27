@@ -108,8 +108,20 @@
         {{ all_s1 || $filters.score_format(all_s1) }}
       </div>
       <!-- 棒球3 出局 -->
-      <div class="poi-des" v-if="[3].includes(+match.csid)" style="flex-shrink: 0;">
+      <!-- <div class="poi-des" v-if="[3].includes(+match.csid)" style="flex-shrink: 0;">
         {{ i18n_t('match_info.strike_out') }}&nbsp; <span class="score">{{ match.mbcn }}</span>
+      </div> -->
+      <div class="baseball-poi-ia" v-if="match.csid == 3" :data-csid="match.csid">
+        <template v-if="get_menu_type != 28">
+          <div class="baseball-poi-w">
+            <div class="poi" :class="{p:match.mbtlp == 1}"></div>
+            <div class="poi" :class="{p:match.mbolp == 1}"></div>
+            <div class="poi" :class="{p:match.mbthlp == 1}"></div>
+          </div>
+          <div class="poi-des">
+            {{i18n_t('match_info.strike_out')}}&nbsp;<span>{{match.mbcn}}</span>
+          </div>
+        </template>
       </div>
     </div>
   
@@ -474,17 +486,6 @@ onUnmounted(() => {
   &.flex-star {
     justify-content: flex-start;
   }
-  .poi-des {
-    color: var(--q-gb-t-c-17);
-        height: auto;
-        display: flex;
-        align-items: flex-start;
-        font-size: 0.12rem;
-      margin-left: 0.04rem;
-      .score{
-        color: var(--q-gb-t-c-1);
-      }
-  }
   .score-scroll-fixed {
     line-height: 1;
     display: flex;
@@ -495,29 +496,26 @@ onUnmounted(() => {
     }
 
     .baseball-poi-ia {
-      width: 1.92rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
 
       .baseball-poi-w {
-        width: 0.14rem;
-        height: 0.14rem;
+        width: 0.16rem;
+        height: 0.16rem;
         display: flex;
         flex-wrap: wrap;
         overflow: hidden;
         align-content: flex-start;
         transform: translateX(-0.02rem) translateY(0.04rem) rotateZ(45deg);
-
         .poi {
-          width: 0.05rem;
-          height: 0.05rem;
+          width: 0.06rem;
+          height: 0.06rem;
           margin: 0 1px 1px 0;
           flex-shrink: 0;
-          background: var(--q-color-com-bg-color-46);
-
+          background: var(--q-gb-t-c-6);
           &.p {
-            background: var(--q-color-com-bg-color-23);
+           background: var(--q-gb-t-c-25);
           }
         }
 
@@ -526,7 +524,17 @@ onUnmounted(() => {
           height: 100%;
         }
       }
-
+      .poi-des {
+        color: var(--q-gb-t-c-17);
+            height: auto;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.12rem;
+          margin-left: 0.04rem;
+          .score{
+            color: var(--q-gb-t-c-1);
+          }
+      }
      
     }
   }
@@ -657,7 +665,7 @@ onUnmounted(() => {
           font-weight: 400;
         
           .important-color-number {
-            color: var(--sys-brand-primary-primary-300, #74C4FF);
+            color: var(--q-gb-bd-c-1);
             text-align: right;
             font-family: Akrobat;
             font-size: 11px;
@@ -700,13 +708,13 @@ onUnmounted(() => {
       &.last {
         margin-right: 0;
         position: relative;
-        top: 1px;
+        // top: 1px;
       }
 
       &:last-child {
         border: none !important;
         margin-right: 0.02rem;
-        color: var(--sys-brand-primary-primary-300, var(--sys-brand-primary-primary-300, #74C4FF)) !important;
+        color: var(--sys-brand-primary-primary-300, var(--q-gb-bd-c-1)) !important;
       }
     }
 

@@ -111,7 +111,7 @@
         <template v-if="is_playing_replay">
           <!-- 回放视频标识logo -->
           <div class="replay-logo-wrap" :class="{'replay-logo-wrap-portrait': !get_is_hengping}">
-            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bw3/svg/details/replay_logo.svg`" />
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details/replay_logo.svg`" />
           </div>
 
           <div v-show="is_controller_show" class="highlights-controller" :class="{'bottom-controller-bar': !get_is_hengping}">
@@ -126,7 +126,7 @@
             <!--</div>-->
             <!-- 全屏按钮 -->
             <div class="full-screen-btn" @click="exit_full_screen">
-              <img src="image/bw3/svg/pack_up.svg">
+              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`">
             </div>
           </div>
         </template>
@@ -147,7 +147,7 @@
 
             <!-- 关闭回放视频 -->
             <div v-show="is_playing_replay" class="close-video-wrap" @click="exit_full_screen">
-              <img src="image/bw3/svg/details/close.svg" />
+              <img src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bw3/svg/details/close.svg`" /> 
             </div>
           </template>
 
