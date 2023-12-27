@@ -15,16 +15,10 @@
     <template v-if="match" >
       <!-- 全部 -->
       <div class="all-league-title" v-if="i === 0" @click.stop="handle_ball_seed_fold">
+      <!-- 全部联赛 -->
         <div> <img :src="icon_date" alt=""> <span>{{ i18n_t('filter.all_leagues')}} </span> </div> 
         <!-- <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt=""> -->
         <div :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
-      </div>
-      <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 @click.stop="handle_ball_seed_fold"-->
-      <div v-if="show_sport_title" @click.stop
-        :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
-        <span class="score-inner-span">
-          {{ match_of_list.csna || get_current_manu_name() }}
-        </span>
       </div>
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
       <div :class="['match-inner-container', {'collapsed': !collapsed}]">
@@ -205,9 +199,8 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score"
-                          :class="{ 'visibility-hidden': match.ms == 110 }">
-                          {{ home_score }}
+                        <div class="score full-score">
+                          {{ home_score || 0 }}
                         </div>
                       </div>
                       <!--客队图片和名称-->
@@ -238,9 +231,8 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score"
-                          :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
-                          {{ away_score }}
+                        <div class="score full-score">
+                          {{ away_score || 0 }}
                         </div>
                       </div>
                     </div>
@@ -339,8 +331,7 @@ export default {
   setup (ctx) {
     // 是否显示球种标题
     const show_sport_title = computed(() => {
-      const { is_show_ball_title } = ctx.match_of_list
-      return is_show_ball_title
+      return [1,2].includes(+ctx.match_of_list.start_flag)
     })
 
     return { 
@@ -361,7 +352,7 @@ export default {
   .match-line {
     width: 100%;
     height: 0.005rem;
-    background-color: var(--q-gb-bd-c-4);
+    background-color: var(--q-gb-bg-c-4);
   }
 }
 .match-container-main-template3{
@@ -379,7 +370,7 @@ export default {
 .all-league-title{
   display: flex;
   height: 30px;
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-25);
   padding: 0 10px;
   align-items: center;
   justify-content: space-between;
@@ -396,7 +387,7 @@ export default {
     width: 0.2rem;
     height: 16px;
     transition: transform 0.25s ease;
-    transform: rotate(-180deg);
+    transform: rotate(-90deg);
   }
   .ball_seed_collapsed{
     transform: rotate(0);
@@ -599,8 +590,8 @@ export default {
     height: 20px;
     border-radius: 0;
     font-size: 12px;
-    padding: 0 5px 0 17px;
-    background: var(--q-gb-bg-c-21);
+    padding: 0 5px 0 20px;
+    background: rgba(175, 179, 200, 0.1);
     line-height: 20px;
     font-size: 11px;
     .league-collapse-dir{
@@ -730,8 +721,7 @@ export default {
     height: 0.26rem;
     border-radius: 0.08rem 0.08rem 0 0;
     // padding: 0 0.1rem;
-    border-bottom: 1px solid var(--q-gb-bd-c-4);
-
+    border-bottom: 1px solid var(--q-gb-bg-c-4);
     &.show-sport {
       border-radius: 0.12rem 0.12rem 0 0;
     }
@@ -746,7 +736,7 @@ export default {
       display: flex;
       align-items: center;
       flex-wrap: nowrap;
-      padding-left: 0.115rem;
+      padding-left: 0.08rem;
       .esport {
         margin: 0.01rem 0.07rem 0 0rem;
         position: relative;
@@ -1027,7 +1017,7 @@ export default {
 
     .team-wrapper {
       padding-right:10px;
-      border-right: 1px solid var(--q-gb-bd-c-4);
+      border-right: 1px solid var(--q-gb-bg-c-4);
 
       &.simple {
         transform: translateY(-1px);
@@ -1255,7 +1245,7 @@ export default {
       .go-to-i-detail-i {
         width: 0.68rem;
         height: 0.47rem;
-        border-left: 1px solid var(--q-gb-bd-c-4);
+        border-left: 1px solid var(--q-gb-bg-c-4);
 
         .word {
           margin-right: 0.08rem;
