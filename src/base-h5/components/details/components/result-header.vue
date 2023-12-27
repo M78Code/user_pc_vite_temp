@@ -59,7 +59,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .result-header {
   width: 100vw;
-  height: 1.3rem;
+  height: 1.68rem;
 
   &.baseball {
     height: 1.4rem;

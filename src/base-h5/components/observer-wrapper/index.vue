@@ -5,7 +5,7 @@
 <template>
   <main class="main-container">
     <template v-if="!match_is_empty">
-      <section class="observer-container" ref="container" @scroll="handler_container_scroll">
+      <section class="observer-container" ref="container" @scroll="handler_container_scroll" :style="compute_css_obj({key:'h5-kyapp-speciality-b'})">
           <div class="observer-item" 
             v-for="item, index in match_list" 
             :key="item.mid" 
@@ -51,7 +51,7 @@ import ObserverItem2 from 'src/base-h5/components/observer-wrapper/observer-item
 import ObserverItem3 from 'src/base-h5/components/observer-wrapper/observer-item3.vue';
 //app-h5 新手版  -- 临时
 import ObserverItem4 from 'src/base-h5/components/observer-wrapper/observer-item4.vue';
-
+import { compute_css_obj} from 'src/output/index.js'
 const defer_render = use_defer_render()
 const props = defineProps({
   // 渲染数据

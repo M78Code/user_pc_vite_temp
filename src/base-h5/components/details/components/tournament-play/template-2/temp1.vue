@@ -466,8 +466,8 @@ export default defineComponent({
 }
 
 .icon-lock {
-  width: 0.12rem;
-  height: 0.14rem;
+  width: 0.16rem;
+  height: 0.16rem;
   vertical-align: middle;
   margin: 0rem 0 0.076rem 0;
 }
@@ -482,7 +482,8 @@ export default defineComponent({
 }
 .item-bet-ky {
   padding:0.08rem;
-  background-color: var(--q-gb-bg-c-29);
+  //background-color: var(--q-gb-bg-c-29);
+  background-color: var(--q-gb-bg-c-38);
   .fat-warp {
     margin:0.04rem;
     background:var(--q-gb-bg-c-15);

@@ -49,7 +49,8 @@
         <div class="row" v-for="(event, i) in events_list_vertical" :key="i" @click="play_video(event, event.homeAway == get_detail_data.mhn)">
           <!-- <div class="time-line"></div> -->
           <!-- <div class="time-line-ball"></div> -->
-          <div :class="['item-content hairline-border item-content-defailt', event.homeAway == get_detail_data.mhn?'':'hide']"  @click="handle_click_event(i, event)" >
+          <!-- <div :class="['item-content hairline-border item-content-defailt', event.homeAway == get_detail_data.mhn?'':'hide']"  @click="handle_click_event(i, event)" > -->
+          <div :class="['item-content hairline-border item-content-defailt', event.homeAway == get_detail_data.mhn?'':'hide']"  @click.stop="toPlayReplay(i, event)" >
             <div :style="{
               'background-image': `url(${event.fragmentPic})`
             }" class="item-img">
@@ -256,6 +257,7 @@ import {
   nextTick,
   watch,
   defineAsyncComponent,
+  inject
 } from 'vue'
 import lodash from 'lodash'
 import {api_common, api_analysis} from "src/api/index.js";
@@ -378,6 +380,10 @@ setup(props, context){
   const is_dp_video_full_screen = ref(false)
   // 赛果详情数据
   const get_detail_data = ref(matchDetailData.get_quick_mid_obj(route.params.mid))
+  
+  // 
+  const ChangeVideoKind = inject('ChangeVideoKind')
+
   onMounted(() => {
     pre_load_video.load_player_js(true);
     console.log(get_detail_data, "get_detail_data");
@@ -834,6 +840,14 @@ setup(props, context){
     return slider_events_list.length * Math.ceil(1.44 * font_size) < full_screen_width
   })
 
+  const toPlayReplay = function(index,replay){
+    const replayData = {
+      item: replay,
+      index
+    }
+    ChangeVideoKind(replayData)
+  }
+  
   onUnmounted(() => {
       clearInterval(get_football_replay_timer.value)
       get_football_replay_timer.value = null
@@ -927,6 +941,7 @@ setup(props, context){
     handleMessage,
     format_total_score,
     LOCAL_PROJECT_FILE_PREFIX,
+    toPlayReplay
   }
 }
 }

@@ -88,22 +88,9 @@ em{
 ::-webkit-scrollbar {
   display: none; /* Chrome Safari */
 }
-@font-face {
-  font-family: 'ky-font';
-  src:
-    url('fonts/Akrobat-Bold-1.otf');
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-.number_family {
-  font-family: 'ky-font';
-}
 body {
-  //color: #414655;
-  // color: #303442;
   font-size: 0.12rem !important;
-  font-family:'PingFang SC','Microsoft Yahei', Arial, Helvetica, sans-serif ;
+  font-family: "PingFang SC", "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft Yahei";
 }
 /* 字体大小 */
 .yb_fontsize8 {

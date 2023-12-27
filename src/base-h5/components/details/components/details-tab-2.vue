@@ -5,7 +5,8 @@
     v-cloak
   >
     <div class="fat-btn" @click="change_btn()">
-      <div class="tab-btn" :class="{ collapsed: get_fewer != 2 }"></div>
+      <!-- <div class="tab-btn" :class="{ collapsed: get_fewer != 2 }"></div> -->
+      <div :class="['expand_item', {collapsed: get_fewer != 2}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
     </div>
     <span class="menu-third"></span>
     <div style="display: flex;align-items: center;">
@@ -13,8 +14,8 @@
       <div
         class="menu-item-stick"
         v-if="fixd_left"
-        :class="current_category_id == data_list[0]['id']? 't_color' : ''"
-        @click.self="selete_item(data_list[0]['id'], 0, data_list[0])"
+        :class="current_category_id == lodash.get(data_list,'[0][id]') ? 't_color' : ''"
+        @click.self="selete_item(lodash.get(data_list,'[0][id]'), 0, lodash.get(data_list,'[0]'))"
       >
         {{ data_list[0].marketName }}
       </div>
@@ -38,6 +39,7 @@
 import {
   MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,
   csid_to_sport_name,
+  compute_css_obj
 } from "src/output/index.js";
 import {
   useMittEmitterGenerator,
@@ -196,15 +198,11 @@ export default defineComponent({
       // 记录当前玩法集ID和玩法集合
       matchDetailCtr.value.category_tab_click(item);
       // 存储tab的id
-
-      SessionStorage.set("DETAIL_TAB_ID", item.id);
-      SessionStorage.set("ACTIVE_TAB", item.round);
+      SessionStorage.set('DETAIL_TAB_ID', item.id)
       // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if (get_fewer.value == 3) {
         get_fewer.value = 1;
       }
-      console.log(item, uId, index, "changeItem");
-      evnet.emit("change-item", item.round);
       // 发送埋点
       let zhuge_obj = {
         玩法集名称: item.marketName,
@@ -266,6 +264,7 @@ export default defineComponent({
       get_active_details_play_tab,
       initEvent,
       new_list,
+      compute_css_obj
     };
   },
 });
@@ -276,6 +275,15 @@ export default defineComponent({
   min-height: 0.4rem;
   background-color: var(--q-gb-bg-c-25);
   // border-bottom: 0.01rem solid var(--q-gb-bd-c-5);
+}
+.expand_item{
+  width: 0.2rem;
+  height: 16px;
+  transition: transform 0.25s ease;
+  transform: rotate(-90deg);
+}
+.collapsed {
+  transform: rotate(0deg);
 }
 .menu-item-stick {
   // position: absolute;
@@ -340,27 +348,31 @@ export default defineComponent({
   float: right;
   text-align: center;
   padding-top: 0.06rem;
-
   width: 0.4rem;
+  min-height: 0.44rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.tab-btn {
-  display: inline-block;
-  width: 0.12rem;
-  height: 0.12rem;
-  margin-top: 0.09rem;
-  background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn_off.svg");
+// .tab-btn {
+//   display: inline-block;
+//   width: 0.12rem;
+//   height: 0.12rem;
+//   margin-top: 0.09rem;
+//   background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn_off.svg");
 
-  background-size: 100% 100%;
-  // transform: rotateZ(180deg);
-  transition: transform 0.3s;
-  // @include webkit(transition, transform 0.3s);
+//   background-size: 100% 100%;
+//   // transform: rotateZ(180deg);
+//   transition: transform 0.3s;
+//   // @include webkit(transition, transform 0.3s);
 
-  &.collapsed {
-    background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn.svg");
-    // @include webkit(transition, transform 0.3s);
-  }
-}
+//   &.collapsed {
+//     background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn.svg");
+//     // @include webkit(transition, transform 0.3s);
+//   }
+// }
 
 .menu-third {
   padding-right: 0.1rem;

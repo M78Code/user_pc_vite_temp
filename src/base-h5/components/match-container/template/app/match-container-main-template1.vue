@@ -469,7 +469,7 @@ export default {
     }
     .expand_item{
       transition: transform 0.25s ease;
-      transform: rotate(-180deg);
+      transform: rotate(-90deg);
       width: 20px;
       height: 16px;
       margin-right: 0.06rem;
@@ -1722,7 +1722,7 @@ export default {
     margin-left: .1rem;
     padding: 0 .01rem;
     height: 0.26rem;
-    width: 0.2rem;
+    width: 0.3rem;
     line-height: .16rem;
     border-radius: .03rem;
     background-size: cover;
