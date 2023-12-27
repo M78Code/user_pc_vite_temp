@@ -10,13 +10,15 @@
     <!-- 页面路由开始 页面路由开始 页面路由开始 -->
     <!-- 页面路由开始 -->
     <router-view />
-
+    <!-- 预加载页面 -->
+    <iframeBeforeLoading />
   </div>
 </template>
 
 <script setup>
 // websocket Log文件
 import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
+import iframeBeforeLoading from "src/components/iframe-before-loading/iframe-before-loading.vue";
 import { wslog } from "src/core/log/";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
