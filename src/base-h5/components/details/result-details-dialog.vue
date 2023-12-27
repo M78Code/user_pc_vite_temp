@@ -92,10 +92,11 @@ import teamImg from 'src/base-h5/components/details/team-img.vue'
 import matchStage from 'src/base-h5/components/match/match-stage.vue';
 import MatchDialogStage from 'src/base-h5/components/match/match-dialog-stage.vue';
 import ShowStartTime from 'src/base-h5/components/details/wight/show-start-time.vue'
-import { format_total_score } from 'src/output/index.js'
+import { format_total_score,useMittEmit,MITT_TYPES } from 'src/output/index.js'
 import { useRoute, useRouter } from "vue-router"
 import { MenuData } from 'src/output/module/menu-data.js'
 import { onUnmounted,onMounted,getCurrentInstance,computed } from 'vue';
+import matchDetailClass from 'src/core/match-detail/match-detail-class';
 
 let router = useRouter()
 let route = useRoute()
@@ -143,10 +144,9 @@ function change_active(item) {
   // 点击联赛页面收起下拉窗效果 传值false
   useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, false);
   // 如果选择当前页的比赛,则不给予跳转;
-  if (detail_data.mid == item.mid) return;
-  set_event_list([])
+  if (props.detail_data.mid == item.mid) return;
   //设置赛事id:mid;
-  set_goto_detail_matchid(item.mid);
+  matchDetailClass.set_goto_detail_matchid(item.mid)
   // 因为动画效果要走完，故而需要加上这个settimeout；
   timer1_ = setInterval(() => {
     // 点击联赛列表设置url赛事id todo优化此处 replace
