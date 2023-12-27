@@ -29,7 +29,7 @@
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length==2 }]"
               :style="{left:`${left}px`}">
               <template v-for="(append_single, index) of append_single_list">
-                <div class="col bet-item" :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
+                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px'}"   :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
                   <div class="row row-fat">
                     <!-- (开盘_mhs=0或者锁盘_mhs=11 -->
                     <div v-if="append_single._mhs == 0 || append_single._mhs == 11" style="flex:1;">
@@ -123,7 +123,7 @@
           <!-- 小 -->
           <div class="play-name " v-show="!get_is_hengping">
               <div class="play-name-card ellipsis">
-                {{lodash.get(item_data, 'title[1].osn')}}
+                {{lodash.get(item_data, 'title[1].osn')}}+++{{ rem(1)+'px' }}
               </div>
           </div>
           <div class="row slide-con" ref="bet_slide" style="flex:1;" v-touch-pan.horizontal.prevent.mouse="touch_pan">
@@ -133,7 +133,7 @@
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length==2 }]"
             :style="{left:`${left}px`}">
               <template v-for="(append_single,index) of append_single_list">
-                <div class="col bet-item" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
+                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px'}" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                   <div class="row row-fat" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                     <!-- (开盘_mhs=0或者锁盘_mhs=11) -->
                     <div v-if="append_single._mhs == 0 || append_single._mhs == 11" style="flex:1;">
@@ -340,6 +340,16 @@ export default defineComponent({
     const is_match_result = computed(() => {
       return ['result_details', 'match_result'].includes(route.name)
     })
+
+        /**
+     * @description: 参考iphone6,7,8窗口宽度(375)模拟rem
+     * @param {Number} value 需要转换的值
+     * @return {Number}
+     */
+     const rem = (value) => {
+      let font_size = (innerWidth * 100) / 375;
+      return Math.ceil(value * font_size);
+    };
     /**
      * @Description 左右滑动
      * @param {object} e 滑动参数
@@ -373,14 +383,14 @@ export default defineComponent({
 
         init_data.left -= dom_width 
          // init_data.left 左滑距离+12   以免右侧留白
-         init_data.left =  init_data.left + 12
+         init_data.left =  init_data.left 
       } else {
         // 右滑
         if (init_data.left >= 0) {
           return
         }
         init_data.left += dom_width
-        init_data.left = init_data.left+ 12
+        init_data.left = init_data.left
       }
     }, 50);
    
@@ -416,7 +426,8 @@ export default defineComponent({
       route,
       go_to_fun,
       LOCAL_PROJECT_FILE_PREFIX,
-      calc_win
+      calc_win,
+      rem
     }
   }
 })
@@ -520,7 +531,7 @@ export default defineComponent({
     //width: 200%;
     height: 0.48rem;
     .bet-item {
-      min-width: 0.85rem;
+      // min-width: 0.85rem;   // rem宽度动态计算，这里注释，写在行内
       margin:0.04rem;
       &:nth-child(1) {
           margin-left:0.08rem;
