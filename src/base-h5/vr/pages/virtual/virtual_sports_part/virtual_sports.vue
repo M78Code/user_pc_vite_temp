@@ -894,6 +894,7 @@ export default {
   color: var(--q-gb-t-c-18);
   // background: #F2F2F6;
   background-color: var(--q-gb-bg-c-21) ;
+  padding-bottom: 0.66rem;
 }
 .virtual-sports-card {
   &-content {
