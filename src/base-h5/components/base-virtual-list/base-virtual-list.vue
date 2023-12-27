@@ -23,7 +23,7 @@
   </div>
   <!-- 回到顶部按钮组件 -->
   <template v-if="isShowGoTop">
-    <ScrollTop :list_scroll_top="scroll_top" @back-top="gotTop" />
+    <ScrollTop :list_scroll_top="rollingHeight" @back-top="gotTop" />
   </template>
 </template>
 
@@ -48,17 +48,19 @@ const props = defineProps({
     type: Boolean,
     default: true
   },
+  // （预估高度）
+  estimateHeight: {
+    type: Number,
+    default: 100
+  }
 })
 
 const emits = defineEmits(["onUpdate"]);
 
-const { cacheCount, dataList } = toRefs(props)
+const { cacheCount, dataList, estimateHeight } = toRefs(props)
 
-const scroll_top = ref(0)
+const rollingHeight = ref(0)
 const show_skeleton_screen = ref(false)
-
-// 猜测高度（预估高度）
-const maybeHeight = 100
 
 // 所有数据
 const allData = ref([])
@@ -145,7 +147,6 @@ const renderData = computed(() => {
 const emitters = ref({})
 
 onMounted(() => {
-  // initDataPostion()
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, gotTop).off,
   };
@@ -157,6 +158,7 @@ onMounted(() => {
 })
 
 onUpdated(() => {
+ 
   nextTick(() => {
     updateHeightAndPos()
   })
@@ -165,6 +167,7 @@ onUpdated(() => {
 watch(dataList, (v, o) => {
   //如果是排序的话 length不会变化 但是mid集合顺序会变 列表变也是一样  赔率变化mid顺序是一样就是一样 不进入
   if (lodash.map(v, 'mid').join() != lodash.map(o, 'mid').join()) {
+    // positionDataArr = []
     nextTick(() => {
       initDataPostion()
     })
@@ -175,11 +178,12 @@ watch(dataList, (v, o) => {
 const initDataPostion = () => {
   // if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
-  positionDataArr = allData.value.map((_, idx) => ({
+  positionDataArr = allData.value.map((item, idx) => ({
     arrPos: idx,
-    startPos: maybeHeight * idx,
-    endPos: maybeHeight * idx + maybeHeight,
-    height: maybeHeight,
+    mid: item.mid,
+    height: estimateHeight.value,
+    startPos: estimateHeight.value * idx,
+    endPos: estimateHeight.value * idx + estimateHeight.value,
   }))
 }
 
@@ -202,7 +206,7 @@ const updateHeightAndPos = () => {
     // 获取元素的实际高度
     // const { height } = childEle.getBoundingClientRect()
     const { offsetHeight: height } = childEle
-    const oldHeight = dataItem.height
+    const oldHeight = dataItem.height || estimateHeight.value
     /*
      * 计算当前数据dom元素的旧高度和当前高度的差值
      * 如：
@@ -210,6 +214,9 @@ const updateHeightAndPos = () => {
      * oldHeight为50px，height为100px, 那么dffVal为 -50px，那么 oldHeight - dffVal 为 100px
      */
     const dffVal = oldHeight - height
+    // console.log(dataItem.mid, oldHeight, height, dffVal)
+    // console.log(positionDataArr)
+    // dataItem.height = height
     if (dffVal != 0) {
       // 当前dom元素的实际高度与allData中记录的高度不一致，则更新高度以及元素位置信息
       dataItem.height = oldHeight - dffVal
@@ -283,7 +290,7 @@ const onScroll = (evt) => {
 
   const { scrollTop } = scrollerContainerDom
 
-  scroll_top.value = scrollTop
+  rollingHeight.value = scrollTop
 
   // 正数或0表示向下滚动
   isPositive = scrollTop - lastScrollTop >= 0
