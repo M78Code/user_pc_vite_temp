@@ -16,7 +16,7 @@
           <div class="row bet-toggle" :class="{'bet-border-radius': BetData.bet_s_list.length==2,'bet-toggle-down':!is_expend, 'bet-toggle-up':is_expend}">
             <div
               class="col bet-toggle-text cursor-pointer" 
-              :class="{'disabled-toggle': expend_disable}"              
+              :class="{'disabled-toggle':BetData.bet_s_list.length==2}"              
               @click="mix_toggle_handle"
             >
               {{ i18n_t('bet.bet_n_')}}
@@ -24,7 +24,7 @@
             </div>
             <div class="col-auto">
               <!--折叠/展开按钮-->
-              <span :class="{'disabled-toggle': expend_disable}">
+              <span :class="{'disabled-toggle': BetData.bet_s_list.length==2}">
                 <icon-wapper
                   name="icon-triangle"
                   size="16px"                     
@@ -128,9 +128,10 @@ const mix_toggle_handle = () => {
       /*  失效的样式 */
     }
     /* 复式连串过关投注 */
-    .disabled-toggle {
+    &.disabled-toggle {
       pointer-events: none;
       cursor: default;
+      opacity: 0.3;
     }
     /*  箭头向下样式 */
     .icon-pull-down:before {
