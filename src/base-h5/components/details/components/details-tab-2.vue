@@ -347,9 +347,8 @@ export default defineComponent({
 .fat-btn {
   float: right;
   text-align: center;
-  padding-top: 0.06rem;
   width: 0.4rem;
-  min-height: 0.44rem;
+  min-height: 0.4rem;
   line-height: 1;
   display: flex;
   align-items: center;

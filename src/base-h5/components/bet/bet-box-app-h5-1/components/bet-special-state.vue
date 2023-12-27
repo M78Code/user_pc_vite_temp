@@ -31,6 +31,7 @@ import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import betDialog from "./bet-dialog.vue"
 import {UserCtr,format_money2,LOCAL_PROJECT_FILE_PREFIX,currency_code ,compute_local_project_file_path } from "src/output/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
+import { ref } from "vue"
 
 const props = defineProps({
     items:{
