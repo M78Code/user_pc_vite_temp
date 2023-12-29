@@ -432,7 +432,8 @@ export default {
      * @param {Number} status 盘口状态
      */
     set_all_match_os_status(status, list_data){
-      let list = this.matchInfoCtr.list;
+      // let list = this.matchInfoCtr.list;
+      let list = MatchDataWarehouseInstance.get_quick_mid_obj(this.mid )?.odds_info
       if(list_data){
         list = list_data;
       }
