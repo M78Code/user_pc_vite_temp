@@ -77,6 +77,7 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import STANDARD_KEY from "src/core/standard-key";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { api_common } from "src/api";
+import MatchFold from 'src/core/match-fold/index.js'
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 const emitters = ref({})
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
@@ -167,6 +168,7 @@ const changeDate = (index) => {
 const changeDatetab = (item, index) => {
     if (store.menu_time === item?.val) return
     store.tabModel = false;
+    MatchFold.clear_fold_info()
     const move_index = week.value.findIndex((t, _index) => _index === index);
     scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
     store.second_tab_index = index;

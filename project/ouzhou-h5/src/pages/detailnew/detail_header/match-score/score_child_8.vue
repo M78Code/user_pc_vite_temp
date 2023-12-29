@@ -21,9 +21,11 @@ const score_array = computed(() => {
 
 <template>
     <ul class="score_child_8" v-if="(score_array || []).length">
-        <li v-for="item of (score_array || [])" :key="item" class="score">
+        <li class="score" v-for="(item,index) of (score_array || [])" :key="item">
             <span>&ensp;</span>
-            <span>{{ item?.home }} - {{ item?.away }}</span>
+            <span :class="{'active-text':(score_array.length == ++index && detail_data.mo != 1)}">
+                {{ item?.home }} - {{ item?.away }}
+            </span>
             <span>&ensp;</span>
         </li>
     </ul>
