@@ -8,7 +8,10 @@
     <span v-if="!['result_details', 'match_result'].includes($route.name)">
       <!-- 赛事未开赛 -->
       <span v-if="detail_data.ms == 0">
-        <span >
+<!--        Bug: 52532-->
+<!--        即将开赛的赛事不显示日期-->
+<!--        所以加了 v-if="!one_hour"-->
+        <span v-if="!one_hour">
           <!-- 距离开赛时间大于1小时 显示月和日 .Format(i18n_t('time3'))-->
            {{(new Date(+detail_data.mgt)).Format(i18n_t('time2'))}}
 <!--          {{ formatTime(+detail_data.mgt, "DD/mm hh:MM") }}-->
