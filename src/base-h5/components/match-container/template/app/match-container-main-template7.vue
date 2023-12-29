@@ -229,39 +229,7 @@
                       </div>
 
                     </div>
-                    <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
-                    <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
-                      v-show="footer_menu_id != 114">
-                      <div class="r row no-wrap">
-                        <div class="go-container-w flex no-wrap new-standard">
-                          <!-- 直播 主播 视频 动画  icon 栏目   -->
-                          <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
-                          <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
-                            <img :class="['live-icon-btn', { disabled: !media_button_state_obj.animationUrl }]"
-                              :src='animation_icon' />
-                          </div>
-                          <!-- 视频 -->
-                          <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
-                            <img :class="['live-icon-btn', { disabled: !media_button_state_obj.muUrl }]"
-                              :src='video_icon' />
-                          </div>
-                          <!-- mng 是否中立场   1:是中立场，0:非中立场-->
-                          <div class="live-i-b-wrap v-mode-span row items-center"
-                            v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
-                            <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
-                          </div>
-                          <!-- 角球 -->
-                          <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle"
-                            v-if="match.csid == 1 && get_corner_kick">
-                            <img :class="['live-icon-btn']" :src='corner_icon' />
-                          </div>
-                          <!-- 此赛事支持提前结算 -->
-                          <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
-                            <img :src="mearlys_icon_app" alt="">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    
                   </div>
                   <!--  -->
                   <div class="right-content-style">
@@ -484,7 +452,7 @@ export default {
 
     .match-content {
       width: 100%;
-      padding: 0 10px;
+      padding: 8px;
       border-top: 1px solid var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
       border-radius: 8px;
@@ -1141,7 +1109,7 @@ export default {
       }
 
       .team-title-container {
-        height: 0.32rem;
+        // height: 0.32rem;
         display: flex;
         justify-content: space-between;
         position: relative;
@@ -1152,9 +1120,10 @@ export default {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         word-break: break-all;
-
+        margin-bottom: 10px;
+    margin-top: 10px;
         &.column2 {
-          height: 0.35rem;
+          // height: 0.35rem;
         }
 
         &.simple {
@@ -1549,7 +1518,7 @@ export default {
 
     .date-time {
       position: relative;
-      top: -1px;
+      // top: -1px;
       font-size: 12px
     }
   }
@@ -1624,8 +1593,8 @@ export default {
     }
 
     .counting-down-up-container {
-      width: 0.7rem;
-      height: .14rem;
+      // width: 0.7rem;
+      // height: .14rem;
 
       &.intermission {
         width: 0.57rem;
@@ -1641,7 +1610,7 @@ export default {
 
       :deep(.counting-down-wrap) {
         color: #AFB3C8 !important;
-        width: 150px !important;
+        // width: 150px !important;
 
         .counting {
           font-size: 11px;
@@ -1708,13 +1677,14 @@ export default {
   display: flex;
   height: auto;
   align-items: center;
-
+  // TODO: 待定
+  // margin-left: 8px;
   .count_span {
-    height: 0.11rem;
+    // height: 0.11rem;
     display: flex;
     align-items: flex-end;
     margin-right: 0.04rem;
-    top: 3px;
+    // top: 3px;
     position: relative;
   }
 

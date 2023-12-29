@@ -575,10 +575,11 @@
   // }
 
   .wonderful {
-    background: #fff;
+    background: var(--q-gb-bg-c-23);
     border-radius: 8px;
     margin: 8px 5px;
     position: relative;
+    color: var(--q-analysis-text-color-20);
     .wonderful-header {
       padding: 5px 8px;
       font-size: 16px;
