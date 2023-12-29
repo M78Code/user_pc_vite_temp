@@ -33,10 +33,10 @@ export default {
     }
   },
   watch: {
-    // 赛马详情，不显示排行榜
+    // 赛马类的详情，不显示排行榜，只展示历史战绩
     "current_match.csid": {
       handler(new_csid){
-        if(new_csid == "1011"){
+        if(new_csid && (new_csid !== "1001" && new_csid !== "1004")){
           this.tab_list = [
           { label_i18n_key: 'virtual_sports.match_detail.bet', id: 2, name: 'bet' },
           { label_i18n_key: 'virtual_sports.match_detail.historical_results', id: 1, name: 'rank' },
