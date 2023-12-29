@@ -37,12 +37,12 @@
           <q-img
             v-if="['result_details', 'match_result'].includes($route.name)"
             style="width: 0.17rem;height: 0.17rem;margin-top:-8px;"
-            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick_red.svg`"
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/corner_kick_red.svg`"
           />
           <q-img 
             v-else
             style="width: 0.17rem;height: 0.17rem;margin-top:-8px;"  
-            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`" 
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick_red.svg`" 
           />
         </template>
         <span v-else><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`" ></q-img></span>
