@@ -466,6 +466,11 @@ export default {
       background: var(--q-gb-bg-c-15);
       padding: 0 0.1rem;
     }
+    &.collapsed{
+      .league{
+        border-bottom: none;
+      }
+    }
   }
 
   &.started_and_un_started {
@@ -728,7 +733,7 @@ export default {
 
   /* **************联赛展示********************** -S*/
   .league {
-    height: 0.26rem;
+    height: 23px;
     border-radius: 0.08rem 0.08rem 0 0;
     // padding: 0 0.1rem;
     background-color: var(--q-gb-bg-c-18);
