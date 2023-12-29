@@ -1,8 +1,10 @@
 import { watch, computed, ref } from "vue";
-import { useRoute } from "vue-router";
 import { MenuData } from 'src/output'
 import PageSourceData from "src/core/page-source/page-source.js";
+import { useRoute } from "vue-router"
+
 const page_source = ref(PageSourceData.page_source) // 当前页面来源
+
 
 const { menu_type, update_time } =  MenuData;
 //是否 滚球
@@ -52,7 +54,9 @@ const is_collect = computed(() => {
 
 //是否 详情页 用途： 赛事列表、热门、详情 引入赛事列表组件
 const is_detail = computed(() => {
-    return page_source.value === 'detail_match_list';
+    const route = useRoute()
+    let is_ = page_source.value === 'detail_match_list' || route.name == 'details' || route.name == 'category';
+    return is_
 });
 
 const footer_menu_id = ''
