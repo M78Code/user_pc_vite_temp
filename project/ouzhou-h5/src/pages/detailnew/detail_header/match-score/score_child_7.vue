@@ -102,9 +102,12 @@ watch(props.detail_data, (newValue, oldValue) => {
 }
 
 .font-style {
-    font-size: 0.12rem;
     color: var(--q-gb-t-c-3);
     letter-spacing: 0;
+    font:{
+        size: .14rem;
+        weight: bold;
+    }
 }
 
 .activeText {

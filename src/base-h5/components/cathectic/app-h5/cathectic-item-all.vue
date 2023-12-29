@@ -10,6 +10,7 @@
     <template v-else>
       <scroll ref="myScroll" :on-pull="onPull">
       <template v-if="!lodash.isEmpty(BetRecordClass.list_data)">
+        <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
         <!-- 订单内容 -->
         <div v-for="(value, name, index) in BetRecordClass.list_data" :key="index" class="cathectic-list">
           <q-slide-transition>
