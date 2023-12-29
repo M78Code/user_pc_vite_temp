@@ -631,32 +631,36 @@ export default {
      *@return {Undefined} undefined
      */
     get_match_result(){
+      this.is_loading = true;
       let params = {
         mid: this.$route.query.mid || this.mid,
         mcid: this.get_details_item,
         cuid: this.get_uid, // userId或者uuid
       }
       // 传值赛事id: mid
-      api_common.get_virtual_matchResult(params).then( res => {
-        this.is_loading = false;
-        if(!res.data || res.data.length == 0){
-          this.is_no_data = true;
-          this.matchInfoCtr.setList([]);
-          this.set_detail_data_storage(params,'');
-          return;
+      axios_api_loop({
+        axios_api:api_common.get_virtual_matchResult,
+        params,
+        error_codes: ["0401038"], //此状态码会重新循环执行一次
+        fun_then:(res)=>{
+          if(!res.data || res.data.length == 0){
+            this.is_no_data = true;
+            this.matchInfoCtr.setList([]);
+            this.set_detail_data_storage(params,'');
+            return;
+          }
+          this.is_no_data = false;
+          let result_list = lodash.get(res, 'data');
+          // 虚拟体育title字段增加
+          this.vir_add_title(result_list)
+          let result_ = lodash.cloneDeep(result_list);
+          this.matchInfoCtr.setList(result_);
+        },
+        fun_finally:()=>{
+          this.is_loading = false;
         }
-        this.is_no_data = false;
-
-        let result_list = lodash.get(res, 'data');
-        // 虚拟体育title字段增加
-        this.vir_add_title(result_list)
-        let result_ = lodash.cloneDeep(result_list);
-        this.matchInfoCtr.setList(result_);
-      }).catch( err=> {
-        console.error(err);
       })
     },
-
     triggle_tabs_update(){
       useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
     },
