@@ -124,7 +124,7 @@ const set_bet_is_accept = () => {
 <style scoped lang="scss">
 .bet-menu-wrap {
   background: var(--q-gb-bg-c-11);
-  border-right: 1px solid var(--q-gb-bg-c-2);
+  border-right: 1px solid var(--q-gb-bg-c-9);
   .bet-total-hr {
       height: 0.5px;
       background: #E4EAFF;;

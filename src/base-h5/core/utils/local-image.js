@@ -141,6 +141,10 @@ export const app_token_center = compute_local_project_file_path('/image/login/ce
 export const friendly_reminder_zh = compute_local_project_file_path('/image/common/friendly_reminder_zh.jpg')
 export const friendly_reminder_en = compute_local_project_file_path('/image/common/friendly_reminder_en.jpg')
 
+// 球队红蓝图标
+export const team_mhlu_url_app_h5 = compute_local_project_file_path('/image/common/mhlu.png')
+export const team_malu_url_app_h5 = compute_local_project_file_path('/image/common/malu.png')
+
 //弹出框菜单图片
 export const popup_menu = {
   refesh: compute_local_project_file_path('/image/menu/refesh.svg'),

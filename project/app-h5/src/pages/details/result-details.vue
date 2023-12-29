@@ -99,7 +99,7 @@ const get_current_menu = computed(() =>{
   return ""
 })
 const get_menu_type = computed(() =>{
-  return MenuData.get_menu_type() 
+  return MenuData.get_results_type() ==1 
 })
 const get_detail_data = computed(() =>{
   return ""
@@ -207,7 +207,7 @@ const get_match_detail_info = () => {
     mid: mid,
     type: 1,
     cuid: UserCtr.uid, // userId或者uuid
-    isESport: MenuData.get_results_type() ==1  ? 1 : null
+    isESport: get_menu_type.value  ? 1 : null
   }
   api_common.get_matchResultDetail_MatchInfo( params ).then(({ data,code }) => {
     // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
@@ -253,7 +253,9 @@ const get_match_list = (params) => {
       math_list_data.value = store_data.list;
     }
   }
-  if(MenuData.get_results_type() ==1 && [100,101,102,103,104].includes(+get_detail_data.csid)){
+  debugger
+  console.log();
+  if(get_menu_type.value && [100,101,102,103,104].includes(+result_detail_data.value?.csid)){
     params.isESport = 1
   }else{
     params.isESport = null

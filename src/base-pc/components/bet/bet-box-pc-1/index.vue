@@ -52,7 +52,6 @@
         {{ i18n_t('bet.merge_info') }}
       </div>
     </q-tooltip>
-
   </div>
 </template>
 

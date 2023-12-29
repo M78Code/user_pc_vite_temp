@@ -141,6 +141,7 @@ export default defineComponent({
   font-size: 0.16rem;
   letter-spacing: 0;
   text-align: center;
+  color: var(--q-gb-t-c-18);
 }
 
 /*************** 赔率结束 *************** -E*/

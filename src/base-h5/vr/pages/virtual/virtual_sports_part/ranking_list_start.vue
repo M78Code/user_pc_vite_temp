@@ -4,7 +4,7 @@
  * @Description: 赛狗类 排行榜页面  只需要传个 mid 赛事id进来
 -->
 <template>
-  <div style="height: 0.08rem; width: 100vw; background-color: #F2F2F6;"></div>
+  <!-- <div style="height: 0.08rem; width: 100vw; background-color: #F2F2F6;"></div> -->
   <div class="ranking_list_satrt">
     <template v-if="!no_data">
       <!-- <span class="navigation-title">{{ i18n_t('virtual_sports.leaderboard') }}</span> -->
@@ -158,8 +158,8 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 0.08rem;
-  background-color: #fff;
+  // margin-top: 0.08rem;
+  background-color: var(--q-gb-bg-c-23);
 
   .navigation-title {
     font-size: 0.14rem;
@@ -237,7 +237,7 @@ export default {
         display: flex;
         flex-direction: row;
         align-items: center;
-        color: #303442;
+        color: var(--q-gb-t-c-18);
         font-size: 0.12rem;
         font-weight: 400;
 
@@ -287,7 +287,7 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: #F2F2F6;
+      background-color: var(--q-gb-bg-c-28);
       border-radius: 0.08rem;
 
       padding: 0.01rem 0.1rem;
@@ -303,7 +303,7 @@ export default {
         .right-item-label{
           display: block;
           width: 0.48rem;
-          color: #303442;
+          color: var(--q-gb-t-c-18);
           font-weight: 400;
           font-size: 0.12rem;
           font-family: PingFang SC;
@@ -325,7 +325,7 @@ export default {
 
           .rate_percent{
             font-weight: 500;
-            color: #7981A4;
+            color: var(--q-gb-t-c-19);
             margin-left: 0.08rem;
           }
 
