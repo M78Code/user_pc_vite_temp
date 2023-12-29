@@ -43,6 +43,7 @@
                 :item_data="data_i||{}"
                 :title="data_i.title"
                 :csid="match_item.csid"
+                :teams="match_item.teams"
               />
             </div>
           </div>
@@ -597,7 +598,7 @@ export default {
         margin-top: 0.1rem;
         span {
           font-size: 0.12rem;
-          color: var(--q-gb-bg-c-8);
+          color: var(--q-gb-t-c-18);
         }
         span + span {
           font-size: 0.1rem;

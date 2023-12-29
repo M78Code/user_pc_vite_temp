@@ -174,8 +174,8 @@ export default {
       left: 0;
       top: 0;
       transition: top 0.4s;
-      border-radius: 4px;
-      background: var(--q-gb-bg-c-15);
+      border-radius: 4px 0px 0px 4px;
+      background: var(--q-gb-bg-c-28);
 
       // &::after {
       //   content: '';
@@ -242,10 +242,10 @@ export default {
   font-size: 0.16rem;
   letter-spacing: 0;
   border-radius: 0 4px 4px 0;
-  border-radius: 4px;
-  background: var(--q-gb-bg-c-15);
+  border-radius: 0px 4px 4px 0;
+  background: var(--q-gb-bg-c-28);
   font-weight: 700;
-  color: var(--q-gb-t-c-20);
+  color: var(--q-gb-t-c-18);
 
   // &::after {
   //   content: "";

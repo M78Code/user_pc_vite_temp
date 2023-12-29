@@ -30,7 +30,7 @@
 </template>
 
 <script setup> 
-import { reactive,onMounted,onUnmounted,ref } from "vue"
+import { reactive,onMounted,onUnmounted,ref, computed } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -58,6 +58,7 @@ const ref_data = reactive({
     show_quick: false, // 显示快捷金额
     emit_lsit: {},
     show_money_span:false,
+    add_num: {} // 快捷金额
 })
 
 const tooltipbox = ref(false)
@@ -136,6 +137,34 @@ const set_special_series = (money,ty_id) => {
   BetData.set_bet_amount(ref_data.money)
   BetData.set_bet_keyboard_config(props.items)
   emits("input_click",event)
+  add_or_remove_active(evnet)
+}
+
+// 获取商户配置的 快捷金额
+const addnum = computed(()=> {
+  if (BetData.is_bet_single) {
+    const { qon,qtw,qth,qfo,qfi } = lodash.get(UserCtr, 'user_info.cvo.single', { qon: 200, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })  
+    ref_data.add_num = {qon,qtw,qth,qfo,qfi} 
+    return ref_data.add_num
+  } else {
+    const {qtw,qth,qfo,qfi,qsi } = lodash.get(UserCtr, 'user_info.cvo.series', {  qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
+    ref_data.add_num = { qtw,qth,qfo,qfi,qsi}
+    return ref_data.add_num
+  }
+})
+
+// 添加或去掉active选中框
+const add_or_remove_active = (e) => {
+  let dom = document.querySelectorAll('.nonebox4-fourth-a-son');
+  for(let i = 0; i < dom.length; i++) {
+    dom[i].classList.remove('active')
+  }
+  // 选中输入框时判断当前金额是否是快捷金额中的其中一个，是就在对应的快捷金额上加选中状态
+  let flag = Object.values(addnum.value).some((item) => item === (+e.target.innerText));
+  if(flag) {
+    let index = Object.values(addnum.value).findIndex((item) => item === (+e.target.innerText));
+    dom[index].classList.add('active')
+  }
 }
 
 // 弹出规则

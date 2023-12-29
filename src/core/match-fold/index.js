@@ -209,6 +209,12 @@ class MatchFold {
   clear_fold_info () {
     this.clear_ball_seed_csid_fold_obj()
     this.clear_match_mid_fold_obj()
+    //全部联赛 折叠
+    this.set_all_csid_fold_status(true)
+    //已开赛 折叠
+    this.progress_csid_fold_obj.value={}
+    //未开赛折叠
+    this.not_begin_csid_fold_obj.value={}
   }
   /**
    * 是否显示次要玩法

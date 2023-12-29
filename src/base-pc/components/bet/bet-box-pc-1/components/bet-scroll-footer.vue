@@ -18,40 +18,41 @@
     </div>
     
     <!-- 错误信息 -->
-    <div class="bet-message" v-if="BetViewDataClass.error_message">
-      <div v-if="BetViewDataClass.bet_order_status == 4"  class="w-100 f-c-c bet-title" :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
+    <div class="bet-message" >
+      <div v-show="BetViewDataClass.error_message" class="w-100 f-c-c bet-title" :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
           {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
       </div>
-      <div v-if="BetViewDataClass.bet_order_status == 3" class="bet-success-order">{{i18n_t("bet.bet_order_info2")}}</div>
     </div>
    
-
-    <div class="full-width cursor-pointer bet-submit">
+    <div class="bet-btn-wrap">
+      <div class="full-width cursor-pointer bet-submit">
      
-      <div @click.stop="submit_handle('submit')" v-if="BetViewDataClass.bet_order_status == 1">
-        <!-- 投注 -->
-        {{ i18n_t('common.betting') }}
+        <div @click.stop="submit_handle('submit')" v-if="BetViewDataClass.bet_order_status == 1">
+          <!-- 投注 -->
+          {{ i18n_t('common.betting') }}
+        </div>
+        <div v-else  @click.stop="cancel_handle()" >
+          <!--确定按钮-->
+          {{ i18n_t('common.confirm') }}
+        </div>
       </div>
-      <div v-else  @click.stop="cancel_handle()" >
-        <!--确定按钮-->
-        {{ i18n_t('common.confirm') }}
-      </div>
-    </div>
 
-    <div class="full-width cursor-pointer bet-delete-all" @click.stop="cancel_handle" v-if="BetViewDataClass.bet_order_status == 1">
-      <!-- 取消投注 -->
-      {{ i18n_t('bet.bet_cancel') }}
+      <div class="full-width cursor-pointer bet-delete-all" @click.stop="cancel_handle" v-if="BetViewDataClass.bet_order_status == 1">
+        <!-- 取消投注 -->
+        {{ i18n_t('bet.bet_cancel') }}
+      </div>
+      <div class="full-width cursor-pointer bet-delete-all" @click="set_retain_selection" v-else>
+        <!-- 保留选项 -->
+        {{ i18n_t('bet.save_item') }}
+      </div>
     </div>
-    <div class="full-width cursor-pointer bet-delete-all" @click="set_retain_selection" v-else>
-      <!-- 保留选项 -->
-      {{ i18n_t('bet.save_item') }}
-    </div>
+    
     
 
 
     <div class="bet-footer-check">
       <span class="check-box" >
-        <span class="check-wrap relative-position" :class="{'active':BetData.bet_is_accept}" @click="set_bet_is_accept()"/>
+        <span class="check-wrap relative-position" :class="{'active':!BetData.bet_is_accept}" @click="set_bet_is_accept()"/>
         <span>{{i18n_t('bet.bet_auto_msg_1')}}</span>
       </span>
     </div>
@@ -122,9 +123,8 @@ const set_bet_is_accept = () => {
 
 <style scoped lang="scss">
 .bet-menu-wrap {
-  padding: 10px 10px 20px;
   background: var(--q-gb-bg-c-11);
-  border-right: 1px solid var(--q-gb-bg-c-2);
+  border-right: 1px solid var(--q-gb-bg-c-9);
   .bet-total-hr {
       height: 0.5px;
       background: #E4EAFF;;
@@ -186,16 +186,24 @@ const set_bet_is_accept = () => {
     background: transparent;
     font-size: 12px;
     margin:-15px 0 15px 0;
+    padding:0 5px;
     .bet-success {
-      line-height: 30px;
-    }
-    .bet-success-order {
       background: rgba(100,194,88,0.2);
       color: #64c258;
       line-height: 30px;
       font-size: 12px;
       border-radius: 0px 0px 6px 6px;
     }
+    // .bet-success-order {
+    //   background: rgba(100,194,88,0.2);
+    //   color: #64c258;
+    //   line-height: 30px;
+    //   font-size: 12px;
+    //   border-radius: 0px 0px 6px 6px;
+    // }
+  }
+  .bet-btn-wrap {
+    padding:0 10px;
   }
 }
 .check-box {
