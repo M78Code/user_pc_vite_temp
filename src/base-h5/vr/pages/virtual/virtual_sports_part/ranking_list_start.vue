@@ -11,7 +11,7 @@
       <div class="ranking-item hairline-border" v-for="(item, index) in ranking_data" :key="index">
         <div class="ranking-item-left">
           <div class="left-item ellipsis">
-            <span class="virtual-num" :class="get_rank_background(item.number, get_curr_sub_menu_type)"></span>
+            <span class="virtual-num" :class="`match-horse${index+1}`"></span>
             <span class="ellipsis">{{ item.name }}</span>
           </div>
         </div>
@@ -110,7 +110,7 @@ export default {
       if([1009].includes(+sportId)){
         virtual_sports_1 = `dirt_motorcycle${rank_i}`
       }
-      return `match-${s_type}${rank_i} ${virtual_sports_1}`;
+      return `match-horse${virtual_sports_1}`;
     },
     async get_list() {
       try {
