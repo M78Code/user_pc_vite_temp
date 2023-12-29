@@ -4,7 +4,7 @@
  * @Description: 当前选中的赛事的阶段组件包含视频,进行中,完赛
 -->
 <template>
-  <div class="virtual-sports-stage" :data-mid="'mid-'+current_match.mid" :data-mstatus="'status-'+m_status">
+  <div class="virtual-sports-stage" :data-mid="'mid-'+current_match.mid" :data-mstatus="'status-'+m_status">      
     <div class="banner" :class="{
       horse:sub_menu_type == 1011,
       dog: [1002, 1010, 1009].includes(sub_menu_type),
@@ -15,7 +15,7 @@
       <loading v-show="virtual_match_list_data_loading" class="wrapper-loading-c" />
 
       <!-- 0:代表开赛之前倒计时 -->
-      <div v-if="!is_pre_counting_end && (!m_status || m_status == 0)" class="row justify-center items-center timetop">
+      <div v-if="(!is_pre_counting_end) && (!m_status || m_status == 0)" class="row justify-center items-center timetop">
         <virtual-sports-timer
           :title="current_match.no"
           :ms="start_now_sub"
@@ -147,7 +147,7 @@
       </div>
     </div>
     <!-- 虚拟篮球列表 v-if="basketball_status == 0 && sub_menu_type == 1004 && (match_started && !is_video_playing || m_status == 2 || is_pre_counting_end)" /> -->
-    <dateMatchList :current_match="current_match" :v_m_status="m_status"
+    <dateMatchList @update_line_width="set_line_width" :current_match="current_match" :v_m_status="m_status"
       :virtual_match_list="virtual_match_list" :source="source"
       :is_pre_counting_end="is_pre_counting_end" :match_status="current_batch.mmp"
       v-if="basketball_status == 0 && sub_menu_type == 1004 && (match_started && !is_video_playing || m_status == 2 || is_pre_counting_end)" />
@@ -237,6 +237,8 @@ export default {
       match_started:false,
       // 篮球早盘倒计时结束
       is_pre_counting_end:false,
+      //子组件进度条宽度
+      round_line_width: 0
     }
   },
   mounted(){
@@ -273,6 +275,7 @@ export default {
     //   'set_settle_dialog_bool',
     //   'set_is_show_menu'
     // ]),
+    set_line_width(width){ this.round_line_width = width},
     set_settle_dialog_bool(){},
     set_is_show_menu(data){VR_CTR.set_is_show_menu(data)},
     set_prev_v_sports_params(data){VR_CTR.set_prev_v_sports_params(data)},

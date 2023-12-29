@@ -93,23 +93,25 @@
         position: relative;
         font-weight: 500;
         font-family: 'PingFang SC';
+        background: var(--q-gb-bd-c-5);
+        padding:0.02rem;
+         border-radius: 25px;  
         ul{
             width: 100%;
             height: 100%;
-            border-radius: 25px;    
-            background: var(--q-gb-bg-c-23);
             display: flex;
             font-size: 12px;
             font-weight: 500;
+            border-radius: 0.25rem;
             li{
                 flex: 1;
                 text-align: center;
-                // color: var(--q-gb-bd-c-4);
-                margin: 0.02rem;
                 color: var(--q-gb-t-c-19);
                 line-height: 0.2rem;
+                width: 50%;
+                
                 &.active{
-                    border-radius: 25px;
+                    border-radius: 0.25rem;
                     // background:var(--q-gb-bg-c-11); 
                     color: var(--q-gb-t-c-23);
                     background: var(--q-gb-bg-c-28);
