@@ -95,6 +95,7 @@ export default {
       // 上次请求的虚拟体育赛马赛事id
       pre_params_mid:'',
       created_init_event:false,
+      MatchDataWarehouseInstance
     }
   },
 
@@ -140,11 +141,13 @@ export default {
     get_is_show_details_analyse(){},
     // 置顶列表
     match_list_new() {
-      return this.matchInfoCtr.listSortNew()
+      return MatchDataWarehouseInstance.listSortNew(this.current_match.mid);
+      // return this.matchInfoCtr.listSortNew()
     },
     // 非置顶列表
     match_list_normal() {
-      return this.matchInfoCtr.listSortNormal()
+      return MatchDataWarehouseInstance.listSortNew(this.current_match.mid);
+      // return this.matchInfoCtr.listSortNormal()
     }
   },
 

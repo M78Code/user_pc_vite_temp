@@ -290,7 +290,7 @@
               <!-- 展示三行的不展示比分 -->
               <template v-if="![1, 4, 11, 14, 15, 16].includes(+match.csid)">
                 <div class="score-content">
-                  <ScoreList :class="[match.csid == 7 && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
+                  <ScoreList :class="[match.csid == 8 && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
                 </div>
               </template>
             </div>
@@ -1438,11 +1438,18 @@ export default {
     :deep(.scroll-container-w){
       .score-fle-container-1{
         display: block;
-        width: 1.06rem;
+        width: 1.18rem;
         text-overflow:ellipsis;
         white-space:nowrap;
         overflow:hidden;
         text-align:right;
+        padding-right: .32rem;
+        .items-start {
+          &:last-child {
+            position: absolute;
+            right: .02rem;
+          }
+        }
       }
     }
   }

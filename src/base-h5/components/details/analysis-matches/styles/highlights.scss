@@ -691,7 +691,7 @@
             font-style: normal;
             font-weight: 700;
             text-overflow: ellipsis;
-            color: #303442;
+            color: var(--q-analysis-bd-color-3);
             padding: 2px 0;
             &:nth-child(2) {
               text-align: right;

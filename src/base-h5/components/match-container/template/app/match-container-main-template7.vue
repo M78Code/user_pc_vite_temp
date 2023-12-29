@@ -111,11 +111,11 @@
 
             <!--玩法数量-->
             <div class="right-score">
-              <!-- <template v-if="match.csid != 1">
+              <template v-if="match.csid != 1">
                 <div class="score-content">
                   <ScoreList :main_source="main_source" :match="match_of_list" />
                 </div>
-              </template> -->
+              </template>
             </div>
           </div>
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
@@ -229,39 +229,7 @@
                       </div>
 
                     </div>
-                    <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
-                    <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
-                      v-show="footer_menu_id != 114">
-                      <div class="r row no-wrap">
-                        <div class="go-container-w flex no-wrap new-standard">
-                          <!-- 直播 主播 视频 动画  icon 栏目   -->
-                          <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
-                          <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
-                            <img :class="['live-icon-btn', { disabled: !media_button_state_obj.animationUrl }]"
-                              :src='animation_icon' />
-                          </div>
-                          <!-- 视频 -->
-                          <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
-                            <img :class="['live-icon-btn', { disabled: !media_button_state_obj.muUrl }]"
-                              :src='video_icon' />
-                          </div>
-                          <!-- mng 是否中立场   1:是中立场，0:非中立场-->
-                          <div class="live-i-b-wrap v-mode-span row items-center"
-                            v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
-                            <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
-                          </div>
-                          <!-- 角球 -->
-                          <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle"
-                            v-if="match.csid == 1 && get_corner_kick">
-                            <img :class="['live-icon-btn']" :src='corner_icon' />
-                          </div>
-                          <!-- 此赛事支持提前结算 -->
-                          <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
-                            <img :src="mearlys_icon_app" alt="">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    
                   </div>
                   <!--  -->
                   <div class="right-content-style">
@@ -275,11 +243,11 @@
 
           </div>
 
-          <template v-if="match.csid != 1">
+          <!-- <template v-if="match.csid != 1">
             <div class="score-content-new">
               <ScoreList :main_source="main_source" :match="match_of_list" />
             </div>
-          </template> 
+          </template>  -->
         </div>
 
         <!-- </q-slide-transition> -->
@@ -484,7 +452,7 @@ export default {
 
     .match-content {
       width: 100%;
-      padding: 0 10px;
+      padding: 8px;
       border-top: 1px solid var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
       border-radius: 8px;
@@ -546,6 +514,7 @@ export default {
 
     &.hairline-border {
       border-radius: 0;
+      height: 56px;
     }
   }
 
@@ -1141,7 +1110,7 @@ export default {
       }
 
       .team-title-container {
-        height: 0.32rem;
+        // height: 0.32rem;
         display: flex;
         justify-content: space-between;
         position: relative;
@@ -1152,9 +1121,10 @@ export default {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         word-break: break-all;
-
+        margin-bottom: 10px;
+    margin-top: 10px;
         &.column2 {
-          height: 0.35rem;
+          // height: 0.35rem;
         }
 
         &.simple {
@@ -1308,7 +1278,8 @@ export default {
           right: 0.07rem;
           bottom: 0;
           font-weight: 600;
-
+          color: var(--q-gb-t-c-18);
+          display: none;
           &.simple {
             right: 0.08rem;
           }
@@ -1388,11 +1359,13 @@ export default {
   }
 }
 
-
+:deep(.odd-column-item) {
+  height: 56px;
+}
 :deep(.odd-list-wrap .standard-odd-l-w) {
   height: 0.7rem;
   .standard-odd-list {
-    height: 100%;
+    height: 100%!important;
   }
 }
 :deep(.odd-list-wrap.standard) {
@@ -1443,8 +1416,8 @@ export default {
     display: flex;
     align-items: center;
     // justify-content: space-between;
-    max-width: 200px;
-    overflow-x: scroll;
+    // max-width: 200px;
+    // overflow-x: scroll;
   }
 
   &.simple {
@@ -1549,7 +1522,7 @@ export default {
 
     .date-time {
       position: relative;
-      top: -1px;
+      // top: -1px;
       font-size: 12px
     }
   }
@@ -1588,8 +1561,8 @@ export default {
 
     .live-icon-btn,
     .live-icon-play-btn {
-      width: 0.18rem;
-      height: 0.14rem;
+      width: 18px;
+      height: 18px;
     }
 
     .neutral-icon-btn {
@@ -1624,8 +1597,8 @@ export default {
     }
 
     .counting-down-up-container {
-      width: 0.7rem;
-      height: .14rem;
+      // width: 0.7rem;
+      // height: .14rem;
 
       &.intermission {
         width: 0.57rem;
@@ -1641,7 +1614,7 @@ export default {
 
       :deep(.counting-down-wrap) {
         color: #AFB3C8 !important;
-        width: 150px !important;
+        // width: 150px !important;
 
         .counting {
           font-size: 11px;
@@ -1708,13 +1681,14 @@ export default {
   display: flex;
   height: auto;
   align-items: center;
-
+  // TODO: 待定
+  // margin-left: 8px;
   .count_span {
-    height: 0.11rem;
+    // height: 0.11rem;
     display: flex;
     align-items: flex-end;
     margin-right: 0.04rem;
-    top: 3px;
+    // top: 3px;
     position: relative;
   }
 

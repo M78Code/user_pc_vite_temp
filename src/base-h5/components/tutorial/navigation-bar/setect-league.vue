@@ -65,7 +65,6 @@ const search_val = ref('')
 //选中的值
 const select_list = ref([])
 //组件数据
-let matchRef = ref(null);
 let matchRefOld = ref(null);
 
 let rem_1 = (window.innerWidth * 100) / 375;
@@ -80,17 +79,15 @@ const emit = defineEmits(["search_fn","closedHandle"]);
  * @param {Array} select_list 选中的数据
  */
 const finishHandle = () => {
-  if (MenuData.get_sub_is_all()) {
-    select_list.value = matchRef.value.list.filter(v=>v.select)
-  } else {
     select_list.value = matchRefOld.value.list.filter(v=>v.select)
-  }
   //设置选中数据
   // 触发联赛选择完成事件
   useMittEmit(MITT_TYPES.EMIT_SELECT_LEAGUE_COMPLETE, {
     open: true,
     select_list: select_list.value,
   });
+    //设置选中数据
+  UserCtr.set_league_select_list(select_list,'amidithion')
   emit("closedHandle");
 };
 /**
