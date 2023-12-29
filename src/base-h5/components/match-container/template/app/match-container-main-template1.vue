@@ -502,7 +502,7 @@ export default {
         // border-radius: 0 0 0.08rem 0.08rem;
       }
       &.border-raduis{
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid var(--q-gb-bd-c-4);
         border-radius: 0 0 0.08rem 0.08rem;
       }
     }
@@ -1256,7 +1256,7 @@ export default {
             word-break: break-all;
             color: var(--q-gb-t-c-18);
             &.is-handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-34) !important;
             }
           }
         }
