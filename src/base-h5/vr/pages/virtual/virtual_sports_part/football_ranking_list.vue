@@ -116,7 +116,7 @@ export default {
 
   .col-label{
     font-size: 0.1rem;
-    color: #949AB6;
+    color: var(--q-gb-t-c-19);
   }
 
   .col1 {
@@ -182,7 +182,7 @@ export default {
     font-size: 0.13rem;
     height: 0.48rem;
     text-align: center;
-    border-bottom: 1px solid var(--q-gb-bd-c-19);
+    border-bottom: 1px solid var(--q-gb-bd-c-4);
 
     .rank-img img{
       width: 14px;
@@ -196,7 +196,7 @@ export default {
       justify-content: center;
       font-size: 0.12rem;
       font-weight: 500;
-      color: var(--q-gb-t-c-20);
+      color: var(--q-gb-t-c-18);
     }
 
     /*  .field{} */

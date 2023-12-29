@@ -1080,7 +1080,7 @@ export default {
       }
 
       .score-wrapper {
-        position: absolute;
+        // position: absolute;
         bottom: 2px;
 
         .score-section {
@@ -1386,6 +1386,17 @@ export default {
       }
     }
   }
+}
+
+
+:deep(.odd-list-wrap .standard-odd-l-w) {
+  height: 0.7rem;
+  .standard-odd-list {
+    height: 100%;
+  }
+}
+:deep(.odd-list-wrap.standard) {
+  height: auto!important;
 }
 
 .score-content {
@@ -1727,7 +1738,7 @@ export default {
 /* ********赛事容器相关********** -E*/
 
 .score-content-new {
-  padding: 4px 0;
+  padding: 6px 0;
   max-width: 200px;
   overflow-x: scroll;
 }
