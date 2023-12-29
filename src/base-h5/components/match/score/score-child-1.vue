@@ -37,12 +37,12 @@
           <q-img
             v-if="['result_details', 'match_result'].includes($route.name)"
             style="width: 0.17rem;height: 0.17rem;margin-top:-8px;"
-            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick_red.svg`"
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/corner_kick_red.svg`"
           />
           <q-img 
             v-else
             style="width: 0.17rem;height: 0.17rem;margin-top:-8px;"  
-            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`" 
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick_red.svg`" 
           />
         </template>
         <span v-else><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`" ></q-img></span>
@@ -163,6 +163,7 @@ export default {
      *@return {Array} 角球 红牌 黄牌数
      */
     initEvent_status(){
+     
       let msc = this.detail_data.msc;
       // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
       msc = lodash.sortBy( msc, (item) => {
@@ -179,12 +180,21 @@ export default {
           score_arr[2] = item.split("|")[1]
         }
       })
-      // 角球
-      this.red_flag = this.show_status(score_arr[0]) > 0 ? true: false;
+
+      // 复刻版的话角球，红牌，黄牌 都显示
+      const {PROJECT_NAME} = window.BUILDIN_CONFIG
+      if (PROJECT_NAME=='app-h5') {
+        this.red_flag = this.red_card = this.yellow_card = true
+      }else{
+       // 角球
+       this.red_flag = this.show_status(score_arr[0]) > 0 ? true: false;
       // 红牌
       this.red_card = this.show_status(score_arr[1]) > 0 ? true: false;
       // 黄牌
       this.yellow_card = this.show_status(score_arr[2]) > 0 ? true: false;
+      }
+
+     
       return score_arr;
     },
     /**

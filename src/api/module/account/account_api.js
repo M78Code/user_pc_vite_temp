@@ -60,6 +60,6 @@ export const get_set_user_language = (params, config, url='/user/setUserLanguage
 export const upload_tablet_comput = (params, config, url = "/tablet_comput/create") => http.post(`${prifix_url}${url}`, params, config);
 
 //查询当前是新系统还是旧系统
-export const get_UserVersion = (params, config={}, url="/yewu12/user/getUserVersion") => {
-  return http.get(`${prifix_url}${url}`, params, config);
+export const get_UserVersion = (params, config={}, url="/user/getUserVersion") => {
+  return http.get(`${prefix_user}${url}`, params, config);
 };

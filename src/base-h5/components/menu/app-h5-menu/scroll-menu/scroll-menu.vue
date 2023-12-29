@@ -25,7 +25,8 @@
                   </div>
                 </div>
                 <!-- v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000"  -->
-                <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi)" class="sport-match-count">
+                <!-- 电竞收藏  暂时隐藏数量 -->
+                <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi) && !([50000].includes(item.mi) && MenuData.is_esports())" class="sport-match-count">
                   {{ item.ct || 0 }}
                 </div>
               </div>
@@ -72,6 +73,7 @@ const scrollDataListNew = computed(()=> {
   //赛果 有数据 展示我的投注
   // if(MenuData.is_results() && props.scrollDataList?.length)return [...[{mi:"200",result_mi:"100",sport_id:"0",btn:1,ct:0,title:"我的投注"}],...props.scrollDataList];
   // if((MenuData.is_results() && !props.scrollDataList?.length)|| MenuData.is_mix())return props.scrollDataList;
+  //赛果 串关 电竞冠军 不显示收藏
   if(MenuData.is_results()|| MenuData.is_mix()||props.is_kemp_esports)return props.scrollDataList;
   return [...[{mi:50000,btn:1,ct:MenuData.collect_count.value,title:"收藏"}],...props.scrollDataList]
 })
@@ -80,6 +82,8 @@ const emits = defineEmits(['changeList','changeMenu'])
  * 二级菜单事件
 */
 function set_menu_lv2(item = {},event) {
+  //重置全部状态
+  MatchFold.set_all_csid_fold_status(false)
   // 重置折叠对象
   MatchFold.clear_fold_info()
   if (props.current_mi === item.mi) return
@@ -264,7 +268,7 @@ onUnmounted(()=>{
                 left: 0.37rem;
                 font-size: 0.1rem;
                 font-family: "Akrobat";
-                z-index: 20;
+                z-index: 50;
         }
         }
       }
