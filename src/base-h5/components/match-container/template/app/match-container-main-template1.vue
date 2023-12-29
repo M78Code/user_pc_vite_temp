@@ -79,7 +79,7 @@
         </div>
         <!-- 卡片主内容 -->
         <!-- <q-slide-transition> -->
-        <div :class="['match-content', { 'collapsed': collapsed, 'border-button': !match.is_show_league }]" v-if="collapsed">
+        <div :class="['match-content', { 'collapsed': collapsed, 'border-raduis': is_show_border_raduis }]" v-if="collapsed">
           <div class="match-content-line" v-if="!match.is_show_league"></div>
           <!--标准版 赔率标题栏-->
           <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
@@ -196,15 +196,9 @@
                         <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
                           v-show="set_serving_side(match_of_list, 'home')">
                         </span>
-                        <template v-if="home_red_score || home_yellow_score">
+                        <template v-if="home_red_score">
                           <!-- 红牌 -->
-                          <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
-                            {{ home_red_score }}
-                          </span>
-                          <!-- 黄牌 -->
-                          <!-- <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
-                            {{ home_yellow_score }}
-                          </span> -->
+                          <span class='score-punish' :class="{ flash: is_show_home_red && !is_results }"> {{ home_red_score }} </span>
                         </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
@@ -237,15 +231,9 @@
                         <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
                           v-show="set_serving_side(match_of_list, 'away')">
                         </span>
-                        <template v-if="home_red_score || home_yellow_score">
+                        <template v-if="away_red_score">
                           <!-- 红牌 -->
-                          <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
-                            {{ away_red_score }}
-                          </span>
-                          <!-- 黄牌 -->
-                          <!-- <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
-                            {{ away_yellow_score }}
-                          </span> -->
+                          <span class='score-punish red' :class="{ flash: is_show_away_red && !is_results}"> {{ away_red_score }}</span>
                         </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
@@ -504,16 +492,18 @@ export default {
     .match-content{
       width: 100%;
       padding: 0 10px;
-      border-top: 1px solid  var(--q-gb-bd-c-4);
+      // border-top: 1px solid  var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
       //border-radius: 0 0 8px 8px;
       border: 1px solid var(--q-gb-bd-c-15);
+      border-bottom-color: var(--q-gb-bg-c-18);
       &.collapsed{
         border-top: none;
         // border-radius: 0 0 0.08rem 0.08rem;
       }
-      &.border-button{
-        // border-radius: 0 0 0.08rem 0.08rem;
+      &.border-raduis{
+        border-bottom: 1px solid #fff;
+        border-radius: 0 0 0.08rem 0.08rem;
       }
     }
     > .match-indent{
@@ -1582,6 +1572,10 @@ export default {
       position: relative;
       top: 1px;
       font-size: 12px
+    }
+    .coming-soon{
+      position: relative;
+      top: 2px;
     }
   }
 

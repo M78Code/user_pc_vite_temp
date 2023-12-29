@@ -9,7 +9,7 @@
     <!-- <div class="cathectic-ref_data.appoint"
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
-    <div style="display:none">{{ BetData.bet_data_class_version }}</div>
+    <div v-show="false">{{ BetData.bet_data_class_version }}</div>
     <q-card-section>
       <!--不是冠军-->
       <div class="row" v-if="item.matchType != 3">

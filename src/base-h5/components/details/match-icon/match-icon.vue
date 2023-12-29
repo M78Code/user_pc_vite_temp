@@ -327,11 +327,11 @@ const icon_click_animationUrl = () => {
 //   () => get_play_video,
 //   (new_) => {
 //     if (new_ && (props.which == 'muUrl' || is_in_play.value == 'muUrl')) {
-//           icon_click_muUrl()
+//           (props.icon_class== 'shipin') && icon_click_muUrl()
 //         } else if (is_in_play.value == 'animationUrl') {
-//           icon_click_animationUrl()
+//           (props.icon_class== 'donghua') icon_click_animationUrl()
 //         } else if (is_in_play.value == 'lvs') {
-//           icon_click_lvs('lvs')
+//           (props.icon_class== 'lvs') icon_click_lvs('lvs')
 //         }
 //   },
 //   {

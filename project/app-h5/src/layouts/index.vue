@@ -51,7 +51,7 @@
 
 
       <!-- 串关投注 只有串关/电竞/VR 才展示--> 
-      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single&&(is_mix||is_esports||is_vr) && BetData.bet_s_list.length">
+      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single && (is_mix||is_esports||is_vr|| is_detail_category()) && BetData.bet_s_list.length">
           <div class="chain_bet" @click="show_chain_bet" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
             <span class="count">{{BetData.bet_s_list.length}}</span>
           </div>
@@ -78,7 +78,7 @@ import {
 } from "vue";
 import StandardEdition from 'src/base-h5/components/standard-edition/index.vue'
 import { useMittOn, MITT_TYPES, useMittEmit, i18n_t, MenuData } from "src/output/index.js";
-import {is_mix,is_esports,is_vr} from "src/base-h5/mixin/menu.js"
+import {is_mix,is_esports,is_vr, is_detail_category} from "src/base-h5/mixin/menu.js"
 import UserCtr from "src/core/user-config/user-ctr.js"; 
 import { Tabbar } from 'src/base-h5/components/menu/app-h5-menu/index'
 import { BetBoxWapper } from "src/base-h5/components/bet";
@@ -265,7 +265,7 @@ const stickyAside = (x) => {
   }
 }
 
-onMounted(async () => {
+onMounted(  () => {
     //设置当前默认版本
   set_standard_edition_fun()
   //获取当前版本默认值
@@ -285,9 +285,16 @@ onMounted(async () => {
     // 隐藏loading动画 
     useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,0);
   })
-  //当前是新系统还是旧系统
-  await api_account.get_UserVersion({h5FrontVersion:'1'})
+  // 上报用户当前使用的版本 
+  shangbao_version()
 });
+
+// 上报用户当前使用的版本 
+const shangbao_version= async ()=>{
+ //当前是新系统还是旧系统
+ await api_account.get_UserVersion({h5FrontVersion:'1'})
+
+}
 
 const mitt_list = [
   // 监听设置框状态
