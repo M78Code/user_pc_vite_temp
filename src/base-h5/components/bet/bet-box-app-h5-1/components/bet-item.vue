@@ -15,7 +15,13 @@
             ]">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c font14 font500">
-                    <span class="text-flow-none">{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></span> 
+                    <!-- vr 单独处理 -->
+                    <div class="text-flow-none" v-if="items.bet_type== 'vr_bet'">
+                        <div v-for="page in items.handicap" :key="page" class="f-s-c">
+                            <span class="virtual-count" :class="`virtual-num-${page.hv} csid-${items.sportId}`" ></span> {{page.text}} 
+                        </div>
+                    </div>
+                    <div class="text-flow-none" v-else>{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></div> 
                 </div>
                 <div class="my-left">
                     <div class="w-100 handicap">
@@ -95,6 +101,7 @@ const set_delete = () => {
 
 <style scoped lang="scss">
 @import "../css/bet.scss";
+@import "../css/vr-bet.scss";
 </style>
 
 <style scoped lang="scss">

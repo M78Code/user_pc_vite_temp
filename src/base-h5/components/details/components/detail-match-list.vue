@@ -5,7 +5,8 @@
 -->
 <template>
 <div class="choose-carefully-wrapper" :style="{height:container_height=='auto'?'auto':`${container_height}px`}">
-  <template v-if="match_list?.length > 0">
+  
+  <template v-if="is_empty">
     <div v-for="(item, index) in match_list" :index="index" :key="item.mid" :class="['s-w-item']">
       <div class="s-w-i-inner" v-if="item">
         <MatchContainerMainTemplate7
@@ -44,6 +45,8 @@ export default defineComponent({
   setup(props, even) {
     const container_height = ref(0)
     const match_list = ref([])
+    //是否存在数据
+    const is_empty = ref(true)
     onMounted(async () => {
       PageSourceData.set_page_source("match_result");
       get_match_list()
@@ -58,9 +61,14 @@ export default defineComponent({
     }
     const get_match_list = async()=>{
        match_list.value = await MatchMeta.get_details_result_match()
+       if (match_list.value?.length > 0){
+        is_empty.value = true
+       }else{
+        is_empty.value = false
+       }
     }
     return {
-      container_height, get_match_item, match_list
+      container_height, get_match_item, match_list,is_empty
     }
   }
 })
