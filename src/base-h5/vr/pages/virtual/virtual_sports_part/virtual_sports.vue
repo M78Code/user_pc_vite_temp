@@ -713,10 +713,10 @@ export default {
     },
     // 赛马类第一次切换菜单时，获取详情赔率
     current_batch(){
-      if(this.current_batch?.no && ![1001,1004].includes(this.sub_menu_type)){
-        // 后期等赛马类的列表接口加上赔率后，可注释掉
-        this.get_detail_odds()
-      }
+      // if(this.current_batch?.no && ![1001,1004].includes(this.sub_menu_type)){
+      //   // 后期等赛马类的列表接口加上赔率后，可注释掉
+      //   this.get_detail_odds()
+      // }
     },
     current_sub_menu(){
       let prev_league_id = ''
