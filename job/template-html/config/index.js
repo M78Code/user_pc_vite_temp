@@ -6,6 +6,7 @@ let { PROJECT_NAME, IS_PC } = BUILD_VERSION_CONFIG;
  import app_h5_config from  "./mondule/app-h5.js"
  import ouzhou_h5_config from  "./mondule/ouzhou-h5.js"
  import ouzhou_pc_config from  "./mondule/ouzhou-pc.js"
+ import animation_page_config from  "./mondule/animation-page.js"
 import {default_all_placeholder_obj}from  "./config.js"
  
 
@@ -32,6 +33,7 @@ export const html_config=   {
      'app-h5':app_h5_config,
      'ouzhou-h5':ouzhou_h5_config,
      'ouzhou-pc':ouzhou_pc_config,
+     'animation-page':animation_page_config,
      'default-key':default_all_placeholder_obj
 }
 

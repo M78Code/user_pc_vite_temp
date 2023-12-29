@@ -1,11 +1,3 @@
-/*
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-05 20:37:45
- * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-11-29 14:37:40
- * @FilePath: \user-pc-vue3\src\api\module\matches_list\index.js
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 
 import { http } from "src/core/http/index.js";
 
