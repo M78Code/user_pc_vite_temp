@@ -344,7 +344,7 @@ export const msc_obj_arry = (msc) => {
  * @param {Integer} hpid 玩法id
  * @return {String} 比分格式为: (主队比分-客队比分)
  */
-export const calc_bifen = (msc, csid, ms, hpid) => {
+export const calc_bifen = (msc = [], csid, ms, hpid) => {
   //只有足球滚球展示基准分
   if (!msc[0] || csid != 1 || !ms || ms == 0) return "";
   let S;
