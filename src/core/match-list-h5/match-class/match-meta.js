@@ -581,7 +581,7 @@ class MatchMeta {
   /**
    * @description vr赛果
    */
-  async get_virtual_results_match() {
+  async get_virtual_results_match(tid) {
     this.clear_match_info()
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const { start_time, end_time } = MatchUtils.get_match_time_start_time(md)
@@ -593,7 +593,7 @@ class MatchMeta {
       page:{ size: 100, current: 1 },
       sportType:MenuData.current_lv_2_menu?.sport_id,
       startTime: String(start_time),
-      tournamentId:"79430600606371842"
+      tournamentId:tid //||"79430600606371842"
     })
     // vr 马 狗 
     // const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
@@ -1114,10 +1114,11 @@ class MatchMeta {
 
     const custom_match_mids = target_list.map(t => t.mid)
 
-    this.complete_matchs = target_list
-    this.current_matchs = target_list
+    this.complete_matchs = lodash.uniqBy(target_list, 'mid')
     this.complete_mids = lodash.uniq(custom_match_mids)
     this.match_mids = lodash.uniq(custom_match_mids)
+
+    this.compute_current_matchs()
 
     // 重置折叠对象
     // MatchFold.clear_fold_info()
@@ -1206,9 +1207,11 @@ class MatchMeta {
       this.other_complete_mids = result_mids
     } else {
       this.complete_matchs = matchs_data
-      this.current_matchs = matchs_data
       this.complete_mids = result_mids
     }
+
+    this.compute_current_matchs()
+
     if (!is_virtual) {
       // 清除虚拟计算信息
       VirtualList.clear_virtual_info()
@@ -1263,7 +1266,7 @@ class MatchMeta {
         is_show_ball_title
       }
     })
-    this.current_matchs = this.complete_matchs
+    this.compute_current_matchs()
 
     const length = lodash.get(this.complete_matchs, 'length', 0)
     this.set_page_match_empty_status({ state: length > 0 ? false : true });
@@ -1579,7 +1582,7 @@ class MatchMeta {
             const index = lodash.findIndex(this.complete_matchs, (match) => match.mid === t.mid)
             if (index > -1) this.complete_matchs[index] = Object.assign({}, item, t)
           }
-          // TODO: 测试代码， 先别动
+          // 更新 current_matchs
           const c_item = lodash.find(this.current_matchs, (match) => match.mid === t.mid)
           if (c_item) {
             const c_index = lodash.findIndex(this.current_matchs, (match) => match.mid === t.mid)

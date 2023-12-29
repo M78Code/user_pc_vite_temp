@@ -101,6 +101,7 @@ const menu_item_click = (item = {}) => {
     // 赛果
     case 1:
       MenuData.set_current_lv_2_menu_i({});
+      MenuData.set_date_time(0,'');
       router.push( {name: item.path_name } );
       break;
 

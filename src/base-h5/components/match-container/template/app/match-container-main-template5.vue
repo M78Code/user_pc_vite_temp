@@ -589,7 +589,7 @@ export default {
         border-top: none;
       }
       &.border-raduis{
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid var(--q-gb-bd-c-4);
         border-radius: 0 0 0.08rem 0.08rem;
       }
     }
@@ -1012,7 +1012,7 @@ export default {
             justify-content: flex-end;
             position: relative;
             .is-handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-34) !important;
             }
             .match-name {
               width: 1rem;
@@ -1033,7 +1033,7 @@ export default {
             justify-content: flex-start;
             position: relative;
             .is-handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-34) !important;
             }
             .match-name {
               width: 1rem;

@@ -1,0 +1,81 @@
+/*************** 数字开始 *************** -S*/
+.virtual-count {
+  width: 0.2rem;
+  height: 0.2rem;
+  line-height: 0.2rem;
+  text-align: center;
+  display: inline-block;
+  background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png")  no-repeat 0 0 / 100%;
+  // background: var(--q-color-com-img-bg-20) no-repeat 0 0 / 100%;
+  --per: -0.3rem;
+}
+
+/*************** 数字结束 *************** -E*/
+.team {
+  width: 1.9rem;
+  margin-right: 0.12rem;
+}
+
+div[class*="virtual-num"] {
+  border-radius: 2px;
+}
+
+.virtual-num-1 {
+  background-position-y: calc(var(--per) * 6);
+
+  &.csid-1009 {
+    background-position-y: calc(var(--per) * 14);
+  }
+}
+
+.virtual-num-2 {
+  background-position-y: calc(var(--per) * 7);
+
+  &.csid-1002 {
+    background-position-y: calc(var(--per) * 1);
+  }
+
+  &.csid-1009 {
+    background-position-y: calc(var(--per) * 15);
+  }
+}
+
+.virtual-num-3 {
+  background-position-y: calc(var(--per) * 8);
+
+  &.csid-1002 {
+    background-position-y: calc(var(--per) * 2);
+  }
+
+  &.csid-1009 {
+    background-position-y: calc(var(--per) * 16);
+  }
+}
+
+.virtual-num-4 {
+  background-position-y: calc(var(--per) * 9);
+
+  &.csid-1002 {
+    background-position-y: calc(var(--per) * 3);
+  }
+
+  &.csid-1009 {
+    background-position-y: calc(var(--per) * 17);
+  }
+}
+
+.virtual-num-5 {
+  background-position-y: calc(var(--per) * 10);
+
+  &.csid-1002 {
+    background-position-y: calc(var(--per) * 4);
+  }
+}
+
+.virtual-num-6 {
+  background-position-y: calc(var(--per) * 11);
+
+  &.csid-1002 {
+    background-position-y: calc(var(--per) * 5);
+  }
+}
