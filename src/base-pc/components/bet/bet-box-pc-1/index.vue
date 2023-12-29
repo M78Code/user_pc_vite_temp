@@ -52,7 +52,6 @@
         {{ i18n_t('bet.merge_info') }}
       </div>
     </q-tooltip>
-
   </div>
 </template>
 
@@ -81,8 +80,6 @@ const set_scroll_this = val => {
 // 单关 合并切换
 const toggle_merge = () => {
   BetData.set_is_bet_merge()
-  BetData.set_clear_bet_info()
-  BetViewDataClass.set_clear_bet_view_config()
 }
 
 

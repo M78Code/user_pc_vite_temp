@@ -25,8 +25,10 @@
 </template>
 
 <script>
+import { reactive } from 'vue'
 import { get_now_server } from 'src/core/utils/common/module/other.js'
 import common from 'src/base-h5/vr/mixin/constant/module/common.js'
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 
 export default {
@@ -42,12 +44,19 @@ export default {
   data(){
     return {
       start_second:null,
-      timer_format:'',
+      
       is_last_circle:false,
       start:null,
       timer_mid_map:{},
       path_d:'',
       strokeColor: false,//
+      VR_CTR,
+    }
+  },
+  setup(props) {
+    const state = reactive({timer_format: ''});
+    return {
+      ...state
     }
   },
   created () {
@@ -101,6 +110,7 @@ export default {
     draw_timer_by_second(){
       // console.log("draw_timer_by_second=========match========", this.match);
       if(!this.match || !this.match.mgt || !this.match.mid){
+        // console.log('走进  !this.match || !this.match.mgt || !this.match.mid');
         return;
       }
       // let ms = Number(this.match.mgt) - get_now_server();
@@ -152,9 +162,13 @@ export default {
       let seconds_f = Math.floor(sub_ms_r / 1000);
       minutes = String(minutes);
       seconds_f = String(seconds_f);
+
       let minutes_format = minutes.padStart(2, '0');
       let seconds_f_format = seconds_f.padStart(2, '0');
       this.timer_format = `${minutes_format}:${seconds_f_format}`;
+      this.$forceUpdate();
+      // console.error("virtual_sports_timer.vue-> draw_timer_by_second() ->157)this.timer_format", `${minutes_format}:${seconds_f_format}`);
+      // console.error("virtual_sports_timer.vue-> draw_timer_by_second() ->157)this.timer_format", this.timer_format);
       this.path_d = this.get_path_d(remaining_time);
       if(remaining_time < 1000){
         this.$emit("time_ended",this.mid);
@@ -175,8 +189,10 @@ export default {
   },
   watch:{
     mid(){
+      console.error("this.mid====>", this.mid);
       this.start = null;
       this.draw_timer_by_second();
+      VR_CTR.set_current_mid(this.mid)
     }
   },
   destroyed(){
@@ -199,7 +215,7 @@ export default {
   align-items: center;
   margin-bottom: 0.38rem;
   .circle-time-wrapper svg path{
-    stroke: var(--q-gb-t-c-12);
+    stroke: var(--q-gb-t-c-35);
   }
   .final-circle {
       svg path {
@@ -220,7 +236,7 @@ export default {
       // color: #ffb001;
       font-size: 0.3rem;
       font-weight: 500;
-      color: var(--q-gb-t-c-12) !important;
+      color: var(--q-gb-t-c-35) !important;
       &.last {
         // color: #E23E3E;
         color: var(--q-gb-bd-c-8) !important;

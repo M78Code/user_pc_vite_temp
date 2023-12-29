@@ -97,6 +97,10 @@ export default defineComponent({
     prev_match () {
       return this.i > 0 ? MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[this.i - 1]) : undefined
     },
+    // 下一场赛事数据
+    next_match () {
+      return MatchMeta.match_mids[this.i + 1] ? MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[this.i + 1]) : undefined
+    },
     // 精彩回放视频开关是否开启
     is_replay_switch () {
       const { config, eventSwitch } = lodash.get(UserCtr, 'merchantEventSwitchVO', {})
@@ -269,8 +273,11 @@ export default defineComponent({
     // 未开赛折叠状态
     not_begin_collapsed ()  {
       return lodash.every(Object.values(MatchFold.not_begin_csid_fold_obj.value),Boolean)
-
     },
+    // 是否显示底部圆角
+    is_show_border_raduis () {
+      return this.next_match && this.match_of_list?.tid !== this.next_match?.tid
+    }
   },
   watch: {
     match_of_list: {
@@ -407,7 +414,7 @@ export default defineComponent({
     handle_all_ball_seed_fold () {
       MatchFold.handler_fold_all_matchs_csid()
       // app-h5 简版 先试运行看效果
-      if (project_name === 'app-h5' && (standard_edition.value == 1 || MenuData.is_results())) MatchMeta.compute_current_matchs()
+      if (project_name === 'app-h5') MatchMeta.compute_current_matchs()
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
     },
 
@@ -421,7 +428,8 @@ export default defineComponent({
       // 不需要虚拟计算，欧洲版五大联赛
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       // app-h5 简版 先试运行看效果
-      if (project_name === 'app-h5' && (standard_edition.value == 1 || MenuData.is_results())) MatchMeta.compute_current_matchs()
+      // if (project_name === 'app-h5' && (standard_edition.value == 1 || MenuData.is_results())) MatchMeta.compute_current_matchs()
+      if (project_name === 'app-h5') MatchMeta.compute_current_matchs()
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
       // 赛事个数小于18 不需要继续获取赔率
       if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
@@ -437,7 +445,7 @@ export default defineComponent({
       // 不需要虚拟计算，欧洲版五大联赛
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       // app-h5 简版 先试运行看效果
-      if (project_name === 'app-h5' && (standard_edition.value == 1 || MenuData.is_results())) MatchMeta.compute_current_matchs()
+      if (project_name === 'app-h5') MatchMeta.compute_current_matchs()
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false})
       // 赛事个数小于18 不需要继续获取赔率
       if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})

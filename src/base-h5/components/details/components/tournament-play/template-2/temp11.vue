@@ -21,7 +21,7 @@
             </div>
           </div>
           <div class="odds-style">
-            <div v-if="item.os != 2">{{compute_value_by_cur_odd_type(item.odds,null,hsw_single)}}</div>
+            <div v-if="item.os != 2">{{compute_value_by_cur_odd_type(item.ov,item._hpid,item._hsw,item._csid)}}</div>
             <div v-else><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
           </div>
         </div>
@@ -44,7 +44,7 @@ import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 import { compute_value_by_cur_odd_type } from "src/output/index.js"
 
 export default defineComponent({
-  name: "temp10",
+  name: "temp11",
   props: ["item_data", "title"],
   // #TODO mixins
   // mixins:[odd_convert],
@@ -92,6 +92,9 @@ export default defineComponent({
       });
       data.odds_list = odds_list
     };
+    onMounted(() => {
+      temp_odds()
+    })
     return {
       ...toRefs(data),
       BetData,
@@ -141,6 +144,7 @@ export default defineComponent({
   font-size: 0.16rem;
   letter-spacing: 0;
   text-align: center;
+  color: var(--q-gb-t-c-18);
 }
 
 /*************** 赔率结束 *************** -E*/

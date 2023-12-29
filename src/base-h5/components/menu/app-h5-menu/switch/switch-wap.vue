@@ -24,6 +24,7 @@ import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { project_name, MenuData } from "src/output/index.js";
 import { set_menu_init,sort_type,standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { is_esports } from 'src/base-h5/mixin/menu.js'
+import MatchFold from 'src/core/match-fold/index.js'
 
 /**
  * 首页switch wap
@@ -97,14 +98,16 @@ const switchData = ref(get_switch_data())
 const hendler_version_change = (val = 2) => {
     UserCtr.set_standard_edition(val)
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
+    // MatchFold.clear_fold_info()
     nextTick(()=>{
         VirtualList.set_is_show_ball(true)
-        if (MenuData.is_collect()) {
-            MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
-        } else {
-            MatchMeta.clear_match_info()
-            MatchMeta.set_origin_match_data({})
-        }
+        MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+        // if (MenuData.is_collect()) {
+        //     MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+        // } else {
+        //     MatchMeta.clear_match_info()
+        //     MatchMeta.set_origin_match_data({})
+        // }
         // MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
     })
 }

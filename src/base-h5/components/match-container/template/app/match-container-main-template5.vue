@@ -79,7 +79,8 @@
 
         </div>
         <!-- 赛事内容 -->
-        <div :class="['match-content', { 'collapsed': collapsed }]" v-if="collapsed">
+        <div :class="['match-content', { 'collapsed': collapsed, 'border-raduis': is_show_border_raduis }]" v-if="collapsed">
+          <div class="match-content-line" v-if="!match.is_show_league"></div>
           <!-- 比分版 | 视频 icon | 赛事阶段 | 比分| 盘口 -->
           <div class="title-details">
             <div class="details">
@@ -473,7 +474,7 @@ export default {
 }
 
 .buffer-container {
-  background: var(--q-gb-bg-c-17);
+  // background: var(--q-gb-bg-c-17);
   height: 5px;
   width: 100%;
 }
@@ -505,7 +506,7 @@ export default {
 
   .match-status-fixed {
     width: 100%;
-    height: 0.25rem;
+    height: 25px;
     line-height: 1;
     font-size: 0.11rem;
     padding-left: 0.17rem;
@@ -581,11 +582,15 @@ export default {
     // box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
     // border-radius: .04rem;
     .match-content{
-      border-radius: 0 0 8px 8px;
       background: var(--q-gb-bg-c-18);
       border: 1px solid var(--q-gb-bd-c-15);
+      border-bottom-color: var(--q-gb-bg-c-18);
       &.collapsed{
         border-top: none;
+      }
+      &.border-raduis{
+        border-bottom: 1px solid var(--q-gb-bd-c-4);
+        border-radius: 0 0 0.08rem 0.08rem;
       }
     }
     &.collapsed{
@@ -596,10 +601,15 @@ export default {
       }
     }
     > .match-indent{
-      border: 1px solid var(--q-gb-bd-c-15);
+      border: 1px solid var(--q-gb-bd-c-18);
       border-radius: 8px 8px 0 0 !important;
       border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
       background: var(--q-gb-bg-c-18);
+    }
+    .match-content-line {
+      width: 100%;
+      height: 1px;
+      background: var(--q-gb-bd-c-4);
     }
   }
 
@@ -886,7 +896,7 @@ export default {
 
   /* **************联赛展示********************** -S*/
   .league {
-    height: 26px;
+    height: 25px;
     border-radius: .08rem .08rem 0 0;
     // background-color: var(--q-gb-bg-c-34) !important;
 
@@ -900,7 +910,7 @@ export default {
       .favorited-icon {
         width: 14px;
         height: 14px;
-        margin: 0 4px 0 0.11rem;
+        margin: 0 8px 0 11px;
         /* position: relative;
         top: 1px; */
         flex-shrink: 0;
@@ -917,13 +927,14 @@ export default {
       width: 100%;
       height: 100%;
       padding-right: 5px;
-      // transform: translateY(1px);
       text-overflow: ellipsis;
       flex-wrap: nowrap;
       align-items: center;
       overflow: hidden;
-      color: var(--q-color-com-fs-color-26);
+      font-size: 12px;
+      color: var(--q-gb-t-c-18);
       font-weight: 600;
+      transform: translateY(1px);
       &.no-favorited{
         padding-left: 15px;
       }
@@ -937,25 +948,11 @@ export default {
       }
 
       .league-t-wrapper {
-        line-height: 1;
         min-width: 1.18rem;
-        display: flex;
-        font-size: .12rem;
-
         &.export {
           min-width: 1.1rem;
           margin-left: 0.1rem;
         }
-      }
-
-      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
-      .match-league {
-        max-width: 2.8rem;
-        line-height: 0.14rem;
-        color: var(--q-gb-t-c-18);
-        font-family: PingFang SC;
-        font-size: 12px;
-        font-weight: 600;
       }
     }
   }
@@ -1002,7 +999,7 @@ export default {
             justify-content: flex-end;
             position: relative;
             .is-handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-34) !important;
             }
             .match-name {
               width: 1rem;
@@ -1023,7 +1020,7 @@ export default {
             justify-content: flex-start;
             position: relative;
             .is-handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-34) !important;
             }
             .match-name {
               width: 1rem;

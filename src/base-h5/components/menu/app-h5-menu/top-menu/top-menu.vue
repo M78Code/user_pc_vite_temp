@@ -87,7 +87,7 @@ const menu_list = reactive([
  * @param {*} type 
  */
 const set_menu_lv1 = item => {
-      // 重置折叠对象
+    // 重置折叠对象
     MatchFold.clear_fold_info()
     MatchFold.set_all_csid_fold_status(true)
     MenuData.set_current_lv1_menu(item.mi);

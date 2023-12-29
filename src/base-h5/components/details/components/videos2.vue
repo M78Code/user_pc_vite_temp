@@ -62,12 +62,12 @@
         <!-- 第一次显示 用户指导页 -->
         <div class="floating-layer" v-if="first_login" @click.self.stop="first_login = false">
           <div>
-            <img class="animate-bounce-up" :src="`${LOCAL_PROJECT_FILE_PREFIX}/svg/one-click.svg`" alt="">
+            <img class="animate-bounce-up" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/one-click.svg`" alt="">
             <span>{{i18n_t("video.click_on")}}</span>
             <p>{{i18n_t("video.show_hide")}}</p>
           </div>
           <div>
-            <img class="animate-bounce-up" :src="`${LOCAL_PROJECT_FILE_PREFIX}/svg/double-click.svg`" alt="">
+            <img class="animate-bounce-up" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/double-click.svg`" alt="">
             <span>{{i18n_t("video.double_click")}}</span>
             <p>{{i18n_t("video.full_screen_play")}}</p>
           </div>
@@ -116,7 +116,7 @@
 
           <div v-show="is_controller_show" class="highlights-controller" :class="{'bottom-controller-bar': !get_is_hengping}">
             <!-- 视频声音 -->
-            <div class="voice-wrap" @click="set_video_voice">
+            <div class="voice-wrap" @click="set_video_voice" v-if="!['result_details','match_result'].includes(route?.name)">
               <svg v-if="!current_event_video.voice"  xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 21 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8z"></path></svg>
               <svg v-else xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 21 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528zM25.152 16q0 2.72-1.536 5.056t-4 3.36q-0.256 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.704 0.672-1.056 1.024-0.512 1.376-0.8 1.312-0.96 2.048-2.4t0.736-3.104-0.736-3.104-2.048-2.4q-0.352-0.288-1.376-0.8-0.672-0.352-0.672-1.056 0-0.448 0.32-0.8t0.8-0.352q0.224 0 0.48 0.096 2.496 1.056 4 3.36t1.536 5.056z"></path></svg>
             </div>
@@ -125,7 +125,7 @@
             <!--  <img src="image/bw3/svg/details/tips.svg" />-->
             <!--</div>-->
             <!-- 全屏按钮 -->
-            <div class="full-screen-btn" @click="exit_full_screen">
+            <div class="full-screen-btn" @click="exit_full_screen" v-if="!['result_details','match_result'].includes(route?.name)">
               <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`">
             </div>
           </div>
@@ -330,6 +330,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import slider from "src/base-h5/components/details/components/slider/slider.vue"
 import OrientationSubscrbe from 'src/base-h5/components/common/orientation/orientation-subscribe'
+import { useRoute } from "vue-router"
 export default {
   name: "videos",
   components: {
@@ -368,6 +369,7 @@ export default {
       select_item:-1,
       voice: false,
       nail: true,
+      route: useRoute(),
       show_icons: false, //控制图标默认展示
       iframe_src: '',
       title: {

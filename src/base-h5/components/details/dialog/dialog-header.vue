@@ -28,7 +28,7 @@ import seamlessMarquee from 'src/base-h5/components/details/seamless-marquee.vue
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { go_where } from "src/core/utils/project/module/go-where.js"  
 import { useRouter, useRoute } from "vue-router";
-
+import { project_name } from "src/output/index.js"
 export default {
   name: 'dialog_header',
   data(){
@@ -50,7 +50,12 @@ export default {
   },
   methods: {
     go_where_item(params) {
-      go_where( {...params, route: this.route, router: this.router} );
+      if(project_name == 'app-h5'){
+       this.router.go(-1)
+      }else{
+        go_where( {...params, route: this.route, router: this.router} );
+      }
+      
     },
     // 点击倒三角收起
     hide_dialog(){

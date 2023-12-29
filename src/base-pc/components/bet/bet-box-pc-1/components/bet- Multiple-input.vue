@@ -1,11 +1,12 @@
 <template>
     <div class="q-card__section">
+        
         <div class="odds-wrap row">
             <div class="line"></div>
             <div class="col">{{i18n_t('bet.bet_multiple')}}</div>
         </div>
         <!--金额输入区域包括键盘 -->
-        <div class="row bet-multiple-input yb-flex-nowrap" :data-check-money="BetViewDataClass.input_money_state">
+        <div class="row bet-multiple-input yb-flex-nowrap">
             <!--金额输入区-->
             <div class="col bet-count">
                 <span>2</span>
@@ -13,21 +14,22 @@
             </div>
             <div class="col-auto right-input">
                 <!--投注金额输入框-->
-                <input class="bet-input input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
-                    :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
+                <input class="input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
+                placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
                 <!--清除输入金额按钮-->
                 <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money">
                     <icon-wapper name="icon-failure" size="12px" />
                 </div>
             </div>
         </div>
+        <div v-show="false">{{ UserCtr.user_version }}-{{ BetData.bet_data_class_version }}</div>
         <div class="row bet-win yb-fontsize12">
             <div class="col df-jb">
                     <!--最高可赢额-->
                  {{ i18n_t('common.maxn_amount_val') }}
             </div>
                 <!--金额-->
-            <div class="col-auto bet-win-money yb-number-bold">00</div>
+            <div class="col-auto bet-win-money yb-number-bold">{{ formatMoney() }}RMB</div>
         </div>
          
         <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
@@ -60,9 +62,9 @@ const ref_data = reactive({
     min_money: 10, // 最小投注金额
     max_money: 8888, // 最大投注金额
     win_money: 0.00, // 最高可赢
-    money: '', // 投注金额
+    money: "", // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
-    emit_lsit: {},
+    emit_lsit: {}
 })
 
 const props = defineProps({
@@ -70,17 +72,14 @@ const props = defineProps({
         type: Number,
         default: 0
     },
-    item: {}
 })
 
 onMounted(() => {
     // 监听 限额变化
-    // ref_data.emit_lsit = {
-    //     emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
-    //     emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
-    // }
-   
-    // BetData.set_bet_keyboard_config(min_max_obj)
+    ref_data.emit_lsit = {
+        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
+        emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
+    }
 })
 
 onUnmounted(() => {
@@ -97,7 +96,7 @@ onUnmounted(() => {
 
 // 清空输入框金额
 const bet_clear_handle = () => {
-   
+    ref_data.money = ''
 }
 
 // 键盘回车事件
@@ -111,14 +110,38 @@ const keydown = (e) => {
 
 // 限额改变 修改限额内容
 const set_ref_data_bet_money = () => {
-    
+
+    let min_money_arr = []
+    let max_money_arr = []
+
+    BetData.bet_single_list.forEach((item)=>{
+        let value = item.playOptionsId
+        const { min_money = 10, max_money = 8888} = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
+        min_money_arr.push(min_money)
+        max_money_arr.push(max_money)
+    })
+    ref_data.min_money = lodash_.min(min_money_arr)
+    ref_data.max_money = lodash_.max(max_money_arr)
+    ref_data.money = ""
 }
 
 
 
 // 输入判断
 const set_win_money = () => {
-    useMittEmit(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY,ref_data.money)
+    useMittEmit(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY,ref_data)
+     // 输入控制
+     if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
+        // BetData.set_bet_obj_amount(ref_data.money,props.item.playOptionsId)
+    }else{
+        // 最大限额不能大于余额
+        let money_a = ref_data.max_money
+        if(UserCtr.balance < ref_data.max_money){
+            money_a = UserCtr.balance
+        }
+        ref_data.money = money_a
+        // BetData.set_bet_obj_amount(ref_data.money,props.item.playOptionsId)
+    }
 }
 </script>
 
@@ -130,21 +153,12 @@ input::-webkit-inner-spin-button {
 }
 
 //火狐
-input[type="number"] {
-    -moz-appearance: textfield;
-}
+// input[type="number"] {
+//     -moz-appearance: textfield;
+// }
 
 /**单关金额输入框**/
 .bet-multiple-input {
-    .bet-input{
-        width: 100%;
-        padding: 4px 6px;
-        margin-top: 2px;
-        color: #191c24;
-        height: 32px;
-        line-height: 18px;
-        outline: none;
-    }
     .bet-input-close {
         .icon-failure:before {
             color: var(--q-gb-t-c-18);

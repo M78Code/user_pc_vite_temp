@@ -40,6 +40,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
 import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from "src/output/index.js";
 import uid from "src/core/uuid/index.js";
+import BetData from 'src/core/bet/class/bet-data-class.js'
 
 const props = defineProps({
   // 联赛名
@@ -78,8 +79,14 @@ onBeforeUnmount(() => cancel_ref.cancel())
 
 // 返回列表页亦或是返回上一级
 const go_to_back = lodash.debounce(() => {
+  // 非串关页面 在详情页面点击了串关 回到列表页 需要设置为单关
+  if(MenuData.old_current_lv_1_menu_i != 6 || route.name == 'category'){
+    BetData.set_is_bet_single('single')
+    BetData.set_clear_bet_info()
+  }
   router.back()
 }, 500, { leading: true })
+
 onBeforeUnmount(() => go_to_back.cancel())
 
 /**

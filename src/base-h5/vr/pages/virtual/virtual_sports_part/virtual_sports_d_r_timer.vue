@@ -175,7 +175,7 @@ export default {
       top: 0;
       transition: top 0.4s;
       border-radius: 4px 0px 0px 4px;
-      background: var(--q-gb-bg-c-18);
+      background: var(--q-gb-bg-c-28);
 
       // &::after {
       //   content: '';
@@ -243,7 +243,7 @@ export default {
   letter-spacing: 0;
   border-radius: 0 4px 4px 0;
   border-radius: 0px 4px 4px 0;
-  background: var(--q-gb-bg-c-18);
+  background: var(--q-gb-bg-c-28);
   font-weight: 700;
   color: var(--q-gb-t-c-18);
 
