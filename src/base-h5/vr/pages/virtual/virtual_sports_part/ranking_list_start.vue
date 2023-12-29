@@ -325,7 +325,7 @@ export default {
 
           .rate_percent{
             font-weight: 500;
-            color: var(--q-gb-t-c-18);
+            color: var(--q-gb-t-c-19);
             margin-left: 0.08rem;
           }
 
