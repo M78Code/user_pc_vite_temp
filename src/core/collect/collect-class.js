@@ -19,12 +19,13 @@ const get_collect_count = () => {
     return
   }
   // 获取到当前 tab的赛种
-  let list = MenuData.is_esports()?BaseData.dianjing_sublist:lodash_.get(MenuData,'menu_lv_mi_lsit', [])
+  let list = MenuData.is_esports()?BaseData.dianjing_sublist:MenuData.get_menu_lvmi_list(MenuData.current_lv_1_menu_i);
+  // let list = MenuData.is_esports()?BaseData.dianjing_sublist:lodash_.get(MenuData,'menu_lv_mi_lsit', [])
   let type = lodash_.get(MenuData,'current_lv_1_menu_i', 2)
   let euid_list = ''
   // 获取对应的旧菜单id    
   list.forEach(item =>{
-    const euid = MenuData.get_euid(item.mi);
+    const euid = item.mi? MenuData.get_euid(item.mi):"";
       if(item.ct && euid){
         euid_list += euid + ','
       }
