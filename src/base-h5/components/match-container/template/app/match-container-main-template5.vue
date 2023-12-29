@@ -589,7 +589,7 @@ export default {
         border-top: none;
       }
       &.border-raduis{
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid var(--q-gb-bd-c-4);
         border-radius: 0 0 0.08rem 0.08rem;
       }
     }
