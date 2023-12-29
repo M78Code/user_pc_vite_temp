@@ -21,7 +21,7 @@
             </div>
           </div>
           <div class="odds-style">
-            <div v-if="item.os != 2">{{compute_value_by_cur_odd_type(item.odds,null,hsw_single)}}</div>
+            <div v-if="item.os != 2">{{compute_value_by_cur_odd_type(item.ov,item._hpid,item._hsw,item._csid)}}</div>
             <div v-else><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
           </div>
         </div>
