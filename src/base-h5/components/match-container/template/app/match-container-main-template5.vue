@@ -583,7 +583,7 @@ export default {
     .match-content{
       border-radius: 0 0 8px 8px;
       background: var(--q-gb-bg-c-18);
-      border: 1px solid var(--q-gb-bd-c-15);
+      border: 1px solid var(--q-gb-bd-c-18);
       &.collapsed{
         border-top: none;
       }
@@ -596,7 +596,7 @@ export default {
       }
     }
     > .match-indent{
-      border: 1px solid var(--q-gb-bd-c-15);
+      border: 1px solid var(--q-gb-bd-c-18);
       border-radius: 8px 8px 0 0 !important;
       border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
       background: var(--q-gb-bg-c-18);
