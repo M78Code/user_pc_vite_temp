@@ -111,11 +111,11 @@
 
             <!--玩法数量-->
             <div class="right-score">
-              <template v-if="match.csid != 1">
+              <!-- <template v-if="match.csid != 1">
                 <div class="score-content">
                   <ScoreList :main_source="main_source" :match="match_of_list" />
                 </div>
-              </template>
+              </template> -->
             </div>
           </div>
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
@@ -274,6 +274,12 @@
             </div>
 
           </div>
+
+          <template v-if="match.csid != 1">
+            <div class="score-content-new">
+              <ScoreList :main_source="main_source" :match="match_of_list" />
+            </div>
+          </template> 
         </div>
 
         <!-- </q-slide-transition> -->
@@ -288,7 +294,7 @@ import { ref, computed, watch, nextTick } from 'vue'
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
-import ScoreList from 'src/base-h5/components/match-container/template/app/components/score-list.vue';
+import ScoreList from 'src/base-h5/components/match-container/template/app/components/scroe-list2.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
@@ -1388,18 +1394,19 @@ export default {
   // bottom: 0;
   // width: 100%;
   :deep(.score-se-inner2) {
-    display: flex;
-    flex-direction: row-reverse;
+    // display: flex;
+    // flex-direction: row-reverse;
   }
 
   :deep(.scroll-container-w) {
     .score-se-inner {
-      max-width: 100%;
+      // max-width: 100%;
 
       .score-se-inner2 {
         display: flex;
         margin-left: -5px;
-        margin-top: 10px;
+        // margin-top: 10px;
+        // height: 30px;
       }
     }
   }
@@ -1424,7 +1431,9 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    // justify-content: space-between;
+    max-width: 200px;
+    overflow-x: scroll;
   }
 
   &.simple {
@@ -1716,5 +1725,11 @@ export default {
 /* **************日期********************** -E*/
 
 /* ********赛事容器相关********** -E*/
+
+.score-content-new {
+  padding: 4px 0;
+  max-width: 200px;
+  overflow-x: scroll;
+}
 </style>
   
