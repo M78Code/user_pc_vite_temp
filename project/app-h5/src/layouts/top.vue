@@ -58,7 +58,6 @@ import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 
 import { is_esports, is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
 import { get_collect_count } from 'src/core/collect/collect-class.js'
-const is_first = ref(true)
 const route = useRoute();
 const router = useRouter() 
 const inner_height = window.innerHeight;  // 视口高度
@@ -94,7 +93,7 @@ const searchTabMenu = ref(null);//足球tab dom
   const dataList = reactive({
     3: dateTabList(new Date(new Date().getTime()+24*60*60*1000)), //早盘下一天开始
     6: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"今日",val:'0'}]),
-    2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"所有日期",val:''},{name:"今日",val:new Date().getTime()}])
+    // 2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"所有日期",val:''},{name:"今日",val:new Date().getTime()}])
   });
   const dataListEsports = ref([]);
   const ref_data = reactive({

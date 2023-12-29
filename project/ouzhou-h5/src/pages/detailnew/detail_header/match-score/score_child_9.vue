@@ -107,5 +107,9 @@ onMounted(() => {
     overflow-y: hidden;
     -webkit-overflow-scrolling: auto;
     white-space: nowrap;
+    font:{
+        size: .14rem;
+        weight: bold;
+    }
 }
 </style>

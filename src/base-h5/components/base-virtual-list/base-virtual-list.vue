@@ -185,6 +185,9 @@ const initDataPostion = () => {
   }))
 }
 
+/**
+ * 更新DOM位置信息
+ */
 const updateHeightAndPos = () => {
   const contentListDom = contentListRef.value
   if (!contentListDom) return
@@ -193,14 +196,14 @@ const updateHeightAndPos = () => {
   for (let i = 0; i < childrenElementArr.length; i++) {
     const childEle = childrenElementArr[i]
     // 获取当前数据dom节点的数据再allData数组中的索引位置
-    const dataMid = childEle.dataset['mid']
-    if (!dataMid) continue
+    const dataStrMid = childEle.dataset['mid']
+    if (!dataStrMid) continue
 
     // 从allData数据中获取到该数据
-    const dataItem = positionDataArr.find(t => t.mid === dataMid)
+    const dataItem = positionDataArr.find(t => t.mid === dataStrMid)
     if (!dataItem) continue
 
-    const dataIndex = positionDataArr.findIndex(t => t.mid === dataMid)
+    const dataIndex = positionDataArr.findIndex(t => t.mid === dataStrMid)
 
     // 获取元素的实际高度
     // const { height } = childEle.getBoundingClientRect()
@@ -213,9 +216,6 @@ const updateHeightAndPos = () => {
      * oldHeight为50px，height为100px, 那么dffVal为 -50px，那么 oldHeight - dffVal 为 100px
      */
     const dffVal = oldHeight - height
-    // console.log(dataItem.mid, oldHeight, height, dffVal)
-    // console.log(positionDataArr)
-    // dataItem.height = height
     if (dffVal != 0) {
       // 当前dom元素的实际高度与allData中记录的高度不一致，则更新高度以及元素位置信息
       dataItem.height = height

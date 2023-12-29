@@ -43,7 +43,7 @@ const tooltipbox = ref(false)
 const itemid = ref()
 // 弹出规则
 const alertRules = (id) => {
-    if(id && id.includes('串')){
+    if(id && id.includes(i18n_t(`app_h5.bet.toltipc`))){
         itemid.value =  id.replace('串','00')
     }else{
         itemid.value =  id

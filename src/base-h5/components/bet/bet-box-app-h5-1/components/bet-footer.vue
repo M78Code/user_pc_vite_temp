@@ -66,6 +66,10 @@ import mathJs from 'src/core/bet/common/mathjs.js'
 import { UserCtr ,format_money2,compute_local_project_file_path,MenuData} from "src/output/index.js"
 import { odds_table } from "src/core/constant/common/module/csid.js"
 import { i18n_tc } from "src/boot/i18n.js"
+import { useRoute } from "vue-router"
+
+
+const route = useRoute()
 
 const ref_data = reactive({
   show_title: '',
@@ -262,19 +266,24 @@ const set_bet_single = () => {
     BetViewDataClass.set_clear_bet_view_config()
     // 后续优化逻辑 
   }else{
+    let menu_id = 2
     // 切换到串关 进入到串关页面 
     if(BetData.is_bet_single){
       BetData.set_clear_bet_info()
       BetViewDataClass.set_clear_bet_view_config()
-      MenuData.set_current_lv1_menu(2);
+      menu_id = 2
     }
 
     // 切换到串关 进入到串关页面 
     if(!BetData.is_bet_single){
       // 额额额 单关切换串关 需要把单关的数据 赋值给串关
       BetData.bet_s_list = lodash_.cloneDeep(BetData.bet_single_list)
-      MenuData.set_current_lv1_menu(6);
+      menu_id = 6
     }
+
+    if(route.name != 'category'){
+        MenuData.set_current_lv1_menu(menu_id);
+      }
   }
 
   BetData.set_bet_box_h5_show(false)

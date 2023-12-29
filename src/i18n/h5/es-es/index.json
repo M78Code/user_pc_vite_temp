@@ -1126,7 +1126,9 @@
     "video": "Video",
     "video_info": "Video Info",
     "Topic": "",
-    "topic": ""
+    "topic": "",
+    "video_live": "Video Live",
+    "animation_live": "Animation Live"
   },
   "match_main": {
     "cut_off": "Libro Cerrado",

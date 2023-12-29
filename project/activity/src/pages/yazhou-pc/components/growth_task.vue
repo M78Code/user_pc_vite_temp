@@ -254,6 +254,7 @@
 <!--        />-->
 <!--      </div>-->
 <!--    </q-dialog>-->
+<!--    领取弹窗-->
     <LotteryDialog
       :getLotteryDialog="daily_task_success"
       :getLotteryNum="pop_parameter.ticket"
