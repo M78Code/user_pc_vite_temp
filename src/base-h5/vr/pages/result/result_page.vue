@@ -228,7 +228,8 @@ export default {
 
 <style lang="scss" scoped>
 .dynamic-result-page {
-  background: #F8F9FA;
+  // background: #F8F9FA;
+  // background: var(--q-gb-bg-c-18);
 }
 /*************** 给一个内下边距开始 *************** -S*/
 .dynamic-main {
@@ -249,7 +250,7 @@ export default {
   height: 0.48rem;
   line-height: 0.48rem;
   border-radius: 0.08rem;
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-18);
   box-shadow: 0px 2px 6px 0px #0000000A;
 }
 
@@ -349,7 +350,8 @@ export default {
 /*************** 背景颜色 *************** -E*/
 .bor-btm {
   height: 0.84rem;
-  background-color: #fff;
+  // background-color: #fff;
+  background: var(--q-gb-bg-c-18);
   flex-grow: 1;
   flex-basis: 31%;
   border-radius: 0.08rem;
@@ -377,7 +379,7 @@ export default {
   line-height: 0.12rem;
   margin: 0.12rem 0 0.13rem 0;
   &+div {
-    color: #303442;
+    color: var(--q-gb-t-c-20);
     font-weight: 700;
   }
 }
@@ -391,7 +393,8 @@ export default {
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  background-color: #fff;
+  // background-color: #fff;
+  background: var(--q-gb-bg-c-18);
   border-radius: 0.08rem;
   box-shadow: 0px 2px 6px 0px #0000000A;
 }

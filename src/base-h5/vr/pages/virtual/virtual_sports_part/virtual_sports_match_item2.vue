@@ -43,6 +43,7 @@
                 :item_data="data_i||{}"
                 :title="data_i.title"
                 :csid="match_item.csid"
+                :teams="match_item.teams"
               />
             </div>
           </div>
