@@ -1,4 +1,5 @@
 import lodash from 'lodash'
+import MatchFold from 'src/core/match-fold/index.js'
 import BaseData from 'src/core/base-data/base-data.js'
 import { MenuData } from 'src/output/module/menu-data.js'
 import PageSourceData from "src/core/page-source/page-source.js";
@@ -320,6 +321,31 @@ class MatchUtils {
     const start_time = new Date(`${now_date} 00:00:00`).getTime();
     const end_time = new Date(`${year}-${month}-${day} 23:59:59`).getTime();
     return { start_time, end_time }
+  }
+  /**
+   * @description 增加 estimateHeight； estimateHeight 关系 不大， 就算不对 后续会主动修复， estimateHeight 只作为辅助值， 辅助初始渲染，偏差没那么大
+   * @param {*} match  赛事信息
+   * @returns 
+   */
+  get_default_estimateHeight (match) {
+    const { is_show_league = true } = match
+    // 折叠对象
+    const fold_data = MatchFold.match_mid_fold_obj.value
+    // 赛事折叠信息
+    const fold_key = MatchFold.get_match_fold_key(match)
+    // 赛事是否显示
+    const show_card = lodash.get(fold_data[fold_key], `show_card`, false)
+    let estimateHeight;
+    if (is_show_league && show_card) { // 显示联赛  显示卡片
+      estimateHeight = 148
+    } else if (is_show_league && !show_card) { // 显示卡片 不显示联赛
+      estimateHeight = 31
+    } else if (!is_show_league && show_card)  {  // 显示联赛  不显示卡片
+      estimateHeight = 103
+    } else { // 默认
+      estimateHeight = 31
+    }
+    return estimateHeight
   }
   /**
    * @description 获取赛事红黄牌

@@ -847,6 +847,8 @@ export default {
       font-size: 0.11rem;
       display: inline-block;
       background: #7981A4;
+      min-width: 0.48rem;
+      text-align: center;
     }
     .icon{
       transform: rotate(180deg);

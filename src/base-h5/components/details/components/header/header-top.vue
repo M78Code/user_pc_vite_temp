@@ -232,9 +232,9 @@
       </div>
     </div>
     <!-- mng 是否中立场   1:是中立场，0:非中立场-->
-    <div class="midfield-container" v-if="![5, 10, 7, 8, 13].includes(Number(detail_data.csid)) && detail_data.mng * 1" >
+    <!-- <div class="midfield-container" v-if="![5, 10, 7, 8, 13].includes(Number(detail_data.csid)) && detail_data.mng * 1" >
         <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
-    </div>
+    </div> -->
   </div>
 </template>
 

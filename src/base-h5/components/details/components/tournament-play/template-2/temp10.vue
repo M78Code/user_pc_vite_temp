@@ -172,7 +172,6 @@ export default defineComponent({
   height: 0.52rem;
   background: var(--q-gb-bg-c-28);
   width: auto;
-
   &:nth-child(3n) {
     border-right: none;
   }

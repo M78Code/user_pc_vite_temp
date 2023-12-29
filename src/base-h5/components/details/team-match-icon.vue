@@ -4,7 +4,15 @@
  * @Description: 动画,视频按钮，收藏的展示
 -->
 <template>
-  <div class='team-match-icon' style="color: #fff;">
+   <div class="match-icon" v-if="detail_data.mvs > -1 || (detail_data.mms > 1 && [1,2,7,10,110].includes(detail_data.ms*1))">
+      <div class="match-icon-item" v-if="detail_data.mms > 1" @click="icon_click_muUrl">
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/live_app.svg`" alt />
+        视频直播</div>
+      <div class="match-icon-item" v-if="detail_data.mvs > -1" @click="icon_click_animationUrl">
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/animate_app.svg`" alt />
+        动画直播</div>
+    </div>
+  <div class='team-match-icon' style="color: #fff;" v-if="false">
     <div class="icon-wrap">
           <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
         <match-icon v-if="show_lvs" class="fl"
@@ -43,6 +51,9 @@ import match_icon from "src/base-h5/components/details/match-icon/match-icon-2.v
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
 import { i18n_t } from "src/boot/i18n.js";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+import { useRoute } from 'vue-router';
+import { useIconInfo } from "./match-icon/hooks";
 
 export default defineComponent({
   name: "team_match_icon",
@@ -51,11 +62,18 @@ export default defineComponent({
   },
   props: ['detail_data'],
   setup(props, evnet) {
+
+    const route = useRoute()
     const state_data = reactive({
       // 收藏|取消收藏是否请求中
       favorite_loading: false,
     });
     const get_detail_data = reactive(props.detail_data)
+
+    // 赛事id
+const match_id = computed(() => route.params.mid || get_detail_data.mid)
+
+const {icon_click_animationUrl,icon_click_muUrl,icon_click_lvs} =  useIconInfo(get_detail_data,match_id);
 
     // #TODO vuex
     // computed:{
@@ -145,7 +163,9 @@ export default defineComponent({
       get_detail_data,
       GlobalAccessConfig,
       lodash,
-      i18n_t
+      i18n_t,
+      icon_click_animationUrl,
+      icon_click_muUrl
     }
   }
 })
@@ -215,5 +235,34 @@ export default defineComponent({
 
 .fl {
   float: left;
+}
+
+.match-icon {
+  height: 26px;
+
+  width: 100%;
+  margin-bottom: 0.1rem;
+  display: flex;
+  justify-content: center;
+  .match-icon-item {
+    min-width: 0.82rem;
+    height: 0.26rem;
+    padding: 3px 6px 3px 6px;
+    border-radius: 0.48rem;
+    background: #00000080;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffffcc;
+    font-size: 12px;
+    margin-right: 0.06rem;
+    cursor: pointer;
+    img{
+      margin-right: 0.04rem;;
+      // height: 16px;
+      // width: 16px;
+    }
+  }
 }
 </style>
