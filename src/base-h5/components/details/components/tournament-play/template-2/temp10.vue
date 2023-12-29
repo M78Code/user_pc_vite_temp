@@ -152,7 +152,7 @@ export default defineComponent({
 /*************** 马数字结束 *************** -E*/
 /*************** 赔率开始 *************** -S*/
 .odds-style {
-  color: #303442;
+  color: var(--q-gb-t-c-18);
   font-size: 0.12rem;
 
   letter-spacing: 0;
