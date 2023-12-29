@@ -506,7 +506,7 @@ export default {
 
   .match-status-fixed {
     width: 100%;
-    height: 0.25rem;
+    height: 25px;
     line-height: 1;
     font-size: 0.11rem;
     padding-left: 0.17rem;
@@ -896,7 +896,7 @@ export default {
 
   /* **************联赛展示********************** -S*/
   .league {
-    height: 26px;
+    height: 25px;
     border-radius: .08rem .08rem 0 0;
     // background-color: var(--q-gb-bg-c-34) !important;
 
@@ -910,7 +910,7 @@ export default {
       .favorited-icon {
         width: 14px;
         height: 14px;
-        margin: 0 4px 0 0.11rem;
+        margin: 0 8px 0 11px;
         /* position: relative;
         top: 1px; */
         flex-shrink: 0;
@@ -927,13 +927,14 @@ export default {
       width: 100%;
       height: 100%;
       padding-right: 5px;
-      // transform: translateY(1px);
       text-overflow: ellipsis;
       flex-wrap: nowrap;
       align-items: center;
       overflow: hidden;
-      color: var(--q-color-com-fs-color-26);
+      font-size: 12px;
+      color: var(--q-gb-t-c-18);
       font-weight: 600;
+      transform: translateY(1px);
       &.no-favorited{
         padding-left: 15px;
       }
@@ -947,25 +948,11 @@ export default {
       }
 
       .league-t-wrapper {
-        line-height: 1;
         min-width: 1.18rem;
-        display: flex;
-        font-size: .12rem;
-
         &.export {
           min-width: 1.1rem;
           margin-left: 0.1rem;
         }
-      }
-
-      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
-      .match-league {
-        max-width: 2.8rem;
-        line-height: 0.14rem;
-        color: var(--q-gb-t-c-18);
-        font-family: PingFang SC;
-        font-size: 12px;
-        font-weight: 600;
       }
     }
   }
@@ -1012,7 +999,7 @@ export default {
             justify-content: flex-end;
             position: relative;
             .is-handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-34) !important;
             }
             .match-name {
               width: 1rem;
@@ -1033,7 +1020,7 @@ export default {
             justify-content: flex-start;
             position: relative;
             .is-handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-34) !important;
             }
             .match-name {
               width: 1rem;
