@@ -25,7 +25,8 @@
                   </div>
                 </div>
                 <!-- v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000"  -->
-                <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi)" class="sport-match-count">
+                <!-- 电竞收藏  暂时隐藏数量 -->
+                <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi) && !([50000].includes(item.mi) && MenuData.is_esports())" class="sport-match-count">
                   {{ item.ct || 0 }}
                 </div>
               </div>
