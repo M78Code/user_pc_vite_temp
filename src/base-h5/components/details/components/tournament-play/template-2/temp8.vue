@@ -17,20 +17,20 @@
             <div class="col-4 team-odds" @click="go_to_fun(`20033${team.teamId}`,index)" :class="[BetData.bet_oid_list.includes(play_obj && play_obj[`20033${team.teamId}`] && play_obj[`20033${team.teamId}`].oid) && 'team-odds2']">
               <div v-if="lodash.get(play_obj,`20033${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
               <div v-else>
-                {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20033${team.teamId}.ov`) / 100000,null,hsw_obj[20033])}}
+                {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20033${team.teamId}.ov`) ,null,hsw_obj[20033])}}
               </div>
             </div>
             <div class="col-4 team-odds" @click="go_to_fun(`20034${team.teamId}`,index)" :class="[BetData.bet_oid_list.includes(play_obj && play_obj[`20034${team.teamId}`] && play_obj[`20034${team.teamId}`].oid) && 'team-odds2']">
               <div v-if="lodash.get(play_obj,`20034${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
               <div v-else>
-                {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20034${team.teamId}.ov`) / 100000,null,hsw_obj[20034])}}
+                {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20034${team.teamId}.ov`) ,null,hsw_obj[20034])}}
               </div>
             </div>
             <div v-if="'1009' != sub_menu_type"
             class="col-4 team-odds" @click="go_to_fun(`20035${team.teamId}`,index)" :class="BetData.bet_oid_list.includes(play_obj && play_obj[`20035${team.teamId}`] && play_obj[`20035${team.teamId}`].oid) && 'team-odds2'">
               <div v-if="lodash.get(play_obj,`20035${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
               <div v-else>
-                {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20035${team.teamId}.ov`) / 100000,null,hsw_obj[20035])}}
+                {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20035${team.teamId}.ov`) ,null,hsw_obj[20035])}}
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@ export default defineComponent({
   },
   setup(props, evnet) {
     // 冠军/前二/前三赔率
-    const play_obj = reactive({});
+    const play_obj = ref({});
     //组装的盘口数据
     const play_obj2 = reactive({});
     // hsw对象
@@ -105,18 +105,19 @@ export default defineComponent({
     const get_odds = () => {
     // plays集合
       let play_ = lodash.get(props.item_data,'plays')
-      let play_obj = {}
+      console.log(props.item_data,'props.item_data');
+      let play_obj1 = {}
       lodash.each(play_,(item) => {
         lodash.each(lodash.get(item,'hl[0].ol'), ol_item => {
           let hpid = lodash.get(item,'hpid')
           hsw_obj[hpid] =  lodash.get(item,'hsw').toString()
           let key = hpid + '' + ol_item.teamId;
           ol_item.hpid = hpid;
-          play_obj[key] = ol_item
+          play_obj1[key] = ol_item
         })
         play_obj2[item.hpid] = item;
       })
-      play_obj.value = play_obj
+      play_obj.value = play_obj1
     };
     /**
      *@description 虚拟体育(赛马)点击详细页小方块投注

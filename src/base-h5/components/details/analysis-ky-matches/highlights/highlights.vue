@@ -29,7 +29,8 @@
 
         <div class="wonderful-list" ref="wonderfulListRef">
           <!-- 精彩回放列表 -->
-          <div class="row" v-for="(event, i) in events_list_vertical" :key="i" v-if="events_list_vertical.length > 0">
+          <template v-if="events_list_vertical.length > 0">
+            <div class="row" v-for="(event, i) in events_list_vertical" :key="i" >
             <div class="time-line"></div>
             <div class="time-line-ball"></div>
             <div :class="['item-flag', flag_icon(event.eventCode)]"></div>
@@ -175,8 +176,10 @@
                 </div>
               </template>
             </div>
-          </div>
-          <noData v-else/>
+            </div>
+          </template>
+          
+          <noData v-else which='noMatch' height='500'/>
         </div>
       </div>
 
