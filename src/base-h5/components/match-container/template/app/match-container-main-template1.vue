@@ -1266,7 +1266,7 @@ export default {
             word-break: break-all;
             color: var(--q-gb-t-c-18);
             &.is-handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-34) !important;
             }
           }
         }
