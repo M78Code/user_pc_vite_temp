@@ -12,6 +12,8 @@
     <span v-if="detail_data.ms != 110" class="base-header-font">
       <!-- 赛事阶段 1、足球；2、篮球；3、棒球；4、冰球；5、网球；6、美足； 7、斯诺克； 8、乒乓球；9、排球； 10、羽毛球； 11、手球； 12、拳击； 13、沙滩排球 -->
       <match-stage :detail_data="detail_data"></match-stage>
+         <!-- mng 是否中立场   1:是中立场，0:非中立场 复刻版在用，其他版本如有冲突判断一下-->
+      <span  class="midfield-container" >N</span>
     </span>
   </div>
 </template>
@@ -54,5 +56,19 @@ export default defineComponent({
   color: #FFFFFF;
   letter-spacing: 0;
   top: 0.32rem;
+  display: flex;
+  align-items: center;
+}
+.midfield-container{
+  background-color: var(--q-gb-t-c-1);
+  font-size: 0.12rem;
+  color: #FFFFFF;
+  display: inline-block;
+  padding: 0 2px;
+  height: 0.12rem;;
+  line-height:0.12rem; 
+  margin-left:  0.06rem;
+  margin-bottom:  0.02rem;
+  border-radius: 0.04rem;;
 }
 </style>
