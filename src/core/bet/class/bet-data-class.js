@@ -1079,12 +1079,11 @@ this.bet_appoint_ball_head= null */
     let array_list = []
     // 单关/串关 赛事列表
     let mid_list = []
-    if(this.bet_single_list){
+    if(this.is_bet_single){
       single_name = 'bet_single_list'
     } else {
       single_name = 'bet_s_list'
     }
-
     array_list = lodash_.cloneDeep(lodash_.get(this,single_name))
     // 获取单关下的赛事id 多个（单关合并）
     mid_list = array_list.map(item => item.matchId) || []
