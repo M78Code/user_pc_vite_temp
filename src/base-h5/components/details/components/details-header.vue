@@ -13,8 +13,7 @@
     <header-top :detail_data="detail_data" />
     <!--详情页视频区域(视频+动画按钮)+底部(赛事比分或者是足球犯规显示)-->
     <header-bottom
-      v-if="data.get_menu_type != 3000"
-      v-show="[1,2].includes(+data?.ms)"
+      v-if="data.get_menu_type != 3000&&[1,2].includes(+detail_data?.ms)"
       :detail_data="detail_data"
       :class="{ results_header_bottom: ['result_details', 'match_result'].includes(route.name), baseball: detail_data.csid == '3', margin_left_bottom: detail_data.mng != 1 }"
     />
