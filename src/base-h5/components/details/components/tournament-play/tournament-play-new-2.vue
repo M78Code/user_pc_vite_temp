@@ -896,13 +896,13 @@ export default defineComponent({
 }
 // 选中颜色
 :deep(.details-bg5){
-  background: var(--q-gb-bg-c-24) !important;
+  background: var(--q-gb-bg-c-37) !important;
 }
 :deep(.active-play){
-  background: var(--q-gb-bg-c-24) !important;
+  background: var(--q-gb-bg-c-37) !important;
 }
 :deep(.active){
-  background: var(--q-gb-bg-c-24) !important;
+  background: var(--q-gb-bg-c-37) !important;
 }
 /* Bug: 51232 投注项加圆角 */
 :deep(.mg-4-bg){

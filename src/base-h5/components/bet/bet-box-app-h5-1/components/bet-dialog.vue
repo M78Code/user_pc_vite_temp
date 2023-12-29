@@ -34,7 +34,6 @@ const props = defineProps({
     tooltipboxs:Boolean,
     id:''
 })
-console.log(props.item,"-----")
 const toltiptitle = computed(() => {
   return  i18n_t(`app_h5.bet.toltips.${props.id}.title`)
 })

@@ -232,7 +232,6 @@ export default defineComponent({
     height: 0.52rem;
     line-height: 0.52rem;
 
-
     padding: 0 0.14rem;
     margin-bottom: 1px;
 
