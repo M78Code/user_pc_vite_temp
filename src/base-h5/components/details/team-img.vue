@@ -5,27 +5,20 @@
 -->
 <template>
   <div class="team-img"  :style="sizeStyle" :class="size == 22? 'team-img-s': ''">
-    <!-- 字母图标 -->
-    <!-- {{url}}{{fr}}{{csid}} -->
-    <!-- <img class="img-style" v-img="([url, fr, csid])" :class="[size == 22 && `img-style-s`]" alt /> -->
-          <div
-              :style="[compute_css_obj({key:'pc-team-logo-image',position:[url,fr, csid, ]}),sizeStyle]"  
-              :class="[size == 22 && `img-style-s`]"
-              class="img-style"
-            ></div>
-            <!-- []({
-                  position: [
-                    fr,
-                    lodash.get(match_info, 'frmhn[0]'),
-                    csid,
-                  ],
-                  theme: lodash.get(UserCtr,'theme'),
-                }) -->
+    <div v-if="url"
+      :style="[compute_css_obj({key:'pc-team-logo-image',position:[url,fr,csid,type]}),sizeStyle]"
+      :class="[size == 22 && `img-style-s`]"
+      class="img-style"
+    ></div>
+    <div v-else :class="[size == 22 && `img-style-s`]"
+      class="img-style" :style="'background-image: url(' + backgroundImage + ')'">
+    </div>
   </div>
 </template>
 
 <script>
 import { compute_css_obj } from "src/output/index.js";
+import { team_mhlu_url_app_h5,team_malu_url_app_h5 } from "src/base-h5/core/utils/local-image.js"
 export default {
   name: "team_img",
   data(){
@@ -60,6 +53,9 @@ export default {
         width:"0."+this.size+'rem',
         height:"0."+this.size+'rem',
       }
+    },
+    backgroundImage(){
+      return !!this.type ? team_malu_url_app_h5 : team_mhlu_url_app_h5
     }
   }
 };
@@ -94,4 +90,5 @@ export default {
   width: 0.3rem!important;
   height: 0.3rem!important;
 }
+
 </style>
