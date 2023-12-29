@@ -292,7 +292,7 @@ template {
   }
 
   .black {
-    color: #666666
+    color: var(--q-gb-t-c-17)
   }
 
   .orange {
