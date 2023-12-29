@@ -339,6 +339,22 @@ const icon_click_animationUrl = () => {
 //     immediate: true
 //   }
 // )
+
+// Bug: 52301
+// 视频或者动画是否播放
+// 给进入详情自动播放使用
+// 0 否 1是
+const play_video = ref(1);
+
+// 播放的类型
+// lvs, muUrl, animationUrl
+const is_in_play = 'muUrl';
+
+onMounted(() => {
+  // icon_click_animationUrl()
+})
+
+
 </script>
 
 <script>
