@@ -65,7 +65,6 @@ const search_val = ref('')
 //选中的值
 const select_list = ref([])
 //组件数据
-let matchRef = ref(null);
 let matchRefOld = ref(null);
 
 let rem_1 = (window.innerWidth * 100) / 375;
@@ -87,6 +86,8 @@ const finishHandle = () => {
     open: true,
     select_list: select_list.value,
   });
+    //设置选中数据
+  UserCtr.set_league_select_list(select_list,'amidithion')
   emit("closedHandle");
 };
 /**
