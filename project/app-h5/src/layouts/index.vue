@@ -265,7 +265,7 @@ const stickyAside = (x) => {
   }
 }
 
-onMounted(async () => {
+onMounted(  () => {
     //设置当前默认版本
   set_standard_edition_fun()
   //获取当前版本默认值
@@ -285,9 +285,16 @@ onMounted(async () => {
     // 隐藏loading动画 
     useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,0);
   })
-  //当前是新系统还是旧系统
-  await api_account.get_UserVersion({h5FrontVersion:'1'})
+  // 上报用户当前使用的版本 
+  shangbao_version()
 });
+
+// 上报用户当前使用的版本 
+const shangbao_version= async ()=>{
+ //当前是新系统还是旧系统
+ await api_account.get_UserVersion({h5FrontVersion:'1'})
+
+}
 
 const mitt_list = [
   // 监听设置框状态

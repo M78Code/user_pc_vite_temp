@@ -51,14 +51,14 @@
 
     <div class="bet-footer-check">
       <span class="check-box" >
-        <span class="check-wrap relative-position"/>
+        <span class="check-wrap relative-position" :class="{'active':BetData.bet_is_accept}" @click="set_bet_is_accept()"/>
         <span>{{i18n_t('bet.bet_auto_msg_1')}}</span>
       </span>
     </div>
 
     <div>
-      <span class="check-box" >
-        <span class="check-wrap relative-position"/>
+      <span class="check-box">
+        <span class="check-wrap relative-position active"/>
         <span>{{ i18n_t('bet.common_amount') }}</span>
       </span>
     </div>
@@ -111,8 +111,13 @@ const set_retain_selection = () => {
         useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
     }, 200);
 }
-
-
+ 
+// 自动接受更好的赔率
+const set_bet_is_accept = () => {
+    console.log(123)
+    let state = !BetData.bet_is_accept
+    BetData.set_bet_is_accept(state)
+}
 </script>
 
 <style scoped lang="scss">
@@ -218,7 +223,7 @@ const set_retain_selection = () => {
 
   &.active {
     border: none;
-    background: var(--q-gb-bg-c-16);
+    background: var(--q-gb-t-c-16);
 
     &::before {
       position: absolute;
