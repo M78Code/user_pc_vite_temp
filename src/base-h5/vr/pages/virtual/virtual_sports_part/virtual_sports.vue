@@ -834,11 +834,11 @@ export default {
     color: var(--q-gb-t-c-18);
     font-weight: 600;
     padding-left: 0.07rem;
-  }
-  .status{
+  }.status{
     .num {
-      color: var(--q-gb-t-c-24);
+      color: var(--q-gb-t-c-18);
     }
+  
     .state{
       margin: 0 5px;
       color: #fff;
@@ -943,7 +943,7 @@ export default {
       &.active {
         background: var(--q-gb-bg-c-24);
         .teams {
-          color: #127DCC;
+          color: var(--q-gb-t-c-30);
         }
       }
       .teams {
