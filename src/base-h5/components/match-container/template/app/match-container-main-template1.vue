@@ -290,7 +290,7 @@
               <!-- 展示三行的不展示比分 -->
               <template v-if="![1, 4, 11, 14, 15, 16].includes(+match.csid)">
                 <div class="score-content">
-                  <ScoreList :class="[match.csid == 7 && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
+                  <ScoreList :class="[match.csid == 8 && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
                 </div>
               </template>
             </div>
@@ -1414,10 +1414,6 @@ export default {
         display: inline-block;
         height: 100%;
         line-height: .23rem;
-        &:last-child {
-          position: absolute;
-          right: .04rem;
-        }
       }
     }
     .score-se-inner{
@@ -1448,6 +1444,12 @@ export default {
         overflow:hidden;
         text-align:right;
         padding-right: .32rem;
+        .items-start {
+          &:last-child {
+            position: absolute;
+            right: .02rem;
+          }
+        }
       }
     }
   }
