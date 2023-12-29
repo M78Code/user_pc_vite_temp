@@ -20,7 +20,7 @@
     <!-- 列表骨架屏 -->
     <!-- <SList v-if="show_skeleton_screen" :loading_body="true" /> -->
     <!-- 赛事列表 -->
-    <match-container />
+    <MatchContainer />
     <!-- 回到顶部按钮组件 -->
     <!-- <scroll-top v-show="list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top" @back-top="back_top" /> -->
   </div>
