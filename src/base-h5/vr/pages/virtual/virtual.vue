@@ -460,7 +460,7 @@ export default {
         left: 50%;
         margin-left: -0.8rem;
         margin-top: -0.44rem;
-        color: var(--q-gb-t-c-20);
+        color: var(--q-gb-t-c-18);
       }
 
       /*  刷新按钮 */
