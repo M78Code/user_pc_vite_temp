@@ -2,7 +2,7 @@
   <div class="full-height">
        <!-- 页面路由开始 -->
        <appload v-if="init_load" />
-       页面路由开始 
+      
   </div>
 </template>
 <script>

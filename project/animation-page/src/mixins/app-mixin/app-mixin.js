@@ -37,6 +37,15 @@ export default {
     '$route'(to, from) {
       watch_route_fun(to, from);
     },
+    init_load(val){
+      if(val&&document.getElementById("loading-root-ele")){
+ 
+          document.getElementById("loading-root-ele").style.visibility = "hidden";
+    
+        // 隐藏loading动画背景
+        useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD,1)
+      }
+    }
   },
  
   

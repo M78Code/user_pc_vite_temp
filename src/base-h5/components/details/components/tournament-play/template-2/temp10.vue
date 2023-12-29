@@ -170,7 +170,7 @@ export default defineComponent({
 
 .item-height {
   height: 0.52rem;
-  background: #F2F2F6;
+  background: var(--q-gb-bg-c-28);
   width: auto;
 
   &:nth-child(3n) {
