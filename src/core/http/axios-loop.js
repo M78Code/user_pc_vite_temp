@@ -59,6 +59,7 @@ export default async function axios_api_loop(opts = {}) {
     if (error_codes.includes(code)) {
       if (loop_count >= max_loop) {
         fun_catch && fun_catch(res);
+        fun_finally && fun_finally();
       } else {
         opts.timer = setTimeout(() => {
           axios_api_loop(opts);
@@ -66,18 +67,17 @@ export default async function axios_api_loop(opts = {}) {
       }
     } else {
       fun_then && fun_then(res);
+      fun_finally && fun_finally();
     }
   } catch (e) {
-    console.log("axios_loop test catch", e);
     clearTimeout(opts.timer);
     if (loop_count >= max_loop) {
       fun_catch && fun_catch(e);
+      fun_finally && fun_finally();
     } else {
       opts.timer = setTimeout(() => {
         axios_api_loop(opts);
       }, timers);
     }
-  } finally{
-    fun_finally && fun_finally();
   }
 }
