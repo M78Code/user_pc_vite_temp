@@ -1721,11 +1721,12 @@ export default {
   .flag-chuan-icon {
     margin-left: .1rem;
     padding: 0 .01rem;
-    height: 0.16rem;
-    width: 0.16rem;
+    height: 0.2rem;
+    width: 0.2rem;
     line-height: .16rem;
     border-radius: .03rem;
     margin-top: 0.6rem;
+    background: cover;
     &.special-lang {
       margin-left: .06rem;
     }
