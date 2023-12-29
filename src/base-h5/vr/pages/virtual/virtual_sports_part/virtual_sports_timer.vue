@@ -166,7 +166,7 @@ export default {
       this.timer_format = `${minutes_format}:${seconds_f_format}`;
       this.$forceUpdate();
       // console.error("virtual_sports_timer.vue-> draw_timer_by_second() ->157)this.timer_format", `${minutes_format}:${seconds_f_format}`);
-      console.error("virtual_sports_timer.vue-> draw_timer_by_second() ->157)this.timer_format", this.timer_format);
+      // console.error("virtual_sports_timer.vue-> draw_timer_by_second() ->157)this.timer_format", this.timer_format);
       this.path_d = this.get_path_d(remaining_time);
       if(remaining_time < 1000){
         this.$emit("time_ended",this.mid);
