@@ -7,8 +7,8 @@ import lodash from 'lodash'
 import { api_common, api_match_list, api_match, api_home, api_analysis } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import MatchFold from 'src/core/match-fold'
-import MatchCollect from 'src/core/match-collect'
+import MatchFold from 'src/core/match-fold/index.js'
+import MatchCollect from 'src/core/match-collect/index.js'
 import { MenuData } from "src/output/module/menu-data.js"
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
