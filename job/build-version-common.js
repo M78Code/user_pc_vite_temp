@@ -111,7 +111,14 @@ export const PROJECT_MAP_WITH_DESCRIPTION = {
    animation: {
     value:  "animation",
     description:"自研动画   "
+   },  
+   'animation-page': {
+    value:  "animation-page",
+    description:"L01动画   "
    },   
+ 
+
+   
    "client-sdk-dev": {
     value:  "client-sdk",
     description:"SDK 本地开发调试  "
