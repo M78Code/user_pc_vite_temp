@@ -136,7 +136,7 @@ export const details_main = () => {
     // 设置玩法集固定
     get_tab_fix: "get_tab_fix",// TODO: 待处理
     // 赛果标识
-    get_menu_type: lodash.get(MenuData, 'top_menu_title.mi'),
+    get_menu_type: MenuData.is_esports(),
     // 获取列表页当前选中时间
     get_current_menu: "get_current_menu",// TODO: 待处理
     // 是否从直播进入详情
@@ -515,7 +515,7 @@ export const details_main = () => {
    */
   const get_match_details = (params) => {
     let api =
-      state_data.get_menu_type == 2000
+      state_data.get_menu_type
         ? api_common.get_DJ_matchDetail_MatchInfo
         : api_common.get_matchDetail_MatchInfo;
     api(params)
@@ -634,7 +634,7 @@ export const details_main = () => {
         state_data.math_list_data = store_data.list;
       }
     }
-    if (state_data.get_menu_type == 2000) {
+    if (state_data.get_menu_type) {
       Object.assign(params, { isESport: 1 });
     }
     /**
