@@ -13,6 +13,7 @@
     <div v-else :class="[size == 22 && `img-style-s`]"
       class="img-style" :style="'background-image: url(' + backgroundImage + ')'">
     </div>
+    <!-- <div class="team-icon" v-if="!lodash.isEmpty(match) && !lodash.get(match,'mhlu[0]')" :style="compute_css_obj({key: 'h5-home-icon'})"></div> -->
   </div>
 </template>
 
@@ -77,6 +78,7 @@ export default {
   left: 0;
   background-repeat: no-repeat;
   background-position-y: center !important;
+  background-size: cover;
 }
 
 .team-img-s {
@@ -91,4 +93,18 @@ export default {
   height: 0.3rem!important;
 }
 
+.team-image{
+  width: 0.44rem;
+  height: 0.44rem;
+  // margin-top: 0.11rem;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &-icon{
+    width: 0.44rem;
+    height: 0.44rem;
+  }
+}
 </style>
