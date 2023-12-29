@@ -941,7 +941,7 @@ export default {
       font-size: .12rem;
       padding: .02rem .12rem;
       &.active {
-        background: var(--q-gb-bg-c-24);
+        background: var(--q-gb-bg-c-37);
         .teams {
           color: var(--q-gb-t-c-30);
         }
