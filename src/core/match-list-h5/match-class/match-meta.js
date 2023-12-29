@@ -194,7 +194,7 @@ class MatchMeta {
       const tn = BaseData?.tids_map[`tid_${match.tid}`]?.tn
       // 赛事其他操作
       this.match_assistance_operations(target, index)
-      return { ...target, tn, csna, is_meta: true }
+      return { ...target, tn, csna, is_meta: true, estimateHeight: MatchUtils.get_default_estimateHeight(match) }
     })
     // 设置 元数据计算 流程
     MatchResponsive.set_is_compute_origin(true)
@@ -1123,10 +1123,11 @@ class MatchMeta {
     // MatchFold.clear_fold_info()
     MatchResponsive.clear_ball_seed_count()
     target_list.forEach((t, i) => {
+      this.match_assistance_operations(t, i)
       Object.assign(t, {
+        estimateHeight: MatchUtils.get_default_estimateHeight(t),
         is_show_league: MatchUtils.get_match_is_show_league(i, target_list)
       })
-      this.match_assistance_operations(t, i)
     })
     // 不需要调用赔率接口
     MatchDataBaseH5.set_list(target_list)
@@ -1184,14 +1185,15 @@ class MatchMeta {
 
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, target_data.map(t => t.mid))
-      const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, target_data)
 
-      Object.assign(match, params, {
-        is_show_ball_title,
-        is_show_league: MatchUtils.get_match_is_show_league(index, target_data)
-      })
       //  赛事操作
       this.match_assistance_operations(match, index)
+
+      Object.assign(match, params, {
+        estimateHeight: MatchUtils.get_default_estimateHeight(match),
+        is_show_league: MatchUtils.get_match_is_show_league(index, target_data),
+        is_show_ball_title: MatchUtils.get_match_is_show_ball_title(index, target_data),
+      })
       return match
     })
 
@@ -1322,16 +1324,8 @@ class MatchMeta {
       const fold_key = MatchFold.get_match_fold_key(match)
       // 赛事是否显示
       const show_card = lodash.get(fold_data[fold_key], `show_card`)
-      // 增加 estimateHeight； estimateHeight 关系 不大， 就算不对 后续会主动修复， estimateHeight 只作为辅助值， 辅助初始渲染，偏差没那么大
-      if (is_show_league && show_card) { // 显示联赛  显示卡片
-        match.estimateHeight = 148
-      } else if (is_show_league && !show_card) { // 显示卡片 不显示联赛
-        match.estimateHeight = 31
-      } else if (!is_show_league && show_card)  {  // 显示联赛  不显示卡片
-        match.estimateHeight = 103
-      } else { // 默认
-        match.estimateHeight = 100
-      }
+      // 默认高度
+      match.estimateHeight = MatchUtils.get_default_estimateHeight(match)
       // if (is_show_league || show_card) this.current_matchs.push(match)
       return is_show_league || show_card
     })
