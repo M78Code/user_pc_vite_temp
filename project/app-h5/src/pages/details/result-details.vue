@@ -71,6 +71,7 @@ import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, Ma
 import { details_main } from "./details.js";
 
 let route = useRoute()
+let router = useRouter()
 const { get_show_video, change_fullscreen, initEvent, on_listeners, off_listeners } = details_main()
 const DetailsMainState = details_main()
 // 赛果详情初始化数据仓库数据
@@ -253,8 +254,7 @@ const get_match_list = (params) => {
       math_list_data.value = store_data.list;
     }
   }
-  debugger
-  console.log();
+  
   if(get_menu_type.value && [100,101,102,103,104].includes(+result_detail_data.value?.csid)){
     params.isESport = 1
   }else{
