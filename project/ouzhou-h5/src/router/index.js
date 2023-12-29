@@ -67,11 +67,6 @@ const router = createRouter({
           component: () => import("../pages/virtual/index.vue"),
         },
         {
-          path: "/esports", // 电竞
-          name: "esports_sports",
-          component: () => import("../pages/esports/index.vue"),
-        },
-        {
           path: "/collect", // 收藏
           name: "collect",
           component: () => import("../pages/collect/index.vue"),
@@ -150,18 +145,6 @@ const router = createRouter({
             keepAlive: true // 需要缓存
           },
         },
-        //测试用
-        {
-          path: "/observer-wrapper",
-          name: "observer-wrapper",
-          component: () => import("../pages/home/test.vue"),
-        },
-        //测试用
-        {
-          path: "/observer",
-          name: "observer",
-          component: () => import("../pages/home/test1.vue"),
-        }
       ],
     },
     //搜索

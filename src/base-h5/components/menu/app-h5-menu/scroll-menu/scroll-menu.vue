@@ -25,7 +25,8 @@
                   </div>
                 </div>
                 <!-- v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000"  -->
-                <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi)" class="sport-match-count">
+                <!-- 电竞收藏  暂时隐藏数量 -->
+                <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi) && !([50000].includes(item.mi) && MenuData.is_esports())" class="sport-match-count">
                   {{ item.ct || 0 }}
                 </div>
               </div>
@@ -81,6 +82,8 @@ const emits = defineEmits(['changeList','changeMenu'])
  * 二级菜单事件
 */
 function set_menu_lv2(item = {},event) {
+  //重置全部状态
+  MatchFold.set_all_csid_fold_status(false)
   // 重置折叠对象
   MatchFold.clear_fold_info()
   if (props.current_mi === item.mi) return
