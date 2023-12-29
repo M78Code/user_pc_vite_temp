@@ -14,7 +14,8 @@
         >
           <div  class="row">
             <div class="temp9-sort" :class="`virtual-num-${index+1} csid-${[1010].includes(sub_menu_type) ? '1002' : sub_menu_type} ${[1010].includes(sub_menu_type) ? `motorcycle-${index+1}` : ''}`"></div>
-            <div class="temp9-name">{{item.on}}</div>
+            <!-- 赛马赔率接口没有返回on，需从ot取名字 -->
+            <div class="temp9-name">{{ teams && teams[item.ot-1] }}</div>
           </div>
           <div class="temp9-ov">
             <div v-if="item.os != 2">{{get_odds(item)}}</div>
@@ -39,7 +40,7 @@ import { compute_value_by_cur_odd_type } from "src/output/index.js"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5} from "src/output/index.js"
 export default defineComponent({
   name: "temp9",
-  props: ["item_data", "title","csid"],
+  props: ["item_data", "title", "csid", "teams"],
   setup(props, evnet) {
     let data = reactive({
       // 冠军投注项集合

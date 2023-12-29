@@ -145,7 +145,7 @@ const list = computed(() => {
     return filter_list;
 })
 
-let select = ref(list.value[0].label);
+let select = ref(list.value[0]?.label);
 
 /**
  * 回调
