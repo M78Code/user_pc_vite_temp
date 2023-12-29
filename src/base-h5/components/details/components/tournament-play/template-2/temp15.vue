@@ -19,7 +19,7 @@
             <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
               <template v-if="ol_item.os == 1">
                 <div @click="go_to_bet(ol_item)"
-                     :class="[{'win':calc_win(ol_item.result),'active-play':BetData.bet_oid_list.includes(ol_item.id_), 'border-top': index2 > 2},name_]"
+                     :class="[{'win':calc_win(ol_item.result),'active-play':BetData.bet_oid_list.includes(ol_item.oid), 'border-top': index2 > 2},name_]"
                      :key="index2" class="play-box">
                   <div class="remark">{{olitem_name(ol_item)}}</div>
                   <div>
@@ -238,6 +238,8 @@ export default defineComponent({
     color:#7981A4;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     margin:0.04rem;
+    flex-shrink: 0;
+    flex-grow: 1;
   }
 
   .play-box-lock {

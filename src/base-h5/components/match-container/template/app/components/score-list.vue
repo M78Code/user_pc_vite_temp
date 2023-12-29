@@ -51,7 +51,7 @@
             </template>
           </div>
           <!-- <div class="row items-center basket-ball" :class="{ 'b-score-wrapper': match.csid != 14 }" -->
-          <div class="row items-center " :class="{ 'b-score-wrapper': match.csid != 14 }" v-if="[2, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
+          <div class="row items-center whitespace-nowrap" :class="{ 'b-score-wrapper': match.csid != 14 }" v-if="[2, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
             <!--分差-->
             <div class="row color18" style="margin-right:.2rem" v-if="[2].includes(+match.csid) && get_total_scores">
               <div style="margin-right:.03rem">
@@ -747,5 +747,14 @@ onUnmounted(() => {
     color: var(--q-gb-t-c-18);
   }
   /* ******比分区域样式********* -E*/
+}
+
+.row {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
 }
 </style>

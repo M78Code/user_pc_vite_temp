@@ -60,7 +60,7 @@
       <div v-if="item&&item.length>0">
         <div class="table-score" >
           <div class="standings_technical_header">
-            <div class="col1 flex_start">{{ i18n_t('analysis_football_matches.age') }}11111</div>
+            <div class="col1 flex_start">{{ i18n_t('analysis_football_matches.age') }}</div>
             <div class="col1">{{ i18n_t('analysis_football_matches.Tactical_division') }}</div>
             <div class="col1">{{ i18n_t('analysis_football_matches.Points_per_game') }}</div>
             <div class="col-go-war">{{ i18n_t('analysis_football_matches.Go_to_war') }}</div>
@@ -202,11 +202,12 @@ import { i18n_t } from "src/boot/i18n.js";;
           align-items: center;
           justify-content: center;
           font-size: 0.12rem;
-          color: var(--q-color-com-fs-color-26) !important;
+          color: var(--q-analysis-text-color-20)!important;
         }
       }
 
       .col1 {
+        flex: 1;
         justify-content: center !important;
 
         &.flex_start {

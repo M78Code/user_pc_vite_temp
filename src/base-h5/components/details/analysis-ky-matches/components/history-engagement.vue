@@ -278,7 +278,7 @@ const get_detail_data = ref({
       }
     }
     .team-item {
-      border-bottom: 1px solid var(--q-analysis-text-color-24);
+      border-bottom: 1px solid var(--q-gb-bd-c-4);
       // background-color: var(--q-analysis-bg-color-1);
       div {
         color: var(--q-analysis-text-color-20);
