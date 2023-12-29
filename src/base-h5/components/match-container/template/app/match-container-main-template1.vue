@@ -1414,6 +1414,10 @@ export default {
         display: inline-block;
         height: 100%;
         line-height: .23rem;
+        &:last-child {
+          position: absolute;
+          right: .04rem;
+        }
       }
     }
     .score-se-inner{
@@ -1438,11 +1442,12 @@ export default {
     :deep(.scroll-container-w){
       .score-fle-container-1{
         display: block;
-        width: 1.06rem;
+        width: 1.18rem;
         text-overflow:ellipsis;
         white-space:nowrap;
         overflow:hidden;
         text-align:right;
+        padding-right: .32rem;
       }
     }
   }
