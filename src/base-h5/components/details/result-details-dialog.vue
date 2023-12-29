@@ -241,4 +241,8 @@ onUnmounted(() => {
 
 .result-details-dialog-bg {
   background-color: #f7f7f7;
-}</style>
+}
+:deep(.marquee-wrap){
+  color: var(--q-gb-t-c-18);
+}
+</style>
