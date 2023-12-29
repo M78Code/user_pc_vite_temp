@@ -14,8 +14,14 @@
       <template v-for="(item, index) in show_data_orderVOS" :key="index">
         <div class="items" v-if="item.isBoolean">
           <div class="top">
-            <p>{{item.matchName}}<template v-if="item.sportId == 1001">{{item.matchDay}}&ensp;{{item.batchNo}}</template></p>
-            <span>{{ item.oddFinally }}</span>
+            <p>
+              <template v-if="!([1011, 1002, 1010, 1009].includes(+item.sportId) && calc_num && calc_num.length > 1)">
+                <!-- 预约的 显示playOptionName, 其他显示 marketValue -->
+                {{(BetRecordClass.selected == 1 ||  BetRecordClass.selected == 2) ? item.playOptionName: item.marketValue}}
+              </template>
+            </p>
+            <!-- 优化后的赔率 -->
+            <span v-if="!data_b.acCode"><span>{{format_odds(item.oddFinally, item.sportId)}}</span></span>
           </div>
           <p class="list">
             <span>{{item.playName}}</span>
@@ -60,7 +66,7 @@ import { bet_result } from "src/core/bet-record/util.js";
 import { i18n_t } from 'src/output/index.js'
 import { format_money2 } from 'src/output/index.js'
 import { itemFooter } from "src/base-h5/components/common/cathectic-item/app-h5/index";
-import { formatTime, compute_local_project_file_path } from 'src/output/index.js'
+import { formatTime, compute_local_project_file_path, format_odds } from 'src/output/index.js'
 //按钮名字
 let btn_text = ref(i18n_t("bet_record.pack_down"))
 //是否展开
@@ -131,6 +137,15 @@ const toggle_box = () => {
     return { text, color }
     
   }
+
+  //虚拟赛马计算标识数量
+  const calc_num = computed(() => {
+    if (/[0-9]/.test(props.data_b.playOptions)) {
+      return props.data_b.playOptions.split('/')
+    } else {
+      return false
+    }
+  })
 
 
 </script>
