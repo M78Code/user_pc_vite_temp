@@ -4,7 +4,7 @@
 
 <template>
   <template v-if="is_base_virtual_list">
-    <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate" :estimateHeight="103" >
+    <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate">
       <template #default="{ item, index }">
         <!-- 赛果详情精选赛事 -->
         <template v-if="is_results">
