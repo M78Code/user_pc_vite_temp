@@ -1414,10 +1414,6 @@ export default {
         display: inline-block;
         height: 100%;
         line-height: .23rem;
-        &:last-child {
-          position: absolute;
-          right: .04rem;
-        }
       }
     }
     .score-se-inner{
@@ -1448,6 +1444,12 @@ export default {
         overflow:hidden;
         text-align:right;
         padding-right: .32rem;
+        .items-start {
+          &:last-child {
+            position: absolute;
+            right: .04rem;
+          }
+        }
       }
     }
   }
