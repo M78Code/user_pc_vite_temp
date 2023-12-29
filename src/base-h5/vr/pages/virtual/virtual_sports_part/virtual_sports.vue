@@ -847,6 +847,8 @@ export default {
       font-size: 0.11rem;
       display: inline-block;
       background: #7981A4;
+      min-width: 0.48rem;
+      text-align: center;
     }
     .icon{
       transform: rotate(180deg);
@@ -941,7 +943,8 @@ export default {
       font-size: .12rem;
       padding: .02rem .12rem;
       &.active {
-        background: var(--q-gb-bg-c-24);
+        background: var(--q-gb-bg-c-37);
+        box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.04);
         .teams {
           color: var(--q-gb-t-c-30);
         }

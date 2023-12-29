@@ -111,7 +111,7 @@
         <template v-if="is_playing_replay">
           <!-- 回放视频标识logo -->
           <div class="replay-logo-wrap" :class="{'replay-logo-wrap-portrait': !get_is_hengping}">
-            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details/replay_logo.svg`" />
+            <img class="replay-logo-svg" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details/replay_logo.svg`" />
           </div>
 
           <div v-show="is_controller_show" class="highlights-controller" :class="{'bottom-controller-bar': !get_is_hengping}">
@@ -2360,6 +2360,10 @@ export default {
     top: 50%;
     left: 0.4rem;
     transform: translateY(calc(-50% - 0.6rem));
+  }
+  .replay-logo-svg {
+    display: block;
+    width: 0.6rem;
   }
 }
 .close-video-wrap {

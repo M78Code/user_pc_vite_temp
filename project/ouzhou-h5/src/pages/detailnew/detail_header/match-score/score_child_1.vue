@@ -42,8 +42,10 @@ const scoreObject = computed(()=>{
     flex-wrap: nowrap;
     flex-shrink: 0;
     grid-template-columns: repeat(5, 1fr);
-    font-size: 16px;
-    font-weight: bold;
+    font:{
+        size: .14rem;
+        weight: bold;
+    }
     .score_item{
         width: 100%;
         height: 100%;

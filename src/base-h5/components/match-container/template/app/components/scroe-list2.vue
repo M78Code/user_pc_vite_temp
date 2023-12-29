@@ -659,7 +659,7 @@
         }
   
         .b-score-wrapper {
-          margin-left: 0.05rem;
+          // margin-left: 0.05rem;
           color: var(--q-gb-t-c-18);
             font-family: PingFang SC;
             font-size: 11px;

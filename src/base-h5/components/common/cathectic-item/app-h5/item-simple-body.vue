@@ -16,7 +16,7 @@
     </div>
     <div class="body-info">
       <div>
-          {{ i18n_t('app_h5.cathectic.bets') }}:[{{Item.sportName}}]:{{ i18n_t(`matchtype.${Item.matchType}`) }}{{Item.playName}} - {{i18n_t(`odds.${Item.marketType}`)}}
+          {{ i18n_t('app_h5.cathectic.bets') }}:[{{Item.sportName}}]:{{ i18n_t(`matchtype.${Item.matchType}`) }} {{Item.playName}} - {{i18n_t(`odds.${Item.marketType}`)}}
       </div>
       <span>
         <span>

@@ -60,11 +60,6 @@ const router = createRouter({
           component: () => import("src/base-h5/vr/pages/virtual/virtual.vue"),
         },
         {
-          path: "/esports", // 电竞
-          name: "esports_sports",
-          component: () => import("../pages/esports/index.vue"),
-        },
-        {
           path: "/collect", // 收藏
           name: "collect",
           component: () => import("../pages/collect/index.vue"),

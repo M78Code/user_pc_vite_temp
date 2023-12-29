@@ -995,6 +995,12 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 获取投注项名称
     let handicap = get_handicap(ol_obj,hl_obj,mid_obj,other)
 
+    let playOptionName = ol_obj.on
+    // 详情投注项
+    if(other.is_detail){
+        playOptionName = ol_obj.otv
+    }
+
     const bet_obj = {
         sportId: mid_obj.csid, // 球种id
         matchId: mid_obj.mid,  // 赛事id
@@ -1009,8 +1015,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         sportName: mid_obj.csna || '', //球种名称
         matchType,  //赛事类型
         matchName: mid_obj.tn || '', //赛事名称
-        playOptionName: ol_obj.on || ol_obj.ott || '', // 投注项名称
-        playOptions: ol_obj.on || ol_obj.ott || '',  // 投注项
+        playOptionName, // 投注项名称
+        playOptions: ol_obj.ot,  // 投注项
         tournamentLevel: mid_obj.tlev, //联赛级别
         playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
         playName: set_play_name(play_config), //玩法名称
@@ -1039,14 +1045,13 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
 
-     // 获取当前的盘口赔率
-     let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
-     // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
-     let hsw = lodash_.get(bet_obj,'odds_hsw','')
-     if(!hsw.includes(cur_odds)){
+    // 获取当前的盘口赔率
+    let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
+    // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
+    let hsw = lodash_.get(bet_obj,'odds_hsw','')
+    if(!hsw.includes(cur_odds)){
         bet_obj.marketTypeFinally = 'EU'
-     }
-
+    }
 
     // 冠军 
     if(bet_obj.bet_type == 'guanjun_bet'){
@@ -1279,67 +1284,74 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
     let lsit_mark = [2,173,38,114]
     // 特殊玩法 
     let list_head = [359,31,340,383,13,102,351,101,107,347,105,106,345,346,348,349,353,360,384]
-    // 详情
-    if(other.is_detail){
-        // 有球头 球头需要变色
-        if(hl_obj.hv){
-            text = ol_obj.ott || '' 
-            hv = ol_obj.on || ''
-        }else{
-            text = `${ol_obj.ott || ''} ${ol_obj.on || ''}`  
-        }
-        if(detail_mark.includes(ol_obj._hpid*1) && ol_obj.ot == 'X' ){
-            text = `${ol_obj.otv || ''}` 
-        }
-        // 
-        if(list_head.includes(ol_obj._hpid*1)){
-            text = `${ol_obj.otv || ''}` 
-        }
 
+    // vr 体育的 赛狗 赛马 泥地摩托  摩托
+    if(other.bet_type == 'vr_bet' && ['1002','1011','1009','1010'].includes(ol_obj._csid) ){
+        text = lodash_.get(mid_obj,`teams[${ol_obj.ot - 1}]`,'')
     }else{
-        let a = '' ,b = '' 
-        b = ol_obj.on 
-        // vr 赛事 特殊处理
-        if(other.bet_type == 'vr_bet'){
+        // 详情
+        if(other.is_detail){
+            // 有球头 球头需要变色
+            if(hl_obj.hv){
+                text = ol_obj.ott || '' 
+                hv = ol_obj.on || ''
+            }else{
+                text = `${ol_obj.ott || ''} ${ol_obj.on || ''}`  
+            }
+            if(detail_mark.includes(ol_obj._hpid*1) && ol_obj.ot == 'X' ){
+                text = `${ol_obj.otv || ''}` 
+            }
+            // 
+            if(list_head.includes(ol_obj._hpid*1)){
+                text = `${ol_obj.otv || ''}` 
+            }
 
-            if(ol_obj.ots == 'T1'){
-                a = mid_obj.teams[0] || ''
-            }
-            if(ol_obj.ots == 'T2'){
-                a = mid_obj.teams[1] || ''
-            }
-        } else {
-            if(ol_obj.ots == 'T1'){
-                a = mid_obj.mhn 
-            }
-            if(ol_obj.ots == 'T2'){
-                a = mid_obj.man
-            }
-        }
-      
-        // 加入是否有球头判断 
-        if(['T1','T2'].includes(ol_obj.ots) && !hl_obj.hv){
-            b = ''
-        }
-
-        if(lsit_mark.includes(ol_obj._hpid*1)){
-            a = ''
-        }
-        // 首页大小类玩法
-        if(['Over',"Under"].includes(ol_obj.ot)){
-            // h5数据格式和pc不一样
-            a = ol_obj.on.split(' ')[0] || ''
-            b = ol_obj.on.split(' ')[1] || ''
-        }
-            
-        // 平 不变色
-        if(ol_obj.ot == 'X'){
-            text = `${b || '' }` 
         }else{
-            text = a
-            hv = b
+            let a = '' ,b = '' 
+            b = ol_obj.on 
+            // vr 赛事 特殊处理
+            if(other.bet_type == 'vr_bet'){
+
+                if(ol_obj.ots == 'T1'){
+                    a = mid_obj.teams[0] || ''
+                }
+                if(ol_obj.ots == 'T2'){
+                    a = mid_obj.teams[1] || ''
+                }
+            } else {
+                if(ol_obj.ots == 'T1'){
+                    a = mid_obj.mhn 
+                }
+                if(ol_obj.ots == 'T2'){
+                    a = mid_obj.man
+                }
+            }
+        
+            // 加入是否有球头判断 
+            if(['T1','T2'].includes(ol_obj.ots) && !hl_obj.hv){
+                b = ''
+            }
+
+            if(lsit_mark.includes(ol_obj._hpid*1)){
+                a = ''
+            }
+            // 首页大小类玩法
+            if(['Over',"Under"].includes(ol_obj.ot)){
+                // h5数据格式和pc不一样
+                a = ol_obj.on.split(' ')[0] || ''
+                b = ol_obj.on.split(' ')[1] || ''
+            }
+                
+            // 平 不变色
+            if(ol_obj.ot == 'X'){
+                text = `${b || '' }` 
+            }else{
+                text = a
+                hv = b
+            }
         }
     }
+    
 
     return {
         text,
