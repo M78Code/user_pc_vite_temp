@@ -220,7 +220,7 @@ const route = useRoute()
 
     .heade {
       position: relative;
-      background-color: var(--q-analysis-bg-color-1);
+      background: var(--q-gb-bg-c-18);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -250,36 +250,36 @@ const route = useRoute()
         text-align: center;
         font-size: 0.14rem;
         border-radius: 0.08rem;
-        background: var(--q-analysis-bg-color-1);
+        // background: var(--q-analysis-bg-color-1);
         color: var(--q-analysis-text-color-20);
         &:nth-child(2) {
           position: relative;
 
-          &:before {
-            content: '';
-            width: 0.01rem;
-            height: 0.14rem;
-            position: absolute;
-            left: 0;
-            top: 0.08rem;
-            background: var(--q-analysis-bg-color-18);
-          }
+          // &:before {
+          //   content: '';
+          //   width: 0.01rem;
+          //   height: 0.14rem;
+          //   position: absolute;
+          //   left: 0;
+          //   top: 0.08rem;
+          //   background: var(--q-analysis-bg-color-18);
+          // }
 
-          &:after {
-            content: '';
-            width: 0.01rem;
-            height: 0.14rem;
-            position: absolute;
-            right: 0;
-            top: 0.08rem;
-            background: var(--q-analysis-bg-color-18);
-          }
+          // &:after {
+          //   content: '';
+          //   width: 0.01rem;
+          //   height: 0.14rem;
+          //   position: absolute;
+          //   right: 0;
+          //   top: 0.08rem;
+          //   background: var(--q-analysis-bg-color-18);
+          // }
         }
 
         &.is-active {
           height: 0.29rem;
-          background: var(--q-gb-bg-c-13);
-          color: var(--q-analysis-text-color-20);
+          background: var(--q-gb-bg-c-28);
+        color: var(--q-analysis-text-color-20);
           &:nth-child(2) {
             &:before, &:after {
               display: none;

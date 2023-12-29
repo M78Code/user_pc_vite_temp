@@ -114,7 +114,6 @@ const end = computed(() => {
   let contentDomTotalHeight = positionDataArr[endPos]?.height
   // 获取视口高度
   const viewPortHeight = scrollerContainerRefHeight.value
-  // console.log(contentDomTotalHeight, viewPortHeight)
   // 从start位置开始遍历positionDataArr的同时，统计数据dom节点的累计高度，直至累计高度超过了视口高度
   while (contentDomTotalHeight < viewPortHeight) {
     endPos++
