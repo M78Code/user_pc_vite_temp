@@ -42,7 +42,7 @@
         ></result-details-dialog>
       </q-dialog>
     <!--玩法集cagetory-->
-    <div :class="[get_detail_data.csid == 3 ?'baseball-play-pad':'play-pad', 'h-full']">
+    <div :class="[result_detail_data?.csid == 3 ?'baseball-play-pad':'play-pad', 'h-full']">
       <router-view v-if="loading"/>
     </div>
     <!--赛果详情骨架屏-->
@@ -101,15 +101,6 @@ const get_current_menu = computed(() =>{
 })
 const get_menu_type = computed(() =>{
   return MenuData.get_results_type() ==1 
-})
-const get_detail_data = computed(() =>{
-  return ""
-})
-const get_goto_detail_matchid = computed(() =>{
-  return ""
-})
-const get_curr_sub_menu_type = computed(() =>{
-  return ""
 })
 const is_match_result = computed(() =>{
   return ['result_details', 'match_result'].includes(route.name)

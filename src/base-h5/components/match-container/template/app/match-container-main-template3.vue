@@ -1163,7 +1163,7 @@ export default {
           align-items: center;
           font-size: 0.1rem;
           border-radius: 0.02rem;
-          color: #fff;
+          color: var(--q-gb-t-c-14);
           &.yellow {
             background: #FFA800;
           }
