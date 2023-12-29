@@ -687,7 +687,7 @@ onUnmounted(() => {
         margin: 0 3px;
       }
       .total-games{
-        color: var(--sys-brand-primary-primary-300, #74C4FF) !important;
+        color: var(--q-gb-t-c-1) !important;
 
       }
       .score-value {}

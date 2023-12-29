@@ -1,26 +1,25 @@
 <template>
   <div class="full-height" @click="set_global_click" :style="page_style">
-    <ws />
+ 
     <!-- 页面路由开始 -->
     <router-view />
-    <div class="error-data">{{ GlobalSwitchClass.error_data }}</div>
-    <div style="display:none">{{ GlobalSwitchClass.global_switch_version.version }}</div>
+ 
     <div id="v-tooltip"></div>
   </div>
 </template>
 <script setup>
-import "src/base-pc/core/globel-mitt";
+ 
  
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { wslog, httplog } from "src/core/log/";
  
 import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
-import store from "src/store-redux/index.js";
-// import { set_remote_server_time } from "./src/store/module/global";
+ 
+ 
  
 import { useRouter,useRoute } from "vue-router";
-import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
+ 
 
 const compute_css_variables=()=>{}
  
@@ -37,28 +36,9 @@ const _data = reactive({
 const page_style = ref('')
 // 检查内嵌版的逻辑处理动作
 iframe_check();
-//设置错误数据
-GlobalSwitchClass.set_error_data("delete")
-// 初始化版本类型
-store.dispatch({
-  type: "INIT_VERSION_NAME",
-});
-// 初始化语言设置
-
-store.dispatch({
-  type: "INIT_LANG",
-  data: i18n_t("isoName"),
-});
-//获取服务器时间
-// store.dispatch(set_remote_server_time());
-// 发送日志s
-// window.wslog.sendMsg('xxx');
-// timeCheck();
-// 只在开发环境下启用vconsole
-/* const Vconsole = require('vconsole')
-      new Vconsole(); */
-//重置即将开赛筛选
-// this.$store.state.filter.open_select_time = null;
+ 
+ 
+ 
 
 onMounted(() => {
   page_style.value = global_color_obj()
@@ -75,26 +55,7 @@ const global_color_obj = () => {
   let lg = compute_css_variables({ category: 'global', module: 'linear-gradient' })
   return { ...bg, ...bd, ...tc, ...lg }
 }
-/**
- * 监听路由变化设置全局路由信息  来源和目标
- */
-watch(
-  () => router.currentRoute,
-  (_to, _from = {}) => {
-    const cur = _to.name;
-    const from = _from.name;
-    if (cur != from) {
-      store.dispatch({
-        type: "SET_LAYOUT_CUR_PAGE",
-        data: {
-          cur,
-          from,
-        },
-      });
-    }
-  },
-  { immediate: true }
-);
+ 
 /**
  * @description: message事件监听
  * 这是个啥 没有搜到vx_set_video_iframe_status
@@ -194,29 +155,7 @@ onBeforeMount(() => {
 onUnmounted(() => {
 });
 </script>
-<script>
-import { PageSourceData ,LayOutMain_pc} from "src/output/index.js";
-export default {
-  watch: {
-  // 监听路由变化 并记录到layout类中
-    $route: {
-      handler(_to, _from) {
-        let cur = lodash.get(_to, "name");
-        let from = lodash.get(_from, "name");
-        let from_path = lodash.get(_from, "path");
-        if (cur != from) {
-          LayOutMain_pc.set_layout_current_path({
-          cur,
-          from,
-          from_path
-        })
-        }
-      },
-      immediate: true,
-    },
-  }
-}
-</script>
+ 
 <style scoped>
 
 .error-data {
