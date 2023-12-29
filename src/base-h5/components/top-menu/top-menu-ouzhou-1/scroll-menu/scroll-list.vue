@@ -28,6 +28,7 @@ import { ref , watch ,nextTick} from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData  } from "src/output/index.js";
+import MatchFold from 'src/core/match-fold/index.js'
 const emits = defineEmits(['changeMenu']);
 
 const props = defineProps({
@@ -72,6 +73,7 @@ const scrollRef = ref(null);
  * @param {*} index 
  */
 const on_change_play = (item,index) => {
+    MatchFold.clear_fold_info()
     if(playValue.value == item.mi)return;
     playValue.value = item.mi;
     emits('changeMenu',item)
