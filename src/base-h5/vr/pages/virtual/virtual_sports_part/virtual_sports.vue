@@ -942,6 +942,7 @@ export default {
       padding: .02rem .12rem;
       &.active {
         background: var(--q-gb-bg-c-24);
+        box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.04);
         .teams {
           color: var(--q-gb-t-c-30);
         }
