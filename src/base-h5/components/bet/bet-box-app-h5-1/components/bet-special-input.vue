@@ -17,7 +17,7 @@
       </div>
     </div>
   </div>
-  <div class="toltal f-b-c" v-if="items.show_quick">
+  <div class="toltal f-b-c" v-if="items.show_quick || items.bet_amount ">
     <div>预计可赢：
       <span v-if="items.seriesOdds">
         <em class="total-money number_family" > {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount)) }}</em>{{currency_code[UserCtr.currency]}}

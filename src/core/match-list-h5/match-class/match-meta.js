@@ -1322,6 +1322,16 @@ class MatchMeta {
       const fold_key = MatchFold.get_match_fold_key(match)
       // 赛事是否显示
       const show_card = lodash.get(fold_data[fold_key], `show_card`)
+      // 增加 estimateHeight； estimateHeight 关系 不大， 就算不对 后续会主动修复， estimateHeight 只作为辅助值， 辅助初始渲染，偏差没那么大， 可有可无
+      if (is_show_league && show_card) {
+        match.estimateHeight = 148
+      } else if (is_show_league && !show_card) {
+        match.estimateHeight = 31
+      } else if (!is_show_league && show_card)  {
+        match.estimateHeight = 103
+      } else {
+        match.estimateHeight = 100
+      }
       // if (is_show_league || show_card) this.current_matchs.push(match)
       return is_show_league || show_card
     })

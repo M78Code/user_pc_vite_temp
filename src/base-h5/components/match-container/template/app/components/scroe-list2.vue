@@ -19,7 +19,7 @@
           'is-table-tennis': match.csid == 8,
           'is-volley-ball': match.csid == 9 || match.csid == 13
         }" @scroll="score_inner2_scrolling($event, match)">
-          <div class="score-se-inner2" :ref="`score_se_inner2_${match.mid}`">
+          <div class="score-se-inner2" style="display: flex;" :ref="`score_se_inner2_${match.mid}`">
             <div class="row items-center whitespace-nowrap" :class="{ 'b-score-wrapper': match.csid != 14 }" v-if="[2, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
               <!--分差-->
               <div class="row color18" style="margin-right:.2rem" v-if="[2].includes(+match.csid) && get_total_scores">
@@ -593,10 +593,10 @@
     }
   
     .score-se-inner {
-      height: 0.3rem;
-      line-height: 1;
-      overflow-x: auto;
-      overflow-y: hidden;
+    //   height: 0.3rem;
+    //   line-height: 1;
+    //   overflow-x: auto;
+    //   overflow-y: hidden;
   
       &.result {
         max-width: 2.33rem;
