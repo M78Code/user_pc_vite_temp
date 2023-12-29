@@ -5,6 +5,7 @@
     <div
         class='match_score'
         :class="route.name == 'match_result' ? '' : 'back_mask'"
+        v-if="[1,3].includes(+detail_data.ms)"
     >
         <!-- component 自定义标签:动态绑定组件,根据数据的不同更换不同的组件 'is' 关键字用来动态切换组件 -->
         <component :is="scoreComponent[`ScoreChild_${detail_data?.csid}`]" :detail_data="detail_data"/>

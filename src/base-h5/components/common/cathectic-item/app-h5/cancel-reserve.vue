@@ -74,25 +74,27 @@ const cancle_pre_order = () => {
     font-weight: bold;
     text-align: center;
     line-height: 3;
+    color: var(--q-gb-t-c-18);
   }
   p {
     font-size: 0.16rem;
     padding: 0.1rem 0;
     margin-bottom: 0.2rem;
     text-align: center;
+    color: var(--q-gb-t-c-24);
   }
   .confirm {
     font-size: 0.20rem;
-    color: var(--q-info);
+    color: var(--q-gb-t-c-1);
     line-height: 2.5;
-    border-top: 1px solid #e5e5e5;
+    border-top: 1px solid var(--q-gb-bd-c-20);
     display: flex;
     span {
       width: 50%;
       text-align: center;
       &:first-child {
-        color: rgba(0,0,0,.4);
-        border-right: 1px solid #e5e5e5;
+        color: var(--q-gb-t-c-24);
+        border-right: 1px solid var(--q-gb-bd-c-20);
       }
     }
   }

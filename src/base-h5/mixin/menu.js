@@ -54,10 +54,15 @@ const is_collect = computed(() => {
 
 //是否 详情页 用途： 赛事列表、热门、详情 引入赛事列表组件
 const is_detail = computed(() => {
-    const route = useRoute()
-    let is_ = page_source.value === 'detail_match_list' || route.name == 'details' || route.name == 'category';
-    return is_
+    return page_source.value === 'detail_match_list' 
 });
+
+//是否 详情页
+const is_detail_category = () => {
+    const route = useRoute()
+    let is_ = page_source.value === 'detail_match_list' || ['match_result','details','category'].includes(route.name);
+    return is_
+}
 
 const footer_menu_id = ''
 const menu_lv1 = ref(MenuData.current_lv_1_menu)//1级 大类
@@ -74,5 +79,5 @@ watch(update_time, () => {
     date_time.value = MenuData.data_time
 });
 export { update_time, footer_menu_id, date_time,
-    is_jinzu, is_kemp,is_mix, is_vr, is_zaopan, is_esports, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2, is_hot, is_detail, is_collect
+    is_jinzu, is_kemp,is_mix, is_vr, is_zaopan, is_esports, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2, is_hot, is_detail, is_collect,is_detail_category
 }

@@ -166,7 +166,7 @@ export default {
       this.timer_format = `${minutes_format}:${seconds_f_format}`;
       this.$forceUpdate();
       // console.error("virtual_sports_timer.vue-> draw_timer_by_second() ->157)this.timer_format", `${minutes_format}:${seconds_f_format}`);
-      console.error("virtual_sports_timer.vue-> draw_timer_by_second() ->157)this.timer_format", this.timer_format);
+      // console.error("virtual_sports_timer.vue-> draw_timer_by_second() ->157)this.timer_format", this.timer_format);
       this.path_d = this.get_path_d(remaining_time);
       if(remaining_time < 1000){
         this.$emit("time_ended",this.mid);
@@ -212,7 +212,7 @@ export default {
   align-items: center;
   margin-bottom: 0.38rem;
   .circle-time-wrapper svg path{
-    stroke: var(--q-gb-t-c-12);
+    stroke: #FEBE55;
   }
   .final-circle {
       svg path {
@@ -233,7 +233,7 @@ export default {
       // color: #ffb001;
       font-size: 0.3rem;
       font-weight: 500;
-      color: var(--q-gb-t-c-12) !important;
+      color: #FEBE55 !important;
       &.last {
         // color: #E23E3E;
         color: var(--q-gb-bd-c-8) !important;

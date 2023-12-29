@@ -280,8 +280,8 @@ const set_bet_single = () => {
       BetData.bet_s_list = lodash_.cloneDeep(BetData.bet_single_list)
       menu_id = 6
     }
-
-    if(route.name != 'category'){
+    // 详情里面切换投注类型 不切换菜单类型
+    if(!['match_result','details','category'].includes(route.name)){
         MenuData.set_current_lv1_menu(menu_id);
       }
   }

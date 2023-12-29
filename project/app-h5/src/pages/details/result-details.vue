@@ -42,7 +42,7 @@
         ></result-details-dialog>
       </q-dialog>
     <!--玩法集cagetory-->
-    <div :class="[get_detail_data.csid == 3 ?'baseball-play-pad':'play-pad', 'h-full']">
+    <div :class="[result_detail_data?.csid == 3 ?'baseball-play-pad':'play-pad', 'h-full']">
       <router-view v-if="loading"/>
     </div>
     <!--赛果详情骨架屏-->
@@ -71,6 +71,7 @@ import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, Ma
 import { details_main } from "./details.js";
 
 let route = useRoute()
+let router = useRouter()
 const { get_show_video, change_fullscreen, initEvent, on_listeners, off_listeners } = details_main()
 const DetailsMainState = details_main()
 // 赛果详情初始化数据仓库数据
@@ -99,16 +100,7 @@ const get_current_menu = computed(() =>{
   return ""
 })
 const get_menu_type = computed(() =>{
-  return MenuData.get_menu_type() 
-})
-const get_detail_data = computed(() =>{
-  return ""
-})
-const get_goto_detail_matchid = computed(() =>{
-  return ""
-})
-const get_curr_sub_menu_type = computed(() =>{
-  return ""
+  return MenuData.get_results_type() ==1 
 })
 const is_match_result = computed(() =>{
   return ['result_details', 'match_result'].includes(route.name)
@@ -207,7 +199,7 @@ const get_match_detail_info = () => {
     mid: mid,
     type: 1,
     cuid: UserCtr.uid, // userId或者uuid
-    isESport: MenuData.get_results_type() ==1  ? 1 : null
+    isESport: get_menu_type.value  ? 1 : null
   }
   api_common.get_matchResultDetail_MatchInfo( params ).then(({ data,code }) => {
     // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
@@ -253,7 +245,8 @@ const get_match_list = (params) => {
       math_list_data.value = store_data.list;
     }
   }
-  if(MenuData.get_results_type() ==1 && [100,101,102,103,104].includes(+get_detail_data.csid)){
+  
+  if(get_menu_type.value && [100,101,102,103,104].includes(+result_detail_data.value?.csid)){
     params.isESport = 1
   }else{
     params.isESport = null

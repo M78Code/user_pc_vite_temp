@@ -66,7 +66,7 @@ let alertTips = ref(false)
     font-size: 0.20rem;
     color: var(--q-gb-t-c-1);
     line-height: 2.5;
-    border-top: 1px solid #e5e5e5;
+    border-top: 1px solid var(--q-gb-bd-c-20);
     display: block;
     text-align: center;
   }

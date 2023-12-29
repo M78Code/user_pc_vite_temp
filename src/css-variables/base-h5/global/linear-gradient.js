@@ -26,4 +26,5 @@ export default {
     'gb-bg-lg-26':'linear-gradient(319.92deg, #FF9124 17.66%, #F7B500 82.59%)',
     'gb-bg-lg-27':'linear-gradient(360deg, #FF9124 0.02%, #F7B500 100%)',
     'gb-bg-lg-28':'linear-gradient(180deg, #FFFFFF 0%, #E3EAFF 78.83%)',
+    'gb-bg-lg-29':'linear-gradient(90deg, #f0f0f0 25%, #dedede 37%, #f0f0f0)',
 }
