@@ -80,11 +80,7 @@ const emit = defineEmits(["search_fn","closedHandle"]);
  * @param {Array} select_list 选中的数据
  */
 const finishHandle = () => {
-  if (MenuData.get_sub_is_all()) {
-    select_list.value = matchRef.value.list.filter(v=>v.select)
-  } else {
     select_list.value = matchRefOld.value.list.filter(v=>v.select)
-  }
   //设置选中数据
   // 触发联赛选择完成事件
   useMittEmit(MITT_TYPES.EMIT_SELECT_LEAGUE_COMPLETE, {

@@ -2,7 +2,8 @@
   <div class="full-height" @click="set_global_click" :style="page_style">
  
     <!-- 页面路由开始 -->
-    <router-view />
+    <!-- <router-view /> -->
+    <IndexPage/>
  
     <div id="v-tooltip"></div>
   </div>
@@ -16,7 +17,7 @@ import { wslog, httplog } from "src/core/log/";
 import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
  
- 
+import IndexPage  from "./src/pages/IndexPage.vue" 
  
 import { useRouter,useRoute } from "vue-router";
  
