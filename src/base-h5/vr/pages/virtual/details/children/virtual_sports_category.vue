@@ -146,7 +146,7 @@ export default {
     },
     // 非置顶列表
     match_list_normal() {
-      return MatchDataWarehouseInstance.listSortNew(this.current_match.mid);
+      return MatchDataWarehouseInstance.listSortNormal(this.current_match.mid);
       // return this.matchInfoCtr.listSortNormal()
     }
   },
