@@ -4,10 +4,13 @@
 import server_resource from "app/job/output/assets/index.json";
 // const server_resource = {}
 import { get_server_file_path } from "src/core/file-path/file-path.js";
+import { team_mhlu_url_app_h5,team_malu_url_app_h5 } from "src/base-h5/core/utils/local-image.js"
 import lodash from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
   locationUrl:"/src/core/server-img/sprite-img/image/pc-team-logo-day.png",
+  mhluUrl: team_mhlu_url_app_h5,
+  maluUrl: team_malu_url_app_h5,
   default:"pc-team-logo",
   // local_dev: "pc-left-menu-bg-image",
   // local_test: "pc-left-menu-bg-image",
@@ -31,7 +34,6 @@ const config = {
  * @returns
  */
 function compute_position(position) {
-  console.log(position,'position');
   const top = 0; // 雪碧图 距离顶部的 空白距离
   const left = 0; //左侧
   const width = 0; //表示是 横 向
@@ -59,7 +61,8 @@ function compute_css_obj({ position, theme }) {
   let url = lodash.get(server_resource, `${config[CURRENT_ENV] || config['default']}.${theme}`);
   if (!url) {
     //从本地拿
-      url = lodash.get(config, 'locationUrl');
+    url = position.type ? lodash.get(config, 'mhluUrl') : lodash.get(config, 'maluUrl')
+    // url = lodash.get(config, 'locationUrl');
   }
    //如果有服务器图片，使用cdn图片
   if(position[0]){
