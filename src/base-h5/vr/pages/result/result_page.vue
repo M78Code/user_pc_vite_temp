@@ -250,7 +250,7 @@ export default {
   height: 0.48rem;
   line-height: 0.48rem;
   border-radius: 0.08rem;
-  background: var(--q-gb-bg-c-18);
+  background: var(--q-gb-bg-c-28);
   box-shadow: 0px 2px 6px 0px #0000000A;
 }
 
@@ -351,7 +351,7 @@ export default {
 .bor-btm {
   height: 0.84rem;
   // background-color: #fff;
-  background: var(--q-gb-bg-c-18);
+  background: var(--q-gb-bg-c-28);
   flex-grow: 1;
   flex-basis: 31%;
   border-radius: 0.08rem;
@@ -394,7 +394,7 @@ export default {
   align-items: center;
   flex-grow: 1;
   // background-color: #fff;
-  background: var(--q-gb-bg-c-18);
+  background: var(--q-gb-bg-c-28);
   border-radius: 0.08rem;
   box-shadow: 0px 2px 6px 0px #0000000A;
 }
