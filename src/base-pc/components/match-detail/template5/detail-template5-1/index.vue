@@ -253,10 +253,13 @@ const get_bet_item_class = (item_details, item, ol, hl_index) => {
     line-height: 32px;
   }
   .sub-title-2 {
-    background: rgba(31, 34, 43, 0.5);
+    //background: rgba(31, 34, 43, 0.5);
     width: 25% !important;
     text-align: center;
     flex: unset !important;
+    //background: red !important;
+    
+    background: var(--q-gb-t-c-14) !important;
   }
   :deep(.handicap) {
     flex-wrap: wrap;
@@ -271,6 +274,9 @@ const get_bet_item_class = (item_details, item, ol, hl_index) => {
       display: flex;
       justify-content: center !important;
       width: 37.5%;
+      border-right: 6px solid var(--q-gb-bd-c-13) !important;
+      border-bottom: 6px solid var(--q-gb-bd-c-13) !important;
+      border-left: 6px solid var(--q-gb-bd-c-13) !important;
       &:last-child {
         border-right: none;
       }
