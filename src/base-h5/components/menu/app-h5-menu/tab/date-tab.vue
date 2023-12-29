@@ -61,15 +61,6 @@ onUnmounted(() => {
  * @param {*} type
  */
 const changeTabMenu = (item, i, event, type) => {
-//   if (item.val === "100") {
-//     // 电竞下的冠军
-//     MenuData.set_current_lv1_menu("400");
-//     //冠军盘口切换欧洲盘
-//     UserCtr.set_cur_odds("EU");
-//   } else {
-//     MenuData.set_current_lv1_menu(MenuData.old_current_lv_1_menu_i);
-//   }
-
   event = event || dateTab.value[0];
   // if(activeOn.value === i && !type)return;
   activeOn.value = i;
@@ -87,18 +78,18 @@ const set_active_val = () => {
   activeOn.value = 0;
 };
 // 根据菜单数据 请求接口
-const set_menu_match_date = (type) => {
-  // 获取菜单中的数据 进去接口请求
-  const {
-    menu_match_date_api_config: { api, params },
-  } = MenuData;
-  api_common[api](params).then((res) => {
-    emits("changeDate", { val: res.data || {}, type: type });
-    // if(res.code == 200 ){
-    // useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, {val:res.data ||{},type:type})
-    // }
-  });
-};
+// const set_menu_match_date = (type) => {
+//   // 获取菜单中的数据 进去接口请求
+//   const {
+//     menu_match_date_api_config: { api, params },
+//   } = MenuData;
+//   api_common[api](params).then((res) => {
+//     emits("changeDate", { val: res.data || {}, type: type });
+//     // if(res.code == 200 ){
+//     // useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, {val:res.data ||{},type:type})
+//     // }
+//   });
+// };
 defineExpose({ set_active_val, changeTabMenu });
 </script>
 <style lang="scss" scoped>

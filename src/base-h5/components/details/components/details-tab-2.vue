@@ -147,6 +147,7 @@ export default defineComponent({
       // set_subscript_game_index(0)
     });
     const change_btn = () => {
+   
       // 设置vuex变量值,没有玩法数据时不能点击
       if (
         props.data_list &&
@@ -159,6 +160,7 @@ export default defineComponent({
         useMittEmit(MITT_TYPES.EMIT_DETAILS_TOGGLE_HANDICAP, 2);
         SessionStorage.set("SET_FEWER", 2);
       } else {
+        
         get_fewer.value = 1;
         useMittEmit(MITT_TYPES.EMIT_DETAILS_TOGGLE_HANDICAP, 1);
         SessionStorage.set("SET_FEWER", 1);
@@ -203,6 +205,13 @@ export default defineComponent({
       if (get_fewer.value == 3) {
         get_fewer.value = 1;
       }
+   // 切换玩法集时  ，如果当前是收起状态应保持收起
+    setTimeout(() => {
+      useMittEmit(MITT_TYPES.EMIT_DETAILS_TOGGLE_HANDICAP, get_fewer.value);
+    }, 50);
+    
+
+      
       // 发送埋点
       let zhuge_obj = {
         玩法集名称: item.marketName,

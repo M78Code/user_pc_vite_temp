@@ -73,7 +73,11 @@ const props = defineProps({
   height: 1.68rem;
 
   &.baseball {
-    height: 1.4rem;
+    //height: 1.4rem;
+    // Bug: 52508
+    // 背景图会被拉伸
+    height: 1.6rem;
+    background-size: 100% 100% !important;
   }
 }
 
