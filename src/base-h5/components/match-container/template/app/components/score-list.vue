@@ -525,7 +525,7 @@ onUnmounted(() => {
         }
       }
       .poi-des {
-        color: var(--q-gb-t-c-17);
+        color: var(--q-gb-t-c-19);
             height: auto;
             display: flex;
             align-items: flex-start;

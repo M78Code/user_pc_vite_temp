@@ -332,7 +332,7 @@ let env_prefix_obj={
   // 预发布环境
   idc_pre:  'user-h5-bw3',
   // 试玩环境
-  idc_sandbox: 'user-h5-bw3',
+  idc_sandbox: 'sport-h5',
   // 隔离预发布
   idc_lspre: 'user-h5-bw3',
   // 生产环境

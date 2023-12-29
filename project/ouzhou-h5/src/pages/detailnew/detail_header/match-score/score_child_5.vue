@@ -43,6 +43,10 @@ const scoreArray = computed(() => {
     flex-wrap: nowrap;
     flex-shrink: 0;
     box-sizing: border-box;
-
+    
+    font:{
+        size: .14rem;
+        weight: bold;
+    }
 }
 </style>
