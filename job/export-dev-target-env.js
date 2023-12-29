@@ -75,11 +75,12 @@ const resolve_recent_pack_config=()=>{
 
         for(let env_key in  project_config){
          let item = project_config[env_key]
+         if(item){
             result_str +=`
 // ${ ENVSTR_MAP[env_key]}      ${ env_key.padEnd(8,' ') }   ${ format_date(new Date(item.createdAt).getTime())  }
 // DEV_TARGET_VERSION = "${item.base_name}"  `             
                  
-            
+         }
  
         }
     }
