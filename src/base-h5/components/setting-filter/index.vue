@@ -62,11 +62,11 @@
          srcset="">
         </div>
       </div>
-      <div class="setting-item" @click="change_version">
+       <div class="setting-item" @click="change_version">
       <!-- 前往旧版 -->
         <div class="title"> {{ i18n_t('app_h5.filter.go_old_version') }}</div>
         <!-- 前往网页版 -->
-        <div class="goto-website"> {{ i18n_t('app_h5.filter.go_web_version') }}</div>
+        <!-- <div class="goto-website"> {{ i18n_t('app_h5.filter.go_web_version') }}</div> -->
       </div>
     </div>
     <div class="closed-btn" @click="closedHandle">
@@ -288,7 +288,7 @@ const activity_handle = item => {
       /**
      * 切换新旧版本
      */
-const change_version = async ()=>{
+const change_version_55 =   ()=>{
     // 增加loop版本跳转参数
     // location.href = old_url.href;
       let obj = { rdm: (new Date().getTime()) };
@@ -307,6 +307,59 @@ const change_version = async ()=>{
           origin = origin.replace(val,jump_url)
       const url = `${origin}?${param}`
       location.href = url
+  }
+      /**
+     * 切换新旧版本
+     */
+     const change_version =   ()=>{
+      const { CURRENT_ENV  , IS_DEV} = BUILD_VERSION_CONFIG;
+
+// 增加loop版本跳转参数
+// location.href = old_url.href;
+let obj = { rdm: (new Date().getTime()) };
+// 设置参数
+let param = UserCtr.get_user_url_parames(obj);
+
+//试玩环境的前缀  
+//官网兼容了 ：   user-h5-bw3  sport-h5  ,都解析了 切换的时候用     user-h5-bw3就可以    
+let env_prefix_obj={
+    // 开发环境
+    local_dev:  'dev-user-h5-bw3',
+  // 测试环境
+  local_test:  'test-user-h5-bw3',
+  // 压力测试环境
+  local_ylcs:  'test-user-h5-bw3',
+  // 预发布环境
+  idc_pre:  'user-h5-bw3',
+  // 试玩环境
+  idc_sandbox: 'sports-h5',
+  // 隔离预发布
+  idc_lspre: 'user-h5-bw3',
+  // 生产环境
+  idc_online: 'user-h5-bw3',
+  // IDC  微型测试环境
+  idc_ylcs:  'user-h5-bw3',
+}
+
+//兜底保证生产试玩
+let new_version_prefix =  env_prefix_obj[CURRENT_ENV] || 'user-h5-bw3'
+
+let arr=location.host.split('.')
+let root_host= arr.splice(arr.length-2).join('.')
+let base_url =`${location.protocol}//${new_version_prefix}.${root_host}`
+console.log(base_url);
+
+
+let final_url= `${base_url}/?${param}`
+console.log(final_url);
+  if (IS_DEV) {
+    console.log('本地开发屏蔽跳转');
+    return false
+  } else {
+    // window.open(final_url, '_blank')
+    location.href = final_url
+  }
+
   }
 
 

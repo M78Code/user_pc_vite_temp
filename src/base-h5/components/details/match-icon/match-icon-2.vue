@@ -328,17 +328,33 @@ const icon_click_animationUrl = () => {
 //   () => get_play_video,
 //   (new_) => {
 //     if (new_ && (props.which == 'muUrl' || is_in_play.value == 'muUrl')) {
-//           icon_click_muUrl()
+//           (props.icon_class== 'shipin') && icon_click_muUrl()
 //         } else if (is_in_play.value == 'animationUrl') {
-//           icon_click_animationUrl()
+//           (props.icon_class== 'donghua') && icon_click_animationUrl()
 //         } else if (is_in_play.value == 'lvs') {
-//           icon_click_lvs('lvs')
+//           (props.icon_class== 'lvs') && icon_click_lvs('lvs')
 //         }
 //   },
 //   {
 //     immediate: true
 //   }
 // )
+
+// Bug: 52301
+// 视频或者动画是否播放
+// 给进入详情自动播放使用
+// 0 否 1是
+const play_video = ref(1);
+
+// 播放的类型
+// lvs, muUrl, animationUrl
+const is_in_play = 'muUrl';
+
+onMounted(() => {
+  // icon_click_animationUrl()
+})
+
+
 </script>
 
 <script>

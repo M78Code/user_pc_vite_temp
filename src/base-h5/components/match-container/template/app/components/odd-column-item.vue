@@ -570,6 +570,7 @@ onUnmounted(() => {
     align-items: center;
     padding-top: 2px;
     color: var(--q-gb-t-c-18);
+    font-family: Akrobat;
 
     .icon-lock {
       width: 0.14rem;
@@ -673,7 +674,7 @@ onUnmounted(() => {
 .flag-random {
   display: none;
 }
-
+ 
 .active {
   // 需要替换成变量
   background: var(--q-gb-bg-c-37) !important;

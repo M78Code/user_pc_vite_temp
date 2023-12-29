@@ -71,8 +71,10 @@ const BasketballScore = computed(()=>{
     flex-wrap: nowrap;
     flex-shrink: 0;
     box-sizing: border-box;
-    font-weight: bold;
-    font-size: .14rem;
+    font:{
+        size: .14rem;
+        weight: bold;
+    }
 }
 .game-on{
     .score-item:nth-last-child(1){

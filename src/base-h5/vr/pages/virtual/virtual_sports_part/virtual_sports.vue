@@ -713,10 +713,10 @@ export default {
     },
     // 赛马类第一次切换菜单时，获取详情赔率
     current_batch(){
-      if(this.current_batch?.no && ![1001,1004].includes(this.sub_menu_type)){
-        // 后期等赛马类的列表接口加上赔率后，可注释掉
-        this.get_detail_odds()
-      }
+      // if(this.current_batch?.no && ![1001,1004].includes(this.sub_menu_type)){
+      //   // 后期等赛马类的列表接口加上赔率后，可注释掉
+      //   this.get_detail_odds()
+      // }
     },
     current_sub_menu(){
       let prev_league_id = ''
@@ -834,11 +834,11 @@ export default {
     color: var(--q-gb-t-c-18);
     font-weight: 600;
     padding-left: 0.07rem;
-  }
-  .status{
+  }.status{
     .num {
-      color: var(--q-gb-t-c-24);
+      color: var(--q-gb-t-c-18);
     }
+  
     .state{
       margin: 0 5px;
       color: #fff;
@@ -942,8 +942,9 @@ export default {
       padding: .02rem .12rem;
       &.active {
         background: var(--q-gb-bg-c-24);
+        box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.04);
         .teams {
-          color: #127DCC;
+          color: var(--q-gb-t-c-30);
         }
       }
       .teams {
