@@ -32,7 +32,7 @@ export const get_virtual_match_result = (params, config={}, url = "/v1/m/virtual
 }
 //虚拟体育赛事列表
 export const get_virtual_sport_list = (params, config={}, url = "/v1/m/virtualMatches") => {
-  params.device = 'V1_H5';
+  params.device = 'KY_APP';
   return http.post(`${prefix}${url}`, params, config);
 }
 
