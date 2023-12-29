@@ -21,7 +21,7 @@
             </div>
           </div>
           <div class="odds-style">
-            <div v-if="item.os != 2">{{compute_value_by_cur_odd_type(item.odds,null,hsw_single)}}</div>
+            <div v-if="item.os != 2">{{compute_value_by_cur_odd_type(item.ov,item._hpid,item._hsw,item._csid)}}</div>
             <div v-else><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
           </div>
         </div>
@@ -137,7 +137,7 @@ export default defineComponent({
 /*************** 马数字结束 *************** -E*/
 /*************** 赔率开始 *************** -S*/
 .odds-style {
-
+  color: var(--q-gb-t-c-18);
   font-size: 0.16rem;
   letter-spacing: 0;
   text-align: center;
@@ -152,7 +152,7 @@ export default defineComponent({
 
 .item-style2 {
   height: 0.52rem;
-  background: #F2F2F6;
+  background: var(--q-gb-bg-c-28);
   
   &:nth-child(5n) {
     border-right: none;

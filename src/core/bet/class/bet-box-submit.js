@@ -995,6 +995,12 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 获取投注项名称
     let handicap = get_handicap(ol_obj,hl_obj,mid_obj,other)
 
+    let playOptionName = ol_obj.on
+    // 详情投注项
+    if(other.is_detail){
+        playOptionName = ol_obj.otv
+    }
+
     const bet_obj = {
         sportId: mid_obj.csid, // 球种id
         matchId: mid_obj.mid,  // 赛事id
@@ -1009,8 +1015,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         sportName: mid_obj.csna || '', //球种名称
         matchType,  //赛事类型
         matchName: mid_obj.tn || '', //赛事名称
-        playOptionName: ol_obj.on || ol_obj.ott || '', // 投注项名称
-        playOptions: ol_obj.on || ol_obj.ott || '',  // 投注项
+        playOptionName, // 投注项名称
+        playOptions: ol_obj.ot,  // 投注项
         tournamentLevel: mid_obj.tlev, //联赛级别
         playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
         playName: set_play_name(play_config), //玩法名称
@@ -1039,14 +1045,13 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
 
-     // 获取当前的盘口赔率
-     let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
-     // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
-     let hsw = lodash_.get(bet_obj,'odds_hsw','')
-     if(!hsw.includes(cur_odds)){
+    // 获取当前的盘口赔率
+    let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
+    // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
+    let hsw = lodash_.get(bet_obj,'odds_hsw','')
+    if(!hsw.includes(cur_odds)){
         bet_obj.marketTypeFinally = 'EU'
-     }
-
+    }
 
     // 冠军 
     if(bet_obj.bet_type == 'guanjun_bet'){

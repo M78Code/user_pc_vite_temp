@@ -107,6 +107,9 @@
         "build-huodong": "npm run build-activity",
         "dev-donghua": "npm run dev-animation",
         "build-donghua": "npm run build-animation",
+        "dev-donghua-2": "npm run dev-animation-page",
+        "build-donghua-2": "npm run build-animation-page",
+  
         "dev2": "npm run dev-self-use-version-inner",
         "dev3": "npm run export-dev-target-env",
         "build": "npm run build-self-use-version",
