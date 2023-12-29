@@ -158,7 +158,6 @@ onMounted(() => {
 })
 
 onUpdated(() => {
- 
   nextTick(() => {
     updateHeightAndPos()
   })
@@ -167,7 +166,6 @@ onUpdated(() => {
 watch(dataList, (v, o) => {
   //如果是排序的话 length不会变化 但是mid集合顺序会变 列表变也是一样  赔率变化mid顺序是一样就是一样 不进入
   if (lodash.map(v, 'mid').join() != lodash.map(o, 'mid').join()) {
-    // positionDataArr = []
     nextTick(() => {
       initDataPostion()
     })
@@ -181,9 +179,9 @@ const initDataPostion = () => {
   positionDataArr = allData.value.map((item, idx) => ({
     arrPos: idx,
     mid: item.mid,
-    height: estimateHeight.value,
-    startPos: estimateHeight.value * idx,
-    endPos: estimateHeight.value * idx + estimateHeight.value,
+    height: item.estimateHeight || estimateHeight.value,
+    startPos: (item.estimateHeight || estimateHeight.value) * idx,
+    endPos: (item.estimateHeight || estimateHeight.value) * idx + (item.estimateHeight || estimateHeight.value),
   }))
 }
 
@@ -195,18 +193,19 @@ const updateHeightAndPos = () => {
   for (let i = 0; i < childrenElementArr.length; i++) {
     const childEle = childrenElementArr[i]
     // 获取当前数据dom节点的数据再allData数组中的索引位置
-    const dataIndexStr = childEle.dataset['index']
-    if (!dataIndexStr) continue
+    const dataMid = childEle.dataset['mid']
+    if (!dataMid) continue
 
-    const dataIndex = parseInt(dataIndexStr)
     // 从allData数据中获取到该数据
-    const dataItem = positionDataArr[dataIndex]
+    const dataItem = positionDataArr.find(t => t.mid === dataMid)
     if (!dataItem) continue
+
+    const dataIndex = positionDataArr.findIndex(t => t.mid === dataMid)
 
     // 获取元素的实际高度
     // const { height } = childEle.getBoundingClientRect()
     const { offsetHeight: height } = childEle
-    const oldHeight = dataItem.height || estimateHeight.value
+    const oldHeight = dataItem.height
     /*
      * 计算当前数据dom元素的旧高度和当前高度的差值
      * 如：
@@ -219,7 +218,7 @@ const updateHeightAndPos = () => {
     // dataItem.height = height
     if (dffVal != 0) {
       // 当前dom元素的实际高度与allData中记录的高度不一致，则更新高度以及元素位置信息
-      dataItem.height = oldHeight - dffVal
+      dataItem.height = height
       dataItem.endPos = dataItem.endPos - dffVal
 
       for (let j = dataIndex + 1; j < positionDataArr.length; j++) {
