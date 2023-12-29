@@ -118,6 +118,7 @@ const end = computed(() => {
   while (contentDomTotalHeight < viewPortHeight) {
     endPos++
     contentDomTotalHeight += positionDataArr[endPos]?.height
+    // console.log(endPos, contentDomTotalHeight)
   }
   // 因为数组的slice方法是包头不包尾的所以还需要再endPos上+1，才会是预期的元素数量
   endPos += 1
@@ -151,9 +152,7 @@ onMounted(() => {
     emitter_1: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, gotTop).off,
   };
   emitters.value = {
-    emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, (val) => {
-      show_skeleton_screen.value = val
-    }).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, (val) => show_skeleton_screen.value = val).off,
   };
 })
 
@@ -174,15 +173,17 @@ watch(dataList, (v, o) => {
 
 // 初始化 DOM 节点位置信息
 const initDataPostion = () => {
-  // if (dataList.value.length < 1) return
+  if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
-  positionDataArr = allData.value.map((item, idx) => ({
-    arrPos: idx,
-    mid: item.mid,
-    height: item.estimateHeight || estimateHeight.value,
-    startPos: (item.estimateHeight || estimateHeight.value) * idx,
-    endPos: (item.estimateHeight || estimateHeight.value) * idx + (item.estimateHeight || estimateHeight.value),
-  }))
+  positionDataArr = allData.value.map((item, idx) => {
+    return {
+      arrPos: idx,
+      mid: item.mid,
+      height: item.estimateHeight || estimateHeight.value,
+      startPos: (item.estimateHeight || estimateHeight.value) * idx,
+      endPos: (item.estimateHeight || estimateHeight.value) * idx + (item.estimateHeight || estimateHeight.value),
+    }
+  })
 }
 
 /**
@@ -289,6 +290,15 @@ const onScroll = (evt) => {
 
   const { scrollTop } = scrollerContainerDom
 
+  handler_render_data(scrollTop)
+
+}
+
+/**
+ * 计算 end index
+ */
+const handler_render_data = (scrollTop = 0) => {
+
   rollingHeight.value = scrollTop
 
   // 正数或0表示向下滚动
@@ -296,6 +306,7 @@ const onScroll = (evt) => {
   lastScrollTop = scrollTop
 
   start.value = findStartByBinarySearch(positionDataArr, scrollTop)
+
   // 记录视口第一个元素底部位置与scrollTop之间的偏移量，用于onUpdate中修正scrollTop
   startOffset = positionDataArr[start.value]?.endPos - scrollTop
 

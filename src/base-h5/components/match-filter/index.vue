@@ -488,6 +488,7 @@ function fetch_filter_match() {
       inputText: props.search_val,
       cuid: UserCtr.get_uid(),
       device: 'v2_h5',
+      showem:1, // 新增的参数 区分电子赛事
       md: lodash.get(MenuData.current_lv_3_menu, 'field1') || new Date().setHours(0, 0, 0, 0)
     };
     api_match_filter = api_filter.get_fetch_filter_match

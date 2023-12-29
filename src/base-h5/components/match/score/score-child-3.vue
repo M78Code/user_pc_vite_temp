@@ -222,7 +222,9 @@ export default {
     border-width: 3px;
     border-style: solid;
     position: absolute;
-    top: 0.15rem;
+    //top: 0.15rem;
+    // Bug: 52641
+    top: 0.06rem;
   }
 
   &:before {

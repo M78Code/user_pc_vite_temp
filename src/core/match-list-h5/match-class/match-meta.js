@@ -7,8 +7,8 @@ import lodash from 'lodash'
 import { api_common, api_match_list, api_match, api_home, api_analysis } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import MatchFold from 'src/core/match-fold'
-import MatchCollect from 'src/core/match-collect'
+import MatchFold from 'src/core/match-fold/index.js'
+import MatchCollect from 'src/core/match-collect/index.js'
 import { MenuData } from "src/output/module/menu-data.js"
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
@@ -194,7 +194,7 @@ class MatchMeta {
       const tn = BaseData?.tids_map[`tid_${match.tid}`]?.tn
       // 赛事其他操作
       this.match_assistance_operations(target, index)
-      return { ...target, tn, csna, is_meta: true }
+      return { ...target, tn, csna, is_meta: true, estimateHeight: MatchUtils.get_default_estimateHeight(match) }
     })
     // 设置 元数据计算 流程
     MatchResponsive.set_is_compute_origin(true)
@@ -581,7 +581,7 @@ class MatchMeta {
   /**
    * @description vr赛果
    */
-  async get_virtual_results_match() {
+  async get_virtual_results_match(tid) {
     this.clear_match_info()
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const { start_time, end_time } = MatchUtils.get_match_time_start_time(md)
@@ -593,7 +593,7 @@ class MatchMeta {
       page:{ size: 100, current: 1 },
       sportType:MenuData.current_lv_2_menu?.sport_id,
       startTime: String(start_time),
-      tournamentId:"79430600606371842"
+      tournamentId:tid //||"79430600606371842"
     })
     // vr 马 狗 
     // const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
@@ -974,7 +974,7 @@ class MatchMeta {
       ...params,
       md: String(MenuData.data_time)
     }
-    if (![3, 6].includes(MenuData.current_lv_1_menu_mi.value) || !MenuData.data_time) delete target_params.md
+    if (![3, 6].includes(MenuData.current_lv_1_menu_mi?.value) || !MenuData.data_time) delete target_params.md
     try {
       const res = await api_common.get_collect_matches(target_params)
       if (res.code !== '200') return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
@@ -1114,19 +1114,21 @@ class MatchMeta {
 
     const custom_match_mids = target_list.map(t => t.mid)
 
-    this.complete_matchs = target_list
-    this.current_matchs = target_list
+    this.complete_matchs = lodash.uniqBy(target_list, 'mid')
     this.complete_mids = lodash.uniq(custom_match_mids)
     this.match_mids = lodash.uniq(custom_match_mids)
+
+    this.compute_current_matchs()
 
     // 重置折叠对象
     // MatchFold.clear_fold_info()
     MatchResponsive.clear_ball_seed_count()
     target_list.forEach((t, i) => {
+      this.match_assistance_operations(t, i)
       Object.assign(t, {
+        estimateHeight: MatchUtils.get_default_estimateHeight(t),
         is_show_league: MatchUtils.get_match_is_show_league(i, target_list)
       })
-      this.match_assistance_operations(t, i)
     })
     // 不需要调用赔率接口
     MatchDataBaseH5.set_list(target_list)
@@ -1184,14 +1186,15 @@ class MatchMeta {
 
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, target_data.map(t => t.mid))
-      const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, target_data)
 
-      Object.assign(match, params, {
-        is_show_ball_title,
-        is_show_league: MatchUtils.get_match_is_show_league(index, target_data)
-      })
       //  赛事操作
       this.match_assistance_operations(match, index)
+
+      Object.assign(match, params, {
+        estimateHeight: MatchUtils.get_default_estimateHeight(match),
+        is_show_league: MatchUtils.get_match_is_show_league(index, target_data),
+        is_show_ball_title: MatchUtils.get_match_is_show_ball_title(index, target_data),
+      })
       return match
     })
 
@@ -1204,9 +1207,11 @@ class MatchMeta {
       this.other_complete_mids = result_mids
     } else {
       this.complete_matchs = matchs_data
-      this.current_matchs = matchs_data
       this.complete_mids = result_mids
     }
+
+    this.compute_current_matchs()
+
     if (!is_virtual) {
       // 清除虚拟计算信息
       VirtualList.clear_virtual_info()
@@ -1261,7 +1266,7 @@ class MatchMeta {
         is_show_ball_title
       }
     })
-    this.current_matchs = this.complete_matchs
+    this.compute_current_matchs()
 
     const length = lodash.get(this.complete_matchs, 'length', 0)
     this.set_page_match_empty_status({ state: length > 0 ? false : true });
@@ -1322,16 +1327,8 @@ class MatchMeta {
       const fold_key = MatchFold.get_match_fold_key(match)
       // 赛事是否显示
       const show_card = lodash.get(fold_data[fold_key], `show_card`)
-      // 增加 estimateHeight； estimateHeight 关系 不大， 就算不对 后续会主动修复， estimateHeight 只作为辅助值， 辅助初始渲染，偏差没那么大
-      if (is_show_league && show_card) { // 显示联赛  显示卡片
-        match.estimateHeight = 148
-      } else if (is_show_league && !show_card) { // 显示卡片 不显示联赛
-        match.estimateHeight = 31
-      } else if (!is_show_league && show_card)  {  // 显示联赛  不显示卡片
-        match.estimateHeight = 103
-      } else { // 默认
-        match.estimateHeight = 100
-      }
+      // 默认高度
+      match.estimateHeight = MatchUtils.get_default_estimateHeight(match)
       // if (is_show_league || show_card) this.current_matchs.push(match)
       return is_show_league || show_card
     })
@@ -1585,7 +1582,7 @@ class MatchMeta {
             const index = lodash.findIndex(this.complete_matchs, (match) => match.mid === t.mid)
             if (index > -1) this.complete_matchs[index] = Object.assign({}, item, t)
           }
-          // TODO: 测试代码， 先别动
+          // 更新 current_matchs
           const c_item = lodash.find(this.current_matchs, (match) => match.mid === t.mid)
           if (c_item) {
             const c_index = lodash.findIndex(this.current_matchs, (match) => match.mid === t.mid)

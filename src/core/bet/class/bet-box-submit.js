@@ -1006,7 +1006,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         matchId: mid_obj.mid,  // 赛事id
         tournamentId: mid_obj.tid,  // 联赛id
         scoreBenchmark: lodash_.get(mid_obj, 'msc[0]'),  //比分
-        marketId: hl_obj.hid, //盘口ID
+        marketId: hl_obj.hid || ol_obj._hid, //盘口ID
         marketValue: hl_obj.hv || '',
         playOptionsId: ol_obj.oid, //投注项id
         marketTypeFinally: UserCtr.odds.cur_odds,  // 欧洲版默认是欧洲盘 HK代表香港盘
@@ -1036,7 +1036,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         mark_score: calc_bifen(mid_obj.msc, mid_obj.csid, mid_obj.ms, ol_obj._hpid), // 显示的基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
-        hl_hs: hl_obj.hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+        hl_hs: hl_obj.hs || ol_obj._hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
         mid_mhs: ol_obj._mhs, // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
         match_ctr: other.match_data_type, // 数据仓库 获取比分
         device_type: BetData.deviceType, // 设备号
@@ -1284,10 +1284,26 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
     let lsit_mark = [2,173,38,114]
     // 特殊玩法 
     let list_head = [359,31,340,383,13,102,351,101,107,347,105,106,345,346,348,349,353,360,384]
+    // vr 前后2 玩法
+    let vr_hpid = [20034,20035,20036,20037,20038]
 
     // vr 体育的 赛狗 赛马 泥地摩托  摩托
     if(other.bet_type == 'vr_bet' && ['1002','1011','1009','1010'].includes(ol_obj._csid) ){
-        text = lodash_.get(mid_obj,`teams[${ol_obj.ot - 1}]`,'')
+        if(vr_hpid.includes(ol_obj._hpid*1)){
+            hv = ol_obj.ot.split('/')
+            text = hv.map(item => {
+                return {
+                    text: lodash_.get(mid_obj,`teams[${item - 1}]`,''),
+                    hv: item
+                }
+            })
+        }else{
+            text = [{
+                text:lodash_.get(mid_obj,`teams[${ol_obj.ot - 1}]`,''),
+                hv: ol_obj.ot
+            }]
+        }
+       
     }else{
         // 详情
         if(other.is_detail){

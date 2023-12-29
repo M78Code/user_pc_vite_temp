@@ -20,7 +20,7 @@
   </div>
 </template>
 <script setup>
-import { reactive, computed, defineComponent,ref } from "vue";
+import { reactive, computed, defineComponent,ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import lodash from "lodash";
 import commonHeader from "src/base-h5/components/common/common-header1.vue";
