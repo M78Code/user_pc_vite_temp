@@ -764,7 +764,7 @@ export default {
 
   /* **************联赛展示********************** -S*/
   .league {
-    height: 0.26rem;
+    height: 25px;
     border-radius: 0;
     // padding: 0 0.1rem;
     background:var(--q-gb-bg-c-18);
@@ -826,7 +826,7 @@ export default {
         position: relative;
         flex-shrink: 0;
         > img {
-          width: 0.14rem;
+          width: 100%;
           height: 100%;
         }
       }
@@ -942,7 +942,7 @@ export default {
       line-height: 1;
       min-width: 1.18rem;
       display: flex;
-      font-size: .12rem;
+      font-size: 12px;
       &.export {
         min-width: 1.1rem;
         margin-left: 0.1rem;
