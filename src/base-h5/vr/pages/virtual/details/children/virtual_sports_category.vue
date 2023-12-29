@@ -41,6 +41,8 @@
 import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue"
  // 引入接口封装文件
 import { api_common } from "src/api/index.js";
+import axios_api_loop from "src/core/http/axios-loop.js"
+
  // 引入投注逻辑mixin
 // import betting from "src/project/mixins/betting/betting.js";
  // 引入加载中的组件
@@ -682,41 +684,48 @@ export default {
       }
       // 获取缓存数据，将参数params传进去
       this.getdetail_cache_session(params);
-      api_common.get_matchDetail_getVirtualMatchOddsInfo(params).then(res=>{
-        this.is_loading = false;
-
-        if(!res.data || res.data.length == 0){
-          this.is_no_data = true;
-          this.matchInfoCtr.setList([]);
-          this.set_detail_data_storage(params,'');
+      axios_api_loop({
+        axios_api:api_common.get_matchDetail_getVirtualMatchOddsInfo,
+        params,
+        error_codes: ["0401038"], //此状态码会重新循环执行一次
+        fun_then:(res)=>{
+          this.is_loading = false;
+          if(!res.data || res.data.length == 0){
+            this.is_no_data = true;
+            this.matchInfoCtr.setList([]);
+            this.set_detail_data_storage(params,'');
+            if(callback) callback();
+            return;
+          }
+          this.is_no_data = false;
+          var temp = lodash.get(res, 'data');
+          this.set_detail_data_storage(params,temp);
+          try {   //getMatchOddsInfo 接口拉取时，联动跟新投注框的数据
+            if(this.get_bet_status == 1 || this.get_bet_status == 7 || this.get_bet_status == 5){
+              this.update_ol(null, temp)
+            }
+          } catch (error) {
+            console.error(error)
+          }
+          if(temp&&temp.length)
+            {
+              this.playlist_length = temp.length;
+              temp.forEach(item => {
+                // 附加盘收缩
+                this.listItemAddCustomAttr(item)
+              });
+            }
+          temp = this.save_hshow(temp); // 保存当前相关hshow状态;
+          MatchDataWarehouseInstance.set_match_details(this.current_match,temp);
+          this.matchInfoCtr.setList(lodash.cloneDeep(temp))
+          delete res.data;
           if(callback) callback();
-          return;
-        }
-        this.is_no_data = false;
-        var temp = lodash.get(res, 'data');
-        this.set_detail_data_storage(params,temp);
-        try {   //getMatchOddsInfo 接口拉取时，联动跟新投注框的数据
-          if(this.get_bet_status == 1 || this.get_bet_status == 7 || this.get_bet_status == 5){
-            this.update_ol(null, temp)
-          }
-        } catch (error) {
-          console.error(error)
-        }
-        if(temp&&temp.length)
-          {
-            this.playlist_length = temp.length;
-            temp.forEach(item => {
-              // 附加盘收缩
-              this.listItemAddCustomAttr(item)
-            });
-          }
-        temp = this.save_hshow(temp); // 保存当前相关hshow状态;
-        MatchDataWarehouseInstance.set_match_details(this.current_match,temp);
-        this.matchInfoCtr.setList(lodash.cloneDeep(temp))
-        delete res.data;
-        if(callback) callback();
-      }).catch(err =>console.error(err));
-      // this.$forceUpdate();
+        },
+        // axios中catch回调方法
+        fun_catch: (e) => {
+          console.error(e);
+        },
+      })
     },
 
     save_hshow(temp,list_old){
