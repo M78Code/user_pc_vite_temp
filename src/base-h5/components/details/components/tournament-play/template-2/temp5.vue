@@ -247,6 +247,7 @@ export default defineComponent({
     .play-box-style {
       margin-bottom: 0;
       width: 1.18rem;
+      background: var(--q-gb-bg-c-28);
     }
   }
 

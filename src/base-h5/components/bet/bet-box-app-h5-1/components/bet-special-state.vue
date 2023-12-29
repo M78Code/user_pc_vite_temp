@@ -5,7 +5,7 @@
             <div class="f-b-c px-12">
                 <div class="f-s-c">
                     <img :src="compute_local_project_file_path('/image/bet/request.svg')" alt="" @click="alertRules(items.seriesValue)">
-                    <span class="font14 font500">{{ items.seriesValue}}</span> 
+                    <span class="font14 font500 text-18">{{ items.seriesValue}}</span> 
                     <span class="text-45B0FF ml-4" v-if="items.orderStatusCode == 1">注单已确认</span>
                 </div>
                 <div class="">
@@ -120,6 +120,9 @@ const alertRules = (id) => {
         .f-a-c {
             color: var(--q-gb-t-c-17);
             display: flex;
+        }
+        .text-18{
+            color:var(--q-gb-t-c-18)
         }
         .bet-amount-box {
             font-size: 0.2rem;

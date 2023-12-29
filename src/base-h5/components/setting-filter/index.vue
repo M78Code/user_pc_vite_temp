@@ -299,10 +299,10 @@ const change_version = async ()=>{
       const end = origin.indexOf('.')
       let jump_url = 'user-h5-bw3'
       //测试环境
+      console.log(window.href)
       if (BUILD_VERSION_CONFIG?.CURRENT_ENV === "local_test"){
          jump_url = 'test-user-h5-bw3'
       }
-      console.log('jump_urljump_url',jump_url)
       let val = origin.substring(start,end)
           origin = origin.replace(val,jump_url)
       const url = `${origin}?${param}`

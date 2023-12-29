@@ -195,6 +195,7 @@ export default {
       }else{
         this.basketball_end_time = "01:00"
         this.basketball_line_width = 100
+        this.$emit('update_line_width', this.basketball_line_width)
         this.m_status = 1
         clearInterval(this.interval_id_b)
         this.timer4 = setTimeout( () => {

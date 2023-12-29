@@ -3,16 +3,16 @@
         <div class="toltip" >
           <template v-if="id?.toString().trim().split('00')[1] == 1">
             <header>{{ i18n_t('app_h5.bet.toltip1')}}{{ item.name || item.seriesValue }}</header>
-            <div> {{ item.name }}{{ i18n_t('app_h5.bet.toltip2')}}{{ item.name.trim().slice(0,1) }}{{ i18n_t('app_h5.bet.toltip3')}} </div>
+            <div> {{ item.name }}{{ i18n_t('app_h5.bet.toltip2')}}{{ item.name || item.seriesValue.trim().slice(0,1) }}{{ i18n_t('app_h5.bet.toltip3')}} </div>
             <div>
             {{ i18n_t('app_h5.bet.toltip4')}}
-            {{ item.name.trim().slice(0,1) }} 
+            {{ item.name || item.seriesValue.trim().slice(0,1) }} 
             {{ i18n_t('app_h5.bet.toltip5')}}
-            {{ item.name }} 
+            {{ item.name || item.seriesValue}} 
             {{ i18n_t('app_h5.bet.toltip6')}}
-            {{ item.name.trim().slice(0,1) }}
+            {{ item.name || item.seriesValue.trim().slice(0,1) }}
             {{ i18n_t('app_h5.bet.toltip7')}}
-            {{ item.name.trim().slice(0,1) }}
+            {{ item.name || item.seriesValue.trim().slice(0,1) }}
             {{ i18n_t('app_h5.bet.toltip8')}}
             </div>
           </template>
@@ -34,7 +34,6 @@ const props = defineProps({
     tooltipboxs:Boolean,
     id:''
 })
-
 const toltiptitle = computed(() => {
   return  i18n_t(`app_h5.bet.toltips.${props.id}.title`)
 })

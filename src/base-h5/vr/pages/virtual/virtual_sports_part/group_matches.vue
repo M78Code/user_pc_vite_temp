@@ -187,7 +187,7 @@ export default {
     background-color: #fff;
 
     // background-color: yellow;
-    box-shadow: 0rem 0rem 0.02rem 0.01rem #F2F2F6;
+    box-shadow: 0rem 0rem 0.02rem 0.01rem var(--q-gb-bg-c-18);
 
     display: flex;
     flex-direction: column;
@@ -203,7 +203,7 @@ export default {
     
     font-size: 0.12rem;
     font-weight: 600;
-    border-bottom: 0.01rem solid #F2F2F6;
+    border-bottom: 0.01rem solid var(--q-gb-bd-c-19);
 
     display: flex;
     flex-direction: row;
@@ -232,6 +232,7 @@ export default {
     height: 0.34rem;
     line-height: 0.34rem;
     text-align: center;
+    border-bottom: 0.01rem solid var(--q-gb-bd-c-19);
 
 
     > div {
