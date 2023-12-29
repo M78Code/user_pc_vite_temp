@@ -581,7 +581,7 @@ class MatchMeta {
   /**
    * @description vr赛果
    */
-  async get_virtual_results_match() {
+  async get_virtual_results_match(tid) {
     this.clear_match_info()
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const { start_time, end_time } = MatchUtils.get_match_time_start_time(md)
@@ -593,7 +593,7 @@ class MatchMeta {
       page:{ size: 100, current: 1 },
       sportType:MenuData.current_lv_2_menu?.sport_id,
       startTime: String(start_time),
-      tournamentId:"79430600606371842"
+      tournamentId:tid //||"79430600606371842"
     })
     // vr 马 狗 
     // const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})

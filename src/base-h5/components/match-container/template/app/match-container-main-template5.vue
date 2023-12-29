@@ -589,7 +589,7 @@ export default {
         border-top: none;
       }
       &.border-raduis{
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid var(--q-gb-bd-c-4);
         border-radius: 0 0 0.08rem 0.08rem;
       }
     }
@@ -601,7 +601,7 @@ export default {
       }
     }
     > .match-indent{
-      border: 1px solid var(--q-gb-bd-c-15);
+      border: 1px solid var(--q-gb-bd-c-18);
       border-radius: 8px 8px 0 0 !important;
       border-bottom: 1px solid var(--q-gb-bd-c-4) !important;
       background: var(--q-gb-bg-c-18);
