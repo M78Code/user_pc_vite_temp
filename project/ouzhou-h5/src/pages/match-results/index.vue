@@ -2,8 +2,8 @@
     <scroll-list menu_type="28" :is_show_badge="false" :current_mi="state.current_mi" :menuList="state.slideMenu_sport" @changeMenu="changeMenu"/>
     <div class="match-result">
         <date-tab v-if="state.slideMenu" :defaultVal="state.currentSlideValue"  :dateList="state.slideMenu" @changeDate="changeDate"/>
-        <!-- <match-container /> -->
-        <ObserverWrapper :match_list="matchs_data" com_type="ouzhou-h5"></ObserverWrapper>
+        <MatchContainer />
+        <!-- <ObserverWrapper :match_list="matchs_data" com_type="ouzhou-h5"></ObserverWrapper> -->
     </div>
 
 </template>
@@ -13,7 +13,7 @@ import { watch,onMounted, onBeforeMount, reactive,ref,nextTick, onUnmounted, com
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
-import matchContainer from "src/base-h5/components/match-list/index.vue";
+import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import { i18n_t, compute_css_obj, MenuData } from "src/output/index.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
@@ -121,8 +121,17 @@ const getData = async (item,date) =>{
         sport:item.sport
     }
     MenuData.set_result_menu_api_params(params)
-    matchs_data.value = await MatchMeta.get_results_match()
-    useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
+    useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: false });
+    useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true);
+    try {
+        matchs_data.value = await MatchMeta.get_results_match()
+        useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
+        useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
+    } catch (err) {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
+        useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: true, type: 'noWifi' });
+    }
+    
 }
 onMounted(()=>{
     VirtualList.set_is_show_ball(false)

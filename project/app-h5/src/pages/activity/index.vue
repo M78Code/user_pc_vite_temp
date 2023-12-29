@@ -43,6 +43,7 @@ if(UserCtr.theme){
   // 主题转换
   theme = UserCtr.theme.replace("-", '0')
 }
+// 主题色在活动那边是反的
 if(theme === 'theme01'){
   theme = 'theme02'
 } else {

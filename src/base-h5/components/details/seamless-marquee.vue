@@ -138,7 +138,7 @@ const move = (text_width, scroll) => {
     top: 0;
     // color: var(--q-gb-t-c-17);
     // color: transparent;
-    opacity: 0;
+    opacity: 0; //这个元素是隐藏计算宽度的 是不显示的的 不要再放开了
   }
 
   .copy {

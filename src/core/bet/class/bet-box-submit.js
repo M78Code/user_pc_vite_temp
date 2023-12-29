@@ -28,7 +28,8 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import { currency_code } from "src/core/constant/common/module/keyword.js"
 import { MenuData } from 'src/output/module/menu-data.js'
 import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
-import { nextTick } from "vue"
+import { calc_bifen } from "src/core/bet/common-helper/module/common-sport.js"
+
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 let time_out = null
@@ -341,6 +342,9 @@ const get_lastest_market_info = () => {
                         bet_item.ot = odds.oddsType
                         // 投注项id
                         bet_item.playOptionsId = odds.id
+                        // 基准分
+                        // bet_item.mark_score = 
+
                         // 球头
                         bet_item.handicap_hv = market.marketValue
                         bet_item.playOptionName = market.marketValue
@@ -991,6 +995,12 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 获取投注项名称
     let handicap = get_handicap(ol_obj,hl_obj,mid_obj,other)
 
+    let playOptionName = ol_obj.on
+    // 详情投注项
+    if(other.is_detail){
+        playOptionName = ol_obj.otv
+    }
+
     const bet_obj = {
         sportId: mid_obj.csid, // 球种id
         matchId: mid_obj.mid,  // 赛事id
@@ -1005,8 +1015,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         sportName: mid_obj.csna || '', //球种名称
         matchType,  //赛事类型
         matchName: mid_obj.tn || '', //赛事名称
-        playOptionName: ol_obj.on || ol_obj.ott || '', // 投注项名称
-        playOptions: ol_obj.on || ol_obj.ott || '',  // 投注项
+        playOptionName, // 投注项名称
+        playOptions: ol_obj.ot,  // 投注项
         tournamentLevel: mid_obj.tlev, //联赛级别
         playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
         playName: set_play_name(play_config), //玩法名称
@@ -1023,7 +1033,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         match_time: mid_obj.mgt, // 开赛时间
         handicap: handicap.text, // 投注项名称
         handicap_hv: handicap.hv, // 投注项 球头
-        mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
+        mark_score: calc_bifen(mid_obj.msc, mid_obj.csid, mid_obj.ms, ol_obj._hpid), // 显示的基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
         hl_hs: hl_obj.hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
@@ -1035,14 +1045,13 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
 
-     // 获取当前的盘口赔率
-     let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
-     // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
-     let hsw = lodash_.get(bet_obj,'odds_hsw','')
-     if(!hsw.includes(cur_odds)){
+    // 获取当前的盘口赔率
+    let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
+    // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
+    let hsw = lodash_.get(bet_obj,'odds_hsw','')
+    if(!hsw.includes(cur_odds)){
         bet_obj.marketTypeFinally = 'EU'
-     }
-
+    }
 
     // 冠军 
     if(bet_obj.bet_type == 'guanjun_bet'){
@@ -1342,25 +1351,8 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
         hv,
     }
 }
-        
-// 是否显示基准分 
-const get_mark_score = (ol_obj,mid_obj) => {
-    let score = ''
-    // 显示基准分
-    // 玩法id 34 33 32 114 92 78 91 77 107 101 13 102 336 28 80 79 11 10 15 5 6 3 12 9 8 14 68 367 7 1 4 2 
-    // let playId = [34, 33, 32, 114, 92, 78, 91, 77, 107, 101, 13, 102, 336, 28, 80, 79, 11, 10, 15, 5, 6, 3, 12, 9, 8, 14, 68, 367, 7, 1, 4, 2]
-    let play_id = [18, 19, 37, 42, 188, 189, 199]
-    // 足球没有  38, 39,这些玩法 篮球的这些玩法要显示比分 
-    // 需要区分赛种的话 可以在mid_obj 里面取 csid
-    // 判断需要显示基准分的玩法
-    if(!play_id.includes(Number(ol_obj._hpid))){
-        let obj = lodash_.get(mid_obj,'msc_obj.S1',{})
-        score = `(${obj.home || ''}-${obj.away|| ''})`
-    }
-    return score
-}
 
-// 获取投注项比分
+// 获取投注项 基准分
 const get_score_config = (obj={}) => {
     let query = null;
     if(obj.device_type == 1){
@@ -1373,7 +1365,7 @@ const get_score_config = (obj={}) => {
     const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${obj.matchId}_`, {})
     const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${obj.matchId}_${obj.playOptionId}`, {})
 
-    return get_mark_score(ol_obj,mid_obj)
+    return calc_bifen(mid_obj.msc,mid_obj.csid,mid_obj.ms,ol_obj._hpid)
 }
 
 // 查询当前盘口是否健在

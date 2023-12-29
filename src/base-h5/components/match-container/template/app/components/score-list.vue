@@ -525,7 +525,7 @@ onUnmounted(() => {
         }
       }
       .poi-des {
-        color: var(--q-gb-t-c-17);
+        color: var(--q-gb-t-c-19);
             height: auto;
             display: flex;
             align-items: flex-start;
@@ -687,7 +687,7 @@ onUnmounted(() => {
         margin: 0 3px;
       }
       .total-games{
-        color: var(--sys-brand-primary-primary-300, #74C4FF) !important;
+        color: var(--q-gb-t-c-1) !important;
 
       }
       .score-value {}

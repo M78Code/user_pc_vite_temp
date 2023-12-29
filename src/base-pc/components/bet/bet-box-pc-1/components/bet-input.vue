@@ -11,7 +11,7 @@
                 <icon-wapper name="icon-failure" size="12px" />
             </div>
         </div>
-
+        <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
         <div v-show="ref_data.keyborard" class="bet-win-key">
             <div class="row bet-win yb-fontsize12">
                 <div class="col df-jb">

@@ -369,7 +369,10 @@ export const calc_bifen = (msc, csid, ms, hpid) => {
   if (hpid == 121) {
     S = msc.toString().match(/S15\|[0-9]+\:[0-9]+/);
   }
-  if (S) return S[0].split("|")[1];
+  if (S) {
+    let str = S[0].split("|")[1];
+    return `(${str.replace(":","-")})`
+  }
   return "";
 };
 
