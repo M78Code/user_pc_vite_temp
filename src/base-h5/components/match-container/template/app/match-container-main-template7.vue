@@ -111,11 +111,11 @@
 
             <!--玩法数量-->
             <div class="right-score">
-              <!-- <template v-if="match.csid != 1">
+              <template v-if="match.csid != 1">
                 <div class="score-content">
                   <ScoreList :main_source="main_source" :match="match_of_list" />
                 </div>
-              </template> -->
+              </template>
             </div>
           </div>
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
@@ -243,11 +243,11 @@
 
           </div>
 
-          <template v-if="match.csid != 1">
+          <!-- <template v-if="match.csid != 1">
             <div class="score-content-new">
               <ScoreList :main_source="main_source" :match="match_of_list" />
             </div>
-          </template> 
+          </template>  -->
         </div>
 
         <!-- </q-slide-transition> -->
@@ -514,6 +514,7 @@ export default {
 
     &.hairline-border {
       border-radius: 0;
+      height: 56px;
     }
   }
 
@@ -1277,7 +1278,8 @@ export default {
           right: 0.07rem;
           bottom: 0;
           font-weight: 600;
-
+          color: var(--q-gb-t-c-18);
+          display: none;
           &.simple {
             right: 0.08rem;
           }
@@ -1357,11 +1359,13 @@ export default {
   }
 }
 
-
+:deep(.odd-column-item) {
+  height: 56px;
+}
 :deep(.odd-list-wrap .standard-odd-l-w) {
   height: 0.7rem;
   .standard-odd-list {
-    height: 100%;
+    height: 100%!important;
   }
 }
 :deep(.odd-list-wrap.standard) {
@@ -1412,8 +1416,8 @@ export default {
     display: flex;
     align-items: center;
     // justify-content: space-between;
-    max-width: 200px;
-    overflow-x: scroll;
+    // max-width: 200px;
+    // overflow-x: scroll;
   }
 
   &.simple {
@@ -1557,8 +1561,8 @@ export default {
 
     .live-icon-btn,
     .live-icon-play-btn {
-      width: 0.18rem;
-      height: 0.14rem;
+      width: 18px;
+      height: 18px;
     }
 
     .neutral-icon-btn {

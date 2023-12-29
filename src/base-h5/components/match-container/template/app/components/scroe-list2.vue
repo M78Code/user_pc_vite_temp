@@ -625,7 +625,7 @@
       }
   
       &.is-table-tennis {
-        max-width: 1.8rem;
+        // max-width: 1.8rem;
       }
   
       .score-se-inner2 {
