@@ -1012,7 +1012,7 @@ export default {
             justify-content: flex-end;
             position: relative;
             .is-handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-34) !important;
             }
             .match-name {
               width: 1rem;
@@ -1033,7 +1033,7 @@ export default {
             justify-content: flex-start;
             position: relative;
             .is-handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-34) !important;
             }
             .match-name {
               width: 1rem;
