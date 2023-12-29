@@ -87,14 +87,14 @@ const cancle_pre_order = () => {
     font-size: 0.20rem;
     color: var(--q-gb-t-c-1);
     line-height: 2.5;
-    border-top: 1px solid #e5e5e5;
+    border-top: 1px solid var(--q-gb-bd-c-20);
     display: flex;
     span {
       width: 50%;
       text-align: center;
       &:first-child {
         color: var(--q-gb-t-c-24);
-        border-right: 1px solid #e5e5e5;
+        border-right: 1px solid var(--q-gb-bd-c-20);
       }
     }
   }
