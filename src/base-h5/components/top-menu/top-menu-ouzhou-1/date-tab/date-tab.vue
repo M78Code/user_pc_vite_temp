@@ -10,6 +10,7 @@
 </template>
   
 <script setup>
+import MatchFold from 'src/core/match-fold/index.js'
 // import { dateWeekFormat } from "../utils.js";
 const props = defineProps({
     reverse: {
@@ -41,6 +42,7 @@ const emits = defineEmits(['changeDate']);
 const time_tab = (item,index) => {
     // if(time_active.value === item.val)return;
     // time_active.value = item.val;
+    MatchFold.clear_fold_info()
     emits('changeDate',item,index)
     // 设置日期
     // MenuData.set_date_time(props.dataList[i].val)

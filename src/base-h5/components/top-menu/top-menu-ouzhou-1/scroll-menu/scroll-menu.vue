@@ -34,6 +34,7 @@ import { sports_play_data } from 'src/output/index.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import STANDARD_KEY from "src/core/standard-key";
+import MatchFold from 'src/core/match-fold/index.js'
 import { useRouter } from 'vue-router'
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 const get_uid =  ref(UserCtr.get_uid())
@@ -174,6 +175,7 @@ onUnmounted(()=>{
  */
 const on_change_play = (item) => {
     if(playValue.value == item.mi)return;
+    MatchFold.clear_fold_info()
     playValue.value = item.mi;
     MenuData.set_menu_mi(item.mi)
     const index = dataList().findIndex(n=>n.mi == item.mi);
