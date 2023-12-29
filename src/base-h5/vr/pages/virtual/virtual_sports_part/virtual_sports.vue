@@ -943,7 +943,7 @@ export default {
       &.active {
         background: var(--q-gb-bg-c-24);
         .teams {
-          color: #127DCC;
+          color: var(--q-gb-t-c-30);
         }
       }
       .teams {
