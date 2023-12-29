@@ -33,13 +33,13 @@ let  DEV_TARGET_VERSION = ''
 
 //----------------------------------2023亚洲版-H5-KYAPP  app-h5  5 -------------------------------------------
 // 测试环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703676977703-test";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703842671775-test";     
 // 试玩环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703841983300-shiwan";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703842703077-shiwan";
 // 隔离环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703676993034-geli";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703842687334-geli";
 // 生产环境
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703841799343-online";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1703842716652-online";
 
 //----------------------------------2023亚洲版-PC   new-pc 6-------------------------------------------
 // 测试环境
