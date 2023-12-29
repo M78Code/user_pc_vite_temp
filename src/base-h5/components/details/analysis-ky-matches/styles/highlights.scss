@@ -74,9 +74,9 @@
   
         &.is-active {
           border-radius: 0.08rem;
-          color: #179CFF;
+          color: var(--q-gb-bg-c-13);
           border-radius: 6px;
-          background: #E8F5FF;
+          background: var(--q-gb-bg-c-31);
         }
       }
     }
@@ -679,7 +679,7 @@
             font-style: normal;
             font-weight: 700;
             text-overflow: ellipsis;
-            color: #303442;
+            color: var(--q-gb-t-c-18);
             padding: 2px 0;
             &:nth-child(2) {
               text-align: right;
