@@ -1322,7 +1322,7 @@ onUnmounted(() => {
     width: 50% !important;
     height: 90% !important;
     :deep(.odd-column-item2){
-      background: var(--q-gb-bg-c-28) !important;
+      background: var(--q-gb-bg-c-28) ;
     }
   }
 }

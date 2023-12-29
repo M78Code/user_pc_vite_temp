@@ -1,27 +1,10 @@
 <template>
     <q-dialog v-model="props.tooltipboxs">
         <div class="toltip" >
-          <template v-if="id?.toString().trim().split('00')[1] == 1">
             <header>{{ i18n_t('app_h5.bet.toltip1')}}{{ item.name || item.seriesValue }}</header>
-            <div> {{ item.name }}{{ i18n_t('app_h5.bet.toltip2')}}{{ item.name || item.seriesValue.trim().slice(0,1) }}{{ i18n_t('app_h5.bet.toltip3')}} </div>
-            <div>
-            {{ i18n_t('app_h5.bet.toltip4')}}
-            {{ item.name || item.seriesValue.trim().slice(0,1) }} 
-            {{ i18n_t('app_h5.bet.toltip5')}}
-            {{ item.name || item.seriesValue}} 
-            {{ i18n_t('app_h5.bet.toltip6')}}
-            {{ item.name || item.seriesValue.trim().slice(0,1) }}
-            {{ i18n_t('app_h5.bet.toltip7')}}
-            {{ item.name || item.seriesValue.trim().slice(0,1) }}
-            {{ i18n_t('app_h5.bet.toltip8')}}
-            </div>
-          </template>
-          <template v-else>
-            <header>{{ i18n_t('app_h5.bet.toltip1')}}{{ item.name || item.seriesValue }}</header>
-            <div>{{ toltiptitle }}</div>
-            <div>{{ toltipcontent }}</div>
-          </template>
-        <footer @click="handleClose">{{i18n_t("info_rules.i_know")}}</footer>
+              <div>{{ toltiptitle }}</div>
+              <div>{{ toltipcontent }}</div>
+            <footer @click="handleClose">{{i18n_t("info_rules.i_know")}}</footer>
         </div>
     </q-dialog>
 </template>
