@@ -14,7 +14,7 @@
       <template v-for="(item, index) in show_data_orderVOS" :key="index">
         <div class="items" v-if="item.isBoolean">
           <div class="top">
-            <p>{{item.matchName}}11<template v-if="item.sportId == 1001">{{item.matchDay}}&ensp;{{item.batchNo}}</template></p>
+            <p>{{item.matchName}}<template v-if="item.sportId == 1001">{{item.matchDay}}&ensp;{{item.batchNo}}</template></p>
             <span>{{ item.oddFinally }}</span>
           </div>
           <p class="list">
