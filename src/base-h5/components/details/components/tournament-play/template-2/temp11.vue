@@ -44,7 +44,7 @@ import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 import { compute_value_by_cur_odd_type } from "src/output/index.js"
 
 export default defineComponent({
-  name: "temp10",
+  name: "temp11",
   props: ["item_data", "title"],
   // #TODO mixins
   // mixins:[odd_convert],
@@ -92,6 +92,9 @@ export default defineComponent({
       });
       data.odds_list = odds_list
     };
+    onMounted(() => {
+      temp_odds()
+    })
     return {
       ...toRefs(data),
       BetData,

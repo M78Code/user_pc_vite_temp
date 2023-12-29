@@ -974,7 +974,7 @@ class MatchMeta {
       ...params,
       md: String(MenuData.data_time)
     }
-    if (![3, 6].includes(MenuData.current_lv_1_menu_mi.value) || !MenuData.data_time) delete target_params.md
+    if (![3, 6].includes(MenuData.current_lv_1_menu_mi?.value) || !MenuData.data_time) delete target_params.md
     try {
       const res = await api_common.get_collect_matches(target_params)
       if (res.code !== '200') return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
