@@ -28,7 +28,7 @@ const skeleton_style = computed(() => {
   animation: skeletonLoading 2s ease-out infinite;
   -webkit-animation: skeletonLoading 2s ease-out infinite;
   background-size: 400% 100%;
-  background-image: linear-gradient(90deg, #f0f0f0 25%, #dedede 37%, #f0f0f0);
+  background-image: var(--q-gb-bg-lg-29);
 
   &.radius_50 {
     border-radius: 50%;
