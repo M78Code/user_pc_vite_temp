@@ -81,6 +81,8 @@ const emits = defineEmits(['changeList','changeMenu'])
  * 二级菜单事件
 */
 function set_menu_lv2(item = {},event) {
+  //重置全部状态
+  MatchFold.set_all_csid_fold_status(false)
   // 重置折叠对象
   MatchFold.clear_fold_info()
   if (props.current_mi === item.mi) return
