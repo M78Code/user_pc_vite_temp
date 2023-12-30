@@ -1231,25 +1231,25 @@ class AllDomain {
       obj_.activity = `${c_url}/activity/common/common/`;
       switch (PROJECT_NAME) {
         case 'yazhou-h5':
-          obj_.sports_rules = `${c_url}/sports-rules/23-as/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/23-as/common/`;
           break;
         case 'yazhou-pc':
-          obj_.sports_rules = `${c_url}/sports-rules/23-as/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/23-as/common/`;
           break;
         case 'ouzhou-h5':
-          obj_.sports_rules = `${c_url}/sports-rules/23-eu/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/23-eu/common/`;
           break;
         case 'ouzhou-pc':
-          obj_.sports_rules = `${c_url}/sports-rules/23-eu/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/23-eu/common/`;
           break;
         case 'app-h5':
-          obj_.sports_rules = `${c_url}/sports-rules/23-app/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/23-app/common/`;
           break;
         case 'new-pc':
-          obj_.sports_rules = `${c_url}/sports-rules/23-as/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/23-as/common/`;
           break;
         default:
-          obj_.sports_rules = `${c_url}/sports-rules/common/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/common/common/`;
           break;
       }
       callback && callback(obj_);
