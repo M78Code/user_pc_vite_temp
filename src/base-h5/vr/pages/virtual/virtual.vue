@@ -508,15 +508,16 @@ export default {
             font-weight: 600;
         }
         .main-menu-right-money{
-            font-family: 'Akrobat';
+            font-family: ky-font;
+            font-size: 15px;
+            letter-spacing: .5px;
             font-style: normal;
             font-weight: 700;
             flex: 1;
-            line-height: 0.26rem;
-            overflow:hidden;
-            text-overflow:ellipsis;
-            white-space:nowrap;
-            font-size: 0.12rem;
+            line-height: .26rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             color: var(--q-gb-t-c-18);
         }
       }
