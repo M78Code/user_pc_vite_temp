@@ -22,10 +22,10 @@
       >
         <!--专业版-->
         <div>
-          <template v-if="get_hp_list(1).length">
+          <!-- <template v-if="get_hp_list(1).length">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" v-if="standard_odd_status == 0" :src="get_theme.includes('y0')?arrows:arrows_default">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="get_theme.includes('y0')?arrows_reverse:arrows_default_balck" v-else>
-          </template>
+          </template> -->
           <!--标准版赔率容器-->
           <div v-touch-pan.horizontal.prevent.mouse="odd_wrapper_pan"
             :class="{'status2':standard_odd_status == 1}" >

@@ -239,8 +239,8 @@ this.bet_appoint_ball_head= null */
     this.bet_single_list.filter(item => {
       if( item.playOptionsId === obj.oid){
         item.playOptionsId = obj.oid
-        item.odds = obj.odds
-        item.oddFinally = obj.oddFinally
+        item.pre_odds = obj.pre_odds
+        item.pre_oddFinally = obj.pre_oddFinally
       }
     })
   }

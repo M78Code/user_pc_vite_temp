@@ -74,5 +74,6 @@ import { LOCAL_PROJECT_FILE_PREFIX,useMittEmit,MITT_TYPES } from "src/output/ind
   font-size: 0.11rem;
   height: 0.36rem;
   line-height: 0.36rem;
+  color: var(--q-gb-t-c-27);
 }
 </style>
