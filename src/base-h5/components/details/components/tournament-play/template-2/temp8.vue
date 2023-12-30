@@ -183,6 +183,7 @@ export default defineComponent({
   text-align: center;
   font-size: 0.16rem;
   flex: 1;
+  color: var(--q-gb-t-c-18);
 }
 
 .team-odds-left {

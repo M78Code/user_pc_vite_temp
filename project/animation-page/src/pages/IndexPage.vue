@@ -61,7 +61,7 @@ export default defineComponent({
         let url_obj = new URL(location.href)
         // const configurationId = '654a46b1fff2e8ee7e5cd901';
         // https://statscore.atlassian.net/wiki/spaces/STW/pages/3102310484/Languages  
-    
+ //http://test-topic.sportxxxifbdxm2.com/animation-page/common/?configurationId=configurationId&eventId=eventId&lang=zh   
         let configurationId = url_obj.searchParams.get('configurationId')|| '654a46bd057e82299ed77d6c'
         let eventId = url_obj.searchParams.get('eventId')||5168463
         let lang = url_obj.searchParams.get('lang') || 'zh'
