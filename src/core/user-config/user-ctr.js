@@ -168,10 +168,11 @@ class UserCtr {
   // 刷新后 获取缓存数据
   set_user_info_refresh() {
     // 获取数据缓存
-    let session_info = LocalStorage.get(user_key);
+    let session_info = SessionStorage.get(user_key);
     if (!session_info) {
       return;
     }
+   
     if (Object.keys(session_info).length) {
       for(let item in session_info){
         if(!['user_version','token_expired_max_process_timer','daily_activities','lang','theme'].includes(item) ){
