@@ -593,6 +593,9 @@ export default defineComponent({
 }
 .margin-other {
   @extend .margin-base;
+  .play-box-style{
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+  }
 }
 // .mgb4{
 //   margin-bottom:4px
