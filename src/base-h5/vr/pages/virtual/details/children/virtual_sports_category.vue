@@ -605,6 +605,7 @@ export default {
         // 赛马数据字段增加
         if(temp){
           this.vir_add_title(temp)
+          MatchDataWarehouseInstance.set_match_details(this.current_match,temp);
         }
 
         try {  //getMatchOddsInfo 接口拉取时，联动更新投注框的数据
