@@ -61,7 +61,7 @@
           </div>
           <div class="t4 column justify-center">
             <span>{{item.handicapOddsDTOList[0].value}}</span>
-            <span :class="{'red':item.handicapOddsDTOList[1].directions == 1,'green':item.handicapOddsDTOList[1].directions == -1}">
+            <span :class="{'red':item.handicapOddsDTOList[1].directions.value == 1,'green':item.handicapOddsDTOList[1].directions.value == -1}">
               {{item.handicapOddsDTOList[1].value}}
               <i class="odd yb_ml4"></i>
             </span>
@@ -70,12 +70,12 @@
             <div class="t4 column justify-center">
               <span>{{item.handicapOddsDTOList[0].value0WinRate}}%</span>
               <span
-                :class="{'red':item.handicapOddsDTOList[1].directions0WinRate == 1,'green':item.handicapOddsDTOList[1].directions0WinRate == -1}">{{item.handicapOddsDTOList[1].value0WinRate}}%</span>
+                :class="{'red':item.handicapOddsDTOList[1].directions.value0WinRate == 1,'green':item.handicapOddsDTOList[1].directions.value0WinRate == -1}">{{item.handicapOddsDTOList[1].value0WinRate}}%</span>
             </div>
             <div class="t4 column justify-center">
-              <span>{{item.handicapOddsDTOList[0].value0WinRate}}%</span>
+              <span>{{item.handicapOddsDTOList[0].valueWinRate}}%</span>
               <span
-                :class="{'red':item.handicapOddsDTOList[1].directionsWinRate == 1,'green':item.handicapOddsDTOList[1].directionsWinRate == -1}">{{item.handicapOddsDTOList[1].value0WinRate}}%</span>
+                :class="{'red':item.handicapOddsDTOList[1].directions.valueWinRate == 1,'green':item.handicapOddsDTOList[1].directions.valueWinRate == -1}">{{item.handicapOddsDTOList[1].valueWinRate}}%</span>
             </div>
             <div class="t4 column justify-center">
               <span>{{item.handicapOddsDTOList[0].returnRate}}%</span>
@@ -112,7 +112,7 @@ const route = useRoute()
     // 国际化后续修改调整
     const tab_list = ref([
         { name: i18n_t('footer_menu.rangqiu') },
-        { name: i18n_t('analysis_football_matches.European_Finger') },
+        { name: i18n_t('footer_menu.win_alone') },
         { name: i18n_t('analysis_football_matches.size') },
       ])
     const tabIndex = ref(0)
@@ -350,18 +350,18 @@ const route = useRoute()
   }
 
   .red {
-    color: var(--q-analysis-bg-color-20);
+    color: var(--q-analysis-text-color-33);
     i {
-      background-color: var(--q-analysis-bg-color-20);
+      background-color: var(--q-analysis-text-color-33);
       -webkit-clip-path: polygon(50% 0, 100% 100%, 51% 64%, 0% 100%);
       clip-path: polygon(50% 0, 100% 100%, 51% 64%, 0% 100%);
     }
   }
 
   .green {
-    color: var(--q-analysis-bg-color-19);
+    color: var(--q-analysis-text-color-7);
     i {
-      background-color: var(--q-analysis-bg-color-19);
+      background-color: var(--q-analysis-text-color-7);
       -webkit-clip-path: polygon(50% 29%, 100% 0, 46% 100%, 0 0);
       clip-path: polygon(50% 29%, 100% 0, 46% 100%, 0 0);
     }
