@@ -290,9 +290,11 @@ onMounted(  () => {
 });
 
 // 上报用户当前使用的版本 
+//点击切换新版的时候传参，旧版传空参即可，
+// frontVer参数：PC>pc-new,H5>h5-new
 const shangbao_version= async ()=>{
  //当前是新系统还是旧系统
- await api_account.get_UserVersion({h5FrontVersion:'1'})
+ await api_account.get_UserVersion({frontVer:'h5-new'})
 
 }
 
