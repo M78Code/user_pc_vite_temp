@@ -514,7 +514,7 @@ export default {
 
     &.hairline-border {
       border-radius: 0;
-      height: 56px;
+      min-height: 0.56rem;
     }
   }
 
