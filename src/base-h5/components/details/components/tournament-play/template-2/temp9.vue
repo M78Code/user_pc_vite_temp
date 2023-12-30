@@ -152,7 +152,7 @@ export default defineComponent({
   }
 
   .temp9-ov {
-    color: var(--q-gb-t-c-20);
+    color: var(--q-gb-t-c-18);
     font-size: 0.14rem;
     font-weight: 700;;
     letter-spacing: 0;
