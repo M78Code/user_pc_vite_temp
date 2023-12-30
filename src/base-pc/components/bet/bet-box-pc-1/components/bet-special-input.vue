@@ -31,7 +31,7 @@
 
                 <!--键盘区域-->
                 <div class="row bet-keyboard bet-keyboard-zone">
-                    <bet-keyboard />
+                    <bet-keyboard :money="ref_data.money"/>
                 </div>
             </div>
         </div>

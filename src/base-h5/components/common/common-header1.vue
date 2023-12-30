@@ -3,9 +3,9 @@
 -->
 <template>
   <div ref="common_header" class="common-header" @touchmove.prevent>
-    <div class="row justify-between full-height mx-15">
+    <div class="row justify-between full-height ">
       <!-- 返回上一页 -->
-      <div class="go-back-btn-wrap a1" @click="go_to_back">
+      <div class="go-back-btn-wrap a1" @click="go_to_back" >
         <div class="go-back"></div>
       </div>
       <div ref="contents" class="ellipsis title-style details-c" @click.stop="show_dialog">
@@ -38,7 +38,7 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
-import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from "src/output/index.js";
+import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData,compute_css_obj } from "src/output/index.js";
 import uid from "src/core/uuid/index.js";
 import BetData from 'src/core/bet/class/bet-data-class.js'
 
@@ -79,13 +79,27 @@ onBeforeUnmount(() => cancel_ref.cancel())
 
 // 返回列表页亦或是返回上一级
 const go_to_back = lodash.debounce(() => {
+
   // 非串关页面 在详情页面点击了串关 回到列表页 需要设置为单关
   let is_ = ['match_result','details','category'].includes(route.name);
   if(![28,6].includes(MenuData.current_lv_1_menu_i *1) && is_){
     BetData.set_is_bet_single('single')
     BetData.set_clear_bet_info()
+    if (route.name=='category') {
+      router.push({name:'matchList'})
+    }else if(route.name=='match_result'){
+      router.push({name:'matchResults'})
+    }
+
+  }else{
+    if(route.name=='match_result'){
+      router.push({name:'matchResults'})
+    }else{
+      router.back()
+    }
+   
   }
-  router.back()
+ 
 }, 500, { leading: true })
 
 onBeforeUnmount(() => go_to_back.cancel())
@@ -326,11 +340,12 @@ export default {
 
 .go-back {
   display: inline-block;
-  width: 0.12rem;
-  height: 0.2rem;
-  // TODO: 后续上传
   background: url($SCSSPROJECTPATH + '/image/common/go_back.svg') no-repeat center / 96% 96%;
-  background-size: 100% 100%;
+  width: 0.3rem;
+  height: 100%;
+  background-position: center ;
+  background-size: 0.1rem auto;
+  margin-left: 0.05rem;
 }
 
 .analysis_new {

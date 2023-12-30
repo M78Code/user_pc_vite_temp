@@ -99,7 +99,6 @@ export const category_info = (category_arr=[]) => {
     return MatchDataWarehouseInstance.value.get_quick_mid_obj(route.params.mid)
   });
   const get_details_item = ref(MatchDetailCalss.current_category_id ) ;
-  console.log(get_details_item.value,);
   
   const get_goto_detail_matchid = computed(() => {
     return "get_goto_detail_matchid";
@@ -496,7 +495,6 @@ export const category_info = (category_arr=[]) => {
                 chpid_obj[item.chpid] = item.chpid;
               }
             });
-            console.log(111111111111113,data)
             // component_data.matchInfoCtr.setList(data);
             component_data.match_info_list = data;
             // console.log(chpid_obj,"chpid_obj");

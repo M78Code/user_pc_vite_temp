@@ -15,6 +15,7 @@ import {reactive,onMounted,onUnmounted} from 'vue'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 let mitt_list = [];
 let load_video_js_timer = {};
+let run_timer = 0;
 // 预加载数据
 const data = reactive({
   video_src:'',
@@ -48,10 +49,13 @@ function iframe_before_loading(obj){
 */
 function iframe_loading(data){
   if(data==0){
-    iframe_before_loading({
-      activity_src: lodash.get(window, `BUILDIN_CONFIG.TOPIC.activity`),
-      rules_src: lodash.get(window, `BUILDIN_CONFIG.TOPIC.sports_rules`),
-    })
+    clearTimeout(run_timer);
+    run_timer = setTimeout(() => {
+      iframe_before_loading({
+        activity_src: lodash.get(window, `BUILDIN_CONFIG.TOPIC.activity`),
+        rules_src: lodash.get(window, `BUILDIN_CONFIG.TOPIC.sports_rules`),
+      })
+    }, 10000);
   }
 }
 onMounted(() => {
@@ -69,6 +73,7 @@ onUnmounted(()=>{
   for (const key in load_video_js_timer) {
     clearTimeout(load_video_js_timer);
   }
+  clearTimeout(run_timer);
   // 销毁监听
   mitt_list.forEach(i=>i&&i())
 })
