@@ -79,9 +79,9 @@ const ref_data = reactive({
   // 第一次滑动 限频
   count: 0,
   // 串关/单关 滑动区域
-  move_leng: 255,
+  move_leng: 305,
   // 同上
-  end_leng: 200,
+  end_leng: 250,
 })
 // 是否可以投注
 let is_bet_single = true
@@ -104,7 +104,7 @@ const set_touch_move_bet = event => {
   if(fit == 'bet-box'){
     let page_x = lodash_.get(event,'changedTouches[0].pageX',0)
     if(page_x > 5 && page_x < ref_data.move_leng){
-      ref_data.basic_model = page_x
+      ref_data.basic_model = page_x > 50 ? page_x - 50 : page_x
     }
   }
 }
@@ -123,7 +123,7 @@ const set_touch_end_bet = event => {
     let fit = lodash_.get(event,'target.className','')
     if(fit == 'bet-box' && ref_data.count < 1){
       ref_data.count++
-      let page_x = lodash_.get(event,'changedTouches[0].pageX',0)
+      let page_x = lodash_.get(event,'changedTouches[0].pageX',0) - 50
       if( page_x < ref_data.end_leng){
         init_slider_config()
       } else {
