@@ -445,7 +445,6 @@ class MatchMeta {
   async get_champion_match() {
     // MatchFold.clear_fold_info()
     MatchDataBaseH5.clear()
-    this.set_page_match_empty_status({ state: false });
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
     try {
@@ -490,7 +489,6 @@ class MatchMeta {
    */
   async get_champion_match_result() {
     this.clear_match_info()
-    this.set_page_match_empty_status({ state: false });
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const { start_time, end_time } = MatchUtils.get_match_time_start_time(md)
     this.current_euid = `10000_${md}`
@@ -551,7 +549,6 @@ class MatchMeta {
    */
   async get_results_match({ tid = '' } = {}) {
     this.clear_match_info()
-    this.set_page_match_empty_status({ state: false });
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const euid = lodash.get(MenuData.result_menu_api_params, 'sport')
     // 电竞的冠军
@@ -643,7 +640,6 @@ class MatchMeta {
   async get_esports_match() {
     this.clear_match_info()
     VirtualList.clear_virtual_info()
-    this.set_page_match_empty_status({ state: false });
     //兼容复刻版电竞冠军
     const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "");
     const is_kemp = md == '100';
@@ -694,7 +690,6 @@ class MatchMeta {
    *  yazhou-h5 需要
    */
   async get_target_match_data({ scroll_top = 0, md = '', is_error = false, tid = '' }) {
-    this.set_page_match_empty_status({ state: false });
     // 有的项目菜单类不存在 data_time
     const data_time = String(md || MenuData?.data_time || this.http_params.md)
     // 球种 euid
