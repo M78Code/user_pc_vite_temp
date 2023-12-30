@@ -201,14 +201,13 @@
                   :csid="+match.csid" :path="match.mhlu" type="home"></image-cache-load> -->
                 <!-- <img v-if="match?.mhlu?.length" class="logo" v-img="([match.mhlu[0], match.frmhn[0], match.csid])" /> -->
                   <team-img
-                    v-if="!lodash.isEmpty(match) && lodash.get(match,'mhlu[0]')"
                     :type="0"
                     :csid="match.csid"
                     :url="lodash.get(match,'mhlu[0]')"
                     :fr="lodash.get(match,'frmhn[0]')"
                     :size="18"
+                    class="team-icon"
                   ></team-img>
-                  <div class="team-icon" v-if="!lodash.isEmpty(match) && !lodash.get(match,'mhlu[0]')" :style="compute_css_obj({key: 'h5-home-icon'})"></div>
                   <team-img
                     v-if="lodash.get(match,'mhlu.length') > 1&& !lodash.isEmpty(match)"
                     :type="0"
@@ -217,6 +216,7 @@
                     :fr="match.frmhn[1]"
                     :size="18"
                     style="margin-left:-0.09rem;"
+                    class="team-icon"
                   ></team-img>
                   <!--发球方绿点-->
                   <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
@@ -234,14 +234,13 @@
                   v-show="set_serving_side(match, 'away')">
                 </span>
                 <team-img
-                  v-if="lodash.get(match,'malu[0]')"
                   :type="1"
                   :csid="match.csid"
                   :url="lodash.get(match,'malu[0]')"
                   :fr="lodash.get(match,'frman[0]')"
                   :size="18"
+                  class="team-icon"
                 ></team-img>
-                <div class="team-icon" v-if="!lodash.get(match,'malu[0]')" :style="compute_css_obj({key: 'h5-away-icon'})"></div>
                 <team-img
                   v-if="lodash.get(match,'malu.length') > 1"
                   :type="1"
@@ -250,6 +249,7 @@
                   :fr="match.frman[1]"
                   :size="18"
                   style="margin-left:-0.09rem;"
+                  class="team-icon"
                 ></team-img>
                 <!-- <img v-if="match?.malu?.length" class="logo" v-img="([match.malu[0], match.frman[0], match.csid])" /> -->
 
@@ -480,9 +480,13 @@ export default {
 }
 /* ********赛事容器相关********** -S*/
 .team-icon {
-  width: 0.2rem;
-  height: 0.2rem;
+  width: 0.2rem !important;
+  height: 0.2rem !important;
   background-size: 100% 100%;
+  :deep(.img-style){
+    width: 0.2rem !important;
+    height: 0.2rem !important;
+  }
 }
 .counting-down-up-container {
 

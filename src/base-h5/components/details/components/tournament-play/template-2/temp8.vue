@@ -211,7 +211,7 @@ export default defineComponent({
 /*************** 数字结束 *************** -E*/
 .team {
   width: 1.9rem;
-  margin-right: 0.12rem;
+  margin-right: 0.28rem;
 }
 
 .team-odds2 {

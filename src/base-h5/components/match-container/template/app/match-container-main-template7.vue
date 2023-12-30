@@ -1214,7 +1214,7 @@ export default {
             color: var(--q-gb-t-c-18);
 
             &.is-handicap {
-              color: #74C4FF !important;
+              color: var(--q-gb-t-c-34) !important;
             }
 
             &.goal-style {

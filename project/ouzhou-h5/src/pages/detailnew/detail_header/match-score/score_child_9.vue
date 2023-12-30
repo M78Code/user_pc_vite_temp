@@ -70,8 +70,7 @@ watchEffect(()=>{
 })
 
 watch(() => props.detail_data, (newValue) => {
-    console.log("score_arr,detail_data")
-    validate_stage(newValue.mmp)
+    validate_stage(newValue?.mmp)
 }, {deep: true,immediate:true})
 
 onMounted(() => {
@@ -84,9 +83,11 @@ onMounted(() => {
 
 <template>
     <ul class="score_child_9" v-if="state.score_array">
-        <li v-for="item of state.score_array" :key="item" class="score">
+        <li v-for="(item,index) of state.score_array" :key="item" class="score">
             <span>&ensp;</span>
-            <span>{{ item?.home }} - {{ item?.away }}</span>
+            <span :class="{'active-text': ((state.score_array || []).length == ++index && detail_data?.mo != 1) }">
+                {{ item?.home }} - {{ item?.away }}
+            </span>
             <span>&ensp;</span>
         </li>
     </ul>
@@ -110,6 +111,10 @@ onMounted(() => {
     font:{
         size: .14rem;
         weight: bold;
+    }
+
+    .active-text {
+        color: var(--q-gb-t-c-1);
     }
 }
 </style>

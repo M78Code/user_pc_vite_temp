@@ -110,6 +110,7 @@ const props = defineProps({
 .p1 {
   width: 0.2rem;
   height: 0.22rem;
+  color: var(--q-gb-t-c-27);
   span {
     --per: -0.32rem;
     display: inline-block;
