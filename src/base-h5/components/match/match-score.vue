@@ -42,7 +42,7 @@ const props = defineProps({
     default: () => { }
   },
 })
-let componentId =null
+let componentId = null
 const id = props.detail_data.csid || 101
 if(id != 100 && id != 101){
  componentId = defineAsyncComponent(() => import(`./score/score-child-${id}.vue`))
