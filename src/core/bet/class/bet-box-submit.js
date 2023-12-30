@@ -148,8 +148,15 @@ const set_bet_order_list = (bet_list, is_single) => {
         })
 
     } else {
+        let pre_odds = ''
         bet_list.forEach((item, index) => {
-           let bet_s_obj = {
+            // 预约投注 设置预约投注赔率
+            if(BetData.is_bet_pre){
+                pre_odds = item.pre_odds
+            }
+            let odds = pre_odds || item.odds
+            let odd_finally = compute_value_by_cur_odd_type(odds, item.playId, item.odds_hsw, item.sportId)
+            let bet_s_obj = {
                 "sportId": item.sportId,   // 赛种id
                 "matchId": item.matchId,   // 赛事id
                 "tournamentId": item.tournamentId,   // 联赛id
@@ -159,8 +166,8 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "marketId": item.marketId,  //盘口id
                 "playOptionsId": item.playOptionsId,   // 投注项id
                 "marketTypeFinally": UserCtr.odds.cur_odds,     // 欧洲版默认是欧洲盘 HK代表香港盘
-                "odds": item.odds,  // 赔率 万位
-                "oddFinally": compute_value_by_cur_odd_type(item.odds, item.playId, item.odds_hsw, item.sportId),  //赔率
+                "odds": odds,  // 赔率 万位
+                "oddFinally": odd_finally,  //赔率
                 "playName": item.playName, //玩法名称
                 "sportName": item.sportName,  // 球种名称
                 "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
@@ -509,9 +516,9 @@ const pre_bet_comparison = () => {
 
 		// 设置预约投注数据
 		let pre_data = {
-			oid:  pre_obj.custom_id,
-			odds: pre_obj.odds,
-			oddFinally: pre_obj.oddFinally
+			oid: pre_obj.custom_id,
+			pre_odds: pre_obj.odds,
+			pre_oddFinally: pre_obj.oddFinally
 		}
 		BetData.set_bet_single_list_obj(pre_data)
 		BetData.set_is_bet_pre(true)
@@ -522,8 +529,8 @@ const pre_bet_comparison = () => {
 					let obj = {
 						old_oid: oid,
 						oid: item.id,
-						odds: pre_obj.odds,
-						oddFinally: pre_obj.oddFinally
+						pre_odds: pre_obj.odds,
+						pre_oddFinally: pre_obj.oddFinally
 					}
 					BetData.set_bet_single_list_obj(obj)
 					BetData.set_is_bet_pre(false)
