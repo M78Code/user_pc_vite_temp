@@ -74,10 +74,10 @@ const set_back = () => {
         MenuData.set_current_lv1_menu('');
         MenuData.set_top_menu_title({})
         MenuData.set_init_menu_list()
-        router.push({name: PageSourceData.from_page_source || 'matchList'})
         if (props.goBackAssign !== null) {
             props.goBackAssign()
         }
+        router.push({name: PageSourceData.from_page_source || 'matchList'})
     }finally{
         setTimeout(() => {
             if (hash == location.hash) { //跳转过后如果过hash相同 就直接跳回首页

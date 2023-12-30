@@ -570,7 +570,6 @@ onUnmounted(() => {
     align-items: center;
     padding-top: 2px;
     color: var(--q-gb-t-c-18);
-    font-family: Akrobat;
 
     .icon-lock {
       width: 0.14rem;
@@ -629,7 +628,6 @@ onUnmounted(() => {
   }
   .fontbold{
     font-weight: 700;
-    font-family: Akrobat;
     font-size: 12px;
   }
 

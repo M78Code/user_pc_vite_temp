@@ -426,7 +426,7 @@ export default {
   }
 
   .v-mode-span {
-    margin-right: 0.1rem;
+    // margin-right: 0.1rem;
   }
 
   .buffer-container {
@@ -452,7 +452,7 @@ export default {
 
     .match-content {
       width: 100%;
-      padding: 8px;
+      padding: 8px 8px 0 8px;
       border-top: 1px solid var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
       border-radius: 8px;
@@ -1122,8 +1122,8 @@ export default {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         word-break: break-all;
-        margin-bottom: 10px;
-    margin-top: 10px;
+        margin-top: 5px;
+    // margin-top: 10px;
         &.column2 {
           // height: 0.35rem;
         }
@@ -1558,7 +1558,7 @@ export default {
   .live-i-b-wrap {
     width: auto;
     display: flex;
-    margin-left: 0.08rem;
+    margin-right: 0.08rem;
 
     .live-icon-btn,
     .live-icon-play-btn {
@@ -1616,7 +1616,7 @@ export default {
       :deep(.counting-down-wrap) {
         color: #AFB3C8 !important;
         // width: 150px !important;
-
+        position: relative!important;
         .counting {
           font-size: 11px;
           color: var(--q-gb-t-c-19);

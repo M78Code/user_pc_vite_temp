@@ -31,9 +31,8 @@
         <result-header :result_detail_data="result_detail_data" :style="{display:show_replay_video?'none':'block'}" />
       </div>
       <!-- 赛果tab集 -->
-      <result-details-tab :tab_index="route.params.index" :result_detail_data="result_detail_data" />
+      <result-details-tab  :tab_index="route.params.index" :result_detail_data="result_detail_data" />
     </div>
-    
     <!-- 下拉联赛列表 -->
       <q-dialog v-model="is_dialog_details" position="top" v-cloak>
         <result-details-dialog
@@ -47,7 +46,7 @@
       <router-view v-if="loading"/>
     </div>
     <!--赛果详情骨架屏-->
-    <!-- <SResult v-if="skeleton_loading" :loading_body="skeleton.changeTab"/> -->
+    <SResult v-if='skeleton_loading'  :loading_body="skeleton.changeTab"/>
   </div>
 </template>
 
@@ -92,7 +91,7 @@ const analysis_show = ref({
     basketball: false,
 })
   //骨架屏加载状态
-const skeleton = ref({
+const skeleton = reactive({
   header: false,//头部数据
   list: false,//列表数据
   changeTab: false,//切换tab
@@ -106,6 +105,7 @@ const get_menu_type = computed(() =>{
 const is_match_result = computed(() =>{
   return ['result_details', 'match_result'].includes(route.name)
 })
+
 const skeleton_loading = computed(() =>{
   if(skeleton.header && skeleton.list){
     return false
@@ -148,11 +148,9 @@ onMounted(() => {
   // 监听调用赛事详情页面接口
     useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info).off,
     useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show).off,
-
-    useMittOn(MITT_TYPES.EMIT_RESULT_LIST_LOADING,()=>{
+    useMittOn(MITT_TYPES.EMIT_RESULT_LIST_LOADING,(v)=>{
       skeleton.list = true
     }).off,
-
     useMittOn(MITT_TYPES.EMIT_CHANGE_TAB, ()=>{
       skeleton.changeTab = true
     }).off
@@ -191,7 +189,6 @@ const get_match_detail_info = () => {
   //赛果类型  0 普通 1电竞 2vr  3冠军
   // console.log(MenuData.get_results_type() ,'MenuData.is_esports() ');
   let mid =  MatchDetailCalss.get_goto_detail_matchid  || route.params.mid;
-  console.log(mid,'mid');
   // if(mid){
   //   set_goto_detail_matchid(mid);
   // }
@@ -356,7 +353,9 @@ onUnmounted(() => {
   background: var(--q-gb-bg-c-19) !important;
 }
 :deep(.skeleton-wrap) {
-  z-index: 10 !important;
+  z-index: 1011 !important;
+  width: 100%;
+  background: var(--q-gb-bg-c-19) !important;
 }
 
 .h-full {
