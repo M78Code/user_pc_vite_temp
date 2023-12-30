@@ -840,7 +840,6 @@ if (type.value == 30) {
     position: relative;
     &::after {
       content: ' ';
-      width: 100%;
       position: absolute;
       border-top:  0.005rem solid var(--q-gb-bd-c-18);
       top: 0;
@@ -978,7 +977,6 @@ if (type.value == 30) {
     position: relative;
     &::after {
       content: ' ';
-      width: 100%;
       position: absolute;
       border-bottom: 0.005rem solid var(--q-gb-bd-c-18);
       bottom: 0;
