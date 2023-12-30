@@ -9,7 +9,7 @@
         <div class="row bet-multiple-input yb-flex-nowrap">
             <!--金额输入区-->
             <div class="col bet-count">
-                <span>2</span>
+                <span>{{ BetData.bet_single_list.length}}</span>
                 <span>x</span>
             </div>
             <div class="col-auto right-input">
