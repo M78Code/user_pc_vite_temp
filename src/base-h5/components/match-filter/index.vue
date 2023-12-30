@@ -15,7 +15,7 @@
           </div>
         </div>
     <!-- 中间滚动选择项 -->
-    <q-scroll-area class="scroll-area" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
+    <q-scroll-area class="scroll-area scroll-bar-display-none" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
       <div v-if="list.length" v-scroll="scrolled" class="yb_mb18">
         <!-- 循环整个后台返回数据 -->
         <div class="scroll-area1" v-for="(item, index) in list" :key="index" ref="scroll_area1">
