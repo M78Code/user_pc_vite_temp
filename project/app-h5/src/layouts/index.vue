@@ -63,8 +63,8 @@
   <toast></toast>
 
   <!-- 商户活动的弹层,只在home页展示，两个都已 脱离文档流-->
-  <activity-layer v-if="activity_status" @activity_hide="activity_status = false" :activity_layerimg="activity_layerimg"
-    :count_down_time="userBannerTimer" />
+  <!-- <activity-layer v-if="activity_status" @activity_hide="activity_status = false" :activity_layerimg="activity_layerimg"
+    :count_down_time="userBannerTimer" /> -->
   <StandardEdition></StandardEdition>
 </template>
 
@@ -96,7 +96,7 @@ import { api_account } from "src/api/index";
 // import betMixBoxChild from "src/base-h5/components/bet/bet-box-app-h5-1/bet_mix_box_child.vue";
 
 // 活动弹出框
-const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
+// const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
 const settleDialog = defineAsyncComponent(() =>
   import("project_path/src/pages/cathectic/index.vue") // project/yazhou-h5/src/pages/cathectic/index.vue
 );

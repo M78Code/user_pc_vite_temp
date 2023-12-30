@@ -66,7 +66,7 @@ import { reactive } from "vue";
   const del=()=>{
     console.error('items',props.items)
     // BetData.bet_list_remove(0)
-    // BetData.set_clear_bet_info()
+    BetData.set_clear_bet_info()
     // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
   }
   </script>

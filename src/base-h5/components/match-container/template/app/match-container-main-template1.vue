@@ -502,7 +502,7 @@ export default {
         // border-radius: 0 0 0.08rem 0.08rem;
       }
       &.border-raduis{
-        border-bottom: 1px solid var(--q-gb-bd-c-4);
+        border-bottom: 1px solid var(--q-gb-bd-c-15);
         border-radius: 0 0 0.08rem 0.08rem;
       }
     }

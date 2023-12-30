@@ -514,7 +514,7 @@ export default {
 
     &.hairline-border {
       border-radius: 0;
-      min-height: 0.56rem;
+      height: 56px;
     }
   }
 
@@ -1555,7 +1555,6 @@ export default {
   }
 
   .live-i-b-wrap {
-    height: 0.14rem;
     width: auto;
     display: flex;
     margin-left: 0.08rem;

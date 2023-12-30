@@ -135,6 +135,7 @@ const searchTabMenu = ref(null);//足球tab dom
       val.old_csid =val.csid || MenuData.current_lv_2_menu?.csid;
       MenuData.set_current_lv_2_menu_i(val);
       nextTick(()=>{
+        dJdateTabMenu.value.set_active_val();
         dJdateTabMenu.value?.changeTabMenu({},0,'',type);
       })
       return;
