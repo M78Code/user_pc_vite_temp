@@ -198,7 +198,7 @@
                         </span>
                         <template v-if="home_red_score">
                           <!-- 红牌 -->
-                          <span class='score-punish' :class="{ flash: is_show_home_red && !is_results }"> {{ home_red_score }} </span>
+                          <span class='score-punish red' :class="{ flash: is_show_home_red && !is_results }"> {{ home_red_score }} </span>
                         </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
@@ -416,7 +416,7 @@ export default {
 }
 .match-content-line {
   width: 100%;
-  height: 1px;
+  height: 0.005rem;
   background: var(--q-gb-bd-c-4);
 }
 .match-container {
@@ -502,7 +502,7 @@ export default {
         // border-radius: 0 0 0.08rem 0.08rem;
       }
       &.border-raduis{
-        border-bottom: 1px solid var(--q-gb-bd-c-4);
+        border-bottom: 1px solid var(--q-gb-bd-c-15);
         border-radius: 0 0 0.08rem 0.08rem;
       }
     }
@@ -1272,7 +1272,6 @@ export default {
           border-radius: 0.02rem;
           margin-left: 0.04rem;
           color: var(--q-gb-t-c-14);
-
           &.yellow {
             background: #FFA800;
           }

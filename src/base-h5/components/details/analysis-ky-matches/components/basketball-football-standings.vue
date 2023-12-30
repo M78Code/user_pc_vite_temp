@@ -420,6 +420,7 @@ const props = defineProps({
       background: var(--q-analysis-bg-color-1);
       border: 1px solid  var(--q-analysis-text-color-23);
       box-shadow: 0 1px 2px 0  var(--q-analysis-bd-color-6);
+      color: var(--q-gb-t-c-14);
 
       border-radius: 0.04rem;
       border-top: 0;

@@ -31,7 +31,7 @@
 
                 <!--键盘区域-->
                 <div class="row bet-keyboard bet-keyboard-zone">
-                    <bet-keyboard />
+                    <bet-keyboard :money="ref_data.money"/>
                 </div>
             </div>
         </div>
@@ -75,8 +75,8 @@ const InputFocus = ref()
 
 onMounted(() => {
     ref_data.money = props.items.bet_amount
-    InputFocus.value.focus()
     show_quick()
+    InputFocus.value.focus()
 })
 
 onUnmounted(() => {
@@ -123,6 +123,7 @@ const show_quick = () => {
     let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
     let id = lodash_.get(props,'items.id','')
     list.filter(item => {
+        console.log(item)
         item.show_quick = false
          // 显示指定投注项的快捷金额按钮
         if(item.id == id){

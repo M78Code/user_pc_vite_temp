@@ -42,6 +42,7 @@
             activeImg:desc2
         }
     ];
+    let is_debounce_disable=false
     const props = defineProps({
         list: {
             type: Array,
@@ -50,8 +51,12 @@
         defaultVal:{
             type: [Number, String],
             default: 1
-        }
-    });
+        },
+        debounce:{
+            type:Number,//不允许快速切换 导致页面卡顿或者性能消耗
+            default: 1500,//默认1.5秒 才能 再次切换回来
+         }
+        });
     const activeOn = ref(props.defaultVal);//选中值
     const sortVal = ref(1);//排序code
     /**
@@ -79,11 +84,15 @@
         //     const enVal = sortJson.filter((item)=>{return item.val === sortVal.value })?.[0].enVal;
         //     return callback(val,enVal);
         // }
-        if(activeOn.value === item.val||item.disabled)return;
+        if(activeOn.value === item.val||item.disabled||is_debounce_disable)return;
+        is_debounce_disable=true //不允许快速切换 导致页面卡顿或者性能消耗
         activeOn.value = item.val;
         callback(item.val,item);
         //监听改变
         UserCtr.set_menu_init_change()
+        setTimeout(() => {
+            is_debounce_disable=false
+        },Number(props.debounce)?props.debounce:0);
     }
 </script>
 <style scoped lang="scss">

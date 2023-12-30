@@ -11,12 +11,8 @@
         <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
           <!-- 返回按钮 及 刷新 注单  设置 按钮 -->
           <div class="title-wrap">
-            <div class="detail-back" @click="go_to_back(),go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})">
-              <img
-                class="img"
-                :src="compute_local_project_file_path('/image/svg/go-back-icon.svg')"
-                alt=""
-              />
+            <div class="detail-back-a">
+              <div class="detail-back" @click="go_to_back(),go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})" :style="compute_css_obj({key: 'h5_back_img'})"></div>
             </div>
             <!-- 虚拟体育 -->
             <div class="col virtual-title">{{i18n_t('common.virtual_sports')}}</div>
@@ -90,7 +86,6 @@ import { compute_css_obj, MenuData } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
-
 export default {
   name:'match_main',
   data() {
@@ -123,7 +118,7 @@ export default {
       balance: 0,
       // 投注数据
       BetData,
-      BetViewDataClass
+      BetViewDataClass,
     };
   },
   created(){
@@ -435,32 +430,37 @@ export default {
     .title-wrap {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       font-size: 0.16rem;
       height: 0.44rem;
       background-color: var(--q-gb-bg-c-21);
-      .detail-back {
-        width: 0.08rem;
-        height: 0.14rem;
-        background-size: 0.1rem auto;
-        margin-left: 0.1rem;
-        margin-right: 0.1rem;
+      .detail-back-a{
+        width: 0.3rem;
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex: 1 1;
+        .detail-back {
+          width: 0.3rem;
+          height: 100%;
+          background-position: center ;
+          //background: url($SCSSPROJECTPATH + '/image/common/go_back.svg') no-repeat center / 96% 96%;
+          background-size: 0.1rem auto;
+          margin-left: 0.05rem;
+         
+        }
       }
+      
 
       .virtual-title{
         text-align: center;
         font-weight: 500;
         font-size: 0.18rem;
-        font-family: PingFang SC;
-        position: absolute;
         width: 1.6rem;
         height: 0.44rem;
         line-height: 0.44rem;
-        top: 50%;
-        left: 50%;
-        margin-left: -0.8rem;
-        margin-top: -0.44rem;
         color: var(--q-gb-t-c-18);
+        flex: auto;
       }
 
       /*  刷新按钮 */
@@ -502,21 +502,23 @@ export default {
         align-items: center;
         padding: 0 0.1rem 0 0.03rem;
         margin-right: 0.1rem;
+        flex: 1 1;
         .main-menu-right-symbol{
             font-family: 'Akrobat';
             font-style: normal;
             font-weight: 600;
         }
         .main-menu-right-money{
-            font-family: 'Akrobat';
+            font-family: ky-font;
+            font-size: 15px;
+            letter-spacing: .5px;
             font-style: normal;
             font-weight: 700;
             flex: 1;
-            line-height: 0.26rem;
-            overflow:hidden;
-            text-overflow:ellipsis;
-            white-space:nowrap;
-            font-size: 0.12rem;
+            line-height: .26rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             color: var(--q-gb-t-c-18);
         }
       }

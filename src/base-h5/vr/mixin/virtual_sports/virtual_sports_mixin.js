@@ -54,6 +54,7 @@ export default {
     }
   },
   created () {
+    this.get_virtual_sport_local=lodash.debounce(this.get_virtual_sport_local.bind(this),100)
     // 延时器
     this.get_next_basketball_time = null;
     this.timer_super5 = null;

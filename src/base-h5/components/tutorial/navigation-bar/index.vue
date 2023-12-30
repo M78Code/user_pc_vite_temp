@@ -2,6 +2,7 @@
  * @Description:盘口教程头部复用操作组件
 -->
 <template>
+    <div class="navigation-bar-header">
     <div class="navigation-bar" :style="{ borderBottomColor: borderBottomNoShow && 'transparent' }">
         <div class="navigation-bar-left">
             <div class="navigation-bar-close" @click="set_back">
@@ -23,6 +24,7 @@
         <div class="navigation-bar-right">
             <slot name="right"></slot>
         </div>
+    </div>
     </div>
 </template>
 <script setup>
@@ -95,6 +97,10 @@ const set_back = () => {
 </script>
 <style scoped lang="scss">
 // 组件样式
+.navigation-bar-header{
+    height: .44rem;
+    display: block;
+}
 .navigation-bar {
     max-height: .6rem;
     height: .44rem;
@@ -103,16 +109,22 @@ const set_back = () => {
     border-bottom: .01rem solid var(--q-gb-bd-c-6);
 
     &-close {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        padding-left: .14rem;
-
-        .img {
-            height: .14rem;
-            width: .08rem;
-        }
+            width: 0.3rem;
+            height: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex: 1 1;
+            .img {
+              width: 0.3rem;
+              height: 100%;
+              background-position: center ;
+              //background: url($SCSSPROJECTPATH + '/image/common/go_back.svg') no-repeat center / 96% 96%;
+              background-size: 0.1rem auto;
+              margin-left: 0.05rem;
+             
+            }
+        
     }
 
     &-center,
