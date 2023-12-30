@@ -13,7 +13,7 @@
                 <div class="main-menu-right" @click.stop>
                     <!-- <span class="main-menu-right-symbol">￥</span> -->
                     <img :src="compute_local_project_file_path('/image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
-                    <span class="main-menu-right-money">{{ format_money2(UserCtr.balance) }}1</span>
+                    <span class="main-menu-right-money">{{ format_money2(UserCtr.balance) }}</span>
                 </div>
             </template>
         </TopHeader>
