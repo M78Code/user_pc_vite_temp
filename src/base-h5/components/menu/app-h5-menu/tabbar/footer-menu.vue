@@ -5,7 +5,8 @@
         <template  v-if="item.title">
           <div class="m-item-inner">
             <div class="item-img-wrapper c-refresh">
-              <img class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading,'not_title':!item.title}" :src="item.icon" alt="" />
+              <!-- <img class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading,'not_title':!item.title}" :src="item.icon" alt="" /> -->
+              <div class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading,'not_title':!item.title}" :style="item.icon"></div>
             </div>
             <div class="menu-item-title">
               <span class="title-p1">  {{ item.title }}</span>
@@ -25,7 +26,7 @@
 <script setup>
 import { ref,watch,computed } from "vue";
 import { useRouter } from "vue-router";
-import { LOCAL_PROJECT_FILE_PREFIX,useMittEmit,MITT_TYPES } from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX,useMittEmit,MITT_TYPES , compute_css_obj } from "src/output/index.js";
 import { i18n_t } from "src/boot/i18n.js";;
 import { UserCtr,MenuData } from "src/output/index.js";
 
@@ -35,49 +36,50 @@ const router = useRouter();
 const loading = ref(false)
 //是否每日活动
 let is_activities = ref(UserCtr.daily_activities)
-let footer_list = [
+const footer_list = ref([
   {
     title: i18n_t('menu_itme_name.results'), 
     path_name: "matchResults",
-    icon: `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_01_nor.png`,
+    icon: computed(() => compute_css_obj({key: 'h5-footer-sg'})),
     id: 1
   },
   {
     title: i18n_t('footer_menu.set_menu'),
-    icon: `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_02_nor.png`,
+    icon: computed(()=>compute_css_obj({key: 'h5-footer-szcd'})),
     id: 2,
    
   },
   {
     title: i18n_t('footer_menu.open_bets'),
-    icon: `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_03_nor.png`,
+    icon: computed(() => compute_css_obj({key: 'h5-footer-yjzd'})) ,
     settle: false,
     id: 3
   },
   {
     title: i18n_t('footer_menu.closed_bets'),
-    icon: `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_04_nor.png`,
+    icon: computed(() => compute_css_obj({key: 'h5-footer-wjzd'})) ,
     settle: true,
     id: 4
   },{
     title: i18n_t('footer_menu.refresh'),
-    icon: `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_05_nor.png`,
+    icon: computed(() => compute_css_obj({key: 'h5-footer-sx'})),
     id: 5,
   }
-]
+])
 // const footer_menu_list = ref(footer_list)
 const footer_menu_list = computed(()=>{
-  let new_footer_list = footer_list;
+  let new_footer_list = footer_list.value;
   if(UserCtr.daily_activities){
     // new_footer_list[4].title = i18n_t('footer_menu.daily_activities');
     new_footer_list[4].title = '';
     new_footer_list[4].icon = `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/activity.png`;
   }else{
     new_footer_list[4].title = i18n_t('footer_menu.refresh');
-    new_footer_list[4].icon = `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_05_nor.png`
+    new_footer_list[4].icon = computed(()=>compute_css_obj({key: 'h5-footer-sx'}))
   }
   return new_footer_list;
 })
+
 /**
  * 监听用户信息版本号
 */

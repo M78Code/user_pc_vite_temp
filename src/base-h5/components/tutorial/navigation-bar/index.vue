@@ -27,14 +27,10 @@
 </template>
 <script setup>
 import { compute_css_obj } from "src/output/index.js";
-<<<<<<< HEAD
 import { useRouter, useRoute } from "vue-router";
-import { compute_local_project_file_path } from "src/output/index.js";
-=======
-import { useRouter,useRoute } from "vue-router";
 import {compute_local_project_file_path,UserCtr} from "src/output/index.js";
->>>>>>> 192a42afc3533819322baef483a83e01ba0d91a7
 import { MenuData } from "src/output/module/menu-data.js"
+import BetData from 'src/core/bet/class/bet-data-class.js'
 // import setectLeague from './setect-league.vue'
 import { ref } from "vue";
 defineOptions({
@@ -87,6 +83,8 @@ const set_back = () => {
             }
         }, 100);
     }
+    BetData.set_is_bet_single('single')
+    BetData.set_clear_bet_info()
 }
 // /**
 //  * 打开联赛筛选框

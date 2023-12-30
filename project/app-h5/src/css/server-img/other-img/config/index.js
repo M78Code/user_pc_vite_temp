@@ -66,4 +66,21 @@ export default {
   'h5-kyapp-crosstalk-icon': {
     default: "h5-kyapp-crosstalk-icon",    
   },
+
+
+  'h5-footer-sg': {
+    default: "h5-footer-sg",    
+  },
+  'h5-footer-szcd': {
+    default: "h5-footer-szcd",    
+  },
+  'h5-footer-yjzd': {
+    default: "h5-footer-yjzd",    
+  },
+  'h5-footer-wjzd': {
+    default: "h5-footer-wjzd",    
+  },
+  'h5-footer-sx': {
+    default: "h5-footer-sx",    
+  },
 }

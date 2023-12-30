@@ -10,7 +10,7 @@
       <div class="row virtual-bet-wrapper">
         <div v-for="(item,index) in odds_list" :key="index"
              class="col-4 item-height"
-             :class="[index >= 3 ? 'border-bot':'',BetData.bet_oid_list.includes(item.oid) ? 'blue-color':'']"
+             :class="[index >= 3 ? 'border-bot':'',BetData.bet_oid_list.includes(item.oid) ? 'active':'']"
              @click="go_to_bet(item)"
         >
           <div class="row justify-center">
