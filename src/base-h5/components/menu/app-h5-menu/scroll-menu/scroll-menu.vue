@@ -268,7 +268,7 @@ onUnmounted(()=>{
                 left: 0.37rem;
                 font-size: 0.1rem;
                 font-family: "Akrobat";
-                z-index: 50;
+                z-index: 5;
         }
         }
       }
