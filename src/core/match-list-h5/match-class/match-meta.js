@@ -445,7 +445,6 @@ class MatchMeta {
   async get_champion_match() {
     // MatchFold.clear_fold_info()
     MatchDataBaseH5.clear()
-    this.set_page_match_empty_status({ state: false });
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
     try {
@@ -490,7 +489,6 @@ class MatchMeta {
    */
   async get_champion_match_result() {
     this.clear_match_info()
-    this.set_page_match_empty_status({ state: false });
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const { start_time, end_time } = MatchUtils.get_match_time_start_time(md)
     this.current_euid = `10000_${md}`
@@ -551,7 +549,6 @@ class MatchMeta {
    */
   async get_results_match({ tid = '' } = {}) {
     this.clear_match_info()
-    this.set_page_match_empty_status({ state: false });
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const euid = lodash.get(MenuData.result_menu_api_params, 'sport')
     // 电竞的冠军
@@ -643,7 +640,6 @@ class MatchMeta {
   async get_esports_match() {
     this.clear_match_info()
     VirtualList.clear_virtual_info()
-    this.set_page_match_empty_status({ state: false });
     //兼容复刻版电竞冠军
     const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "");
     const is_kemp = md == '100';
@@ -694,7 +690,6 @@ class MatchMeta {
    *  yazhou-h5 需要
    */
   async get_target_match_data({ scroll_top = 0, md = '', is_error = false, tid = '' }) {
-    this.set_page_match_empty_status({ state: false });
     // 有的项目菜单类不存在 data_time
     const data_time = String(md || MenuData?.data_time || this.http_params.md)
     // 球种 euid
@@ -719,10 +714,10 @@ class MatchMeta {
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
       if (res.code === '0401038') {
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-        this.set_page_match_empty_status({ state: false });
+        if (this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
         return []
       }
-      if (this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+      
       // 接口请求成功，重置接口限频次数
       this.error_http_count.match = 1
       const list = lodash.get(res, 'data', [])
@@ -745,7 +740,8 @@ class MatchMeta {
       //   this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
       // }, 7000)
 
-    } catch {
+    } catch (err) {
+      console.error(err)
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
       // 当接口 报错，或者出现限频， 调用3次
       if (this.error_http_count.match >= 3) {
@@ -1255,11 +1251,6 @@ class MatchMeta {
       // 计算所需渲染数据
       this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
     }
-
-    // // 复刻版 下的 新手版
-    // if (this.is_observer_type()) {
-    //   useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-    // }
 
     // 重置数据为空状态
     this.set_page_match_empty_status({ state: false })
