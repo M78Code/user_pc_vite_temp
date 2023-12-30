@@ -642,6 +642,9 @@
 
     // 设置 loading 动画 主题
     set_root_loading_theme(url_search);
+    if(!url_search.get('token')){
+      document.getElementById("loading-root-ele").style.visibility = "hidden";
+    }
   </script>
 
   script2_html_placeholder

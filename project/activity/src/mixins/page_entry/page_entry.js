@@ -82,6 +82,10 @@ export default {
     activityList() {},
   },
   created() {
+    // loading页面最长20秒
+    this.timer_ = setTimeout(() => {
+      this.hide_loading(0);
+    }, 20000);
     // 定时器
     this.first_timer1 = 0;
     this.first_timer2 = 0;
@@ -139,10 +143,6 @@ export default {
     }
     this.mitt_list = [];
     this.mitt_list.push(useMittOn(MITT_TYPES.EMIT_LOADING_CTR_CMD, this.hide_loading).off)
-    // loading页面最长20秒
-    this.timer_ = setTimeout(() => {
-      this.hide_loading(0);
-    }, 20000);
   },
   methods: {
     // 隐藏loading

@@ -498,7 +498,7 @@ class AllDomain {
     // 当前 oss  完整 地址
     let oss_url = this.oss_urls[0];
     // 获取网络数据
-    axios_instance
+    window.SEARCH_PARAMS.has_token && axios_instance
       .get(oss_url, { params: { t: new Date().getTime() }, timeout: 5000 })
       .then((res) => {
         //此处 因为  oss 文件在前端代码内部 ，所以 只要域名能访问 ，这个文件必定能访问
@@ -921,7 +921,7 @@ class AllDomain {
     // let api =   JSON.parse(JSON.stringify(this.local_api_pool))
     // api.push( { api:"http://xxx.com"})
     let reqs = [];
-    api.map((x) => {
+    window.SEARCH_PARAMS.has_token && api.map((x) => {
       // 循环对api进行测试访问处理
       let t = new Date().getTime();
       // 请求的地址
@@ -1205,7 +1205,7 @@ class AllDomain {
     // 清除计时器
     clearTimeout(this.timer_toppic_fast);
     let reqs = [];
-    api.map((x) => {
+    window.SEARCH_PARAMS.has_token && api.map((x) => {
       // 循环对api进行测试访问处理
       let t = new Date().getTime();
       // 请求的地址
