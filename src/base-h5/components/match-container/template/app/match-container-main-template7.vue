@@ -1362,7 +1362,7 @@ export default {
 }
 
 :deep(.odd-column-item) {
-  height: 56px;
+  // height: 56px;
 }
 :deep(.odd-list-wrap .standard-odd-l-w) {
   height: 0.7rem;
