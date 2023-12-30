@@ -1,7 +1,8 @@
 <template>
   <div
     ref="details_tab"
-    :class="['details-tab', { 'tab-fixed': get_tab_fix }]"
+    class="component details-tab"
+    :class="{ 'tab-fixed': get_tab_fix }"
     v-cloak
   >
     <div class="fat-btn" @click="change_btn()">
@@ -9,7 +10,7 @@
       <div :class="['expand_item', {collapsed: get_fewer != 2}]" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
     </div>
     <span class="menu-third"></span>
-    <div style="display: flex;align-items: center;">
+    <div class="tabs-container">
       <!-- // app 复刻版第一个玩法集固定不随滚动 -->
       <div
         class="menu-item-stick"
@@ -284,6 +285,7 @@ export default defineComponent({
   min-height: 0.4rem;
   background-color: var(--q-gb-bg-c-25);
   // border-bottom: 0.01rem solid var(--q-gb-bd-c-5);
+  display: flex;
 }
 .expand_item{
   width: 0.2rem;
@@ -309,7 +311,6 @@ export default defineComponent({
   z-index: 100;
   cursor: pointer;
   color: var(--q-gb-t-c-19);
-  margin-top: 0.08rem;
 }
 
 .menu-s {
@@ -319,7 +320,6 @@ export default defineComponent({
   white-space: nowrap;
   padding: 0.02rem 0;
   color: var(--q-gb-t-c-19);
-  margin-top: 0.08rem;
   position: relative;
   &::-webkit-scrollbar {
     display: none;
@@ -364,6 +364,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
+  order: 10;
 }
 
 // .tab-btn {
@@ -399,7 +400,12 @@ export default defineComponent({
     top: 0.14rem;
   }
 }
-
+.tabs-container{
+  display: flex;
+  align-items: center;
+  flex: 1;
+  width: 0;
+}
 // .tab-fixed {
 //   position: fixed;
 //   top: 2.04rem;
