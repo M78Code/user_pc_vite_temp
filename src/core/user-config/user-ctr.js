@@ -150,6 +150,16 @@ class UserCtr {
     //监听设置菜单发生变化时
     this.set_menu_init = 1
 
+    // 设置topic数据
+    let topic = LocalStorage.get('topic');
+    if(topic){
+      try {
+        const topic_obj = JSON.parse(topic);
+        topic_obj && (window.BUILDIN_CONFIG.TOPIC = topic_obj);
+      } catch (error) {
+        console.error(error);
+      }
+    }
     nextTick(()=>{
       this.get_system_time()
     })
@@ -158,10 +168,11 @@ class UserCtr {
   // 刷新后 获取缓存数据
   set_user_info_refresh() {
     // 获取数据缓存
-    let session_info = LocalStorage.get(user_key);
+    let session_info = SessionStorage.get(user_key);
     if (!session_info) {
       return;
     }
+   
     if (Object.keys(session_info).length) {
       for(let item in session_info){
         if(!['user_version','token_expired_max_process_timer','daily_activities','lang','theme'].includes(item) ){

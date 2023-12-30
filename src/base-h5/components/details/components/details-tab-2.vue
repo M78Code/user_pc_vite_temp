@@ -309,6 +309,7 @@ export default defineComponent({
   z-index: 100;
   cursor: pointer;
   color: var(--q-gb-t-c-19);
+  margin-top: 0.08rem;
 }
 
 .menu-s {
@@ -318,6 +319,7 @@ export default defineComponent({
   white-space: nowrap;
   padding: 0.02rem 0;
   color: var(--q-gb-t-c-19);
+  margin-top: 0.08rem;
   position: relative;
   &::-webkit-scrollbar {
     display: none;
