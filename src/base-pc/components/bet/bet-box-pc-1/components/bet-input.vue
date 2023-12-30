@@ -149,6 +149,11 @@ const set_win_money = () => {
 //获取多项单注金额
 const  set_bet_multiple_money = (obj) => {
     ref_data.money = obj.money
+    let oid = obj.oid
+    oid.forEach(id => {
+        BetData.set_bet_obj_amount(ref_data.money,id)
+    })
+    
 }
 </script>
 
