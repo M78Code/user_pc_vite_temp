@@ -519,10 +519,6 @@ export default defineComponent({
   }
 }
 
-.margin-other {
-
-}
-
 .bor-style {
 
 }
@@ -586,11 +582,17 @@ export default defineComponent({
 .lock-margin {
   padding-left: 0.2rem;
 }
-.mg-4-bg{
+.margin-base{
   margin:0.04rem;
+}
+.mg-4-bg{
+  @extend .margin-base;
   background:var(--q-gb-bg-c-15) !important;
   border-radius: 4px;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+}
+.margin-other {
+  @extend .margin-base;
 }
 // .mgb4{
 //   margin-bottom:4px
