@@ -1228,7 +1228,7 @@ class AllDomain {
       // 比如 https://test-topic.sportxxxifbdxm2.com/sports-rules/common/common
       // 获取项目信息
       const PROJECT_NAME = window.BUILDIN_CONFIG.PROJECT_NAME;
-      obj_.activity = `${c_url}/activity/common/common`;
+      obj_.activity = `${c_url}/activity/common/common/`;
       switch (PROJECT_NAME) {
         case 'yazhou-h5':
           obj_.sports_rules = `${c_url}/sports-rules/23-as/common`;

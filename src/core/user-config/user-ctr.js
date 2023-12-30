@@ -152,13 +152,14 @@ class UserCtr {
 
     // 设置topic数据
     let topic = LocalStorage.get('topic');
-    try {
-      const topic_obj = JSON.parse(topic);
-      topic_obj && (window.BUILDIN_CONFIG.TOPIC = topic_obj);
-    } catch (error) {
-      console.error(error);
+    if(topic){
+      try {
+        const topic_obj = JSON.parse(topic);
+        topic_obj && (window.BUILDIN_CONFIG.TOPIC = topic_obj);
+      } catch (error) {
+        console.error(error);
+      }
     }
-
     nextTick(()=>{
       this.get_system_time()
     })
