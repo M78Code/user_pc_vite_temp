@@ -18,7 +18,7 @@
                     <icon-wapper name="icon-failure" size="12px" />
                 </div>
             </div>
-            <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
+            {{ items.show_quick }}
             <div v-show="items.show_quick" class="bet-win-key">
                 <div class="row bet-win yb-fontsize12">
                     <div class="col df-jb">
@@ -34,6 +34,7 @@
                     <bet-keyboard />
                 </div>
             </div>
+            <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         </div>
         
     </div>
@@ -74,9 +75,10 @@ const ref_data = reactive({
 const InputFocus = ref()
 
 onMounted(() => {
+    show_quick()
     ref_data.money = props.items.bet_amount
     InputFocus.value.focus()
-    show_quick()
+    
 })
 
 onUnmounted(() => {
