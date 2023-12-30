@@ -13,7 +13,7 @@
           <span v-if="start_time  && get_match_detail.ms == 0  ">
             {{ i18n_tc('list.after_time_start2', [getLongTime]) }}
           </span>
-          <match-stage :detail_data="get_match_detail"  v-else ></match-stage>
+          <match-stage :is_show_time="true" :detail_data="get_match_detail"  v-else ></match-stage>
           <q-badge
             v-if="get_match_detail.mng == 1"
             text-color="white"

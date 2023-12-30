@@ -27,6 +27,7 @@
                 <bet-keyboard />
             </div>
         </div>
+        <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
     </div>
 </template>
 
