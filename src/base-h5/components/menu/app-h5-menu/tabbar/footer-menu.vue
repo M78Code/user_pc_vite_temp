@@ -6,7 +6,7 @@
           <div class="m-item-inner">
             <div class="item-img-wrapper c-refresh">
               <!-- <img class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading,'not_title':!item.title}" :src="item.icon" alt="" /> -->
-              <div class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading,'not_title':!item.title}" :style="item.icon_ ?item.icon: compute_css_obj({key: item.icon}) "></div>
+              <div class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading,'not_title':!item.title}" :style="item.icon_ ? item.icon : compute_css_obj({key: item.icon}) "></div>
             </div>
             <div class="menu-item-title">
               <span class="title-p1">  {{ item.title }}</span>
@@ -76,7 +76,8 @@ const footer_menu_list = computed(()=>{
     new_footer_list[4].icon = `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/activity.png`;
   }else{
     new_footer_list[4].title = i18n_t('footer_menu.refresh');
-    new_footer_list[4].icon =  'h5-footer-sx'
+    new_footer_list[4].icon_ = ''
+    new_footer_list[4].icon = 'h5-footer-sx'
   }
   return new_footer_list;
 })
