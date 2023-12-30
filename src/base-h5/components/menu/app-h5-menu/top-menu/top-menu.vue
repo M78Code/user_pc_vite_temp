@@ -13,7 +13,7 @@
                 <div class="main-menu-right" @click.stop>
                     <!-- <span class="main-menu-right-symbol">￥</span> -->
                     <img :src="compute_local_project_file_path('/image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
-                    <span class="main-menu-right-money">{{ format_money2(UserCtr.balance) }}1</span>
+                    <span class="main-menu-right-money">{{ format_money2(UserCtr.balance) }}</span>
                 </div>
             </template>
         </TopHeader>
@@ -87,6 +87,7 @@ const menu_list = reactive([
  * @param {*} type 
  */
 const set_menu_lv1 = item => {
+    if(item.mi == MenuData.current_lv_1_menu_i)return;
     // 重置折叠对象
     MatchFold.clear_fold_info()
     MatchFold.set_all_csid_fold_status(true)

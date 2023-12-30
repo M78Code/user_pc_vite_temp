@@ -139,6 +139,10 @@ export default {
     }
     this.mitt_list = [];
     this.mitt_list.push(useMittOn(MITT_TYPES.EMIT_LOADING_CTR_CMD, this.hide_loading).off)
+    // loading页面最长20秒
+    this.timer_ = setTimeout(() => {
+      this.hide_loading(0);
+    }, 20000);
   },
   methods: {
     // 隐藏loading
@@ -362,6 +366,7 @@ export default {
     sessionStorage.removeItem("isAPP");
     // 销毁监听
     this.mitt_list.forEach(i=>i())
+    clearTimeout(this.timer_);
   },
 };
 

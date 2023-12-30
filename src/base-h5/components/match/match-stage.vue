@@ -11,10 +11,14 @@
 <!--        Bug: 52532-->
 <!--        即将开赛的赛事不显示日期-->
 <!--        所以加了 v-if="!one_hour"-->
-        <span v-if="!one_hour">
+<!--        这个组件是所有公用的，这里会影响其他项目，要加prop变量控制 -->
+        <span v-if="!is_show_time && !one_hour">
           <!-- 距离开赛时间大于1小时 显示月和日 .Format(i18n_t('time3'))-->
            {{(new Date(+detail_data.mgt)).Format(i18n_t('time2'))}}
 <!--          {{ formatTime(+detail_data.mgt, "DD/mm hh:MM") }}-->
+        </span>
+        <span v-if="is_show_time">
+          {{(new Date(+detail_data.mgt)).Format(i18n_t('time2') + ' hh:mm')}}
         </span>
       </span>
 
@@ -78,6 +82,13 @@ const props = defineProps({
     default: () => {}
   },
   dialog: {
+    type: Boolean,
+    default: false
+  },
+  // Bug: 52634
+  // 这个参数控制开赛时间是否显示时间
+  // 不影响其他项目
+  is_show_time: {
     type: Boolean,
     default: false
   }

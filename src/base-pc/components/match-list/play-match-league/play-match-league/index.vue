@@ -8,8 +8,6 @@
       <!-- 联赛信息 -->
       <div class="leagues-wrap" :class="match_style_obj.data_tpl_id == 12 && 'jingcai'"
         :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
-        <!-- 箭头 -->
-        <i class="icon-arrow q-icon c-icon" size="14px"></i>
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
             <span class="soprts_id_icon"
@@ -27,6 +25,7 @@
             <span class="league-match-count">{{ card_style_obj.match_count}}</span>
           </div>
         </div>
+        
       </div>
       <!-- 玩法名称 -->
       <div class="play-name row col">
@@ -77,6 +76,9 @@
           class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch">
           <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
         </div>
+        
+        <!-- 箭头 -->
+        <i class="icon-arrow q-icon c-icon" size="14px"></i>
       </div>
     </div>
   </div>

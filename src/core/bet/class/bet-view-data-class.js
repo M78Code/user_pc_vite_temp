@@ -7,6 +7,9 @@ import { ref,nextTick } from "vue";
 import lodash_ from "lodash"
 import BetData from "./bet-data-class.js"
 import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+
+const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 class BetViewData {
   constructor() { 
@@ -180,6 +183,10 @@ class BetViewData {
       
     }else{
       let special_series = this.bet_special_series.map((item,index)=>{
+
+        let showQuick = false
+        if(PROJECT_NAME.includes('pc') && index == 0) showQuick  = true
+
         //  串关使用 type 复连串 30001
         let obj = bet_amount_list.find(page => page.type == item.id) || {}
         if(obj.type){
@@ -190,7 +197,7 @@ class BetViewData {
             globalId: obj.globalId,  //  风控响应id
             seriesOdds: obj.seriesOdds, // 赔率  // 串关使用 3串1
             bet_amount: '', // 投注金额
-            show_quick: false, // 快捷金额
+            show_quick: showQuick, // 快捷金额
           }
         }
       })
@@ -462,6 +469,7 @@ class BetViewData {
         }
       }
     })
+  
     this.bet_special_series = special_series
     this.set_bet_view_version()
   }
@@ -472,6 +480,7 @@ class BetViewData {
         obj.min_money = 0
         obj.max_money = 8888
     })
+ 
     this.set_bet_view_version()
   }
   // 投注后的数据
