@@ -193,8 +193,8 @@ export default {
       .item {
         .result-list {
           .result-item {
-            background: #74C4FF;
-            color:var(--q-gb-t-c-13);
+            background: #FEAE2B;
+            color:var(--q-gb-t-c-14);
             &.item-W {
               background: #E95B5B;
             }
@@ -206,6 +206,9 @@ export default {
         }
       }
     }
+  }
+  .win-percent {
+    color:var(--q-gb-t-c-18);
   }
 .c-match-startistic {
   min-width: 3.75rem;
