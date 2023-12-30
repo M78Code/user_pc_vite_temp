@@ -28,6 +28,7 @@
 import { reactive } from 'vue'
 import { get_now_server } from 'src/core/utils/common/module/other.js'
 import common from 'src/base-h5/vr/mixin/constant/module/common.js'
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 
 export default {
@@ -49,6 +50,7 @@ export default {
       timer_mid_map:{},
       path_d:'',
       strokeColor: false,//
+      VR_CTR,
     }
   },
   setup(props) {
@@ -190,6 +192,7 @@ export default {
       console.error("this.mid====>", this.mid);
       this.start = null;
       this.draw_timer_by_second();
+      VR_CTR.set_current_mid(this.mid)
     }
   },
   destroyed(){
@@ -212,7 +215,7 @@ export default {
   align-items: center;
   margin-bottom: 0.38rem;
   .circle-time-wrapper svg path{
-    stroke: #FEBE55;
+    stroke: var(--q-gb-t-c-35);
   }
   .final-circle {
       svg path {
@@ -233,7 +236,7 @@ export default {
       // color: #ffb001;
       font-size: 0.3rem;
       font-weight: 500;
-      color: #FEBE55 !important;
+      color: var(--q-gb-t-c-35) !important;
       &.last {
         // color: #E23E3E;
         color: var(--q-gb-bd-c-8) !important;

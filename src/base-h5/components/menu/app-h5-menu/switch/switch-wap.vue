@@ -98,7 +98,7 @@ const switchData = ref(get_switch_data())
 const hendler_version_change = (val = 2) => {
     UserCtr.set_standard_edition(val)
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
-    MatchFold.clear_fold_info()
+    // MatchFold.clear_fold_info()
     nextTick(()=>{
         VirtualList.set_is_show_ball(true)
         MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })

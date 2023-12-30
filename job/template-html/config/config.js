@@ -3,6 +3,7 @@ export const placeholder_const = {
   meta1: "meta1_html_placeholder",
   style1: "style1_html_placeholder",
   script1: "script1_html_placeholder",
+  script2: "script2_html_placeholder",
 };
 
 // 默认所有占位符  对象

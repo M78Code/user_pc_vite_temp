@@ -219,6 +219,9 @@ const {
 </script>
 
 <style lang="scss" scoped>
+.bet-inner{
+  background: var(--q-gb-bg-c-19);
+}
 .lock {
   width: 12px;
   height: 12px;

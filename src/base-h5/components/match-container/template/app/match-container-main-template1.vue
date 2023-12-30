@@ -290,7 +290,7 @@
               <!-- 展示三行的不展示比分 -->
               <template v-if="![1, 4, 11, 14, 15, 16].includes(+match.csid)">
                 <div class="score-content">
-                  <ScoreList :class="[match.csid == 7 && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
+                  <ScoreList :class="[match.csid == 8 && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
                 </div>
               </template>
             </div>
@@ -764,7 +764,7 @@ export default {
 
   /* **************联赛展示********************** -S*/
   .league {
-    height: 0.26rem;
+    height: 25px;
     border-radius: 0;
     // padding: 0 0.1rem;
     background:var(--q-gb-bg-c-18);
@@ -826,7 +826,7 @@ export default {
         position: relative;
         flex-shrink: 0;
         > img {
-          width: 0.14rem;
+          width: 100%;
           height: 100%;
         }
       }
@@ -942,7 +942,7 @@ export default {
       line-height: 1;
       min-width: 1.18rem;
       display: flex;
-      font-size: .12rem;
+      font-size: 12px;
       &.export {
         min-width: 1.1rem;
         margin-left: 0.1rem;
@@ -1256,7 +1256,7 @@ export default {
             word-break: break-all;
             color: var(--q-gb-t-c-18);
             &.is-handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-34) !important;
             }
           }
         }
@@ -1438,11 +1438,18 @@ export default {
     :deep(.scroll-container-w){
       .score-fle-container-1{
         display: block;
-        width: 1.06rem;
+        width: 1.18rem;
         text-overflow:ellipsis;
         white-space:nowrap;
         overflow:hidden;
         text-align:right;
+        padding-right: .32rem;
+        .items-start {
+          &:last-child {
+            position: absolute;
+            right: .02rem;
+          }
+        }
       }
     }
   }

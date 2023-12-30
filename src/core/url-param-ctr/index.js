@@ -257,6 +257,9 @@ const to_corresponding_router_ouzhou_pc = (that, params_obj) => {
 let timer = 0;
 const watch_route_fun = (to, from)=>{
   clearTimeout(timer);
+  if(BUILDIN_CONFIG.PROJECT_NAME == 'app-h5' && to.name == 'virtual_sports_details'){
+    return;
+  }
   timer = setTimeout(() => {
     // 删除所有url参数
     let hash = location.hash;
