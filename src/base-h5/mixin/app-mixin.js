@@ -46,6 +46,10 @@ export default {
     this.init_load_timer = setTimeout(() => {
       this.set_init_load(true);
     }, 11000);
+    // loading页面最长20秒
+    this.timer_ = setTimeout(() => {
+      this.hide_loading(0);
+    }, 20000);
   },
   watch: {
     '$route'(to, from) {
@@ -105,6 +109,7 @@ export default {
     }
     // 销毁监听
     this.mitt_list.forEach(i=>i());
+    clearTimeout(this.timer_);
   },
   methods: {
     /**

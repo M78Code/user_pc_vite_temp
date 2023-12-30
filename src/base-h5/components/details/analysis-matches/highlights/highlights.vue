@@ -1,5 +1,5 @@
 <template>
-  <div class="highlights analysis-odds  overflow-hidden">
+  <div class="component highlights analysis-odds  overflow-hidden">
     <div class="wonderful">
       <div class="wonderful-header">
         <ul class="wonderful-tabs">
@@ -961,4 +961,7 @@ setup(props, context){
 
 <style scoped lang="scss">
 @import '../styles/highlights.scss';
+.highlights{
+  margin-top: 5px;
+}
 </style>

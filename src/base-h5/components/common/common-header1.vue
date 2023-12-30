@@ -3,9 +3,9 @@
 -->
 <template>
   <div ref="common_header" class="common-header" @touchmove.prevent>
-    <div class="row justify-between full-height mx-15">
+    <div class="row justify-between full-height ">
       <!-- 返回上一页 -->
-      <div class="go-back-btn-wrap a1" @click="go_to_back">
+      <div class="go-back-btn-wrap a1" @click="go_to_back" >
         <div class="go-back"></div>
       </div>
       <div ref="contents" class="ellipsis title-style details-c" @click.stop="show_dialog">
@@ -38,7 +38,7 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
-import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from "src/output/index.js";
+import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData,compute_css_obj } from "src/output/index.js";
 import uid from "src/core/uuid/index.js";
 import BetData from 'src/core/bet/class/bet-data-class.js'
 
@@ -340,11 +340,12 @@ export default {
 
 .go-back {
   display: inline-block;
-  width: 0.12rem;
-  height: 0.2rem;
-  // TODO: 后续上传
   background: url($SCSSPROJECTPATH + '/image/common/go_back.svg') no-repeat center / 96% 96%;
-  background-size: 100% 100%;
+  width: 0.3rem;
+  height: 100%;
+  background-position: center ;
+  background-size: 0.1rem auto;
+  margin-left: 0.05rem;
 }
 
 .analysis_new {

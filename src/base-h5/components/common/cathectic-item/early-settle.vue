@@ -152,7 +152,7 @@ import { api_betting } from "src/api/index.js"
 import { format_time_zone_time } from "src/output/index.js"
 import { compute_css_obj, compute_local_project_file_path } from 'src/output/index.js'
 import { Platform } from "quasar";
-import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
+import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick,reactive } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js"
 import { useMitt, MITT_TYPES, useMittEmit } from "src/core/mitt/"
@@ -160,7 +160,16 @@ import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 
-let store_cathectic = store.getState().cathecticReducer
+const store_cathectic = reactive({
+    // 0未结算/筛选 1已结算/搜索
+    main_item: 0,
+  // 0筛选 1搜索
+  search_for_choose: 0,
+  // 搜索 去到 详情页的记录
+  search_term: '',
+  //提前结算金额集合
+  early_moey_data: [],
+})
 const props = defineProps({
   item_data: {
     type: Object
@@ -286,6 +295,8 @@ const min_bet_money = computed(() => {
 const calc_show = computed(() => {
   return /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + store_cathectic.main_item + props.item_data.enablePreSettle + status.value);
 })
+
+
 watch(() => expected_profit, (_new, _old) => {
   // 小于 1 时暂停提前结算
   if (_new < 1) {

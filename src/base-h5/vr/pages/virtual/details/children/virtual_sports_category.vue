@@ -216,7 +216,10 @@ export default {
   },
 
   created(){
+    //函数防抖 在100毫秒内只触发最后一次需要执行的事件
     this.initEvent=lodash.debounce(this.initEvent.bind(this),100)
+    //函数防抖 在150毫秒内只触发最后一次需要执行的事件
+    this.socket_upd_list = debounce(this.socket_upd_list.bind(this), 200);
     // 延时器
     this.get_video_timer = null;
     // 满足刷新页面保持向上展开的状态
@@ -249,8 +252,7 @@ export default {
       useMittOn(MITT_TYPES.EMIT_REF_API, this.initEvent).off,
       useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, this.sendSocketInitCmd).off,
     ]
-    //函数防抖 在500毫秒内只触发最后一次需要执行的事件
-    this.socket_upd_list = debounce(this.socket_upd_list, 500);
+    
 
     // 调用接口的参数
     let params = {

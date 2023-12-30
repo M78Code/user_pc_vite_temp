@@ -15,8 +15,8 @@
           </div>
         </div>
     <!-- 中间滚动选择项 -->
-    <q-scroll-area class="scroll-area" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
-      <div v-if="list.length" v-scroll="scrolled" class="yb_mb18 overflowx">
+    <q-scroll-area class="scroll-area scroll-bar-display-none" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
+      <div v-if="list.length" v-scroll="scrolled" class="yb_mb18">
         <!-- 循环整个后台返回数据 -->
         <div class="scroll-area1" v-for="(item, index) in list" :key="index" ref="scroll_area1">
           <div class="bg-f6f7f8 scroll-title" ref="bg_f6f7f8" v-if="item.title">
@@ -840,10 +840,11 @@ if (type.value == 30) {
     position: relative;
     &::after {
       content: ' ';
-      width: 100%;
       position: absolute;
       border-top:  0.005rem solid var(--q-gb-bd-c-18);
       top: 0;
+      left: 0;
+      right: 0;
     }
   }
   .content_box2 {
@@ -976,10 +977,11 @@ if (type.value == 30) {
     position: relative;
     &::after {
       content: ' ';
-      width: 100%;
       position: absolute;
       border-bottom: 0.005rem solid var(--q-gb-bd-c-18);
       bottom: 0;
+      left: 0;
+      right: 0;
     }
   }
 
@@ -1030,9 +1032,6 @@ if (type.value == 30) {
 .icon-search:before {}
 .is_fold{
   transform: rotate(270deg);
-}
-:deep(.scroll){
-  overflow: visible;
 }
 </style>
 
@@ -1136,10 +1135,4 @@ if (type.value == 30) {
 .icon_keep:before {
   color: var(--q-color-fs-color-50);
 }
-
-.overflowx {
-  overflow-x: hidden;
-}
-
-
 </style>

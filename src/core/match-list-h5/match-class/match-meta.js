@@ -714,10 +714,10 @@ class MatchMeta {
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
       if (res.code === '0401038') {
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-        this.set_page_match_empty_status({ state: false });
+        if (this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
         return []
       }
-      if (this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+      
       // 接口请求成功，重置接口限频次数
       this.error_http_count.match = 1
       const list = lodash.get(res, 'data', [])
@@ -740,7 +740,8 @@ class MatchMeta {
       //   this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
       // }, 7000)
 
-    } catch {
+    } catch (err) {
+      console.error(err)
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
       // 当接口 报错，或者出现限频， 调用3次
       if (this.error_http_count.match >= 3) {
@@ -1250,11 +1251,6 @@ class MatchMeta {
       // 计算所需渲染数据
       this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
     }
-
-    // // 复刻版 下的 新手版
-    // if (this.is_observer_type()) {
-    //   useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-    // }
 
     // 重置数据为空状态
     this.set_page_match_empty_status({ state: false })

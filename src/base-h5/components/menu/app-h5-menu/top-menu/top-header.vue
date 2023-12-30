@@ -1,15 +1,7 @@
 <template>
     <div class="top-header">
         <div class="top-header-left">
-            <div class="top-header-left-img" @click="goBack()">
-                <!-- <img class="img" :src="delimg" alt="" /> -->
-                <div class="img" :style="compute_css_obj({key: 'h5_back_img'})"></div>
-                <!-- <img
-                    class="img"
-                    :src="compute_local_project_file_path('/image/svg/go-back-icon.svg')"
-                    alt=""
-                /> -->
-            </div>
+            <div class="detail-back" @click="goBack()" :style="compute_css_obj({key: 'h5_back_img'})"></div>
         </div>
         <div class="top-header-content">
             {{MenuData.top_menu_title.title}}
@@ -53,21 +45,15 @@ const router = useRouter()
         align-items: center;
         display: flex;
         white-space: nowrap;
-        padding: 0 0.14rem;
+        padding: 0 0.14rem 0 0 ;
         .top-header-left{
-            height: 0.14rem;
+            height: 100%;
             padding-left: 0.09em;
             display: flex;
             justify-content: flex-start;
             align-items: center;
             flex: 1 1;
-            .top-header-left-img{
-                .img {
-                    width: 0.08rem;
-                    height: 0.14rem;
-                    background-size: cover;
-                }
-            }
+            
         }
         .top-header-content{
             font-weight: 400;
@@ -83,4 +69,12 @@ const router = useRouter()
             flex: 1 1;
         }
     }
+    .detail-back {
+        width: 0.3rem;
+        height: 100%;
+       
+        background-size: 0.1rem auto;
+        margin-left: 0.05rem;
+       background-position: center;
+      }
 </style>

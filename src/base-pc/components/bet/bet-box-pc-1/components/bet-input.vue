@@ -24,7 +24,7 @@
 
             <!--键盘区域-->
             <div class="row bet-keyboard bet-keyboard-zone">
-                <bet-keyboard />
+                <bet-keyboard :money="ref_data.money"/>
             </div>
         </div>
         <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>

@@ -109,7 +109,8 @@ function show_alert(data) {
   btn_text.value = data.btn_text || i18n_t('common.confirm')
   // 弹框时,关闭视频播放窗口
   useMittEmit(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD, { cmd: "colse" })
-
+  // 隐藏loading动画背景
+  useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD, 0);
 }
 /**
  * @Description:域名错误弹窗
@@ -120,6 +121,8 @@ function domain_error_alert() {
   is_show.value = true;
   // 弹框时,关闭视频播放窗口
   useMittEmit(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD, { cmd: "colse" })
+  // 隐藏loading动画背景
+  useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD, 0);
 }
 
 /**
