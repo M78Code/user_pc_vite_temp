@@ -49,7 +49,7 @@ export default {
   },
   watch: {
     '$route'(to, from) {
-      PageSourceData && PageSourceData.set_from_page(to.name)
+      PageSourceData && PageSourceData.set_from_page(from.name)
       watch_route_fun(to, from);
     },
     init_load(val){
