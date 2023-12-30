@@ -81,6 +81,7 @@ class MenuData {
      this.result_menu_api_params = {}
      //赛果类型  0 普通 1电竞 2vr  3冠军 
      this.is_results_type = 0;
+     this.is_results_vr_type = 0;
       //----------------------------------------------------------------------------------------//
 
     //当前的菜单 lv3
@@ -166,6 +167,12 @@ class MenuData {
     this.is_results_type = val;
     this.set_cache_class({
       is_results_type:val
+    })
+  }
+  set_results_vr_type(val){
+    this.is_results_vr_type = val;
+    this.set_cache_class({
+      is_results_vr_type:val
     })
   }
   get_results_type(){

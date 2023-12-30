@@ -546,7 +546,7 @@ class MatchMeta {
     const euid = lodash.get(MenuData.result_menu_api_params, 'sport')
     // 电竞的冠军
     const category = MenuData.result_menu_lv1_mi ? 0 : 1
-    this.current_euid = `${euid}_${md}`
+    this.current_euid = `results_${euid}_${md}`
     if (!md) return []
     try {
       const params = this.get_base_params()
@@ -559,8 +559,7 @@ class MatchMeta {
         euid: euid && String(euid),
         type: euid ==="0"? 29 : 28,//我的投注 euid为0
       })
-      if (this.current_euid !== `${euid}_${md}`) return []
-      if (+res.code !== 200) {
+      if (this.current_euid !== `results_${euid}_${md}` || +res.code !== 200) {
         if (res.code === '0401038') {
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
           this.set_page_match_empty_status({ state: false });

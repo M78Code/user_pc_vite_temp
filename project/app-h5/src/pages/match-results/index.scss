@@ -78,3 +78,38 @@
 .match-result-contant {
     background: var(--q-gb-bg-c-18) !important;
 }
+/*  联赛菜单 */
+.tab-wrapper {
+    height: 0.32rem;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+    align-items: center;
+    padding: 0 0.08rem;
+    background-color: var(--q-gb-bg-c-27);
+  
+    .tab-item {
+      height: 0.26rem;
+      line-height: 0.26rem;
+      border-radius: 0.04rem;
+      margin-right: 0.06rem;
+      padding: 0 0.1rem;
+      flex-shrink: 0;
+      color:var(--q-gb-t-c-24);
+      position: relative;
+      &.active {
+        color: var(--q-gb-t-c-1);
+        &:after {
+          content: "";
+          display: block;
+          width: 0.32rem;
+          height: 0.02rem;
+          background: var(--q-gb-t-c-1);
+          position: absolute;
+          bottom: 0.01rem;
+          left: 50%;
+          margin-left: -0.16rem;
+        }
+      }
+    }
+  }

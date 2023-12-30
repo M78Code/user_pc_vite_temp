@@ -85,7 +85,8 @@
             <div :class="['item-flag my-4', flag_icon(event.eventCode)]"></div>
             <div class="lines"></div>
           </div>
-          <div :class="['item-content hairline-border item-content-defailt', event.homeAway == get_detail_data.man ? '' : 'hide']"  @click="handle_click_event(i, event)" >
+          <!-- <div :class="['item-content hairline-border item-content-defailt', event.homeAway == get_detail_data.man ? '' : 'hide']"  @click="handle_click_event(i, event)" > -->
+          <div :class="['item-content hairline-border item-content-defailt', event.homeAway == get_detail_data.man ? '' : 'hide']"  @click.stop="toPlayReplay(i, event)" >
             <div :style="{
               'background-image': `url(${event.fragmentPic})`
             }" class="item-img">

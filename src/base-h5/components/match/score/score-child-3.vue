@@ -205,7 +205,7 @@ export default {
     background: #D8DBE6;
 
     &.p {
-      background: #FFB900;
+      background: var(--q-gb-t-c-25);
     }
   }
 }

@@ -10,10 +10,10 @@
       :class="[size == 22 && `img-style-s`]"
       class="img-style"
     ></div>
-    <div v-else :class="[size == 22 && `img-style-s`]"
+    <!-- <div v-else :class="[size == 22 && `img-style-s`]"
       class="img-style" :style="'background-image: url(' + backgroundImage + ')'">
-    </div>
-    <!-- <div class="team-icon" v-if="!lodash.isEmpty(match) && !lodash.get(match,'mhlu[0]')" :style="compute_css_obj({key: 'h5-home-icon'})"></div> -->
+    </div> -->
+    <div class="img-style" v-else :class="[size == 22 && `img-style-s`]" :style="compute_css_obj({key: 'h5-home-icon'})"></div>
   </div>
 </template>
 
