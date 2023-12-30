@@ -51,5 +51,10 @@ const score_array = computed(() => {
         size: .14rem;
         weight: bold;
     }
+
+    .active-text {
+        color: var(--q-gb-t-c-1);
+    }
 }
+
 </style>

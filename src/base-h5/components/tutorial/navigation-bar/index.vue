@@ -27,8 +27,13 @@
 </template>
 <script setup>
 import { compute_css_obj } from "src/output/index.js";
+<<<<<<< HEAD
 import { useRouter, useRoute } from "vue-router";
 import { compute_local_project_file_path } from "src/output/index.js";
+=======
+import { useRouter,useRoute } from "vue-router";
+import {compute_local_project_file_path,UserCtr} from "src/output/index.js";
+>>>>>>> 192a42afc3533819322baef483a83e01ba0d91a7
 import { MenuData } from "src/output/module/menu-data.js"
 // import setectLeague from './setect-league.vue'
 import { ref } from "vue";
@@ -71,7 +76,7 @@ const set_back = () => {
         MenuData.set_current_lv1_menu('');
         MenuData.set_top_menu_title({})
         MenuData.set_init_menu_list()
-        router.back()
+        router.push({name: UserCtr.from_page_source || 'matchList'})
         if (props.goBackAssign !== null) {
             props.goBackAssign()
         }

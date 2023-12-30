@@ -29,7 +29,7 @@
     <!-- 半封(显示盘口值)与赔率显示 -->
     <div v-else class="item-inner have-on" :class="{close: is_fengpan(get_odd_status()) || get_obv_is_lock(odd_item)}">
       <!--csid:1足球全封,不显示盘口名-->
-      <div class='odd-title'
+      <div class='odd-title number_family'
         :class="{three:column_ceil > 2,standard:n_s == 2}"
         v-if="(odd_item.on || convert_num(odd_item) === 0 || (!is_fengpan(get_odd_status()) && [18,19].includes(+lodash.get(current_tab_item, 'id'))) ) ||
               (is_fengpan(get_odd_status())  || get_obv_is_lock(odd_item))
@@ -37,7 +37,7 @@
         v-html="transfer_on(odd_item)">
       </div>
       <!-- 显示赔率 -->
-      <div class='odd-value fontbold' v-show="!is_fengpan(get_odd_status()) && (+odd_item.ov ) && !get_obv_is_lock(odd_item)"
+      <div class='odd-value fontbold number_family' v-show="!is_fengpan(get_odd_status()) && (+odd_item.ov ) && !get_obv_is_lock(odd_item)"
         :class="{
           three:column_ceil > 2,
           red:red_green_status === 1,
