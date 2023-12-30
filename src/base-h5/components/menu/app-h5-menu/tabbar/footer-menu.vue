@@ -6,7 +6,7 @@
           <div class="m-item-inner">
             <div class="item-img-wrapper c-refresh">
               <!-- <img class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading,'not_title':!item.title}" :src="item.icon" alt="" /> -->
-              <div class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading,'not_title':!item.title}" :style="item.icon"></div>
+              <div class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading,'not_title':!item.title}" :style="item.icon_ ?item.icon: compute_css_obj({key: item.icon}) "></div>
             </div>
             <div class="menu-item-title">
               <span class="title-p1">  {{ item.title }}</span>
@@ -40,29 +40,29 @@ const footer_list = ref([
   {
     title: i18n_t('menu_itme_name.results'), 
     path_name: "matchResults",
-    icon: compute_css_obj({key: 'h5-footer-sg'}),
+    icon: 'h5-footer-sg',
     id: 1
   },
   {
     title: i18n_t('footer_menu.set_menu'),
-    icon: compute_css_obj({key: 'h5-footer-szcd'}),
+    icon: 'h5-footer-szcd',
     id: 2,
    
   },
   {
     title: i18n_t('footer_menu.open_bets'),
-    icon: compute_css_obj({key: 'h5-footer-yjzd'}) ,
+    icon: 'h5-footer-yjzd',
     settle: false,
     id: 3
   },
   {
     title: i18n_t('footer_menu.closed_bets'),
-    icon: compute_css_obj({key: 'h5-footer-wjzd'}) ,
+    icon: 'h5-footer-wjzd' ,
     settle: true,
     id: 4
   },{
     title: i18n_t('footer_menu.refresh'),
-    icon: compute_css_obj({key: 'h5-footer-sx'}),
+    icon: 'h5-footer-sx',
     id: 5,
   }
 ])
@@ -72,10 +72,11 @@ const footer_menu_list = computed(()=>{
   if(UserCtr.daily_activities){
     // new_footer_list[4].title = i18n_t('footer_menu.daily_activities');
     new_footer_list[4].title = '';
+    new_footer_list[4].icon_ = 'activity'
     new_footer_list[4].icon = `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/activity.png`;
   }else{
     new_footer_list[4].title = i18n_t('footer_menu.refresh');
-    new_footer_list[4].icon = compute_css_obj({key: 'h5-footer-sx'})
+    new_footer_list[4].icon =  'h5-footer-sx'
   }
   return new_footer_list;
 })
