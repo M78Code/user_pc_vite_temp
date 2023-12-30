@@ -1555,7 +1555,6 @@ export default {
   }
 
   .live-i-b-wrap {
-    height: 0.14rem;
     width: auto;
     display: flex;
     margin-left: 0.08rem;
