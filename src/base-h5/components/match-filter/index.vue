@@ -844,6 +844,8 @@ if (type.value == 30) {
       position: absolute;
       border-top:  0.005rem solid var(--q-gb-bd-c-18);
       top: 0;
+      left: 0;
+      right: 0;
     }
   }
   .content_box2 {
@@ -980,6 +982,8 @@ if (type.value == 30) {
       position: absolute;
       border-bottom: 0.005rem solid var(--q-gb-bd-c-18);
       bottom: 0;
+      left: 0;
+      right: 0;
     }
   }
 
@@ -1030,9 +1034,6 @@ if (type.value == 30) {
 .icon-search:before {}
 .is_fold{
   transform: rotate(270deg);
-}
-:deep(.scroll){
-  overflow: visible;
 }
 </style>
 

@@ -89,6 +89,7 @@ const mix_toggle_handle = () => {
     flex-direction: column;
     height: calc(100% - 34px);
     overflow: hidden;
+    padding-bottom: 20px;
     .scroll-wrap,
     .record-scoll-wrap {
       height: auto;
