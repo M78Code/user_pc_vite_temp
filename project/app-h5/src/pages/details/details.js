@@ -901,6 +901,8 @@ export const details_main = () => {
           }
         }
         console.log(event_data, "=====data=====");
+        // 赛事跳转应关闭视频
+        state_data.get_show_video = false
         router.replace({name:"category",params:{mid:event_data.mid,tid:event_data.tid,csid:event_data.csid}})
         // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
         get_match_details({ mid: event_data.mid, cuid: event_data.get_uid });

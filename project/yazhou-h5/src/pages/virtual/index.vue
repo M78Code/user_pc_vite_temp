@@ -9,7 +9,7 @@
         <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
           <!-- 返回按钮 及 刷新 注单  设置 按钮 -->
           <div class="back-wrap">
-            <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail',route_name:route.name,route,router})"></div>
+            <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail',route_name:route.name,route,router})" :style="compute_css_obj({key: 'h5_back_img'})"></div>
             <!-- 虚拟体育 -->
             <div class="col">{{i18n_t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
             <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
@@ -60,11 +60,12 @@ import lodash from "lodash";
 import { api_common } from "src/api/index";
 import axios_api_loop from "src/core/http/axios-loop.js"
 import { go_where } from "src/core/utils/common/index.js"
-import { i18n_t, MenuData } from "src/output/index.js"
+import { i18n_t, MenuData,compute_css_obj } from "src/output/index.js"
 import base_data from "src/core/menu-h5/menu-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { theme } from 'src/base-h5/mixin/userctr.js'
 import { useRoute,useRouter } from "vue-router";
+
 const route = useRoute()
 const router = useRouter()
 // 回到顶部

@@ -216,6 +216,10 @@ export default {
   },
 
   created(){
+    //函数防抖 在100毫秒内只触发最后一次需要执行的事件
+    this.initEvent=lodash.debounce(this.initEvent.bind(this),100)
+    //函数防抖 在150毫秒内只触发最后一次需要执行的事件
+    this.socket_upd_list = debounce(this.socket_upd_list.bind(this), 200);
     // 延时器
     this.get_video_timer = null;
     // 满足刷新页面保持向上展开的状态
@@ -248,8 +252,7 @@ export default {
       useMittOn(MITT_TYPES.EMIT_REF_API, this.initEvent).off,
       useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, this.sendSocketInitCmd).off,
     ]
-    //函数防抖 在500毫秒内只触发最后一次需要执行的事件
-    this.socket_upd_list = debounce(this.socket_upd_list, 500);
+    
 
     // 调用接口的参数
     let params = {
@@ -586,49 +589,50 @@ export default {
         // this.is_loading = false;
         this.is_no_data = false;
       }
+      this.socket_upd_list() //下面的方法和socket_upd_list一样 所以直接调用
       // 正常赛事调用: /v1/m/matchDetail/getMatchOddsInfoPB接口
       // 虚拟体育调用: /v1/m/matchDetail/getVirtualMatchOddsInfo接口
-      api_common.get_matchDetail_getVirtualMatchOddsInfo(params).then(res => {
-        this.is_loading = false;
-        if(!res.data || res.data.length == 0){
-          this.is_no_data = true;
-          this.matchInfoCtr.setList([]);
-          this.set_detail_data_storage(params,'');
-          return;
-        }
-        this.is_no_data = false;
+      // api_common.get_matchDetail_getVirtualMatchOddsInfo(params).then(res => {
+      //   this.is_loading = false;
+      //   if(!res.data || res.data.length == 0){
+      //     this.is_no_data = true;
+      //     this.matchInfoCtr.setList([]);
+      //     this.set_detail_data_storage(params,'');
+      //     return;
+      //   }
+      //   this.is_no_data = false;
 
-        let temp = lodash.get(res, 'data');
-        if(this.is_lock_add){
-          this.set_all_match_os_status(2, temp);
-        }
-        // 赛马数据字段增加
-        if(temp){
-          this.vir_add_title(temp)
-          MatchDataWarehouseInstance.set_match_details(this.current_match,temp);
-        }
+      //   let temp = lodash.get(res, 'data');
+      //   if(this.is_lock_add){
+      //     this.set_all_match_os_status(2, temp);
+      //   }
+      //   // 赛马数据字段增加
+      //   if(temp){
+      //     this.vir_add_title(temp)
+      //     MatchDataWarehouseInstance.set_match_details(this.current_match,temp);
+      //   }
 
-        try {  //getMatchOddsInfo 接口拉取时，联动更新投注框的数据
-          //投注框初始状态或者锁盘时才跟新数据
-          if(this.get_bet_status == 1 || this.get_bet_status ==7 || this.get_bet_status == 5){
-            this.update_ol(null, temp)
-          }
-        } catch (error) {
-          console.error(error)
-        }
-        this.set_detail_data_storage(params,temp);
-        if(temp&&temp.length)
-        {
-          this.playlist_length = temp.length;
-          temp.forEach(item => {
-            // 附加盘收缩
-            this.listItemAddCustomAttr(item)
-          });
-        }
-        let list_ = lodash.cloneDeep(temp);
-        this.matchInfoCtr.setList(list_);
-        delete res.data;
-      })
+      //   try {  //getMatchOddsInfo 接口拉取时，联动更新投注框的数据
+      //     //投注框初始状态或者锁盘时才跟新数据
+      //     if(this.get_bet_status == 1 || this.get_bet_status ==7 || this.get_bet_status == 5){
+      //       this.update_ol(null, temp)
+      //     }
+      //   } catch (error) {
+      //     console.error(error)
+      //   }
+      //   this.set_detail_data_storage(params,temp);
+      //   if(temp&&temp.length)
+      //   {
+      //     this.playlist_length = temp.length;
+      //     temp.forEach(item => {
+      //       // 附加盘收缩
+      //       this.listItemAddCustomAttr(item)
+      //     });
+      //   }
+      //   let list_ = lodash.cloneDeep(temp);
+      //   this.matchInfoCtr.setList(list_);
+      //   delete res.data;
+      // })
     },
     /**
      *@description: 获取虚拟足球赛事的赛果
@@ -678,9 +682,6 @@ export default {
       }else if(this.$route.name == "virtual_sports_details"){
         mid = this.$route.query.mid || this.mid
       }
-      console.log(mid, this.$route, '666');
-      
-
       // 调用接口的参数
       let params = {
         // 当前选中玩法项的id

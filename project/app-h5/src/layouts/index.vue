@@ -63,8 +63,8 @@
   <toast></toast>
 
   <!-- 商户活动的弹层,只在home页展示，两个都已 脱离文档流-->
-  <activity-layer v-if="activity_status" @activity_hide="activity_status = false" :activity_layerimg="activity_layerimg"
-    :count_down_time="userBannerTimer" />
+  <!-- <activity-layer v-if="activity_status" @activity_hide="activity_status = false" :activity_layerimg="activity_layerimg"
+    :count_down_time="userBannerTimer" /> -->
   <StandardEdition></StandardEdition>
 </template>
 
@@ -96,7 +96,7 @@ import { api_account } from "src/api/index";
 // import betMixBoxChild from "src/base-h5/components/bet/bet-box-app-h5-1/bet_mix_box_child.vue";
 
 // 活动弹出框
-const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
+// const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
 const settleDialog = defineAsyncComponent(() =>
   import("project_path/src/pages/cathectic/index.vue") // project/yazhou-h5/src/pages/cathectic/index.vue
 );
@@ -290,9 +290,11 @@ onMounted(  () => {
 });
 
 // 上报用户当前使用的版本 
+//点击切换新版的时候传参，旧版传空参即可，
+// frontVer参数：PC>pc-new,H5>h5-new
 const shangbao_version= async ()=>{
  //当前是新系统还是旧系统
- await api_account.get_UserVersion({h5FrontVersion:'1'})
+ await api_account.get_UserVersion({frontVer:'h5-new'})
 
 }
 

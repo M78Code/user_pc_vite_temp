@@ -1304,11 +1304,13 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
                     hv: item
                 }
             })
-        }else{
+        }else if(20033 == ol_obj._hpid){
             text = [{
                 text:lodash_.get(mid_obj,`teams[${ol_obj.ot - 1}]`,''),
                 hv: ol_obj.ot
             }]
+        }else {
+            text = `${ol_obj.otv || ''}` 
         }
        
     }else{
