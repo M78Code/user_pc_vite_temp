@@ -588,12 +588,12 @@ export default {
     .match-content{
       background: var(--q-gb-bg-c-18);
       border: 1px solid var(--q-gb-bd-c-15);
-      border-bottom-color: var(--q-gb-bg-c-18);
+      border-bottom: none;
       &.collapsed{
         border-top: none;
       }
       &.border-raduis{
-        border-bottom: 1px solid var(--q-gb-bd-c-4);
+        border-bottom: 1px solid var(--q-gb-bd-c-15);
         border-radius: 0 0 0.08rem 0.08rem;
       }
     }
@@ -612,7 +612,7 @@ export default {
     }
     .match-content-line {
       width: 100%;
-      height: 1px;
+      height: 0.005rem;
       background: var(--q-gb-bd-c-4);
     }
   }
