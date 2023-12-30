@@ -1,7 +1,8 @@
 <template>
   <div
     ref="details_tab"
-    :class="['details-tab', { 'tab-fixed': get_tab_fix }]"
+    class="component details-tab"
+    :class="{ 'tab-fixed': get_tab_fix }"
     v-cloak
   >
     <div class="fat-btn" @click="change_btn()">
