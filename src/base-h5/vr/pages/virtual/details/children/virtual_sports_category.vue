@@ -95,6 +95,7 @@ export default {
       // 上次请求的虚拟体育赛马赛事id
       pre_params_mid:'',
       created_init_event:false,
+      MatchDataWarehouseInstance
     }
   },
 
@@ -140,11 +141,13 @@ export default {
     get_is_show_details_analyse(){},
     // 置顶列表
     match_list_new() {
-      return this.matchInfoCtr.listSortNew()
+      return MatchDataWarehouseInstance.listSortNew(this.current_match.mid);
+      // return this.matchInfoCtr.listSortNew()
     },
     // 非置顶列表
     match_list_normal() {
-      return this.matchInfoCtr.listSortNormal()
+      return MatchDataWarehouseInstance.listSortNormal(this.current_match.mid);
+      // return this.matchInfoCtr.listSortNormal()
     }
   },
 
@@ -429,7 +432,8 @@ export default {
      * @param {Number} status 盘口状态
      */
     set_all_match_os_status(status, list_data){
-      let list = this.matchInfoCtr.list;
+      // let list = this.matchInfoCtr.list;
+      let list = MatchDataWarehouseInstance.get_quick_mid_obj(this.mid )?.odds_info
       if(list_data){
         list = list_data;
       }

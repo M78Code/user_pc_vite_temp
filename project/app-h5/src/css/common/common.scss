@@ -42,6 +42,14 @@
 .base-bg {
   background-color: var(--q-gb-bg-c-23);
 }
+
+.tab-active {
+  background-color: var(--q-gb-bg-c-28);
+}
+
+.tab-default {
+  background-color: var(--q-gb-bg-c-18);
+}
 // 浅色header
 .sub-header {
   background: var(--q-gb-bg-c-28);

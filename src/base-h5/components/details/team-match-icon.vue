@@ -165,7 +165,8 @@ const {icon_click_animationUrl,icon_click_muUrl,icon_click_lvs} =  useIconInfo(g
       lodash,
       i18n_t,
       icon_click_animationUrl,
-      icon_click_muUrl
+      icon_click_muUrl,
+      LOCAL_PROJECT_FILE_PREFIX
     }
   }
 })

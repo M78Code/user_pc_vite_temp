@@ -943,81 +943,90 @@ get_quick_mid_obj_ref(mid){
             if (lodash.get(hps_data_arr, 'length') && Array.isArray(hps_data_arr)) {
               // 遍历玩法数据
               hps_data_arr.forEach(item2 => {
-                if(!lodash.get(item2,'hsw')){
-                  item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
-                }
-                // 玩法对象补偿
-                let play_obj_key = `hpid_${item2.chpid?item2.chpid:item2.hpid}`;
-                if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
-                  if(!item.play_obj){
-                    item.play_obj = {};
+                const fun = (item2)=>{
+                  if(!lodash.get(item2,'hsw')){
+                    item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                   }
-                  const obj_temp = {};
-                  for (const key in item2) {
-                    if(!['hl','ol'].includes(key)){
-                      obj_temp[key] = item2[key];
+                  // 玩法对象补偿
+                  let play_obj_key = `hpid_${item2.chpid?item2.chpid:item2.hpid}`;
+                  if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
+                    if(!item.play_obj){
+                      item.play_obj = {};
                     }
-                  }
-                  item.play_obj[play_obj_key] = obj_temp;
-                }
-                // 检查是否有盘口数据
-                if (lodash.get(item2,'hl.length') || lodash.get(item2,'ol.length')) {
-                  let item_arr = [];
-                  if(lodash.get(item2,'ol.length')){
-                    item_arr = [item2]
-                  } else{
-                    item_arr = item2.hl;
-                  }
-                  // 遍历盘口数据
-                  item_arr.forEach(item3 => {
-                    if (item3) {
-                      if (item3.hid) {
-                        // 增加玩法信息到盘口级别
-                        item3.mid = item.mid;
-                        item3.hpid = item2.hpid;
-                        item3.hsw = item2.hsw;
-                        // 快速查询对象hl_obj增加数据
-                        many_obj.hl_obj[this.get_list_to_obj_key(item.mid,item3.hid,'hl')] = item3;
+                    const obj_temp = {};
+                    for (const key in item2) {
+                      if(!['hl','ol'].includes(key)){
+                        obj_temp[key] = item2[key];
                       }
-                      if (lodash.get(item3, 'ol.length')) {
-                        // 遍历投注项数据
-                        item3.ol.forEach(item4 => {
-                          // 处理ot是小数的情况,进行数据修正
-                          let ot = ''; 
-                          
-                          if(item4.ot && item4.ot.includes('.')) {
-                            ot = item4.ot.replace('.','-');
-                          } else {
-                            ot = item4.ot;
-                          }
-                          // 设置坑位信息
-                          let _hn = item3.hn?`${item.mid}_${item2.chpid}_${item3.hn}_${ot}`:'';
-                          // 押注项设置盘口状态
-                          Object.assign(item4, {
-                            _hpid: item2.hpid,
-                            _chpid: item2.chpid,
-                            _hs: (item3.hs ? item3.hs : 0),
-                            _mhs: (item.mhs ? item.mhs : 0),
-                            _mid: item.mid,
-                            _hid: item3.hid,
-                            _hn,
-                            _hsw:item2.hsw,
-                            _hipo:item3.hipo,
-                            _csid:item.csid,
-                            _ispo:item2.ispo || item.ispo,
-                            os:Object.hasOwnProperty.call(item4,'os')?item4.os:1,
+                    }
+                    item.play_obj[play_obj_key] = obj_temp;
+                  }
+                  // 检查是否有盘口数据
+                  if (lodash.get(item2,'hl.length') || lodash.get(item2,'ol.length')) {
+                    let item_arr = [];
+                    if(lodash.get(item2,'ol.length')){
+                      item_arr = [item2]
+                    } else{
+                      item_arr = item2.hl;
+                    }
+                    // 遍历盘口数据
+                    item_arr.forEach(item3 => {
+                      if (item3) {
+                        if (item3.hid) {
+                          // 增加玩法信息到盘口级别
+                          item3.mid = item.mid;
+                          item3.hpid = item2.hpid;
+                          item3.hsw = item2.hsw;
+                          // 快速查询对象hl_obj增加数据
+                          many_obj.hl_obj[this.get_list_to_obj_key(item.mid,item3.hid,'hl')] = item3;
+                        }
+                        if (lodash.get(item3, 'ol.length')) {
+                          // 遍历投注项数据
+                          item3.ol.forEach(item4 => {
+                            // 处理ot是小数的情况,进行数据修正
+                            let ot = ''; 
+                            
+                            if(item4.ot && item4.ot.includes('.')) {
+                              ot = item4.ot.replace('.','-');
+                            } else {
+                              ot = item4.ot;
+                            }
+                            // 设置坑位信息
+                            let _hn = item3.hn?`${item.mid}_${item2.chpid}_${item3.hn}_${ot}`:'';
+                            // 押注项设置盘口状态
+                            Object.assign(item4, {
+                              _hpid: item2.hpid,
+                              _chpid: item2.chpid,
+                              _hs: (item3.hs ? item3.hs : 0),
+                              _mhs: (item.mhs ? item.mhs : 0),
+                              _mid: item.mid,
+                              _hid: item3.hid,
+                              _hn,
+                              _hsw:item2.hsw,
+                              _hipo:item3.hipo,
+                              _csid:item.csid,
+                              _ispo:item2.ispo || item.ispo,
+                              os:Object.hasOwnProperty.call(item4,'os')?item4.os:1,
+                            });
+                            // 快速查询对象ol_obj增加数据
+                            many_obj.ol_obj[this.get_list_to_obj_key(item.mid,item4.oid,'ol')] = item4;
+                            if(_hn) {
+                              // 快速查询对象hn_obj增加数据
+                              many_obj.hn_obj[this.get_list_to_obj_key(item.mid,_hn,'hn')] = item4;
+                            }
                           });
-                          // 快速查询对象ol_obj增加数据
-                          many_obj.ol_obj[this.get_list_to_obj_key(item.mid,item4.oid,'ol')] = item4;
-                          if(_hn) {
-                            // 快速查询对象hn_obj增加数据
-                            many_obj.hn_obj[this.get_list_to_obj_key(item.mid,_hn,'hn')] = item4;
-                          }
-                        });
+                        }
                       }
-                    }
+                    });
+                  }
+                }
+                if(hps_key_str =='odds_info' && lodash.get(item2,'plays')){
+                  const plays =lodash.get(item2,'plays');
+                  plays.forEach(plays_items => {
+                    fun(plays_items);
                   });
                 }
+                fun(item2);
               });
             }
             break;
@@ -1147,76 +1156,85 @@ get_quick_mid_obj_ref(mid){
               if (lodash.get(hps_data_arr, 'length') && Array.isArray(hps_data_arr)) {
                 // 遍历玩法数据
                 hps_data_arr.forEach(item2 => {
-                  if(!lodash.get(item2,'hsw')){
-                    item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
-                  }
-                  // 玩法对象补偿
-                  let play_obj_key = `hpid_${item2.chpid?item2.chpid:item2.hpid}`;
-                  if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
-                    if(!item.play_obj){
-                      item.play_obj = {};
+                  const fun = (item2)=>{
+                    if(!lodash.get(item2,'hsw')){
+                      item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                     }
-                    const obj_temp = {};
-                    for (const key in item2) {
-                      if(!['hl','ol'].includes(key)){
-                        obj_temp[key] = item2[key];
+                    // 玩法对象补偿
+                    let play_obj_key = `hpid_${item2.chpid?item2.chpid:item2.hpid}`;
+                    if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
+                      if(!item.play_obj){
+                        item.play_obj = {};
                       }
-                    }
-                    item.play_obj[play_obj_key] = obj_temp;
-                  }
-                  // 检查是否有盘口数据
-                  if (lodash.get(item2,'hl.length') || lodash.get(item2,'ol.length')) {
-                    let item_arr = [];
-                    if(lodash.get(item2,'ol.length')){
-                      item_arr = [item2]
-                    } else{
-                      item_arr = item2.hl;
-                    }
-                    // 遍历盘口数据
-                    item_arr.forEach(item3 => {
-                      if (item3) {
-                        if (item3.hid) {
-                          // 增加玩法信息到盘口级别
-                          item3.mid = item.mid;
-                          item3.hpid = item2.hpid;
-                          item3.hsw = item2.hsw;
-                        }
-                        if (lodash.get(item3, 'ol.length')) {
-                          // 遍历投注项数据
-                          item3.ol.forEach(item4 => {
-                            // 处理ot是小数的情况,进行数据修正
-                            let ot = ''; 
-                            if(item4.ot && item4.ot.includes('.')) {
-                              ot = item4.ot.replace('.','-');
-                            } else {
-                              ot = item4.ot;
-                            }
-                            // 设置坑位信息
-                            if(!item3.hn) {
-                            let _hn = `${item.mid}_${item2.hpid}_1_${ot}`;
-                              // 押注项设置盘口状态
-                              Object.assign(item4, {
-                                _hpid: item2.hpid,
-                                _chpid: item2.chpid,
-                                _hs: (item3.hs ? item3.hs : 0),
-                                _mhs: (item.mhs ? item.mhs : 0),
-                                _mid: item.mid,
-                                _hid: item3.hid,
-                                _hn,
-                                _hsw:item2.hsw,
-                                _hipo:item3.hipo,
-                                _csid:item.csid,
-                                _ispo:item2.ispo || item.ispo,
-                                os:Object.hasOwnProperty.call(item4,'os')?item4.os:1,
-                              });
-                              // 快速查询对象hn_obj增加数据
-                              map_obj[this.get_list_to_obj_key(item.mid,_hn,'hn')] = item4;
-                            }
-                          });
+                      const obj_temp = {};
+                      for (const key in item2) {
+                        if(!['hl','ol'].includes(key)){
+                          obj_temp[key] = item2[key];
                         }
                       }
+                      item.play_obj[play_obj_key] = obj_temp;
+                    }
+                    // 检查是否有盘口数据
+                    if (lodash.get(item2,'hl.length') || lodash.get(item2,'ol.length')) {
+                      let item_arr = [];
+                      if(lodash.get(item2,'ol.length')){
+                        item_arr = [item2]
+                      } else{
+                        item_arr = item2.hl;
+                      }
+                      // 遍历盘口数据
+                      item_arr.forEach(item3 => {
+                        if (item3) {
+                          if (item3.hid) {
+                            // 增加玩法信息到盘口级别
+                            item3.mid = item.mid;
+                            item3.hpid = item2.hpid;
+                            item3.hsw = item2.hsw;
+                          }
+                          if (lodash.get(item3, 'ol.length')) {
+                            // 遍历投注项数据
+                            item3.ol.forEach(item4 => {
+                              // 处理ot是小数的情况,进行数据修正
+                              let ot = ''; 
+                              if(item4.ot && item4.ot.includes('.')) {
+                                ot = item4.ot.replace('.','-');
+                              } else {
+                                ot = item4.ot;
+                              }
+                              // 设置坑位信息
+                              if(!item3.hn) {
+                              let _hn = `${item.mid}_${item2.hpid}_1_${ot}`;
+                                // 押注项设置盘口状态
+                                Object.assign(item4, {
+                                  _hpid: item2.hpid,
+                                  _chpid: item2.chpid,
+                                  _hs: (item3.hs ? item3.hs : 0),
+                                  _mhs: (item.mhs ? item.mhs : 0),
+                                  _mid: item.mid,
+                                  _hid: item3.hid,
+                                  _hn,
+                                  _hsw:item2.hsw,
+                                  _hipo:item3.hipo,
+                                  _csid:item.csid,
+                                  _ispo:item2.ispo || item.ispo,
+                                  os:Object.hasOwnProperty.call(item4,'os')?item4.os:1,
+                                });
+                                // 快速查询对象hn_obj增加数据
+                                map_obj[this.get_list_to_obj_key(item.mid,_hn,'hn')] = item4;
+                              }
+                            });
+                          }
+                        }
+                      });
+                    }
+                  }
+                  if(hps_key_str =='odds_info' && lodash.get(item2,'plays')){
+                    const plays =lodash.get(item2,'plays');
+                    plays.forEach(plays_items => {
+                      fun(plays_items);
                     });
                   }
+                  fun(item2);
                 });
               }
               break;
