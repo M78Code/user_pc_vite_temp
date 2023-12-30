@@ -155,7 +155,6 @@ class UserCtr {
     try {
       const topic_obj = JSON.parse(topic);
       topic_obj && (window.BUILDIN_CONFIG.TOPIC = topic_obj);
-      console.error('topic_obj=',topic_obj);
     } catch (error) {
       console.error(error);
     }
