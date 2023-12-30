@@ -81,7 +81,7 @@ onBeforeUnmount(() => cancel_ref.cancel())
 const go_to_back = lodash.debounce(() => {
   // 非串关页面 在详情页面点击了串关 回到列表页 需要设置为单关
   let is_ = ['match_result','details','category'].includes(route.name);
-  if(MenuData.current_lv_1_menu_i != 6 && is_){
+  if(![28,6].includes(MenuData.current_lv_1_menu_i *1) && is_){
     BetData.set_is_bet_single('single')
     BetData.set_clear_bet_info()
   }
