@@ -267,7 +267,9 @@ const handle_hide_dialog = (e) => {
   width: 3.75rem;
   margin: 0 -0.16rem;
   line-height: 0.48rem;
-  background: var(--q-gb-bd-c-12);
+  background-color: var(--q-gb-bg-c-23);
+  color: var(--q-gb-t-c-18);
+
 }
 .back {
   display: inline-block;
@@ -278,7 +280,7 @@ const handle_hide_dialog = (e) => {
   background-size: 100% 100%;
 }
 .dialog-content {
-  background: var(--q-gb-bd-c-12);
+  background: var(--q-gb-bg-c-23);
 }
 </style>
 
