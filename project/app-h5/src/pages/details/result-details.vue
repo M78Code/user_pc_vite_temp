@@ -338,20 +338,21 @@ onUnmounted(() => {
 
 .header-tab {
   min-width: 3.75rem;
-  position: fixed;
+  // position: fixed;
+  position: sticky;
   top: 0;
   z-index: 80;
 }
 
 .play-pad {
-  padding-top: 2.09rem;
+  // padding-top: 2.09rem;
   // background: var(--q-gb-bg-c-19) ;
   height: 100%;
   overflow: hidden;
 }
 
 .baseball-play-pad {
-  padding-top: 2.73rem;
+  // padding-top: 2.73rem;
   background: var(--q-gb-bg-c-19) !important;
 }
 :deep(.skeleton-wrap) {
