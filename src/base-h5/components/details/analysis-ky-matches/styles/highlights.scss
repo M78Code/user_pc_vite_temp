@@ -74,9 +74,9 @@
   
         &.is-active {
           border-radius: 0.08rem;
-          color: #179CFF;
+          color: var(--q-gb-bg-c-13);
           border-radius: 6px;
-          background: #E8F5FF;
+          background: var(--q-gb-bg-c-31);
         }
       }
     }
@@ -588,6 +588,8 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 0.5px solid var(--q-analysis-bd-color-3);
+      background:  var(--q-analysis-text-color-17);
+      color: var(--q-analysis-text-color-20);
     }
     .border-left {
       position: absolute;
@@ -679,7 +681,7 @@
             font-style: normal;
             font-weight: 700;
             text-overflow: ellipsis;
-            color: #303442;
+            color: var(--q-gb-t-c-18);
             padding: 2px 0;
             &:nth-child(2) {
               text-align: right;

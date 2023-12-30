@@ -33,6 +33,7 @@
       <!-- 赛果tab集 -->
       <result-details-tab :tab_index="route.params.index" :result_detail_data="result_detail_data" />
     </div>
+    
     <!-- 下拉联赛列表 -->
       <q-dialog v-model="is_dialog_details" position="top" v-cloak>
         <result-details-dialog
@@ -42,7 +43,7 @@
         ></result-details-dialog>
       </q-dialog>
     <!--玩法集cagetory-->
-    <div :class="[result_detail_data?.csid == 3 ?'baseball-play-pad':'play-pad', 'h-full']">
+    <div :class="[show_replay_video ?'baseball-play-pad':'play-pad', 'h-full']">
       <router-view v-if="loading"/>
     </div>
     <!--赛果详情骨架屏-->
@@ -112,7 +113,6 @@ const skeleton_loading = computed(() =>{
     return true
   }
 })
-
 // 监听is_dialog_details(控制是否显示联赛列表)
 watch(is_dialog_details, (new_value, old_value) => {
   // 新的值等于true的时候也就是点击下三角准备查看联赛列表 此时调用接口:详情页下拉列表接口(/v1/m/matchDetail/getMatchDetailByTournamentIdPB)
@@ -351,7 +351,7 @@ onUnmounted(() => {
 }
 
 .baseball-play-pad {
-  padding-top: 2.09rem;
+  padding-top: 2.73rem;
   background: var(--q-gb-bg-c-19) !important;
 }
 :deep(.skeleton-wrap) {

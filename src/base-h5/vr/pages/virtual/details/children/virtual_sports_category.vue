@@ -146,7 +146,7 @@ export default {
     },
     // 非置顶列表
     match_list_normal() {
-      return MatchDataWarehouseInstance.listSortNew(this.current_match.mid);
+      return MatchDataWarehouseInstance.listSortNormal(this.current_match.mid);
       // return this.matchInfoCtr.listSortNormal()
     }
   },
@@ -432,7 +432,8 @@ export default {
      * @param {Number} status 盘口状态
      */
     set_all_match_os_status(status, list_data){
-      let list = this.matchInfoCtr.list;
+      // let list = this.matchInfoCtr.list;
+      let list = MatchDataWarehouseInstance.get_quick_mid_obj(this.mid )?.odds_info
       if(list_data){
         list = list_data;
       }
@@ -604,6 +605,7 @@ export default {
         // 赛马数据字段增加
         if(temp){
           this.vir_add_title(temp)
+          MatchDataWarehouseInstance.set_match_details(this.current_match,temp);
         }
 
         try {  //getMatchOddsInfo 接口拉取时，联动更新投注框的数据

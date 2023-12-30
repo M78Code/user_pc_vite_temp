@@ -546,36 +546,40 @@ class MatchMeta {
     const euid = lodash.get(MenuData.result_menu_api_params, 'sport')
     // 电竞的冠军
     const category = MenuData.result_menu_lv1_mi ? 0 : 1
-    this.current_euid = `${euid}_${md}`
+    this.current_euid = `results_${euid}_${md}`
     if (!md) return []
-    const params = this.get_base_params()
-    const res = await api_common.get_match_result_api({
-      ...params,
-      category,
-      tid,
-      md: String(md),
-      showem: 1, // 新增的参数 区分电子赛事
-      euid: euid && String(euid),
-      type: euid ==="0"? 29 : 28,//我的投注 euid为0
-    })
-    if (this.current_euid !== `${euid}_${md}`) return []
-    if (+res.code !== 200) {
-      if (res.code === '0401038') {
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-        this.set_page_match_empty_status({ state: false });
+    try {
+      const params = this.get_base_params()
+      const res = await api_common.get_match_result_api({
+        ...params,
+        category,
+        tid,
+        md: String(md),
+        showem: 1, // 新增的参数 区分电子赛事
+        euid: euid && String(euid),
+        type: euid ==="0"? 29 : 28,//我的投注 euid为0
+      })
+      if (this.current_euid !== `results_${euid}_${md}` || +res.code !== 200) {
+        if (res.code === '0401038') {
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+          this.set_page_match_empty_status({ state: false });
+          return []
+        }
+        this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
         return []
       }
-      this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
-      return []
+      // 避免接口慢导致的数据错乱
+      const list = lodash.get(res, 'data', [])
+      const length = lodash.get(list, 'length', 0)
+      if (length < 1) {
+        this.set_page_match_empty_status({ state: true });
+        return []
+      }
+      return this.handler_match_list_data({ list: list, type: 2, is_virtual: false })
+    } catch (err) {
+      console.log(err)
+      this.set_page_match_empty_status({ state: true, type: 'noWifi' });
     }
-    // 避免接口慢导致的数据错乱
-    const list = lodash.get(res, 'data', [])
-    const length = lodash.get(list, 'length', 0)
-    if (length < 1) {
-      this.set_page_match_empty_status({ state: true });
-      return []
-    }
-    return this.handler_match_list_data({ list: list, type: 2, is_virtual: false })
   }
 
   /**

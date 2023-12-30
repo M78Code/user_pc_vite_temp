@@ -110,13 +110,13 @@
             </div>
 
             <!--玩法数量-->
-            <div class="right-score">
+            <!-- <div class="right-score">
               <template v-if="match.csid != 1">
                 <div class="score-content">
                   <ScoreList :main_source="main_source" :match="match_of_list" />
                 </div>
               </template>
-            </div>
+            </div> -->
           </div>
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
           <div :class="['match-odds-container study_height_s hairline-border']">
@@ -243,11 +243,11 @@
 
           </div>
 
-          <!-- <template v-if="match.csid != 1">
+          <template v-if="match.csid != 1">
             <div class="score-content-new">
               <ScoreList :main_source="main_source" :match="match_of_list" />
             </div>
-          </template>  -->
+          </template> 
         </div>
 
         <!-- </q-slide-transition> -->
@@ -1202,7 +1202,8 @@ export default {
           }
 
           .team-t-title-w {
-            overflow: hidden;
+            // overflow: hidden;
+            white-space: nowrap;
             display: -webkit-box;
             font-size: 0.12rem;
             flex-shrink: 0;
@@ -1214,7 +1215,7 @@ export default {
             color: var(--q-gb-t-c-18);
 
             &.is-handicap {
-              color: #74C4FF !important;
+              color: var(--q-gb-t-c-34) !important;
             }
 
             &.goal-style {
@@ -1712,7 +1713,7 @@ export default {
 /* ********赛事容器相关********** -E*/
 
 .score-content-new {
-  padding: 6px 0;
+  padding-top: 6px;
   max-width: 200px;
   overflow-x: scroll;
 }

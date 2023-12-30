@@ -183,6 +183,7 @@ export default defineComponent({
   text-align: center;
   font-size: 0.16rem;
   flex: 1;
+  color: var(--q-gb-t-c-18);
 }
 
 .team-odds-left {
@@ -210,11 +211,11 @@ export default defineComponent({
 /*************** 数字结束 *************** -E*/
 .team {
   width: 1.9rem;
-  margin-right: 0.12rem;
+  margin-right: 0.28rem;
 }
 
 .team-odds2 {
-
+  background: var(--q-gb-bg-c-37) !important
 }
 
 div[class*="virtual-num"] {
