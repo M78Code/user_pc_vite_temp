@@ -8,7 +8,7 @@
 
       <div class="f-b-c px-12 h40 font14 bet-delete-all" v-if="(BetData.bet_single_list.length || BetData.bet_s_list.length) && BetViewDataClass.bet_order_status == 1 ">
         <!-- 删除全部  -->
-        <div class="cursor">
+        <div class="cursor" @click="BetData.set_clear_bet_info()&BetData.set_bet_state_show(false)">
           <span class="icon-delete"></span>
           <span class="ml-16">{{i18n_t('common.del_all')}}</span>
         </div>

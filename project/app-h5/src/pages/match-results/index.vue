@@ -204,6 +204,7 @@ const switchHandle = (val,type) => {
 const get_date_matches_list = async (item)=>{
     MatchFold.clear_fold_info()
     MatchMeta.clear_match_info()
+    useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: false })
     useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true);
     if(item?.sport_id){
         let params = {
