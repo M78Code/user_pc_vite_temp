@@ -1031,9 +1031,6 @@ if (type.value == 30) {
 .is_fold{
   transform: rotate(270deg);
 }
-:deep(.scroll){
-  overflow: visible;
-}
 </style>
 
 
