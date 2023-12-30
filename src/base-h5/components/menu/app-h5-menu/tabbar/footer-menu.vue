@@ -40,29 +40,29 @@ const footer_list = ref([
   {
     title: i18n_t('menu_itme_name.results'), 
     path_name: "matchResults",
-    icon: computed(() => compute_css_obj({key: 'h5-footer-sg'})),
+    icon: compute_css_obj({key: 'h5-footer-sg'}),
     id: 1
   },
   {
     title: i18n_t('footer_menu.set_menu'),
-    icon: computed(()=>compute_css_obj({key: 'h5-footer-szcd'})),
+    icon: compute_css_obj({key: 'h5-footer-szcd'}),
     id: 2,
    
   },
   {
     title: i18n_t('footer_menu.open_bets'),
-    icon: computed(() => compute_css_obj({key: 'h5-footer-yjzd'})) ,
+    icon: compute_css_obj({key: 'h5-footer-yjzd'}) ,
     settle: false,
     id: 3
   },
   {
     title: i18n_t('footer_menu.closed_bets'),
-    icon: computed(() => compute_css_obj({key: 'h5-footer-wjzd'})) ,
+    icon: compute_css_obj({key: 'h5-footer-wjzd'}) ,
     settle: true,
     id: 4
   },{
     title: i18n_t('footer_menu.refresh'),
-    icon: computed(() => compute_css_obj({key: 'h5-footer-sx'})),
+    icon: compute_css_obj({key: 'h5-footer-sx'}),
     id: 5,
   }
 ])
@@ -75,7 +75,7 @@ const footer_menu_list = computed(()=>{
     new_footer_list[4].icon = `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/activity.png`;
   }else{
     new_footer_list[4].title = i18n_t('footer_menu.refresh');
-    new_footer_list[4].icon = computed(()=>compute_css_obj({key: 'h5-footer-sx'}))
+    new_footer_list[4].icon = compute_css_obj({key: 'h5-footer-sx'})
   }
   return new_footer_list;
 })
