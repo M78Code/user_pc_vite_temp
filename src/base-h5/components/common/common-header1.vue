@@ -79,13 +79,27 @@ onBeforeUnmount(() => cancel_ref.cancel())
 
 // 返回列表页亦或是返回上一级
 const go_to_back = lodash.debounce(() => {
+
   // 非串关页面 在详情页面点击了串关 回到列表页 需要设置为单关
   let is_ = ['match_result','details','category'].includes(route.name);
   if(![28,6].includes(MenuData.current_lv_1_menu_i *1) && is_){
     BetData.set_is_bet_single('single')
     BetData.set_clear_bet_info()
+    if (route.name=='category') {
+      router.push({name:'matchList'})
+    }else if(route.name=='match_result'){
+      router.push({name:'matchResults'})
+    }
+
+  }else{
+    if(route.name=='match_result'){
+      router.push({name:'matchResults'})
+    }else{
+      router.back()
+    }
+   
   }
-  router.back()
+ 
 }, 500, { leading: true })
 
 onBeforeUnmount(() => go_to_back.cancel())
