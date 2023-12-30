@@ -22,16 +22,15 @@
                 </div>
             </div>
         </div>
-        <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         <div class="row bet-win yb-fontsize12">
             <div class="col df-jb">
                     <!--最高可赢额-->
                  {{ i18n_t('common.maxn_amount_val') }}
             </div>
                 <!--金额-->
-            <div class="col-auto bet-win-money yb-number-bold">{{ formatMoney(ref_data.win_money) }}RMB</div>
+            <div class="col-auto bet-win-money yb-number-bold">{{  set_bet_win_money(BetData.bet_data_class_version) }}RMB</div>
         </div>
-         
+        <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
             <div class="col">
                 <bet-keyboard />
@@ -42,7 +41,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, computed } from "vue"
+import { ref, reactive, onMounted, onUnmounted, computed,watch} from "vue"
 import BetKeyboard from "../common/bet-keyboard.vue"
 import { IconWapper } from 'src/components/icon'
 import lodash_ from 'lodash'
@@ -51,6 +50,7 @@ import { format_odds, formatMoney,format_currency, format_currency2 } from "src/
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { UserCtr } from "src/output/index.js"
+import mathJs from 'src/core/bet/common/mathjs.js'
 
 const ref_data = reactive({
     DOM_ID_SHOW: false,
@@ -73,6 +73,12 @@ const props = defineProps({
         type: Number,
         default: 0
     },
+})
+
+//监听最离可赢变化
+const set_bet_win_money = computed(()=> state =>{
+    set_win_money()
+    return formatMoney(ref_data.win_money) 
 })
 
 onMounted(() => {
@@ -128,8 +134,6 @@ const set_ref_data_bet_money = () => {
     ref_data.money = ""
 }
 
-
-
 // 输入判断
 const set_win_money = () => {
     useMittEmit(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY,ref_data)
@@ -138,11 +142,10 @@ const set_win_money = () => {
      if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
 
         //计算多项最高可赢
-        ref_data.oddFinallyArr.forEach((item)=>{
-            console.log(item)
-            sum += (ref_data.money*item)-ref_data.money
+        BetData.bet_single_list.forEach((item)=>{
+            sum += mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)
         })
-        ref_data.win_money = sum
+         ref_data.win_money = sum
     }else{
         // 输入金额不能大于最大限额
         if(ref_data.money>ref_data.max_money) {
@@ -150,6 +153,8 @@ const set_win_money = () => {
         }
     }
 }
+
+    
 </script>
 
 <style scoped lang="scss">
@@ -160,9 +165,9 @@ input::-webkit-inner-spin-button {
 }
 
 //火狐
-// input[type="number"] {
-//     -moz-appearance: textfield;
-// }
+input[type="number"] {
+    -moz-appearance: textfield;
+}
 
 /**单关金额输入框**/
 .bet-multiple-input {

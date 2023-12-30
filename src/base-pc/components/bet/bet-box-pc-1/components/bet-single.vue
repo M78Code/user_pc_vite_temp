@@ -45,6 +45,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import BetSingleInfo from "./bet-single-info.vue";
 // 单关投注后信息
 import BetSingleRecord from "./bet-single-record.vue";
-import BetMultipleInput from "./bet- Multiple-input.vue"
+import BetMultipleInput from "./bet-multiple-input.vue"
+
 
 </script>
