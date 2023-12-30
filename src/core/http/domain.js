@@ -845,7 +845,7 @@ class AllDomain {
     let topic = lodash.get(oss_data, "topic");
     if (topic && topic.length) {
       this.toppic_fast(topic,(api_obj)=>{
-        BUILDIN_CONFIG.DOMAIN_RESULT.topic = api_obj;
+        BUILDIN_CONFIG.TOPIC = api_obj;
       });
     }
     // 处理 api  逻辑
@@ -1253,6 +1253,7 @@ class AllDomain {
           break;
       }
       callback && callback(obj_);
+      LocalStorage.set('topic',JSON.stringify(obj_));
       return;
     } catch (error) {
       // 所有  全部请求失败
