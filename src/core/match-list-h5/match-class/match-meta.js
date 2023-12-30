@@ -698,7 +698,12 @@ class MatchMeta {
         ...other_params
       })
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
-      if (res.code == '0401038' && this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+      if (res.code === '0401038') {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+        this.set_page_match_empty_status({ state: false });
+        return []
+      }
+      if (this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
       // 接口请求成功，重置接口限频次数
       this.error_http_count.match = 1
       const list = lodash.get(res, 'data', [])
