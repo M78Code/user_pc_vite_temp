@@ -217,9 +217,9 @@ export default {
 
   created(){
     //函数防抖 在100毫秒内只触发最后一次需要执行的事件
-    this.initEvent=lodash.debounce(this.initEvent.bind(this),100)
-    //函数防抖 在500毫秒内只触发最后一次需要执行的事件
-    this.socket_upd_list = debounce(this.socket_upd_list, 500);
+    this.initEvent=lodash.debounce(this.initEvent.bind(this),150)
+    //函数防抖 在150毫秒内只触发最后一次需要执行的事件
+    this.socket_upd_list = debounce(this.socket_upd_list, 150);
     // 延时器
     this.get_video_timer = null;
     // 满足刷新页面保持向上展开的状态
