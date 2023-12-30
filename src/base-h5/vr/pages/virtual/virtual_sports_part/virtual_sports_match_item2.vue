@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { LOCAL_PROJECT_FILE_PREFIX, i18n_t, LocalStorage } from "src/output/index.js";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import v_s_odd_item from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_odd_item.vue"
 import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue"
@@ -80,10 +81,10 @@ export default {
       vsports:null,
       standard_odd_status:0,
       is_basketball_score:false,
-      arrows: "image/wwwassets/bw3/common/slide_icon_y0.svg",
-      arrows_default: "image/wwwassets/bw3/common/slide_icon.svg",
-      arrows_reverse: "image/wwwassets/bw3/common/slide_icon_reverse_y0.svg",
-      arrows_default_balck:"image/wwwassets/bw3/common/slide_icon_r.svg",
+      arrows: `${LOCAL_PROJECT_FILE_PREFIX }/image/common/slide_icon_y0.svg`,
+      arrows_default: `${LOCAL_PROJECT_FILE_PREFIX }/image/common/slide_icon.svg`,
+      arrows_reverse: `${LOCAL_PROJECT_FILE_PREFIX }/image/common/slide_icon_reverse_y0.svg`,
+      arrows_default_balck:`${LOCAL_PROJECT_FILE_PREFIX }/image/common/slide_icon_r.svg`,
       standard_edition  //新手版1    标准版  2
     }
   },
