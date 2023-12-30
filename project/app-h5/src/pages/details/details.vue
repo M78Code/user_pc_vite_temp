@@ -103,7 +103,7 @@
                   <!-- ms 为0 或者 1时，表示未开赛或进行中 -->
                   <category v-if="[0,1,110].includes(+detail_data.ms)" :active="round"
                   :category_arr="matchDetailCtr.category_arr" ref="category"></category>
-                  <no-data v-else-if="detail_data.ms!=undefined" which='noMatch' height='500'></no-data>
+                  <no-data v-else-if="detail_data?.ms!=undefined" which='noMatch' height='500'></no-data>
                   <!-- detail_data.ms!=undefined 不然会闪现no-data哦 -->
                 </div>
               </div>
