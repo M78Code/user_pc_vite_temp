@@ -34,6 +34,7 @@
         </div> -->
         <div v-if="BetData.bet_s_list.length > 1">
           <q-card flat class="bet-mix-item-card">
+            {{ BetViewDataClass.bet_special_series }}
             <div v-show="false"> {{BetViewDataClass.bet_view_version}}</div>
             <betSpecialInput  :items="BetViewDataClass.bet_special_series[0]"  />
           </q-card>
