@@ -338,7 +338,8 @@ onUnmounted(() => {
   // position: fixed;
   position: sticky;
   top: 0;
-  z-index: 99;
+  /** 需要大于odds-list的z-index: 100; */
+  z-index: 200;
 }
 
 .play-pad {
