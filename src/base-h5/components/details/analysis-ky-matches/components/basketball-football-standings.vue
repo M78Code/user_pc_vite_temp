@@ -56,7 +56,8 @@
       </span>
     </div>
     <!-- 没有数据 组件 -->
-     <div v-if="no_data" class="no-list">{{ i18n_t('common.no_data') }}</div>
+     <!-- <div v-if="no_data" class="no-list">{{ i18n_t('common.no_data') }}</div> -->
+     <no-data v-if="no_data" which='noMatch' height='500' />
   </div>
 </template>
 
@@ -67,6 +68,7 @@ import lodash from 'lodash'
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
 import { project_name,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+import noData from "src/base-h5/components/common/no-data.vue";
 
 
 const props = defineProps({
