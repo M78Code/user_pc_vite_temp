@@ -341,7 +341,7 @@ onUnmounted(() => {
   // position: fixed;
   position: sticky;
   top: 0;
-  z-index: 80;
+  z-index: 99;
 }
 
 .play-pad {

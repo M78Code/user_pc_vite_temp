@@ -489,10 +489,15 @@ export default defineComponent({
     .detail-back {
       width: 0.3rem;
       height: 100%;
-       // TODO: 后续上传
       background: url($SCSSPROJECTPATH + '/image/common/go_back.svg') no-repeat center / 96% 96%;
       background-size: 0.1rem auto;
       margin-left: 0.05rem;
+      & + div {
+        color: #fff;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
 
     /*  刷新按钮 */
