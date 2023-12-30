@@ -18,7 +18,7 @@
                     <icon-wapper name="icon-failure" size="12px" />
                 </div>
             </div>
-            {{ items.show_quick }}
+            <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
             <div v-show="items.show_quick" class="bet-win-key">
                 <div class="row bet-win yb-fontsize12">
                     <div class="col df-jb">
@@ -34,7 +34,6 @@
                     <bet-keyboard />
                 </div>
             </div>
-            <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         </div>
         
     </div>
@@ -75,10 +74,9 @@ const ref_data = reactive({
 const InputFocus = ref()
 
 onMounted(() => {
-    show_quick()
     ref_data.money = props.items.bet_amount
+    show_quick()
     InputFocus.value.focus()
-    
 })
 
 onUnmounted(() => {
@@ -125,6 +123,7 @@ const show_quick = () => {
     let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
     let id = lodash_.get(props,'items.id','')
     list.filter(item => {
+        console.log(item)
         item.show_quick = false
          // 显示指定投注项的快捷金额按钮
         if(item.id == id){

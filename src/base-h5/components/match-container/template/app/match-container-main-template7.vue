@@ -515,6 +515,7 @@ export default {
     &.hairline-border {
       border-radius: 0;
       height: 56px;
+      overflow: hidden;
     }
   }
 
@@ -1361,12 +1362,12 @@ export default {
 }
 
 :deep(.odd-column-item) {
-  height: 56px;
+  // height: 56px;
 }
 :deep(.odd-list-wrap .standard-odd-l-w) {
   height: 0.7rem;
   .standard-odd-list {
-    height: 100%!important;
+    // height: 100%!important;
   }
 }
 :deep(.odd-list-wrap.standard) {
