@@ -234,6 +234,7 @@ class MatchUtils {
    * @param { Array } list
    */
   get_match_total_by_csid (key, list) {
+    // MatchResponsive.clear_ball_seed_count()
     const csids = list.map(item => item.csid)
     const csid_list = lodash.uniq(csids)
     csid_list.forEach(t => {

@@ -445,6 +445,7 @@ class MatchMeta {
   async get_champion_match() {
     // MatchFold.clear_fold_info()
     MatchDataBaseH5.clear()
+    this.set_page_match_empty_status({ state: false });
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
     try {
@@ -456,7 +457,14 @@ class MatchMeta {
         "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
       })
 
-      if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
+      if (+res.code !== 200) {
+        if (res.code === '0401038') {
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+          this.set_page_match_empty_status({ state: false });
+          return []
+        }
+        return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
+      }
       const list = lodash.get(res, 'data', [])
       if (list.length < 1) return
       MatchCollect.get_collect_match_data(list)
@@ -482,6 +490,7 @@ class MatchMeta {
    */
   async get_champion_match_result() {
     this.clear_match_info()
+    this.set_page_match_empty_status({ state: false });
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const { start_time, end_time } = MatchUtils.get_match_time_start_time(md)
     this.current_euid = `10000_${md}`
@@ -542,6 +551,7 @@ class MatchMeta {
    */
   async get_results_match({ tid = '' } = {}) {
     this.clear_match_info()
+    this.set_page_match_empty_status({ state: false });
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const euid = lodash.get(MenuData.result_menu_api_params, 'sport')
     // 电竞的冠军
@@ -633,6 +643,7 @@ class MatchMeta {
   async get_esports_match() {
     this.clear_match_info()
     VirtualList.clear_virtual_info()
+    this.set_page_match_empty_status({ state: false });
     //兼容复刻版电竞冠军
     const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "");
     const is_kemp = md == '100';
@@ -648,7 +659,14 @@ class MatchMeta {
       category,
       "type": 3000,
     })
-    if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
+    if (+res.code !== 200) {
+      if (res.code === '0401038') {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+        this.set_page_match_empty_status({ state: false });
+        return []
+      }
+      return this.set_page_match_empty_status({ state: true });
+    }
     // if (this.current_euid != `${csid}_${md}`) return
     const list = lodash.get(res, 'data', [])
     MatchCollect.get_collect_match_data(list)
@@ -676,6 +694,7 @@ class MatchMeta {
    *  yazhou-h5 需要
    */
   async get_target_match_data({ scroll_top = 0, md = '', is_error = false, tid = '' }) {
+    this.set_page_match_empty_status({ state: false });
     // 有的项目菜单类不存在 data_time
     const data_time = String(md || MenuData?.data_time || this.http_params.md)
     // 球种 euid
@@ -698,7 +717,12 @@ class MatchMeta {
         ...other_params
       })
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
-      if (res.code == '0401038' && this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+      if (res.code === '0401038') {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+        this.set_page_match_empty_status({ state: false });
+        return []
+      }
+      if (this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
       // 接口请求成功，重置接口限频次数
       this.error_http_count.match = 1
       const list = lodash.get(res, 'data', [])

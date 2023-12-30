@@ -607,13 +607,17 @@ onUnmounted(() => {
     position: relative;
     min-height: 0.16rem;
     color: var(--q-color-fs-color-115);
-
+    position: relative;
     &.three {
       font-size: 0.11rem;
     }
     .up_down{
       width: 12px;
       height: 11px;
+      display: flex;
+      position: absolute;
+      right: 100%;
+
     }
     .is_up{
       color: #F53F3F;
