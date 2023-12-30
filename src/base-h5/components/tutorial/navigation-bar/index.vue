@@ -28,8 +28,9 @@
 <script setup>
 import { compute_css_obj } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
-import {compute_local_project_file_path,UserCtr} from "src/output/index.js";
+import {compute_local_project_file_path,PageSourceData} from "src/output/index.js";
 import { MenuData } from "src/output/module/menu-data.js"
+import BetData from 'src/core/bet/class/bet-data-class.js'
 // import setectLeague from './setect-league.vue'
 import { ref } from "vue";
 defineOptions({
@@ -71,7 +72,7 @@ const set_back = () => {
         MenuData.set_current_lv1_menu('');
         MenuData.set_top_menu_title({})
         MenuData.set_init_menu_list()
-        router.push({name: UserCtr.from_page_source || 'matchList'})
+        router.push({name: PageSourceData.from_page_source || 'matchList'})
         if (props.goBackAssign !== null) {
             props.goBackAssign()
         }
@@ -82,6 +83,8 @@ const set_back = () => {
             }
         }, 100);
     }
+    BetData.set_is_bet_single('single')
+    BetData.set_clear_bet_info()
 }
 // /**
 //  * 打开联赛筛选框
