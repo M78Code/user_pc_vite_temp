@@ -9,7 +9,7 @@
         <div class="row bet-multiple-input yb-flex-nowrap">
             <!--金额输入区-->
             <div class="col bet-count">
-                <span>2</span>
+                <span>{{ BetData.bet_single_list.length}}</span>
                 <span>x</span>
             </div>
             <div class="col-auto right-input">
@@ -33,7 +33,7 @@
         <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
             <div class="col">
-                <bet-keyboard />
+                <bet-keyboard :monery="ref_data.money"/>
             </div>
         </div>
     </div>
@@ -98,7 +98,7 @@ onUnmounted(() => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = (new_money) => {
- 
+        ref_data.money = new_money.money
 }
 
 // 清空输入框金额

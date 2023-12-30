@@ -144,6 +144,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
     font-size: 0.1rem;
     border-radius: 0.04rem;
     padding: 0 0.08rem;
+    color: var(--q-gb-t-c-18);
 
     img {
       width: 0.08rem;
