@@ -12,6 +12,7 @@ import BetWsMessage from "src/core/bet/class/bet-ws-message.js";
 import { http, AllDomain } from "src/core/http/";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
+import PageSourceData  from  "src/core/page-source/page-source.js";
 
 export default {
   data() {
@@ -48,6 +49,7 @@ export default {
   },
   watch: {
     '$route'(to, from) {
+      PageSourceData && PageSourceData.set_from_page(to.name)
       watch_route_fun(to, from);
     },
     init_load(val){

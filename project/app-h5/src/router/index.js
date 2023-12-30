@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import { MenuData } from "src/output";
-import PageSourceData  from  "src/core/page-source/page-source.js";
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -147,7 +146,6 @@ const router = createRouter({
  * 路由切换清除默认球种
  */
 router.afterEach((to, from) => {
-  PageSourceData && PageSourceData.set_from_page(to.name)
   if(from.name=="virtual_sports" && to.name == "matchList"){
     MenuData.set_top_menu_title({});//设置菜单
  }
