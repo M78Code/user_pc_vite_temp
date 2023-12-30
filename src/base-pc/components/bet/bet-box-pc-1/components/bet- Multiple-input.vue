@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <div v-show="false">{{ UserCtr.user_version }}-{{ BetData.bet_data_class_version }}</div>
+        <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         <div class="row bet-win yb-fontsize12">
             <div class="col df-jb">
                     <!--最高可赢额-->
@@ -50,7 +50,6 @@ import { useMittOn, MITT_TYPES,useMittEmit} from "src/core/mitt/index.js"
 import { format_odds, formatMoney,format_currency, format_currency2 } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import mathJs from 'src/core/bet/common/mathjs.js'
 import { UserCtr } from "src/output/index.js"
 
 const ref_data = reactive({
@@ -65,7 +64,8 @@ const ref_data = reactive({
     money: "", // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
     emit_lsit: {},
-    oddFinallyArr:[]
+    oddFinallyArr:[],
+    oid:[]
 })
 
 const props = defineProps({
@@ -120,6 +120,7 @@ const set_ref_data_bet_money = () => {
             const { min_money = 10, max_money = 8888} = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
             min_money_arr.push(min_money)
             max_money_arr.push(max_money)
+            ref_data.oid.push(item.playOptionsId)
             ref_data.oddFinallyArr.push(item.oddFinally)
          })
     ref_data.min_money = lodash_.max(min_money_arr) //多项单注限额取最小值取多项里最大的
@@ -135,6 +136,8 @@ const set_win_money = () => {
      // 输入控制
      let sum = 0
      if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
+
+        //计算多项最高可赢
         ref_data.oddFinallyArr.forEach((item)=>{
             console.log(item)
             sum += (ref_data.money*item)-ref_data.money
