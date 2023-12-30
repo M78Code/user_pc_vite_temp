@@ -49,8 +49,8 @@ function iframe_before_loading(obj){
 function iframe_loading(data){
   if(data==0){
     iframe_before_loading({
-      activity_src: lodash.get(window, `BUILDIN_CONFIG.DOMAIN_RESULT.topic.activity`),
-      rules_src: lodash.get(window, `BUILDIN_CONFIG.DOMAIN_RESULT.topic.sports_rules`),
+      activity_src: lodash.get(window, `BUILDIN_CONFIG.TOPIC.activity`),
+      rules_src: lodash.get(window, `BUILDIN_CONFIG.TOPIC.sports_rules`),
     })
   }
 }
