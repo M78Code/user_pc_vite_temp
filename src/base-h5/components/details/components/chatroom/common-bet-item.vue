@@ -335,6 +335,7 @@ export default defineComponent({
       font-size: 0.11rem;
       height: 0.36rem;
       line-height: 0.36rem;
+      color: var(--q-gb-t-c-27);
     }
 
     .item-footer {
