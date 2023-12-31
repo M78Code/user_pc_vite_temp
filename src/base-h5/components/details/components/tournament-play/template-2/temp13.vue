@@ -16,8 +16,9 @@
           <div class="item-name ellipsis">{{lodash.get(item_data, 'title[1].osn')}}</div>
         </div>
         <!-- 大 -->
-        <div class="row bor-style bet-card-play-container" :class="get_is_hengping?'bor-style2':'' ">
-          <div class="play-name " v-show="!get_is_hengping" :style="{width:rem(0.85)+'px',margin:rem(0.04)+'px'}">
+        <div class="row bor-style bet-card-play-container" :class="get_is_hengping?'bor-style2':'' " :style="{'margin-bottom':rem(0.04)+'px'}">
+<!--          <div class="play-name " v-show="!get_is_hengping" :style="{width:rem(0.85)+'px',margin:rem(0.04)+'px'}">-->
+          <div class="play-name " v-show="!get_is_hengping" :style="{width:rem(0.85)+'px','margin-right':rem(0.04)+'px'}">
             <div class="play-name-card ellipsis" >
               {{lodash.get(item_data, 'title[0].osn')}}
             </div>
@@ -29,7 +30,8 @@
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length==2 }]"
               :style="{left:`${left}px`}">
               <template v-for="(append_single, index) of append_single_list">
-                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px',margin:rem(0.04)+'px'}"   :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
+<!--                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px',margin:rem(0.04)+'px'}"   :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">-->
+                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px'}"   :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
                   <div class="row row-fat">
                     <!-- (开盘_mhs=0或者锁盘_mhs=11 -->
                     <div v-if="append_single._mhs == 0 || append_single._mhs == 11" style="flex:1;">
@@ -121,7 +123,8 @@
         </div>
         <div class="row bet-card-play-container">
           <!-- 小 -->
-          <div class="play-name " v-show="!get_is_hengping" :style="{width:rem(0.85)+'px',margin:rem(0.04)+'px'}">
+<!--          <div class="play-name " v-show="!get_is_hengping" :style="{width:rem(0.85)+'px',margin:rem(0.04)+'px'}">-->
+          <div class="play-name " v-show="!get_is_hengping" :style="{width:rem(0.85)+'px','margin-right':rem(0.04)+'px'}">
               <div class="play-name-card ellipsis" >
                 {{lodash.get(item_data, 'title[1].osn')}}
               </div>
@@ -133,7 +136,8 @@
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length==2 }]"
             :style="{left:`${left}px`}">
               <template v-for="(append_single,index) of append_single_list">
-                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px',margin:rem(0.04)+'px'}" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
+<!--                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px',margin:rem(0.04)+'px'}" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">-->
+                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px'}" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                   <div class="row row-fat" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                     <!-- (开盘_mhs=0或者锁盘_mhs=11) -->
                     <div v-if="append_single._mhs == 0 || append_single._mhs == 11" style="flex:1;">
@@ -546,8 +550,9 @@ export default defineComponent({
     .bet-item {
       // min-width: 0.85rem;   // rem动态计算，这里注释，写在行内
       // margin:0.04rem;
+        margin-right: .06rem;
       &:nth-child(1) {
-           margin-left:0.08rem;
+           //margin-left:0.08rem;
         }
     }
    
@@ -563,6 +568,8 @@ export default defineComponent({
     border-radius: 4px;
     position: relative;
     overflow: hidden;
+      box-sizing: border-box;
+      padding: .05rem;
   }
 
   .bor-style {
@@ -589,18 +596,20 @@ export default defineComponent({
   .play-box-style {
     text-align: center;
     width: 100%;
-    height: 0.40rem;
-    line-height: 0.40rem;
+    height: 0.48rem;
+    line-height: 0.48rem;
   }
 
   .play-box-sty {
-    height: 0.40rem;
+    height: 0.48rem;
     text-align: center;
+      //box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+      //border-radius: 4px;
     // padding:0.08rem 0.04rem ;
   }
 
   .odds-lock {
-    line-height: 0.40rem;
+    line-height: 0.48rem;
     .bet-item-ky-container {
       padding-top: 0.12rem;
       padding-bottom: 0.11rem;
@@ -652,6 +661,8 @@ export default defineComponent({
 
   .row-fat {
     text-align: center;
+      box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+      border-radius: 4px;
   }
 
   .white_text {
@@ -662,7 +673,8 @@ export default defineComponent({
 
   .play-name {
     // width: 0.95rem;
-    height: 0.45rem;
+    //height: 0.45rem;
+    height: 0.48rem;
     line-height: 0.36rem;
     // padding:  0.08rem 0.04rem 0.08rem 0.08rem;
     // margin-right: 1px;
@@ -675,13 +687,15 @@ export default defineComponent({
   }
   .play-name-card{
       // margin: 0.04rem;
+      height: .48rem;
+      line-height: .48rem;
       text-align: center;
       font-size: 0.14rem;
       background:var(--q-gb-bg-c-28);
       border-radius: 4px;
       color:var(--q-gb-t-c-10);
       // width: 0.85rem;
-      box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+      //box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     }
   .single-name {
     line-height: 0.36rem;
@@ -718,17 +732,19 @@ export default defineComponent({
   flex-direction: column;
   justify-content:center;
   background:var(--q-gb-bg-c-28);
-  border-radius: 4px;
   align-items:center;
   padding:0 0.04rem;
-  box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+    border-radius: 0 !important;
+  //box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   color: var(--q-gb-t-c-18);
+    height: .48rem;
   .single-name {
     line-height: normal;
   }
 }
 .bet-card-play-container{
-  height:0.48rem
+  height: 0.48rem;
 }
 .click-bet-bgc{
   background: var(--q-gb-bg-c-37);
