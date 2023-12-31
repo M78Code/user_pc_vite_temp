@@ -274,6 +274,7 @@ class MenuData {
 
   // 设置二级菜单id
   set_current_lv_2_menu_i(val = {},type=0){
+
     const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
     val = type && current.current_lv_2_menu?.mi?current.current_lv_2_menu:val;
     this.current_lv_2_menu_i = val?.mi;
@@ -283,13 +284,13 @@ class MenuData {
       current_lv_2_menu_i:val?.mi,
     });
     this.set_menu_csid(val?.mi);
-    this.update()
   }
    // 设置三级菜单id
    set_current_lv_special_menu_mi(val = {}){
     this.current_lv_special_menu_mi = val.mi;
     this.current_lv_special_menu = val;
     console.log("特殊点击",val)
+
     this.update()
   }
   /**
@@ -330,6 +331,7 @@ class MenuData {
       current_lv_1_menu_i:lv1_mi,
       current_lv_1_menu_mi:lv1_mi
     });
+   
     // 早盘 /串关 不走此逻辑
     // if([1,2,400].includes(lv1_mi*1)){
 
@@ -379,6 +381,7 @@ class MenuData {
       search_tab_index:i||0,
       search_tab_i_tid:tid||''
     });
+    this.update();
   };
   /**
    * 设置时间 并且设置时间请求参数
@@ -1044,6 +1047,7 @@ class MenuData {
       current_lv_2_menu,
       current_lv_2_menu_i,
     });
+
     if (!current_lv_2_menu) {
       //2级菜单为空 3级也滞空
       this.set_cache_class({
