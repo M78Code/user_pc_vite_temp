@@ -11,7 +11,7 @@ import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type7 
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-pc/list-template/index.js";
 import { conpute_match_list_card_offset } from "./card-show-offset.js";
-import { MenuData} from "src/output/module/menu-data.js"
+import { MenuData} from "src/output/project/index.js"
 import { nextTick } from "vue";
 
 /**

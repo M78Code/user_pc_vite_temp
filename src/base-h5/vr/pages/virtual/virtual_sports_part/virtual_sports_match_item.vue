@@ -736,7 +736,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       &.standard {
         height: 1.07rem;
 

@@ -490,7 +490,7 @@
           transform: scale(0.5);
           -webkit-transform-origin: left top;
           transform-origin: left top;
-          border: 1px solid var(--q-gb-bd-c-5);
+          // border: 1px solid var(--q-gb-bd-c-5);
           border-radius: 0; //复刻版不需要 圆角 todo
           overflow: hidden;
         }

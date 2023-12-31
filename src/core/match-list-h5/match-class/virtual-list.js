@@ -6,7 +6,7 @@
  */
 
 import { ref } from 'vue'
-import { MenuData } from 'src/output/module/menu-data.js'
+import { MenuData } from 'src/output/project/index.js'
 import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 import MatchFold from 'src/core/match-fold/index.js'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
