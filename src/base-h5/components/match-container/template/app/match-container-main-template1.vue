@@ -491,7 +491,7 @@ export default {
     }
     .match-content{
       width: 100%;
-      padding: 0 10px;
+      // padding: 0 10px;
       // border-top: 1px solid  var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
       //border-radius: 0 0 8px 8px;
@@ -1714,7 +1714,7 @@ export default {
 
   .mfo-title {
     margin-left: .05rem;
-    margin-top: .02rem;
+    margin-top: .05rem;
     font-size: .12rem;
   }
 

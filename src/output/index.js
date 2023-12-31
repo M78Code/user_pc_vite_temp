@@ -1,4 +1,12 @@
-/**
+
+    
+ 
+    
+ 
+ 
+    
+ 
+    /**
  * 业务逻辑  相关
  * 数据仓库
  * 通用项目：  各个版本 体育 客户端 H5,PC ,
@@ -39,3 +47,8 @@ export * from "./module/project-single.js"
 
 // 埋点相关
 export * from "./module/hide-api.js"
+
+ 
+ //当前项目专用的   
+ export * from "./project/index.js"
+  

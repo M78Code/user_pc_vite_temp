@@ -72,7 +72,7 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
     }
     mids_arr.forEach((mid) => {
       // 原来的样式数据
-      let old_match_style_obj = MatchListCardData.all_card_obj[mid + '_'];
+      let old_match_style_obj = MatchListCardData.get_card_obj_bymid(mid);
       if (old_match_style_obj) {
         // 判断是否需要动态计算高度
         if (old_match_style_obj.is_dynamic_compute_height || lodash.get(old_match_style_obj, 'card_total_height')) {

@@ -1,0 +1,1 @@
+export { default as MenuData } from "src/core/menu-pc/menu-data-class.js";

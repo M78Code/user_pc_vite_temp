@@ -1531,10 +1531,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  // flex: 1;
   .icon-wapper-more{
       transform: rotate(-90deg);
       margin-left: .04rem;
+      margin-left: -.01rem;
     }
 }
 

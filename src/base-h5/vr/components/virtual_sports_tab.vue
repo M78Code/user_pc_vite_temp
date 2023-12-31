@@ -270,7 +270,7 @@ export default {
   line-height: 0.3rem;
   border-radius: 0.22rem;
   padding: 0;
-
+  font-weight: bold;
   &:after {
     content: ' ';
     display: block;

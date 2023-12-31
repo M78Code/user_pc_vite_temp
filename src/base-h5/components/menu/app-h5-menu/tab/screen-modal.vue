@@ -137,7 +137,6 @@
 </template>
 <script setup>
 import { ref, watch } from "vue";
-import search from "src/core/search-class/search.js";
 import { api_search } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 // 无网络展示组件

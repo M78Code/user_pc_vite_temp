@@ -122,7 +122,6 @@
                     display: inline-block;
                     width: 0.14rem;
                     height: 0.12rem;
-                    text-align: center;
                 }
             }
         }
