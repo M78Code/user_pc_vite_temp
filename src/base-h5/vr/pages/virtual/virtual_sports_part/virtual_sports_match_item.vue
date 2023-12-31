@@ -708,6 +708,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     flex-wrap: nowrap;
     // background-color: red;
 
@@ -840,7 +841,7 @@ export default {
     }
 
     .profession {
-      padding-top: 0.13rem;
+      // padding-top: 0.13rem;
       // height: 1.21rem;
       overflow: hidden;
       position: relative;
