@@ -88,7 +88,8 @@ import { BetRecordViewWapper } from "src/base-pc/components/bet-record-view";
 // // 通屏垂直滚动
 import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { MenuData, LayOutMain_pc } from "src/output/index.js";
+import { MenuData } from "src/output/index.js";
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { api_betting } from "src/api/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 

@@ -22,7 +22,8 @@
 import { watch, ref, onMounted, onUnmounted, provide } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { LayOutMain_pc, MatchDataWarehouse_PC_List_Common } from "src/output/index.js";
+import { MatchDataWarehouse_PC_List_Common } from "src/output/index.js";
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js'
