@@ -907,8 +907,7 @@ export default {
       this.check_replay_url(this.replay_video_src)
       // 滚动目标到屏幕显示区域
       this.$nextTick(()=>{
-        console.log(this.$refs.slider_video.$refs.slider_x,'this.$refs.slider_video.$refs.slider_x')
-        this.$tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
+        // this.$tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
       })
       
       
