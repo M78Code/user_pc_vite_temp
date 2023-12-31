@@ -6,7 +6,8 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { isObject, get } from 'lodash'
 const theme = ref(UserCtr.theme);
-const { CURRENT_ENV } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { CURRENT_ENV } = BUILDIN_CONFIG;
 useMittOn(MITT_TYPES.EMIT_THEME_CHANGE, function (v) {
   theme.value = UserCtr.theme;
 })

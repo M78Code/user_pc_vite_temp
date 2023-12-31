@@ -3,7 +3,8 @@
 // 
 // const server_resource = {}
 import lodash from "lodash";
-const { CURRENT_ENV } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { CURRENT_ENV } = BUILDIN_CONFIG;
 const config = {
   default:"pc-team-logo-image",
 };

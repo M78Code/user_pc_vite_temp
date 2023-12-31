@@ -4,7 +4,8 @@
 // import server_resource from "app/job/output/assets/index.json";
 const server_resource = {}
 import { get } from "lodash";
-const { CURRENT_ENV } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { CURRENT_ENV } = BUILDIN_CONFIG;
 const config = {
   local: "/src/core/server-img/sprite-img/image/pc-popup-language-icon-image-day.png",
   default: "pc-popup-language-icon-image",
