@@ -28,7 +28,7 @@
                  {{ i18n_t('common.maxn_amount_val') }}
             </div>
                 <!--金额-->
-            <div class="col-auto bet-win-money yb-number-bold">{{  set_bet_win_money() }}RMB</div>
+            <div class="col-auto bet-win-money yb-number-bold"> {{winMoney()}} RMB</div>
         </div>
         <div v-show="false">{{ UserCtr.user_version }}--{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
@@ -76,9 +76,12 @@ const props = defineProps({
 })
 
 //监听最高可赢变化
-const set_bet_win_money = computed(()=> state =>{
-    set_win_money()
-    return formatMoney(ref_data.win_money) 
+const winMoney = computed(()=> state =>{
+    let sum = 0
+    BetData.bet_single_list.forEach((item)=>{
+            sum += mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)
+    })
+    return formatMoney(sum) 
 })
 
 onMounted(() => {
