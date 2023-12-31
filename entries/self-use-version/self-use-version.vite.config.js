@@ -39,6 +39,8 @@ export default defineConfig({
         //
       
         'score': [/score/],
+        'stage-child-': [/stage-child/],
+        'virtual': [/virtual/],
         'virtual': [/virtual/],
         'code-all': [/src\/pages/],
       }
@@ -70,7 +72,29 @@ export default defineConfig({
       manualChunks: {},
         chunkFileNames: "static/js/[name]-[hash].js",
         entryFileNames: "static/js/[name]-[hash].js",
-        assetFileNames: "static/[ext]/[name]-[hash].[ext]"
+        assetFileNames: "static/[ext]/[name]-[hash].[ext]",
+        // chunkFileNames:(ChunkInfo)=>{
+        //   // facadeModuleId: 'D:/CODE-WEB/WEB/user-pc-vite/src/base-pc/components/match-detail/match_info/tabs.vue',
+        //   //facadeModuleId: 'D:/CODE-WEB/WEB/user-pc-vite/src/i18n/pc/zh-cn/index.json',
+        //   let facadeModuleId = ChunkInfo.facadeModuleId
+      
+        //   // console.log('ChunkInfo---',ChunkInfo.facadeModuleId )
+       
+
+        //   if(facadeModuleId&&facadeModuleId.includes('/src/i18n/')){
+        //     let arr = facadeModuleId.split('/')
+        //     let lan_name= arr[arr.length-2]
+
+        //     return `static/js/${lan_name}-[hash].js`
+        //   }else{
+        //     return "static/js/[name]-[hash].js"
+        //   }
+          
+      
+
+        // }
+
+
       },
     },
   },
