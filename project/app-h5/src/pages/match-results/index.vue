@@ -273,13 +273,13 @@ const get_date_matches_list = async (item)=>{
         case 1:
             nextTick(async () => {
                 state.matchs_data = await MatchMeta.get_results_match();
-                // useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
+                useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             })
             break;
         case 2:
             nextTick(async () => {
                 state.matchs_data = await MatchMeta.get_virtual_results_match(state.tid);
-                // useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
+                useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             })
             break;
         case 3:
@@ -288,7 +288,7 @@ const get_date_matches_list = async (item)=>{
             }
             MenuData.set_result_menu_api_params(params)
             state.matchs_data = await MatchMeta.get_champion_match_result()
-            // useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
+            useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             break;
         default:
             break;
