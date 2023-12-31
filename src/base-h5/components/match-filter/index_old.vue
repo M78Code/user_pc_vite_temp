@@ -440,6 +440,9 @@ function select_li_ctr(li_item) {
     select_num.value += li_item.num;
   }
   li_item.select = !li_item.select;
+  //处理单个选择 关联字母选择
+  let is_all_select = list.value.some(i => (!i.select && i.spell==li_item.spell))
+  li_item.checked = !is_all_select;
 }
 // @Description:字母选择
 function type_select(li_item) {

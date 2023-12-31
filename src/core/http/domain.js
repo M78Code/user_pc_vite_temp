@@ -298,9 +298,17 @@ class AllDomain {
 
     // 并发请求
     let reqs = [];
+    let pb = 'PB'
+    try {
+      if(window.SEARCH_PARAMS.init_param.get('pb')){
+        pb='';
+      }
+    } catch (error) {
+      console.error(error);
+    }
     url_api.map((item) =>
       reqs.push(
-        axios_instance.get(`${item}/yewu12/user/getUserInfoPB`, {
+        axios_instance.get(`${item}/yewu12/user/getUserInfo${pb}`, {
           params: { token: token },
           timeout: 6000,
           headers: {

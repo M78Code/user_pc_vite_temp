@@ -207,6 +207,7 @@ const set_scroll_current = async (val, type) => {
  */
 const setDate = (type) => {
   handler_go_to_top()
+  !type && MenuData.search_data_tab_index();//清除联赛缓存
   if ([3, 6].includes(MenuData.current_lv_1_menu_mi.value)) {
     set_scroll_data_list(MenuData.current_lv_1_menu_mi.value, type)
   } else {
