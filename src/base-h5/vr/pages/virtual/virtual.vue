@@ -199,7 +199,6 @@ export default {
   },
   methods: {
     get_user_balance(){
-      console.error('sssss')
       lodash.throttle(() => {
           UserCtr.get_balance()
       },5000)
