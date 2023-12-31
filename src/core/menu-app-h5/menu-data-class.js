@@ -103,6 +103,8 @@ class MenuData {
     this.data_tab_index = 0;
     this.search_tab_index = 0;
     this.search_tab_i_tid = '';
+    //筛选联赛
+    this.league_filter_list = [];
     // 时间api接口及参数信息 
     this.menu_match_date_api_config = {}
 
@@ -374,12 +376,20 @@ class MenuData {
   set_collect_menu_type (lv1_mi) {
     this.menu_type.value = menu_type_config[lv1_mi]  
   };
-  search_data_tab_index(i,tid){
+  /**
+   * 设置足球联赛 联赛筛选
+   * @param {*} i 
+   * @param {*} tid 
+   */
+  search_data_tab_index(i,tid,tid_list){
     this.search_tab_index = i||0;
     this.search_tab_tid = tid||'';
+    this.league_filter_list = tid_list||[];
+    if(!tid_list) UserCtr.set_league_select_list([],this.is_results()?"amidithion":"")
     this.set_cache_class({
       search_tab_index:i||0,
-      search_tab_i_tid:tid||''
+      search_tab_i_tid:tid||'',
+      league_filter_list:tid_list||[]
     });
     this.update();
   };
