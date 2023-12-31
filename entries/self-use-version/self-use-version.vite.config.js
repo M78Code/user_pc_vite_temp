@@ -39,9 +39,9 @@ export default defineConfig({
         //
       
         'score': [/score/],
-        'stage-child-': [/stage-child/],
+        'stage-child': [/stage-child/],
         'virtual': [/virtual/],
-        'virtual': [/virtual/],
+ 
         'code-all': [/src\/pages/],
       }
     })
