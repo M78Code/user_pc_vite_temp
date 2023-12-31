@@ -45,12 +45,28 @@ export default defineConfig({
       // index: path.resolve(__dirname, `index.html`),
      
       },
+      // https://rollupjs.org/configuration-options/
+      // https://github.com/sanyuan0704/vite-plugin-chunk-split/blob/master/README-CN.md
+      // https://rollupjs.org/guide/en/#outputmanualchunks
       output: {
         // Provide global variables to use in the UMD build
         // Add external deps here
         globals: {
           // "vue3-draggable-resizable": "vue3-draggable-resizable",
         },
+        // manualChunks: {
+        //   // project\app-h5
+        //   'app-h5-detail': [
+        //     '../../project/app-h5/src/pages/match-list/',
+         
+        //   ],
+        // },
+        // chunkFileNames:
+      
+
+        chunkFileNames: "static/js/[name]-[hash].js",
+        entryFileNames: "static/js/[name]-[hash].js",
+        assetFileNames: "static/[ext]/[name]-[hash].[ext]"
       },
     },
   },

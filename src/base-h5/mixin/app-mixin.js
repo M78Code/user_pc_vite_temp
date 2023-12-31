@@ -13,6 +13,7 @@ import { http, AllDomain } from "src/core/http/";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
 import PageSourceData  from  "src/core/page-source/page-source.js";
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
 
 export default {
   data() {
@@ -50,6 +51,9 @@ export default {
     this.init_load_timer = setTimeout(() => {
       this.set_init_load(true);
     }, 11000);
+    // 监听页面是否转入休眠状态
+    document.addEventListener("visibilitychange",this.visibilitychange_handle);
+    document.addEventListener("pagehide", this.visibilitychange_handle);
   },
   watch: {
     '$route'(to, from) {
@@ -86,6 +90,8 @@ export default {
         http.setApiDomain();
         enter_params(async(user)=>{
           await loadLanguageAsync(lang);
+          // 客户端-获取紧急开关配置
+          await GlobalAccessConfig.init();
           MenuData.init();
           BetData.init_core()
           BetViewDataClass.init()
@@ -110,8 +116,19 @@ export default {
     // 销毁监听
     this.mitt_list.forEach(i=>i());
     clearTimeout(this.timer_);
+    // 移除监听页面是否转入休眠状态
+    document.removeEventListener("visibilitychange",this.visibilitychange_handle);
+    document.removeEventListener("pagehide", this.visibilitychange_handle);
   },
   methods: {
+    /**
+     *@description 页面可见性变化的处理函数
+    */
+     visibilitychange_handle() {
+      const is_hidden = document.visibilityState == "hidden";
+      // 设置当前页面是否后台运行中状态
+      GlobalAccessConfig.set_vue_hidden_run(is_hidden);
+    },
     /**
      * @description: 设置this.init_load变量的状态
      * @param {*} status 布尔值

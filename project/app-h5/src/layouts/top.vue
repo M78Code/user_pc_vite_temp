@@ -137,7 +137,7 @@ const changeList = (list) => {
 }
 // 设置滑动菜单的选中id
 const set_scroll_current = async (val, type) => {
-  try {
+  try{
   handler_go_to_top()
   if (MenuData.is_esports() && !type) {
     const data_list_esports = await MenuData.getDateList(val?.csid);
@@ -201,9 +201,9 @@ const set_scroll_current = async (val, type) => {
       handle_match_render_data()
       break;
   }
-  alert('菜单切换ok')
-} catch (err) {
-  alert('菜单切换错误：'+err)
+  console.error('二级菜单切换OK')
+} catch (err){
+  console.error('二级菜单切换错误：'+err)
 }
 }
 /**
@@ -225,9 +225,9 @@ const setDate = (type) => {
 const handler_go_to_top = () => {
   try {
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
-    alert('通知回到顶部ok')
+    console.error('通知回到顶部ok')
   } catch (err){
-    alert('通知回到顶部错误：'+err)
+    console.error('通知回到顶部错误：'+err)
   }
   
 }
@@ -262,7 +262,9 @@ const init_data = (new_, type) => {
       if (MenuData.menu_csid === 1 && MenuData.current_lv_1_menu_mi.value != 400 && MenuData.search_tab_index) {
         searchTabMenu.value?.changeTab(MenuData.search_tab_index)
       }
-    } catch (_) { }
+    } catch (_ee) { 
+      console.error('球种滚动初始化错误：'+_ee)
+    }
   })
 }
 watch(() => MenuData.current_lv_1_menu_mi.value, (new_, old_) => {
