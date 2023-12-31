@@ -9,7 +9,7 @@ import BaseData from 'src/core/base-data/base-data.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchFold from 'src/core/match-fold/index.js'
 import MatchCollect from 'src/core/match-collect/index.js'
-import { MenuData } from "src/output/module/menu-data.js"
+import { MenuData } from "src/output/project/index.js"
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';

@@ -92,7 +92,7 @@
 import lodash from "lodash";
 import { useGetItem } from "./bet_item_hooks.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
-import { MenuData } from 'src/output/module/menu-data.js'
+import { MenuData } from 'src/output/project/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 const props = defineProps({
   // 当前玩法信息

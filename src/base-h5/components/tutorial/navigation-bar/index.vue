@@ -31,7 +31,7 @@
 import { compute_css_obj } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import {compute_local_project_file_path,PageSourceData} from "src/output/index.js";
-import { MenuData } from "src/output/module/menu-data.js"
+import { MenuData } from "src/output/project/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 // import setectLeague from './setect-league.vue'
 import { ref } from "vue";

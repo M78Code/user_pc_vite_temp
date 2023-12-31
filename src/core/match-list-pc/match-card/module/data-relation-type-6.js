@@ -26,7 +26,7 @@
     } from "../config/card-template-config.js"
     import { compute_sport_id  } from 'src/output/module/constant-utils.js'
     import {get_match_template_id} from '../../match-handle-data.js'
-    import { MenuData} from "src/output/module/menu-data.js"
+    import { MenuData} from "src/output/project/index.js"
 
   /**
    * @Description 计算所有卡片样式数据   5. 冠军赛事列表 全部赛种 不区分是否开赛  6. 冠军赛事列表    单一赛种 不区分是否开赛
