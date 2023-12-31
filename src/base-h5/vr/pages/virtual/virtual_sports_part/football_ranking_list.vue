@@ -90,7 +90,7 @@ export default {
 
 <style lang="scss" scoped>
 .ranking_list {
-  padding-top: 0.15rem;
+  // padding-top: 0.15rem;
 
   .navigation-title {
 

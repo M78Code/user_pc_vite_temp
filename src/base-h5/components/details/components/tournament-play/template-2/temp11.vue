@@ -11,8 +11,7 @@
         <!-- 分割线 -->
         <div v-for="(item,index) in odds_list"
              @click="go_to_bet(item)" :key="index"
-             :style="{width:odds_list.length > 30 ?'25%':'20%'}"
-             class="item-style2" :class="[![0,1,2,3,4].includes(index) ? 'border-bot':'',BetData.bet_oid_list.includes(item.oid) ? 'active':'']"
+             class="col-4 item-style2" :class="[![0,1,2,3,4].includes(index) ? 'border-bot':'',BetData.bet_oid_list.includes(item.oid) ? 'active':'']"
         >
           <div class="row justify-center">
             <div v-for="(item_data_count,index2) in item.two_num" :key="index2">
@@ -141,23 +140,31 @@ export default defineComponent({
 /*************** 赔率开始 *************** -S*/
 .odds-style {
   color: var(--q-gb-t-c-18);
-  font-size: 0.16rem;
+  font-size: 0.12rem;
   letter-spacing: 0;
   text-align: center;
   color: var(--q-gb-t-c-18);
+  margin-top: 0.1rem;
 }
 
 /*************** 赔率结束 *************** -E*/
 .virtual-bet-wrapper {
   border-radius: 0.08rem;
   overflow: hidden;
+  display: grid;
+  gap: 0.1rem;
+  grid-template-columns: 33.3% 33.3% 33.3%;
 }
 
 
 .item-style2 {
-  height: 0.52rem;
+  height: 0.67rem;
   background: var(--q-gb-bg-c-28);
-  
+  width: auto;
+  padding-top: 0.07rem;
+  >div {
+    gap: 0.16rem;
+  }
   &:nth-child(5n) {
     border-right: none;
   }

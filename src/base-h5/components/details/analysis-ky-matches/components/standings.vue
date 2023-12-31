@@ -214,7 +214,7 @@ const props = defineProps({
       border-radius: 0.08rem;
       padding: 0 .15rem;
       // background: var(--q-analysis-bg-color-1);
-      color: var(--q-analysis-text-color-20);
+      color: var(--q-analysis-text-color-34);
       &:nth-child(2) {
         position: relative;
 

@@ -48,7 +48,7 @@
 </template>
 <script setup>
 // import lodash_ from 'lodash'
-import { ref, reactive,computed, nextTick } from "vue";
+import { ref, reactive,computed, nextTick, onMounted } from "vue";
 import { ScrollMenu,DateTab } from 'src/base-h5/components/menu/app-h5-menu/index'
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 // import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
@@ -66,7 +66,6 @@ import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import {api_common } from "src/api/index.js";
 
 const inner_height = window.innerHeight;  // 视口高度
-// const switchMenu = [i18n_t('app_h5.match.normal_results'), i18n_t('app_h5.match.game_results'), i18n_t('app_h5.match.vr_results'), i18n_t('app_h5.match.championship_results')]
 const switchMenu = [
     {
         name:i18n_t('app_h5.match.normal_results'),
@@ -76,10 +75,6 @@ const switchMenu = [
         name: i18n_t('app_h5.match.game_results'),
         val:1
     },
-    // {
-    //     name:i18n_t('app_h5.match.vr_results'),
-    //     val:2
-    // },
     {
         name:i18n_t('app_h5.match.championship_results'),
         val:3
@@ -189,66 +184,7 @@ const switchHandle = async(val,type) => {
     state.tab_items =  await get_vr_menu_list();
     const index = MenuData.is_results_vr_type && type?MenuData.is_results_vr_type:0;
     return set_scroll_current(menu_mi,index)
-    // //获取 赛果菜单
-    // switch (+val) {
-    //     case 0:
-    //         normalAndChampionApi(0)
-    //         break;
-    //     case 1:
-    //         break;
-    //     case 2:
-    //         break;
-    //     case 3:
-    //         state.slideMenu_sport = []
-    //         MenuData.set_result_menu_api_params({
-    //             md:state.currentSlideValue
-    //         })
-    //         state.matchs_data = await lodash_.debounce(()=>{
-    //             return MatchMeta.get_champion_match_result();
-    //         },1000) 
-    //         console.error('get_champion_match_result')
-    //         normalAndChampionApi(1)
-    //         break;
-    // }
-    
-    
 }
-// const normalAndChampionApi = (val) => {
-//     // 赛果菜单接口 menuType 0 标准赛事，1冠军赛事
-//     api_analysis.get_match_result_menu( {menuType:val} ).then( async ( res = {} ) => {
-//         if(res.code == 200){
-//             state.slideMenu = res.data || {}
-//             const index = MenuData.data_tab_index || 0;
-//             // 设置时间默认选中
-//             state.currentSlideValue = lodash_.get(res.data,`[${index}].field1`, '')
-//             set_scroll_data_list(lodash_.get(res.data,`[${index}].sportList`, []))
-//         }
-//     })
-// }
-// const slideHandle = (val, i,e) => {
-//     if (state.currentSlideValue === val) return
-//     MenuData.set_date_time(i,val.field1);
-//     state.currentSlideValue = val.field1
-//     set_scroll_data_list(val.sportList)
-//     scrollMenuEvent(e, ".slide-box", ".switch-item-active");
-// }
-
-// // 设置赛种列表
-// const set_scroll_data_list = (data_list = []) => {
-//     let scroll_data = data_list.map( item => {
-//         return {
-//             ...item,
-//             mi: 100+item.sportId*1 + ''+'1',
-//             ct: item.count,
-//             md: item.date,
-//             sport: item.sportId,
-//             mif:100+item.sportId*1
-//         }
-//     })
-//     state.slideMenu_sport = scroll_data
-//     state.current_mi = MenuData.current_lv_2_menu_i || scroll_data[0]?.mi
-//     set_scroll_current(MenuData.current_lv_2_menu?.mi ?MenuData.current_lv_2_menu:scroll_data[0])
-// }
 /**
  * 获取数据
  */
@@ -293,8 +229,6 @@ const get_date_matches_list = async (item)=>{
         default:
             break;
     }
-    // const length = lodash.get(state.matchs_data, 'length', 0)
-    // if (length > 0) useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
 }
 
 // 设置滑动菜单的选中id
@@ -309,54 +243,7 @@ const set_scroll_current = (item,index) => {
         setTid(item,index)
     }
     get_date_matches_list(item)
-    // if (MenuData.get_results_type() == 3) {
-    //     state.slideMenu_sport = []
-    //     MenuData.set_result_menu_api_params({
-    //         md:state.currentSlideValue
-    //     })
-    //     state.matchs_data = await MatchMeta.get_champion_match_result()
-    //     if (state.matchs_data.length > 0)  useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-    // } else {
-    //     // 常规赛果
-    //     state.current_mi = item.mi
-    //     let params = {
-    //         mi:item.mi,
-    //         md:state.currentSlideValue,
-    //         sport:item.sport
-    //     }
-    //     MenuData.set_result_menu_api_params(params)
-    //     state.matchs_data = await MatchMeta.get_results_match()
-    //     if (state.matchs_data.length > 0)  useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-    // }
-   
 }
-// // 设置滑动菜单的选中id
-// const set_scroll_current = async item => {
-//     state.matchs_data = []
-//     console.log('set_scroll_currentMenuData.get_results_kemp()', MenuData.get_results_type(), item)
-//     if (!item) return
-//     MenuData.set_current_lv_2_menu_i(item)
-//     if (MenuData.get_results_type() == 3) {
-//         state.slideMenu_sport = []
-//         MenuData.set_result_menu_api_params({
-//             md:state.currentSlideValue
-//         })
-//         state.matchs_data = await MatchMeta.get_champion_match_result()
-//         if (state.matchs_data.length > 0)  useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-//     } else {
-//         // 常规赛果
-//         state.current_mi = item.mi
-//         let params = {
-//             mi:item.mi,
-//             md:state.currentSlideValue,
-//             sport:item.sport
-//         }
-//         MenuData.set_result_menu_api_params(params)
-//         state.matchs_data = await MatchMeta.get_results_match()
-//         if (state.matchs_data.length > 0)  useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-//     }
-   
-// }
 
 const goBackAssign = () => {
     MenuData.set_top_menu_title({})
@@ -365,9 +252,14 @@ const goBackAssign = () => {
     MenuData.set_current_lv_2_menu_i({});
     MenuData.set_results_type(0)
 }
+
+// onMounted(() => {
 if(MenuData.is_esports())MenuData.set_top_menu_title({})
 MenuData.set_current_lv1_menu(28)//设置为赛果
 switchHandle(MenuData.get_results_type()||0,1)
+MenuData.search_data_tab_index();
+// })
+
 </script>
 <style scoped lang="scss">
 @import "./index.scss";
