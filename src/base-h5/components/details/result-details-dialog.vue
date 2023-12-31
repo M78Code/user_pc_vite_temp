@@ -16,7 +16,7 @@
           <div class="mx-12 new-dialog-item" :data-mid="item.mid">
             <!-- 灰色背景部分 -->
             <div class="row text-center new-dialog-item-main"
-              :class="detail_data.mid == item.mid ? 'result-details-dialog-bg' : ''">
+              :class="detail_data.mid == item.mid ? 'details-dialog-bg_blue' : ''">
               <!-- 单项赛事的左侧队伍 -->
               <div class="col column">
                 <!-- 字母图标 -->
@@ -94,7 +94,7 @@ import MatchDialogStage from 'src/base-h5/components/match/match-dialog-stage.vu
 import ShowStartTime from 'src/base-h5/components/details/wight/show-start-time.vue'
 import { format_total_score,useMittEmit,MITT_TYPES } from 'src/output/index.js'
 import { useRoute, useRouter } from "vue-router"
-import { MenuData } from 'src/output/module/menu-data.js'
+import { MenuData } from 'src/output/project/index.js'
 import { onUnmounted,onMounted,getCurrentInstance,computed } from 'vue';
 import matchDetailClass from 'src/core/match-detail/match-detail-class';
 
@@ -183,7 +183,10 @@ onUnmounted(() => {
   height: 1rem;
   font-size: 0.12rem;
 }
-
+.details-dialog-bg_blue{
+  background: var(--q-gb-bg-c-31) ;
+  color: var(--q-gb-t-c-18);
+}
 .new-dialog-item-main {
   height: 0.88rem;
   border-radius: 0.04rem;
@@ -237,10 +240,6 @@ onUnmounted(() => {
 .q-dialog__inner--left>div,
 .q-dialog__inner--top>div {
   border-bottom-right-radius: 0.1rem;
-}
-
-.result-details-dialog-bg {
-  background-color: #f7f7f7;
 }
 :deep(.marquee-wrap){
   color: var(--q-gb-t-c-18);

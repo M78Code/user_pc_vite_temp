@@ -177,12 +177,19 @@ export default defineComponent({
 /*************** 每项team结束 *************** -E*/
 /*************** 每项odds开始 *************** -S*/
 .team-odds {
-  line-height: 0.52rem;
-
+  line-height: 0.4rem;
+  height: 0.4rem;
   text-align: center;
   font-size: 0.16rem;
   flex: 1;
   color: var(--q-gb-t-c-18);
+  background: var(--q-gb-bg-c-28);
+  border-radius: 0.08rem;
+  >div {
+    color: var(--q-gb-t-c-18);
+    font-size: 0.14rem;
+    font-weight: 700;
+  }
 }
 
 .team-odds-left {
@@ -211,6 +218,7 @@ export default defineComponent({
 .team {
   width: 1.9rem;
   margin-right: 0.28rem;
+  gap: 0.1rem;
 }
 
 .team-odds2 {

@@ -378,4 +378,8 @@ export default defineComponent({
 .details_color {
   background:var(--q-gb-bg-c-28);
 }
+.bor-style .mg-4-bg .row{
+  border-radius: 4px;
+  overflow: hidden;
+}
 </style>

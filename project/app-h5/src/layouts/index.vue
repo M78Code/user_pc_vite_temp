@@ -40,9 +40,9 @@
       </div>
 
       <!-- 投注记录弹层 -->
-      <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box" @click="change_settle_status(false)" @touchmove.prevent></div>
+      <div class="shadow-box" v-if="record_show" @click="change_settle_status(false)" @touchmove.prevent></div>
       <!-- 投注记录弹框（已结算+未结算） -->
-      <div class="bet-record-box" v-if="record_show" :class="settle_dialog_bool && 'bet-record-box2'" :style="{ bottom: calc_bottom }">
+      <div class="bet-record-box" v-if="record_show" >
         <!-- 结算弹窗 -->
         <settle-dialog></settle-dialog>
       </div>
@@ -419,7 +419,7 @@ if (UserCtr.get_user_token()) {
   /* **********注单记录********************* *-S*/
   .shadow-box {
     background-color: rgba(0, 0, 0, .4); //var(--q-color-page-bg-color-4);
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s;
     backdrop-filter: var(--q-color-backdrop-filter-bg-1);
     position: fixed;
@@ -450,6 +450,7 @@ if (UserCtr.get_user_token()) {
     transition: bottom 0.3s;
     position: fixed;
     left: 10%;
+    top: 10vh;
     z-index: 600;
   }
 

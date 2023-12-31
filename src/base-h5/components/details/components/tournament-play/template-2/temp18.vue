@@ -235,11 +235,15 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .temp16 {
-  padding:0.04rem;
+  //padding:0.04rem;
   .content {
     border-radius: 0.08rem;
     overflow: hidden;
   }
+
+    .hairline-border{
+        padding: .08rem;
+    }
 
   .tittle {
 
@@ -257,8 +261,10 @@ export default defineComponent({
     height: 0.52rem;
 
     font-size: 0.14rem;
-    padding: 0.06rem 0.07rem 0;
+    //padding: 0.06rem 0.07rem 0;
     margin-bottom: 1px;
+      border-radius: .04rem;
+      //margin: 0 !important;
   }
 
   .item-fat {

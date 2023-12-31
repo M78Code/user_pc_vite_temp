@@ -12,12 +12,14 @@
           <div class="col text-center ellipsis yb_px4" v-for="(item,index) in item_data.title" :key="index">{{item.osn}}</div>
         </div>
 
-        <div v-for="(item,index) in item_data.hl" :key="index" class="row">
+        <div v-for="(item,index) in item_data.hl" :key="index" class="row play-hl-box">
           <!-- 左   -->
           <div :class="['col','yb_fontsize14' ,{'col-mg':!['37'].includes(item_data.hpid)}]" style="min-width: 1px;">
             <template v-for="(ol_item,ol_index) in item.ol">
-              <div v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index" class="ellipsis font_color play-box-style">
+              <div class="mg-4-bg">
+                <div v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index" class="ellipsis font_color play-box-style">
                 {{ol_item.on}}
+              </div>
               </div>
             </template>
           </div>
@@ -25,7 +27,8 @@
           <!-- 中 -->
           <div class="col col-mg">
             <template v-for="(ol_item,ol_index) in item.ol">
-              <div v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
+              <div class="mg-4-bg">
+                <div v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
                 <!--  0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
@@ -72,13 +75,16 @@
                 <!-- 关盘 -->
                 <template v-if="ol_item._mhs == 2"></template>
               </div>
+
+              </div>
             </template>
           </div>
 
           <!-- 右 -->
           <div class="col col-mg">
             <template v-for="(ol_item,ol_index) in item.ol">
-              <div v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index">
+              <div class="mg-4-bg">
+                <div v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index">
                 <!--  0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
@@ -122,11 +128,14 @@
                 <!-- 关盘 -->
                 <template v-if="ol_item._mhs == 2"></template>
               </div>
+              </div>
+             
             </template>
           </div>
 
           <!-- 其他or平局 -->
           <template v-for="(ol_item,ol_index) in item.ol">
+            <!-- <div class="mg-4-bg"></div> -->
             <div v-if="ol_item.otd == '0'" :key="ol_index" class="other row">
               <!-- ms: 0开 2关 1封 11锁 -->
               <!-- 开盘or锁盘 正常显示 -->
@@ -136,16 +145,16 @@
                   <!-- os: 1、开盘 2、封盘-->
                   <template v-if="ol_item.os == 1">
                     <!-- 主程序 start -->
-                    <div class="ellipsis remark play-box-style bw_mr1">{{ol_item.on}}</div>
-                    <div @click="go_to_bet(ol_item)" :class="[BetData.bet_oid_list.includes(ol_item.id_)?'active-play':'',{'win':calc_win(ol_item.result)}]" class="play-box-style col">
+                    <div class="ellipsis remark play-box-style bw_mr1 mg-4">{{ol_item.on}}</div>
+                    <div @click="go_to_bet(ol_item)" :class="[BetData.bet_oid_list.includes(ol_item.id_)?'active-play':'',{'win':calc_win(ol_item.result)}]" class="play-box-style col mg-4">
                       <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
                     </div>
                     <!-- 主程序 end -->
                   </template>
                   <template v-if="ol_item.os == 2">
                     <!-- lock 锁状态 start -->
-                    <div class="ellipsis remark play-box-style bw_mr1">{{ol_item.on}}</div>
-                    <div class="play-box-style col"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
+                    <div class="ellipsis remark play-box-style bw_mr1 mg-4">{{ol_item.on}}</div>
+                    <div class="play-box-style col mg-4"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
                     <!-- lock 锁状态 end -->
                   </template>
                   <!-- 新增start -->
@@ -156,8 +165,8 @@
                   <template v-if="ol_item.os == 3"></template>
                   <template v-else>
                     <!-- lock 锁状态 start -->
-                    <div class="ellipsis remark play-box-style bw_mr1">{{ol_item.on}}</div>
-                    <div class="play-box-style col"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
+                    <div class="ellipsis remark play-box-style bw_mr1 mg-4">{{ol_item.on}}</div>
+                    <div class="play-box-style col mg-4"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
                     <!-- lock 锁状态 end -->
                   </template>
                 </template>
@@ -169,8 +178,8 @@
               <!-- 封盘，一把锁的居中显示 -->
               <template v-if="ol_item._mhs == 1">
                 <!-- lock 锁状态 start -->
-                <div class="ellipsis remark play-box-style bw_mr1">{{ol_item.on}}</div>
-                <div class="play-box-style col"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
+                <div class="ellipsis remark play-box-style bw_mr1 mg-4">{{ol_item.on}}</div>
+                <div class="play-box-style col mg-4"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
                 <!-- lock 锁状态 end -->
               </template>
               <!-- 关盘 -->
@@ -215,23 +224,48 @@ export default defineComponent({
 <style lang="scss" scoped>
 .temp5 {
   .head {
-    line-height: 0.17rem;
+    height: 0.35rem !important; 
+    line-height: 0.35rem !important;
+    .yb_px4{
+      height: 0.35rem !important; 
+    line-height: 0.35rem !important;
+    }
   }
   .col-mg{
-    margin:0.04rem;
-     background:var(--q-gb-bg-c-15);
-    border-radius: 4px;
+    
+    // margin-right: 0.04rem;
+    //  margin:0.04rem;
+    //  background:var(--q-gb-bg-c-15);
+    // border-radius: 4px;
     color:#7981A4;
-    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    box-sizing: border-box;
+    &:nth-child(2){
+      
+      // margin: 0rem 0.04rem !important;
+    }
+    &:nth-child(3){
+      
+      // margin-right: 0.04rem !important;
+    }
+    // box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+  }
+  .play-hl-box{
+    padding: 0.08rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-top: 0.5px solid var(--q-gb-bd-c-5);
   }
   .play-box-style {
-    text-align: center;
+    //  margin:0.04rem;
+    width: 100%;
     height: 0.52rem;
     line-height: 0.52rem;
-
-
-    padding: 0 0.14rem;
-    margin-bottom: 1px;
+    padding: 0 0.15rem;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
 
     img {
       width: 0.12rem;
@@ -241,7 +275,7 @@ export default defineComponent({
 
   .other {
     width: 100%;
-    // margin-bottom: 1px;
+     margin-bottom:0.04rem;
     // border-bottom: 1px solid var(--q-gb-bd-c-7);
 
     .play-box-style {
@@ -262,5 +296,11 @@ export default defineComponent({
 
     }
   }
+}
+.mg-4{
+  margin:0.04rem;
+}
+:deep(.component.odds_new){
+  text-align: center;
 }
 </style>

@@ -272,6 +272,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
+import { useRoute } from "vue-router"
 export default defineComponent({
   name: "temp12",
   props: ["item_data", "title"],

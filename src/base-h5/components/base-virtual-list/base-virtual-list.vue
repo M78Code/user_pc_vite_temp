@@ -384,10 +384,11 @@ onUnmounted(() => {
     position: absolute;
     overflow: hidden;
     margin-top: 0.1rem;
+    width: 100%;
     height: calc(100% - 0.1rem);
     padding-top: 0 !important;
     .version_biaozhun{
-      padding: 0;
+      padding: 0 5px;
     }
   }
 }

@@ -6,7 +6,7 @@
 import { nextTick } from 'vue'
 import MatchListCardData from "./match-list-card-data-class.js";
 import PageSourceData  from  "src/core/page-source/page-source.js"
-import { MenuData} from "src/output/module/menu-data.js";
+import { MenuData} from "src/output/project/index.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 // 显示等级：

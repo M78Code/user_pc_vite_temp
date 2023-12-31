@@ -254,10 +254,12 @@ export default defineComponent({
 
   .play-box {
 
-    height: 0.52rem;
+    //height: 0.52rem;
+      height: .48rem;
 
     font-size: 0.14rem;
     padding: 0.06rem 0.07rem 0;
+      box-sizing: border-box;
     // margin-bottom: 1px;
   }
 
@@ -277,9 +279,10 @@ export default defineComponent({
   }
 }
 .bet-box-bg {
-  margin:0.04rem;
+  margin: 0.04rem;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   background:var(--q-gb-bg-c-15);
   border-radius: 4px;
 }
+
 </style>

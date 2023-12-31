@@ -29,7 +29,8 @@
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length==2 }]"
               :style="{left:`${left}px`}">
               <template v-for="(append_single, index) of append_single_list">
-                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px',margin:rem(0.04)+'px'}"   :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
+<!--                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px',margin:rem(0.04)+'px'}"   :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">-->
+                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px'}"   :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
                   <div class="row row-fat">
                     <!-- (开盘_mhs=0或者锁盘_mhs=11 -->
                     <div v-if="append_single._mhs == 0 || append_single._mhs == 11" style="flex:1;">
@@ -37,7 +38,7 @@
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_fun(append_single)"
                                :class="[BetData.bet_oid_list.includes(append_single.oid)?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
-                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':BetData.bet_oid_list.includes(append_single.oid)}]">  
+                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':BetData.bet_oid_list.includes(append_single.oid)}]">
                               <div class="single-name">
                                 <!-- <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
                                 <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_12">
@@ -45,13 +46,13 @@
                               </span>
                               </div>
                               <odds-new  :class="{'odds-style':!is_match_result}"  :item_data="item_data" :ol_data="append_single" ></odds-new>
-                            </div>                           
+                            </div>
                           </div>
                         </template>
                         <!-- os=2 封盘 -->
                         <template v-if="append_single.os == 2">
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                            <div class="bet-item-ky-container">  
+                            <div class="bet-item-ky-container">
                               <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
                                 <!-- <span class="fz_14 ver-ali-top ">{{devote_value_d(append_single.ot)}}</span> -->
                                 <span class="fz_14 odd-color">
@@ -73,7 +74,7 @@
                         </template>
                         <template v-else>
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                            <div class="bet-item-ky-container">  
+                            <div class="bet-item-ky-container">
                               <div class="single-name" v-show="get_detail_data.csid != 1">
                                 <!-- <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
                                 <span class="fz_14 night-style">
@@ -81,14 +82,14 @@
                               </span>
                               </div>
                               <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
-                            </div> 
+                            </div>
                           </div>
                         </template>
                       </template>
                       <!-- hs=2 空白占位 -->
                       <template v-if="append_single._hs == 2">
                         <div class="play-box-sty details-color" style="flex:1;">
-                          <div class="bet-item-ky-container">   
+                          <div class="bet-item-ky-container">
                             <div class="single-name">
                               <span class="fz_14 ver-ali-top"></span>
                               <span class="fz_14"></span>
@@ -100,7 +101,7 @@
                     <!-- 封盘ms=1 -->
                     <template v-if="append_single._mhs == 1">
                       <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                        <div class="bet-item-ky-container">  
+                        <div class="bet-item-ky-container">
                           <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
                             <!-- <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
                             <span class="size-color fz_14 odd-color">
@@ -108,7 +109,7 @@
                           </span>
                           </div>
                           <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
-                        </div> 
+                        </div>
                       </div>
                     </template>
                     <!-- 关盘ms=2 -->
@@ -133,7 +134,8 @@
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length==2 }]"
             :style="{left:`${left}px`}">
               <template v-for="(append_single,index) of append_single_list">
-                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px',margin:rem(0.04)+'px'}" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
+<!--                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px',margin:rem(0.04)+'px'}" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">-->
+                <div class="col bet-item" :style="{minWidth:rem(0.85)+'px'}" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                   <div class="row row-fat" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                     <!-- (开盘_mhs=0或者锁盘_mhs=11) -->
                     <div v-if="append_single._mhs == 0 || append_single._mhs == 11" style="flex:1;">
@@ -156,7 +158,7 @@
                         <!-- os=2 封盘 -->
                         <template v-if="append_single.os == 2">
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                            <div class="bet-item-ky-container">  
+                            <div class="bet-item-ky-container">
                               <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">22
                                 <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
                                 <span class="fz_14 odd-color">
@@ -164,7 +166,7 @@
                               </span>
                               </div>
                               <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
-                            </div> 
+                            </div>
                           </div>
                         </template>
                         <!-- 新增start -->
@@ -178,7 +180,7 @@
                         </template>
                         <template v-else>
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                            <div class="bet-item-ky-container">  
+                            <div class="bet-item-ky-container">
                               <div class="single-name" v-show="get_detail_data.csid != 1">
                                 <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
                                 <span class="fz_14 night-style">
@@ -186,23 +188,23 @@
                               </span>
                               </div>
                               <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
-                            </div>  
+                            </div>
                           </div>
                         </template>
                       </template>
                       <!-- hs=2 空白占位 -->
                       <template v-if="append_single._hs == 2">
                         <div class="play-box-sty details-color" style="flex:1;">
-                          <div class="bet-item-ky-container">  
+                          <div class="bet-item-ky-container">
                             <div class="single-name"><span class="fz_14 ver-ali-top"></span><span class="fz_14"></span></div>
-                          </div> 
+                          </div>
                         </div>
                       </template>
                     </div>
                     <!-- 封盘ms=1 -->
                     <template v-if="append_single._mhs == 1">
                       <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                        <div class="bet-item-ky-container">  
+                        <div class="bet-item-ky-container">
                           <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
                             <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
                             <span class="size-color fz_14 odd-color">
@@ -210,7 +212,7 @@
                           </span>
                           </div>
                           <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
-                        </div> 
+                        </div>
                       </div>
                     </template>
                     <!-- 关盘ms=2 -->
@@ -359,7 +361,7 @@ export default defineComponent({
      * @param {undefined} undefined
     */
    const touch_pan =lodash.debounce( (e) =>{
-    // 初始化 init_data.left 设置为0 
+    // 初始化 init_data.left 设置为0
      init_data.left = 0
      init_data.left = init_data.prev_left
     // if ( init_data.left=0) {
@@ -389,10 +391,10 @@ export default defineComponent({
         if (Math.abs(init_data.left) >= max_left) {
           return
         }
-        init_data.left -= dom_width 
+        init_data.left -= dom_width
          // init_data.left 左滑距离+13   以免右侧留白
           init_data.left =  init_data.left - rem (init_data.index* 0.13)
-          init_data.prev_left -= dom_width 
+          init_data.prev_left -= dom_width
       } else {
         init_data.index =  init_data.index-1
         // 右滑
@@ -406,7 +408,7 @@ export default defineComponent({
          init_data.prev_left+= dom_width
       }
     }, 50);
-   
+
     const go_to_fun = (ol_item) => {
       append_single_list.value.map((item)=>{
         ol_item.oid == item.oid ?  item.show_bgc = true: item.show_bgc = false
@@ -448,35 +450,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .temp13 {
-  // @include keyframes(dir_remind_animate) {
-  //   0% {
-  //     transform: translateX(0);
-  //     opacity: 0;
-  //   }
-  //   60% {
-  //     transform: translateX(-0.06rem);
-  //     opacity: 1;
-  //   }
-  //   100% {
-  //     transform: translateX(-0.09rem);
-  //     opacity: 0;
-  //   }
-  // }
 
-  // @include keyframes(dir_right_remind_animate) {
-  //   0% {
-  //     transform: translateX(-0.09rem) rotate(180deg);
-  //     opacity: 0;
-  //   }
-  //   60% {
-  //     transform: translateX(-0.06rem) rotate(180deg);
-  //     opacity: 1;
-  //   }
-  //   100% {
-  //     transform: translateX(0) rotate(180deg);
-  //     opacity: 0;
-  //   }
-  // }
   @keyframes dir_remind_animate {
   0% {
     transform: translateX(0);
@@ -519,7 +493,7 @@ export default defineComponent({
     right: -0.03rem;
     z-index: 10;
     margin-top: -0.06rem;
-  
+
     &.animate-effect {
       animation: dir_remind_animate cubic-bezier(0.49, 0.49, 0.61, 0.59) 1.4s infinite;
     }
@@ -545,12 +519,13 @@ export default defineComponent({
     height: 0.48rem;
     .bet-item {
       // min-width: 0.85rem;   // rem动态计算，这里注释，写在行内
-      // margin:0.04rem;
+       margin:0.04rem;
+        height: .48rem;
       &:nth-child(1) {
-           margin-left:0.08rem;
+           //margin-left:0.08rem;
         }
     }
-   
+
   }
   .slide-wrap-width-100{
     width: 100%;
@@ -563,12 +538,19 @@ export default defineComponent({
     border-radius: 4px;
     position: relative;
     overflow: hidden;
+      box-sizing: border-box;
+      padding: .05rem;
   }
 
   .bor-style {
     // margin-bottom: 1px;
     // border-bottom: 1px solid  var(--q-gb-bd-c-7);
     border-bottom: none !important;
+    height: .48rem;
+    margin-bottom: .04rem;
+    &:nth-last-child(1){
+      margin-bottom: .04rem;
+    }
   }
   .bor-style2 {
     border-bottom: none !important;
@@ -589,21 +571,24 @@ export default defineComponent({
   .play-box-style {
     text-align: center;
     width: 100%;
-    height: 0.40rem;
-    line-height: 0.40rem;
+    height: 0.48rem;
+    line-height: 0.48rem;
   }
 
   .play-box-sty {
-    height: 0.40rem;
+    height: 0.48rem;
     text-align: center;
+      //box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+      //border-radius: 4px;
     // padding:0.08rem 0.04rem ;
   }
 
   .odds-lock {
-    line-height: 0.40rem;
+    line-height: 0.48rem;
     .bet-item-ky-container {
       padding-top: 0.12rem;
       padding-bottom: 0.11rem;
+        box-sizing: border-box;
     }
   }
 
@@ -646,23 +631,14 @@ export default defineComponent({
     display: flex;
   }
 
-  .details-color {
-
-  }
-
   .row-fat {
     text-align: center;
   }
 
-  .white_text {
-    .ver-ali-top {
-
-    }
-  }
-
   .play-name {
     // width: 0.95rem;
-    height: 0.45rem;
+    //height: 0.45rem;
+    height: 0.48rem;
     line-height: 0.36rem;
     // padding:  0.08rem 0.04rem 0.08rem 0.08rem;
     // margin-right: 1px;
@@ -671,26 +647,24 @@ export default defineComponent({
     text-align: center;
     font-size: 0.14rem;
     position: relative;
- 
+
   }
   .play-name-card{
       // margin: 0.04rem;
+      height: .48rem;
+      line-height: .48rem;
       text-align: center;
       font-size: 0.14rem;
       background:var(--q-gb-bg-c-28);
       border-radius: 4px;
       color:var(--q-gb-t-c-10);
       // width: 0.85rem;
-      box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+      //box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     }
   .single-name {
-    line-height: 0.36rem;
+    line-height: 0.2rem;
   }
 
-  .odds-style {
-    // line-height: 0.16rem;
-    // padding-bottom: 0.07rem;
-  }
 
   .icon-lock {
     width: 0.12rem;
@@ -718,18 +692,15 @@ export default defineComponent({
   flex-direction: column;
   justify-content:center;
   background:var(--q-gb-bg-c-28);
-  border-radius: 4px;
   align-items:center;
-  padding:0 0.04rem;
-  box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+  padding: .04rem;
+    box-sizing: border-box;
+    border-radius: 0 !important;
+  //box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   color: var(--q-gb-t-c-18);
-  .single-name {
-    line-height: normal;
-  }
+    height: .48rem;
 }
-.bet-card-play-container{
-  height:0.48rem
-}
+
 .click-bet-bgc{
   background: var(--q-gb-bg-c-37);
 }

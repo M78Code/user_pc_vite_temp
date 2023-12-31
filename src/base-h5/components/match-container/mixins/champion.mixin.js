@@ -51,14 +51,22 @@ export default {
     is_collect() {
       return Boolean(lodash.get(this.match_of_list, 'tf'))
     },
+    // 是否最后一个
+    is_last () {
+      const complete_matchs = lodash.get(MatchMeta, 'complete_matchs', [])
+      const length = lodash.get(complete_matchs, 'length', 0)
+      return this.match_of_list.source_index === length - 1
+    },
     // 下一场赛事数据
     next_match () {
-      return MatchMeta.match_mids[this.i + 1] ? MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[this.i + 1]) : undefined
+      const match_mids = lodash.get( MatchMeta, 'match_mids', [])
+      const length = lodash.get( match_mids, 'length', 0)
+      if (length < 1) return { tid: '' }
+      return match_mids[this.i + 1] ? MatchDataBaseH5.get_quick_mid_obj(match_mids[this.i + 1]) : { tid: '' }
     },
-    // 是否显示底部圆角
+    // 是否显示底部圆角  冠军  id  有重复的  在通过 is_last 判断
     is_show_border_raduis () {
-      console.log('next_matchnext_matchnext_matchnext_matchnext_match', this.next_match)
-      return this.next_match && this.match_of_list?.tid !== this.next_match?.tid
+      return this.match_of_list?.tid !== this.next_match?.tid
     },
   },
   methods: {

@@ -8,7 +8,7 @@
     <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
     <settle-loading v-if="BetRecordClass.is_loading"></settle-loading>
     <template v-else>
-      <scroll ref="myScroll" :on-pull="onPull">
+      <scroll ref="myScroll" :on-pull="onPull" :class="{'scroll-warp': true, 'no-tab': BetRecordClass.selected === 3}">
       <template v-if="!lodash.isEmpty(BetRecordClass.list_data)">
         <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
         <!-- 订单内容 -->
@@ -168,6 +168,7 @@ const onPull = () => {
   BetRecordClass.onPull(params, url_api, ele, prevData)
 }
 
+
 const cancelSuccess = () => {
     setTimeout( () => {
       init_data(1)
@@ -193,7 +194,8 @@ template {
 /**投注记录弹框未结算*/
 .cathectic {
   height: 100%;
-  border-radius: 0.1rem;
+  border-top-left-radius: 0.1rem;
+  border-top-right-radius: 0.1rem;
   overflow: hidden;
 
   /**提前结算筛选按钮*/
@@ -256,4 +258,13 @@ template {
 /**提前结算*/
 .early2 {
   background-image: url($SCSSPROJECTPATH + "/image/svg/select_a.svg");
-}</style>
+}
+.scroll-warp {
+  // 100vh - 10vh(top定位) - 0.4rem(菜单高度) - 0.2rem(paddingTop)
+  max-height: calc(100vh - 10vh - 0.4rem - 0.2rem);
+  &.no-tab {
+    // 未结算订单没有菜单栏
+    max-height: calc(100vh - 10vh - 0.2rem);
+  }
+}
+</style>

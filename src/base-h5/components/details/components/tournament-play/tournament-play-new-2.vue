@@ -89,7 +89,7 @@
             <icon-wapper color="#999" name="icon-arrow"  :class="['icon-wapper', {'close': judage_hshow == 'Yes'}]"  size="16px" />
           </div>
           <!-- 调试专用勿删除 -->
-          <span v-if="wsl_flag"  style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>
+          <span v-if="wsl_flag" style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>
         </div>
       </div>
       <template v-if="[0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,18,51].includes(+item_data.hpt)">
@@ -100,7 +100,7 @@
                 :is="`temp${item_data.hpt}`"
                 :item_data="item_data"
                 :title="title"
-            
+
             />
           </div>
         </q-slide-transition>
@@ -819,17 +819,23 @@ export default defineComponent({
       padding: 0 0.05rem 0.04rem 0.05rem;
     }
     .show_border_r{
-      :deep(.hairline-border,), :deep(.item-wrap) {
+      :deep(.hairline-border), :deep(.item-wrap) {
       // background-color: #ffffff;
       }
     }
     .hide_border_r{
-      :deep(.hairline-border,), :deep(.item-wrap) {
+      padding-bottom: 4px;
+      :deep(.hairline-border), :deep(.item-wrap) {
       //background-color: var(--q-gb-bg-c-29) !important;
       background-color: var(--q-gb-bg-c-38) !important;
       border-radius:0 0 0.04rem 0.04rem!important;
       border-top:0.5px solid var(--q-gb-bd-c-5);
       color:var(--q-gb-t-c-19)
+      }
+      :deep(.hairline-border){
+        .item-wrap{
+          border-top: none;
+        }
       }
     }
     .play-name {
@@ -906,22 +912,22 @@ export default defineComponent({
   background: var(--q-gb-bg-c-37) !important;
 }
 /* Bug: 51232 投注项加圆角 */
-:deep(.mg-4-bg){
-  border-radius: 8px !important;
-}
-:deep(.play-box-style){
-  border-radius: 8px !important;
-}
-:deep(.bet-box-bg){
-  border-radius: 8px !important;
-}
-:deep(.bet-item-ky-container){
-  border-radius: 8px !important;
-}
-:deep(.item-bet-ky .fat-warp){
-  border-radius: 8px !important;
-}
-:deep(.play-box){
-  border-radius: 8px !important;
-}
+//:deep(.mg-4-bg){
+//  border-radius: 8px !important;
+//}
+//:deep(.play-box-style){
+//  border-radius: 8px !important;
+//}
+//:deep(.bet-box-bg){
+//  border-radius: 8px !important;
+//}
+//:deep(.bet-item-ky-container){
+//  border-radius: 8px !important;
+//}
+//:deep(.item-bet-ky .fat-warp){
+//  border-radius: 8px !important;
+//}
+//:deep(.play-box){
+//  border-radius: 8px !important;
+//}
 </style>

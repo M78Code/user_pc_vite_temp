@@ -14,7 +14,7 @@ import {
 import uid from "src/core/uuid/index.js";
 
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { MenuData} from "src/output/module/menu-data.js"
+import { MenuData} from "src/output/project/index.js"
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchDetailCtr from "src/core/match-detail/match-detail-class.js";
 import { ref } from "vue"

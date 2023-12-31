@@ -287,11 +287,10 @@ import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/co
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
-import { i18n_t, compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/output/index.js"
+import { i18n_t, compute_img_url, compute_css_obj, sports_play_data, use_sports_play_title, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/output/index.js"
 import { format_time_zone } from "src/output/index.js"
-import { MenuData } from "src/output/module/menu-data.js"
+import { MenuData } from "src/output/project/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou, neutral_site } from 'src/base-h5/core/utils/local-image.js'
-import { sports_play_data, use_sports_play_title } from 'src/output/index.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'

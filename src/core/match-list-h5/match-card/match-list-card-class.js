@@ -8,7 +8,7 @@ import MatchPage from '../match-class/match-page'
 import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { MenuData} from "src/output/module/menu-data.js"
+import { MenuData} from "src/output/project/index.js"
 import MatchListCardScroll from './match-list-card-scroll'
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/output/module/match-data-base.js'
 import { compute_style_template_by_match_height } from './module/compute-style-template.js'

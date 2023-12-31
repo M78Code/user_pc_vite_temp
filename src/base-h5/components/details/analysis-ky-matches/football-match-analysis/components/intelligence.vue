@@ -147,7 +147,7 @@ import { i18n_t } from "src/boot/i18n.js";
       font-size: 0.14rem;
 
       .ellipsis {
-        color: var(--q-analysis-text-color-20);
+        color: var(--q-analysis-text-color-34);
         font-weight: unset;
       }
 
@@ -157,7 +157,7 @@ import { i18n_t } from "src/boot/i18n.js";
 
         .ellipsis {
           color: var(--q-analysis-text-color-20);
-          font-weight: bold;
+          font-weight: 400;
         }
       }
 

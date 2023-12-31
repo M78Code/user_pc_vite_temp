@@ -708,6 +708,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     flex-wrap: nowrap;
     // background-color: red;
 
@@ -733,7 +734,10 @@ export default {
     .team-wrapper {
       flex: 1;
       font-weight: bold;
-
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
       &.standard {
         height: 1.07rem;
 
@@ -837,7 +841,7 @@ export default {
     }
 
     .profession {
-      padding-top: 0.13rem;
+      // padding-top: 0.13rem;
       // height: 1.21rem;
       overflow: hidden;
       position: relative;
@@ -847,6 +851,8 @@ export default {
           color: #AFB3C8;
           text-align: right;
           padding-right: 0.1rem;
+          margin-bottom: 0.05rem;
+          // background-color: red;
           i {
             transform: rotate(90deg);
             font-size: 0.1rem;
