@@ -1,6 +1,7 @@
 import { UserCtr } from "src/output/module/global-common.js";
 import {http} from "src/core/http/index.js";
-const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { API_PREFIX } = BUILDIN_CONFIG ;
 const { API_PREFIX_JOB:prefix,API_PREFIX_ACTIVITY:prefix2} = API_PREFIX;
 const prefix3 =  '/livechat-api';
 

@@ -1,5 +1,5 @@
 import lodash from "lodash";
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 
 /**
  * @Description 设置默认模板
@@ -230,7 +230,7 @@ const template_config = {
   'ouzhou-h5': match_style_template_ouzhou,
 }
 
-const { PROJECT_NAME = 'yazhou-h5' } = BUILD_VERSION_CONFIG
+const { PROJECT_NAME = 'yazhou-h5' } = BUILDIN_CONFIG 
 
 export const match_style_template = template_config[PROJECT_NAME]
 

@@ -176,6 +176,7 @@ export default defineComponent({
       //  margin: 0.04rem;
       flex: 1;
       overflow: hidden;
+      box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
       &:nth-child(1){
         margin-left:  0.04rem;;
       }

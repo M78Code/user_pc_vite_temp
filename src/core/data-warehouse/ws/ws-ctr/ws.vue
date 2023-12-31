@@ -22,9 +22,9 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import { set_market_id_to_ws } from "src/core/bet/class/bet-box-submit.js"
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 
-const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
+const { PROJECT_NAME } = BUILDIN_CONFIG ;
 
 // 页面 失去 焦点后  WS 断开时间
 const DOCUMENT_HIDDEN_WS_CLOSE_TIME = 5 * 60 * 1000;

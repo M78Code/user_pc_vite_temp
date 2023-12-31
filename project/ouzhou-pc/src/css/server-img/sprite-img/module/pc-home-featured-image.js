@@ -4,7 +4,8 @@
 
 import server_resource from "app/job/output/assets/index.json";
 
-const { CURRENT_ENV } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { CURRENT_ENV } = BUILDIN_CONFIG;
 const config = {
   default:"pc-home-featured-image",
   // local_dev: "pc-left-menu-bg-image",

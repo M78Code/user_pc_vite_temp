@@ -105,7 +105,7 @@ let DOMAIN_RESULT = {
 const DOMAIN_API_STORAGE_KEY = STANDARD_KEY.get("domain_api_01");
 // 引入 当前 计算出的植入配置
 
-const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 //当前目标环境
 const { CURRENT_ENV, NODE_ENV, OSS_FILE_ARR, OSS_FILE_NAME, PROJECT_NAME } = BUILDIN_CONFIG;
 // 判断是否PC项目

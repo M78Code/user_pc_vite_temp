@@ -1,7 +1,8 @@
 /***/
 //  应有引入的方法
 import { SessionStorage } from "src/output/module/constant-utils-common.js";
-const { htmlVariables } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { htmlVariables } = BUILDIN_CONFIG;
 function gtag_config_send(user_id) {
   // 设置默认启动参数
   // GA 埋点开关开启---照常统计，和生产环境保持一致

@@ -3,7 +3,8 @@
 // img-bg-menu-live 对应输出的css名称
 // 
 import server_resource from "app/job/output/assets/index.json";
-const { CURRENT_ENV } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { CURRENT_ENV } = BUILDIN_CONFIG;
 const config = {
     default: "eu-menu-sport-active-image",
 };

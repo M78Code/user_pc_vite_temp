@@ -9,8 +9,8 @@ import BetWsMessage from "src/core/bet/class/bet-ws-message.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-
-const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { DEFAULT_VERSION_NAME } = BUILDIN_CONFIG;
 export default {
     data() {
       return {
@@ -18,6 +18,12 @@ export default {
       }
     },
     created () {
+      this.vue_hidden_run_flg = false;
+      this.background_run_time = "";
+      this.background_run_time_timer = setTimeout(() => {
+        this.vue_hidden_run_flg = true;
+      }, 4000);
+
       // loading页面最长20秒
       this.timer_ = setTimeout(() => {
         this.hide_loading(0);
@@ -51,9 +57,43 @@ export default {
        *@description 页面可见性变化的处理函数
       */
       visibilitychange_handle() {
-        const is_hidden = document.visibilityState == "hidden";
+        if (!this.vue_hidden_run_flg) {
+          return false;
+        }
+        let is_hidden = document.visibilityState == "hidden";
+      
+        if (is_hidden) {
+          window.DOCUMENT_HIDDEN = new Date().getTime();
+        } else {
+          // 获取 焦点后 ，页面激活 ，次开关打开 ，HTTP,WS 就会自动 打开开关
+          window.DOCUMENT_HIDDEN = "";
+        }
         // 设置当前页面是否后台运行中状态
         GlobalAccessConfig.set_vue_hidden_run(is_hidden);
+      
+        //页面失去焦点 ，隐藏   后台运行
+        if (is_hidden) {
+          this.background_run_time = new Date().getTime();
+          // 在后台运行超过 over_timer 分钟后才广播刷新数据指令
+        } else {
+          // 页面 唤起  这里流程分 二种：
+          // 流程一：   离开不到30分钟 ，  列表或者详情 ，监听到 页面聚焦时间 变更 ，重新拉取当前的接口
+          // 流程二：   离开超过30分钟 ，  页面直接刷新 重走流程
+          // 30分钟  重载刷新  页面
+          let over_timer = 30 * (60 * 1000);
+          let now_time = new Date().getTime();
+          // 在后台共运行了多少时间
+          let run_time = now_time - this.background_run_time;
+          // 页面需要 重载刷新
+          let need_reload = run_time > over_timer;
+          //如果需要 重载刷新
+          if (need_reload) {
+            window.location.reload();
+          } else {
+            // 站点 tab 休眠状态转激活  ，
+            useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
+          }
+        }
       },
       async init_process() {
         try {
@@ -130,5 +170,6 @@ export default {
       // 移除监听页面是否转入休眠状态
       document.removeEventListener("visibilitychange",this.visibilitychange_handle);
       document.removeEventListener("pagehide", this.visibilitychange_handle);
+      clearTimeout(this.background_run_time_timer);
     },
 }

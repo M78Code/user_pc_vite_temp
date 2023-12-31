@@ -6,7 +6,8 @@ import server_resource from "app/job/output/assets/index.json";
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 import { team_mhlu_url_app_h5,team_malu_url_app_h5 } from "src/base-h5/core/utils/local-image.js"
 import lodash from "lodash";
-const { CURRENT_ENV } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { CURRENT_ENV } = BUILDIN_CONFIG;
 const config = {
   locationUrl:"/src/core/server-img/sprite-img/image/pc-team-logo-day.png",
   mhluUrl: team_mhlu_url_app_h5,

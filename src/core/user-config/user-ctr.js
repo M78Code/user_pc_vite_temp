@@ -21,9 +21,9 @@ import { odds_table } from "src/core/constant/common/module/csid.js"
  
 import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 import {GLOBAL_CONSTANT } from "src/core/constant/global/index.js"
-const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
+const { PROJECT_NAME,htmlVariables } = BUILDIN_CONFIG ;
 
 // #TODO 接口统一管理的文件，后续替换
 import { api_details, api_account,api_betting } from "src/api/index.js";
@@ -35,7 +35,6 @@ const user_key = STANDARD_KEY.get("user_info");
 import { AllDomain } from "src/core/http/";
 
 const axios_instance = axios.create();
-const { htmlVariables = {} } = window.BUILDIN_CONFIG;
 class UserCtr {
   constructor() {
     this.init();
@@ -155,7 +154,7 @@ class UserCtr {
     if(topic){
       try {
         const topic_obj = JSON.parse(topic);
-        topic_obj && (window.BUILDIN_CONFIG.TOPIC = topic_obj);
+        topic_obj && (BUILDIN_CONFIG.TOPIC = topic_obj);
       } catch (error) {
         console.error(error);
       }
@@ -608,8 +607,8 @@ class UserCtr {
       // localStorage持久化用户分组信息
       sessionStorage.setItem("gr", gr);
 
-      //  if(window.BUILDIN_CONFIG.gr != gr){
-      if (window.BUILDIN_CONFIG.DOMAIN_RESULT.gr != gr) {
+      //  if(BUILDIN_CONFIG.gr != gr){
+      if (BUILDIN_CONFIG.DOMAIN_RESULT.gr != gr) {
         // #TODO
         let url_search = SEARCH_PARAMS.init_param;
         //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
@@ -674,9 +673,9 @@ class UserCtr {
       return Promise.resolve(1);
     }
 
-    //  let api_domains = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV];
+    //  let api_domains = BUILDIN_CONFIG.domain[BUILDIN_CONFIG.CURRENT_ENV];
     let api_domains =
-      window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV] || [];
+      BUILDIN_CONFIG.domain[BUILDIN_CONFIG.CURRENT_ENV] || [];
     let api_domain = api_domains[0];
 
     try {
@@ -1118,7 +1117,7 @@ class UserCtr {
         "user_gr",
         JSON.stringify({ token: sessionStorage.getItem("h5_token"), gr })
       );
-      if (window.BUILDIN_CONFIG.gr != gr) {
+      if (BUILDIN_CONFIG.gr != gr) {
         let url_search = SEARCH_PARAMS.init_param;
         //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
         url_search.set("rdm", new Date().getTime());
@@ -1260,7 +1259,7 @@ class UserCtr {
     // }
     // 设置主题色
     // if(!window.vue.$store.getters.get_theme){
-    //   let theme = 'theme0'+config.default_theme[window.BUILDIN_CONFIG.PROJECT_NAME]
+    //   let theme = 'theme0'+config.default_theme[BUILDIN_CONFIG.PROJECT_NAME]
     //   window.vue.$store.dispatch('set_theme',theme)
     // }
   }
@@ -1429,7 +1428,7 @@ class UserCtr {
     // api 获取默认最快域名进行加密
     res.api = this.api_encrypt(BUILDIN_CONFIG.DOMAIN_RESULT.first_one || get_value('best_api')) || '';
     // 项目来源;
-    res.project = BUILD_VERSION_CONFIG.PROJECT_NAME;
+    res.project = BUILDIN_CONFIG .PROJECT_NAME;
     // 功能附加参数
     const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
     PARAM_ADD_KEY.forEach(key => {

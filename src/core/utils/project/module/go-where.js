@@ -10,8 +10,8 @@
   let godetailpage = false
 // =============================================
 import { MatchDetailCalss } from "src/output/module/project-single.js";
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { PROJECT_NAME } = BUILDIN_CONFIG ;
 // 返回首页
 const go_home = ({back_to, route_name, route, router}) => {
   if(get_show_favorite_list){

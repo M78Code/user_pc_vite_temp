@@ -3,7 +3,7 @@
 -->
 <template>
   <!-- 全部联赛标题 -->
-  <div class="all_league_title component match-container-main-template2" v-if="i === 0" @click.stop="handle_all_ball_seed_fold">
+  <div class="all_league_title component match-container-main-template2" v-if="match?.source_index === 0" @click.stop="handle_all_ball_seed_fold">
     <div> <img :src="icon_date" alt=""> <span>{{i18n_t("filter.all_leagues")}}</span> </div>
     <!-- <img :class="['expand_item', {ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt=""> -->
     <div class="expand_item" :class="{ball_seed_collapsed: !all_ball_seed_collapsed}" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>

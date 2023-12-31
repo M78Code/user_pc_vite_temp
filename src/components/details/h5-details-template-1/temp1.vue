@@ -434,7 +434,7 @@ export default defineComponent({
 
 .first-radius {
   position: relative;
-  border-radius: 0.03rem 0 0 0.03rem;
+  // border-radius: 0.03rem 0 0 0.03rem;
 
   > .col {
     &:nth-child(2) {
@@ -444,7 +444,7 @@ export default defineComponent({
 }
 
 .last-radius {
-  border-radius: 0 0.03rem 0.03rem 0;
+  // border-radius: 0 0.03rem 0.03rem 0;
 }
 
 .first-rad {
