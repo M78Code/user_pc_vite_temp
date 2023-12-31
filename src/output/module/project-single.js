@@ -20,12 +20,6 @@ export { default as MatchDetailCalss } from "src/core/match-detail/match-detail-
 export { default as MatchListH5DetailMiddleware } from "src/core/match-detail/match-detail-h5/match-list-detail-h5/index.js";
 
 /**
- * PC  布局
- */
-
-export { default as LayOutMain_pc } from "src/core/layout/index.js";
-
-/**
  * img 变量
  */
 export * from "src/core/server-img/";
@@ -43,12 +37,5 @@ export { compute_css_variables } from "src/core/css-var/index.js";
 export { default as PageSourceData } from "src/core/page-source/page-source.js";
 export { default as GlobalAccessConfig } from "src/core/access-config/access-config.js";
 export { default as GlobalSwitchClass } from "src/core/global/global.js";
-
-// 搜索组件类
-export { default as SearchPCClass } from "src/core/search-class/seach-pc-calss.js";
-
-export { default as SearchData } from "src/core/search-class/search-data-class.js";
-
-export { default as TabMove } from "src/core/tab-move/tab-move.js";
 
  
