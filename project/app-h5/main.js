@@ -41,6 +41,10 @@ app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
 
+// 真机调试
+// import VConsole from 'vconsole'
+// const vConsole = new VConsole()
+// app.use(vConsole)
 
 import { i18n } from "src/boot/i18n.js";
 app.use(i18n).use(router);

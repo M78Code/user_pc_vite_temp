@@ -491,6 +491,7 @@ export default defineComponent({
   height: auto;
   overflow: hidden;
   padding:0.08rem;
+  border-top: unset !important;
   .col-middle {
     flex: 0 0 .9rem;
   }
