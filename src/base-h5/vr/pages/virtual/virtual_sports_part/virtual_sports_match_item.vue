@@ -733,7 +733,10 @@ export default {
     .team-wrapper {
       flex: 1;
       font-weight: bold;
-
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       &.standard {
         height: 1.07rem;
 
