@@ -184,6 +184,7 @@ const searchTabMenu = ref(null);//足球tab dom
         break 
       default:
           ref_data.current_mi = val.mi
+          !type && MenuData.search_data_tab_index();//清除联赛缓存
         // 设置二级菜单 
           MenuData.set_current_lv_2_menu_i(val)
           handle_match_render_data()
