@@ -264,6 +264,7 @@ export default defineComponent({
     //padding: 0.06rem 0.07rem 0;
     margin-bottom: 1px;
       border-radius: .04rem;
+      //margin: 0 !important;
   }
 
   .item-fat {

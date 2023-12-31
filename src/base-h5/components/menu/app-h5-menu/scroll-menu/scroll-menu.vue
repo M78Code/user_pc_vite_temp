@@ -83,35 +83,28 @@ const emits = defineEmits(['changeList','changeMenu'])
  * 二级菜单事件
 */
 function set_menu_lv2(item = {},event) {
+  //重置全部状态
+  MatchFold.set_all_csid_fold_status(false)
+  // 重置折叠对象
+  MatchFold.clear_fold_info()
+  if (props.current_mi === item.mi) return
+  // if (item.mi === 2000) router.push('/esports')
+  event = event || scrollTab.value[0];
+  // 选中后点击无效
+  // if (item.mi == MenuData.current_lv_2_menu_i) return;
+  scrollMenuEvent(event,".s-menu-container",".current");
+  // emits('changeMenu',item)
+  nextTick(()=>{ //收藏是没有change的相当于是页面
+    // 设置菜单点击事件
+    emits('changeMenu',item)
+    // useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
+  })
 
-  try {
-    //重置全部状态
-    MatchFold.set_all_csid_fold_status(false)
-    // 重置折叠对象
-    MatchFold.clear_fold_info()
-    if (props.current_mi === item.mi) return
-    // if (item.mi === 2000) router.push('/esports')
-    event = event || scrollTab.value[0];
-    // 选中后点击无效
-    // if (item.mi == MenuData.current_lv_2_menu_i) return;
-    scrollMenuEvent(event,".s-menu-container",".current");
-    // emits('changeMenu',item)
-    nextTick(()=>{ //收藏是没有change的相当于是页面
-      // 设置菜单点击事件
-      emits('changeMenu',item)
-      // useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
-    })
-
-    //串关页面跳转电竞，VR强制转单关
-    if(MenuData.is_esports(item.mi) || MenuData.is_vr(item.mi)) {
-      BetData.set_is_bet_single('single')
-      BetData.set_clear_bet_info()
-    }
-    alert('二级菜单事件ok')
-  } catch (err){
-    alert('二级菜单事件:'+err)
+  //串关页面跳转电竞，VR强制转单关
+  if(MenuData.is_esports(item.mi) || MenuData.is_vr(item.mi)) {
+    BetData.set_is_bet_single('single')
+    BetData.set_clear_bet_info()
   }
- 
 }
 
 /**

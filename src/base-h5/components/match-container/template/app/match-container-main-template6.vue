@@ -9,7 +9,7 @@
         <!-- <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' /> -->
       </div>
     </div>
-    <div :class="['cw2-bg-content', !collapsed && 'collapsed', !is_show_league(i) && 'no-radius', is_show_border_raduis && 'border-raduis']">
+    <div :class="['cw2-bg-content', !collapsed && 'collapsed']">
       <div v-if="is_show_league(i)"
         :class="['league-container flex items-center justify-between right-border', { collapsed: !collapsed }]"
         @click="handle_league_fold">
@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <div class="champion-match-results-content" v-if="collapsed">
+      <div class="champion-match-results-content" v-if="collapsed" :class="[(is_show_border_raduis || is_last) && 'border-raduis']">
         <div class="match-line-module" v-if="!is_show_league(i)">
           <div class="match-line"></div>
         </div>
@@ -96,6 +96,7 @@ export default {
   box-shadow: var(--q-color-box-shadow-color-4);
   border-top-right-radius: .08rem;
   border-top-left-radius: .08rem;
+  border-radius: 0 0 0.08rem 0.08rem;
   .league-container {
     border-top-right-radius: .08rem;
     border-top-left-radius: .08rem;
@@ -415,36 +416,40 @@ export default {
 
 .champion-match-results-content {
   padding:0 .08rem .08rem;
-    background: var(--q-gb-bg-c-18);
-    border: 1px solid var(--q-gb-bd-c-15);
-    border-bottom-color: var(--q-gb-bg-c-18);
-    .cmrc-title {
+  background: var(--q-gb-bg-c-18);
+  border: 1px solid var(--q-gb-bd-c-15);
+  border-bottom-color: var(--q-gb-bg-c-18);
+  .cmrc-title {
+    display:flex;
+    justify-content: space-between;
+    margin-bottom:.1rem;
+    color: var(--q-gb-t-c-18);
+    padding-top: .08rem;
+    .cmrc-t-league {
       display:flex;
-      justify-content: space-between;
-      margin-bottom:.1rem;
-      color: var(--q-gb-t-c-18);
-      padding-top: .08rem;
-      .cmrc-t-league {
-        display:flex;
-        align-items:center;
-        margin-right:.2rem;
-        .cmrc-tl-text {
-          width:1.4rem;
-        }
-        img {
-          width:.18rem;
-          height:.18rem;
-          margin-right: .04rem;
-        }
+      align-items:center;
+      margin-right:.2rem;
+      .cmrc-tl-text {
+        width:1.4rem;
+      }
+      img {
+        width:.18rem;
+        height:.18rem;
+        margin-right: .04rem;
       }
     }
-    .cmrc-t-teams {
-      font-weight:500;
-      margin-bottom:.1rem;
-      color: var(--q-gb-t-c-18);
-    }
-    .cmrc-t-time {
-      color:#AFB3C8;
-    }
   }
+  .cmrc-t-teams {
+    font-weight:500;
+    margin-bottom:.1rem;
+    color: var(--q-gb-t-c-18);
+  }
+  .cmrc-t-time {
+    color:#AFB3C8;
+  }
+  &.border-raduis{
+    border-bottom: 1px solid var(--q-gb-bd-c-15);
+    border-radius: 0 0 0.08rem 0.08rem;
+  }
+}
 </style>
