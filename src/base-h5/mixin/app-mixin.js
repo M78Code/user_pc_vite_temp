@@ -29,6 +29,10 @@ export default {
     };
   },
   created() {
+    // loading页面最长20秒
+    this.timer_ = setTimeout(() => {
+      this.hide_loading(0);
+    }, 20000);
     this.mitt_list = [];
     this.mitt_list.push(useMittOn(MITT_TYPES.EMIT_LOADING_CTR_CMD, this.hide_loading).off)
     // 参数控制处理和跳转逻辑
@@ -46,10 +50,6 @@ export default {
     this.init_load_timer = setTimeout(() => {
       this.set_init_load(true);
     }, 11000);
-    // loading页面最长20秒
-    this.timer_ = setTimeout(() => {
-      this.hide_loading(0);
-    }, 20000);
   },
   watch: {
     '$route'(to, from) {

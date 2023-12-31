@@ -3,7 +3,7 @@
 -->
 <template>
   <!-- :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon-black.svg`" alt=""> -->
-  <div class="select-league" :style="bounced_high">
+  <div class="component select-league" :style="bounced_high" @scroll.stop>
     <div class="sl-header">
     <!-- 取消 -->
       <div class="sl-btn" @click="closed">{{ i18n_t('common.cancel') }}</div>

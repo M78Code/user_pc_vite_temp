@@ -1439,9 +1439,12 @@ class UserCtr {
   }
 
   async get_system_time () {
-    let res = await api_common.get_time_server()
-    let ts = lodash.get(res,'ts','')
-    LocalStorage.set('server_time',ts)
+    let ts = '';
+    if(window.SEARCH_PARAMS.has_token){
+      let res = await api_common.get_time_server()
+      ts = lodash.get(res,'ts','')
+      LocalStorage.set('server_time',ts)
+    } 
     return ts
   }
   // 是否支持当前赔率

@@ -821,6 +821,7 @@ setup(props, context){
   }
 
   const toPlay = function(index,replay){
+    exit_browser_full_screen()
     const replayData = {
       item: replay,
       index
