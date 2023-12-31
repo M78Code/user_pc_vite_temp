@@ -2,7 +2,7 @@
 import PageSourceData from "src/core/page-source/page-source.js";
 console.log('asfnafhasf', PageSourceData);
 import MatchListCardData from "./match-list-card-data-class.js";
-import { MenuData} from "src/output/module/menu-data.js"
+import { MenuData} from "src/output/project/index.js"
 
 /**
  * @Description 设置吸顶高度

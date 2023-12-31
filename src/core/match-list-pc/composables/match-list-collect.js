@@ -3,7 +3,7 @@ import lodash from "lodash";
 
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
-import { MenuData }  from "src/output/module/menu-data.js";
+import { MenuData }  from "src/output/project/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import PageSourceData from "src/core/page-source/page-source.js";

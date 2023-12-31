@@ -9,7 +9,7 @@ import BaseData from 'src/core/base-data/base-data.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchFold from 'src/core/match-fold/index.js'
 import MatchCollect from 'src/core/match-collect/index.js'
-import { MenuData } from "src/output/module/menu-data.js"
+import { MenuData } from "src/output/project/index.js"
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
@@ -496,53 +496,58 @@ class MatchMeta {
     if (!md) return []
     const params = this.get_base_params()
     delete params.hpsFlag
-    const res = await api_analysis.get_champion_match_result_api({
-      ...params,
-      type: 28,
-      orderBy: 1,
-      category: 1,
-      euid: "10000",
-      md: String(start_time),
-      startTime: String(start_time),
-      endTime: String(end_time),
-      sportType: 10000,
-      isVirtualSport: 1
-    })
-    if (this.current_euid !== `10000_${md}`) return []
-
-    if (+res.code !== 200) {
-      this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
-      if (res.code === '0401038') {
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-        this.set_page_match_empty_status({ state: false });
+    try {
+      const res = await api_analysis.get_champion_match_result_api({
+        ...params,
+        type: 28,
+        orderBy: 1,
+        category: 1,
+        euid: "10000",
+        md: String(start_time),
+        startTime: String(start_time),
+        endTime: String(end_time),
+        sportType: 10000,
+        isVirtualSport: 1
+      })
+      if (this.current_euid !== `10000_${md}`) return []
+  
+      if (+res.code !== 200) {
+        this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
+        if (res.code === '0401038') {
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+          this.set_page_match_empty_status({ state: false });
+          return []
+        }
         return []
       }
-      return []
-    }
-    // 避免接口慢导致的数据错乱
-    const list = lodash.get(res, 'data', [])
-    let obj = {}
-    list.forEach(i => {
-      i.tid = i.tournamentId
-      i.csid = i.sportId
-      i.mid = i.marketId
-      i.csna = i.sportName
-      if (obj[i.sportId]) {
-        obj[i.sportId]++
-      } else {
-        obj[i.sportId] = 1
+      // 避免接口慢导致的数据错乱
+      const list = lodash.get(res, 'data', [])
+      let obj = {}
+      list.forEach(i => {
+        i.tid = i.tournamentId
+        i.csid = i.sportId
+        i.mid = i.marketId
+        i.csna = i.sportName
+        if (obj[i.sportId]) {
+          obj[i.sportId]++
+        } else {
+          obj[i.sportId] = 1
+        }
+      })
+      list.forEach(i => {
+        i._total = obj[i.sportId]
+      })
+      const length = lodash.get(list, 'length', 0)
+      if (length < 1) {
+        this.set_page_match_empty_status({ state: true });
+        return []
       }
-    })
-    list.forEach(i => {
-      i._total = obj[i.sportId]
-    })
-    const length = lodash.get(list, 'length', 0)
-    if (length < 1) {
-      this.set_page_match_empty_status({ state: true });
-      return []
+      // const matchs = MatchUtils.handler_champion_match_classify_by_sport_id(list)
+      return this.handler_match_list_data({ list: list, type: 2, is_virtual: false })
+    } catch (err) {
+      console.error(err)
+      this.set_page_match_empty_status({ state: true, type: 'noWifi' });
     }
-    // const matchs = MatchUtils.handler_champion_match_classify_by_sport_id(list)
-    return this.handler_match_list_data({ list: list, type: 2, is_virtual: false })
   }
 
   /**

@@ -277,7 +277,13 @@ export default defineComponent({
     // 是否显示底部圆角
     is_show_border_raduis () {
       return this.next_match && this.match_of_list?.tid !== this.next_match?.tid
-    }
+    },
+    // 是否最后一个
+    is_last () {
+      const complete_matchs = lodash.get(MatchMeta, 'complete_matchs', [])
+      const length = lodash.get(complete_matchs, 'length', 0)
+      return this.match_of_list.source_index === length - 1
+    },
   },
   watch: {
     match_of_list: {

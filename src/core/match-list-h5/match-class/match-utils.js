@@ -1,7 +1,7 @@
 import lodash from 'lodash'
 import MatchFold from 'src/core/match-fold/index.js'
 import BaseData from 'src/core/base-data/base-data.js'
-import { MenuData } from 'src/output/module/menu-data.js'
+import { MenuData } from 'src/output/project/index.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { use_playingMethods_15 } from "src/output/module/constant-utils.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
