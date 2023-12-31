@@ -196,7 +196,6 @@
 <script>
 
 import { ref, computed, watch, nextTick, onMounted } from 'vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from  "src/output/index.js"
 
 import { IconWapper } from 'src/components/icon'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
@@ -206,8 +205,7 @@ import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-w
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
-import { i18n_t, compute_img_url, compute_css_obj  } from "src/output/index.js"
-import { format_time_zone } from "src/output/index.js"
+import { i18n_t, compute_img_url, compute_css_obj, LOCAL_PROJECT_FILE_PREFIX, format_time_zone  } from "src/output/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou} from 'src/base-h5/core/utils/local-image.js'
 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
