@@ -39,5 +39,7 @@ export default {
     'gb-bg-c-37': '#D1EBFF', 
     'gb-bg-c-38': '#f8f9fa', 
     'gb-bg-c-41': '#f8f9fa',
+    'gb-bg-c-42': '#333',
+    'gb-bg-c-43': "rgba(175, 175, 175, 0.10)",
     'gb-bg-c-90': '#00000090', 
   } 

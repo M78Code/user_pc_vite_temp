@@ -33,7 +33,7 @@
         <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
             <div class="col">
-                <bet-keyboard :monery="ref_data.money"/>
+                <bet-keyboard :money="ref_data.money"/>
             </div>
         </div>
     </div>
@@ -147,6 +147,10 @@ const set_win_money = () => {
         })
          ref_data.win_money = sum
     }else{
+        // 最大限额不能大于余额
+        if(UserCtr.balance < ref_data.max_money){
+            ref_data.max_money = UserCtr.balance
+        }
         // 输入金额不能大于最大限额
         if(ref_data.money>ref_data.max_money) {
             ref_data.money = ref_data.max_money

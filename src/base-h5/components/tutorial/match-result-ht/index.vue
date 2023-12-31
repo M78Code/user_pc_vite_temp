@@ -118,7 +118,7 @@ const state = reactive({
         display: flex;
         align-items: center;
         justify-content: center;
-        border-bottom: 0.01rem solid #fbfbfb;
+        border-bottom: 0.01rem solid var(--q-gb-bd-c-4);
 
         .pattern {
             width: .03rem;
@@ -229,7 +229,7 @@ const state = reactive({
             justify-content: center;
             height:.49rem;
             align-items: center;
-            border: .01rem solid var(--q-gb-bd-c-7);
+            border-bottom: .01rem solid var(--q-gb-bd-c-4);
             color: var(--q-gb-t-c-27);
         }
         .title {
@@ -282,7 +282,7 @@ const state = reactive({
                 .result {
                     font-size: .12rem;
                     color: #afafaf;
-                    background-color: var(--q-gb-bd-c-7);
+                    background-color: var(--q-gb-bg-c-43);
                     text-align: center;
                     margin-top: .03rem;
                     padding: .01rem .04rem;
