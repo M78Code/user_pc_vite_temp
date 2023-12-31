@@ -1556,7 +1556,7 @@ export default {
     }
     .match-content{
       width: 100%;
-      padding: 0 10px;
+      // padding: 0 10px;
       // border-top: 1px solid  var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
       //border-radius: 0 0 8px 8px;
