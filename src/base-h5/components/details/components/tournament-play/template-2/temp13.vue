@@ -695,7 +695,7 @@ export default defineComponent({
   align-items:center;
   padding: .04rem;
     box-sizing: border-box;
-    border-radius: 0 !important;
+    border-radius: 4px !important;
   //box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   color: var(--q-gb-t-c-18);
     height: .48rem;
