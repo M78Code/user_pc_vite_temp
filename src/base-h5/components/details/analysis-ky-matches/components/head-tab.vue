@@ -94,6 +94,7 @@ const handle_show_tab = (item, index) => {
   let nedw_show_tab = true;
   if (
     props.detail_data.csid === "1" &&
+    props.detail_data.ms == 0 &&
     lodash.get(item, "component") === "highlights" &&
     !show_tab.value
   ) {
@@ -158,7 +159,8 @@ onUnmounted(() => {
         background-color: var(--q-gb-bg-c-31);
         .tabs-label {
         font-size: 0.14rem;
-        color: var(--q-gb-bg-c-13);
+        color: var(--q-gb-t-c-1);
+        font-weight: bold;
       }
         // box-sizing: border-box;
         //       .tabs-label {
@@ -184,7 +186,7 @@ onUnmounted(() => {
 
       .tabs-label {
         font-size: 0.14rem;
-        color: var(--q-gb-t-c-18);
+        color: var(--q-gb-t-c-19);
       }
     }
   }

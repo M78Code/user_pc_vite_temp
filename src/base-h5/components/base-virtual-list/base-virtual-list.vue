@@ -1,25 +1,24 @@
 
 <template>
-  <div class="outContainer">
+  <div :class="['outContainer', { 'skeletonContainer': show_skeleton_screen }]">
+    <!-- 骨架图 -->
+    <template v-if="show_skeleton_screen">
+      <div class="skeletonBox"><SList :loading_body="true" /></div>
+    </template>
     <!-- 滚动容器 -->
-    <template v-if="!show_skeleton_screen">
-      <div v-if="!show_skeleton_screen" class="scrollerContainer" ref="scrollerContainerRef" @scroll="onScroll">
-        <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
-        <div class="contentList" :style="styleTranslate" ref="contentListRef">
-          <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-index="index"
-            :data-source-index="item.source_index">
-            <slot name="default" :item="item" :index="index"></slot>
-          </div>
-          <!-- 到底了容器-->
-          <!-- <div :class="['loading-more-container']" v-if="isScrolledRealBottom && isShowMoreWrapper">
-            <div style="color:#AAAEB8;font-size:.12rem;"> {{ i18n_t("scroll_wrapper.is_footer") }} </div>
-          </div> -->
+    <div class="scrollerContainer" ref="scrollerContainerRef" @scroll="onScroll">
+      <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
+      <div class="contentList" :style="styleTranslate" ref="contentListRef">
+        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index">
+          <slot name="default" :item="item" :index="index"></slot>
         </div>
+        <!-- 到底了容器-->
+        <!-- <div :class="['loading-more-container']" v-if="isScrolledRealBottom && isShowMoreWrapper">
+          <div style="color:#AAAEB8;font-size:.12rem;"> {{ i18n_t("scroll_wrapper.is_footer") }} </div>
+        </div> -->
       </div>
-    </template>
-    <template v-else>
-      <SList :loading_body="true" />
-    </template>
+    </div>
+  
   </div>
   <!-- 回到顶部按钮组件 -->
   <template v-if="isShowGoTop">
@@ -28,7 +27,7 @@
 </template>
 
 <script setup>
-import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, onUnmounted, onUpdated, ref, toRefs, watch } from 'vue'
+import { computed, markRaw, nextTick, onMounted, onUnmounted, onUpdated, ref, toRefs, watch } from 'vue'
 
 import { useMittOn, MITT_TYPES } from "src/output"
 
@@ -152,7 +151,7 @@ onMounted(() => {
     emitter_1: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, gotTop).off,
   };
   emitters.value = {
-    emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, (val) => show_skeleton_screen.value = val).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, (val) =>  show_skeleton_screen.value = val).off,
   };
 })
 
@@ -375,6 +374,12 @@ onUnmounted(() => {
   height: 100%;
   position: relative;
   overflow-y: auto;
+  &.skeletonContainer{
+    overflow: hidden;
+    .skeletonBox{
+      height: 100%;
+    }
+  }
   :deep(.skeleton-wrap){
     position: absolute;
     overflow: hidden;

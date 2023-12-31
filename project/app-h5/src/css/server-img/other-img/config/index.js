@@ -83,4 +83,10 @@ export default {
   'h5-footer-sx': {
     default: "h5-footer-sx",    
   },
+  'h5-sort-arrows': {
+    default: "h5-sort-arrows",    
+  },
+  'h5-sort-arrows-active': {
+    default: "h5-sort-arrows-active",    
+  },
 }

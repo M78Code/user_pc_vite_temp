@@ -16,6 +16,7 @@ const router = createRouter({
             name: "matchList",
             component: () => import("../pages/match-list/index.vue"),
             meta: {
+              preload: true,
               keepAlive: true // 需要缓存
             },
           },
@@ -24,6 +25,7 @@ const router = createRouter({
             name: "handicapTutorial",
             component: () => import("../pages/handicap-tutorial/index.vue"),
             meta: {
+              preload: true,
               keepAlive: true // 需要缓存
             },
           },
@@ -33,6 +35,7 @@ const router = createRouter({
             name: "rules",
             component: () => import("../pages/handicap-tutorial/index.vue"),
             meta: {
+              preload: true,
               keepAlive: true // 需要缓存
             },
           },
@@ -41,6 +44,7 @@ const router = createRouter({
             name: "matchResults",
             component: () => import("../pages/match-results/index.vue"),
             meta: {
+              preload: true,
               keepAlive: true // 需要缓存
             },
           },
@@ -58,30 +62,42 @@ const router = createRouter({
           path: "/virtual",  // vr体育
           name: "virtual_sports",
           component: () => import("src/base-h5/vr/pages/virtual/virtual.vue"),
+          meta: {
+            preload: true,
+          },
         },
         {
           path: "/collect", // 收藏
           name: "collect",
           component: () => import("../pages/collect/index.vue"),
+          meta: {
+            preload: true,
+          },
         },
         {
           path: "/menu",
           name: "menu",
           component: () => import("../pages/menu/index.vue"),
+          meta: {
+            preload: true,
+          },
         },
         {
           path: "/notice",
           name: "notice",
           component: () => import("../pages/notice/index.vue"),
+          meta: {
+            preload: true,
+          },
         },
        
         {
           path: "/rule_description",
           name: "rule_description",
-          component: () =>
-            import(
-              "../pages/rule-description/description-main.vue"
-            ),
+          component: () => import( "../pages/rule-description/description-main.vue" ),
+          meta: {
+            preload: true,
+          },
         },
           // {
           //   path: '/category_loading/:mid',
@@ -93,12 +109,18 @@ const router = createRouter({
           path: "/details/:mid/:csid/:tid/:mcid?",
           name: "category",
           component: () => import("../pages/details/details.vue"),
+          meta: {
+            preload: true,
+          },
         },
           // 赛果详情页
           {
             path: "/result_details/:mid/:csid/:mcid?/:index?",
             name: "result_details",
             component: () => import("../pages/details/result-details.vue"),
+            meta: {
+              preload: true,
+            },
             children: [
               {
                 path: "/result_details/:mid/:csid/:mcid?/:index?",
@@ -110,13 +132,19 @@ const router = createRouter({
           { 
             path: '/result/:mid/:csid/:mcid?',
             name: "result",
-            redirect: { name: 'result_details' }
+            redirect: { name: 'result_details' },
+            meta: {
+              preload: true,
+            },
           },
         //   // 虚拟赛事详情页
           {
             path: "/virtual_sports_details",
             name: "virtual_sports_details",
             component: () => import("src/base-h5/vr/pages/virtual/virtual_sports_details.vue"),
+            meta: {
+              preload: true,
+            },
             children: [
               {
                 path: "virtual_sports_category/:id?",
@@ -130,6 +158,9 @@ const router = createRouter({
             path: "/activity",
             name: "activity",
             component: () => import("../pages/activity/index.vue"),
+            meta: {
+              preload: true,
+            },
           },
       ],
     },

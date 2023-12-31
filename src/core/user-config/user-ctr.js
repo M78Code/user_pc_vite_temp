@@ -410,9 +410,16 @@ class UserCtr {
   * @param {*} callback 
   */
   async get_user_info(token, callback) {
-    let res = await api_account.get_user_info({
-      token,
-    });
+    let res = '';
+    let time_upd = lodash.get(BUILDIN_CONFIG.DOMAIN_RESULT, 'getuserinfo_res.time_upd')
+    if(time_upd && ((new Date().getTime()-time_upd)<2000)){
+      // 首次加载时用户接口,两秒内只调用一次
+      res = lodash.get(BUILDIN_CONFIG.DOMAIN_RESULT, 'getuserinfo_res.data');
+    } else {
+      res = await api_account.get_user_info({
+        token,
+      });
+    }
     let obj = lodash.get(res, 'data', {});
     this.set_user_token(token);
     this.set_user_info(obj);

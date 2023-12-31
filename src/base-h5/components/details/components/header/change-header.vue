@@ -15,7 +15,7 @@
           <div class="col-2 text-center header-font" v-show="is_show_score && !eports_scoring">{{score.home}}</div>
           <!-- 中间的赛事阶段 上半场和一个倒计时-->
           <div class="col text-center base-header-font">
-            <match-stage :detail_data="detail_data" v-if="show_match_stage"></match-stage>
+            <match-stage :detail_data="detail_data" v-if="show_match_stage" :is_change_header="true"></match-stage>
           </div>
           <div class="col eports_scoring_tip" v-if="eports_scoring">{{i18n_t('mmp.eports_scoring')}}</div>
           <!-- 右边的比分 -->
@@ -23,6 +23,9 @@
         </div>
         <!-- 客队名称 -->
         <div class="col-2 text-right ellipsis base-header-font">{{detail_data.man}}</div>
+<!--      为了保证标题可以居中-->
+      <!--   其实也可以不要，本来加起来也不是12   -->
+        <div class="col-1"></div>
     </div>
   </div>
 </template>
@@ -138,8 +141,10 @@ export default defineComponent({
   .go-back-container {
     display: flex;
     align-items: center;
+    justify-content: center;
     position: relative;
-    border-right: .15rem solid transparent;   /*扩大可点击范围*/
+    // 不是这么玩的！
+    //border-right: .15rem solid transparent;   /*扩大可点击范围*/
   }
 
   .iocn {
@@ -184,8 +189,14 @@ export default defineComponent({
   background: url($SCSSPROJECTPATH + '/image/common/go_back.svg') no-repeat center / 96% 96%;
   background-size: 100% 100%;
 }
+// 解决标题的居中问题，
+// margin 和 padding不能乱用
+.mx-15 {
+  margin: 0;
+  //padding: 0 0.15rem;
+  padding: 0;
+}
 </style>
 <style lang="scss">
 
 </style>
-src/core/utils/common/index.jssrc/output/index.js
