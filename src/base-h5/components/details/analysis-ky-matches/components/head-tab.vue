@@ -158,7 +158,8 @@ onUnmounted(() => {
         background-color: var(--q-gb-bg-c-31);
         .tabs-label {
         font-size: 0.14rem;
-        color: var(--q-gb-bg-c-13);
+        color: var(--q-gb-t-c-1);
+        font-weight: bold;
       }
         // box-sizing: border-box;
         //       .tabs-label {
@@ -184,7 +185,7 @@ onUnmounted(() => {
 
       .tabs-label {
         font-size: 0.14rem;
-        color: var(--q-gb-t-c-18);
+        color: var(--q-gb-t-c-19);
       }
     }
   }
