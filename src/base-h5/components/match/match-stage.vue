@@ -17,9 +17,15 @@
            {{(new Date(+detail_data.mgt)).Format(i18n_t('time2'))}}
 <!--          {{ formatTime(+detail_data.mgt, "DD/mm hh:MM") }}-->
         </span>
-        <span v-if="is_show_time">
+
+<!--    Bug: 52634-->
+        <span v-if="!is_change_header && is_show_time">
           {{(new Date(+detail_data.mgt)).Format(i18n_t('time2') + ' hh:mm')}}
         </span>
+
+        <!-- Bug: 52782-->
+        <show-start-time v-if="is_change_header && one_hour" :detail_data="detail_data"></show-start-time>
+
       </span>
 
       <span v-else-if="detail_data.ms == 3">
@@ -55,6 +61,7 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { MenuData } from "src/output/index.js";
 import { i18n_t } from "src/boot/i18n.js"
 import { format_time_zone, formatTime } from 'src/output/index.js'
+import showStartTime from 'src/base-h5/components/details/wight/show-start-time.vue'   // 详情页同联赛的赛事即将开赛显示时间
 
 import stage_child_1 from "./stage/stage-child-1.vue";  // 详情页显示足球赛事第几节以及赛事时间
 import stage_child_2 from "./stage/stage-child-2.vue";  // 详情页显示篮球赛事第几节以及赛事时间
