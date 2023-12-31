@@ -1,1 +1,1 @@
-export const sxasxa =6666
+export { default as MenuData } from "src/core/menu-app-h5/menu-data-class.js";
