@@ -11,7 +11,7 @@
           <template v-if="item">
             <template v-for="(ol_item,ol_index) in item.ol">
               <!-- 左 -->
-              <div class="col border-style mg-4-bg" v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
+              <div class="col border-style" v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
                 <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
@@ -71,7 +71,7 @@
               </div>
 
               <!-- 右 -->
-              <div class="col  mg-4-bg" v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index">
+              <div class="col" v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index">
                 <!--  0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
@@ -186,7 +186,7 @@ export default defineComponent({
   .bet-wrapper {
     border-radius: 0.08rem;
     overflow: hidden;
-    padding:0.04rem;
+    padding:0.08rem;
     color: var(--q-bd-t-c-18);
     .border-style{
       // border-right: 1px solid var(--q-gb-bd-c-7);
@@ -194,10 +194,13 @@ export default defineComponent({
   }
 
   .play-box {
-    height: 0.52rem;
     background: var(--q-gb-bg-c-28);
     margin: 0.04rem;
-    padding: 0.06rem 0.05rem 0;
+    height: 0.52rem;
+    line-height: 0.52rem;
+    padding: 0 0.15rem;
+    display: flex;
+    justify-content: center;
 
     .ellipsis {
       height: 0.16rem;
@@ -230,5 +233,8 @@ export default defineComponent({
   .win :deep(.odds-new2) {
     color: #FF4A4A !important;
   }
+}
+.play-box{
+  border-radius: 4px;
 }
 </style>

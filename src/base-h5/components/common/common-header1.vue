@@ -283,6 +283,7 @@ export default {
   .triangle-down {
     width: 0;
     height: 0;
+    margin-top: 0.04rem;
     border: 0.05rem solid;
     border-color: #fff transparent transparent transparent;
     display: inline-block;
@@ -300,8 +301,14 @@ export default {
   letter-spacing: 0;
   text-align: center;
   font-weight: 400;
-  padding-left: 0.6rem;
+   //padding-left: 0.6rem;
+  // 修复名称居中问题
+  // width不能用100%，会盖住返回等问题
   background-color: transparent !important;
+  position: absolute;
+  left: 50%;
+  width: 76%;
+  margin-left: -38%;
 }
 
 .details-c {

@@ -154,7 +154,7 @@ export default defineComponent({
 .odds-style {
   color: var(--q-gb-t-c-18);
   font-size: 0.12rem;
-
+  margin-top: 0.1rem;
   letter-spacing: 0;
   text-align: center;
 }
@@ -169,9 +169,13 @@ export default defineComponent({
 }
 
 .item-height {
-  height: 0.52rem;
+  height: 0.67rem;
   background: var(--q-gb-bg-c-28);
   width: auto;
+  padding-top: 0.07rem;
+  >div {
+    gap: 0.16rem;
+  }
   &:nth-child(3n) {
     border-right: none;
   }

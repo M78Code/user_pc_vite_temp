@@ -171,8 +171,8 @@
                 </div>
               </div>
               <!-- 比分版, 即将开赛时不展示比分-->
-              <div class="score-title-text" v-if="match.ms != 110 && get_match_status(match.ms)">{{ home_score }} - {{
-                away_score }}</div>
+              <div class="score-title-text" v-if="match.ms != 110 && get_match_status(match.ms)"><span>{{ home_score }} - {{
+                away_score }}</span></div>
             </div>
             <!--玩法数量-->
             <div class="more" @click='goto_details(match)'>
@@ -495,6 +495,7 @@ export default {
     /* width:0.9rem!important; */
     width: auto !important;
     position: static;
+    height: 100%;
     >span {
       display: inline-block;
       white-space: nowrap;

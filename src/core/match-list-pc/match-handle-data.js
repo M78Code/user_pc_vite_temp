@@ -10,6 +10,7 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/output/module/menu-data.js'
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
+import { get_compute_other_play_data,get_play_current_play,get_tab_play_keys} from 'src/core/match-list-pc/composables/match-list-other.js'
 import { match_state_convert_score_dict, history_score_dict } from 'src/core/constant/project/module/data-class-ctr/score-keys.js'
 /**
    * @Description  根据菜单ID 获取一个菜单对象
@@ -316,7 +317,7 @@ export function get_match_to_map_obj(match, key_arr, type = 1) {
                                 if (lodash.get(item2, 'hl.length')) {
                                     // 遍历盘口数据
                                     item2.hl.forEach(item3 => {
-                                        if (item3) {
+                                        if (item3&& !item3.hn) {
                                             if (item3.hid) {
                                                 // 增加玩法信息到盘口级别
                                                 item3.mid = match.mid;
@@ -335,23 +336,21 @@ export function get_match_to_map_obj(match, key_arr, type = 1) {
                                                         ot = item4.ot;
                                                     }
                                                     // 设置坑位信息
-                                                    if (!item3.hn) {
-                                                        let _hn = `${match.mid}_${item2.hpid}_${type}_${ot}`;
-                                                        // 押注项设置盘口状态
-                                                        Object.assign(item4, {
-                                                            _hpid: item2.hpid,
-                                                            _hs: (item3.hs ? item3.hs : 0),
-                                                            _mhs: (match.mhs ? match.mhs : 0),
-                                                            _mid: match.mid,
-                                                            _hid: item3.hid,
-                                                            _hn,
-                                                            _hsw: item2.hsw,
-                                                            _hipo: item3.hipo,
-                                                            os: Object.hasOwnProperty.call(item4, 'os') ? item4.os : 1,
-                                                        });
-                                                        // 快速查询对象hn_obj增加数据
-                                                        map_obj[MatchListData.get_list_to_obj_key(match.mid, _hn, 'hn')] = item4;
-                                                    }
+                                                    let _hn = `${match.mid}_${item2.hpid}_${type}_${ot}`;
+                                                    // 押注项设置盘口状态
+                                                    Object.assign(item4, {
+                                                        _hpid: item2.hpid,
+                                                        _hs: (item3.hs ? item3.hs : 0),
+                                                        _mhs: (match.mhs ? match.mhs : 0),
+                                                        _mid: match.mid,
+                                                        _hid: item3.hid,
+                                                        _hn,
+                                                        _hsw: item2.hsw,
+                                                        _hipo: item3.hipo,
+                                                        os: Object.hasOwnProperty.call(item4, 'os') ? item4.os : 1,
+                                                    });
+                                                    // 快速查询对象hn_obj增加数据
+                                                    map_obj[MatchListData.get_list_to_obj_key(match.mid, _hn, 'hn')] = item4;
                                                 });
                                             }
                                         }
@@ -370,9 +369,9 @@ export function get_match_to_map_obj(match, key_arr, type = 1) {
                                 // 检查是否有盘口数据
                                 if (lodash.get(item2, 'hl.ol.length')) {
                                     // if(item2.hl.ol.forEach(item3 => {
-                                    if (lodash.get(item2, 'hl')) {
+                                    if (lodash.get(item2, 'hl') ) {
                                         let item3 = item2.hl;
-                                        if (item3) {
+                                        if (item3&& !item3.hn) {
                                             if (item3.hid) {
                                                 // 增加玩法信息到盘口级别
                                                 item3.mid = match.mid;
@@ -390,25 +389,22 @@ export function get_match_to_map_obj(match, key_arr, type = 1) {
                                                     } else {
                                                         ot = item4.ot;
                                                     }
-
                                                     // 设置非坑位信息
-                                                    if (!item3.hn) {
-                                                        let _hn = `${match.mid}_${item2.hpid}_${type}_${ot}`;
-                                                        // 押注项设置盘口状态
-                                                        Object.assign(item4, {
-                                                            _hpid: item2.hpid,
-                                                            _hs: (item3.hs ? item3.hs : 0),
-                                                            _mhs: (match.mhs ? match.mhs : 0),
-                                                            _mid: match.mid,
-                                                            _hid: item3.hid,
-                                                            _hn,
-                                                            _hsw: item2.hsw,
-                                                            _hipo: item3.hipo,
-                                                            os: Object.hasOwnProperty.call(item4, 'os') ? item4.os : 1,
-                                                        });
-                                                        // 快速查询对象hn_obj增加数据
-                                                        map_obj[MatchListData.get_list_to_obj_key(match.mid, _hn, 'hn')] = item4;
-                                                    }
+                                                    let _hn = `${match.mid}_${item2.hpid}_1_${ot}`;
+                                                    // 押注项设置盘口状态
+                                                    Object.assign(item4, {
+                                                        _hpid: item2.hpid,
+                                                        _hs: (item3.hs ? item3.hs : 0),
+                                                        _mhs: (match.mhs ? match.mhs : 0),
+                                                        _mid: match.mid,
+                                                        _hid: item3.hid,
+                                                        _hn,
+                                                        _hsw: item2.hsw,
+                                                        _hipo: item3.hipo,
+                                                        os: Object.hasOwnProperty.call(item4, 'os') ? item4.os : 1,
+                                                    });
+                                                    // 快速查询对象hn_obj增加数据
+                                                    map_obj[MatchListData.get_list_to_obj_key(match.mid, _hn, 'hn')] = item4;
                                                 });
                                             }
                                         }
@@ -527,6 +523,11 @@ export function match_list_handle_set(match_list) {
         match_list.forEach(match => {
             match.tpl_id = get_match_template_id(match);
             match.api_update_time = date_now;
+            match.tab_play_keys=get_tab_play_keys(match)
+            match.has_other_play = match.tab_play_keys&&String(match.tab_play_keys).split(',').length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
+            match.play_current_key=get_play_current_play(match)
+            
+            match.other_handicap_list = get_compute_other_play_data(match);
         })
     }
 }

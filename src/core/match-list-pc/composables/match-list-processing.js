@@ -24,7 +24,6 @@ const load_data_state = ref(null);
 let hot_match_list_timeout;
 let vx_layout_list_type = 'match'
 
-console.error('MenuData-------',);
 // 是否虚拟体育
 let is_virtual = MenuData.is_vr();
 const { route_name } = PageSourceData;

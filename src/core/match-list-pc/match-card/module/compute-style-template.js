@@ -31,6 +31,7 @@ import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
 import { MenuData} from "src/output/module/menu-data.js"
 import { update_match_parent_card_style } from "src/core/match-list-pc/match-card/module/utils.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 import { league_title_card_template, ouzhou_league_title_template } from "../config/card-template-config.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "../../list-template/index.js";
@@ -42,12 +43,13 @@ const get_tab_play_height = (mid) => {
 	let template_id = MenuData.get_match_tpl_number()
 	let { play_current_key, other_handicap_list = [] } =
 		MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
+		console.log("jiffy-3",play_current_key)
 	let { tab_play_handicap_height: handicap_height } = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]["match_template_config"] || {};
 	let length = lodash.get(other_handicap_list, "0.ols.length", 3);
 	//5分钟      波胆
 	if (["hps5Minutes", "hpsBold"].includes(play_current_key)) {
 		// 计算0号模板次要玩法 盘口+玩法标题高度
-		handicap_height = length * 35 + (40 - (!["en", "ad", "ms"].includes(localStorage.getItem("get_lang")) ? 16 : 0));
+		handicap_height = length * 35 + (40 - (!["en", "ad", "ms"].includes(UserCtr.lang) ? 16 : 0));
 	}
 
 	return handicap_height;
@@ -106,11 +108,10 @@ const compute_style_template_by_matchinfo_template0_zuqiu = (
 	let is_show_tab_play = match.has_other_play;
 	// 角球、罚牌、点球大战等玩法 是否折叠
 	let is_fold_tab_play = lodash.get(
-		MatchListCardData.all_card_obj["mid_" + match.mid],
+		MatchListCardData.get_card_obj_bymid(match.mid),
 		"is_fold_tab_play",
 		false
 	);
-
 	let tab_play_total_height = 0;
 	if (is_show_tab_play && !is_fold_tab_play) {
 		// 如果有角球玩法并且未折叠  角球区域总高度 等于角球标题高度加角球盘口高度
@@ -145,10 +146,10 @@ const compute_style_template_by_matchinfo_template0_zuqiu = (
  * @param {String|Number} mid 赛事id
  */
 export const update_match_cur_card_style = (mid) => {
-	let card_obj = MatchListCardData.all_card_obj[mid+'_'];
+	let card_obj = MatchListCardData.get_card_obj_bymid(mid);
 	if (!card_obj.is_fold_tab_play) {
 		card_obj.tab_play_total_height =
-			card_obj.tab_play_title_height + get_tab_play_height(-1);
+			card_obj.tab_play_title_height + get_tab_play_height(mid);
 		card_obj.total_height =
 			card_obj.main_handicap_height +
 			card_obj.add_handicap_height +
