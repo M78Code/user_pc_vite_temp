@@ -448,6 +448,7 @@ class MatchMeta {
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
     try {
+      this.current_euid = `champion_${euid}`
       const res = await api_common.post_match_full_list({
         euid,
         "cuid": UserCtr.get_uid(),
@@ -455,7 +456,7 @@ class MatchMeta {
         "sort": UserCtr.sort_type,
         "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
       })
-
+      if (this.current_euid !== `champion_${euid}`) return
       if (+res.code !== 200) {
         if (res.code === '0401038') {
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
@@ -569,8 +570,6 @@ class MatchMeta {
       if (this.current_euid !== `results_${euid}_${md}` || +res.code !== 200) {
         if (res.code === '0401038') {
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-          this.set_page_match_empty_status({ state: false });
-          return []
         }
         this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
         return []

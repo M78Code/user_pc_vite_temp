@@ -114,7 +114,17 @@ search_params_obj.init_param_del = location_href_param_del;
 search_params_obj.init_param_set = location_href_param_set;
 // 获取指定url中的所有参数 
 search_params_obj.get_url_param = get_url_param;
-
+// 是否有token 
+let has_token = true;
+try {
+  if(!search_params_obj.init_param.get('token')){
+    has_token = false;
+  }
+} catch (error) {
+  console.error(error);
+}
+// 设置是否有token 
+search_params_obj.has_token = has_token;
 // 全局获取url参数值使用
 window.SEARCH_PARAMS = search_params_obj;
 // 获取清除参数的url

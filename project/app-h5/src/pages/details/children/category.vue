@@ -5,10 +5,7 @@
       :style="get_is_hengping ? 'left: unset;width: 2.8rem;' : ''" 
       该样式导致47446，loading不居中
     -->
-    <loading
-        v-if="is_loading"
-        :top="get_is_hengping ? '50%' : '58%'"
-    ></loading>
+    <loading v-if="is_loading" :top="get_is_hengping ? '50%' : '58%'"></loading>
     <!--无盘口数据时,赛事推荐-->
     <div class="match-recommend-wrapper" v-if="show_recommend" style="">
       <!-- 无数据背景图  :src="get_is_hengping ? (`/image/wwwassets/bw3/svg/full_screen_match_odds_closed.svg`) : `/image/wwwassets/bw3/svg/match_odds_closed.svg`"-->
