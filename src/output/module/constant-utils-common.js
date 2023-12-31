@@ -8,11 +8,13 @@
  * 必须 内部 单独引用 或者  从 src\output\module\constant-utils-common.js 引用 问题不大
  * 但是不能 引用 非这个文件内引入的内容
  */
-
+// 本次打包的 客户端版本
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 export * from "src/core/format/common/index.js";
 export * from "src/core/constant/common/index.js";
 export * from "src/core/utils/common/index.js";
 export * from "src/core/file-path/file-path";
+
 export { default as STANDARD_KEY } from "src/core/standard-key";
 
 export { default as uid } from "src/core/uuid/index.js";
@@ -30,8 +32,7 @@ export {
   MITT_TYPES,
 } from "src/core/mitt/index.js";
 
-// 本次打包的 客户端版本
-import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+
 
 export const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILDIN_CONFIG ;
 export const  project_name = PROJECT_NAME

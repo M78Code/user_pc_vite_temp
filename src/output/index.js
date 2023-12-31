@@ -15,7 +15,8 @@
  * 但是可以引用 ： src/output/module/*.js
  */
 
- 
+ // 本次打包的 客户端版本
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
  
  
 //所有项目通用： 业务逻辑  无关  ： 常量，工具函数 ，国际化 ，顶层通信用的 全局常量和 MITT
