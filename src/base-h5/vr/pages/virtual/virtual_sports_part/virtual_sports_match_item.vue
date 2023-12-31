@@ -1072,13 +1072,13 @@ export default {
           // background-color: red;
 
           &.left {
-            // justify-content: flex-end;
-            justify-content: center;
+            justify-content: flex-end;
+            // justify-content: center;
           }
 
           &.right {
-            // justify-content: flex-start;
-            justify-content: center;
+            justify-content: flex-start;
+            // justify-content: center;
           }
         }
       }
