@@ -284,7 +284,7 @@ export default {
       // padding-top: 0.12rem;
       position: relative;
       display: flex;
-      width: 50%;
+      width: 59%;
       // &:before {
       //   width: 0.03rem;
       //   height: 0.16rem;
