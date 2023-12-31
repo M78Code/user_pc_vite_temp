@@ -2,10 +2,11 @@ import lodash from 'lodash'
 // 电竞赛种csid
 const e_sport_csids = [101, 100, 102, 103];
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
- 
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+
 import {GLOBAL_CONSTANT } from "src/core/constant/global/index.js"
 // 目前环境信息
-const {BUILD_VERSION, IS_DEV, CURRENT_ENV, DOMAIN_RESULT, PROJECT_NAME ,IS_TOPIC_PROJECT,LOCAL_COMMON_FILE_PREFIX, LOCAL_PROJECT_FILE_PREFIX} = window.BUILDIN_CONFIG;
+const {BUILD_VERSION, IS_DEV, CURRENT_ENV, DOMAIN_RESULT, PROJECT_NAME ,IS_TOPIC_PROJECT,LOCAL_COMMON_FILE_PREFIX, LOCAL_PROJECT_FILE_PREFIX} = BUILDIN_CONFIG;
 let project_name = PROJECT_NAME
 const src_rdm = Date.now();
 // 字母顺序

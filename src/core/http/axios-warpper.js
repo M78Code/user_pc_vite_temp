@@ -20,7 +20,7 @@ import { SessionStorage ,LocalStorage} from "src/output/module/constant-utils-co
 
 import STANDARD_KEY from "src/core/standard-key";
 
-const { API_PREFIX = {} } = window.BUILDIN_CONFIG;
+ 
 const { API_PREFIX_WBSOCKET } = API_PREFIX;
 //token键
 const token_key = STANDARD_KEY.get("token"); 
@@ -37,8 +37,7 @@ usePageVisibilityChange(
     DOCUMENT_HIDDEN = Date.now();
   }
 );
-// 引入 当前  植入配置
-const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
+ 
 /**
  * 去掉 api 参数 reload
  */
