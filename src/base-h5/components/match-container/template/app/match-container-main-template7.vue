@@ -1513,7 +1513,7 @@ export default {
     top: 0px;
     height: 100%;
     color: var(--q-gb-t-c-19);
-    margin-right: 2px;
+    margin-right: 8px;
     &.newer {
       margin-left: 0;
     }
