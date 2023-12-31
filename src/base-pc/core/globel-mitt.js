@@ -3,7 +3,8 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/";
 import { LocalStorage, SessionStorage } from 'src/core/utils/common/module/web-storage.js'
 import { onBeforeUnmount } from "vue";
 import { throttle } from "lodash";
-const { NODE_ENV, TAG, PRO_ARR } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { NODE_ENV, TAG, PRO_ARR } = BUILDIN_CONFIG;
 import STANDARD_KEY from "src/core/standard-key/";
 import UserCtr from "src/core/user-config/user-ctr.js";
 

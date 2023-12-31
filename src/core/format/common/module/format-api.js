@@ -1,4 +1,4 @@
-const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 
 /**
  * 把一条API 数据组装当前的 分组数据 等

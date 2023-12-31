@@ -1,7 +1,8 @@
 import { api_common } from "src/api/index.js";
 import BaseUserInfo from "src/core/user-config/base-user-info.js";
 import { get } from "lodash";
-const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { DEFAULT_VERSION_NAME } = BUILDIN_CONFIG;
 const initialState = {
   version_name: "zhuanye",
   // 当前网站是否处于后台运行中

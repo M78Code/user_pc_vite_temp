@@ -3,7 +3,8 @@
  * @Description: ws通信日志功能类
  */
 import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
-const { LOCAL_FUNCTION_SWITCH, PROJECT_NAME } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { LOCAL_FUNCTION_SWITCH, PROJECT_NAME } = BUILDIN_CONFIG;
 
 class WsLog
 {

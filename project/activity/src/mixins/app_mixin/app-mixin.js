@@ -2,7 +2,7 @@
 import { loadLanguageAsync } from "project_path/src/boot/i18n.js";
 import { throttle } from "lodash";
 import $class from "licia/$class";
-const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 import { UserCtr } from "project_path/src/core/index.js";
 
 import { enter_params,  LocalStorage  ,useMittOn, 

@@ -3,8 +3,8 @@
  * 
  */
 import { api_hide } from "src/api/index.js";
-
-const {PROJECT_NAME,IS_PC} = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const {PROJECT_NAME,IS_PC} = BUILDIN_CONFIG;
 const HIDE_API_NAME_MAP1 = {
   'yazhou-h5':'2023亚洲版',
   'yazhou-pc':'2023亚洲版',
