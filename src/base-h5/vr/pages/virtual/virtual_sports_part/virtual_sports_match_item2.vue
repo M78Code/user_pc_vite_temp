@@ -510,7 +510,7 @@ export default {
   min-height: 0.9rem;
   margin: 0 auto 0.08rem auto;
   border-radius: 0;
-  border-bottom: 1px solid var(--q-gb-bd-c-4);
+  // border-bottom: 1px solid var(--q-gb-bd-c-4);
   position: relative;
 
   .test-line {
@@ -596,7 +596,7 @@ export default {
         justify-content: space-between;
         border-bottom: 1px solid var(--q-gb-bd-c-4);
         height: 0.25rem;
-        margin-top: 0.1rem;
+        margin-top: 0.05rem;
         span {
           font-size: 0.12rem;
           color: var(--q-gb-t-c-18);
