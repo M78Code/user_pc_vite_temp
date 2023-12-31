@@ -200,6 +200,14 @@ class MatchUtils {
     if ([1,2].includes(+match.start_flag)) is_show_league = true
     return is_show_league
   }
+  // 是否显示 卡片 下边 圆角
+  get_is_show_border_radius (i, list)  {
+    // 当前赛事
+    const match = list[i]
+    const next_match = list[i + 1]
+    if (!next_match) return true
+    return match?.tid !== next_match?.tid
+  }
   /**
 	 * @description 获取比分 比分变化 或者 赛事阶段变化时调用
 	 * @param  {object} match  当场赛事信息
