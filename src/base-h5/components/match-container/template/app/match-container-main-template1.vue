@@ -1673,9 +1673,7 @@ export default {
         color: #AFB3C8 !important;
         width: 150px !important;
         .counting{
-          font-size: 11px;
-          position: relative;
-          top: -1px;
+          font-size: 12px;
           color: var(--q-gb-t-c-19);
         }
         .special{
