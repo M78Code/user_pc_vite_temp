@@ -73,7 +73,6 @@ import {
   ref,
   onMounted,
   onUnmounted,
-  defineAsyncComponent,
   nextTick,
 } from "vue";
 import StandardEdition from 'src/base-h5/components/standard-edition/index.vue'
@@ -95,14 +94,8 @@ import {debounce} from "lodash";
 import { api_account } from "src/api/index";
 // import betMixBoxChild from "src/base-h5/components/bet/bet-box-app-h5-1/bet_mix_box_child.vue";
 
-// 活动弹出框
-// const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
-const settleDialog = defineAsyncComponent(() =>
-  import("project_path/src/pages/cathectic/index.vue") // project/yazhou-h5/src/pages/cathectic/index.vue
-);
-const toast = defineAsyncComponent(() =>
-  import("src/base-h5/components/common/toast.vue")
-);
+import toast from "src/base-h5/components/common/toast.vue"
+import settleDialog from "project_path/src/pages/cathectic/index.vue"
 
 import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
 
