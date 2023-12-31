@@ -224,7 +224,12 @@ export default defineComponent({
 <style lang="scss" scoped>
 .temp5 {
   .head {
-    line-height: 0.17rem;
+    height: 0.35rem !important; 
+    line-height: 0.35rem !important;
+    .yb_px4{
+      height: 0.35rem !important; 
+    line-height: 0.35rem !important;
+    }
   }
   .col-mg{
     
@@ -249,6 +254,7 @@ export default defineComponent({
     padding: 0.08rem;
     box-sizing: border-box;
     overflow: hidden;
+    border-top: 0.5px solid var(--q-gb-bd-c-5);
   }
   .play-box-style {
     //  margin:0.04rem;

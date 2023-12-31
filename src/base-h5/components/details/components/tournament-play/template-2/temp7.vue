@@ -299,10 +299,11 @@ export default defineComponent({
   height: auto;
   border-radius: 0.03rem 0.03rem 0.03rem 0.03rem;
   overflow: hidden;
-  padding:0.04rem;
+  padding:0.08rem;
 }
 
 .bor-style {
+  border-bottom: unset !important;
 
 }
 
