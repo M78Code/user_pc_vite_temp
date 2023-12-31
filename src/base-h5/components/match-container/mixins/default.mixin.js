@@ -282,7 +282,7 @@ export default defineComponent({
     is_new_user_border_raduis () {
       const { tid = '', mid = '', source_index = 0 } = this.match_of_list
       const current_matchs = lodash.get(MatchMeta, 'current_matchs', [])
-      const next_match = current_matchs[this.i + 1]
+      const next_match = current_matchs[source_index + 1]
       const length = lodash.get(current_matchs, 'length', 0)
       let result = false
       if (tid !== next_match?.tid || source_index === length - 1) result = true

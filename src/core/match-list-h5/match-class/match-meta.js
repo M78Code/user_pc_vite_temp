@@ -1223,6 +1223,7 @@ class MatchMeta {
         estimateHeight: MatchUtils.get_default_estimateHeight(match),
         is_show_league: MatchUtils.get_match_is_show_league(index, target_data),
         is_show_ball_title: MatchUtils.get_match_is_show_ball_title(index, target_data),
+        is_show_border_radius: MatchUtils.get_is_show_border_radius(index, target_data),
       })
       return match
     })
