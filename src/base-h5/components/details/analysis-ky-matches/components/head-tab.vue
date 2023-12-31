@@ -137,10 +137,11 @@ onUnmounted(() => {
       // margin-right: 0.3rem;
       box-sizing: border-box;
       border-radius: 0.2rem;
-      padding: 0.06rem 0.24rem;
+      padding: 0 0.12rem;
       // background-color: aqua;
       box-sizing: border-box;
-
+      height: 0.3rem;
+      line-height: 0.3rem;
       &.small-right {
         margin-right: 0.15rem;
       }
