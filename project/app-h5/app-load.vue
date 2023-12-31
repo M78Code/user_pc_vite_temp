@@ -173,49 +173,49 @@ function event_listener_preventDefault(event) {
   event.preventDefault();
 }
 
-/**
- *@description 页面可见性变化的处理函数
- */
-function visibilitychange_handle() {
-  if (!vue_hidden_run_flg) {
-    return false;
-  }
-  let is_hidden = document.visibilityState == "hidden";
+// /**
+//  *@description 页面可见性变化的处理函数
+//  */
+// function visibilitychange_handle() {
+//   if (!vue_hidden_run_flg) {
+//     return false;
+//   }
+//   let is_hidden = document.visibilityState == "hidden";
 
-  if (is_hidden) {
-    window.DOCUMENT_HIDDEN = new Date().getTime();
-  } else {
-    // 获取 焦点后 ，页面激活 ，次开关打开 ，HTTP,WS 就会自动 打开开关
-    window.DOCUMENT_HIDDEN = "";
-  }
-  // // 设置当前页面是否后台运行中状态
-  // GlobalAccessConfig.set_vue_hidden_run(is_hidden);
+//   if (is_hidden) {
+//     window.DOCUMENT_HIDDEN = new Date().getTime();
+//   } else {
+//     // 获取 焦点后 ，页面激活 ，次开关打开 ，HTTP,WS 就会自动 打开开关
+//     window.DOCUMENT_HIDDEN = "";
+//   }
+//   // // 设置当前页面是否后台运行中状态
+//   // GlobalAccessConfig.set_vue_hidden_run(is_hidden);
 
-  //页面失去焦点 ，隐藏   后台运行
-  if (is_hidden) {
-    background_run_time = new Date().getTime();
-    // 在后台运行超过 over_timer 分钟后才广播刷新数据指令
-  } else {
-    // 页面 唤起  这里流程分 二种：
-    // 流程一：   离开不到30分钟 ，  列表或者详情 ，监听到 页面聚焦时间 变更 ，重新拉取当前的接口
-    // 流程二：   离开超过30分钟 ，  页面直接刷新 重走流程
-    // 30分钟  重载刷新  页面
-    let over_timer = 30 * (60 * 1000);
-    let now_time = new Date().getTime();
-    // 在后台共运行了多少时间
-    let run_time = now_time - background_run_time;
-    // 页面需要 重载刷新
-    let need_reload = run_time > over_timer;
-    //如果需要 重载刷新
-    if (need_reload) {
-      window.location.reload();
-    } else {
-      // 站点 tab 休眠状态转激活  ，
+//   //页面失去焦点 ，隐藏   后台运行
+//   if (is_hidden) {
+//     background_run_time = new Date().getTime();
+//     // 在后台运行超过 over_timer 分钟后才广播刷新数据指令
+//   } else {
+//     // 页面 唤起  这里流程分 二种：
+//     // 流程一：   离开不到30分钟 ，  列表或者详情 ，监听到 页面聚焦时间 变更 ，重新拉取当前的接口
+//     // 流程二：   离开超过30分钟 ，  页面直接刷新 重走流程
+//     // 30分钟  重载刷新  页面
+//     let over_timer = 30 * (60 * 1000);
+//     let now_time = new Date().getTime();
+//     // 在后台共运行了多少时间
+//     let run_time = now_time - background_run_time;
+//     // 页面需要 重载刷新
+//     let need_reload = run_time > over_timer;
+//     //如果需要 重载刷新
+//     if (need_reload) {
+//       window.location.reload();
+//     } else {
+//       // 站点 tab 休眠状态转激活  ，
 
-      useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
-    }
-  }
-}
+//       useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
+//     }
+//   }
+// }
 /**
  * @Description 阻止双击放大
  * @param {undefined} undefined
@@ -227,12 +227,12 @@ function appclick(e) {
 }
 // 添加相应监听事件
 function on_listeners() {
-  // 监听页面是否转入休眠状态
-  document.addEventListener(
-    "visibilitychange",
-    visibilitychange_handle
-  );
-  document.addEventListener("pagehide", visibilitychange_handle);
+  // // 监听页面是否转入休眠状态
+  // document.addEventListener(
+  //   "visibilitychange",
+  //   visibilitychange_handle
+  // );
+  // document.addEventListener("pagehide", visibilitychange_handle);
   document.addEventListener(
     "gesturestart",
     event_listener_preventDefault
@@ -255,11 +255,11 @@ function on_listeners() {
 }
 // 移除相应监听事件
 function off_listeners() {
-  document.removeEventListener(
-    "visibilitychange",
-    visibilitychange_handle
-  );
-  document.removeEventListener("pagehide", visibilitychange_handle);
+  // document.removeEventListener(
+  //   "visibilitychange",
+  //   visibilitychange_handle
+  // );
+  // document.removeEventListener("pagehide", visibilitychange_handle);
   document.removeEventListener(
     "gesturestart",
     event_listener_preventDefault
