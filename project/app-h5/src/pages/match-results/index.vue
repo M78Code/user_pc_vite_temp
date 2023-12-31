@@ -9,7 +9,7 @@
                     </div>
                 </div>
             </template>
-            <template v-if="state.currentSwitchValue !== 3" v-slot:right>
+            <template v-if="[0,1].includes(state.currentSwitchValue)" v-slot:right>
                 <img
                     class="right-icon"
                     @click="filterChange()"
@@ -133,6 +133,7 @@ const current_mi = ref(MenuData.current_lv_2_menu?.mi||menu_list.value[0]?.mi)
  */
 const setDate = () =>{
     state.currentSlideValue = MenuData.data_time;
+    MenuData.search_data_tab_index();//清除联赛筛选
     //调用接口
     get_date_matches_list();
 }
@@ -184,11 +185,12 @@ const switchHandle = async(val,type) => {
     MenuData.set_result_menu_lv1_mi(val)
     state.matchs_data = []
     MenuData.set_results_type(val)
+    !type && MenuData.search_data_tab_index();//清除联赛筛选
     const menu_mi = MenuData.current_lv_2_menu?.mi && type?MenuData.current_lv_2_menu:menu_list.value[0];
-    if(val !== 2)return set_scroll_current(menu_mi);
+    if(val !== 2)return set_scroll_current(menu_mi,0,type);
     state.tab_items =  await get_vr_menu_list();
     const index = MenuData.is_results_vr_type && type?MenuData.is_results_vr_type:0;
-    return set_scroll_current(menu_mi,index)
+    return set_scroll_current(menu_mi,index,type)
     // //获取 赛果菜单
     // switch (+val) {
     //     case 0:
@@ -298,7 +300,8 @@ const get_date_matches_list = async (item)=>{
 }
 
 // 设置滑动菜单的选中id
-const set_scroll_current = (item,index) => {
+const set_scroll_current = (item,index,type) => {
+    !type && MenuData.search_data_tab_index();//清除联赛筛选
     index = index ||0;
     state.matchs_data = []
     if(item){

@@ -28,7 +28,7 @@
         font-size: 0.14rem;
   
         .ellipsis {
-          color: #AFB3C8;
+          color: var(--q-gb-t-c-24);
           font-weight: unset;
         }
   
@@ -38,7 +38,7 @@
   
           .ellipsis {
             color: var(--q-analysis-text-color-20);
-            font-weight: bold;
+            font-weight: 400;
           }
         }
   
