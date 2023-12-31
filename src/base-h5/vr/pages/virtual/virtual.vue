@@ -20,7 +20,7 @@
             <!-- <set-menu /> -->
 
             <!-- 从macth顶部 搬运过来的  用户金额 -->
-            <div class="main-menu-right"  @click.stop>
+            <div class="main-menu-right" @click.stop="get_user_balance()">
                 <!-- <span class="main-menu-right-symbol">￥</span> -->
                 <img :src="compute_local_project_file_path('image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
                 <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
@@ -70,7 +70,6 @@
 import virtualSports from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports.vue";    // 虚拟体育
 // import setMenu from "src/project/components/common/set_menu.vue"    // 设置菜单
 import { api_v_sports } from "src/base-h5/vr/api";
-import { debounce } from "lodash";
 import { utils } from "src/core/utils/common/module/utils.js";
 // import virtualFooterMenu from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_footer_menu.vue'
 import axios_api_loop from "src/core/http/axios-loop.js"
@@ -134,7 +133,7 @@ export default {
     this.timer_super28 = setTimeout(()=>{
       this.set_menu_type(900);
     }, 500)
-    this.cancel_ref = debounce(this.cancel_ref,200)
+    this.cancel_ref = lodash.debounce(this.cancel_ref,200)
   },
   mounted() {
     // 浏览器窗口变化事件监听
@@ -199,6 +198,11 @@ export default {
     }
   },
   methods: {
+    get_user_balance(){
+      lodash.throttle(() => {
+          UserCtr.get_balance()
+      },5000)
+    },
     // ...mapMutations([
     //   "set_list_scroll_top_iconshow", // 设置滚动图标显示
     //   "set_menu_type",    // 设置当前主菜单menu_type值
@@ -430,9 +434,11 @@ export default {
     .title-wrap {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       font-size: 0.16rem;
       height: 0.44rem;
       background-color: var(--q-gb-bg-c-21);
+      position: relative;
       .detail-back-a{
         width: 0.3rem;
         height: 100%;
@@ -456,11 +462,15 @@ export default {
         text-align: center;
         font-weight: 500;
         font-size: 0.18rem;
-        width: 1.6rem;
-        height: 0.44rem;
         line-height: 0.44rem;
         color: var(--q-gb-t-c-18);
-        flex: auto;
+        position: absolute;
+        width: 1.6rem;
+        height: 0.44rem;
+        top: 50%;
+        left: 50%;
+        margin-left: -0.8rem;
+        margin-top: -0.22rem;
       }
 
       /*  刷新按钮 */
@@ -502,7 +512,6 @@ export default {
         align-items: center;
         padding: 0 0.1rem 0 0.03rem;
         margin-right: 0.1rem;
-        flex: 1 1;
         .main-menu-right-symbol{
             font-family: 'Akrobat';
             font-style: normal;

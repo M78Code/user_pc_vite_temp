@@ -5,9 +5,10 @@
 -->
 
 <template>
-  <div class="odd-item-w" :class="{
-    'odd-item-w2':get_bet_list.includes(ol_item.oid),
-    }" :data-oid="ol_item.oid" :data-result="ol_item.result">
+  <div class="odd-item-w" 
+  :class="BetData.bet_oid_list.includes(ol_item.oid)&& 'active'"
+  :data-oid="ol_item.oid" :data-result="ol_item.result">
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
     <div class="result-focus" v-if="ol_item.result == 4">
     </div>
     <div class="o-i-inner flex justify-center items-center">
@@ -34,9 +35,15 @@
 <script>
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import odds_conversion from "src/base-h5/vr/mixin/odds_conversion/odds_conversion.js"
+import BetData from "src/core/bet/class/bet-data-class.js"
 
 export default {
   mixins:[odds_conversion],
+  data(){
+    return {
+      BetData
+    }
+  },
   props:{
     ol_item:Object,
     hl_item:Object,
@@ -86,6 +93,14 @@ export default {
   position: relative;
   flex: 1;
   background: var(--q-gb-bg-c-28);
+  &.active {
+    background: var(--q-gb-bg-c-37) !important;
+    :deep(.o-i-inner){
+      div {
+        color: var(--q-gb-t-c-30)
+      }
+    }
+  }
 
   .result-focus, .o-i-inner {
     width: 100%;

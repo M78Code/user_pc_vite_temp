@@ -240,7 +240,7 @@ const props = defineProps({
     // 头部
     &.backball-table {
       .header {
-        color:  var(--q-analysis-text-color-22);
+        color:  var(--q-analysis-text-color-14);
         border-bottom: 1px solid var(--q-analysis-text-color-25);
         // background: var(--q-analysis-text-color-13);
         > div {
@@ -308,9 +308,9 @@ const props = defineProps({
         align-items: center;
         justify-content: center;
         font-size: 0.12rem;
-        color: var(--q-analysis-text-color-2);
+        color: var(--q-analysis-text-color-20); 
           &.col2 {
-            color: var(--q-analysis-text-color-2);
+            color: var(--q-analysis-text-color-20); 
           }
       }
 

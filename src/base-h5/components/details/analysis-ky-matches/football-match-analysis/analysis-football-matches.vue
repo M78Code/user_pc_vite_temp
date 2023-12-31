@@ -258,7 +258,7 @@ export default defineComponent({
 .analysis-football-matches {
   position: relative;
   z-index: 80;
-  background-color: var(--q-gb-bg-c-15);
+  background-color:  var(--q-gb-bg-c-23);
 }
 
 .clear-bg {
@@ -271,7 +271,7 @@ export default defineComponent({
     width: 100%;
     ul {
       width: 100%;
-      padding: 0 .3rem;
+      padding: 0 0.1rem;
       white-space: nowrap;
       overflow-x: auto;
     }

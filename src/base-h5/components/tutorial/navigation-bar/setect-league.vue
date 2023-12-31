@@ -63,7 +63,7 @@ const router = useRouter();
 //选中的值
 const search_val = ref('')
 //选中的值
-const select_list = ref([])
+const select_list = ref(MenuData.league_filter_list || [])
 //组件数据
 let matchRefOld = ref(null);
 
@@ -79,7 +79,7 @@ const emit = defineEmits(["search_fn","closedHandle"]);
  * @param {Array} select_list 选中的数据
  */
 const finishHandle = () => {
-    select_list.value = matchRefOld.value.list.filter(v=>v.select)
+  select_list.value = matchRefOld.value.list.filter(v=>v.select)
   //设置选中数据
   // 触发联赛选择完成事件
   useMittEmit(MITT_TYPES.EMIT_SELECT_LEAGUE_COMPLETE, {

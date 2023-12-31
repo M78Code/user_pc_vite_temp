@@ -448,6 +448,7 @@ class MatchMeta {
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
     try {
+      this.current_euid = `champion_${euid}`
       const res = await api_common.post_match_full_list({
         euid,
         "cuid": UserCtr.get_uid(),
@@ -455,7 +456,7 @@ class MatchMeta {
         "sort": UserCtr.sort_type,
         "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
       })
-
+      if (this.current_euid !== `champion_${euid}`) return
       if (+res.code !== 200) {
         if (res.code === '0401038') {
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
@@ -551,6 +552,7 @@ class MatchMeta {
     this.clear_match_info()
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const euid = lodash.get(MenuData.result_menu_api_params, 'sport')
+    const params_tid = tid || MenuData.search_tab_tid
     // 电竞的冠军
     const category = MenuData.result_menu_lv1_mi ? 0 : 1
     this.current_euid = `results_${euid}_${md}`
@@ -560,7 +562,7 @@ class MatchMeta {
       const res = await api_common.get_match_result_api({
         ...params,
         category,
-        tid,
+        tid:params_tid,
         md: String(md),
         showem: 1, // 新增的参数 区分电子赛事
         euid: euid && String(euid),
@@ -569,8 +571,6 @@ class MatchMeta {
       if (this.current_euid !== `results_${euid}_${md}` || +res.code !== 200) {
         if (res.code === '0401038') {
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-          this.set_page_match_empty_status({ state: false });
-          return []
         }
         this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
         return []

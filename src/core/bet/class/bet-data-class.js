@@ -17,7 +17,6 @@ class BetData {
    
   }
   init_core() {
-    console.error('init_core')
     this.deviceType = 1  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
     // 当前赔率
     this.cur_odd = "eu";
@@ -981,6 +980,7 @@ this.bet_appoint_ball_head= null */
     if(single_list.length){
       // 获取单关下的赛事id 多个（单关合并）
       mid_list = single_list.map(item => item.matchId) || []
+      // console.error('mid_list',mid_list, '------',mid)
       // 投注项中有 推送的数据 那么就会对盘口和投注项id进行比对筛选 
       if( mid_list.includes(mid)){
         // 投注项盘口id 多个（单关合并）
@@ -995,20 +995,21 @@ this.bet_appoint_ball_head= null */
         //     this.set_ws_message_bet_info(item,ol_index)
         //   }
         // });
-       
+      
         // 获取ws推送中的 盘口项 进行筛选匹配
         // 对比盘口和投注项
         hls.forEach(item => {
           if(market_list.includes(item.hid)){
+            // console.error('market_list',market_list, '------',item.hid)
             // 查询投注项中的 投注项id
             let ol_obj = single_list.find(obj => obj.marketId == item.hid) || {}
             let ol_obj_index = single_list.findIndex(obj => obj.marketId == item.hid) || 0
             // 查询ws投注项 中 匹配到的投注项id 
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
-            // console.error('market_list', item.hs ,ws_ol_obj.os,item.hn, ol_obj.placeNum)
-            // 坑位变更
-            if(item.hn != ol_obj.placeNum){
+            // console.error('ol_obj', item.hs ,ws_ol_obj.os,item.hn, ol_obj.placeNum)
+            // 有坑位 并且 坑位变更 
+            if(item.hn != ol_obj.placeNum && ol_obj.placeNum){
               // 获取最新的盘口值
               get_lastest_market_info()
               return

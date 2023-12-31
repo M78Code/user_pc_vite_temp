@@ -157,27 +157,36 @@ export default defineComponent({
     line-height: 0.13rem;
   }
 
-  .item2 {
-    flex: 1;
-    // background: var(--q-gb-bg-c-18);
-  }
+  // .item2 {
+  //   flex: 1;
+  //   // background: var(--q-gb-bg-c-18);
+  // }
 
   .item-wrap {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.1rem;
-    min-height: 0.32rem;
+       gap: 0.08rem;
+    // min-height: 0.32rem;
     height: auto;
-    border-radius: 4px;
+    // border-radius: 8px;
     overflow: hidden;
-    padding:0.04rem;
+    padding:0.08rem;
+    box-sizing: border-box;
     .item2 {
+      //  margin: 0.04rem;
       flex: 1;
-      max-width: 50%;
-      min-width: 45%;
-      padding:0.04rem;
+      overflow: hidden;
+      &:nth-child(1){
+        margin-left:  0.04rem;;
+      }
+      &:nth-child(2){
+        margin-right:  0.04rem;;
+      }
+      // max-width: 50%;
+      // min-width: 45%;
+      // padding:0.04rem;
       &:nth-child(2n) {
-        margin-right: 0;
+        // margin-right: 0;
         border-right: 0;
       }
     }
@@ -189,16 +198,26 @@ export default defineComponent({
 
   .play-box-style {
     width: 100%;
-    // height: 0.52rem;
-    // line-height: 0.52rem;
-    // background:var(--q-gb-bg-c-28) !important;
-    padding: 0.05rem;
+    height: 0.52rem;
+    line-height: 0.52rem;
+    padding: 0 0.15rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-radius: 4px;
-    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
-
+    border-radius: 8px;
+    box-sizing: border-box;
+    // box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+    &.details-bg5 {
+      background: var(--q-gb-bg-c-37) !important;
+      .details_t_color6  {
+        color: var(--q-gb-t-c-30)!important
+      }
+      :deep(.odds-wrap){
+        .details_t_color6, .odds span {
+          color: var(--q-gb-t-c-30)!important
+        }
+      }
+    }
   }
 
   .play-box-sty {

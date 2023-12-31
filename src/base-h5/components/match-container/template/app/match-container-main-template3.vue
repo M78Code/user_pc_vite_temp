@@ -32,7 +32,7 @@
          
         <!--联赛标题 -->
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
-          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title}]">
+          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'collapsed': !collapsed}]">
           <div class="league-t-wrap right-border">
             <span class="league-title-text row justify-between">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
@@ -47,7 +47,7 @@
         </div>
         <!-- 卡片主内容 -->
         <!-- <q-slide-transition> -->
-        <div style="width: 100%;" v-if="collapsed">
+        <div style="width: 100%;" :class="['match-content', { 'collapsed': collapsed, 'border-raduis': is_show_border_raduis }]" v-if="collapsed">
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
             <!-- <div style="border-top: 1px solid #000; width: 96%;"></div>  ！-->
           <div :class="['match-odds-container study_height_s hairline-border', {'border-top': !match.is_show_league}]">
@@ -445,33 +445,6 @@ export default {
       width: 100%;
     }
 
-  .match-inner-container {
-    // margin: 0 auto;
-    /* 兼容iPhone11边框显示不全 */
-    //width: 100%;
-    display: flex;
-    margin: 0 0.05rem;
-    flex-direction: column;
-    align-items: center;
-    background: var(--q-gb-bg-c-21);
-    border-radius: .08rem;
-    border: 1px solid var(--q-gb-bd-c-15);
-
-    // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
-    &.show-sport {
-      border-top-left-radius: 0.08rem;
-      border-top-right-radius: 0.08rem;
-    }
-    .match-content{
-      background: var(--q-gb-bg-c-15);
-      padding: 0 0.1rem;
-    }
-    &.collapsed{
-      .league{
-        border-bottom: none;
-      }
-    }
-  }
 
   &.started_and_un_started {
     display: block;
@@ -1567,6 +1540,50 @@ export default {
       margin-left: .04rem;
     }
 }
+
+.match-inner-container {
+    padding: 0 0.05rem;
+    margin: 0 auto;
+    /* 兼容iPhone11边框显示不全 */
+    //width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // background: var(--q-gb-bg-c-15);
+    // background: var(--q-gb-bg-c-18);
+    // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
+    &.show-sport {
+      border-top-left-radius: 0.08rem;
+      border-top-right-radius: 0.08rem;
+    }
+    .match-content{
+      width: 100%;
+      padding: 0 10px;
+      // border-top: 1px solid  var(--q-gb-bd-c-4);
+      background: var(--q-gb-bg-c-18);
+      //border-radius: 0 0 8px 8px;
+      border: 1px solid var(--q-gb-bd-c-15);
+      border-bottom-color: var(--q-gb-bg-c-18);
+      &.collapsed{
+        border-top: none;
+        // border-radius: 0 0 0.08rem 0.08rem;
+      }
+      &.border-raduis{
+        border-bottom: 1px solid var(--q-gb-bd-c-15);
+        border-radius: 0 0 0.08rem 0.08rem;
+      }
+    }
+    > .match-indent{
+      border: 1px solid var(--q-gb-bd-c-15);
+      border-radius: 8px 8px 0 0;
+      border-bottom: 1px solid  var(--q-gb-bd-c-4) !important;
+      &.collapsed{
+        border-radius: 8px;
+        border-bottom: 1px solid var(--q-gb-bd-c-15) !important;
+        border: 1px solid var(--q-gb-bd-c-15);
+      }
+    }
+  }
 
 
 /* ********右边赛果相关样式********** -E*/

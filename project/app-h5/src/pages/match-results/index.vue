@@ -9,7 +9,7 @@
                     </div>
                 </div>
             </template>
-            <template v-if="state.currentSwitchValue !== 3" v-slot:right>
+            <template v-if="[0,1].includes(state.currentSwitchValue)" v-slot:right>
                 <img
                     class="right-icon"
                     @click="filterChange()"
@@ -133,6 +133,7 @@ const current_mi = ref(MenuData.current_lv_2_menu?.mi||menu_list.value[0]?.mi)
  */
 const setDate = () =>{
     state.currentSlideValue = MenuData.data_time;
+    MenuData.search_data_tab_index();//清除联赛筛选
     //调用接口
     get_date_matches_list();
 }
@@ -184,11 +185,12 @@ const switchHandle = async(val,type) => {
     MenuData.set_result_menu_lv1_mi(val)
     state.matchs_data = []
     MenuData.set_results_type(val)
+    !type && MenuData.search_data_tab_index();//清除联赛筛选
     const menu_mi = MenuData.current_lv_2_menu?.mi && type?MenuData.current_lv_2_menu:menu_list.value[0];
-    if(val !== 2)return set_scroll_current(menu_mi);
+    if(val !== 2)return set_scroll_current(menu_mi,0,type);
     state.tab_items =  await get_vr_menu_list();
     const index = MenuData.is_results_vr_type && type?MenuData.is_results_vr_type:0;
-    return set_scroll_current(menu_mi,index)
+    return set_scroll_current(menu_mi,index,type)
     // //获取 赛果菜单
     // switch (+val) {
     //     case 0:
@@ -259,7 +261,7 @@ const get_date_matches_list = async (item)=>{
     MatchMeta.clear_match_info()
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: false })
-    // nextTick(() => useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true))
+    nextTick(() => useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true))
     if(item?.sport_id){
         let params = {
             mi:item.mif,
@@ -273,13 +275,13 @@ const get_date_matches_list = async (item)=>{
         case 1:
             nextTick(async () => {
                 state.matchs_data = await MatchMeta.get_results_match();
-                // useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
+                useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             })
             break;
         case 2:
             nextTick(async () => {
                 state.matchs_data = await MatchMeta.get_virtual_results_match(state.tid);
-                // useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
+                useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             })
             break;
         case 3:
@@ -288,7 +290,7 @@ const get_date_matches_list = async (item)=>{
             }
             MenuData.set_result_menu_api_params(params)
             state.matchs_data = await MatchMeta.get_champion_match_result()
-            // useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
+            useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             break;
         default:
             break;
@@ -298,7 +300,8 @@ const get_date_matches_list = async (item)=>{
 }
 
 // 设置滑动菜单的选中id
-const set_scroll_current = (item,index) => {
+const set_scroll_current = (item,index,type) => {
+    !type && MenuData.search_data_tab_index();//清除联赛筛选
     index = index ||0;
     state.matchs_data = []
     if(item){

@@ -323,9 +323,10 @@ class AllDomain {
           } catch (error) {
             console.error(error);
           }
-          this.begin_process_when_use_url_api_after_process(res);
           //保存 用户数据
+          res.time_upd = new Date().getTime();
           BUILDIN_CONFIG.DOMAIN_RESULT.getuserinfo_res = res;
+          this.begin_process_when_use_url_api_after_process(res);
         } else {
           // 强制 走 oss 文件逻辑
           this.force_current_api_flow_to_use_oss_file_api();
