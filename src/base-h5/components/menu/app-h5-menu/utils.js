@@ -76,6 +76,7 @@ export const scrollMenuAnimate = (dom, x) => {
  * @param {*} childClass  选中类
  */
 export const scrollMenuEvent = (event, parentClass, childClass) => {
+    try {
     let scrollBox = document.querySelector(parentClass),//父元素
         scrollBoxNav = document.querySelector(parentClass).querySelector(childClass),//子元素
         spanLeft,
@@ -95,5 +96,9 @@ export const scrollMenuEvent = (event, parentClass, childClass) => {
     if (spanRight < widths || spanLeft < widths) {
         let n = scrollL + (spanLeft - widths) + divBox;
         scrollMenuAnimate(scrollBox, n)
+    }
+    alert('滚动ok')
+    } catch (err){
+        alert('滚动：'+err)
     }
 }
