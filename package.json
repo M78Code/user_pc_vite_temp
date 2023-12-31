@@ -122,6 +122,7 @@
         "efvc": "npm run export-full-version-close",
         "ebca": "npm run  export-build-in-config  export-css-project-path  all",
         "ebc": "npm run  export-build-in-config",
+        "test": "quasar serve ./dist/self-use-version/ -p=35567",
         "echo": "echo \" 此命令无用，查看并选择其他合适命令执行构建 。\" && exit 0"
     },
     "dependencies": {
