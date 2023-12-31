@@ -2,8 +2,8 @@ import BaseData from "src/core/base-data/base-data.js";
 import lodash_ from "lodash"
 import { nextTick } from "vue"
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { PROJECT_NAME } = BUILDIN_CONFIG ;
 class BaseWsMessage {
   constructor(){
     this.count = 0

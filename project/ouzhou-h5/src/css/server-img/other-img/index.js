@@ -1,6 +1,7 @@
 import server_resource from "app/job/output/assets/config.json";
 import { get } from "lodash";
-const { CURRENT_ENV } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { CURRENT_ENV } = BUILDIN_CONFIG;
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 import all_other_image from "./config/index.js";

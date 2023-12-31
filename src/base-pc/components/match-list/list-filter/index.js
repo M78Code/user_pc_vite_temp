@@ -8,8 +8,8 @@ import BaseData from "src/core/base-data/base-data.js";
 import { functions } from "lodash";
 import { api_match_list,api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { IS_FOR_NEIBU_TEST,BUILD_VERSION } = BUILD_VERSION_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { IS_FOR_NEIBU_TEST,BUILD_VERSION } = BUILDIN_CONFIG ;
 
 const current_menu = ref({});
 const mi_100_arr = ref([]);

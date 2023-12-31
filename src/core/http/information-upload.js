@@ -6,7 +6,8 @@
 import axios from "axios";
 import device from "current-device";
 import { SessionStorage } from "src/output/module/constant-utils-common.js";
-const { CURRENT_ENV } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { CURRENT_ENV } = BUILDIN_CONFIG;
 
 class infoUpload {
   HTTP_UPLOAD_API = "https://information-api.sportxxxwo8.com";

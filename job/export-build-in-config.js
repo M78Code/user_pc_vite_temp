@@ -53,12 +53,12 @@ const export_env_config = (env) => {
     // 写入文件
     write_env_file(htmlVariables);
     let str =
-      `export default   window.BUILDIN_CONFIG=` + JSON.stringify(final_config);
+      `export default   ` + JSON.stringify(final_config);
     write_file(full_path, str);
     if (!all_env) {
       write_file(
         final_file_path,
-        `export default window.BUILDIN_CONFIG= ` + JSON.stringify(final_config)
+        `export default   ` + JSON.stringify(final_config)
       );
     }
   });

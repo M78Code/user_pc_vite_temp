@@ -2,7 +2,8 @@ import { ref } from 'vue';
 import { api_details } from "src/api/index";
 import lodash from 'lodash'
 import { MITT_TYPES, useMittEmit } from "../../mitt";
-const { DOMAIN_RESULT, BUILD_VERSION } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { DOMAIN_RESULT, BUILD_VERSION } = BUILDIN_CONFIG;
   // 是否已加载视频动画资源
 let is_load_video_resources = ref(false)
 let timer_load_video = null

@@ -3,8 +3,8 @@ import { api_common } from "src/api/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { MenuData } from "src/output/index.js";
 import BaseData from "src/core/base-data/base-data.js";
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME,BUILD_VERSION,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { PROJECT_NAME,BUILD_VERSION,IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG ;
 
 // 获取收藏数量
 const get_collect_count = () => {

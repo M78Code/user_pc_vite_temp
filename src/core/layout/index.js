@@ -1,6 +1,6 @@
 import { ref } from "vue";
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-export const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+export const { PROJECT_NAME } = BUILDIN_CONFIG ;
 import PageSourceData from "src/core/page-source/page-source.js";
 const { page_source } = PageSourceData;
 // 浏览器高度

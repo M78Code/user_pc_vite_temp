@@ -14,12 +14,12 @@
     }]">
     <template v-if="match" >
       <!-- 全部 -->
-      <div class="all-league-title" v-if="i === 0" @click.stop="handle_all_ball_seed_fold">
+      <div class="all-league-title" v-if="match?.source_index === 0" @click.stop="handle_all_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{ i18n_t('filter.all_leagues')}} </span> </div> 
         <div class="expand_item" :class="{ball_seed_collapsed: !all_ball_seed_collapsed}" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
-      <div class="buffer-container" v-if="match.is_show_league && i !== 0"></div>
+      <div class="buffer-container" v-if="match.is_show_league && match?.source_index !== 0"></div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 @click.stop="handle_ball_seed_fold"-->
       <div v-if="show_sport_title" @click.stop="handle_ball_seed_fold"
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">

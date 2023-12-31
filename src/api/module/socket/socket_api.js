@@ -5,7 +5,8 @@
  */
 
 import {http} from "src/core/http/index.js";
-const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { API_PREFIX } = BUILDIN_CONFIG ;
 const { API_PREFIX_USER:prefix,API_PREFIX_BAT:prefix_yewu13,API_PREFIX_JOB:prefix_job} = API_PREFIX;
 
 // 赛事详情玩法信息

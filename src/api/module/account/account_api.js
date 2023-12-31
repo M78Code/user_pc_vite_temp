@@ -5,8 +5,8 @@
  */
 
 import http from "src/core/http/axios-warpper.js";
-
-const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { API_PREFIX } = BUILDIN_CONFIG ;
 const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_user} = API_PREFIX;
 let prifix_url =  http.HTTP_UPLOAD_API;
 

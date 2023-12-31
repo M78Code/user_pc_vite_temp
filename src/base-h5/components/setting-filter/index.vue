@@ -89,7 +89,7 @@ import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { is_vr } from 'src/base-h5/mixin/menu.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 // 本次打包的 客户端版本
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 
 defineOptions({
   name: "settingFilter" // 设置组件名称
@@ -313,7 +313,7 @@ const change_version_55 =   ()=>{
       let jump_url = 'user-h5-bw3'
       //测试环境
       console.log(window.href)
-      if (BUILD_VERSION_CONFIG?.CURRENT_ENV === "local_test"){
+      if (BUILDIN_CONFIG ?.CURRENT_ENV === "local_test"){
          jump_url = 'test-user-h5-bw3'
       }
       let val = origin.substring(start,end)
@@ -325,7 +325,7 @@ const change_version_55 =   ()=>{
      * 切换新旧版本
      */
      const change_version =   ()=>{
-      const { CURRENT_ENV  , IS_DEV} = BUILD_VERSION_CONFIG;
+      const { CURRENT_ENV  , IS_DEV} = BUILDIN_CONFIG ;
 
 // 增加loop版本跳转参数
 // location.href = old_url.href;

@@ -4,8 +4,8 @@
  */
 
 import {http} from "src/core/http/";
-
-const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { API_PREFIX } = BUILDIN_CONFIG ;
 const { API_PREFIX_ACTIVITY: prefix } = API_PREFIX;
 
 // prefix => yewu19
