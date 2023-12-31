@@ -259,7 +259,7 @@ const get_date_matches_list = async (item)=>{
     MatchMeta.clear_match_info()
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: false })
-    // nextTick(() => useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true))
+    nextTick(() => useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true))
     if(item?.sport_id){
         let params = {
             mi:item.mif,
@@ -273,13 +273,13 @@ const get_date_matches_list = async (item)=>{
         case 1:
             nextTick(async () => {
                 state.matchs_data = await MatchMeta.get_results_match();
-                // useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
+                useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             })
             break;
         case 2:
             nextTick(async () => {
                 state.matchs_data = await MatchMeta.get_virtual_results_match(state.tid);
-                // useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
+                useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             })
             break;
         case 3:
@@ -288,7 +288,7 @@ const get_date_matches_list = async (item)=>{
             }
             MenuData.set_result_menu_api_params(params)
             state.matchs_data = await MatchMeta.get_champion_match_result()
-            // useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
+            useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
             break;
         default:
             break;
