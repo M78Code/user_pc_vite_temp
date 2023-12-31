@@ -68,7 +68,7 @@ export default defineComponent({
   name: "eliminationRank",
   components: {
     IconWapper,
-  }
+  },
   props:{
     // 虚拟体育控制类
     vsport_ctr: Object,
