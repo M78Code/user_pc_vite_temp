@@ -110,7 +110,6 @@
           <div v-show="judage_hshow == 'Yes'" :class="[judage_hshow != 'Yes'?'show_border_r':'hide_border_r' ]">
             <!-- 模板id=8 --用于虚拟体育-热门 -->
             <temp8
-                v-show="item_data.hotName"
                 :item_data="item_data"
                 :title="title"
                 :csid="get_detail_data.csid"
