@@ -10,7 +10,7 @@
       <!-- 玩法列表 -->
       <div class="handicap-col" v-for="(col, col_index) in col_ols_data" :key="col_index">
         <div :class="['bet-item-wrap',]" :style="get_bet_style(col_index, lodash.get(col, 'ols.length'))"
-          v-for="(ol_data, ol_index) in col.ols" :key="col_index+'_'+ol_index">
+          v-for="(ol_data, ol_index) in col.ols" :key="col_index + '_' + ol_index">
           <!-- 投注项组件 -->
           <template
             v-if="match_style_obj.data_tpl_id != 'esports' || (match_style_obj.data_tpl_id == 'esports' && getCurState(ol_data._hipo))">
@@ -19,7 +19,6 @@
         </div>
       </div>
     </div>
-
     <!-- 赛事比分 -->
     <MatchFooterScore v-if="is_show_score" :match="match" :is_show_score_content="is_show_score_content"
       :score_wrap_width="lodash.get(match_list_tpl_size, 'bet_width', 0) * lodash.get(match_list_tpl_size, 'bet_col_count', 0)">
@@ -28,19 +27,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, nextTick, watch } from 'vue';
+import { ref, onMounted, computed, nextTick,toRef, inject } from 'vue';
 import lodash from 'lodash';
 
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
 import { get_match_status } from 'src/core/utils/common/index'
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data.vue"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import { compute_sport_id } from 'src/output/index.js'
-import {get_match_to_map_obj} from 'src/core/match-list-pc/match-handle-data.js'
+import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 const props = defineProps({
   // 盘口列表
   handicap_list: {
@@ -64,7 +62,7 @@ const props = defineProps({
   },
   // 是否是附加盘 且有type
   add_type: {
-    type: [ String, Number ],
+    type: [String, Number],
     default: () => 1,
   },
   // 是否主球次要玩法
@@ -73,33 +71,38 @@ const props = defineProps({
     default: () => false,
   }
 })
+
+const MatchListData=inject("MatchListData")
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 // 组件是否已挂载
-const is_mounted = ref(true);
+const is_mounted = ref(false);
 const cur_esports_mode = ref(BetData.cur_esports_mode);
 onMounted(() => {
   // 异步设置组件是否挂载完成
-  // setTimeout(() => {
-  //   is_mounted.value = true
-  // })
+  setTimeout(() => {
+    is_mounted.value = true
+  })
 })
+//非坑位对象
+const not_hn_obj_map = computed(() => {
+  return get_match_to_map_obj(props.match, null, props.add_type); //非坑位对象
+})
+//坑位对象
+const hn_obj = toRef(MatchListData.list_to_obj,'hn_obj')
 const col_ols_data = computed(() => {
   try {
-    let { hn, mid,csid } = props.match
-    let handicap_type = hn || props.add_type
-    const many_obj = get_match_to_map_obj(props.match, null, props.add_type); //非坑位对象
-    const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
+    let { mid, csid } = props.match
+    let handicap_type = props.add_type
     return lodash.cloneDeep(props.handicap_list || []).map(col => {
       col.ols = col.ols.map(item => {
         if (item.empty) { return }
         // 投注项数据拼接
         let hn_obj_config = MatchListData.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
-        // 获取投注项内容 
-        return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config]||{};
+        return lodash.get(hn_obj.value, hn_obj_config) || not_hn_obj_map.value[hn_obj_config] || {};
       })
-      col.csid=csid;
+      col.csid = csid;
       return col
     })
   } catch (e) {

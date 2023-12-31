@@ -14,7 +14,6 @@
       LayOutMain_pc.layout_content_width - 15
     }px  !important;${card_style}`"
   >
-
     <div
       v-if="is_mounted"
       :class="{ 'list-card-inner': !MatchListCardData.is_champion }"
@@ -67,7 +66,7 @@
   </div>
 </template>
 <script setup>
-import { computed, onMounted, onUnmounted, reactive, ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, provide, ref, watch } from "vue";
 import { PlayMatchTypeFullVersionWapper as PlayMatchType } from "src/base-pc/components/match-list/play-match-type/index.js";
 import { PlayMatchLeagueFullVersionWapper as PlayMatchLeague } from "src/base-pc/components/match-list/play-match-league/index.js";
 import { MatchTypeChampionFullVersionWapper as MatchTypeChampion } from "src/base-pc/components/match-list/match-type-champion/index.js";
@@ -76,14 +75,14 @@ import LoadData from "src/base-pc/components/load-data/load-data.vue";
 
 import MatchListCardData from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { LayOutMain_pc, compute_local_project_file_path } from "src/output/index.js";
-
+import { LayOutMain_pc, compute_local_project_file_path,MatchDataWarehouse_PC_List_Common } from "src/output/index.js";
 const props = defineProps({
-  card_key: {
-    type: String,
-    default: () => "",
-  },
+  card_key: String,
+  MatchListData: {
+    default: () => MatchDataWarehouse_PC_List_Common
+  }
 });
+provide("MatchListData", props.MatchListData)
 // 卡片样式对象
 let card_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.card_key);
 // 存储一个变量，减少对card_style_obj的重复访问和判断

@@ -672,7 +672,8 @@ export default {
 }
 
 .match-item-wrap {
-  width: 3.61rem;
+  // width: 3.61rem;
+  width: 97vw;
   min-height: 1.05rem;
   margin: 0 auto 0.08rem auto;
   border-radius: 0;
@@ -704,12 +705,16 @@ export default {
     left: 0;
     top: 0;
     font-size: 0.14rem;
-    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     flex-wrap: nowrap;
+    // background-color: red;
 
     &.standard {
       .team-w-container {
-        padding-top: 0.21rem;
+        padding-left: 0.10rem;
+        padding-top: 0.31rem;
       }
 
       .team-title {
@@ -762,6 +767,12 @@ export default {
     }
 
     .m-c-container {
+      // background-color: yellow;
+      width: 80vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       &.standard {
         width: 1.92rem;
 
@@ -778,7 +789,7 @@ export default {
       }
 
       &.simple {
-        display: block;
+        // display: block;
         .bet-item-wrap {
           width: 100%;
           display: flex;
@@ -822,7 +833,7 @@ export default {
     }
 
     &.standard {
-      height: 1.07rem;
+      // height: 1.07rem;
     }
 
     .profession {
@@ -949,7 +960,8 @@ export default {
       &.simple {
         width: 0.38rem;
         font-size: 0.13rem;
-        width: 100%;
+        // width: 100%;
+        width: 2.74rem;
 
         .yb-icon-arrow {
           margin-top: 0.02rem;
@@ -1024,6 +1036,7 @@ export default {
   }
 
   .event-team {
+    width: 2.74rem;
       padding: 8px 0;
 
       .name {
@@ -1054,14 +1067,18 @@ export default {
           display: flex;
           align-items: center;
           gap: 4px;
-          width: 1.6rem;
+          // width: 1.6rem;
+          flex: 1;
+          // background-color: red;
 
           &.left {
             justify-content: flex-end;
+            // justify-content: center;
           }
 
           &.right {
             justify-content: flex-start;
+            // justify-content: center;
           }
         }
       }

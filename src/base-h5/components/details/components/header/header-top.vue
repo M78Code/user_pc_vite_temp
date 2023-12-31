@@ -171,8 +171,8 @@
     </div>
 
     <!-- 队名 -->
-    <div class="mx-4 row team-name">
-      <div class="row name-wrap mhn">
+    <div class="mx-30 row team-name">
+      <div class="row name-wrap mhn col-3">
         <div class="mhn-name ellipsis-2-lines">
           <template v-if="lodash.get(detail_data, 'mhn', '').includes('/')">
             <div class="ellipsis">{{ detail_data.mhn.split(' / ')[0] }}/</div>
@@ -201,7 +201,9 @@
           <div class="inner left"></div>
         </div>
       </div>
-      <div class="row name-wrap">
+<!--      保证队伍名称和logo居中对齐-->
+      <div class="col-6">&nbsp;</div>
+      <div class="row name-wrap col-3">
         <div
           class="red-gif"
           :class="{ flash: show_someone.is_show_away_red }"
