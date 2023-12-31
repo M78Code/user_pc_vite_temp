@@ -17,7 +17,6 @@ class BetData {
    
   }
   init_core() {
-    console.error('init_core')
     this.deviceType = 1  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
     // 当前赔率
     this.cur_odd = "eu";

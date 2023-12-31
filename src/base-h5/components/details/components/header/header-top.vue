@@ -172,7 +172,7 @@
 
     <!-- 队名 -->
     <div class="mx-4 row team-name">
-      <div class="row name-wrap mhn">
+      <div class="row name-wrap mhn col-3">
         <div class="mhn-name ellipsis-2-lines">
           <template v-if="lodash.get(detail_data, 'mhn', '').includes('/')">
             <div class="ellipsis">{{ detail_data.mhn.split(' / ')[0] }}/</div>
@@ -201,7 +201,7 @@
           <div class="inner left"></div>
         </div>
       </div>
-      <div class="row name-wrap">
+      <div class="row name-wrap col-3">
         <div
           class="red-gif"
           :class="{ flash: show_someone.is_show_away_red }"
