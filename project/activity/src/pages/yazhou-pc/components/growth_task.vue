@@ -221,39 +221,39 @@
       </q-layout>
     </q-dialog>
     <!-- 领取奖券弹窗 -->
-<!--    <q-dialog v-model="daily_task_success">-->
-<!--      <div class="daily_task_dialog" @click.self="daily_task_success = false">-->
-<!--        <div class="task_success">-->
-<!--          <div class="title">-->
-<!--            {{-->
-<!--              pop_parameter.ticket >= 0-->
-<!--                ? `恭喜您，获得 ${pop_parameter.ticket} 张奖券`-->
-<!--                : "领取失败，请重新领取奖券"-->
-<!--            }}-->
-<!--          </div>-->
-<!--          <img-->
-<!--            :src="-->
-<!--              pop_parameter.ticket >= 0-->
-<!--                ? pop_parameter.success-->
-<!--                : pop_parameter.failure-->
-<!--            "-->
-<!--            alt=""-->
-<!--          />-->
-<!--          <div-->
-<!--            class="Go-to-lottery"-->
-<!--            :class="{ failure: pop_parameter.ticket < 0 }"-->
-<!--            @click="Reclaim"-->
-<!--          >-->
-<!--            {{ pop_parameter.ticket >= 0 ? "我知道了" : "重新领取" }}-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <img-->
-<!--          class="colse2"-->
-<!--          @click="daily_task_success = false"-->
-<!--          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/colse2.png`"-->
-<!--        />-->
-<!--      </div>-->
-<!--    </q-dialog>-->
+    <!--    <q-dialog v-model="daily_task_success">-->
+    <!--      <div class="daily_task_dialog" @click.self="daily_task_success = false">-->
+    <!--        <div class="task_success">-->
+    <!--          <div class="title">-->
+    <!--            {{-->
+    <!--              pop_parameter.ticket >= 0-->
+    <!--                ? `恭喜您，获得 ${pop_parameter.ticket} 张奖券`-->
+    <!--                : "领取失败，请重新领取奖券"-->
+    <!--            }}-->
+    <!--          </div>-->
+    <!--          <img-->
+    <!--            :src="-->
+    <!--              pop_parameter.ticket >= 0-->
+    <!--                ? pop_parameter.success-->
+    <!--                : pop_parameter.failure-->
+    <!--            "-->
+    <!--            alt=""-->
+    <!--          />-->
+    <!--          <div-->
+    <!--            class="Go-to-lottery"-->
+    <!--            :class="{ failure: pop_parameter.ticket < 0 }"-->
+    <!--            @click="Reclaim"-->
+    <!--          >-->
+    <!--            {{ pop_parameter.ticket >= 0 ? "我知道了" : "重新领取" }}-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--        <img-->
+    <!--          class="colse2"-->
+    <!--          @click="daily_task_success = false"-->
+    <!--          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/colse2.png`"-->
+    <!--        />-->
+    <!--      </div>-->
+    <!--    </q-dialog>-->
 <!--    领取弹窗-->
     <LotteryDialog
       :getLotteryDialog="daily_task_success"

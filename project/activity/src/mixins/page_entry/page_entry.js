@@ -82,6 +82,10 @@ export default {
     activityList() {},
   },
   created() {
+    // loading页面最长20秒
+    this.timer_ = setTimeout(() => {
+      this.hide_loading(0);
+    }, 20000);
     // 定时器
     this.first_timer1 = 0;
     this.first_timer2 = 0;
@@ -362,6 +366,7 @@ export default {
     sessionStorage.removeItem("isAPP");
     // 销毁监听
     this.mitt_list.forEach(i=>i())
+    clearTimeout(this.timer_);
   },
 };
 

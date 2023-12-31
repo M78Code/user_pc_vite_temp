@@ -323,9 +323,10 @@ class AllDomain {
           } catch (error) {
             console.error(error);
           }
-          this.begin_process_when_use_url_api_after_process(res);
           //保存 用户数据
+          res.time_upd = new Date().getTime();
           BUILDIN_CONFIG.DOMAIN_RESULT.getuserinfo_res = res;
+          this.begin_process_when_use_url_api_after_process(res);
         } else {
           // 强制 走 oss 文件逻辑
           this.force_current_api_flow_to_use_oss_file_api();
@@ -498,7 +499,7 @@ class AllDomain {
     // 当前 oss  完整 地址
     let oss_url = this.oss_urls[0];
     // 获取网络数据
-    axios_instance
+    window.SEARCH_PARAMS.has_token && axios_instance
       .get(oss_url, { params: { t: new Date().getTime() }, timeout: 5000 })
       .then((res) => {
         //此处 因为  oss 文件在前端代码内部 ，所以 只要域名能访问 ，这个文件必定能访问
@@ -921,7 +922,7 @@ class AllDomain {
     // let api =   JSON.parse(JSON.stringify(this.local_api_pool))
     // api.push( { api:"http://xxx.com"})
     let reqs = [];
-    api.map((x) => {
+    window.SEARCH_PARAMS.has_token && api.map((x) => {
       // 循环对api进行测试访问处理
       let t = new Date().getTime();
       // 请求的地址
@@ -1205,7 +1206,7 @@ class AllDomain {
     // 清除计时器
     clearTimeout(this.timer_toppic_fast);
     let reqs = [];
-    api.map((x) => {
+    window.SEARCH_PARAMS.has_token && api.map((x) => {
       // 循环对api进行测试访问处理
       let t = new Date().getTime();
       // 请求的地址
@@ -1228,28 +1229,28 @@ class AllDomain {
       // 比如 https://test-topic.sportxxxifbdxm2.com/sports-rules/common/common
       // 获取项目信息
       const PROJECT_NAME = window.BUILDIN_CONFIG.PROJECT_NAME;
-      obj_.activity = `${c_url}/activity/common/common`;
+      obj_.activity = `${c_url}/activity/common/common/`;
       switch (PROJECT_NAME) {
         case 'yazhou-h5':
-          obj_.sports_rules = `${c_url}/sports-rules/23-as/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/23-as/common/`;
           break;
         case 'yazhou-pc':
-          obj_.sports_rules = `${c_url}/sports-rules/23-as/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/23-as/common/`;
           break;
         case 'ouzhou-h5':
-          obj_.sports_rules = `${c_url}/sports-rules/23-eu/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/23-eu/common/`;
           break;
         case 'ouzhou-pc':
-          obj_.sports_rules = `${c_url}/sports-rules/23-eu/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/23-eu/common/`;
           break;
         case 'app-h5':
-          obj_.sports_rules = `${c_url}/sports-rules/23-app/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/23-app/common/`;
           break;
         case 'new-pc':
-          obj_.sports_rules = `${c_url}/sports-rules/23-as/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/23-as/common/`;
           break;
         default:
-          obj_.sports_rules = `${c_url}/sports-rules/common/common`;
+          obj_.sports_rules = `${c_url}/sports-rules/common/common/`;
           break;
       }
       callback && callback(obj_);

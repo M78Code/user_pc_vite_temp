@@ -570,7 +570,6 @@ onUnmounted(() => {
     align-items: center;
     padding-top: 2px;
     color: var(--q-gb-t-c-18);
-    font-family: Akrobat;
 
     .icon-lock {
       width: 0.14rem;
@@ -607,13 +606,17 @@ onUnmounted(() => {
     position: relative;
     min-height: 0.16rem;
     color: var(--q-color-fs-color-115);
-
+    position: relative;
     &.three {
       font-size: 0.11rem;
     }
     .up_down{
       width: 12px;
       height: 11px;
+      display: flex;
+      position: absolute;
+      right: 100%;
+
     }
     .is_up{
       color: #F53F3F;
@@ -625,7 +628,6 @@ onUnmounted(() => {
   }
   .fontbold{
     font-weight: 700;
-    font-family: Akrobat;
     font-size: 12px;
   }
 

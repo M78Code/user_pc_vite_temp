@@ -2,7 +2,7 @@
  * @Description: app-h5 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
-  <div class="match-container component match-container-main-template7" :class="[{
+  <div class="component match-container-main-template7 match-container" :class="[{
     jinri: MenuData.is_today(),
     zaopan: MenuData.is_zaopan(),
     gunqiu: MenuData.is_scroll_ball()
@@ -426,7 +426,7 @@ export default {
   }
 
   .v-mode-span {
-    margin-right: 0.1rem;
+    // margin-right: 0.1rem;
   }
 
   .buffer-container {
@@ -452,7 +452,7 @@ export default {
 
     .match-content {
       width: 100%;
-      padding: 8px;
+      padding: 8px 8px 0 8px;
       border-top: 1px solid var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
       border-radius: 8px;
@@ -514,10 +514,13 @@ export default {
 
     &.hairline-border {
       border-radius: 0;
-      min-height: 0.56rem;
+      // height: 56px;
+      // overflow: hidden;
     }
   }
-
+  :deep(.reslut-box) {
+    height: 100%!important;
+  }
   &.is_league_tail {
     .match-inner-container {
       box-shadow: var(--q-color-box-shadow-color-4);
@@ -1121,8 +1124,8 @@ export default {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         word-break: break-all;
-        margin-bottom: 10px;
-    margin-top: 10px;
+        // margin-top: 5px;
+        margin-top: 10px;
         &.column2 {
           // height: 0.35rem;
         }
@@ -1280,7 +1283,7 @@ export default {
           bottom: 0;
           font-weight: 600;
           color: var(--q-gb-t-c-18);
-          display: none;
+          // display: none;
           &.simple {
             right: 0.08rem;
           }
@@ -1361,12 +1364,12 @@ export default {
 }
 
 :deep(.odd-column-item) {
-  height: 56px;
+  // height: 56px;
 }
 :deep(.odd-list-wrap .standard-odd-l-w) {
-  height: 0.7rem;
+  height: 68px;
   .standard-odd-list {
-    height: 100%!important;
+    // height: 100%!important;
   }
 }
 :deep(.odd-list-wrap.standard) {
@@ -1512,7 +1515,7 @@ export default {
     top: 0px;
     height: 100%;
     color: var(--q-gb-t-c-19);
-    margin-right: 2px;
+    margin-right: 8px;
     &.newer {
       margin-left: 0;
     }
@@ -1555,10 +1558,9 @@ export default {
   }
 
   .live-i-b-wrap {
-    height: 0.14rem;
     width: auto;
     display: flex;
-    margin-left: 0.08rem;
+    margin-right: 0.08rem;
 
     .live-icon-btn,
     .live-icon-play-btn {
@@ -1616,7 +1618,7 @@ export default {
       :deep(.counting-down-wrap) {
         color: #AFB3C8 !important;
         // width: 150px !important;
-
+        position: relative!important;
         .counting {
           font-size: 11px;
           color: var(--q-gb-t-c-19);

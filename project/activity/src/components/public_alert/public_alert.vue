@@ -22,7 +22,7 @@
   </q-dialog>
 </template>
 <script>
- 
+import { MITT_TYPES, useMittEmit } from "project_path/src/core/index.js";
 export default {
   name: 'Alert',
   props: {
@@ -43,6 +43,10 @@ export default {
     is_show: {
       handler(n) {
         this.isShow = n;
+        if(n){
+          // 隐藏loading动画背景
+          useMittEmit(MITT_TYPES.EMIT_LOADING_CTR_CMD, 0);
+        }
       }
     },
     text: {

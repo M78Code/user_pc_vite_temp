@@ -135,6 +135,7 @@ const searchTabMenu = ref(null);//足球tab dom
       val.old_csid =val.csid || MenuData.current_lv_2_menu?.csid;
       MenuData.set_current_lv_2_menu_i(val);
       nextTick(()=>{
+        dJdateTabMenu.value.set_active_val();
         dJdateTabMenu.value?.changeTabMenu({},0,'',type);
       })
       return;
@@ -183,6 +184,7 @@ const searchTabMenu = ref(null);//足球tab dom
         break 
       default:
           ref_data.current_mi = val.mi
+          !type && MenuData.search_data_tab_index();//清除联赛缓存
         // 设置二级菜单 
           MenuData.set_current_lv_2_menu_i(val)
           handle_match_render_data()
@@ -291,7 +293,9 @@ const searchTabMenu = ref(null);//足球tab dom
     if(MenuData.is_collect() && [3,6].includes(MenuData.current_lv_1_menu_mi.value)){
       ref_data.current_mi =MenuData.current_lv_2_menu_i;
     }else if(is_sport_id && [1,2,3,6].includes(MenuData.current_lv_1_menu_mi.value)){
-      ref_data.current_mi =`${MenuData.recombine_menu_desc(MenuData.current_lv_2_menu_i)}${MenuData.current_lv_1_menu_mi.value}`;
+      const current_mi = `${MenuData.recombine_menu_desc(MenuData.current_lv_2_menu_i)}${MenuData.current_lv_1_menu_mi.value}`;
+      ref_data.current_mi =current_mi;
+      MenuData.set_current_lv_2_menu_i(ref_data.scroll_data_list.find(n=>{return n.mi == current_mi}))
     }else{
       let obj = lodash_.get(ref_data.scroll_data_list,`[${0}]`,{})
       // 设置二级菜单 
@@ -353,7 +357,6 @@ const searchTabMenu = ref(null);//足球tab dom
 
     const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
     if (lodash_.isEmpty(mi_tid_mids_res)) return
-
     // // 设置菜单对应源数据 以及 获取数据
     // if (MenuData.top_menu_title.mi === 50000) return
     MatchMeta.set_origin_match_data({ md: MenuData.data_time })

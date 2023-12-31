@@ -448,6 +448,7 @@ class MatchMeta {
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
     try {
+      this.current_euid = `champion_${euid}`
       const res = await api_common.post_match_full_list({
         euid,
         "cuid": UserCtr.get_uid(),
@@ -455,8 +456,15 @@ class MatchMeta {
         "sort": UserCtr.sort_type,
         "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
       })
-
-      if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
+      if (this.current_euid !== `champion_${euid}`) return
+      if (+res.code !== 200) {
+        if (res.code === '0401038') {
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+          this.set_page_match_empty_status({ state: false });
+          return []
+        }
+        return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
+      }
       const list = lodash.get(res, 'data', [])
       if (list.length < 1) return
       MatchCollect.get_collect_match_data(list)
@@ -562,8 +570,6 @@ class MatchMeta {
       if (this.current_euid !== `results_${euid}_${md}` || +res.code !== 200) {
         if (res.code === '0401038') {
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-          this.set_page_match_empty_status({ state: false });
-          return []
         }
         this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
         return []
@@ -648,7 +654,14 @@ class MatchMeta {
       category,
       "type": 3000,
     })
-    if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
+    if (+res.code !== 200) {
+      if (res.code === '0401038') {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+        this.set_page_match_empty_status({ state: false });
+        return []
+      }
+      return this.set_page_match_empty_status({ state: true });
+    }
     // if (this.current_euid != `${csid}_${md}`) return
     const list = lodash.get(res, 'data', [])
     MatchCollect.get_collect_match_data(list)
@@ -698,7 +711,12 @@ class MatchMeta {
         ...other_params
       })
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
-      if (res.code == '0401038' && this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+      if (res.code === '0401038') {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+        if (this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+        return []
+      }
+      
       // 接口请求成功，重置接口限频次数
       this.error_http_count.match = 1
       const list = lodash.get(res, 'data', [])
@@ -721,7 +739,8 @@ class MatchMeta {
       //   this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
       // }, 7000)
 
-    } catch {
+    } catch (err) {
+      console.error(err)
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
       // 当接口 报错，或者出现限频， 调用3次
       if (this.error_http_count.match >= 3) {
@@ -1231,11 +1250,6 @@ class MatchMeta {
       // 计算所需渲染数据
       this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
     }
-
-    // // 复刻版 下的 新手版
-    // if (this.is_observer_type()) {
-    //   useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-    // }
 
     // 重置数据为空状态
     this.set_page_match_empty_status({ state: false })

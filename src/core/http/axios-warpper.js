@@ -355,6 +355,10 @@ class AxiosHttp {
         request_config.type = request_config.type || 2;
         break;
     }
+    // 无token时取消所有请求
+    if(!window.SEARCH_PARAMS.has_token){
+      return Promise.reject("api_cancel");
+    }
     // 删除内部参数
     try {
       wslog.send_msg("HTTP-S:", { url: request_config.url, params });

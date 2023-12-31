@@ -99,7 +99,6 @@ export const category_info = (category_arr=[]) => {
     return MatchDataWarehouseInstance.value.get_quick_mid_obj(route.params.mid)
   });
   const get_details_item = ref(MatchDetailCalss.current_category_id ) ;
-  console.log(get_details_item.value,);
   
   const get_goto_detail_matchid = computed(() => {
     return "get_goto_detail_matchid";
@@ -428,8 +427,10 @@ export const category_info = (category_arr=[]) => {
         details_data_cache[`${match_id.value}-${get_details_item.value}`] = temp;
         SessionStorage.set("DETAILS_DATA_CACHE", details_data_cache)
         // 切换tab时变更mid_obj里面的odds_info对象数据
-        MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(match_id.value) ,temp)
-        // set_details_data_cache(details_data_cache);
+      //  这个地方加个setTimeout，否则有时候详情接口比较慢会拿不到详情数据造成赛事切换空白
+        setTimeout(() => {
+          MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(match_id.value) ,temp)
+        }, 500);
         
       } catch (err) {
         console.error(err);

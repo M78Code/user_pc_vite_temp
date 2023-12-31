@@ -296,7 +296,7 @@ const get_query_bet_amount_common = (obj) => {
 }
 
 // 查询最新的盘口数据
-const get_lastest_market_info = () => {
+const get_lastest_market_info = (type) => {
     let params = {
         idList:[]
     }
@@ -379,6 +379,11 @@ const get_lastest_market_info = () => {
             // 重新订阅ws
             set_market_id_to_ws()
            
+        }
+    }).finally(()=>{
+        // 不管接口拿到数据没 都去进行投注
+        if(type == 'submit_bet'){
+            submit_handle_lastest_market()
         }
     })
 } 
@@ -504,7 +509,6 @@ const set_bet_pre_list = (bet_appoint = []) => {
     BetData.set_bet_pre_list(pre_list)
 }
 
-
 // 对比赔率，判断是否是预约投注
 const pre_bet_comparison = () => {
 	// 如果点击预约判断所选赔率和盘口赔率是否一致，一致说明不是预约，切换到对应的盘口id;否则就设置为预约
@@ -542,13 +546,25 @@ const pre_bet_comparison = () => {
 }
 
 // 提交投注信息 
-const submit_handle = async () => {
+const submit_handle = () => {
     
-    pre_bet_comparison()
+    // 预约需要更新赔率
+    if(BetData.is_bet_pre){
+        pre_bet_comparison()
+    }
+   
+    // 投注前获取最新的 投注信息 赔率 坑位 等
+    get_lastest_market_info('submit_bet')
+    
+}
+
+// 投注前获取最新的 投注信息 赔率 坑位 等
+// 投注已经准备好了 拿最新的数据 去投注
+const submit_handle_lastest_market = () => {
     // 
     if(submit_btn) return
     // 单关才有预约投注
-     // 是否预约投注  1 预约  0 不预约
+    // 是否预约投注  1 预约  0 不预约
     //  是否合并投注  bet_single_list。length  0:1个 1:多个
     let pre_type = 0
     let milt_single = 0
@@ -566,7 +582,7 @@ const submit_handle = async () => {
         }
         // 投注金额未达最低限额
         let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${ol_obj.playOptionsId}`, {})
-       
+    
         // 投注金额未达最低限额
         if(ol_obj.bet_amount*1 < min_max.min_money*1 ){
             set_submit_btn()
@@ -629,8 +645,6 @@ const submit_handle = async () => {
         return
     }
 
-    await get_lastest_market_info()
-
     let currency = "CNY"
     // 获取当前赛种
     let cur_code = SessionStorage.get('currency_code',1)
@@ -651,7 +665,6 @@ const submit_handle = async () => {
         seriesOrders: []
     }
     let seriesOrders = []
-    let orderDetailList = []
     // 单关 
     if (BetData.is_bet_single) {
         // 单关 不合并 只有一条
@@ -1304,11 +1317,13 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
                     hv: item
                 }
             })
-        }else{
+        }else if(20033 == ol_obj._hpid){
             text = [{
                 text:lodash_.get(mid_obj,`teams[${ol_obj.ot - 1}]`,''),
                 hv: ol_obj.ot
             }]
+        }else {
+            text = `${ol_obj.otv || ''}` 
         }
        
     }else{

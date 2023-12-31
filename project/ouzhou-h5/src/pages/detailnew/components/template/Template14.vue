@@ -14,6 +14,14 @@
           </div>
         </template>
       </div>
+      <div class="other" ref="otherEl">
+        <template v-for="item in hl.ol">
+          <OddOlItem :value="item" v-if="item.otd == config.template14OtherOtd" :key="item.oid"
+            :type="olType"
+          >
+          </OddOlItem>
+        </template>
+      </div>
     </template>
   </div>
 </template>
@@ -21,7 +29,7 @@
 import OddHlWrap from "./OddHlWrap.vue";
 import OddsTitle from "./OddsTitle.vue";
 import OddOlItem from "./OddOlItem.vue";
-import common from './common'
+import common, { config } from './common'
 const props = defineProps<{
   data:TYPES.OddInfo
 }>()

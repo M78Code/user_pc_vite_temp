@@ -43,7 +43,7 @@ const props = defineProps({
   },
 });
 const dateTab = ref(null);
-const activeOn = ref(MenuData.data_tab_index); //默认值
+const activeOn = ref(MenuData.data_tab_index || 0); //默认值
 const emits = defineEmits(["changeDate"]);
 // onMounted(() => {
 //     nextTick(()=>{
@@ -62,7 +62,7 @@ onUnmounted(() => {
  */
 const changeTabMenu = (item, i, event, type) => {
   event = event || dateTab.value[0];
-  // if(activeOn.value === i && !type)return;
+  if(activeOn.value === i)return;
   activeOn.value = i;
   // 设置日期
   MenuData.set_date_time(i, props.dataList?.[i]?.val,props.dataList?.[i]?.menuType || "");
@@ -75,7 +75,7 @@ const changeTabMenu = (item, i, event, type) => {
  * 默认值
  */
 const set_active_val = () => {
-  activeOn.value = 0;
+  activeOn.value = '';
 };
 // 根据菜单数据 请求接口
 // const set_menu_match_date = (type) => {

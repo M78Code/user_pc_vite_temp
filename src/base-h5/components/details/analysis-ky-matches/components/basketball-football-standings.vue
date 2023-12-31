@@ -240,7 +240,7 @@ const props = defineProps({
     // 头部
     &.backball-table {
       .header {
-        color:  var(--q-analysis-text-color-22);
+        color:  var(--q-analysis-text-color-14);
         border-bottom: 1px solid var(--q-analysis-text-color-25);
         // background: var(--q-analysis-text-color-13);
         > div {
@@ -287,7 +287,7 @@ const props = defineProps({
 
     .group-item {
       .team-item {
-        border-bottom: 1px solid var(--q-gb-bd-c-7);
+        border-bottom: 1px solid var(--q-gb-bd-c-4);
 
         &:last-child {
           border-bottom: 0;
@@ -308,9 +308,9 @@ const props = defineProps({
         align-items: center;
         justify-content: center;
         font-size: 0.12rem;
-        color: var(--q-analysis-text-color-2);
+        color: var(--q-analysis-text-color-20); 
           &.col2 {
-            color: var(--q-analysis-text-color-2);
+            color: var(--q-analysis-text-color-20); 
           }
       }
 
@@ -418,8 +418,9 @@ const props = defineProps({
       font-size: 0.1rem;
       padding: 0 0.08rem;
       background: var(--q-analysis-bg-color-1);
-      border: 1px solid  var(--q-analysis-text-color-23);
-      box-shadow: 0 1px 2px 0  var(--q-analysis-bd-color-6);
+      border: 1px solid var(--q-gb-bd-c-4);
+      // box-shadow: 0 1px 2px 0  var(--q-analysis-bd-color-6);
+      color: var(--q-gb-t-c-14);
 
       border-radius: 0.04rem;
       border-top: 0;

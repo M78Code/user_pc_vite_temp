@@ -113,6 +113,7 @@
                 v-show="item_data.hotName"
                 :item_data="item_data"
                 :title="title"
+                :csid="get_detail_data.csid"
             ></temp8>
           </div>
         </q-slide-transition>
@@ -323,7 +324,7 @@ export default defineComponent({
     // ]),
     //=================TODO: 后续修改===================
     const get_uid = ref(UserCtr.get_uid()); // userId
-    const get_detail_data = ref(lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid || lodash.get(props.item_data,'mid')}_]`, {})); // userId
+    const get_detail_data = ref(lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.query.mid || lodash.get(props.item_data,'mid')}_]`, {})); // userId
     const get_fewer = computed(() => {
       return "";
     });
@@ -895,9 +896,9 @@ export default defineComponent({
   background:var(--q-gb-bg-c-28);
 }
 // 选中颜色
-:deep(.details-bg5){
-  background: var(--q-gb-bg-c-37) !important;
-}
+// :deep(.details-bg5){
+//   background: var(--q-gb-bg-c-37) !important;
+// }
 :deep(.active-play){
   background: var(--q-gb-bg-c-37) !important;
 }
