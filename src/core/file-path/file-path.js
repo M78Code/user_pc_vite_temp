@@ -5,7 +5,8 @@ import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
  
 import {GLOBAL_CONSTANT } from "src/core/constant/global/index.js"
 // 目前环境信息
-const {BUILD_VERSION, IS_DEV, CURRENT_ENV, DOMAIN_RESULT, PROJECT_NAME ,IS_TOPIC_PROJECT,LOCAL_COMMON_FILE_PREFIX, LOCAL_PROJECT_FILE_PREFIX} = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const {BUILD_VERSION, IS_DEV, CURRENT_ENV, DOMAIN_RESULT, PROJECT_NAME ,IS_TOPIC_PROJECT,LOCAL_COMMON_FILE_PREFIX, LOCAL_PROJECT_FILE_PREFIX} = BUILDIN_CONFIG;
 let project_name = PROJECT_NAME
 const src_rdm = Date.now();
 // 字母顺序

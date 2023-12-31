@@ -3,7 +3,8 @@
 // 
 import server_resource from "app/job/output/assets/index.json";
 import { get } from "lodash";
-const { CURRENT_ENV } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { CURRENT_ENV } = BUILDIN_CONFIG;
 const config = {
     default: "h5-sport-icon-image",
     // local_dev: "pc-left-menu-bg-image",

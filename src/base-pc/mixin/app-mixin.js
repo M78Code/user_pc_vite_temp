@@ -1,15 +1,16 @@
 import { http, AllDomain } from "src/core/http/";
 import { SessionStorage } from "src/output/index.js";
 import { enter_params } from 'src/core/enter-params/index.js'
-import { loadLanguageAsync,LocalStorage, LayOutMain_pc,MatchDetailCalss,GlobalSwitchClass,MenuData,useMittOn, MITT_TYPES, useMittEmit } from "src/output/index.js";
+import { loadLanguageAsync,LocalStorage,MatchDetailCalss,GlobalSwitchClass,MenuData,useMittOn, MITT_TYPES, useMittEmit } from "src/output/index.js";
+import LayOutMain_pc from "src/core/layout/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetWsMessage from "src/core/bet/class/bet-ws-message.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-
-const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { DEFAULT_VERSION_NAME } = BUILDIN_CONFIG;
 export default {
     data() {
       return {
@@ -31,7 +32,7 @@ export default {
       this.mitt_list.push(useMittOn(MITT_TYPES.EMIT_LOADING_CTR_CMD, this.hide_loading).off)
         // 参数控制处理和跳转逻辑
         url_param_ctr_init(this);
-        MenuData.get_new_data()
+        MenuData.get_new_data&&MenuData.get_new_data()
         this.init_process() 
       // 监听页面是否转入休眠状态
       document.addEventListener("visibilitychange",this.visibilitychange_handle);

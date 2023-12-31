@@ -172,9 +172,6 @@ export default defineComponent({
   border-radius: 4px;
   .temp15-pd{
     padding:0.08rem;
-      box-sizing: border-box;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
   }
   .every1 {
     flex: 1;

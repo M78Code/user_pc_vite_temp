@@ -3,8 +3,8 @@ import load_data from "project/activity/src/components/load_data/load_data-h5.vu
 // 加载公共样式
 import 'project/activity/src/css/common.scss';
 // 本次打包的 客户端版本
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const {BUILD_VERSION ,CURRENT_ENV,IS_DEV} = BUILD_VERSION_CONFIG
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const {BUILD_VERSION ,CURRENT_ENV,IS_DEV} = BUILDIN_CONFIG 
 export default async (app) => {//app, router, store,
   /** 三方类库 **************************/
   // 重写console.log, 支持ws推送console.log日志

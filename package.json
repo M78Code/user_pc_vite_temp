@@ -110,7 +110,6 @@
         "build-donghua": "npm run build-animation",
         "dev-donghua-2": "npm run dev-animation-page",
         "build-donghua-2": "npm run build-animation-page",
-  
         "dev2": "npm run dev-self-use-version-inner",
         "dev3": "npm run export-dev-target-env",
         "build": "npm run build-self-use-version",
@@ -164,6 +163,7 @@
         "sass": "^1.32.12",
         "shelljs": "^0.8.5",
         "vite": "^4.4.5",
+        "vite-plugin-chunk-split": "^0.5.0",
         "vite-plugin-compression": "^0.5.1",
         "vue-json-viewer": "^3.0.4"
     }

@@ -102,7 +102,9 @@ const route = useRoute();
 //引入组件样式
 import { compute_css_variables } from "src/core/css-var/index.js";
 import { reactive, ref, watch ,computed} from "vue";
-import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData, MatchDetailCalss,LayOutMain_pc,is_eports_csid,SearchPCClass } from "src/output/index.js";
+import {SearchPCClass,LayOutMain_pc} from "src/output/project/common/pc-common.js";
+
+import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData, MatchDetailCalss,is_eports_csid } from "src/output/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 const page_style = ref(null);
 page_style.value = compute_css_variables({

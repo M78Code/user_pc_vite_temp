@@ -7,9 +7,9 @@ import { ref,nextTick } from "vue";
 import lodash_ from "lodash"
 import BetData from "./bet-data-class.js"
 import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 
-const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
+const { PROJECT_NAME } = BUILDIN_CONFIG ;
 
 class BetViewData {
   constructor() { 

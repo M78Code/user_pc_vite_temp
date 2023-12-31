@@ -5,13 +5,13 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
 import { computed_menu_to_match_templte_ouzhou } from 'src/core/match-list-pc/list-template/ouzhou-pc-menu-match-template.js'
 import PageSource from 'src/core/page-source/page-source.js'
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-export const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+export const { PROJECT_NAME } = BUILDIN_CONFIG ;
 import {
   SessionStorage,
 } from "src/output/module/constant-utils.js"
 import STANDARD_KEY from "src/core/standard-key";
-import LayOutMain_pc from "src/core/layout/index.js";
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import {
   useMittEmit,
   MITT_TYPES,

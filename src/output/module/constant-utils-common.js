@@ -31,9 +31,9 @@ export {
 } from "src/core/mitt/index.js";
 
 // 本次打包的 客户端版本
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 
-export const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILD_VERSION_CONFIG;
+export const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILDIN_CONFIG ;
 export const  project_name = PROJECT_NAME
 
 export {
