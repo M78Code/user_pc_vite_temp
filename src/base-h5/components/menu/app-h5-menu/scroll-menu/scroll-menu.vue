@@ -26,7 +26,8 @@
                 </div>
                 <!-- v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000"  -->
                 <!-- 电竞收藏  暂时隐藏数量 -->
-                <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi) && !([50000].includes(item.mi) && MenuData.is_esports())" class="sport-match-count">
+                <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi) && !([50000].includes(item.mi) && MenuData.is_esports())" 
+                  :class="['sport-match-count', { 'is-max': item.ct > 1000 }]">
                   {{ item.ct || 0 }}
                 </div>
               </div>
@@ -265,11 +266,14 @@ onUnmounted(()=>{
         .sport-match-count {
                 line-height: 1;
                 position: absolute;
-                left: 0.3rem;
+                left: 0.37rem;
                 font-size: 0.1rem;
                 font-family: "Akrobat";
                 z-index: 5;
-        }
+                &.is-max {
+                  left: 0.3rem;
+                }
+          }
         }
       }
     }
