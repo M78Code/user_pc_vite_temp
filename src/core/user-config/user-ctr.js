@@ -290,13 +290,8 @@ class UserCtr {
    * 联赛赛选的数据发生变化
   */
   set_league_select_list(val,type) {
-    //赛果筛选
-    if (type && type === 'amidithion'){
-      this.amidithion_league_select_list = val.value
-    }else{
       //普通筛选
       this.league_select_list = val.value
-    }
     this.update()
   }
   set_cur_odds(odd) {
