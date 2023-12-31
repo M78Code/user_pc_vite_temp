@@ -91,6 +91,12 @@ const props = defineProps({
   is_show_time: {
     type: Boolean,
     default: false
+  },
+  // Bug: 52782
+  // 是否是滑动之后的顶部显示
+  is_change_header: {
+    type: Boolean,
+    default: false
   }
 })
 
