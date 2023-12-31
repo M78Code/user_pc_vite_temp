@@ -24,6 +24,10 @@ const other = {
   play_name: ''
 }
 
+export const config = {
+  /** 模板hpt14中, 玩法ID:353(独赢 & 最先进球球队) [无进球]投注项的otd */
+  template14OtherOtd: 1130,
+}
 export const state = reactive({
   active: -1
 })
