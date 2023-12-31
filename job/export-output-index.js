@@ -43,14 +43,14 @@ if (IS_MAIN_PROJECT) {
 
   let file_str_project = fs.readFileSync(project_file_path);
 
-  let file_str = `
+  let project_file_str = `
+//当前项目的强相关的一些入口 ，当前项目专用的，理论上 运行A 项目 不会 因为这里 引入 B 项目的文件 ，例如 运行H5，却加载了PC 的组件
 ${file_str_common} 
-
 ${file_str_project}
 
 `;
 
-  write_file("./src/output/project/index.js", file_str);
+  write_file("./src/output/project/index.js", project_file_str .trim());
   // console.log('拷贝入口html 完成');
 
   // remove_file(`${BUILD_STATIC_DIR_PATH}project/`)
@@ -60,20 +60,18 @@ ${file_str_project}
 
   let file_str_index = fs.readFileSync(index_file_path);
 
-  let index_file_str = `
- ${file_str_index}
+  let index_file_str = `${file_str_index}`  ;
 
 
-`;
 
   if (!index_file_str.includes("./project/index.js")) {
-    index_file_str = `
-    ${file_str_index}
+  
+    index_file_str = `  ${file_str_index}
  //当前项目专用的   
  export * from "./project/index.js"
   
 `;
   }
 
-  write_file(index_file_path, index_file_str);
+  write_file(index_file_path, index_file_str.trim());
 }
