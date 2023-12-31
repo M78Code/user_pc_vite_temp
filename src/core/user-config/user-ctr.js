@@ -21,9 +21,9 @@ import { odds_table } from "src/core/constant/common/module/csid.js"
  
 import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 import {GLOBAL_CONSTANT } from "src/core/constant/global/index.js"
-const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
+const { PROJECT_NAME } = BUILDIN_CONFIG ;
 
 // #TODO 接口统一管理的文件，后续替换
 import { api_details, api_account,api_betting } from "src/api/index.js";
@@ -1429,7 +1429,7 @@ class UserCtr {
     // api 获取默认最快域名进行加密
     res.api = this.api_encrypt(BUILDIN_CONFIG.DOMAIN_RESULT.first_one || get_value('best_api')) || '';
     // 项目来源;
-    res.project = BUILD_VERSION_CONFIG.PROJECT_NAME;
+    res.project = BUILDIN_CONFIG .PROJECT_NAME;
     // 功能附加参数
     const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
     PARAM_ADD_KEY.forEach(key => {

@@ -8,8 +8,8 @@
 import {http} from "src/core/http/index.js";
 import lodash from "lodash"
 
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { API_PREFIX } = BUILD_VERSION_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { API_PREFIX } = BUILDIN_CONFIG ;
 const { API_PREFIX_JOB: prefix,API_PREFIX_USER:prefix_, API_PREFIX_JOB:prefix_job, API_PREFIX_BAT: prefix_bat} = API_PREFIX;
 
 // 全url   获取  一般用于 视频动画域名检测

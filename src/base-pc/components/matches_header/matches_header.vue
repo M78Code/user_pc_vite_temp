@@ -47,9 +47,9 @@ import MatchesLeaguesTab from "./matches_filter_tab_leagues.vue"
 import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t, } from "src/output/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 import { resolve_mew_menu_res, un_mounted } from "src/base-pc/components/match-list/list-filter/index.js"
-const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG ;
 
 const tab_list = ref([])
 

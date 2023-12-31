@@ -6,8 +6,8 @@
 import {http} from "src/core/http/index.js";
 
  
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { API_PREFIX } = BUILD_VERSION_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { API_PREFIX } = BUILDIN_CONFIG ;
 const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_12} = API_PREFIX;
 
 //菜单栏目初始化接口

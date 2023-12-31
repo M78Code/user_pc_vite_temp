@@ -77,8 +77,8 @@ import { api_search } from "src/api/index.js";
 
 import { compute_css_variables } from "src/core/css-var/index.js"
 
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG ;
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 const props = defineProps({})

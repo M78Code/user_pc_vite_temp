@@ -5,8 +5,8 @@
  */
 import {http} from "src/core/http/index.js";
 // 定义配置变量 
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { API_PREFIX } = BUILD_VERSION_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { API_PREFIX } = BUILDIN_CONFIG ;
 const { API_PREFIX_JOB:prefix,API_PREFIX_ACTIVITY:prefix2} = API_PREFIX;
 // post1配置
 export const post1 = (params, config, url ) => http.post(`${prefix}${url}`, params, config)

@@ -1,5 +1,5 @@
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-export const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+export const { PROJECT_NAME } = BUILDIN_CONFIG ;
 
 /**
  * 通过菜单id 来映射显示每个菜单下边的默认模板

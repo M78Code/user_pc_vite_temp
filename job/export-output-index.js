@@ -11,7 +11,7 @@ import {
   remove_file,
 } from "./write-folder-file.js";
 // 本次打包的 客户端版本
-import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
+import BUILDIN_CONFIG  from "./output/version/build-version.js";
 let {
   BUILD_VERSION,
   PROJECT_NAME,
@@ -24,7 +24,7 @@ let {
   IS_MAIN_PROJECT,
   IS_MAIN_PROJECT_H5,
   IS_MAIN_PROJECT_PC,
-} = BUILD_VERSION_CONFIG;
+} = BUILDIN_CONFIG ;
 
 if (IS_MAIN_PROJECT) {
   let common_file_path = "";
