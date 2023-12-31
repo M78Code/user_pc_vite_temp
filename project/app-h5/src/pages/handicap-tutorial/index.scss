@@ -23,7 +23,7 @@
         }
     }
     .switch-item-active {
-        color: #333;
+        color: var(--q-gb-t-c-27);
         span {
             font-size: .18rem;
             font-weight: 500;
@@ -37,20 +37,20 @@
     padding: .14rem .2rem;
     width: 100%;
     overflow-x: scroll;
-    color: #333;
+    color: var(--q-gb-t-c-27);
 
     .slide-item-active {
         span {
-            background-color: var(--q-gb-bg-c-4);
+            background-color: var(--q-gb-bg-c-42);
             border-radius: .2rem;
             color: var(--q-gb-t-c-14);
         }
     }
     .slide-item {
         flex:0 0 .74rem;
-        color: #333;
+        color: var(--q-gb-t-c-27);
         border-radius: .2rem;
-        border: .01rem solid var(--q-gb-bg-c-4);
+        border: .01rem solid var(--q-gb-bd-c-4);
         margin-right: .12rem;
         span {
             display: flex;

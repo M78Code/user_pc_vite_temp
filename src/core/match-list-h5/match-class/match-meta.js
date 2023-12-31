@@ -570,8 +570,6 @@ class MatchMeta {
       if (this.current_euid !== `results_${euid}_${md}` || +res.code !== 200) {
         if (res.code === '0401038') {
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-          this.set_page_match_empty_status({ state: false });
-          return []
         }
         this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
         return []
