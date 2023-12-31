@@ -194,7 +194,8 @@ template {
 /**投注记录弹框未结算*/
 .cathectic {
   height: 100%;
-  border-radius: 0.1rem;
+  border-top-left-radius: 0.1rem;
+  border-top-right-radius: 0.1rem;
   overflow: hidden;
 
   /**提前结算筛选按钮*/
