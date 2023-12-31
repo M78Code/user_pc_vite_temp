@@ -153,6 +153,7 @@ export default {
         font-size: 0.1rem;
         line-height: 1;
         margin-right: 0.03rem;
+        color: var(--q-gb-t-c-19)
       }
     }
   }

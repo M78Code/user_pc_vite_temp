@@ -254,7 +254,7 @@ export default defineComponent({
     padding: 0.08rem;
     box-sizing: border-box;
     overflow: hidden;
-    border-top: 0.5px solid var(--q-gb-bd-c-5);
+    // border-top: 0.5px solid var(--q-gb-bd-c-5);
   }
   .play-box-style {
     //  margin:0.04rem;
