@@ -20,7 +20,10 @@ let {BUILD_VERSION ,PROJECT_NAME ,BUILD_DIR_NAME ,BUILD_OUTDIR ,IS_TOPIC_PROJECT
 
 
 
-if(!IS_MAIN_PROJECT){ return  }
+if(IS_MAIN_PROJECT){ 
+
+
+
 
 let common_file_path = ''
 
@@ -49,11 +52,42 @@ ${file_str_project}
 
 `
 
-IS_MAIN_PROJECT_H5
+ 
 // src\output\h5-pc\h5.js
 
-write_file( './src/output/h5-pc/index.js' ,file_str)  
+write_file( './src/output/current-project.js' ,file_str)  
 // console.log('拷贝入口html 完成');
 
 // remove_file(`${BUILD_STATIC_DIR_PATH}project/`)
 // console.log('删除原 html 文件 完成');
+
+
+
+let index_file_path = `./src/output/index.js`
+
+let  file_str_index= fs.readFileSync(index_file_path);
+
+
+let index_file_str = `
+ ${file_str_index}
+
+
+`
+
+if( !index_file_str.includes('./current-project.js') ){
+    index_file_str = `
+    ${file_str_index}
+ export * from "./current-project.js"
+  
+` 
+
+}
+
+
+
+
+
+write_file( index_file_path ,index_file_str)  
+    
+}
+

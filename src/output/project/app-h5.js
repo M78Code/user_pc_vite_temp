@@ -1,0 +1,1 @@
+export const sxasxa =6666
