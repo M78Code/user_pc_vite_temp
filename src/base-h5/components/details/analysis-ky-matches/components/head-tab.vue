@@ -94,6 +94,7 @@ const handle_show_tab = (item, index) => {
   let nedw_show_tab = true;
   if (
     props.detail_data.csid === "1" &&
+    props.detail_data.ms == 0 &&
     lodash.get(item, "component") === "highlights" &&
     !show_tab.value
   ) {
