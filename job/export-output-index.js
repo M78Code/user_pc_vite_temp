@@ -30,16 +30,16 @@ if (IS_MAIN_PROJECT) {
   let common_file_path = "";
 
   if (IS_MAIN_PROJECT_H5) {
-    common_file_path = "./src/output/project/h5-common.js";
+    common_file_path = "./src/output/project/common/h5-common.js";
   }
 
   if (IS_MAIN_PROJECT_PC) {
-    common_file_path = "./src/output/project/pc-common.js";
+    common_file_path = "./src/output/project/common/pc-common.js";
   }
 
   let file_str_common = fs.readFileSync(common_file_path);
 
-  let project_file_path = `./src/output/project/${PROJECT_NAME}.js`;
+  let project_file_path = `./src/output/project/module/${PROJECT_NAME}.js`;
 
   let file_str_project = fs.readFileSync(project_file_path);
 

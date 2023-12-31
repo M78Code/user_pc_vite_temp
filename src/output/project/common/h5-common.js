@@ -9,3 +9,4 @@ export { default as MatchListCardData } from "src/core/match-list-h5/match-card/
 export { default as SearchData } from "src/core/search-class/search-data-class.js";
 
 export { default as TabMove } from "src/core/tab-move/tab-move.js";
+
