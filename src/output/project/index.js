@@ -1,4 +1,3 @@
-
 // h5 路径抛出
 export { default as MatchListCard } from "src/core/match-list-h5/match-card/match-list-card-class.js";
 
@@ -14,5 +13,3 @@ export { default as TabMove } from "src/core/tab-move/tab-move.js";
  
 
 export { default as MenuData } from "src/core/menu-app-h5/menu-data-class.js";
-
-

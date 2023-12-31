@@ -50,7 +50,7 @@ ${file_str_project}
 
 `;
 
-  write_file("./src/output/project/index.js", file_str);
+  write_file("./src/output/project/index.js", file_str .trim());
   // console.log('拷贝入口html 完成');
 
   // remove_file(`${BUILD_STATIC_DIR_PATH}project/`)
@@ -60,20 +60,18 @@ ${file_str_project}
 
   let file_str_index = fs.readFileSync(index_file_path);
 
-  let index_file_str = `
- ${file_str_index}
+  let index_file_str = `${file_str_index}`  ;
 
 
-`;
 
   if (!index_file_str.includes("./project/index.js")) {
-    index_file_str = `
-    ${file_str_index}
+  
+    index_file_str = `  ${file_str_index}
  //当前项目专用的   
  export * from "./project/index.js"
   
 `;
   }
 
-  write_file(index_file_path, index_file_str);
+  write_file(index_file_path, index_file_str.trim());
 }
