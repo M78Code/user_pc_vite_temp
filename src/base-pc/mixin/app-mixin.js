@@ -1,12 +1,15 @@
 import { http, AllDomain } from "src/core/http/";
 import { SessionStorage } from "src/output/index.js";
 import { enter_params } from 'src/core/enter-params/index.js'
-import { loadLanguageAsync,LocalStorage, LayOutMain_pc,MatchDetailCalss,GlobalSwitchClass,MenuData,useMittOn, MITT_TYPES, useMittEmit } from "src/output/index.js";
+import { loadLanguageAsync,LocalStorage,MatchDetailCalss,GlobalSwitchClass,MenuData,useMittOn, MITT_TYPES, useMittEmit } from "src/output/index.js";
+import LayOutMain_pc from "src/core/layout/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetWsMessage from "src/core/bet/class/bet-ws-message.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
+
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 export default {
     data() {
@@ -23,8 +26,11 @@ export default {
       this.mitt_list.push(useMittOn(MITT_TYPES.EMIT_LOADING_CTR_CMD, this.hide_loading).off)
         // 参数控制处理和跳转逻辑
         url_param_ctr_init(this);
-        MenuData.get_new_data()
+        MenuData.get_new_data&&MenuData.get_new_data()
         this.init_process() 
+      // 监听页面是否转入休眠状态
+      document.addEventListener("visibilitychange",this.visibilitychange_handle);
+      document.addEventListener("pagehide", this.visibilitychange_handle);
     },
     watch: {
       '$route'(to, from) {
@@ -41,6 +47,14 @@ export default {
       }
     },
     methods: {
+      /**
+       *@description 页面可见性变化的处理函数
+      */
+      visibilitychange_handle() {
+        const is_hidden = document.visibilityState == "hidden";
+        // 设置当前页面是否后台运行中状态
+        GlobalAccessConfig.set_vue_hidden_run(is_hidden);
+      },
       async init_process() {
         try {
           // 设置是否是内嵌iframe
@@ -77,24 +91,25 @@ export default {
             http.setApiDomain();
 
             enter_params(async(user)=>{
+              // 客户端-获取紧急开关配置
+              await GlobalAccessConfig.init();
+              // 元数据初始化
+              base_data.init();
+              // 投注信息 初始化
+              BetData.init_core();
               
+              // 设置设备类型 2 pc
+              BetData.set_device_type(2);
+              BetViewDataClass.init();
+              BetWsMessage.init()
+              // 布局初始化
+              LayOutMain_pc.init();
+              //赛事详情类参数初始化
+              MatchDetailCalss.init()
+              //全局开发类初始化
+              GlobalSwitchClass.init()
+              this.init_load = true;
             })
-            // 元数据初始化
-            base_data.init();
-            // 投注信息 初始化
-            BetData.init_core();
-            
-            // 设置设备类型 2 pc
-            BetData.set_device_type(2);
-            BetViewDataClass.init();
-            BetWsMessage.init()
-            // 布局初始化
-            LayOutMain_pc.init();
-            //赛事详情类参数初始化
-            MatchDetailCalss.init()
-            //全局开发类初始化
-            GlobalSwitchClass.init()
-            this.init_load = true;
           });
         AllDomain.run();
         }
@@ -112,5 +127,8 @@ export default {
       // 销毁监听
       this.mitt_list.forEach(i=>i());
       clearTimeout(this.timer_);
+      // 移除监听页面是否转入休眠状态
+      document.removeEventListener("visibilitychange",this.visibilitychange_handle);
+      document.removeEventListener("pagehide", this.visibilitychange_handle);
     },
 }

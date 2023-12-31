@@ -4,7 +4,7 @@ import vue from "@vitejs/plugin-vue";
 import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 import path from "path";
 import viteCompression from 'vite-plugin-compression';
-
+import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 //本地开发端口
 const port = 28300
 console.log("---------启动文件入口目录-------------", __dirname);
@@ -31,6 +31,18 @@ export default defineConfig({
       
     }),
     viteCompression(),
+    chunkSplitPlugin({
+      strategy: 'default',
+      customSplitting: {
+        //  
+        'react-vendor': [/node_modules/],
+        //
+      
+        'score': [/score/],
+        'virtual': [/virtual/],
+        'code-all': [/src\/pages/],
+      }
+    })
   ],
   css:{
     devSourcemap: true,
@@ -45,12 +57,20 @@ export default defineConfig({
       // index: path.resolve(__dirname, `index.html`),
      
       },
+      // https://rollupjs.org/configuration-options/
+      // https://github.com/sanyuan0704/vite-plugin-chunk-split/blob/master/README-CN.md
+      // https://rollupjs.org/guide/en/#outputmanualchunks
       output: {
         // Provide global variables to use in the UMD build
         // Add external deps here
         globals: {
           // "vue3-draggable-resizable": "vue3-draggable-resizable",
         },
+      // manualChunks 配置
+      manualChunks: {},
+        chunkFileNames: "static/js/[name]-[hash].js",
+        entryFileNames: "static/js/[name]-[hash].js",
+        assetFileNames: "static/[ext]/[name]-[hash].[ext]"
       },
     },
   },

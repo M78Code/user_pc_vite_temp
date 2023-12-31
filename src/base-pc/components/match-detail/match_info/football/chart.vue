@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import { LayOutMain_pc } from "src/output/index.js";
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 //引入组件样式
 import { compute_css_variables } from "src/core/css-var/index.js";
 export default {

@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import {defineAsyncComponent} from 'vue'
 import home from "./components/first-page.vue"; // 包网3首页下边（轮播 + 跑马灯 + 赛事框）  榴莲千层盒子（小）300p
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import { onUnmounted, watch, ref, computed, onMounted, defineComponent, nextTick, } from "vue";
@@ -33,10 +32,11 @@ import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js";
 import { MenuData } from "src/output/index.js"
 
+import hot from "src/base-h5/components/home/hot/index.vue"
+import live_video from "src/base-h5/components/home/live-video/index.vue"
+
 import 'src/base-h5/css/pages/hot-modal.scss'
 // import router_mixins from "src/base-h5/mixins/router-mixins.js";
-const  live_video =defineAsyncComponent(()=>import("src/base-h5/components/home/live-video/index.vue"));
-const  hot =defineAsyncComponent(()=>import("src/base-h5/components/home/hot/index.vue"));
 
 export default defineComponent({
   beforeRouteEnter(to, from, next) {

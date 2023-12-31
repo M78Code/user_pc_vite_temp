@@ -27,10 +27,11 @@
 </template>
 <script setup>
 import { ref,onBeforeUnmount } from "vue";
-import store from "src/store-redux/index.js";
-import { useMittOn, MITT_TYPES } from "src/core/mitt";
+// import store from "src/store-redux/index.js";
 import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
-import { LayOutMain_pc,MenuData } from "src/output/index.js";
+
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+
 import { useRoute, useRouter } from "vue-router"
 // import virtualRight from "src/base-pc/components/virtual-right/virtual-right.vue";
 const route = useRoute()

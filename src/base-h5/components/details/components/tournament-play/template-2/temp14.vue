@@ -279,13 +279,10 @@ export default defineComponent({
   }
 }
 .bet-box-bg {
-  //margin:0.04rem;
-    margin-bottom: .04rem;
+  margin: 0.04rem;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   background:var(--q-gb-bg-c-15);
   border-radius: 4px;
 }
-.col3{
-    margin: 0 0.04rem;
-}
+
 </style>

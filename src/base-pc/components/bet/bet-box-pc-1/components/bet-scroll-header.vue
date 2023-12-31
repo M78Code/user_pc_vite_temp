@@ -50,8 +50,7 @@
 
 <script setup>
 import { computed, onMounted } from "vue"
-import LayOutMain_pc from "src/core/layout/index.js";
-import MenuData from "src/core/menu-pc/menu-data-class.js"
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 
 import { IconWapper } from 'src/components/icon'

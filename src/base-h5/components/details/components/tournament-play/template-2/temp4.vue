@@ -479,11 +479,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .title-style {
-  margin-bottom: 0.06rem;
-  height: 0.13rem;
-  font-size: 0.12rem;
-
-  line-height: 0.13rem;
+  height: 0.35rem;
+  line-height: 0.35rem;
+  margin-bottom: 0;
+  background-color: var(--q-match-page-bg-color-105);
 }
 
 .item-wrap {
@@ -492,6 +491,7 @@ export default defineComponent({
   height: auto;
   overflow: hidden;
   padding:0.08rem;
+  border-top: unset !important;
   .col-middle {
     flex: 0 0 .9rem;
   }
@@ -570,8 +570,8 @@ export default defineComponent({
 }
 
 .fam {
-  height: 0.18rem;
-  line-height: 0.18rem;
+  height: 0.35rem;
+  line-height: 0.35rem;
 
   font-size: 0.13rem;
 

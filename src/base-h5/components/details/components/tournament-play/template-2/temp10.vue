@@ -162,23 +162,20 @@ export default defineComponent({
 /*************** 赔率结束 *************** -E*/
 .virtual-bet-wrapper {
   border-radius: 0.08rem;
+  padding: .12rem !important;
+  box-sizing: border-box;
   overflow: hidden;
   display: grid;
-  gap: 0.1rem;
-  grid-template-columns: 33.3% 33.3% 33.3%;
+   grid-column-gap: .08rem;
+    grid-row-gap: .06rem;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .item-height {
   height: 0.67rem;
   background: var(--q-gb-bg-c-28);
-  width: auto;
+  width: 100%;
   padding-top: 0.07rem;
-  >div {
-    gap: 0.16rem;
-  }
-  &:nth-child(3n) {
-    border-right: none;
-  }
 }
 
 .blue-color {

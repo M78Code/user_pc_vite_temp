@@ -18,11 +18,9 @@ import {
   useMittEmitterGenerator,
   useMittEmit,
   MatchDetailCalss,
-  LayOutMain_pc,
   GlobalSwitchClass
 } from "src/output/index.js";
-//moni
-// import MenuData from "./menuData"
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 import { reactive, toRefs, ref, onMounted, onUnmounted, computed, watch } from "vue";
 import MenuData from "src/core/menu-pc/menu-data-class.js";

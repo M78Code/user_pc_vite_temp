@@ -77,7 +77,7 @@ onBeforeMount(() => {
   }
   // 发送日志
   // window.wslog.sendMsg('xxx');
-  GlobalAccessConfig.set_vue_hidden_run(false);
+  // GlobalAccessConfig.set_vue_hidden_run(false);
   timer2 = setTimeout(() => {
     vue_hidden_run_flg = true;
   }, 4000);
@@ -156,8 +156,8 @@ function visibilitychange_handle() {
     // 获取 焦点后 ，页面激活 ，次开关打开 ，HTTP,WS 就会自动 打开开关
     window.DOCUMENT_HIDDEN = "";
   }
-  // 设置当前页面是否后台运行中状态
-  GlobalAccessConfig.set_vue_hidden_run(is_hidden);
+  // // 设置当前页面是否后台运行中状态
+  // GlobalAccessConfig.set_vue_hidden_run(is_hidden);
 
   //页面失去焦点 ，隐藏   后台运行
   if (is_hidden) {
@@ -242,8 +242,8 @@ function off_listeners() {
   );
   document.removeEventListener("click", event_listener_preventDefault);
 }
-// 客户端-获取紧急开关配置
-GlobalAccessConfig.init()
+// // 客户端-获取紧急开关配置
+// GlobalAccessConfig.init()
 //服务器时间
 ServerTime.get_server_time()
 </script>
