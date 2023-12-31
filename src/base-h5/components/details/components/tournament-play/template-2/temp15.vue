@@ -175,8 +175,6 @@ export default defineComponent({
       box-sizing: border-box;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-row-gap: .04rem;
-      grid-column-gap: .08rem;
   }
   .every1 {
     flex: 1;

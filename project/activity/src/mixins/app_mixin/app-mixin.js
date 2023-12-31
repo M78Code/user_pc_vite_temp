@@ -9,14 +9,7 @@ import { enter_params,  LocalStorage  ,useMittOn,
   MITT_TYPES ,http, AllDomain,
   url_param_ctr_init, watch_route_fun,STANDARD_KEY
 } from "project_path/src/core/index.js";
- 
-
- 
- 
- 
- 
-
-
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
 export default {
   data() {
     return {
@@ -34,10 +27,10 @@ export default {
   created() {
     // 参数控制处理和跳转逻辑
     url_param_ctr_init(this);
-   this.init_process() ;
-
-
-    
+    this.init_process() ;
+    // 监听页面是否转入休眠状态
+    document.addEventListener("visibilitychange",this.visibilitychange_handle);
+    document.addEventListener("pagehide", this.visibilitychange_handle);
   },
   watch: {
     '$route'(to, from) {
@@ -72,8 +65,19 @@ export default {
       // 销毁停止对象功能
       AllDomain.clear_timer && AllDomain.clear_timer();
     }
+    // 移除监听页面是否转入休眠状态
+    document.removeEventListener("visibilitychange",this.visibilitychange_handle);
+    document.removeEventListener("pagehide", this.visibilitychange_handle);
   },
   methods: {
+    /**
+     *@description 页面可见性变化的处理函数
+    */
+    visibilitychange_handle() {
+      const is_hidden = document.visibilityState == "hidden";
+      // 设置当前页面是否后台运行中状态
+      GlobalAccessConfig.set_vue_hidden_run(is_hidden);
+    },
     async init_process() {
     // 设置wslog 默认函数防止提前调用报错
     window.wslog = { sendMsg: () => {} };
@@ -109,6 +113,8 @@ export default {
         http.setApiDomain();
         enter_params(async(user)=>{
           await loadLanguageAsync(lang);
+          // 客户端-获取紧急开关配置
+          await GlobalAccessConfig.init();
           this.set_init_load(true);
         })
       });
