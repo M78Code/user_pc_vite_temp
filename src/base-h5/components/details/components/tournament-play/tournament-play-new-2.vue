@@ -96,11 +96,12 @@
         <q-slide-transition :duration="200">
           <div v-show="judage_hshow == 'Yes'" :class="[judage_hshow != 'Yes'?'show_border_r':'hide_border_r' ]">
             <!-- 模板id  hpt -->
+<!--              {{ +item_data.hpt }}-->
             <component
                 :is="`temp${item_data.hpt}`"
                 :item_data="item_data"
                 :title="title"
-            
+
             />
           </div>
         </q-slide-transition>
@@ -896,9 +897,13 @@ export default defineComponent({
   background:var(--q-gb-bg-c-28);
 }
 // 选中颜色
-// :deep(.details-bg5){
-//   background: var(--q-gb-bg-c-37) !important;
-// }
+:deep(.details-bg5){
+  background: var(--q-gb-bg-c-37) !important;
+  .remark, .odds_new {
+    color: var(--q-gb-t-c-30) !important;
+  }
+
+}
 :deep(.active-play){
   background: var(--q-gb-bg-c-37) !important;
 }
@@ -906,22 +911,22 @@ export default defineComponent({
   background: var(--q-gb-bg-c-37) !important;
 }
 /* Bug: 51232 投注项加圆角 */
-:deep(.mg-4-bg){
-  border-radius: 8px !important;
-}
-:deep(.play-box-style){
-  border-radius: 8px !important;
-}
-:deep(.bet-box-bg){
-  border-radius: 8px !important;
-}
-:deep(.bet-item-ky-container){
-  border-radius: 8px !important;
-}
-:deep(.item-bet-ky .fat-warp){
-  border-radius: 8px !important;
-}
-:deep(.play-box){
-  border-radius: 8px !important;
-}
+//:deep(.mg-4-bg){
+//  border-radius: 8px !important;
+//}
+//:deep(.play-box-style){
+//  border-radius: 8px !important;
+//}
+//:deep(.bet-box-bg){
+//  border-radius: 8px !important;
+//}
+//:deep(.bet-item-ky-container){
+//  border-radius: 8px !important;
+//}
+//:deep(.item-bet-ky .fat-warp){
+//  border-radius: 8px !important;
+//}
+//:deep(.play-box){
+//  border-radius: 8px !important;
+//}
 </style>

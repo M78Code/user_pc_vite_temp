@@ -172,6 +172,9 @@ export default defineComponent({
   border-radius: 4px;
   .temp15-pd{
     padding:0.08rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
   }
   .every1 {
     flex: 1;
@@ -191,12 +194,6 @@ export default defineComponent({
 
   .every3 {
     flex-grow: 1;
-
-    &:nth-child(2) {
-      div {
-        border-radius: 0;
-      }
-    }
   }
 
   .every4 {
@@ -237,7 +234,7 @@ export default defineComponent({
     border-radius: 4px;
     color:#7981A4;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
-    margin:0.04rem;
+    //margin:0.04rem;
     flex-shrink: 0;
     flex-grow: 1;
   }

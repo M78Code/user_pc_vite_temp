@@ -733,7 +733,10 @@ export default {
     .team-wrapper {
       flex: 1;
       font-weight: bold;
-
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       &.standard {
         height: 1.07rem;
 
@@ -847,6 +850,8 @@ export default {
           color: #AFB3C8;
           text-align: right;
           padding-right: 0.1rem;
+          margin-bottom: 0.05rem;
+          // background-color: red;
           i {
             transform: rotate(90deg);
             font-size: 0.1rem;
