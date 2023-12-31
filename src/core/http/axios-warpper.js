@@ -12,17 +12,14 @@ import { usePageVisibilityChange } from "src/core/utils/common/module/event-hook
 import domain from "./domain";
  
 // 本次打包的 客户端版本
-import BUILDIN_CONFIG from "app/job/output/env/index.js";;
-const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILDIN_CONFIG ;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC,API_PREFIX,API_PREFIX_WBSOCKET} = BUILDIN_CONFIG ;
 
 import { SessionStorage ,LocalStorage} from "src/output/module/constant-utils-common.js"
 // import ws from "../ws/ws.js";
 
 import STANDARD_KEY from "src/core/standard-key";
 
-const { API_PREFIX = {} } = window.BUILDIN_CONFIG;
-const { API_PREFIX_WBSOCKET } = API_PREFIX;
-//token键
 const token_key = STANDARD_KEY.get("token"); 
 
 /**
@@ -37,8 +34,7 @@ usePageVisibilityChange(
     DOCUMENT_HIDDEN = Date.now();
   }
 );
-// 引入 当前  植入配置
-const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
+
 /**
  * 去掉 api 参数 reload
  */

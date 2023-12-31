@@ -9,8 +9,8 @@ import BetWsMessage from "src/core/bet/class/bet-ws-message.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-
-const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { DEFAULT_VERSION_NAME } = BUILDIN_CONFIG;
 export default {
     data() {
       return {

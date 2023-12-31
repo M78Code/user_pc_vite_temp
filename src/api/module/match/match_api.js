@@ -5,8 +5,8 @@
  */
 
 import {http} from "src/core/http/index.js";
-
-const { API_PREFIX = {},PROJECT_NAME:project_name } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { API_PREFIX = {},PROJECT_NAME:project_name } = BUILDIN_CONFIG;
 const { API_PREFIX_BAT:prefix_user } = API_PREFIX;
 
 let prefix = 'yewu11'
