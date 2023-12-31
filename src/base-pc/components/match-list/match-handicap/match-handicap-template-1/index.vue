@@ -8,9 +8,11 @@
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="row no-wrap">
       <!-- 玩法列表 -->
+    
       <div class="handicap-col" v-for="(col, col_index) in col_ols_data" :key="col_index">
-        <div :class="['bet-item-wrap',]" :style="get_bet_style(col_index, lodash.get(col, 'ols.length'))"
-          v-for="(ol_data, ol_index) in col.ols" :key="col_index + '_' + ol_index">
+        <div  v-for="(ol_data, ol_index) in col.ols" :key="col_index + '_' + ol_index" 
+          :class="['bet-item-wrap',ol_data?.other_class]"  :style="get_bet_style(col_index, lodash.get(col, 'ols.length'),ol_data)"
+          >
           <!-- 投注项组件 -->
           <template
             v-if="match_style_obj.data_tpl_id != 'esports' || (match_style_obj.data_tpl_id == 'esports' && getCurState(ol_data._hipo))">
@@ -100,7 +102,7 @@ const col_ols_data = computed(() => {
         if (item.empty) { return }
         // 投注项数据拼接
         let hn_obj_config = MatchListData.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
-        return lodash.get(hn_obj.value, hn_obj_config) || not_hn_obj_map.value[hn_obj_config] || {};
+        return Object.assign({other_class:item.other_class},lodash.get(hn_obj.value, hn_obj_config) || not_hn_obj_map.value[hn_obj_config] || {}) 
       })
       col.csid = csid;
       return col

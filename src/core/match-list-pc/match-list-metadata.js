@@ -1,6 +1,6 @@
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/output/module/match-data-base.js";
 import BaseData from 'src/core/base-data/base-data.js';
-import { MenuData } from "src/output/module/menu-data.js"
+import { MenuData } from "src/output/project/index.js"
 import { set_match_base_info_by_mids_info } from 'src/core/match-list-pc/composables/match-list-featch.js'
 import { handle_match_list_request_when_ok } from './composables/match-list-processing'
 import { match_list_handle_set } from './match-handle-data.js'

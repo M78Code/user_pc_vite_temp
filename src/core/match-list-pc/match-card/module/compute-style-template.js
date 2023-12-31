@@ -29,7 +29,7 @@ import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 import { time_conversion } from 'src/output/module/constant-utils.js'
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
-import { MenuData} from "src/output/module/menu-data.js"
+import { MenuData} from "src/output/project/index.js"
 import { update_match_parent_card_style } from "src/core/match-list-pc/match-card/module/utils.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 

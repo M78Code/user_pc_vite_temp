@@ -143,17 +143,20 @@ export default defineComponent({
   font-size: 0.12rem;
   letter-spacing: 0;
   text-align: center;
-  color: var(--q-gb-t-c-18);
   margin-top: 0.1rem;
 }
 
 /*************** 赔率结束 *************** -E*/
 .virtual-bet-wrapper {
   border-radius: 0.08rem;
+    box-sizing: border-box;
   overflow: hidden;
   display: grid;
-  gap: 0.1rem;
-  grid-template-columns: 33.3% 33.3% 33.3%;
+    padding: .12rem !important;
+    box-sizing: border-box;
+    grid-column-gap: .08rem;
+    grid-row-gap: .06rem;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 

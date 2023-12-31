@@ -94,7 +94,7 @@ import MatchDialogStage from 'src/base-h5/components/match/match-dialog-stage.vu
 import ShowStartTime from 'src/base-h5/components/details/wight/show-start-time.vue'
 import { format_total_score,useMittEmit,MITT_TYPES } from 'src/output/index.js'
 import { useRoute, useRouter } from "vue-router"
-import { MenuData } from 'src/output/module/menu-data.js'
+import { MenuData } from 'src/output/project/index.js'
 import { onUnmounted,onMounted,getCurrentInstance,computed } from 'vue';
 import matchDetailClass from 'src/core/match-detail/match-detail-class';
 

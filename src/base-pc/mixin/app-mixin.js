@@ -76,7 +76,9 @@ export default {
             // ws和http域名切换逻辑
             http.setApiDomain();
 
-            enter_params()
+            enter_params(async(user)=>{
+              
+            })
             // 元数据初始化
             base_data.init();
             // 投注信息 初始化
