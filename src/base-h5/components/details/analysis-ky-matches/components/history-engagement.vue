@@ -230,7 +230,7 @@ const get_detail_data = ref({
       text-align: center;
       margin-right: 0.1rem;
       // background: var(--q-analysis-bg-color-1);
-      border: 1px solid var(--q-analysis-bd-color-5);
+      border: 1px solid var(--q-gb-bd-c-4);
       color: var(--q-analysis-text-color-14);
       &.active {
         background: var(--q-analysis-text-color-31);
@@ -253,7 +253,7 @@ const get_detail_data = ref({
       text-align: center;
       // background: var(--q-analysis-bg-color-1);
       color: var(--q-analysis-text-color-14);
-      border: 1px solid var(--q-analysis-bd-color-5)!important;
+      border: 1px solid var(--q-gb-bd-c-4)!important;
       &.active {
         background: var(--q-gb-bg-c-13);
         color: var(--q-gb-t-c-14);

@@ -118,7 +118,7 @@ onUnmounted(() => {
 }
 .item-header {
   height: 0.38rem;
-  line-height: 0.34rem;
+  color: var(--q-gb-t-c-18);
 }
 
 .hairline-border-ky {

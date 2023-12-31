@@ -57,7 +57,7 @@ export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
   name: "temp8",
-  props: ["item_data", "title"],
+  props: ["item_data", "title", "csid"],
   components: {
 
   },
@@ -105,7 +105,6 @@ export default defineComponent({
     const get_odds = () => {
     // plays集合
       let play_ = lodash.get(props.item_data,'plays')
-      console.log(props.item_data,'props.item_data');
       let play_obj1 = {}
       lodash.each(play_,(item) => {
         lodash.each(lodash.get(item,'hl[0].ol'), ol_item => {
