@@ -30,7 +30,7 @@
       no_data_card_template
     } from "../config/card-template-config.js"
     import { compute_sport_id  } from 'src/output/module/constant-utils.js'
-    import { MenuData} from "src/output/module/menu-data.js"
+    import { MenuData} from "src/output/project/index.js"
     import {get_match_template_id} from '../../match-handle-data.js'
   /**
    * @Description 计算所有卡片样式数据 2. 全部赛种 不区分 是否开赛  4. 列表数据类型为赛事列表   单一赛种，有未开赛 已开赛 ，不区分赛种

@@ -26,7 +26,7 @@ import { odds_table } from "src/core/constant/common/module/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { currency_code } from "src/core/constant/common/module/keyword.js"
-import { MenuData } from 'src/output/module/menu-data.js'
+import { MenuData } from 'src/output/project/index.js'
 import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import { calc_bifen } from "src/core/bet/common-helper/module/common-sport.js"
 

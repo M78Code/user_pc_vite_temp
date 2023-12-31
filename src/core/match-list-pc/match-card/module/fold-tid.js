@@ -7,7 +7,7 @@ import {
 import { recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie } from "./fold-csid.js";
 import { recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie } from "./fold-kaisai-weikaisi.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
-import { MenuData} from "src/output/module/menu-data.js"
+import { MenuData} from "src/output/project/index.js"
 
 /**
  * 联赛 折叠

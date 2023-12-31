@@ -12,7 +12,7 @@ import { get_tab_param_build } from 'src/core/match-list-pc/composables/match-li
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import { match_collect_status } from './match-list-collect'
-import { MenuData }  from "src/output/module/menu-data.js";
+import { MenuData }  from "src/output/project/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import * as api_websocket from "src/api/module/socket/socket_api.js";
 import filterHeader from 'src/core/filter-header/filter-header.js'

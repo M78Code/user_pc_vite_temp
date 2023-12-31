@@ -10,7 +10,7 @@ import MatchListParams from '../composables/match-list-params'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/output/module/match-data-base.js'
 import {   i18n_t,  useMittEmit, MITT_TYPES } from 'src/output/module/constant-utils.js'
-import {  MenuData } from 'src/output/module/menu-data.js'
+import {  MenuData } from 'src/output/project/index.js'
 import { nextTick } from "vue";
 import MatchMeta from './match-meta'
 import { get_now_server } from 'src/core/utils/common/module/other.js'

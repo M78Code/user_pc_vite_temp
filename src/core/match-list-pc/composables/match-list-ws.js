@@ -10,7 +10,7 @@ import {
 	useMittEmit,
 	MITT_TYPES,
 } from "src/core/mitt/index.js";
-import { MenuData } from 'src/output/module/menu-data.js'
+import { MenuData } from 'src/output/project/index.js'
 
 import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
 import { match_collect_status } from './match-list-collect.js'

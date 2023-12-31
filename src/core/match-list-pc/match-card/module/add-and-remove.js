@@ -8,7 +8,7 @@ import MatchListCardData from "./match-list-card-data-class";
 import { league_list_obj } from '../../composables/match-list-featch.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { fold_template } from "../config/card-template-config.js"
-import { MenuData } from 'src/output/module/menu-data.js'
+import { MenuData } from 'src/output/project/index.js'
 import { replace } from "lodash";
 
 const { page_source, route_name } = PageSourceData;
