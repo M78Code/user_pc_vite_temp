@@ -1281,7 +1281,7 @@ export default {
           bottom: 0;
           font-weight: 600;
           color: var(--q-gb-t-c-18);
-          display: none;
+          // display: none;
           &.simple {
             right: 0.08rem;
           }
@@ -1513,7 +1513,7 @@ export default {
     top: 0px;
     height: 100%;
     color: var(--q-gb-t-c-19);
-    margin-right: 2px;
+    margin-right: 8px;
     &.newer {
       margin-left: 0;
     }
