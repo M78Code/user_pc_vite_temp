@@ -264,6 +264,7 @@ export default defineComponent({
     padding: 0 0.15rem;
     display: flex;
     justify-content: center;
+    align-items: center;
     box-sizing: border-box;
     overflow: hidden;
 
