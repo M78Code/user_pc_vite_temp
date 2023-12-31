@@ -1281,7 +1281,7 @@ export default {
           bottom: 0;
           font-weight: 600;
           color: var(--q-gb-t-c-18);
-          display: none;
+          // display: none;
           &.simple {
             right: 0.08rem;
           }
