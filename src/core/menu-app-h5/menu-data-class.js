@@ -274,8 +274,6 @@ class MenuData {
 
   // 设置二级菜单id
   set_current_lv_2_menu_i(val = {},type=0){
-    //清除联赛缓存
-    this.search_data_tab_index();
 
     const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
     val = type && current.current_lv_2_menu?.mi?current.current_lv_2_menu:val;
@@ -324,8 +322,6 @@ class MenuData {
    * item [object]当前点击对象
    */
   set_current_lv1_menu(lv1_mi) {
-    //清除联赛缓存
-    this.search_data_tab_index();
     // const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
     this.current_lv_1_menu_mi.value = lv1_mi  
     this.current_lv_1_menu_i = lv1_mi
