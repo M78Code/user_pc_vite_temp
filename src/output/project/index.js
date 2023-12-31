@@ -11,8 +11,7 @@ export { default as SearchData } from "src/core/search-class/search-data-class.j
 
 export { default as TabMove } from "src/core/tab-move/tab-move.js";
 
-
-export const dolpin_oooo =1565612032156232 
+ 
 
 export { default as MenuData } from "src/core/menu-app-h5/menu-data-class.js";
 
