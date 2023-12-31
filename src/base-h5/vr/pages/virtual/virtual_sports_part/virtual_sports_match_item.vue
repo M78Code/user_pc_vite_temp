@@ -850,6 +850,8 @@ export default {
           color: #AFB3C8;
           text-align: right;
           padding-right: 0.1rem;
+          margin-bottom: 0.05rem;
+          // background-color: red;
           i {
             transform: rotate(90deg);
             font-size: 0.1rem;

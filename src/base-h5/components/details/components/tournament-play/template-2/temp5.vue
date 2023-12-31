@@ -294,4 +294,7 @@ export default defineComponent({
 .mg-4{
   margin:0.04rem;
 }
+:deep(.component.odds_new){
+  text-align: center;
+}
 </style>

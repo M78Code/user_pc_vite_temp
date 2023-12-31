@@ -29,8 +29,8 @@
             <span class="right-item-label">{{i18n_t('virtual_sports.comprehensive_rating')}}</span>
             <div class="right-item-content">
               <q-rating
-                style="min-width:.85rem"
-                :value="Number(item.star)"
+                style="min-width:.85rem; margin-left: 0.07rem;"
+                v-model="item.star"
                 size="3.5em"
                 :icon="`img:${LOCAL_PROJECT_FILE_PREFIX}/image/png/m-list-favorite.png`"
                 :icon-selected="`img:${LOCAL_PROJECT_FILE_PREFIX}/image/png/m-list-favorite-red.png`"
@@ -287,7 +287,7 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: var(--q-gb-bg-c-28);
+      background-color: var(--q-gb-bg-c-21);
       border-radius: 0.08rem;
 
       padding: 0.01rem 0.1rem;
@@ -316,7 +316,7 @@ export default {
           // background-color: purple;
           display: flex;
           flex-direction: row;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
 
           .q-mt-sm{
@@ -393,7 +393,6 @@ export default {
                 margin-right: 0.05rem;
 
                 &.q-rating__icon--active {
-
                 }
               }
 

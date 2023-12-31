@@ -79,7 +79,7 @@
         </div>
         <!-- 卡片主内容 -->
         <!-- <q-slide-transition> -->
-        <div :class="['match-content', { 'collapsed': collapsed, 'border-raduis': is_show_border_raduis }]" v-if="collapsed">
+        <div :class="['match-content', { 'collapsed': collapsed, 'border-raduis': is_show_border_raduis || is_last }]" v-if="collapsed">
           <div class="match-content-line" v-if="!match.is_show_league"></div>
           <!--标准版 赔率标题栏-->
           <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
@@ -491,7 +491,7 @@ export default {
     }
     .match-content{
       width: 100%;
-      padding: 0 10px;
+      // padding: 0 10px;
       // border-top: 1px solid  var(--q-gb-bd-c-4);
       background: var(--q-gb-bg-c-18);
       //border-radius: 0 0 8px 8px;

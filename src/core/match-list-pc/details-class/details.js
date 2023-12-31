@@ -5,7 +5,7 @@
  */
 import { api_details } from "src/api/index";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { MenuData } from 'src/output/module/menu-data.js'
+import { MenuData } from 'src/output/project/index.js'
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
 import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData } from 'src/output/module/match-data-base.js'
 import { MatchDetailCalss } from 'src/output/module/project-single.js'

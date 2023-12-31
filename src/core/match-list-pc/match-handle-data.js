@@ -8,8 +8,9 @@ import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 import { get_match_status } from 'src/output/module/constant-utils.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import BaseData from "src/core/base-data/base-data.js";
-import { MenuData } from 'src/output/module/menu-data.js'
+import { MenuData } from 'src/output/project/index.js'
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
+import { get_compute_other_play_data,get_play_current_play,get_tab_play_keys} from 'src/core/match-list-pc/composables/match-list-other.js'
 import { match_state_convert_score_dict, history_score_dict } from 'src/core/constant/project/module/data-class-ctr/score-keys.js'
 /**
    * @Description  根据菜单ID 获取一个菜单对象
@@ -522,6 +523,11 @@ export function match_list_handle_set(match_list) {
         match_list.forEach(match => {
             match.tpl_id = get_match_template_id(match);
             match.api_update_time = date_now;
+            match.tab_play_keys=get_tab_play_keys(match)
+            match.has_other_play = match.tab_play_keys&&String(match.tab_play_keys).split(',').length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
+            match.play_current_key=get_play_current_play(match)
+            
+            match.other_handicap_list = get_compute_other_play_data(match);
         })
     }
 }
