@@ -17,17 +17,12 @@
 import match_video from "src/base-pc/components/match-detail/match_info/match_video.vue";
 import info from "src/base-pc/components/match-detail/match_info/info.vue";
 import {
-  i18n_t,
-  MITT_TYPES,
-  useMittOn,
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
   MatchDetailCalss,
-  LayOutMain_pc,
-  useMittEmit,
-  
   UserCtr,
   MenuData
 } from "src/output/index.js";
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 export default {
   components: {
     "match-video": match_video,

@@ -25,17 +25,10 @@
 import { api_match } from "src/api/index.js";
 import details from "src/core/match-list-pc/details-class/details.js"
 import {
-  i18n_t,
-  MITT_TYPES,
-  useMittOn,
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
   MatchDetailCalss,
-  LayOutMain_pc,
-  GlobalSwitchClass,
-  useMittEmit,
-  
-  UserCtr
 } from "src/output/index.js";
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 // import skt_data_esports_score from "/mixins/websocket/data/skt_data_esports_score.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";

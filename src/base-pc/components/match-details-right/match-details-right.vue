@@ -267,12 +267,12 @@ import {
   useMittOn,
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
   MatchDetailCalss,
-  LayOutMain_pc,
   GlobalSwitchClass,
   useMittEmit,
   
   UserCtr
 } from "src/output/index.js";
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import  videoHistoryLine  from "src/base-pc/components/video-replay/video-history-line.vue";
 import matchHandicap from "src/base-pc/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
