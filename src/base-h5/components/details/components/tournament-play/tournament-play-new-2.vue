@@ -824,6 +824,7 @@ export default defineComponent({
       }
     }
     .hide_border_r{
+      padding-bottom: 4px;
       :deep(.hairline-border), :deep(.item-wrap) {
       //background-color: var(--q-gb-bg-c-29) !important;
       background-color: var(--q-gb-bg-c-38) !important;
