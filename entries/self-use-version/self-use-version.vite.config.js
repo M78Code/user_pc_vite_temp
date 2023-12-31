@@ -54,16 +54,7 @@ export default defineConfig({
         globals: {
           // "vue3-draggable-resizable": "vue3-draggable-resizable",
         },
-        // manualChunks: {
-        //   // project\app-h5
-        //   'app-h5-detail': [
-        //     '../../project/app-h5/src/pages/match-list/',
-         
-        //   ],
-        // },
-        // chunkFileNames:
-      
-
+ 
         chunkFileNames: "static/js/[name]-[hash].js",
         entryFileNames: "static/js/[name]-[hash].js",
         assetFileNames: "static/[ext]/[name]-[hash].[ext]"
