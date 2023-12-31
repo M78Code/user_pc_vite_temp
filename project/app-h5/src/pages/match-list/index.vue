@@ -73,8 +73,7 @@ let message_fun = null
 let handler_func = null
 
 onMounted(() => {
-
-  BaseData.is_emit && get_page_match_data()
+  get_page_match_data()
 
   // 接口请求防抖
   handler_func = lodash.debounce(({ cmd, data }) => {
