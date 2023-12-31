@@ -259,7 +259,7 @@ const get_date_matches_list = async (item)=>{
     MatchMeta.clear_match_info()
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: false })
-    nextTick(() => useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true))
+    // nextTick(() => useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true))
     if(item?.sport_id){
         let params = {
             mi:item.mif,
