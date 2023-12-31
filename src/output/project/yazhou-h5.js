@@ -1,0 +1,1 @@
+export { default as MenuData } from "src/core/menu-h5/menu-data-class.js";
