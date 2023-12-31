@@ -15,6 +15,9 @@ import BUILDIN_CONFIG from "app/job/output/env/index.js";
 window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 
 
+// http://doc-web.sportxxxkd1.com/#/main/detail?type=doc&id=65892329ade8da4fba3089c5
+
+
 import App from "./App.vue";
 import router from './src/router/index'
 import lodash from "lodash";
@@ -36,3 +39,5 @@ app.use(Quasar, {
 });
 // 引入 当前 计算出的植入配置
 app.mount("#ty-app");
+
+
