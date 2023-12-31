@@ -51,7 +51,6 @@ import {
   ref,
   onMounted,
   onUnmounted,
-  defineAsyncComponent,
   nextTick,
 } from "vue";
 import { useMittOn, MITT_TYPES, i18n_t, UserCtr } from "src/output/index.js";
@@ -66,16 +65,9 @@ import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 // 活动弹出框
-const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
-const settleDialog = defineAsyncComponent(() =>
-  import("project_path/src/pages/cathectic/index.vue") 
-);
-const toast = defineAsyncComponent(() =>
-  import("src/base-h5/components/common/toast.vue")
-);
-// const selectDia = defineAsyncComponent(() =>
-//   import("../pages/match-list/components/select-dia.vue")
-// );
+import activityLayer from "src/base-h5/components/common/activity-layer.vue"
+import settleDialog from "project_path/src/pages/cathectic/index.vue"
+import toast from "src/base-h5/components/common/toast.vue"
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 // import layoutHeader from "./layout-header.vue";

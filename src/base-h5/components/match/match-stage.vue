@@ -43,7 +43,7 @@
       <span v-else>
         <!-- 显示 赛事阶段和赛事时间 -->
         <component
-          :is="playComponent[`stage_child_${detail_data.csid}`]"
+          :is="componentId"
           :detail_data="detail_data"
           :dialog="dialog"
         ></component>
@@ -62,24 +62,25 @@ import { MenuData } from "src/output/index.js";
 import { i18n_t } from "src/boot/i18n.js"
 import { format_time_zone, formatTime } from 'src/output/index.js'
 import showStartTime from 'src/base-h5/components/details/wight/show-start-time.vue'   // 详情页同联赛的赛事即将开赛显示时间
-
-import stage_child_1 from "./stage/stage-child-1.vue";  // 详情页显示足球赛事第几节以及赛事时间
-import stage_child_2 from "./stage/stage-child-2.vue";  // 详情页显示篮球赛事第几节以及赛事时间
-import stage_child_3 from "./stage/stage-child-3.vue";  // 详情页显示棒球赛事第几节以及赛事时间
-import stage_child_4 from "./stage/stage-child-4.vue";  // 详情页显示冰球赛事第几节以及赛事时间
-import stage_child_5 from "./stage/stage-child-5.vue";  // 详情页显示网球赛事第几节以及赛事时间
-import stage_child_6 from "./stage/stage-child-6.vue";  // 详情页显示美式足球赛事第几节以及赛事时间
-import stage_child_7 from "./stage/stage-child-7.vue";  // 详情页显示斯诺克赛事第几节以及赛事时间
-import stage_child_8 from "./stage/stage-child-8.vue";  // 详情页显示兵乓球赛事第几节以及赛事时间
-import stage_child_9 from "./stage/stage-child-9.vue";  // 详情页显示排球赛事第几节以及赛事时间
-import stage_child_10 from "./stage/stage-child-10.vue";  // 详情页显示羽毛球赛事第几节以及赛事时间
-import stage_child_11 from "./stage/stage-child-11.vue";  // 详情页手球赛事阶段+赛事时间
-import stage_child_12 from "./stage/stage-child-12.vue";  // 详情页拳击赛事阶段
-import stage_child_13 from "./stage/stage-child-13.vue";  // 详情页显示沙滩排球赛事第几节以及赛事时间
-import stage_child_14 from "./stage/stage-child-14.vue";  // 详情页橄榄球赛事阶段+赛事时间
-import stage_child_15 from "./stage/stage-child-15.vue";  // 详情页显示曲棍球赛事阶段及赛事时间
-import stage_child_16 from "./stage/stage-child-16.vue";  // 详情页显示水球赛事第几节以及赛事时间
-import stage_child_101 from "./stage/stage-child-101.vue";  // 详情页 电竞第几局 以及 赛事时间
+import { useRoute } from "vue-router";
+let route = useRoute()
+// import stage_child_1 from "./stage/stage-child-1.vue";  // 详情页显示足球赛事第几节以及赛事时间
+// import stage_child_2 from "./stage/stage-child-2.vue";  // 详情页显示篮球赛事第几节以及赛事时间
+// import stage_child_3 from "./stage/stage-child-3.vue";  // 详情页显示棒球赛事第几节以及赛事时间
+// import stage_child_4 from "./stage/stage-child-4.vue";  // 详情页显示冰球赛事第几节以及赛事时间
+// import stage_child_5 from "./stage/stage-child-5.vue";  // 详情页显示网球赛事第几节以及赛事时间
+// import stage_child_6 from "./stage/stage-child-6.vue";  // 详情页显示美式足球赛事第几节以及赛事时间
+// import stage_child_7 from "./stage/stage-child-7.vue";  // 详情页显示斯诺克赛事第几节以及赛事时间
+// import stage_child_8 from "./stage/stage-child-8.vue";  // 详情页显示兵乓球赛事第几节以及赛事时间
+// import stage_child_9 from "./stage/stage-child-9.vue";  // 详情页显示排球赛事第几节以及赛事时间
+// import stage_child_10 from "./stage/stage-child-10.vue";  // 详情页显示羽毛球赛事第几节以及赛事时间
+// import stage_child_11 from "./stage/stage-child-11.vue";  // 详情页手球赛事阶段+赛事时间
+// import stage_child_12 from "./stage/stage-child-12.vue";  // 详情页拳击赛事阶段
+// import stage_child_13 from "./stage/stage-child-13.vue";  // 详情页显示沙滩排球赛事第几节以及赛事时间
+// import stage_child_14 from "./stage/stage-child-14.vue";  // 详情页橄榄球赛事阶段+赛事时间
+// import stage_child_15 from "./stage/stage-child-15.vue";  // 详情页显示曲棍球赛事阶段及赛事时间
+// import stage_child_16 from "./stage/stage-child-16.vue";  // 详情页显示水球赛事第几节以及赛事时间
+// import stage_child_101 from "./stage/stage-child-101.vue";  // 详情页 电竞第几局 以及 赛事时间
 
 
 // const props = defineProps(["detail_data", "dialog"])
@@ -109,25 +110,27 @@ const props = defineProps({
 
 /** 时间显示 */
 const one_hour = ref(false)
-const playComponent = ref({
-stage_child_1 :markRaw(stage_child_1),
-stage_child_2 :markRaw(stage_child_2),
-stage_child_3 :markRaw(stage_child_3),
-stage_child_4 :markRaw(stage_child_4),
-stage_child_5 :markRaw(stage_child_5),
-stage_child_6 :markRaw(stage_child_6),
-stage_child_7 :markRaw(stage_child_7),
-stage_child_8:markRaw(stage_child_8),
-stage_child_9 :markRaw(stage_child_9),
-stage_child_10 :markRaw(stage_child_10),
-stage_child_11 :markRaw(stage_child_11),
-stage_child_12 :markRaw(stage_child_12),
-stage_child_13 :markRaw(stage_child_13),
-stage_child_14 :markRaw(stage_child_14),
-stage_child_15 :markRaw(stage_child_15),
-stage_child_16 :markRaw(stage_child_16),
-stage_child_101:markRaw(stage_child_101)
-})
+// const playComponent = ref({
+// stage_child_1 :markRaw(stage_child_1),
+// stage_child_2 :markRaw(stage_child_2),
+// stage_child_3 :markRaw(stage_child_3),
+// stage_child_4 :markRaw(stage_child_4),
+// stage_child_5 :markRaw(stage_child_5),
+// stage_child_6 :markRaw(stage_child_6),
+// stage_child_7 :markRaw(stage_child_7),
+// stage_child_8:markRaw(stage_child_8),
+// stage_child_9 :markRaw(stage_child_9),
+// stage_child_10 :markRaw(stage_child_10),
+// stage_child_11 :markRaw(stage_child_11),
+// stage_child_12 :markRaw(stage_child_12),
+// stage_child_13 :markRaw(stage_child_13),
+// stage_child_14 :markRaw(stage_child_14),
+// stage_child_15 :markRaw(stage_child_15),
+// stage_child_16 :markRaw(stage_child_16),
+// stage_child_101:markRaw(stage_child_101)
+// })
+let componentId = null
+ componentId = defineAsyncComponent(() => import(`./stage/stage-child-${route.params.csid}.vue`))
 watch(
   () => props.detail_data,
   () => initEvent(),
