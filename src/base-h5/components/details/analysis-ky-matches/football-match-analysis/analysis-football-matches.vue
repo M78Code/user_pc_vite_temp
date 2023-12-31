@@ -271,7 +271,7 @@ export default defineComponent({
     width: 100%;
     ul {
       width: 100%;
-      padding: 0 .3rem;
+      padding: 0 0.1rem;
       white-space: nowrap;
       overflow-x: auto;
     }

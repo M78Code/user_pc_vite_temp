@@ -514,11 +514,13 @@ export default {
 
     &.hairline-border {
       border-radius: 0;
-      height: 56px;
-      overflow: hidden;
+      // height: 56px;
+      // overflow: hidden;
     }
   }
-
+  :deep(.reslut-box) {
+    height: 100%!important;
+  }
   &.is_league_tail {
     .match-inner-container {
       box-shadow: var(--q-color-box-shadow-color-4);
@@ -1122,8 +1124,8 @@ export default {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         word-break: break-all;
-        margin-top: 5px;
-    // margin-top: 10px;
+        // margin-top: 5px;
+        margin-top: 10px;
         &.column2 {
           // height: 0.35rem;
         }
@@ -1281,7 +1283,7 @@ export default {
           bottom: 0;
           font-weight: 600;
           color: var(--q-gb-t-c-18);
-          display: none;
+          // display: none;
           &.simple {
             right: 0.08rem;
           }
@@ -1365,7 +1367,7 @@ export default {
   // height: 56px;
 }
 :deep(.odd-list-wrap .standard-odd-l-w) {
-  height: 0.7rem;
+  height: 68px;
   .standard-odd-list {
     // height: 100%!important;
   }

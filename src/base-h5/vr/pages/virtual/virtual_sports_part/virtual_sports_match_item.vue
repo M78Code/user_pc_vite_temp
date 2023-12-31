@@ -672,7 +672,8 @@ export default {
 }
 
 .match-item-wrap {
-  width: 3.61rem;
+  // width: 3.61rem;
+  width: 97vw;
   min-height: 1.05rem;
   margin: 0 auto 0.08rem auto;
   border-radius: 0;
@@ -704,12 +705,16 @@ export default {
     left: 0;
     top: 0;
     font-size: 0.14rem;
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     flex-wrap: nowrap;
+    // background-color: red;
 
     &.standard {
       .team-w-container {
-        padding-top: 0.21rem;
+        padding-left: 0.10rem;
+        padding-top: 0.31rem;
       }
 
       .team-title {
@@ -822,7 +827,7 @@ export default {
     }
 
     &.standard {
-      height: 1.07rem;
+      // height: 1.07rem;
     }
 
     .profession {
