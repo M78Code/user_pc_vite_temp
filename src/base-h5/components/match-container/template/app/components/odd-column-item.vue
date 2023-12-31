@@ -533,11 +533,11 @@ onUnmounted(() => {
   position: relative;
 
   &.first-radius {
-    border-radius: 0.03rem 0 0 0.03rem;
+    // border-radius: 0.03rem 0 0 0.03rem;
   }
 
   &.last-radius {
-    border-radius: 0 0.03rem 0.03rem 0;
+    // border-radius: 0 0.03rem 0.03rem 0;
   }
 
   &:after {
