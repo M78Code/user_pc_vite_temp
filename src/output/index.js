@@ -1,5 +1,7 @@
 
  
+    
+ 
     /**
  * 业务逻辑  相关
  * 数据仓库
@@ -42,7 +44,11 @@ export * from "./module/project-single.js"
 // 埋点相关
 export * from "./module/hide-api.js"
 
-    export * from "./current-project.js"
+
+
+
+
+ export * from "./project/index.js"
   
 
 
