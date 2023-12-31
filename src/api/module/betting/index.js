@@ -4,7 +4,8 @@
  * @Description: 押注API接口定义
  */
 import {http} from "src/core/http/index.js";
-const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { API_PREFIX } = BUILD_VERSION_CONFIG;
 const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix2,API_PREFIX_BAT:prefix3,API_PREFIX_BAT:prefix13 } = API_PREFIX;
 
 // 获取押注列表最新数据（valar）

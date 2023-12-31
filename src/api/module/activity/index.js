@@ -4,8 +4,8 @@
  */
 
 import {http} from "src/core/http/";
-
-const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { API_PREFIX } = BUILD_VERSION_CONFIG;
 const { API_PREFIX_ACTIVITY: prefix } = API_PREFIX;
 
 // prefix => yewu19

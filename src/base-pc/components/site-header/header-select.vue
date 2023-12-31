@@ -91,7 +91,8 @@ import popupLanguage from "src/base-pc/components/popup-select/popup-language.vu
 /* api */
 import { api_account, api_common } from "src/api/index.js";
 
-import {LayOutMain_pc, get_server_file_path,compute_img_url } from 'src/output/index.js'
+import {compute_img_url } from 'src/output/index.js'
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import store from "src/store-redux/index.js";
 import { format_money2 } from "src/output/index.js"
 // import userCtr from 'src/output/index.js'

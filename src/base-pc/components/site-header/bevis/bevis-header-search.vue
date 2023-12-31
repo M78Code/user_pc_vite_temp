@@ -7,8 +7,9 @@ import { get_hot_search, get_hot_push, get_search_sport, get_history_search, ins
     get_remove_search_history, get_delete_history_search, get_search_result } from "src/api/module/search"
 
 import { ref, onMounted, provide } from "vue"
-import {SearchPCClass, compute_local_project_file_path} from 'src/output/index.js'
+import {compute_local_project_file_path} from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js"
+import {SearchPCClass} from 'src/output/project/common/pc-common.js'
 
 const img_search_icon = compute_local_project_file_path('/image/svg/search-icon.svg')
 const img_search_icon_y0 = compute_local_project_file_path('/image/svg/y0-search-icon.svg')

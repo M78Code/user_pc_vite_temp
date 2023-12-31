@@ -152,7 +152,7 @@ import {FliterCheckbox} from "src/components/fliter-checkbox/index.js";
 import selectY from "src/base-pc/components/match-results/select/components/select-y.vue"
 import { api_analysis } from "src/api/";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { LayOutMain_pc } from "src/output/index.js";
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { GlobalSwitchClass} from "src/output/index.js";
 
 import { loadLanguageAsync } from "src/output/index.js";

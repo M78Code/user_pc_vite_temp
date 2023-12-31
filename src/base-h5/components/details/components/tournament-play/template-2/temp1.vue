@@ -564,7 +564,7 @@ export default defineComponent({
   padding: 0 0.15rem;
   display: flex;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 4px;
   box-sizing: border-box;
 }
 .remark {
@@ -637,7 +637,7 @@ export default defineComponent({
 
 .first-radius {
   position: relative;
-  border-radius: 0.03rem 0 0 0.03rem;
+  // border-radius: 0.03rem 0 0 0.03rem;
 
   > .col {
     &:nth-child(2) {
@@ -647,7 +647,7 @@ export default defineComponent({
 }
 
 .last-radius {
-  border-radius: 0 0.03rem 0.03rem 0;
+  // border-radius: 0 0.03rem 0.03rem 0;
 }
 
 .first-rad {

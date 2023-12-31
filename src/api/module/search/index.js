@@ -5,7 +5,8 @@
  */
 import {http} from "src/core/http/index.js";
 
-const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { API_PREFIX } = BUILD_VERSION_CONFIG;
 const { API_PREFIX_JOB:prefix } = API_PREFIX;
 
 // //获取关键词联想列表

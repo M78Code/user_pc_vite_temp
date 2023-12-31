@@ -234,13 +234,11 @@ import {
   UserCtr,
   MenuData,
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
-  useMittOn,
   useMittEmit,
   MITT_TYPES,
-  useMittEmitterGenerator,
-  i18n_t,
-  LayOutMain_pc,
+  useMittEmitterGenerator
 } from "src/output/index.js";
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, onUnmounted } from "vue";

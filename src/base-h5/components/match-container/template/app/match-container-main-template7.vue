@@ -27,7 +27,7 @@
         </template>
       </div>
       <!-- 全部 -->
-      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
+      <div class="all-league-title" v-if="match?.source_index === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{ title }}</span> </div>
         <img :class="['expand_item', { all_ball_seed_collapsed: !all_ball_seed_collapsed }]" :src="expand_item" alt="">
       </div>
