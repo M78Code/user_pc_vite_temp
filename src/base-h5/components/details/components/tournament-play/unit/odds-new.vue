@@ -124,7 +124,7 @@ export default defineComponent({
   letter-spacing: 0;
 }
 .odds-new-ky {
-  flex:1
+  // flex:1
 }
 .odds {
   position: relative;

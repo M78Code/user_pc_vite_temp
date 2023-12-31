@@ -46,13 +46,10 @@
   </div>
 </template>
 <script setup>
-import { i18n_t, compute_css_obj } from "src/output/index.js";
-import { useRouter, useRoute } from "vue-router";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import matchFilter from "src/base-h5/components/match-filter/index.vue";
-import { reactive, toRefs, ref } from "vue";
-import { useMittEmit, MITT_TYPES, MenuData } from "src/output/index.js";
-import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from "src/output/index.js";
-import { UserCtr } from "src/output/index.js";
+import { i18n_t, compute_local_project_file_path, UserCtr, useMittEmit, MITT_TYPES } from "src/output/index.js";
 defineOptions({
   name: "selectLeague" // 设置组件名称
 });
@@ -63,7 +60,7 @@ const router = useRouter();
 //选中的值
 const search_val = ref('')
 //选中的值
-const select_list = ref([])
+const select_list = ref(MenuData.league_filter_list || [])
 //组件数据
 let matchRefOld = ref(null);
 

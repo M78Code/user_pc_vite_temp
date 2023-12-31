@@ -12,7 +12,7 @@
           <div class="col text-center ellipsis yb_px4" v-for="(item,index) in item_data.title" :key="index">{{item.osn}}</div>
         </div>
 
-        <div v-for="(item,index) in item_data.hl" :key="index" class="row">
+        <div v-for="(item,index) in item_data.hl" :key="index" class="row play-hl-box">
           <!-- 左   -->
           <div :class="['col','yb_fontsize14' ,{'col-mg':!['37'].includes(item_data.hpid)}]" style="min-width: 1px;">
             <template v-for="(ol_item,ol_index) in item.ol">
@@ -224,14 +224,18 @@ export default defineComponent({
     color:#7981A4;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   }
+  .play-hl-box{
+    padding: 0.08rem;
+    box-sizing: border-box;
+  }
   .play-box-style {
-    text-align: center;
+    margin: 0.04rem;
+    width: 100%;
     height: 0.52rem;
     line-height: 0.52rem;
-
-
-    padding: 0 0.14rem;
-    margin-bottom: 1px;
+    padding: 0 0.15rem;
+    display: flex;
+    justify-content: center;
 
     img {
       width: 0.12rem;
@@ -262,5 +266,8 @@ export default defineComponent({
 
     }
   }
+}
+:deep(.component.odds_new){
+  text-align: center;
 }
 </style>

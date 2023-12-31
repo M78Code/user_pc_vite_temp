@@ -263,7 +263,6 @@
 <script>
 
 import { ref, computed, onMounted } from 'vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from  "src/output/index.js"
 
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
@@ -273,12 +272,10 @@ import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-w
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
-import { i18n_t, compute_img_url, compute_css_obj, PageSourceData, MenuData } from "src/output/index.js"
-import { format_time_zone } from "src/output/index.js"
+import { i18n_t, compute_img_url, LOCAL_PROJECT_FILE_PREFIX, compute_css_obj, PageSourceData, format_time_zone, foot_ball_score_handle } from "src/output/index.js"
 import { mearlys_icon, in_progress, not_begin, normal_img_not_favorite_white, normal_img_is_favorite, icon_date, expand_item } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { format_msc, foot_ball_score_handle } from "src/output/index.js"
 import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
@@ -1534,10 +1531,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  // flex: 1;
   .icon-wapper-more{
       transform: rotate(-90deg);
       margin-left: .04rem;
+      margin-left: -.01rem;
     }
 }
 

@@ -168,13 +168,19 @@ for(let key in PROJECT_MAP_WITH_DESCRIPTION){
   const DEFAULT_VERSION_NAME = ''
   //是客户端主要项目
   const IS_MAIN_PROJECT = MAIN_PROJECT_ARR.includes(PROJECT_NAME)
+  //是否是客户端主要项目 的 PC 
+  const IS_MAIN_PROJECT_PC = IS_MAIN_PROJECT &&( PROJECT_NAME.includes('pc'))
+  //是否是客户端主要项目 的 h5 
+  const IS_MAIN_PROJECT_H5 = IS_MAIN_PROJECT &&( PROJECT_NAME.includes('h5'))
   return {
     PROJECT_NAME,
     DEFAULT_VERSION_NAME,
     NEED_DELETE_PROJECT,
     PUBLIC_STATIC_OTHER_DIR,
     MAIN_PROJECT_ARR,
-    IS_MAIN_PROJECT  
+    IS_MAIN_PROJECT ,
+    IS_MAIN_PROJECT_PC,
+    IS_MAIN_PROJECT_H5 
   };
 };
 

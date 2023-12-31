@@ -71,7 +71,7 @@ const router = useRouter();
 //选中的值
 const search_val = ref('')
 //选中的值
-const select_list = ref([])
+const select_list = ref(MenuData.league_filter_list || [])
 //组件数据
 let matchRef = ref(null);
 let matchRefOld = ref(null);

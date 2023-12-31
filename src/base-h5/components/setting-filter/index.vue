@@ -79,7 +79,7 @@
 import { useRouter, useRoute } from "vue-router";
 import {  useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import {SessionStorage,UserCtr,LOCAL_PROJECT_FILE_PREFIX, project_name, MenuData } from "src/output/index.js";
-import {ref,computed,nextTick} from "vue";
+import { ref, computed, nextTick, watch } from 'vue'
 import Switch from "./components/switch.vue";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { default_theme_key } from "src/core/theme/";
@@ -141,44 +141,57 @@ defineProps({});
 
 const emit = defineEmits(["closedHandle"]);
 
-const setting_list = ref([
-  {
-    name: i18n_t('footer_menu.bet_model'),//"投注模式"
-    leftVal: i18n_t('footer_menu.new_v'),//"新手版"
-    rightVal: i18n_t('footer_menu.pro_v'),//"专业版
-    switchValue: UserCtr.standard_edition === 2 ? "rightVal" : "leftVal",
-    mark: "version"
-  },
-  {
-    name: i18n_t('footer_menu.sort_title'),//"排序规则"
-    leftVal: i18n_t('footer_menu.hot'),//"热门
-    rightVal: i18n_t('footer_menu.time'),//"时间
-    switchValue: UserCtr.sort_type === 2 ? "rightVal" : "leftVal",
-    mark: "sort"
-  },
-  {
-    name: i18n_t('footer_menu.odds_set'),//"盘口设置
-    leftVal: i18n_t('odds.EU'),//"欧洲盘
-    rightVal: i18n_t('odds.HK'),//"香港盘
-    switchValue: UserCtr.odds.cur_odds === "HK" ? "rightVal" : "leftVal",
-    mark: "Handicap"
-  },
-  // { name: '字号大小', leftVal: '默认', rightVal: '放大',mark:'size' },
-  {
-    name: i18n_t('footer_menu.theme'),//"主题风格
-    leftVal: i18n_t('footer_menu.daytime'),//"日间
-    rightVal: i18n_t('footer_menu.night'),//"夜间
-    switchValue: UserCtr.theme === "theme-1" ? "rightVal" : "leftVal",
-    mark: "theme"
-  },
-  {
+const setting_list = computed(() => {
+  const actiItem = {
     name: i18n_t('footer_menu.daily_activities'),//"每日活动
     leftVal: i18n_t('footer_menu.turn_on'),//"开启
     rightVal: i18n_t('common.close'),//"关闭
     switchValue: UserCtr.daily_activities ? "leftVal" : "rightVal",
     mark: "activity"
   }
-]);
+  const arr = [
+    {
+      name: i18n_t('footer_menu.bet_model'),//"投注模式"
+      leftVal: i18n_t('footer_menu.new_v'),//"新手版"
+      rightVal: i18n_t('footer_menu.pro_v'),//"专业版
+      switchValue: UserCtr.standard_edition === 2 ? "rightVal" : "leftVal",
+      mark: "version"
+    },
+    {
+      name: i18n_t('footer_menu.sort_title'),//"排序规则"
+      leftVal: i18n_t('footer_menu.hot'),//"热门
+      rightVal: i18n_t('footer_menu.time'),//"时间
+      switchValue: UserCtr.sort_type === 2 ? "rightVal" : "leftVal",
+      mark: "sort"
+    },
+    {
+      name: i18n_t('footer_menu.odds_set'),//"盘口设置
+      leftVal: i18n_t('odds.EU'),//"欧洲盘
+      rightVal: i18n_t('odds.HK'),//"香港盘
+      switchValue: UserCtr.odds.cur_odds === "HK" ? "rightVal" : "leftVal",
+      mark: "Handicap"
+    },
+    // { name: '字号大小', leftVal: '默认', rightVal: '放大',mark:'size' },
+    {
+      name: i18n_t('footer_menu.theme'),//"主题风格
+      leftVal: i18n_t('footer_menu.daytime'),//"日间
+      rightVal: i18n_t('footer_menu.night'),//"夜间
+      switchValue: UserCtr.theme === "theme-1" ? "rightVal" : "leftVal",
+      mark: "theme"
+    },
+  ]
+  const {activityList} = UserCtr.get_user() || {}
+  const daily_activities = UserCtr.daily_activities
+  if(!daily_activities){
+    // 如果活动未开启，判断是否有活动列表
+    if(activityList && activityList.length) {
+      // 如果有 可以展示 否则不可以展示
+      return [...arr, actiItem];
+    }
+    return arr;
+  }
+  return [...arr, actiItem];
+})
 
 const closedHandle = () => {
   emit("closedHandle");
@@ -190,7 +203,7 @@ const closedHandle = () => {
  * 选中的联赛数量
  */
 const league_select_count = computed(() =>{
-  return UserCtr.league_select_list.length
+  return UserCtr.league_select_list?.length
 })
 /**
  * 打开联赛筛选框

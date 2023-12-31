@@ -50,6 +50,7 @@ export default {
   "analysis-text-color-32": "#6c7ba8", 
   "analysis-text-color-33": "#ff4400", 
   "analysis-text-color-34": "#949AB6", 
+  "analysis-text-color-35": "#7981A4", 
   "analysis-bd-color-1": "#e7eaee",
   "analysis-bd-color-2": "#d0d8de",
   "analysis-bd-color-3": "#edeef1", 
