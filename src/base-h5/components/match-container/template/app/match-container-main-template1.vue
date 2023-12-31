@@ -1714,7 +1714,7 @@ export default {
 
   .mfo-title {
     margin-left: .05rem;
-    margin-top: .02rem;
+    margin-top: .05rem;
     font-size: .12rem;
   }
 
