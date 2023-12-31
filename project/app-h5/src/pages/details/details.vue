@@ -171,7 +171,7 @@ import basketballMatchAnalysis from "src/base-h5/components/details/analysis-ky-
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
-import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide,defineAsyncComponent,nextTick } from "vue";
+import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide,nextTick } from "vue";
 import {compute_css_obj,compute_img_url,MatchDetailCalss,MenuData, SessionStorage} from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
