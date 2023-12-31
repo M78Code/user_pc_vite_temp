@@ -23,7 +23,7 @@
         >
           <!-- 赛事列表里面每一项赛事 -->
           <div
-            class="mx-12 new-dialog-item"
+            class="new-dialog-item"
             :data-mid="item.mid"
           >
             <!-- 灰色背景部分 -->
