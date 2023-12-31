@@ -86,8 +86,6 @@ const finishHandle = () => {
     open: true,
     select_list: select_list.value,
   });
-    //设置选中数据
-  UserCtr.set_league_select_list(select_list,'amidithion')
   emit("closedHandle");
 };
 /**
