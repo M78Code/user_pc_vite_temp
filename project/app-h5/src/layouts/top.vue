@@ -201,9 +201,9 @@ const set_scroll_current = async (val, type) => {
       handle_match_render_data()
       break;
   }
-  alert('二级菜单切换OK')
+  console.error('二级菜单切换OK')
 } catch (err){
-  alert('二级菜单切换错误：'+err)
+  console.error('二级菜单切换错误：'+err)
 }
 }
 /**
@@ -225,9 +225,9 @@ const setDate = (type) => {
 const handler_go_to_top = () => {
   try {
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
-    alert('通知回到顶部ok')
+    console.error('通知回到顶部ok')
   } catch (err){
-    alert('通知回到顶部错误：'+err)
+    console.error('通知回到顶部错误：'+err)
   }
   
 }
@@ -263,7 +263,7 @@ const init_data = (new_, type) => {
         searchTabMenu.value?.changeTab(MenuData.search_tab_index)
       }
     } catch (_ee) { 
-      alert('球种滚动初始化错误：'+_ee)
+      console.error('球种滚动初始化错误：'+_ee)
     }
   })
 }
