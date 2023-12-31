@@ -17,18 +17,18 @@
               <!-- <div ref="scrollTab" :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] "  @click="set_menu_lv2(item, $event)" > -->
                 <div class="inner-w flex justify-between items-center">
                   <div class="sport-w-icon">
+                    <!-- v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000"  -->
+                    <!-- 电竞收藏  暂时隐藏数量 -->
+                    <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi) && !([50000].includes(item.mi) && MenuData.is_esports())" 
+                      class="sport-match-count" :class="[{ 'is-max': item.ct > 1000 }]">
+                      {{ item.ct || 0 }}
+                    </div>
                     <span class="sport-icon-wrap"
                       :style="compute_css_obj({key:current_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
                   </div>
                   <div class="s-w-i-title">
                     {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item) }}
                   </div>
-                </div>
-                <!-- v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000"  -->
-                <!-- 电竞收藏  暂时隐藏数量 -->
-                <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi) && !([50000].includes(item.mi) && MenuData.is_esports())" 
-                  :class="['sport-match-count', { 'is-max': item.ct > 1000 }]">
-                  {{ item.ct || 0 }}
                 </div>
               </div>
             </template>
@@ -266,12 +266,12 @@ onUnmounted(()=>{
         .sport-match-count {
                 line-height: 1;
                 position: absolute;
-                left: 0.37rem;
+                left: 100%;
                 font-size: 0.1rem;
                 font-family: "Akrobat";
                 z-index: 5;
                 &.is-max {
-                  left: 0.3rem;
+                  // left: 0.3rem;
                 }
           }
         }

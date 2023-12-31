@@ -10,7 +10,7 @@
         <!-- 300, -->
         <TopHeader v-if="[2000].includes(+MenuData.top_menu_title.mi )">
             <template #right>
-                <div class="main-menu-right" @click.stop>
+                <div class="main-menu-right" @click.stop="get_user_balance()">
                     <!-- <span class="main-menu-right-symbol">￥</span> -->
                     <img :src="compute_local_project_file_path('/image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
                     <span class="main-menu-right-money">{{ format_money2(UserCtr.balance) }}</span>
@@ -34,7 +34,7 @@
                     </div>
                 </template>
             </div>
-            <div class="main-menu-right"  @click.stop>
+            <div class="main-menu-right" @click.stop="get_user_balance()">
                 <!-- <span class="main-menu-right-symbol">￥</span> -->
                 <img :src="compute_local_project_file_path('image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
                 <span class="main-menu-right-money">{{ format_money2(UserCtr.balance) }}</span>
@@ -111,6 +111,11 @@ const set_menu_lv1 = item => {
         UserCtr.set_cur_odds("EU");
     }
 }
+
+// 获取余额 5s内触发一次
+const get_user_balance = _.throttle(() => {
+    UserCtr.get_balance()
+},5000)
 
 /**
  * 初始化数据
