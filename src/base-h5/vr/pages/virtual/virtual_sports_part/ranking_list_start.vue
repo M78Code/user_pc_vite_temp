@@ -287,7 +287,7 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: var(--q-gb-bg-c-28);
+      background-color: var(--q-gb-bg-c-21);
       border-radius: 0.08rem;
 
       padding: 0.01rem 0.1rem;
