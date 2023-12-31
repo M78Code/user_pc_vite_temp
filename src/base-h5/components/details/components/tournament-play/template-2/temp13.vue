@@ -17,7 +17,7 @@
         </div>
         <!-- 大 -->
         <div class="row bor-style bet-card-play-container" :class="get_is_hengping?'bor-style2':'' ">
-          <div class="play-name " v-show="!get_is_hengping" :style="{width:rem(0.85)+'px',margin:rem(0.04)+'px'}">
+          <div class="play-name" v-show="!get_is_hengping" :style="{width:rem(0.85)+'px'}">
             <div class="play-name-card ellipsis" >
               {{lodash.get(item_data, 'title[0].osn')}}
             </div>
@@ -122,7 +122,7 @@
         </div>
         <div class="row bet-card-play-container">
           <!-- 小 -->
-          <div class="play-name " v-show="!get_is_hengping" :style="{width:rem(0.85)+'px',margin:rem(0.04)+'px'}">
+          <div class="play-name " v-show="!get_is_hengping" :style="{width:rem(0.85)+'px'}">
               <div class="play-name-card ellipsis" >
                 {{lodash.get(item_data, 'title[1].osn')}}
               </div>
@@ -393,7 +393,7 @@ export default defineComponent({
         }
         init_data.left -= dom_width
          // init_data.left 左滑距离+13   以免右侧留白
-          init_data.left =  init_data.left - rem (init_data.index* 0.13)
+          init_data.left =  init_data.left - rem (init_data.index* 0.11)
           init_data.prev_left -= dom_width
       } else {
         init_data.index =  init_data.index-1
@@ -404,7 +404,7 @@ export default defineComponent({
           return
         }
         init_data.left += dom_width
-         init_data.left = init_data.left-rem (init_data.index* 0.13)
+         init_data.left = init_data.left-rem (init_data.index* 0.11)
          init_data.prev_left+= dom_width
       }
     }, 50);
@@ -519,7 +519,7 @@ export default defineComponent({
     height: 0.48rem;
     .bet-item {
       // min-width: 0.85rem;   // rem动态计算，这里注释，写在行内
-       margin:0.04rem;
+       margin: 0 0.04rem;
         height: .48rem;
       &:nth-child(1) {
            //margin-left:0.08rem;
