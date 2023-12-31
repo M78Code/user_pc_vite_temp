@@ -190,7 +190,7 @@ const closedHandle = () => {
  * 选中的联赛数量
  */
 const league_select_count = computed(() =>{
-  return UserCtr.league_select_list.length
+  return UserCtr.league_select_list?.length
 })
 /**
  * 打开联赛筛选框

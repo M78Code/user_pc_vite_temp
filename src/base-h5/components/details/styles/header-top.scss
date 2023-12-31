@@ -109,7 +109,7 @@
   font-size: 0.14rem;
   // color: $details-header-team-name;
   height: 0.5rem;
-  padding: 0 0.2rem;
+  //padding: 0 0.26rem;
   justify-content: space-between;
   padding-top: 0.13rem;
   color: var(--q-gb-t-c-14);
@@ -118,7 +118,7 @@
 .name-wrap {
   display: flex;
   justify-content: center;
-  width: 0.9rem;
+  //min-width: 0.9rem;
   flex-wrap: nowrap;
   text-align: center;
 }

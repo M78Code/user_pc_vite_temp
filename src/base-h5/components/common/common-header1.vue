@@ -283,6 +283,7 @@ export default {
   .triangle-down {
     width: 0;
     height: 0;
+    margin-top: 0.04rem;
     border: 0.05rem solid;
     border-color: #fff transparent transparent transparent;
     display: inline-block;

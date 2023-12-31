@@ -95,6 +95,11 @@ export default {
   background: var(--q-gb-bg-c-28);
   &.active {
     background: var(--q-gb-bg-c-37) !important;
+    :deep(.o-i-inner){
+      div {
+        color: var(--q-gb-t-c-30)
+      }
+    }
   }
 
   .result-focus, .o-i-inner {
