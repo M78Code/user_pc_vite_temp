@@ -486,7 +486,7 @@ onUnmounted(() => {
   .title-space-1 {
     padding-right: 0.03rem;
     margin-right: 0.02rem;
-    font-size: 0.11rem;
+    font-size: 0.12rem;
     color: var(--q-gb-t-c-19);
   }
 
@@ -495,7 +495,7 @@ onUnmounted(() => {
     //color: #5A6074;
     font-size: 0.12rem;
     font-weight: 500;
-    margin-top: .02rem;
+    // margin-top: .02rem;
   }
 
   .mar-l5 {
