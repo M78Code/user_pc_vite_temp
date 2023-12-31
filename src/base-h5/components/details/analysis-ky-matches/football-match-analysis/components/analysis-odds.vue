@@ -251,7 +251,7 @@ const route = useRoute()
         font-size: 0.14rem;
         border-radius: 0.08rem;
         // background: var(--q-analysis-bg-color-1);
-        color: var(--q-gb-t-c-24);
+        color: var(--q-analysis-text-color-34);
         &:nth-child(2) {
           position: relative;
 
