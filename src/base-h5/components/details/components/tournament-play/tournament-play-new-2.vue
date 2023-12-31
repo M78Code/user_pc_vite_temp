@@ -89,14 +89,13 @@
             <icon-wapper color="#999" name="icon-arrow"  :class="['icon-wapper', {'close': judage_hshow == 'Yes'}]"  size="16px" />
           </div>
           <!-- 调试专用勿删除 -->
-          <span v-if="wsl_flag"  style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>
+          <span   style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>
         </div>
       </div>
       <template v-if="[0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,18,51].includes(+item_data.hpt)">
         <q-slide-transition :duration="200">
           <div v-show="judage_hshow == 'Yes'" :class="[judage_hshow != 'Yes'?'show_border_r':'hide_border_r' ]">
             <!-- 模板id  hpt -->
-<!--              {{ +item_data.hpt }}-->
             <component
                 :is="`temp${item_data.hpt}`"
                 :item_data="item_data"
