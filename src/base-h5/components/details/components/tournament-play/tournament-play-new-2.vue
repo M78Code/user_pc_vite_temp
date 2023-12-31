@@ -89,7 +89,7 @@
             <icon-wapper color="#999" name="icon-arrow"  :class="['icon-wapper', {'close': judage_hshow == 'Yes'}]"  size="16px" />
           </div>
           <!-- 调试专用勿删除 -->
-          <span   style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>
+          <span v-if="false"  style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>
         </div>
       </div>
       <template v-if="[0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,18,51].includes(+item_data.hpt)">
@@ -896,13 +896,9 @@ export default defineComponent({
   background:var(--q-gb-bg-c-28);
 }
 // 选中颜色
-:deep(.details-bg5){
-  background: var(--q-gb-bg-c-37) !important;
-  .remark, .odds_new {
-    color: var(--q-gb-t-c-30) !important;
-  }
-
-}
+// :deep(.details-bg5){
+//   background: var(--q-gb-bg-c-37) !important;
+// }
 :deep(.active-play){
   background: var(--q-gb-bg-c-37) !important;
 }
