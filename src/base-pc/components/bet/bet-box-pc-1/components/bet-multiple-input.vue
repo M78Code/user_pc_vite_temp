@@ -28,12 +28,12 @@
                  {{ i18n_t('common.maxn_amount_val') }}
             </div>
                 <!--金额-->
-            <div class="col-auto bet-win-money yb-number-bold">{{  set_bet_win_money(BetData.bet_data_class_version) }}RMB</div>
+            <div class="col-auto bet-win-money yb-number-bold">{{  set_bet_win_money() }}RMB</div>
         </div>
-        <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
+        <div v-show="false">{{ UserCtr.user_version }}--{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
             <div class="col">
-                <bet-keyboard :monery="ref_data.money"/>
+                <bet-keyboard :money="ref_data.money"/>
             </div>
         </div>
     </div>
@@ -75,7 +75,7 @@ const props = defineProps({
     },
 })
 
-//监听最离可赢变化
+//监听最高可赢变化
 const set_bet_win_money = computed(()=> state =>{
     set_win_money()
     return formatMoney(ref_data.win_money) 
@@ -140,15 +140,15 @@ const set_win_money = () => {
      // 输入控制
      let sum = 0
      if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
-
         //计算多项最高可赢
         BetData.bet_single_list.forEach((item)=>{
             sum += mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)
         })
          ref_data.win_money = sum
     }else{
-        // 输入金额不能大于最大限额
-        if(ref_data.money>ref_data.max_money) {
+        // 最大限额不能大于余额
+        if(UserCtr.balance < ref_data.max_money){
+            ref_data.max_money = UserCtr.balance
             ref_data.money = ref_data.max_money
         }
     }
@@ -182,16 +182,6 @@ input[type="number"] {
             }
         }
     }
-
-    .bet-input-close {
-        position: absolute;
-        top: 34px;
-        right: 5px;
-        cursor: pointer;
-        width: auto;
-        height: auto;
-    }
-
     // .bet-win-key {
     //     margin-top: 10px;
     // }

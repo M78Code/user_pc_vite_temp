@@ -7,10 +7,10 @@
    <div class="match-icon" v-if="detail_data.mvs > -1 || (detail_data.mms > 1 && [1,2,7,10,110].includes(detail_data.ms*1))">
       <div class="match-icon-item" v-if="detail_data.mms > 1" @click="icon_click_muUrl">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/live_app.svg`" alt />
-        视频直播</div>
+        {{ i18n_t('match_info.video_live') }}</div>
       <div class="match-icon-item" v-if="detail_data.mvs > -1" @click="icon_click_animationUrl">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/animate_app.svg`" alt />
-        动画直播</div>
+        {{i18n_t('match_info.animation_live') }}</div>
     </div>
   <div class='team-match-icon' style="color: #fff;" v-if="false">
     <div class="icon-wrap">
@@ -50,7 +50,7 @@ import match_icon from "src/base-h5/components/details/match-icon/match-icon-2.v
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
-import { i18n_t } from "src/boot/i18n.js";
+// import { i18n_t } from "src/boot/i18n.js";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { useRoute } from 'vue-router';
 import { useIconInfo } from "./match-icon/hooks";

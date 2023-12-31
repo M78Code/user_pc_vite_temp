@@ -7,7 +7,6 @@
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <div class="settle-void" @touchmove.prevent :style="compute_css_obj({key: 'fkh5_bg_jiesuan'})">
 
-    <!-- <img :src="compute_local_project_file_path('/image/bet/no-data.png')"> -->
     <!-- <img :src="compute_local_project_file_path('/image/bet/def_nobetrecord.png')"> -->
     <div :style="compute_css_obj({key: 'h5-kyapp-no-data'})"></div>
 

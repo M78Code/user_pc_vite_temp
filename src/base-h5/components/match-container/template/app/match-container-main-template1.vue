@@ -115,7 +115,7 @@
                     <img v-if='match_collect_state' :src="normal_img_is_favorite">
                   </div>
                   <!-- 赛事日期标准版 -->
-                  <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
+                  <div :class="['timer-wrapper-c flex items-center', { esports: is_esports }]">
 
                     <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                     <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
@@ -1715,7 +1715,9 @@ export default {
   }
 
   .mfo-title {
-    margin: .05rem;
+    margin-left: .05rem;
+    margin-top: .02rem;
+    font-size: .12rem;
   }
 
   .flag-chuan-icon {

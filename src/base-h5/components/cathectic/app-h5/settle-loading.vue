@@ -5,7 +5,7 @@
 -->
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-  <div class="settle-void" @touchmove.prevent >
+  <div class="settle-void" @touchmove.prevent :style="compute_css_obj({key: 'fkh5_bg_jiesuan'})">
     <img :src="compute_local_project_file_path('/image/bet/img_loading.png')">
     <template>
       <!-- 数据加载中。。。 -->
@@ -43,7 +43,6 @@ template {
   align-items: center;
   min-height: 4rem;
   border-radius: 0.1rem;
-  background: url($SCSSPROJECTPATH+'/image/png/cathectic-item-all_bg.png');
   background-size: cover;
   // opacity: 0;
   // animation: opacityAnimate 0.2s linear;

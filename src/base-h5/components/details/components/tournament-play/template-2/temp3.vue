@@ -198,7 +198,12 @@ export default defineComponent({
     justify-content: center;
     border-radius: 4px;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
-
+    &.details-bg5 {
+      background: var(--q-gb-bg-c-37) !important;
+    }
+    .white_text, .odds span {
+      color: var(--q-gb-t-c-30)!important
+    }
   }
 
   .play-box-sty {

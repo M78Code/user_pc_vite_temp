@@ -15,7 +15,7 @@
           <div class="col-2 text-center header-font" v-show="is_show_score && !eports_scoring">{{score.home}}</div>
           <!-- 中间的赛事阶段 上半场和一个倒计时-->
           <div class="col text-center base-header-font">
-            <match-stage :detail_data="detail_data" v-if="show_match_stage"></match-stage>
+            <match-stage :detail_data="detail_data" v-if="show_match_stage" :is_change_header="true"></match-stage>
           </div>
           <div class="col eports_scoring_tip" v-if="eports_scoring">{{i18n_t('mmp.eports_scoring')}}</div>
           <!-- 右边的比分 -->
