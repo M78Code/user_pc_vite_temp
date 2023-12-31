@@ -707,7 +707,7 @@ export default {
     font-size: 0.14rem;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: nowrap;
     // background-color: red;
 
@@ -767,6 +767,12 @@ export default {
     }
 
     .m-c-container {
+      // background-color: yellow;
+      width: 80vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       &.standard {
         width: 1.92rem;
 
@@ -783,7 +789,7 @@ export default {
       }
 
       &.simple {
-        display: block;
+        // display: block;
         .bet-item-wrap {
           width: 100%;
           display: flex;
@@ -954,7 +960,8 @@ export default {
       &.simple {
         width: 0.38rem;
         font-size: 0.13rem;
-        width: 100%;
+        // width: 100%;
+        width: 2.74rem;
 
         .yb-icon-arrow {
           margin-top: 0.02rem;
@@ -1029,6 +1036,7 @@ export default {
   }
 
   .event-team {
+    width: 2.74rem;
       padding: 8px 0;
 
       .name {
@@ -1059,14 +1067,18 @@ export default {
           display: flex;
           align-items: center;
           gap: 4px;
-          width: 1.6rem;
+          // width: 1.6rem;
+          flex: 1;
+          // background-color: red;
 
           &.left {
-            justify-content: flex-end;
+            // justify-content: flex-end;
+            justify-content: center;
           }
 
           &.right {
-            justify-content: flex-start;
+            // justify-content: flex-start;
+            justify-content: center;
           }
         }
       }
