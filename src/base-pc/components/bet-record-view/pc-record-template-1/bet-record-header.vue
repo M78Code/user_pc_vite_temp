@@ -66,7 +66,7 @@
 
 <script setup>
 import BetRecord from "src/core/bet-record/bet-record.js"
-import LayOutMain_pc from "src/core/layout/index.js";
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import { IconWapper } from 'src/components/icon'
