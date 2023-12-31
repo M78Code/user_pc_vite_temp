@@ -234,4 +234,7 @@ export default defineComponent({
     color: #FF4A4A !important;
   }
 }
+.play-box{
+  border-radius: 4px;
+}
 </style>

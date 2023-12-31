@@ -267,4 +267,7 @@ export default defineComponent({
     }
   }
 }
+:deep(.component.odds_new){
+  text-align: center;
+}
 </style>
