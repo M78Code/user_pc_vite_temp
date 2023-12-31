@@ -30,12 +30,12 @@
             <div class="right-item-content">
               <q-rating
                 style="min-width:.85rem; margin-left: 0.07rem;"
-                :value="Number(item.star)"
+                v-model="item.star"
                 size="3.5em"
                 :icon="`img:${LOCAL_PROJECT_FILE_PREFIX}/image/png/m-list-favorite.png`"
                 :icon-selected="`img:${LOCAL_PROJECT_FILE_PREFIX}/image/png/m-list-favorite-red.png`"
                 readonly
-              /> 
+              />
             </div>
           </div>
 
@@ -393,7 +393,6 @@ export default {
                 margin-right: 0.05rem;
 
                 &.q-rating__icon--active {
-                  background-color: red;
                 }
               }
 
