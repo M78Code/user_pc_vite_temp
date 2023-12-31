@@ -552,6 +552,7 @@ class MatchMeta {
     this.clear_match_info()
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const euid = lodash.get(MenuData.result_menu_api_params, 'sport')
+    const params_tid = tid || MenuData.search_tab_tid
     // 电竞的冠军
     const category = MenuData.result_menu_lv1_mi ? 0 : 1
     this.current_euid = `results_${euid}_${md}`
@@ -561,7 +562,7 @@ class MatchMeta {
       const res = await api_common.get_match_result_api({
         ...params,
         category,
-        tid,
+        tid:params_tid,
         md: String(md),
         showem: 1, // 新增的参数 区分电子赛事
         euid: euid && String(euid),
