@@ -434,9 +434,11 @@ export default {
     .title-wrap {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       font-size: 0.16rem;
       height: 0.44rem;
       background-color: var(--q-gb-bg-c-21);
+      position: relative;
       .detail-back-a{
         width: 0.3rem;
         height: 100%;
@@ -460,11 +462,15 @@ export default {
         text-align: center;
         font-weight: 500;
         font-size: 0.18rem;
-        width: 1.6rem;
-        height: 0.44rem;
         line-height: 0.44rem;
         color: var(--q-gb-t-c-18);
-        flex: auto;
+        position: absolute;
+        width: 1.6rem;
+        height: 0.44rem;
+        top: 50%;
+        left: 50%;
+        margin-left: -0.8rem;
+        margin-top: -0.22rem;
       }
 
       /*  刷新按钮 */
@@ -506,7 +512,6 @@ export default {
         align-items: center;
         padding: 0 0.1rem 0 0.03rem;
         margin-right: 0.1rem;
-        flex: 1 1;
         .main-menu-right-symbol{
             font-family: 'Akrobat';
             font-style: normal;
