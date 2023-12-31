@@ -278,6 +278,16 @@ export default defineComponent({
     is_show_border_raduis () {
       return this.next_match && this.match_of_list?.tid !== this.next_match?.tid
     },
+    // 复刻版新手版
+    is_new_user_border_raduis () {
+      const { tid = '', mid = '', source_index = 0 } = this.match_of_list
+      const current_matchs = lodash.get(MatchMeta, 'current_matchs', [])
+      const next_match = current_matchs[this.i + 1]
+      const length = lodash.get(current_matchs, 'length', 0)
+      let result = false
+      if (tid !== next_match?.tid || source_index === length - 1) result = true
+      return result
+    },
     // 是否最后一个
     is_last () {
       const complete_matchs = lodash.get(MatchMeta, 'complete_matchs', [])
