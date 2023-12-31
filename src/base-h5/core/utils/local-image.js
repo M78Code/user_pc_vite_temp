@@ -78,7 +78,7 @@ export const no_wifi = compute_local_project_file_path('/image/list/no-wifi.png'
 // 角球图标
 export const corner_icon = compute_local_project_file_path('/image/list/corner_icon.png')
 // app-h5 提前结算
-export const mearlys_icon_app = compute_local_project_file_path('/image/list/mearlys_icon_app.png')
+export const mearlys_icon_app = compute_local_project_file_path('/image/list/mearlys_icon_app-s.svg')
 
 export const midfield_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
 // app-h5 中立场
