@@ -32,7 +32,7 @@
         <div class="img" :class="['expand_item', {ball_seed_collapsed: not_begin_collapsed}]"  :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
       </div>
       <!-- 全部 -->
-      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
+      <div class="all-league-title" v-if="match?.source_index === 0 && is_show_all" @click.stop="handle_all_ball_seed_fold">
         <div> <img :src="icon_date" alt=""> <span>{{get_date_title}}</span> </div>
         <!-- <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt=""> -->
          <div class="img" :class="['expand_item', {ball_seed_collapsed: !all_ball_seed_collapsed}]"  :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
