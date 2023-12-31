@@ -31,7 +31,6 @@ import {
   ref,
   onMounted,
   onUnmounted,
-  defineAsyncComponent,
   watch,
   nextTick
 } from "vue";
@@ -47,9 +46,7 @@ import { api_common } from "src/api/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit, i18n_t } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
-const toast = defineAsyncComponent(() =>
-  import("src/base-h5/components/common/toast.vue")
-);
+import toast from "src/base-h5/components/common/toast.vue"
 
 var tou_show = ref(true)
 

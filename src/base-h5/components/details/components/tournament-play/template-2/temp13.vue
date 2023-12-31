@@ -450,35 +450,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .temp13 {
-  // @include keyframes(dir_remind_animate) {
-  //   0% {
-  //     transform: translateX(0);
-  //     opacity: 0;
-  //   }
-  //   60% {
-  //     transform: translateX(-0.06rem);
-  //     opacity: 1;
-  //   }
-  //   100% {
-  //     transform: translateX(-0.09rem);
-  //     opacity: 0;
-  //   }
-  // }
 
-  // @include keyframes(dir_right_remind_animate) {
-  //   0% {
-  //     transform: translateX(-0.09rem) rotate(180deg);
-  //     opacity: 0;
-  //   }
-  //   60% {
-  //     transform: translateX(-0.06rem) rotate(180deg);
-  //     opacity: 1;
-  //   }
-  //   100% {
-  //     transform: translateX(0) rotate(180deg);
-  //     opacity: 0;
-  //   }
-  // }
   @keyframes dir_remind_animate {
   0% {
     transform: translateX(0);
@@ -574,6 +546,11 @@ export default defineComponent({
     // margin-bottom: 1px;
     // border-bottom: 1px solid  var(--q-gb-bd-c-7);
     border-bottom: none !important;
+    height: .48rem;
+    margin-bottom: .04rem;
+    &:nth-last-child(1){
+      margin-bottom: .04rem;
+    }
   }
   .bor-style2 {
     border-bottom: none !important;
@@ -654,18 +631,8 @@ export default defineComponent({
     display: flex;
   }
 
-  .details-color {
-
-  }
-
   .row-fat {
     text-align: center;
-  }
-
-  .white_text {
-    .ver-ali-top {
-
-    }
   }
 
   .play-name {
@@ -698,10 +665,6 @@ export default defineComponent({
     line-height: 0.2rem;
   }
 
-  .odds-style {
-    // line-height: 0.16rem;
-    // padding-bottom: 0.07rem;
-  }
 
   .icon-lock {
     width: 0.12rem;
@@ -736,13 +699,8 @@ export default defineComponent({
   //box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   color: var(--q-gb-t-c-18);
     height: .48rem;
-  .single-name {
-    //line-height: normal;
-  }
 }
-.bet-card-play-container{
-  //height: 0.48rem;
-}
+
 .click-bet-bgc{
   background: var(--q-gb-bg-c-37);
 }

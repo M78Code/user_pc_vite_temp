@@ -123,7 +123,8 @@ export default defineComponent({
   .esport-bet-wrapper {
     border-radius: 0.08rem;
     overflow: hidden;
-    padding: 0.08rem;
+    padding: 0.12rem;
+    box-sizing: border-box;
   }
 
   .play-box {
@@ -164,7 +165,7 @@ export default defineComponent({
     color: #FF4A4A !important;
   }
   .gap20{
-    gap: 20px;
+    gap: .04rem;
   }
 }
 </style>

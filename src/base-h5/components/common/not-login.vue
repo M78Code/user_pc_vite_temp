@@ -1,5 +1,5 @@
 <template>
-  <div class="not-loggedin-page">
+  <div class="not-loggedin-page" :style="{ height: height }">
     <img :src="get_no_token_image" alt="not loggedin">
   </div>
 </template>
@@ -13,6 +13,10 @@ const get_no_token_image = computed(() => {
   return (lang == 'zh') ? friendly_reminder_zh : friendly_reminder_en
 })
 
+const height = computed(() => {
+  return `${window.innerHeight}px`
+})
+
 onMounted(() => {
 })
 
@@ -20,7 +24,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .not-loggedin-page{
-  height: 100%;
+  overflow: hidden;
   > img {
     width: 100%;
     height: 100%;
