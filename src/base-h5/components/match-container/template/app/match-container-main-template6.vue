@@ -9,7 +9,7 @@
         <!-- <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' /> -->
       </div>
     </div>
-    <div class="cw2-bg-content">
+    <div :class="['cw2-bg-content', !collapsed && 'collapsed', !is_show_league(i) && 'no-radius', is_show_border_raduis && 'border-raduis']">
       <div v-if="is_show_league(i)"
         :class="['league-container flex items-center justify-between right-border', { collapsed: !collapsed }]"
         @click="handle_league_fold">
@@ -28,6 +28,9 @@
       </div>
 
       <div class="champion-match-results-content" v-if="collapsed">
+        <div class="match-line-module" v-if="!is_show_league(i)">
+          <div class="match-line"></div>
+        </div>
         <div class="cmrc-title">
           <div class="cmrc-t-league">
             <img :src="get_server_file_path(match_of_list.picUrl)">
@@ -89,10 +92,38 @@ export default {
 <style scoped lang="scss">
 .cw2-bg-content {
   background: var(--q-gb-bg-c-18);
-  margin: 0 .08rem;
+  margin: 0 .05rem;
   box-shadow: var(--q-color-box-shadow-color-4);
-  border: 1px solid var(--q-gb-bd-c-15);
-  border-radius: .08rem;
+  border-top-right-radius: .08rem;
+  border-top-left-radius: .08rem;
+  .league-container {
+    border-top-right-radius: .08rem;
+    border-top-left-radius: .08rem;
+    border: 1px solid var(--q-gb-bd-c-15);
+    border-bottom: 1px solid var(--q-gb-bd-c-4);
+  }
+  // border: 1px solid var(--q-gb-bd-c-15);
+  &.collapsed {
+    border-radius: .08rem;
+    .league-container {
+      border-radius: .08rem;
+      border: 1px solid var(--q-gb-bd-c-15);
+    }
+  }
+  &.no-radius {
+    border-radius: 0;
+  }
+}
+
+.match-line-module {
+  padding: 0 0.1rem;
+  // background-color: var(--q-gb-bg-c-21) !important;
+  height: 1px;
+  .match-line {
+    width: 100%;
+    height: 0.005rem;
+    background-color: var(--q-gb-bd-c-4);
+  }
 }
 .champion-wrap-2 {
   //width: 3.61rem;
@@ -108,7 +139,8 @@ export default {
 
   .league-container {
     height: 0.26rem;
-    border-bottom: 1px solid var(--q-gb-bd-c-4);
+    // border-bottom: 1px solid var(--q-gb-bd-c-15) !important;
+    // border: 1px solid var(--q-gb-bd-c-15);
 
     &.collapsed {
       // border-bottom: 1px solid var(--q-gb-t-c-4);
@@ -382,12 +414,16 @@ export default {
 }
 
 .champion-match-results-content {
-  padding:.08rem;
+  padding:0 .08rem .08rem;
+    background: var(--q-gb-bg-c-18);
+    border: 1px solid var(--q-gb-bd-c-15);
+    border-bottom-color: var(--q-gb-bg-c-18);
     .cmrc-title {
       display:flex;
       justify-content: space-between;
       margin-bottom:.1rem;
       color: var(--q-gb-t-c-18);
+      padding-top: .08rem;
       .cmrc-t-league {
         display:flex;
         align-items:center;
