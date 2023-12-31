@@ -200,9 +200,14 @@ export default defineComponent({
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     &.details-bg5 {
       background: var(--q-gb-bg-c-37) !important;
-    }
-    .white_text, .odds span {
-      color: var(--q-gb-t-c-30)!important
+      .details_t_color6  {
+        color: var(--q-gb-t-c-30)!important
+      }
+      :deep(.odds-wrap){
+        .details_t_color6, .odds span {
+          color: var(--q-gb-t-c-30)!important
+        }
+      }
     }
   }
 
