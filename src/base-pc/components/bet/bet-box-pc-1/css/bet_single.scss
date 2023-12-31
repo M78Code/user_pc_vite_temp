@@ -419,19 +419,25 @@
                 outline: none;
               }
             }
+            //默认输入框里面说明字体颜色
             input::-webkit-input-placeholder {
               font-size: 14px;
-              color: rgba(255, 255, 255, 0.4);
+              color: rgba(108,123,168,0.5);
             }
-
+            //默认输入框里面说明字体颜色
             input::-moz-placeholder {
               font-size: 14px;
-              color: rgba(255, 255, 255, 0.4);
+              color: rgba(108,123,168,0.5);
             }
-
+            //默认输入框里面说明字体颜色
+            input:-moz-placeholder {
+              font-size: 14px;
+              color: rgba(108,123,168,0.5);
+            }
+            //默认输入框里面说明字体颜色
             input:-ms-input-placeholder {
               font-size: 14px;
-              color: rgba(255, 255, 255, 0.4);
+              color: rgba(108,123,168,0.5);
             }
             .input-money {
               background: var(--q-gb-bg-c-11);
@@ -446,25 +452,29 @@
                  color: var(--q-gb-t-c-6);
               }
             }
-          }
-          input::-webkit-input-placeholder {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.4);
-          }
-
-          input::-moz-placeholder {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.4);
-          }
-
-          input:-moz-placeholder {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.4);
-          }
-
-          input:-ms-input-placeholder {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.4);
+            // 校验错误时显示红色边框样式
+            .input-border-red {
+              border: 1px solid #FF4040;
+            }
+          // 输入框中的关闭按钮样式
+            .bet-input-close {
+              position: absolute;
+              top: 32px;
+              right: 10px;
+              cursor: pointer;
+              width: auto;
+              height: auto;
+              .icon-failure:before {
+                opacity: 0.9;
+                color: var(--q-gb-t-c-1);
+              }
+              &:hover {
+                .icon-failure:before {
+                  opacity: 0.9;
+                  color: #0086F3;
+                }
+              }
+            } 
           }
 
           // 校验错误时显示红色边框样式

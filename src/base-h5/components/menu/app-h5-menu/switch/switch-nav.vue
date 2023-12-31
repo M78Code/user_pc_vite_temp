@@ -8,13 +8,13 @@
 <template>
     <div class="switch-nav">
         <ul>
-            <li v-for="(item,index) in list" :key="index" :class="{active:activeOn == item.val,disabled:item.disabled}" @click="changeActive(item,index,item.changeFun,item.isSort)">
-                {{  item.name }}
+            <li v-for="(item,index) in list" :key="index" 
+                :class="{active:activeOn == item.val,disabled:item.disabled,isSort:item.isSort}" 
+                @click="changeActive(item,index,item.changeFun,item.isSort)">
+                <span :class="{text:item.isSort}">{{  item.name }}</span>
                 <template v-if="item.isSort">
-                    <span>
-                        <i v-for="(n,m) in sortJson" :key="m">
-                            <img :src="`${activeOn}` == `${index+1}`? n.activeImg:n.img" />
-                        </i>
+                    <span class="icon" 
+                        :style="compute_css_obj({key:(activeOn == index+1) ? 'h5-sort-arrows-active' : 'h5-sort-arrows'})">
                     </span>
                 </template>
             </li>
@@ -22,26 +22,9 @@
     </div>
 </template>
 <script setup>
+  import { compute_css_obj } from "src/output/index.js";
     import {ref,watch} from "vue";
-    import asc1 from "./img/asc1.svg";
-    import asc2 from "./img/asc2.svg";
-    import desc1 from "./img/desc1.svg";
-    import desc2 from "./img/desc2.svg";
     import UserCtr from "src/core/user-config/user-ctr.js"
-    const sortJson = [//排序数据
-        {
-            val:1,
-            enVal:"asc",
-            img:asc1,
-            activeImg:asc2
-        },
-        {
-            val:2,
-            enVal:"desc",
-            img:desc1,
-            activeImg:desc2
-        }
-    ];
     let is_debounce_disable=false
     const props = defineProps({
         list: {
@@ -125,6 +108,21 @@
                     color: var(--q-gb-t-c-23);
                     background: var(--q-gb-bg-c-28);
                     box-shadow: 0px 2px 4px rgba(121, 129, 164, 0.2);
+                }
+                .isSort{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .text{
+                    display: inline-block;
+                   transform: translateX(0.03rem); 
+                }
+                .icon{
+                    display: inline-block;
+                    width: 0.14rem;
+                    height: 0.12rem;
+                    text-align: center;
                 }
             }
         }

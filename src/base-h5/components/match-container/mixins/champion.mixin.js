@@ -50,7 +50,16 @@ export default {
     },
     is_collect() {
       return Boolean(lodash.get(this.match_of_list, 'tf'))
-    }
+    },
+    // 下一场赛事数据
+    next_match () {
+      return MatchMeta.match_mids[this.i + 1] ? MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[this.i + 1]) : undefined
+    },
+    // 是否显示底部圆角
+    is_show_border_raduis () {
+      console.log('next_matchnext_matchnext_matchnext_matchnext_match', this.next_match)
+      return this.next_match && this.match_of_list?.tid !== this.next_match?.tid
+    },
   },
   methods: {
     /**
