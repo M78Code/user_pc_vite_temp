@@ -79,7 +79,7 @@
 
         </div>
         <!-- 赛事内容 -->
-        <div :class="['match-content', { 'collapsed': collapsed, 'border-raduis': is_show_border_raduis }]" v-if="collapsed">
+        <div :class="['match-content', { 'collapsed': collapsed, 'border-raduis': is_new_user_border_raduis }]" v-if="collapsed">
           <div class="match-content-line" v-if="!match.is_show_league"></div>
           <!-- 比分版 | 视频 icon | 赛事阶段 | 比分| 盘口 -->
           <div class="title-details">
@@ -355,7 +355,6 @@ export default {
     const go_to_bet = (ol) => {
       if (ol.os !== 1) return
       active_score.value = `${ol._mid}${ol.oid}`
-      console.log(' active_score.value: ', active_score.value);
       const { oid, _hid, _hn, _mid } = ol
       const params = {
         oid, // 投注项id ol_obj

@@ -10,7 +10,8 @@
 </template>
 <script setup>
 import "src/base-pc/core/globel-mitt";
-import { PageSourceData ,GlobalSwitchClass,LayOutMain_pc} from "src/output/index.js";
+import { PageSourceData ,GlobalSwitchClass} from "src/output/index.js";
+import LayOutMain_pc from "src/core/layout/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { wslog, httplog } from "src/core/log/";
 import {get_query_string as urlparams } from "src/output/index.js";
@@ -194,7 +195,9 @@ onUnmounted(() => {
 });
 </script>
 <script>
-import { PageSourceData ,LayOutMain_pc} from "src/output/index.js";
+import { PageSourceData } from "src/output/index.js";
+import LayOutMain_pc from "src/core/layout/index.js";
+
 export default {
   watch: {
   // 监听路由变化 并记录到layout类中

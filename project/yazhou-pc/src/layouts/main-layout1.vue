@@ -62,7 +62,9 @@ import { ref, computed,onBeforeUnmount,watch } from "vue";
 import { useRoute } from "vue-router";
 import "./main-layout.js"; //初始化数据
 
-import { LayOutMain_pc,UserCtr } from "src/output/index.js";
+import { UserCtr } from "src/output/index.js";
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import { BetBoxWapper } from "src/base-pc/components/bet";
 

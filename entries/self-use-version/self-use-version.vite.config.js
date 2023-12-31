@@ -4,7 +4,7 @@ import vue from "@vitejs/plugin-vue";
 import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 import path from "path";
 import viteCompression from 'vite-plugin-compression';
-
+import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 //本地开发端口
 const port = 28300
 console.log("---------启动文件入口目录-------------", __dirname);
@@ -31,6 +31,18 @@ export default defineConfig({
       
     }),
     viteCompression(),
+    chunkSplitPlugin({
+      strategy: 'default',
+      customSplitting: {
+        //  
+        'react-vendor': [/node_modules/],
+        //
+      
+        'score': [/score/],
+        'virtual': [/virtual/],
+        'code-all': [/src\/pages/],
+      }
+    })
   ],
   css:{
     devSourcemap: true,
@@ -54,16 +66,8 @@ export default defineConfig({
         globals: {
           // "vue3-draggable-resizable": "vue3-draggable-resizable",
         },
-        // manualChunks: {
-        //   // project\app-h5
-        //   'app-h5-detail': [
-        //     '../../project/app-h5/src/pages/match-list/',
-         
-        //   ],
-        // },
-        // chunkFileNames:
-      
-
+      // manualChunks 配置
+      manualChunks: {},
         chunkFileNames: "static/js/[name]-[hash].js",
         entryFileNames: "static/js/[name]-[hash].js",
         assetFileNames: "static/[ext]/[name]-[hash].[ext]"

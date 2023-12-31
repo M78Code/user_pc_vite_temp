@@ -116,9 +116,9 @@ import {
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
   useMittOn,
   MITT_TYPES,
-  i18n_t,
-  LayOutMain_pc,
+  i18n_t
 } from "src/output/index.js";
+import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { mx_get_bet_simple } from "src/core/utils/project/module/bet-util.js";
 export default {

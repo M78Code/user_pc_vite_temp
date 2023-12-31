@@ -81,7 +81,7 @@ import store from "src/store-redux/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js";
 import { component_symbol, need_register_props } from "../config/index.js";
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-import { MatchDetailCalss,LayOutMain_pc } from "src/output/index.js"; 
+
 const props = defineProps({
   //tab列表
   list: {

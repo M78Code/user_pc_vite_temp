@@ -733,10 +733,10 @@ export default {
 
     .team-wrapper {
       flex: 1;
-      font-weight: bold;
+      // font-weight: bold;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: flex-start;
       &.standard {
         height: 1.07rem;
@@ -981,6 +981,7 @@ export default {
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      font-size: 0.12rem;
       // overflow: hidden;
       // text-overflow: ellipsis;
       // white-space: nowrap;
