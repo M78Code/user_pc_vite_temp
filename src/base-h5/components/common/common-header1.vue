@@ -301,8 +301,13 @@ export default {
   letter-spacing: 0;
   text-align: center;
   font-weight: 400;
-  padding-left: 0.6rem;
+  // padding-left: 0.6rem;
+  // 修复名称居中问题
   background-color: transparent !important;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  padding: 0 0.4rem;
 }
 
 .details-c {
