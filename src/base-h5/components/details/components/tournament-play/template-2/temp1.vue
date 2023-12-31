@@ -1,14 +1,21 @@
 <template>
   <!-- hpt: 1 -->
-  <div v-show="false">{{BetData.bet_data_class_version}}</div>
+  <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div class="temp1 mx-5" v-cloak>
     <div class="item-wrap">
-      <div v-for="(item,index) in item_data.hl" :key="index">
-        <div class="row item-bet-ky" v-if="index > 0||index == 0" :class="{'result-style':is_match_result}">
+      <div v-for="(item, index) in item_data.hl" :key="index">
+        <div
+          class="row item-bet-ky"
+          v-if="index > 0 || index == 0"
+          :class="{ 'result-style': is_match_result }"
+        >
           <!-- 如果是电竞，展示这个模板-->
-          <div class="col fat-warp first-radius DJ_special_treatment" v-if="menu_type ==3000">
-            <template v-for="(ol_item,ol_index) in item.ol" :key="ol_index">
-              <div class="col" >
+          <div
+            class="col fat-warp first-radius DJ_special_treatment"
+            v-if="menu_type == 3000"
+          >
+            <template v-for="(ol_item, ol_index) in item.ol" :key="ol_index">
+              <div class="col">
                 <!-- ms---是外层的赛事级别状态值  mhs: 0开 2关 1封 11锁 -->
                 <!--  0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
@@ -19,11 +26,21 @@
                       <div
                         class="play-box-style details_color first-radius warp"
                         @click="go_to_bet(ol_item)"
-                        :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':calc_win(ol_item.result)}]"
+                        :class="[
+                          BetData.bet_oid_list.includes(ol_item.id_)
+                            ? ['details-bg5', 'white_text', 'first-rad']
+                            : '',
+                          { win: calc_win(ol_item.result) },
+                        ]"
                       >
                         <div class="text-center odds-wrap">
-                          <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
-                          <odds-new  :item_data="item_data" :ol_data="ol_item" ></odds-new>
+                          <div class="col text-center ellipsis led">
+                            {{ ol_item.ott }}{{ ol_item.on }}
+                          </div>
+                          <odds-new
+                            :item_data="item_data"
+                            :ol_data="ol_item"
+                          ></odds-new>
                         </div>
                       </div>
                       <!-- 主程序 end -->
@@ -31,9 +48,16 @@
                     <template v-if="ol_item.os == 2">
                       <!-- lock 锁状态 start -->
                       <div class="play-box-style details_color">
-                        <div class="text-center odds-wrap warp ">
-                        <div class="col text-center ellipsis led details_t_color7">{{ol_item.ott}}{{ol_item.on}}</div>
-                          <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                        <div class="text-center odds-wrap warp">
+                          <div
+                            class="col text-center ellipsis led details_t_color7"
+                          >
+                            {{ ol_item.ott }}{{ ol_item.on }}
+                          </div>
+                          <img
+                            class="icon-lock"
+                            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"
+                          />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -47,9 +71,16 @@
                     <template v-else>
                       <!-- lock 锁状态 start -->
                       <div class="play-box-style details_color first-radius">
-                        <div class="text-center odds-wrap warp ">
-                        <div class="col text-center ellipsis led details_t_color7">{{ol_item.ott}}{{ol_item.on}}</div>
-                          <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                        <div class="text-center odds-wrap warp">
+                          <div
+                            class="col text-center ellipsis led details_t_color7"
+                          >
+                            {{ ol_item.ott }}{{ ol_item.on }}
+                          </div>
+                          <img
+                            class="icon-lock"
+                            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"
+                          />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -57,17 +88,23 @@
                   </template>
                   <template v-if="ol_item._hs == 2">
                     <!-- 盘口级别状态关盘时，要占位 -->
-                    <div class="play-box-style details_color">
-                    </div>
+                    <div class="play-box-style details_color"></div>
                   </template>
                 </template>
                 <!-- 封盘，一把锁的居中显示 -->
                 <template v-if="ol_item._mhs == 1">
                   <!-- lock 锁状态 start -->
                   <div class="play-box-style details_color">
-                    <div class="text-center odds-wrap warp ">
-                    <div class="col text-center ellipsis led details_t_color7">{{ol_item.ott}}{{ol_item.on}}</div>
-                      <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                    <div class="text-center odds-wrap warp">
+                      <div
+                        class="col text-center ellipsis led details_t_color7"
+                      >
+                        {{ ol_item.ott }}{{ ol_item.on }}
+                      </div>
+                      <img
+                        class="icon-lock"
+                        :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"
+                      />
                     </div>
                   </div>
                   <!-- lock 锁状态 end -->
@@ -78,10 +115,14 @@
             </template>
           </div>
           <!-- 如果不是电竞，展示这个模板-->
-          <template v-if="menu_type !=3000">
+          <template v-if="menu_type != 3000">
             <div class="col fat-warp first-radius">
-              <template v-for="(ol_item,ol_index) in item.ol">
-                <div class="col" v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
+              <template v-for="(ol_item, ol_index) in item.ol">
+                <div
+                  class="col"
+                  v-if="lodash.get(item_data.title, '[0].otd') == ol_item.otd"
+                  :key="ol_index"
+                >
                   <!-- _mhs---是外层的赛事级别状态值  mhs: 0开 2关 1封 11锁 -->
                   <!--  0开 2关 1封 11锁 -->
                   <!-- 开盘or锁盘 正常显示 -->
@@ -92,21 +133,43 @@
                         <div
                           class="play-box-style details_color first-radius warp"
                           @click="go_to_bet(ol_item)"
-                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':calc_win(ol_item.result)}]"
+                          :class="[
+                            BetData.bet_oid_list.includes(ol_item.id_)
+                              ? ['details-bg5', 'white_text', 'first-rad']
+                              : '',
+                            { win: calc_win(ol_item.result) },
+                          ]"
                         >
                           <div class="text-center odds-wrap">
-                            <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <odds-new class="odds-style"  :item_data="item_data" :ol_data="ol_item" ></odds-new>
+                            <div class="col text-center ellipsis led">
+                              {{ ol_item.ott }}{{ ol_item.on }}
+                            </div>
+                            <odds-new
+                              class="odds-style"
+                              :item_data="item_data"
+                              :ol_data="ol_item"
+                            ></odds-new>
                           </div>
                         </div>
                         <!-- 主程序 end -->
                       </template>
                       <template v-if="ol_item.os == 2">
                         <!-- lock 锁状态 start -->
-                        <div class="play-box-style details_color" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
+                        <div
+                          class="play-box-style details_color"
+                          :class="get_detail_data.csid == 1 ? 'odds-lock' : ''"
+                        >
                           <div class="text-center odds-wrap warp flex-center">
-                            <div class="col text-center ellipsis led details_t_color7"  v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                            <div
+                              class="col text-center ellipsis led details_t_color7"
+                              v-show="get_detail_data.csid != 1"
+                            >
+                              {{ ol_item.ott }}{{ ol_item.on }}
+                            </div>
+                            <img
+                              class="icon-lock"
+                              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"
+                            />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -120,9 +183,22 @@
                       <template v-else>
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color first-radius">
-                          <div class="text-center odds-wrap warp"  :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                            <div class="col text-center ellipsis led" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                          <div
+                            class="text-center odds-wrap warp"
+                            :class="
+                              get_detail_data.csid == 1 ? 'odds-lock' : ''
+                            "
+                          >
+                            <div
+                              class="col text-center ellipsis led"
+                              v-show="get_detail_data.csid != 1"
+                            >
+                              {{ ol_item.ott }}{{ ol_item.on }}
+                            </div>
+                            <img
+                              class="icon-lock"
+                              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"
+                            />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -130,17 +206,27 @@
                     </template>
                     <template v-if="ol_item._hs == 2">
                       <!-- 盘口级别状态关盘时，要占位 -->
-                      <div class="play-box-style details_color">
-                      </div>
+                      <div class="play-box-style details_color"></div>
                     </template>
                   </template>
                   <!-- 封盘，一把锁的居中显示 -->
                   <template v-if="ol_item._mhs == 1">
                     <!-- lock 锁状态 start -->
                     <div class="play-box-style details_color">
-                      <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                        <div class="col text-center ellipsis led details_t_color7" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                        <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                      <div
+                        class="text-center odds-wrap warp"
+                        :class="get_detail_data.csid == 1 ? 'odds-lock' : ''"
+                      >
+                        <div
+                          class="col text-center ellipsis led details_t_color7"
+                          v-show="get_detail_data.csid != 1"
+                        >
+                          {{ ol_item.ott }}{{ ol_item.on }}
+                        </div>
+                        <img
+                          class="icon-lock"
+                          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"
+                        />
                       </div>
                     </div>
                     <!-- lock 锁状态 end -->
@@ -152,10 +238,10 @@
             </div>
 
             <div class="col fat-warp">
-              <template v-for="(ol_item,ol_index) in item.ol">
+              <template v-for="(ol_item, ol_index) in item.ol">
                 <div
                   class="col"
-                  v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd"
+                  v-if="lodash.get(item_data.title, '[1].otd') == ol_item.otd"
                   :key="ol_index"
                 >
                   <!--  0开 2关 1封 11锁 -->
@@ -167,11 +253,23 @@
                         <div
                           class="play-box-style details_color warp"
                           @click="go_to_bet(ol_item)"
-                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',,{'win':calc_win(ol_item.result)}]"
+                          :class="[
+                            BetData.bet_oid_list.includes(ol_item.id_)
+                              ? ['details-bg5', 'white_text', 'first-rad']
+                              : '',
+                            ,
+                            { win: calc_win(ol_item.result) },
+                          ]"
                         >
                           <div class="text-center odds-wrap">
-                            <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <odds-new class="odds-style"  :item_data="item_data" :ol_data="ol_item" ></odds-new>
+                            <div class="col text-center ellipsis led">
+                              {{ ol_item.ott }}{{ ol_item.on }}
+                            </div>
+                            <odds-new
+                              class="odds-style"
+                              :item_data="item_data"
+                              :ol_data="ol_item"
+                            ></odds-new>
                           </div>
                         </div>
                         <!-- 主程序 end -->
@@ -179,9 +277,22 @@
                       <template v-if="ol_item.os == 2">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color">
-                          <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                            <div class="col text-center ellipsis led details_t_color7"  v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                          <div
+                            class="text-center odds-wrap warp"
+                            :class="
+                              get_detail_data.csid == 1 ? 'odds-lock' : ''
+                            "
+                          >
+                            <div
+                              class="col text-center ellipsis led details_t_color7"
+                              v-show="get_detail_data.csid != 1"
+                            >
+                              {{ ol_item.ott }}{{ ol_item.on }}
+                            </div>
+                            <img
+                              class="icon-lock"
+                              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"
+                            />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -195,9 +306,22 @@
                       <template v-else>
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color">
-                          <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                            <div class="col text-center ellipsis led"  v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                          <div
+                            class="text-center odds-wrap warp"
+                            :class="
+                              get_detail_data.csid == 1 ? 'odds-lock' : ''
+                            "
+                          >
+                            <div
+                              class="col text-center ellipsis led"
+                              v-show="get_detail_data.csid != 1"
+                            >
+                              {{ ol_item.ott }}{{ ol_item.on }}
+                            </div>
+                            <img
+                              class="icon-lock"
+                              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"
+                            />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -205,17 +329,27 @@
                     </template>
                     <template v-if="ol_item._hs == 2">
                       <!-- 盘口级别状态关盘时，要占位 -->
-                      <div class="play-box-style details_color">
-                      </div>
+                      <div class="play-box-style details_color"></div>
                     </template>
                   </template>
                   <!-- 封盘，一把锁的居中显示 -->
                   <template v-if="ol_item._mhs == 1">
                     <!-- lock 锁状态 start -->
                     <div class="play-box-style details_color">
-                      <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                        <div class="col text-center ellipsis led details_t_color7" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                        <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                      <div
+                        class="text-center odds-wrap warp"
+                        :class="get_detail_data.csid == 1 ? 'odds-lock' : ''"
+                      >
+                        <div
+                          class="col text-center ellipsis led details_t_color7"
+                          v-show="get_detail_data.csid != 1"
+                        >
+                          {{ ol_item.ott }}{{ ol_item.on }}
+                        </div>
+                        <img
+                          class="icon-lock"
+                          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"
+                        />
                       </div>
                     </div>
                     <!-- lock 锁状态 end -->
@@ -227,10 +361,10 @@
             </div>
 
             <div class="col fat-warp last-radius">
-              <template v-for="(ol_item,ol_index) in item.ol">
+              <template v-for="(ol_item, ol_index) in item.ol">
                 <div
                   class="col"
-                  v-if="lodash.get(item_data.title,'[2].otd') == ol_item.otd"
+                  v-if="lodash.get(item_data.title, '[2].otd') == ol_item.otd"
                   :key="ol_index"
                 >
                   <!--  0开 2关 1封 11锁 -->
@@ -242,11 +376,22 @@
                         <div
                           class="play-box-style details_color last-radius"
                           @click="go_to_bet(ol_item)"
-                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text']:'',{'win':calc_win(ol_item.result)}]"
+                          :class="[
+                            BetData.bet_oid_list.includes(ol_item.id_)
+                              ? ['details-bg5', 'white_text']
+                              : '',
+                            { win: calc_win(ol_item.result) },
+                          ]"
                         >
                           <div class="text-center odds-wrap">
-                            <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <odds-new class="odds-style"  :item_data="item_data" :ol_data="ol_item" ></odds-new>
+                            <div class="col text-center ellipsis led">
+                              {{ ol_item.ott }}{{ ol_item.on }}
+                            </div>
+                            <odds-new
+                              class="odds-style"
+                              :item_data="item_data"
+                              :ol_data="ol_item"
+                            ></odds-new>
                           </div>
                         </div>
                         <!-- 主程序 end -->
@@ -255,9 +400,22 @@
                       <template v-if="ol_item.os == 2">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color">
-                          <div class="text-center odds-wrap" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                            <div class="col text-center ellipsis led details_t_color7" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                          <div
+                            class="text-center odds-wrap"
+                            :class="
+                              get_detail_data.csid == 1 ? 'odds-lock' : ''
+                            "
+                          >
+                            <div
+                              class="col text-center ellipsis led details_t_color7"
+                              v-show="get_detail_data.csid != 1"
+                            >
+                              {{ ol_item.ott }}{{ ol_item.on }}
+                            </div>
+                            <img
+                              class="icon-lock"
+                              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"
+                            />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -273,9 +431,22 @@
                       <template v-else>
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color last-radius">
-                          <div class="text-center odds-wrap " :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                            <div class="col text-center ellipsis led" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                          <div
+                            class="text-center odds-wrap"
+                            :class="
+                              get_detail_data.csid == 1 ? 'odds-lock' : ''
+                            "
+                          >
+                            <div
+                              class="col text-center ellipsis led"
+                              v-show="get_detail_data.csid != 1"
+                            >
+                              {{ ol_item.ott }}{{ ol_item.on }}
+                            </div>
+                            <img
+                              class="icon-lock"
+                              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"
+                            />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -284,8 +455,7 @@
 
                     <template v-if="ol_item._hs == 2">
                       <!-- 盘口级别状态关盘时，要占位 -->
-                      <div class="play-box-style details_color">
-                      </div>
+                      <div class="play-box-style details_color"></div>
                     </template>
                   </template>
                   <!-- 封盘，一把锁的居中显示 -->
@@ -293,7 +463,12 @@
                     <!-- lock 锁状态 start -->
                     <div class="play-box-style details_color">
                       <div class="text-center odds-wrap">
-                        <div class="col text-center ellipsis led details_t_color7" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
+                        <div
+                          class="col text-center ellipsis led details_t_color7"
+                          v-show="get_detail_data.csid != 1"
+                        >
+                          {{ ol_item.ott }}{{ ol_item.on }}
+                        </div>
                       </div>
                     </div>
                     <!-- lock 锁状态 end -->
@@ -302,8 +477,7 @@
                   <template v-if="ol_item._mhs == 2"></template>
                 </div>
               </template>
-              </div>
-
+            </div>
           </template>
         </div>
       </div>
@@ -311,16 +485,29 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters } from "vuex";
-import lodash from "lodash"
+import lodash from "lodash";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/core/odds-conversion/odds_conversion-mixin.js";
-import { MenuData, LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,calc_win } from 'src/output/index.js';
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { useRoute } from "vue-router"
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import BetData from "src/core/bet/class/bet-data-class.js"
+import {
+  MenuData,
+  LOCAL_PROJECT_FILE_PREFIX,
+  MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,
+  calc_win,
+} from "src/output/index.js";
+import {
+  reactive,
+  computed,
+  onMounted,
+  onUnmounted,
+  toRefs,
+  watch,
+  defineComponent,
+} from "vue";
+import { useRoute } from "vue-router";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   // #TODO mixins
@@ -328,22 +515,24 @@ export default defineComponent({
   name: "temp1",
   props: ["item_data", "title"],
   components: {
-    "odds-new": odds_new
+    "odds-new": odds_new,
   },
   setup(props, evnet) {
-    const route = useRoute()
+    const route = useRoute();
     const { menu_type } = MenuData; //菜单选中项
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     // ...mapGetters(["BetData.bet_oid_list","get_cur_odd","menu_type","get_detail_data"]),
     const get_cur_odd = computed(() => {
-      return ""
+      return "";
     });
     const get_detail_data = computed(() => {
-      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid||lodash.get(props.item_data,'mid'))
+      return MatchDataWarehouseInstance.get_quick_mid_obj(
+        route.params.mid || lodash.get(props.item_data, "mid")
+      );
     });
     const is_match_result = computed(() => {
-      return ['result_details', 'match_result'].includes(route.name)
+      return ["result_details", "match_result"].includes(route.name);
     });
     return {
       calc_win,
@@ -354,38 +543,42 @@ export default defineComponent({
       is_match_result,
       LOCAL_PROJECT_FILE_PREFIX,
       BetData,
-      go_to_bet
-    }
-  }
-})
+      go_to_bet,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
 .item-wrap {
   min-height: 0.32rem;
   height: auto;
-  background:none !important;
+  background: none !important;
 }
 
 .play-box-style {
+  // margin: 0.04rem;
   width: 100%;
+  height: 0.52rem;
+  line-height: 0.52rem;
+  padding: 0 0.15rem;
   display: flex;
-  padding:0.04rem;
-  border-radius: 12px;
+  justify-content: center;
+  border-radius: 8px;
+  box-sizing: border-box;
 }
 .remark {
   flex: 1;
-  letter-spacing: 0; 
+  letter-spacing: 0;
 }
 
 .odds-wrap {
-  width: 100%;
-  padding: 0.005rem 0;
-  height: 0.52rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+  // width: 100%;
+  // padding: 0.005rem 0;
+  // height: 0.52rem;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
 }
 
 .odds-lock {
@@ -393,7 +586,6 @@ export default defineComponent({
 }
 
 .active {
-
 }
 
 .lock-style {
@@ -413,11 +605,10 @@ export default defineComponent({
 }
 
 .fat-warp {
-
 }
 
 .led {
-  flex:1;
+  flex: 1;
   color: var(--q-gb-t-c-19); //var(--q-detials-color-7);
   // padding-bottom: 0.02rem;
   font-size: 0.13rem;
@@ -461,7 +652,6 @@ export default defineComponent({
 
 .first-rad {
   &:after {
-
   }
 }
 
@@ -478,15 +668,15 @@ export default defineComponent({
   justify-content: center;
 }
 .flex1 {
-      flex: 1;
+  flex: 1;
 }
 .item-bet-ky {
-  padding:0.08rem;
+  padding: 0.08rem;
   //background-color: var(--q-gb-bg-c-29);
   background-color: var(--q-gb-bg-c-38);
   .fat-warp {
-    margin:0.04rem;
-    background:var(--q-gb-bg-c-15);
+    margin: 0.04rem;
+    background: var(--q-gb-bg-c-15);
     border-radius: 4px;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   }
