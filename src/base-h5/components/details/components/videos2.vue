@@ -138,7 +138,7 @@
           
           <!--<div v-show="is_playing_replay" class="video-wrapper" ref="video_wrapper" @click="click_video_screen"></div>-->
           <!-- 精彩回放事件类型切换 -->
-          <tabs v-show="is_expand_video_list" :tabs="tab_list" @click="get_video_list" ref="tabs"></tabs>
+          <!-- <tabs v-show="is_expand_video_list" :tabs="tab_list" @click="get_video_list" ref="tabs"></tabs> -->
           
           <template v-if="get_is_hengping">
             <!--（精彩/收起）回放 -->
@@ -341,7 +341,7 @@ export default {
     footballEvents,
     "analysis-football-matches": analysis_football_matches,  //足球分析
     "basketball-match-analysis": basketball_match_analysis,  //篮球分析
-    "tabs": () => import("src/base-pc/components/match-detail/match_info/tabs.vue"),
+    // "tabs": () => import("src/base-pc/components/match-detail/match_info/tabs.vue"),
     "slider-x": () => import("src/base-h5/components/details/analysis-matches/components/slider-x.vue"),
     slider: slider,
   },
@@ -907,6 +907,7 @@ export default {
       this.check_replay_url(this.replay_video_src)
       // 滚动目标到屏幕显示区域
       this.$nextTick(()=>{
+        console.log(this.$refs.slider_video.$refs.slider_x,'this.$refs.slider_video.$refs.slider_x')
         this.$tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
       })
       
