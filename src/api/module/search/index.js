@@ -53,11 +53,6 @@ export const get_hotselect3 = (params, config={}, url = "/v1/hotSearch/hotSelect
     params.isPc = 0;  //1(Pc端)  0(h5端))
     return http.get(`${prefix}${url}`, params, config)
   }
-  // 热词-------删除搜索历史
-  export function get_remove_search_history(params, config={}, url = "/v1/hotSearch/deleteHistoryPB") {
-    return http.get(`${prefix}${url}`, params, config)
-  }
-  
   
   //热词--------增加搜索记录接口
   export const get_insert_history = (params, config={}, url = "/v1/searchSettings/insertHistory") => http.post(`${prefix}${url}`, params, config)

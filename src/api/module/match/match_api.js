@@ -102,13 +102,6 @@ export const get_fetch_detail_match = (params, config = {}, url = "/v1/w/matchDe
 export const get_hot_league_list = (params, config = {}, url="/v1/tournamentRanking/getTournamentId") => {
   return http.get(`${prefix_11}${url}`, params);
 };
-//根据联赛id获取排行榜
-export const get_ranking_by_league_id = (params, config = {}, url="/v1/tournamentRanking/getRankingByTournamentId") => {
-  return http.get(`${prefix_11}${url}`, params);
-};
-
-//获取联赛数量统计
-export const get_leagues_list_match = (params, config={}, url = "/v3/european/matchesByTidPB") => http.post(`${prefix_11}${url}`, params);
  
 
 //电竞右侧5场赛事列表

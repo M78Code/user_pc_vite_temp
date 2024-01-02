@@ -99,9 +99,6 @@ export const get_hots_es = (params, config = {}, url = "/v1/w/hotEsportsMatches"
 //赛事详情
 export const get_match_virtual_details = (params, config = {}, url = "/v1/w/matchDetail/getVirtualMatchDetail") => http.get(`${prefix}${url}`, params)
 
-//玩法详情
-export const get_match_virtual_plays = (params, config = {}, url = "/v1/w/matchDetail/getVirtualMatchOddsInfo") => http.get(`${prefix}${url}`, params)
-
 // 获取vuex中投注项最新数据
 export const get_bet_olds = (params, config = {}, url = "/v1/w/matchDetail/getOls") => http.get(`${prefix}${url}`, params)
 
