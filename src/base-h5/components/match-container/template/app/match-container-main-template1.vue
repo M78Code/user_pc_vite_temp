@@ -273,7 +273,7 @@
                           <img :class="['live-icon-btn']" :src='corner_icon' />
                         </div>
                         <!-- 此赛事支持提前结算 -->
-                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
+                        <div class="column justify-center " v-if="match_of_list.mearlys == 1" @click.stop>
                           <img :src="mearlys_icon_app" alt="">
                         </div>
                       </div>
