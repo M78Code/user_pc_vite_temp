@@ -160,7 +160,7 @@ export default {
   height: auto;
   position: relative;
   margin: 0 auto;
-  // background: var(--q-gb-bg-c-18);
+  background: var(--q-gb-bg-c-18);
   border-radius: 0.05rem;
   color: var(--q-gb-t-c-18);
 
