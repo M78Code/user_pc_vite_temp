@@ -194,7 +194,7 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
      */
     if (
       [1, 3].includes(MatchListCardData.match_list_mapping_relation_obj_type)
-    ) {console.log("jiffy2",)
+    ) {
       compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1(
         match_list,
         is_ws_call,
