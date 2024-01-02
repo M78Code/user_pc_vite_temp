@@ -47,7 +47,7 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
 import  GATAG  from "src/core/http/gtag-tag.js";
 const route = useRoute();
-const store_state = store.getState();
+// const store_state = store.getState();
 // const websocket_store = use_websocket_store()
 
 const match_main = ref(null);
