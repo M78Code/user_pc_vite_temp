@@ -448,7 +448,9 @@ export default {
       border-top: 2px solid rgba(116, 196, 255, 0.5);
     }
     &.not_begin{
-      border-top: 2px solid var(--q-gb-bd-c-13);
+      // border-top: 2px solid var(--q-gb-bd-c-13);
+      border-top: 2px solid rgba(233, 91, 91, 0.51);
+
     }
 
     img {
