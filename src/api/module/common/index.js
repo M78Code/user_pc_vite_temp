@@ -218,7 +218,7 @@ export const videoAnimationUrl = (params, config, url="/v1/w/videoAnimationUrl")
 export const getliveVideoUrl = (params, config, url="/v1/w/liveVideoUrl") => http.post(`${prefix}${url}`,params, config);
 
 
-// 获取视频是否可获取
+// 获取用户是否登录
 export const getMatchUserIsLogin = (params, config, url="/v1/w/isLogin") => http.post(`${prefix}${url}`,params, config);
 
 // 获取视频链接
@@ -286,9 +286,6 @@ export const get_virtual_menu = (params={}, config={}, url = "/v1/w/virtual/menu
 // 菜单实时统计玩法数量
 export const post_menu_play_count = (params, config={}, url = "/v2/w/menu/queryPlayCountPB") => http.post(`${prefix}${url}`, params, config);
 
- 
-//从服务器获取时间戳
-export const get_server_time = (params, config={}, url = "/v1/getSystemTime/currentTimeMillis") => http.get(`${prefix_job}${url}`, params, config);
 
 // 根据赛事IDs，获取赛事事件
 export const match_event = (params, config={}, url = "/v1/matchevent") => http.post(`${prefix}${url}`, params, config);
