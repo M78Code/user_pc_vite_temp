@@ -773,7 +773,7 @@ if (type.value == 30) {
 
   .active-point {
     position: fixed;
-    top: 3.6rem !important;
+    top: 3.6rem;
     right: 0.25rem;
     z-index: 100;
     width: 0.48rem;
