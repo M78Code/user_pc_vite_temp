@@ -73,15 +73,6 @@ export const get_category_playTop = (params, config = {}, url = "/v1/m/category/
   return http.get(`${prefix}${url}`, params, config)
 }
 
-//获取直播url
-export const post_video_url = (params, config = {}, url = "/v1/w/videoAnimationUrl") => {
-  let imgDm = lodash.get(window,'env.config.oss_img_domains[0]');
-  if(imgDm){
-    params.imgDm = imgDm;
-  }
-  return http.post(`${prefix}${url}`, params);
-}
-
 //获取用户是否登录
 export const post_check_login = (params, config = {}, url = "/v1/w/isLogin") => http.post(`${prefix}${url}`, params);
 
