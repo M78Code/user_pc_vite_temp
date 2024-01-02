@@ -17,7 +17,6 @@ import video from "src/core/video/video.js"   // 视频相关公共方法
 import { useRoute } from 'vue-router';
 import { ref, onMounted, defineProps, computed, watch, onUnmounted } from "vue";
 import { api_common } from 'src/api';
-import store from "src/store-redux/index.js";
 import OrientationSubscribe from 'src/base-h5/components/common/orientation/orientation-subscribe';
 const props = defineProps({
     get_detail_data: {
@@ -37,8 +36,6 @@ const is_show_text = ref('')
 const show_go_back = ref(false);
 const get_show_video = ref(false);
 console.log(route.params, "params");
-const { detailsReducer } = store.getState()
-// const hd_sd = ref(detailsReducer.hd_sd)
 watch(() => route.params.mid, (value) => {
   detail_data = lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid}_]`, {});
   icon_click_muUrl();

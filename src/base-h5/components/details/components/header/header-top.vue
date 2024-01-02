@@ -253,7 +253,6 @@ import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 
 // 公共方法
 import { MenuData, UserCtr } from "src/output/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import store from "src/store-redux/index.js";
 import { format_total_score, format_time_zone_time, format_time_zone, formatTime } from "src/output/index.js"
 import { i18n_t,i18n_tc } from "src/boot/i18n.js"
 import { midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
@@ -559,9 +558,9 @@ onBeforeUnmount(clear_timer1_)
 
 
 
-const set_video_url = (data) => store.dispatch({ type: 'videoReducer.set_video_url', data })
-const set_show_video = (data) => store.dispatch({ type: 'videoReducer.set_show_video', data })
-const set_iframe_onload = (data) => store.dispatch({ type: 'videoReducer.set_iframe_onload', data })
+// const set_video_url = (data) => store.dispatch({ type: 'videoReducer.set_video_url', data })
+// const set_show_video = (data) => store.dispatch({ type: 'videoReducer.set_show_video', data })
+// const set_iframe_onload = (data) => store.dispatch({ type: 'videoReducer.set_iframe_onload', data })
 /** 视频播放 */
 const icon_click = () => {
   const data = {

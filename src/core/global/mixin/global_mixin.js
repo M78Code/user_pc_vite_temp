@@ -6,7 +6,7 @@
 import { reactive, ref, toRefs, onUnmounted, watch } from "vue";
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 // api文件
-import { api_details } from "src/api/index";
+import { api_details, api_common } from "src/api/index";
 import lodash from "lodash";
 import details from "src/core/match-detail/match-detail-pc/match-detail";
 import video from "src/core/video/video.js";
@@ -284,7 +284,7 @@ export const useGetGlobal = ({  back_to }) => {
 
       let api =
         cur_page == "details"
-          ? api_details.get_fetch_detail_latest_match(_params)
+          ? api_common.get_detail_video(_params)
           : api_details.post_fetch_list_latest_match(_params);
 
       api.then(({ data }) => {

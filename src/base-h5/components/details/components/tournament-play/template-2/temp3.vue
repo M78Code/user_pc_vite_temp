@@ -149,6 +149,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .temp3 {
+  background: var(--q-gb-bg-c-38) !important;
   .title-style {
     margin-bottom: 0.06rem;
     height: 0.13rem;
@@ -157,45 +158,35 @@ export default defineComponent({
     line-height: 0.13rem;
   }
 
-  // .item2 {
-  //   flex: 1;
-  //   // background: var(--q-gb-bg-c-18);
-  // }
 
   .item-wrap {
     display: flex;
     flex-wrap: wrap;
        gap: 0.08rem;
-    // min-height: 0.32rem;
     height: auto;
-    // border-radius: 8px;
     overflow: hidden;
     padding:0.08rem;
+    padding:0.08rem 0.12rem;
     box-sizing: border-box;
+    
     .item2 {
-      //  margin: 0.04rem;
       flex: 1;
+      flex-basis: 45%;
       overflow: hidden;
       box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
-      &:nth-child(1){
-        margin-left:  0.04rem;;
-      }
-      &:nth-child(2){
-        margin-right:  0.04rem;;
-      }
-      // max-width: 50%;
-      // min-width: 45%;
-      // padding:0.04rem;
-      &:nth-child(2n) {
-        // margin-right: 0;
-        border-right: 0;
-      }
+      border-radius: .04rem;
+      // &:nth-child(1){
+      //   margin-left:  0.04rem;;
+      // }
+      // &:nth-child(2){
+      //   margin-right:  0.04rem;;
+      // }
+      // &:nth-child(2n) {
+      //   border-right: 0;
+      // }
     }
   }
 
-  .bor-style {
-
-  }
 
   .play-box-style {
     width: 100%;
@@ -203,9 +194,9 @@ export default defineComponent({
     line-height: 0.52rem;
     padding: 0 0.15rem;
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: .04rem;
     box-sizing: border-box;
     // box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     &.details-bg5 {
@@ -221,7 +212,7 @@ export default defineComponent({
     }
   }
 
-  .play-box-sty {
+  .play-box-style {
     width: 100%;
     height: 0.52rem;
     line-height: 0.52rem;
@@ -241,9 +232,6 @@ export default defineComponent({
     // width: 0.55rem;
   }
 
-  .active {
-
-  }
 
   .lock-style {
     width: 100%;
@@ -251,29 +239,13 @@ export default defineComponent({
     line-height: 0.3rem;
     margin-bottom: 0.02rem;
 
-    border-radius: 0.02rem;
+    border-radius: .04rem;
     padding: 0 0.1rem;
     text-align: center;
     display: block;
   }
 
-  .box-style {
 
-  }
-
-  .white_text {
-
-  }
-
-  .details_color {
-
-  }
-}
-
-.first-rad {
-  &:after {
-
-  }
 }
 
 .icon-lock {
@@ -291,4 +263,10 @@ export default defineComponent({
 .details_t_color6 {
   color: var(--q-gb-t-c-11);
 }
+
+// 统一间距
+.item-wrap {
+  gap: 0.04rem !important;
+}
+
 </style>

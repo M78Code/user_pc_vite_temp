@@ -285,4 +285,9 @@ export default defineComponent({
   border-radius: 4px;
 }
 
+// 统一间距
+.bet-box-bg {
+  margin-left: 0.02rem !important;
+  margin-right: 0.02rem !important;
+}
 </style>

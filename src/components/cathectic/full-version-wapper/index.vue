@@ -1,7 +1,5 @@
 <template>
-  <div>
     <component :is="use_component_key" v-bind="$attrs" />
-  </div>
 </template>
 <script>
 import wapper_config from "./wapper.js";

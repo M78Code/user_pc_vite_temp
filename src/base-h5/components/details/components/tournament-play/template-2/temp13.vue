@@ -393,7 +393,7 @@ export default defineComponent({
         }
         init_data.left -= dom_width
          // init_data.left 左滑距离+13   以免右侧留白
-          init_data.left =  init_data.left - rem (init_data.index* 0.11)
+          init_data.left =  init_data.left - rem (init_data.index* 0.06)
           init_data.prev_left -= dom_width
       } else {
         init_data.index =  init_data.index-1
@@ -404,7 +404,7 @@ export default defineComponent({
           return
         }
         init_data.left += dom_width
-         init_data.left = init_data.left-rem (init_data.index* 0.11)
+         init_data.left = init_data.left-rem (init_data.index* 0.06)
          init_data.prev_left+= dom_width
       }
     }, 50);
@@ -588,7 +588,8 @@ export default defineComponent({
     .bet-item-ky-container {
       padding-top: 0.12rem;
       padding-bottom: 0.11rem;
-        box-sizing: border-box;
+      box-sizing: border-box;
+      box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     }
   }
 

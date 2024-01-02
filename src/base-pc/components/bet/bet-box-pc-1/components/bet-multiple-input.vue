@@ -17,7 +17,7 @@
                 <input class="input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
                 :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
                 <!--清除输入金额按钮-->
-                <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money">
+                <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money && !BetData.is_bet_single">
                     <icon-wapper name="icon-failure" size="12px" />
                 </div>
             </div>
@@ -101,20 +101,42 @@ onUnmounted(() => {
  *@description 金额改变事件
  *@param {Number} new_money 最新金额值
  */
- const change_money_handle = (new_money) => {
-    if( new_money.money*1 > ref_data.max_money*1){
-        ref_data.money =  ref_data.max_money
-    }else{
-        ref_data.money = new_money.money
+
+
+ const change_money_handle = obj => {
+    if(!obj.id) {
+        // 获取当前投注金额
+        let money = BetData.bet_amount
+        let money_ = obj.money
+        // 设置最大投注金额
+        if(obj.money == "MAX"){
+            money_ = ref_data.max_money
+        }
+        // 计算投注金额
+        let money_amount = mathJs.add(money,money_)
+        // 投注金额 不能大于最大投注金额 也不能大于用户余额
+        if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
+            BetData.set_bet_amount(mathJs.add(money,money_))
+            ref_data.money = money_amount
+        }else{
+            // 最大限额不能大于余额
+            let money_a = ref_data.max_money
+            if(UserCtr.balance < ref_data.max_money){
+                money_a = UserCtr.balance
+            }  
+            BetData.set_bet_amount(mathJs.add(money,money_))
+
+            ref_data.money = money_a
+        }  
+        
     }
-    BetData.bet_single_list.forEach((item,oid)=>{
-        BetData.set_bet_obj_amount(ref_data.money,oid)
-    })
 }
 
 // 清空输入框金额
 const bet_clear_handle = () => {
     ref_data.money = ''
+    BetData.set_bet_amount(0)
+    BetData.set_bet_obj_amount('',oid)
 }
 
 // 键盘回车事件
@@ -150,10 +172,12 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
+    console.log(ref_data.money)
     useMittEmit(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY,ref_data)
      // 输入控制
      let sum = 0
      if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
+        BetData.set_bet_amount(ref_data.money)
         //计算多项最高可赢
         BetData.bet_single_list.forEach((item)=>{
             sum += mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)
@@ -165,6 +189,7 @@ const set_win_money = () => {
             ref_data.max_money = UserCtr.balance
             ref_data.money = ref_data.max_money
         }
+        BetData.set_bet_amount(ref_data.money)
     }
 }
 

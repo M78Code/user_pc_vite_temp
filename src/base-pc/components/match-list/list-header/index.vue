@@ -96,7 +96,7 @@ import { PageSourceData, GlobalSwitchClass } from "src/output/index.js";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import store from 'src/store-redux/index.js';
+// //import store from 'src/store-redux/index.js';
 import filterHeader from "src/core/filter-header/filter-header.js";
 import { IconWapper } from 'src/components/icon'
 
@@ -216,16 +216,16 @@ time_list.value = [
 DOM_ID_SHOW.value = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 // console.error('reload')
 // 刷新时重置为列表展开
-store.dispatch({
-  type: 'SETCUREXPANDLAYOUT',
-  data: "match-list"
-})
-function set_unfold_multi_column() {
-  store.dispatch({
-    type: 'SET_UNFOLD_MULTI_COLUMN',
-    data: false
-  })
-}
+// store.dispatch({
+//   type: 'SETCUREXPANDLAYOUT',
+//   data: "match-list"
+// })
+// function set_unfold_multi_column() {
+//   store.dispatch({
+//     type: 'SET_UNFOLD_MULTI_COLUMN',
+//     data: false
+//   })
+// }
 /**
  * 计算 全部 按钮样式
  */
@@ -263,10 +263,10 @@ function reset_filter () {
 function on_click_sort(row) {
   if (!GlobalAccessConfig.get_sortCut()) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"))
   match_sort_show.value = false
-  store.dispatch({
-    type: 'SET_MATCH_SORT',
-    data: row.id
-  })
+  // store.dispatch({
+  //   type: 'SET_MATCH_SORT',
+  //   data: row.id
+  // })
 }
 /**
  * @Description:切换联赛筛选
@@ -278,10 +278,10 @@ function toggle_filter_popup() {
     return
   }
   //打开或关闭赛事筛选弹层
-  store.dispatch({
-    type: 'SET_SHOW_FILTER_POPUP',
-    data: !filterHeader.show_filter_popup
-  })
+  // store.dispatch({
+  //   type: 'SET_SHOW_FILTER_POPUP',
+  //   data: !filterHeader.show_filter_popup
+  // })
   if (filterHeader.show_filter_popup) {
     //设置即将开赛筛选默认值
     reset_filter()

@@ -92,7 +92,7 @@ export default {
   align-items: center;
   position: relative;
   flex: 1;
-  background: var(--q-gb-bg-c-28);
+  // background: var(--q-gb-bg-c-28);
   &.active {
     background: var(--q-gb-bg-c-37) !important;
     :deep(.o-i-inner){

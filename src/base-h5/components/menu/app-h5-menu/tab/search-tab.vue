@@ -215,7 +215,7 @@ function key_down(event) {
     overflow: hidden;
     padding: 0 0.06rem;
     position: relative;
-
+    background-color: var(--q-gb-bg-c-27);
     .search-tab-content {
         width: 100%;
         height: 0.32rem;
@@ -307,7 +307,7 @@ function key_down(event) {
 		border: 1px solid var(--q-gb-bg-c-18);
 		height: 0.25rem;
 		padding-left: 0.12rem;
-        background: var(--q-gb-bg-c-28);
+        background: var(--q-gb-bg-c-41);
         color: var(--q-gb-t-c-18);
 	}
 	::placeholder {

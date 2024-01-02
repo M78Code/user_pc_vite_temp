@@ -647,7 +647,8 @@ class MatchMeta {
     VirtualList.clear_virtual_info()
     //兼容复刻版电竞冠军
     const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "");
-    const is_kemp = md == '100';
+    const menuType = lodash.get(MenuData.current_lv_3_menu, 'menuType', "");
+    const is_kemp = menuType == '100';
     // 电竞的冠军
     const category = MenuData.get_menu_type() === 100 || is_kemp ? 2 : 1
     const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
@@ -1369,14 +1370,6 @@ class MatchMeta {
   }
 
   /**
-   * @description 是否 observer-wrapper 组件模式
-   * @returns 
-   */
-  is_observer_type() {
-    return project_name == 'app-h5' && UserCtr.standard_edition == 1
-  }
-
-  /**
    * @description 重置 prev_scroll 
    */
   set_prev_scroll(val) {
@@ -1410,6 +1403,16 @@ class MatchMeta {
     this.complete_mids = []
   }
 
+  /**
+   * @description 更新 是否 接口 导致的数据变更
+   */
+  update_is_http_update_info () {
+    let timer = setTimeout(() => {
+      MatchResponsive.set_is_http_update_info(false)
+      clearTimeout(timer)
+      timer = null
+    }, 1000)
+  }
   /**
    * @description: 0未开始 1滚球阶段 2暂停 7延迟 10比赛中断 110即将开赛  3结束 4关闭 5取消 6比赛放弃 8未知 9延期
    *              
@@ -1597,6 +1600,7 @@ class MatchMeta {
       this.error_http_count.bymids = 1
       const length = lodash.get(data, 'length', 0)
       if (length > 0) {
+        MatchResponsive.set_is_http_update_info(true)
         data.forEach(t => {
           // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
           t.handicap_index = MatchUtils.get_handicap_index_by(t);
@@ -1624,6 +1628,8 @@ class MatchMeta {
           clearTimeout(timer)
           timer = null
         }, 3000)
+      } else {
+        this.update_is_http_update_info()
       }
     }
   }
@@ -1635,6 +1641,7 @@ class MatchMeta {
    * @param { warehouse } 仓库类型
    */
   handle_update_match_info(config) {
+    MatchResponsive.set_is_http_update_info(true)
     let { list = [], merge = '', warehouse = MatchDataBaseH5 } = config
 
     // 合并前后两次赛事数据
@@ -1655,6 +1662,7 @@ class MatchMeta {
     // this.is_ws_trigger = false
     warehouse.set_list(list)
     this.is_ws_trigger = false
+    this.update_is_http_update_info()
   }
 
   /**
@@ -1663,6 +1671,7 @@ class MatchMeta {
    * @param { warehouse } 仓库类型
    */
   handle_submit_warehouse(config) {
+    MatchResponsive.set_is_http_update_info(true)
     let { list = [], warehouse = MatchDataBaseH5, is_again = true } = config
 
     // ws 订阅

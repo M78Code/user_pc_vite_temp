@@ -22,6 +22,10 @@ const ref_data = reactive({
   keyboard_data: [],
 })
 
+const props = defineProps({
+  oid:0
+})
+
 onMounted(()=>{
   addnum()
 })
@@ -39,25 +43,8 @@ const addnum = () => {
 
 // 快捷金额
 const set_click_keybord = obj => {
-  console.log(BetData.bet_amount)
-  // 快捷金额 max 使用限额最大金额作为投注金额
-  let key_board_obj = lodash.get(BetData,'bet_keyboard_config',{})
-  let money = BetData.bet_amount
-  if (obj == 'MAX') {
-      money = key_board_obj.max_money
-  } else {
-    // 投注金额 = 快捷金额 加上 原有的投注金额
-    let max_money = money * 1 + obj
-    // 投注金额 大于 最大投注限额 则 使用最大限额作为投注金额
-    if (max_money > key_board_obj.max_money) {
-        money = key_board_obj.max_money
-    } else {
-        money = max_money
-    }
-    // 记录投注金额 单关 不合并
-    BetData.set_bet_amount(money)
-  }
-  let keyboard = { params:key_board_obj, money: money }
+  let  money = obj
+  let keyboard = { money: money,id:props.oid }
   useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD,keyboard)
 }
 

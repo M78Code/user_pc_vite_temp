@@ -67,13 +67,13 @@ import { TabInformationFullVersionWapper as tabInformation } from 'src/base-pc/c
 import { TabOddsFullVersionWapper as tabOdds } from 'src/base-pc/components/analysis/template/tab-odds/index.js'
 import { TabNewsFullVersionWapper as news } from 'src/base-pc/components/analysis/template/tab-news/index.js'
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
-import { api_analysis, api_details } from 'src/api/index.js'
+import { api_analysis, api_details, api_common } from 'src/api/index.js'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { formatTime,msc_array_obj } from 'src/output/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
-import store from 'src/store-redux/index.js'
+//import store from 'src/store-redux/index.js'
 import { UserCtr } from "src/output/index.js";
-let state = store.getState();
+// let state = store.getState();
 
 export default {
   components: {
@@ -258,7 +258,7 @@ export default {
      * 文章阅读数
      */
     atrticleReadCount(id) {
-      api_analysis.get_article_count({ id: id }).then(res => {
+      api_common.addArticleCount({ id: id }).then(res => {
         let count = lodash.get(res, 'data.data');
       })
     },

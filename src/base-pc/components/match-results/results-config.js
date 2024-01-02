@@ -14,7 +14,7 @@ import {
 } from "vue";
 import { api_common, api_analysis } from "src/api/";
 import lodash from "lodash";
-// import store from "src/store-redux/index.js";
+////import store from "src/store-redux/index.js";
 import { useRoute, useRouter } from "vue-router";
 import { format_day, is_eports_csid } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -245,7 +245,7 @@ export const useGetResultConfig = () => {
    * @description: 获取服务器时间
    */
   const get_serverTime = () => {
-    api_common.get_server_time().then((res) => {
+    api_common.get_time_server().then((res) => {
       let code = lodash.get(res, "code");
       if (code == 200) {
         state.day_time = parseInt(lodash.get(res, "data")) - 1000 * 60 * 60 * 24;
@@ -575,7 +575,7 @@ export const useGetResultConfig = () => {
       state.league_type = [i18n_t("common.all")];
       state.league = i18n_t("common.all");
     }
-    api_analysis.post_results_list(state.results_params).then((res) => {
+    api_common.get_virtual_result(state.results_params).then((res) => {
       const code = lodash.get(res, "code");
       const data = lodash.get(res, "data");
       state.refresh_finish = true;

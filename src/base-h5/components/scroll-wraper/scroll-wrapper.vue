@@ -11,7 +11,7 @@
     <div  :class="['scroll-i-con', { detail_list: is_detail, simple: standard_edition == 1, 'static': get_is_static() }]"
       :style="get_container_style">
       <template v-if="MatchMeta.match_mids.length > 0">
-        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
+        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="index" :data-mid="match_mid"
           :class="['s-w-item', {last: index == MatchMeta.match_mids.length - 1 }]" 
           :style="{ transform: `translateY(${get_match_top_by_mid(match_mid)}px)`, zIndex: `${100 + index}` }">
           <!-- 调试用 -->
@@ -23,7 +23,7 @@
             </span>
           </div>
           <!-- 赛事渲染信息 -->
-          <div class="s-w-i-inner">
+          <div class="s-w-i-inner" v-if="defer_render(index)">
             <slot :match_item="get_match_item(match_mid)" :mid="match_mid" :index="index"></slot>
           </div>
         </div>
@@ -42,13 +42,9 @@
 import { useRoute } from 'vue-router';
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue' 
 import lodash from 'lodash'
-import store from "src/store-redux/index.js";
-import UserCtr from "src/core/user-config/user-ctr.js";
 import MenuData from  "src/core/menu-h5/menu-data-class.js";
-import PageSourceData from "src/core/page-source/page-source.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import VirtualList from "src/core/match-list-h5/match-class/virtual-list.js";
-import RouterScroll from "src/core/match-list-h5/match-class/router-scroll.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,compute_local_project_file_path } from "src/output/index.js"
 import { menu_type, menu_lv2, is_kemp, is_hot, is_detail, is_results, is_esports, is_collect } from 'src/base-h5/mixin/menu.js'
@@ -56,7 +52,6 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
-import { no_data_app } from 'src/base-h5/core/utils/local-image.js'
 import { compute_css_obj} from 'src/output/index.js'
 // 避免定时器每次滚动总是触发
 const props = defineProps({
@@ -65,7 +60,6 @@ const props = defineProps({
 
 const route = useRoute()
 const defer_render = use_defer_render()
-const store_state = store.getState();
 
 // 调试信息
 let test = ref('')
@@ -102,7 +96,7 @@ const get_index_f_data_source = (mid) => {
 }
 
 // 赛事列表容器滚动事件
-const handler_match_container_scroll = lodash.throttle(($ev) => {
+const handler_match_container_scroll = lodash.debounce(($ev) => {
   const scrollTop = lodash.get($ev.target, 'scrollTop', 0)
   scroll_top.value = scrollTop
   const length = lodash.get(MatchMeta.complete_matchs, 'length', 0)
@@ -122,66 +116,12 @@ const get_match_base_hps = lodash.debounce(() => {
 }, 800)
 
 /**
- * @description: 页面滚动事件处理函数
- * @param {Undefined}
- * @return {Undefined} Undefined
- */
-const window_scrolling = () => {
-  let splited = store_state.matchReducer.list_scroll_top.split('-');
-  target_scroll_obj.value = {
-    scroll_y: +splited[0],
-    client_height: +splited[1],
-    scroll_height: +splited[2],
-  };
-
-  let now = new Date().getTime();
-  // 1向上滑,  -1向下滑,滚动方向
-  get_is_show_footer_animate();
-  if (now - prev_frame_time < 200) {
-    return;
-  }
-  prev_frame_time = now;
-  // 容器的滚动数据
-  let scroll_y = null;
-  scroll_y = +splited[0]
-  clearTimeout(scroll_frame_timer)
-  scroll_frame_timer = setTimeout(() => {
-    // console.error('屏蔽用户频繁滚动触发事件,  还没触发 更新视图，赛事订阅事件 ===========================================1111111111111');
-    // 如果需要对DOM进行多次访问，尽量使用局部变量缓存该DOM   减少回流（Reflow）与重绘（Repaint） 优化
-    let xnyouhua = document.documentElement
-    let params = {
-      position: scroll_y,
-      scrollTop: scroll_y,
-      clientHeight: xnyouhua.clientHeight,
-      scrollHeight: xnyouhua.scrollHeight,
-      liebiao_slide: 'liebiao_slide'
-    };
-    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, params);
-  }, 500);
-}
-/**
- * 判断是否显示页脚菜单
- *   1向上滑,  -1向下滑
- */
-const get_is_show_footer_animate = () => {
-  let top = null;
-  top = store_state.matchReducer.list_scroll_top.split('-')[0]
-  let scroll_dir = top - prev_frame_poi.value;
-  if (scroll_dir > 0) {
-    scroll_dir = 1;
-  } else if (scroll_dir < 0) {
-    scroll_dir = -1;
-  }
-  store.dispatch({ type: 'matchReducer/set_list_scroll_direction',  payload: scroll_dir })
-  prev_frame_poi.value = top;
-}
-/**
  * @description: 列表回到顶部
  */
 const goto_top = () => {
   MatchMeta.set_prev_scroll(0)
   let timer = setTimeout(() => {
-    container.value && container.value.scrollTo({ top: 0, behavior: 'smooth' });
+    container.value && container.value.scrollTo({ top: 0 });
     clearTimeout(timer)
     timer = null
   }, 100)
@@ -209,16 +149,6 @@ const get_container_style = computed(() => {
   })
   return style_obj
 })
-
-// 计算每个赛事id 对应的 容器高度 top 值
-const get_match_top_by_mid1 = (mid) => {
-  let r = 0;
-  if (mid in VirtualList.mid_top_map) {
-    r = VirtualList.mid_top_map[mid];
-    r = +r.toFixed(6);
-  }
-  return r;
-}
 
 const get_match_top_by_mid = (mid) => {
   const key = VirtualList.get_match_height_key(mid)
@@ -289,7 +219,7 @@ onUnmounted(() => {
   overflow-anchor: none;
   // background-color: #f5f5f5;
   -webkit-overflow-scrolling: touch;/*解决移动端滑动卡顿问题*/
-  -webkit-transform: translateZ(0px);/*开启GPU加速*/
+  transform: translateZ(0px);/*开启GPU加速*/
   &.data-get-empty {
     min-height: 0 !important;
     height: 0 !important;
@@ -297,9 +227,9 @@ onUnmounted(() => {
   }
   .scroll-i-con {
     width: 100%;
-    // height: 10000px;
     position: relative;
     background-size: contain;
+    // will-change: transform;
     background-repeat: repeat-y !important;
     &.high_scrolling {
       background-size: contain;

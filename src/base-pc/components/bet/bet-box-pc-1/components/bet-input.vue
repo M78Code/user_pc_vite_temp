@@ -7,7 +7,7 @@
             <input ref="InputFocus" class="bet-input input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
                 :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
             <!--清除输入金额按钮-->
-            <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money">
+            <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money && !BetData.is_bet_single">
                 <icon-wapper name="icon-failure" size="12px" />
             </div>
         </div>
@@ -24,7 +24,7 @@
 
             <!--键盘区域-->
             <div class="row bet-keyboard bet-keyboard-zone">
-                <bet-keyboard />
+                <bet-keyboard :oid="item.playOptionsId"/>
             </div>
         </div>
         <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
@@ -86,24 +86,47 @@ onUnmounted(() => {
  *@description 金额改变事件
  *@param {Number} new_money 最新金额值
  */
- const change_money_handle = (new_money) => {
-  if(props.item.id == new_money.params.id){
-    if( new_money.money*1 > props.item.max_money *1){
-      ref_data.money =  props.item.max_money
-    }else{
-      ref_data.money = new_money.money
+ const change_money_handle = obj => {
+    if(props.item.playOptionsId == obj.id){
+        set_bet_money(obj)  
     }
-    BetData.set_bet_obj_amount(ref_data.money,props.item.playOptionsId)
-    
-     //设置键盘MAX限额
-    let max_money_obj = {max_money:ref_data.max_money}
-    BetData.set_bet_keyboard_config(max_money_obj)
-  }
+    // 多项单注快捷金额
+    if(obj.id == undefined) {
+        set_bet_money(obj) 
+    }
 }
+// 快捷金额
+const set_bet_money = obj => {
+    // 获取当前投注金额
+        let money = props.item.bet_amount
+        let money_ = obj.money
+        // 设置最大投注金额
+        if(obj.money == "MAX"){
+            money_ = ref_data.max_money
+        }
+        // 计算投注金额
+        let money_amount = mathJs.add(money,money_)
+        // 投注金额 不能大于最大投注金额 也不能大于用户余额
+        if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
+            BetData.set_bet_obj_amount(mathJs.add(money,money_),props.item.playOptionsId)
+            ref_data.money = money_amount
+        }else{
+            // 最大限额不能大于余额
+            let money_a = ref_data.max_money
+            if(UserCtr.balance < ref_data.max_money){
+                money_a = UserCtr.balance
+            }  
+            BetData.set_bet_obj_amount(money_a,props.item.playOptionsId)
+
+            ref_data.money = money_a
+        }   
+}
+
 
 // 清空输入框金额
 const bet_clear_handle = () => {
     ref_data.money = ''
+    BetData.set_bet_amount(0)
     BetData.set_bet_obj_amount('',props.item.playOptionsId)
 }
 
@@ -130,6 +153,9 @@ const set_ref_data_bet_money = () => {
     // 限额改变 重置投注金额
     ref_data.money = ''
 
+     //设置键盘MAX限额
+    let max_money_obj = {max_money:ref_data.max_money,id:props.item.playOptionsId}
+    BetData.set_bet_keyboard_config(max_money_obj)
 
     InputFocus.value.focus()
 

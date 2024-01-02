@@ -2,7 +2,6 @@
 import lodash from 'lodash'
 import { defineComponent } from 'vue'
 import { api_common } from "src/api/index.js";
-import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES, UserCtr, project_name } from  "src/output"
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
@@ -241,6 +240,10 @@ export default defineComponent({
       }
       return lodash.get(MatchResponsive.ball_seed_count.value, `${key}`, 1)
     },
+    is_http_update_info () {
+      const is_http_update_info = lodash.get(MatchResponsive, 'is_http_update_info.value', true)
+      return is_http_update_info
+    },
      // 获取联赛赛事数量
     get_ball_seed_league_count () {
       const { warehouse_type = '' } = this.match_of_list
@@ -322,7 +325,7 @@ export default defineComponent({
       if (this.match_of_list.csid != 1) return;
       if (this.get_footer_sub_changing) return;
       if (this.match_changing) return;
-      if (new_ > 0 && new_ != old_ && old_ !== null && [1,3].includes(+menu_type.value) && this.match_of_list.is_ws) {
+      if (!this.is_http_update_info && new_ > 0 && new_ != old_ && old_ !== null && [1,3].includes(+menu_type.value) && this.match_of_list.is_ws) {
         this.hide_away_goal()
         this.is_show_home_goal = true
         this.clear_goal()
@@ -335,7 +338,7 @@ export default defineComponent({
       if (this.get_footer_sub_changing) return;
       if (this.match_changing) return;
 
-      if (new_ > 0 && new_ != old_ && old_ !== null && [1,3].includes(+menu_type.value) && this.match_of_list.is_ws) {
+      if (!this.is_http_update_info && new_ > 0 && new_ != old_ && old_ !== null && [1,3].includes(+menu_type.value) && this.match_of_list.is_ws) {
         this.hide_home_goal()
         this.is_show_away_goal = true
         this.clear_goal()
@@ -537,10 +540,10 @@ export default defineComponent({
         default:
           break;
       }
-      store.dispatch({
-        type: "matchReducer/set_is_in_play",
-        payload: final_button_type,
-      });
+      // store.dispatch({
+      //   type: "matchReducer/set_is_in_play",
+      //   payload: final_button_type,
+      // });
       this.goto_details(this.match_of_list);
     },
 
@@ -567,10 +570,10 @@ export default defineComponent({
         default:
           break;
       }
-      store.dispatch({
-        type: "matchReducer/set_is_in_play",
-        payload: final_button_type,
-      });
+      // store.dispatch({
+      //   type: "matchReducer/set_is_in_play",
+      //   payload: final_button_type,
+      // });
       this.goto_details(this.match_of_list);
     },
     /**
@@ -909,9 +912,9 @@ export default defineComponent({
               set_goto_detail_matchid('')
 
               // 短距离滚动标识
-              store.dispatch({ type: 'matchReducer/set_allow_short_scroll',  payload: true });
-              // 已滚动至目标dom时，未滚动至目标计数置为-1
-              store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: -1 });
+              // store.dispatch({ type: 'matchReducer/set_allow_short_scroll',  payload: true });
+              // // 已滚动至目标dom时，未滚动至目标计数置为-1
+              // store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: -1 });
 
               // 第二次延时计算是为了保证滚动距离正确
               clearTimeout(this.scroll_top_timer2)
@@ -994,7 +997,8 @@ export default defineComponent({
       if (this.is_on_go_detail) {
         return; //  防止急速点击两次
       }
-      
+      // 清除赛事数量
+      MatchResponsive.clear_ball_seed_count()
       this.is_on_go_detail = true;
       if (is_results.value || this.$route.name == "matchList") useMittEmit(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, item)
       // 如果是非赛果电竞赛事，需要设置菜单类型
