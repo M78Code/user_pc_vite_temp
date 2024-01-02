@@ -36,13 +36,6 @@ export const get_match_detail_MatchInfo = function(params, config = {}, url = "/
   return pre_get_match_detail_res
 }
 
- 
-// 精彩回放相关地址
-export const get_live_video_playback_info = (params, config = {}, url = "/v1/w/playbackVideoUrl") => http.post(`${prefix}${url}`, params)
-
-// 登录聊天室
-export const post_chatroom_login = (params, config={}, url = "/yewu19/v1/activity/liveChatLogin") => http.post(`${url}`, params, config);
-
 //赛事详情页面---电竞详情比分板接口
 export const get_match_detail_ESMatchInfo = (params, config = {}, url = "/v1/w/matchDetail/getESMatchDetail") => http.get(`${prefix}${url}`, params)
 
