@@ -174,7 +174,7 @@ function getArticleFavoriteList() {
  * 文章阅读数
  */
 function atrticleReadCount(id) {
-  api_analysis.get_article_count({ id: id }).then(res => {
+  api_common.addArticleCount({ id: id }).then(res => {
     let count = lodash.get(res, 'data.data');
     if (Number(count)) {
       //更新列表阅读数
@@ -197,7 +197,7 @@ function showArticle(item) {
   //设置默认值
   let strCount = '/0';
   //更新阅读数
-  api_analysis.get_article_count({ id: item.id }).then(res => {
+  api_common.addArticleCount({ id: item.id }).then(res => {
     let count = lodash.get(res, 'data.data');
     if (Number(count)) {
       //更新列表阅读数
