@@ -54,7 +54,7 @@ import { api_virtual } from "src/api/index.js";
 import { get_now_server } from 'src/core/utils/common/module/other.js'
 import teamImg from "src/components/details/team-img/team-img-template-1/team-img.vue";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { t } from "src/boot/i18n.js";;
+;
 //国际化
 
 

@@ -7,200 +7,285 @@
   <div class="analysis-odds">
     <div class="heade-wrapper">
       <div class="heade">
-        <span v-for="(item,i) in tab_list" :key="i" :class="{'is-active' : tabIndex == i}" @click="radio_button(i)">
+        <span
+          v-for="(item, i) in tab_list"
+          :key="i"
+          :class="{ 'is-active': tabIndex == i }"
+          @click="radio_button(i)"
+        >
           {{ item.name }}
         </span>
       </div>
     </div>
     <div class="content" :class="tabIndex == 1 && 'ouzhi'">
-      <div class="tittle row align_items">
-        <template v-if="tabIndex != 1">
-          <span class="t1">{{ i18n_t('analysis_football_matches.company') }}</span>
-          <span class="t2">{{  tabIndex == 2 ? i18n_t('analysis_football_matches.big') : i18n_t('analysis_football_matches.Main_win') }}</span>
-          <span class="t3">{{i18n_t('analysis_football_matches.handicap') }}</span>
-          <span class="t4">{{ tabIndex == 2 ? i18n_t('analysis_football_matches.small') : i18n_t('analysis_football_matches.away_win') }}</span>
-        </template>
-        <template v-else>
-          <div class="t1 row items-center justify-between">
-            <div class="ellipsis" style="width:0.5rem">{{ i18n_t('analysis_football_matches.company') }}</div>
-            <div class="yb_ml6" style="visibility: hidden">
-              <span>{{ i18n_t('analysis_football_matches.Initial_offer') }}</span>
-              <span>1</span>
-            </div>
+      <div class="tittle">
+        <p class="sub_tiele">{{ tab_list[tabIndex].name }}</p>
+        <section v-if="tabIndex != 1" class="tabs_title row items-center">
+          <p class="s1">{{ i18n_t("analysis_football_matches.company") }}</p>
+          <p class="s2">
+            {{
+              tabIndex == 2
+                ? i18n_t("analysis_football_matches.big")
+                : i18n_t("analysis_football_matches.Main_win")
+            }}
+          </p>
+          <p class="s3">{{ i18n_t("analysis_football_matches.handicap") }}</p>
+          <p class="s4">
+            {{
+              tabIndex == 2
+                ? i18n_t("analysis_football_matches.small")
+                : i18n_t("analysis_football_matches.away_win")
+            }}
+          </p>
+        </section>
+        <section class="tabs_title row items-center" v-else>
+          <!-- <div class="row items-center justify-between"> -->
+          <!-- <div class="ellipsis">
+              {{ i18n_t("analysis_football_matches.company") }}
+            </div> -->
+          <!-- <div class="yb_ml6" style="visibility: hidden">
+              <p>
+                {{
+                  i18n_t("analysis_football_matches.Initial_slidin0.08offer")
+                }}
+              </p>
+              <p>1</p>
+            </div> -->
+          <!-- </div> -->
+          <div class="ellipsis bookName">
+            {{ i18n_t("analysis_football_matches.company") }}
           </div>
-          <i class="t2">{{ i18n_t('analysis_football_matches.home_win1') }}</i>
-          <i class="t3">{{ i18n_t('analysis_football_matches.flat') }}</i>
-          <i class="t4">{{ i18n_t('analysis_football_matches.away_win') }}</i>
-          <i class="t4">{{ i18n_t('analysis_football_matches.Main_win_rate') }}</i>
-          <i class="t4">{{ i18n_t('analysis_football_matches.Customer_win_rate') }}</i>
-          <i class="t4">{{ i18n_t('analysis_football_matches.Return_rate') }}</i>
-        </template>
+          <p class="t2">{{ i18n_t("analysis_football_matches.home_win1") }}</p>
+          <p class="t3">{{ i18n_t("analysis_football_matches.flat") }}</p>
+          <p class="t4">{{ i18n_t("analysis_football_matches.away_win") }}</p>
+          <p class="t4">
+            {{ i18n_t("analysis_football_matches.Main_win_rate") }}
+          </p>
+          <p class="t4">
+            {{ i18n_t("analysis_football_matches.Customer_win_rate") }}
+          </p>
+          <p class="t4">
+            {{ i18n_t("analysis_football_matches.Return_rate") }}
+          </p>
+        </section>
       </div>
       <div class="sliding" v-if="data_list.length">
-        <div class="detail row" v-for="(item,index) in data_list" :key="index">
-          <div class="t1 row items-center justify-between">
-            <div class="ellipsis" style="width:0.5rem">{{item.bookName}}</div>
+        <div
+          class="detail row items-center"
+          v-for="(item, index) in data_list"
+          :class="tabIndex != 1 ? 'other_tabs' : 'win_tabs'"
+          :key="index"
+        >
+          <div class="tbale_one row items-center">
+            <div class="ellipsis bookName">{{ item.bookName }}</div>
             <div class="yb_ml6">
-              <span>{{ i18n_t('analysis_football_matches.Initial_offer') }}</span>
-              <span>{{ i18n_t('analysis_football_matches.immediate') }}</span>
+              <p>{{ i18n_t("analysis_football_matches.Initial_offer") }}</p>
+              <p>{{ i18n_t("analysis_football_matches.immediate") }}</p>
             </div>
           </div>
-          <div class="t2 column justify-center">
-            <span>{{item.handicapOddsDTOList[0].value0}}</span>
-            <span :class="{'red':item.handicapOddsDTOList[1].directions.value0 == 1,'green':item.handicapOddsDTOList[1].directions.value0 == -1}">
-              {{item.handicapOddsDTOList[1].value0}}
+
+          <div class="t2 column justify-center set_width">
+            <p>{{ item.handicapOddsDTOList[0].value0 }}</p>
+            <p
+              :class="{
+                red: item.handicapOddsDTOList[1].directions.value0 == 1,
+                green: item.handicapOddsDTOList[1].directions.value0 == -1,
+              }"
+            >
+              {{ item.handicapOddsDTOList[1].value0 }}
               <i class="odd yb_ml4"></i>
-            </span>
+            </p>
           </div>
-          <div class="t3 column justify-center">
-            <span>{{item.handicapOddsDTOList[0].handicapVal}}</span>
-            <span :class="{'red':item.handicapOddsDTOList[1].directions.handicapVal == 1,'green':item.handicapOddsDTOList[1].directions.handicapVal == -1}">
-              {{item.handicapOddsDTOList[1].handicapVal}}
+
+          <div class="t3 column justify-center set_width">
+            <p>{{ item.handicapOddsDTOList[0].handicapVal }}</p>
+            <p
+              :class="{
+                red: item.handicapOddsDTOList[1].directions.handicapVal == 1,
+                green: item.handicapOddsDTOList[1].directions.handicapVal == -1,
+              }"
+            >
+              {{ item.handicapOddsDTOList[1].handicapVal }}
               <i class="odd yb_ml4"></i>
-            </span>
+            </p>
           </div>
-          <div class="t4 column justify-center">
-            <span>{{item.handicapOddsDTOList[0].value}}</span>
-            <span :class="{'red':item.handicapOddsDTOList[1].directions.value == 1,'green':item.handicapOddsDTOList[1].directions.value == -1}">
-              {{item.handicapOddsDTOList[1].value}}
+
+          <div class="t4 column justify-center set_width">
+            <p>{{ item.handicapOddsDTOList[0].value }}</p>
+            <p
+              :class="{
+                red: item.handicapOddsDTOList[1].directions.value == 1,
+                green: item.handicapOddsDTOList[1].directions.value == -1,
+              }"
+            >
+              {{ item.handicapOddsDTOList[1].value }}
               <i class="odd yb_ml4"></i>
-            </span>
+            </p>
           </div>
           <template v-if="tabIndex == 1">
-            <div class="t4 column justify-center">
-              <span>{{item.handicapOddsDTOList[0].value0WinRate}}%</span>
-              <span
-                :class="{'red':item.handicapOddsDTOList[1].directions.value0WinRate == 1,'green':item.handicapOddsDTOList[1].directions.value0WinRate == -1}">{{item.handicapOddsDTOList[1].value0WinRate}}%</span>
+            <div class="t4 column justify-center set_width">
+              <p>{{ item.handicapOddsDTOList[0].value0WinRate }}%</p>
+              <p
+                :class="{
+                  red:
+                    item.handicapOddsDTOList[1].directions.value0WinRate == 1,
+                  green:
+                    item.handicapOddsDTOList[1].directions.value0WinRate == -1,
+                }"
+              >
+                {{ item.handicapOddsDTOList[1].value0WinRate }}%
+              </p>
             </div>
-            <div class="t4 column justify-center">
-              <span>{{item.handicapOddsDTOList[0].valueWinRate}}%</span>
-              <span
-                :class="{'red':item.handicapOddsDTOList[1].directions.valueWinRate == 1,'green':item.handicapOddsDTOList[1].directions.valueWinRate == -1}">{{item.handicapOddsDTOList[1].valueWinRate}}%</span>
+            <div class="t4 column justify-center set_width">
+              <p>{{ item.handicapOddsDTOList[0].valueWinRate }}%</p>
+              <p
+                :class="{
+                  red: item.handicapOddsDTOList[1].directions.valueWinRate == 1,
+                  green:
+                    item.handicapOddsDTOList[1].directions.valueWinRate == -1,
+                }"
+              >
+                {{ item.handicapOddsDTOList[1].valueWinRate }}%
+              </p>
             </div>
-            <div class="t4 column justify-center">
-              <span>{{item.handicapOddsDTOList[0].returnRate}}%</span>
-              <span
-                :class="{'red':item.handicapOddsDTOList[1].directions.returnRate == 1,'green':item.handicapOddsDTOList[1].directions.returnRate == -1}">{{item.handicapOddsDTOList[1].returnRate}}%</span>
+            <div class="t4 column justify-center set_width">
+              <p>{{ item.handicapOddsDTOList[0].returnRate }}%</p>
+              <p
+                :class="{
+                  red: item.handicapOddsDTOList[1].directions.returnRate == 1,
+                  green:
+                    item.handicapOddsDTOList[1].directions.returnRate == -1,
+                }"
+              >
+                {{ item.handicapOddsDTOList[1].returnRate }}%
+              </p>
             </div>
-
           </template>
         </div>
       </div>
-      <div v-if="!data_list.length && is_done" class="yb_py18 text-center no-list">{{ i18n_t('common.no_data') }}</div>
+      <div
+        v-if="!data_list.length && is_done"
+        class="yb_py18 text-center no-list"
+      >
+        {{ i18n_t("common.no_data") }}
+      </div>
     </div>
-
   </div>
 </template>
 
 <script setup>
-import { defineComponent, ref, nextTick, onUnmounted, onMounted, computed } from 'vue'
+import {
+  defineComponent,
+  ref,
+  nextTick,
+  onUnmounted,
+  onMounted,
+  computed,
+} from "vue";
 import { api_analysis } from "src/api/index.js";
-import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
-import { useRoute } from 'vue-router'
-import { i18n_t } from "src/boot/i18n.js";;
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/";
+import { useRoute } from "vue-router";
+import { i18n_t } from "src/boot/i18n.js";
 const get_detail_data = ref({
-        csid: '1',
-        mid: '1',
-    })
-
+  csid: "1",
+  mid: "1",
+});
 
 //路由
-const route = useRoute()
+const route = useRoute();
 
 // TODO: 后续修改调整
 // import { mapGetters } from "vuex";
-    // 国际化后续修改调整
-    const tab_list = ref([
-        { name: i18n_t('footer_menu.rangqiu') },
-        { name: i18n_t('footer_menu.win_alone') },
-        { name: i18n_t('analysis_football_matches.size') },
-      ])
-    const tabIndex = ref(0)
-    //详细赔率数据
-    const data_list = ref([])
-    //数据加载完成
-    const is_done = ref(false)
-    onMounted(() => {
-        // 添加监听 赛事分析刷新事件 TODO: 后续修改调整 $root emit
-      useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
-      get_list()
-    })
+// 国际化后续修改调整
+const tab_list = ref([
+  { name: i18n_t("footer_menu.rangqiu") },
+  { name: i18n_t("footer_menu.win_alone") },
+  { name: i18n_t("analysis_football_matches.size") },
+]);
+const tabIndex = ref(0);
+//详细赔率数据
+const data_list = ref([]);
+//数据加载完成
+const is_done = ref(false);
+onMounted(() => {
+  // 添加监听 赛事分析刷新事件 TODO: 后续修改调整 $root emit
+  useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis);
+  get_list();
+});
 
-
-    /**
-     *@description 按钮切换
-     *@param {Undefined}
-     *@return {Undefined} undefined
-     */
-    const radio_button = (index) => {
-      if(tabIndex.value == index) return
-      tabIndex.value = index
-      data_list.value = []
-      get_list()
+/**
+ *@description 按钮切换
+ *@param {Undefined}
+ *@return {Undefined} undefined
+ */
+const radio_button = (index) => {
+  if (tabIndex.value == index) return;
+  tabIndex.value = index;
+  data_list.value = [];
+  get_list();
+};
+const get_list = async () => {
+  try {
+    is_done.value = false;
+    let parameter = {
+      standardMatchId: match_id.value,
+      parentMenuId: 5, //父菜单类型:(2数据;3阵容4情报;5赔率)
+      sonMenuId: tabIndex.value + 1,
+    };
+    let result = await api_analysis.get_match_analysise_data(parameter);
+    let res = {};
+    if (result.status) {
+      res = result.data;
+    } else {
+      res = result;
     }
-    const get_list = async () => {
-      try {
-        is_done.value = false
-        let parameter = {
-          standardMatchId: match_id.value,
-          parentMenuId: 5,  //父菜单类型:(2数据;3阵容4情报;5赔率)
-          sonMenuId: tabIndex.value + 1
-        }
-        let result = await api_analysis.get_match_analysise_data(parameter)
-        let res = {}
-        if (result.status) {
-          res = result.data
-        } else {
-          res = result
-        }
-        let { code, data } = res
-        if (code == 200 && data && data.sThirdMatchHistoryOddsDTOList.length) {
-          data_list.value = data.sThirdMatchHistoryOddsDTOList
-        }
-        is_done.value = true
-      } catch (error) {
-        console.error(error);
-      }
+    let { code, data } = res;
+    if (code == 200 && data && data.sThirdMatchHistoryOddsDTOList.length) {
+      data_list.value = data.sThirdMatchHistoryOddsDTOList;
     }
-    // 刷新 当前赛事分析信息
-    const refresh_match_analysis = () => {
-      const new_tabIndex = tabIndex.value
-      tabIndex.value = -1
+    is_done.value = true;
+  } catch (error) {
+    console.error(error);
+  }
+};
+// 刷新 当前赛事分析信息
+const refresh_match_analysis = () => {
+  const new_tabIndex = tabIndex.value;
+  tabIndex.value = -1;
 
-      nextTick(() => {
-        radio_button(new_tabIndex)
-      })
-    }
+  nextTick(() => {
+    radio_button(new_tabIndex);
+  });
+};
 
-    const search_list_high = computed(() => {
-      let rem_1 = window.innerWidth * 100 / 375;
-      return {height : window.innerHeight - rem_1 - 90 + 'px'}
-    })
-    // 赛事id
-    const match_id = computed(() => {
-      // get_detail_data.mid  后续修改调整
-      return route.params.mid || get_detail_data.value.mid
-    })
-    onUnmounted(() => {
-      // 移除监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
-      useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off
-      // 国际化后续修改调整
-     tab_list.value = ref([
-        { name: i18n_t('footer_menu.rangqiu') },
-        { name: i18n_t('analysis_football_matches.European_Finger') },
-        { name: i18n_t('analysis_football_matches.size') },
-      ])
-     tabIndex.value = 0
-    //详细赔率数据
-     data_list.value = []
-    //数据加载完成
-     is_done.value = false
-    })
-  // computed: {
-    //  TODO: 后续修改调整
-  //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data']),
-  // },
-
+const search_list_high = computed(() => {
+  let rem_1 = (window.innerWidth * 100) / 375;
+  return { height: window.innerHeight - rem_1 - 90 + "px" };
+});
+// 赛事id
+const match_id = computed(() => {
+  // get_detail_data.mid  后续修改调整
+  return route.params.mid || get_detail_data.value.mid;
+});
+onUnmounted(() => {
+  // 移除监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
+  useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off;
+  // 国际化后续修改调整
+  tab_list.value = ref([
+    { name: i18n_t("footer_menu.rangqiu") },
+    { name: i18n_t("analysis_football_matches.European_Finger") },
+    { name: i18n_t("analysis_football_matches.size") },
+  ]);
+  tabIndex.value = 0;
+  //详细赔率数据
+  data_list.value = [];
+  //数据加载完成
+  is_done.value = false;
+});
+// computed: {
+//  TODO: 后续修改调整
+//   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data']),
+// },
 </script>
 
 <style lang="scss" scoped>
@@ -212,7 +297,7 @@ const route = useRoute()
     width: 100%;
     height: auto;
     margin: 0 auto;
-    background: var(--q-analysis-text-color-19);
+    background: var(--q-gb-bg-c-18);
     position: sticky;
     top: 1.21rem;
     padding: 0.15rem 0.48rem;
@@ -225,6 +310,7 @@ const route = useRoute()
       justify-content: center;
       align-items: center;
       border-radius: 0.08rem;
+      padding: 0.01rem;
 
       &::after {
         content: "";
@@ -279,9 +365,10 @@ const route = useRoute()
         &.is-active {
           height: 0.29rem;
           background: var(--q-gb-bg-c-28);
-        color: var(--q-analysis-text-color-20);
+          color: var(--q-analysis-text-color-20);
           &:nth-child(2) {
-            &:before, &:after {
+            &:before,
+            &:after {
               display: none;
             }
           }
@@ -294,54 +381,106 @@ const route = useRoute()
 
   .content {
     color: var(--q-analysis-text-color-20);
+    margin: 5px 8px;
+    border-radius: 8px;
+    background: var(--q-gb-bg-c-28);
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
+    //让球
     .tittle {
       position: sticky;
       top: 1.81rem;
-      padding: 0 0.05rem 0.1rem 0.2rem;
       z-index: 80;
-      background: var(--q-analysis-text-color-19);
-      i {
-        font-style: normal;
-        flex: 1;
+      background: var(--q-gb-bg-c-28);
+      .sub_tiele {
+        font-family: PingFang SC;
+        font-weight: 600;
+        line-height: 20px; /* 142.857% */
+        width: 100%;
+        height: 0.32rem;
+        background: var(--q-gb-bg-c-28);
+        padding: 0.06rem 0.08rem;
+        font-size: 0.14rem;
+        color: var(--q-gb-t-c-18);
+        border-bottom: 0.5px solid var(--q-gb-bd-c-6);
+           &:before {
+            content: '';
+            width: 0.03rem;
+            height: 0.14rem;
+            position: absolute;
+            left: 0rem;
+            top: 0.07rem;
+            background: var(--q-gb-t-c-1);
+            border-radius: 1.5px;
+    }
       }
-    }
-
-    .detail {
-      height: 0.52rem;
-      padding: 0 0.05rem 0 0.2rem;
-      background-color: var(--q-analysis-text-color-27);
-
-      span {
-        display: block;
-      }
-    }
-
-    .t1 {
-      margin-right: auto;
-    }
-
-    .t2, .t3 {
-      width: 0.86rem;
-    }
-
-    .t4 {
-      width: 0.5rem;
-      margin-left: .02rem;
-    }
-
-    &.ouzhi {
-      .t2, .t3, .t4 {
-        flex: 1;
-      }
-
-      .detail {
-        .t1 {
-          margin-right: 0.08rem;
+      .tabs_title {
+        -color: #949ab6;
+        color: var(--q-analysis-text-color-34);
+        margin: 0 0.08rem;
+        height: 0.24rem;
+        line-height: 0.24rem;
+        border-bottom: 0.5px solid var(--q-gb-bd-c-6);
+        .s1,
+        .s2,
+        .s3,
+        .s4 {
+          width: calc(100%/4);
+          text-align: center;
+        }
+        p {
+          width: calc(calc(100% - 0.92rem) / 6);
+          text-align: center;
+        }
+        .bookName {
+          min-width: 0.92rem;
+          text-align: center;
         }
       }
     }
   }
-
+  .detail {
+    border-bottom: 0.5px solid var(--q-gb-bd-c-6);
+    &:last-child{
+      border-bottom:none;
+    }
+    .tbale_one {
+      .bookName {
+        width: 0.56rem;
+        height: 0.72rem;
+        line-height: 0.72rem;
+        text-align: center;
+        border-right: 0.5px solid var(--q-gb-bd-c-6);
+      }
+      .yb_ml6 {
+        margin-left: 0;
+        p {
+          width: 0.36rem;
+          height: 0.32rem;
+          line-height: 0.36rem;
+          text-align: center;
+        }
+        :nth-child(1) {
+          border-bottom: 0.5px solid var(--q-gb-bd-c-6);
+        }
+      }
+    }
+    //大小
+    .t2,
+    .t3,
+    .t4 {
+      p {
+        height: 0.32rem;
+        line-height: 0.36rem;
+      }
+    }
+    .t4 {
+      span {
+        display: inline-block;
+        height: 0.32rem;
+        line-height: 0.36rem;
+      }
+    }
+  }
   .odd {
     display: inline-block;
     width: 0.06rem;
@@ -377,8 +516,26 @@ const route = useRoute()
 }
 
 .sliding {
-
   overflow-x: hidden;
   overflow-y: auto;
+  padding: 0 0.08rem;
+}
+.win_tabs {
+  .set_width {
+    width: calc(calc(100% - 0.92rem) / 6);
+    text-align: center;
+    :nth-child(1) {
+      border-bottom: 0.5px solid var(--q-gb-bd-c-6);
+    }
+  }
+}
+.other_tabs {
+  .set_width {
+    width: calc(calc(100% - 0.92rem) / 3);
+    text-align: center;
+    :nth-child(1) {
+      border-bottom: 0.5px solid var(--q-gb-bd-c-6);
+    }
+  }
 }
 </style>

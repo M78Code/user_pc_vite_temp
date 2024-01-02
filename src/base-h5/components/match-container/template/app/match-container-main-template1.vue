@@ -990,6 +990,8 @@ export default {
 
   .right-content-style {
     position: relative;
+    width: 1.8rem;
+    flex-shrink: 0;
   }
 
   &.simple,
@@ -1061,7 +1063,8 @@ export default {
     .team-wrapper {
       min-height: 100%;
       height: auto;
-      width: 1.72rem;
+      // width: 1.72rem;
+      flex: 1;
       position: relative;
       z-index: 1;
 

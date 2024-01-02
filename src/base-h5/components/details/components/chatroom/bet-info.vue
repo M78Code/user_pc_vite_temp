@@ -78,7 +78,7 @@ import { api_common } from 'src/project/api/index.js'
 import uid from "src/core/uuid/index.js";
 import { format_currency, format_odds,  } from "src/output/index.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { t } from "src/boot/i18n.js";;
+;
 //国际化
 
 export default defineComponent({

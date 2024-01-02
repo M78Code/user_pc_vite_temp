@@ -169,16 +169,16 @@ const on_show_money = (flag) => {
 const on_change_lang = (key) => {
   lang.value = key
   api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: lang.value }).then(res => {
-      let code = lodash.get(res, 'code');
-      if (code == 200) {
-          // 设置国际化语言
-          loadLanguageAsync(lang.value).then().finally(() => {
-            UserCtr.set_lang(lang.value) 
-            marqueeRef.value.get_marquee_data()
-          })
-      } else if (code == '0401038') {
-          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
-      }
+    let code = lodash.get(res, 'code');
+    if (code == 200) {
+        // 设置国际化语言
+        loadLanguageAsync(lang.value).then().finally(() => {
+          UserCtr.set_lang(lang.value) 
+          marqueeRef.value.get_marquee_data()
+        })
+    } else if (code == '0401038') {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_nodata_22"))
+    }
   })
 }
 // 跳转规则界面

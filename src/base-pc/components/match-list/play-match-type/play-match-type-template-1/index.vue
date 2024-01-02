@@ -21,7 +21,7 @@ import MenuData from 'src/core/menu-pc/menu-data-class.js'
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-import { t } from "src/output/index.js";
+
 
 const route = useRoute()
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));

@@ -48,7 +48,7 @@ export default {
       skt_hpid: "", // 需要订阅的玩法
       socket_name: "esports_score_list",
       vx_detail_params:MatchDetailCalss.params, //详情参数
-      details_data_version:MatchDetailCalss.details_data_version //详情类版本号
+      details_data_version:MatchDetailCalss.details_data_version, //详情类版本号
       //获取当前菜单信息
       vx_cur_menu_type: MenuData.cur_menu_type,
       vx_layout_cur_page: LayOutMain_pc.layout_current_path,
@@ -80,7 +80,7 @@ export default {
 
       },
       immediate: true
-    }
+    },
 
   /*
   ** 监听MatchDetailCalss的版本号  获取最新的mid

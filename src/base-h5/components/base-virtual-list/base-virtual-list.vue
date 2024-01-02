@@ -398,7 +398,8 @@ onUnmounted(() => {
   width: 100%;
   overflow-y: auto;
   position: relative;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch; /*解决移动端滑动卡顿问题*/
+  -webkit-transform: translateZ(0px);/*开启GPU加速*/
 }
 
 .pillarDom {

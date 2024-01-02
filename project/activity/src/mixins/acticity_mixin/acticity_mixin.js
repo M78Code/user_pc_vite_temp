@@ -77,8 +77,6 @@ export default {
         html:true
       })
     },
-    t(msg){
-      return this.$t(msg)
-    }
+    
   },
 };
