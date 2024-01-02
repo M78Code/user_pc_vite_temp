@@ -76,7 +76,8 @@
     </ul>
 
     <!-- 字母悬浮图标 -->
-    <div v-if="is_show" class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
+    <!-- v-if="is_show" -->
+    <div  class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
       <span>{{ active_index }}</span>
     </div>
     <!-- 无数据展示 -->
@@ -768,8 +769,8 @@ if (type.value == 30) {
 
   .active-point {
     position: fixed;
-    top: 3.4rem;
-    right: 0.85rem;
+    top: 3.6rem !important;
+    right: 0.25rem;
     z-index: 100;
     width: 0.48rem;
     height: 0.48rem;
