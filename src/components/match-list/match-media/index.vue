@@ -55,7 +55,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import details from 'src/core/match-list-pc/details-class/details.js'
  
 import store from 'src/store-redux/index.js';
-import { t, compute_css_obj } from "src/output/index.js";
+import {  compute_css_obj } from "src/output/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useRouter } from "vue-router";
 const router = useRouter()

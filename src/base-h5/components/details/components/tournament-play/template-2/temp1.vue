@@ -559,12 +559,13 @@ export default defineComponent({
 .play-box-style {
   width: 100%;
   height: 0.52rem;
-  line-height: 0.52rem;
+  // line-height: 0.52rem;
   padding: 0 0.15rem;
   display: flex;
   justify-content: center;
   border-radius: .04rem;
   box-sizing: border-box;
+  align-items: center;
 }
 .remark {
   flex: 1;

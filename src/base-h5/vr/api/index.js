@@ -4,7 +4,7 @@
  * @Description: API 共通入口
  */
 
-import * as api_v_sports from "src/base-h5/vr/api/virtual_sports/virtual_sports.js"  //hanmar
+import * as api_v_sports from "src/api/module/virtual_sports/virtual_sports.js"  //hanmar
 
 export {
   // 虚拟体育接口定义

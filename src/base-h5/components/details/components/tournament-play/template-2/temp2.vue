@@ -206,6 +206,7 @@ export default defineComponent({
 
     .ellipsis {
       height: 0.16rem;
+      overflow: unset;
     }
 
     .odds-osn {

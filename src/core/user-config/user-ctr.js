@@ -1327,7 +1327,7 @@ class UserCtr {
         }
         this.send_gcuuid4 = uid();
         param.gcuuid = this.send_gcuuid4;
-        const res = await api_home.get_bannerList(param)
+        const res = await api_account.get_BannersUrl(param)
         if (this.send_gcuuid4 != res.gcuuid) return;
         if (res && lodash.get(res, 'code') == 200 && lodash.get(res, 'data')) {
           let arr = lodash.cloneDeep(lodash.get(res, 'data')), arr1 = [], arr2 = [], obj3 = '', obj4 = '';

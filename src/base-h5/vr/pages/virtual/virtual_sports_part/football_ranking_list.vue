@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {api_v_sports} from "src/base-h5/vr/api";
+import {api_v_sports} from "src/api/index.js";
 import no_data from "src/base-h5/vr/components/common/no_data.vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 

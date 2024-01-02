@@ -192,7 +192,7 @@ export default defineComponent({
     line-height: 0.52rem;
     padding: 0 0.15rem;
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     justify-content: center;
     border-radius: .04rem;
     box-sizing: border-box;
@@ -210,7 +210,7 @@ export default defineComponent({
     }
   }
 
-  .play-box-sty {
+  .play-box-style {
     width: 100%;
     height: 0.52rem;
     line-height: 0.52rem;

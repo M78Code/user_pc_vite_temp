@@ -52,12 +52,7 @@ const  loadLanguageAsync= async(lang)=>{
 }
 
 
-
-// 新增
-function t(key, args, options) {
-  if (!i18n) return key;
-  return i18n.global.tm(key, args, options);
-}
+ 
 // 新增
 function i18n_t(key, args, options) {
   if (!i18n) return key;
@@ -72,5 +67,5 @@ function i18n_tc(key, args, options) {
 
 
 
-export { i18n, loadLanguageAsync, map_lang, t, i18n_t, i18n_tc   };
+export { i18n, loadLanguageAsync, map_lang,  i18n_t, i18n_tc   };
 

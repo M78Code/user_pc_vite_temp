@@ -16,7 +16,7 @@
 // #TODO vuex
 // import {mapGetters} from "vuex";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
-import { t } from "src/boot/i18n.js";;
+;
 import UserCtr from "src/core/user-config/user-ctr.js";;
 
 //国际化

@@ -105,7 +105,7 @@
 
 import { ref, computed, watch, onMounted, inject } from 'vue';
 import lodash from 'lodash'
-import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr, compute_local_project_file_path } from "src/output/index.js";
+import {  get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr, compute_local_project_file_path } from "src/output/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 // useRegistPropsHelper(component_symbol, need_register_props)
