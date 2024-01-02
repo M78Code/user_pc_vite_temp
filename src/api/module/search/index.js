@@ -34,7 +34,7 @@ export const get_search_sport = (params, config = {}, url  = "/v1/hotSearch/getS
 export const get_hot_push = (params, config = {}, url  = "/v1/searchSettings/getHotPush") => http.post(`${prefix}${url}`, params)
 
 // 增加搜索记录
-export const insert_history = (params, config = {}, url  = "/v1/searchSettings/insertHistory") => http.post(`${prefix}${url}`, params)
+export const insert_history = (params, config = {}, url  = "/v1/searchSettings/insertHistory") => http.post(`${prefix}${url}`, params, config)
 
 //模糊搜索分类-antonio 此接口用作按下手机的搜索键后,业务端记录这条搜索记录,不用管返回数据
 export const get_hotselect3 = (params, config={}, url = "/v1/hotSearch/hotSelect3PB") => {
@@ -53,9 +53,6 @@ export const get_hotselect3 = (params, config={}, url = "/v1/hotSearch/hotSelect
     params.isPc = 0;  //1(Pc端)  0(h5端))
     return http.get(`${prefix}${url}`, params, config)
   }
-  
-  //热词--------增加搜索记录接口
-  export const get_insert_history = (params, config={}, url = "/v1/searchSettings/insertHistory") => http.post(`${prefix}${url}`, params, config)
   
   
   
