@@ -151,11 +151,11 @@
           </div>
         </div>
         <!-- 新手版 -->
-        <!--根据bug单号52926 注释掉此处
-          <div v-if="standard_edition == 1" class="match-play-count column justify-end items-end simple" @click="goto_details(match_item)">
+        <div v-if="standard_edition == 1" class="match-play-count column justify-end items-end simple" @click="goto_details(match_item)">
+          <!--根据bug单号52926 注释掉此处-->
+          <!-- <div v-if="match_item.mc">{{match_item.mc}}+ > </div> -->
           <div v-if="match_item.mc">{{match_item.mc}}+ > </div>
-        </div> 
-        -->
+        </div>
         <div class="event-team" v-if="standard_edition == 1">
           <div class="name">
             <div class='left'>

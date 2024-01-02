@@ -116,7 +116,6 @@ export default {
   width: 100%;
   height: auto;
   padding-top: 0.08rem;
-  background-color: var(--q-gb-bg-c-25);
 
   &.standard {
     padding-top: 0;
