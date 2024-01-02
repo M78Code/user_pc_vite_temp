@@ -45,11 +45,6 @@ export const post_addOrCancelMatch = (params, config, url = "/v1/w/userCollectio
 export const post_saveFingerPrint = (params, config, url='/user/saveFingerPrint') => {
   return http.post(`${prefix}${url}`, params, config);
 };
-// 设置用户语言 (valar)
-export const get_set_user_language = (params, config, url='/user/setUserLanguage') => {
-  return http.get(`${prefix}${url}`, params, config)
-};
-
  
 // 当时平板电脑访问时上报信息
 export const upload_tablet_comput = (params, config, url = "/tablet_comput/create") => http.post(`${prifix_url}${url}`, params, config);

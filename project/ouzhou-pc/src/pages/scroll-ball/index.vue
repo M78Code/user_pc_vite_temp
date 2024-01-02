@@ -27,7 +27,7 @@
             <!-- 滚球其他列表 -->
             <scroll-list v-if="MenuData.menu_root_show_shoucang != 300">
                 <template v-slot:before>
-                    <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
+                    <div :style="{ height: MatchListCardDataClass.sticky_top.type+'px' }"></div>
                 </template>
                 <div v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key"
                     :data-card-key="card_key" :class="`card_key   ${card_key}`">
