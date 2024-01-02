@@ -74,7 +74,6 @@ import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 // import { component_symbol, need_register_props } from "src/components/search/config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
-const props = defineProps({})
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
@@ -97,7 +96,7 @@ import { TabWapper as Tab } from "src/components/common/tab"
 import { api_search } from "src/api/index.js";
 
 import { compute_css_variables } from "src/core/css-var/index.js"
-
+const props = defineProps({})
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
 
