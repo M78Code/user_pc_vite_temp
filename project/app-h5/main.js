@@ -41,9 +41,7 @@ app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
 
-console.error('LOCATION_SEARCHLOCATION_SEARCH', sessionStorage.getItem('LOCATION_SEARCH') || '')
 let location_search = sessionStorage.getItem('LOCATION_SEARCH') || ''
-
 // 真机调试
 import VConsole from 'vconsole'
 if(location_search.includes('vconsole_h5=1') ){

@@ -16,11 +16,9 @@
       <div>
       </div>
       <div v-if="!MenuData.is_vr()" class="more row items-center justify-between"  @click="searchClick">
-       <img
-            class="league-icon"
-            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league_icon.svg`"
-            alt=""
-          />
+        <div v-for="(item,index) in league_select_icon" :key="index">
+        <ImageCacheLoad :path="item.picUrlthumb" type="default_league_icon"></ImageCacheLoad>
+        </div>
         <p>
         <!-- 更多 -->
           {{ i18n_t('footer_menu.more') }}
@@ -28,7 +26,6 @@
           :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/left_icon.svg`"
           srcset="">
         </p>
-      
       </div>
     </div>
     <div class="setting-list">
@@ -90,6 +87,7 @@ import { is_vr } from 'src/base-h5/mixin/menu.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 // 本次打包的 客户端版本
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 
 defineOptions({
   name: "settingFilter" // 设置组件名称
@@ -204,6 +202,16 @@ const closedHandle = () => {
  */
 const league_select_count = computed(() =>{
   return UserCtr.league_select_list?.length
+})
+/**
+ * 选中的联赛icon展示 
+ */
+const league_select_icon = computed(() =>{
+  let icon_url = UserCtr.league_select_list || []
+  if (UserCtr.league_select_list?.length > 3){
+    icon_url = UserCtr.league_select_list.splice(0,4)
+  }
+  return icon_url
 })
 /**
  * 打开联赛筛选框
@@ -453,5 +461,8 @@ console.log(final_url);
       font-size: 0.18rem;
     }
   }
+}
+:deep(.team-icon){
+  margin-right: 0;
 }
 </style>
