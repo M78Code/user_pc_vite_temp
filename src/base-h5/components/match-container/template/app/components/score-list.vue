@@ -735,7 +735,7 @@ onUnmounted(() => {
 
   .score-important {
     height: 0.1rem;
-    color: var(--sys-brand-primary-primary-300, #74C4FF) !important;
+    color: var(--sys-brand-primary-primary-300, --q-gb-t-c-1) !important;
     // border: none !important;
   }
 
