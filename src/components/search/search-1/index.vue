@@ -78,8 +78,6 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
-
-import store from "src/store-redux/index.js";
 // 搜索输入框组件
 import searchInput from "./search-input.vue"
 // 搜索初始化组件
@@ -120,8 +118,7 @@ const search_width = ref(LayOutMain_pc.layout_search_width)
 /* 路由对象 */
 const route = useRoute();
 
-/** stroe仓库 */
-const { searchReducer, layoutReducer, globalReducer } = store.getState();
+
 /**
  * 是否显示搜索组件 default: false
  * 路径: project_path\src\store\module\search.js
