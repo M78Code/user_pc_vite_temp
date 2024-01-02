@@ -1082,6 +1082,7 @@ if (type.value == 30) {
 
   .nums {
     color: var(--q-gb-t-c-19);
+    font-size: 0.14rem;
   }
 
   .round-box {
