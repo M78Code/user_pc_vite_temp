@@ -795,6 +795,7 @@ export default {
 
       &.simple {
         // display: block;
+        width: 100vw;
         .bet-item-wrap {
           width: 100%;
           display: flex;
@@ -967,8 +968,8 @@ export default {
       &.simple {
         width: 0.38rem;
         font-size: 0.13rem;
-        // width: 100%;
-        width: 2.74rem;
+        width: 95%;
+        // width: 2.74rem;
 
         .yb-icon-arrow {
           margin-top: 0.02rem;
