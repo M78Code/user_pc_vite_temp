@@ -104,7 +104,6 @@ import { ref, watch, onMounted } from 'vue'
 import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js"
 import search from "src/core/search-class/search.js"
-import store from "src/store-redux/index.js";
 import { IconWapper } from 'src/components/icon/index.js'
 
 const props = defineProps({
@@ -130,14 +129,14 @@ watch(
     }
 )
 
-const set_click_keyword = (data) => store.dispatch({
-    type: 'SET_CLICK_KEYWORD',
-    data
-})
-const set_search_type = (data) => store.dispatch({
-    type: 'SET_SEARCH_TYPE',
-    data
-})
+// const set_click_keyword = (data) => store.dispatch({
+//     type: 'SET_CLICK_KEYWORD',
+//     data
+// })
+// const set_search_type = (data) => store.dispatch({
+//     type: 'SET_SEARCH_TYPE',
+//     data
+// })
 /**
  * @Description:点击搜索关键词
  * @param {string} keyword 点击的关键词
@@ -149,8 +148,8 @@ function click_keyword(keyword, is_insert_history) {
     if (is_insert_history) {
         search.insert_history(keyword)
     }
-    set_search_type(1)
-    set_click_keyword(keyword);
+    // set_search_type(1)
+    // set_click_keyword(keyword);
 }
 
 /**

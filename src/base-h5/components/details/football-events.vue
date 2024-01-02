@@ -18,13 +18,11 @@
 // #TODO VUEX
 // import { mapGetters } from "vuex";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import store from "src/store-redux/index.js";
 import { reactive,defineComponent, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "football_events",
 
   setup(props, evnet) {
-    const store_state = store.getState()
     let data = reactive({
       emitters: [],
       is_shoe: false,  // 是否显示
@@ -50,7 +48,7 @@ export default defineComponent({
     // computed: {
     // ...mapGetters(['get_detail_data', 'get_is_hengping', 'get_is_full_screen']),
     const get_detail_data = computed(() => {
-      return store_state.detailsReducer.details_data || {}
+      return {}
     });
     const get_is_hengping = computed(() => {
       return ""
