@@ -79,12 +79,12 @@ export const scrollMenuEvent = (event, parentClass, childClass) => {
     try{
     let scrollBox = document.querySelector(parentClass),//父元素
         scrollBoxNav = document.querySelector(parentClass).querySelector(childClass),//子元素
-        spanLeft,
-        divBox = scrollBoxNav?.clientWidth / 2, // 点击的元素一半宽度
-        totalWidths = scrollBox?.clientWidth, // 父元素总宽度
+        spanLeft=0,
+        divBox = (scrollBoxNav?.clientWidth / 2) || 0, // 点击的元素一半宽度
+        totalWidths = scrollBox?.clientWidth || 0, // 父元素总宽度
         widths = totalWidths / 2, // 父元素总宽度一半
-        spanRight, // 元素的右边距离
-        scrollL = scrollBox.scrollLeft; // 滚动条滚动的距离
+        spanRight = 0, // 元素的右边距离
+        scrollL = scrollBox.scrollLeft || 0; // 滚动条滚动的距离
     // 当元素左边距离 或者 右边距离小于总宽一半
     
     if (event instanceof Event) {spanLeft = event?.clientX} // 当前点击的元素左边距离
