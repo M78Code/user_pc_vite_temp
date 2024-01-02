@@ -16,7 +16,6 @@ import { wslog, httplog } from "src/core/log/";
 import {get_query_string as urlparams } from "src/output/index.js";
 import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
-import store from "src/store-redux/index.js";
 // import { set_remote_server_time } from "./src/store/module/global";
 import { useRouter,useRoute } from "vue-router";
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
@@ -38,15 +37,15 @@ iframe_check();
 //设置错误数据
 GlobalSwitchClass.set_error_data("delete")
 // 初始化版本类型
-store.dispatch({
-  type: "INIT_VERSION_NAME",
-});
+// store.dispatch({
+//   type: "INIT_VERSION_NAME",
+// });
 // 初始化语言设置
 
-store.dispatch({
-  type: "INIT_LANG",
-  data: i18n_t("isoName"),
-});
+// store.dispatch({
+//   type: "INIT_LANG",
+//   data: i18n_t("isoName"),
+// });
 //获取服务器时间
 // store.dispatch(set_remote_server_time());
 // 发送日志s
@@ -82,13 +81,13 @@ watch(
     const cur = _to.name;
     const from = _from.name;
     if (cur != from) {
-      store.dispatch({
-        type: "SET_LAYOUT_CUR_PAGE",
-        data: {
-          cur,
-          from,
-        },
-      });
+      // store.dispatch({
+      //   type: "SET_LAYOUT_CUR_PAGE",
+      //   data: {
+      //     cur,
+      //     from,
+      //   },
+      // });
     }
   },
   { immediate: true }

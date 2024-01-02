@@ -112,9 +112,12 @@ class BetRecord {
       } else {
         return;
       }
-      //容错处理，接口再调一次(有问题、size < 5是死循环)
+      //容错处理，接口再调一次 (极端情况下，条件多次成立，触发接口限频)
       // if (size < 5 && size > 0 && lodash.get(res, 'data.hasNext') == true) {
-      //   this.get_order_list(params, url_api, prevData)
+      //   let newParams = Object.assign({}, params, {
+      //     searchAfter: this.last_record
+      //   })
+      //   this.get_order_list(newParams, url_api, prevData)
       // }
     }).catch(err => {
       this.is_loading = false;
@@ -132,7 +135,7 @@ class BetRecord {
    * @returns 
    */
   onPull(params, url_api, $el, prevData=false) {
-    if (!this.is_hasnext || this.last_record === undefined) {
+    if (!this.is_hasnext || !this.last_record) {
       //没有更多
       $el.setState(7);
       return;

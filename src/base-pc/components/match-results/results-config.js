@@ -245,7 +245,7 @@ export const useGetResultConfig = () => {
    * @description: 获取服务器时间
    */
   const get_serverTime = () => {
-    api_common.get_server_time().then((res) => {
+    api_common.get_time_server().then((res) => {
       let code = lodash.get(res, "code");
       if (code == 200) {
         state.day_time = parseInt(lodash.get(res, "data")) - 1000 * 60 * 60 * 24;
