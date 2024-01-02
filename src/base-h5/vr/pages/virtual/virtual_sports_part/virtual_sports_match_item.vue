@@ -100,7 +100,7 @@
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="get_theme.includes('y0')?arrows_reverse:arrows_default_balck" v-else>
           </template>
            <!-- 玩法数量 -->
-           <div v-if="match_item.mc" class="play-count">
+           <div v-if="match_item.mc" class="play-count" @click="goto_details(match_item)">
               {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}`: i18n_t('footer_menu.more')}}
               <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow"  />
             </div>
