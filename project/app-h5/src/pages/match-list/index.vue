@@ -30,7 +30,7 @@ import { computed, onUnmounted, onMounted, watch, onDeactivated, ref } from "vue
 import { useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import lodash from "lodash";
-import store from "src/store-redux/index.js";
+// import store from "src/store-redux/index.js";
 import tiaozhuanPanel from "src/base-h5/components/match-list/components/tiaozhuan-panel.vue";    //  跳转banner图和猜你喜欢
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
  

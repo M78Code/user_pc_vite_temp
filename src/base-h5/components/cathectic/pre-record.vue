@@ -58,7 +58,7 @@ import cancleConfirmPop from 'src/base-h5/components/cathectic/cancle-confirm-po
 import settleVoid from "src/base-h5/components/cathectic/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";
-import store from 'src/store-redux/index.js';
+//import store from 'src/store-redux/index.js';
 import lodash from "lodash";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 import { i18n_t } from "src/boot/i18n.js";
@@ -68,8 +68,8 @@ import { project_name } from "src/output/index.js";
 // import { mapGetters, mapMutations } from 'vuex';
 
 // 仓库数据
-let { cathecticReducer, userInfoReducer } = store.getState()
-const store_cathectic = ref(cathecticReducer)
+// let { cathecticReducer, userInfoReducer } = store.getState()
+// const store_cathectic = ref(cathecticReducer)
 
 const props = defineProps({
     main_item: {
@@ -174,10 +174,10 @@ const cancle_pre_order = () => {
             res = result
         }
         if (res.code == 200) {
-            store.dispatch({
-                'txt': i18n_t('pre_record.canceled'),
-                hide_time: 3000
-            })
+            // store.dispatch({
+            //     'txt': i18n_t('pre_record.canceled'),
+            //     hide_time: 3000
+            // })
             cancle_confirm_pop_visible.value = false
             timer_2.value = setTimeout(() => {
                 change_pre_status([{
@@ -187,10 +187,10 @@ const cancle_pre_order = () => {
             init_data(true)
         } else if (['0400546', '0400547'].includes(res.code)) {
             cancle_confirm_pop_visible.value = false
-            store.dispatch({
-                'txt': res.code == '0400546' ? i18n_t('pre_record.cancle_fail_tips') : i18n_t('pre_record.cancle_fail_tips2'),
-                hide_time: 3000
-            })
+            // store.dispatch({
+            //     'txt': res.code == '0400546' ? i18n_t('pre_record.cancle_fail_tips') : i18n_t('pre_record.cancle_fail_tips2'),
+            //     hide_time: 3000
+            // })
         }
     }).catch(() => {
         cancle_confirm_pop_visible.value = false
@@ -344,9 +344,9 @@ watch(() => list_data.value, (newVal) => {
             })
             clearTimeout(timer_1.value)
             timer_1.value = setTimeout(() => {
-                if (store_cathectic.value.main_item.value == 2 && document.visibilityState == 'visible') {
-                    change_pre_status(orderList)
-                }
+                // if (store_cathectic.value.main_item.value == 2 && document.visibilityState == 'visible') {
+                //     change_pre_status(orderList)
+                // }
             }, 5000)
         } else {
             clearTimeout(timer_1.value)
