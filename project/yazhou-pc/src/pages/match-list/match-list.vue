@@ -56,7 +56,7 @@
       <!-- 滚球虚拟体育列表 -->
       <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
         <template v-slot:before>
-          <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
+          <div :style="{ height: MatchListCardDataClass.sticky_top.type }"></div>
         </template>
         <template>
           <!--虚拟体育 赛事列表 赛事头-->
@@ -80,10 +80,12 @@
       <scroll-list v-if="menu_config.menu_root_show_shoucang != 300">
         <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
         <template v-slot:before>
-          <div :style="{ height: MatchListCardDataClass.sticky_top.top + 'px' }"></div>
+          <div :style="{ height: MatchListCardDataClass.sticky_top.type + 'px' }"></div>
         </template>
-        <match-list-card v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key"
-          :data-card-key="card_key" :class="`card_key_${card_key}`" />
+        <template v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key"
+          :data-card-key="card_key" :class="`card_key_${card_key}`">
+          <match-list-card :card_key="card_key" />
+        </template>
         <template v-slot:after>
           <div style="height:15px"></div>
           <div class="pager-wrap row justify-end">

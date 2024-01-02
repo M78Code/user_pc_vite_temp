@@ -15,7 +15,7 @@
           </div>
         </div>
     <!-- 中间滚动选择项 -->
-    <q-scroll-area class="scroll-area scroll-bar-display-none "   v-if="!no_find_content && !list_data_loading" ref="scrollArea">
+    <q-scroll-area class="scroll-area scroll-bar-display-none"   v-if="!no_find_content && !list_data_loading" ref="scrollArea">
       <div v-if="list.length" v-scroll="scrolled" class="yb_mb18">
         <!-- 循环整个后台返回数据 -->
         <div class="scroll-area1" v-for="(item, index) in list" :key="index" ref="scroll_area1">
@@ -773,13 +773,13 @@ if (type.value == 30) {
 
   .active-point {
     position: fixed;
-    top: 3.6rem !important;
+    top: 3.6rem;
     right: 0.25rem;
     z-index: 100;
     width: 0.48rem;
     height: 0.48rem;
     font-size: 0.28rem;
-    background: var(--q-gb-bg-c-30) no-repeat center / 98%;
+    background: var(--q-gb-bg-c-44) no-repeat center / 98%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -789,7 +789,7 @@ if (type.value == 30) {
       content: ' ';
       border-top:  .20rem solid transparent;
       border-bottom:  .20rem solid transparent;
-      border-left:  .20rem solid var(--q-gb-bg-c-30);
+      border-left:  .20rem solid var(--q-gb-bg-c-44);
       position: absolute;
       right: -0.1rem;
       border-radius: 0.16rem;
@@ -890,6 +890,7 @@ if (type.value == 30) {
       font-size: .1rem;
       span {
         display: inline-block;
+        font-size: 0.14rem;
       }
       div {
         width: 0.28rem;

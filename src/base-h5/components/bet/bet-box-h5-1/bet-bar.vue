@@ -37,7 +37,7 @@
 
 <script setup>
 import lodash from "lodash"
-// import store from "src/store-redux/index.js";
+////import store from "src/store-redux/index.js";
 // import { UserCtr } from "src/output/index.js";
 import { format_money2 } from 'src/output/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";

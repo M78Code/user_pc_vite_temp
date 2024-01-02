@@ -66,7 +66,7 @@
 
     <!-- 右边字母切换按钮 quasar提供的平移上下左右操作v-touch-pan.-->
     <ul class="right-side" v-touch-pan.vertical.prevent="handler" v-show="!no_find_content && !list_data_loading">
-      <li @click.stop.prevent="bar_click(item)" :class="{ actived: active_index == item, hot: item == i18n_t('search.hot') }"
+      <li @click.stop.prevent="bar_click(item,$event)" :class="{ actived: active_index == item, hot: item == i18n_t('search.hot') }"
         v-for="(item, index) in anchor_arr" :key="index + 'letter'">
         <template v-if="item == i18n_t('search.hot')">
           <img style="width: 28px;" :src="compute_img_url(active_index == item ? 'h5-kyapp-match-fliter-s' : 'match-filter')" alt="">
@@ -76,7 +76,8 @@
     </ul>
 
     <!-- 字母悬浮图标 -->
-    <div v-if="is_show" class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
+    <!-- v-if="is_show" -->
+    <div  class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
       <span>{{ active_index }}</span>
     </div>
     <!-- 无数据展示 -->
@@ -311,13 +312,21 @@ function scroll_obj_fn(index_num) {
  *@param {String} item 字母
  *@return {Undefined} undefined
  */
-function bar_click(item) {
+function bar_click(item,event) {
   is_scroll_right.value = true;
   active_index.value = item;
   is_show.value = true;
+
+  console.log('window.innerHeight',event)
   timer2 = setTimeout(() => {
     is_show.value = false;
   }, 500);
+  console.log('fixed_top.value',fixed_top.value)
+  if (window.screen.availHeight > 700) {
+    fixed_top.value = (window.innerHeight - 351) / 2 + 80+ event.layerY;
+  } else {
+    fixed_top.value = (window.innerHeight - 351) / 2 + 114 + event.layerY;
+  }
 }
 /**
  *@description 根据高度计算绑定左边按钮所在的位置
@@ -768,13 +777,13 @@ if (type.value == 30) {
 
   .active-point {
     position: fixed;
-    top: 3.6rem !important;
+    top: 3.6rem;
     right: 0.25rem;
     z-index: 100;
     width: 0.48rem;
     height: 0.48rem;
     font-size: 0.28rem;
-    background: var(--q-gb-bg-c-30) no-repeat center / 98%;
+    background: var(--q-gb-bg-c-44) no-repeat center / 98%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -784,7 +793,7 @@ if (type.value == 30) {
       content: ' ';
       border-top:  .20rem solid transparent;
       border-bottom:  .20rem solid transparent;
-      border-left:  .20rem solid var(--q-gb-bg-c-30);
+      border-left:  .20rem solid var(--q-gb-bg-c-44);
       position: absolute;
       right: -0.1rem;
       border-radius: 0.16rem;

@@ -1,10 +1,9 @@
 
 import { reactive, toRefs, onUnmounted } from "vue";
-import store from "src/store-redux/index.js";
+
 
 export const useGetStore = () => {
-  const store_state = store.getState();
-  const { menuReducer, betInfoReducer, globalReducer } = store_state;
+
 
   const state = reactive({
      // 聊天室用户信息

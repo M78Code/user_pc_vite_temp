@@ -8,8 +8,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // 引入投注逻辑mixin
 // import betting from "src/base-h5/mixins/betting/betting.js";
 import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss} from "src/output/index"; 
-// 引入redux
-import store from "src/store-redux/index.js";
+
 // import { Level_one_detail_odd_info } from "../category-list.js";
 import uid from "src/core/uuid/index.js";
 import lodash from "lodash";
@@ -23,7 +22,6 @@ export const category_info = (category_arr=[]) => {
   const router = useRouter();
   const route = useRoute();
   let emitters = []
-  const store_state = store.getState()
   const category = ref(null)
   const detail_match_list = ref(null)
   let component_data = reactive({

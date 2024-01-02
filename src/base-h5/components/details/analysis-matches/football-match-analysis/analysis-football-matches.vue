@@ -27,7 +27,6 @@ import lodash from 'lodash'
 import headTab from "src/base-h5/components/details/match-analysis/head-tab.vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
-import store from "src/store-redux/index.js"
 import zhuge from "src/core/http/zhuge-tag.js"
 import { MatchDetailCalss } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -87,8 +86,6 @@ export default defineComponent({
       ])
     // 当前选中tab
     const currentContent = ref('articleMain')
-    // 仓库数据
-    let {  userInfoReducer } = store.getState()
     // TODO: 临时用
     const get_event_list = ref(MatchDetailCalss.playback_video_list)
     const get_analyze_show = ref(false)
