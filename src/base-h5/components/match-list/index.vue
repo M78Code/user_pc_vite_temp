@@ -44,9 +44,6 @@ import MatchList2 from './components/match-list2.vue'
 // ouzhou-h5 赛事列表
 import MatchList3 from './components/match-list3.vue'
 
-// app-h5 observer-wrapper 新手版 赛事列表
-import MatchList4 from './components/match-list4.vue'
-
 // 无网络展示组件
 import NoData from "src/base-h5/components/common/no-data.vue"; 
 // 次要玩法描述组件
@@ -94,8 +91,6 @@ const config = {
 }
 
 const target_com = computed(() => {
-  // app 新手版  由于常规赛事还没替换， 故做临时处理， 后续放在 MatchList2里统一处理
-  // if (PROJECT_NAME === 'app-h5' && standard_edition.value === 1) return MatchList4
   return config[PROJECT_NAME]
 })
 

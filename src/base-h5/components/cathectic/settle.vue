@@ -83,7 +83,7 @@ import settleVoid from "./settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";
 import lodash from "lodash"
-import store from 'src/store-redux/index.js'
+//import store from 'src/store-redux/index.js'
 import { format_M_D } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t } from "src/boot/i18n.js";
@@ -99,8 +99,8 @@ const props = defineProps({
   }
 })
 // 仓库数据
-let { cathecticReducer, userInfoReducer } = store.getState()
-let store_cathectic = cathecticReducer
+// let { cathecticReducer, userInfoReducer } = store.getState()
+// let store_cathectic = cathecticReducer
 
 // 锚点
 const myScroll = ref(null)

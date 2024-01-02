@@ -1,11 +1,11 @@
 import mitt from "mitt";
  
-import  {MITT_TYPES_BASE ,MITT_TYPES_PROJECT} from "app/job/output/entry/index.js";
+import  {MITT_TYPES_GLOABLE, MITT_TYPES_BASE ,MITT_TYPES_PROJECT} from "app/job/output/entry/index.js";
 
 import { onUnmounted } from "vue";
 
 /** @type {MittType} */
-const MITT_TYPES = Object.assign({}, MITT_TYPES_BASE, MITT_TYPES_PROJECT);
+const MITT_TYPES = Object.assign({}, MITT_TYPES_GLOABLE, MITT_TYPES_BASE, MITT_TYPES_PROJECT);
 
 const emitter = mitt();
 

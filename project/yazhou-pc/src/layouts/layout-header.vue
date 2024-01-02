@@ -27,7 +27,7 @@ import { ref, reactive, onMounted, onUnmounted, watch } from 'vue'
 import lodash from 'lodash'
 import { useRoute, useRouter } from "vue-router";
 
-import store from 'src/store-redux/index.js'
+//import store from 'src/store-redux/index.js'
 import { SessionStorage } from 'src/output/index.js'
 import {SearchPCClass} from "src/output/project/common/pc-common.js";
 
@@ -530,10 +530,13 @@ function navigate(obj) {
     }
   }
   /** 保存显示搜索组件状态 */
-const set_show_login_popup = (data) => store.dispatch({
-    type: 'SET_SHOW_LOGIN_POPUP',
-    data
-})
+const set_show_login_popup = (data) =>
+{
+//   store.dispatch({
+//     type: 'SET_SHOW_LOGIN_POPUP',
+//     data
+// })
+}
 </script>
 
 <style lang="scss" scoped>
