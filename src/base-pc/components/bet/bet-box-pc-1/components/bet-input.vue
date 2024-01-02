@@ -24,7 +24,7 @@
 
             <!--键盘区域-->
             <div class="row bet-keyboard bet-keyboard-zone">
-                <bet-keyboard :money="ref_data.money" />
+                <bet-keyboard />
             </div>
         </div>
         <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
@@ -94,6 +94,10 @@ onUnmounted(() => {
       ref_data.money = new_money.money
     }
     BetData.set_bet_obj_amount(ref_data.money,props.item.playOptionsId)
+    
+     //设置键盘MAX限额
+    let max_money_obj = {max_money:ref_data.max_money}
+    BetData.set_bet_keyboard_config(max_money_obj)
   }
 }
 
@@ -126,9 +130,6 @@ const set_ref_data_bet_money = () => {
     // 限额改变 重置投注金额
     ref_data.money = ''
 
-     //设置键盘MAX限额
-    let max_money_obj = {max_money:ref_data.max_money}
-    BetData.set_bet_keyboard_config(max_money_obj)
 
     InputFocus.value.focus()
 

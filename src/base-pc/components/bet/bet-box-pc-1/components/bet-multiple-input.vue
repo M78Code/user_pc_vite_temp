@@ -33,7 +33,7 @@
         <div v-show="false">{{ UserCtr.user_version }}--{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
             <div class="col">
-                <bet-keyboard :money="ref_data.money" />
+                <bet-keyboard />
             </div>
         </div>
     </div>
@@ -102,12 +102,14 @@ onUnmounted(() => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = (new_money) => {
-    console.log(new_money)
     if( new_money.money*1 > ref_data.max_money*1){
         ref_data.money =  ref_data.max_money
     }else{
         ref_data.money = new_money.money
     }
+    BetData.bet_single_list.forEach((item,oid)=>{
+        BetData.set_bet_obj_amount(ref_data.money,oid)
+    })
 }
 
 // 清空输入框金额
