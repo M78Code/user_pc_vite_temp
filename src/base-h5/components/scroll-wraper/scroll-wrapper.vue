@@ -11,7 +11,7 @@
     <div  :class="['scroll-i-con', { detail_list: is_detail, simple: standard_edition == 1, 'static': get_is_static() }]"
       :style="get_container_style">
       <template v-if="MatchMeta.match_mids.length > 0">
-        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
+        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="index" :data-mid="match_mid"
           :class="['s-w-item', {last: index == MatchMeta.match_mids.length - 1 }]" 
           :style="{ transform: `translateY(${get_match_top_by_mid(match_mid)}px)`, zIndex: `${100 + index}` }">
           <!-- 调试用 -->
@@ -43,12 +43,9 @@ import { useRoute } from 'vue-router';
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue' 
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
-import UserCtr from "src/core/user-config/user-ctr.js";
 import MenuData from  "src/core/menu-h5/menu-data-class.js";
-import PageSourceData from "src/core/page-source/page-source.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import VirtualList from "src/core/match-list-h5/match-class/virtual-list.js";
-import RouterScroll from "src/core/match-list-h5/match-class/router-scroll.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,compute_local_project_file_path } from "src/output/index.js"
 import { menu_type, menu_lv2, is_kemp, is_hot, is_detail, is_results, is_esports, is_collect } from 'src/base-h5/mixin/menu.js'
@@ -56,7 +53,6 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
-import { no_data_app } from 'src/base-h5/core/utils/local-image.js'
 import { compute_css_obj} from 'src/output/index.js'
 // 避免定时器每次滚动总是触发
 const props = defineProps({
@@ -209,16 +205,6 @@ const get_container_style = computed(() => {
   })
   return style_obj
 })
-
-// 计算每个赛事id 对应的 容器高度 top 值
-const get_match_top_by_mid1 = (mid) => {
-  let r = 0;
-  if (mid in VirtualList.mid_top_map) {
-    r = VirtualList.mid_top_map[mid];
-    r = +r.toFixed(6);
-  }
-  return r;
-}
 
 const get_match_top_by_mid = (mid) => {
   const key = VirtualList.get_match_height_key(mid)

@@ -1369,14 +1369,6 @@ class MatchMeta {
   }
 
   /**
-   * @description 是否 observer-wrapper 组件模式
-   * @returns 
-   */
-  is_observer_type() {
-    return project_name == 'app-h5' && UserCtr.standard_edition == 1
-  }
-
-  /**
    * @description 重置 prev_scroll 
    */
   set_prev_scroll(val) {

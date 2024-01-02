@@ -276,6 +276,9 @@ export default defineComponent({
     },
     // 是否显示底部圆角
     is_show_border_raduis () {
+      if (  this.match_of_list.mid === '3043320' ) {
+        console.log()
+      }
       return this.next_match && this.match_of_list?.tid !== this.next_match?.tid
     },
     // 复刻版新手版
