@@ -90,7 +90,7 @@
         </div>
       </div>
       <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
-       <div v-if="match_item_batch.remaining_time > 0" class="virtual-sports-card-content">
+       <div v-if="match_item_batch.remaining_time > 0" class="virtual-sports-card-content" :class="{'virtual-sports-card-simple': standard_edition === 1}">
         <div class="tab-title" @click.stop="expend_match(match_item_batch)">
           <div class="league-name right-border">{{ lengue_name }}</div>
           <div class="status">
@@ -907,6 +907,9 @@ export default {
   }
   &:last-of-type {
     padding-bottom: 0.7rem;
+  }
+  &-simple{
+    background: var(--q-gb-bg-c-28);
   }
 }
 
