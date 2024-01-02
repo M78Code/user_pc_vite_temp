@@ -113,34 +113,35 @@ const init_data = (_index) => {
 /**
  * 获取请求接口的api和params
  * @param {*} _index 当前索引
- * @param {*} _isOnPull 是否是pull分页加载(确定searchAfter要不要传参)
  */
-const init_params_api = (_index, _isOnPull=false) => {
+const init_params_api = (_index) => {
   let params = {}
   let url_api = Promise.resolve();
   switch (_index) {
     case 0: //未结算
       params = {
-        searchAfter: (_isOnPull && BetRecordClass.last_record) || undefined,
+        searchAfter: BetRecordClass.last_record || undefined,
         orderStatus: '0',
       }
       url_api = api_betting.post_getH5OrderList      
       break;
     case 1: //预约中
       params = {
-        preOrderStatusList: [0]
+        preOrderStatusList: [0],
+        searchAfter: BetRecordClass.last_record || undefined,
       }
       url_api = api_betting.get_preOrderList_news
       break;
     case 2: // 已失效
       params = {
-        preOrderStatusList: [2, 3, 4]
+        preOrderStatusList: [2, 3, 4],
+        searchAfter: BetRecordClass.last_record || undefined,
       }
       url_api = api_betting.get_preOrderList_news
       break;
     case 3: //已结算
       params = {
-        searchAfter: (_isOnPull && BetRecordClass.last_record) || undefined,
+        searchAfter: BetRecordClass.last_record || undefined,
         orderStatus: '1',
         orderBy: enum_order_by[1],  // 默认排序（结算时间）
         timeType: enum_time_type[2]  //七日内
@@ -162,7 +163,7 @@ const init_params_api = (_index, _isOnPull=false) => {
 const onPull = () => {
   const ele = myScroll.value
   const _index = BetRecordClass.selected
-  const { params, url_api } = init_params_api(_index, true)
+  const { params, url_api } = init_params_api(_index)
   // 预约中、已失效(数据需加工)
   const prevData = (_index === 1 || _index === 2)
   BetRecordClass.onPull(params, url_api, ele, prevData)
