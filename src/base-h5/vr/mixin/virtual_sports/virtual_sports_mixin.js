@@ -3,7 +3,7 @@
  * @Date: 2020-12-30 10:37:23
  * @Description:
  */
-import { api_v_sports } from "src/api/index.js";
+import { api_v_sports, api_virtual } from "src/api/index.js";
 import VSport from "src/base-h5/vr/utils/vsport/vsport.js"
 import { api_common } from "src/api/index.js";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
@@ -632,7 +632,7 @@ export default {
         this.video_by_api_cache_key += `-${params.orderNo}`;
       }
       this.api_video_params = params;
-      api_v_sports.get_virtual_video_process(params).then(res => {
+      api_virtual.get_virtual_video_process(params).then(res => {
         if(res.code == 200){
           if(res.data && res.data.detail && Object.keys(res.data.detail).length){
             if(!is_no_match_data){
@@ -830,7 +830,7 @@ export default {
           }
           let params = this.api_video_params;
           if(!params.csid) return;
-          api_v_sports.get_virtual_video_process(params).then(res => {
+          api_virtual.get_virtual_video_process(params).then(res => {
             let get_data = false;
             if(res.code == 200){
               if(res.data && res.data.detail && Object.keys(res.data.detail).length){
