@@ -232,29 +232,14 @@ export default defineComponent({
     }
   }
   .col-mg{
-    
-    // margin-right: 0.04rem;
-    //  margin:0.04rem;
-    //  background:var(--q-gb-bg-c-15);
-    // border-radius: 4px;
     color:#7981A4;
     overflow: hidden;
     box-sizing: border-box;
-    &:nth-child(2){
-      
-      // margin: 0rem 0.04rem !important;
-    }
-    &:nth-child(3){
-      
-      // margin-right: 0.04rem !important;
-    }
-    // box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   }
   .play-hl-box{
-    padding: 0.08rem;
+    padding: 0 .08rem;
     box-sizing: border-box;
     overflow: hidden;
-    // border-top: 0.5px solid var(--q-gb-bd-c-5);
   }
   .play-box-style {
     //  margin:0.04rem;
@@ -294,18 +279,10 @@ export default defineComponent({
     flex-basis: 0.08rem;
   }
   .bw_mr1 {
-    // margin-right: 0.01rem;
-    // border-right: 1px solid var(--q-gb-bd-c-7);
-    // min-width: 1px;
     flex: 10;
     flex-basis: 0;
   }
 
-  .active-play {
-    & > div {
-
-    }
-  }
 }
 .mg-4{
   margin:0.04rem;
@@ -313,5 +290,9 @@ export default defineComponent({
 }
 :deep(.component.odds_new){
   text-align: center;
+}
+.mg-4-bg{
+  // border-radius: .04rem;
+  // overflow: hidden;
 }
 </style>

@@ -61,7 +61,7 @@ import { useRouter } from 'vue-router';
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-import { api_analysis } from 'src/api/index'
+import { api_analysis, api_common } from 'src/api/index'
 import { formatDate } from 'src/output/index.js'
 import { get_server_file_path } from 'src/core/file-path/file-path.js'
 import { i18n_t } from "src/boot/i18n.js"
@@ -148,7 +148,7 @@ function getArticleFavoriteList() {
     id: articleDetail.value.id,
     matchId: props.mid,
   }
-  api_analysis.get_favorite_article(params).then(res => {
+  api_common.getFavoriteArticle(params).then(res => {
     let list = lodash.get(res, 'data');
     if (lodash.get(list, 'length') > 0) {
       if (list.length == 1 && articleDetail.value.id == list[0].id) {
@@ -174,7 +174,7 @@ function getArticleFavoriteList() {
  * 文章阅读数
  */
 function atrticleReadCount(id) {
-  api_analysis.get_article_count({ id: id }).then(res => {
+  api_common.addArticleCount({ id: id }).then(res => {
     let count = lodash.get(res, 'data.data');
     if (Number(count)) {
       //更新列表阅读数
@@ -197,7 +197,7 @@ function showArticle(item) {
   //设置默认值
   let strCount = '/0';
   //更新阅读数
-  api_analysis.get_article_count({ id: item.id }).then(res => {
+  api_common.addArticleCount({ id: item.id }).then(res => {
     let count = lodash.get(res, 'data.data');
     if (Number(count)) {
       //更新列表阅读数
