@@ -78,7 +78,7 @@
         </div>
         
         <!-- 箭头 -->
-        <i class="icon-arrow q-icon c-icon" size="14px"></i>
+        <!-- <i class="icon-arrow q-icon c-icon" size="14px"></i> -->
       </div>
     </div>
   </div>
