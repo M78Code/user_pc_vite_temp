@@ -30,7 +30,7 @@
 
 <script setup>
   import { ref,onMounted,onUnmounted, watch } from 'vue';
-  import { MenuData, useMittOn,MITT_TYPES, i18n_t} from 'src/output/index.js'
+  import { MenuData, useMittOn,MITT_TYPES } from 'src/output/index.js'
   import { get_data_menu_result,handle_click_menu_mi_3_date } from "src/base-pc/components/tab/date-tab/index.js"
   import { compute_img_url } from 'src/core/server-img/index.js'
   // import { LocalStorage } from "src/core/utils/common/module/web-storage.js";

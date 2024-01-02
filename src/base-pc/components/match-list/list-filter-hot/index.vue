@@ -69,7 +69,6 @@ const props = defineProps({
 });
 const current_menu = ref("");
 const mi_500_obj = ref([]);
-const name = ref("list_filter_hot");
 let top_logos = [
   "50199", //赛事
   "50101", //竞足

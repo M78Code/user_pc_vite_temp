@@ -58,7 +58,7 @@ import { computed } from 'vue';
 import { useRouter,useRoute } from "vue-router";
 import lodash from 'lodash';
 
-import {compute_local_project_file_path, is_show_sr_flg} from "src/output/index.js";
+import { compute_local_project_file_path, is_show_sr_flg} from "src/output/index.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";

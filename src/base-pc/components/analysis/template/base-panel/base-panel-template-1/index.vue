@@ -426,7 +426,7 @@
 <script setup>
 
 import { ref, onUnmounted } from 'vue';
-
+ 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 // const { match,tournamentTypeFinish,vs_info } = useRegistPropsHelper(component_symbol, defineProps(need_register_props))
