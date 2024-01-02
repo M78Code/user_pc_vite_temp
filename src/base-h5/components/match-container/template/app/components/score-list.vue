@@ -661,7 +661,7 @@ onUnmounted(() => {
         margin-left: 0.05rem;
         color: var(--q-gb-t-c-18);
           font-family: PingFang SC;
-          font-size: 11px;
+          font-size: 10px;
           font-weight: 400;
         
           .important-color-number {
@@ -677,7 +677,7 @@ onUnmounted(() => {
     .score {
       flex-shrink: 0;
       margin-right: 0.04rem;
-      font-size: 0.11rem;
+      font-size: 10px;
       color: var(--q-color-com-fs-color-29);
       align-items: center;
       // margin-left: 3px;

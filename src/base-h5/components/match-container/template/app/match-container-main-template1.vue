@@ -1586,7 +1586,7 @@ export default {
     .date-time{
       position: relative;
       top: 1px;
-      font-size: 12px
+      font-size: 10px
     }
     .coming-soon{
       position: relative;
@@ -1653,7 +1653,7 @@ export default {
       color: var(--q-color-com-fs-color-37);
     }
     .coming-soon{
-      font-size: 11px;
+      font-size: 10px;
     }
 
     :deep(.start-counting-down){
@@ -1682,7 +1682,7 @@ export default {
         color: #AFB3C8 !important;
         width: 150px !important;
         .counting{
-          font-size: 12px;
+          font-size: 10px;
           color: var(--q-gb-t-c-19);
           // margin-bottom: 1px;
         }
@@ -1725,7 +1725,7 @@ export default {
   .mfo-title {
     margin-left: .05rem;
     margin-top: .02rem;
-    font-size: .12rem;
+    font-size: 10px;
   }
 
   .flag-chuan-icon {

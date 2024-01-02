@@ -1253,7 +1253,8 @@ export default {
           height:100%;
           display: flex;
           align-items: center;
-          color:var(--q-gb-t-c-18)
+          color:var(--q-gb-t-c-18);
+          font-size: 10px;
           // margin-top: .02rem;
         }
 
@@ -1290,7 +1291,7 @@ export default {
     }
     :deep(.start-counting-down) {
       .counting-down-start{
-        font-size: 0.12rem;
+        font-size: 10px;
       }
     }
   }
