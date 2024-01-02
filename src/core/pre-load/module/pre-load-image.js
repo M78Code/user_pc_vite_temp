@@ -32,7 +32,6 @@ import {
 
 // }
 let MITT_PRELOAD_IMAGE_CALLBACK = (params) => {
-  debugger
   let { key = "" } = params;
   let arr = all_preload_image_obj[key] || [];
 
