@@ -316,4 +316,11 @@ export default defineComponent({
   margin-left: 0.02rem !important;
   margin-right: 0.02rem !important;
 }
+
+.other {
+  .mg-4{
+    margin-right: .02rem !important;
+    margin-left: .02rem !important;
+  }
+}
 </style>
