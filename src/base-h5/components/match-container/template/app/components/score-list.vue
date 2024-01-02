@@ -62,7 +62,7 @@
               </div>
             </div> -->
             <!--总分-->
-            <div class="row color18" v-if="[2, 6].includes(+match.csid)">
+            <div class="row color18" v-if="[6].includes(+match.csid)">
               <div style="margin-right:.03rem">
                 {{ i18n_t('list.total_pp_score_count') }}
               </div>
