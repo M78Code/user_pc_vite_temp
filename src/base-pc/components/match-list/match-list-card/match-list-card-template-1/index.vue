@@ -1,45 +1,23 @@
 <template>
-  <div>
-    <div v-show="false">{{ MatchListCardDataClass.list_version }}{{ LayOutMain_pc.layout_version}}</div>
-    <div
-    class="list-card-wrap v-scroll-item relative-position"
-    :class="{
-      'matc-type-card': [
-        'sport_title',
-        'play_title',
-        'no_start_title',
-      ].includes(card_type),
-    }"
-    :style="`height:${card_style_obj?.card_total_height}px  !important;width:${
-      LayOutMain_pc.layout_content_width - 15
-    }px  !important;${card_style}`"
-  >
-    <div
-      v-if="is_mounted"
-      :class="{ 'list-card-inner': !MatchListCardData.is_champion }"
-    >
+  <div v-show="false">{{ MatchListCardDataClass.list_version }}{{ LayOutMain_pc.layout_version }}</div>
+  <div class="list-card-wrap v-scroll-item relative-position" :class="{
+    'sticky-wrap': ['sport_title', 'play_title', 'no_start_title', 'league_title', 'champion_league_title'].includes(card_style_obj?.card_type),
+    'matc-type-card': [
+      'sport_title',
+      'play_title',
+      'no_start_title',
+    ].includes(card_type),
+  }" :style="`height:${card_style_obj?.card_total_height}px  !important;width:${LayOutMain_pc.layout_content_width - 15
+  }px  !important;${card_style}`">
+    <div v-if="is_mounted" :class="{ 'list-card-inner': !MatchListCardData.is_champion }">
       <!-- 赛事状态 | 赛种类型 -->
-      <play-match-type
-        v-if="
-          ['sport_title', 'play_title', 'no_start_title'].includes(
-            card_type
-          )
-        "
-        :card_style_obj="card_style_obj"
-      />
+      <play-match-type v-if="['sport_title', 'play_title', 'no_start_title'].includes(card_type)
+        " :card_style_obj="card_style_obj" />
       <!-- 联赛标题 -->
-      <play-match-league
-        v-else-if="
-          card_type == 'league_title' && card_style_obj?.mid
-        "
-        :card_style_obj="card_style_obj"
-        :key="card_type"
-      />
+      <play-match-league v-else-if="card_type == 'league_title' && card_style_obj?.mid
+        " :card_style_obj="card_style_obj" :key="card_type" />
       <!-- 冠军联赛标题 -->
-      <match-type-champion
-        v-else-if="card_type == 'champion_league_title'"
-        :card_style_obj="card_style_obj"
-      />
+      <match-type-champion v-else-if="card_type == 'champion_league_title'" :card_style_obj="card_style_obj" />
       <!-- 暂无数据 -->
       <div class="fit" v-else-if="card_type == 'no_data'">
         <load-data style="max-height: 260px" state="empty" />
@@ -54,15 +32,10 @@
         <!-- 数据加载状态 -->
         <!-- 赛事列表 -->
 
-        <match-card
-            v-for="mid in mids_arr"
-            :key="mid"
-            :mid="mid"
-          />
+        <match-card v-for="mid in mids_arr" :key="mid" :mid="mid" />
 
       </template>
     </div>
-  </div>
   </div>
 </template>
 <script setup>
@@ -75,8 +48,8 @@ import LoadData from "src/base-pc/components/load-data/load-data.vue";
 
 import MatchListCardData from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { compute_local_project_file_path,MatchDataWarehouse_PC_List_Common } from "src/output/index.js";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import { compute_local_project_file_path, MatchDataWarehouse_PC_List_Common } from "src/output/index.js";
+import { LayOutMain_pc } from "src/output/project/common/pc-common.js";
 const props = defineProps({
   card_key: String,
   MatchListData: {
@@ -92,7 +65,7 @@ watch(() => MatchListCardDataClass.list_version.value, () => {
   card_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.card_key);
   card_type.value = card_style_obj?.card_type;
 })
-let sticky_top = ref(null);
+let sticky_top = ref(MatchListCardDataClass.sticky_top);
 // 组件是否加载完成
 const is_mounted = ref(true);
 /**
@@ -148,6 +121,7 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .list-card-wrap {
   overflow: hidden;
+
   .list-card-inner {
     position: absolute;
     width: 100%;
@@ -155,20 +129,24 @@ onUnmounted(() => {
     left: 0;
     top: 0;
   }
+
   /*  数据加载组件 */
   .load-data-wrap {
     width: 100%;
     height: 100%;
+
     :deep(.empty-wrap .img) {
       width: 130px !important;
       height: 130px !important;
     }
+
     :deep(.user_api_limited) {
       .img {
         display: none;
       }
     }
   }
+
   .test-info {
     position: absolute;
     color: red;
@@ -179,11 +157,13 @@ onUnmounted(() => {
     user-select: text;
   }
 }
+
 .list-hot-icon {
   width: 14px;
   height: 14px;
   margin: 2px 15px 0 10px;
 }
+
 .list-hot-text {
   font-size: 14px;
   font-weight: 600;
