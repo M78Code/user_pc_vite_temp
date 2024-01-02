@@ -170,6 +170,7 @@ export default defineComponent({
     
     .item2 {
       flex: 1;
+      flex-basis: 45%;
       overflow: hidden;
       box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
       border-radius: .04rem;
