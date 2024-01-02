@@ -588,7 +588,8 @@ export default defineComponent({
     .bet-item-ky-container {
       padding-top: 0.12rem;
       padding-bottom: 0.11rem;
-        box-sizing: border-box;
+      box-sizing: border-box;
+      box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     }
   }
 

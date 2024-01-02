@@ -1,6 +1,6 @@
 <template>
   <div
-      class="tournament-play"
+      class="component tournament-play-2"
       :class="{
         'tournament-play-outer': !get_is_hengping,
         'result-details': get_menu_type === 28,
