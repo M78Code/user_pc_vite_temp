@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {api_v_sports} from "src/api/index.js";
+import {api_virtual} from "src/api/index.js";
 import no_data from "src/base-h5/vr/components/common/no_data.vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 
@@ -65,7 +65,7 @@ export default {
   methods: {
     async get_list() {
       try {
-        let {code , data} = await api_v_sports.get_virtual_sport_team_ranking({tid: this.tid})
+        let {code , data} = await api_virtual.get_virtual_sport_team_ranking({tid: this.tid})
         if(code == 200) {
           if (data && data.length > 0) {
             this.ranking_data = data

@@ -9,15 +9,6 @@ import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 const { API_PREFIX } = BUILDIN_CONFIG ;
 const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_12} = API_PREFIX;
 
-// 联赛积分榜
-export const post_league_ranking = (params, config={}, url  = "/v1/w/virtual/getVirtualSportTeamRanking") => http.post(`${prefix}${url}`, params, config)
-
-// 小组赛积分榜
-export const post_group_ranking = (params, config={}, url  = "/v1/w/virtual/getVirtualSportXZTeamRanking") => http.post(`${prefix}${url}`, params, config)
-
-// 视频接口
-export const post_virtual_replay = (params, config={}, url  = "/v1/w/virtualReplay") => http.post(`${prefix}${url}`, params, config)
-
 // 赛果
 export const get_match_result = (params, config={}, url  = "/v1/w/matchDetail/getVirtualMatchResult") => http.get(`${prefix}${url}`, params, config)
 
