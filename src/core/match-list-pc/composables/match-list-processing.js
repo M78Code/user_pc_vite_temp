@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import lodash from 'lodash';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
-import { MenuData } from "src/output/project/index.js";
+import { MenuData } from 'src/output/project/index.js'
 
 import { match_collect_status, set_collect_count, mx_collect_count } from "./match-list-collect.js";
 
@@ -24,8 +24,7 @@ const load_data_state = ref(null);
 let hot_match_list_timeout;
 let vx_layout_list_type = 'match'
 
-// 是否虚拟体育
-let is_virtual = MenuData.is_vr();
+
 const { route_name } = PageSourceData;
 //
 let is_search = PageSourceData.is_search();
@@ -289,7 +288,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
 		backend_run
 	);
 	if (!backend_run) {
-		if (!is_virtual || is_search) {
+		if (!MenuData.is_vr() || is_search) {
 			// 非虚拟体育——设置赛事列表选中赛事
 			if (
 				MenuData.is_kemp() ||
@@ -337,7 +336,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
  * 当接口状态为异常状态时  调用此方法
  */
 const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, backend_run }) => {
-	if (is_virtual && !is_search) {
+	if (MenuData.is_vr() && !is_search) {
 		// 右侧切换
 		// MatchListDetailMiddleware.set_vsport_params({
 		// 	csid: 0,
@@ -412,7 +411,7 @@ const mx_use_list_res = (data, backend_run) => {
 	set_league_list_obj(match_list)
 	//虚拟体育 接口数据结构转换
 	// // lockie
-	// if (is_virtual && !is_search && false) {
+	// if (MenuData.is_vr() && !is_search && false) {
 	// 	// 格式化
 	// 	match_list = virtual_sport_format(match_list);
 	// }
