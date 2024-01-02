@@ -54,8 +54,6 @@ export const record_user_preference = (params, config={}, url = "/v1/betOrder/re
 // 虚拟体育投注接口
 /* export const post_submit_virtual_bet_list = (params, config={}, url = "/v1/betOrder/virtualBet") => http.post(`${prefix}${url}`, params, config); */
 
-//投注记录（ 新  带提前结算相关字段）
-export const post_order_list = (params, config={}, url = "/order/betRecord/getOrderList") => http.post(`${prefix2}${url}`, params, config);
 //提前结算
 export const post_pre_bet_order = (params, config={}, url = "/v1/betOrder/orderPreSettle") => http.post(`${prefix13}${url}`, params, config);
 //预投住注单记录

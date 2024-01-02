@@ -4,7 +4,7 @@
  * @Description: 筛选页  1974 【客户端】H5联赛排序和筛选功能逻辑优化
 -->
 <template>
-  <div class="boss-box">
+  <div class="boss-box" >
     <!--  筛选骨架屏  -->
     <SFilter v-if="list_data_loading" />
     <!-- 全选 -->
@@ -15,7 +15,7 @@
           </div>
         </div>
     <!-- 中间滚动选择项 -->
-    <q-scroll-area class="scroll-area" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
+    <q-scroll-area class="scroll-area scroll-bar-display-none" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
       <div v-if="list.length" v-scroll="scrolled" class="yb_mb18">
         <!-- 循环整个后台返回数据 -->
         <div class="scroll-area1" v-for="(item, index) in list" :key="index" ref="scroll_area1">
@@ -76,8 +76,7 @@
     </ul>
 
     <!-- 字母悬浮图标 -->
-    <!-- v-if="is_show" -->
-    <div  class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
+    <div class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
       <span>{{ active_index }}</span>
     </div>
     <!-- 无数据展示 -->
@@ -775,7 +774,7 @@ if (type.value == 30) {
     width: 0.48rem;
     height: 0.48rem;
     font-size: 0.28rem;
-    background: var(--q-gb-bg-c-30) no-repeat center / 98%;
+    background: var(--q-gb-bg-c-44) no-repeat center / 98%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -785,7 +784,7 @@ if (type.value == 30) {
       content: ' ';
       border-top:  .20rem solid transparent;
       border-bottom:  .20rem solid transparent;
-      border-left:  .20rem solid var(--q-gb-bg-c-30);
+      border-left:  .20rem solid var(--q-gb-bg-c-44);
       position: absolute;
       right: -0.1rem;
       border-radius: 0.16rem;
@@ -853,6 +852,8 @@ if (type.value == 30) {
       position: absolute;
       border-top:  0.005rem solid var(--q-gb-bd-c-18);
       top: 0;
+      left: 0;
+      right: 0;
     }
   }
   .content_box2 {
@@ -990,6 +991,8 @@ if (type.value == 30) {
       position: absolute;
       border-bottom: 0.005rem solid var(--q-gb-bd-c-18);
       bottom: 0;
+      left: 0;
+      right: 0;
     }
   }
 
@@ -1040,9 +1043,6 @@ if (type.value == 30) {
 .icon-search:before {}
 .is_fold{
   transform: rotate(270deg);
-}
-:deep(.scroll){
-  overflow: visible;
 }
 </style>
 
