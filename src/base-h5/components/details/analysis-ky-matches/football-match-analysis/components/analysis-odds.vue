@@ -297,7 +297,7 @@ onUnmounted(() => {
     width: 100%;
     height: auto;
     margin: 0 auto;
-    background: var(--q-gb-bg-c-18);
+    // background: var(--q-gb-bg-c-18);
     position: sticky;
     top: 1.21rem;
     padding: 0.15rem 0.48rem;

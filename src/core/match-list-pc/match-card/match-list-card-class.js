@@ -169,6 +169,7 @@ class MatchListCardInfo {
 
   fold_tab_play(mid) {
     fold_tab_play(mid);
+    MatchListCardData.set_list_version()
   }
 
   /**

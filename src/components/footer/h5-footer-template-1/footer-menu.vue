@@ -82,11 +82,9 @@ import {  SessionStorage } from "src/output/index.js";
 import { ref, computed, onBeforeUnmount, onMounted, watch } from "vue";
 import lodash from "lodash";
 import { useRoute, useRouter } from "vue-router";
-import store from "src/store-redux/index.js";
 import { i18n_t, compute_css_obj, useMittOn, useMittEmit, MITT_TYPES, MenuData } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { lang, show_favorite_list, theme, user_info, resources_obj } from "src/base-h5/mixin/userctr";
-const { matchReducer } = store.getState();
 const { menu_type, update_time, get_sport_all_selected } = MenuData;
 // 路由
 const route = useRoute();
@@ -611,13 +609,13 @@ const is_iphone = computed(() => {
 /**
  * 通过列表滚动决定页脚菜单显示/隐藏
  */
-watch(
-  () => matchReducer.list_scroll_direction,
-  (direction) => {
-    //不显示投注弹层时改变页脚菜单显示状态
-    scroll_dir.value = direction;
-  }
-);
+// watch(
+//   () => matchReducer.list_scroll_direction,
+//   (direction) => {
+//     //不显示投注弹层时改变页脚菜单显示状态
+//     scroll_dir.value = direction;
+//   }
+// );
 //收藏改变
 watch(show_favorite_list,
   (is_fav) => {

@@ -1,8 +1,6 @@
 <template>
-  <div v-if="BetData.bet_box_h5_show">
-    
-    <div v-show="false"> {{ UserCtr.user_version }} -- {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version}}-{{ BetData.bet_box_h5_show }}</div>
-
+  <div v-show="false"> {{ UserCtr.user_version }} -- {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version}}-{{ BetData.bet_box_h5_show }}</div>
+  <div v-if="BetData.bet_box_h5_show && (BetData.bet_single_list.length || BetData.bet_s_list.length)">
     <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <div class="bet-box-info" @touchmove.prevent>
       <!-- 头部信息 -->

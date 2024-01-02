@@ -10,7 +10,7 @@ import lodash from "lodash"
 
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 const { API_PREFIX } = BUILDIN_CONFIG ;
-const { API_PREFIX_JOB: prefix,API_PREFIX_USER:prefix_, API_PREFIX_JOB:prefix_job, API_PREFIX_BAT: prefix_bat} = API_PREFIX;
+const { API_PREFIX_JOB: prefix,API_PREFIX_USER:prefix_ , API_PREFIX_BAT: prefix_bat} = API_PREFIX;
 
 // 全url   获取  一般用于 视频动画域名检测
 export const get_full_url = (url='') => {
@@ -29,7 +29,7 @@ export const post_match_full_list = (params) => {
     url += params.query;
   }
   // const queryParams = {"cuid":"508169450736300035","euid":"40003,40004,40006,40007,40008,40009,40012,40010,40015,40016,40017,40020,40021,40022,40011,40013","type":1,"sort":2,"device":"v2_h5_st","hpsFlag":0}
-  return http.post(`${prefix_job}${url}`, { ...params }, {axios_debounce_cache_key:'post_match_full_listPB',type:2});
+  return http.post(`${prefix}${url}`, { ...params }, {axios_debounce_cache_key:'post_match_full_listPB',type:2});
 };
 
 // 收藏列表 2739 需求 
@@ -45,7 +45,7 @@ export const post_esport_collect = (params, config, url="/v1/m/escnh5") => {
 };
 //电竞图片资源域名
 export const get_games_imgDomain = (params, config, url="/v1/games/imgDomain") => {
-  return http.get(`${prefix_job}${url}`, params, config);
+  return http.get(`${prefix}${url}`, params, config);
 };
 
 
@@ -68,7 +68,7 @@ export const get_match_result_api = (params, config, url = "/v1/m/matcheResultPB
 };
 
 //根据赛事id获取赛事列表
-export const get_match_base_info_by_mids = (params, config, url = "/v1/m/getMatchBaseInfoByMidsPB") => http.post(`${prefix_job}${url}`, params, {axios_debounce_cache_key:'get_match_base_info_by_mids',type:2});
+export const get_match_base_info_by_mids = (params, config, url = "/v1/m/getMatchBaseInfoByMidsPB") => http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_match_base_info_by_mids',type:2});
 
 //根据赛事id获取电竞赛事详情列表
 export const get_esports_match_by_mids = (params, config, url = "/v1/m/esportsMatchInfoByMidsPB") => http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_esports_match_by_mids', type: 2});
@@ -90,15 +90,6 @@ export const get_menu_match_total = (params, config, url="/v1/m/menu/queryNum") 
 
 
 
-// 更新收藏列表菜单赛事数量
-export const get_menu_of_favorite = (params, config, url="/v1/m/menu/countCollectH5") => {
-  params.sys = 3; //系统（1.panda-H5菜单  2.panda老PC-菜单 3.188菜单  4-新版PC菜单   7-H5 v2.0）
-  return http.get(`${prefix}${url}`, params, config);
-};
-// 更新收藏列表菜单赛事数量
-export const get_menu_of_favorite_count = (params, config, url="/v1/m/menu/countCollectPB") => {
-  return http.post(`${prefix}${url}`, params, config);
-};
 // 更新收藏列表菜单赛事数量 H5
 export const get_collect_menu_count_h5 = (params, config, url="/v1/m/menu/countCollectPB") => {
   return http.post(`${prefix}${url}`, params, config);
@@ -143,7 +134,7 @@ export const get_collect_live_matchs = (params, config, url = "/v1/m/getCollectL
 export const get_Video_MaxTime = (params, config, url = "/v1/w/virtual/getVideoMaxTime") => http.get(`${prefix}${url}`, params,config)
 // 获取详情页面玩法集接口（christion）
 export const get_category_list = (params, config, url = "/v1/m/category/getCategoryList") => {
-  return http.get(`${prefix_job}${url}`, params,{axios_debounce_cache_key: 'get_category_list'});
+  return http.get(`${prefix}${url}`, params,{axios_debounce_cache_key: 'get_category_list'});
 }
 // 详情页赛事结束自动切换赛事接口(业务:yk)
 export const get_detail_video = (params, config, url = "/v1/w/getDetailVideo") => http.get(`${prefix}${url}`, params, config)
@@ -172,19 +163,19 @@ export const get_virtual_matchResult = (params,config, url = "/v1/m/matchDetail/
 export const get_matchDetail_getMatchDetailByTournamentId = (params, config, url = "/v1/m/matchDetail/getMatchDetailByTournamentIdPB") => http.get(`${prefix}${url}`, params, config)
 
 // 赛事详情页面接口（christion）
-export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetailPB") => http.get(`${prefix_job}${url}`, params, config)
+export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetailPB") => http.get(`${prefix}${url}`, params, config)
 /** 
  * 赛果详情页面接口（christion）
  * @returns {Promise<API.MatchDetails>}
  */
-export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getResultMatchDetailPB") => http.get(`${prefix_job}${url}`, params, config)
+export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getResultMatchDetailPB") => http.get(`${prefix}${url}`, params, config)
 
 // 电竞赛事详情页面接口（start）
 export const get_DJ_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getESMatchDetail") => http.get(`${prefix}${url}`, params, config)
 
 // 根据玩法查询盘口信息
 export const get_matchDetail_getMatchOddsInfo = (params, config, url = "/v1/m/matchDetail/getMatchOddsInfo1PB") => {
-  return http.get(`${prefix_job}${url}`, params, {axios_debounce_cache_key: 'match_detail_odds_info'});
+  return http.get(`${prefix}${url}`, params, {axios_debounce_cache_key: 'match_detail_odds_info'});
 };
 
 // 电竞 根据玩法查询盘口信息 （start）
@@ -227,7 +218,7 @@ export const videoAnimationUrl = (params, config, url="/v1/w/videoAnimationUrl")
 export const getliveVideoUrl = (params, config, url="/v1/w/liveVideoUrl") => http.post(`${prefix}${url}`,params, config);
 
 
-// 获取视频是否可获取
+// 获取用户是否登录
 export const getMatchUserIsLogin = (params, config, url="/v1/w/isLogin") => http.post(`${prefix}${url}`,params, config);
 
 // 获取视频链接
@@ -241,26 +232,21 @@ export const existMatchResult = (params, config, url="/order/betRecord/existMatc
 export const get_virtual_result = (params, config, url="/v1/orderScoreResult/queryTournamentScoreResult") =>
 http.post(`${prefix}${url}`,params,config);
 // 获取赛事文章详情(Jeffrey)
-export const getArticle = (params, config, url="/v1/art/getArticle") => http.get(`${prefix_job}${url}`,params, config)
+export const getArticle = (params, config, url="/v1/art/getArticle") => http.get(`${prefix}${url}`,params, config)
 // 获取赛事文章猜你喜欢接口(Jeffrey)
 export const getFavoriteArticle = (params, config, url="/v1/art/getFavoriteArticle") => http.get(`${prefix}${url}`,params, config)
 // 更新赛事文章浏览记录(Jeffrey)
 export const  addArticleCount = (params, config, url="/v1/art/addArticleCount") => http.post(`${prefix}${url}`,params, config)
 
-
-
-// 客户端-获取紧急开关配置 (march-远程)
-export const  getAccessConfig = (params, config, url="/v1/art/getAccessConfig") => http.get(`${prefix}${url}`,params, config)
-
 // 节日资源图片(资源配置)接口 （mack-远程）
-export const queryFestivalBanner = (params, config, url = "/v2/festival/queryBanner") => http.get(`${prefix_job}${url}`, params, config);
+export const queryFestivalBanner = (params, config, url = "/v2/festival/queryBanner") => http.get(`${prefix}${url}`, params, config);
 
 
 
 
 
 //获取全局开关
-export const get_access_config = (params, config={}, url = "/v1/art/getAccessConfig") => http.get(`${prefix_job}${url}`, params, config);
+export const get_access_config = (params, config={}, url = "/v1/art/getAccessConfig") => http.get(`${prefix}${url}`, params, config);
 
 export const get_menu_init = (params, config={}, url = "/v2/w/menu/initPB") => {
   return http.get(`${prefix}${url}`, params, config);
@@ -268,36 +254,33 @@ export const get_menu_init = (params, config={}, url = "/v2/w/menu/initPB") => {
 
 // 专业版获取----主列表顶部日期菜单
 export const post_date_menu = (params, config={}, url = "/v2/menu/getDateMenuListPB")=>{
-  return http.post(`${prefix_job}${url}`, params, config);
+  return http.post(`${prefix}${url}`, params, config);
 }
 
 // 专业版获取----主列表顶部日期菜单 有PB
 export const post_date_menu_count = (params, config={}, url = "/v2/m/menu/getDateMenuCount")=>{
-  return http.post(`${prefix_job}${url}`, params, config);
+  return http.post(`${prefix}${url}`, params, config);
 }
 
 // 电竞日期菜单 有PB PB
 export const get_esports_date_menu_count = (params, config={}, url = "/v1/w/esports/getDateMenuCountList") => {
-  return http.post(`${prefix_job}${url}`, params, config);
+  return http.post(`${prefix}${url}`, params, config);
 };
 
 // 电竞日期菜单
 export const get_esports_date_menu = (params, config={}, url = "/v1/w/esports/getDateMenuList") => {
-  return http.post(`${prefix_job}${url}`, params, config);
+  return http.post(`${prefix}${url}`, params, config);
 };
 
 //虚拟体育菜单接口
 export const get_virtual_menu = (params={}, config={}, url = "/v1/w/virtual/menus") => {
-  return http.get(`${prefix_job}${url}`, params, config);
+  return http.get(`${prefix}${url}`, params, config);
 };
 
 
 // 菜单实时统计玩法数量
 export const post_menu_play_count = (params, config={}, url = "/v2/w/menu/queryPlayCountPB") => http.post(`${prefix}${url}`, params, config);
 
- 
-//从服务器获取时间戳
-export const get_server_time = (params, config={}, url = "/v1/getSystemTime/currentTimeMillis") => http.get(`${prefix_job}${url}`, params, config);
 
 // 根据赛事IDs，获取赛事事件
 export const match_event = (params, config={}, url = "/v1/matchevent") => http.post(`${prefix}${url}`, params, config);

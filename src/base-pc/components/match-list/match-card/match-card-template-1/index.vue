@@ -26,7 +26,7 @@ import { MatchDataWarehouse_PC_List_Common } from "src/output/index.js";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 // import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 // import {component_symbol ,need_register_props} from "../config/index.js"
-// import store from 'src/store-redux/index.js'
+// //import store from 'src/store-redux/index.js'
 // inject:['match_list_card'],
 
 // 玩法模板 0   足球-让球&大小  、 足球-角球 、 美足-让球&大小 、 手球-让球&大小

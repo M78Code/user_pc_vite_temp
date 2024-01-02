@@ -16,10 +16,10 @@
           <!-- 左   -->
           <div :class="['col','yb_fontsize14' ,{'col-mg':!['37'].includes(item_data.hpid)}]" style="min-width: 1px;">
             <template v-for="(ol_item,ol_index) in item.ol">
-              <div class="mg-4-bg">
-                <div v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index" class="ellipsis font_color play-box-style">
-                {{ol_item.on}}
-              </div>
+              <div class="mg-4-bg" v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
+                <div class="ellipsis font_color play-box-style">
+                  {{ol_item.on}}
+                </div>
               </div>
             </template>
           </div>
@@ -27,55 +27,54 @@
           <!-- 中 -->
           <div class="col col-mg">
             <template v-for="(ol_item,ol_index) in item.ol">
-              <div class="mg-4-bg">
-                <div v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
-                <!--  0开 2关 1封 11锁 -->
-                <!-- 开盘or锁盘 正常显示 -->
-                <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
-                  <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
-                    <template v-if="ol_item.os == 1">
-                      <!-- 主程序 start -->
-                      <div 
-                      class="play-box-style" 
-                      @click="go_to_bet(ol_item)" 
-                      :class="[BetData.bet_oid_list.includes(ol_item.id_)?'active-play':'',{'win': calc_win(ol_item.result)}]">
-                        <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
+              <div class="mg-4-bg" v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
+                <div>
+                  <!--  0开 2关 1封 11锁 -->
+                  <!-- 开盘or锁盘 正常显示 -->
+                  <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+                    <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
+                      <template v-if="ol_item.os == 1">
+                        <!-- 主程序 start -->
+                        <div 
+                        class="play-box-style" 
+                        @click="go_to_bet(ol_item)" 
+                        :class="[BetData.bet_oid_list.includes(ol_item.id_)?'active-play':'',{'win': calc_win(ol_item.result)}]">
+                          <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
+                        </div>
+                        <!-- 主程序 end -->
+                      </template>
+                      <template v-if="ol_item.os == 2">
+                        <!-- lock 锁状态 start -->
+                        <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
+                        <!-- lock 锁状态 end -->
+                      </template>
+                      <!-- 新增start -->
+                      <template v-if="ol_item.os == 3"></template>
+                      <!-- 新增over -->
+                    </template>
+                    <template v-if="ol_item._hs == 1">
+                      <template v-if="ol_item.os == 3"></template>
+                      <template v-else>
+                        <!-- lock 锁状态 start -->
+                        <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
+                        <!-- lock 锁状态 end -->
+                      </template>
+                    </template>
+                    <template v-if="ol_item._hs == 2">
+                      <!-- 盘口级别状态关盘时，要占位 -->
+                      <div class="play-box-style">
                       </div>
-                      <!-- 主程序 end -->
-                    </template>
-                    <template v-if="ol_item.os == 2">
-                      <!-- lock 锁状态 start -->
-                      <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
-                      <!-- lock 锁状态 end -->
-                    </template>
-                    <!-- 新增start -->
-                    <template v-if="ol_item.os == 3"></template>
-                    <!-- 新增over -->
-                  </template>
-                  <template v-if="ol_item._hs == 1">
-                    <template v-if="ol_item.os == 3"></template>
-                    <template v-else>
-                      <!-- lock 锁状态 start -->
-                      <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
-                      <!-- lock 锁状态 end -->
                     </template>
                   </template>
-                  <template v-if="ol_item._hs == 2">
-                    <!-- 盘口级别状态关盘时，要占位 -->
-                    <div class="play-box-style">
-                    </div>
+                  <!-- 封盘，一把锁的居中显示 -->
+                  <template v-if="ol_item._mhs == 1">
+                    <!-- lock 锁状态 start -->
+                    <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
+                    <!-- lock 锁状态 end -->
                   </template>
-                </template>
-                <!-- 封盘，一把锁的居中显示 -->
-                <template v-if="ol_item._mhs == 1">
-                  <!-- lock 锁状态 start -->
-                  <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
-                  <!-- lock 锁状态 end -->
-                </template>
-                <!-- 关盘 -->
-                <template v-if="ol_item._mhs == 2"></template>
-              </div>
-
+                  <!-- 关盘 -->
+                  <template v-if="ol_item._mhs == 2"></template>
+                </div>
               </div>
             </template>
           </div>
@@ -83,51 +82,51 @@
           <!-- 右 -->
           <div class="col col-mg">
             <template v-for="(ol_item,ol_index) in item.ol">
-              <div class="mg-4-bg">
-                <div v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index">
-                <!--  0开 2关 1封 11锁 -->
-                <!-- 开盘or锁盘 正常显示 -->
-                <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
-                  <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
-                    <template v-if="ol_item.os == 1">
-                      <!-- 主程序 start -->
-                      <div class="play-box-style" @click="go_to_bet(ol_item)" :class="[BetData.bet_oid_list.includes(ol_item.id_)?'active-play':'',{'win':calc_win(ol_item.result)}]">
-                        <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
+              <div class="mg-4-bg" v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index">
+                <div >
+                  <!--  0开 2关 1封 11锁 -->
+                  <!-- 开盘or锁盘 正常显示 -->
+                  <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+                    <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
+                      <template v-if="ol_item.os == 1">
+                        <!-- 主程序 start -->
+                        <div class="play-box-style" @click="go_to_bet(ol_item)" :class="[BetData.bet_oid_list.includes(ol_item.id_)?'active-play':'',{'win':calc_win(ol_item.result)}]">
+                          <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
+                        </div>
+                        <!-- 主程序 end -->
+                      </template>
+                      <template v-if="ol_item.os == 2">
+                        <!-- lock 锁状态 start -->
+                        <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
+                        <!-- lock 锁状态 end -->
+                      </template>
+                      <!-- 新增start -->
+                      <template v-if="ol_item.os == 3"></template>
+                      <!-- 新增over -->
+                    </template>
+                    <template v-if="ol_item._hs == 1">
+                      <template v-if="ol_item.os == 3"></template>
+                      <template v-else>
+                        <!-- lock 锁状态 start -->
+                        <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
+                        <!-- lock 锁状态 end -->
+                      </template>
+                    </template>
+                    <template v-if="ol_item._hs == 2">
+                      <!-- 盘口级别状态关盘时，要占位 -->
+                      <div class="play-box-style">
                       </div>
-                      <!-- 主程序 end -->
-                    </template>
-                    <template v-if="ol_item.os == 2">
-                      <!-- lock 锁状态 start -->
-                      <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
-                      <!-- lock 锁状态 end -->
-                    </template>
-                    <!-- 新增start -->
-                    <template v-if="ol_item.os == 3"></template>
-                    <!-- 新增over -->
-                  </template>
-                  <template v-if="ol_item._hs == 1">
-                    <template v-if="ol_item.os == 3"></template>
-                    <template v-else>
-                      <!-- lock 锁状态 start -->
-                      <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
-                      <!-- lock 锁状态 end -->
                     </template>
                   </template>
-                  <template v-if="ol_item._hs == 2">
-                    <!-- 盘口级别状态关盘时，要占位 -->
-                    <div class="play-box-style">
-                    </div>
+                  <!-- 封盘，一把锁的居中显示 -->
+                  <template v-if="ol_item._mhs == 1">
+                    <!-- lock 锁状态 start -->
+                    <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
+                    <!-- lock 锁状态 end -->
                   </template>
-                </template>
-                <!-- 封盘，一把锁的居中显示 -->
-                <template v-if="ol_item._mhs == 1">
-                  <!-- lock 锁状态 start -->
-                  <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
-                  <!-- lock 锁状态 end -->
-                </template>
-                <!-- 关盘 -->
-                <template v-if="ol_item._mhs == 2"></template>
-              </div>
+                  <!-- 关盘 -->
+                  <template v-if="ol_item._mhs == 2"></template>
+                </div>
               </div>
              
             </template>
@@ -222,6 +221,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+// .content-wrapper{
+//   overflow: hidden;
+// }
+// .play-hl-box{
+//   padding: .08rem;
+//   box-sizing: border-box !important;
+// }
 .temp5 {
   .head {
     height: 0.35rem !important; 
@@ -242,7 +248,6 @@ export default defineComponent({
     overflow: hidden;
   }
   .play-box-style {
-    //  margin:0.04rem;
     width: 100%;
     height: 0.52rem;
     line-height: 0.52rem;
@@ -252,6 +257,7 @@ export default defineComponent({
     align-items: center;
     box-sizing: border-box;
     overflow: hidden;
+    border-radius: .04rem;
 
     img {
       width: 0.12rem;
@@ -261,14 +267,19 @@ export default defineComponent({
 
   .other {
     width: 100%;
-    margin-bottom:0.04rem;
-
-    // border-bottom: 1px solid var(--q-gb-bd-c-7);
+    box-sizing: border-box;
+    // border: 0.04rem solid var(--q-gb-bg-c-38) !important;
 
     .play-box-style {
-      margin-bottom: 0;
-      // width: 1.18rem;
       background: var(--q-gb-bg-c-28);
+      border-radius: .04rem;
+      overflow: hidden;
+    }
+    .mg-4{
+      margin-right: .04rem;
+      margin-left: .04rem;
+      border-radius: .04rem;
+      overflow: hidden;
     }
   }
   .play-box-style{
@@ -281,18 +292,28 @@ export default defineComponent({
   .bw_mr1 {
     flex: 10;
     flex-basis: 0;
+    margin: 0 .04rem .04rem .04rem;
+    border-radius: .04rem;
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   }
 
 }
 .mg-4{
-  margin:0.04rem;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+  border-radius: .04rem;
+  overflow: hidden;
 }
 :deep(.component.odds_new){
   text-align: center;
 }
 .mg-4-bg{
-  // border-radius: .04rem;
-  // overflow: hidden;
+  border-radius: .04rem;
+  overflow: hidden;
+}
+
+// 统一间距
+.mg-4-bg {
+  margin-left: 0.02rem !important;
+  margin-right: 0.02rem !important;
 }
 </style>
