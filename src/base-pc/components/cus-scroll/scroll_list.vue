@@ -12,9 +12,7 @@
       @scroll="on_scroll"
     >
       <div class="v-scroll-content relative-position">
-        <!-- <div ref="before">
-          <slot name="before"></slot>
-        </div> -->
+        <slot name="before"></slot>
         <slot></slot>
         <div :class="{ 'none-thumb': !has_thumb }" ref="after">
           <slot name="after"></slot>

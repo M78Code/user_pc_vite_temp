@@ -308,6 +308,7 @@ export default defineComponent({
   width: 100%;
   height: 0.52rem;
   line-height: 0.52rem;
+  border-radius: 4px;
 
 
   padding: 0 0.15rem;
@@ -319,6 +320,7 @@ export default defineComponent({
   width: 100%;
   height: 0.52rem;
   line-height: 0.52rem;
+  border-radius: 4px;
 
 
   padding: 0 0.15rem;
@@ -330,7 +332,7 @@ export default defineComponent({
   width: 100%;
   height: 0.52rem;
   line-height: 0.52rem;
-
+  border-radius: 4px;
 
   padding: 0 0.15rem;
   display: flex;
