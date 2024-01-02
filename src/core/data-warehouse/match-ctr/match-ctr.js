@@ -1326,6 +1326,14 @@ get_quick_mid_obj_ref(mid){
    * @return
    */
   set_match_details(match_details, odds_info, param={}){
+    if(!match_details){
+      const mid = lodash.get(odds_info,'[0].mid') || lodash.get(odds_info, '[0].plays[0].mid');
+      if(mid){
+        match_details = this.get_quick_mid_obj(mid);
+      } else {
+        return;
+      }
+    }
     if(match_details){
       this.type = param.type || 'match';
       // 格式化列表赛事(部分数组转对象)
