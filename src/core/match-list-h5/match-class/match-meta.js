@@ -1510,17 +1510,15 @@ class MatchMeta {
       const index = this.complete_matchs.findIndex(t => t.mid == mid)
       index > -1 && this.complete_matchs.splice(index, 1)
       if (index > -1) {
-        // 复刻版 新手版 使用的是 observer-wrapper 组件模式 不需要重新计算
-        // if (project_name == 'app-h5' && UserCtr.standard_edition == 1) return;
-
-        // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
         if (this.debounce_timer) return
-
         this.debounce_timer = setTimeout(() => {
           this.is_ws_trigger = true
           if (MenuData.is_kemp()) {
+            // 冠军不走虚拟计算 全量渲染
             // this.handle_custom_matchs({ list: this.complete_matchs })
           } else {
+            // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
+            this.compute_current_matchs()
             this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
           }
           clearTimeout(this.debounce_timer)
