@@ -166,6 +166,7 @@ export default defineComponent({
     height: auto;
     overflow: hidden;
     padding:0.08rem;
+    padding:0.08rem 0.12rem;
     box-sizing: border-box;
     
     .item2 {
@@ -174,15 +175,15 @@ export default defineComponent({
       overflow: hidden;
       box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
       border-radius: .04rem;
-      &:nth-child(1){
-        margin-left:  0.04rem;;
-      }
-      &:nth-child(2){
-        margin-right:  0.04rem;;
-      }
-      &:nth-child(2n) {
-        border-right: 0;
-      }
+      // &:nth-child(1){
+      //   margin-left:  0.04rem;;
+      // }
+      // &:nth-child(2){
+      //   margin-right:  0.04rem;;
+      // }
+      // &:nth-child(2n) {
+      //   border-right: 0;
+      // }
     }
   }
 
