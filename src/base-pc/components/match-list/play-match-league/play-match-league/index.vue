@@ -3,7 +3,7 @@
     :class="[{ 'match-tpl1-bg': match_style_obj.data_tpl_id == 0 }, card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${match_style_obj.data_tpl_id}`]"
     v-if="lodash.get(card_style_obj, 'league_obj.csid')">
     <!-- 第一行 -->
-    <div v-show="false">{{ MatchListCardData.list_version }}</div>
+    <div v-show="false">{{ MatchListCardData.list_version }}{{ MatchListCardDataClass.list_version }}</div>
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
       <div class="leagues-wrap" :class="match_style_obj.data_tpl_id == 12 && 'jingcai'"
@@ -73,10 +73,13 @@
       <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         <!-- 联赛是否收藏 -->
         <div @click.stop="mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
-          class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch">
+          class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch()"
+          >
           <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
-        </div>
-        
+          <!-- <div class="q-icon"
+              :style="compute_css_obj({ key: lodash.get(props.card_style_obj, 'league_obj.tf') ? 'pc-home-star-fill' : 'pc-home-star-empty' })"></div>
+         -->
+            </div>
         <!-- 箭头 -->
         <!-- <i class="icon-arrow q-icon c-icon" size="14px"></i> -->
       </div>
