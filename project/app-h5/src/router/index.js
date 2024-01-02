@@ -145,13 +145,6 @@ const router = createRouter({
             meta: {
               preload: true,
             },
-            children: [
-              {
-                path: "virtual_sports_category/:id?",
-                name: "virtual_sports_category",
-                component: () => import("../pages/details/children/virtual-sports-category.vue")
-              },
-            ]
           },
           //活动页面
           {
