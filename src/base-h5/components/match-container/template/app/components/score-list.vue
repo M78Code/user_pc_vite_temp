@@ -52,15 +52,15 @@
           </div>
           <!-- <div class="row items-center basket-ball" :class="{ 'b-score-wrapper': match.csid != 14 }" -->
           <div class="row items-center whitespace-nowrap" :class="{ 'b-score-wrapper': match.csid != 14 }" v-if="[2, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
-            <!--分差-->
-            <div class="row color18" style="margin-right:.2rem" v-if="[2].includes(+match.csid) && get_total_scores">
+            <!--分差 复刻版不显示 v-if="[2].includes(+match.csid) && get_total_scores"-->
+            <!-- <div class="row color18" style="margin-right:.2rem" v-if="[2].includes(+match.csid) && get_total_scores">
               <div style="margin-right:.03rem">
                 {{ i18n_t('list.score-disparity') }}
               </div>
               <div class="important-color-number sub">
                 {{ get_total_scores.score_sub ? get_total_scores.score_sub : 0 }}
               </div>
-            </div>
+            </div> -->
             <!--总分-->
             <div class="row color18" v-if="[2, 6].includes(+match.csid)">
               <div style="margin-right:.03rem">
@@ -735,7 +735,7 @@ onUnmounted(() => {
 
   .score-important {
     height: 0.1rem;
-    color: var(--sys-brand-primary-primary-300, #74C4FF) !important;
+    color: var(--sys-brand-primary-primary-300, --q-gb-t-c-1) !important;
     // border: none !important;
   }
 

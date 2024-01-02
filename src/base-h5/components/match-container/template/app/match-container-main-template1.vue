@@ -993,6 +993,8 @@ export default {
 
   .right-content-style {
     position: relative;
+    width: 1.8rem;
+    flex-shrink: 0;
   }
 
   &.simple,
@@ -1064,7 +1066,8 @@ export default {
     .team-wrapper {
       min-height: 100%;
       height: auto;
-      width: 1.72rem;
+      // width: 1.72rem;
+      flex: 1;
       position: relative;
       z-index: 1;
 
@@ -1080,7 +1083,7 @@ export default {
 
       .score-wrapper {
         position: absolute;
-        bottom: 2px;
+        bottom: 0;
 
         .score-section {
           padding-left: 0;
@@ -1398,12 +1401,15 @@ export default {
 }
 .score-content{
   position: absolute;
-  bottom: -3px;
+  bottom: 0px;
   width: 80%;
   z-index: 100;
   height: 26px;
   overflow-x: auto;
   right: 0;
+  :deep(.score-section){
+    height: 100%;
+  }
   :deep(.score-se-inner2){
     display: flex;
     // flex-direction: row-reverse;
