@@ -14,13 +14,13 @@
 <!--        这个组件是所有公用的，这里会影响其他项目，要加prop变量控制 -->
         <span v-if="!is_show_time && !one_hour">
           <!-- 距离开赛时间大于1小时 显示月和日 .Format(i18n_t('time3'))-->
-           {{(new Date(+detail_data.mgt)).Format(i18n_t('time2'))}}
+           {{(new Date(+detail_data.mgt)).Format(i18n_t('time11'))}}
 <!--          {{ formatTime(+detail_data.mgt, "DD/mm hh:MM") }}-->
         </span>
 
 <!--    Bug: 52634-->
         <span v-if="!is_change_header && is_show_time">
-          {{(new Date(+detail_data.mgt)).Format(i18n_t('time2') + ' hh:mm')}}
+          {{(new Date(+detail_data.mgt)).Format(i18n_t('time11'))}}
         </span>
 
         <!-- Bug: 52782-->

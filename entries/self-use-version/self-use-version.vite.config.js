@@ -32,18 +32,54 @@ export default defineConfig({
     }),
     viteCompression(),
     chunkSplitPlugin({
-      strategy: 'default',
-      customSplitting: {
-        //  
-        'react-vendor': [/node_modules/],
-        //
-      
-        'score': [/score/],
-        'stage-child': [/stage-child/],
-        'virtual': [/virtual/],
- 
-        'code-all': [/src\/pages/],
-      }
+      strategy: 'default',  //     | 'default' | 'all-in-one' | 'single-vendor' | 'unbundle';
+
+  
+
+      // customChunk: CustomChunk; (context: {id:string, moduleId:string, file:string, root:string}) => string | undefined | null;
+      useEntryName: false,
+      // customSplitting: {
+      // customSplitting: {
+      //   //project\app-h5\main.js
+      //   //  project\/app-h5\/main\.js/, /src\/boot\/i18n\.js/  ,/job\/output\/env/,/lodash/
+      //     //  'window-global': [/project\/app-h5\/main\.js/, /src\/boot\/i18n\.js/  ,/lodash/ ],
+      //     //  'core': [/src\/core/   ],
+      //   // 'index': [/src\/boot\/i18n\.js/,/main.js/],
+      //   // 'index': [/src\/boot\/i18n\.js/,/main.js/],
+      //   //    
+      //   // 'vendor-666': [ /job\/output\/env/],
+      //   // 'vendor': [/node_modules/ ,/job\/output\/env/  ],
+      //   //
+      //   // 'code-all': [/src\/pages/,/virtual/],
+   
+      //   // 'other': [/score/,/stage-child/],
+      //   // 'stage-child': [/stage-child/],
+      //   // 'virtual': [/virtual/],
+      //   'core': [/src\/core\/format/ ,   /src\/core\/utils/  ,  /src\/core\/mitt/  ,   /src\/core\/url-param-ctr/  ,    /src\/core\/constant/ ,/lodash/  ],
+      //   'vendor': [/node_modules/  ,/job\/output\/env/,/src\/core\/mitt/  , ],
+      //   'code-all': [/src\/pages/,/virtual/],
+      // },
+
+      // customChunk:(info)=>{
+      //   // moduleId
+      //   // D:/CODE-WEB/WEB/user-pc-vite/src/core/match-list-pc/match-card/module/data-relation-type-7.js D:/CODE-WEB/WEB/user-pc-vite
+      //   let {moduleId ,root} = info
+      //   console.log(moduleId ,root)
+      //   if(moduleId.includes("node_modules")){
+
+      //    return 'vendor--22--'
+      //   }else if(moduleId.includes(root+"/job/output/env")||  moduleId.includes(root+"/src/core/mitt") ||  moduleId.includes(root+"/src/api") ){
+      //     return 'vendor--22--'
+      //   }else if(moduleId.includes( root+"/src/") &&   !moduleId.includes(  ".vue") ){
+      //     return 'src'
+      //   }else if(moduleId.includes( root+"/project/")   ){
+      //     return 'project'
+      //   }else{
+      //     return 'code-666'
+      //   }
+
+
+      // }
     })
   ],
   css:{
@@ -69,7 +105,7 @@ export default defineConfig({
           // "vue3-draggable-resizable": "vue3-draggable-resizable",
         },
       // manualChunks 配置
-      manualChunks: {},
+      // manualChunks: {},
         chunkFileNames: "static/js/[name]-[hash].js",
         entryFileNames: "static/js/[name]-[hash].js",
         assetFileNames: "static/[ext]/[name]-[hash].[ext]",

@@ -1,5 +1,5 @@
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { t } from "src/boot/i18n.js";
+
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { MenuData } from 'src/output/project/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";

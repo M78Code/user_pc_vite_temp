@@ -10,7 +10,8 @@
       <span v-if="odds_value() < 1.01 && get_cur_odd == 'EU'">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" alt="" style=" width: 0.12rem"/>
       </span>
-      <span v-else class="odds" :class="[{'is_up': status == 10, 'is_down': status == -10,'white_text':BetData.bet_oid_list.includes(ol_data.id_) }]">
+<!--      Bug: 52882 修复赔率字体 加公共类名 number_family -->
+      <span v-else class="odds number_family" :class="[{'is_up': status == 10, 'is_down': status == -10,'white_text':BetData.bet_oid_list.includes(ol_data.id_) }]">
         <span>{{ odds_value() }}</span>
         <span class='change-icon' :class="{'icon-red':status == 10,'icon-green':status == -10}"></span>
         <!-- <img class="up_down"  :src="is_up_app" alt="" /> -->
