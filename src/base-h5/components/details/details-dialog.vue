@@ -12,7 +12,7 @@
       <!-- 赛事列表部分 -->
       <div
         class="scroll"
-        style="margin-top: 0.44rem; min-height:.35rem; max-height:520px;"
+        style="margin-top: 0.44rem; min-height:.35rem; max-height:520px;padding-bottom: 0.2rem; "
         ref="details_dialog_content"
       >
 
@@ -303,6 +303,7 @@ export default defineComponent({
 
 .new-dialog-item-main {
   height: 100%;
+  margin:0 0.12rem
 }
 
 .new-dialog-item-line {
