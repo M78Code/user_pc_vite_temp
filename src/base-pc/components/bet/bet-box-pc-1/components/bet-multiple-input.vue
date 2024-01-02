@@ -17,7 +17,7 @@
                 <input class="input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
                 :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
                 <!--清除输入金额按钮-->
-                <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money">
+                <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money && !BetData.is_bet_single">
                     <icon-wapper name="icon-failure" size="12px" />
                 </div>
             </div>
@@ -101,20 +101,40 @@ onUnmounted(() => {
  *@description 金额改变事件
  *@param {Number} new_money 最新金额值
  */
- const change_money_handle = (new_money) => {
-    if( new_money.money*1 > ref_data.max_money*1){
-        ref_data.money =  ref_data.max_money
-    }else{
-        ref_data.money = new_money.money
-    }
-    BetData.bet_single_list.forEach((item,oid)=>{
-        BetData.set_bet_obj_amount(ref_data.money,oid)
+ const change_money_handle = obj => {
+    if(obj.id) return
+    BetData.bet_single_list.forEach((item) => {
+        // 获取当前投注金额
+        let oid = item.playOptionsId
+        let money = item.bet_amount
+        let money_ = obj.money
+        // 设置最大投注金额
+        if(obj.money == "MAX"){
+            money_ = ref_data.max_money
+        }
+        // 计算投注金额
+        let money_amount = mathJs.add(money,money_)
+        // 投注金额 不能大于最大投注金额 也不能大于用户余额
+        if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
+            BetData.set_bet_obj_amount(money_amount,oid)
+            ref_data.money = money_amount
+        }else{
+            // 最大限额不能大于余额
+            let money_a = ref_data.max_money
+            if(UserCtr.balance < ref_data.max_money){
+                money_a = UserCtr.balance
+            }  
+            BetData.set_bet_obj_amount(money_a,oid)
+            ref_data.money = money_a
+        }       
     })
 }
 
 // 清空输入框金额
 const bet_clear_handle = () => {
     ref_data.money = ''
+    BetData.set_bet_amount(0)
+    BetData.set_bet_obj_amount('',oid)
 }
 
 // 键盘回车事件

@@ -774,7 +774,7 @@ if (type.value == 30) {
     width: 0.48rem;
     height: 0.48rem;
     font-size: 0.28rem;
-    background: var(--q-gb-bg-c-30) no-repeat center / 98%;
+    background: var(--q-gb-bg-c-44) no-repeat center / 98%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -784,7 +784,7 @@ if (type.value == 30) {
       content: ' ';
       border-top:  .20rem solid transparent;
       border-bottom:  .20rem solid transparent;
-      border-left:  .20rem solid var(--q-gb-bg-c-30);
+      border-left:  .20rem solid var(--q-gb-bg-c-44);
       position: absolute;
       right: -0.1rem;
       border-radius: 0.16rem;
