@@ -23,7 +23,7 @@
   </div>
 </template>
 <script setup>
-// import store from "src/store-redux/index.js";
+////import store from "src/store-redux/index.js";
 // import virtualRight from "src/base-pc/components/virtual-right/virtual-right.vue";
 // import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
 

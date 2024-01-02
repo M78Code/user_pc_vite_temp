@@ -13,7 +13,7 @@ class ServerTime {
    */
   async get_server_time() {
     try {
-      let res = await api_common.get_server_time();
+      let res = await api_common.get_time_server();
       let code = lodash.get(res, "data.code");
       if (code == 200) {
         this.init_load = true;

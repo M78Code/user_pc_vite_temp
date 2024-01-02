@@ -585,4 +585,14 @@ export default defineComponent({
 // .mgb4{
 //   margin-bottom:4px
 // }
+
+// 统一间距
+.mg-4-bg {
+  margin-left: 0.02rem !important;
+  margin-right: 0.02rem !important;
+}
+// 最后一行
+.margin-other {
+  margin-top: 0;
+}
 </style>

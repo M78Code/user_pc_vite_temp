@@ -97,7 +97,6 @@ import {
   watch,
 } from "vue";
 import { useRoute } from "vue-router";
-import store from "src/store-redux/index.js";
 import ZHUGE from "src/core/http/zhuge-tag";
 import { CommonTabFullVersionWapper } from "src/base-pc/components/tab/common-tab/index.js";
 import { IconWapper } from 'src/components/icon/index.js'
@@ -117,7 +116,6 @@ export default defineComponent({
     whitchDetail: String,
   },
   setup(props, {emit}) {
-    const store_state = store.getState();
     //当前选中
     const currentIndex = ref(0);
     const tab = ref(null);

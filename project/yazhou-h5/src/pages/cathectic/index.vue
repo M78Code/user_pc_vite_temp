@@ -48,14 +48,14 @@
   import { onMounted, onUnmounted, ref, computed, provide, watch, nextTick } from 'vue'
   import lodash from 'lodash'
   import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-  import store from 'src/store-redux/index.js'
+  //import store from 'src/store-redux/index.js'
   import UserCtr from "src/core/user-config/user-ctr.js";
   import { i18n_t } from "src/boot/i18n.js";
   import {compute_css_obj} from "src/output/index.js"
   import { compute_css_variables } from "src/core/css-var/index.js"
   
-  let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()
-  const store_cathectic = ref(cathecticReducer)
+  // let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()
+  // const store_cathectic = ref(cathecticReducer)
   
   // 待确认中的提前结算订单
   provide('queryorderpresettleconfirm_data', '')
@@ -135,7 +135,7 @@
     //已选中状态下不能点击
     if (main_item.value === key) return;
     main_item.value = key
-    store.dispatch({ type: "SET_MAIN_ITEM", data: key })
+    // store.dispatch({ type: "SET_MAIN_ITEM", data: key })
   
   }
   // 清除当前组件所有定时器
@@ -144,7 +144,7 @@
     timer_1.value = null
   }
   onUnmounted(() => {
-    store.dispatch({ type: "SET_MAIN_ITEM", data: 0 })
+    // store.dispatch({ type: "SET_MAIN_ITEM", data: 0 })
     // for (const key in $data) {
     //     $data[key] = null
     //   }

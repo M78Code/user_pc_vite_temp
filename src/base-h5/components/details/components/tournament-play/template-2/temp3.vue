@@ -170,6 +170,7 @@ export default defineComponent({
     
     .item2 {
       flex: 1;
+      flex-basis: 45%;
       overflow: hidden;
       box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
       border-radius: .04rem;
@@ -261,4 +262,10 @@ export default defineComponent({
 .details_t_color6 {
   color: var(--q-gb-t-c-11);
 }
+
+// 统一间距
+.item-wrap {
+  gap: 0.04rem !important;
+}
+
 </style>

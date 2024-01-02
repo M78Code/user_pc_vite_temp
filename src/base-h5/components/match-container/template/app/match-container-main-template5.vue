@@ -538,7 +538,7 @@ export default {
     .expand_item{
       transition: transform 0.25s ease;
       transform: rotate(-90deg);
-      width: 18px;
+      width: 20px;
       height: 16px;
     }
     .collapsed{
@@ -1274,11 +1274,12 @@ export default {
 
       .more {
         .count_span {
-          font-size: 10px;
+          font-size: 0.12rem;
           font-weight: 500;
           color: var(--q-gb-t-c-19);
           display: flex;
           align-items: center;
+          margin-top: 1px;
         }
 
         .icon-wapper-more {

@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { api_virtual } from "src/api";//虚拟体育api
+import { api_common } from "src/api";//虚拟体育api
 import { reactive,onMounted,toRefs } from " vue";
 import { ServerTime,format_second_ms,update_bet_item_status } from "src/output/index.js";
 // import { mapGetters } from "vuex";
@@ -219,7 +219,7 @@ export default {
         batchNo: props.match.batchNo,
       };
 
-      api_virtual.get_video_maxtime(params).then((res) => {
+      api_common.get_video_maxtime(params).then((res) => {
         let code = lodash.get(res, "data.code");
         if (code == 200) {
           let data = lodash.get(res, "data.data");

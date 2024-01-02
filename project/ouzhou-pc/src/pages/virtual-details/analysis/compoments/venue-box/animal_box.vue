@@ -52,7 +52,7 @@
 
 <script setup>
 import { onMounted, ref, watch, nextTick } from "vue";
-import { api_match_list } from "src/api";
+import { api_common } from "src/api";
 import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
 import video from "src/core/video/video.js";
 import url_add_param from "src/core/enter-params/util/index.js";
@@ -76,7 +76,7 @@ const iframe_loading = ref();
 const is_video_hover = ref(false); // 鼠标是否经过视频
 const is_show_content = ref(false); //是否显示提示信息
 
-const { post_video_url } = api_match_list; // 接口
+const { videoAnimationUrl } = api_common; // 接口
 watch(
   () => props.detail_info,
   (val) => {
@@ -186,7 +186,7 @@ const get_animation_url = () => {
     type: "Animation",
     device: "PC",
   };
-  post_video_url(params)
+  videoAnimationUrl(params)
     .then((res) => {
       let animationUrl = "";
       // 足篮棒网使用3.0动画  其他使用2.0

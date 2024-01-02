@@ -73,18 +73,6 @@ export const get_category_playTop = (params, config = {}, url = "/v1/m/category/
   return http.get(`${prefix}${url}`, params, config)
 }
 
-//获取直播url
-export const post_video_url = (params, config = {}, url = "/v1/w/videoAnimationUrl") => {
-  let imgDm = lodash.get(window,'env.config.oss_img_domains[0]');
-  if(imgDm){
-    params.imgDm = imgDm;
-  }
-  return http.post(`${prefix}${url}`, params);
-}
-
-//获取用户是否登录
-export const post_check_login = (params, config = {}, url = "/v1/w/isLogin") => http.post(`${prefix}${url}`, params);
-
 //获取视频直播 iframe 域名
 export const post_video_refer = (params, config = {}, url = "/v1/w/videoReferUrl") => http.post(`${prefix}${url}??device=PC`, params);
 
@@ -108,16 +96,8 @@ export const get_hots = (params, config = {}, url = "/v1/m/hotUlikeRecommendatio
 //查询热门推荐---电竞
 export const get_hots_es = (params, config = {}, url = "/v1/w/hotEsportsMatches") => http.get(`${prefix}${url}`, params)
 
-//赛事详情页 返回一场赛事信息
-export const get_fetch_detail_latest_match = (params, config = {}, url = "/v1/w/getDetailVideo") => {
-  return http.get(`${prefix}${url}`, params);
-}
-
 //赛事详情
 export const get_match_virtual_details = (params, config = {}, url = "/v1/w/matchDetail/getVirtualMatchDetail") => http.get(`${prefix}${url}`, params)
-
-//玩法详情
-export const get_match_virtual_plays = (params, config = {}, url = "/v1/w/matchDetail/getVirtualMatchOddsInfo") => http.get(`${prefix}${url}`, params)
 
 // 获取vuex中投注项最新数据
 export const get_bet_olds = (params, config = {}, url = "/v1/w/matchDetail/getOls") => http.get(`${prefix}${url}`, params)
