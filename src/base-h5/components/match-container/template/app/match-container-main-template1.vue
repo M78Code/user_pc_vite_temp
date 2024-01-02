@@ -188,21 +188,20 @@
                           'is-handicap': match.handicap_index == 1,
                           'is-handicap-1': match.handicap_index == 2,
                         }">
-                          <span>{{ match.mhn }}</span>
-
-                        </div>
-                        <!--发球方绿点-->
-                        <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                          v-show="set_serving_side(match_of_list, 'home')">
-                        </span>
-                        <template v-if="home_red_score">
-                          <!-- 红牌 -->
-                          <span class='score-punish red' :class="{ flash: is_show_home_red && !is_results }"> {{ home_red_score }} </span>
-                        </template>
-                        <!-- 进球动画 -->
-                        <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
-                          <div class="yb-goal-gif" :class="{ 'yb-goal-yo': (theme || []).includes('y0') }"></div>
-                          <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
+                          <div class="name"> <span>{{ match.mhn }}</span> </div>
+                          <!--发球方绿点-->
+                          <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                            v-show="set_serving_side(match_of_list, 'home')">
+                          </span>
+                          <template v-if="home_red_score">
+                            <!-- 红牌 -->
+                            <span class='score-punish red' :class="{ flash: is_show_home_red && !is_results }"> {{ home_red_score }} </span>
+                          </template>
+                          <!-- 进球动画 -->
+                          <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
+                            <div class="yb-goal-gif" :class="{ 'yb-goal-yo': (theme || []).includes('y0') }"></div>
+                            <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
+                          </div>
                         </div>
                       </div>
                       <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
@@ -224,21 +223,21 @@
                           'is-handicap': match.handicap_index == 2,
                           'is-handicap-1': match.handicap_index == 1,
                         }">
-                          <span >{{ match.man }}</span>
-                        </div>
-                        <!--发球方绿点-->
-                        <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                          v-show="set_serving_side(match_of_list, 'away')">
-                        </span>
-                        <template v-if="away_red_score">
-                          <!-- 红牌 -->
-                          <span class='score-punish red' :class="{ flash: is_show_away_red && !is_results}"> {{ away_red_score }}</span>
-                        </template>
-                        <!-- 进球动画 -->
-                        <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
-                          <!-- 进球图标 -->
-                          <div class="yb-goal-gif yb-goal-yo"></div>
-                          <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
+                          <div class="name"> <span>{{ match.man }}</span> </div>
+                          <!--发球方绿点-->
+                          <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                            v-show="set_serving_side(match_of_list, 'away')">
+                          </span>
+                          <template v-if="away_red_score">
+                            <!-- 红牌 -->
+                            <span class='score-punish red' :class="{ flash: is_show_away_red && !is_results}"> {{ away_red_score }}</span>
+                          </template>
+                          <!-- 进球动画 -->
+                          <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
+                            <!-- 进球图标 -->
+                            <div class="yb-goal-gif yb-goal-yo"></div>
+                            <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
+                          </div>
                         </div>
                       </div>
                     <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
@@ -1176,7 +1175,7 @@ export default {
         -webkit-box-orient: vertical;
         word-break: break-all;
         &.column2{
-          height: 0.35rem;
+          height: 35px;
         }
         &.simple {
           width: 1.72rem;
@@ -1197,10 +1196,11 @@ export default {
         }
 
         .team-title-inner-con {
-          width: 1.19rem;
+          // width: 1.19rem;
           position: relative;
           line-height: 0.14rem;
           display: flex;
+          flex: 1;
           align-items: center;
           color: var(--q-gb-t-c-18);
           .yb-flex-center{
@@ -1252,17 +1252,25 @@ export default {
 
           .team-t-title-w {
             overflow: hidden;
-            display: -webkit-box;
+            display: flex;
+            align-items: center;
             font-size: 0.12rem;
-            flex-shrink: 0;
-            max-width: 100px;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            text-overflow: ellipsis;
-            word-break: break-all;
             color: var(--q-gb-t-c-18);
             &.is-handicap {
               color: var(--q-gb-t-c-34) !important;
+            }
+            .name{
+              overflow: hidden;
+              display: flex;
+              font-size: 0.12rem;
+              flex-shrink: 0;
+              flex: 1;
+              display: -webkit-box;
+              color: var(--q-gb-t-c-18);
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              text-overflow: ellipsis;
+              word-break: break-all;
             }
           }
         }
@@ -1312,14 +1320,15 @@ export default {
         }
 
         .score {
-          height: 0.3rem;
-          font-size: 0.14rem;
+          height: 100%;
+          font-size: 0.12rem;
           display: flex;
           align-items: center;
-          position: absolute;
-          right: 0.07rem;
-          bottom: 0;
+          // position: absolute;
+          // right: 0.07rem;
+          // bottom: 0;
           font-weight: 600;
+          margin: 0 8px;
 
           &.simple {
             right: 0.08rem;
