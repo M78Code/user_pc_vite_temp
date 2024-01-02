@@ -86,13 +86,14 @@
 </template>
 
 <script>
-import odd_convert from "src/base-h5/vr/mixin/odds_conversion/odds_conversion.js";
+// import odd_convert from "src/base-h5/vr/mixin/odds_conversion/odds_conversion.js";
+import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 
 // 引入接口封装文件
 import { api_common } from "src/api/index.js";
 export default {
-  mixins:[odd_convert],
+  // mixins:[odd_convert],
   name:'result_page',
   data(){
     return {
@@ -142,8 +143,10 @@ export default {
   methods: {
     // 赔率切换显示对应的赔率
     get_odds(item,play_obj){
-      let val = item.ov / 100000, hsw = play_obj.hsw;
-      let ov = this.compute_value_by_cur_odd_type(val, null, hsw);
+      let val = item.ov, hsw = play_obj.hsw;
+      let csid = lodash.get(item, '_csid');
+      let hpid = lodash.get(item, '_hpid');
+      let ov = compute_value_by_cur_odd_type(val, hpid, hsw, csid);
       return ov ? ov : '';
     },
     /**
