@@ -34,7 +34,7 @@ import SSearch from "src/base-h5/components/skeleton/search.vue"// 骨架屏
 import { MenuData, UserCtr, SearchData, i18n_t, SessionStorage, useMittEmit, MITT_TYPES } from "src/output/index.js"
 import { api_search } from 'src/api/'
 import lodash from "lodash"
-const { get_fetch_search_history, get_remove_search_history, get_fetch_hot_search, get_hotselect3 } = api_search || {};
+const { get_fetch_search_history, get_delete_history_search, get_fetch_hot_search, get_hotselect3 } = api_search || {};
 const history_list = ref([])  //搜索历史记录list
 const params = { cuid: '' }//查询搜索历史记录的入参
 const suggestion_list = ref([]) //搜索建议列表
@@ -65,7 +65,7 @@ function delete_history(item) {
     keyword: item ? item.keyword : '',
   };
   // 删除搜索历史
-  get_remove_search_history(params).then(({ data }) => {
+  get_delete_history_search(params).then(({ data }) => {
     let found_i = -1;
     // 历史记录数据源
     history_list.value.forEach((li, i) => {

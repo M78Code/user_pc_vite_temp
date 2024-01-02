@@ -76,8 +76,7 @@
     </ul>
 
     <!-- 字母悬浮图标 -->
-    <!-- v-if="is_show" -->
-    <div  class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
+    <div v-if="is_show" class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
       <span>{{ active_index }}</span>
     </div>
     <!-- 无数据展示 -->
@@ -321,7 +320,6 @@ function bar_click(item,event) {
   timer2 = setTimeout(() => {
     is_show.value = false;
   }, 500);
-  console.log('fixed_top.value',fixed_top.value)
   if (window.screen.availHeight > 700) {
     fixed_top.value = (window.innerHeight - 351) / 2 + 80+ event.layerY;
   } else {

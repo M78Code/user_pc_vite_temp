@@ -88,7 +88,7 @@
 
 <script setup>
 import { api_search } from 'src/api/'
-const { get_insert_history } = api_search || {}
+const { insert_history } = api_search || {}
 import NoData from 'src/base-h5/components/common/no-data.vue'// 无数据组件
 import { computed, onBeforeUnmount, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -148,7 +148,7 @@ function suggestion_bowling_click(item) {
     item_name = item.name
   }
 
-  get_insert_history({ word: item ? item_name : '', }).then(({ data }) => { })
+  insert_history({ word: item ? item_name : '', }).then(({ data }) => { })
 
   // 手机键盘收起动画完成后才跳转
   clearTimeout(go_detail_or_result_timer)
@@ -178,7 +178,7 @@ function default_method_jump(name, item) {
     //set_goto_detail_matchid(item.matchList[0].mid);
   }
 
-  get_insert_history({ word: item ? name : '', }).then(({ data }) => { })
+  insert_history({ word: item ? name : '', }).then(({ data }) => { })
 
   // 手机键盘收起动画完成后才跳转
   clearTimeout(go_detail_or_result_timer)

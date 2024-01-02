@@ -270,7 +270,7 @@ const processing_score = (data) => {
       margin-right: 0.1rem;
 
       &.active, &.progress_bar {
-        background: var(--q-analysis-text-color-31);
+        background: var(--q-gb-bg-c-13);
         color: var(--q-gb-t-c-14);
         border: unset;
       }
