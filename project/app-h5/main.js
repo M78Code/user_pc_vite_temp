@@ -47,7 +47,6 @@ let location_search = window.SEARCH_PARAMS.init_param.get('vconsole_h5')
 // 真机调试
 if(location_search == 1){
   const vConsole = new VConsole()
-  app.use(vConsole)
 }
 
 import { i18n } from "src/boot/i18n.js";
