@@ -19,11 +19,11 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import store from 'src/store-redux/index.js'
+//import store from 'src/store-redux/index.js'
 import { MITT_TYPES,compute_css_obj,i18n_t, useMittEmit } from "src/output/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
-let { themeReducer, cathecticReducer } = store.getState()
-let store_cathectic = cathecticReducer
+// let { themeReducer, cathecticReducer } = store.getState()
+// let store_cathectic = cathecticReducer
 
 const props = defineProps({
   // 提前结算图标是否选中
@@ -43,17 +43,17 @@ const calc_text = computed(() => {
     // 如果结算图标被选中
     return 'msg.msg_nodata_22' //i18n_t('msg.msg_nodata_22')
   }
-  if (store_cathectic.main_item == 0) {
-    // 如果是未结算
-    return props.is_early ? i18n_t('msg.msg_nodata_15') : i18n_t('msg.msg_nodata_12')
-  } else {
-    if (props.is_early) {
-      // 如果被限频
-      return i18n_t('msg.msg_nodata_16')//  i18n_t('msg.msg_nodata_16')
-    } else {
-      return store_cathectic.main_item == 2 ? i18n_t('msg.msg_nodata_18') : i18n_t('msg.msg_nodata_13')
-    }
-  }
+  // if (store_cathectic.main_item == 0) {
+  //   // 如果是未结算
+  //   return props.is_early ? i18n_t('msg.msg_nodata_15') : i18n_t('msg.msg_nodata_12')
+  // } else {
+  //   if (props.is_early) {
+  //     // 如果被限频
+  //     return i18n_t('msg.msg_nodata_16')//  i18n_t('msg.msg_nodata_16')
+  //   } else {
+  //     return store_cathectic.main_item == 2 ? i18n_t('msg.msg_nodata_18') : i18n_t('msg.msg_nodata_13')
+  //   }
+  // }
 })
 //页面跳转逻辑
 const go_bet = () => {

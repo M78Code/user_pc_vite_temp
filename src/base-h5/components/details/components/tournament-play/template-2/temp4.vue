@@ -268,7 +268,7 @@
             </div>
 
             <!-- 其他 横向一列 -->
-            <div class="row other margin-other" v-for="(ol_item,ol_index) of other_item_list" :key="ol_index">
+            <div class="row other margin-other radius-4" v-for="(ol_item,ol_index) of other_item_list" :key="ol_index">
 
               <!--  0开 2关 1封 11锁 -->
               <!-- 开盘or锁盘 正常显示 -->
@@ -504,7 +504,8 @@ export default defineComponent({
   width: 100%;
   height: 0.52rem;
   line-height: 0.52rem;
-
+ border-radius: .04rem;
+  overflow: hidden;
   padding: 0 0.15rem;
   display: flex;
   justify-content: center;
@@ -519,9 +520,6 @@ export default defineComponent({
   }
 }
 
-.bor-style {
-
-}
 
 .remark {
   flex: 1;
@@ -533,9 +531,6 @@ export default defineComponent({
   width: 0.51rem;
 }
 
-.active {
-
-}
 
 .lock-style {
   width: 100%;
@@ -549,19 +544,6 @@ export default defineComponent({
   display: block;
 }
 
-.white_text {
-
-}
-
-.details_color {
-
-}
-
-.first-rad {
-  &:after {
-
-  }
-}
 
 .icon-lock {
   width: 0.16rem;
@@ -588,16 +570,29 @@ export default defineComponent({
 .mg-4-bg{
   @extend .margin-base;
   background:var(--q-gb-bg-c-15) !important;
-  border-radius: 4px;
+  border-radius: .04rem;
+  overflow: hidden;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
 }
 .margin-other {
   @extend .margin-base;
   .play-box-style{
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+     border-radius: .04rem;
+    overflow: hidden;
   }
 }
 // .mgb4{
 //   margin-bottom:4px
 // }
+
+// 统一间距
+.mg-4-bg {
+  margin-left: 0.02rem !important;
+  margin-right: 0.02rem !important;
+}
+// 最后一行
+.margin-other {
+  margin-top: 0;
+}
 </style>

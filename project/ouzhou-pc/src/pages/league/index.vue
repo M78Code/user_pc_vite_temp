@@ -30,7 +30,7 @@ import {
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import LeaguesHeader from "src/base-pc/components/leagues-header/index.vue";
 import { LayOutMain_pc, useMittOn,MITT_TYPES } from 'src/output/index.js';
-import { api_match } from "src/api/index.js";
+import { api_match_list } from "src/api/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import "../match-list/match_list.scss";
 export default {
@@ -73,7 +73,7 @@ export default {
         selectionHour: MatchLeagueData.get_select_hours()
       };
       set_load_data_state("loading")
-      api_match.get_leagues_list_match(params).then((res) => {
+      api_match_list.get_leagues_list_match(params).then((res) => {
         set_load_data_state(lodash.get(res, 'data.data.length', 0) ? "data" : "empty")
         //保存数据到数据仓库
         mx_use_list_res(res);

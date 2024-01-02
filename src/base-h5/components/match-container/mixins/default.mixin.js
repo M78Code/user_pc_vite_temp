@@ -2,7 +2,6 @@
 import lodash from 'lodash'
 import { defineComponent } from 'vue'
 import { api_common } from "src/api/index.js";
-import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES, UserCtr, project_name } from  "src/output"
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
@@ -276,6 +275,9 @@ export default defineComponent({
     },
     // 是否显示底部圆角
     is_show_border_raduis () {
+      if (  this.match_of_list.mid === '3043320' ) {
+        console.log()
+      }
       return this.next_match && this.match_of_list?.tid !== this.next_match?.tid
     },
     // 复刻版新手版
@@ -537,10 +539,10 @@ export default defineComponent({
         default:
           break;
       }
-      store.dispatch({
-        type: "matchReducer/set_is_in_play",
-        payload: final_button_type,
-      });
+      // store.dispatch({
+      //   type: "matchReducer/set_is_in_play",
+      //   payload: final_button_type,
+      // });
       this.goto_details(this.match_of_list);
     },
 
@@ -567,10 +569,10 @@ export default defineComponent({
         default:
           break;
       }
-      store.dispatch({
-        type: "matchReducer/set_is_in_play",
-        payload: final_button_type,
-      });
+      // store.dispatch({
+      //   type: "matchReducer/set_is_in_play",
+      //   payload: final_button_type,
+      // });
       this.goto_details(this.match_of_list);
     },
     /**
@@ -909,9 +911,9 @@ export default defineComponent({
               set_goto_detail_matchid('')
 
               // 短距离滚动标识
-              store.dispatch({ type: 'matchReducer/set_allow_short_scroll',  payload: true });
-              // 已滚动至目标dom时，未滚动至目标计数置为-1
-              store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: -1 });
+              // store.dispatch({ type: 'matchReducer/set_allow_short_scroll',  payload: true });
+              // // 已滚动至目标dom时，未滚动至目标计数置为-1
+              // store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: -1 });
 
               // 第二次延时计算是为了保证滚动距离正确
               clearTimeout(this.scroll_top_timer2)

@@ -76,7 +76,7 @@ const get_switch_data = () => {
             ]
         },
         {
-            defaultVal: UserCtr.theme,
+            defaultVal: UserCtr.theme || theme_list.find(n=>{return n.is_default === 1}).key,
             mark:'theme',
             list:theme_list.map((item)=>{
                 item.name = item.i18n[lang.value];
@@ -91,7 +91,7 @@ const get_switch_data = () => {
         },
     ]
 }
-
+!UserCtr.theme && UserCtr.set_theme(theme_list.find(n=>{return n.is_default === 1}).key)
 const switchData = ref(get_switch_data())
 
 // 版本切换
@@ -130,10 +130,10 @@ watch(()=>set_menu_init.value,()=>{
 <style scoped lang="scss">
 .switch-wap {
     width: 100%;
-    height: 0.24rem;
+    // height: 0.24rem;
     display: flex;
-    margin: 0.05rem 0;
-
+    padding: 0.05rem 0;
+    background-color: var(--q-gb-bg-c-27);
     .switch-content {
         flex: 1;
         margin: 0 0.1rem;

@@ -22,9 +22,7 @@ import { MenuData} from "src/output/project/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import filterHeader from 'src/core/filter-header/filter-header.js'
 import * as api_websocket from "src/api/module/socket/socket_api.js";
-import store from "src/store-redux/index.js";
 const route = useRoute()
-let state = store.getState();
 const background_img = ref(null); //详情背景图片
 const countMatchDetailErr = ref(0); //错误接口次数统计
 const handicap_state = ref("loading"); //玩法加载状态状态

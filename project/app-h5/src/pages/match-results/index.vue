@@ -35,7 +35,6 @@
             <div>{{tab_item.name}}</div>
             </div>
         </div>
-        <!-- <ObserverWrapper class="match-result-contant" :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper> -->
         <MatchContainer/>
     </template>
 
@@ -59,7 +58,6 @@ import MatchFold from 'src/core/match-fold/index.js'
 import { MenuData,compute_local_project_file_path } from "src/output/index.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
-// import ObserverWrapper from 'src/base-h5/components/observer-wrapper/index.vue';
 import BaseData from "src/core/base-data/base-data.js";
 import setectLeague from 'src/base-h5/components/tutorial/navigation-bar/setect-league.vue'
 import MatchContainer from "src/base-h5/components/match-list/index.vue";

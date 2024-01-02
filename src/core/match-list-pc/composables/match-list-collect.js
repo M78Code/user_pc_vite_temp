@@ -387,7 +387,7 @@ const mx_collect_leagues = async (match, is_champion) => {
       cf: cur_collect_state,
     };
   }
-  await api_match.post_collect_leagues(_params);
+  await api_common.add_or_cancel_tournament(_params);
   // .then((res) => {
   // let code = lodash.get(res, "code");
   // let data = lodash.get(res, "data");

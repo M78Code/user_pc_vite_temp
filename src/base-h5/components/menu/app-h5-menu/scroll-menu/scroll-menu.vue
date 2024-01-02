@@ -194,7 +194,7 @@ onUnmounted(()=>{
     height: 0.5rem;
     padding: 0 0.05rem;
     transition: transform 0.6s, max-height 0.3s;
-
+    background-color: var(--q-gb-bg-c-27);
     // 二级菜单
     .sport-m-container {
       width: 100%;
@@ -231,6 +231,9 @@ onUnmounted(()=>{
             .inner-w {
               position: relative;
               font-size: 0.1rem;
+            }
+            .sport-match-count{
+              z-index: 131;
             }
           }
           .inner-w {
@@ -271,8 +274,8 @@ onUnmounted(()=>{
         .sport-match-count {
                 line-height: 1;
                 position: absolute;
-                left: 100%;
-                font-size: 0.1rem;
+                left: 90%;
+                font-size: 0.09rem;
                 font-family: "Akrobat";
                 z-index: 5;
                 &.is-max {

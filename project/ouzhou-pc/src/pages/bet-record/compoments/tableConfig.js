@@ -7,13 +7,13 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { ref, onMounted,computed } from 'vue'
-import { api_match_list } from 'src/api'
+import { api_betting } from 'src/api'
 import { responseData } from './mock'
 import { i18n_t, } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import GlobalSwitchClass from 'src/core/global/global.js'
 export function useGetOrderList () {
-  const { get_order_list } = api_match_list // 接口
+  const { post_getOrderList } = api_betting // 接口
   // const userInfo = state.userReducer?.userInfo || {}; // 用户数据
   const { user_info: userInfo } = UserCtr // 用户数据
   const tableData = ref([])
@@ -85,7 +85,7 @@ export function useGetOrderList () {
         // timeType: 1,
         ...obj
       }
-      let res = await get_order_list(params)
+      let res = await post_getOrderList(params)
       if(res.code !== '200'){
         if(res.code === '0401038'){
           GlobalSwitchClass.set_tip_show_state(true, {

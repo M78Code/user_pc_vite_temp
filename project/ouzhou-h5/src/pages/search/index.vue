@@ -269,7 +269,7 @@ import { api_common, api_match_list } from "src/api/index.js";
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import NoData from './components/no-data.vue'// 无数据组件
 import { store } from "./index.js"
-const { get_insert_history, get_fetch_hot_search } = api_search || {};
+const { insert_history, get_fetch_hot_search } = api_search || {};
 import { is_results } from 'src/base-h5/mixin/menu.js'
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
@@ -384,7 +384,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 			search_data.value = res.data.data;
 			search_loading = false
 			// 插入搜索历史
-			get_insert_history({ keyword })
+			insert_history({ keyword })
 			// 搜索前清空会话仓库数据
 			sessionStorage.removeItem('search_params');
 			if (is_results.value) {

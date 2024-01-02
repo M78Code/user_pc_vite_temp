@@ -18,9 +18,6 @@ export const post_group_ranking = (params, config={}, url  = "/v1/w/virtual/getV
 // 视频接口
 export const post_virtual_replay = (params, config={}, url  = "/v1/w/virtualReplay") => http.post(`${prefix}${url}`, params, config)
 
-// 获取指定批次视频时长最长的时间(s)
-export const get_video_maxtime = (params, config={}, url  = "/v1/w/virtual/getVideoMaxTime") => http.get(`${prefix}${url}`, params, config)
-
 // 赛果
 export const get_match_result = (params, config={}, url  = "/v1/w/matchDetail/getVirtualMatchResult") => http.get(`${prefix}${url}`, params, config)
 
