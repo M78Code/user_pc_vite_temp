@@ -894,6 +894,7 @@ if (type.value == 30) {
       font-size: .1rem;
       span {
         display: inline-block;
+        font-size: 0.14rem;
       }
       div {
         width: 0.28rem;

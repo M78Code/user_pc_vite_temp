@@ -41,7 +41,7 @@
     </div>
     <!--标准版赔率容器  波胆 5分钟  玩法除外-->
     <template v-if="![18,19].includes(+lodash.get(current_tab_item, 'id'))">
-      <div v-if="(!show_newer_edition && get_n_s_changed_loaded) || selected_list " v-touch-swipe.mouse="odd_wrapper_pan"
+      <div v-if="(!show_newer_edition && get_n_s_changed_loaded) || selected_list " v-touch-swipe.mouse.right.left="odd_wrapper_pan"
         :class="['standard-odd-l-w',{'status2':standard_odd_status == 1}]" >
         <!--标准版-->
         <div class="standard-odd-list row" v-if="!selected_list"  :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
