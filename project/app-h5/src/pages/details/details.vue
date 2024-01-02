@@ -81,10 +81,6 @@
             :new_match_detail_ctr="new_match_detail_ctr"
             @change-item="change_item"
             ></details-tab>
-            <!-- 精彩回放 -->
-            <template v-if="viewTab === 'playback'">
-              <highlights :detail_data="detail_data" />
-            </template>
           </div>
           <!-- tab 激活投注展示内容 -->
           <!-- 投注展示内容 -->
@@ -115,7 +111,6 @@
             <div>
                 <!-- 足球赛事分析 页面-->
                 <analysis-football-matches :detail_data="detail_data" v-if="detail_data.csid == '1'"></analysis-football-matches>
-                <!-- <line-up :detail_data="detail_data" ></line-up> -->
                 <!-- 篮球赛事分析 页面-->
                 <basketball-match-analysis  :detail_data="detail_data" v-if="detail_data.csid == '2'"></basketball-match-analysis>
             </div>
@@ -163,7 +158,7 @@ import detailsDialog from "src/base-h5/components/details/details-dialog.vue";  
 import videos from "src/base-h5/components/details/components/videos2.vue";   // 详情页视频+动画直播区域
 import changeHeader from "src/base-h5/components/details/components/header/change-header.vue";  // 详情页下拉置顶title
 import info_rules from "src/base-h5/components/details/components/info-rules.vue"  // 视频info说明弹框
-import SDetails from "src/base-h5/components/skeleton/skeleton-details.vue"  // 详情骨架屏
+// import SDetails from "src/base-h5/components/skeleton/skeleton-details.vue"  // 详情骨架屏
 import category from "./children/category.vue";
 // import chatroom from "src/base-h5/components/details/components/chatroom/chatroom.vue"
 import analysisFootballMatches from "src/base-h5/components/details/analysis-ky-matches/football-match-analysis/analysis-football-matches.vue"
@@ -178,9 +173,6 @@ import { compute_css_variables } from "src/core/css-var/index.js"
 import {is_esports } from "src/base-h5/mixin/menu";
 // 详情页中部玩法集tab
 import detailsTab from "src/base-h5/components/details/components/details-tab-2.vue";
-//首发组件
-import lineUp from "src/base-h5/components/details/analysis-matches/components/line-up-2.vue"
-import highlights from "src/base-h5/components/details/analysis-matches/highlights/highlights.vue"
 import  no_data  from "src/base-h5/components/common/no-data.vue";
 export default defineComponent({
   name: "match-details",
@@ -195,10 +187,8 @@ export default defineComponent({
     "no-data": no_data,
     "info-rules": info_rules,
     videos: videos,
-     SDetails,
+    //  SDetails,
     category,
-    lineUp,
-    highlights
   },
   // 从首页轮播区域跳转到详情页 增加判断
 //   beforeRouteEnter(to, from, next) {
@@ -461,7 +451,7 @@ export default defineComponent({
     //   set_zhiding_info( false );
     //   set_video_zhiding( false );
       if (!location.search.includes('keep_url')) {
-        history.replaceState(null,'',`${location.pathname}${location.hash}`)     //地址栏优化
+        history.replaceState(window.window.history.state,'',`${location.pathname}${location.hash}`)     //地址栏优化
       }
 
       // 进入详情页直接展示赛事分析
