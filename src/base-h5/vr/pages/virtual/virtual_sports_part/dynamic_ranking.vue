@@ -1,6 +1,4 @@
 <!--
- * @Author: Supermark
- * @Date: 2020-12-25 14:47:31
  * @Description: 赛马进行中的动态排名
 -->
 <template>

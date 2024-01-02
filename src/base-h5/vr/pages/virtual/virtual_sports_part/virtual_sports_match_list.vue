@@ -1,7 +1,5 @@
 <!--
- * @Author: Cronus
- * @Date: 2021-01-01 13:52:32
- * @Description: 赛事列表
+ * @Description: 虚拟体育赛事列表
 -->
 
 <template>

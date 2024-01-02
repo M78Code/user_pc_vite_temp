@@ -1,7 +1,5 @@
 <!--
- * @Author: Cronus
- * @Date: 2021-01-01 18:42:46
- * @Description: 简版投注项
+ * @Description: 虚拟体育新手版投注项
 -->
 
 <template>

@@ -1,7 +1,5 @@
 <!--
- * @Author:
- * @Date: 2021-06-29 18:53:35
- * @Description:
+ * @Description: 虚拟体育篮球结束时对阵比分组件
 -->
 <template>
   <!-- 单场赛事结束 -->

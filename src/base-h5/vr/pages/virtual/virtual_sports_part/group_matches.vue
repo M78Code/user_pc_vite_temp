@@ -1,6 +1,4 @@
 <!--
- * @Author: ledron
- * @Date: 2020-12-29 17:13:55
  * @Description: 虚拟体育 小组赛页面 只需要传个 tid 联赛id进来
 -->
 <template>

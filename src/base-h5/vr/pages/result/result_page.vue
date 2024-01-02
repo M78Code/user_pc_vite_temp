@@ -1,7 +1,5 @@
 <!--
- * @Author: Supermark
- * @Date: 2020-12-26 15:23:03
- * @Description: 虚拟体育菜单下，比赛结束后需要展示一段时间的赛果页面
+ * @Description: 虚拟体育菜单下，赛马类比赛结束后需要展示一段时间的赛果页面
 -->
 <template>
   <div class="dynamic-result-page">

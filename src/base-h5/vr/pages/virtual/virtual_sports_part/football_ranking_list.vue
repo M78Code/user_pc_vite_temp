@@ -1,6 +1,4 @@
 <!--
- * @Author: ladron
- * @Date: 2020-12-27 11:34:53
  * @Description: 球类 排行榜页面 只需要传个 tid 联赛id进来
 -->
 <template>

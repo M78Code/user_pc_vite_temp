@@ -1,7 +1,7 @@
 <!--
  * @Author: Cronus
  * @Date: 2020-12-22 18:07:03
- * @Description: 虚拟体育
+ * @Description: 虚拟体育首页主文件
 -->
 <template>
   <div class="virtual-sports">

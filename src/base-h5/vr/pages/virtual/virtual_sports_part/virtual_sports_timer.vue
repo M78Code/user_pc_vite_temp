@@ -1,6 +1,4 @@
 <!--
- * @Author: Cronus
- * @Date: 2020-12-22 18:07:03
  * @Description: 虚拟体育时钟
 -->
 <template>

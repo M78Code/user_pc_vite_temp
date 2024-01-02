@@ -1,6 +1,4 @@
 <!--
- * @Author: Cronus
- * @Date: 2021-01-03 18:33:47
  * @Description: 赛马动态排行
 -->
 <template>

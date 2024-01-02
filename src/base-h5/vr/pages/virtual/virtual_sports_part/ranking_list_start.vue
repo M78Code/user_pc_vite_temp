@@ -1,6 +1,4 @@
 <!--
- * @Author: ladron
- * @Date: 2020-12-28 11:34:53
  * @Description: 赛狗类 排行榜页面  只需要传个 mid 赛事id进来
 -->
 <template>

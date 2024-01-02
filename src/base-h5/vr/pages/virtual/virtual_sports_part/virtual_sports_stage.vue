@@ -1,6 +1,4 @@
 <!--
- * @Author: Cronus
- * @Date: 2021-01-08 14:20:29
  * @Description: 当前选中的赛事的阶段组件包含视频,进行中,完赛
 -->
 <template>

@@ -1,6 +1,4 @@
 <!--
- * @Author: Supermark
- * @Date: 2020-12-23 16:40:25
  * @Description: 虚拟体育详情页最外层父组件
 -->
 <template>

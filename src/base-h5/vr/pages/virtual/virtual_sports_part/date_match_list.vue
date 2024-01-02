@@ -1,7 +1,5 @@
 <!--
- * @Author: Cronus
- * @Date: 2021-06-16 21:47:25
- * @Description:
+ * @Description: 虚拟体育篮球相关组件
 -->
 <template>
   <div class="v-match-l-wrapper">

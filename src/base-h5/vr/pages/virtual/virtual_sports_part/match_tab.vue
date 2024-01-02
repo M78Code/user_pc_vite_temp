@@ -1,6 +1,4 @@
 <!--
- * @Author: Supermark
- * @Date: 2020-12-25 18:32:04
  * @Description: 虚拟体育列表页批次tab切换组件
 -->
 <template>

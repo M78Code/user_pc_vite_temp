@@ -1,7 +1,5 @@
 <!--
  * @Author: 虚拟赛事时钟
- * @Date: 2021-01-02 12:07:28
- * @Description:
 -->
 <template>
   <div class="flag-wrapper">

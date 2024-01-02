@@ -1,7 +1,5 @@
 <!--
- * @Author: Cronus
- * @Date: 2021-01-05 21:06:30
- * @Description: 虚拟体育赛狗,赛马列表赛事组件
+ * @Description: 虚拟体育赛狗,赛马列表赛事项组件
 -->
 
 <template>

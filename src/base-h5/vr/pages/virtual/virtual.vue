@@ -1,7 +1,5 @@
 <!--
- * @Author: Cronus
- * @Date: 2021-03-13 15:52:42
- * @Description:
+ * @Description: 虚拟体育最外层父组件，包括了上方的球种菜单切换
 -->
 <template>
   <div>
@@ -71,7 +69,6 @@ import virtualSports from "src/base-h5/vr/pages/virtual/virtual_sports_part/virt
 // import setMenu from "src/project/components/common/set_menu.vue"    // 设置菜单
 import { api_v_sports } from "src/api/index.js";
 import { utils } from "src/core/utils/common/module/utils.js";
-// import virtualFooterMenu from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_footer_menu.vue'
 import axios_api_loop from "src/core/http/axios-loop.js"
 import { debounce_throttle_cancel } from "src/core/utils/common/module/other.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
@@ -666,10 +663,3 @@ export default {
 }
 </style>
 
-
-<style lang="scss" scoped>
-@import 'src/base-h5/vr/css/virtual_sports/virtual_sports.scss';
-@import 'src/base-h5/vr/css/virtual_sports/virtual_sports_match_item.scss';
-@import 'src/base-h5/vr/css/virtual_sports/match_tab.scss';
-@import 'src/base-h5/vr/css/virtual_sports/virtual_footer_menu.scss';
-</style>
