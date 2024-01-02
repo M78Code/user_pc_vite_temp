@@ -41,11 +41,6 @@ export const upload_url_info = (params, config={}, url = "/url_info/createOrUpda
 //赛事收藏和取消收藏
 export const post_addOrCancelMatch = (params, config, url = "/v1/w/userCollection/addOrCancelMatch") => http.post(`${prefix}${url}`, params, config);
 //------------------欧宝版--------------E------------
-
-// 通过用户token获取用户信息
-export const get_user_info_bytoken = (params, config, url='/user/getUserInfoPB') => {
-  return http.get(`${prefix}${url}`, params, config);
-};
 // 存储登录用户浏览器指纹信息 (cruise)
 export const post_saveFingerPrint = (params, config, url='/user/saveFingerPrint') => {
   return http.post(`${prefix}${url}`, params, config);
