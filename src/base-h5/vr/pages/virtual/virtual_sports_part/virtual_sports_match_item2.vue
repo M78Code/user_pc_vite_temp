@@ -102,8 +102,8 @@ export default {
     //   "set_details_item",
     // ]),
     // ...mapMutations(['set_current_gotodetail_match','set_toast']),
-    set_details_item(data){ VR_CTR.set_details_item(data)  },
-    set_current_gotodetail_match(data){ return VR_CTR.set_current_gotodetail_match(data) },
+    set_details_item(data){ VR_CTR.state.details_item = data },
+    set_current_gotodetail_match(data){ return VR_CTR.state.current_gotodetail_match = data },
     set_toast(){},
     /**
      * 篮球早盘倒计时结束显示列表比分
@@ -421,10 +421,10 @@ export default {
     //   get_theme:'get_theme',
     //   get_access_config:'get_access_config',
     // }),
-    footer_sub_menu_id(){return VR_CTR.get_footer_sub_menu_id() },
-    get_video_process_data(){return VR_CTR.get_video_process_data();},
+    footer_sub_menu_id(){return VR_CTR.state.footer_sub_menu_id },
+    get_video_process_data(){return VR_CTR.state.video_process_data},
     get_n_s_changed_loaded(){return false;},
-    get_curr_sub_menu_type(){ return VR_CTR.get_curr_sub_menu_type() },
+    get_curr_sub_menu_type(){ return VR_CTR.state.curr_sub_menu_type },
     get_theme(){return 'theme01'},
     get_access_config(){return {handicapNum: true}},
     

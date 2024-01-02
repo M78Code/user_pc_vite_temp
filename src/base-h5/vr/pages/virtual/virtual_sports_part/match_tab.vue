@@ -77,10 +77,10 @@ export default {
     //   get_access_config: 'get_access_config',
     // }),
     sub_menu_type(){
-      return VR_CTR.get_curr_sub_menu_type();
+      return VR_CTR.state.curr_sub_menu_type;
     },
     current_batch(){
-      return VR_CTR.get_current_batch();
+      return VR_CTR.state.current_batch;
     },
     get_access_config(){
       return {};
@@ -154,10 +154,10 @@ export default {
     // ...mapMutations(['set_current_mid','set_detail_data']),
     set_detail_data(data){
       // TODO 需要对应
-      VR_CTR.set_detail_data(data)
+      VR_CTR.state.detail_data = data
     },
     set_current_mid(mid){
-      VR_CTR.set_current_mid(mid)
+      VR_CTR.state.current_match_mid = mid
     },
     /**
      * 篮球倒计时到达

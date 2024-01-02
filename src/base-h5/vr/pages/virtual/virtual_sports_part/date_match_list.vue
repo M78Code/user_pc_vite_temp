@@ -323,7 +323,7 @@ export default {
   //   ...mapGetters([
   //     'get_current_batch'
   //   ])
-  	get_current_batch(){return VR_CTR.get_current_batch()}
+  	get_current_batch(){return VR_CTR.state.current_batch}
   },
   components:{
     'date-match-sdata':dateMatchSdata,

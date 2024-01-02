@@ -132,10 +132,10 @@ export default {
     //   "get_theme"
     // ]),
     get_current_mid(){
-      return VR_CTR.get_current_mid();
+      return VR_CTR.state.current_match_mid;
     },
     get_curr_sub_menu_type(){
-      return VR_CTR.get_curr_sub_menu_type()
+      return VR_CTR.state.curr_sub_menu_type
     },
     get_theme(){
       return 'theme01';

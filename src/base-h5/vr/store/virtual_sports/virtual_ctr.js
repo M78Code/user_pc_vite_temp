@@ -84,185 +84,185 @@ class VirtualCtr {
     })
   }
 
-  //get方法
-  get_prev_v_sports(){
-    return this.state.prev_v_sports;
-  }
-  get_prev_v_sports_params(){
-    return this.state.prev_v_sports_params;
-  }
-  get_current_league() {
-    return this.state.current_league;
-  }
-  get_current_batch(){
-    return this.state.current_batch
-  }
-  get_video_process_loaded(){
-    return this.state.video_process_loaded
-  }
-  get_current_mid(){
-    return this.state.current_match_mid
-  }
-  get_video_process_data(){
-    return this.state.video_process_data;
-  }
-  get_current_gotodetail_match(){
-    return this.state.current_gotodetail_match;
-  }
-  get_is_user_refreshing() {
-    return this.state.is_user_refreshing
-  }
-  get_virtual_menu_list() {
-    return this.state.virtual_menu_list;
-  }
-  get_virtual_data_loading() {
-    return this.state.virtual_data_loading;
-  }
-  get_virtual_current_sub_menuid() {
-    return this.state.virtual_current_sub_menuid;
-  }
-  get_current_sub_menuid() {
-    return this.state.current_sub_menuid;
-  }
-  get_curr_sub_menu_type() {
-    return this.state.curr_sub_menu_type;
-  }
-  get_detail_data() {
-    return this.state.detail_data;
-  }
-  get_is_show_details_analyse(){
-    return this.state.is_show_details_analyse;
-  }
-  get_goto_detail_matchid() {
-    return this.state.goto_detail_matchid;
-  }
-  get_is_show_menu() {
-    return this.state.is_show_menu;
-  }
-  get_details_item() {
-    return this.state.details_item;
-  }
-  get_footer_sub_menu_id(){
-    return this.state.footer_sub_menu_id;
-  }
+  // //get方法
+  // get_prev_v_sports(){
+  //   return this.state.prev_v_sports;
+  // }
+  // get_prev_v_sports_params(){
+  //   return this.state.prev_v_sports_params;
+  // }
+  // get_current_league() {
+  //   return this.state.current_league;
+  // }
+  // get_current_batch(){
+  //   return this.state.current_batch
+  // }
+  // get_video_process_loaded(){
+  //   return this.state.video_process_loaded
+  // }
+  // get_current_mid(){
+  //   return this.state.current_match_mid
+  // }
+  // get_video_process_data(){
+  //   return this.state.video_process_data;
+  // }
+  // get_current_gotodetail_match(){
+  //   return this.state.current_gotodetail_match;
+  // }
+  // get_is_user_refreshing() {
+  //   return this.state.is_user_refreshing
+  // }
+  // get_virtual_menu_list() {
+  //   return this.state.virtual_menu_list;
+  // }
+  // get_virtual_data_loading() {
+  //   return this.state.virtual_data_loading;
+  // }
+  // get_virtual_current_sub_menuid() {
+  //   return this.state.virtual_current_sub_menuid;
+  // }
+  // get_current_sub_menuid() {
+  //   return this.state.current_sub_menuid;
+  // }
+  // get_curr_sub_menu_type() {
+  //   return this.state.curr_sub_menu_type;
+  // }
+  // get_detail_data() {
+  //   return this.state.detail_data;
+  // }
+  // get_is_show_details_analyse(){
+  //   return this.state.is_show_details_analyse;
+  // }
+  // get_goto_detail_matchid() {
+  //   return this.state.goto_detail_matchid;
+  // }
+  // get_is_show_menu() {
+  //   return this.state.is_show_menu;
+  // }
+  // get_details_item() {
+  //   return this.state.details_item;
+  // }
+  // get_footer_sub_menu_id(){
+  //   return this.state.footer_sub_menu_id;
+  // }
   
 
-  // get发放2
-  prev_v_sports(){
-    return this.state.prev_v_sports;
-  }
-  prev_v_sports_params(){
-    return this.state.prev_v_sports_params;
-  }
-  current_league() {
-    return this.state.current_league;
-  }
-  current_batch(){
-    return this.state.current_batch
-  }
-  video_process_loaded(){
-    return this.state.video_process_loaded
-  }
-  current_mid(){
-    return this.state.current_match_mid
-  }
-  video_process_data(){
-    return this.state.video_process_data;
-  }
-  current_gotodetail_match(){
-    return this.state.current_gotodetail_match;
-  }
-  is_user_refreshing() {
-    return this.state.is_user_refreshing
-  }
-  virtual_menu_list() {
-    return this.state.virtual_menu_list;
-  }
-  virtual_data_loading() {
-    return this.state.virtual_data_loading;
-  }
-  virtual_current_sub_menuid() {
-    return this.state.virtual_current_sub_menuid;
-  }
-  current_sub_menuid() {
-    return this.state.current_sub_menuid;
-  }
-  is_show_menu() {
-    return this.state.is_show_menu;
-  }
+  // // get发放2
+  // prev_v_sports(){
+  //   return this.state.prev_v_sports;
+  // }
+  // prev_v_sports_params(){
+  //   return this.state.prev_v_sports_params;
+  // }
+  // current_league() {
+  //   return this.state.current_league;
+  // }
+  // current_batch(){
+  //   return this.state.current_batch
+  // }
+  // video_process_loaded(){
+  //   return this.state.video_process_loaded
+  // }
+  // current_mid(){
+  //   return this.state.current_match_mid
+  // }
+  // video_process_data(){
+  //   return this.state.video_process_data;
+  // }
+  // current_gotodetail_match(){
+  //   return this.state.current_gotodetail_match;
+  // }
+  // is_user_refreshing() {
+  //   return this.state.is_user_refreshing
+  // }
+  // virtual_menu_list() {
+  //   return this.state.virtual_menu_list;
+  // }
+  // virtual_data_loading() {
+  //   return this.state.virtual_data_loading;
+  // }
+  // virtual_current_sub_menuid() {
+  //   return this.state.virtual_current_sub_menuid;
+  // }
+  // current_sub_menuid() {
+  //   return this.state.current_sub_menuid;
+  // }
+  // is_show_menu() {
+  //   return this.state.is_show_menu;
+  // }
 
-  // set方法
-  set_prev_v_sports(value){
-    this.state.prev_v_sports = value;
-  }
-  set_prev_v_sports_params(value){
-    this.state.prev_v_sports_params = value;
-  }
-  // set_c_selected_match_i(value){
-  //   state.c_selected_match_i = value;
-  // },
-  set_current_league(league) {
-    this.state.current_league = league;
-  }
-  set_current_batch(batch){
-    this.state.current_batch = batch
-  }
-  set_video_process_loaded(value){
-    this.state.video_process_loaded = value
-  }
-  set_current_mid(value){
-    this.state.current_match_mid = value
-  }
-  set_video_process_data(value){
-    this.state.video_process_data = value;
-  }
-  set_current_gotodetail_match(value){
-    this.state.current_gotodetail_match = value;
-  }
-  set_current_match_assign(callback){
-    if(callback){
-      callback(this.state.current_gotodetail_match);
-    }
-  }
-  set_is_user_refreshing(value) {
-    this.state.is_user_refreshing = value
-  }
-  set_virtual_data_loading(value){
-    this.state.virtual_data_loading = value;
-  }
-  set_virtual_data_loading(v) {
-    this.state.virtual_data_loading = v;
-  }
-  set_virtual_menu_list(v) {
-    this.state.virtual_menu_list = v;
-  }
-  set_virtual_current_sub_menuid(v) {
-    this.state.virtual_current_sub_menuid = v;
-  }
-  set_current_sub_menuid(v) {
-    this.state.current_sub_menuid = v;
-  }
-  set_curr_sub_menu_type(v) {
-    this.state.curr_sub_menu_type = Number(v);
-  }
-  set_detail_data(payload) {
-    this.state.detail_data = payload;
-  }
-  set_is_show_details_analyse(value){
-    this.state.is_show_details_analyse = value;
-  }
-  set_goto_detail_matchid(value) {
-    this.state.goto_detail_matchid = value;
-  }
-  set_is_show_menu(v) {
-    this.state.is_show_menu = v;
-  }
-  set_details_item(payload) {
-    this.state.details_item = payload;
-  }
-  set_footer_sub_menu_id(value){
-    this.state.footer_sub_menu_id = value;
-  }
+  // // set方法
+  // set_prev_v_sports(value){
+  //   this.state.prev_v_sports = value;
+  // }
+  // set_prev_v_sports_params(value){
+  //   this.state.prev_v_sports_params = value;
+  // }
+  // // set_c_selected_match_i(value){
+  // //   state.c_selected_match_i = value;
+  // // },
+  // set_current_league(league) {
+  //   this.state.current_league = league;
+  // }
+  // set_current_batch(batch){
+  //   this.state.current_batch = batch
+  // }
+  // set_video_process_loaded(value){
+  //   this.state.video_process_loaded = value
+  // }
+  // set_current_mid(value){
+  //   this.state.current_match_mid = value
+  // }
+  // set_video_process_data(value){
+  //   this.state.video_process_data = value;
+  // }
+  // set_current_gotodetail_match(value){
+  //   this.state.current_gotodetail_match = value;
+  // }
+  // set_current_match_assign(callback){
+  //   if(callback){
+  //     callback(this.state.current_gotodetail_match);
+  //   }
+  // }
+  // set_is_user_refreshing(value) {
+  //   this.state.is_user_refreshing = value
+  // }
+  // set_virtual_data_loading(value){
+  //   this.state.virtual_data_loading = value;
+  // }
+  // set_virtual_data_loading(v) {
+  //   this.state.virtual_data_loading = v;
+  // }
+  // set_virtual_menu_list(v) {
+  //   this.state.virtual_menu_list = v;
+  // }
+  // set_virtual_current_sub_menuid(v) {
+  //   this.state.virtual_current_sub_menuid = v;
+  // }
+  // set_current_sub_menuid(v) {
+  //   this.state.current_sub_menuid = v;
+  // }
+  // set_curr_sub_menu_type(v) {
+  //   this.state.curr_sub_menu_type = Number(v);
+  // }
+  // set_detail_data(payload) {
+  //   this.state.detail_data = payload;
+  // }
+  // set_is_show_details_analyse(value){
+  //   this.state.is_show_details_analyse = value;
+  // }
+  // set_goto_detail_matchid(value) {
+  //   this.state.goto_detail_matchid = value;
+  // }
+  // set_is_show_menu(v) {
+  //   this.state.is_show_menu = v;
+  // }
+  // set_details_item(payload) {
+  //   this.state.details_item = payload;
+  // }
+  // set_footer_sub_menu_id(value){
+  //   this.state.footer_sub_menu_id = value;
+  // }
 }
 const VR_CTR = reactive(new VirtualCtr());
 export default VR_CTR

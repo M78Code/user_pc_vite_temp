@@ -266,10 +266,10 @@ export default {
     this.match_ended_status2_handle();
   },
   methods:{
-	set_current_league(data){VR_CTR.set_current_league(data)},
-	set_video_process_data(data){VR_CTR.set_video_process_data(data)},
-	set_prev_v_sports_params(data){VR_CTR.set_prev_v_sports_params(data)},
-	set_current_mid(data){VR_CTR.set_current_mid(data)},
+	set_current_league(data){VR_CTR.state.current_league = data},
+	set_video_process_data(data){VR_CTR.state.video_process_data = data},
+	set_prev_v_sports_params(data){VR_CTR.state.prev_v_sports_params = data},
+	set_current_mid(data){VR_CTR.state.current_match_mid = data},
 
     //全部轮次展开折叠 
     handle_all_league(){
@@ -560,7 +560,7 @@ export default {
     },
     set_detail_data(data){
       // TODO 需要对应
-      VR_CTR.set_detail_data(data)
+      VR_CTR.state.detail_data = data
     },
     /**
      * 批次变化
@@ -643,14 +643,14 @@ export default {
     //   get_betbar_show:"get_betbar_show",
     //   get_newer_standard_edition:"get_newer_standard_edition",
     // }),
-    current_league(){return VR_CTR.get_current_league()},
-    current_batch(){return VR_CTR.get_current_batch()},
-    get_video_process_data(){return VR_CTR.get_video_process_data()},
-    get_prev_v_sports_params(){return VR_CTR.get_prev_v_sports_params()},
-    get_prev_v_sports(){return VR_CTR.get_prev_v_sports()},
-    sub_menuid(){return VR_CTR.get_current_sub_menuid()},
-    sub_menu_type(){return VR_CTR.get_curr_sub_menu_type()},
-    is_show_analyse(){return VR_CTR.get_is_show_details_analyse()},
+    current_league(){return VR_CTR.state.current_league},
+    current_batch(){return VR_CTR.state.current_batch},
+    get_video_process_data(){return VR_CTR.state.video_process_data},
+    get_prev_v_sports_params(){return VR_CTR.state.prev_v_sports_params},
+    get_prev_v_sports(){return VR_CTR.state.prev_v_sports},
+    sub_menuid(){return VR_CTR.state.current_sub_menuid},
+    sub_menu_type(){return VR_CTR.state.curr_sub_menu_type},
+    is_show_analyse(){return VR_CTR.state.is_show_details_analyse},
     get_bet_list(){return []},
     get_betbar_show(){return 1},
     // 当前联赛的全部轮次

@@ -275,8 +275,8 @@ export default {
     // ]),
     set_line_width(width){ this.round_line_width = width},
     set_settle_dialog_bool(){},
-    set_is_show_menu(data){VR_CTR.set_is_show_menu(data)},
-    set_prev_v_sports_params(data){VR_CTR.set_prev_v_sports_params(data)},
+    set_is_show_menu(data){VR_CTR.state.is_show_menu = data},
+    set_prev_v_sports_params(data){VR_CTR.state.prev_v_sports_params = data},
 
     /**
      *@description 计算类名
@@ -668,13 +668,13 @@ export default {
     //   // 抽屉菜单显示状态
     //   right_menu_show: 'get_is_show_menu'
     // }),
-    current_league(){return VR_CTR.get_current_league()},
-    current_batch(){return VR_CTR.get_current_batch()},
-    video_process_data(){return VR_CTR.get_video_process_data()},
-    get_prev_v_sports_params(){return VR_CTR.get_prev_v_sports_params()},
-    sub_menu_type(){return VR_CTR.get_curr_sub_menu_type()},
+    current_league(){return VR_CTR.state.current_league},
+    current_batch(){return VR_CTR.state.current_batch},
+    video_process_data(){return VR_CTR.state.video_process_data},
+    get_prev_v_sports_params(){return VR_CTR.state.prev_v_sports_params},
+    sub_menu_type(){return VR_CTR.state.curr_sub_menu_type},
     get_is_show_settle_tab(){return 1},
-    right_menu_show(){return VR_CTR.get_is_show_menu()},
+    right_menu_show(){return VR_CTR.state.is_show_menu},
 
     // 主队名
     home_name(){

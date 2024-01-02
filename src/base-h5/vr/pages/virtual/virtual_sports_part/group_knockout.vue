@@ -99,7 +99,7 @@ export default {
   },
   computed: {
     current_batch(){
-      return VR_CTR.get_current_batch();
+      return VR_CTR.state.current_batch;
     }
   },
   methods: {

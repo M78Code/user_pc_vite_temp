@@ -54,17 +54,17 @@ export default {
     //   sub_menu_type: 'get_curr_sub_menu_type',
     //   is_show_analyse: 'get_is_show_details_analyse'
     // }),
-    get_details_item(){return VR_CTR.get_details_item()  },
+    get_details_item(){return VR_CTR.state.details_item  },
     get_uid(){return },
     get_tab_fix(){return },
     get_fewer(){return },
-    get_current_league(){return VR_CTR.get_current_league()},
-    get_detail_data(){return VR_CTR.get_detail_data()},
+    get_current_league(){return VR_CTR.state.current_league},
+    get_detail_data(){return VR_CTR.state.detail_data},
     get_access_config(){return {}},
-    matchid(){return VR_CTR.get_goto_detail_matchid()},
-    sub_menu_id(){return VR_CTR.get_current_sub_menuid()},
-    sub_menu_type(){return VR_CTR.get_curr_sub_menu_type()},
-    is_show_analyse(){return VR_CTR.get_is_show_details_analyse()},
+    matchid(){return VR_CTR.state.goto_detail_matchid},
+    sub_menu_id(){return VR_CTR.state.current_sub_menuid},
+    sub_menu_type(){return VR_CTR.state.curr_sub_menu_type},
+    is_show_analyse(){return VR_CTR.state.is_show_details_analyse},
 
     // 历史战绩：标准赛事详情页的时候不显示,只在虚拟体育详情显示历史战绩(其中篮球不显示历史战绩)
     anlyse_show(){
@@ -100,7 +100,7 @@ export default {
     //   'set_fewer',
     //   'set_is_show_details_analyse'
     // ]),
-    set_details_item(data){ return VR_CTR.set_details_item(data) },
+    set_details_item(data){ return VR_CTR.state.details_item = data },
     set_first_details_item(data){},
     set_fewer(data){},
     set_is_show_details_analyse(data){},

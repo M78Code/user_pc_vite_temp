@@ -11,7 +11,7 @@ export default {
   methods:{
   	// ...mapMutations(['set_video_process_loaded']),
 	set_video_process_loaded(data){
-		VR_CTR.set_video_process_loaded(data);
+		VR_CTR.state.video_process_loaded = data;
 	},
     /**
      * 获取赛事比分
@@ -86,10 +86,10 @@ export default {
     //  current_league:'get_current_league',
     //  current_batch:'get_current_batch',
     //}),
-	get_video_process_data(){return VR_CTR.get_video_process_loaded()},
-	sub_menu_type(){return VR_CTR.get_curr_sub_menu_type()},
-	current_league(){return VR_CTR.get_current_league()},
-	current_batch(){return VR_CTR.get_current_batch()},
+	get_video_process_data(){return VR_CTR.state.video_process_loaded},
+	sub_menu_type(){return VR_CTR.state.curr_sub_menu_type},
+	current_league(){return VR_CTR.state.current_league},
+	current_batch(){return VR_CTR.state.current_batch},
   },
   watch:{
     get_video_process_data(){

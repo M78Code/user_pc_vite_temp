@@ -91,7 +91,7 @@ export default {
     //   match:'get_current_gotodetail_match'
     // }),
     match(){
-      return VR_CTR.get_current_gotodetail_match()
+      return VR_CTR.state.current_gotodetail_match
     },
   },
   created() {

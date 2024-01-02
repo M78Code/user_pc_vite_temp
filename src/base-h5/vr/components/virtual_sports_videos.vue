@@ -46,7 +46,7 @@ export default {
     //   "get_current_league"
     // ])
     get_is_show_settle_tab(){return 0},
-    get_current_league(){return VR_CTR.get_current_league()},
+    get_current_league(){return VR_CTR.state.current_league},
   },
   components: {
     settleDialog,

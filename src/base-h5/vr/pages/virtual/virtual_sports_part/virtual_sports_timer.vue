@@ -190,7 +190,7 @@ export default {
       console.error("this.mid====>", this.mid);
       this.start = null;
       this.draw_timer_by_second();
-      VR_CTR.set_current_mid(this.mid)
+      VR_CTR.state.current_match_mid = this.mid;
     }
   },
   destroyed(){
