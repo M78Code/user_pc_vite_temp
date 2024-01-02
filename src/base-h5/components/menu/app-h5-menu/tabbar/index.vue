@@ -81,7 +81,7 @@
   import { ref, computed, onBeforeUnmount, onMounted, watch } from "vue";
   import lodash from "lodash";
   import { useRoute, useRouter } from "vue-router";
-  import store from "src/store-redux/index.js";
+ //import store from "src/store-redux/index.js";
   import { UserCtr, i18n_t, compute_css_obj, useMittOn, useMittEmit, MITT_TYPES, MenuData,compute_local_project_file_path } from "src/output/index.js";
   import { lang, show_favorite_list, theme, user_info, resources_obj } from "src/base-h5/mixin/userctr";
   const { matchReducer } = store.getState();

@@ -27,7 +27,7 @@
 </template>
 <script setup>
 import { ref,onBeforeUnmount } from "vue";
-// import store from "src/store-redux/index.js";
+////import store from "src/store-redux/index.js";
 import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
 
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";

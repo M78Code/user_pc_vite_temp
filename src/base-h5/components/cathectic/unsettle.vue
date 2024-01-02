@@ -57,10 +57,10 @@ import { i18n_t } from "src/boot/i18n.js";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
-import store from 'src/store-redux/index.js'
+//import store from 'src/store-redux/index.js'
     // mixins: [skt_order]
 
-  const store_data = store.getState()
+  // const store_data = store.getState()
   // 锚点
   const myScroll = ref(null)
   //是否在加载中
@@ -160,10 +160,10 @@ const props = defineProps({
         res = reslut
       }
       if(res.code == 200 && res.data){
-        store.dispatch({
-          type: "SET_EARLY_MOEY_DATA",
-          data: res,data
-        })
+        // store.dispatch({
+        //   type: "SET_EARLY_MOEY_DATA",
+        //   data: res,data
+        // })
       }
     })
   }
@@ -341,10 +341,10 @@ const props = defineProps({
   }
   onUnmounted(() => {
     clear_timer();
-    store.dispatch({
-      type: "SET_EARLY_MOEY_DATA",
-      data: []
-    })
+    // store.dispatch({
+    //   type: "SET_EARLY_MOEY_DATA",
+    //   data: []
+    // })
     // for (const key in $data) {
     //   $data[key] = null
     // }

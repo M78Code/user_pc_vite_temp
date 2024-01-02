@@ -8,7 +8,7 @@
     <!-- <img :class="['expand_item', {ball_seed_collapsed: !all_ball_seed_collapsed}]" :src="expand_item" alt=""> -->
     <div class="expand_item" :class="{ball_seed_collapsed: !all_ball_seed_collapsed}" :style="compute_css_obj({key: 'h5-kyapp-expand-lague'})"></div>
   </div>
-  <div class="champion-wrap-2" v-if="is_show">
+  <div :class="['champion-wrap-2', !collapsed && 'collapsed']" v-if="is_show">
     <div v-if="is_show_league(i)" 
       :class="['league-container flex items-center justify-between right-border collapsed']"
       @click="handle_league_fold">
@@ -163,13 +163,15 @@ export default {
   background: var(--q-gb-bg-c-18);
   border-radius: 0.05rem;
   color: var(--q-gb-t-c-18);
+  margin-bottom: .05rem;
 
   .league-container {
     height: 0.26rem;
-    // margin: 0 0.07rem;
-    &.collapsed{
-      border-bottom: 1px solid var(--q-gb-bd-c-5);
-    }
+    border-top-right-radius: .08rem;
+    border-top-left-radius: .08rem;
+    border: 1px solid var(--q-gb-bd-c-15);
+    border-bottom: 1px solid var(--q-gb-bd-c-4);
+    
 
     .league-wrapper {
       padding-left: 0.12rem;
@@ -252,6 +254,17 @@ export default {
       }
     }
   }
+
+  &.collapsed{
+    border-radius: .08rem;
+    .league-container {
+      border-radius: .08rem;
+      border: 1px solid var(--q-gb-bd-c-15);
+    }
+  }
+  &.no-radius {
+    border-radius: 0;
+  }
   .limit-time {
     // width: 100%;
     height: 0.25rem;
@@ -271,6 +284,10 @@ export default {
   }
 
   .hps-wrap {
+    border: 1px solid var(--q-gb-bd-c-15);
+    border-radius: 0;
+    border-bottom-left-radius: 0.05rem;
+    border-bottom-right-radius: 0.05rem;
 
     > .title {
       margin: 0 0.08rem 0 0.11rem;

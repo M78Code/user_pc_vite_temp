@@ -112,10 +112,10 @@ class BetRecord {
       } else {
         return;
       }
-      //容错处理，接口再调一次
-      if (size < 5 && size > 0 && lodash.get(res, 'data.hasNext') == true) {
-        this.get_order_list(params, url_api, prevData)
-      }
+      //容错处理，接口再调一次(有问题、size < 5是死循环)
+      // if (size < 5 && size > 0 && lodash.get(res, 'data.hasNext') == true) {
+      //   this.get_order_list(params, url_api, prevData)
+      // }
     }).catch(err => {
       this.is_loading = false;
       console.error(err)
