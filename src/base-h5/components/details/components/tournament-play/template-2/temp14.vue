@@ -286,8 +286,18 @@ export default defineComponent({
 }
 
 // 统一间距
+.play-box {
+  margin: 0 !important;
+}
 .bet-box-bg {
   margin-left: 0.02rem !important;
   margin-right: 0.02rem !important;
+  margin-top: 0.01rem !important;
+  margin-bottom: 0.01rem !important;
+  .play-box {
+    border-radius: 4px;
+  }
 }
+
+
 </style>
