@@ -310,4 +310,10 @@ export default defineComponent({
   border-radius: .04rem;
   overflow: hidden;
 }
+
+// 统一间距
+.mg-4-bg {
+  margin-left: 0.02rem !important;
+  margin-right: 0.02rem !important;
+}
 </style>

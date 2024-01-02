@@ -261,4 +261,10 @@ export default defineComponent({
 .details_t_color6 {
   color: var(--q-gb-t-c-11);
 }
+
+// 统一间距
+.item-wrap {
+  gap: 0.04rem !important;
+}
+
 </style>
