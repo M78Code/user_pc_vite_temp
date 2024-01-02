@@ -10,22 +10,19 @@
 </template>
 <script setup>
 import "src/base-pc/core/globel-mitt";
-import { PageSourceData ,GlobalSwitchClass} from "src/output/index.js";
+import { GlobalSwitchClass} from "src/output/index.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { wslog, httplog } from "src/core/log/";
-import {get_query_string as urlparams } from "src/output/index.js";
-import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
 // import { set_remote_server_time } from "./src/store/module/global";
-import { useRouter,useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
 import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const router = useRouter();
-const route= useRoute();
 const _data = reactive({
   is_ws_run: wslog.ws_run, //// 初始化启动日志系统--开发模式时日志打开
   // config:window.BUILDIN_CONFIG,
