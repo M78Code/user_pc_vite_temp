@@ -101,12 +101,12 @@ onUnmounted(() => {
  *@description 金额改变事件
  *@param {Number} new_money 最新金额值
  */
+
+
  const change_money_handle = obj => {
-    if(obj.id) return
-    BetData.bet_single_list.forEach((item) => {
+    if(!obj.id) {
         // 获取当前投注金额
-        let oid = item.playOptionsId
-        let money = item.bet_amount
+        let money = BetData.bet_amount
         let money_ = obj.money
         // 设置最大投注金额
         if(obj.money == "MAX"){
@@ -116,7 +116,7 @@ onUnmounted(() => {
         let money_amount = mathJs.add(money,money_)
         // 投注金额 不能大于最大投注金额 也不能大于用户余额
         if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
-            BetData.set_bet_obj_amount(money_amount,oid)
+            BetData.set_bet_amount(mathJs.add(money,money_))
             ref_data.money = money_amount
         }else{
             // 最大限额不能大于余额
@@ -124,10 +124,12 @@ onUnmounted(() => {
             if(UserCtr.balance < ref_data.max_money){
                 money_a = UserCtr.balance
             }  
-            BetData.set_bet_obj_amount(money_a,oid)
+            BetData.set_bet_amount(mathJs.add(money,money_))
+
             ref_data.money = money_a
-        }       
-    })
+        }  
+        
+    }
 }
 
 // 清空输入框金额
@@ -170,10 +172,12 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
+    console.log(ref_data.money)
     useMittEmit(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY,ref_data)
      // 输入控制
      let sum = 0
      if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
+        BetData.set_bet_amount(ref_data.money)
         //计算多项最高可赢
         BetData.bet_single_list.forEach((item)=>{
             sum += mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)
@@ -185,6 +189,7 @@ const set_win_money = () => {
             ref_data.max_money = UserCtr.balance
             ref_data.money = ref_data.max_money
         }
+        BetData.set_bet_amount(ref_data.money)
     }
 }
 
