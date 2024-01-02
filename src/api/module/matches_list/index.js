@@ -17,9 +17,6 @@ export const get_detail_category = (params, config={}, url = "/v1/w/category/get
  */
 export const get_detail_list = (params, config={}, url = "/v1/w/matchDetail/getMatchOddsInfo1PB") => http.get(`${prefix_11}${url}`, params);
 
-//获取注单历史
-export const get_order_list = (params, config={}, url = "/order/betRecord/getOrderList") => http.post(`${prefix_12}${url}`, params);
-
 //获取联赛数量统计(新)
 export const get_leagues_list = (params, config={}, url = "/v3/european/getLeaguesPB") => http.post(`${prefix_11}${url}`, params);
 
