@@ -18,7 +18,7 @@
       <div v-if="!MenuData.is_vr()" class="more row items-center justify-between"  @click="searchClick">
        <img
             class="league-icon"
-            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league_icon.svg`"
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league_icon.png`"
             alt=""
           />
         <p>
@@ -452,6 +452,10 @@ console.log(final_url);
     span {
       font-size: 0.18rem;
     }
+  }
+  .league-icon{
+    width: 0.98rem;
+    height: 0.24rem;
   }
 }
 </style>
