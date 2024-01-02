@@ -15,17 +15,17 @@
           <!-- 置顶 -->
           <template v-for="(item,keyscorll) in match_list_new">
             <template v-if="item.hton!=0">
-              <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
+              <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="get_list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
             </template>
           </template>
           <!-- 非置顶 -->
           <template v-for="(item,keyscorll) in match_list_normal">
             <template v-if="item.hton==0">
               <template v-if="match_list_new.length == 0">
-                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
+                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="get_list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
               </template>
               <template v-else>
-                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item"></tournament-play-new>
+                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="get_list" :item_data="item"></tournament-play-new>
               </template>
             </template>
           </template>
@@ -50,7 +50,7 @@ import loading from 'src/base-h5/components/common/loading.vue';
  // 引入quasar
 import { dom } from 'quasar'
  // 引入处理数据的封装方法
-import MatchInfoCtr from "src/base-h5/vr/utils/vsport/matchInfoCtr.js";
+// import MatchInfoCtr from "src/base-h5/vr/utils/vsport/matchInfoCtr.js";
 import VSport from 'src/base-h5/vr/utils/vsport/vsport.js';
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
@@ -74,7 +74,7 @@ export default {
       // 玩法集合投注底部兼容白块的处理PS-12302
       // dom_play_bool: false,
       // 所有数据集合
-      matchInfoCtr: new MatchInfoCtr(this),
+      // matchInfoCtr: new MatchInfoCtr(this),
       // dom_play元素的观察对象
       observer_:undefined,
       // 第一次进来根据数据是否折叠玩法
@@ -201,12 +201,18 @@ export default {
     // 监听get_fewer的值
     get_fewer(n){
       if(n != 3){
-        if(Array.isArray(this.matchInfoCtr.list) && this.matchInfoCtr.list.length){
-          for (const item of this.matchInfoCtr.list) {
+        // let list = lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(this.mid),'odds_info',[]);
+        let list = this.get_list;
+        if(Array.isArray(list) && list.length){
+          for (const item of list) {
             item.hshow = n == 1 ? 'Yes':'No'
           }
         }
       }
+    },
+    // 返回赛事详情玩法列表数据
+    get_list(){
+      return  lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(this.mid),'odds_info',[]);
     }
   },
 
@@ -435,7 +441,6 @@ export default {
      * @param {Number} status 盘口状态
      */
     set_all_match_os_status(status, list_data){
-      // let list = this.matchInfoCtr.list;
       let list = MatchDataWarehouseInstance.get_quick_mid_obj(this.mid )?.odds_info
       if(list_data){
         list = list_data;
@@ -471,13 +476,13 @@ export default {
       }
     },
     change_show(val){
-      if(Array.isArray(this.matchInfoCtr.list) && this.matchInfoCtr.list.length){
+      if(Array.isArray(this.get_list) && this.get_list.length){
 
-        let flag1 = this.matchInfoCtr.list.every(item =>{
+        let flag1 = this.get_list.every(item =>{
           return item.hshow == 'Yes'
         })
 
-        let flag2 = this.matchInfoCtr.list.every(item =>{
+        let flag2 = this.get_list.every(item =>{
           return item.hshow == 'No'
         })
 
@@ -530,7 +535,9 @@ export default {
       {
         item.hl.forEach(item2 => {
           if(item2.hid){
-            this.matchInfoCtr.hl_obj[item2.hid]=item2;
+            // this.matchInfoCtr.hl_obj[item2.hid]=item2;
+            const hid = MatchDataWarehouseInstance.get_list_to_obj_key(this.mid,item2.hid,'hl');
+            MatchDataWarehouseInstance.list_to_obj.hl_obj[hid]=item2;
           }
           if(item2&&item2.ol&&item2.ol.length){
             item2.ol.forEach(item3 => {
@@ -654,7 +661,8 @@ export default {
         fun_then:(res)=>{
           if(!res.data || res.data.length == 0){
             this.is_no_data = true;
-            this.matchInfoCtr.setList([]);
+            // this.matchInfoCtr.setList([]);
+            MatchDataWarehouseInstance.set_match_details(this.current_match,[]);
             this.set_detail_data_storage(params,'');
             return;
           }
@@ -663,7 +671,8 @@ export default {
           // 虚拟体育title字段增加
           this.vir_add_title(result_list)
           let result_ = lodash.cloneDeep(result_list);
-          this.matchInfoCtr.setList(result_);
+          // this.matchInfoCtr.setList(result_);
+          MatchDataWarehouseInstance.set_match_details(this.current_match,result_);
         },
         fun_finally:()=>{
           this.is_loading = false;
@@ -702,7 +711,8 @@ export default {
           this.is_loading = false;
           if(!res.data || res.data.length == 0){
             this.is_no_data = true;
-            this.matchInfoCtr.setList([]);
+            // this.matchInfoCtr.setList([]);
+            MatchDataWarehouseInstance.set_match_details(this.current_match,[]);
             this.set_detail_data_storage(params,'');
             if(callback) callback();
             return;
@@ -727,7 +737,7 @@ export default {
             }
           temp = this.save_hshow(temp); // 保存当前相关hshow状态;
           MatchDataWarehouseInstance.set_match_details(this.current_match,temp);
-          this.matchInfoCtr.setList(lodash.cloneDeep(temp))
+          // this.matchInfoCtr.setList(lodash.cloneDeep(temp))
           delete res.data;
           if(callback) callback();
         },
@@ -745,7 +755,7 @@ export default {
       {
         middle_data = lodash.cloneDeep(list_old);
       } else {
-        middle_data = lodash.cloneDeep(this.matchInfoCtr.list);
+        middle_data = lodash.cloneDeep(this.get_list);
       }
       let middle_obj = {}
       lodash.forEach(middle_data, (item) =>{
@@ -783,7 +793,8 @@ export default {
         if(this.is_lock_add){
           this.set_all_match_os_status(2, list_);
         }
-        this.matchInfoCtr.setList(list_);
+        // this.matchInfoCtr.setList(list_);
+        MatchDataWarehouseInstance.set_match_details(this.current_match,list_);
       }
       return cach_string;
     },
