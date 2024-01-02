@@ -1,7 +1,7 @@
 <!--
  * @Author: Cronus
  * @Date: 2021-01-01 18:42:46
- * @Description: 简版投注项
+ * @Description: 新手版投注项
 -->
 
 <template>
@@ -92,7 +92,7 @@ export default {
   align-items: center;
   position: relative;
   flex: 1;
-  background: var(--q-gb-bg-c-28);
+  // background: var(--q-gb-bg-c-28);
   &.active {
     background: var(--q-gb-bg-c-37) !important;
     :deep(.o-i-inner){
