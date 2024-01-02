@@ -36,9 +36,6 @@ export const get_match_detail_MatchInfo = function(params, config = {}, url = "/
   return pre_get_match_detail_res
 }
 
-// 登录聊天室
-export const post_chatroom_login = (params, config={}, url = "/yewu19/v1/activity/liveChatLogin") => http.post(`${url}`, params, config);
-
 //赛事详情页面---电竞详情比分板接口
 export const get_match_detail_ESMatchInfo = (params, config = {}, url = "/v1/w/matchDetail/getESMatchDetail") => http.get(`${prefix}${url}`, params)
 

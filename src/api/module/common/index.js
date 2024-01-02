@@ -18,11 +18,6 @@ export const get_full_url = (url='') => {
   return http.get(`${url}`);
 };
 
-//详情页 里边的  聊天室直播视频拉流地址接口   接口调用
-export const get_chat_datainfo = (params, config, url = "/v1/w/liveVideoUrl") => {
-  return http.post(`${prefix_job}${url}`, params, config);
-};
-
 //联赛列表接口
 export const get_tournament_list = (params, config, url = "/v1/m/tournamentMatches") => {
   return http.post(`${prefix}${url}`, params, config);
