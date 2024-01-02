@@ -43,14 +43,9 @@ import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vu
 import { compute_local_project_file_path, project_name, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MenuData } from 'src/output/index.js';
 import { skeleton_white_ouzhou_110, skeleton_white_ouzhou_90, skeleton_white_app_177, skeleton_white_app_117 } from 'src/base-h5/core/utils/local-image.js'
 
-// yazhou-h5 亚洲版
-import ObserverItem from 'src/base-h5/components/observer-wrapper/observer-item.vue';
 // app-h5 复刻版
-import ObserverItem2 from 'src/base-h5/components/observer-wrapper/observer-item2.vue';
-// ouzhou-h5 欧洲版
-import ObserverItem3 from 'src/base-h5/components/observer-wrapper/observer-item3.vue';
-//app-h5 新手版  -- 临时
-import ObserverItem4 from 'src/base-h5/components/observer-wrapper/observer-item4.vue';
+import ObserverItem from 'src/base-h5/components/observer-wrapper/observer-item.vue';
+
 import { compute_css_obj} from 'src/output/index.js'
 const defer_render = use_defer_render()
 const props = defineProps({
@@ -78,10 +73,7 @@ const match_is_empty = ref(false)
 
 // 组件配置
 const com_config = {
-  'app-h5': ObserverItem2,
-  'yazhou-h5': ObserverItem,
-  'ouzhou-h5': ObserverItem3,
-  'app-h5-new': ObserverItem4
+  'app-h5': ObserverItem,
 }
 
 // 所渲染的组件

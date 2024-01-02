@@ -444,7 +444,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
    */
   const get_chatroom_info = () => {
     api_common
-      .get_chat_datainfo({ mid: matchid.value, device: "H5" })
+      .getliveVideoUrl({ mid: matchid.value, device: "H5" })
       .then(({ data }) => {
         if (data) {
           // set_details_chatroom_data(data);

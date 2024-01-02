@@ -1,6 +1,7 @@
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MatchDetailCalss }  from "src/output/module/project-single.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { api_details, api_common } from "src/api/index";
 /**
  * PC   列表 和 详情  之间的 数据中间件 
  * 
@@ -286,7 +287,7 @@ class MatchListDetailMiddleware {
 
       let api =
         page_source == "details"
-          ? api_details.get_fetch_detail_latest_match(_params)
+          ? api_common.get_detail_video(_params)
           : api_details.post_fetch_list_latest_match(_params);
 
       api.then(({ data }) => {
