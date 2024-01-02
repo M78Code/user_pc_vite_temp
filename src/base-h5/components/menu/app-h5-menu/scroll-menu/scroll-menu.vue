@@ -232,6 +232,9 @@ onUnmounted(()=>{
               position: relative;
               font-size: 0.1rem;
             }
+            .sport-match-count{
+              z-index: 131;
+            }
           }
           .inner-w {
             height: 0.41rem;
@@ -271,8 +274,8 @@ onUnmounted(()=>{
         .sport-match-count {
                 line-height: 1;
                 position: absolute;
-                left: 100%;
-                font-size: 0.1rem;
+                left: 90%;
+                font-size: 0.09rem;
                 font-family: "Akrobat";
                 z-index: 5;
                 &.is-max {
