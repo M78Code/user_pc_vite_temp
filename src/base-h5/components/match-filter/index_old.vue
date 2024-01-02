@@ -334,6 +334,11 @@ function bar_click(item) {
   timer2 = setTimeout(() => {
     is_show.value = false;
   }, 500);
+  if (window.screen.availHeight > 700) {
+    fixed_top.value = (window.innerHeight - 351) / 2 + 80+ event.layerY;
+  } else {
+    fixed_top.value = (window.innerHeight - 351) / 2 + 114 + event.layerY;
+  }
 }
 /**
  *@description 根据高度计算绑定左边按钮所在的位置
