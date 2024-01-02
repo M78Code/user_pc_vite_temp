@@ -90,8 +90,6 @@ export const post_collect_count_es = (params, config = {}, url = "/v1/w/menu/esc
 export const post_fetch_collect_list_high_light = (params, config = {}, url = "/v1/w/collectMatches") => {
   return http.post(`${prefix_11}${url}`, params, {axios_debounce_cache_key:'get_match_list'});
 };
-//联赛收藏 | 取消收藏
-export const post_collect_leagues = (params, config = {}, url = "/v1/userCollection/addOrCancelTournament") => http.post(`${prefix_user}${url}`, params);
 
  
 //赛事详情 联赛关联的赛事

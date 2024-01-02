@@ -3,7 +3,6 @@
     <div class="match-result">
         <date-tab v-if="state.slideMenu" :defaultVal="state.currentSlideValue"  :dateList="state.slideMenu" @changeDate="changeDate"/>
         <MatchContainer />
-        <!-- <ObserverWrapper :match_list="matchs_data" com_type="ouzhou-h5"></ObserverWrapper> -->
     </div>
 
 </template>
@@ -20,8 +19,6 @@ import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll
 import dateTab from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/date-tab/date-tab.vue';
 import { api_analysis } from "src/api/"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt";
-
-import ObserverWrapper from 'src/base-h5/components/observer-wrapper/index.vue';
 
 const matchs_data = ref([])
 const inner_height = window.innerHeight;  // 视口高度

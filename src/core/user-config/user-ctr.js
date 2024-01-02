@@ -27,7 +27,7 @@ const { PROJECT_NAME,htmlVariables } = BUILDIN_CONFIG ;
 
 // #TODO 接口统一管理的文件，后续替换
 import { api_details, api_account,api_betting } from "src/api/index.js";
-import * as api_common from 'src/api/module/common/index.js'
+import { api_common } from 'src/api/index'
 import { i18n_t } from "src/boot/i18n.js";
 
 import STANDARD_KEY from "src/core/standard-key";
@@ -531,7 +531,7 @@ class UserCtr {
   async check_login(callback) {
     try {
       // #TODO 接口
-      let res = await api_details.post_check_login();
+      let res = await api_common.getMatchUserIsLogin();
       callback(
         lodash.get(res, "data.isLogin", false),
         lodash.get(res, "code") == "0401038"

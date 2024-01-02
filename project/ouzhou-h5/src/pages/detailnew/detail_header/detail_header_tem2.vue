@@ -306,7 +306,7 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
 
 
     //获取动画播放地址
-    api_match_list.post_video_url(params).then( res => {
+    api_common.videoAnimationUrl(params).then( res => {
 
     let animationUrl = ''
     // 足篮棒网使用3.0动画  其他使用2.0

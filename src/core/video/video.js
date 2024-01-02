@@ -4,10 +4,9 @@
  * @Description: 视频相关操作
  */
 
-import { api_common } from "src/api/index.js";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
 import User from "src/core/user-config/user-ctr.js"
-import { api_details } from "src/api/index"
+import { api_details, api_common } from "src/api/index"
 import { i18n_t} from "src/boot/i18n.js"
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { get_media_icon_index,get_match_status, is_eports_csid } from 'src/output/module/constant-utils.js'
@@ -945,7 +944,7 @@ export default {
       type: "Animation",
       device: "PC"
     }
-    api_details.post_video_url(params).then( res => {
+    api_common.videoAnimationUrl(params).then( res => {
       let animationUrl = ''
       //足篮棒网使用3.0动画  其他使用2.0
       if([1,2,3,5].includes(match.csid*1)){

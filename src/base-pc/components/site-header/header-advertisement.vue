@@ -34,7 +34,7 @@
 <script setup>
 import { ref, reactive, watch, onUnmounted } from 'vue'
 import lodash from 'lodash'
-// import store from "src/store-redux/index.js";
+////import store from "src/store-redux/index.js";
 import { i18n_t ,compute_img_url} from "src/output/index.js"
 
 /** api */

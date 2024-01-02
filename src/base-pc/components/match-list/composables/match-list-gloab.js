@@ -4,6 +4,8 @@ import ZHUGE from 'src/core/http/zhuge-tag.js'
 import NewMenu from "src/core/menu-pc/menu-data-class.js";
 import details from "src/core/match-list-pc/details-class/details.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
+import { api_details, api_common } from "src/api/index";
+
 const page_source = PageSourceData;
 
 function get_full_sr_url(match) {
@@ -121,7 +123,7 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 		this.latest_match_params_pre = latest_match_params_cur;
 		let api =
 			cur_page == "details"
-				? api_details.get_fetch_detail_latest_match(_params)
+				? api_common.get_detail_video(_params)
 				: api_details.post_fetch_list_latest_match(_params);
 		api.then(({ data }) => {
 			if (!details.auto_swich_match) return;

@@ -520,10 +520,10 @@
 
       .bor-style {
         border-bottom: 0;
-        border-radius: 0.08rem;
+        border-radius: 4px;
 
         &.has-more {
-          border-radius: 0.08rem 0.08rem 0 0;
+          border-radius: 4px 4px 0 0;
         }
       }
 
@@ -535,7 +535,7 @@
     :deep(.temp1) {
       .item-wrap {
         > div {
-          border-radius: 0.08rem;
+          border-radius: 4px;
           overflow: hidden;
         }
       }
@@ -544,7 +544,7 @@
     :deep(.temp3) {
       .hairline-border {
         .item-wrap {
-          border-radius: 0.08rem;
+          border-radius: 4px;
           overflow: hidden;
 
           &::after {
@@ -570,7 +570,7 @@
       }
 
       .content-wrapper {
-        border-radius: 0.08rem;
+        border-radius: 4px;
         overflow: hidden;
       }
     }
@@ -579,8 +579,8 @@
       background-color: transparent;
 
       .item-wrap {
-        border-bottom-left-radius: 0.08rem;
-        border-bottom-right-radius: 0.08rem;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius:4px;
         overflow: hidden;
 
         &::after {
@@ -637,7 +637,7 @@
 
     :deep(.temp6) {
       .item-wrap {
-        border-radius: 0 0 0.08rem 0.08rem;
+        border-radius: 0 0 4px 4px;
         overflow: hidden;
         &::after {
           border: 0;
@@ -647,7 +647,7 @@
 
     :deep(.temp7) {
       .item-wrap {
-        border-radius: 0 0 0.08rem 0.08rem;
+        border-radius: 0 0 4px 4px;
         overflow: hidden !important;
 
         &::after {
@@ -663,7 +663,7 @@
 
       .virtual-bet-wrapper {
         padding: 0.1rem 0.08rem;
-        border-radius: 0.08rem;
+        border-radius: 4px;
         overflow: hidden !important;
       }
     }
@@ -682,7 +682,7 @@
 
     :deep(.temp13) {
       .rad-style {
-        border-radius: 0.08rem;
+        border-radius: 4px;
         overflow: hidden;
         // background-color: var(--q-gb-bg-c-28);
         ::after {
@@ -702,13 +702,13 @@
         border-radius: 0;
 
         &:first-child {
-          border-top-left-radius: 0.08rem;
-          border-top-right-radius: 0.08rem;
+          border-top-left-radius: 4px;
+          border-top-right-radius: 4px;
         }
 
         &:last-child {
-          border-bottom-left-radius: 0.08rem;
-          border-bottom-right-radius: 0.08rem;
+          border-bottom-left-radius: 4px;
+          border-bottom-right-radius: 4px;
         }
 
         .row-bet-wrapper {
@@ -721,7 +721,7 @@
       }
 
       .row-bet-wrapper {
-        border-radius: 0 0 0.08rem 0.08rem;
+        border-radius: 0 0 4px 4px;
         overflow: hidden;
       }
     }
@@ -730,15 +730,15 @@
       > .hairline-border {
 
         .sigle-item-border{
-          border-radius: 0.08rem;
+          border-radius: 4px;
         }
         .many-item-border {
           background: var(--q-match-page-bg-color-104);
           &:first-child{
-            border-radius: 0.08rem 0.08rem 0 0;
+            border-radius: 4px 4px 0 0;
           }
           &:last-child{
-            border-radius: 0 0 0.08rem 0.08rem;
+            border-radius: 0 0 4px 4px;
           }
         }
 
@@ -755,13 +755,13 @@
         border-radius: 0;
 
         &:first-child {
-          border-top-left-radius: 0.08rem;
-          border-top-right-radius: 0.08rem;
+          border-top-left-radius: 4px;
+          border-top-right-radius: 4px;
         }
 
         &:last-child {
-          border-bottom-left-radius: 0.08rem;
-          border-bottom-right-radius: 0.08rem;
+          border-bottom-left-radius:4px;
+          border-bottom-right-radius:4px;
         }
 
         .row-bet-wrapper {
@@ -775,7 +775,7 @@
       }
 
       .row-bet-wrapper {
-        border-radius: 0 0 0.08rem 0.08rem;
+        border-radius: 0 0 4px 4px;
         overflow: hidden;
       }
     }

@@ -6,7 +6,6 @@
 import lodash from "lodash";
 import { ref, watch, onMounted, onUnmounted } from "vue";
 import {is_eports_csid} from 'src/output/index.js';
-import store from "src/store-redux/index.js";
 import { HandicapTitle } from "src/base-pc/components/match-detail/handicap-title/index.js";
 import betItem from "src/base-pc/components/bet-item/bet_item.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
@@ -14,7 +13,7 @@ export const useCommon = ({ emit, props }) => {
   const isShow = ref(true); //主盘折叠
   const isShow_plus = ref(true); //附加盘折叠
   const curIsShow = ref(true); // 是否展示当前玩法
-  const store_state = store.getState();
+
 
   //  当前电竞查询的模式 false单关模式
   const vx_cur_esports_mode = ref(BetData.cur_esports_mode);
