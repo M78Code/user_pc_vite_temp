@@ -1274,7 +1274,7 @@ export default {
 
       .more {
         .count_span {
-          font-size: 0.12rem;
+          font-size: 10px;
           font-weight: 500;
           color: var(--q-gb-t-c-19);
           display: flex;
