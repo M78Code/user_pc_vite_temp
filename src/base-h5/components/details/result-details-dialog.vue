@@ -234,12 +234,12 @@ onUnmounted(() => {
 // 强行修改 q-dialog 样式;
 .q-dialog__inner--right>div,
 .q-dialog__inner--top>div {
-  border-bottom-left-radius: 0.1rem;
+  // border-bottom-left-radius: 0.1rem;
 }
 
 .q-dialog__inner--left>div,
 .q-dialog__inner--top>div {
-  border-bottom-right-radius: 0.1rem;
+  // border-bottom-right-radius: 0.1rem;
 }
 :deep(.marquee-wrap){
   color: var(--q-gb-t-c-18);
