@@ -19,9 +19,6 @@ export const post_getOrderList = (params, config={}, url = "/order/betRecord/get
 //H5订单记录页面接口
 export const post_getH5OrderList = (params, config={}, url = "/order/betRecord/getH5OrderList") => http.post(`${prefix2}${url}`, params, config)
 
-// 获取赛事是否存在赛果接口
-export const get_exist_match_result = (params, config={}, url = "/order/betRecord/existMatchResult") =>  http.get(`${prefix}${url}`, params, config);
-
 // 获取未结算注单统计
 export const get_unsettle_tickets_count = (params, config={}, url = "/order/betRecord/countUnsettleTickets") =>  http.get(`${prefix3}${url}`, params, config);
 

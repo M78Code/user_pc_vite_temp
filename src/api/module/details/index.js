@@ -36,9 +36,6 @@ export const get_match_detail_MatchInfo = function(params, config = {}, url = "/
   return pre_get_match_detail_res
 }
 
-// 登录聊天室
-export const post_chatroom_login = (params, config={}, url = "/yewu19/v1/activity/liveChatLogin") => http.post(`${url}`, params, config);
-
 //赛事详情页面---电竞详情比分板接口
 export const get_match_detail_ESMatchInfo = (params, config = {}, url = "/v1/w/matchDetail/getESMatchDetail") => http.get(`${prefix}${url}`, params)
 
@@ -110,11 +107,6 @@ export const get_hots = (params, config = {}, url = "/v1/m/hotUlikeRecommendatio
  
 //查询热门推荐---电竞
 export const get_hots_es = (params, config = {}, url = "/v1/w/hotEsportsMatches") => http.get(`${prefix}${url}`, params)
-
-//赛事详情页 返回一场赛事信息
-export const get_fetch_detail_latest_match = (params, config = {}, url = "/v1/w/getDetailVideo") => {
-  return http.get(`${prefix}${url}`, params);
-}
 
 //赛事详情
 export const get_match_virtual_details = (params, config = {}, url = "/v1/w/matchDetail/getVirtualMatchDetail") => http.get(`${prefix}${url}`, params)

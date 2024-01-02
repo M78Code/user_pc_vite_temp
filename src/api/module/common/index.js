@@ -18,11 +18,6 @@ export const get_full_url = (url='') => {
   return http.get(`${url}`);
 };
 
-//详情页 里边的  聊天室直播视频拉流地址接口   接口调用
-export const get_chat_datainfo = (params, config, url = "/v1/w/liveVideoUrl") => {
-  return http.post(`${prefix_job}${url}`, params, config);
-};
-
 //联赛列表接口
 export const get_tournament_list = (params, config, url = "/v1/m/tournamentMatches") => {
   return http.post(`${prefix}${url}`, params, config);
@@ -95,15 +90,6 @@ export const get_menu_match_total = (params, config, url="/v1/m/menu/queryNum") 
 
 
 
-// 更新收藏列表菜单赛事数量
-export const get_menu_of_favorite = (params, config, url="/v1/m/menu/countCollectH5") => {
-  params.sys = 3; //系统（1.panda-H5菜单  2.panda老PC-菜单 3.188菜单  4-新版PC菜单   7-H5 v2.0）
-  return http.get(`${prefix}${url}`, params, config);
-};
-// 更新收藏列表菜单赛事数量
-export const get_menu_of_favorite_count = (params, config, url="/v1/m/menu/countCollectPB") => {
-  return http.post(`${prefix}${url}`, params, config);
-};
 // 更新收藏列表菜单赛事数量 H5
 export const get_collect_menu_count_h5 = (params, config, url="/v1/m/menu/countCollectPB") => {
   return http.post(`${prefix}${url}`, params, config);
