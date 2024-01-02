@@ -16,6 +16,11 @@ export const get_virtual_menus = (params, config={}, url = "/v1/w/virtual/menus"
   return http.get(`${prefix}${url}`, params, config);
 };
 
+//获取虚拟赛事视频进程
+export const get_virtual_video_process = (params, config={}, url = "/v1/w/virtualReplay") => {
+  return http.post(`${prefix}${url}`,params,config);
+}
+
 //获取虚拟体育赛事比分
 export const get_v_match_score_api = (params, config={}, url="/v1/w/virtual/getMatchScore") => {
   return http.post(`${prefix}${url}`,params,config);
@@ -36,6 +41,12 @@ export const get_virtual_match_detail_count = (params, config={}, url = "/v1/m/m
 
 // 虚拟赛事详情-Mobile(Star)
 export const get_virtual_match_detail = (params, config={}, url = "/v1/m/matchDetail/getVirtualMatchDetail") => http.get(`${prefix}${url}`, params, config);
+
+// 虚拟体育联赛积分总榜 (david)
+export const get_virtual_sport_team_ranking = (params, config={}, url = "/v1/w/virtual/getVirtualSportTeamRanking") => http.post(`${prefix}${url}`, params, config);
+
+// 小组赛积分排行榜 （david）
+export const get_virtual_sport_XZ_team_ranking = (params, config={}, url = "/v1/w/virtual/getVirtualSportXZTeamRanking") => http.post(`${prefix}${url}`, params, config);
 
 // 淘汰赛积分统计（Jeffrey） tid = '2522488869376001'
 export const get_match_sorce = (params, config={}, url = "/v1/w/virtual/getMatchSorce") => http.get(`${prefix}${url}`, params, config);

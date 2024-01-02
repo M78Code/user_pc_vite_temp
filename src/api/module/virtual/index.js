@@ -12,9 +12,6 @@ const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_12} = API_PREFIX;
 // 赛果
 export const get_match_result = (params, config={}, url  = "/v1/w/matchDetail/getVirtualMatchResult") => http.get(`${prefix}${url}`, params, config)
 
-// 淘汰赛统计
-export const get_elimination_rank = (params, config={}, url  = "/v1/w/virtual/getMatchSorce") => http.get(`${prefix}${url}`, params, config)
-
 // 篮球比分
 export const get_basketball_score = (params, config={}, url  = "/v1/w/virtual/getMatchScore") => http.post(`${prefix}${url}`, params, config)
 

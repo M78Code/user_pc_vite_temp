@@ -13,7 +13,7 @@
     vsport.destroy();
  *
  */
-import { api_virtual } from "src/api/index.js";
+import { api_v_sports } from "src/api/index.js";
 import LoopCallback from "src/base-h5/vr/class/loop_callback.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import licia from "licia";
@@ -346,7 +346,7 @@ export default class VSport {
     // 实例化循环调用接口对象
     this.loop_callback = new LoopCallback(async(n)=>{
       let res_ = false;
-      await api_virtual.get_virtual_video_process(params).then(res => {
+      await api_v_sports.get_virtual_video_process(params).then(res => {
         if(res.code == 200){
           if(res.data && res.data.detail && Object.keys(res.data.detail).length){
             let match_play_data = lodash.cloneDeep(res.data);
