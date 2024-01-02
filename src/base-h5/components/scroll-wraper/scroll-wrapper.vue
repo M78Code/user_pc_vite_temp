@@ -288,6 +288,8 @@ onUnmounted(() => {
   overflow-y: auto;
   overflow-anchor: none;
   // background-color: #f5f5f5;
+  -webkit-overflow-scrolling: touch;/*解决移动端滑动卡顿问题*/
+  -webkit-transform: translateZ(0px);/*开启GPU加速*/
   &.data-get-empty {
     min-height: 0 !important;
     height: 0 !important;
