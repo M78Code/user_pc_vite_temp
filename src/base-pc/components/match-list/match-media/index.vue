@@ -53,11 +53,11 @@ import {is_eports_csid}  from "src/core/constant/common/module/csid-util.js";
 import { get_match_status, compute_css_obj,MatchDetailCalss, other_play_name_to_playid } from "src/output/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import details from 'src/core/match-list-pc/details-class/details.js'
-import store from 'src/store-redux/index.js';
+//import store from 'src/store-redux/index.js';
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 const router = useRouter()
-let state = store.getState();
+// let state = store.getState();
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 const props = defineProps({
@@ -155,14 +155,14 @@ function on_switch_match (media_type){
 
   //展开右侧详情
   //展开右侧详情
-  store.dispatch({
-    type: 'SET_UNFOLD_MULTI_COLUMN',
-    data: false
-  })
-  store.dispatch({
-    type: 'SET_IS_PAUSE_VIDEO',
-    data: false
-  })
+  // store.dispatch({
+  //   type: 'SET_UNFOLD_MULTI_COLUMN',
+  //   data: false
+  // })
+  // store.dispatch({
+  //   type: 'SET_IS_PAUSE_VIDEO',
+  //   data: false
+  // })
   if ((route.name == 'details' || route.name == 'search') && media_type == 'auto') {
     media_type = 'info'
   }
@@ -173,10 +173,10 @@ function on_switch_match (media_type){
   details.on_switch_match(media_type, props.match, play_id)
   // 如果右侧视频区是折叠，则会展开
   if (!vx_get_is_fold_status.value) {
-    store.dispatch({
-      type: 'SET_IS_FOLD_STATUS',
-      data: !vx_get_is_fold_status.value
-    })
+    // store.dispatch({
+    //   type: 'SET_IS_FOLD_STATUS',
+    //   data: !vx_get_is_fold_status.value
+    // })
   }
 }
 /**

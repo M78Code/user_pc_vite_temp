@@ -47,7 +47,7 @@
         </div>
         <!-- 卡片主内容 -->
         <!-- <q-slide-transition> -->
-        <div style="width: 100%;" :class="['match-content', { 'collapsed': collapsed, 'border-raduis': is_show_border_raduis }]" v-if="collapsed">
+        <div style="width: 100%;" :class="['match-content', { 'collapsed': collapsed, 'border-raduis': match?.is_show_border_radius }]" v-if="collapsed">
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
             <!-- <div style="border-top: 1px solid #000; width: 96%;"></div>  ！-->
           <div :class="['match-odds-container study_height_s hairline-border', {'border-top': !match.is_show_league}]">
@@ -351,7 +351,7 @@ export default {
 <style scoped lang="scss">
 
 .match-line-module {
-  padding: 0 0.1rem;
+  padding: 0 5px;
   // background-color: var(--q-gb-bg-c-21) !important;
   height: 1px;
   .match-line {

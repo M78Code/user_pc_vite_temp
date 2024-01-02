@@ -247,15 +247,21 @@ watch(() => odd_item.value?.ov, (v1,v0) => {
   let curr = Number(v1);
   let old = Number(v0);
 
-  clearTimeout(timer_.value);
-  if(curr > old){
-    red_green_status.value = 1;
-  }else if(curr < old){
-    red_green_status.value = -1;
+  // if (props.match.mid ==='280760235258482690') {
+  //   console.log(curr,old)
+  // }
+
+  if (curr && old) {
+    clearTimeout(timer_.value);
+    if(curr > old){
+      red_green_status.value = 1;
+    }else if(curr < old){
+      red_green_status.value = -1;
+    }
+    timer_.value = setTimeout(() => {
+      red_green_status.value = 0;
+    },3000);
   }
-  timer_.value = setTimeout(() => {
-    red_green_status.value = 0;
-  },3000);
 })
 
 // 监听玩法变化
