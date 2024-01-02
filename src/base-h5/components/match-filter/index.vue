@@ -768,8 +768,8 @@ if (type.value == 30) {
 
   .active-point {
     position: fixed;
-    top: 3.4rem;
-    right: 0.85rem;
+    top: 3.6rem !important;
+    right: 0.25rem;
     z-index: 100;
     width: 0.48rem;
     height: 0.48rem;
@@ -894,6 +894,7 @@ if (type.value == 30) {
       font-size: .1rem;
       span {
         display: inline-block;
+        font-size: 0.14rem;
       }
       div {
         width: 0.28rem;

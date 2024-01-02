@@ -78,7 +78,7 @@
         </div>
         
         <!-- 箭头 -->
-        <i class="icon-arrow q-icon c-icon" size="14px"></i>
+        <!-- <i class="icon-arrow q-icon c-icon" size="14px"></i> -->
       </div>
     </div>
   </div>
@@ -90,7 +90,7 @@ import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card
 import lodash from 'lodash';
 import { ref, computed } from 'vue';
 import BaseData from "src/core/base-data/base-data.js"
-import { t,compute_css_obj } from "src/output/index.js";
+import { compute_css_obj } from "src/output/index.js";
 import { get_match_tpl_title } from 'src/output/index.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'

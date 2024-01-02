@@ -553,40 +553,29 @@ export default defineComponent({
 .item-wrap {
   min-height: 0.32rem;
   height: auto;
-  background: none !important;
+  background: var(--q-gb-bg-c-38) !important;
 }
 
 .play-box-style {
-  // margin: 0.04rem;
   width: 100%;
   height: 0.52rem;
-  line-height: 0.52rem;
+  // line-height: 0.52rem;
   padding: 0 0.15rem;
   display: flex;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: .04rem;
   box-sizing: border-box;
+  align-items: center;
 }
 .remark {
   flex: 1;
   letter-spacing: 0;
 }
 
-.odds-wrap {
-  // width: 100%;
-  // padding: 0.005rem 0;
-  // height: 0.52rem;
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-}
-
 .odds-lock {
   line-height: 0.52rem;
 }
 
-.active {
-}
 
 .lock-style {
   width: 100%;
@@ -604,18 +593,11 @@ export default defineComponent({
   background-color: var(--q-gb-bg-c-28);
 }
 
-.fat-warp {
-}
 
 .led {
   flex: 1;
-  color: var(--q-gb-t-c-19); //var(--q-detials-color-7);
-  // padding-bottom: 0.02rem;
+  color: var(--q-gb-t-c-19);
   font-size: 0.13rem;
-
-  // max-width: 1rem;
-  // margin: 0 auto;
-  // margin-top: 0.06rem;
 }
 
 .os-led {
@@ -626,32 +608,17 @@ export default defineComponent({
   margin: 0 auto;
 }
 
-.odds-style {
-  // line-height: 0.16rem;
-  // padding-bottom: 0.07rem;
-}
-
 .DJ_special_treatment {
   display: flex;
 }
 
 .first-radius {
   position: relative;
-  // border-radius: 0.03rem 0 0 0.03rem;
 
   > .col {
     &:nth-child(2) {
       margin: 0 0.02rem;
     }
-  }
-}
-
-.last-radius {
-  // border-radius: 0 0.03rem 0.03rem 0;
-}
-
-.first-rad {
-  &:after {
   }
 }
 
@@ -672,12 +639,12 @@ export default defineComponent({
 }
 .item-bet-ky {
   padding: 0.08rem;
-  //background-color: var(--q-gb-bg-c-29);
   background-color: var(--q-gb-bg-c-38);
   .fat-warp {
     margin: 0.04rem;
     background: var(--q-gb-bg-c-15);
-    border-radius: 4px;
+    border-radius: .04rem;
+    overflow: hidden;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   }
 }

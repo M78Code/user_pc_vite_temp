@@ -273,7 +273,7 @@
                           <img :class="['live-icon-btn']" :src='corner_icon' />
                         </div>
                         <!-- 此赛事支持提前结算 -->
-                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1" @click.stop>
+                        <div class="column justify-center " v-if="match_of_list.mearlys == 1" @click.stop>
                           <img :src="mearlys_icon_app" alt="">
                         </div>
                       </div>
@@ -990,8 +990,6 @@ export default {
 
   .right-content-style {
     position: relative;
-    width: 1.8rem;
-    flex-shrink: 0;
   }
 
   &.simple,
@@ -1063,8 +1061,7 @@ export default {
     .team-wrapper {
       min-height: 100%;
       height: auto;
-      // width: 1.72rem;
-      flex: 1;
+      width: 1.72rem;
       position: relative;
       z-index: 1;
 
@@ -1678,6 +1675,7 @@ export default {
         .counting{
           font-size: 12px;
           color: var(--q-gb-t-c-19);
+          margin-bottom: 1px;
         }
         .special{
           font-size: 12px;

@@ -47,7 +47,7 @@
 import details from "src/core/match-list/details-class/details.js";
 import { IconWapper } from 'src/components/icon'
 import { ref, computed, watch } from 'vue';
-import { t } from "src/output/index.js";
+
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)

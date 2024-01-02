@@ -453,7 +453,6 @@
    *@param init_footer_menulist_data 是否重置footer_menulist数据
    */
   const set_footer_menulist = (init_footer_menulist_data = true) => {
-    let is_virtual = MenuData.is_vr(); //虚拟体育
     // 赛果虚拟体育
     let is_result_virtual = MenuData.is_results_virtual_sports();
     let is_saiguo_gz = MenuData.is_results() &&
@@ -482,7 +481,7 @@
           icon_black_fav: "f-icon-follow1-black.svg",
           icon2: "f-icon-follow-black.svg",
           id: 1,
-          is_disabled: is_virtual || is_result_virtual || MenuData.is_results(),
+          is_disabled: MenuData.is_vr() || is_result_virtual || MenuData.is_results(),
         },
         // 注单
         {
@@ -499,7 +498,7 @@
           icon_black: "f-icon-filter-black.svg",
           id: 3,
           is_disabled:
-            is_virtual ||
+          MenuData.is_vr() ||
             is_saiguo_gz ||
             show_favorite_list.value ||
             is_electronicSports,
