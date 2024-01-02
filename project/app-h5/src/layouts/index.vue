@@ -376,6 +376,10 @@ if (UserCtr.get_user_token()) {
 .layout_container {
   height: 100%;
   overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   background: var(--q-gb-bg-c-27);
   .layouts_header {
     height: 50px;
