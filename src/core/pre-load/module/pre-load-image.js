@@ -32,6 +32,7 @@ import {
 
 // }
 let MITT_PRELOAD_IMAGE_CALLBACK = (params) => {
+  debugger
   let { key = "" } = params;
   let arr = all_preload_image_obj[key] || [];
 
@@ -68,8 +69,10 @@ let MITT_PRELOAD_IMAGE_CALLBACK = (params) => {
 };
 
 
-const pre_load_img=()=>{
-  useMitt(MITT_TYPES.MITT_PRELOAD_IMAGE, MITT_PRELOAD_IMAGE_CALLBACK);
+const pre_load_img=(key)=>{
+  MITT_PRELOAD_IMAGE_CALLBACK(key)
+  // debugger
+  // useMittOn(MITT_TYPES.MITT_PRELOAD_IMAGE, MITT_PRELOAD_IMAGE_CALLBACK);
 }
 
 
