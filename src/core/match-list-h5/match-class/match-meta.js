@@ -647,7 +647,8 @@ class MatchMeta {
     VirtualList.clear_virtual_info()
     //兼容复刻版电竞冠军
     const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "");
-    const is_kemp = md == '100';
+    const menuType = lodash.get(MenuData.current_lv_3_menu, 'menuType', "");
+    const is_kemp = menuType == '100';
     // 电竞的冠军
     const category = MenuData.get_menu_type() === 100 || is_kemp ? 2 : 1
     const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')

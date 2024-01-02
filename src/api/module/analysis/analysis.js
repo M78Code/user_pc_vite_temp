@@ -25,16 +25,8 @@ export const get_team_vs_history = (params, config = {}, url = "/v2/statistics/t
 // 历史战绩接口
 export const get_team_vs_other_team = (params, config = {}, url = "/v2/statistics/teamVsOtherTeam") => { return http.get(`${prefix}${url}`, params, config); };
 
-// 赛事文章
-export const get_article = (params, config = {}, url = "/v1/art/getArticle") => { return http.get(`${prefix}${url}`, params, config); };
 // 赛事文章压缩
 export const getArticlePB = (params, config = {}, url = "/v1/art/getArticlePB") => { return http.get(`${prefix}${url}`, params, config); };
-
-// 猜你喜欢  文章列表
-export const get_favorite_article = (params, config = {}, url = "/v1/art/getFavoriteArticle") => { return http.get(`${prefix}${url}`, params, config); };
-
-// 文章阅读数
-export const get_article_count = (params, config = {}, url = "/v1/art/addArticleCount") => { return http.post(`${prefix}${url}`, params, config); };
 
 //详情页 里边的  精选赛事   接口调用
 export const get_result_match_care_list = (params, config = {}, url = "/v1/m/matcheHandpickPB") => {
@@ -102,9 +94,6 @@ export const get_sportType = (params, config = {}, url = "/v1/orderScoreResult/q
 
 //赛果联赛查询
 export const post_results_pournament = (params, config = {}, url = "/v1/orderScoreResult/queryTournament") => http.post(`${prefix}${url}`, params, config);
-
-//赛果联赛查询
-export const post_results_list = (params, config = {}, url = "/v1/orderScoreResult/queryTournamentScoreResult") => http.post(`${prefix}${url}`, params, config);
 
 //赛果联赛查询
 export const post_results_order = (params, config = {}, url = "/v1/orderScoreResult/queryMatchScoreResult") => http.post(`${prefix}${url}`, params, config);
