@@ -28,6 +28,7 @@ let base_path= `src/base-${PROJECT_NAME.includes('pc')?'pc':'h5'}`
 final_str=`
 // export * as  PROJECT_STORE from "${base_path}/store";
 export const  PROJECT_STORE={}
+export * as  MITT_TYPES_GLOABLE from "src/core/mitt/module/gloable.js" 
 export * as  MITT_TYPES_BASE from "${base_path}/core/mitt/mitt-keys.js" 
 export * as  MITT_TYPES_PROJECT from "project_path/src/core/mitt/mitt-keys.js" 
 
@@ -41,6 +42,7 @@ final_str=`
 // export * as  PROJECT_STORE from "project_path/src/store";
 export const  MITT_TYPES_BASE={}
 export const  PROJECT_STORE={}
+export * as  MITT_TYPES_GLOABLE from "src/core/mitt/module/gloable.js" 
 export * as  MITT_TYPES_PROJECT from "project_path/src/core/mitt/mitt-keys.js" 
 `
 
