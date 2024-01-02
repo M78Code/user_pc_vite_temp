@@ -88,7 +88,7 @@
 
 <script>
 import { api_v_sports } from "src/api/index.js";
-import no_data from "src/base-h5/vr/components/common/no_data.vue";
+import no_data from "src/base-h5/vr/components/common/vr_sport_no_data.vue";
 import { LOCAL_PROJECT_FILE_PREFIX,calc_win, project_name, i18n_t } from 'src/output/index.js'
 import { lang } from 'src/base-h5/mixin/userctr.js'
 

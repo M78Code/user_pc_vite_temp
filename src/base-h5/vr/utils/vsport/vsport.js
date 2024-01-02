@@ -14,7 +14,7 @@
  *
  */
 import { api_v_sports } from "src/api/index.js";
-import LoopCallback from "src/base-h5/vr/class/loop_callback.js";
+import LoopCallback from "src/base-h5/vr/utils/vsport/loop_callback.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import licia from "licia";
 export default class VSport {
