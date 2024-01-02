@@ -1274,11 +1274,12 @@ export default {
 
       .more {
         .count_span {
-          font-size: 10px;
+          font-size: 0.12rem;
           font-weight: 500;
           color: var(--q-gb-t-c-19);
           display: flex;
           align-items: center;
+          margin-top: 1px;
         }
 
         .icon-wapper-more {
