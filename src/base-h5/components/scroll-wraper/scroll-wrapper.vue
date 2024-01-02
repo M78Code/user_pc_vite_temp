@@ -42,7 +42,6 @@
 import { useRoute } from 'vue-router';
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue' 
 import lodash from 'lodash'
-import store from "src/store-redux/index.js";
 import MenuData from  "src/core/menu-h5/menu-data-class.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import VirtualList from "src/core/match-list-h5/match-class/virtual-list.js";
@@ -61,7 +60,6 @@ const props = defineProps({
 
 const route = useRoute()
 const defer_render = use_defer_render()
-const store_state = store.getState();
 
 // 调试信息
 let test = ref('')
@@ -117,60 +115,6 @@ const get_match_base_hps = lodash.debounce(() => {
   scroll_timer.value = null
 }, 800)
 
-/**
- * @description: 页面滚动事件处理函数
- * @param {Undefined}
- * @return {Undefined} Undefined
- */
-const window_scrolling = () => {
-  let splited = store_state.matchReducer.list_scroll_top.split('-');
-  target_scroll_obj.value = {
-    scroll_y: +splited[0],
-    client_height: +splited[1],
-    scroll_height: +splited[2],
-  };
-
-  let now = new Date().getTime();
-  // 1向上滑,  -1向下滑,滚动方向
-  get_is_show_footer_animate();
-  if (now - prev_frame_time < 200) {
-    return;
-  }
-  prev_frame_time = now;
-  // 容器的滚动数据
-  let scroll_y = null;
-  scroll_y = +splited[0]
-  clearTimeout(scroll_frame_timer)
-  scroll_frame_timer = setTimeout(() => {
-    // console.error('屏蔽用户频繁滚动触发事件,  还没触发 更新视图，赛事订阅事件 ===========================================1111111111111');
-    // 如果需要对DOM进行多次访问，尽量使用局部变量缓存该DOM   减少回流（Reflow）与重绘（Repaint） 优化
-    let xnyouhua = document.documentElement
-    let params = {
-      position: scroll_y,
-      scrollTop: scroll_y,
-      clientHeight: xnyouhua.clientHeight,
-      scrollHeight: xnyouhua.scrollHeight,
-      liebiao_slide: 'liebiao_slide'
-    };
-    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, params);
-  }, 500);
-}
-/**
- * 判断是否显示页脚菜单
- *   1向上滑,  -1向下滑
- */
-const get_is_show_footer_animate = () => {
-  let top = null;
-  top = store_state.matchReducer.list_scroll_top.split('-')[0]
-  let scroll_dir = top - prev_frame_poi.value;
-  if (scroll_dir > 0) {
-    scroll_dir = 1;
-  } else if (scroll_dir < 0) {
-    scroll_dir = -1;
-  }
-  store.dispatch({ type: 'matchReducer/set_list_scroll_direction',  payload: scroll_dir })
-  prev_frame_poi.value = top;
-}
 /**
  * @description: 列表回到顶部
  */

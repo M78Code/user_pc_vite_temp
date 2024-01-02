@@ -76,6 +76,7 @@ import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
 import { is_up_app, is_down_app } from 'src/base-h5/core/utils/local-image.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 
 // TODO: 其他模块得 store  待添加
@@ -164,6 +165,11 @@ const is_show_fenpan = computed(() => {
   return !(is_fengpan(get_odd_status()) && [18,19].includes(+lodash.get(props.current_tab_item, 'id'))) || ((odd_item.value.on || convert_num(odd_item.value) === 0) && props.match.csid != 1)
 })
 
+const is_http_update_info = computed(() => {
+  const is_http_update_info = lodash.get(MatchResponsive, 'is_http_update_info.value', true)
+  return is_http_update_info
+})
+
 // 判断边框border-radius样式
 const odds_class_object = () => {
   let result = {
@@ -247,11 +253,7 @@ watch(() => odd_item.value?.ov, (v1,v0) => {
   let curr = Number(v1);
   let old = Number(v0);
 
-  // if (props.match.mid ==='280760235258482690') {
-  //   console.log(curr,old)
-  // }
-
-  if (curr && old) {
+  if (!is_http_update_info.value && curr && old) {
     clearTimeout(timer_.value);
     if(curr > old){
       red_green_status.value = 1;
