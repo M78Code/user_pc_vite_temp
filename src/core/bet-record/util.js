@@ -1,5 +1,5 @@
 import lodash from "lodash"
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
 
 // 按什么排序  1-投注时间  2-默认排序（结算时间）  3-开赛时间
 export const enum_order_by = [1, 2, 3]

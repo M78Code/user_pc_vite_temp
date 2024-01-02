@@ -88,7 +88,7 @@ import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import common from 'src/base-h5/vr/mixin/constant/module/common.js';
 import teamImg from 'src/base-h5/vr/components/team_img.vue';
 import dateMatchSdata from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_s_data.vue'
-import { api_v_sports } from "src/base-h5/vr/api";
+import { api_v_sports } from "src/api/index.js";
 import { emitter, useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { get_now_server } from 'src/core/utils/common/module/other.js'
 

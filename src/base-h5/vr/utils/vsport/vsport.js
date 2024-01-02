@@ -13,7 +13,7 @@
     vsport.destroy();
  *
  */
-import { api_v_sports } from "src/base-h5/vr/api";
+import { api_v_sports } from "src/api/index.js";
 import LoopCallback from "src/base-h5/vr/class/loop_callback.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import licia from "licia";

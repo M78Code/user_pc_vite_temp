@@ -75,7 +75,7 @@ import virtual_sports_tab from 'src/base-h5/vr/components/virtual_sports_tab.vue
 import virtual_sports_detail_tab from 'src/base-h5/vr/pages/virtual/details/children/virtual_sports_detail_tab.vue'
 import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue"
 import virtual_match_statistic from 'src/base-h5/vr/components/virtual_match_statistic.vue'
-import {api_v_sports} from "src/base-h5/vr/api";
+import {api_v_sports} from "src/api/index.js";
 import virtual_sports_stage from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
 import VSport from 'src/base-h5/vr/utils/vsport/vsport.js';
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
