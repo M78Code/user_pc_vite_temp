@@ -76,7 +76,7 @@
     </ul>
 
     <!-- 字母悬浮图标 -->
-    <div class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
+    <div v-if="is_show" class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
       <span>{{ active_index }}</span>
     </div>
     <!-- 无数据展示 -->
