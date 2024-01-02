@@ -15,7 +15,7 @@
           </div>
         </div>
     <!-- 中间滚动选择项 -->
-    <q-scroll-area class="scroll-area" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
+    <q-scroll-area class="scroll-area scroll-bar-display-none" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
       <div v-if="list.length" v-scroll="scrolled" class="yb_mb18">
         <!-- 循环整个后台返回数据 -->
         <div class="scroll-area1" v-for="(item, index) in list" :key="index" ref="scroll_area1">
@@ -76,7 +76,7 @@
     </ul>
 
     <!-- 字母悬浮图标 -->
-    <div v-if="is_show" class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
+    <div class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
       <span>{{ active_index }}</span>
     </div>
     <!-- 无数据展示 -->
@@ -774,7 +774,7 @@ if (type.value == 30) {
     width: 0.48rem;
     height: 0.48rem;
     font-size: 0.28rem;
-    background: var(--q-gb-bg-c-30) no-repeat center / 98%;
+    background: var(--q-gb-bg-c-44) no-repeat center / 98%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -784,7 +784,7 @@ if (type.value == 30) {
       content: ' ';
       border-top:  .20rem solid transparent;
       border-bottom:  .20rem solid transparent;
-      border-left:  .20rem solid var(--q-gb-bg-c-30);
+      border-left:  .20rem solid var(--q-gb-bg-c-44);
       position: absolute;
       right: -0.1rem;
       border-radius: 0.16rem;
