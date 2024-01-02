@@ -538,7 +538,7 @@ export default {
     .expand_item{
       transition: transform 0.25s ease;
       transform: rotate(-90deg);
-      width: 18px;
+      width: 20px;
       height: 16px;
     }
     .collapsed{

@@ -23,7 +23,7 @@
             </span>
           </div>
           <!-- 赛事渲染信息 -->
-          <div class="s-w-i-inner">
+          <div class="s-w-i-inner" v-if="defer_render(index)">
             <slot :match_item="get_match_item(match_mid)" :mid="match_mid" :index="index"></slot>
           </div>
         </div>
@@ -219,7 +219,7 @@ onUnmounted(() => {
   overflow-anchor: none;
   // background-color: #f5f5f5;
   -webkit-overflow-scrolling: touch;/*解决移动端滑动卡顿问题*/
-  -webkit-transform: translateZ(0px);/*开启GPU加速*/
+  transform: translateZ(0px);/*开启GPU加速*/
   &.data-get-empty {
     min-height: 0 !important;
     height: 0 !important;
@@ -227,9 +227,9 @@ onUnmounted(() => {
   }
   .scroll-i-con {
     width: 100%;
-    // height: 10000px;
     position: relative;
     background-size: contain;
+    // will-change: transform;
     background-repeat: repeat-y !important;
     &.high_scrolling {
       background-size: contain;
