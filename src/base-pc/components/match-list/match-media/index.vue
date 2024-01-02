@@ -50,7 +50,7 @@ import { useRoute,useRouter } from 'vue-router';
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import {is_eports_csid}  from "src/core/constant/common/module/csid-util.js";
-import { get_match_status, t, compute_css_obj,MatchDetailCalss, other_play_name_to_playid } from "src/output/index.js"
+import { get_match_status, compute_css_obj,MatchDetailCalss, other_play_name_to_playid } from "src/output/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import details from 'src/core/match-list-pc/details-class/details.js'
 import store from 'src/store-redux/index.js';

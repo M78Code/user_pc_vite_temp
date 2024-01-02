@@ -18,7 +18,7 @@ import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
 // import { set_remote_server_time } from "./src/store/module/global";
-import { t } from "src/output/index.js";
+
 import { useRouter,useRoute } from "vue-router";
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 import { compute_css_variables } from "src/core/css-var/index.js"

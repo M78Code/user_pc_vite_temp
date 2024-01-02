@@ -37,7 +37,7 @@
 
 import { computed} from 'vue';
 import lodash from 'lodash';
-import { t } from "src/output/index.js";
+
 import tips from "src/base-pc/components/match-detail/tips1/tips1.vue"
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 

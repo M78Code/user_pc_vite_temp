@@ -86,7 +86,7 @@
 
 import { computed } from 'vue';
 import lodash from 'lodash'
-import { t, is_eports_csid,compute_local_project_file_path, is_show_sr_flg } from "src/output/index.js";
+import { is_eports_csid,compute_local_project_file_path, is_show_sr_flg } from "src/output/index.js";
 import { get_match_status } from 'src/core/utils/common/index'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'

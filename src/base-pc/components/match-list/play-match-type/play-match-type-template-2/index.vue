@@ -36,7 +36,7 @@
   
 <script setup>
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
-import {choose_config, t} from 'src/output/index.js'
+import {choose_config} from 'src/output/index.js'
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import lodash from 'lodash';
