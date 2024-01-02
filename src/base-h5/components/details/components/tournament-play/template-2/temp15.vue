@@ -259,4 +259,11 @@ export default defineComponent({
   }
 
 }
+
+// 统一间距
+.play-box {
+  margin: 0.02rem !important;
+}
+
+
 </style>

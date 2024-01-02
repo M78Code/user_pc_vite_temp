@@ -648,4 +648,13 @@ export default defineComponent({
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   }
 }
+
+// 统一间距
+.item-bet-ky {
+  .fat-warp {
+    margin-left: 0.02rem !important;
+    margin-right: 0.02rem !important;
+  }
+}
+
 </style>
