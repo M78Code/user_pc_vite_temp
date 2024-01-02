@@ -48,7 +48,6 @@
      * @return 
      */
     watch(()=>props.defaultVal,(val)=>{
-        // console.log('valval',val)
         activeOn.value = val;
         sortVal.value = val;
     },{immediate:true})
