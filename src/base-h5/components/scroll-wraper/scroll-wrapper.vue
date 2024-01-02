@@ -177,7 +177,7 @@ const get_is_show_footer_animate = () => {
 const goto_top = () => {
   MatchMeta.set_prev_scroll(0)
   let timer = setTimeout(() => {
-    container.value && container.value.scrollTo({ top: 0, behavior: 'smooth' });
+    container.value && container.value.scrollTo({ top: 0 });
     clearTimeout(timer)
     timer = null
   }, 100)

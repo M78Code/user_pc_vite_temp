@@ -1,8 +1,8 @@
 <template>
   <div v-show="false"> {{ UserCtr.user_version }} -- {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version}}-{{ BetData.bet_box_h5_show }}</div>
-  <div v-if="BetData.bet_box_h5_show">
+  <div v-if="BetData.bet_box_h5_show && (BetData.bet_single_list.length || BetData.bet_s_list.length)">
     <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
-    <div class="bet-box-info" @touchmove.prevent>
+    <div class="bet-box-info">
       <!-- 头部信息 -->
       <betTitle v-if="BetViewDataClass.bet_order_status == 1"/>
       <!-- 投注状态 -->
@@ -11,7 +11,7 @@
       <div class="bet-box-content">
         <!-- {{BetData.is_bet_single}}-{{BetViewDataClass.bet_order_status}}-{{ BetViewDataClass.orderNo_bet_obj}}-{{ BetData.bet_s_list.length > 1 }}-{{ BetViewDataClass.bet_special_series }} -->
         <!-- 单关 投注 -->
-        <div class="bet-scroll" ref="bet_scroll" @scroll="handle_bet_scroll" @touchmove.prevent
+        <div class="bet-scroll" ref="bet_scroll" @scroll="handle_bet_scroll"
         :class="!BetData.is_bet_single && BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1  ?'h188':''">
           <div v-if="BetViewDataClass.bet_order_status == 1">
             <template v-if="BetData.is_bet_single">
