@@ -1415,7 +1415,7 @@ export default {
       .items-start {
         display: inline-block;
         height: 100%;
-        line-height: .23rem;
+        line-height: .25rem;
       }
     }
     .score-se-inner{
