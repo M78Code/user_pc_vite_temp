@@ -2,7 +2,7 @@ import axios from "axios";
 
 //模块之间通信 ，去耦合化的一个 事件通信 仓库
 
-import all_preload_image_obj from "project_path/src/core/pre-load/index.js";
+import * as all_preload_image_obj from "project_path/src/core/pre-load/index.js";
 
 import {
   useMittOn,
