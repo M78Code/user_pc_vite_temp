@@ -444,10 +444,13 @@ export default {
     background: var(--q-gb-bg-c-25);
     justify-content: space-between;
     &.progress{
-      border-top: 2px solid var(--q-gb-bd-c-1);
+      // border-top: 2px solid var(--q-gb-bd-c-1);
+      border-top: 2px solid rgba(116, 196, 255, 0.5);
     }
     &.not_begin{
-      border-top: 2px solid var(--q-gb-bd-c-13);
+      // border-top: 2px solid var(--q-gb-bd-c-13);
+      border-top: 2px solid rgba(233, 91, 91, 0.51);
+
     }
 
     img {
@@ -990,8 +993,6 @@ export default {
 
   .right-content-style {
     position: relative;
-    width: 1.8rem;
-    flex-shrink: 0;
   }
 
   &.simple,
@@ -1063,8 +1064,7 @@ export default {
     .team-wrapper {
       min-height: 100%;
       height: auto;
-      // width: 1.72rem;
-      flex: 1;
+      width: 1.72rem;
       position: relative;
       z-index: 1;
 
@@ -1678,6 +1678,7 @@ export default {
         .counting{
           font-size: 12px;
           color: var(--q-gb-t-c-19);
+          // margin-bottom: 1px;
         }
         .special{
           font-size: 12px;

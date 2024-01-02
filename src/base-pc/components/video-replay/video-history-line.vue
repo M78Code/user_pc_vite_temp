@@ -27,7 +27,7 @@
     </div>
 </template>
 <script>
-import { api_details } from "src/api/index";
+import { api_details, api_analysis } from "src/api/index";
 import video from "src/core/video/video.js"
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 import {
@@ -195,7 +195,7 @@ export default {
                 device: 'PC',
                 eventCode: 0, // 0全部 1进球 2角球 3罚牌
             }
-            api_details.get_live_video_playback_info(params).then((data ) => {
+            api_analysis.post_playback_video_url(params).then((data ) => {
                 // eventList
                 // let data = [
                 //     {

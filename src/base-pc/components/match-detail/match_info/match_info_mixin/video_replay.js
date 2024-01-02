@@ -1,7 +1,7 @@
   import SliderX from "src/base-pc/components/match-detail/match_info/slider_x.vue"
   import { UserCtr ,MatchDetailCalss,MITT_TYPES,useMittOn} from "src/output/index";
   import { TabWapper as Tabs } from "src/components/common/tab"
-  import { api_details } from "src/api/index";
+  import { api_details, api_analysis } from "src/api/index";
 import { useMittEmit } from "src/output";
 
  
@@ -232,7 +232,7 @@ import { useMittEmit } from "src/output";
             device: 'PC',
             eventCode: this.current_events_type
           }
-          api_details.get_live_video_playback_info(params)
+          api_analysis.post_playback_video_url(params)
               .then(( data ) => {
                 if (data.code == 200 && data.data.eventList) {
                   this.events_list = data.data.eventList
