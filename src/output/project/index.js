@@ -14,4 +14,4 @@ export { default as LayOutMain_pc } from "src/core/layout/index.js";
  */
 export { default as SearchPCClass } from "src/core/search-class/seach-pc-calss.js";
  
-export { default as MenuData } from "src/core/menu-pc/menu-data-class.js";
+export { default as MenuData } from "src/core/menu-pc-yazhou/menu-data-class.js";

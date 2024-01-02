@@ -22,10 +22,6 @@ const ref_data = reactive({
   keyboard_data: [],
 })
 
-const props = defineProps({
-  money:0
-})
-
 onMounted(()=>{
   addnum()
 })
@@ -43,10 +39,10 @@ const addnum = () => {
 
 // 快捷金额
 const set_click_keybord = obj => {
-  console.log(props.money)
+  console.log(BetData.bet_amount)
   // 快捷金额 max 使用限额最大金额作为投注金额
   let key_board_obj = lodash.get(BetData,'bet_keyboard_config',{})
-  let money = props.money
+  let money = BetData.bet_amount
   if (obj == 'MAX') {
       money = key_board_obj.max_money
   } else {
