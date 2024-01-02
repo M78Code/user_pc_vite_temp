@@ -20,9 +20,9 @@
   </div>
 </template>
 <script>
-import common from "src/base-h5/vr/mixin/constant/module/common.js"
+// import common from "src/base-h5/vr/mixin/constant/module/common.js"
 export default {
-  mixins:[common],
+  // mixins:[common],
   props:{
     match:Object,
     i_of_list:Number,

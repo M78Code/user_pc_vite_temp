@@ -27,13 +27,13 @@
 <script>
 import { reactive } from 'vue'
 import { get_now_server } from 'src/core/utils/common/module/other.js'
-import common from 'src/base-h5/vr/mixin/constant/module/common.js'
+// import common from 'src/base-h5/vr/mixin/constant/module/common.js'
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 
 export default {
   name: 'virtual_sports_timer',
-  mixins:[common],
+  // mixins:[common],
   props:{
     // ms:Number, // 指定毫秒数后开赛
     mid:Number|String,// 赛事id

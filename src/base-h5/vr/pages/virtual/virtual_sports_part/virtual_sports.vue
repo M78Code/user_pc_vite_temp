@@ -161,7 +161,7 @@
 </template>
 
 <script>
-import common from 'src/base-h5/vr/mixin/constant/module/common.js';
+// import common from 'src/base-h5/vr/mixin/constant/module/common.js';
 import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/virtual_sports_mixin.js"
 import noData from "src/base-h5/vr/components/common/vr_sport_no_data.vue";
 import matchTab from "src/base-h5/vr/pages/virtual/virtual_sports_part/match_tab.vue"
@@ -184,7 +184,8 @@ import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, LOCAL_PROJECT_FILE_PREFIX,compute_css_obj } from "src/output/index.js"
 export default {
-  mixins:[common,virtual_sports_mixin],
+  // mixins:[common,virtual_sports_mixin],
+  mixins:[virtual_sports_mixin],
   props:{
     menu_list:Array,
     params:Object,

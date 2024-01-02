@@ -164,7 +164,7 @@
 
 <script>
 import virtualSportsTimer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
-import common from "src/base-h5/vr/mixin/constant/module/common.js";
+// import common from "src/base-h5/vr/mixin/constant/module/common.js";
 // import settleDialog from "project_path/components/footer_bar/settle_dialog.vue";
 import loading from 'src/base-h5/components/common/loading.vue';
 import dateMatchList from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_list.vue'
@@ -177,7 +177,7 @@ import { LOCAL_PROJECT_FILE_PREFIX,calc_win, project_name, i18n_t } from 'src/ou
 
 export default {
   name:'VirtualSportsStage',
-  mixins:[common],
+  // mixins:[common],
   props:{
     current_match:Object,
     dialog:false,

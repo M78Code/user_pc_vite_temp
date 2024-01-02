@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import common from "src/base-h5/vr/mixin/constant/module/common.js"
+// import common from "src/base-h5/vr/mixin/constant/module/common.js"
 import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/virtual_sports_mixin.js"
 import virtual_sports_tab from 'src/base-h5/vr/components/virtual_sports_tab.vue'
 import virtual_sports_detail_tab from 'src/base-h5/vr/pages/virtual/details/children/virtual_sports_detail_tab.vue'
@@ -91,7 +91,8 @@ import football_ranking_list from "src/base-h5/vr/pages/virtual/virtual_sports_p
 import { get_now_server } from 'src/core/utils/common/module/other.js'
 
 export default {
-  mixins:[common,virtual_sports_mixin],
+  // mixins:[common,virtual_sports_mixin],
+  mixins:[virtual_sports_mixin],
   name:'virtual_sports_details',
   computed: {
     // ...mapGetters({
