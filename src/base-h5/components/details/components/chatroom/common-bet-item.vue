@@ -121,7 +121,7 @@
 // import { mapGetters } from "vuex";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { format_time_zone_time, format_money2,format_odds, format_score } from "src/output/index.js"
-import { t } from "src/boot/i18n.js";;
+;
 import {UserCtr,compute_css_obj} from "src/output/index.js";
 
 //国际化
