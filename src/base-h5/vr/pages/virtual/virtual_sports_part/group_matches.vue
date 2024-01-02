@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { api_virtual } from "src/api/index.js";
+import { api_v_sports } from "src/api/index.js";
 import no_data from "src/base-h5/vr/components/common/no_data.vue";
 import { lang } from 'src/base-h5/mixin/userctr.js'
 
@@ -84,7 +84,7 @@ export default {
   methods: {
     async get_list() {
       try {
-        let {code , data} = await api_virtual.get_virtual_sport_XZ_team_ranking({tid: this.tid})
+        let {code , data} = await api_v_sports.get_virtual_sport_XZ_team_ranking({tid: this.tid})
         if(code == 200) {
           if(data && data.length > 0){
             this.group_stage_list = data

@@ -385,6 +385,7 @@ const get_lastest_market_info = (type) => {
         if(type == 'submit_bet'){
             submit_handle_lastest_market()
         }
+        set_submit_btn()
     })
 } 
 
@@ -552,22 +553,9 @@ const submit_handle = () => {
     if(BetData.is_bet_pre){
         pre_bet_comparison()
     }
-   
-    // 投注前获取最新的 投注信息 赔率 坑位 等
-    get_lastest_market_info('submit_bet')
-    
-}
-
-// 投注前获取最新的 投注信息 赔率 坑位 等
-// 投注已经准备好了 拿最新的数据 去投注
-const submit_handle_lastest_market = () => {
     // 
     if(submit_btn) return
     // 单关才有预约投注
-    // 是否预约投注  1 预约  0 不预约
-    //  是否合并投注  bet_single_list。length  0:1个 1:多个
-    let pre_type = 0
-    let milt_single = 0
     submit_btn = true
     // 是否投注中遇到了问题 
     let is_bet_error = false
@@ -598,8 +586,8 @@ const submit_handle_lastest_market = () => {
             return set_error_message_config({code:"M400005"},'bet')
         }
 
-        pre_type = BetData.is_bet_pre ? 1 : 0
-        milt_single = BetData.bet_single_list.length > 1 ? 1 : 0
+       
+       
     } else {
         // 未满足串关条件 不允许投注
         if(!bet_special_series_change()){
@@ -644,6 +632,23 @@ const submit_handle_lastest_market = () => {
     if( is_bet_error ){
         return
     }
+   
+      // 不管接口 直接显示
+    BetViewDataClass.set_bet_order_status(2)
+    console.error('ssssss')
+    // 投注前获取最新的 投注信息 赔率 坑位 等
+    get_lastest_market_info('submit_bet')
+    
+}
+
+// 投注前获取最新的 投注信息 赔率 坑位 等
+// 投注已经准备好了 拿最新的数据 去投注
+const submit_handle_lastest_market = () => {
+  
+    // 是否预约投注  1 预约  0 不预约
+    let pre_type = BetData.is_bet_pre ? 1 : 0
+    //  是否合并投注  bet_single_list。length  0:1个 1:多个
+    let milt_single = BetData.bet_single_list.length > 1 ? 1 : 0
 
     let currency = "CNY"
     // 获取当前赛种
@@ -687,6 +692,7 @@ const submit_handle_lastest_market = () => {
     }
     // 投注内容
     params.seriesOrders = seriesOrders
+    
     // 测试投注失败
     // BetViewDataClass.set_bet_order_status(5)
     //return
