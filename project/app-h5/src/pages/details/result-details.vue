@@ -23,9 +23,6 @@
             v-if="show_replay_video"
             @change_fullscreen="change_fullscreen"
             :detail_data="result_detail_data"
-            :tips.sync="tips"
-            :is_show_text="is_show_text"
-            :show_go_back="show_go_back"
             @change_go_back="change_go_back"
           />
         <result-header :result_detail_data="result_detail_data" :style="{display:show_replay_video?'none':'block'}" />
@@ -69,7 +66,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { computed, onMounted, onUnmounted, watch, ref, reactive, provide, nextTick } from "vue";
 import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss, MenuData, useMittOn, useMittEmit, MITT_TYPES } from "src/output/index.js";
 import { details_main } from "./details.js";
-
+const tips = ref(null)
 let route = useRoute()
 let router = useRouter()
 const { get_show_video, change_fullscreen, initEvent, on_listeners, off_listeners } = details_main()

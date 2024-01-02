@@ -23,7 +23,7 @@
 
 <script>
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { t } from "src/boot/i18n.js";;
+;
 //国际化
 
 

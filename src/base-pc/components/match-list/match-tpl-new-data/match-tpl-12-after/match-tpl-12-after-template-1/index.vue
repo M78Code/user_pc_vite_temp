@@ -100,7 +100,7 @@
 // import { ref, defineProps } from 'vue';
 import { ref } from 'vue';
 
-import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr, is_show_sr_flg } from "src/output/index.js";
+import {  get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr, is_show_sr_flg } from "src/output/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";

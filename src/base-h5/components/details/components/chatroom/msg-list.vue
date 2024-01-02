@@ -23,7 +23,7 @@ import chat_msg from 'src/base-h5/components/details/components/chatroom/chat_ms
 import { msgType, muteType } from 'src/base-h5/components/details/components/chatroom/constant.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
-import { t } from "src/boot/i18n.js";;
+;
 //国际化
 
 

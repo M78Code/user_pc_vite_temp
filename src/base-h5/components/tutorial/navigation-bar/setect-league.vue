@@ -49,7 +49,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import matchFilter from "src/base-h5/components/match-filter/index.vue";
-import { i18n_t, compute_local_project_file_path, UserCtr, useMittEmit, MITT_TYPES } from "src/output/index.js";
+import { i18n_t, compute_local_project_file_path, UserCtr, useMittEmit, MITT_TYPES, MenuData } from "src/output/index.js";
+
 defineOptions({
   name: "selectLeague" // 设置组件名称
 });
