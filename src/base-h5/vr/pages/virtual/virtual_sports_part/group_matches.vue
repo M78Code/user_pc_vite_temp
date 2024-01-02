@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { api_v_sports } from "src/base-h5/vr/api";
+import { api_v_sports } from "src/api/index.js";
 import no_data from "src/base-h5/vr/components/common/no_data.vue";
 import { lang } from 'src/base-h5/mixin/userctr.js'
 

@@ -22,6 +22,7 @@ import * as api_match_list from  "./module/matches_list/index.js"
 
 import * as api_hide from "./module/hide-api/index.js"; // hanmar
 
+import * as api_v_sports from "./module/virtual_sports/virtual_sports.js"  //hanmar
 export {
   api_base_data,
   // 公共API接口定义
@@ -59,5 +60,6 @@ export {
   // 埋点api
   api_hide,
   //15分钟赛事数据
-  api_match_list
+  api_match_list,
+  api_v_sports
 };

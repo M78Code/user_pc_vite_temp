@@ -3,20 +3,10 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 国际化默认配置文件
  */
-import { createI18n } from 'vue-i18n'
+ 
 import common_lang from 'project/activity/src/i18n/common-lang/index.json'
-// 所有语中使用到的公共的国际化字符串
-// import other from 'src/i18n/other
-
-const i18n = createI18n({
-  locale: localStorage.pc_user_base_info && localStorage.pc_user_base_info.languageName || 'zh',
-  fallbackLocale: 'zh',
-  // 增加所有语中使用到的公共的国际化字符串
-  messages:{},
-  legacy: true,
-  // 去除控制台i18n警告信息
-  silentTranslationWarn: true,
-})
+ 
+import {i18n} from  "./i18n-2.js"
 
 /**
  * @description: 异步获取国际化数据,并设置
@@ -47,11 +37,7 @@ function loadLanguageAsync (lang){
     return lang;
   })
 }
-// 新增
-function t(key, args, options) {
-  if (!i18n) return key;
-  return i18n.global.tm(key, args, options);
-}
+ 
 // 新增
 function i18n_t(key, args, options) {
   if (!i18n) return key;
@@ -62,5 +48,5 @@ function i18n_tc(key, args, options) {
   if (!i18n) return key;
   return i18n.global.tc(key, args, options);
 }
-export { i18n, loadLanguageAsync, t, i18n_t, i18n_tc }
+export { i18n, loadLanguageAsync, i18n_t, i18n_tc }
 
