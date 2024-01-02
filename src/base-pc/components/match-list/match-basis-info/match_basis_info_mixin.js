@@ -6,7 +6,7 @@
 
 import { reactive, computed } from 'vue';
 import details from "src/core/match-list/details-class/details.js";
-import { t } from "src/output/index.js";
+im
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { is_eports_csid } from "src/core/utils/utils";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'

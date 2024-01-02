@@ -56,7 +56,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import { t, is_eports_csid } from "src/output/index.js";
+import { is_eports_csid } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js";
 import DragScroll from "src/base-pc/components/cus-scroll/drag_scroll.vue";
@@ -69,7 +69,6 @@ const props = defineProps({
 });
 const current_menu = ref("");
 const mi_500_obj = ref([]);
-const name = ref("list_filter_hot");
 let top_logos = [
   "50199", //赛事
   "50101", //竞足

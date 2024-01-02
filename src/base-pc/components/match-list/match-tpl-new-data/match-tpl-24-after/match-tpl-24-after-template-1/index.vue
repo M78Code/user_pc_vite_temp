@@ -49,7 +49,7 @@ import { computed } from 'vue';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-import { t, compute_local_project_file_path } from "src/output/index.js";
+import {  compute_local_project_file_path } from "src/output/index.js";
 // useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps ({
   match: {
