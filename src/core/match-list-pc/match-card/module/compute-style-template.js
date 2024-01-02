@@ -43,7 +43,6 @@ const get_tab_play_height = (mid) => {
 	let template_id = MenuData.get_match_tpl_number()
 	let { play_current_key, other_handicap_list = [] } =
 		MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
-		console.log("jiffy-3",play_current_key)
 	let { tab_play_handicap_height: handicap_height } = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]["match_template_config"] || {};
 	let length = lodash.get(other_handicap_list, "0.ols.length", 3);
 	//5分钟      波胆

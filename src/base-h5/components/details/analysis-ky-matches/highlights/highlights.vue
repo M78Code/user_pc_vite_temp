@@ -231,7 +231,6 @@ import {
 import lodash from 'lodash'
 import {api_common, api_analysis} from "src/api/index.js";
 import { MatchDetailCalss, useMittOn, useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
-import store from "src/store-redux/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { pre_load_video } from "src/core/pre-load/index.js"
 import { format_total_score } from "src/output/index.js"
@@ -364,10 +363,10 @@ setup(props, context){
   onMounted(() => {
     pre_load_video.load_player_js(true);
     console.log(get_detail_data, "get_detail_data");
-    store.dispatch({
-      type: 'SET_EVENT_LIST',
-      data: []
-    })
+    // store.dispatch({
+    //   type: 'SET_EVENT_LIST',
+    //   data: []
+    // })
 
     // 监听iframe传来的消息
     window.addEventListener("message", handleMessage);
