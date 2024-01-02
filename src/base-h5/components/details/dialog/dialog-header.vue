@@ -68,7 +68,8 @@ export default {
 
 <style lang="scss" scoped>
 .dialog-header {
-  width: 3.75rem;
+  // width: 3.75rem;
+  width: 100%;
   //background: url($SCSSPROJECTPATH + "/image/svg/go-back-icon.svg") no-repeat 50%/96% 96%;
   height: 0.44rem;
   line-height: 0.44rem;
