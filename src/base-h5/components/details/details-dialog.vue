@@ -303,6 +303,7 @@ export default defineComponent({
 
 .new-dialog-item-main {
   height: 100%;
+  margin:0 0.12rem
 }
 
 .new-dialog-item-line {
