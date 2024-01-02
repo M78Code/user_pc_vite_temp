@@ -265,7 +265,7 @@
             </div>
 
             <!-- 其他 横向一列 -->
-            <div class="row other margin-other" v-for="(ol_item,ol_index) of other_item_list" :key="ol_index">
+            <div class="row other margin-other radius-4" v-for="(ol_item,ol_index) of other_item_list" :key="ol_index">
 
               <!--  0开 2关 1封 11锁 -->
               <!-- 开盘or锁盘 正常显示 -->
