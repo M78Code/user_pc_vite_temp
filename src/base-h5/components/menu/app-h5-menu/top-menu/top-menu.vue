@@ -138,7 +138,7 @@ const get_user_balance = _.throttle(() => {
     // top: 0;
     // left: 0;
     z-index: 2;
-
+    background-color: var(--q-gb-bg-c-27);
     &.esport,
     &.is_esports {
         background-color: transparent;

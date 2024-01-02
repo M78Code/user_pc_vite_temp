@@ -15,6 +15,9 @@ export * from "src/core/constant/common/index.js";
 export * from "src/core/utils/common/index.js";
 export * from "src/core/file-path/file-path";
 
+export  * from "src/core/pre-load/index.js";
+
+
 export { default as STANDARD_KEY } from "src/core/standard-key";
 
 export { default as uid } from "src/core/uuid/index.js";
@@ -31,6 +34,9 @@ export {
   useMittEmitterGenerator,
   MITT_TYPES,
 } from "src/core/mitt/index.js";
+
+
+
 
 
 

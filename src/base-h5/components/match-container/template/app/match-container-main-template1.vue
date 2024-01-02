@@ -444,7 +444,8 @@ export default {
     background: var(--q-gb-bg-c-25);
     justify-content: space-between;
     &.progress{
-      border-top: 2px solid var(--q-gb-bd-c-1);
+      // border-top: 2px solid var(--q-gb-bd-c-1);
+      border-top: 2px solid rgba(116, 196, 255, 0.5);
     }
     &.not_begin{
       border-top: 2px solid var(--q-gb-bd-c-13);
@@ -1675,7 +1676,7 @@ export default {
         .counting{
           font-size: 12px;
           color: var(--q-gb-t-c-19);
-          margin-bottom: 1px;
+          // margin-bottom: 1px;
         }
         .special{
           font-size: 12px;
