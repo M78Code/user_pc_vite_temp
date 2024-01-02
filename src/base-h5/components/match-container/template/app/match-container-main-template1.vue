@@ -1676,7 +1676,7 @@ export default {
         .counting{
           font-size: 12px;
           color: var(--q-gb-t-c-19);
-          margin-bottom: 1px;
+          // margin-bottom: 1px;
         }
         .special{
           font-size: 12px;

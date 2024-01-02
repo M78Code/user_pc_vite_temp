@@ -189,7 +189,7 @@ export default defineComponent({
     padding:0.08rem;
     color: var(--q-bd-t-c-18);
     .border-style{
-      // border-right: 1px solid var(--q-gb-bd-c-7);
+      background-color: transparent;
     }
   }
 
@@ -201,9 +201,12 @@ export default defineComponent({
     padding: 0 0.15rem;
     display: flex;
     justify-content: center;
+    border-radius: .04rem;
+    overflow: hidden;
 
     .ellipsis {
       height: 0.16rem;
+      overflow: unset;
     }
 
     .odds-osn {
@@ -233,8 +236,5 @@ export default defineComponent({
   .win :deep(.odds-new2) {
     color: #FF4A4A !important;
   }
-}
-.play-box{
-  border-radius: 4px;
 }
 </style>

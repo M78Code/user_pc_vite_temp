@@ -575,7 +575,7 @@ export const useGetResultConfig = () => {
       state.league_type = [i18n_t("common.all")];
       state.league = i18n_t("common.all");
     }
-    api_analysis.post_results_list(state.results_params).then((res) => {
+    api_common.get_virtual_result(state.results_params).then((res) => {
       const code = lodash.get(res, "code");
       const data = lodash.get(res, "data");
       state.refresh_finish = true;
