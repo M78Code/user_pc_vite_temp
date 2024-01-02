@@ -997,7 +997,8 @@ export default defineComponent({
       if (this.is_on_go_detail) {
         return; //  防止急速点击两次
       }
-      
+      // 清除赛事数量
+      MatchResponsive.clear_ball_seed_count()
       this.is_on_go_detail = true;
       if (is_results.value || this.$route.name == "matchList") useMittEmit(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, item)
       // 如果是非赛果电竞赛事，需要设置菜单类型

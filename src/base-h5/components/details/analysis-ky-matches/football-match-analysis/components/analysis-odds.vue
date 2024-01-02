@@ -302,6 +302,7 @@ onUnmounted(() => {
     top: 1.21rem;
     padding: 0.15rem 0.48rem;
     z-index: 100;
+    background: var(--q-analysis-text-color-19);
 
     .heade {
       position: relative;
@@ -390,7 +391,7 @@ onUnmounted(() => {
       position: sticky;
       top: 1.81rem;
       z-index: 80;
-      -background: var(--q-gb-bg-c-28);
+      background: var(--q-gb-bg-c-23);
       .sub_tiele {
         font-family: PingFang SC;
         font-weight: 600;

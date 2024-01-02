@@ -78,7 +78,6 @@
 
         </div>
         <!-- 卡片主内容 -->
-        <!-- <q-slide-transition> -->
         <div :class="['match-content', { 'collapsed': collapsed, 'border-raduis': is_show_border_raduis || is_last }]" v-if="collapsed">
           <div class="match-content-line" v-if="!match.is_show_league"></div>
           <!--标准版 赔率标题栏-->
@@ -249,36 +248,7 @@
                     </div>
 
                   </div>
-                  <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
-                  <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
-                    v-show="footer_menu_id != 114">
-                    <div class="r row no-wrap">
-                      <div class="go-container-w flex no-wrap new-standard">
-                        <!-- 直播 主播 视频 动画  icon 栏目   -->
-                        <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
-                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
-                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.animationUrl }]" :src='animation_icon' />
-                        </div>
-                        <!-- 视频 -->
-                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
-                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.muUrl }]" :src='video_icon' />
-                        </div>
-                        <!-- mng 是否中立场   1:是中立场，0:非中立场-->
-                        <div class="live-i-b-wrap v-mode-span row items-center"
-                          v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
-                          <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
-                        </div>
-                        <!-- 角球 -->
-                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle" v-if="match.csid == 1 && get_corner_kick">
-                          <img :class="['live-icon-btn']" :src='corner_icon' />
-                        </div>
-                        <!-- 此赛事支持提前结算 -->
-                        <div class="column justify-center " v-if="match_of_list.mearlys == 1" @click.stop>
-                          <img :src="mearlys_icon_app" alt="">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  
                 </div>
                 <!--  -->
                 <div class="right-content-style">
@@ -287,17 +257,47 @@
                 </div>
                 </div>
               </div>
-              <!-- 展示三行的不展示比分 -->
-              <template v-if="![1, 4, 11, 14, 15, 16].includes(+match.csid)">
-                <div class="score-content">
-                  <ScoreList :class="[match.csid == 8 && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
+              <div class="card-footer">
+                <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
+                <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
+                  v-show="footer_menu_id != 114">
+                  <div class="r row no-wrap">
+                    <div class="go-container-w flex no-wrap new-standard">
+                      <!-- 直播 主播 视频 动画  icon 栏目   -->
+                      <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
+                      <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
+                        <img :class="['live-icon-btn', { disabled: !media_button_state_obj.animationUrl }]" :src='animation_icon' />
+                      </div>
+                      <!-- 视频 -->
+                      <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
+                        <img :class="['live-icon-btn', { disabled: !media_button_state_obj.muUrl }]" :src='video_icon' />
+                      </div>
+                      <!-- mng 是否中立场   1:是中立场，0:非中立场-->
+                      <div class="live-i-b-wrap v-mode-span row items-center"
+                        v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
+                        <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
+                      </div>
+                      <!-- 角球 -->
+                      <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle" v-if="match.csid == 1 && get_corner_kick">
+                        <img :class="['live-icon-btn']" :src='corner_icon' />
+                      </div>
+                      <!-- 此赛事支持提前结算 -->
+                      <div class="column justify-center " v-if="match_of_list.mearlys == 1" @click.stop>
+                        <img :src="mearlys_icon_app" alt="">
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </template>
+                <!-- 展示三行的不展示比分 -->
+                <template v-if="![1, 4, 11, 14, 15, 16].includes(+match.csid)">
+                  <div class="score-content">
+                    <ScoreList :class="[match.csid == 8 && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
+                  </div>
+                </template>
+              </div>
             </div>
           </div>
         </div>
-
-        <!-- </q-slide-transition> -->
       </div>
     </template>
   </div>
@@ -1083,7 +1083,7 @@ export default {
 
       .score-wrapper {
         position: absolute;
-        bottom: 2px;
+        bottom: 0;
 
         .score-section {
           padding-left: 0;
@@ -1399,14 +1399,22 @@ export default {
     }
   }
 }
-.score-content{
+
+.card-footer{
   position: absolute;
-  bottom: -3px;
-  width: 80%;
+  bottom: 5px;
+  width: 100%;
+  height: 25px;
   z-index: 100;
-  height: 26px;
-  overflow-x: auto;
-  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.score-content{
+  width: 80%;
+  :deep(.score-section){
+    height: 100%;
+  }
   :deep(.score-se-inner2){
     display: flex;
     // flex-direction: row-reverse;
