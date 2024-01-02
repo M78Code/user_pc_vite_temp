@@ -72,7 +72,7 @@
                   {{ match.tn }}
                 </span>
               </span>
-              <IconWapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': collapsed}]" />
+              <IconWapper color="#c9c9c9" name="icon-arrow" size="14px"  :class="['icon-wapper', {'close': collapsed}]" />
             </span>
           </div>
 
@@ -388,7 +388,7 @@ export default {
   display: flex;
   height: 30px;
   background: var(--q-gb-bg-c-25);
-  padding: 0 10px;
+  padding: 0 15px;
   align-items: center;
   justify-content: space-between;
   border-top: 2px solid var(--q-gb-bd-c-3);
@@ -463,7 +463,7 @@ export default {
       transform: rotate(-90deg);
       width: 20px;
       height: 16px;
-      margin-right: 0.06rem;
+      margin-right: 14px;
     }
     .collapsed{
       transform: rotate(0);
@@ -935,6 +935,7 @@ export default {
       padding-left: 15px;
     }
     .icon-wapper{
+      margin-right: 6px;
       transform: rotate(90deg);
     }
     .close{
@@ -1692,7 +1693,7 @@ export default {
           // margin-bottom: 1px;
         }
         .special{
-          font-size: 12px;
+          font-size: 10px;
         }
       }
     }
