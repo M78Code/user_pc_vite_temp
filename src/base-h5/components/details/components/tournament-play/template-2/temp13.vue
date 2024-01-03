@@ -393,7 +393,7 @@ export default defineComponent({
         }
         init_data.left -= dom_width
          // init_data.left 左滑距离+13   以免右侧留白
-          init_data.left =  init_data.left - rem (init_data.index* 0.06)
+          init_data.left =  init_data.left - rem (init_data.index* 0.04)
           init_data.prev_left -= dom_width
       } else {
         init_data.index =  init_data.index-1
@@ -404,7 +404,7 @@ export default defineComponent({
           return
         }
         init_data.left += dom_width
-         init_data.left = init_data.left-rem (init_data.index* 0.06)
+         init_data.left = init_data.left-rem (init_data.index* 0.04)
          init_data.prev_left+= dom_width
       }
     }, 50);
@@ -509,7 +509,9 @@ export default defineComponent({
   }
 
   .slide-wrap {
-    padding-right:0.04rem;
+    // padding-right:0.04rem;
+    padding-left: 0.02rem;
+    // padding-right: 0.02rem;
     transition: left 0.3s;
     position: absolute;
     top: 0;
@@ -519,7 +521,7 @@ export default defineComponent({
     height: 0.48rem;
     .bet-item {
       // min-width: 0.85rem;   // rem动态计算，这里注释，写在行内
-       margin: 0 0.04rem;
+       margin: 0 0.02rem;
         height: .48rem;
       &:nth-child(1) {
            //margin-left:0.08rem;
@@ -539,7 +541,7 @@ export default defineComponent({
     position: relative;
     overflow: hidden;
       box-sizing: border-box;
-      padding: .05rem;
+      padding: .08rem 0.10rem;
   }
 
   .bor-style {
