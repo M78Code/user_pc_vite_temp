@@ -764,6 +764,13 @@ class MenuData {
     return [101210, 101310].includes(+this.mid_menu_result.lv2_mi);
   }
   /**
+   * 是否选中了早盘
+   *  mi [number|string] 要比对的值
+  */
+  is_zaopan(mi) {
+    return this._is_cur_mi(3, mi)
+  }
+  /**
    * 强制更新 菜单的版本号 ， 会重新计算
    *
    * 更新菜单整体视图
