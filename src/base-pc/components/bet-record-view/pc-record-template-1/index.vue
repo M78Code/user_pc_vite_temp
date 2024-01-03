@@ -44,8 +44,8 @@
               </template>
               <q-card-section class="bet-item-result" :key="'bet-result-' + index">
                 <!--结算结果-->
-                <bet-record-result :index="index" :item="item" :orderNo_data_list="orderNo_data_list"
-                  :orderNo_data_obj="orderNo_data_obj" ></bet-record-result>
+                <bet-record-result :index="index" :item="item" :orderNo_data_list="ref_data.orderNo_data_list"
+                  :orderNo_data_obj="ref_data.orderNo_data_obj" ></bet-record-result>
               </q-card-section>
 
             </template>
