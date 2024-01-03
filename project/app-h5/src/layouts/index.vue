@@ -15,7 +15,7 @@
         </template>
       </MenuWapper> -->
       <!-- 当路由为盘口教程时 不展示topMenu 和 scrollMenu -->
-      <layoutTop />
+      <!-- <layoutTop /> -->
       
       <router-view />
       <BetBoxWapper />
@@ -83,7 +83,7 @@ import { Tabbar } from 'src/base-h5/components/menu/app-h5-menu/index'
 import { BetBoxWapper } from "src/base-h5/components/bet";
 
 import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
-import layoutTop from "./top.vue"
+// import layoutTop from "./top.vue"
 import { useRoute } from "vue-router";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";

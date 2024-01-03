@@ -171,6 +171,8 @@ export const category_info = (category_arr=[]) => {
   };
   let message_fun = null
   onMounted(() => {
+   // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上  刚进入页面应全展开
+    SessionStorage.set("SET_FEWER", 1);
     initEvent()
     // 获取置顶列表数据
     match_list_new()
