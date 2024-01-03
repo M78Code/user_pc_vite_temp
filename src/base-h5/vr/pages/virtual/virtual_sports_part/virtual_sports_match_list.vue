@@ -28,8 +28,7 @@
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue";
 import virtual_sports_match_item from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_item.vue";
-import SVirtual from "src/base-h5/vr/components/skeleton/virtual_sports/virtual.vue"
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5} from "src/output/index.js"
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
@@ -90,7 +89,6 @@ export default {
   components:{
     'v-s-match-timer':v_s_match_timer,
     'v-sports-match-item':virtual_sports_match_item,
-    SVirtual
   }
 }
 </script>

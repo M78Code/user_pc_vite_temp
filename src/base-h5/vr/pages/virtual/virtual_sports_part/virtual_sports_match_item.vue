@@ -193,7 +193,6 @@ import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import v_s_odd_item from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_odd_item.vue"
 import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue"
 import odd_column_item from "src/base-h5/components/match-container/template/app/components/odd-column-item.vue"
-// import betting from 'project_path/mixins/betting/betting.js';
 import virtual_sports_m_item_mixin from 'src/base-h5/vr/mixin/virtual_sports/virtual_sports_m_item_mixin.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
@@ -203,7 +202,6 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { IconWapper } from 'src/components/icon'
 
 export default {
-  // mixins:[betting,virtual_sports_m_item_mixin],
   mixins:[virtual_sports_m_item_mixin],
   props:{
     i:Number,
@@ -240,11 +238,7 @@ export default {
     ]
   },
   methods:{
-    // ...mapActions([
-    //   // 设置玩法项默认选中
-    //   "set_details_item",
-    // ]),
-    // ...mapMutations(['set_current_gotodetail_match','set_toast']),
+    // 设置玩法项默认选中
     set_details_item(data){ VR_CTR.state.details_item = data },
     set_current_gotodetail_match(data){ return VR_CTR.state.current_gotodetail_match = data },
     set_toast(){},
@@ -580,17 +574,11 @@ export default {
   },
   computed:{
     // ...mapGetters({
-    //   footer_sub_menu_id:"get_footer_sub_menu_id",
-    //   get_video_process_data:"get_video_process_data",
-    //   get_newer_standard_edition:"get_newer_standard_edition",
-    //   get_n_s_changed_loaded:"get_n_s_changed_loaded",
-    //   get_curr_sub_menu_type:"get_curr_sub_menu_type",
     //   get_theme:'get_theme',
     //   get_access_config:'get_access_config',
     // }),
     footer_sub_menu_id(){return VR_CTR.state.footer_sub_menu_id },
     get_video_process_data(){return VR_CTR.state.video_process_data},
-    get_n_s_changed_loaded(){return false;},
     get_curr_sub_menu_type(){ return VR_CTR.state.curr_sub_menu_type },
     get_theme(){return 'theme01'},
     get_access_config(){return {handicapNum: true}},
@@ -629,9 +617,6 @@ export default {
     if(this.vsports){
       this.vsports.destroy();
     }
-    // this.$root.$off(this.emit_cmd.EMIT_VIDEO_PROCESS_DATA_GOT,this.video_process_init_video);
-    // this.$root.$off(this.emit_cmd.EMIT_PRE_COUNTING_EDN,this.pre_counting_end_handle)
-    // this.$root.$off(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,this.xu_ni_ty_standard_odd_status)
     this.emitters.map((x) => x());
   }
 }
