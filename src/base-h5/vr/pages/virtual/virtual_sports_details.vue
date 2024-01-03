@@ -90,9 +90,7 @@ export default {
   mixins:[virtual_sports_mixin],
   name:'virtual_sports_details',
   computed: {
-    // is_show_analyse(){return VR_CTR.state.is_show_details_analyse},
     matchid(){return VR_CTR.state.goto_detail_matchid},
-    get_current_gotodetail_match(){return },
     sub_menuid(){return VR_CTR.state.current_sub_menuid},
     sub_menu_type(){return VR_CTR.state.curr_sub_menu_type },
     current_league(){return VR_CTR.state.current_league},
@@ -113,7 +111,6 @@ export default {
   data(){
     return{
       vsport_operate:null,
-      match_of_video:null,
       show_debug:sessionStorage.getItem('wsl') == '9999',
       mid:'',
       current_match:{},
