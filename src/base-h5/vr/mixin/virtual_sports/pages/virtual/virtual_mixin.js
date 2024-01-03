@@ -1,7 +1,6 @@
 /*
  * @Description:虚拟体育最外层父组件，包括了上方的球种菜单切换
  */
-import virtualSports from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports.vue";    // 虚拟体育
 // import setMenu from "src/project/components/common/set_menu.vue"    // 设置菜单
 import { api_v_sports } from "src/api/index.js";
 import { utils } from "src/core/utils/common/module/utils.js";
@@ -284,7 +283,4 @@ export default {
     // 当前选中的二级菜单type
     get_curr_sub_menu_type(){return VR_CTR.state.curr_sub_menu_type},
   },
-  components: {
-    virtualSports,
-  }
 };

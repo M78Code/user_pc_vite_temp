@@ -48,8 +48,12 @@
 
 <script>
 import date_match_s_data_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/date_match_s_data_mixin.js";
+import teamImg from 'src/base-h5/vr/components/team_img.vue';
 export default {
   mixins:[date_match_s_data_mixin],
+  components:{
+    'team-img':teamImg
+  }
 }
 </script>
 <style lang="scss" scoped>

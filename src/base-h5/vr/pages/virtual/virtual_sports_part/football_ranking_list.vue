@@ -33,9 +33,13 @@
 </template>
 <script>
 import football_ranking_list_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/football_ranking_list_mixin.js";
+import no_data from "src/base-h5/vr/components/common/vr_sport_no_data.vue";
 export default {
   mixins:[football_ranking_list_mixin],
   name:'ranking_list',
+  components: {
+    "no-data": no_data
+  },
 }
 </script>
 

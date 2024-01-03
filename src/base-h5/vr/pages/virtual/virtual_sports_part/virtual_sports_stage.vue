@@ -148,9 +148,19 @@
 </template>
 <script>
 import virtual_sports_stage_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/virtual_sports_stage_mixin.js";
+import virtualSportsTimer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
+import loading from 'src/base-h5/components/common/loading.vue';
+import dateMatchList from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_list.vue'
+import virtualBasketball from 'src/base-h5/vr/pages/virtual/details/children/virtual_basketball.vue'
 export default {
   mixins:[virtual_sports_stage_mixin],
   name:'VirtualSportsStage',
+  components:{
+    'virtual-sports-timer':virtualSportsTimer,
+    dateMatchList,
+    loading,
+    virtualBasketball
+  },
 }
 </script>
 

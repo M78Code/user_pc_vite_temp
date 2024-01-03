@@ -53,9 +53,13 @@
 </template>
 <script>
 import virtual_basketball_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/details/children/virtual_basketball_mixin.js";
+import teamImg from 'src/base-h5/vr/components/team_img.vue';
 export default {
   mixins:[virtual_basketball_mixin],
   name:'virtual_basketball',
+  components:{
+    teamImg,
+  },
 }
 </script>
 <style lang="scss" scoped>

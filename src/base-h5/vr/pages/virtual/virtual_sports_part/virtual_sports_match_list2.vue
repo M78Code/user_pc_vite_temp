@@ -25,8 +25,14 @@
 </template>
 <script>
 import virtual_sports_match_list2_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/virtual_sports_match_list2_mixin.js";
+import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue";
+import virtual_sports_match_item from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_item2.vue";
 export default {
   mixins:[virtual_sports_match_list2_mixin],
+  components:{
+    'v-s-match-timer':v_s_match_timer,
+    'v-sports-match-item':virtual_sports_match_item,
+  }
 }
 </script>
 

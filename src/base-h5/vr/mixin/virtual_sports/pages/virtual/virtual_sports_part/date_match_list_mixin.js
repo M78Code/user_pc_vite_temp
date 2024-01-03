@@ -3,8 +3,6 @@
  */
 import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 // import common from 'src/base-h5/vr/mixin/constant/module/common.js';
-import teamImg from 'src/base-h5/vr/components/team_img.vue';
-import dateMatchSdata from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_s_data.vue'
 import { api_v_sports } from "src/api/index.js";
 import { emitter, useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { get_now_server } from 'src/core/utils/common/module/other.js'
@@ -240,10 +238,6 @@ export default {
   },
   computed:{
   	get_current_batch(){return VR_CTR.state.current_batch}
-  },
-  components:{
-    'date-match-sdata':dateMatchSdata,
-    'team-img':teamImg,
   },
   destroyed () {
     this.clear_timer()
