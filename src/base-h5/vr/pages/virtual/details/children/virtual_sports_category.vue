@@ -118,6 +118,7 @@ export default {
     get_uid(){},
     get_details_tabs_list(){},
     get_fewer(){},
+    get_list(){},
     get_current_mid(){ return VR_CTR.state.current_match_mid },
     get_current_league(){ return VR_CTR.state.current_league },
     get_is_user_refreshing(){},
