@@ -162,7 +162,7 @@ const set_bet_is_accept = () => {
     color: var(--q-gb-bd-c-13);
     text-align: center;
     font-weight: 600;
-    border-radius: 4px;
+    border-radius: 40px;
     background: var(--q-gb-bg-lg-1);
   }
 
@@ -171,7 +171,7 @@ const set_bet_is_accept = () => {
     text-align: center;
     height: 36px;
     line-height: 36px;
-    border-radius: 4px;
+    border-radius: 36px;
     font-weight: 400;
     font-size: 12px;
     border: 0.5px solid var(--q-gb-bd-c-8);

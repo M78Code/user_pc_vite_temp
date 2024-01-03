@@ -1,6 +1,4 @@
 <!--
- * @Author: ledron
- * @Date: 2020-12-29 17:13:55
  * @Description: 虚拟体育 小组赛页面 只需要传个 tid 联赛id进来
 -->
 <template>
@@ -44,66 +42,16 @@
     <no-data v-if="no_data" which='noMatch' height='500' class="no-list"></no-data>
   </div>
 </template>
-
 <script>
-import { api_v_sports } from "src/api/index.js";
-import no_data from "src/base-h5/vr/components/common/no_data.vue";
-import { lang } from 'src/base-h5/mixin/userctr.js'
-
+import group_matches_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/group_matches_mixin.js";
+import no_data from "src/base-h5/vr/components/common/vr_sport_no_data.vue";
 export default {
-  name: "group_matches",
+  mixins:[group_matches_mixin],
+  name:'group_matches',
   components: {
     "no-data": no_data
   },
-  computed: {
-    // ...mapGetters(['get_lang']),
-    // get_lang(){ return 'zh' }
-  },
-  props:{
-    tid: Number|String,
-    current_match: {
-      type: Object,
-      default: () => ({})
-    }
-  },
-  data() {
-    return {
-      group_stage_list: [],
-      no_data: false,
-      lang
-    }
-  },
-  mounted() {
-  },
-  watch: {
-    tid: {
-      handler: 'get_list',
-      immediate: true,
-    }
-  },
-  methods: {
-    async get_list() {
-      try {
-        let {code , data} = await api_v_sports.get_virtual_sport_XZ_team_ranking({tid: this.tid})
-        if(code == 200) {
-          if(data && data.length > 0){
-            this.group_stage_list = data
-          }else {
-            this.no_data = true
-          }
-        }
-      } catch (error) {
-        this.no_data = true
-        console.error(error);
-      }
-    },
-  },
-  destroyed () {
-    for (const key in this.$data) {
-      this.$data[key] = null
-    }
-  },
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -116,7 +64,7 @@ export default {
   justify-content: center;
   align-items: center;
   // background-color: yellowgreen;
-  background-color: #F8F9FA;
+  background-color: var(--q-gb-bg-c-21);
 
   .col1 {
     width: 10%;
@@ -184,7 +132,7 @@ export default {
     width: 98vw;
     position: relative;
     margin-bottom: 0.08rem;
-    background-color: #fff;
+    background-color: var(--q-gb-bg-c-18);
 
     // background-color: yellow;
     box-shadow: 0rem 0rem 0.02rem 0.01rem var(--q-gb-bg-c-18);

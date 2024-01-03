@@ -61,11 +61,11 @@ const router = createRouter({
         //   name: "activity_task",
         //   component: () => import("../activity-page/activity-task/index.vue")
         // },
-        {
-          path: "/virtual", // vr体育
-          name: "virtual_sports",
-          component: () => import("../pages/virtual/index.vue"),
-        },
+        // {
+        //   path: "/virtual", // vr体育
+        //   name: "virtual_sports",
+        //   component: () => import("../pages/virtual/index.vue"),
+        // },
         {
           path: "/collect", // 收藏
           name: "collect",

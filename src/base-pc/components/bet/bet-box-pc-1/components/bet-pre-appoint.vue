@@ -22,13 +22,23 @@
       <div class="col-2 mt5">{{ i18n_t('bet.bet_odds') }}</div>
       <!--减号 赔率输入框 加号-->
       <div class="col-9 input-number mt5">
-        <div @click="sub_handle('odds_value')" class="sub-number"
-          :class="{ 'disabled': ref_data.min_odds_value == ref_data.appoint_odds_value }">-</div>
+        <div 
+          class="sub-number"
+          :class="{ 'disabled': ref_data.min_odds_value == ref_data.appoint_odds_value }" 
+          v-touch-repeat:0:300.mouse.enter.space="()=>{
+            sub_handle('odds_value')
+          }"
+        >-</div>
         
         <input class="pre-input" v-model="ref_data.appoint_odds_value" ref="currency_input">
 
-        <div class="add-number" :class="{ 'disabled': ref_data.appoint_odds_value >= 355 }"
-          @click="add_handle('odds_value')">+</div>
+        <div 
+          class="add-number" 
+          :class="{ 'disabled': ref_data.appoint_odds_value >= 355 }"
+          v-touch-repeat:0:300.mouse.enter.space="()=>{
+            add_handle('odds_value')
+          }"
+        >+</div>
       </div>
       <div class="col-1"></div>
     </div>
@@ -215,6 +225,66 @@ const appoint_odds_value_handle = (event) => {
     ref_data.min_odds_value = -1000;//这里输入的值如果小于最小值的话，给个很小的值，目的不让当前输入值变成最小值
   }
 }
+//  49381 【生产】【产品】【三端】预约投注-增减赔率优化
+// 赔率列表 根据赔率判断点击增加或减少对应的赔率数值
+const odd_list = [ 
+  {
+    oddsRange: 3, // 范围
+    add_odd: 0.01 // 增减赔率
+  },
+  {
+    oddsRange: 5,
+    add_odd: 0.05
+  },
+  {
+    oddsRange: 10,
+    add_odd: 0.1
+  },
+  {
+    oddsRange: 20,
+    add_odd: 0.5
+  },
+  {
+    oddsRange: 9999999999, // 无限大
+    add_odd: 1
+  },
+]
+
+    // 格式化预约赔率
+const format_pre_odds = (appoint_odds_value) => {
+  /**
+    // 49381 【生产】【产品】【三端】预约投注-增减赔率优化
+    赔率范围	小数位精确	调整幅度
+    < 3.00	2位小数	0.01
+    ≥3.00 且＜5.00	2位小数	0.05
+    ≥5.00 且 ＜10.0的	2位小数	0.10
+    ≥10.0 且 ＜20.0	1位小数（仅出现.0与.5）	0.50
+    ≥20.0～无限	仅展示个位数
+    1.00
+
+    例如：
+    < 3.00的：如 1.99，2.00，2.01，2.99；
+    ≥3 且＜5.00的：如 3.00，3.05， 3.55 ，4.95；
+    ≥5 且 ＜10.00的：如5.00，5.10， 6.20 ，7.30，9.90；
+    ≥10 且 ＜20.0的：如10.0，10.5， 11.5 ，18.5，20.0；
+    ≥20 ～无限：如20，21， 22 ，99，100，300，......
+  */
+  let decimal_digits = lodash_.split(appoint_odds_value, '.', 2);
+  let decimal_digits_1 = decimal_digits[1] || '';
+  if(+(decimal_digits[0]) >= 20) {
+    appoint_odds_value = decimal_digits[0]
+  } else if( decimal_digits_1[0] == undefined && decimal_digits_1[1] == undefined && +(decimal_digits[0]) < 10){
+    appoint_odds_value = decimal_digits[0] + '.00'
+  } else if(+(decimal_digits[0]) != 0 && decimal_digits_1[0] != undefined && decimal_digits_1[1] == undefined && +(decimal_digits[0]) < 10) {
+    appoint_odds_value = decimal_digits[0] + '.' + decimal_digits_1 + '0'
+  } else if(+(decimal_digits[0]) >= 10 && decimal_digits_1[0] == undefined && decimal_digits_1[1] == undefined) {
+    appoint_odds_value = decimal_digits[0] + '.0'
+  } else {
+    return appoint_odds_value ? appoint_odds_value : ''
+  }
+  return appoint_odds_value
+}
+
 /**
  * @description:点击加号(球头或者赔率)的修改逻辑
  * @param {string} type  赔率还是球头
@@ -225,7 +295,11 @@ const add_handle = (type, index = 1) => {
   //赔率加
   if (type == 'odds_value') {
     let aov = ref_data.appoint_odds_value;
-    ref_data.appoint_odds_value = mathJs.add(aov,0.01);
+    const list = odd_list.find(item => {
+      return aov < item.oddsRange
+    });
+
+    ref_data.appoint_odds_value = format_pre_odds(mathJs.add(aov,list.add_odd));
     //获取当前需要添加焦点的输入框，如果存在输入框，则获取焦点
     let input = index == 0 ? currency_input : ''
     if (input) input.focus();
@@ -297,7 +371,11 @@ const sub_handle = (type, index = 1) => {
   if (type == 'odds_value') {
     if (ref_data.appoint_odds_value > ref_data.min_odds_value) {
       let aov = ref_data.appoint_odds_value;
-      ref_data.appoint_odds_value = mathJs.subtract(aov,0.01);
+      const list = odd_list.find(item => {
+        return aov <= item.oddsRange
+      });
+
+      ref_data.appoint_odds_value = format_pre_odds(mathJs.subtract(aov, list.add_odd));
       let input = index == 0 ? currency_input : ''
       if (input) input.focus();
     } else {

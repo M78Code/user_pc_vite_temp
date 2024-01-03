@@ -113,35 +113,6 @@ const score = computed(() => {
   return score;
 });
 
-onMounted(() => {
-  // 异步设置组件是否挂载完成
-  // setTimeout(() => {
-  //   is_mounted.value = true;
-  // });
-});
-
-// 监听玩法ID变化 取消赔率升降
-// watch(props.ol_data._hpid, () => {
-//   clear_odds_lift()
-// }) 
-
-// 监听oid 取消赔率升降
-// watch(props.ol_data.oid, () => {
-//   clear_odds_lift()
-// })  
-
-// 监听投注项赔率变化
-// watch(props.ol_data.ov, (cur, old) => {
-//   // 赔率值处理
-//   format_odds(cur, 1);
-//   if (props.ol_data) {
-//     let { _mhs, _hs, os } = props.ol_data;
-//     odds_state.value = get_odds_state(_mhs, _hs, os);
-//   }
-//   // 红升绿降变化
-//   set_odds_lift(cur, old);
-// })  
-
 /**
  * 赔率转换
  * @param  {number} ov - 赔率值
@@ -390,7 +361,7 @@ onUnmounted(() => {
 .handicap-value-text {
   font-weight: 500;
   white-space: nowrap;
-  color: var(--q-gb-bg-c-13);
+  color: var(--q-gb-t-c-16);
 }
 .vertical {
   flex-direction: column;
@@ -407,6 +378,6 @@ onUnmounted(() => {
 }
 .active {
   background: var(--q-gb-bg-c-13);
-  color: var(--q-gb-t-c-18);
+  color: var(--q-gb-t-c-18) !important;
 }
 </style>

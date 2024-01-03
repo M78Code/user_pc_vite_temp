@@ -4,7 +4,6 @@ import * as api_search from "./module/search/index.js"; //masterj
 import * as api_details from "./module/details/index.js"; //masterj
 import * as api_filter from "./module/filter/filter_api.js"; //masterj
 import * as api_account from "./module/account/account_api.js"; //bruce
-import * as api_virtual from "./module/virtual/index.js"; //bruce
 import * as api_analysis from "./module/analysis/analysis.js"; //bruce
 import * as api_chatroom from "./module/chatroom/index.js"; //bruce
  
@@ -39,8 +38,6 @@ export {
   api_filter,
   // 用户模块相关api定义
   api_account,
-  // 虚拟体育相关
-  api_virtual,
   // 赛事分析相关
   api_analysis,
   // 聊天室相关

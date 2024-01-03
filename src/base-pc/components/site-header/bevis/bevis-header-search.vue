@@ -21,7 +21,7 @@ const current_index = ref(0)
 
 const ShowSearch = function (toggle){
     SearchPCClass.set_search_isShow(toggle)
-    if(toggle) _getSearchHistory()
+    if(toggle) initData();
     ++SearchWapperRefKey.value
 }
 const ChangeShowHotListData = function (){
@@ -107,14 +107,20 @@ const _querySearchResults = function (keyword){
 
     })
 }
-
+/**
+ * 初始化数据
+ */
+const initData = () =>{
+    _getSearchHistory()
+    _getSportList()
+    _getHotSearch()
+    _getHotPush()
+}
 provide('ClearHistories',_clearSearchHistory)
 provide('ChangeShowHotListData',ChangeShowHotListData)
 
 onMounted(()=>{
-    _getSportList()
-    _getHotSearch()
-    _getHotPush()
+    initData()
 })
 </script>
 
@@ -132,13 +138,13 @@ onMounted(()=>{
                 <p class="cursorPointer" @click.self.stop="ShowSearch(false)">|&nbsp;&nbsp;关闭</p>
             </div>
             <div class="historyBox">
-            <!--
-            <TabWapper :list="SearchPCClass.sportList" @onclick="tab_click" is_show_line :currentIndex="current_index" :padding="15"
-                       :hasActivity="hasActivity" :line_width="36" name="sportName"></TabWapper>
-            -->
-                <bevisSearchList v-show="(SearchPCClass?.searchHistory || []).length" kind="history"
-                                 :list="SearchPCClass?.searchHistory ?? []" @Delete="_deleteSearchHistory" />
-                <bevisSearchList kind="hot" :list="SearchPCClass?.showHotList ?? []" @Search="_addSearchHistory" />
+            <!--  @onclick="tab_click" :hasActivity="hasActivity" -->
+            <TabWapper :list="SearchPCClass.sportList" is_show_line :currentIndex="current_index" :padding="15"
+                        :line_width="36" name="sportName"></TabWapper>
+           
+            <bevisSearchList v-show="(SearchPCClass?.searchHistory || []).length" kind="history"
+                                :list="SearchPCClass?.searchHistory ?? []" @Delete="_deleteSearchHistory" />
+            <bevisSearchList kind="hot" :list="SearchPCClass?.hotSearchList ?? []" @Search="_addSearchHistory" />
             </div>
         </div>
     </nav>

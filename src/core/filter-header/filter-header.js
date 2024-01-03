@@ -27,6 +27,7 @@ class FilterHeader {
 
   //保存显示搜索组件状态
   set_show_filter_popup(data) {
+    console.log('datadata',data)
     this.show_filter_popup = data;
     this.set_filter_header_version();
   }

@@ -8,6 +8,7 @@
       <div class="left-header-all">
         <!-- 昵称、余额 -->
         <main-header />
+        
         <!-- 投注记录 入口 -->
         <div v-show="LayOutMain_pc.layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
           class="menu-item menu-top menu-border item bet_history"
@@ -210,7 +211,9 @@ const get_unsettle_tickets_count_config = () => {
   width: 100%;
   height: 100%;
 }
-
+.main-header{
+  padding-right: 14px;
+}
 .left-bg-box {
   width: 100%;
 }

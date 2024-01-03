@@ -78,7 +78,7 @@
 </template>
  
 <script>
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 export default {
   data() {
     return {
@@ -87,11 +87,8 @@ export default {
     };
   },
   computed:{
-    // ...mapGetters({
-    //   match:'get_current_gotodetail_match'
-    // }),
     match(){
-      return VR_CTR.get_current_gotodetail_match()
+      return VR_CTR.state.current_gotodetail_match
     },
   },
   created() {

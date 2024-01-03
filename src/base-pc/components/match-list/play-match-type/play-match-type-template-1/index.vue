@@ -1,7 +1,8 @@
 <template>
   <!-- 滚球盘 标题-->
   <div :class="['match-type text-left yb-flex-between', { 'match-type-even': card_style_obj.is_even_type }]"
-    @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
+  @click="cur_title_info.func_name(card_style_obj)">
+    
     <div class="col-left">
       <!-- 滚球盘 -->
       {{ cur_title_info.name }}
@@ -21,7 +22,12 @@ import MenuData from 'src/core/menu-pc/menu-data-class.js'
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-
+import {
+  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie
+} from 'src/core/match-list-pc/match-card/module/fold-csid.js';
+import {
+  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie
+} from 'src/core/match-list-pc/match-card/module/fold-kaisai-weikaisi.js';
 
 const route = useRoute()
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -33,28 +39,27 @@ const props = defineProps({
 })
 const cur_title_info = computed(() => {
   let { card_type = 'no_start_title', csna, match_count } = props.card_style_obj;
-  let func_name = 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie'
   let title_obj = {
     //球种标题
     sport_title: {
       name: csna,
       match_count: lodash.get(MatchListCardData, `sport_match_count.csid_${props.card_style_obj.csid}.count`),
       show_num: MenuData.menu_root != 400 && route.name != "search",
-      func_name: 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie'
+      func_name: recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie
     },
     //滚球标题
     play_title: {
       name: i18n_t("menu.match_play"),
       match_count,
       show_num: true,
-      func_name
+      func_name:recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie
     },
     //未开赛标题
     no_start_title: {
       name: i18n_t("list.match_no_start"),
       match_count,
       show_num: true,
-      func_name
+      func_name:recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie
     },
   };
   return title_obj[card_type];

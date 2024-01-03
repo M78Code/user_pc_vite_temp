@@ -574,6 +574,8 @@ class AllDomain {
     this.oss_file_content = obj;
     // 设置 oss文件中的数据到全局配置文件中
     this.set_all_config_from_oss_file_data_2(obj);
+    // 全局变量可视化设置
+    window.BUILDIN_CONFIG.OSS_JSON = obj;
   }
 
   /**
@@ -1210,7 +1212,6 @@ class AllDomain {
    */
   async toppic_fast(api=[], callback, count=0) {
     count++;
-    console.log('toppic_fast->',count);
     // 清除计时器
     clearTimeout(this.timer_toppic_fast);
     let reqs = [];
