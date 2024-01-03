@@ -120,7 +120,7 @@ export default defineComponent({
 .odds_new {
   width: 100%;
   color: var(--q-gb-t-c-18); // var(--q-detials-color-6);
-  font-size: 0.14rem; //todo app-h5
+  font-size: 0.16rem; //todo app-h5
   font-weight: 700;
   letter-spacing: 0;
 }
