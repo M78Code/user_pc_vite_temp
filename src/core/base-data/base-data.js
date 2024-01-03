@@ -21,9 +21,9 @@ const { PROJECT_NAME,BUILD_VERSION,IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG ;
 
 //  1001  1004
 import UserCtr from "src/core/user-config/user-ctr.js";
-import lodash_, { reject } from "lodash";
+import lodash_ from "lodash";
 
-import { api_base_data, api_common } from "src/api/index.js";
+import { api_base_data } from "src/api/index.js";
 
 // import VrMiConfig from "./config/vr-mi.js";
 
@@ -524,7 +524,7 @@ class BaseData {
     this.set_left_menu_init(menu_old_or_nem_data_list);
 
     // app-h5使用
-    if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
+    if( ['ouzhou-h5','app-h5','new-pc'].includes(PROJECT_NAME)){
       MenuData.set_init_menu_list()
     }
 
