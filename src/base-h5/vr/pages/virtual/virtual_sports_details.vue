@@ -187,7 +187,7 @@ export default {
     });
     this.cancel_ref = debounce(this.cancel_ref,200)
   },
-  destroyed() {
+  unmounted() {
     this.debounce_throttle_cancel(this.cancel_ref);
     clearTimeout(this.timer1_)
     this.timer1_ = null

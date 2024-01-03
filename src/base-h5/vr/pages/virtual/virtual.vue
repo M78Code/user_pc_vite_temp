@@ -152,7 +152,7 @@ export default {
    * @param {Undefined} Undefined
    * @return {Undefined} Undefined
    */
-  destroyed() {
+  unmounted() {
     debounce_throttle_cancel(this.cancel_ref);
     this.emitters && this.emitters.map((x) => x());
 

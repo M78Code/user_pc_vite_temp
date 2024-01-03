@@ -193,7 +193,7 @@ export default {
       VR_CTR.state.current_match_mid = this.mid;
     }
   },
-  destroyed(){
+  unmounted(){
     clearTimeout(this.timer_super31);
 
     for (const key in this.$data) {

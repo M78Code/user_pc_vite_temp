@@ -778,7 +778,7 @@ export default {
     loading,
     virtualBasketball
   },
-  destroyed(){
+  unmounted(){
     if(this.player){
       this.player.destroy();
       this.player = null;
