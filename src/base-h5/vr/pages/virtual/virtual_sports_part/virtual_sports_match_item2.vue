@@ -97,14 +97,9 @@ export default {
     ]
   },
   methods:{
-    // ...mapActions([
-    //   // 设置玩法项默认选中
-    //   "set_details_item",
-    // ]),
-    // ...mapMutations(['set_current_gotodetail_match','set_toast']),
+    // 设置玩法项默认选中
     set_details_item(data){ VR_CTR.state.details_item = data },
     set_current_gotodetail_match(data){ return VR_CTR.state.current_gotodetail_match = data },
-    set_toast(){},
     /**
      * 篮球早盘倒计时结束显示列表比分
      */
@@ -413,11 +408,6 @@ export default {
   },
   computed:{
     // ...mapGetters({
-    //   footer_sub_menu_id:"get_footer_sub_menu_id",
-    //   get_video_process_data:"get_video_process_data",
-    //   get_newer_standard_edition:"get_newer_standard_edition",
-    //   get_n_s_changed_loaded:"get_n_s_changed_loaded",
-    //   get_curr_sub_menu_type:"get_curr_sub_menu_type",
     //   get_theme:'get_theme',
     //   get_access_config:'get_access_config',
     // }),
@@ -462,9 +452,6 @@ export default {
     if(this.vsports){
       this.vsports.destroy();
     }
-    // this.$root.$off(this.emit_cmd.EMIT_VIDEO_PROCESS_DATA_GOT,this.video_process_init_video);
-    // this.$root.$off(this.emit_cmd.EMIT_PRE_COUNTING_EDN,this.pre_counting_end_handle)
-    // this.$root.$off(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,this.xu_ni_ty_standard_odd_status)
     this.emitters.map((x) => x());
   }
 }
