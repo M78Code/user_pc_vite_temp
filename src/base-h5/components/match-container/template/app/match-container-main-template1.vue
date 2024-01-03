@@ -462,7 +462,7 @@ export default {
       transform: rotate(-90deg);
       width: 20px;
       height: 16px;
-      margin-right: 8px;
+      margin-right: 14px;
     }
     .collapsed{
       transform: rotate(0);
@@ -1605,14 +1605,14 @@ export default {
     }
     .coming-soon{
       position: relative;
-      top: 2px;
+      top: 1px;
     }
   }
 
   .favorite-icon-top {
-    width: 0.14rem;
+    width: 0.15rem;
     height: 100%;
-    height: 0.13rem;
+    height: 0.15rem;
     flex-shrink: 0;
     margin-right: .07rem;
     position: relative;
@@ -1742,7 +1742,7 @@ export default {
     // margin-top: .02rem;
     // margin-right: .02rem;
     margin: .02rem .02rem 0 .05rem;
-    font-size: 0.11rem;
+    font-size: 0.12rem;
   }
 
   .flag-chuan-icon {
