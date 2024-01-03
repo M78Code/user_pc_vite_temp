@@ -4,7 +4,7 @@
  * @Description: 右侧视频控制区域组件
 -->
 <template>
-  <div class="c-video-ctrl">
+  <div class="component i-pc c-video-ctrl">
     <!-- 控制区 -->
     <div class="ctrl-wrap row items-center justify-between">
       <div
@@ -151,7 +151,7 @@
             @click="switch_video(val)"
           >
             <div class="line"></div>
-            <sport-icon :sport_id="val.csid" status="2" size="18px" />
+            <!-- <sport-icon :sport_id="val.csid" status="2" size="18px" /> -->
             <div class="team-wrap ellipsis col">
               {{ val.mhn }}
               <span class="separate">v</span>
@@ -165,7 +165,7 @@
 </template>
 <script setup>
 import { tooltip_style } from "src/core/config/global-component-style.js";
-import sportIcon from "src/components/sport_icon/sport-icon.vue";
+// import sportIcon from "src/components/sport_icon/sport-icon.vue";
 import video from "src/core/video/video.js"
 import details from "src/core/match-list-pc/details-class/details.js";
 import { computed, onMounted, onUnmounted, ref, watch,nextTick } from "vue";

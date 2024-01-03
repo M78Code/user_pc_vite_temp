@@ -31,7 +31,7 @@
 
                 <!--键盘区域-->
                 <div class="row bet-keyboard bet-keyboard-zone">
-                    <bet-keyboard :money="ref_data.money"/>
+                    <bet-keyboard :oid="items.id"/>
                 </div>
             </div>
         </div>
@@ -74,6 +74,11 @@ const ref_data = reactive({
 const InputFocus = ref()
 
 onMounted(() => {
+     // 监听 键盘金额变化
+     ref_data.emit_lsit = {
+        emitter_1: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
+    }
+   
     ref_data.money = props.items.bet_amount
     show_quick()
     InputFocus.value.focus()
@@ -83,10 +88,38 @@ onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());
 })
 
+const change_money_handle = obj => {
+    if(props.items.id == obj.id) {
+        // 获取当前投注金额
+        let money = props.items.bet_amount 
+        let money_ = obj.money
+        // 设置最大投注金额
+        if(obj == "MAX"){
+            money_ = props.items.max_money
+        }
+        let items_obj = lodash_.get(props,'items',{})
+        // 计算投注金额
+        let money_amount = mathJs.add(money,money_)
+        // 投注金额 不能大于最大投注金额 也不能大于用户余额
+        if(money_amount < props.items.max_money && money_amount < UserCtr.balance){
+            items_obj.bet_amount = mathJs.add(money,money_)
+            ref_data.money = mathJs.add(money,money_)
+        }else{
+            // 最大限额不能大于余额
+            money_amount = props.items.max_money
+            if(UserCtr.balance < props.items.max_money){
+                money_amount = UserCtr.balance
+            }
+            items_obj.bet_amount = money_amount
+            ref_data.money = money_amount
+        }
+        BetViewDataClass.set_bet_special_series_item(items_obj)
+    }
+}
+
 // 清空输入框金额
 const bet_clear_handle = () => {
     ref_data.money = ''
-    BetData.set_bet_obj_amount('',props.items.playOptionsId)
 }
 
 // 键盘回车事件
@@ -123,7 +156,6 @@ const show_quick = () => {
     let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
     let id = lodash_.get(props,'items.id','')
     list.filter(item => {
-        console.log(item)
         item.show_quick = false
          // 显示指定投注项的快捷金额按钮
         if(item.id == id){
