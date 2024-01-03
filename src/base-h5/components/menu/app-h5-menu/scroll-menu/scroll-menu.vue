@@ -103,7 +103,6 @@ function set_menu_lv2(item = {},event) {
     BetData.set_is_bet_single('single')
     BetData.set_clear_bet_info()
   }
-  console.error('二级菜单点击ok')
 }catch (err){
   console.error('二级菜单点击错误：'+err)
 }

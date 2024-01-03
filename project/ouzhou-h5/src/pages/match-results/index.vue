@@ -119,13 +119,10 @@ const getData = async (item,date) =>{
     }
     MenuData.set_result_menu_api_params(params)
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: false });
-    useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true);
     try {
         matchs_data.value = await MatchMeta.get_results_match()
-        useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
         useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
     } catch (err) {
-        useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, false);
         useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: true, type: 'noWifi' });
     }
     
