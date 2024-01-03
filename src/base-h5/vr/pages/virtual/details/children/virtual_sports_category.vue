@@ -125,12 +125,10 @@ export default {
     // 置顶列表
     match_list_new() {
       return MatchDataWarehouseInstance.listSortNew(this.current_match.mid);
-      // return this.matchInfoCtr.listSortNew()
     },
     // 非置顶列表
     match_list_normal() {
       return MatchDataWarehouseInstance.listSortNormal(this.current_match.mid);
-      // return this.matchInfoCtr.listSortNormal()
     }
   },
 
@@ -184,7 +182,6 @@ export default {
     // 监听get_fewer的值
     get_fewer(n){
       if(n != 3){
-        // let list = lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(this.mid),'odds_info',[]);
         let list = this.get_list;
         if(Array.isArray(list) && list.length){
           for (const item of list) {
@@ -258,13 +255,7 @@ export default {
   mounted () {
   },
   methods: {
-    // ...mapMutations([
-    //   "set_fewer",
-    //   "set_detail_data_assign",
-    //   'set_is_user_refreshing',
-    // ]),
     set_fewer(){},
-    // set_detail_data_assign(){},
     set_is_user_refreshing(){},
 
     /**
