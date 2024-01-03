@@ -69,7 +69,7 @@ export default {
     "no-data": no_data
   },
   props:{
-    mid: Number|String,
+    mid: [Number, String],
   },
   data() {
     return {

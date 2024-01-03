@@ -52,7 +52,7 @@
 import { ref, computed, onUnmounted, watch } from "vue";
 
 import { useRoute } from "vue-router";
-import "./main-layout.js"; //初始化数据
+// import "./main-layout.js"; //初始化数据
 
 import { LayOutMain_pc, UserCtr, GlobalAccessConfig } from "src/output/index.js";
 import BetData from 'src/core/bet/class/bet-data-class.js'

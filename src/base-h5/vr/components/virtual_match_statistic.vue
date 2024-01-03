@@ -143,7 +143,7 @@ export default {
       }
 
       // 比赛总轮次
-      let match_total = 5;
+      let match_total = msc.length;
       let _win_home = (win_home / match_total) * 100;
       let _win_away = (win_away / match_total) * 100;
       

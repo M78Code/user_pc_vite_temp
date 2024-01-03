@@ -4,14 +4,20 @@ import vue from "@vitejs/plugin-vue";
 import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 import path from "path";
 import viteCompression from 'vite-plugin-compression';
-import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
+
+import BUILDIN_CONFIG from "../../job/output/env/index.js";;
+ 
+const {BUILD_VERSION ,PROJECT_NAME} =  BUILDIN_CONFIG
 //本地开发端口
 const port = 28300
 console.log("---------启动文件入口目录-------------", __dirname);
+
 import COMPUTE_ENTRY_CONFIG from "../../job/entry-config.js";
 //入口配置
 const  { project, outDir, base} = COMPUTE_ENTRY_CONFIG({port})
+ 
 
+const chunkSplitPlugin1=()=>{}
 // https://vitejs.dev/config/
 export default defineConfig({
   base  ,
@@ -31,56 +37,7 @@ export default defineConfig({
       
     }),
     viteCompression(),
-    chunkSplitPlugin({
-      strategy: 'default',  //     | 'default' | 'all-in-one' | 'single-vendor' | 'unbundle';
-
-  
-
-      // customChunk: CustomChunk; (context: {id:string, moduleId:string, file:string, root:string}) => string | undefined | null;
-      useEntryName: false,
-      // customSplitting: {
-      // customSplitting: {
-      //   //project\app-h5\main.js
-      //   //  project\/app-h5\/main\.js/, /src\/boot\/i18n\.js/  ,/job\/output\/env/,/lodash/
-      //     //  'window-global': [/project\/app-h5\/main\.js/, /src\/boot\/i18n\.js/  ,/lodash/ ],
-      //     //  'core': [/src\/core/   ],
-      //   // 'index': [/src\/boot\/i18n\.js/,/main.js/],
-      //   // 'index': [/src\/boot\/i18n\.js/,/main.js/],
-      //   //    
-      //   // 'vendor-666': [ /job\/output\/env/],
-      //   // 'vendor': [/node_modules/ ,/job\/output\/env/  ],
-      //   //
-      //   // 'code-all': [/src\/pages/,/virtual/],
-   
-      //   // 'other': [/score/,/stage-child/],
-      //   // 'stage-child': [/stage-child/],
-      //   // 'virtual': [/virtual/],
-      //   'core': [/src\/core\/format/ ,   /src\/core\/utils/  ,  /src\/core\/mitt/  ,   /src\/core\/url-param-ctr/  ,    /src\/core\/constant/ ,/lodash/  ],
-      //   'vendor': [/node_modules/  ,/job\/output\/env/,/src\/core\/mitt/  , ],
-      //   'code-all': [/src\/pages/,/virtual/],
-      // },
-
-      // customChunk:(info)=>{
-      //   // moduleId
-      //   // D:/CODE-WEB/WEB/user-pc-vite/src/core/match-list-pc/match-card/module/data-relation-type-7.js D:/CODE-WEB/WEB/user-pc-vite
-      //   let {moduleId ,root} = info
-      //   console.log(moduleId ,root)
-      //   if(moduleId.includes("node_modules")){
-
-      //    return 'vendor--22--'
-      //   }else if(moduleId.includes(root+"/job/output/env")||  moduleId.includes(root+"/src/core/mitt") ||  moduleId.includes(root+"/src/api") ){
-      //     return 'vendor--22--'
-      //   }else if(moduleId.includes( root+"/src/") &&   !moduleId.includes(  ".vue") ){
-      //     return 'src'
-      //   }else if(moduleId.includes( root+"/project/")   ){
-      //     return 'project'
-      //   }else{
-      //     return 'code-666'
-      //   }
-
-
-      // }
-    })
+ 
   ],
   css:{
     devSourcemap: true,
@@ -104,33 +61,11 @@ export default defineConfig({
         globals: {
           // "vue3-draggable-resizable": "vue3-draggable-resizable",
         },
-      // manualChunks 配置
-      // manualChunks: {},
+   
+       // manualChunks: {},
         chunkFileNames: "static/js/[name]-[hash].js",
         entryFileNames: "static/js/[name]-[hash].js",
         assetFileNames: "static/[ext]/[name]-[hash].[ext]",
-        // chunkFileNames:(ChunkInfo)=>{
-        //   // facadeModuleId: 'D:/CODE-WEB/WEB/user-pc-vite/src/base-pc/components/match-detail/match_info/tabs.vue',
-        //   //facadeModuleId: 'D:/CODE-WEB/WEB/user-pc-vite/src/i18n/pc/zh-cn/index.json',
-        //   let facadeModuleId = ChunkInfo.facadeModuleId
-      
-        //   // console.log('ChunkInfo---',ChunkInfo.facadeModuleId )
-       
-
-        //   if(facadeModuleId&&facadeModuleId.includes('/src/i18n/')){
-        //     let arr = facadeModuleId.split('/')
-        //     let lan_name= arr[arr.length-2]
-
-        //     return `static/js/${lan_name}-[hash].js`
-        //   }else{
-        //     return "static/js/[name]-[hash].js"
-        //   }
-          
-      
-
-        // }
-
-
       },
     },
   },
