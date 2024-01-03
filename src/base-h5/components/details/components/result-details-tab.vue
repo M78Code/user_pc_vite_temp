@@ -312,20 +312,20 @@ onUnmounted(() => {
 
 .t_color {
   position: relative;
-  font-size: 0.14rem;
+  font-size: 0.16rem;
   letter-spacing: 0;
   text-align: center;
   font-weight: bold;
-  color: var(--q-gb-t-c-1);
+  color: var(--q-gb-t-c-18);
   &:after {
     content: ' ';
     display: block;
     position: absolute;
-    width: 0.18rem;
+    width: 100%;
     height: 0.03rem;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 0;
+    bottom: 0.1rem;
     border-radius: 1.5px;
     background: var(--q-gb-t-c-1);
   }

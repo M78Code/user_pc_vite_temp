@@ -4,9 +4,7 @@
  * @Description: 赛事主列表页
 -->
 <template>
-  <div class="yb-match-list column full-height   relative-position"
-  :data-version="MatchListCardDataClass.list_version"
-    >
+  <div class="yb-match-list column full-height   relative-position" :data-version="MatchListCardDataClass.list_version">
     <div class="test-info-wrap" v-show="GlobalAccessConfig.get_wsl()">
       <!-- <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div> -->
       <!-- 临时调试用 -->
@@ -24,25 +22,25 @@
     </div>
     <div class="scroll-fixed-header" :class="{ 'no-data': load_data_state != 'data' }">
       <!-- banner -->
-      <div class="banner-box" :style="{height: GlobalAccessConfig.get_show_banner() ? '120px' : '0px'}" v-if="GlobalAccessConfig.get_show_banner()"></div>
+      <div class="banner-box" :style="{ height: GlobalAccessConfig.get_show_banner() ? '120px' : '0px' }"
+        v-if="GlobalAccessConfig.get_show_banner()"></div>
       <!-- 列表头 -->
       <list-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state">
         <template v-slot:refresh_icon>
           <!-- 刷新组件 -->
-          <refresh :loaded="load_data_state != 'loading'" :other_icon="true" :icon_name="1"
-            @click="on_refresh" />
+          <refresh :loaded="load_data_state != 'loading'" :other_icon="true" :icon_name="1" @click="on_refresh" />
         </template>
       </list-header>
       <!-- <div>menu_config.match_list_menu_show.list_filter {{ menu_config.match_list_menu_show.list_filter }}</div> -->
       <!-- 顶部菜单  // 滚球  冠军 -->
-      <list-filter v-if="[1, 400].includes(parseInt(menu_config.menu_root))"
-        :collect_count="collect_count" :load_data_state="load_data_state" />
+      <list-filter v-if="[1, 400].includes(parseInt(menu_config.menu_root))" :collect_count="collect_count"
+        :load_data_state="load_data_state" />
       <!-- 日期菜单   早盘 日期 -->
-      <list-filter-date v-if="menu_config.menu_root == 3"
-        :collect_count="collect_count" :load_data_state="load_data_state" />
+      <list-filter-date v-if="menu_config.menu_root == 3" :collect_count="collect_count"
+        :load_data_state="load_data_state" />
       <!-- 热门赛事顶部菜单 -->
-      <list-filter-hot v-if="menu_config.menu_root == 500"
-        :collect_count="collect_count" :load_data_state="load_data_state" />
+      <list-filter-hot v-if="menu_config.menu_root == 500" :collect_count="collect_count"
+        :load_data_state="load_data_state" />
       <!-- 电竞顶部菜单 -->
       <esports-header v-if="menu_config.menu_root == 2000" :load_data_state="load_data_state" />
       <!-- 赛事状态 | 赛种类型      -->
@@ -54,11 +52,11 @@
       </div>
     </div>
     <!-- 列表容器 -->
-    <load-data :state="'data'"  >
+    <load-data :state="'data'">
       <!-- 滚球虚拟体育列表 -->
       <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
         <template v-slot:before>
-          <div :style="{ height: MatchListCardDataClass.sticky_top.type+'px' }"></div>
+          <div :style="{ height: MatchListCardDataClass.sticky_top.type + 'px' }"></div>
         </template>
         <template>
           <!--虚拟体育 赛事列表 赛事头-->
@@ -79,22 +77,15 @@
       </scroll-list>
       <!-- <div> {{match_list_card_key_arr }}</div> -->
       <!-- 滚球其他列表 -->
-      <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
+      <scroll-list v-if="menu_config.menu_root_show_shoucang != 300">
         <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
         <template v-slot:before>
-          <div :style="{ height: MatchListCardDataClass.sticky_top.type+'px' }"></div>
+          <div :style="{ height: MatchListCardDataClass.sticky_top.type + 'px' }"></div>
         </template>
-        <div
-          v-for="card_key in match_list_card_key_arr"
-          :key="card_key" 
-          :card_key="card_key" 
-          :data-card-key="card_key"
-          :class="`card_key_${card_key}`"
-        >
-          <match-list-card 
-            :card_key="card_key" 
-          />
-        </div>  
+        <template v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :data-card-key="card_key"
+          :class="`card_key_${card_key}`">
+          <match-list-card :card_key="card_key" />
+        </template>
         <template v-slot:after>
           <div style="height:15px"></div>
           <div class="pager-wrap row justify-end">
@@ -140,10 +131,10 @@ import match_list_card from "src/core/match-list-pc/match-card/match-list-card-c
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import {mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh,handle_destroyed } from "src/core/match-list-pc/match-list-composition.js";
+import { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh, handle_destroyed } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData,compute_css_obj } from 'src/output/index.js';
-import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/output/index.js";
+import { PageSourceData, compute_css_obj } from 'src/output/index.js';
+import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/output/index.js";
 import "./match_list.scss";
 const { page_source } = PageSourceData;
 export default {
@@ -167,7 +158,7 @@ export default {
       mounted_fn();
     });
     onUnmounted(() => {
-       handle_destroyed()
+      handle_destroyed()
     })
     return {
       menu_config,
@@ -184,23 +175,23 @@ export default {
   data() {
     return {
       compute_css_obj,
-      MatchListCardDataClass   ,
+      MatchListCardDataClass,
       load_data_state,
-      match_list_card_key_arr:[]
+      match_list_card_key_arr: []
     }
   },
-  mounted () {
-    this.MatchListCardDataClass_match_list_card_key_arr()  ;
+  mounted() {
+    this.MatchListCardDataClass_match_list_card_key_arr();
   },
   watch: {
     'MatchListCardDataClass.list_version'(newValue, oldValue) {
       this.MatchListCardDataClass_match_list_card_key_arr()
-       this.$forceUpdate()
+      this.$forceUpdate()
     }
   },
   methods: {
     MatchListCardDataClass_match_list_card_key_arr() {
-      this.match_list_card_key_arr= MatchListCardDataClass.match_list_card_key_arr
+      this.match_list_card_key_arr = MatchListCardDataClass.match_list_card_key_arr
     },
   },
 };
@@ -230,6 +221,7 @@ export default {
   left: 200px;
   z-index: 99999;
   display: flex;
+
   .fold-btn {
     border: 1px solid #ccc;
     font-size: 16px;
@@ -237,6 +229,7 @@ export default {
     padding: 5px;
   }
 }
+
 .leagues-tabs {
   height: 40px;
   position: sticky;
