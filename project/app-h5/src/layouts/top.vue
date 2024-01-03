@@ -377,7 +377,7 @@ const handle_match_render_data = (type) => {
   // 赛果不走元数据， 直接拉取接口
   // if (MenuData.is_results()) return MatchMeta.get_results_match()
   // 电竞不走元数据， 直接拉取接口
-  if (MenuData.is_esports() && !type) return MatchMeta.get_esports_match()
+  if (MenuData.is_esports()) return MatchMeta.get_esports_match()
 
   const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
   if (lodash_.isEmpty(mi_tid_mids_res)) return
