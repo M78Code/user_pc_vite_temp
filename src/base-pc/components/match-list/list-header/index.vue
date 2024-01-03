@@ -95,10 +95,11 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { PageSourceData, GlobalSwitchClass } from "src/output/index.js";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import UserCtr from 'src/core/user-config/user-ctr.js'
+// import UserCtr from 'src/core/user-config/user-ctr.js'
 // //import store from 'src/store-redux/index.js';
 import filterHeader from "src/core/filter-header/filter-header.js";
 import { IconWapper } from 'src/components/icon'
+
 
 const page_source = PageSourceData.page_source;
 const is_search_page = page_source.includes('search');
@@ -253,7 +254,8 @@ function select_time_change () {
  * 重置条件
  */
 function reset_filter () {
-  filterHeader.set_open_select_time(null)
+  filterHeader.set_checked_count(null)
+  // filterHeader.set_open_select_time(null)
 }
 /**
  * @ Description:切换联赛排序
@@ -277,11 +279,13 @@ function toggle_filter_popup() {
   if ((props.load_data_state != 'data' && !filterHeader.show_filter_popup)) {
     return
   }
-  //打开或关闭赛事筛选弹层
+  console.log('!filterHeader.show_filter_popup',!filterHeader.show_filter_popup)
+  //打开或关闭赛事筛选弹层 
   // store.dispatch({
   //   type: 'SET_SHOW_FILTER_POPUP',
   //   data: !filterHeader.show_filter_popup
   // })
+  filterHeader.set_show_filter_popup(!filterHeader.show_filter_popup)
   if (filterHeader.show_filter_popup) {
     //设置即将开赛筛选默认值
     reset_filter()
