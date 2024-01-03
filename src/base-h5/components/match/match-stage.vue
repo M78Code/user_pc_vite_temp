@@ -130,7 +130,8 @@ const one_hour = ref(false)
 // stage_child_101:markRaw(stage_child_101)
 // })
 let componentId = null
- componentId = defineAsyncComponent(() => import(`./stage/stage-child-${route.params.csid}.vue`))
+let csid = MenuData.is_esports() ? '101' :  route.params.csid
+ componentId = defineAsyncComponent(() => import(`./stage/stage-child-${csid}.vue`))
 watch(
   () => props.detail_data,
   () => initEvent(),
