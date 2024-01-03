@@ -37,6 +37,7 @@ export default {
       // 监听页面是否转入休眠状态
       document.addEventListener("visibilitychange",this.visibilitychange_handle);
       document.addEventListener("pagehide", this.visibilitychange_handle);
+
     },
     watch: {
       '$route'(to, from) {
@@ -53,6 +54,7 @@ export default {
       }
     },
     methods: {
+     
       /**
        *@description 页面可见性变化的处理函数
       */
@@ -171,5 +173,6 @@ export default {
       document.removeEventListener("visibilitychange",this.visibilitychange_handle);
       document.removeEventListener("pagehide", this.visibilitychange_handle);
       clearTimeout(this.background_run_time_timer);
+    
     },
 }
