@@ -287,7 +287,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
              * @description 格式化msc(比分)数据
              * msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
              */
-            data.msc = details.build_msc(data);
             // 设置赛事信息
             MatchDataWarehouseInstance.set_match_details(data,[])  
             let str =state.mid+'_'

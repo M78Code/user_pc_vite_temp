@@ -834,11 +834,6 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
                 });
               }
             }
-            /**
-             * @description 格式化msc数据
-             * msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
-             */
-            data.msc = detailUtils.build_msc(data);
             MatchDataWarehouseInstance.set_match_details(data,[]);
             allData.match_infoData = MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid);
           

@@ -5,6 +5,11 @@
 <template>
   <div :class="['match-list-container', { empty_page: match_is_empty }]" :style="page_style">
 
+    <!-- 骨架图 -->
+    <template v-if="show_skeleton_screen">
+      <div class="skeleton_box"><SList :loading_body="true" /></div>
+    </template>
+
     <template v-if="!match_is_empty">
       <component :is="target_com"></component>
     </template>
@@ -36,6 +41,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, PROJECT_NAME } from "src/output/index.js"
 import { is_collect, menu_type } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+import SList from "src/base-h5/components/skeleton/skeleton-list.vue" 
 
 // yazhou-h5 赛事列表
 import MatchList1 from './components/match-list1.vue'
@@ -71,6 +77,7 @@ const match_is_empty = ref(false)
 const window_scrolly = ref(0)
 const match_list_wrapper_height = ref(0)
 const is_collcte_page = ref(false)
+const show_skeleton_screen = ref(false)
 
 onMounted(() => {
   // 页面css变量植入
@@ -110,6 +117,7 @@ const on_listeners = () => {
     emitter_2: useMittOn(MITT_TYPES.EMIT_SELECT_LEAGUE_COMPLETE,lodash.debounce( (val) => {
       MatchMeta.footer_event({ ...val, text: 'filter' })
     },100)).off,
+    emitter_3: useMittOn(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, (val) =>  show_skeleton_screen.value = val).off,
     emitter_10: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, upd_match_is_empty).off,
     emitter_6: useMittOn(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE, MatchPage.bet_odd_synchronize_handle).off,
     emitter_8: useMittOn(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, MatchListCard.secondary_play_unfold_change_handle).off,
@@ -144,6 +152,22 @@ const clear_timer = () => {
   height: 100%;
   .main-container{
     height: 100%;
+  }
+  .skeleton_box{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background: #fff;
+    :deep(.skeleton-wrap){
+      padding-top: 0 !important;
+      position: static !important;
+      width: 100%;
+      left: 0;
+      transform: none;
+    }
   }
 }
 
