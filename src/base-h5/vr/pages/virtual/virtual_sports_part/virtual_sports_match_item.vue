@@ -93,10 +93,6 @@
         <div class="profession" v-if="standard_edition == 2">
            <!--复刻版vr不能滑动-->
           <!-- <template v-if="0 && get_hp_list(1).length"> -->
-          <template v-if="false">
-            <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" v-if="standard_odd_status == 0" :src="get_theme.includes('y0')?arrows:arrows_default">
-            <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="get_theme.includes('y0')?arrows_reverse:arrows_default_balck" v-else>
-          </template>
            <!-- 玩法数量 -->
            <div v-if="match_item.mc" class="play-count" @click="goto_details(match_item)">
               {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}`: i18n_t('footer_menu.more')}}
@@ -241,7 +237,6 @@ export default {
     // 设置玩法项默认选中
     set_details_item(data){ VR_CTR.state.details_item = data },
     set_current_gotodetail_match(data){ return VR_CTR.state.current_gotodetail_match = data },
-    set_toast(){},
     /**
      * 篮球早盘倒计时结束显示列表比分
      */
@@ -573,14 +568,9 @@ export default {
   }
   },
   computed:{
-    // ...mapGetters({
-    //   get_theme:'get_theme',
-    //   get_access_config:'get_access_config',
-    // }),
     footer_sub_menu_id(){return VR_CTR.state.footer_sub_menu_id },
     get_video_process_data(){return VR_CTR.state.video_process_data},
     get_curr_sub_menu_type(){ return VR_CTR.state.curr_sub_menu_type },
-    get_theme(){return 'theme01'},
     get_access_config(){return {handicapNum: true}},
     
     show_debugger_line(){

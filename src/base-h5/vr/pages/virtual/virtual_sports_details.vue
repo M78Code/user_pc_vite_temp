@@ -84,7 +84,7 @@ import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from
 import ranking_list_start from "src/base-h5/vr/pages/virtual/virtual_sports_part/ranking_list_start.vue"
 import group_knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/group_knockout.vue"
 import football_ranking_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/football_ranking_list.vue"
-import { get_now_server } from 'src/core/utils/common/module/other.js'
+import { get_now_server, debounce_throttle_cancel } from 'src/core/utils/common/module/other.js'
 
 export default {
   mixins:[virtual_sports_mixin],
@@ -188,7 +188,7 @@ export default {
     this.cancel_ref = debounce(this.cancel_ref,200)
   },
   unmounted() {
-    this.debounce_throttle_cancel(this.cancel_ref);
+    debounce_throttle_cancel(this.cancel_ref);
     clearTimeout(this.timer1_)
     this.timer1_ = null
     clearTimeout(this.timer_super28);
