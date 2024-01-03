@@ -438,6 +438,12 @@ export default {
   /*============精彩回放 end===============*/
 }
 
+.novide-canplay{
+  :deep(.no-video-inner .img-list .item .text){
+    color: var(--q-gb-t-c-18);
+  }
+}
+
 </style>
 <style>
 @media screen and (max-width: 1440px) {
