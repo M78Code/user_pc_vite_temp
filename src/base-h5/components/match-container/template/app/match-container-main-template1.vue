@@ -1702,7 +1702,7 @@ export default {
           // margin-bottom: 1px;
         }
         .special{
-          font-size: 10px;
+          font-size: 0.12rem;
         }
       }
     }
@@ -1738,9 +1738,11 @@ export default {
   }
 
   .mfo-title {
-    margin-left: .05rem;
-    margin-top: .02rem;
-    font-size: 10px;
+    // margin-left: .05rem;
+    // margin-top: .02rem;
+    // margin-right: .02rem;
+    margin: .02rem .02rem 0 .05rem;
+    font-size: 0.12rem;
   }
 
   .flag-chuan-icon {

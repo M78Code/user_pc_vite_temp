@@ -101,6 +101,7 @@ onMounted(counting_down)
 
 <style lang="scss" scoped>
 .counting-down-start {
+  padding-bottom: 2px;
   font-size: 0.1rem;
 }
 </style>
