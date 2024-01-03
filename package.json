@@ -79,7 +79,7 @@
         "dev-animation-page-inner": "vite    --config  ./entries/animation-page/animation-page.vite.config.js",
         "build-animation-page-inner": "vite   build --config  ./entries/animation-page/animation-page.vite.config.js  --mode  production",
         "dev-animation-page": "run-s remove-output  env-dev  export-build-version-animation-page   common-process  dev-animation-page-inner",
-        "build-animation-page": "run-s remove-output env-prod  export-build-version-animation-page   common-process  build-animation-page-inner  copy-html  copy-oss-dist  remove-dist-assets",
+        "build-animation-page": "run-s remove-output env-prod  export-build-version-animation-page   common-process  build-animation-page-inner  copy-html  copy-oss-dist  remove-dist-assets copy-assets",
         "divider--17--2": "echo  -------------------------L01动画  结束----------------------------- ",
         "divider--16--1": "echo  -------------------------模板项目  开始----------------------------- ",
         "export-build-version-template-project": "node ./job/export-build-version-template-project.js",
