@@ -35,7 +35,6 @@
                      :class="[sub_menu_i == i ? 'tabs-active' : '']"
                      @click="virtual_menu_changed(i)"
                 >
-                <!--class="icon" :class="['icon'+tab.field1, get_theme.includes('y0')?'icon_y0':'']" -->
                   <div class="sport-icon-wrap" :style="compute_css_obj({key:sub_menu_i == i ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type({...tab,mi:`3${tab.field1}`})})" >
                     <img v-if="false" class="menu-new-icon" src="image/bw3/svg/virtual-sports/new.svg" />
                   </div>
@@ -57,10 +56,6 @@
       </virtualSports>
 
     </div>
-
-    <!-- 简版 底部菜单 -->
-    <!-- <virtual-footer-menu v-show="!right_menu_show" /> -->
-
   </div>
 </template>
 
@@ -121,20 +116,11 @@ export default {
     pre_load_video.load_player_js('old')
     //虚拟体育刷新赛事
     this.timer_super27=0;
-    this.timer_super28=0;
     //获取虚拟体育菜单数据
     this.get_virtual_menus();
-    //首页跳转虚拟体育设置menu_type为900
-    this.set_menu_type(900);
-    clearTimeout(this.timer_super28)
-    this.timer_super28 = setTimeout(()=>{
-      this.set_menu_type(900);
-    }, 500)
     this.cancel_ref = lodash.debounce(this.cancel_ref,200)
   },
   mounted() {
-    // 浏览器窗口变化事件监听
-    // this.$root.$on(this.emit_cmd.EMIT_WINDOW_RESIZE, this.window_resize_on);
     // 不让浏览器记住上次的滚动位置
     if ('scrollRestoration' in History){
       history.scrollRestoration = 'manual'
@@ -153,7 +139,6 @@ export default {
    */
   beforeRouteEnter(to, from, next) {
     next(_this => {
-      _this.set_current_esport_csid('');
       _this.v_match_router_ente = Math.random();
       if(from.name == "virtual_sports_details"){
         if(_this.get_virtual_current_sub_menuid){
@@ -168,11 +153,7 @@ export default {
    * @return {Undefined} Undefined
    */
   destroyed() {
-    // 设置上次的菜单类型
-    this.set_menu_type(this.get_prev_menu_type)
     debounce_throttle_cancel(this.cancel_ref);
-    // this.$root.$off(this.emit_cmd.EMIT_WINDOW_RESIZE, this.window_resize_on);
-    // this.$root.$off(this.emit_cmd.EMIT_COUNTING_DOWN_START_ENDED,this.counting_down_start_ended_on);
     this.emitters && this.emitters.map((x) => x());
 
     this.clear_timer();
@@ -184,7 +165,6 @@ export default {
       }
     }
     clearTimeout(this.timer_super27);
-    clearTimeout(this.timer_super28);
   },
   watch: {
     "UserCtr.user_version": {
@@ -200,15 +180,6 @@ export default {
           UserCtr.get_balance()
       },5000)
     },
-    // ...mapMutations([
-    //   "set_list_scroll_top_iconshow", // 设置滚动图标显示
-    //   "set_menu_type",    // 设置当前主菜单menu_type值
-    //   'set_virtual_current_sub_menuid',   // 设置当前选中的二级菜单id
-    //   'set_curr_sub_menu_type',   // 设置当前选中的二级菜单type
-    //   'set_virtual_data_loading',  // 设置虚拟体育数据loading状态
-    //   'set_current_esport_csid',   // 设置电竞游戏csid
-    //   'set_is_user_refreshing',    // 设置用户刷新状态
-    // ]),
     go_to_back() {
       if(MenuData.old_current_lv_1_menu_i!=6) {
           BetData.set_is_bet_single('single')
@@ -219,13 +190,12 @@ export default {
     set_balance(balance){
       this.balance = balance;
     },
-    set_list_scroll_top_iconshow(){},
-    set_menu_type(){},
+    // 设置当前选中的二级菜单id
     set_virtual_current_sub_menuid(data){VR_CTR.state.virtual_current_sub_menuid = data},
+    // 设置当前选中的二级菜单type
     set_curr_sub_menu_type(data){VR_CTR.state.curr_sub_menu_type = Number(data)},
+    // 设置虚拟体育数据loading状态
     set_virtual_data_loading(data){VR_CTR.state.virtual_data_loading = data},
-    set_current_esport_csid(){},
-    set_is_user_refreshing(){},
     /**
      * @description: 赛事列表回到顶部
      */
@@ -249,7 +219,6 @@ export default {
     vir_refresh(){
       if(this.refreshing) return;
       this.refreshing = true;
-      this.set_is_user_refreshing(true)
       this.timer_super27 = setTimeout(() => {
         // 取消刷新 已做节流
         this.cancel_ref();
@@ -266,10 +235,6 @@ export default {
       this.sub_menu_i = i;
       this.current_sub_menu = this.sub_menu_list[i];
       this.virtual_sports_params.csid = this.current_sub_menu.menuId;
-
-      // console.log("this.current_sub_menu===");
-      // console.log(this.current_sub_menu);
-
       // 足蓝跳转到其他虚拟赛种前， 给状态一个标识
       this.v_menu_changed = ([1001, 1004].includes(this.get_curr_sub_menu_type) ? 'zu_lan_' : '') + Math.random();
       console.log(this.get_curr_sub_menu_type, 'this.get_curr_sub_menu_type')
@@ -373,29 +338,13 @@ export default {
     compute_local_project_file_path
   },
   computed: {
-    // ...mapGetters({
-    //   get_virtual_current_sub_menuid: "get_virtual_current_sub_menuid", // 当前选中的二级菜单id
-    //   get_curr_sub_menu_type: "get_curr_sub_menu_type", // 当前选中的二级菜单type
-    //   get_prev_menu_type:"get_prev_menu_type",//赛事列表筛选逻辑使用的menu_type
-    //   get_is_close_video:"get_is_close_video",
-    //   get_is_banner_jump:"get_is_banner_jump",
-    //   get_golistpage:"get_golistpage",
-    //   get_theme:'get_theme',
-    //   right_menu_show:'get_is_show_menu',
-    // }),
+    // 当前选中的二级菜单id
     get_virtual_current_sub_menuid(){return VR_CTR.state.virtual_current_sub_menuid},
+    // 当前选中的二级菜单type
     get_curr_sub_menu_type(){return VR_CTR.state.curr_sub_menu_type},
-    get_prev_menu_type(){return 1},
-    get_is_close_video(){return 1},
-    get_is_banner_jump(){return 1},
-    get_golistpage(){return 1},
-    get_theme(){return 'theme01'},
-    right_menu_show(){return VR_CTR.state.is_show_menu},
   },
   components: {
     virtualSports,
-    // setMenu,
-    // virtualFooterMenu,
   }
 };
 </script>
