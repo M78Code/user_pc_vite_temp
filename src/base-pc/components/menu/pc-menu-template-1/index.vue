@@ -261,6 +261,7 @@ const lev_1_click = (obj) => {
   let mid_obj = {}
   let left_obj = {}
   let root = ''
+  let d_value = 100
 
   if (type == 400) {
     // 设置 中间 菜单输出 
@@ -280,6 +281,8 @@ const lev_1_click = (obj) => {
   } else if (type == 2000) {
     // 设置默认值
     root = 2000
+
+    d_value = 2000
 
     // 设置左侧菜单
     left_obj = {
@@ -318,7 +321,7 @@ const lev_1_click = (obj) => {
     }
     // 设置为冠军
     root = 400
-
+    MenuData.set_current_ball_type(left_obj.lv1_mi - 100)
   } else {
     // 常规体育
     left_obj = {
@@ -333,6 +336,7 @@ const lev_1_click = (obj) => {
         md: ''
       }
     }
+    MenuData.set_current_ball_type(left_obj.lv1_mi - 100)
   }
 
   // 今日 早盘不用设置 
@@ -345,6 +349,8 @@ const lev_1_click = (obj) => {
   // 设置 中间菜单 
   // 今日没有中间菜单 需要清空
   MenuData.set_mid_menu_result(mid_obj)
+
+  MenuData.set_menu_current_mi(left_obj.lv2_mi)
 
 };
 /**
@@ -371,6 +377,7 @@ const lev_2_click = (detail = {}) => {
 
   MenuData.set_mid_menu_result(mid_obj)
 
+  MenuData.set_menu_current_mi(left_obj.lv2_mi)
 };
 
 /**
@@ -410,6 +417,8 @@ const handle_click_jinri_zaopan = (val) => {
   if(MenuData.is_zaopan()){
     MenuData.set_mid_menu_result({md:""})
   }
+
+  MenuData.set_menu_current_mi(obj.lv2_mi)
 };
 
 // 获取当前菜单下的二级菜单id
