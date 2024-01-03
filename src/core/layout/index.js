@@ -125,7 +125,6 @@ class LayOutMain {
     );
 
     this.layout_content_height =  this.client_height - this.layout_nav_height - this.layout_notice_height
-    console.error('ss')
     let content_width =  this.client_width < this.layout_min_width ? this.layout_min_width :  this.client_width
     this.layout_content_width =  content_width - this.layout_left_width - this.layout_right_width 
     this.set_layout_version()
@@ -156,7 +155,6 @@ class LayOutMain {
 
   // 设置页面布局更新
   set_layout_version(){
-    console.error('sadasda')
     this.layout_version.value = Date.now()
   }
 

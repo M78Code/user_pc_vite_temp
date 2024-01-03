@@ -298,15 +298,25 @@ class BaseData {
     if (!(res instanceof Array)) return
     res.forEach(t => {
       if (t.key === 'p1') {
-        this.init_mi_euid_map(t.res)
+        nextTick(()=>{
+          this.init_mi_euid_map(t.res)
+        })
       } else if (t.key === 'p2') {
-        this.init_mi_tid_mids(t.res)
+        nextTick(()=>{
+          this.init_mi_tid_mids(t.res)
+        })
       } else if (t.key === 'p3') {
-        this.init_base_menu_il8n(t.res)
+        nextTick(()=>{
+          this.init_base_menu_il8n(t.res)
+        })
       } else if (t.key === 'p4') {
-        this.init_base_data(t.res)
+        nextTick(()=>{
+          this.init_base_data(t.res)
+        })
       } else if (t.key === 'p5') {
-        this.init_mew_menu_list(t.res)
+        nextTick(()=>{
+          this.init_mew_menu_list(t.res)
+        })
       }
     })
   }

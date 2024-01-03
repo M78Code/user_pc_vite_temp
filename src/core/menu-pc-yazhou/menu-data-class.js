@@ -835,24 +835,31 @@ class MenuData {
                 break;
 
               case 2:
-                // 获取 今日下的冠军数据 插入到赛种中 并且赛种的数量 = 让球大小 + 冠军数量
-                kemp = list_sl.find(obj => obj.mi == item.mi + '4' ) || {}
-                if(item_obj.sl){
-                  item_obj.sl.push(kemp)
+                if(![190,191].includes(item.mi*1)){
+                  // 获取 今日下的冠军数据 插入到赛种中 并且赛种的数量 = 让球大小 + 冠军数量
+                  kemp = list_sl.find(obj => obj.mi == item.mi + '4' ) || {}
+                  if(item_obj.sl){
+                    item_obj.sl.push(kemp)
+                  }
+                  // mif 赛种id
+                  // mi 新菜单id
+                  item_obj.ct += kemp.ct
                 }
-                // mif 赛种id
-                // mi 新菜单id
-                item_obj.ct += kemp.ct
                 item_obj.mif = item.mi
                 to_day_list.push(item_obj)
                 break;
 
               case 3: 
-                kemp = list_sl.find(obj => obj.mi == item.mi + '4' ) || {}
-                if(item_obj.sl){
-                  item_obj.sl.push(kemp)
+                if(![190,191].includes(item.mi*1)){
+                  // 获取 今日下的冠军数据 插入到赛种中 并且赛种的数量 = 让球大小 + 冠军数量
+                  kemp = list_sl.find(obj => obj.mi == item.mi + '4' ) || {}
+                  if(item_obj.sl){
+                    item_obj.sl.push(kemp)
+                  }
+                  // mif 赛种id
+                  // mi 新菜单id
+                  item_obj.ct += kemp.ct
                 }
-                item_obj.ct += kemp.ct
                 item_obj.mif = item.mi
                 early_list.push(item_obj)
                 break;
@@ -878,7 +885,8 @@ class MenuData {
     this.early_list = early_list
     this.in_play_list = in_play_list
     
-    
+    // 默认设置 早盘数据
+    this.left_menu_list = to_day_list
   }
 
   is_kemp() {
