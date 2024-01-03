@@ -8,6 +8,7 @@
         <template v-if="item != 'MAX'">+</template>{{ item }}
       </div>
     </div>
+    <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
   </div>
 </template>
 
@@ -16,7 +17,6 @@
 import { onMounted, reactive, ref } from "vue"
 import { UserCtr } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
-import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 const ref_data = reactive({

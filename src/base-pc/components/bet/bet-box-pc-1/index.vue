@@ -80,9 +80,6 @@ const set_scroll_this = val => {
 // 单关 合并切换
 const toggle_merge = () => {
   BetData.set_is_bet_merge()
-  //清除单关数据
-  let id = BetData.bet_single_list[0].playOptionsId
-  BetData.set_bet_obj_amount('',id)
 }
 
 
