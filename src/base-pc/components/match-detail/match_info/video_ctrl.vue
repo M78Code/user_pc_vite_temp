@@ -38,7 +38,7 @@
             :style="compute_css_obj(item.icon)"
             :class="[
               'vicon',
-              `${item.icon}-icon`,
+              `${item.type}-icon`,
               { active: vx_play_media.media_type == item.type },
             ]"
           ></div>
@@ -675,5 +675,30 @@ onUnmounted(() => {
   height: 18px;
   background-size: 100% auto;
 }
+
+
+.video-icon {
+    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/video0.svg"); // TODO: video0.svg
+
+    &.active {
+      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/video2.svg"); // TODO: video2.svg)
+    }
+  }
+  .animation-icon {
+    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/animation0.svg"); // TODO: animation0.svg
+
+    &.active {
+      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/animation2.svg"); // TODO: animation2.svg
+    }
+  }
+
+  .info-icon {
+    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/switch0.svg");// TODO: switch0.svg
+    background-repeat: no-repeat;
+
+    &.active {
+      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/switch2.svg");// TODO: switch2.svg
+    }
+  }
 /** 提示内容 -S*/
 </style>
