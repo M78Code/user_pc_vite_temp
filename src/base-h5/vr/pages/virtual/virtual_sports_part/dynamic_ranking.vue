@@ -10,9 +10,13 @@
 </template>
 <script>
 import dynamic_ranking_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/dynamic_ranking_mixin.js";
+import virtual_sports_d_r_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_d_r_timer.vue"
 export default {
   mixins:[dynamic_ranking_mixin],
   name:'dynamic_ranking',
+  components:{
+    'virtual-sports-d-r-timer':virtual_sports_d_r_timer
+  },
 }
 </script>
 <style lang="scss" scoped>

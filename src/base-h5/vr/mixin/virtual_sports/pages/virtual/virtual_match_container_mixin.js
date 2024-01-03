@@ -1,7 +1,6 @@
 /*
  * @Description: 虚拟体育赛狗赛马赛果项(应该是老版h5列表页面使用)
  */
-import data_pager from "src/base-h5/components/common/data-pager.vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { lang } from 'src/base-h5/mixin/userctr.js'
 
@@ -294,8 +293,5 @@ export default {
       }
       return flag;
     }
-  },
-  components:{
-    'data-pager':data_pager,
   },
 }

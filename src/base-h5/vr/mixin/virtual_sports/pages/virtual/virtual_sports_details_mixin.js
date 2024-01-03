@@ -2,12 +2,7 @@
  * @Description:虚拟体育详情页最外层父组件
  */
 import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/virtual_sports_mixin.js"
-import virtual_sports_tab from 'src/base-h5/vr/components/virtual_sports_tab.vue'
-import virtual_sports_detail_tab from 'src/base-h5/vr/pages/virtual/details/children/virtual_sports_detail_tab.vue'
-import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue"
-import virtual_match_statistic from 'src/base-h5/vr/components/virtual_match_statistic.vue'
 import {api_v_sports} from "src/api/index.js";
-import virtual_sports_stage from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
 import VSport from 'src/base-h5/vr/utils/vsport/vsport.js';
 import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/"
@@ -15,9 +10,6 @@ import { debounce } from "lodash";
 import { go_where } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/output/index.js"
-import ranking_list_start from "src/base-h5/vr/pages/virtual/virtual_sports_part/ranking_list_start.vue"
-import group_knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/group_knockout.vue"
-import football_ranking_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/football_ranking_list.vue"
 import { get_now_server, debounce_throttle_cancel } from 'src/core/utils/common/module/other.js'
 
 export default {
@@ -31,16 +23,6 @@ export default {
     current_batch(){return VR_CTR.state.current_batch},
     video_process_data(){return VR_CTR.state.video_process_data},
     get_betbar_show(){return },
-  },
-  components: {
-    'virtual-sports-tab': virtual_sports_tab,
-    'virtual-match-statistic': virtual_match_statistic,
-    'virtual-sports-stage': virtual_sports_stage,
-    'virtual-sports-category': virtual_sports_category,
-    'virtual-sports-detail-tab': virtual_sports_detail_tab,
-    'ranking-list-start':ranking_list_start,
-    'football-ranking-list':football_ranking_list,
-    'group-knockout':group_knockout,
   },
   data(){
     return{

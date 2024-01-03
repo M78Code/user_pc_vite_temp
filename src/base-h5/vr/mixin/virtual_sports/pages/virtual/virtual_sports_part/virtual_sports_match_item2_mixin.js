@@ -3,15 +3,10 @@
  */
 import { LOCAL_PROJECT_FILE_PREFIX, i18n_t, LocalStorage } from "src/output/index.js";
 import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
-import v_s_odd_item from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_odd_item.vue"
-import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue"
-import odd_column_item from "src/base-h5/components/match-container/template/app/components/odd-column-item.vue"
 // import betting from 'project_path/mixins/betting/betting.js';
 import virtual_sports_m_item_mixin from 'src/base-h5/vr/mixin/virtual_sports/virtual_sports_m_item_mixin.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
-import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
-import temp9 from "src/base-h5/components/details/components/tournament-play/template-2/temp9.vue"
 
 export default {
   // mixins:[betting,virtual_sports_m_item_mixin],
@@ -378,13 +373,6 @@ export default {
       }
       return flag;
     }
-  },
-  components:{
-    "v-s-odd-item":v_s_odd_item,
-    'v-s-match-timer':v_s_match_timer,
-    "odd-column-item":odd_column_item,
-    'image-cache-load': ImageCacheLoad,
-    temp9,
   },
   watch:{
     other_status(n){

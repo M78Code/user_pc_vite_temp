@@ -2,14 +2,10 @@
  * @Description: 球类 排行榜页面 只需要传个 tid 联赛id进来
  */
 import {api_v_sports} from "src/api/index.js";
-import no_data from "src/base-h5/vr/components/common/vr_sport_no_data.vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 
 export default {
   name: "ranking_list",
-  components: {
-    "no-data": no_data
-  },
   props:{
     tid: Number|String
   },

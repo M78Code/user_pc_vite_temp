@@ -127,9 +127,13 @@
 </template>
 <script>
 import virtual_match_container_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_match_container_mixin.js";
+import data_pager from "src/base-h5/components/common/data-pager.vue"
 export default {
   mixins:[virtual_match_container_mixin],
   name:'virtual_match_container',
+  components:{
+    'data-pager':data_pager,
+  },
 }
 </script>
 

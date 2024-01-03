@@ -4,19 +4,9 @@
  * @Description: 虚拟体育首页主文件
  */
 import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/virtual_sports_mixin.js"
-import noData from "src/base-h5/vr/components/common/vr_sport_no_data.vue";
-import matchTab from "src/base-h5/vr/pages/virtual/virtual_sports_part/match_tab.vue"
-import v_s_match_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list.vue"
-import v_s_match_list2 from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list2.vue"
-import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue"
-import virtual_sports_stage from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue"
-import dynamic_ranking from "src/base-h5/vr/pages/virtual/virtual_sports_part/dynamic_ranking.vue"
-import result_page from "src/base-h5/vr/pages/result/result_page.vue"
-import virtual_skeleton from "src/base-h5/vr/components/skeleton/virtual_sports/virtual.vue"
 import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { get_now_server } from 'src/core/utils/common/module/other.js'
-import { IconWapper } from 'src/components/icon'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -570,20 +560,6 @@ export default {
         this.ranking_list_change = false;
       }
     }
-  },
-  components:{
-    'virtual-sports-category':virtual_sports_category,
-    'match-tab':matchTab,
-    'v-s-match-list':v_s_match_list,
-    'v-s-match-list2':v_s_match_list2,
-    // 'virtual-sports-tab':virtualSportsTab,
-    'virtual-sports-stage':virtual_sports_stage,
-    'dynamic-ranking': dynamic_ranking,
-    'result-page': result_page,
-    noData,
-    // 'setting': setting,
-    'icon-wapper': IconWapper,
-    'virtual-skeleton':virtual_skeleton,
   },
   unmounted(){
     this.is_before_destroy = Math.random();

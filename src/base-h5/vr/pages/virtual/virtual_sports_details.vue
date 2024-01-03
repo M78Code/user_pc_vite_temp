@@ -67,9 +67,27 @@
 </template>
 <script>
 import virtual_sports_details_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_details_mixin.js";
+import virtual_sports_tab from 'src/base-h5/vr/components/virtual_sports_tab.vue'
+import virtual_sports_stage from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
+import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue"
+import virtual_sports_detail_tab from 'src/base-h5/vr/pages/virtual/details/children/virtual_sports_detail_tab.vue'
+import ranking_list_start from "src/base-h5/vr/pages/virtual/virtual_sports_part/ranking_list_start.vue"
+import football_ranking_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/football_ranking_list.vue"
+import group_knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/group_knockout.vue"
+import virtual_match_statistic from 'src/base-h5/vr/components/virtual_match_statistic.vue'
 export default {
   mixins:[virtual_sports_details_mixin],
   name:'virtual_sports_details',
+  components: {
+    'virtual-sports-tab': virtual_sports_tab,
+    'virtual-match-statistic': virtual_match_statistic,
+    'virtual-sports-stage': virtual_sports_stage,
+    'virtual-sports-category': virtual_sports_category,
+    'virtual-sports-detail-tab': virtual_sports_detail_tab,
+    'ranking-list-start':ranking_list_start,
+    'football-ranking-list':football_ranking_list,
+    'group-knockout':group_knockout,
+  },
 }
 </script>
 

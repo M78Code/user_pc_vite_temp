@@ -2,15 +2,11 @@
  * @Description: 虚拟体育 淘汰赛页面 只需要传个 tid 联赛id进来
  */
 import { api_v_sports } from "src/api/index.js";
-import no_data from "src/base-h5/vr/components/common/vr_sport_no_data.vue";
 import { LOCAL_PROJECT_FILE_PREFIX,calc_win, project_name, i18n_t } from 'src/output/index.js'
 import { lang } from 'src/base-h5/mixin/userctr.js'
 
 export default {
   name: "knockout",
-  components: {
-    "no-data": no_data
-  },
   props:{
     tid: Number|String,
     current_match: {

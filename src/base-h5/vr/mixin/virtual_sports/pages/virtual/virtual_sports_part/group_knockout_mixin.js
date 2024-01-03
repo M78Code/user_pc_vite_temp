@@ -2,18 +2,11 @@
  * @Description: 虚拟体育 小组赛淘汰赛页面 只需要传个 tid 联赛id进来
  */
 import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
-import group_matches from "src/base-h5/vr/pages/virtual/virtual_sports_part/group_matches.vue";
-import knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/knockout.vue";
-
 export default {
   name: "virtual_sports_part",
   props:{
     tid:  Number|String,
     current_match:Object,
-  },
-  components: {
-    group_matches: group_matches,
-    knockout: knockout,
   },
   data() {
     return {

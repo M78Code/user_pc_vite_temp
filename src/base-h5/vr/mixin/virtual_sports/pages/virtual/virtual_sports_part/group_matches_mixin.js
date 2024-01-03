@@ -2,14 +2,10 @@
  * @Description: 虚拟体育 小组赛页面 只需要传个 tid 联赛id进来
  */
 import { api_v_sports } from "src/api/index.js";
-import no_data from "src/base-h5/vr/components/common/vr_sport_no_data.vue";
 import { lang } from 'src/base-h5/mixin/userctr.js'
 
 export default {
   name: "group_matches",
-  components: {
-    "no-data": no_data
-  },
   props:{
     tid: Number|String,
     current_match: {

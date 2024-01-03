@@ -16,7 +16,16 @@
       <q-separator class="divider" color="#F2F5F8" inset />
     <div class="search-header">
     <div class="wrap-select">
-      
+      <div class="r-select ball-games">
+        <!-- 体育 -->
+        <span class="label  ball-games-label">{{$root.$t('results.sport')}}</span>
+        <normal-select
+          :value="sport"
+          :options="sport_type"
+          :isChampion="0"
+          class="select-style"
+        ></normal-select>
+      </div>
       <!-- 冠军球种才展示这个下拉选择框 -->
       <div class="r-select ball-games" v-if="current_sport_id == 0">
         <!-- 球种 -->
@@ -149,6 +158,7 @@
 import {  ref,computed,onMounted, reactive,watch } from 'vue';
 import {SelectWrapper} from "src/base-pc/components/match-results/select/index.js";
 import {FliterCheckbox} from "src/components/fliter-checkbox/index.js";
+import normalSelect from "src/base-pc/components/match-results/select/components/normal-select.vue";
 import selectY from "src/base-pc/components/match-results/select/components/select-y.vue"
 import { api_analysis } from "src/api/";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -251,7 +261,7 @@ const props = defineProps({
   watch(
     () => GlobalSwitchClass.global_switch_version.version,
     (new_) => {
-     props.hideSelect()
+    //  props.hideSelect()
     },
     {deep:true, immediate: true }
   );
