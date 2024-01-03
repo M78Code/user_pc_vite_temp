@@ -21,9 +21,9 @@ const { PROJECT_NAME,BUILD_VERSION,IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG ;
 
 //  1001  1004
 import UserCtr from "src/core/user-config/user-ctr.js";
-import lodash_, { reject } from "lodash";
+import lodash_ from "lodash";
 
-import { api_base_data, api_common } from "src/api/index.js";
+import { api_base_data } from "src/api/index.js";
 
 // import VrMiConfig from "./config/vr-mi.js";
 
@@ -298,15 +298,25 @@ class BaseData {
     if (!(res instanceof Array)) return
     res.forEach(t => {
       if (t.key === 'p1') {
-        this.init_mi_euid_map(t.res)
+        nextTick(()=>{
+          this.init_mi_euid_map(t.res)
+        })
       } else if (t.key === 'p2') {
-        this.init_mi_tid_mids(t.res)
+        nextTick(()=>{
+          this.init_mi_tid_mids(t.res)
+        })
       } else if (t.key === 'p3') {
-        this.init_base_menu_il8n(t.res)
+        nextTick(()=>{
+          this.init_base_menu_il8n(t.res)
+        })
       } else if (t.key === 'p4') {
-        this.init_base_data(t.res)
+        nextTick(()=>{
+          this.init_base_data(t.res)
+        })
       } else if (t.key === 'p5') {
-        this.init_mew_menu_list(t.res)
+        nextTick(()=>{
+          this.init_mew_menu_list(t.res)
+        })
       }
     })
   }
@@ -524,7 +534,7 @@ class BaseData {
     this.set_left_menu_init(menu_old_or_nem_data_list);
 
     // app-h5使用
-    if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
+    if( ['ouzhou-h5','app-h5','new-pc'].includes(PROJECT_NAME)){
       MenuData.set_init_menu_list()
     }
 

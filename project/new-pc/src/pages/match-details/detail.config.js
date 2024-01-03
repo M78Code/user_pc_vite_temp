@@ -27,6 +27,8 @@ import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data ,is_e
 import uid from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
+import { details_ws } from "src/core/match-detail/details-ws.js";
 export const useGetConfig = (router,cur_menu_type,details_params,play_media) => {
   const route = useRoute();
   // const router = useRouter();
@@ -281,16 +283,9 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
               // 自动判断是否需要切换右侧赛事数据
               mx_autoset_active_match({ mid: data.mid });
             }
-            /**
-             * @description 格式化msc(比分)数据
-             * msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
-             */
-            data.msc = details.build_msc(data);
             // 设置赛事信息
             MatchDataWarehouseInstance.set_match_details(data,[])  
-            let str =state.mid+'_'
-            // state.match_infoData = data;
-            state.match_infoData = lodash.get(MatchDataWarehouseInstance.list_to_obj.mid_obj,str);
+            state.match_infoData = MatchDataWarehouseInstance.get_quick_mid_obj(state.mid)
           } else {
             // 处理报错，置换替补数据
             countMatchDetail();
@@ -682,10 +677,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    * @param {Number} timestap 时间戳
    */
   const handle_match_details_data = (data, timestap) => {
-    // 初始化赛事控制类玩法数据
-    MatchDataWarehouseInstance.set_match_details(state.match_infoData, data);
-    let str =state.mid+'_'
-    match_details_data_set([lodash.get(MatchDataWarehouseInstance.list_to_obj.mid_obj,str)]);
+    match_details_data_set(data);
     state.handicap_state = "data";
     // 同步投注项
     if (!get_lang_change.value) {
@@ -719,10 +711,12 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
         });
         infoArr.push(item);
       });
-      state.match_details = infoArr;
+        // 初始化赛事控制类玩法数据
+      MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid), infoArr);
     } else {
-      state.match_details = match_details_arr;
+      MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid), match_details_arr);
     }
+    state.match_details =  [MatchDataWarehouseInstance.get_quick_mid_obj(state.mid)]
   };
   /**
    * 传递玩法列表的数据给到玩法集
@@ -835,8 +829,14 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
       { type: MITT_TYPES.EMIT_CHANGE_LOADING_STATUS_DETAILS, callback: getLoading },
       // 获取详情页头部高度
       { type: MITT_TYPES.EMIT_GET_DETAILS_HEIGHT_MAIN, callback: getHeaderHeight },
-        // 返回背景图
-        { type: MITT_TYPES.EMIT_GET_BACKGROUND_IMG, callback: setBg },
+      // 返回背景图
+      { type: MITT_TYPES.EMIT_GET_BACKGROUND_IMG, callback: setBg },
+      // ws触发详情更新
+      { type: MITT_TYPES.EMIT_REFRESH_DETAILS, callback: init },
+      //触发盘口oddinfo
+      { type: MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET, callback: get_match_details },
+      //触发玩法集 cateragy
+      { type: MITT_TYPES.EMIT_GET_ODDS_LIST, callback: get_category_list },
     ])
 
  
@@ -847,6 +847,9 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
      // });
 
   onUnmounted(emitters_off)
+  /* 引入ws处理指令 */
+  const { handler_ws_cmd } = details_ws();
+  let message_fun = null
   onMounted(() => {
     // 加载视频动画资源
     pre_load_video.load_video_resources();
@@ -873,7 +876,11 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     // 初始化进入详情的加载时间
     init_details_loading_time_record();
 
-
+    message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+      if (lodash.get(data, "cd.mid") != state.mid || cmd == "C105") return;
+      handler_ws_cmd(cmd, data,state.mid);
+      // console.error('flag','cmd:',cmd,data);
+    })
      
   });
 

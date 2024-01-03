@@ -150,8 +150,11 @@ onMounted(() => {
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, gotTop).off,
   };
-  emitters.value = {
-    emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, (val) =>  show_skeleton_screen.value = val).off,
+  emitters.value = { 
+    emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, (val) => {
+      show_skeleton_screen.value = val
+      show_skeleton_screen.value && reset_show_skeleton_state()
+    }).off,
   };
 })
 
@@ -362,6 +365,11 @@ const gotTop = () => {
     timer = null
   }, 100)
 }
+
+// 骨架图隐藏兜底
+const reset_show_skeleton_state = lodash.debounce(() => {
+  if (show_skeleton_screen.value) show_skeleton_screen.value = false
+}, 8000)
 
 onUnmounted(() => {
   Object.values(emitters.value).map((x) => x());

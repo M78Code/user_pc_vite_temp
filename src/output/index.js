@@ -16,31 +16,31 @@
  */
 
  // 本次打包的 客户端版本
-import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+ import BUILDIN_CONFIG from "app/job/output/env/index.js";;
  
  
-//所有项目通用： 业务逻辑  无关  ： 常量，工具函数 ，国际化 ，顶层通信用的 全局常量和 MITT
-export * from "./module/constant-utils.js";
+ //所有项目通用： 业务逻辑  无关  ： 常量，工具函数 ，国际化 ，顶层通信用的 全局常量和 MITT
+ export * from "./module/constant-utils.js";
+  
+ //所有项目通用： 业务逻辑 无关  ： 用户类，接口请求 ，埋点
+ export * from "./module/global-common.js";
  
-//所有项目通用： 业务逻辑 无关  ： 用户类，接口请求 ，埋点
-export * from "./module/global-common.js";
-
-
-//体育客户端通用：  数据仓库
-export * from "./module/match-data-base.js";
-
-
-//体育客户端通用： 非数据仓库的其他业务逻辑
-export * from "./module/menu-data.js";
-
-export * from "./module/match-list-card.js"
-export * from "./module/match-list-card-data.js"
-
-export * from "./module/project-single.js"
-
-// 埋点相关
-export * from "./module/hide-api.js"
-
  
- //当前项目专用的   
- export * from "./project/index.js"
+ //体育客户端通用：  数据仓库
+ export * from "./module/match-data-base.js";
+ 
+ 
+ //体育客户端通用： 非数据仓库的其他业务逻辑
+ export * from "./module/menu-data.js";
+ 
+ export * from "./module/match-list-card.js"
+ export * from "./module/match-list-card-data.js"
+ 
+ export * from "./module/project-single.js"
+ 
+ // 埋点相关
+ export * from "./module/hide-api.js"
+ 
+ 
+//当前项目专用的   
+export * from "./project/index.js"

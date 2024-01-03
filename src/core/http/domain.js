@@ -1212,7 +1212,6 @@ class AllDomain {
    */
   async toppic_fast(api=[], callback, count=0) {
     count++;
-    console.log('toppic_fast->',count);
     // 清除计时器
     clearTimeout(this.timer_toppic_fast);
     let reqs = [];

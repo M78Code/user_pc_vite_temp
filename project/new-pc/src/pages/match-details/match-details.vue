@@ -102,8 +102,7 @@ const route = useRoute();
 //引入组件样式
 import { compute_css_variables } from "src/core/css-var/index.js";
 import { reactive, ref, watch ,computed} from "vue";
-import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData, MatchDetailCalss,LayOutMain_pc,is_eports_csid,SearchPCClass } from "src/output/index.js";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData, MatchDetailCalss,LayOutMain_pc,is_eports_csid,SearchPCClass,MenuData } from "src/output/index.js";
 const page_style = ref(null);
 page_style.value = compute_css_variables({
   category: "component",
@@ -116,8 +115,9 @@ const details_params = ref(MatchDetailCalss.params );
 //右侧播放类型
 const play_media = ref(MatchDetailCalss.play_media )
 const {
+  match_details,
   load_detail_statu,
-  // match_infoData,
+  match_infoData,
   category_list,
   plays_list,
   currentRound,
@@ -144,16 +144,16 @@ const on_go_top = () => {
   emit("on_go_top");
 };
 import search from "src/core/search-class/search.js";
-const match_infoData = ref({});
-const match_details = ref([]);
+// const match_infoData = ref({});
+// const match_details = ref([]);
 /**
  * @description: 通过mid获取从仓库获取最新的数据
  * @param {*} val  mid参数
  * @return {*}
  */
  const update_data = (val) => {
-  match_infoData.value = MatchDetailsData.get_quick_mid_obj(val);
-  match_details.value = [MatchDetailsData.get_quick_mid_obj(val)];
+  // match_infoData.value = MatchDetailsData.get_quick_mid_obj(val);
+  // match_details.value = [MatchDetailsData.get_quick_mid_obj(val)];
 };
 /*
  ** 监听MatchDetailCalss的版本号  获取最新的mid
@@ -170,15 +170,7 @@ watch(
   },
   { deep: true }
 );
-watch(
-  () => MatchDetailsData.data_version,
-  (val, oldval) => {
-    if (val.version) {
-      update_data(mid.value)
-    }
-  },
-  { deep: true }
-);
+
 let back_to_timer =null
   /**
    * @description 返回上一页

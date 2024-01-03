@@ -9,6 +9,7 @@
     :style="`height:${lodash.get(get_match_style(), `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
     v-if="get_match_style().is_show_card"
   >
+  <!-- {{ get_match_style().view_tpl_id }} -->
     <component
       :is="`MatchTpl${get_match_style().view_tpl_id}After`"
       :mid="mid"

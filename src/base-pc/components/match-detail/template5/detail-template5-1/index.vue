@@ -259,7 +259,7 @@ const get_bet_item_class = (item_details, item, ol, hl_index) => {
     flex: unset !important;
     //background: red !important;
     
-    background: var(--q-gb-t-c-14) !important;
+    background: var(--q-gb-bg-c-22) !important;
   }
   :deep(.handicap) {
     flex-wrap: wrap;
@@ -274,9 +274,10 @@ const get_bet_item_class = (item_details, item, ol, hl_index) => {
       display: flex;
       justify-content: center !important;
       width: 37.5%;
-      border-right: 6px solid var(--q-gb-bd-c-13) !important;
-      border-bottom: 6px solid var(--q-gb-bd-c-13) !important;
-      border-left: 6px solid var(--q-gb-bd-c-13) !important;
+      // 暂时先注释，不清楚为啥写这个
+      // border-right: 6px solid var(--q-gb-bd-c-13) !important;
+      // border-bottom: 6px solid var(--q-gb-bd-c-13) !important;
+      // border-left: 6px solid var(--q-gb-bd-c-13) !important;
       &:last-child {
         border-right: none;
       }

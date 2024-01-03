@@ -118,15 +118,24 @@ const jump_rule = () => {
   closedHandle();
 };
 
-const is_disabled = (item) => {
-  if(MenuData.is_esports()){
-    //电竞 不会排序 和 盘口
-    if(['Handicap','sort'].includes(item.mark )){
-      return true
-    }
+const is_disabled = computed(() => {
+  return (item) => {
+    if(MenuData.is_esports()){
+      //电竞 不会排序 和 盘口
+      if(['Handicap','sort'].includes(item.mark )){
+        return true
+      }
+      // 电竞下冠军
+      if (MenuData.get_mm_is_champion()) {
+        if(['version'].includes(item.mark )){
+          return true
+        }
+      }
+    } 
+    return false
   }
-  return false
-}
+})
+
 /**
  * @description 跳转网页版
  * @param 
