@@ -220,7 +220,7 @@ const {
 
 <style lang="scss" scoped>
 .bet-inner{
-  background: var(--q-gb-bg-c-19);
+  // background: var(--q-gb-bg-c-19);
 }
 .lock {
   width: 12px;
