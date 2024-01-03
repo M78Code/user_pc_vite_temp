@@ -8,7 +8,7 @@
       
   <!-- high_scrolling: set_is_high_scrolling && menu_type !== 100 && !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100, -->
   <div class="scroll-wrapper" ref="container" @scroll="handler_match_container_scroll">
-    <div  :class="['scroll-i-con', { detail_list: is_detail, simple: standard_edition == 1, 'static': get_is_static() }]"
+    <div  :class="['scroll-i-con', { detail_list: is_detail, simple: standard_edition == 1, 'static': is_static }]"
       :style="get_container_style">
       <template v-if="MatchMeta.match_mids.length > 0">
         <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="index" :data-mid="match_mid"
@@ -100,7 +100,7 @@ const handler_match_container_scroll = lodash.debounce(($ev) => {
   const scrollTop = lodash.get($ev.target, 'scrollTop', 0)
   scroll_top.value = scrollTop
   const length = lodash.get(MatchMeta.complete_matchs, 'length', 0)
-  if (get_is_static() || length < 17) return
+  if (is_static.value || length < 17) return
   if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 200) || Math.abs(scrollTop - prev_scroll.value) >= 200) {
     prev_scroll.value = scrollTop
     MatchMeta.compute_page_render_list({ scrollTop: $ev.target.scrollTop, type: 2, is_again: false, merge: 'cover' })
@@ -128,12 +128,16 @@ const goto_top = () => {
 }
 
 // 是否虚拟计算逻辑
-const get_is_static = () => {
+// const get_is_static = () => {
+//   return is_kemp.value || is_collect.value || route?.name === 'collect' || MatchResponsive.is_compute_origin.value
+// }
+// 是否虚拟计算逻辑
+const is_static = computed(() => {
   return is_kemp.value || is_collect.value || route?.name === 'collect' || MatchResponsive.is_compute_origin.value
-}
+})
 
 const is_show_out = computed(() => {
-  return max_height && !get_is_static() && VirtualList.container_total_height.value > container.value?.offsetHeight
+  return max_height && !is_static.value && VirtualList.container_total_height.value > container.value?.offsetHeight
 })
 
 const container_total_height = computed(() => {
@@ -143,7 +147,7 @@ const container_total_height = computed(() => {
 
 // 动态 样式 
 const get_container_style = computed(() => {
-  const style_obj = { 'height': get_is_static() ? 'auto' : container_total_height.value}
+  const style_obj = { 'height': is_static.value ? 'auto' : container_total_height.value}
   if (menu_type.value !== 100 && !(menu_type.value == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.value?.mi))) Object.assign(style_obj, {
     ...compute_css_obj({key: 'h5-kyapp-speciality-bg' })
   })
