@@ -86,7 +86,7 @@
             <div  v-if="!item_data.hotName" class="text-right" @click.stop="set_hton(item_data)" :class="icon_name">
             </div>
             <!-- 折叠按钮 -->
-            <icon-wapper color="#999" name="icon-arrow"  :class="['icon-wapper', {'close': judage_hshow == 'Yes'}]"  size="16px" />
+            <icon-wapper color="#999" name="icon-arrow"  :class="['icon-wapper', {'close': judage_hshow == 'Yes'}]"  size="12px" />
           </div>
           <!-- 调试专用勿删除 -->
           <span v-if="wsl_flag" style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>
@@ -782,8 +782,8 @@ export default defineComponent({
 }
 
 .icon_zd_default {
-  width: 0.16rem;
-  height: 0.14rem;
+  width: 0.12rem;
+  height: 0.12rem;
   background: url($SCSSPROJECTPATH + "/image/svg/stick_btn_def.svg") no-repeat center / 96% 96% !important;
 }
 .base-font-weg {
@@ -903,6 +903,9 @@ export default defineComponent({
 // 选中颜色
 :deep(.details-bg5){
   background: var(--q-gb-bg-c-37) !important;
+  .remark, .odds_new {
+    color: var(--q-gb-t-c-30);
+  }
 }
 :deep(.active-play){
   background: var(--q-gb-bg-c-37) !important;

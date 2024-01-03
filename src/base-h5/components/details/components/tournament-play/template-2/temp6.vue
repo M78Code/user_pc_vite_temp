@@ -265,10 +265,14 @@
           </div>
 
           <!-- 展开和收起按钮 -->
-          <div v-if="!hide_show_more_layout" class="show-more play-box-style"  @click="change_show">
+          <div  v-if="!hide_show_more_layout" style="padding:0 0.08rem">
+            <div class="show-more play-box-style"  @click="change_show">
           <span class="fz_13">{{show_more?i18n_t('match_info.pack_up'):i18n_t('match_info.show_more')}}
           </span>
           </div>
+
+          </div>
+         
 
         </div>
       </div>
@@ -503,13 +507,15 @@ export default defineComponent({
   color: var(--q-color-com-fs-color-11);
   align-items: center;
   justify-content: center;
+  padding:0 20px
+  // padding: 0 0.18rem !important;
 }
 
 .play-box-style {
   width: 100%;
   height: 0.52rem;
   line-height: 0.52rem;
-  background:var(--q-gb-bg-c-15) !important;
+  background:var(--q-gb-bg-c-28);
   padding: 0 0.15rem;
   display: flex;
   justify-content: center;

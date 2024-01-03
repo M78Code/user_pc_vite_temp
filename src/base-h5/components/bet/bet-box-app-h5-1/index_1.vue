@@ -12,7 +12,7 @@
         <!-- {{BetData.is_bet_single}}-{{BetViewDataClass.bet_order_status}}-{{ BetViewDataClass.orderNo_bet_obj}}-{{ BetData.bet_s_list.length > 1 }}-{{ BetViewDataClass.bet_special_series }} -->
         <!-- 单关 投注 -->
         <div class="bet-scroll" ref="bet_scroll" @scroll="handle_bet_scroll"
-        :class="!BetData.is_bet_single && BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1  ?'h188':''">
+        :class="!BetData.is_bet_single && BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1  ?'h344':''">
           <div v-if="BetViewDataClass.bet_order_status == 1">
             <template v-if="BetData.is_bet_single">
               <div
@@ -197,7 +197,6 @@ const scrollTo = () => {
   padding: 0 0.14rem;
   -webkit-overflow-scrolling: touch;
   border-radius: .24rem .24rem 0 0;
-  //border: 1px solid;
   background-color: var(--q-gb-bg-c-23);
   z-index: 1999;
   padding-bottom: .2rem;
@@ -209,8 +208,9 @@ const scrollTo = () => {
 .bet-scroll {
   max-height: 4rem;
   overflow-y: auto;
-  &.h188{
-    height: 1.8rem;
+  &.h344{
+    min-height: 1.8rem;
+    max-height: 3.44rem;
   }
   .bet_single_info:nth-last-child(2) {
     border-radius: .12rem .12rem 0 0;

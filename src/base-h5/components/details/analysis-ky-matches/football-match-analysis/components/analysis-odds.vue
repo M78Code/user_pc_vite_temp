@@ -391,7 +391,7 @@ onUnmounted(() => {
       position: sticky;
       top: 1.81rem;
       z-index: 80;
-      -background: var(--q-gb-bg-c-23);
+      background: var(--q-gb-bg-c-23);
       .sub_tiele {
         font-family: PingFang SC;
         font-weight: 600;

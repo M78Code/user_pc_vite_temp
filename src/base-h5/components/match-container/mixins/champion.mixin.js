@@ -207,11 +207,16 @@ export default {
           _hn,  // hn_obj
           _mid,  //赛事id mid_obj
         }
+        let bet_type = 'guanjun_bet'
+        // 电竞下的冠军属于 电竞 特例
+        if(MenuData.is_esports()){
+          bet_type = 'esports_bet'
+        }
         let other = {
           is_detail: false,
           // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
           // 根据赛事纬度判断当前赛事属于 那种投注类型
-          bet_type: 'guanjun_bet',
+          bet_type,
           // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
           device_type: 1,  
           // 数据仓库类型

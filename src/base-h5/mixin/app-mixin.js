@@ -14,7 +14,7 @@ import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-
+import VConsole from 'vconsole'
 export default {
   data() {
     return {
@@ -60,6 +60,11 @@ export default {
     // 监听页面是否转入休眠状态
     document.addEventListener("visibilitychange",this.visibilitychange_handle);
     document.addEventListener("pagehide", this.visibilitychange_handle);
+
+    // 真机调试
+    if(window.SEARCH_PARAMS.init_param.get('vconsole_h5')){
+      new VConsole();
+    }
   },
   watch: {
     '$route'(to, from) {
