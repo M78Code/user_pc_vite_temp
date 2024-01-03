@@ -522,12 +522,13 @@ export default {
     .both-home {
       border-bottom: 1px solid rgba(225, 225, 225, 0.08);
     }
-    .wrap-logo {
+    // 比分榜样式
+    .wrap-logo {   //
       display: flex;
       flex: 1;
       align-items: center;
       min-width: 1px;
-      color: var(--q-gb-t-c-1);
+      color: var(--q-gb-bd-c-13);
       height: 28px;
       overflow: hidden;
     }
