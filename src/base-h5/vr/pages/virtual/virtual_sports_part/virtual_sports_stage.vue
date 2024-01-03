@@ -778,13 +778,6 @@ export default {
       this.player.destroy();
       this.player = null;
     }
-
-    // this.$root.$off(this.emit_cmd.EMIT_IS_ALL_END_NOTICE,this.all_ended_handle);
-    // this.$root.$off(this.emit_cmd.EMIT_SYNC_VIDEO_DATA,this.sync_video_data_handle);
-    // this.$root.$off(this.emit_cmd.EMIT_VIRTUAL_MATCH_LOADING,this.set_loading_state);
-    // this.$root.$off(this.emit_cmd.EMIT_CURRENT_VIDEO_PROCESS_INITED,this.set_init_video_on);
-    // this.$root.$off(this.emit_cmd.EMIT_PRE_COUNTING_EDN,this.pre_counting_end_handle);
-    // this.$root.$off(this.emit_cmd.EMIT_VISIBILITYCHANGE_EVENT,this.visibilitychange_handle)
     this.emitters.map((x) => x());
     this.clear_timer();
 
