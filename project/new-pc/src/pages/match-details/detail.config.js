@@ -285,7 +285,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
             }
             // 设置赛事信息
             MatchDataWarehouseInstance.set_match_details(data,[])  
-            state.match_infoData = lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid));
+            state.match_infoData = MatchDataWarehouseInstance.get_quick_mid_obj(state.mid)
           } else {
             // 处理报错，置换替补数据
             countMatchDetail();
@@ -677,10 +677,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    * @param {Number} timestap 时间戳
    */
   const handle_match_details_data = (data, timestap) => {
-    // 初始化赛事控制类玩法数据
-    MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid), data);
-    let str =state.mid+'_'
-    match_details_data_set([lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid))]);
+    match_details_data_set(data);
     state.handicap_state = "data";
     // 同步投注项
     if (!get_lang_change.value) {
@@ -714,10 +711,12 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
         });
         infoArr.push(item);
       });
-      state.match_details = infoArr;
+        // 初始化赛事控制类玩法数据
+      MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid), infoArr);
     } else {
-      state.match_details = match_details_arr;
+      MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid), match_details_arr);
     }
+    state.match_details =  [MatchDataWarehouseInstance.get_quick_mid_obj(state.mid)]
   };
   /**
    * 传递玩法列表的数据给到玩法集

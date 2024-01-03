@@ -150,7 +150,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     allData.countMatchDetailErr = 0;
     let params = allData.details_params; //vx_details_params，列表页点击进入详情所保存的赛事参数
     // allData.details_params.mid = mid;
-    allData.sportId =MatchDataWarehouseInstance.get_quick_mid_obj(mid).csid; //球类id
+    allData.sportId =lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(mid),'csid'); //球类id
 
     // 1. C104 mhs 0  仅开盘 循环四次调用  每两次发起之间次间隔最低3秒 一共 理论上9秒以上，
     // 两个原则：

@@ -112,6 +112,8 @@ class MenuData {
     this.early_list = []
     this.in_play_list = []
 
+    this.current_ball_type = 0
+
     this.left_menu_list = []
   }
 
@@ -274,6 +276,11 @@ class MenuData {
     // MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     this.set_match_list_api_config({})
     
+  }
+
+  // 设置当前的赛种id
+  set_current_ball_type(val){
+    this.current_ball_type = val
   }
 
    /**
