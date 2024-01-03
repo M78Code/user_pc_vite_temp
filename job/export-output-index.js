@@ -26,55 +26,55 @@ let {
   IS_MAIN_PROJECT_PC,
 } = BUILD_VERSION_CONFIG;
 
-if (IS_MAIN_PROJECT) {
-  let common_file_path = "";
 
-  if (IS_MAIN_PROJECT_H5) {
-    common_file_path = "./src/output/project/common/h5-common.js";
+/**
+ * 
+ * 产出  ./src/output/project/index.js
+ */
+const export_output_project_index_file = () => {
+  if (IS_MAIN_PROJECT) {
+    let common_file_path = "";
+    if (IS_MAIN_PROJECT_H5) {
+      common_file_path = "./src/output/project/common/h5-common.js";
+    }
+    if (IS_MAIN_PROJECT_PC) {
+      common_file_path = "./src/output/project/common/pc-common.js";
+    }
+    let file_str_common = fs.readFileSync(common_file_path);
+    let project_file_path = `./src/output/project/module/${PROJECT_NAME}.js`;
+    let file_str_project = fs.readFileSync(project_file_path);
+    let project_file_str = `
+  //当前项目的强相关的一些入口 ，当前项目专用的，理论上 运行A 项目 不会 因为这里 引入 B 项目的文件 ，例如 运行H5，却加载了PC 的组件
+  ${file_str_common} 
+  ${file_str_project}
+  `;
+
+    write_file("./src/output/project/index.js", project_file_str.trim());
   }
+};
 
-  if (IS_MAIN_PROJECT_PC) {
-    common_file_path = "./src/output/project/common/pc-common.js";
-  }
+export_output_project_index_file()
 
-  let file_str_common = fs.readFileSync(common_file_path);
+/**
+ * 产出  ./src/output/index.j
+ */
 
-  let project_file_path = `./src/output/project/module/${PROJECT_NAME}.js`;
-
-  let file_str_project = fs.readFileSync(project_file_path);
-
-  let project_file_str = `
-//当前项目的强相关的一些入口 ，当前项目专用的，理论上 运行A 项目 不会 因为这里 引入 B 项目的文件 ，例如 运行H5，却加载了PC 的组件
-${file_str_common} 
-${file_str_project}
-
-`;
-
-  write_file("./src/output/project/index.js", project_file_str .trim());
-  // console.log('拷贝入口html 完成');
-
+const export_output_index_file = () => {
   // remove_file(`${BUILD_STATIC_DIR_PATH}project/`)
   // console.log('删除原 html 文件 完成');
-
+  // job\template-entry\output-index\template.js
+  let index_temp_file_path = `./job/template-entry/output-index/template.js`;
   let index_file_path = `./src/output/index.js`;
-
-  let file_str_index = fs.readFileSync(index_file_path);
-
-  let index_file_str = `${file_str_index}`  ;
-
-
-
-  if (!index_file_str.includes("./project/index.js")) {
-  
+  let file_str_index = fs.readFileSync(index_temp_file_path);
+  let index_file_str = `${file_str_index}`;
+  if (IS_MAIN_PROJECT) {
     index_file_str = `  ${file_str_index}
- //当前项目专用的   
- export * from "./project/index.js"
-  
+//当前项目专用的   
+export * from "./project/index.js"
 `;
-
-write_file(index_file_path, index_file_str.trim());
-
+  } else {
   }
+  write_file(index_file_path, index_file_str.trim());
+};
 
-
-}
+export_output_index_file();
