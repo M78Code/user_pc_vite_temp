@@ -139,6 +139,9 @@ export default defineComponent({
     );
 
     onMounted(() => {
+     
+
+      SessionStorage.set("SET_FEWER", 1);
       // 延时器
       data.timer1_ = null;
       initEvent();
@@ -206,10 +209,6 @@ export default defineComponent({
       if (get_fewer.value == 3) {
         get_fewer.value = 1;
       }
-   // 切换玩法集时  ，如果当前是收起状态应保持收起
-    setTimeout(() => {
-      useMittEmit(MITT_TYPES.EMIT_DETAILS_TOGGLE_HANDICAP, get_fewer.value);
-    }, 50);
     
 
       

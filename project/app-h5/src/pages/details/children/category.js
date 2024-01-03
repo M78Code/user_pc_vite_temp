@@ -59,6 +59,10 @@ export const category_info = (category_arr=[]) => {
   const MatchDataWarehouseInstance =ref(MatchDataWarehouse_H5_Detail_Common)
   const match_list_new_data = ref([])
   const match_list_normal_data = ref([])
+
+      // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
+      const get_fewer =ref ( SessionStorage.get("SET_FEWER")||1);
+
   // #TODO vuex
   // computed:{
   // ...mapGetters([
@@ -110,9 +114,9 @@ export const category_info = (category_arr=[]) => {
   const get_subscript_game_index = computed(() => {
     return "get_subscript_game_index";
   });
-  const get_fewer = computed(() => {
-    return "get_fewer";
-  });
+  // const get_fewer = computed(() => {
+  //   return "get_fewer";
+  // });
   const get_curr_sub_menu_type = computed(() => {
     return "get_curr_sub_menu_type";
   });
@@ -239,10 +243,13 @@ export const category_info = (category_arr=[]) => {
     if (!item) {
       return;
     }
+// 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
+    const get_fewer = SessionStorage.get("SET_FEWER")
+
     if (get_fewer == 2 && component_data.playlist_length) {
       item.hshow = "No";
     }
-    if (get_fewer == 1 && component_data.playlist_length && first_load) {
+    if (get_fewer == 1 && component_data.playlist_length && component_data.first_load) {
       item.hshow = "Yes";
     }
     if (item && item.hl && item.hl.length) {
