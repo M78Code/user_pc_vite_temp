@@ -71,7 +71,7 @@ export default {
       required: true
     },
   },
-  destroyed() {
+  unmounted() {
     for (const key in this.$data) {
       this.$data[key] = null
     }

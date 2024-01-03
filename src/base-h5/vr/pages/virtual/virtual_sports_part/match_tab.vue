@@ -293,7 +293,7 @@ export default {
       }
     }
   },
-  destroyed(){
+  unmounted(){
     // this.$root.$off(this.emit_cmd.EMIT_BASKETBALL_TIME_ARRIVED,this.basket_ball_time_handle);
     // this.$root.$off(this.emit_cmd.EMIT_FORCE_END_PLAYING_BASKETBALL,this.end_playing_basketball_handle);
     // this.$root.$off(this.emit_cmd.EMIT_INGAME_RESULT_SHOW_END,this.ingame_result_show_end);

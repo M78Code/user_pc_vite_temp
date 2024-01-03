@@ -216,7 +216,7 @@ export default {
       }
     }
   },
-  destroyed() {
+  unmounted() {
     this.emitters.map((x) => x())
     this.set_fewer(1);
     clearTimeout(this.timer1_)

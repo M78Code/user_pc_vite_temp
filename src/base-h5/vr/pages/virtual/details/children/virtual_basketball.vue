@@ -262,7 +262,7 @@ export default {
       }
     },
   },
-  destroyed() {
+  unmounted() {
     this.clear_timer()
   }
 }
