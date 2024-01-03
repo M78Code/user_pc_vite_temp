@@ -41,7 +41,7 @@ export default {
   &.text-active-tab {
     .q-tab__label {
       font-weight: bolder;
-      // color: var(--q-gb-t-c-1);
+      color: var(--q-gb-t-c-1);
       font-size: 0.16rem;
     }
   }

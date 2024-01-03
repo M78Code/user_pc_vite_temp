@@ -58,7 +58,7 @@ export default {
     border-radius: 0.08rem;
     position: relative;
     background-color: var(--q-gb-bg-c-29);
-    color: #7981A4;
+    color: var(--q-gb-t-c-32);
     
     display: flex;
     flex-direction: row;
@@ -83,11 +83,10 @@ export default {
 
       &.is-active {
         // background: var(--q-color-page-bg-color-9);
-        color: var(--q-color-fs-color-6);
+        color: var(--q-gb-t-c-18);
         background-color: var(--q-gb-bg-c-28);
         border-radius: 0.08rem;
         height: 0.36rem;
-        color: #303442;
       }
     }
   }

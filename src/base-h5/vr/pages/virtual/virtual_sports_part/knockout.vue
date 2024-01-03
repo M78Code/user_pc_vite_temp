@@ -208,7 +208,7 @@ export default {
           justify-content: center;
           align-items: center;
           .number {
-            color: #303442;
+            color: var(--q-gb-t-c-18);
             font-size: 0.16rem;
             font-weight: 600;
           }
@@ -239,7 +239,7 @@ export default {
             }
 
             &:nth-of-type(odd) {
-              border-bottom: 0.01rem solid #E4E6ED;
+              border-bottom: 0.01rem solid var(--q-gb-bd-c-18);
               &:nth-child(2n){
                 background-color: red;
               }
@@ -254,7 +254,7 @@ export default {
               height: 100%;
               line-height: 0.32rem;
               .ellipsis {
-                color: #303442;
+                color: var(--q-gb-t-c-18);
                 font-size: 0.14rem;
                 font-weight: 400;
               }
@@ -268,7 +268,7 @@ export default {
               .score {
                 width: 0.28rem;
                 text-align: center;
-                color: #303442;
+                color: var(--q-gb-t-c-18);
                 font-size: 0.14rem;
                 font-weight: 500;
               }
@@ -299,7 +299,7 @@ export default {
         height: 0.80rem;
         border-radius: 0.08rem;
         background-color: var(--q-gb-bg-c-18);
-
+        color: var(--q-gb-t-c-18);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -349,7 +349,7 @@ export default {
         // width: .56rem;
         // height: .20rem;
         display: block;
-        color: #303442;
+        color: var(--q-gb-t-c-18);
         font-family: PingFangSC-Regular;
         font-size: 0.14rem;
         font-weight: 400;
