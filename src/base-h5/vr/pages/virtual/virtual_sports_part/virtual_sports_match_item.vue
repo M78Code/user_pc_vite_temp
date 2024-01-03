@@ -588,6 +588,7 @@ export default {
           flag = true;
         }
       }
+      console.log("===flag===", flag);
       return flag;
     }
   },
@@ -605,7 +606,7 @@ export default {
   },
   unmounted(){
     if(this.vsports){
-      this.vsports.destroy();
+      this.vsports.unmounted();
     }
     this.emitters.map((x) => x());
   }
