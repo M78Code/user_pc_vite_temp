@@ -1,5 +1,7 @@
 <!--
- * @Description: 虚拟体育赛事列表
+ * @Author: Cronus
+ * @Date: 2021-01-01 13:52:32
+ * @Description: 赛事列表
 -->
 
 <template>
@@ -65,7 +67,7 @@ export default {
     //   // 设置玩法项默认选中
     //   "set_details_item",
     // ]),
-    set_details_item(data){ VR_CTR.state.details_item = data },
+    set_details_item(data){ VR_CTR.set_details_item(data)  },
     /**
      * 切换赛事
      * @param {Number} i 赛事下标
@@ -98,7 +100,7 @@ export default {
     //   footer_sub_menu_id:"get_footer_sub_menu_id",
     //   get_newer_standard_edition:"get_newer_standard_edition",//新手版1    标准版  2
     // }),
-    footer_sub_menu_id(){return VR_CTR.state.footer_sub_menu_id},
+    footer_sub_menu_id(){return VR_CTR.get_footer_sub_menu_id()},
   },
   components:{
     'v-s-match-timer':v_s_match_timer,

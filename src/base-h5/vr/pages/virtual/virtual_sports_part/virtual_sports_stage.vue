@@ -162,8 +162,6 @@
 
 <script>
 import virtualSportsTimer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
-// import common from "src/base-h5/vr/mixin/constant/module/common.js";
-// import settleDialog from "project_path/components/footer_bar/settle_dialog.vue";
 import loading from 'src/base-h5/components/common/loading.vue';
 import dateMatchList from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_list.vue'
 import virtualBasketball from 'src/base-h5/vr/pages/virtual/details/children/virtual_basketball.vue'
@@ -175,7 +173,6 @@ import { LOCAL_PROJECT_FILE_PREFIX,calc_win, project_name, i18n_t } from 'src/ou
 
 export default {
   name:'VirtualSportsStage',
-  // mixins:[common],
   props:{
     current_match:Object,
     dialog:false,
@@ -421,21 +418,6 @@ export default {
       }
       this.player.video.muted = true;
       this.video_voice = false
-      // 监听视频可以播放
-      // this.player.on('canplaythrough', () => {
-      //   if(!this.player) return;
-      //   if(!this.video_voice){
-      //     this.player.video.muted = true;
-      //     this.player.video.setAttribute('autoplay','autoplay');
-      //   }
-
-      //   // 右侧菜单为显示状态则暂停视频播放
-      //   if (!this.right_menu_show) {
-      //     this.player.play()
-      //   } else {
-      //     this.player.pause()
-      //   }
-      // });
       // 播放
       this.player.on('play',() => {
         this.video_play_stauts = 0;
@@ -662,12 +644,6 @@ export default {
     },
   },
   computed:{
-    // ...mapGetters({
-    //   sub_menu_type: 'get_curr_sub_menu_type',
-    //   get_is_show_settle_tab: 'get_is_show_settle_tab',
-    //   // 抽屉菜单显示状态
-    //   right_menu_show: 'get_is_show_menu'
-    // }),
     current_league(){return VR_CTR.state.current_league},
     current_batch(){return VR_CTR.state.current_batch},
     video_process_data(){return VR_CTR.state.video_process_data},
