@@ -172,7 +172,7 @@ const is_day = computed(() => UserCtr.theme == 'day')
  * 左侧菜单的切换状态 true: 展开 false: 收缩 default: true
  * 路径: project_path\src\store\module\betInfo.js
  */
-//const left_menu_toggle = ref(true)
+const left_menu_toggle = ref(true)
 /** 
  * 判断是否是登录状态 default: false
  * 路径: project_path\src\store\module\betInfo.js
@@ -182,7 +182,7 @@ const is_invalid = ref(false)
  * 左侧列表显示形式 -- normal：展开 mini：收起 default: 'normal'
  * 路径: project_path\src\store\module\menu.js
  */
-//const main_menu_toggle = ref({})
+const main_menu_toggle = ref({})
 /** 
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js

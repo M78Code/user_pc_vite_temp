@@ -179,6 +179,56 @@
               </div>
             </template>
           </div>
+
+        </div>
+
+        <div class="other row row-bet-wrapper">
+          <div class="row bet-box-wrap">
+            <template v-for="(ol_item,ol_index) in item.ol" v-if="true">
+              <div v-if="otherOtd == ol_item.otd" :key="ol_index" class="bet-box-bg">
+                <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+                  <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
+                    <template v-if="ol_item.os == 1">
+                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':calc_win(ol_item.result),'active':BetData.bet_oid_list.includes(ol_item.oid)}">
+                        <div class="ellipsis remark">
+                        <span class="item-fat">
+                          {{ ol_item.on||ol_item.ott }}
+                        </span>
+                        </div>
+                        <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
+                      </div>
+                    </template>
+                    <template v-if="ol_item.os == 2">
+                      <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
+                        <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
+                        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                      </div>
+                    </template>
+                    <template v-if="ol_item.os == 3"></template>
+                  </template>
+                  <template v-if="ol_item._hs == 1">
+                    <template v-if="ol_item.os == 3"></template>
+                    <template v-else>
+                      <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
+                        <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
+                        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                      </div>
+                    </template>
+                  </template>
+                  <template v-if="ol_item._hs == 2">
+                    <div class="play-box"></div>
+                  </template>
+                </template>
+                <template v-if="ol_item._mhs == 1">
+                  <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
+                    <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
+                    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                  </div>
+                </template>
+                <template v-if="ol_item._mhs == 2"></template>
+              </div>
+            </template>
+          </div>
         </div>
       </div>
     </div>
@@ -219,6 +269,8 @@ export default defineComponent({
       //   $data[key] = null
       // }
     });
+    /** 玩法ID:353(独赢 & 最先进球球队) [无进球]投注项的otd */
+    const otherOtd = 1130
     return {
       ...toRefs(data),
       lodash,
@@ -227,13 +279,17 @@ export default defineComponent({
       get_detail_data,
       LOCAL_PROJECT_FILE_PREFIX,
       calc_win,
-      go_to_bet
+      go_to_bet,
+      otherOtd,
     }
   }
 })
 </script>
 
 <style lang="scss" scoped>
+.play-box-height{
+  height: .52rem;
+}
 .temp14 {
   .content {
     border-radius: 0.08rem;
@@ -250,6 +306,22 @@ export default defineComponent({
     border-radius: 4px;
     overflow: hidden;
     padding:0.08rem;
+    padding-bottom: 0;
+    &.other{
+      padding-top: 0;
+      padding-bottom: 0.08rem;
+      .bet-box-wrap,.bet-box-bg{
+        // height: 0.56rem;
+        flex: 1;
+        margin: 0;
+        .bet-box-bg{
+          height: 0.56rem;
+        }
+        .play-box{
+          // height: 0.52rem;
+        }
+      }
+    }
   }
 
   .play-box {

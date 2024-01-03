@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-wrap" @click.stop="details.on_go_detail(match, null, router,route)">
+  <div class="basic-wrap" @click.stop="details.on_go_detail(match, null, router, route)">
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <!-- 主队信息 -->
     <div class="row-item team-item">
@@ -53,13 +53,10 @@
         </div>
       </div>
       <!-- 主比分 -->
-      <div 
-        class="score" 
-        :key="lodash.get(match, 'mid')" 
-        v-if="show_type == 'all'" 
-        v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}"
-      >
-        {{play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.away`) : lodash.get(match, 'away_score')}}
+      <div class="score" :key="lodash.get(match, 'mid')" v-if="show_type == 'all'"
+        v-tooltip="{ content: is_15min ? i18n_t('list.15min_stage') : '', overflow: 1 }">
+        {{ play_name_obj.score_key ? lodash.get(match, `msc_obj.${play_name_obj.score_key}.away`) : lodash.get(match,
+          'away_score') }}
       </div>
     </div>
     <!-- 中立场、盘口数 -->
@@ -103,17 +100,17 @@
 
 <script setup>
 
-import { computed,watch , ref, onUnmounted } from 'vue';
-import { useRouter,useRoute } from "vue-router";
+import { computed, watch, ref, onUnmounted } from 'vue';
+import { useRouter, useRoute } from "vue-router";
 import lodash from 'lodash'
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { get_match_status } from 'src/core/utils/common/index'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-import { MenuData, is_show_sr_flg, i18n_t, compute_local_project_file_path  } from "src/output/index.js"
+import { MenuData, is_show_sr_flg, i18n_t, compute_local_project_file_path } from "src/output/index.js"
 import details from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import {get_main_score} from 'src/core/match-list-pc/match-handle-data.js'
-import {collect_count} from 'src/core/match-list-pc/composables/match-list-collect.js'
+import { get_main_score } from 'src/core/match-list-pc/match-handle-data.js'
+import { get_remote_time } from "src/output/index.js"
 const router = useRouter()
 const route = useRoute()
 const props = defineProps({
@@ -187,11 +184,7 @@ const play_name_obj = computed(() => {
   }
   return play_name_obj
 })
-
 is_collect.value = Boolean(lodash.get(props.match, 'mf'))
-//进球特效防抖
-// hide_home_goal = this.debounce(hide_home_goal,5000);
-// hide_away_goal = this.debounce(hide_away_goal,5000);
 /**
  * @Description 赛事收藏 
 */
@@ -203,26 +196,26 @@ const collect = () => {
 // 监听收藏变化
 watch(() => props.match.mf, (n) => {
   is_collect.value = Boolean(n)
-}, { immediate: true})
+}, { immediate: true })
 
 
 // 监听主比分变化
-watch(props.match.home_score, (n) => {
+watch(() => props.match.home_score, (n) => {
   //推送时间是否过期
-  let is_time_out = (get_remote_time()-props.match.ws_update_time)<3000
+  let is_time_out = (get_remote_time() - props.match.ws_update_time) < 3000
   // 足球 并且已开赛
-  if(props.match.csid == 1 && get_match_status(props.match.ms,[110]) == 1 && n!=0 && is_time_out ){
+  if (props.match.csid == 1 && get_match_status(props.match.ms, [110]) == 1 && n != 0 && is_time_out) {
     is_show_home_goal.value = true;
     hide_home_goal();
   }
 })
 
 // 监听主比分变化
-watch(props.match.away_score, (n) => {
+watch(() => props.match.away_score, (n) => {
   //推送时间是否过期
-  let is_time_out = (get_remote_time()-props.match.ws_update_time)<3000
+  let is_time_out = (get_remote_time() - props.match.ws_update_time) < 3000
   // 足球 并且已开赛
-  if(props.match.csid == 1 && get_match_status(props.match.ms,[110]) == 1  && n!=0 && is_time_out ){
+  if (props.match.csid == 1 && get_match_status(props.match.ms, [110]) == 1 && n != 0 && is_time_out) {
     is_show_away_goal.value = true;
     hide_away_goal();
   }
@@ -232,21 +225,21 @@ watch(props.match.away_score, (n) => {
  * @Description 隐藏主队进球动画
  * @param {undefined} undefined
 */
-function hide_home_goal() {
+const hide_home_goal = lodash.debounce(() => {
   is_show_home_goal.value = false;
-}
+}, 5000)
 
 /**
  * @Description 隐藏客队进球动画
  * @param {undefined} undefined
 */
-function hide_away_goal() {
+const hide_away_goal = lodash.debounce(() => {
   is_show_away_goal.value = false;
-}
+}, 5000)
 
 onUnmounted(() => {
-  // this.debounce_throttle_cancel(hide_home_goal());
-  // this.debounce_throttle_cancel(hide_away_goal());
+  lodash.isFunction(hide_away_goal.cancel)&&hide_away_goal.cancel();
+  lodash.isFunction(hide_home_goal.cancel)&&hide_home_goal.cancel();
 })
 </script>
 <style lang="scss" scoped>

@@ -258,6 +258,7 @@ export default defineComponent({
     box-sizing: border-box;
     overflow: hidden;
     border-radius: .04rem;
+    border: none !important;
 
     img {
       width: 0.12rem;
@@ -268,7 +269,6 @@ export default defineComponent({
   .other {
     width: 100%;
     box-sizing: border-box;
-    // border: 0.04rem solid var(--q-gb-bg-c-38) !important;
 
     .play-box-style {
       background: var(--q-gb-bg-c-28);
