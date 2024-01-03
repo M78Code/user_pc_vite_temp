@@ -115,7 +115,7 @@ class SearchPCDataClass {
     this.update()
   }
   deletion_history_one(keyword){
-    this.searchHistory = this.searchHistory.filter(item=> item.keyword === keyword )
+    this.searchHistory = this.searchHistory.filter(item=> item.keyword !== keyword )
     this.update()
   }
 }

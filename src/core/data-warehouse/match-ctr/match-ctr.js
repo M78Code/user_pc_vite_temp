@@ -728,10 +728,10 @@ get_quick_mid_obj_ref(mid){
    */
   set_list(list, param={}){
     // 这个打印先别删
-    console.log('set_list', list,this.name_code)
-    list.forEach(match => {
-      // match_collect_status(match)        
-    })
+    // console.log('set_list', list,this.name_code)
+    // list.forEach(match => {
+    //   match_collect_status(match)        
+    // })
     if(list){
       // 索引置换
       let temp = lodash.cloneDeep(this.match_list);

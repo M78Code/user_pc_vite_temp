@@ -121,7 +121,7 @@
         </div>
         <div class="info-data">
         
-          <!-- 角球总比分 -->
+          <!-- 角球总比分 111-->
           <span v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc_obj.S5.home')}}</span>
           <!-- 黄牌比分 -->
           <span v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc_obj.S12.home')}}</span>
@@ -142,7 +142,7 @@
           >{{lodash.get(match_info, 'msc_obj.S7.home')}}</span>
           <!-- 点球大战比分 -->
           <span
-            v-show="lodash.get(match_info, 'msc_obj.S170.home')"
+            v-show="lodash.get(match_info, 'msc.S170.home')"
             :class="{'mmp-active': ['34','50','120'].includes(lodash.get(match_info,'mmp'))}"
           >{{lodash.get(match_info, 'msc_obj.S170.home')}}</span>
         </div>
@@ -183,12 +183,12 @@
           >{{lodash.get(match_info, 'msc_obj.S1.away')}}</span>
           <!-- 加时赛比分 -->
           <span
-            v-show="lodash.get(match_info, 'msc_obj.S7.away')"
+            v-show="lodash.get(match_info, 'msc.S7.away')"
             :class="{'mmp-active': ['32','41','33','42'].includes(lodash.get(match_info,'mmp'))}"
           >{{lodash.get(match_info, 'msc_obj.S7.away')}}</span>
           <!-- 点球大战 -->
           <span
-            v-show="lodash.get(match_info, 'msc_obj.S170.away')"
+            v-show="lodash.get(match_info, 'msc.S170.away')"
             :class="{'mmp-active': ['34','50','120'].includes(lodash.get(match_info,'mmp'))}"
           >{{lodash.get(match_info, 'msc_obj.S170.away')}}</span>
         </div>
@@ -292,6 +292,7 @@ export default {
     },
   },
   created(){
+    
     this.hide_home_goal = this.lodash.debounce(this.hide_home_goal,5000)
     this.hide_away_goal = this.lodash.debounce(this.hide_away_goal,5000)
     this.hide_home_red = this.lodash.debounce(this.hide_home_red,5000)
@@ -307,6 +308,7 @@ export default {
   watch: {
     match_info: {
       handler(res, old) {
+      
         this.match_change_time = new Date().getTime()
         this.reload_data();
         this.timestamp = 0;
@@ -440,7 +442,7 @@ export default {
   overflow: hidden;
   width: 560px;
   border-radius: 2px;
-  color: #d1d1d1;
+  color: var(--q-gb-t-c-18);
   font-size: 12px;
   .info-time {
     display: flex;
@@ -455,6 +457,12 @@ export default {
       .count_down {
         align-items: center;
         justify-content: center;
+        :deep(.process-name){
+          color: var(--q-gb-t-c-18);
+        }
+        :deep(.c-match-date){
+          color: var(--q-gb-t-c-18);
+        }
       }
     }
     .time-node {
