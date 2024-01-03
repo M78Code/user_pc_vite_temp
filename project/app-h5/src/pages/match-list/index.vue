@@ -2,6 +2,7 @@
  * @Description: 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
 -->
 <template>
+  <layoutTop />
   <!--赛事列表-->
   <div class="match-list-page"
     :class="{
@@ -33,7 +34,7 @@ import lodash from "lodash";
 // import store from "src/store-redux/index.js";
 import tiaozhuanPanel from "src/base-h5/components/match-list/components/tiaozhuan-panel.vue";    //  跳转banner图和猜你喜欢
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
- 
+import layoutTop from "../../layouts/top.vue"
 import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
@@ -73,7 +74,7 @@ let message_fun = null
 let handler_func = null
 
 onMounted(() => {
-  get_page_match_data()
+  // get_page_match_data()
 
   // 接口请求防抖
   handler_func = lodash.debounce(({ cmd, data }) => {

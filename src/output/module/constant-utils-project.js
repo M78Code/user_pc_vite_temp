@@ -12,3 +12,4 @@
 export * from "src/core/utils/project/index.js";
 export * from "src/core/format/project/index.js";
 export * from "src/core/constant/project/index.js";
+export  * from "src/core/pre-load/index.js";
