@@ -1,13 +1,13 @@
 import { nextTick, ref } from "vue";
 import lodash_ from 'lodash';
-import MatchListTpl from 'src/core/match-list-pc/list-template/match-list-tpl.js'
+import {set_template_width} from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
 import { computed_menu_to_match_templte_ouzhou } from 'src/core/match-list-pc/list-template/ouzhou-pc-menu-match-template.js'
 import PageSource from 'src/core/page-source/page-source.js'
-import BUILDIN_CONFIG from "app/job/output/env/index.js";;
-export const { PROJECT_NAME } = BUILDIN_CONFIG ;
+import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
+
 import {
   SessionStorage,
 } from "src/output/module/constant-utils.js"
@@ -150,10 +150,10 @@ class MenuData {
     // 菜单数据缓存
     // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
     //宽度请求变化 因为请求参数是在这里触发的
-    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_TPL_COMPUTED_CMD,lodash_.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+    // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_TPL_COMPUTED_CMD,lodash_.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     clearTimeout(this._t)
     this._t=setTimeout(() => {
-      MatchListTpl.set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+      set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     }, 10);
     this.set_match_list_api_config()
   }
@@ -722,11 +722,10 @@ class MenuData {
 
     // 设置投注类别
     this.set_bet_category();
-    // MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
-
-    // 菜单数据缓存 //从元数据拿值
+    //从元数据拿值
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
-    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) //从接口拿值
+    //从接口拿值
+    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) 
     nextTick(()=>{
       SessionStorage.set(menu_key,this)
     })
