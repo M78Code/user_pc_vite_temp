@@ -151,7 +151,7 @@
             @click="switch_video(val)"
           >
             <div class="line"></div>
-            <sport-icon :sport_id="val.csid" status="2" size="18px" />
+            <!-- <sport-icon :sport_id="val.csid" status="2" size="18px" /> -->
             <div class="team-wrap ellipsis col">
               {{ val.mhn }}
               <span class="separate">v</span>
