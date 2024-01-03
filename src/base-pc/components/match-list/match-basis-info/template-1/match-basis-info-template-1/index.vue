@@ -200,7 +200,7 @@ watch(() => props.match.mf, (n) => {
 
 
 // 监听主比分变化
-watch(props.match.home_score, (n) => {
+watch(() => props.match.home_score, (n) => {
   //推送时间是否过期
   let is_time_out = (get_remote_time() - props.match.ws_update_time) < 3000
   // 足球 并且已开赛
@@ -211,7 +211,7 @@ watch(props.match.home_score, (n) => {
 })
 
 // 监听主比分变化
-watch(props.match.away_score, (n) => {
+watch(() => props.match.away_score, (n) => {
   //推送时间是否过期
   let is_time_out = (get_remote_time() - props.match.ws_update_time) < 3000
   // 足球 并且已开赛

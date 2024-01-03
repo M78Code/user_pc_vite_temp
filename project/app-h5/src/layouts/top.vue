@@ -86,7 +86,7 @@ const ref_data = reactive({
   // 滑动菜单需要的数据
   scroll_data_list: [],
   // 滑动菜单选中的菜单id
-  current_mi: ''
+  current_mi: '',
 })
 onMounted(() => {
   // set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,1)
@@ -170,7 +170,11 @@ const set_scroll_current = async (val, type) => {
       const data_list_esports = await MenuData.getDateList(val?.csid || MenuData.current_lv_2_menu?.old_csid || BaseData.dianjing_sublist[0].csid);
       dataListEsports.value = data_list_esports;
       get_collect_count();
-      handle_match_render_data(type)
+      nextTick(() => {
+        dJdateTabMenu.value.set_active_val();
+        dJdateTabMenu.value?.changeTabMenu({}, MenuData.data_tab_index||0, '', type);
+      })
+      // handle_match_render_data(type)
       break;
     case 300:
       //vr重新设置单关

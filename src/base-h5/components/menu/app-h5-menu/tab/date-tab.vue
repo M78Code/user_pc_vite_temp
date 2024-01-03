@@ -16,7 +16,9 @@
           :key="index"
           @click="changeTabMenu(item, index, $event)"
         >
-          <!-- {{ index == 0 ? i18n_tc('menu.match_today') : item.name }} -->
+          <!-- {{ item.name }} -->
+          <!-- {{ index == 0 ? i18n_t('menu.match_today') : item.name }} -->
+          <!-- TODO: 勿覆盖， fix: 52981 【UAT】【H5新版复刻】【H5】冠军赛果页面日期显示与设计图不符  -->
           {{ index == 0 ? "今日" : item.name }}
         </li>
       </ul>
@@ -25,14 +27,14 @@
 </template>
   
 <script setup>
-import lodash from "lodash";
-import { onMounted, onUnmounted, ref, nextTick } from "vue";
+// import lodash from "lodash";
+import { onUnmounted, ref } from "vue";
 import { scrollMenuEvent } from "../utils";
-import { MenuData, UserCtr } from "src/output/index.js";
-import { api_common } from "src/api/";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import MatchMeta from "src/core/match-list-h5/match-class/match-meta";
-import { i18n_tc } from "src/boot/i18n";
+import { MenuData } from "src/output/index.js";
+// import { api_common } from "src/api/";
+// import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+// import MatchMeta from "src/core/match-list-h5/match-class/match-meta";
+// import { i18n_tc } from "src/boot/i18n";
 
 const props = defineProps({
   defaultVal: {

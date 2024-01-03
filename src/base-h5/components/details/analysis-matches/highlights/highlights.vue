@@ -46,7 +46,7 @@
           </div>
         </template>
         <!-- 精彩回放列表 -->
-        <div class="row" v-for="(event, i) in events_list_vertical" :key="i" @click="play_video(event, event.homeAway == get_detail_data.mhn)">
+        <div class="row" v-for="(event, i) in events_list_vertical.reverse()" :key="i" @click="play_video(event, event.homeAway == get_detail_data.mhn)">
           <!-- <div class="time-line"></div> -->
           <!-- <div class="time-line-ball"></div> -->
           <!-- <div :class="['item-content hairline-border item-content-defailt', event.homeAway == get_detail_data.mhn?'':'hide']"  @click="handle_click_event(i, event)" > -->

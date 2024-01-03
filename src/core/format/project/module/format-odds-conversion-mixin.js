@@ -10,7 +10,6 @@ import lodash_ from "lodash"
 import { esports_csid } from "src/core/constant/common/module/csid.js"
 import UserCtr from 'src/core/user-config/user-ctr'
 import mathJs from 'src/core/bet/common/mathjs.js'
-import { MenuData } from "src/output"
 import { only_win } from "src/core/constant/common/module/csid.js"
  
 // import global_mixin from "project_path/src/pages/match-details/global_mixin.js";
