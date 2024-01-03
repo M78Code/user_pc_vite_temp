@@ -135,6 +135,7 @@ const menu_to_match_templte = {
 const different_version_config = {
   "ouzhou-pc": 100,
   "yazhou-pc": 0,
+  "new-pc": 0,
 };
 /**
  *

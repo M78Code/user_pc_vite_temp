@@ -97,7 +97,6 @@ export const scrollMenuEvent = (event, parentClass, childClass) => {
         let n = scrollL + (spanLeft - widths) + divBox;
         scrollMenuAnimate(scrollBox, n)
     }
-    console.error('滚动ok')
 } catch (err){
     console.error('滚动错误：'+err)
 }
