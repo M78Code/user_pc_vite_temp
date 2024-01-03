@@ -1,7 +1,5 @@
 <!--
- * @Author: Cronus
- * @Date: 2021-01-01 18:42:46
- * @Description: 新手版投注项
+ * @Description: 虚拟体育新手版投注项
 -->
 
 <template>
@@ -31,55 +29,10 @@
     </div>
   </div>
 </template>
-
 <script>
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
-import odds_conversion from "src/base-h5/vr/mixin/odds_conversion/odds_conversion.js"
-import BetData from "src/core/bet/class/bet-data-class.js"
-
+import virtual_sports_odd_item_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/virtual_sports_odd_item_mixin.js";
 export default {
-  mixins:[odds_conversion],
-  data(){
-    return {
-      BetData
-    }
-  },
-  props:{
-    ol_item:Object,
-    hl_item:Object,
-    match_invalid:Boolean,
-    // mhs 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
-    match:Object,
-    is_vr_lock: Boolean //用来控制vr投注项提前10s封盘 
-  },
-  methods:{
-    get_odd_value(ol_item){
-      let r = "";
-      if(ol_item.result === "0" || ol_item.result === 0 || ol_item.result){
-        r = i18n_t(`virtual_sports.result[${ol_item.result}]`);
-      }
-      else{
-        r = this.odds_value;
-      }
-      return r;
-    }
-  },
-  computed:{
-    // ...mapGetters(['get_bet_list']),
-    get_bet_list(){ return [] },
-    /**
-     * @description: 计算最终显示的赔率
-     * @param {Undefined} Undefined
-     * @return {number} 最终显示的赔率
-     */
-    odds_value(){
-      let ov = this.ol_item.ov,
-        hsw = this.hl_item ? this.hl_item.hsw : 0,
-        csid = this.ol_item.csid;
-      let r1 = this.compute_value_by_cur_odd_type(ov / 100000,null, hsw, csid);
-      return r1 || '';
-    },
-  }
+  mixins:[virtual_sports_odd_item_mixin],
 }
 </script>
 

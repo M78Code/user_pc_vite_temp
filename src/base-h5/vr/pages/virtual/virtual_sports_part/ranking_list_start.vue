@@ -1,6 +1,4 @@
 <!--
- * @Author: ladron
- * @Date: 2020-12-28 11:34:53
  * @Description: 赛狗类 排行榜页面  只需要传个 mid 赛事id进来
 -->
 <template>
@@ -58,97 +56,12 @@
     <no-data v-if="no_data" which='noMatch' height='500' class="no-list"></no-data>
   </div>
 </template>
-
 <script>
-import { api_v_sports } from "src/api/index.js";
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
-import no_data from "src/base-h5/vr/components/common/no_data.vue"
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
-
+import ranking_list_start_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/ranking_list_start_mixin.js";
 export default {
-  name: "ranking_list_start",
-  components: {
-    "no-data": no_data
-  },
-  props:{
-    mid: [Number, String],
-  },
-  data() {
-    return {
-      ranking_data:[],
-      no_data: false,
-      LOCAL_PROJECT_FILE_PREFIX
-    }
-  },
-  watch: {
-    'get_current_mid': {
-      handler: 'get_list',
-      immediate: true
-    },
-  },
-  methods: {
-    /**
-     *@description 计算类名
-     *@param {Number} rank_i 编号
-     *@param {Number} sportId 球类id
-     *@return {String} 类名
-     */
-    get_rank_background(rank_i,sportId){
-      let s_type = 'dog';//赛马horse或赛狗dog
-      let virtual_sports_1= ''
-      if(sportId == 1011){  // 赛马
-        s_type = 'horse'
-      }
-      else if([1002, 1010, 1009].includes(+sportId)){ // 赛狗 摩托车
-        s_type = 'dog'
-      } else {
-        return null
-      }
-      if([1010].includes(+sportId)){
-        virtual_sports_1 = `motorcycle${rank_i}`
-      }
-      if([1009].includes(+sportId)){
-        virtual_sports_1 = `dirt_motorcycle${rank_i}`
-      }
-      return `match-horse${virtual_sports_1}`;
-    },
-    async get_list() {
-      try {
-        let {code , data} = await api_v_sports.get_virtual_match_detail_count({mid: this.get_current_mid})
-        if(code == 200 && data.length > 0) {
-          this.ranking_data = data
-          // this.results_filter(this.ranking_data)
-        } else {
-          this.no_data = true
-        }
-      } catch (error) {
-        this.no_data = true
-        console.error(error);
-      }
-    },
-  },
-  computed: {
-    // ...mapGetters([
-    //   "get_current_mid",
-    //   "get_curr_sub_menu_type",
-    //   "get_theme"
-    // ]),
-    get_current_mid(){
-      return VR_CTR.get_current_mid();
-    },
-    get_curr_sub_menu_type(){
-      return VR_CTR.get_curr_sub_menu_type()
-    },
-    get_theme(){
-      return 'theme01';
-    },
-  },
-  destroyed () {
-    for (const key in this.$data) {
-      this.$data[key] = null
-    }
-  },
-};
+  mixins:[ranking_list_start_mixin],
+  name:'ranking_list_start',
+}
 </script>
 
 <style lang="scss" scoped>

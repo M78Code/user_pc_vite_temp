@@ -1,6 +1,4 @@
 <!--
- * @Author: Supermark
- * @Date: 2020-12-25 14:47:31
  * @Description: 赛马进行中的动态排名
 -->
 <template>
@@ -10,20 +8,13 @@
     </virtual-sports-d-r-timer>
   </div>
 </template>
-
 <script>
-import virtual_sports_d_r_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_d_r_timer.vue"
+import dynamic_ranking_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/dynamic_ranking_mixin.js";
 export default {
+  mixins:[dynamic_ranking_mixin],
   name:'dynamic_ranking',
-  props:{
-    virtual_match_list:Array
-  },
-  components:{
-    'virtual-sports-d-r-timer':virtual_sports_d_r_timer
-  },
 }
 </script>
-
 <style lang="scss" scoped>
 /*************** 排名最后一个子元素开始 *************** -S*/
 .dynamic-main {

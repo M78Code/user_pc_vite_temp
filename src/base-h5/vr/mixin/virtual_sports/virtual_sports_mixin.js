@@ -6,7 +6,7 @@
 import { api_v_sports } from "src/api/index.js";
 import VSport from "src/base-h5/vr/utils/vsport/vsport.js"
 import { api_common } from "src/api/index.js";
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { get_now_server } from 'src/core/utils/common/module/other.js'
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
@@ -70,8 +70,8 @@ export default {
     MatchDataBaseH5.clear();
   },
   methods:{
-	set_virtual_data_loading(data){VR_CTR.set_virtual_data_loading(data)},
-	set_prev_v_sports(data){VR_CTR.set_prev_v_sports(data)},
+	set_virtual_data_loading(data){VR_CTR.state.virtual_data_loading = data},
+	set_prev_v_sports(data){VR_CTR.state.prev_v_sports = data},
 	set_current_batch(data){
     // if(data && data.matchs){
     //   MatchDataBaseH5.set_list(data.matchs);
@@ -80,7 +80,7 @@ export default {
     //     MatchDataBaseH5.set_list(data);
     //   }
     // }
-    VR_CTR.set_current_batch(data);
+    VR_CTR.state.current_batch = data;
   },
     /**
      * @description: 虚拟菜单数据未空时的逻辑处理函数

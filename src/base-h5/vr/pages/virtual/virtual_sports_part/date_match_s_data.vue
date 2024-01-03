@@ -1,7 +1,5 @@
 <!--
- * @Author:
- * @Date: 2021-06-29 18:53:35
- * @Description:
+ * @Description: 虚拟体育篮球结束时对阵比分组件
 -->
 <template>
   <!-- 单场赛事结束 -->
@@ -49,19 +47,11 @@
 </template>
 
 <script>
-import teamImg from 'src/base-h5/vr/components/team_img.vue';
-
+import date_match_s_data_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/date_match_s_data_mixin.js";
 export default {
-  props:{
-    match_ended:Object,
-    source:String,
-  },
-  components:{
-    'team-img':teamImg
-  }
+  mixins:[date_match_s_data_mixin],
 }
 </script>
-
 <style lang="scss" scoped>
 .match-single-end {
   width: 100%;
