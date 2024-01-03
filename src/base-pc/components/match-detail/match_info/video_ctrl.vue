@@ -38,7 +38,7 @@
             :style="compute_css_obj(item.icon)"
             :class="[
               'vicon',
-              `${item.icon}-icon`,
+              `${item.type}-icon`,
               { active: vx_play_media.media_type == item.type },
             ]"
           ></div>
@@ -110,12 +110,16 @@
           @click.stop="toggle_item"
         >
           <div class="line"></div>
-          <sport-icon
+          <span class="soprts_id_icon"
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(menu_data.left_menu_result.lv1_mi)}` })"
+            :alt="BaseData.menus_i18n_map[menu_data.left_menu_result.lv1_mi]"></span>
+          <!-- <sport-icon
             v-if="match_info.csid && match_info.csid != -1"
             :sport_id="match_info.csid"
-            status="2"
+          
+            key_name="pc-left-menu-bg-image" 
             size="18px"
-          />
+          /> -->
           <div
             class="team-wrap ellipsis col allow-user-select"
             v-if="match_info.mhn"
@@ -173,6 +177,8 @@ import { compute_css_obj } from "src/core/server-img/index.js";
 import filterHeader from "src/core/filter-header/filter-header.js";
 import { debounce_throttle_cancel } from "src/core/utils/common/module/other.js";
 import { useRoute, useRouter } from "vue-router";
+import BaseData from "src/core/base-data/base-data.js"
+
 const  route = useRoute()
 const  router= useRouter()
 import lodash from "lodash";
@@ -479,6 +485,7 @@ const full_screen = () => {
 };
 
 onMounted(() => {
+
   let autoPlay = sessionStorage.getItem("auto_play_media");
   if (autoPlay) {
     toggle_play_media("video");
@@ -662,5 +669,36 @@ onUnmounted(() => {
     }
   }
 }
+
+.soprts_id_icon {
+  width: 18px;
+  height: 18px;
+  background-size: 100% auto;
+}
+
+
+.video-icon {
+    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/video0.svg"); // TODO: video0.svg
+
+    &.active {
+      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/video2.svg"); // TODO: video2.svg)
+    }
+  }
+  .animation-icon {
+    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/animation0.svg"); // TODO: animation0.svg
+
+    &.active {
+      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/animation2.svg"); // TODO: animation2.svg
+    }
+  }
+
+  .info-icon {
+    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/switch0.svg");// TODO: switch0.svg
+    background-repeat: no-repeat;
+
+    &.active {
+      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/switch2.svg");// TODO: switch2.svg
+    }
+  }
 /** 提示内容 -S*/
 </style>

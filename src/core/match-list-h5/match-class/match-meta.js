@@ -400,6 +400,7 @@ class MatchMeta {
    * @param { tid } 联赛 ID 
    */
   filter_hot_match_by_tid(tid = '') {
+    this.set_show_skeleton_state(true)
     tid = tid || MenuData.search_tab_i_tid;
     const tid_info = this.tid_map_mids[`tid_${tid}`]
     this.get_target_match_data({ tid })
@@ -929,6 +930,7 @@ class MatchMeta {
       euid: euid_arr,
       md: String(MenuData.data_time)
     }
+    this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_common.post_esport_collect, params: target_params, key: 'post_esport_collect' })
     const code = lodash.get(res, 'code', 0)
     const list = lodash.get(res, 'data', [])
@@ -950,6 +952,7 @@ class MatchMeta {
       md: String(MenuData.data_time)
     }
     if (![3, 6].includes(MenuData.current_lv_1_menu_mi?.value) || !MenuData.data_time) delete target_params.md
+    this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_common.get_collect_matches, params: target_params, key: 'get_collect_matches' })
     const code = lodash.get(res, 'code', 0)
     const list = lodash.get(res, 'data', [])
@@ -1423,6 +1426,7 @@ class MatchMeta {
         break;
       // 排序
       case "sortRules":
+        this.set_show_skeleton_state(true)
         this.clear_match_info()
         this.handler_again_matchs()
         break;

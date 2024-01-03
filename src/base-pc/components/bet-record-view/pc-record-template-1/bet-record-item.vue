@@ -216,6 +216,7 @@ import { VIURTUAL_SPORT, VIRTUAL_PLAY_NOT_NUMBER2, VIRTUAL_SPORT_ID,CANCEL_TYPE 
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import BetRecord from "src/core/bet-record/bet-record.js"
+import { formatTime } from 'src/output/index.js'
 
 import lodash_ from "lodash"
 const props = defineProps({
