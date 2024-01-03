@@ -87,9 +87,6 @@ export default {
     };
   },
   computed:{
-    // ...mapGetters({
-    //   match:'get_current_gotodetail_match'
-    // }),
     match(){
       return VR_CTR.state.current_gotodetail_match
     },

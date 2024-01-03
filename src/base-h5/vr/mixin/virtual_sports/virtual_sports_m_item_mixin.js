@@ -5,11 +5,10 @@
  */
 import VSport from "src/base-h5/vr/utils/vsport/vsport.js"
 import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/"
 
 export default {
   methods:{
-  	// ...mapMutations(['set_video_process_loaded']),
 	set_video_process_loaded(data){
 		VR_CTR.state.video_process_loaded = data;
 	},
@@ -80,12 +79,6 @@ export default {
     }
   },
   computed:{
-	//...mapGetters({
-    //  video_process_loaded:'get_video_process_loaded',
-    //  sub_menu_type: 'get_curr_sub_menu_type',
-    //  current_league:'get_current_league',
-    //  current_batch:'get_current_batch',
-    //}),
 	get_video_process_data(){return VR_CTR.state.video_process_loaded},
 	sub_menu_type(){return VR_CTR.state.curr_sub_menu_type},
 	current_league(){return VR_CTR.state.current_league},

@@ -111,9 +111,6 @@ export default {
     current_match:Object
   },
   computed: {
-    // ...mapGetters({
-    //   sub_menu_type: 'get_curr_sub_menu_type',
-    // }),
     sub_menu_type(){return VR_CTR.state.curr_sub_menu_type}
   },
   created() {

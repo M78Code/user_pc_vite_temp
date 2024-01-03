@@ -127,8 +127,6 @@ export default {
   },
   computed: {
     // ...mapGetters([
-    //   "get_current_mid",
-    //   "get_curr_sub_menu_type",
     //   "get_theme"
     // ]),
     get_current_mid(){
