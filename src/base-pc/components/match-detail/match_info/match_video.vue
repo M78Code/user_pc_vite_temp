@@ -116,7 +116,7 @@
     </div>
 
     <!-- 无直播可放 -->
-    <no-video v-if="show_type == 'no-video'" />
+    <no-video v-if="show_type == 'no-video'" class="novide-canplay" />
     <!-- 回播链接错误 -->
     <video-replay-error @iframe_status="iframe_status" v-if="current_replay" :url="media_src"/>
 
