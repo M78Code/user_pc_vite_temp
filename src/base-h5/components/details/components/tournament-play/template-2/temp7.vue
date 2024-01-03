@@ -426,4 +426,12 @@ export default defineComponent({
   margin: 0 auto;
 }
 
+// 统一间距
+.mg-4-bg {
+  margin: 0.02rem !important;
+  .details_color {
+    border-radius: 4px;
+  }
+}
+
 </style>
