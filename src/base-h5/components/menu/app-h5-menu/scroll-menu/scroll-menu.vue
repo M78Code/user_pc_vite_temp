@@ -53,7 +53,7 @@ const props = defineProps({
   // 滑动菜单数据
   scrollDataList:{
     type: Array,
-    default: () => []
+    default: []
   },
   // 当前选中的值
   current_mi:{
@@ -90,10 +90,10 @@ function set_menu_lv2(item = {},event) {
   MatchFold.clear_fold_info()
   if (props.current_mi === item.mi) return
   // if (item.mi === 2000) router.push('/esports')
-  event = event || scrollTab.value[0];
+  event = event || scrollTab.value?.[0];
   // 选中后点击无效
   // if (item.mi == MenuData.current_lv_2_menu_i) return;
-  scrollMenuEvent(event,".s-menu-container",".current");
+  event && scrollMenuEvent(event,".s-menu-container",".current");
   // emits('changeMenu',item)
   nextTick(()=>{ //收藏是没有change的相当于是页面
     // 设置菜单点击事件
@@ -116,8 +116,11 @@ function set_menu_lv2(item = {},event) {
  * 初始化滚动条
  */
 const scrollTabMenu = () =>{
-    scrollMenuEvent(scrollTab.value[0],".s-menu-container",".sport-menu-item");
-  // })
+  try {
+    scrollTab.value?.[0] && scrollMenuEvent(scrollTab.value?.[0],".s-menu-container",".sport-menu-item");
+  }catch(err){
+    console.error('二级菜单点击错误：'+err)
+  }
 }
 defineExpose({scrollTabMenu});
 /**
@@ -232,6 +235,9 @@ onUnmounted(()=>{
               position: relative;
               font-size: 0.1rem;
             }
+            .sport-match-count{
+              z-index: 131;
+            }
           }
           .inner-w {
             height: 0.41rem;
@@ -271,8 +277,8 @@ onUnmounted(()=>{
         .sport-match-count {
                 line-height: 1;
                 position: absolute;
-                left: 100%;
-                font-size: 0.1rem;
+                left: 90%;
+                font-size: 0.09rem;
                 font-family: "Akrobat";
                 z-index: 5;
                 &.is-max {

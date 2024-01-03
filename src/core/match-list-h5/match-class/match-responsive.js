@@ -27,6 +27,8 @@ class MatchResponsive {
     this.active_odd = ref('')
     // 赛事显示、隐藏信息
     this.show_match_info = ref({})
+    // 是否 接口 导致的数据变更 是则红升绿降和进球动画 不显示
+    this.is_http_update_info = ref(true)
   }
 
    /**
@@ -52,6 +54,10 @@ class MatchResponsive {
    */
   set_is_compute_origin (val) {
     this.is_compute_origin.value = val
+  }
+
+  set_is_http_update_info (val) {
+    this.is_http_update_info.value = val
   }
 
   /**

@@ -486,14 +486,14 @@ onUnmounted(() => {
   .title-space-1 {
     padding-right: 0.03rem;
     margin-right: 0.02rem;
-    font-size: 0.12rem;
+    font-size: 10px;
     color: var(--q-gb-t-c-19);
   }
 
   .counting, .special {
     color: var(--q-gb-t-c-19);
     //color: #5A6074;
-    font-size: 0.12rem;
+    font-size: 10px;
     font-weight: 500;
     // margin-top: .02rem;
   }

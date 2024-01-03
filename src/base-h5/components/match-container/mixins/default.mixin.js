@@ -240,6 +240,10 @@ export default defineComponent({
       }
       return lodash.get(MatchResponsive.ball_seed_count.value, `${key}`, 1)
     },
+    is_http_update_info () {
+      const is_http_update_info = lodash.get(MatchResponsive, 'is_http_update_info.value', true)
+      return is_http_update_info
+    },
      // 获取联赛赛事数量
     get_ball_seed_league_count () {
       const { warehouse_type = '' } = this.match_of_list
@@ -275,9 +279,6 @@ export default defineComponent({
     },
     // 是否显示底部圆角
     is_show_border_raduis () {
-      if (  this.match_of_list.mid === '3043320' ) {
-        console.log()
-      }
       return this.next_match && this.match_of_list?.tid !== this.next_match?.tid
     },
     // 复刻版新手版
@@ -324,7 +325,7 @@ export default defineComponent({
       if (this.match_of_list.csid != 1) return;
       if (this.get_footer_sub_changing) return;
       if (this.match_changing) return;
-      if (new_ > 0 && new_ != old_ && old_ !== null && [1,3].includes(+menu_type.value) && this.match_of_list.is_ws) {
+      if (!this.is_http_update_info && new_ > 0 && new_ != old_ && old_ !== null && [1,3].includes(+menu_type.value) && this.match_of_list.is_ws) {
         this.hide_away_goal()
         this.is_show_home_goal = true
         this.clear_goal()
@@ -337,7 +338,7 @@ export default defineComponent({
       if (this.get_footer_sub_changing) return;
       if (this.match_changing) return;
 
-      if (new_ > 0 && new_ != old_ && old_ !== null && [1,3].includes(+menu_type.value) && this.match_of_list.is_ws) {
+      if (!this.is_http_update_info && new_ > 0 && new_ != old_ && old_ !== null && [1,3].includes(+menu_type.value) && this.match_of_list.is_ws) {
         this.hide_home_goal()
         this.is_show_away_goal = true
         this.clear_goal()
@@ -996,7 +997,8 @@ export default defineComponent({
       if (this.is_on_go_detail) {
         return; //  防止急速点击两次
       }
-      
+      // 清除赛事数量
+      MatchResponsive.clear_ball_seed_count()
       this.is_on_go_detail = true;
       if (is_results.value || this.$route.name == "matchList") useMittEmit(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, item)
       // 如果是非赛果电竞赛事，需要设置菜单类型

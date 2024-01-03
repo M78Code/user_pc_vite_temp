@@ -2,7 +2,7 @@ import axios from "axios";
 
 //模块之间通信 ，去耦合化的一个 事件通信 仓库
 
-import * as all_preload_image_obj from "project_path/src/core/pre-load/index.js";
+import * as all_preload_image_obj from "/src/core/pre-load/index.js";
 
 import {
   useMittOn,
@@ -46,9 +46,9 @@ let MITT_PRELOAD_IMAGE_CALLBACK = (params) => {
       let url = "";
       if (("" + y).startsWith("/")) {
         if (type == "common") {
-          url = origin + compute_local_common_file_path(x);
+          url = origin + compute_local_common_file_path(y);
         } else if (type == "project") {
-          url = origin + compute_local_project_file_path(x);
+          url = origin + compute_local_project_file_path(y);
         }
       } else {
         url = y;
@@ -70,7 +70,6 @@ let MITT_PRELOAD_IMAGE_CALLBACK = (params) => {
 
 const pre_load_img=(key)=>{
   MITT_PRELOAD_IMAGE_CALLBACK(key)
-  // debugger
   // useMittOn(MITT_TYPES.MITT_PRELOAD_IMAGE, MITT_PRELOAD_IMAGE_CALLBACK);
 }
 

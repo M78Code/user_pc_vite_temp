@@ -519,6 +519,7 @@ export default defineComponent({
   .play-box-sty {
     height: 0.52rem;
     text-align: center;
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
   }
 
   .odds-lock {

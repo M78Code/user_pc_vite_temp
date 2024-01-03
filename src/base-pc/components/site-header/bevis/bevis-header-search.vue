@@ -4,7 +4,7 @@ import { TabWapper } from "src/components/common/tab"
 import bevisSearchList from "./bevis-search-list.vue"
 
 import { get_hot_search, get_hot_push, get_search_sport, get_history_search, insert_history,
-    get_delete_history_search, get_delete_history_search, get_search_result } from "src/api/module/search"
+    get_delete_history_search, get_search_result } from "src/api/module/search"
 
 import { ref, onMounted, provide } from "vue"
 import {compute_local_project_file_path} from 'src/output/index.js'

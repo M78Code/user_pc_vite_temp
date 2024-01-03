@@ -41,14 +41,13 @@ app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
 
-let location_search = sessionStorage.getItem('LOCATION_SEARCH') || ''
-// 真机调试
 import VConsole from 'vconsole'
-if(location_search.includes('vconsole_h5=1') ){
-  const vConsole = new VConsole()
-  app.use(vConsole)
-}
 
+let location_search = window.SEARCH_PARAMS.init_param.get('vconsole_h5')
+// 真机调试
+if(location_search == 1){
+  const vConsole = new VConsole()
+}
 
 import { i18n } from "src/boot/i18n.js";
 app.use(i18n).use(router);

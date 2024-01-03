@@ -100,7 +100,7 @@
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="get_theme.includes('y0')?arrows_reverse:arrows_default_balck" v-else>
           </template>
            <!-- 玩法数量 -->
-           <div v-if="match_item.mc" class="play-count">
+           <div v-if="match_item.mc" class="play-count" @click="goto_details(match_item)">
               {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}`: i18n_t('footer_menu.more')}}
               <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow"  />
             </div>
@@ -151,9 +151,10 @@
           </div>
         </div>
         <!-- 新手版 -->
-        <div v-if="standard_edition == 1"
-          class="match-play-count column justify-end items-end simple" @click="goto_details(match_item)">
-          <div v-if="match_item.mc">{{match_item.mc}}+ > </div>
+        <div v-if="standard_edition == 1" class="match-play-count column justify-end items-end simple" @click="goto_details(match_item)">
+          <!--根据bug单号52926 注释掉此处-->
+          <!-- <div v-if="match_item.mc">{{match_item.mc}}+ > </div> -->
+          <div v-if="match_item.mc"> > </div>
         </div>
         <div class="event-team" v-if="standard_edition == 1">
           <div class="name">
@@ -794,6 +795,7 @@ export default {
 
       &.simple {
         // display: block;
+        width: 100vw;
         .bet-item-wrap {
           width: 100%;
           display: flex;
@@ -966,8 +968,8 @@ export default {
       &.simple {
         width: 0.38rem;
         font-size: 0.13rem;
-        // width: 100%;
-        width: 2.74rem;
+        width: 95%;
+        // width: 2.74rem;
 
         .yb-icon-arrow {
           margin-top: 0.02rem;

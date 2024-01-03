@@ -72,7 +72,7 @@
                   {{ match.tn }}
                 </span>
               </span>
-              <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px"
+              <icon-wapper color="#c9c9c9" name="icon-arrow" size="14px"
                 :class="['icon-wapper', { 'close': collapsed }]" />
             </span>
           </div>
@@ -531,14 +531,14 @@ export default {
     }
 
     img,.img {
-      margin-right: .06rem;
+      margin-right: 8px;
       width: .13rem;
       height: .13rem;
     }
     .expand_item{
       transition: transform 0.25s ease;
       transform: rotate(-90deg);
-      width: 18px;
+      width: 20px;
       height: 16px;
     }
     .collapsed{
@@ -1253,7 +1253,8 @@ export default {
           height:100%;
           display: flex;
           align-items: center;
-          color:var(--q-gb-t-c-18)
+          color:var(--q-gb-t-c-18);
+          font-size: 10px;
           // margin-top: .02rem;
         }
 
@@ -1279,6 +1280,7 @@ export default {
           color: var(--q-gb-t-c-19);
           display: flex;
           align-items: center;
+          margin-top: 1px;
         }
 
         .icon-wapper-more {
@@ -1289,7 +1291,7 @@ export default {
     }
     :deep(.start-counting-down) {
       .counting-down-start{
-        font-size: 0.12rem;
+        font-size: 10px;
       }
     }
   }
