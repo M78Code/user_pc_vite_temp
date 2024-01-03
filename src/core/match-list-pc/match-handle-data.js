@@ -76,6 +76,8 @@ export function get_match_template_id({ csid }) {
     const different_version_config = {
         "ouzhou-pc": 100,
         "yazhou-pc": 0,
+        "new-pc": 0,
+
     }
     let tpl_id = get_match_tpl_number()
     // 虚拟足球1001、虚拟篮球1004

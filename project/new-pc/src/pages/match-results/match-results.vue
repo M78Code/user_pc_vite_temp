@@ -131,7 +131,8 @@ const {
   isSelectConfirm,
   ipt_search,
   select_submit,
-  input_radio
+  input_radio,
+  hideSelect
 } = useGetResultConfig();
 
 onMounted(() => {

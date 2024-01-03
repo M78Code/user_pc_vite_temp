@@ -191,30 +191,30 @@ body {
     }
   }
 
-  .video-icon {
-    background-image: var(--qq--bg-image-url12); // TODO: video0.svg
+  // .video-icon {
+  //   background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/video0.svg"); // TODO: video0.svg
 
-    &.active {
-      background-image: var(--qq--bg-image-url13) !important; // TODO: video2.svg)
-    }
-  }
+  //   &.active {
+  //     background-image: var(--qq--bg-image-url13) !important; // TODO: video2.svg)
+  //   }
+  // }
 
-  .animation-icon {
-    background-image: var(--qq--bg-image-url14); // TODO: animation0.svg
+  // .animation-icon {
+  //   background-image: var(--qq--bg-image-url14); // TODO: animation0.svg
 
-    &.active {
-      background-image: var(--qq--bg-image-url15) !important; // TODO: animation2.svg
-    }
-  }
+  //   &.active {
+  //     background-image: var(--qq--bg-image-url15) !important; // TODO: animation2.svg
+  //   }
+  // }
 
-  .switch-icon {
-    background-image: var(--qq--bg-image-url16); // TODO: switch0.svg
-    background-repeat: no-repeat;
+  // .switch-icon {
+  //   background-image: var(--qq--bg-image-url16); // TODO: switch0.svg
+  //   background-repeat: no-repeat;
 
-    &.active {
-      background-image: var(--qq--bg-image-url17); // TODO: switch2.svg
-    }
-  }
+  //   &.active {
+  //     background-image: var(--qq--bg-image-url17); // TODO: switch2.svg
+  //   }
+  // }
 
   //演播室
   .studio-icon {

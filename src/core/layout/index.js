@@ -80,6 +80,10 @@ class LayOutMain {
     //是否展开多列玩法
     this.is_unfold_multi_column = false; 
 
+    this.client_height = client_height
+
+    this.client_width = client_width
+
     // ------------------------------------------ 欧洲版 pc 专用 --------------------------------------------------------------------------------------------
     // 显示左侧菜单
     this.oz_show_left = true
@@ -109,13 +113,26 @@ class LayOutMain {
 
   // 设置 中间内容区域 宽度 高度
   set_layout_content_config(){
-    this.layout_content_height = client_height - this.layout_nav_height - this.layout_notice_height
-    this.layout_content_width = client_width - this.layout_left_width - this.layout_right_width
+    // 浏览器高度
+    this.client_height = Math.max(
+      document.body.clientHeight,
+      document.documentElement.clientHeight
+    );
+    // 浏览器宽度
+    this.client_width = Math.max(
+      document.body.clientWidth,
+      document.documentElement.clientWidth
+    );
+
+    this.layout_content_height =  this.client_height - this.layout_nav_height - this.layout_notice_height
+    console.error('ss')
+    let content_width =  this.client_width < this.layout_min_width ? this.layout_min_width :  this.client_width
+    this.layout_content_width =  content_width - this.layout_left_width - this.layout_right_width 
     this.set_layout_version()
   }
 
   set_oz_layout_content_config() {
-    this.oz_layout_content_height = client_height - 68;
+    this.oz_layout_content_height =  this.client_height - 68;
   }
  
   // 设置 左侧列表显示形式
@@ -133,12 +150,13 @@ class LayOutMain {
       }
     }
     // 设置 左侧菜单宽度
-    this.layout_left_width = (this.layout_left_menu_status == 'mini' ?  64 : 234 ) + 'px'
+    this.layout_left_width = (this.layout_left_menu_status == 'mini' ?  64 : 234 )
     this.set_layout_version()
   }
 
   // 设置页面布局更新
   set_layout_version(){
+    console.error('sadasda')
     this.layout_version.value = Date.now()
   }
 
