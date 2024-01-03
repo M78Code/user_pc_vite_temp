@@ -108,11 +108,13 @@ import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MenuData } from '
 
 const route = useRoute()
 
-// 是否使用 BaseVirtualList 组件
+// 是否使用 BaseVirtualList 组件  BaseVirtualList 试运行， 稳定后替换其他模板
 const is_base_virtual_list = computed(() => {
-  return is_results.value || (standard_edition.value == 1 && !is_kemp.value && route.name !== 'match_result')
+  return MenuData.update_time.value && !MenuData.get_mm_is_champion() && (is_results.value || (standard_edition.value == 1 && !is_kemp.value && route.name !== 'match_result'))
+  // return is_results.value || (standard_edition.value == 1 && !is_kemp.value && route.name !== 'match_result')
   // return standard_edition.value == 1 && ! is_results.value && !is_kemp.value && route.name !== 'match_result'
 })
+
 
 // 组件 所需 start ·············································
 

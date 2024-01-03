@@ -122,29 +122,29 @@
         <div class="info-data">
         
           <!-- 角球总比分 -->
-          <span v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc.S5.home')}}</span>
+          <span v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc_obj.S5.home')}}</span>
           <!-- 黄牌比分 -->
-          <span v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc.S12.home')}}</span>
+          <span v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc_obj.S12.home')}}</span>
           <!-- 红牌比分 -->
-          <span v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc.S11.home')}}</span>
+          <span v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc_obj.S11.home')}}</span>
           <!-- 点球比分 -->
-          <span v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc.S10.home')}}</span>
+          <span v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc_obj.S10.home')}}</span>
           <!-- 上半场比分 -->
-          <span >{{lodash.get(match_info, 'msc.S2.home')}}</span>
+          <span >{{lodash.get(match_info, 'msc_obj.S2.home')}}</span>
           <!-- 全场比分 -->
           <span
             :class="{'mmp-active': !['32','41','33','42','34','50','120'].includes(lodash.get(match_info,'mmp'))}"
-          >{{lodash.get(match_info, 'msc.S1.home')}}</span>
+          >{{lodash.get(match_info, 'msc_obj.S1.home')}}</span>
           <!-- 加时赛比分 -->
           <span
-            v-show="lodash.get(match_info, 'msc.S7.home')"
+            v-show="lodash.get(match_info, 'msc_obj.S7.home')"
             :class="{'mmp-active': ['32','41','33','42'].includes(lodash.get(match_info,'mmp'))}"
-          >{{lodash.get(match_info, 'msc.S7.home')}}</span>
+          >{{lodash.get(match_info, 'msc_obj.S7.home')}}</span>
           <!-- 点球大战比分 -->
           <span
-            v-show="lodash.get(match_info, 'msc.S170.home')"
+            v-show="lodash.get(match_info, 'msc_obj.S170.home')"
             :class="{'mmp-active': ['34','50','120'].includes(lodash.get(match_info,'mmp'))}"
-          >{{lodash.get(match_info, 'msc.S170.home')}}</span>
+          >{{lodash.get(match_info, 'msc_obj.S170.home')}}</span>
         </div>
       </div>
       <div class="both-away">
@@ -168,29 +168,29 @@
         </div>
         <div class="info-data">
           <!-- 角球总比分 -->
-          <span  v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc.S5.away')}}</span>
+          <span  v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc_obj.S5.away')}}</span>
           <!-- 黄牌 -->
-          <span  v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc.S12.away')}}</span>
+          <span  v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc_obj.S12.away')}}</span>
           <!-- 红牌 -->
-          <span  v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc.S11.away')}}</span>
+          <span  v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc_obj.S11.away')}}</span>
           <!-- 点球 -->
-          <span  v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc.S10.away')}}</span>
+          <span  v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc_obj.S10.away')}}</span>
           <!-- 上半场 -->
-          <span>{{lodash.get(match_info, 'msc.S2.away')}}</span>
+          <span>{{lodash.get(match_info, 'msc_obj.S2.away')}}</span>
           <!-- 全场比分 -->
           <span
             :class="{'mmp-active': !['32','41','33','42','34','50','120'].includes(lodash.get(match_info,'mmp'))}"
-          >{{lodash.get(match_info, 'msc.S1.away')}}</span>
+          >{{lodash.get(match_info, 'msc_obj.S1.away')}}</span>
           <!-- 加时赛比分 -->
           <span
-            v-show="lodash.get(match_info, 'msc.S7.away')"
+            v-show="lodash.get(match_info, 'msc_obj.S7.away')"
             :class="{'mmp-active': ['32','41','33','42'].includes(lodash.get(match_info,'mmp'))}"
-          >{{lodash.get(match_info, 'msc.S7.away')}}</span>
+          >{{lodash.get(match_info, 'msc_obj.S7.away')}}</span>
           <!-- 点球大战 -->
           <span
-            v-show="lodash.get(match_info, 'msc.S170.away')"
+            v-show="lodash.get(match_info, 'msc_obj.S170.away')"
             :class="{'mmp-active': ['34','50','120'].includes(lodash.get(match_info,'mmp'))}"
-          >{{lodash.get(match_info, 'msc.S170.away')}}</span>
+          >{{lodash.get(match_info, 'msc_obj.S170.away')}}</span>
         </div>
       </div>
     </div>
@@ -522,12 +522,13 @@ export default {
     .both-home {
       border-bottom: 1px solid rgba(225, 225, 225, 0.08);
     }
-    .wrap-logo {
+    // 比分榜样式
+    .wrap-logo {   //
       display: flex;
       flex: 1;
       align-items: center;
       min-width: 1px;
-      color: var(--q-gb-t-c-1);
+      color: var(--q-gb-bd-c-13);
       height: 28px;
       overflow: hidden;
     }
