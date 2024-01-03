@@ -263,7 +263,8 @@ class MenuData {
     // 菜单数据缓存
     // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
     //宽度请求变化 因为请求参数是在这里触发的
-    MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    // MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    // MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     this.set_match_list_api_config({})
     
   }
@@ -332,7 +333,6 @@ class MenuData {
         version: Date.now(),
       };
     }
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -398,7 +398,6 @@ class MenuData {
       version: Date.now(),
     };
     this.menu_root_show_shoucang = obj.root;
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     console.error(
       "set_mid_menu_result-------",
       JSON.stringify(this.mid_menu_result)
@@ -742,10 +741,12 @@ class MenuData {
   set_match_list_api_config(config) {
     // 更新列表数据类型
     this.set_match_list_api_type(this.mid_menu_result);
-
+    clearTimeout(this._ct)
     // 设置投注类别
     this.set_bet_category();
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    this._ct=  setTimeout(() => {
+      MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    },16);
     // 菜单数据缓存 //从元数据拿值
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) //从接口拿值
