@@ -2,7 +2,7 @@ import { ref } from 'vue';
 
 import lodash from 'lodash';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import store from "src/store-redux/index.js";
+// import store from "src/store-redux/index.js";
 import { MenuData } from 'src/output/project/index.js'
 
 import { match_collect_status, set_collect_count, mx_collect_count } from "./match-list-collect.js";

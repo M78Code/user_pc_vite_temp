@@ -36,12 +36,12 @@
         <template v-if="project_name == 'app-h5'">
           <q-img
             v-if="['result_details', 'match_result'].includes($route.name)"
-            style="width: 0.17rem;height: 0.17rem;margin-top:-8px;"
-            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/corner_kick_red.svg`"
+            style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick_red.svg`"
           />
           <q-img 
             v-else
-            style="width: 0.17rem;height: 0.17rem;margin-top:-8px;"  
+            style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick_red.svg`" 
           />
         </template>

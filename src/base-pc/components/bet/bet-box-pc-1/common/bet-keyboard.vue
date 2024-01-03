@@ -39,6 +39,9 @@ const addnum = () => {
     const {qtw,qth,qfo,qfi,qsi } = lodash.get(UserCtr, 'user_info.cvo.series', {  qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
     ref_data.keyboard_data = { qtw,qth,qfo,qfi,qsi,max:'MAX'}
   }
+  if(UserCtr.balance) {
+
+  }
 }
 
 // 快捷金额

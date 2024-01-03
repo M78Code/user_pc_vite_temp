@@ -71,7 +71,10 @@ ${file_str_project}
  export * from "./project/index.js"
   
 `;
+
+write_file(index_file_path, index_file_str.trim());
+
   }
 
-  write_file(index_file_path, index_file_str.trim());
+
 }

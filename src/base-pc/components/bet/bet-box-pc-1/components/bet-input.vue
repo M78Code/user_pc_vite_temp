@@ -88,6 +88,7 @@ onUnmounted(() => {
  */
  const change_money_handle = obj => {
     if(props.item.playOptionsId == obj.id || obj.id == undefined){
+        console.log(BetData.bet_amount,props.item.bet_amount)
          // 获取当前投注金额
         let money = obj.id == undefined ? BetData.bet_amount : props.item.bet_amount
         let money_ = obj.money
@@ -108,7 +109,6 @@ onUnmounted(() => {
                 money_a = UserCtr.balance
             }  
             BetData.set_bet_obj_amount(money_a,props.item.playOptionsId)
-
             ref_data.money = money_a
         } 
     }
