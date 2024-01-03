@@ -20,10 +20,6 @@
       >
         <!--专业版-->
         <div>
-          <!-- <template v-if="get_hp_list(1).length">
-            <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" v-if="standard_odd_status == 0" :src="get_theme.includes('y0')?arrows:arrows_default">
-            <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="get_theme.includes('y0')?arrows_reverse:arrows_default_balck" v-else>
-          </template> -->
           <!--标准版赔率容器-->
           <div v-touch-pan.horizontal.prevent.mouse="odd_wrapper_pan"
             :class="{'status2':standard_odd_status == 1}" >
@@ -407,16 +403,10 @@ export default {
     }
   },
   computed:{
-    // ...mapGetters({
-    //   get_theme:'get_theme',
-    //   get_access_config:'get_access_config',
-    // }),
     footer_sub_menu_id(){return VR_CTR.state.footer_sub_menu_id },
     get_video_process_data(){return VR_CTR.state.video_process_data},
     get_n_s_changed_loaded(){return false;},
     get_curr_sub_menu_type(){ return VR_CTR.state.curr_sub_menu_type },
-    get_theme(){return 'theme01'},
-    get_access_config(){return {handicapNum: true}},
     
     show_debugger_line(){
       let wsl = sessionStorage.getItem('wsl');
