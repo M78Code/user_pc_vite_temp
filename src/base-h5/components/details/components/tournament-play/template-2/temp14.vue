@@ -311,7 +311,7 @@ export default defineComponent({
       padding-top: 0;
       padding-bottom: 0.08rem;
       .bet-box-wrap,.bet-box-bg{
-        height: 0.56rem;
+        // height: 0.56rem;
         flex: 1;
         margin: 0;
         .bet-box-bg{
