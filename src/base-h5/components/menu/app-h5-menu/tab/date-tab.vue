@@ -65,14 +65,13 @@ onUnmounted(() => {
  * @param {*} type
  */
 const changeTabMenu = (item, i, event, type) => {
-  event = event || dateTab.value[0];
+  event = event || dateTab.value && dateTab.value[0];
   if(activeOn.value === i)return;
   activeOn.value = i;
   // 设置日期
   MenuData.set_date_time(i, props.dataList?.[i]?.val,props.dataList?.[i]?.menuType || "");
   emits("changeDate", type);
   // set_menu_match_date(type)
-
   scrollMenuEvent(event, ".date-tab-content-ul", ".active");
 };
 /**

@@ -2,7 +2,6 @@ import { ref, nextTick } from "vue";
 import lodash from 'lodash';
 
 import BaseData from "src/core/base-data/base-data.js";
-import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
 import PageSource from 'src/core/page-source/page-source.js'
 import {
@@ -13,7 +12,7 @@ import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 ////import store from "src/store-redux/index.js";
 import { SessionStorage } from "src/output/module/constant-utils.js";
 import STANDARD_KEY from "src/core/standard-key";
-
+import MatchListTpl from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 const menu_key = STANDARD_KEY.get("menu_pc");
 
 
@@ -748,12 +747,12 @@ class MenuData {
   set_match_list_api_config(config) {
     // 更新列表数据类型
     this.set_match_list_api_type(this.mid_menu_result);
-    clearTimeout(this._ct)
     // 设置投注类别
     this.set_bet_category();
-    this._ct=  setTimeout(() => {
-      MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
-    },16);
+    clearTimeout(this._t)
+    this._t=setTimeout(() => {
+      MatchListTpl.set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+    }, 10);
     // 菜单数据缓存 //从元数据拿值
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) //从接口拿值

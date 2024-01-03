@@ -1,5 +1,6 @@
 import { nextTick, ref } from "vue";
 import lodash_ from 'lodash';
+import MatchListTpl from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
@@ -149,9 +150,12 @@ class MenuData {
     // 菜单数据缓存
     // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
     //宽度请求变化 因为请求参数是在这里触发的
-    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash_.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_TPL_COMPUTED_CMD,lodash_.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+    clearTimeout(this._t)
+    this._t=setTimeout(() => {
+      MatchListTpl.set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+    }, 10);
     this.set_match_list_api_config()
-    
   }
 
   // 设置当前选中的赛种

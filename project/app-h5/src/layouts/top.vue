@@ -204,7 +204,6 @@ const set_scroll_current = async (val, type) => {
       handle_match_render_data()
       break;
   }
-  console.error('二级菜单切换OK')
 } catch (err){
   console.error('二级菜单切换错误：'+err)
 }
@@ -228,7 +227,6 @@ const setDate = (type) => {
 const handler_go_to_top = () => {
   try {
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
-    console.error('通知回到顶部ok')
   } catch (err){
     console.error('通知回到顶部错误：'+err)
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-wrap fit relative-position" ref="wrap" @mousedown="mousedown">
+  <div class="component tab-wrap fit relative-position" ref="wrap" @mousedown="mousedown">
     <div
       class="item-wrap relative-position"
       ref="item_wrap"
