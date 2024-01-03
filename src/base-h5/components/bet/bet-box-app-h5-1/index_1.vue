@@ -197,7 +197,6 @@ const scrollTo = () => {
   padding: 0 0.14rem;
   -webkit-overflow-scrolling: touch;
   border-radius: .24rem .24rem 0 0;
-  //border: 1px solid;
   background-color: var(--q-gb-bg-c-23);
   z-index: 1999;
   padding-bottom: .2rem;
