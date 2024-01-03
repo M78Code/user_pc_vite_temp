@@ -640,13 +640,11 @@ export default {
   },
   computed:{
     //抽屉菜单显示状态
-
     current_league(){return VR_CTR.state.current_league},
     current_batch(){return VR_CTR.state.current_batch},
     video_process_data(){return VR_CTR.state.video_process_data},
     get_prev_v_sports_params(){return VR_CTR.state.prev_v_sports_params},
     sub_menu_type(){return VR_CTR.state.curr_sub_menu_type},
-    get_is_show_settle_tab(){return 1},
     right_menu_show(){return VR_CTR.state.is_show_menu},
 
     // 主队名
