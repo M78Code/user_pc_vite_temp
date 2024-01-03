@@ -1335,13 +1335,16 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
                 hv = ol_obj.on || ''
             }else{
                 text = `${ol_obj.ott || ''} ${ol_obj.on || ''}`  
+                hv = ''
             }
             if(detail_mark.includes(ol_obj._hpid*1) && ol_obj.ot == 'X' ){
                 text = `${ol_obj.otv || ''}` 
+                hv = ''
             }
-            // 
+            // 特殊玩法
             if(list_head.includes(ol_obj._hpid*1)){
                 text = `${ol_obj.otv || ''}` 
+                hv = ''
             }
 
         }else{
