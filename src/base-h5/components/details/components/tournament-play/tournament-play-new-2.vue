@@ -903,6 +903,9 @@ export default defineComponent({
 // 选中颜色
 :deep(.details-bg5){
   background: var(--q-gb-bg-c-37) !important;
+  .remark, .odds_new {
+    color: var(--q-gb-t-c-30);
+  }
 }
 :deep(.active-play){
   background: var(--q-gb-bg-c-37) !important;
