@@ -369,6 +369,6 @@ const state = reactive({
 }
 
 .bsball-content {
-    background-color: var(--q-gb-bg-c-18);
+    background-color: transparent;
 }
 </style>

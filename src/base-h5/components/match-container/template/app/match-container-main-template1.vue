@@ -444,7 +444,7 @@ export default {
     justify-content: space-between;
     &.progress{
       // border-top: 2px solid var(--q-gb-bd-c-1);
-      border-top: 2px solid rgba(116, 196, 255, 0.5);
+      border-top: 2px solid var(--q-gb-bd-c-1);
     }
     &.not_begin{
       // border-top: 2px solid var(--q-gb-bd-c-13);
@@ -462,7 +462,7 @@ export default {
       transform: rotate(-90deg);
       width: 20px;
       height: 16px;
-      margin-right: 14px;
+      margin-right: 8px;
     }
     .collapsed{
       transform: rotate(0);
@@ -641,7 +641,7 @@ export default {
     padding: 0 5px 0 17px;
     background: var(--q-gb-bg-c-21);
     line-height: 20px;
-    font-size: 11px;
+    // font-size: 11px;
     .league-collapse-dir{
       display: none;
     }
@@ -1489,7 +1489,7 @@ export default {
   display: flex;
   align-items: center;
   margin: 0 auto;
-  font-size: 0.1rem;
+  font-size: 0.11rem;
   align-items: center;
   justify-content: space-between;
 
@@ -1742,7 +1742,7 @@ export default {
     // margin-top: .02rem;
     // margin-right: .02rem;
     margin: .02rem .02rem 0 .05rem;
-    font-size: 0.12rem;
+    font-size: 0.11rem;
   }
 
   .flag-chuan-icon {
