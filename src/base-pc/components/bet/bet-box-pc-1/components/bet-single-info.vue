@@ -148,10 +148,6 @@ const pending_order_status = computed(() => options_id => {
   return 0;
 })
 
-onMounted(()=>{
-  console.log(props.item)
-})
-
 const ref_data = reactive({
   DOM_ID_SHOW: false,
   matchType: 1,  // matchType 盘口类型 1:赛前盘，2: 滚球盘 3: 冠军盘 
