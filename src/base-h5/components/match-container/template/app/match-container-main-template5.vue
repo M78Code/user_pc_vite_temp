@@ -549,7 +549,7 @@ export default {
     display: flex;
     height: 30px;
     background: var(--q-gb-bg-c-25);
-    padding: 0 10px;
+    padding: 0 15px;
     align-items: center;
     justify-content: space-between;
     border-top: 2px solid var(--q-gb-bd-c-3);
@@ -562,7 +562,7 @@ export default {
       }
     }
     .expand_item{
-      width: 18px;
+      width: 20px;
       height: 16px;
       transition: transform 0.25s ease;
       transform: rotate(-90deg);
@@ -729,7 +729,7 @@ export default {
           color: var(--sys-brand-secodary-secondary-300, --q-gb-t-c-19);
           text-align: right;
           font-family: Akrobat;
-          font-size: 10px;
+          font-size: 11px;
           font-weight: 500;
 
           .mc-n {
@@ -944,6 +944,7 @@ export default {
       }
 
       .icon-wapper {
+        margin-right: 6px;
         transform: rotate(90deg);
       }
 
