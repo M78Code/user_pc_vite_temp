@@ -94,9 +94,9 @@
                         <template v-if="ol_list_0[ol_index0 - 1]._mhs == 2"></template>
                       </div>
                     </template>
-                    <template v-else>
+                    <div class="item-col-item" v-else>
                       <div :key="ol_index" class="play-box-style details_color warp bor-style"></div>
-                    </template>
+                    </div>
                   </template>
                 </template>
               </div>
@@ -176,9 +176,10 @@
                         <template v-if="ol_list_1[ol_index1 - 1]._mhs == 2"></template>
                       </div>
                     </template>
-                    <template v-else>
-                      <div :key="ol_index" class="play-box-style details_color bor-style"></div>
-                    </template>
+                    
+                    <div class="item-col-item" v-else>
+                      <div :key="ol_index" class="play-box-style details_color warp bor-style"></div>
+                    </div>
                   </template>
                 </template>
               </div>
@@ -265,15 +266,12 @@
           </div>
 
           <!-- 展开和收起按钮 -->
-          <div  v-if="!hide_show_more_layout" style="padding:0 0.08rem">
+          <div  v-if="!hide_show_more_layout" style="padding: .04rem 0.08rem;border-radius: .04rem;overflow: hidden;">
             <div class="show-more play-box-style"  @click="change_show">
-          <span class="fz_13">{{show_more?i18n_t('match_info.pack_up'):i18n_t('match_info.show_more')}}
-          </span>
+              <span class="fz_13">{{show_more?i18n_t('match_info.pack_up'):i18n_t('match_info.show_more')}}</span>
+            </div>
           </div>
-
-          </div>
-         
-
+          
         </div>
       </div>
     </div>
@@ -494,7 +492,7 @@ export default defineComponent({
 .item-wrap {
   min-height: 0.32rem;
   height: auto;
-  border-radius: 4px;
+  border-radius: .04rem;
   overflow: hidden;
 }
 
@@ -503,12 +501,12 @@ export default defineComponent({
 }
 
 .show-more {
-
   color: var(--q-color-com-fs-color-11);
   align-items: center;
   justify-content: center;
-  padding:0 20px
-  // padding: 0 0.18rem !important;
+  padding:0 20px;
+  border-radius: .04rem !important;
+  overflow: hidden;
 }
 
 .play-box-style {
@@ -519,12 +517,13 @@ export default defineComponent({
   padding: 0 0.15rem;
   display: flex;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: .04rem;
+  overflow: hidden;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
 }
 
 .bor-style {
-
+  border: none !important;
 }
 
 .ellipsis-t {
@@ -537,7 +536,6 @@ export default defineComponent({
 
 .remark {
   flex: 1;
-
   letter-spacing: 0;
   font-size: 0.14rem;
   color: var(--q-analysis-text-color-14)!important;
@@ -551,34 +549,15 @@ export default defineComponent({
   width: 0.45rem;
 }
 
-.active {
-
-}
-
 .lock-style {
   width: 100%;
   height: 0.3rem;
   line-height: 0.3rem;
   margin-bottom: 0.02rem;
-
-  border-radius: 0.02rem;
+  border-radius: 0.04rem;
   padding: 0 0.1rem;
   text-align: center;
   display: block;
-}
-
-.white_text {
-
-}
-
-.details_color {
-
-}
-
-.first-rad {
-  &:after {
-
-  }
 }
 
 .icon-lock {
