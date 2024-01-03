@@ -512,7 +512,7 @@ export default {
     width: 100%;
     height: 25px;
     line-height: 1;
-    font-size: 0.11rem;
+    font-size: 0.12rem;
     padding-left: 0.17rem;
     display: flex;
     align-items: center;
@@ -521,6 +521,7 @@ export default {
     justify-content: space-between;
     &.progress{
       border-top: 2px solid rgba(116, 196, 255, 0.5);
+      // border-top: 2px solid #127DCC;
     }
     &.not_begin{
       border-top: 2px solid rgba(233, 91, 91, 0.51);
@@ -531,7 +532,7 @@ export default {
     }
 
     img,.img {
-      margin-right: 8px;
+      margin-right: 14px;
       width: .13rem;
       height: .13rem;
     }
@@ -885,7 +886,7 @@ export default {
     padding: 0 5px 0 17px;
     background: var(--q-gb-bg-c-21);
     line-height: 20px;
-    font-size: 11px;
+    font-size: 12px;
     // margin-bottom: -.05rem;
     margin-top: 0;
     border-bottom: 0;
@@ -1276,7 +1277,7 @@ export default {
 
       .more {
         .count_span {
-          font-size: 10px;
+          font-size: 11px;
           font-weight: 500;
           color: var(--q-gb-t-c-19);
           display: flex;
