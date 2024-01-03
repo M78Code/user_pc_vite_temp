@@ -266,12 +266,7 @@ export default {
     this.user_destroy_resource();
   },
   methods:{
-    // ...mapMutations([
-    //   'set_settle_dialog_bool',
-    //   'set_is_show_menu'
-    // ]),
     set_line_width(width){ this.round_line_width = width},
-    set_settle_dialog_bool(){},
     set_is_show_menu(data){VR_CTR.state.is_show_menu = data},
     set_prev_v_sports_params(data){VR_CTR.state.prev_v_sports_params = data},
 
@@ -343,7 +338,6 @@ export default {
     *@return{Undefined}undefined
     */
     change_settle_status(){
-      this.set_settle_dialog_bool(false)
       this.timer_super29 = setTimeout(() => {
         this.dialog = false
       }, 100);
