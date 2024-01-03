@@ -6,7 +6,7 @@
  *映射store内部的方法
  */
 import { api_common } from "src/api/";
-import store from "src/store-redux/index.js";
+// import store from "src/store-redux/index.js";
 const methods_map_store = [
  
   "SET_INIT_ODD",
@@ -16,7 +16,7 @@ const methods_map_store = [
  
 ].reduce((obj, type) => {
   obj[type] = (data) => {
-    store.dispatch({ type, data });
+    // store.dispatch({ type, data });
   };
   return obj;
 }, {});
