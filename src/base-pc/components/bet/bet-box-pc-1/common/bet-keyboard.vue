@@ -1,9 +1,10 @@
 
 <template>
   <div class="q-gutter-xs keyboard-zone">
-    <div class="keyboard-btn" v-for="(item, index) in ref_data.keyboard_data" :key="index" @click="set_click_keybord(item)">
+    <div class="keyboard-btn" v-for="(item, index) in ref_data.keyboard_data" :key="index" @click="set_click_keybord(item)" 
+    :class="bet_money_btn_class(item,index)">
       <!--键盘按键文本显示 如果无效则置灰 以及MAX按钮文本显示-->
-      <div class="keyboard-btn-text" :class="{ 'text-disable': item.disabled }">
+      <div class="keyboard-btn-text">
         <template v-if="item != 'MAX'">+</template>{{ item }}
       </div>
     </div>
@@ -15,11 +16,13 @@
 import { onMounted, reactive, ref } from "vue"
 import { UserCtr } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 const ref_data = reactive({
   // 键盘数据以及默认键盘数据
   keyboard_data: [],
+  max_money:0
 })
 
 const props = defineProps({
@@ -39,9 +42,20 @@ const addnum = () => {
     const {qtw,qth,qfo,qfi,qsi } = lodash.get(UserCtr, 'user_info.cvo.series', {  qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
     ref_data.keyboard_data = { qtw,qth,qfo,qfi,qsi,max:'MAX'}
   }
-  if(UserCtr.balance) {
+  //获取最大限额
+  let key_board_obj = lodash.get(BetData,'bet_keyboard_config',{})
+  ref_data.max_money = key_board_obj.max_money
+}
 
-  }
+// 判断快捷金额按钮是否可点击
+const bet_money_btn_class = (item) => {
+    let className = '';
+    if(ref_data.max_money > 0) {
+        if(item!='max' && (ref_data.max_money < item || ref_data.max_money < BetData.bet_amount || UserCtr.balance < item)) {
+            className = 'disable-key-btn disabled'
+        }
+    }
+    return className;
 }
 
 // 快捷金额
@@ -87,7 +101,9 @@ const set_click_keybord = obj => {
   .keyboard-btn-add {
     margin-right: 20px;
   }
-
+  .text-disabled {
+    color: rgba(108,123,168,0.5);
+  }
   /*  按钮文字样式 */
   .keyboard-btn-text {
     line-height: 24px;
