@@ -327,7 +327,8 @@ const set_scroll_data_list = (mid, type) => {
     ref_data.current_mi = type && MenuData.current_lv_2_menu_i ? MenuData.current_lv_2_menu_i : obj.mi
   }
 
-  !type && handle_match_render_data()
+  // !type && handle_match_render_data()
+  handle_match_render_data()
 }
 
 // 菜单变化页面请求数据
