@@ -1601,7 +1601,7 @@ export default {
     .date-time{
       position: relative;
       top: 1px;
-      font-size: 10px
+      font-size: 0.12rem,
     }
     .coming-soon{
       position: relative;
@@ -1668,7 +1668,7 @@ export default {
       color: var(--q-color-com-fs-color-37);
     }
     .coming-soon{
-      font-size: 10px;
+      font-size: 0.12rem;
     }
 
     :deep(.start-counting-down){
@@ -1697,7 +1697,7 @@ export default {
         color: #AFB3C8 !important;
         width: 150px !important;
         .counting{
-          font-size: 10px;
+          font-size: 0.12rem;
           color: var(--q-gb-t-c-19);
           // margin-bottom: 1px;
         }
