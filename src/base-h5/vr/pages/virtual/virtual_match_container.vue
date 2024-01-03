@@ -131,7 +131,7 @@ import data_pager from "src/base-h5/components/common/data-pager.vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { lang } from 'src/base-h5/mixin/userctr.js'
 
-const static_serve = window.env.config.static_serve[0];
+const static_serve = lodash.get(window.BUILDIN_CONFIG,'OSS_JSON.static[0]');
 export default {
   name:'virtual_match_container',
   props:{
