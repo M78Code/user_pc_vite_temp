@@ -41,14 +41,6 @@ app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
 
-import VConsole from 'vconsole'
-
-let location_search = window.SEARCH_PARAMS.init_param.get('vconsole_h5')
-// 真机调试
-if(location_search == 1){
-  const vConsole = new VConsole()
-}
-
 import { i18n } from "src/boot/i18n.js";
 app.use(i18n).use(router);
 // 使用自定义指令
