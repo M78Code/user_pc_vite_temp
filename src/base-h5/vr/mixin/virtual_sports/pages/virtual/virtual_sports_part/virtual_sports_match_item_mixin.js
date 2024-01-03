@@ -2,16 +2,11 @@
  * @Description: 虚拟体育足球篮球赛事项组件
  */
 import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
-import v_s_odd_item from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_odd_item.vue"
-import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue"
-import odd_column_item from "src/base-h5/components/match-container/template/app/components/odd-column-item.vue"
 import virtual_sports_m_item_mixin from 'src/base-h5/vr/mixin/virtual_sports/virtual_sports_m_item_mixin.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
-import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
-import { IconWapper } from 'src/components/icon'
 
 export default {
   mixins:[virtual_sports_m_item_mixin],
@@ -406,13 +401,6 @@ export default {
       }
       return flag;
     }
-  },
-  components:{
-    "v-s-odd-item":v_s_odd_item,
-    'v-s-match-timer':v_s_match_timer,
-    "odd-column-item":odd_column_item,
-    'image-cache-load': ImageCacheLoad,
-    'icon-wapper': IconWapper,
   },
   watch:{
     other_status(n){
