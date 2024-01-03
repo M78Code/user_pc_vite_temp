@@ -4,6 +4,8 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { MenuData } from 'src/output/project/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { PROJECT_NAME } = BUILDIN_CONFIG ;
 
 
 //请求 参数的说明
@@ -73,7 +75,13 @@ function match_list_all_params() {
     let { lv1_mi, lv2_mi } = left_menu_result || {};
     let apiType = 1;
     // 父级euid
-    let euid = ''
+    let euid = get_mid_for_euid(menu_current_mi)
+
+    // 有二级菜单 需要用一级才的euid
+    if(['new-pc','yazhou-pc'].includes(PROJECT_NAME)){
+        euid = get_mid_for_euid(lv1_mi)
+    }
+
     let api_name = api_params[menu_root]?.match || api_params[lv1_mi]?.match || api_params.other.match;
     // type === "collect"
     if (is_collect) {
@@ -121,8 +129,6 @@ function match_list_all_params() {
         if (lv1_mi == 118) {
             // 娱乐下只有冠军 直接写死
             euid = [3, 203].includes(menu_root) ? '3020212' : '3020112'
-        } else {
-            euid = get_mid_for_euid(menu_current_mi)
         }
         lv2_mi_info = {
             apiType,
@@ -174,7 +180,7 @@ function match_list_all_params() {
         lv2_mi_info = {
             ...lv2_mi_info,
             apiType,
-            euid: get_mid_for_euid(menu_current_mi),
+            euid,
             "orpt": "-1",
             tid: ""
         }

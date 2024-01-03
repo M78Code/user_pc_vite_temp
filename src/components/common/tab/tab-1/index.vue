@@ -1,6 +1,6 @@
 <!-- @Description: 下划线跟随移动的tab组件 -->
 <template>
-  <div class="tab-wrap fit relative-position" ref="wrap" @mousedown="mousedown">
+  <div class="component tab-wrap fit relative-position" ref="wrap" @mousedown="mousedown">
     <div class="item-wrap relative-position" ref="item_wrap" :style="{ left: item_wrap_left + 'px' }" :key="key">
       <div class="tab-item yb-flex-center" :class="[{ active: currentIndex == index }, val.class]"
         v-for="(val, index) in list" :key="index" @click.stop="onclick(index, val)" @mouseenter="tabs_enter(index)"

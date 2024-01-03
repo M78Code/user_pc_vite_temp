@@ -170,6 +170,8 @@ function on_click_lang(lang_) {
             }
         })
     }
+
+    toggle_popup()
 }
 /**
 * @description:

@@ -2,7 +2,6 @@ import { ref, nextTick } from "vue";
 import lodash from 'lodash';
 
 import BaseData from "src/core/base-data/base-data.js";
-import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
 import PageSource from 'src/core/page-source/page-source.js'
 import {
@@ -13,7 +12,7 @@ import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 ////import store from "src/store-redux/index.js";
 import { SessionStorage } from "src/output/module/constant-utils.js";
 import STANDARD_KEY from "src/core/standard-key";
-
+import MatchListTpl from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 const menu_key = STANDARD_KEY.get("menu_pc");
 
 
@@ -106,6 +105,16 @@ class MenuData {
     }
     // 当前选中的菜单id----终极菜单id 根据此id获取对应的旧菜单id 
     this.menu_current_mi = ''
+
+    this.kemp_list = []
+    this.hot_list = []
+    this.to_day_list = []
+    this.early_list = []
+    this.in_play_list = []
+
+    this.current_ball_type = 0
+
+    this.left_menu_list = []
   }
 
   // 设置 菜单的版本变化
@@ -263,9 +272,15 @@ class MenuData {
     // 菜单数据缓存
     // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
     //宽度请求变化 因为请求参数是在这里触发的
-    MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    // MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    // MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     this.set_match_list_api_config({})
     
+  }
+
+  // 设置当前的赛种id
+  set_current_ball_type(val){
+    this.current_ball_type = val
   }
 
    /**
@@ -302,7 +317,6 @@ class MenuData {
    * lv2_mi
    */
   set_left_menu_result(obj) {
-    this.menu_root = obj.root;
     this.menu_root_show_shoucang = obj.root;
     // 设置 列表接口类型
     // this.set_match_list_api_type(obj);
@@ -332,7 +346,6 @@ class MenuData {
         version: Date.now(),
       };
     }
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -398,7 +411,6 @@ class MenuData {
       version: Date.now(),
     };
     this.menu_root_show_shoucang = obj.root;
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     console.error(
       "set_mid_menu_result-------",
       JSON.stringify(this.mid_menu_result)
@@ -742,10 +754,12 @@ class MenuData {
   set_match_list_api_config(config) {
     // 更新列表数据类型
     this.set_match_list_api_type(this.mid_menu_result);
-
     // 设置投注类别
     this.set_bet_category();
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    clearTimeout(this._t)
+    this._t=setTimeout(() => {
+      MatchListTpl.set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+    }, 10);
     // 菜单数据缓存 //从元数据拿值
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) //从接口拿值
@@ -763,6 +777,13 @@ class MenuData {
     return [101210, 101310].includes(+this.mid_menu_result.lv2_mi);
   }
   /**
+   * 是否选中了早盘
+   *  mi [number|string] 要比对的值
+  */
+  is_zaopan(mi) {
+    return this._is_cur_mi(3, mi)
+  }
+  /**
    * 强制更新 菜单的版本号 ， 会重新计算
    *
    * 更新菜单整体视图
@@ -772,7 +793,94 @@ class MenuData {
   update_menu_version() {
     BaseData.menu_version = Date.now();
   }
+
+  set_menu_root(val){
+    this.menu_root = val
+    if(val == 2){
+      this.left_menu_list = lodash.cloneDeep(this.to_day_list)
+    }
+    if(val == 3){
+      this.left_menu_list = lodash.cloneDeep(this.early_list)
+    }
+    console.error("menu",this)
+  }
  
+  // 根据菜单设置对应的数据
+  set_init_menu_list(){
+    let menu_list = lodash.cloneDeep(lodash.get(BaseData,'left_menu_base_mi',[]))
+    // 今日
+    let to_day_list = []
+    // 早盘
+    let early_list = []
+    // 冠军
+    let kemp_list = []
+    // 滚球
+    let in_play_list = []
+    // 热门赛事
+    let hot_list = []
+    
+    // 菜单大类对应的code
+    let type_list = [1,2,3]
+
+    menu_list.forEach(item => {
+      let list_sl = lodash.get(item,'sl',[]) || []
+      if(list_sl.length){
+        type_list.forEach(type => {
+          let item_obj = list_sl.find(obj => obj.mi == item.mi + ''+type ) || {}
+          let kemp = {}
+          if(item_obj.mi){
+            switch(type){
+              case 1:
+                in_play_list.push(item_obj)
+                break;
+
+              case 2:
+                // 获取 今日下的冠军数据 插入到赛种中 并且赛种的数量 = 让球大小 + 冠军数量
+                kemp = list_sl.find(obj => obj.mi == item.mi + '4' ) || {}
+                if(item_obj.sl){
+                  item_obj.sl.push(kemp)
+                }
+                // mif 赛种id
+                // mi 新菜单id
+                item_obj.ct += kemp.ct
+                item_obj.mif = item.mi
+                to_day_list.push(item_obj)
+                break;
+
+              case 3: 
+                kemp = list_sl.find(obj => obj.mi == item.mi + '4' ) || {}
+                if(item_obj.sl){
+                  item_obj.sl.push(kemp)
+                }
+                item_obj.ct += kemp.ct
+                item_obj.mif = item.mi
+                early_list.push(item_obj)
+                break;
+            }
+          }
+        })
+      }
+    })
+  
+    let mew_menu_list_res = lodash.get(BaseData,'mew_menu_list_res',[]) || []
+    
+    // 获取冠军的所有数据
+    let kemp_list_ = mew_menu_list_res.find(item => item.mi == 400) || {}
+    kemp_list = lodash.get(kemp_list_,'sl',[]) || []
+
+    // 获取热门赛事
+    let hot_list_ = mew_menu_list_res.find(item => item.mi == 500) || {}
+    hot_list = lodash.get(hot_list_,'sl',[]) || []
+
+    this.kemp_list = kemp_list
+    this.hot_list = hot_list
+    this.to_day_list = to_day_list
+    this.early_list = early_list
+    this.in_play_list = in_play_list
+    
+    
+  }
+
   is_kemp() {
     return (this.match_list_api_config.guanjun || "").includes("guanjun");
   }
@@ -901,6 +1009,141 @@ class MenuData {
   }
   static cl_1() {
     // console.error("cl_1");
+  }
+  
+  is_esports_champion() {
+    return (this.match_list_api_config || {}).guanjun == "dianjing-guanjun";
+  }
+
+  // 是否是 featured
+  is_featured() {
+    return this.mid_menu_result.filter_tab == 1001
+  }
+
+  // 是否是 top_events
+  is_top_events() {
+    return this.mid_menu_result.filter_tab == 1002
+  }
+
+  // 是否是 leagues
+  is_leagues() {
+    return this.mid_menu_result.filter_tab == 4002
+  }
+
+  //root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
+  //内部方法
+  _is_cur_mi(mi, param) {
+    if (param) {
+      return mi == param
+    }
+    return this.menu_root == mi
+  }
+  /**
+   * 是否选中了 热门
+   * mi [number|string] 要比对的值
+   * 没有传递对比当前菜单
+  */
+  is_hot(mi) {
+    return this._is_cur_mi(500, mi)
+  }
+  /**
+   * 是否选中了VR 
+   * mi [number|string] 要比对的值
+   * 没有传递对比当前菜单
+  */
+  is_vr(mi) {
+    if (mi) {
+      return this._is_cur_mi(300, mi)
+    }
+    return this._is_cur_mi(300, mi) || (this.match_list_api_config.guanjun || "").includes("vr")
+  }
+  /**
+   * 是否选中了赛果
+   *  mi [number|string] 要比对的值
+  */
+  is_results(mi) {
+    return this._is_cur_mi(28, mi)
+  }
+  /**
+   * 是否选中了早盘
+   *  mi [number|string] 要比对的值
+  */
+  is_zaopan(mi) {
+    return this._is_cur_mi(3, mi)
+  }
+  is_left_zaopan(mi) {
+    return this._is_cur_mi(203, mi)
+  }
+  /**
+   * 是否选中了今日
+   *  mi [number|string] 要比对的值
+  */
+  is_today(mi) {
+    return this._is_cur_mi(2, mi)
+  }
+  is_left_today(mi) {
+    return this._is_cur_mi(202, mi)
+  }
+  /**
+   * 是否选中了滚球
+   *  mi [number|string] 要比对的值
+  */
+  is_scroll_ball(mi) {
+    return this._is_cur_mi(1, mi)
+  }
+  /**
+   * 是否选中了冠军
+   *  mi [number|string] 要比对的值
+  */
+  is_kemp(mi) {
+    if (mi) {
+      return this._is_cur_mi(400, mi)
+    }
+    return this._is_cur_mi(400, mi) || (this.match_list_api_config.guanjun || "").includes("guanjun")
+  }
+
+  /**
+   * 是否选中了电竞
+   *  mi [number|string] 要比对的值
+  */
+  is_esports(mi) {
+    // return (
+    //   this.menu_root == 2000 ||
+    //   (this.match_list_api_config || {}).sports == "dianjing"
+    // );
+    if(mi){
+      return this._is_cur_mi(2000, mi)
+    }
+    return this._is_cur_mi(2000, mi) || this._is_cur_mi(2000, this.left_menu_result.lv1_mi)
+  }
+  /**
+   * 是否选中了串关
+   *  mi [number|string] 要比对的值 没有传递对比当前菜单
+  */
+  is_mix(mi) {
+    return this._is_cur_mi(6, mi)
+  }
+  /*
+    * 是否为电子赛事
+    *  mi [number|string] 要比对的值
+  */
+  is_electron_match(mi) {
+    return [190,191].includes(this.left_menu_result.lv1_mi * 1) 
+  }
+  /**
+   * 是否为首页
+   *  mi [number|string] 要比对的值
+  */
+  is_home(mi) {
+    return this._is_cur_mi(0, mi)
+  }
+  // 是不是 常规赛种下的冠军
+  is_common_kemp(mi) {
+    return this.left_menu_result.lv1_mi && this.left_menu_result.lv1_mi != 400 && this.menu_root == 400
+  }
+
+  is_collect_kemp() {
+    return this.is_collect && this.menu_root == 400
   }
 }
 

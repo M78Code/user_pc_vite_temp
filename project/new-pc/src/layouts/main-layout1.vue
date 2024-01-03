@@ -7,10 +7,10 @@
       <!-- 页面头部容器-->
       <layout-header />
     </div>
-    <div v-show="true"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}-{{LayOutMain_pc.layout_content_width}}</div>
+    <div v-show="false"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}-{{LayOutMain_pc.layout_content_width}}</div>
     <div class="flex" >
       <!-- 左侧 菜单 -->
-      <div :style="{ height: LayOutMain_pc.layout_content_height + 'px', width: LayOutMain_pc.layout_left_width }"
+      <div :style="{ height: LayOutMain_pc.layout_content_height + 'px', width: LayOutMain_pc.layout_left_width + 'px' }"
         class="layout_main_left">
         <layout-left />
       </div>
@@ -75,7 +75,13 @@ document.addEventListener('visibilitychange', event_listener_visibilitychange);
 document.addEventListener('pagehide', event_listener_visibilitychange);
 window.addEventListener("resize", resize_);
 
+let timeout_vue_hidden_run_flg = null
+let vue_hidden_run_flg = null
+timeout_vue_hidden_run_flg = setTimeout(() => {
+  vue_hidden_run_flg = true;
+}, 4000);
 
+const background_run_time = ref('')
 const route = useRoute();
 /**
  * @Description 全局一秒钟定时器 
@@ -101,7 +107,8 @@ const show_move_video = computed(() => {
 })
 
 function event_listener_visibilitychange(){
-    if (!vue_hidden_run_flg) { return false }
+  console.warn("#TODO: Uncaught ReferenceError: vue_hidden_run_flg is not defined")
+    // if (!vue_hidden_run_flg) { return false } // vue_hidden_run_flg is not defined
     let _is_hidden = document.visibilityState == 'hidden'
   //  document.visibilityState == 'visible'
     if (_is_hidden) {

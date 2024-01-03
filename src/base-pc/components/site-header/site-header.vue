@@ -2,7 +2,7 @@
  * @Description: 站点页眉
 -->
 <template>
-    <div class="c-site-header relative-position" :class="{ 'is-iframe': is_iframe }">
+    <div class="component c-site-header relative-position" :class="{ 'is-iframe': is_iframe }">
         <!-- 系统将在30分钟后进入维护，造成不便，深表歉意！ -->
         <maintenance-tip></maintenance-tip>
 
