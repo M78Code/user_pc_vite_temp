@@ -67,7 +67,6 @@
 </template>
 
 <script>
-// import common from "src/base-h5/vr/mixin/constant/module/common.js"
 import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/virtual_sports_mixin.js"
 import virtual_sports_tab from 'src/base-h5/vr/components/virtual_sports_tab.vue'
 import virtual_sports_detail_tab from 'src/base-h5/vr/pages/virtual/details/children/virtual_sports_detail_tab.vue'
@@ -77,9 +76,8 @@ import {api_v_sports} from "src/api/index.js";
 import virtual_sports_stage from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
 import VSport from 'src/base-h5/vr/utils/vsport/vsport.js';
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { debounce } from "lodash";
-import { reactive } from 'vue'
 import { go_where } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/output/index.js"
@@ -89,22 +87,9 @@ import football_ranking_list from "src/base-h5/vr/pages/virtual/virtual_sports_p
 import { get_now_server } from 'src/core/utils/common/module/other.js'
 
 export default {
-  // mixins:[common,virtual_sports_mixin],
   mixins:[virtual_sports_mixin],
   name:'virtual_sports_details',
   computed: {
-    // ...mapGetters({
-    //   is_show_analyse: 'get_is_show_details_analyse',
-    //   matchid: "get_goto_detail_matchid",
-    //   get_current_gotodetail_match:"get_current_gotodetail_match",
-    //   sub_menuid: 'get_current_sub_menuid',
-    //   sub_menu_type: 'get_curr_sub_menu_type',
-    //   current_league: 'get_current_league',
-    //   current_batch:'get_current_batch',
-    //   video_process_data:'get_video_process_data',
-    //   get_bet_list:'get_bet_list',
-    //   get_betbar_show:'get_betbar_show',
-    // }),
     is_show_analyse(){return VR_CTR.state.is_show_details_analyse},
     matchid(){return VR_CTR.state.goto_detail_matchid},
     get_current_gotodetail_match(){return },
@@ -113,9 +98,7 @@ export default {
     current_league(){return VR_CTR.state.current_league},
     current_batch(){return VR_CTR.state.current_batch},
     video_process_data(){return VR_CTR.state.video_process_data},
-    get_bet_list(){return []},
     get_betbar_show(){return },
-    
   },
   components: {
     'virtual-sports-tab': virtual_sports_tab,

@@ -104,7 +104,7 @@
             <div
                 class="v-sports-main-list"
                 :class="{'v-sports-main-list-style': standard_edition === 1}"
-                :style="{'padding-bottom': get_betbar_show ? '0' : '0'}"
+                :style="{'padding-bottom': '0'}"
             >
               <!-- 虚拟体育足球赛事列表 -->
               <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
@@ -161,20 +161,16 @@
 </template>
 
 <script>
-// import common from 'src/base-h5/vr/mixin/constant/module/common.js';
 import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/virtual_sports_mixin.js"
 import noData from "src/base-h5/vr/components/common/vr_sport_no_data.vue";
 import matchTab from "src/base-h5/vr/pages/virtual/virtual_sports_part/match_tab.vue"
 import v_s_match_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list.vue"
 import v_s_match_list2 from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list2.vue"
-// import virtualSportsTab from "src/base-h5/vr/components/virtual_sports_tab.vue"
 import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue"
-import { utils } from "src/core/utils/common/module/utils.js";
 import virtual_sports_stage from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue"
 import dynamic_ranking from "src/base-h5/vr/pages/virtual/virtual_sports_part/dynamic_ranking.vue"
 import result_page from "src/base-h5/vr/pages/result/result_page.vue"
 import virtual_skeleton from "src/base-h5/vr/components/skeleton/virtual_sports/virtual.vue"
-// import setting from "src/project/components/common/setting";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { get_now_server } from 'src/core/utils/common/module/other.js'
@@ -184,7 +180,6 @@ import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, LOCAL_PROJECT_FILE_PREFIX,compute_css_obj } from "src/output/index.js"
 export default {
-  // mixins:[common,virtual_sports_mixin],
   mixins:[virtual_sports_mixin],
   props:{
     menu_list:Array,
@@ -266,10 +261,10 @@ export default {
     this.match_ended_status2_handle();
   },
   methods:{
-	set_current_league(data){VR_CTR.state.current_league = data},
-	set_video_process_data(data){VR_CTR.state.video_process_data = data},
-	set_prev_v_sports_params(data){VR_CTR.state.prev_v_sports_params = data},
-	set_current_mid(data){VR_CTR.state.current_match_mid = data},
+    set_current_league(data){VR_CTR.state.current_league = data},
+    set_video_process_data(data){VR_CTR.state.video_process_data = data},
+    set_prev_v_sports_params(data){VR_CTR.state.prev_v_sports_params = data},
+    set_current_mid(data){VR_CTR.state.current_match_mid = data},
 
     //全部轮次展开折叠 
     handle_all_league(){
@@ -634,15 +629,6 @@ export default {
      }
   },
   computed:{
-    //
-    // ...mapGetters({
-    //   sub_menuid: 'get_current_sub_menuid',
-    //   sub_menu_type: 'get_curr_sub_menu_type',
-    //   is_show_analyse:"get_is_show_details_analyse",
-    //   get_bet_list:"get_bet_list",
-    //   get_betbar_show:"get_betbar_show",
-    //   get_newer_standard_edition:"get_newer_standard_edition",
-    // }),
     current_league(){return VR_CTR.state.current_league},
     current_batch(){return VR_CTR.state.current_batch},
     get_video_process_data(){return VR_CTR.state.video_process_data},
@@ -651,8 +637,6 @@ export default {
     sub_menuid(){return VR_CTR.state.current_sub_menuid},
     sub_menu_type(){return VR_CTR.state.curr_sub_menu_type},
     is_show_analyse(){return VR_CTR.state.is_show_details_analyse},
-    get_bet_list(){return []},
-    get_betbar_show(){return 1},
     // 当前联赛的全部轮次
     match_list_all_batches(){
       const match_list_all_batches = [...this.virtual_match_list];
