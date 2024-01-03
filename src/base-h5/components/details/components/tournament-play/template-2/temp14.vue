@@ -184,7 +184,7 @@
 
         <div class="other row row-bet-wrapper">
           <div class="row bet-box-wrap">
-            <template v-for="(ol_item,ol_index) in item.ol" v-if="true">
+            <template v-for="(ol_item,ol_index) in item.ol">
               <div v-if="otherOtd == ol_item.otd" :key="ol_index" class="bet-box-bg">
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">

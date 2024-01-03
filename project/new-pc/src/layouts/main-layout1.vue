@@ -7,8 +7,8 @@
       <!-- 页面头部容器-->
       <layout-header />
     </div>
-    <div style="display: none;"> {{ LayOutMain_pc.layout_version }}{{ BetData.bet_data_class_version }}</div>
-    <div class="flex">
+    <div v-show="true"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}-{{LayOutMain_pc.layout_content_width}}</div>
+    <div class="flex" >
       <!-- 左侧 菜单 -->
       <div :style="{ height: LayOutMain_pc.layout_content_height + 'px', width: LayOutMain_pc.layout_left_width }"
         class="layout_main_left">
@@ -73,6 +73,9 @@ page_style.value = compute_css_variables({ category: 'component', module: 'layou
 // 监听页面是否转入休眠状态
 document.addEventListener('visibilitychange', event_listener_visibilitychange);
 document.addEventListener('pagehide', event_listener_visibilitychange);
+window.addEventListener("resize", resize_);
+
+
 const route = useRoute();
 /**
  * @Description 全局一秒钟定时器 
@@ -80,6 +83,10 @@ const route = useRoute();
 */
 const global_one_second_timer = () => {
   useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, { time: new Date().getTime(), step: 1000 })
+}
+
+function resize_(){
+  LayOutMain_pc.set_layout_content_config()
 }
 
 //重新计算高度
@@ -141,6 +148,7 @@ watch(() => UserCtr.user_version, (val) => {
 onUnmounted(() => {
   document.removeEventListener('visibilitychange', event_listener_visibilitychange);
   document.removeEventListener('pagehide', event_listener_visibilitychange);
+  window.removeEventListener("resize", resize_);
 })
 
 </script>

@@ -37,7 +37,7 @@ const route = useRoute()
 const right_status=ref(null)
 
 onBeforeUnmount(() => {
-  list_emit.forEach((i) => i());
+  // list_emit.forEach((i) => i());
 });
 function handle_click() {
   store.dispatch({
