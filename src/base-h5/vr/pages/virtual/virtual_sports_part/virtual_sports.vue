@@ -104,7 +104,7 @@
             <div
                 class="v-sports-main-list"
                 :class="{'v-sports-main-list-style': standard_edition === 1}"
-                :style="{'padding-bottom': get_betbar_show ? '0' : '0'}"
+                :style="{'padding-bottom': '0'}"
             >
               <!-- 虚拟体育足球赛事列表 -->
               <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
@@ -634,15 +634,6 @@ export default {
      }
   },
   computed:{
-    //
-    // ...mapGetters({
-    //   sub_menuid: 'get_current_sub_menuid',
-    //   sub_menu_type: 'get_curr_sub_menu_type',
-    //   is_show_analyse:"get_is_show_details_analyse",
-    //   get_bet_list:"get_bet_list",
-    //   get_betbar_show:"get_betbar_show",
-    //   get_newer_standard_edition:"get_newer_standard_edition",
-    // }),
     current_league(){return VR_CTR.state.current_league},
     current_batch(){return VR_CTR.state.current_batch},
     get_video_process_data(){return VR_CTR.state.video_process_data},
@@ -651,8 +642,6 @@ export default {
     sub_menuid(){return VR_CTR.state.current_sub_menuid},
     sub_menu_type(){return VR_CTR.state.curr_sub_menu_type},
     is_show_analyse(){return VR_CTR.state.is_show_details_analyse},
-    get_bet_list(){return []},
-    get_betbar_show(){return 1},
     // 当前联赛的全部轮次
     match_list_all_batches(){
       const match_list_all_batches = [...this.virtual_match_list];
