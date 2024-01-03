@@ -87,18 +87,10 @@ onUnmounted(() => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = obj => {
-    if(props.item.playOptionsId == obj.id){
-        set_bet_money(obj)  
-    }
-    // 多项单注快捷金额
-    if(obj.id == undefined) {
-        set_bet_money(obj) 
-    }
-}
-// 快捷金额
-const set_bet_money = obj => {
-    // 获取当前投注金额
-        let money = props.item.bet_amount
+    if(props.item.playOptionsId == obj.id || obj.id == undefined){
+        console.log(BetData.bet_amount,props.item.bet_amount)
+         // 获取当前投注金额
+        let money = obj.id == undefined ? BetData.bet_amount : props.item.bet_amount
         let money_ = obj.money
         // 设置最大投注金额
         if(obj.money == "MAX"){
@@ -117,10 +109,11 @@ const set_bet_money = obj => {
                 money_a = UserCtr.balance
             }  
             BetData.set_bet_obj_amount(money_a,props.item.playOptionsId)
-
             ref_data.money = money_a
-        }   
+        } 
+    }
 }
+
 
 
 // 清空输入框金额

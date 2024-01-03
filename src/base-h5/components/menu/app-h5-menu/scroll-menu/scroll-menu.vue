@@ -10,18 +10,15 @@
           <div class="s-menu-container flex" >
             <template  v-for="(item,index) in scrollDataListNew" :key="index">
               <!-- 全部 vr 收藏 电竞显示  -->
-              <!-- v-if="item?.ct > 0 || menu_show_id.includes(+item.mi) || +item.mi>2000" -->
               <div ref="scrollTab" 
                 :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] " 
                  @click="set_menu_lv2(item, $event)" >
-              <!-- <div ref="scrollTab" :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] "  @click="set_menu_lv2(item, $event)" > -->
                 <div class="inner-w flex justify-between items-center">
                   <div class="sport-w-icon">
-                    <!-- v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000"  -->
                     <!-- 电竞收藏  暂时隐藏数量 -->
                     <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi) && !([50000].includes(item.mi) && MenuData.is_esports())" 
-                      class="sport-match-count" :class="[{ 'is-max': item.ct > 1000 }]">
-                      {{ item.ct || 0 }}
+                      class="sport-match-count" :class="[{ 'is-max': item?.ct >= 1000 }]">
+                      {{ item.ct || 0 }} 
                     </div>
                     <span class="sport-icon-wrap"
                       :style="compute_css_obj({key:current_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
@@ -53,7 +50,7 @@ const props = defineProps({
   // 滑动菜单数据
   scrollDataList:{
     type: Array,
-    default: () => []
+    default: []
   },
   // 当前选中的值
   current_mi:{
@@ -76,7 +73,7 @@ const scrollDataListNew = computed(()=> {
   // if((MenuData.is_results() && !props.scrollDataList?.length)|| MenuData.is_mix())return props.scrollDataList;
   //赛果 串关 电竞冠军 不显示收藏
   if(MenuData.is_results()|| MenuData.is_mix()||props.is_kemp_esports)return props.scrollDataList;
-  return [...[{mi:50000,btn:1,ct:MenuData.collect_count.value,title:"收藏"}],...props.scrollDataList]
+  return [...[{mi:50000,btn:1,ct:MenuData.collect_count.value || 0,title:"收藏"}],...props.scrollDataList]
 })
 const emits = defineEmits(['changeList','changeMenu'])
 /**
@@ -90,10 +87,10 @@ function set_menu_lv2(item = {},event) {
   MatchFold.clear_fold_info()
   if (props.current_mi === item.mi) return
   // if (item.mi === 2000) router.push('/esports')
-  event = event || scrollTab.value[0];
+  event = event || scrollTab.value?.[0];
   // 选中后点击无效
   // if (item.mi == MenuData.current_lv_2_menu_i) return;
-  scrollMenuEvent(event,".s-menu-container",".current");
+  event && scrollMenuEvent(event,".s-menu-container",".current");
   // emits('changeMenu',item)
   nextTick(()=>{ //收藏是没有change的相当于是页面
     // 设置菜单点击事件
@@ -116,8 +113,11 @@ function set_menu_lv2(item = {},event) {
  * 初始化滚动条
  */
 const scrollTabMenu = () =>{
-    scrollMenuEvent(scrollTab.value[0],".s-menu-container",".sport-menu-item");
-  // })
+  try {
+    scrollTab.value?.[0] && scrollMenuEvent(scrollTab.value?.[0],".s-menu-container",".sport-menu-item");
+  }catch(err){
+    console.error('二级菜单点击错误：'+err)
+  }
 }
 defineExpose({scrollTabMenu});
 /**
@@ -279,7 +279,7 @@ onUnmounted(()=>{
                 font-family: "Akrobat";
                 z-index: 5;
                 &.is-max {
-                  // left: 0.3rem;
+                  left: 80%;
                 }
           }
         }

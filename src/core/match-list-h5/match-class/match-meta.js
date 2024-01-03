@@ -13,7 +13,7 @@ import { MenuData } from "src/output/project/index.js"
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
-import { PageSourceData, GlobalAccessConfig, ServerTime } from "src/output/index.js";
+import { PageSourceData, GlobalAccessConfig, ServerTime, axios_loop } from "src/output/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import { useMittEmit, MITT_TYPES, project_name } from "src/output/module/constant-utils.js"
 import {
@@ -53,11 +53,6 @@ class MatchMeta {
     // 传入参数
     this.http_params = {
       md: ''
-    }
-    // 接口最大调用次数  赛事列表  matchs 接口； byMids  赔率接口
-    this.error_http_count = {
-      match: 1,
-      bymids: 1
     }
     // 是否ws触发
     this.is_ws_trigger = false
@@ -447,42 +442,26 @@ class MatchMeta {
     MatchDataBaseH5.clear()
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
-    try {
-      this.current_euid = `champion_${euid}`
-      const res = await api_common.post_match_full_list({
-        euid,
-        "cuid": UserCtr.get_uid(),
-        "type": 100,
-        "sort": UserCtr.sort_type,
-        "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
-      })
-      if (this.current_euid !== `champion_${euid}`) return
-      if (+res.code !== 200) {
-        if (res.code === '0401038') {
-          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-          this.set_page_match_empty_status({ state: false });
-          return []
-        }
-        return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
-      }
-      const list = lodash.get(res, 'data', [])
-      if (list.length < 1) return
-      MatchCollect.get_collect_match_data(list)
-      this.handle_custom_matchs(list)
-    } catch (err) {
-      console.log(err)
-      // 当接口 报错，或者出现限频， 调用3次
-      if (this.error_http_count.match >= 3) {
-        if (this.match_mids.length < 1) this.set_page_match_empty_status({ state: true, type: 'noWifi' });
-      } else {
-        this.error_http_count.match++
-        let timer = setTimeout(() => {
-          this.get_champion_match()
-          clearTimeout(timer)
-          timer = null
-        }, 3000)
-      }
+    this.current_euid = `champion_${euid}`
+    const target_params = {
+      euid,
+      "cuid": UserCtr.get_uid(),
+      "type": 100,
+      "sort": UserCtr.sort_type,
+      "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
     }
+    const res = await this.handler_axios_loop_func({ http: api_common.post_match_full_list, params: target_params, key: 'post_match_full_list' })
+    if (this.current_euid !== `champion_${euid}`) return
+    const code = lodash.get(res, 'code', 0)
+    if (+code !== 200) {
+      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
+      return []
+    }
+    const list = lodash.get(res, 'data', [])
+    if (list.length < 1) return
+    MatchCollect.get_collect_match_data(list)
+    this.handle_custom_matchs(list)
   }
 
   /**
@@ -496,58 +475,50 @@ class MatchMeta {
     if (!md) return []
     const params = this.get_base_params()
     delete params.hpsFlag
-    try {
-      const res = await api_analysis.get_champion_match_result_api({
-        ...params,
-        type: 28,
-        orderBy: 1,
-        category: 1,
-        euid: "10000",
-        md: String(start_time),
-        startTime: String(start_time),
-        endTime: String(end_time),
-        sportType: 10000,
-        isVirtualSport: 1
-      })
-      if (this.current_euid !== `10000_${md}`) return []
-  
-      if (+res.code !== 200) {
-        this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
-        if (res.code === '0401038') {
-          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-          this.set_page_match_empty_status({ state: false });
-          return []
-        }
-        return []
-      }
-      // 避免接口慢导致的数据错乱
-      const list = lodash.get(res, 'data', [])
-      let obj = {}
-      list.forEach(i => {
-        i.tid = i.tournamentId
-        i.csid = i.sportId
-        i.mid = i.marketId
-        i.csna = i.sportName
-        if (obj[i.sportId]) {
-          obj[i.sportId]++
-        } else {
-          obj[i.sportId] = 1
-        }
-      })
-      list.forEach(i => {
-        i._total = obj[i.sportId]
-      })
-      const length = lodash.get(list, 'length', 0)
-      if (length < 1) {
-        this.set_page_match_empty_status({ state: true });
-        return []
-      }
-      // const matchs = MatchUtils.handler_champion_match_classify_by_sport_id(list)
-      return this.handler_match_list_data({ list: list, type: 2, is_virtual: false })
-    } catch (err) {
-      console.error(err)
-      this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+    const target_params = {
+      ...params,
+      type: 28,
+      orderBy: 1,
+      category: 1,
+      euid: "10000",
+      md: String(start_time),
+      startTime: String(start_time),
+      endTime: String(end_time),
+      sportType: 10000,
+      isVirtualSport: 1
     }
+    const res = await this.handler_axios_loop_func({ http: api_analysis.get_champion_match_result_api, params: target_params, key: 'get_champion_match_result_api' })
+    if (this.current_euid !== `10000_${md}`) return []
+    const code = lodash.get(res, 'code', 0)
+    if (+code !== 200) {
+      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
+      return []
+    }
+    // 避免接口慢导致的数据错乱
+    const list = lodash.get(res, 'data', [])
+    let obj = {}
+    list.forEach(i => {
+      i.tid = i.tournamentId
+      i.csid = i.sportId
+      i.mid = i.marketId
+      i.csna = i.sportName
+      if (obj[i.sportId]) {
+        obj[i.sportId]++
+      } else {
+        obj[i.sportId] = 1
+      }
+    })
+    list.forEach(i => {
+      i._total = obj[i.sportId]
+    })
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) {
+      this.set_page_match_empty_status({ state: true });
+      return []
+    }
+    // const matchs = MatchUtils.handler_champion_match_classify_by_sport_id(list)
+    return this.handler_match_list_data({ list: list, type: 2, is_virtual: false })
   }
 
   /**
@@ -562,36 +533,31 @@ class MatchMeta {
     const category = MenuData.result_menu_lv1_mi ? 0 : 1
     this.current_euid = `results_${euid}_${md}`
     if (!md) return []
-    try {
-      const params = this.get_base_params()
-      const res = await api_common.get_match_result_api({
-        ...params,
-        category,
-        tid:params_tid,
-        md: String(md),
-        showem: 1, // 新增的参数 区分电子赛事
-        euid: euid && String(euid),
-        type: euid ==="0"? 29 : 28,//我的投注 euid为0
-      })
-      if (this.current_euid !== `results_${euid}_${md}` || +res.code !== 200) {
-        if (res.code === '0401038') {
-          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-        }
-        this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
-        return []
-      }
-      // 避免接口慢导致的数据错乱
-      const list = lodash.get(res, 'data', [])
-      const length = lodash.get(list, 'length', 0)
-      if (length < 1) {
-        this.set_page_match_empty_status({ state: true });
-        return []
-      }
-      return this.handler_match_list_data({ list: list, type: 2, is_virtual: false })
-    } catch (err) {
-      console.log(err)
-      this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+    const params = this.get_base_params()
+    const target_params = {
+      ...params,
+      category,
+      tid:params_tid,
+      md: String(md),
+      showem: 1, // 新增的参数 区分电子赛事
+      euid: euid && String(euid),
+      type: euid ==="0"? 29 : 28,//我的投注 euid为0
     }
+    const res = await this.handler_axios_loop_func({ http: api_common.get_match_result_api, params: target_params, key: 'get_match_result_api' })
+    const code = lodash.get(res, 'code', 0)
+    if (this.current_euid !== `results_${euid}_${md}` || +code !== 200) {
+      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
+      return []
+    }
+    // 避免接口慢导致的数据错乱
+    const list = lodash.get(res, 'data', [])
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) {
+      this.set_page_match_empty_status({ state: true });
+      return []
+    }
+    return this.handler_match_list_data({ list: list, type: 2, is_virtual: false })
   }
 
   /**
@@ -602,7 +568,7 @@ class MatchMeta {
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const { start_time, end_time } = MatchUtils.get_match_time_start_time(md)
     // vr 
-    const res = await api_common.get_virtual_result({
+    const target_params = {
       batchNo:"",
       endTime: String(end_time),
       isVirtualSport:1,
@@ -610,16 +576,14 @@ class MatchMeta {
       sportType:MenuData.current_lv_2_menu?.sport_id,
       startTime: String(start_time),
       tournamentId:tid //||"79430600606371842"
-    })
+    }
+    const res = await this.handler_axios_loop_func({ http: api_common.get_virtual_result, params: target_params, key: 'get_virtual_result' })
     // vr 马 狗 
     // const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
-    if (+res.code !== 200) {
-      this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
-      if (res.code === '0401038') {
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-        this.set_page_match_empty_status({ state: false });
-        return []
-      }
+    const code = lodash.get(res, 'code', 0)
+    if (+code !== 200) {
+      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
       return []
     }
 
@@ -653,23 +617,22 @@ class MatchMeta {
     const category = MenuData.get_menu_type() === 100 || is_kemp ? 2 : 1
     const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
     const params = this.get_base_params()
-    // this.current_euid = `${csid}_${md}`
-    const res = await api_common.post_esports_match({
+    // this.current_euid = `exports_${csid}_${md}`
+    const target_params = {
       ...params,
       md: is_kemp ? '' : md,
       csid,
       category,
       "type": 3000,
-    })
-    if (+res.code !== 200) {
-      if (res.code === '0401038') {
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-        this.set_page_match_empty_status({ state: false });
-        return []
-      }
-      return this.set_page_match_empty_status({ state: true });
     }
-    // if (this.current_euid != `${csid}_${md}`) return
+    const res = await this.handler_axios_loop_func({ http: api_common.post_esports_match, params: target_params, key: 'post_esports_match' })
+    // if (this.current_euid !== `exports_${csid}_${md}`) return
+    const code = lodash.get(res, 'code', 0)
+    if (+code !== 200) {
+      if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
+      return []
+    }
     const list = lodash.get(res, 'data', [])
     MatchCollect.get_collect_match_data(list)
     return this.handler_match_list_data({ list: list })
@@ -712,56 +675,35 @@ class MatchMeta {
     tid &&  Object.assign(other_params, { tid })
     // data_time 有值 则 加上 md
     data_time && Object.assign(other_params, { md: data_time })
-    try {
-      const res = await api_common.post_match_full_list({
-        ...params,
-        ...other_params
-      })
-      if (this.current_euid !== `${euid}_${md}_${tid}`) return
-      if (res.code === '0401038') {
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
-        if (this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
-        return []
-      }
-      
-      // 接口请求成功，重置接口限频次数
-      this.error_http_count.match = 1
-      const list = lodash.get(res, 'data', [])
-      const length = lodash.get(list, 'length', 0)
-      // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
-      if (length < 1) return this.set_page_match_empty_status({ state: true });
-      MatchCollect.get_collect_match_data(list)
-
-      // 复刻版下的新手版 和 赛果 不需要  虚拟计算
-      const is_virtual = !(project_name === 'app-h5' && (MenuData.is_results() || UserCtr.standard_edition == 1))
-
-      this.handler_match_list_data({ list: list, scroll_top, is_virtual })
-
-      // 模拟删除赛事
-      // setInterval(() => {
-      //   let randomNumber = Math.floor(Math.random() * 3)
-      //   const item  = this.complete_matchs.splice(randomNumber, 1)
-      //   console.log(randomNumber, item)
-      //   this.is_ws_trigger = true
-      //   this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
-      // }, 7000)
-
-    } catch (err) {
-      console.error(err)
-      if (this.current_euid !== `${euid}_${md}_${tid}`) return
-      // 当接口 报错，或者出现限频， 调用3次
-      if (this.error_http_count.match >= 3) {
-        this.set_page_match_empty_status({ state: true, type: 'noWifi' });
-        // if (this.match_mids.length < 1) this.set_page_match_empty_status({ state: true, type: 'noWifi' });
-      } else {
-        this.error_http_count.match++
-        let timer = setTimeout(() => {
-          this.get_target_match_data({ scroll_top, md, is_error: true, tid })
-          clearTimeout(timer)
-          timer = null
-        }, 3000)
-      }
+    const target_params = {
+      ...params,
+      ...other_params
     }
+    const res = await this.handler_axios_loop_func({ http: api_common.post_match_full_list, params: target_params, key: 'post_match_full_list' })
+    if (this.current_euid !== `${euid}_${md}_${tid}`) return
+    const code = lodash.get(res, 'code', 0)
+    const list = lodash.get(res, 'data', [])
+    const length = lodash.get(list, 'length', 0)
+    if (code === '0401038') {
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
+      if (this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+      return []
+    }
+    // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
+    if (length < 1) return this.set_page_match_empty_status({ state: true });
+    MatchCollect.get_collect_match_data(list)
+    // 复刻版下的新手版 和 赛果 不需要  虚拟计算
+    const is_virtual = !(project_name === 'app-h5' && (MenuData.is_results() || UserCtr.standard_edition == 1))
+    this.handler_match_list_data({ list: list, scroll_top, is_virtual, type: !is_virtual ? 2 : 1 })
+
+    // 模拟删除赛事
+    // setInterval(() => {
+    //   let randomNumber = Math.floor(Math.random() * 3)
+    //   const item  = this.complete_matchs.splice(randomNumber, 1)
+    //   console.log(randomNumber, item)
+    //   this.is_ws_trigger = true
+    //   this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+    // }, 7000)
   }
 
   /**
@@ -971,25 +913,23 @@ class MatchMeta {
    */
   async get_esports_collect_match() {
     this.clear_match_info()
-    try {
-      const dianjing_list = lodash.get(BaseData, 'dianjing_sublist', [])
-      const csids = dianjing_list.map(item => item.csid).join(',')
-      const euid_arr = dianjing_list.map(item => item.mi && MenuData.get_euid(item.mi + '')).join(',')
-      const params = this.get_base_params()
-      const res = await api_common.post_esport_collect({
-        ...params,
-        type: 3000,
-        csid: csids,
-        euid: euid_arr,
-        md: String(MenuData.data_time)
-      })
-      if (res.code !== '200') return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
-      const list = lodash.get(res, 'data', [])
-      this.handler_collect_match_list(list)
-    } catch (err) {
-      console.error(err)
-      this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+    const dianjing_list = lodash.get(BaseData, 'dianjing_sublist', [])
+    const csids = dianjing_list.map(item => item.csid).join(',')
+    const euid_arr = dianjing_list.map(item => item.mi && MenuData.get_euid(item.mi + '')).join(',')
+    const params = this.get_base_params()
+    const target_params = {
+      ...params,
+      type: 3000,
+      csid: csids,
+      euid: euid_arr,
+      md: String(MenuData.data_time)
     }
+    const res = await this.handler_axios_loop_func({ http: api_common.post_esport_collect, params: target_params, key: 'post_esport_collect' })
+    const code = lodash.get(res, 'code', 0)
+    const list = lodash.get(res, 'data', [])
+    const length = lodash.get(list, 'length', 0)
+    if (code !== '200' || length < 1) return this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
+    this.handler_collect_match_list(list)
   }
 
   /**
@@ -1005,20 +945,17 @@ class MatchMeta {
       md: String(MenuData.data_time)
     }
     if (![3, 6].includes(MenuData.current_lv_1_menu_mi?.value) || !MenuData.data_time) delete target_params.md
-    try {
-      const res = await api_common.get_collect_matches(target_params)
-      if (res.code !== '200') return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
-      const list = lodash.get(res, 'data', [])
+    const res = await this.handler_axios_loop_func({ http: api_common.get_collect_matches, params: target_params, key: 'get_collect_matches' })
+    const code = lodash.get(res, 'code', 0)
+    const list = lodash.get(res, 'data', [])
+    const length = lodash.get(list, 'length', 0)
+    if (+code !== 200 || length < 1) return this.set_page_match_empty_status({ state: true, type: code == '0401038' ? 'noWifi' : 'noMatch' });
+    if (MenuData.is_kemp()) {
       // 冠军
-      if (MenuData.is_kemp()) {
-        MatchCollect.get_collect_match_data(list)
-        this.handle_custom_matchs(list)
-      } else {
-        this.handler_collect_match_list(list)
-      }
-    } catch (err) {
-      console.error(err)
-      this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+      MatchCollect.get_collect_match_data(list)
+      this.handle_custom_matchs(list)
+    } else {
+      this.handler_collect_match_list(list)
     }
   }
 
@@ -1424,6 +1361,44 @@ class MatchMeta {
   }
 
   /**
+   * @description 接口限频或者报错 执行3次
+   * @param {*} param0 
+   * @returns 
+   */
+  handler_axios_loop_func (axios_params = {}) {
+    const { http = '', params = '', key = '', code = ["0401038"], timers = 2500 } = axios_params
+    if (!http) return
+    return new Promise((resolve, reject) => {
+      const http_info = {
+        // axios api对象
+        axios_api: http,
+        // axios api对象参数
+        params: params,
+        // 唯一key值
+        key: key,
+        // 错误状态码
+        error_codes: code,
+        // axios中then回调方法
+        fun_then: (res) => {
+          resolve(res)
+        },
+        // axios中catch回调方法
+        fun_catch: (e) => {
+          console.log(e)
+          resolve({ code: '0401038' })
+        },
+        fun_finally: () => { },
+        // 最大循环调用次数(异常时会循环调用),默认3次
+        max_loop: 3,
+        // 异常调用时延时时间,毫秒数,默认1000
+        timers: timers,
+      };
+      // 执行
+      axios_loop(http_info);
+    })
+  }
+
+  /**
    * @description: 页脚菜单事件
    * @param {Object} obj 选中的页脚项目对象
    * @return {Undefined} Undefined
@@ -1559,11 +1534,62 @@ class MatchMeta {
       if (_mids.some((_mid) => this.match_mids.includes(_mid))) this.get_match_base_hps_by_mids({})
     }
   }
+  async get_match_base_hps_by_mids({ mids = [], warehouse }) {
+    // 赛果页不需要获取赔率
+    if (MenuData.is_results() && PageSourceData.route_name == 'matchResults') return
+    if (this.match_mids.length < 1 && mids.length < 1) return
+    const match_mids = this.match_mids.join(',')
+    // 冠军不需要调用
+    if (MenuData.is_esports()) return
+    // 竞足409 不需要euid
+    const params = {
+      mids: mids.length > 0 ? mids : match_mids,
+      cuid: UserCtr.get_uid(),
+      sort: UserCtr.sort_type,
+      euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
+      device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
+    };
+    //如果是赛果详情精选列表
+    if (PageSourceData.route_name == 'match_result') {
+      delete params.euid;
+      params.versionNewStatus = 'matcheHandpick';
+      params.sort = 1;
+    }
+    let res = ''
+    // 赛果
+    if (MenuData.is_esports()) {
+      res = await this.handler_axios_loop_func({ http: api_common.get_esports_match_by_mids, params, key: 'get_esports_match_by_mids' })
+    } else {
+      res = await this.handler_axios_loop_func({ http: api_common.get_match_base_info_by_mids, params, key: 'get_match_base_info_by_mids' })
+    }
+    const code = lodash.get(res, 'code', 0)
+    const data = lodash.get(res, 'data', [])
+    const length = lodash.get(data, 'length', 0)
+    if (!res || +code !== 200 || length < 1) return this.update_is_http_update_info()
+    MatchResponsive.set_is_http_update_info(true)
+    data.forEach(t => {
+      // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
+      t.handicap_index = MatchUtils.get_handicap_index_by(t);
+      const item = lodash.find(this.complete_matchs, (match) => match.mid === t.mid)
+      if (item) {
+        const index = lodash.findIndex(this.complete_matchs, (match) => match.mid === t.mid)
+        if (index > -1) this.complete_matchs[index] = Object.assign({}, item, t)
+      }
+      // 更新 current_matchs
+      const c_item = lodash.find(this.current_matchs, (match) => match.mid === t.mid)
+      if (c_item) {
+        const c_index = lodash.findIndex(this.current_matchs, (match) => match.mid === t.mid)
+        if (c_index > -1) this.current_matchs[c_index] = Object.assign({}, c_item, t)
+      }
+    })
+    // 设置仓库渲染数据
+    this.handle_update_match_info({ list: data, merge: 'cover', warehouse })
+  }
   /**
-   * @description 获取赛事赔率
+   * @description 获取赛事赔率    TODO:  废弃 待删除
    * @param { mids } mids
    */
-  async get_match_base_hps_by_mids({ mids = [], warehouse, is_again = true }) {
+  async get_match_base_hps_by_mids1({ mids = [], warehouse, is_again = true }) {
     try {
       // 赛果页不需要获取赔率
       if (MenuData.is_results() && PageSourceData.route_name == 'matchResults') return

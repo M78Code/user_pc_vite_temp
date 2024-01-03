@@ -50,7 +50,7 @@
         flex:0 0 .74rem;
         color: var(--q-gb-t-c-27);
         border-radius: .2rem;
-        border: .01rem solid var(--q-gb-bd-c-4);
+        border: .01rem solid var(--q-gb-bg-c-42);
         margin-right: .12rem;
         span {
             display: flex;
@@ -74,13 +74,20 @@
 }
 
 .ht-bsball-text {
-    font-size: .14rem;
-    width: 3.1rem;
-    margin: 0 auto;
+    // margin: 0 auto;
+    width: 100%;
     text-align: center;
     background-color: var(--q-gb-bg-c-18);
     color: var(--q-gb-bg-c-8);
-    margin-bottom: .16rem;
+    padding-bottom: .16rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    span {
+        display: flex;
+        width: 3.1rem;
+        font-size: .14rem;
+    }
 }
 
 .ht-handle {
@@ -124,7 +131,7 @@
     .default {
         background-color: var(--q-gb-bg-c-16);
         border: none;
-        color: var(--q-gb-bg-c-4);
+        color: var(--q-gb-t-c-27);
         font-weight: 600;
     }
 }
