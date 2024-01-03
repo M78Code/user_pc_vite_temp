@@ -42,7 +42,6 @@
 import { useRoute } from 'vue-router';
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue' 
 import lodash from 'lodash'
-import MenuData from  "src/core/menu-h5/menu-data-class.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import VirtualList from "src/core/match-list-h5/match-class/virtual-list.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
@@ -52,7 +51,7 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
-import { compute_css_obj} from 'src/output/index.js'
+import { compute_css_obj, MenuData } from 'src/output/index.js'
 // 避免定时器每次滚动总是触发
 const props = defineProps({
   is_goto_top_random: Number,
@@ -133,7 +132,8 @@ const goto_top = () => {
 // }
 // 是否虚拟计算逻辑
 const is_static = computed(() => {
-  return is_kemp.value || is_collect.value || route?.name === 'collect' || MatchResponsive.is_compute_origin.value
+  return MenuData.update_time.value && (is_kemp.value || is_collect.value || route?.name === 'collect' || 
+    MatchResponsive.is_compute_origin.value || MenuData.get_mm_is_champion())
 })
 
 const is_show_out = computed(() => {

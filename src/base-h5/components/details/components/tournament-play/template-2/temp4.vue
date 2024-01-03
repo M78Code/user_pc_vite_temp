@@ -594,5 +594,7 @@ export default defineComponent({
 // 最后一行
 .margin-other {
   margin-top: 0;
+  margin-left: 0.02rem !important;
+  margin-right: 0.02rem !important;
 }
 </style>

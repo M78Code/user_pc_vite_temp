@@ -6,6 +6,7 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import { use_playingMethods_15 } from "src/output/module/constant-utils.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
+
 class MatchUtils {
 
   /**
@@ -227,6 +228,9 @@ class MatchUtils {
 				key = "S170";
 			}
 		}
+    if ([5].includes(+csid) && !MenuData.is_results()) {
+      key = "S103";
+    }
 		// 主队比分
     let home_score = lodash.get(msc_obj, `${key}.home`, "0")
     // 客队比分

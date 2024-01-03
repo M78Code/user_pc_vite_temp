@@ -316,7 +316,6 @@ function bar_click(item,event) {
   active_index.value = item;
   is_show.value = true;
 
-  console.log('window.innerHeight',event)
   timer2 = setTimeout(() => {
     is_show.value = false;
   }, 500);

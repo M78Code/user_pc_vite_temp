@@ -86,7 +86,7 @@ const ref_data = reactive({
   // 滑动菜单需要的数据
   scroll_data_list: [],
   // 滑动菜单选中的菜单id
-  current_mi: ''
+  current_mi: '',
 })
 onMounted(() => {
   // set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,1)
@@ -170,7 +170,11 @@ const set_scroll_current = async (val, type) => {
       const data_list_esports = await MenuData.getDateList(val?.csid || MenuData.current_lv_2_menu?.old_csid || BaseData.dianjing_sublist[0].csid);
       dataListEsports.value = data_list_esports;
       get_collect_count();
-      handle_match_render_data(type)
+      nextTick(() => {
+        dJdateTabMenu.value.set_active_val();
+        dJdateTabMenu.value?.changeTabMenu({}, MenuData.data_tab_index||0, '', type);
+      })
+      // handle_match_render_data(type)
       break;
     case 300:
       //vr重新设置单关
@@ -327,7 +331,8 @@ const set_scroll_data_list = (mid, type) => {
     ref_data.current_mi = type && MenuData.current_lv_2_menu_i ? MenuData.current_lv_2_menu_i : obj.mi
   }
 
-  !type && handle_match_render_data()
+  // !type && handle_match_render_data()
+  handle_match_render_data()
 }
 
 // 菜单变化页面请求数据
@@ -376,7 +381,7 @@ const handle_match_render_data = (type) => {
   // 赛果不走元数据， 直接拉取接口
   // if (MenuData.is_results()) return MatchMeta.get_results_match()
   // 电竞不走元数据， 直接拉取接口
-  if (MenuData.is_esports() && !type) return MatchMeta.get_esports_match()
+  if (MenuData.is_esports()) return MatchMeta.get_esports_match()
 
   const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
   if (lodash_.isEmpty(mi_tid_mids_res)) return

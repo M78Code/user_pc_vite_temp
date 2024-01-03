@@ -64,7 +64,7 @@ export default {
       pre_route : route.name
     }
     
-    MenuData.set_router_info(obj)
+    // MenuData.set_router_info(obj)
   },
   /**
    * @Description 同步时间 
