@@ -65,15 +65,6 @@
               </div>
             </div>
           </div>
-          <!--<div>
-            {{current_match.teams[0] ? current_match.teams[0] : 0}}
-          </div>
-          <div>
-            {{current_match.home}}-{{current_match.away}}
-          </div>
-          <div>
-            {{current_match.teams[1] ? current_match.teams[1] : 0}}
-          </div>-->
           <div v-if="sub_menu_type != 1004" class="c-s-timer-w row justify-center items-center">
             {{current_match.show_time}}'
             <div class="update-timer">
@@ -81,7 +72,6 @@
             </div>
           </div>
           <div v-if="sub_menu_type == 1004" class="c-s-timer-w basketball row justify-center items-center">
-            <!-- <img  src="image/wwwassets/bw3/list/basket_ball_video_playing.svg" alt=""> -->
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/basket_ball_video_playing.svg`" alt="">
           </div>
         </div>
@@ -118,9 +108,6 @@
                 (current_match.s170_home > 0 || current_match.s170_away > 0)"
                 class="match-msc match-penalty"
             >
-              <!--<span>-->
-              <!--  {{i18n_t('mmp[1][50]')}}:&nbsp;-->
-              <!--</span>-->
               <i class="icon icon-penalty"></i>
               <div class="penalty-score">
                 <span>{{current_match.s170_home ? current_match.s170_home : 0}}</span>
@@ -361,7 +348,6 @@ export default {
         else{
           this.$emit('time_ended','is_basketball_pre');
         }
-
       }
       else{
         this.match_started = true;
@@ -769,7 +755,6 @@ export default {
   components:{
     'virtual-sports-timer':virtualSportsTimer,
     dateMatchList,
-    // settleDialog,
     loading,
     virtualBasketball
   },
