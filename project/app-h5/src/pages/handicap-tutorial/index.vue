@@ -35,7 +35,9 @@
         <!-- 球数 内容 -->
         <template v-else>
             <template v-if="!state.inAnswerQuestion">
-                <div class="ht-bsball-text">{{ i18n_t('app_h5.handicap_tutorial.big_small_ball_tip') }}</div>
+                <div class="ht-bsball-text">
+                    <span>{{ i18n_t('app_h5.handicap_tutorial.big_small_ball_tip') }}</span>
+                </div>
                 <div class="ht-bsball-scroll ht-bg-color" @scroll="handleScroll">
                     <match-result-ht v-for="(item, index) in bigAndSmallBallData" :option="item"
                         :key="'matchResultHtBalls' + index" :source="'bigAndSmallBall'">

@@ -472,6 +472,7 @@ export default defineComponent({
     display: flex;
     //width: 200%;
     height: 0.52rem;
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     .bet-item {
       min-width: 0.796rem;
     }

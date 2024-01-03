@@ -903,7 +903,6 @@ export default {
     background: var(--q-gb-bg-c-18);
     border-radius: .08rem;
     margin-bottom: .08rem;
-    border: 1px solid var(--q-gb-bd-c-15);
   }
   &:last-of-type {
     padding-bottom: 0.7rem;

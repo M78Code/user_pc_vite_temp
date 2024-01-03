@@ -33,9 +33,9 @@
                         <span class="text-a1a text-flow-none text-009 font400" v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
                         <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
                     </div>
-                    <div class="w-100 fon12 font400 my-4" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2 && items.sportId == 1 ? items.mark_score : ''}}
+                    <div class="w-100 fon12 font400 mt-4" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2 && items.sportId == 1 ? items.mark_score : ''}}
                     </div>
-                    <div class="w-100 fon12 font400">{{ items.tid_name }}</div>
+                    <div class="w-100 fon12 font400 mt-4" v-if="BetData.is_bet_single">{{ items.tid_name }}</div>
                 </div>
             </div>
             
