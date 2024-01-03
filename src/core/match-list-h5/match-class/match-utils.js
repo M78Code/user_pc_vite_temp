@@ -227,9 +227,6 @@ class MatchUtils {
 				key = "S170";
 			}
 		}
-    if ([5].includes(+csid)) {
-      key = "S103";
-    }
 		// 主队比分
     let home_score = lodash.get(msc_obj, `${key}.home`, "0")
     // 客队比分

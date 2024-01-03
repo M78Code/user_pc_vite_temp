@@ -354,8 +354,15 @@ const get_lastest_market_info = (type) => {
 
                         // 球头
                         bet_item.handicap_hv = market.marketValue
-                        bet_item.playOptionName = market.marketValue
-                        bet_item.playOptions = market.marketValue
+                        let play_option_name = ''
+                        // 主队 客队
+                        if( odds.oddsType == 1 ){
+                            play_option_name = obj.home || ''
+                        }else{
+                            play_option_name = obj.away  || ''
+                        }
+                        bet_item.playOptionName = play_option_name  + ' ' + market.marketValue
+                        bet_item.playOptions = odds.oddsType
 
                         bet_item.place_num = 'place_num'
                        

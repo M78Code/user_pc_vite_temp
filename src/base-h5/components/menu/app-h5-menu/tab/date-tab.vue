@@ -16,7 +16,8 @@
           :key="index"
           @click="changeTabMenu(item, index, $event)"
         >
-          {{ item.name }}
+          <!-- {{ index == 0 ? i18n_tc('menu.match_today') : item.name }} -->
+          {{ index == 0 ? "今日" : item.name }}
         </li>
       </ul>
     </div>
@@ -31,6 +32,7 @@ import { MenuData, UserCtr } from "src/output/index.js";
 import { api_common } from "src/api/";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta";
+import { i18n_tc } from "src/boot/i18n";
 
 const props = defineProps({
   defaultVal: {
