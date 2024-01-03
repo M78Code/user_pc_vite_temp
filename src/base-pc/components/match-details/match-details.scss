@@ -248,8 +248,9 @@
       border: 1px solid var(--q-gb-bd-c-6);
       .template-title {
         //background: var(--q-gb-bg-lg-17);
+        // 详情玩法模版名称上划线
         & + .handicap {
-          // border-top: 1px solid var(--q-gb-bd-c-8);
+           border-top: 1px solid var(--q-gb-bd-c-8);
         }
         .play-name {
           color: var(--q-gb-t-c-5);
