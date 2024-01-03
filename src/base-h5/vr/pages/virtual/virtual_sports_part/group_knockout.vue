@@ -43,7 +43,7 @@ export default {
 <style lang="scss" scoped>
 .group_knockout {
   
-  background-color: #F8F9FA;
+  // background-color: #F8F9FA;
 
   display: flex;
   flex-direction: column;
@@ -57,7 +57,7 @@ export default {
     margin: 0.11rem 0 0.05rem 0;
     border-radius: 0.08rem;
     position: relative;
-    background-color: #F2F2F6;
+    background-color: var(--q-gb-bg-c-29);
     color: #7981A4;
     
     display: flex;
@@ -84,7 +84,7 @@ export default {
       &.is-active {
         // background: var(--q-color-page-bg-color-9);
         color: var(--q-color-fs-color-6);
-        background-color: #FFFFFF;
+        background-color: var(--q-gb-bg-c-28);
         border-radius: 0.08rem;
         height: 0.36rem;
         color: #303442;
@@ -93,9 +93,12 @@ export default {
   }
   :deep(.q-carousel__slide) {
     padding: unset;
+    // background: var(--q-gb-bg-c-18);
   }
 }
-
+:deep(.q-carousel){
+  background: var(--q-gb-bg-c-18);
+}
 
 </style>
 

@@ -196,7 +196,7 @@ export default {
         display: flex;
         flex-direction: row;
 
-        background-color: #F2F2F6;
+        background-color: var(--q-gb-bg-c-18);
         
         &:nth-child(n+2){
           margin-top: 0.12rem;
@@ -298,7 +298,7 @@ export default {
         width: 0.82rem;
         height: 0.80rem;
         border-radius: 0.08rem;
-        background-color: #F2F2F6;
+        background-color: var(--q-gb-bg-c-18);
 
         display: flex;
         flex-direction: column;
