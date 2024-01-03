@@ -263,7 +263,8 @@ class MenuData {
     // 菜单数据缓存
     // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
     //宽度请求变化 因为请求参数是在这里触发的
-    MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    // MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    // MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     this.set_match_list_api_config({})
     
   }
@@ -332,7 +333,6 @@ class MenuData {
         version: Date.now(),
       };
     }
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -398,7 +398,6 @@ class MenuData {
       version: Date.now(),
     };
     this.menu_root_show_shoucang = obj.root;
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     console.error(
       "set_mid_menu_result-------",
       JSON.stringify(this.mid_menu_result)
@@ -742,10 +741,12 @@ class MenuData {
   set_match_list_api_config(config) {
     // 更新列表数据类型
     this.set_match_list_api_type(this.mid_menu_result);
-
+    clearTimeout(this._ct)
     // 设置投注类别
     this.set_bet_category();
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    this._ct=  setTimeout(() => {
+      MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    },16);
     // 菜单数据缓存 //从元数据拿值
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) //从接口拿值
@@ -761,6 +762,13 @@ class MenuData {
   is_corner_menu() {
     // console.log(2222222,this.mid_menu_result)
     return [101210, 101310].includes(+this.mid_menu_result.lv2_mi);
+  }
+  /**
+   * 是否选中了早盘
+   *  mi [number|string] 要比对的值
+  */
+  is_zaopan(mi) {
+    return this._is_cur_mi(3, mi)
   }
   /**
    * 强制更新 菜单的版本号 ， 会重新计算
@@ -901,6 +909,141 @@ class MenuData {
   }
   static cl_1() {
     // console.error("cl_1");
+  }
+  
+  is_esports_champion() {
+    return (this.match_list_api_config || {}).guanjun == "dianjing-guanjun";
+  }
+
+  // 是否是 featured
+  is_featured() {
+    return this.mid_menu_result.filter_tab == 1001
+  }
+
+  // 是否是 top_events
+  is_top_events() {
+    return this.mid_menu_result.filter_tab == 1002
+  }
+
+  // 是否是 leagues
+  is_leagues() {
+    return this.mid_menu_result.filter_tab == 4002
+  }
+
+  //root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
+  //内部方法
+  _is_cur_mi(mi, param) {
+    if (param) {
+      return mi == param
+    }
+    return this.menu_root == mi
+  }
+  /**
+   * 是否选中了 热门
+   * mi [number|string] 要比对的值
+   * 没有传递对比当前菜单
+  */
+  is_hot(mi) {
+    return this._is_cur_mi(500, mi)
+  }
+  /**
+   * 是否选中了VR 
+   * mi [number|string] 要比对的值
+   * 没有传递对比当前菜单
+  */
+  is_vr(mi) {
+    if (mi) {
+      return this._is_cur_mi(300, mi)
+    }
+    return this._is_cur_mi(300, mi) || (this.match_list_api_config.guanjun || "").includes("vr")
+  }
+  /**
+   * 是否选中了赛果
+   *  mi [number|string] 要比对的值
+  */
+  is_results(mi) {
+    return this._is_cur_mi(28, mi)
+  }
+  /**
+   * 是否选中了早盘
+   *  mi [number|string] 要比对的值
+  */
+  is_zaopan(mi) {
+    return this._is_cur_mi(3, mi)
+  }
+  is_left_zaopan(mi) {
+    return this._is_cur_mi(203, mi)
+  }
+  /**
+   * 是否选中了今日
+   *  mi [number|string] 要比对的值
+  */
+  is_today(mi) {
+    return this._is_cur_mi(2, mi)
+  }
+  is_left_today(mi) {
+    return this._is_cur_mi(202, mi)
+  }
+  /**
+   * 是否选中了滚球
+   *  mi [number|string] 要比对的值
+  */
+  is_scroll_ball(mi) {
+    return this._is_cur_mi(1, mi)
+  }
+  /**
+   * 是否选中了冠军
+   *  mi [number|string] 要比对的值
+  */
+  is_kemp(mi) {
+    if (mi) {
+      return this._is_cur_mi(400, mi)
+    }
+    return this._is_cur_mi(400, mi) || (this.match_list_api_config.guanjun || "").includes("guanjun")
+  }
+
+  /**
+   * 是否选中了电竞
+   *  mi [number|string] 要比对的值
+  */
+  is_esports(mi) {
+    // return (
+    //   this.menu_root == 2000 ||
+    //   (this.match_list_api_config || {}).sports == "dianjing"
+    // );
+    if(mi){
+      return this._is_cur_mi(2000, mi)
+    }
+    return this._is_cur_mi(2000, mi) || this._is_cur_mi(2000, this.left_menu_result.lv1_mi)
+  }
+  /**
+   * 是否选中了串关
+   *  mi [number|string] 要比对的值 没有传递对比当前菜单
+  */
+  is_mix(mi) {
+    return this._is_cur_mi(6, mi)
+  }
+  /*
+    * 是否为电子赛事
+    *  mi [number|string] 要比对的值
+  */
+  is_electron_match(mi) {
+    return [190,191].includes(this.left_menu_result.lv1_mi * 1) 
+  }
+  /**
+   * 是否为首页
+   *  mi [number|string] 要比对的值
+  */
+  is_home(mi) {
+    return this._is_cur_mi(0, mi)
+  }
+  // 是不是 常规赛种下的冠军
+  is_common_kemp(mi) {
+    return this.left_menu_result.lv1_mi && this.left_menu_result.lv1_mi != 400 && this.menu_root == 400
+  }
+
+  is_collect_kemp() {
+    return this.is_collect && this.menu_root == 400
   }
 }
 

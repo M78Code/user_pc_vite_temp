@@ -110,12 +110,16 @@
           @click.stop="toggle_item"
         >
           <div class="line"></div>
-          <sport-icon
+          <span class="soprts_id_icon"
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(menu_data.left_menu_result.lv1_mi)}` })"
+            :alt="BaseData.menus_i18n_map[menu_data.left_menu_result.lv1_mi]"></span>
+          <!-- <sport-icon
             v-if="match_info.csid && match_info.csid != -1"
             :sport_id="match_info.csid"
-            status="2"
+          
+            key_name="pc-left-menu-bg-image" 
             size="18px"
-          />
+          /> -->
           <div
             class="team-wrap ellipsis col allow-user-select"
             v-if="match_info.mhn"
@@ -161,7 +165,7 @@
 </template>
 <script setup>
 import { tooltip_style } from "src/core/config/global-component-style.js";
-import sportIcon from "src/components/sport_icon/sport-icon.vue";
+
 import video from "src/core/video/video.js"
 import details from "src/core/match-list-pc/details-class/details.js";
 import { computed, onMounted, onUnmounted, ref, watch,nextTick } from "vue";
@@ -173,6 +177,8 @@ import { compute_css_obj } from "src/core/server-img/index.js";
 import filterHeader from "src/core/filter-header/filter-header.js";
 import { debounce_throttle_cancel } from "src/core/utils/common/module/other.js";
 import { useRoute, useRouter } from "vue-router";
+import BaseData from "src/core/base-data/base-data.js"
+
 const  route = useRoute()
 const  router= useRouter()
 import lodash from "lodash";
@@ -479,6 +485,7 @@ const full_screen = () => {
 };
 
 onMounted(() => {
+
   let autoPlay = sessionStorage.getItem("auto_play_media");
   if (autoPlay) {
     toggle_play_media("video");
@@ -661,6 +668,12 @@ onUnmounted(() => {
       left: 17px;
     }
   }
+}
+
+.soprts_id_icon {
+  width: 18px;
+  height: 18px;
+  background-size: 100% auto;
 }
 /** 提示内容 -S*/
 </style>

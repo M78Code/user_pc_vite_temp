@@ -15,7 +15,7 @@
     <div class="play-name col">
       <span class="ellipsis">
         <!-- 玩法名称 -->
-        {{ lodash.get(item_details, "hpn") }}
+        {{ lodash.get(item_details, "hpn") }}+++{{ item_details.hpt }}
         <template
           v-if="
             ![0, 110].includes(lodash.get(match_info, 'ms')) &&

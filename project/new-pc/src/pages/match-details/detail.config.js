@@ -281,16 +281,9 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
               // 自动判断是否需要切换右侧赛事数据
               mx_autoset_active_match({ mid: data.mid });
             }
-            /**
-             * @description 格式化msc(比分)数据
-             * msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
-             */
-            data.msc = details.build_msc(data);
             // 设置赛事信息
             MatchDataWarehouseInstance.set_match_details(data,[])  
-            let str =state.mid+'_'
-            // state.match_infoData = data;
-            state.match_infoData = lodash.get(MatchDataWarehouseInstance.list_to_obj.mid_obj,str);
+            state.match_infoData = lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid));
           } else {
             // 处理报错，置换替补数据
             countMatchDetail();
@@ -683,9 +676,9 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    */
   const handle_match_details_data = (data, timestap) => {
     // 初始化赛事控制类玩法数据
-    MatchDataWarehouseInstance.set_match_details(state.match_infoData, data);
+    MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid), data);
     let str =state.mid+'_'
-    match_details_data_set([lodash.get(MatchDataWarehouseInstance.list_to_obj.mid_obj,str)]);
+    match_details_data_set([lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid))]);
     state.handicap_state = "data";
     // 同步投注项
     if (!get_lang_change.value) {
