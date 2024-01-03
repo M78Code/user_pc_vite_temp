@@ -210,7 +210,7 @@ const scrollTo = () => {
   overflow-y: auto;
   &.h344{
     min-height: 1.8rem;
-    max-height: 3.64rem;
+    max-height: 3.44rem;
   }
   .bet_single_info:nth-last-child(2) {
     border-radius: .12rem .12rem 0 0;
