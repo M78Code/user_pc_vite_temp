@@ -65,6 +65,7 @@ class MenuData {
     //当前的菜单 lv2  注意  二级菜单 可能 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = {};
     this.current_lv_2_menu_i = '';
+    this.current_lv_2_menu_mi =  ref('');
     this.menu_csid = '';
 
     // 收藏数量
@@ -116,7 +117,7 @@ class MenuData {
 
   // 刷新后 获取缓存数据
   set_menu_h5_key_refresh() {
-    const notItem = ['menu_type','current_lv_1_menu_mi','update_time','collect_count','current_lv_3_menu','data_tab_index','data_time','search_tab_i_tid','search_tab_index']
+    const notItem = ['menu_type','current_lv_1_menu_mi','current_lv_2_menu_i','current_lv_2_menu_mi','update_time','collect_count','current_lv_3_menu','data_tab_index','data_time','search_tab_i_tid','search_tab_index']
     // 获取数据缓存
     let session_info = SessionStorage.get('menu_app_h5');
     if (!session_info) {
@@ -276,23 +277,23 @@ class MenuData {
 
   // 设置二级菜单id
   set_current_lv_2_menu_i(val = {},type=0){
-
     const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
     val = type && current.current_lv_2_menu?.mi?current.current_lv_2_menu:val;
+    this.current_lv_2_menu_mi.value = val?.mi
     this.current_lv_2_menu_i = val?.mi;
     this.current_lv_2_menu = val;
     this.set_cache_class({
       current_lv_2_menu:val,
+      current_lv_2_menu_mi:val?.mi,
       current_lv_2_menu_i:val?.mi,
     });
     this.set_menu_csid(val?.mi);
+    this.update()
   }
    // 设置三级菜单id
    set_current_lv_special_menu_mi(val = {}){
     this.current_lv_special_menu_mi = val.mi;
     this.current_lv_special_menu = val;
-    console.log("特殊点击",val)
-
     this.update()
   }
   /**
@@ -891,8 +892,7 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_collect(mi) {
-    // return this._is_cur_mi_special(50000, mi)
-    return this.current_lv_2_menu_i == 50000;
+    return this.current_lv_2_menu_mi.value == 50000;
   }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {
@@ -1220,7 +1220,7 @@ class MenuData {
     set_cache_class(obj, is_cache = true) {
       for (const key in obj) {
         if (Object.hasOwnProperty.call(this, key)) {
-          if (["menu_type","current_lv_1_menu_mi"].includes(key)) {
+          if (["menu_type","current_lv_1_menu_mi",'current_lv_2_menu_mi'].includes(key)) {
             this[key].value = obj[key];
           } else {
             this[key] = obj[key];
