@@ -180,6 +180,7 @@
             .timer-wrapper-c {
               .coming-soon {
                 color: var(--q-gb-t-c-19);
+                font-size: 0.12rem;
               }
               .date-time {
                 color: var(--q-gb-t-c-19);
@@ -207,7 +208,7 @@
             }
           }
           .start-counting-down {
-             //background:var(--q-color-page-bg-color-2);
+             margin-top: 4px;
           }
           .counting-down-start {
             color: var(--q-color-fs-color-30);

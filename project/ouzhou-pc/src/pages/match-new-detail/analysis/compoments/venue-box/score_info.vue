@@ -647,10 +647,12 @@ watch(
 
   &:deep(.q-table th) {
     padding: 1px 0px !important;
+    text-align: center !important;
   }
 
   &:deep(.q-table td) {
     padding: v-bind("padding_value") !important;
+    text-align: center !important;
   }
 
   &:deep(.q-table tbody td) {

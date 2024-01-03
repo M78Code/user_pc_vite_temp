@@ -398,7 +398,7 @@ onUnmounted(() => {
         line-height: 20px; /* 142.857% */
         width: 100%;
         height: 0.32rem;
-        background: var(--q-gb-bg-c-28);
+        -background: var(--q-gb-bg-c-28);
         padding: 0.06rem 0.08rem;
         font-size: 0.14rem;
         color: var(--q-gb-t-c-18);
