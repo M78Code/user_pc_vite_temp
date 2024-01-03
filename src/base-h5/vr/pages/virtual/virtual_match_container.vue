@@ -1,7 +1,7 @@
 <!--
  * @Author: Cronus
  * @Date: 2021-04-30 10:00:33
- * @Description: 虚拟体育赛狗赛马赛果项
+ * @Description: 虚拟体育赛狗赛马赛果项(应该是老版h5列表页面使用)
 -->
 <template>
   <div class="v-match-container">
@@ -24,7 +24,6 @@
             </div>
           </div>
         </div>
-        <!-- <setting :calc_show="false"  :list_type="'match'" v-if="i_list==0"/> -->
         <!--赛马 赛狗 摩托车 泥地摩托车-->
         <div v-if="[1011, 1002, 1010, 1009].includes(+sport_id)" v-show="!collapsed" class="data-item-w-wrapper">
           <div class="data-title-w row justify-between" :class="{show_title:get_is_show_title}">
@@ -132,7 +131,6 @@ import data_pager from "src/base-h5/components/common/data-pager.vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { lang } from 'src/base-h5/mixin/userctr.js'
 
-// import setting from "src/project/components/common/setting";
 const static_serve = window.env.config.static_serve[0];
 export default {
   name:'virtual_match_container',
@@ -283,8 +281,6 @@ export default {
     }
   },
   computed:{
-    // ...mapGetters(['get_lang', 'get_theme']),
-    // get_lang(){return 'zh'},
     get_theme(){return 'theme01'},
     stage_result(){
       let result = "";
@@ -427,7 +423,6 @@ export default {
   },
   components:{
     'data-pager':data_pager,
-    // setting
   },
 }
 </script>
