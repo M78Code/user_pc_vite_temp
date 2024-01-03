@@ -170,7 +170,7 @@ class MatchMeta {
     const result_mids = lodash.uniq(mids)
     const length = lodash.get(result_mids, 'length', 0)
     // 显示空数据页面  this.set_page_match_empty_status({ state: true });
-    if (length < 1) return
+    if (length < 1) return this.set_show_skeleton_state(true)
     // 重置折叠对象
     // MatchFold.clear_fold_info()
     // 赛事全量数据
@@ -450,6 +450,7 @@ class MatchMeta {
       "sort": UserCtr.sort_type,
       "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
     }
+    this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_common.post_match_full_list, params: target_params, key: 'post_match_full_list' })
     if (this.current_euid !== `champion_${euid}`) return
     const code = lodash.get(res, 'code', 0)
@@ -487,6 +488,7 @@ class MatchMeta {
       sportType: 10000,
       isVirtualSport: 1
     }
+    this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_analysis.get_champion_match_result_api, params: target_params, key: 'get_champion_match_result_api' })
     if (this.current_euid !== `10000_${md}`) return []
     const code = lodash.get(res, 'code', 0)
@@ -543,6 +545,7 @@ class MatchMeta {
       euid: euid && String(euid),
       type: euid ==="0"? 29 : 28,//我的投注 euid为0
     }
+    this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_common.get_match_result_api, params: target_params, key: 'get_match_result_api' })
     const code = lodash.get(res, 'code', 0)
     if (this.current_euid !== `results_${euid}_${md}` || +code !== 200) {
@@ -577,6 +580,7 @@ class MatchMeta {
       startTime: String(start_time),
       tournamentId:tid //||"79430600606371842"
     }
+    this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_common.get_virtual_result, params: target_params, key: 'get_virtual_result' })
     // vr 马 狗 
     // const res = await api_common.get_virtual_result({"sportType":"1011","startTime":1703520000000,"endTime":1703606399000,"isVirtualSport":1,"page":{"size":100,"current":1},"tournamentId":"23622704245395458","batchNo":""})
@@ -625,6 +629,7 @@ class MatchMeta {
       category,
       "type": 3000,
     }
+    this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_common.post_esports_match, params: target_params, key: 'post_esports_match' })
     // if (this.current_euid !== `exports_${csid}_${md}`) return
     const code = lodash.get(res, 'code', 0)
@@ -1021,8 +1026,16 @@ class MatchMeta {
    * @param {*} state 
    */
   set_page_match_empty_status(obj) {
+    this.set_show_skeleton_state(false)
     const { state = false, type = 'noMatch' } = obj
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: state, type: type });
+  }
+  /**
+   * @description 设置骨架图的显示状态
+   * @param {*} val 
+   */
+  set_show_skeleton_state (val) {
+    useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, val)
   }
 
   /**
@@ -1073,7 +1086,6 @@ class MatchMeta {
   * @param { res } 接口返回对象
   */
   handle_custom_matchs(list) {
-
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return
 
