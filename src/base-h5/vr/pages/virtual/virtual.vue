@@ -67,7 +67,7 @@ import { utils } from "src/core/utils/common/module/utils.js";
 import axios_api_loop from "src/core/http/axios-loop.js"
 import { debounce_throttle_cancel } from "src/core/utils/common/module/other.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 import lodash from "lodash"
 import tab_move from "src/core/tab-move/tab-move.js";
 import { useRouter, useRoute } from "vue-router";

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 // import odds_conversion from "src/base-h5/vr/mixin/odds_conversion/odds_conversion.js"
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js"

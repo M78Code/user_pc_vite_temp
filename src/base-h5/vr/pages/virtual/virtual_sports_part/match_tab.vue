@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 import { utils } from "src/core/utils/common/module/utils.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 

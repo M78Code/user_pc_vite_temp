@@ -185,7 +185,7 @@
 </template>
 
 <script>
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 import v_s_odd_item from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_odd_item.vue"
 import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue"
 import odd_column_item from "src/base-h5/components/match-container/template/app/components/odd-column-item.vue"

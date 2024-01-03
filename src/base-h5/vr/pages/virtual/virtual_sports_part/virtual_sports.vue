@@ -171,7 +171,7 @@ import virtual_sports_stage from "src/base-h5/vr/pages/virtual/virtual_sports_pa
 import dynamic_ranking from "src/base-h5/vr/pages/virtual/virtual_sports_part/dynamic_ranking.vue"
 import result_page from "src/base-h5/vr/pages/result/result_page.vue"
 import virtual_skeleton from "src/base-h5/vr/components/skeleton/virtual_sports/virtual.vue"
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { get_now_server } from 'src/core/utils/common/module/other.js'
 import { IconWapper } from 'src/components/icon'

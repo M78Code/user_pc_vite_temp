@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 // import common from 'src/base-h5/vr/mixin/constant/module/common.js';
 import teamImg from 'src/base-h5/vr/components/team_img.vue';
 import dateMatchSdata from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_s_data.vue'

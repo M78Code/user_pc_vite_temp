@@ -75,7 +75,7 @@ import virtual_match_statistic from 'src/base-h5/vr/components/virtual_match_sta
 import {api_v_sports} from "src/api/index.js";
 import virtual_sports_stage from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
 import VSport from 'src/base-h5/vr/utils/vsport/vsport.js';
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { debounce } from "lodash";
 import { go_where } from "src/output/index.js";

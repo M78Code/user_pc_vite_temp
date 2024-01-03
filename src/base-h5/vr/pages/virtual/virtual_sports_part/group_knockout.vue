@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 import group_matches from "src/base-h5/vr/pages/virtual/virtual_sports_part/group_matches.vue";
 import knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/knockout.vue";
 

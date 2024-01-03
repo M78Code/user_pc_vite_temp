@@ -59,7 +59,7 @@
 
 <script>
 import { api_v_sports } from "src/api/index.js";
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 import no_data from "src/base-h5/vr/components/common/vr_sport_no_data.vue"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 

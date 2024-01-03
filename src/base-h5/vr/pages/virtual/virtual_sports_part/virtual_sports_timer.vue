@@ -26,7 +26,7 @@
 import { reactive } from 'vue'
 import { get_now_server } from 'src/core/utils/common/module/other.js'
 // import common from 'src/base-h5/vr/mixin/constant/module/common.js'
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 
 export default {

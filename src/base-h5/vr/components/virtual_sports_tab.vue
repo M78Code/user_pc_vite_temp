@@ -26,7 +26,7 @@
 
 <script>
 import { api_common } from "src/api/index.js";
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 export default {
   name: 'virtual_sports_tab',
