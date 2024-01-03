@@ -6,7 +6,8 @@ import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
 // import betting from 'project_path/mixins/betting/betting.js';
 import virtual_sports_m_item_mixin from 'src/base-h5/vr/mixin/virtual_sports/virtual_sports_m_item_mixin.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+// import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+import UserCtr from "src/core/user-config/user-ctr.js"; 
 
 export default {
   // mixins:[betting,virtual_sports_m_item_mixin],
@@ -27,7 +28,7 @@ export default {
       arrows_default: `${LOCAL_PROJECT_FILE_PREFIX }/image/common/slide_icon.svg`,
       arrows_reverse: `${LOCAL_PROJECT_FILE_PREFIX }/image/common/slide_icon_reverse_y0.svg`,
       arrows_default_balck:`${LOCAL_PROJECT_FILE_PREFIX }/image/common/slide_icon_r.svg`,
-      standard_edition  //新手版1    标准版  2
+      // standard_edition  //新手版1    标准版  2
     }
   },
   created(){
@@ -355,7 +356,8 @@ export default {
     get_video_process_data(){return VR_CTR.state.video_process_data},
     get_n_s_changed_loaded(){return false;},
     get_curr_sub_menu_type(){ return VR_CTR.state.curr_sub_menu_type },
-    
+    //新手版1    标准版  2
+    standard_edition(){return UserCtr.standard_edition},
     show_debugger_line(){
       let wsl = sessionStorage.getItem('wsl');
       if(wsl == '9999') return true;
