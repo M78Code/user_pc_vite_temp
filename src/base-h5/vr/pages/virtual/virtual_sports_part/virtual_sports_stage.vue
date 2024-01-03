@@ -418,6 +418,7 @@ export default {
       }
       this.player.video.muted = true;
       this.video_voice = false
+      //监听视频可以播放  右侧菜单为显示状态则暂停视频播放
       // 播放
       this.player.on('play',() => {
         this.video_play_stauts = 0;
@@ -644,6 +645,8 @@ export default {
     },
   },
   computed:{
+    //抽屉菜单显示状态
+
     current_league(){return VR_CTR.state.current_league},
     current_batch(){return VR_CTR.state.current_batch},
     video_process_data(){return VR_CTR.state.video_process_data},
