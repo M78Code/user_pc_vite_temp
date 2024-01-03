@@ -7,10 +7,10 @@
       <!-- 页面头部容器-->
       <layout-header />
     </div>
-    <div v-show="true"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}-{{LayOutMain_pc.layout_content_width}}</div>
+    <div v-show="false"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}-{{LayOutMain_pc.layout_content_width}}</div>
     <div class="flex" >
       <!-- 左侧 菜单 -->
-      <div :style="{ height: LayOutMain_pc.layout_content_height + 'px', width: LayOutMain_pc.layout_left_width }"
+      <div :style="{ height: LayOutMain_pc.layout_content_height + 'px', width: LayOutMain_pc.layout_left_width + 'px' }"
         class="layout_main_left">
         <layout-left />
       </div>

@@ -910,6 +910,141 @@ class MenuData {
   static cl_1() {
     // console.error("cl_1");
   }
+  
+  is_esports_champion() {
+    return (this.match_list_api_config || {}).guanjun == "dianjing-guanjun";
+  }
+
+  // 是否是 featured
+  is_featured() {
+    return this.mid_menu_result.filter_tab == 1001
+  }
+
+  // 是否是 top_events
+  is_top_events() {
+    return this.mid_menu_result.filter_tab == 1002
+  }
+
+  // 是否是 leagues
+  is_leagues() {
+    return this.mid_menu_result.filter_tab == 4002
+  }
+
+  //root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
+  //内部方法
+  _is_cur_mi(mi, param) {
+    if (param) {
+      return mi == param
+    }
+    return this.menu_root == mi
+  }
+  /**
+   * 是否选中了 热门
+   * mi [number|string] 要比对的值
+   * 没有传递对比当前菜单
+  */
+  is_hot(mi) {
+    return this._is_cur_mi(500, mi)
+  }
+  /**
+   * 是否选中了VR 
+   * mi [number|string] 要比对的值
+   * 没有传递对比当前菜单
+  */
+  is_vr(mi) {
+    if (mi) {
+      return this._is_cur_mi(300, mi)
+    }
+    return this._is_cur_mi(300, mi) || (this.match_list_api_config.guanjun || "").includes("vr")
+  }
+  /**
+   * 是否选中了赛果
+   *  mi [number|string] 要比对的值
+  */
+  is_results(mi) {
+    return this._is_cur_mi(28, mi)
+  }
+  /**
+   * 是否选中了早盘
+   *  mi [number|string] 要比对的值
+  */
+  is_zaopan(mi) {
+    return this._is_cur_mi(3, mi)
+  }
+  is_left_zaopan(mi) {
+    return this._is_cur_mi(203, mi)
+  }
+  /**
+   * 是否选中了今日
+   *  mi [number|string] 要比对的值
+  */
+  is_today(mi) {
+    return this._is_cur_mi(2, mi)
+  }
+  is_left_today(mi) {
+    return this._is_cur_mi(202, mi)
+  }
+  /**
+   * 是否选中了滚球
+   *  mi [number|string] 要比对的值
+  */
+  is_scroll_ball(mi) {
+    return this._is_cur_mi(1, mi)
+  }
+  /**
+   * 是否选中了冠军
+   *  mi [number|string] 要比对的值
+  */
+  is_kemp(mi) {
+    if (mi) {
+      return this._is_cur_mi(400, mi)
+    }
+    return this._is_cur_mi(400, mi) || (this.match_list_api_config.guanjun || "").includes("guanjun")
+  }
+
+  /**
+   * 是否选中了电竞
+   *  mi [number|string] 要比对的值
+  */
+  is_esports(mi) {
+    // return (
+    //   this.menu_root == 2000 ||
+    //   (this.match_list_api_config || {}).sports == "dianjing"
+    // );
+    if(mi){
+      return this._is_cur_mi(2000, mi)
+    }
+    return this._is_cur_mi(2000, mi) || this._is_cur_mi(2000, this.left_menu_result.lv1_mi)
+  }
+  /**
+   * 是否选中了串关
+   *  mi [number|string] 要比对的值 没有传递对比当前菜单
+  */
+  is_mix(mi) {
+    return this._is_cur_mi(6, mi)
+  }
+  /*
+    * 是否为电子赛事
+    *  mi [number|string] 要比对的值
+  */
+  is_electron_match(mi) {
+    return [190,191].includes(this.left_menu_result.lv1_mi * 1) 
+  }
+  /**
+   * 是否为首页
+   *  mi [number|string] 要比对的值
+  */
+  is_home(mi) {
+    return this._is_cur_mi(0, mi)
+  }
+  // 是不是 常规赛种下的冠军
+  is_common_kemp(mi) {
+    return this.left_menu_result.lv1_mi && this.left_menu_result.lv1_mi != 400 && this.menu_root == 400
+  }
+
+  is_collect_kemp() {
+    return this.is_collect && this.menu_root == 400
+  }
 }
 
 export default new MenuData();
