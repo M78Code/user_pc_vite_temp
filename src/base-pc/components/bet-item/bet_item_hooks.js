@@ -13,7 +13,7 @@ import {
   watch,
   onBeforeMount,
 } from "vue";
-import store from "src/store-redux/index.js";
+// import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
@@ -603,15 +603,15 @@ export const useGetItem = ({ props }) => {
   //  投注类别 1: 普通赛事 2: 虚拟体育 3: 电竞
   watch(()=>BetData.bet_category, (new_) => {
     if ([2, 3].includes(new_ * 1)) {
-      store.dispatch({
-        type: "set_is_virtual_bet",
-        data: true,
-      });
+      // store.dispatch({
+      //   type: "set_is_virtual_bet",
+      //   data: true,
+      // });
     } else {
-      store.dispatch({
-        type: "set_is_virtual_bet",
-        data: false,
-      });
+      // store.dispatch({
+      //   type: "set_is_virtual_bet",
+      //   data: false,
+      // });
     }
     // BetData.bet_clear();  //TODO
   });
