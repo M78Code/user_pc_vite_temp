@@ -515,7 +515,7 @@ export default {
       flex: 1;
       align-items: center;
       min-width: 1px;
-      color: var(--q-gb-t-c-1);
+      color: var(--q-gb-bd-c-13);
       height: 28px;
       overflow: hidden;
     }

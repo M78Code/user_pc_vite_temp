@@ -88,7 +88,6 @@ onUnmounted(() => {
  */
  const change_money_handle = obj => {
     if(props.item.playOptionsId == obj.id || obj.id == undefined){
-        console.log(BetData.bet_amount,props.item.bet_amount)
          // 获取当前投注金额
         let money = obj.id == undefined ? BetData.bet_amount : props.item.bet_amount
         let money_ = obj.money
@@ -151,7 +150,6 @@ const set_ref_data_bet_money = () => {
     BetData.set_bet_keyboard_config(max_money_obj)
 
     InputFocus.value.focus()
-
 }
 
 

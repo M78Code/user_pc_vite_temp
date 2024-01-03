@@ -99,9 +99,10 @@ const get_user = ref(UserCtr.get_user())
 const show_move_video = computed(() => {
   return lodash.get(get_user.value, "merchantEventSwitchVO.eventSwitch")
 })
-let vue_hidden_run_flg = false;
+
 function event_listener_visibilitychange(){
-    if (!vue_hidden_run_flg) { return false }
+  console.warn("#TODO: Uncaught ReferenceError: vue_hidden_run_flg is not defined")
+    // if (!vue_hidden_run_flg) { return false } // vue_hidden_run_flg is not defined
     let _is_hidden = document.visibilityState == 'hidden'
   //  document.visibilityState == 'visible'
     if (_is_hidden) {
