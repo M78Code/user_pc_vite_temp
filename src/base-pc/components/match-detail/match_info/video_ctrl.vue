@@ -4,7 +4,7 @@
  * @Description: 右侧视频控制区域组件
 -->
 <template>
-  <div class="c-video-ctrl">
+  <div class="component i-pc c-video-ctrl">
     <!-- 控制区 -->
     <div class="ctrl-wrap row items-center justify-between">
       <div

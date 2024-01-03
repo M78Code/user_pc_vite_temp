@@ -90,7 +90,6 @@ onMounted(() => {
         emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
         emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
     }
-    
 })
 
 onUnmounted(() => {
@@ -162,8 +161,8 @@ const set_ref_data_bet_money = () => {
             ref_data.oid.push(item.playOptionsId)
             ref_data.oddFinallyArr.push(item.oddFinally)
          })
-    ref_data.min_money = lodash_.max(min_money_arr) //多项单注限额取最小值取多项里最大的
-    ref_data.max_money = lodash_.min(max_money_arr) //多项单注限额取最大值取多项里最小的
+    ref_data.min_money = lodash_.max(min_money_arr) //多项单注限额最小值取多项里最大的
+    ref_data.max_money = lodash_.min(max_money_arr) //多项单注限额最大值取多项里最小的
     ref_data.money = ""
     //设置键盘MAX限额
     let max_money_obj = {max_money:ref_data.max_money}
@@ -172,7 +171,6 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
-    console.log(ref_data.money)
     useMittEmit(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY,ref_data)
      // 输入控制
      let sum = 0
