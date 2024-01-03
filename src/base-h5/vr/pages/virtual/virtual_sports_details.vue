@@ -90,7 +90,7 @@ export default {
   mixins:[virtual_sports_mixin],
   name:'virtual_sports_details',
   computed: {
-    is_show_analyse(){return VR_CTR.state.is_show_details_analyse},
+    // is_show_analyse(){return VR_CTR.state.is_show_details_analyse},
     matchid(){return VR_CTR.state.goto_detail_matchid},
     get_current_gotodetail_match(){return },
     sub_menuid(){return VR_CTR.state.current_sub_menuid},

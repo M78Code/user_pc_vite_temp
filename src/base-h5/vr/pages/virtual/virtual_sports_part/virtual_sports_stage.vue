@@ -266,12 +266,7 @@ export default {
     this.user_destroy_resource();
   },
   methods:{
-    // ...mapMutations([
-    //   'set_settle_dialog_bool',
-    //   'set_is_show_menu'
-    // ]),
     set_line_width(width){ this.round_line_width = width},
-    set_settle_dialog_bool(){},
     set_is_show_menu(data){VR_CTR.state.is_show_menu = data},
     set_prev_v_sports_params(data){VR_CTR.state.prev_v_sports_params = data},
 
@@ -343,7 +338,6 @@ export default {
     *@return{Undefined}undefined
     */
     change_settle_status(){
-      this.set_settle_dialog_bool(false)
       this.timer_super29 = setTimeout(() => {
         this.dialog = false
       }, 100);
@@ -418,6 +412,7 @@ export default {
       }
       this.player.video.muted = true;
       this.video_voice = false
+      //监听视频可以播放  右侧菜单为显示状态则暂停视频播放
       // 播放
       this.player.on('play',() => {
         this.video_play_stauts = 0;
@@ -644,6 +639,8 @@ export default {
     },
   },
   computed:{
+    //抽屉菜单显示状态
+
     current_league(){return VR_CTR.state.current_league},
     current_batch(){return VR_CTR.state.current_batch},
     video_process_data(){return VR_CTR.state.video_process_data},
