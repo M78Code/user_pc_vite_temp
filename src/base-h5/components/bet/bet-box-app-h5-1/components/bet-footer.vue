@@ -66,10 +66,10 @@ import mathJs from 'src/core/bet/common/mathjs.js'
 import { UserCtr ,format_money2,compute_local_project_file_path,MenuData} from "src/output/index.js"
 import { odds_table } from "src/core/constant/common/module/csid.js"
 import { i18n_tc } from "src/boot/i18n.js"
-import { useRoute } from "vue-router"
+import { useRoute,useRouter } from "vue-router"
 
 
-const route = useRoute()
+const router = useRouter()
 
 const ref_data = reactive({
   show_title: '',
@@ -285,10 +285,10 @@ const set_bet_single = () => {
       BetData.bet_s_list = lodash_.cloneDeep(BetData.bet_single_list)
       menu_id = 6
     }
-    // 详情里面切换投注类型 不切换菜单类型
-    if(!['match_result','details','category'].includes(route.name)){
-        MenuData.set_current_lv1_menu(menu_id);
-      }
+    MenuData.set_current_lv1_menu(menu_id);
+    // 详情里面切换投注类型 
+    router.push({ name: "matchList" });
+    
   }
 
   BetData.set_bet_box_h5_show(false)

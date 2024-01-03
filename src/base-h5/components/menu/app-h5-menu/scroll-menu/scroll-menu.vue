@@ -10,14 +10,11 @@
           <div class="s-menu-container flex" >
             <template  v-for="(item,index) in scrollDataListNew" :key="index">
               <!-- 全部 vr 收藏 电竞显示  -->
-              <!-- v-if="item?.ct > 0 || menu_show_id.includes(+item.mi) || +item.mi>2000" -->
               <div ref="scrollTab" 
                 :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] " 
                  @click="set_menu_lv2(item, $event)" >
-              <!-- <div ref="scrollTab" :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] "  @click="set_menu_lv2(item, $event)" > -->
                 <div class="inner-w flex justify-between items-center">
                   <div class="sport-w-icon">
-                    <!-- v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000"  -->
                     <!-- 电竞收藏  暂时隐藏数量 -->
                     <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi) && !([50000].includes(item.mi) && MenuData.is_esports())" 
                       class="sport-match-count" :class="[{ 'is-max': item.ct > 1000 }]">
@@ -76,7 +73,7 @@ const scrollDataListNew = computed(()=> {
   // if((MenuData.is_results() && !props.scrollDataList?.length)|| MenuData.is_mix())return props.scrollDataList;
   //赛果 串关 电竞冠军 不显示收藏
   if(MenuData.is_results()|| MenuData.is_mix()||props.is_kemp_esports)return props.scrollDataList;
-  return [...[{mi:50000,btn:1,ct:MenuData.collect_count.value,title:"收藏"}],...props.scrollDataList]
+  return [...[{mi:50000,btn:1,ct:MenuData.collect_count.value || 0,title:"收藏"}],...props.scrollDataList]
 })
 const emits = defineEmits(['changeList','changeMenu'])
 /**
