@@ -92,7 +92,7 @@ const get_user = ref(UserCtr.get_user())
 const show_move_video = computed(() => {
   return lodash.get(get_user.value, "merchantEventSwitchVO.eventSwitch")
 })
-
+let vue_hidden_run_flg = false;
 function event_listener_visibilitychange(){
     if (!vue_hidden_run_flg) { return false }
     let _is_hidden = document.visibilityState == 'hidden'
