@@ -47,19 +47,11 @@
 </template>
 
 <script>
-import teamImg from 'src/base-h5/vr/components/team_img.vue';
-
+import date_match_s_data_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/date_match_s_data_mixin.js";
 export default {
-  props:{
-    match_ended:Object,
-    source:String,
-  },
-  components:{
-    'team-img':teamImg
-  }
+  mixins:[date_match_s_data_mixin],
 }
 </script>
-
 <style lang="scss" scoped>
 .match-single-end {
   width: 100%;

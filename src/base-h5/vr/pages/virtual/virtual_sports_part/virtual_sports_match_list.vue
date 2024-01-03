@@ -23,73 +23,10 @@
     </div>
   </div>
 </template>
-
 <script>
-import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js";
-import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue";
-import virtual_sports_match_item from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_item.vue";
-import { useMittOn, MITT_TYPES } from "src/core/mitt/"
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5} from "src/output/index.js"
-import { standard_edition } from 'src/base-h5/mixin/userctr.js'
-
+import virtual_sports_match_list_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/virtual_sports_match_list_mixin.js";
 export default {
-  props:{
-    virtual_match_list:Array,
-    match_list_loaded:Number,
-    v_menu_changed:Number | String,
-    csid:Number | String,
-  },
-  data(){
-    return{
-      selected_match_i:0,
-      v_match_hps:[],
-      standard_odd_status:0,
-      MatchDataBaseH5,
-      standard_edition
-    }
-  },
-  mounted() {
-    this.emitters = [
-      useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, this.odd_pan_handle).off,
-    ]
-  },
-  unmounted(){
-    this.emitters.map((x) => x());
-  },
-  methods:{
-    // 设置玩法项默认选中
-    set_details_item(data){ VR_CTR.state.details_item = data },
-    /**
-     * 切换赛事
-     * @param {Number} i 赛事下标
-     * @return {Undefined}
-     */
-    switch_match_handle(i){
-      this.selected_match_i = i;
-      this.$emit('switch_match',i);
-    },
-    /**
-     * 赔率滑动状态
-     */
-    odd_pan_handle(status){
-      this.standard_odd_status = status;
-    },
-  },
-  watch:{
-    v_menu_changed(){
-      this.standard_odd_status = 0;
-    },
-    virtual_match_list(){
-      if(!this.virtual_match_list || !this.virtual_match_list.length) return;
-      this.v_match_hps = this.virtual_match_list[0].hps
-      this.switch_match_handle(this.selected_match_i);
-      this.$emit('switch_match',this.selected_match_i);
-    }
-  },
-  components:{
-    'v-s-match-timer':v_s_match_timer,
-    'v-sports-match-item':virtual_sports_match_item,
-  }
+  mixins:[virtual_sports_match_list_mixin],
 }
 </script>
 

@@ -31,59 +31,12 @@
     <no-data v-if="no_data" which='noMatch' height='500' class="no-list"></no-data>
   </div>
 </template>
-
 <script>
-import {api_v_sports} from "src/api/index.js";
-import no_data from "src/base-h5/vr/components/common/vr_sport_no_data.vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
-
+import football_ranking_list_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/football_ranking_list_mixin.js";
 export default {
-  name: "ranking_list",
-  components: {
-    "no-data": no_data
-  },
-  props:{
-    tid: Number|String
-  },
-  data() {
-    return {
-      ranking_data: [],
-      no_data: false,
-      LOCAL_PROJECT_FILE_PREFIX
-    }
-  },
-  mounted() {
-  },
-  watch: {
-    tid: {
-      handler: 'get_list',
-      immediate: true,
-    }
-  },
-  methods: {
-    async get_list() {
-      try {
-        let {code , data} = await api_v_sports.get_virtual_sport_team_ranking({tid: this.tid})
-        if(code == 200) {
-          if (data && data.length > 0) {
-            this.ranking_data = data
-          }else {
-            this.no_data = true
-          }
-        }
-      } catch (error) {
-        this.no_data = true
-        console.error(error);
-      }
-    }
-  },
-  destroyed () {
-    for (const key in this.$data) {
-      this.$data[key] = null
-    }
-  },
-
-};
+  mixins:[football_ranking_list_mixin],
+  name:'ranking_list',
+}
 </script>
 
 <style lang="scss" scoped>

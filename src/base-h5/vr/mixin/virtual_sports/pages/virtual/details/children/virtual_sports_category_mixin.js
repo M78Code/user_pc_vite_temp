@@ -4,15 +4,12 @@
  * @Description: 虚拟体育玩法投注项区域
  */
 // import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new.vue"
-import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue"
  // 引入接口封装文件
 import { api_common } from "src/api/index.js";
 import axios_api_loop from "src/core/http/axios-loop.js"
 
  // 引入投注逻辑mixin
 // import betting from "src/project/mixins/betting/betting.js";
- // 引入加载中的组件
-import loading from 'src/base-h5/components/common/loading.vue';
  // 引入quasar
 import { dom } from 'quasar'
  // 引入处理数据的封装方法
@@ -161,11 +158,6 @@ export default {
     get_list(){
       return  lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(this.mid),'odds_info',[]);
     }
-  },
-
-  components: {
-    'tournament-play-new': tournament_play_new,
-    loading
   },
 
   created(){
