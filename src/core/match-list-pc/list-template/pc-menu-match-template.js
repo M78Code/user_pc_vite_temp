@@ -120,7 +120,7 @@ const menu_to_match_templte = {
   104: { label: "滚球-冰球", value: "16" },
   105: { label: "滚球-网球", value: "9" },
   106: { label: "滚球-美式足球", value: "1" },
-  107: { label: "滚球-斯诺克", value: "11" },
+  107201: { label: "滚球-斯诺克", value: "11" },
   108: { label: "滚球-乒乓球", value: "11" },
   109: { label: "滚球-排球", value: "11" },
   110: { label: "滚球-羽毛球", value: "11" },
