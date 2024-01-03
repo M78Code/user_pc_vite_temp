@@ -1,9 +1,15 @@
 /* 
  处理详情ws逻辑
+ useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS) 触发3个接口的更新  details cateragy  oddinfo
+ useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET) 触发1个接口的更新盘口更新  oddinfo
+useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)    触发玩法集接口     cateragy
 */
 
 import {  useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { MatchDataWarehouse_H5_Detail_Common } from "src/output/module/match-data-base.js";
+import { MatchDataWarehouse_H5_Detail_Common,MatchDataWarehouse_PC_Detail_Common } from "src/output/module/match-data-base.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { PROJECT_NAME } = BUILDIN_CONFIG ;
+console.log(PROJECT_NAME,'PROJECT_NAME');
 export const details_ws = () => {
   /**
    * @description: 处理ws指令 与返回来的数据
@@ -65,9 +71,14 @@ export const details_ws = () => {
       }
       let skt_data = obj.cd;
       if (!skt_data || skt_data.length < 1) return;
-      // 重新拉取数据;
-      useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
-      useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET)
+      // 重新拉取数据; 因为
+      if(PROJECT_NAME.includes('pc')){
+        useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
+      }else{
+        useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
+        useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET)
+      }
+      
     }
     /**
      * @description: 赛事级别盘口状态(C104)  hs: 0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态
@@ -79,8 +90,13 @@ export const details_ws = () => {
       // 赛事级别盘口状态 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
       if (skt_data.mhs == 0 || skt_data.mhs == 11) {
         // 重新拉取数据;
+          // 重新拉取数据; 因为
+      if(PROJECT_NAME.includes('pc')){
+        useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
+      }else{
         useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
         useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET)
+      }
       } else if (skt_data.mhs == 1) {
         // 设置盘口状态
       } else if (skt_data.mhs == 2) {
@@ -108,7 +124,12 @@ export const details_ws = () => {
     */
    function RCMD_C110(obj){
       if(obj.cd.mc == 0){
-        MatchDataWarehouse_H5_Detail_Common.set_match_details()
+        if(PROJECT_NAME.includes('pc')){
+          MatchDataWarehouse_PC_Detail_Common.set_match_details()
+        }else{
+          MatchDataWarehouse_H5_Detail_Common.set_match_details()
+        }
+        
         set_match_details(obj.cd.mid)
         //清除玩法缓存
         sessionStorage.removeItem("match_oddinfo")
@@ -136,7 +157,12 @@ export const details_ws = () => {
    * @return {*}
    */
   function set_match_details(mid,odds_info){
-    MatchDataWarehouse_H5_Detail_Common.set_match_details(MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(mid),odds_info)
+    if(PROJECT_NAME.includes('pc')){
+      MatchDataWarehouse_PC_Detail_Common.set_match_details(MatchDataWarehouse_PC_Detail_Common.get_quick_mid_obj(mid),odds_info)
+    }else{
+      MatchDataWarehouse_H5_Detail_Common.set_match_details(MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(mid),odds_info)
+    }
+    
   }  
   return {
     handler_ws_cmd,

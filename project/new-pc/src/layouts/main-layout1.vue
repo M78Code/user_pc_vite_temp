@@ -101,7 +101,7 @@ const show_move_video = computed(() => {
 })
 let vue_hidden_run_flg = false;
 function event_listener_visibilitychange(){
-    if (!vue_hidden_run_flg) { return false }
+    // if (!vue_hidden_run_flg) { return false } // vue_hidden_run_flg is not defined
     let _is_hidden = document.visibilityState == 'hidden'
   //  document.visibilityState == 'visible'
     if (_is_hidden) {
