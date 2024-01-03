@@ -462,7 +462,7 @@ export default {
       transform: rotate(-90deg);
       width: 20px;
       height: 16px;
-      margin-right: 14px;
+      margin-right: 8px;
     }
     .collapsed{
       transform: rotate(0);
