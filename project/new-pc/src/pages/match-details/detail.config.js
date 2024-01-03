@@ -281,16 +281,9 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
               // 自动判断是否需要切换右侧赛事数据
               mx_autoset_active_match({ mid: data.mid });
             }
-            /**
-             * @description 格式化msc(比分)数据
-             * msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
-             */
-            data.msc = details.build_msc(data);
             // 设置赛事信息
             MatchDataWarehouseInstance.set_match_details(data,[])  
-            let str =state.mid+'_'
-            // state.match_infoData = data;
-            state.match_infoData = lodash.get(MatchDataWarehouseInstance.list_to_obj.mid_obj,str);
+            state.match_infoData = lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid));
           } else {
             // 处理报错，置换替补数据
             countMatchDetail();
