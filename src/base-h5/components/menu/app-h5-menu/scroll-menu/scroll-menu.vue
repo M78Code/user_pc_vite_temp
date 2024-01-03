@@ -20,8 +20,8 @@
                     <!-- v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000"  -->
                     <!-- 电竞收藏  暂时隐藏数量 -->
                     <div v-if="props.is_show_badge" v-show="!menu_show_id.includes(item.mi) && !([50000].includes(item.mi) && MenuData.is_esports())" 
-                      class="sport-match-count" :class="[{ 'is-max': item.ct > 1000 }]">
-                      {{ item.ct || 0 }}
+                      class="sport-match-count" :class="[{ 'is-max': item?.ct >= 1000 }]">
+                      {{ item.ct || 0 }} 
                     </div>
                     <span class="sport-icon-wrap"
                       :style="compute_css_obj({key:current_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
@@ -282,7 +282,7 @@ onUnmounted(()=>{
                 font-family: "Akrobat";
                 z-index: 5;
                 &.is-max {
-                  // left: 0.3rem;
+                  left: 80%;
                 }
           }
         }
