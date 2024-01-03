@@ -440,7 +440,7 @@ export default {
   overflow: hidden;
   width: 560px;
   border-radius: 2px;
-  color: #d1d1d1;
+  color: var(--q-gb-t-c-18);
   font-size: 12px;
   .info-time {
     display: flex;
@@ -455,6 +455,12 @@ export default {
       .count_down {
         align-items: center;
         justify-content: center;
+        :deep(.process-name){
+          color: var(--q-gb-t-c-18);
+        }
+        :deep(.c-match-date){
+          color: var(--q-gb-t-c-18);
+        }
       }
     }
     .time-node {
