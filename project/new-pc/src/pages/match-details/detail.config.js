@@ -676,9 +676,9 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    */
   const handle_match_details_data = (data, timestap) => {
     // 初始化赛事控制类玩法数据
-    MatchDataWarehouseInstance.set_match_details(state.match_infoData, data);
+    MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid), data);
     let str =state.mid+'_'
-    match_details_data_set([lodash.get(MatchDataWarehouseInstance.list_to_obj.mid_obj,str)]);
+    match_details_data_set([lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid))]);
     state.handicap_state = "data";
     // 同步投注项
     if (!get_lang_change.value) {
