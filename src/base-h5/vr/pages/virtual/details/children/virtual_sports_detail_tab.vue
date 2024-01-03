@@ -73,7 +73,8 @@ export default {
   &.text-active-tab {
     .q-tab__label {
       font-weight: bolder;
-      color: var(--q-gb-t-c-1);
+      // color: var(--q-gb-t-c-1);
+      font-size: 0.16rem;
     }
   }
 
@@ -81,10 +82,11 @@ export default {
   color: var(--q-gb-bg-c-13);
   border-radius: 1.5px;
   z-index: 1;
+  bottom: 0.08rem;
 }
   .q-tab__label {
     font-size: 0.14rem;
-    color: var(--q-gb-t-c-19);
+    color: var(--q-gb-t-c-18);
     
   }
 }

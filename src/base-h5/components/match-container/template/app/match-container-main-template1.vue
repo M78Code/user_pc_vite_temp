@@ -444,7 +444,7 @@ export default {
     justify-content: space-between;
     &.progress{
       // border-top: 2px solid var(--q-gb-bd-c-1);
-      border-top: 2px solid rgba(116, 196, 255, 0.5);
+      border-top: 2px solid var(--q-gb-bd-c-1);
     }
     &.not_begin{
       // border-top: 2px solid var(--q-gb-bd-c-13);
@@ -462,7 +462,7 @@ export default {
       transform: rotate(-90deg);
       width: 20px;
       height: 16px;
-      margin-right: 14px;
+      margin-right: 8px;
     }
     .collapsed{
       transform: rotate(0);

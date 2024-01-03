@@ -2,6 +2,7 @@
  * @Description: 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
 -->
 <template>
+  <layoutTop />
   <!--赛事列表-->
   <div class="match-list-page"
     :class="{
@@ -33,7 +34,7 @@ import lodash from "lodash";
 // import store from "src/store-redux/index.js";
 import tiaozhuanPanel from "src/base-h5/components/match-list/components/tiaozhuan-panel.vue";    //  跳转banner图和猜你喜欢
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
- 
+import layoutTop from "../../layouts/top.vue"
 import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
@@ -241,5 +242,128 @@ onUnmounted(() => {
 
 </script>
 <style scoped lang="scss">
-  @import "./index.scss";
+  
+/* ************** 赛事列表包装器 **************** -S */
+.match-list-page {
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  position: relative;
+  flex: 10;
+  transition: transform 0.2s;
+  .match-list-container{
+    height: 100%;
+  }
+  background: var(--q-gb-bg-c-21) !important;
+  .animation{
+    animation: my-animation 0.3s ease-in
+  }
+  &.no-padding-bottom {
+    padding-bottom: 0;
+  }
+
+  &.mini_x {
+    padding-top: 0.95rem;
+  }
+
+  &.mini_s {
+    padding-top: 1.3rem;
+  }
+
+  .gap{
+    height: .41rem; // 因该为0.4 多设一个像素 0.41
+    width: 100%;
+    // 缝隙 专门用于解决遮罩和底部的间隙问题
+   // background-image: var(--q-color-com-img-bg-2);
+    background: var(--q-color-page-bg-color-2);
+    &.zaopan{
+      background: var(--q-color-page-bg-color-45);
+    }
+
+  }
+
+  &.show-status {
+    padding-top:.94rem;
+  }
+
+  &.zaopan {
+    // padding-top:1.3rem;
+  }
+  // &.esport {
+  //   padding-top: 1.4rem;
+  // }
+
+  &.guanjun {
+    padding-top: 5px;
+  }
+
+  &.level_four_menu {
+    padding-top: 1.38rem;
+  }
+
+  &.jingzu {
+    padding-top: 0.4rem;
+  }
+
+  &.detail_match_list {
+    padding-top: 0;
+    padding-bottom: 0;
+    .refresh-container{
+      padding-top: 0;
+    }
+  }
+  .cover-loading {
+    width: 0.4rem;
+    display: block;
+    position: fixed;
+    left: 50%;
+    z-index: 30;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: -0.2rem;
+    margin-top: 1.68rem;
+  }
+
+  .loading-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 502;
+
+    &.dark {
+      background-color: transparent;
+    }
+  }
+  .loading-more-container {
+    width: 100%;
+    height: 1.81rem;
+    padding: 0.88rem 0 0.6rem 0;
+    text-align: center;
+    //bottom: -2rem;
+    //position: absolute;
+    //left: 0;
+    &.home_hot{
+      position: unset;
+      bottom: unset;
+    }
+  }
+}
+
+@keyframes my-animation {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(50%, 0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate3d(100%, 0, 0);
+    opacity: 0;
+  }
+}
 </style>
