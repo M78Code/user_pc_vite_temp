@@ -116,7 +116,7 @@ export default {
       this.currentContent = tab.value
     }
   },
-  destroyed() {
+  unmounted() {
     clearTimeout(this.timer)
     this.timer = null
 

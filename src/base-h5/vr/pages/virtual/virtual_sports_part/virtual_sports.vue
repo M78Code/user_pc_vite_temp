@@ -743,7 +743,7 @@ export default {
     'icon-wapper': IconWapper,
     'virtual-skeleton':virtual_skeleton,
   },
-  destroyed(){
+  unmounted(){
     this.is_before_destroy = Math.random();
     if(this.video_process_obj && this.video_process_obj.destroy){
       this.video_process_obj.destroy();

@@ -56,7 +56,7 @@ export default {
       useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, this.odd_pan_handle).off,
     ]
   },
-  destroyed(){
+  unmounted(){
     // this.$root.$off(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,this.odd_pan_handle)
     this.emitters.map((x) => x());
   },

@@ -850,7 +850,7 @@ export default {
    *@param {Undefined}
    *@return {Undefined} undefined
    */
-  destroyed(){
+  unmounted(){
     // 取消订阅事件
     // this.$root.$off(this.emit_cmd.EMIT_REF_API, this.initEvent);
     // this.$root.$off(this.emit_cmd.EMIT_CATEGORY_SKT, this.sendSocketInitCmd);

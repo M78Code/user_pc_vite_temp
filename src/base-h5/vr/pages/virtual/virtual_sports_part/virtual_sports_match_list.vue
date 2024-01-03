@@ -28,14 +28,12 @@
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue";
 import virtual_sports_match_item from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_item.vue";
-// import betting from 'project_path/mixins/betting/betting.js';
 import SVirtual from "src/base-h5/vr/components/skeleton/virtual_sports/virtual.vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5} from "src/output/index.js"
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
 export default {
-  // mixins:[betting],
   props:{
     virtual_match_list:Array,
     match_list_loaded:Number,
@@ -56,15 +54,11 @@ export default {
       useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, this.odd_pan_handle).off,
     ]
   },
-  destroyed(){
-    // this.$root.$off(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,this.odd_pan_handle)
+  unmounted(){
     this.emitters.map((x) => x());
   },
   methods:{
-    // ...mapActions([
-    //   // 设置玩法项默认选中
-    //   "set_details_item",
-    // ]),
+    // 设置玩法项默认选中
     set_details_item(data){ VR_CTR.state.details_item = data },
     /**
      * 切换赛事
@@ -92,13 +86,6 @@ export default {
       this.switch_match_handle(this.selected_match_i);
       this.$emit('switch_match',this.selected_match_i);
     }
-  },
-  computed:{
-    // ...mapGetters({
-    //   footer_sub_menu_id:"get_footer_sub_menu_id",
-    //   get_newer_standard_edition:"get_newer_standard_edition",//新手版1    标准版  2
-    // }),
-    footer_sub_menu_id(){return VR_CTR.state.footer_sub_menu_id},
   },
   components:{
     'v-s-match-timer':v_s_match_timer,

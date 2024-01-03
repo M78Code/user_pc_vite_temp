@@ -625,7 +625,7 @@ export default {
       this.standard_odd_status = n;
     },
   },
-  destroyed(){
+  unmounted(){
     if(this.vsports){
       this.vsports.destroy();
     }
