@@ -147,12 +147,13 @@ export default {
     
     font-size: 0.12rem;
     font-weight: 600;
-    border-bottom: 0.01rem solid var(--q-gb-bd-c-19);
+    border-bottom: 0.01rem solid var(--q-gb-bd-c-18);
 
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    color: var(--q-gb-t-c-18);
 
     span {
       &:nth-child(1){
@@ -176,13 +177,13 @@ export default {
     height: 0.34rem;
     line-height: 0.34rem;
     text-align: center;
-    border-bottom: 0.01rem solid var(--q-gb-bd-c-19);
+    border-bottom: 0.01rem solid var(--q-gb-bd-c-18);
 
 
     > div {
       font-size: 0.12rem;
       font-weight: 400;
-      color: #303442;
+      color: var(--q-gb-t-c-18);
     }
 
     &:last-child {

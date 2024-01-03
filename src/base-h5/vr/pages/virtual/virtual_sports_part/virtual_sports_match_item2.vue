@@ -439,7 +439,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #303442;
+        color: var(--q-gb-t-c-18);
         font-size: 12px;
         font-weight: 400;
 
