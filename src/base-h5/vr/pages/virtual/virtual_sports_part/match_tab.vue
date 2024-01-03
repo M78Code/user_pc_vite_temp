@@ -71,11 +71,6 @@ export default {
     ]
   },
   computed: {
-    // ...mapGetters({
-    //   sub_menu_type: 'get_curr_sub_menu_type',
-    //   current_batch:'get_current_batch',
-    //   get_access_config: 'get_access_config',
-    // }),
     sub_menu_type(){
       return VR_CTR.state.curr_sub_menu_type;
     },
@@ -151,7 +146,6 @@ export default {
     }
   },
   methods: {
-    // ...mapMutations(['set_current_mid','set_detail_data']),
     set_detail_data(data){
       // TODO 需要对应
       VR_CTR.state.detail_data = data
@@ -294,9 +288,6 @@ export default {
     }
   },
   unmounted(){
-    // this.$root.$off(this.emit_cmd.EMIT_BASKETBALL_TIME_ARRIVED,this.basket_ball_time_handle);
-    // this.$root.$off(this.emit_cmd.EMIT_FORCE_END_PLAYING_BASKETBALL,this.end_playing_basketball_handle);
-    // this.$root.$off(this.emit_cmd.EMIT_INGAME_RESULT_SHOW_END,this.ingame_result_show_end);
     this.emitters.map((x) => x());
     clearTimeout(this.timer1_)
   }

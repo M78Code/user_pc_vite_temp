@@ -53,10 +53,6 @@ export default {
   components: {
     "no-data": no_data
   },
-  computed: {
-    // ...mapGetters(['get_lang']),
-    // get_lang(){ return 'zh' }
-  },
   props:{
     tid: Number|String,
     current_match: {

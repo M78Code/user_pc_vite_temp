@@ -118,8 +118,6 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters(['get_lang']),
-    // get_lang(){return 'zh'}
   },
   watch: {
     'current_match': {
