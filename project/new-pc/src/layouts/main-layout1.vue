@@ -75,7 +75,13 @@ document.addEventListener('visibilitychange', event_listener_visibilitychange);
 document.addEventListener('pagehide', event_listener_visibilitychange);
 window.addEventListener("resize", resize_);
 
+let timeout_vue_hidden_run_flg = null
+let vue_hidden_run_flg = null
+timeout_vue_hidden_run_flg = setTimeout(() => {
+  vue_hidden_run_flg = true;
+}, 4000);
 
+const background_run_time = ref('')
 const route = useRoute();
 /**
  * @Description 全局一秒钟定时器 
