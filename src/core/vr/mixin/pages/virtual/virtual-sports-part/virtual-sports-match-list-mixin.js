@@ -4,7 +4,7 @@
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 import { MatchDataWarehouse_H5_List_Common ,MatchDataWarehouse_PC_List_Common } from "src/output/index.js"
-import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
 const MatchDataBaseH5 = window.BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_List_Common:MatchDataWarehouse_H5_List_Common;
 
 export default {
@@ -20,8 +20,11 @@ export default {
       v_match_hps:[],
       standard_odd_status:0,
       MatchDataBaseH5,
-      standard_edition
     }
+  },
+  computed:{
+    // /标准版本2  简易版1
+    standard_edition(){ return UserCtr.standard_edition },
   },
   mounted() {
     this.emitters = [
