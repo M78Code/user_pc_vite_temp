@@ -7,7 +7,7 @@ import virtual_sports_mixin from "src/core/vr/mixin/virtual-sports-mixin.js"
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { get_now_server } from 'src/core/utils/common/module/other.js'
-import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+// import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, LOCAL_PROJECT_FILE_PREFIX,compute_css_obj } from "src/output/index.js"
@@ -72,8 +72,8 @@ export default {
       lengue_name: '',
       // 是否展开视频
       expend_video: true,
-      // 1:新手版 2:专业版
-      standard_edition,
+      // // 1:新手版 2:专业版
+      // standard_edition,
       LOCAL_PROJECT_FILE_PREFIX,
       compute_css_obj,
       // 是否全部折叠
@@ -461,6 +461,8 @@ export default {
      }
   },
   computed:{
+    // 1:新手版 2:专业版
+    standard_edition(){return UserCtr.standard_edition;},
     current_league(){return VR_CTR.state.current_league},
     current_batch(){return VR_CTR.state.current_batch},
     get_video_process_data(){return VR_CTR.state.video_process_data},

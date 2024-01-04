@@ -3,7 +3,7 @@
  */
 import { api_v_sports } from "src/api/index.js";
 import { LOCAL_PROJECT_FILE_PREFIX,calc_win, project_name, i18n_t } from 'src/output/index.js'
-import { lang } from 'src/base-h5/mixin/userctr.js'
+import UserCtr from "src/core/user-config/user-ctr.js"; 
 
 export default {
   name: "knockout",
@@ -29,7 +29,8 @@ export default {
       check_if_there_tab: []  //  判断tab 选项卡是不是有数据
     }
   },
-  computed: {
+  computed:{
+    lang(){ return UserCtr.lang },
   },
   watch: {
     'current_match': {
@@ -44,7 +45,6 @@ export default {
   setup() {
     return {
       LOCAL_PROJECT_FILE_PREFIX,
-      lang
     }
   },
   methods: {

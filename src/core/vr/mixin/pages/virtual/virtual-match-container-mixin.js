@@ -2,8 +2,7 @@
  * @Description: 虚拟体育赛狗赛马赛果项(应该是老版h5列表页面使用)
  */
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-import { lang } from 'src/base-h5/mixin/userctr.js'
-
+import UserCtr from "src/core/user-config/user-ctr.js"; 
 const static_serve = lodash.get(window.BUILDIN_CONFIG,'OSS_JSON.static[0]');
 export default {
   name:'virtual_match_container',
@@ -154,6 +153,7 @@ export default {
     }
   },
   computed:{
+    lang(){ return UserCtr.lang },
     get_theme(){return 'theme01'},
     stage_result(){
       let result = "";

@@ -2,7 +2,7 @@
  * @Description: 虚拟体育 小组赛页面 只需要传个 tid 联赛id进来
  */
 import { api_v_sports } from "src/api/index.js";
-import { lang } from 'src/base-h5/mixin/userctr.js'
+import UserCtr from "src/core/user-config/user-ctr.js"; 
 
 export default {
   name: "group_matches",
@@ -17,8 +17,10 @@ export default {
     return {
       group_stage_list: [],
       no_data: false,
-      lang
     }
+  },
+  computed:{
+    lang(){ return UserCtr.lang },
   },
   mounted() {
   },
