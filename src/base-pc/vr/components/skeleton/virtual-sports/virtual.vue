@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import skeleton from 'src/base-h5/vr/components/skeleton/index.vue'
+import skeleton from 'src/base-pc/vr/components/skeleton/index.vue'
 import UserCtr from "src/core/user-config/user-ctr.js"; 
 
 export default {
