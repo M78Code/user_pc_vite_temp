@@ -3,7 +3,7 @@
  * @Date: 2020-12-22 18:07:03
  * @Description: 虚拟体育首页主文件
  */
-import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/virtual_sports_mixin.js"
+import virtual_sports_mixin from "src/core/vr/mixin/virtual_sports_mixin.js"
 import VR_CTR from "src/core/vr/vr-sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { get_now_server } from 'src/core/utils/common/module/other.js'

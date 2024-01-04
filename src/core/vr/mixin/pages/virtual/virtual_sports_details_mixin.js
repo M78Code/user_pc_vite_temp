@@ -1,7 +1,7 @@
 /*
  * @Description:虚拟体育详情页最外层父组件
  */
-import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/virtual_sports_mixin.js"
+import virtual_sports_mixin from "src/core/vr/mixin/virtual_sports_mixin.js"
 import {api_v_sports} from "src/api/index.js";
 import VSport from 'src/core/vr/vr-sports/vsport.js';
 import VR_CTR from "src/core/vr/vr-sports/virtual_ctr.js"
