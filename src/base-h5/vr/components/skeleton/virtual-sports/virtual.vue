@@ -73,13 +73,14 @@
 
 <script>
 import skeleton from 'src/base-h5/vr/components/skeleton/index.vue'
-import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+import UserCtr from "src/core/user-config/user-ctr.js"; 
 
 export default {
   components:{ skeleton },
   computed:{
     // ...mapGetters(["get_newer_standard_edition"]),
     // get_newer_standard_edition(){ return ''}
+    standard_edition(){return UserCtr.standard_edition},
   },
   data(){
     return {
