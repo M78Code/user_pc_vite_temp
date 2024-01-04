@@ -160,7 +160,7 @@
   </div>
 </template>
 <script>
-import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/virtual_sports_mixin.js";
+import virtual_sports_mixin from "src/core/vr/mixin/pages/virtual/virtual_sports_part/virtual_sports_mixin.js";
 import noData from "src/base-h5/vr/components/common/vr_sport_no_data.vue";
 import matchTab from "src/base-h5/vr/pages/virtual/virtual_sports_part/match_tab.vue"
 import v_s_match_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list.vue"

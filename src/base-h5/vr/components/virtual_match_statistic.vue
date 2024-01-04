@@ -78,7 +78,7 @@
 </template>
  
 <script>
-import VR_CTR from "src/base-h5/vr/utils/vsport/virtual_ctr.js"
+import VR_CTR from "src/core/vr/vr-sports/virtual_ctr.js"
 export default {
   data() {
     return {

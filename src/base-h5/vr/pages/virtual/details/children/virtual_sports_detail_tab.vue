@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import virtual_sports_detail_tab_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/details/children/virtual_sports_detail_tab_mixin.js";
+import virtual_sports_detail_tab_mixin from "src/core/vr/mixin/pages/virtual/details/children/virtual_sports_detail_tab_mixin.js";
 export default {
   mixins:[virtual_sports_detail_tab_mixin],
   name:'virtual_sports_detail_tab',

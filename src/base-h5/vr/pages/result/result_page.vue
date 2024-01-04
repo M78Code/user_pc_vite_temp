@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import result_page_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/result/result_page_mixin.js";
+import result_page_mixin from "src/core/vr/mixin/pages/result/result_page_mixin.js";
 export default {
   mixins:[result_page_mixin],
   name:'result_page',

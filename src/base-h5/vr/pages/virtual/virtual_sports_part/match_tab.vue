@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import match_tab_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/match_tab_mixin.js";
+import match_tab_mixin from "src/core/vr/mixin/pages/virtual/virtual_sports_part/match_tab_mixin.js";
 export default {
   mixins:[match_tab_mixin],
   name:'match_tab',

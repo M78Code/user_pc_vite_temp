@@ -59,7 +59,7 @@
   </div>
 </template>
 <script>
-import virtual_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_mixin.js";
+import virtual_mixin from "src/core/vr/mixin/pages/virtual/virtual_mixin.js";
 import virtualSports from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports.vue";    // 虚拟体育
 export default {
   mixins:[virtual_mixin],

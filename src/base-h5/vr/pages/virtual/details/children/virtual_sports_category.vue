@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import virtual_sports_category_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/details/children/virtual_sports_category_mixin.js";
+import virtual_sports_category_mixin from "src/core/vr/mixin/pages/virtual/details/children/virtual_sports_category_mixin.js";
 // 引入加载中的组件
 import loading from 'src/base-h5/components/common/loading.vue';
 import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue"

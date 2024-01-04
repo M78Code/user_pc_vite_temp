@@ -27,7 +27,7 @@
   </div>
 </template>
 <script>
-import group_knockout_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/group_knockout_mixin.js";
+import group_knockout_mixin from "src/core/vr/mixin/pages/virtual/virtual_sports_part/group_knockout_mixin.js";
 import group_matches from "src/base-h5/vr/pages/virtual/virtual_sports_part/group_matches.vue";
 import knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/knockout.vue";
 export default {

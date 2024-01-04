@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import ranking_list_start_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/ranking_list_start_mixin.js";
+import ranking_list_start_mixin from "src/core/vr/mixin/pages/virtual/virtual_sports_part/ranking_list_start_mixin.js";
 import no_data from "src/base-h5/vr/components/common/vr_sport_no_data.vue"
 export default {
   mixins:[ranking_list_start_mixin],

@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import virtual_sports_timer_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/virtual_sports_timer_mixin.js";
+import virtual_sports_timer_mixin from "src/core/vr/mixin/pages/virtual/virtual_sports_part/virtual_sports_timer_mixin.js";
 export default {
   mixins:[virtual_sports_timer_mixin],
   name:'virtual_sports_timer',

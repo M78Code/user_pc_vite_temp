@@ -147,7 +147,7 @@
   </div>
 </template>
 <script>
-import virtual_sports_stage_mixin from "src/base-h5/vr/mixin/virtual_sports/pages/virtual/virtual_sports_part/virtual_sports_stage_mixin.js";
+import virtual_sports_stage_mixin from "src/core/vr/mixin/pages/virtual/virtual_sports_part/virtual_sports_stage_mixin.js";
 import virtualSportsTimer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
 import loading from 'src/base-h5/components/common/loading.vue';
 import dateMatchList from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_list.vue'
