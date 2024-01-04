@@ -19,8 +19,8 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { debounce } from "lodash";
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
-import {MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/output/index.js"
-
+import {MatchDataWarehouse_H5_Detail_Common, MatchDataWarehouse_PC_Detail_Common} from "src/output/index.js"
+const MatchDataWarehouseInstance = window.BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_Detail_Common:MatchDataWarehouse_H5_Detail_Common;
 const { height, width, css} = dom
 
 export default {

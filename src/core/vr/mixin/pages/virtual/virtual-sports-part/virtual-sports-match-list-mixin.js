@@ -3,8 +3,9 @@
  */
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5} from "src/output/index.js"
+import { MatchDataWarehouse_H5_List_Common ,MatchDataWarehouse_PC_List_Common } from "src/output/index.js"
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+const MatchDataBaseH5 = window.BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_List_Common:MatchDataWarehouse_H5_List_Common;
 
 export default {
   props:{

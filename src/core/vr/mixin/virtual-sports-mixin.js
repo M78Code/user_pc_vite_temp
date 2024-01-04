@@ -9,8 +9,8 @@ import { api_common } from "src/api/index.js";
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { get_now_server } from 'src/core/utils/common/module/other.js'
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
-
+import { MatchDataWarehouse_H5_List_Common, MatchDataWarehouse_PC_List_Common } from "src/output/index.js"
+const MatchDataBaseH5 = window.BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_List_Common:MatchDataWarehouse_H5_List_Common;
 export default {
   data(){
     return {
