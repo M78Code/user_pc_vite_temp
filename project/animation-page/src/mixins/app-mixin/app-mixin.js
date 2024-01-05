@@ -2,13 +2,13 @@ import { loadLanguageAsync , useMittOn, MITT_TYPES, useMittEmit  } from "src/out
 import { throttle } from "lodash";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 import STANDARD_KEY from "src/core/standard-key";
-import { enter_params } from 'src/core/enter-params/index.js'
+// import { enter_params } from 'src/core/enter-params/index.js'
 import { LocalStorage } from 'src/core/utils/common/module/web-storage.js'
  
  
 import { http, AllDomain } from "src/core/http/index.js";
  
-import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
+ 
 
 export default {
   data() {
@@ -26,16 +26,14 @@ export default {
   },
   created() {
     // 参数控制处理和跳转逻辑
-    url_param_ctr_init(this);
-   this.init_process() ;
+ 
+  //  this.init_process() ;
 
-
+  this.set_init_load(true);
     
   },
   watch: {
-    '$route'(to, from) {
-      watch_route_fun(to, from);
-    },
+  
     init_load(val){
       if(val&&document.getElementById("loading-root-ele")){
  

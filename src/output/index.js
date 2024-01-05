@@ -40,7 +40,3 @@
  
  // 埋点相关
  export * from "./module/hide-api.js"
- 
- 
-//当前项目专用的   
-export * from "./project/index.js"
