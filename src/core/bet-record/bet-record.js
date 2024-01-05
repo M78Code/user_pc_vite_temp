@@ -29,6 +29,8 @@ class BetRecord {
     // 接口是否返回错误码为0401038限频
     this.is_limit = false
 
+    // 预约  0进行中  1已失效
+    this.appoint_order_status = 0
     // 投注记录版本变更
     this.bet_record_version = ref('1111')
   }
