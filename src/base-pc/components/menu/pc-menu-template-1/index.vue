@@ -100,7 +100,6 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { compute_css_obj } from 'src/core/server-img/index.js'
-import lodash_ from "lodash"
 
 import MenuItem from "./menu-item.vue";
 
@@ -342,6 +341,11 @@ const lev_1_click = (obj) => {
   if(root){
     MenuData.set_menu_root(root)
   }
+  // 不是列表页 点击列表菜单
+  if(route.name != 'home'){
+    router.push({name:'home'})
+  }
+
   // 设置 左侧菜单
   MenuData.set_left_menu_result(left_obj)
 
@@ -372,6 +376,11 @@ const lev_2_click = (detail = {}) => {
 
   current_lv_2_mi.value = lv2_mi
 
+  // 不是列表页 点击列表菜单
+  if(route.name != 'home'){
+    router.push({name:'home'})
+  }
+
   MenuData.set_left_menu_result(left_obj)
 
   MenuData.set_mid_menu_result(mid_obj)
@@ -383,32 +392,31 @@ const lev_2_click = (detail = {}) => {
  * 详情页回首页
  */
 const set_route_url = () => {
-  let { name } = route;
-  if ((!route?.query?.flag) && ["details", "search", "video", "virtual_details"].includes(name)) {
-    router.push({
-      name: 'home'
-    });
+  let name = lodash.get(route,'name','')
+  if (["details", "search", "video", "virtual_details"].includes(name)) {
+    return true
   }
-  first_change.value = false;
+ return false
 };
 /**
  * 今日早盘按钮点击
  * @param {*} val
  */
 const handle_click_jinri_zaopan = (val) => {
-  set_route_url();
-
+  
   MenuData.set_menu_root(val)
 
   let obj = {
     lv1_mi: `101${val}`,
     lv2_mi: ''
   }
+  obj.lv2_mi = get_lv_1_lv_2_mi( obj.lv1_mi )
+
   // mif 赛种id
   // lv1_mi 新菜单id
   // lv2_mi 二级菜单id
   current_lv_1_mi.value = obj.lv1_mi
-  current_lv_2_mi.value = get_lv_1_lv_2_mi( obj.lv1_mi )
+  current_lv_2_mi.value = obj.lv2_mi 
 
   MenuData.set_left_menu_result(obj)
 
@@ -416,6 +424,9 @@ const handle_click_jinri_zaopan = (val) => {
   if(MenuData.is_zaopan()){
     MenuData.set_mid_menu_result({md:""})
   }
+  
+
+  if(set_route_url()) return
 
   MenuData.set_menu_current_mi(obj.lv2_mi)
 };
@@ -428,7 +439,7 @@ const get_lv_1_lv_2_mi = (mi) => {
 
   if(obj.mi){
     // 获取菜单下的第一个菜单
-    lv2_mi = lodash_.get(obj,'sl[0].mi', '')
+    lv2_mi = lodash.get(obj,'sl[0].mi', '')
   }
 
   return lv2_mi
