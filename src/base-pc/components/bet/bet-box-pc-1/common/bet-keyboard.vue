@@ -26,6 +26,10 @@ const ref_data = reactive({
   oid:0
 })
 
+const props = defineProps({
+  oid:0
+})
+
 onMounted(()=>{
   addnum()
 })
@@ -34,7 +38,7 @@ onUpdated(()=>{
     //获取最大限额
     let key_board_obj = lodash.get(BetData,'bet_keyboard_config',{})
     ref_data.max_money = key_board_obj.max_money
-    ref_data.oid = key_board_obj.id
+    ref_data.oid = props.oid
 })
 
 // 获取商户配置的 快捷金额
