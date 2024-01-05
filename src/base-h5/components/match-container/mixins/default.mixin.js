@@ -241,8 +241,8 @@ export default defineComponent({
       return lodash.get(MatchResponsive.ball_seed_count.value, `${key}`, 1)
     },
     is_http_update_info () {
-      const is_http_update_info = lodash.get(MatchResponsive, 'is_http_update_info.value', true)
-      return is_http_update_info
+      const result = lodash.get(MatchResponsive, 'is_http_update_info.value', true)
+      return result
     },
      // 获取联赛赛事数量
     get_ball_seed_league_count () {

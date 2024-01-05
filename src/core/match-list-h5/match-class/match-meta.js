@@ -1363,7 +1363,7 @@ class MatchMeta {
       MatchResponsive.set_is_http_update_info(false)
       clearTimeout(timer)
       timer = null
-    }, 1000)
+    }, 1500)
   }
   /**
    * @description: 0未开始 1滚球阶段 2暂停 7延迟 10比赛中断 110即将开赛  3结束 4关闭 5取消 6比赛放弃 8未知 9延期
