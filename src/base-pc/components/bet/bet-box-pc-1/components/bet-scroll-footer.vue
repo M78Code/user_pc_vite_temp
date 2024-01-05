@@ -58,7 +58,7 @@
     </div>
 
     <div>
-      <span class="check-box" v-if="BetData.is_bet_single" @click="BetData.set_regular_amount()">
+      <span class="check-box" :class="{'p-d-20': BetData.is_bet_single}" v-if="BetData.is_bet_single" @click="BetData.set_regular_amount()">
         <span class="check-wrap relative-position" :class="{'active': BetData.is_checked_regular_amount}" />
         <span>{{ i18n_t('bet.common_amount') }}</span>
       </span>
@@ -172,9 +172,11 @@ const set_bet_is_accept = () => {
     line-height: 36px;
     border-radius: 36px;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 14px;
     border: 0.5px solid var(--q-gb-bd-c-8);
-    color: var(--q-gb-t-c-5);
+    color: var(--q-gb-t-c-6);
+    background: linear-gradient(180deg, #E5EDFE 0%, #F7FAFF 53.65%, #F6F9FF 100%);
+    box-shadow: 0px 2px 2px 0px rgba(24, 81, 130, 0.12);
   }
   .bet-message {
     text-align: center;
@@ -210,6 +212,7 @@ const set_bet_is_accept = () => {
   align-items: center;
   cursor: pointer;
   padding: 0 10px;
+  color: var(--q-gb-t-c-11);
 
   .check-wrap {
     padding: 0;
