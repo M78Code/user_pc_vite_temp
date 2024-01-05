@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, computed,watch} from "vue"
+import { ref, reactive, onMounted, onUnmounted, computed,nextTick} from "vue"
 import BetKeyboard from "../common/bet-keyboard.vue"
 import { IconWapper } from 'src/components/icon'
 import lodash_ from 'lodash'
@@ -85,11 +85,13 @@ const winMoney = computed(()=> state =>{
 })
 
 onMounted(() => {
-    // 监听 限额变化
-    ref_data.emit_lsit = {
-        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
-        emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
-    }
+    nextTick(() => {
+        // 监听 限额变化
+        ref_data.emit_lsit = {
+            emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
+            emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
+        }
+    })
 })
 
 onUnmounted(() => {
@@ -103,6 +105,8 @@ onUnmounted(() => {
 
 
  const change_money_handle = obj => {
+    console.log(obj)
+    console.log(BetData.bet_amount)
     if(!obj.id) {
         // 获取当前投注金额
         let money = BetData.bet_amount
@@ -115,7 +119,6 @@ onUnmounted(() => {
         let money_amount = mathJs.add(money,money_)
         // 投注金额 不能大于最大投注金额 也不能大于用户余额
         if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
-            BetData.set_bet_amount(mathJs.add(money,money_))
             ref_data.money = money_amount
         }else{
             // 最大限额不能大于余额
@@ -123,11 +126,8 @@ onUnmounted(() => {
             if(UserCtr.balance < ref_data.max_money){
                 money_a = UserCtr.balance
             }  
-            BetData.set_bet_amount(mathJs.add(money,money_))
-
             ref_data.money = money_a
-        }  
-        
+        } 
     }
 }
 
@@ -165,7 +165,7 @@ const set_ref_data_bet_money = () => {
     ref_data.max_money = lodash_.min(max_money_arr) //多项单注限额最大值取多项里最小的
     ref_data.money = ""
     //设置键盘MAX限额
-    let max_money_obj = {max_money:ref_data.max_money}
+    let max_money_obj = {max_money:ref_data.max_money,id:''}
     BetData.set_bet_keyboard_config(max_money_obj)
 }
 

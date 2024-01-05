@@ -78,7 +78,6 @@ onMounted(() => {
      ref_data.emit_lsit = {
         emitter_1: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
     }
-   
     ref_data.money = props.items.bet_amount
     show_quick()
     InputFocus.value.focus()
@@ -89,7 +88,10 @@ onUnmounted(() => {
 })
 
 const change_money_handle = obj => {
-    if(props.items.id == obj.id) {
+    console.log(obj)
+    console.log(props.items.id)
+    if(props.items.playOptionsId == obj.id) {
+        console.log('123',props.items.bet_amount )
         // 获取当前投注金额
         let money = props.items.bet_amount 
         let money_ = obj.money
@@ -113,6 +115,7 @@ const change_money_handle = obj => {
             items_obj.bet_amount = money_amount
             ref_data.money = money_amount
         }
+        console.log(items_obj)
         BetViewDataClass.set_bet_special_series_item(items_obj)
     }
 }
@@ -136,6 +139,7 @@ const keydown = (e) => {
 const set_win_money = () => {
 
     let items_obj = lodash_.get(props,'items',{})
+    console.log(items_obj)
     // 输入控制
     if( ref_data.money < props.items.max_money &&  ref_data.money < UserCtr.balance){
         items_obj.bet_amount = ref_data.money
@@ -162,6 +166,7 @@ const show_quick = () => {
             item.show_quick = true
         }
     })
+    console.log(list)
     BetViewDataClass.set_bet_special_series(list)
 }
 
