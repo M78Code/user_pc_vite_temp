@@ -28,7 +28,7 @@
           <span class="yb-info-money font14" v-if="BetData.is_bet_single"> {{ i18n_tc('app_h5.bet.bet_win',{"total": bet_win_money(BetData.bet_data_class_version) }) }}</span>
           <span class="yb-info-money font14" v-else>{{ i18n_t('bet.sum') }}{{bet_total(BetViewDataClass.bet_view_version) }}</span>
         </div>
-        <div class="middle ml-4" v-else>盘口已关闭</div>
+        <div class="middle ml-4" v-else>{{ i18n_t('bet.close') }}</div>
         <img :src="compute_local_project_file_path('/image/bet/roll-right-arrow.png')" alt="">
       </div>
 
@@ -44,10 +44,10 @@
     <!-- 投注后 -->
     <div v-else>
       <!--  单关 -->
-      <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub font500">确认</div>
+      <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub font500">{{ i18n_t('app_h5.bet.confirm') }}</div>
       <!--  串关  -->
       <div v-else>
-        <div @click="set_confirm" class="sub">注单已确认 <span class="sub-total">合计{{bet_total(BetViewDataClass.bet_view_version)}}</span></div>
+        <div @click="set_confirm" class="sub">{{ i18n_t('app_h5.bet.bet_confirm') }} <span class="sub-total">{{ i18n_t('bet.sum') }}{{bet_total(BetViewDataClass.bet_view_version)}}</span></div>
         <div @click="set_retain_selection" class="reserve font500">保留选项，继续投注</div>
       </div>
 
@@ -245,7 +245,7 @@ const set_special_state = computed(()=> status => {
   for(let item of  bet_list) {
     // 盘口已关闭 盘口关闭不允许投注
     if(item.ol_os != 1 || item.hl_hs != 0 || item.mid_mhs != 0){
-      ref_data.show_title = "盘口已关闭"
+      ref_data.show_title = i18n_t('bet.close')
       // 不允许投注
       is_bet_single = false
       return true
