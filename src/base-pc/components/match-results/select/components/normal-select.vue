@@ -149,10 +149,11 @@ export default {
       background: #e3e9ee;
     }
     .rule-scroll-area {
-      ::v-deep .q-scrollarea__content {
+      &:deep(.q-scrollarea__content){
         width: 100%;
         background: #fff;
-      }
+  }
+     
     }
   }
 }

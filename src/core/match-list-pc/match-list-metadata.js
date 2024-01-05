@@ -201,7 +201,7 @@ function set_base_data_init() {
 	//右侧比分版 应该改变
 	MatchDataWarehouse_PC_Detail_Common.set_match_details(matchs_list[0], [])
 	useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, matchs_list[0].mid)
-	handle_match_list_request_when_ok(matchs_list, false, true, true);
+	handle_match_list_request_when_ok(data, false, true, true);
 
 	let ts1 = Date.now();
 	let mids_arr = [];

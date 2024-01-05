@@ -11,20 +11,21 @@
             <div class="inputBox">
                 <icon-wapper class="icon" :name="`img:${img_search_icon_y0}`" size="14px"></icon-wapper>
                 <input type="text" placeholder="请输入联赛名或球队名" v-model="SearchPCClass.keyword" @keyup.enter="_addSearchHistory(SearchPCClass.keyword)"/>
-                <p class="cursorPointer" @click.self.stop="ShowSearch(false)">|&nbsp;&nbsp;关闭</p>
+                <p class="cursorPointer search-close" @click.self.stop="ShowSearch(false)">关闭</p>
             </div>
             <div class="historyBox">
-            <!--  @onclick="tab_click" :hasActivity="hasActivity" -->
-            <div class="historyBoxTab">
-                <TabWapper :list="SearchPCClass.sportList" :is_show_line="true" :line_width="40" :is_show_btn="true" tab_name_key="sportName" :padding="10" @onclick="set_sports_tab_index" :currentIndex="current_index" ref="tab" />
+                <!--  @onclick="tab_click" :hasActivity="hasActivity" -->
+                <div class="historyBoxTab">
+                    <TabWapper :list="SearchPCClass.sportList" :is_show_line="true" :line_width="40" :is_show_btn="true" tab_name_key="sportName" :padding="10" @onclick="set_sports_tab_index" :currentIndex="current_index" ref="tab" />
+                </div>
+                
+                <!-- <Tab :list="nav_list" @onclick="tab_click" is_show_line :currentIndex="current_index" :padding="15"
+                        :hasActivity="hasActivity" :line_width="36" /> -->
+                <bevisSearchList v-show="(SearchPCClass?.searchHistory || []).length" kind="history"
+                                    :list="SearchPCClass?.searchHistory ?? []" @Delete="_deleteSearchHistory" />
+                <bevisSearchList kind="hot" :list="SearchPCClass?.hotSearchList ?? []" @Search="_addSearchHistory" />
             </div>
-            
-            <!-- <Tab :list="nav_list" @onclick="tab_click" is_show_line :currentIndex="current_index" :padding="15"
-                    :hasActivity="hasActivity" :line_width="36" /> -->
-            <bevisSearchList v-show="(SearchPCClass?.searchHistory || []).length" kind="history"
-                                :list="SearchPCClass?.searchHistory ?? []" @Delete="_deleteSearchHistory" />
-            <bevisSearchList kind="hot" :list="SearchPCClass?.hotSearchList ?? []" @Search="_addSearchHistory" />
-            </div>
+            <div class="maskBox" @click.stop="ShowSearch(false)"></div>
         </div>
     </nav>
 </template>
@@ -165,6 +166,21 @@ onUnmounted(() => {
 .cursorPointer{
     cursor: pointer;
 }
+.search-close {
+    position: relative;
+    padding-left: 24px;
+    display: flex;
+    align-items: center;
+    &::before {
+        content: ' ';
+        height: 20px;
+        width: 1px;
+        display: block;
+        background-color: #DEE4F2;
+        position: absolute;
+        left: 0;
+    }
+}
 p{
     margin: 0;
     padding: 0;
@@ -195,12 +211,12 @@ p{
         position: relative;
         height: 100%;
         .inputBox{
-            width: 1200px;
+            min-width: 984px;
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #fff;
+            background: #E9F0FF;
             z-index: 999;
             padding: 0 24px;
             box-sizing: border-box;
@@ -208,6 +224,7 @@ p{
                 flex: 1;
                 margin: 0 16px;
                 border: none;
+                background: #E9F0FF;
                 height: 80%;
                 &:focus-visible{
                     outline: none;
@@ -217,12 +234,17 @@ p{
                 margin: 0;
             }
         }
+        .maskBox {
+            min-width: 984px;
+            background: rgb(0, 0, 0, .2);
+            height: 100vh;
+        }
         .historyBox{
-            width: 1200px;
+            min-width: 984px;
             min-height: 320px;
             position: absolute;
-            background: #fff;
-            top: 100%;
+            background: #F6F9FF;
+            top: calc(100% + 6px);
             left: 0;
             z-index: 999;
             padding: 0 24px 16px;
