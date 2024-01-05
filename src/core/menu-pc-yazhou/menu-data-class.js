@@ -13,6 +13,7 @@ import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { SessionStorage } from "src/output/module/constant-utils.js";
 import STANDARD_KEY from "src/core/standard-key";
 import {set_template_width} from 'src/core/match-list-pc/list-template/match-list-tpl.js'
+import { let_ball_play_tpl } from "src/core/constant/project/index.js"
 const menu_key = STANDARD_KEY.get("menu_pc");
 
 

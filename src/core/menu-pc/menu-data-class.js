@@ -363,7 +363,6 @@ class MenuData {
    * lv2_mi
    */
   set_left_menu_result(obj) {
-    console.log('MENUDATA.set_left_menu_result', this.is_scroll_ball())
     // 设置 列表接口类型
     // this.set_match_list_api_type(obj);
 

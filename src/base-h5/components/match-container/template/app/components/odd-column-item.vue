@@ -165,9 +165,10 @@ const is_show_fenpan = computed(() => {
   return !(is_fengpan(get_odd_status()) && [18,19].includes(+lodash.get(props.current_tab_item, 'id'))) || ((odd_item.value.on || convert_num(odd_item.value) === 0) && props.match.csid != 1)
 })
 
+// 是否 接口 导致的数据变化
 const is_http_update_info = computed(() => {
-  const is_http_update_info = lodash.get(MatchResponsive, 'is_http_update_info.value', true)
-  return is_http_update_info
+  const result = lodash.get(MatchResponsive, 'is_http_update_info.value', true)
+  return result
 })
 
 // 判断边框border-radius样式

@@ -105,8 +105,6 @@ onUnmounted(() => {
 
 
  const change_money_handle = obj => {
-    console.log(obj)
-    console.log(BetData.bet_amount)
     if(!obj.id) {
         // 获取当前投注金额
         let money = BetData.bet_amount
@@ -119,7 +117,7 @@ onUnmounted(() => {
         let money_amount = mathJs.add(money,money_)
         // 投注金额 不能大于最大投注金额 也不能大于用户余额
         if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
-            BetData.set_bet_obj_amount(mathJs.add(money,money_))
+            BetData.set_bet_amount(mathJs.add(money,money_))
             ref_data.money = money_amount
         }else{
             // 最大限额不能大于余额
@@ -127,7 +125,7 @@ onUnmounted(() => {
             if(UserCtr.balance < ref_data.max_money){
                 money_a = UserCtr.balance
             }  
-            BetData.set_bet_obj_amount(mathJs.add(money,money_))
+            BetData.set_bet_amount(mathJs.add(money,money_))
             ref_data.money = money_a
         } 
     }
@@ -177,7 +175,6 @@ const set_win_money = () => {
      // 输入控制
      let sum = 0
      if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
-        BetData.set_bet_amount(ref_data.money)
         //计算多项最高可赢
         BetData.bet_single_list.forEach((item)=>{
             sum += mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)
@@ -189,8 +186,8 @@ const set_win_money = () => {
             ref_data.max_money = UserCtr.balance
             ref_data.money = ref_data.max_money
         }
-        BetData.set_bet_amount(ref_data.money)
     }
+    BetData.set_bet_amount(ref_data.money)
 }
 
     
