@@ -246,6 +246,7 @@ const computed_process_name = computed(() => {
 //是否赛事显示时间
 const computed_show_date = computed(() => {
   let { mmp, csid, ms, mlet } = props.match || {};
+  console.log(csid, 'csid')
   csid = Number(csid);
   let show = false;
 
@@ -257,7 +258,7 @@ const computed_show_date = computed(() => {
   // 电竞赛事未开赛也展示赛事日期
   // 欧洲版网球没有展示未开赛时间，在此处加了5
   else if (
-    [1, 2, 4, 5, 6, 11, 12, 13, 14, 15, 16].includes(csid) ||
+    [1, 2, 4, 5, 6,7, 11, 12, 13, 14, 15, 16].includes(csid) ||
     is_eports_csid(csid)
   ) {
     show = true;
