@@ -67,9 +67,9 @@ const compute_view_tpl_id = (data_tpl_id) => {
 	  view_tpl_id = 10
 	}else if([13].includes(+data_tpl_id)){
 	  view_tpl_id = 1
-	}else if([28].includes(+data_tpl_id)){ //15分钟
-		  view_tpl_id = 24
-		}
+	}else if([24].includes(+data_tpl_id)){ //15分钟
+		view_tpl_id = 24
+	}
 	else if([240].includes(+data_tpl_id)){
 	// return matchtpl1after
 	  view_tpl_id = 'Esports'

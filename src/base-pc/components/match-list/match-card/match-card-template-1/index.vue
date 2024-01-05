@@ -1,6 +1,7 @@
 <template>
   <!--赛事玩法模板-->
   <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
+  <!-- {{ get_match_style.view_tpl_id }}--{{ get_match_style.show_level }} -->
   <div class="c-match-card relative-position" :id="`list-mid-${mid}`"
     :style="`height:${lodash.get(get_match_style, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
     v-if="get_match_style.is_show_card && [1, 2].includes(get_match_style.show_level)">

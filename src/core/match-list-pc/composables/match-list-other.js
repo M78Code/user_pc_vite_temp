@@ -273,7 +273,7 @@ export function data_move_up(list) {
   * @param {Number} mst 赛事进行时间
   * @param {Function} callback 回调 重新拉取赛事信息
   */
-function set_min15(match, mst, callback) {
+export function set_min15(match, mst, callback) {
   // 如果未开赛
   if (get_match_status(match.ms, [110]) === 0) {
     return
@@ -306,6 +306,7 @@ function set_min15(match, mst, callback) {
     callback()
   }
   Object.assign(match, { hSpecial, hSpecial5min })
+  return {hSpecial, hSpecial5min}
 }
 /**
   * @Description 获取五分钟玩法阶段状态
