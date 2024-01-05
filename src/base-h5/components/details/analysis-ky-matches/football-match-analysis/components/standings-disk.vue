@@ -284,6 +284,7 @@ import lodash from "lodash"
     .item-1st {
       flex: 0 0 12%;
       height: 100%;
+      color: var(--q-analysis-text-color-20);
     }
 
     .item-2nd, .item-3rd {
