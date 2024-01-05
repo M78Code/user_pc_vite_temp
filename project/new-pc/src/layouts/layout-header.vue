@@ -11,7 +11,7 @@
       :style="SearchPCClass.search_isShow ? 'z-index:900;' : ''">
       <!-- 搜索 -->
         <!--<header-search />-->
-        <bevisHeaderSearch></bevisHeaderSearch>
+        <bevisHeaderSearch class="layout-header-search"></bevisHeaderSearch>
       <!-- 公告滚动组件 -->
       <marquee-cst v-if='!SearchPCClass.search_isShow' @navigate="navigate" />
       <!-- 占位盒子 -->
@@ -543,6 +543,9 @@ const set_show_login_popup = (data) =>{
 <style lang="scss" scoped>
 .yb-layout-margin-header{
     height: 100px;
+}
+.layout-header-search {
+  margin-right: 13px;
 }
 </style>
 <!--

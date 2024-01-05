@@ -24,7 +24,7 @@
 
             <!--键盘区域-->
             <div class="row bet-keyboard bet-keyboard-zone">
-                <bet-keyboard :oid="item.playOptionsId"/>
+                <bet-keyboard />
             </div>
         </div>
         <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, computed } from "vue"
+import { ref, reactive, onMounted, onUnmounted, computed, nextTick } from "vue"
 import BetKeyboard from "../common/bet-keyboard.vue"
 import { IconWapper } from 'src/components/icon'
 import lodash_ from 'lodash'
@@ -68,14 +68,14 @@ const props = defineProps({
 const InputFocus = ref()
 
 onMounted(() => {
-    // 监听 限额变化
-    ref_data.emit_lsit = {
-        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
-        emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
-        emitter_3: useMittOn(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY, set_bet_multiple_money).off,
-    }
-    let min_max_obj = lodash_.get(BetViewDataClass,`bet_min_max_money[${props.item.playOptionsId}]`,{})
-    BetData.set_bet_keyboard_config(min_max_obj)
+    nextTick(()=>{
+        // 监听 限额变化
+        ref_data.emit_lsit = {
+            emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
+            emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
+            emitter_3: useMittOn(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY, set_bet_multiple_money).off,
+        }
+    })
 })
 
 onUnmounted(() => {
@@ -87,9 +87,11 @@ onUnmounted(() => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = obj => {
-    if(props.item.playOptionsId == obj.id || obj.id == undefined){
+    console.log(obj)
+   
+    if(props.item.playOptionsId == obj.id || obj.id == ''){
          // 获取当前投注金额
-        let money = obj.id == undefined ? BetData.bet_amount : props.item.bet_amount
+        let money = obj.id == '' ? BetData.bet_amount : props.item.bet_amount
         let money_ = obj.money
         // 设置最大投注金额
         if(obj.money == "MAX"){
@@ -97,7 +99,7 @@ onUnmounted(() => {
         }
         // 计算投注金额
         let money_amount = mathJs.add(money,money_)
-        // 投注金额 不能大于最大投注金额 也不能大于用户余额
+            // 投注金额 不能大于最大投注金额 也不能大于用户余额
         if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
             BetData.set_bet_obj_amount(mathJs.add(money,money_),props.item.playOptionsId)
             ref_data.money = money_amount
@@ -107,9 +109,10 @@ onUnmounted(() => {
             if(UserCtr.balance < ref_data.max_money){
                 money_a = UserCtr.balance
             }  
-            BetData.set_bet_obj_amount(money_a,props.item.playOptionsId)
+            BetData.set_bet_obj_amount(mathJs.add(money,money_),props.item.playOptionsId)
+
             ref_data.money = money_a
-        } 
+        }
     }
 }
 
@@ -144,11 +147,9 @@ const set_ref_data_bet_money = () => {
     ref_data.seriesOdds = seriesOdds
     // 限额改变 重置投注金额
     ref_data.money = ''
-
      //设置键盘MAX限额
-    let max_money_obj = {max_money:ref_data.max_money,id:props.item.playOptionsId}
-    BetData.set_bet_keyboard_config(max_money_obj)
-
+     let max_obj = {max_money:ref_data.max_money,id:props.item.playOptionsId}
+     BetData.set_bet_keyboard_config(max_obj)
     InputFocus.value.focus()
 }
 
