@@ -191,7 +191,6 @@ const select_change = (value) => {
 const changeTab = (i,event) => {
     // if(activeOn.value === i)return;
     activeOn.value = i;
-    useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: false });
     const tid = popular_league.value[i].tid;
     event && scrollMenuEvent(event,".search-tab-content-ul",".active");
     MatchMeta.clear_match_info()
