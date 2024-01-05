@@ -54,6 +54,8 @@ import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
 import { TopMenu, ScrollMenu, SearchTab, DateTab, SwitchWap } from 'src/base-h5/components/menu/app-h5-menu/index'
 
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 
 import { is_esports, is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
@@ -272,6 +274,8 @@ watch(() => MenuData.current_lv_1_menu_mi.value, (new_, old_) => {
   MenuData.set_old_current_lv_1_menu_i([2000, 300].includes(new_) ? old_ : '');//电竞vr记录旧菜单id
   MenuData.search_data_tab_index();//清除足球联赛缓存
   init_data(new_, old_ == 28 ? 1 : 0)
+  // 重置热门联赛
+  MatchResponsive.set_popular_league({})
 })
 // 早盘 串关  电竞
 // const set_scroll_early_single = (params) => {
@@ -387,7 +391,7 @@ const handle_match_render_data = (type) => {
   // if (MenuData.top_menu_title.mi === 50000) return
   MatchMeta.set_origin_match_data({ md: MenuData.data_time })
   // 今日 下 得足球  提前设置 热门联赛
-  if (MenuData.current_lv_2_menu_i === '1012') MatchMeta.set_tid_map_mids()
+  // if (MenuData.current_lv_2_menu_i === '1012') MatchMeta.set_tid_map_mids()
 }
 
 </script>
