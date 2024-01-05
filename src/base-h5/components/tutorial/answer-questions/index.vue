@@ -185,7 +185,8 @@ const go_back = () => {
 </script>
 <style scoped lang="scss">
 .ht-border {
-    border-top: .08rem solid var(--q-gb-bg-c-11);
+    // border-top: .08rem solid var(--q-gb-bg-c-11);
+    padding-top: .08rem;
 }
 
 .ht-content {
