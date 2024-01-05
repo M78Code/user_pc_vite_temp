@@ -234,7 +234,6 @@ const lev_1_click = (obj) => {
   // show_menu 展开或者收起  收起是 true  展开是false
   // current_lv_1_mi 选中按钮  选中的情况下 点击一级菜单 收起或者展开
   // 收起的情况下 再次回来 还是收起 / 展开的情况下 再次回来还是展开
-
   // mif 赛种id
   // lv1_mi 新菜单id
   // lv2_mi 二级菜单id
@@ -326,7 +325,7 @@ const lev_1_click = (obj) => {
     // 常规体育
     left_obj = {
       lv1_mi: mi,
-      lv2_mi: `101${MenuData.root}`,
+      lv2_mi: get_lv_1_lv_2_mi(mi),
     }
 
     if(MenuData.is_zaopan()){

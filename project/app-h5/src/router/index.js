@@ -141,7 +141,7 @@ const router = createRouter({
           {
             path: "/virtual_sports_details",
             name: "virtual_sports_details",
-            component: () => import("src/base-h5/vr/pages/virtual/virtual_sports_details.vue"),
+            component: () => import("src/base-h5/vr/pages/virtual/virtual-sports-details.vue"),
             meta: {
               preload: true,
             },
