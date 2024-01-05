@@ -1,5 +1,4 @@
 <template>
-  {{ match_style_obj.data_tpl_id }}
   <div class="c-match-item " :class="'tpl-'+match_style_obj.data_tpl_id"  >
     <!-- 15分钟玩法标题 -->
     <div class=" flex absolute c15min-title">
@@ -27,7 +26,6 @@
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
           <basis-info1 v-if="is_mounted" is_15min :match="match" show_type="all" />
         </div>
-
         <!-- 赛事盘口投注项 -->
         <match-handicap
           :handicap_list="compute_match_all_handicap_data(match)"

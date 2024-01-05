@@ -11,7 +11,7 @@ import { get_compute_other_play_data, get_play_current_play, get_tab_play_keys }
 import { match_state_convert_score_dict, history_score_dict } from 'src/core/constant/project/module/data-class-ctr/score-keys.js'
 import { get_match_template_id } from './list-template/match-list-tpl'
 import { let_ball_play_tpl } from "src/core/constant/project/index.js"
-import {get_21_bold_template,get_template_data} from './composables/match-list-other'
+import {get_21_bold_template,get_template_data,set_min15} from './composables/match-list-other'
 export * from './list-template/match-list-tpl'
 export const check_match_end = (match, callback) => {
     if (match?.mmp == 999) {
@@ -528,7 +528,7 @@ const clone_arr = (arr) => {
 export function compute_match_all_handicap_data(match) {
     let { tpl_id, csid, mmp } = match
     // 模板玩法配置
-    let play_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}`] || {}
+    let play_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`] || {}
     // 是否角球菜单
     let is_corner_menu =false// $NewMenu.is_corner_menu()
     //盘口类型
@@ -581,13 +581,13 @@ export function compute_match_all_handicap_data(match) {
     }
     //  15分钟主盘口列表
     else if (tpl_id == 24 && csid == 1) {
-        main_handicap_list = clone_arr(match_list_play_config.template_0.hps15Minutes)
+        main_handicap_list = clone_arr(MATCH_LIST_TEMPLATE_CONFIG.template_1_config.hps15Minutes)
         type = 4
-        this.set_min15(match, match.mst)
+        set_min15(match, match.mst)
     }
     //  罚牌主盘口列表
     else if (tpl_id == 25 && csid == 1) {
-        main_handicap_list = clone_arr(match_list_play_config.template_0.hpsPunish)
+        main_handicap_list = clone_arr(MATCH_LIST_TEMPLATE_CONFIG.template_1_config.hpsPunish)
     }
     // 计算赛事让球方
     computed_team_let_ball(match)

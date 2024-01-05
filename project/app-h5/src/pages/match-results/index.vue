@@ -81,7 +81,7 @@ const switchMenu = [
 /**
  * 赛果日期格式
  */
- const dataList = reactive(dateTabList(new Date(new Date().getTime()),[],[],1));
+ const dataList = reactive(dateTabList(new Date(new Date().getTime() - 24 * 60 * 60 * 1000),[{ name: "今日", val: new Date().setHours(0, 0, 0, 0) }],[],1));
 /**
  * 默认值
  */
