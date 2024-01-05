@@ -1,6 +1,6 @@
 import { reactive, ref } from "vue";
 import lodash from 'lodash';
-import {choose_config} from 'src/output/module/constant-utils.js'
+import { choose_config } from 'src/output/module/constant-utils.js'
 
 /**
  * 列表表征数据存放实例
@@ -85,135 +85,19 @@ class MatchListCardDataClass {
     csid_to_card_key_obj && (this.csid_to_card_key_obj = csid_to_card_key_obj)
     this.set_list_version()
   }
-  /**
-     * @Description 设置吸顶高度
-     * @param {Object}
-    */
-  set_sticky_top(){
-    let type_name =''
-    let obj = {
-      type:32,
-      league:32
-    }
-    // 搜索页面
-    if(this.$route.name == 'search'){
-      obj = {
-        type:36,
-        league:74
-      }
-    }
-    // 冠军聚合页
-    else if(type_name == 'winner_top'){
-      obj = {
-        type:84,
-        league:122
-      }
-    }
-    // 非滚球电竞
-    else if($menu.menu_data.is_esports && !['hot','play'].includes(type_name)){
-      obj = {
-        type:196,
-        league:196
-      }
-    }
-    // 冠军 并且不是早盘
-    else if($menu.menu_data.match_tpl_number == 18 && type_name != 'early'){
-      obj = {
-        type:40,
-        league:40
-      }
-    }
-    // 今日
-    else if(type_name == 'today'){
-      obj = {
-        type:36,
-        league:74
-      }
-    }
-    // 滚球
-    else if(type_name == 'play'){
-      obj = {
-        type:84,
-        league:122
-      }
-      if(this.is_show_hot){
-        obj = {
-          type:36,
-          league:74
-        }
-      }
-       //虚拟体育
-      if(this.menu_data.is_virtual_sport){
-        // 虚拟足球
-         if(this.menu_data.cur_level2_menu =="30054"){
-            obj = {
-              type:160,
-              league:20
-            }
-           }else{
-             obj = {
-               type:117.5,
-               league:20
-             }
-           }
-       }
-    }
-    // 早盘
-    else if(type_name == 'early'){
-      obj = {
-        type:90,
-        league:90
-      }
-      if(this.is_show_hot){
-        obj = {
-          type:36,
-          league:74
-        }
-      }
-    }
-    // 串关
-    else if(type_name == 'bet'){
-      obj = {
-        type:86,
-        league:124
-      }
-      if(this.is_show_hot){
-        obj = {
-          type:36,
-          league:74
-        }
-      }
-    }
-    // 热门赛事
-    else if(type_name == 'hot'){
-      obj = {
-        type:84,
-        league:122
-      }
-    }
-    // 收藏页面
-    if(this.vx_layout_list_type == 'collect'){
-      obj = {
-        type:36,
-        league:74
-      }
-      // 电竞收藏
-      if($menu.menu_data.is_esports){
-        obj = {
-          type:196,
-          league:196
-        }
-      }
-      // 冠军收藏
-      else if($menu.menu_data.match_tpl_number == 18 && type_name != 'winner_top'){
-        obj = {
-          type:40,
-          league:40
-        }
-      }
-    }
-    this.fixed_header_height = obj.type + 'px'
-    Object.assign(this.sticky_top,obj)
+  set_sticky_top({
+    type, league, fixed_header_height
+  }) {
+    // 吸顶高度
+    this.sticky_top = {
+      //固定在顶部的头高度
+      fixed_header_height,
+      // 赛事状态 | 赛种类型 吸顶高度
+      type,
+      // 联赛名称吸顶高度
+      league
+    };
+    this.set_list_version()
   }
   // 设置 的列表scroll_top
   set_scroll_top(scroll_top) {
@@ -240,7 +124,7 @@ class MatchListCardDataClass {
     if (tpl_odds) return tpl_odds
     //默认使用第一个
     if (choose_config[csid]) return choose_config[csid][0]
-    console.error("默认模板没有配置",csid)
+    console.error("默认模板没有配置", csid)
     return {};
   }
   //获取单个卡片对象
