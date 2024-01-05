@@ -3,17 +3,28 @@
 <template>
 
 <div>
-  <div class="top-menu-content">
+  <!-- <div class="top-menu-content"> -->
         <!-- 体育 -->
         <!-- <span class="label">{{ i18n_t("results.sport") }}</span> -->
-        <Select-Wrapper
+        <!-- <Select-Wrapper
           :sportType="sport"
           :options="sport_type"
           :isChampion="0"
           use_component_key="Select_n"
         ></Select-Wrapper>
       </div>
+      <q-separator class="divider" color="#F2F5F8" inset /> -->
+    <div class="c-simple-header">
+      <div class="rule-logo">
+        <img src="" alt="" class="logo-img">
+      </div>
+      
+    </div>
+    <div>
+      <div>赛果</div>
       <q-separator class="divider" color="#F2F5F8" inset />
+    </div>
+    
     <div class="search-header">
     <div class="wrap-select">
       <div class="r-select ball-games">
@@ -117,15 +128,15 @@
             <!-- 滚球 -->
             <span>{{ i18n_t("results.roll_ball") }}</span>
           </div>
-          <!-- <div
+          <div
             class="checkbox"
             v-if="results_params.sportType == '1' && show_play_back"
             @click="highlights_input_radio"
           >
-            <fliter-checkbox :checked="is_highlights" /> -->
+            <fliter-checkbox :checked="is_highlights" /> 
             <!-- 精彩回放筛选 -->
-            <!-- <span>{{ i18n_t("video.video_event_history") }}</span>
-          </div> -->
+            <span>{{ i18n_t("video.video_event_history") }}</span>
+          </div> 
         </div>
       </div>
       
@@ -335,6 +346,26 @@ onMounted(()=>{
 <style scoped lang="scss">
 
 @import "./result-header.scss";
+.c-simple-header{
+  display: flex;
+  padding: 0 20px 0 15px;
+  height: 61px;
+  min-height: 61px;
+  align-items: center;
+  text-transform: uppercase;
+  .rule-logo{
+    width: 127px;
+    height: 30rpx;
+    .logo-img{
+      width: 130px;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+  }
+}
+
 .top-menu-content {
     height: 40px;
     border-top: 1px solid var(--q-announce-left-menu-color-2);
@@ -363,7 +394,7 @@ onMounted(()=>{
 .search-header {
   display: flex;
   align-items: center;
-  padding: 28px 20px 14px 20px;
+  padding: 28px 0px 14px 0px;
   border-bottom:1px solid #ff7000;
   
 
@@ -433,7 +464,7 @@ onMounted(()=>{
       }
 
       .ball-games-label {
-        margin-left: 10px;
+        //margin-left: 10px;
         white-space: nowrap;
       }
     }
@@ -590,13 +621,13 @@ onMounted(()=>{
 
     .search-btn {
       display: inline-block;
-      width: 90px;
+      width: 80px;
       height: 28px;
-      border-radius: 4px;
+      border-radius: 100px;
       text-align: center;
       line-height: 28px;
       cursor: pointer;
-      background: #ff7000;
+      background: #179CFF;
       color:#ffffff;
       // &:hover {
       //     background: #ffb001;
