@@ -520,7 +520,7 @@ export default {
     background: var(--q-gb-bg-c-25);
     justify-content: space-between;
     &.progress{
-      border-top: 2px solid rgba(116, 196, 255, 0.5);
+      border-top: 2px solid var(--q-gb-bd-c-1);
       // border-top: 2px solid #127DCC;
     }
     &.not_begin{
