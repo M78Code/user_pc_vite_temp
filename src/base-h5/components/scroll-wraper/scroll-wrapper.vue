@@ -6,10 +6,10 @@
 
 <template>
 
-    <!-- 骨架图 -->
-    <div class="skeleton-contaniner" v-if="show_skeleton_screen">
-      <div class="skeleton-box"><SList :loading_body="true" /></div>
-    </div>
+  <!-- 骨架图 -->
+  <div class="skeleton-contaniner" v-if="show_skeleton_screen">
+    <div class="skeleton-box"><SList :loading_body="true" /></div>
+  </div>
       
   <!-- high_scrolling: set_is_high_scrolling && menu_type !== 100 && !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100, -->
   <div class="scroll-wrapper" ref="container" @scroll="handler_match_container_scroll">
@@ -39,7 +39,7 @@
       </div>
     </div>
     <!-- 回到顶部按钮组件 -->
-    <ScrollTop :list_scroll_top="scroll_top" @back-top="goto_top" />
+    <ScrollTop :list_scroll_top="scroll_top" to_com=".refresh-container" @back-top="goto_top" />
   </div>
 </template>
 

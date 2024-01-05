@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <Teleport to="body" v-if="!disabled">
+  <Teleport :to="to_com" v-if="!disabled">
     <!-- <img class="component scroll-top list-scroll-to-top"
       :class="[is_show_btn?'show':'hide', { 'app-h5': PROJECT_NAME === 'app-h5' }]"
       :src="scroll_top_image" @click="back_top"
@@ -32,6 +32,10 @@ const props = defineProps({
   list_scroll_top: {
     type: Number,
     default: 0
+  },
+  // 需要挂在的节点
+  to_com: {
+    default: 'body'
   }
 })
 
@@ -106,13 +110,13 @@ onUnmounted(() => {
   width: 0.3rem;
   height: 0.3rem;
   bottom: 0;
-  right: .2rem;
+  right: .25rem;
   z-index: 999;
   background-size:100%;
-  --private-transition-duration: 1s;
+  --private-transition-duration: 500ms;
   transition: bottom var(--private-transition-duration);
   &.show{
-    bottom:  1.5rem;
+    bottom:  0.9rem;
     opacity: 1;
   }
   &.hide{

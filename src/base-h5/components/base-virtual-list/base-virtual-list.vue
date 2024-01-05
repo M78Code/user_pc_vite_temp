@@ -22,7 +22,7 @@
   </div>
   <!-- 回到顶部按钮组件 -->
   <template v-if="isShowGoTop">
-    <ScrollTop :list_scroll_top="rollingHeight" @back-top="gotTop" />
+    <ScrollTop :list_scroll_top="rollingHeight" to_com=".outContainer" @back-top="gotTop" />
   </template>
 </template>
 
@@ -360,7 +360,7 @@ const findStartByBinarySearch = (_positionDataArr, scrollTop) => {
  */
 const gotTop = () => {
   let timer = setTimeout(() => {
-    scrollerContainerRef.value && scrollerContainerRef.value.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollerContainerRef.value && scrollerContainerRef.value.scrollTo({ top: 0 });
     clearTimeout(timer)
     timer = null
   }, 100)
