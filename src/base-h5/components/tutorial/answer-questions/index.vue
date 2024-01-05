@@ -424,6 +424,7 @@ const go_back = () => {
             .info {
                 font-size: .14rem;
                 text-align: center;
+                color: var(--q-gb-t-c-18);
 
                 span {
                     color: var(--q-gb-t-c-1);
@@ -484,5 +485,7 @@ const go_back = () => {
             margin-left: .04rem;
         }
     }
-
+    .text-style{
+        color: var(--q-gb-t-c-18);
+    }
 }</style>
