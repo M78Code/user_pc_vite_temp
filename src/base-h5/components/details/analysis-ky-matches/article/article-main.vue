@@ -45,6 +45,7 @@ import lodash from 'lodash'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { get_server_file_path } from "src/core/file-path/file-path.js"
 import ZHUGE from "src/core/http/zhuge-tag";
+import {MenuData} from "src/output/index.js";
 
   // 弹框是否显示
   let is_show_dialog = ref(false)
@@ -65,7 +66,9 @@ import ZHUGE from "src/core/http/zhuge-tag";
 
 
   onMounted(() => {
-    get_article(route.params.mid)
+    get_article(route.params.mid);
+    // Bug: 53048
+    MenuData.set_current_lv_2_menu_i({});
   })
 
   watch(() => is_show_dialog.value, (newValue) => {

@@ -63,6 +63,7 @@ p{
 .list {
     width: 100%;
     margin: 0;
+    padding: 0 8px;
 
     dt {
         width: 100%;

@@ -5,11 +5,6 @@
 -->
 
 <template>
-
-  <!-- 骨架图 -->
-  <div class="skeleton-contaniner" v-if="show_skeleton_screen">
-    <div class="skeleton-box"><SList :loading_body="true" /></div>
-  </div>
       
   <!-- high_scrolling: set_is_high_scrolling && menu_type !== 100 && !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100, -->
   <div class="scroll-wrapper" ref="container" @scroll="handler_match_container_scroll">
@@ -83,7 +78,6 @@ const max_height = ref(false)
 const scroll_timer = ref(0)
 const emitters = ref({})
 const container = ref(null)
-const show_skeleton_screen = ref(false)
 // const scroll_height = ref(0)
 
 onMounted(() => {
@@ -93,17 +87,8 @@ onMounted(() => {
   emitters.value = {
     emitter: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MAX_HEIGHT, update_max_height).off,
     emitter_1: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, goto_top).off,
-    emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, (val) => {
-      show_skeleton_screen.value = val
-      show_skeleton_screen.value && reset_show_skeleton_state()
-    }).off,
   }
 })
-
-// 骨架图隐藏兜底
-const reset_show_skeleton_state = lodash.debounce(() => {
-  if (show_skeleton_screen.value) show_skeleton_screen.value = false
-}, 8000)
 
 // 获取仓库赛事数据
 const get_match_item = (mid) => {
@@ -167,7 +152,8 @@ const container_total_height = computed(() => {
 // 动态 样式 
 const get_container_style = computed(() => {
   const style_obj = { 'height': is_static.value ? 'auto' : container_total_height.value}
-  if (menu_type.value !== 100 && !(menu_type.value == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.value?.mi))) Object.assign(style_obj, {
+  const length = lodash.get(MatchMeta.match_mids, 'length', 0)
+  if (length > 0 && menu_type.value !== 100 && !(menu_type.value == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.value?.mi))) Object.assign(style_obj, {
     ...compute_css_obj({key: 'h5-kyapp-speciality-bg' })
   })
   return style_obj
@@ -235,24 +221,6 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.skeleton-contaniner{
-  height: 100%;
-  position: relative;
-  .skeleton-box{
-    position: absolute;
-    top: 10px;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    :deep(.skeleton-wrap){
-      padding-top: 0 !important;
-      position: static !important;
-      width: 100%;
-      left: 0;
-      transform: none;
-    }
-  }
-}
 .scroll-wrapper {
   width: 100%;
   height: 100%;

@@ -3,8 +3,14 @@
 -->
 
 <template>
-  <div :class="['match-list-container', { empty_page: match_is_empty }]" :style="page_style">
+  <div :class="['match-list-container', { empty_page: match_is_empty, skeleton_page: show_skeleton_screen && is_show_skeleton }]" :style="page_style">
 
+    <!-- 骨架图 -->
+    <div class="skeleton-contaniner" v-if="show_skeleton_screen && is_show_skeleton">
+      <div class="skeleton-box"><SList :loading_body="true" /></div>
+    </div>
+
+    <!-- 列表容器 -->
     <template v-if="!match_is_empty">
       <component :is="target_com"></component>
     </template>
@@ -19,9 +25,7 @@
       <!-- bevis 修改 46949 【SIT】【H5新版复刻】【H5】虚拟体育列表页无数据返回，页面展示空白 -->
       <NoData class="data-get-empty2" v-else :which='menu_type === 28 ? "noMatch" : "comingSoon"' height='400'></NoData>
     </template>
-
-    <SecondaryDescription />
-    </div>
+  </div>
 </template>
  
 <script setup>
@@ -37,6 +41,8 @@ import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, PROJECT_NAME } fr
 import { is_collect, menu_type } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
+import SList from "src/base-h5/components/skeleton/skeleton-list.vue" 
+
 // yazhou-h5 赛事列表
 import MatchList1 from './components/match-list1.vue'
 // app-h5 赛事列表
@@ -46,8 +52,6 @@ import MatchList3 from './components/match-list3.vue'
 
 // 无网络展示组件
 import NoData from "src/base-h5/components/common/no-data.vue"; 
-// 次要玩法描述组件
-import SecondaryDescription from "src/base-h5/components/match-list/components/secondary-description.vue";
 
 import './styles/index.variables.scss'
 
@@ -62,15 +66,11 @@ const emitters = ref({});
 let timer_super = null
 let timer = ref(null)
 let subscription_timer = null
+const show_skeleton_screen = ref(false)
 
 // TODO: 下面需要替换
 const which = ref('noMatch')
-const invok_source = ref('')
-const ws_invoke_key = ref('match_main')
 const match_is_empty = ref(false)
-const window_scrolly = ref(0)
-const match_list_wrapper_height = ref(0)
-const is_collcte_page = ref(false)
 
 onMounted(() => {
   // 页面css变量植入
@@ -90,8 +90,14 @@ const config = {
   'ouzhou-h5': MatchList3,
 }
 
+// 赛事渲染组件
 const target_com = computed(() => {
   return config[PROJECT_NAME]
+})
+
+// 复刻版显示骨架图
+const is_show_skeleton = computed(() => {
+  return PROJECT_NAME === 'app-h5'
 })
 
 /**
@@ -104,12 +110,21 @@ const upd_match_is_empty = (obj = {}) => {
   match_is_empty.value = state;
 }
 
+// 骨架图隐藏兜底
+const reset_show_skeleton_state = lodash.debounce(() => {
+  if (show_skeleton_screen.value) show_skeleton_screen.value = false
+}, 8000)
+
 // 绑定相关事件监听
 const on_listeners = () => {
   emitters.value = {
     emitter_2: useMittOn(MITT_TYPES.EMIT_SELECT_LEAGUE_COMPLETE,lodash.debounce( (val) => {
       MatchMeta.footer_event({ ...val, text: 'filter' })
     },100)).off,
+    emitter_3: useMittOn(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, (val) => {
+      show_skeleton_screen.value = val
+      show_skeleton_screen.value && reset_show_skeleton_state()
+    }).off,
     emitter_10: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, upd_match_is_empty).off,
     emitter_6: useMittOn(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE, MatchPage.bet_odd_synchronize_handle).off,
     emitter_8: useMittOn(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, MatchListCard.secondary_play_unfold_change_handle).off,
@@ -145,6 +160,25 @@ const clear_timer = () => {
   .main-container{
     height: 100%;
   }
+  .skeleton-contaniner{
+    height: 100%;
+    position: relative;
+    z-index: 100;
+    .skeleton-box{
+      position: absolute;
+      top: 10px;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      :deep(.skeleton-wrap){
+        padding-top: 0 !important;
+        position: static !important;
+        width: 100%;
+        left: 0;
+        transform: none;
+      }
+    }
+  }
 }
 
 .empty_page {
@@ -153,5 +187,8 @@ const clear_timer = () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  &.skeleton_page{
+    display: block;
+  }
 }
 </style>
