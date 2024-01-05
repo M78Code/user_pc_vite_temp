@@ -12,7 +12,7 @@ import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 ////import store from "src/store-redux/index.js";
 import { SessionStorage } from "src/output/module/constant-utils.js";
 import STANDARD_KEY from "src/core/standard-key";
-import {set_template_width} from 'src/core/match-list-pc/list-template/match-list-tpl.js'
+import {set_template_width,get_match_tpl_number} from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 const menu_key = STANDARD_KEY.get("menu_pc");
 
 
@@ -287,10 +287,7 @@ class MenuData {
    * 获取当前的列表的默认的 模板配置
    */
    get_match_tpl_number() {
-    let euid = lodash.get(this.left_menu_result, 'lv2_mi');
-    // 根据当前的菜单id 取到对应的模板id
-    let current_template_id = computed_menu_to_match_templte(euid)
-    return current_template_id
+    return get_match_tpl_number()
 
     // let r = (match_list.params || {}).orpt || 1;
     // if (r == '0') {
