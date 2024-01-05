@@ -47,9 +47,10 @@ const props = defineProps({
 const match = inject('match');
 // 赛事模板样式
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
+const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
+
 // 赛事模板宽度信息
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 // 赛事模板投注项信息
-const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
 const is_mounted = ref(true);
 </script>

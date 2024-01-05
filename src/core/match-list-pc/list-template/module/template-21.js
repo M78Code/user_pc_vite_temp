@@ -93,10 +93,7 @@ const tpl_21_full = [
   */
   export  const set_template_width=(total_width)=>{
     let base_config=  TemplateCommon.set_template_width_base(total_width, width_config)
-
     // 加工 base_config 
-
-
     return base_config
   }
 
