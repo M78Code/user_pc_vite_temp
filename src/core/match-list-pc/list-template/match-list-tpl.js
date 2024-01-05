@@ -25,7 +25,7 @@ function get_match_tpl_number() {
     return current_template_id
 }
 function set_template_width(a, b, c, d) {
-    const tpl_num = get_match_tpl_number()
+    let tpl_num = get_match_tpl_number()
     if (PROJECT_NAME == 'ouzhou-pc') {
         tpl_num = 101 //欧洲是固定模板宽
     }
