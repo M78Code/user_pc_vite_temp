@@ -57,6 +57,7 @@ template {
   align-items: center;
   min-height: 4rem;
   border-radius: 0.1rem;
+  background-color: var(--q-gb-bg-c-23);
   background-size: cover;
   opacity: 0;
   animation: opacityAnimate 0.5s linear;

@@ -50,9 +50,9 @@
     
 
 
-    <div class="bet-footer-check">
+    <div class="bet-footer-check" @click="set_bet_is_accept()">
       <span class="check-box" :class="{'p-d-20': !BetData.is_bet_single}">
-        <span class="check-wrap relative-position" :class="{'active':!BetData.bet_is_accept}" @click="set_bet_is_accept()"/>
+        <span class="check-wrap relative-position" :class="{'active':!BetData.bet_is_accept}"/>
         <span>{{i18n_t('bet.bet_auto_msg_1')}}</span>
       </span>
     </div>
@@ -114,7 +114,6 @@ const set_retain_selection = () => {
  
 // 自动接受更好的赔率
 const set_bet_is_accept = () => {
-    console.log(123)
     let state = !BetData.bet_is_accept
     BetData.set_bet_is_accept(state)
 }
