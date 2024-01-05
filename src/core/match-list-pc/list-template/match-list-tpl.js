@@ -20,7 +20,7 @@ function get_match_tpl_number() {
         current_template_id = computed_menu_to_match_templte_ouzhou(euid)
     } else {
         let mi = get(MenuData.left_menu_result, 'lv2_mi');
-        current_template_id = computed_menu_to_match_templte(parseInt(mi))
+        current_template_id = computed_menu_to_match_templte((mi))
     }
     return current_template_id
 }
@@ -111,7 +111,7 @@ function get_match_template_id({ csid }) {
         "yazhou-pc": 0,
         "new-pc": 0,
     }
-    let tpl_id = get_match_tpl_number2()
+    let tpl_id = get_match_tpl_number()
     // 虚拟足球1001、虚拟篮球1004
     if ([1001, 1004].includes(+csid)) {
         tpl_id = csid
@@ -132,7 +132,6 @@ function get_match_template_id({ csid }) {
         }
         return get_ouzhou_data_tpl_id(csid)
     }
-    
     return tpl_id
 }
 

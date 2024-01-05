@@ -57,7 +57,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             "playOptionId": item.playOptionsId,   // 投注项id
             "playOptions": item.playOptions,   // 投注项配置项
             "seriesType": is_single ? 1 : 2,  // 串关类型 // 串关类型 1 单关 2串关
-            "matchProcessId": item.match_ms + '',  // 赛事阶段
+            "matchProcessId": item.match_ms,  // 赛事阶段
             "scoreBenchmark": "",   // 基准分
             "tenantId": 1,   // 商户id
             "tournamentLevel": item.tournamentLevel,   // 联赛级别

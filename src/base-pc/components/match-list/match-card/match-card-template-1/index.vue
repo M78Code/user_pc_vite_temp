@@ -1,35 +1,20 @@
 <template>
   <!--赛事玩法模板-->
-  <div v-show="false">{{ LayOutMain_pc.layout_version}}</div>
-  <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
-  <div v-show="false">{{ match_style_obj }}</div>
-  <div
-    class="c-match-card relative-position"
-    :id="`list-mid-${mid}`"
-    :style="`height:${lodash.get(get_match_style(), `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
-    v-if="get_match_style().is_show_card"
-  >
-  <!-- {{ get_match_style().view_tpl_id }} -->
-    <component
-      :is="`MatchTpl${get_match_style().view_tpl_id}After`"
-      :mid="mid"
-      v-if="[1, 2].includes(get_match_style().show_level)"
-    />
-    <!-- {{`MatchTpl${match_style_obj.view_tpl_id}After`}} -->
+  <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
+  <!-- {{ get_match_style.view_tpl_id }}--{{ get_match_style.show_level }} -->
+  <div class="c-match-card relative-position" :id="`list-mid-${mid}`"
+    :style="`height:${lodash.get(get_match_style, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
+    v-if="get_match_style.is_show_card && [1, 2].includes(get_match_style.show_level)">
+    <component :is="`MatchTpl${get_match_style.view_tpl_id}After`" :mid="mid" />
   </div>
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, provide } from 'vue';
+import { ref, onMounted, onUnmounted, provide, computed } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { MatchDataWarehouse_PC_List_Common } from "src/output/index.js";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
-// import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
-// import {component_symbol ,need_register_props} from "../config/index.js"
-// //import store from 'src/store-redux/index.js'
-// inject:['match_list_card'],
-
+import { LayOutMain_pc } from "src/output/project/common/pc-common.js";
 // 玩法模板 0   足球-让球&大小  、 足球-角球 、 美足-让球&大小 、 手球-让球&大小
 import { MatchTpl1AfterFullVersionWapper as MatchTpl1After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-1-after/index.js";
 // // 玩法模板 2   足球-半/全
@@ -50,6 +35,7 @@ import { MatchTpl18AfterFullVersionWapper as MatchTpl18After } from "src/base-pc
 import { MatchTpl21AfterFullVersionWapper as MatchTpl21After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-21-after/index.js";
 // // // 玩法模板 24  足球-15分钟
 import { MatchTpl24AfterFullVersionWapper as MatchTpl24After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-24-after/index.js";
+
 // // 电竞玩法模板
 import { MatchTplEsportsAfterFullVersionWapper as MatchTplEsportsAfter } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-esports-after/index.js";
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -75,9 +61,8 @@ export default {
   },
   setup(props) {
     // 赛事样式对象
-    provide("match",MatchDataWarehouse_PC_List_Common.get_quick_mid_obj_ref(props.mid))
+    provide("match", MatchDataWarehouse_PC_List_Common.get_quick_mid_obj_ref(props.mid))
     let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
-
     // 组件是否加载完成
     const is_mounted = ref(true);
     // 显示部分dom ID
@@ -88,9 +73,9 @@ export default {
       //   is_mounted.value = true
       // })
     })
-    const get_match_style = () => {
-      return MatchListCardDataClass.get_card_obj_bymid(props.mid)
-    }
+    const get_match_style = computed(() => {
+      return MatchListCardDataClass.get_card_obj_bymid(props.mid, MatchListCardDataClass.list_version.value)
+    })
     onUnmounted(() => {
       match_style_obj = null
     })
@@ -116,6 +101,7 @@ export default {
 <style lang="scss" scoped>
 .c-match-card {
   overflow: hidden;
+
   .test {
     position: absolute;
     color: red;

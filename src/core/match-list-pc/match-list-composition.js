@@ -244,7 +244,6 @@ function init_page_when_base_data_first_loaded() {
 	if (is_has_base_data === true) {  //如果元数据有数据就设定为data
 		set_load_data_state("data")
 	}
-
 }
 /**
  * 初始化方法
