@@ -141,17 +141,10 @@ const router = createRouter({
           {
             path: "/virtual_sports_details",
             name: "virtual_sports_details",
-            component: () => import("src/base-h5/vr/pages/virtual/virtual_sports_details.vue"),
+            component: () => import("src/base-h5/vr/pages/virtual/virtual-sports-details.vue"),
             meta: {
               preload: true,
             },
-            children: [
-              {
-                path: "virtual_sports_category/:id?",
-                name: "virtual_sports_category",
-                component: () => import("../pages/details/children/virtual-sports-category.vue")
-              },
-            ]
           },
           //活动页面
           {

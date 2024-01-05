@@ -126,6 +126,7 @@
         "ebc": "npm run  export-build-in-config",
         "test-server": "quasar serve ./dist/self-use-version/ -p=35567",
         "test-build":"npm  run  build-self-use-version-test >./log/168.log",
+        "py-git":"python ./git-console.py",
         "echo": "echo \" 此命令无用，查看并选择其他合适命令执行构建 。\" && exit 0"
     },
     "dependencies": {

@@ -3,106 +3,13 @@
 */
 
 
-import { csid_to_tpl_id } from 'src/core/constant/common/module/csid-util.js'
-import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 import { get_match_status } from 'src/output/module/constant-utils.js'
-import PageSourceData from "src/core/page-source/page-source.js";
-import BaseData from "src/core/base-data/base-data.js";
-import { MenuData } from 'src/output/project/index.js'
+
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
 import { get_compute_other_play_data,get_play_current_play,get_tab_play_keys} from 'src/core/match-list-pc/composables/match-list-other.js'
 import { match_state_convert_score_dict, history_score_dict } from 'src/core/constant/project/module/data-class-ctr/score-keys.js'
-/**
-   * @Description  根据菜单ID 获取一个菜单对象
-   * @param {number} menu_id 菜单ID
-   * @param {undefined} undefined
-  */
-function get_menu_obj_by_menu_id(menu_id) {
-    return BaseData.get_menu_list(menu_id) || { count: 0, subList: [], topMenuList: [] }
-}
-/**
-   * @Description 获取当前列表模板编号  
-   * @param {undefined} undefined
-  */
-function get_match_tpl_number(is_hot) {
-    const { left_menu_result = {}, mid_menu_result = {} } = MenuData;
-    let match_tpl_number = -1
-    // 玩法菜单
-    let play_menu = get_menu_obj_by_menu_id(lodash.get(left_menu_result, "lv1_mi"))
-    // 详情页热门赛事 或者 搜索 或者列表强力推荐
-    if (PageSourceData.route_name == 'details' || PageSourceData.route_name == 'search' || is_hot) {
-        match_tpl_number = -1
-        //搜索13列玩法
-        //&& store.getters.get_unfold_multi_column
-        // if (lodash.get(vue, '$route.query.csid', -1) === '1' && MenuData.is_multi_column) {
-        //     match_tpl_number = 13
-        // }
-    }
-    // 竟足赛事 12模板
-    else if (mid_menu_result.mi == 30101) {
-        match_tpl_number = 12
-    }
-    // 冠军聚合页  或者电竞冠军 18模板 
-    else if (MenuData.is_kemp() || MenuData.is_esports_champion()) {
-        match_tpl_number = 18
-    }
-    // 电竞常规赛事
-    else if (MenuData.is_esports()) {
-        match_tpl_number = 'esports'
-    }
-    //13列玩法菜单 && store.getters.get_unfold_multi_column
-    else if (MenuData.is_multi_column && PageSourceData.page_source == 'home') {
-        match_tpl_number = 13
-    }
-    // 取玩法菜单
-    else if (play_menu.field2 == 0 || play_menu.field2) {
-        match_tpl_number = play_menu.field2
-    }
-    return match_tpl_number
-}
-
-/**
- * @Description 获取赛事模板ID
- * @param {number} csid 球种类型
-*/
-export function get_match_template_id({ csid }) {
-    // 这里的话 
-    // 因为我们会有多个版本  
-    // 需要映射到不同的赔率模板 
-    // 所以加一个配置  
-    // 欧洲版从100开始  
-    // 亚洲版从0开始
-
-    const different_version_config = {
-        "ouzhou-pc": 100,
-        "yazhou-pc": 0,
-        "new-pc": 0,
-
-    }
-    let tpl_id = get_match_tpl_number()
-    // 虚拟足球1001、虚拟篮球1004
-    if ([1001, 1004].includes(+csid)) {
-        tpl_id = csid
-    }
-    // 虚拟赛狗1002 虚拟摩托1010 虚拟赛马1011 泥地摩托车1009
-    else if ([1002, 1010, 1011, 1009].includes(+csid)) {
-        tpl_id = 1002
-    }
-    // 99模板根据球种获取模板ID
-    else if (tpl_id == -1) {
-        tpl_id = csid_to_tpl_id(csid)
-    }
-    tpl_id = Number(tpl_id) + Number(different_version_config[PROJECT_NAME])
-    if ('ouzhou-pc' == PROJECT_NAME) {
-        // 欧洲版冠军
-        if (MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp()) {
-            return tpl_id
-        }
-        return get_ouzhou_data_tpl_id(csid)
-    }
-    return tpl_id
-}
-
+import {get_match_template_id}  from './list-template/match-list-tpl'
+export * from './list-template/match-list-tpl'
 export const check_match_end = (match, callback) => {
     if (match?.mmp == 999) {
         // 移除赛事
@@ -114,47 +21,6 @@ export const check_match_end = (match, callback) => {
         callback(match);
     }
 }
-
-/**
- * 
- * @param {Number | String} csid 
- * @returns 数据模板id
- * @description 获取欧洲版 不同球种的数据模板id
- */
-export function get_ouzhou_data_tpl_id(csid) {
-    switch (Number(csid)) {
-        case 1:
-            return 101
-        case 2:
-            return 102;
-        case 4:
-            return 104;
-        case 5:
-            return 109;
-        case 6:
-            return 106;
-        case 7:
-            return 112;
-        case 10:
-        case 8:
-        case 9:
-        case 13:
-            return 111;
-        case 3:
-            return 117;
-        case 12:
-            return 119;
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-            return 124;
-        default:
-            return 101;
-    }
-}
-
-
 /**
      * @description 获取总比分
      * @param  {object} match  当场赛事信息
@@ -186,7 +52,6 @@ export function get_main_score(match) {
     }
     return [_home_score, _away_score]
 }
-
 
 /**
    * @description 获取历史比分列表

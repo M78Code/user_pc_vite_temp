@@ -12,7 +12,7 @@ import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 ////import store from "src/store-redux/index.js";
 import { SessionStorage } from "src/output/module/constant-utils.js";
 import STANDARD_KEY from "src/core/standard-key";
-import MatchListTpl from 'src/core/match-list-pc/list-template/match-list-tpl.js'
+import {set_template_width} from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 const menu_key = STANDARD_KEY.get("menu_pc");
 
 
@@ -758,7 +758,7 @@ class MenuData {
     this.set_bet_category();
     clearTimeout(this._t)
     this._t=setTimeout(() => {
-      MatchListTpl.set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+      set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     }, 10);
     // 菜单数据缓存 //从元数据拿值
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
