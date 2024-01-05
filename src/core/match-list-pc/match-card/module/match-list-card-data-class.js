@@ -62,11 +62,11 @@ class MatchListCardDataClass {
     // 吸顶高度
     this.sticky_top = {
       //固定在顶部的头高度
-      fixed_header_height: "36px",
+      fixed_header_height: "0",
       // 赛事状态 | 赛种类型 吸顶高度
-      type: 36,
+      type: 0,
       // 联赛名称吸顶高度
-      league: 74,
+      league: 0,
     };
     // 赛事列表队列数据
     this.match_list_key = []
