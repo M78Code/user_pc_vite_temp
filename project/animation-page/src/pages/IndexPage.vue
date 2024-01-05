@@ -67,6 +67,11 @@ export default defineComponent({
         let lang = url_obj.searchParams.get('lang') || 'zh'
         // Input data for widget type you want to embded
         const inputData = { eventId, language: lang };
+
+        console.error('inputData--',{
+          configurationId,
+          inputData
+        });
         // Optional object with options.
         // You can check available options further in the docs.
         const options = {};
