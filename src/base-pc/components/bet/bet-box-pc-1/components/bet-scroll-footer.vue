@@ -58,7 +58,7 @@
     </div>
 
     <div>
-      <span class="check-box">
+      <span class="check-box" v-if="BetData.is_bet_single">
         <span class="check-wrap relative-position active"/>
         <span>{{ i18n_t('bet.common_amount') }}</span>
       </span>
@@ -153,6 +153,7 @@ const set_bet_is_accept = () => {
   }
   .bet-footer-check{
     margin-top: 20px;
+    padding: 0 10px 20px 10px;
   }
 
   .bet-submit {
