@@ -47,9 +47,9 @@ import { MatchTpl17AfterFullVersionWapper as MatchTpl17After } from "src/base-pc
 // // // 玩法模板 18  所有冠军玩法 政治娱
 import { MatchTpl18AfterFullVersionWapper as MatchTpl18After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-18-after/index.js";
 // // // 玩法模板 21  足球-比分
-// import { MatchTpl21AfterFullVersionWapper as MatchTpl21After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-21-after/index.js";
+import { MatchTpl21AfterFullVersionWapper as MatchTpl21After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-21-after/index.js";
 // // // 玩法模板 24  足球-15分钟
-// import { MatchTpl24AfterFullVersionWapper as MatchTpl24After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-24-after/index.js";
+import { MatchTpl24AfterFullVersionWapper as MatchTpl24After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-24-after/index.js";
 // // 电竞玩法模板
 import { MatchTplEsportsAfterFullVersionWapper as MatchTplEsportsAfter } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-esports-after/index.js";
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -67,7 +67,10 @@ export default {
     MatchTpl9After,
     MatchTpl17After,
     MatchTpl10After,
+    MatchTpl21After,
+    MatchTpl12After,
     MatchTpl18After,
+    MatchTpl24After,
     MatchTplEsportsAfter
   },
   setup(props) {

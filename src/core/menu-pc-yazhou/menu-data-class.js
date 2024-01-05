@@ -320,16 +320,17 @@ class MenuData {
     this.menu_root_show_shoucang = obj.root;
     // 设置 列表接口类型
     // this.set_match_list_api_type(obj);
-
+    // console.error('set_left_menu_result',obj)
     // 是否有中间菜单 ，
     // 有则 需要显示中间菜单组件,需要 走中间菜单渲染 ，中间菜单负责输出 列表请求参数
     // 如果没有 需要逻辑分流计算 列表请求参数
+    this.left_menu_result = {
+      ...obj,
+      version: Date.now(),
+      root: this.menu_root
+    };
 
     if (obj.has_mid_menu) {
-      this.left_menu_result = {
-        ...obj,
-        version: Date.now(),
-      };
       //  如果 有   走 自然的 中间菜单组件渲染 ，
       this.compute_mid_match_list_menu_component_show();
     } else {
@@ -340,12 +341,8 @@ class MenuData {
       if (mid_menu_refer_params && Object.keys(mid_menu_refer_params).length) {
         this.set_match_list_api_config(mid_menu_refer_params);
       }
-      //  如果没有  需要逻辑分流计算 列表请求参数
-      this.left_menu_result = {
-        ...obj,
-        version: Date.now(),
-      };
     }
+
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {

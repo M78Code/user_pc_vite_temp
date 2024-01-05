@@ -11,7 +11,7 @@
       :style="SearchPCClass.search_isShow ? 'z-index:900;' : ''">
       <!-- 搜索 -->
         <!--<header-search />-->
-        <bevisHeaderSearch></bevisHeaderSearch>
+        <bevisHeaderSearch class="layout-header-search"></bevisHeaderSearch>
       <!-- 公告滚动组件 -->
       <marquee-cst v-if='!SearchPCClass.search_isShow' @navigate="navigate" />
       <!-- 占位盒子 -->
@@ -279,6 +279,7 @@ function menu_init_done() {
   let nav_list = [...site_header_data.nav_list]
   // 如果有电竞
   const { is_mi_2000_open, is_mi_300_open } = BaseData
+  console.log('menu_init_donemenu_init_donemenu_init_donemenu_init_done')
   if (is_mi_2000_open) {
     if (nav_list.findIndex(i => i.id == 5) == -1) {
       nav_list.splice(1, 0, { id: 5, tab_name: i18n_t("common.e_sports"), path: "/e_sport" });
@@ -542,6 +543,9 @@ const set_show_login_popup = (data) =>{
 <style lang="scss" scoped>
 .yb-layout-margin-header{
     height: 100px;
+}
+.layout-header-search {
+  margin-right: 13px;
 }
 </style>
 <!--
