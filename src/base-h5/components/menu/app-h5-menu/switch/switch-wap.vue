@@ -38,12 +38,12 @@ const get_switch_data = () => {
                 {
                     name:i18n_t('footer_menu.pro_v'),
                     val:2,
-                    changeFun:(val)=> hendler_version_change(2)
+                    changeFun:(val)=> handler_version_change(2)
                 },
                 {// 1 新手版
                     name:i18n_t('footer_menu.new_v'),
                     val:1,
-                    changeFun:(val)=> hendler_version_change(1)
+                    changeFun:(val)=> handler_version_change(1)
                 }
             ]
         },
@@ -57,21 +57,14 @@ const get_switch_data = () => {
                     val:1,
                     isSort:1,
                     disabled:is_esports,
-                    changeFun:(val,sort)=>{
-                        if(is_esports.value){//电竞 不会热门排序 和 盘口
-                            return;
-                        }
-                        return UserCtr.set_sort_type(val);
-                    }
+                    changeFun: (val) => handler_sort_change(1)
                 },
                 {
                     //时间
                     name:i18n_t('footer_menu.time'),
                     val:2,
                     isSort:2,
-                    changeFun:(val,sort)=>{
-                        return UserCtr.set_sort_type(val);
-                    }
+                    changeFun: (val) => handler_sort_change(2)
                 }
             ]
         },
@@ -95,7 +88,7 @@ const get_switch_data = () => {
 const switchData = ref(get_switch_data())
 
 // 版本切换
-const hendler_version_change = (val = 2) => {
+const handler_version_change = (val = 2) => {
     UserCtr.set_standard_edition(val)
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
     // MatchFold.clear_fold_info()
@@ -110,6 +103,13 @@ const hendler_version_change = (val = 2) => {
         // }
         // MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
     })
+}
+
+// 排序切换
+const handler_sort_change = (val) => {
+    //电竞 不会热门排序 和 盘口
+    if(val === 1 && is_esports.value) return;
+    UserCtr.set_sort_type(val);
 }
 
 /**

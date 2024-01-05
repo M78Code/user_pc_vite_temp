@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, computed,watch} from "vue"
+import { ref, reactive, onMounted, onUnmounted, computed,nextTick} from "vue"
 import BetKeyboard from "../common/bet-keyboard.vue"
 import { IconWapper } from 'src/components/icon'
 import lodash_ from 'lodash'
@@ -85,11 +85,13 @@ const winMoney = computed(()=> state =>{
 })
 
 onMounted(() => {
-    // 监听 限额变化
-    ref_data.emit_lsit = {
-        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
-        emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
-    }
+    nextTick(() => {
+        // 监听 限额变化
+        ref_data.emit_lsit = {
+            emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
+            emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
+        }
+    })
 })
 
 onUnmounted(() => {
@@ -103,6 +105,8 @@ onUnmounted(() => {
 
 
  const change_money_handle = obj => {
+    console.log(obj)
+    console.log(BetData.bet_amount)
     if(!obj.id) {
         // 获取当前投注金额
         let money = BetData.bet_amount
@@ -124,10 +128,8 @@ onUnmounted(() => {
                 money_a = UserCtr.balance
             }  
             BetData.set_bet_amount(mathJs.add(money,money_))
-
             ref_data.money = money_a
-        }  
-        
+        } 
     }
 }
 

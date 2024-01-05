@@ -26,7 +26,7 @@ const compute_css_variables=()=>{}
  
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const router = useRouter();
-const route= useRoute();
+ 
 const _data = reactive({
   is_ws_run: wslog.ws_run, //// 初始化启动日志系统--开发模式时日志打开
   // config:window.BUILDIN_CONFIG,

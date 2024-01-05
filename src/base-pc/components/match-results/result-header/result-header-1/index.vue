@@ -128,24 +128,25 @@
           </div> -->
         </div>
       </div>
+      
       <div class="flex items-center">
         <div>
         <!-- 提示语 -->
           <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
             <div>{{ i18n_t("results.tips") }}</div>
-        </q-tooltip>
-        <div
-          class="match-resultstips-icon relative-position"
-          @click="click_popup"
-          @mouseleave="img_mouseleave"
-        >
-          <span class="cursor-pointer"></span>
+          </q-tooltip>
+          <div
+            class="match-resultstips-icon relative-position"
+            @click="click_popup"
+            @mouseleave="img_mouseleave"
+          >
+            <span class="cursor-pointer"></span>
+          </div>
         </div>
-      </div>
-      <!-- 搜索 -->
-      <div class="search-btn" @click="refresh()">
-          {{ i18n_t("results.search") }}
-      </div>
+        <!-- 搜索 -->
+        <div class="search-btn" @click="refresh()">
+            {{ i18n_t("results.search") }}
+        </div>
       </div>
       
     </div>
@@ -174,6 +175,11 @@ import {
   MITT_TYPES,
 } from "src/output/index.js";
 import lodash from "lodash"
+import { useGetResultConfig } from "src/base-pc/components/match-results/results-config.js";
+const {
+  //变量
+  changePage
+} = useGetResultConfig();
 const emit = defineEmits(['refresh'])
 const props = defineProps({
   current_sport_id:{
@@ -318,7 +324,8 @@ const confirmDate=()=>{
 * @return {}
 */
 function refresh() {
-  emit("refresh")
+  changePage({changePage: 1});
+  // emit("refresh")
 }
 onMounted(()=>{
  loadLanguageAsync(LocalStorage.get('lang'));
@@ -524,7 +531,7 @@ onMounted(()=>{
   /* ************** select *************** -E */
   /* ************** 日期、单选框、搜索 *************** -S */
   .wrap-handel {
-    width: 100%;
+    // width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
