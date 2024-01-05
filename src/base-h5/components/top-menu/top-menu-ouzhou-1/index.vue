@@ -23,11 +23,17 @@
           <detail-top-info />
         </template>
 
-        <!-- 个人中心 vr 电竞 头部 -->
+        <!-- 个人中心 电竞 头部 -->
         <template v-else-if="is_personal_page">
           <div class="back" @click="go_back">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/back.png`" alt="" />
             {{ i18n_t("ouzhou.setting_menu.back") }}</div>
+        </template>
+         <!-- vr 头部 -->
+         <template v-else-if="is_vr_page">
+          <div>
+            VR Sports
+          </div>
         </template>
         <!-- home 头部 -->
         <template v-else>
@@ -91,10 +97,16 @@ const get_route_name = computed(() => {
   return  router.currentRoute.value.name;
 })
 /**
- * 个人中心 vr 电竞
+ * 个人中心 电竞
  */
 const is_personal_page = computed(() => {
-  return ['/personal','/esports','/virtual'].includes(router.currentRoute.value.path)
+  return ['/personal','/esports'].includes(router.currentRoute.value.path)
+})
+/**
+ * vr 头部
+ */
+const is_vr_page = computed(() => {
+  return ['/virtual'].includes(router.currentRoute.value.path)
 })
 /**
  * 公告  规则
