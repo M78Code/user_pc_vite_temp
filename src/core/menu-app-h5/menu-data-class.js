@@ -151,6 +151,7 @@ class MenuData {
     if(current){
       this.set_cache_class(current)
     }
+    this.search_data_tab_index()
   }
 
   set_collect_list (list) {
