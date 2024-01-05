@@ -39,6 +39,7 @@ onUpdated(()=>{
     let key_board_obj = lodash.get(BetData,'bet_keyboard_config',{})
     ref_data.max_money = key_board_obj.max_money
     ref_data.oid = props.oid
+    BetData.set_bet_keyboard_config('',props.oid)
 })
 
 // 获取商户配置的 快捷金额

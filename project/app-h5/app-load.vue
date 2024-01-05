@@ -24,7 +24,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { PageSourceData, GlobalAccessConfig, ServerTime,set_css ,set_theme_style_sheet_by_css_obj,pre_load_img} from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
-import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
+import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch, nextTick } from "vue";
 import { useRoute } from "vue-router";
 
 import './src/css/common/app.scss'
@@ -68,6 +68,11 @@ onMounted(()=>{
       set_global_theme_change
     ).off
   };
+
+  nextTick(()=>{
+    // 复刻版默认设置中文
+    LocalStorage.set('lang','zh')
+  })
 })
 
 watch(

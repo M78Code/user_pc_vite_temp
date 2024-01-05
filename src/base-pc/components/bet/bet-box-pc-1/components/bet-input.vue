@@ -89,7 +89,8 @@ onUnmounted(() => {
  const change_money_handle = obj => {
     if(props.item.playOptionsId == obj.id || obj.id == undefined){
          // 获取当前投注金额
-        let money = obj.id == undefined ? BetData.bet_amount : props.item.bet_amount
+        let money = BetData.is_bet_merge ? BetData.bet_amount : props.item.bet_amount
+        
         let money_ = obj.money
         // 设置最大投注金额
         if(obj.money == "MAX"){
