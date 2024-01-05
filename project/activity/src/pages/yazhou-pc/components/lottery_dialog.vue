@@ -59,10 +59,10 @@ export default {
   max-width: 750px;
   height: 600px;
   background: var(--qq--activity-get-lottery-bg) no-repeat center;
-
-  ::v-deep .scroll {
+  &:deep(.scroll){
     overflow: hidden;
   }
+
 
   .close {
     width: 30px;
