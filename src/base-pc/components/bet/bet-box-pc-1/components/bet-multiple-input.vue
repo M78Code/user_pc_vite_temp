@@ -119,7 +119,7 @@ onUnmounted(() => {
         let money_amount = mathJs.add(money,money_)
         // 投注金额 不能大于最大投注金额 也不能大于用户余额
         if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
-            BetData.set_bet_obj_amount(mathJs.add(money,money_))
+            BetData.set_bet_amount(mathJs.add(money,money_))
             ref_data.money = money_amount
         }else{
             // 最大限额不能大于余额
@@ -127,7 +127,7 @@ onUnmounted(() => {
             if(UserCtr.balance < ref_data.max_money){
                 money_a = UserCtr.balance
             }  
-            BetData.set_bet_obj_amount(mathJs.add(money,money_))
+            BetData.set_bet_amount(mathJs.add(money,money_))
             ref_data.money = money_a
         } 
     }

@@ -87,10 +87,9 @@ onUnmounted(() => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = obj => {
-    console.log(obj)
     if(props.item.playOptionsId == obj.id || obj.id == undefined){
          // 获取当前投注金额
-        let money = obj.id == '' ? BetData.bet_amount : props.item.bet_amount
+        let money = obj.id == undefined ? BetData.bet_amount : props.item.bet_amount
         let money_ = obj.money
         // 设置最大投注金额
         if(obj.money == "MAX"){
@@ -109,7 +108,6 @@ onUnmounted(() => {
                 money_a = UserCtr.balance
             }  
             BetData.set_bet_obj_amount(mathJs.add(money,money_),props.item.playOptionsId)
-
             ref_data.money = money_a
         }
     }
