@@ -9,7 +9,7 @@ export const { PROJECT_NAME } = BUILDIN_CONFIG ;
 const menu_to_match_templte = {
   // 常规
   101201: { label: "足球-今日-让球&大小", value: "1" },
-  101202: { label: "足球-今日-波胆", value: "1" },
+  101202: { label: "足球-今日-波胆", value: "21" },
   101203: { label: "足球-今日-15分钟", value: "28" },
   101204: {
     label: "足球-今日-独赢/让球胜平负/双重机会",

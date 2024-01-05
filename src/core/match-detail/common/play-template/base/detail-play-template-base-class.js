@@ -2,8 +2,11 @@
  * 详情页面 玩法 级别 布局专用  通用 类
  *
  */
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 import { uid } from "quasar";
 import * as BASE_CONFIG from "./play-template-base.js";
+
+const { PROJECT_NAME , IS_MAIN_PROJECT_PC,  IS_MAIN_PROJECT_H5}  = BUILDIN_CONFIG
 class DetailPlayTemplateBaseClass {
   constructor() {}
 
@@ -17,7 +20,7 @@ class DetailPlayTemplateBaseClass {
     // 可能的 玩法 id ,辅助性的  无实际作用
     this.possible_pids = possible_pids || [];
     //模板ID
-    this.hpt = hpt || 0;
+    this.local_hpt = hpt || 0;
     //topKey
     this.topKey = topKey || "";
     // 玩法的展开收起状态 布尔值 ,这个值 可以被覆写
@@ -26,6 +29,13 @@ class DetailPlayTemplateBaseClass {
     this.mid = mid;
     // ID 数据对象ID  ,topkey 正常不会重复的 ，除非出错，或者走 uid
     this.DPTID = this.topKey || uid();
+    // 项目是 H5,还是PC 
+    this.IS_H5 = IS_MAIN_PROJECT_H5
+    // 项目名字 
+    this.PROJECT_NAME = PROJECT_NAME
+    
+
+    
   }
   /**
    * 初始化 布局数据
@@ -61,6 +71,16 @@ class DetailPlayTemplateBaseClass {
     this.init_style_data()
   }
  
+  /**
+   * 计算 OL 投注项的列表行数，不含特殊的 
+   */
+  compute_ol_row_nmm(hp_obj,hp_index =0){
+
+    // let {ol=[]} = hp_obj[hp_index]
+   
+    // ol.length
+
+  }
 }
 
 export default DetailPlayTemplateBaseClass;

@@ -51,14 +51,14 @@
 
 
     <div class="bet-footer-check">
-      <span class="check-box" >
+      <span class="check-box" :class="{'p-d-20': !BetData.is_bet_single}">
         <span class="check-wrap relative-position" :class="{'active':!BetData.bet_is_accept}" @click="set_bet_is_accept()"/>
         <span>{{i18n_t('bet.bet_auto_msg_1')}}</span>
       </span>
     </div>
 
     <div>
-      <span class="check-box">
+      <span class="check-box" v-if="BetData.is_bet_single">
         <span class="check-wrap relative-position active"/>
         <span>{{ i18n_t('bet.common_amount') }}</span>
       </span>
@@ -209,9 +209,8 @@ const set_bet_is_accept = () => {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  padding-left: 5px;
-  padding-right: 5px;
   cursor: pointer;
+  padding: 0 10px;
 
   .check-wrap {
     padding: 0;
@@ -246,6 +245,8 @@ const set_bet_is_accept = () => {
     }
   }
 }
-
+.p-d-20 {
+  padding-bottom: 20px;
+}
 /** 选择框样式 -E*/
 </style>
