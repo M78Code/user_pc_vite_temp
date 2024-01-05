@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import lodash from 'lodash'
 
 import { MatchDataWarehouse_PC_List_Common as MatchListData, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
@@ -70,6 +70,13 @@ let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);
+
+const pos_class = computed(() => {
+  if(_.get(this.match,'ispo', 0) == 0 && _.get(this.match,'mfo', '')==''){
+    return 'top18'
+  }
+  return ''
+})
 
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
