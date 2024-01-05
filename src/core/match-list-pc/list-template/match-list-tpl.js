@@ -132,7 +132,7 @@ function get_match_template_id({ csid }) {
         }
         return get_ouzhou_data_tpl_id(csid)
     }
-    console.log(tpl_id,'tpl_id')
+    
     return tpl_id
 }
 

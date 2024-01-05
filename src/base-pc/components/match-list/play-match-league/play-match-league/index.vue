@@ -84,6 +84,16 @@
         <!-- <i class="icon-arrow q-icon c-icon" size="14px"></i> -->
       </div>
     </div>
+     <!-- 第二行 玩法名称 -->
+     <div class="tr-col-name" v-if="[1,3,5,21,22].includes(+match_style_obj.data_tpl_id)">
+      <div :style="`width:${match_list_tpl_size.process_team_width}px !important;`"></div>
+      <div class="play-name row col">
+          <div v-for="(item,key) in bet_col" class="col ellipsis" :style="`width: ${(match_style_obj.data_tpl_id == 22 && key <=5  ) ?  match_list_tpl_size.bet_width+5+'px !important; flex:auto'  : ''}`"  v-tooltip="{content:item,overflow:1}"  :key="key">
+            {{item}}
+          </div>
+      </div>
+      <div :style="`width:${match_list_tpl_size.media_width}px !important;`"></div>
+    </div>
   </div>
 </template>
 
