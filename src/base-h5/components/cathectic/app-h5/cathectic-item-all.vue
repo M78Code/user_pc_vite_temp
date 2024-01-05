@@ -185,7 +185,7 @@ template {
 .cathectic-item {
   width: 100%;
   border-radius: 0.1rem;
-  //background: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-23);
   background-size: cover;
   overflow: hidden;
   margin: 0 0 0.1rem;

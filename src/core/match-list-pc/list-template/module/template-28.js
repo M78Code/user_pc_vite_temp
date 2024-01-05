@@ -44,7 +44,6 @@ let hps_15_minute = TemplateCommon.hps_15_minute
 
     // 加工 base_config 
 
-
     return base_config
   }
 

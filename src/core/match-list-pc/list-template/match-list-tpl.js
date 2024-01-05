@@ -29,7 +29,6 @@ function set_template_width(a, b, c, d) {
     if (PROJECT_NAME == 'ouzhou-pc') {
         tpl_num = 101 //欧洲是固定模板宽
     }
-    console.log('set_template_width', tpl_num)
     MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_num}_config`].set_template_width(a, b, c, d)
 }
 
@@ -133,7 +132,7 @@ function get_match_template_id({ csid }) {
         }
         return get_ouzhou_data_tpl_id(csid)
     }
-    console.log(tpl_id,'tpl_id')
+    
     return tpl_id
 }
 

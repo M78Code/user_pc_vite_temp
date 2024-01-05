@@ -7,10 +7,15 @@ import DetailPlayTemplateBaseClass from "../base/detail-play-template-base-class
 
 // 默认布局配置
 const default_layout_config = {
-  column_number: 1,
+   default :{column_number: 1,} ,
+   "app-h5" :{column_number: 1,} 
 };
 // 默认样式配置
-const default_style_config = {};
+const default_style_config = {
+ 
+};
+
+
 
 class DetailPlayTemplate1Class extends DetailPlayTemplateBaseClass {
   constructor() {
@@ -29,16 +34,33 @@ class DetailPlayTemplate1Class extends DetailPlayTemplateBaseClass {
    * 初始化 布局数据
    */
   init_layout_data(params = {}) {
-    let obj = Object.assign({}, default_layout_config, params);
+   
+
+   let p_obj =  default_layout_config[ this.PROJECT_NAME ] ||{}
+   let d_obj =  default_layout_config['default'] ||{}
+
+
+  let  p_config =  Object.assign({} , d_obj ,p_obj)
+    let obj = Object.assign({}, p_config, params);
     super.init_layout_data(obj);
   }
   /**
    * 初始化 样式数据
    */
   init_style_data(params = {}) {
-    let obj = Object.assign({}, default_style_config, params);
+
+    
+   let p_obj =  default_style_config[ this.PROJECT_NAME ] ||{}
+   let d_obj = default_style_config['default'] ||{}
+
+
+  let  p_config =  Object.assign({} , d_obj ,p_obj)
+
+    let obj = Object.assign({}, p_config, params);
     super.init_style_data(obj);
   }
+
+
 
 
 }

@@ -382,7 +382,7 @@ template {
 .early-settle {
   .un-success {
     padding: 0 0.14rem;
-    color: red;
+    color: #f53f3f;
     line-height: 2;
   }
   .early-button {
