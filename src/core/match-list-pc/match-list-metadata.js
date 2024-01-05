@@ -67,22 +67,23 @@ function set_base_data_init() {
 	if ((MenuData.is_today() || MenuData.is_zaopan()) && !MenuData.is_common_kemp()) {
 		// 根据联赛-赛事接口 拿到 mid 去赛事列表里面匹配数据
 		if (!mid) return;
-		// 常规赛种/联赛   滚球 ld
-		let livedata = (mi_tid_mids_res[mid].ld || []).map((item) => ({ tid: item.tid, csid, mids: item.mids.join(","), mids_info: item.mids })) || [];
-		// 常规赛种/联赛   未开赛 nd
-		let nolivedata = (mi_tid_mids_res[mid].nd || []).map((item) => ({ tid: item.tid, csid, mids: item.mids.join(","), mids_info: item.mids, })) || [];
-		// 常规赛种、联赛  滚球 详细内容
-		let live_match = get_match_list_by_mid_for_base_data_res(mid, csid, "ld");
-		// 常规赛种、联赛  未开赛 详细内容
-		let nolive_match = get_match_list_by_mid_for_base_data_res(mid, csid, "nd");
-		matchs_list = [...live_match, ...nolive_match];
-		// 常规赛种联赛
-		data.data = {
-			collectCount: 0,
-			collectMIds: [],
-			livedata: livedata,
-			nolivedata: nolivedata,
-		};
+			// 常规赛种/联赛   滚球 ld
+			let livedata = (mi_tid_mids_res[mid].ld || []).map((item) => ({ tid: item.tid, csid, mids: item.mids.join(","), mids_info: item.mids })) || [];
+			// // 常规赛种/联赛   未开赛 nd
+			let nolivedata = (mi_tid_mids_res[mid].nd || []).map((item) => ({ tid: item.tid, csid, mids: item.mids.join(","), mids_info: item.mids, })) || [];
+			// // 常规赛种、联赛  滚球 详细内容
+
+			let live_match = get_match_list_by_mid_for_base_data_res(mid, csid, "ld");
+			// 常规赛种、联赛  未开赛 详细内容
+			let nolive_match = get_match_list_by_mid_for_base_data_res(mid, csid, "nd");
+			matchs_list = [...live_match, ...nolive_match];
+			// 常规赛种联赛
+			data.data = {
+				collectCount: 0,
+				collectMIds: [],
+				livedata: livedata,
+				nolivedata: nolivedata,
+			};
 	} else {
 		//滚球赛事
 		//滚球赛事
@@ -183,9 +184,7 @@ function set_base_data_init() {
 	);
 	//右侧比分版 应该改变
 	MatchDataWarehouse_PC_Detail_Common.set_match_details(matchs_list[0], [])
-	useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, matchs_list[0].mid)
 	handle_match_list_request_when_ok(data, false, true, true);
-
 	let ts1 = Date.now();
 	let mids_arr = [];
 	(matchs_list || []).forEach((match) => {
@@ -194,6 +193,7 @@ function set_base_data_init() {
 	});
 	// 联赛数据
 	set_match_base_info_by_mids_info(matchs_list, mids_arr, ts1);
+	useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, matchs_list[0].mid)
 	return true;
 };
 

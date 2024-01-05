@@ -94,7 +94,7 @@ const menu_to_match_templte = {
   412: { label: "拳击-冠军-冠军", value: "18" },
   403: { label: "棒球-冠军-冠军", value: "18" },
   401: { label: "冠军-足球", value: "18" },
-  405: { label: "冠军-网球", value: "网球" },
+  405: { label: "冠军-网球", value: "18" },
   400: { label: "冠军", value: "18" },
 
   // 热门
@@ -145,6 +145,7 @@ const different_version_config = {
  */
 export const computed_menu_to_match_templte = (data_tpl_id) => {
   let default_template_value = 1;
+  console.log(data_tpl_id,'jiffy')
   let current_data_template_value =
     Number(menu_to_match_templte[data_tpl_id]?.value) +
     Number(different_version_config[PROJECT_NAME]);
