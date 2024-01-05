@@ -39,6 +39,8 @@ export const default_layout_config = {
     column_number: 2,
     // 每一列是否补齐占位 ，无数据也显示 空框框
     column_patch: false,
+    //当前卡片非 特殊投注项的 展示类型 
+    common_ol_layout_type: ol_item_layout.type1,
     //是否有 特殊投注项
     has_special_ol: false,
     //特殊投注项个数
