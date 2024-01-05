@@ -154,6 +154,7 @@ function init_func() {
       width: clientWidth - props.padding * 2
     })
   }
+  console.log('init_funcinit_funcinit_funcinit_func', sizes.value)
   if (sizes.value.length > 0) {
     let current_index = props.currentIndex == -1 ? 0 : props.currentIndex;
     left.value = lodash.get(sizes.value, `${current_index}.left`, 0)
@@ -292,11 +293,12 @@ const tabs_hover = lodash.debounce((index, type) => {
   let last_tabitem = props.list[index];
   let activity = props.hasActivity;
   // 如果当前有活动并且当前 index 是最后一个并且当前对象有 path 属性以及 path 值是活动路径，就不展示下划线
-  if (activity && (index == sizes.value.length - 1) && last_tabitem.path && last_tabitem.path.indexOf('/activity') != -1) {
-    _index = props.currentIndex
-  } else {
-    _index = index;
-  }
+  // if (activity && (index == sizes.value.length - 1) && last_tabitem.path && last_tabitem.path.indexOf('/activity') != -1) {
+  //   _index = props.currentIndex
+  // } else {
+  //   _index = index;
+  // }
+  _index = index;
   if (type == 'in') {
     if (lodash.get(sizes.value, `[${_index}]`)) {
       left.value = lodash.get(sizes.value, `${_index}.left`)
