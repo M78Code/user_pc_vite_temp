@@ -27,13 +27,11 @@ export default {
       path_d:'',
       strokeColor: false,//
       VR_CTR,
+      timer_format: ''
     }
   },
   setup(props) {
-    const state = reactive({timer_format: ''});
-    return {
-      ...state
-    }
+    
   },
   created () {
     this.strokeBgColor='rgba(255,255,255,.2)';
