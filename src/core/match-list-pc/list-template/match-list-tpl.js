@@ -29,7 +29,6 @@ function set_template_width(a, b, c, d) {
     if (PROJECT_NAME == 'ouzhou-pc') {
         tpl_num = 101 //欧洲是固定模板宽
     }
-    console.log('set_template_width', tpl_num)
     MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_num}_config`].set_template_width(a, b, c, d)
 }
 
