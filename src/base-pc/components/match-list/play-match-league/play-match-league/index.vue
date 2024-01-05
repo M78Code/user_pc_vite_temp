@@ -104,7 +104,7 @@ import lodash from 'lodash';
 import { ref, computed } from 'vue';
 import BaseData from "src/core/base-data/base-data.js"
 import { compute_css_obj } from "src/output/index.js";
-import { get_match_tpl_title } from 'src/output/index.js'
+import { get_match_tpl_title } from 'src/core/format/common/index.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
@@ -148,7 +148,7 @@ const bet_col = computed(() => {
   let csid = props.card_style_obj.league_obj.csid
   let bet_col = []
   if (match_style_obj.data_tpl_id == 13) {
-    match_style_obj.data_tpl_id = 1
+    // match_style_obj.data_tpl_id = 1
     bet_col = [...i18n_t('list.match_tpl_title.tpl13_m.bet_col')]
   }
   let title_name = 'bet_col'
@@ -158,13 +158,11 @@ const bet_col = computed(() => {
   }
   //罚牌主盘
   if (match_style_obj.data_tpl_id == 25) {
-    match_style_obj.data_tpl_id = 1
+    // match_style_obj.data_tpl_id = 1
     title_name = "punish_bet_col"
   }
   bet_col = [...get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.data_tpl_id}.${title_name}`, csid), ...bet_col]
-
   let mft = lodash.get(MatchListCardData.match_mid_obj, `mid_${props.card_style_obj.mid}.mft`)
-
   // 模板10
   if (match_style_obj.data_tpl_id == 10) {
     if (mft == 3) {

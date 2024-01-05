@@ -1,4 +1,5 @@
 <template>
+  {{ match_style_obj.data_tpl_id }}
   <div class="c-match-item " :class="'tpl-'+match_style_obj.data_tpl_id"  >
     <!-- 15分钟玩法标题 -->
     <div class=" flex absolute c15min-title">
@@ -29,7 +30,7 @@
 
         <!-- 赛事盘口投注项 -->
         <match-handicap
-          :handicap_list="match.main_handicap_list"
+          :handicap_list="compute_match_all_handicap_data(match)"
           :match="match"
         />
         <!-- 视频按钮 -->
@@ -44,7 +45,7 @@
 
 <script setup>
 import { inject, computed, ref } from 'vue';
-import { compute_local_project_file_path, MenuData } from "src/output/index.js";
+import { compute_local_project_file_path } from "src/output/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
@@ -73,7 +74,7 @@ console.log('match_list_tpl_size', match_list_tpl_size);
 // 其他玩法标题
 const bet_col = computed(() => {
   let bet_col,
-  hSpecial = match.hSpecial;
+  hSpecial = match.value.hSpecial;
   // 15分钟玩法
     let start = hSpecial - 1,
     end =  hSpecial +1;
