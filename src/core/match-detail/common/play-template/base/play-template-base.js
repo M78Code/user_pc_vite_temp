@@ -57,7 +57,7 @@ export const default_layout_config = {
   // 默认样式配置
   export   const default_style_config = {
     //玩法卡片根节点样式 ,多个就 空格 隔开
-    card_root_class: "",
+    card_root_class: "xasx  new-pc ",
     ol_item_class: "",
   };
   
