@@ -14,7 +14,7 @@
 
 <script setup>
 // 公共主题文件引入
-import { onMounted, reactive, ref } from "vue"
+import { onMounted, reactive, ref,onUpdated} from "vue"
 import { UserCtr } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -22,15 +22,19 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 const ref_data = reactive({
   // 键盘数据以及默认键盘数据
   keyboard_data: [],
-  max_money:0
-})
-
-const props = defineProps({
+  max_money:0,
   oid:0
 })
 
 onMounted(()=>{
   addnum()
+})
+
+onUpdated(()=>{
+    //获取最大限额
+    let key_board_obj = lodash.get(BetData,'bet_keyboard_config',{})
+    ref_data.max_money = key_board_obj.max_money
+    ref_data.oid = key_board_obj.id
 })
 
 // 获取商户配置的 快捷金额
@@ -42,9 +46,7 @@ const addnum = () => {
     const {qtw,qth,qfo,qfi,qsi } = lodash.get(UserCtr, 'user_info.cvo.series', {  qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
     ref_data.keyboard_data = { qtw,qth,qfo,qfi,qsi,max:'MAX'}
   }
-  //获取最大限额
-  let key_board_obj = lodash.get(BetData,'bet_keyboard_config',{})
-  ref_data.max_money = key_board_obj.max_money
+  
 }
 
 // 判断快捷金额按钮是否可点击
@@ -61,7 +63,7 @@ const bet_money_btn_class = (item) => {
 // 快捷金额
 const set_click_keybord = obj => {
   let  money = obj
-  let keyboard = { money: money,id:props.oid }
+  let keyboard = { money: money,id:ref_data.oid }
   useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD,keyboard)
 }
 
