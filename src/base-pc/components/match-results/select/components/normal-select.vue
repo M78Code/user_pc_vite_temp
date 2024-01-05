@@ -151,6 +151,7 @@ export default {
     .rule-scroll-area {
       ::v-deep .q-scrollarea__content {
         width: 100%;
+        background: #fff;
       }
     }
   }

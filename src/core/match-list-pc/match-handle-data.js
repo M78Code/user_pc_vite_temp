@@ -4,11 +4,13 @@
 
 
 import { get_match_status } from 'src/output/module/constant-utils.js'
-
+import { time_conversion } from 'src/output/module/constant-utils.js'
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
-import { get_compute_other_play_data,get_play_current_play,get_tab_play_keys} from 'src/core/match-list-pc/composables/match-list-other.js'
+import { get_compute_other_play_data, get_play_current_play, get_tab_play_keys } from 'src/core/match-list-pc/composables/match-list-other.js'
 import { match_state_convert_score_dict, history_score_dict } from 'src/core/constant/project/module/data-class-ctr/score-keys.js'
-import {get_match_template_id}  from './list-template/match-list-tpl'
+import { get_match_template_id } from './list-template/match-list-tpl'
+import {get_21_bold_template,get_template_data} from './composables/match-list-other'
 export * from './list-template/match-list-tpl'
 export const check_match_end = (match, callback) => {
     if (match?.mmp == 999) {
@@ -184,7 +186,7 @@ export function get_match_to_map_obj(match, key_arr, type = 1) {
                                 if (lodash.get(item2, 'hl.length')) {
                                     // 遍历盘口数据
                                     item2.hl.forEach(item3 => {
-                                        if (item3&& !item3.hn) {
+                                        if (item3 && !item3.hn) {
                                             if (item3.hid) {
                                                 // 增加玩法信息到盘口级别
                                                 item3.mid = match.mid;
@@ -236,9 +238,9 @@ export function get_match_to_map_obj(match, key_arr, type = 1) {
                                 // 检查是否有盘口数据
                                 if (lodash.get(item2, 'hl.ol.length')) {
                                     // if(item2.hl.ol.forEach(item3 => {
-                                    if (lodash.get(item2, 'hl') ) {
+                                    if (lodash.get(item2, 'hl')) {
                                         let item3 = item2.hl;
-                                        if (item3&& !item3.hn) {
+                                        if (item3 && !item3.hn) {
                                             if (item3.hid) {
                                                 // 增加玩法信息到盘口级别
                                                 item3.mid = match.mid;
@@ -390,10 +392,10 @@ export function match_list_handle_set(match_list) {
         match_list.forEach(match => {
             match.tpl_id = get_match_template_id(match);
             match.api_update_time = date_now;
-            match.tab_play_keys=get_tab_play_keys(match)
-            match.has_other_play = match.tab_play_keys&&String(match.tab_play_keys).split(',').length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
-            match.play_current_key=get_play_current_play(match)
-            
+            match.tab_play_keys = get_tab_play_keys(match)
+            match.has_other_play = match.tab_play_keys && String(match.tab_play_keys).split(',').length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
+            match.play_current_key = get_play_current_play(match)
+
             match.other_handicap_list = get_compute_other_play_data(match);
         })
     }
@@ -458,4 +460,126 @@ export const get_match_score_result = (match) => {
     // 客队比分
     let away_score = lodash.get(msc_obj, `${key}.away`, "0")
     return { home_score, away_score }
+}
+/**
+   * @Description 克隆数组
+   * @param {array} arr 需要克隆的数值
+   */
+const clone_arr = (arr) => {
+    let new_arr = [];
+    lodash.merge(new_arr, arr || []);
+    return new_arr;
+  }
+/**
+   * @Description 计算赛事所有盘口数据
+   * @param {undefined} undefined
+  */
+export function compute_match_all_handicap_data(match) {
+    let { tpl_id, csid, mmp } = match
+    // 模板玩法配置
+    let play_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}`] || {}
+    // 是否角球菜单
+    let is_corner_menu =false// $NewMenu.is_corner_menu()
+    //盘口类型
+    let type = 1
+    // 主盘口列表
+    let main_handicap_list = clone_arr(play_config.main_handicap_list)
+    // 角球主盘口列表
+    if (tpl_id == 0 && is_corner_menu) {
+        main_handicap_list = clone_arr(play_config.hpsCorner)
+    }
+    // 足球 加时赛阶段主盘口列表  mmp：即将加时(32)、加时休息(33)、加时上半场(41)、加时下半场(42)
+    else if (tpl_id == 0 && [32, 33, 41, 42].includes(+mmp)) {
+        main_handicap_list = clone_arr(play_config.hpsOvertime)
+    }
+    // 美足 主盘口列表
+    else if (tpl_id == 0 && csid == 6) {
+        main_handicap_list = clone_arr(play_config.main_handicap_list_6)
+    }
+    // 网球准确局数 | 排球准确局数 | 羽毛球准确局数 根据赛制获取主盘列表
+    else if (tpl_id == 10) {
+        // 赛制 3局或5局
+        let mft = match.mft == 3 ? 3 : 5
+        if ([5, 9].includes(+csid)) {
+            main_handicap_list = clone_arr(play_config[`main_handicap_list_5_${mft}`])
+        } else {
+            main_handicap_list = clone_arr(play_config[`main_handicap_list_${csid}_${mft}`])
+        }
+    }
+    // 兵乓球准确局数  根据赛制获取主盘列表
+    else if (tpl_id == 15) {
+        // 赛制 3局或5局
+        let mft = match.mft == 5 ? 5 : 7
+        main_handicap_list = clone_arr(play_config[`main_handicap_list_${mft}`])
+    }
+    // 斯诺克让球与大小主盘列表
+    else if (tpl_id == 11 && csid == 7) {
+        main_handicap_list = clone_arr(play_config.main_handicap_list_7)
+    }
+    // 美足总分单双
+    else if (tpl_id == 3 && csid == 6) {
+        main_handicap_list = clone_arr(play_config.main_handicap_list_6)
+    }
+    //虚拟泥地摩托车
+    else if (tpl_id == 1002 && csid == 1009) {
+        main_handicap_list = clone_arr(play_config.main_handicap_list_1009)
+    }
+    // 足球比分
+    else if (tpl_id == 21 && csid == 1) {
+        main_handicap_list = get_21_bold_template(match)
+    }
+    //  15分钟主盘口列表
+    else if (tpl_id == 24 && csid == 1) {
+        main_handicap_list = clone_arr(match_list_play_config.template_0.hps15Minutes)
+        type = 4
+        this.set_min15(match, match.mst)
+    }
+    //  罚牌主盘口列表
+    else if (tpl_id == 25 && csid == 1) {
+        main_handicap_list = clone_arr(match_list_play_config.template_0.hpsPunish)
+    }
+    // match.main_handicap_list = this.
+    return get_template_data({ match, handicap_list: main_handicap_list, type })
+    // 足球 让球与大小 模板
+    // if (csid == 1 && [0, 13].includes(+tpl_id) && !is_corner_menu) {
+    //     // 计算角球、罚牌等其他玩法数据
+    //     this.compute_other_play_data(match)
+    //     // 设置赛事附加盘盘口数据
+    //     this.set_match_add_handicap_data(match)
+    // }
+
+    // // 篮球让球与大小
+    // if (tpl_id == 7) {
+    //     // 设置赛事附加盘盘口数据
+    //     this.set_match_add_handicap_data(match)
+    // }
+
+    // // 有当前局玩法的模板  设置当前局盘口数据   沙滩排球13没有当前局
+    // if (has_cur_handicap_tpl_ids.includes(+tpl_id) && csid != 13) {
+    //     // 设置赛事当前局盘口数据
+    //     this.set_match_cur_handicap_data(match)
+    // }
+
+    // // 计算赛事让球方
+    // this.computed_team_let_ball(match)
+}
+/**
+ * @Description 计算赛事所有盘口数据--冠军玩法
+ * @param {undefined} undefined
+*/
+export function compute_match_all_handicap_data_champion(match) {
+    // 主盘口列表
+    let main_handicap_list = []
+    // 遍历主盘口数据
+    lodash.each(match.hpsData, hpsData => {
+        lodash.each(hpsData.hps, item => {
+            let hl_obj = lodash.get(item, 'hl', {})
+            if (hl_obj.hid) {
+                hl_obj.end_time = time_conversion(hl_obj.hmed)
+                hl_obj.hpn = lodash.get(match.play_obj, `hid_${hl_obj.hid}.hpn`, '')
+                main_handicap_list.push(hl_obj)
+            }
+        })
+    })
+    return main_handicap_list
 }
