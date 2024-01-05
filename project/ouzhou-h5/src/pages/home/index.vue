@@ -151,7 +151,7 @@ onMounted(async () => {
     } else {
       get_top_events_match(MenuData.menu_csid)
     }
-  }, 1000)
+  }, 1500)
 
   // 增加监听接受返回的监听函数
   message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
@@ -307,7 +307,7 @@ const on_update = (val) => {
  */
 const get_top_events_match = (csid = '1') => {
   // 设置 元数据计算 流程
-  MatchMeta.set_origin_match_data({ is_match: false })
+  // MatchMeta.set_origin_match_data({ is_match: false })
   MatchResponsive.set_is_compute_origin(true)
   state.current_mi = MenuData.top_events_list?.[0]?.mi;
   MatchMeta.get_top_events_match(csid)
