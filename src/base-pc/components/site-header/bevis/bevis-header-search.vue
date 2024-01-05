@@ -25,7 +25,7 @@
                                     :list="SearchPCClass?.searchHistory ?? []" @Delete="_deleteSearchHistory" />
                 <bevisSearchList kind="hot" :list="SearchPCClass?.hotSearchList ?? []" @Search="_addSearchHistory" />
             </div>
-            <div class="maskBox"></div>
+            <div class="maskBox" @click.stop="ShowSearch(false)"></div>
         </div>
     </nav>
 </template>
@@ -211,7 +211,7 @@ p{
         position: relative;
         height: 100%;
         .inputBox{
-            min-width: 986px;
+            min-width: 984px;
             height: 100%;
             display: flex;
             align-items: center;
@@ -235,12 +235,12 @@ p{
             }
         }
         .maskBox {
-            min-width: 986px;
+            min-width: 984px;
             background: rgb(0, 0, 0, .2);
             height: 100vh;
         }
         .historyBox{
-            min-width: 986px;
+            min-width: 984px;
             min-height: 320px;
             position: absolute;
             background: #F6F9FF;
