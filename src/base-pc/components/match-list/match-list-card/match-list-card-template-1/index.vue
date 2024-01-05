@@ -31,9 +31,7 @@
       <template v-else-if="card_type == 'league_container'">
         <!-- 数据加载状态 -->
         <!-- 赛事列表 -->
-
         <match-card v-for="mid in mids_arr" :key="mid" :mid="mid" />
-
       </template>
     </div>
   </div>
@@ -50,6 +48,7 @@ import MatchListCardData from "src/core/match-list-pc/match-card/match-list-card
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { compute_local_project_file_path, MatchDataWarehouse_PC_List_Common } from "src/output/index.js";
 import { LayOutMain_pc } from "src/output/project/common/pc-common.js";
+
 const props = defineProps({
   card_key: String,
   MatchListData: {
@@ -58,13 +57,15 @@ const props = defineProps({
 });
 provide("MatchListData", props.MatchListData)
 // 卡片样式对象
-let card_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.card_key);
+let card_style_obj = computed(() => {
+  return MatchListCardDataClass.get_card_obj_bymid(props.card_key, MatchListCardDataClass.list_version.value)
+});
+
+provide("card_style_obj", card_style_obj)
 // 存储一个变量，减少对card_style_obj的重复访问和判断
-let card_type = ref(card_style_obj?.card_type);
-watch(() => MatchListCardDataClass.list_version.value, () => {
-  card_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.card_key);
-  card_type.value = card_style_obj?.card_type;
-})
+let card_type = computed(() => {
+  return (card_style_obj.value?.card_type)
+});
 let sticky_top = ref(MatchListCardDataClass.sticky_top);
 // 组件是否加载完成
 const is_mounted = ref(true);
@@ -100,22 +101,18 @@ const card_style = computed(() => {
  * @param {undefined} undefined
  */
 const mids_arr = computed(() => {
-  let mids_arr = [];
-  if (card_style_obj?.card_type == "league_container") {
-    mids_arr = card_style_obj?.mids.split(",");
-    return mids_arr;
+  let _mids_arr = [];
+  if (card_style_obj.value?.card_type == "league_container") {
+    _mids_arr = card_style_obj.value?.mids.split(",");
+    return _mids_arr;
   }
-  return mids_arr;
+  return _mids_arr;
 });
 onMounted(() => {
   // 异步设置组件是否挂载完成
   // setTimeout(()=>{
   //   is_mounted.value = true
   // })
-});
-onUnmounted(() => {
-  card_style_obj = null;
-  card_type.value = null;
 });
 </script>
 <style lang="scss" scoped>
