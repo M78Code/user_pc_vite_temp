@@ -12,15 +12,15 @@ import PageSourceData from "src/core/page-source/page-source.js";
 /**
 * 获取当前的列表的默认的 模板配置
 */
-function get_match_tpl_number(euid) {
+function get_match_tpl_number() {
     // 根据当前的菜单id 取到对应的模板id
     let current_template_id;
     if (PROJECT_NAME == 'ouzhou-pc') {
         let euid = get(MenuData.left_menu_result, 'lv1_mi');
         current_template_id = computed_menu_to_match_templte_ouzhou(euid)
     } else {
-        let euid = get(MenuData.left_menu_result, 'lv1_mi');
-        current_template_id = computed_menu_to_match_templte(parseInt(euid))
+        let mi = get(MenuData.left_menu_result, 'lv2_mi');
+        current_template_id = computed_menu_to_match_templte(parseInt(mi))
     }
     return current_template_id
 }
@@ -29,7 +29,7 @@ function set_template_width(a, b, c, d) {
     if (PROJECT_NAME == 'ouzhou-pc') {
         tpl_num = 101 //欧洲是固定模板宽
     }
-    console.log('set_template_width',tpl_num)
+    console.log('set_template_width', tpl_num)
     MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_num}_config`].set_template_width(a, b, c, d)
 }
 
@@ -46,40 +46,55 @@ function get_menu_obj_by_menu_id(menu_id) {
    * @param {undefined} undefined
   */
 function get_match_tpl_number2(is_hot) {
-    const { left_menu_result = {}, mid_menu_result = {} } = MenuData;
-    let match_tpl_number = -1
-    // 玩法菜单
-    let play_menu = get_menu_obj_by_menu_id(lodash.get(left_menu_result, "lv1_mi"))
-    // 详情页热门赛事 或者 搜索 或者列表强力推荐
-    if (PageSourceData.route_name == 'details' || PageSourceData.route_name == 'search' || is_hot) {
-        match_tpl_number = -1
-        //搜索13列玩法
-        //&& store.getters.get_unfold_multi_column
-        // if (lodash.get(vue, '$route.query.csid', -1) === '1' && MenuData.is_multi_column) {
-        //     match_tpl_number = 13
-        // }
-    }
-    // 竟足赛事 12模板
-    else if (mid_menu_result.mi == 30101) {
-        match_tpl_number = 12
-    }
-    // 冠军聚合页  或者电竞冠军 18模板 
-    else if (MenuData.is_kemp() || MenuData.is_esports_champion()) {
-        match_tpl_number = 18
-    }
+    let { orpt } = BaseData.mi_info_map[`mi_${MenuData.menu_current_mi}`] || {};
+    let r = orpt || -1;
     // 电竞常规赛事
-    else if (MenuData.is_esports()) {
-        match_tpl_number = 'esports'
+    if (MenuData.is_esports()) {
+        r = 'esports';
     }
-    //13列玩法菜单 && store.getters.get_unfold_multi_column
-    else if (MenuData.is_multi_column && PageSourceData.page_source == 'home') {
-        match_tpl_number = 13
+    //搜索13列玩法
+    if (MenuData.is_multi_column) {
+        r = 13
     }
-    // 取玩法菜单
-    else if (play_menu.field2 == 0 || play_menu.field2) {
-        match_tpl_number = play_menu.field2
-    }
-    return match_tpl_number
+    // console.error( 'get_match_tpl_number----------get_match_tpl_number----',r );
+
+    return r || -1
+
+
+    // const { left_menu_result = {}, mid_menu_result = {} } = MenuData;
+    // let match_tpl_number = -1
+    // // 玩法菜单
+    // let play_menu = get_menu_obj_by_menu_id(lodash.get(left_menu_result, "lv1_mi"))
+    // // 详情页热门赛事 或者 搜索 或者列表强力推荐
+    // if (PageSourceData.route_name == 'details' || PageSourceData.route_name == 'search' || is_hot) {
+    //     match_tpl_number = -1
+    //     //搜索13列玩法
+    //     //&& store.getters.get_unfold_multi_column
+    //     if (lodash.get(MenuData, 'current_ball_type', -1) == '1' && MenuData.is_multi_column) {
+    //         match_tpl_number = 13
+    //     }
+    // }
+    // // 竟足赛事 12模板
+    // else if (mid_menu_result.mi == 30101) {
+    //     match_tpl_number = 12
+    // }
+    // // 冠军聚合页  或者电竞冠军 18模板 
+    // else if (MenuData.is_kemp() || MenuData.is_esports_champion()) {
+    //     match_tpl_number = 18
+    // }
+    // // 电竞常规赛事
+    // else if (MenuData.is_esports()) {
+    //     match_tpl_number = 'esports'
+    // }
+    // //13列玩法菜单 && store.getters.get_unfold_multi_column
+    // else if (MenuData.is_multi_column && PageSourceData.page_source == 'home') {
+    //     match_tpl_number = 13
+    // }
+    // // 取玩法菜单
+    // else if (play_menu.field2 == 0 || play_menu.field2) {
+    //     match_tpl_number = play_menu.field2
+    // }
+    // return match_tpl_number
 }
 /**
  * @Description 获取赛事模板ID
@@ -118,6 +133,7 @@ function get_match_template_id({ csid }) {
         }
         return get_ouzhou_data_tpl_id(csid)
     }
+    
     return tpl_id
 }
 

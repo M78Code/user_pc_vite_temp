@@ -133,7 +133,7 @@ onBeforeUnmount(clear_init_timer)
 /** 初始化函数 */
 function init() {
   clear_init_timer()
-  init_timer.value = setTimeout(init_func, 300)
+  init_timer.value = setTimeout(init_func, 700)
 }
 /** ref="warp" */
 const warp = ref(null)
@@ -293,12 +293,11 @@ const tabs_hover = lodash.debounce((index, type) => {
   let last_tabitem = props.list[index];
   let activity = props.hasActivity;
   // 如果当前有活动并且当前 index 是最后一个并且当前对象有 path 属性以及 path 值是活动路径，就不展示下划线
-  // if (activity && (index == sizes.value.length - 1) && last_tabitem.path && last_tabitem.path.indexOf('/activity') != -1) {
-  //   _index = props.currentIndex
-  // } else {
-  //   _index = index;
-  // }
-  _index = index;
+  if (activity && (index == sizes.value.length - 1) && last_tabitem.path && last_tabitem.path.indexOf('/activity') != -1) {
+    _index = props.currentIndex
+  } else {
+    _index = index;
+  }
   if (type == 'in') {
     if (lodash.get(sizes.value, `[${_index}]`)) {
       left.value = lodash.get(sizes.value, `${_index}.left`)

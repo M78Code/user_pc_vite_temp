@@ -32,7 +32,7 @@ export const generate_detail_play_template_config=(num)=>{
  * 3. 初始化 玩法数据
  *     play_template_config.init_hp_data()
  * 4.初始化 布局数据
- *    play_template_config.init_hp_data()
+ *    play_template_config.init_style_data()
  * 5. 初始化 样式数据
  *   play_template_config.init_style_data()
  * 
