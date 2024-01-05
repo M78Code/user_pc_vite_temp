@@ -3,7 +3,6 @@ import { api_details } from "src/api";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js";
-import  { computed_background } from  "src/output/index.js"
 import axios_api_loop from "src/core/http/axios-loop.js"
 import {
   useMittOn,
@@ -13,17 +12,17 @@ import {
   is_eports_csid,
   MatchDataWarehouse_PC_Detail_Common,
   format_plays,
-  
+  MenuData,
   format_sort_data,
   useMittEmitterGenerator,
   useMittEmit,
   MatchDetailCalss,
-  GlobalSwitchClass
+  GlobalSwitchClass,
+  computed_background
 } from "src/output/index.js";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 import { reactive, toRefs, ref, onMounted, onUnmounted, computed, watch } from "vue";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useRouter } from "vue-router";
 export const useRightDetails = (props) => {
   //视频是否展开状态
@@ -69,7 +68,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     let { mid = null } = route.params;
     //  mid = mid || allData.details_params.mid todo
     // 如果当前是详情或者视频，就直接初始化
-    if (["video"].includes(this.layout_cur_page.cur)) {
+    if (["video"].includes(layout_cur_page.value.cur)) {
       init({ mid, is_ws: true });
       // 否则就拉取比分面板数据
     } else {
@@ -436,7 +435,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
       } else {
         await api_details
           .get_match_detail2(params)
-          .then((res) => {
+          .then((res) => { 
             set_home_loading_time_record("ok");
             // 检查gcuuid
             if (allData.last_by_mids_uuid != res.gcuuid) return;
@@ -560,22 +559,24 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
       let info = instance.can_send_request(params);
       if (info.can_send) {
         //直接发请求    单次数 请求的方法
-        fun_temp();
+          fun_temp();
       } else {
         // 记录timer
         this.current_hash_code = 0;
         clearTimeout(this.axios_debounce_timer2);
         this.axios_debounce_timer2 = setTimeout(() => {
           //直接发请求    单次数 请求的方法
-          fun_temp();
+            fun_temp();
           this.current_hash_code = 0;
         }, info.delay_time || 1000);
       }
     } else {
       //直接发请求    多 次数  循环请求 的方法
-      fun_temp();
+        fun_temp();
     }
   };
+
+
   const refresh = lodash.throttle(
     () => {
       allData.refresh_loading = true;
@@ -593,7 +594,6 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
       trailing: false,
     }
   );
-
   // 对获取玩法集所有玩法接口进行节流操作
   const get_match_detail_base_throttle = lodash.throttle(
     () => {
@@ -844,7 +844,10 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
             let mststs = lodash.get(data, "mststs");
             MatchDetailCalss.set_match_details_params({mid,csid,media_type:'auto'})
             //获取赔率
-            get_match_detail_base();
+            lodash.throttle(() => {
+              get_match_detail_base()
+              console.error('iszhixing')
+            },1000);
             //同步赛事时间
             update_match_time({ mid, mst, mstst, mststs });
             let { media_type, play_id } = allData.details_params;
@@ -1001,9 +1004,11 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
   /**
    * @description: ws逻辑调取玩法列表
    */
-  const get_match_detail = (isWs) => {
-    get_match_detail_base({ isWs });
-  };
+  const get_match_detail= lodash.throttle(
+    (isWs) => {
+      get_match_detail_base(isWs);
+    }, 1000
+  );
 
   /**
    * @description: 子组件玩法切换

@@ -3,7 +3,7 @@
   <div class="text-toast" v-if="is_show">
     <div class="no_data">
       <img :src="compute_local_project_file_path('/image/svg/warn.svg')" alt="" />
-      <div style="text-align: center">{{text}}</div>
+      <div style="text-align: center; padding: 0.08rem 0;">{{text}}</div>
     </div>
   </div>
 </template>
@@ -77,7 +77,7 @@ onUnmounted(() => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 0.18rem 0.14rem;
+  padding: 0.1rem 0.14rem;
   color: #ffffff;
   background: #040506;
   display: flex;
@@ -87,7 +87,7 @@ onUnmounted(() => {
   border-radius: 0.06rem;
 
   img {
-    margin-bottom: 0.1rem;
+    // margin-bottom: 0.1rem;
   }
 }
 </style>
