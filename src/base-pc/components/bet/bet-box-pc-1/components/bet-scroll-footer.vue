@@ -58,14 +58,14 @@
     </div>
 
     <div>
-      <span class="check-box" v-if="BetData.is_bet_single">
-        <span class="check-wrap relative-position active"/>
+      <span class="check-box" v-if="BetData.is_bet_single" @click="BetData.set_regular_amount()">
+        <span class="check-wrap relative-position" :class="{'active': BetData.is_checked_regular_amount}" />
         <span>{{ i18n_t('bet.common_amount') }}</span>
       </span>
     </div>
 
 
-    <div v-show="false">{{ BetViewDataClass.bet_view_version }}-{{BetData.bet_data_class_version}} - {{ BetViewDataClass.bet_view_version }}</div>
+    <div v-show="false">{{ BetData.bet_view_version }}-{{BetData.bet_data_class_version}} - {{ BetViewDataClass.bet_view_version }}</div>
 
   </div>
 </template>

@@ -1,13 +1,13 @@
 
 <template>
-  <div class="page-main full-height" :style="page_style" id="parent">
+  <div class="page-main full-height" id="parent">
     <div :style="{ height: LayOutMain_pc.layout_top_height }">
       <!-- 搜索 -->
       <!--<search-wapper />-->
       <!-- 页面头部容器-->
       <layout-header />
     </div>
-    <div v-show="false"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}-{{LayOutMain_pc.layout_content_width}}</div>
+    <div v-show="false"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}-{{LayOutMain_pc.layout_content_width}}-{{UserCtr.user_version}}</div>
     <div class="flex" >
       <!-- 左侧 菜单 -->
       <div :style="{ height: LayOutMain_pc.layout_content_height + 'px', width: LayOutMain_pc.layout_left_width + 'px' }"
@@ -33,7 +33,7 @@
       </div>
     </div>
     <!-- 视频画中画组件 -->
-    <!-- <moveVideo v-if="show_move_video"></moveVideo> -->
+    <!-- <moveVideo v-if="lodash.get(UserCtr.get_user(), "merchantEventSwitchVO.eventSwitch")"></moveVideo> -->
     <!-- toast 消息提示 -->
     <toast-components />
     <confirm-components />
@@ -66,22 +66,12 @@ import toastComponents from "src/base-pc/components/toast/toast.vue";
 import alertComponents from "src/base-pc/components/toast/alert.vue";
 import confirmComponents from "src/base-pc/components/toast/confirm.vue";
 // import moveVideo from 'src/base-pc/components/video-replay/move-video.vue'
-import { compute_css_variables } from "src/core/css-var/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
-const page_style = ref('')
-page_style.value = compute_css_variables({ category: 'component', module: 'layout' })
+
+
 // 监听页面是否转入休眠状态
-document.addEventListener('visibilitychange', event_listener_visibilitychange);
-document.addEventListener('pagehide', event_listener_visibilitychange);
 window.addEventListener("resize", resize_);
 
-let timeout_vue_hidden_run_flg = null
-let vue_hidden_run_flg = null
-timeout_vue_hidden_run_flg = setTimeout(() => {
-  vue_hidden_run_flg = true;
-}, 4000);
-
-const background_run_time = ref('')
 const route = useRoute();
 /**
  * @Description 全局一秒钟定时器 
@@ -95,66 +85,7 @@ function resize_(){
   LayOutMain_pc.set_layout_content_config()
 }
 
-//重新计算高度
-const mitt_offs = [
-  // useMittOn(MITT_TYPES.EMIT_LAYOUT_RESIZE, debounce(resize, 150)).off,
-];
-// resize();
-// 屏蔽视频移动组件(视频回播功能)
-const get_user = ref(UserCtr.get_user())
-const show_move_video = computed(() => {
-  return lodash.get(get_user.value, "merchantEventSwitchVO.eventSwitch")
-})
-
-function event_listener_visibilitychange(){
-  console.warn("#TODO: Uncaught ReferenceError: vue_hidden_run_flg is not defined")
-    // if (!vue_hidden_run_flg) { return false } // vue_hidden_run_flg is not defined
-    let _is_hidden = document.visibilityState == 'hidden'
-  //  document.visibilityState == 'visible'
-    if (_is_hidden) {
-      window.DOCUMENT_HIDDEN = new Date().getTime()
-    } else {
-      // 获取 焦点后 ，页面激活 ，次开关打开 ，HTTP,WS 就会自动 打开开关
-      window.DOCUMENT_HIDDEN = ''
-    }
-
-    // 设置当前页面是否后台运行中状态
-    GlobalAccessConfig.set_vue_hidden_run(_is_hidden);
-    //页面失去焦点 ，隐藏   后台运行
-    if (_is_hidden) {
-      background_run_time.value = new Date().getTime()
-      // 在后台运行超过 over_timer 分钟后才广播刷新数据指令
-    } else {
-      // 页面 唤起  这里流程分 二种：
-      // 流程一：   离开不到30分钟 ，  列表或者详情 ，监听到 页面聚焦时间 变更 ，重新拉取当前的接口
-      // 流程二：   离开超过30分钟 ，  页面直接刷新 重走流程
-      // 30分钟  重载刷新  页面
-      let over_timer = 30 * (60 * 1000)
-      let now_time = new Date().getTime()
-      // 在后台共运行了多少时间
-      let run_time = now_time - background_run_time.value
-      // 页面需要 重载刷新
-      let need_reload = run_time > over_timer
-      //如果需要 重载刷新
-      if (need_reload) {
-      window.location.reload()
-      } else {
-        // 站点 tab 休眠状态转激活  ，
-        useMittEmit(MITT_TYPES.EMIT_SITE_TAB_ACTIVE )
-      }
-    }
-}
-
-/* Í监听user版本号 */
-watch(() => UserCtr.user_version, (val) => {
-  if (val) {
-    get_user.value = UserCtr.get_user()
-  }
-}) 
-
 onUnmounted(() => {
-  document.removeEventListener('visibilitychange', event_listener_visibilitychange);
-  document.removeEventListener('pagehide', event_listener_visibilitychange);
   window.removeEventListener("resize", resize_);
 })
 

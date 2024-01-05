@@ -16,10 +16,7 @@
           :key="index"
           @click="changeTabMenu(item, index, $event)"
         >
-          <!-- {{ item.name }} -->
-          <!-- {{ index == 0 ? i18n_t('menu.match_today') : item.name }} -->
-          <!-- TODO: 勿覆盖， fix: 52981 【UAT】【H5新版复刻】【H5】冠军赛果页面日期显示与设计图不符  -->
-          {{ index == 0 ? "今日" : item.name }}
+          {{ item.name }}
         </li>
       </ul>
     </div>

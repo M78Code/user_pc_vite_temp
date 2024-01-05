@@ -237,4 +237,21 @@ export default defineComponent({
     color: #FF4A4A !important;
   }
 }
+
+// Bug: 53049
+.temp2 {
+  .play-box {
+    .ellipsis {
+      flex: 2;
+      overflow: hidden;
+      height: 100%;
+    }
+    :deep(.odds_new) {
+      flex: 1;
+      height: 100%;
+    }
+  }
+}
+
+
 </style>

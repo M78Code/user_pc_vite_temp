@@ -60,18 +60,17 @@ const compute_view_tpl_id = (data_tpl_id) => {
 	let view_tpl_id = data_tpl_id
 	// 25 罚牌主盘口
 	if([3,5,6,8,19,20,22,23,25].includes(+data_tpl_id)){
-	  // return MatchTpl2After
 	  view_tpl_id = 2
 	}else if([11,16].includes(+data_tpl_id)){
-	  // return MatchTpl9After
 	  view_tpl_id = 9
 	}else if([15].includes(+data_tpl_id)){
-	  // return MatchTpl10After
 	  view_tpl_id = 10
 	}else if([13].includes(+data_tpl_id)){
-	  // return matchtpl1after
 	  view_tpl_id = 1
-	}else if([240].includes(+data_tpl_id)){
+	}else if([28].includes(+data_tpl_id)){ //15分钟
+		  view_tpl_id = 24
+		}
+	else if([240].includes(+data_tpl_id)){
 	// return matchtpl1after
 	  view_tpl_id = 'Esports'
 	}
@@ -320,6 +319,7 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 	if (template_id == 13) {
 		template_id = 1;
 	}
+	console.log('template_id',template_id)
 	// 赛事列表模板配置
 	let template_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]["match_template_config"] || {};
 
