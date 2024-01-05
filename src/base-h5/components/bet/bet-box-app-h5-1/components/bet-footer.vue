@@ -28,7 +28,7 @@
           <span class="yb-info-money font14" v-if="BetData.is_bet_single"> {{ i18n_tc('app_h5.bet.bet_win',{"total": bet_win_money(BetData.bet_data_class_version) }) }}</span>
           <span class="yb-info-money font14" v-else>{{ i18n_t('bet.sum') }}{{bet_total(BetViewDataClass.bet_view_version) }}</span>
         </div>
-        <div class="middle ml-4" v-else>{{ i18n_t('bet.close') }}</div>
+        <div class="middle font16 ml-4" v-else>{{ i18n_t('bet.close') }}</div>
         <img :src="compute_local_project_file_path('/image/bet/roll-right-arrow.png')" alt="">
       </div>
 
@@ -411,7 +411,7 @@ const set_confirm = () => {
     background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%);
     box-shadow: 0rem .02rem .12rem 0rem rgba(0, 174, 255, 0.10);
     &.disabled-line{
-      background: #e4e6ed;
+      background: var(--q-gb-bg-c-45);
       box-shadow: 0 2px 12px rgba(0,0,0,.1);
       .bet-box-line{
         .bet-box{
@@ -446,6 +446,7 @@ const set_confirm = () => {
         justify-content: center;
         align-items: center;
         margin-left: .55rem;
+        font-size: 0.16rem;
         color: var(--q-gb-t-c-14);
       }
       img {
