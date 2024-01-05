@@ -33,19 +33,18 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
   const route = useRoute();
   // const router = useRouter();
   const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_PC_Detail_Common)
+  const match_details = ref([]) //玩法盘口列表
+  const match_infoData = ref({}) //赛事状态比分信息
   const state = reactive({
     // 菜单数据
     // menu_data: $menu.menu_data,
     // MatchDataWarehouseInstance: "",
     mid: (route?.params?.mid) || "" , //赛事id
     sportId: (route?.params?.csid) || 0, //球类id
-    match_infoData: {}, //赛事状态比分信息
     category_list: [], //玩法集
     mcid: 0, //默认玩法集id
     plays_list: [], //选中玩法集的盘口玩法集
-    match_details: [], //玩法盘口列表
     is_request: false, // 详情接口 是否请求中
-
     // isInit: false,
     load_data_state: "loading", //整块加载状态
     handicap_state: "loading", //玩法加载状态状态
@@ -89,10 +88,10 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     return lodash.get(state.category_list, "length", 0);
   });
   const ms = computed(() => {
-    return lodash.get(state.match_infoData, "ms", 0);
+    return lodash.get(match_infoData.value, "ms", 0);
   });
   const mmp = computed(() => {
-    return lodash.get(state.match_infoData, "mmp", 0);
+    return lodash.get(match_infoData.value, "mmp", 0);
   });
 
   // ----------------------watch相关----------------------------
@@ -285,7 +284,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
             }
             // 设置赛事信息
             MatchDataWarehouseInstance.set_match_details(data,[])  
-            state.match_infoData = MatchDataWarehouseInstance.get_quick_mid_obj(state.mid)
+            match_infoData.value = MatchDataWarehouseInstance.get_quick_mid_obj(state.mid)
           } else {
             // 处理报错，置换替补数据
             countMatchDetail();
@@ -392,7 +391,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
               // 处理当前玩法集数据
               handle_match_details_data(tabs_active_data_cache, Date.now());
             } else {
-              state.match_details = [];
+              match_details.value = [];
               set_handicap_state("empty");
             }
           }
@@ -409,7 +408,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    */
   const get_match_details = (res) => {
     state.err_time = 0;
-    state.match_details = [];
+    match_details.value = [];
     state.data_loaded = true;
     const code = lodash.get(res, "code");
     if (code == "0400500") {
@@ -418,7 +417,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     }
     let data = lodash.get(res, "data");
     let timestap = lodash.get(res, "ts");
-    if (code == 200 && data.length && state.match_infoData?.mhs != 2) {
+    if (code == 200 && data.length && match_infoData.value?.mhs != 2) {
       data.forEach((item) => {
         // 筛选--删掉已经关盘的投注项
         item = format_plays(item);
@@ -492,7 +491,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
         // 处理当前玩法集数据
         handle_match_details_data(tabs_active_data_cache, timestap);
       } else {
-        state.match_details = [];
+        match_details.value = [];
         set_handicap_state("empty");
       }
     }
@@ -521,7 +520,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    * @return {}
    */
   const err_tips = (err) => {
-    state.match_details = [];
+    match_details.value = [];
     GlobalSwitchClass.set_error_data({
       site: "details--get_match_detail",
       error: err,
@@ -716,7 +715,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     } else {
       MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(state.mid), match_details_arr);
     }
-    state.match_details =  [MatchDataWarehouseInstance.get_quick_mid_obj(state.mid)]
+    match_details.value =  [MatchDataWarehouseInstance.get_quick_mid_obj(state.mid)]
   };
   /**
    * 传递玩法列表的数据给到玩法集
@@ -754,7 +753,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    * @return {undefined} undefined
    */
   const check_plays_show = () => {
-    this.match_details.forEach((item) => {
+    match_details.value.forEach((item) => {
       item = format_plays(item);
     });
   };
@@ -769,7 +768,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    * @return {}
    */
   const close_tips = (hpid) => {
-    state.match_details.forEach((item) => {
+    match_details.value.forEach((item) => {
       item.tipstatus = item.hpid == hpid;
     });
   };
@@ -811,7 +810,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
   const change_loading_state = (n) => {
     state.handicap_state = n;
     
-    state.match_details = [];
+    match_details.value = [];
   };
     /** 批量注册mitt */
     const { emitters_off } = useMittEmitterGenerator([
@@ -906,9 +905,9 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     MatchDetailCalss.set_clear_all_play_data()
     // 站点 tab 休眠状态转激活
     // useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off;
-    state.match_infoData = null;
+    match_infoData.value = null;
     state.category_list = null;
-    state.match_details = null;
+    match_details.value = null;
     state.active_detials = null;
   });
   return {
@@ -922,6 +921,8 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     set_handicap_state,
     get_mattch_details,
     change_loading_state,
-    MatchDataWarehouseInstance
+    MatchDataWarehouseInstance,
+    match_infoData,
+    match_details
   };
 };

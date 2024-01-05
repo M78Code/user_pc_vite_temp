@@ -3,7 +3,6 @@ import { api_details } from "src/api";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js";
-import  { computed_background } from  "src/output/index.js"
 import axios_api_loop from "src/core/http/axios-loop.js"
 import {
   useMittOn,
@@ -13,17 +12,17 @@ import {
   is_eports_csid,
   MatchDataWarehouse_PC_Detail_Common,
   format_plays,
-  
+  MenuData,
   format_sort_data,
   useMittEmitterGenerator,
   useMittEmit,
   MatchDetailCalss,
-  GlobalSwitchClass
+  GlobalSwitchClass,
+  computed_background
 } from "src/output/index.js";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 import { reactive, toRefs, ref, onMounted, onUnmounted, computed, watch } from "vue";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useRouter } from "vue-router";
 export const useRightDetails = (props) => {
   //视频是否展开状态
@@ -69,7 +68,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     let { mid = null } = route.params;
     //  mid = mid || allData.details_params.mid todo
     // 如果当前是详情或者视频，就直接初始化
-    if (["video"].includes(this.layout_cur_page.cur)) {
+    if (["video"].includes(layout_cur_page.value.cur)) {
       init({ mid, is_ws: true });
       // 否则就拉取比分面板数据
     } else {
