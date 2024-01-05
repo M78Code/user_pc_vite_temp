@@ -247,10 +247,13 @@ p{
             top: calc(100% + 6px);
             left: 0;
             z-index: 999;
-            padding: 0 24px 16px;
+            padding: 0 12px 12px;
             box-sizing: border-box;
             .historyBoxTab{
-                height:30px;
+                height:44px;
+                :deep(.tab-wrap) {
+                    width: 100%
+                }
                 :deep(.line-wrap){
                     transform: translateY(0);
                 }
