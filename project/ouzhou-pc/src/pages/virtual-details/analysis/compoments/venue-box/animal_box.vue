@@ -266,11 +266,10 @@ const video_leave = () => {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  &::v-deep{
-    .loading_box{
-      padding-top: 0;
-    }
+  &:deep(.loading_box){
+    padding-top: 0;
   }
+  
 }
 .video-iframe {
 }
