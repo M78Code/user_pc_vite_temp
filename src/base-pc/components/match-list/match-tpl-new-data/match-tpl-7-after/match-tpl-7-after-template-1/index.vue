@@ -102,10 +102,6 @@ const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.da
 let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);
 
-watch(() => MatchListData.data_version.version, (new_value, old_value) => {
-  match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
-})
-
 const score_column_position = computed(() => {
   let has_add1 = lodash.get(match, 'has_add1')
   let has_add2 = lodash.get(match, 'has_add2')
