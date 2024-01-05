@@ -29,6 +29,8 @@ class MatchResponsive {
     this.show_match_info = ref({})
     // 是否 接口 导致的数据变更 是则红升绿降和进球动画 不显示
     this.is_http_update_info = ref(true)
+    // 复刻版下的热门联赛
+    this.popular_league = ref({})
   }
 
    /**
@@ -39,6 +41,13 @@ class MatchResponsive {
     Object.assign(this.show_match_info.value, {
       [key]: flag
     })
+  }
+  /**
+   * @description 设置复刻版下的热门联赛
+   * @param {*} val 
+   */
+  set_popular_league (val) {
+    this.popular_league.value = val
   }
   /**
    * @description 重置赛事显示、隐藏信息

@@ -11,7 +11,7 @@
     <!-- <div class="search-tab-wap"> -->
         <div class="search-tab-content">
             <ul class="search-tab-content-ul" v-show="!drawerRight">
-                <li ref="searchTab" :class="{ active: activeOn === index }" v-for="(item, index) in dataList" :key="index"
+                <li ref="searchTab" v-for="(item, index) in popular_league" :class="{ active: activeOn === index }"  :key="index"
                     @click="changeTab(index,$event)">
                     <!-- <img v-show="item.img" :src="item.img" /> -->
                     <span v-if="item.tid !== '0'" class="sport-icon-wrap"
@@ -49,13 +49,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import lodash from 'lodash'
 import search from "./img/search.svg";
 import {scrollMenuEvent} from "../utils";
 // import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import  screenModal from './screen-modal.vue';
 // import { MenuData } from "src/output/index.js";
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { i18n_t, compute_css_obj,league_sprite_images_postion,MenuData  } from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 const props = defineProps({
@@ -66,7 +68,8 @@ const props = defineProps({
                 name: "全部",
                 val: 0,
                 img: "",
-                tid: '0'
+                tid: '0',
+                alias: 'all'
             },
             // {
             //     // 世界杯2022(在卡塔尔) FIFA World Cup 2022 (In Qatar) - 10011003169
@@ -79,8 +82,9 @@ const props = defineProps({
             {
                 name: "欧冠",
                 val: 2,
-                tid: '6408,1770644235695929827,1294283490856630095,1848098505482530049,1352541568130764801',
-                img: ""
+                tid: '6408',
+                img: "",
+                alias: 'ou_guan'
             },
             {
                 // 英格兰超级联赛 England Premier League - 10011000
@@ -88,38 +92,44 @@ const props = defineProps({
                 name: "英超",
                 val: 3,
                 img: "",
-                tid: '180,10011000,1292581040691029461,1904416851014932228,1123422872380629461,1540981435603930067,1682746558471673291',
+                tid: '180',
+                alias: 'ying_chao'
 
             },
             {
                 name: "意甲",
                 val: 4,
-                tid: '239,1397259071108129580,1073779634158929463,1509730429901832063,1343311880987496449',
-                img: ""
+                tid: '239',
+                img: "",
+                alias: 'yi_jia'
             },
             {
                 name: "西甲",
                 val: 5,
                 img: "",
-                tid: '320,1268878968030329451,1682747999219130753'
+                tid: '320',
+                alias: 'xi_jia'
             },
             {
                 name: "德甲",
                 val: 6,
-                tid: "276,1958173088092129507,1957252651999329569,1062856997136532230"
+                tid: "276",
+                alias: 'de_jia'
             },
             {
                 name: "法甲",
                 val: 7,
                 img: "",
-                tid: '79,1343264595247255555'
+                tid: '79',
+                alias: 'fa_jia'
             },
             {
                 // 中国超级联赛 China Super League - 10011006344 
                 // SRL中国超级联赛 SRL China Super League - 10011020404
                 name: "中超",
                 val: 8,
-                tid: "10011006344,10011020404,1682748478869187623,1682748005315163434"
+                tid: "10011006344",
+                alias: 'zhong_chao'
             }
         ]
     },
@@ -131,9 +141,25 @@ const props = defineProps({
 const drawerRight = ref(false)
 const searchTab = ref(null)
 const keyword = ref('')
+const popular_league = ref([])
+const emitters = ref({});
 
-const activeOn = ref(MenuData.search_tab_index || 0);//默认值
+const activeOn = ref(0);//默认值
 const league_data = ref([])
+
+watch(() => MatchResponsive.popular_league.value , (v) => {
+    popular_league.value = lodash.cloneDeep(props.dataList)
+    if (lodash.isEmpty(v)) return
+    Object.keys(v).forEach((key) => {
+        const item = popular_league.value.find(t => t.alias === key)
+        if (!item) return
+        const length = lodash.get(v[key].tids, 'length', 0)
+        if (length < 1) return 
+        const result_tid = [...v[key].tids, item.tid]
+        item.tid = lodash.uniq(result_tid).join(',')
+        
+    })
+}, { immediate: true, deep: true})
 
 /**
  * @description 搜索赛事
@@ -165,8 +191,10 @@ const select_change = (value) => {
 const changeTab = (i,event) => {
     // if(activeOn.value === i)return;
     activeOn.value = i;
-    const tid = props.dataList[i].tid;
+    useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: false });
+    const tid = popular_league.value[i].tid;
     event && scrollMenuEvent(event,".search-tab-content-ul",".active");
+    MatchMeta.clear_match_info()
     if (tid === '0') {
         MenuData.search_data_tab_index(i,'')
         MatchMeta.set_origin_match_data({})
