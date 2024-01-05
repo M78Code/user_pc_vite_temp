@@ -24,7 +24,7 @@
 
             <!--键盘区域-->
             <div class="row bet-keyboard bet-keyboard-zone">
-                <bet-keyboard />
+                <bet-keyboard :oid="item.playOptionsId"/>
             </div>
         </div>
         <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
@@ -88,8 +88,7 @@ onUnmounted(() => {
  */
  const change_money_handle = obj => {
     console.log(obj)
-   
-    if(props.item.playOptionsId == obj.id || obj.id == ''){
+    if(props.item.playOptionsId == obj.id || obj.id == undefined){
          // 获取当前投注金额
         let money = obj.id == '' ? BetData.bet_amount : props.item.bet_amount
         let money_ = obj.money

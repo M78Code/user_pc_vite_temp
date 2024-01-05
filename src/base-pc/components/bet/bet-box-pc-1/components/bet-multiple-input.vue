@@ -119,6 +119,7 @@ onUnmounted(() => {
         let money_amount = mathJs.add(money,money_)
         // 投注金额 不能大于最大投注金额 也不能大于用户余额
         if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
+            BetData.set_bet_obj_amount(mathJs.add(money,money_))
             ref_data.money = money_amount
         }else{
             // 最大限额不能大于余额
@@ -126,6 +127,7 @@ onUnmounted(() => {
             if(UserCtr.balance < ref_data.max_money){
                 money_a = UserCtr.balance
             }  
+            BetData.set_bet_obj_amount(mathJs.add(money,money_))
             ref_data.money = money_a
         } 
     }
@@ -165,7 +167,7 @@ const set_ref_data_bet_money = () => {
     ref_data.max_money = lodash_.min(max_money_arr) //多项单注限额最大值取多项里最小的
     ref_data.money = ""
     //设置键盘MAX限额
-    let max_money_obj = {max_money:ref_data.max_money,id:''}
+    let max_money_obj = {max_money:ref_data.max_money}
     BetData.set_bet_keyboard_config(max_money_obj)
 }
 

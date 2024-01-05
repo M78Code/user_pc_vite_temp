@@ -16,7 +16,7 @@
             <div class="historyBox">
             <!--  @onclick="tab_click" :hasActivity="hasActivity" -->
             <div class="historyBoxTab">
-                <tab :list="SearchPCClass.sportList" :is_show_line="true" :line_width="40" :is_show_btn="true" tab_name_key="sportName" :padding="10" @onclick="set_sports_tab_index" :currentIndex="current_index" ref="tab" />
+                <TabWapper :list="SearchPCClass.sportList" :is_show_line="true" :line_width="40" :is_show_btn="true" tab_name_key="sportName" :padding="10" @onclick="set_sports_tab_index" :currentIndex="current_index" ref="tab" />
             </div>
             
             <!-- <Tab :list="nav_list" @onclick="tab_click" is_show_line :currentIndex="current_index" :padding="15"
@@ -30,8 +30,8 @@
 </template>
 <script setup name="bevis-header-search">
 import {IconWapper} from 'src/components/icon/index.js'
-// import { TabWapper } from "src/components/common/tab"
-import { TabWapper as Tab } from "src/components/common/tab"
+import { TabWapper } from "src/components/common/tab"
+// import { TabWapper as Tab } from "src/components/common/tab"
 // import Tab from 'src/components/common/tab/tab-1/index.vue'
 import bevisSearchList from "./bevis-search-list.vue"
 
@@ -51,8 +51,8 @@ const SearchWapperRefKey = ref(0)
 
 const current_index = ref(0)
 const refSearchWapper = ref(null);
-const set_sports_tab_index = () =>{
-    alert(1)
+const set_sports_tab_index = ({index = 0}) =>{
+    current_index.value = index;
 }
 
 const ShowSearch = function (toggle){
@@ -157,10 +157,8 @@ provide('ChangeShowHotListData',ChangeShowHotListData)
 
 onMounted(()=>{
     initData()
-    window.addEventListener('click', ShowSearch(false))
 })
 onUnmounted(() => {
-    window.removeEventListener('click', ShowSearch(false))
 })
 </script>
 <style scoped lang="scss">
@@ -227,10 +225,13 @@ p{
             top: 100%;
             left: 0;
             z-index: 999;
-            padding: 16px 24px;
+            padding: 0 24px 16px;
             box-sizing: border-box;
             .historyBoxTab{
-                height:40px
+                height:30px;
+                :deep(.line-wrap){
+                    transform: translateY(0);
+                }
             }
         }
     }
