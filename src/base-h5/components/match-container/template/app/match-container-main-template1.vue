@@ -1091,9 +1091,6 @@ export default {
         }
 
         .go-container-w {
-          .disabled{
-            filter: grayscale(100%);
-          }
           .goto-detail {
             display: flex;
             height: auto;
@@ -1113,27 +1110,6 @@ export default {
               width: 0.04rem;
               height: 0.07rem;
               display: block;
-            }
-          }
-
-          &.new-standard {
-            .live-i-b-wrap {
-              width: 0.18rem;
-              margin-right: 0.05rem;
-
-              img {
-                height: 0.16rem;
-                width: 0.16rem;
-              }
-
-              .live-icon-btn {
-                width: 100%;
-              }
-
-              .live-icon-play-btn {
-                width: 100%;
-                height: 0.14rem;
-              }
             }
           }
 
@@ -1419,6 +1395,73 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  .go-container-w {
+    width: auto;
+    height: 100%;
+    justify-content: flex-end;
+    align-items: center;
+
+    &.favorite {
+      height: 0.24rem;
+      justify-content: center;
+      align-items: center;
+      margin-left: 0;
+      margin-right: .05rem;
+    }
+
+    &.no-margin {
+      margin-left: 0;
+    }
+
+    &.mcount {
+      margin-left: 0.08rem;
+    }
+
+    .fav-i-wrap-match {
+      height: 0.16rem;
+
+      .favorite-icon {
+        height: 100%;
+
+        img {
+          width: 0.14rem;
+          height: 0.14rem;
+        }
+      }
+    }
+
+    .goto-detail {
+      width: 30px;
+      .count_span {
+        .mc-n {
+          width: 0.14rem;
+        }
+      }
+    }
+  }
+  .new-standard {
+    .live-i-b-wrap {
+      width: 0.18rem;
+      margin-right: 0.05rem;
+
+      img {
+        height: 0.16rem;
+        width: 0.16rem;
+      }
+
+      .live-icon-btn {
+        width: 100%;
+        &.disabled{
+          filter: grayscale(100%)
+        }
+      }
+
+      .live-icon-play-btn {
+        width: 100%;
+        height: 0.14rem;
+      }
+    }
+  }
 }
 .score-content{
   width: 80%;
@@ -1538,52 +1581,6 @@ export default {
 
   }
 
-  .go-container-w {
-    width: auto;
-    margin-left: 0.06rem;
-    height: 100%;
-    justify-content: flex-end;
-    align-items: center;
-
-    &.favorite {
-      height: 0.24rem;
-      justify-content: center;
-      align-items: center;
-      margin-left: 0;
-      margin-right: .05rem;
-    }
-
-    &.no-margin {
-      margin-left: 0;
-    }
-
-    &.mcount {
-      margin-left: 0.08rem;
-    }
-
-    .fav-i-wrap-match {
-      height: 0.16rem;
-
-      .favorite-icon {
-        height: 100%;
-
-        img {
-          width: 0.14rem;
-          height: 0.14rem;
-        }
-      }
-    }
-
-    .goto-detail {
-      width: 30px;
-      .count_span {
-        .mc-n {
-          width: 0.14rem;
-        }
-      }
-    }
-   
-  }
 
   .timer-wrapper-c {
     position: relative;

@@ -22,7 +22,7 @@ $layout_nav_height: 60px; //导航高度
 $layout_notice_height: 36px; //公告高度
 body,
 html {
-  max-width: $layout_max_width;
+  // max-width: $layout_max_width;
   min-width: $layout_min_width;
   margin: 0 auto;
 }
