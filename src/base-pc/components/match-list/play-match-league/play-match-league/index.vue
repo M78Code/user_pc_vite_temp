@@ -3,7 +3,6 @@
     :class="[{ 'match-tpl1-bg': match_style_obj.data_tpl_id == 1 }, card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${match_style_obj.data_tpl_id}`]"
     v-if="lodash.get(card_style_obj, 'league_obj.csid')">
     <!-- 第一行 -->
-    <div v-show="false">{{ MatchListCardData.list_version }}{{ MatchListCardDataClass.list_version }}</div>
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
       <div class="leagues-wrap" :class="match_style_obj.data_tpl_id == 12 && 'jingcai'"
@@ -110,9 +109,6 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-
-// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-
 import {mx_collect} from "src/core/match-list-pc/composables/match-list-collect.js";
 
 const props = defineProps({
