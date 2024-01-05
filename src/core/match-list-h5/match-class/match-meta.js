@@ -1429,6 +1429,7 @@ class MatchMeta {
         this.set_show_skeleton_state(true)
         this.clear_match_info()
         this.handler_again_matchs()
+        useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
         break;
       // 筛选
       case "filter":

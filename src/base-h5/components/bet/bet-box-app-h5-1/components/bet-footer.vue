@@ -15,7 +15,7 @@
       <img :src="compute_local_project_file_path('/image/svg/delete5.svg')" alt="">
     </div>
 
-    <div class="bet-silider_1" :class="{'disabled-line': set_special_state(BetData.bet_data_class_version) }">
+    <div class="bet-silider_1" ref="bet_silder" :class="{'disabled-line': set_special_state(BetData.bet_data_class_version) }">
 
       <!-- <q-slider class="bet-box-line" @pan="change_slider_model" v-model="ref_data.basic_model" :inner-min="8" :inner-max="92" :min="0" :max="100"/> -->
       <div class="bet-box-line">
@@ -28,7 +28,7 @@
           <span class="yb-info-money font14" v-if="BetData.is_bet_single"> {{ i18n_tc('app_h5.bet.bet_win',{"total": bet_win_money(BetData.bet_data_class_version) }) }}</span>
           <span class="yb-info-money font14" v-else>{{ i18n_t('bet.sum') }}{{bet_total(BetViewDataClass.bet_view_version) }}</span>
         </div>
-        <div class="middle ml-4" v-else>盘口已关闭</div>
+        <div class="middle ml-4" v-else>{{ i18n_t('bet.close') }}</div>
         <img :src="compute_local_project_file_path('/image/bet/roll-right-arrow.png')" alt="">
       </div>
 
@@ -44,10 +44,10 @@
     <!-- 投注后 -->
     <div v-else>
       <!--  单关 -->
-      <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub font500">确认</div>
+      <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub font500">{{ i18n_t('app_h5.bet.confirm') }}</div>
       <!--  串关  -->
       <div v-else>
-        <div @click="set_confirm" class="sub">注单已确认 <span class="sub-total">合计{{bet_total(BetViewDataClass.bet_view_version)}}</span></div>
+        <div @click="set_confirm" class="sub">{{ i18n_t('app_h5.bet.bet_confirm') }} <span class="sub-total">{{ i18n_t('bet.sum') }}{{bet_total(BetViewDataClass.bet_view_version)}}</span></div>
         <div @click="set_retain_selection" class="reserve font500">保留选项，继续投注</div>
       </div>
 
@@ -57,7 +57,7 @@
 
 <script setup>
 import lodash_ from "lodash"
-import { computed, onMounted, reactive, onUnmounted } from "vue"
+import { computed, onMounted, reactive, onUnmounted,ref } from "vue"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
@@ -70,6 +70,8 @@ import { useRoute,useRouter } from "vue-router"
 
 
 const router = useRouter()
+
+const bet_silder = ref('')
 
 const ref_data = reactive({
   show_title: '',
@@ -97,6 +99,7 @@ onMounted(()=>{
   window.addEventListener('touchmove' ,set_touch_move_bet, { passive: false})
 
   window.addEventListener('touchend',set_touch_end_bet, {passive: false})
+  window.addEventListener('resize',get_leng_px, {passive: false})
 })
 
 // 滑动监听
@@ -150,6 +153,7 @@ onUnmounted(() => {
   Object.values(ref_data.emit_lsit).map((x) => x());
   window.removeEventListener('touchmove',set_touch_move_bet)
   window.removeEventListener('touchend',set_touch_end_bet)
+  window.removeEventListener('resize',get_leng_px)
 })
 
 // 投注验证失败 初始化滑块
@@ -162,13 +166,19 @@ const init_slider_config = () => {
 
 // 串关/单关 获取到限制的距离
 const get_leng_px = () => {
+  // console.error('bet_silder',bet_silder.value.clientWidth)
+  // let wind_leng = window.outerWidth || lodash_.get(document,'body.clientWidth')
+  let bet_leng = lodash_.get(bet_silder,'value.clientWidth')
+  // 设置 区块比例
+  let cont_leng = bet_leng
+  // 44 是滑块的宽高 
   if(BetData.is_bet_single){
-    ref_data.move_leng = 255
-    ref_data.end_leng = 200
+    ref_data.move_leng = cont_leng - 44
+    ref_data.end_leng = cont_leng  - 44 * 2.2
     ref_data.bet_leng = 50
   } else {
-    ref_data.move_leng = 200
-    ref_data.end_leng = 150
+    ref_data.move_leng = cont_leng - 44
+    ref_data.end_leng = cont_leng - 44 * 2.2
     // 串关左侧有删除键 需要再往后50
     ref_data.bet_leng = 100
   }
@@ -235,7 +245,7 @@ const set_special_state = computed(()=> status => {
   for(let item of  bet_list) {
     // 盘口已关闭 盘口关闭不允许投注
     if(item.ol_os != 1 || item.hl_hs != 0 || item.mid_mhs != 0){
-      ref_data.show_title = "盘口已关闭"
+      ref_data.show_title = i18n_t('bet.close')
       // 不允许投注
       is_bet_single = false
       return true
