@@ -357,6 +357,7 @@ class UserCtr {
     
     this.is_invalid = false;
     this.user_logined_id = user_obj.userId
+    SessionStorage.set('user_id', user_obj.userId)
     // 判断是不是新用户登录
     if (uid_ && uid_ != user_obj.userId) {
       // 发送订阅ws公共命令
