@@ -13,7 +13,6 @@ import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { SessionStorage } from "src/output/module/constant-utils.js";
 import STANDARD_KEY from "src/core/standard-key";
 import {set_template_width} from 'src/core/match-list-pc/list-template/match-list-tpl.js'
-import { let_ball_play_tpl } from "src/core/constant/project/index.js"
 const menu_key = STANDARD_KEY.get("menu_pc");
 
 
@@ -116,57 +115,6 @@ class MenuData {
     this.current_ball_type = 0
 
     this.left_menu_list = []
-  }
-
-  /**
-   * 计算队伍中的让球方
-   * @param {object} match 赛事对象
-   */
-  computed_team_let_ball(match) {
-    if(!let_ball_play_tpl.includes(+match.tpl_id)) return
-    let team_let_ball = ''
-    let other_team_let_ball = ''
-    // 让球玩法ID
-    let let_ball_play_id = _.get(match,'main_handicap_list.1.ols.1._hpid')
-    //常规玩法让球方
-    team_let_ball =  this.get_team_let_ball(match,let_ball_play_id)
-    //足球特殊玩法
-    if( match.csid == 1 &&  (match.cosCorner || match.cosPunish)){
-       let other_hpid = _.get(match,'other_handicap_list.1.ols.1._hpid')
-       other_team_let_ball = this.get_team_let_ball(match,other_hpid);
-    }
-    //当前局玩法
-    if(match.is_show_cur_handicap){
-      let other_hpid = _.get(match,'cur_handicap_list.1.ols.1._hpid')
-      //网球
-      if(match.csid == 5){
-         other_hpid = _.get(match,'cur_handicap_list.2.ols.1._hpid')
-      }
-      other_team_let_ball = this.get_team_let_ball(match,other_hpid);
-    }
-    //主盘让球方
-    match.team_let_ball = team_let_ball
-     //足球罚牌角球 | 篮球等当前局
-    match.other_team_let_ball = other_team_let_ball
-  }
-
-  /**
-   * 获取队伍中的让球方
-   * @param {Object} match   赛事详情数据
-   * @param {string} play_id  玩法id
-   * @returns {string}   让球方(T1|T2|'')
-   */
-  get_team_let_ball(match,play_id){
-    let team_let_ball = ''
-    if(play_id){
-      _.each([`${match.mid}_${play_id}_1_1`,`${match.mid}_${play_id}_1_2`], hn => {
-        let ol_data = match.all_ol_data[hn] || {}
-        if(ol_data.on && (ol_data.on.trim()).startsWith('-')) {
-          team_let_ball = ol_data.ots;
-        }
-      })
-    }
-    return  team_let_ball
   }
 
   // 设置 菜单的版本变化
