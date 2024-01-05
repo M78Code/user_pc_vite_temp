@@ -204,6 +204,10 @@ let back_to_timer =null
      if (from == "video") {
        from_path = "/home";
      }
+     if( from_path == "/home"){
+      let lv2_mi = lodash.get(MenuData,'left_menu_result.lv2_mi','')
+      MenuData.set_menu_current_mi(lv2_mi)
+     }
      // 告知列表是详情返回：用于是否重新自动拉右侧内容
      MatchDetailCalss.set_is_back_btn_click(is_back)
      router.push({path:from_path});
