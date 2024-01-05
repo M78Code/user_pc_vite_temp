@@ -305,6 +305,10 @@ const cancel_operate = () =>{
 .col-delete {
   display: flex;
   align-items: flex-start;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  border-radius: 0 4px 0 10px;
 
   /*  删除按钮 */
   .bet-del {

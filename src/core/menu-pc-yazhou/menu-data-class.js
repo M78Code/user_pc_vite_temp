@@ -117,6 +117,57 @@ class MenuData {
     this.left_menu_list = []
   }
 
+  /**
+   * 计算队伍中的让球方
+   * @param {object} match 赛事对象
+   */
+  computed_team_let_ball(match) {
+    if(!let_ball_play_tpl.includes(+match.tpl_id)) return
+    let team_let_ball = ''
+    let other_team_let_ball = ''
+    // 让球玩法ID
+    let let_ball_play_id = _.get(match,'main_handicap_list.1.ols.1._hpid')
+    //常规玩法让球方
+    team_let_ball =  this.get_team_let_ball(match,let_ball_play_id)
+    //足球特殊玩法
+    if( match.csid == 1 &&  (match.cosCorner || match.cosPunish)){
+       let other_hpid = _.get(match,'other_handicap_list.1.ols.1._hpid')
+       other_team_let_ball = this.get_team_let_ball(match,other_hpid);
+    }
+    //当前局玩法
+    if(match.is_show_cur_handicap){
+      let other_hpid = _.get(match,'cur_handicap_list.1.ols.1._hpid')
+      //网球
+      if(match.csid == 5){
+         other_hpid = _.get(match,'cur_handicap_list.2.ols.1._hpid')
+      }
+      other_team_let_ball = this.get_team_let_ball(match,other_hpid);
+    }
+    //主盘让球方
+    match.team_let_ball = team_let_ball
+     //足球罚牌角球 | 篮球等当前局
+    match.other_team_let_ball = other_team_let_ball
+  }
+
+  /**
+   * 获取队伍中的让球方
+   * @param {Object} match   赛事详情数据
+   * @param {string} play_id  玩法id
+   * @returns {string}   让球方(T1|T2|'')
+   */
+  get_team_let_ball(match,play_id){
+    let team_let_ball = ''
+    if(play_id){
+      _.each([`${match.mid}_${play_id}_1_1`,`${match.mid}_${play_id}_1_2`], hn => {
+        let ol_data = match.all_ol_data[hn] || {}
+        if(ol_data.on && (ol_data.on.trim()).startsWith('-')) {
+          team_let_ball = ol_data.ots;
+        }
+      })
+    }
+    return  team_let_ball
+  }
+
   // 设置 菜单的版本变化
   set_menu_data_version(){
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA)
@@ -320,16 +371,17 @@ class MenuData {
     this.menu_root_show_shoucang = obj.root;
     // 设置 列表接口类型
     // this.set_match_list_api_type(obj);
-
+    // console.error('set_left_menu_result',obj)
     // 是否有中间菜单 ，
     // 有则 需要显示中间菜单组件,需要 走中间菜单渲染 ，中间菜单负责输出 列表请求参数
     // 如果没有 需要逻辑分流计算 列表请求参数
+    this.left_menu_result = {
+      ...obj,
+      version: Date.now(),
+      root: this.menu_root
+    };
 
     if (obj.has_mid_menu) {
-      this.left_menu_result = {
-        ...obj,
-        version: Date.now(),
-      };
       //  如果 有   走 自然的 中间菜单组件渲染 ，
       this.compute_mid_match_list_menu_component_show();
     } else {
@@ -340,12 +392,8 @@ class MenuData {
       if (mid_menu_refer_params && Object.keys(mid_menu_refer_params).length) {
         this.set_match_list_api_config(mid_menu_refer_params);
       }
-      //  如果没有  需要逻辑分流计算 列表请求参数
-      this.left_menu_result = {
-        ...obj,
-        version: Date.now(),
-      };
     }
+
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {
