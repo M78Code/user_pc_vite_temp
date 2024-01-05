@@ -24,18 +24,46 @@
     </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import {LocalStorage,compute_img_url,compute_local_project_file_path} from 'src/output/'
-const isShow = ref(!LocalStorage.get('standard_edition'));
+import {LocalStorage, SessionStorage, compute_img_url,compute_local_project_file_path} from 'src/output/'
+const isShow = ref(false);
 const emits = defineEmits(["change"])
 function set_standard_edition(v) {
-    isShow.value = false
+    // 关闭弹窗
+    confirm_standard_edition()
     UserCtr.set_standard_edition(v)
     UserCtr.set_menu_init_change()
     emits('change', v);
     
 }
+// =============弹窗开启条件==============
+const userid = SessionStorage.get('user_id')
+let data = LocalStorage.get('setting_modal_info') || {}
+if (data[userid]) {
+    isShow.value = false;
+} else {
+    isShow.value = true;
+}
+const confirm_standard_edition = (set_default = false) => {
+    // 获取用户id
+    const userid = SessionStorage.get('user_id');
+    // 获取用户是否登录信息
+    let data = LocalStorage.get('setting_modal_info') || {};
+    if (!data[userid]) {
+        data[userid] = {};
+    }
+    data[userid].isShow = false;
+    // 设置用户是否登录过
+    LocalStorage.set("setting_modal_info", data);
+    if(!set_default){
+        isShow.value = false;
+    }
+}
+onMounted(() => {
+    confirm_standard_edition(true)
+})
+// ==============结束==========================
 </script>
 <style lang="scss" scoped>
 .dialog {
