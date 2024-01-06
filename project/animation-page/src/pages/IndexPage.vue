@@ -1,8 +1,8 @@
 <template>
     <!-- <h1> DEMO </h1> -->
-    <div  id="statscorewidget"  :style="widget_style" ></div>
+    <div  id="statscorewidget" v-if="!no_data"  :style="widget_style" ></div>
     <!-- 动画播放失败 -->
-    <animation_no_video v-if="no_data"></animation_no_video>
+    <animation_no_video v-else></animation_no_video>
 </template>
 <script>
 import { defineComponent } from 'vue'

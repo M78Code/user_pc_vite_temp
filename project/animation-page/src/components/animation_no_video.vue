@@ -71,7 +71,7 @@ export default {
   }
   .text1 {
     font-size: 14px;
-    color: var(--q-gb-t-c-1);
+    color: #fff;
   }
   .img-list {
     display: flex;
@@ -87,7 +87,7 @@ export default {
       margin-bottom: 5px;
     }
     .text {
-      color: var(--q-gb-t-c-1);
+      color: #fff;
       padding: 0 5px;
     }
   }
