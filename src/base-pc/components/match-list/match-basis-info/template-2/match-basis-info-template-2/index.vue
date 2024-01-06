@@ -9,9 +9,10 @@
     <div class="row-item team-item">
       <div class="team-logo" :class="lodash.get(match,'match_logo.is_double',false) && 'double-logo'">
         <!-- 电竞和普通赛事图片地址不同需要传入csid(球种id)进行区分 -->
-        <img style="width: 22px; max-height: 24px;" v-img="[(match.match_logo || {}).home_1_logo,(match.match_logo || {}).home_1_letter,match.csid]" />
+
+        <img style="width: 22px; max-height: 24px;" v-img="[(match.match_logo || {}).home_1_logo,(match.match_logo || {}).home_1_letter,match.csid,update_show_default]" />
         <!-- 双打局，就会有两个头像 -->
-        <img style="width: 22px; max-height: 24px;" class="logo2" v-if="lodash.get(match,'match_logo.is_double',false)" v-img="[(match.match_logo || {}).home_2_logo,(match.match_logo || {}).home_2_letter,match.csid]" />
+        <img style="width: 22px; max-height: 24px;" class="logo2" v-if="lodash.get(match,'match_logo.is_double',false)" v-img="[(match.match_logo || {}).home_2_logo,(match.match_logo || {}).home_2_letter,match.csid,update_show_default]" />
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
