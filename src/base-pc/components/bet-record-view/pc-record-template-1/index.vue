@@ -31,7 +31,7 @@
             <!--结算内容-->
             <template v-if="item.is_expand">
               <!-- 0:未结算 1:已结算 2: 预约 -->
-              <template v-if="[0, 1].includes(BetRecord.selected)">
+              <template v-if="[0, 1].includes(BetRecordLeft.selected)">
                 <div v-for="(order, order_index) in item.orderVOS" :key="'bet-item-' + index + '-' + order_index"
                   class="bet-item  relative-position" :class="{ 'cursor-pointer': show_arrow(item, order) }"
                   @click="go_match(item, order)">
@@ -72,7 +72,7 @@ import BetRecordHeader from './bet-record-header.vue'
 
 import { api_betting } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js"
-import BetRecord from "src/core/bet-record/bet-record.js"
+import { BetRecordLeft } from "src/core/bet-record/pc/bet-record-instance.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import lodash_ from "lodash"
@@ -114,7 +114,7 @@ const get_record_list = (cur_page = 1) => {
   let params = {
     page: cur_page,
     size: ref_data.page_size,
-    orderStatus: BetRecord.selected,
+    orderStatus: BetRecordLeft.selected,
     timeType: 5  // 一个账务日
     // beginTime: this.begin_time,
     // endTime: this.end_time
@@ -199,7 +199,7 @@ const get_record_list = (cur_page = 1) => {
         })
         // 如果是已结算
         // 提前结算开关打开时订阅提前结算注单
-        if (BetRecord.selected == 0 && UserCtr.settleSwitch) {
+        if (BetRecordLeft.selected == 0 && UserCtr.settleSwitch) {
           // 订阅C21
           // this.SCMD_C21();
         }

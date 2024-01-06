@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import BetRecordClass from "src/core/bet-record/bet-record.js";
+import BetRecordClass from "src/core/bet-record/h5/bet-record.js";
 import {  i18n_t, compute_css_obj, compute_local_project_file_path } from 'src/output/index.js'
 </script>
 

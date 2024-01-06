@@ -84,13 +84,11 @@
 // import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
 // mixins:[match_basis_info_mixin],
 
-import { computed } from 'vue';
+import { computed,inject} from 'vue';
 import lodash from 'lodash'
 import {  is_eports_csid,compute_local_project_file_path, is_show_sr_flg } from "src/output/index.js";
 import { get_match_status } from 'src/core/utils/common/index'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
-import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import details  from "src/core/match-list-pc/details-class/details.js"
 import { get_handicap_index_by, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
 import { useRoute, useRouter } from "vue-router";
@@ -98,10 +96,6 @@ const router = useRouter()
 const route = useRoute()
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
-  match: {
-    type: Object,
-    default: () => {}
-  },
   show_type: {
     type: String,
     default: () => ''
@@ -116,34 +110,33 @@ const props = defineProps({
   }
 })
 
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
-// 赛事模板宽度
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+let match_style_obj =inject('match_style_obj')
+let match =inject('match')
 
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
-    return `+${ props.match.mc || 0}`
+    return `+${ match.value.mc || 0}`
   }else{
     return i18n_t('match_info.more')
   }
 })
 
 const home_score = computed(() => {
-  let obj = get_match_score(props.match)
+  let obj = get_match_score(match.value)
   return obj.home_score
 })
 const away_score = computed(() => {
-  let obj = get_match_score(props.match)
+  let obj = get_match_score(match.value)
   return obj.away_score
 })
 
 let handicap_index = computed(() => {
-  return get_handicap_index_by(props.match)
+  return get_handicap_index_by(match.value)
 })
 
 //是否展示为比分判定中
 const scoring = computed(() => {
-  const {csid, ms, mmp, home_score, away_score} = props.match
+  const {csid, ms, mmp, home_score, away_score} = match.value
   let scoring = false
   if (
     is_eports_csid(csid) && // 电竞赛事

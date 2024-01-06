@@ -27,7 +27,7 @@
               <span>{{ i18n_t('bet.merge') }}</span>
             </span>
 
-            <span @mouseover="show_merge_info = true" @mouseout="show_merge_info = false">
+            <span class="icon-info" @mouseover="show_merge_info = true" @mouseout="show_merge_info = false">
               <icon-wapper id="merge-info" name="icon-tips" class="bet-info" size="14px" />
             </span>
           </div>

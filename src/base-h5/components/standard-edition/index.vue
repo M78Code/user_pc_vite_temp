@@ -102,6 +102,8 @@ onMounted(() => {
     .bg {
         padding-top: 12px;
         background: var(--q-gb-bg-c-11);
+        border-radius: 10px;
+
     }
     .title {
         color: var(--q-gb-t-c-20);

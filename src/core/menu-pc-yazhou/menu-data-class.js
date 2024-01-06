@@ -14,6 +14,8 @@ import { SessionStorage } from "src/output/module/constant-utils.js";
 import STANDARD_KEY from "src/core/standard-key";
 import {set_template_width,get_match_tpl_number} from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 const menu_key = STANDARD_KEY.get("menu_pc");
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { api_common } from "src/api/index.js"
 
 
 // const state = store.getState();
@@ -139,6 +141,46 @@ class MenuData {
     // 英雄联盟100  dota2 101 csgo 102 王者荣耀103
     return [100, 101, 102, 103].includes(+csid);
   }
+
+  // 获取二级菜单数据
+  set_post_menu_play_count(mi){
+    let mi_ = mi || this.left_menu_result.lv1_mi
+    let params = {
+      cuid: UserCtr.get_cuid(),
+      euid: this.get_mid_for_euid(mi_)
+    }
+    api_common.post_menu_play_count(params).then((res = {})=>{
+      if(res.code == 200){
+        let menu_list = lodash.get(res,'data.subList',[])
+        let list_obj = {}
+         menu_list.forEach(item=>{
+          // 旧菜单 转化为新的菜单 
+          list_obj[BaseData.base_menu_obj[item.menuId] || '0' ] = {
+            ct: item.count,
+            mi: BaseData.base_menu_obj[item.menuId]
+          }
+        })
+        
+        // 使用新的二级菜单数据 替换旧的菜单数据
+        for(let item of this.left_menu_list){
+          if(item.mi == mi){
+            // 获取到菜单的二级菜单列表 和 接口返回的二级菜单列表 做对比 数量替换 
+            let item_sl = lodash.cloneDeep(lodash.get(item,'sl',[]))
+            item_sl.forEach(item => {
+              //对 匹配上的数据 做替换
+              if(list_obj[item.mi] && list_obj[item.mi].mi == item.mi ){
+                item.ct = list_obj[item.mi].ct
+              }
+            })
+            item.sl = item_sl
+          }
+        }
+      }
+    }).catch(err =>{
+      console.error('获取二级菜单数据错误',err)
+    })
+  }
+
   /***
    * 滚球盘 数量计算
    */
@@ -468,44 +510,7 @@ class MenuData {
   set_current_mi_0_and_change_menu() {
     return;
     //TODO
-    let config = {
-      jinri_zaopan: 2,
-      root: 2,
-      lv1_mi: 101,
-      lv2_mi: "101201",
-      sports: "common",
-      guanjun: "",
-      mid_menu_show: {
-        list_filter_date: false,
-      },
-      has_mid_menu: false,
-      mid_menu_refer_params: {
-        begin_request: true,
-        is_collect: false,
-        route: "list",
-        root: 2,
-        sports: "common",
-        guanjun: "",
-        match_list: {
-          api_name: "post_league_list",
-          params: {
-            cuid: "505555350036300025",
-            selectionHour: null,
-            sort: 1,
-            apiType: 1,
-            euid: "3020101",
-            orpt: 0,
-            pids: "1,4,2,17,19,18",
-          },
-        },
-        version: 1685616769421,
-        bymids: {
-          api_name: "",
-          api_type: "",
-          params: {},
-        },
-      },
-    };
+
     this.set_left_menu_result(config);
   }
 
@@ -869,6 +874,14 @@ class MenuData {
     // 获取热门赛事
     let hot_list_ = mew_menu_list_res.find(item => item.mi == 500) || {}
     hot_list = lodash.get(hot_list_,'sl',[]) || []
+
+    // 获取vr赛事
+    let vr_list_ = mew_menu_list_res.find(item => item.mi == 300) || {}
+    // vr 体育数量写死 295
+    vr_list_.ct = 295
+
+    to_day_list.push(kemp_list_,vr_list_)
+    early_list.push(kemp_list_,vr_list_)
 
     this.kemp_list = kemp_list
     this.hot_list = hot_list

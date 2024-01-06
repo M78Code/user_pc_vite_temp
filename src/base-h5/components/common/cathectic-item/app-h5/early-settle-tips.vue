@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import BetRecordClass from "src/core/bet-record/bet-record.js";
+import BetRecordClass from "src/core/bet-record/h5/bet-record.js";
 import { IconWapper } from 'src/components/icon'
 import { i18n_t } from "src/output/index.js";
 import { ref } from 'vue'

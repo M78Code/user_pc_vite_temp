@@ -27,7 +27,7 @@ export default defineComponent({
     init_widget() {
       //联赛查询详见网: https://www.statscore.com/products/prematchpro/coverage/
       //2915 需求  ：  http://lan-confluence.sportxxxr1pub.com/pages/viewpage.action?pageId=98967696
-      // https://statscore.atlassian.net/wiki/spaces/STW/pages/2917072899/Advanced
+      // 对接文档  https://statscore.atlassian.net/wiki/spaces/STW/pages/2917072899/Advanced
       // https://api.statscore.com/v2/booked-events?product=livescorepro&client_id=1981&mapped_status=mapped
       // Hook up when library is loaded and ready to use.
       // You can use this method as many times as necessary - if library
@@ -54,14 +54,14 @@ export default defineComponent({
         const element = document.getElementById('statscorewidget');
         // Configuration that you should receive from STATSCORE
 
-//         For LivematchPro: 654a46b1fff2e8ee7e5cd901
-// For PrematchPro: 654a46bd057e82299ed77d6c
-// Your client identifier (client_id): 1981   
+        //         For LivematchPro: 654a46b1fff2e8ee7e5cd901
+        // For PrematchPro: 654a46bd057e82299ed77d6c
+        // Your client identifier (client_id): 1981   
         // const configurationId = '654a46bd057e82299ed77d6c';
         let url_obj = new URL(location.href)
         // const configurationId = '654a46b1fff2e8ee7e5cd901';
         // https://statscore.atlassian.net/wiki/spaces/STW/pages/3102310484/Languages  
- //http://test-topic.sportxxxifbdxm2.com/animation-page/common/?configurationId=configurationId&eventId=eventId&language=zh   
+      //http://test-topic.sportxxxifbdxm2.com/animation-page/common/?configurationId=configurationId&eventId=eventId&language=zh   
         let configurationId = url_obj.searchParams.get('configurationId')|| '654a46bd057e82299ed77d6c'
         let eventId = url_obj.searchParams.get('eventId')||0
         let language = url_obj.searchParams.get('language') || 'zh'
@@ -76,7 +76,8 @@ export default defineComponent({
         // Optional object with options.
         // You can check available options further in the docs.
         const options = {};
-        const widget = new window.STATSCOREWidgets.Widget(element, configurationId, inputData, options);
+        // const widget = new window.STATSCOREWidgets.Widget(element, configurationId, inputData, options);
+        const widget = new window.STATSCOREWidgets.WidgetGroup(element, configurationId, inputData, options);
        this.   add_widget_event(widget)
       });
     },

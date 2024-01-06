@@ -60,6 +60,12 @@ const routes = [
     name: "rule",
     component: () => import("../pages/rule/index.vue"),
   },
+  // 活动
+  {
+    path: "/activity",
+    name: "activity",
+    component: () => import("../pages/activity/index.vue"),
+  },
   {
     path: '/:catchAll(.*)*',
     redirect: {
