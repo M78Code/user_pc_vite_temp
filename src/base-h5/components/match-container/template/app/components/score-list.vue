@@ -646,7 +646,6 @@ onUnmounted(() => {
         color: var(--q-gb-t-c-18);
         font-family: Akrobat;
         font-size: 10px;
-        font-weight: 700;
         margin-left: 0.08rem;
         &.result {
           .score {
