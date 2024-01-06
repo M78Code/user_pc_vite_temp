@@ -11,8 +11,42 @@ import { get_compute_other_play_data, get_play_current_play, get_tab_play_keys }
 import { match_state_convert_score_dict, history_score_dict } from 'src/core/constant/project/module/data-class-ctr/score-keys.js'
 import { get_match_template_id } from './list-template/match-list-tpl'
 import { let_ball_play_tpl } from "src/core/constant/project/index.js"
-import {get_21_bold_template,get_template_data,set_min15} from './composables/match-list-other'
+import { get_21_bold_template, get_template_data, switch_other_play, set_min15 } from './composables/match-list-other'
 export * from './list-template/match-list-tpl'
+
+/**
+ * 设置到数据仓库缓存
+ * @param {*} mid 
+ * @param {*} MatchListData 
+ * @returns [match,{set}]
+ */
+export function set_match(mid, val = {}) {
+    const _match = MatchListData.get_quick_mid_obj(lodash.get(mid, 'mid', mid));
+    MatchListData.cache_match[mid] = MatchListData.cache_match[mid] || {}
+    Object.assign(MatchListData.cache_match[mid],val)
+    return {
+        ..._match,
+        ...MatchListData.cache_match[mid]
+    }
+}
+/**
+ * 获取处理后的赛事
+ * @param {*} mid 
+ * @param {*} MatchListData 
+ * @returns 
+ */
+export function get_match(mid, MatchListData) {
+    const _match = MatchListData.get_quick_mid_obj(lodash.get(mid, 'mid', mid));
+    MatchListData.cache_match[mid] = MatchListData.cache_match[mid] || {}
+    Object.assign(_match, MatchListData.cache_match[mid])
+    match_list_handle_set([_match]);
+    return _match;
+}
+/**
+ * 判断才是是否结束
+ * @param {*} match 
+ * @param {*} callback 
+ */
 export const check_match_end = (match, callback) => {
     if (match?.mmp == 999) {
         // 移除赛事
@@ -396,7 +430,6 @@ export function match_list_handle_set(match_list) {
             match.tab_play_keys = get_tab_play_keys(match)
             match.has_other_play = match.tab_play_keys && String(match.tab_play_keys).split(',').length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
             match.play_current_key = get_play_current_play(match)
-
             match.other_handicap_list = get_compute_other_play_data(match);
         })
     }
@@ -470,7 +503,7 @@ const clone_arr = (arr) => {
     let new_arr = [];
     lodash.merge(new_arr, arr || []);
     return new_arr;
-  }
+}
 /**
    * @Description 计算赛事所有盘口数据
    * @param {undefined} undefined
@@ -480,7 +513,7 @@ export function compute_match_all_handicap_data(match) {
     // 模板玩法配置
     let play_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`] || {}
     // 是否角球菜单
-    let is_corner_menu =false// $NewMenu.is_corner_menu()
+    let is_corner_menu = false// $NewMenu.is_corner_menu()
     //盘口类型
     let type = 1
     // 主盘口列表
@@ -582,39 +615,39 @@ export function compute_match_all_handicap_data_champion(match) {
     return main_handicap_list
 }
 
- /**
-   * @Description 简化盘口文本
-   * @param {string} lang 语言
-   * @param {string} onb 盘口文本
-   * @return  {string} text 盘口文本
-  */
- export function disk_text_replace(lang,onb){
+/**
+  * @Description 简化盘口文本
+  * @param {string} lang 语言
+  * @param {string} onb 盘口文本
+  * @return  {string} text 盘口文本
+ */
+export function disk_text_replace(lang, onb) {
     let text = ''
-    if(onb){
-      switch (lang) {
-        case 'en':
-        case 'ad':
-        case 'ms':
-          text =  onb.replace("Home","H").replace("Away","A").replace("Draw","D")
-          break;
-        case 'vi':
-          text =  onb.replace("Chủ","C").replace("Khách","K").replace("Hòa","H")
-          break;
-        case 'th':
-          text =  onb.replace("เจ้าบ้าน","H").replace("แขก","A").replace("วาด","D")
-          break;
-        case 'zh':
-        case 'tw':
-          text =  onb.replace("胜","").replace("局","").replace("勝","")
-          break;
+    if (onb) {
+        switch (lang) {
+            case 'en':
+            case 'ad':
+            case 'ms':
+                text = onb.replace("Home", "H").replace("Away", "A").replace("Draw", "D")
+                break;
+            case 'vi':
+                text = onb.replace("Chủ", "C").replace("Khách", "K").replace("Hòa", "H")
+                break;
+            case 'th':
+                text = onb.replace("เจ้าบ้าน", "H").replace("แขก", "A").replace("วาด", "D")
+                break;
+            case 'zh':
+            case 'tw':
+                text = onb.replace("胜", "").replace("局", "").replace("勝", "")
+                break;
 
-        default:
-        text = onb
-          break;
-      }
+            default:
+                text = onb
+                break;
+        }
     }
     return text
-  }
+}
 
 /**
    * @Description 计算投注项数据
@@ -622,58 +655,58 @@ export function compute_match_all_handicap_data_champion(match) {
    * @param {object} match 赛事对象
    * @param {number} handicap_type 盘口类型 1:主盘，  2：附加盘1， 3：附加盘2   (特殊 15分钟玩法是取阶段保存)
   */
-export function compute_ol_data(hl_data,match,handicap_type){
+export function compute_ol_data(hl_data, match, handicap_type) {
     // 遍历盘口 所有投注项
-    _.each( hl_data.ol, ol => {
-      // 投注项坑位值
-      let hn = `${match.mid}_${hl_data.chpid}_${handicap_type}_${ol.ot}`
-      // 投注项坑位旧值
-      let old_hn = `${match.mid}_${hl_data._hpid}_${handicap_type}_${ol.ot}`
-      // 赛事级开盘状态
-      ol._mhs = match.mhs
-      // 盘口级 开盘状态
-      ol._hs = hl_data.hs
-      // 盘口ID
-      ol._hid = hl_data.hid
-      // 玩法ID
-      ol._hpid = hl_data._hpid
-      // 是否支持串关 1:支持串关 0: 不支持串关
-      ol._hipo = hl_data.hipo;
-      // 赛事ID
-      ol._mid = match.mid
-      // 球种ID
-      ol.csid = match.csid
-      //内嵌简化盘口文本
-      if(utils.is_iframe){
-        ol.onb = disk_text_replace(store.getters.get_lang,_.get(ol,'onb',''))
-      }
-      //简化盘口文本
-      if(match.tpl_id == 22 && String(ol.onb).endsWith('.0')){
-        ol.onb =  ol.onb.replace('.0','')
-      }
-      // 简化盘口文本
-      if(match.tpl_id == 13){
-        ol.onb = ol.onb.replace('Không có bàn thắng','- 0 BT').replace('ไม่มีเป้าหมาย','ไม่ได้ประตู')
-      }
-       // 支持的盘口类型
-      if(hl_data.hSpecial){
-        ol._hsw = _.get(match.play_obj,`hpid_${hl_data._hpid}_${hl_data.hSpecial}.hsw`,'')
-      }else{
-        ol._hsw = _.get(match.play_obj,`hpid_${hl_data._hpid}.hsw`,'')
-      }
+    _.each(hl_data.ol, ol => {
+        // 投注项坑位值
+        let hn = `${match.mid}_${hl_data.chpid}_${handicap_type}_${ol.ot}`
+        // 投注项坑位旧值
+        let old_hn = `${match.mid}_${hl_data._hpid}_${handicap_type}_${ol.ot}`
+        // 赛事级开盘状态
+        ol._mhs = match.mhs
+        // 盘口级 开盘状态
+        ol._hs = hl_data.hs
+        // 盘口ID
+        ol._hid = hl_data.hid
+        // 玩法ID
+        ol._hpid = hl_data._hpid
+        // 是否支持串关 1:支持串关 0: 不支持串关
+        ol._hipo = hl_data.hipo;
+        // 赛事ID
+        ol._mid = match.mid
+        // 球种ID
+        ol.csid = match.csid
+        //内嵌简化盘口文本
+        if (utils.is_iframe) {
+            ol.onb = disk_text_replace(store.getters.get_lang, _.get(ol, 'onb', ''))
+        }
+        //简化盘口文本
+        if (match.tpl_id == 22 && String(ol.onb).endsWith('.0')) {
+            ol.onb = ol.onb.replace('.0', '')
+        }
+        // 简化盘口文本
+        if (match.tpl_id == 13) {
+            ol.onb = ol.onb.replace('Không có bàn thắng', '- 0 BT').replace('ไม่มีเป้าหมาย', 'ไม่ได้ประตู')
+        }
+        // 支持的盘口类型
+        if (hl_data.hSpecial) {
+            ol._hsw = _.get(match.play_obj, `hpid_${hl_data._hpid}_${hl_data.hSpecial}.hsw`, '')
+        } else {
+            ol._hsw = _.get(match.play_obj, `hpid_${hl_data._hpid}.hsw`, '')
+        }
 
 
-      // 盘口是否高亮
-      ol.handicap_highlight = handicap_highlight_paly_id.includes(+hl_data._hpid)
+        // 盘口是否高亮
+        ol.handicap_highlight = handicap_highlight_paly_id.includes(+hl_data._hpid)
 
-      // 判断盘口是否有坑位  设置投注项坑位值
-      if(hl_data.hn){
-        ol._hn = hn
-      }
-      match.all_ol_data[old_hn] = ol
-      match.all_oid_arr.push(ol.oid)
+        // 判断盘口是否有坑位  设置投注项坑位值
+        if (hl_data.hn) {
+            ol._hn = hn
+        }
+        match.all_ol_data[old_hn] = ol
+        match.all_oid_arr.push(ol.oid)
     })
-  }
+}
 
 
 /**
@@ -684,97 +717,97 @@ export function compute_ol_data(hl_data,match,handicap_type){
    * @param {Object} all_hl_obj  当前赛事所有盘口数据
    * @param {Number} hl_index  附加盘
   */
-export function compute_hl_obj_data({match, hl_obj,all_hids,all_hl_obj,hl_index}){
-    let { hl, hSpecial, hpid, chpid,hl:{hid}} = hl_obj
-    if([7,20,74,341,342].includes(+hpid) && _.get(hl_obj,'hl.hs',2) !=2){
-      match.tpl_21_hpids+=hpid+','
+export function compute_hl_obj_data({ match, hl_obj, all_hids, all_hl_obj, hl_index }) {
+    let { hl, hSpecial, hpid, chpid, hl: { hid } } = hl_obj
+    if ([7, 20, 74, 341, 342].includes(+hpid) && _.get(hl_obj, 'hl.hs', 2) != 2) {
+        match.tpl_21_hpids += hpid + ','
     }
-    if(hid){
-      let handle_type = 1
-      if(hSpecial){
-        hl.hSpecial = hSpecial
-        handle_type = Number(hSpecial)
-      }
-      if(hl_index){
-        handle_type = hl_index
-      }
-      // 添加盘口ID
-      all_hids.push(hid)
-      // 玩法ID
-      hl._hpid = hpid
-      // 玩法唯一标识
-      hl.chpid = chpid || hpid
-      // 赛事级别盘口状态
-      hl._mhs = match.mhs
-      all_hl_obj['hid_'+hid] = hl
-      // 计算投注项数据
-      compute_ol_data(hl,match,handle_type)
+    if (hid) {
+        let handle_type = 1
+        if (hSpecial) {
+            hl.hSpecial = hSpecial
+            handle_type = Number(hSpecial)
+        }
+        if (hl_index) {
+            handle_type = hl_index
+        }
+        // 添加盘口ID
+        all_hids.push(hid)
+        // 玩法ID
+        hl._hpid = hpid
+        // 玩法唯一标识
+        hl.chpid = chpid || hpid
+        // 赛事级别盘口状态
+        hl._mhs = match.mhs
+        all_hl_obj['hid_' + hid] = hl
+        // 计算投注项数据
+        compute_ol_data(hl, match, handle_type)
     }
-  }
+}
 
-  /**
-   * @Description 计算玩法数据
-   * @param {object} match 赛事对象
-  */
-  export function compute_play_data(match){
+/**
+ * @Description 计算玩法数据
+ * @param {object} match 赛事对象
+*/
+export function compute_play_data(match) {
     // 玩法对象临时变量
     let play_obj = {}
     // 遍历所有玩法
     _.each(match.hpsPns, hps => {
-      if(match.tpl_id == 18){
-        hps.hsw = '1,3,4,5,6'
-        // 冠军用盘口ID保存玩法数据
-        play_obj['hid_'+hps.hid] = hps
+        if (match.tpl_id == 18) {
+            hps.hsw = '1,3,4,5,6'
+            // 冠军用盘口ID保存玩法数据
+            play_obj['hid_' + hps.hid] = hps
 
-      }else if(hps.hSpecial){
-        // 15分钟玩法用玩法ID+阶段保存玩法数据
-        play_obj[`hpid_${hps.hpid}_${hps.hSpecial}`] = hps
-      }else{
-        // 非冠军用玩法ID保存玩法数据
-        play_obj['hpid_'+hps.hpid] = hps
-      }
+        } else if (hps.hSpecial) {
+            // 15分钟玩法用玩法ID+阶段保存玩法数据
+            play_obj[`hpid_${hps.hpid}_${hps.hSpecial}`] = hps
+        } else {
+            // 非冠军用玩法ID保存玩法数据
+            play_obj['hpid_' + hps.hpid] = hps
+        }
     })
     match.play_obj = play_obj
-  }
+}
 
-  /**
-   * @Description 设置赛事所有盘口数据
-   * @param {undefined} undefined
-  */
-  export function set_match_all_handicap_data(match){
+/**
+ * @Description 设置赛事所有盘口数据
+ * @param {undefined} undefined
+*/
+export function set_match_all_handicap_data(match) {
     let all_hl_obj = {}
     let all_hids = []
     // 计算玩法数据
     compute_play_data(match)
-    if([21,0,13].includes(+match.tpl_id)){
-      match.tpl_21_hpids = ""
+    if ([21, 0, 13].includes(+match.tpl_id)) {
+        match.tpl_21_hpids = ""
     }
     // 所有投注项ID列表
     match.all_oid_arr = []
     match.all_ol_data = {}
     // 遍历主盘口数据
     _.each(match.hpsData, hpsData => {
-      _.each(hpsData.hps, hl_obj => {
-        compute_hl_obj_data({match,hl_obj,all_hids,all_hl_obj})
-      })
+        _.each(hpsData.hps, hl_obj => {
+            compute_hl_obj_data({ match, hl_obj, all_hids, all_hl_obj })
+        })
     })
     // 遍历附加盘数据
-    let add_hps = _.get(match,'hpsData[0].hpsAdd',[])
-    add_hps.forEach( item => {
-      // 遍历附加盘盘口
-      let {hl:hls_arr = [],hpid,chpid} = item
-      hls_arr.forEach( (hl,hl_index) => {
-        compute_hl_obj_data({match,hl_obj:{hl,hpid,chpid},all_hids,all_hl_obj,hl_index:hl_index+2})
-      })
+    let add_hps = _.get(match, 'hpsData[0].hpsAdd', [])
+    add_hps.forEach(item => {
+        // 遍历附加盘盘口
+        let { hl: hls_arr = [], hpid, chpid } = item
+        hls_arr.forEach((hl, hl_index) => {
+            compute_hl_obj_data({ match, hl_obj: { hl, hpid, chpid }, all_hids, all_hl_obj, hl_index: hl_index + 2 })
+        })
     })
 
     // 足球让球与大小玩法 遍历其他玩法数据
-    if(match.csid == 1 && [0,13].includes(+match.tpl_id)){
-      _.each(Object.keys(other_play_name_to_playid), key => {
-        _.each(match[key], hl_obj => {
-          compute_hl_obj_data({match,hl_obj,all_hids,all_hl_obj})
+    if (match.csid == 1 && [0, 13].includes(+match.tpl_id)) {
+        _.each(Object.keys(other_play_name_to_playid), key => {
+            _.each(match[key], hl_obj => {
+                compute_hl_obj_data({ match, hl_obj, all_hids, all_hl_obj })
+            })
         })
-      })
     }
 
     // _.merge(this.hl_obj,all_hl_obj)
@@ -786,12 +819,12 @@ export function compute_hl_obj_data({match, hl_obj,all_hids,all_hl_obj,hl_index}
     // old_oid_arr.forEach( oid => {
     //   delete this.ol_obj['oid_'+oid]
     // })
-    if(match.tpl_id == 18){
-      // 计算赛事所有盘口数据--冠军玩法
-      compute_match_all_handicap_data_champion(match)
-    }else{
-      // 计算赛事所有盘口数据
-      compute_match_all_handicap_data(match)
+    if (match.tpl_id == 18) {
+        // 计算赛事所有盘口数据--冠军玩法
+        compute_match_all_handicap_data_champion(match)
+    } else {
+        // 计算赛事所有盘口数据
+        compute_match_all_handicap_data(match)
     }
 
-  }
+}

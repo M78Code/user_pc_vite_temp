@@ -1,8 +1,6 @@
 <template>
-  <div class="flex flex-center">
     <!-- <h1> DEMO </h1> -->
     <div id="statscorewidget"  :style="widget_style" ></div>
-  </div>
 </template>
 <script>
 import { defineComponent } from 'vue'
@@ -75,7 +73,9 @@ export default defineComponent({
         });
         // Optional object with options.
         // You can check available options further in the docs.
-        const options = {};
+        const options = {loader:{
+           enabled: false, size: 60, color1: 'red', color2: 'blue' 
+        }};
         // const widget = new window.STATSCOREWidgets.Widget(element, configurationId, inputData, options);
         const widget = new window.STATSCOREWidgets.WidgetGroup(element, configurationId, inputData, options);
        this.   add_widget_event(widget)
@@ -134,8 +134,8 @@ this.widget = widget
 <style lang="scss">
 
 #statscorewidget{
-  width: 350px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
 }
   
 </style>
