@@ -4,9 +4,12 @@
     <!-- 主队信息 -->
     <div class="row-item team-item">
       <div class="team-logo">
-        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;"
+        <img v-if="show_type == 'all' && home_avatar" style="width: 22px; max-height: 24px;"
         :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"
           v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter]" />
+        <div v-else v-show="lodash.get(match, 'mhn')"
+          :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })">
+        </div>
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
@@ -38,9 +41,12 @@
     <!-- 客队信息 -->
     <div class="row-item team-item">
       <div class="team-logo">
-        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;"
+        <img v-if="show_type == 'all' && away_avatar" style="width: 22px; max-height: 24px;"
         :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"
           v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter]" />
+        <div v-else v-show="lodash.get(match, 'man')"
+          :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })">
+        </div>
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
@@ -150,6 +156,14 @@ const is_collect = ref(false) //赛事是否收藏
 let match_style_obj =inject('match_style_obj')
 let match =inject('match')
 
+const home_avatar = computed(() => {
+  const url = ((lodash.get(match.value, 'match_logo') || {}) || {}).home_1_logo;
+  return url
+})
+const away_avatar = computed(() => {
+  const url = (lodash.get(match.value, 'match_logo') || {}).away_1_logo;
+  return url
+})
 
 const handicap_num = computed(() => {
   if (GlobalAccessConfig.get_handicapNum()) {
