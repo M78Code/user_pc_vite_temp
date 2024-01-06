@@ -3,7 +3,7 @@
   <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
   <!-- {{ match_style_obj.view_tpl_id }}--{{ match_style_obj.show_level }} -->
   <div class="c-match-card relative-position" :id="`list-mid-${mid}`"
-    :style="`height:${lodash.get(get_match_style, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
+    :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
     v-if="match_style_obj.is_show_card">
     <component :is="`MatchTpl${match_style_obj.view_tpl_id}After`" v-if="[1, 2].includes(match_style_obj.show_level)"
       :mid="mid" />

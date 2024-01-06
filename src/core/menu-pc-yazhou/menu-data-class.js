@@ -750,10 +750,7 @@ class MenuData {
     this.set_match_list_api_type(this.mid_menu_result);
     // 设置投注类别
     this.set_bet_category();
-    clearTimeout(this._t)
-    this._t=setTimeout(() => {
-      set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
-    }, 10);
+    set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     // 菜单数据缓存 //从元数据拿值
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) //从接口拿值
