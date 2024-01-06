@@ -8,7 +8,7 @@
     <div v-show="false">{{BetData.bet_data_class_version}}</div>
       <div class="nonebox4-fourth number_family">
           <div class="nonebox4-fourth-a nonebox4-fourth-h-40" @click.stop="_handleKeyPress($event)">
-              <div class="nonebox4-fourth-a-son" :class="item == BetData.bet_amount ?'active':''" v-for="(item,index) of addnum(BetData.bet_data_class_version)" :key='item' :data-number='index'>{{item}}</div>
+              <div class="nonebox4-fourth-a-son" :class="item == BetData.bet_amount ?'active':''" v-for="(item,index) of BetData.user_max_min_money" :key='item' :data-number='index'>{{item}}</div>
           </div>
           
           <div class="nonebox4-fourth-a" @click.stop="_handleKeyPress($event)"> 
@@ -231,7 +231,7 @@ const _handleNumberKey = (num, e) => {
   console.error('asdasdasdada')
   let money_ = BetData.bet_amount
   if (['qon', 'qtw', 'qth','qfo','qfi','qsi'].includes(num)) {
-    money_ = ref_data.add_num[num]
+    money_ = BetData.user_max_min_money[num]
     // if (!money_) {
     //   money_ = ref_data.add_num[num]
     // } else {
@@ -275,19 +275,6 @@ const _handleNumberKey = (num, e) => {
   // add_or_remove_active(e)
 }
 
-// 获取商户配置的 快捷金额
-const addnum = computed(()=> status => {
-  if (BetData.is_bet_single) {
-    const { qon,qtw,qth,qfo,qfi } = lodash.get(UserCtr, 'user_info.cvo.single', { qon: 200, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })  
-    ref_data.add_num = {qon,qtw,qth,qfo,qfi} 
-    return ref_data.add_num
-  } else {
-    const {qtw,qth,qfo,qfi,qsi } = lodash.get(UserCtr, 'user_info.cvo.series', {  qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
-    ref_data.add_num = { qtw,qth,qfo,qfi,qsi}
-    return ref_data.add_num
-  }
-})
-
 // 左侧+的按钮 置灰
 const prevent_click = computed((value) => {
   return function (v) {
@@ -329,6 +316,8 @@ const has_pre_market = computed(() => {
 
 onMounted(() => {
   add_keyboard_shadow();
+  // 获取商户配置的 快捷金额
+  BetData.set_user_max_min_money()
 })
 onUnmounted(() => {
   useMittOn(MITT_TYPES.EMIT_THE_THEME_CHANGE, add_keyboard_shadow).off()
