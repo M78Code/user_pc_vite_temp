@@ -34,7 +34,7 @@
   </div>
 </template>
 <script setup>
-import { computed, ref, watch,onMounted, onUnmounted } from "vue";
+import { computed, ref, watch,onMounted, onUnmounted, defineProps } from "vue";
 import matchDate from "src/components/match-process/match-process-template-1/match_date.vue";
 import {
   get_match_status,
@@ -83,7 +83,8 @@ const props = defineProps({
   },
   right: Boolean,
 });
-;
+
+console.log('proasfdjnasfas', props.match);
 const mmp_time_obj = ref({
   // key: 球种id value: 阶段对应的时间(秒数)
   1: {
