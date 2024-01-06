@@ -89,7 +89,6 @@ const set_search_status = (flag)=>{
 
 /** 展开搜索 */
 function show_search() {
-    console.log("asdfashdfu")
   // if (!globalAccessConfig.get_searchSwitch()) {
   if (!globalAccessConfig.config.searchSwitch) {
     return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));

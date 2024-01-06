@@ -8,6 +8,9 @@ import lodash from "lodash";
 import { MatchDetailCalss }  from "src/output/module/project-single.js"
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import GlobalSwitchClass  from "src/core/global/global.js";
+import {
+  UserCtr
+ } from "src/output/index.js";
 //统计分析URL
 const signal_url = "https://s5.sir.swiftscore.com";
 
@@ -255,6 +258,7 @@ const show_wrap_total = (match_infoData) => {
  * @return:
  */
 const sr_click_handle = (match) => {
+
   let full_url = get_full_sr_url(match); // seid,match.srid
   if (!GlobalAccessConfig.get_statisticsSwitch())
     return window.vue.useMittEmit(
@@ -271,7 +275,6 @@ const sr_click_handle = (match) => {
   let _window_height = 650;
   let _window_offset_left = (screen.width - _window_width) / 2;
   let _window_offset_top = (screen.height - _window_height) / 2;
-
   if (full_url) {
     window.open(
       full_url,
@@ -351,7 +354,7 @@ const get_src_lang = () => {
     es: "es",
     ad: "ad", // 印尼语
   };
-  return all_sr_lang[store.getters.get_lang]; // TODO
+  return all_sr_lang[UserCtr.lang]; 
 };
 
 /**

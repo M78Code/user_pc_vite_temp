@@ -86,8 +86,8 @@
         <!-- 赔率 -->
         <div class="bet-team-handicap-odd" v-else>
           <div class="col bet-odds-value" :class="{
-            'up-red': item.red_green == 'up-red',
-            'down-green': item.red_green == 'down-green'
+            'up-red': item.red_green == 'red_up',
+            'down-green': item.red_green == 'green_down'
           }">
             <!--投注赔率1.87-->
             <span class="odds-value yb-number-bold">

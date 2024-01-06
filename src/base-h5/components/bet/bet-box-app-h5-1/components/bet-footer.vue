@@ -104,7 +104,6 @@ onMounted(()=>{
 
 // 滑动监听
 const set_touch_move_bet = event => {
-  console.error('set_touch_move_bet')
   let fit = lodash_.get(event,'target.className','')
   get_leng_px()
   if(fit == 'bet-box'){
@@ -123,7 +122,6 @@ requestAnimationFrame(() => {
 let timer = null
 // 滑动结束
 const set_touch_end_bet = event => {
-  console.error('set_touch_end_bet')
   clearTimeout(timer)
   timer = setTimeout(() => {
     get_leng_px()
