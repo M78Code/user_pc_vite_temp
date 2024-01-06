@@ -8,7 +8,7 @@
                 <div class="bg">
                     <div class="title">{{ i18n_t('common.zhuanye') }}</div>
                     <div class="desc">{{ i18n_t('common.gongnengwanshan') }}</div>
-                    <img class='version_img' :src="compute_img_url('vocational_version')" alt="" />
+                    <div class='version_img' :style="compute_css_obj({key: 'h5-new-page'})"></div>
                 </div>
                 <div class="btn" @click="set_standard_edition(2)">{{ i18n_t('common.use') }}</div>
             </div>
@@ -16,7 +16,7 @@
                 <div class="bg">
                     <div class="title">{{ i18n_t('common.xinshou') }}</div>
                     <div class="desc">{{ i18n_t('common.yemianjianjie') }}</div>
-                    <img class='version_img' :src="compute_img_url('noob_version')" alt="" />
+                    <div class='version_img' :style="compute_css_obj({key: 'h5-new-page-xs'})"></div>
                 </div>
                 <div class="btn" @click="set_standard_edition(1)">{{ i18n_t('common.use') }}</div>
             </div>
@@ -26,7 +26,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import {LocalStorage, SessionStorage, compute_img_url,compute_local_project_file_path} from 'src/output/'
+import {LocalStorage, SessionStorage, compute_img_url,compute_local_project_file_path,compute_css_obj} from 'src/output/'
 const isShow = ref(false);
 const emits = defineEmits(["change"])
 function set_standard_edition(v) {
@@ -85,7 +85,7 @@ onMounted(() => {
     border-radius: 20px;
     padding: 24px 16px 16px;
     justify-content: space-between;
-    background-color: var(--q-gb-bg-c-15);
+    background-color: var(--q-gb-bg-c-46);
     width: 348px;
     .close{
         position: absolute;
@@ -101,7 +101,7 @@ onMounted(() => {
     }
     .bg {
         padding-top: 12px;
-        background: var(--q-gb-bg-c-11);
+        background: var(--q-gb-bg-c-18);
         border-radius: 10px;
 
     }
