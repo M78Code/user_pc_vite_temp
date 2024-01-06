@@ -270,6 +270,21 @@ onUnmounted(() => {
      align-items: center;
   }
 
+  .red-ball {
+    margin: 0 0 2.5px 8px;
+    position: relative;
+    top: 1px;
+    padding: 0 2px;
+    height: 14px;
+    line-height: 14px;
+    &.yellow {
+      background-color: #FFA800;
+    }
+
+    &.flash {
+      animation: 1s text-flash linear infinite normal;
+    }
+  }
   /*  发球方 */
   .serve-ball {
     position: absolute;
