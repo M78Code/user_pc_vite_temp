@@ -325,9 +325,11 @@ function key_down(event) {
 .search {
 	width: 100%; 
 	flex: 1 1;
-  font-size: 12px;
+    font-size: 12px;
 	font-family: PingFang SC;
 	color: var(--q-gb-t-c-17);
+    display: flex;
+    align-items: center;
 	.search-input {
 		width: 90%;
 		border-radius: .25rem;

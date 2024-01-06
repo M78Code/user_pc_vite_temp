@@ -41,6 +41,8 @@ class MatchMeta {
     this.complete_matchs = []
     // 列表渲染数据
     this.current_matchs = []
+    // 列表初始数据 辅助联赛筛选的时候使用
+    this.init_matchs = []
     // 上一次滚动得距离
     this.prev_scroll = 0
     // 其他仓库的全量赛事
@@ -404,7 +406,7 @@ class MatchMeta {
    */
   filter_match_by_name(str) {
     const keyword = str.replace(/^\s+|\s+$/g, '')
-    if (!keyword) return this.set_origin_match_data()
+    if (!keyword) return this.handler_match_list_data({ list: this.init_matchs, type: 1, is_virtual: true })
     const length = lodash.get(this.complete_matchs, 'length', 0)
     if (length === 0) return this.set_page_match_empty_status({ state: true });
     const result = []
@@ -737,6 +739,7 @@ class MatchMeta {
     }
     // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
     if (length < 1) return this.set_page_match_empty_status({ state: true });
+    this.init_matchs = list
     // 处理足球下的热门联赛
     this.handler_popular_leagues_by_all(list)
     // 处理收藏状态
@@ -1397,6 +1400,7 @@ class MatchMeta {
     this.complete_matchs = []
     this.current_matchs = []
     this.complete_mids = []
+    this.init_matchs = []
   }
 
   /**
