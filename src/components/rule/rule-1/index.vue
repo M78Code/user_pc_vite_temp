@@ -92,8 +92,6 @@ onMounted(()=>{
     height: calc(100vh - 80px);
     display: flex;
     flex-direction: column;
-    position: fixed;
-    top: 46px;
     // padding-bottom: 100px;
     .rule-content {
         width: 100%;
@@ -106,5 +104,7 @@ onMounted(()=>{
 // ========复刻版=======
 .app-h5.rule-wrap {
     height: calc(100vh - 46px);
+    position: fixed;
+    top: 46px;
 }
 </style>
