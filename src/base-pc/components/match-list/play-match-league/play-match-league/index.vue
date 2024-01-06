@@ -1,9 +1,8 @@
 <template>
   <div class="c-match-league"
-    :class="[{ 'match-tpl1-bg': match_style_obj.data_tpl_id == 0 }, card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${match_style_obj.data_tpl_id}`]"
+    :class="[{ 'match-tpl1-bg': match_style_obj.data_tpl_id == 1 }, card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${match_style_obj.data_tpl_id}`]"
     v-if="lodash.get(card_style_obj, 'league_obj.csid')">
     <!-- 第一行 -->
-    <div v-show="false">{{ MatchListCardData.list_version }}{{ MatchListCardDataClass.list_version }}</div>
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
       <div class="leagues-wrap" :class="match_style_obj.data_tpl_id == 12 && 'jingcai'"
@@ -11,7 +10,7 @@
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
             <span class="soprts_id_icon"
-            v-if="menu_config.is_esports()"
+            v-if="MenuData.is_esports()"
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
           <img v-else v-img="[lodash.get(card_style_obj, 'league_obj.lurl')]" />
         </div>
@@ -20,7 +19,7 @@
           <div class="absolute-full">
             <!-- 联赛数量 -->
             <span class="ellipsis allow-user-select" v-tooltip="{ content: card_style_obj.league_obj.tn, overflow: 1 }">
-              {{ card_style_obj.league_obj.tn || card_style_obj.league_obj.tid }}
+              {{ card_style_obj.league_obj.tn}}
             </span>
             <span class="league-match-count">{{ card_style_obj.match_count}}</span>
           </div>
@@ -73,7 +72,7 @@
       <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         <!-- 联赛是否收藏 -->
         <div @click.stop="mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
-          class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch()"
+          class="icon-wrap m-star-wrap-league" v-if="!MenuData.is_esports() && GlobalAccessConfig.get_collectSwitch()"
           >
           <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
           <!-- <div class="q-icon"
@@ -103,17 +102,13 @@ import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card
 import lodash from 'lodash';
 import { ref, computed } from 'vue';
 import BaseData from "src/core/base-data/base-data.js"
-import { compute_css_obj } from "src/output/index.js";
-import { get_match_tpl_title } from 'src/output/index.js'
+import { compute_css_obj,MenuData } from "src/output/index.js";
+import { get_match_tpl_title } from 'src/core/format/common/index.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import menu_config from "src/core/menu-pc/menu-data-class.js";
-
-// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-
 import {mx_collect} from "src/core/match-list-pc/composables/match-list-collect.js";
 
 const props = defineProps({
@@ -126,18 +121,18 @@ const props = defineProps({
     default: () => ''
   }
 })
-
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'card_style_obj.mid'))
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+const match_style_obj = computed(() => {
+  return MatchListCardDataClass.get_card_obj_bymid(lodash.get(props.card_style_obj, 'mid'), MatchListCardDataClass.list_version.value)
+})
+const match_list_tpl_size = computed(() => {
+  return MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.value.data_tpl_id}_config`].width_config
+})
 // 获取菜单类型
-if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
-  useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {})
-}
-
-
-
+// if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(MenuData.menu_root)) {
+//   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {})
+// }
 const is_HDP = computed(() => {
-  return [1, 20, 24, 13, 25].includes(+match_style_obj.data_tpl_id)
+  return [1, 20, 24, 13, 25].includes(+match_style_obj.value.data_tpl_id)
 })
 
 /**
@@ -147,26 +142,26 @@ const is_HDP = computed(() => {
 const bet_col = computed(() => {
   let csid = props.card_style_obj.league_obj.csid
   let bet_col = []
-  if (match_style_obj.data_tpl_id == 13) {
-    match_style_obj.data_tpl_id = 1
+  if (match_style_obj.value.data_tpl_id == 13) {
+    // match_style_obj.value.data_tpl_id = 1
     bet_col = [...i18n_t('list.match_tpl_title.tpl13_m.bet_col')]
   }
   let title_name = 'bet_col'
   //角球
-  if (match_style_obj.data_tpl_id == 1 && menu_config.is_corner_menu()) {
+  if (match_style_obj.value.data_tpl_id == 1 && MenuData.is_corner_menu()) {
     title_name = "corner_bet_col"
   }
   //罚牌主盘
-  if (match_style_obj.data_tpl_id == 25) {
-    match_style_obj.data_tpl_id = 1
+  if (match_style_obj.value.data_tpl_id == 25) {
+    // match_style_obj.value.data_tpl_id = 1
     title_name = "punish_bet_col"
   }
-  bet_col = [...get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.data_tpl_id}.${title_name}`, csid), ...bet_col]
-
+  let tpl_title=get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.value.data_tpl_id}.${title_name}`, csid)
+  tpl_title=tpl_title.length?tpl_title:[]
+  bet_col = [...tpl_title, ...bet_col]
   let mft = lodash.get(MatchListCardData.match_mid_obj, `mid_${props.card_style_obj.mid}.mft`)
-
   // 模板10
-  if (match_style_obj.data_tpl_id == 10) {
+  if (match_style_obj.value.data_tpl_id == 10) {
     if (mft == 3) {
       bet_col = bet_col.slice(0, 3)
     } else {
@@ -174,7 +169,7 @@ const bet_col = computed(() => {
     }
   }
   // 模板15
-  if (match_style_obj.data_tpl_id == 15) {
+  if (match_style_obj.value.data_tpl_id == 15) {
     if (mft == 5) {
       bet_col = bet_col.slice(4, 8);
     } else {
@@ -182,17 +177,17 @@ const bet_col = computed(() => {
     }
   }
   // 模板11 && 斯诺克
-  if (match_style_obj.data_tpl_id == 11 && csid == 7) {
+  if (match_style_obj.value.data_tpl_id == 11 && csid == 7) {
     bet_col = get_match_tpl_title("list.match_tpl_title.tpl11.bet_col2", csid)
   }
 
   // 模板20 && 曲棍球
-  if (match_style_obj.data_tpl_id == 20 && csid == 15) {
+  if (match_style_obj.value.data_tpl_id == 20 && csid == 15) {
     bet_col = get_match_tpl_title("list.match_tpl_title.tpl20.bet_col2")
   }
   // 模板 esport && CSGO
-  if (match_style_obj.data_tpl_id == 'esports' && csid == 102) {
-    bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.data_tpl_id}.bet_col102`)
+  if (match_style_obj.value.data_tpl_id == 'esports' && csid == 102) {
+    bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.value.data_tpl_id}.bet_col102`)
   }
   return bet_col
 })
@@ -202,7 +197,7 @@ const bet_col = computed(() => {
  * @param {undefined} undefined
 */
 const bet_title = computed(() => {
-  let bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.data_tpl_id}.title2`, props.card_style_obj.league_obj.csid)
+  let bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.value.data_tpl_id}.title2`, props.card_style_obj.league_obj.csid)
   return bet_col
 })
 
@@ -213,7 +208,7 @@ const bet_title = computed(() => {
    * @param {NUmber}  i(0|1)  双行标题第几个
   */
 function get_highlight_title(is_double, key, i) {
-  let highlight = [3, 4, 5].includes(key) && [0, 13, 25].includes(+match_style_obj.data_tpl_id)
+  let highlight = [3, 4, 5].includes(key) && [0, 13, 25].includes(+match_style_obj.value.data_tpl_id)
   if (is_double) {
     highlight = (highlight && i === 1)
   }
@@ -224,24 +219,24 @@ function get_highlight_title(is_double, key, i) {
  * @param {undefined} undefined
 */
 function get_title_style() {
-  return `width: ${(match_list_tpl_size.bet_width + 5) * 3}px !important; flex:auto`
+  return `width: ${(match_list_tpl_size.value.bet_width + 5) * 3}px !important; flex:auto`
 }
 /**
   * @Description 获取模板标题宽度
   * @param {Number} index 第几个标题索引
  */
 function get_bet_width(index) {
-  let bet_width = match_list_tpl_size.bet_width
+  let bet_width = match_list_tpl_size.value.bet_width
   let flex = 'none'
-  if (is_HDP && match_style_obj.data_tpl_id != 13 && index == 5) {
+  if (is_HDP && match_style_obj.value.data_tpl_id != 13 && index == 5) {
     flex = 1
   }
   let style = `width:${bet_width}px !important; flex: ${flex};`
   if (is_HDP && utils_info.is_iframe) {
     if ([0, 3].includes(index)) {
-      bet_width = match_list_tpl_size.bet_width - 4
+      bet_width = match_list_tpl_size.value.bet_width - 4
     } else {
-      bet_width = match_list_tpl_size.bet_width + 2
+      bet_width = match_list_tpl_size.value.bet_width + 2
     }
     style = `width:${bet_width}px !important; flex: none;`
   }
@@ -252,7 +247,7 @@ function get_bet_width(index) {
  * @param {String} csid 球种id
 */
 function is_highlighted (csid){
-  if (is_HDP || menu_config.is_eports_csid(csid)) {
+  if (is_HDP || MenuData.is_eports_csid(csid)) {
     return true
   } else {
     return false
@@ -263,7 +258,7 @@ function is_highlighted (csid){
 */
 function set_fold() {
   // 如果当前联赛是折叠的 并且是今日、早盘  调用bymids接口拉数据
-  if (props.card_style_obj.is_league_fold && ([2, 3].includes(menu_config.menu_root) || menu_config.is_esports())) {
+  if (props.card_style_obj.is_league_fold && ([2, 3].includes(MenuData.menu_root) || MenuData.is_esports())) {
     // 设置赛事基础数据
     MatchListCardData.set_match_basic_data(props.card_style_obj)
     let params = {

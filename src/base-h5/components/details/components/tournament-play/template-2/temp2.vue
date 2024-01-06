@@ -241,14 +241,32 @@ export default defineComponent({
 // Bug: 53049
 .temp2 {
   .play-box {
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: normal;
     .ellipsis {
-      flex: 2;
-      overflow: hidden;
-      height: 100%;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .odds-osn {
+        //flex: 1;
+        //text-align: right;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 1rem;
+        display: inline-block;
+      }
+      .size-color {
+        //width: 0.3rem;
+
+      }
     }
     :deep(.odds_new) {
-      flex: 1;
-      height: 100%;
+      height: auto;
     }
   }
 }

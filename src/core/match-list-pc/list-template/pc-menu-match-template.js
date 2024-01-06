@@ -10,7 +10,7 @@ const menu_to_match_templte = {
   // 常规
   101201: { label: "足球-今日-让球&大小", value: "1" },
   101202: { label: "足球-今日-波胆", value: "21" },
-  101203: { label: "足球-今日-15分钟", value: "28" },
+  101203: { label: "足球-今日-15分钟", value: "24" },
   101204: {
     label: "足球-今日-独赢/让球胜平负/双重机会",
     value: "22",
@@ -24,7 +24,7 @@ const menu_to_match_templte = {
   101211: { label: "足球-今日-罚牌", value: "29" },
   101301: { label: "足球-早盘-让球&大小", value: "1" },
   101302: { label: "足球-早盘-波胆", value: "1" },
-  101303: { label: "足球-早盘-15分钟", value: "28" },
+  101303: { label: "足球-早盘-15分钟", value: "24" },
   101304: {
     label: "足球-早盘-独赢/让球胜平负/双重机会",
     value: "22",
@@ -94,7 +94,7 @@ const menu_to_match_templte = {
   412: { label: "拳击-冠军-冠军", value: "18" },
   403: { label: "棒球-冠军-冠军", value: "18" },
   401: { label: "冠军-足球", value: "18" },
-  405: { label: "冠军-网球", value: "网球" },
+  405: { label: "冠军-网球", value: "18" },
   400: { label: "冠军", value: "18" },
 
   // 热门
@@ -145,6 +145,7 @@ const different_version_config = {
  */
 export const computed_menu_to_match_templte = (data_tpl_id) => {
   let default_template_value = 1;
+  console.log(data_tpl_id,'jiffy')
   let current_data_template_value =
     Number(menu_to_match_templte[data_tpl_id]?.value) +
     Number(different_version_config[PROJECT_NAME]);

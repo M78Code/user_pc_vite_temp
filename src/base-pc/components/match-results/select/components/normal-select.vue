@@ -93,7 +93,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .e-select {
-  width: 120px;
+  width: 100px;
   height: 28px;
   color: var(--qq--yb-text-color3);
   border-radius: 2px;
@@ -105,7 +105,7 @@ export default {
     width: 100%;
     height: 28px;
     line-height: 28px;
-    padding: 0 15px;
+    padding: 0 6px;
     position: relative;
     border: 1px solid var(--q-match-result-boreder-1);
     background: #ffffff;
@@ -149,10 +149,11 @@ export default {
       background: #e3e9ee;
     }
     .rule-scroll-area {
-      ::v-deep .q-scrollarea__content {
+      &:deep(.q-scrollarea__content){
         width: 100%;
         background: #fff;
-      }
+  }
+     
     }
   }
 }

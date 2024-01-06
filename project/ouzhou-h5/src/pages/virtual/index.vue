@@ -1,0 +1,3 @@
+<template>
+    ouzhou vr
+</template>

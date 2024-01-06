@@ -51,10 +51,10 @@
             <div class="line"></div>
           </div>
           <div class="col text-center"
-            :class="{'active': BetRecord.appoint_order_status==2}"
-            @click.stop="set_record_appoint_order_status(2)">
+            :class="{'active': BetRecord.appoint_order_status==1}"
+            @click.stop="set_record_appoint_order_status(1)">
             {{ i18n_t('bet.bet_invalid') }}
-            <template v-if="BetRecord.appoint_order_status==2">
+            <template v-if="BetRecord.appoint_order_status==1">
               <div class="tabs-line"></div>
             </template>
           </div>
@@ -91,9 +91,22 @@ const set_menu_back = val => {
 </script>
 
 <style scoped lang="scss">
-  .active{
-    color:#ff0000;
+.bet-type {
+  .row {
+    height: 34px;
+    line-height: 34px;
   }
+  .menu-tab-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .line {
+      width: 1px;
+      height: 14px;
+      background: var(--q-gb-t-c-13);
+    }
+  }
+}
   /* 返回体育项目 */
 .bet-back-btn {
   padding-left: 15px;
@@ -162,5 +175,44 @@ const set_menu_back = val => {
     }
   }
 }
+.bet-record-item {
+      font-size: 14px;
+      height: 32px;
+      line-height: 32px;
+      margin-left: 5px;
+      margin-right: 5px;
+      background: var(--q-gb-bg-c-14);
+      box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.1);
+      border-radius: 16px;
+      border-radius: 16px;
+      div.col {
+        &.active {
+          color: #FFFFFF;
+          width: 77px;
+          height: 32px;
+          background:var(--q-gb-bd-c-12);
+          border-radius: 16px;
+        }
+      }
+    }
+    .appoint-order-status {
+        margin-left: 6px;
+        margin-top: 5px;
+        width: 208px;
 
+      .active {
+        margin-top: -2px;
+        color: var(--q-gb-t-c-16);
+      }
+      /*  未结算,已结算中间分割线设置 */
+      .tabs-line {
+        width: 39px;
+        height: 2px;
+        background: var(--q-gb-t-c-16);
+        border-radius: 100px 100px 0px 0px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: -4px;
+      }
+    }    
 </style>

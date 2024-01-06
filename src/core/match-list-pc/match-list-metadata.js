@@ -39,27 +39,13 @@ function get_match_list_by_mid_for_base_data_res(mid, csid, type) {
 };
 // 使用元数据默认显示 后面替换
 function set_base_data_init() {
-	// 当前的分类 左侧菜单数据 中间件数据
-	const {
-		left_menu_result: { lv2_mi = "", lv1_mi, has_mid_menu, guanjun, jinri_zaopan },
-		mid_menu_result: { csid: mi, mif, root, mid_menu_mi },
+	let {
 		current_ball_type: csid,
+		left_menu_result: { lv2_mi, lv1_mi },
+		mid_menu_result: { mid_menu_mi },
 	} = MenuData;
 	let mid = lv2_mi;
 	let midf = lv1_mi;
-	// 有中间件数据 不能是早盘 使用 mi
-	if (has_mid_menu && !MenuData.is_zaopan()) {
-		mid = mi;
-		if ([MenuData.is_vr(), MenuData.is_kemp()].includes(true)) {
-			midf = mi;
-		} else {
-			// midf = mif;
-		}
-	}
-	// 数据兜底
-	midf = midf || lv2_mi;
-	mid = mid || lv2_mi;
-
 	if (MenuData.is_scroll_ball()) {
 		mid = mid_menu_mi;
 	}
@@ -71,9 +57,7 @@ function set_base_data_init() {
 	// 元数据
 	const {
 		mi_tid_mids_res = {},
-		base_data_res = {},
 		mew_menu_list_res,
-		left_menu_base_mi_arr,
 	} = BaseData;
 	// 没有数据 不执行
 	if (!(mi_tid_mids_res && mi_tid_mids_res[mid])) {
@@ -83,43 +67,44 @@ function set_base_data_init() {
 	if ((MenuData.is_today() || MenuData.is_zaopan()) && !MenuData.is_common_kemp()) {
 		// 根据联赛-赛事接口 拿到 mid 去赛事列表里面匹配数据
 		if (!mid) return;
-		// 常规赛种/联赛   滚球 ld
-		let livedata = (mi_tid_mids_res[mid].ld || []).map((item) => ({ tid: item.tid, csid, mids: item.mids.join(","), mids_info: item.mids })) || [];
-		// 常规赛种/联赛   未开赛 nd
-		let nolivedata = (mi_tid_mids_res[mid].nd || []).map((item) => ({ tid: item.tid, csid, mids: item.mids.join(","), mids_info: item.mids, })) || [];
-		// 常规赛种、联赛  滚球 详细内容
-		let live_match = get_match_list_by_mid_for_base_data_res(mid, csid, "ld");
-		// 常规赛种、联赛  未开赛 详细内容
-		let nolive_match = get_match_list_by_mid_for_base_data_res(mid, csid, "nd");
-		matchs_list = [...live_match, ...nolive_match];
-		// 常规赛种联赛
-		data.data = {
-			collectCount: 0,
-			collectMIds: [],
-			livedata: livedata,
-			nolivedata: nolivedata,
-		};
+			// 常规赛种/联赛   滚球 ld
+			let livedata = (mi_tid_mids_res[mid].ld || []).map((item) => ({ tid: item.tid, csid, mids: item.mids.join(","), mids_info: item.mids })) || [];
+			// // 常规赛种/联赛   未开赛 nd
+			let nolivedata = (mi_tid_mids_res[mid].nd || []).map((item) => ({ tid: item.tid, csid, mids: item.mids.join(","), mids_info: item.mids, })) || [];
+			// // 常规赛种、联赛  滚球 详细内容
+
+			let live_match = get_match_list_by_mid_for_base_data_res(mid, csid, "ld");
+			// 常规赛种、联赛  未开赛 详细内容
+			let nolive_match = get_match_list_by_mid_for_base_data_res(mid, csid, "nd");
+			matchs_list = [...live_match, ...nolive_match];
+			// 常规赛种联赛
+			data.data = {
+				collectCount: 0,
+				collectMIds: [],
+				livedata: livedata,
+				nolivedata: nolivedata,
+			};
 	} else {
 		//滚球赛事
+		//滚球赛事
 		if (MenuData.is_scroll_ball()) {
-			if (mi == 1) {
-				let mi_100_arr = [];
-				// 常规赛种/联赛  滚球
-				mew_menu_list_res.forEach((x) => {
-					if (x.mi * 1 < 300) { mi_100_arr.push(midf + jinri_zaopan + x.mi.substring(1)); }
-				});
-				//常规赛事下 所有的滚球数据
-				mi_100_arr.forEach((item) => {
-					let livedata = get_match_list_by_mid_for_base_data_res(item, csid, "ld");
-					matchs_list = [...matchs_list, ...livedata];
-				});
-			} else {
-				let mid_1 = midf + jinri_zaopan + ("" + midf).substring(1);
-				matchs_list = get_match_list_by_mid_for_base_data_res(mid_1, csid, "ld");
-			}
+			// if (current_ball_type == 1) {
+			let mi_100_arr = [];
+			// 常规赛种/联赛  滚球
+			mew_menu_list_res.forEach((x) => {
+				if (x.mi * 1 < 300) { mi_100_arr.push(x.mi + '1'); }
+			});
+			//常规赛事下 所有的滚球数据
+			mi_100_arr.forEach((item) => {
+				let livedata = get_match_list_by_mid_for_base_data_res(item, csid, csid);
+				matchs_list = [...matchs_list, ...livedata];
+			});
+			// } else {
+			// 	let mid_1 = midf + menu_root + ("" + midf).substring(1);
+			// 	matchs_list = get_match_list_by_mid_for_base_data_res(mid_1, csid, "ld");
+			// }
 		}
 		//  else if (MenuData.is_kemp()) {
-
 		// 	if (mi == 400) {
 		// 		let mi_400_arr = [];
 		// 		// 常规赛种/联赛  滚球
@@ -136,7 +121,6 @@ function set_base_data_init() {
 		// 	} else {
 		// 		let mid_1 = midf + '4';
 		// 		matchs_list = get_match_list_by_mid_for_base_data_res(mid_1, csid, "ld");
-
 		// 	}
 		// } else if (menu_root == 500) {
 		// 	// 热门赛事
@@ -191,7 +175,7 @@ function set_base_data_init() {
 		// }
 		data.data = matchs_list;
 	}
-	if (MenuData.is_left_zaopan() || matchs_list.length <= 0) return;
+	if (MenuData.is_zaopan() || matchs_list.length <= 0) return;
 	// 赛事列表 卡片数据
 	// 设置列表数据仓库
 	match_list_handle_set(matchs_list)
@@ -200,9 +184,7 @@ function set_base_data_init() {
 	);
 	//右侧比分版 应该改变
 	MatchDataWarehouse_PC_Detail_Common.set_match_details(matchs_list[0], [])
-	useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, matchs_list[0].mid)
-	handle_match_list_request_when_ok(matchs_list, false, true, true);
-
+	handle_match_list_request_when_ok(data, false, true, true);
 	let ts1 = Date.now();
 	let mids_arr = [];
 	(matchs_list || []).forEach((match) => {
@@ -211,6 +193,7 @@ function set_base_data_init() {
 	});
 	// 联赛数据
 	set_match_base_info_by_mids_info(matchs_list, mids_arr, ts1);
+	useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, matchs_list[0].mid)
 	return true;
 };
 

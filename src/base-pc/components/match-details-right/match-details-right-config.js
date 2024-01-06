@@ -117,8 +117,8 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
    * 调用后通过传参判断是否是 ws 调用
    */
   const m_init = (param = { is_ws: false }) => {
-    console.log(MatchDataWarehouseInstance.get_quick_mid_obj(param),'11111');
-    console.trace(2222)
+    // console.log(MatchDataWarehouseInstance.get_quick_mid_obj(param),'11111');
+    // console.trace(2222)
     //给仓库类设置id
    
     allData.details_params = param
