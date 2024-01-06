@@ -159,10 +159,10 @@
       </div>
     </div>
 
-    <!-- 近期战绩 -->
+    <!-- 近期战绩44 -->
     <div class="panel history near">
       <div class="panel-title">
-        <!-- 近期战绩 -->
+        <!-- 近期战绩 33-->
         <span>{{ i18n_t('analysis.recent_record') }}</span>
         <m-select name="other" @click="selectedFn(arguments)" />
       </div>

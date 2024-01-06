@@ -47,7 +47,8 @@ const match_status = computed(() => {
     left: 0.19rem;
     bottom: 0.11rem;
     font-size: 0.12rem;
-    color: var(--q-gb-t-c-5);
+    //color: var(--q-gb-t-c-5);
+    color: var(--q-gb-t-c-14);
 
     &.baseball {
         bottom: 0.28rem;

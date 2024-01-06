@@ -23,6 +23,7 @@ const format_time = computed(()=>{
 <style lang="scss" scoped>
 .team-time{
     height: .32rem;
-    color: var(--q-gb-t-c-5);
+    //color: var(--q-gb-t-c-5);
+    color: var(--q-gb-t-c-14);
 }
 </style>

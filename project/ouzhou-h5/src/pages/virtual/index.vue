@@ -9,15 +9,25 @@
 
         <div class="nav_list">
             <div class="nav_item" v-for="(item, index) in [0,1]" :key="index">
-                <div>267382-</div>
-                <img :src="`${LOCAL_PROJECT_FILE_PREFIX }/image/menu/top-menu/mask_group.png`" alt="">
+                <div class="item_content">
+                    <div>267382-</div>
+                    <img :src="`${LOCAL_PROJECT_FILE_PREFIX }/image/menu/top-menu/mask_group.png`" alt="">
+                </div>
+                <div class="item_vertical_line"></div>
             </div>
         </div>
         
         <div class="match_list_box">
             <div class="match_list">
                 <div class="match_item" v-for="(item, index) in [0,1,2,3,4,5]" :key="index">
-                    比赛item{{ index }}
+                    <div class="left">
+                        <div class="left_item" v-for="(it, inde) in [0, 1]" :key="inde">
+                            <div class="left_item_left"></div>
+                            <div class="left_item_right"></div>
+                        </div>
+                    </div>
+                    <div class="vertical_line"></div>
+                    <div class="right"></div>
                 </div>
             </div>
         </div>
@@ -49,32 +59,49 @@
             align-items: center;
             .nav_item{
                 // width: 0.49rem;
+                height: 100%;
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 justify-content: center;
                 align-items: center;
-                >div{
-                    height: 0.15rem;
-                    margin-top: 0.15rem;
-                    margin-bottom: 0.14rem;
-                    padding-left: 0.15rem;
-                    padding-right: 0.15rem;
-                    // background-color: orange;
-                    border-right: 0.005rem solid #D9D9D9;
+                .item_content{
+                    height: 100%;
+                    // background-color: palegoldenrod;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
 
-                    color: #FF7000;
-
-                    text-align: center;
-                    font-family: Roboto;
-                    font-size: 13px;
-                    font-style: normal;
-                    font-weight: 500;
-                    line-height: normal;
-                    text-transform: capitalize;
+                    >div{
+                        height: 0.15rem;
+                        margin-top: 0.15rem;
+                        padding-left: 0.15rem;
+                        padding-right: 0.15rem;
+                        // background-color: orange;
+                        // border-right: 0.005rem solid #D9D9D9;
+                        color: #FF7000;
+                        text-align: center;
+                        font-family: Roboto;
+                        font-size: 13px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                        text-transform: capitalize;
+                    }
+                    
+                    >img{
+                        margin-top: 0.10rem;
+                        margin-bottom: 0.01rem;
+                        // padding-right: 0.14rem;
+                    }
                 }
 
-                >img{
-                    padding-right: 0.15rem;
+                .item_vertical_line{
+                    // background-color: blue;
+                    width: 0.005rem;
+                    height: 0.12rem;
+                    flex-shrink: 0;
+                    background: #D9D9D9;
                 }
             }
         }
@@ -90,6 +117,7 @@
                 align-items: center;
                 .match_item{
                     width: 100%;
+                    height: 0.9rem;
                     background-color: orange;
                     // margin-top: 0.2rem;
                     border-top: 0.005rem solid #ccc;
