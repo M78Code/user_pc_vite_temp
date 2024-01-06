@@ -78,7 +78,6 @@ const vx_play_media = ref(MatchDetailCalss.play_media)
 watch(
   () => MatchDetailCalss.details_data_version.version,
   (val) => {
-    console.error('3278837832',props.match)
     if (val) {
       vx_play_media.value = MatchDetailCalss.play_media
     }
