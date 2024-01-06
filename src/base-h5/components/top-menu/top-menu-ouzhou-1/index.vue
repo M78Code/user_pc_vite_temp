@@ -71,7 +71,7 @@
 import { ref, reactive, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRouter, useRoute } from "vue-router";
 import { format_money2,UserCtr } from "src/output/index.js";
-import vrTop from "./components/vr-top/vr_top.vue";
+import vrTop from "./components/vr-top/vr-top.vue";
 import leftMenu from "./components/left-menu/left-menu.vue";
 import detailTopInfo from "./detail-top/detail-top.vue";
 import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
