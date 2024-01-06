@@ -1,9 +1,8 @@
 import { ref } from "vue"
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
-import { filter_early_list } from  "./util.js"
+import { filter_early_list } from  "../util.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_betting } from "src/api/index.js";
-import BetRecordClass from "src/core/bet-record/bet-record.js";
 import lodash from 'lodash';
 
 class BetRecord {
@@ -29,8 +28,6 @@ class BetRecord {
     // 接口是否返回错误码为0401038限频
     this.is_limit = false
 
-    // 预约  0进行中  1已失效
-    this.appoint_order_status = 0
     // 投注记录版本变更
     this.bet_record_version = ref('1111')
   }
@@ -160,8 +157,8 @@ class BetRecord {
           }
         }
         // 合并数据
-        let obj = lodash.cloneDeep(BetRecordClass.list_data)
-        BetRecordClass.set_list_data(Object.assign(obj, record))
+        let obj = lodash.cloneDeep(this.list_data)
+        this.set_list_data(Object.assign(obj, record))
       } else {
         //没有更多
         $el.setState(7);

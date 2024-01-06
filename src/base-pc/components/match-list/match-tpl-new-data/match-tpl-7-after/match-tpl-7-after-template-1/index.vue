@@ -100,8 +100,6 @@ const match_style_obj = inject("match_style_obj");
 const match_list_tpl_size = inject("match_list_tpl_size");
 const match_tpl_info = inject("match_tpl_info");
 
-
-
 const is_mounted = ref(true);
 
 const score_column_position = computed(() => {

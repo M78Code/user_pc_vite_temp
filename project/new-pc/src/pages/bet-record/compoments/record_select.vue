@@ -207,7 +207,6 @@ div.q-menu {
 
 .record-select {
   margin-top: 10px;
-  background-color: var(--q-gb-bg-c-4);
 
   &:deep(.q-btn) {
     font-size: 12px;

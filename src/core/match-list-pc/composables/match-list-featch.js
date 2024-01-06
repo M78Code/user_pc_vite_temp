@@ -7,6 +7,7 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { MatchDataWarehouse_PC_List_Common  } from "src/output/module/match-data-base.js";
 import { GlobalAccessConfig  } from "src/output/";
+import get_match_list_params from '../match-list-params'
 
 import { get_tab_param_build } from 'src/core/match-list-pc/composables/match-list-other.js';
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
@@ -204,7 +205,7 @@ const api_bymids = (
   // 	});
   // 获取足球tab玩法参数
   let tabs = get_tab_param_build(mids);
-  let match_list_api_config = MenuData.match_list_api_config.match_list;
+  let match_list_api_config = get_match_list_params().match_list;
   let _params = lodash.clone(match_list_api_config.params) || {};
   let params = {
     mids: mids.join(","),
