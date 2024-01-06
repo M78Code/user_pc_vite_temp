@@ -213,12 +213,12 @@ const api_bymids = (
     orpt: _params.orpt,
     sort: UserCtr.sort_type,
   };
-  if (tabs.length > 0) {
-    params.tabs = tabs;
-  }
   // 非滚球传 玩法ID
   if (MenuData.menu_root != "1" && PageSourceData.page_source != "search") {
     params.pids = _params.pids;
+  }
+  if(tabs.length > 0&&!params.pids&&params.orpt!=0) {
+    params.tabs = tabs;
   }
   //today：今日  early：早盘 角球玩法
   params.cos = MenuData.is_corner_menu() || params.orpt == 25 ? 1 : 0;

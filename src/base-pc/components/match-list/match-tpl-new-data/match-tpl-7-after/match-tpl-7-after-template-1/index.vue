@@ -78,7 +78,7 @@
 <script setup>
 // import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
 // mixins: [match_item_mixin],
-import { computed, ref, watch } from 'vue';
+import { computed, ref, inject } from 'vue';
 import { MatchDataWarehouse_PC_List_Common as MatchListData, compute_local_project_file_path } from "src/output/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -95,17 +95,19 @@ const props = defineProps({
     default: null,
   },
 })
+const match = inject("match");
+const match_style_obj = inject("match_style_obj");
+const match_list_tpl_size = inject("match_list_tpl_size");
+const match_tpl_info = inject("match_tpl_info");
 
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+
+
 const is_mounted = ref(true);
 
 const score_column_position = computed(() => {
-  let has_add1 = lodash.get(match, 'has_add1')
-  let has_add2 = lodash.get(match, 'has_add2')
-  let { is_show_cur_handicap } = match_tpl_info
+  let has_add1 = lodash.get(match.value, 'has_add1')
+  let has_add2 = lodash.get(match.value, 'has_add2')
+  let { is_show_cur_handicap } = match_tpl_info.value||{}
   if (is_show_cur_handicap) {
     return 'cur'
   } else if (has_add2) {
@@ -124,9 +126,9 @@ const score_column_position = computed(() => {
   function get_cur_handicap_list (match) {
 		// 当前局盘口列表
 		let cur_handicap_list = [];
-    let play_config = match_tpl_info[`template_${match_style_obj.data_tpl_id}`]
+    let play_config = match_tpl_info.value[`template_${match_style_obj.value.data_tpl_id}`]
 		// 篮球根据赛事阶段获取当前局盘口列表
-		if (match_style_obj.data_tpl_id == 7) {
+		if (match_style_obj.value.data_tpl_id == 7) {
 			switch (+match.mmp) {
 				case 1: //上半场
 					cur_handicap_list = play_config.cur_handicap_list_up;
@@ -158,15 +160,15 @@ const score_column_position = computed(() => {
 			}
 		}
 		// 斯诺克让球与大小当前局盘口列表
-		else if (match_style_obj.data_tpl_id == 11 && match.csid == 7) {
+		else if (match_style_obj.value.data_tpl_id == 11 && match.csid == 7) {
 			cur_handicap_list = play_config.cur_handicap_list_7;
 		}
 		// 排球让球与大小当前局盘口列表
-		else if (match_style_obj.data_tpl_id == 11 && match.csid == 9) {
+		else if (match_style_obj.value.data_tpl_id == 11 && match.csid == 9) {
 			cur_handicap_list = play_config.cur_handicap_list_9;
 		}
 		// 判断模板是否有当前局玩法
-		else if ([7, 9, 11, 16].includes(+match_style_obj.data_tpl_id)) {
+		else if ([7, 9, 11, 16].includes(+match_style_obj.value.data_tpl_id)) {
 			cur_handicap_list = play_config.cur_handicap_list;
 		}
 		return cur_handicap_list;
