@@ -10,8 +10,9 @@
     <div :class="['header-item item2 row items-center', { 'search-off': !globalAccessConfig.get_activitySwitch() }]"
       :style="SearchPCClass.search_isShow ? 'z-index:900;' : ''">
       <!-- 搜索 -->
-        <!--<header-search />-->
-        <bevisHeaderSearch class="layout-header-search"></bevisHeaderSearch>
+      <header-search v-if="!SearchPCClass.search_isShow" />
+      <searchCom v-if="SearchPCClass.search_isShow" />
+        <!-- <bevisHeaderSearch class="layout-header-search"></bevisHeaderSearch> -->
       <!-- 公告滚动组件 -->
       <marquee-cst v-if='!SearchPCClass.search_isShow' @navigate="navigate" />
       <!-- 占位盒子 -->
@@ -50,6 +51,8 @@ import headerSelect from 'src/base-pc/components/site-header/header-select.vue'
 import gift_package from '/yazhou-pc/image/common/activity_banner/gift_package.png'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BaseData from "src/core/base-data/base-data.js";
+import searchCom from 'src/components/search/search-3/index.vue';
+
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
 
