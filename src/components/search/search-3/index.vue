@@ -9,12 +9,13 @@
     :style="page_style"
     >
     <div
-      v-show="route.params.video_size != 1"
       class="serach-wrap column"
       :style="{ right: `${search_width}px`, paddingRight: `${is_iframe ? 10 : 14}px`}"
       :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }"
     >
-      <search-input v-model:show_type="show_type" />
+      <search-input 
+        v-model:show_type="show_type"
+      />
       <!-- 遮罩层样式.bottom-wrap -->
       <div class="bottom-wrap col search-result relative-position">
         <!-- 球类导航 -->
@@ -72,7 +73,7 @@ import {  MenuData,  GlobalSwitchClass,SearchPCClass } from 'src/output/index.js
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+// import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 // import { component_symbol, need_register_props } from "src/components/search/config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -117,7 +118,7 @@ const search_width = ref(LayOutMain_pc.layout_search_width)
 let main_width = ref(LayOutMain_pc.layout_main_width + 'px')
 
 /* 路由对象 */
-const route = useRoute();
+// const route = useRoute();
 
 
 /**
@@ -281,7 +282,7 @@ export default defineComponent({
       left: 0;
       width: 100%;
       height: 50px;
-      padding: 10px 0 0 30px;
+      padding: 10px 0 0 15px;
       z-index: 999;
       /* 修改此值  需注意是否被滚球倒计时遮挡 */
       background-color: var(--q-gb-bg-c-11);
