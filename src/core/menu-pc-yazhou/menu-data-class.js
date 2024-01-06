@@ -14,6 +14,8 @@ import { SessionStorage } from "src/output/module/constant-utils.js";
 import STANDARD_KEY from "src/core/standard-key";
 import {set_template_width,get_match_tpl_number} from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 const menu_key = STANDARD_KEY.get("menu_pc");
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { api_common } from "src/api/index.js"
 
 
 // const state = store.getState();
@@ -139,6 +141,40 @@ class MenuData {
     // 英雄联盟100  dota2 101 csgo 102 王者荣耀103
     return [100, 101, 102, 103].includes(+csid);
   }
+
+  // 获取二级菜单数据
+  set_post_menu_play_count(mi){
+    return
+    let mi_ = mi || this.left_menu_result.lv1_mi
+    let params = {
+      cuid: UserCtr.get_cuid(),
+      euid: this.get_mid_for_euid(mi_)
+    }
+    api_common.post_menu_play_count(params).then((res = {})=>{
+      if(res.code == 200){
+        console.error('BaseData.base_menu_obj',BaseData.base_menu_obj)
+        let menu_list = lodash.get(res,'data.subList',[])
+        let list = menu_list.map(item=>{
+          return {
+            mi: BaseData.base_menu_obj[item.menuId],
+            ct: item.count,
+          }
+        })
+
+        for(let item of this.left_menu_list){
+          if(item.mi == mi){
+            item.sl = list
+            return
+          }
+        }
+        
+        console.error('this.left_menu_list',this.left_menu_list)
+      }
+    }).catch(err =>{
+      console.error('获取二级菜单数据错误',err)
+    })
+  }
+
   /***
    * 滚球盘 数量计算
    */

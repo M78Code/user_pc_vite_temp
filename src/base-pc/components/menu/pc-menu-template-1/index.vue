@@ -253,6 +253,9 @@ const lev_1_click = (obj) => {
     return false;
   }
 
+  // 获取具体的二级玩法
+  MenuData.set_post_menu_play_count(mi)
+
   current_lv_1_mi.value = mi
   current_lv_2_mi.value = get_lv_1_lv_2_mi(mi)
 
@@ -435,7 +438,8 @@ const handle_click_jinri_zaopan = (val) => {
 const get_lv_1_lv_2_mi = (mi) => {
   let lv2_mi = ''
   // 获取对应的菜单数据
-  let obj = MenuData.left_menu_list.find(item => item.mi == mi ) || {}
+  let left_list = lodash.get(MenuData,'left_menu_list',[]) || []
+  let obj = left_list.find(item => item.mi == mi ) || {}
 
   if(obj.mi){
     // 获取菜单下的第一个菜单
