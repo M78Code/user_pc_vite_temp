@@ -20,7 +20,7 @@
       </div>
       <!-- 主比分 -->
       <div class="score">
-        <span v-show="!scoring">{{match.home_score}}</span>
+        <span v-show="!scoring">{{ home_score }}</span>
         <span v-show="scoring" class="scoring">{{ i18n_t('mmp.100.scoring') }}</span>
       </div>
     </div>
@@ -36,9 +36,9 @@
           <div class="team-name away ellipsis allow-user-select" :class="{'bold': handicap_index == 2}"  v-tooltip="{content:lodash.get(match,'man'),overflow:1}">{{match.man}}</div>
         </div>
       </div>
-      <!-- 主比分 -->
+      <!-- 客比分 -->
       <div class="score">
-        <span v-show="!scoring">{{match.away_score}}</span>
+        <span v-show="!scoring">{{ away_score }}</span>
       </div>
     </div>                      
   
@@ -126,6 +126,15 @@ const handicap_num = computed(() => {
   }else{
     return i18n_t('match_info.more')
   }
+})
+
+const home_score = computed(() => {
+  let obj = get_match_score(props.match)
+  return obj.home_score
+})
+const away_score = computed(() => {
+  let obj = get_match_score(props.match)
+  return obj.away_score
 })
 
 let handicap_index = computed(() => {

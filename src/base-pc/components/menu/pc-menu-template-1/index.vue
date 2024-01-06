@@ -20,7 +20,7 @@
     </div>
     <div v-show="false">{{ BaseData.base_data_version }}</div>
 
-    <div v-for="item in left_menu_list" :key="`_${item.mi}`" :class="set_vr_or_guanjun_border(item.mi)">
+    <div v-for="item in (MenuData.left_menu_list || [] )" :key="`_${item.mi}`" :class="set_vr_or_guanjun_border(item.mi)">
       <!--   赛种-->
       <!-- {{ BaseData.filterSport_arr }} -- {{ BaseData.compute_sport_id(item) }} -->
       <div class="menu-item menu-fold1 search" :class="current_lv_1_mi == item.mi ? 'y-active' : ''" @click="lev_1_click(item)" v-if="item.ct">
@@ -251,6 +251,9 @@ const lev_1_click = (obj) => {
     return false;
   }
 
+  // 获取具体的二级玩法
+  MenuData.set_post_menu_play_count(mi)
+
   current_lv_1_mi.value = mi
   current_lv_2_mi.value = get_lv_1_lv_2_mi(mi)
 
@@ -433,7 +436,8 @@ const handle_click_jinri_zaopan = (val) => {
 const get_lv_1_lv_2_mi = (mi) => {
   let lv2_mi = ''
   // 获取对应的菜单数据
-  let obj = left_menu_list.value.find(item => item.mi == mi ) || {}
+  let left_list = lodash.get(MenuData,'left_menu_list',[]) || []
+  let obj = left_list.find(item => item.mi == mi ) || {}
 
   if(obj.mi){
     // 获取菜单下的第一个菜单

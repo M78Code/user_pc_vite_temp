@@ -1,7 +1,6 @@
 <template>
   <div class="c-match-league"
-    :class="[{ 'match-tpl1-bg': match_style_obj.data_tpl_id == 1 }, card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${match_style_obj.data_tpl_id}`]"
-    v-if="lodash.get(card_style_obj, 'league_obj.csid')">
+    :class="[{ 'match-tpl1-bg': match_style_obj.data_tpl_id == 1 }, card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${match_style_obj.data_tpl_id}`]">
     <!-- 第一行 -->
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
@@ -9,9 +8,8 @@
         :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
-            <span class="soprts_id_icon"
-            v-if="MenuData.is_esports()"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
+          <span class="soprts_id_icon" v-if="MenuData.is_esports()"
+            :style="compute_css_obj({ key: 'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
           <img v-else v-img="[lodash.get(card_style_obj, 'league_obj.lurl')]" />
         </div>
         <!-- 联赛名称 -->
@@ -19,12 +17,12 @@
           <div class="absolute-full">
             <!-- 联赛数量 -->
             <span class="ellipsis allow-user-select" v-tooltip="{ content: card_style_obj.league_obj.tn, overflow: 1 }">
-              {{ card_style_obj.league_obj.tn}}
+              {{ card_style_obj.league_obj.tn }}
             </span>
-            <span class="league-match-count">{{ card_style_obj.match_count}}</span>
+            <span class="league-match-count">{{ card_style_obj.match_count }}</span>
           </div>
         </div>
-        
+
       </div>
       <!-- 玩法名称 -->
       <div class="play-name row col">
@@ -33,7 +31,8 @@
             {{ bet_title[0] }}
           </div>
 
-          <div class="col" :class="{ 'bet-col4 y0-col4': [3, 21].includes(+match_style_obj.data_tpl_id) }" v-if="match_style_obj.data_tpl_id != 5">
+          <div class="col" :class="{ 'bet-col4 y0-col4': [3, 21].includes(+match_style_obj.data_tpl_id) }"
+            v-if="match_style_obj.data_tpl_id != 5">
             {{ bet_title[1] }}
           </div>
         </template>
@@ -72,24 +71,25 @@
       <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         <!-- 联赛是否收藏 -->
         <div @click.stop="mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
-          class="icon-wrap m-star-wrap-league" v-if="!MenuData.is_esports() && GlobalAccessConfig.get_collectSwitch()"
-          >
+          class="icon-wrap m-star-wrap-league" v-if="!MenuData.is_esports() && GlobalAccessConfig.get_collectSwitch()">
           <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
           <!-- <div class="q-icon"
               :style="compute_css_obj({ key: lodash.get(props.card_style_obj, 'league_obj.tf') ? 'pc-home-star-fill' : 'pc-home-star-empty' })"></div>
          -->
-            </div>
+        </div>
         <!-- 箭头 -->
         <!-- <i class="icon-arrow q-icon c-icon" size="14px"></i> -->
       </div>
     </div>
-     <!-- 第二行 玩法名称 -->
-     <div class="tr-col-name" v-if="[1,3,5,21,22].includes(+match_style_obj.data_tpl_id)">
+    <!-- 第二行 玩法名称 -->
+    <div class="tr-col-name" v-if="[1, 3, 5, 21, 22].includes(+match_style_obj.data_tpl_id)">
       <div :style="`width:${match_list_tpl_size.process_team_width}px !important;`"></div>
       <div class="play-name row col">
-          <div v-for="(item,key) in bet_col" class="col ellipsis" :style="`width: ${(match_style_obj.data_tpl_id == 22 && key <=5  ) ?  match_list_tpl_size.bet_width+5+'px !important; flex:auto'  : ''}`"  v-tooltip="{content:item,overflow:1}"  :key="key">
-            {{item}}
-          </div>
+        <div v-for="(item, key) in bet_col" class="col ellipsis"
+          :style="`width: ${(match_style_obj.data_tpl_id == 22 && key <= 5) ? match_list_tpl_size.bet_width + 5 + 'px !important; flex:auto' : ''}`"
+          v-tooltip="{ content: item, overflow: 1 }" :key="key">
+          {{ item }}
+        </div>
       </div>
       <div :style="`width:${match_list_tpl_size.media_width}px !important;`"></div>
     </div>
@@ -102,19 +102,19 @@ import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card
 import lodash from 'lodash';
 import { ref, computed } from 'vue';
 import BaseData from "src/core/base-data/base-data.js"
-import { compute_css_obj,MenuData } from "src/output/index.js";
+import { compute_css_obj, MenuData } from "src/output/index.js";
 import { get_match_tpl_title } from 'src/core/format/common/index.js'
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import {mx_collect} from "src/core/match-list-pc/composables/match-list-collect.js";
+import { mx_collect } from "src/core/match-list-pc/composables/match-list-collect.js";
 
 const props = defineProps({
   card_style_obj: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
   card_key: {
     type: String,
@@ -156,8 +156,8 @@ const bet_col = computed(() => {
     // match_style_obj.value.data_tpl_id = 1
     title_name = "punish_bet_col"
   }
-  let tpl_title=get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.value.data_tpl_id}.${title_name}`, csid)
-  tpl_title=tpl_title.length?tpl_title:[]
+  let tpl_title = get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.value.data_tpl_id}.${title_name}`, csid)
+  tpl_title = tpl_title.length ? tpl_title : []
   bet_col = [...tpl_title, ...bet_col]
   let mft = lodash.get(MatchListCardData.match_mid_obj, `mid_${props.card_style_obj.mid}.mft`)
   // 模板10
@@ -246,7 +246,7 @@ function get_bet_width(index) {
  * @Description 是否高亮标题
  * @param {String} csid 球种id
 */
-function is_highlighted (csid){
+function is_highlighted(csid) {
   if (is_HDP || MenuData.is_eports_csid(csid)) {
     return true
   } else {
@@ -390,7 +390,7 @@ function set_fold() {
       }
     }
 
-     /* .play-name div {
+    /* .play-name div {
        display: none;
      } */
 
@@ -403,6 +403,7 @@ function set_fold() {
     display: none;
   }
 }
+
 .soprts_id_icon {
   width: 18px;
   height: 18px;
