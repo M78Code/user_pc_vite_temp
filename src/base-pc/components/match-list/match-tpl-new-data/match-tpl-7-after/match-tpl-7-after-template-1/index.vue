@@ -40,7 +40,7 @@
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap v-if="match" :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match"
-          :is_show_score="score_column_position === 'add1'" />
+          :is_show_score="score_column_position === 'add1'" :add_type="2" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -53,7 +53,7 @@
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap v-if="match" :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match"
-          :is_show_score="score_column_position === 'add2'" />
+          :is_show_score="score_column_position === 'add2'" :add_type="3" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>

@@ -9,6 +9,7 @@ import { compute_value_by_cur_odd_type } from "src/core/format/project/module/fo
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { nextTick, ref } from "vue"
 import lodash_ from "lodash"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
 
 
@@ -190,6 +191,8 @@ this.bet_appoint_ball_head= null */
       draggable:true,
       show: false,
     }
+    // 商户限额
+    this.user_max_min_money = {}
     // console.error('window.innerWidth',window.innerWidth);
     // console.error('window.innerWidth',window.innerWidth);
     // 默认展开 投注弹窗
@@ -204,6 +207,16 @@ this.bet_appoint_ball_head= null */
 
     // 获取缓存信息
     this.set_loacl_config()
+  }
+
+  set_user_max_min_money(){
+    if (this.is_bet_single) {
+      const { qon,qtw,qth,qfo,qfi } = lodash.get(UserCtr, 'user_info.cvo.single', { qon: 200, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })  
+      this.user_max_min_money = {qon,qtw,qth,qfo,qfi} 
+    } else {
+      const {qtw,qth,qfo,qfi,qsi } = lodash.get(UserCtr, 'user_info.cvo.series', {  qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
+      this.user_max_min_money = { qtw,qth,qfo,qfi,qsi}
+    }
   }
 
   // 根据缓存信息 设置数据

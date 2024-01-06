@@ -122,21 +122,21 @@ const handicap_num = computed(() => {
 })
 
 const home_score = computed(() => {
-  let obj = get_match_score(props.match)
+  let obj = get_match_score(match.value)
   return obj.home_score
 })
 const away_score = computed(() => {
-  let obj = get_match_score(props.match)
+  let obj = get_match_score(match.value)
   return obj.away_score
 })
 
 let handicap_index = computed(() => {
-  return get_handicap_index_by(props.match)
+  return get_handicap_index_by(match.value)
 })
 
 //是否展示为比分判定中
 const scoring = computed(() => {
-  const {csid, ms, mmp, home_score, away_score} = props.match
+  const {csid, ms, mmp, home_score, away_score} = match.value
   let scoring = false
   if (
     is_eports_csid(csid) && // 电竞赛事
