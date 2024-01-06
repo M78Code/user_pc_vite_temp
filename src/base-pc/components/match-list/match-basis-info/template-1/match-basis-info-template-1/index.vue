@@ -10,7 +10,7 @@
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div class="team-name home ellipsis allow-user-select"
-            :class="{ 'bold': lodash.get(match, 'team_let_ball') == 'T1' }"
+            :class="{ 'bold':  handicap_index == 1 }"
             v-tooltip="{ content: lodash.get(match, 'mhn') + play_name_obj.suffix_name, overflow: 1 }">
             {{ lodash.get(match, 'mhn') }}{{ play_name_obj.suffix_name }}
           </div>
@@ -27,7 +27,7 @@
       <!-- 主比分 -->
       <div class="score" v-if="show_type == 'all'"
         v-tooltip="{ content: is_15min ? i18n_t('list.15min_stage') : '', overflow: 1 }">
-        {{ play_name_obj.score_key ? lodash.get(match, `msc_obj.${play_name_obj.score_key}.home`) : scroe_list[0] }}</div>
+        {{ home_score }}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
@@ -38,7 +38,7 @@
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div class="team-name away ellipsis allow-user-select"
-            :class="{ 'bold': lodash.get(match, 'team_let_ball') == 'T2' }"
+            :class="{ 'bold': handicap_index == 2 }"
             v-tooltip="{ content: lodash.get(match, 'man') + play_name_obj.suffix_name, overflow: 1 }">{{
               lodash.get(match,
                 'man') }}{{ play_name_obj.suffix_name }}</div>
@@ -55,8 +55,7 @@
       <!-- 主比分 -->
       <div class="score" :key="lodash.get(match, 'mid')" v-if="show_type == 'all'"
         v-tooltip="{ content: is_15min ? i18n_t('list.15min_stage') : '', overflow: 1 }">
-        {{ play_name_obj.score_key ? lodash.get(match, `msc_obj.${play_name_obj.score_key}.away`) : lodash.get(match,
-          'away_score') }}
+        {{ away_score }}
       </div>
     </div>
     <!-- 中立场、盘口数 -->
@@ -111,6 +110,8 @@ import details from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { get_main_score } from 'src/core/match-list-pc/match-handle-data.js'
 import { get_remote_time } from "src/output/index.js"
+import { get_handicap_index_by, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
+
 const router = useRouter()
 const route = useRoute()
 const props = defineProps({
@@ -193,6 +194,21 @@ const collect = () => {
   is_collect.value = !is_collect.value
   useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
 }
+
+const home_score = computed(() => {
+  let obj = get_match_score(props.match)
+  return obj.home_score
+})
+const away_score = computed(() => {
+  let obj = get_match_score(props.match)
+  return obj.away_score
+})
+
+let handicap_index = computed(() => {
+  return get_handicap_index_by(props.match)
+})
+
+
 // 监听收藏变化
 watch(() => props.match.mf, (n) => {
   is_collect.value = Boolean(n)
