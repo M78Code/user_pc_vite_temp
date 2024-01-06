@@ -358,8 +358,6 @@ export default defineComponent({
   height: 60px;
   font-size: 12px;
   z-index: 1100;
-  background-color: var(--q-gb-bg-c-4);
-  box-shadow: 0px -4px 8px var(--q-gb-bg-c-15);
 
   .pagination-select {
     display: flex;

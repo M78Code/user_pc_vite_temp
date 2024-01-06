@@ -88,8 +88,8 @@
             "242": "Winner",
             "243": "HDP",
             "244": "Total Goals",
-            "30001": "Map Handicap",
-            "30002": "Match Winner",
+            "30001": "Match Winner",
+            "30002": "Map Handicap",
             "30003": "Total Maps"
           }
     },
@@ -162,6 +162,30 @@
         "bet_col_2": "2"
       },
       "bet_col_182": {
+        "bet_col_1": "Over",
+        "bet_col_2": "Under"
+      },
+      "bet_col_242": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_243": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_244": {
+        "bet_col_1": "Over",
+        "bet_col_2": "Under"
+      },
+      "bet_col_30002": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_30001": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_30003": {
         "bet_col_1": "Over",
         "bet_col_2": "Under"
       }

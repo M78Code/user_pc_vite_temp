@@ -9,9 +9,9 @@
     <div class="row-item team-item">
       <div class="team-logo" :class="lodash.get(match,'match_logo.is_double',false) && 'double-logo'">
         <!-- 电竞和普通赛事图片地址不同需要传入csid(球种id)进行区分 -->
-        <img style="width: 22px; max-height: 24px;" v-img="[(match.match_logo || {}).home_1_logo,(match.match_logo || {}).home_1_letter,match.csid]" />
+        <img style="width: 22px; max-height: 24px;" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })" v-img="[(match.match_logo || {}).home_1_logo,(match.match_logo || {}).home_1_letter,match.csid]" />
         <!-- 双打局，就会有两个头像 -->
-        <img style="width: 22px; max-height: 24px;" class="logo2" v-if="lodash.get(match,'match_logo.is_double',false)" v-img="[(match.match_logo || {}).home_2_logo,(match.match_logo || {}).home_2_letter,match.csid]" />
+        <img style="width: 22px; max-height: 24px;" class="logo2" v-if="lodash.get(match,'match_logo.is_double',false)" v-img="[(match.match_logo || {}).home_2_logo,(match.match_logo || {}).home_2_letter,match.csid,update_show_default]" />
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
@@ -43,7 +43,8 @@
     <div class="row-item team-item">
       <div class="team-logo" :class="lodash.get(match,'match_logo.is_double',false) && 'double-logo'">
         <!-- 同主队 -->
-        <img style="width: 22px; max-height: 24px;" v-img="[(match.match_logo || {}).away_1_logo,(match.match_logo || {}).away_1_letter,match.csid]" />
+        
+        <img style="width: 22px; max-height: 24px;" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })" v-img="[(match.match_logo || {}).away_1_logo,(match.match_logo || {}).away_1_letter,match.csid]" />
         <img style="width: 22px; max-height: 24px;" class="logo2" v-if="lodash.get(match,'match_logo.is_double',false)" v-img="[(match.match_logo || {}).away_2_logo,(match.match_logo || {}).away_2_letter,match.csid]" />
       </div>
       <div class="ellipsis-wrap">
@@ -70,12 +71,11 @@
         <span v-show="!scoring">{{ away_score }}</span>
       </div>
     </div>                      
-  
     <div class="row-item match-icon" v-if="is_show_more">
       <!-- 提前结算 -->
        <div @click.stop="">
          <div
-          v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12 && vx_cur_menu_type.type_name!='bet'"
+          v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12 && MenuData.is_mix()"
           class="icon-wrap settlement-pre relative-position"
           v-tooltip="{content: i18n_t('bet_record.settlement_pre')}"
         >
@@ -115,28 +115,20 @@
 
 import { computed, watch, ref,inject, onUnmounted} from 'vue';
 import lodash from 'lodash'
-import {  is_eports_csid,compute_local_project_file_path, is_show_sr_flg } from "src/output/index.js";
+import {  is_eports_csid,compute_local_project_file_path, is_show_sr_flg,compute_css_obj } from "src/output/index.js";
 import { get_match_status } from 'src/core/utils/common/index'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
 import { get_handicap_index_by, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
-import { get_remote_time } from "src/output/index.js"
+import { get_remote_time,MenuData } from "src/output/index.js"
 import { useRoute, useRouter } from "vue-router";
 const router = useRouter()
 const route = useRoute()
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
-  show_type: {
-    type: String,
-    default: () => ''
-  },
-  is_15min:{
-    type:Boolean,
-    default:false
-  },
   is_show_more: {
     type:Boolean,
-    default:false
+    default:true
   }
 })
 
@@ -270,6 +262,21 @@ onUnmounted(() => {
      align-items: center;
   }
 
+  .red-ball {
+    margin: 0 0 2.5px 8px;
+    position: relative;
+    top: 1px;
+    padding: 0 2px;
+    height: 14px;
+    line-height: 14px;
+    &.yellow {
+      background-color: #FFA800;
+    }
+
+    &.flash {
+      animation: 1s text-flash linear infinite normal;
+    }
+  }
   /*  发球方 */
   .serve-ball {
     position: absolute;
