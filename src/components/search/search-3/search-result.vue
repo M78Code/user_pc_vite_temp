@@ -56,13 +56,13 @@
   
 <script setup>
 import { ref, reactive, watch, onBeforeUnmount ,nextTick} from 'vue'
-import { useRouter } from 'vue-router'
-
+import { SearchPCClass } from 'src/output/index.js'
 import { project_name, i18n_t } from 'src/output/index.js';
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
-import store from "src/store-redux/index.js";
+// import store from "src/store-redux/index.js";
 import details from "src/core/match-list-pc/details-class/details.js"
 import search from "src/core/search-class/search.js"
+import {store} from './index.js'
 
 import loadData from "src/components/load_data/load_data.vue"
 
@@ -88,24 +88,28 @@ const load_data_state = ref('data')
 /** 搜索结果数据 */
 let res_list = reactive([])
 
-const router = useRouter()
+// const router = useRouter()
 
 /** stroe仓库 */
-const { searchReducer } = {}
+// const { searchReducer } = {}
 /**
  * 获取搜索内容 default: ''
  * 路径: project_path\src\store\module\search.js
  */
-const keyword = ref('')
+const keyword = ref(SearchPCClass.keyword)
 // 监听搜索关键词改变
 watch(
-    () => keyword.value,
+    () => store._keyword,
     (res) => {
-        if (search_type.value == 2) {
-            update_show_type('none')
-        } else {
-            get_search_result(res.substr(5))
-        }
+        console.log('fdsafdsfdsafsdafdsafsdafsdfsa12312312', res)
+        // if (search_type.value == 2) {
+        //     update_show_type('none')
+        // } else {
+        //     get_search_result(res.substr(5))
+        // }
+
+        get_search_result(res)
+
     }
 )
 
@@ -114,19 +118,19 @@ watch(
  * 路径: project_path\src\store\module\search.js
  */
 const search_type = ref(1)
-const unsubscribe = store.subscribe(() => {
-    const { searchReducer: new_searchReducer } = {};
-    keyword.value = ''
-    search_type.value = ''
-})
-onBeforeUnmount(unsubscribe)
+// const unsubscribe = store.subscribe(() => {
+//     const { searchReducer: new_searchReducer } = {};
+//     keyword.value = ''
+//     search_type.value = ''
+// })
+// onBeforeUnmount(unsubscribe)
 
 /** 设置搜索联赛关键字 */
-const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
+// const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
 /** 设置搜索状态 */
-const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
+// const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
 /** 设置搜索类型 */
-const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data })
+// const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data })
 
 /**
  * @Description:点击联赛搜索
@@ -136,15 +140,15 @@ const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data
 function league_click(league) {
     search.insert_history(league.league_name)
     update_show_type('none')
-    router.push({
-        name: 'search',
-        params: {
-            keyword: league.league_name,
-        },
-        query: {
-            csid: props.search_csid
-        }
-    })
+    // router.push({
+    //     name: 'search',
+    //     params: {
+    //         keyword: league.league_name,
+    //     },
+    //     query: {
+    //         csid: props.search_csid
+    //     }
+    // })
     set_search_type(2)
     set_click_keyword(league.league_name)
 }

@@ -1,6 +1,5 @@
 <template>
   <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
-    <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
@@ -59,49 +58,39 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, watch, inject } from 'vue';
 import lodash from 'lodash'
-
-import {  get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
+import {  get_match_status } from "src/output/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
-import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
-// useRegistPropsHelper(component_symbol, need_register_props)
 import {  compute_local_project_file_path } from 'src/output/index.js';
-import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import { MatchBasisInfo2FullVersionWapper as BasisInfo2 } from 'src/base-pc/components/match-list/match-basis-info/template-2/index.js'
 import { MatchBasisInfo5FullVersionWapper as BasisInfo5 } from 'src/base-pc/components/match-list/match-basis-info/template-5/index.js'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
-
 const props = defineProps({
   mid: {
     type: [String, Number],
     default: null,
   },
 })
-
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+let match_style_obj = inject('match_style_obj')
+let match = inject('match')
+let match_list_tpl_size = inject('match_list_tpl_size')
+let match_tpl_info = inject('match_tpl_info')
 const is_mounted = ref(true)
-watch(() => MatchListData.data_version.version, () => {
-  match = MatchListData.list_to_obj.mid_obj[props.mid+'_']
-})
 const process_margin = computed(() => {
-  let { is_show_cur_handicap } = match_tpl_info
+  let { is_show_cur_handicap } = match_tpl_info.value
   let process_margin = 0
   if(is_show_cur_handicap){
     process_margin = 70
-    if(match.has_add1){
+    if(match.value.has_add1){
       process_margin += 70
     }
-    if(match.has_add2){
+    if(match.value.has_add2){
       process_margin += 70
     }
-    if(match.csid ==4){
+    if(match.value.csid ==4){
       process_margin +=35
     }
   }
@@ -119,11 +108,11 @@ const process_margin = computed(() => {
 		let cur_handicap_list = [];
     let play_config = match_tpl_info[`template_${match_style_obj.data_tpl_id}`]
 		// 斯诺克让球与大小当前局盘口列表
-		if (match_style_obj.data_tpl_id == 11 && match.csid == 7) {
+		if (match_style_obj.data_tpl_id == 11 && match.value.csid == 7) {
 			cur_handicap_list = play_config.cur_handicap_list_7;
 		}
 		// 排球让球与大小当前局盘口列表
-		else if (match_style_obj.data_tpl_id == 11 && match.csid == 9) {
+		else if (match_style_obj.data_tpl_id == 11 && match.value.csid == 9) {
 			cur_handicap_list = play_config.cur_handicap_list_9;
 		}
 		// 判断模板是否有当前局玩法
