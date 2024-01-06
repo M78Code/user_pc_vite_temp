@@ -145,6 +145,8 @@ class BaseData {
       football: false,
       basketball: false,
     }
+
+    this.base_menu_obj = {}
   }
   /**
    * 初始化数据
@@ -217,6 +219,7 @@ class BaseData {
       type = 'h'
     }
     const base_menu_obj = Object.fromEntries(Object.keys(data).map(item => [data[item][type] , item]));
+    this.base_menu_obj = base_menu_obj
     return base_menu_obj;
   }
   // 菜单数量变化

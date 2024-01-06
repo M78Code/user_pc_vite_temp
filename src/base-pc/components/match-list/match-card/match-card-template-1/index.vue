@@ -1,9 +1,8 @@
 <template>
   <!--赛事玩法模板-->
   <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
-  <!-- {{ match_style_obj.view_tpl_id }}--{{ match_style_obj.show_level }} -->
   <div class="c-match-card relative-position" :id="`list-mid-${mid}`"
-    :style="`height:${lodash.get(get_match_style, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
+    :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
     v-if="match_style_obj.is_show_card">
     <component :is="`MatchTpl${match_style_obj.view_tpl_id}After`" v-if="[1, 2].includes(match_style_obj.show_level)"
       :mid="mid" />
@@ -11,7 +10,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, provide, computed } from 'vue';
+import { provide, computed } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { MatchDataWarehouse_PC_List_Common } from "src/output/index.js";
@@ -40,6 +39,7 @@ import { MatchTpl24AfterFullVersionWapper as MatchTpl24After } from "src/base-pc
 // // 电竞玩法模板
 import { MatchTplEsportsAfterFullVersionWapper as MatchTplEsportsAfter } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-esports-after/index.js";
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 export default {
   props: {
     mid: {
@@ -69,8 +69,12 @@ export default {
     const match_list_tpl_size = computed(() => {
       return MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.value?.data_tpl_id}_config`].width_config
     })
+    const match_tpl_info = computed(() => {
+      return MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.value?.data_tpl_id}_config`]
+    })
     provide("match_style_obj", match_style_obj)
     provide("match_list_tpl_size", match_list_tpl_size)
+    provide("match_tpl_info", match_tpl_info)
     return {
       match_style_obj,
       LayOutMain_pc,

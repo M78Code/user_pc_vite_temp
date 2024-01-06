@@ -8,12 +8,12 @@
             <icon-wapper class="icon" :name="!['theme01_y0', 'theme02_y0'].includes(UserCtr.theme) ? `img:${img_search_icon}` : `img:${img_search_icon_y0}`" size="14px"></icon-wapper>
         </div>
         <div ref="refSearchWapper" class="search-history-box" v-else>
-            <div class="inputBox">
+            <div class="inputBox" :style="{ width: LayOutMain_pc.layout_content_width + 219 + 'px' }">
                 <icon-wapper class="icon" :name="`img:${img_search_icon_y0}`" size="14px"></icon-wapper>
                 <input type="text" placeholder="请输入联赛名或球队名" v-model="SearchPCClass.keyword" @keyup.enter="_addSearchHistory(SearchPCClass.keyword)"/>
                 <p class="cursorPointer search-close" @click.self.stop="ShowSearch(false)">关闭</p>
             </div>
-            <div class="historyBox">
+            <div class="historyBox" :style="{ width: LayOutMain_pc.layout_content_width +  219 + 'px' }">
                 <!--  @onclick="tab_click" :hasActivity="hasActivity" -->
                 <div class="historyBoxTab">
                     <TabWapper :list="SearchPCClass.sportList" :is_show_line="true" :line_width="40" :is_show_btn="true" tab_name_key="sportName" :padding="10" @onclick="set_sports_tab_index" :currentIndex="current_index" ref="tab" />
@@ -25,7 +25,7 @@
                                     :list="SearchPCClass?.searchHistory ?? []" @Delete="_deleteSearchHistory" />
                 <bevisSearchList kind="hot" :list="SearchPCClass?.hotSearchList ?? []" @Search="_addSearchHistory" />
             </div>
-            <div class="maskBox" @click.stop="ShowSearch(false)"></div>
+            <div class="maskBox" @click.stop="ShowSearch(false)" :style="{ width: LayOutMain_pc.layout_content_width + 219 + 'px' }"></div>
         </div>
     </nav>
 </template>
@@ -40,7 +40,8 @@ import { get_hot_search, get_hot_push, get_search_sport, get_history_search, ins
     get_delete_history_search, get_search_result } from "src/api/module/search"
 
 import { ref, onMounted, provide ,onUnmounted} from "vue"
-import {compute_local_project_file_path} from 'src/output/index.js'
+import {compute_local_project_file_path, LayOutMain_pc} from 'src/output/index.js'
+
 import UserCtr from "src/core/user-config/user-ctr.js"
 import {SearchPCClass} from 'src/output/project/common/pc-common.js'
 
@@ -211,7 +212,6 @@ p{
         position: relative;
         height: 100%;
         .inputBox{
-            min-width: 984px;
             height: 100%;
             display: flex;
             align-items: center;
@@ -235,12 +235,10 @@ p{
             }
         }
         .maskBox {
-            min-width: 984px;
             background: rgb(0, 0, 0, .2);
             height: 100vh;
         }
         .historyBox{
-            min-width: 984px;
             min-height: 320px;
             position: absolute;
             background: #F6F9FF;

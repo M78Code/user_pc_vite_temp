@@ -5,6 +5,7 @@
 -->
 <template>
   <div class="box-bc">
+ 
     <q-table
       :rows="data"
       separator="none"
@@ -352,8 +353,8 @@ const get_msc_data = (msc_data, current_data) => {
     },
   ];
   if (msc_data.length > 0) {
-    //   网球 羽毛球
-    if (["5", "10"].includes(detail_info.csid + "")) {
+    //   网球 羽毛球 冰球
+    if (['4',"5", "10"].includes(detail_info.csid + "")) {
       res = list.map((item) => {
         return {
           name: item.name,

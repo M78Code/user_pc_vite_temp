@@ -3,12 +3,12 @@
  * 
  * 列表可视区 显示级别 算法  
  * */ 
-import { nextTick } from 'vue'
 import MatchListCardData from "./match-list-card-data-class.js";
 import PageSourceData  from  "src/core/page-source/page-source.js"
 import { MenuData} from "src/output/project/index.js";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
+import { throttle } from "lodash";
 // 显示等级：
 //     列表分为不同层级 不同维度 组合成为我们的列表
 //     1.我们由赛事卡片组合成我们的列表容器卡片
@@ -146,12 +146,15 @@ export const set_card_show_level = () => {
     }
   });
   MatchListScrollClass.set_show_mids(show_mids_arr)
+  setTimeout(() => {
+    MatchListCardData.set_list_version() 
+  }, 5);
   return show_mids_arr;
 };
 
 
 
-
+  const set_list_version=throttle(()=>MatchListCardData.set_list_version(),10)
   /**
    * 计算所有卡片的偏移量 和列表总高度
    * 切记 先改赛事 联赛 赛种  开赛层级 再 改这个
@@ -212,12 +215,9 @@ export const set_card_show_level = () => {
       pre_card_obj = card_obj
     })
     set_card_show_level()
-    MatchListCardData.set_list_version()  
+    set_list_version()
   }
 
-
-
-  
   /**
    * @Description 设置折叠后的列表scroll_top
    * @param {number} offset_top 折叠的卡片offset_top

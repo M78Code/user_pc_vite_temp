@@ -1,6 +1,5 @@
 <template>
-  <div class="c-match-item  match-tpl1-bg"
-    :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
+  <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
     <!-- <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }"> -->
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
     <!-- 比赛进程 -->
@@ -103,11 +102,10 @@
 
 <script setup>
 
-import { ref, computed, watch, onMounted, inject } from 'vue';
+import { ref, computed, watch,nextTick, onMounted, inject } from 'vue';
 import lodash from 'lodash'
 import {  get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr, compute_local_project_file_path } from "src/output/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
-import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 // useRegistPropsHelper(component_symbol, need_register_props)
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -178,11 +176,10 @@ const play_name_list = computed(() => {
   return play_name_list_info
 });
 //当前选中的次要玩法
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-
-const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-const is_mounted = ref(false);
+let match_style_obj = inject('match_style_obj')
+let match_list_tpl_size = inject('match_list_tpl_size')
+let match_tpl_info = inject('match_tpl_info')
+const is_mounted = ref(true);
 const has_other_play = computed(() => { //是否有其他玩法
   return play_name_list.value && play_name_list.value.length > 0
 });
@@ -196,7 +193,7 @@ watch(() => [match.value.ms, match.value.mmp], () => {
 const bet_col = computed(() => {
   let bet_col = []
   //是否多列
-  let multi_column = lodash.get(match_style_obj, 'data_tpl_id') == 13
+  let multi_column = lodash.get(match_style_obj.value, 'data_tpl_id') == 13
   let _play_current_key = get_play_current_play(match.value)
   if (MatchListCardDataClass.list_version.value) { }
   // 5分钟玩法
@@ -317,8 +314,8 @@ function set_secondary_bg(index, length) {
 */
 function get_bet_width(index, length) {
   //是否多列
-  let multi_column = lodash.get('match_style_obj.data_tpl_id') == 13
-  let bet_width = match_list_tpl_size.bet_width
+  let multi_column = lodash.get(match_style_obj.value,'data_tpl_id') == 13
+  let bet_width = match_list_tpl_size.value.bet_width
   if (multi_column) {
     if (length == 5) {
       if (index < 4) {
@@ -341,9 +338,9 @@ function get_bet_width(index, length) {
     } else {
       if (utils_info.is_iframe) {
         if ([0, 3].includes(index)) {
-          bet_width = match_list_tpl_size.bet_width - 4
+          bet_width = match_list_tpl_size.value.bet_width - 4
         } else {
-          bet_width = match_list_tpl_size.bet_width + 2
+          bet_width = match_list_tpl_size.value.bet_width + 2
         }
       }
     }
@@ -382,9 +379,9 @@ function fold_tab_play() {
 }
 onMounted(() => {
   // 异步设置组件是否挂载完成
-  setTimeout(()=>{
-    is_mounted.value = true
-  })
+  // nextTick(()=>{
+  //   is_mounted.value = true
+  // })
 })
 </script>
 

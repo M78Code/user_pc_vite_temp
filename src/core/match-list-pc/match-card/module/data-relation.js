@@ -12,7 +12,6 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-pc/list-template/index.js";
 import { conpute_match_list_card_offset } from "./card-show-offset.js";
 import { MenuData} from "src/output/project/index.js"
-import { nextTick } from "vue";
 
 /**
  * @Description 设置是哪种列表类型
@@ -109,7 +108,7 @@ const set_match_list_mapping_relation_obj_type = () => {
       type = 8
     }
   }
-  console.log(type,'jiffy')
+  
   return   type
 };
 
@@ -159,6 +158,7 @@ const reset_all_card_data = () => {
 
 export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
   (match_list, is_ws_call, is_remove_call, is_five_leagues=false) => {
+    console.log('jiffy5')
     // 虚拟体育 不走卡片逻辑
     if (MenuData.is_vr()) {
       MatchListCardData.is_run_card_function = false;

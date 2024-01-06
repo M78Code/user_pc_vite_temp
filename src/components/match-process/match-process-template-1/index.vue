@@ -23,24 +23,6 @@
       v-html="computed_process_name"
     >
     </div>
-    <!--补充时间-->
-    <!-- <template v-if="show_fill_time">
-      第二行显示的时间阶段时间+补时分钟数
-      <div :class="{'fill-time': source=='detail'}">{{format_second_ms(cur_mmp_time,'default')}} + {{cur_fill_second}}'</div>
-      第三行补时倒计时部分
-      <div class="c-match-date text-center date-wrap" :class="{'count-down': source=='detail'}">
-        <timer :tconfig="{
-          time:Number(cur_fill_time),
-          time_format:(second)=>format_second_ms(second,'default'),
-          step:-1,
-          timer_ms:1000,
-          on_time_change:count_down_change,
-          source: (source)
-        }"
-      />
-      </div>
-    </template>
-    <template v-else> -->
       <match-date
         :rows="date_rows"
         v-if="computed_show_date"
@@ -48,8 +30,6 @@
         :date_show_type="date_show_type"
         class="date-wrap"
       />
-
-    <!-- </template> -->
   </template>
   </div>
 </template>
@@ -246,7 +226,6 @@ const computed_process_name = computed(() => {
 //是否赛事显示时间
 const computed_show_date = computed(() => {
   let { mmp, csid, ms, mlet } = props.match || {};
-  console.log(csid, 'csid')
   csid = Number(csid);
   let show = false;
 
