@@ -213,7 +213,7 @@ onMounted(init)
   
 <style lang="scss" scoped>
 .wrap-init {
-    padding: 5px 30px 15px 30px;
+    padding: 5px 15px 15px 15px;
     color: #99a3b1;
     overflow: hidden;
 }

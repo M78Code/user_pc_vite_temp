@@ -863,6 +863,11 @@ class MenuData {
           }
         })
       }
+      // 娱乐 只有冠军 没有其他玩法
+      if(item.mi == 118){
+        to_day_list.push(item)
+        early_list.push(item)
+      }
     })
   
     let mew_menu_list_res = lodash.get(BaseData,'mew_menu_list_res',[]) || []
@@ -875,11 +880,40 @@ class MenuData {
     let hot_list_ = mew_menu_list_res.find(item => item.mi == 500) || {}
     hot_list = lodash.get(hot_list_,'sl',[]) || []
 
+    let esports_list = mew_menu_list_res.filter(item => item.mi > 2000 && item.mi < 3000 ) || []
+    // 获取电子竞技的赛事数量
+    let esports_ct = esports_list.reduce((cur,pre) => {
+      let pre_list = lodash.get(pre,'sl',[]) || []
+      return cur += pre_list.reduce((pre_cur,item)=> {
+        return pre_cur += item.ct
+      },0)
+    }, 0)
+    // 设置电子竞技的数据 插入到菜单列表中
+    let esports_obj = {
+      mi: 2000,
+      sl: esports_list,
+      ct: esports_ct
+    }
+
+    // 获取 电子足球，电子篮球的位置
+    let foot_index_of = lodash.findIndex(to_day_list,{mi:'1902'})
+    let basket_index_of = lodash.findIndex(to_day_list,{mi:'1912'})
+    // 篮球在足球后面，有篮球就使用篮球当前的位置 没有就用足球 最后使用默认位置
+    let e_sports_index = (basket_index_of > 0 ? basket_index_of : foot_index_of > 0 ? foot_index_of : 2 ) + 1
+    to_day_list.splice(e_sports_index , 0 ,esports_obj)
+
+    let foot_index_of_ = lodash.findIndex(to_day_list,{mi:'1903'})
+    let basket_index_of_ = lodash.findIndex(to_day_list,{mi:'1913'})
+     // 篮球在足球后面，有篮球就使用篮球当前的位置 没有就用足球 最后使用默认位置
+    let e_sports_index_ = ( basket_index_of_ > 0 ? basket_index_of_ : foot_index_of_ > 0 ? foot_index_of_ : 2 ) + 1
+    early_list.splice(e_sports_index_ , 0 ,esports_obj)
+
     // 获取vr赛事
     let vr_list_ = mew_menu_list_res.find(item => item.mi == 300) || {}
     // vr 体育数量写死 295
     vr_list_.ct = 295
 
+    // 冠军 和 vr 加入到 今日 早盘列表
     to_day_list.push(kemp_list_,vr_list_)
     early_list.push(kemp_list_,vr_list_)
 

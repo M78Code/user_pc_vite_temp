@@ -51,7 +51,7 @@ class MatchMeta {
     // 其他仓库的全量赛事mids
     this.other_complete_mids = []
     // 当前接口 euid
-    this.current_euid = ''
+    this.current_http_flag = ''
     // 传入参数
     this.http_params = {
       md: ''
@@ -485,7 +485,7 @@ class MatchMeta {
     MatchDataBaseH5.clear()
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
-    this.current_euid = `champion_${euid}`
+    this.current_http_flag = `champion_${euid}`
     const target_params = {
       euid,
       "cuid": UserCtr.get_uid(),
@@ -495,7 +495,7 @@ class MatchMeta {
     }
     this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_common.post_match_full_list, params: target_params, key: 'post_match_full_list' })
-    if (this.current_euid !== `champion_${euid}`) return
+    if (this.current_http_flag !== `champion_${euid}`) return
     const code = lodash.get(res, 'code', 0)
     if (+code !== 200) {
       if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
@@ -515,7 +515,7 @@ class MatchMeta {
     this.clear_match_info()
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const { start_time, end_time } = MatchUtils.get_match_time_start_time(md)
-    this.current_euid = `10000_${md}`
+    this.current_http_flag = `10000_${md}`
     if (!md) return []
     const params = this.get_base_params()
     delete params.hpsFlag
@@ -533,7 +533,7 @@ class MatchMeta {
     }
     this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_analysis.get_champion_match_result_api, params: target_params, key: 'get_champion_match_result_api' })
-    if (this.current_euid !== `10000_${md}`) return []
+    if (this.current_http_flag !== `10000_${md}`) return []
     const code = lodash.get(res, 'code', 0)
     if (+code !== 200) {
       if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
@@ -576,7 +576,7 @@ class MatchMeta {
     const params_tid = tid || MenuData.search_tab_tid
     // 电竞的冠军
     const category = MenuData.result_menu_lv1_mi ? 0 : 1
-    this.current_euid = `results_${euid}_${md}`
+    this.current_http_flag = `results_${euid}_${md}`
     if (!md) return []
     const params = this.get_base_params()
     const target_params = {
@@ -591,7 +591,7 @@ class MatchMeta {
     this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_common.get_match_result_api, params: target_params, key: 'get_match_result_api' })
     const code = lodash.get(res, 'code', 0)
-    if (this.current_euid !== `results_${euid}_${md}` || +code !== 200) {
+    if (this.current_http_flag !== `results_${euid}_${md}` || +code !== 200) {
       if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
       this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
       return []
@@ -664,7 +664,7 @@ class MatchMeta {
     const category = MenuData.get_menu_type() === 100 || is_kemp ? 2 : 1
     const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
     const params = this.get_base_params()
-    // this.current_euid = `exports_${csid}_${md}`
+    // this.current_http_flag = `exports_${csid}_${md}`
     const target_params = {
       ...params,
       md: is_kemp ? '' : md,
@@ -674,7 +674,7 @@ class MatchMeta {
     }
     this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_common.post_esports_match, params: target_params, key: 'post_esports_match' })
-    // if (this.current_euid !== `exports_${csid}_${md}`) return
+    // if (this.current_http_flag !== `exports_${csid}_${md}`) return
     const code = lodash.get(res, 'code', 0)
     if (+code !== 200) {
       if (code === '0401038') useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('msg.msg_nodata_22')}`)
@@ -714,7 +714,7 @@ class MatchMeta {
     const euid = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
     this.http_params.md = md
     const params = this.get_base_params()
-    if (!is_error) this.current_euid = `${euid}_${md}_${tid}`
+    if (!is_error) this.current_http_flag = `${euid}_${md}_${tid}`
     const other_params = { category: 1 }
     // data_time 有值 则 加上 md
     data_time && Object.assign(other_params, { md: data_time })
@@ -728,7 +728,7 @@ class MatchMeta {
     }
     if (params_tid) this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_common.post_match_full_list, params: target_params, key: 'post_match_full_list' })
-    if (this.current_euid !== `${euid}_${md}_${tid}` || MenuData.is_collect()) return
+    if (this.current_http_flag !== `${euid}_${md}_${tid}` || MenuData.is_collect()) return
     const code = lodash.get(res, 'code', 0)
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
@@ -804,7 +804,7 @@ class MatchMeta {
  * @returns 
  */
   get_default_ouzhou_home_hots() {
-    this.current_euid = 'ouzhou_h5'
+    this.current_http_flag = 'ouzhou_h5'
     const res = localStorage.getItem('ouzhou_home_hots') && JSON.parse(localStorage.getItem('ouzhou_home_hots'))
     return this.get_ouzhou_home_hots_data(res)
   }
@@ -813,7 +813,7 @@ class MatchMeta {
    * @description 获取欧洲版首页热门赛事
    */
   async get_ouzhou_home_hots() {
-    this.current_euid = 'ouzhou_h5'
+    this.current_http_flag = 'ouzhou_h5'
     const params = {
       euid: "30199",
       sort: 1,
@@ -853,7 +853,7 @@ class MatchMeta {
    * @returns 
    */
   get_default_ouzhou_home_data() {
-    this.current_euid = 'ouzhou_h5'
+    this.current_http_flag = 'ouzhou_h5'
     const res = localStorage.getItem('ouzhou_home_data') && JSON.parse(localStorage.getItem('ouzhou_home_data'))
     return this.handle_ouzhou_home_data(res)
   }
@@ -862,7 +862,7 @@ class MatchMeta {
    * @description 获取欧洲版首页热门赛事
    */
   async get_ouzhou_home_data() {
-    this.current_euid = 'ouzhou_h5'
+    this.current_http_flag = 'ouzhou_h5'
     const res = await api_match_list.get_home_matches({ type: 1, sort: 2 })
     return this.handle_ouzhou_home_data(res)
   }
@@ -886,7 +886,7 @@ class MatchMeta {
    * @description 处理欧洲版首页热门赛事
    */
   handle_ouzhou_home_data(res) {
-    if (this.current_euid != 'ouzhou_h5') return { p15_list: [], hots: [], dataList: [] }
+    if (this.current_http_flag != 'ouzhou_h5') return { p15_list: [], hots: [], dataList: [] }
     if (!res || +res.code !== 200) return { p15_list: [], hots: [], dataList: [] }
     localStorage.setItem('ouzhou_home_data', JSON.stringify(res))
     const p15 = lodash.get(res, 'data.p15', [])
@@ -906,8 +906,10 @@ class MatchMeta {
       dataList.forEach(t => {
         t.match_data_type = 'h5_in_play_league'
       })
-      const arr_list = MatchUtils.handler_match_classify_by_csid(dataList)
-      match_list = MatchUtils.get_home_in_play_data(arr_list)
+      
+      const target_data = MatchUtils.generate_match_classify_tid(dataList)
+      const target_list = MatchUtils.handler_match_classify_by_csid(target_data)
+      match_list = MatchUtils.get_home_in_play_data(target_list)
       // this.handler_match_list_data({ list: match_list, type: 2, is_virtual: false })
       this.handler_match_list_data({ list: match_list, warehouse: MatchDataBaseInPlayH5, type: 2, is_virtual: false, merge: 'cover' })
     }
@@ -1078,6 +1080,7 @@ class MatchMeta {
   set_page_match_empty_status(obj) {
     this.set_show_skeleton_state(false)
     const { state = false, type = 'noMatch' } = obj
+    useMittEmit(MITT_TYPES.EMIT_IS_SHOW_MASK, false);
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: state, type: type });
   }
   /**
@@ -1108,10 +1111,6 @@ class MatchMeta {
     return is_classify
   }
 
-  set_current_euid(val) {
-    this.current_euid = val
-  }
-
   /**
    * @description 处理收藏页数据
    * @param { type } 1: 联赛 2 赛事
@@ -1139,7 +1138,8 @@ class MatchMeta {
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return
 
-    const target_list = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
+    const target_data = MatchUtils.generate_match_classify_tid(list)
+    const target_list = MatchUtils.handler_match_classify_by_csid(target_data).filter((t) => t.mid)
 
     const custom_match_mids = target_list.map(t => t.mid)
 
@@ -1190,15 +1190,17 @@ class MatchMeta {
 
     if (length < 1) return this.set_page_match_empty_status({ state: true });
 
-    let target_data = []
+    // 生成新的 联赛 归类 id
+    let target_data = MatchUtils.generate_match_classify_tid(list)
     if (is_classify) {
       // 赛事归类(开赛-未开赛) 里面包含了球种归类、联赛归类
       target_data = MatchUtils.handler_match_classify_by_ms(list).filter((t) => t.mid)
     } else {
+      target_data = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
       // 球种归类
-      const result_data = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
+      // const result_data = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
       // 联赛归类
-      target_data = MatchUtils.handler_match_classify_by_tid(result_data)
+      // target_data = MatchUtils.handler_match_classify_by_tid(result_data)
     }
 
     // 重置折叠对象

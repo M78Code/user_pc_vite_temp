@@ -61,7 +61,6 @@ export const get_compute_other_play_data = (match) => {
   // set_tab_play_keys(match)
   //当前选中玩法
   let play_key = get_play_current_play(match)
- 
   const { data_tpl_id = 1 } = MatchListCardDataClass.get_card_obj_bymid(mid)
   const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`][`template_${data_tpl_id}`]
   // 其他玩法盘口列表
