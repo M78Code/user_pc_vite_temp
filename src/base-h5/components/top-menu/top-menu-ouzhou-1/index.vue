@@ -27,13 +27,12 @@
         <template v-else-if="is_personal_page">
           <div class="back" @click="go_back">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/back.png`" alt="" />
-            {{ i18n_t("ouzhou.setting_menu.back") }}</div>
+            {{ i18n_t("ouzhou.setting_menu.back") }}
+          </div>
         </template>
          <!-- vr 头部 -->
-         <template v-else-if="is_vr_page">
-          <div>
-            VR Sports
-          </div>
+        <template v-else-if="is_vr_page">
+            <vrTop />
         </template>
         <!-- home 头部 -->
         <template v-else>
@@ -69,9 +68,10 @@
 
   <script setup>
 
-  import { ref, reactive, computed, onMounted, onUnmounted, watch } from 'vue'
+import { ref, reactive, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRouter, useRoute } from "vue-router";
 import { format_money2,UserCtr } from "src/output/index.js";
+import vrTop from "./components/vr-top/vr-top.vue";
 import leftMenu from "./components/left-menu/left-menu.vue";
 import detailTopInfo from "./detail-top/detail-top.vue";
 import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
@@ -106,7 +106,7 @@ const is_personal_page = computed(() => {
  * vr 头部
  */
 const is_vr_page = computed(() => {
-  return ['/virtual'].includes(router.currentRoute.value.path)
+  return ['/virtual', '/virtual/'].includes(router.currentRoute.value.path)
 })
 /**
  * 公告  规则
@@ -264,6 +264,7 @@ onUnmounted(()=>{
       margin-right: 5px;
     }
   }
+
 }
 .top_header,.top_header_rule{
   height: 100%;

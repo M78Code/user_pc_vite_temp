@@ -53,7 +53,7 @@
 import { defineComponent, ref, nextTick, watch, onUnmounted, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { IconWapper } from 'src/components/icon/index.js'
-
+import {SearchPCClass} from 'src/output/project/common/pc-common.js'
 import { i18n_t } from "src/boot/i18n.js"
 import store from "src/store-redux/index.js";
 import search from "src/core/search-class/search.js"
@@ -148,14 +148,15 @@ const router = useRouter()
  * @return {undefined} undefined
  */
 function on_Close() {
-    set_search_status(false)
+    // set_search_status(false)
+    SearchPCClass.set_search_isShow(false)
     // 是搜索结果页时点 关闭 需要返回上一页
-    if (route.name == "search") {
-        router.push({
-            name: route_name.value
-        })
-    }
-    set_unfold_multi_column(false)
+    // if (route.name == "search") {
+    //     router.push({
+    //         name: route_name.value
+    //     })
+    // }
+    // set_unfold_multi_column(false)
 }
 
 /** 清空输入框 */
@@ -170,17 +171,17 @@ function clear_input() {
  */
 function init() {
     //记录进入搜索页面
-    if (route.name == "search") {
-        route_name.value = 'home'
-    } else {
-        route_name.value = route.name;
-    }
+    // if (route.name == "search") {
+    //     route_name.value = 'home'
+    // } else {
+    //     route_name.value = route.name;
+    // }
     // set_search_type(2)
-    set_click_keyword(route.params.keyword || '')
-    if (search.back_keyword.keyword) {
-        set_search_type(1)
-        set_click_keyword(search.back_keyword.keyword)
-    }
+    // set_click_keyword(route.params.keyword || '')
+    // if (search.back_keyword.keyword) {
+    //     set_search_type(1)
+    //     set_click_keyword(search.back_keyword.keyword)
+    // }
     //输入框获得焦点
     nextTick(() => {
         if (route.name != 'search') {
@@ -204,26 +205,26 @@ const click_keyword = ref({})
  */
 const global_click = ref({})
 
-const unsubscribe = store.subscribe(() => {
-    const { searchReducer: new_searchReducer, globalReducer: new_globalReducer } = {};
-    click_keyword.value = ''
-    global_click.value = ''
-})
+// const unsubscribe = store.subscribe(() => {
+//     const { searchReducer: new_searchReducer, globalReducer: new_globalReducer } = {};
+//     click_keyword.value = ''
+//     global_click.value = ''
+// })
 /** 销毁监听 */
-onUnmounted(unsubscribe)
+// onUnmounted(unsubscribe)
 
 /** 保存显示搜索组件状态 */
-const set_search_status = (data) => store.dispatch({ type: 'SET_SEARCH_STATUS', data })
+// const set_search_status = (data) => store.dispatch({ type: 'SET_SEARCH_STATUS', data })
 /** 保存联想搜索关键字 */
 // const set_related_keyword = (data) => store.dispatch({ type: 'SET_RELATED_KEYWORD', data })
 /** 保存搜索关键字 */
-const set_search_keyword = (data) => store.dispatch({ type: 'SET_SEARCH_KEYWORD', data })
+// const set_search_keyword = (data) => store.dispatch({ type: 'SET_SEARCH_KEYWORD', data })
 /** 保存搜索的联赛名 */
-const set_click_keyword = (data) => store.dispatch({ type: 'SET_CLICK_KEYWORD', data })
+// const set_click_keyword = (data) => store.dispatch({ type: 'SET_CLICK_KEYWORD', data })
 /** 保存搜索类型 */
-const set_search_type = (data) => store.dispatch({ type: 'SET_SEARCH_TYPE', data })
+// const set_search_type = (data) => store.dispatch({ type: 'SET_SEARCH_TYPE', data })
 /** 是否展开多列玩法 */
-const set_unfold_multi_column = (data) => store.dispatch({ type: 'SET_UNFOLD_MULTI_COLUMN', data })
+// const set_unfold_multi_column = (data) => store.dispatch({ type: 'SET_UNFOLD_MULTI_COLUMN', data })
 
 //监听点击搜索关键词改变
 watch(

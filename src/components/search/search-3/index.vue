@@ -221,7 +221,7 @@ function on_resize() {
   LayOutMain_pc.set_layout_main_width()
   LayOutMain_pc.set_layout_search_width()
   search_width.value = LayOutMain_pc.layout_search_width
-  // main_width.value = LayOutMain_pc.layout_main_width + 'px'
+  main_width.value = LayOutMain_pc.layout_main_width + 'px'
 }
 onUnmounted(() => window.removeEventListener('resize', on_resize))
 
@@ -291,6 +291,10 @@ export default defineComponent({
         height: 38px;
         line-height: 40px;
         padding: 0 10px;
+      }
+
+      .line-wrap {
+        transform: none;
       }
     }
   }
