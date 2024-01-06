@@ -92,6 +92,8 @@ onMounted(()=>{
     height: calc(100vh - 80px);
     display: flex;
     flex-direction: column;
+    position: fixed;
+    top: 46px;
     // padding-bottom: 100px;
     .rule-content {
         width: 100%;
