@@ -2622,7 +2622,13 @@
     "show_hide": "显示/隐藏操作按钮",
     "sorry": "抱歉，暂时无法加载资源",
     "nohandle": "您长时间未操作，视频暂停，若要继续观看请重新点击播放",
-    "video_line": "视频线路"
+    "video_line": "视频线路",
+    "novideo1": "暂无直播视频，请耐心等待",
+    "novideo2": "快速结算注单",
+    "novideo3": "支持多种<br />语言&货币",
+    "novideo4": "极致用户体验",
+    "novideo5": "极致服务团队",
+    "novideo6": "您长时间未操作，视频暂停，若要继续观看请重新点击播放",
   },
   "virtual_sports": {
     "advance": "进",
