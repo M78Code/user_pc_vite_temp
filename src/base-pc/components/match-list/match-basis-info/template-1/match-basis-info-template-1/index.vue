@@ -5,6 +5,7 @@
     <div class="row-item team-item">
       <div class="team-logo">
         <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;"
+        :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"
           v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter]" />
       </div>
       <div class="ellipsis-wrap">
@@ -38,6 +39,7 @@
     <div class="row-item team-item">
       <div class="team-logo">
         <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;"
+        :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"
           v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter]" />
       </div>
       <div class="ellipsis-wrap">
@@ -120,7 +122,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import { get_main_score } from 'src/core/match-list-pc/match-handle-data.js'
 import { get_remote_time } from "src/output/index.js"
 import { get_handicap_index_by, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
-
+import { compute_css_obj } from 'src/core/server-img/index.js'
 const router = useRouter()
 const route = useRoute()
 const props = defineProps({
