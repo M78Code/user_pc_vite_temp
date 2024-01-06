@@ -17,10 +17,10 @@
             <!-- 搜索输入框 -->
             <input
                 type="search"
-                v-model="store._keyword"
+                v-model="store.keyword"
                 class="search-input col"
                 v-focus="is_focus"
-                :class="{ 'key-is-empty': !store._keyword }"
+                :class="{ 'key-is-empty': !store.keyword }"
                 @blur="is_focus = false"
                 @keyup.enter="submit"
                 @input="change_txt"
@@ -36,7 +36,7 @@
                 <icon-wapper
                     class="cursor-pointer clear_input_btn"
                     name="icon-failure"
-                    v-if="store._keyword != ''"
+                    v-if="store.keyword != ''"
                     size="12px"
                 />
             </span>
@@ -73,17 +73,17 @@ const emit = defineEmits(['update:set_show_type', 'get_search_result'])
 /** 输入关键字 */
 // const keyword = ref('')
 //监听输入框内容改变
-watch(
-    () => store._keyword,
-    (val) => {
-        let trimVal = val.trim();
-        if (is_focus.value) {
-            SearchPCClass.set_search_type(1)
-        }
-        // set_search_keyword(trimVal)
-        SearchPCClass.set_keyword(trimVal)
-    }
-)
+// watch(
+//     () => store.keyword,
+//     (val) => {
+//         let trimVal = val.trim();
+//         if (is_focus.value) {
+//             SearchPCClass.set_search_type(1)
+//         }
+//         // set_search_keyword(trimVal)
+//         SearchPCClass.set_keyword(trimVal)
+//     }
+// )
 
 /** 输入框是否获得焦点 */
 const is_focus = ref(false)
@@ -94,8 +94,8 @@ const route_name = ref('')
  * @return {undefined} undefined
  */
 function change_txt() {
-    store._keyword = store._keyword.replace(/#/g, "");
-    if (store._keyword.length > 20) store._keyword = store._keyword.slice(0, 20);
+    store.keyword = store.keyword.replace(/#/g, "");
+    if (store.keyword.length > 20) store.keyword = store.keyword.slice(0, 20);
 }
 
 /**
@@ -103,7 +103,7 @@ function change_txt() {
  * @return {undefined} undefined
  */
 function submit() {
-    const res = store._keyword.trim();
+    const res = store.keyword.trim();
     if (!res) return;
     // set_search_type(1) 替换为 SearchPCClass.set_search_type(1)
     SearchPCClass.set_search_type(1)
@@ -128,7 +128,7 @@ function focusclick() {
  */
 function input_click() {
     is_focus.value = true
-    const val = store._keyword.trim();
+    const val = store.keyword.trim();
     SearchPCClass.set_search_type(1)
     // set_search_keyword(val)
     SearchPCClass.set_keyword(val)
@@ -165,7 +165,7 @@ function on_Close() {
 /** 清空输入框 */
 function clear_input() {
     is_focus.value = true
-    store._keyword = ""
+    store.keyword = ""
 }
 
 /**
