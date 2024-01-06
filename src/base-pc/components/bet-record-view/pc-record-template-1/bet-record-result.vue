@@ -6,11 +6,11 @@
   <div>
     <div class="row">
       <div class="col bet-money">
-        <template v-if="[0,1].includes(BetRecord.selected)">
+        <template v-if="[0,1].includes(BetRecordLeft.selected)">
           <!--投注额-->
           {{i18n_t('common.bets_val')}}
         </template>
-        <template v-else-if="BetRecord.selected==2">
+        <template v-else-if="BetRecordLeft.selected==2">
           <!-- 预约投注额 -->
           {{i18n_t("bet.bet_book_stake")}}
         </template>
@@ -18,9 +18,9 @@
       </div>
       <div class="col-auto bet-money">
         <!--最高可赢-->
-        <template v-if="[0,2].includes(BetRecord.selected)">{{i18n_t('common.maxn_amount_val')}}</template>
+        <template v-if="[0,2].includes(BetRecordLeft.selected)">{{i18n_t('common.maxn_amount_val')}}</template>
         <!--返还金额-->
-        <template v-if="BetRecord.selected==1">{{i18n_t('common.donate_win')}}</template>
+        <template v-if="BetRecordLeft.selected==1">{{i18n_t('common.donate_win')}}</template>
         <!-- 可赢额 -->
       </div>
     </div>
@@ -29,10 +29,10 @@
        {{ format_currency(item.orderAmount) }}
       </div>
       <div class="col-auto bet-value" :class="{'red-text':(item.outcome=='4' || item.outcome=='5')}">
-        <template v-if="[0,2].includes(BetRecord.selected)">
+        <template v-if="[0,2].includes(BetRecordLeft.selected)">
           {{  format_currency(item.maxWinAmount) }}
         </template>
-        <template v-if="BetRecord.selected==1">
+        <template v-if="BetRecordLeft.selected==1">
           {{ format_currency(item.backAmount) }}
         </template>
       </div>
@@ -54,7 +54,7 @@
     <template v-if="item.seriesType=='1'">
       <div class="info-wrap">
         <!--选择的是未结算 且settleSwitch开关为1且enablePreSettle为true 且initPresettleWs为true（优先级高过且enablePreSettle 且结算状态不等于-2）-->
-        <template v-if="BetRecord.selected==0 && UserCtr.settleSwitch && item.enablePreSettle && item.initPresettleWs && item.cash_out_status!=-2">
+        <template v-if="BetRecordLeft.selected==0 && UserCtr.settleSwitch && item.enablePreSettle && item.initPresettleWs && item.cash_out_status!=-2">
           <!--账户有钱且是开盘状态且结算状态为1-->
           <template v-if="ref_data.amount > 1 && lodash_.get(item,'orderVOS.0.hs')==0 && item.cash_out_status==1">
             <!--settleType 1 未发生提前结算(支持全额)4已发生 部分提前部分结算(支持部分),5 已发生提前全结算(支持全部),3 提前结算取消-->
@@ -218,7 +218,7 @@
           </template>
         </template>
         <!--已结算下部分提前结算和全部结算显示分隔符-->
-        <hr class="bet-result-separator" v-if="BetRecord.selected==1 && [4,5].includes(item.settleType)" />
+        <hr class="bet-result-separator" v-if="BetRecordLeft.selected==1 && [4,5].includes(item.settleType)" />
         <!--部分以及全部结算展示与隐藏按钮切换-->
         <template v-if="[3,4,5].includes(item.settleType)">
           <div class="row" @click="show_bet_pre_info(item.orderNo)">
@@ -311,7 +311,7 @@ import { reactive, ref } from "vue"
 import { format_odds, format_currency, formatTime } from "src/output/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
-import BetRecord from "src/core/bet-record/bet-record.js"
+import { BetRecordLeft } from "src/core/bet-record/pc/bet-record-instance.js"
 
 import lodash_ from "lodash"
 const props = defineProps({

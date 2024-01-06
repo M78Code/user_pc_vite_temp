@@ -2,9 +2,9 @@
   <div>
     <div class="row yb-flex-center book-content">
       <!--预-->
-      <div class="col-2">{{ i18n_t('bet.bet_dish') }}</div>
+      <div class="col-2 center yb-fontsize12">{{ i18n_t('bet.bet_dish') }}</div>
       <!--此处为盘口区域，-->
-      <div class="col-9 input-number">
+      <div class="col-9 input-number" :class="{'m-b-8': item.sportId == 1 }">
         <!-- 盘口减- -->
         <div @click="sub_handle('ball_head')" class="sub-number" :class="{ 'disabled': head_sub_style }">-</div>
         <input class="pre-input" v-model=" ref_data.computed_appoint_ball_head" v-if="item.sportId == 1" readonly>
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="row yb-flex-center book-content">
-      <div class="col-2 mt5">{{ i18n_t('bet.bet_odds') }}</div>
+      <div class="col-2 mt5 center yb-fontsize12">{{ i18n_t('bet.bet_odds') }}</div>
       <!--减号 赔率输入框 加号-->
       <div class="col-9 input-number mt5">
         <div 
@@ -593,5 +593,12 @@ const set_computed_appoint_ball_head = ()=>{
 <style lang="scss" scoped>
 .pre-input{
   border: 1px solid var(--q-gb-bd-c-8);
+}
+.m-b-8 {
+  margin-bottom: 8px;
+}
+.center {
+  height: 26px;
+  line-height: 23px;
 }
 </style>
