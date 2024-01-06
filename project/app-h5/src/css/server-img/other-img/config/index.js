@@ -89,4 +89,12 @@ export default {
   'h5-sort-arrows-active': {
     default: "h5-sort-arrows-active",    
   },
+
+
+  'h5-new-page': {
+    default: "h5-new-page",    
+  },
+  'h5-new-page-xs': {
+    default: "h5-new-page-xs",    
+  },
 }

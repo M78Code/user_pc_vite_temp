@@ -23,7 +23,7 @@ import { ref } from 'vue'
 import { api_betting } from "src/api/index.js";
 import { i18n_t } from "src/output/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
-import BetRecordClass from "src/core/bet-record/bet-record.js";
+import BetRecordClass from "src/core/bet-record/h5/bet-record.js";
 const props = defineProps({
   orderNumber: {
     type: [ String, Number ]

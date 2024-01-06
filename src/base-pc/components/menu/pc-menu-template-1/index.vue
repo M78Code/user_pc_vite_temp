@@ -27,22 +27,22 @@
         <!-- icon -->
         <div class="row items-center">
           <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif)}` })"
-            :alt="BaseData.menus_i18n_map[item.mif]"></span>
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif|| item.mi)}` })"
+            :alt="BaseData.menus_i18n_map[item.mif || item.mi]"></span>
 
         </div>
         <div class="items-right row" style="flex-wrap: wrap">
           <div style="line-height: 1; flex: 1">
             <span class="menu-text">
               <!-- 名字 {{ item }} -->
-              {{ BaseData.menus_i18n_map[item.mif] || "" }}
+              {{ BaseData.menus_i18n_map[item.mif || item.mi] || "" }}
             </span>
           </div>
           <!-- 数字 显示    有些赛种不显示 -->
           <div class="col-right" style="min-width: 40px">
             <!-- 有滚球赛事  hl 今日&&存在滚球赛事时  展示live图标 -->
             <div class="live-text" :style="compute_css_obj('live_text')" v-if="MenuData.is_today() && BaseData.mi_gunqiu.includes(item.mif)" />
-            <span class="match-count yb-family-odds" >{{ item.ct }}</span>
+            <span class="match-count yb-family-odds">{{ item.ct }}</span>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
       <!--  子菜单  ，  开始    -->
       <!--  子菜单  ， 冠军 不显示子菜单  -->
       <!--  常规体育 含 娱乐     子菜单  开始    -->
-      <div class="menu-fold2-wrap" :class="current_lv_1_mi == item.mi && !show_menu ? 'open' : ''">
+      <div class="menu-fold2-wrap" :class="current_lv_1_mi == item.mi && !show_menu ? 'open' : ''" v-if="item.mi != 400">
         <template v-for="item2 in item.sl">
           <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        开始   -->
           <div :key="`_${item.mi}_${item2.mi}_100`" @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })
@@ -471,6 +471,7 @@ const get_lv_1_lv_2_mi = (mi) => {
 }
 onMounted(()=>{
   handle_click_jinri_zaopan(2)
+  return
   ref_data.emit_lsit = {
       emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, get_menu_ws_list).off,
   }
@@ -515,17 +516,20 @@ onUnmounted(()=>{
         font-size: 13px;
         justify-content: space-around;
         padding: 0px;
+        margin-bottom: 9px;
 
         .item {
-          border-radius: 8px;
+          border-radius: 1000px;
           margin-right: 10px;
           white-space: nowrap;
           margin-right: 0!important;
-          height: 38px!important;
-          background-size: 100% 100%;
-          min-width: 98px;
-          padding-bottom: 4px;
-          box-shadow: none!important;
+          height: 30px!important;
+          min-width: 90px;
+          line-height: 30px;
+          border: 0.5px solid #D7E1FD;
+          box-shadow: 0px 3px 3px 0px rgba(0, 56, 98, 0.1) !important;
+          background: linear-gradient(0deg, #D7E1FD, #D7E1FD),
+          linear-gradient(180deg, #E4ECFD 0%, #F8FAFF 47.92%, #F5F8FF 100%);          
           &:last-child {
             margin-right: 0;
           }
@@ -533,7 +537,8 @@ onUnmounted(()=>{
           &.active {
             font-weight: 600;
             font-size: 14px;
-            color: var(--q-gb-t-c-1);
+            color: var(--q-gb-t-c-18);
+            background: var(--q-gb-bg-c-4);
           }
 
           &.active1 {

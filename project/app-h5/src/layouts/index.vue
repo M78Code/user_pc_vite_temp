@@ -87,7 +87,7 @@ import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
 import { useRoute } from "vue-router";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
-import BetRecordClass from "src/core/bet-record/bet-record.js";
+import BetRecordClass from "src/core/bet-record/h5/bet-record.js";
 import { bet_special_series_change,get_query_bet_amount_common,set_market_id_to_ws } from "src/core/bet/class/bet-box-submit.js"
 import TokenInvalid from "./token-invalid.vue"
 import {debounce} from "lodash";

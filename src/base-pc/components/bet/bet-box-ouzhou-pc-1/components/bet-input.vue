@@ -23,7 +23,7 @@
                 </div>
             
             </div>
-            <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
+            <div v-show="false">{{ UserCtr.user_version }}--{{BetData.bet_data_class_version}}--{{BetViewDataClass.bet_view_version}}</div>
         </div>
         <div>
             <ul class="bet-bet-money f-b-c" v-show="items.ol_os == 1">
@@ -167,7 +167,6 @@ const set_ref_data_bet_money = () => {
         // 串关 type
         value = id
     }
-
     const { min_money = 10, max_money = 8888, seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
     // 最小限额
     ref_data.min_money = min_money
