@@ -6,8 +6,8 @@
       <div class="team-logo">
         <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;"
         :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"
-          v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter]" />
-      </div>
+          v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter,update_show_default]" />
+      </div> 
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div class="team-name home ellipsis allow-user-select"
@@ -146,6 +146,12 @@ const is_show_away_goal = ref(false) // 是否显示客队进球动画
 const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
+
+const show_default_img = ref(false); //是否显示默认队伍头像
+//设置图片默认
+const update_show_default = (value) => {
+  show_default_img.value = value;
+}
 
 let match_style_obj =inject('match_style_obj')
 let match =inject('match')
