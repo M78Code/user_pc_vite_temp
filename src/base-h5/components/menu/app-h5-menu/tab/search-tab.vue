@@ -11,8 +11,8 @@
     <!-- <div class="search-tab-wap"> -->
         <div class="search-tab-content">
             <ul class="search-tab-content-ul" v-show="!drawerRight">
-                <li ref="searchTab" v-for="(item, index) in popular_league" :class="{ active: activeOn === index }"  :key="index"
-                    @click="changeTab(index,$event)">
+                <li ref="searchTab" v-for="(item, index) in dataList" :class="{ active: activeOn === index }"  :key="index"
+                    @click="changeTab(index,$event,item)">
                     <!-- <img v-show="item.img" :src="item.img" /> -->
                     <span v-if="item.tid !== '0'" class="sport-icon-wrap"
                       :style="compute_css_obj({key: activeOn === index ? 'league-sport-active-image' : 'league-sport-icon-image', position:format_type(item)})"></span>
@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import lodash from 'lodash'
 import search from "./img/search.svg";
 import {scrollMenuEvent} from "../utils";
@@ -141,25 +141,10 @@ const props = defineProps({
 const drawerRight = ref(false)
 const searchTab = ref(null)
 const keyword = ref('')
-const popular_league = ref([])
 const emitters = ref({});
 
 const activeOn = ref(0);//默认值
 const league_data = ref([])
-
-watch(() => MatchResponsive.popular_league.value , (v) => {
-    popular_league.value = lodash.cloneDeep(props.dataList)
-    if (lodash.isEmpty(v)) return
-    Object.keys(v).forEach((key) => {
-        const item = popular_league.value.find(t => t.alias === key)
-        if (!item) return
-        const length = lodash.get(v[key].tids, 'length', 0)
-        if (length < 1) return 
-        const result_tid = [...v[key].tids, item.tid]
-        item.tid = lodash.uniq(result_tid).join(',')
-        
-    })
-}, { immediate: true, deep: true})
 
 /**
  * @description 搜索赛事
@@ -184,14 +169,30 @@ const select_change = (value) => {
     // drawerRight = !drawerRight
     console.log('valuevalue',value)
 }
+
+/**
+ * @description 获取联赛 id
+ */
+const get_leagues_tid = (league) => {
+    let target_tid = league.tid
+    const popular_league_data = lodash.get(MatchResponsive, 'popular_league.value', {})
+    if (!lodash.isEmpty(popular_league_data) && league.alias !== 'all') {
+        const item = popular_league_data[league.alias]
+        const length = lodash.get(item.tids, 'length', 0)
+        if (length > 0) target_tid = item.tids.join(',')
+    }
+    return target_tid
+}
+
+
 /**
  * 选中事件
  * @param {*} val
  */
-const changeTab = (i,event) => {
-    // if(activeOn.value === i)return;
+const changeTab = (i, event, item) => {
+    if(activeOn.value === i)return;
     activeOn.value = i;
-    const tid = popular_league.value[i].tid;
+    const tid = get_leagues_tid(item)
     event && scrollMenuEvent(event,".search-tab-content-ul",".active");
     MatchMeta.clear_match_info()
     if (tid === '0') {
