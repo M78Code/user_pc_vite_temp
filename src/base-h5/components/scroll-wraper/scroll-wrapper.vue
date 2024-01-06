@@ -108,7 +108,7 @@ const handler_match_container_scroll = lodash.debounce(($ev) => {
     MatchMeta.compute_page_render_list({ scrollTop: $ev.target.scrollTop, type: 2, is_again: false, merge: 'cover' })
     if (!is_esports.value) get_match_base_hps()
   }
-}, 200)
+}, 300)
 
 // 获取赔率
 const get_match_base_hps = lodash.debounce(() => {
