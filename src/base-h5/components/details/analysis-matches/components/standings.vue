@@ -21,7 +21,7 @@
       <football-standings :detail_data="detail_data"/>
       <!-- 历史交战 -->
       <history-engagement :detail_data="detail_data"/>
-      <!-- 近期战绩 -->
+      <!-- 近期战绩 22-->
       <recent-record :detail_data="detail_data"/>
       <!-- 未来赛程  只有 足球才有 -->
       <future-schedule :future_schedule_data="future_schedule_data" v-if="detail_data.csid == 1"/>
