@@ -42,34 +42,40 @@
         .nav_list{
             width: 100%;
             height: 0.44rem;
-            background-color: paleturquoise;
+            background-color: #fff;
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
             align-items: center;
             .nav_item{
                 // width: 0.49rem;
-                height: 0.15rem;
-                margin-top: 0.15rem;
-                margin-bottom: 0.15rem;
-                padding-right: 0.15rem;
-                background-color: orange;
-                border-right: 0.01rem solid blue;
-
-                color: #FF7000;
-
-                text-align: center;
-                font-family: Roboto;
-                font-size: 13px;
-                font-style: normal;
-                font-weight: 500;
-                line-height: normal;
-                text-transform: capitalize;
-
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+                >div{
+                    height: 0.15rem;
+                    margin-top: 0.15rem;
+                    margin-bottom: 0.14rem;
+                    padding-left: 0.15rem;
+                    padding-right: 0.15rem;
+                    // background-color: orange;
+                    border-right: 0.005rem solid #D9D9D9;
+
+                    color: #FF7000;
+
+                    text-align: center;
+                    font-family: Roboto;
+                    font-size: 13px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    text-transform: capitalize;
+                }
+
+                >img{
+                    padding-right: 0.15rem;
+                }
             }
         }
 
@@ -85,7 +91,8 @@
                 .match_item{
                     width: 100%;
                     background-color: orange;
-                    margin-top: 0.2rem;
+                    // margin-top: 0.2rem;
+                    border-top: 0.005rem solid #ccc;
                 }
             }
         }
