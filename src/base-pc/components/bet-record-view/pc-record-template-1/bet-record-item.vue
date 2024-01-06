@@ -215,7 +215,7 @@ import { VIURTUAL_SPORT, VIRTUAL_PLAY_NOT_NUMBER2, VIRTUAL_SPORT_ID,CANCEL_TYPE 
  
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
-import BetRecord from "src/core/bet-record/bet-record.js"
+import { BetRecordLeft } from "src/core/bet-record/pc/bet-record-instance.js"
 import { formatTime } from 'src/output/index.js'
 
 import lodash_ from "lodash"
@@ -248,7 +248,7 @@ const show_score_info = ref(false)
    */
 const bet_result = (bet_status, bet_result, cancel_type) => {
   let html = "";
-  if (BetRecord.selected == 0) {
+  if (BetRecordLeft.selected == 0) {
     // 未结算
     if (props.item.orderStatus == 0) {
       //串关
@@ -302,7 +302,7 @@ const bet_result = (bet_status, bet_result, cancel_type) => {
         }
       }
     }
-  } else if (BetRecord.selected == 1) { // 已结算
+  } else if (BetRecordLeft.selected == 1) { // 已结算
     if (props.item.orderStatus == 1) { // 投注成功
       switch (bet_result) {
         case 2:
