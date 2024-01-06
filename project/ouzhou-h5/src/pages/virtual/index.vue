@@ -20,7 +20,13 @@
         <div class="match_list_box">
             <div class="match_list">
                 <div class="match_item" v-for="(item, index) in [0,1,2,3,4,5]" :key="index">
-                    <div class="left"></div>
+                    <div class="left">
+                        <div class="left_item" v-for="(it, inde) in [0, 1]" :key="inde">
+                            <div class="left_item_left"></div>
+                            <div class="left_item_right"></div>
+                        </div>
+                    </div>
+                    <div class="vertical_line"></div>
                     <div class="right"></div>
                 </div>
             </div>
