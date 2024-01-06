@@ -96,6 +96,7 @@ if (is_output) {
   local_oss_target_dir = "./job/output/oss";
 }
 let zhixing_job = is_dist || is_backup || is_output;
+console.log(`复制oss--is_dist--${is_dist}--is_backup--${is_backup}--is_output--${is_output}--`);
 const write_oss_fn = async () => {
   //计算文件名字
   function compute_file_name(str = "") {
@@ -114,10 +115,16 @@ const write_oss_fn = async () => {
 
       if (res.data) {
         oss_data_obj[file_name] = res.data;
+        console.log(`复制oss---${file_name}--接口正常--正常`);
       } else {
+        console.log(`复制oss---${file_name}--接口正常--为空`);
         if (!oss_data_obj[file_name]) {
           oss_data_obj[file_name] = {};
+          console.log(`复制oss---${file_name}--接口正常--为空--赋值为空`);
+        }else{
+          console.log(`复制oss---${file_name}--接口正常--为空--已有缓存值`);
         }
+   
       }
     } catch (error) {
       if (!oss_data_obj[file_name]) {
@@ -127,6 +134,9 @@ const write_oss_fn = async () => {
           `./backup-oss/${file_name}`
         );
         oss_data_obj[file_name] = env_back_up_data;
+        console.log(`复制oss---${file_name}--接口错误----没有缓存值---读取备份文件进行赋值`);
+      }else{
+        console.log(`复制oss---${file_name}--接口错误----已有缓存值`);
       }
     }
   }

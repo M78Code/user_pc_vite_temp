@@ -9,9 +9,15 @@
     <div class="row-item team-item">
       <div class="team-logo" :class="lodash.get(match,'match_logo.is_double',false) && 'double-logo'">
         <!-- 电竞和普通赛事图片地址不同需要传入csid(球种id)进行区分 -->
-        <img style="width: 22px; max-height: 24px;" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })" v-img="[(match.match_logo || {}).home_1_logo,(match.match_logo || {}).home_1_letter,match.csid]" />
+        <div>
+          <img v-if="home_avatar" style="width: 22px; max-height: 24px;" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })" v-img="[(match.match_logo || {}).home_1_logo,(match.match_logo || {}).home_1_letter,match.csid]" />
+          <div v-else v-show="lodash.get(match, 'man')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"></div>
+        </div>
         <!-- 双打局，就会有两个头像 -->
-        <img style="width: 22px; max-height: 24px;" class="logo2" v-if="lodash.get(match,'match_logo.is_double',false)" v-img="[(match.match_logo || {}).home_2_logo,(match.match_logo || {}).home_2_letter,match.csid,update_show_default]" />
+        <div v-if="lodash.get(match,'match_logo.is_double',false)">
+          <img v-if="home_avatar2" style="width: 22px; max-height: 24px;" class="logo2" v-img="[(match.match_logo || {}).home_2_logo,(match.match_logo || {}).home_2_letter,match.csid,update_show_default]" />
+          <div class="logo2" v-else v-show="lodash.get(match, 'man')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_2_letter })"></div>
+        </div>
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
@@ -43,9 +49,14 @@
     <div class="row-item team-item">
       <div class="team-logo" :class="lodash.get(match,'match_logo.is_double',false) && 'double-logo'">
         <!-- 同主队 -->
-        
-        <img style="width: 22px; max-height: 24px;" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })" v-img="[(match.match_logo || {}).away_1_logo,(match.match_logo || {}).away_1_letter,match.csid]" />
-        <img style="width: 22px; max-height: 24px;" class="logo2" v-if="lodash.get(match,'match_logo.is_double',false)" v-img="[(match.match_logo || {}).away_2_logo,(match.match_logo || {}).away_2_letter,match.csid]" />
+        <div>
+          <img v-if="away_avatar" style="width: 22px; max-height: 24px;" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })" v-img="[(match.match_logo || {}).away_1_logo,(match.match_logo || {}).away_1_letter,match.csid]" />
+          <div v-else v-show="lodash.get(match, 'man')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"></div>
+        </div>
+        <div v-if="lodash.get(match,'match_logo.is_double',false)">
+          <img v-if="away_avatar2" style="width: 22px; max-height: 24px;" class="logo2" v-img="[(match.match_logo || {}).away_2_logo,(match.match_logo || {}).away_2_letter,match.csid]" />
+          <div class="logo2" v-else v-show="lodash.get(match, 'man')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_2_letter })"></div>
+        </div>
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
@@ -141,6 +152,33 @@ const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
 
+
+const home_avatar = computed(()=>{
+  const url = ((lodash.get(match.value, 'match_logo') || {}) || {}).home_1_logo;
+  
+  return url
+})
+const home_avatar2 = computed(()=>{
+  const url = ((lodash.get(match.value, 'match_logo') || {}) || {}).home_2_logo;
+  
+  return url
+})
+
+const away_avatar = computed(()=>{
+  const url = (lodash.get(match.value, 'match_logo') || {}).away_1_logo;
+  return url
+})
+
+const away_avatar2 = computed(()=>{
+  const url = (lodash.get(match.value, 'match_logo') || {}).away_2_logo;
+  return url
+})
+
+const show_default_img = ref(false); //是否显示默认队伍头像
+//设置图片默认
+const update_show_default = (value) => {
+  show_default_img.value = value;
+}
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
     return `+${ match.value.mc || 0}`

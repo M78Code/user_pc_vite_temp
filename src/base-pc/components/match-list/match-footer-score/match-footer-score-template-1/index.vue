@@ -101,13 +101,14 @@ const more_left_icon = ref(false);
 const stage_score = ref(null);
 // 当前赛事状态
 const match_status = computed(() => {
-  get_match_status(props.match.ms, [110]);
+ return get_match_status(props.match.ms, [110]);
 })
 const score_list = computed(() => {
     let score_list = get_history_score_list(props.match) || []
     if (score_list.length > 0) {
       return score_list[0]
     }
+    return score_list
 });
 onMounted(() => {
   // 异步设置组件是否挂载完成

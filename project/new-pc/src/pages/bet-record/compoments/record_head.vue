@@ -1,5 +1,6 @@
 <template>
   <div class="record-head">
+    <div style="display: none;">{{ BetRecordHistory.bet_record_version }}</div>
     <div class="c-simple-header">
       <div v-if="is_hide_icon" class="icon-layout"></div>
       <div v-else class="rule-logo">
@@ -17,8 +18,8 @@
     </div>
     <div class="tabs-wrap">
       <div class="btn-wrap">
-        <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
-              :class="[{ 'active': item.id === active }, 'btn']">{{ i18n_t(item.label)}}
+        <span v-for="(item, index) in tabList" :key="index" @click="tabClick(index)"
+          :class="[{ 'active': BetRecordHistory.selected === index }, 'btn']">{{ i18n_t(item.label)}}
         </span>
       </div>
       <!-- 按钮后面的描述 -->
@@ -26,7 +27,7 @@
           <!-- 文字前面的点-->
           <div class="point"></div>
           <!--未结算文字描述-->
-          <div class="text">四大分卫呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃呃</div>
+          <div class="text">{{i18n_t(BetRecordHistory.tipMsg)}}</div>
       </div>
     </div>
   </div>
@@ -34,27 +35,22 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 import { get_remote_time, utc_to_gmt_no_8_ms2 } from "src/output/index.js"
 import { BetRecordHistory } from "src/core/bet-record/pc/bet-record-instance.js"
 
-const tab = ref('unsettled')
-const emits = defineEmits(['tab_change'])
-const active = ref('unsettled')
-const tabClick = (item) => {
-  active.value = item.id
-  emits('tab_change', item.id)
+const tabClick = (index) => {
+  BetRecordHistory.set_selected(index)
 }
 const tabList = ref([
-  { label: "ouzhou.record.unsettled", id: 'unsettled' },
-  { label: "ouzhou.record.settled", id: 'settled' }
+  { label: "bet_record.outstanding_notes" },
+  { label: "bet_record.settled_note" },
+  { label: "bet_record.book_note" },
 ])
 
-
+// 顶部系统时间
 let is_hide_icon = ref(false)
 let date_time = ref("")
 let timer_id = null
-
 /**
  * @Description:获取当前系统时间
  * @return {undefined} undefined
@@ -67,6 +63,10 @@ let timer_id = null
         date_time.value = utc_to_gmt_no_8_ms2(time);
     }, 1000);
 }
+
+/**
+ * 提示语
+ */
 
 onMounted(() => {
   is_hide_icon.value = (location.href.indexOf('i_h=1') != -1)
@@ -86,15 +86,18 @@ onUnmounted(() => {
   background: var(--q-gb-bg-c-14);
   position: relative;
   box-sizing: border-box;
+  color: var(--q-gb-t-c-6);
+  padding: 0 20px;
 }
 .icon-layout {
   width: 5px;
 }
 .c-simple-header {
   display: flex;
-  padding: 0 20px 0 15px;
+  padding-right: 20px;
   height: 60px;
   min-height: 60px; /*  必须用min-height；兼容IE */
+  border-bottom: 1px solid var(--q-gb-bd-c-8);
   align-items: center;
   text-transform: uppercase;
   .rule-logo {
@@ -128,24 +131,20 @@ onUnmounted(() => {
 /**表格头部分 未结算已结算预约注单按钮tab*/
 .tabs-wrap {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  height: 40px;
+  height: 36px;
+  border-bottom: 1px solid var(--q-gb-bd-c-13);
   /**未结算已结算预约注单按钮tab*/
   .btn-wrap {
-    position: absolute;
-    bottom: -1px;
-    left: 0;
     display: flex;
     //height: 30px;
     /**按钮样式*/
     .btn {
-      margin-right: 5px;
-      height: 100%;
-      text-align: center;
-      line-height: 30px;
+      margin-right: 24px;
       cursor: pointer;
-      padding: 0 10px;
+      line-height: 38px;
+      height: 36px;
       &.active {
         color: var(--q-gb-t-c-7);
         position: relative;
@@ -154,9 +153,9 @@ onUnmounted(() => {
           bottom: -3px;
           left: 50%;
           transform: translateX(-50%);
-          width: 40px;
-          height: 3px;
-          border-radius: 2px 2px 0px 0px;
+          width: 30px;
+          height: 4px;
+          border-radius: 6px 6px 0px 0px;
           content: "";
           background-color: var(--q-gb-t-c-7);
         }
