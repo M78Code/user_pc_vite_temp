@@ -50,7 +50,7 @@
   </div>
 </template>
 <script setup>
-import { onUnmounted, watch } from "vue";
+import { onUnmounted, watch,onMounted,onBeforeMount } from "vue";
 
 import { useRoute,useRouter } from "vue-router";
 // import "./main-layout.js"; //初始化数据
@@ -77,6 +77,14 @@ window.addEventListener("resize", resize_);
 const route = useRoute();
 const router = useRouter();
 
+let upd_time_refresh_timer;
+onMounted(() => {
+
+  // 全局一秒钟定时器
+  upd_time_refresh_timer = setInterval(global_one_second_timer, 1000);
+
+})
+
 
 /**
  * @Description 全局一秒钟定时器 
@@ -92,7 +100,13 @@ function resize_() {
 
 onUnmounted(() => {
   window.removeEventListener("resize", resize_);
+  clearInterval(upd_time_refresh_timer)
 })
+
+onBeforeMount(()=>{
+    clearInterval(upd_time_refresh_timer)
+  })
+
 
 
 
