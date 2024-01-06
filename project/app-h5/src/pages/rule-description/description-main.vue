@@ -37,6 +37,8 @@ const go_back = () => {
   padding-top: 0.01rem;
   position: relative;
   height: 0.44rem;
+  position: fixed;
+  width: 100%;
 
   .go-back {
     align-items: center;
