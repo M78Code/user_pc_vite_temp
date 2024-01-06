@@ -7,7 +7,15 @@
   <div class="football-after" v-if="isRouterAlive">
     <div class="info-time">
       <div class="match-date">
-        <match-date :match="match_info"  source='detail'  :right="right" class="count_down" style="flex-flow: row;"></match-date>
+          <!-- 倒/正计时组件 -->
+          <div style="margin-right: 10px;display: flex;">
+                  <match-process
+                    :match="match_info"
+                    show_page="match-list"
+                    :rows="1"
+                  />
+             </div>
+        <!-- <match-date :match="match_info"  source='detail'  :right="right" class="count_down" style="flex-flow: row;"></match-date> -->
       </div>
       <!-- 中立场 -->
       <span v-if="match_info.mng"   class="icon-neutral q-icon c-icon"><span class="path1"></span><span class="path2"></span></span>
@@ -205,11 +213,13 @@ import lodash from 'lodash'
 import { get_match_status,i18n_t,formatSeconds,debounce_throttle_cancel,compute_local_project_file_path } from "src/output/index.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { IconWapper } from 'src/components/icon'
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 export default {
   components: {
     "match-date":MatchProcessFullVersionWapper,
     IconWapper,
+    matchProcess
   },
   name: "football_after",
   // mixins: [format],
@@ -292,7 +302,7 @@ export default {
     },
   },
   created(){
-    
+    console.log(11111111666,this.match_info)
     this.hide_home_goal = this.lodash.debounce(this.hide_home_goal,5000)
     this.hide_away_goal = this.lodash.debounce(this.hide_away_goal,5000)
     this.hide_home_red = this.lodash.debounce(this.hide_home_red,5000)
