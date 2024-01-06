@@ -108,7 +108,7 @@
 
 <script setup>
 
-import { computed, watch, ref, onUnmounted } from 'vue';
+import { computed, watch, ref,inject, onUnmounted } from 'vue';
 import { useRouter, useRoute } from "vue-router";
 import lodash from 'lodash'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
@@ -124,10 +124,6 @@ import { get_handicap_index_by, get_match_score } from 'src/core/match-list-pc/m
 const router = useRouter()
 const route = useRoute()
 const props = defineProps({
-  match: {
-    type: Object,
-    default: () => { }
-  },
   show_type: {
     type: String,
     default: () => ''
@@ -149,23 +145,25 @@ const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
 
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'match.mid'))
+let match_style_obj =inject('match_style_obj')
+let match =inject('match')
+
 
 const handicap_num = computed(() => {
   if (GlobalAccessConfig.get_handicapNum()) {
-    return `+${lodash.get(props, 'match.mc') || 0}`
+    return `+${lodash.get(match.value, 'match.mc') || 0}`
   } else {
     return i18n_t('match_info.more')
   }
 })
-const scroe_list = get_main_score(props.match)
+const scroe_list = get_main_score(match.value)
 const play_name_obj = computed(() => {
   let play_name_obj = {
     key: 'main',
     suffix_name: '',
     score_key: ''
   }
-  let { ms, hSpecial } = props.match || {}
+  let { ms, hSpecial } = match.value || {}
   if (MatchListCardDataClass.list_version.value) { }
   //滚球
   if (get_match_status(ms, [110]) == 1) {
@@ -177,14 +175,14 @@ const play_name_obj = computed(() => {
         score_key: 'S5'
       }
       //罚牌后缀
-    } else if (match_style_obj.data_tpl_id == 25) {
+    } else if (match_style_obj.value.data_tpl_id == 25) {
       play_name_obj = {
         key: 'punish',
         suffix_name: ' - ' + i18n_t('list.punish'),
         score_key: 'S10102'
       }
       // 15分钟比分
-    } else if (match_style_obj.data_tpl_id == 24) {
+    } else if (match_style_obj.value.data_tpl_id == 24) {
       play_name_obj = {
         key: 'main',
         suffix_name: '',
@@ -194,7 +192,7 @@ const play_name_obj = computed(() => {
   }
   return play_name_obj
 })
-is_collect.value = Boolean(lodash.get(props.match, 'mf'))
+is_collect.value = Boolean(lodash.get(match.value, 'mf'))
 /**
  * @Description 赛事收藏 
 */
@@ -205,21 +203,21 @@ const collect = () => {
 }
 
 const home_score = computed(() => {
-  let obj = get_match_score(props.match)
+  let obj = get_match_score(match.value)
   return obj.home_score
 })
 const away_score = computed(() => {
-  let obj = get_match_score(props.match)
+  let obj = get_match_score(match.value)
   return obj.away_score
 })
 
 let handicap_index = computed(() => {
-  return get_handicap_index_by(props.match)
+  return get_handicap_index_by(match.value)
 })
 
 
 // 监听收藏变化
-watch(() => props.match.mf, (n) => {
+watch(() => match.value.mf, (n) => {
   is_collect.value = Boolean(n)
 }, { immediate: true })
 
@@ -227,9 +225,9 @@ watch(() => props.match.mf, (n) => {
 // 监听主比分变化
 watch(home_score, (n) => {
   //推送时间是否过期
-  let is_time_out = (get_remote_time() - props.match.ws_update_time) < 3000
+  let is_time_out = (get_remote_time() - match.value.ws_update_time) < 3000
   // 足球 并且已开赛
-  if (props.match.csid == 1 && get_match_status(props.match.ms, [110]) == 1 && n != 0 && is_time_out) {
+  if (match.value.csid == 1 && get_match_status(match.value.ms, [110]) == 1 && n != 0 && is_time_out) {
     is_show_home_goal.value = true;
     hide_home_goal();
   }
@@ -238,9 +236,9 @@ watch(home_score, (n) => {
 // 监听主比分变化
 watch(away_score, (n) => {
   //推送时间是否过期
-  let is_time_out = (get_remote_time() - props.match.ws_update_time) < 3000
+  let is_time_out = (get_remote_time() - match.value.ws_update_time) < 3000
   // 足球 并且已开赛
-  if (props.match.csid == 1 && get_match_status(props.match.ms, [110]) == 1 && n != 0 && is_time_out) {
+  if (match.value.csid == 1 && get_match_status(match.value.ms, [110]) == 1 && n != 0 && is_time_out) {
     is_show_away_goal.value = true;
     hide_away_goal();
   }
