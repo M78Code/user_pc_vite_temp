@@ -87,7 +87,10 @@
       </div>
        
        <!-- 底部投注信息 -->
-       <betFooter v-show="BetData.bet_single_list.length || BetData.bet_s_list.length"/>
+       <div v-show="BetData.bet_single_list.length || BetData.bet_s_list.length">
+        <betFooter />
+       </div>
+       
     </div>
   </div>
 </template>
