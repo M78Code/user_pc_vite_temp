@@ -188,7 +188,8 @@
             left: 0;
             height: 60px;
             transition: height .3s ease-in-out;
-
+            background: var(--q-site-header-color-7); ;
+            
             &.iframe-header-item1-hide {
                 height: 0 !important;
                 overflow: hidden;
@@ -273,11 +274,11 @@
                         text-transform: uppercase;
                         position: relative;
                         z-index: 100;
-                        color: var(--q-gb-t-c-8); // #666
+                        color: var(--q-site-header-color-2); // #666
                         letter-spacing:.5px;
                         &.active {
                             font-weight: 600;
-                            color: var(--q-site-header-color-1);
+                            color: var(--q-site-header-color-3);
                           }
                     }
 
@@ -365,7 +366,7 @@
             justify-content: space-between;
             border-top: 1px solid var(--q-site-header-color-4);
             border-bottom: 1px solid var(--q-site-header-color-4);
-            background: var(--q-gb-bg-c-11); // #fff
+            background: var(--q-gb-bg-c-11); 
             /* 公告 */
             .marquee-wrap {          
                 .iframe-tab-wrapper {
@@ -653,6 +654,7 @@
 .c-site-header.is-iframe {
     height: 86px;
     transition: height .3s ease-in-out;
+   
 
     .header-item {
         &.item1 {
