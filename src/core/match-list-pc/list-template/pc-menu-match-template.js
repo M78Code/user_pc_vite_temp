@@ -94,7 +94,7 @@ const menu_to_match_templte = {
   412: { label: "拳击-冠军-冠军", value: "18" },
   403: { label: "棒球-冠军-冠军", value: "18" },
   401: { label: "冠军-足球", value: "18" },
-  405: { label: "冠军-网球", value: "网球" },
+  405: { label: "冠军-网球", value: "18" },
   400: { label: "冠军", value: "18" },
 
   // 热门

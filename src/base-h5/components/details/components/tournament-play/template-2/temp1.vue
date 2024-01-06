@@ -33,7 +33,7 @@
                           { win: calc_win(ol_item.result) },
                         ]"
                       >
-                        <div class="text-center odds-wrap">
+                        <div class="text-center odds-wrap w-full">
                           <div class="col text-center ellipsis led">
                             {{ ol_item.ott }}{{ ol_item.on }}
                           </div>
@@ -140,7 +140,7 @@
                             { win: calc_win(ol_item.result) },
                           ]"
                         >
-                          <div class="text-center odds-wrap">
+                          <div class="text-center odds-wrap w-full">
                             <div class="col text-center ellipsis led">
                               {{ ol_item.ott }}{{ ol_item.on }}
                             </div>
@@ -261,7 +261,7 @@
                             { win: calc_win(ol_item.result) },
                           ]"
                         >
-                          <div class="text-center odds-wrap">
+                          <div class="text-center odds-wrap w-full">
                             <div class="col text-center ellipsis led">
                               {{ ol_item.ott }}{{ ol_item.on }}
                             </div>
@@ -383,7 +383,7 @@
                             { win: calc_win(ol_item.result) },
                           ]"
                         >
-                          <div class="text-center odds-wrap">
+                          <div class="text-center odds-wrap w-full">
                             <div class="col text-center ellipsis led">
                               {{ ol_item.ott }}{{ ol_item.on }}
                             </div>

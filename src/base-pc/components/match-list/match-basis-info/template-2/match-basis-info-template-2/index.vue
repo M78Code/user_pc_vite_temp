@@ -15,12 +15,12 @@
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
-          <div class="team-name home ellipsis allow-user-select" :class="{'bold':match.team_let_ball=='T1'}" v-tooltip="{content:lodash.get(match,'mhn',''),overflow:1}">{{match.mhn}}</div>
+          <div class="team-name home ellipsis allow-user-select" :class="{'bold': handicap_index == 1}" v-tooltip="{content:lodash.get(match,'mhn',''),overflow:1}">{{match.mhn}}</div>
         </div>
       </div>
       <!-- 主比分 -->
       <div class="score">
-        <span v-show="!scoring">{{match.home_score}}</span>
+        <span v-show="!scoring">{{ home_score }}</span>
         <span v-show="scoring" class="scoring">{{ i18n_t('mmp.100.scoring') }}</span>
       </div>
     </div>
@@ -33,12 +33,12 @@
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
-          <div class="team-name away ellipsis allow-user-select" :class="{'bold':match.team_let_ball=='T2'}"  v-tooltip="{content:lodash.get(match,'man'),overflow:1}">{{match.man}}</div>
+          <div class="team-name away ellipsis allow-user-select" :class="{'bold': handicap_index == 2}"  v-tooltip="{content:lodash.get(match,'man'),overflow:1}">{{match.man}}</div>
         </div>
       </div>
-      <!-- 主比分 -->
+      <!-- 客比分 -->
       <div class="score">
-        <span v-show="!scoring">{{match.away_score}}</span>
+        <span v-show="!scoring">{{ away_score }}</span>
       </div>
     </div>                      
   
@@ -92,6 +92,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import details  from "src/core/match-list-pc/details-class/details.js"
+import { get_handicap_index_by, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
 import { useRoute, useRouter } from "vue-router";
 const router = useRouter()
 const route = useRoute()
@@ -126,6 +127,20 @@ const handicap_num = computed(() => {
     return i18n_t('match_info.more')
   }
 })
+
+const home_score = computed(() => {
+  let obj = get_match_score(props.match)
+  return obj.home_score
+})
+const away_score = computed(() => {
+  let obj = get_match_score(props.match)
+  return obj.away_score
+})
+
+let handicap_index = computed(() => {
+  return get_handicap_index_by(props.match)
+})
+
 //是否展示为比分判定中
 const scoring = computed(() => {
   const {csid, ms, mmp, home_score, away_score} = props.match

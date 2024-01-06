@@ -246,7 +246,6 @@ const computed_process_name = computed(() => {
 //是否赛事显示时间
 const computed_show_date = computed(() => {
   let { mmp, csid, ms, mlet } = props.match || {};
-  console.log(csid, 'csid')
   csid = Number(csid);
   let show = false;
 

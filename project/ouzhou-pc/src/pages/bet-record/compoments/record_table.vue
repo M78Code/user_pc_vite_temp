@@ -2,7 +2,7 @@
   <div class="record-table">
     <div>
 
-      <q-table :rows="tableData" style="max-height:calc(100vh - 17rem)" :rows-per-page-options="[0]" :columns="columns"
+      <q-table :rows="tableData" style="max-height:calc(100vh - 270px)" :rows-per-page-options="[0]" :columns="columns"
                row-key="orderNo" separator="cell" hide-pagination :class="current_tab === 'settled' ? 'settled' : 'unsettled'"
           :table-header-style="{
           backgroundColor: '#F1F1F1',
@@ -14,7 +14,7 @@
           <div class="detail-loading" v-if="loading">
             <q-circular-progress indeterminate rounded size="80px" :thickness="0.1" color="opt-basic" class="q-ma-md" />
           </div>
-          <div class="no-data" style="height:calc(100vh - 17rem)">
+          <div class="no-data" style="height:calc(100vh - 270px)">
             <div class="c">
               <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/no-data.svg`" alt="" srcset="">
               <div style="text-align: center;color:#A1A3A5;font-weight: 500;">{{i18n_t('common.no_data')}}</div>
@@ -293,7 +293,7 @@ watch(() => props.timeType, (newVal) => {
   pageCurrent.value = '1'
 })
 // 监听tab 切换表格头数据
-watch(() => props.current_tab, (newVal) => {
+watch(() => props.current_tab, (newVal) => {  
   tableData.value = []
   if (newVal == 'settled') {
     columns.value[5] = {
@@ -303,6 +303,7 @@ watch(() => props.current_tab, (newVal) => {
       field: 'return'
     }
     handle_fetch_order_list({ orderStatus: 1, timeType: 1 })
+    console.log(tableData)
   } else {
     columns.value[5] = {
       name: 'highestWin',
@@ -311,6 +312,7 @@ watch(() => props.current_tab, (newVal) => {
       field: 'highestWin'
     }
     handle_fetch_order_list({ orderStatus: 0 })
+    console.log(tableData)
   }
 })
 const getTableData = (params) => {

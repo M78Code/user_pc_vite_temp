@@ -34,7 +34,7 @@
         </div>
         <!-- 滚动时置顶的悬浮条 -->
         <!-- <div style="position: fixed;z-index: 1000; top: 100px;background:#000;color: #fff;">{{ scroll_visible_1 }}{{ get_show_video }}</div> -->
-        <div class="mini-header-container" :class="{'no-z-index': get_is_dp_video_full_screen}" :style="{ visibility: scroll_visible && !get_show_video&& viewTab != 'chatroom'? 'visible' : 'hidden' }">
+        <div class="mini-header-container" :class="{'no-z-index': get_is_dp_video_full_screen}" :style="{ visibility: scroll_visible && viewTab != 'chatroom'? 'visible' : 'hidden' }">
           <change-header :detail_data="detail_data"></change-header>
         </div>
 
