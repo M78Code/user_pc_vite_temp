@@ -173,7 +173,7 @@ const away_avatar = computed(() => {
 
 const handicap_num = computed(() => {
   if (GlobalAccessConfig.get_handicapNum()) {
-    return `+${lodash.get(match.value, 'match.mc') || 0}`
+    return `+${lodash.get(match.value, 'mc') || 0}`
   } else {
     return i18n_t('match_info.more')
   }
