@@ -228,7 +228,6 @@ const _handleDeleteKey = (e) => {
 // 数字建
 const _handleNumberKey = (num, e) => {
   if (!num) return
-  console.error('asdasdasdada')
   let money_ = BetData.bet_amount
   if (['qon', 'qtw', 'qth','qfo','qfi','qsi'].includes(num)) {
     money_ = BetData.user_max_min_money[num]
