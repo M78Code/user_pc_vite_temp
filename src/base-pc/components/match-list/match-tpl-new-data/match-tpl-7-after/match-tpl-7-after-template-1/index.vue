@@ -78,7 +78,7 @@
 <script setup>
 // import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
 // mixins: [match_item_mixin],
-import { computed, ref, watch } from 'vue';
+import { computed, ref, inject } from 'vue';
 import { MatchDataWarehouse_PC_List_Common as MatchListData, compute_local_project_file_path } from "src/output/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -95,11 +95,11 @@ const props = defineProps({
     default: null,
   },
 })
+const match = inject("match")
 
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);
 
 const score_column_position = computed(() => {

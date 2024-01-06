@@ -27,7 +27,7 @@
         <!-- icon -->
         <div class="row items-center">
           <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif)}` })"
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif|| item.mi)}` })"
             :alt="BaseData.menus_i18n_map[item.mif || item.mi]"></span>
 
         </div>
@@ -516,17 +516,20 @@ onUnmounted(()=>{
         font-size: 13px;
         justify-content: space-around;
         padding: 0px;
+        margin-bottom: 9px;
 
         .item {
-          border-radius: 8px;
+          border-radius: 1000px;
           margin-right: 10px;
           white-space: nowrap;
           margin-right: 0!important;
-          height: 38px!important;
-          background-size: 100% 100%;
-          min-width: 98px;
-          padding-bottom: 4px;
-          box-shadow: none!important;
+          height: 30px!important;
+          min-width: 90px;
+          line-height: 30px;
+          border: 0.5px solid #D7E1FD;
+          box-shadow: 0px 3px 3px 0px rgba(0, 56, 98, 0.1) !important;
+          background: linear-gradient(0deg, #D7E1FD, #D7E1FD),
+          linear-gradient(180deg, #E4ECFD 0%, #F8FAFF 47.92%, #F5F8FF 100%);          
           &:last-child {
             margin-right: 0;
           }
@@ -534,7 +537,8 @@ onUnmounted(()=>{
           &.active {
             font-weight: 600;
             font-size: 14px;
-            color: var(--q-gb-t-c-1);
+            color: var(--q-gb-t-c-18);
+            background: var(--q-gb-bg-c-4);
           }
 
           &.active1 {
