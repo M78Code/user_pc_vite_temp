@@ -544,10 +544,7 @@ const set_show_login_popup = (data) =>{
 </script>
 
 <style lang="scss" scoped>
-.yb-layout-margin-header{
-  background: #FFFFFF;
-  height: 96px;
-}
+
 .layout-header-search {
   margin-right: 13px;
 }
