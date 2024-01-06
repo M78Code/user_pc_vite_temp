@@ -153,6 +153,12 @@ const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
 
+const show_default_img = ref(false); //是否显示默认队伍头像
+//设置图片默认
+const update_show_default = (value) => {
+  show_default_img.value = value;
+}
+
 let match_style_obj =inject('match_style_obj')
 let match =inject('match')
 

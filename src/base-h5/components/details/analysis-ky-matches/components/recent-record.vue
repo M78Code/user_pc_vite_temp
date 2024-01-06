@@ -392,6 +392,15 @@ const processing_score = (data) => {
         >span.results.results_lose {
           color: var(--q-analysis-text-color-7);
         }
+
+        // 红色
+        .have_pan_road,.have_big_small {
+          color: var(--q-analysis-text-color-6);
+        }
+        // 绿色
+        .no_pan_road,.no_big_small {
+          color: var(--q-analysis-text-color-7);
+        }
       }
     }
     .team-item:nth-child(odd) {

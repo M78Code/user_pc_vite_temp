@@ -47,8 +47,7 @@ class MatchUtils {
     // 未开赛球种归类后的数据
     const result_not_started = this.handler_match_classify_by_csid(not_started)
     // 最终数据
-    return lodash.uniqBy([ ...result_started, ...result_not_started ], 'mid')
-    // return lodash.uniqBy([ ...this.handler_match_classify_by_tid(result_started), ...this.handler_match_classify_by_tid(result_not_started) ], 'mid')
+    return lodash.uniqBy([ ...this.handler_match_classify_by_tid(result_started), ...this.handler_match_classify_by_tid(result_not_started) ], 'mid')
   }
 
   /**
@@ -181,7 +180,6 @@ class MatchUtils {
     if ([1,2].includes(+match.start_flag)) is_show_league = true
     return is_show_league
   }
-
   /**
    * @description 非元数据 是否展示联赛标题   
    * @param {*} i 赛事下标
@@ -193,9 +191,9 @@ class MatchUtils {
     let is_show_league = false
     if (!match) return false
     if (i > 0) {
-      // 上一个赛事对象
       const prev_match = list[i - 1]
-      is_show_league = prev_match && match.custom_tid !== prev_match.custom_tid
+       // 上一个赛事对象
+      is_show_league = prev_match && i === 0 ? true : match.tid !== prev_match.tid
     } else {
       is_show_league = true
     }
@@ -203,34 +201,14 @@ class MatchUtils {
     if ([1,2].includes(+match.start_flag)) is_show_league = true
     return is_show_league
   }
-
   // 是否显示 卡片 下边 圆角
   get_is_show_border_radius (i, list)  {
     // 当前赛事
     const match = list[i]
     const next_match = list[i + 1]
     if (!next_match) return true
-    return match?.custom_tid !== next_match?.custom_tid
+    return match?.tid !== next_match?.tid
   }
-
-  // 生成新的 联赛 归类 id
-  generate_match_classify_tid (list) {
-    const league_repeat_count_obj = {}
-    list.forEach((t, i) => {
-      league_repeat_count_obj[t.tid] = +league_repeat_count_obj[t.tid] || 0
-      // 生成自定义联赛ID
-      league_repeat_count_obj[t.tid]++
-      const new_tid = `${t.tid}_${league_repeat_count_obj[t.tid]}`
-      if (i === 0) return t.custom_tid = new_tid
-      if (t.tid === list[i - 1].tid) {
-        t.custom_tid = list[i - 1].custom_tid
-      } else {
-        t.custom_tid = new_tid
-      }
-    })
-    return list
-  }
-
   /**
 	 * @description 获取比分 比分变化 或者 赛事阶段变化时调用
 	 * @param  {object} match  当场赛事信息
@@ -259,7 +237,6 @@ class MatchUtils {
     let away_score = lodash.get(msc_obj, `${key}.away`, "0")
     return { home_score, away_score }
 	}
-
   /**
    * @description 获取 开赛，未开赛 下的各球种数量
    * @param { String } key
@@ -274,12 +251,12 @@ class MatchUtils {
       MatchResponsive.set_ball_seed_count(`${key}_csid_${t}`, matchs.length)
     })
   }
-
    /**
    * @description 15分钟玩法赛事阶段 ms 1 滚球
    * @param { Number } ms
    * @param { Number } mst
    */
+   // 
   get_match_15_minute_stage (ms, mst)  {
     const playingMethods_15 = use_playingMethods_15()
     let isLock = false

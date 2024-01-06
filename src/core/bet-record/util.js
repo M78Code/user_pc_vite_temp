@@ -28,6 +28,24 @@ export const outcome = {
     "6": i18n_t("bet_record.bet_no_status06"), //'输半',
 }
 
+// PC 投注记录提示
+// "msg_1": "此记录将显示所有未派彩的投注",
+// "msg_2": "此记录将显示今天所有已派奖彩的投注",
+// "msg_3": "此记录将显示昨天所有已派奖彩的投注",
+// "msg_4": "此记录将显示7天内所有已派奖彩的投注",
+// "msg_5": "此记录将显示30天内所有已派奖彩的投注",
+// "msg_6": "此记录将显示所选范围内所有已派彩的投注",
+// "msg_7": "此记录将显示所有已预约的投注"
+export const msgList = [
+    "bet_record.msg_1",
+    "bet_record.msg_2",
+    "bet_record.msg_3",
+    "bet_record.msg_4",
+    "bet_record.msg_5",
+    "bet_record.msg_6",
+    "bet_record.msg_7"
+]
+
 /**
  * 返回订单状态(带有输赢和其他状态)
  * orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败)

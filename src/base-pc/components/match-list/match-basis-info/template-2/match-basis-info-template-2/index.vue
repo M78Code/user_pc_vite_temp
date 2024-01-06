@@ -174,6 +174,11 @@ const away_avatar2 = computed(()=>{
   return url
 })
 
+const show_default_img = ref(false); //是否显示默认队伍头像
+//设置图片默认
+const update_show_default = (value) => {
+  show_default_img.value = value;
+}
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
     return `+${ match.value.mc || 0}`

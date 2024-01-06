@@ -294,6 +294,9 @@ const get_detail_data = ref({
           color: var(--q-analysis-text-color-32);
         }
       }
+      .col4 {
+        
+      }
       .col4.end-btn {
         >span.results {
           color: var(--q-analysis-text-color-1);
@@ -302,6 +305,15 @@ const get_detail_data = ref({
           color: var(--q-analysis-text-color-6);
         }
         >span.results.results_lose {
+          color: var(--q-analysis-text-color-7);
+        }
+
+        // 红色
+        .have_pan_road,.have_big_small {
+          color: var(--q-analysis-text-color-6);
+        }
+        // 绿色
+        .no_pan_road,.no_big_small {
           color: var(--q-analysis-text-color-7);
         }
       }
