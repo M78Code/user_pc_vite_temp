@@ -14,7 +14,7 @@
     <!-- ms值3-比赛结束 4-比赛关闭 -->
     <div
       v-show="
-        get_match_status(lodash.get(props, 'match.ms'))  || [3,4].includes(1*lodash.get(props, 'match.ms')) ||
+        get_match_status(lodash.get(match, 'ms'))  || [3,4].includes(1*lodash.get(match, 'ms')) ||
         (lodash.get(match, 'mcid') && lodash.get(match, 'mmp') != 0)
       "
       class="process-name"
@@ -241,7 +241,6 @@ const computed_show_date = computed(() => {
     is_eports_csid(csid)
   ) {
     show = true;
-
     // 冰、美足 mlet 为空时不显示
     if ([4, 6].includes(csid) && mlet == "") {
       show = false;
@@ -250,7 +249,6 @@ const computed_show_date = computed(() => {
     // 非足、篮、冰、美足  不是滚球时才显示【赛事日期】
     show = get_match_status(ms);
   }
-
   return show;
 });
 
