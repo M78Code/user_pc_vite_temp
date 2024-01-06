@@ -181,6 +181,18 @@
       "bet_col_182": {
         "bet_col_1": "大于",
         "bet_col_2": "小于"
+      },
+      "bet_col_242": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_243": {
+        "bet_col_1": "主队",
+        "bet_col_2": "客队"
+      },
+      "bet_col_244": {
+        "bet_col_1": "大于",
+        "bet_col_2": "小于"
       }
     },
     "15minutes_bet_col": [
