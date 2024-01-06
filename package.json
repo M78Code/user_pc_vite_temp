@@ -12,6 +12,7 @@
         "copy-oss-dist": "node ./job/copy-oss.js dist",
         "copy-oss-backup": "node ./job/copy-oss.js backup",
         "remove-output": "node ./job/remove-output.js",
+        "remove-cash": "node ./job/remove-cash.js",
         "remove-dist-assets": "node ./job/remove-dist-assets.js",
         "copy-html": "node ./job/copy-html.js",
         "export-html": "node ./job/export-html.js",
