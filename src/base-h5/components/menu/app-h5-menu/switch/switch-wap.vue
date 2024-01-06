@@ -9,6 +9,7 @@
     <div class="switch-wap">
         <div class="switch-content" v-for="(item, index) in switchData" :key="index">
             <SwitchNav :list="item.list" :defaultVal="item.defaultVal" />
+            <div class="mask" v-if="is_show_mask"></div>
         </div>
     </div>
 </template>
@@ -18,7 +19,7 @@ import { ref, computed, onUnmounted, watch, nextTick, onMounted } from "vue";
 import { theme_list, theme_map } from "src/core/theme/"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { lang } from "src/base-h5/mixin/userctr";
-import {  useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list' 
 import { project_name, MenuData } from "src/output/index.js";
@@ -87,13 +88,18 @@ const get_switch_data = () => {
 !UserCtr.theme && UserCtr.set_theme(theme_list.find(n=>{return n.is_default === 1}).key)
 const switchData = ref(get_switch_data())
 
+const emitters = ref({})
+const is_show_mask = ref(false)
+
 // 版本切换
 const handler_version_change = (val = 2) => {
+    is_show_mask.value = true
     UserCtr.set_standard_edition(val)
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
     // MatchFold.clear_fold_info()
     nextTick(()=>{
         VirtualList.set_is_show_ball(true)
+        
         MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
         // if (MenuData.is_collect()) {
         //     MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
@@ -103,14 +109,22 @@ const handler_version_change = (val = 2) => {
         // }
         // MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
     })
+    reset_is_show_mask()
 }
 
 // 排序切换
 const handler_sort_change = (val) => {
     //电竞 不会热门排序 和 盘口
     if(val === 1 && is_esports.value) return;
+    is_show_mask.value = true
     UserCtr.set_sort_type(val);
+    reset_is_show_mask()
 }
+
+// 遮罩层兜底
+const reset_is_show_mask = lodash.debounce(() => {
+    is_show_mask.value = false
+}, 8000)
 
 /**
  * @description 监听设置菜单里面 菜单的改变
@@ -126,6 +140,16 @@ watch(()=>set_menu_init.value,()=>{
       })
 },{immediate:true,deep:true})
 
+onMounted(() => {
+    emitters.value = {
+        emitter: useMittOn(MITT_TYPES.EMIT_IS_SHOW_MASK, (val) => is_show_mask.value = val).off,
+    }
+})
+
+onUnmounted(() => {
+    Object.values(emitters.value).map((x) => x());
+})
+
 </script>
 <style scoped lang="scss">
 .switch-wap {
@@ -136,7 +160,19 @@ watch(()=>set_menu_init.value,()=>{
     background-color: var(--q-gb-bg-c-27);
     .switch-content {
         flex: 1;
+        position: relative;
         margin: 0 0.1rem;
+        .mask{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 0.25rem;
+            background: var(--q-gb-bd-c-5);
+            opacity: 0.6;
+        }
     }
+
 }
 </style>

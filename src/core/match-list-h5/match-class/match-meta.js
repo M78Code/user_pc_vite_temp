@@ -1080,6 +1080,7 @@ class MatchMeta {
   set_page_match_empty_status(obj) {
     this.set_show_skeleton_state(false)
     const { state = false, type = 'noMatch' } = obj
+    useMittEmit(MITT_TYPES.EMIT_IS_SHOW_MASK, false);
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: state, type: type });
   }
   /**

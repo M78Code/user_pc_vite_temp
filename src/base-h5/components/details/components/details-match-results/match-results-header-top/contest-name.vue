@@ -25,7 +25,8 @@ const props = defineProps({
     span {
         letter-spacing: 0;
         font-size: 0.16rem;
-        color: var(--q-gb-t-c-5);
+        //color: var(--q-gb-t-c-5);
+        color: var(--q-gb-t-c-14);
 
         &:nth-child(2) {
             min-width: 0.5rem;
