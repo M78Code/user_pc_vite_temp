@@ -132,7 +132,7 @@ const match_list_tpl_size = computed(() => {
 //   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {})
 // }
 const is_HDP = computed(() => {
-  return [1, 20, 24, 13, 25].includes(+match_style_obj.value.data_tpl_id)
+  return [1, 20, 24, 13,29].includes(+match_style_obj.value.data_tpl_id)
 })
 
 /**
@@ -142,26 +142,27 @@ const is_HDP = computed(() => {
 const bet_col = computed(() => {
   let csid = props.card_style_obj.league_obj.csid
   let bet_col = []
-  if (match_style_obj.value.data_tpl_id == 13) {
-    // match_style_obj.value.data_tpl_id = 1
+  let data_tpl_id=match_style_obj.value.data_tpl_id
+  if (data_tpl_id == 13) {
+    data_tpl_id = 1
     bet_col = [...i18n_t('list.match_tpl_title.tpl13_m.bet_col')]
   }
   let title_name = 'bet_col'
   //角球
-  if (match_style_obj.value.data_tpl_id == 1 && MenuData.is_corner_menu()) {
+  if (data_tpl_id == 1 && MenuData.is_corner_menu()) {
     title_name = "corner_bet_col"
   }
   //罚牌主盘
-  if (match_style_obj.value.data_tpl_id == 25) {
-    // match_style_obj.value.data_tpl_id = 1
+  if ([29].includes(data_tpl_id)) {
+    data_tpl_id = 1
     title_name = "punish_bet_col"
   }
-  let tpl_title = get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.value.data_tpl_id}.${title_name}`, csid)
+  let tpl_title = get_match_tpl_title(`list.match_tpl_title.tpl${data_tpl_id}.${title_name}`, csid)
   tpl_title = tpl_title.length ? tpl_title : []
   bet_col = [...tpl_title, ...bet_col]
   let mft = lodash.get(MatchListCardData.match_mid_obj, `mid_${props.card_style_obj.mid}.mft`)
   // 模板10
-  if (match_style_obj.value.data_tpl_id == 10) {
+  if (data_tpl_id == 10) {
     if (mft == 3) {
       bet_col = bet_col.slice(0, 3)
     } else {
@@ -169,7 +170,7 @@ const bet_col = computed(() => {
     }
   }
   // 模板15
-  if (match_style_obj.value.data_tpl_id == 15) {
+  if (data_tpl_id == 15) {
     if (mft == 5) {
       bet_col = bet_col.slice(4, 8);
     } else {
@@ -177,17 +178,17 @@ const bet_col = computed(() => {
     }
   }
   // 模板11 && 斯诺克
-  if (match_style_obj.value.data_tpl_id == 11 && csid == 7) {
+  if (data_tpl_id == 11 && csid == 7) {
     bet_col = get_match_tpl_title("list.match_tpl_title.tpl11.bet_col2", csid)
   }
 
   // 模板20 && 曲棍球
-  if (match_style_obj.value.data_tpl_id == 20 && csid == 15) {
+  if (data_tpl_id == 20 && csid == 15) {
     bet_col = get_match_tpl_title("list.match_tpl_title.tpl20.bet_col2")
   }
   // 模板 esport && CSGO
-  if (match_style_obj.value.data_tpl_id == 'esports' && csid == 102) {
-    bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.value.data_tpl_id}.bet_col102`)
+  if (data_tpl_id == 'esports' && csid == 102) {
+    bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${data_tpl_id}.bet_col102`)
   }
   return bet_col
 })
