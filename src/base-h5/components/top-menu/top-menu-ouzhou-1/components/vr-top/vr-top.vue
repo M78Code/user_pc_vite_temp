@@ -35,8 +35,8 @@
 
 <script setup>
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
-
 </script>
+
 <style lang="scss" scoped>
     .info_box{
         width: 100%;
