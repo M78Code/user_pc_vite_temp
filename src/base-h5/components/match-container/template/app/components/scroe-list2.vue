@@ -3,13 +3,18 @@
 -->
 
 <template>
+     <!--  standard: get_newer_standard_edition == 2,  -->
     <div v-show="show_score_match_line(match)" class="score-section"
-      :class="{ 'flex-star': [3].includes(+match.csid), standard: get_newer_standard_edition == 2, result: get_menu_type == 28 }">
+
+      :class="{ 
+        'flex-star': [3].includes(+match.csid), 
+        result: get_menu_type == 28 
+      }">
       <div class="scroll-container-w" :class="{'bq-ball': match.csid == 3, }"
         :ref="`match_score_scroll_w_${match.mid}`">
-        <!-- 需求：棒球3，斯诺克7，拳击12 不显示比分  -->
+        <!-- 需求：棒球3，斯诺克7，拳击12 不显示比分  get_newer_standard_edition == 2 && -->
         <div class="score-se-inner" ref='scoreWrapScroller' v-if="![3].includes(+match.csid)" :class="{
-          standard: get_newer_standard_edition == 2 && get_menu_type != 28,
+          standard: get_menu_type != 28,
           result: get_menu_type == 28,
           'is-foot-ball': match.csid == 1 || match.csid == 11,
           'is-basket-ball': match.csid == 2,
@@ -142,7 +147,7 @@
   })
   
   const scoreWrapScroller = ref(null)
-  const store_state = store.getState()
+  // const store_state = store.getState()
   const timer_1 = ref(null)
   const timer_2 = ref(null)
   //斯诺克比分编号为S1的结果
@@ -155,12 +160,12 @@
   const show_right_triangle = ref(false)
   const get_menu_type = ref(MenuData.get_menu_type())
   
-  const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
+  // const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
   
-  const unsubscribe = store.subscribe(() => {
-    const new_state = store.getState()
-    get_newer_standard_edition.value = new_state.get_newer_standard_edition
-  })
+  // const unsubscribe = store.subscribe(() => {
+  //   const new_state = store.getState()
+  //   get_newer_standard_edition.value = new_state.get_newer_standard_edition
+  // })
   
   
   onMounted(() => {
@@ -447,7 +452,7 @@
   }
   
   onUnmounted(() => {
-    unsubscribe()
+    // unsubscribe()
     clearTimeout(timer_1.value);
     timer_1.value = null;
   
