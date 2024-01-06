@@ -863,9 +863,9 @@ class BaseData {
   resolve_menus(res) {
     if (!res) return
     // 获取语言类型
-    let locale = i18n.global.locale || "zh";
+    let locale = lodash_.get(i18n,'global.locale','zh') || "zh";
     // 设置 语言变量
-    let esports = lodash_.get(i18n.global.messages, 'common.e_sports')
+    let esports = lodash_.get(i18n, `global.messages[${locale}].common.e_sports`)
 
     // 菜单 国际化 数据  map
     res["2000"] = esports || "Esports";

@@ -60,7 +60,7 @@ const props = defineProps({
   // 是否显示比分内容
   is_show_score_content: {
     type: Boolean,
-    default: () => false,
+    default: () => true,
   },
   // 是否是附加盘 且有type
   add_type: {

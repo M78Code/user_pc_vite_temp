@@ -45,6 +45,7 @@
         <div :class="['match-content', { 'collapsed': collapsed }, { 'border-top': !match.is_show_league }]"
           v-if="collapsed">
           <!-- 赛事日期标准版,包含 比分组件 -->
+          <!-- {{ match.mid }} -->
           <div class="date-container match-indent">
             <div class='l standard'>
               <!--竞彩足球 星期与编号-->
@@ -266,7 +267,7 @@ import ScoreList from 'src/base-h5/components/match-container/template/app/compo
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
-import { i18n_t, format_M_D, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX, PageSourceData, format_time_zone } from "src/output/index.js"
+import { i18n_t, format_M_D, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX, PageSourceData, format_time_zone, ws_add_message_listener } from "src/output/index.js"
 import {
   in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app
@@ -274,8 +275,8 @@ import {
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id, is_zaopan } from 'src/base-h5/mixin/menu.js'
-
 import default_mixin from '../../mixins/default.mixin.js'
+import WsMan from 'src/core/data-warehouse/ws/ws-ctr/ws-man';
 export default {
   name: "match-container-main-template7",
   mixins: [default_mixin],
@@ -296,7 +297,25 @@ export default {
     CountingDownStart,
     CountingDownSecond,
   },
+  data() {
+    return {
+      message_fun: null
+    }
+  },
+  methods: {
+    listener(data) {
+      const current_data = data.data.data;
+      if (current_data.cmd == "C105") {
 
+        // console.log("ws消息推送=====",current_data);
+      }
+     
+    }
+  },
+  mounted() {
+    // this.message_fun = ws_message_listener.ws_add_message_listener(this.listener)
+    // WsMan.add_eventListener(this.listener)
+  },
   setup(ctx) {
     // 是否显示球种标题
     const show_sport_title = computed(() => {
@@ -307,6 +326,8 @@ export default {
       //早盘日期 显示的是日期  全部是全部
       return is_zaopan.value && lodash.isNumber(MenuData.current_lv_3_menu.field1) ? format_M_D(MenuData.current_lv_3_menu.field1) : i18n_t("filter.all_leagues")
     })
+
+    
     return {
       title,
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id, LOCAL_PROJECT_FILE_PREFIX, in_progress, not_begin, MenuData,

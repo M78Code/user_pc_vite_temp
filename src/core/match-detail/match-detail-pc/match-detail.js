@@ -29,72 +29,6 @@ const signal_url = "https://s5.sir.swiftscore.com";
     })
   }
 /**
- * 初始化数据
- */
-const init = async () => {
-  await get_category(); // 获取玩法集
-  await get_detail(); // 获取赛事详情数据
-  await get_detail_lists(); // 获取玩法列表
-};
-
-/**
- * 获取赛玩法集数据
- * @param {*} mid 赛事id,sportId 球种id
- */
-const get_category = async (sportId, mid) => {
-  try {
-    const params = {
-      sportId,
-      mid,
-      t: new Date().getTime(),
-    };
-    const res = await get_detail_category(params);
-    category_list.value = res.data.data || [];
-    const list = res.data.data.filter((i) => i.marketName);
-    tabList.value = list.map((item) => ({
-      label: item.marketName,
-      value: item.orderNo,
-    }));
-  } catch (error) {}
-};
-
-/**
- * 获取赛事玩法列表数据
- * @param {*} mid 赛事id
- */
-const get_detail_lists = async (mid) => {
-  return new Promise(async (resolve) => {
-    const params = {
-      mcid: 0,
-      cuid: userInfo.userId,
-      mid,
-      newUser: 0,
-      t: new Date().getTime(),
-    };
-    const res = await get_detail_list(params);
-    resolve(res.data.data || []);
-  }).catch((err) => {});
-};
-
-/**
- * 获取赛事详情数据
- * @param {*} mid 赛事id
- */
-const get_detail = async (mid) => {
-  return new Promise(async (resolve) => {
-    const params = {
-      mid,
-      cuid: userInfo.userId,
-      t: new Date().getTime(),
-    };
-    const res = await get_detail_data(params);
-    resolve(res.data.data || []);
-  }).catch((err) => {});
-};
-
-
-
-/**
  *
  * @param {*} data 接口返回的整个 data 对象
  * @returns msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
@@ -188,20 +122,6 @@ const check_plays = (plays) => {
   }
 
   return is_show;
-};
-/**
- * @根据分类id过滤玩法数据
- * @param {Object} id tabs id
- * @return {detail_list} 筛选后的玩法数据
- * @Description:category_list 分类列表，all_list 所有玩法数据
- */
-const getDetaillist = (value) => {
-  let detail_list = [];
-  const plays = category_list.find((item) => item.orderNo == value).plays;
-  let list = all_list.filter((item) => plays.includes(Number(item.hpid)));
-  list = list.filter((i) => i.hpn);
-  detail_list = list || [];
-  return detail_list;
 };
 
 /**
@@ -438,7 +358,6 @@ const get_play_rows = (data) => {
 export default {
   build_msc,
   check_plays,
-  getDetaillist,
   use_polling_mst,
   show_wrap_total,
   sr_click_handle,

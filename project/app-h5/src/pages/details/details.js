@@ -57,7 +57,10 @@ export const details_main = () => {
     // 赛事列表数据
     math_list_data: [],
     // 数据列表
-    data_list: [],
+    data_list: [
+      {id: "0",
+      marketName: "所有投注",
+      orderNo: -2147483648}],
     // 控制详情头部显示
     is_show_detail_header_data: false,
     // 控制下拉列表显示
