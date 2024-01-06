@@ -104,5 +104,7 @@ onMounted(()=>{
 // ========复刻版=======
 .app-h5.rule-wrap {
     height: calc(100vh - 46px);
+    position: fixed;
+    top: 46px;
 }
 </style>

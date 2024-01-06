@@ -20,7 +20,7 @@
                         @click="go_to_bet(ol_item)"
                         :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':calc_win(ol_item.result)}]"
                       >
-                        <div class="text-center odds-wrap">
+                        <div class="text-center odds-wrap w-full">
                           <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
                           <odds-new class="odds-style" :item_data="item_data" :ol_data="ol_item" ></odds-new>
                         </div>
@@ -93,7 +93,7 @@
                           @click="go_to_bet(ol_item)"
                           :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':calc_win(ol_item.result)}]"
                         >
-                          <div class="text-center odds-wrap">
+                          <div class="text-center odds-wrap w-full">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
                             <odds-new class="odds-style" :item_data="item_data" :ol_data="ol_item" ></odds-new>
                           </div>
@@ -168,7 +168,7 @@
                           @click="go_to_bet(ol_item)"
                           :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',,{'win':calc_win(ol_item.result)}]"
                         >
-                          <div class="text-center odds-wrap">
+                          <div class="text-center odds-wrap w-full">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
                             <odds-new class="odds-style" :item_data="item_data" :ol_data="ol_item" ></odds-new>
                           </div>
@@ -243,7 +243,7 @@
                           @click="go_to_bet(ol_item)"
                           :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text']:'',{'win':calc_win(ol_item.result)}]"
                         >
-                          <div class="text-center odds-wrap">
+                          <div class="text-center odds-wrap w-full">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
                             <odds-new class="odds-style" :item_data="item_data" :ol_data="ol_item" ></odds-new>
                           </div>
@@ -254,7 +254,7 @@
                       <template v-if="ol_item.os == 2">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color">
-                          <div class="text-center odds-wrap" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
+                          <div class="text-center odds-wrap w-full" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="col text-center ellipsis led details_t_color7" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
                             <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
@@ -272,7 +272,7 @@
                       <template v-else>
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color last-radius">
-                          <div class="text-center odds-wrap " :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
+                          <div class="text-center odds-wrap w-full" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="col text-center ellipsis led" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
                             <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
@@ -291,7 +291,7 @@
                   <template v-if="ol_item._mhs == 1">
                     <!-- lock 锁状态 start -->
                     <div class="play-box-style details_color">
-                      <div class="text-center odds-wrap">
+                      <div class="text-center odds-wrap w-full">
                         <div class="col text-center ellipsis led details_t_color7" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
                       </div>
                     </div>
@@ -483,5 +483,9 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.odds-wrap {
+  width: 100%!important;
 }
 </style>
