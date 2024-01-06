@@ -36,7 +36,7 @@
   </div>
 </template>
 <script setup>
-import { computed, onMounted, onUnmounted, provide, ref, watch } from "vue";
+import { computed, onMounted, nextTick, provide, ref, watch } from "vue";
 import { PlayMatchTypeFullVersionWapper as PlayMatchType } from "src/base-pc/components/match-list/play-match-type/index.js";
 import { PlayMatchLeagueFullVersionWapper as PlayMatchLeague } from "src/base-pc/components/match-list/play-match-league/index.js";
 import { MatchTypeChampionFullVersionWapper as MatchTypeChampion } from "src/base-pc/components/match-list/match-type-champion/index.js";
@@ -67,7 +67,7 @@ let card_type = computed(() => {
 });
 let sticky_top = ref(MatchListCardDataClass.sticky_top);
 // 组件是否加载完成
-const is_mounted = ref(true);
+const is_mounted = ref(false);
 /**
  * @Description 设置卡片样式
  * @param {undefined} undefined
@@ -109,9 +109,9 @@ const mids_arr = computed(() => {
 });
 onMounted(() => {
   // 异步设置组件是否挂载完成
-  // setTimeout(()=>{
-  //   is_mounted.value = true
-  // })
+  nextTick(()=>{
+    is_mounted.value = true
+  })
 });
 </script>
 <style lang="scss" scoped>
