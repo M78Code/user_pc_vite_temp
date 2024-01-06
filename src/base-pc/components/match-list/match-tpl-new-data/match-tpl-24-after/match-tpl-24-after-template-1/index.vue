@@ -17,7 +17,6 @@
       <!-- 比赛进程 -->
       <match-process v-if="is_mounted && match.api_update_time !=0" :match="match" source="match_list"  show_page="match-list" :rows="2" />
     </div>
-
     <!-- 盘口 -->
     <div class="match-handicap-item-wrap">
       <!-- 主盘 -->
@@ -62,11 +61,11 @@ const match = inject('match');
 // 赛事模板样式
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-const is_mounted = ref(false);
+console.log('match_tpl_info', match_tpl_info);
+const is_mounted = ref(true);
 // 赛事模板宽度信息
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 // 赛事模板投注项信息
-console.log('match_list_tpl_size', match_list_tpl_size);
 
 
 // 其他玩法标题
