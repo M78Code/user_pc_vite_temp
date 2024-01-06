@@ -863,6 +863,11 @@ class MenuData {
           }
         })
       }
+      // 娱乐 只有冠军 没有其他玩法
+      if(item.mi == 118){
+        to_day_list.push(item)
+        early_list.push(item)
+      }
     })
   
     let mew_menu_list_res = lodash.get(BaseData,'mew_menu_list_res',[]) || []
