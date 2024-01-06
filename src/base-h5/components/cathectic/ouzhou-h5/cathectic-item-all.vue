@@ -58,7 +58,7 @@
 <script setup>
 import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
-import BetRecordClass from "src/core/bet-record/bet-record.js";
+import BetRecordClass from "src/core/bet-record/h5/bet-record.js";
 import BetRecordWs from "src/core/bet-record/bet-record-ws.js";
 import { enum_order_by, enum_time_type } from "src/core/bet-record/util.js";
 import { itemMultipleBody } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";

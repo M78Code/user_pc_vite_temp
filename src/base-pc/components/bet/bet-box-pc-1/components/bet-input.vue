@@ -5,7 +5,7 @@
         <div class="bet-input-failure">
             <!--投注金额输入框-->
             <input ref="InputFocus" class="bet-input input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
-                :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
+                :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${format_money3(ref_data.max_money)}`" maxLength="11" />
             <!--清除输入金额按钮-->
             <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money && !BetData.is_bet_single">
                 <icon-wapper name="icon-failure" size="12px" />
@@ -37,7 +37,7 @@ import BetKeyboard from "../common/bet-keyboard.vue"
 import { IconWapper } from 'src/components/icon'
 import lodash_ from 'lodash'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { format_odds, formatMoney,format_currency, format_currency2 } from "src/output/index.js"
+import { format_odds, formatMoney,format_currency, format_currency2, format_money3 } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import mathJs from 'src/core/bet/common/mathjs.js'

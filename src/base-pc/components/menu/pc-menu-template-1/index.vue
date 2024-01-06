@@ -20,7 +20,7 @@
     </div>
     <div v-show="false">{{ BaseData.base_data_version }}</div>
 
-    <div v-for="item in left_menu_list" :key="`_${item.mi}`" :class="set_vr_or_guanjun_border(item.mi)">
+    <div v-for="item in (MenuData.left_menu_list || [] )" :key="`_${item.mi}`" :class="set_vr_or_guanjun_border(item.mi)">
       <!--   赛种-->
       <!-- {{ BaseData.filterSport_arr }} -- {{ BaseData.compute_sport_id(item) }} -->
       <div class="menu-item menu-fold1 search" :class="current_lv_1_mi == item.mi ? 'y-active' : ''" @click="lev_1_click(item)" v-if="item.ct">
@@ -28,21 +28,21 @@
         <div class="row items-center">
           <span class="soprts_id_icon"
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif)}` })"
-            :alt="BaseData.menus_i18n_map[item.mif]"></span>
+            :alt="BaseData.menus_i18n_map[item.mif || item.mi]"></span>
 
         </div>
         <div class="items-right row" style="flex-wrap: wrap">
           <div style="line-height: 1; flex: 1">
             <span class="menu-text">
               <!-- 名字 {{ item }} -->
-              {{ BaseData.menus_i18n_map[item.mif] || "" }}
+              {{ BaseData.menus_i18n_map[item.mif || item.mi] || "" }}
             </span>
           </div>
           <!-- 数字 显示    有些赛种不显示 -->
           <div class="col-right" style="min-width: 40px">
             <!-- 有滚球赛事  hl 今日&&存在滚球赛事时  展示live图标 -->
             <div class="live-text" :style="compute_css_obj('live_text')" v-if="MenuData.is_today() && BaseData.mi_gunqiu.includes(item.mif)" />
-            <span class="match-count yb-family-odds" >{{ item.ct }}</span>
+            <span class="match-count yb-family-odds">{{ item.ct }}</span>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
       <!--  子菜单  ，  开始    -->
       <!--  子菜单  ， 冠军 不显示子菜单  -->
       <!--  常规体育 含 娱乐     子菜单  开始    -->
-      <div class="menu-fold2-wrap" :class="current_lv_1_mi == item.mi && !show_menu ? 'open' : ''">
+      <div class="menu-fold2-wrap" :class="current_lv_1_mi == item.mi && !show_menu ? 'open' : ''" v-if="item.mi != 400">
         <template v-for="item2 in item.sl">
           <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        开始   -->
           <div :key="`_${item.mi}_${item2.mi}_100`" @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })
@@ -251,6 +251,9 @@ const lev_1_click = (obj) => {
     return false;
   }
 
+  // 获取具体的二级玩法
+  MenuData.set_post_menu_play_count(mi)
+
   current_lv_1_mi.value = mi
   current_lv_2_mi.value = get_lv_1_lv_2_mi(mi)
 
@@ -433,7 +436,8 @@ const handle_click_jinri_zaopan = (val) => {
 const get_lv_1_lv_2_mi = (mi) => {
   let lv2_mi = ''
   // 获取对应的菜单数据
-  let obj = left_menu_list.value.find(item => item.mi == mi ) || {}
+  let left_list = lodash.get(MenuData,'left_menu_list',[]) || []
+  let obj = left_list.find(item => item.mi == mi ) || {}
 
   if(obj.mi){
     // 获取菜单下的第一个菜单
@@ -467,6 +471,7 @@ const get_lv_1_lv_2_mi = (mi) => {
 }
 onMounted(()=>{
   handle_click_jinri_zaopan(2)
+  return
   ref_data.emit_lsit = {
       emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, get_menu_ws_list).off,
   }
