@@ -262,6 +262,7 @@
       flex-direction: column;
       align-items: center;
       position: relative;
+      transform: translateZ(0px);
 
       .play-w-change-icon {
         position: absolute;
@@ -269,6 +270,9 @@
         top: unset; /*  联想S5手机自带浏览器不支持该关键字,导致图标往下掉 */
         width: 0.09rem;
         height: 0.09rem;
+      }
+      .activity-img{
+        position: absolute;
       }
     }
 
