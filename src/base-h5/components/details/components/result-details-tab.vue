@@ -93,6 +93,7 @@ const tab_data_init = () => {
   }
   // 点击高亮显示tab
 const result_tab = (index,tab_item) => {
+  // TODO: 【待确认】 53185 【UAT】【H5新版复刻】【H5】赛果详情-精选赛事，页面数据不会自动更新
   console.trace('tab_item')
     let search_term =route.query.search_term
     // useMittEmit(MITT_TYPES.EMIT_CHANGE_TAB, true)
@@ -103,6 +104,7 @@ const result_tab = (index,tab_item) => {
       index = 2
       item_index.value = 1
     }
+    console.log("点击切换tab===");
     if(props.result_detail_data && props.result_detail_data.mid){
       let mid = MatchDetailCalss.get_goto_detail_matchid ||  props.result_detail_data.mid;
       // todo 考虑优化此处代码
@@ -114,8 +116,6 @@ const result_tab = (index,tab_item) => {
         query: {search_term: search_term}
       });
       // }, 500);
-
- 
     }
   }
   // 获取订单记录页面接口，判断赛果有没有 订单记录，有则显示在页面
