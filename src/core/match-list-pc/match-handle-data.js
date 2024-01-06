@@ -471,56 +471,6 @@ const clone_arr = (arr) => {
     lodash.merge(new_arr, arr || []);
     return new_arr;
   }
- /**
-   * 计算队伍中的让球方
-   * @param {object} match 赛事对象
-   */
- const computed_team_let_ball = (match) => {
-    if(!let_ball_play_tpl.includes(+match.tpl_id)) return
-    let team_let_ball = ''
-    let other_team_let_ball = ''
-    // 让球玩法ID
-    let let_ball_play_id = _.get(match,'main_handicap_list.1.ols.1._hpid')
-    //常规玩法让球方
-    team_let_ball =  get_team_let_ball(match,let_ball_play_id)
-    //足球特殊玩法
-    if( match.csid == 1 &&  (match.cosCorner || match.cosPunish)){
-       let other_hpid = _.get(match,'other_handicap_list.1.ols.1._hpid')
-       other_team_let_ball = get_team_let_ball(match,other_hpid);
-    }
-    //当前局玩法
-    if(match.is_show_cur_handicap){
-      let other_hpid = _.get(match,'cur_handicap_list.1.ols.1._hpid')
-      //网球
-      if(match.csid == 5){
-         other_hpid = _.get(match,'cur_handicap_list.2.ols.1._hpid')
-      }
-      other_team_let_ball = get_team_let_ball(match,other_hpid);
-    }
-    //主盘让球方
-    match.team_let_ball = team_let_ball
-     //足球罚牌角球 | 篮球等当前局
-    match.other_team_let_ball = other_team_let_ball
-  }
-
-  /**
-   * 获取队伍中的让球方
-   * @param {Object} match   赛事详情数据
-   * @param {string} play_id  玩法id
-   * @returns {string}   让球方(T1|T2|'')
-   */
-  const get_team_let_ball = (match,play_id) => {
-    let team_let_ball = ''
-    if(play_id){
-      _.each([`${match.mid}_${play_id}_1_1`,`${match.mid}_${play_id}_1_2`], hn => {
-        let ol_data = match.all_ol_data[hn] || {}
-        if(ol_data.on && (ol_data.on.trim()).startsWith('-')) {
-          team_let_ball = ol_data.ots;
-        }
-      })
-    }
-    return  team_let_ball
-  }
 /**
    * @Description 计算赛事所有盘口数据
    * @param {undefined} undefined
@@ -589,9 +539,6 @@ export function compute_match_all_handicap_data(match) {
     else if (tpl_id == 25 && csid == 1) {
         main_handicap_list = clone_arr(MATCH_LIST_TEMPLATE_CONFIG.template_1_config.hpsPunish)
     }
-    // 计算赛事让球方
-    computed_team_let_ball(match)
-
     // match.main_handicap_list = this.
     return get_template_data({ match, handicap_list: main_handicap_list, type })
     // 足球 让球与大小 模板
@@ -613,9 +560,6 @@ export function compute_match_all_handicap_data(match) {
     //     // 设置赛事当前局盘口数据
     //     this.set_match_cur_handicap_data(match)
     // }
-
-    // // 计算赛事让球方
-    // this.computed_team_let_ball(match)
 }
 /**
  * @Description 计算赛事所有盘口数据--冠军玩法

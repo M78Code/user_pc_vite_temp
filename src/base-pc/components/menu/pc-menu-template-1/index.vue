@@ -20,7 +20,7 @@
     </div>
     <div v-show="false">{{ BaseData.base_data_version }}</div>
 
-    <div v-for="item in MenuData.left_menu_list" :key="`_${item.mi}`" :class="set_vr_or_guanjun_border(item.mi)">
+    <div v-for="item in (MenuData.left_menu_list || [] )" :key="`_${item.mi}`" :class="set_vr_or_guanjun_border(item.mi)">
       <!--   赛种-->
       <!-- {{ BaseData.filterSport_arr }} -- {{ BaseData.compute_sport_id(item) }} -->
       <div class="menu-item menu-fold1 search" :class="current_lv_1_mi == item.mi ? 'y-active' : ''" @click="lev_1_click(item)" v-if="item.ct">
@@ -92,7 +92,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, computed,nextTick } from "vue";
+import { ref, reactive,onMounted, onUnmounted,computed,nextTick } from "vue";
 import { useRoute, useRouter } from 'vue-router'
 // 菜单配置
 import { MenuData } from "src/output/index.js"
@@ -100,12 +100,16 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { compute_css_obj } from 'src/core/server-img/index.js'
-
+import { MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
 import MenuItem from "./menu-item.vue";
 
 
 const route = useRoute();
 const router = useRouter();
+const ref_data = reactive({
+    emit_lsit:{}
+})
+const left_menu_list = ref(MenuData.left_menu_list||[])
 // 当前的一级菜单ID
 const current_lv_1_mi = ref(""); //"101",
 // 当前的二级菜单ID
@@ -114,12 +118,6 @@ const current_lv_2_mi = ref(""); //"101201", // 101301
 const show_menu = ref(true);
 // 首次进入 刷新用
 const first_change = ref(false);
-
-
-onMounted(() => {
-  handle_click_jinri_zaopan(2)
-})
-
 
 /**
  * @description: 冠军 vr border 样式
@@ -448,7 +446,38 @@ const get_lv_1_lv_2_mi = (mi) => {
 
   return lv2_mi
 }
-
+/**
+ * ws推送球种数量
+ * @param {*} list 
+ */
+ const get_menu_ws_list = (list) =>{
+  console.log("list",list)
+    list = list.filter((item)=>{return item.mi});
+    let wsList = left_menu_list.value.map((item)=>{
+        list.forEach((n)=>{
+            if(item.mi == n.mi){
+                item.ct = n.count;
+            }
+            const index = item.sl?.findIndex((k)=>{
+              return k.mi == n.mi;
+            })
+            if(index !== -1){
+              item.sl[index].ct = n.count;
+            }
+        })
+        return item;
+    })
+    left_menu_list.value = wsList;
+}
+onMounted(()=>{
+  handle_click_jinri_zaopan(2)
+  ref_data.emit_lsit = {
+      emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, get_menu_ws_list).off,
+  }
+})
+onUnmounted(()=>{
+    Object.values(ref_data.emit_lsit).map((x) => x());
+})
 // 模拟推送
 // const send_menu = () => {
 //   BaseData.set_ws_send_new_menu_init()

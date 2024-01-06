@@ -237,7 +237,6 @@ const compute_style_template_by_matchinfo_template118 = (match, template_id) => 
     lodash.each(cur_match.hpsData, (hpsData) => {
       lodash.each(hpsData.hps, (item) => {
         let hl_obj = lodash.get(item, "hl", {});
-
         if (hl_obj.hid) {
           hl_obj.end_time = time_conversion(hl_obj.hmed);
           hl_obj.hpn = lodash.get(cur_match.play_obj, `hid_${hl_obj.hid}.hpn`, "");
@@ -319,7 +318,6 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 	if (template_id == 13) {
 		template_id = 1;
 	}
-	console.log('template_id',template_id)
 	// 赛事列表模板配置
 	let template_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]["match_template_config"] || {};
 

@@ -109,7 +109,7 @@ const set_match_list_mapping_relation_obj_type = () => {
       type = 8
     }
   }
-  console.log(type,'jiffy')
+  
   return   type
 };
 
