@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import BetRecordClass from "src/core/bet-record/bet-record.js";
+import BetRecordClass from "src/core/bet-record/h5/bet-record.js";
 import { api_betting } from "src/api/index.js"
 import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
