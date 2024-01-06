@@ -27,7 +27,7 @@
       <!-- 主比分 -->
       <div class="score" v-if="show_type == 'all'"
         v-tooltip="{ content: is_15min ? i18n_t('list.15min_stage') : '', overflow: 1 }">
-        {{ play_name_obj.score_key ? lodash.get(match, `msc_obj.${play_name_obj.score_key}.home`) : scroe_list[0] }}</div>
+        {{ home_score }}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
@@ -55,8 +55,7 @@
       <!-- 主比分 -->
       <div class="score" :key="lodash.get(match, 'mid')" v-if="show_type == 'all'"
         v-tooltip="{ content: is_15min ? i18n_t('list.15min_stage') : '', overflow: 1 }">
-        {{ play_name_obj.score_key ? lodash.get(match, `msc_obj.${play_name_obj.score_key}.away`) : lodash.get(match,
-          'away_score') }}
+        {{ away_score }}
       </div>
     </div>
     <!-- 中立场、盘口数 -->
@@ -196,6 +195,14 @@ const collect = () => {
   useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
 }
 
+const home_score = computed(() => {
+  let obj = get_match_score(props.match)
+  return obj.home_score
+})
+const away_score = computed(() => {
+  let obj = get_match_score(props.match)
+  return obj.away_score
+})
 
 let handicap_index = computed(() => {
   return get_handicap_index_by(props.match)
