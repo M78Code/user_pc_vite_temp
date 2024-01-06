@@ -12,38 +12,38 @@
         </div>
       </div>
 
-      <div style="display: none;">{{ BetRecord.bet_record_version }}</div>
+      <div style="display: none;">{{ BetRecordLeft.bet_record_version }}</div>
       
       <div class="row bet-record-item cursor-pointer">
         <!--点选未结算0-->
-        <div class="col text-center" :class="{'active': BetRecord.selected==0}" @click.stop="set_record_selected(0)">
+        <div class="col text-center" :class="{'active': BetRecordLeft.selected==0}" @click.stop="set_record_selected(0)">
           {{i18n_t('common.no_settlement')}}
           <!--未结算-->
         </div>
         <!--点选预约2-->
-        <div class="col-auto menu-tab-line" v-if="BetRecord.selected==2">
+        <div class="col-auto menu-tab-line" v-if="BetRecordLeft.selected==2">
           <div class="line"></div>
         </div>
         <!--点选已结算1-->
-        <div class="col text-center" :class="{'active': BetRecord.selected==1}" @click.stop="set_record_selected(1)">
+        <div class="col text-center" :class="{'active': BetRecordLeft.selected==1}" @click.stop="set_record_selected(1)">
           {{i18n_t('common.settlement_')}}
           <!--已结算-->
         </div>
-        <div class="col-auto menu-tab-line" v-if="BetRecord.selected==0">
+        <div class="col-auto menu-tab-line" v-if="BetRecordLeft.selected==0">
           <div class="line"></div>
         </div>
-        <div class="col text-center"  :class="{'active': BetRecord.selected==2}"  @click.stop="set_record_selected(2)">
+        <div class="col text-center"  :class="{'active': BetRecordLeft.selected==2}"  @click.stop="set_record_selected(2)">
           {{ i18n_t('bet.bet_book2') }}
           <!--预约-->
         </div>
       </div>
-      <template v-if="BetRecord.selected==2">
+      <template v-if="BetRecordLeft.selected==2">
         <div class="row cursor-pointer appoint-order-status">
           <div class="col text-center"
-            :class="{'active': BetRecord.appoint_order_status==0}"
+            :class="{'active': BetRecordLeft.appoint_order_status==0}"
             @click.stop="set_record_appoint_order_status(0)">
             {{ i18n_t('bet.bet_process') }}
-            <template v-if="BetRecord.appoint_order_status==0">
+            <template v-if="BetRecordLeft.appoint_order_status==0">
               <div class="tabs-line"></div>
             </template>
           </div>
@@ -51,10 +51,10 @@
             <div class="line"></div>
           </div>
           <div class="col text-center"
-            :class="{'active': BetRecord.appoint_order_status==1}"
+            :class="{'active': BetRecordLeft.appoint_order_status==1}"
             @click.stop="set_record_appoint_order_status(1)">
             {{ i18n_t('bet.bet_invalid') }}
-            <template v-if="BetRecord.appoint_order_status==1">
+            <template v-if="BetRecordLeft.appoint_order_status==1">
               <div class="tabs-line"></div>
             </template>
           </div>
@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-import BetRecord from "src/core/bet-record/bet-record.js"
+import { BetRecordLeft } from "src/core/bet-record/pc/bet-record-instance.js"
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
@@ -74,13 +74,13 @@ import { IconWapper } from 'src/components/icon'
 // tab切换 未结算 已结算 预约
 const set_record_selected = number => {
   console.error('sssss')
-  BetRecord.set_selected(number)
+  BetRecordLeft.set_selected(number)
   // 切换后请求接口
   useMittEmit(MITT_TYPES.EMIT_GET_RECORD_LIST)
 }
 // tab切换 预约-》 进行中 已失效
 const set_record_appoint_order_status = number => {
-  BetRecord.set_appoint_order_status(number)
+  BetRecordLeft.set_appoint_order_status(number)
 }
 
 // 返回菜单列表

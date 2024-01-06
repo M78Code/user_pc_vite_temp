@@ -19,7 +19,7 @@
         </div>
         <!--删除按钮-->
         <div class="col-auto col-delete">
-          <icon-wapper name="icon-del" class="bet-del" @click="del_bet_item" size="14px" />
+          <icon-wapper color="#ffffff" name="icon-del" class="bet-del" @click="del_bet_item" size="12px" />
         </div>
       </div>
       <div class="row">
@@ -44,7 +44,7 @@
         </div>
         <!--删除按钮-->
         <div class="col-auto col-delete" v-if="item.matchType == 3">
-          <icon-wapper size="12px" name="icon-del" class="bet-del" @click="del_bet_item" />
+          <icon-wapper color="#ffffff" size="12px" name="icon-del" class="bet-del" @click="del_bet_item" />
         </div>
       </div>
       <!--不是滚球-->
@@ -304,11 +304,15 @@ const cancel_operate = () =>{
 /*  删除按钮列的样式 */
 .col-delete {
   display: flex;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+  height: 18px;
   position: absolute;
-  top: -10px;
-  right: -10px;
+  top: -14px;
+  right: -14px;
   border-radius: 0 4px 0 10px;
+  background-color: var(--q-gb-t-c-16);
 
   /*  删除按钮 */
   .bet-del {
