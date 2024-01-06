@@ -5,9 +5,10 @@
 
 <template>
   <div class="keyboard" style="opacity: 1;">
+    <div v-show="false">{{BetData.bet_data_class_version}}</div>
       <div class="nonebox4-fourth number_family">
           <div class="nonebox4-fourth-a nonebox4-fourth-h-40" @click.stop="_handleKeyPress($event)">
-              <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum(BetData.bet_data_class_version)" :key='item' :data-number='index'>{{item}}</div>
+              <div class="nonebox4-fourth-a-son" :class="item == BetData.bet_amount ?'active':''" v-for="(item,index) of addnum(BetData.bet_data_class_version)" :key='item' :data-number='index'>{{item}}</div>
           </div>
           
           <div class="nonebox4-fourth-a" @click.stop="_handleKeyPress($event)"> 
@@ -211,7 +212,7 @@ const _handmaxKey = (e) => {
     money.value = money_
   }
   set_money_change_new(money.value)
-  add_or_remove_active(e)
+  // add_or_remove_active(e)
 }
 
 // 删除键
@@ -222,11 +223,12 @@ const _handleDeleteKey = (e) => {
   let s = money.value.toString()
   money.value = s.substring(0, s.length - 1);
   set_money_change_new(money.value)
-  add_or_remove_active(e);
+  // add_or_remove_active(e);
 }
 // 数字建
 const _handleNumberKey = (num, e) => {
   if (!num) return
+  console.error('asdasdasdada')
   let money_ = BetData.bet_amount
   if (['qon', 'qtw', 'qth','qfo','qfi','qsi'].includes(num)) {
     money_ = ref_data.add_num[num]
@@ -270,7 +272,7 @@ const _handleNumberKey = (num, e) => {
 
   money.value = money_
   set_money_change_new(money_)
-  add_or_remove_active(e)
+  // add_or_remove_active(e)
 }
 
 // 获取商户配置的 快捷金额
@@ -285,24 +287,6 @@ const addnum = computed(()=> status => {
     return ref_data.add_num
   }
 })
-
-// 添加或去掉active选中框
-const add_or_remove_active = (e) => {
-  let dom = document.querySelectorAll('.nonebox4-fourth-a-son');
-  for(let i = 0; i < dom.length; i++) {
-    dom[i].classList.remove('active')
-  }
-  
-  // 选中输入框时判断当前金额是否是快捷金额中的其中一个，是就在对应的快捷金额上加选中状态
-  let flag = Object.values(ref_data.add_num).some((item) => item === (+money.value));
-  let index = Object.values(ref_data.add_num).findIndex((item) => item === (+money.value));
-  if(e) {
-    e.target.classList.add('active')
-  }
-  if(flag) {
-    dom[index].classList.add('active')
-  }
-}
 
 // 左侧+的按钮 置灰
 const prevent_click = computed((value) => {
