@@ -4,7 +4,7 @@
  * @Description: 赛事详情分析页
 -->
 <template>
-  <div>
+  <div v-show="detail_info&&detail_info.ms>0">
 <!--    <div>{{  }}</div>-->
     <div class="analysis-body">
       <!-- 动画/视频/比分榜 -->
