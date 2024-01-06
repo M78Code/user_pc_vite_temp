@@ -290,7 +290,7 @@
                 <!-- 展示三行的不展示比分 -->
                 <template v-if="![1, 4, 11, 14, 15, 16].includes(+match.csid)">
                   <div class="score-content">
-                    <ScoreList :class="[match.csid == 8 && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
+                    <ScoreList :class="[match.csid == 7 && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
                   </div>
                 </template>
               </div>
@@ -435,7 +435,7 @@ export default {
     width: 100%;
     height: 25px;
     line-height: 1;
-    font-size: 0.11rem;
+    font-size: 0.12rem;
     padding-left: 0.17rem;
     display: flex;
     align-items: center;

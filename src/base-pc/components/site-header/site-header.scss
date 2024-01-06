@@ -84,9 +84,7 @@
 }
 
 .c-site-header {
-    // height: 96px;
-    background: var(--q-gb-bg-c-11); // #fff
-    color: var(--q-gb-t-c-8); // #666
+   
 
     .tip-content {
         position: absolute;
@@ -186,9 +184,10 @@
             z-index: 1000;
             top: 0;
             left: 0;
-            height: 60px;
+            height: 58px;
             transition: height .3s ease-in-out;
-
+            background: var(--q-site-header-color-7); ;
+            
             &.iframe-header-item1-hide {
                 height: 0 !important;
                 overflow: hidden;
@@ -273,11 +272,11 @@
                         text-transform: uppercase;
                         position: relative;
                         z-index: 100;
-                        color: var(--q-gb-t-c-8); // #666
+                        color: var(--q-site-header-color-2); // #666
                         letter-spacing:.5px;
                         &.active {
                             font-weight: 600;
-                            color: var(--q-site-header-color-1);
+                            color: var(--q-site-header-color-3);
                           }
                     }
 
@@ -361,11 +360,10 @@
             z-index: 1001;
             bottom: 0;
             left: 0;
-            height: 36px;
+            height: 34px;
             justify-content: space-between;
             border-top: 1px solid var(--q-site-header-color-4);
-            border-bottom: 1px solid var(--q-site-header-color-4);
-            background: var(--q-gb-bg-c-11); // #fff
+            background: var(--q-gb-bg-c-11); 
             /* 公告 */
             .marquee-wrap {          
                 .iframe-tab-wrapper {
@@ -653,6 +651,7 @@
 .c-site-header.is-iframe {
     height: 86px;
     transition: height .3s ease-in-out;
+   
 
     .header-item {
         &.item1 {
@@ -853,8 +852,11 @@
  body {
     /**站点头部背景色 site_header.vue .c-site-header**/
     .c-site-header {
-      background: var(--q-gb-bg-c-11);
+      background: var(--q-site-header-color-7); 
       color: var(--q-gb-t-c-8);
+      border: 2px solid var(--q-site-header-color-1);;
+      border-radius: 0 0 6px 6px;
+      height: 96px;
       .tip-content {
         .yb-icon-triangle {
           &::before {
@@ -867,7 +869,7 @@
       }
       .tab-wrap {
         .line-wrap{
-          transform: translateY(-13px);
+        //   transform: translateY(-13px);
         }
         .item-wrap {
           .tab-item {
@@ -903,7 +905,6 @@
         /*  搜索行部分样式 */
         &.item2 {
           border-top: .6px solid var(--q-site-header-color-4);
-          border-bottom: 1px solid var(--q-site-header-color-4);
           background: var(--q-gb-bg-c-11);
           /* 公告 */
           .marquee-wrap {          

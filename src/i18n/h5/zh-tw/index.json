@@ -2081,7 +2081,13 @@
     "show_hide": "顯示/隱藏操作按鈕",
     "sorry": "抱歉，暫時無法連線視頻",
     "nohandle": "您長時間未操作，視頻暫停，若要繼續觀看請重新點擊播放",
-    "video_line": "視頻線路"
+    "video_line": "視頻線路",
+    "novideo1": "暫無直播視頻，請耐心等待",
+    "novideo2": "快速結算注單",
+    "novideo3": "支持多種<br />語言&貨幣",
+    "novideo4": "極致用戶體驗",
+    "novideo5": "極致服務團隊",
+    "novideo6": "您長時間未操作，視頻暫停，若要繼續觀看請重新點擊播放"
   },
   "virtual_sports": {
     "advance": "進",

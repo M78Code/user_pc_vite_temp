@@ -15,7 +15,7 @@
         </template>
         <template v-else>
           <div class="m-item-inner">
-            <img class="menu-item-img not_title" :src="item.icon" alt="" />
+            <img class="menu-item-img not_title activity-img" :src="item.icon" alt="" />
           </div>
         </template>
       </div>

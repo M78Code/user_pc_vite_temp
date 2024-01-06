@@ -35,9 +35,9 @@ const i18n = createI18n({
  * @return {*}
  */
 const  loadLanguageAsync= async(lang)=>{
-
-  try {
-    const langfile =  await  import(/* webpackChunkName: "lang-[request]" */`../i18n/${map_lang[lang]}/index.json`) 
+  try { 
+    const langfile =  await  import(/* webpackChunkName: "lang-[request]" */`../i18n/en-gb/index.json`) 
+    console.log(langfile,'langfile');
     // 设置语言信息
     i18n.global.setLocaleMessage(lang, { ...langfile,   });
     i18n.global.locale = lang;
@@ -55,6 +55,8 @@ const  loadLanguageAsync= async(lang)=>{
  
 // 新增
 function i18n_t(key, args, options) {
+  console.log( i18n.global.getLocaleMessage(),' i18n.global.setLocaleMessage');
+  
   if (!i18n) return key;
   return i18n.global.tm(key, args, options);
 }
