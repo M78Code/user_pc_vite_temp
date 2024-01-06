@@ -21,7 +21,12 @@
           </div>
           <!-- 红牌数 -->
           <span v-show="lodash.get(match, 'msc_obj.S11.home') > 0" class="red-ball"
-            :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S11.home') }}</span>
+            :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S11.home') }}
+          </span>
+          <!-- 黄牌数 -->
+          <span class="red-ball yellow"
+            v-show="lodash.get(match, 'msc_obj.S12.home', 0) > 0 && lodash.get(match, 'msc_obj.S11.home', 0) < 0"
+            :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S12.home') }}</span>
         </div>
       </div>
       <!-- 主比分 -->
@@ -50,6 +55,10 @@
           <!-- 红牌数 -->
           <span v-show="lodash.get(match, 'msc_obj.S11.away') > 0" class="red-ball"
             :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S11.away') }}</span>
+          <!-- 黄牌数 -->
+          <span class="red-ball yellow"
+            v-show="lodash.get(match, 'msc_obj.S12.home', 0) > 0 && lodash.get(match, 'msc_obj.S11.home', 0) < 0"
+            :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S12.home') }}</span>
         </div>
       </div>
       <!-- 主比分 -->
@@ -216,7 +225,7 @@ watch(() => props.match.mf, (n) => {
 
 
 // 监听主比分变化
-watch(() => props.match.home_score, (n) => {
+watch(home_score, (n) => {
   //推送时间是否过期
   let is_time_out = (get_remote_time() - props.match.ws_update_time) < 3000
   // 足球 并且已开赛
@@ -227,7 +236,7 @@ watch(() => props.match.home_score, (n) => {
 })
 
 // 监听主比分变化
-watch(() => props.match.away_score, (n) => {
+watch(away_score, (n) => {
   //推送时间是否过期
   let is_time_out = (get_remote_time() - props.match.ws_update_time) < 3000
   // 足球 并且已开赛
@@ -286,6 +295,9 @@ onUnmounted(() => {
     padding: 0 2px;
     height: 14px;
     line-height: 14px;
+    &.yellow {
+      background-color: #FFA800;
+    }
 
     &.flash {
       animation: 1s text-flash linear infinite normal;
