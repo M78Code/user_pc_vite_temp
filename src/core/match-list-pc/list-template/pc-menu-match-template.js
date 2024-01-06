@@ -145,7 +145,6 @@ const different_version_config = {
  */
 export const computed_menu_to_match_templte = (data_tpl_id) => {
   let default_template_value = 1;
-  console.log(data_tpl_id,'jiffy')
   let current_data_template_value =
     Number(menu_to_match_templte[data_tpl_id]?.value) +
     Number(different_version_config[PROJECT_NAME]);
