@@ -21,7 +21,12 @@
           </div>
           <!-- 红牌数 -->
           <span v-show="lodash.get(match, 'msc_obj.S11.home') > 0" class="red-ball"
-            :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S11.home') }}</span>
+            :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S11.home') }}
+          </span>
+          <!-- 黄牌数 -->
+          <span class="red-ball yellow"
+            v-show="lodash.get(match, 'msc_obj.S12.home', 0) > 0 && lodash.get(match, 'msc_obj.S11.home', 0) < 0"
+            :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S12.home') }}</span>
         </div>
       </div>
       <!-- 主比分 -->
@@ -50,6 +55,10 @@
           <!-- 红牌数 -->
           <span v-show="lodash.get(match, 'msc_obj.S11.away') > 0" class="red-ball"
             :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S11.away') }}</span>
+          <!-- 黄牌数 -->
+          <span class="red-ball yellow"
+            v-show="lodash.get(match, 'msc_obj.S12.home', 0) > 0 && lodash.get(match, 'msc_obj.S11.home', 0) < 0"
+            :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S12.home') }}</span>
         </div>
       </div>
       <!-- 主比分 -->
@@ -194,16 +203,16 @@ const collect = () => {
 }
 
 const home_score = computed(() => {
-  let obj = get_match_score(props.match)
+  let obj = get_match_score(match.value)
   return obj.home_score
 })
 const away_score = computed(() => {
-  let obj = get_match_score(props.match)
+  let obj = get_match_score(match.value)
   return obj.away_score
 })
 
 let handicap_index = computed(() => {
-  return get_handicap_index_by(props.match)
+  return get_handicap_index_by(match.value)
 })
 
 
@@ -214,7 +223,7 @@ watch(() => match.value.mf, (n) => {
 
 
 // 监听主比分变化
-watch(() => match.value.home_score, (n) => {
+watch(home_score, (n) => {
   //推送时间是否过期
   let is_time_out = (get_remote_time() - match.value.ws_update_time) < 3000
   // 足球 并且已开赛
@@ -225,7 +234,7 @@ watch(() => match.value.home_score, (n) => {
 })
 
 // 监听主比分变化
-watch(() => match.value.away_score, (n) => {
+watch(away_score, (n) => {
   //推送时间是否过期
   let is_time_out = (get_remote_time() - match.value.ws_update_time) < 3000
   // 足球 并且已开赛
@@ -284,6 +293,9 @@ onUnmounted(() => {
     padding: 0 2px;
     height: 14px;
     line-height: 14px;
+    &.yellow {
+      background-color: #FFA800;
+    }
 
     &.flash {
       animation: 1s text-flash linear infinite normal;
