@@ -1023,7 +1023,7 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
             font-weight: 500;
-            color: #8a8986;
+            // color: #8a8986;
             &.is-show-goal{
               max-width: 0.9rem;
             }
@@ -1031,7 +1031,7 @@ export default {
               color: #8a8986;
             }
             &.is-handicap {
-              color: #000;
+              color: #7A0F25;
             }
           }
         }
