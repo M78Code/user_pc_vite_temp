@@ -262,7 +262,7 @@ function mounted_fn(fun) {
 			fun({ is_socket: true })
 		}
 		else {
-			useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, { is_socket: true })
+			// useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, { is_socket: true })
 		}
 	}
 	mitt_list = [

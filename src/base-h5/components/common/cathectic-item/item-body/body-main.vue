@@ -432,7 +432,7 @@ const props =defineProps({
     font-size: 0.14rem;
     color: var(--q-cathectic-color-1);
     .oddfinally {
-      color: var(--q-gb-t-c-12);
+      color: var(--q-gb-t-c-1);
     }
   }
   .beif_src {
