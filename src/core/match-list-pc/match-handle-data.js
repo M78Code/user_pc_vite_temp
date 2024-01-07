@@ -614,7 +614,51 @@ export function compute_match_all_handicap_data_champion(match) {
   });
   return main_handicap_list;
 }
-
+/**
+ * 获取是否显示当全局盘口
+ * @param {*} match 
+ */
+export function get_is_show_cur_handicap(match){
+ return match.tpl_id == 7 ? get_basketball_is_show_cur_handicap(match) : get_match_status(match.ms,[110]) == 1
+}
+/**
+   * @Description 获取篮球是否显示当前局盘口
+   * @param {undefined} undefined
+  */
+function get_basketball_is_show_cur_handicap(match){
+    if(get_match_status(match.ms,[110]) == 0){
+      return false
+    }
+    let is_show_cur_handicap = false
+    let mmp = match.mmp
+    // 篮球第四节(16|100) || 篮球 3*3 不显示当前局
+    if(mmp == 16 || mmp == 100 || match.mle == 73){
+      is_show_cur_handicap = false
+    }
+    // 篮球第二节 需要判断 当前局盘口是否关闭
+    else if (mmp == 14){
+      match.cur_handicap_list?.forEach( col => {
+        col.ols.forEach( ol => {
+          // 非投注项关盘
+          if(ol.oid && ol._hs != 2 && ol.os != 3){
+            // match.up_half_text = '-'+window.vue.$root.$t('common.up_half')
+            is_show_cur_handicap = true
+          }
+        })
+      })
+    }else {
+      //第一节        刚开赛
+    //   if(mmp ==13 || mmp ==0 ){
+    //     match.up_half_text = '-'+window.vue.$root.$t('mmp.2.13')
+    //   }
+    //   //第三节   第二节休息
+    //   if(mmp ==15 || mmp == 302){
+    //     match.up_half_text = '-'+window.vue.$root.$t('mmp.2.15')
+    //   }
+      is_show_cur_handicap = true
+    }
+    return is_show_cur_handicap
+  }
 /**
   * @Description 简化盘口文本
   * @param {string} lang 语言
