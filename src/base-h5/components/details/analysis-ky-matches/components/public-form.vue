@@ -41,7 +41,7 @@
           <span
               class="results"
               v-if="default_index == 0"
-              :class="item.result == 2 ? 'results_flat' : item.result == 3 ? 'results_lose' : 'results_win'"
+              :class="item.result == 2 ? 'results_flat  ping-or-zou-color' : item.result == 3 ? 'results_lose' : 'results_win'"
           >
           {{ item.result ==2 ? i18n_t('analysis_football_matches.flat') : item.result ==3 ? i18n_t('analysis_football_matches.negative') : i18n_t('analysis_football_matches.victory') }}
         </span>

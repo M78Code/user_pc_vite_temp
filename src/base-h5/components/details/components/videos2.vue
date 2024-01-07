@@ -1228,14 +1228,15 @@ export default {
       this.sendMessage2({cmd: 'switch', val:index})
     },
     close_video() {
+      console.log(2222);
       this.get_is_full_screen = false
       this.exit_browser_full_screen();
       this.$emit('change_fullscreen', false)
       // iPhone Safari 不兼容screen.orientation
-      if (screen.orientation) {
-        screen.orientation.unlock()
+      // if (screen.orientation) {
+      //   screen.orientation.unlock()
         // screen.orientation.lock('portrait')
-      }
+      // }
       this.set_tab_fix(false);
       this.set_is_close_video(Math.random());
       useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, false)

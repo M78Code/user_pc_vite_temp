@@ -639,10 +639,10 @@ export const video_info = () => {
     this.exit_browser_full_screen();
 
     // iPhone Safari 不兼容screen.orientation
-    if (screen.orientation) {
-      screen.orientation.unlock()
+    // if (screen.orientation) {
+    //   screen.orientation.unlock()
       // screen.orientation.lock('portrait')
-    }
+    // }
     this.set_tab_fix(false);
     this.set_is_close_video(Math.random());
     this.set_show_video(false);
