@@ -17,7 +17,7 @@
        <!-- 提前结算 -->
        <div @click.stop="">
          <div
-          v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12"
+          v-if="lodash.get(match, 'mearlys', 0) && match.tpl_id != 12"
           class="icon-wrap settlement-pre relative-position"
           v-tooltip="{content: i18n_t('bet_record.settlement_pre')}"
         >
@@ -51,25 +51,15 @@
   </div>
 </template>
 <script setup>
-// import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
-// mixins:[match_basis_info_mixin],
-
-import { computed } from 'vue';
+import { computed,inject } from 'vue';
 import { useRouter,useRoute } from "vue-router";
 import lodash from 'lodash';
-
 import { compute_local_project_file_path, is_show_sr_flg} from "src/output/index.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
-import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import details  from "src/core/match-list-pc/details-class/details.js"
 const router = useRouter()
 const route = useRoute()
 const props = defineProps({
-  match: {
-    type: Object,
-    default: () => {}
-  },
   is_show_more: {
     type: Boolean,
     default: () => false
@@ -79,15 +69,9 @@ const props = defineProps({
     default: () => false
   }
 })  
-
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
-// 赛事模板宽度
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-
-
-
+const match=inject("match")
 const team_names = computed(() => {
-  let { mhn = '', man = '', up_half_text = '' } = props.match
+  let { mhn = '', man = '', up_half_text = '' } = match.value
   let team_names = {
     away:"",
     home:"",

@@ -79,6 +79,7 @@ export const get_compute_other_play_data = (match) => {
   }
   let type = play_key == 'hps15Minutes' ? 4 : 1
   // coverage_match_data({ other_handicap_list }, mid)
+  
   // return  merge_template_data({ match, handicap_list, play_key })
   return get_template_data({ match, handicap_list, play_key,type })
 }
@@ -305,7 +306,6 @@ export function set_min15(match, mst, callback) {
   if ((hSpecial !== match.hSpecial || hSpecial5min !== match.hSpecial5min) && callback) {
     callback()
   }
-  Object.assign(match, { hSpecial, hSpecial5min })
   return {hSpecial, hSpecial5min}
 }
 /**
