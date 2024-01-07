@@ -12,12 +12,20 @@ export const store = reactive({
     search_csid: 1,
     sports_list: [], /** 球种列表 */
     sports_tab_index: 0, /** 球种tab选中索引 */
+    res_list: [],
+    load_data_state: 'data'
 })
 
 export class mutations {
     // 搜索结果
     static get_search_result_handle() {
-        return search.get_search_result(store.keyword, store.search_csid)
+        search.get_search_result(store.keyword, store.search_csid).then(res => {
+            console.log('search.get_search_result', res)
+            const { state, list } = res
+            store.res_list = list
+            store.show_type = 'result'
+            store.load_data_state = state
+        })
     }
     // 获取球种
     static get_sports_list_handle() {
@@ -44,6 +52,7 @@ export class mutations {
             store.sports_list = []
         });
     }
+    // 设置球种类型
     static set_sports_handle(index) {
         let index_ = index;
         if (typeof (index) == 'object') {
