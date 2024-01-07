@@ -10,7 +10,7 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 
-const currentVal = ref('')
+const currentVal = ref(null)
 
 const props = defineProps({
   list: {
@@ -53,6 +53,7 @@ const check = (item) => {
 .check_box_warp {
     display: flex;
     align-items: center;
+    color: var(--q-gb-t-c-6);
     .check_item {
       display: flex;
       align-items: center;
