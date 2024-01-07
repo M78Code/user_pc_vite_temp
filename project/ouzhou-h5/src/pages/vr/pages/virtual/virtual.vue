@@ -7,24 +7,6 @@
       <!-- 头部 -->
       <div class="virtual-head">
         <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
-          <!-- 返回按钮 及 刷新 注单  设置 按钮 -->
-          <div class="title-wrap">
-            <div class="detail-back-a">
-              <div class="detail-back" @click="go_to_back(),go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})" :style="compute_css_obj({key: 'h5_back_img'})"></div>
-            </div>
-            <!-- 虚拟体育 -->
-            <div class="col virtual-title">{{i18n_t('common.virtual_sports')}}</div>
-            <!-- 复刻版暂时用不到先注释了 -->
-            <!-- <set-menu /> -->
-
-            <!-- 从macth顶部 搬运过来的  用户金额 -->
-            <div class="main-menu-right" @click.stop="get_user_balance()">
-                <!-- <span class="main-menu-right-symbol">￥</span> -->
-                <img :src="compute_local_project_file_path('image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
-                <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
-            </div>
-
-          </div>
           <!-- 虚拟体育菜单 -->
           <div class="virtual-menu-list" ref='virtual_menu_list'>
             <div class="tabs-bar">
