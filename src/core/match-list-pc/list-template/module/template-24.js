@@ -16,7 +16,7 @@ let hps_15_minute = TemplateCommon.hps_15_minute
 
   //  足球 十五分钟 玩法
  
-  export const template_28 = {
+  export const template_24 = {
     main_handicap_list: [
       ...TemplateCommon.clone_arr(hps_15_minute),
       ...TemplateCommon.clone_arr(hps_15_minute),

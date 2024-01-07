@@ -62,7 +62,8 @@ export const get_compute_other_play_data = (match) => {
   //当前选中玩法
   let play_key = get_play_current_play(match)
   const { data_tpl_id = 1 } = MatchListCardDataClass.get_card_obj_bymid(mid)
-  const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`][`template_${data_tpl_id}`]
+  let template_name = `template_${data_tpl_id}`
+  const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[template_name+'_config'][template_name]
   // 其他玩法盘口列表
   let handicap_list = clone_arr(match_tpl_info[play_key])
   // 波胆
