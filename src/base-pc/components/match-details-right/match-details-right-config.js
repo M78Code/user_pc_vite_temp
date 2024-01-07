@@ -1201,7 +1201,8 @@ watch(
     change_loading_state,
     set_handicap_this,
     setfoldStatus,
-    get_mattch_details
+    get_mattch_details,
+    refresh
   };
 
 };
