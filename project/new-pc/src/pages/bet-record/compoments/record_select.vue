@@ -1,12 +1,12 @@
 <template>
   <div class="record-select">
     <div style="display: none;">{{ BetRecordHistory.bet_record_version }}</div>
-    <!-- 未结算 -->
+    <!-- ------------------未结算---------------------- -->
     <div class="record-select-main" v-if="BetRecordHistory.selected == 0">
       <!-- 提前结算 -->
       <check-box-warp :list="options" @emit_value="emit_value"></check-box-warp>
     </div>
-    <!-- 已结算 -->
+    <!-- -------------------已结算---------------------- -->
     <div v-else-if="BetRecordHistory.selected == 1" class="record-settled">
       <div class="record-settled-l">
         <div class="btn-group">
@@ -42,7 +42,7 @@
         </div>
       </div>
     </div>
-    <!-- 预约 -->
+    <!-- ----------------------预约--------------- -->
     <div class="record-pre" v-if="BetRecordHistory.selected == 2">
       <!-- 提前结算, 默认进行中 -->
       <check-box-warp :list="pre_options" initVal="0" @emit_value="emit_value"></check-box-warp>
@@ -51,10 +51,12 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { formatTime } from 'src/output/index.js'
 import { BetRecordHistory } from "src/core/bet-record/pc/bet-record-instance.js"
 import checkBoxWarp from './check_box_warp.vue'
+import {useMittEmit, useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
+import { api_betting } from "src/api/index.js";
 import dayjs from 'dayjs'
 const _dayjs = dayjs()
 
@@ -80,10 +82,12 @@ const btn_options = [
   { label: "ouzhou.record.30_days", value: 4, range: [_dayjs.subtract(29, 'day').startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] }
 ]
 const time_click = (item) => {
+  //提示语
+  BetRecordHistory.set_date_tip_msg(item.value)
+
   const [from, to] = item.range
   current_time.value = item.value
   params.timeType = item.value
-  tipMsg.value = msgList[item.value]
   if(from === to){
     date.value = [from]
   } else {
@@ -121,11 +125,92 @@ const dateLocal = isZH ? {
   monthsShort: months,
 } : {}
 
+
+let useMitt = null
 onMounted(() => {
-  cash_value.value = ['']
+  // 初始化日期时间
   const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
   date_value.value = data + '-' + data
   date.value = { from: data, to: data }
+
+  // 首次进入获取数据
+  init_data(BetRecordHistory.selected)
+  // 监听BetRecordHistory.selected改变，获取数据
+  useMitt = useMittOn(MITT_TYPES.EMIT_BET_RECORD_SELECTED_CHANGE, function (val) {
+    init_data(val)
+  }).off;
+})
+
+/**
+ * @description 初始请求注单记录数据
+ * @param {Undefined} Undefined
+ * @return {Undefined} undefined
+ */
+  const init_data = (_index) => {
+  const { params, url_api } = init_params_api(_index)
+  //请求注单记录接口
+  // 预约中、已失效(数据需加工)
+  const prevData = (_index === 1 || _index === 2)
+  BetRecordHistory.handle_fetch_order_list(url_api, params)
+
+  // 未结算时，轮询获取提前结算列表金额
+  // timer && clearInterval(timer)
+  // if(_index === 0) {
+  //   timer = setInterval(() => {
+  //     if (document.visibilityState == 'visible') {
+  //       BetRecordClass.check_early_order()
+  //     }
+  //   }, 5000)
+  // }
+}
+
+/**
+ * 获取请求接口的api和params
+ * @param {*} _index 当前索引
+ */
+ const init_params_api = (_index) => {
+  let params = {}
+  let url_api = Promise.resolve();
+  switch (_index) {
+    case 0: //未结算
+      params = {
+        enablePreSettle: false,
+        orderBy: 2,
+        orderStatus: 0,
+        page: 1,
+        size: 50
+      }
+      url_api = api_betting.post_getOrderList      
+      break;
+    case 1: //已结算
+      params = {
+        enablePreSettle: false,
+        orderBy: 2,
+        orderStatus: 1,
+        page: 1,
+        size: 50
+      }
+      url_api = api_betting.post_getOrderList
+      break;
+    case 2: // 预约订单
+      params = {
+        jumpFrom: 2,
+        preOrderStatusList: ['0'],
+        page: 1,
+        size: 50
+      }
+      url_api = api_betting.post_book_list
+      break;
+  }
+  return {
+    params,
+    url_api
+  }
+}
+
+
+onUnmounted(() => {
+  useMitt && useMitt()
 })
 
 
