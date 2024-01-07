@@ -1028,10 +1028,10 @@ export default {
               max-width: 0.9rem;
             }
             &.visiting {
-              color: #8a8986;
+              // color: #8a8986;
             }
             &.is-handicap {
-              color: #7A0F25;
+              color: #7A0F25 !important;
             }
           }
         }
