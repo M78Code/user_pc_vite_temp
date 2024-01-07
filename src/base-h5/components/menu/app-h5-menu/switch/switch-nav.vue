@@ -22,7 +22,7 @@
     </div>
 </template>
 <script setup>
-  import { compute_css_obj } from "src/output/index.js";
+    import { compute_css_obj } from "src/output/index.js";
     import {ref,watch} from "vue";
     import UserCtr from "src/core/user-config/user-ctr.js"
     let is_debounce_disable=false
@@ -66,15 +66,16 @@
         //     const enVal = sortJson.filter((item)=>{return item.val === sortVal.value })?.[0].enVal;
         //     return callback(val,enVal);
         // }
-        if(activeOn.value === item.val||item.disabled||is_debounce_disable)return;
-        is_debounce_disable=true //不允许快速切换 导致页面卡顿或者性能消耗
+        if(activeOn.value === item.val||item.disabled)return;
+        // if(activeOn.value === item.val||item.disabled||is_debounce_disable)return;
+        // is_debounce_disable=true //不允许快速切换 导致页面卡顿或者性能消耗
         activeOn.value = item.val;
         callback(item.val,item);
         //监听改变
         UserCtr.set_menu_init_change()
-        setTimeout(() => {
-            is_debounce_disable=false
-        },Number(props.debounce)?props.debounce:0);
+        // setTimeout(() => {
+        //     is_debounce_disable=false
+        // },Number(props.debounce)?props.debounce:0);
     }
 </script>
 <style scoped lang="scss">

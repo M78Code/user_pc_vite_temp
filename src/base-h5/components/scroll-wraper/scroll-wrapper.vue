@@ -7,7 +7,7 @@
 <template>
       
   <!-- high_scrolling: set_is_high_scrolling && menu_type !== 100 && !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100, -->
-  <div class="scroll-wrapper" ref="container" @scroll="handler_match_container_scroll">
+  <div class="scroll-wrapper" ref="container" @scroll.passive="handler_match_container_scroll">
     <div  :class="['scroll-i-con', { detail_list: is_detail, simple: standard_edition == 1, 'static': is_static }]"
       :style="get_container_style">
       <template v-if="MatchMeta.match_mids.length > 0">
@@ -123,6 +123,7 @@ const get_match_base_hps = lodash.debounce(() => {
 const goto_top = () => {
   MatchMeta.set_prev_scroll(0)
   let timer = setTimeout(() => {
+    scroll_top.value = 0
     container.value && container.value.scrollTo({ top: 0 });
     clearTimeout(timer)
     timer = null
@@ -226,6 +227,8 @@ onUnmounted(() => {
   overflow-y: auto;
   overflow-anchor: none;
   // background-color: #f5f5f5;
+  touch-action: pan-y;
+  overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;/*解决移动端滑动卡顿问题*/
   transform: translateZ(0px);/*开启GPU加速*/
   &.data-get-empty {

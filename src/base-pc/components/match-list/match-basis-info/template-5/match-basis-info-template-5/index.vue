@@ -13,10 +13,9 @@
           <div class="team-name home ellipsis allow-user-select" :class="{'bold':match.other_team_let_ball=='T1'}" v-tooltip="{content:match.mhn,overflow:1}">{{match.mhn}}{{match.up_half_text}}</div>
         </div>
       </div>
-      <!-- 当前盘下的当前局比分 -->
-      <div class="score" v-if="match.csid == 5">{{ lodash.get(match,'score_obj.S103.home') }}</div>
+      <div class="score" v-if="match.csid == 5">{{lodash.get(match, 'msc_obj.S103.home')}}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{ lodash.get(match,'cur_score.home') }}</div>
+      <div class="score-game">{{lodash.get(match, 'msc_obj.S1.home')}}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
@@ -27,16 +26,16 @@
         </div>
       </div>
       <!-- 当前盘下的当前局比分 -->
-      <div class="score" v-if="match.csid == 5">{{ lodash.get(match,'score_obj.S103.away') }}</div>
+      <div class="score" v-if="match.csid == 5">{{lodash.get(match, 'msc_obj.S103.away')}}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{ lodash.get(match,'cur_score.away')}}</div>
+      <div class="score-game">{{ lodash.get(match, 'msc_obj.S1.away') }}</div>
     </div>                      
     
     <div class="row-item match-icon">
       <!-- 提前结算 -->
        <div @click.stop="">
          <div
-          v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12 && vx_cur_menu_type.type_name!='bet'"
+          v-if="lodash.get(match, 'mearlys', 0) && match.tpl_id != 12"
           class="icon-wrap settlement-pre relative-position"
           v-tooltip="{content: i18n_t('bet_record.settlement_pre')}"
         >
@@ -52,7 +51,7 @@
     
         <!-- 是否收藏 -->
         <span @click.stop="collect" class="yb-flex-center yb-hover-bg m-star-wrap-match" v-if="GlobalAccessConfig.get_collectSwitch()">
-          <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
+          <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
         </span>
         <!-- 统计分析 -->
         <div class="sr-link-icon-w" v-tooltip="{content:i18n_t('common.analysis')}" v-if="is_show_sr_flg(match)" @click.stop='details.sr_click_handle(match)'>
@@ -72,7 +71,7 @@
 <script setup>
 import { compute_local_project_file_path, is_show_sr_flg } from "src/output/index.js";
 // useRegistPropsHelper(component_symbol, need_register_props)
-import {inject} from 'vue'
+import {inject, computed, watch, ref} from 'vue'
 import details  from "src/core/match-list-pc/details-class/details.js"
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
@@ -80,6 +79,23 @@ let match = inject("match")
 let match_style_obj = inject("match_style_obj")
 // let match_list_tpl_size = inject("match_list_tpl_size")
 
+const is_collect = ref(false) //赛事是否收藏
+
+is_collect.value = Boolean(lodash.get(match.value, 'mf'))
+
+
+// 监听收藏变化
+watch(() => match.value.mf, (n) => {
+  is_collect.value = Boolean(n)
+}, { immediate: true })
+
+const handicap_num = computed(() => {
+  if (GlobalAccessConfig.get_handicapNum()) {
+    return `+${lodash.get(match.value, 'mc') || 0}`
+  } else {
+    return i18n_t('match_info.more')
+  }
+})
 
 </script>
 <style lang="scss" scoped>

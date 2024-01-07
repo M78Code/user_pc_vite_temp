@@ -102,7 +102,8 @@ function match_click(match) {
     search.insert_history(match.name)
 	const { mid, tid, csid } = match
     // details.on_go_detail(match, keyword.value.substr(5),router)
-    router.push(`/details/${mid}/${csid}/${tid}`)
+    // router.push(`/details/${mid}/${csid}/${tid}?keyword=${store.keyword}`)
+    router.push({path:`/details/${mid}/${csid}/${tid}`, query: { keyword: store.keyword}})
     SearchPCClass.set_search_isShow(false);
     useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,

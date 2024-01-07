@@ -64,6 +64,7 @@ class MenuData {
       lv1_mi: "", //一级菜单
       lv2_mi: "", // 二级菜单
     };
+    this.ref_lv2_mi = ref(null);
     // 左侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
     this.menu_root = 1;
     // 与 menu_root  类似，主要用于收藏按钮的显示隐藏，使用menu_root  由于这个值被监听，会有其他情况发生
@@ -113,7 +114,7 @@ class MenuData {
     this.to_day_list = []
     this.early_list = []
     this.in_play_list = []
-
+    this.vr_list = [];
     this.current_ball_type = 0
 
     this.left_menu_list = []
@@ -347,7 +348,9 @@ class MenuData {
 
     // return r || 1;
   }
-
+  get_lv2_mi_value(){
+    return this.ref_lv2_mi.value
+  }
   /**
    * 设置    左侧菜单输出
    *
@@ -369,7 +372,7 @@ class MenuData {
       version: Date.now(),
       root: this.menu_root
     };
-
+    this.ref_lv2_mi.value =obj.lv2_mi?Number(obj.lv2_mi):"";
     if (obj.has_mid_menu) {
       //  如果 有   走 自然的 中间菜单组件渲染 ，
       this.compute_mid_match_list_menu_component_show();
@@ -926,7 +929,15 @@ class MenuData {
     // 默认设置 早盘数据
     this.left_menu_list = to_day_list
   }
-
+  /**
+ * 暂时获取联赛接口  后期国际化从init取 目前init没有国际化
+ */
+  async get_vr_menu_list(){
+    const res = await api_common.get_virtual_menu({device: 'V1_H5'});
+    if(res && res.code =='200'){
+        this.vr_list = res.data;
+    }
+  }
   is_kemp() {
     return (this.match_list_api_config.guanjun || "").includes("guanjun");
   }

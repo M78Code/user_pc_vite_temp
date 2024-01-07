@@ -158,9 +158,9 @@ class BaseData {
    * 目前 按照约定 走 api
    */
   init() {
-    // console.error('初始化菜单数据')
+    console.error('初始化菜单数据')
     // 用默认数据 初始化
-    this.init_by_default_data();
+    // this.init_by_default_data();
     // console.warn("BaseData.init()--------");
 
     // 获取 用户信息
@@ -1232,5 +1232,4 @@ class BaseData {
 }
 
 const base_data_instance = new BaseData();
-useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=>base_data_instance.init())
 export default base_data_instance;
