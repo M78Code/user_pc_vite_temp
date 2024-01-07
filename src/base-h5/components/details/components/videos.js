@@ -403,8 +403,9 @@ export const video_info = () => {
     if (this.get_is_full_screen) {
       this.set_is_hengping(false)
       this.exit_browser_full_screen()
-      screen.orientation && screen.orientation.unlock()
-
+      if(lodash.get(window,'screen.orientation.unlock')){
+        window.screen.orientation.unlock()
+      }
       if (this.get_video_url.active === 'lvs') {
         this.sendMessage2({
           cmd: 'record_play_info',
@@ -426,7 +427,9 @@ export const video_info = () => {
       this.get_replay_video()
       this.set_is_hengping(true)
       this.browser_full_screen()
-      screen.orientation && screen.orientation.lock('landscape')
+      if(lodash.get(window,'screen.orientation.lock')){
+        window.screen.orientation.lock('landscape')
+      }
     }
     this.set_is_full_screen(!this.get_is_full_screen)
   };
@@ -639,10 +642,9 @@ export const video_info = () => {
     this.exit_browser_full_screen();
 
     // iPhone Safari 不兼容screen.orientation
-    if (screen.orientation) {
-      screen.orientation.unlock()
-      // screen.orientation.lock('portrait')
-    }
+    if(lodash.get(window,'screen.orientation.unlock')){
+      window.screen.orientation.unlock()
+   }
     this.set_tab_fix(false);
     this.set_is_close_video(Math.random());
     this.set_show_video(false);

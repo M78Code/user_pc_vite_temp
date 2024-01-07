@@ -136,6 +136,7 @@ const ChangeActive = function () {
     .mhn {
         .tips {
             text-align: right;
+            padding-left: .1rem;
         }
 
         .figure {
@@ -146,6 +147,7 @@ const ChangeActive = function () {
     .man {
         .tips {
             text-align: left;
+            padding-right: .1rem;
         }
 
         .figure {

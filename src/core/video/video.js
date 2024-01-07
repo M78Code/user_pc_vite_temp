@@ -841,7 +841,7 @@ export default {
           callback('no-video')
           return
         }
-        console.log(111111111,url)
+       
         // 如果地址不是//开头  加上// 本地代码连生产时放开可播放大视频
         if(url.substr(0,2) != '//'){
           url = '//'+url
@@ -915,7 +915,7 @@ export default {
   */
   check_url(url,callback){
     api_details.get_full_url(url).then( res => {
-      console.log(111111111,res)
+     
       if (res.data) {
         callback(true)
       } else {

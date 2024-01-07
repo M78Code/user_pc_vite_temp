@@ -592,8 +592,9 @@
   
         is_hengping.value = false
         exit_browser_full_screen()
-        screen.orientation && screen.orientation.unlock()
-  
+        if(lodash.get(window,'screen.orientation.unlock')){
+          window.screen.orientation.unlock()
+      }
         is_expand_video_list.value = false
   
         data = {
@@ -606,8 +607,9 @@
   
         // is_hengping.value = true
         browser_full_screen()
-        screen.orientation && screen.orientation.lock('landscape')
-  
+        if(lodash.get(window,'screen.orientation.lock')){
+          window.screen.orientation.lock('landscape')
+      }
         data = {
           cmd: 'full_screen_portrait',
           full_screen_portrait: 1

@@ -30,7 +30,7 @@ import { onMounted, onUnmounted, ref} from "vue";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
-
+import {defineExpose} from 'vue'
 const props = defineProps({
   // 吸顶高度
   sticky_height: {
@@ -76,6 +76,7 @@ let mitt_list = [];
     area_ref.value.scrollTop = top;
   }
 };
+defineExpose({set_scrollTop})
 
 // 设置列表滚动条位置
 onUnmounted(() => {
@@ -172,6 +173,7 @@ const scroll_height_change = () => {
 const setScrollPosition = (top) => {
   set_scrollTop(top);
 };
+
 
 </script>
 <style lang="scss" scoped>
