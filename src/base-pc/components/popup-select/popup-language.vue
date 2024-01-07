@@ -24,7 +24,6 @@
   
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router';
 
 import { api_account } from 'src/api/index';
 import langs_mjs from "src/i18n/pc/langs/index.mjs";
@@ -32,7 +31,6 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { loadLanguageAsync } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js"
-import { update_bet_item_info } from "src/core/bet/common-helper/module/common.js";
 import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 
 /** 是否展示 */
