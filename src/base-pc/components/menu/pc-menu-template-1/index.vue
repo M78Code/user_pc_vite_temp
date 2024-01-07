@@ -8,7 +8,7 @@
       </div>
       <!--   今日、早盘、 -->
       <div class="menu-item menu-tab disable-hover double">
-        <div class="item yb-flex-center" :style="compute_css_obj(`today_menu_bg_1${MenuData.is_today() ? '_active' : ''}`)" :class="MenuData.is_today() ? 'active' : ''"
+        <div class="item yb-flex-center" :style="compute_css_obj(`today_menu_bg_1${!MenuData.is_zaopan() ? '_active' : ''}`)" :class="!MenuData.is_zaopan() ? 'active' : ''"
           @click="handle_click_jinri_zaopan(2)">
           {{ i18n_t("menu.match_today") }}
         </div>
@@ -23,7 +23,7 @@
     <div v-for="item in (MenuData.left_menu_list || [] )" :key="`_${item.mi}`" :class="set_vr_or_guanjun_border(item.mi)">
       <!--   赛种-->
       <!-- {{ BaseData.filterSport_arr }} -- {{ BaseData.compute_sport_id(item) }} -->
-      <div class="menu-item menu-fold1 search" :class="current_lv_1_mi == item.mi ? 'y-active' : ''" @click="lev_1_click(item)" v-if="item.ct">
+      <div class="menu-item menu-fold1 search" :class="current_lv_1_mi == item.mi? 'y-active' : ''" @click="lev_1_click(item)" v-if="item.ct">
         <!-- icon -->
         <div class="row items-center">
           <span class="soprts_id_icon"
@@ -75,7 +75,7 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive,onMounted, onUnmounted,computed,nextTick } from "vue";
+import { ref, watch,reactive,onMounted, onUnmounted,computed,nextTick } from "vue";
 import { useRoute, useRouter } from 'vue-router'
 // 菜单配置
 import { MenuData } from "src/output/index.js"
@@ -101,7 +101,6 @@ const current_lv_2_mi = ref(""); //"101201", // 101301
 const show_menu = ref(true);
 // 首次进入 刷新用
 const first_change = ref(false);
-
 /**
  * @description: 冠军 vr border 样式
  * @param {item} 赛种id
@@ -219,6 +218,9 @@ const lev_1_click = (obj) => {
   // lv2_mi 二级菜单id
   let mi = obj.mi
   let type = obj.mif
+  if(!MenuData.is_zaopan()){
+    MenuData.set_menu_root(2)
+  }
   if (MenuData.is_today() || MenuData.is_zaopan()) {
     // 点击一级菜单
     if (current_lv_1_mi.value == mi) {
