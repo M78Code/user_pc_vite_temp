@@ -77,7 +77,7 @@
       </scroll-list>
       <!-- <div> {{match_list_card_key_arr }}</div> -->
       <!-- 滚球其他列表 -->
-      <scroll-list v-if="menu_config.menu_root_show_shoucang != 300" ref="sroll_set">
+      <scroll-list v-if="menu_config.menu_root_show_shoucang != 300">
         <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.type + 'px' }"></div>
@@ -106,8 +106,8 @@
     </div>
   </div>
 </template>
-<script setup>
-import { onMounted, onUnmounted , watch,ref } from "vue";
+<script>
+import { onMounted, onUnmounted } from "vue";
 
 import { IconWapper } from 'src/components/icon'
 import LoadData from 'src/components/load_data/load_data.vue';
@@ -137,30 +137,64 @@ import { PageSourceData, compute_css_obj } from 'src/output/index.js';
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/output/index.js";
 import "./match_list.scss";
 const { page_source } = PageSourceData;
-const match_list_card_key_arr = ref([])
-const sroll_set = ref()
-const MatchListCardDataClass_match_list_card_key_arr = ()=>{
-  match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
-}
-const on_go_top = () => {
-  // useMittEmit(MITT_TYPES.EMIT_SET_SCROLL_POSITION, [0, 0]) 
-  sroll_set.value.set_scrollTop(0)
-}
-onMounted(()=>{
-  mounted_fn()
-  MatchListCardDataClass_match_list_card_key_arr()
-})
-
-onUnmounted(()=>{
-  handle_destroyed()
-})
-
-watch(
-  () => MatchListCardDataClass.list_version,
-  (val) => {
-    MatchListCardDataClass_match_list_card_key_arr()
+export default {
+  components: {
+    LeagueTab,
+    listFilter,
+    listFilterDate,
+    MatchListCard,
+    ListFilterHot,
+    PlayVirtualMatchType,
+    LoadData,
+    ScrollList,
+    IconWapper,
+    LoadData,
+    refresh,
+    EsportsHeader,
+    ListHeader
   },
-);
+  setup() {
+    onMounted(() => {
+      mounted_fn();
+    });
+    onUnmounted(() => {
+      handle_destroyed()
+    })
+    return {
+      menu_config,
+      MatchListData,
+      show_refresh_mask,
+      collect_count,
+      is_show_hot,
+      page_source,
+      GlobalAccessConfig,
+      match_list_card,
+      on_refresh
+    };
+  },
+  data() {
+    return {
+      compute_css_obj,
+      MatchListCardDataClass,
+      load_data_state,
+      match_list_card_key_arr: []
+    }
+  },
+  mounted() {
+    this.MatchListCardDataClass_match_list_card_key_arr();
+  },
+  watch: {
+    'MatchListCardDataClass.list_version'(newValue, oldValue) {
+      this.MatchListCardDataClass_match_list_card_key_arr()
+      this.$forceUpdate()
+    }
+  },
+  methods: {
+    MatchListCardDataClass_match_list_card_key_arr() {
+      this.match_list_card_key_arr = MatchListCardDataClass.match_list_card_key_arr
+    },
+  },
+};
 // 赛事列表筛选：滚球-球种、早盘-日期
 // 列表视图滚动容器
 // ScrollList: () => import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/cus_scroll/scroll_list.vue"),
