@@ -61,4 +61,9 @@ export class mutations {
         store.sports_tab_index = index_
         store.search_csid = store.sports_list[index_].id
     }
+
+    static clear_handle() {
+        store.keyword = ''
+        store.show_type = 'init'
+    }
 }

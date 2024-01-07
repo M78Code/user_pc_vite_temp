@@ -619,8 +619,6 @@ const hand_copy = (data) => {
 
 .record-table {
   position: relative;
-  margin-top: 10px;
-
   .unsettled {
     padding-bottom: 50px;
   }
