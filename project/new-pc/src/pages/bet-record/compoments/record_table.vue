@@ -3,8 +3,8 @@
     <div style="display: none;">{{ BetRecordHistory.bet_record_version }}</div>
     <div>
 
-      <q-table :rows="tableData" style="max-height:calc(100vh - 17rem)" :rows-per-page-options="[0]" :columns="columns"
-               row-key="orderNo" separator="cell" hide-pagination :class="current_tab === 'settled' ? 'settled' : 'unsettled'"
+      <q-table :rows="tableData" style="max-height:calc(100vh - 17rem)" :rows-per-page-options="[0]" :columns="BetRecordHistory.columns"
+          row-key="orderNo" separator="cell" hide-pagination :class="current_tab === 'settled' ? 'settled' : 'unsettled'"
           :table-header-style="{
           backgroundColor: '#F1F1F1',
           height: '28px',
@@ -619,8 +619,6 @@ const hand_copy = (data) => {
 
 .record-table {
   position: relative;
-  margin-top: 10px;
-
   .unsettled {
     padding-bottom: 50px;
   }
