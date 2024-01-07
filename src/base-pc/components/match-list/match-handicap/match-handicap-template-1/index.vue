@@ -8,7 +8,6 @@
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="row no-wrap">
       <!-- 玩法列表 -->
-    
       <div class="handicap-col" v-for="(col, col_index) in col_ols_data" :key="col_index">
         <div  v-for="(ol_data, ol_index) in col.ols" :key="col_index + '_' + ol_index" 
           :class="['bet-item-wrap',ol_data?.other_class]"  :style="get_bet_style(col_index, lodash.get(col, 'ols.length'),ol_data)"
@@ -75,9 +74,10 @@ const props = defineProps({
 })
 
 const MatchListData=inject("MatchListData")
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
+const match_style_obj=inject("match_style_obj")
 // 赛事模板宽度
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+const match_list_tpl_size=inject("match_list_tpl_size")
+
 // 组件是否已挂载
 const is_mounted = ref(false);
 const cur_esports_mode = ref(BetData.cur_esports_mode);
@@ -139,9 +139,9 @@ function get_5min_classname() {
  * @return {Number}  bet_width 投注项宽度 
  */
 function get_bet_width(index, other_class = '') {
-  let { bet_width } = match_list_tpl_size
+  let { bet_width } = match_list_tpl_size.value
   // let bet_width = 110;
-  let { data_tpl_id } = match_style_obj
+  let { data_tpl_id } = match_style_obj.value
   if (other_class.includes('col1.5')) {
     bet_width *= 1.5
   } else if (other_class.includes('col2')) {
@@ -173,7 +173,7 @@ function get_bet_width(index, other_class = '') {
  */
 function get_bet_height(length) {
   let height = 35
-  let { data_tpl_id } = match_style_obj
+  let { data_tpl_id } = match_style_obj.value
   if (length == 1) {
     if (+data_tpl_id === 22) {
       height = height * 3
@@ -192,8 +192,8 @@ function get_bet_style(col_index, length, ol_data) {
   let other_class = lodash.get(ol_data, 'other_class', '')
   let style = `width:${get_bet_width(col_index, other_class)}px !important;height:${get_bet_height(length)}px !important;`
   if (other_class.includes('displacement')) {
-    let { data_tpl_id } = match_style_obj
-    let { bet_width, media_width } = match_list_tpl_size
+    let { data_tpl_id } = match_style_obj.value
+    let { bet_width, media_width } = match_list_tpl_size.value
     let right = data_tpl_id == 13 ? bet_width * 7 + media_width - 1 : media_width - 1
     style += `right: ${right}px;`
   }
