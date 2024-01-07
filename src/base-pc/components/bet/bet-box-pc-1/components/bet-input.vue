@@ -233,6 +233,7 @@ input[type="number"] {
         padding-top: 8px !important;
         margin-left: -10px !important;
         margin-right: -10px !important;
+        padding: 0 10px;
     }
 }
 
