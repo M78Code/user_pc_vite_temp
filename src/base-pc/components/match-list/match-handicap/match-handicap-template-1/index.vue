@@ -5,7 +5,6 @@
 -->
 <template>
   <div :class="['c-match-handicap', { 'unfold_multi_column': match_style_obj.data_tpl_id == 13 }, get_5min_classname()]">
-    <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="row no-wrap">
       <!-- 玩法列表 -->
       <div class="handicap-col" v-for="(col, col_index) in col_ols_data" :key="col_index">
@@ -33,23 +32,15 @@ import lodash from 'lodash';
 
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
 import { get_match_status } from 'src/core/utils/common/index'
-import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data.vue"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
-import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { compute_sport_id } from 'src/output/index.js'
 import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 const props = defineProps({
   // 盘口列表
   handicap_list: {
     type: Array,
     default: () => [],
-  },
-  // 赛事
-  match: {
-    type: Object,
-    default: () => { },
   },
   // 是否显示比分
   is_show_score: {
@@ -75,6 +66,7 @@ const props = defineProps({
 
 const MatchListData=inject("MatchListData")
 const match_style_obj=inject("match_style_obj")
+const match=inject("match")
 // 赛事模板宽度
 const match_list_tpl_size=inject("match_list_tpl_size")
 
@@ -89,13 +81,13 @@ onMounted(() => {
 })
 //非坑位对象
 const not_hn_obj_map = computed(() => {
-  return get_match_to_map_obj(props.match, null, props.add_type); //非坑位对象
+  return get_match_to_map_obj(match.value, null, props.add_type); //非坑位对象
 })
 //坑位对象
 const hn_obj = toRef(MatchListData.list_to_obj,'hn_obj')
 const col_ols_data = computed(() => {
   try {
-    let { mid, csid } = props.match
+    let { mid, csid } =match.value
     let handicap_type = props.add_type
     return lodash.cloneDeep(props.handicap_list || []).map(col => {
       col.ols = col.ols.map(item => {
@@ -119,10 +111,10 @@ const col_ols_data = computed(() => {
 function get_5min_classname() {
   let className = ''
   if (
-    props.other_play && ['hps5Minutes'].includes(props.match.play_current_key) // 5分钟玩法
+    props.other_play && ['hps5Minutes'].includes(match.value.play_current_key) // 5分钟玩法
   ) {
     // 滚球 不需要背景色
-    if (get_match_status(lodash.get(props, 'match.ms'), [110]) == 1) {
+    if (get_match_status(lodash.get(match.value, 'ms'), [110]) == 1) {
       className = 'not-bg-handicap min5-roll-handicap'
     } else {
       // not-bg-handicap 清除被影响的背景色
