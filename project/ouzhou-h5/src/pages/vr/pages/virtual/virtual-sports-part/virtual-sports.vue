@@ -21,26 +21,10 @@
     <div class="virtual-content-wrapper">
       <div class="virtual-sports-card">
         <div class="virtual-sports-card-content">
-          <div class="tab-title" @click.stop="expend_video = !expend_video">
-            <div class="league-name right-border">{{ lengue_name }}</div>
-            <div class="status">
-              <span class="num">{{current_match.no}}</span>
-              <span class="state">
-                <!-- 未开赛时间 -->
-                <template v-if="current_match.match_status == 0">
-                  {{match_list_all_batches && match_list_all_batches[0] && match_list_all_batches[0].remaining_time > 0 ? match_list_all_batches[0].timer_format :  i18n_t('virtual_sports.match_status.playing')}}
-                </template>
-                <template v-else>
-                  {{ current_match.match_status == 2 ? i18n_t('collect.match_end') : i18n_t('virtual_sports.match_status.playing') }}
-                </template>
-              </span>
-              <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
-            </div>
-          </div>
-          <div v-show="expend_video">
+          <div>
             <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
             <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
-            <virtual-sports-stage ref="virtual_sports_stage"
+            <virtual-sports-stage ref="virtual_sports_stage" 
               :is_before_destroy="is_before_destroy"
               :key="current_match.mid"
               :m_status="current_match.match_status"
@@ -55,18 +39,6 @@
             </virtual-sports-stage>
             <div class="test-line" v-if="show_debug">
               {{current_match.mid}}
-            </div>
-            <div class="virtual-video-play-team" v-if="sub_menu_type && [1001,1004].includes(sub_menu_type)">
-                    <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']" v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
-                      <div class="teams">
-                        <span>{{item.teams[0]}}</span>
-                        <span class="number_family">{{item.home || 0}}</span>
-                      </div>
-                      <div class="teams">
-                        <span>{{item.teams[1]}}</span>
-                        <span class="number_family">{{item.away || 0}}</span>
-                      </div>
-                    </div>
             </div>
             <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
             <template v-else-if="sub_menu_type && current_match">

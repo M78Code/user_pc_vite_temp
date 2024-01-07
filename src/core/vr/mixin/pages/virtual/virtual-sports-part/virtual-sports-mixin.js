@@ -99,6 +99,14 @@ export default {
     set_prev_v_sports_params(data){VR_CTR.state.prev_v_sports_params = data},
     set_current_mid(data){VR_CTR.state.current_match_mid = data},
 
+    //全部轮次展开折叠 
+    handle_all_league(){
+      this.expend_video = this.is_expend_all ? false : true;
+      this.match_list_all_batches.forEach(item=>{
+        item.is_expend = this.is_expend_all ? false : true;
+      })
+      this.is_expend_all = !this.is_expend_all;
+    },
     // 顶部菜单切换状态改变
     handle_top_menu_change(status) {
       this.top_menu_changed = status
