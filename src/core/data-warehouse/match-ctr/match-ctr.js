@@ -644,7 +644,7 @@ get_quick_mid_obj_ref(mid){
     match.has_add2 = has_add_n.has_add2;
 
     // 设置是否显示当前局玩法 // 组件显示时,组件内进行设置
-    // match.is_show_cur_handicap = false
+    match.is_show_cur_handicap = false
     // 主客队名称后面是否显示上半场字符串
     match.up_half_text = '' // 组件显示时,组件内进行设置
     // 当前局盘口列表
