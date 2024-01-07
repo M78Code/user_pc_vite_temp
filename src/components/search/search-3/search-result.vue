@@ -3,17 +3,17 @@
 <template>
     <div class="result-wrap">
         <!-- 无数据 -->
-        <div class="serach-background" v-show="load_data_state != 'data'" @click.stop>
-            <loadData class="fit" :state="load_data_state" :no_data_msg="i18n_t('search.null1')"
+        <div class="serach-background" v-show="store.load_data_state != 'data'" @click.stop>
+            <loadData class="fit" :state="store.load_data_state" :no_data_msg="i18n_t('search.null1')"
                 :no_data_msg2="i18n_t('search.null2')" />
         </div>
         <!-- 滚动区域 -->
-        <q-scroll-area v-show="load_data_state == 'data'" class="fit rule-scroll-area" ref="scrollRef">
+        <q-scroll-area v-show="store.load_data_state == 'data'" class="fit rule-scroll-area" ref="scrollRef">
             <div class="serach-background" @click.stop>
                 <div style="height:70px"></div>
                 <!-- 赛种 -->
                 <div class="type-item" :class="{ active: type.is_active, inplay: type.is_inplay }"
-                    v-for="(type, type_index) in res_list" :key="type_index">
+                    v-for="(type, type_index) in store.res_list" :key="type_index">
                     <div class="type-wrap" @click="type.is_active = !type.is_active">
                         <div class="line"></div>
                         <div class="type-name">
@@ -59,10 +59,10 @@ import { ref, reactive, watch, onBeforeUnmount ,nextTick} from 'vue'
 import { SearchPCClass } from 'src/output/index.js'
 import { project_name, i18n_t } from 'src/output/index.js';
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
-// import store from "src/store-redux/index.js";
+import lodash from "lodash";
 import details from "src/core/match-list-pc/details-class/details.js"
 import search from "src/core/search-class/search.js"
-import {store} from './index.js'
+import {store, mutations} from './index.js'
 
 import loadData from "src/components/load_data/load_data.vue"
 
@@ -84,9 +84,9 @@ const update_show_type = (data) => emit('update:show_type', data)
 
 
 /** 数据加载状态 */
-const load_data_state = ref('data')
+// const load_data_state = ref('data')
 /** 搜索结果数据 */
-let res_list = reactive([])
+// let res_list = reactive([])
 
 // const router = useRouter()
 
@@ -96,21 +96,18 @@ let res_list = reactive([])
  * 获取搜索内容 default: ''
  * 路径: project_path\src\store\module\search.js
  */
-const keyword = ref(SearchPCClass.keyword)
+// const keyword = ref(SearchPCClass.keyword)
 // 监听搜索关键词改变
 watch(
-    () => store._keyword,
-    (res) => {
-        console.log('fdsafdsfdsafsdafdsafsdafsdfsa12312312', res)
+    () => store.keyword,
+    lodash.debounce((res) => {
         // if (search_type.value == 2) {
         //     update_show_type('none')
         // } else {
         //     get_search_result(res.substr(5))
         // }
-
-        get_search_result(res)
-
-    }
+            get_search_result(res)
+    }, 300)
 )
 
 /**
@@ -172,35 +169,54 @@ const timer = ref(null)
  * @param {string} keyword 搜索关键字
  * @return {Undefined} Undefined
  */
-function get_search_result(keyword, is_loading) {
-    if (!keyword) {
-        update_show_type('init')
+function get_search_result() {
+    if (!store.keyword) {
+        // update_show_type('init')
+        store.show_type = 'init'
         return
     }
-    //调用接口前先设置加载状态
-    if (is_loading) {
-        load_data_state.value = 'loading'
-    }
-    //调用接口获取获取搜索结果数据
-    search.get_search_result(keyword, props.search_csid).then(res => {
-        const { state, list } = res
-        update_show_type('result')
-        load_data_state.value = state
-        res_list = list
-        let _ref_scroll = scrollRef.value;
-        timer.value = setTimeout(() => {
-            // 如果是从详情页返回
-            if (search.back_keyword.keyword) {
-                nextTick(() => {
-                    //重新设置滚动高度
-                    _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', search.result_scroll.top);
-                })
-            } else {
+    // //调用接口前先设置加载状态
+    // if (is_loading) {
+    //     load_data_state.value = 'loading'
+    // }
+    mutations.get_search_result_handle()
+    // const { state, list } = results
+    // update_show_type('result')
+    // load_data_state.value = 'data'
+    let _ref_scroll = scrollRef.value;
+    timer.value = setTimeout(() => {
+        // 如果是从详情页返回
+        if (search.back_keyword.keyword) {
+            nextTick(() => {
                 //重新设置滚动高度
-                _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
-            }
-        })
+                _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', search.result_scroll.top);
+            })
+        } else {
+            //重新设置滚动高度
+            _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
+        }
     })
+
+    //调用接口获取获取搜索结果数据
+    // search.get_search_result(keyword, props.search_csid).then(res => {
+    //     const { state, list } = res
+    //     update_show_type('result')
+    //     load_data_state.value = state
+    //     res_list = list
+    //     let _ref_scroll = scrollRef.value;
+    //     timer.value = setTimeout(() => {
+    //         // 如果是从详情页返回
+    //         if (search.back_keyword.keyword) {
+    //             nextTick(() => {
+    //                 //重新设置滚动高度
+    //                 _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', search.result_scroll.top);
+    //             })
+    //         } else {
+    //             //重新设置滚动高度
+    //             _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
+    //         }
+    //     })
+    // })
 }
 onBeforeUnmount(() => {
     if (timer.value) {
@@ -211,10 +227,15 @@ onBeforeUnmount(() => {
 
 // 监听搜索球种变化
 watch(
-    () => props.search_csid,
+    () => store.search_csid,
     () => {
-        const keword = keyword.value.substr(5)
-        get_search_result(keword, true)
+        if (store.keyword) {
+            get_search_result()
+        } else {
+        }
+        // const keword = keyword.value.substr(5)
+        // store.keyword = ''
+        // get_search_result()
     }
 )
 

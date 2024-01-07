@@ -10,8 +10,8 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/m
 import { get_compute_other_play_data, get_play_current_play, get_tab_play_keys } from 'src/core/match-list-pc/composables/match-list-other.js'
 import { match_state_convert_score_dict, history_score_dict } from 'src/core/constant/project/module/data-class-ctr/score-keys.js'
 import { get_match_template_id } from './list-template/match-list-tpl'
-import { let_ball_play_tpl } from "src/core/constant/project/index.js"
 import { get_21_bold_template, get_template_data, switch_other_play, set_min15 } from './composables/match-list-other'
+
 export * from './list-template/match-list-tpl'
 
 /**
@@ -23,7 +23,7 @@ export * from './list-template/match-list-tpl'
 export function set_match(mid, val = {}) {
     const _match = MatchListData.get_quick_mid_obj(lodash.get(mid, 'mid', mid));
     MatchListData.cache_match[mid] = MatchListData.cache_match[mid] || {}
-    Object.assign(MatchListData.cache_match[mid],val)
+    Object.assign(MatchListData.cache_match[mid], val)
     return {
         ..._match,
         ...MatchListData.cache_match[mid]
@@ -535,9 +535,9 @@ export function compute_match_all_handicap_data(match) {
         // 赛制 3局或5局
         let mft = match.mft == 3 ? 3 : 5
         if ([5, 9].includes(+csid)) {
-            main_handicap_list = clone_arr(play_config[`main_handicap_list_5_${mft}`])
+            main_handicap_list = clone_arr(lodash.get(play_config,`template_${tpl_id}.main_handicap_list_5_${mft}`))
         } else {
-            main_handicap_list = clone_arr(play_config[`main_handicap_list_${csid}_${mft}`])
+            main_handicap_list = clone_arr(lodash.get(play_config,`template_${tpl_id}.main_handicap_list_${csid}_${mft}`))
         }
     }
     // 兵乓球准确局数  根据赛制获取主盘列表

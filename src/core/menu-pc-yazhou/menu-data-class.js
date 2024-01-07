@@ -357,6 +357,7 @@ class MenuData {
    */
   set_left_menu_result(obj) {
     this.menu_root_show_shoucang = obj.root;
+    this.menu_root = obj.root?obj.root:this.menu_root;
     // 设置 列表接口类型
     // this.set_match_list_api_type(obj);
     // console.error('set_left_menu_result',obj)
@@ -769,8 +770,7 @@ class MenuData {
    * @param {boolean}
    */
   is_corner_menu() {
-    // console.log(2222222,this.mid_menu_result)
-    return [101210, 101310].includes(+this.mid_menu_result.lv2_mi);
+    return [101210, 101310].includes(+this.left_menu_result.lv2_mi);
   }
   /**
    * 是否选中了早盘

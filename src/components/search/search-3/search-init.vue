@@ -105,14 +105,16 @@ import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js"
 import search from "src/core/search-class/search.js"
 import { IconWapper } from 'src/components/icon/index.js'
+import {store, mutations} from './index.js'
 
-const props = defineProps({
-    show_type: {
-        type: String,
-        default: ''
-    }
-})
-const emit = defineEmits(['update:set_show_type'])
+
+// const props = defineProps({
+//     show_type: {
+//         type: String,
+//         default: ''
+//     }
+// })
+// const emit = defineEmits(['update:set_show_type'])
 
 /** 历史搜索数据 */
 const histroy_data = ref([])
@@ -121,7 +123,7 @@ const hot_data = ref([])
 
 //显示类型改变
 watch(
-    () => props.show_type,
+    () => store.show_type,
     (bool) => {
         if (bool == 'init') {
             init()
@@ -148,6 +150,7 @@ function click_keyword(keyword, is_insert_history) {
     if (is_insert_history) {
         search.insert_history(keyword)
     }
+    store.keyword = keyword
     // set_search_type(1)
     // set_click_keyword(keyword);
 }
@@ -195,7 +198,8 @@ const delete_histroy = lodash.debounce((keyword, index) => {
  * @return {undefined} undefined
  */
 function other_search(type) {
-    emit('update:show_type', type)
+    // emit('update:show_type', type)
+    store.show_type = type
 }
 
 /**

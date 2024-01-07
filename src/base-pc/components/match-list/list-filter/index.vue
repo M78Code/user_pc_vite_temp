@@ -1,5 +1,4 @@
 <template>
-  {{MenuData.menu_root}} ---
   <div
     class="c-match-list-filter"
     :class="{
@@ -34,9 +33,11 @@
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_0` })"></span>
           <!-- 是否新上玩法 -->
         </div>
+        全部
       </div>
       <!-- 常规球类 -->
-      <template v-for="item in mi_100_arr">
+      <!-- <template v-for="item in mi_100_arr"> -->
+      <template v-for="item in MenuData.in_play_list">
         <div
           :key="`mi_100_arr_${item.mif}`"
           v-if="
@@ -186,7 +187,7 @@
           <span class="count-text">{{ compute_quanbu_num_mi_400() }}</span>
         </div>
       </div>
-      <template v-for="item in mi_400_obj['sl']">
+      <template v-for="item in MenuData.kemp_list">
         <!--   no-active  active -->
         <div
           :key="item.mi"
@@ -236,7 +237,7 @@
 </template>
 <script setup>
 import BaseData from "src/core/base-data/base-data.js";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import MenuData from "src/core/menu-pc-yazhou/menu-data-class.js";
 import DragScroll from "src/base-pc/components/cus-scroll/drag_scroll.vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { compute_css_obj } from "src/output/index.js";
@@ -248,8 +249,7 @@ import { compute_css_obj } from "src/output/index.js";
     vr_menu_obj,
      compute_quanbu_num_mi_1,
     handle_click_menu_mi_400, handle_click_menu_mi_1, compute_mi_400_sl_mi_csid, compute_quanbu_num_mi_400, 
-  } from './index.js'
-
+  } from './yz_index.js'
 
 </script>
 <style lang="scss" scoped>

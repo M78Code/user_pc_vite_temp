@@ -339,6 +339,7 @@
     // 网斯乒羽(5,7,8,10)  棒冰美排(3、4、6、9)
     let csid = +match.csid;
     let result = false;
+    // ms -> 1进行中
     result = match.ms == 1 && [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].includes(csid);
     // if(get_menu_type.value == 28){
     //   result = true;
