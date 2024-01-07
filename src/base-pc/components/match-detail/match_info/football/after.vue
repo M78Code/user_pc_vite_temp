@@ -302,7 +302,6 @@ export default {
     },
   },
   created(){
-    console.log(11111111666,this.match_info)
     this.hide_home_goal = this.lodash.debounce(this.hide_home_goal,5000)
     this.hide_away_goal = this.lodash.debounce(this.hide_away_goal,5000)
     this.hide_home_red = this.lodash.debounce(this.hide_home_red,5000)
