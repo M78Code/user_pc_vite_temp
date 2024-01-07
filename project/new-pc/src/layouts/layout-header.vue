@@ -427,9 +427,12 @@ function navigate(obj) {
     return;
   }
   // 改为欧洲杯大师赛路径
-  let _window_width = (['/activity', '/activity_aegis'].includes(_path)) ? 1217 : 1000;
+  let _window_width = (['/activity_aegis'].includes(_path)) ? 1217 : 1000;
   if (_path == '/match_results') {
     _window_width = 1170
+  }
+  if (_path == '/activity') {
+    _window_width = 1400
   }
   let _window_height = 650;
   if (['/activity', '/activity_aegis'].includes(_path)) {
