@@ -831,5 +831,33 @@ export const use_sports_play_title = () => {
         ]
       },
     ],
+    // 虚拟足球
+    "1001": [  
+      {
+        hpid: '20001',
+        label: i18n_t('list.play1'), //'全场独赢',
+        ol: [
+          { ot: '1', title: i18n_t('list.win1') }, //"主胜"
+          { ot: 'X', title: i18n_t('list.dogfall') }, // "平局"
+          { ot: '2', title: i18n_t('list.win2')} // "客胜"
+        ]
+      },
+      {
+        hpid: '20002',
+        label: i18n_t('list.play3'), // '全场大小',
+        ol: [
+          { ot: 'Over', title: i18n_t('ouzhou.match.bet_col_Over') }, // "全场大"
+          { ot: 'Under', title: i18n_t('ouzhou.match.bet_col_Under') }, // "全场小"
+        ]
+      },
+      {
+        hpid: '20004',
+        label: i18n_t('list.play2'), // '全场让球',
+        ol: [
+          { ot: '1', title: i18n_t('ouzhou.bet_col.bet_col_4.bet_col_1') }, // "主队让球"
+          { ot: '2', title: i18n_t('ouzhou.bet_col.bet_col_4.bet_col_2') }, // "客队让球"
+        ]
+      },
+    ],
   }
 }
