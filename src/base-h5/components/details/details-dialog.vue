@@ -385,4 +385,4 @@ export default defineComponent({
     }
   }
 }
-</style>src/core/format/common/module/format-score.js
+</style>
