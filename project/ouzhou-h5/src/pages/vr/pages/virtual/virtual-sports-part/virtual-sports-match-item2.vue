@@ -51,7 +51,7 @@ import virtual_sports_match_item2_mixin from "src/core/vr/mixin/pages/virtual/vi
 import v_s_odd_item from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/virtual-sports-odd-item.vue"
 import v_s_match_timer from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/virtual-sports-match-timer.vue"
 import odd_column_item from "src/base-h5/components/match-container/template/app/components/odd-column-item.vue"
-import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
+import ImageCacheLoad from "src/core/public-cache-image/public-cache-image.vue";
 import temp9 from "src/base-h5/components/details/components/tournament-play/template-2/temp9.vue"
 export default {
   mixins:[virtual_sports_match_item2_mixin],
