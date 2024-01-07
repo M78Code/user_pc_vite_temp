@@ -121,7 +121,7 @@ import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
 import { compute_css_obj } from 'src/core/server-img/index.js'
-
+import BaseData from 'src/core/base-data/base-data.js'
 
 export default defineComponent({
   name: "RightHead",
@@ -255,11 +255,12 @@ export default defineComponent({
       // 设置国际化语言
       loadLanguageAsync(key).then().finally(() => {
         UserCtr.set_lang(key)
+        BaseData.set_base_data_menu_i18n()
       })
       api_account.set_user_lang({ languageName: key }).then(res => {
         let code = lodash.get(res, 'code');
         if (code == 200) {
-
+         
         } else if (code == '0401038') {
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
         }
