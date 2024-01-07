@@ -55,7 +55,7 @@ function un_mounted() {
 function compute_quanbu_num_mi_1() {
     // 常规的计算
     let num = 0;
-    mi_100_arr.value.map((x) => {
+    MenuData.in_play_list.map((x) => {
         if (x.ct) {
             num += x.ct;
         }
