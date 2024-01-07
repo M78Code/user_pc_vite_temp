@@ -254,7 +254,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .analysis-football-matches {
   position: relative;
-  z-index: 80;
+  z-index: 99;
   background-color:  var(--q-gb-bg-c-23);
 }
 

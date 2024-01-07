@@ -5,7 +5,7 @@
 -->
 <template>
   <div
-    :class="{ 'w-100': lodash.get(match_info, 'msc.S7') }"
+    :class="{ 'w-100': lodash.get(match_info, 'msc_obj.S7') }"
     class="basketball-after"
     v-if="isRouterAlive"
   >
@@ -94,7 +94,7 @@
           <!-- 右滚动按钮 E -->
 
           <!-- 加时 -->
-          <span class="common-score" v-if="lodash.get(match_info, 'msc.S7')">{{
+          <span class="common-score" v-if="lodash.get(match_info, 'msc_obj.S7')">{{
             i18n_t("common.add_time")
           }}</span>
         </template>
@@ -137,32 +137,32 @@
             >
               <template v-if="lodash.get(match_info, 'mle') == '17'">
                 <!-- 上半场比分 -->
-                <span>{{ lodash.get(match_info, "msc.S2.home") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S2.home") }}</span>
                 <!-- 下半场比分 -->
-                <span>{{ lodash.get(match_info, "msc.S3.home") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S3.home") }}</span>
               </template>
               <template v-else>
                 <!-- 第一节比分 -->
-                <span>{{ lodash.get(match_info, "msc.S19.home") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S19.home") }}</span>
                 <!-- 第二节比分 -->
-                <span>{{ lodash.get(match_info, "msc.S20.home") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S20.home") }}</span>
                 <span class="time-half">{{
-                  lodash.get(match_info, "msc.S2.home")
+                  lodash.get(match_info, "msc_obj.S2.home")
                 }}</span>
                 <!-- 第三节比分 -->
-                <span>{{ lodash.get(match_info, "msc.S21.home") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S21.home") }}</span>
                 <!-- 第四节比分 -->
-                <span>{{ lodash.get(match_info, "msc.S22.home") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S22.home") }}</span>
               </template>
             </div>
             <span
               class="common-score"
-              v-if="lodash.get(match_info, 'msc.S7')"
-              >{{ lodash.get(match_info, "msc.S7.home") }}</span
+              v-if="lodash.get(match_info, 'msc_obj.S7')"
+              >{{ lodash.get(match_info, "msc_obj.S7.home") }}</span
             >
           </template>
           <span class="common-score score">{{
-            lodash.get(match_info, "msc.S1.home")
+            lodash.get(match_info, "msc_obj.S1.home")
           }}</span>
         </div>
       </div>
@@ -197,28 +197,28 @@
               }"
             >
               <template v-if="lodash.get(match_info, 'mle') == '17'">
-                <span>{{ lodash.get(match_info, "msc.S2.away") }}</span>
-                <span>{{ lodash.get(match_info, "msc.S3.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S2.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S3.away") }}</span>
               </template>
               <template v-else>
-                <span>{{ lodash.get(match_info, "msc.S19.away") }}</span>
-                <span>{{ lodash.get(match_info, "msc.S20.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S19.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S20.away") }}</span>
                 <span class="time-half">{{
-                  lodash.get(match_info, "msc.S2.away")
+                  lodash.get(match_info, "msc_obj.S2.away")
                 }}</span>
-                <span>{{ lodash.get(match_info, "msc.S21.away") }}</span>
-                <span>{{ lodash.get(match_info, "msc.S22.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S21.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S22.away") }}</span>
               </template>
             </div>
 
             <span
               class="common-score"
-              v-if="lodash.get(match_info, 'msc.S7')"
-              >{{ lodash.get(match_info, "msc.S7.away") }}</span
+              v-if="lodash.get(match_info, 'msc_obj.S7')"
+              >{{ lodash.get(match_info, "msc_obj.S7.away") }}</span
             >
           </template>
           <span class="common-score score">{{
-            lodash.get(match_info, "msc.S1.away")
+            lodash.get(match_info, "msc_obj.S1.away")
           }}</span>
         </div>
       </div>
@@ -271,7 +271,7 @@ export default {
     };
   },
   mounted() {
-    
+  
   },
   methods: {
     /**
@@ -381,7 +381,7 @@ export default {
 
         if (
           this.$route.name == "home" &&
-          lodash.get(res, "msc.S7") &&
+          lodash.get(res, "msc_obj.S7") &&
           LayOutMain.layout_content_width < 1430
         ) {
           this.is_scroll = true;
@@ -404,7 +404,7 @@ export default {
     LayOutMain: {
       handler(res) {
         if (this.$route.name == "home") {
-          if (res.width < 1430 && lodash.get(this.match_info, "msc.S7")) {
+          if (res.width < 1430 && lodash.get(this.match_info, "msc_obj.S7")) {
             if (!this.is_scroll) {
               this.screen_class = "is_min_screen";
               this.is_scroll = true;

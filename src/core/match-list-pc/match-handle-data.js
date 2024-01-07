@@ -599,20 +599,20 @@ export function compute_match_all_handicap_data(match) {
  * @param {undefined} undefined
 */
 export function compute_match_all_handicap_data_champion(match) {
-    // 主盘口列表
-    let main_handicap_list = []
-    // 遍历主盘口数据
-    lodash.each(match.hpsData, hpsData => {
-        lodash.each(hpsData.hps, item => {
-            let hl_obj = lodash.get(item, 'hl', {})
-            if (hl_obj.hid) {
-                hl_obj.end_time = time_conversion(hl_obj.hmed)
-                hl_obj.hpn = lodash.get(match.play_obj, `hid_${hl_obj.hid}.hpn`, '')
-                main_handicap_list.push(hl_obj)
-            }
-        })
-    })
-    return main_handicap_list
+  // 主盘口列表
+  let main_handicap_list = [];
+  // 遍历主盘口数据
+  lodash.each(match.hpsData, (hpsData) => {
+    lodash.each(hpsData.hps, (item) => {
+      let hl_obj = lodash.get(item, "hl", {});
+      if (hl_obj.hid) {
+        hl_obj.end_time = time_conversion(hl_obj.hmed);
+        hl_obj.hpn = match.hpsPns.find(option => option.hid == hl_obj.hid)?.hpn
+        main_handicap_list.push(hl_obj);
+      }
+    });
+  });
+  return main_handicap_list;
 }
 
 /**

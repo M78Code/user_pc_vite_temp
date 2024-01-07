@@ -17,11 +17,10 @@
             <!-- 搜索输入框 -->
             <input
                 type="search"
+                ref="inputRef"
                 v-model="store.keyword"
                 class="search-input col"
-                v-focus="is_focus"
                 :class="{ 'key-is-empty': !store.keyword }"
-                @blur="is_focus = false"
                 @keyup.enter="submit"
                 @input="change_txt"
                 @click="input_click"
@@ -51,24 +50,26 @@
   
 <script setup>
 import { defineComponent, ref, nextTick, watch, onUnmounted, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+// import { useRoute, useRouter } from 'vue-router'
 import { IconWapper } from 'src/components/icon/index.js'
 import {SearchPCClass} from 'src/output/project/common/pc-common.js'
 import { i18n_t } from "src/boot/i18n.js"
 import {store} from "./index";
 
-const vFocus = {
-    update: (el, value) => value && el.focus()
-}
+const inputRef = ref(null)
 
-const props = defineProps({
-    show_type: {
-        type: String,
-        default: ''
-    }
-})
+// const vFocus = {
+//     update: (el, value) => value && el.focus()
+// }
 
-const emit = defineEmits(['update:set_show_type', 'get_search_result'])
+// const props = defineProps({
+//     show_type: {
+//         type: String,
+//         default: ''
+//     }
+// })
+
+// const emit = defineEmits(['update:set_show_type', 'get_search_result'])
 
 /** 输入关键字 */
 // const keyword = ref('')
@@ -86,9 +87,9 @@ const emit = defineEmits(['update:set_show_type', 'get_search_result'])
 // )
 
 /** 输入框是否获得焦点 */
-const is_focus = ref(false)
+// const is_focus = ref(true)
 /** 进入搜索的页面 */
-const route_name = ref('')
+// const route_name = ref('')
 /**
  * @Description:替换输入框非法字符为空串
  * @return {undefined} undefined
@@ -103,36 +104,38 @@ function change_txt() {
  * @return {undefined} undefined
  */
 function submit() {
-    const res = store.keyword.trim();
-    if (!res) return;
+    // const res = store.keyword.trim();
+    store.keyword = store.keyword.trim();
+    // if (!res) return;
     // set_search_type(1) 替换为 SearchPCClass.set_search_type(1)
-    SearchPCClass.set_search_type(1)
+    // SearchPCClass.set_search_type(1)
     // set_search_keyword(res) 替换为 SearchPCClass.set_keyword(res)
-    SearchPCClass.set_keyword(res)
+    // SearchPCClass.set_keyword(res)
 }
 
 /**
  * @Description:输入框获得焦点
  * @return {undefined} undefined
  */
-function focusclick() {
-    is_focus.value = true
-    if (props.show_type == 'none') {
-        emit('update:set_show_type', 'init')
-    }
-}
+// function focusclick() {
+//     // is_focus.value = true
+//     if (store.show_type == 'none') {
+//         // emit('update:set_show_type', 'init')
+//         store.show_type = 'init'
+//     }
+// }
 
 /**
  * @Description 输入框点击
  * @param {undefined} undefined
  */
-function input_click() {
-    is_focus.value = true
-    const val = store.keyword.trim();
-    SearchPCClass.set_search_type(1)
+// function input_click() {
+    // is_focus.value = true
+    // const val = store.keyword.trim();
+    // SearchPCClass.set_search_type(1)
     // set_search_keyword(val)
-    SearchPCClass.set_keyword(val)
-}
+    // SearchPCClass.set_keyword(val)
+// }
 
 // const route = useRoute()
 //从搜索页面跳转其他页面
@@ -164,7 +167,7 @@ function on_Close() {
 
 /** 清空输入框 */
 function clear_input() {
-    is_focus.value = true
+    // is_focus.value = true
     store.keyword = ""
 }
 
@@ -172,7 +175,7 @@ function clear_input() {
  * @Description:组件初始化
  * @return {undefined} undefined
  */
-function init() {
+// function init() {
     //记录进入搜索页面
     // if (route.name == "search") {
     //     route_name.value = 'home'
@@ -186,20 +189,24 @@ function init() {
     //     set_click_keyword(search.back_keyword.keyword)
     // }
     //输入框获得焦点
-    nextTick(() => {
-        focusclick()
-    });
-}
+    // nextTick(() => {
+        // focusclick()
+    // });
+// }
 /** 钩子触发 */
-onMounted(init)
+onMounted(() => {
+    nextTick(() => {
+        inputRef.value.focus()
+    })
+})
 
 /** stroe仓库 */
-const { searchReducer, globalReducer } = {}
+// const { searchReducer, globalReducer } = {}
 /** 
  * 点击的关键字 default: ''
  * 路径: project/src/store/module/search.js
  */
-const click_keyword = ref({})
+// const click_keyword = ref({})
 /** 
  * global_click 全局点击事件数 default: 0
  * 路径: project_path\src\store\module\global.js
@@ -324,7 +331,7 @@ export default defineComponent({
         line-height: 18px;
         cursor: pointer;
         border-left: 1px solid var(--q-gb-bd-c-4); // #999999
-        padding-left: 10px;
+        padding: 0 20px;
         color: var(--q-gb-t-c-10); // #888888
 
         &:hover {

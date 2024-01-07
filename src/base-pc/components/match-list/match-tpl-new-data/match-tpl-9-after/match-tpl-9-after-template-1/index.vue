@@ -25,7 +25,7 @@
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap v-if="match"
-          :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].main_handicap_list" :match="match"
+          :handicap_list="get_main_handicap_list(match)" :match="match"
           :is_show_score="!match_tpl_info.is_show_cur_handicap && match.csid != 4" />
 
         <!-- 视频按钮 -->
@@ -99,11 +99,11 @@ function get_cur_handicap_list(match) {
   let cur_handicap_list = [];
   let play_config = match_tpl_info.value[`template_${match_style_obj.value.data_tpl_id}`]
   // 斯诺克让球与大小当前局盘口列表
-  if (match_style_obj.value.data_tpl_id == 11 && match.value.csid == 7) {
+  if (match_style_obj.value.data_tpl_id == 11 && match.csid == 7) {
     cur_handicap_list = play_config.cur_handicap_list_7;
   }
   // 排球让球与大小当前局盘口列表
-  else if (match_style_obj.value.data_tpl_id == 11 && match.value.csid == 9) {
+  else if (match_style_obj.value.data_tpl_id == 11 && match.csid == 9) {
     cur_handicap_list = play_config.cur_handicap_list_9;
   }
   // 判断模板是否有当前局玩法
@@ -111,6 +111,29 @@ function get_cur_handicap_list(match) {
     cur_handicap_list = play_config.cur_handicap_list;
   }
   return cur_handicap_list;
+}
+
+/**
+   * @Description 获取主盘口列表模板
+   * @param {undefined} undefined
+   */
+function get_main_handicap_list(match) {
+  // 主盘口列表
+  let main_handicap_list = [];
+  let play_config = match_tpl_info.value[`template_${match_style_obj.value.data_tpl_id}`]
+  // 斯诺克让球与大小主盘口列表
+  if (match_style_obj.value.data_tpl_id == 11 && match.csid == 7) {
+    main_handicap_list = play_config.main_handicap_list_7;
+  }
+  // 排球让球与大小主盘口列表
+  else if (match_style_obj.value.data_tpl_id == 11 && match.csid == 9) {
+    main_handicap_list = play_config.main_handicap_list;
+  }
+  // 判断模板是否有主玩法
+  else if ([7, 9, 11, 16].includes(+match_style_obj.value.data_tpl_id)) {
+    main_handicap_list = play_config.main_handicap_list;
+  }
+  return main_handicap_list;
 }
 </script>
 
