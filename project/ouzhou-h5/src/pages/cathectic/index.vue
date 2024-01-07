@@ -24,7 +24,7 @@
   
   <script setup>
   import BetRecordClass from "src/core/bet-record/h5/bet-record.js";
-  import { enum_order_by, enum_time_type } from "src/core/bet-record/util.js";
+  import { enum_order_by, enum_time_type } from "src/core/bet-record/h5/util.js";
   import { api_betting } from "src/api/index.js";
   import cathecticItemAll from "src/base-h5/components/cathectic/ouzhou-h5/cathectic-item-all.vue"
   import daysSelect from "src/base-h5/components/cathectic/ouzhou-h5/days-select.vue"
