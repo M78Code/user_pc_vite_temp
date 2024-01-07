@@ -48,6 +48,7 @@
 import lodash from "lodash";
 import { ref,inject } from "vue";
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue";
+import {compute_match_all_handicap_data_champion} from 'src/core/match-list-pc/match-handle-data.js'
 import {
   i18n_t,
   MatchDataWarehouse_PC_List_Common as MatchListData,
@@ -62,26 +63,6 @@ const props = defineProps({
 const match =inject("match");
 const is_mounted = ref(true)
 const vx_main_menu_toggle = ref('')
-/**
- * @Description 计算赛事所有盘口数据--冠军玩法
- * @param {undefined} undefined
- */
-function compute_match_all_handicap_data_champion(match) {
-  // 主盘口列表
-  let main_handicap_list = [];
-  // 遍历主盘口数据
-  lodash.each(match.hpsData, (hpsData) => {
-    lodash.each(hpsData.hps, (item) => {
-      let hl_obj = lodash.get(item, "hl", {});
-      if (hl_obj.hid) {
-        hl_obj.end_time = time_conversion(hl_obj.hmed);
-        hl_obj.hpn = match.hpsPns.find(option => option.hid == hl_obj.hid)?.hpn
-        main_handicap_list.push(hl_obj);
-      }
-    });
-  });
-  return main_handicap_list;
-}
 </script>
 <style lang="scss" scoped>
 .c-match-item {

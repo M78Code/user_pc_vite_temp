@@ -13,10 +13,9 @@
           <div class="team-name home ellipsis allow-user-select" :class="{'bold':match.other_team_let_ball=='T1'}" v-tooltip="{content:match.mhn,overflow:1}">{{match.mhn}}{{match.up_half_text}}</div>
         </div>
       </div>
-      <!-- 当前盘下的当前局比分 -->
-      <div class="score" v-if="match.csid == 5">{{ lodash.get(match,'score_obj.S103.home') }}</div>
+      <div class="score" v-if="match.csid == 5">{{lodash.get(match, 'msc_obj.S103.home')}}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{ lodash.get(match,'cur_score.home') }}</div>
+      <div class="score-game">{{lodash.get(match, 'msc_obj.S1.home')}}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
@@ -27,16 +26,16 @@
         </div>
       </div>
       <!-- 当前盘下的当前局比分 -->
-      <div class="score" v-if="match.csid == 5">{{ lodash.get(match,'score_obj.S103.away') }}</div>
+      <div class="score" v-if="match.csid == 5">{{lodash.get(match, 'msc_obj.S103.away')}}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{ lodash.get(match,'cur_score.away')}}</div>
+      <div class="score-game">{{ lodash.get(match, 'msc_obj.S1.away') }}</div>
     </div>                      
     
     <div class="row-item match-icon">
       <!-- 提前结算 -->
        <div @click.stop="">
          <div
-          v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12 && vx_cur_menu_type.type_name!='bet'"
+          v-if="lodash.get(match, 'mearlys', 0) && match.tpl_id != 12"
           class="icon-wrap settlement-pre relative-position"
           v-tooltip="{content: i18n_t('bet_record.settlement_pre')}"
         >

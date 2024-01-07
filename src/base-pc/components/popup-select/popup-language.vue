@@ -23,17 +23,14 @@
 </template>
   
 <script setup>
-import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 
-import { api_account, api_details } from 'src/api/index';
+import { api_account } from 'src/api/index';
 import langs_mjs from "src/i18n/pc/langs/index.mjs";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { loadLanguageAsync } from 'src/output/index.js'
-// import userCtr from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
-import BetData from "src/core/bet/class/bet-data-class.js";
 import BaseData from "src/core/base-data/base-data.js"
 import { update_bet_item_info } from "src/core/bet/common-helper/module/common.js";
 import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
@@ -52,11 +49,6 @@ const languageList = ref([])
 onMounted(() => languageList.value = lodash.get(UserCtr.get_user(), 'languageList') || [])
 onUnmounted(() => languageList.value = [])
 
-/** 路由对象 */
-const route = useRoute()
-/** 路由实例 */
-const router = useRouter()
-
 /**
  * @Description:切换语言
  * @param {string} lang_ 语言
@@ -71,7 +63,9 @@ function on_click_lang(lang_) {
             // 设置即将开赛筛选默认值为全部
             // set_open_select_time(null)
             // 设置国际化语言
-            loadLanguageAsync(lang_).then().finally(() => {})
+            loadLanguageAsync(lang_).then().finally(() => {
+                console.error('设置国际化语言')
+            })
         } else if (code == '0401038') {
             useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
         }

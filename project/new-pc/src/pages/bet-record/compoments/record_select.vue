@@ -44,8 +44,8 @@
     </div>
     <!-- 预约 -->
     <div class="record-pre" v-if="BetRecordHistory.selected == 2">
-      <!-- 提前结算 -->
-      <check-box-warp :list="pre_options" @emit_value="emit_value"></check-box-warp>
+      <!-- 提前结算, 默认进行中 -->
+      <check-box-warp :list="pre_options" initVal="0" @emit_value="emit_value"></check-box-warp>
     </div>
   </div>
 </template>
@@ -57,6 +57,60 @@ import { BetRecordHistory } from "src/core/bet-record/pc/bet-record-instance.js"
 import checkBoxWarp from './check_box_warp.vue'
 import dayjs from 'dayjs'
 const _dayjs = dayjs()
+
+// 提前结算、 进行中、已取消、预约失败 筛选按钮
+const options = [{ label: i18n_t("bet_record.settlement_pre"), value: 'op1' }]
+const pre_options = [
+  { label: i18n_t("bet.bet_process"), value: '0' },
+  { label: i18n_t("bet.bet_book_canceled"), value: '4' },
+  { label: i18n_t("bet.bet_book_failed"), value: '2,3' }
+]
+const emit_value = (value) => {
+  console.log(`emit_value`, value);
+}
+
+
+// 时间筛选  今天、昨天、7天、30天
+const current_time = ref(1)
+const formatYMD = 'YYYY/MM/DD'
+const btn_options = [
+  { label: "ouzhou.record.today", value: 1, range: [_dayjs.startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] },
+  { label: "ouzhou.record.yesterday", value: 2, range: [_dayjs.subtract(1, 'day').startOf('day').format(formatYMD), _dayjs.subtract(1, 'day').endOf('day').format(formatYMD)] },
+  { label: "ouzhou.record.7_days", value: 3, range: [_dayjs.subtract(6, 'day').startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] },
+  { label: "ouzhou.record.30_days", value: 4, range: [_dayjs.subtract(29, 'day').startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] }
+]
+const time_click = (item) => {
+  const [from, to] = item.range
+  current_time.value = item.value
+  params.timeType = item.value
+  tipMsg.value = msgList[item.value]
+  if(from === to){
+    date.value = [from]
+  } else {
+    date.value = { from, to }
+  }
+  emitClick()
+}
+
+// 排序筛选   默认排序、按投注时间排序、按开赛时间排序
+const select_value = ref(i18n_t("bet_record.settled_time"))
+const select_options = [
+  { value: i18n_t("bet_record.sort_by_settled_time"), label: `<i class="q-icon icon-calendar"> </i> <span>${i18n_t("bet_record.settled_time")}</span>`, id: 2 },
+  { value: i18n_t("bet_record.sort_by_bet_time"), label: `<i class="q-icon icon-calendar"> </i> <span>${i18n_t("bet_record.bet_time")}</span>`, id: 1 },
+  { value: i18n_t("bet_record.sort_by_match_time"), label: `<i class="q-icon icon-calendar"> </i> <span>${i18n_t("bet_record.match_time")}</span>`, id: 3 }
+]
+const selectInput = (v) => {
+  select_value.value = v.label
+  params.orderBy = v.id
+  emit('itemFilter', params)
+}
+
+
+// 时间选择器
+const date_value = ref('')
+const qDateProxy = ref(null)
+const date = ref({ from: '', to: '' })
+
 const isZH = true
 const days = i18n_t('time.time_date_week')
 const months = [...Array(12)].map((v, i) => i + 1 + '月')
@@ -66,13 +120,22 @@ const dateLocal = isZH ? {
   months,
   monthsShort: months,
 } : {}
+
+onMounted(() => {
+  cash_value.value = ['']
+  const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
+  date_value.value = data + '-' + data
+  date.value = { from: data, to: data }
+})
+
+
 const props = defineProps({
   current_tab: {
     type: String,
     default: ''
   }
 })
-const formatYMD = 'YYYY/MM/DD'
+
 const msgList = [
   "bet_record.msg_1",
   "bet_record.msg_2",
@@ -84,30 +147,13 @@ const msgList = [
 ]
 const tipMsg = ref(msgList[1])
 const dateRef = ref(null)
-const qDateProxy = ref(null)
+
 const cash_value = ref([''])
 const pre_status_value = ref([''])
-const current_time = ref(1)
-const date = ref({ from: '', to: '' })
-const date_value = ref('')
-const select_options = [
-  { value: i18n_t("bet_record.sort_by_settled_time"), label: `<i class="q-icon icon-calendar"> </i> <span>${i18n_t("bet_record.settled_time")}</span>`, id: 2 },
-  { value: i18n_t("bet_record.sort_by_bet_time"), label: `<i class="q-icon icon-calendar"> </i> <span>${i18n_t("bet_record.bet_time")}</span>`, id: 1 },
-  { value: i18n_t("bet_record.sort_by_match_time"), label: `<i class="q-icon icon-calendar"> </i> <span>${i18n_t("bet_record.match_time")}</span>`, id: 3 }
-]
+
+
 const tabChange = ref(false)
 
-const emit_value = (value) => {
-  console.log(`emit_value`, value);
-}
-
-onMounted(() => {
-  cash_value.value = ['']
-  const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
-  date_value.value = data + '-' + data
-  date.value = { from: data, to: data }
-})
-const select_value = ref(i18n_t("bet_record.settled_time"))
 let params = {
   enablePreSettle: false,
   timeType: 1,
@@ -149,53 +195,12 @@ watch(cash_value, (newVal) => {
   }
   // emit('itemFilter',{enablePreSettle:newVal[1] == 'op1'})
 })
-const options = [
-  {
-    label: i18n_t("bet_record.settlement_pre"),
-    value: 'op1'
-  }
-]
-const pre_options = [
-{
-    label: i18n_t("bet_record.settlement_pre"),
-    value: '0'
-  },
-  {
-    label: i18n_t("bet_record.settlement_pre"),
-    value: ''
-  },
-  {
-    label: i18n_t("bet_record.settlement_pre"),
-    value: '2,3'
-  }
-]
-const btn_options = [
-  { label: "ouzhou.record.today", value: 1, range: [_dayjs.startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] },
-  { label: "ouzhou.record.yesterday", value: 2, range: [_dayjs.subtract(1, 'day').startOf('day').format(formatYMD), _dayjs.subtract(1, 'day').endOf('day').format(formatYMD)] },
-  { label: "ouzhou.record.7_days", value: 3, range: [_dayjs.subtract(6, 'day').startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] },
-  { label: "ouzhou.record.30_days", value: 4, range: [_dayjs.subtract(29, 'day').startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] }
-]
-// 时间筛选点击
-const time_click = (item) => {
-  const [from, to] = item.range
-  current_time.value = item.value
-  params.timeType = item.value
-  tipMsg.value = msgList[item.value]
-  if(from === to){
-    date.value = [from]
-  } else {
-    date.value = { from, to }
-  }
-  emitClick()
-}
+
+
 const emitClick = () => {
   emit('itemFilter', params)
 }
-const selectInput = (v) => {
-  select_value.value = v.label
-  params.orderBy = v.id
-  emit('itemFilter', params)
-}
+
 const search = () => {
   tipMsg.value = msgList[5]
   const beginTime = date.value.from.split('/')
@@ -225,17 +230,11 @@ div.q-menu {
 }
 
 .record-select {
-  padding: 6px 0;
-  &:deep(.q-btn) {
-    font-size: 12px;
-    font-weight: 400;
-  }
-
-  &:deep(.q-checkbox__inner) {
-    font-size: 30px;
-    color: var(--q-gb-t-c-2);
-  }
-
+  height: 48px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 0 20px;
 }
 
 .record-select-main {
@@ -247,10 +246,9 @@ div.q-menu {
 
 .record-settled {
   display: flex;
-  padding: 0 15px;
-  height: 36px;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 
   .record-settled-l {
     display: flex;
@@ -324,6 +322,7 @@ div.q-menu {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 20px;
   // padding: 0 5px;
 
   .btn-group-item {

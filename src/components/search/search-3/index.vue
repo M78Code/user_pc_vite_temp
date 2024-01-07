@@ -66,6 +66,7 @@ import { useMittOn, MITT_TYPES } from 'src/core/mitt'
 import {  MenuData,  GlobalSwitchClass,SearchPCClass } from 'src/output/index.js'
 import { LayOutMain_pc } from "src/output/project/common/pc-common.js";
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
+import search from "src/core/search-class/search.js"
 import searchInput from "./search-input.vue"
 import searchInt from "./search-init.vue"
 import searchSports from "./search-sports.vue"
@@ -83,6 +84,7 @@ const main_menu_toggle = ref(MenuData.main_menu_toggle) /** 左侧列表显示�
 const search_width = ref(LayOutMain_pc.layout_search_width)
 const main_width = ref(LayOutMain_pc.layout_main_width + 'px')
 const search_isShow = ref(SearchPCClass.search_isShow) // 是否显示搜索组件 default: false
+// const route = useRoute()
 
 page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
 
@@ -102,6 +104,9 @@ const is_unfold_multi_column = ref(LayOutMain_pc.is_unfold_multi_column)
 
 
 onMounted(() => {
+  // if (search.back_keyword.keyword) {
+  //   store.keyword = search.back_keyword.keyword
+  // }
   document.addEventListener('click', click_fun)
   window.addEventListener('resize', on_resize)
   // 初始化球种菜单数据
@@ -114,6 +119,12 @@ onUnmounted(() => {
   off
 })
 
+// watch(
+//     () => route.name,
+//     (res) => {
+//       console.log('route.nameroute.nameroute.nameroute.nameroute.nameroute.name', res)
+//     }
+// )
 
 /**
  * @Description 设置球种tab选中索引

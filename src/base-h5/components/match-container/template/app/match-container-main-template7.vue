@@ -1038,7 +1038,7 @@ export default {
 
       &.result {
         padding-top: 0.1rem;
-        padding-bottom: 0.1rem;
+        // padding-bottom: 0.1rem;
       }
     }
 
@@ -1739,6 +1739,7 @@ export default {
   padding-top: 6px;
   max-width: 200px;
   overflow-x: scroll;
+  padding-bottom: 10px;
 }
 </style>
   

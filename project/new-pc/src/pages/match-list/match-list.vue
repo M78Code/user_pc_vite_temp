@@ -44,7 +44,7 @@
       <!-- 电竞顶部菜单 -->
       <esports-header v-if="MenuData.is_esports()" :load_data_state="load_data_state" />
       <!-- 赛事状态 | 赛种类型      -->
-      <!-- <play-virtual-match-type class="sticky-wrap" v-if="menu_config.menu_root_show_shoucang == 300" style="top:100px" /> -->
+      <list-filter-vr :menuInfo="MenuData.vr_list" class="sticky-wrap" v-if="MenuData.is_vr()"/>
       <!-- 联赛  VR 足球才会有联赛-->
       <div class="leagues-tabs leagues-bg" v-if="MenuData.mid_menu_result.mi == '1001'">
         <!-- 联赛菜单 -->
@@ -112,11 +112,12 @@ import { onMounted, onUnmounted } from "vue";
 import { IconWapper } from 'src/components/icon'
 import LoadData from 'src/components/load_data/load_data.vue';
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
-import listFilter from "src/base-pc/components/match-list/list-filter/index.vue"; //赛事列表筛选：滚球-球种、早盘-日期
-import ListFilterHot from "src/base-pc/components/match-list/list-filter-hot/index.vue"; //热门赛事列表 头部筛选
+import listFilter from "src/base-pc/components/match-list/list-filter/yz_index.vue"; //赛事列表筛选：滚球-球种、早盘-日期
+import listFilterVr from "src/base-pc/components/match-list/list-filter-vr/index.vue"; //vr
+import ListFilterHot from "src/base-pc/components/match-list/list-filter-hot/yz_index.vue"; //热门赛事列表 头部筛选
 import listFilterDate from "src/base-pc/components/match-list/list-filter-date/index.vue"; //热门赛事列表  早盘-日期
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
-import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
+// import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
 import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"; //头部
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import refresh from "src/components/refresh/refresh.vue"
@@ -144,7 +145,8 @@ export default {
     listFilterDate,
     MatchListCard,
     ListFilterHot,
-    PlayVirtualMatchType,
+    listFilterVr,
+    // PlayVirtualMatchType,
     LoadData,
     ScrollList,
     IconWapper,

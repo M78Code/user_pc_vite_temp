@@ -1,9 +1,10 @@
 import { ref } from "vue"
+import { columns } from  "./util.js"
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
-import { filter_early_list, msgList } from  "../util.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_betting } from "src/api/index.js";
 import lodash from 'lodash';
+import { i18n_t } from "src/boot/i18n.js";
 
 class BetRecord {
   constructor() {
@@ -18,10 +19,10 @@ class BetRecord {
     this.tipMsg = 'bet_record.msg_1'
     //列表数据
     this.list_data = {}
+    // table列表columns
+    this.columns = columns
     // 提前结算图标是否选中
     this.is_early = false
-    // 提前结算列表
-    this.early_money_list = {}
 
     //是否在加载中
     this.is_loading = true
@@ -41,6 +42,8 @@ class BetRecord {
     this.reset()
     // 切换提示语
     this.set_tip_msg(number)
+    // 更改columns
+    this.set_columns(number)
     // 通知 cathectic-item-all, 重新获取数据 
     useMittEmit(MITT_TYPES.EMIT_BET_RECORD_SELECTED_CHANGE, this.selected)
     this.set_bet_record_version()
@@ -49,14 +52,31 @@ class BetRecord {
   // 更新列表
   set_list_data(value) {
     this.list_data = value
-    this.early_money_list = filter_early_list(value, this.is_early)
     this.set_bet_record_version()
+  }
+
+  // 更改columns
+  set_columns(number) {
+    if(number == 1) {
+      this.columns[5] = {
+        name: 'return',
+        label: i18n_t("common.donate_win"),
+        align: 'center',
+        field: 'return'
+      }
+    } else {
+      this.columns[5] = {
+        name: 'highestWin',
+        label: i18n_t("common.maxn_amount_val"),
+        align: 'center',
+        field: 'highestWin'
+      }
+    }
   }
 
   // 设置提前结算按钮
   set_is_early(value) {
     this.is_early = value
-    this.early_money_list = filter_early_list(this.list_data, value)
     this.set_bet_record_version()
   }
 
@@ -86,7 +106,6 @@ class BetRecord {
   reset() {
     this.list_data = {}
     this.is_early = false
-    this.early_money_list = {}
     this.is_loading = true
     this.last_record = ''
     this.is_hasnext = false
