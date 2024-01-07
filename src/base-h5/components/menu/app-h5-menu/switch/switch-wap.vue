@@ -93,14 +93,16 @@ const is_show_mask = ref(false)
 
 // 版本切换
 const handler_version_change = (val = 2) => {
-    is_show_mask.value = true
+    change_is_show_mask(true)
+    useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true)
     UserCtr.set_standard_edition(val)
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
     // MatchFold.clear_fold_info()
-    nextTick(()=>{
+    let timer = setTimeout(() => {
         VirtualList.set_is_show_ball(true)
-        
         MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+        clearTimeout(timer)
+        timer = null
         // if (MenuData.is_collect()) {
         //     MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
         // } else {
@@ -108,7 +110,7 @@ const handler_version_change = (val = 2) => {
         //     MatchMeta.set_origin_match_data({})
         // }
         // MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
-    })
+    }, 350)
     reset_is_show_mask()
 }
 
@@ -116,14 +118,19 @@ const handler_version_change = (val = 2) => {
 const handler_sort_change = (val) => {
     //电竞 不会热门排序 和 盘口
     if(val === 1 && is_esports.value) return;
-    is_show_mask.value = true
+    change_is_show_mask(true)
     UserCtr.set_sort_type(val);
     reset_is_show_mask()
 }
 
+// 是否显示蒙层
+const change_is_show_mask = (val) => {
+    is_show_mask.value = val
+}
+
 // 遮罩层兜底
 const reset_is_show_mask = lodash.debounce(() => {
-    is_show_mask.value = false
+    change_is_show_mask(false)
 }, 8000)
 
 /**
@@ -140,9 +147,10 @@ watch(()=>set_menu_init.value,()=>{
       })
 },{immediate:true,deep:true})
 
+
 onMounted(() => {
     emitters.value = {
-        emitter: useMittOn(MITT_TYPES.EMIT_IS_SHOW_MASK, (val) => is_show_mask.value = val).off,
+        emitter: useMittOn(MITT_TYPES.EMIT_IS_SHOW_MASK, (val) => change_is_show_mask(val)).off,
     }
 })
 

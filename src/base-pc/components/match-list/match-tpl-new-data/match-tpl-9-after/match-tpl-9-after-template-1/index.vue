@@ -25,7 +25,7 @@
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap v-if="match"
-          :handicap_list="get_handicap_list(match)" :match="match"
+          :handicap_list="(match.main_handicap_list)" :match="match"
           :is_show_score="!match_tpl_info.is_show_cur_handicap && match.csid != 4" />
 
         <!-- 视频按钮 -->
@@ -41,7 +41,7 @@
           <basis-info5 v-if="is_mounted && match" :match="match" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match" :handicap_list="get_handicap_list(match,'cur')" :match="match" :is_show_score="true" />
+        <match-handicap v-if="match" :handicap_list="match.cur_handicap_list" :match="match" :is_show_score="true" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -100,7 +100,7 @@ const process_margin = computed(() => {
     cur_handicap_list = play_config[`${type}_handicap_list_9`];
   }
   // 判断模板是否有当前局玩法
-  else if ([7, 9, 11, 16].includes(+match_style_obj.data_tpl_id)) {
+  else if ([7, 9, 11, 16].includes(+match_style_obj.value.data_tpl_id)) {
     cur_handicap_list = play_config[`${type}_handicap_list`];
   }
   return cur_handicap_list;

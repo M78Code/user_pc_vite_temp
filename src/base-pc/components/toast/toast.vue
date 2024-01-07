@@ -6,7 +6,7 @@
     <q-dialog v-model="is_show" seamless>
       <q-card class="dialog_content">
         <q-card-section>
-          <div class="text-h6">
+          <div class="toast-text-content">
             <slot name="img">
               <img :src="compute_local_project_file_path('/image/svg/warn.svg')" />
             </slot>
@@ -66,7 +66,7 @@ const show_toast = (msg, delay = 2000) => {
   padding: 8px 8px;
 }
 
-.text-h6 {
+.toast-text-content {
   text-align: center;
 }
 
@@ -78,5 +78,3 @@ const show_toast = (msg, delay = 2000) => {
   padding: 0;
 }
 </style>
-
-src/output/index.js

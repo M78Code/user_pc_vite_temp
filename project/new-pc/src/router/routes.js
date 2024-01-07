@@ -18,7 +18,7 @@ const routes = [
         },
       },
       {
-        path: "/details/:mid/:csid/:tid?",
+        path: "/details/:mid/:csid/:tid",
         name: "details",
         component: () => import('../pages/match-details/details-main.vue')
       },

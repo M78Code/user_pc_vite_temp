@@ -462,14 +462,15 @@ class BetViewData {
   // 设置限额对应的金额
   set_bet_special_series_item(item) {
     let special_series = this.bet_special_series.map(obj=>{
+      let series_obj = lodash_.cloneDeep(obj)
       if(obj.id == item.id){
-        return {
+        series_obj = {
           ...obj,
           ...item
         }
       }
+      return series_obj
     })
-  
     this.bet_special_series = special_series
     this.set_bet_view_version()
   }

@@ -1,5 +1,4 @@
 <template>
-  {{MenuData.menu_root}} ---
   <div
     class="c-match-list-filter"
     :class="{
@@ -34,9 +33,20 @@
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_0` })"></span>
           <!-- 是否新上玩法 -->
         </div>
+        <div
+            class="name menu-inline name-margin-left"
+            v-tooltip="{
+              content:  '全部',
+              overflow: 1,
+            }"
+          >
+            <span> 全部 </span>
+            <span class="count-text"> {{ compute_quanbu_num_mi_1() }}</span>
+          </div>
       </div>
       <!-- 常规球类 -->
-      <template v-for="item in mi_100_arr">
+      <!-- <template v-for="item in mi_100_arr"> -->
+      <template v-for="item in MenuData.in_play_list">
         <div
           :key="`mi_100_arr_${item.mif}`"
           v-if="
@@ -59,8 +69,7 @@
         >
           <div class="icon-wrap list-filter menu-inline">
             <span class="soprts_id_icon"
-            v-if="MenuData.is_esports()"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif)}` })"></span>
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif|| item.mi)}` })"></span>
             <!-- 是否新上玩法 -->
             <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`${LOCAL_PROJECT_FILE_PREFIX}/img/yabo/svg/virtual/menu_new.svg`"/> -->
           </div>
@@ -186,7 +195,7 @@
           <span class="count-text">{{ compute_quanbu_num_mi_400() }}</span>
         </div>
       </div>
-      <template v-for="item in mi_400_obj['sl']">
+      <template v-for="item in MenuData.kemp_list">
         <!--   no-active  active -->
         <div
           :key="item.mi"
@@ -208,7 +217,6 @@
         >
           <div class="icon-wrap list-filter menu-inline">
             <span class="soprts_id_icon"
-            v-if="MenuData.is_esports()"
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${compute_mi_400_sl_mi_csid(item.mi)}` })"></span>
             <!-- <sport-icon
               :sport_id="compute_mi_400_sl_mi_csid(item.mi)"
@@ -236,7 +244,7 @@
 </template>
 <script setup>
 import BaseData from "src/core/base-data/base-data.js";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import MenuData from "src/core/menu-pc-yazhou/menu-data-class.js";
 import DragScroll from "src/base-pc/components/cus-scroll/drag_scroll.vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { compute_css_obj } from "src/output/index.js";
@@ -248,8 +256,7 @@ import { compute_css_obj } from "src/output/index.js";
     vr_menu_obj,
      compute_quanbu_num_mi_1,
     handle_click_menu_mi_400, handle_click_menu_mi_1, compute_mi_400_sl_mi_csid, compute_quanbu_num_mi_400, 
-  } from './index.js'
-
+  } from './yz_index.js'
 
 </script>
 <style lang="scss" scoped>
@@ -295,6 +302,12 @@ import { compute_css_obj } from "src/output/index.js";
       }
       .menu-inline {
         display: inline-block;
+        .soprts_id_icon{
+          width: 18px;
+          height:18px;
+          display: inline-block;
+          background-size: cover;
+        }
       }
       .name-margin-left {
         margin-left: 5px;
