@@ -86,7 +86,7 @@
     }
     // 遍历所有赛事列表
     lodash.each(match_list, _match => {
-      let match = MatchListData.list_to_obj.mid_obj[_match.mid + '_']
+      let match = MatchListData.list_to_obj.mid_obj[_match.mid + '_'] || {}
       league_repeat_count_obj[match.tid] = league_repeat_count_obj[match.tid] || 0
       let match_ms =  get_match_status(match.ms)
       // 赛事数量统计
