@@ -5,7 +5,8 @@
 <template>
   <div class="match-list-wrapper" :class="{standard: standard_edition == 2}">
     <div>
-      <div class="title-wrap-standard row justify-end" v-if="standard_edition == 2">
+      <div class="title-wrap-standard row justify-between items-center" v-if="standard_edition == 2">
+        <div class="lengue-name">{{ lengue_name }}</div>
         <div class="odd-title-wrapper row">
           <div class="odd-t-w-inner row items-center" :class="{status2:standard_odd_status}">
             <div v-for="(hpl_title, hp_i) of i18n_t('list_title.'+csid+'.title')" :key="hp_i">
@@ -49,11 +50,16 @@ export default {
 
   .title-wrap-standard {
     // width: 3.61rem;
-    width: 97vw;
-    height: 0.24rem;
-    margin: 0 auto;
-    border-bottom: 1px solid  var(--q-gb-bd-c-4);
-
+    width: 100%;
+    border-radius: 0;
+    display: flex;
+    height: 36px;
+    padding-left: 10px;
+    color: #1a1a1a;
+    background: #F1F1F1!important;
+    .lengue-name {
+      font-weight: 600;
+    }
     .odd-title-wrapper {
       width: 1.92rem;
       height: 100%;
@@ -76,10 +82,10 @@ export default {
       & > div {
         width: 0.6rem;
         text-align: center;
-        font-size: 0.1rem;
         line-height: 1;
         margin-right: 0.03rem;
-        color: var(--q-gb-t-c-19)
+        font-size: 13px;
+        font-weight: 600;
       }
     }
   }
