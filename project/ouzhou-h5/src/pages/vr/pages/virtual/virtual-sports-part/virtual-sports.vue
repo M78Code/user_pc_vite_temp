@@ -50,49 +50,39 @@
           </div>
         </div>
       </div>
-      <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
-       <div v-if="match_item_batch.remaining_time > 0" class="virtual-sports-card-content" :class="{'virtual-sports-card-simple': standard_edition === 1}">
-        <div class="tab-title" @click.stop="expend_match(match_item_batch)">
-          <div class="league-name right-border">{{ lengue_name }}</div>
-          <div class="status">
-            <span class="num">{{ match_item_batch.no }}</span>
-            <span class="state">{{ match_item_batch.timer_format }}</span>
-            <icon-wapper class="icon" :class="[!match_item_batch.is_expend && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
-          </div>
-        </div>
-        <template v-if="match_item_batch.is_expend">
-            <!--  虚拟体育主列表页面  -->
-            <div
-                class="v-sports-main-list"
-                :class="{'v-sports-main-list-style': standard_edition === 1}"
-                :style="{'padding-bottom': '0'}"
-            >
-              <!-- 虚拟体育足球赛事列表 -->
-              <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
-                :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
-                @switch_match="switch_match_handle"  @start="match_start_handle">
-              </v-s-match-list>
+      <div class="virtual-sports-card">
+       <div  class="virtual-sports-card-content" :class="{'virtual-sports-card-simple': standard_edition === 1}">
+          <!--  虚拟体育主列表页面  -->
+          <div
+              class="v-sports-main-list"
+              :class="{'v-sports-main-list-style': standard_edition === 1}"
+              :style="{'padding-bottom': '0'}"
+          >
+            <!-- 虚拟体育足球赛事列表 -->
+            <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_list_by_no"
+              :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
+              @switch_match="switch_match_handle"  @start="match_start_handle">
+            </v-s-match-list>
 
-              <!-- 除当前赛事外，展示赔率信息 -->
-              <div class="v-sports-ranking" v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)">
+            <!-- 除当前赛事外，展示赔率信息 -->
+            <div class="v-sports-ranking" v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)">
+                <div>
+                  <!-- 赛马切换玩法集tab组件 -->
+                  <!-- <virtual-sports-tab
+                    :batch="match_item_batch.matchs[0]?.mid">
+                  </virtual-sports-tab> -->
+                  <!-- 打印请勿删除 -->
+                  <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
+                  <!-- 赛马投注区域 -->
                   <div>
-                    <!-- 赛马切换玩法集tab组件 -->
-                    <!-- <virtual-sports-tab
-                      :batch="match_item_batch.matchs[0]?.mid">
-                    </virtual-sports-tab> -->
-                    <!-- 打印请勿删除 -->
-                    <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
-                    <!-- 赛马投注区域 -->
-                    <div>
-                      <v-s-match-list2 v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
-                        :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
-                        @switch_match="switch_match_handle"  @start="match_start_handle">
-                      </v-s-match-list2>
-                    </div>
+                    <v-s-match-list2 v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)" :virtual_match_list="match_list_by_no"
+                      :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
+                      @switch_match="switch_match_handle"  @start="match_start_handle">
+                    </v-s-match-list2>
                   </div>
                 </div>
-            </div>
-        </template>
+              </div>
+          </div>
        </div>
       </div>
 
@@ -153,7 +143,7 @@ export default {
 
 .fixed-head {
   position: sticky;
-  top: 0.89rem;
+  top: 0.45rem;
   background: var(--q-gb-bg-c-21);
   z-index: 100;
 }
@@ -273,7 +263,6 @@ export default {
 }
 .virtual-sports-card {
   &-content {
-    background: var(--q-gb-bg-c-18);
     border-radius: .08rem;
     margin-bottom: .08rem;
   }

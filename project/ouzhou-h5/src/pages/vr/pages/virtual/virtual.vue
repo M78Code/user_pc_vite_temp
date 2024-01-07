@@ -197,7 +197,7 @@ export default {
     flex-wrap: nowrap;
     overflow: auto;
     font-size: 0.12rem;
-    background-color: var(--q-gb-bg-c-27);
+    background: var(--q-gb-bg-c-21);
     .tabs-bar {
       width: 100%;
 
