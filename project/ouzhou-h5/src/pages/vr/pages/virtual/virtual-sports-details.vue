@@ -31,7 +31,7 @@
           </virtual-sports-stage>
         </div>
         <!--历史战绩，投注，排行榜tab键-->
-        <virtual-sports-detail-tab v-if="sub_menu_type != 1004" :current_match="current_match" @virtual_play_height="virtual_play_height" @change_tab="change_tab" />
+        <!-- <virtual-sports-detail-tab v-if="sub_menu_type != 1004" :current_match="current_match" @virtual_play_height="virtual_play_height" @change_tab="change_tab" /> -->
         <div class="debug-test" v-if="show_debug">
           {{`batchNo:${current_batch.batchNo}-csid:${sub_menuid}-mid:${current_match.mid}`}}<br />
           {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}

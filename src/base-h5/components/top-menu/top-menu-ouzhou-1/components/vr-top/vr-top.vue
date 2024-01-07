@@ -1,6 +1,10 @@
 <template>
     <div class="info_box">
         <div class="left">
+            <div class="back" @click="toHome">
+                <img class="bakc-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/back.png`" alt="" />
+            </div>
+            <!-- <div class="detail-back" v-if="['/virtual_sports_details', '/virtual_sports_details/'].includes(router.currentRoute.value.path)" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div> -->
             <div class="vr_name">
                 <span style="margin-left: 0.01rem;">VR Sports</span>
                 <img :src="`${LOCAL_PROJECT_FILE_PREFIX }/image/menu/top-menu/back.png`" alt="">
@@ -36,10 +40,39 @@
 <script setup>
 import lodash from 'lodash';
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { useRouter, useRoute } from "vue-router";
+const router = useRouter();
+const route = useRoute()
+import NavbarSubscribe from "../../detail-top/nav-bar-subscribe";
+import BaseData from "src/core/base-data/base-data.js";
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+
 
 const onItemClick = (event)=>{
     console.log('event', lodash.get(event, 'event.target', ''))
 }
+
+
+/** 返回上一页 */
+const toHome = async() => {
+
+    router.back()
+    return
+  // 设置 元数据计算 流程
+  // 先通知观察者返回
+  NavbarSubscribe.instance.back();
+  // 异步获取状态
+  const res = await NavbarSubscribe.instance.get_status();
+  // 状态为真，可以返回
+  if (res) {
+    BaseData.set_is_emit(true)
+    // MatchMeta.clear_match_info()
+    MatchResponsive.set_is_compute_origin(true)
+    router.back()
+  } else {
+    // 状态为false，执行其他操作
+  }
+};
 
 </script>
 
@@ -56,10 +89,22 @@ const onItemClick = (event)=>{
             justify-content: center;
             align-items: center;
 
+            .back{
+                color: #ffd5b2;
+                // width: 18%;
+                .bakc-icon {
+                    width: 0.05rem;
+                    height: 0.08rem;
+                    vertical-align: middle;
+                    margin-left: 0.06rem;
+                    margin-top: -0.02rem;
+                }
+            }
+
             .vr_name{
                 color: #fff;
                 font-family: Roboto;
-                font-size: 14px;
+                font-size: 0.14rem;
                 font-style: normal;
                 font-weight: 400;
                 line-height: normal;

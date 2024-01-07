@@ -104,7 +104,12 @@
             :class="{'status2':standard_odd_status == 1}" v-if="standard_edition == 2">
             <!--标准版-->
             <div class="standard-odd-list row">
-              <div class="odd-column-w" :key="hp_i_i"
+              <!-- 右边盘口组件 -->
+              <template v-if="match_item">
+                <ScoreList :match_info="match_item"></ScoreList>
+              </template>
+              
+              <!-- <div class="odd-column-w" :key="hp_i_i"
                 v-for="(hp_i,hp_i_i) of get_hp_list(0)">
                 <div class="odd-wrap-min" :class="`hp-${get_ol_length(hp_i,hp_i_i)}`"
                   :key="ol_item_i" v-for="(ol_item,ol_item_i) of get_ol_list(hp_i,hp_i_i)">
@@ -120,7 +125,7 @@
                     :is_vr_lock="is_vr_lock"
                     />
                 </div>
-              </div>
+              </div> -->
             </div>
             <!--标准版第二部分-->
             <!--复刻版vr不能滑动-->
@@ -190,6 +195,7 @@ import v_s_match_timer from "project_path/src/pages/vr/pages/virtual/virtual-spo
 import odd_column_item from "src/base-h5/components/match-container/template/app/components/odd-column-item.vue"
 import ImageCacheLoad from "src/core/public-cache-image/public-cache-image.vue";
 import { IconWapper } from 'src/components/icon'
+import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
 
 export default {
   mixins:[virtual_sports_match_item_mixin],
@@ -199,6 +205,7 @@ export default {
     "odd-column-item":odd_column_item,
     'image-cache-load': ImageCacheLoad,
     'icon-wapper': IconWapper,
+    ScoreList
   },
 }
 </script>

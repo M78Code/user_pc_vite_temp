@@ -63,7 +63,8 @@ export default {
       color: var(--q-gb-t-c-35) !important;
       &.last {
         // color: #E23E3E;
-        color: var(--q-gb-bd-c-8) !important;
+        // color: var(--q-gb-bd-c-8) !important;
+        color: var(--q-gb-bg-c-1) !important;
       }
     }
   }

@@ -263,8 +263,8 @@ export default {
   font-size: 0.14rem;
   letter-spacing: 0;
   text-align: center;
-  color: var(--q-gb-t-c-1);
-  background: var(--q-gb-bg-c-31);
+  color: var(--q-gb-t-c-2);
+  background: var(--q-gb-bg-c-1);
   width: 0.74rem;
   height: 0.3rem;
   line-height: 0.3rem;

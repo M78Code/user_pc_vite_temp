@@ -660,7 +660,7 @@ export default defineComponent({
       font-size: 0.14rem;
       background:var(--q-gb-bg-c-28);
       border-radius: 4px;
-      color:var(--q-gb-t-c-10);
+      color:var(--q-gb-t-c-4);
       // width: 0.85rem;
       //box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     }
