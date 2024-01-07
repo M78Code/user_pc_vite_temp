@@ -1472,7 +1472,7 @@ class MatchMeta {
     switch (obj.text) {
       // 活动
       case "activities":
-        console.log('每日活动')
+        // console.log('每日活动')
         break;
       // 排序
       case "sortRules":
