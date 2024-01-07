@@ -516,7 +516,7 @@ export default {
     padding-left: 0.17rem;
     display: flex;
     align-items: center;
-    color: var(--q-gb-t-c-20);
+    color: var(--q-gb-t-c-18);
     background: var(--q-gb-bg-c-25);
     justify-content: space-between;
     &.progress{
@@ -532,7 +532,7 @@ export default {
     }
 
     img,.img {
-      margin-right: 14px;
+      margin-right: 0.06rem;
       width: .13rem;
       height: .13rem;
     }

@@ -435,7 +435,7 @@ export default {
     width: 100%;
     height: 25px;
     line-height: 1;
-    font-size: 0.11rem;
+    font-size: 0.12rem;
     padding-left: 0.17rem;
     display: flex;
     align-items: center;

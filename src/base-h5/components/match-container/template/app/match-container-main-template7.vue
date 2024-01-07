@@ -243,8 +243,8 @@
             </div>
 
           </div>
-
-          <template v-if="match.csid != 1">
+          <!-- match.csid != 1 -->
+          <template v-if="match.csid">
             <div class="score-content-new">
               <ScoreList :main_source="main_source" :match="match_of_list" />
             </div>

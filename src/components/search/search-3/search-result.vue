@@ -62,7 +62,7 @@ import { MatchProcessFullVersionWapper as matchProcess } from "src/components/ma
 // import store from "src/store-redux/index.js";
 import details from "src/core/match-list-pc/details-class/details.js"
 import search from "src/core/search-class/search.js"
-import {store} from './index.js'
+import {store, mutations} from './index.js'
 
 import loadData from "src/components/load_data/load_data.vue"
 
@@ -96,10 +96,10 @@ let res_list = reactive([])
  * 获取搜索内容 default: ''
  * 路径: project_path\src\store\module\search.js
  */
-const keyword = ref(SearchPCClass.keyword)
+// const keyword = ref(SearchPCClass.keyword)
 // 监听搜索关键词改变
 watch(
-    () => store._keyword,
+    () => store.keyword,
     (res) => {
         console.log('fdsafdsfdsafsdafdsafsdafsdfsa12312312', res)
         // if (search_type.value == 2) {
@@ -107,9 +107,7 @@ watch(
         // } else {
         //     get_search_result(res.substr(5))
         // }
-
         get_search_result(res)
-
     }
 )
 
@@ -172,35 +170,56 @@ const timer = ref(null)
  * @param {string} keyword 搜索关键字
  * @return {Undefined} Undefined
  */
-function get_search_result(keyword, is_loading) {
-    if (!keyword) {
-        update_show_type('init')
+async function get_search_result() {
+    if (!store.keyword) {
+        // update_show_type('init')
+        store.show_type = 'init'
         return
     }
-    //调用接口前先设置加载状态
-    if (is_loading) {
-        load_data_state.value = 'loading'
-    }
-    //调用接口获取获取搜索结果数据
-    search.get_search_result(keyword, props.search_csid).then(res => {
-        const { state, list } = res
-        update_show_type('result')
-        load_data_state.value = state
-        res_list = list
-        let _ref_scroll = scrollRef.value;
-        timer.value = setTimeout(() => {
-            // 如果是从详情页返回
-            if (search.back_keyword.keyword) {
-                nextTick(() => {
-                    //重新设置滚动高度
-                    _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', search.result_scroll.top);
-                })
-            } else {
+    // //调用接口前先设置加载状态
+    // if (is_loading) {
+    //     load_data_state.value = 'loading'
+    // }
+    const results = await mutations.get_search_result_handle()
+    const { state, list } = results
+    // update_show_type('result')
+    store.show_type = 'result'
+    load_data_state.value = state
+    res_list = list
+    let _ref_scroll = scrollRef.value;
+    timer.value = setTimeout(() => {
+        // 如果是从详情页返回
+        if (search.back_keyword.keyword) {
+            nextTick(() => {
                 //重新设置滚动高度
-                _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
-            }
-        })
+                _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', search.result_scroll.top);
+            })
+        } else {
+            //重新设置滚动高度
+            _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
+        }
     })
+
+    //调用接口获取获取搜索结果数据
+    // search.get_search_result(keyword, props.search_csid).then(res => {
+    //     const { state, list } = res
+    //     update_show_type('result')
+    //     load_data_state.value = state
+    //     res_list = list
+    //     let _ref_scroll = scrollRef.value;
+    //     timer.value = setTimeout(() => {
+    //         // 如果是从详情页返回
+    //         if (search.back_keyword.keyword) {
+    //             nextTick(() => {
+    //                 //重新设置滚动高度
+    //                 _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', search.result_scroll.top);
+    //             })
+    //         } else {
+    //             //重新设置滚动高度
+    //             _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
+    //         }
+    //     })
+    // })
 }
 onBeforeUnmount(() => {
     if (timer.value) {
@@ -211,10 +230,15 @@ onBeforeUnmount(() => {
 
 // 监听搜索球种变化
 watch(
-    () => props.search_csid,
+    () => store.search_csid,
     () => {
-        const keword = keyword.value.substr(5)
-        get_search_result(keword, true)
+        if (store.keyword) {
+            get_search_result()
+        } else {
+        }
+        // const keword = keyword.value.substr(5)
+        // store.keyword = ''
+        // get_search_result()
     }
 )
 

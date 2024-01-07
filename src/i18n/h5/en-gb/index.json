@@ -2406,7 +2406,13 @@
     "show_hide": "Show/Hide",
     "sorry": "Sorry, it can't be loaded now.",
     "nohandle": "You have been inactive for too long, the video is paused, pls click play to continue watching",
-    "video_line": "Video Line"
+    "video_line": "Video Line",
+    "novideo1": "No broadcast. Hold on",
+    "novideo2": "Quick settle",
+    "novideo3": "Multilingual, currency",
+    "novideo4": "Amazing",
+    "novideo5": "Great team",
+    "novideo6": "You have been inactive for too long, the video is paused, pls click play to continue watching"
   },
   "new_menu": {
     "1": "In-Play",
