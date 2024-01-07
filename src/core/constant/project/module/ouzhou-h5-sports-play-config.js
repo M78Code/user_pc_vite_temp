@@ -290,6 +290,23 @@ export const sports_play_data = {
         csid: '2'
       },
     ],
+    "1001" : [ 
+      {
+        label: i18n_t('ouzhou.match.play_map.1'),
+        hpid: '20001',
+        csid: '1001'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.2'),
+        hpid: '20002',
+        csid: '1001'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.4'),
+        hpid: '20004',
+        csid: '1001'
+      },
+    ],
 }
 
 export const use_sports_play_title = () => {
