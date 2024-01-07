@@ -1242,7 +1242,6 @@ class MatchMeta {
     }
 
     this.compute_current_matchs()
-
     if (!is_virtual) {
       // 清除虚拟计算信息
       VirtualList.clear_virtual_info()
@@ -1388,7 +1387,7 @@ class MatchMeta {
    */
   set_ws_active_mids({ list = [], warehouse = MatchDataBaseH5 }) {
     warehouse.set_active_mids([])
-    if (MenuData.is_results()) return
+    if (MenuData.is_results() && PageSourceData.route_name != 'match_result') return
     const mids = list.map(t => t)
     warehouse.set_active_mids(mids)
   }

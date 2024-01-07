@@ -1,6 +1,6 @@
 import { ref } from "vue"
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
-import { filter_early_list } from  "../util.js"
+import { filter_early_list, msgList } from  "../util.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_betting } from "src/api/index.js";
 import lodash from 'lodash';
@@ -10,8 +10,12 @@ class BetRecord {
     this.init_core()
   }
   init_core() {
-    // 0 未结算 1 预约中 2 已失效 3 已结算
+    // 0 未结算 1 已结算  2 预约
     this.selected = 0
+    // 预约  0进行中  1已失效
+    this.appoint_order_status = 0
+    // PC 投注记录提示
+    this.tipMsg = 'bet_record.msg_1'
     //列表数据
     this.list_data = {}
     // 提前结算图标是否选中
@@ -27,9 +31,6 @@ class BetRecord {
     this.is_hasnext = false
     // 接口是否返回错误码为0401038限频
     this.is_limit = false
-
-    // 预约  0进行中  1已失效
-    this.appoint_order_status = 0
     // 投注记录版本变更
     this.bet_record_version = ref('1111')
   }
@@ -38,6 +39,8 @@ class BetRecord {
   set_selected(number) {
     this.selected = number
     this.reset()
+    // 切换提示语
+    this.set_tip_msg(number)
     // 通知 cathectic-item-all, 重新获取数据 
     useMittEmit(MITT_TYPES.EMIT_BET_RECORD_SELECTED_CHANGE, this.selected)
     this.set_bet_record_version()
@@ -60,6 +63,23 @@ class BetRecord {
   // 更新投注记录版本
   set_bet_record_version() {
     this.bet_record_version.value = Date.now()
+  }
+
+  //设置提示语
+  set_tip_msg(index) {
+    let msg = ''
+    switch (index) {
+      case 0:
+        msg = 'bet_record.msg_1'
+        break;
+      case 1:
+        msg = 'bet_record.msg_2'
+        break;
+      case 2:
+        msg = 'bet_record.msg_7'
+        break;
+    }
+    this.tipMsg = msg
   }
 
   // 初始化数据

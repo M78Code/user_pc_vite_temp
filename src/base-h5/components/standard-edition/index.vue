@@ -106,14 +106,14 @@ onMounted(() => {
 
     }
     .title {
-        color: var(--q-gb-t-c-20);
+        color: var(--q-gb-t-c-18);
         font-size: 15px;
         font-weight: 600;
         line-height: 21px;
     }
 
     .desc {
-        color: var(--q-gb-t-c-11);
+        color: var(--q-gb-t-c-24);
         font-size: 12px;
         line-height: 17px;
         margin-top: 4px;

@@ -1,5 +1,6 @@
 <template>
   <div class="record-table">
+    <div style="display: none;">{{ BetRecordHistory.bet_record_version }}</div>
     <div>
 
       <q-table :rows="tableData" style="max-height:calc(100vh - 17rem)" :rows-per-page-options="[0]" :columns="columns"
@@ -229,14 +230,6 @@
                   :isUnsettled="current_tab === 'unsettled'"
       >
       </Pagination>
-      <!--      <pagination-wrapper-->
-      <!--        v-if="tableData.length > 0"-->
-      <!--        class="record-pagination"-->
-      <!--        :count="500"-->
-      <!--        @pageChange="changePage"-->
-      <!--        :is_bet_record="false"-->
-      <!--      ></pagination-wrapper>-->
-
 
     </div>
   </div>
@@ -255,6 +248,7 @@ import sport_icon from './sport_icon.vue'
 // import football_icon from 'src/assets/images/football_icon.png'
 import { copyToClipboard } from 'quasar'
 import GlobalSwitchClass from 'src/core/global/global.js'
+import { BetRecordHistory } from "src/core/bet-record/pc/bet-record-instance.js"
 const lang = computed(() => {
   return UserCtr.lang;
 })
