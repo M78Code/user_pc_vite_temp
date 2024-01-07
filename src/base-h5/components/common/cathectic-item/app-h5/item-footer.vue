@@ -83,7 +83,7 @@
 <script setup>
 import { reactive, onMounted, onUnmounted } from 'vue'
 import BetRecordClass from "src/core/bet-record/h5/bet-record.js";
-import { calc_text_only_status, calc_text, outcome } from "src/core/bet-record/util.js";
+import { calc_text_only_status, calc_text, outcome } from "src/core/bet-record/h5/util.js";
 import { i18n_t } from "src/boot/i18n.js";;
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import { formatTime, format_money2, format_balance, compute_local_project_file_path,currency_code,UserCtr } from 'src/output/index.js'
