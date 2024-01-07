@@ -273,7 +273,7 @@ export default {
     format_money2, 
     compute_css_obj,
     format_type:(item)=>{
-      return MenuData.recombine_menu_bg(item, true)
+      return MenuData.recombine_menu_bg?MenuData.recombine_menu_bg(item, true):0
     },
     compute_local_project_file_path
   },
