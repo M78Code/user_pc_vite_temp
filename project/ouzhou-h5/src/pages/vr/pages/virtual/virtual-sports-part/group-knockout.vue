@@ -28,8 +28,8 @@
 </template>
 <script>
 import group_knockout_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/group-knockout-mixin.js";
-import group_matches from "src/base-h5/vr/pages/virtual/virtual-sports-part/group-matches.vue";
-import knockout from "src/base-h5/vr/pages/virtual/virtual-sports-part/knockout.vue";
+import group_matches from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/group-matches.vue";
+import knockout from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/knockout.vue";
 export default {
   mixins:[group_knockout_mixin],
   name:'virtual_sports_part',

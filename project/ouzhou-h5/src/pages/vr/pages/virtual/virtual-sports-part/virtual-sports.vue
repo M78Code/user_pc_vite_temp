@@ -161,15 +161,15 @@
 </template>
 <script>
 import virtual_sports_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-mixin.js";
-import noData from "src/base-h5/vr/components/common/vr-sport-no-data.vue";
-import matchTab from "src/base-h5/vr/pages/virtual/virtual-sports-part/match-tab.vue"
-import v_s_match_list from "src/base-h5/vr/pages/virtual/virtual-sports-part/virtual-sports-match-list.vue"
-import v_s_match_list2 from "src/base-h5/vr/pages/virtual/virtual-sports-part/virtual-sports-match-list2.vue"
-import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual-sports-category.vue"
-import virtual_sports_stage from "src/base-h5/vr/pages/virtual/virtual-sports-part/virtual-sports-stage.vue"
-import dynamic_ranking from "src/base-h5/vr/pages/virtual/virtual-sports-part/dynamic-ranking.vue"
-import result_page from "src/base-h5/vr/pages/result/result-page.vue"
-import virtual_skeleton from "src/base-h5/vr/components/skeleton/virtual-sports/virtual.vue"
+import noData from "project_path/src/pages/vr/components/common/vr-sport-no-data.vue";
+import matchTab from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/match-tab.vue"
+import v_s_match_list from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/virtual-sports-match-list.vue"
+import v_s_match_list2 from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/virtual-sports-match-list2.vue"
+import virtual_sports_category from "project_path/src/pages/vr/pages/virtual/details/children/virtual-sports-category.vue"
+import virtual_sports_stage from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/virtual-sports-stage.vue"
+import dynamic_ranking from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/dynamic-ranking.vue"
+import result_page from "project_path/src/pages/vr/pages/result/result-page.vue"
+import virtual_skeleton from "project_path/src/pages/vr/components/skeleton/virtual-sports/virtual.vue"
 import { IconWapper } from 'src/components/icon'
 export default {
   mixins:[virtual_sports_mixin],

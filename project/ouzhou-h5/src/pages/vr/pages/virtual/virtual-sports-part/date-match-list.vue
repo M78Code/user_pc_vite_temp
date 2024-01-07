@@ -82,8 +82,8 @@
 </template>
 <script>
 import date_match_list_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/date-match-list-mixin.js";
-import teamImg from 'src/base-h5/vr/components/team-img.vue';
-import dateMatchSdata from 'src/base-h5/vr/pages/virtual/virtual-sports-part/date-match-s-data.vue'
+import teamImg from 'project_path/src/pages/vr/components/team-img.vue';
+import dateMatchSdata from 'project_path/src/pages/vr/pages/virtual/virtual-sports-part/date-match-s-data.vue'
 export default {
   mixins:[date_match_list_mixin],
   components:{

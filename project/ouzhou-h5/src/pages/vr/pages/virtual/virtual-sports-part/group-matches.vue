@@ -44,7 +44,7 @@
 </template>
 <script>
 import group_matches_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/group-matches-mixin.js";
-import no_data from "src/base-h5/vr/components/common/vr-sport-no-data.vue";
+import no_data from "project_path/src/pages/vr/components/common/vr-sport-no-data.vue";
 export default {
   mixins:[group_matches_mixin],
   name:'group_matches',

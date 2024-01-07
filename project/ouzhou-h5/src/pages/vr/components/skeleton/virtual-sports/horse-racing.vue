@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import skeleton from 'project/ouzhou-h5/src/pages/vr/components/skeleton/index.vue'
+import skeleton from 'project_path/src/pages/vr/components/skeleton/index.vue'
 
 export default {
   components:{ skeleton },

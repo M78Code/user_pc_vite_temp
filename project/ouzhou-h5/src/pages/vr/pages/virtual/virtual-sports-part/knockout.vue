@@ -85,7 +85,7 @@
 </template>
 <script>
 import knockout_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/knockout-mixin.js";
-import no_data from "src/base-h5/vr/components/common/vr-sport-no-data.vue";
+import no_data from "project_path/src/pages/vr/components/common/vr-sport-no-data.vue";
 export default {
   mixins:[knockout_mixin],
   name:'knockout',

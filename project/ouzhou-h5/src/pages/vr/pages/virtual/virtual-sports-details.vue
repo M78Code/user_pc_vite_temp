@@ -67,14 +67,14 @@
 </template>
 <script>
 import virtual_sports_details_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-details-mixin.js";
-import virtual_sports_tab from 'src/base-h5/vr/components/virtual-sports-tab.vue'
-import virtual_sports_stage from 'src/base-h5/vr/pages/virtual/virtual-sports-part/virtual-sports-stage.vue'
-import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual-sports-category.vue"
-import virtual_sports_detail_tab from 'src/base-h5/vr/pages/virtual/details/children/virtual-sports-detail-tab.vue'
-import ranking_list_start from "src/base-h5/vr/pages/virtual/virtual-sports-part/ranking-list-start.vue"
-import football_ranking_list from "src/base-h5/vr/pages/virtual/virtual-sports-part/football-ranking-list.vue"
-import group_knockout from "src/base-h5/vr/pages/virtual/virtual-sports-part/group-knockout.vue"
-import virtual_match_statistic from 'src/base-h5/vr/components/virtual-match-statistic.vue'
+import virtual_sports_tab from 'project_path/src/pages/vr/components/virtual-sports-tab.vue'
+import virtual_sports_stage from 'project_path/src/pages/vr/pages/virtual/virtual-sports-part/virtual-sports-stage.vue'
+import virtual_sports_category from "project_path/src/pages/vr/pages/virtual/details/children/virtual-sports-category.vue"
+import virtual_sports_detail_tab from 'project_path/src/pages/vr/pages/virtual/details/children/virtual-sports-detail-tab.vue'
+import ranking_list_start from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/ranking-list-start.vue"
+import football_ranking_list from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/football-ranking-list.vue"
+import group_knockout from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/group-knockout.vue"
+import virtual_match_statistic from 'project_path/src/pages/vr/components/virtual-match-statistic.vue'
 export default {
   mixins:[virtual_sports_details_mixin],
   name:'virtual_sports_details',
