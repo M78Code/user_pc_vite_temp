@@ -5,10 +5,8 @@
 -->
 <template>
   <div :class="['c-match-handicap', { 'unfold_multi_column': match_style_obj.data_tpl_id == 13 }, get_5min_classname()]">
-    <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="row no-wrap">
       <!-- 玩法列表 -->
-    
       <div class="handicap-col" v-for="(col, col_index) in col_ols_data" :key="col_index">
         <div  v-for="(ol_data, ol_index) in col.ols" :key="col_index + '_' + ol_index" 
           :class="['bet-item-wrap',ol_data?.other_class]"  :style="get_bet_style(col_index, lodash.get(col, 'ols.length'),ol_data)"
@@ -34,23 +32,15 @@ import lodash from 'lodash';
 
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
 import { get_match_status } from 'src/core/utils/common/index'
-import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data.vue"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
-import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { compute_sport_id } from 'src/output/index.js'
 import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 const props = defineProps({
   // 盘口列表
   handicap_list: {
     type: Array,
     default: () => [],
-  },
-  // 赛事
-  match: {
-    type: Object,
-    default: () => { },
   },
   // 是否显示比分
   is_show_score: {
@@ -75,9 +65,11 @@ const props = defineProps({
 })
 
 const MatchListData=inject("MatchListData")
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
+const match_style_obj=inject("match_style_obj")
+const match=inject("match")
 // 赛事模板宽度
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+const match_list_tpl_size=inject("match_list_tpl_size")
+
 // 组件是否已挂载
 const is_mounted = ref(false);
 const cur_esports_mode = ref(BetData.cur_esports_mode);
@@ -89,13 +81,13 @@ onMounted(() => {
 })
 //非坑位对象
 const not_hn_obj_map = computed(() => {
-  return get_match_to_map_obj(props.match, null, props.add_type); //非坑位对象
+  return get_match_to_map_obj(match.value, null, props.add_type); //非坑位对象
 })
 //坑位对象
 const hn_obj = toRef(MatchListData.list_to_obj,'hn_obj')
 const col_ols_data = computed(() => {
   try {
-    let { mid, csid } = props.match
+    let { mid, csid } =match.value
     let handicap_type = props.add_type
     return lodash.cloneDeep(props.handicap_list || []).map(col => {
       col.ols = col.ols.map(item => {
@@ -119,10 +111,10 @@ const col_ols_data = computed(() => {
 function get_5min_classname() {
   let className = ''
   if (
-    props.other_play && ['hps5Minutes'].includes(props.match.play_current_key) // 5分钟玩法
+    props.other_play && ['hps5Minutes'].includes(match.value.play_current_key) // 5分钟玩法
   ) {
     // 滚球 不需要背景色
-    if (get_match_status(lodash.get(props, 'match.ms'), [110]) == 1) {
+    if (get_match_status(lodash.get(match.value, 'ms'), [110]) == 1) {
       className = 'not-bg-handicap min5-roll-handicap'
     } else {
       // not-bg-handicap 清除被影响的背景色
@@ -139,9 +131,9 @@ function get_5min_classname() {
  * @return {Number}  bet_width 投注项宽度 
  */
 function get_bet_width(index, other_class = '') {
-  let { bet_width } = match_list_tpl_size
+  let { bet_width } = match_list_tpl_size.value
   // let bet_width = 110;
-  let { data_tpl_id } = match_style_obj
+  let { data_tpl_id } = match_style_obj.value
   if (other_class.includes('col1.5')) {
     bet_width *= 1.5
   } else if (other_class.includes('col2')) {
@@ -173,7 +165,7 @@ function get_bet_width(index, other_class = '') {
  */
 function get_bet_height(length) {
   let height = 35
-  let { data_tpl_id } = match_style_obj
+  let { data_tpl_id } = match_style_obj.value
   if (length == 1) {
     if (+data_tpl_id === 22) {
       height = height * 3
@@ -192,8 +184,8 @@ function get_bet_style(col_index, length, ol_data) {
   let other_class = lodash.get(ol_data, 'other_class', '')
   let style = `width:${get_bet_width(col_index, other_class)}px !important;height:${get_bet_height(length)}px !important;`
   if (other_class.includes('displacement')) {
-    let { data_tpl_id } = match_style_obj
-    let { bet_width, media_width } = match_list_tpl_size
+    let { data_tpl_id } = match_style_obj.value
+    let { bet_width, media_width } = match_list_tpl_size.value
     let right = data_tpl_id == 13 ? bet_width * 7 + media_width - 1 : media_width - 1
     style += `right: ${right}px;`
   }
