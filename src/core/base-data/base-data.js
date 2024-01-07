@@ -698,6 +698,9 @@ class BaseData {
         this.is_mi_300_open = true;
       }
 
+      // 菜单完成 更新顶部菜单tab
+      useMittEmit(MITT_TYPES.EMIT_MENU_INIT_DONE)
+
       // console.warn('left_menu',left_menu)get_virtual_menuvr
       // console.warn('菜单数据处理完成-----')
       // 数据对比替换
