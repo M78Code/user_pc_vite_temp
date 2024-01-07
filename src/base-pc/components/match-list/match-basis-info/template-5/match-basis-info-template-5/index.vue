@@ -52,7 +52,7 @@
     
         <!-- 是否收藏 -->
         <span @click.stop="collect" class="yb-flex-center yb-hover-bg m-star-wrap-match" v-if="GlobalAccessConfig.get_collectSwitch()">
-          <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
+          <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
         </span>
         <!-- 统计分析 -->
         <div class="sr-link-icon-w" v-tooltip="{content:i18n_t('common.analysis')}" v-if="is_show_sr_flg(match)" @click.stop='details.sr_click_handle(match)'>
@@ -72,7 +72,7 @@
 <script setup>
 import { compute_local_project_file_path, is_show_sr_flg } from "src/output/index.js";
 // useRegistPropsHelper(component_symbol, need_register_props)
-import {inject} from 'vue'
+import {inject, computed, watch, ref} from 'vue'
 import details  from "src/core/match-list-pc/details-class/details.js"
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
@@ -80,6 +80,23 @@ let match = inject("match")
 let match_style_obj = inject("match_style_obj")
 // let match_list_tpl_size = inject("match_list_tpl_size")
 
+const is_collect = ref(false) //赛事是否收藏
+
+is_collect.value = Boolean(lodash.get(match.value, 'mf'))
+
+
+// 监听收藏变化
+watch(() => match.value.mf, (n) => {
+  is_collect.value = Boolean(n)
+}, { immediate: true })
+
+const handicap_num = computed(() => {
+  if (GlobalAccessConfig.get_handicapNum()) {
+    return `+${lodash.get(match.value, 'mc') || 0}`
+  } else {
+    return i18n_t('match_info.more')
+  }
+})
 
 </script>
 <style lang="scss" scoped>

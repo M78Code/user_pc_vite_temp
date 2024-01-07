@@ -14,7 +14,8 @@ import {SessionStorage,
    MITT_TYPES,
    UserCtr,
    SearchData,
-   axios_loop as axios_api_loop
+   axios_loop as axios_api_loop,
+   PageSourceData
   } from "src/output/index.js";
   import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import matchDetailClass from "src/core/match-detail/match-detail-class";
@@ -522,10 +523,14 @@ export const details_main = () => {
       .then((res) => {
         let { data: res_data, ts, code } = res
         // #TODO
-        
         // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
         if (code == "0400500" || !res_data || Object.keys(res_data).length === 0) {
-          router.push({ name: "matchList" });
+          console.log(PageSourceData.from_page_source,'PageSourceData.from_page_source');
+          if(PageSourceData.from_page_source == 'match_result'){
+            router.go("-1");
+          }else{
+            router.push({ name: "matchList" });
+          }
         } else if (code == 200) {
           if (res_data && Object.keys(res_data).length) {
             match_detail_data_handle(res_data)
