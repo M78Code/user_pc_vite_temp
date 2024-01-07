@@ -32,7 +32,7 @@
     </div>
 
     <template v-for="(hp, index) of match_of_list.hps">
-      <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && !collapsed" :key="index">
+      <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && collapsed" :key="index">
 
         <div class="hps-wrap-title flex items-center justify-between" :class="{ 'is-favorite': false }" @click.stop>
           <div class="match-title items-center font-weight match-title-width">
@@ -120,6 +120,7 @@ export default {
   .league-container {
     height: 0.4rem;
     border: .01rem solid var(--q-gb-bd-c-5);
+    border-top: none;
 
     &::before {
       display: none !important;

@@ -123,4 +123,3 @@
     background-color: var(--q-gb-bg-c-10);
   }
   </style>
-  src/output/index.js

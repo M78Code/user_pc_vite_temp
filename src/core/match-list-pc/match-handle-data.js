@@ -51,7 +51,7 @@ export function match_list_handle_set(match_list) {
             match.tpl_id = get_match_template_id(match);
             match.api_update_time = date_now;
             match.tab_play_keys = get_tab_play_keys(match)
-            match.qi = match.tab_play_keys && String(match.tab_play_keys).split(',').length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
+            match.has_other_play = match.tab_play_keys && String(match.tab_play_keys).split(',').length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
             match.play_current_key = get_play_current_play(match)
             match.other_handicap_list = get_compute_other_play_data(match);
             const ass = compute_match_all_handicap_data(match)
