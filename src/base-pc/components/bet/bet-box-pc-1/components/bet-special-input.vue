@@ -49,6 +49,7 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { format_odds, formatMoney,format_currency, format_currency2,format_money3 } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { UserCtr } from "src/output/index.js"
 
