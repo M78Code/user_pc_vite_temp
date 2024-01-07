@@ -3,7 +3,7 @@
     <div style="display: none;">{{ BetRecordHistory.bet_record_version }}</div>
     <div>
 
-      <q-table :rows="tableData" style="max-height:calc(100vh - 17rem)" :rows-per-page-options="[0]" :columns="BetRecordHistory.columns"
+      <q-table :rows="BetRecordHistory.table_data" style="max-height:calc(100vh - 17rem)" :rows-per-page-options="[0]" :columns="BetRecordHistory.columns"
           row-key="orderNo" separator="cell" hide-pagination :class="current_tab === 'settled' ? 'settled' : 'unsettled'"
           :table-header-style="{
           backgroundColor: '#F1F1F1',
@@ -219,7 +219,7 @@
       </q-table>
       <!--分页组件-->
 
-      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="records.total" 
+      <Pagination v-if="BetRecordHistory.table_data.length > 0" class="record-pagination" :count="records.total" 
                   :betTotalAmount="records.betTotalAmount"
                   @pageChange="changePage"
                   @pageSizeChange="pageSizeChange"
@@ -257,6 +257,7 @@ const pageCurrent = ref('1')
 const getRowIndex = (rowIndex) => {
   return (pageCurrent.value - 1) * pageSize.value + rowIndex + 1;
 }
+
 
 const cts_mid = ref([15,27,28,23,31,32,24,33,34])
 
