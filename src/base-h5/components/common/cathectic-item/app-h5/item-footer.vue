@@ -26,7 +26,7 @@
         <span :class="{'acount': data_f.profitAmount > 0}">
           {{ showText(data_f) }}
           {{ format_balance(data_f.profitAmount) }}
-          {{i18n_t('common.unit')}}</span>
+          {{ currency_code[UserCtr.currency] }}</span>
       </p>
       <!-- 输/赢  -->
       <!-- <p>
