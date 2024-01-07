@@ -72,7 +72,7 @@
 <script setup>
 import { compute_local_project_file_path, is_show_sr_flg } from "src/output/index.js";
 // useRegistPropsHelper(component_symbol, need_register_props)
-import {inject} from 'vue'
+import {inject, computed, watch, ref} from 'vue'
 import details  from "src/core/match-list-pc/details-class/details.js"
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
@@ -80,6 +80,23 @@ let match = inject("match")
 let match_style_obj = inject("match_style_obj")
 // let match_list_tpl_size = inject("match_list_tpl_size")
 
+const is_collect = ref(false) //赛事是否收藏
+
+is_collect.value = Boolean(lodash.get(match.value, 'mf'))
+
+
+// 监听收藏变化
+watch(() => match.value.mf, (n) => {
+  is_collect.value = Boolean(n)
+}, { immediate: true })
+
+const handicap_num = computed(() => {
+  if (GlobalAccessConfig.get_handicapNum()) {
+    return `+${lodash.get(match.value, 'mc') || 0}`
+  } else {
+    return i18n_t('match_info.more')
+  }
+})
 
 </script>
 <style lang="scss" scoped>
