@@ -55,7 +55,7 @@
         />
         <!-- 隐藏 -->
         <div
-          v-if="is_eports_csid(sportId)"
+          v-if="!is_eports_csid(sportId)"
           class="hide-btn"
           @click="toggle_panel = false"
         >
@@ -82,8 +82,7 @@
 
 <script setup>
 import { ref, defineExpose, onUnmounted } from "vue";
-import { is_eports_csid } from "src/core/constant/common/module/csid-util.js";
-import { i18n_t } from "src/output/index.js";
+import { i18n_t,is_eports_csid } from "src/output/index.js";
 import ZHUGE from "src/core/http/zhuge-tag";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
 import info from "src/base-pc/components/match-detail/match_info/info.vue";
@@ -323,6 +322,7 @@ onUnmounted(() => {});
     right: 13px;
     padding: 5px 6px;
     border-radius: 13px;
+    color:var(--q-gb-bd-c-13) !important;
     background: rgba(31, 33, 41, 0.6);
     cursor: pointer;
     &:hover {

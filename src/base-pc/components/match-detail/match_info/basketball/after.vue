@@ -5,18 +5,14 @@
 -->
 <template>
   <div
-    :class="{ 'w-100': lodash.get(match_info, 'msc.S7') }"
+    :class="{ 'w-100': lodash.get(match_info, 'msc_obj.S7') }"
     class="basketball-after"
     v-if="isRouterAlive"
   >
     <div class="info-time">
       <!-- 正计时 -->
       <div class="match-date">
-        <match-date
-          :right="right"
-          :match_props="{ match: match_info }"
-          class="count_down"
-        ></match-date>
+        <match-process :match="match_info" show_page="match-list" :rows="1" />
       </div>
       <!-- 中立场 -->
       <span v-if="match_info.mng" class="icon-neutral q-icon c-icon"
@@ -94,9 +90,11 @@
           <!-- 右滚动按钮 E -->
 
           <!-- 加时 -->
-          <span class="common-score" v-if="lodash.get(match_info, 'msc.S7')">{{
-            i18n_t("common.add_time")
-          }}</span>
+          <span
+            class="common-score"
+            v-if="lodash.get(match_info, 'msc_obj.S7')"
+            >{{ i18n_t("common.add_time") }}</span
+          >
         </template>
         <!-- 总分 -->
         <span class="common-score score">{{ i18n_t("common.total") }}</span>
@@ -115,7 +113,6 @@
               lodash.get(match_info, 'frmhn[0]'),
             ]"
             class="both-logo"
-
           />
           <span
             class="ellipsis allow-user-select"
@@ -137,32 +134,32 @@
             >
               <template v-if="lodash.get(match_info, 'mle') == '17'">
                 <!-- 上半场比分 -->
-                <span>{{ lodash.get(match_info, "msc.S2.home") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S2.home") }}</span>
                 <!-- 下半场比分 -->
-                <span>{{ lodash.get(match_info, "msc.S3.home") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S3.home") }}</span>
               </template>
               <template v-else>
                 <!-- 第一节比分 -->
-                <span>{{ lodash.get(match_info, "msc.S19.home") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S19.home") }}</span>
                 <!-- 第二节比分 -->
-                <span>{{ lodash.get(match_info, "msc.S20.home") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S20.home") }}</span>
                 <span class="time-half">{{
-                  lodash.get(match_info, "msc.S2.home")
+                  lodash.get(match_info, "msc_obj.S2.home")
                 }}</span>
                 <!-- 第三节比分 -->
-                <span>{{ lodash.get(match_info, "msc.S21.home") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S21.home") }}</span>
                 <!-- 第四节比分 -->
-                <span>{{ lodash.get(match_info, "msc.S22.home") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S22.home") }}</span>
               </template>
             </div>
             <span
               class="common-score"
-              v-if="lodash.get(match_info, 'msc.S7')"
-              >{{ lodash.get(match_info, "msc.S7.home") }}</span
+              v-if="lodash.get(match_info, 'msc_obj.S7')"
+              >{{ lodash.get(match_info, "msc_obj.S7.home") }}</span
             >
           </template>
           <span class="common-score score">{{
-            lodash.get(match_info, "msc.S1.home")
+            lodash.get(match_info, "msc_obj.S1.home")
           }}</span>
         </div>
       </div>
@@ -197,28 +194,28 @@
               }"
             >
               <template v-if="lodash.get(match_info, 'mle') == '17'">
-                <span>{{ lodash.get(match_info, "msc.S2.away") }}</span>
-                <span>{{ lodash.get(match_info, "msc.S3.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S2.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S3.away") }}</span>
               </template>
               <template v-else>
-                <span>{{ lodash.get(match_info, "msc.S19.away") }}</span>
-                <span>{{ lodash.get(match_info, "msc.S20.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S19.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S20.away") }}</span>
                 <span class="time-half">{{
-                  lodash.get(match_info, "msc.S2.away")
+                  lodash.get(match_info, "msc_obj.S2.away")
                 }}</span>
-                <span>{{ lodash.get(match_info, "msc.S21.away") }}</span>
-                <span>{{ lodash.get(match_info, "msc.S22.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S21.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc_obj.S22.away") }}</span>
               </template>
             </div>
 
             <span
               class="common-score"
-              v-if="lodash.get(match_info, 'msc.S7')"
-              >{{ lodash.get(match_info, "msc.S7.away") }}</span
+              v-if="lodash.get(match_info, 'msc_obj.S7')"
+              >{{ lodash.get(match_info, "msc_obj.S7.away") }}</span
             >
           </template>
           <span class="common-score score">{{
-            lodash.get(match_info, "msc.S1.away")
+            lodash.get(match_info, "msc_obj.S1.away")
           }}</span>
         </div>
       </div>
@@ -230,18 +227,18 @@
 
 <script>
 // import format from "src/project/yabo/mixins/match_details/index";
-import { MatchProcessFullVersionWapper } from "src/components/match-process/index.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
-import { IconWapper } from 'src/components/icon'
+import { IconWapper } from "src/components/icon";
 import { nextTick } from "vue";
-import LayOutMain from "src/core/layout/index.js"
+import LayOutMain from "src/core/layout/index.js";
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 
 export default {
   components: {
-    "match-date": MatchProcessFullVersionWapper,
     IconWapper,
+    matchProcess,
   },
   // mixins: [format],
   props: {
@@ -270,9 +267,7 @@ export default {
       un_subscribe: null,
     };
   },
-  mounted() {
-    
-  },
+  mounted() {},
   methods: {
     /**
      * 鼠标移入
@@ -317,7 +312,11 @@ export default {
       }
 
       let offset = 3;
-      let _scroll_left = BetCommonHelper.get_refs_info("scroll_handel", "scrollLeft", this);
+      let _scroll_left = BetCommonHelper.get_refs_info(
+        "scroll_handel",
+        "scrollLeft",
+        this
+      );
       let _msc_length = 5 * this.one_item_width;
       let _max_scroll = _msc_length - this.one_item_width * offset;
 
@@ -334,9 +333,12 @@ export default {
      */
     init_scroll() {
       let scroll_left = this.one_item_width * 2;
-      BetCommonHelper.get_refs_info("scroll_handel", null, this).scrollLeft = scroll_left;
-      BetCommonHelper.get_refs_info("scroll_home", null, this).scrollLeft = scroll_left;
-      BetCommonHelper.get_refs_info("scroll_away", null, this).scrollLeft = scroll_left;
+      BetCommonHelper.get_refs_info("scroll_handel", null, this).scrollLeft =
+        scroll_left;
+      BetCommonHelper.get_refs_info("scroll_home", null, this).scrollLeft =
+        scroll_left;
+      BetCommonHelper.get_refs_info("scroll_away", null, this).scrollLeft =
+        scroll_left;
       this.more_left_icon = true;
     },
     /**
@@ -345,7 +347,7 @@ export default {
      */
     reload_data() {
       this.isRouterAlive = false;
-      nextTick(()=> {
+      nextTick(() => {
         this.isRouterAlive = true;
       });
     },
@@ -381,7 +383,7 @@ export default {
 
         if (
           this.$route.name == "home" &&
-          lodash.get(res, "msc.S7") &&
+          lodash.get(res, "msc_obj.S7") &&
           LayOutMain.layout_content_width < 1430
         ) {
           this.is_scroll = true;
@@ -404,7 +406,7 @@ export default {
     LayOutMain: {
       handler(res) {
         if (this.$route.name == "home") {
-          if (res.width < 1430 && lodash.get(this.match_info, "msc.S7")) {
+          if (res.width < 1430 && lodash.get(this.match_info, "msc_obj.S7")) {
             if (!this.is_scroll) {
               this.screen_class = "is_min_screen";
               this.is_scroll = true;

@@ -14,9 +14,9 @@
         </div>
       </div>
       <!-- 当前盘下的当前局比分 -->
-      <div class="score" v-if="match.csid == 5">{{match.score_obj.S103.home}}</div>
+      <div class="score" v-if="match.csid == 5">{{ lodash.get(match,'score_obj.S103.home') }}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{match.cur_score.home}}</div>
+      <div class="score-game">{{ lodash.get(match,'cur_score.home') }}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
@@ -27,9 +27,9 @@
         </div>
       </div>
       <!-- 当前盘下的当前局比分 -->
-      <div class="score" v-if="match.csid == 5">{{match.score_obj.S103.away}}</div>
+      <div class="score" v-if="match.csid == 5">{{ lodash.get(match,'score_obj.S103.away') }}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{match.cur_score.away}}</div>
+      <div class="score-game">{{ lodash.get(match,'cur_score.away')}}</div>
     </div>                      
     
     <div class="row-item match-icon">
@@ -67,34 +67,18 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 <script setup>
-// import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
-// mixins:[match_basis_info_mixin],
 import { compute_local_project_file_path, is_show_sr_flg } from "src/output/index.js";
-import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
-import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 // useRegistPropsHelper(component_symbol, need_register_props)
-import lodash from 'lodash';
+import {inject} from 'vue'
 import details  from "src/core/match-list-pc/details-class/details.js"
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-
-const props = {
-  match: {
-    type: Object,
-    default: () => {}
-  }
-}
-
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
-// 赛事模板宽度
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-
+let match = inject("match")
+let match_style_obj = inject("match_style_obj")
+// let match_list_tpl_size = inject("match_list_tpl_size")
 
 
 </script>

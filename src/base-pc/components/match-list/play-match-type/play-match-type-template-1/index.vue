@@ -87,5 +87,3 @@ const cur_title_info = computed(() => {
   }
 }
 </style>
- 
- src/output/index.js

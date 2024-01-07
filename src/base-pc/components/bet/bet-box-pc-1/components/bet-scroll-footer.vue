@@ -155,13 +155,13 @@ const set_bet_is_accept = () => {
   }
 
   .bet-submit {
-    height: 40px;
-    line-height: 40px;
+    height: 36px;
+    line-height: 36px;
     font-size: 14px;
     color: var(--q-gb-bd-c-13);
     text-align: center;
     font-weight: 600;
-    border-radius: 40px;
+    border-radius: 36px;
     background: var(--q-gb-bg-lg-1);
   }
 

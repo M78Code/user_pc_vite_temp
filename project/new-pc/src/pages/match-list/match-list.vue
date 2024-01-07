@@ -33,20 +33,20 @@
       </list-header>
       <!-- <div>menu_config.match_list_menu_show.list_filter {{ menu_config.match_list_menu_show.list_filter }}</div> -->
       <!-- 顶部菜单  // 滚球  冠军 -->
-      <list-filter v-if="[1, 400].includes(parseInt(menu_config.menu_root))" :collect_count="collect_count"
+      <list-filter v-if="MenuData.is_scroll_ball() || MenuData.is_kemp()" :collect_count="collect_count"
         :load_data_state="load_data_state" />
       <!-- 日期菜单   早盘 日期 -->
-      <list-filter-date v-if="menu_config.menu_root == 3" :collect_count="collect_count"
+      <list-filter-date v-if="MenuData.is_zaopan()" :collect_count="collect_count"
         :load_data_state="load_data_state" />
       <!-- 热门赛事顶部菜单 -->
-      <list-filter-hot v-if="menu_config.menu_root == 500" :collect_count="collect_count"
+      <list-filter-hot v-if="MenuData.is_hot()" :collect_count="collect_count"
         :load_data_state="load_data_state" />
       <!-- 电竞顶部菜单 -->
-      <esports-header v-if="menu_config.menu_root == 2000" :load_data_state="load_data_state" />
+      <esports-header v-if="MenuData.is_esports()" :load_data_state="load_data_state" />
       <!-- 赛事状态 | 赛种类型      -->
       <!-- <play-virtual-match-type class="sticky-wrap" v-if="menu_config.menu_root_show_shoucang == 300" style="top:100px" /> -->
       <!-- 联赛  VR 足球才会有联赛-->
-      <div class="leagues-tabs leagues-bg" v-if="menu_config.mid_menu_result.mi == '1001'">
+      <div class="leagues-tabs leagues-bg" v-if="MenuData.mid_menu_result.mi == '1001'">
         <!-- 联赛菜单 -->
         <LeagueTab />
       </div>
@@ -54,7 +54,7 @@
     <!-- 列表容器 -->
     <load-data :state="'data'">
       <!-- 滚球虚拟体育列表 -->
-      <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
+      <scroll-list v-if="MenuData.menu_root_show_shoucang == 300">
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.type + 'px' }"></div>
         </template>
@@ -77,7 +77,7 @@
       </scroll-list>
       <!-- <div> {{match_list_card_key_arr }}</div> -->
       <!-- 滚球其他列表 -->
-      <scroll-list v-if="menu_config.menu_root_show_shoucang != 300" ref="sroll_set">
+      <scroll-list v-if="MenuData.menu_root_show_shoucang != 300">
         <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.type + 'px' }"></div>
@@ -106,8 +106,8 @@
     </div>
   </div>
 </template>
-<script setup>
-import { onMounted, onUnmounted , watch,ref } from "vue";
+<script>
+import { onMounted, onUnmounted } from "vue";
 
 import { IconWapper } from 'src/components/icon'
 import LoadData from 'src/components/load_data/load_data.vue';
@@ -129,38 +129,72 @@ import EsportsHeader from "src/base-pc/components/match-list/esports-header/inde
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
-
-import menu_config from "src/core/menu-pc/menu-data-class.js";
+import { MenuData } from "src/output/index.js"
+// import menu_config from "src/core/menu-pc-yazhou/menu-data-class.js";
 import { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh, handle_destroyed } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { PageSourceData, compute_css_obj } from 'src/output/index.js';
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/output/index.js";
 import "./match_list.scss";
 const { page_source } = PageSourceData;
-const match_list_card_key_arr = ref([])
-const sroll_set = ref()
-const MatchListCardDataClass_match_list_card_key_arr = ()=>{
-  match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
-}
-const on_go_top = () => {
-  // useMittEmit(MITT_TYPES.EMIT_SET_SCROLL_POSITION, [0, 0]) 
-  sroll_set.value.set_scrollTop(0)
-}
-onMounted(()=>{
-  mounted_fn()
-  MatchListCardDataClass_match_list_card_key_arr()
-})
-
-onUnmounted(()=>{
-  handle_destroyed()
-})
-
-watch(
-  () => MatchListCardDataClass.list_version,
-  (val) => {
-    MatchListCardDataClass_match_list_card_key_arr()
+export default {
+  components: {
+    LeagueTab,
+    listFilter,
+    listFilterDate,
+    MatchListCard,
+    ListFilterHot,
+    PlayVirtualMatchType,
+    LoadData,
+    ScrollList,
+    IconWapper,
+    LoadData,
+    refresh,
+    EsportsHeader,
+    ListHeader
   },
-);
+  setup() {
+    onMounted(() => {
+      mounted_fn();
+    });
+    onUnmounted(() => {
+      handle_destroyed()
+    })
+    return {
+      MenuData,
+      MatchListData,
+      show_refresh_mask,
+      collect_count,
+      is_show_hot,
+      page_source,
+      GlobalAccessConfig,
+      match_list_card,
+      on_refresh
+    };
+  },
+  data() {
+    return {
+      compute_css_obj,
+      MatchListCardDataClass,
+      load_data_state,
+      match_list_card_key_arr: []
+    }
+  },
+  mounted() {
+    this.MatchListCardDataClass_match_list_card_key_arr();
+  },
+  watch: {
+    'MatchListCardDataClass.list_version'(newValue, oldValue) {
+      this.MatchListCardDataClass_match_list_card_key_arr()
+      this.$forceUpdate()
+    }
+  },
+  methods: {
+    MatchListCardDataClass_match_list_card_key_arr() {
+      this.match_list_card_key_arr = MatchListCardDataClass.match_list_card_key_arr
+    },
+  },
+};
 // 赛事列表筛选：滚球-球种、早盘-日期
 // 列表视图滚动容器
 // ScrollList: () => import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/cus_scroll/scroll_list.vue"),

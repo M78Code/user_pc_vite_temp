@@ -522,7 +522,7 @@ export function usedetailData(route) {
   );
   //  赛事切换刷新数据
   const refresh = () => {
-    console.log(11111111)
+  
     all_list_toggle = {};
     detail_list.value = [];
     sportId = route.params.csid;
