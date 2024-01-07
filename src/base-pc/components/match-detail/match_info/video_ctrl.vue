@@ -485,7 +485,6 @@ const full_screen = () => {
 };
 
 onMounted(() => {
-  console.log(111111111111155,menu_data.value)
   let autoPlay = sessionStorage.getItem("auto_play_media");
   if (autoPlay) {
     toggle_play_media("video");

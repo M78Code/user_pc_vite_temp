@@ -13,7 +13,7 @@
     </template>
 
     <!-- 弹出框 -->
-    <q-dialog v-model="is_show_dialog" content-class="article-dialog" position="bottom" @hide="handle_hide_dialog">
+    <q-dialog v-model="is_show_dialog"  content-class="article-dialog" position="bottom" @hide="handle_hide_dialog">
       <div class="dialog-title yb_px12 yb_fontsize16" @click="back"><i class="back yb_mr8"></i>返回</div>
       <div class="dialog-content">
         <template v-if="article_detail2.articleTittle">
@@ -45,8 +45,7 @@ import lodash from 'lodash'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { get_server_file_path } from "src/core/file-path/file-path.js"
 import ZHUGE from "src/core/http/zhuge-tag";
-import {MenuData} from "src/output/index.js";
-
+import { MenuData, rem} from "src/output/index.js";
   // 弹框是否显示
   let is_show_dialog = ref(false)
   // 详情页文章标签下的文章详情
@@ -90,6 +89,7 @@ const calc_height = () => {
     if (!ele.style.height) {
       // TODO: 后续修改调整  $utils
       ele.style.height = window.innerHeight - rem(0.92) + 'px'
+      console.log(window.innerHeight - rem(0.92) + 'px','px');
       ele.style.maxHeight = 'unset'
     }
   }
@@ -190,7 +190,6 @@ const maylike_click = (index) => {
         matchids.value.push(index)
         matchids.value.last_click = true
         calc_height()
-
         // 触发停留时长埋点
         const article_id = matchids.value.length === 1 ? article_detail.value.id : favorite_article_data.value[matchids.value.length - 2].id
         handle_stay_duration(article_id)
@@ -284,7 +283,9 @@ const handle_hide_dialog = (e) => {
 }
 .dialog-content {
   background: var(--q-gb-bg-c-23);
+  max-height:75vh !important;
 }
+
 </style>
 
 <style>
