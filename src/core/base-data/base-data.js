@@ -160,7 +160,7 @@ class BaseData {
   init() {
     console.error('初始化菜单数据')
     // 用默认数据 初始化
-    this.init_by_default_data();
+    // this.init_by_default_data();
     // console.warn("BaseData.init()--------");
 
     // 获取 用户信息
