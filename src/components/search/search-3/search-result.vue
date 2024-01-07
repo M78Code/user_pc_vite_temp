@@ -56,78 +56,20 @@
   
 <script setup>
 import { ref, reactive, watch, onBeforeUnmount ,nextTick} from 'vue'
+import { useRouter } from 'vue-router'
 import { SearchPCClass } from 'src/output/index.js'
 import { project_name, i18n_t } from 'src/output/index.js';
+import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
 import lodash from "lodash";
 import details from "src/core/match-list-pc/details-class/details.js"
 import search from "src/core/search-class/search.js"
 import {store, mutations} from './index.js'
-
 import loadData from "src/components/load_data/load_data.vue"
 
-const props = defineProps({
-    show_type: {
-        type: String,
-        default: ''
-    },
-    search_csid: {
-        type: [Number, String],
-        default: ''
-    }
-})
-
-const emit = defineEmits(['update:show_type'])
-const update_show_type = (data) => emit('update:show_type', data)
-
-/** 国际化 */
-
-
-/** 数据加载状态 */
-// const load_data_state = ref('data')
-/** 搜索结果数据 */
-// let res_list = reactive([])
-
-// const router = useRouter()
-
-/** stroe仓库 */
-// const { searchReducer } = {}
-/**
- * 获取搜索内容 default: ''
- * 路径: project_path\src\store\module\search.js
- */
-// const keyword = ref(SearchPCClass.keyword)
-// 监听搜索关键词改变
-watch(
-    () => store.keyword,
-    lodash.debounce((res) => {
-        // if (search_type.value == 2) {
-        //     update_show_type('none')
-        // } else {
-        //     get_search_result(res.substr(5))
-        // }
-            get_search_result(res)
-    }, 300)
-)
-
-/**
- * 获取搜索类型 default: 1
- * 路径: project_path\src\store\module\search.js
- */
-const search_type = ref(1)
-// const unsubscribe = store.subscribe(() => {
-//     const { searchReducer: new_searchReducer } = {};
-//     keyword.value = ''
-//     search_type.value = ''
-// })
-// onBeforeUnmount(unsubscribe)
-
-/** 设置搜索联赛关键字 */
-// const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
-/** 设置搜索状态 */
-// const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
-/** 设置搜索类型 */
-// const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data })
+const router = useRouter()
+const scrollRef = ref(null)
+const timer = ref(null)
 
 /**
  * @Description:点击联赛搜索
@@ -135,35 +77,40 @@ const search_type = ref(1)
  * @return {undefined} undefined
  */
 function league_click(league) {
+    if(!league) return
     search.insert_history(league.league_name)
-    update_show_type('none')
-    // router.push({
-    //     name: 'search',
-    //     params: {
-    //         keyword: league.league_name,
-    //     },
-    //     query: {
-    //         csid: props.search_csid
-    //     }
-    // })
-    set_search_type(2)
-    set_click_keyword(league.league_name)
+    const { csid } = league.children[0]
+    store.show_type = 'none'
+	router.push(`/search/${league.league_name}/${csid}`)
+    // SearchPCClass.set_search_isShow(false);
+	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
+		focus: false,
+		text: ''
+	})
+    // mutations.clear_handle()
 }
 
-const scrollRef = ref(null)
 /**
  * @Description:点击赛事搜索
  * @param {object} match 点击的赛事
  * @return {undefined} undefined
  */
 function match_click(match) {
+    console.log('match_clickmatch_clickmatch_clickmatch_click', match)
+	if(!match) return;
     search.result_scroll = scrollRef.value.getScrollPosition()
     search.insert_history(match.name)
-    details.on_go_detail(match, keyword.value.substr(5),router)
-    set_search_status(false)
+	const { mid, tid, csid } = match
+    // details.on_go_detail(match, keyword.value.substr(5),router)
+    router.push(`/details/${mid}/${csid}/${tid}`)
+    SearchPCClass.set_search_isShow(false);
+    useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
+		focus: false,
+		text: ''
+	})
+    // mutations.clear_handle()
 }
 
-const timer = ref(null)
 /**
  * @Description:获取搜索结果数据
  * @param {string} keyword 搜索关键字
@@ -171,18 +118,10 @@ const timer = ref(null)
  */
 function get_search_result() {
     if (!store.keyword) {
-        // update_show_type('init')
         store.show_type = 'init'
         return
     }
-    // //调用接口前先设置加载状态
-    // if (is_loading) {
-    //     load_data_state.value = 'loading'
-    // }
     mutations.get_search_result_handle()
-    // const { state, list } = results
-    // update_show_type('result')
-    // load_data_state.value = 'data'
     let _ref_scroll = scrollRef.value;
     timer.value = setTimeout(() => {
         // 如果是从详情页返回
@@ -196,27 +135,6 @@ function get_search_result() {
             _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
         }
     })
-
-    //调用接口获取获取搜索结果数据
-    // search.get_search_result(keyword, props.search_csid).then(res => {
-    //     const { state, list } = res
-    //     update_show_type('result')
-    //     load_data_state.value = state
-    //     res_list = list
-    //     let _ref_scroll = scrollRef.value;
-    //     timer.value = setTimeout(() => {
-    //         // 如果是从详情页返回
-    //         if (search.back_keyword.keyword) {
-    //             nextTick(() => {
-    //                 //重新设置滚动高度
-    //                 _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', search.result_scroll.top);
-    //             })
-    //         } else {
-    //             //重新设置滚动高度
-    //             _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
-    //         }
-    //     })
-    // })
 }
 onBeforeUnmount(() => {
     if (timer.value) {
@@ -225,17 +143,21 @@ onBeforeUnmount(() => {
     }
 })
 
+// 监听搜索关键词改变
+watch(
+    () => store.keyword,
+    lodash.debounce((res) => {
+            get_search_result(res)
+    }, 300)
+)
+
 // 监听搜索球种变化
 watch(
     () => store.search_csid,
     () => {
         if (store.keyword) {
             get_search_result()
-        } else {
         }
-        // const keword = keyword.value.substr(5)
-        // store.keyword = ''
-        // get_search_result()
     }
 )
 
