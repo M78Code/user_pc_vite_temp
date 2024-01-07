@@ -20,7 +20,6 @@
 import { ref, reactive } from 'vue'
 import { TabWapper as Tab } from "src/components/common/tab"
 
-import store from "src/store-redux/index.js";
 
 const props = defineProps({
     show_type: {

@@ -1475,6 +1475,7 @@ class MatchMeta {
       // 排序
       case "sortRules":
         this.set_show_skeleton_state(true)
+        MatchFold.clear_fold_info()
         this.clear_match_info()
         this.handler_again_matchs()
         useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)

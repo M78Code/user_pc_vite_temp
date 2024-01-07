@@ -12,7 +12,7 @@ import * as TemplateCommon from "./template-common.js"
  
 
   // 电竞模板
-  export const template_24= {
+  export const template_28= {
     main_handicap_list: [
       {
         ols: [
