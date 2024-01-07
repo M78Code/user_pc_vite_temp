@@ -3,19 +3,19 @@
 -->
 <template>
   <div class="virtual-detail" ref="virtual_detail_box">
-    <!-- 头部 -->
-    <div class="virtual-head">
+    <!-- 头部-->
+    <!--<div class="virtual-head">
       <div class="type-bg bg1001">
-        <div class="back-wrap">
+        <div class="back-wrap">-->
           <!-- 返回按钮 -->
-          <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div>
+          <!-- <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div> -->
           <!-- 虚拟体育 -->
-          <div class="col">{{current_league.name}}</div>
+          <!-- <div class="col">{{current_league.name}}</div> -->
           <!--刷新按钮-->
-          <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
+          <!-- <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!--视频，tab和玩法集部分-->
     <template v-if="true">
       <div class="detail-header-bg"></div>
