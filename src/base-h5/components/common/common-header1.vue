@@ -5,8 +5,8 @@
   <div ref="common_header" class="common-header" @touchmove.prevent>
     <div class="row justify-between full-height ">
       <!-- 返回上一页 -->
-      <div class="go-back-btn-wrap a1" @click="go_to_back" >
-        <div class="go-back"></div>
+      <div class="go-back-btn-wrap" @click="go_to_back" >
+        <GoBackSvg class="go-back" />
       </div>
       <div ref="contents" class="ellipsis title-style details-c" @click.stop="show_dialog">
         <!-- 联赛名 -->
@@ -34,6 +34,7 @@ import { useRoute, useRouter } from "vue-router"
 import lodash from 'lodash'
 
 import seamlessMarquee from 'src/base-h5/components/details/seamless-marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
+import GoBackSvg from 'src/components/go_back/index.vue'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -347,12 +348,8 @@ export default {
 
 .go-back {
   display: inline-block;
-  background: url($SCSSPROJECTPATH + '/image/common/go_back.svg') no-repeat center / 96% 96%;
-  width: 0.3rem;
-  height: 100%;
-  background-position: center ;
-  background-size: 0.1rem auto;
-  margin-left: 0.05rem;
+  color: #E7E7E7;
+  margin-left: 0.15rem;
 }
 
 .analysis_new {

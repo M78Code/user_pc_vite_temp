@@ -88,7 +88,6 @@ const set_click_keybord = obj => {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 0 10px;
 }
 
 .is_big_vedio {

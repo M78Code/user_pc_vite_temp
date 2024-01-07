@@ -213,5 +213,3 @@ function handle_hpid_choose(item) {
   }
 }
 </style>
- 
- src/output/index.js

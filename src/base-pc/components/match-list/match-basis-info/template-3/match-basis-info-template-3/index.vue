@@ -73,6 +73,10 @@ const props = defineProps({
   is_show_more: {
     type: Boolean,
     default: () => false
+  },
+  is_suffix: {
+    type: Boolean,
+    default: () => false
   }
 })  
 
@@ -88,7 +92,7 @@ const team_names = computed(() => {
     away:"",
     home:"",
   }
-  if(is_suffix.value){
+  if(props.is_suffix){
     team_names = {
       away:man+up_half_text,
       home:mhn+up_half_text,

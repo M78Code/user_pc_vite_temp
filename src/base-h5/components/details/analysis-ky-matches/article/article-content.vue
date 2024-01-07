@@ -9,7 +9,7 @@
       {{ article_detail.articleTittle }}
     </div>
     <div class="row yb_mb18 yb_mt8 category-content" >
-      <img src="image/bw3/svg/touxiang.svg" alt="" class="touxiang yb_mr4" />
+      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details/touxiang.svg`" alt="" class="touxiang yb_mr4" />
       <span class="category-name ellipsis">{{ article_detail.categoryName }}</span>
       <span class="yb_ml12">{{ article_detail.readCounts }}阅读</span>
       <span style="margin-left: auto">{{ formete_date(article_detail.updateTime)   }}</span>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { formete_date  } from "src/output/index.js";
+import { formete_date,LOCAL_PROJECT_FILE_PREFIX  } from "src/output/index.js";
   const props = defineProps({
     article_detail: {
       type: Object,

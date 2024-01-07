@@ -14,9 +14,9 @@
         </div>
       </div>
       <!-- 当前盘下的当前局比分 -->
-      <div class="score" v-if="match.csid == 5">{{match.score_obj.S103.home}}</div>
+      <div class="score" v-if="match.csid == 5">{{ lodash.get(match,'score_obj.S103.home') }}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{match.cur_score.home}}</div>
+      <div class="score-game">{{ lodash.get(match,'cur_score.home') }}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
@@ -27,9 +27,9 @@
         </div>
       </div>
       <!-- 当前盘下的当前局比分 -->
-      <div class="score" v-if="match.csid == 5">{{match.score_obj.S103.away}}</div>
+      <div class="score" v-if="match.csid == 5">{{ lodash.get(match,'score_obj.S103.away') }}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{match.cur_score.away}}</div>
+      <div class="score-game">{{ lodash.get(match,'cur_score.away')}}</div>
     </div>                      
     
     <div class="row-item match-icon">

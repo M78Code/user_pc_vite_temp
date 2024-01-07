@@ -1,13 +1,7 @@
 <template>
     <div>
         <div class="header">
-            <div class="go-back" @click="go_back">
-                <img
-                    class="img"
-                    :src="compute_local_project_file_path('/image/svg/go-back-icon.svg')"
-                    alt=""
-                />
-            </div>
+          <GoBackSvg class="go-back" @click="go_back" />
             <span class="title">
                 {{$root.$t('common.rule_description')}}
             </span>
@@ -21,6 +15,7 @@
 import { RuleWapper } from 'src/components/rule'
 import { useRouter, useRoute } from "vue-router";
 import {compute_local_project_file_path} from "src/output/index.js";
+import GoBackSvg from 'src/components/go_back/index.vue'
 
 const router = useRouter();
 
@@ -41,12 +36,7 @@ const go_back = () => {
   width: 100%;
 
   .go-back {
-    align-items: center;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    background-size: 100% 100%;
-    justify-content: flex-start;
+    color: #A3A3A3;
   }
 
   .title {

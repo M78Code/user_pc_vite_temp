@@ -33,7 +33,7 @@
       </div>
 
       <!-- 附加盘1 -->
-      <div class="match-handicap-item" v-if=" lodash.get(match, 'has_add1')">
+      <div class="match-handicap-item" v-if="match.has_add1">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
           <basis-info3 :is_suffix="false" v-if="is_mounted && score_column_position === 'add1' && match" :match="match" />
@@ -46,7 +46,7 @@
       </div>
 
       <!-- 附加盘2 -->
-      <div class="match-handicap-item" v-if="lodash.get(match, 'has_add2')">
+      <div class="match-handicap-item" v-if="match.has_add2">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
           <basis-info3 :is_suffix="false" v-if="is_mounted && score_column_position === 'add2' && match" :match="match" />
