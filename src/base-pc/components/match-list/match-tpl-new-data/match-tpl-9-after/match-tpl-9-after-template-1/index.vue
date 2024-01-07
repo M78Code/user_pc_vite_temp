@@ -100,7 +100,7 @@ const process_margin = computed(() => {
     cur_handicap_list = play_config[`${type}_handicap_list_9`];
   }
   // 判断模板是否有当前局玩法
-  else if ([7, 9, 11, 16].includes(+match_style_obj.data_tpl_id)) {
+  else if ([7, 9, 11, 16].includes(+match_style_obj.value.data_tpl_id)) {
     cur_handicap_list = play_config[`${type}_handicap_list`];
   }
   return cur_handicap_list;
