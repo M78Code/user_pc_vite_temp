@@ -61,7 +61,7 @@
          srcset="">
         </div>
       </div>
-       <div class="setting-item" @click="change_version">
+       <div v-if="lodash.get(UserCtr,'user_info.versionSwitch', true)" class="setting-item" @click="change_version">
       <!-- 前往旧版 -->
         <div class="title"> {{ i18n_t('app_h5.filter.go_old_version') }}</div>
         <!-- 前往网页版 -->
