@@ -324,6 +324,13 @@ class BaseData {
     })
   }
 
+  // 切换国际化 获取最新的数据
+  set_base_data_menu_i18n() {
+    api_base_data.post_base_data_menu_i18n({}).then((res) => {
+      this.init_base_menu_il8n(res)
+    }).catch(err => reject(err))
+  }
+
   // 模拟数据推送 左侧菜单和顶部菜单 修改
   set_ws_send_new_menu_init() {
     // console.warn('开始模拟推送菜单数据-----')

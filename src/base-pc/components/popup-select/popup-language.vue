@@ -57,7 +57,7 @@ function on_click_lang(lang_) {
         let code = lodash.get(res, 'code');
         if (code == 200) {
             UserCtr.set_lang(lang_);
-            BaseData.init()
+            BaseData.set_base_data_menu_i18n()
             // 设置即将开赛筛选默认值为全部
             // set_open_select_time(null)
             // 设置国际化语言
