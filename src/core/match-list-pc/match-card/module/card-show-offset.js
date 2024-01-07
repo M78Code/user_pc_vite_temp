@@ -116,7 +116,7 @@ export const set_card_show_level = () => {
     list_arry.push(...MatchListCardData.five_leagues_card_key_arr)
   }
   list_arry.forEach((card_key) => {
-    let card_obj = MatchListCardData.all_card_obj[card_key];
+    let card_obj = MatchListCardData.get_card_obj_bymid(card_key);
     if(!card_obj){
       console.log("未找到表征:card_key",card_key, card_obj);
       return;
@@ -128,13 +128,13 @@ export const set_card_show_level = () => {
       // card_obj.show_level = 1;
 
       // 设置对应的联赛标题卡片显示等级
-      let league_title_card_obj = MatchListCardData.all_card_obj[card_obj.league_title_card_key];
+      let league_title_card_obj = MatchListCardData.get_card_obj_bymid(card_obj.league_title_card_key);
 
       league_title_card_obj.show_level = card_obj.show_level;
       let mids_arr = card_obj.mids.split(",");
       // 遍历联赛容器下的赛事卡片  设置显示等级
       mids_arr.forEach((mid) => {
-        let match_card_obj = MatchListCardData.all_card_obj[mid+'_'];
+        let match_card_obj = MatchListCardData.get_card_obj_bymid(mid);
         match_card_obj.show_level = get_show_level(match_card_obj);
         if (match_card_obj.show_level == 1 && card_obj.is_show_card) {
           show_mids_arr.push(mid);
@@ -146,9 +146,7 @@ export const set_card_show_level = () => {
     }
   });
   MatchListScrollClass.set_show_mids(show_mids_arr)
-  setTimeout(() => {
-    MatchListCardData.set_list_version() 
-  }, 5);
+  MatchListCardData.set_list_version()
   return show_mids_arr;
 };
 
@@ -176,7 +174,7 @@ export const set_card_show_level = () => {
     // 上一个赛事卡片对象
     let pre_match_card_obj
     MatchListCardData.match_list_card_key_arr.forEach(card_key => {
-      let card_obj = MatchListCardData.all_card_obj[card_key]
+      let card_obj = MatchListCardData.get_card_obj_bymid(card_key)
       if(!card_obj){
         console.log("未找到表征:card_key",card_key);
         return;
@@ -204,7 +202,11 @@ export const set_card_show_level = () => {
         // 遍历所有赛事卡片
 
         mids_arr.forEach( mid => {
-          let match_card_obj = MatchListCardData.all_card_obj[mid+'_']
+          let match_card_obj = MatchListCardData.get_card_obj_bymid(mid)
+          if(!match_card_obj){
+            console.log("未找到表征:card_key",mid);
+            return;
+          }
           // 设置卡片偏移量  顶部偏移量等于上一个卡片 的底部偏移量， 底部偏移量等于自定顶部偏移量加自身高度
           match_card_obj.offset_top = pre_match_card_obj.offset_bottom
           match_card_obj.offset_bottom = match_card_obj.offset_top + match_card_obj.total_height
