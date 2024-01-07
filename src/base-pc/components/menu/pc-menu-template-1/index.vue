@@ -27,7 +27,7 @@
         <!-- icon -->
         <div class="row items-center">
           <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif)}` })"
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif|| item.mi)}` })"
             :alt="BaseData.menus_i18n_map[item.mif || item.mi]"></span>
 
         </div>
@@ -50,12 +50,10 @@
       <!--  子菜单  ，  开始    -->
       <!--  子菜单  ， 冠军 不显示子菜单  -->
       <!--  常规体育 含 娱乐     子菜单  开始    -->
-      <div class="menu-fold2-wrap" :class="current_lv_1_mi == item.mi && !show_menu ? 'open' : ''" v-if="item.mi != 400">
-        <template v-for="item2 in item.sl">
+      <div class="menu-fold2-wrap  1" :class="current_lv_1_mi == item.mi && !show_menu ? 'open' : ''" v-if="item.mi != 400">
+        <template v-for="item2 in item.sl" :key="`_${item.mi}_${item2.mi}_100`">
           <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        开始   -->
-          <div :key="`_${item.mi}_${item2.mi}_100`" @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })
-            " v-if="item.mif != 118" v-show="item2['ct']" :class="current_lv_2_mi == item2.mi ? 'active' : ''"
-            class="menu-item menu-fold2">
+          <div @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })" :class="current_lv_2_mi == item2.mi ? 'active' : ''" class="menu-item menu-fold2">
             <div class="row items-center relative-position">
               <span class="menu-point"></span>
               <span class="menu-text ellipsis">
@@ -70,25 +68,10 @@
           </div>
           <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        结束    -->
         </template>
-       
       </div>
-      <!--  常规体育 含 娱乐    子菜单  结束     -->
-      <!--  电竞    子菜单  开始    -->
-      <div v-if="item == 2000" class="menu-fold2-wrap" :data-id="show_menu"
-        :class="current_lv_1_mi == item && !show_menu ? 'open' : ''">
-        <MenuItem :menu_list="compute_item_sublist_mi_2000(item)" type='2000' @click_wapper_handle="click_wapper_handle" 
-          :current_lv_2_mi="current_lv_2_mi" />
-      </div>
-      <!--  电竞    子菜单   结束     -->
-      <!--  VR    子菜单   开始     -->
-      <div v-if="item == 300" class="menu-fold2-wrap" :data-id="show_menu"
-        :class="current_lv_1_mi == item && !show_menu ? 'open' : ''">
-        <MenuItem :menu_list="compute_item_sublist_mi_300(item)" type='300' @click_wapper_handle="click_wapper_handle" 
-          :current_lv_2_mi="current_lv_2_mi" />
-      </div>
-      <!--  VR    子菜单   结束     -->
-      <!--  子菜单  ，  结束     -->
     </div>
+
+    <div class="box-line"></div>
   </div>
 </template>
 <script setup>
@@ -491,6 +474,10 @@ onUnmounted(()=>{
 // }
 </script>
 <style lang="scss" scoped>
+.box-line{
+  width: 100%;
+  height: 50px;
+}
 .c-main-menu {
   font-size: 13px;
   /* *** 头部 ************ -S */
@@ -516,17 +503,20 @@ onUnmounted(()=>{
         font-size: 13px;
         justify-content: space-around;
         padding: 0px;
+        margin-bottom: 9px;
 
         .item {
-          border-radius: 8px;
+          border-radius: 1000px;
           margin-right: 10px;
           white-space: nowrap;
           margin-right: 0!important;
-          height: 38px!important;
-          background-size: 100% 100%;
-          min-width: 98px;
-          padding-bottom: 4px;
-          box-shadow: none!important;
+          height: 30px!important;
+          min-width: 90px;
+          line-height: 30px;
+          border: 0.5px solid #D7E1FD;
+          box-shadow: 0px 3px 3px 0px rgba(0, 56, 98, 0.1) !important;
+          background: linear-gradient(0deg, #D7E1FD, #D7E1FD),
+          linear-gradient(180deg, #E4ECFD 0%, #F8FAFF 47.92%, #F5F8FF 100%);          
           &:last-child {
             margin-right: 0;
           }
@@ -534,7 +524,8 @@ onUnmounted(()=>{
           &.active {
             font-weight: 600;
             font-size: 14px;
-            color: var(--q-gb-t-c-1);
+            color: var(--q-gb-t-c-18);
+            background: var(--q-gb-bg-c-4);
           }
 
           &.active1 {

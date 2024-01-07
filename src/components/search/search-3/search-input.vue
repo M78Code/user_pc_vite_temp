@@ -17,10 +17,10 @@
             <!-- 搜索输入框 -->
             <input
                 type="search"
-                v-model="keyword"
+                v-model="store.keyword"
                 class="search-input col"
                 v-focus="is_focus"
-                :class="{ 'key-is-empty': !keyword }"
+                :class="{ 'key-is-empty': !store.keyword }"
                 @blur="is_focus = false"
                 @keyup.enter="submit"
                 @input="change_txt"
@@ -36,7 +36,7 @@
                 <icon-wapper
                     class="cursor-pointer clear_input_btn"
                     name="icon-failure"
-                    v-if="keyword != ''"
+                    v-if="store.keyword != ''"
                     size="12px"
                 />
             </span>
@@ -55,8 +55,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { IconWapper } from 'src/components/icon/index.js'
 import {SearchPCClass} from 'src/output/project/common/pc-common.js'
 import { i18n_t } from "src/boot/i18n.js"
-import store from "src/store-redux/index.js";
-import search from "src/core/search-class/search.js"
+import {store} from "./index";
 
 const vFocus = {
     update: (el, value) => value && el.focus()
@@ -69,21 +68,22 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['update:set_show_type'])
+const emit = defineEmits(['update:set_show_type', 'get_search_result'])
 
 /** 输入关键字 */
-const keyword = ref('')
+// const keyword = ref('')
 //监听输入框内容改变
-watch(
-    () => keyword.value,
-    (val) => {
-        let trimVal = val.trim();
-        if (is_focus.value) {
-            set_search_type(1)
-        }
-        set_search_keyword(trimVal)
-    }
-)
+// watch(
+//     () => store.keyword,
+//     (val) => {
+//         let trimVal = val.trim();
+//         if (is_focus.value) {
+//             SearchPCClass.set_search_type(1)
+//         }
+//         // set_search_keyword(trimVal)
+//         SearchPCClass.set_keyword(trimVal)
+//     }
+// )
 
 /** 输入框是否获得焦点 */
 const is_focus = ref(false)
@@ -94,8 +94,8 @@ const route_name = ref('')
  * @return {undefined} undefined
  */
 function change_txt() {
-    keyword.value = keyword.value.replace(/#/g, "");
-    if (keyword.value.length > 20) keyword.value = keyword.value.slice(0, 20);
+    store.keyword = store.keyword.replace(/#/g, "");
+    if (store.keyword.length > 20) store.keyword = store.keyword.slice(0, 20);
 }
 
 /**
@@ -103,10 +103,12 @@ function change_txt() {
  * @return {undefined} undefined
  */
 function submit() {
-    const res = keyword.value.trim();
+    const res = store.keyword.trim();
     if (!res) return;
-    set_search_type(1)
-    set_search_keyword(res);
+    // set_search_type(1) 替换为 SearchPCClass.set_search_type(1)
+    SearchPCClass.set_search_type(1)
+    // set_search_keyword(res) 替换为 SearchPCClass.set_keyword(res)
+    SearchPCClass.set_keyword(res)
 }
 
 /**
@@ -126,23 +128,24 @@ function focusclick() {
  */
 function input_click() {
     is_focus.value = true
-    const val = keyword.value.trim();
-    set_search_type(1)
-    set_search_keyword(val)
+    const val = store.keyword.trim();
+    SearchPCClass.set_search_type(1)
+    // set_search_keyword(val)
+    SearchPCClass.set_keyword(val)
 }
 
-const route = useRoute()
+// const route = useRoute()
 //从搜索页面跳转其他页面
-watch(
-    () => route.name,
-    (res) => {
-        if (res != 'search') {
-            set_search_status(false)
-        }
-    }
-)
+// watch(
+//     () => route.name,
+//     (res) => {
+//         if (res != 'search') {
+//             set_search_status(false)
+//         }
+//     }
+// )
 
-const router = useRouter()
+// const router = useRouter()
 /**
  * @Description:点击关闭搜索按钮
  * @return {undefined} undefined
@@ -162,7 +165,7 @@ function on_Close() {
 /** 清空输入框 */
 function clear_input() {
     is_focus.value = true
-    keyword.value = ""
+    store.keyword = ""
 }
 
 /**
@@ -184,9 +187,7 @@ function init() {
     // }
     //输入框获得焦点
     nextTick(() => {
-        if (route.name != 'search') {
-            focusclick()
-        }
+        focusclick()
     });
 }
 /** 钩子触发 */
@@ -203,11 +204,11 @@ const click_keyword = ref({})
  * global_click 全局点击事件数 default: 0
  * 路径: project_path\src\store\module\global.js
  */
-const global_click = ref({})
+// const global_click = ref({})
 
 // const unsubscribe = store.subscribe(() => {
 //     const { searchReducer: new_searchReducer, globalReducer: new_globalReducer } = {};
-//     click_keyword.value = ''
+//     click_store._keyword = ''
 //     global_click.value = ''
 // })
 /** 销毁监听 */
@@ -227,27 +228,28 @@ const global_click = ref({})
 // const set_unfold_multi_column = (data) => store.dispatch({ type: 'SET_UNFOLD_MULTI_COLUMN', data })
 
 //监听点击搜索关键词改变
-watch(
-    () => click_keyword.value,
-    (val) => {
-        let res = val.substr(5);
-        if (res == keyword.value) {
-            set_search_keyword(res)
-        } else {
-            keyword.value = res
-        }
-    }
-)
+// watch(
+//     () => click_store._keyword,
+//     (val) => {
+//         let res = val.substr(5);
+//         if (res == store._keyword) {
+//             // set_search_keyword(res)
+//             SearchPCClass.set_keyword(res)
+//         } else {
+//             store._keyword = res
+//         }
+//     }
+// )
 
 //点击任何地方关闭搜素
-watch(
-    () => global_click.value,
-    () => {
-        if (route.name != 'search') {
-            on_Close()
-        }
-    }
-)
+// watch(
+//     () => global_click.value,
+//     () => {
+//         if (route.name != 'search') {
+//             on_Close()
+//         }
+//     }
+// )
 
 </script>
 

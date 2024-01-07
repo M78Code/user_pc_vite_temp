@@ -6,22 +6,22 @@
                 <img :src="`${LOCAL_PROJECT_FILE_PREFIX }/image/menu/top-menu/back.png`" alt="">
             </div>
             <div class="drop_menulist">
-                <q-btn-dropdown color="rgba(0,0,0, 0)" :flat="true" :glossy="false" :ripple="false" label="vr足球">
+                <q-btn-dropdown color="rgba(0,0,0, 0)" :flat="true" no-caps :glossy="false" :ripple="false" label="VR-Basketball">
                     <q-list>
                         <q-item clickable v-close-popup @click="onItemClick">
-                        <q-item-section>
-                            <q-item-label>vr足球</q-item-label>
-                        </q-item-section>
+                            <q-item-section>
+                                <q-item-label>VR-Basketball</q-item-label>
+                            </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup @click="onItemClick">
-                        <q-item-section>
-                            <q-item-label>vr蓝球</q-item-label>
-                        </q-item-section>
+                            <q-item-section>
+                                <q-item-label>VR-Footerball</q-item-label>
+                            </q-item-section>
                         </q-item>
                         <q-item clickable v-close-popup @click="onItemClick">
-                        <q-item-section>
-                            <q-item-label>vr赛马</q-item-label>
-                        </q-item-section>
+                            <q-item-section>
+                                <q-item-label>VR-Greyhounds</q-item-label>
+                            </q-item-section>
                         </q-item>
                     </q-list>
                 </q-btn-dropdown>
@@ -34,7 +34,13 @@
 </template>
 
 <script setup>
+import lodash from 'lodash';
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+
+const onItemClick = (event)=>{
+    console.log('event', lodash.get(event, 'event.target', ''))
+}
+
 </script>
 
 <style lang="scss" scoped>

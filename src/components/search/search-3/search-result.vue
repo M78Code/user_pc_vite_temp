@@ -56,13 +56,13 @@
   
 <script setup>
 import { ref, reactive, watch, onBeforeUnmount ,nextTick} from 'vue'
-import { useRouter } from 'vue-router'
-
+import { SearchPCClass } from 'src/output/index.js'
 import { project_name, i18n_t } from 'src/output/index.js';
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
-import store from "src/store-redux/index.js";
+// import store from "src/store-redux/index.js";
 import details from "src/core/match-list-pc/details-class/details.js"
 import search from "src/core/search-class/search.js"
+import {store, mutations} from './index.js'
 
 import loadData from "src/components/load_data/load_data.vue"
 
@@ -88,24 +88,26 @@ const load_data_state = ref('data')
 /** 搜索结果数据 */
 let res_list = reactive([])
 
-const router = useRouter()
+// const router = useRouter()
 
 /** stroe仓库 */
-const { searchReducer } = {}
+// const { searchReducer } = {}
 /**
  * 获取搜索内容 default: ''
  * 路径: project_path\src\store\module\search.js
  */
-const keyword = ref('')
+// const keyword = ref(SearchPCClass.keyword)
 // 监听搜索关键词改变
 watch(
-    () => keyword.value,
+    () => store.keyword,
     (res) => {
-        if (search_type.value == 2) {
-            update_show_type('none')
-        } else {
-            get_search_result(res.substr(5))
-        }
+        console.log('fdsafdsfdsafsdafdsafsdafsdfsa12312312', res)
+        // if (search_type.value == 2) {
+        //     update_show_type('none')
+        // } else {
+        //     get_search_result(res.substr(5))
+        // }
+        get_search_result(res)
     }
 )
 
@@ -114,19 +116,19 @@ watch(
  * 路径: project_path\src\store\module\search.js
  */
 const search_type = ref(1)
-const unsubscribe = store.subscribe(() => {
-    const { searchReducer: new_searchReducer } = {};
-    keyword.value = ''
-    search_type.value = ''
-})
-onBeforeUnmount(unsubscribe)
+// const unsubscribe = store.subscribe(() => {
+//     const { searchReducer: new_searchReducer } = {};
+//     keyword.value = ''
+//     search_type.value = ''
+// })
+// onBeforeUnmount(unsubscribe)
 
 /** 设置搜索联赛关键字 */
-const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
+// const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
 /** 设置搜索状态 */
-const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
+// const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
 /** 设置搜索类型 */
-const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data })
+// const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data })
 
 /**
  * @Description:点击联赛搜索
@@ -136,15 +138,15 @@ const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data
 function league_click(league) {
     search.insert_history(league.league_name)
     update_show_type('none')
-    router.push({
-        name: 'search',
-        params: {
-            keyword: league.league_name,
-        },
-        query: {
-            csid: props.search_csid
-        }
-    })
+    // router.push({
+    //     name: 'search',
+    //     params: {
+    //         keyword: league.league_name,
+    //     },
+    //     query: {
+    //         csid: props.search_csid
+    //     }
+    // })
     set_search_type(2)
     set_click_keyword(league.league_name)
 }
@@ -168,35 +170,56 @@ const timer = ref(null)
  * @param {string} keyword 搜索关键字
  * @return {Undefined} Undefined
  */
-function get_search_result(keyword, is_loading) {
-    if (!keyword) {
-        update_show_type('init')
+async function get_search_result() {
+    if (!store.keyword) {
+        // update_show_type('init')
+        store.show_type = 'init'
         return
     }
-    //调用接口前先设置加载状态
-    if (is_loading) {
-        load_data_state.value = 'loading'
-    }
-    //调用接口获取获取搜索结果数据
-    search.get_search_result(keyword, props.search_csid).then(res => {
-        const { state, list } = res
-        update_show_type('result')
-        load_data_state.value = state
-        res_list = list
-        let _ref_scroll = scrollRef.value;
-        timer.value = setTimeout(() => {
-            // 如果是从详情页返回
-            if (search.back_keyword.keyword) {
-                nextTick(() => {
-                    //重新设置滚动高度
-                    _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', search.result_scroll.top);
-                })
-            } else {
+    // //调用接口前先设置加载状态
+    // if (is_loading) {
+    //     load_data_state.value = 'loading'
+    // }
+    const results = await mutations.get_search_result_handle()
+    const { state, list } = results
+    // update_show_type('result')
+    store.show_type = 'result'
+    load_data_state.value = state
+    res_list = list
+    let _ref_scroll = scrollRef.value;
+    timer.value = setTimeout(() => {
+        // 如果是从详情页返回
+        if (search.back_keyword.keyword) {
+            nextTick(() => {
                 //重新设置滚动高度
-                _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
-            }
-        })
+                _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', search.result_scroll.top);
+            })
+        } else {
+            //重新设置滚动高度
+            _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
+        }
     })
+
+    //调用接口获取获取搜索结果数据
+    // search.get_search_result(keyword, props.search_csid).then(res => {
+    //     const { state, list } = res
+    //     update_show_type('result')
+    //     load_data_state.value = state
+    //     res_list = list
+    //     let _ref_scroll = scrollRef.value;
+    //     timer.value = setTimeout(() => {
+    //         // 如果是从详情页返回
+    //         if (search.back_keyword.keyword) {
+    //             nextTick(() => {
+    //                 //重新设置滚动高度
+    //                 _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', search.result_scroll.top);
+    //             })
+    //         } else {
+    //             //重新设置滚动高度
+    //             _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
+    //         }
+    //     })
+    // })
 }
 onBeforeUnmount(() => {
     if (timer.value) {
@@ -207,10 +230,15 @@ onBeforeUnmount(() => {
 
 // 监听搜索球种变化
 watch(
-    () => props.search_csid,
+    () => store.search_csid,
     () => {
-        const keword = keyword.value.substr(5)
-        get_search_result(keword, true)
+        if (store.keyword) {
+            get_search_result()
+        } else {
+        }
+        // const keword = keyword.value.substr(5)
+        // store.keyword = ''
+        // get_search_result()
     }
 )
 

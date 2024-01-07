@@ -57,7 +57,10 @@ export const details_main = () => {
     // 赛事列表数据
     math_list_data: [],
     // 数据列表
-    data_list: [],
+    data_list: [
+      {id: "0",
+      marketName: "所有投注",
+      orderNo: -2147483648}],
     // 控制详情头部显示
     is_show_detail_header_data: false,
     // 控制下拉列表显示
@@ -522,7 +525,7 @@ export const details_main = () => {
       .then((res) => {
         let { data: res_data, ts, code } = res
         // #TODO
-
+        
         // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
         if (code == "0400500" || !res_data || Object.keys(res_data).length === 0) {
           router.push({ name: "matchList" });
@@ -535,10 +538,9 @@ export const details_main = () => {
             //如果是切换tab页
             //切换tab页 应该不需要重新get_match_detials吧?
             if (state_data.refresh) {
-              //获取玩法集 
-              get_odds_list()
-              //获取盘口
-              useMittEmit(MITT_TYPES.EMIT_REF_API, (true))
+              //获取玩法集 mitt触发盘口回调oddinfo接口 保证执行顺序
+              get_odds_list({ sportId: sport_id.value, mid: matchDetailCtr.value.mid || matchid.value }, ()=>{useMittEmit(MITT_TYPES.EMIT_REF_API, (true))})
+             
             }
             // 球种ID
             sport_id.value = res_data.csid
@@ -680,7 +682,8 @@ export const details_main = () => {
    *@return {obj} init_req 是否是初次进入详情
    */
   const get_odds_list =  (
-    params = { sportId: sport_id.value, mid: matchDetailCtr.value.mid || matchid.value }, init_req) => {
+    params = { sportId: sport_id.value, mid: matchDetailCtr.value.mid || matchid.value }, callback=null) => {
+    console.log(callback,'callback');
     // state_data.data_list = Level_one_category_list();
     const get_details_category_list = () => {
          //接口调用
@@ -701,6 +704,7 @@ export const details_main = () => {
               get_odds_list()
             }, 800);
           }
+          callback && callback()
           state_data.data_list = res_data;
           // set_details_tabs_list(res_data);
           matchDetailCtr.value.compute_category_refer(res_data)
@@ -967,7 +971,8 @@ export const details_main = () => {
     state_data.emitters = [
       useMittOn(MITT_TYPES.EMIT_RESET_SET_HTON, scrollMethod),
       // 刷新详情页头部信息;
-      useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, initEvent),
+      useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, ()=>{
+        initEvent({refresh:true})}),
       // 调odds_info接口
       useMittOn(MITT_TYPES.EMIT_GET_ODDS_LIST, get_odds_list),
       useMittOn(MITT_TYPES.EMIT_SET_SHOW_VIDEO, set_show_video),

@@ -1,5 +1,6 @@
 <template>
   <div class="record-select">
+    <div style="display: none;">{{ BetRecordHistory.bet_record_version }}</div>
     <!-- 未结算 -->
     <div class="record-select-main" v-if="current_tab == 'unsettled'">
       <!-- <q-option-group v-model="cash_value" type="checkbox" :options="options" color="opt-basic" /> -->
@@ -57,6 +58,7 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { formatTime } from 'src/output/index.js'
+import { BetRecordHistory } from "src/core/bet-record/pc/bet-record-instance.js"
 import dayjs from 'dayjs'
 const _dayjs = dayjs()
 const isZH = true
@@ -82,6 +84,7 @@ const msgList = [
   "bet_record.msg_4",
   "bet_record.msg_5",
   "bet_record.msg_6",
+  "bet_record.msg_7"
 ]
 const tipMsg = ref(msgList[1])
 const dateRef = ref(null)
@@ -207,7 +210,6 @@ div.q-menu {
 
 .record-select {
   margin-top: 10px;
-  background-color: var(--q-gb-bg-c-4);
 
   &:deep(.q-btn) {
     font-size: 12px;

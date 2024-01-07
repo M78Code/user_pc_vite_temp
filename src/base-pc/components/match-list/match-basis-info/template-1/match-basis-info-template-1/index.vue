@@ -4,8 +4,12 @@
     <!-- 主队信息 -->
     <div class="row-item team-item">
       <div class="team-logo">
-        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;"
+        <img v-if="home_avatar" style="width: 22px; max-height: 24px;"
+        :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"
           v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter]" />
+        <div v-else v-show="lodash.get(match, 'mhn')"
+          :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })">
+        </div>
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
@@ -37,8 +41,12 @@
     <!-- 客队信息 -->
     <div class="row-item team-item">
       <div class="team-logo">
-        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;"
+        <img v-if="away_avatar" style="width: 22px; max-height: 24px;"
+        :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"
           v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter]" />
+        <div v-else v-show="lodash.get(match, 'man')"
+          :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })">
+        </div>
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
@@ -120,7 +128,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import { get_main_score } from 'src/core/match-list-pc/match-handle-data.js'
 import { get_remote_time } from "src/output/index.js"
 import { get_handicap_index_by, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
-
+import { compute_css_obj } from 'src/core/server-img/index.js'
 const router = useRouter()
 const route = useRoute()
 const props = defineProps({
@@ -145,13 +153,27 @@ const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
 
+const show_default_img = ref(false); //是否显示默认队伍头像
+//设置图片默认
+const update_show_default = (value) => {
+  show_default_img.value = value;
+}
+
 let match_style_obj =inject('match_style_obj')
 let match =inject('match')
 
+const home_avatar = computed(() => {
+  const url = ((lodash.get(match.value, 'match_logo') || {}) || {}).home_1_logo;
+  return url
+})
+const away_avatar = computed(() => {
+  const url = (lodash.get(match.value, 'match_logo') || {}).away_1_logo;
+  return url
+})
 
 const handicap_num = computed(() => {
   if (GlobalAccessConfig.get_handicapNum()) {
-    return `+${lodash.get(match.value, 'match.mc') || 0}`
+    return `+${lodash.get(match.value, 'mc') || 0}`
   } else {
     return i18n_t('match_info.more')
   }

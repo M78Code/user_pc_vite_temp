@@ -2,19 +2,17 @@
 
 <template>
    <div style="display:none">{{SearchPCClass.update_time}}</div>
-   {{ SearchPCClass.search_isShow }}
    <div
     v-if="SearchPCClass.search_isShow"
     class="search-position"
     :style="page_style"
     >
     <div
-      v-show="route.params.video_size != 1"
       class="serach-wrap column"
       :style="{ right: `${search_width}px`, paddingRight: `${is_iframe ? 10 : 14}px`}"
-      :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }"
+      :class="{ 'hide-search': store.show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }"
     >
-      <search-input v-model:show_type="show_type" />
+      <search-input />
       <!-- 遮罩层样式.bottom-wrap -->
       <div class="bottom-wrap col search-result relative-position">
         <!-- 球类导航 -->
@@ -23,39 +21,35 @@
           @click.stop
         >
           <tab
-            :list="sports_list"
+            :list="store.sports_list"
             :is_show_line="true"
             :is_show_btn="true"
             tab_name_key="sportName"
             :padding="10"
-            @onclick="set_sports_tab_index"
-            :currentIndex="sports_tab_index"
+            @onclick="sportHandle"
+            :currentIndex="store.sports_tab_index"
             ref="tab"
           />
         </div>
         <!-- 初始化 -->
         <search-int
           class="serach-background"
-          v-show="show_type == 'init'"
-          v-model:show_type="show_type"
+          v-show="store.show_type == 'init'"
         />
         <!-- 搜球类 -->
         <search-sports
           class="serach-background"
-          v-show="show_type == 'sports'"
-          v-model:show_type="show_type"
+          v-show="store.show_type == 'sports'"
           ref="sports"
         />
         <!-- 搜玩法 -->
         <search-play
           class="serach-background"
-          v-show="show_type == 'play'"
-          v-model:show_type="show_type"
+          v-show="store.show_type == 'play'"
         />
         <!-- 搜索结果 -->
         <search-result
-          v-show="show_type == 'result'"
-          v-model:show_type="show_type"
+          v-show="store.show_type == 'result'"
           :search_csid="search_csid"
         />
       </div>
@@ -72,7 +66,7 @@ import {  MenuData,  GlobalSwitchClass,SearchPCClass } from 'src/output/index.js
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+// import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 // import { component_symbol, need_register_props } from "src/components/search/config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -95,6 +89,9 @@ import { TabWapper as Tab } from "src/components/common/tab"
 import { api_search } from "src/api/index.js";
 
 import { compute_css_variables } from "src/core/css-var/index.js"
+
+import {store, mutations} from './index.js'
+
 const props = defineProps({})
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
@@ -105,7 +102,7 @@ const is_iframe = ref(utils_info.is_iframe);
 const main_menu_toggle = ref(MenuData.main_menu_toggle)
 
 /** 显示类型 */
-const show_type = ref('init')
+// const show_type = ref('init')
 /** 球种列表 */
 let sports_list = reactive([])
 /** 球种tab选中索引 */
@@ -117,7 +114,7 @@ const search_width = ref(LayOutMain_pc.layout_search_width)
 let main_width = ref(LayOutMain_pc.layout_main_width + 'px')
 
 /* 路由对象 */
-const route = useRoute();
+// const route = useRoute();
 
 
 /**
@@ -144,12 +141,12 @@ const set_search_status = (data) =>{
 const { off } = useMittOn(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, (bool) => {
   search_isShow.value = bool
 })
-onUnmounted(off)
+// onUnmounted(off)
 
 const click_fun = () => set_search_status(false);
 // TODO:
-onMounted(() => document.addEventListener('click', click_fun))
-onUnmounted(() => document.removeEventListener('click', click_fun))
+// onMounted(() => document.addEventListener('click', click_fun))
+// onUnmounted(() => document.removeEventListener('click', click_fun))
 
 /** 
  * 浏览器 宽高等数据 default: object
@@ -162,57 +159,29 @@ onUnmounted(() => document.removeEventListener('click', click_fun))
 */
 const is_unfold_multi_column = ref(LayOutMain_pc.is_unfold_multi_column)
 
-onMounted(() => window.addEventListener('resize', on_resize))
+// onMounted(() => window.addEventListener('resize', on_resize))
 
+onMounted(() => {
+  document.addEventListener('click', click_fun)
+  window.addEventListener('resize', on_resize)
+  // 初始化球种菜单数据
+  mutations.get_sports_list_handle()
+})
 
-// const unsubscribe = store.subscribe(() => {
-//   const { searchReducer: new_searchReducer, layoutReducer: new_layoutReducer, globalReducer: new_globalReducer } = store.getState()
-// })
-// onUnmounted(unsubscribe)
+onUnmounted(() => {
+  document.removeEventListener('click', click_fun)
+  window.removeEventListener('resize', on_resize)
+  off
+})
 
-/**
- * @Description:设置搜索球种列表
- * @return {undefined} undefined
- */
-function set_sports_list() {
-  // let csid = search.back_keyword.csid
-  let csid = ''
-  api_search.get_search_sport().then(res => {
-    if (lodash.get(res, 'code') == 200) {
-      const list = lodash.get(res, 'data') || []
-      // 根据商户过滤篮球赛事
-      sports_list = list
-      // 默认第一个 足球被禁用后 默认值不是1
-      search_csid.value = (list[0] || {}).id
-      if (csid) {
-        sports_list.forEach((item, index) => {
-          if (csid == item.id) {
-            set_sports_tab_index(index)
-          }
-        })
-      }
-    } else {
-      sports_list = []
-    }
-  }).catch(err => {
-    console.error(err);
-    sports_list = []
-  });
-}
-onMounted(set_sports_list)
 
 /**
  * @Description 设置球种tab选中索引
  * @param {number} index 索引
  * @param {undefined} undefined
 */
-function set_sports_tab_index(index) {
-  let index_ = index;
-  if (typeof (index) == 'object') {
-    index_ = index.index;
-  }
-  sports_tab_index.value = index_
-  search_csid.value = sports_list[index_].id
+function sportHandle(index) {
+  mutations.set_sports_handle(index)
 }
 
 
@@ -223,7 +192,7 @@ function on_resize() {
   search_width.value = LayOutMain_pc.layout_search_width
   main_width.value = LayOutMain_pc.layout_main_width + 'px'
 }
-onUnmounted(() => window.removeEventListener('resize', on_resize))
+// onUnmounted(() => window.removeEventListener('resize', on_resize))
 
 </script>
 <script>
@@ -281,7 +250,7 @@ export default defineComponent({
       left: 0;
       width: 100%;
       height: 50px;
-      padding: 10px 0 0 30px;
+      padding: 10px 0 0 15px;
       z-index: 999;
       /* 修改此值  需注意是否被滚球倒计时遮挡 */
       background-color: var(--q-gb-bg-c-11);

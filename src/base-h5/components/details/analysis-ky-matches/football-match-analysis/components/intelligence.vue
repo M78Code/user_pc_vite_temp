@@ -177,9 +177,11 @@ import { i18n_t } from "src/boot/i18n.js";
 
   .content {
     background-color: var(--q-analysis-text-color-13);
+    background: var(--q-gb-bg-c-28);
     .tittle {
       line-height: 0.4rem;
       padding: 0 0.2rem;
+      color: var(--q-analysis-text-color-20);
 
       span {
         display: inline-block;

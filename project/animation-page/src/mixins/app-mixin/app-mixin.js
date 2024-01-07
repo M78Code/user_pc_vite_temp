@@ -1,4 +1,4 @@
-import { loadLanguageAsync , useMittOn, MITT_TYPES, useMittEmit  } from "src/output/module/constant-utils-common.js";
+import { useMittOn, MITT_TYPES, useMittEmit ,loadLanguageAsync } from "src/output/module/constant-utils-common.js";
 import { throttle } from "lodash";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 import STANDARD_KEY from "src/core/standard-key";
@@ -30,6 +30,7 @@ export default {
   //  this.init_process() ;
 
   this.set_init_load(true);
+
     
   },
   watch: {
@@ -78,8 +79,7 @@ export default {
         // 这里最好是 url 内的 语种 ，不过 兜底语言是中文 因此 这里设置中文
     // 后面如果确实有需要就自己处理 。目前这个是兼容某些异常场景下 接口先返回来回
     // 文件后返回回来 的显示异常，不管 前端缓存，资源文件丢失的场景，生产无此场景
-    const lang = window.SEARCH_PARAMS.init_param.get('lang') || LocalStorage.get('lang','en');
-    lang && (await  loadLanguageAsync(lang));
+ 
       // 实例化域名检测类对象
       AllDomain.create( () => {
         // data参数说明: {type:'domain_api',status:0 ,list:[]}
@@ -106,8 +106,10 @@ export default {
      * @description: 设置this.init_load变量的状态
      * @param {*} status 布尔值
      */
-    set_init_load(status) {
+    async set_init_load (status) {
       this.init_load = status;
+      const lang = window.SEARCH_PARAMS.init_param.get('lang') || LocalStorage.get('lang','en');
+      lang && (await  loadLanguageAsync(lang));
     },
     /**
      * @description: 初始化网络配置

@@ -1078,6 +1078,7 @@ class MatchMeta {
   set_page_match_empty_status(obj) {
     this.set_show_skeleton_state(false)
     const { state = false, type = 'noMatch' } = obj
+    useMittEmit(MITT_TYPES.EMIT_IS_SHOW_MASK, false);
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: state, type: type });
   }
   /**
@@ -1241,7 +1242,6 @@ class MatchMeta {
     }
 
     this.compute_current_matchs()
-
     if (!is_virtual) {
       // 清除虚拟计算信息
       VirtualList.clear_virtual_info()
@@ -1387,7 +1387,7 @@ class MatchMeta {
    */
   set_ws_active_mids({ list = [], warehouse = MatchDataBaseH5 }) {
     warehouse.set_active_mids([])
-    if (MenuData.is_results()) return
+    if (MenuData.is_results() && PageSourceData.route_name != 'match_result') return
     const mids = list.map(t => t)
     warehouse.set_active_mids(mids)
   }

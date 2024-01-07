@@ -19,11 +19,11 @@
         
                 <div>
                     <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
-                    :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money}~${format_money3(ref_data.max_money)}`" maxLength="11"  />
+                    :placeholder="`${i18n_t('bet.money_range')} ${format_money3(ref_data.min_money)}~${format_money3(ref_data.max_money)}`" maxLength="11"  />
                 </div>
             
             </div>
-            <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
+            <div v-show="false">{{ UserCtr.user_version }}--{{BetData.bet_data_class_version}}--{{BetViewDataClass.bet_view_version}}</div>
         </div>
         <div>
             <ul class="bet-bet-money f-b-c" v-show="items.ol_os == 1">
@@ -48,8 +48,8 @@ const props = defineProps({
 })
 
 const ref_data = reactive({
-    min_money: '', // 最小投注金额
-    max_money: '', // 最大投注金额
+    min_money: 10, // 最小投注金额
+    max_money: 8888, // 最大投注金额
     win_money: 0.00, // 最高可赢
     money: '', // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
@@ -77,8 +77,8 @@ const stop_drap_fn = (state) => {
 }
 
 onMounted(() => {
-    set_ref_data_bet_money()
-    show_quick_amount(true)
+    // set_ref_data_bet_money()
+    // show_quick_amount(true)
     // // 单关 单注可以默认展开
     // if(BetData.is_bet_single && !BetData.is_bet_merge){
     //     show_quick_amount(true)
@@ -167,8 +167,9 @@ const set_ref_data_bet_money = () => {
         // 串关 type
         value = id
     }
-
+  
     const { min_money = 10, max_money = 8888, seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
+ 
     // 最小限额
     ref_data.min_money = min_money
     // 最大限额

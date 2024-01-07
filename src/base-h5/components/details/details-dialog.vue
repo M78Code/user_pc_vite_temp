@@ -244,9 +244,9 @@ function change_active(item) {
   useMittEmit(MITT_TYPES.EMIT_CATEGORY_SKT); // 底部信息skt连接
   useMittEmit(MITT_TYPES.EMIT_DETAILS_SKT); // 头部信息skt连接
   // 触发category_list接口
-  useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
+  // useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
   // 触发odds_info接口
-  useMittEmit(MITT_TYPES.EMIT_REF_API);
+  // useMittEmit(MITT_TYPES.EMIT_REF_API);
   timer1_.value = setInterval(() => {
     // 触发详情页页面初始化
     useMittEmit(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT);

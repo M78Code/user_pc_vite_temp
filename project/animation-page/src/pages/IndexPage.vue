@@ -1,11 +1,12 @@
 <template>
-  <div class="flex flex-center">
     <!-- <h1> DEMO </h1> -->
-    <div id="statscorewidget"  :style="widget_style" ></div>
-  </div>
+    <div  id="statscorewidget" v-if="!no_data"  :style="widget_style" ></div>
+    <!-- 动画播放失败 -->
+    <animation_no_video v-else></animation_no_video>
 </template>
 <script>
 import { defineComponent } from 'vue'
+import  animation_no_video  from "../components/animation_no_video.vue";
 export default defineComponent({
   name: 'IndexPage',
   data() {
@@ -14,11 +15,15 @@ export default defineComponent({
       widget_style:{
         // visibility: 'hidden' ,
         // visibility: 'unset',
-      }
+      },
+      no_data:false
     }
   },
   created() {
   
+  },
+  components:{
+    animation_no_video
   },
   mounted(){
     this.init_widget();
@@ -27,7 +32,7 @@ export default defineComponent({
     init_widget() {
       //联赛查询详见网: https://www.statscore.com/products/prematchpro/coverage/
       //2915 需求  ：  http://lan-confluence.sportxxxr1pub.com/pages/viewpage.action?pageId=98967696
-      // https://statscore.atlassian.net/wiki/spaces/STW/pages/2917072899/Advanced
+      // 对接文档  https://statscore.atlassian.net/wiki/spaces/STW/pages/2917072899/Advanced
       // https://api.statscore.com/v2/booked-events?product=livescorepro&client_id=1981&mapped_status=mapped
       // Hook up when library is loaded and ready to use.
       // You can use this method as many times as necessary - if library
@@ -54,14 +59,14 @@ export default defineComponent({
         const element = document.getElementById('statscorewidget');
         // Configuration that you should receive from STATSCORE
 
-//         For LivematchPro: 654a46b1fff2e8ee7e5cd901
-// For PrematchPro: 654a46bd057e82299ed77d6c
-// Your client identifier (client_id): 1981   
+        //         For LivematchPro: 654a46b1fff2e8ee7e5cd901
+        // For PrematchPro: 654a46bd057e82299ed77d6c
+        // Your client identifier (client_id): 1981   
         // const configurationId = '654a46bd057e82299ed77d6c';
         let url_obj = new URL(location.href)
         // const configurationId = '654a46b1fff2e8ee7e5cd901';
         // https://statscore.atlassian.net/wiki/spaces/STW/pages/3102310484/Languages  
- //http://test-topic.sportxxxifbdxm2.com/animation-page/common/?configurationId=configurationId&eventId=eventId&language=zh   
+      //http://test-topic.sportxxxifbdxm2.com/animation-page/common/?configurationId=configurationId&eventId=eventId&language=zh   
         let configurationId = url_obj.searchParams.get('configurationId')|| '654a46bd057e82299ed77d6c'
         let eventId = url_obj.searchParams.get('eventId')||0
         let language = url_obj.searchParams.get('language') || 'zh'
@@ -75,9 +80,12 @@ export default defineComponent({
         });
         // Optional object with options.
         // You can check available options further in the docs.
-        const options = {};
-        const widget = new window.STATSCOREWidgets.Widget(element, configurationId, inputData, options);
-       this.   add_widget_event(widget)
+        const options = {loader:{
+           enabled: false, size: 60, color1: 'red', color2: 'blue' 
+        }};
+        // const widget = new window.STATSCOREWidgets.Widget(element, configurationId, inputData, options);
+        const widget = new window.STATSCOREWidgets.WidgetGroup(element, configurationId, inputData, options);
+       this.add_widget_event(widget)
       });
     },
     add_widget_event(widget){
@@ -95,7 +103,7 @@ widget.on('beforeInsert', () => { /* Triggers when data necessary to display wid
 widget.on('load', () => { /* Triggers when widget is loaded but not yet interactive */ });
 widget.on('mount', () => { /* Triggers when widget is loaded and interactive */   
 
- this. widget_style= {
+ this.widget_style= {
       
          visibility: 'unset',
       }
@@ -104,10 +112,11 @@ widget.on('mount', () => { /* Triggers when widget is loaded and interactive */
 widget.on('error', e => { 
   /* Handle errors here */ 
 console.error("widget.on('error'----",e);
-this. widget_style= {
+this.widget_style= {
         visibility: 'hidden' ,
          
       }
+this.no_data = true      
 });
 
 // Event coverage:
@@ -133,8 +142,8 @@ this.widget = widget
 <style lang="scss">
 
 #statscorewidget{
-  width: 350px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
 }
   
 </style>
