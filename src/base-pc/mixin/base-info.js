@@ -62,6 +62,7 @@ const away_avatar = computed(() => {
     const url = (lodash.get(match.value, 'match_logo') || {}).away_1_logo;
     return url
 })
+
 const play_name_obj = computed(() => {
     let play_name_obj = {
         key: 'main',
