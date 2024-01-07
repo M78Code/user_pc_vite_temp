@@ -357,6 +357,7 @@ class MenuData {
    */
   set_left_menu_result(obj) {
     this.menu_root_show_shoucang = obj.root;
+    this.menu_root = obj.root?obj.root:this.menu_root;
     // 设置 列表接口类型
     // this.set_match_list_api_type(obj);
     // console.error('set_left_menu_result',obj)
