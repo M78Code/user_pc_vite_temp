@@ -78,7 +78,7 @@ class MatchFold {
    */
   set_league_fold (match, type) {
     // 赛事 mids
-    const { custom_tid, csid, warehouse_type } = match
+    const { tid, csid, warehouse_type } = match
     let list = []
     if (['five_league'].includes(warehouse_type)) {
       list = lodash.get(MatchMeta, 'other_complete_matchs', [])
@@ -86,7 +86,7 @@ class MatchFold {
       list = lodash.get(MatchMeta, 'complete_matchs', [])
     }
     list.forEach(item => {
-      if (!item || item.custom_tid !== custom_tid) return
+      if (!item || item.tid !== tid) return
       const key = this.get_match_fold_key(item)
       const show_card = !lodash.get(this.match_mid_fold_obj.value, `${key}.show_card`, false)
       // 全部
@@ -176,8 +176,8 @@ class MatchFold {
    * @returns string
    */
   get_match_fold_key (match) {
-    const { mid, custom_tid, warehouse_type = '', start_flag = '' } = match
-    return warehouse_type ? `${warehouse_type}_${custom_tid}_${mid}_${start_flag}` : `${custom_tid}_${mid}_${start_flag}`
+    const { mid, tid, warehouse_type = '', start_flag = '' } = match
+    return warehouse_type ? `${warehouse_type}_${tid}_${mid}_${start_flag}` : `${tid}_${mid}_${start_flag}`
   } 
   /**
    * @description 设置赛事折叠
