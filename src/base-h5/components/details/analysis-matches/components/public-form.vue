@@ -41,7 +41,7 @@
           <span
               class="results"
               v-if="default_index == 0"
-              :class="item.result == 2 ? 'results_flat' : item.result == 3 ? 'results_lose' : 'results_win'"
+              :class="item.result == 2 ? 'results_flat ping-or-zou-color' : item.result == 3 ? 'results_lose' : 'results_win'"
           >
           {{ item.result ==2 ? i18n_t('analysis_football_matches.flat') : item.result ==3 ? i18n_t('analysis_football_matches.negative') : i18n_t('analysis_football_matches.victory') }}
         </span>
@@ -49,7 +49,7 @@
           <span
               class="pan-road"
               v-else-if="default_index == 1"
-              :class="item.handicapResult ==2 ? 'flat' : item.handicapResult ==3 ? 'no_pan_road' : item.handicapResult ==4 ? 'have_pan_road' : ''"
+              :class="item.handicapResult ==2 ? 'flat ping-or-zou-color' : item.handicapResult ==3 ? 'no_pan_road' : item.handicapResult ==4 ? 'have_pan_road' : ''"
           >
            <!-- <template v-if="item.handicapVal">{{ item.handicapVal }}{{ item.handicapResult ==2 ? i18n_t('analysis_football_matches.level') : item.handicapResult ==3 ? i18n_t('analysis_football_matches.lose')  : item.handicapResult ==4 ? i18n_t('analysis_football_matches.win') : '' }}</template> -->
            <template v-if="item.handicapVal">{{ item.handicapResult ==2 ? i18n_t('analysis_football_matches.level') : item.handicapResult ==3 ? i18n_t('analysis_football_matches.lose')  : item.handicapResult ==4 ? i18n_t('analysis_football_matches.win') : '' }}</template>
@@ -60,7 +60,7 @@
           <span
               class="big-small"
               v-else-if="default_index == 2"
-              :class="item.overunderResult ==2 ? 'flat' : item.overunderResult ==3 ? 'no_big_small' : item.overunderResult ==4 ? 'have_big_small' : ''"
+              :class="item.overunderResult ==2 ? 'flat ping-or-zou-color' : item.overunderResult ==3 ? 'no_big_small' : item.overunderResult ==4 ? 'have_big_small' : ''"
           >
            <!-- <template v-if="item.overunderVal">{{ item.overunderVal }}{{ item.overunderResult ==2 ? i18n_t('analysis_football_matches.level') : item.overunderResult ==3 ? i18n_t('analysis_football_matches.small') : item.overunderResult ==4 ? i18n_t('analysis_football_matches.big') : ''}}</template> -->
            <template v-if="item.overunderVal">{{ item.overunderResult ==2 ? i18n_t('analysis_football_matches.level') : item.overunderResult ==3 ? i18n_t('analysis_football_matches.small') : item.overunderResult ==4 ? i18n_t('analysis_football_matches.big') : ''}}</template>

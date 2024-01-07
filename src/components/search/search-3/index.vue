@@ -104,11 +104,11 @@ const main_menu_toggle = ref(MenuData.main_menu_toggle)
 /** 显示类型 */
 // const show_type = ref('init')
 /** 球种列表 */
-let sports_list = reactive([])
+// let sports_list = reactive([])
 /** 球种tab选中索引 */
-const sports_tab_index = ref(0)
+// const sports_tab_index = ref(0)
 /** 搜索球种 */
-const search_csid = ref(1)
+// const search_csid = ref(1)
 
 const search_width = ref(LayOutMain_pc.layout_search_width)
 let main_width = ref(LayOutMain_pc.layout_main_width + 'px')
@@ -208,7 +208,7 @@ export default defineComponent({
   left: 0;
   width: v-bind(main_width);
   // right: 0;
-  top: 64px;
+  top: 60px;
   bottom: 0;
   z-index: 10001;
   // background-color: pink;
