@@ -844,10 +844,8 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
             let mststs = lodash.get(data, "mststs");
             MatchDetailCalss.set_match_details_params({mid,csid,media_type:'auto'})
             //获取赔率
-            lodash.throttle(() => {
-              get_match_detail_base()
-              console.error('iszhixing')
-            },1000);
+              // get_match_detail_base()
+              get_match_detail_base_throttle();
             //同步赛事时间
             update_match_time({ mid, mst, mstst, mststs });
             let { media_type, play_id } = allData.details_params;

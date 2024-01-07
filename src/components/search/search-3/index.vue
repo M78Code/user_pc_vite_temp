@@ -208,7 +208,7 @@ export default defineComponent({
   left: 0;
   width: v-bind(main_width);
   // right: 0;
-  top: 64px;
+  top: 60px;
   bottom: 0;
   z-index: 10001;
   // background-color: pink;

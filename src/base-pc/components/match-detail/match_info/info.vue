@@ -6,6 +6,7 @@
 <template>
   <div class="right_match_info">
   <template v-if="match_info">
+    {{ lodash.get(match_info, 'csid') }}
     <!-- ms，0未开赛；1进行中；3完赛 110 即将开赛 -->
     <template v-if="[0, 110].includes(lodash.get(match_info,'ms')*1)">
       <before :match_info="match_info" :is_new="true" />
@@ -16,7 +17,7 @@
         <football :right="right" :match_info="match_info" />
       </template>
       <!-- 2、篮球 6美足 -->
-      <template v-else-if="['2','6'].includes(lodash.get(match_info, 'csid'))">
+      <template v-else-if="['2','6'].includes(String (match_info.csid))">
         <basketball :right="right" :match_info="match_info" />
       </template>
       <!-- 棒球 -->
@@ -44,7 +45,7 @@ import baseball from "src/base-pc/components/match-detail/match_info/more/baseba
 import before from "src/base-pc/components/match-detail/match_info/animation_template/common_before.vue";
 import { is_eports_csid} from "src/output/index.js"
 import dota2_started from "src/base-pc/components/match-detail/match_info/dota2/dota2-started.vue"
-import lodash from 'lodash'
+
 export default {
   props: {
     match_info: Object,
