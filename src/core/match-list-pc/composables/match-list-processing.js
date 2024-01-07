@@ -81,8 +81,8 @@ const deal_with_list_data = (data) => {
 	// if (MenuData.is_kemp()) {
 	//   MatchListData.set_list(mid_arr)
 	// }
-	MatchListData.set_list(mid_arr)
 	match_list_handle_set(mid_arr)
+	MatchListData.set_list(mid_arr)
 }
 /**
  * @description 专业处理服务器返回的 列表 数据---联赛结构
