@@ -6,7 +6,7 @@
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
     v-if="match_style_obj.is_show_card">
     <!-- 数据模版调试 -->
-    <!-- <div style="position:absolute;color:red"> {{ match_style_obj.view_tpl_id }}-{{ match_style_obj.data_tpl_id }}-{{
+    <!-- <div  style="position:absolute;color:red"> {{ match_style_obj.view_tpl_id }}-{{ match_style_obj.data_tpl_id }}-{{
       match_style_obj.show_level }}-{{ match_style_obj.is_show_card }}
     </div> -->
     <component :is="`MatchTpl${match_style_obj.view_tpl_id}After`" v-if="[1, 2].includes(match_style_obj.show_level)"
