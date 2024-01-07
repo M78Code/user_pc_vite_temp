@@ -243,8 +243,9 @@
             </div>
 
           </div>
-          <!-- match.csid != 1 -->
-          <template v-if="match.csid">
+          <!-- match.csid != 1 赛种id ？ -->
+          <!-- ms:  1 已经开赛，0 未开赛 -->
+          <template v-if="match.ms == 1">
             <div class="score-content-new">
               <ScoreList :main_source="main_source" :match="match_of_list" />
             </div>
