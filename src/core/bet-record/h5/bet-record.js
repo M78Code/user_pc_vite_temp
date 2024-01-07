@@ -1,6 +1,6 @@
 import { ref } from "vue"
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
-import { filter_early_list } from  "../util.js"
+import { filter_early_list } from  "./util.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_betting } from "src/api/index.js";
 import lodash from 'lodash';
