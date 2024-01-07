@@ -344,7 +344,6 @@ export default defineComponent({
     watch(
       () => state_data.detail_data?.mmp,
       (_new) => {
-        console.log(_new,'_new');
         // 如果是999赛事结束即调接口切换赛事
         if(_new == '999'){
           event_switch();
@@ -513,7 +512,6 @@ export default defineComponent({
     const ChangeVideoKind = (replay)=>{
       useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true)
       useMittEmit(MITT_TYPES.EMIT_SET_PLAY_VIDEO, true)
-      console.log(replay,"replay")
       nextTick(()=>{
         try{
           videosRef.value.is_playing_replay = true

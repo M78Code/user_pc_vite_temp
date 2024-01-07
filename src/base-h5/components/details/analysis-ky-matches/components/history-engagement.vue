@@ -299,7 +299,7 @@ const get_detail_data = ref({
       }
       .col4.end-btn {
         >span.results {
-          color: var(--q-analysis-text-color-1);
+          // color: var(--q-analysis-text-color-1);
         }
         >span.results.results_win {
           color: var(--q-analysis-text-color-6);

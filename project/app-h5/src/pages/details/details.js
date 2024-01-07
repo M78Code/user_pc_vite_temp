@@ -232,7 +232,6 @@ export const details_main = () => {
   })
 
   const change_fullscreen = (value) => {
-    console.log(value, "change_fullscreen");
     state_data.get_is_dp_video_full_screen = value;
   }
   
@@ -242,7 +241,6 @@ export const details_main = () => {
     // LocalStorage.get("YUAN_MATCH_DETAIL_DATA")
     MatchDataWarehouseInstance.set_match_details(LocalStorage.get("YUAN_MATCH_DETAIL_DATA"),[])
     state_data.detail_data = MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value);
-    console.log(state_data.detail_data ,"state_data.detail_data");
   })
   /**
    *@description: 点击详情任意地方显示视频对阵信息
@@ -258,7 +256,6 @@ export const details_main = () => {
    * 子组件触发父组件方法
    */
   const change_go_back = (state) => {
-    console.log(state, "子组件触发父组件方法");
     state_data.show_go_back = state;
   };
   /**
@@ -683,7 +680,6 @@ export const details_main = () => {
    */
   const get_odds_list =  (
     params = { sportId: sport_id.value, mid: matchDetailCtr.value.mid || matchid.value }, callback=null) => {
-    console.log(callback,'callback');
     // state_data.data_list = Level_one_category_list();
     const get_details_category_list = () => {
          //接口调用
@@ -697,7 +693,6 @@ export const details_main = () => {
         error_codes: ["0401038"],
         // axios中then回调方法
         fun_then: (res) => {
-          console.log(res,'res');
           const res_data = lodash.get(res, "data",[]);
           if (res.code=='0401038') {  //限频
             return  setTimeout(() => {
@@ -904,7 +899,6 @@ export const details_main = () => {
             }
           }
         }
-        console.log(event_data, "=====data=====");
         // 赛事跳转应关闭视频
         state_data.get_show_video = false
         router.replace({name:"category",params:{mid:event_data.mid,tid:event_data.tid,csid:event_data.csid}})
