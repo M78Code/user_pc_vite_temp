@@ -14,7 +14,7 @@ let other_play_current_play = {};
 import { other_play_name_to_playid } from 'src/core/constant/project/module/data-class-ctr/index.js';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
- 
+
 
 /**
    * @Description 克隆数组
@@ -32,21 +32,21 @@ const clone_arr = (arr) => {
 export function get_tab_play_keys(match) {
   let tab_play_keys = []
   let play_keys = Object.keys(other_play_name_to_playid)
-  lodash.each(play_keys,key=>{
-    let status_key = 'cos'+key.slice(3)
-    let status =  match[status_key]
+  lodash.each(play_keys, key => {
+    let status_key = 'cos' + key.slice(3)
+    let status = match[status_key]
     //15分钟次要玩法前端强制关闭
     let cos15min_status = !(status_key === 'cos15Minutes' && match.hSpecial == 6)
     //5分钟次要玩法前端强制关闭状态
     let cos5min_status = !(status_key === 'cos5Minutes' && match.hSpecial5min == 6)
-    if( status && cos15min_status  && cos5min_status){
-        tab_play_keys.push(key)
+    if (status && cos15min_status && cos5min_status) {
+      tab_play_keys.push(key)
     }
   })
   // match.tab_play_keys = tab_play_keys.join(',')
   // // 是否有其他玩法
   // match.has_other_play = tab_play_keys.length > 0
-  return  tab_play_keys.join(',');
+  return tab_play_keys.join(',');
 }
 /**
    * @Description 计算角球、罚牌等其他玩法数据 (获取角球、罚牌模板数据，并与接口数据合并)
@@ -63,7 +63,7 @@ export const get_compute_other_play_data = (match) => {
   let play_key = get_play_current_play(match)
   const { data_tpl_id = 1 } = MatchListCardDataClass.get_card_obj_bymid(mid)
   let template_name = `template_${data_tpl_id}`
-  const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[template_name+'_config'][template_name]
+  const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[template_name + '_config'][template_name]
   // 其他玩法盘口列表
   let handicap_list = clone_arr(match_tpl_info[play_key])
   // 波胆
@@ -79,9 +79,9 @@ export const get_compute_other_play_data = (match) => {
   }
   let type = play_key == 'hps15Minutes' ? 4 : 1
   // coverage_match_data({ other_handicap_list }, mid)
-  
+
   // return  merge_template_data({ match, handicap_list, play_key })
-  return get_template_data({ match, handicap_list, play_key,type })
+  return get_template_data({ match, handicap_list, play_key, type })
 }
 /**
 * @Description 合并列表模板数据
@@ -306,7 +306,7 @@ export function set_min15(match, mst, callback) {
   if ((hSpecial !== match.hSpecial || hSpecial5min !== match.hSpecial5min) && callback) {
     callback()
   }
-  return {hSpecial, hSpecial5min}
+  return { hSpecial, hSpecial5min }
 }
 /**
   * @Description 获取五分钟玩法阶段状态
@@ -364,8 +364,8 @@ export const get_tab_param_build = (mids, MatchListData = MatchDataWarehouse_PC_
   */
 export function get_21_bold_template(match) {
   let list_name = "main_handicap_list_20"
-  const { data_tpl_id = 1 } = MatchListCardDataClass.get_card_obj_bymid(match.mid)
-  data_tpl_id == 13 && (list_name += '_13')
+  let { tpl_id = 1 } = match
+  tpl_id == 13 && (list_name += '_13')
   let tpl_21_hpids = ''
   function compute_hl_obj_data(hl_obj) {
     let { hpid } = hl_obj
@@ -389,7 +389,7 @@ export function get_21_bold_template(match) {
     })
   })
   // 足球让球与大小玩法 遍历其他玩法数据
-  if (match.csid == 1 && [0, 13].includes(+data_tpl_id)) {
+  if (match.csid == 1 && [1, 13].includes(+tpl_id)) {
     lodash.each(Object.keys(other_play_name_to_playid), key => {
       lodash.each(match[key], hl_obj => {
         compute_hl_obj_data(hl_obj)
@@ -440,7 +440,7 @@ export const set_match_play_current_index = (match, play_key) => {
   match.play_current_key = play_key
   // 保存当前选中的玩法
   other_play_current_play[match.mid + '_'] = play_key
-  match.other_handicap_list=get_compute_other_play_data(match)
+  match.other_handicap_list = get_compute_other_play_data(match)
 }
 //获取保存的盘口玩法
 export function get_play_current_play(match) {
