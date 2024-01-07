@@ -119,7 +119,8 @@
         "dev2": "npm run dev-self-use-version-inner",
         "dev3": "npm run export-dev-target-env",
         "build-inner": "npm run build-self-use-version",
-        "build": "run-s  refresh-dependencies build-inner ",
+        "build2": "run-s  refresh-dependencies build-inner ",
+        "build": "npm run build-self-use-version",
   
         "emc": "npm run export-merchant-config",
         "ddd": "npm run dev-development-document",
