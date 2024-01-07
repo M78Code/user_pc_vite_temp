@@ -1,7 +1,7 @@
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <!-- 投注额 -->
-  <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span class="font500">{{format_money2(data_f.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p>
+  <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span class="font500">{{format_money2(data_f.orderAmountTotal)}} {{ currency_code[UserCtr.currency] }}</span></p>
   
   <template>
     <!-- orderStatus 订单状态(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
@@ -10,12 +10,12 @@
       <label>{{ i18n_t('app_h5.cathectic.winnable') }}：</label> 
       <template v-if="data_f.orderStatus == 1 || data_f.orderStatus == 2 || data_f.orderStatus == 4">
         <span class="font500">
-          <template v-if="data_f.backAmount !== null">{{format_money2(data_f.backAmount)}}{{ i18n_t('common.unit') }}</template>
-          <template v-else>{{format_money2(data_f.orderAmountTotal)}}{{ i18n_t('common.unit') }}</template>
+          <template v-if="data_f.backAmount !== null">{{format_money2(data_f.backAmount)}} {{ currency_code[UserCtr.currency] }}</template>
+          <template v-else>{{format_money2(data_f.orderAmountTotal)}} {{ currency_code[UserCtr.currency] }}</template>
         </span>
       </template>
       <template v-else>
-        <span class="font500">{{format_money2(data_f.maxWinAmount)}}{{ i18n_t('common.unit') }}</span>
+        <span class="font500">{{format_money2(data_f.maxWinAmount)}} {{ currency_code[UserCtr.currency] }}</span>
       </template>
     </p>
     <!-- 在已结算页 -->
@@ -86,7 +86,7 @@ import BetRecordClass from "src/core/bet-record/h5/bet-record.js";
 import { calc_text_only_status, calc_text, outcome } from "src/core/bet-record/util.js";
 import { i18n_t } from "src/boot/i18n.js";;
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
-import { formatTime, format_money2, format_balance, compute_local_project_file_path } from 'src/output/index.js'
+import { formatTime, format_money2, format_balance, compute_local_project_file_path,currency_code,UserCtr } from 'src/output/index.js'
 import ClipboardJS from "clipboard";
 import { Platform } from "quasar";
 let props = defineProps({

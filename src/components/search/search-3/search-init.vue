@@ -150,6 +150,7 @@ function click_keyword(keyword, is_insert_history) {
     if (is_insert_history) {
         search.insert_history(keyword)
     }
+    store.keyword = keyword
     // set_search_type(1)
     // set_click_keyword(keyword);
 }

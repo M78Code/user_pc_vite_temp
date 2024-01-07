@@ -3,17 +3,17 @@
 <template>
     <div class="result-wrap">
         <!-- 无数据 -->
-        <div class="serach-background" v-show="load_data_state != 'data'" @click.stop>
-            <loadData class="fit" :state="load_data_state" :no_data_msg="i18n_t('search.null1')"
+        <div class="serach-background" v-show="store.load_data_state != 'data'" @click.stop>
+            <loadData class="fit" :state="store.load_data_state" :no_data_msg="i18n_t('search.null1')"
                 :no_data_msg2="i18n_t('search.null2')" />
         </div>
         <!-- 滚动区域 -->
-        <q-scroll-area v-show="load_data_state == 'data'" class="fit rule-scroll-area" ref="scrollRef">
+        <q-scroll-area v-show="store.load_data_state == 'data'" class="fit rule-scroll-area" ref="scrollRef">
             <div class="serach-background" @click.stop>
                 <div style="height:70px"></div>
                 <!-- 赛种 -->
                 <div class="type-item" :class="{ active: type.is_active, inplay: type.is_inplay }"
-                    v-for="(type, type_index) in res_list" :key="type_index">
+                    v-for="(type, type_index) in store.res_list" :key="type_index">
                     <div class="type-wrap" @click="type.is_active = !type.is_active">
                         <div class="line"></div>
                         <div class="type-name">
@@ -59,7 +59,7 @@ import { ref, reactive, watch, onBeforeUnmount ,nextTick} from 'vue'
 import { SearchPCClass } from 'src/output/index.js'
 import { project_name, i18n_t } from 'src/output/index.js';
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
-// import store from "src/store-redux/index.js";
+import lodash from "lodash";
 import details from "src/core/match-list-pc/details-class/details.js"
 import search from "src/core/search-class/search.js"
 import {store, mutations} from './index.js'
@@ -84,9 +84,9 @@ const update_show_type = (data) => emit('update:show_type', data)
 
 
 /** 数据加载状态 */
-const load_data_state = ref('data')
+// const load_data_state = ref('data')
 /** 搜索结果数据 */
-let res_list = reactive([])
+// let res_list = reactive([])
 
 // const router = useRouter()
 
@@ -100,15 +100,14 @@ let res_list = reactive([])
 // 监听搜索关键词改变
 watch(
     () => store.keyword,
-    (res) => {
-        console.log('fdsafdsfdsafsdafdsafsdafsdfsa12312312', res)
+    lodash.debounce((res) => {
         // if (search_type.value == 2) {
         //     update_show_type('none')
         // } else {
         //     get_search_result(res.substr(5))
         // }
-        get_search_result(res)
-    }
+            get_search_result(res)
+    }, 300)
 )
 
 /**
@@ -170,7 +169,7 @@ const timer = ref(null)
  * @param {string} keyword 搜索关键字
  * @return {Undefined} Undefined
  */
-async function get_search_result() {
+function get_search_result() {
     if (!store.keyword) {
         // update_show_type('init')
         store.show_type = 'init'
@@ -180,12 +179,10 @@ async function get_search_result() {
     // if (is_loading) {
     //     load_data_state.value = 'loading'
     // }
-    const results = await mutations.get_search_result_handle()
-    const { state, list } = results
+    mutations.get_search_result_handle()
+    // const { state, list } = results
     // update_show_type('result')
-    store.show_type = 'result'
-    load_data_state.value = state
-    res_list = list
+    // load_data_state.value = 'data'
     let _ref_scroll = scrollRef.value;
     timer.value = setTimeout(() => {
         // 如果是从详情页返回
