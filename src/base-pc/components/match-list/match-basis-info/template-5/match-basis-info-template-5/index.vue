@@ -52,7 +52,7 @@
     
         <!-- 是否收藏 -->
         <span @click.stop="collect" class="yb-flex-center yb-hover-bg m-star-wrap-match" v-if="GlobalAccessConfig.get_collectSwitch()">
-          <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
+          <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
         </span>
         <!-- 统计分析 -->
         <div class="sr-link-icon-w" v-tooltip="{content:i18n_t('common.analysis')}" v-if="is_show_sr_flg(match)" @click.stop='details.sr_click_handle(match)'>
