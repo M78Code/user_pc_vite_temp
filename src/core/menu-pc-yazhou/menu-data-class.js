@@ -769,8 +769,7 @@ class MenuData {
    * @param {boolean}
    */
   is_corner_menu() {
-    // console.log(2222222,this.mid_menu_result)
-    return [101210, 101310].includes(+this.mid_menu_result.lv2_mi);
+    return [101210, 101310].includes(+this.left_menu_result.lv2_mi);
   }
   /**
    * 是否选中了早盘

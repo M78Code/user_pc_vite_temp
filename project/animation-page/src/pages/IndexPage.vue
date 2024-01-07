@@ -1,9 +1,12 @@
 <template>
     <!-- <h1> DEMO </h1> -->
-    <div id="statscorewidget"  :style="widget_style" ></div>
+    <div  id="statscorewidget" v-if="!no_data"  :style="widget_style" ></div>
+    <!-- 动画播放失败 -->
+    <animation_no_video v-else></animation_no_video>
 </template>
 <script>
 import { defineComponent } from 'vue'
+import  animation_no_video  from "../components/animation_no_video.vue";
 export default defineComponent({
   name: 'IndexPage',
   data() {
@@ -12,11 +15,15 @@ export default defineComponent({
       widget_style:{
         // visibility: 'hidden' ,
         // visibility: 'unset',
-      }
+      },
+      no_data:false
     }
   },
   created() {
   
+  },
+  components:{
+    animation_no_video
   },
   mounted(){
     this.init_widget();
@@ -78,7 +85,7 @@ export default defineComponent({
         }};
         // const widget = new window.STATSCOREWidgets.Widget(element, configurationId, inputData, options);
         const widget = new window.STATSCOREWidgets.WidgetGroup(element, configurationId, inputData, options);
-       this.   add_widget_event(widget)
+       this.add_widget_event(widget)
       });
     },
     add_widget_event(widget){
@@ -96,7 +103,7 @@ widget.on('beforeInsert', () => { /* Triggers when data necessary to display wid
 widget.on('load', () => { /* Triggers when widget is loaded but not yet interactive */ });
 widget.on('mount', () => { /* Triggers when widget is loaded and interactive */   
 
- this. widget_style= {
+ this.widget_style= {
       
          visibility: 'unset',
       }
@@ -105,10 +112,11 @@ widget.on('mount', () => { /* Triggers when widget is loaded and interactive */
 widget.on('error', e => { 
   /* Handle errors here */ 
 console.error("widget.on('error'----",e);
-this. widget_style= {
+this.widget_style= {
         visibility: 'hidden' ,
          
       }
+this.no_data = true      
 });
 
 // Event coverage:
