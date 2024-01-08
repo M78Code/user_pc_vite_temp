@@ -128,6 +128,8 @@ function tab_click(obj) {
   background-size: 100% auto;
   padding-top: 56px;
   z-index: -1;
+  background-image: url($SCSSPROJECTPATH+"/image/common/png/esportbg-lol.png");
+  
   .sport-tab {
     height: 118px;
     display: flex;
