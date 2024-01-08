@@ -51,7 +51,6 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 
-
 export default {
   name:'match_main',
   data() {
@@ -159,7 +158,7 @@ export default {
         if(this.is_vr_page){
             // console.log("history===", history);
             // router.go(hisLen.value - history.length - 1)
-            router.push('/virtual')
+            this.router.push('/virtual')
             return ;
         }
     },
