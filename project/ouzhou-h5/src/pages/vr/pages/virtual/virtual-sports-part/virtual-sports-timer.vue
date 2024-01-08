@@ -31,8 +31,8 @@ export default {
 
 <style lang="scss" scoped>
 .v-s-timer {
-  min-width: 1.1rem;
-  height: 1.1rem;
+  min-width: 1.4rem;
+  height: 1.4rem;
   position: relative;
   display: flex;
   justify-content: center;
@@ -50,8 +50,8 @@ export default {
     }
 
   .v-timer-inner {
-    width: 1.05rem;
-    height: 1.05rem;
+    width: 1.4rem;
+    height: 1.4rem;
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 50%;
     line-height: 1;
@@ -60,6 +60,7 @@ export default {
 
     .timer-format {
       // color: #ffb001;
+      margin-bottom: 0.15rem;
       font-size: 0.3rem;
       font-weight: 500;
       color: var(--q-gb-t-c-35) !important;
@@ -72,7 +73,7 @@ export default {
   }
 
   .graphic-wrapper {
-    width: 1.1rem;
+    width: 1.4rem;
     height: 100%;
     position: absolute;
     top: 0;
@@ -90,7 +91,7 @@ export default {
   .count-wrap {
     position: absolute;
     left: 50%;
-    bottom: -0.38rem;
+    bottom: 0.25rem;
     display: flex;
     justify-content: center;
     transform: translateX(-50%);
@@ -104,11 +105,11 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
       padding: 0 0.1rem;
-      background-color: rgba(0, 0, 0, 0.6);
+      // background-color: rgba(0, 0, 0, 0.6);
       border-radius: 0.15rem;
       font-size: 0.14rem;
       color: #F5F8FA;
-      backdrop-filter: blur(5px);
+      // backdrop-filter: blur(5px);
       letter-spacing: 0.02rem;
     }
   }

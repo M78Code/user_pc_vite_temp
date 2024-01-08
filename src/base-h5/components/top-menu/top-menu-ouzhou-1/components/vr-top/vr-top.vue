@@ -59,8 +59,9 @@ const onItemClick = (event)=>{
 // 回到上一页
 const go_back = () => {
   if(props.is_vr_page){
-    // console.log("hisLen.value - history.length - 1===",  (hisLen.value - history.length - 1))
-    router.go(hisLen.value - history.length - 1)
+    // console.log("history===", history);
+    // router.go(hisLen.value - history.length - 1)
+    router.back(-1)
     return ;
   }
 }
