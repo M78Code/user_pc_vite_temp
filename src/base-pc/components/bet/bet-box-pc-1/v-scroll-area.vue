@@ -218,7 +218,7 @@ onUnmounted(() => {
 
   .q-scrollarea__content {
     width: 100%;
-    border-right: 1px solid var(--q-gb-bd-c-6);
+     //border-right: 1px solid var(--q-gb-bd-c-6);
     border-radius: 0 6px 0 0;
     background: var(--q-gb-bg-c-11);
   }
