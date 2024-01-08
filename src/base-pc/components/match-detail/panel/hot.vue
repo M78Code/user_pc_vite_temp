@@ -123,7 +123,6 @@
                     mx_get_bet_simple(item, index, 'oid')
                   "
                   :key="`item_0_${index}`"
-                  class="item_border"
                   :match_info="item"
                   :play_data="mx_get_bet_simple(item, index, 'play')"
                   :bet_data="mx_get_bet_simple(item, index, 'bet_data')"
