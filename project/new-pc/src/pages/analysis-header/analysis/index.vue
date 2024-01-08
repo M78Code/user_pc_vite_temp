@@ -400,7 +400,9 @@ function switchTabs(item, index) {
       border-left: 1px solid #DEE4F2;
       border-right: 1px solid #DEE4F2;
     }
-
+    .d-tr {
+      border-top: 1px solid #DEE4F2;
+    }
     .wrap-home {
       .future-item {
         border-left: 1px solid #DEE4F2;

@@ -31,6 +31,9 @@ let animation_timer = null;
 const update_show_default = (value) => {
     show_default_img.value = value;
 }
+
+is_collect.value = Boolean(lodash.get(match.value, 'mf'))
+
 let mitt_list = []
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(match.value, 'mid'))
 const handicap_num = computed(() => {
@@ -112,9 +115,7 @@ const collect = () => {
 watch(() => match.value.mf, (n) => {
     is_collect.value = Boolean(n)
 }, { immediate: true })
-//进球特效防抖
-// hide_home_goal = this.debounce(hide_home_goal,5000);
-// hide_away_goal = this.debounce(hide_away_goal,5000);
+
 // 监听收藏数量，更新收藏icon 颜色
 // watch(get_collect_count, () => {
 //   const cur = match.value_list_data.mid_obj
@@ -205,14 +206,31 @@ function reset_event() {
         is_show_away_goal.value = false
     }, 5000)
 }
+
+/**
+ * @Description 隐藏主队进球动画
+ * @param {undefined} undefined
+*/
+const hide_home_goal = lodash.debounce(() => {
+    is_show_home_goal.value = false;
+  }, 5000)
+  
+/**
+ * @Description 隐藏客队进球动画
+ * @param {undefined} undefined
+ */
+const hide_away_goal = lodash.debounce(() => {
+is_show_away_goal.value = false;
+}, 5000)
+
 onUnmounted(() => {
     clearInterval(timer);
     clearTimeout(animation_timer)
     animation_timer = null
     timer = null;
     mitt_list.forEach(i => i());
-    // this.debounce_throttle_cancel(hide_home_goal());
-    // this.debounce_throttle_cancel(hide_away_goal());
+    lodash.isFunction(hide_away_goal.cancel)&&hide_away_goal.cancel();
+    lodash.isFunction(hide_home_goal.cancel)&&hide_home_goal.cancel();
 })
 
 
