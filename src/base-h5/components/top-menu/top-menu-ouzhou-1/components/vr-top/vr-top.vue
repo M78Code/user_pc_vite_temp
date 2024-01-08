@@ -10,7 +10,7 @@
                 <img :src="`${LOCAL_PROJECT_FILE_PREFIX }/image/menu/top-menu/back.png`" alt="">
             </div>
             <div class="drop_menulist">
-                <q-btn-dropdown color="rgba(0,0,0, 0)" :flat="true" no-caps :glossy="false" :ripple="false" label="VR-Basketball">
+                <q-btn-dropdown style="left: 0; min-width: 100vw;" color="rgba(0,0,0, 0)" :flat="true" no-caps :glossy="false" :ripple="false" label="VR-Basketball">
                     <q-list>
                         <q-item clickable v-close-popup @click="onItemClick">
                             <q-item-section>
@@ -146,6 +146,15 @@ const toHome = async() => {
             flex-direction: row;
             justify-content: center;
             align-items: center;
+        }
+
+        :deep(.q-position-engine){
+            left: 0;
+            visibility: visible;
+            min-width: 100vw;
+            background: rgba(0,0,0, 1);
+            color: #fff;
+            text-align: center;
         }
   }
 </style>
