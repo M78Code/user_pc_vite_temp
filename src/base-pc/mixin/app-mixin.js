@@ -23,7 +23,6 @@ export default {
       this.background_run_time_timer = setTimeout(() => {
         this.vue_hidden_run_flg = true;
       }, 4000);
-
       // loading页面最长20秒
       this.timer_ = setTimeout(() => {
         this.hide_loading(0);
