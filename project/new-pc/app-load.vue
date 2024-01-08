@@ -4,7 +4,7 @@
     <!-- 页面路由开始 -->
     <router-view />
     <div class="error-data">{{ GlobalSwitchClass.error_data }}</div>
-    <div style="display:none">{{ GlobalSwitchClass.global_switch_version.version }}</div>
+    <div style="display:none">{{ GlobalSwitchClass.global_switch_version }}</div>
     <div id="v-tooltip"></div>
   </div>
 </template>
@@ -118,8 +118,9 @@ watch(
 // }
 //设置点击全局事件+1
 function set_global_click() {
-    //设置全局点击事件
-    GlobalSwitchClass.set_global_click()
+  //设置全局点击事件
+  GlobalSwitchClass.set_global_click()
+
 }
 /**
  * @description: 检查内嵌版的逻辑处理动作

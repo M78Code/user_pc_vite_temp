@@ -45,7 +45,7 @@
             <div :class="['match-result', state.source === 'bigAndSmallBall' && 'mb20']">
                 <div class="left">
                     <div class="home-team teams">
-                        <div v-if="state.source !== 'bigAndSmallBall'" class="teams-logo"><img src="./teams-icon.svg" alt=""></div>
+                        <div v-if="state.source !== 'bigAndSmallBall'" class="teams-logo"><img :class="[UserCtr.theme === 'theme-1' && 'teams-logo-theme']" src="./teams-icon.svg" alt=""></div>
                         <div class="title">{{ state.source !== 'bigAndSmallBall' ? i18n_t('app_h5.handicap_tutorial.bet_home_team') : item.big }} </div>
                         <div :class="['result', item.winIsWho === 'homeTeam' ? 'win' : item.winIsWho ? 'lose' : 'default']">{{ item.homeTeam }}</div>
                     </div>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="right">
                     <div class="away-team teams">
-                        <div v-if="state.source !== 'bigAndSmallBall'" class="teams-logo"><img src="./teams-icon.svg" alt=""></div>
+                        <div v-if="state.source !== 'bigAndSmallBall'" class="teams-logo"><img :class="[UserCtr.theme === 'theme-1' && 'teams-logo-theme']" src="./teams-icon.svg" alt=""></div>
                         <div class="title">{{ state.source !== 'bigAndSmallBall' ? i18n_t('app_h5.handicap_tutorial.bet_away_team') : item.small }}</div>
                         <div :class="['result', item.winIsWho === 'awayTeam' ? 'win' : item.winIsWho ? 'lose' : 'default']">{{ item.awayTeam }}</div>
                     </div>
@@ -73,7 +73,8 @@
 import { i18n_t, compute_local_project_file_path } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { reactive } from "vue";
-
+import { UserCtr } from "src/output/index.js";
+console.log('------------------------------------4324321-------------------------------',UserCtr.theme)
 defineOptions({
     name: 'matchResultHt' // 设置组件名称
 })
@@ -263,6 +264,9 @@ const state = reactive({
                     align-items: center;
                     margin-bottom: .04rem;
                     color: var(--q-gb-t-c-27);
+                    .teams-logo-theme {
+                        filter: brightness(100)
+                    }
                 }
             }
 
