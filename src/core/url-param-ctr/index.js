@@ -257,7 +257,10 @@ const to_corresponding_router_ouzhou_pc = (that, params_obj) => {
 let timer = 0;
 const watch_route_fun = (to, from)=>{
   clearTimeout(timer);
-  if(BUILDIN_CONFIG.PROJECT_NAME == 'app-h5' && to.name == 'virtual_sports_details'){
+  // if(BUILDIN_CONFIG.PROJECT_NAME == 'app-h5' && to.name == 'virtual_sports_details'){
+  //   return;
+  // }
+  if(location.href.indexOf('token') == -1){
     return;
   }
   timer = setTimeout(() => {

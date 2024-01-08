@@ -34,7 +34,7 @@ const check = (item) => {
   if(props.list.length == 1) { // 如果只有一项, 多次点击切换选中、非选中
     if(currentVal.value == item.value) {
       currentVal.value = ''
-      emit('emit_value', '')
+      emit('emit_value', false)
     } else {
       currentVal.value = item.value
       emit('emit_value', item.value)
