@@ -36,10 +36,11 @@ export default {
   width: 100%;
   height: 0.4rem;
   position: sticky;
-  top: 1.08rem;
+  top: 0.75rem;
   z-index: 99;
   display: flex;
   align-items: center;
+  background: #fff;
 }
 
 .part-nav {
@@ -72,8 +73,11 @@ export default {
     height: 100%;
     position: relative;
     padding-left: 0.08rem;
+    color: #8A8986;
+    font-weight: 500;
 
     &.focus {
+      color: #FF7000;
       &:after {
         display: block;
       }
