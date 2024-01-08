@@ -14,23 +14,10 @@ import { format_mst_data } from 'src/core/utils/matches_list.js'
 import { useMittEmit, MITT_TYPES, useMittOn } from 'src/core/mitt/index.js'
 
 import { get_handicap_index_by, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
-const router = useRouter()
-const route = useRoute()
-const match = inject('match');
-const props = defineProps({
-    show_type: {
-        type: String,
-        default: () => ''
-    },
-    is_15min: {
-        type: Boolean,
-        default: false
-    },
-    is_show_more: {
-        type: Boolean,
-        default: false
-    }
-})
+
+
+export function BaseInfo (match) {
+
 const is_show_home_goal = ref(false) // 是否显示主队进球动画
 const is_show_away_goal = ref(false) // 是否显示客队进球动画
 const is_show_home_red = ref(false) // 是否显示主队红牌动画
@@ -62,6 +49,7 @@ const away_avatar = computed(() => {
     const url = (lodash.get(match.value, 'match_logo') || {}).away_1_logo;
     return url
 })
+
 const play_name_obj = computed(() => {
     let play_name_obj = {
         key: 'main',
@@ -79,7 +67,7 @@ const play_name_obj = computed(() => {
                 score_key: 'S5'
             }
             //罚牌后缀
-        } else if (match_style_obj.data_tpl_id == 25) {
+        } else if (match_style_obj.data_tpl_id == 29) {
             play_name_obj = {
                 key: 'punish',
                 suffix_name: ' - ' + i18n_t('list.punish'),
@@ -226,3 +214,24 @@ onUnmounted(() => {
     // this.debounce_throttle_cancel(hide_home_goal());
     // this.debounce_throttle_cancel(hide_away_goal());
 })
+
+
+return {
+    home_score,
+    away_score,
+    handicap_index,
+    use_polling_mst,
+    collect,
+    play_name_obj,
+    home_avatar,
+    away_avatar,
+    handicap_num,
+    is_collect,
+    is_show_home_goal,
+    is_show_away_goal,
+    is_show_home_red,
+    is_show_away_red,
+    is_show_home_var
+}
+
+}

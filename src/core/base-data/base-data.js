@@ -77,7 +77,7 @@ class BaseData {
     //菜单版本set_vr_mi_config
     this.menu_version = 1;
     // 菜单 国际化 数据  map
-    this.menus_i18n_map = [];
+    this.menus_i18n_map = menu_i18n_default;
     // 新的菜单 接口返回  数据
     this.mew_menu_list_res = [];
     //新的菜单 的基础信息相关的 （可以包含国际化）
@@ -158,9 +158,9 @@ class BaseData {
    * 目前 按照约定 走 api
    */
   init() {
-    // console.error('初始化菜单数据')
+    console.error('初始化菜单数据')
     // 用默认数据 初始化
-    this.init_by_default_data();
+    // this.init_by_default_data();
     // console.warn("BaseData.init()--------");
 
     // 获取 用户信息
@@ -196,6 +196,7 @@ class BaseData {
 
     // ws请求订阅
     BaseWsMessage.init()
+
   }
 
 
@@ -322,6 +323,13 @@ class BaseData {
         })
       }
     })
+  }
+
+  // 切换国际化 获取最新的数据
+  set_base_data_menu_i18n() {
+    api_base_data.post_base_data_menu_i18n({}).then((res) => {
+      this.init_base_menu_il8n(res)
+    }).catch(err => reject(err))
   }
 
   // 模拟数据推送 左侧菜单和顶部菜单 修改
@@ -697,6 +705,9 @@ class BaseData {
       } else {
         this.is_mi_300_open = true;
       }
+
+      // 菜单完成 更新顶部菜单tab
+      useMittEmit(MITT_TYPES.EMIT_MENU_INIT_DONE)
 
       // console.warn('left_menu',left_menu)get_virtual_menuvr
       // console.warn('菜单数据处理完成-----')
@@ -1232,5 +1243,4 @@ class BaseData {
 }
 
 const base_data_instance = new BaseData();
-useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=>base_data_instance.init())
 export default base_data_instance;

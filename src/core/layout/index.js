@@ -22,7 +22,7 @@ const different_version_config = {
   },
   'new-pc': {
     left_width: 234,
-    right_width: 441,
+    right_width: 576,
   },
   'ouzhou-pc': {
     left_width: 240,

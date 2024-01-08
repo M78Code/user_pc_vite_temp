@@ -1,9 +1,12 @@
 import { ref } from "vue"
+import { columns } from  "./util.js"
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
-import { filter_early_list, msgList } from  "../util.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_betting } from "src/api/index.js";
 import lodash from 'lodash';
+import { i18n_t } from "src/boot/i18n.js";
+import GlobalSwitchClass from 'src/core/global/global.js'
+import { football_score_no } from "src/output/index.js";
 
 class BetRecord {
   constructor() {
@@ -16,15 +19,24 @@ class BetRecord {
     this.appoint_order_status = 0
     // PC 投注记录提示
     this.tipMsg = 'bet_record.msg_1'
+    // 列表
+    this.params = {
+      page: 1,
+      size: 50,
+      userId: UserCtr.user_info.userId
+    }
+    this.api_url = api_betting.post_getOrderList
+    this.table_data = []
+    this.records = {}
     //列表数据
     this.list_data = {}
+    // table列表columns
+    this.columns = columns
     // 提前结算图标是否选中
     this.is_early = false
-    // 提前结算列表
-    this.early_money_list = {}
 
     //是否在加载中
-    this.is_loading = true
+    this.loading = true
     //list_data里面最后的一条数据的日期 '2020-11-17'
     this.last_record = ''
     // 是否存在下一页
@@ -41,22 +53,52 @@ class BetRecord {
     this.reset()
     // 切换提示语
     this.set_tip_msg(number)
-    // 通知 cathectic-item-all, 重新获取数据 
+    // 更改columns
+    this.set_columns(number)
+    // 更改api
+    this.set_api_url(number)
+    // 通知 重新获取数据 
     useMittEmit(MITT_TYPES.EMIT_BET_RECORD_SELECTED_CHANGE, this.selected)
     this.set_bet_record_version()
   }
 
   // 更新列表
-  set_list_data(value) {
-    this.list_data = value
-    this.early_money_list = filter_early_list(value, this.is_early)
+  set_table_data(value) {
+    this.table_data = value
     this.set_bet_record_version()
+  }
+
+  // 更改columns
+  set_columns(number) {
+    if(number == 1) {
+      this.columns[5] = {
+        name: 'return',
+        label: i18n_t("common.donate_win"),
+        align: 'center',
+        field: 'return'
+      }
+    } else {
+      this.columns[5] = {
+        name: 'highestWin',
+        label: i18n_t("common.maxn_amount_val"),
+        align: 'center',
+        field: 'highestWin'
+      }
+    }
+  }
+
+  // 更改api
+  set_api_url(number) {
+    if(number == 2) { // 预约
+      this.api_url = api_betting.post_book_list
+    } else { // 未结算、已结算
+      this.api_url = api_betting.post_getOrderList
+    }
   }
 
   // 设置提前结算按钮
   set_is_early(value) {
     this.is_early = value
-    this.early_money_list = filter_early_list(this.list_data, value)
     this.set_bet_record_version()
   }
 
@@ -73,7 +115,7 @@ class BetRecord {
         msg = 'bet_record.msg_1'
         break;
       case 1:
-        msg = 'bet_record.msg_2'
+        msg = 'bet_record.msg_6'
         break;
       case 2:
         msg = 'bet_record.msg_7'
@@ -81,13 +123,67 @@ class BetRecord {
     }
     this.tipMsg = msg
   }
+  // 根据 今天、昨天、7天、30天提示
+  set_date_tip_msg(val) {
+    let msg = ''
+    switch (val) {
+      case 1:
+        msg = 'bet_record.msg_2'
+        break;
+      case 2:
+        msg = 'bet_record.msg_3'
+        break;
+      case 3:
+        msg = 'bet_record.msg_4'
+        break;
+      case 4:
+        msg = 'bet_record.msg_5'
+        break;
+    }
+    this.tipMsg = msg
+    this.set_bet_record_version()
+  }
+
+  /**
+   * 获取数据
+   */
+    handle_fetch_order_list = async () => {
+      try {
+        this.loading = true
+        let res = await this.api_url({ ...this.params })
+        if(res.code !== '200'){
+          if(res.code === '0401038'){
+            GlobalSwitchClass.set_tip_show_state(true, {
+              // 当前访问人数过多，请稍后再试
+              text: i18n_t('common.limited')
+            })
+            return ;
+          }
+          return;
+        }
+        this.records = res.data || {}
+        this.set_table_data(res.data?.records || [])
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.loading = false
+      }
+    }
 
   // 初始化数据
   reset() {
+    this.params = {
+      page: 1,
+      size: 50,
+      userId: UserCtr.user_info.userId
+    }
+    this.api_url = api_betting.post_getOrderList
+    this.table_data = []
+    this.records = {}
+
     this.list_data = {}
     this.is_early = false
-    this.early_money_list = {}
-    this.is_loading = true
+    this.loading = true
     this.last_record = ''
     this.is_hasnext = false
     this.is_limit = false
@@ -102,12 +198,12 @@ class BetRecord {
   get_order_list(params, url_api, prevData=false) {
     //第一次加载时的注单数
     let size = 0
-    this.is_loading = true
+    this.loading = true
     // 请求接口
     url_api(params).then(reslut => {
       let res = reslut.status ? reslut.data : reslut
       this.is_limit = false
-      this.is_loading = false;
+      this.loading = false;
       if (res.code == 200) {
         let { record, hasNext } = lodash.get(res, "data");
         this.is_hasnext = hasNext
@@ -141,7 +237,7 @@ class BetRecord {
       //   this.get_order_list(newParams, url_api, prevData)
       // }
     }).catch(err => {
-      this.is_loading = false;
+      this.loading = false;
       console.error(err)
       return;
     });

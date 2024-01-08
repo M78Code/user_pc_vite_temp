@@ -1,0 +1,647 @@
+.panel {
+  margin-bottom: 20px;
+  min-width: 960px;
+  background: #fff;
+  .panel-title {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 20px;
+    .ranking-more {
+      color: var(--q-analysis-color-5);
+      cursor: pointer;
+    }
+  }
+}
+/*  杯赛积分 */
+.integrate {
+  .d-header:not(:last-child) {
+    border-bottom: none !important;
+  }
+  .d-body {
+    color: var(--q-gb-t-c-3);
+    .d-td:not(:last-child) {
+      border-right: 1px solid #DEE4F2;
+    }
+  }
+  .d-tr {
+    display: flex;
+    border-bottom: 1px solid #DEE4F2;
+    .d-td {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 100%;
+      flex: 1;
+      font-weight: 500;
+      &:first-child {
+        width: 6%;
+        flex: unset;
+      }
+      &:nth-child(2) {
+        width: 19%;
+        flex: unset;
+      }
+      &:nth-child(3) {
+        width: 17%;
+        flex: unset;
+      }
+      &:last-child {
+        border-right: transparent;
+      }
+    }
+  }
+  .d-header {
+    height: 30px;
+    color: var(--q-analysis-color-12);
+    background: var(-q-analysis-color-17);
+  }
+  .d-body {
+    height: 40px;
+    &:last-child {
+      border-radius: 0 0 8px 8px;
+    }
+    .ranking {
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      background: var(--q-analysis-color-9);
+      color: var(--q-analysis-color-13);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  &.show_all_rank {
+    .d-tr:nth-child(3) {
+      .ranking {
+        background: var(--q-analysis-color-11);
+      }
+    }
+    .d-tr:nth-child(4) {
+      .ranking {
+        background: var(--q-analysis-color-13);
+      }
+    }
+    .d-tr:nth-child(5) {
+      .ranking {
+        background: var(--q-analysis-color-15);
+      }
+    }
+  }
+}
+/*  历史交战/近期战绩 */
+.history {
+  .content {
+    .title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 74px;
+      padding: 0 20px;
+      color: var(--q-analysis-color-1);
+      border-bottom: 1px solid #DEE4F2;
+      .vs {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .both {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        .team-name {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+          .logo {
+            width: 20px;
+            height: 20px;
+          }
+        }
+        .socre {
+          display: flex;
+          align-items: center;
+          .label {
+            color: var(--q-analysis-color-0);
+            font-size: 16px;
+          }
+          .item-wrap {
+            display: flex;
+            .item {
+              height: 20px;
+              width: 20px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: var(--q-analysis-color-13);
+              border-radius: 2px;
+              margin-right: 5px;
+              &:last-child {
+                margin-right: 0;
+              }
+            }
+          }
+        }
+        &.home {
+          .team-name {
+            .logo {
+              margin-right: 10px;
+            }
+          }
+          .label {
+            margin-right: 10px;
+          }
+        }
+        &.away {
+          align-items: flex-end;
+          .d-title {
+            border-right: 1px solid #DEE4F2;
+          }
+          .team-name {
+            .logo {
+              margin-left: 10px;
+            }
+          }
+          .label {
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+    .d-title {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 28px;
+      border-bottom: 1px solid #DEE4F2;
+      padding: 0 20px;
+      &:last-child {
+        border-bottom: 1px solid #DEE4F2;
+        border-radius: 0 0 8px 8px;
+      }
+      span {
+        width: 50px;
+        margin-right: 10px;
+        text-align: center;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+    .d-tr {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid #DEE4F2;
+      .score {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--q-analysis-color-1);
+        font-size: 16px;
+        font-weight: 600;
+        .line {
+          margin: 0 3px;
+        }
+      }
+      .home {
+        display: flex;
+        align-items: center;
+
+        flex: 1;
+        div {
+          width: 50%;
+          flex: 1;
+          height: 100%;
+          &:nth-child(2) {
+            text-align: center;
+            line-height: 39px;
+            border-left: 1px solid #DEE4F2;
+            border-right: 1px solid #DEE4F2;
+          }
+        }
+      }
+      .away {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex: 1;
+      }
+      .match-time {
+        color: var(--q-analysis-color-12);
+        display: flex;
+        align-items: center;
+        span {
+          margin-right: 6px;
+          min-width: 50px;
+        }
+      }
+      .result {
+        display: flex;
+        align-items: center;
+        span {
+          width: 50px;
+          height: 20px;
+          margin-right: 6px;
+          border-radius: 2px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+.fontBold {
+  font-weight: 700;
+  color: var(--q-analysis-color-5);
+  font-family: PingFangSC-Medium;
+}
+.font999 {
+  color: #E93D3D;;
+  font-family: PingFangSC-Regular;
+}
+.before {
+  .content {
+    .d-title {
+      border-left: 1px solid #DEE4F2;
+      border-right: 1px solid #DEE4F2;
+      padding: 0;
+      div {
+        width: 22.15%;
+        max-width: 213px;
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+    .d-tr:last-child {
+      border-radius: 0 0 8px 8px;
+    }
+  }
+  .d-tr {
+    height: 40px;
+    padding: 0 !important;
+    .home {
+      .match-time {
+        padding-left: 20px;
+      }
+      div:nth-child(2) {
+        width: 200px;
+      }
+      div {
+        flex: 1;
+      }
+    }
+    .away {
+      div {
+        flex: 1;
+      }
+      div:first-child {
+        width: 200px;
+        text-align: center;
+        border-right: 1px solid #DEE4F2;
+        height: 100%;
+        line-height: 39px;
+      }
+      .result {
+        justify-content: space-around;
+        max-width: 213px;
+      }
+    }
+    .score {
+      width: 110px;
+      border-right: 1px solid #DEE4F2;
+    }
+  }
+}
+/*  近期战绩 */
+.near {
+  .both:first-child {
+    border-right: 1px solid #DEE4F2;
+  }
+  .t-body {
+    border-top: none;
+    display: flex;
+    .home,
+    .away {
+      flex: 1;
+      overflow: hidden;
+    }
+    .home {
+      border-right: 1px solid #DEE4F2;
+      .d-title {
+        border-left: 1px solid #DEE4F2;
+        padding: 0;
+        &:last-child {
+          border-radius: 0 0 0 8px;
+        }
+        div {
+          width: 168px;
+          display: flex;
+          justify-content: space-around;
+          span {
+            margin: 0;
+          }
+        }
+      }
+      .d-tr {
+        border-right: none !important;
+        border-left: 1px solid #DEE4F2;
+        &:last-child {
+          border-radius: 0 0 0 8px;
+        }
+      }
+    }
+    .away {
+      .d-title {
+        padding: 0;
+        &:last-child {
+          border-radius: 0 0 8px 0;
+        }
+        div {
+          width: 168px;
+          display: flex;
+          justify-content: space-around;
+          span {
+            margin: 0;
+          }
+        }
+      }
+      .d-title,
+      .d-tr {
+        border-right: 1px solid #DEE4F2;
+        border-left: none !important;
+      }
+      .d-tr:last-child {
+        border-radius: 0 0 8px 0;
+      }
+    }
+    .d-tr {
+      padding: 0 !important;
+      height: 56px;
+      border-right: 1px solid #DEE4F2;
+      &:last-child {
+        border-bottom: 1px solid #DEE4F2;
+      }
+      .result {
+        width: 168px;
+        justify-content: space-around;
+        span {
+          margin-right: 0 !important;
+        }
+      }
+      .info {
+        flex: 1;
+
+        display: flex;
+        overflow: hidden;
+        .match-time {
+          display: unset;
+          border-right: 1px solid #DEE4F2;
+
+          padding: 10px 0 0 10px;
+          flex: 1;
+        }
+        .both {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-right: 1px solid #DEE4F2;
+
+          width: 70%;
+          & > span {
+            flex: 1;
+            width: 38%;
+            text-align: center;
+          }
+          .score {
+            width: 33%;
+            height: 100%;
+            border-left: 1px solid #DEE4F2;
+            border-right: 1px solid #DEE4F2;
+          }
+        }
+      }
+    }
+  }
+}
+/*  未来赛程/伤停情况 */
+.details {
+  .simple-title {
+    display: flex;
+    padding: 0 20px;
+    color: var(--q-analysis-color-5);
+    border-bottom: 1px solid #DEE4F2;
+    .home {
+      .logo {
+        margin-right: 10px;
+      }
+    }
+    .away {
+      justify-content: flex-end;
+      .logo {
+        margin-left: 10px;
+      }
+    }
+    .logo {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  .home,
+  .away,
+  .future-item {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    flex: 1;
+  }
+  .home {
+    border-right: 1px solid #DEE4F2;
+  }
+  .d-tr {
+    display: flex;
+    border-bottom: 1px solid #DEE4F2;
+    &:last-child {
+      border-bottom: transparent;
+    }
+    .home,
+    .away {
+      color: var(--q-analysis-color-12);
+    }
+  }
+  .content {
+    display: flex;
+    .wrap-home {
+      border-right: 1px solid #DEE4F2;
+    }
+    .future-item {
+      border-bottom: 1px solid #DEE4F2;
+      padding: 0 10px 0 20px;
+    }
+    .wrap-home,
+    .wrap-away {
+      color: var(--q-analysis-color-12);
+      flex: 1;
+      .logo {
+        width: 14px;
+        height: 14px;
+      }
+      .both {
+        display: flex;
+        align-items: center;
+        width: 267px;
+        color: var(--q-analysis-color-1);
+        .home-name,
+        .away-name {
+          display: flex;
+          align-items: center;
+          flex: 1;
+          overflow: hidden;
+        }
+        .home-name {
+          .logo {
+            margin-right: 6px;
+            vertical-align: sub;
+          }
+        }
+        .away-name {
+          .logo {
+            margin-left: 6px;
+            vertical-align: sub;
+          }
+        }
+        .vs {
+          text-align: center;
+          width: 77px;
+          font-size: 16px;
+        }
+      }
+      .match-time {
+        flex: 1;
+        span {
+          margin-right: 6px;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+    .item {
+      padding: 0 10px 0 20px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      height: 56px;
+      &:first-child {
+        border-top: none;
+      }
+    }
+    .player-name {
+      color: var(--q-analysis-color-1);
+      span:first-child {
+        margin-right: 6px;
+      }
+    }
+  }
+}
+
+/*  伤停情况 */
+.hurt {
+  .simple-title:not(:last-child) {
+    border-bottom: 0;
+  }
+  .simple-team {
+    border-bottom: 1px solid #DEE4F2 !important;
+    .home {
+      border-bottom: 0;
+    }
+  }
+  .content {
+    .item:not(:last-child) {
+      border-bottom: 1px solid #DEE4F2;
+    }
+    .wrap-home {
+      border-left: 1px solid #DEE4F2;
+      border-bottom: 1px solid #DEE4F2;
+      border-radius: 0 0 0 8px;
+    }
+    .wrap-away {
+      border-bottom: 1px solid #DEE4F2;
+      border-right: 1px solid #DEE4F2;
+      border-radius: 0 0 8px 0;
+    }
+  }
+  .content.no_data {
+    display: flex;
+    border-top: 1px solid #DEE4F2;
+
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    .wrap-away {
+      border-right: 1px solid #DEE4F2;
+    }
+    .wrap-home {
+      border-radius: 0 0 0 8px;
+    }
+    .wrap-away {
+      border-radius: 0 0 8px 0;
+    }
+  }
+}
+/*  未来赛程 */
+.future {
+  .wrap-home,
+  .wrap-away {
+    border-bottom: none;
+  }
+  .content {
+    .both {
+      flex: 1;
+      height: 100%;
+      .home-name,
+      .away-name {
+        display: unset !important;
+        text-align: center;
+        .ellipsis {
+          width: 85%;
+          display: inline-block;
+        }
+      }
+      .away-name {
+        .ellipsis {
+          direction: rtl;
+        }
+      }
+      .vs {
+        height: 100%;
+        border-left: 1px solid #DEE4F2;
+        border-right: 1px solid #DEE4F2;
+        line-height: 39px;
+      }
+    }
+    .match-time {
+      width: 23%;
+      flex: none !important;
+      height: 100%;
+      border-right: 1px solid #DEE4F2;
+      padding-top: 2px;
+    }
+    .wrap-home {
+      .future-item:last-child {
+        border-radius: 0 0 0 8px;
+      }
+    }
+    .wrap-away {
+      .future-item:last-child {
+        border-radius: 0 0 8px 0;
+      }
+    }
+  }
+}

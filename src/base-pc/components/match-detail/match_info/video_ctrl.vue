@@ -111,7 +111,7 @@
         >
           <div class="line"></div>
           <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(menu_data.left_menu_result.lv1_mi)}` })"
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(menu_data.left_menu_result.lv1_mi.slice(0,-1))}` })"
             :alt="BaseData.menus_i18n_map[menu_data.left_menu_result.lv1_mi]"></span>
           <!-- <sport-icon
             v-if="match_info.csid && match_info.csid != -1"
@@ -293,7 +293,7 @@ watch(
  ** 监听GlobalSwitchClass的版本号  获取最新的全局状态
  */
  watch(
-  () => GlobalSwitchClass.global_switch_version.version,
+  () => GlobalSwitchClass.global_switch_version,
   (val) => {
     if (val) {
       get_global_click.value = GlobalSwitchClass.global_click;
@@ -485,7 +485,6 @@ const full_screen = () => {
 };
 
 onMounted(() => {
-
   let autoPlay = sessionStorage.getItem("auto_play_media");
   if (autoPlay) {
     toggle_play_media("video");

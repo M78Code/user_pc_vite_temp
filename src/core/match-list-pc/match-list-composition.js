@@ -1,5 +1,5 @@
 import {
-	ref
+	ref,onUnmounted
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
@@ -217,6 +217,7 @@ function handle_destroyed() {
 		clearTimeout(hot_match_list_timeout);
 	}
 	mitt_list.forEach(i => i());
+	mitt_list=[]
 	timer_obj.value = {};
 	clearTimeout(axios_debounce_timer);
 	clearTimeout(axios_debounce_timer2);
@@ -262,7 +263,7 @@ function mounted_fn(fun) {
 			fun({ is_socket: true })
 		}
 		else {
-			useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, { is_socket: true })
+			useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, { is_socket: true }) //请求列表
 		}
 	}
 	mitt_list = [
@@ -275,6 +276,9 @@ function mounted_fn(fun) {
 		check_match_last_update_time,
 		30000
 	);
+	onUnmounted(() => {
+		handle_destroyed()
+	});
 	// load_video_resources();
 }
 // watch(MenuData.match_list_api_config.version, (cur) => {
@@ -295,9 +299,6 @@ function mounted_fn(fun) {
 // 	},
 // 	{ deep: true }
 // );
-// onUnmounted(() => {
-// 	handle_destroyed()
-// });
 /**
  * @description 获取强力推荐赛事
  * @param  {boolean} backend_run 是否后台 调用
@@ -337,7 +338,6 @@ function get_hot_match_list(backend_run = false) {
 					MatchListData.set_list(
 						match_list,
 					);
-
 					if (!backend_run) {
 						// 调用bymids接口
 						useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, { is_first_load: true })

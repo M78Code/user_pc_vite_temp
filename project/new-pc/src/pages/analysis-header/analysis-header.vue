@@ -14,7 +14,8 @@
 
 <script setup>
 import simpleHeader from "src/base-pc/components/site-header/simple-header.vue";
-import analysisPage from "/src/base-pc/components/analysis/index.vue";
+// import analysisPage from "/src/base-pc/components/analysis/index.vue";
+import analysisPage from "./analysis/index.vue";
 </script>
 
 <style lang="scss" scoped>

@@ -2,6 +2,7 @@
 
 <template>
    <div style="display:none">{{SearchPCClass.update_time}}</div>
+   {{ SearchPCClass.search_isShow }}
    <div
     v-if="SearchPCClass.search_isShow"
     class="search-position"
@@ -63,77 +64,31 @@ import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt'
 import {  MenuData,  GlobalSwitchClass,SearchPCClass } from 'src/output/index.js'
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import { LayOutMain_pc } from "src/output/project/common/pc-common.js";
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
-//-------------------- 对接参数 prop 注册  开始  -------------------- 
-// import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-// import { component_symbol, need_register_props } from "src/components/search/config/index.js"
-// useRegistPropsHelper(component_symbol, need_register_props)
-// const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-// const tableClass_computed = useComputed.tableClass_computed(props)
-// const title_computed = useComputed.title_computed(props)
-//-------------------- 对接参数 prop 注册  结束  -------------------- 
-// 搜索输入框组件
+import search from "src/core/search-class/search.js"
 import searchInput from "./search-input.vue"
-// 搜索初始化组件
 import searchInt from "./search-init.vue"
-//搜索赛事组件
 import searchSports from "./search-sports.vue"
-// 搜索玩法组件
 import searchPlay from "./search-play.vue"
-// 搜索查询结果组件
 import searchResult from "./search-result.vue"
-// 引入tab切换栏组件
 import { TabWapper as Tab } from "src/components/common/tab"
-// 搜索模块js
 import { api_search } from "src/api/index.js";
-
 import { compute_css_variables } from "src/core/css-var/index.js"
-
+// 响应数据处理 及 兄弟组件业务逻辑处理
 import {store, mutations} from './index.js'
-
-const props = defineProps({})
+// 该组件展示类变量
 const page_style = ref('')
+const is_iframe = ref(utils_info.is_iframe); /** 是否内嵌 */
+const main_menu_toggle = ref(MenuData.main_menu_toggle) /** 左侧列表显示形式 normal：展开 mini：收起 */
+const search_width = ref(LayOutMain_pc.layout_search_width)
+const main_width = ref(LayOutMain_pc.layout_main_width + 'px')
+const search_isShow = ref(SearchPCClass.search_isShow) // 是否显示搜索组件 default: false
+// const route = useRoute()
+
 page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
 
-/** 是否内嵌 */
-const is_iframe = ref(utils_info.is_iframe);
-/** 左侧列表显示形式 normal：展开 mini：收起 */
-const main_menu_toggle = ref(MenuData.main_menu_toggle)
 
-/** 显示类型 */
-// const show_type = ref('init')
-/** 球种列表 */
-let sports_list = reactive([])
-/** 球种tab选中索引 */
-const sports_tab_index = ref(0)
-/** 搜索球种 */
-const search_csid = ref(1)
-
-const search_width = ref(LayOutMain_pc.layout_search_width)
-let main_width = ref(LayOutMain_pc.layout_main_width + 'px')
-
-/* 路由对象 */
-// const route = useRoute();
-
-
-/**
- * 是否显示搜索组件 default: false
- * 路径: project_path\src\store\module\search.js
- */
-const search_isShow = ref(SearchPCClass.search_isShow)
-/* 
-  * 监听搜索组件变更获取最新的数据
-*/
-watch(
-  () => SearchPCClass.update_time,
-  (val) => {
-    if (val) {
-      search_isShow.value = SearchPCClass.search_isShow
-    }
-  },
-  { deep: true }
-);
 /** 保存显示搜索组件状态 */
 const set_search_status = (data) =>{
   SearchPCClass.set_search_isShow(data)
@@ -141,27 +96,17 @@ const set_search_status = (data) =>{
 const { off } = useMittOn(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, (bool) => {
   search_isShow.value = bool
 })
-// onUnmounted(off)
 
 const click_fun = () => set_search_status(false);
-// TODO:
-// onMounted(() => document.addEventListener('click', click_fun))
-// onUnmounted(() => document.removeEventListener('click', click_fun))
 
-/** 
- * 浏览器 宽高等数据 default: object
- * 路径: project_path\src\store\module\layout.js
- */
-
-/** 
-* 是否展开多列玩法 default: object
-* 路径: project_path\src\store\module\global.js
-*/
+// 是否展开多列玩法 default: object
 const is_unfold_multi_column = ref(LayOutMain_pc.is_unfold_multi_column)
 
-// onMounted(() => window.addEventListener('resize', on_resize))
 
 onMounted(() => {
+  // if (search.back_keyword.keyword) {
+  //   store.keyword = search.back_keyword.keyword
+  // }
   document.addEventListener('click', click_fun)
   window.addEventListener('resize', on_resize)
   // 初始化球种菜单数据
@@ -174,6 +119,12 @@ onUnmounted(() => {
   off
 })
 
+// watch(
+//     () => route.name,
+//     (res) => {
+//       console.log('route.nameroute.nameroute.nameroute.nameroute.nameroute.name', res)
+//     }
+// )
 
 /**
  * @Description 设置球种tab选中索引
@@ -192,13 +143,6 @@ function on_resize() {
   search_width.value = LayOutMain_pc.layout_search_width
   main_width.value = LayOutMain_pc.layout_main_width + 'px'
 }
-// onUnmounted(() => window.removeEventListener('resize', on_resize))
-
-</script>
-<script>
-export default defineComponent({
-  name: 'search'
-})
 </script>
 
 <style lang="scss" scoped>
@@ -208,7 +152,7 @@ export default defineComponent({
   left: 0;
   width: v-bind(main_width);
   // right: 0;
-  top: 64px;
+  top: 60px;
   bottom: 0;
   z-index: 10001;
   // background-color: pink;

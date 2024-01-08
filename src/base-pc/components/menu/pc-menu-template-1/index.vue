@@ -8,7 +8,7 @@
       </div>
       <!--   今日、早盘、 -->
       <div class="menu-item menu-tab disable-hover double">
-        <div class="item yb-flex-center" :style="compute_css_obj(`today_menu_bg_1${MenuData.is_today() ? '_active' : ''}`)" :class="MenuData.is_today() ? 'active' : ''"
+        <div class="item yb-flex-center" :style="compute_css_obj(`today_menu_bg_1${!MenuData.is_zaopan() ? '_active' : ''}`)" :class="!MenuData.is_zaopan() ? 'active' : ''"
           @click="handle_click_jinri_zaopan(2)">
           {{ i18n_t("menu.match_today") }}
         </div>
@@ -18,12 +18,13 @@
         </div>
       </div>
     </div>
-    <div v-show="false">{{ BaseData.base_data_version }}</div>
+    
+    <div v-show="false">{{ BaseData.base_data_version }}-{{MenuData.menu_data_version}}</div>
 
     <div v-for="item in (MenuData.left_menu_list || [] )" :key="`_${item.mi}`" :class="set_vr_or_guanjun_border(item.mi)">
       <!--   赛种-->
       <!-- {{ BaseData.filterSport_arr }} -- {{ BaseData.compute_sport_id(item) }} -->
-      <div class="menu-item menu-fold1 search" :class="current_lv_1_mi == item.mi ? 'y-active' : ''" @click="lev_1_click(item)" v-if="item.ct">
+      <div class="menu-item menu-fold1 search" :class="current_lv_1_mi == item.mi? 'y-active' : ''" @click="lev_1_click(item)" v-if="item.ct">
         <!-- icon -->
         <div class="row items-center">
           <span class="soprts_id_icon"
@@ -53,7 +54,7 @@
       <div class="menu-fold2-wrap  1" :class="current_lv_1_mi == item.mi && !show_menu ? 'open' : ''" v-if="item.mi != 400">
         <template v-for="item2 in item.sl" :key="`_${item.mi}_${item2.mi}_100`">
           <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        开始   -->
-          <div @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })" :class="current_lv_2_mi == item2.mi ? 'active' : ''" class="menu-item menu-fold2">
+          <div @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })" :class="MenuData.get_lv2_mi_value() == item2.mi? 'active' : ''" class="menu-item menu-fold2">
             <div class="row items-center relative-position">
               <span class="menu-point"></span>
               <span class="menu-text ellipsis">
@@ -75,7 +76,7 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive,onMounted, onUnmounted,computed,nextTick } from "vue";
+import { ref, watch,reactive,onMounted, onUnmounted,computed,nextTick } from "vue";
 import { useRoute, useRouter } from 'vue-router'
 // 菜单配置
 import { MenuData } from "src/output/index.js"
@@ -96,12 +97,11 @@ const left_menu_list = ref(MenuData.left_menu_list||[])
 // 当前的一级菜单ID
 const current_lv_1_mi = ref(""); //"101",
 // 当前的二级菜单ID
-const current_lv_2_mi = ref(""); //"101201", // 101301
+// const current_lv_2_mi = ref(""); //"101201", // 101301
 // 当前赛种是否收起 状态
 const show_menu = ref(true);
 // 首次进入 刷新用
 const first_change = ref(false);
-
 /**
  * @description: 冠军 vr border 样式
  * @param {item} 赛种id
@@ -218,7 +218,10 @@ const lev_1_click = (obj) => {
   // lv1_mi 新菜单id
   // lv2_mi 二级菜单id
   let mi = obj.mi
-  let type = obj.mif
+  let type = obj.mif || obj.mi
+  if(!MenuData.is_zaopan()){
+    MenuData.set_menu_root(2)
+  }
   if (MenuData.is_today() || MenuData.is_zaopan()) {
     // 点击一级菜单
     if (current_lv_1_mi.value == mi) {
@@ -238,7 +241,7 @@ const lev_1_click = (obj) => {
   MenuData.set_post_menu_play_count(mi)
 
   current_lv_1_mi.value = mi
-  current_lv_2_mi.value = get_lv_1_lv_2_mi(mi)
+  // current_lv_2_mi.value = get_lv_1_lv_2_mi(mi)
 
   let mid_obj = {}
   let left_obj = {}
@@ -293,7 +296,7 @@ const lev_1_click = (obj) => {
       mi: 1010,
       tid: '', // 联赛
     }
-
+    MenuData.get_vr_menu_list();
   } else if (type == 118) {
     // 娱乐只有冠军
     left_obj ={
@@ -358,7 +361,7 @@ const lev_2_click = (detail = {}) => {
     md: ''
   }
 
-  current_lv_2_mi.value = lv2_mi
+  // current_lv_2_mi.value = lv2_mi
 
   // 不是列表页 点击列表菜单
   if(route.name != 'home'){
@@ -400,7 +403,7 @@ const handle_click_jinri_zaopan = (val) => {
   // lv1_mi 新菜单id
   // lv2_mi 二级菜单id
   current_lv_1_mi.value = obj.lv1_mi
-  current_lv_2_mi.value = obj.lv2_mi 
+  // current_lv_2_mi.value = obj.lv2_mi 
 
   MenuData.set_left_menu_result(obj)
 
@@ -429,6 +432,18 @@ const get_lv_1_lv_2_mi = (mi) => {
 
   return lv2_mi
 }
+/**
+ * 
+ */
+// watch(MenuData.menu_data_version,()=>{
+//   const { left_menu_result } = MenuData;
+//   if( current_menu.value?.mi!=left_menu_result.lv2_mi){
+//     current_menu.value =
+//       dianjing_sublist.value.find((item) => item.mi == left_menu_result.lv2_mi) ||
+//       {};
+//     sport_click(current_menu.value);
+//   }
+// })
 /**
  * ws推送球种数量
  * @param {*} list 

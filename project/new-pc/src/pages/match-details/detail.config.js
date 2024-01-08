@@ -863,6 +863,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
       // 电竞不用切右侧
       if (!is_eports_csid(sportId)) {
         // 设置赛事详情的请求参数
+        console.log(1111111111111666)
         MatchDetailCalss.set_match_details_params({ mid, sportId, tid })
       }
       // 初始化详情页数据

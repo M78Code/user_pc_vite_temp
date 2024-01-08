@@ -129,6 +129,8 @@ import { get_main_score } from 'src/core/match-list-pc/match-handle-data.js'
 import { get_remote_time } from "src/output/index.js"
 import { get_handicap_index_by, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
+import { BaseInfo } from "src/base-pc/mixin/base-info"
+
 const router = useRouter()
 const route = useRoute()
 const props = defineProps({
@@ -146,12 +148,11 @@ const props = defineProps({
   }
 })
 
-
 const is_show_home_goal = ref(false) // 是否显示主队进球动画
 const is_show_away_goal = ref(false) // 是否显示客队进球动画
 const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
-const is_collect = ref(false) //赛事是否收藏
+// const is_collect = ref(false) //赛事是否收藏
 
 const show_default_img = ref(false); //是否显示默认队伍头像
 //设置图片默认
@@ -162,14 +163,27 @@ const update_show_default = (value) => {
 let match_style_obj =inject('match_style_obj')
 let match =inject('match')
 
-const home_avatar = computed(() => {
-  const url = ((lodash.get(match.value, 'match_logo') || {}) || {}).home_1_logo;
-  return url
-})
-const away_avatar = computed(() => {
-  const url = (lodash.get(match.value, 'match_logo') || {}).away_1_logo;
-  return url
-})
+
+const {
+  home_score,
+  away_score,
+  handicap_index,
+  is_collect,
+  collect,
+  home_avatar,
+  away_avatar
+} = BaseInfo(match)
+
+
+
+// const home_avatar = computed(() => {
+//   const url = ((lodash.get(match.value, 'match_logo') || {}) || {}).home_1_logo;
+//   return url
+// })
+// const away_avatar = computed(() => {
+//   const url = (lodash.get(match.value, 'match_logo') || {}).away_1_logo;
+//   return url
+// })
 
 const handicap_num = computed(() => {
   if (GlobalAccessConfig.get_handicapNum()) {
@@ -197,7 +211,7 @@ const play_name_obj = computed(() => {
         score_key: 'S5'
       }
       //罚牌后缀
-    } else if (match_style_obj.value.data_tpl_id == 25) {
+    } else if (match_style_obj.value.data_tpl_id == 29) {
       play_name_obj = {
         key: 'punish',
         suffix_name: ' - ' + i18n_t('list.punish'),
@@ -214,57 +228,57 @@ const play_name_obj = computed(() => {
   }
   return play_name_obj
 })
-is_collect.value = Boolean(lodash.get(match.value, 'mf'))
+// is_collect.value = Boolean(lodash.get(match.value, 'mf'))
 /**
  * @Description 赛事收藏 
 */
-const collect = () => {
-  //前端修改收藏状态
-  is_collect.value = !is_collect.value
-  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
-}
+// const collect = () => {
+//   //前端修改收藏状态
+//   is_collect.value = !is_collect.value
+//   useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
+// }
 
-const home_score = computed(() => {
-  let obj = get_match_score(match.value)
-  return obj.home_score
-})
-const away_score = computed(() => {
-  let obj = get_match_score(match.value)
-  return obj.away_score
-})
+// const home_score = computed(() => {
+//   let obj = get_match_score(match.value)
+//   return obj.home_score
+// })
+// const away_score = computed(() => {
+//   let obj = get_match_score(match.value)
+//   return obj.away_score
+// })
 
-let handicap_index = computed(() => {
-  return get_handicap_index_by(match.value)
-})
+// let handicap_index = computed(() => {
+//   return get_handicap_index_by(match.value)
+// })
 
 
 // 监听收藏变化
-watch(() => match.value.mf, (n) => {
-  is_collect.value = Boolean(n)
-}, { immediate: true })
+// watch(() => match.value.mf, (n) => {
+//   is_collect.value = Boolean(n)
+// }, { immediate: true })
 
 
-// 监听主比分变化
-watch(home_score, (n) => {
-  //推送时间是否过期
-  let is_time_out = (get_remote_time() - match.value.ws_update_time) < 3000
-  // 足球 并且已开赛
-  if (match.value.csid == 1 && get_match_status(match.value.ms, [110]) == 1 && n != 0 && is_time_out) {
-    is_show_home_goal.value = true;
-    hide_home_goal();
-  }
-})
+// // 监听主比分变化
+// watch(home_score, (n) => {
+//   //推送时间是否过期
+//   let is_time_out = (get_remote_time() - match.value.ws_update_time) < 3000
+//   // 足球 并且已开赛
+//   if (match.value.csid == 1 && get_match_status(match.value.ms, [110]) == 1 && n != 0 && is_time_out) {
+//     is_show_home_goal.value = true;
+//     hide_home_goal();
+//   }
+// })
 
-// 监听主比分变化
-watch(away_score, (n) => {
-  //推送时间是否过期
-  let is_time_out = (get_remote_time() - match.value.ws_update_time) < 3000
-  // 足球 并且已开赛
-  if (match.value.csid == 1 && get_match_status(match.value.ms, [110]) == 1 && n != 0 && is_time_out) {
-    is_show_away_goal.value = true;
-    hide_away_goal();
-  }
-})
+// // 监听主比分变化
+// watch(away_score, (n) => {
+//   //推送时间是否过期
+//   let is_time_out = (get_remote_time() - match.value.ws_update_time) < 3000
+//   // 足球 并且已开赛
+//   if (match.value.csid == 1 && get_match_status(match.value.ms, [110]) == 1 && n != 0 && is_time_out) {
+//     is_show_away_goal.value = true;
+//     hide_away_goal();
+//   }
+// })
 
 /**
  * @Description 隐藏主队进球动画

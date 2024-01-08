@@ -23,6 +23,12 @@
         :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
         <!-- 图片资源有问题，先用文字替代  -->
         <div
+          class="video"
+          v-if="+lodash.get(match, 'mms') > 0"
+          :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
+        </div>
+        <div
+          v-else
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
         </div>
       </div>
@@ -240,7 +246,9 @@ export default {
     height: 16px;
     background-size: 100%;
   }
-
+  .video {
+    width: 18px;
+  }
   &:hover {
     color: var(--q-gb-bg-c-17);
   }

@@ -19,7 +19,7 @@
           <basis-info1 v-if="is_mounted && match" :match="match" show_type="all" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].main_handicap_list"
+        <match-handicap :handicap_list="match.main_handicap_list"
           :match="match" />
         <!-- 视频按钮 -->
         <div class="media-col">
@@ -27,25 +27,25 @@
         </div>
       </div>
       <!-- 附加盘1 -->
-      <div class="match-handicap-item" v-if="lodash.get(match, 'has_add1')">
+      <div class="match-handicap-item" v-if="match.has_add1">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:70px !important;`">
           <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list"
+        <match-handicap :handicap_list="match.add1_handicap_list"
           :match="match" :add_type="2" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
       <!-- 附加盘2 -->
-      <div class="match-handicap-item" v-if="lodash.get(match, 'has_add2')">
+      <div class="match-handicap-item" v-if="match.has_add2">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:70px !important;`">
           <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list"
+        <match-handicap :handicap_list="match.add2_handicap_list"
           :match="match" :add_type="3" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>

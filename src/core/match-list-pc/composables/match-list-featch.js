@@ -1,24 +1,24 @@
 import lodash from "lodash";
-import { useMittEmit,useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { ref } from 'vue';
 
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
-import { MatchDataWarehouse_PC_List_Common  } from "src/output/module/match-data-base.js";
-import { GlobalAccessConfig  } from "src/output/";
+import { MatchDataWarehouse_PC_List_Common } from "src/output/module/match-data-base.js";
+import { GlobalAccessConfig } from "src/output/";
 import get_match_list_params from '../match-list-params'
 
 import { get_tab_param_build } from 'src/core/match-list-pc/composables/match-list-other.js';
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import { match_collect_status } from './match-list-collect'
-import { MenuData }  from "src/output/project/index.js";
+import { MenuData } from "src/output/project/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import * as api_websocket from "src/api/module/socket/socket_api.js";
 import filterHeader from 'src/core/filter-header/filter-header.js'
 import { match_list_handle_set } from '../match-handle-data'
-import {set_load_data_state} from '../match-list-composition'
+import { set_load_data_state } from '../match-list-composition'
 
 const league_list_obj = ref({})
 
@@ -26,7 +26,7 @@ const league_list_obj = ref({})
  * @Description 删除赛事数据 卡片
  * @param {*} mid 删除赛事id
  */
-function remove_match_data(mid,MatchListData=MatchDataWarehouse_PC_List_Common) {
+function remove_match_data(mid, MatchListData = MatchDataWarehouse_PC_List_Common) {
   // 移除卡片
   MatchListCardClass.remove_match(mid);
   //清除数据仓库数据
@@ -34,7 +34,7 @@ function remove_match_data(mid,MatchListData=MatchDataWarehouse_PC_List_Common) 
   //切换右侧
   if (vx_details_params.mid == mid) {
     // 赛事移除时右侧赛事自动切换
-    mx_autoset_active_match({ mid },MatchListData);
+    mx_autoset_active_match({ mid }, MatchListData);
   }
 };
 
@@ -102,7 +102,7 @@ export const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
    * @Description 设置联赛列表对象
    * @param {object} league_list_obj
    */
-const set_league_list_obj = (val={}) => {
+const set_league_list_obj = (val = {}) => {
   league_list_obj.value = val;
 }
 /**
@@ -110,7 +110,7 @@ const set_league_list_obj = (val={}) => {
    * @returns {array} mids 前12场赛事id
    */
 const get_first_unfold_mids = () => {
-  
+
   let mids = [];
   // 展开的赛事数量计数  用于计数首次加载列表 只展开前12场赛事
   let unfold_match_count = 0;
@@ -148,10 +148,10 @@ const api_bymids = (
     is_first_load,
     is_show_mids_change,
     is_league_first,
-    mids=[],
+    mids = [],
     inner_param,
   },
-  callback,MatchListData=MatchDataWarehouse_PC_List_Common
+  callback, MatchListData = MatchDataWarehouse_PC_List_Common
 ) => {
   let panduan_1 = MenuData.is_vr();
   let panduan_2 = ["details", "video"].includes(PageSourceData.page_source);
@@ -191,7 +191,7 @@ const api_bymids = (
     mids.splice(24);
   }
   if (mids.length == 0) return;
-  mids=lodash.uniq(mids)//去除重复
+  mids = lodash.uniq(mids)//去除重复
   // is_show_mids_change &&
   // 	mids.forEach((mid) => {
   // 		// 从列表触发详情接口同步数据
@@ -218,7 +218,7 @@ const api_bymids = (
   if (MenuData.menu_root != "1" && PageSourceData.page_source != "search") {
     params.pids = _params.pids;
   }
-  if(tabs.length > 0&&!params.pids&&params.orpt!=0) {
+  if (tabs.length > 0 && !params.pids && params.orpt != 0) {
     params.tabs = tabs;
   }
   //today：今日  early：早盘 角球玩法
@@ -255,7 +255,7 @@ const api_bymids = (
     api(params)
       .then((res) => {
 
-        
+
         set_home_loading_time_record("ok");
         // 组件和路由不匹配
         // if (page_source == "details" && page_source != "details") return;
@@ -272,7 +272,6 @@ const api_bymids = (
         let ts1 = res.ts
 
         match_list_handle_set(match_list)
-        
         let mids_arr = [];
         match_list.forEach((match) => {
           mids_arr.push(String(match.mid));
@@ -281,21 +280,21 @@ const api_bymids = (
         // 展开联赛数据加载状态
         let league_load_status = "";
         // 检查赛事是否移除
-        if (code == 200 ) {
+        if (code == 200) {
           // mids.forEach((mid) => {
           //   if (!mids_arr.includes(String(mid))) {
           //     remove_match_data(mid,MatchListData);
           //   }
           // });
-          if(match_list.length > 0){
-            match_list.forEach( match => {
+          if (match_list.length > 0) {
+            match_list.forEach(match => {
               match_collect_status(match)
             })
             MatchListData.set_list(
               match_list,
             );
             //只有主列表才有这项操作 计算赛事卡片
-            if(MatchListData == MatchDataWarehouse_PC_List_Common){
+            if (MatchListData == MatchDataWarehouse_PC_List_Common) {
               set_match_base_info_by_mids_info(match_list, mids_arr, ts1);
             }
           }
@@ -303,7 +302,7 @@ const api_bymids = (
           by_mids_fun();
           league_load_status = "empty";
         } else if (code == "0401038") {
-          if(is_league_first&& by_mids_fun_count++ < 3){
+          if (is_league_first && by_mids_fun_count++ < 3) {
             by_mids_fun();
           }
           // 限流
@@ -311,17 +310,13 @@ const api_bymids = (
         } else {
           league_load_status = "empty";
         }
-        if (league_load_status && callback) {
-          // 回调无数据状态
-          callback(league_load_status);
-        }
         // 如果是第一次加载设置数据加载状态
         if (is_league_first) {
           set_load_data_state('data')
         }
         // 回调函数
         if (callback) {
-          callback();
+          callback(league_load_status); // 展开联赛数据加载状态
         }
       })
       .catch((err) => {
@@ -378,7 +373,7 @@ useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(() => {
   // 重新订阅C8
   api_bymids({ is_show_mids_change: true })
 }, 1000)),
-useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids);
+  useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids);
 export {
   api_bymids,
   set_league_list_obj,

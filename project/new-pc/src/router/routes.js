@@ -18,7 +18,7 @@ const routes = [
         },
       },
       {
-        path: "/details/:mid/:csid/:tid?",
+        path: "/details/:mid/:csid/:tid",
         name: "details",
         component: () => import('../pages/match-details/details-main.vue')
       },
@@ -35,6 +35,15 @@ const routes = [
     name: "analysis_header",
 
     component: () => import('../pages/analysis-header/analysis-header.vue'),
+  },
+  // 搜索
+  {
+    path: "/search/:keyword/:csid",
+    name: "search",
+    component: () => import('../pages/search/index.vue'),
+    meta: {
+      keepAlive: true, // 需要缓存
+    }
   },
   //投注记录
   {

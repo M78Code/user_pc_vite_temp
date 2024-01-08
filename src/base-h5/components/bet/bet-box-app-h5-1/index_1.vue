@@ -94,7 +94,7 @@
 </template>
 
 <script setup>
-import { watch, ref,nextTick } from "vue";
+import { watch, ref,nextTick, onMounted, reactive } from "vue";
 import { UserCtr, compute_local_project_file_path } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -118,6 +118,12 @@ const pack_up = () => {
     BetViewDataClass.set_clear_bet_view_config()
   }
 };
+
+// 内部滚动区域高度
+let ref_data_height = ref('3.44rem') // rem 高长屏幕
+onMounted(()=>{
+  ref_data_height.value = document.body.clientHeight > 700 ? '3.44rem' : '2.2rem'
+})
 
 // 关闭弹窗
 const set_show_single = () => {
@@ -199,7 +205,7 @@ const scrollTo = () => {
   border-radius: .24rem .24rem 0 0;
   background-color: var(--q-gb-bg-c-23);
   z-index: 1999;
-  padding-bottom: .2rem;
+  padding-bottom: .4rem;
 }
 
 :deep(.bet-scroll) {
@@ -210,7 +216,7 @@ const scrollTo = () => {
   overflow-y: auto;
   &.h344{
     min-height: 1.8rem;
-    max-height: 3.64rem;
+    max-height: v-bind('ref_data_height');
   }
   .bet_single_info:nth-last-child(2) {
     border-radius: .12rem .12rem 0 0;

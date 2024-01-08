@@ -384,6 +384,8 @@ const chatroom_height = () => {
  */
 const update_data = (val) => {
   if(!val) return
+  //  console.log(111111111115,val)
+  // console.log(111111111115,MatchDetailsData.get_quick_mid_obj(val))
   match_infoData.value = MatchDetailsData.get_quick_mid_obj(val);
   match_details.value = [MatchDetailsData.get_quick_mid_obj(val)];
  
@@ -397,7 +399,6 @@ const match_details = ref([]);
 watch(
   () => MatchDetailsData.data_version,
   (val, oldval) => {
-    console.log('data_version',val.version);
     if (val.version) {
       update_data(mid.value);
     }
@@ -412,10 +413,10 @@ watch(
   () => MatchDetailCalss.details_data_version.version,
   (val) => {
     if (val) {
-      console.log('details_data_version data_version',val,MatchDetailCalss.params);
       details_params.value =  MatchDetailCalss.params
       mid.value = MatchDetailCalss.mid;
-      update_data(MatchDetailCalss.mid);
+      // console.log(111111111116,MatchDetailCalss.mid)
+       update_data(MatchDetailCalss.mid);
     }
   },
   { deep: true }

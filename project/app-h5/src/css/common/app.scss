@@ -89,6 +89,7 @@ em{
   display: none; /* Chrome Safari */
 }
 body {
+  touch-action: pan-y;
   font-size: 0.12rem !important;
   font-family: "PingFang SC", "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft Yahei";
 }

@@ -70,8 +70,7 @@ const compute_view_tpl_id = (data_tpl_id) => {
 	}else if([24].includes(+data_tpl_id)){ //15分钟
 		view_tpl_id = 24
 	}
-	else if([240].includes(+data_tpl_id)){
-	// return matchtpl1after
+	else if([28].includes(+data_tpl_id)){
 	  view_tpl_id = 'Esports'
 	}
 	  return view_tpl_id
@@ -193,7 +192,6 @@ const compute_style_template_by_matchinfo_template18 = (match, template_id) => {
     lodash.each(cur_match.hpsData, (hpsData) => {
       lodash.each(hpsData.hps, (item) => {
         let hl_obj = lodash.get(item, "hl", {});
-
         if (hl_obj.hid) {
           hl_obj.end_time = time_conversion(hl_obj.hmed);
           hl_obj.hpn = lodash.get(cur_match.play_obj, `hid_${hl_obj.hid}.hpn`, "");
@@ -220,7 +218,6 @@ const compute_style_template_by_matchinfo_template18 = (match, template_id) => {
 			add_handicap_height = add_handicap_height + Math.ceil(ol_count / 2) * 35;
 		}
 	});
-	Object.assign(match, main_handicap_list)
 	return { add_handicap_height };
 };
 
