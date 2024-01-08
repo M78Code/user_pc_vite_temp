@@ -69,7 +69,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import {useMittEmit, useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
 import { formatTime } from 'src/output/index.js'
 import { i18n_t } from "src/boot/i18n.js";
-import loading from "src/base-h5/components/common/loading.vue"
+import loading from "src/components/loading/loading.vue"
 //语言设置
 const lang = ref(UserCtr.lang)
 // 锚点

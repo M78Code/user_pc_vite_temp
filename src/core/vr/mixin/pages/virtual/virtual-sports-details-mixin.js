@@ -26,6 +26,7 @@ export default {
   },
   data(){
     return{
+      MatchDataWarehouseInstance:MatchDataWarehouseInstance,
       vsport_operate:null,
       show_debug:sessionStorage.getItem('wsl') == '9999',
       mid:'',
