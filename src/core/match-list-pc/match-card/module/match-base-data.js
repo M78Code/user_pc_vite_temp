@@ -89,9 +89,9 @@ import {match_list_handle_set} from '../../match-handle-data.js'
         }
       })
       if(match_list.length > 0){
-        match_list_handle_set(match_list)
         // 设置列表数据仓库
         MatchListData.set_list(match_list,true)
+        match_list_handle_set(match_list)
         // 重新计算赛事样式
         MatchListCardClass.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(mids)
       }

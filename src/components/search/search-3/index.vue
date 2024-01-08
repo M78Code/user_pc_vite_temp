@@ -2,7 +2,6 @@
 
 <template>
    <div style="display:none">{{SearchPCClass.update_time}}</div>
-   {{ SearchPCClass.search_isShow }}
    <div
     v-if="SearchPCClass.search_isShow"
     class="search-position"

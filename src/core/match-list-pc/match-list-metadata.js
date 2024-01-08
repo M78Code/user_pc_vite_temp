@@ -178,10 +178,10 @@ function set_base_data_init() {
 	if (MenuData.is_zaopan() || matchs_list.length <= 0) return;
 	// 赛事列表 卡片数据
 	// 设置列表数据仓库
-	match_list_handle_set(matchs_list)
 	MatchListData.set_list(
 		matchs_list,
 	);
+	match_list_handle_set(matchs_list)
 	//右侧比分版 应该改变
 	MatchDataWarehouse_PC_Detail_Common.set_match_details(matchs_list[0], [])
 	handle_match_list_request_when_ok(data, false, true, true);
@@ -351,12 +351,11 @@ function set_base_data_init_ouzhou(play_num = '01') {
 			data.data = matchs_list;
 		}
 		if (MenuData.is_left_zaopan() || matchs_list.length <= 0) return;
-		// 赛事列表 卡片数据
-		match_list_handle_set(matchs_list)
 		// 设置列表数据仓库
 		MatchListData.set_list(
 			matchs_list,
 		);
+		match_list_handle_set(matchs_list)
 		handle_match_list_request_when_ok(data, false, true, true);
 		let ts1 = Date.now();
 		let mids_arr = [];

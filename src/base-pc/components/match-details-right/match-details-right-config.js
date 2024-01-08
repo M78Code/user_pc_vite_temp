@@ -469,12 +469,12 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
                   }
                 }
                 // 同步数据到详情
-                let msc = detailUtils.build_msc(match_obj);
-                match_obj.msc = msc;
-                Object.assign(
-                  MatchDataWarehouseInstance.match_obj,
-                  match_obj
-                );
+                // let msc = detailUtils.build_msc(match_obj);
+                // match_obj.msc = msc;
+                // Object.assign(
+                //   MatchDataWarehouseInstance.match_obj,
+                //   match_obj
+                // );
               }
               // 是否是从详情页返回列表页
               allData.is_go_match_list = true;
