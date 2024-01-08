@@ -1,7 +1,5 @@
 <template>
-  <div class="c-match-item  match-tpl1-bg"
-    :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
-    <!-- <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }"> -->
+  <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }">
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
@@ -16,11 +14,10 @@
       <div class="match-handicap-item">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:105px !important;`">
-          <basis-info1 v-if="is_mounted && match" :match="match" show_type="all" />
+          <basis-info1 v-if="is_mounted && match" show_type="all" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match.main_handicap_list"
-          :match="match" />
+        <match-handicap :handicap_list="match.main_handicap_list" />
         <!-- 视频按钮 -->
         <div class="media-col">
           <match-media :match="match" />
@@ -33,8 +30,7 @@
           <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match.add1_handicap_list"
-          :match="match" :add_type="2" />
+        <match-handicap :handicap_list="match.add1_handicap_list" :add_type="2" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -45,14 +41,13 @@
           <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match.add2_handicap_list"
-          :match="match" :add_type="3" />
+        <match-handicap :handicap_list="match.add2_handicap_list" :match="match" :add_type="3" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
       <template v-if="has_other_play">
         <!-- 角球玩法tab -->
-        <div class="other-play-tab" >
+        <div class="other-play-tab">
           <!-- <div class="process-col"></div> -->
           <div class="play-title col" @click="fold_tab_play"
             :style="`width:${match_list_tpl_size.team_width + match_list_tpl_size.bet_width * (match_style_obj.data_tpl_id == 13 ? 13 : 6)}px !important;flex:none`">
