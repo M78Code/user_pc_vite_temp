@@ -10,25 +10,28 @@
                 <img :src="`${LOCAL_PROJECT_FILE_PREFIX }/image/menu/top-menu/back.png`" alt="">
             </div>
             <div class="drop_menulist">
-                <q-btn-dropdown color="rgba(0,0,0, 0)" :flat="true" no-caps :glossy="false" :ripple="false" label="VR-Basketball">
-                    <q-list>
-                        <q-item clickable v-close-popup @click="onItemClick">
-                            <q-item-section>
-                                <q-item-label>VR-Basketball</q-item-label>
-                            </q-item-section>
-                        </q-item>
-                        <q-item clickable v-close-popup @click="onItemClick">
-                            <q-item-section>
-                                <q-item-label>VR-Footerball</q-item-label>
-                            </q-item-section>
-                        </q-item>
-                        <q-item clickable v-close-popup @click="onItemClick">
-                            <q-item-section>
-                                <q-item-label>VR-Greyhounds</q-item-label>
-                            </q-item-section>
-                        </q-item>
-                    </q-list>
-                </q-btn-dropdown>
+                VR-Footerball
+                <q-menu class="vr-menu-wrap">
+                    <div>
+                        <q-list>
+                            <q-item clickable v-close-popup @click="onItemClick">
+                                <q-item-section>
+                                    <q-item-label>VR-Basketball</q-item-label>
+                                </q-item-section>
+                            </q-item>
+                            <q-item clickable v-close-popup @click="onItemClick">
+                                <q-item-section>
+                                    <q-item-label>VR-Footerball</q-item-label>
+                                </q-item-section>
+                            </q-item>
+                            <q-item clickable v-close-popup @click="onItemClick">
+                                <q-item-section>
+                                    <q-item-label>VR-Greyhounds</q-item-label>
+                                </q-item-section>
+                            </q-item>
+                        </q-list>
+                    </div>
+                </q-menu>
             </div>
         </div>
         <div class="right">
@@ -148,4 +151,18 @@ const toHome = async() => {
             align-items: center;
         }
   }
+</style>
+
+<style lang="scss">
+.vr-menu-wrap {
+    width: 3.75rem !important;
+    max-width: 3.75rem !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: #626262;
+    .q-item__label {
+        font-size: 0.14rem;
+        color: #fff;
+    }
+}
 </style>
