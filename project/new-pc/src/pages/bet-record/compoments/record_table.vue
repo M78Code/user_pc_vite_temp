@@ -217,17 +217,43 @@
           </q-tr>
         </template>
       </q-table>
-      <!--分页组件-->
+      
+      <div class="table-footer-bar">
+        <span>
+          {{ i18n_t('bet_record.total_count') }}
+          <!-- 总计单数 -->
+          ：
+          <span class="footer-text">{{ BetRecordHistory.records.total }}</span>
+        </span>
+        <span>
+          {{ BetRecordHistory.selected == 2 ? i18n_t('bet.bet_book_total') : i18n_t('bet_record.total_v') }}
+          <!-- 总投注额/预约总投资额 -->
+          ：
+          <span class="footer-text">{{ BetRecordHistory.records.betTotalAmount }}</span>
+          <!-- <span class="footer-text">{{ format_balance(betTotalAmount) }}</span> -->
+        </span>
+        <div>
+          <!-- 目前屏蔽有效流水展示 -->
+          <span v-if="0">
+            {{ i18n_t('bet_record.effective_water') }}
+            <!-- 有效流水 -->
+            <!-- ：{{ effectiveFlow }} -->
+          </span>
+          <span v-if="BetRecordHistory.selected == 1">
+            {{ BetRecordHistory.records.profit.indexOf("-") != -1 ? i18n_t('bet_record.lose') : i18n_t('bet_record.win') }}：
+            <span class="footer-text" >{{ BetRecordHistory.records.profit }}</span>
+          </span>
+          <!-- <span>{{profit.indexOf("-")!=-1?'输':'赢'}}：{{profit}}</span> -->
+        </div>
+      </div>
 
-      <Pagination v-if="BetRecordHistory.table_data.length > 0" class="record-pagination" :count="records.total" 
-                  :betTotalAmount="records.betTotalAmount"
+      <!--分页组件-->
+      <Pagination v-if="BetRecordHistory.table_data.length > 0" class="record-pagination" 
+                  :count="BetRecordHistory.records.total" 
                   @pageChange="changePage"
                   @pageSizeChange="pageSizeChange"
                   @goPageChange="goPageChange"
-                  :profit="records.profit"
                   :reset_pagination="pageCurrent"
-                  :is_bet_record="true"
-                  :isUnsettled="current_tab === 'unsettled'"
       >
       </Pagination>
 
@@ -570,11 +596,28 @@ const hand_copy = (data) => {
 .time{
   color: var(--q-gb-t-c-8);
 }
+
+.table-footer-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 20px;
+  height: 36px;
+  font-size: 14px;
+  background-color: #f6f7fa;
+
+  span {
+    margin-left: 20px;
+
+    .footer-text {
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+}
+
 .detail-options {
   width: 100%;
-
-  .record-detail-list {
-  }
 
   .record-detail-item {
     flex: 1;

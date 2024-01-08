@@ -8,7 +8,7 @@
             <div class="yb-icon-arrow"></div>
         </div>
         
-        <div v-show="false">{{UserCtr.user_version}}</div>
+        <div v-show="false">{{UserCtr.user_version}}-{{GlobalSwitchClass.global_switch_version}}</div>
 
         <div class="wrap-language" v-if="show_popup">
             <div class="triangle"></div>
@@ -23,12 +23,12 @@
 </template>
   
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue'
 
 import { api_account } from 'src/api/index';
 import langs_mjs from "src/i18n/pc/langs/index.mjs";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { loadLanguageAsync } from 'src/output/index.js'
+import { loadLanguageAsync,GlobalSwitchClass } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js"
 import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
@@ -41,6 +41,18 @@ const language_arr = ref(Object.keys(langs_mjs))
 const hits = ref(0)
 const langs = ref(langs_mjs)
 
+
+// 监听全局点击事件， 语言切换是展开的 需要收起
+watch(
+    GlobalSwitchClass.global_switch_version,
+  (handkey) => {
+    if(GlobalSwitchClass.global_click%2 == 1 ){
+       return
+    }
+    show_popup.value = false
+  },
+  { immediate: true }
+);
 
 /** 语言列表 */
 const languageList = ref([])
@@ -81,7 +93,10 @@ function toggle_popup() {
     if (lodash.isEmpty(languageList.value)) {
         languageList.value = lodash.get(UserCtr.get_user(), 'languageList') || [];
     }
-    show_popup.value = !show_popup.value
+    nextTick(()=>{
+        show_popup.value = !show_popup.value
+    })
+   
 }
 
 const versions_class = computed(() => {
