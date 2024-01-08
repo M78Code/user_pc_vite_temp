@@ -322,7 +322,7 @@ onMounted(() => {
 });
 // 全局点击事件
   watch(
-    () => GlobalSwitchClass.global_switch_version.version,
+    () => GlobalSwitchClass.global_switch_version,
     (new_) => {
       isShow.value = false;
     },
