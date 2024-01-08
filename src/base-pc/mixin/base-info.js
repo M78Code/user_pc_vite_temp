@@ -44,14 +44,25 @@ const handicap_num = computed(() => {
         return i18n_t('match_info.more')
     }
 })
-const home_avatar = computed(() => {
+
+const home_avatar = computed(()=>{
     const url = ((lodash.get(match.value, 'match_logo') || {}) || {}).home_1_logo;
     return url
-})
-const away_avatar = computed(() => {
+  })
+  const home_avatar2 = computed(()=>{
+    const url = ((lodash.get(match.value, 'match_logo') || {}) || {}).home_2_logo;
+    return url
+  })
+  
+  const away_avatar = computed(()=>{
     const url = (lodash.get(match.value, 'match_logo') || {}).away_1_logo;
     return url
-})
+  })
+  
+  const away_avatar2 = computed(()=>{
+    const url = (lodash.get(match.value, 'match_logo') || {}).away_2_logo;
+    return url
+  })
 
 const play_name_obj = computed(() => {
     let play_name_obj = {
@@ -164,6 +175,24 @@ const use_polling_mst = payload => {
         }, 1000)
     }
 }
+
+//是否展示为比分判定中
+const scoring = computed(() => {
+    const {csid, ms, mmp, home_score, away_score} = match.value
+    let scoring = false
+    if (
+      is_eports_csid(csid) && // 电竞赛事
+      get_match_status(ms, [ 110 ]) // 且为滚球（进行中）状态
+    ) {
+      // 电竞未开赛 展示为 第一局
+      const mmp_state = mmp || 1
+      // 当前局数不等于 比分总和加一，則提示比分判定中
+      if (mmp_state != (Number(home_score) + Number(away_score) + 1)) {
+        scoring = true
+      }
+    }
+    return scoring
+})
 // var 事件处理
 function handle_var_event(ws_data) {
     const { skt_data: { mat, mid }, var_item } = ws_data
@@ -242,14 +271,18 @@ return {
     collect,
     play_name_obj,
     home_avatar,
+    home_avatar2,
     away_avatar,
+    away_avatar2,
     handicap_num,
     is_collect,
     is_show_home_goal,
     is_show_away_goal,
     is_show_home_red,
     is_show_away_red,
-    is_show_home_var
+    is_show_home_var,
+    update_show_default,
+    scoring
 }
 
 }
