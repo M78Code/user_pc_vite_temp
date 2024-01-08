@@ -3,14 +3,9 @@
 -->
 
 <template>
-  <div class="match-item-wrap hairline-border" :class="{standard:standard_edition == 2}">
+  <div class="match-item-wrap" :class="{standard:standard_edition == 2}">
     <div class="test-line" v-if="show_debugger_line">
       {{match_item.batchNo +'-'+ match_item.mid}}
-    </div>
-    <!-- 玩法数量 -->
-    <div class="play-count" @click="goto_details(match_item)">
-      {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}`: i18n_t('footer_menu.more')}}
-      <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow"  />
     </div>
     <div class="match-data-item row"
       :class="{
@@ -20,26 +15,14 @@
       }">
       <!-- 赛事信息 -->
       <div class="row items-start team-w-container" @click="goto_details(match_item)" v-if="standard_edition == 2">
-        <div class="team-wrapper" :class="{standard:standard_edition == 2}">
-          <!-- 战队名称 -->
-          <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
-            <div class="ellipsis">{{match_item.teams ? match_item.teams[0] : ''}}</div>
-          </div>
-          <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
-            <div class="ellipsis">
-              {{match_item.teams ? match_item.teams[1] : ''}}
-            </div>
-          </div>
-
-          <div
-            v-if="false"
-            class="match-play-count standard row justify-start items-center">
-            <!-- 比赛时间 -->
+        <div class="match-play-count standard row justify-between items-center">
+          <!-- 比赛时间 -->
+          <div class="match-play-left row justify-start items-center">
             <div class="time-wrap" v-if="match_item.csid != 1004"
               :class="{whistle:[2,11].includes(+match_item.match_status)}"
               v-show="match_item.show_time > 0 || [2,11].includes(+match_item.match_status)" >
               <div class="time">
-                {{match_item.show_time}}
+                {{match_item.show_time}}'
               </div>
             </div>
             <!-- 固定60秒 -->
@@ -60,37 +43,38 @@
               v-show="match_item.match_status == 2">
               Fin.
             </div>
+            <!-- 视频icon -->
+            <div class="play-icon-wrapper yb-flex-center"
+              @click="switch_match_handle(i,match_item)">
+              <span class="video-play-icon" :data_si="match_selected_i" :data_i="i"
+                :class="get_play_btn_class(match_item,i)" />
+            </div>
           </div>
+            
+          <!-- 玩法数量 -->
+          <div class="play-count" @click="goto_details(match_item)">
+            {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}`: i18n_t('footer_menu.more')}}
+            <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow"  />
+          </div>
+        </div>
+        
+        <div class="team-wrapper" :class="{standard:standard_edition == 2}">
+          <!-- 战队名称 -->
+          <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
+            <div class="ellipsis">{{match_item.teams ? match_item.teams[0] : ''}}</div>
+          </div>
+          <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
+            <div class="ellipsis">
+              {{match_item.teams ? match_item.teams[1] : ''}}
+            </div>
+          </div>
+
         </div>
       </div>
       <!-- 玩法 -->
       <div class="row items-center shrink-0 justify-between m-c-container"
         :class="{standard:standard_edition == 2,simple:standard_edition == 1}"
       >
-        <!-- 比分和视频icon -->
-        <div class="score-wrap" v-if="false">
-          <div class="score"
-            v-if="match_item.mmp == 'INGAME' && (match_item.match_status > 0 || show_basketball_score)">
-            {{match_item.home}}
-          </div>
-          <div class="score"
-            v-if="match_item.mmp == 'INGAME' && (match_item.match_status > 0 || show_basketball_score)">
-            {{match_item.away}}
-          </div>
-          <!-- 视频icon -->
-          <div class="play-icon-wrapper yb-flex-center"
-            v-if="standard_edition == 2 && match_item.mms > 0" @click="switch_match_handle(i,match_item)">
-            play
-            <span class="video-play-icon" :data_si="match_selected_i" :data_i="i"
-              :class="get_play_btn_class(match_item,i)" />
-          </div>
-        </div>
-        <div class="simple-time" v-if="false">
-          <!-- 比赛时间 -->
-          <div class="time-wrap" v-show="match_item.show_time > 0 || match_item.match_status == 2 || match_item.match_status == 11" :class="{whistle:match_item.match_status == 2 || match_item.match_status == 11}">
-            <div class="time">{{match_item.show_time}}</div>
-          </div>
-        </div>
         <!--专业版-->
         <div class="profession" v-if="standard_edition == 2">
           <!--标准版赔率容器-->
@@ -102,24 +86,6 @@
               <template v-if="match_item">
                 <ScoreList :match_info="match_item"></ScoreList>
               </template>
-              
-              <!-- <div class="odd-column-w" :key="hp_i_i"
-                v-for="(hp_i,hp_i_i) of get_hp_list(0)">
-                <div class="odd-wrap-min" :class="`hp-${get_ol_length(hp_i,hp_i_i)}`"
-                  :key="ol_item_i" v-for="(ol_item,ol_item_i) of get_ol_list(hp_i,hp_i_i)">
-                  <odd-column-item
-                    :placeholder="ol_item.placeholder"
-                    :n_s="Number(standard_edition)"
-                    :column_ceil="get_ol_length(hp_i)"
-                    :odd_item_i="ol_item_i"
-                    :match="match_item"
-                    :odd_field="hp_i"
-                    :hl_hs="get_hl_hs(hp_i)"
-                    bet_type="vr_bet"
-                    :is_vr_lock="is_vr_lock"
-                    />
-                </div>
-              </div> -->
             </div>
             <!--标准版第二部分-->
             <!--复刻版vr不能滑动-->
@@ -143,41 +109,6 @@
             </div>
           </div>
         </div>
-        <!-- 新手版 -->
-        <div v-if="standard_edition == 1" class="match-play-count column justify-end items-end simple" @click="goto_details(match_item)">
-          <!--根据bug单号52926 注释掉此处-->
-          <!-- <div v-if="match_item.mc">{{match_item.mc}}+ > </div> -->
-          <div v-if="match_item.mc"> > </div>
-        </div>
-        <div class="event-team" v-if="standard_edition == 1">
-          <div class="name">
-            <div class='left'>
-              <span>
-                {{match_item.teams ? match_item.teams[0] : ''}}
-              </span>
-              <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
-              <image-cache-load v-if="match_item?.mhlu?.length && !([5, 10, 7, 8].includes(Number(match_item.csid)))"
-                :csid="+match_item.csid" :path="match_item.mhlu" type="home"></image-cache-load>
-              <!-- <img v-if="match?.mhlu?.length" class="logo" v-img="([match_item.mhlu[0], match_item.frmhn[0], match_item.csid])" /> -->
-            </div>
-            <span class="vs">VS</span>
-            <div class='right'>
-              <image-cache-load v-if="match_item?.malu?.length && !([5, 10, 7, 8].includes(Number(match_item.csid)))"
-                :csid="+match_item.csid" :path="match_item.malu" type="home"></image-cache-load>
-              <span>
-                {{match_item.teams ? match_item.teams[1] : ''}}
-              </span>
-            </div>
-          </div>
-        </div>
-        <!--新手版-->
-        <div v-if="standard_edition == 1" class="bet-item-wrap row border-radius4">
-          <v-s-odd-item :ol_item="ol_item" :hl_item="get_hl_item(match_item)" @click.native="item_click4(match_item,ol_item)"
-            :match_invalid="match_item.invalid" :match="match_item"  :is_vr_lock="is_vr_lock"
-            v-for="(ol_item,o_i) of get_ol_list_f_match(match_item)" :key="o_i">
-          </v-s-odd-item>
-        </div>
-
       </div>
     </div>
   </div>
@@ -241,7 +172,7 @@ export default {
   min-height: 0.9rem;
   border-radius: 0;
   border-bottom: 1px solid #F5F5F5;
-  position: relative;
+  padding: 10px 0 10px 10px;
 
   &.standard {
     height: 0.9rem;
@@ -270,18 +201,11 @@ export default {
     flex-wrap: nowrap;
     // background-color: red;
 
-    &.standard {
-      .team-title {
-        height: 0.32rem;
-        line-height: 0.3rem;
-        margin-bottom: 0.02rem;
-
-      }
-    }
-
     .team-w-container {
       flex-grow: 1;
-      width: 50%
+      width: 50%;
+      padding-right: 5px;
+      border-right: 1px solid rgba(88,88,88,.1);
     }
 
     .team-wrapper {
@@ -292,8 +216,6 @@ export default {
       justify-content: flex-start;
       align-items: flex-start;
       &.standard {
-        height: 1.07rem;
-
         .team-title {
           width: 1.4rem;
         }
@@ -487,21 +409,35 @@ export default {
       overflow: hidden;
     }
 
-    .video-play-icon {
-      width: 0.16rem;
-      height: 0.16rem;
-      background-size: 100%;
-      background-position: center;
-    }
-
     .match-play-count {
       font-weight: normal;
       color: #AFB3C8;
-      padding-right: 0.1rem;
+      flex-grow: 1;
+      .play-count {
+        color: #1A1A1A;
+        i {
+          transform: rotate(90deg);
+        }
+      }
+
+      .video-play-icon {
+        width: 0.14rem;
+        height: 0.12rem;
+        background-size: 100%;
+        background-position: center;
+        &.img-playing {
+          background-image: url($SCSSPROJECTPATH + "/image/vr/img-playing.png");
+        }
+        &.img-play {
+          background-image: url($SCSSPROJECTPATH + "/image/vr/img-play.png");
+        }
+        &.img-disabled {
+          background-image: url($SCSSPROJECTPATH + "/image/vr/img-disabled.png");
+        }
+      } 
+
 
       &.standard {
-        line-height: 0.3rem;
-        height: 0.3rem;
         font-size: 0.12rem;
       }
 
@@ -540,13 +476,12 @@ export default {
   }
 
   .time-wrap {
-    width: 0.37rem;
+    width: 0.3rem;
     height: 0.16rem;
     font-size: 0.12rem;
     background-size: 100% 100%;
     display: flex;
     align-items: center;
-    margin-right: 0.07rem;
     padding-top: 0.02rem;
     padding-left: 0.01rem;
 
@@ -554,6 +489,7 @@ export default {
       min-width: 0.18rem;
       text-align: center;
       line-height: 1;
+      color: #FF7000;
     }
   }
 
