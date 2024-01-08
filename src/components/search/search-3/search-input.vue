@@ -78,6 +78,10 @@ function on_Close() {
     SearchPCClass.set_search_isShow(false)
 }
 
+function input_click() {
+    store.show_type = 'result'
+}
+
 function clear_input() {
     store.keyword = ""
     store.show_type = 'init'
