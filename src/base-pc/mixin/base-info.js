@@ -4,7 +4,7 @@ import lodash from 'lodash'
 
 import { get_match_status } from 'src/core/utils/common/index'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-import { MenuData, MatchDataWarehouse_PC_List_Common, i18n_t, compute_img_url } from "src/output/index.js"
+import { MenuData, MatchDataWarehouse_PC_List_Common, i18n_t, compute_img_url, is_eports_csid } from "src/output/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { get_remote_time } from "src/output/index.js"
 import details from "src/core/match-list-pc/details-class/details.js"
