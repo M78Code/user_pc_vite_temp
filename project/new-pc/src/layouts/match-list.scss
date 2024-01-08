@@ -439,7 +439,8 @@ body {
     }
 
     .highlight-t {
-      color: var(--q-gb-bd-c-11) !important;
+      // color: var(--q-gb-bd-c-11) !important;
+      color: #179CFF !important;
     }
 
     /*  足球其他玩法（角球、罚牌等） 玩法标题 边框 颜色 */
@@ -600,8 +601,10 @@ body {
       }
 
       .tr-match-head {
-        background-image: var(--q-gb-bg-lg-18);
-        border: 1px solid var(--q-gb-bg-c-9);
+        // background-image: var(--q-gb-bg-lg-18);
+        background: #DCE5F2;
+        border: 1px solid #DCE5F2;
+        // border: 1px solid var(--q-gb-bg-c-9);
         border-radius: 6px;
 
         // color: var(--q-gb-bg-c-8)FFF;
@@ -627,7 +630,8 @@ body {
             &.bet-col3,
             &.bet-col4,
             &.bet-col5 {
-              background: var(--q-gb-bg-c-22);
+              // background: var(--q-gb-bg-c-22);
+              background: #dce5f2;
               // font-weight: 400;
               &.no-bg {
                 background: none;

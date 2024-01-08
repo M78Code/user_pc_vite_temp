@@ -54,7 +54,10 @@ import { IconWapper } from 'src/components/icon/index.js'
 import {SearchPCClass} from 'src/output/project/common/pc-common.js'
 import { i18n_t } from "src/boot/i18n.js"
 import {store, mutations} from "./index";
+import { useRoute, useRouter } from 'vue-router'
 
+const router = useRouter()
+const route = useRoute()
 const inputRef = ref(null)
 
 function change_txt() {
@@ -67,6 +70,11 @@ function submit() {
 }
 
 function on_Close() {
+    if (route.name == "search") {
+        router.push({
+            name: 'home'
+        })
+    }
     SearchPCClass.set_search_isShow(false)
 }
 

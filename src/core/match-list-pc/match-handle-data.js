@@ -36,7 +36,7 @@ export function get_match(mid, MatchListData) {
     const _match = MatchListData.get_quick_mid_obj(lodash.get(mid, 'mid', mid));
     return {
         ..._match,
-        ...(MatchListData.cache_match[mid] || {})
+        ...(lodash.get(MatchListData.cache_match, mid, {}))
     };
 }
 /**
@@ -47,30 +47,30 @@ export function get_match(mid, MatchListData) {
 export function match_list_handle_set(match_list) {
     if (Object.prototype.toString.call(match_list) == '[object Array]') {
         const date_now = Date.now();
-        match_list.forEach(match => {
+        match_list.forEach(_match => {
+            const match = MatchListData.get_quick_mid_obj(lodash.get(_match, 'mid'));
             match.tpl_id = get_match_template_id(match);
             match.api_update_time = date_now;
-            match.tab_play_keys = get_tab_play_keys(match)
-            match.has_other_play = match.tab_play_keys && String(match.tab_play_keys).split(',').length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
-            match.play_current_key = get_play_current_play(match)
-            match.other_handicap_list = get_compute_other_play_data(match);
             const ass = compute_match_all_handicap_data(match)
             Object.assign(match, {
                 tpl_id: match.tpl_id,
                 hSpecial: match.hSpecial,
                 hSpecial5min: match.hSpecial5min,
-            }, ass)
+            }, ass) //如果不挂在数仓match上
+            //就挂在match_cache上
             set_match(match.mid, {
                 tpl_id: match.tpl_id,
+                tab_play_keys: match.tab_play_keys,
+                play_current_key: match.tab_play_keys,
+                other_handicap_list: match.tab_play_keys,
+                has_other_play: match.has_other_play,
                 hSpecial: match.hSpecial,
                 hSpecial5min: match.hSpecial5min
                 , ...ass
             })
         })
-
     }
 }
-
 /**
  * 判断才是是否结束
  * @param {*} match 
@@ -533,6 +533,11 @@ export function compute_match_all_handicap_data(match) {
     // 角球主盘口列表
     if (tpl_id == 1 && is_corner_menu) {
         main_handicap_list = clone_arr(play_config.hpsCorner)
+        Object.assign(match_assign, { //角球没有附加盘口 和 其他玩法 因为在数仓里可能设置了true值 这里重置false
+            has_add1: false,
+            has_add2: false,
+            has_other_play: false,
+        })
     }
     // 足球 加时赛阶段主盘口列表  mmp：即将加时(32)、加时休息(33)、加时上半场(41)、加时下半场(42)
     else if (tpl_id == 1 && [32, 33, 41, 42].includes(+mmp)) {
@@ -578,7 +583,9 @@ export function compute_match_all_handicap_data(match) {
     else if (tpl_id == 24 && csid == 1) {
         main_handicap_list = clone_arr(MATCH_LIST_TEMPLATE_CONFIG.template_1_config.template_1.hps15Minutes)
         type = 4
-        Object.assign(match_assign, set_min15(match, match.mst))
+        const min15 = set_min15(match, match.mst)
+        Object.assign(match, min15)
+        Object.assign(match_assign, min15)
     }
     //  罚牌主盘口列表
     else if (tpl_id == 29 && csid == 1) {
@@ -591,10 +598,9 @@ export function compute_match_all_handicap_data(match) {
     if (csid == 1 && [1, 13].includes(+tpl_id) && !is_corner_menu) {
         // 计算角球、罚牌等其他玩法数据
         Object.assign(match_assign, {
+            play_current_play:get_play_current_play(match),
             other_handicap_list: get_compute_other_play_data(match)
-        })
-        // 设置赛事附加盘盘口数据
-        Object.assign(match_assign, get_match_add_handicap_data(match))
+        }, get_match_add_handicap_data(match))// 设置赛事附加盘盘口数据
     }
     // 篮球让球与大小
     if (tpl_id == 7) {

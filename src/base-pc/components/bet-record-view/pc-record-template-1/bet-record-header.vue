@@ -40,10 +40,10 @@
       <template v-if="BetRecordLeft.selected==2">
         <div class="row cursor-pointer appoint-order-status">
           <div class="col text-center"
-            :class="{'active': BetRecordLeft.appoint_order_status==0}"
+            :class="{'active': appoint_order_status==0}"
             @click.stop="set_record_appoint_order_status(0)">
             {{ i18n_t('bet.bet_process') }}
-            <template v-if="BetRecordLeft.appoint_order_status==0">
+            <template v-if="appoint_order_status==0">
               <div class="tabs-line"></div>
             </template>
           </div>
@@ -51,10 +51,10 @@
             <div class="line"></div>
           </div>
           <div class="col text-center"
-            :class="{'active': BetRecordLeft.appoint_order_status==1}"
+            :class="{'active': appoint_order_status==1}"
             @click.stop="set_record_appoint_order_status(1)">
             {{ i18n_t('bet.bet_invalid') }}
-            <template v-if="BetRecordLeft.appoint_order_status==1">
+            <template v-if="appoint_order_status==1">
               <div class="tabs-line"></div>
             </template>
           </div>
@@ -65,7 +65,8 @@
 </template>
 
 <script setup>
-import { BetRecordLeft } from "src/core/bet-record/pc/bet-record-instance.js"
+import { ref } from "vue"
+import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
@@ -73,14 +74,14 @@ import { IconWapper } from 'src/components/icon'
 
 // tab切换 未结算 已结算 预约
 const set_record_selected = number => {
-  console.error('sssss')
   BetRecordLeft.set_selected(number)
   // 切换后请求接口
   useMittEmit(MITT_TYPES.EMIT_GET_RECORD_LIST)
 }
 // tab切换 预约-》 进行中 已失效
+let appoint_order_status = ref(0)
 const set_record_appoint_order_status = number => {
-  BetRecordLeft.set_appoint_order_status(number)
+  appoint_order_status.value = number
 }
 
 // 返回菜单列表

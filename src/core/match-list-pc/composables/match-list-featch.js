@@ -271,7 +271,6 @@ const api_bymids = (
         let match_list = lodash.get(res, "data.data") || [];
         let ts1 = res.ts
 
-        match_list_handle_set(match_list)
         let mids_arr = [];
         match_list.forEach((match) => {
           mids_arr.push(String(match.mid));
@@ -293,6 +292,7 @@ const api_bymids = (
             MatchListData.set_list(
               match_list,
             );
+            match_list_handle_set(match_list)
             //只有主列表才有这项操作 计算赛事卡片
             if (MatchListData == MatchDataWarehouse_PC_List_Common) {
               set_match_base_info_by_mids_info(match_list, mids_arr, ts1);
