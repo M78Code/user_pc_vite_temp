@@ -6,9 +6,10 @@
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
     v-if="match_style_obj.is_show_card">
     <!-- 数据模版调试 -->
-    <!-- <div  style="position:absolute;color:red"> {{ match_style_obj.view_tpl_id }}-{{ match_style_obj.data_tpl_id }}-{{
-      match_style_obj.show_level }}-{{ match_style_obj.is_show_card }}
-    </div> -->
+    <div v-show="GlobalAccessConfig.get_wsl()" style="position:absolute;color:red"> {{ match_style_obj.view_tpl_id }}-{{
+      match_style_obj.data_tpl_id }}-{{
+    match_style_obj.show_level }}-{{ match_style_obj.is_show_card }}
+    </div>
     <component :is="`MatchTpl${match_style_obj.view_tpl_id}After`" v-if="[1, 2].includes(match_style_obj.show_level)"
       :mid="mid" />
   </div>
@@ -18,7 +19,7 @@
 import { provide, computed } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { MatchDataWarehouse_PC_List_Common } from "src/output/index.js";
+import { MatchDataWarehouse_PC_List_Common, GlobalAccessConfig } from "src/output/index.js";
 import { LayOutMain_pc } from "src/output/project/common/pc-common.js";
 // 玩法模板 0   足球-让球&大小  、 足球-角球 、 美足-让球&大小 、 手球-让球&大小
 import { MatchTpl1AfterFullVersionWapper as MatchTpl1After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-1-after/index.js";
@@ -45,6 +46,7 @@ import { MatchTpl24AfterFullVersionWapper as MatchTpl24After } from "src/base-pc
 import { MatchTplEsportsAfterFullVersionWapper as MatchTplEsportsAfter } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-esports-after/index.js";
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 export default {
   props: {
     mid: {
@@ -67,7 +69,7 @@ export default {
   },
   setup(props) {
     // 赛事样式对象
-    provide("match", MatchDataWarehouse_PC_List_Common.get_quick_mid_obj_ref(props.mid))
+    const match = MatchDataWarehouse_PC_List_Common.get_quick_mid_obj_ref(props.mid)
     let match_style_obj = computed(() => {
       return MatchListCardDataClass.get_card_obj_bymid(props.mid, MatchListCardDataClass.list_version.value)
     });
@@ -77,14 +79,21 @@ export default {
     const match_tpl_info = computed(() => {
       return MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.value?.data_tpl_id}_config`]
     })
+    //非坑位对象
+    const not_hn_obj_map = computed(() => {
+      return get_match_to_map_obj(match.value, null, props.add_type); //非坑位对象
+    })
+    provide("match", match)
     provide("match_style_obj", match_style_obj)
     provide("match_list_tpl_size", match_list_tpl_size)
     provide("match_tpl_info", match_tpl_info)
+    provide("not_hn_obj_map", not_hn_obj_map)
     return {
       match_style_obj,
       LayOutMain_pc,
       MatchListCardData,
       MatchListCardDataClass,
+      GlobalAccessConfig
     }
   }
 }

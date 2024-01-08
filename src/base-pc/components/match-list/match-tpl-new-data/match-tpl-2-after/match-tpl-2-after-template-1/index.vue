@@ -1,5 +1,5 @@
 <template>
-  <div class="c-match-item " :class="'tpl-'+match_style_obj.data_tpl_id">
+  <div class="c-match-item " :class="'tpl-'+match.tpl_id">
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->

@@ -227,7 +227,7 @@ useRegistPropsHelper(component_symbol, need_register_props)
 
 import { format_result } from 'src/output/index.js'
 
-import { BasePanelFullVersionWapper as basePanel } from 'src/base-pc/components/analysis/template/base-panel/index.js'
+import { BasePanelFullVersionWapper as basePanel } from '../../base-panel/index.js'
 import { api_analysis } from 'src/api/index'
 
 import { i18n_t,result_filter } from "src/output/index.js";
@@ -409,48 +409,53 @@ function getAge(birthdate) {
 
 <style lang="scss" scoped>
 .datum {
+  width: 100%;
+  overflow-x: auto;
   .tab {
     display: flex;
     align-items: center;
-    height: 30px;
-    color: var(--q-analysis-color-3);
+    height: 34px;
     margin-bottom: 10px;
-    width: 309px;
-    border-radius: 8px;
+    border-radius: 0 0 8px 8px;
+    box-sizing: border-box;
+    background: #fff;
+    overflow: hidden;
     span {
-      width: 103px;
+      position: relative;
+      margin: 0 10px;
       height: 28px;
       line-height: 28px;
+      color: #555;
       cursor: pointer;
       text-align: center;
-      border: 1px solid var(--q-analysis-color-10);
-      &:first-child {
-        border-radius: 8px 0 0 8px;
-      }
-      &:last-child {
-        border-left: none;
-        border-radius: 0 8px 8px 0;
-      }
-      &:nth-child(2) {
-        border-left: none;
-      }
-      &:not(:last-child) {
-        border-right: none;
-      }
       &.active {
-        background-image: var(--q-analysis-bg-gradient-2);
-        color: var(--q-analysis-color-16);
+        font-weight: 600;
+        color: #179CFF;
+      }
+      &.active::before {
+        position: absolute;
+        content: "";
+        width: 90%;
+        height: 6px;
+        border-radius: 15px;
+        background: #179CFF;
+        bottom: -6px;
+        left: 50%;
+        transform: translate(-50%);
       }
     }
   }
-  :deep(.panel) {
+  ::v-deep .panel {
     min-width: 950px;
   }
   .panel {
     margin-bottom: 20px;
     min-width: 950px;
+    // width: 100%;
+    background: var(--qq--y0-bg-color12);
     .panel-title {
       display: flex;
+      // background: #F4FAFF;
       justify-content: space-between;
       padding-right: 20px;
     }
@@ -458,12 +463,13 @@ function getAge(birthdate) {
 
   /*  盘面 */
   .disk {
+    background: var(--qq--y0-bg-color12);
     .match-info {
       padding: 20px 20px 10px;
       .team {
         display: flex;
         align-items: center;
-        color: var(--q-analysis-color-1);
+        color: var(--qq--analysis-text-color-1);
         margin-bottom: 10px;
         .logo {
           width: 20px;
@@ -479,7 +485,7 @@ function getAge(birthdate) {
           align-items: center;
           margin-right: 80px;
           .label {
-            color: var(--q-analysis-color-0);
+            color: var(--qq--analysis-text-color-4);
             font-size: 16px;
             margin-right: 10px;
           }
@@ -493,7 +499,7 @@ function getAge(birthdate) {
             width: 20px;
             height: 20px;
             border-radius: 2px;
-            color: var(--q-analysis-color-16);
+            color: var(--qq--analysis-text-color-13);
             margin-right: 6px;
           }
         }
@@ -505,6 +511,8 @@ function getAge(birthdate) {
         flex: 1;
         display: flex;
         align-items: center;
+        border: 1px solid var(--qq--match-border-color5);
+        color: var(--qq--y0-text-color5);
         justify-content: center;
         &:first-child {
           width: 84px;
@@ -514,14 +522,16 @@ function getAge(birthdate) {
       }
     }
     .d-header {
-      background: var(-q-analysis-color-17);
-      color:  var(--q-analysis-color-7);
+      // background: var(--qq--y0-bg-color12);
+      // color:  var(--qq--y0-text-color5);
+      background: var(--qq--analysis-bg-color-16);
+      color: var(--qq--y0-text-color5);
       border-bottom: none !important;
       .d-td {
         height: 28px;
       }
       .border_r {
-        border-right: 1px solid var(--q-analysis-color-10);
+        border: 1px solid var(--qq--match-border-color5);
         &:first-child {
           display: flex;
           justify-content: center;
@@ -532,14 +542,14 @@ function getAge(birthdate) {
       }
     }
     .d-body {
-      border-bottom: 1px solid var(--q-analysis-color-10);
+      border-bottom: 1px solid var(--qq--match-border-color5);
       font-weight: 500;
       .color_83838a {
-        color: var(--q-analysis-color-7);
+        color: var(--qq--y0-text-color5);
       }
       .d-td {
         height: 40px;
-        border-right: 1px solid var(--q-analysis-color-10);
+        border: 1px solid var(--qq--match-border-color5);
         &:last-child {
           border-right: transparent;
         }
@@ -548,7 +558,7 @@ function getAge(birthdate) {
           display: flex;
           justify-content: center;
           &:first-child {
-            color: var(--q-analysis-color-7);
+            color: var(--qq--y0-text-color5);
           }
         }
       }
@@ -576,7 +586,7 @@ function getAge(birthdate) {
   .technical {
     .panel-title:last-child {
       border-radius: 8px;
-      border-bottom: 1px solid var(--q-analysis-color-10);
+      border-bottom: 1px solid var(--qq--analysis-bd-color-4);
     }
     .match-info {
       padding: 10px 20px;

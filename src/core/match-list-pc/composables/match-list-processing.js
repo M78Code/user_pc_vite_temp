@@ -1,32 +1,19 @@
 import { ref } from 'vue';
-
 import lodash from 'lodash';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-// import store from "src/store-redux/index.js";
 import { MenuData } from 'src/output/project/index.js'
-
-import { match_collect_status, set_collect_count, mx_collect_count } from "./match-list-collect.js";
-
+import { match_collect_status} from "./match-list-collect.js";
 import { api_bymids, set_league_list_obj } from "./match-list-featch.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/output/module/match-data-base.js";
-
-
 import virtual_composable_fn from './match-list-virtual.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { match_list_handle_set } from '../match-handle-data.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
 const vx_filter_select_obj = ref([])
-
-const load_data_state = ref(null);
-let hot_match_list_timeout;
 let vx_layout_list_type = 'match'
-
-
 const { route_name } = PageSourceData;
-//
 let is_search = PageSourceData.is_search();
 let is_show_hot = ref(false);
 let vx_pre_filter_select_obj = []
@@ -109,10 +96,6 @@ const mx_list_res = (data, backend_run) => {
 	if (code == 200 && all_league_list.length > 0) {
 		is_show_hot.value = false;
 		// 设置收藏数量
-		// lockie
-		// if (vx_filter_select_obj.value.length > 0) {
-		// 	mx_collect_count();
-		// } else {
 		try {
 			// 组装所有赛事,检测赛事收藏,算总共的收藏赛事数量
 			all_league_list.forEach(item => {
@@ -128,11 +111,6 @@ const mx_list_res = (data, backend_run) => {
 			count_mf = lodash.get(data, 'data.collectCount', 0)
 			console.error(error);
 		}
-		// set_collect_count({
-		// 	type: "set",
-		// 	count: lodash.get(data, "data.collectCount", 0),
-		// });
-		// }
 		// 如果是专业版 && 今日、早盘、串关之间的切换 && 之前有筛选 && 并且当前没有筛选
 		if (
 			!backend_run &&
@@ -178,29 +156,14 @@ const mx_list_res = (data, backend_run) => {
 			// 	data: {}
 			// })
 		}
-
 		// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
 			backend_run
 		);
-		// if (lodash.isFunction(this.SCMD_C9)) {
-		// 	// C9订阅
-		// 	this.SCMD_C9(all_league_list);
-		// }
 		if (backend_run) {
-			// 静默拉取列表 设置数据加载状态
-			load_data_state.value = "data";
 			// 更新可视区域赛事盘口数据
 			useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE)
-			let first_league = all_league_list[0];
-			let mids = first_league.mids.split(",");
-			let params = {
-				media_type: "auto",
-				mid: mids[0],
-				tid: first_league.tid,
-				sportId: first_league.csid,
-			};
 			if (MatchListCardDataClass.current_mid.value) {
 				const match = MatchListData.get_quick_mid_obj(MatchListCardDataClass.current_mid.value)
 				// 控制右侧比分板
@@ -214,24 +177,12 @@ const mx_list_res = (data, backend_run) => {
 				// 非电竞切换右侧 为列表第一场赛事
 				let first_league = all_league_list[0];
 				let mids = first_league.mids.split(",");
-				// let params = {
-				// 	media_type: "auto",
-				// 	mid: mids[0],
-				// 	tid: first_league.tid,
-				// 	sportId: first_league.csid,
-				// };
 				//触发右侧详情更新
-				// useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, params);
-				callback_func = () => {
-					// lockie
-					const match = MatchListData.get_quick_mid_obj(Number(mids[0]));
-					if (match) {
-						MatchDataWarehouse_PC_Detail_Common.set_match_details(match, [])
+				callback_func =lodash.debounce(() => {
+					if (mids[0]) {
 						useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mids[0])
 					}
-
-					// this.regular_events_set_match_details_params(cut, params);
-				};
+				},10);
 			}
 			// 调用bymids更新前12场赛事
 			api_bymids(
@@ -239,29 +190,7 @@ const mx_list_res = (data, backend_run) => {
 				callback_func
 			);
 		}
-	} else if (!backend_run) {
-		let delay = 10000;
-		if (sessionStorage.getItem("is_select_time")) {
-			delay = 0;
-			sessionStorage.removeItem("is_select_time");
-		}
-		// this.load_data_state = "empty";
-		hot_match_list_timeout = setTimeout(() => {
-			if (load_data_state.value !== "data") {
-				// this.get_hot_match_list();
-				clearTimeout(hot_match_list_timeout);
-			}
-		}, delay);
-		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-			res_data,
-		);
-	} else {
-		load_data_state.value = "empty";
-		// 计算列表卡片样式
-		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-			res_data,
-		);
-	}
+	} 
 };
 /***
  * @description 当接口状态为成功且有数据时 调用此方法
@@ -330,7 +259,6 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
 		// 调用bymids接口
 		api_bymids({ is_first_load: true, inner_param: true });
 	}
-	load_data_state.value = "data";
 };
 /***
  * 当接口状态为异常状态时  调用此方法
@@ -351,7 +279,6 @@ const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, backend_
 		// 		3000
 		// 	);
 		// }
-		load_data_state.value = "empty";
 	}
 	// 非静默拉取时
 	else if (!backend_run) {
@@ -363,10 +290,6 @@ const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, backend_
 			MenuData.menu_root == "1" &&
 			match_list_api_config.sports != "quanbu-gunqiu"
 		) {
-			let obj = {
-				menuId: (match_list_api_config.match_list || {}).params.euid,
-				count: 0,
-			};
 			MenuData.set_current_mi_0_and_change_menu();
 		} else if (
 			route_name == "home" &&
@@ -374,12 +297,8 @@ const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, backend_
 			vx_layout_list_type !== "collect"
 		) {
 			get_hot_match_list();
-			//TODO
-		} else {
-			load_data_state.value = "empty";
 		}
 	} else {
-		load_data_state.value = "empty";
 		// 设置列表数据仓库
 		// MatchListData.compute_match_list_all_data(
 		// 	match_list,
