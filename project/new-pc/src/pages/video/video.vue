@@ -3,10 +3,10 @@
 -->
 <template>
   <div class="video-wrap c-big-video v-scroll-area relative-position"
-    :class="{ 'big-video-right': $route.params.video_size == 1 }">
+    :class="{ 'big-video-right': route.params.video_size == 1 }">
     <load-data class="fit" :state="load_data_state">
       <!-- 视屏头部 -->
-      <video-header v-if="$route.params.video_size != 1" :refresh_loading="refresh_loading" :match_info="match_info"
+      <video-header v-if="route.params.video_size != 1" :refresh_loading="refresh_loading" :match_info="match_info"
         @refresh="refresh_data" />
 
       <!-- 视频播放器 -->
@@ -85,7 +85,7 @@ import VideoHeader from "src/base-pc/components/video/video-header.vue"
 // websocket数据页面数据接入
 // import skt_data_video from "project_path/src/mixins/websocket/data/skt_data_video.js"
 // 赛事详情页面信息操作类
-// import MatchInfoCtr from "src/utils/dataClassCtr/match_info_ctr.js"
+import MatchInfoCtr from "src/core/utils/dataclass-ctr/match_info_ctr"
 //  直播聊天室相关
 // import live_chatroom from "src/project/yabo/mixins/live_chatroom/live_chatroom";
 // import { mapGetters, mapActions } from "vuex"
@@ -94,9 +94,12 @@ import video from "src/core/video/video";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const load_data_state =  ref("loading");
-// const match_info_ctr = new MatchInfoCtr();  // 赛事控制类
+const match_info_ctr = new MatchInfoCtr();  // 赛事控制类
 const show_loading = ref(false); // 是否展示loading
 const match_info = ref({}); // 赛事信息
+const refresh_loading = ref(false); // 刷新loading
+const refresh_time = ref(0); // 刷新时间
+let refresh_loading_timer = null; // 倒计时
 //   export default {
 // name: "Video",
 // mixins:[skt_data_video, live_chatroom],
@@ -195,7 +198,7 @@ useMittOn(MITT_TYPES.EMIT_EXIT_BROWSER_FULL_SCREEN, exit_browser_full_screen).of
 //   ]),
 
 function emit_site_tab_active() {
-  this.get_match_info(false)
+  get_match_info(false)
 }
 /**
  * @Description 浏览器全屏
@@ -287,10 +290,10 @@ function get_match_info(show_loading = true) {
 }
 //设置全屏状态
 function set_full_screen_status() {
-  if (this.$route.params.video_size == 1) {
-    this.browser_full_screen()
+  if (route.params.video_size == 1) {
+    browser_full_screen()
   } else {
-    this.exit_browser_full_screen()
+    exit_browser_full_screen()
   }
 }
 // 刷新数据
@@ -298,18 +301,18 @@ function refresh_data() {
   // if (this.refresh_loading) {
   //   return false
   // }
-  this.refresh_loading = true
-  this.refresh_time += 1
+  refresh_loading.value = true
+  refresh_time.value += 1
   // 重新获取赛事信息
-  this.get_match_info(false)
+  get_match_info(false)
   // 刷新前 先关闭聊天室
-  this.set_chatroom_available(0)
+  // set_chatroom_available(0)
   // 聊天室开关开启后才显示聊天室
   if (UserCtr.user_info.chatRoomSwitch) {
     // 获取直播、聊天室信息
-    this.get_live_chat_info()
+    get_live_chat_info()
   }
-  this.refresh_loading_timer && clearTimeout(this.refresh_loading_timer)
+  refresh_loading_timer && clearTimeout(refresh_loading_timer)
   this.refresh_loading_timer = setTimeout(() => this.refresh_loading = false, 2500)
 }
 

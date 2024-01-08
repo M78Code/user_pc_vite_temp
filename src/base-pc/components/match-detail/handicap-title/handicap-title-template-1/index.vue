@@ -135,7 +135,7 @@ const set_top = (type) => {
  */
 const toggle_downMenu = () => {
   // 记录用户的展开/折叠操作
-  emit("click", { isplus:isplus.value, match_info: match_info.value });
+  emit("click", { isplus:props.isplus, match_info: props.match_info });
   is_fold.value = !is_fold.value;
 };
 </script>

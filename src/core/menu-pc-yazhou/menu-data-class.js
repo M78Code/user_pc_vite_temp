@@ -927,7 +927,9 @@ class MenuData {
     const res = await api_common.get_virtual_menu({device: 'V1_H5'});
     if(res && res.code =='200'){
         this.vr_list = res.data;
+        return res.data
     }
+    return []
   }
  
   // 新菜单规律核心参照表

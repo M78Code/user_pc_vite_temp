@@ -475,14 +475,18 @@ body {
                 min-width: 70px;
                 height: 24px;
                 line-height: 22px;
-                border: 0.5px solid var(--q-gb-bd-c-8);
+                border: 0.5px solid #D7E1FD;
                 border-radius: 17px;
                 margin-right: 6px;
-
+                color: #555555;
+                box-shadow: 0px 3px 3px 0px rgba(0, 56, 98, 0.1);
                 &.active {
-                  color: var(--q-gb-bd-c-11);
-                  background-color: var(--q-gb-bg-c-19);
-                  border: 0.5px solid var(--q-gb-bd-c-11) !important;
+                  // color: var(--q-gb-bd-c-11);
+                  color: #fff;
+                  // background-color: var(--q-gb-bg-c-19);
+                  background-color: #179cff;
+                  // border: 0.5px solid var(--q-gb-bd-c-11) !important;
+                  box-shadow: 0px 3px 3px 0px rgba(0, 56, 98, 0.25);
                 }
               }
             }

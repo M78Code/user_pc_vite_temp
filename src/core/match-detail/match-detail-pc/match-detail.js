@@ -355,6 +355,27 @@ const get_play_rows = (data) => {
   return row;
 };
 
+/**
+  * @Description:根据球种id获取球种英文名
+  * @Author Cable
+  * @param:csid 球种id
+  * @return:球种英文名
+  */
+const get_sports_en = (csid)=>{
+  if(csid == 1) return 'football'         //足球
+  if(csid == 2) return 'basketball'     //篮球
+  if(csid == 3) return 'baseball'     //棒球
+  if(csid == 4) return 'iceball'       //冰球
+  if(csid == 5) return 'tennis'        //网球
+  if(csid == 6) return 'americaball'   //美式足球
+  if(csid == 7) return 'snooker'       //斯诺克
+  if(csid == 8) return 'pingpong'      //兵乓球
+  if(csid == 9) return 'volleyball'    //排球
+  if(csid == 10) return 'badminton'     //羽毛球
+  if(csid == 17) return 'gaming'        //竞技
+  return ''
+};
+
 export default {
   build_msc,
   check_plays,
@@ -362,5 +383,6 @@ export default {
   show_wrap_total,
   sr_click_handle,
   set_waterfall,
-  init_score
+  init_score,
+  get_sports_en
 };

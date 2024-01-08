@@ -52,11 +52,11 @@
       </div>
     </div>
     <!-- 列表容器 -->
-    <load-data :state="'data'">
+    <load-data :state="load_data_state">
       <!-- 滚球虚拟体育列表 -->
       <scroll-list v-if="MenuData.menu_root_show_shoucang == 300">
         <template v-slot:before>
-          <div :style="{ height: MatchListCardDataClass.sticky_top.type + 'px' }">222</div>
+          <div :style="{ height: MatchListCardDataClass.sticky_top.type + 'px' }"></div>
         </template>
         <template>
           <!--虚拟体育 赛事列表 赛事头-->
@@ -115,7 +115,7 @@ import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/
 import listFilter from "src/base-pc/components/match-list/list-filter/yz_index.vue"; //赛事列表筛选：滚球-球种、早盘-日期
 import listFilterVr from "src/base-pc/components/match-list/list-filter-vr/index.vue"; //vr
 import ListFilterHot from "src/base-pc/components/match-list/list-filter-hot/yz_index.vue"; //热门赛事列表 头部筛选
-import listFilterDate from "src/base-pc/components/match-list/list-filter-date/index.vue"; //热门赛事列表  早盘-日期
+import listFilterDate from "src/base-pc/components/match-list/list-filter-date/yz_index.vue"; //热门赛事列表  早盘-日期
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 // import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
 import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"; //头部

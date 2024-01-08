@@ -50,7 +50,6 @@ const get_tab_play_height = (mid) => {
 		// 计算0号模板次要玩法 盘口+玩法标题高度
 		handicap_height = length * 35 + (40 - (!["en", "ad", "ms"].includes(UserCtr.lang) ? 16 : 0));
 	}
-
 	return handicap_height;
 };
 

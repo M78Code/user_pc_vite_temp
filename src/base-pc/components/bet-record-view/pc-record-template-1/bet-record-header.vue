@@ -74,14 +74,25 @@ import { IconWapper } from 'src/components/icon'
 
 // tab切换 未结算 已结算 预约
 const set_record_selected = number => {
+  appoint_order_status.value = 0
   BetRecordLeft.set_selected(number)
-  // 切换后请求接口
-  useMittEmit(MITT_TYPES.EMIT_GET_RECORD_LIST)
 }
 // tab切换 预约-》 进行中 已失效
 let appoint_order_status = ref(0)
 const set_record_appoint_order_status = number => {
   appoint_order_status.value = number
+  const params = [
+    {
+      jumpFrom: 1,
+      preOrderStatusList: [1]
+    },
+    {
+      jumpFrom: 1,
+      preOrderStatusList: [2,3,4]
+    }
+  ]
+  // 通知 重新获取数据 
+  useMittEmit(MITT_TYPES.EMIT_GET_RECORD_LIST, params[number])
 }
 
 // 返回菜单列表

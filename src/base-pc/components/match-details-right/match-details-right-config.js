@@ -118,10 +118,11 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
    */
   const m_init = (param = { is_ws: false }) => {
     // console.log(MatchDataWarehouseInstance.get_quick_mid_obj(param),'11111');
-    // console.trace(2222)
+    console.trace(2222,allData.mid,param)
     //给仓库类设置id
     //限流 防止mitt多次触发
-    if(allData.details_params.mid == param) return
+    if(allData.mid == param) return
+    console.log(2222);
     allData.details_params = param
     clearTimeout(allData.get_match_details_timer);
     //如果是ws推送
@@ -469,12 +470,12 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
                   }
                 }
                 // 同步数据到详情
-                let msc = detailUtils.build_msc(match_obj);
-                match_obj.msc = msc;
-                Object.assign(
-                  MatchDataWarehouseInstance.match_obj,
-                  match_obj
-                );
+                // let msc = detailUtils.build_msc(match_obj);
+                // match_obj.msc = msc;
+                // Object.assign(
+                //   MatchDataWarehouseInstance.match_obj,
+                //   match_obj
+                // );
               }
               // 是否是从详情页返回列表页
               allData.is_go_match_list = true;

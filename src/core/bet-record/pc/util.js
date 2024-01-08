@@ -48,3 +48,18 @@ export const columns = [
       // sortable: true,
     }
   ]
+
+  export const o_params = [
+  {
+    orderStatus: 0,
+    timeType: 5  
+  },
+  {
+    orderStatus: 1,
+    timeType: 5  
+  },
+  {
+    jumpFrom: 1,
+    preOrderStatusList: [1]
+  }
+]

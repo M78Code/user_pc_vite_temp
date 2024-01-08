@@ -51,6 +51,7 @@ export function match_list_handle_set(match_list) {
             const match = MatchListData.get_quick_mid_obj(lodash.get(_match, 'mid'));
             match.tpl_id = get_match_template_id(match);
             match.api_update_time = date_now;
+            Object.assign(match, get_tab_play_keys(match))
             const ass = compute_match_all_handicap_data(match)
             Object.assign(match, {
                 tpl_id: match.tpl_id,
@@ -60,12 +61,13 @@ export function match_list_handle_set(match_list) {
             //就挂在match_cache上
             set_match(match.mid, {
                 tpl_id: match.tpl_id,
+                hSpecial: match.hSpecial,
+                hSpecial5min: match.hSpecial5min,
+
                 tab_play_keys: match.tab_play_keys,
                 play_current_key: match.tab_play_keys,
-                other_handicap_list: match.tab_play_keys,
                 has_other_play: match.has_other_play,
-                hSpecial: match.hSpecial,
-                hSpecial5min: match.hSpecial5min
+                up_half_text: match.up_half_text
                 , ...ass
             })
         })
@@ -598,7 +600,7 @@ export function compute_match_all_handicap_data(match) {
     if (csid == 1 && [1, 13].includes(+tpl_id) && !is_corner_menu) {
         // 计算角球、罚牌等其他玩法数据
         Object.assign(match_assign, {
-            play_current_play:get_play_current_play(match),
+            play_current_play: get_play_current_play(match),
             other_handicap_list: get_compute_other_play_data(match)
         }, get_match_add_handicap_data(match))// 设置赛事附加盘盘口数据
     }
@@ -702,7 +704,7 @@ function get_match_cur_handicap_data(match, is_ws_call) {
     // 设置是否显示当前局玩法
     return {
         cur_handicap_list: match.cur_handicap_list,
-        is_show_cur_handicap: get_is_show_cur_handicap(match)
+        ...get_is_show_cur_handicap(match)
     }
 }
 /**
@@ -752,20 +754,20 @@ function get_basketball_is_show_cur_handicap(match) {
             col.ols.forEach(ol => {
                 // 非投注项关盘
                 if (ol.oid && ol._hs != 2 && ol.os != 3) {
-                    // match.up_half_text = '-'+window.vue.$root.$t('common.up_half')
+                    match.up_half_text = '-' + i18n_t('common.up_half')
                     is_show_cur_handicap = true
                 }
             })
         })
     } else {
-        //第一节        刚开赛
-        //   if(mmp ==13 || mmp ==0 ){
-        //     match.up_half_text = '-'+window.vue.$root.$t('mmp.2.13')
-        //   }
-        //   //第三节   第二节休息
-        //   if(mmp ==15 || mmp == 302){
-        //     match.up_half_text = '-'+window.vue.$root.$t('mmp.2.15')
-        //   }
+        // 第一节        刚开赛
+        if (mmp == 13 || mmp == 0) {
+            match.up_half_text = '-' + i18n_t('mmp.2.13')
+        }
+        //第三节   第二节休息
+        if (mmp == 15 || mmp == 302) {
+            match.up_half_text = '-' + i18n_t('mmp.2.15')
+        }
         is_show_cur_handicap = true
     }
     return is_show_cur_handicap

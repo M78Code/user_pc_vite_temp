@@ -5,7 +5,6 @@
 -->
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-  <!-- {{ odds_state }} -->
   <div
     v-if="
       ol_data_item &&
@@ -62,6 +61,7 @@
           </div>
         </slot>
       </div>
+    
       <!-- 赔率 -->
       <div :class="['odds yb-number-font', odds_lift]" >
         <div
@@ -227,6 +227,7 @@ const {
 .lock {
   width: 12px;
   height: 12px;
+  background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/lock.svg") 
 }
 .has-hv {
   .handicap-value {
