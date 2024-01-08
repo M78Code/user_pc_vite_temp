@@ -53,7 +53,6 @@ const deal_with_list_data = (data) => {
 	data.forEach(item => {
 		// mids 为  123,44344,1231232, 格式的mids字符串 转化为 mid层级
 		let mid = item.mids.split(',');
-
 		mid.forEach(option => {
 			const match = MatchListData.get_quick_mid_obj(mid) || {}
 			let mid_info = {
@@ -65,11 +64,8 @@ const deal_with_list_data = (data) => {
 			mid_arr.push(mid_info)
 		})
 	})
-	// if (MenuData.is_kemp()) {
-	//   MatchListData.set_list(mid_arr)
-	// }
-	match_list_handle_set(mid_arr)
 	MatchListData.set_list(mid_arr)
+	match_list_handle_set(mid_arr)
 }
 /**
  * @description 专业处理服务器返回的 列表 数据---联赛结构

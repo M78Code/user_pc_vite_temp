@@ -273,7 +273,7 @@ import sport_icon from './sport_icon.vue'
 // import football_icon from 'src/assets/images/football_icon.png'
 import { copyToClipboard } from 'quasar'
 import GlobalSwitchClass from 'src/core/global/global.js'
-import { BetRecordHistory } from "src/core/bet-record/pc/bet-record-instance.js"
+import BetRecordHistory from "src/core/bet-record/pc/bet-record-history.js"
 const lang = computed(() => {
   return UserCtr.lang;
 })

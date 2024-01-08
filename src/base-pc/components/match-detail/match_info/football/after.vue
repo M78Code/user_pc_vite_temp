@@ -191,12 +191,12 @@
           >{{lodash.get(match_info, 'msc_obj.S1.away')}}</span>
           <!-- 加时赛比分 -->
           <span
-            v-show="lodash.get(match_info, 'msc.S7.away')"
+            v-show="lodash.get(match_info, 'msc_obj.S7.away')"
             :class="{'mmp-active': ['32','41','33','42'].includes(lodash.get(match_info,'mmp'))}"
           >{{lodash.get(match_info, 'msc_obj.S7.away')}}</span>
           <!-- 点球大战 -->
           <span
-            v-show="lodash.get(match_info, 'msc.S170.away')"
+            v-show="lodash.get(match_info, 'msc_obj.S170.away')"
             :class="{'mmp-active': ['34','50','120'].includes(lodash.get(match_info,'mmp'))}"
           >{{lodash.get(match_info, 'msc_obj.S170.away')}}</span>
         </div>
@@ -321,22 +321,22 @@ export default {
         this.match_change_time = new Date().getTime()
         this.reload_data();
         this.timestamp = 0;
-        !lodash.get(res, 'msc.S1') && (res.msc.S1 = this.default);
-        !lodash.get(res, 'msc.S5') && (res.msc.S5 = this.default);
+        // !lodash.get(res, 'msc.S1') && (res.msc.S1 = this.default);
+        // !lodash.get(res, 'msc.S5') && (res.msc.S5 = this.default);
         // 不确定是不是有地方要显示默认比分0:0，先只针对 S10(点球)做处理
-        !lodash.get(res, 'msc.S10') && (res.msc.S10 = {
-          home: '',
-          away: ''
-        });
-        !lodash.get(res, 'msc.S11') && (res.msc.S11 = this.default);
-        !lodash.get(res, 'msc.S12') && (res.msc.S12 = this.default);
+        // !lodash.get(res, 'msc.S10') && (res.msc.S10 = {
+        //   home: '',
+        //   away: ''
+        // });
+        // !lodash.get(res, 'msc.S11') && (res.msc.S11 = this.default);
+        // !lodash.get(res, 'msc.S12') && (res.msc.S12 = this.default);
         //加时赛
         if (["32", "41", "33", "42", "110"].includes(res.mmp) && !lodash.get(res, 'msc.S7')) {
-          res.msc.S7 = this.default;
+          // res.msc.S7 = this.default;
         }
         //点球大战
         if (["34", "50", "120"].includes(res.mmp) && !lodash.get(res, 'msc.S170')) {
-          res.msc.S170 = this.default;
+          // res.msc.S170 = this.default;
         }
         if (get_match_status(res.ms) && ["6", "7"].includes(res.mmp)) {
           this.timestamp = parseInt(res.mst);
