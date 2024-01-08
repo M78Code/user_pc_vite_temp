@@ -724,13 +724,15 @@
           .control {
             .btn {
               display: block;
-              background-image: var(--qq--control-bg-img-url); //todo `url(${preffix}/image/yabo/theme01/img/svg/arrow.svg)`,
+              background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/arrow.svg");
+             // background-image: var(--qq--control-bg-img-url); //todo `url(${preffix}/image/yabo/theme01/img/svg/arrow.svg)`,
               &:hover {
-                background-image: var(--qq--control-bg-img-url-hover); //todo `url(${preffix}/image/yabo/theme01/img/svg/arrow_active.svg)`,
+                background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/arrow_active.svg");
+                //background-image: var(--qq--control-bg-img-url-hover); //todo `url(${preffix}/image/yabo/theme01/img/svg/arrow_active.svg)`,
               }
             }
             .control-item {
-              background: var(--q-match-resluts-bg-c-3);
+              background: var(--q-gb-bd-c-8);
               &.active {
                background: var(--q-gb-bg-c-17);
               }

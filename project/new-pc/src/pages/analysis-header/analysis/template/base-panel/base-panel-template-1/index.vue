@@ -1,4 +1,4 @@
-<template>7
+<template>
   <div class="base_panel">
     <!-- 杯赛积分 -->
     <div class="panel integrate" :class="{ 'show_all_rank': flag }">
@@ -431,7 +431,7 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 // const { match,tournamentTypeFinish,vs_info } = useRegistPropsHelper(component_symbol, defineProps(need_register_props))
 import { formatTime, result_filter } from 'src/output/index.js'
-import { MSelectFullVersionWapper as MSelect } from 'src/base-pc/components/analysis/template/m-select/index.js'
+import { MSelectFullVersionWapper as MSelect } from '../../m-select/index.js'
 const props = defineProps(need_register_props)
 //杯赛数据
 const vs_info_data = ref([]);

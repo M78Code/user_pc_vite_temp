@@ -9,15 +9,13 @@ import {
   MITT_TYPES,
 } from "src/core/mitt/index.js";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
-////import store from "src/store-redux/index.js";
 import { SessionStorage } from "src/output/module/constant-utils.js";
 import STANDARD_KEY from "src/core/standard-key";
 import {set_template_width,get_match_tpl_number} from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 const menu_key = STANDARD_KEY.get("menu_pc");
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_common } from "src/api/index.js"
-
-
+import { menu_default } from "./config/menu-default.js"
 // const state = store.getState();
 // 热门除了50199-30199  赛事、50101-30101 竞足外，
 // 常规联赛原菜单ID：301+联赛ID、新菜单：502+菜单ID；电竞联赛原菜单：30+联赛ID、新菜单ID：联赛ID
@@ -118,21 +116,29 @@ class MenuData {
     this.current_ball_type = 0
 
     this.left_menu_list = []
+   
+  }
+
+  // 初始化菜单 默认值
+  set_left_menu_list_init(list = []){
+    this.left_menu_list = list.length ? list : menu_default
+    console.error('menu_default',JSON.parse(JSON.stringify(this)))
+    this.set_menu_data_version()
   }
 
   // 设置 菜单的版本变化
-  set_menu_data_version(){
+  set_menu_data_version = lodash.debounce(() => {
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA)
     this.menu_data_version.value = Date.now()
-  }
+  },10)
+
   /**
    * @Description 设置 api参数的版本
    * @param {undefined} undefined
    */
-  set_api_config_version(version) {
-    console.log('version', version);
+  set_api_config_version = lodash.debounce((version) => {
     this.api_config_version.value = version;
-  }
+  },10)
 
   /**
    * @Description 是否电竞的球种ID
@@ -523,6 +529,8 @@ class MenuData {
     // 获取菜单数据缓存
     let session_info = sessionStorage.getItem("is_session_menu_data");
     if (!session_info) {
+      // 没有数据 使用默认值
+      this.set_left_menu_list_init()
       return;
     }
     const session_menu_data = JSON.parse(session_info);
@@ -767,41 +775,20 @@ class MenuData {
       SessionStorage.set(menu_key,this)
     })
   }
-
-  /**
-   * @Description  是否角球玩法菜单
-   * @param {boolean}
-   */
-  is_corner_menu() {
-    return [101210, 101310].includes(+this.left_menu_result.lv2_mi);
-  }
-  /**
-   * 是否选中了早盘
-   *  mi [number|string] 要比对的值
-  */
-  is_zaopan(mi) {
-    return this._is_cur_mi(3, mi)
-  }
-  /**
-   * 强制更新 菜单的版本号 ， 会重新计算
-   *
-   * 更新菜单整体视图
-   *
-   * $this.update_menu_version()
-   */
-  update_menu_version() {
-    BaseData.menu_version = Date.now();
-  }
+  
 
   set_menu_root(val){
     this.menu_root = val
+    let left_menu_list = []
     if(val == 2){
-      this.left_menu_list = lodash.cloneDeep(this.to_day_list)
+      left_menu_list = lodash.cloneDeep(this.to_day_list) 
+     
     }
     if(val == 3){
-      this.left_menu_list = lodash.cloneDeep(this.early_list)
+      left_menu_list = lodash.cloneDeep(this.early_list) 
     }
-    console.error("menu",this)
+    this.set_left_menu_list_init(left_menu_list)
+    this.set_menu_data_version()
   }
  
   // 根据菜单设置对应的数据
@@ -927,7 +914,7 @@ class MenuData {
     this.in_play_list = in_play_list
     
     // 默认设置 早盘数据
-    this.left_menu_list = to_day_list
+    this.set_left_menu_list_init(to_day_list)
   }
   /**
  * 暂时获取联赛接口  后期国际化从init取 目前init没有国际化
@@ -938,9 +925,7 @@ class MenuData {
         this.vr_list = res.data;
     }
   }
-  is_kemp() {
-    return (this.match_list_api_config.guanjun || "").includes("guanjun");
-  }
+ 
   // 新菜单规律核心参照表
   /**
    * 新菜单规律核心参照表  根据这个表 设计
@@ -1067,7 +1052,14 @@ class MenuData {
   static cl_1() {
     // console.error("cl_1");
   }
-  
+  /**
+   * @Description  是否角球玩法菜单
+   * @param {boolean}
+   */
+  is_corner_menu() {
+    return [101210, 101310].includes(+this.left_menu_result.lv2_mi);
+  }
+
   is_esports_champion() {
     return (this.match_list_api_config || {}).guanjun == "dianjing-guanjun";
   }
