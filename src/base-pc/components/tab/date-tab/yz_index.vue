@@ -2,7 +2,7 @@
   <div class="tab-wrap fit relative-position" ref="wrap" @mousedown="mousedown" :data-version="date_menu_version">
     <div class="item-wrap relative-position" ref="item_wrap" :style="{ left: item_wrap_left + 'px' }" :key="key">
       <!-- 所有日期  -->
-      <template v-for="(item, index) in list" :key="item.menuName + '_' + index">
+      <template  v-for="(item, index) in list" :key="item.menuName + '_' + index">
         <div class="tab-item yb-flex-center" :class="[{ active: final_index == index }]"
            @click.stop="() => {
               final_index = index;

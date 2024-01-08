@@ -25,7 +25,7 @@ const compute_get_date_menu_list_params = () => {
         lv2_mi,
         tid = "",
     } = left_menu_result;
-    const euid = MenuData.get_mid_for_euid(lv1_mi)
+    let euid = MenuData.get_mid_for_euid(lv1_mi)
     if (lv1_mi == 2000) {
         //  早盘 或者 今日的  电竞
         let csid = parseInt(lv2_mi) - 2000;
