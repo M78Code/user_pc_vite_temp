@@ -1,4 +1,4 @@
-<template>7
+<template>
   <div class="base_panel">
     <!-- 杯赛积分 -->
     <div class="panel integrate" :class="{ 'show_all_rank': flag }">

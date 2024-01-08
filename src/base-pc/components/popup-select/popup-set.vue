@@ -13,7 +13,7 @@
         <div class="relative-position">
             <div class="item-wrap">
                 <div class="triangle"></div>
-                <div class="item ellipsis" v-for="item in theme_list" :class="{ active: theme == item.key }"
+                <div class="item ellipsis" v-for="item in theme_list" :class="{ active: theme == item.key }" :key="item.key"
                     @click="handle_set_theme(item.key)">
                     {{ item.i18n[lang] || item.key }}
                     <!-- 拿后台配置的名称 -->

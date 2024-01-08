@@ -176,8 +176,9 @@
                         </div>
                       </div>
                       <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
+                      <!-- ms	string	赛事状态：0未开赛，1 进行中  -->
                       <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
-                        :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
+                        :class="{ 'visibility-hidden': match_of_list.ms == 1 }">
                         {{ home_score }}
                       </div>
 
@@ -1296,7 +1297,6 @@ export default {
         }
 
         .score {
-          height: 0.3rem;
           font-size: 0.14rem;
           display: flex;
           align-items: center;
