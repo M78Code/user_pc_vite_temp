@@ -76,7 +76,6 @@ const emit_value = (value) => {
     })
   }
   // 预约 进行中 已取消  预约失败  
-  console.log(value);
   if (BetRecordHistory.selected == 2) {
     Object.assign(BetRecordHistory.params, {
       preOrderStatusList: value.split(',')
