@@ -1,0 +1,14 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "赛事卡片组件"
+  },
+  "props": {
+    "match-data": {
+      "type": [ "Object", "Array" ],
+      "default": [],
+      "description": "赛事卡片组件"
+    }
+  }
+}

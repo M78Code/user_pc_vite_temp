@@ -35,7 +35,6 @@ import { get_match_status } from 'src/core/utils/common/index'
 import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data.vue"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 const props = defineProps({
   // 盘口列表
   handicap_list: {
@@ -69,7 +68,8 @@ const match_style_obj=inject("match_style_obj")
 const match=inject("match")
 // 赛事模板宽度
 const match_list_tpl_size=inject("match_list_tpl_size")
-
+//非坑位对象
+const not_hn_obj_map=inject('not_hn_obj_map')
 // 组件是否已挂载
 const is_mounted = ref(false);
 const cur_esports_mode = ref(BetData.cur_esports_mode);
@@ -79,10 +79,7 @@ onMounted(() => {
     is_mounted.value = true
   })
 })
-//非坑位对象
-const not_hn_obj_map = computed(() => {
-  return get_match_to_map_obj(match.value, null, props.add_type); //非坑位对象
-})
+
 //坑位对象
 const hn_obj = toRef(MatchListData.list_to_obj,'hn_obj')
 const col_ols_data = computed(() => {

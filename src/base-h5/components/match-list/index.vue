@@ -97,7 +97,7 @@ const target_com = computed(() => {
 
 // 复刻版显示骨架图
 const is_show_skeleton = computed(() => {
-  return PROJECT_NAME === 'app-h5'
+  return ['app-h5', 'ouzhou-h5'].includes(PROJECT_NAME)
 })
 
 /**

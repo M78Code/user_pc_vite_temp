@@ -20,7 +20,8 @@
       {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--
       length--- {{ match_list_card_key_arr.length }}
     </div>
-    <div class="scroll-fixed-header" :class="{ 'no-data': load_data_state != 'data' }">
+    <!--  :class="{ 'no-data': load_data_state != 'data' }" -->
+    <div class="scroll-fixed-header">
       <!-- banner -->
       <div class="banner-box" :style="{ height: GlobalAccessConfig.get_show_banner() ? '120px' : '0px' }"
         v-if="GlobalAccessConfig.get_show_banner()"></div>
@@ -43,8 +44,8 @@
         :load_data_state="load_data_state" />
       <!-- 电竞顶部菜单 -->
       <esports-header v-if="MenuData.is_esports()" :load_data_state="load_data_state" />
-      <!-- 赛事状态 | 赛种类型      -->
-      <list-filter-vr :menuInfo="MenuData.vr_list" class="sticky-wrap" v-if="MenuData.is_vr()"/>
+      <!-- 赛事状态 | 赛种类型    class="sticky-wrap"    -->
+      <list-filter-vr :menuInfo="MenuData.vr_list" :load_data_state="load_data_state"  v-if="MenuData.is_vr()"/>
       <!-- 联赛  VR 足球才会有联赛-->
       <div class="leagues-tabs leagues-bg" v-if="MenuData.mid_menu_result.mi == '1001'">
         <!-- 联赛菜单 -->
