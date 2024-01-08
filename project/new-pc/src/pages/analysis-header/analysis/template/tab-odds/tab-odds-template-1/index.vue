@@ -230,7 +230,7 @@ onUnmounted(() => {
       line-height: 28px;
       cursor: pointer;
       text-align: center;
-      border: 1px solid var(--q-analysis-color-10);
+      border: 1px solid #DEE4F2;
 
       &:last-child {
         border-left: none;
@@ -279,17 +279,17 @@ onUnmounted(() => {
   }
 
   .d-body {
-    border-bottom: 1px solid var(--q-analysis-color-10);
+    border-bottom: 1px solid #DEE4F2;
 
     &:last-child {
-      border-bottom: 1px solid var(--q-analysis-color-10);
+      border-bottom: 1px solid #DEE4F2;
       border-radius: 0 0 8px 8px;
     }
 
     .company {
       height: 80px;
       width: 160px;
-      border-right: 1px solid var(--q-analysis-color-10);
+      border-right: 1px solid #DEE4F2;
       display: flex;
       align-items: center;
       padding-left: 30px;
@@ -307,7 +307,7 @@ onUnmounted(() => {
           align-items: center;
           justify-content: center;
           height: 40px;
-          border-right: 1px solid var(--q-analysis-color-10);
+          border-right: 1px solid #DEE4F2;
           flex: 1;
           position: relative;
           margin-bottom: 0;
@@ -363,7 +363,7 @@ onUnmounted(() => {
       }
 
       .handicap-before {
-        border-bottom: 1px solid var(--q-analysis-color-10);
+        border-bottom: 1px solid #DEE4F2;
       }
 
       .timer {

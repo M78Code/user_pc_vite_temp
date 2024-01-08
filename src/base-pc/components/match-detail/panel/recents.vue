@@ -76,7 +76,6 @@
               <bet-item
                 v-if="lodash.get(item, 'hps.0.hl') && mx_get_bet_simple(item,index,'oid')"
                 :key="`item_0_${i}`"
-                class="item_border"
                 :match_info="item"
                 :play_data="mx_get_bet_simple(item,index,'play')"
                 :bet_data="mx_get_bet_simple(item,index,'bet_data')"

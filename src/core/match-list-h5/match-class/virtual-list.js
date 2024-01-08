@@ -170,7 +170,7 @@ class VirtualList {
         // 如果当前折叠 并且 当前赛事 显示联赛，则 -1 操作
         if (is_show_league && !show_card) {
           // 赛事容器数量减1，相当于页面可视区域 总数量 page_count 加1个
-          if (already_folded <= 7) match_count--; 
+          if (already_folded <= 10) match_count--; 
           already_folded++;
         }
       }

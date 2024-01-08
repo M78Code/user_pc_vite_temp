@@ -1,6 +1,7 @@
 .panel {
   margin-bottom: 20px;
   min-width: 960px;
+  background: #fff;
   .panel-title {
     display: flex;
     justify-content: space-between;
@@ -19,12 +20,12 @@
   .d-body {
     color: var(--q-gb-t-c-3);
     .d-td:not(:last-child) {
-      border-right: 1px solid var(--q-analysis-color-10);
+      border-right: 1px solid #DEE4F2;
     }
   }
   .d-tr {
     display: flex;
-    border-bottom: 1px solid var(--q-analysis-color-10);
+    border-bottom: 1px solid #DEE4F2;
     .d-td {
       display: flex;
       align-items: center;
@@ -99,6 +100,7 @@
       height: 74px;
       padding: 0 20px;
       color: var(--q-analysis-color-1);
+      border-bottom: 1px solid #DEE4F2;
       .vs {
         font-size: 16px;
         font-weight: 600;
@@ -155,7 +157,7 @@
         &.away {
           align-items: flex-end;
           .d-title {
-            border-right: 1px solid var(--q-analysis-color-10);
+            border-right: 1px solid #DEE4F2;
           }
           .team-name {
             .logo {
@@ -172,12 +174,11 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      background: var(-q-analysis-color-17);
       height: 28px;
-      color: var(--q-analysis-color-12);
+      border-bottom: 1px solid #DEE4F2;
       padding: 0 20px;
       &:last-child {
-        border-bottom: 1px solid var(--q-analysis-color-10);
+        border-bottom: 1px solid #DEE4F2;
         border-radius: 0 0 8px 8px;
       }
       span {
@@ -193,7 +194,7 @@
       display: flex;
       justify-content: space-between;
       padding: 0 20px;
-      border-bottom: 1px solid var(--q-analysis-color-10);
+      border-bottom: 1px solid #DEE4F2;
       .score {
         display: flex;
         justify-content: center;
@@ -217,8 +218,8 @@
           &:nth-child(2) {
             text-align: center;
             line-height: 39px;
-            border-left: 1px solid var(--q-analysis-color-10);
-            border-right: 1px solid var(--q-analysis-color-10);
+            border-left: 1px solid #DEE4F2;
+            border-right: 1px solid #DEE4F2;
           }
         }
       }
@@ -262,14 +263,14 @@
   font-family: PingFangSC-Medium;
 }
 .font999 {
-  color: var(--q-analysis-color-14);
+  color: #E93D3D;;
   font-family: PingFangSC-Regular;
 }
 .before {
   .content {
     .d-title {
-      border-left: 1px solid var(--q-analysis-color-10);
-      border-right: 1px solid var(--q-analysis-color-10);
+      border-left: 1px solid #DEE4F2;
+      border-right: 1px solid #DEE4F2;
       padding: 0;
       div {
         width: 22.15%;
@@ -303,7 +304,7 @@
       div:first-child {
         width: 200px;
         text-align: center;
-        border-right: 1px solid var(--q-analysis-color-10);
+        border-right: 1px solid #DEE4F2;
         height: 100%;
         line-height: 39px;
       }
@@ -314,14 +315,14 @@
     }
     .score {
       width: 110px;
-      border-right: 1px solid var(--q-analysis-color-10);
+      border-right: 1px solid #DEE4F2;
     }
   }
 }
 /*  近期战绩 */
 .near {
   .both:first-child {
-    border-right: 1px solid var(--q-analysis-color-10);
+    border-right: 1px solid #DEE4F2;
   }
   .t-body {
     border-top: none;
@@ -332,9 +333,9 @@
       overflow: hidden;
     }
     .home {
-      border-right: 1px solid var(--q-analysis-color-10);
+      border-right: 1px solid #DEE4F2;
       .d-title {
-        border-left: 1px solid var(--q-analysis-color-10);
+        border-left: 1px solid #DEE4F2;
         padding: 0;
         &:last-child {
           border-radius: 0 0 0 8px;
@@ -350,7 +351,7 @@
       }
       .d-tr {
         border-right: none !important;
-        border-left: 1px solid var(--q-analysis-color-10);
+        border-left: 1px solid #DEE4F2;
         &:last-child {
           border-radius: 0 0 0 8px;
         }
@@ -373,7 +374,7 @@
       }
       .d-title,
       .d-tr {
-        border-right: 1px solid var(--q-analysis-color-10);
+        border-right: 1px solid #DEE4F2;
         border-left: none !important;
       }
       .d-tr:last-child {
@@ -383,9 +384,9 @@
     .d-tr {
       padding: 0 !important;
       height: 56px;
-      border-right: 1px solid var(--q-analysis-color-10);
+      border-right: 1px solid #DEE4F2;
       &:last-child {
-        border-bottom: 1px solid var(--q-analysis-color-10);
+        border-bottom: 1px solid #DEE4F2;
       }
       .result {
         width: 168px;
@@ -401,7 +402,7 @@
         overflow: hidden;
         .match-time {
           display: unset;
-          border-right: 1px solid var(--q-analysis-color-10);
+          border-right: 1px solid #DEE4F2;
 
           padding: 10px 0 0 10px;
           flex: 1;
@@ -410,7 +411,7 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          border-right: 1px solid var(--q-analysis-color-10);
+          border-right: 1px solid #DEE4F2;
 
           width: 70%;
           & > span {
@@ -421,8 +422,8 @@
           .score {
             width: 33%;
             height: 100%;
-            border-left: 1px solid var(--q-analysis-color-10);
-            border-right: 1px solid var(--q-analysis-color-10);
+            border-left: 1px solid #DEE4F2;
+            border-right: 1px solid #DEE4F2;
           }
         }
       }
@@ -435,7 +436,7 @@
     display: flex;
     padding: 0 20px;
     color: var(--q-analysis-color-5);
-    border-bottom: 1px solid var(--q-analysis-color-10);
+    border-bottom: 1px solid #DEE4F2;
     .home {
       .logo {
         margin-right: 10px;
@@ -461,11 +462,11 @@
     flex: 1;
   }
   .home {
-    border-right: 1px solid var(--q-analysis-color-10);
+    border-right: 1px solid #DEE4F2;
   }
   .d-tr {
     display: flex;
-    border-bottom: 1px solid var(--q-analysis-color-10);
+    border-bottom: 1px solid #DEE4F2;
     &:last-child {
       border-bottom: transparent;
     }
@@ -477,10 +478,10 @@
   .content {
     display: flex;
     .wrap-home {
-      border-right: 1px solid var(--q-analysis-color-10);
+      border-right: 1px solid #DEE4F2;
     }
     .future-item {
-      border-bottom: 1px solid var(--q-analysis-color-10);
+      border-bottom: 1px solid #DEE4F2;
       padding: 0 10px 0 20px;
     }
     .wrap-home,
@@ -556,35 +557,35 @@
     border-bottom: 0;
   }
   .simple-team {
-    border-bottom: 1px solid var(--q-analysis-color-10) !important;
+    border-bottom: 1px solid #DEE4F2 !important;
     .home {
       border-bottom: 0;
     }
   }
   .content {
     .item:not(:last-child) {
-      border-bottom: 1px solid var(--q-analysis-color-10);
+      border-bottom: 1px solid #DEE4F2;
     }
     .wrap-home {
-      border-left: 1px solid var(--q-analysis-color-10);
-      border-bottom: 1px solid var(--q-analysis-color-10);
+      border-left: 1px solid #DEE4F2;
+      border-bottom: 1px solid #DEE4F2;
       border-radius: 0 0 0 8px;
     }
     .wrap-away {
-      border-bottom: 1px solid var(--q-analysis-color-10);
-      border-right: 1px solid var(--q-analysis-color-10);
+      border-bottom: 1px solid #DEE4F2;
+      border-right: 1px solid #DEE4F2;
       border-radius: 0 0 8px 0;
     }
   }
   .content.no_data {
     display: flex;
-    border-top: 1px solid var(--q-analysis-color-10);
+    border-top: 1px solid #DEE4F2;
 
     text-align: center;
     height: 40px;
     line-height: 40px;
     .wrap-away {
-      border-right: 1px solid var(--q-analysis-color-10);
+      border-right: 1px solid #DEE4F2;
     }
     .wrap-home {
       border-radius: 0 0 0 8px;
@@ -620,8 +621,8 @@
       }
       .vs {
         height: 100%;
-        border-left: 1px solid var(--q-analysis-color-10);
-        border-right: 1px solid var(--q-analysis-color-10);
+        border-left: 1px solid #DEE4F2;
+        border-right: 1px solid #DEE4F2;
         line-height: 39px;
       }
     }
@@ -629,7 +630,7 @@
       width: 23%;
       flex: none !important;
       height: 100%;
-      border-right: 1px solid var(--q-analysis-color-10);
+      border-right: 1px solid #DEE4F2;
       padding-top: 2px;
     }
     .wrap-home {
