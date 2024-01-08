@@ -13,6 +13,8 @@
     <component :is="`MatchTpl${match_style_obj.view_tpl_id}After`" v-if="[1, 2].includes(match_style_obj.show_level)"
       :mid="mid" />
   </div>
+  <div class="test">
+  </div>
 </template>
 
 <script>
@@ -116,7 +118,7 @@ export default {
     font-size: 14px;
     z-index: 999999;
     left: 0;
-    bottom: 0;
+    top: 0;
     user-select: text;
   }
 }
