@@ -253,8 +253,7 @@
                   @pageChange="changePage"
                   @pageSizeChange="pageSizeChange"
                   @goPageChange="goPageChange"
-                  :reset_pagination="pageCurrent"
-      >
+                  :reset_pagination="BetRecordHistory.params.page">
       </Pagination>
 
     </div>
@@ -274,14 +273,13 @@ import sport_icon from './sport_icon.vue'
 // import football_icon from 'src/assets/images/football_icon.png'
 import { copyToClipboard } from 'quasar'
 import GlobalSwitchClass from 'src/core/global/global.js'
-import { BetRecordHistory } from "src/core/bet-record/pc/bet-record-instance.js"
+import BetRecordHistory from "src/core/bet-record/pc/bet-record-history.js"
 const lang = computed(() => {
   return UserCtr.lang;
 })
-const pageSize = ref('50')
-const pageCurrent = ref('1')
+
 const getRowIndex = (rowIndex) => {
-  return (pageCurrent.value - 1) * pageSize.value + rowIndex + 1;
+  return (BetRecordHistory.params.page - 1) * BetRecordHistory.params.size + rowIndex + 1;
 }
 
 
@@ -310,9 +308,7 @@ const { columns, tableData, loading, handle_fetch_order_list,records } = useGetO
 const labelClick = (row) => {
   console.log(row)
 }
-watch(() => props.timeType, (newVal) => {
-  pageCurrent.value = '1'
-})
+
 // 监听tab 切换表格头数据
 watch(() => props.current_tab, (newVal) => {
   tableData.value = []
@@ -558,27 +554,22 @@ const order_status = (orderStatus) => {
 // 页码变化
 const changePage = (arv) => {
   const { current } = arv
-  pageCurrent.value = current
-  emit('itemFilter', {
-    page: current,
-    size: +pageSize.value,
-    timeType: props.timeType
+  Object.assign(BetRecordHistory.params, {
+    page: current
   })
+  BetRecordHistory.handle_fetch_order_list()
 }
 const goPageChange = (v) => {
-  pageCurrent.value = v
-  emit('itemFilter', {
-    page: v,
-    size: +pageSize.value,
-    timeType: props.timeType
+  Object.assign(BetRecordHistory.params, {
+    page: v
   })
+  BetRecordHistory.handle_fetch_order_list()
 }
 const pageSizeChange = (v) => {
-  pageSize.value = v.value
-  emit('itemFilter', {
-    size: v.value,
-    timeType: props.timeType
+  Object.assign(BetRecordHistory.params, {
+    size: v.value
   })
+  BetRecordHistory.handle_fetch_order_list()
 }
 /**
  * 复制id

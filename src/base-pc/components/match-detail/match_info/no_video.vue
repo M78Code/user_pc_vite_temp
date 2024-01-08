@@ -72,7 +72,7 @@ export default {
   }
   .text1 {
     font-size: 14px;
-    color: var(--q-gb-t-c-1);
+    color: var(--q-gb-t-c-18);
   }
   .img-list {
     display: flex;

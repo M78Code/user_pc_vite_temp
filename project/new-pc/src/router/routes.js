@@ -27,6 +27,12 @@ const routes = [
         name: "video",
         component: () =>import("../pages/video/video.vue")   
       },
+      // 搜索
+      {
+        path: "/search/:keyword/:csid",
+        name: "search",
+        component: () => import('../pages/search/index.vue'),
+      },
     ],
   },
   //赛事分析
@@ -35,15 +41,6 @@ const routes = [
     name: "analysis_header",
 
     component: () => import('../pages/analysis-header/analysis-header.vue'),
-  },
-  // 搜索
-  {
-    path: "/search/:keyword/:csid",
-    name: "search",
-    component: () => import('../pages/search/index.vue'),
-    meta: {
-      keepAlive: true, // 需要缓存
-    }
   },
   //投注记录
   {
