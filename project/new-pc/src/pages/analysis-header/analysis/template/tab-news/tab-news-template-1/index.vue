@@ -262,7 +262,7 @@ onUnmounted(() => {
 
   .article_detail {
     background: var(--q-analysis-color-16);
-    border: 1px solid var(--q-analysis-color-10);
+    border: 1px solid #DEE4F2;
     border-radius: 8px;
     height: 100%;
     padding: 15px 38px 38px;
@@ -274,7 +274,7 @@ onUnmounted(() => {
 
     .article_title {
       font-size: 16px;
-      color: var(--q-analysis-color-10);
+      color: #DEE4F2;
       font-weight: 600;
     }
 
@@ -331,7 +331,7 @@ onUnmounted(() => {
       display: block;
       width: 3px;
       height: 16px;
-      background: var(--q-analysis-color-14);
+      background: #E93D3D;;
       border-radius: 1.5px;
       position: absolute;
       top: 16px;
@@ -351,7 +351,7 @@ onUnmounted(() => {
         width: 100%;
         display: flex;
         justify-content: space-between;
-        border-bottom: 1px solid var(--q-analysis-color-10);
+        border-bottom: 1px solid #DEE4F2;
         padding: 20px 0;
         cursor: pointer;
       }
@@ -376,7 +376,7 @@ onUnmounted(() => {
 
         .title {
           font-size: 20px;
-          color: var(--q-analysis-color-10);
+          color: #DEE4F2;
           font-weight: 600;
           width: 100%;
 
@@ -417,7 +417,7 @@ onUnmounted(() => {
   :deep(.load-data-wrap) {
     .empty-wrap {
       .text-center {
-        color: var(--q-analysis-color-10);
+        color: #DEE4F2;
       }
     }
 

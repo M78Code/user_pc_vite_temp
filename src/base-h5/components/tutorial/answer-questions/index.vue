@@ -75,7 +75,7 @@
                     </div>
                 </div>
 
-                <div v-if="state.afterAnswerQuestion" class="ht-button default" @click="nextQuestionsHandle">
+                <div v-if="state.afterAnswerQuestion" :class="[nextQuestionsText() && 'ht-button', 'default']" @click="nextQuestionsHandle">
                 {{ nextQuestionsText() }}
                 </div>
             </div>
@@ -224,8 +224,9 @@ const go_back = () => {
     .ht-questions {
         padding: .2rem;
         margin: 0 .2rem .11rem .2rem;
-        background-color: var(--q-gb-bg-c-15);
+        background-color: var(--q-gb-bg-c-25);
         border-radius: .2rem;
+        position: relative;
         .ht-topic-type {
             width: .4rem;
             height: .18rem;
@@ -438,7 +439,17 @@ const go_back = () => {
             color: var(--q-gb-t-c-1);
             font-weight: 500;
             text-align: center;
-            margin-top: .27rem;
+            padding: 0.16rem 0 0rem 0;
+            margin-top: .3rem;
+            margin-bottom: -.04rem;
+            &::after {
+                content: ' ';
+                position: absolute;
+                bottom: .56rem;
+                left: 0;
+                width: 100%;
+                border-top: .01rem solid var(--q-gb-bd-c-6);
+            }
         } 
     }
 
@@ -459,7 +470,7 @@ const go_back = () => {
         .ht-button {
             width: 2.4rem;
             height: .44rem;
-            background-color: var(--q-gb-bg-c-4);
+            background-color: var(--q-gb-bg-c-42);
             border-radius: .44rem;
             font-size: .16rem;
             color: var(--q-gb-bd-c-12);
@@ -467,7 +478,7 @@ const go_back = () => {
             align-items: center;
             justify-content: center;
             margin-top: .12rem;
-            border: 1px solid transparent;
+            border: .01rem solid var(--q-gb-bd-c-18);
         }
     }
 

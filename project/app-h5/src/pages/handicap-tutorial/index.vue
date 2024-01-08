@@ -1,6 +1,6 @@
 <template>
     <div class="handicap-tutorial ht-bg-color">
-        <navigation-bar class="ht-bg-color" :title="i18n_t('app_h5.handicap_tutorial.answer_question')" borderBottomNoShow :centerContentType="state.inAnswerQuestion ? 'text' : 'switch'">
+        <navigation-bar :useCustomGoBack="state.inAnswerQuestion" class="ht-bg-color" :title="i18n_t('app_h5.handicap_tutorial.answer_question')" borderBottomNoShow :centerContentType="state.inAnswerQuestion ? 'text' : 'switch'" @goBackHandle="goBackHandle">
             <!-- '让球', '大小球' -->
             <template v-slot:center>
                 <div class="ht-switch-box">
@@ -114,6 +114,10 @@ const state = reactive({
     bsHtContentHeightList: [],
     isClickFlag: false
 })
+
+const goBackHandle = () => {
+    state.inAnswerQuestion = false
+}
 
 // 返回上一页
 const go_back = () => {

@@ -1447,7 +1447,7 @@ class MatchMeta {
         },
         // axios中catch回调方法
         fun_catch: (e) => {
-          console.log(e)
+          console.error(e)
           resolve({ code: '0401038' })
         },
         fun_finally: () => { },
