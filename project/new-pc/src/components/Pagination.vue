@@ -7,36 +7,6 @@
 -->
 <template>
   <div>
-    <div class="table-footer-bar" v-if="is_bet_record">
-      <span>
-        {{ i18n_t('bet_record.total_count') }}
-        <!-- 总计单数 -->
-        ：
-        <span class="footer-text">{{ count }}</span>
-      </span>
-      <span>
-        {{ toolSelected == '2' ? i18n_t('bet.bet_book_total') : i18n_t('bet_record.total_v') }}
-        <!-- 总投注额/预约总投资额 -->
-        ：
-        <span class="footer-text">{{ betTotalAmount }}</span>
-        <!-- <span class="footer-text">{{ format_balance(betTotalAmount) }}</span> -->
-      </span>
-      <div>
-        <!-- 目前屏蔽有效流水展示 -->
-        <span v-if="0">
-          {{ i18n_t('bet_record.effective_water') }}
-          <!-- 有效流水 -->
-          ：{{ effectiveFlow }}
-        </span>
-        <span v-if="!isUnsettled">
-          {{ profit.indexOf("-") != -1 ? i18n_t('bet_record.lose') : i18n_t('bet_record.win') }}：
-          <span
-            class="footer-text"
-          >{{ profit }}</span>
-        </span>
-        <!-- <span>{{profit.indexOf("-")!=-1?'输':'赢'}}：{{profit}}</span> -->
-      </div>
-    </div>
     <div class="pagination-wrap" :style="results_table">
       <q-pagination v-model="current" color="basic" :max="max" size="sm" :max-pages="9" direction-links ellipses
         icon-prev="icon-triangle2" icon-next="icon-triangle3" />
@@ -84,16 +54,7 @@ export default defineComponent({
     count: {
       type: null,
     },
-
-    betTotalAmount: {
-      type: String,
-      default: '',
-    },
     effectiveFlow: {
-      type: String,
-      default: '',
-    },
-    profit: {
       type: String,
       default: '',
     },
@@ -108,10 +69,6 @@ export default defineComponent({
     toolSelected: {
       type: Number,
       default: 0,
-    },
-    isUnsettled: {
-      type: Boolean,
-      default: false,
     },
     is_bet_record: {
       type: Boolean,
@@ -181,7 +138,9 @@ export default defineComponent({
       })
     })
     watch(() => props.reset_pagination, (newVal) => {
-       state.current = 1;
+      if(newVal == 1) {
+        state.current = 1;
+      }
     })
 
 
@@ -332,24 +291,6 @@ export default defineComponent({
 .go-input{
   border-radius: 2px;
   border: 1px solid #D0D8DE;
-}
-.table-footer-bar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding-right: 20px;
-  height: 36px;
-  font-size: 14px;
-  background-color: #f6f7fa;
-
-  span {
-    margin-left: 20px;
-
-    .footer-text {
-      margin: 0;
-      font-weight: 500;
-    }
-  }
 }
 
 .pagination-wrap {

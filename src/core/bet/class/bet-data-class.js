@@ -762,13 +762,16 @@ this.bet_appoint_ball_head= null */
       } else {
         this.bet_single_list = []
       }
+      
+      // 指定删除的数据
+      index = lodash_.findIndex(this.bet_single_list, (item) => { return item.playOptionsId == custom_id });
     } else {
       // 串关
       query = this.bet_s_list
-    }
+      // 指定删除的数据
+      index = lodash_.findIndex(this.bet_s_list, (item) => { return item.playOptionsId == custom_id });
 
-    // 指定删除的数据
-    index = lodash_.findIndex(this.bet_single_list, (item) => { return item.custom_id == custom_id });
+    }
 
     let temp = Object.assign([], query);
     // 指定删除

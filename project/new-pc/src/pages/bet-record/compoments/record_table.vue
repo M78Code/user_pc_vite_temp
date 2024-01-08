@@ -217,18 +217,43 @@
           </q-tr>
         </template>
       </q-table>
-      <!--分页组件-->
+      
+      <div class="table-footer-bar">
+        <span>
+          {{ i18n_t('bet_record.total_count') }}
+          <!-- 总计单数 -->
+          ：
+          <span class="footer-text">{{ BetRecordHistory.records.total }}</span>
+        </span>
+        <span>
+          {{ BetRecordHistory.selected == 2 ? i18n_t('bet.bet_book_total') : i18n_t('bet_record.total_v') }}
+          <!-- 总投注额/预约总投资额 -->
+          ：
+          <span class="footer-text">{{ BetRecordHistory.records.betTotalAmount }}</span>
+          <!-- <span class="footer-text">{{ format_balance(betTotalAmount) }}</span> -->
+        </span>
+        <div>
+          <!-- 目前屏蔽有效流水展示 -->
+          <span v-if="0">
+            {{ i18n_t('bet_record.effective_water') }}
+            <!-- 有效流水 -->
+            <!-- ：{{ effectiveFlow }} -->
+          </span>
+          <span v-if="BetRecordHistory.selected == 1">
+            {{ BetRecordHistory.records.profit.indexOf("-") != -1 ? i18n_t('bet_record.lose') : i18n_t('bet_record.win') }}：
+            <span class="footer-text" >{{ BetRecordHistory.records.profit }}</span>
+          </span>
+          <!-- <span>{{profit.indexOf("-")!=-1?'输':'赢'}}：{{profit}}</span> -->
+        </div>
+      </div>
 
-      <Pagination v-if="BetRecordHistory.table_data.length > 0" class="record-pagination" :count="records.total" 
-                  :betTotalAmount="records.betTotalAmount"
+      <!--分页组件-->
+      <Pagination v-if="BetRecordHistory.table_data.length > 0" class="record-pagination" 
+                  :count="BetRecordHistory.records.total" 
                   @pageChange="changePage"
                   @pageSizeChange="pageSizeChange"
                   @goPageChange="goPageChange"
-                  :profit="records.profit"
-                  :reset_pagination="pageCurrent"
-                  :is_bet_record="true"
-                  :isUnsettled="current_tab === 'unsettled'"
-      >
+                  :reset_pagination="BetRecordHistory.params.page">
       </Pagination>
 
     </div>
@@ -252,10 +277,9 @@ import { BetRecordHistory } from "src/core/bet-record/pc/bet-record-instance.js"
 const lang = computed(() => {
   return UserCtr.lang;
 })
-const pageSize = ref('50')
-const pageCurrent = ref('1')
+
 const getRowIndex = (rowIndex) => {
-  return (pageCurrent.value - 1) * pageSize.value + rowIndex + 1;
+  return (BetRecordHistory.params.page - 1) * BetRecordHistory.params.size + rowIndex + 1;
 }
 
 
@@ -284,9 +308,7 @@ const { columns, tableData, loading, handle_fetch_order_list,records } = useGetO
 const labelClick = (row) => {
   console.log(row)
 }
-watch(() => props.timeType, (newVal) => {
-  pageCurrent.value = '1'
-})
+
 // 监听tab 切换表格头数据
 watch(() => props.current_tab, (newVal) => {
   tableData.value = []
@@ -532,27 +554,22 @@ const order_status = (orderStatus) => {
 // 页码变化
 const changePage = (arv) => {
   const { current } = arv
-  pageCurrent.value = current
-  emit('itemFilter', {
-    page: current,
-    size: +pageSize.value,
-    timeType: props.timeType
+  Object.assign(BetRecordHistory.params, {
+    page: current
   })
+  BetRecordHistory.handle_fetch_order_list()
 }
 const goPageChange = (v) => {
-  pageCurrent.value = v
-  emit('itemFilter', {
-    page: v,
-    size: +pageSize.value,
-    timeType: props.timeType
+  Object.assign(BetRecordHistory.params, {
+    page: v
   })
+  BetRecordHistory.handle_fetch_order_list()
 }
 const pageSizeChange = (v) => {
-  pageSize.value = v.value
-  emit('itemFilter', {
-    size: v.value,
-    timeType: props.timeType
+  Object.assign(BetRecordHistory.params, {
+    size: v.value
   })
+  BetRecordHistory.handle_fetch_order_list()
 }
 /**
  * 复制id
@@ -570,11 +587,28 @@ const hand_copy = (data) => {
 .time{
   color: var(--q-gb-t-c-8);
 }
+
+.table-footer-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 20px;
+  height: 36px;
+  font-size: 14px;
+  background-color: #f6f7fa;
+
+  span {
+    margin-left: 20px;
+
+    .footer-text {
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+}
+
 .detail-options {
   width: 100%;
-
-  .record-detail-list {
-  }
 
   .record-detail-item {
     flex: 1;
