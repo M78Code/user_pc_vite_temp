@@ -61,7 +61,7 @@ const go_back = () => {
   if(props.is_vr_page){
     // console.log("history===", history);
     // router.go(hisLen.value - history.length - 1)
-    router.back(-1)
+    router.push('/virtual')
     return ;
   }
 }
