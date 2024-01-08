@@ -293,7 +293,7 @@ watch(
  ** 监听GlobalSwitchClass的版本号  获取最新的全局状态
  */
  watch(
-  () => GlobalSwitchClass.global_switch_version.version,
+  () => GlobalSwitchClass.global_switch_version,
   (val) => {
     if (val) {
       get_global_click.value = GlobalSwitchClass.global_click;
