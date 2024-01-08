@@ -1,7 +1,7 @@
 <template>
     <div class="info_box">
         <div class="left">
-            <div class="back" @click="toHome">
+            <div class="back" @click="go_back">
                 <img class="bakc-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/back.png`" alt="" />
             </div>
             <!-- <div class="detail-back" v-if="['/virtual_sports_details', '/virtual_sports_details/'].includes(router.currentRoute.value.path)" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div> -->
@@ -38,6 +38,7 @@
 </template>
 
 <script setup>
+import {ref} from 'vue';
 import lodash from 'lodash';
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
@@ -47,9 +48,21 @@ import NavbarSubscribe from "../../detail-top/nav-bar-subscribe";
 import BaseData from "src/core/base-data/base-data.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
+const hisLen = ref(history.length)
+const props = defineProps(['is_vr_page'])
 
 const onItemClick = (event)=>{
     console.log('event', lodash.get(event, 'event.target', ''))
+}
+
+
+// 回到上一页
+const go_back = () => {
+  if(props.is_vr_page){
+    // console.log("hisLen.value - history.length - 1===",  (hisLen.value - history.length - 1))
+    router.go(hisLen.value - history.length - 1)
+    return ;
+  }
 }
 
 
@@ -63,6 +76,7 @@ const toHome = async() => {
   NavbarSubscribe.instance.back();
   // 异步获取状态
   const res = await NavbarSubscribe.instance.get_status();
+  console.log("res",   res);
   // 状态为真，可以返回
   if (res) {
     BaseData.set_is_emit(true)
