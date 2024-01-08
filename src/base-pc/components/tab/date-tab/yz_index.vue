@@ -58,7 +58,7 @@ import {
   date_menu_version,
   item_wrap_left,
   list
-} from "src/base-pc/components/tab/date-tab/index.js"
+} from "src/base-pc/components/tab/date-tab/yz_index.js"
 
 const props = defineProps({
   //item盒子左右padding
@@ -132,7 +132,7 @@ onMounted(() => {
   })
 })
 
-watch(MenuData.menu_data_version,()=>{
+watch(()=>MenuData.ref_lv2_mi.value,()=>{
   nextTick(()=>{
     get_date_menu_list()
   })

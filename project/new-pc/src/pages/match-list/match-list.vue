@@ -115,7 +115,7 @@ import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/
 import listFilter from "src/base-pc/components/match-list/list-filter/yz_index.vue"; //赛事列表筛选：滚球-球种、早盘-日期
 import listFilterVr from "src/base-pc/components/match-list/list-filter-vr/index.vue"; //vr
 import ListFilterHot from "src/base-pc/components/match-list/list-filter-hot/yz_index.vue"; //热门赛事列表 头部筛选
-import listFilterDate from "src/base-pc/components/match-list/list-filter-date/index.vue"; //热门赛事列表  早盘-日期
+import listFilterDate from "src/base-pc/components/match-list/list-filter-date/yz_index.vue"; //热门赛事列表  早盘-日期
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 // import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
 import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"; //头部

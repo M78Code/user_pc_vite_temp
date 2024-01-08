@@ -32,7 +32,7 @@
 </template>
 <script setup>
 import { onMounted,ref,watch } from "vue";
-import DateTab from "src/base-pc/components/tab/date-tab/index.vue";
+import DateTab from "src/base-pc/components/tab/date-tab/yz_index.vue";
 import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj } from "src/core/server-img/index.js";
 import { MenuData } from "src/output/index.js";
