@@ -1738,8 +1738,8 @@ export default {
 
 .score-content-new {
   padding-top: 6px;
-  max-width: 200px;
-  overflow-x: scroll;
+  // max-width: 200px;
+  // overflow-x: scroll;
   padding-bottom: 10px;
 }
 </style>
