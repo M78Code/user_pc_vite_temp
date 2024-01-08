@@ -132,11 +132,11 @@ onMounted(() => {
   })
 })
 
-watch(MenuData.menu_data_version,()=>{
-  nextTick(()=>{
-    get_date_menu_list()
-  })
-})
+// watch(MenuData.menu_data_version,()=>{
+//   nextTick(()=>{
+//     get_date_menu_list()
+//   })
+// })
 
 /**
  * @Description:切换选项
