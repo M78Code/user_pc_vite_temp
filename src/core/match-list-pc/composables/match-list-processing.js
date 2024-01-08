@@ -6,11 +6,9 @@ import { match_collect_status} from "./match-list-collect.js";
 import { api_bymids, set_league_list_obj } from "./match-list-featch.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/output/module/match-data-base.js";
-import virtual_composable_fn from './match-list-virtual.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { match_list_handle_set } from '../match-handle-data.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
 const vx_filter_select_obj = ref([])
 let vx_layout_list_type = 'match'
 const { route_name } = PageSourceData;
@@ -78,7 +76,7 @@ const mx_list_res = (data, backend_run) => {
 	let res_data = lodash.get(data, "data");
 	// 将全量数据接口 切割成含有mid元素的对象数组
 	let callback_func = null;
-	clearTimeout(virtual_list_timeout_id);
+	// clearTimeout(virtual_list_timeout_id);
 	// 所有联赛列表
 	let all_league_list = [];
 	all_league_list.push(...lodash.get(res_data, "livedata", []));
@@ -317,7 +315,6 @@ const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, backend_
  */
 const mx_use_list_res = (data, backend_run) => {
 	let code = lodash.get(data, "code");
-	clearTimeout(virtual_list_timeout_id);
 	// 赛事列表
 	let match_list = lodash.get(data, "data.data", []);
 	if (!match_list.length) {
