@@ -268,10 +268,10 @@ export default {
     height: 6px;
     border-radius: 50%;
     &.dot-h {
-      background-color: var(--qq--chat-bg-orange-1);
+      background-color: var(--q-gb-bg-c-17);
     }
     &.dot-a {
-      background-color: var(--qq--chat-bg-blue-1);
+      background-color: var(--q-gb-bg-c-4);
     }
   }
   .team-info {
@@ -338,7 +338,7 @@ export default {
           .stripe {
             position: absolute;
             right: 0;
-            background-color: var(--qq--chat-bg-orange-1);
+            background-color: var(--q-gb-bg-c-17);
             border-radius: 2px 0px 0px 2px;
           }
         }
@@ -348,7 +348,7 @@ export default {
           .stripe {
             position: absolute;
             left: 0;
-            background-color: var(--qq--chat-bg-blue-1);
+            background-color: var(--q-gb-bg-c-4);
             border-radius: 0px 2px 2px 0px;
           }
         }
