@@ -10,6 +10,7 @@
         v-show="sub_menu_type != '1004' || item.mmp != 'PREGAME' || !pre_to_playing || i != 0"
         :key="i">
         {{item.no}}
+        <div class="line"></div>
       </div>
     </div>
     <!-- 分析icon显示 -->
@@ -75,6 +76,14 @@ export default {
     padding-left: 0.08rem;
     color: #8A8986;
     font-weight: 500;
+    .line {
+      width: 1px;
+      height: 0.12rem;
+      background: #D9D9D9;
+      position: relative;
+      left: 0.14rem;
+      top: 0.14rem;
+    }
 
     &.focus {
       color: #FF7000;
@@ -94,14 +103,15 @@ export default {
 
     &:after {
       content: '';
-      width: 4px;
+      width: 8px;
       height: 4px;
-      border-radius: 50%;
       position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-2px);
+      left: 50%;
+      bottom: 0;
+      // transform: translateY(-2px);
       display: none;
+      background: url($SCSSPROJECTPATH+"/image/vr/circle.png") no-repeat center;
+      background-size: 100% 100%;
     }
   }
 }

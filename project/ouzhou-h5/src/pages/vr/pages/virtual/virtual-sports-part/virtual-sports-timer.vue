@@ -39,7 +39,7 @@ export default {
   align-items: center;
   margin-bottom: 0.38rem;
   .circle-time-wrapper svg path{
-    stroke: var(--q-gb-t-c-35);
+    stroke: var(--q-gb-bg-c-1);
   }
   .final-circle {
       svg path {
@@ -62,7 +62,7 @@ export default {
       // color: #ffb001;
       font-size: 0.3rem;
       font-weight: 500;
-      color: var(--q-gb-t-c-35) !important;
+      color: #fff !important;
       &.last {
         // color: #E23E3E;
         // color: var(--q-gb-bd-c-8) !important;

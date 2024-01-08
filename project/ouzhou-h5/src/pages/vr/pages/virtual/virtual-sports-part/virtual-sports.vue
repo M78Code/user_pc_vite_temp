@@ -7,11 +7,9 @@
   <div class="virtual-sports">
     <virtual-skeleton v-show="virtual_data_loading">
     </virtual-skeleton>
-    <!-- <setting list_type="vr"/> -->
     <!--联赛tab-->
-    <!--只有足球展示多个联赛菜单 -->
     <div class="fixed-head">
-      <div class="tab-wrapper" v-if="sub_menu_type == 1001">
+      <div class="tab-wrapper">
         <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
           :key="i" @click="tab_item_click_handle(i,null,'user_change')">
           <div>{{tab_item.name}}</div>
