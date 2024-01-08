@@ -361,7 +361,7 @@ const get_lastest_market_info = (type) => {
                         }else{
                             play_option_name = obj.away  || ''
                         }
-                        bet_item.playOptionName = play_option_name  + ' ' + market.marketValue
+                        bet_item.playOptionName = bet_item.handicap  + ' ' + market.marketValue
                         bet_item.playOptions = odds.oddsType
 
                         bet_item.place_num = 'place_num'
