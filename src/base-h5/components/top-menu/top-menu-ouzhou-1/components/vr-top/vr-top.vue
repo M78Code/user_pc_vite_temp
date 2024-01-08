@@ -14,19 +14,10 @@
                 <q-menu class="vr-menu-wrap">
                     <div>
                         <q-list>
-                            <q-item clickable v-close-popup @click="onItemClick">
+                            <q-item clickable v-close-popup v-for="(item, key) in sub_menu_list" 
+                            :key = "key" @click="onItemClick">
                                 <q-item-section>
-                                    <q-item-label>VR-Basketball</q-item-label>
-                                </q-item-section>
-                            </q-item>
-                            <q-item clickable v-close-popup @click="onItemClick">
-                                <q-item-section>
-                                    <q-item-label>VR-Footerball</q-item-label>
-                                </q-item-section>
-                            </q-item>
-                            <q-item clickable v-close-popup @click="onItemClick">
-                                <q-item-section>
-                                    <q-item-label>VR-Greyhounds</q-item-label>
+                                    <q-item-label>{{ item.name }}</q-item-label>
                                 </q-item-section>
                             </q-item>
                         </q-list>
@@ -41,22 +32,59 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import { ref , onMounted } from 'vue';
 import lodash from 'lodash';
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
-const router = useRouter();
-const route = useRoute()
 import NavbarSubscribe from "../../detail-top/nav-bar-subscribe";
 import BaseData from "src/core/base-data/base-data.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+import { api_v_sports } from "src/api/index.js";
+import axios_api_loop from "src/core/http/axios-loop.js"
 
+const router = useRouter();
+const route = useRoute()
 const hisLen = ref(history.length)
 const props = defineProps(['is_vr_page'])
-
+const sub_menu_list = ref([])
 const onItemClick = (event)=>{
     console.log('event', lodash.get(event, 'event.target', ''))
 }
+
+/**
+ * 获取虚拟体育菜单
+ */
+const get_virtual_menus = ()=>{
+let obj_ = {
+    // axios api对象
+    axios_api: api_v_sports.get_virtual_menus,
+    // axios api对象参数
+    params:{},
+    // axios中then回调方法
+    fun_then: res => {
+        if(res.code == 200){
+        res.data.forEach(sub_menu => {
+            sub_menu.menuName = sub_menu.name;
+        });
+            sub_menu_list.value = lodash.cloneDeep(res.data);
+        }
+    },
+    // axios中catch回调方法
+    fun_catch: err => {
+        useMittEmit(MITT_TYPES.EMIT_NO_VIRTUAL_MENU_DATA);
+    },
+    // 最大循环调用次数(异常时会循环调用),默认3次
+    max_loop:3,
+    // 异常调用时延时时间,毫秒数,默认1000
+    timers:1100
+    }
+    // axios_api轮询调用方法
+    axios_api_loop(obj_);
+}
+
+onMounted(()=>{
+    get_virtual_menus();
+})
 
 
 // 回到上一页
