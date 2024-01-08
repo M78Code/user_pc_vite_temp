@@ -32,7 +32,7 @@
         </template>
          <!-- vr 头部 -->
         <template v-else-if="is_vr_page">
-            <vrTop />
+            <vrTop :is_vr_page="is_vr_page"/>
         </template>
         <!-- home 头部 -->
         <template v-else>

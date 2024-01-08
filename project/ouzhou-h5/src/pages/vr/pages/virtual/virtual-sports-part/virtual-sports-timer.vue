@@ -43,7 +43,9 @@ export default {
   }
   .final-circle {
       svg path {
-        stroke: var(--q-gb-bd-c-8);
+        // stroke: var(--q-gb-bd-c-8);
+        // stroke: var(--q-gb-bd-c-16);
+        stroke: var(--q-gb-bg-c-1);
       }
     }
 
@@ -112,4 +114,4 @@ export default {
   }
 }
 </style>
-src/core/vr/mixin/pages/virtual/virtual-sports_part/virtual_sports_timer_mixin.js
+<!-- src/core/vr/mixin/pages/virtual/virtual-sports_part/virtual_sports_timer_mixin.js -->
