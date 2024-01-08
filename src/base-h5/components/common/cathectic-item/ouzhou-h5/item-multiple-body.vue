@@ -74,7 +74,7 @@
               </span>
             </span>
             <!-- 单关不需要下划线 -->
-            <div v-if="data_b.seriesType != '1'" class="line"></div>
+            <div v-if="!['1', '3'].includes(data_b.seriesType)" class="line"></div>
           </div>
         </div>
       </template>
