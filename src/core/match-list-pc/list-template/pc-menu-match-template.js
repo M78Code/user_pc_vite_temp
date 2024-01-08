@@ -73,10 +73,11 @@ const menu_to_match_templte = {
   106301: { label: "美式足球-早盘-让球&大小", value: "1" },
   106302: { label: "美式足球-早盘-总分单/双", value: "3" },
   // 电竞
-  2100: { label: "电竞-英雄联盟", value: "24" },
-  2101: { label: "电竞-Dota2", value: "24" },
-  2101: { label: "电竞-Dota2", value: "24" },
-  2103: { label: "电竞-王者荣耀", value: "24" },
+  2100: { label: "电竞-英雄联盟", value: "28" },
+  2101: { label: "电竞-Dota2", value: "28" },
+  2102: { label: "电竞-cs2", value: "28" },
+  2103: { label: "电竞-王者荣耀", value: "28" },
+
 
   // 冠军
   404: { label: "冰球-冠军-冠军", value: "18" },

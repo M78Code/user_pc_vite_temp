@@ -77,7 +77,7 @@ class BaseData {
     //菜单版本set_vr_mi_config
     this.menu_version = 1;
     // 菜单 国际化 数据  map
-    this.menus_i18n_map = [];
+    this.menus_i18n_map = menu_i18n_default;
     // 新的菜单 接口返回  数据
     this.mew_menu_list_res = [];
     //新的菜单 的基础信息相关的 （可以包含国际化）
@@ -196,6 +196,7 @@ class BaseData {
 
     // ws请求订阅
     BaseWsMessage.init()
+
   }
 
 
