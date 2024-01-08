@@ -348,6 +348,10 @@ class UserCtr {
     if (user_obj.balance === null) delete user_obj.balance;
     // 获取历史uid
     const uid_ = this.get_uid();
+    // 新旧版切换开关, 默认是开  1是开0是关
+    if (user_obj.h5VerSysSwitch && user_obj.h5VersionSwitch) {
+      user_obj.versionSwitch = user_obj.h5VerSysSwitch == 1 && user_obj.h5VersionSwitch == 1
+    }
     if (this.user_info) {
       Object.assign(this.user_info, user_obj);
     } else {

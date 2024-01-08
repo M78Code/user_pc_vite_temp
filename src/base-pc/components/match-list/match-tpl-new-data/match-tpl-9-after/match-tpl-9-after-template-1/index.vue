@@ -25,7 +25,7 @@
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap v-if="match"
-          :handicap_list="get_handicap_list(match)" :match="match"
+          :handicap_list="(match.main_handicap_list)" :match="match"
           :is_show_score="!match_tpl_info.is_show_cur_handicap && match.csid != 4" />
 
         <!-- 视频按钮 -->
@@ -35,13 +35,13 @@
       </div>
 
       <!-- 当前局盘 -->
-      <div class="match-handicap-item" v-if="get_is_show_cur_handicap(match)">
+      <div class="match-handicap-item" v-if="match.is_show_cur_handicap">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
           <basis-info5 v-if="is_mounted && match" :match="match" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match" :handicap_list="get_handicap_list(match,'cur')" :match="match" :is_show_score="true" />
+        <match-handicap v-if="match" :handicap_list="match.cur_handicap_list" :match="match" :is_show_score="true" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -59,7 +59,6 @@ import { MatchBasisInfo2FullVersionWapper as BasisInfo2 } from 'src/base-pc/comp
 import { MatchBasisInfo5FullVersionWapper as BasisInfo5 } from 'src/base-pc/components/match-list/match-basis-info/template-5/index.js'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
-import {get_is_show_cur_handicap} from 'src/core/match-list-pc/match-handle-data.js'
 let match_style_obj = inject('match_style_obj')
 let match = inject('match')
 let match_list_tpl_size = inject('match_list_tpl_size')
@@ -82,29 +81,7 @@ const process_margin = computed(() => {
   }
   return process_margin
 })
-/**
- * 获取当前局、主盘口列表模板
- * @param {*} match 
- * @param {*} type  madin / cur
- */
- function get_handicap_list(match,type='main') {
-  // 当前局盘口列表
-  let cur_handicap_list = [];
-  let play_config = match_tpl_info.value[`template_${match_style_obj.value.data_tpl_id}`]
-  // 斯诺克让球与大小当前局盘口列表
-  if (match_style_obj.value.data_tpl_id == 11 && match.csid == 7) {
-    cur_handicap_list = play_config[`${type}_handicap_list_7`];
-  }
-  // 排球让球与大小当前局盘口列表
-  else if (match_style_obj.value.data_tpl_id == 11 && match.csid == 9) {
-    cur_handicap_list = play_config[`${type}_handicap_list_9`];
-  }
-  // 判断模板是否有当前局玩法
-  else if ([7, 9, 11, 16].includes(+match_style_obj.data_tpl_id)) {
-    cur_handicap_list = play_config[`${type}_handicap_list`];
-  }
-  return cur_handicap_list;
-}
+
 </script>
 
 <style lang="scss" scoped>

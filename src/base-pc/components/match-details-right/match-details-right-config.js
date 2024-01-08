@@ -120,20 +120,22 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     // console.log(MatchDataWarehouseInstance.get_quick_mid_obj(param),'11111');
     // console.trace(2222)
     //给仓库类设置id
-   
     allData.details_params = param
     clearTimeout(allData.get_match_details_timer);
     //如果是ws推送
     let mid =null
     let is_ws = false
-    if( lodash.isObject(param)){
+    if(lodash.isObject(param)){
        mid  = param.mid;
        is_ws  = param.is_ws;
     }else{
       //如果是mitt 列表触发
+      if (route.name=='details') {
+        mid = route.params.mid;
+      }else{
         mid = param;
-    }
-    
+      }   
+    } 
     // 如果有传参，并且不是 ws 调用
     if (mid) {
       allData.mid = mid;
@@ -776,6 +778,9 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
    * @param {number} loop_count 循环调用次数
    */
   const get_matchInfo = (loop_count) => {
+    if (route.name=='details') {
+      allData.mid = route.params.mid
+    }
     let params = {
       mid: allData.mid || 0, //赛事id
     };

@@ -7,7 +7,7 @@ import {watch,ref} from 'vue'
 const bool = ref(GlobalSwitchClass.tip_show_state.isShow)
 const text = ref(GlobalSwitchClass.tip_show_state.text)
 watch(
-  () => GlobalSwitchClass.global_switch_version.version,
+  () => GlobalSwitchClass.global_switch_version,
   () => {
     bool.value = GlobalSwitchClass.tip_show_state.isShow
     text.value = GlobalSwitchClass.tip_show_state.text

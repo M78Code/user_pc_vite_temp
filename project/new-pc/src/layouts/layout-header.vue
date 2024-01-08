@@ -68,7 +68,6 @@ const props = defineProps({
 
 const emit = defineEmits(['close_home_loading'])
 
-/** 国际化 */
 
 /** 路由对象 */
 const route = useRoute()
@@ -76,8 +75,6 @@ const route = useRoute()
 const router = useRouter()
 
 
-const menu_obj = ref({})
-//  const { menu_obj } = betReducer
 
 /** 是否内嵌 */
 const is_iframe = ref(utils_info.is_iframe)
@@ -279,7 +276,6 @@ function menu_init_done() {
   let nav_list = [...site_header_data.nav_list]
   // 如果有电竞
   const { is_mi_2000_open, is_mi_300_open } = BaseData
-  console.error('menu_init_donemenu_init_donemenu_init_donemenu_init_done')
   if (is_mi_2000_open) {
     if (nav_list.findIndex(i => i.id == 5) == -1) {
       nav_list.splice(1, 0, { id: 5, tab_name: i18n_t("common.e_sports"), path: "/e_sport" });
@@ -433,6 +429,9 @@ function navigate(obj) {
   }
   if (_path == '/activity') {
     _window_width = 1400
+  }
+  if (_path == "/bet_record") {
+    _window_width = 1440
   }
   let _window_height = 650;
   if (['/activity', '/activity_aegis'].includes(_path)) {
