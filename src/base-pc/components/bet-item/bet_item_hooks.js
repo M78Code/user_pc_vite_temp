@@ -206,8 +206,10 @@ export const useGetItem = ({ props }) => {
    * @param {undefined} undefined
    */
   const assign_ol_data_item = () => {
+    // console.log(111111111,lodash.get(ol_data.value, "oid"))
     if (lodash.get(ol_data.value, "oid")) {
       Object.assign(state.ol_data_item, ol_data.value);
+      // console.log(111111111,state.ol_data_item)
     } else {
       Object.assign(state.ol_data_item, { _hs: 2, os: 3 });
     }
@@ -257,6 +259,7 @@ export const useGetItem = ({ props }) => {
    * @return {undefined} undefined
    */
   const set_odds_lift = (cur, old) => {
+    
     if (menu_config.is_vr()) {
       return;
     }
@@ -527,8 +530,9 @@ export const useGetItem = ({ props }) => {
 
   // 监听投注项赔率变化
   watch(
-    () => ol_data_item_ov,
+    () => ol_data_item_ov.value,
     (cur, old) => {
+
       // 赔率值处理
       format_odds(cur, 1);
       if (state.ol_data_item) {
