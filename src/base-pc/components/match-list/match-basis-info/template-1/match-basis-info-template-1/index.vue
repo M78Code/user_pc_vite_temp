@@ -34,7 +34,7 @@
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" v-if="show_type == 'all'"
+      <div class="score" v-if="show_type == 'all' && get_match_status(match.ms)"
         v-tooltip="{ content: is_15min ? i18n_t('list.15min_stage') : '', overflow: 1 }">
         {{ home_score }}</div>
     </div>
@@ -69,8 +69,8 @@
             :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S12.home') }}</span>
         </div>
       </div>
-      <!-- 主比分 -->
-      <div class="score" :key="lodash.get(match, 'mid')" v-if="show_type == 'all'"
+      <!-- 客比分 -->
+      <div class="score" :key="lodash.get(match, 'mid')" v-if="show_type == 'all' && get_match_status(match.ms)"
         v-tooltip="{ content: is_15min ? i18n_t('list.15min_stage') : '', overflow: 1 }">
         {{ away_score }}
       </div>

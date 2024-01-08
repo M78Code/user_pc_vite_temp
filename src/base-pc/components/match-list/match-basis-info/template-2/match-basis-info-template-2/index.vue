@@ -40,7 +40,7 @@
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score">
+      <div class="score" v-if="get_match_status(match.ms)">
         <span v-show="!scoring">{{ home_score }}</span>
         <span v-show="scoring" class="scoring">{{ i18n_t('mmp.100.scoring') }}</span>
       </div>
@@ -78,7 +78,7 @@
         </div>
       </div>
       <!-- 客比分 -->
-      <div class="score">
+      <div class="score" v-if="get_match_status(match.ms)">
         <span v-show="!scoring">{{ away_score }}</span>
       </div>
     </div>                      
