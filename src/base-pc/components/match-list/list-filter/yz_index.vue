@@ -201,7 +201,6 @@ import { compute_css_obj } from "src/output/index.js";
         
     }
     if(MenuData.is_kemp()){
-      alert(1)
       handle_click_menu_mi_400({
         mi: '400',
         root: '400',
