@@ -20,6 +20,12 @@ class BetRecord {
     // PC 投注记录提示
     this.tipMsg = 'bet_record.msg_1'
     // 列表
+    this.params = {
+      page: 1,
+      size: 50,
+      userId: UserCtr.user_info.userId
+    }
+    this.api_url = api_betting.post_getOrderList
     this.table_data = []
     this.records = {}
     //列表数据
@@ -49,6 +55,8 @@ class BetRecord {
     this.set_tip_msg(number)
     // 更改columns
     this.set_columns(number)
+    // 更改api
+    this.set_api_url(number)
     // 通知 重新获取数据 
     useMittEmit(MITT_TYPES.EMIT_BET_RECORD_SELECTED_CHANGE, this.selected)
     this.set_bet_record_version()
@@ -76,6 +84,15 @@ class BetRecord {
         align: 'center',
         field: 'highestWin'
       }
+    }
+  }
+
+  // 更改api
+  set_api_url(number) {
+    if(number == 2) { // 预约
+      this.api_url = api_betting.post_book_list
+    } else { // 未结算、已结算
+      this.api_url = api_betting.post_getOrderList
     }
   }
 
@@ -130,13 +147,10 @@ class BetRecord {
   /**
    * 获取数据
    */
-    handle_fetch_order_list = async (url, params) => {
+    handle_fetch_order_list = async () => {
       try {
         this.loading = true
-        let res = await url({
-          ...params,
-          userId: UserCtr.user_info.userId
-        })
+        let res = await this.api_url({ ...this.params })
         if(res.code !== '200'){
           if(res.code === '0401038'){
             GlobalSwitchClass.set_tip_show_state(true, {
@@ -158,6 +172,15 @@ class BetRecord {
 
   // 初始化数据
   reset() {
+    this.params = {
+      page: 1,
+      size: 50,
+      userId: UserCtr.user_info.userId
+    }
+    this.api_url = api_betting.post_getOrderList
+    this.table_data = []
+    this.records = {}
+
     this.list_data = {}
     this.is_early = false
     this.loading = true

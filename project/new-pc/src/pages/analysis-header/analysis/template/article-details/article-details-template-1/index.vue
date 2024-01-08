@@ -115,7 +115,7 @@ onUnmounted(() => {
 
 .article_detail {
   background: var(--q-analysis-color-16);
-  border: 1px solid var(--q-analysis-color-10);
+  border: 1px solid #DEE4F2;
   border-radius: 8px;
   height: 100%;
   padding: 15px 38px;
@@ -127,7 +127,7 @@ onUnmounted(() => {
 
   .article_title {
     font-size: 16px;
-    color: var(--q-analysis-color-10);
+    color: #DEE4F2;
     font-weight: 600;
   }
 
@@ -146,7 +146,7 @@ onUnmounted(() => {
   :deep(.article) {
       * {
         max-width: 100%;
-        color: var(--q-analysis-color-10);
+        color: #DEE4F2;
       }
 
       p {

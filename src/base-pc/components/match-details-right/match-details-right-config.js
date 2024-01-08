@@ -120,7 +120,6 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     // console.log(MatchDataWarehouseInstance.get_quick_mid_obj(param),'11111');
     // console.trace(2222)
     //给仓库类设置id
-   
     allData.details_params = param
     clearTimeout(allData.get_match_details_timer);
     //如果是ws推送
