@@ -215,7 +215,7 @@ import { VIURTUAL_SPORT, VIRTUAL_PLAY_NOT_NUMBER2, VIRTUAL_SPORT_ID,CANCEL_TYPE 
  
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
-import { BetRecordLeft } from "src/core/bet-record/pc/bet-record-instance.js"
+import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
 import { formatTime } from 'src/output/index.js'
 
 import lodash_ from "lodash"

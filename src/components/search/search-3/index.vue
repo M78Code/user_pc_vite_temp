@@ -2,16 +2,15 @@
 
 <template>
    <div style="display:none">{{SearchPCClass.update_time}}</div>
-   {{ SearchPCClass.search_isShow }}
    <div
     v-if="SearchPCClass.search_isShow"
     class="search-position"
-    :style="page_style"
+    :style="{ right: `${search_width}px`, paddingRight: `${is_iframe ? 10 : 14}px`}"
+    :class="{ 'hide-search': store.show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }"
     >
     <div
+      v-if="SearchPCClass.search_isShow"
       class="serach-wrap column"
-      :style="{ right: `${search_width}px`, paddingRight: `${is_iframe ? 10 : 14}px`}"
-      :class="{ 'hide-search': store.show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }"
     >
       <search-input />
       <!-- 遮罩层样式.bottom-wrap -->
@@ -150,20 +149,11 @@ function on_resize() {
 .search-position {
   position: fixed;
   left: 0;
-  width: v-bind(main_width);
+  // width: v-bind(main_width);
   // right: 0;
   top: 60px;
   bottom: 0;
   z-index: 10001;
-  // background-color: pink;
-}
-
-.serach-wrap {
-  position: absolute;
-  top: 0;
-  left: 0px;
-  bottom: 0;
-  z-index: 999;
 
   &.iframe {
     top: 50px !important;
@@ -177,6 +167,18 @@ function on_resize() {
       display: none;
     }
   }
+  // background-color: pink;
+}
+
+.serach-wrap {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  bottom: 0;
+  z-index: 999;
+  width: 100%;
+
+  
 
   .bottom-wrap {
     top: -1px;

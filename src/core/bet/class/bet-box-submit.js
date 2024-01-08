@@ -364,7 +364,7 @@ const get_lastest_market_info = (type) => {
                         }else{
                             play_option_name = obj.away  || ''
                         }
-                        bet_item.playOptionName = play_option_name  + ' ' + market.marketValue
+                        bet_item.playOptionName = bet_item.handicap  + ' ' + market.marketValue
                         bet_item.playOptions = odds.oddsType
 
                         bet_item.place_num = 'place_num'
@@ -794,19 +794,11 @@ const submit_handle_lastest_market = () => {
                 obj.mid = ''
                 // 盘口Id，多个Id使用逗号分隔
                 // 赛事Id，多个Id使用逗号分隔
-                if(BetData.is_bet_single){
-                    let series_orders = lodash_.get(seriesOrders,'[0].orderDetailList', {})
-                    obj.hid = series_orders.marketId 
-                    obj.mid = series_orders.matchId 
-                   
-                    // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_single_list))
-                } else {
-                    seriesOrders.orderDetailList.forEach( item => {
-                        obj.hid = item.marketId 
-                        obj.mid = item.matchId 
-                    })
-                    // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_s_list))
-                }
+                let series_orders = lodash_.get(seriesOrders,'[0].orderDetailList', {})
+                series_orders.forEach( item => {
+                    obj.hid += item.marketId + ','
+                    obj.mid += item.matchId + ','
+                })
                 // 用户赔率分组
                 obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
                 obj.esMarketLevel = lodash_.get(UserCtr.user_info,'esMarketLevel','0');
@@ -917,7 +909,7 @@ const set_error_message_config = (res ={},type,order_state) => {
  * @returns 
  */
 const set_bet_obj_config = (params = {}, other = {}) => {
-    console.error('投注项需要数据', params, 'other', other);
+    // console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 

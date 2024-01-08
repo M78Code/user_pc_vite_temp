@@ -53,7 +53,7 @@ const set_match_list_mapping_relation_obj_type = () => {
     type = 7;
   }
   // 搜索页面
-  else if (page_source == "search") {
+  else if (route_name == "search") {
     type = 4;
   }
   // 电竞收藏
@@ -108,7 +108,6 @@ const set_match_list_mapping_relation_obj_type = () => {
       type = 8
     }
   }
-  
   return   type
 };
 
@@ -158,7 +157,6 @@ const reset_all_card_data = () => {
 
 export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
   (match_list, is_ws_call, is_remove_call, is_five_leagues=false) => {
-    console.log('jiffy5')
     // 虚拟体育 不走卡片逻辑
     if (MenuData.is_vr()) {
       MatchListCardData.is_run_card_function = false;

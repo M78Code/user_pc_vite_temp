@@ -41,14 +41,13 @@ let get_match_list_timeid;
 let hot_match_list_timeout;
 let axios_debounce_timer;
 let axios_debounce_timer2;
-let virtual_list_timeout_id;
-let switch_timer_id
 let mitt_list = [];
 let tid_match_list;
 // 调用列表接口
 useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({ is_socket = undefined }) => {
 	clearTimeout(tid_match_list)
 	tid_match_list = setTimeout(() => {
+		api_error_count = 0; //重新计算错误次数
 		fetch_match_list(is_socket)//请求接口
 	}, 80);
 })
@@ -333,11 +332,11 @@ function get_hot_match_list(backend_run = false) {
 				if (match_list.length > 0) {
 					set_load_data_state("data")
 					is_show_hot.value = true;
-					match_list_handle_set(match_list)
 					// 设置列表数据仓库
 					MatchListData.set_list(
 						match_list,
 					);
+					match_list_handle_set(match_list)
 					if (!backend_run) {
 						// 调用bymids接口
 						useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, { is_first_load: true })

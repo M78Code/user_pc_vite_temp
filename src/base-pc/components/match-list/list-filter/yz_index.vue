@@ -85,80 +85,6 @@
           </div>
         </div>
       </template>
-      <!-- 电竞  -->
-      <template v-for="item in mi_2000_arr">
-        <div
-          :key="`mi_2000_arr_${item.mif}`"
-          v-if="item.ct"
-          @click="
-            handle_click_menu_mi_1({
-              mi: item.mi,
-              mif: item.mif,
-              root: '2000',
-              sports: 'dianjing',
-              guanjun: '',
-            })
-          "
-          :class="current_menu == item.mi ? 'active' : 'no-active'"
-          class="item yb-flex-center"
-        >
-          <div class="icon-wrap list-filter menu-inline">
-            <!-- <sport-icon
-              :sport_id="Number(item.mif) - 2000"
-              size="20px"
-              class="icon"
-            /> -->
-            <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${Number(item.mif) - 2000}` })"></span>
-            <!-- 是否新上玩法 -->
-            <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`${LOCAL_PROJECT_FILE_PREFIX}/img/yabo/svg/virtual/menu_new.svg`"/> -->
-          </div>
-          <div
-            class="name menu-inline name-margin-left"
-            v-tooltip="{
-              content: BaseData.menus_i18n_map[item.mif] || '',
-              overflow: 1,
-            }"
-          >
-            <span>{{ BaseData.menus_i18n_map[item.mif] || "" }}</span>
-            <span class="count-text"> {{ item.ct }}</span>
-          </div>
-        </div>
-      </template>
-      <!-- VR -->
-      <template v-for="item in vr_menu_obj">
-        <div
-          v-if="item.count"
-          :key="`vr_menu_obj_sl${item.menuId}`"
-          class="item yb-flex-center"
-          :class="current_menu == item.mi ? 'active' : 'no-active'"
-          @click="
-            handle_click_menu_mi_1({
-              mi: item.menuId,
-              menu: item.mi,
-              root: '300',
-              sports: 'vr',
-              guanjun: '',
-            })
-          "
-        >
-          <!-- {{ item.mi }} -->
-          <div class="icon-wrap list-filter menu-inline">
-            <!-- <sport-icon :sport_id="item.menuId" size="20px" class="icon" /> -->
-            <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${item.menuId}` })"></span>
-            <!-- 是否新上玩法 -->
-            <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`${LOCAL_PROJECT_FILE_PREFIX}/img/yabo/svg/virtual/menu_new.svg`"/> -->
-          </div>
-          <div
-            class="name menu-inline name-margin-left"
-            v-tooltip="{ content: item.name || '', overflow: 1 }"
-          >
-            <span>{{ item.name || "" }}</span>
-            <span class="count-text">{{ item.count }}</span>
-          </div>
-        </div>
-      </template>
     </drag-scroll>
     <!-- 冠军-球种  -->
     <drag-scroll
@@ -243,6 +169,7 @@
   </div>
 </template>
 <script setup>
+import { ref, watch,reactive,onMounted, onUnmounted,computed,nextTick } from "vue";
 import BaseData from "src/core/base-data/base-data.js";
 import MenuData from "src/core/menu-pc-yazhou/menu-data-class.js";
 import DragScroll from "src/base-pc/components/cus-scroll/drag_scroll.vue";
@@ -250,14 +177,39 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { compute_css_obj } from "src/output/index.js";
   import {
     current_menu,
-    mi_100_arr,
-    mi_2000_arr,
-    mi_400_obj,
-    vr_menu_obj,
      compute_quanbu_num_mi_1,
     handle_click_menu_mi_400, handle_click_menu_mi_1, compute_mi_400_sl_mi_csid, compute_quanbu_num_mi_400, 
   } from './yz_index.js'
-
+  onMounted(()=>{
+    if(MenuData.is_scroll_ball()){
+      if(GlobalAccessConfig.get_playAllShow()){
+        handle_click_menu_mi_1({
+          mi: '1',
+          root: '1',
+          sports: 'quanbu-gunqiu',
+          guanjun: '',
+        })
+      }else{
+        handle_click_menu_mi_1({
+          mi: MenuData.in_play_list?.[0]?.mi,
+          root: '1',
+          mif: MenuData.in_play_list?.[0]?.mif,
+          sports: 'common',
+          guanjun: '',
+        })
+      }
+        
+    }
+    if(MenuData.is_kemp()){
+      handle_click_menu_mi_400({
+        mi: '400',
+        root: '400',
+        sports: 'quanbu-guanjun',
+        guanjun: 'guanjun-common',
+      })
+    }
+   
+  })
 </script>
 <style lang="scss" scoped>
 .c-match-list-filter {

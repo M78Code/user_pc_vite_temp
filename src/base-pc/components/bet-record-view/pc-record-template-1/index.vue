@@ -42,6 +42,17 @@
                   </q-card-section>
                 </div>
               </template>
+              <template v-else>
+                <div v-for="(order, order_index) in item.detailList" :key="'bet-item-' + index + '-' + order_index"
+                  class="bet-item  relative-position" :class="{ 'cursor-pointer': show_arrow(item, order) }"
+                  @click="go_match(item, order)">
+                  <!--卡片内容-->
+                  <q-card-section>
+                    <!--投注记录中投注项 selected是否被选择 appoint_order_status预约状态 order_status订单状态pre_bet_amount提前结算金额-->
+                    <bet-book-item :item="item" :index="index" :order="order"></bet-book-item>
+                  </q-card-section>
+                </div>
+              </template>
               <q-card-section class="bet-item-result" :key="'bet-result-' + index">
                 <!--结算结果-->
                 <bet-record-result :index="index" :item="item" :orderNo_data_list="ref_data.orderNo_data_list"
@@ -64,21 +75,24 @@
 import { onMounted, onUnmounted, reactive } from "vue";
 
 import BetRecordItem from "./bet-record-item.vue";
-// import BetBookItem from "./bet-book-item.vue";
+import BetBookItem from "./bet-book-item.vue";
 import BetRecordResult from "./bet-record-result.vue";
-// // 通屏垂直滚动
+// 通屏垂直滚动
 import vScrollArea from "./v-scroll-area.vue";
 import BetRecordHeader from './bet-record-header.vue'
 
 import { api_betting } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js"
-import { BetRecordLeft } from "src/core/bet-record/pc/bet-record-instance.js"
+import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import lodash_ from "lodash"
 
 onMounted(() => {
-  get_record_list()
+  get_record_list({
+    orderStatus: 0,
+    timeType: 5 
+  })
   useMittOn(MITT_TYPES.EMIT_GET_RECORD_LIST, get_record_list).on
 })
 
@@ -92,8 +106,6 @@ const ref_data = reactive({
   // 0:未结算 1:已结算 2: 预约
   selected: 1,
   load_data_state: 'loading',
-  // 预约订单状态当appoint_status为投注预约时取值为 0: 进行中 2: 已失效
-  appoint_order_status: 0,
   get_cashout_num: 0,
   is_more_show: false,
   total_page: 20,
@@ -107,22 +119,20 @@ const ref_data = reactive({
 
 /**
  * @description: 获取记录列表
+ * @param {Number} o_params 参数
  * @param {Number} cur_page 当前页 默认为第一页
  * @return {undefined} undefined
  */
-const get_record_list = (cur_page = 1) => {
+const get_record_list = (o_params, cur_page = 1) => {
   let params = {
     page: cur_page,
     size: ref_data.page_size,
-    orderStatus: BetRecordLeft.selected,
-    timeType: 5  // 一个账务日
-    // beginTime: this.begin_time,
-    // endTime: this.end_time
+    ...o_params
   };
   ref_data.cur_page = cur_page
   ref_data.load_data_state = "loading";
 
-  api_betting.post_getOrderList(params).then(res => {
+  BetRecordLeft.api_url(params).then(res => {
 
     let code = lodash_.get(res, 'code')
     let data = lodash_.get(res, 'data')

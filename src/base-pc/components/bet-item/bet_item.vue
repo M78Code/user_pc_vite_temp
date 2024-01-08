@@ -5,7 +5,6 @@
 -->
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-  <!-- {{ odds_state }} -->
   <div
     v-if="
       ol_data_item &&
@@ -62,6 +61,7 @@
           </div>
         </slot>
       </div>
+    
       <!-- 赔率 -->
       <div :class="['odds yb-number-font', odds_lift]" >
         <div
@@ -80,9 +80,9 @@
           :class="is_odds_value_red && 'color-red'"
         >
           <!-- ['match_details', 'hot','recent', 'match_list'].includes(bet_source)?  -->
-          <span class="yb-family-odds yb-number-bold" :class="bet_source">{{
-              format_odds_value(match_odds)
-          }}</span>
+          <span class="yb-family-odds yb-number-bold" :class="bet_source">
+              {{ compute_value_by_cur_odd_type(ol_data_item.ov, ol_data_item._hpid, ol_data_item._hsw, ol_data_item.csid) }}
+          </span>
         </div>
       </div>
     </div>
@@ -95,6 +95,7 @@ import { useGetItem } from "./bet_item_hooks.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { MenuData } from 'src/output/project/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
+import { compute_value_by_cur_odd_type } from "src/output/index.js";
 const props = defineProps({
   // 当前玩法信息
   play_data: Object,
@@ -226,6 +227,7 @@ const {
 .lock {
   width: 12px;
   height: 12px;
+  background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/lock.svg") 
 }
 .has-hv {
   .handicap-value {
