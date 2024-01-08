@@ -179,7 +179,7 @@ const play_name_obj = computed(() => {
         score_key: 'S5'
       }
       //罚牌后缀
-    } else if (match_style_obj.data_tpl_id == 29) {
+    } else if (match_style_obj.data_tpl_id == 25) {
       play_name_obj = {
         key: 'punish',
         suffix_name: ' - ' + i18n_t('list.punish'),

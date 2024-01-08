@@ -590,7 +590,7 @@ export function compute_match_all_handicap_data(match) {
         Object.assign(match_assign, min15)
     }
     //  罚牌主盘口列表
-    else if (tpl_id == 29 && csid == 1) {
+    else if (tpl_id == 25 && csid == 1) {
         main_handicap_list = clone_arr(MATCH_LIST_TEMPLATE_CONFIG.template_1_config.template_1.hpsPunish)
     }
     Object.assign(match_assign, {

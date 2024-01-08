@@ -6,7 +6,10 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from './index.js'
 import { get } from 'lodash'
 import BaseData from "src/core/base-data/base-data.js";
 import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
-
+setTimeout(() => {
+    window.BaseData = BaseData
+    window.MenuData = MenuData;
+})
 /**
 * 获取当前的列表的默认的 模板配置
 */
@@ -17,8 +20,7 @@ function get_match_tpl_number() {
         let euid = get(MenuData.left_menu_result, 'lv1_mi');
         current_template_id = computed_menu_to_match_templte_ouzhou(euid)
     } else {
-        let mi = get(MenuData.left_menu_result, 'lv2_mi');
-        current_template_id = computed_menu_to_match_templte((mi))
+        current_template_id = get_match_tpl_number2()
     }
     return current_template_id
 }
@@ -31,10 +33,14 @@ function get_match_tpl_number() {
  */
 function set_template_width(a, b, c, d) {
     let tpl_num = get_match_tpl_number()
-    if (PROJECT_NAME == 'ouzhou-pc') {
-        tpl_num = 101 //欧洲是固定模板宽
+    try {
+        if (PROJECT_NAME == 'ouzhou-pc') {
+            tpl_num = 101 //欧洲是固定模板宽
+        }
+        MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_num}_config`].set_template_width(a, b, c, d)
+    } catch (error) {
+        console.error(tpl_num, BaseData.mi_info_map[`mi_${MenuData.menu_current_mi}`], error)
     }
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_num}_config`].set_template_width(a, b, c, d)
 }
 /**
    * @Description  根据菜单ID 获取一个菜单对象
@@ -48,19 +54,26 @@ function get_menu_obj_by_menu_id(menu_id) {
    * @Description 获取当前列表模板编号  
    * @param {undefined} undefined
   */
-function get_match_tpl_number2(is_hot) {
-    let { orpt } = BaseData.mi_info_map[`mi_${MenuData.menu_current_mi}`] || {};
-    let r = orpt || -1;
+function get_match_tpl_number2() {
+    let { orpt: r } = BaseData.mi_info_map[`mi_${MenuData.menu_current_mi}`] || {};
     // 电竞常规赛事
-    if (MenuData.is_esports()) {
-        r = 'Esports';
+    if (MenuData.is_kemp()||MenuData.is_common_kemp() || MenuData.is_esports_champion()) {
+        r = 18
+    }
+    // 电竞
+    else if (MenuData.is_esports()) {
+        r = 28;
     }
     //搜索13列玩法
     if (MenuData.is_multi_column) {
         r = 13
     }
-    // console.error( 'get_match_tpl_number----------get_match_tpl_number----',r );
-    return r || -1
+    if (!r) {
+        //  兜底
+        let mi = get(MenuData.left_menu_result, 'lv2_mi');
+        r = computed_menu_to_match_templte((mi))
+    }
+    return r == 0 ? 1 : r
     // const { left_menu_result = {}, mid_menu_result = {} } = MenuData;
     // let match_tpl_number = -1
     // // 玩法菜单
@@ -120,7 +133,7 @@ function get_match_template_id({ csid }) {
     else if (MenuData.is_esports()) {
         tpl_id = 28;
     }
-    else if (!tpl_id) {
+    else if (!tpl_id || tpl_id == '0' || MenuData.is_scroll_ball()) {
         tpl_id = csid_to_tpl_id(csid)
     }
     tpl_id = Number(tpl_id) + Number(different_version_config[PROJECT_NAME])
