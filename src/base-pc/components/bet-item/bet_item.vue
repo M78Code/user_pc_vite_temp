@@ -5,7 +5,6 @@
 -->
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-  <!-- {{ odds_state }} -->
   <div
     v-if="
       ol_data_item &&
