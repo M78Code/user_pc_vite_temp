@@ -17,8 +17,7 @@
       <div class="fold-btn" @click="match_list_card.test_log_data()">
         打印数据
       </div>
-      {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--
-      length--- {{ match_list_card_key_arr.length }}
+      {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--length--- {{ match_list_card_key_arr.length }}
     </div>
     <!--  :class="{ 'no-data': load_data_state != 'data' }" -->
     <div class="scroll-fixed-header">
@@ -57,7 +56,7 @@
       <!-- 滚球虚拟体育列表 -->
       <scroll-list v-if="MenuData.menu_root_show_shoucang == 300">
         <template v-slot:before>
-          <div :style="{ height: MatchListCardDataClass.sticky_top.type + 'px' }"></div>
+          <div :style="{ height: MatchListCardDataClass.sticky_top.type + 'px' }">222</div>
         </template>
         <template>
           <!--虚拟体育 赛事列表 赛事头-->
@@ -81,7 +80,7 @@
       <scroll-list v-if="MenuData.menu_root_show_shoucang != 300" ref="scoll_list">
         <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
         <template v-slot:before>
-          <div :style="{ height: MatchListCardDataClass.sticky_top.type + 'px' }"></div>
+          <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }">333</div>
         </template>
         <template v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :data-card-key="card_key"
           :class="`card_key_${card_key}`">
