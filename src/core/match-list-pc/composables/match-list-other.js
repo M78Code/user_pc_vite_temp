@@ -1,20 +1,13 @@
 /**
  * 这里是处理次要玩法的逻辑  
  */
-
-import { ref } from 'vue';
-
 import { MatchDataWarehouse_PC_List_Common } from "src/output/module/match-data-base.js";
 import { get_match_status } from 'src/output/module/constant-utils.js'
 import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
-
-import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-let other_play_current_play = {};
-
 import { other_play_name_to_playid } from 'src/core/constant/project/module/data-class-ctr/index.js';
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
-
+let other_play_current_play = {}; //存储赛事选中附加玩法的key
 
 /**
    * @Description 克隆数组
@@ -26,9 +19,12 @@ const clone_arr = (arr) => {
   return new_arr;
 }
 /**
-   * @Description 获取其他玩法tab标题
-   * @param {object} match 赛事对象
-  */
+ *   @Description 获取其他玩法tab标题
+* @param {object} match 赛事对象
+ * @returns  { tab_play_keys,// 其他玩法key
+ *  has_other_play, // 是否有其他玩法,
+ *   play_current_key//当前选中的玩法}
+ */
 export function get_tab_play_keys(match) {
   let tab_play_keys = []
   let play_keys = Object.keys(other_play_name_to_playid)
@@ -43,26 +39,24 @@ export function get_tab_play_keys(match) {
       tab_play_keys.push(key)
     }
   })
-  // match.tab_play_keys = tab_play_keys.join(',')
-  // // 是否有其他玩法
-  // match.has_other_play = tab_play_keys.length > 0
-  return tab_play_keys.join(',');
+  return {
+    tab_play_keys: tab_play_keys.join(','),// 其他玩法key
+    has_other_play: tab_play_keys.length > 0, // 是否有其他玩法,
+  };
 }
 /**
    * @Description 计算角球、罚牌等其他玩法数据 (获取角球、罚牌模板数据，并与接口数据合并)
    * @param {undefined} undefined
   */
 export const get_compute_other_play_data = (match) => {
-  if (!match) return []
-  let { cos15Minutes, cos5Minutes, mst, mid } = match
+  let { cos15Minutes, cos5Minutes, mst, tpl_id = 1 } = match
   if (cos15Minutes || cos5Minutes) {
-    set_min15(match, mst)
+    Object.assign(match, set_min15(match, mst))
   }
-  // set_tab_play_keys(match)
   //当前选中玩法
-  let play_key = get_play_current_play(match)
-  const { data_tpl_id = 1 } = MatchListCardDataClass.get_card_obj_bymid(mid)
-  let template_name = `template_${data_tpl_id}`
+  const play_key = get_play_current_play(match)
+  if (!play_key) return []
+  let template_name = `template_${tpl_id}`
   const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[template_name + '_config'][template_name]
   // 其他玩法盘口列表
   let handicap_list = clone_arr(match_tpl_info[play_key])
@@ -78,9 +72,6 @@ export const get_compute_other_play_data = (match) => {
     handicap_list = clone_arr(match_tpl_info.hpsCorner)
   }
   let type = play_key == 'hps15Minutes' ? 4 : 1
-  // coverage_match_data({ other_handicap_list }, mid)
-
-  // return  merge_template_data({ match, handicap_list, play_key })
   return get_template_data({ match, handicap_list, play_key, type })
 }
 /**
@@ -407,13 +398,12 @@ export function get_21_bold_template(match) {
    * @return {Object} other_handicap_list 5分钟模板
    */
 export function get_5minutes_template(match = {}) {
-  let { hSpecial5min = 6, ms = 110 } = match
-  const { data_tpl_id = 1 } = MatchListCardDataClass.get_card_obj_bymid(match.mid)
+  let { hSpecial5min = 6, ms = 110, tpl_id = 1 } = match
   let other_handicap_list = []
   let hpid = get_match_status(ms, [110]) ? "362" : "361"
   let tpl_name = `hps5Minutes_${hpid}`
   let slice_index = Math.min(hSpecial5min - 1, 3)
-  const _template_data = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${data_tpl_id}_config.template_${data_tpl_id}.${tpl_name}`);
+  const _template_data = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${tpl_id}_config.template_${tpl_id}.${tpl_name}`);
   lodash.each(_template_data, col => {
     other_handicap_list.push({ ols: col.ols.slice(slice_index) })
   })
@@ -444,5 +434,12 @@ export const set_match_play_current_index = (match, play_key) => {
 }
 //获取保存的盘口玩法
 export function get_play_current_play(match) {
-  return other_play_current_play[match.mid + '_'] || String(match.tab_play_keys).split(",")[0];
+  const cur = other_play_current_play[match.mid + '_']
+  if (cur && match.tab_play_keys.includes(cur)) {
+    return cur
+  }
+  if (match.tab_play_keys) {
+    return String(match.tab_play_keys).split(",")[0]
+  }
+  return undefined
 }

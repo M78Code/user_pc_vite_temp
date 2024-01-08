@@ -333,11 +333,11 @@ function get_hot_match_list(backend_run = false) {
 				if (match_list.length > 0) {
 					set_load_data_state("data")
 					is_show_hot.value = true;
-					match_list_handle_set(match_list)
 					// 设置列表数据仓库
 					MatchListData.set_list(
 						match_list,
 					);
+					match_list_handle_set(match_list)
 					if (!backend_run) {
 						// 调用bymids接口
 						useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, { is_first_load: true })

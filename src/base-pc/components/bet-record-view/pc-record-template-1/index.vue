@@ -72,7 +72,7 @@ import BetRecordHeader from './bet-record-header.vue'
 
 import { api_betting } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js"
-import { BetRecordLeft } from "src/core/bet-record/pc/bet-record-instance.js"
+import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import lodash_ from "lodash"
