@@ -369,14 +369,16 @@ export default {
     get_hots(callback) {
       let api;
       // 电竞
-      if (this.menu_data.is_esports) {
+      if (this.menu_data.is_esports()) {
         api = api_details.get_hots_es;
       } else {
         // 其他赛种
         api = api_details.get_hots;
       }
+     
       // this.match_ctr.clear_data();
       api({ cuid: this.uid, isHot: 1 }).then((res) => {
+
         let code = lodash.get(res, "code");
         let data = lodash.get(res, "data");
         let timestap = lodash.get(res, "ts");
