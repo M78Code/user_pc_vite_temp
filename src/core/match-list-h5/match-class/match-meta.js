@@ -356,13 +356,13 @@ class MatchMeta {
     // 非 今日、滚球、早盘、串关下的足球，不处理
     if (menu_csid !== 1 || ![1,2,3,6].includes(menu_type) || search_tab_i_tid) return
     const popular_leagues = {
-      'ou_guan': { key: '欧洲冠军联赛', 'tids': [] },
-      'ying_chao': { key: '英格兰超级联赛', 'tids': [] },
-      'yi_jia': { key: '意大利甲级联赛', 'tids': [] },
-      'xi_jia': { key: '西班牙甲级联赛', 'tids': [] },
-      'de_jia': { key: '德国甲级联赛', 'tids': [] },
-      'fa_jia': { key: '法国甲级联赛', 'tids': [] },
-      'zhong_chao': { key: '中国超级联赛', 'tids': [] },
+      'european_league': { key: '欧洲冠军联赛', 'tids': [] },
+      'english_league': { key: '英格兰超级联赛', 'tids': [] },
+      'serie_league': { key: '意大利甲级联赛', 'tids': [] },
+      'spanish_league': { key: '西班牙甲级联赛', 'tids': [] },
+      'german_league': { key: '德国甲级联赛', 'tids': [] },
+      'french_league': { key: '法国甲级联赛', 'tids': [] },
+      'china_league': { key: '中国超级联赛', 'tids': [] },
     }
     list.forEach(match => {
       const { tid = '', tn = '' } = match

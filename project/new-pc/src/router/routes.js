@@ -36,6 +36,15 @@ const routes = [
 
     component: () => import('../pages/analysis-header/analysis-header.vue'),
   },
+  // 搜索
+  {
+    path: "/search/:keyword/:csid",
+    name: "search",
+    component: () => import('../pages/search/index.vue'),
+    meta: {
+      keepAlive: true, // 需要缓存
+    }
+  },
   //投注记录
   {
     path: "/bet_record",

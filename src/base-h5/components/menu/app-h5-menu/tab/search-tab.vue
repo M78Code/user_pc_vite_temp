@@ -84,7 +84,7 @@ const props = defineProps({
                 val: 2,
                 tid: '6408',
                 img: "",
-                alias: 'ou_guan'
+                alias: 'european_league'
             },
             {
                 // 英格兰超级联赛 England Premier League - 10011000
@@ -93,7 +93,7 @@ const props = defineProps({
                 val: 3,
                 img: "",
                 tid: '180',
-                alias: 'ying_chao'
+                alias: 'english_league'
 
             },
             {
@@ -101,27 +101,27 @@ const props = defineProps({
                 val: 4,
                 tid: '239',
                 img: "",
-                alias: 'yi_jia'
+                alias: 'serie_league'
             },
             {
                 name: "西甲",
                 val: 5,
                 img: "",
                 tid: '320',
-                alias: 'xi_jia'
+                alias: 'spanish_league'
             },
             {
                 name: "德甲",
                 val: 6,
                 tid: "276",
-                alias: 'de_jia'
+                alias: 'german_league'
             },
             {
                 name: "法甲",
                 val: 7,
                 img: "",
                 tid: '79',
-                alias: 'fa_jia'
+                alias: 'french_league'
             },
             {
                 // 中国超级联赛 China Super League - 10011006344 
@@ -129,7 +129,7 @@ const props = defineProps({
                 name: "中超",
                 val: 8,
                 tid: "10011006344",
-                alias: 'zhong_chao'
+                alias: 'china_league'
             }
         ]
     },

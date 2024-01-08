@@ -1,5 +1,5 @@
 <!--
- * @Description: 视频大屏版页面
+ * @Description: 视频大屏版页面 "/video/:mid/:tid/:csid/:play_type/:video_size",
 -->
 <template>
   <div class="video-wrap c-big-video v-scroll-area relative-position"
@@ -58,7 +58,7 @@
 
 <script setup>
 
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import LoadData from "src/base-pc/components/load-data/load-data.vue"
 // 视屏头部
 import VideoHeader from "src/base-pc/components/video/video-header.vue"
@@ -85,12 +85,15 @@ import VideoHeader from "src/base-pc/components/video/video-header.vue"
 // websocket数据页面数据接入
 // import skt_data_video from "project_path/src/mixins/websocket/data/skt_data_video.js"
 // 赛事详情页面信息操作类
-// import MatchInfoCtr from "project_path/src/utils/dataClassCtr/match_info_ctr.js"
+// import MatchInfoCtr from "src/utils/dataClassCtr/match_info_ctr.js"
 //  直播聊天室相关
 // import live_chatroom from "src/project/yabo/mixins/live_chatroom/live_chatroom";
 // import { mapGetters, mapActions } from "vuex"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-
+import video from "src/core/video/video";
+const load_data_state =  ref("loading");
+// const match_info_ctr = new MatchInfoCtr();  // 赛事控制类
+const show_loading = ref(false); // 是否展示loading
 //   export default {
 // name: "Video",
 // mixins:[skt_data_video, live_chatroom],
@@ -271,11 +274,11 @@ function exit_browser_full_screen() {
  * @return {undefined} undefined
  */
 function get_match_info(show_loading = true) {
-  show_loading && (this.load_data_state = 'loading')
+  // show_loading && (this.load_data_state = 'loading')
 
-  video.api_get_match_info(this.mid,this.$route, (match_info, load_data_state) => {
-    this.load_data_state = load_data_state
-    this.match_info_ctr.init_match_obj(match_info); // 初始化赛事控制类
+  video.api_get_match_info(this.mid,this.$route, (_match_info, _load_data_state) => {
+    load_data_state.value = _load_data_state
+    match_info_ctr.init_match_obj(_match_info); // 初始化赛事控制类
     this.match_info = this.match_info_ctr.match_obj
   })
 }
@@ -306,6 +309,10 @@ function refresh_data() {
   this.refresh_loading_timer && clearTimeout(this.refresh_loading_timer)
   this.refresh_loading_timer = setTimeout(() => this.refresh_loading = false, 2500)
 }
+
+onMounted(() => {
+  get_match_info();
+})
 
 // watch:{
 //   //监听mid改变
