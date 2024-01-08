@@ -3,7 +3,7 @@
   <!-- 列表容器 -->
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <div class="yb-match-list full-height relative-position">
-    <load-data :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
+    <load-data :state="'data'" :style="{ width: `${LayOutMain_pc.layout_main_width - (LayOutMain_pc.layout_right_width + LayOutMain_pc.layout_left_width)}px`,}">
       <scroll-list>
         <div v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :data-card-key="card_key"
           :class="`card_key_${card_key}`">

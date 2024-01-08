@@ -151,6 +151,7 @@
       </div>
       <!-- 客队 E -->
     </div>
+
   </div>
 </template>
 
@@ -426,5 +427,9 @@ function get_first_lineup(data, lineup, type) {
   .panel-title:before {
     background: var(--q-analysis-color-2) !important;
   }
+}
+
+.q-pb-md {
+  padding-bottom: 50px;
 }
 </style>

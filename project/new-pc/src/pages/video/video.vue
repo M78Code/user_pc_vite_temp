@@ -91,9 +91,12 @@ import VideoHeader from "src/base-pc/components/video/video-header.vue"
 // import { mapGetters, mapActions } from "vuex"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import video from "src/core/video/video";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const load_data_state =  ref("loading");
 // const match_info_ctr = new MatchInfoCtr();  // 赛事控制类
 const show_loading = ref(false); // 是否展示loading
+const match_info = ref({}); // 赛事信息
 //   export default {
 // name: "Video",
 // mixins:[skt_data_video, live_chatroom],
@@ -276,10 +279,10 @@ function exit_browser_full_screen() {
 function get_match_info(show_loading = true) {
   // show_loading && (this.load_data_state = 'loading')
 
-  video.api_get_match_info(this.mid,this.$route, (_match_info, _load_data_state) => {
+  video.api_get_match_info(route.params['mid'], route, (_match_info, _load_data_state) => {
     load_data_state.value = _load_data_state
     match_info_ctr.init_match_obj(_match_info); // 初始化赛事控制类
-    this.match_info = this.match_info_ctr.match_obj
+    match_info.value = match_info_ctr.match_obj
   })
 }
 //设置全屏状态
