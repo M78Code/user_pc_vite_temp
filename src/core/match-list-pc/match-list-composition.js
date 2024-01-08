@@ -262,7 +262,7 @@ function mounted_fn(fun) {
 			fun({ is_socket: true })
 		}
 		else {
-			// useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, { is_socket: true })
+			useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, { is_socket: true })
 		}
 	}
 	mitt_list = [
@@ -337,7 +337,6 @@ function get_hot_match_list(backend_run = false) {
 					MatchListData.set_list(
 						match_list,
 					);
-
 					if (!backend_run) {
 						// 调用bymids接口
 						useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, { is_first_load: true })
