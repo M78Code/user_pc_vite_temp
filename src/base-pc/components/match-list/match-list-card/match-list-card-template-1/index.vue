@@ -7,7 +7,8 @@
       'no_start_title',
     ].includes(card_type),
   }" :style="`height:${card_style_obj?.card_total_height}px  !important;width:${LayOutMain_pc.layout_content_width - 15
-  }px  !important;${card_style}`">
+  }px  !important;${card_style}`">1111111111
+      {{ card_type }}
     <div v-if="is_mounted" :class="{ 'list-card-inner': !MatchListCardData.is_champion }">
       <!-- 赛事状态 | 赛种类型 -->
       <play-match-type v-if="['sport_title', 'play_title', 'no_start_title'].includes(card_type)
@@ -65,7 +66,7 @@ provide("card_style_obj", card_style_obj)
 let card_type = computed(() => {
   return (card_style_obj.value?.card_type)
 });
-let sticky_top = ref(MatchListCardDataClass.sticky_top);
+let sticky_top = MatchListCardDataClass.sticky_top;
 // 组件是否加载完成
 const is_mounted = ref(false);
 /**
@@ -81,7 +82,7 @@ const card_style = computed(() => {
       card_type.value
     )
   ) {
-    let top = sticky_top.value?.type || 0;
+    let top = sticky_top?.type || 0;
     card_style = `top:${top - 0.5}px;`;
   }
   // 如果是联赛标题卡片  设置联赛吸顶
@@ -90,7 +91,7 @@ const card_style = computed(() => {
       card_type.value
     )
   ) {
-    let top = sticky_top.value?.league || "";
+    let top = sticky_top?.league || "";
     card_style = `top:${top - 0.5}px;`;
   }
   return card_style;

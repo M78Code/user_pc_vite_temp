@@ -134,7 +134,6 @@
         .yb-site-left-width {
             display: flex;
             height: 100%;
-
             &.normal,
             &.mini-normal {
                 // width: $layout_menu_width;
@@ -147,9 +146,6 @@
                 height: 100%;
                 width: 100%;
                 padding: 0 0px 0 16px;
-                color: var(--99-gb-t-c-10); // #999
-                background-image: var(--q-gb-bg-lg-10);
-                border: 1px solid var(--q-site-header-color-9);
 
                 &.mini-normal,
                 &.normal {
@@ -362,8 +358,8 @@
             left: 0;
             height: 34px;
             justify-content: space-between;
-            border-top: 1px solid var(--q-site-header-color-4);
-            background: var(--q-gb-bg-c-11); 
+            border-top: 1px solid var(--q-site-header-color-8);
+            background: var(--q-site-header-color-7); 
             /* 公告 */
             .marquee-wrap {          
                 .iframe-tab-wrapper {
@@ -891,21 +887,21 @@
       }
       .yb-site-left-width {
         .search-wrap{
-          background-image: var(--q-gb-bg-lg-10);
-          border: 1px solid var(--q-site-header-color-9);
+          background: var(--q-site-header-color-9);
           font-weight: 400;
           border-left: 0;
           position: relative;
-          top: -1px;
-          height: 36px !important;
-          color: var(--q-gb-t-c-10);        
+          top: 0px;
+          height: 33px !important;
+          color: var(--q-site-header-color-10);
+          border-radius: 0 0 0 6px;
         }
       }
       .header-item {
         /*  搜索行部分样式 */
         &.item2 {
-          border-top: .6px solid var(--q-site-header-color-4);
-          background: var(--q-gb-bg-c-11);
+          border-top: 1px solid var(--q-site-header-color-8);
+          background: var(--q-site-header-color-7);
           /* 公告 */
           .marquee-wrap {          
             .iframe-tab-wrapper {

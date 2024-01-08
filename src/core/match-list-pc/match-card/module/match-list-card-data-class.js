@@ -60,14 +60,14 @@ class MatchListCardDataClass {
       level3_offset_bottom: "",
     };
     // 吸顶高度
-    this.sticky_top = {
+    this.sticky_top = reactive({
       //固定在顶部的头高度
-      fixed_header_height: "0",
+      fixed_header_height: "0px",
       // 赛事状态 | 赛种类型 吸顶高度
       type: 0,
       // 联赛名称吸顶高度
       league: 0,
-    };
+    });
     // 赛事列表队列数据
     this.match_list_key = []
     // 滚球页当前选中的赛事id
@@ -88,16 +88,11 @@ class MatchListCardDataClass {
   set_sticky_top({
     type, league, fixed_header_height
   }) {
+    console.log("set_sticky_top", type, league, fixed_header_height)
     // 吸顶高度
-    this.sticky_top = {
-      //固定在顶部的头高度
-      fixed_header_height,
-      // 赛事状态 | 赛种类型 吸顶高度
-      type,
-      // 联赛名称吸顶高度
-      league
-    };
-    this.set_list_version()
+    this.sticky_top.fixed_header_height = fixed_header_height; //固定在顶部的头高度
+    this.sticky_top.league = league; // 联赛名称吸顶高度
+    this.sticky_top.type = type; // 赛事状态 | 赛种类型 吸顶高度
   }
   // 设置 的列表scroll_top
   set_scroll_top(scroll_top) {

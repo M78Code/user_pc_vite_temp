@@ -2,6 +2,7 @@
   margin-bottom: 20px;
   min-width: 960px;
   background: #fff;
+  border-radius: 8px;
   .panel-title {
     display: flex;
     justify-content: space-between;
@@ -644,4 +645,8 @@
       }
     }
   }
+}
+
+.base_panel {
+  padding-bottom: 50px;
 }
