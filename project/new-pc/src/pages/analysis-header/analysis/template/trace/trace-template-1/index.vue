@@ -36,12 +36,12 @@ import { formatTime } from 'src/output/index.js'
   display: flex;
   align-items: center;
   height: 40px;
-  border-bottom: 1px solid var(--q-analysis-color-10);
-  border-left: 1px solid var(--q-analysis-color-10);
-  border-right: 1px solid var(--q-analysis-color-10);
+  border-bottom: 1px solid #DEE4F2;
+  border-left: 1px solid #DEE4F2;
+  border-right: 1px solid #DEE4F2;
 
   &:last-child {
-    border-bottom: 1px solid var(--q-analysis-color-10);
+    border-bottom: 1px solid #DEE4F2;
     border-radius: 0 0 8px 8px;
   }
 
@@ -61,7 +61,7 @@ import { formatTime } from 'src/output/index.js'
     }
 
     &.team-2 {
-      background: var(--q-analysis-color-14);
+      background: #E93D3D;;
     }
 
     &:before {

@@ -346,6 +346,7 @@ const state = reactive({
                     .score {
                         font-size: .32rem;
                         color: var(--q-gb-t-c-27);
+                        font-family: 'ky-font';
                     }
 
                     .text-style {

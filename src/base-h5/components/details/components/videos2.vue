@@ -3,7 +3,7 @@
  * @Date: 2020-08-20 18:35:53
  * @Description: 详情页视频+动画直播区域
 -->
-<template>
+<template>    
   <div
     ref="video_height"
     class="component videos2 player"
@@ -264,10 +264,10 @@
           </div>
         </div>
         <!-- 声音按钮 -->
-        <div v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay && !load_error" class="voice-btn" @click.stop="toggle_click(2, get_video_url.active)">
+        <!-- <div v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay && !load_error" class="voice-btn" @click.stop="toggle_click(2, get_video_url.active)">
           <img v-if="voice" :src="voice_def">
           <img v-else :src="voice_act">
-        </div>
+        </div> -->
         <slider v-if="false" class="slider-container" :value="current_event_video.voice" 
                 v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay"  @change="change_volumn"/>
 
@@ -315,7 +315,6 @@
         <!-- 篮球赛事分析 页面-->
         <basketball-match-analysis v-if="get_detail_data.csid === '2'"></basketball-match-analysis>
     </div>
-    
   </div>
 </template>
 
@@ -334,6 +333,7 @@ import slider from "src/base-h5/components/details/components/slider/slider.vue"
 import OrientationSubscrbe from 'src/base-h5/components/common/orientation/orientation-subscribe'
 import { useRoute } from "vue-router"
 import { project_name } from "src/output/index.js"
+console.log(project_name,'project_name');
 export default {
   name: "videos",
   components: {
@@ -671,9 +671,9 @@ export default {
     get_video_url(new_value, old_value) {
       if(new_value.active == 'muUrl'){
         if ([100,101,102,103].includes(+this.get_detail_data.csid)){
-          this.iframe_src = new_value.media_src + this.dj_http_fix(new_value.media_src) +'controls=0'
+          this.iframe_src = new_value.media_src + this.dj_http_fix(new_value.media_src) +'controls=1'
         } else {
-          this.iframe_src = new_value.media_src + '&controls=0'
+          this.iframe_src = new_value.media_src + '&controls=1'
         }
         //用戶第一次登录 显示 视频指引层
         let is_login_one = localStorage.getItem("is_first_login");
@@ -689,9 +689,9 @@ export default {
       else{
         if (new_value.referUrl && new_value[new_value.active]) {
           if ([100,101,102,103].includes(+this.get_detail_data.csid)){
-            this.iframe_src = new_value[new_value.active] + this.dj_http_fix(new_value[new_value.active]) +'controls=0'
+            this.iframe_src = new_value[new_value.active] + this.dj_http_fix(new_value[new_value.active]) +'controls=1'
           } else {
-            this.iframe_src = new_value[new_value.active] + '&controls=0'
+            this.iframe_src = new_value[new_value.active] + '&controls=1'
           }
           
         }
@@ -822,6 +822,7 @@ export default {
       },
       // 设置音量
       change_volumn(volume) {
+        console.log(volume,'volume');
         const data = {
           cmd: 'volume_video',
           volume
@@ -1037,6 +1038,7 @@ export default {
      * @param {undefined} undefined
      */
     set_video_voice(){
+      console.log(document.getElementById('replayIframe').contentWindow,2222);
       // this.player.video.muted = this.current_event_video.voice;
       this.current_event_video.voice = !this.current_event_video.voice
       const data = {
@@ -1158,10 +1160,12 @@ export default {
     },
     // 向子iframe发送message
     sendMessage2(data){
-      if(document.getElementById('bdIframe')){
+      console.log(document.getElementById('video-iframe'),'iframe');
+      if(document.getElementById('video-iframe')){
         // let iframeWin = this.mapFrame.contentWindow;
         // iframeWin && iframeWin.postMessage(data, '*');
-        document.getElementById('bdIframe').contentWindow.postMessage(data,'*')
+        console.log(data,'data');
+        document.getElementById('video-iframe').contentWindow.postMessage(data,'*')
       }
     },
     /**
@@ -1174,6 +1178,7 @@ export default {
     toggle_click(num,val) {
       // 开启/关闭声音
       if (num == 2) {
+        console.log(2222,this.voice);
         this.voice = !this.voice;
         this.change_volumn(this.voice ?1:0)
         // this.sendMessage2({cmd: 'volume_video', val:this.voice ?1:0})
@@ -1442,9 +1447,9 @@ export default {
     reload_create_fun(){
       if([ "muUrl", "lvs"].includes(this.get_video_url.active) ){
         if ([100,101,102,103].includes(+this.get_detail_data.csid)){
-          this.iframe_src = this.get_video_url.media_src + this.dj_http_fix(this.get_video_url.media_src) +'controls=0'
+          this.iframe_src = this.get_video_url.media_src + this.dj_http_fix(this.get_video_url.media_src) +'controls=1'
         } else {
-          this.iframe_src = this.get_video_url.media_src + '&controls=0';
+          this.iframe_src = this.get_video_url.media_src + '&controls=1';
         }
       } else {
         if(( this.get_video_url.active == "muUrl" && this.get_video_url.referUrl == '') || ( this.get_video_url.active == "animationUrl" && this.get_video_url.animationUrl == '' )){
@@ -2406,6 +2411,10 @@ export default {
       right: .2rem;
     }
   }
+  .replay-voice-wrap{
+      top: -6.28rem !important;
+      left: .1rem !important;
+    }
   .voice-wrap {
     position: absolute;
     bottom: .12rem;
@@ -2429,10 +2438,7 @@ export default {
     right: .35rem;
   }
 
-  .replay-voice-wrap{
-    top: -6.28rem !important;
-    left: .1rem !important;
-  }
+
 }
 .exit-img {
   position: absolute;
