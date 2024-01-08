@@ -204,6 +204,7 @@
                           :class="{ 'visibility-hidden': match.ms == 110 }">
                           {{ home_score }}
                         </div>
+                        <span class="serving-party-volleyball" v-if="+match.csid == '9' && match.handicap_index == 1" ></span>
                       </div>
                       <!--客队图片和名称-->
                       <div class='team-title-container'>
@@ -255,6 +256,7 @@
                           :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
                           {{ away_score }}
                         </div>
+                        <span class="serving-party-volleyball" v-if="+match.csid == '9' && match.handicap_index == 2" ></span>
                       </div>
                     </div>
                     <!-- 右边盘口组件 -->
@@ -1062,7 +1064,7 @@ export default {
           width: 4px;
           height: 4px;
           border-radius: 50%;
-          background: var(--q-color-page-bg-color-59);
+          // background: var(--q-color-page-bg-color-59);
           flex-shrink: 0;
           margin: 0.13rem 0.05rem 0;
 
@@ -1084,6 +1086,20 @@ export default {
           &.simple {
             right: 0.08rem;
           }
+        }
+        .volleyball-party{
+          
+        }
+        .serving-party-volleyball{
+          display: block;
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+          // background: var(--q-color-page-bg-color-59);
+          flex-shrink: 0;
+          margin: 0.1rem 0.05rem 0;
+          background: #0f7a3f;
+          float: right;
         }
       }
 
