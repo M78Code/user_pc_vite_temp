@@ -433,6 +433,9 @@ function navigate(obj) {
   if (_path == '/activity') {
     _window_width = 1400
   }
+  if (_path == "/bet_record") {
+    _window_width = 1440
+  }
   let _window_height = 650;
   if (['/activity', '/activity_aegis'].includes(_path)) {
     _window_height = 800;
