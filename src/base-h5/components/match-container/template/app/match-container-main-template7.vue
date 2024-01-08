@@ -1296,7 +1296,6 @@ export default {
         }
 
         .score {
-          height: 0.3rem;
           font-size: 0.14rem;
           display: flex;
           align-items: center;
