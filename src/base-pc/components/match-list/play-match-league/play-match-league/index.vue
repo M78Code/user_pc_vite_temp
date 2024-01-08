@@ -132,7 +132,7 @@ const match_list_tpl_size = computed(() => {
 //   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {})
 // }
 const is_HDP = computed(() => {
-  return [1, 20, 24, 13,29].includes(+match_style_obj.value.data_tpl_id)
+  return [1, 20, 24, 13, 29].includes(+match_style_obj.value.data_tpl_id)
 })
 
 /**
@@ -142,7 +142,7 @@ const is_HDP = computed(() => {
 const bet_col = computed(() => {
   let csid = props.card_style_obj.league_obj.csid
   let bet_col = []
-  let data_tpl_id=match_style_obj.value.data_tpl_id
+  let data_tpl_id = match_style_obj.value.data_tpl_id
   if (data_tpl_id == 13) {
     data_tpl_id = 1
     bet_col = [...i18n_t('list.match_tpl_title.tpl13_m.bet_col')]
@@ -153,9 +153,11 @@ const bet_col = computed(() => {
     title_name = "corner_bet_col"
   }
   //罚牌主盘
-  if ([29].includes(data_tpl_id)) {
+  else if ([29].includes(data_tpl_id)) {
     data_tpl_id = 1
     title_name = "punish_bet_col"
+  } else if (data_tpl_id == 28) {
+    data_tpl_id = 'esports'
   }
   let tpl_title = get_match_tpl_title(`list.match_tpl_title.tpl${data_tpl_id}.${title_name}`, csid)
   tpl_title = tpl_title.length ? tpl_title : []
@@ -170,7 +172,7 @@ const bet_col = computed(() => {
     }
   }
   // 模板15
-  if (data_tpl_id == 15) {
+  else if (data_tpl_id == 15) {
     if (mft == 5) {
       bet_col = bet_col.slice(4, 8);
     } else {
@@ -178,16 +180,15 @@ const bet_col = computed(() => {
     }
   }
   // 模板11 && 斯诺克
-  if (data_tpl_id == 11 && csid == 7) {
+  else if (data_tpl_id == 11 && csid == 7) {
     bet_col = get_match_tpl_title("list.match_tpl_title.tpl11.bet_col2", csid)
   }
-
   // 模板20 && 曲棍球
-  if (data_tpl_id == 20 && csid == 15) {
+  else if (data_tpl_id == 20 && csid == 15) {
     bet_col = get_match_tpl_title("list.match_tpl_title.tpl20.bet_col2")
   }
   // 模板 esport && CSGO
-  if (data_tpl_id == 'esports' && csid == 102) {
+  else if (data_tpl_id == 'esports' && csid == 102) {
     bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${data_tpl_id}.bet_col102`)
   }
   return bet_col
@@ -209,7 +210,7 @@ const bet_title = computed(() => {
    * @param {NUmber}  i(0|1)  双行标题第几个
   */
 function get_highlight_title(is_double, key, i) {
-  let highlight = [3, 4, 5].includes(key) && [0, 13, 25].includes(+match_style_obj.value.data_tpl_id)
+  let highlight = [3, 4, 5].includes(key) && [1, 13, 29].includes(+match_style_obj.value.data_tpl_id)
   if (is_double) {
     highlight = (highlight && i === 1)
   }
