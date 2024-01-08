@@ -97,7 +97,7 @@
           <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
         </span>
         <!-- 统计分析 -->
-        <div class="sr-link-icon-w" v-tooltip="{ content: i18n_t('common.analysis') }" v-if="is_show_sr_flg(match)"
+        <div class="sr-link-icon-w" v-tooltip="{ content: i18n_t('common.analysis') }"
           @click.stop='details.sr_click_handle(match)'>
           <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
         </div>

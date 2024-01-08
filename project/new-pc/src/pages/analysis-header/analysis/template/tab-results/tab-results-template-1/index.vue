@@ -251,7 +251,7 @@ onUnmounted(() => {
 /*  统计图表 */
 .total {
   padding: 20px 30px 30px;
-  border: 1px solid var(--q-analysis-color-10);
+  border: 1px solid #DEE4F2;
   border-top: 0;
   border-radius: 0 0 8px 8px;
 
@@ -277,7 +277,7 @@ onUnmounted(() => {
         border-radius: 6px;
 
         &.home-round {
-          background: var(--q-analysis-color-14);
+          background: #E93D3D;;
           margin-right: 5px;
         }
 
@@ -339,7 +339,7 @@ onUnmounted(() => {
 
     &:last-child {
       border-radius: 8px;
-      border-bottom: 1px solid var(--q-analysis-color-10);
+      border-bottom: 1px solid #DEE4F2;
     }
 
     .stage-tab {
