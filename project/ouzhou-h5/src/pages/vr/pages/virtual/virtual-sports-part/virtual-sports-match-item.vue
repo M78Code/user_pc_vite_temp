@@ -14,7 +14,7 @@
         'items-center':standard_edition == 1
       }">
       <!-- 赛事信息 -->
-      <div class="row items-start team-w-container" v-if="standard_edition == 2">
+      <div class="team-w-container" v-if="standard_edition == 2">
         <div class="match-play-count standard row justify-between items-center">
           <!-- 比赛时间 -->
           <div class="match-play-left row justify-start items-center">
@@ -62,11 +62,13 @@
           <!-- 战队名称 -->
           <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
             <div class="ellipsis">{{match_item.teams ? match_item.teams[0] : ''}}</div>
+            <div class="team-score">{{ match_item.home || 0 }}</div>
           </div>
           <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
             <div class="ellipsis">
               {{match_item.teams ? match_item.teams[1] : ''}}
             </div>
+            <div class="team-score">{{ match_item.away || 0 }}</div>
           </div>
 
         </div>
@@ -204,7 +206,7 @@ export default {
     .team-w-container {
       flex-grow: 1;
       width: 50%;
-      padding-right: 5px;
+      padding-right: 10px;
       border-right: 1px solid rgba(88,88,88,.1);
     }
 
@@ -217,7 +219,7 @@ export default {
       align-items: flex-start;
       &.standard {
         .team-title {
-          width: 1.4rem;
+          width: 100%;
         }
       }
     }
@@ -457,21 +459,13 @@ export default {
       height: 0.23rem;
       margin-bottom: 0.03rem;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
       font-size: 0.14rem;
-      // overflow: hidden;
-      // text-overflow: ellipsis;
-      // white-space: nowrap;
-      // position: relative;
-
-      // .ellipsis {
-        // position: absolute;
-        // left: 0;
-        // top: 0;
-        // width: 100%;
-        // height: 100%;
-      // }
+      .team-score {
+        font-size: 0.14rem;
+        font-weight: 500;
+      }
     }
   }
 
