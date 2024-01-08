@@ -14,7 +14,7 @@
         'items-center':standard_edition == 1
       }">
       <!-- 赛事信息 -->
-      <div class="row items-start team-w-container" @click="goto_details(match_item)" v-if="standard_edition == 2">
+      <div class="row items-start team-w-container" v-if="standard_edition == 2">
         <div class="match-play-count standard row justify-between items-center">
           <!-- 比赛时间 -->
           <div class="match-play-left row justify-start items-center">

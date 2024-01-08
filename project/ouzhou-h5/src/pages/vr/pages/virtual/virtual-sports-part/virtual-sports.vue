@@ -50,6 +50,24 @@
           </div>
         </div>
       </div>
+
+      <!--赛事轮|期菜单-->
+      <match-tab
+          :is_reset_tab_i="is_reset_tab_i"
+          :no_list="no_title_list"
+          :is_user_switch_league="is_user_switch_league"
+          :auto_change_tab_i_first="auto_change_tab_i_first"
+          :current_league="tab_items[tab_item_i]"
+          :current_match="current_match"
+          :is_basket_ball_next_no="is_basket_ball_next_no"
+          :v_menu_changed="v_menu_changed"
+          :before_match_tab_trend="before_match_tab_trend"
+          @sub_nav_change="sub_nav_changed"
+          @trend_event_change="trend_event_change"
+          @time_ended="timer_ended_handle"
+          @update_next_batch_match="v_basket_ball_update_n"
+        ></match-tab>
+
       <div class="virtual-sports-card">
        <div  class="virtual-sports-card-content" :class="{'virtual-sports-card-simple': standard_edition === 1}">
           <!--  虚拟体育主列表页面  -->
@@ -87,27 +105,6 @@
           </div>
        </div>
       </div>
-
-      <template v-if="!no_virtual_match">
-        <!--赛事轮|期菜单-->
-        <match-tab
-          style="display: none;"
-          :is_reset_tab_i="is_reset_tab_i"
-          :no_list="no_title_list"
-          :is_user_switch_league="is_user_switch_league"
-          :auto_change_tab_i_first="auto_change_tab_i_first"
-          :current_league="tab_items[tab_item_i]"
-          :current_match="current_match"
-          :is_basket_ball_next_no="is_basket_ball_next_no"
-          :v_menu_changed="v_menu_changed"
-          :before_match_tab_trend="before_match_tab_trend"
-          @sub_nav_change="sub_nav_changed"
-          @trend_event_change="trend_event_change"
-          @time_ended="timer_ended_handle"
-          @update_next_batch_match="v_basket_ball_update_n"
-        ></match-tab>
-        <!-- 占位撑开高度 -->
-      </template>
       </div>
       <!-- <no-data v-else which='noMatch' height='500'></no-data> -->
   </div>
