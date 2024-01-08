@@ -118,7 +118,7 @@ function match_list_all_params() {
         // 电子竞技
         lv2_mi_info = {
             "category": 1,
-            "csid": filter_tab - 2000,
+            "csid": filter_tab ? (filter_tab - 2000) : csid,
             "collect": 1,
             "selectionHour": null,
             "tid": "",
