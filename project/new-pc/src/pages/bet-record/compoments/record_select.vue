@@ -54,7 +54,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { formatTime } from 'src/output/index.js'
-import { BetRecordHistory } from "src/core/bet-record/pc/bet-record-instance.js"
+import BetRecordHistory from "src/core/bet-record/pc/bet-record-history.js"
 import checkBoxWarp from './check_box_warp.vue'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { api_betting } from "src/api/index.js";
