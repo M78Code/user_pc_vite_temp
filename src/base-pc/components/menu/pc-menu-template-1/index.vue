@@ -18,7 +18,9 @@
         </div>
       </div>
     </div>
-    <div v-show="false">{{ BaseData.base_data_version }}</div>
+    
+    <div v-show="false">{{ BaseData.base_data_version }}-{{MenuData.menu_data_version}}</div>
+
     <div v-for="item in (MenuData.left_menu_list || [] )" :key="`_${item.mi}`" :class="set_vr_or_guanjun_border(item.mi)">
       <!--   赛种-->
       <!-- {{ BaseData.filterSport_arr }} -- {{ BaseData.compute_sport_id(item) }} -->
