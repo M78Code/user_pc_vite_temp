@@ -7,7 +7,11 @@
     <div class="test-line" v-if="show_debugger_line">
       {{match_item.batchNo +'-'+ match_item.mid}}
     </div>
-
+    <!-- 玩法数量 -->
+    <div class="play-count" @click="goto_details(match_item)">
+      {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}`: i18n_t('footer_menu.more')}}
+      <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow"  />
+    </div>
     <div class="match-data-item row"
       :class="{
         standard:standard_edition == 2,
@@ -19,11 +23,9 @@
         <div class="team-wrapper" :class="{standard:standard_edition == 2}">
           <!-- 战队名称 -->
           <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
-            <img v-img="([lodash.get(match_item,'mhlu'), lodash.get(match_item,'frmhn')])" />
             <div class="ellipsis">{{match_item.teams ? match_item.teams[0] : ''}}</div>
           </div>
           <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
-            <img v-img="([lodash.get(match_item,'malu'), lodash.get(match_item,'frman')])" />
             <div class="ellipsis">
               {{match_item.teams ? match_item.teams[1] : ''}}
             </div>
@@ -91,14 +93,6 @@
         </div>
         <!--专业版-->
         <div class="profession" v-if="standard_edition == 2">
-           <!--复刻版vr不能滑动-->
-          <!-- <template v-if="0 && get_hp_list(1).length"> -->
-           <!-- 玩法数量 -->
-           <div v-if="match_item.mc" class="play-count" @click="goto_details(match_item)">
-              {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}`: i18n_t('footer_menu.more')}}
-              <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow"  />
-            </div>
-
           <!--标准版赔率容器-->
           <div class="standard-odd-l-w" v-touch-pan.horizontal.prevent.mouse="odd_wrapper_pan"
             :class="{'status2':standard_odd_status == 1}" v-if="standard_edition == 2">
@@ -244,16 +238,13 @@ export default {
 }
 
 .match-item-wrap {
-  // width: 3.61rem;
-  width: 97vw;
-  min-height: 1.05rem;
-  margin: 0 auto 0.08rem auto;
+  min-height: 0.9rem;
   border-radius: 0;
-  border-bottom: 1px solid var(--q-gb-bd-c-4);
+  border-bottom: 1px solid #F5F5F5;
   position: relative;
 
   &.standard {
-    height: 1.4rem;
+    height: 0.9rem;
   }
 
   .test-line {
@@ -271,11 +262,6 @@ export default {
   }
 
   .match-data-item {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
     font-size: 0.14rem;
     display: flex;
     flex-direction: row;
@@ -285,11 +271,6 @@ export default {
     // background-color: red;
 
     &.standard {
-      .team-w-container {
-        padding-left: 0.10rem;
-        padding-top: 0.31rem;
-      }
-
       .team-title {
         height: 0.32rem;
         line-height: 0.3rem;
@@ -419,18 +400,6 @@ export default {
       overflow: hidden;
       position: relative;
 
-      .play-count {
-          font-size: 0.1rem;
-          color: #AFB3C8;
-          text-align: right;
-          padding-right: 0.1rem;
-          margin-bottom: 0.05rem;
-          // background-color: red;
-          i {
-            transform: rotate(90deg);
-            font-size: 0.1rem;
-          }
-      }
 
       .slide_icon {
         position: absolute;
@@ -554,7 +523,7 @@ export default {
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      font-size: 0.12rem;
+      font-size: 0.14rem;
       // overflow: hidden;
       // text-overflow: ellipsis;
       // white-space: nowrap;
