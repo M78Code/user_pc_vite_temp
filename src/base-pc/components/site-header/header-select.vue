@@ -72,7 +72,7 @@
             <!-- 语言切换 -->
             <popup-language />
             <!-- 切换盘口 -->
-            <popup-handicap />
+            <!-- <popup-handicap /> -->
             <!-- 设置多语言、版本、颜色 -->
             <popup-set />
         </template>
@@ -85,7 +85,7 @@ import lodash from 'lodash'
 /* 组件 */
 import { RefreshWapper as refresh } from "src/components/common/refresh";
 import headerTime from "src/base-pc/components/site-header/header-time.vue"
-import popupHandicap from "src/base-pc/components/popup-select/popup-handicap.vue"
+// import popupHandicap from "src/base-pc/components/popup-select/popup-handicap.vue"
 import popupSet from "src/base-pc/components/popup-select/popup-set.vue"
 import popupLanguage from "src/base-pc/components/popup-select/popup-language.vue"
 /* api */
