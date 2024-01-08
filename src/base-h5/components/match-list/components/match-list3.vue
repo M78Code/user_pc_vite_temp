@@ -58,7 +58,6 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
 
 const matchs_data = computed(() => {
-  console.log(MatchMeta.current_matchs)
   return MatchMeta.current_matchs
 })
 
