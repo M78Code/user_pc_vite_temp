@@ -224,7 +224,7 @@ const go_back = () => {
     .ht-questions {
         padding: .2rem;
         margin: 0 .2rem .11rem .2rem;
-        background-color: var(--q-gb-bg-c-15);
+        background-color: var(--q-gb-bg-c-25);
         border-radius: .2rem;
         position: relative;
         .ht-topic-type {
@@ -470,7 +470,7 @@ const go_back = () => {
         .ht-button {
             width: 2.4rem;
             height: .44rem;
-            background-color: var(--q-gb-bg-c-4);
+            background-color: var(--q-gb-bg-c-42);
             border-radius: .44rem;
             font-size: .16rem;
             color: var(--q-gb-bd-c-12);
@@ -478,7 +478,7 @@ const go_back = () => {
             align-items: center;
             justify-content: center;
             margin-top: .12rem;
-            border: 1px solid transparent;
+            border: .01rem solid var(--q-gb-bd-c-18);
         }
     }
 
