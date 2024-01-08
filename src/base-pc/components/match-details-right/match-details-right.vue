@@ -467,5 +467,5 @@ const is_show_margin = computed(() => {
 </style>
 
 <style lang="scss">
-@import "../match-details//match-details.scss";
+@import "../match-details/match-details.scss";
 </style>
