@@ -10,12 +10,13 @@
                 <img :src="`${LOCAL_PROJECT_FILE_PREFIX }/image/menu/top-menu/back.png`" alt="">
             </div>
             <div class="drop_menulist">
-                VR-Footerball
+                {{ current_sub_menu.name }}
                 <q-menu class="vr-menu-wrap">
                     <div>
                         <q-list>
-                            <q-item clickable v-close-popup v-for="(item, key) in sub_menu_list" 
-                            :key = "key" @click="onItemClick">
+                            <q-item clickable v-close-popup v-for="(item, i) in sub_menu_list" 
+                            :class="[sub_menu_i == i ? 'item-active' : '']"
+                            :key="i" @click="virtual_menu_changed(i)">
                                 <q-item-section>
                                     <q-item-label>{{ item.name }}</q-item-label>
                                 </q-item-section>
@@ -408,6 +409,15 @@ export default {
     .q-item__label {
         font-size: 0.14rem;
         color: #fff;
+        font-weight: 500;
+    }
+    .q-item {
+        border-bottom: 1px solid rgba(245, 245, 245, 0.06);
+        &.item-active {
+            .q-item__label {
+                color: #FF7000;
+            }
+        }
     }
 }
 </style>
