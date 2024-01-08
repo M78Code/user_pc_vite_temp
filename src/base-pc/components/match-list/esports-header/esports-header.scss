@@ -17,10 +17,10 @@
     }
     .sport-tab {
       .sport-item {
-        color: var(--q-gb-bg-c-11);
+        color: var(--q-gb-bg-c-5);
         &.active {
-          background-color: var(--q-gb-bg-c-11);
-          color: var(--q-gb-t-c-5);
+          // background-color: var(--q-gb-bg-c-11);
+          color: var(--q-gb-t-c-11);
           font-weight: 500;
         }
       }

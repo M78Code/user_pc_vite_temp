@@ -1,5 +1,5 @@
 <template>
-    <announce-wapper></announce-wapper>
+    <announce-wapper use_component_key="Announce_new_pc"></announce-wapper>
 </template>
 
 <script setup>

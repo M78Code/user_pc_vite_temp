@@ -780,6 +780,7 @@ class MenuData {
   set_menu_root(val){
     this.menu_root = val
     let left_menu_list = []
+    
     if(val == 2){
       left_menu_list = lodash.cloneDeep(this.to_day_list) 
      
@@ -787,7 +788,10 @@ class MenuData {
     if(val == 3){
       left_menu_list = lodash.cloneDeep(this.early_list) 
     }
-    this.set_left_menu_list_init(left_menu_list)
+    if([2,3].includes(val*1)){
+      this.set_left_menu_list_init(left_menu_list)
+    }
+  
     this.set_menu_data_version()
   }
  
@@ -923,7 +927,9 @@ class MenuData {
     const res = await api_common.get_virtual_menu({device: 'V1_H5'});
     if(res && res.code =='200'){
         this.vr_list = res.data;
+        return res.data
     }
+    return []
   }
  
   // 新菜单规律核心参照表

@@ -364,7 +364,7 @@ const get_lastest_market_info = (type) => {
                         }else{
                             play_option_name = obj.away  || ''
                         }
-                        bet_item.playOptionName = play_option_name  + ' ' + market.marketValue
+                        bet_item.playOptionName = bet_item.handicap  + ' ' + market.marketValue
                         bet_item.playOptions = odds.oddsType
 
                         bet_item.place_num = 'place_num'
@@ -909,7 +909,7 @@ const set_error_message_config = (res ={},type,order_state) => {
  * @returns 
  */
 const set_bet_obj_config = (params = {}, other = {}) => {
-    console.error('投注项需要数据', params, 'other', other);
+    // console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 

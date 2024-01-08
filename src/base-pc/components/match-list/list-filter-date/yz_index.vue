@@ -10,8 +10,8 @@
 </template>
 
 <script setup>
-import DateTab from "src/base-pc/components/tab/date-tab/index.vue";
-import menu_config from "src/core/menu-pc/menu-data-class.js";
+import DateTab from "src/base-pc/components/tab/date-tab/yz_index.vue";
+import menu_config from "src/core/menu-pc-yazhou/menu-data-class.js";
 </script>
 
 <style lang="scss" scoped>
