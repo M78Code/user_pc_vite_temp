@@ -1,5 +1,5 @@
 <template>
-  <div class="analysis-page relative-position">
+  <div class="analysis-page">
     <div class="match-header" v-if="matchLoaded">
       <div class="both home">
         <span class="team-name">
@@ -23,6 +23,27 @@
         </span>
       </div>
     </div>
+    <div class="analysis-page-c">
+      <div class="tab">
+        <span v-for="(item, index) in tab" :key="index" class="item" :class="{ 'active': item === activeTab }"
+            @click="switchTabs(item)">{{ item === 'news' ? newsTabName : i18n_t(`analysis.${item}`) }}</span>
+      </div>
+      <q-scroll-area class="rule-scroll-area" :visible="true" v-if="matchLoaded"
+                     :style="{ height: '100%', margin: hasNews && activeTab == 0 ? '0' : '0 20px' }">
+        <!-- 文章资讯  -->
+        <news :mid="mid" v-if="activeTab === 'news'" />
+        <!-- 赛况 -->
+        <tab-results :match="matchDetail" v-if="activeTab === 'result'" />
+        <!-- 数据 -->
+        <tab-data :match="matchDetail" v-if="activeTab === 'data'" />
+        <!-- 阵容 -->
+        <tab-lineup :match="matchDetail" v-if="activeTab === 'lineup'" />
+        <!-- 情报 -->
+        <tab-information :match="matchDetail" v-if="activeTab === 'information'" />
+        <!-- 赔率 -->
+        <tab-odds :match="matchDetail" v-if="activeTab === 'odds'" />
+      </q-scroll-area>
+    </div>
   </div>
 </template>
 
@@ -33,9 +54,18 @@ import { api_analysis, api_details } from 'src/api/index.js'
 import {msc_array_obj, formatTime, UserCtr} from "src/output/index.js";
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 
+import { TabNewsFullVersionWapper as news } from './template/tab-news/index.js';
+import { TabResultsFullVersionWapper as tabResults } from './template/tab-results/index.js';
+import { TableDataFullVersionWapper as tabData } from './template/tab-data/index.js'
+import { TabLineupFullVersionWapper as tabLineup } from './template/tab-lineup/index.js'
+import { TabInformationFullVersionWapper as tabInformation } from './template/tab-information/index.js'
+import { TabOddsFullVersionWapper as tabOdds } from 'src/base-pc/components/analysis/template/tab-odds/index.js'
+
+import zhugeTag from "src/core/http/zhuge-tag.js";
+
 //赛况，数据，阵容，情报，赔率
 const tab = ref(['result', 'data', 'lineup', 'information', 'odds']);
-const activeTab = ref(null);
+const activeTab = ref(null); //用字符串代替数字可减少判断
 const sportDict = {
   allScore: ['S1', 'S11', 'S12', 'S5', 'S8', 'S105', 'S104', 'S1101', "S17", "S18", 'S106', 'S109', 'S12345', 'S12346', 'S111', 'S108', 'S107', 'S110'],
   line: ['S1101', "S17", "S18", 'S108', 'S107', 'S110']
@@ -43,9 +73,34 @@ const sportDict = {
 const matchDetail = ref({})
 const matchLoaded = ref(false) //match 数据接口是否就绪
 
+const hasNews = ref(false)
+const articleDetail = ref({})
+const newsTabName = ref(null)
+
 const route = useRoute();
 
 const mid = ref(0);
+
+if (Object.keys(route.params).length) {
+  let { csid } = route.params
+  // 篮球只展示赛况、数据和阵容
+  if (csid == '2') {
+    tab.value = ['result', 'data', 'lineup']
+  }
+}
+
+// 只在简中和繁中的时候有赛事文章
+// if (['zh', 'tw'].includes(localStorage.getItem('lang'))) {
+// if (localStorage.getItem('lang') == 'zh') {
+if (['zh', 'tw'].includes(UserCtr.lang)) {
+  if (UserCtr.lang == 'zh') {
+    newsTabName.value = '资讯'
+  } else {
+    newsTabName.value = '資訊'
+  }
+  tab.value.unshift('news');
+  hasNews.value = true;
+}
 
 onMounted(() => {
   get_match_data();
@@ -58,11 +113,7 @@ function get_match_data() {
     let match = res.data
     mid.value = match.mid //设置news 需要的mid
     // 设置页面激活的tab
-    if (['zh', 'tw'].includes(UserCtr.lang)) {
-      activeTab.value = match.ms == 1 ? 1 : 2
-    }else {
-      activeTab.value = match.ms == 1 ? 0 : 1
-    }
+    activeTab.value = match.ms == 1 ? 'result' : 'data';
     match.msc = msc_array_obj(match.msc)
     return match
   }).then(match_info => {
@@ -124,16 +175,40 @@ function get_match_data() {
     matchDetail.value = match
     matchLoaded.value = true
   })
-
-
-
 }
+
+function switchTabs(item, index) {
+  activeTab.value = item;
+  // let eventLabel = '';
+  // switch (index) {
+  //   case 0:
+  //     eventLabel = 'PC_情报分析_资讯'
+  //     break
+  //   case 1:
+  //     eventLabel = 'PC_情报分析_赛况'
+  //     break;
+  //   case 2:
+  //     eventLabel = 'PC_情报分析_数据'
+  //     break;
+  //   case 3:
+  //     eventLabel = 'PC_情报分析_阵容'
+  //     break;
+  //   case 4:
+  //     eventLabel = 'PC_情报分析_情报'
+  //     break;
+  //   default:
+  //     eventLabel = 'PC_情报分析_赔率'
+  // }
+  // // 发送埋点事件
+  // zhugeTag.send_zhuge_event(eventLabel);
+}
+
 
 </script>
 
 <style lang="scss" scoped>
 .analysis-page {
-  background: var(--q-analysis-color-16);
+  background: linear-gradient(180deg, #EAF2FF 0%, #E7F0FF 100%);
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -212,44 +287,38 @@ function get_match_data() {
       }
     }
   }
-
+  .analysis-page-c {
+    padding: 10px;
+    height: 100%;
+  }
   /*  tab 区 */
   .tab {
     display: flex;
+    gap: 15px;
+    align-items: center;
     margin-bottom: 10px;
-
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: 0px;
-      height: 1px;
-      width: 100%;
-      background: var(--q-analysis-color-10);
-      z-index: 1;
-    }
-
+    background: #F6F9FF;
+    border: 2px solid #FFFFFF;
+    border-radius: 6px;
+    height: 48px;
+    padding: 0 15px;
     .item {
-      width: 100px;
       height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 5px;
-      background: var(--q-analysis-color-12);
-      border: 1px solid var(--q-analysis-color-12);
-      border-bottom-color: var(--q-analysis-color-10);
-      color: var(--q-analysis-color-3);
-      z-index: 2;
+      line-height: 30px;
+      padding: 0 35px;
       cursor: pointer;
-      font-family: PingFangSC-Regular;
-
-      font-size: 14px;
-
+      font-family: PingFangSC;
+      font-size: 12px;
+      color: #555555;
+      background: linear-gradient(180deg, #E4ECFD 0%, #F8FAFF 47.92%, #F5F8FF 100%);
+      border: 0.5px solid #D7E1FD;
+      box-shadow: 0px 3px 3px 0px rgba(0, 56, 98, 0.1);
+      border-radius: 100px;
       &.active {
-        background: transparent;
-        border-bottom-color: var(--q-analysis-color-16);
-        color: var(--q-analysis-color-0);
-        font-family: PingFangSC-Medium;
+        background: #179CFF;
+        color: #fff;
+        border: none;
+        box-shadow: none;
       }
     }
   }
