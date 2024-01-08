@@ -11,16 +11,17 @@ body {
 
   /* 列表 */
   .yb-match-list {
-    // &::before {
-    //   content: '';
-    //   position: absolute;
-    //   right: 11px;
-    //   z-index: 499;
-    //   top: 0;
-    //   left: 0;
-    //   height: 6px;
-    //   background-color: var(--q-gb-bg-c-11);
-    // }
+    display: flex;
+    &::before {
+      content: '';
+      position: absolute;
+      right: 11px;
+      z-index: 499;
+      top: 0;
+      left: 0;
+      height: 6px;
+      background-color: var(--q-gb-bg-c-11);
+    }
 
     /*顶部下横线*/
     .scroll-fixed-header {

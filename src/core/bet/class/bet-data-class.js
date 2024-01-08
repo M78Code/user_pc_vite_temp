@@ -953,6 +953,7 @@ this.bet_appoint_ball_head= null */
     this.set_bet_data_class_version()
     // 删除后的数据 是否可以去获取限额
     let single_length = single_list.length
+    
     // 单关且有数据 才能去请求限额
     if(single && single_length) {
       let obj = single_list.find(item => ["C01","B03","O01"].includes(item.dataSource)) || {}
@@ -967,6 +968,12 @@ this.bet_appoint_ball_head= null */
           get_query_bet_amount_common()
         }
       }
+    }
+    
+    // pc 端无投注项时，恢复菜单状态
+    if(!single_length) {
+      // 数量为 0 切换到菜单页面
+      LayOutMain_pc.set_layout_left_show('menu')
     }
 
     // 串关要大于1条才能去请求限额
