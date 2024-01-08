@@ -4,7 +4,7 @@
     <!-- 页面路由开始 -->
     <router-view />
     <div class="error-data">{{ GlobalSwitchClass.error_data }}</div>
-    <div style="display:none">{{ GlobalSwitchClass.global_switch_version.version }}</div>
+    <div style="display:none">{{ GlobalSwitchClass.global_switch_version }}</div>
     <div id="v-tooltip"></div>
   </div>
 </template>
