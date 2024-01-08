@@ -258,7 +258,7 @@ export default {
 }
 .virtual-content-wrapper {
   padding: 0.08rem 0.05rem 0;
-  color: var(--q-gb-t-c-18);
+  color: #1A1A1A;
   // background: #F2F2F6;
   background-color: var(--q-gb-bg-c-21) ;
   padding-bottom: 0.66rem;
