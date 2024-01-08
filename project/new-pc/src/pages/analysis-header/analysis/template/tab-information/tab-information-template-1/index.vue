@@ -106,7 +106,7 @@ onUnmounted(() => {
       line-height: 28px;
       cursor: pointer;
       text-align: center;
-      border: 1px solid var(--q-analysis-color-10);
+      border: 1px solid #DEE4F2;
       overflow: hidden;
 
       &:first-child {
@@ -130,12 +130,12 @@ onUnmounted(() => {
     margin-bottom: 20px;
 
     .panel-title.FF7373:before {
-      background: var(--q-analysis-color-14);
+      background: #E93D3D;;
     }
 
     .item {
       padding: 14px 30px;
-      border: 1px solid var(--q-analysis-color-10);
+      border: 1px solid #DEE4F2;
       border-top: 0 none;
       border-radius: 0 0 8px 8px;
     }

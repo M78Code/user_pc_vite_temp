@@ -28,8 +28,7 @@
         <span v-for="(item, index) in tab" :key="index" class="item" :class="{ 'active': item === activeTab }"
             @click="switchTabs(item)">{{ item === 'news' ? newsTabName : i18n_t(`analysis.${item}`) }}</span>
       </div>
-      <q-scroll-area class="rule-scroll-area" :visible="true" v-if="matchLoaded"
-                     :style="{ height: '100%', margin: hasNews && activeTab == 0 ? '0' : '0 20px' }">
+      <q-scroll-area class="rule-scroll-area" :visible="true" v-if="matchLoaded" style="height: 100%">
         <!-- 文章资讯  -->
         <news :mid="mid" v-if="activeTab === 'news'" />
         <!-- 赛况 -->
@@ -296,7 +295,7 @@ function switchTabs(item, index) {
     display: flex;
     gap: 15px;
     align-items: center;
-    margin-bottom: 10px;
+    //margin-bottom: 10px;
     background: #F6F9FF;
     border: 2px solid #FFFFFF;
     border-radius: 6px;
@@ -329,7 +328,7 @@ function switchTabs(item, index) {
   }
   :deep(.panel) {
     border-top: transparent;
-
+    background: #fff;
     .panel-title {
       position: relative;
       height: 32px;
@@ -338,13 +337,13 @@ function switchTabs(item, index) {
       background-image: var(--q-analysis-bg-gradient-1) !important;
       color: var(--q-analysis-color-3);
 
-      border: 1px solid var(--q-analysis-color-10);
+      border: 1px solid #DEE4F2;
       border-bottom: 0;
       border-radius: 8px 8px 0 0;
 
       &:last-child {
         border-radius: 8px;
-        border-bottom: 1px solid var(--q-analysis-color-10);
+        border-bottom: 1px solid #DEE4F2;
       }
 
       &:before {
@@ -355,14 +354,14 @@ function switchTabs(item, index) {
         transform: translate(0, -50%);
         width: 3px;
         height: 14px;
-        background: var(--q-analysis-color-12);
+        background: #179cff;
       }
     }
 
     .d-header {
-      border-left: 1px solid var(--q-analysis-color-10);
-      border-right: 1px solid var(--q-analysis-color-10);
-      border-bottom: 1px solid var(--q-analysis-color-10);
+      border-left: 1px solid #DEE4F2;
+      border-right: 1px solid #DEE4F2;
+      border-bottom: 1px solid #DEE4F2;
 
       &:last-child {
         border-radius: 0 0 8px 8px;
@@ -370,15 +369,15 @@ function switchTabs(item, index) {
     }
 
     .win {
-      color: var(--q-analysis-color-14);
+      color: #E93D3D;;
     }
 
     .lose {
-      color: var(--q-analysis-color-6);
+      color: #71c866;;
     }
 
     .dogfall {
-      color: var(--q-analysis-color-4);
+      color: #179cff;
     }
 
     .default {
@@ -386,8 +385,8 @@ function switchTabs(item, index) {
     }
 
     .simple-title {
-      border-left: 1px solid var(--q-analysis-color-10);
-      border-right: 1px solid var(--q-analysis-color-10);
+      border-left: 1px solid #DEE4F2;
+      border-right: 1px solid #DEE4F2;
 
       &:last-child {
         border-radius: 0 0 8px 8px;
@@ -398,19 +397,19 @@ function switchTabs(item, index) {
     .simple-title,
     .d-tr,
     .match-info {
-      border-left: 1px solid var(--q-analysis-color-10);
-      border-right: 1px solid var(--q-analysis-color-10);
+      border-left: 1px solid #DEE4F2;
+      border-right: 1px solid #DEE4F2;
     }
 
     .wrap-home {
       .future-item {
-        border-left: 1px solid var(--q-analysis-color-10);
+        border-left: 1px solid #DEE4F2;
       }
     }
 
     .wrap-away {
       .future-item {
-        border-right: 1px solid var(--q-analysis-color-10);
+        border-right: 1px solid #DEE4F2;
       }
     }
   }

@@ -121,81 +121,86 @@ onUnmounted(() => {
 .select-wrap {
   display: flex;
   align-items: center;
-
   .selct-menu {
     width: 160px;
     height: 24px;
-    background: var(--q-analysis-color-16);
-    border: 1px solid var(--q-analysis-color-10);
+    border: 1px solid #D7E1FD;
+    background: linear-gradient(180deg, #E4ECFD 0%, #F8FAFF 47.92%, #F5F8FF 100%);
+    box-shadow: 0px 3px 3px 0px #0038621A;
+    border-radius: 12px;
     cursor: pointer;
-
     &:first-child {
       margin-right: 10px;
     }
-
     .select-lable {
       height: 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 15px;
-
       .yb-icon-arrow {
         transition: transform 0.3s;
         transform: rotate(90deg);
       }
     }
-
     .select-page {
       display: none;
       width: 160px;
-      border: 1px solid var(--q-analysis-color-10);
-      background: var(--q-analysis-color-16);
-      padding: 5px 0;
+      background: #f6f9ff;
+      filter: drop-shadow(0 0 5px rgba(0, 0, 0, .3));
       position: absolute;
+      border-radius:6px;
       z-index: 1;
-
+      text-align: center;
+      top: 40px;
+      right: 0;
       .options {
         padding: 0 15px;
         cursor: pointer;
-
+        position: relative;
+        z-index: 19;
         &:hover,
         &.selected {
-          background: var(--q-analysis-color-15);
+          color: #179CFF;
+          background: rgba(23, 156, 255, 0.1);
         }
       }
+      .options-box{
+        position: relative;
+        z-index: 19;
+        width: 100%;
+        height: 6px;
+        border-radius: 12px;
+      }
     }
-
     &.open_select {
       .yb-icon-arrow {
         transform: rotate(270deg);
       }
-
       .select-page {
         display: block;
       }
     }
   }
-
   .tab-menu {
     display: flex;
-
     span {
       line-height: 24px;
       min-width: 64px;
       text-align: center;
-      padding: 0 7px;
-      border: var(--q-analysis-color-10);
-      background: var(--q-analysis-color-16);
+      padding: 0 8px;
+      border: 1px solid #D7E1FD;
+      background: linear-gradient(180deg, #E4ECFD 0%, #F8FAFF 47.92%, #F5F8FF 100%);
+      box-shadow: 0px 3px 3px 0px #0038621A;
+      border-radius: 12px;
       cursor: pointer;
       margin-right: 10px;
-      border-radius: 2px;
       font-family: PingFangSC-Regular;
-      color: var(--q-analysis-color-3);
-
+      color: #555;
       &.active {
-        background-image: var(--q-analysis-bg-gradient-2);
-        color: var(--q-analysis-color-13);
+        background: #179cff;
+        color: #fff;
+        font-weight: 600;
       }
     }
   }
