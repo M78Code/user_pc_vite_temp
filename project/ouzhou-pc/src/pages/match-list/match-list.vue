@@ -175,9 +175,9 @@ export default {
           get_data_info({ is_socket: true, type })
         ]).off, // 15分钟赛事数据
       ]
-      mounted_fn(get_data_info);
       MatchListCardDataClass_match_list_card_key_arr();
     });
+    mounted_fn(get_data_info);
     onUnmounted(() => {
       ws_destroyed_common()
       handle_destroyed();
