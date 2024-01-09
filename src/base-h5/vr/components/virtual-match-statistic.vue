@@ -44,7 +44,7 @@
       <!-- 胜负百分比 -->
       <div class="result-wrap row">
         <div class="home item  column items-center">
-          <div class="win-percent">{{ datas.win_home }}%</div>
+          <!-- <div class="win-percent">{{ datas.win_home }}%</div> -->
 
           <div class="result-list row ">
             <div
@@ -60,7 +60,7 @@
 
         </div>
         <div class="away item column items-center">
-          <div class="win-percent">{{ datas.win_away }}%</div>
+          <!-- <div class="win-percent">{{ datas.win_away }}%</div> -->
 
           <div class="result-list row">
             <div

@@ -175,7 +175,6 @@ export default {
           get_data_info({ is_socket: true, type })
         ]).off, // 15分钟赛事数据
       ]
-      mounted_fn(get_data_info);
       MatchListCardDataClass_match_list_card_key_arr();
     });
     onUnmounted(() => {
@@ -202,6 +201,7 @@ export default {
     function on_go_top() {
       useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0)
     }
+    mounted_fn(get_data_info);
     function get_league_list() {
       return MatchLeagueData.get_league_list() || []
     }
