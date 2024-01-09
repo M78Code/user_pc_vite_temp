@@ -190,7 +190,7 @@ input[type="number"] {
         .line {
             width: 3px;
             height: 14px; 
-            background: #ff7000;
+            background: var(--q-bet-box-2);
             border-radius: 1.5px 
         }
         .bet-mix-info {
@@ -205,7 +205,7 @@ input[type="number"] {
             height: 18px;
             line-height: 16px;
             font-size: 14px;
-            color: #ff7000;
+            color: var(--q-bet-box-2);
             font-weight: 700;
         }
     }

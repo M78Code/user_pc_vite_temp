@@ -147,7 +147,7 @@ const set_bet_is_accept = () => {
       text-align: center;
     }
     .bet-gold-text {
-      color: var(--q-gb-bg-c-18);
+      color: var(--q-bet-box-2);
     }
   }
   .bet-footer-check{

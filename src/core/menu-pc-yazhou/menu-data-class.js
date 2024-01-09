@@ -62,7 +62,8 @@ class MenuData {
       lv1_mi: "", //一级菜单
       lv2_mi: "", // 二级菜单
     };
-    this.ref_lv2_mi = ref(null);
+    //响应式左侧菜单 右侧菜单 电竞 vr  
+    this.ref_lv2_mi = ref('');
     // 左侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
     this.menu_root = 1;
     // 与 menu_root  类似，主要用于收藏按钮的显示隐藏，使用menu_root  由于这个值被监听，会有其他情况发生
@@ -349,7 +350,7 @@ class MenuData {
     // return r || 1;
   }
   get_lv2_mi_value(){
-    return this.ref_lv2_mi.value
+    return this.ref_lv2_mi.value || ""
   }
   /**
    * 设置    左侧菜单输出
