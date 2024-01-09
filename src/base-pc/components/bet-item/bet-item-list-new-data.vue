@@ -371,7 +371,7 @@ onUnmounted(() => {
   text-align: left !important;
 }
 .active {
-  background: var(--q-gb-bg-c-13);
+  background: var(--q-gb-t-c-16);
   color: var(--q-gb-t-c-18) !important;
 }
 </style>

@@ -162,7 +162,8 @@ const set_bet_is_accept = () => {
     text-align: center;
     font-weight: 600;
     border-radius: 36px;
-    background: var(--q-gb-bg-lg-1);
+    //background: var(--q-bet-record-color-16);
+    background: var(--q-gb-t-c-16);
   }
 
   .bet-delete-all {
