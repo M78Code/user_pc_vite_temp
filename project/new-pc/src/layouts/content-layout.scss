@@ -183,13 +183,13 @@ body {
   /** 数据加载组件 -E*/
 
   /* 视频icon */
-  .unfold {
-    background-image: var(--qq--bg-image-url26); // TODO: unfold_close_thme01.svg
+  // .unfold {
+  //   background-image: var(--qq--bg-image-url26); // TODO: unfold_close_thme01.svg
 
-    &.open {
-      background-image: var(--qq--bg-image-url27); // TODO:  unfold_open_them01.svg
-    }
-  }
+  //   &.open {
+  //     background-image: var(--qq--bg-image-url27); // TODO:  unfold_open_them01.svg
+  //   }
+  // }
 
   // .video-icon {
   //   background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/video0.svg"); // TODO: video0.svg

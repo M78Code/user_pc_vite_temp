@@ -2,7 +2,12 @@
   <div class="record-table">
     <div style="display: none;">{{ BetRecordHistory.bet_record_version }}</div>
     <div>
-
+<!--      <Table-->
+<!--        :columns="BetRecordHistory.columns"-->
+<!--        :rows="BetRecordHistory.table_data"-->
+<!--        :BetRecordHistory="BetRecordHistory"-->
+<!--        :current_tab="current_tab"-->
+<!--      />-->
       <q-table :rows="BetRecordHistory.table_data" style="max-height:calc(100vh - 17rem)" :rows-per-page-options="[0]" :columns="BetRecordHistory.columns"
           row-key="orderNo" separator="cell" hide-pagination :class="current_tab === 'settled' ? 'settled' : 'unsettled'"
           :table-header-style="{
@@ -17,7 +22,7 @@
           </div>
           <div class="no-data" style="height:calc(100vh - 17rem)">
             <div class="c">
-              <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/no-data.svg`" alt="" srcset="">
+              <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/no_data.svg`" alt="" srcset="">
               <div style="text-align: center;color:#A1A3A5;font-weight: 500;">{{i18n_t('common.no_data')}}</div>
             </div>
           </div>
@@ -267,6 +272,7 @@ import { formatTime } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { format_balance, LOCAL_PROJECT_FILE_PREFIX,i18n_t } from 'src/output/index.js'
 import Pagination from 'project_path/src/components/Pagination.vue'
+// import Table from 'project_path/src/pages/bet-record/compoments/table.vue'
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 import sport_icon from './sport_icon.vue'
@@ -654,14 +660,36 @@ const hand_copy = (data) => {
 
 .record-table {
   position: relative;
+  padding: 20px;
+  padding-top: 0;
   .unsettled {
-    padding-bottom: 50px;
+    //padding-bottom: 50px;
   }
   .settled {
     padding-bottom: 62px;
   }
-
+  &:deep(.q-table){
+    tbody{
+    }
+    tr{
+      td:first-child{
+        border-radius: 8px 0 0 8px;
+      }
+    }
+    th{
+      border-top: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      &:first-child{
+        //border-radius: 6px;
+        border-left: 2px solid #fff;
+      }
+      &:last-child{
+        border-right: 2px solid #fff;
+      }
+    }
+  }
   &:deep(.q-table__card) {
+    border-radius: 6px;
     box-shadow: none;
     // height: 650px !important;
     border-bottom: none;
