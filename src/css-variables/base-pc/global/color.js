@@ -18,5 +18,6 @@ export default  {
   'gb-t-c-17': '#ffb001', //蓝色版已录入  right-match-home-score-color
   'gb-t-c-18': '#ffffff', //系统未录入
   'gb-t-c-19': '#4276fb',//系统未录入
+  'gb-t-c-20': '#6C6C6C',//系统未录入
   
 }

@@ -122,13 +122,11 @@ class MenuData {
   // 初始化菜单 默认值
   set_left_menu_list_init(list = []){
     this.left_menu_list = list.length ? list : menu_default
-    console.error('menu_default',JSON.parse(JSON.stringify(this)))
     this.set_menu_data_version()
   }
 
   // 设置 菜单的版本变化
   set_menu_data_version = lodash.debounce(() => {
-    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA)
     this.menu_data_version.value = Date.now()
   },10)
 
