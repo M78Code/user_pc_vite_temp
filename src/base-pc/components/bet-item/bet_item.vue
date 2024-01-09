@@ -191,6 +191,7 @@ const {
  */
  const bet_click_ol = () => {
   const {oid,_hid,_hn,_mid } = ol_data_item.value
+  console.log(ol_data_item,'ol_data_item');
   let bet_type = 'common_bet'
     if(MenuData.is_esports()){
         bet_type ="esports_bet"
@@ -221,7 +222,12 @@ const {
 </script>
 
 <style lang="scss" scoped>
-.bet-inner{
+
+.c-bet-item {
+  width: 100%;
+  height: 100%;
+}
+  .bet-inner{
   // background: var(--q-gb-bg-c-19);
 }
 .lock {
