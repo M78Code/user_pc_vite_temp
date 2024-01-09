@@ -21,6 +21,8 @@ export default {
     'gb-bg-c-20': 'none',     //系统未录入
     'gb-bg-c-21': 'transparent', //系统未录入
     'gb-bg-c-22': '#f0f6ff',   //系统未录入
-    
+    'gb-bg-c-23': '#DCE5F2',  
+    'gb-bg-c-24': '#EFF8FF',   
+    'gb-bg-c-25': '#FAFCFF',   
   }
 
