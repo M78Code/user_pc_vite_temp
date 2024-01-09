@@ -30,7 +30,7 @@
       >
         <div class="icon-wrap list-filter menu-inline">
           <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_0` })"></span>
+            :style="compute_css_obj({key:current_menu == '0'?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image', position: `item_0` })"></span>
           <!-- 是否新上玩法 -->
         </div>
         <div
@@ -69,7 +69,7 @@
         >
           <div class="icon-wrap list-filter menu-inline">
             <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif|| item.mi)}` })"></span>
+            :style="compute_css_obj({key:current_menu == item.mi?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif|| item.mi)}` })"></span>
             <!-- 是否新上玩法 -->
             <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`${LOCAL_PROJECT_FILE_PREFIX}/img/yabo/svg/virtual/menu_new.svg`"/> -->
           </div>
@@ -111,7 +111,7 @@
         <div class="icon-wrap list-filter menu-inline">
           <!-- <sport-icon :sport_id="0" size="20px" class="icon" /> -->
           <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_0` })"></span>
+            :style="compute_css_obj({key:current_menu == '400'?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image', position: `item_0` })"></span>
         </div>
         <div
           class="name menu-inline name-margin-left"
@@ -143,7 +143,7 @@
         >
           <div class="icon-wrap list-filter menu-inline">
             <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${compute_mi_400_sl_mi_csid(item.mi)}` })"></span>
+            :style="compute_css_obj({key:current_menu == item.mi?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image', position: `item_${compute_mi_400_sl_mi_csid(item.mi)}` })"></span>
             <!-- <sport-icon
               :sport_id="compute_mi_400_sl_mi_csid(item.mi)"
               size="20px"
