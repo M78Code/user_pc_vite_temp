@@ -74,6 +74,9 @@ const get_card_csid = () => {
     if (MenuData.is_esports()) {
       csid = Number(props.card_style_obj?.csid) + 2000
     }
+    if (MenuData.is_kemp()) {
+      csid = Number(props.card_style_obj?.csid) + 400
+    }
   } else {
     csid = Number(props.card_style_obj?.csid) + 100
   }

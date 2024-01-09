@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { computed, inject } from 'vue';
+import { computed, inject, ref } from 'vue';
 import lodash from 'lodash'
 
 
@@ -53,9 +53,10 @@ const props = defineProps({
   }
 })
 const match = inject("match");
+const is_mounted = ref(true);
 const match_list_tpl_size = inject("match_list_tpl_size");
 const pos_class = computed(() => {
-  if (lodash.get(this.match, 'ispo', 0) == 0 && _.get(this.match, 'mfo', '') == '') {
+  if (lodash.get(match, 'ispo', 0) == 0 && lodash.get(match, 'mfo', '') == '') {
     return 'top18'
   }
   return ''

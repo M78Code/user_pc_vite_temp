@@ -412,8 +412,24 @@ class MenuData {
 
   // 根据菜单id 获取对应的euid
   get_mid_for_euid(mi) {
+    let euid="";
+    if(mi == 0){//滚球全部
+      euid = this.in_play_list.map(n=>{
+        const euid_obj = lodash.get(BaseData, `mi_info_map[mi_${n.mi}]`, {})
+        return euid_obj.euid || "";
+      }).join();
+      return euid;
+    }
+    if(mi == 400){//冠军全部
+      euid = this.kemp_list.map(n=>{
+        const euid_obj = lodash.get(BaseData, `mi_info_map[mi_${n.mi}]`, {})
+        return euid_obj.euid || "";
+      }).join();
+      return euid;
+    }
     let obj = lodash.get(BaseData, `mi_info_map[mi_${mi}]`, {})
-    return obj.euid || 3020101
+    euid = obj.euid;
+    return euid || 3020101
   }
   /**
    * 中间菜单显示配置 默认的

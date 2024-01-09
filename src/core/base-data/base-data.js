@@ -651,20 +651,20 @@ class BaseData {
        *  一期只有足球篮球  暂定
        *  重置默认数据
        */
-      if(!IS_FOR_NEIBU_TEST){
-        this.left_menu_base_mi_arr = this.conventionalType;
+      // if(!IS_FOR_NEIBU_TEST){
+      //   this.left_menu_base_mi_arr = this.conventionalType;
        
-        let list_mi_lsit = []
-        left_menu_mi.forEach(item=>{
-          if(this.conventionalType.includes(item.mi*1)){
-            list_mi_lsit.push(item)
-          }
-        })
-        left_menu_list = list_mi_lsit
-      }else{
+      //   let list_mi_lsit = []
+      //   left_menu_mi.forEach(item=>{
+      //     if(this.conventionalType.includes(item.mi*1)){
+      //       list_mi_lsit.push(item)
+      //     }
+      //   })
+      //   left_menu_list = list_mi_lsit
+      // }else{
         this.left_menu_base_mi_arr = left_menu ; 
         left_menu_list = left_menu_mi;
-      }
+      // }
 
       // 赛种筛选
       left_menu_list.filter(item => {
