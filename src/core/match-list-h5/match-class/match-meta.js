@@ -93,10 +93,10 @@ class MatchMeta {
     this.clear_match_info()
 
     // 电竞、赛果、冠军 return
-    if (MenuData.is_esports() || MenuData.is_results()) return
+    if (MenuData.is_esports() || MenuData.is_results() || MenuData.is_kemp()) return
 
     // 冠军
-    if (MenuData.is_kemp()) return this.get_champion_match()
+    // if (MenuData.is_kemp()) return this.get_champion_match()
 
     // 获取真实数据
     this.http_params.md = md

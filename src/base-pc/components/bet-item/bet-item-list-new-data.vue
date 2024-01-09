@@ -10,6 +10,8 @@
       `csid${ol_data.csid}`,
       odds_lift,
       { 'show-odds-icon': odds_state != 'seal' },
+      {'oddsup': odds_lift == 'up'},
+      {'oddsdown': odds_lift == 'down'}
     ]"
     @click.stop="bet_click_ol"
     :id="`list-${ol_data.oid}`"
@@ -256,6 +258,15 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.c-bet-item {
+  background-color: var(--q-gb-bg-c-27);
+}
+.oddsup {
+  background-color: var(--q-gb-bg-c-28);
+}
+.oddsdown {
+  background-color: var(--q-gb-bg-c-29);
+}
 .show-odds-icon {
   &.up {
     .odds-up {
@@ -371,7 +382,7 @@ onUnmounted(() => {
   text-align: left !important;
 }
 .active {
-  background: var(--q-gb-bg-c-13);
+  background: var(--q-gb-t-c-16);
   color: var(--q-gb-t-c-18) !important;
 }
 </style>

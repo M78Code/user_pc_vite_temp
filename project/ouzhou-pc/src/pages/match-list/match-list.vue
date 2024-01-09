@@ -177,7 +177,6 @@ export default {
       ]
       MatchListCardDataClass_match_list_card_key_arr();
     });
-    mounted_fn(get_data_info);
     onUnmounted(() => {
       ws_destroyed_common()
       handle_destroyed();
@@ -202,6 +201,7 @@ export default {
     function on_go_top() {
       useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0)
     }
+    mounted_fn(get_data_info);
     function get_league_list() {
       return MatchLeagueData.get_league_list() || []
     }

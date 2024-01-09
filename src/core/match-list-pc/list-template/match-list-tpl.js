@@ -5,6 +5,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from './index.js'
 import { get } from 'lodash'
 import BaseData from "src/core/base-data/base-data.js";
 import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
+
 /**
 * 获取当前的列表的默认的 模板配置
 */
@@ -80,9 +81,14 @@ function get_match_template_id({ csid }) {
         "yazhou-pc": 0,
         "new-pc": 0,
     }
-    let tpl_id = get_match_tpl_number()
-    if (!tpl_id || MenuData.is_scroll_ball() || MenuData.is_hot()) {
-        tpl_id = csid_to_tpl_id(csid)
+    let tpl_id;
+    if (MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp()) {
+        tpl_id = 18
+    } else {
+        tpl_id = get_match_tpl_number()
+        if (!tpl_id) {
+            tpl_id = csid_to_tpl_id(csid)
+        }
     }
     tpl_id = Number(tpl_id) + Number(different_version_config[PROJECT_NAME])
     if ('ouzhou-pc' == PROJECT_NAME) {

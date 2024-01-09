@@ -1,8 +1,9 @@
-import { ref } from "vue";
+import { ref,nextTick } from "vue";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 export const { PROJECT_NAME } = BUILDIN_CONFIG ;
 import PageSourceData from "src/core/page-source/page-source.js";
 const { page_source } = PageSourceData;
+import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
 // 浏览器高度
 let client_height = Math.max(
   document.body.clientHeight,
@@ -97,6 +98,9 @@ class LayOutMain {
     this.oz_layout_content = 1430
     //公告 赛果 体育规则 当前进入的模块
     this.layout_secondary_active = ''
+
+    this.set_loacl_config()
+
     // ------------------------------------------ 欧洲版 pc 专用 --------------------------------------------------------------------------------------------
   }
 
@@ -110,6 +114,24 @@ class LayOutMain {
     this.set_layout_search_width()
     this.set_oz_layout_content_config()
   }
+
+  // 根据缓存信息 设置数据
+  set_loacl_config(){
+    // 获取数据缓存
+    let session_info = SessionStorage.get('layout_class');
+    if (!session_info) {
+      return;
+    }
+    if (Object.keys(session_info).length) {
+      for(let item in session_info){
+        if(!['layout_version'].includes(item) ){
+          this[item] = session_info[item]
+        }
+      }
+    }
+    this.set_layout_version()
+  }
+  
 
   // 设置 中间内容区域 宽度 高度
   set_layout_content_config(){
@@ -156,6 +178,9 @@ class LayOutMain {
   // 设置页面布局更新
   set_layout_version(){
     this.layout_version.value = Date.now()
+    nextTick(()=>{
+      SessionStorage.set('layout_class',this)
+    })
   }
 
   /** 设置主内容宽度 */

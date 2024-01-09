@@ -210,6 +210,8 @@ function getCurState(hipo) {
 <style lang="scss" scoped>
 .handicap-col {
   .bet-item-wrap {
+    padding: 4px;
+    border-radius: 4px;
     &.visibility {
       visibility: hidden;
     }
