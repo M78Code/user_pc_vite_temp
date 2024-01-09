@@ -122,13 +122,11 @@ class MenuData {
   // 初始化菜单 默认值
   set_left_menu_list_init(list = []){
     this.left_menu_list = list.length ? list : menu_default
-    console.error('menu_default',JSON.parse(JSON.stringify(this)))
     this.set_menu_data_version()
   }
 
   // 设置 菜单的版本变化
   set_menu_data_version = lodash.debounce(() => {
-    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA)
     this.menu_data_version.value = Date.now()
   },10)
 
@@ -318,11 +316,7 @@ class MenuData {
   // 设置终极菜单id
   set_menu_current_mi(mi) {
     this.menu_current_mi = mi
-    // 菜单数据缓存
-    // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
     //宽度请求变化 因为请求参数是在这里触发的
-    // MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
-    // MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     this.set_match_list_api_config({})
     
   }

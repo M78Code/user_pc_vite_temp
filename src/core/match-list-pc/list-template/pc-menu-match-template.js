@@ -79,6 +79,23 @@ const menu_to_match_templte = {
   106301: { label: "美式足球-早盘-让球&大小", value: "1" },
   106302: { label: "美式足球-早盘-总分单/双", value: "3" },
 
+  
+
+  // 滚球
+  1011: { label: "滚球-足球", value: "1" },
+  1021: { label: "滚球-篮球", value: "2" },
+  1031: { label: "滚球-棒球", value: "17" },
+  104201: { label: "滚球-冰球", value: "16" },
+  1051: { label: "滚球-网球", value: "9" },
+  1061: { label: "滚球-美式足球", value: "1" },
+  107201: { label: "滚球-斯诺克", value: "11" },
+  1081: { label: "滚球-乒乓球", value: "11" },
+  1091: { label: "滚球-排球", value: "11" },
+  110201: { label: "滚球-羽毛球", value: "11" },
+
+
+  //以上的配置 暂时没有用到哦 走的 orpt / csid匹配 //
+
   // 热门
   500: { label: "热门-热门赛事", value: "12" },
   50101: { label: "热门-竞足", value: "12" },
@@ -94,18 +111,6 @@ const menu_to_match_templte = {
   5026344: { label: "热门-中超", value: "1" },
   5026408: { label: "热门-欧冠", value: "1" },
   50231511: { label: "热门-WNBA - 季后赛", value: "2" },
-
-  // 滚球
-  101: { label: "滚球-足球", value: "1" },
-  102: { label: "滚球-篮球", value: "2" },
-  103: { label: "滚球-棒球", value: "17" },
-  104201: { label: "滚球-冰球", value: "16" },
-  105: { label: "滚球-网球", value: "9" },
-  106: { label: "滚球-美式足球", value: "1" },
-  107201: { label: "滚球-斯诺克", value: "11" },
-  108: { label: "滚球-乒乓球", value: "11" },
-  109: { label: "滚球-排球", value: "11" },
-  110201: { label: "滚球-羽毛球", value: "11" },
 };
 
 // 这里的话

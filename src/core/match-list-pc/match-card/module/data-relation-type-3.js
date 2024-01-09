@@ -19,7 +19,6 @@
 
     import {get_league_title_card_height,compute_style_template_by_matchinfo } from  "./compute-style-template.js"
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
-    import {get_match_template_id} from '../../match-handle-data.js'
     import {set_new_league_fold} from  "./fold-tid.js"
     import {
       ouzhou_match_status_title_card_template,
@@ -31,7 +30,6 @@
     } from "../config/card-template-config.js"
     import { MenuData} from "src/output/project/index.js"
     import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-    import { compute_sport_id  } from 'src/output/module/constant-utils.js'
 
   /**
    * @Description 更新所有未折叠 但是赛事没数据的 赛事
@@ -63,9 +61,6 @@
       useMittEmit(MITT_TYPES.EMIT_API_BYMIDS,params)
     }
   }
-
-
-
 
   /**
    * @Description 计算所有卡片样式数据 1. 单一赛种，有未开赛 已开赛 ，不区分赛种   3 单一赛种，不区分赛种 ，只有未开赛，只有联赛
@@ -221,6 +216,7 @@
         }else{
           is_league_fold = true
         }
+        league_obj.csid
         // 打入联赛标题卡片特征
         all_card_obj[card_key] = {
           ...ouzhou_league_title_template,
@@ -265,7 +261,7 @@
         mids_arr.forEach( mid => {
           unfold_match_count++
           // 赛事表征数据
-          let match = MatchListData.list_to_obj.mid_obj[mid+'_']
+          let match = MatchListData.get_quick_mid_obj(mid)
           let match_style_obj = compute_style_template_by_matchinfo(match, template_id, true)
           all_card_obj[mid+'_'] = match_style_obj
           league_card_total_height += match_style_obj.total_height
