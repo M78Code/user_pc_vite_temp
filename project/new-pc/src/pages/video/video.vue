@@ -3,12 +3,12 @@
 -->
 <template>
   <div class="video_wrap">
-   <video_player :mid="mid" />
+   <video_player :mid="mid" :show_type_default="'play-video'"/>
   </div>
 </template>
 
 <script setup>
-import video_player from "./components/video-player.vue";
+import video_player from "src/base-pc/components/match-detail/match_info/match_video.vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue"
 const route = useRoute(); 

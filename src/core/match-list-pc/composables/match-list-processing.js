@@ -53,10 +53,12 @@ const deal_with_list_data = (data) => {
 		let mid = item.mids.split(',');
 		mid.forEach(option => {
 			const match = MatchListData.get_quick_mid_obj(mid) || {}
+			const match_cache = MatchListData.cache_match[mid] || {}
 			let mid_info = {
 				...item,
 				mid: option,
 				...match,
+				...match_cache,
 			}
 			delete mid_info.mids;
 			mid_arr.push(mid_info)
