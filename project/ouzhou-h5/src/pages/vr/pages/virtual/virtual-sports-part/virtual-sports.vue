@@ -116,7 +116,6 @@ import virtual_sports_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports
 import noData from "project_path/src/pages/vr/components/common/vr-sport-no-data.vue";
 import matchTab from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/match-tab.vue"
 import v_s_match_list from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/virtual-sports-match-list.vue"
-import v_s_match_list2 from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/virtual-sports-match-list2.vue"
 import virtual_sports_category from "project_path/src/pages/vr/pages/virtual/details/children/virtual-sports-category.vue"
 import virtual_sports_stage from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/virtual-sports-stage.vue"
 import dynamic_ranking from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/dynamic-ranking.vue"
@@ -131,7 +130,6 @@ export default {
     'virtual-sports-category':virtual_sports_category,
     'match-tab':matchTab,
     'v-s-match-list':v_s_match_list,
-    'v-s-match-list2':v_s_match_list2,
     'virtual-sports-stage':virtual_sports_stage,
     'dynamic-ranking': dynamic_ranking,
     'result-page': result_page,

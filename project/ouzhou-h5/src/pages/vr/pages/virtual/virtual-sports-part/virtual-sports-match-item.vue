@@ -58,7 +58,7 @@
           </div>
         </div>
         
-        <div class="team-wrapper" :class="{standard:standard_edition == 2}">
+        <div class="team-wrapper" @click="goto_details(match_item)" :class="{standard:standard_edition == 2}">
           <!-- 战队名称 -->
           <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
             <div class="ellipsis">{{match_item.teams ? match_item.teams[0] : ''}}</div>

@@ -13,13 +13,11 @@
 import virtual_sports_category_mixin from "src/core/vr/mixin/pages/virtual/details/children/virtual-sports-category-mixin.js";
 // 引入加载中的组件
 import loading from 'src/components/loading/loading.vue';
-import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue"
 import odds_list_contrainer from "project_path/src/pages/detailnew/components/OddsListContrainer.vue";
 export default {
   mixins:[virtual_sports_category_mixin],
   name:'virtual_sports_category',
   components: {
-    'tournament-play-new': tournament_play_new,
     loading,
     odds_list_contrainer
   },
