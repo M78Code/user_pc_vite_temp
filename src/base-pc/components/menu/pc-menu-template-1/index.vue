@@ -553,10 +553,11 @@ onUnmounted(()=>{
 
         &.y-active{
           background: var(--q-gb-bg-lg-8);
-          color: var(--q-gb-t-c-15); 
+          color: var(--q-gb-t-c-16); 
         }
         &:hover{
           background: var(--q-gb-bg-lg-9);
+          color: var(--q-gb-t-c-16); 
         }
       }
       &.menu-fold2 {
