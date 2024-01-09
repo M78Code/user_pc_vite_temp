@@ -29,10 +29,9 @@ import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 import { time_conversion } from 'src/output/module/constant-utils.js'
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
-import { MenuData} from "src/output/project/index.js"
+import { get_match_template_id } from '../../match-handle-data.js'
 import { update_match_parent_card_style } from "src/core/match-list-pc/match-card/module/utils.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-
 import { league_title_card_template, ouzhou_league_title_template } from "../config/card-template-config.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "../../list-template/index.js";
 /**
@@ -40,10 +39,10 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from "../../list-template/index.js";
  * @param {string | Number } mid  赛事id
  */
 const get_tab_play_height = (mid) => {
-	let template_id = MenuData.get_match_tpl_number()
-	let { play_current_key, other_handicap_list = [] } =
-		MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
-	let { tab_play_handicap_height: handicap_height } = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]["match_template_config"] || {};
+	// let template_id = MenuData.get_match_tpl_number()
+	let { play_current_key, other_handicap_list = [], tpl_id } =
+		MatchListData.get_quick_mid_obj(mid) || {};
+	let { tab_play_handicap_height: handicap_height } = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${tpl_id}_config.match_template_config`, {});
 	let length = lodash.get(other_handicap_list, "0.ols.length", 3);
 	//5分钟      波胆
 	if (["hps5Minutes", "hpsBold"].includes(play_current_key)) {
@@ -58,22 +57,22 @@ const compute_view_tpl_id = (data_tpl_id) => {
 	// 这里 是数据模板id 映射出来的视图模板id
 	let view_tpl_id = data_tpl_id
 	// 25 罚牌主盘口
-	if([3,5,6,8,19,20,22,23,25].includes(+data_tpl_id)){
-	  view_tpl_id = 2
-	}else if([11,16].includes(+data_tpl_id)){
-	  view_tpl_id = 9
-	}else if([15].includes(+data_tpl_id)){
-	  view_tpl_id = 10
-	}else if([13].includes(+data_tpl_id)){
-	  view_tpl_id = 1
-	}else if([24].includes(+data_tpl_id)){ //15分钟
+	if ([3, 5, 6, 8, 19, 20, 22, 23, 25].includes(+data_tpl_id)) {
+		view_tpl_id = 2
+	} else if ([11, 16].includes(+data_tpl_id)) {
+		view_tpl_id = 9
+	} else if ([15].includes(+data_tpl_id)) {
+		view_tpl_id = 10
+	} else if ([13].includes(+data_tpl_id)) {
+		view_tpl_id = 1
+	} else if ([24].includes(+data_tpl_id)) { //15分钟
 		view_tpl_id = 24
 	}
-	else if([28].includes(+data_tpl_id)){
-	  view_tpl_id = 'Esports'
+	else if ([28].includes(+data_tpl_id)) {
+		view_tpl_id = 'Esports'
 	}
-	  return view_tpl_id
-  }
+	return view_tpl_id
+}
 
 /**
  * @Description 获取足篮附加盘数量
@@ -188,22 +187,22 @@ const compute_style_template_by_matchinfo_template18 = (match, template_id) => {
 	};
 	let main_handicap_list = []
 	// 遍历主盘口数据
-    lodash.each(cur_match.hpsData, (hpsData) => {
-      lodash.each(hpsData.hps, (item) => {
-        let hl_obj = lodash.get(item, "hl", {});
-        if (hl_obj.hid) {
-          hl_obj.end_time = time_conversion(hl_obj.hmed);
-          hl_obj.hpn = lodash.get(cur_match.play_obj, `hid_${hl_obj.hid}.hpn`, "");
-          main_handicap_list.push(hl_obj);
-        }
-      });
-    });
+	lodash.each(cur_match.hpsData, (hpsData) => {
+		lodash.each(hpsData.hps, (item) => {
+			let hl_obj = lodash.get(item, "hl", {});
+			if (hl_obj.hid) {
+				hl_obj.end_time = time_conversion(hl_obj.hmed);
+				hl_obj.hpn = lodash.get(cur_match.play_obj, `hid_${hl_obj.hid}.hpn`, "");
+				main_handicap_list.push(hl_obj);
+			}
+		});
+	});
 	// 附加盘口高度
 	let add_handicap_height = 0;
 	// 投注项数量
 	let ol_count = 0;
 	main_handicap_list.forEach((hl_data) => {
-		if (hl_data.hpid ) {
+		if (hl_data.hpid) {
 			// 盘口标题高度
 			add_handicap_height += 32;
 			// 计算投注项数量
@@ -230,22 +229,22 @@ const compute_style_template_by_matchinfo_template118 = (match, template_id) => 
 	};
 	let main_handicap_list = []
 	// 遍历主盘口数据
-    lodash.each(cur_match.hpsData, (hpsData) => {
-      lodash.each(hpsData.hps, (item) => {
-        let hl_obj = lodash.get(item, "hl", {});
-        if (hl_obj.hid) {
-          hl_obj.end_time = time_conversion(hl_obj.hmed);
-          hl_obj.hpn = lodash.get(cur_match.play_obj, `hid_${hl_obj.hid}.hpn`, "");
-          main_handicap_list.push(hl_obj);
-        }
-      });
-    });
+	lodash.each(cur_match.hpsData, (hpsData) => {
+		lodash.each(hpsData.hps, (item) => {
+			let hl_obj = lodash.get(item, "hl", {});
+			if (hl_obj.hid) {
+				hl_obj.end_time = time_conversion(hl_obj.hmed);
+				hl_obj.hpn = lodash.get(cur_match.play_obj, `hid_${hl_obj.hid}.hpn`, "");
+				main_handicap_list.push(hl_obj);
+			}
+		});
+	});
 	// 附加盘口高度
 	let add_handicap_height = 0;
 	// 投注项数量
 	let ol_count = 0;
 	main_handicap_list.forEach((hl_data) => {
-		if (hl_data.hpid ) {
+		if (hl_data.hpid) {
 			// 盘口标题高度
 			add_handicap_height += 36;
 			// 计算投注项数量
@@ -266,7 +265,7 @@ const compute_style_template_by_matchinfo_template118 = (match, template_id) => 
  * @param {number} mid 折叠的赛事ID
  */
 export const fold_tab_play = (mid) => {
-	let card_obj = MatchListCardData.all_card_obj[mid+'_'];
+	let card_obj = MatchListCardData.all_card_obj[mid + '_'];
 	card_obj.is_fold_tab_play = !card_obj.is_fold_tab_play;
 	if (card_obj.is_fold_tab_play) {
 		// 角球已折叠  角球区域总高度 等于角球标题高度
@@ -310,13 +309,16 @@ export const get_league_title_card_height = (template_id) => {
  * @returns
  */
 
-export const compute_style_template_by_matchinfo = (match, template_id) => {
+export const compute_style_template_by_matchinfo = (match) => {
+	let {tpl_id:template_id}=match;
 	if (template_id == 13) {
 		template_id = 1;
 	}
+	if(!template_id){
+		template_id=get_match_template_id(match)//兜底
+	}
 	// 赛事列表模板配置
 	let template_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]["match_template_config"] || {};
-
 	// 赛事样式对象
 	let style_obj = {
 		// 显示等级
@@ -358,7 +360,7 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 	}
 	style_obj.csid = match.csid;
 	style_obj.is_show_card = true;
-	
+
 	if (template_id == 1) {
 		let obj = compute_style_template_by_matchinfo_template0_zuqiu(
 			match,
@@ -404,13 +406,13 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 	if (PROJECT_NAME == 'ouzhou-pc') {
 		if (template_id == 118) {
 			style_obj.total_height =
-			style_obj.main_handicap_height +
-			style_obj.cur_handicap_height +
-			style_obj.add_handicap_height +
-			style_obj.tab_play_total_height
+				style_obj.main_handicap_height +
+				style_obj.cur_handicap_height +
+				style_obj.add_handicap_height +
+				style_obj.tab_play_total_height
 		} else {
 			style_obj.total_height = style_obj.main_handicap_height;
-			if([109].includes(+template_id)){//有赛局制度
+			if ([109].includes(+template_id)) {//有赛局制度
 				style_obj.total_height += template_config.cur_handicap_height;
 			}
 		}

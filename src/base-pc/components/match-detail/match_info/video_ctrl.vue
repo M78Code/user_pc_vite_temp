@@ -13,6 +13,7 @@
         @click="$emit('setfoldStatus')"
         :style="compute_css_obj('pc-img-match-info-unfold-open')"
       ></div>
+      
 
       <div class="col-center row full-height">
         <!-- 媒体图标 -->
@@ -111,7 +112,7 @@
         >
           <div class="line"></div>
           <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(menu_data.left_menu_result.lv1_mi.slice(0,-1))}` })"
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(menu_data.left_menu_result?.lv1_mi?.slice(0,-1))}` })"
             :alt="BaseData.menus_i18n_map[menu_data.left_menu_result.lv1_mi]"></span>
           <!-- <sport-icon
             v-if="match_info.csid && match_info.csid != -1"
@@ -243,7 +244,7 @@ const  vx_play_media = ref(MatchDetailCalss.play_media) // 视频播放信息
 const  details_params = ref(MatchDetailCalss.params) // 赛事详细参数（赛事/联赛/球类/直播类型）
 const  get_global_click = ref(GlobalSwitchClass.global_click)   //全局点击事件数
 //   // 设置获取视频是否展开状态
-const vx_get_is_fold_status = ref(GlobalSwitchClass.is_fold_status);
+const vx_get_is_fold_status = ref(false);
 let set_play_media_timer = null;
 /**
  * @Description:获取图标是否显示
@@ -485,6 +486,8 @@ const full_screen = () => {
 };
 
 onMounted(() => {
+  vx_get_is_fold_status.value = GlobalSwitchClass.is_fold_status
+
   let autoPlay = sessionStorage.getItem("auto_play_media");
   if (autoPlay) {
     toggle_play_media("video");
@@ -519,6 +522,10 @@ onUnmounted(() => {
     background-repeat: no-repeat;
     background-size: 100%;
     cursor: pointer;
+    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/unfold_close_thme01.svg");
+    &.open {
+      background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/y0_unfold_open.svg"); // TODO:  unfold_open_them01.svg
+    }
   }
   .col-center {
     position: absolute;

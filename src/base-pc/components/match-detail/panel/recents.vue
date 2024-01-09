@@ -87,8 +87,6 @@
               
                 }"
               >
-              <!--     hl_obj:match_ctr.list_to_obj.hl_obj,
-                  ol_obj:match_ctr.list_to_obj.ol_obj -->
                 <div
                   class="play-name ellipsis bet_handicap"
                   v-tooltip="{content:lodash.get(item, `hps.0.hl.0.ol.${index}.onb`) || lodash.get(item, `hps.0.hl.0.ol.${index}.on`),overflow:1}"

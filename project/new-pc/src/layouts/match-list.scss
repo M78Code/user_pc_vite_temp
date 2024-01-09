@@ -365,7 +365,7 @@ body {
             }
 
             .score {
-              color: var(--q-gb-bd-c-11);
+              color: var(--q-gb-t-c-16);
               font-weight: 700;
 
               &.score-cur {
@@ -388,7 +388,7 @@ body {
 
             .team-name,
             .up-half-text {
-              color: var(--q-gb-bd-c-11);
+              color: var(--q-gb-t-c-16);
 
               &.bold {
                 color: var(--q-gb-t-c-12) !important;
@@ -439,8 +439,7 @@ body {
     }
 
     .highlight-t {
-      // color: var(--q-gb-bd-c-11) !important;
-      color: #179CFF !important;
+      color: var(--q-gb-t-c-16) !important;
     }
 
     /*  足球其他玩法（角球、罚牌等） 玩法标题 边框 颜色 */
@@ -613,7 +612,7 @@ body {
 
         // color: var(--q-gb-bg-c-8)FFF;
         .leagues-wrap {
-          color: var(--q-gb-bg-c-2);
+          color: var(--q-gb-t-c-20);
           font-weight: 550;
         }
 
@@ -627,7 +626,7 @@ body {
           .col {
             font-size: 13px;
             font-weight: 500;
-            color: var(--q-gb-bg-c-2);
+            color: var(--q-gb-t-c-6);
             font-family: "PingFangSC-Medium";
             border-left: .5px solid transparent;
 
@@ -756,8 +755,14 @@ body {
     /* *** 单场赛事公共样式++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
     .list-card-inner {
       border-top-color: var(--q-gb-bg-c-11);
-      color: var(--q-gb-bg-c-2);
+      color: var(--q-gb-t-c-6);
     }
+    /* *** 主队样式++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    .home-team {
+      border-top-color: var(--q-gb-bg-c-11);
+      color: var(--q-gb-t-c-16);
+    }
+
 
     /* *** 统计分析 ************************ -S */
     .sr-link-icon-w {
