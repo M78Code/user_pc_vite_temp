@@ -36,15 +36,13 @@
       <list-filter v-if="MenuData.is_scroll_ball() || MenuData.is_kemp()" :collect_count="collect_count"
         :load_data_state="load_data_state" />
       <!-- 日期菜单   早盘 日期 -->
-      <list-filter-date v-if="MenuData.is_zaopan()" :collect_count="collect_count"
-        :load_data_state="load_data_state" />
+      <list-filter-date v-if="MenuData.is_zaopan()" :collect_count="collect_count" :load_data_state="load_data_state" />
       <!-- 热门赛事顶部菜单 -->
-      <list-filter-hot v-if="MenuData.is_hot()" :collect_count="collect_count"
-        :load_data_state="load_data_state" />
+      <list-filter-hot v-if="MenuData.is_hot()" :collect_count="collect_count" :load_data_state="load_data_state" />
       <!-- 电竞顶部菜单 -->
       <esports-header v-if="MenuData.is_esports()" :load_data_state="load_data_state" />
       <!-- 赛事状态 | 赛种类型    class="sticky-wrap"    -->
-      <list-filter-vr :menuInfo="MenuData.vr_list" :load_data_state="load_data_state"  v-if="MenuData.is_vr()"/>
+      <list-filter-vr :menuInfo="MenuData.vr_list" :load_data_state="load_data_state" v-if="MenuData.is_vr()" />
       <!-- 联赛  VR 足球才会有联赛-->
       <div class="leagues-tabs leagues-bg" v-if="MenuData.mid_menu_result.mi == '1001'">
         <!-- 联赛菜单 -->
@@ -77,13 +75,13 @@
       </scroll-list>
       <!-- <div> {{match_list_card_key_arr }}</div> -->
       <!-- 滚球其他列表 -->
-      <scroll-list v-if="MenuData.menu_root_show_shoucang != 300" ref="scoll_list">
+      <scroll-list v-if="MenuData.menu_root_show_shoucang != 300">
         <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }">333</div>
         </template>
-        <template v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :data-card-key="card_key"
-          :class="`card_key_${card_key}`">
+        <template v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key"
+          :data-card-key="card_key" :class="`card_key_${card_key}`">
           <match-list-card :card_key="card_key" />
         </template>
         <template v-slot:after>
@@ -107,7 +105,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, onUnmounted, watch ,ref } from "vue";
+import { onMounted, onUnmounted, watch, ref } from "vue";
 
 import { IconWapper } from 'src/components/icon'
 import LoadData from 'src/components/load_data/load_data.vue';
@@ -121,7 +119,7 @@ import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/com
 import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"; //头部
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import refresh from "src/components/refresh/refresh.vue"
-import EsportsHeader from "src/base-pc/components/match-list/esports-header/index.vue";//电竞赛事列表筛选
+import EsportsHeader from "src/base-pc/components/match-list/esports-header/yz_index.vue";//电竞赛事列表筛选
 
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/base-pc/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
 // import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
@@ -129,34 +127,37 @@ import EsportsHeader from "src/base-pc/components/match-list/esports-header/inde
 // import { VirtualMatchTpl2FullVersionWapper as VirtualMatchTpl2 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟赛马 、 虚拟赛狗
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
-// import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 import { MenuData } from "src/output/index.js"
-// import menu_config from "src/core/menu-pc-yazhou/menu-data-class.js";
 import { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh, handle_destroyed } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData, compute_css_obj } from 'src/output/index.js';
+
+import { LayOutMain_pc, compute_css_obj } from 'src/output/index.js';
+import { set_template_width } from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/output/index.js";
 import "./match_list.scss";
-const { page_source } = PageSourceData;
 const match_list_card_key_arr = ref([])
-const scoll_list = ref()
-const MatchListCardDataClass_match_list_card_key_arr=()=>{
+function MatchListCardDataClass_match_list_card_key_arr () {
   match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
 }
-const on_go_top = ()=>{
-  scoll_list.value && scoll_list.value.set_scrollTop(0)
+const on_go_top = () => {
+  useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0)
 }
+function _resize(){
+  set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15))
+  MatchListCardDataClass.set_list_version()
+}
+window.addEventListener('resize',_resize)
 mounted_fn()
-onMounted(()=>{
+onMounted(() => {
   MatchListCardDataClass_match_list_card_key_arr()
 })
-watch(
-  () => MatchListCardDataClass.list_version,
-  (val) => {
+onUnmounted(()=>{
+  window.removeEventListener('resize',_resize)
+})
+watch(MatchListCardDataClass.list_version,
+  () => {
     MatchListCardDataClass_match_list_card_key_arr()
-  },
-  { deep: true }
-)
+  }, { deep: true })
 // };
 // 赛事列表筛选：滚球-球种、早盘-日期
 // 列表视图滚动容器

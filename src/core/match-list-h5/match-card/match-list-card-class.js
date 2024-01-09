@@ -8,7 +8,6 @@ import MatchPage from '../match-class/match-page'
 import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { MenuData} from "src/output/project/index.js"
 import MatchListCardScroll from './match-list-card-scroll'
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/output/module/match-data-base.js'
 import { compute_style_template_by_match_height } from './module/compute-style-template.js'
@@ -38,7 +37,6 @@ class MatchListCard {
     this.get_current_menu = 0
     this.get_curr_sub_menu_type = 0
   }
-
   // // 足球正在切换第一屏与第二屏
   // 'set_foot_ball_screen_changing',
   // // 容器滚动的值

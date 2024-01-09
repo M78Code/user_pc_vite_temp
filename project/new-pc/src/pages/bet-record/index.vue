@@ -36,7 +36,7 @@ onActivated(() => {
 <style lang="scss" scoped>
 .cont {
   min-height: 100vh;
-  background-color: var(--q-gb-bg-c-9);
+  background-color: var(--q-gb-bd-c-8);
 }
 
 .header {

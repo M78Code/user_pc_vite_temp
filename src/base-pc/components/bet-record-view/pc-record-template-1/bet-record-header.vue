@@ -124,7 +124,7 @@ const set_menu_back = val => {
   padding-left: 15px;
   height: 34px;
   cursor: pointer;
-  background: var(--q-gb-bg-c-14);
+  background: var(--q-gb-bg-lg-6);
   border-bottom: 1px solid var(--q-gb-bd-c-8);
   border-right: 1px solid var(--q-gb-bd-c-6);
 
@@ -187,16 +187,18 @@ const set_menu_back = val => {
     }
   }
 }
+
 .bet-record-item {
       font-size: 14px;
       height: 32px;
       line-height: 32px;
       margin-left: 5px;
       margin-right: 5px;
-      background: var(--q-gb-bg-c-14);
+      background: var(--q-gb-bg-c-11);
       box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.1);
       border-radius: 16px;
       border-radius: 16px;
+      margin-top: 10px;
       div.col {
         &.active {
           color: #FFFFFF;
