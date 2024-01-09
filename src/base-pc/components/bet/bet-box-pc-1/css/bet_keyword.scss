@@ -5,16 +5,16 @@
  body {
   .keyboard-btn {
     border-radius: 4px;
-    background: var(--q-gb-bg-c-11);
-    border: 0.5px solid var(--q-gb-bd-c-8);
+    background: var(--q-bet-box-7);
+    // border: 0.5px solid var(--q-gb-bd-c-8);
     .icon-add:before {
       color: var(--q-gb-t-c-1);
     }
     &:hover {
-      background: var(--q-gb-bg-c-18);
+      background: var(--q-bet-box-2);
       .keyboard-btn-add,
       .keyboard-btn-text {
-        color: var(--q-gb-t-c-18);
+        color: var(--q-bet-box-3);
       }
     }
     &.key-btn-click {
