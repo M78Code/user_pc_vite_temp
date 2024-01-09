@@ -332,6 +332,7 @@ const get_lastest_market_info = (type) => {
                     
                     // 赛事id 玩法id 坑位
                     if(obj.matchInfoId == item.matchId && obj.playId == item.playId && market.placeNum == item.placeNum){
+                        // bug 需要遍历 ot == oddsType
                         let odds = lodash_.get(market,'marketOddsList[0]', {})
                         // 赛事状态
                         bet_item.mid_mhs = obj.matchHandicapStatus
@@ -906,7 +907,7 @@ const set_error_message_config = (res ={},type,order_state) => {
  * @returns 
  */
 const set_bet_obj_config = (params = {}, other = {}) => {
-    // console.error('投注项需要数据', params, 'other', other);
+    console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 
@@ -980,7 +981,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     let matchType = 1
     // 冠军
     if(other.bet_type == 'common_bet'){
-        if ([1, 2].includes(Number(mid_obj.ms))) {
+         //  ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
+        if ([1, 2,110].includes(Number(mid_obj.ms))) {
             matchType = 2
         }
     }
