@@ -2,7 +2,7 @@
   <div class="basic-wrap" @click.stop="details.on_go_detail(match, null, router, route)">
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <!-- 主队信息 -->
-    <div class="row-item team-item">
+    <div class="row-item team-item home-team">
       <div class="team-logo">
         <img v-if="home_avatar" style="width: 22px; max-height: 24px;"
         :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"
