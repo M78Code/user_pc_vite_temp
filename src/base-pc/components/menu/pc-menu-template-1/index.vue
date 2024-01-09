@@ -532,8 +532,7 @@ onUnmounted(()=>{
           line-height: 30px;
           border: 0.5px solid #D7E1FD;
           box-shadow: 0px 3px 3px 0px rgba(0, 56, 98, 0.1) !important;
-          background: linear-gradient(0deg, #D7E1FD, #D7E1FD),
-          linear-gradient(180deg, #E4ECFD 0%, #F8FAFF 47.92%, #F5F8FF 100%);          
+          background: var(--q-gb-bg-lg-4);          
           &:last-child {
             margin-right: 0;
           }
