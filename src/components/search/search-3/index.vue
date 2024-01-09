@@ -5,7 +5,7 @@
    <div
     v-if="SearchPCClass.search_isShow"
     class="search-position"
-    :style="{ right: `${search_width}px`, paddingRight: `${is_iframe ? 10 : 14}px`}"
+    :style="{ right: `${search_width}px`, paddingRight: `${is_iframe ? 10 : 14}px`} "
     :class="{ 'hide-search': store.show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }"
     >
     <div
@@ -14,7 +14,7 @@
     >
       <search-input />
       <!-- 遮罩层样式.bottom-wrap -->
-      <div class="bottom-wrap col search-result relative-position">
+      <div class="bottom-wrap col search-result relative-position" :style="page_style">
         <!-- 球类导航 -->
         <div
           class="sports-tab"
@@ -182,7 +182,7 @@ function on_resize() {
 
   .bottom-wrap {
     top: -1px;
-    background: var(--q-header-search-color-2);
+    background: var(--q-header-search-color-6);
 
     :deep(.serach-background) {
       background-color: var(--q-gb-bg-c-11);

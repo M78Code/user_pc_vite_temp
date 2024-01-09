@@ -266,7 +266,7 @@ export default defineComponent({
 
   .bottom-wrap {
     top: -1px;
-    background: var(--q-header-search-color-2);
+    background: var(--q-header-search-color-6);
 
     :deep(.serach-background) {
       background-color: var(--q-gb-bg-c-11);
