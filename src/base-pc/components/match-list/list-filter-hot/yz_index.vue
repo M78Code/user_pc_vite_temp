@@ -1,6 +1,6 @@
 <template>
   <div class="c-match-list-filter">
-    <drag-scroll class="item-wrap filter-sports competition" ref="drag_scroll">
+    <drag-scroll class="item-wrap filter-sports competition" :show_right_btn="true" :show_left_btn="true" ref="drag_scroll">
       <!-- :class="current_menu == item.mi ? 'active' : 'no-active' -->
       <template v-for="item in mi_500_obj['sl']">
         <div
@@ -11,24 +11,10 @@
           :class="current_menu == item.mi ? 'active' : 'no-active'"
         >
           <div class="icon-wrap list-filter menu-inline">
+            <span v-if="item.tid !== '0'" class="sport-icon-wrap"
+                      :style="compute_css_obj({key:current_menu == item.mi? 'league-sport-active-image' : 'league-sport-icon-image', position:format_type(item)})"></span>
+                    {{ item.name }}
             <!-- 热门赛事列表菜单icon 本地精灵图     hot-img-no-active-->
-            <span
-              v-if="compute_if_has_local_icon(item.mi)"
-              class="q-icon icon"
-              :style="`background-position:0 -${icon_styles(item.mi)}px`"
-              :class="current_menu == item.mi ? 'hot-img-active' : 'hot-img'"
-            >
-            </span>
-            <!-- 电竞 -->
-            <sport-icon
-              v-else-if="is_eports_csid(+item.st)"
-              :sport_id="item.st"
-              size="20px"
-              class="icon"
-            />
-            <!-- 本地没有icon使用远程icon -->
-            <img v-else class="l-icon" :key="item.mi" v-img="[item.st]" />
-            <!-- 精 -->
           </div>
           <!-- 球种名称 -->
           <div
@@ -56,7 +42,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import { is_eports_csid } from "src/output/index.js";
+import { is_eports_csid ,compute_css_obj } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js";
 import DragScroll from "src/base-pc/components/cus-scroll/drag_scroll.vue";
@@ -69,60 +55,124 @@ const props = defineProps({
 });
 const current_menu = ref("");
 const mi_500_obj = ref([]);
+// let top_logos = [
+//   "50199", //赛事
+//   "50101", //竞足
+//   "180", //英超
+//   "320", //西甲
+//   "276", //德甲
+//   "79", //法甲
+//   "6408", // 欧冠
+//   "146", //CBA
+//   "208", // 韩篮甲
+//   "239", // 意甲
+//   "132", //NBA
+//   "262", //欧足联
+//   "39", // j2
+//   "90", //j1
+//   "95",
+//   "103",
+//   "130",
+//   "137",
+//   "150",
+//   "160",
+//   "185",
+//   "224",
+//   "244",
+//   "265",
+//   "295",
+//   "333",
+//   "340",
+//   "359",
+//   "427",
+//   "563",
+//   "1524",
+//   "1555",
+//   "1607",
+//   "2066",
+//   "2177",
+//   "2332",
+//   "3123",
+//   "3230",
+//   "6343",
+//   "6344",
+//   "6371",
+//   "8120",
+//   "17706",
+//   "20746",
+//   "21202",
+//   "24313",
+//   "24613",
+//   "26992",
+//   "28009",
+//   "28190",
+//   "28592",
+//   "64",
+// ];
 let top_logos = [
   "50199", //赛事
   "50101", //竞足
-  "180", //英超
-  "320", //西甲
-  "276", //德甲
-  "79", //法甲
-  "6408", // 欧冠
-  "146", //CBA
-  "208", // 韩篮甲
-  "239", // 意甲
-  "132", //NBA
-  "262", //欧足联
-  "39", // j2
-  "90", //j1
-  "95",
-  "103",
-  "130",
-  "137",
-  "150",
-  "160",
-  "185",
-  "224",
-  "244",
-  "265",
-  "295",
-  "333",
-  "340",
-  "359",
-  "427",
-  "563",
-  "1524",
-  "1555",
-  "1607",
-  "2066",
-  "2177",
-  "2332",
-  "3123",
-  "3230",
-  "6343",
-  "6344",
-  "6371",
-  "8120",
-  "17706",
-  "20746",
-  "21202",
-  "24313",
-  "24613",
-  "26992",
-  "28009",
-  "28190",
-  "28592",
-  "64",
+  "502180", //英超
+  "502320", //西甲
+  "502276", //德甲
+  "50279", //法甲
+  "5026408", // 欧冠
+  "502146", //CBA
+  "502208", // 韩篮甲
+  "502239", // 意甲
+  "502132", //NBA
+  "502262", //欧足联
+  "50239", // j2
+  "50290", //j1
+  "50295",
+  "502103",
+  "502130",
+  "502137",
+  "502150",
+  "502160",
+  "502185",
+  "502224",
+  "502244",
+  "502265",
+  "502295",
+  "502333",
+  "502340",
+  "502359",
+  "502427",
+  "502563",
+  "5021524",
+  "5021555",
+  "5021607",
+  "5022066",
+  "5022177",
+  "5022332",
+  "5023123",
+  "5023230",
+  "5026343",
+  "5026344",
+  "5026371",
+  "5028120",
+  "50217706",
+  "50220746",
+  "50221202",
+  "50224313",
+  "50224613",
+  "50226992",
+  "50228009",
+  "50228190",
+  "50228592",
+  "50264",
 ];
+/**
+ * @description: 联赛转化背景
+ * @param {String} id 球类id
+ * @return {}
+ */
+ const format_type = ( item = {} ) => {
+    let index = top_logos.findIndex(n=>{return item.mi == n});
+    index = index == -1?0:index;
+    return index;
+}
 onMounted(() => {
   const hot_menu= BaseData.mew_menu_list_res.find((x) => x.mi == root)
   if(hot_menu){
@@ -269,6 +319,7 @@ function handle_click_menu_mi_500(mi) {
     match_list,
     bymids,
   };
+  console.info(params,"params")
   // 设置      中间 菜单输出
   menu_config.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
@@ -304,6 +355,16 @@ function handle_click_menu_mi_500(mi) {
       }
       .menu-inline {
         display: inline-block;
+      }
+      .sport-icon-wrap {
+          --per: -30.55px;
+          display: inline-block;
+          height: 18px;
+          width: 18px;
+          vertical-align: middle;
+          margin-top: -2px;
+          background-position: 0 0;
+          background-size: 100% auto;
       }
       .count-text {
         padding-left: 2px;

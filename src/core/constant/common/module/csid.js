@@ -475,21 +475,10 @@ export const sprite_images_postion_new_pc = {
   item_38: 52,
   item_39: 53,
   item_22: 55,
-  item_1010: 56,
+  item_1010: 24,
   item_1002: 11,
-  item_1001: 36,
-  item_1004: 37,
+  item_1001: 39,
+  item_1004: 40,
   item_1011: 23,
-  item_1009: 24
-}
-// 亚洲pc联赛对应的位置
-export const league_sprite_images_postion_new_pc = {
-  1:22, //世界杯 下标从0开始
-  2: 6, //欧冠
-  3:2,//英超
-  4:9,//意甲
-  5:3,//西甲
-  6:4,//德甲
-  7:5,//法甲
-  8:39,//中超
+  item_1009: 5
 }
