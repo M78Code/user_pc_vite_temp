@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import lodash from 'lodash';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { MenuData } from 'src/output/project/index.js'
-import { match_collect_status} from "./match-list-collect.js";
+import { match_collect_status } from "./match-list-collect.js";
 import { api_bymids, set_league_list_obj } from "./match-list-featch.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/output/module/match-data-base.js";
@@ -170,15 +170,18 @@ const mx_list_res = (data, backend_run) => {
 				// 冠军玩法 调用接口切换右侧
 				// this.mx_autoset_active_match();
 			} else if (!MenuData.is_esports()) {
-				// 非电竞切换右侧 为列表第一场赛事
-				let first_league = all_league_list[0];
-				let mids = first_league.mids.split(",");
+
 				//触发右侧详情更新
-				callback_func =lodash.debounce(() => {
-					if (mids[0]) {
-						useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mids[0])
+				callback_func = lodash.debounce(() => {
+					// 非电竞切换右侧 为列表第一场赛事
+					let first_league = all_league_list[0];
+					let mids = first_league.mids.split(",");
+					const match = MatchListData.get_quick_mid_obj(Number(mids[0]));
+					if (match) {
+						MatchDataWarehouse_PC_Detail_Common.set_match_details(match, [])
+						useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, match.mid)
 					}
-				},10);
+				}, 10);
 			}
 			// 调用bymids更新前12场赛事
 			api_bymids(
@@ -186,7 +189,7 @@ const mx_list_res = (data, backend_run) => {
 				callback_func
 			);
 		}
-	} 
+	}
 };
 /***
  * @description 当接口状态为成功且有数据时 调用此方法
@@ -224,17 +227,10 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
 			// 非详情页 切换右侧为列表第一场赛事
 			else if (route_name != "details") {
 				let first_match = match_list[0];
-				// let params = {
-				// 	media_type: "auto",
-				// 	mid: first_match.mid,
-				// 	tid: first_match.tid,
-				// 	sportId: first_match.csid,
-				// };
 				if (first_match) {
 					MatchDataWarehouse_PC_Detail_Common.set_match_details(first_match, [])
 					useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, first_match.mid)
 				}
-				// regular_events_set_match_details_params(cut, params);
 			}
 		}
 	} else {
