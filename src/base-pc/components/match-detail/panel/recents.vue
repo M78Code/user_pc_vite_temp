@@ -74,7 +74,6 @@
                 }
               ]"
             >
-          
               <bet-item
                 v-if="lodash.get(item, 'hps.0.hl') && mx_get_bet_simple(item,index,'oid')"
                 :key="`item_0_${i}`"
@@ -84,11 +83,12 @@
                 :bet_ids="mx_get_bet_simple(item,index,'bet_id')"
                 bet_source="recent"
                 :bet_info="{
-                  mid_obj:match_ctr.mid_obj,
-                  hl_obj:match_ctr.hl_obj,
-                  ol_obj:match_ctr.ol_obj
+                  mid_obj:match_ctr.get_quick_mid_obj(item.mid),
+              
                 }"
               >
+              <!--     hl_obj:match_ctr.list_to_obj.hl_obj,
+                  ol_obj:match_ctr.list_to_obj.ol_obj -->
                 <div
                   class="play-name ellipsis bet_handicap"
                   v-tooltip="{content:lodash.get(item, `hps.0.hl.0.ol.${index}.onb`) || lodash.get(item, `hps.0.hl.0.ol.${index}.on`),overflow:1}"
@@ -113,7 +113,7 @@ import bet_item from "src/base-pc/components/bet-item/bet_item.vue";
 import {
   UserCtr,
   MenuData,
-  MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
+  MatchDataWarehouse_PC_List_Common as MatchListData,
   useMittOn,
   MITT_TYPES,
   i18n_t
@@ -133,7 +133,7 @@ export default {
     return {
       mx_get_bet_simple,
       recent_data: [], //列表数据
-      match_ctr: MatchDetailsData,
+      match_ctr: MatchListData,
       socket_name: "recent", // 接入socket的名称
       skt_mid: {}, // 需要订阅的赛事id
       skt_hpid: "", // 需要订阅的玩法
@@ -191,7 +191,7 @@ export default {
             }
           });          
           if (this.match_ctr) {
-            // this.match_ctr.set_list_obj(data,timestap);
+            this.match_ctr.set_list(data);
             this.recent_data = data;
             console.log(1111111111112,data)
             // let match_c8 = null;

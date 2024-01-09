@@ -63,7 +63,8 @@
             }
             &.active {
               color: var(--q-gb-t-c-18);
-              background-image: var(--q-gb-bg-lg-14);
+              background-color: #179cff;
+              // background-image: var(--q-gb-bg-lg-14);
             }
           }
           .tabs-icons {
@@ -134,7 +135,7 @@
       .handicap-item {
         &.sub-title-2 {
           //background: var(--q-gb-bg-c-14) !important;
-          color: var(--q-gb-t-c-16);
+          color:#179cff;
           font-size: 12px;
           font-weight: 500;
         }
@@ -159,7 +160,7 @@
             font-size: 12px;
             color: var(--q-gb-t-c-5);
             .yb-family-odds {
-              color: var(--q-gb-t-c-16);
+              color:#179cff;
               font-weight: 500;
             }
             .yb-family-odds.normal_color {
