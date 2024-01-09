@@ -31,36 +31,21 @@
             <!--结算内容-->
             <template v-if="item.is_expand">
               <!-- 0:未结算 1:已结算 2: 预约 -->
-              <template v-if="[0, 1].includes(BetRecordLeft.selected)">
-                <div v-for="(order, order_index) in item.orderVOS" :key="'bet-item-' + index + '-' + order_index"
-                  class="bet-item  relative-position" :class="{ 'cursor-pointer': show_arrow(item, order) }"
-                  @click="go_match(item, order)">
-                  <!--卡片内容-->
-                  <q-card-section>
-                    <!--投注记录中投注项 selected是否被选择 appoint_order_status预约状态 order_status订单状态pre_bet_amount提前结算金额-->
-                    <bet-record-item :item="item" :index="index" :order="order"></bet-record-item>
-                  </q-card-section>
-                </div>
-              </template>
-              <template v-else>
-                <div v-for="(order, order_index) in item.detailList" :key="'bet-item-' + index + '-' + order_index"
-                  class="bet-item  relative-position" :class="{ 'cursor-pointer': show_arrow(item, order) }"
-                  @click="go_match(item, order)">
-                  <!--卡片内容-->
-                  <q-card-section>
-                    <!--投注记录中投注项 selected是否被选择 appoint_order_status预约状态 order_status订单状态pre_bet_amount提前结算金额-->
-                    <bet-book-item :item="item" :index="index" :order="order"></bet-book-item>
-                  </q-card-section>
-                </div>
-              </template>
+              <div v-for="(order, order_index) in data_list(item)" :key="'bet-item-' + index + '-' + order_index"
+                class="bet-item  relative-position" :class="{ 'cursor-pointer': show_arrow(item, order) }"
+                @click="go_match(item, order)">
+                <!--卡片内容-->
+                <q-card-section>
+                  <!--投注记录中投注项 selected是否被选择 appoint_order_status预约状态 order_status订单状态pre_bet_amount提前结算金额-->
+                  <bet-record-item :item="item" :index="index" :order="order"></bet-record-item>
+                </q-card-section>
+              </div>
               <q-card-section class="bet-item-result" :key="'bet-result-' + index">
                 <!--结算结果-->
                 <bet-record-result :index="index" :item="item" :orderNo_data_list="ref_data.orderNo_data_list"
                   :orderNo_data_obj="ref_data.orderNo_data_obj" ></bet-record-result>
               </q-card-section>
-
             </template>
-
             <q-card-section class="bet-item-separator"
               :class="{ 'bet-item-separator-last': (index == (ref_data.record_data.length - 1)) }"
               :key="index"></q-card-section>
@@ -103,19 +88,30 @@ onUnmounted(() => {
 const ref_data = reactive({
   cur_page: 1,
   page_size: 20,
-  // 0:未结算 1:已结算 2: 预约
-  selected: 1,
   load_data_state: 'loading',
   get_cashout_num: 0,
   is_more_show: false,
   total_page: 20,
   record_data: [],
-  orderNo_list: [],
   orderNo_data_obj:[],
   orderNo_data_list:[],
   send_cashout:null,
 
 })
+
+/**
+ *  0:未结算 1:已结算 数据源 orderVOS
+ *  2: 预约 数据源 detailList
+ * @param {*} item 
+ */
+const data_list = (item) => {
+  // 0:未结算 1:已结算 2: 预约
+  if([0, 1].includes(BetRecordLeft.selected)) {
+    return item.orderVOS
+  } else {
+    return item.detailList
+  }
+}
 
 /**
  * @description: 获取记录列表
@@ -235,7 +231,7 @@ const count_cashout = (orderNo_data_obj) => {
   // 判断提前结算实时查询返回集合数据的投注额maxout有null
   if (lodash_.includes(maxcashout_list, null)) {
     // 清除重新拉取投注记录定时器
-  clear_send_cashout()
+    clear_send_cashout()
     ref_data.send_cashout = setTimeout(() => {
       // 重新拉取列表数据
       get_record_list(ref_data.cur_page);
