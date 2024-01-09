@@ -104,7 +104,7 @@ const set_change_bet_single = () => {
   padding-left: 15px;
   height: 34px;
   cursor: pointer;
-  background: var(--q-gb-bg-c-14);
+  background: var(--q-bet-box-8);
   border-bottom: 1px solid var(--q-gb-bd-c-8);
   border-right: 1px solid var(--q-gb-bd-c-6);
 

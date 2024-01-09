@@ -37,7 +37,6 @@
    * @param {boolean} is_ws_call 是否ws调用
   */
   export const compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2=(match_list,is_ws_call)=>{
-    let template_id = MenuData.get_match_tpl_number()
     // 已开赛 到卡片key的 映射对象
     let play_to_card_key_arr = ['play_title']
     // 未开赛 到卡片key的 映射对象
@@ -235,7 +234,7 @@
       league_card_mids_arr[card_key].push(match.mid)
 
       // 赛事表征数据
-      let match_style_obj =  compute_style_template_by_matchinfo(match,template_id)
+      let match_style_obj =  compute_style_template_by_matchinfo(match)
       all_card_obj[match.mid+'_'] = match_style_obj
 
     })

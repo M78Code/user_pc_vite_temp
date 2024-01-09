@@ -26,7 +26,12 @@ export default {
       type: Number,
       default: 0
     }, //刷新次数
-    mid:String || Number
+    mid:String || Number,
+    // 默认的展示类型
+    show_type_default: {
+      type: String,
+      default: ''
+    }
   },
   mixins: [video_replay],
   data() {
@@ -107,6 +112,15 @@ export default {
   },
 
   watch: {
+    /**
+     * 监听并修改设置的type
+     * @param {'play-video'} value 
+     */
+    show_type_default(value) {
+      if (value) {
+        this.show_type = value;
+      }
+    },
     // //监听详情类的版本号
     // "layout_version.value": {
     //   handler(res) {
