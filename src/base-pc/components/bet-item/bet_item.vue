@@ -191,6 +191,7 @@ const {
  */
  const bet_click_ol = () => {
   const {oid,_hid,_hn,_mid } = ol_data_item.value
+  console.log(ol_data_item,'ol_data_item');
   let bet_type = 'common_bet'
     if(MenuData.is_esports()){
         bet_type ="esports_bet"
