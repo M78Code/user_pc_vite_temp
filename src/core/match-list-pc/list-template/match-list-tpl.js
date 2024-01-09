@@ -5,10 +5,6 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from './index.js'
 import { get } from 'lodash'
 import BaseData from "src/core/base-data/base-data.js";
 import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
-setTimeout(() => {
-    window.BaseData = BaseData
-    window.MenuData = MenuData;
-})
 /**
 * 获取当前的列表的默认的 模板配置
 */
@@ -25,24 +21,19 @@ function get_match_tpl_number() {
 }
 /**
  * 设置模板的宽度
- * @param {*} a 
- * @param {*} b 
+ * @param {*} 宽度
+ * @param {*} 其他参数 
  * @param {*} c 
  * @param {*} d 
  */
 function set_template_width(a, b, c, d) {
-    let tpl_num = get_match_tpl_number()
-    try {
-        // if (PROJECT_NAME == 'ouzhou-pc') {
-        //     MATCH_LIST_TEMPLATE_CONFIG[key]?.set_template_width(a, b, c, d)
-        //     tpl_num = 101 //欧洲是固定模板宽
-        // } else {
+    if (PROJECT_NAME == 'ouzhou-pc') {
+        MATCH_LIST_TEMPLATE_CONFIG['template_101_config'].set_template_width(a, b, c, d)
+    } else {
         for (const key in MATCH_LIST_TEMPLATE_CONFIG) {
-            MATCH_LIST_TEMPLATE_CONFIG[key]?.set_template_width(a, b, c, d)
+            if (MATCH_LIST_TEMPLATE_CONFIG[key].set_template_width)
+                MATCH_LIST_TEMPLATE_CONFIG[key].set_template_width(a, b, c, d)
         }
-        // }
-    } catch (error) {
-        console.error(tpl_num, BaseData.mi_info_map[`mi_${MenuData.menu_current_mi}`], error)
     }
 }
 /**
