@@ -136,7 +136,6 @@ const get_first_unfold_mids = () => {
 }
 /**
  * @description 调用列表bymids接口
- * @param  {boolean} is_first_load 是否用户切换菜单  第一次加载调用
  * @param  {boolean} is_show_mids_change 是否可视区域赛事改变 调用
  * @param  {boolean} is_league_first 是否联赛结构类型列表 首次加载拉前12场赛事
  * @param  {array} mids 指定拉取的mids
@@ -369,11 +368,6 @@ const api_bymids = (
     }
   }
 };
-useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(() => {
-  // 重新订阅C8
-  api_bymids({ is_show_mids_change: true })
-}, 1000)),
-  useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids);
 export {
   api_bymids,
   set_league_list_obj,

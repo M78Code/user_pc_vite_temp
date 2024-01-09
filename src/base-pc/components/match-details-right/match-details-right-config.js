@@ -118,11 +118,9 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
    */
   const m_init = (param = { is_ws: false }) => {
     // console.log(MatchDataWarehouseInstance.get_quick_mid_obj(param),'11111');
-    console.trace(2222,allData.mid,param)
     //给仓库类设置id
     //限流 防止mitt多次触发
     if(allData.mid == param) return
-    console.log(2222);
     allData.details_params = param
     clearTimeout(allData.get_match_details_timer);
     //如果是ws推送

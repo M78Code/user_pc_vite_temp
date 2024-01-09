@@ -1,5 +1,5 @@
 import {
-	ref,onUnmounted
+	ref, onUnmounted
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
@@ -43,16 +43,7 @@ let axios_debounce_timer;
 let axios_debounce_timer2;
 let mitt_list = [];
 let tid_match_list;
-// 调用列表接口
-useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({ is_socket = undefined }) => {
-	clearTimeout(tid_match_list)
-	tid_match_list = setTimeout(() => {
-		api_error_count = 0; //重新计算错误次数
-		fetch_match_list(is_socket)//请求接口
-	}, 80);
-})
-//请求元数据
-useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 50));
+
 /**
 * @description 请求数据
 * @param  {boolean} is_socket   是否 socket 调用
@@ -216,7 +207,7 @@ function handle_destroyed() {
 		clearTimeout(hot_match_list_timeout);
 	}
 	mitt_list.forEach(i => i());
-	mitt_list=[]
+	mitt_list = []
 	timer_obj.value = {};
 	clearTimeout(axios_debounce_timer);
 	clearTimeout(axios_debounce_timer2);
@@ -269,6 +260,22 @@ function mounted_fn(fun) {
 		// 站点 tab 休眠状态转激活
 		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, default_fun).off,
 		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, default_fun).off, //语言切换
+		// 调用列表接口
+		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({ is_socket = undefined }) => {
+			clearTimeout(tid_match_list)
+			tid_match_list = setTimeout(() => {
+				api_error_count = 0; //重新计算错误次数
+				fetch_match_list(is_socket)//请求接口
+			}, 80);
+		}).off,
+		//请求元数据
+		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 50)).off,
+
+		useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(() => {
+			// 重新订阅C8
+			api_bymids({ is_show_mids_change: true })
+		}, 1000)).off,
+		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids).off,
 	]
 	//每30秒检查一次可视区域赛事数据最后更新时间 
 	check_match_last_update_timer_id = setInterval(
@@ -418,7 +425,7 @@ function check_match_last_update_time() {
 		// 更新时间间隔
 		let api_time_dif = 0,
 			ws_time_dif = 0;
-		let match = MatchListData.list_to_obj.mid_obj[mid + '_'] || {};
+		let match = MatchListData.get_quick_mid_obj(mid) || {};
 		if (match.api_update_time) {
 			api_time_dif = now_time - match.api_update_time;
 		}
