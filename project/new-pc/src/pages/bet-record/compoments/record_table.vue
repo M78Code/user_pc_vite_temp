@@ -22,7 +22,7 @@
           </div>
           <div class="no-data" style="height:calc(100vh - 17rem)">
             <div class="c">
-              <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/no-data.svg`" alt="" srcset="">
+              <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/no_data.svg`" alt="" srcset="">
               <div style="text-align: center;color:#A1A3A5;font-weight: 500;">{{i18n_t('common.no_data')}}</div>
             </div>
           </div>
