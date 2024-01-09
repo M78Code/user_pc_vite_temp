@@ -127,7 +127,6 @@
                   :play_data="mx_get_bet_simple(item, index, 'play')"
                   :bet_data="mx_get_bet_simple(item, index, 'bet_data')"
                   :bet_ids="mx_get_bet_simple(item, index, 'bet_id')"
-                  style="padding: 0 10px"
                   bet_source="recent"
                   :bet_info="{
                     mid_obj:match_ctr.get_quick_mid_obj(item.mid)
