@@ -9,13 +9,12 @@ import {
   MITT_TYPES,
 } from "src/core/mitt/index.js";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
-import { SessionStorage } from "src/output/module/constant-utils.js";
-import STANDARD_KEY from "src/core/standard-key";
 import {set_template_width,get_match_tpl_number} from 'src/core/match-list-pc/list-template/match-list-tpl.js'
-const menu_key = STANDARD_KEY.get("menu_pc");
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_common } from "src/api/index.js"
 import { menu_default } from "./config/menu-default.js"
+import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
+
 // const state = store.getState();
 // 热门除了50199-30199  赛事、50101-30101 竞足外，
 // 常规联赛原菜单ID：301+联赛ID、新菜单：502+菜单ID；电竞联赛原菜单：30+联赛ID、新菜单ID：联赛ID
@@ -117,6 +116,26 @@ class MenuData {
 
     this.left_menu_list = []
    
+  }
+
+
+  // 获取数据缓存 ，用于刷新
+  get_new_data() {
+    // 获取菜单数据缓存
+    let session_info = SessionStorage.get("menu_pc");
+    if (!session_info) {
+      // 没有数据 使用默认值
+      this.set_left_menu_list_init()
+      return;
+    }
+
+    if (Object.keys(session_info).length) {
+      for(let item in session_info){
+        if(!['menu_data_version','match_list_version','api_config_version','ref_lv2_mi'].includes(item) ){
+          this[item] = session_info[item]
+        }
+      }
+    }
   }
 
   // 初始化菜单 默认值
@@ -538,52 +557,11 @@ class MenuData {
     this.set_left_menu_result(config);
   }
 
-  // 获取数据缓存 ，用于刷新
-  get_new_data() {
-    // 获取菜单数据缓存
-    let session_info = sessionStorage.getItem("is_session_menu_data");
-    if (!session_info) {
-      // 没有数据 使用默认值
-      this.set_left_menu_list_init()
-      return;
-    }
-    const session_menu_data = JSON.parse(session_info);
-    //  console.warn('session_menu_data', session_menu_data);
-
-    // 获取热门和滚球的数量缓存
-    const local_1_500_count = JSON.parse(
-      sessionStorage.getItem("local_1_500_count")
-    );
-    this.menu_root_count = local_1_500_count;
-
-    if (Object.keys(session_menu_data).length) {
-      const { left_menu_result, menu_root_count, mid_menu_result } =
-        session_menu_data;
-
-      this.menu_root_count = menu_root_count;
-
-      // 重置版本 随便输入
-      this.set_api_config_version("222222");
-
-      // 设置左侧菜单
-      this.set_left_menu_result(left_menu_result);
-
-      // 设置中间件
-      this.set_mid_menu_result(mid_menu_result);
-
-      // this.set_match_list_api_config(match_list_api_config);
-    }
-  }
 
   // 设置 热门和滚球的数量 存在localStorage
   set_local_1_500_count() {
-    // 菜单数据缓存
-    sessionStorage.setItem(
-      "is_session_menu_data",
-      JSON.stringify(this || {})
-    );
     // 滚球热门数据 存local
-    localStorage.setItem("local_1_500_count", this.compute_menu_root_cont());
+    SessionStorage.set("local_1_500_count", this.compute_menu_root_cont());
   }
   // 设置投注类别
 
@@ -786,7 +764,7 @@ class MenuData {
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) //从接口拿值
     nextTick(()=>{
-      SessionStorage.set(menu_key,this)
+      SessionStorage.set('menu_pc',this)
     })
   }
   
