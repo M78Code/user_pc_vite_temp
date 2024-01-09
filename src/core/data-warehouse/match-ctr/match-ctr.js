@@ -653,7 +653,7 @@ get_quick_mid_obj_ref(mid){
     match.tab_play_keys = this.get_tab_play_keys(match);
     // 是否有其他玩法
     match.has_other_play = match.tab_play_keys&&String(match.tab_play_keys).split(',').length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
-
+    match.other_handicap_list=[]
     // 默认比分数据
     // match.score_obj = serialized_score([],true)
     // 当前局比分 

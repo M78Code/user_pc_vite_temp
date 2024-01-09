@@ -50,7 +50,6 @@ const get_tab_play_height = (mid) => {
 		// 计算0号模板次要玩法 盘口+玩法标题高度
 		handicap_height = length * 35 + (40 - (!["en", "ad", "ms"].includes(UserCtr.lang) ? 16 : 0));
 	}
-
 	return handicap_height;
 };
 
@@ -59,7 +58,7 @@ const compute_view_tpl_id = (data_tpl_id) => {
 	// 这里 是数据模板id 映射出来的视图模板id
 	let view_tpl_id = data_tpl_id
 	// 25 罚牌主盘口
-	if([3,5,6,8,19,20,22,23,29].includes(+data_tpl_id)){
+	if([3,5,6,8,19,20,22,23,25].includes(+data_tpl_id)){
 	  view_tpl_id = 2
 	}else if([11,16].includes(+data_tpl_id)){
 	  view_tpl_id = 9

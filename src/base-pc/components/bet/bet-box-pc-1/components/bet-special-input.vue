@@ -89,7 +89,7 @@ onUnmounted(() => {
 })
 
 const change_money_handle = obj => {
-    if(props.items.playOptionsId == obj.id) {
+    if(props.items.id == obj.id) {
         // 获取当前投注金额
         let money = props.items.bet_amount 
         let money_ = obj.money
@@ -120,6 +120,8 @@ const change_money_handle = obj => {
 // 清空输入框金额
 const bet_clear_handle = () => {
     ref_data.money = ''
+    BetData.set_bet_amount('')
+    BetViewDataClass.set_bet_special_series_item({bet_amount:'',id:props.items.id})
 }
 
 // 键盘回车事件
@@ -251,7 +253,7 @@ input[type="number"] {
     }
     .bet-input-close {
         .icon-failure:before {
-            color: var(--q-gb-t-c-18);
+            color: var(--qq--yb-text-color4);
         }
 
         &:hover {
@@ -263,8 +265,8 @@ input[type="number"] {
 
     .bet-input-close {
         position: absolute;
-        top: 10px;
-        right: 5px;
+        top: 7px;
+        right: 25px;
         cursor: pointer;
         width: auto;
         height: auto;

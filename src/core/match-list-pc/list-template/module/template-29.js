@@ -1,8 +1,7 @@
 
 /**
- *    
- *  足球 罚牌 
- *    
+ *    // 虚拟足球
+ *    源名字： template_1001   template1001
  */
 
 import * as TemplateCommon from "./template-common.js"
@@ -11,65 +10,61 @@ import * as TemplateCommon from "./template-common.js"
 
 
  
-
-
-  // 足球 罚牌 
- 
-  export const template_29 = {
-    main_handicap_list: [ 
+  // 虚拟足球
+  export const template_29  = {
+    main_handicap_list: [
       {
         ols: [
-          {  _hpid: 310, ot: '1' },
-          {  _hpid: 310, ot: '2' },
-          {  _hpid: 310, ot: 'X' },
+          {  _hpid: 20001, ot: '1' },
+          {  _hpid: 20001, ot: '2' },
+          {  _hpid: 20001, ot: 'X' },
         ],
       },
       {
         ols: [
-          {  _hpid: 306, ot: '1' },
-          {  _hpid: 306, ot: '2' },
+          {  _hpid: 20004, ot: '1' },
+          {  _hpid: 20004, ot: '2' },
           { empty:1}
         ],
       },
       {
         ols: [
-          {  _hpid: 307, ot: 'Over' },
-          {  _hpid: 307, ot: 'Under' },
+          {  _hpid: 20002, ot: 'Over' },
+          {  _hpid: 20002, ot: 'Under' },
           { empty:1}
         ],
       },
       {
         ols: [
-          {  _hpid: 311, ot: '1' },
-          {  _hpid: 311, ot: '2' },
-          {  _hpid: 311, ot: 'X' },
+          {  _hpid: 20013, ot: '1' },
+          {  _hpid: 20013, ot: '2' },
+          {  _hpid: 20013, ot: 'X' },
         ],
       },
       {
         ols: [
-          {  _hpid: 308, ot: '1' },
-          {  _hpid: 308, ot: '2' },
+          {  _hpid: 20015, ot: '1' },
+          {  _hpid: 20015, ot: '2' },
           { empty:1}
         ],
       },
       {
         ols: [
-          {  _hpid: 309, ot: 'Over' },
-          {  _hpid: 309, ot: 'Under' },
+          {  _hpid: 20014, ot: 'Over' },
+          {  _hpid: 20014, ot: 'Under' },
           { empty:1}
         ],
       },
     ],
-   
   } 
 
 
-  
-    //   列表宽度计算模板
-export const  width_config ={
+  //   列表宽度计算模板
+  export const  width_config ={
   ...TemplateCommon.width_config_template,
   bet_col_count: 6
 }
+
 
 
   
@@ -86,11 +81,13 @@ export const  width_config ={
     return base_config
   }
 
-
-  // 赛事模板配置
+    
+// 赛事模板配置
 export const match_template_config = {
   ...TemplateCommon.match_style_template,
  
 }
+
+
 
 

@@ -102,7 +102,7 @@
           {{ format_currency(parseFloat(item.maxWinMoney)/100) }}
         </div>
       </div>
-      <template v-if="is_indonesia">
+      <template>
         <div class="row bet-win-money yb-fontsize12">
           <div class="col">
             <div class="bet-addition">
@@ -116,8 +116,6 @@
   </q-card>
 </template>
 <script setup>
-import lodash from 'lodash'
- 
 import { IconWapper } from 'src/components/icon'
 import { format_currency,formatTime } from "src/output/index.js"
  

@@ -496,7 +496,7 @@ onMounted(() => {
       right: "4px",
     });
     get_videos();
-    refreshFunc();
+    // refreshFunc();
 });
 onUnmounted(() => {
   debounce_throttle_cancel(refresh);
