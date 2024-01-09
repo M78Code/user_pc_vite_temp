@@ -600,7 +600,7 @@ body {
         position: absolute;
         width: 100%;
         height: 6px;
-        background-color: var(--q-gb-bg-c-11);
+        // background-color: var(--q-gb-bg-c-11);
         left: 0;
         top: 0;
         z-index: -1;
@@ -608,7 +608,7 @@ body {
 
       .tr-match-head {
         // background-image: var(--q-gb-bg-lg-18);
-        background: var(--q-gb-bg-c-23);
+        background: var(--q-gb-bg-lg-7);
         border: 1px solid var(--q-gb-bg-c-23);
         // border: 1px solid var(--q-gb-bg-c-9);
         border-radius: 6px;
@@ -660,7 +660,7 @@ body {
       }
 
       .tr-col-name {
-        background: var(--q-gb-bg-c-11);
+        // background: var(--q-gb-bg-c-11);
         color: var(--q-gb-bg-c-2);
         position: relative;
 
@@ -669,7 +669,7 @@ body {
           position: absolute;
           width: 100%;
           height: 6px;
-          background-color: var(--q-gb-bg-c-11);
+          // background-color: var(--q-gb-bg-c-11);
           left: 0;
           top: -6px;
           z-index: -1;
