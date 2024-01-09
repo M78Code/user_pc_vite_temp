@@ -46,7 +46,8 @@ body {
           border-left: 0;
         }
         &.active {
-          background-image: var(--q-gb-bg-lg-12);
+          background: #179CFF;
+          // background-image: var(--q-gb-bg-lg-12);
           color: var(--q-gb-t-c-18);
           .number {
             color: var(--q-gb-t-c-18);
@@ -60,7 +61,7 @@ body {
           }
         }
         .number {
-          color: var(--q-gb-t-c-5);
+          color: var(--q-gb-t-c-3);
         }
       }
     }
