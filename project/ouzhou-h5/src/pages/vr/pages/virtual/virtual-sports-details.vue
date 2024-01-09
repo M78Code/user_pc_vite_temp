@@ -43,8 +43,8 @@
       <!-- 赔率列表页面 -->
       <template  v-if="match && tabs_name == 'bet'">
         <virtual-sports-tab :mid="mid" />
-        <OddsListContrainer :match_odds_info="match_odds_info" :match_detail="match_detail" :loading="loading"/>
-        <!-- <virtual-sports-category :mid="mid" :current_match="match" :source="'virtual_sports_details'"/> -->
+        <!-- <OddsListContrainer :match_odds_info="match_odds_info" :match_detail="match_detail" :loading="loading"/> -->
+        <virtual-sports-category :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
       </template>
       <!-- 历史战绩页面 -->
       <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
