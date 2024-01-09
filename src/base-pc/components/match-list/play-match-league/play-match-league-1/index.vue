@@ -44,7 +44,7 @@
         </div>
       </div>
       <!-- 赛事数量 -->
-      <div v-else class="league-match-count">
+      <div v-if="!is_kemp && card_style_obj.is_league_fold" class="league-match-count">
         <span>{{ card_style_obj.match_count }}</span>
       </div>
     </div>

@@ -222,7 +222,12 @@ const {
 </script>
 
 <style lang="scss" scoped>
-.bet-inner{
+
+.c-bet-item {
+  width: 100%;
+  height: 100%;
+}
+  .bet-inner{
   // background: var(--q-gb-bg-c-19);
 }
 .lock {

@@ -149,7 +149,6 @@ const set_bet_order_list = (bet_list, is_single) => {
 
     } else {
         let pre_odds = ''
-        let bet_single_ = []
         bet_list.forEach((item, index) => {
             // 预约投注 设置预约投注赔率
             if(BetData.is_bet_pre){
@@ -194,17 +193,15 @@ const set_bet_order_list = (bet_list, is_single) => {
             //     ...bet_s_obj,
             //     ...BetData.bet_pre_obj[item.playOptionsId]
             // }
-
-            bet_single_.push(bet_s_obj)
-      
+            order_list.push({
+                "seriesSum": 1,   // 串关数量
+                "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
+                "seriesValues": "单关",  // 串关值 2串1 3串1...
+                "fullBet": 0,   // 是否满额投注，1：是，0：否
+                "orderDetailList": [bet_s_obj] 
+            })
         }) 
-        order_list.push({
-            "seriesSum": 1,   // 串关数量
-            "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
-            "seriesValues": "单关",  // 串关值 2串1 3串1...
-            "fullBet": 0,   // 是否满额投注，1：是，0：否
-            "orderDetailList": bet_single_ 
-        })
+        
     }
     return order_list
 }
@@ -1238,6 +1235,7 @@ const pc_match_data_switch = match_data_type => {
 
 // 根据当前的投注项 获取对应的赔率变化ws
 const set_market_id_to_ws = () => {
+    BetData.set_bet_single_special_list()
     let hid = []
     let mid = []
     let obj = {}

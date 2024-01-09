@@ -214,44 +214,38 @@ onUnmounted(() => {
 .odds {
   min-width: 950px;
 
+  // 复制的重复代码，.datum .tab 等待抽象
   .tab {
     display: flex;
     align-items: center;
-    height: 30px;
-    color: var(--q-analysis-color-3);
+    height: 34px;
     margin-bottom: 10px;
-    width: 300px;
-    border-radius: 8px;
+    border-radius: 0 0 8px 8px;
+    box-sizing: border-box;
+    background: #fff;
     overflow: hidden;
-
     span {
-      width: 100px;
+      position: relative;
+      margin: 0 10px;
       height: 28px;
       line-height: 28px;
+      color: #555;
       cursor: pointer;
       text-align: center;
-      border: 1px solid #DEE4F2;
-
-      &:last-child {
-        border-left: none;
-        border-radius: 0 8px 8px 0;
-      }
-
-      &:nth-child(2) {
-        border-left: none;
-      }
-
-      &:first-child {
-        border-radius: 8px 0 0 8px;
-      }
-
-      &:not(:last-child) {
-        border-right: none;
-      }
-
       &.active {
-        background-image: var(--q-analysis-bg-gradient-2);
-        color: var(--q-analysis-color-13);
+        font-weight: 600;
+        color: #179CFF;
+      }
+      &.active::before {
+        position: absolute;
+        content: "";
+        width: 90%;
+        height: 6px;
+        border-radius: 15px;
+        background: #179CFF;
+        bottom: -6px;
+        left: 50%;
+        transform: translate(-50%);
       }
     }
   }

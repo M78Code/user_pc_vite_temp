@@ -58,7 +58,7 @@ import { TabResultsFullVersionWapper as tabResults } from './template/tab-result
 import { TableDataFullVersionWapper as tabData } from './template/tab-data/index.js'
 import { TabLineupFullVersionWapper as tabLineup } from './template/tab-lineup/index.js'
 import { TabInformationFullVersionWapper as tabInformation } from './template/tab-information/index.js'
-import { TabOddsFullVersionWapper as tabOdds } from 'src/base-pc/components/analysis/template/tab-odds/index.js'
+import { TabOddsFullVersionWapper as tabOdds } from './template/tab-odds/index.js'
 
 import zhugeTag from "src/core/http/zhuge-tag.js";
 
