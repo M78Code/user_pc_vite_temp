@@ -160,8 +160,8 @@ export default {
       video_type:1 //1:高清flv, 2:流畅m3u8
       },
     }
-  
   },
+  
 };
 </script>
 

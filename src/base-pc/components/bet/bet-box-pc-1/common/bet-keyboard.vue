@@ -1,7 +1,7 @@
 
 <template>
   <div class="q-gutter-xs keyboard-zone">
-    <div class="keyboard-btn" v-for="(item, index) in BetData.user_max_min_money" :key="index" @click="set_click_keybord(item)" 
+    <div class="keyboard-btn" v-for="(item, index) in ref_data.user_max_min_money" :key="index" @click="set_click_keybord(item)" 
     :class="{'disable-key-btn disabled': item > UserCtr.balance}">
       <!--键盘按键文本显示 如果无效则置灰 以及MAX按钮文本显示-->
       <div class="keyboard-btn-text">
@@ -14,7 +14,7 @@
 
 <script setup>
 // 公共主题文件引入
-import { onMounted } from "vue"
+import { onMounted, reactive } from "vue"
 import { UserCtr } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -24,9 +24,15 @@ const props = defineProps({
   oid:0
 })
 
+const ref_data = reactive({
+  user_max_min_money:{}
+})
+
 onMounted(()=>{
+  BetData.set_user_max_min_money()
   // 添加max按钮
-  BetData.user_max_min_money = Object.assign(BetData.user_max_min_money, {max: 'MAX'})
+  ref_data.user_max_min_money = Object.assign(BetData.user_max_min_money, {max: 'MAX'})
+  
   BetData.set_bet_keyboard_config('',props.oid)
 })
 
