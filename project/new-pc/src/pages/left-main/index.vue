@@ -531,6 +531,7 @@ const get_unsettle_tickets_count_config = () => {
     justify-content: space-between;
     height: 40px;
     align-items: center;
+    
 
     .left {
       display: flex;

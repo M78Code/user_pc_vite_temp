@@ -24,5 +24,7 @@ export default {
     'gb-bg-c-23': '#DCE5F2',  
     'gb-bg-c-24': '#EFF8FF',   
     'gb-bg-c-25': '#FAFCFF',   
+    'gb-bg-c-26': '#E9F0FF',   
+    'gb-bg-c-30': '#F6F9FF',   
   }
 

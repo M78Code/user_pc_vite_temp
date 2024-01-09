@@ -117,8 +117,9 @@ export default {
      * @param {'play-video'} value 
      */
     show_type_default(value) {
-      if (value) {
+      if (value == "play-video") {
         this.show_type = value;
+        MatchDetailCalss.set_play_media( { media_type: "video", mid: this.mid, time: Date.now() })
       }
     },
     // //监听详情类的版本号

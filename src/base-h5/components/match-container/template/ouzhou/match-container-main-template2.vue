@@ -295,6 +295,10 @@ export default {
         :deep(.odds) {
           color: var(--q-gb-t-c-1);
         }
+        &.active{
+          background: linear-gradient(0deg,rgba(255,112,0,.1) 0%,rgba(255,112,0,.1) 100%),#FFF;
+
+        }
       }
       .ol-li-item:nth-child(even) {
         border-right: 0;

@@ -109,7 +109,7 @@ const toggle_merge = () => {
   justify-content: space-between;
   height: 40px;
   align-items: center;
-
+  background: var(--q-bet-box-6);
   .left {
     display: flex;
     align-items: center;
@@ -117,14 +117,14 @@ const toggle_merge = () => {
 
     .bet-single-count {
       border-radius: 10px;
-      color: var(--q---q-bet-box-8);
+      color: var(--q-bet-box-5);
       width: 20px;
       height: 20px;
       line-height: 20px;
       margin-left: 5px;
       text-align: center;
       transform: scale(0.8);
-      background: var(--q-gb-bg-c-18);
+      background: var(--q-bet-box-2);
     }
   }
 
