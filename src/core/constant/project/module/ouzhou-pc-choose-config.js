@@ -1,4 +1,14 @@
 export  const  choose_config= {
+    "90": [ //电子足球
+      {first_hpid: "1", second_hpid: "2"},
+      {first_hpid: "1", second_hpid: "4"},
+      {first_hpid: "2", second_hpid: "4"},
+    ],
+    "91": [ //电子篮球
+      {first_hpid: "37", second_hpid: "38"},
+      {first_hpid: "37", second_hpid: "39"},
+      {first_hpid: "38", second_hpid: "39"},
+    ],
     "1": [
       {first_hpid: "1", second_hpid: "2"},
       {first_hpid: "1", second_hpid: "4"},
