@@ -119,7 +119,7 @@ import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/com
 import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"; //头部
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import refresh from "src/components/refresh/refresh.vue"
-import EsportsHeader from "src/base-pc/components/match-list/esports-header/index.vue";//电竞赛事列表筛选
+import EsportsHeader from "src/base-pc/components/match-list/esports-header/yz_index.vue";//电竞赛事列表筛选
 
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/base-pc/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
 // import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
