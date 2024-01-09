@@ -15,7 +15,7 @@ import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
 
 class BetData {
   constructor() {
-   
+  
   }
   init_core() {
     this.deviceType = 1  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
@@ -207,14 +207,16 @@ this.bet_appoint_ball_head= null */
 
     // 获取缓存信息
     this.set_loacl_config()
+
+   
   }
 
   set_user_max_min_money(){
     if (this.is_bet_single) {
-      const { qon,qtw,qth,qfo,qfi } = lodash.get(UserCtr, 'user_info.cvo.single', { qon: 200, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })  
+      const { qon,qtw,qth,qfo,qfi } = lodash_.get(UserCtr, 'user_info.cvo.single', { qon: 200, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })  
       this.user_max_min_money = {qon,qtw,qth,qfo,qfi} 
     } else {
-      const {qtw,qth,qfo,qfi,qsi } = lodash.get(UserCtr, 'user_info.cvo.series', {  qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
+      const {qtw,qth,qfo,qfi,qsi } = lodash_.get(UserCtr, 'user_info.cvo.series', {  qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
       this.user_max_min_money = { qtw,qth,qfo,qfi,qsi}
     }
   }
@@ -370,6 +372,12 @@ this.bet_appoint_ball_head= null */
     Object.assign(real_bet_obj, obj)
   }
 
+  // 清除投注项中的不 问题数据
+  set_bet_single_special_list() {
+    this.bet_single_list = this.bet_single_list.filter(Boolean)
+    this.bet_s_list = this.bet_s_list.filter(Boolean)
+  }
+
   /* 
     设置 投注项立马生成的前端索引ID
   */
@@ -422,6 +430,7 @@ this.bet_appoint_ball_head= null */
         break;
     }
 
+    this.set_bet_single_special_list()
     // 设置是否为 虚拟投注
     this.is_virtual_bet = is_virtual_bet
     // 设置 投注内容
@@ -639,6 +648,7 @@ this.bet_appoint_ball_head= null */
     if (this.is_bet_merge) {
       // 不合并的状态下 取最后合并的最后一条数据作为投注内容
       this.bet_single_list = [this.bet_single_list.pop()]
+      this.bet_oid_list = [this.bet_oid_list.pop()]
     }
     let is_merge = !this.is_bet_merge
 

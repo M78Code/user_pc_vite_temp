@@ -6,24 +6,23 @@
 <template>
   <!-- 单关组件 -->
   <div class="bet-single" data-container="single-container" ref="single-container">
-    <div style="display:none;" >{{ BetData.bet_data_class_version }}</div>
+
+    <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
 
     <!--未投注-->
-    <template v-if="BetData.bet_flag">
+    <template v-if="BetViewDataClass.bet_order_status == 1">
       <!--投注信息-->
-      <bet-single-info
-        :item="item"
-        :index="index"
-        :key="`single-${index}`"
-        v-for="(item, index) in BetData.bet_single_list"
-      ></bet-single-info>
+      <bet-single-info :items="item" :index="index" :key="`single_${index}`" v-for="(item, index) in BetData.bet_single_list"></bet-single-info>
+      
+      <!-- 多项单注 -->
+      <div v-if="BetData.is_bet_merge && BetData.bet_single_list.length>1">
+        <q-card flat class="relative-position bet-multiple bet-card q-card q-card--flat no-shadow">
+          <BetMultipleInput />
+        </q-card>
+      </div>
+
     </template>
-    <!-- 多项单注 -->
-    <div v-if="BetData.is_bet_merge && BetData.bet_single_list.length>1">
-      <q-card flat class="relative-position bet-multiple bet-card q-card q-card--flat no-shadow">
-        <BetMultipleInput />
-      </q-card>
-    </div>
+ 
     <!-- 已投注 -->
     <template v-else>
       <!--投注后信息-->
@@ -34,8 +33,7 @@
         v-for="(item, index) in BetViewDataClass.orderNo_bet_obj"
       ></bet-single-record>
     </template>
-    
-    
+
   </div>
 </template>
 <script setup>
