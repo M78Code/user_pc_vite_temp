@@ -75,13 +75,12 @@ function match_list_all_params() {
     let { lv1_mi, lv2_mi } = left_menu_result || {};
     let apiType = 1;
     // 父级euid
-    let euid = get_mid_for_euid(menu_current_mi)
+    let euid = MenuData.get_mid_for_euid(menu_current_mi)
 
     // 有二级菜单 需要用一级才的euid
     if(['new-pc','yazhou-pc'].includes(PROJECT_NAME)){
-        euid = get_mid_for_euid(lv1_mi)
+        euid = MenuData.get_mid_for_euid(lv1_mi)
     }
-
     let api_name = api_params[menu_root]?.match || api_params[lv1_mi]?.match || api_params.other.match;
     // type === "collect"
     if (is_collect) {
