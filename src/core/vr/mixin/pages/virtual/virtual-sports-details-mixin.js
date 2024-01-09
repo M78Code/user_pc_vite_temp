@@ -35,6 +35,7 @@ export default {
       loading: false,
       match_odds_info: [], 
       match_detail: {},
+      MatchDataWarehouseInstance:MatchDataWarehouseInstance,
       vsport_operate:null,
       show_debug:sessionStorage.getItem('wsl') == '9999',
       mid:'',

@@ -39,7 +39,7 @@
 <script>
 import virtual_sports_category_mixin from "src/core/vr/mixin/pages/virtual/details/children/virtual-sports-category-mixin.js";
 // 引入加载中的组件
-import loading from 'src/base-h5/components/common/loading.vue';
+import loading from 'src/components/loading/loading.vue';
 import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue"
 export default {
   mixins:[virtual_sports_category_mixin],
