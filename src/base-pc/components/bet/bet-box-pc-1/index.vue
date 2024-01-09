@@ -1,6 +1,6 @@
 <template>
   <!--当前投注-->
-  <div class="relative-position bet-list-info">
+  <div class="relative-position bet-list-info" :style="bet_style">
     <!-- 投注栏 1 -->
     <v-scroll-area ref="ref_bet_scroll_area_bet_list" position="bet_list" :observer_area="3" :observer_middle="true"
       class="bet-list">
@@ -69,6 +69,11 @@ import BetSingle from "./components/bet-single.vue"
 import BetMix from "./components/bet-mix.vue"
 
 import { IconWapper } from 'src/components/icon'
+import { compute_css_variables } from "src/core/css-var/index.js"
+
+const bet_style = ref('')
+bet_style.value = compute_css_variables({ category: 'component', module: 'bet-box' })
+console.error('page_style.value',bet_style.value)
 
 // 是否显示合并信息A
 const show_merge_info = ref(false)
@@ -112,7 +117,7 @@ const toggle_merge = () => {
 
     .bet-single-count {
       border-radius: 10px;
-      color: var(--q-gb-bg-c-11);
+      color: var(--q---q-bet-box-8);
       width: 20px;
       height: 20px;
       line-height: 20px;

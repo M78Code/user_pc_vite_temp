@@ -30,7 +30,7 @@
       <span class="handicap-more" v-show="ol_data.onbl"
         >{{ ol_data.onbl }}&nbsp;</span
       >
-      <div class="handicap-value-text">{{ score }} {{ ol_data.onb }}</div>
+      <div class="handicap-value-text handicap-value-ranks">{{ score }} {{ ol_data.onb }}</div>
     </div>
 
     <!-- 赔率 -->
@@ -362,6 +362,9 @@ onUnmounted(() => {
   font-weight: 500;
   white-space: nowrap;
   color: var(--q-gb-t-c-16);
+}
+.handicap-value-ranks{
+  color: var(--q-gb-t-c-20);
 }
 .vertical {
   flex-direction: column;
