@@ -161,8 +161,10 @@ export function csid_to_tpl_id(csid) {
 function get_ouzhou_data_tpl_id(csid) {
     switch (Number(csid)) {
         case 1:
+        case 90:
             return 101
         case 2:
+        case 91:
             return 102;
         case 4:
             return 104;

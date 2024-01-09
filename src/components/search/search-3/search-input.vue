@@ -4,8 +4,9 @@
     <div
         class="wrap-input"
         @click.stop
+        :style="page_style"
     >
-        <div class="search-icon-container">
+        <div class="search-icon-container" >
             <icon-wapper
                 class="search-icon"
                 color="#ABBAC8"
@@ -55,11 +56,12 @@ import {SearchPCClass} from 'src/output/project/common/pc-common.js'
 import { i18n_t } from "src/boot/i18n.js"
 import {store, mutations} from "./index";
 import { useRoute, useRouter } from 'vue-router'
-
+import { compute_css_variables } from "src/core/css-var/index.js"
+const page_style = ref('')
 const router = useRouter()
 const route = useRoute()
 const inputRef = ref(null)
-
+page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
 function change_txt() {
     store.keyword = store.keyword.replace(/#/g, "");
     if (store.keyword.length > 20) store.keyword = store.keyword.slice(0, 20);
