@@ -355,7 +355,7 @@ body {
           .team-item {
             .team-name {
               &.bold {
-                color: var(--q-gb-t-c-12);
+                -color: var(--q-gb-t-c-12);
               }
             }
 
@@ -398,7 +398,7 @@ body {
 
           .play-count-wrap {
             .play-count {
-              color: var(--q-gb-bd-c-11);
+              color: var(--q-gb-t-c-6);
             }
             &:hover {
               .icon-triangle-right {

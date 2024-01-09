@@ -364,7 +364,7 @@ onUnmounted(() => {
   color: var(--q-gb-t-c-16);
 }
 .handicap-value-ranks{
-  color: var(--q-gb-t-c-20);
+  -color: var(--q-gb-t-c-20);
 }
 .vertical {
   flex-direction: column;
