@@ -28,7 +28,7 @@
           <!-- icon -->
           <div class="row items-center">
             <span class="soprts_id_icon"
-              :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif|| item.mi)}` })"
+              :style="compute_css_obj({key:current_lv_1_mi == item.mi?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif|| item.mi)}` })"
               :alt="BaseData.menus_i18n_map[item.mif || item.mi]"></span>
 
           </div>
@@ -54,7 +54,7 @@
         <div class="menu-fold2-wrap  1" :class="current_lv_1_mi == item.mi && !show_menu ? 'open' : ''" v-if="item.mi != 400">
           <template v-for="item2 in item.sl" :key="`_${item.mi}_${item2.mi}_100`">
             <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        开始   -->
-            <div @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })"  class="menu-item menu-fold2">
+            <div @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })" :class="MenuData?.get_lv2_mi_value() == item2.mi?'active':''" class="menu-item menu-fold2">
               <div class="row items-center relative-position">
                 <span class="menu-point"></span>
                 <span class="menu-text ellipsis">
@@ -532,8 +532,7 @@ onUnmounted(()=>{
           line-height: 30px;
           border: 0.5px solid #D7E1FD;
           box-shadow: 0px 3px 3px 0px rgba(0, 56, 98, 0.1) !important;
-          background: linear-gradient(0deg, #D7E1FD, #D7E1FD),
-          linear-gradient(180deg, #E4ECFD 0%, #F8FAFF 47.92%, #F5F8FF 100%);          
+          background: var(--q-gb-bg-lg-4);          
           &:last-child {
             margin-right: 0;
           }

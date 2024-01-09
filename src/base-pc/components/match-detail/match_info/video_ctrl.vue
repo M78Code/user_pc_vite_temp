@@ -469,6 +469,9 @@ const toggle_play_media = (media_type) => {
 
       clearTimeout(set_play_media_timer);
       set_play_media_timer = setTimeout(() => {
+        // 点击视频 video 283297698528694273 MatchDetailCalss.set_play_media===
+        // MatchDetailCalss.set_play_media( { media_type: "video", mid, time: Date.now() })
+        // console.log(media_type, mid, "MatchDetailCalss.set_play_media===");
         MatchDetailCalss.set_play_media( { media_type, mid, time: Date.now() })
       }, 50);
     }

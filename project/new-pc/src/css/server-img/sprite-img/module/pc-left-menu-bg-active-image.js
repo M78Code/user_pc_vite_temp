@@ -7,7 +7,7 @@ import { sprite_images_postion_new_pc } from "src/output/module/constant-utils.j
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 const { CURRENT_ENV } = BUILDIN_CONFIG;
 const config = {
-  default:"pc-left-menu-bg-image",
+  default:"pc-left-menu-bg-active-image",
   // local_dev: "pc-left-menu-bg-image",
   // local_test: "pc-left-menu-bg-image",
   // local_ylcs: "pc-left-menu-bg-image",
@@ -17,7 +17,6 @@ const config = {
   // idc_online: "pc-left-menu-bg-image",
  
 };
-
 /**
  * 根据item 计算雪碧图位置
  * @param {*} position 下标从0开始
