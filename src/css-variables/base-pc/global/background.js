@@ -23,8 +23,11 @@ export default {
     'gb-bg-c-22': '#f0f6ff',   //系统未录入
     'gb-bg-c-23': '#DCE5F2',  
     'gb-bg-c-24': '#EFF8FF',   
-    'gb-bg-c-25': '#FAFCFF',   
+    'gb-bg-c-25': '#FAFCFF',
     'gb-bg-c-26': '#E9F0FF',   
-    'gb-bg-c-30': '#F6F9FF',   
+    'gb-bg-c-27': '#FAFCFF',   
+    'gb-bg-c-28': 'rgba(233,61,61,0.1)',   
+    'gb-bg-c-29': 'rgba(80,192,66,0.1)',
+    'gb-bg-c-30': '#F6F9FF'
   }
 
