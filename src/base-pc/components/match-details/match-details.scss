@@ -497,7 +497,8 @@
     .recents-tilte,
     .panel-title {
       &::before {
-        background: var(--q-gb-bg-c-17);
+        background: var(--q-gb-bg-c-1);
+        // background: var(--q-gb-bg-c-17);
         width: 3px !important;
         border-radius: 1.5px;
       }
@@ -653,7 +654,8 @@
             }
           }
           span {
-            color: var(--q-gb-t-c-4);
+            color: var(--q-gb-t-c-3);
+            // color: var(--q-gb-t-c-4);
           }
         }
         .status-tips,
@@ -990,7 +992,8 @@
     .basketball-chart {
       .team-info,
       .score-num {
-        color: var(--q-gb-t-c-5);
+        color: var(--q-gb-t-c-6);
+        // color: var(--q-gb-t-c-5);
       }
       .stripe-left,
       .stripe-right {
