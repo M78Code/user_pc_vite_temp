@@ -51,7 +51,7 @@
 
 
       <!-- 串关投注 只有串关/电竞/VR 才展示--> 
-      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single && (is_mix||is_esports||is_vr|| is_detail_category()) && BetData.bet_s_list.length">
+      <q-page-sticky position="bottom-right" :offset="fabPos" v-if="!BetData.is_bet_single && (is_mix||is_esports||is_vr|| is_detail_category()) && BetData.bet_s_list.length && !is_activity">
           <div class="chain_bet" @click="show_chain_bet" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
             <span class="count">{{BetData.bet_s_list.length}}</span>
           </div>
@@ -74,6 +74,7 @@ import {
   onMounted,
   onUnmounted,
   nextTick,
+  computed, 
 } from "vue";
 import StandardEdition from 'src/base-h5/components/standard-edition/index.vue'
 import { useMittOn, MITT_TYPES, useMittEmit, i18n_t, MenuData } from "src/output/index.js";
@@ -93,7 +94,6 @@ import TokenInvalid from "./token-invalid.vue"
 import {debounce} from "lodash";
 import { api_account } from "src/api/index";
 // import betMixBoxChild from "src/base-h5/components/bet/bet-box-app-h5-1/bet_mix_box_child.vue";
-
 import toast from "src/base-h5/components/common/toast.vue"
 import settleDialog from "project_path/src/pages/cathectic/index.vue"
 
@@ -114,6 +114,12 @@ const is_token_invalid_show = ref(false); // token失效
 const timer_3 = ref(null);
 // 开启注单历史弹窗及遮罩
 const settle_dialog_bool = ref(true);
+
+// 活动页面不展示串关入口
+const is_activity = computed(() => {
+    return route.path === '/activity';
+  });
+
 
 /**
  * @description: touchstart事件方法体
@@ -259,6 +265,7 @@ const stickyAside = (x) => {
 }
 
 onMounted(  () => {
+  console.log("~~~~~~~~~~~",is_activity)
     //设置当前默认版本
   set_standard_edition_fun()
   //获取当前版本默认值
