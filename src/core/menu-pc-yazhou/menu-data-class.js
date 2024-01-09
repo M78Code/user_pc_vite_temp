@@ -316,11 +316,7 @@ class MenuData {
   // 设置终极菜单id
   set_menu_current_mi(mi) {
     this.menu_current_mi = mi
-    // 菜单数据缓存
-    // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
     //宽度请求变化 因为请求参数是在这里触发的
-    // MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
-    // MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     this.set_match_list_api_config({})
     
   }
