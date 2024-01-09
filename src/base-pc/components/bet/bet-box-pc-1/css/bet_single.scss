@@ -606,7 +606,7 @@
         margin-right: 5px;
         margin-bottom: 0;
         border: 0px;
-        background: var(--q-gb-bg-c-22);
+        background: var(--q-bet-box-3);
         border-bottom: 0.5px solid var(--q-gb-bd-c-8);
         /* *卡片组件样式重写* */
         .q-card__section {
@@ -644,8 +644,8 @@
           }
           .bet-content {
             padding: 8px;
-            background: var(--q-gb-bg-c-11);
-            border: 0.5px solid var(--q-gb-bd-c-7);//rgba(65,70,85,1)
+            background: var(--q-bet-box-6);
+            // border: 0.5px solid var(--q-gb-bd-c-7);//rgba(65,70,85,1)
             border-radius: 6px;
             margin-bottom: 15px;
             /*  盘口名称设置 */
