@@ -93,6 +93,16 @@
                 />
               </div>
             </div>
+
+            <!-- 注释勿删除 -->
+            <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
+              <!-- 打印请勿删除 -->
+              <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
+              <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
+              <dynamic-ranking v-if="current_match.match_status == 1" :virtual_match_list="[current_match]" />
+              <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
+              <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
+            </div>
             
           </div>
        </div>

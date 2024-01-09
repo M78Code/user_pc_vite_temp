@@ -33,14 +33,11 @@
 </template>
 
 <script>
-import { ref , onMounted } from 'vue';
 import lodash from 'lodash';
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { api_v_sports } from "src/api/index.js";
 import axios_api_loop from "src/core/http/axios-loop.js"
-
-import { utils } from "src/core/utils/common/module/utils.js";
 import { debounce_throttle_cancel } from "src/core/utils/common/module/other.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"

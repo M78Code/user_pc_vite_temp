@@ -50,8 +50,7 @@ export default {
       left: 0;
       top: 0;
       transition: top 0.4s;
-      border-radius: 4px 0px 0px 4px;
-      background: var(--q-gb-bg-c-28);
+      border-bottom: 1px solid #F5F5F5;
 
       // &::after {
       //   content: '';
@@ -117,12 +116,10 @@ export default {
   text-align: center;
   font-size: 0.16rem;
   letter-spacing: 0;
-  border-radius: 0 4px 4px 0;
   border-radius: 0px 4px 4px 0;
-  background: var(--q-gb-bg-c-28);
   font-weight: 700;
   color: var(--q-gb-t-c-18);
-
+  border-bottom: 1px solid #F5F5F5;
   // &::after {
   //   content: "";
   //   pointer-events: none;
