@@ -27,6 +27,7 @@ export default {
     'gb-bg-c-26': '#E9F0FF',   
     'gb-bg-c-27': '#FAFCFF',   
     'gb-bg-c-28': 'rgba(233,61,61,0.1)',   
-    'gb-bg-c-29': 'rgba(80,192,66,0.1)'  
+    'gb-bg-c-29': 'rgba(80,192,66,0.1)',
+    'gb-bg-c-30': '#F6F9FF'
   }
 
