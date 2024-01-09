@@ -5,7 +5,7 @@
 -->
 <template>
   <div class='category virtual-sport'>
-    <odds_list_contrainer :match_detail="current_match || {}" :match_odds_info="current_match.odds_info" :loading="loading"/>
+    <odds_list_contrainer v-if="current_match && current_match.odds_info" :match_detail="current_match || {}" :match_odds_info="current_match.odds_info" :loading="loading"/>
   </div>
 </template>
 
@@ -21,6 +21,7 @@ export default {
     loading,
     odds_list_contrainer
   },
+  props: ['match_detail','match_odds_info'],
   data(){
     return {
       loading: false,

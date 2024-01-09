@@ -43,7 +43,7 @@
       <!-- 赔率列表页面 -->
       <template  v-if="match && tabs_name == 'bet'">
         <virtual-sports-tab :mid="mid" />
-        <virtual-sports-category :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
+        <virtual-sports-category v-if="match" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
       </template>
       <!-- 历史战绩页面 -->
       <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
