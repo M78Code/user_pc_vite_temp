@@ -50,6 +50,7 @@ export default {
       api_ = api_details.get_match_detail_MatchInfo;
     }
     api_(params).then( res => {
+      console.log(res, params, api_, "res=====");
       let data = this.get_match_info(res)
       if(data.mid == mid){
         callback(data,'data')

@@ -98,7 +98,7 @@ const props = defineProps({
   handicap_this: Object, // 传给玩法集 tabs 的数据
   handicap_state: String, //玩法加载状态状态
   is_request: Boolean, //详情接口 是否请求中
-  sportId: Number || String, //球类id
+  sportId:  String | Number, //球类id
 });
 import { is_show_sr_flg } from "src/core/utils/project/module/other.js";
 const toggle_panel = ref(true); //比分扳显示|隐藏

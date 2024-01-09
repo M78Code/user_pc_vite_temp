@@ -135,10 +135,11 @@ export const useGetItem = ({ props }) => {
       }
       // 热门推荐 || 近期关注
     } else if (bet_source === "hot" || bet_source === "recent") {
+      let item_bet = lodash.get(bet_info,`mid_obj.hps[0].hl[0].ol`)
       let {
         bet_ids: { oid },
       } = props;
-      ol_data = lodash.get(bet_info, `ol_obj.${oid}`);
+      ol_data = item_bet?.find((i)=>i.oid == oid);
     }
     return ol_data;
   });
