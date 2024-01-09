@@ -160,4 +160,7 @@ const toggle_downMenu = () => {
     transform: rotate(180deg);
   }
 }
+.ellipsis{
+  color: var(--q-gb-t-c-3);
+}
 </style>

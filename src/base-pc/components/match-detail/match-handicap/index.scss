@@ -201,7 +201,8 @@
       }
       .c-bet-item.active {
         .bet-item {
-          color: var(--qq--theme-color-handicap-item-bet-active) !important;
+          //color: var(--qq--theme-color-handicap-item-bet-active) !important;
+          color: var(--q-gb-t-c-18)!important;
         }
         &:hover {
           .odds {

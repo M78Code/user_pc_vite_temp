@@ -42,6 +42,7 @@ export function get_tab_play_keys(match) {
   return {
     tab_play_keys: tab_play_keys.join(','),// 其他玩法key
     has_other_play: tab_play_keys.length > 0, // 是否有其他玩法,
+    play_current_key: get_play_current_play(match, tab_play_keys.join(','))
   };
 }
 /**
@@ -49,12 +50,11 @@ export function get_tab_play_keys(match) {
    * @param {undefined} undefined
   */
 export const get_compute_other_play_data = (match) => {
-  let { cos15Minutes, cos5Minutes, mst, tpl_id = 1 } = match
+  let { cos15Minutes, cos5Minutes, mst, tpl_id = 1, play_current_key: play_key } = match
   if (cos15Minutes || cos5Minutes) {
     Object.assign(match, set_min15(match, mst))
   }
   //当前选中玩法
-  const play_key = get_play_current_play(match)
   if (!play_key) return []
   let template_name = `template_${tpl_id}`
   const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[template_name + '_config'][template_name]
@@ -433,13 +433,13 @@ export const set_match_play_current_index = (match, play_key) => {
   match.other_handicap_list = get_compute_other_play_data(match)
 }
 //获取保存的盘口玩法
-export function get_play_current_play(match) {
+export function get_play_current_play(match, tab_play_keys='') {
   const cur = other_play_current_play[match.mid + '_']
   if (cur && match.tab_play_keys.includes(cur)) {
     return cur
   }
-  if (match.tab_play_keys) {
-    return String(match.tab_play_keys).split(",")[0]
+  if (match.tab_play_keys || tab_play_keys) {
+    return String(match.tab_play_keys || tab_play_keys).split(",")[0]
   }
   return undefined
 }

@@ -40,7 +40,7 @@ class MatchListCardData {
     // 列表视图渲染key 每次切换菜单自增1  解决切换菜单偶现视图数据不更新
     this.match_list_render_key = 0;
 
-  
+
   }
   set_all_card_obj({
     all_card_obj, play_to_card_key_arr, no_start_to_card_key_arr, match_list_card_key_arr, csid_to_card_key_obj
@@ -51,15 +51,15 @@ class MatchListCardData {
     no_start_to_card_key_arr && (this.no_start_to_card_key_arr = no_start_to_card_key_arr)
     match_list_card_key_arr && (this.match_list_card_key_arr = match_list_card_key_arr)
     csid_to_card_key_obj && (this.csid_to_card_key_obj = csid_to_card_key_obj)
-    this.set_list_version()
+    this.set_list_version && this.set_list_version()
   }
   // 设置 的列表scroll_top
   set_scroll_top(scroll_top) {
     this.scroll_top = scroll_top;
   }
-   //获取单个卡片对象
-   get_card_obj_bymid(mid) {
-    return this.all_card_obj[mid]||{}
+  //获取单个卡片对象
+  get_card_obj_bymid(mid) {
+    return this.all_card_obj[mid] || {}
   }
 }
 export default new MatchListCardData();

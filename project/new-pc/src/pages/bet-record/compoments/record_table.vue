@@ -2,27 +2,19 @@
   <div class="record-table">
     <div style="display: none;">{{ BetRecordHistory.bet_record_version }}</div>
     <div>
-<!--      <Table-->
-<!--        :columns="BetRecordHistory.columns"-->
-<!--        :rows="BetRecordHistory.table_data"-->
-<!--        :BetRecordHistory="BetRecordHistory"-->
-<!--        :current_tab="current_tab"-->
-<!--      />-->
-      <q-table :rows="BetRecordHistory.table_data" style="max-height:calc(100vh - 17rem)" :rows-per-page-options="[0]" :columns="BetRecordHistory.columns"
-          row-key="orderNo" separator="cell" hide-pagination :class="current_tab === 'settled' ? 'settled' : 'unsettled'"
-          :table-header-style="{
-          backgroundColor: '#F1F1F1',
-          height: '28px',
-          color: '#2A2925',
-          fontSize: '12px',
-        }">
+      <q-table :rows="BetRecordHistory.table_data" 
+      style="max-height:calc(100vh - 17rem)" 
+      :rows-per-page-options="[0]" 
+      :columns="BetRecordHistory.columns"
+      :bordered="false"
+      row-key="orderNo" hide-pagination >
         <template v-slot:no-data>
           <div class="detail-loading" v-if="loading">
             <q-circular-progress indeterminate rounded size="80px" :thickness="0.1" color="opt-basic" class="q-ma-md" />
           </div>
           <div class="no-data" style="height:calc(100vh - 17rem)">
             <div class="c">
-              <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/no_data.svg`" alt="" srcset="">
+              <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/no_data_02.png`" alt="" srcset="">
               <div style="text-align: center;color:#A1A3A5;font-weight: 500;">{{i18n_t('common.no_data')}}</div>
             </div>
           </div>
@@ -668,8 +660,9 @@ const hand_copy = (data) => {
   .settled {
     padding-bottom: 62px;
   }
-  &:deep(.q-table){
-    tbody{
+  &:deep(.q-table) {
+    thead tr{
+      background-color: var(--q-gb-bg-c-25);
     }
     tr{
       td:first-child{
@@ -696,16 +689,9 @@ const hand_copy = (data) => {
 
   }
 
-  &:deep(.q-table td) {
-
-    border-bottom: 1px solid var(--q-gb-bd-c-2);
-
-  }
 
   &:deep(.q-table__bottom) {
-
     border-top: none;
-
   }
 
   &:deep(thead tr th) {
