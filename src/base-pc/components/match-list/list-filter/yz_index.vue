@@ -18,13 +18,13 @@
       <div
         @click="
           handle_click_menu_mi_1({
-            mi: '1',
+            mi: '0',
             root: '1',
             sports: 'quanbu-gunqiu',
             guanjun: '',
           })
         "
-        :class="current_menu == '1' ? 'active' : 'no-active'"
+        :class="current_menu == '0' ? 'active' : 'no-active'"
         v-if="GlobalAccessConfig.get_playAllShow()"
         class="item yb-flex-center"
       >
@@ -184,7 +184,7 @@ import { compute_css_obj } from "src/output/index.js";
     if(MenuData.is_scroll_ball()){
       if(GlobalAccessConfig.get_playAllShow()){
         handle_click_menu_mi_1({
-          mi: '1',
+          mi: '0',
           root: '1',
           sports: 'quanbu-gunqiu',
           guanjun: '',
