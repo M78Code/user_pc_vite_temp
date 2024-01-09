@@ -44,9 +44,6 @@ import {
 } from "src/output/index.js"
 import { get_mmp_name } from 'src/core/format/project/module/format-msc.js'
 import lodash from "lodash";
-
-// mixins: [global_mixin, msc_mixin, time_format_mixin],
-
 const props = defineProps({
   source:{
     type:String,
@@ -54,7 +51,7 @@ const props = defineProps({
   // 当场赛事信息
   match:{
     type:Object,
-    default: ()=> {}
+    default: ()=> ({})
   },
   // 显示的页面
   show_page: {
@@ -130,8 +127,6 @@ const cur_fill_second = ref(0); // 补充的分钟
   cur_fill_second.value = lodash.get(props.match, "mststi") || 0;
 };
 // useMitt(MITT_TYPES.EMIT_INIT_FILL_TIME_CMD, init_fill_time);
-init_fill_time();
-
 // 获取阶段名称
 const computed_process_name = computed(() => {
   let { match } = props || {};
@@ -228,7 +223,6 @@ const computed_show_date = computed(() => {
   let { mmp, csid, ms, mlet } = props.match || {};
   csid = Number(csid);
   let show = false;
-
   // 全场结束 || 即将开赛 时不显示时间组件
   if (mmp == 999 || ms == 110) {
     show = false;
@@ -247,7 +241,7 @@ const computed_show_date = computed(() => {
     }
   } else {
     // 非足、篮、冰、美足  不是滚球时才显示【赛事日期】
-    show = get_match_status(ms);
+    show = !get_match_status(ms);
   }
   return show;
 });
@@ -255,11 +249,11 @@ const computed_show_date = computed(() => {
 
 
 const mstst = computed(() => {
-  return lodash.get(props, 'match.mstst')
+  return lodash.get(props.match, 'mstst')
 });
 
 const mststi = computed(() => {
-  return lodash.get(props, 'match.mststi')
+  return lodash.get(props.match, 'mststi')
 });
 
 // watch(
@@ -269,28 +263,12 @@ const mststi = computed(() => {
 //   },
 //   { immediate: true }
 // );
-
 watch(
-  () => show_fill_time.value,
+  () => [mststi.value,mstst.value,show_fill_time.value],
   () => {
     init_fill_time();
   }
 );
-
-watch(
-  () => mstst.value,
-  () => {
-    init_fill_time();
-  }
-);
-
-watch(
-  () => mstst.value,
-  () => {
-    init_fill_time();
-  }
-);
-
 /**
  * @description 将 mct 转成相应的 阶段名称
  * @param  {object} match  当场赛事信息
