@@ -136,7 +136,7 @@ import { set_template_width } from 'src/core/match-list-pc/list-template/match-l
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/output/index.js";
 import "./match_list.scss";
 const match_list_card_key_arr = ref([])
-function MatchListCardDataClass_match_list_card_key_arr = () => {
+function MatchListCardDataClass_match_list_card_key_arr () {
   match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
 }
 const on_go_top = () => {
