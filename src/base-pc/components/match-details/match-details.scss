@@ -51,7 +51,7 @@
             padding-left: 15px;
           }
           .tab-item {
-            color: var(--q-gb-t-c-1);
+            color: var(--q-gb-t-c-6);
             font-size: 13px;
             background-color: var(--q-gb-bg-lg-5);
             border: 0.5px solid var(--q-gb-bd-c-8);
@@ -289,7 +289,7 @@
             .highlight,
             .item-label,
             .bet_handicap {
-              color: var(--q-gb-t-c-1);
+              color: var(--q-gb-t-c-18);
               .color {
                 color: var(--q-gb-t-c-1) !important;
               }
@@ -473,7 +473,7 @@
       .handicap-item {
         .c-bet-item {
           .bet-item {
-            color: var(--q-gb-t-c-5);
+            color: var(--q-gb-t-c-20);
           }
         }
         &.os-1:hover {
@@ -503,7 +503,9 @@
       }
     }
     .screen {
-      color: var(--q-gb-t-c-8) !important;
+      color: var(--q-gb-t-c-3);
+      // color: var(--q-gb-t-c-8) !important;
+      // color: var(--q-gb-t-c-8) !important;
       background: transparent;
       .c-video-ctrl {
         .ctrl-wrap {
