@@ -28,3 +28,10 @@ import analysisPage from "./analysis/index.vue";
   width: 100vw;
 }
 </style>
+
+<style lang="scss">
+// 先定义在这里，后期再找人配置
+:root {
+  --q-analysis-color-2: #179cff; /* 这里是你想要的颜色数值 */
+}
+</style>
