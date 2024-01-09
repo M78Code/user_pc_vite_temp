@@ -38,13 +38,6 @@
             <div class="test-line" v-if="show_debug">
               {{current_match.mid}}
             </div>
-            <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
-            <template v-else-if="sub_menu_type && current_match">
-              <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
-              <dynamic-ranking v-if="current_match.match_status == 0 || current_match.match_status == 1" :virtual_match_list="[current_match]" />
-              <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
-              <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
-          </template>
           </div>
         </div>
       </div>
@@ -82,24 +75,25 @@
               :lengue_name="lengue_name">
             </v-s-match-list>
 
-            <!-- 除当前赛事外，展示赔率信息 -->
-            <div class="v-sports-ranking" v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)">
-                <div>
-                  <!-- 赛马切换玩法集tab组件 -->
-                  <!-- <virtual-sports-tab
-                    :batch="match_item_batch.matchs[0]?.mid">
-                  </virtual-sports-tab> -->
-                  <!-- 打印请勿删除 -->
-                  <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
-                  <!-- 赛马投注区域 -->
-                  <div>
-                    <v-s-match-list2 v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)" :virtual_match_list="match_list_by_no"
-                      :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
-                      @switch_match="switch_match_handle"  @start="match_start_handle">
-                    </v-s-match-list2>
-                  </div>
-                </div>
+            <div v-if="current_match.match_status == 0">
+              <!-- 赛马切换玩法集tab组件 -->
+              <virtual-sports-tab
+                :batch="current_match_id"
+                v-if="![1001,1004].includes(sub_menu_type)">
+              </virtual-sports-tab>
+              <!-- 打印请勿删除 -->
+              <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
+              <!-- 赛马投注区域 -->
+              <div v-if="match_list_by_no && match_list_by_no.length && ![1001,1004].includes(sub_menu_type)">
+                <virtual-sports-category
+                    :top_menu_changed="top_menu_changed"
+                    :current_match="match_list_by_no[0]"
+                    source='sports'
+                    @top_menu_change="handle_top_menu_change"
+                />
               </div>
+            </div>
+            
           </div>
        </div>
       </div>
@@ -119,6 +113,8 @@ import dynamic_ranking from "project_path/src/pages/vr/pages/virtual/virtual-spo
 import result_page from "project_path/src/pages/vr/pages/result/result-page.vue"
 import virtual_skeleton from "project_path/src/pages/vr/components/skeleton/virtual-sports/virtual.vue"
 import { IconWapper } from 'src/components/icon'
+import virtual_sports_tab from 'src/base-h5/vr/components/virtual-sports-tab.vue'
+
 export default {
   mixins:[virtual_sports_mixin],
   components:{
@@ -132,6 +128,7 @@ export default {
     noData,
     'icon-wapper': IconWapper,
     'virtual-skeleton':virtual_skeleton,
+    'virtual-sports-tab':virtual_sports_tab,
   },
 }
 </script>
