@@ -53,14 +53,15 @@
           .tab-item {
             color: var(--q-gb-t-c-1);
             font-size: 13px;
-            background-color: var(--q-match-resluts-bg-c-1);
+            background-color: var(--q-gb-bg-lg-5);
             border: 0.5px solid var(--q-gb-bd-c-8);
             margin-right: 10px;
             &:hover {
-              border: 0.5px solid var(--q-gb-bd-c-11);
-              background-color: var(--q-match-resluts-bg-c-2);
+              border: 0.5px solid var(--q-gb-bd-c-12);
+              background-color: var(--q-gb-bg-c-27);
               color: var(--q-gb-t-c-1);
             }
+            border-radius: 36px;
             &.active {
               color: var(--q-gb-t-c-18);
               background-color: var(--q-gb-t-c-16);
@@ -288,7 +289,7 @@
             .highlight,
             .item-label,
             .bet_handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-1);
               .color {
                 color: var(--q-gb-t-c-1) !important;
               }
