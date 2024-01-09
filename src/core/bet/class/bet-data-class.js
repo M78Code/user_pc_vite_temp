@@ -15,7 +15,7 @@ import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
 
 class BetData {
   constructor() {
-   
+  
   }
   init_core() {
     this.deviceType = 1  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
@@ -207,14 +207,16 @@ this.bet_appoint_ball_head= null */
 
     // 获取缓存信息
     this.set_loacl_config()
+
+   
   }
 
   set_user_max_min_money(){
     if (this.is_bet_single) {
-      const { qon,qtw,qth,qfo,qfi } = lodash.get(UserCtr, 'user_info.cvo.single', { qon: 200, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })  
+      const { qon,qtw,qth,qfo,qfi } = lodash_.get(UserCtr, 'user_info.cvo.single', { qon: 200, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })  
       this.user_max_min_money = {qon,qtw,qth,qfo,qfi} 
     } else {
-      const {qtw,qth,qfo,qfi,qsi } = lodash.get(UserCtr, 'user_info.cvo.series', {  qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
+      const {qtw,qth,qfo,qfi,qsi } = lodash_.get(UserCtr, 'user_info.cvo.series', {  qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
       this.user_max_min_money = { qtw,qth,qfo,qfi,qsi}
     }
   }
