@@ -38,7 +38,7 @@
         const lang2 = lang_map[UserCtr.lang] || 'zh_cn';
         let url = '';
         const [theme2, get_merchant_style] = UserCtr.theme.split('_')
-        let domain = lodash.get(window, `BUILDIN_CONFIG.TOPIC.sports_rules`);
+        let domain = UserCtr.get_topic_key_url('sports_rules');
         // if (current_env == 'idc_online' || current_env == 'idc_ylcs') {
         //     // 生产环境
         //     domain = "https://9wutrx6jpfaslmvi.9ps7bak.com"

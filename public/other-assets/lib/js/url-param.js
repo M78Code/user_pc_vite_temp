@@ -102,6 +102,25 @@ function get_location_href_param() {
   }
   return search_params;
 };
+// 获取TY_SDK_key持久化信息
+function get_storage_sdk_key(storage,key){
+  let res = '';
+  if(storage && key){
+    let val = storage.getItem('TY_SDK_'+key.toUpperCase());
+    if(val){
+      try {
+        res = JSON.parse(val).value;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+  return res;
+}
+// 获取topic
+function get_topic(){
+  return get_storage_sdk_key(localStorage, 'topic') || {};
+}
 // 浏览器参数对象
 const search_params_obj = {};
 // 当前最新的href
@@ -114,6 +133,10 @@ search_params_obj.init_param_del = location_href_param_del;
 search_params_obj.init_param_set = location_href_param_set;
 // 获取指定url中的所有参数 
 search_params_obj.get_url_param = get_url_param;
+// 设置获取TY_SDK_key方法
+search_params_obj.get_storage_sdk_key = get_storage_sdk_key;
+// 设置topic数据
+search_params_obj.get_topic = get_topic
 // 是否有token 
 let has_token = true;
 try {
