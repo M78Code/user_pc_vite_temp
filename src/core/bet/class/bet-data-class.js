@@ -372,6 +372,12 @@ this.bet_appoint_ball_head= null */
     Object.assign(real_bet_obj, obj)
   }
 
+  // 清除投注项中的不 问题数据
+  set_bet_single_special_list() {
+    this.bet_single_list = this.bet_single_list.filter(Boolean)
+    this.bet_s_list = this.bet_s_list.filter(Boolean)
+  }
+
   /* 
     设置 投注项立马生成的前端索引ID
   */
@@ -424,6 +430,7 @@ this.bet_appoint_ball_head= null */
         break;
     }
 
+    this.set_bet_single_special_list()
     // 设置是否为 虚拟投注
     this.is_virtual_bet = is_virtual_bet
     // 设置 投注内容
@@ -641,6 +648,7 @@ this.bet_appoint_ball_head= null */
     if (this.is_bet_merge) {
       // 不合并的状态下 取最后合并的最后一条数据作为投注内容
       this.bet_single_list = [this.bet_single_list.pop()]
+      this.bet_oid_list = [this.bet_oid_list.pop()]
     }
     let is_merge = !this.is_bet_merge
 
