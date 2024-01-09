@@ -75,7 +75,7 @@
       </scroll-list>
       <!-- <div> {{match_list_card_key_arr }}</div> -->
       <!-- 滚球其他列表 -->
-      <scroll-list v-if="MenuData.menu_root_show_shoucang != 300" ref="scoll_list">
+      <scroll-list v-if="MenuData.menu_root_show_shoucang != 300">
         <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }">333</div>
@@ -127,9 +127,7 @@ import EsportsHeader from "src/base-pc/components/match-list/esports-header/inde
 // import { VirtualMatchTpl2FullVersionWapper as VirtualMatchTpl2 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟赛马 、 虚拟赛狗
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
-// import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 import { MenuData } from "src/output/index.js"
-// import menu_config from "src/core/menu-pc-yazhou/menu-data-class.js";
 import { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh, handle_destroyed } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
@@ -138,12 +136,11 @@ import { set_template_width } from 'src/core/match-list-pc/list-template/match-l
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/output/index.js";
 import "./match_list.scss";
 const match_list_card_key_arr = ref([])
-const scoll_list = ref(null)
-const MatchListCardDataClass_match_list_card_key_arr = () => {
+function MatchListCardDataClass_match_list_card_key_arr = () => {
   match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
 }
 const on_go_top = () => {
-  scoll_list.value && scoll_list.value.set_scrollTop(0)
+  useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0)
 }
 function _resize(){
   set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15))
@@ -154,7 +151,6 @@ mounted_fn()
 onMounted(() => {
   MatchListCardDataClass_match_list_card_key_arr()
 })
-
 onUnmounted(()=>{
   window.removeEventListener('resize',_resize)
 })
