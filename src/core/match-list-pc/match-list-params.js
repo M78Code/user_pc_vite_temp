@@ -184,7 +184,7 @@ function match_list_all_params() {
             tid: ""
         }
     } else if (menu_root == 300) {
-        sports = "vr";
+        // sports = "vr";
         lv2_mi_info = {
             match_list: {
                 api_name: "post_fetch_virtual_matchs",

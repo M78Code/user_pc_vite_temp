@@ -18,7 +18,7 @@
             <div class="sport_icon">
               <!-- <sport-icon :sport_id="item.menuId" :status="item.menuId == menu_data.cur_level2_menu ? 1 : 2" size="20px"
                 class="icon" /> -->
-                <span :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.field1)}` })"></span>
+                <span :style="compute_css_obj({key:MenuData.get_lv2_mi_value() == `3${item.menuId}`?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image', position: `item_${item.menuId}`})"></span>
             </div>
             <!-- 虚拟体育名称 -->
             <!-- <div class="tab-text ellipsis"  v-tooltip="{content:item.field1== 1009 ? item.name.replace('VR','').replace('VR',''):item.name,overflow:1}" >{{ item.field1== 1009 ? item.name.replace('VR','').replace('VR',''):item.name }}</div> -->
@@ -96,6 +96,7 @@
         
         margin: 5px 0;
         width: 18px;
+        height: 18px;
         span{
             background-size: 100% auto;
             display:inline-block;

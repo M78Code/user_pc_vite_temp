@@ -26,14 +26,14 @@
     .item-wrap {
       .line-wrap {
         .line {
-          background-color: var(--q-gb-bg-c-17);
+          background-color: var(--q-gb-bg-c-1);
           border-top-right-radius: 40px;
           border-top-left-radius: 40px;
         }
       }
       .line-wrap-dz {
         .line {
-          background-color: var(--q-gb-bg-c-17);
+          background-color: var(--q-gb-bg-c-1);
           border-top-right-radius: 40px;
           border-top-left-radius: 40px;
         }
@@ -43,7 +43,7 @@
       color: var(--q-gb-t-c-5);
       &.active {
         font-weight: 600;
-        color: var(--q-gb-bg-c-17);
+        color: var(--q-gb-bg-c-1);
       }
       .match-count {
         opacity: 1 !important;

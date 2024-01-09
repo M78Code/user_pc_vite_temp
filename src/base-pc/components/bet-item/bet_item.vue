@@ -278,7 +278,7 @@ const {
   font-size: 12px;
 }
 .active {
-  background: var(--q-gb-bg-c-13);
-  color: var(--q-gb-t-c-18);
+  background: var(--q-gb-t-c-16);
+  color: var(--q-gb-bg-c-11);
 }
 </style>
