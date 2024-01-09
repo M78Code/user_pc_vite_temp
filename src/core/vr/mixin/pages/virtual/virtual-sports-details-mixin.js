@@ -11,6 +11,12 @@ import { go_where } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { MatchDataWarehouse_H5_Detail_Common, MatchDataWarehouse_PC_Detail_Common} from "src/output/index.js"
 import { get_now_server, debounce_throttle_cancel } from 'src/core/utils/common/module/other.js'
+
+import { details_main } from "./details.js";
+
+
+
+
 const MatchDataWarehouseInstance = window.BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_Detail_Common:MatchDataWarehouse_H5_Detail_Common;
 export default {
   mixins:[virtual_sports_mixin],
@@ -26,6 +32,9 @@ export default {
   },
   data(){
     return{
+      loading: false,
+      match_odds_info: [], 
+      match_detail: {},
       vsport_operate:null,
       show_debug:sessionStorage.getItem('wsl') == '9999',
       mid:'',
@@ -46,6 +55,14 @@ export default {
     },
   },
   created() {
+    const { loading, match_odds_info, match_detail} = details_main(this.router, this.route)
+    console.log("loading========", loading.value);
+    console.log("match_odds_info========", match_odds_info.value);
+    console.log("match_detail========", match_detail.value);
+    this.loading = loading
+    this.match_odds_info = match_odds_info 
+    this.match_detail = match_detail
+
     this.timer_super28=0;
     //首页跳转虚拟体育设置menu_type为900
     clearTimeout(this.timer_super28)

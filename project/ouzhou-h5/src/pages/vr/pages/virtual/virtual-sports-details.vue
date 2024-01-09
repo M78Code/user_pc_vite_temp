@@ -43,7 +43,8 @@
       <!-- 赔率列表页面 -->
       <template  v-if="match && tabs_name == 'bet'">
         <virtual-sports-tab :mid="mid" />
-        <virtual-sports-category :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
+        <OddsListContrainer :match_odds_info="match_odds_info" :match_detail="match_detail" :loading="loading"/>
+        <!-- <virtual-sports-category :mid="mid" :current_match="match" :source="'virtual_sports_details'"/> -->
       </template>
       <!-- 历史战绩页面 -->
       <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
@@ -65,6 +66,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import virtual_sports_details_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-details-mixin.js";
 import virtual_sports_tab from 'project_path/src/pages/vr/components/virtual-sports-tab.vue'
@@ -75,6 +77,8 @@ import ranking_list_start from "project_path/src/pages/vr/pages/virtual/virtual-
 import football_ranking_list from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/football-ranking-list.vue"
 import group_knockout from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/group-knockout.vue"
 import virtual_match_statistic from 'project_path/src/pages/vr/components/virtual-match-statistic.vue'
+import OddsListContrainer from "project_path/src/pages/detailnew/components/OddsListContrainer.vue";
+
 export default {
   mixins:[virtual_sports_details_mixin],
   name:'virtual_sports_details',
@@ -87,6 +91,7 @@ export default {
     'ranking-list-start':ranking_list_start,
     'football-ranking-list':football_ranking_list,
     'group-knockout':group_knockout,
+    OddsListContrainer
   },
 }
 </script>
