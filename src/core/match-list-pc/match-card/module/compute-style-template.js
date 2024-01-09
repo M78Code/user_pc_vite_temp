@@ -40,8 +40,8 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from "../../list-template/index.js";
  */
 const get_tab_play_height = (mid) => {
 	// let template_id = MenuData.get_match_tpl_number()
-	let { play_current_key, other_handicap_list = [], tpl_id } =
-		MatchListData.get_quick_mid_obj(mid) || {};
+	const match = MatchListData.get_quick_mid_obj(mid) || {};
+	let { play_current_key, other_handicap_list = [], tpl_id } = match
 	let { tab_play_handicap_height: handicap_height } = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${tpl_id}_config.match_template_config`, {});
 	let length = lodash.get(other_handicap_list, "0.ols.length", 3);
 	//5分钟      波胆
@@ -310,12 +310,12 @@ export const get_league_title_card_height = (template_id) => {
  */
 
 export const compute_style_template_by_matchinfo = (match) => {
-	let {tpl_id:template_id}=match;
+	let { tpl_id: template_id } = match;
 	if (template_id == 13) {
 		template_id = 1;
 	}
-	if(!template_id){
-		template_id=get_match_template_id(match)//兜底
+	if (!template_id) {
+		template_id = get_match_template_id(match)//兜底
 	}
 	// 赛事列表模板配置
 	let template_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]["match_template_config"] || {};
