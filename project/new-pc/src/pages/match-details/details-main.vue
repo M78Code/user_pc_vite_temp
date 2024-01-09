@@ -4,7 +4,7 @@
  * @Description:  赛事详情公用操作vue组件
 -->
 <template>
-  <div class="detials_layout" style="width: 100%; height: 1180px">
+  <div class="detials_layout" style="width: 100%; height: 100%">
     <detailsMain :key="key"></detailsMain>
   </div>
 </template>

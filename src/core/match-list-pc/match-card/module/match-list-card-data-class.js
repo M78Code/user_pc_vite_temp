@@ -88,7 +88,6 @@ class MatchListCardDataClass {
   set_sticky_top({
     type, league, fixed_header_height
   }) {
-    console.log("set_sticky_top", type, league, fixed_header_height)
     // 吸顶高度
     this.sticky_top.fixed_header_height = fixed_header_height; //固定在顶部的头高度
     this.sticky_top.league = league; // 联赛名称吸顶高度

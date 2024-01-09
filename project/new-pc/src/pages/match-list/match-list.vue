@@ -146,12 +146,9 @@ const MatchListCardDataClass_match_list_card_key_arr=()=>{
 const on_go_top = ()=>{
   scoll_list.value && scoll_list.value.set_scrollTop(0)
 }
+mounted_fn()
 onMounted(()=>{
-  mounted_fn()
   MatchListCardDataClass_match_list_card_key_arr()
-})
-onUnmounted(() => {
-  handle_destroyed()
 })
 watch(
   () => MatchListCardDataClass.list_version,
