@@ -23,7 +23,7 @@
       <div class="row">
         <div class="col">
           <!--足,蓝,棒,乒,排[1,2,3,8,9]-->
-          <div v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2 && items.sportId == 1 ? items.mark_score : ''}}</div>
+          <div class="against" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2 && items.sportId == 1 ? items.mark_score : ''}}</div>
 
           <!--不是滚球-->
           <!--1 ：早盘赛事 ，2： 滚球盘赛事， -->
@@ -39,12 +39,12 @@
       <div class="bet-content">
         <div class="row">
           <!--玩法及队名部分样式-->
-          <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
+          <span class="mr-4 text-009 text-flow-none handicap-type" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
 
           <span>{{ items.playName }}</span>
 
-          <span v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
-          <span v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
+          <span class="handicap-type" v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
+          <span class="handicap-type" v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
 
         </div>
 
@@ -55,7 +55,7 @@
           </div>
         </div>
 
-        <div class="text-flow-none" v-else>{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></div> 
+        <div class="text-flow-none handicap-type" v-else>{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></div> 
 
         <!-- 预约投注组件 -->
         <!-- <div v-if="ref_data.show_appoint">
@@ -402,5 +402,11 @@ const cancel_operate = () =>{
 }
 .appoint_cursor{
   cursor: pointer;
+}
+.against{
+  color: var(--q-gb-t-c-20);
+}
+.handicap-type{
+  color: var(--q-gb-t-c-16);
 }
 </style>

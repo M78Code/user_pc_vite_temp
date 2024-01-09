@@ -314,7 +314,7 @@ function switchTabs(item, index) {
       box-shadow: 0px 3px 3px 0px rgba(0, 56, 98, 0.1);
       border-radius: 100px;
       &.active {
-        background: #179CFF;
+        background: var(--q-gb-t-c-16);
         color: #fff;
         border: none;
         box-shadow: none;
@@ -377,7 +377,7 @@ function switchTabs(item, index) {
     }
 
     .dogfall {
-      color: #179cff;
+      color: var(--q-gb-t-c-16);
     }
 
     .default {

@@ -205,7 +205,8 @@ const set_change_bet_single = () => {
   display: flex;
   align-items: center;
   .bet-series-text{
-    color: var(--q-gb-t-c-10) ;
+    //color: var(--q-gb-t-c-10) ;
+    color: var(--q-gb-t-c-11) ;
     &.actions{
       color: var(--q-gb-t-c-16);
     }

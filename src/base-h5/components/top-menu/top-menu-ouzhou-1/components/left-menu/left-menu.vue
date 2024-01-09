@@ -158,8 +158,6 @@ const change_current_menu = (item) => {
   setPopularSort(item.mi);
   // 设置菜单对应源数据
   emits('isLeftDrawer');
-  useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,item.mi);
-  BaseData.set_is_emit(false)
   // if (route.name === 'matchList') MatchMeta.set_origin_match_data()
 
   // MenuData.set_menu_lv2_mi(item.mi+''+2)
@@ -172,6 +170,8 @@ const change_current_menu = (item) => {
     return router.push({name: 'champion'})
   }else{
     // MatchMeta.set_origin_match_data()
+    useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,item.mi);
+    BaseData.set_is_emit(false)
     // 重置所选 球种默认玩法 hpid
     MenuData.set_current_lv1_menu('2');
     MatchResponsive.reset_match_hpid_by_csid()
