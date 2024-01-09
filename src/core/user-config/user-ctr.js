@@ -151,17 +151,19 @@ class UserCtr {
 
     // 设置topic数据
     let topic = LocalStorage.get('topic');
-    if(topic){
-      try {
-        const topic_obj = JSON.parse(topic);
-        topic_obj && (BUILDIN_CONFIG.TOPIC = topic_obj);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    topic && (BUILDIN_CONFIG.TOPIC = topic);
     nextTick(()=>{
       this.get_system_time()
     })
+  }
+
+  // 获取topic指定key域名url
+  get_topic_key_url(key) {
+    let res = '';
+    if(key){
+      res = lodash.get(window, `BUILDIN_CONFIG.TOPIC.${key}`, lodash.get(window.SEARCH_PARAMS.get_topic(),`${key}`));
+    }
+    return res;
   }
   
   // 刷新后 获取缓存数据

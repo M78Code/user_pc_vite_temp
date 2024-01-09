@@ -35,7 +35,7 @@ const  gr = window.SEARCH_PARAMS.init_param.get('gr')?.toLocaleUpperCase()
 //     // 其他环境，测试和开发 等
 //   url.value =  'http://test-topic.sportxxxifbdxm2.com/activity'
 // }
-url.value  = lodash.get(window, `BUILDIN_CONFIG.TOPIC.activity`);
+url.value  = UserCtr.get_topic_key_url('activity');
 const  theme_value = ref('')
 // 设置默认主题
 let theme = 'theme01';
