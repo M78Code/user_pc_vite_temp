@@ -631,13 +631,13 @@ body {
             font-weight: 500;
             color: var(--q-gb-t-c-6);
             font-family: "PingFangSC-Medium";
-            border-left: .5px solid transparent;
+            // border-left: .5px solid transparent;
 
             &.bet-col3,
             &.bet-col4,
             &.bet-col5 {
               // background: var(--q-gb-bg-c-22);
-              background: var(--q-gb-bg-c-23);
+              // background: var(--q-gb-bg-c-23);
               // font-weight: 400;
               &.no-bg {
                 background: none;
@@ -651,7 +651,7 @@ body {
 
             &.bet-col2,
             &.bet-col5 {
-              border-right: .5px solid var(--q-gb-bd-c-8);
+              // border-right: .5px solid var(--q-gb-bd-c-8);
             }
           }
 
