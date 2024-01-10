@@ -45,7 +45,7 @@ const is_mounted = ref(true);
 const main_handicap_list = computed(() => {
   let { mft, csid, tpl_id } = match.value
   mft = mft == 3 ? 3 : 5
-  let play_config = match_tpl_info.value[`template_${match_style_obj.value.data_tpl_id}`]
+  let play_config = match_tpl_info.value[`template_${match_style_obj.data_tpl_id}`]
   if ([5, 9].includes(+csid)) {
     return lodash.merge([], lodash.get(play_config, `main_handicap_list_5_${mft}`))
   } else {

@@ -1,5 +1,5 @@
 import {
-	ref, onUnmounted, onMounted
+	ref, onUnmounted, nextTick
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
@@ -7,6 +7,7 @@ import {
 	MatchDataWarehouse_PC_List_Common as MatchListData,
 	MatchDataWarehouse_PC_Detail_Common,
 } from "src/output/module/match-data-base.js";
+import MatchListCardData from "./match-card/module/match-list-card-data-class";
 import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { api_match } from "src/api/index.js";
@@ -225,16 +226,23 @@ function init_page_when_base_data_first_loaded() {
 	// if (MenuData.is_home()) {
 	// 	return
 	// }
-	set_load_data_state("loading") //loading
-	//设置元数据 列表 返回boolean
-	if (PROJECT_NAME == 'ouzhou-pc') {
-		is_has_base_data = set_base_data_init_ouzhou()
-	} else {
-		is_has_base_data = set_base_data_init()
-	}
-	if (is_has_base_data === true) {  //如果元数据有数据就设定为data
-		set_load_data_state("data")
-	}
+	// 设置列表滚动条scrollTop
+	MatchListScrollClass.set_scroll_top(0);
+	MatchListScrollClass.clear_show_mid()
+	MatchListCardData.reset_data();//表征清空
+	useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0)//列表滚动到顶部
+	nextTick(() => {
+		set_load_data_state("loading") //loading
+		//设置元数据 列表 返回boolean
+		if (PROJECT_NAME == 'ouzhou-pc') {
+			is_has_base_data = set_base_data_init_ouzhou()
+		} else {
+			is_has_base_data = set_base_data_init()
+		}
+		if (is_has_base_data === true) {  //如果元数据有数据就设定为data
+			set_load_data_state("data")
+		}
+	});
 }
 /**
  * 初始化方法

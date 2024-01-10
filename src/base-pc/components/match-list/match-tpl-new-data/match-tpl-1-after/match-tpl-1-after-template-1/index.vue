@@ -188,7 +188,7 @@ watch(() => [match.value.ms, match.value.mmp], () => {
 const bet_col = computed(() => {
   let bet_col = []
   //是否多列
-  let multi_column = lodash.get(match_style_obj.value, 'data_tpl_id') == 13
+  let multi_column = lodash.get(match_style_obj, 'data_tpl_id') == 13
   let _play_current_key = get_play_current_play(match.value)
   if (MatchListCardDataClass.list_version.value) { }
   // 5分钟玩法
@@ -309,7 +309,7 @@ function set_secondary_bg(index, length) {
 */
 function get_bet_width(index, length) {
   //是否多列
-  let multi_column = lodash.get(match_style_obj.value, 'data_tpl_id') == 13
+  let multi_column = lodash.get(match_style_obj, 'data_tpl_id') == 13
   let bet_width = match_list_tpl_size.value.bet_width
   if (multi_column) {
     if (length == 5) {

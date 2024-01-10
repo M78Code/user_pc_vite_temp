@@ -48,7 +48,6 @@ import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/ma
 import { MatchBasisInfo1FullVersionWapper as BasisInfo1 } from 'src/base-pc/components/match-list/match-basis-info/template-1/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
-import { compute_match_all_handicap_data } from 'src/core/match-list-pc/match-handle-data.js'
 const props = defineProps({
   mid: {
     type: [String, Number],
@@ -60,7 +59,6 @@ const match = inject('match');
 // 赛事模板样式
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-console.log('match_tpl_info', match_tpl_info);
 const is_mounted = ref(true);
 // 赛事模板宽度信息
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config

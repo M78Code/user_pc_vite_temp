@@ -73,7 +73,7 @@ const deal_with_list_data = (data) => {
  * @param {boolean} backend_run / is_socket 是否静默拉取 
  * @return {undefined} undefined
  */
-const mx_list_res = (data, backend_run) => {
+const mx_list_res = (data, backend_run,is_base_data) => {
 	let code = lodash.get(data, "code");
 	let res_data = lodash.get(data, "data");
 	// 将全量数据接口 切割成含有mid元素的对象数组
@@ -184,7 +184,7 @@ const mx_list_res = (data, backend_run) => {
 				}, 10);
 			}
 			// 调用bymids更新前12场赛事
-			api_bymids(
+			!is_base_data&&api_bymids(
 				{ is_league_first: true, inner_param: true },
 				callback_func
 			);
@@ -194,7 +194,7 @@ const mx_list_res = (data, backend_run) => {
 /***
  * @description 当接口状态为成功且有数据时 调用此方法
  */
-const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backend_run }) => {
+const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backend_run,is_base_data }) => {
 	is_show_hot.value = false;
 	if (!Array.isArray(match_list)) {
 		match_list = []
@@ -249,7 +249,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
 		!backend_run
 	) {
 		// 调用bymids接口
-		api_bymids({ is_first_load: true, inner_param: true });
+		!is_base_data&&api_bymids({ is_first_load: true, inner_param: true });
 	}
 };
 /***
@@ -326,24 +326,23 @@ const mx_use_list_res = (data, backend_run) => {
 	// 	match_list = virtual_sport_format(match_list);
 	// }
 	if (code == 200 && match_list) {
-		mx_use_list_res_when_code_200_and_list_length_gt_0({ match_list, backend_run });
+		mx_use_list_res_when_code_200_and_list_length_gt_0({ match_list, backend_run,is_base_data });
 	} else {
-		mx_use_list_res_when_code_error_or_list_length_0({ match_list, backend_run });
+		mx_use_list_res_when_code_error_or_list_length_0({ match_list, backend_run,is_base_data });
 	}
 };
 /**
  * 
  * @param {object} data 要处理数据
- * @param {booble} is_socket 
- * @param {*} cut 
- * @param {*} collect 
+ * @param {booble} is_socket 是否socket请求
+ * @param {*} is_base_data 是否元数据请求
  */
-function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
+function handle_match_list_request_when_ok(data, is_socket, is_base_data) {
 	if (lodash.has(data, 'data.livedata') || lodash.has(data, 'data.nolivedata')) {
 		//       mx_list_res
 		//    今日早盘   常规球种下的  常规 玩法
 		//    电竞 单页  所有玩法
-		mx_list_res(data, is_socket, cut, collect);
+		mx_list_res(data, is_socket, is_base_data);
 	} else {
 		//  mx_use_list_res
 		// 滚球单页 下所有
@@ -352,7 +351,7 @@ function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
 		//  今日早盘   常规球种下的   常规球种下的 冠军
 		// 虚拟体育 单页 的  所有赛种
 		// 收藏
-		mx_use_list_res(data, is_socket, cut, collect);
+		mx_use_list_res(data, is_socket,is_base_data);
 	}
 };
 export {

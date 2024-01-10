@@ -80,10 +80,7 @@
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }">333</div>
         </template>
-        <template v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key"
-          :data-card-key="card_key" :class="`card_key_${card_key}`">
-          <match-list-card :card_key="card_key" />
-        </template>
+        <match-list-card v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :class="card_key" />
         <template v-slot:after>
           <div style="height:15px"></div>
           <div class="pager-wrap row justify-end">
@@ -136,28 +133,28 @@ import { set_template_width } from 'src/core/match-list-pc/list-template/match-l
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/output/index.js";
 import "./match_list.scss";
 const match_list_card_key_arr = ref([])
-function MatchListCardDataClass_match_list_card_key_arr () {
+function MatchListCardDataClass_match_list_card_key_arr() {
   match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
 }
 const on_go_top = () => {
   useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0)
 }
-function _resize(){
+function _resize() {
   set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15))
   MatchListCardDataClass.set_list_version()
 }
-window.addEventListener('resize',_resize)
+window.addEventListener('resize', _resize)
 mounted_fn()
 onMounted(() => {
   MatchListCardDataClass_match_list_card_key_arr()
 })
-onUnmounted(()=>{
-  window.removeEventListener('resize',_resize)
+onUnmounted(() => {
+  window.removeEventListener('resize', _resize)
 })
 watch(MatchListCardDataClass.list_version,
   () => {
     MatchListCardDataClass_match_list_card_key_arr()
-  }, { deep: true })
+  })
 // };
 // 赛事列表筛选：滚球-球种、早盘-日期
 // 列表视图滚动容器

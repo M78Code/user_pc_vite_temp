@@ -80,7 +80,12 @@ export default {
     const { csid } = match.value || {}
     let current_mid = MatchListCardDataClass.current_mid;
     let handicap_list = computed(() => {
-      return match_tpl_info.value?.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
+      try{
+       return match_tpl_info.value?.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
+      }catch(e){
+        console.log(match_tpl_info.value,e,'jiffy')
+      }
+      return []
     });
     // watch(() => MatchListCardDataClass.list_version, (new_value, old_value) => {
     //   if (match.value) {

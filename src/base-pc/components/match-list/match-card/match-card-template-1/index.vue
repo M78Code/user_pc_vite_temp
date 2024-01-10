@@ -1,18 +1,15 @@
 <template>
   <!--赛事玩法模板-->
   <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
-
   <div class="c-match-card relative-position" :id="`list-mid-${mid}`"
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
     v-if="match_style_obj.is_show_card">
     <!-- 数据模版调试 -->
-    <div v-show="GlobalAccessConfig.get_wsl()" style="position:absolute;color:red">{{ match.mid }}-{{
+    <div style="position:absolute;color:red">{{ match.mid }}-{{
       match_style_obj.view_tpl_id }}-{{ match_style_obj.data_tpl_id }}-{{ match_style_obj.show_level }}-
     </div>
     <component :is="`MatchTpl${match_style_obj.view_tpl_id}After`" v-if="[1, 2].includes(match_style_obj.show_level)"
       :mid="mid" />
-  </div>
-  <div class="test">
   </div>
 </template>
 
@@ -71,18 +68,19 @@ export default {
   setup(props) {
     // 赛事样式对象
     const match = MatchDataWarehouse_PC_List_Common.get_quick_mid_obj_ref(props.mid)
-    let match_style_obj = computed(() => {
-      return MatchListCardDataClass.get_card_obj_bymid(props.mid, MatchListCardDataClass.list_version.value)
-    });
+    let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
     const match_list_tpl_size = computed(() => {
-      return MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.value?.data_tpl_id}_config`].width_config
+      const width_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+      return width_config
     })
     const match_tpl_info = computed(() => {
-      return MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.value?.data_tpl_id}_config`]
+      const tpl_info = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${match_style_obj.data_tpl_id}_config`)
+      return tpl_info
     })
     //非坑位对象
     const not_hn_obj_map = computed(() => {
-      return get_match_to_map_obj(match.value, null, props.add_type); //非坑位对象
+      const _not_hn_obj_map = get_match_to_map_obj(match.value, null, props.add_type); //非坑位对象
+      return _not_hn_obj_map
     })
     provide("match", match)
     provide("match_style_obj", match_style_obj)
