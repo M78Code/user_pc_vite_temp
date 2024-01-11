@@ -73,7 +73,7 @@ const card_style = computed(() => {
   // 如果卡片类型是球种标题、已开赛、未开赛标题  设置吸顶
   if (
     ["sport_title", "play_title", "no_start_title"].includes(
-      card_style_obj?.card_type.value
+      card_style_obj?.card_type
     )
   ) {
     let top = sticky_top?.type || 0;
@@ -82,7 +82,7 @@ const card_style = computed(() => {
   // 如果是联赛标题卡片  设置联赛吸顶
   else if (
     ["league_title", "champion_league_title"].includes(
-      card_style_obj?.card_type.value
+      card_style_obj?.card_type
     )
   ) {
     let top = sticky_top?.league || "";
