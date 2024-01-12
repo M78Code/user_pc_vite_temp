@@ -112,7 +112,7 @@
         >
           <div class="line"></div>
           <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(menu_data.left_menu_result?.lv1_mi?.slice(0,-1))}` })"
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(menu_data.left_menu_result?.lv1_mi ? menu_data.left_menu_result?.lv1_mi?.slice(0,-1):0)}` })"
             :alt="BaseData.menus_i18n_map[menu_data.left_menu_result.lv1_mi]"></span>
           <!-- <sport-icon
             v-if="match_info.csid && match_info.csid != -1"
