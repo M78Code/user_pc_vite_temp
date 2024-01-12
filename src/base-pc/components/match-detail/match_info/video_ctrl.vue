@@ -192,7 +192,7 @@ const props = defineProps({
   icons_right: Number,
 });
 const match_scroll_area=ref(null)
-const emit = defineEmits(["refresh"]);
+const emit = defineEmits(["refresh","setfoldStatus"]);
 const thumb_style2 = ref({}); //赛事列表滚动条样式
 const height0 = ref("100%"); //战队信息盒子高度初始高度
 const height1 = ref("216px"); //有视频的赛事列表滚动区域高度
@@ -298,7 +298,7 @@ watch(
   (val) => {
     if (val) {
       get_global_click.value = GlobalSwitchClass.global_click;
-      vx_get_is_fold_status.value = GlobalSwitchClass.global_click;
+      vx_get_is_fold_status.value = GlobalSwitchClass.is_fold_status;
     }
   },
   { deep: true }
