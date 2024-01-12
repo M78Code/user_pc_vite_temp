@@ -188,6 +188,8 @@ import {
 } from "src/output/index.js";
 import lodash from "lodash"
 import { useGetResultConfig } from "src/base-pc/components/match-results/results-config.js";
+
+import { compute_css_obj } from 'src/core/server-img/index.js'
 const {
   //变量
   changePage
@@ -354,6 +356,10 @@ onMounted(()=>{
   min-height: 61px;
   align-items: center;
   text-transform: uppercase;
+  background-color: #ffffff;
+  .header-title{
+    color:#626262;
+  }
   .rule-logo {
     margin-right: 33.3px;
     height: 100%;
@@ -646,5 +652,11 @@ background: #ffffff;
     line-height: 12px !important;
   }
 }
+.logo-icon{
+    width:130px;
+    height: 40px;
+    margin-right: 34px;
+  }
+
 
 </style>
