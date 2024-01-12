@@ -740,7 +740,8 @@
             .control-item {
               background: var(--q-gb-bd-c-8);
               &.active {
-               background: var(--q-gb-bg-c-17);
+               background: var(--q-gb-bg-c-1);
+              //  background: var(--q-gb-bg-c-17);
               }
             }
           }

@@ -94,7 +94,10 @@ body {
           .handicap-col:nth-of-type(n+4):nth-of-type(-n+6) {
             .bet-item-wrap {
               // background-color: var(--q-gb-bg-c-14);
-              background-color: var(--q-gb-bg-c-24);
+              // background-color: var(--q-gb-bg-c-24);
+              .c-bet-item {
+                background-color: var(--q-gb-bg-c-31);
+              }
             }
           }
         }
@@ -244,7 +247,7 @@ body {
       .bet-item-wrap {
         // border-top: 0.5px solid var(--q-gb-bd-c-8);
         // border-right: 0.5px solid var(--q-gb-bd-c-8);
-        background-color: var(--q-gb-bg-c-25);
+        // background-color: var(--q-gb-bg-c-25);
         cursor: pointer;
         &:first-child {
           border-top: 0.5px solid var(--q-gb-bd-c-8);
@@ -279,7 +282,7 @@ body {
         border-right: 1px solid var(--q-gb-bd-c-8);
 
         .tab-tilte-bg {
-          background-color: var(--q-gb-bg-c-14);
+          // background-color: var(--q-gb-bg-c-14);
         }
       }
     }

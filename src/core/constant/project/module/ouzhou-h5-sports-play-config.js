@@ -573,6 +573,7 @@ export const use_sports_play_title = () => {
         label: i18n_t('list.play1'),//'全场独赢',
         ol: [
           { ot: '1', title: i18n_t('list.win1') },
+          { ot: 'X', title: i18n_t('list.dogfall') }, // "平局"
           { ot: '2', title: i18n_t('list.win2')}
         ]
       },
@@ -588,8 +589,8 @@ export const use_sports_play_title = () => {
         hpid: '2',
         label: i18n_t('ouzhou.match.play_map.2'),// '全场大小',
         ol: [
-          { ot: 'Over', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_1') },  // "大于"
-          { ot: 'Under', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_2') }, // "小于"
+          { ot: 'Over', title: i18n_t('ouzhou.match.bet_col_Over') }, // "全场大"
+          { ot: 'Under', title: i18n_t('ouzhou.match.bet_col_Under') }, // "全场小"
         ]
       },
     ],
@@ -621,14 +622,14 @@ export const use_sports_play_title = () => {
       },
     ],
     //联合式橄榄球
-    "414": [
+    "14": [
       {
         hpid: '1',
-        label: i18n_t('list.play1'),//'全场独赢',
+        label: i18n_t('list.play1'), //'全场独赢',
         ol: [
-          { ot: '1', title: i18n_t('list.win1') },// "主胜"
+          { ot: '1', title: i18n_t('list.win1') }, // "主胜"
           { ot: 'X', title: i18n_t('list.dogfall') }, // "平局"
-          { ot: '2', title: i18n_t('list.win2')}// "客胜"
+          { ot: '2', title: i18n_t('list.win2')} // "客胜"
         ]
       },
       {
@@ -663,8 +664,8 @@ export const use_sports_play_title = () => {
         hpid: '2',
         label: i18n_t('ouzhou.match.play_map.2'), // '全场总分',
         ol: [
-          { ot: 'Over', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_1') }, // "总分"
-          { ot: 'Under', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_2') }, // "总分"
+          { ot: 'Over', title: i18n_t('ouzhou.match.bet_col_Over') }, // "全场大"
+          { ot: 'Under', title: i18n_t('ouzhou.match.bet_col_Under') }, // "全场小"
         ]
       },
       {
@@ -691,8 +692,8 @@ export const use_sports_play_title = () => {
         hpid: '2',
         label: i18n_t('ouzhou.match.play_map.2'), // '全场总分',
         ol: [
-          { ot: 'Over', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_1') }, // "总分"
-          { ot: 'Under', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_2') }, // "总分"
+          { ot: 'Over', title: i18n_t('ouzhou.match.bet_col_Over') }, // "全场大"
+          { ot: 'Under', title: i18n_t('ouzhou.match.bet_col_Under') }, // "全场小"
         ]
       },
       {
