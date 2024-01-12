@@ -137,7 +137,7 @@ const set_bet_money = obj => {
         if(UserCtr.balance < ref_data.max_money){
             money_a = UserCtr.balance
         }  
-        BetData.set_bet_obj_amount(mathJs.add(money,money_),props.items.playOptionsId)
+        BetData.set_bet_obj_amount(money_a,props.items.playOptionsId)
 
         ref_data.money = money_a
     }

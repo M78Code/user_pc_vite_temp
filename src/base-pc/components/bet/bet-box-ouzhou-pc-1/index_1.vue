@@ -17,20 +17,20 @@
         
         <div class="cursor re f-e-c bet-text">
            <!--  单关 合并 切换 -->
-          <!-- <div class="f-e-c" @click="show_merge_change()" v-if="BetData.is_bet_single">
+          <div class="f-e-c" @click="show_merge_change()" v-if="BetData.is_bet_single">
             {{ i18n_t('bet.merge') }} 
             <span v-if="BetData.is_bet_merge" class="icon-arrow icon-arrow-merge ml-4"></span>
             <span v-else class="merge-checkbox ml-4"></span> 
-          </div> -->
+          </div>
           <!-- 单关 串关 切换 -->
-          <!-- <div class="f-e-c ml-16" @click="show_single_change()">
+          <div class="f-e-c ml-16" @click="show_single_change()">
             <span v-if="BetData.is_bet_single">{{ i18n_t('bet.bet_one_') }}</span>
             <span v-if="!BetData.is_bet_single">{{ i18n_t('bet.bet_series') }}</span>
 
             <div class="switch-single ml-4" :class="BetData.is_bet_single ? '':'arrow-single'">
               <span></span>
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
 
@@ -41,6 +41,9 @@
           <template v-if="BetData.is_bet_single">
             <div v-for="(item,index) in BetData.bet_single_list" :key="item.playOptionsId">
                 <betItem :items="item" :key="index" :index="index" />
+            </div>
+            <div v-if="BetData.bet_single_list.length > 1">
+              <BetMultipleInput/>
             </div>
           </template>
           <!-- 串关 投注 -->
@@ -105,6 +108,8 @@ import betItem from "./components/bet-item.vue"  // 投注列表
 import betFooter from "./components/bet-footer.vue"  // 投注底部信息
 import betResult from "./components/bet-result.vue"  // 投注结果
 import betSpecialInput from "./components/bet-special-input.vue"
+import BetMultipleInput from "./components/bet-multiple-input.vue"
+
 
 const ref_data = reactive({
   show_single: false,
