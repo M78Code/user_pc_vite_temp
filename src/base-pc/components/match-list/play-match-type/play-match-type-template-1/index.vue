@@ -100,10 +100,12 @@ const is_no_start_title = computed(() => {
       border-radius: 0 0 6px 6px;
       border: 1px solid var(--q-gb-bd-c-6);
       border-top: 0;
+      background: var(--q-gb-bd-c-13);
     }
     &.match-type-even {
       border-radius: 6px;
       border-top: 1px solid var(--q-gb-bd-c-6);
+      background: var(--q-gb-bg-lg-7) !important;
     }
   }
 }
