@@ -279,7 +279,7 @@ class UserCtr {
     this.theme = theme;
     useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, theme);
     // 替换body上className
-    const old_theme = LocalStorage.get("theme") || sessionStorage.getItem("theme") || theme == 'day' ? 'theme02' : 'theme01';
+    const old_theme = LocalStorage.get("theme") || SessionStorage.get("theme") || 'theme-1';
     document.getElementById('ty-app').classList.replace(old_theme, theme)
     LocalStorage.set("theme", theme.value || theme)
     LocalStorage.set("default-theme", theme.value || theme)

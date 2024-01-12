@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, watch } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
 import { useRoute, useRouter } from "vue-router";
 
@@ -54,7 +54,7 @@ import BaseData from "src/core/base-data/base-data.js";
 import searchCom from 'src/components/search/search-3/index.vue';
 
 const page_style = ref('')
-page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
+
 
 const props = defineProps({
   /** 
@@ -65,6 +65,8 @@ const props = defineProps({
     default: false
   }
 })
+
+
 
 const emit = defineEmits(['close_home_loading'])
 
@@ -118,11 +120,21 @@ const hasBonusType3 = ref(false)
 
 onMounted(()=>{
   init_site_header()
+  set_components_style()
   site_header_data.emit_lsit = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, init_site_header ).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_MENU_INIT_DONE, menu_init_done ).off,
+    emitter_3: useMittOn( MITT_TYPES.EMIT_THEME_CHANGE,  set_components_style ).off
   }
 })
+
+
+// 设置组件样式
+const set_components_style = () => {
+  nextTick(()=>{
+    page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
+  })
+}
 
 /** 检查是否有可领取奖券 */
 function getActivityLists({ id = 1, type }) {
