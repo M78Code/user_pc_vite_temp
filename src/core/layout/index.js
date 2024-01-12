@@ -148,7 +148,10 @@ class LayOutMain {
 
     this.layout_content_height =  this.client_height - this.layout_nav_height - this.layout_notice_height
     let content_width =  this.client_width < this.layout_min_width ? this.layout_min_width :  this.client_width
-    this.layout_content_width =  content_width - this.layout_left_width - this.layout_right_width 
+    if(!this.is_unfold_multi_column){
+      this.layout_content_width =  content_width - this.layout_left_width - this.layout_right_width 
+    }
+    
     this.set_layout_version()
   }
 
@@ -230,12 +233,13 @@ class LayOutMain {
  */
   set_unfold_multi_column(val){
     this.is_unfold_multi_column = val
+    const width = different_version_config[PROJECT_NAME].right_width
     if(!val){
-    this.layout_right_width = 441
-    this.layout_content_width -= 441
+    this.layout_right_width =  width
+    this.layout_content_width -=  width
     }else{
-    this.layout_right_width = 0
-    this.layout_content_width += 441
+      this.layout_right_width = 0
+      this.layout_content_width +=  width
     }
     this.set_layout_version()
   }

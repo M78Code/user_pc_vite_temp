@@ -41,7 +41,7 @@
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
-import menu_config from "src/core/menu-pc/menu-data-class.js";
+import { MenuData } from "src/output/index.js"
 import { is_eports_csid ,compute_css_obj } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js";
@@ -178,7 +178,7 @@ onMounted(() => {
   if(hot_menu){
     let mid_b = hot_menu.sl?.find((item) => item.ct > 0) || {};
     // 刷新后 根据中间件 重新输出
-    const { mi = mid_b.mi } = menu_config.mid_menu_result;
+    const { mi = mid_b.mi } = MenuData.mid_menu_result;
     current_menu.value = mi;
     mi&&handle_click_menu_mi_500(mi);
     mi_500_obj.value=hot_menu;
@@ -319,11 +319,10 @@ function handle_click_menu_mi_500(mi) {
     match_list,
     bymids,
   };
-  console.info(params,"params")
   // 设置      中间 菜单输出
-  menu_config.set_mid_menu_result(params);
+  MenuData.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  menu_config.set_match_list_api_config(config);
+  MenuData.set_match_list_api_config(config);
 }
 </script>
 <style lang="scss" scoped>

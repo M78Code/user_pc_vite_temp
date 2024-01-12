@@ -97,7 +97,7 @@ import betSpecialInput from "./bet-special-input.vue"
 
           /* 盘口值 -0.5 */
           label {
-            margin-left: 5px;
+            margin-left: 0;
             word-break: break-word;
 
             &.bet-handicap {
