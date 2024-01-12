@@ -6,7 +6,9 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 const { PROJECT_NAME } = BUILDIN_CONFIG ;
-
+setTimeout(() => {
+    window.MenuData=MenuData
+}, 0);
 
 //请求 参数的说明
 //     begin_request:
@@ -64,7 +66,7 @@ function match_list_all_params() {
     // is_collect 是否收藏
     // menu_current_mi 当前选中的菜单id----终极菜单id 根据此id获取对应的旧菜单id 
     // get_mid_for_euid 通过当前选中的菜单id获取对应的旧菜单id
-    const { menu_root, left_menu_result, mid_menu_result, is_collect, get_mid_for_euid, menu_current_mi, current_ball_type } = MenuData
+    let { menu_root, left_menu_result, mid_menu_result, is_collect, get_mid_for_euid, menu_current_mi, current_ball_type } = MenuData
     // mid_menu_mi 中间键 赛种菜单id 
     // md 中间键 时间id
     // tid 中间键 联赛id  // vr体育 下的赛种对应的联赛
@@ -82,6 +84,7 @@ function match_list_all_params() {
         euid = MenuData.get_mid_for_euid(lv1_mi)
     }
     let api_name = api_params[menu_root]?.match || api_params[lv1_mi]?.match || api_params.other.match;
+  
     // type === "collect"
     if (is_collect) {
         // 前端控制是否禁用收藏功能
@@ -123,6 +126,15 @@ function match_list_all_params() {
             "tid": "",
             md,
         }
+    } else if (MenuData.is_kemp()||MenuData.is_common_kemp()) {
+        // 冠军
+        lv2_mi_info = {
+            selectionHour: null,
+            "sportId": current_ball_type,
+            "outrightMatches": 1,
+            tid: '',
+            "orpt": 18,
+        }
     } else if ([2, 3, 202, 203].includes(Number(menu_root))) {
         // 今日 早盘 常规赛事
         if (lv1_mi == 118) {
@@ -142,15 +154,6 @@ function match_list_all_params() {
             lv2_mi_info.tid = ''
             lv2_mi_info.orpt = '0'
             // lv2_mi_info.index = index || 0 // 早盘收藏 切换后回到原来的
-        }
-    } else if (menu_root == 400) {
-        // 冠军
-        lv2_mi_info = {
-            selectionHour: null,
-            "sportId": current_ball_type,
-            "outrightMatches": 1,
-            tid: '',
-            "orpt": 18,
         }
     } else if (menu_root == 500) {
         // euid = get_mid_for_euid(menu_current_mi)
