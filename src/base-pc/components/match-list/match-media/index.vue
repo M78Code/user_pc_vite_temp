@@ -85,6 +85,7 @@ watch(
   (val) => {
     if (val) {
       vx_play_media.value = MatchDetailCalss.play_media;
+      vx_detail_params.value=MatchDetailCalss.params
     }
   },
   { deep: true }

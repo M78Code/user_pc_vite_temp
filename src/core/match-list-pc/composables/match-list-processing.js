@@ -311,7 +311,7 @@ const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, backend_
  * @param  {boolean} collect   是否 请求收藏数量  true 不请求
  * @return {undefined} undefined
  */
-const mx_use_list_res = (data, backend_run) => {
+const mx_use_list_res = (data, backend_run,is_base_data) => {
 	let code = lodash.get(data, "code");
 	// 赛事列表
 	let match_list = lodash.get(data, "data.data", []);
