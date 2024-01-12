@@ -316,7 +316,8 @@ export default {
                 content: '';
                 height: 14px;
                 border-radius: 1.5px;
-                background: var(--q-gb-bg-c-13);
+                background: var(--q-gb-bg-c-1);
+                //background: var(--q-gb-bg-c-13);
             }
         }
     }
@@ -336,7 +337,8 @@ export default {
         position: relative;
         .progress {
             height: 100%;
-            background: var(--q-gb-bg-c-13);
+            background: var(--q-gb-bg-c-1);
+            //background: var(--q-gb-bg-c-13);
             border-radius: 15px;
         }
         .event-item {
