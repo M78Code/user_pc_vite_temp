@@ -96,6 +96,8 @@
                         formatTime(item.beginTime, "yyyy-mm-dd hh:MM:ss")
                       }}
                       </span> -->
+                      <!-- 提前结算 -->
+                      <bet-early-settle v-if="BetRecordHistory.selected == 0" :item="props.row"></bet-early-settle>
                     </div>
                     <!-- 赢 -->
                     <!-- 投注项结算状态展示条件，未处理，已处理，注单无效
@@ -272,6 +274,8 @@ import sport_icon from './sport_icon.vue'
 import { copyToClipboard } from 'quasar'
 import GlobalSwitchClass from 'src/core/global/global.js'
 import BetRecordHistory from "src/core/bet-record/pc/bet-record-history.js"
+import betEarlySettle from "src/base-pc/components/bet-record/record-table/bet-early-settle.vue"
+
 const lang = computed(() => {
   return UserCtr.lang;
 })
