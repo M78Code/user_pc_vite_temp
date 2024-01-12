@@ -44,11 +44,17 @@
 
   /* ************** 表格穿透样式 *************** -S */
 
+  :deep(.search-header){
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: none;
+  }
    :deep(.wrap-table) {
       display: flex;
       flex: 1;
       flex-flow: column;
       height: 100%;
+     padding: 0 20px;
 
       .table-col:first-child {
         span {
