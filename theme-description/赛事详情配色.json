@@ -20,4 +20,18 @@
     "match-details-home-bg": "#FFB001", // 主队圆点颜色
     "match-details-tab-active-boxshadow": "rgba(0, 56, 98, 0.25)",
     "match-details-slider-bg": "#EBECF3", // swipe 滑块点背景色
+    // 2024/1/12
+    "match-details-desc": "#B3B3B3", // 介绍色
+    "match-details-bet-block": "#E9F0FF", // 投注块颜色
+    "match-detail-input-placeholder": "#CBCED8", // 输入框placeholder
+    "match-details-back-menu-bg": "linear-gradient(243deg, rgba(242, 245, 249, 0.50) 14.69%, rgba(168, 177, 202, 0.50) 116.69%)",
+    "match-details-icon": "#F6F9FF", // icon 色
+    "match-details-border-bottom": "#DCE5F2", // 边框底色
+    "match-details-item-title": "#6C6C6C", // 每个分栏头部标题的字体颜色
+    "match-details-header": "#99A3B1", // 顶部title颜色
+    "match-details-title": "#1D1D1D", // 黑色标题
+    "match-details-win": "#E93D3D", // 赢
+    "match-details-lose": "#50C042", // 输
+    "match-details-win-bg": "rgba(233, 61, 61, 0.10)", // 赢背景色
+    "match-details-lose-bg": "rgba(80, 192, 66, 0.10)", // 输背景色
 }
