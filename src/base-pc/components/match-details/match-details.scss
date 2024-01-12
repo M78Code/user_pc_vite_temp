@@ -293,16 +293,17 @@
             .bet_handicap {
               color: var(--q-gb-t-c-18);
               .color {
-                color: var(--q-gb-t-c-1) !important;
+                color: var(--q-gb-t-c-1);
               }
               .ellipsis-wrap {
-                color: var(--q-gb-t-c-1) !important;
+                color: var(--q-gb-t-c-1);
               }
             }
           }
           .odds {
             span:hover {
               padding: 2px 4px;
+              
             }
           }
         }
@@ -604,7 +605,7 @@
         .os-1 {
           .active {
             .bet_handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-1);
             }
           }
           &:hover {
@@ -614,7 +615,7 @@
             }
             .c-bet-item.active {
               .bet_handicap {
-                color: var(--q-gb-t-c-1) !important;
+                color: var(--q-gb-t-c-1);
               }
             }
           }

@@ -206,7 +206,8 @@
         }
         &:hover {
           .odds {
-            color: var(--qq--theme-color-handicap-item-bet-active) !important;
+            //color: var(--qq--theme-color-handicap-item-bet-active) !important;
+            color: var(--q-gb-t-c-18) !important;
           }
         }
       }
@@ -419,9 +420,12 @@
     cursor: pointer;
     // to do use key
     // 这个是投注项背景颜色
-    background: #EFF8FF;
+    -background: #EFF8FF;
+    background-color: var(--q-gb-bg-c-27);
     &:hover {
-      background: #ecf4ff;
+      -background: #ecf4ff;
+      color: var(--q-gb-t-c-18);
+            background: var(--q-gb-t-c-16);
     }
   }
 }

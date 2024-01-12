@@ -78,7 +78,9 @@ body {
             border-bottom: 1px solid transparent;
           }
           &:hover:not(.active) {
-            background-color: var(--q-gb-bg-c-14) !important;
+            //background-color: var(--q-gb-bg-c-14) !important;
+            background-color: var(--q-gb-t-c-16) !important;
+            color: var(--q-gb-t-c-18) !important;
             .line {
               border-left: 3px solid transparent;
             }
