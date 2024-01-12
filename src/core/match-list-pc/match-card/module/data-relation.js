@@ -11,7 +11,7 @@ import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type7 
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-pc/list-template/index.js";
 import { conpute_match_list_card_offset } from "./card-show-offset.js";
-import { MenuData} from "src/output/project/index.js"
+import { MenuData } from "src/output/project/index.js"
 
 /**
  * @Description 设置是哪种列表类型
@@ -41,6 +41,25 @@ const set_match_list_mapping_relation_obj_type = () => {
       'match-vr' ,// vr
       "virtual_details"// vr 详情
     */
+
+  // 欧洲版也不区分赛种 且需要一个新的计算逻辑 但是因为接口结构不一样 所以需要有两套计算逻辑
+  // 但是需要区分滚球全部和单球种
+  if (PROJECT_NAME == 'ouzhou-pc') {
+    //MenuData.menu_root 为0是首页 不能用！menu_root判断
+    if (
+      (page_source == "hot" && MenuData.match_list_api_params.euid != 30199)
+      || ["today", "early", "bet", 'match-play-common', 'match-collect'].includes(page_source)
+      || route_name == 'search' || MenuData.is_top_events() || MenuData.is_leagues()
+      // || lodash.isUndefined(MenuData.menu_root)|| lodash.isNull(MenuData.menu_root)
+      || !MenuData.menu_root
+    ) {
+      return 9
+    } else if (MenuData.is_kemp()) {
+      return 6
+    } else {
+      return 8
+    }
+  }
   let type;
   const page_source = PageSourceData.page_source;
   const route_name = PageSourceData.route_name;
@@ -61,7 +80,7 @@ const set_match_list_mapping_relation_obj_type = () => {
     type = 7;
   }
   // 冠军聚合页
-  else if (page_source == "winner_top") {
+  else if (MenuData.is_kemp()) {
     type = 5;
   }
   // 电竞冠军
@@ -69,15 +88,16 @@ const set_match_list_mapping_relation_obj_type = () => {
     type = 3;
   }
   // 今日冠军
-  else if (page_source == "match-common-champion") {
+  else if (MenuData.is_today() && MenuData.is_common_kemp()) {
     type = 6;
   }
   // 列表接口类型为赛事列表
   else if (MenuData.match_list_api_type == "match_list") {
     // 热门赛事 或者 今日、早盘、串关
     if (
-      (page_source == "hot" && MenuData.match_list_api_params.euid != 30199) ||
-      ["today", "early", "bet"].includes(page_source)
+      //热门 & 不是竞足
+      (MenuData.is_hot() && MenuData.menu_current_mi != 50199) ||
+      [MenuData.is_today(), MenuData.is_zaopan(), MenuData.is_mix()].includes(true)
     ) {
       type = 4;
     } else {
@@ -85,30 +105,12 @@ const set_match_list_mapping_relation_obj_type = () => {
     }
   }
   // 早盘 和 电竞只有未开赛  不区分赛种
-  else if ( page_source == "early" || (MenuData.is_esports() && page_source != "hot") ) {
+  else if (MenuData.is_zaopan() || (MenuData.is_esports() && !MenuData.is_hot())) {
     type = 3;
   } else {
     type = 1;
   }
-  // 欧洲版也不区分赛种 且需要一个新的计算逻辑 但是因为接口结构不一样 所以需要有两套计算逻辑
-  // 但是需要区分滚球全部和单球种
-  if (PROJECT_NAME == 'ouzhou-pc') {
-    //MenuData.menu_root 为0是首页 不能用！menu_root判断
-    if (
-      (page_source == "hot" && MenuData.match_list_api_params.euid != 30199) 
-      || ["today", "early", "bet",'match-play-common', 'match-collect'].includes(page_source)
-      || route_name == 'search' || MenuData.is_top_events() || MenuData.is_leagues()
-      // || lodash.isUndefined(MenuData.menu_root)|| lodash.isNull(MenuData.menu_root)
-      || !MenuData.menu_root
-    ) {
-      type = 9
-    } else if(MenuData.is_kemp()) {
-      type = 6
-    } else {
-      type = 8
-    }
-  }
-  return   type
+  return type
 };
 
 /**
@@ -156,7 +158,7 @@ const reset_all_card_data = () => {
  */
 
 export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
-  (match_list, is_ws_call, is_remove_call, is_five_leagues=false) => {
+  (match_list, is_ws_call, is_remove_call, is_five_leagues = false) => {
     // 虚拟体育 不走卡片逻辑
     if (MenuData.is_vr()) {
       MatchListCardData.is_run_card_function = false;
@@ -164,15 +166,15 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
     } else {
       MatchListCardData.is_run_card_function = true;
     }
-  MatchListCardData.match_list_mapping_relation_obj_type = set_match_list_mapping_relation_obj_type();
+    MatchListCardData.match_list_mapping_relation_obj_type = set_match_list_mapping_relation_obj_type();
     // 非ws调用  清空卡片数据
-    if (!is_ws_call&&!is_five_leagues) {
+    if (!is_ws_call && !is_five_leagues) {
       MatchListCardData.match_list_render_key++;
       // 重置 赛事模板配置  开始
       //  let template_id = MenuData.match_tpl_number
       let reset_template_config_fn =
         MATCH_LIST_TEMPLATE_CONFIG[
-          "template_1_config"
+        "template_1_config"
         ]["reset_match_template_config"];
       if (reset_template_config_fn) {
         reset_template_config_fn();
@@ -180,16 +182,16 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
       // 重置 赛事模板配置  结束
       reset_all_card_data();
     }
-        /**
-     * 哪种列表类型
-     * 1. 列表数据类型为联赛列表   有未开赛 已开赛
-     * 2. 列表数据类型为赛事列表   区分赛种
-     * 3. 列表数据类型为联赛列表   只有联赛
-     * 4. 列表数据类型为赛事列表   有未开赛 已开赛
-     * 5. 冠军赛事列表            区分赛种
-     * 6. 冠军赛事列表            只有联赛
-     * 7. 列表数据类型为赛事列表   只有联赛
-     */
+    /**
+ * 哪种列表类型
+ * 1. 列表数据类型为联赛列表   有未开赛 已开赛
+ * 2. 列表数据类型为赛事列表   区分赛种
+ * 3. 列表数据类型为联赛列表   只有联赛
+ * 4. 列表数据类型为赛事列表   有未开赛 已开赛
+ * 5. 冠军赛事列表            区分赛种
+ * 6. 冠军赛事列表            只有联赛
+ * 7. 列表数据类型为赛事列表   只有联赛
+ */
     if (
       [1, 3].includes(MatchListCardData.match_list_mapping_relation_obj_type)
     ) {
@@ -210,7 +212,7 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
         match_list,
         is_ws_call
       );
-    }else if ([8].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
+    } else if ([8].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
       compute_match_list_style_obj_and_match_list_mapping_relation_obj_type3(
         match_list,
         is_ws_call
@@ -234,7 +236,7 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
         is_ws_call
       );
     }
-    conpute_match_list_card_offset();    
+    conpute_match_list_card_offset();
 
     // 设置列表总高度
     // nextTick(() => {

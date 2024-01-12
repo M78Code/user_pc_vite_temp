@@ -719,7 +719,8 @@ class MenuData {
    */
   set_match_list_api_config(config) {
     // 更新列表数据类型
-    this.set_match_list_api_type(this.mid_menu_result);
+    // this.set_match_list_api_type(this.mid_menu_result);
+    this.set_match_list_api_type(config.root?config:this.mid_menu_result);
     // 设置投注类别
     this.set_bet_category();
     set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
