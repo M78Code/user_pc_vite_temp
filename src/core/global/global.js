@@ -65,17 +65,6 @@ class UseGlobal {
     this.champion_fold_obj = {};
     // 全局开关变更
     this.global_switch_version =ref('22222')
-    //视频是否展开状态
-     this.is_fold_status = true;
-  }
-  /**
-   * @description: 设置获取视频是否展开状态
-   * @param {boolean} val
-   * @return {*}
-   */
-  set_is_fold_status(val){
-    this.is_fold_status = val
-    set_global_data_version()
   }
   /**
    * @description: 设置全局点击事件
