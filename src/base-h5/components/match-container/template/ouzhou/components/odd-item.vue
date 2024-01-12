@@ -116,8 +116,7 @@ const get_item_hpn = (s) => {
 
 // 是否锁盘
 const is_lock = computed(() => {
-  const { mhs = 0 } = props.match_info
-  return props.odd_item.os != 1 || props.item_hs == 1 || mhs == 1 || virtual_odds_state.value == 1
+  return props.odd_item.os != 1 || props.item_hs == 1 || props.match_info.mhs == 1 || virtual_odds_state.value == 1
 })
 
 const get_icon = (type) => {
