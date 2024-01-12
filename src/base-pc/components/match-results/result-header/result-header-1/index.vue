@@ -16,7 +16,7 @@
       <q-separator class="divider" color="#F2F5F8" inset /> -->
     <div class="c-simple-header">
       <div class="rule-logo">
-        <img src="" alt="" class="logo-img">
+        <div class="img-logo custom-format-img-logo-01"></div>
       </div>
       
     </div>
@@ -353,10 +353,10 @@ onMounted(()=>{
   min-height: 61px;
   align-items: center;
   text-transform: uppercase;
-  .rule-logo{
-    width: 127px;
-    height: 30rpx;
-    .logo-img{
+  .rule-logo {
+    margin-right: 33.3px;
+    height: 100%;
+    .img-logo {
       width: 130px;
       height: 100%;
       background-repeat: no-repeat;
