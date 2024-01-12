@@ -527,7 +527,7 @@ onUnmounted(() => {
     cursor: pointer;
     background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/unfold_close_thme01.svg");
     &.open {
-      background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/y0_unfold_open.svg"); // TODO:  unfold_open_them01.svg
+      background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/unfold_open_them01_copy.svg"); // TODO:  unfold_open_them01.svg
     }
   }
   .col-center {

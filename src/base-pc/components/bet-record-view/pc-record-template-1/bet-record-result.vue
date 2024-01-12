@@ -5,6 +5,7 @@
 <template>
   <div>
     <div class="row">
+      <div style="display: none;">{{ BetRecordLeft.bet_record_version }}</div>
       <div class="col bet-money">
         <template v-if="[0,1].includes(BetRecordLeft.selected)">
           <!--投注额-->
@@ -52,13 +53,13 @@
     <div class="info-wrap" v-if="calc_show">
       <!--提前结算提示语-->
       <div class="bet-pre-title">
-        <template v-if="ref_data.bet_pre_code>1 && ref_data.bet_pre_code!='0400524'">
+        <template v-if="unSuccessTips">
           <span style="color:red">
-            <template v-if="ref_data.bet_pre_code=='0400527'">
+            <template v-if="bet_pre_code=='0400527'">
               <!--功能暂停中，请稍后再试-->
               {{i18n_t('bet_record.pre_suspend')}}
             </template>
-            <template v-else-if="ref_data.bet_pre_code=='0400537'">
+            <template v-else-if="bet_pre_code=='0400537'">
               <!--提前结算金额调整中，请再试一次-->
               {{i18n_t('bet_record.pre_amount_change')}}
             </template>
@@ -75,15 +76,25 @@
       </div>
       <div class="bet-pre-wrap">
         <!-- 提前结算按钮-->
-        <div class="bet-pre-btn">
+        <div class="bet-pre-btn" @click="submit_click">
           <!-- 提前结算-->
-          <div class="bet-row-1">{{i18n_t("bet_record.settlement_pre")}} </div>
-          <div class="bet-row-2" v-if="status !== 5 && (Number(front_settle_amount) || expected_profit)">￥{{ betting_amount }}</div>
+          <div class="bet-row-1">
+            <!-- 提前结算 -->
+            <template v-if="status == 1 || status == 6">{{i18n_t("bet_record.settlement_pre")}} </template>
+            <!-- 确认提前结算 -->
+            <template v-if="status == 2">{{i18n_t("bet_record.confirm_bet_pre")}} </template>
+            <!-- 确认中... -->
+            <template v-if="status == 3">{{i18n_t("bet_record.confirm")}} </template>
+            <!-- 已提前结算 -->
+            <template v-if="status == 4">{{i18n_t("bet_record.finish_bet_pre")}} </template>
+          </div>
+          <div class="bet-row-2" v-if="(Number(front_settle_amount) || expected_profit)">￥{{ betting_amount }}</div>
         </div>
-        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/success.png`" alt="">
+        <img v-if="status == 3" class="roll" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/suring.png`" alt="">
+        <img v-if="status == 4" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/success.png`" alt="">
       </div>
     </div>
-    <template v-if="item.seriesType=='1'">
+    <template v-if="false">
       <div class="info-wrap">
         <!--选择的是未结算 且settleSwitch开关为1且enablePreSettle为true -->
         <template v-if="BetRecordLeft.selected==0 && UserCtr.settleSwitch && item.enablePreSettle">
@@ -367,6 +378,7 @@ let status = ref(1)
 let calc_show = ref(false)
 // 提前结算申请未通过提示
 let unSuccessTips = ref(false)
+let bet_pre_code = ref('')
 // 滑块是否显示
 let slider_show = ref(false)
 // 0  100
@@ -531,17 +543,17 @@ const submit_early_settle = () => {
   if (cashout_stake.value < 0.01) return;
   status.value = 3;
   unSuccessTips.value = false
+  bet_pre_code.value = ''
   let params = {
     // 订单号
     orderNo: props.item.orderNo,
     // 结算金额
     settleAmount: cashout_stake.value,
     // 结算设备类型 1:H5（默认），2：PC，3:Android，4:IOS
-    deviceType: 1,
+    deviceType: 2,
     // 预计返还（盈利）
     frontSettleAmount: String(front_settle_amount.value || expected_profit.value),
   };
-  let message = ''
   // 响应码【0000000 成功（仅在测试模式出现） | 0400524 确认中（仅在非测试模式出现）| 0400500 提交申请失败，提示message信息】
   api_betting.post_pre_bet_order(params).then((reslut) => {
     let res = reslut.status ? reslut.data : reslut
@@ -553,10 +565,11 @@ const submit_early_settle = () => {
     } else if (res.code == "0400527") {
       // 不支持提前结算或者暂停
       status.value = 5;
+      bet_pre_code.value = '0400527'
     } else if (res.code == "0400537") {
       // 金额有变动，需要更新按钮上的金额
       status.value = 1;
-      message = i18n_t('early.info7');
+      bet_pre_code.value = '0400537'
       let money = res.data
       if (+money > 0) {
         nextTick(() => {
@@ -569,7 +582,6 @@ const submit_early_settle = () => {
       // 提示未通过
       showUnSuccessTips()
     }
-    message && useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
   }).catch((err) => {
     // 提前结算申请未通过
     status.value = 1;
@@ -651,6 +663,9 @@ const clear_timer = () => {
       top: 10px;
       height: 18px;
       width: 18px;
+      &.roll {
+        animation: .5s loading-roll infinite linear
+      }
     }
   }
 }
@@ -673,5 +688,13 @@ const clear_timer = () => {
   padding: 10px 0 0px 0;
 }
 
+@keyframes loading-roll {
+    0% {
+      transform: rotateZ(0deg);
+    }
+    100% {
+      transform: rotateZ(360deg);
+    }
+  }
 
 </style>
