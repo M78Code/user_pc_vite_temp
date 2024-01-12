@@ -7,7 +7,7 @@
     <div class="auto-wrap no-wrap column">
       <!-- 下注标识 -->
       <div v-if="false"> -{{ BetData.bet_data_class_version }} -- {{  BetData.bet_s_list.length }} -{{BetViewDataClass.bet_view_version}} </div>
-      <div class="scroll-wrap">    
+      <div class="scroll-wrap" v-if="BetViewDataClass.bet_order_status == 1">    
 
         <!--未投注就是bet-mix-info组件-->
         <bet-mix-info></bet-mix-info>
@@ -50,6 +50,11 @@
           </div>
         </template>
       </div>
+
+      <!-- 投注结果 -->
+      <div v-else>
+        <bet-mix-record></bet-mix-record>
+      </div>
     </div>
   </div>
 </template>
@@ -57,7 +62,7 @@
 import { ref } from "vue"
 // import bet_mix from "src/public/mixins/bet/bet_mix.js"; // 下注混入js
 import BetMixInfo from "./bet-mix-info.vue"; // 下注混入信息组件
-import BetInput from "./bet-input.vue"; // 下注输入框
+import BetMixRecord from "./bet-mix-record.vue";
 import { IconWapper } from 'src/components/icon'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
