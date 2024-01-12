@@ -603,12 +603,6 @@ class MenuData {
   is_home() {
     return false
   }
-  is_common_kemp(mi) {
-    return this._is_cur_mi(400, mi)
-  }
-  is_collect_kemp() {
-    return this.is_collect && this.menu_root == 400
-  }
   is_leagues() {
     return false
   }
@@ -639,7 +633,7 @@ class MenuData {
         ["101201", "101301"].includes(lv2_mi)
       ) {
         const { lv1_mi, guanjun } = this.left_menu_result;
-        if (lv1_mi == 101 && guanjun != "common-guanjun") {
+        if (lv1_mi == 1012 || lv1_mi == 1013 ) {
           is_multi_column = true;
         }
       }
@@ -1150,7 +1144,8 @@ class MenuData {
   }
   // 是不是 常规赛种下的冠军
   is_common_kemp(mi) {
-    return this.left_menu_result.lv1_mi && this.left_menu_result.lv1_mi != 400 && this.menu_root == 400
+    mi = mi || this.left_menu_result.lv2_mi;
+    return  mi && mi.substr(mi.length-1,1) == 4;
   }
 
   is_collect_kemp() {

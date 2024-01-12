@@ -99,6 +99,14 @@ export function get_template_data({ match, handicap_list, type = 1, play_key }, 
       const hn_key = MatchListData.get_list_to_obj_key(mid, `${mid}_${_hpid || hpid}_${handicap_type}_${ot}`, 'hn')
       let ol_data = lodash.get(hn_obj, hn_key) || many_obj[hn_key]
       if (ol_data) {
+        //附加盘1
+        if (type == 2) {
+          match.has_add1 = true
+        }
+        //附加盘2
+        if (type == 3) {
+          match.has_add2 = true
+        }
         Object.assign(col.ols[ol_index], ol_data)
       }
     })
@@ -433,7 +441,7 @@ export const set_match_play_current_index = (match, play_key) => {
   match.other_handicap_list = get_compute_other_play_data(match)
 }
 //获取保存的盘口玩法
-export function get_play_current_play(match, tab_play_keys='') {
+export function get_play_current_play(match, tab_play_keys = '') {
   const cur = other_play_current_play[match.mid + '_']
   if (cur && match.tab_play_keys.includes(cur)) {
     return cur
