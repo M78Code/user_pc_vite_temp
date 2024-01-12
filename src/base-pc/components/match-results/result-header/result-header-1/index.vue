@@ -17,7 +17,18 @@
     
         <div class="c-simple-header">
       <div class="logo-icon"  :style="compute_css_obj({ key: 'pc-rule-logo' })"></div>
-      <div class="header-title">赛果</div>
+          <div class="head-info">
+            <div class="rule-title">
+              赛果
+            </div>
+            <div class="systime">
+              <div class="refresh" v-if="$route.name == 'match_results'">
+                <refresh-comp :loaded="data_loaded" @click="refresh()" />
+              </div>
+              <!--右侧时间-->
+              <span>{{date_time}} (GMT+8)</span>
+            </div>
+          </div>
     </div>
     <div>
      
@@ -180,6 +191,7 @@ import { GlobalSwitchClass} from "src/output/index.js";
 
 import { loadLanguageAsync } from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
+import refreshComp from "src/components/refresh/refresh.vue";
 import {
   i18n_t,
   useMittEmit,
@@ -189,6 +201,8 @@ import {
 import lodash from "lodash"
 import { useGetResultConfig } from "src/base-pc/components/match-results/results-config.js";
 
+import userCtr from 'src/core/user-config/user-ctr.js'
+import { get_remote_time,utc_to_gmt_no_8_ms2 } from "src/output/index.js"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 const {
   //变量
@@ -196,6 +210,10 @@ const {
 } = useGetResultConfig();
 const emit = defineEmits(['refresh'])
 const props = defineProps({
+  data_loaded:{
+    type: Boolean,
+    default: true//刷新按钮动画开关
+  },
   current_sport_id:{
     type: null
   },
@@ -324,6 +342,8 @@ const locales = {
       }
 const  date = ref(props.dateValue)
 const  showBtn = ref(props.is_show)
+const date_time = ref('')
+const timer_id = ref(null)
 /**
 * @description: 时间选择确认
 * @return {}
@@ -341,14 +361,48 @@ function refresh() {
   changePage({changePage: 1});
   // emit("refresh")
 }
+/**
+ * @Description:获取当前系统时间
+ * @return {undefined} undefined
+ */
+function get_date_time() {
+  const time = get_remote_time()
+  date_time.value = utc_to_gmt_no_8_ms2(time);
+  timer_id.value = setInterval(() => {
+    time += 1000;
+    date_time.value = utc_to_gmt_no_8_ms2(time);
+  }, 1000);
+}
 onMounted(()=>{
  loadLanguageAsync(LocalStorage.get('lang'));
+  get_date_time()
 })
 </script>
 
 <style scoped lang="scss">
 
 @import "./result-header.scss";
+.head-info {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  .rule-title {
+    font-size: 12px;
+  }
+  .systime {
+    min-width: 96px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    .refresh {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  }
+}
+
 .c-simple-header{
   display: flex;
   padding: 0 20px 0 15px;
