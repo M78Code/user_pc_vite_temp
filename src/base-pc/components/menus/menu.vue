@@ -46,7 +46,7 @@
           <sport-icon :sport_id="BaseData.compute_sport_id(400)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
-        <template v-if="IS_FOR_NEIBU_TEST">
+        <!-- <template v-if="IS_FOR_NEIBU_TEST"> -->
           <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}">
             <sport-icon :sport_id="BaseData.compute_sport_id(2000)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
             {{ (BaseData.menus_i18n_map || {})[2000] || "" }}
@@ -55,7 +55,7 @@
             <sport-icon :sport_id="BaseData.compute_sport_id(300)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
             {{ (BaseData.menus_i18n_map || {})[300] || "" }}
           </li>
-        </template>
+        <!-- </template> -->
       </ul>
     </div>
 

@@ -9,14 +9,11 @@ import {
   MITT_TYPES,
 } from "src/core/mitt/index.js";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
-////import store from "src/store-redux/index.js";
-import { SessionStorage } from "src/output/module/constant-utils.js";
-import STANDARD_KEY from "src/core/standard-key";
 import {set_template_width,get_match_tpl_number} from 'src/core/match-list-pc/list-template/match-list-tpl.js'
-const menu_key = STANDARD_KEY.get("menu_pc");
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_common } from "src/api/index.js"
-
+import { menu_default } from "./config/menu-default.js"
+import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
 
 // const state = store.getState();
 // 热门除了50199-30199  赛事、50101-30101 竞足外，
@@ -64,6 +61,8 @@ class MenuData {
       lv1_mi: "", //一级菜单
       lv2_mi: "", // 二级菜单
     };
+    //响应式左侧菜单 右侧菜单 电竞 vr  
+    this.ref_lv2_mi = ref('');
     // 左侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
     this.menu_root = 1;
     // 与 menu_root  类似，主要用于收藏按钮的显示隐藏，使用menu_root  由于这个值被监听，会有其他情况发生
@@ -113,25 +112,51 @@ class MenuData {
     this.to_day_list = []
     this.early_list = []
     this.in_play_list = []
-
+    this.vr_list = [];
     this.current_ball_type = 0
 
     this.left_menu_list = []
+   
+  }
+
+
+  // 获取数据缓存 ，用于刷新
+  get_new_data() {
+    // 获取菜单数据缓存
+    let session_info = SessionStorage.get("menu_pc");
+    if (!session_info) {
+      // 没有数据 使用默认值
+      this.set_left_menu_list_init()
+      return;
+    }
+
+    if (Object.keys(session_info).length) {
+      for(let item in session_info){
+        if(!['menu_data_version','match_list_version','api_config_version','ref_lv2_mi'].includes(item) ){
+          this[item] = session_info[item]
+        }
+      }
+    }
+  }
+
+  // 初始化菜单 默认值
+  set_left_menu_list_init(list = []){
+    this.left_menu_list = list.length ? list : menu_default
+    this.set_menu_data_version()
   }
 
   // 设置 菜单的版本变化
-  set_menu_data_version(){
-    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA)
+  set_menu_data_version = lodash.debounce(() => {
     this.menu_data_version.value = Date.now()
-  }
+  },10)
+
   /**
    * @Description 设置 api参数的版本
    * @param {undefined} undefined
    */
-  set_api_config_version(version) {
-    console.log('version', version);
+  set_api_config_version = lodash.debounce((version) => {
     this.api_config_version.value = version;
-  }
+  },10)
 
   /**
    * @Description 是否电竞的球种ID
@@ -311,11 +336,7 @@ class MenuData {
   // 设置终极菜单id
   set_menu_current_mi(mi) {
     this.menu_current_mi = mi
-    // 菜单数据缓存
-    // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
     //宽度请求变化 因为请求参数是在这里触发的
-    // MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
-    // MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     this.set_match_list_api_config({})
     
   }
@@ -347,7 +368,9 @@ class MenuData {
 
     // return r || 1;
   }
-
+  get_lv2_mi_value(){
+    return this.ref_lv2_mi.value || ""
+  }
   /**
    * 设置    左侧菜单输出
    *
@@ -369,7 +392,7 @@ class MenuData {
       version: Date.now(),
       root: this.menu_root
     };
-
+    this.ref_lv2_mi.value =obj.lv2_mi?Number(obj.lv2_mi):"";
     if (obj.has_mid_menu) {
       //  如果 有   走 自然的 中间菜单组件渲染 ，
       this.compute_mid_match_list_menu_component_show();
@@ -403,8 +426,24 @@ class MenuData {
 
   // 根据菜单id 获取对应的euid
   get_mid_for_euid(mi) {
+    let euid="";
+    if(mi == 0){//滚球全部
+      euid = this.in_play_list.map(n=>{
+        const euid_obj = lodash.get(BaseData, `mi_info_map[mi_${n.mi}]`, {})
+        return euid_obj.euid || "";
+      }).join();
+      return euid;
+    }
+    if(mi == 400){//冠军全部
+      euid = this.kemp_list.map(n=>{
+        const euid_obj = lodash.get(BaseData, `mi_info_map[mi_${n.mi}]`, {})
+        return euid_obj.euid || "";
+      }).join();
+      return euid;
+    }
     let obj = lodash.get(BaseData, `mi_info_map[mi_${mi}]`, {})
-    return obj.euid || 3020101
+    euid = obj.euid;
+    return euid || 3020101
   }
   /**
    * 中间菜单显示配置 默认的
@@ -515,50 +554,11 @@ class MenuData {
     this.set_left_menu_result(config);
   }
 
-  // 获取数据缓存 ，用于刷新
-  get_new_data() {
-    // 获取菜单数据缓存
-    let session_info = sessionStorage.getItem("is_session_menu_data");
-    if (!session_info) {
-      return;
-    }
-    const session_menu_data = JSON.parse(session_info);
-    //  console.warn('session_menu_data', session_menu_data);
-
-    // 获取热门和滚球的数量缓存
-    const local_1_500_count = JSON.parse(
-      sessionStorage.getItem("local_1_500_count")
-    );
-    this.menu_root_count = local_1_500_count;
-
-    if (Object.keys(session_menu_data).length) {
-      const { left_menu_result, menu_root_count, mid_menu_result } =
-        session_menu_data;
-
-      this.menu_root_count = menu_root_count;
-
-      // 重置版本 随便输入
-      this.set_api_config_version("222222");
-
-      // 设置左侧菜单
-      this.set_left_menu_result(left_menu_result);
-
-      // 设置中间件
-      this.set_mid_menu_result(mid_menu_result);
-
-      // this.set_match_list_api_config(match_list_api_config);
-    }
-  }
 
   // 设置 热门和滚球的数量 存在localStorage
   set_local_1_500_count() {
-    // 菜单数据缓存
-    sessionStorage.setItem(
-      "is_session_menu_data",
-      JSON.stringify(this || {})
-    );
     // 滚球热门数据 存local
-    localStorage.setItem("local_1_500_count", this.compute_menu_root_cont());
+    SessionStorage.set("local_1_500_count", this.compute_menu_root_cont());
   }
   // 设置投注类别
 
@@ -614,7 +614,7 @@ class MenuData {
     return false
   }
   is_common_kemp() {
-    return false
+    return this._is_cur_mi(400, this.menu_root)
   }
   is_collect_kemp() {
     return this.is_collect && this.menu_root == 400
@@ -761,44 +761,27 @@ class MenuData {
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) //从接口拿值
     nextTick(()=>{
-      SessionStorage.set(menu_key,this)
+      SessionStorage.set('menu_pc',this)
     })
   }
-
-  /**
-   * @Description  是否角球玩法菜单
-   * @param {boolean}
-   */
-  is_corner_menu() {
-    return [101210, 101310].includes(+this.left_menu_result.lv2_mi);
-  }
-  /**
-   * 是否选中了早盘
-   *  mi [number|string] 要比对的值
-  */
-  is_zaopan(mi) {
-    return this._is_cur_mi(3, mi)
-  }
-  /**
-   * 强制更新 菜单的版本号 ， 会重新计算
-   *
-   * 更新菜单整体视图
-   *
-   * $this.update_menu_version()
-   */
-  update_menu_version() {
-    BaseData.menu_version = Date.now();
-  }
+  
 
   set_menu_root(val){
     this.menu_root = val
+    let left_menu_list = []
+    
     if(val == 2){
-      this.left_menu_list = lodash.cloneDeep(this.to_day_list)
+      left_menu_list = lodash.cloneDeep(this.to_day_list) 
+     
     }
     if(val == 3){
-      this.left_menu_list = lodash.cloneDeep(this.early_list)
+      left_menu_list = lodash.cloneDeep(this.early_list) 
     }
-    console.error("menu",this)
+    if([2,3].includes(val*1)){
+      this.set_left_menu_list_init(left_menu_list)
+    }
+  
+    this.set_menu_data_version()
   }
  
   // 根据菜单设置对应的数据
@@ -924,12 +907,20 @@ class MenuData {
     this.in_play_list = in_play_list
     
     // 默认设置 早盘数据
-    this.left_menu_list = to_day_list
+    this.set_left_menu_list_init(to_day_list)
   }
-
-  is_kemp() {
-    return (this.match_list_api_config.guanjun || "").includes("guanjun");
+  /**
+ * 暂时获取联赛接口  后期国际化从init取 目前init没有国际化
+ */
+  async get_vr_menu_list(){
+    const res = await api_common.get_virtual_menu({device: 'V1_H5'});
+    if(res && res.code =='200'){
+        this.vr_list = res.data;
+        return res.data
+    }
+    return []
   }
+ 
   // 新菜单规律核心参照表
   /**
    * 新菜单规律核心参照表  根据这个表 设计
@@ -1056,7 +1047,14 @@ class MenuData {
   static cl_1() {
     // console.error("cl_1");
   }
-  
+  /**
+   * @Description  是否角球玩法菜单
+   * @param {boolean}
+   */
+  is_corner_menu() {
+    return [101210, 101310].includes(+this.left_menu_result.lv2_mi);
+  }
+
   is_esports_champion() {
     return (this.match_list_api_config || {}).guanjun == "dianjing-guanjun";
   }
@@ -1145,7 +1143,8 @@ class MenuData {
     if (mi) {
       return this._is_cur_mi(400, mi)
     }
-    return this._is_cur_mi(400, mi) || (this.match_list_api_config.guanjun || "").includes("guanjun")
+    return this._is_cur_mi(400, this.menu_root)
+    // return this._is_cur_mi(400, mi) || (this.match_list_api_config.guanjun || "").includes("guanjun")
   }
 
   /**

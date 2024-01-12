@@ -35,7 +35,6 @@ import { get_match_status } from 'src/core/utils/common/index'
 import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data.vue"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 const props = defineProps({
   // 盘口列表
   handicap_list: {
@@ -69,7 +68,8 @@ const match_style_obj=inject("match_style_obj")
 const match=inject("match")
 // 赛事模板宽度
 const match_list_tpl_size=inject("match_list_tpl_size")
-
+//非坑位对象
+const not_hn_obj_map=inject('not_hn_obj_map')
 // 组件是否已挂载
 const is_mounted = ref(false);
 const cur_esports_mode = ref(BetData.cur_esports_mode);
@@ -79,10 +79,7 @@ onMounted(() => {
     is_mounted.value = true
   })
 })
-//非坑位对象
-const not_hn_obj_map = computed(() => {
-  return get_match_to_map_obj(match.value, null, props.add_type); //非坑位对象
-})
+
 //坑位对象
 const hn_obj = toRef(MatchListData.list_to_obj,'hn_obj')
 const col_ols_data = computed(() => {
@@ -133,7 +130,7 @@ function get_5min_classname() {
 function get_bet_width(index, other_class = '') {
   let { bet_width } = match_list_tpl_size.value
   // let bet_width = 110;
-  let { data_tpl_id } = match_style_obj.value
+  let { data_tpl_id } = match_style_obj
   if (other_class.includes('col1.5')) {
     bet_width *= 1.5
   } else if (other_class.includes('col2')) {
@@ -165,7 +162,7 @@ function get_bet_width(index, other_class = '') {
  */
 function get_bet_height(length) {
   let height = 35
-  let { data_tpl_id } = match_style_obj.value
+  let { data_tpl_id } = match_style_obj
   if (length == 1) {
     if (+data_tpl_id === 22) {
       height = height * 3
@@ -184,7 +181,7 @@ function get_bet_style(col_index, length, ol_data) {
   let other_class = lodash.get(ol_data, 'other_class', '')
   let style = `width:${get_bet_width(col_index, other_class)}px !important;height:${get_bet_height(length)}px !important;`
   if (other_class.includes('displacement')) {
-    let { data_tpl_id } = match_style_obj.value
+    let { data_tpl_id } = match_style_obj
     let { bet_width, media_width } = match_list_tpl_size.value
     let right = data_tpl_id == 13 ? bet_width * 7 + media_width - 1 : media_width - 1
     style += `right: ${right}px;`
@@ -213,6 +210,8 @@ function getCurState(hipo) {
 <style lang="scss" scoped>
 .handicap-col {
   .bet-item-wrap {
+    padding: 4px;
+    border-radius: 4px;
     &.visibility {
       visibility: hidden;
     }

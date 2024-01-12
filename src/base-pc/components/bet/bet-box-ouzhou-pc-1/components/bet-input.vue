@@ -77,8 +77,8 @@ const stop_drap_fn = (state) => {
 }
 
 onMounted(() => {
-    // set_ref_data_bet_money()
-    // show_quick_amount(true)
+    set_ref_data_bet_money()
+    show_quick_amount(true)
     // // 单关 单注可以默认展开
     // if(BetData.is_bet_single && !BetData.is_bet_merge){
     //     show_quick_amount(true)

@@ -52,13 +52,12 @@
 
         <div v-for="card_key in match_list_card_key_arr" :key="card_key"
           :class="{ 'have_margin': card_key.indexOf('sport_title') != -1 && card_key != 'sport_title_1' && MenuData.is_home() }">
-          <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
+          <match-list-card :card_key="card_key" :key="`match-list-card1-${card_key}`" />
         </div>
         <Match-Main-Title :title="i18n_t('ouzhou.match.top_leagues')"
           v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
-        <div v-for="card_key in five_leagues_card_key_arr" :key="card_key" :class="`card_key_${card_key}`">
-          <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
-        </div>
+        <match-list-card v-for="card_key in five_leagues_card_key_arr" :card_key="card_key"
+          :key="`match-list-card2-${card_key}`" :class="`card_key_${card_key}`" />
         <template v-slot:after>
           <div style="height: 15px"></div>
           <back-top :onClick="on_go_top" />
@@ -115,7 +114,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import {
   compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES, useMittEmit,
   GlobalAccessConfig, MatchDataWarehouse_ouzhou_PC_five_league_List_Common,
-  into_home_event,UserCtr
+  into_home_event, UserCtr
 } from "src/output/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import MatchMainTitle from "src/base-pc/components/match-list/match_main_title.vue";
@@ -161,10 +160,8 @@ export default {
     const match_list_top = ref("76px");
     let mitt_list = null
     const MatchListCardDataClass_match_list_card_key_arr = () => {
-      nextTick(() => {
-        match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr;
-        five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
-      })
+      match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr;
+      five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
     };
 
     let timer = 0;
@@ -172,7 +169,7 @@ export default {
       // 发送进入首页埋点消息
       clearTimeout(timer)
       timer = setTimeout(() => {
-        lodash.get(UserCtr,'user_info.userId') && into_home_event();
+        lodash.get(UserCtr, 'user_info.userId') && into_home_event();
       }, 2000);
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
@@ -182,7 +179,6 @@ export default {
           get_data_info({ is_socket: true, type })
         ]).off, // 15分钟赛事数据
       ]
-      mounted_fn(get_data_info);
       MatchListCardDataClass_match_list_card_key_arr();
     });
     onUnmounted(() => {
@@ -209,6 +205,7 @@ export default {
     function on_go_top() {
       useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0)
     }
+    mounted_fn(get_data_info);
     function get_league_list() {
       return MatchLeagueData.get_league_list() || []
     }

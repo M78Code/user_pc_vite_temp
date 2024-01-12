@@ -176,8 +176,9 @@
                         </div>
                       </div>
                       <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                      <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
-                        :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
+                      <!-- ms	string	赛事状态：0未开赛，1 进行中  v-show="match_of_list.ms > 0 && !is_results && !eports_scoring" -->
+                      <div class="score full-score" 
+                        :class="{ 'visibility-hidden': match_of_list?.ms == 0  }">
                         {{ home_score }}
                       </div>
 
@@ -223,9 +224,10 @@
                           <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                         </div>
                       </div>
-                      <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                      <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
-                        :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
+                      
+                      <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分 v-show="match_of_list.ms > 0 && !is_results && !eports_scoring" -->
+                      <div class="score full-score" 
+                        :class="{ 'visibility-hidden':match_of_list?.ms == 0 }">
                         {{ away_score }}
                       </div>
 
@@ -243,8 +245,9 @@
             </div>
 
           </div>
-          <!-- match.csid != 1 -->
-          <template v-if="match.csid">
+          <!-- match.csid != 1 赛种id ？ -->
+          <!-- ms:  1 已经开赛，0 未开赛 -->
+          <template v-if="match.ms == 1">
             <div class="score-content-new">
               <ScoreList :main_source="main_source" :match="match_of_list" />
             </div>
@@ -1038,7 +1041,7 @@ export default {
 
       &.result {
         padding-top: 0.1rem;
-        padding-bottom: 0.1rem;
+        // padding-bottom: 0.1rem;
       }
     }
 
@@ -1295,7 +1298,6 @@ export default {
         }
 
         .score {
-          height: 0.3rem;
           font-size: 0.14rem;
           display: flex;
           align-items: center;
@@ -1737,8 +1739,9 @@ export default {
 
 .score-content-new {
   padding-top: 6px;
-  max-width: 200px;
-  overflow-x: scroll;
+  // max-width: 200px;
+  // overflow-x: scroll;
+  padding-bottom: 10px;
 }
 </style>
   

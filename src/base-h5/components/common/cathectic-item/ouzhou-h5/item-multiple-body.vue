@@ -74,7 +74,7 @@
               </span>
             </span>
             <!-- 单关不需要下划线 -->
-            <div v-if="data_b.seriesType != '1'" class="line"></div>
+            <div v-if="!['1', '3'].includes(data_b.seriesType)" class="line"></div>
           </div>
         </div>
       </template>
@@ -99,7 +99,7 @@
 import lodash from 'lodash'
 import { ref, onMounted, computed } from 'vue'
 import BetRecordClass from "src/core/bet-record/h5/bet-record.js";
-import { bet_result } from "src/core/bet-record/util.js";
+import { bet_result } from "src/core/bet-record/h5/util.js";
 import { i18n_t, project_name } from 'src/output/index.js'
 import { IconWapper } from 'src/components/icon'
 import { itemFooter, itemOrder, earlySettle, earlySettledDetail } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";

@@ -44,7 +44,7 @@
         </div>
       </div>
       <!-- 赛事数量 -->
-      <div v-else class="league-match-count">
+      <div v-if="!is_kemp && card_style_obj.is_league_fold" class="league-match-count">
         <span>{{ card_style_obj.match_count }}</span>
       </div>
     </div>
@@ -87,15 +87,9 @@ const csid = (lodash.get(props.card_style_obj, 'league_obj.csid') || MenuData.cu
 let data_tpl_id = get_ouzhou_data_tpl_id(csid)
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`]
 const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`], 'width_config')
-// 获取菜单类型
-if (!csid && ['1', '500'].includes(menu_config.menu_root)) {
-  useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
-}
-
 function is_collect() {
   return Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
 }
-
 /**
  * @Description 设置联赛折叠
 */

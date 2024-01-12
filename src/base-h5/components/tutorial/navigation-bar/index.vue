@@ -40,6 +40,8 @@ defineOptions({
 })
 
 const router = useRouter();
+const emit = defineEmits(['goBackHandle'])
+
 
 const props = defineProps({
     centerContentType: {
@@ -61,6 +63,10 @@ const props = defineProps({
     centerFlex: {
         type: Number,
         default: 3
+    },
+    useCustomGoBack: {
+        type: Boolean,
+        default: false
     }
 })
 //筛选窗口
@@ -69,6 +75,10 @@ const select_dialog = ref(false);
 // const inner_height = window.innerHeight;
 
 const set_back = () => {
+    if (props.useCustomGoBack) {
+        emit('goBackHandle')
+        return
+    }
     const hash = location.hash //可能是url 直接跳进来 有返回按钮 那就先保存hash
     try{
         MenuData.set_current_lv1_menu('');

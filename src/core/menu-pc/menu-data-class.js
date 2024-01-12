@@ -151,10 +151,7 @@ class MenuData {
     // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
     //宽度请求变化 因为请求参数是在这里触发的
     // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_TPL_COMPUTED_CMD,lodash_.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
-    clearTimeout(this._t)
-    this._t=setTimeout(() => {
-      set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
-    }, 10);
+    set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     this.set_match_list_api_config()
   }
 
@@ -179,7 +176,6 @@ class MenuData {
   set_menu_data_version() {
     clearTimeout(this._tid)
     this._tid=setTimeout(() => {
-      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)//列表滚动到顶部
       this.menu_data_version.value = Date.now()
       nextTick(()=>{
         SessionStorage.set(menu_key,this)

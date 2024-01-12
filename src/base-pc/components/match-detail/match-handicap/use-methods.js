@@ -86,7 +86,7 @@ export const useMethods = ({ props,emit }) => {
     }
   );
   // 页面宽高变化
-  watch(get_layout_list_size, (val) => {
+  watch(()=>get_layout_list_size.value, (val) => {
     if (get_layout_statu.value) {
       state.waterfall = details.set_waterfall(state.details_data);
     } else {
@@ -427,7 +427,7 @@ export const useMethods = ({ props,emit }) => {
   const check_half = () => {
     if (
       (route.name == "details" &&
-        get_layout_list_size.value.width >= 1680) ||
+      LayOutMain_pc.client_width >= 1680) ||
       (route.name == "virtual_details" && state.match_info.csid == "1001")
     ) {
       return true;
@@ -524,7 +524,7 @@ const rang = ref([])
       ...toRefs(state),
       category_list:props.category_list,
       toggele_layout,
-      check_half,
+      check_half:check_half(),
       toggle_panel
     }
     useMittEmit(MITT_TYPES.EMIT_SET_HANDICAP_THIS, data)

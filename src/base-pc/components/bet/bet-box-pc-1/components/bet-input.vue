@@ -19,12 +19,12 @@
                     {{ i18n_t('common.maxn_amount_val') }}
                 </div>
                 <!--金额-->
-                <div class="col-auto bet-win-money yb-number-bold">{{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)) }} RMB</div>
+                <div class="col-auto bet-win-money yb-number-bold">{{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally), items.bet_amount)) }} RMB</div>
             </div>
 
             <!--键盘区域-->
             <div class="row bet-keyboard bet-keyboard-zone">
-                <bet-keyboard :oid="item.playOptionsId"/>
+                <bet-keyboard :oid="items.playOptionsId"/>
             </div>
         </div>
         <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
@@ -62,7 +62,7 @@ const props = defineProps({
         type: Number,
         default: 0
     },
-    item: {}
+    items: {}
 })
 
 const InputFocus = ref()
@@ -87,9 +87,9 @@ onUnmounted(() => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = obj => {
-    if(props.item.playOptionsId == obj.id || obj.id == undefined){
+    if(props.items.playOptionsId == obj.id || obj.id == undefined){
          // 获取当前投注金额
-        let money = BetData.is_bet_merge ? BetData.bet_amount : props.item.bet_amount
+        let money = BetData.is_bet_merge ? BetData.bet_amount : props.items.bet_amount
         
         let money_ = obj.money
         // 设置最大投注金额
@@ -100,7 +100,7 @@ onUnmounted(() => {
         let money_amount = mathJs.add(money,money_)
             // 投注金额 不能大于最大投注金额 也不能大于用户余额
         if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
-            BetData.set_bet_obj_amount(mathJs.add(money,money_),props.item.playOptionsId)
+            BetData.set_bet_obj_amount(mathJs.add(money,money_),props.items.playOptionsId)
             ref_data.money = money_amount
         }else{
             // 最大限额不能大于余额
@@ -108,7 +108,7 @@ onUnmounted(() => {
             if(UserCtr.balance < ref_data.max_money){
                 money_a = UserCtr.balance
             }  
-            BetData.set_bet_obj_amount(mathJs.add(money,money_),props.item.playOptionsId)
+            BetData.set_bet_obj_amount(mathJs.add(money,money_),props.items.playOptionsId)
             ref_data.money = money_a
         }
     }
@@ -120,7 +120,7 @@ onUnmounted(() => {
 const bet_clear_handle = () => {
     ref_data.money = ''
     BetData.set_bet_amount(0)
-    BetData.set_bet_obj_amount('',props.item.playOptionsId)
+    BetData.set_bet_obj_amount('',props.items.playOptionsId)
 }
 
 // 键盘回车事件
@@ -134,7 +134,7 @@ const keydown = (e) => {
 
 // 限额改变 修改限额内容
 const set_ref_data_bet_money = () => {
-    let value = props.item.playOptionsId
+    let value = props.items.playOptionsId
  
     const { min_money = 10, max_money = 8888, seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
     // 最小限额
@@ -146,7 +146,7 @@ const set_ref_data_bet_money = () => {
     // 限额改变 重置投注金额
     ref_data.money = ''
      //设置键盘MAX限额
-     let max_obj = {max_money:ref_data.max_money,id:props.item.playOptionsId}
+     let max_obj = {max_money:ref_data.max_money,id:props.items.playOptionsId}
      BetData.set_bet_keyboard_config(max_obj)
     InputFocus.value.focus()
 }
@@ -156,7 +156,7 @@ const set_ref_data_bet_money = () => {
 const set_win_money = () => {
     // 输入控制
     if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
-        BetData.set_bet_obj_amount(ref_data.money,props.item.playOptionsId)
+        BetData.set_bet_obj_amount(ref_data.money,props.items.playOptionsId)
     }else{
         // 最大限额不能大于余额
         let money_a = ref_data.max_money
@@ -164,7 +164,7 @@ const set_win_money = () => {
             money_a = UserCtr.balance
         }
         ref_data.money = money_a
-        BetData.set_bet_obj_amount(money_a,props.item.playOptionsId)
+        BetData.set_bet_obj_amount(money_a,props.items.playOptionsId)
     }
 }
 
@@ -233,6 +233,7 @@ input[type="number"] {
         padding-top: 8px !important;
         margin-left: -10px !important;
         margin-right: -10px !important;
+        padding: 0 10px;
     }
 }
 

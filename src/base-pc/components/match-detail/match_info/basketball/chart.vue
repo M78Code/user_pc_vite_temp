@@ -20,21 +20,21 @@
       <div class="score-item score-num-wrap first-item">
         <!-- 主队2分次数 -->
         <div class="score-num match-home">
-          {{ lodash.get(match_info, "msc.S107.home") || 0 }}
+          {{ lodash.get(match_info, "msc_obj.S107.home") || 0 }}
         </div>
         <div class="score-tips">2 {{ i18n_t("common.score") }}</div>
         <!-- 客队2分次数 -->
         <div class="score-num match-away">
-          {{ lodash.get(match_info, "msc.S107.away") || 0 }}
+          {{ lodash.get(match_info, "msc_obj.S107.away") || 0 }}
         </div>
       </div>
       <!-- 2分条 -->
       <div class="score-item  stripe-item">
         <div class="stripe-left">
-          <div class="stripe" :style="{width: cale_score(lodash.get(match_info, 'msc.S107.home') || 0)}"></div>
+          <div class="stripe" :style="{width: cale_score(lodash.get(match_info, 'msc_obj.S107.home') || 0)}"></div>
         </div>
         <div class="stripe-right">
-          <div class="stripe"  :style="{width: cale_score(lodash.get(match_info, 'msc.S107.away') || 0)}"></div>
+          <div class="stripe"  :style="{width: cale_score(lodash.get(match_info, 'msc_obj.S107.away') || 0)}"></div>
         </div>
       </div>
 
@@ -42,50 +42,50 @@
       <div class="score-item score-num-wrap">
         <!-- 主队3分次数 -->
         <div class="score-num match-home" >
-          {{ lodash.get(match_info, "msc.S108.home") || 0 }}
+          {{ lodash.get(match_info, "msc_obj.S108.home") || 0 }}
         </div>
         <div class="score-tips">3 {{ i18n_t("common.score") }}</div>
         <!-- 客队3分次数 -->
         <div class="score-num match-away">
-          {{ lodash.get(match_info, "msc.S108.away") || 0 }}
+          {{ lodash.get(match_info, "msc_obj.S108.away") || 0 }}
         </div>
       </div>
       <!-- 3分条 -->
       <div class="score-item stripe-item">
         <div class="stripe-left">
-          <div class="stripe" :style="{width: cale_score(lodash.get(match_info, 'msc.S108.home') || 0)}"></div>
+          <div class="stripe" :style="{width: cale_score(lodash.get(match_info, 'msc_obj.S108.home') || 0)}"></div>
         </div>
         <div class="stripe-right">
-          <div class="stripe" :style="{width: cale_score(lodash.get(match_info, 'msc.S108.away') || 0)}"></div>
+          <div class="stripe" :style="{width: cale_score(lodash.get(match_info, 'msc_obj.S108.away') || 0)}"></div>
         </div>
       </div>
       <!-- 犯规 -->
       <div class="score-item score-num-wrap">
-        <div class="score-num match-home">{{ lodash.get(match_info, "msc.S106.home", 0) }}</div>
+        <div class="score-num match-home">{{ lodash.get(match_info, "msc_obj.S106.home", 0) }}</div>
         <div class="score-tips">{{ i18n_t("common.foul") }}</div>
-        <div class="score-num match-away">{{ lodash.get(match_info, "msc.S106.away", 0) }}</div>
+        <div class="score-num match-away">{{ lodash.get(match_info, "msc_obj.S106.away", 0) }}</div>
       </div>
       <!-- 犯规条 -->
       <div class="score-item stripe-item">
         <div class="stripe-left">
-          <div class="stripe" :style="{width: cale_score(lodash.get(match_info, 'msc.S106.home', 0) || 0)}"></div>
+          <div class="stripe" :style="{width: cale_score(lodash.get(match_info, 'msc_obj.S106.home', 0) || 0)}"></div>
         </div>
         <div class="stripe-right">
-          <div class="stripe" :style="{width: cale_score(lodash.get(match_info, 'msc.S106.away') || 0)}"></div>
+          <div class="stripe" :style="{width: cale_score(lodash.get(match_info, 'msc_obj.S106.away') || 0)}"></div>
         </div>
       </div>
       <div class="score-item score-penalty">
         <div class="status-num match-home">
           <!-- 主队罚球得分率 -->
-          <span class="scale">{{ lodash.get(match_info, "msc.S111.home") || "0" }}%</span>
+          <span class="scale">{{ lodash.get(match_info, "msc_obj.S111.home") || "0" }}%</span>
           <!-- 罚球得分次数 -->
-          <span class="degree">{{ lodash.get(match_info, "msc.S110.home") || "0"  }}</span>
+          <span class="degree">{{ lodash.get(match_info, "msc_obj.S110.home") || "0"  }}</span>
         </div>
         <div class="status-num match-away">
           <!-- 客队队罚球得分次数 -->
-          <span class="degree">{{ lodash.get(match_info, "msc.S110.away") || "0"  }}</span>
+          <span class="degree">{{ lodash.get(match_info, "msc_obj.S110.away") || "0"  }}</span>
           <!-- 客队罚球得分率 -->
-          <span class="scale">{{ lodash.get(match_info, "msc.S111.away") || "0" }}%</span
+          <span class="scale">{{ lodash.get(match_info, "msc_obj.S111.away") || "0" }}%</span
           >
         </div>
       </div>
@@ -96,11 +96,11 @@
         </div>
         <!-- 主队罚球率 -->
         <div class="stripe-left penalty">
-          <div class="stripe" :style="{width: (lodash.get(match_info, 'msc.S111.home') || '5')+ '%'}"></div>
+          <div class="stripe" :style="{width: (lodash.get(match_info, 'msc_obj.S111.home') || '5')+ '%'}"></div>
         </div>
          <!-- 客队罚球率 -->
         <div class="stripe-right penalty">
-          <div class="stripe" :style="{width: (lodash.get(match_info, 'msc.S111.away') || '5')+ '%'}"></div>
+          <div class="stripe" :style="{width: (lodash.get(match_info, 'msc_obj.S111.away') || '5')+ '%'}"></div>
         </div>
          <!-- 客队暂停 -->
         <div class="away-stop stop">
@@ -161,9 +161,9 @@ export default {
     match_info: {
       handler(res, old) {
         // 罚球得分率
-        if (lodash.get(res, "msc.S111")) {
-          res.msc.S111.home = parseInt(res.msc.S111.home);
-          res.msc.S111.away = parseInt(res.msc.S111.away);
+        if (lodash.get(res, "msc_obj.S111")) {
+          res.msc_obj.S111.home = parseInt(res.msc_obj.S111.home);
+          res.msc_obj.S111.away = parseInt(res.msc_obj.S111.away);
         }
         //数据出错
         let data_err =
@@ -236,10 +236,10 @@ export default {
           }, //中场休息
         };
         this.foul =
-          lodash.get(res, `msc.${lodash.get(dict[res.mmp], "foul")}`) ||
+          lodash.get(res, `msc_obj.${lodash.get(dict[res.mmp], "foul")}`) ||
           this.default_score;
-        if (lodash.get(res, `msc.${ lodash.get(dict[res.mmp],'stop')}`)) {
-          let stop_num = lodash.get(res, `msc.${ lodash.get(dict[res.mmp],'stop')}`) || {};
+        if (lodash.get(res, `msc_obj.${ lodash.get(dict[res.mmp],'stop')}`)) {
+          let stop_num = lodash.get(res, `msc_obj.${ lodash.get(dict[res.mmp],'stop')}`) || {};
           this.stop_obj ={
                   home: parseInt(stop_num.home),
                   away: parseInt(stop_num.away)
@@ -268,10 +268,10 @@ export default {
     height: 6px;
     border-radius: 50%;
     &.dot-h {
-      background-color: var(--qq--chat-bg-orange-1);
+      background-color: var(--q-gb-bg-c-17);
     }
     &.dot-a {
-      background-color: var(--qq--chat-bg-blue-1);
+      background-color: var(--q-gb-bg-c-4);
     }
   }
   .team-info {
@@ -338,7 +338,7 @@ export default {
           .stripe {
             position: absolute;
             right: 0;
-            background-color: var(--qq--chat-bg-orange-1);
+            background-color: var(--q-gb-bg-c-17);
             border-radius: 2px 0px 0px 2px;
           }
         }
@@ -348,7 +348,7 @@ export default {
           .stripe {
             position: absolute;
             left: 0;
-            background-color: var(--qq--chat-bg-blue-1);
+            background-color: var(--q-gb-bg-c-4);
             border-radius: 0px 2px 2px 0px;
           }
         }

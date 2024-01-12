@@ -37,8 +37,7 @@
     
     <div style="display: none">{{ base_data_instance.base_data_version }}</div>
     <!-- 体育菜单 -->
-    <menu-wapper use_component_key="PcMenuTemplate1" :base_data="base_data_instance"
-      :version="base_data_instance.base_data_version"></menu-wapper>
+    <menu-wapper use_component_key="PcMenuTemplate1" ></menu-wapper>
   </div>
 </template>
 

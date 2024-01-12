@@ -1,24 +1,24 @@
 <template>
-  <div class="full-height" @click="set_global_click" :style="page_style">
+  <div class="full-height" @click="set_global_click">
     <ws />
     <!-- 页面路由开始 -->
     <router-view />
     <div class="error-data">{{ GlobalSwitchClass.error_data }}</div>
-    <div style="display:none">{{ GlobalSwitchClass.global_switch_version.version }}</div>
+    <div style="display:none">{{ GlobalSwitchClass.global_switch_version }}</div>
     <div id="v-tooltip"></div>
   </div>
 </template>
 <script setup>
 import "src/base-pc/core/globel-mitt";
-import { PageSourceData ,GlobalSwitchClass} from "src/output/index.js";
+import { PageSourceData ,GlobalSwitchClass,set_theme_style_sheet_by_css_obj} from "src/output/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { wslog, httplog } from "src/core/log/";
 import {get_query_string as urlparams } from "src/output/index.js";
 import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
+
 // import { set_remote_server_time } from "./src/store/module/global";
 import { useRouter,useRoute } from "vue-router";
-import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
 import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
@@ -31,7 +31,7 @@ const _data = reactive({
   // 父类窗口句柄
   parent_doc_element: null,
 });
-const page_style = ref('')
+const emitters = ref('')
 // 检查内嵌版的逻辑处理动作
 iframe_check();
 //设置错误数据
@@ -57,9 +57,21 @@ GlobalSwitchClass.set_error_data("delete")
 //重置即将开赛筛选
 // this.$store.state.filter.open_select_time = null;
 
-onMounted(() => {
-  page_style.value = global_color_obj()
+onBeforeMount(()=>{
+  set_global_theme_change()
 })
+
+onMounted(() => {
+  emitters.value = {
+    emitter_1: useMittOn( MITT_TYPES.EMIT_THEME_CHANGE,  set_global_theme_change ).off
+  }
+})
+
+// 设置主题
+const set_global_theme_change = () => {
+ set_theme_style_sheet_by_css_obj(global_color_obj())
+}
+
 // 公共全局主题色
 const global_color_obj = () => {
   // 背景色
@@ -118,8 +130,9 @@ watch(
 // }
 //设置点击全局事件+1
 function set_global_click() {
-    //设置全局点击事件
-    GlobalSwitchClass.set_global_click()
+  //设置全局点击事件
+  GlobalSwitchClass.set_global_click()
+
 }
 /**
  * @description: 检查内嵌版的逻辑处理动作
@@ -171,8 +184,7 @@ const scroll_mitt = useMittOn(
     }
   }
 );
-onMounted(() => {
-});
+
 onBeforeMount(() => {
   // 释放日志功能对象
   if (wslog.destroyed) {
@@ -189,6 +201,7 @@ onBeforeMount(() => {
   // remove_message();
 });
 onUnmounted(() => {
+  Object.values(emitters.value).map((x) => x());
 });
 </script>
 <script>

@@ -149,7 +149,7 @@ const ref_data = reactive({
 
 // 删除当前投注项
 const del_bet_item = () => {
-  BetData.bet_list_remove(props.item.playOptionsId)
+  BetData.set_delete_bet_info(props.item.playOptionsId,props.index)
 }
 
 </script>

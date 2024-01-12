@@ -1,5 +1,5 @@
 import {
-	ref
+	ref, onUnmounted, nextTick
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
@@ -7,6 +7,7 @@ import {
 	MatchDataWarehouse_PC_List_Common as MatchListData,
 	MatchDataWarehouse_PC_Detail_Common,
 } from "src/output/module/match-data-base.js";
+import MatchListCardData from "./match-card/module/match-list-card-data-class";
 import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { api_match } from "src/api/index.js";
@@ -41,19 +42,9 @@ let get_match_list_timeid;
 let hot_match_list_timeout;
 let axios_debounce_timer;
 let axios_debounce_timer2;
-let virtual_list_timeout_id;
-let switch_timer_id
 let mitt_list = [];
 let tid_match_list;
-// 调用列表接口
-useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({ is_socket = undefined }) => {
-	clearTimeout(tid_match_list)
-	tid_match_list = setTimeout(() => {
-		fetch_match_list(is_socket)//请求接口
-	}, 80);
-})
-//请求元数据
-useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 50));
+
 /**
 * @description 请求数据
 * @param  {boolean} is_socket   是否 socket 调用
@@ -217,6 +208,7 @@ function handle_destroyed() {
 		clearTimeout(hot_match_list_timeout);
 	}
 	mitt_list.forEach(i => i());
+	mitt_list = []
 	timer_obj.value = {};
 	clearTimeout(axios_debounce_timer);
 	clearTimeout(axios_debounce_timer2);
@@ -234,16 +226,23 @@ function init_page_when_base_data_first_loaded() {
 	// if (MenuData.is_home()) {
 	// 	return
 	// }
-	set_load_data_state("loading") //loading
-	//设置元数据 列表 返回boolean
-	if (PROJECT_NAME == 'ouzhou-pc') {
-		is_has_base_data = set_base_data_init_ouzhou()
-	} else {
-		is_has_base_data = set_base_data_init()
-	}
-	if (is_has_base_data === true) {  //如果元数据有数据就设定为data
-		set_load_data_state("data")
-	}
+	// 设置列表滚动条scrollTop
+	MatchListScrollClass.set_scroll_top(0);
+	MatchListScrollClass.clear_show_mid()
+	MatchListCardData.reset_data();//表征清空
+	useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0)//列表滚动到顶部
+	nextTick(() => {
+		set_load_data_state("loading") //loading
+		//设置元数据 列表 返回boolean
+		if (PROJECT_NAME == 'ouzhou-pc') {
+			is_has_base_data = set_base_data_init_ouzhou()
+		} else {
+			is_has_base_data = set_base_data_init()
+		}
+		if (is_has_base_data === true) {  //如果元数据有数据就设定为data
+			set_load_data_state("data")
+		}
+	});
 }
 /**
  * 初始化方法
@@ -262,19 +261,46 @@ function mounted_fn(fun) {
 			fun({ is_socket: true })
 		}
 		else {
-			useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, { is_socket: true })
+			useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, { is_socket: true }) //请求列表
 		}
 	}
 	mitt_list = [
 		// 站点 tab 休眠状态转激活
 		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, default_fun).off,
 		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, default_fun).off, //语言切换
+		// 调用列表接口
+		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({ is_socket = undefined }) => {
+			clearTimeout(tid_match_list)
+			tid_match_list = setTimeout(() => {
+				api_error_count = 0; //重新计算错误次数
+				fetch_match_list(is_socket)//请求接口
+			}, 80);
+		}).off,
+		//请求元数据
+		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 50)).off,
+		useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(() => {
+			// 重新订阅C8
+			api_bymids({ is_show_mids_change: true })
+		}, 1000)).off,
+		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids).off,
 	]
+	//如果创建后 菜单没有触发数据拉去
+	//菜单没有触发请求数据 仍然没有请求数据 自身触发一次
+	//防止一直loading
+	setTimeout(() => {
+		if (load_data_state.value == 'loading') {
+			useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
+			useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {})
+		}
+	}, 10)
 	//每30秒检查一次可视区域赛事数据最后更新时间 
 	check_match_last_update_timer_id = setInterval(
 		check_match_last_update_time,
 		30000
 	);
+	onUnmounted(() => {
+		handle_destroyed()
+	});
 	// load_video_resources();
 }
 // watch(MenuData.match_list_api_config.version, (cur) => {
@@ -295,9 +321,6 @@ function mounted_fn(fun) {
 // 	},
 // 	{ deep: true }
 // );
-// onUnmounted(() => {
-// 	handle_destroyed()
-// });
 /**
  * @description 获取强力推荐赛事
  * @param  {boolean} backend_run 是否后台 调用
@@ -313,14 +336,13 @@ function get_hot_match_list(backend_run = false) {
 	let _params = lodash.clone(match_list_api_config.params);
 	api(_params)
 		.then((res) => {
-			console.log('backend_run', backend_run)
 			// 组件和路由不匹配
 			if (page_source == "details" && page_source != "details") {
 				return;
 			}
-			if (handle_destroyed()) {
-				return;
-			}
+			// if (handle_destroyed()) {
+			// 	return;
+			// }
 			show_refresh_mask.value = false;
 			let code = lodash.get(res, "data.code");
 			// 赛事列表
@@ -332,12 +354,11 @@ function get_hot_match_list(backend_run = false) {
 				if (match_list.length > 0) {
 					set_load_data_state("data")
 					is_show_hot.value = true;
-					match_list_handle_set(match_list)
 					// 设置列表数据仓库
 					MatchListData.set_list(
 						match_list,
 					);
-
+					match_list_handle_set(match_list)
 					if (!backend_run) {
 						// 调用bymids接口
 						useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, { is_first_load: true })
@@ -419,7 +440,7 @@ function check_match_last_update_time() {
 		// 更新时间间隔
 		let api_time_dif = 0,
 			ws_time_dif = 0;
-		let match = MatchListData.list_to_obj.mid_obj[mid + '_'] || {};
+		let match = MatchListData.get_quick_mid_obj(mid) || {};
 		if (match.api_update_time) {
 			api_time_dif = now_time - match.api_update_time;
 		}
@@ -434,7 +455,6 @@ function check_match_last_update_time() {
 		}
 	});
 	if (mids.length > 0) {
-		console.log('mids', mids)
 		api_bymids({ mids });
 	}
 };

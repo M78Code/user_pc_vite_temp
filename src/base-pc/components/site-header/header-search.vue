@@ -7,10 +7,8 @@
       <div v-show="main_menu_toggle !== 'mini'" class="ellipsis" @click.stop="show_search">
         {{ search_hot_push.hot_push_name || i18n_t("common.search") }}
       </div>
-      <icon-wapper class="icon" :name="!['theme01_y0', 'theme02_y0'].includes(UserCtr.theme)
-        ? `img:${img_search_icon}`
-        : `img:${img_search_icon_y0}`
-        " size="14px" />
+      <div class="search-icon"  :style="compute_css_obj({ key: 'pc-search-icon' })"></div>
+    
     </div>
   </div>
 
@@ -44,9 +42,9 @@ import { IconWapper } from 'src/components/icon/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
+import { compute_css_obj } from 'src/core/server-img/index.js'
 
-const img_search_icon = compute_local_project_file_path('/image/svg/search-icon.svg')
-const img_search_icon_y0 = compute_local_project_file_path('/image/svg/y0-search-icon.svg')
+
 
 
 /** 国际化 */
@@ -128,6 +126,10 @@ function handle_menu_collapse() {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.search-icon{
+  height: 14px;
+  width: 14px;
+}
 // @import './site-header.scss';
 </style>

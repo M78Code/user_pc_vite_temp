@@ -10,6 +10,8 @@
       `csid${ol_data.csid}`,
       odds_lift,
       { 'show-odds-icon': odds_state != 'seal' },
+      {'oddsup': odds_lift == 'up'},
+      {'oddsdown': odds_lift == 'down'}
     ]"
     @click.stop="bet_click_ol"
     :id="`list-${ol_data.oid}`"
@@ -30,7 +32,7 @@
       <span class="handicap-more" v-show="ol_data.onbl"
         >{{ ol_data.onbl }}&nbsp;</span
       >
-      <div class="handicap-value-text">{{ score }} {{ ol_data.onb }}</div>
+      <div class="handicap-value-text handicap-value-ranks">{{ score }} {{ ol_data.onb }}</div>
     </div>
 
     <!-- 赔率 -->
@@ -48,13 +50,10 @@
       <span v-else>
         {{ ol_data.ov / 100000 }}
       </span>
-      <div
-        class="odds-arrows-wrap"
-        v-if="odds_state != 'seal' && !menu_config.is_virtual_sport"
-      >
+      <div class="odds-arrows-wrap">
         <!-- 红升、绿降 -->
-        <div class="odds-icon odds-up"></div>
-        <div class="odds-icon odds-down"></div>
+        <div class="odds-icon" v-if="odds_lift == 'up'" :style="compute_css_obj({ key: 'pc-home-arrow-up' })"></div>
+        <div class="odds-icon" v-if="odds_lift == 'down'" :style="compute_css_obj({ key: 'pc-home-arrow-down' })"></div>
       </div>
     </div>
   </div>
@@ -73,6 +72,7 @@ import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { compute_value_by_cur_odd_type, UserCtr } from "src/output/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
+import { compute_css_obj } from 'src/core/server-img/index.js'
 
 const is_mounted = ref(true);
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
@@ -81,11 +81,6 @@ const odds_state = ref("");
 const match_odds = ref("");
 // 赔率升降 up:上升 down:下降
 const odds_lift = ref("");
-// 是否红升绿降中
-const odds_lift_show = ref(false);
-
-// 定时器对象
-let timer_obj = {};
 
 const props = defineProps({
   ol_data: {
@@ -119,21 +114,21 @@ const score = computed(() => {
  * @param  {number} obv - 断档赔率值
  * @return {undefined} undefined
  */
-const format_odds = () => {
-  let ov = lodash.get(props.ol_data, "ov");
-  let obv = lodash.get(props.ol_data, "obv");
-  // 列表取 hsw
-  let hsw = props.ol_data._hsw;
-  let match_odds_info = compute_value_by_cur_odd_type(
-    ov ,
-    ov.hpid,
-    hsw || '',
-    1
-  );
-  console.log('match_odds_info', props.ol_data);
-  match_odds.value = format_odds_value(match_odds_info,props.ol_data.csid);
-};
-
+// const format_odds = () => {
+//   let ov = lodash.get(props.ol_data, "ov");
+//   let obv = lodash.get(props.ol_data, "obv");
+//   // 列表取 hsw
+//   let hsw = props.ol_data._hsw;
+//   let match_odds_info = compute_value_by_cur_odd_type(
+//     ov ,
+//     ov.hpid,
+//     hsw || '',
+//     1
+//   );
+//   console.log('match_odds_info', props.ol_data);
+//   match_odds.value = format_odds_value(match_odds_info,props.ol_data.csid);
+// };
+let tid;
 /**
  * 设置赔率升降
  * @param  {number} cur - 当前赔率值
@@ -141,34 +136,18 @@ const format_odds = () => {
  * @return {undefined} undefined
  */
 const set_odds_lift = (cur, old) => {
-  let _odds_lift = "";
-
-  if (
-    odds_state.value != "lock" &&
-    odds_state.value != "seal" &&
-    old &&
-    !is_odds_seal()
+  if (!["lock", 'seal'].includes(odds_state.value) && old && !is_odds_seal()
   ) {
     if (cur > old) {
-      _odds_lift = "up";
-    } else if (cur < old) {
-      _odds_lift = "down";
+      odds_lift.value = 'up'
     }
-
-    if (_odds_lift && !odds_lift_show.value) {
-      /**清除定时器 */
-      if (timer_obj["odds_lift"]) {
-        clearTimeout(timer_obj["odds_lift"]);
-        timer_obj["odds_lift"] = null;
-      }
-      odds_lift_show.value = true;
-      odds_lift.value = _odds_lift;
-
-      timer_obj["odds_lift"] = setTimeout(() => {
-        odds_lift.value = "";
-        odds_lift_show.value = false;
-      }, 3000);
+    else if (old > cur) {
+      odds_lift.value = 'down'
     }
+    clearTimeout(tid)
+    tid = setTimeout(() => {
+      odds_lift.value = "";
+    }, 3000);
   }
 };
 
@@ -176,6 +155,7 @@ const set_odds_lift = (cur, old) => {
  * 取消赔率升降
  */
 const clear_odds_lift = () => {
+  clearTimeout(tid)
   odds_lift.value = "";
 };
 
@@ -197,27 +177,27 @@ const is_odds_seal = () => {
  * @param  {number} os  投注项级 1：开 2：封 3：关 4：锁
  * @return {undefined} undefined
  */
-const get_odds_state = (mhs, hs, os) => {
-  let _active = get_odds_active(mhs, hs, os);
-  let id = lodash.get(props.ol_data, "_hn") || lodash.get(props.ol_data, "oid");
-  let state = "";
-  const STATE = {
-    // 封盘
-    2: "seal",
-    // 关盘
-    3: "close",
-  };
-  if (!id) {
-    state = "disable";
-  } else if (STATE[_active]) {
-    state = STATE[_active];
-  } else {
-    let selected_class;
-    state = selected_class ? "active" : "normal";
-  }
-  // 当赔率对应的欧赔小于1.01时 ！！！！！！！！！！！！！！！！并且当前不在关盘状态，强制转换成封盘的状态 对盘口加锁
-  return is_odds_seal() && _active !== 3 ? "seal" : state;
-};
+// const get_odds_state = (mhs, hs, os) => {
+//   let _active = get_odds_active(mhs, hs, os);
+//   let id = lodash.get(props.ol_data, "_hn") || lodash.get(props.ol_data, "oid");
+//   let state = "";
+//   const STATE = {
+//     // 封盘
+//     2: "seal",
+//     // 关盘
+//     3: "close",
+//   };
+//   if (!id) {
+//     state = "disable";
+//   } else if (STATE[_active]) {
+//     state = STATE[_active];
+//   } else {
+//     let selected_class;
+//     state = selected_class ? "active" : "normal";
+//   }
+//   // 当赔率对应的欧赔小于1.01时 ！！！！！！！！！！！！！！！！并且当前不在关盘状态，强制转换成封盘的状态 对盘口加锁
+//   return is_odds_seal() && _active !== 3 ? "seal" : state;
+// };
 
 /**
  * @description 投注项点击
@@ -254,16 +234,39 @@ const get_odds_state = (mhs, hs, os) => {
   // BetData.set_bet_state_show(true)
 };
 
+
+// 监听oid 取消赔率升降
+// 监听玩法ID变化 取消赔率升降 
+// 监听oid 取消赔率升降
+// 监听玩法ID变化 取消赔率升降 
+watch(() => [props.ol_data._hpid, props.ol_data.oid], (v, o) => {
+  if (v[0] != o[0] || v[1] != o[1]){ //地址可能会变  但是oid不一定
+    clear_odds_lift()
+  }
+})
+// 监听投注项赔率变化
+watch(() => props.ol_data.ov, (cur, old) => {
+  if (cur == old) return
+  // 红升绿降变化
+  set_odds_lift(cur, old);
+}, { deep: true })
+
 onUnmounted(() => {
   // 清除定时器
-  for (const key in timer_obj) {
-    clearTimeout(timer_obj[key]);
-    timer_obj[key] = null;
-  }
+  clearTimeout(tid)
 });
 </script>
 
 <style lang="scss" scoped>
+.c-bet-item {
+  background-color: var(--q-gb-bg-c-27);
+}
+.oddsup {
+  background-color: var(--q-gb-bg-c-28);
+}
+.oddsdown {
+  background-color: var(--q-gb-bg-c-29);
+}
 .show-odds-icon {
   &.up {
     .odds-up {
@@ -288,7 +291,6 @@ onUnmounted(() => {
   left: -1px;
   top: -6px;
   overflow: hidden;
-  display: none;
 }
 .odds-up {
   background: url($SCSSPROJECTPATH+"/image/svg/up.svg") no-repeat 100%;
@@ -363,6 +365,9 @@ onUnmounted(() => {
   white-space: nowrap;
   color: var(--q-gb-t-c-16);
 }
+.handicap-value-ranks{
+  -color: var(--q-gb-t-c-20);
+}
 .vertical {
   flex-direction: column;
   .handicap-value {
@@ -377,7 +382,7 @@ onUnmounted(() => {
   text-align: left !important;
 }
 .active {
-  background: var(--q-gb-bg-c-13);
+  background: var(--q-gb-t-c-16);
   color: var(--q-gb-t-c-18) !important;
 }
 </style>

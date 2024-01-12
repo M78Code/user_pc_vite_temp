@@ -5,10 +5,10 @@
   <div class="component bet-record-item">
     <!--足球或者篮球，预约显示预约字样-->
     <template v-if="order.sportId == 1 || order.sportId == 2">
-      <div class="row appoint-status" v-if="preOrder">
+      <!-- <div class="row appoint-status" v-if="preOrder"> -->
         <!--预约-->
-        <div class="col">{{ i18n_t('bet.bet_book_confirm') }}</div>
-      </div>
+        <!-- <div class="col">{{ i18n_t('bet.bet_book_confirm') }}</div>
+      </div> -->
     </template>
     <!--如果是虚拟体育-->
     <template v-if="VIRTUAL_SPORT_ID.includes(`${order.sportId}`)">
@@ -176,7 +176,7 @@
           </template>
           <template v-else>
             <!--非赛狗/非赛马时显示盘口值 赔率-->
-            <span class="part-one">{{ part1 }}</span><span class="part-two">{{ lodash_.trim(part2) }}</span>
+            <span class="part-one">{{ part().part1 }}</span><span class="part-two">{{ lodash_.trim(part().part2) }}</span>
             <!-- <span>{{order.marketValue}}</span> -->
           </template>
         </div>
@@ -188,7 +188,7 @@
         </div>
         <!--结算是显示投注结果: 输,赢,半输,半赢,比赛异常的各种显示(比赛取消,比赛延期等等)--->
         <div class="col-auto bet-result">
-          <template v-if="pre_bet_amount > 0 && selected == 1">
+          <template v-if="item.preBetAmount > 0 && BetRecordLeft.selected == 1">
             <!--输赢状态-->
             <span :class="item_class(out_come)" v-text="item_status(out_come)"></span>
           </template>
@@ -215,7 +215,7 @@ import { VIURTUAL_SPORT, VIRTUAL_PLAY_NOT_NUMBER2, VIRTUAL_SPORT_ID,CANCEL_TYPE 
  
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
-import { BetRecordLeft } from "src/core/bet-record/pc/bet-record-instance.js"
+import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
 import { formatTime } from 'src/output/index.js'
 
 import lodash_ from "lodash"
@@ -237,7 +237,6 @@ const socre_format = (value) => {
   return `(${value.replace(':', '-')})`
 }
 const show_score_info = ref(false)
-
 
 /**
    * @description: 输赢结算状态
@@ -516,17 +515,22 @@ const cancel_type_msg = (cancel_type) => {
  * @param {String} lang_code 语种信息
  * @return {String} 需要显示的类型文本
  */
-const match_type = (type, langCode = UserCtr.lang) => {
-  let text = '';
-  switch (parseInt(type)) {
-    case 1:
-      text = `common_lang.${langCode}.bet.morning_session`; //"早盘赛事";
-      break;
-    case 2:
-      text = `common_lang.${langCode}.bet.bet_inplay`; //"滚球盘赛事";
-      break;
+const match_type = (type, langCode=UserCtr.lang) => {
+  let res = "";
+  if(type && langCode) {
+    switch (parseInt(type)) {
+      case 1:
+        res = i18n_t(`odds.${langCode}.morning_session`); //"赛前";
+        break;
+      case 2:
+        res = i18n_t(`odds.${langCode}.list_today_play_title`);//"滚球";
+        break;
+      case 3:
+        res =i18n_t(`odds.${langCode}.match_winner`); //"冠军";
+        break;
+    }
   }
-  return i18n_t(text);
+  return res;
 }
 /**
   * @description: 获取编码序号
@@ -542,6 +546,31 @@ const get_numbers = () => {
   }
   return [];
 }
+
+const part = () => {
+  let part1 = ''   // 第一部分
+  let part2 = ''   // 第二部分
+  // 投注项名称获取
+  let playOptionName = lodash_.trim(props.order.marketValue);
+  let playId = props.order.playId;
+  // 投注项中间是否包含空格
+  if(props.order.marketValue && lodash_.trim(playOptionName).includes(" ") && ![362].includes(playId)) {      
+    // 获取投注项中间最后一个空格所在位置
+    let spliter = playOptionName.lastIndexOf(' ');
+    // 截取第一部分
+    part1 = playOptionName.substring(0,spliter);
+    // 截取第二部分
+    part2 = playOptionName.substring(spliter,playOptionName.length+1);
+  } else {
+    // 默认投注项名称为第一部分
+    part1 =  lodash_.trim(playOptionName);
+  }
+  return {
+    part1,
+    part2
+  }
+}
+
 </script>
 <style lang="scss" scoped>
 // 英文和泰语可能会换行

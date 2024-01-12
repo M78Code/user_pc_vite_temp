@@ -1,5 +1,5 @@
 import { reactive, ref } from "vue";
-import {debounce} from "lodash";
+import lodash from "lodash"
 
 // 全局toast默认值
 const defaultGlobalToastTxt = 'Replicating Success'
@@ -64,7 +64,7 @@ class UseGlobal {
     this.is_fold_status = true;
     this.champion_fold_obj = {};
     // 全局开关变更
-    this.global_switch_version = reactive({ version:'111'})
+    this.global_switch_version =ref('22222')
   }
   /**
    * @description: 设置获取视频是否展开状态
@@ -113,10 +113,13 @@ class UseGlobal {
       this.set_global_data_version()
     }, timer);
   }
+
   // 设置全局开关版本变更
-  set_global_data_version=debounce(()=>{
-    this.global_switch_version.version = Date.now()
+  set_global_data_version = lodash.debounce(()=>{
+    this.global_switch_version.value = Date.now()
+    console.error('set_global_data_version')
   },10)
+  
   // 获取当前排序
   get_match_sort() {
     return this.match_sort

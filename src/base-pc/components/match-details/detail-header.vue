@@ -55,7 +55,7 @@
         />
         <!-- 隐藏 -->
         <div
-          v-if="is_eports_csid(sportId)"
+          v-if="!is_eports_csid(sportId)"
           class="hide-btn"
           @click="toggle_panel = false"
         >
@@ -82,8 +82,7 @@
 
 <script setup>
 import { ref, defineExpose, onUnmounted } from "vue";
-import { is_eports_csid } from "src/core/constant/common/module/csid-util.js";
-import { i18n_t } from "src/output/index.js";
+import { i18n_t,is_eports_csid } from "src/output/index.js";
 import ZHUGE from "src/core/http/zhuge-tag";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
 import info from "src/base-pc/components/match-detail/match_info/info.vue";
@@ -99,7 +98,7 @@ const props = defineProps({
   handicap_this: Object, // 传给玩法集 tabs 的数据
   handicap_state: String, //玩法加载状态状态
   is_request: Boolean, //详情接口 是否请求中
-  sportId: Number, //球类id
+  sportId:  String | Number, //球类id
 });
 import { is_show_sr_flg } from "src/core/utils/project/module/other.js";
 const toggle_panel = ref(true); //比分扳显示|隐藏
@@ -323,6 +322,7 @@ onUnmounted(() => {});
     right: 13px;
     padding: 5px 6px;
     border-radius: 13px;
+    color:var(--q-gb-bd-c-13) !important;
     background: rgba(31, 33, 41, 0.6);
     cursor: pointer;
     &:hover {

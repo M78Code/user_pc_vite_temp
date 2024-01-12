@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, watch } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
 import { useRoute, useRouter } from "vue-router";
 
@@ -54,7 +54,7 @@ import BaseData from "src/core/base-data/base-data.js";
 import searchCom from 'src/components/search/search-3/index.vue';
 
 const page_style = ref('')
-page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
+
 
 const props = defineProps({
   /** 
@@ -66,29 +66,17 @@ const props = defineProps({
   }
 })
 
+
+
 const emit = defineEmits(['close_home_loading'])
 
-/** 国际化 */
 
 /** 路由对象 */
 const route = useRoute()
 /** 路由实例 */
 const router = useRouter()
 
-/** stroe仓库 */
-// const store_data = store.getState() || {}
-// const { searchReducer: {} } = store_data
-/** 
-* 是否显示搜索组件 default: false
-* 路径: project_path\src\store\module\search.js
-*/
-/** 
- * 选择的选项 menu_obj
- * 路径: src\store-redux\module\betInfo.js
- */
 
-const menu_obj = ref({})
-//  const { menu_obj } = betReducer
 
 /** 是否内嵌 */
 const is_iframe = ref(utils_info.is_iframe)
@@ -119,6 +107,7 @@ const site_header_data = reactive({
   url_type: "",
   /** 是否有活动入口 */
   has_activity: false,
+  emit_lsit:{}
 })
 
 /** 已开启的活动 id */
@@ -128,6 +117,25 @@ const isFirstLoadPage = ref(true)
 /** 是否有小红点提示 */
 const hasBonusType3 = ref(false)
 // TODO: useMittOn('update-bonus', this.getActivityLists);
+
+onMounted(()=>{
+  init_site_header()
+  set_components_style()
+  site_header_data.emit_lsit = {
+    emitter_1: useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, init_site_header ).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_MENU_INIT_DONE, menu_init_done ).off,
+    emitter_3: useMittOn( MITT_TYPES.EMIT_THEME_CHANGE,  set_components_style ).off
+  }
+})
+
+
+// 设置组件样式
+const set_components_style = () => {
+  nextTick(()=>{
+    page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
+  })
+}
+
 /** 检查是否有可领取奖券 */
 function getActivityLists({ id = 1, type }) {
   // 如果是首次加载页面并且由用户信息接口发起，则不发起请求
@@ -272,8 +280,6 @@ function activity_dialog() {
   })
 }
 
-const { off: menu_init_done_off } = useMittOn(MITT_TYPES.EMIT_MENU_INIT_DONE, menu_init_done)
-onUnmounted(menu_init_done_off)
 /**
  * @Description 菜单初始化完成
  * @param {undefined} undefined
@@ -282,7 +288,6 @@ function menu_init_done() {
   let nav_list = [...site_header_data.nav_list]
   // 如果有电竞
   const { is_mi_2000_open, is_mi_300_open } = BaseData
-  console.error('menu_init_donemenu_init_donemenu_init_donemenu_init_done')
   if (is_mi_2000_open) {
     if (nav_list.findIndex(i => i.id == 5) == -1) {
       nav_list.splice(1, 0, { id: 5, tab_name: i18n_t("common.e_sports"), path: "/e_sport" });
@@ -313,14 +318,12 @@ function menu_init_done() {
   }
 }
 
-// 监听语言切换 
-const { off: init_site_header_off } = useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, () => init_site_header(2))
-onUnmounted(init_site_header_off)
 /**
  * @description 设置顶部菜单
  * @param {number} type  类型(null-自然触发，1-导航栏二次触发，2-切换语言)
  */
 function init_site_header(type = null) {
+  console.error('init_site_header')
   let nav_list = [
     { id: 1, tab_name: i18n_t("common.sports_betting"), path: "/home" }, //体育投注
     { id: 2, tab_name: i18n_t('common.note_single_history'), path: "/bet_record", _blank: true }, //注单历史
@@ -353,7 +356,8 @@ function init_site_header(type = null) {
     activityTimer();
     activity_timer.value = setTimeout(() => getActivityLists({ id: 1, type: "init_nav" }), 1000)
   }
-  if (type != 2) {
+  if (!type) {
+    console.error('运营位专题页')
     // 运营位专题页 
     special_page()
   }
@@ -373,15 +377,14 @@ function init_site_header(type = null) {
   emit('close_home_loading', false);
   // 菜单初始化 因为菜单是去轮询的 so
   // 因为设置菜单是500s
-  set_menu_init_time(600)
+  // set_menu_init_time(600)
 
-  init_reset_time = setTimeout(()=>{
-    // 本身商户的设置有缓存 所以频率太快
-    set_menu_init_time(5000)
-    clear_init_reset_time()
-  },2000)
+  // init_reset_time = setTimeout(()=>{
+  //   // 本身商户的设置有缓存 所以频率太快
+  //   set_menu_init_time(5000)
+  //   clear_init_reset_time()
+  // },2000)
 }
-onMounted(init_site_header)
 let init_reset_time = null
 function clear_init_reset_time () {
   if (init_reset_time) {
@@ -389,7 +392,6 @@ function clear_init_reset_time () {
     init_reset_time = null
   }
 }
-onUnmounted(clear_init_reset_time)
 
 let menu_init_time = null
 function clear_menu_init_time () {
@@ -398,15 +400,22 @@ function clear_menu_init_time () {
     menu_init_time = null
   }
 }
-onUnmounted(clear_menu_init_time)
+
+
+onUnmounted(()=>{
+  clear_init_reset_time()
+  clear_menu_init_time()
+  Object.values(site_header_data.emit_lsit).map((x) => x());
+})
+
 /**
  * 定时请求菜单
  */
-function set_menu_init_time(number){
-  clear_menu_init_time()
-  // 菜单初始化 因为菜单是去轮询的
-  menu_init_time = setInterval(menu_init_done,number)
-}
+// function set_menu_init_time(number){
+//   clear_menu_init_time()
+//   // 菜单初始化 因为菜单是去轮询的
+//   menu_init_time = setInterval(menu_init_done,number)
+// }
 
 /**
  * @description 导航路由跳转
@@ -426,9 +435,15 @@ function navigate(obj) {
     return;
   }
   // 改为欧洲杯大师赛路径
-  let _window_width = (['/activity', '/activity_aegis'].includes(_path)) ? 1217 : 1000;
+  let _window_width = (['/activity_aegis'].includes(_path)) ? 1217 : 1000;
   if (_path == '/match_results') {
     _window_width = 1170
+  }
+  if (_path == '/activity') {
+    _window_width = 1400
+  }
+  if (_path == "/bet_record") {
+    _window_width = 1440
   }
   let _window_height = 650;
   if (['/activity', '/activity_aegis'].includes(_path)) {

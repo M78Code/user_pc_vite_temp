@@ -151,17 +151,19 @@ class UserCtr {
 
     // 设置topic数据
     let topic = LocalStorage.get('topic');
-    if(topic){
-      try {
-        const topic_obj = JSON.parse(topic);
-        topic_obj && (BUILDIN_CONFIG.TOPIC = topic_obj);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    topic && (BUILDIN_CONFIG.TOPIC = topic);
     nextTick(()=>{
       this.get_system_time()
     })
+  }
+
+  // 获取topic指定key域名url
+  get_topic_key_url(key) {
+    let res = '';
+    if(key){
+      res = lodash.get(window, `BUILDIN_CONFIG.TOPIC.${key}`, lodash.get(window.SEARCH_PARAMS.get_topic(),`${key}`));
+    }
+    return res;
   }
   
   // 刷新后 获取缓存数据
@@ -258,8 +260,10 @@ class UserCtr {
    * 设置语言变化
   */
   set_lang(data) {
+    // console.error('sssssssss',data)
     if(data){
       SEARCH_PARAMS.init_param_set({lang:data});
+      // console.error('SEARCH_PARAMS',data)
       if(this.lang == data)return;
       this.lang = data;
       this.user_info.languageName = data;
@@ -275,7 +279,7 @@ class UserCtr {
     this.theme = theme;
     useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, theme);
     // 替换body上className
-    const old_theme = LocalStorage.get("theme") || sessionStorage.getItem("theme") || theme == 'day' ? 'theme02' : 'theme01';
+    const old_theme = LocalStorage.get("theme") || SessionStorage.get("theme") || 'theme-1';
     document.getElementById('ty-app').classList.replace(old_theme, theme)
     LocalStorage.set("theme", theme.value || theme)
     LocalStorage.set("default-theme", theme.value || theme)
@@ -346,6 +350,10 @@ class UserCtr {
     if (user_obj.balance === null) delete user_obj.balance;
     // 获取历史uid
     const uid_ = this.get_uid();
+    // 新旧版切换开关, 默认是开  1是开0是关
+    if (user_obj.h5VerSysSwitch && user_obj.h5VersionSwitch) {
+      user_obj.versionSwitch = user_obj.h5VerSysSwitch == 1 && user_obj.h5VersionSwitch == 1
+    }
     if (this.user_info) {
       Object.assign(this.user_info, user_obj);
     } else {

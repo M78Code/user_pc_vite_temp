@@ -49,6 +49,7 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { format_odds, formatMoney,format_currency, format_currency2,format_money3 } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { UserCtr } from "src/output/index.js"
 
@@ -88,7 +89,7 @@ onUnmounted(() => {
 })
 
 const change_money_handle = obj => {
-    if(props.items.playOptionsId == obj.id) {
+    if(props.items.id == obj.id) {
         // 获取当前投注金额
         let money = props.items.bet_amount 
         let money_ = obj.money
@@ -119,6 +120,8 @@ const change_money_handle = obj => {
 // 清空输入框金额
 const bet_clear_handle = () => {
     ref_data.money = ''
+    BetData.set_bet_amount('')
+    BetViewDataClass.set_bet_special_series_item({bet_amount:'',id:props.items.id})
 }
 
 // 键盘回车事件
@@ -187,7 +190,7 @@ input[type="number"] {
         .line {
             width: 3px;
             height: 14px; 
-            background: #ff7000;
+            background: var(--q-bet-box-2);
             border-radius: 1.5px 
         }
         .bet-mix-info {
@@ -202,7 +205,7 @@ input[type="number"] {
             height: 18px;
             line-height: 16px;
             font-size: 14px;
-            color: #ff7000;
+            color: var(--q-bet-box-2);
             font-weight: 700;
         }
     }
@@ -250,7 +253,7 @@ input[type="number"] {
     }
     .bet-input-close {
         .icon-failure:before {
-            color: var(--q-gb-t-c-18);
+            color: var(--qq--yb-text-color4);
         }
 
         &:hover {
@@ -262,8 +265,8 @@ input[type="number"] {
 
     .bet-input-close {
         position: absolute;
-        top: 10px;
-        right: 5px;
+        top: 7px;
+        right: 25px;
         cursor: pointer;
         width: auto;
         height: auto;

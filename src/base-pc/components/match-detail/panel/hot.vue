@@ -101,7 +101,7 @@
           <!-- 赛事信息 E-->
 
           <!-- 投注项 S-->
-          <div class="handicap" v-if="!menu_data.is_esports">
+          <div class="handicap" v-if="!menu_data.is_esports()">
             <template v-for="index in [0, 2, 1]">
               <div
                 v-if="index !== 2 || lodash.get(item, `hps.0.hl.0.ol.${index}`)"
@@ -123,17 +123,13 @@
                     mx_get_bet_simple(item, index, 'oid')
                   "
                   :key="`item_0_${index}`"
-                  class="item_border"
                   :match_info="item"
                   :play_data="mx_get_bet_simple(item, index, 'play')"
                   :bet_data="mx_get_bet_simple(item, index, 'bet_data')"
                   :bet_ids="mx_get_bet_simple(item, index, 'bet_id')"
-                  style="padding: 0 10px"
                   bet_source="recent"
                   :bet_info="{
-                    mid_obj: match_ctr.mid_obj,
-                    hl_obj: match_ctr.hl_obj,
-                    ol_obj: match_ctr.ol_obj,
+                    mid_obj:match_ctr.get_quick_mid_obj(item.mid)
                   }"
                 >
                   <div
@@ -161,7 +157,7 @@
             <div
               v-if="
                 !(
-                  menu_data.is_esports &&
+                  menu_data.is_esports() &&
                   ['play', 'hot'].includes(cur_menu_type)
                 ) && global_switch.collect_switch
               "
@@ -229,14 +225,15 @@ import bet_item from "src/base-pc/components/bet-item/bet_item.vue";
 // import skt_data_list_hot from "src/public/mixins/websocket/data/skt_data_list_hot.js";  todo  ws更新
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 import { is_show_sr_flg } from "src/core/utils/project/module/other.js";
+import { mx_get_bet_simple } from "src/core/utils/project/module/bet-util.js";
 import {
   GlobalSwitchClass,
   UserCtr,
   MenuData,
-  MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
+  MatchDataWarehouse_PC_List_Common as MatchListData,
   useMittEmit,
   MITT_TYPES,
-  useMittEmitterGenerator
+  useMittEmitterGenerator,
 } from "src/output/index.js";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
@@ -251,12 +248,13 @@ export default {
   },
   data() {
     return {
+      mx_get_bet_simple,
       is_show_sr_flg,
       tooltip_style,
       i18n_t,
       // 菜单数据
       menu_data: MenuData,
-      match_ctr: MatchDetailsData,
+      match_ctr: MatchListData,
       slide: 0, //轮播下标
       autoplay: true, //轮播自动切换
       hot_data: [], //轮播数据
@@ -327,7 +325,7 @@ export default {
       // 当前局数不等于 比分总和加一，則提示比分判定中
       if (
         mmp_state != Number(home_score) + Number(away_score) + 1 &&
-        this.menu_data.is_esports
+        this.menu_data.is_esports()
       ) {
         score_text = i18n_t("mmp.100.scoring");
       }
@@ -369,14 +367,16 @@ export default {
     get_hots(callback) {
       let api;
       // 电竞
-      if (this.menu_data.is_esports) {
+      if (this.menu_data.is_esports()) {
         api = api_details.get_hots_es;
       } else {
         // 其他赛种
         api = api_details.get_hots;
       }
+     
       // this.match_ctr.clear_data();
       api({ cuid: this.uid, isHot: 1 }).then((res) => {
+
         let code = lodash.get(res, "code");
         let data = lodash.get(res, "data");
         let timestap = lodash.get(res, "ts");

@@ -168,10 +168,6 @@
                               {{ home_yellow_score }}
                             </span>
                           </template>
-                          <!--发球方绿点-->
-                          <template v-else>
-                            <span class="serving-party" :class="{ 'simple': standard_edition == 1 }" v-show="set_serving_side(match, 'home')"></span>
-                          </template>
                         </div>
                         <div class="team-title-inner-con">
                           <div class='team-t-title-w' :class="{
@@ -202,7 +198,8 @@
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
                         <div class="score full-score" v-show="match.ms > 0 && !is_results && !eports_scoring"
                           :class="{ 'visibility-hidden': match.ms == 110 }">
-                          {{ home_score }}
+                          <span class="serving-party" :class="{ 'simple': standard_edition == 1 }" v-show="set_serving_side(match, 'home')"></span>
+                          <span>{{ home_score }}</span>
                         </div>
                       </div>
                       <!--客队图片和名称-->
@@ -218,10 +215,6 @@
                             <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
                               {{ away_yellow_score }}
                             </span>
-                          </template>
-                          <!--发球方绿点-->
-                          <template v-else>
-                            <span class="serving-party" :class="{ 'simple': standard_edition == 1 }" v-show="set_serving_side(match_of_list, 'away')"> </span>
                           </template>
                         </div>
                         <div class="team-title-inner-con">
@@ -253,7 +246,9 @@
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
                         <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
                           :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
-                          {{ away_score }}
+                          <!--发球方绿点-->
+                          <span class="serving-party" :class="{ 'simple': standard_edition == 1 }" v-show="set_serving_side(match, 'away')"> </span>
+                          <span>{{ away_score }}</span>
                         </div>
                       </div>
                     </div>
@@ -1058,14 +1053,11 @@ export default {
         }
 
         .serving-party {
-          display: block;
+          border-radius: 2px;
+          background: var(--sys-feedback-success-success-400, #4AB06A);
           width: 4px;
           height: 4px;
-          border-radius: 50%;
-          background: var(--q-color-page-bg-color-59);
-          flex-shrink: 0;
-          margin: 0.13rem 0.05rem 0;
-
+          margin-right: 4px;
           &.simple {
             margin-right: 0.03rem;
           }

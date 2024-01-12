@@ -71,7 +71,6 @@
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1 =(all_league_obj,is_ws_call,is_remove_call)=>{
     let template_id = MenuData.get_match_tpl_number()
     // 赛事模板ID
-    
     // 已开赛 到卡片key的 映射对象
     let play_to_card_key_arr = ['play_title']
     // 未开赛 到卡片key的 映射对象
@@ -238,8 +237,8 @@
         mids_arr.forEach( mid => {
           unfold_match_count++
           // 赛事表征数据
-          let match = MatchListData.list_to_obj.mid_obj[mid+'_']
-          let match_style_obj = compute_style_template_by_matchinfo(match, template_id, mid)
+          let match = MatchListData.get_quick_mid_obj(mid)
+          let match_style_obj = compute_style_template_by_matchinfo(match)
           all_card_obj[mid+'_'] = match_style_obj
           league_card_total_height += match_style_obj.total_height
           // 设置父级卡片key
@@ -278,13 +277,13 @@
     // 合并所有卡片样式对象
     // 已开赛 到卡片key的 映射对象
     MatchListCardData.set_all_card_obj({
-      // 合并所有卡片样式对象
-        all_card_obj,
-        play_to_card_key_arr,// 已开赛 到卡片key的 映射对象
-        no_start_to_card_key_arr,// 未开赛 到卡片key的 映射对象
-        //卡片key列表
-        match_list_card_key_arr,
-      })
+    // 合并所有卡片样式对象
+      all_card_obj,
+      play_to_card_key_arr,// 已开赛 到卡片key的 映射对象
+      no_start_to_card_key_arr,// 未开赛 到卡片key的 映射对象
+      //卡片key列表
+      match_list_card_key_arr,
+    })
     // // 遍历所有联赛容器卡片
     all_league_container_keys_arr.forEach( card_key => {
       // 设置联赛容器卡片

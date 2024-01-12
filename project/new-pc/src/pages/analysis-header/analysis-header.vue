@@ -14,7 +14,8 @@
 
 <script setup>
 import simpleHeader from "src/base-pc/components/site-header/simple-header.vue";
-import analysisPage from "/src/base-pc/components/analysis/index.vue";
+// import analysisPage from "/src/base-pc/components/analysis/index.vue";
+import analysisPage from "./analysis/index.vue";
 </script>
 
 <style lang="scss" scoped>
@@ -25,5 +26,12 @@ import analysisPage from "/src/base-pc/components/analysis/index.vue";
   overflow: hidden;
   min-width: 1000px;
   width: 100vw;
+}
+</style>
+
+<style lang="scss">
+// 先定义在这里，后期再找人配置
+:root {
+  --q-analysis-color-2: #179cff; /* 这里是你想要的颜色数值 */
 }
 </style>

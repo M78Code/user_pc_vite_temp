@@ -1,6 +1,7 @@
 <template>
   <div class="match-tpl-101">
-    <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
+    <div v-show="false">{{ MatchListCardDataClass.list_version }}
+    </div>
     <div class="flex flex-start items-center">
       <!-- 赛事基础信息 -->
       <div class="basic-col"
@@ -22,17 +23,21 @@
       <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
         :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
         <!-- 图片资源有问题，先用文字替代  -->
-        <div
+        <div class="video" v-if="+lodash.get(match, 'mms') > 0"
+          :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
+        </div>
+        <div v-else
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
         </div>
       </div>
     </div>
-    <div class="flex" v-if="match_style_obj.data_tpl_id==109">
+    <div class="flex" v-if="match_style_obj.data_tpl_id == 109">
       <div :style="`width:${match_list_tpl_size.process_team_width}px !important;height:28px !important;`">
       </div>
       <div class="flex col items-start">
         <!-- 赛事比分 -->
-        <MatchFooterScore use_component_key="MatchFooterScore2" :match_style_obj="match_style_obj"   :match="match" style="width: 100%;" :is_show_score_content="true">
+        <MatchFooterScore use_component_key="MatchFooterScore2" :match_style_obj="match_style_obj" :match="match"
+          style="width: 100%;" :is_show_score_content="true">
         </MatchFooterScore>
       </div>
     </div>
@@ -40,20 +45,18 @@
 </template>
 
 <script>
-import { ref, watch,  inject } from 'vue';
+import { computed, watch, inject } from 'vue';
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
-import {MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/output/index.js";
-import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/output/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
-
 import { MatchBasisInfo101FullVersionWapper as BasisInfo101 } from 'src/base-pc/components/match-list/match-basis-info/template-101/index.js'
 import { MatchBasisInfo105FullVersionWapper as BasisInfo105 } from 'src/base-pc/components/match-list/match-basis-info/template-105/index.js'
 import IconBox from '../modules/iconBox/index.vue'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { useRouter } from 'vue-router';
-import { get_ouzhou_data_tpl_id, check_match_end } from 'src/core/match-list-pc/match-handle-data.js'
+import { check_match_end } from 'src/core/match-list-pc/match-handle-data.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 export default {
   components: {
@@ -71,29 +74,33 @@ export default {
   setup(props) {
     const router = useRouter()
     const match = inject("match")
-    const { mid } = match.value || {}
-    let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(mid)
+    const match_tpl_info = inject('match_tpl_info')
+    const match_style_obj = inject('match_style_obj')
+    const match_list_tpl_size = inject('match_list_tpl_size')
+    const { csid } = match.value || {}
     let current_mid = MatchListCardDataClass.current_mid;
-    //101号模板 默认就是 101的宽高配置 不会改变
-    let match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, 'template_101_config.width_config', {})
-    let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-    let handicap_list = ref([]);
-    watch(() => MatchListCardDataClass.list_version, (new_value, old_value) => {
-      if (match.value) {
-        const csid = lodash.get(match.value, 'csid')
-        //获取欧洲要显示的数据
-        const tpl_id = get_ouzhou_data_tpl_id(csid)
-        //101 视图模板 却是对应不同的数据模板ID 所以要重新取
-        match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`]
-        //获取要展示的赔率数据
-        handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
+    let handicap_list = computed(() => {
+      try{
+       return match_tpl_info.value?.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
+      }catch(e){
+        console.log(match_tpl_info.value,e,'jiffy')
       }
-    }, { deep: true, immediate: true })
-
+      return []
+    });
+    // watch(() => MatchListCardDataClass.list_version, (new_value, old_value) => {
+    //   if (match.value) {
+    //     const csid = lodash.get(match.value, 'csid')
+    //     //获取欧洲要显示的数据
+    //     const tpl_id = get_ouzhou_data_tpl_id(csid)
+    //     //101 视图模板 却是对应不同的数据模板ID 所以要重新取
+    //     match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`]
+    //     //获取要展示的赔率数据
+    //     handicap_list.value = 
+    //   }
+    // }, { deep: true, immediate: true })
     watch(() => MatchListCardDataClass.current_mid, (new_value, old_value) => {
       current_mid = new_value
     }, { deep: true, immediate: true })
-
     watch(() => [match.value.ms, match.value.mmp], () => {
       if (match.value?.mmp || match.value?.ms) {
         check_match_end(match.value, socket_remove_match)
@@ -239,6 +246,10 @@ export default {
     width: 16px;
     height: 16px;
     background-size: 100%;
+  }
+
+  .video {
+    width: 18px;
   }
 
   &:hover {

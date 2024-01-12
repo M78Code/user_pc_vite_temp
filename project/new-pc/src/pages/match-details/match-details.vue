@@ -152,8 +152,8 @@ import search from "src/core/search-class/search.js";
  * @return {*}
  */
  const update_data = (val) => {
-  // match_infoData.value = MatchDetailsData.get_quick_mid_obj(val);
-  // match_details.value = [MatchDetailsData.get_quick_mid_obj(val)];
+   match_infoData.value = MatchDetailsData.get_quick_mid_obj(val);
+   match_details.value =lodash.get(MatchDetailsData.get_quick_mid_obj(val), "odds_info");
 };
 /*
  ** 监听MatchDetailCalss的版本号  获取最新的mid

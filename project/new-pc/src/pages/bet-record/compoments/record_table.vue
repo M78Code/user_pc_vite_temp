@@ -2,22 +2,19 @@
   <div class="record-table">
     <div style="display: none;">{{ BetRecordHistory.bet_record_version }}</div>
     <div>
-
-      <q-table :rows="tableData" style="max-height:calc(100vh - 17rem)" :rows-per-page-options="[0]" :columns="columns"
-               row-key="orderNo" separator="cell" hide-pagination :class="current_tab === 'settled' ? 'settled' : 'unsettled'"
-          :table-header-style="{
-          backgroundColor: '#F1F1F1',
-          height: '28px',
-          color: '#2A2925',
-          fontSize: '12px',
-        }">
+      <q-table :rows="BetRecordHistory.table_data" 
+      style="max-height:calc(100vh - 17rem)" 
+      :rows-per-page-options="[0]" 
+      :columns="BetRecordHistory.columns"
+      :bordered="false"
+      row-key="orderNo" hide-pagination >
         <template v-slot:no-data>
           <div class="detail-loading" v-if="loading">
             <q-circular-progress indeterminate rounded size="80px" :thickness="0.1" color="opt-basic" class="q-ma-md" />
           </div>
           <div class="no-data" style="height:calc(100vh - 17rem)">
             <div class="c">
-              <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/no-data.svg`" alt="" srcset="">
+              <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/no_data_02.png`" alt="" srcset="">
               <div style="text-align: center;color:#A1A3A5;font-weight: 500;">{{i18n_t('common.no_data')}}</div>
             </div>
           </div>
@@ -217,18 +214,43 @@
           </q-tr>
         </template>
       </q-table>
-      <!--分页组件-->
+      
+      <div class="table-footer-bar">
+        <span>
+          {{ i18n_t('bet_record.total_count') }}
+          <!-- 总计单数 -->
+          ：
+          <span class="footer-text">{{ BetRecordHistory.records.total }}</span>
+        </span>
+        <span>
+          {{ BetRecordHistory.selected == 2 ? i18n_t('bet.bet_book_total') : i18n_t('bet_record.total_v') }}
+          <!-- 总投注额/预约总投资额 -->
+          ：
+          <span class="footer-text">{{ BetRecordHistory.records.betTotalAmount }}</span>
+          <!-- <span class="footer-text">{{ format_balance(betTotalAmount) }}</span> -->
+        </span>
+        <div>
+          <!-- 目前屏蔽有效流水展示 -->
+          <span v-if="0">
+            {{ i18n_t('bet_record.effective_water') }}
+            <!-- 有效流水 -->
+            <!-- ：{{ effectiveFlow }} -->
+          </span>
+          <span v-if="BetRecordHistory.selected == 1">
+            {{ BetRecordHistory.records.profit.indexOf("-") != -1 ? i18n_t('bet_record.lose') : i18n_t('bet_record.win') }}：
+            <span class="footer-text" >{{ BetRecordHistory.records.profit }}</span>
+          </span>
+          <!-- <span>{{profit.indexOf("-")!=-1?'输':'赢'}}：{{profit}}</span> -->
+        </div>
+      </div>
 
-      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="records.total" 
-                  :betTotalAmount="records.betTotalAmount"
+      <!--分页组件-->
+      <Pagination v-if="BetRecordHistory.table_data.length > 0" class="record-pagination" 
+                  :count="BetRecordHistory.records.total" 
                   @pageChange="changePage"
                   @pageSizeChange="pageSizeChange"
                   @goPageChange="goPageChange"
-                  :profit="records.profit"
-                  :reset_pagination="pageCurrent"
-                  :is_bet_record="true"
-                  :isUnsettled="current_tab === 'unsettled'"
-      >
+                  :reset_pagination="BetRecordHistory.params.page">
       </Pagination>
 
     </div>
@@ -242,21 +264,22 @@ import { formatTime } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { format_balance, LOCAL_PROJECT_FILE_PREFIX,i18n_t } from 'src/output/index.js'
 import Pagination from 'project_path/src/components/Pagination.vue'
+// import Table from 'project_path/src/pages/bet-record/compoments/table.vue'
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 import sport_icon from './sport_icon.vue'
 // import football_icon from 'src/assets/images/football_icon.png'
 import { copyToClipboard } from 'quasar'
 import GlobalSwitchClass from 'src/core/global/global.js'
-import { BetRecordHistory } from "src/core/bet-record/pc/bet-record-instance.js"
+import BetRecordHistory from "src/core/bet-record/pc/bet-record-history.js"
 const lang = computed(() => {
   return UserCtr.lang;
 })
-const pageSize = ref('50')
-const pageCurrent = ref('1')
+
 const getRowIndex = (rowIndex) => {
-  return (pageCurrent.value - 1) * pageSize.value + rowIndex + 1;
+  return (BetRecordHistory.params.page - 1) * BetRecordHistory.params.size + rowIndex + 1;
 }
+
 
 const cts_mid = ref([15,27,28,23,31,32,24,33,34])
 
@@ -283,9 +306,7 @@ const { columns, tableData, loading, handle_fetch_order_list,records } = useGetO
 const labelClick = (row) => {
   console.log(row)
 }
-watch(() => props.timeType, (newVal) => {
-  pageCurrent.value = '1'
-})
+
 // 监听tab 切换表格头数据
 watch(() => props.current_tab, (newVal) => {
   tableData.value = []
@@ -531,27 +552,22 @@ const order_status = (orderStatus) => {
 // 页码变化
 const changePage = (arv) => {
   const { current } = arv
-  pageCurrent.value = current
-  emit('itemFilter', {
-    page: current,
-    size: +pageSize.value,
-    timeType: props.timeType
+  Object.assign(BetRecordHistory.params, {
+    page: current
   })
+  BetRecordHistory.handle_fetch_order_list()
 }
 const goPageChange = (v) => {
-  pageCurrent.value = v
-  emit('itemFilter', {
-    page: v,
-    size: +pageSize.value,
-    timeType: props.timeType
+  Object.assign(BetRecordHistory.params, {
+    page: v
   })
+  BetRecordHistory.handle_fetch_order_list()
 }
 const pageSizeChange = (v) => {
-  pageSize.value = v.value
-  emit('itemFilter', {
-    size: v.value,
-    timeType: props.timeType
+  Object.assign(BetRecordHistory.params, {
+    size: v.value
   })
+  BetRecordHistory.handle_fetch_order_list()
 }
 /**
  * 复制id
@@ -569,11 +585,28 @@ const hand_copy = (data) => {
 .time{
   color: var(--q-gb-t-c-8);
 }
+
+.table-footer-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 20px;
+  height: 36px;
+  font-size: 14px;
+  background-color: #f6f7fa;
+
+  span {
+    margin-left: 20px;
+
+    .footer-text {
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+}
+
 .detail-options {
   width: 100%;
-
-  .record-detail-list {
-  }
 
   .record-detail-item {
     flex: 1;
@@ -619,32 +652,46 @@ const hand_copy = (data) => {
 
 .record-table {
   position: relative;
-  margin-top: 10px;
-
+  padding: 20px;
+  padding-top: 0;
   .unsettled {
-    padding-bottom: 50px;
+    //padding-bottom: 50px;
   }
   .settled {
     padding-bottom: 62px;
   }
-
+  &:deep(.q-table) {
+    thead tr{
+      background-color: var(--q-gb-bg-c-25);
+    }
+    tr{
+      td:first-child{
+        border-radius: 8px 0 0 8px;
+      }
+    }
+    th{
+      border-top: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      &:first-child{
+        //border-radius: 6px;
+        border-left: 2px solid #fff;
+      }
+      &:last-child{
+        border-right: 2px solid #fff;
+      }
+    }
+  }
   &:deep(.q-table__card) {
+    border-radius: 6px;
     box-shadow: none;
     // height: 650px !important;
     border-bottom: none;
 
   }
 
-  &:deep(.q-table td) {
-
-    border-bottom: 1px solid var(--q-gb-bd-c-2);
-
-  }
 
   &:deep(.q-table__bottom) {
-
     border-top: none;
-
   }
 
   &:deep(thead tr th) {

@@ -94,7 +94,7 @@
 </template>
 
 <script setup>
-import { watch, ref,nextTick } from "vue";
+import { watch, ref,nextTick, onMounted, reactive } from "vue";
 import { UserCtr, compute_local_project_file_path } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -118,6 +118,15 @@ const pack_up = () => {
     BetViewDataClass.set_clear_bet_view_config()
   }
 };
+
+// 内部滚动区域高度 键盘展开的
+let ref_data_height_max = ref('2rem') // rem 高长屏幕
+// 键盘收起的高度
+let ref_min_height_max = ref('4.1rem') // rem 高长屏幕
+onMounted(()=>{
+  ref_data_height_max.value = document.body.clientHeight > 600 ? '2rem' : '1.2rem'
+  ref_min_height_max.value = document.body.clientHeight > 600 ? '4.1rem' : '3.2rem'
+})
 
 // 关闭弹窗
 const set_show_single = () => {
@@ -203,14 +212,13 @@ const scrollTo = () => {
 }
 
 :deep(.bet-scroll) {
-  max-height: 4rem;
+  max-height: v-bind('ref_min_height_max');
   }
 .bet-scroll {
-  max-height: 4rem;
+  max-height: v-bind('ref_min_height_max');
   overflow-y: auto;
   &.h344{
-    min-height: 1.8rem;
-    max-height: 3.64rem;
+    max-height: v-bind('ref_data_height_max');
   }
   .bet_single_info:nth-last-child(2) {
     border-radius: .12rem .12rem 0 0;

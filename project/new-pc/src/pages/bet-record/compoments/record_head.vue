@@ -36,7 +36,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { get_remote_time, utc_to_gmt_no_8_ms2 } from "src/output/index.js"
-import { BetRecordHistory } from "src/core/bet-record/pc/bet-record-instance.js"
+import BetRecordHistory from "src/core/bet-record/pc/bet-record-history.js"
 
 const tabClick = (index) => {
   BetRecordHistory.set_selected(index)

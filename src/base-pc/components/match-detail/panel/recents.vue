@@ -20,7 +20,8 @@
           <img v-img="[lodash.get(item,'lurl')]" />
           <span>{{item.tn}}</span>
         </div>
-        <match-date :match_props="{match: item}" />
+        <match-process :match="item" show_page="match-list" :rows="1" />
+        <!-- <match-date :match_props="{match: item}" /> -->
       </div>
       <!-- 标题 E -->
 
@@ -76,17 +77,14 @@
               <bet-item
                 v-if="lodash.get(item, 'hps.0.hl') && mx_get_bet_simple(item,index,'oid')"
                 :key="`item_0_${i}`"
-                class="item_border"
                 :match_info="item"
                 :play_data="mx_get_bet_simple(item,index,'play')"
                 :bet_data="mx_get_bet_simple(item,index,'bet_data')"
                 :bet_ids="mx_get_bet_simple(item,index,'bet_id')"
-                style="padding: 0 10px"
                 bet_source="recent"
                 :bet_info="{
-                  mid_obj:match_ctr.mid_obj,
-                  hl_obj:match_ctr.hl_obj,
-                  ol_obj:match_ctr.ol_obj
+                  mid_obj:match_ctr.get_quick_mid_obj(item.mid),
+              
                 }"
               >
                 <div
@@ -113,7 +111,7 @@ import bet_item from "src/base-pc/components/bet-item/bet_item.vue";
 import {
   UserCtr,
   MenuData,
-  MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
+  MatchDataWarehouse_PC_List_Common as MatchListData,
   useMittOn,
   MITT_TYPES,
   i18n_t
@@ -121,17 +119,19 @@ import {
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { mx_get_bet_simple } from "src/core/utils/project/module/bet-util.js";
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 export default {
   components: {
     "match-date": MatchProcessFullVersionWapper,
     "bet-item": bet_item,
+    matchProcess
   },
   // mixins: [skt_data_list_recent],
   data() {
     return {
       mx_get_bet_simple,
       recent_data: [], //列表数据
-      match_ctr: MatchDetailsData,
+      match_ctr: MatchListData,
       socket_name: "recent", // 接入socket的名称
       skt_mid: {}, // 需要订阅的赛事id
       skt_hpid: "", // 需要订阅的玩法
@@ -189,8 +189,9 @@ export default {
             }
           });          
           if (this.match_ctr) {
-            // this.match_ctr.set_list_obj(data,timestap);
+            this.match_ctr.set_list(data);
             this.recent_data = data;
+            console.log(1111111111112,data)
             // let match_c8 = null;
             // let _skt_mid_obj = ws_c8_obj_format(this.match_ctr.list) || null;
             // this.match_ctr.list.map((item) => {
@@ -294,8 +295,8 @@ export default {
   align-items: center;
   padding: 0 15px;
   height: 36px;
-  border-top: 1px solid var(--qq--wrap-recents-border-color);
-  border-bottom: 1px solid var(--qq--wrap-recents-border-color);
+  border-top: 1px solid var(--q-gb-bd-c-8);
+  border-bottom: 1px solid var(--q-gb-bd-c-8);
   background: rgba(31, 34, 43, 0.5);
   &.border-top-0 {
     border-top: 0;

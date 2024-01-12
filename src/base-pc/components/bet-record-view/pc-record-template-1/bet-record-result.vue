@@ -48,13 +48,11 @@
         <div class="col-auto"></div>
       </div>
     </template>
-    <!--
-      专业版单关 未结算 可以提前结算
-    -->
+    <!-- 专业版单关 未结算 可以提前结算 -->
     <template v-if="item.seriesType=='1'">
       <div class="info-wrap">
-        <!--选择的是未结算 且settleSwitch开关为1且enablePreSettle为true 且initPresettleWs为true（优先级高过且enablePreSettle 且结算状态不等于-2）-->
-        <template v-if="BetRecordLeft.selected==0 && UserCtr.settleSwitch && item.enablePreSettle && item.initPresettleWs && item.cash_out_status!=-2">
+        <!--选择的是未结算 且settleSwitch开关为1且enablePreSettle为true -->
+        <template v-if="BetRecordLeft.selected==0 && UserCtr.settleSwitch && item.enablePreSettle">
           <!--账户有钱且是开盘状态且结算状态为1-->
           <template v-if="ref_data.amount > 1 && lodash_.get(item,'orderVOS.0.hs')==0 && item.cash_out_status==1">
             <!--settleType 1 未发生提前结算(支持全额)4已发生 部分提前部分结算(支持部分),5 已发生提前全结算(支持全部),3 提前结算取消-->
@@ -100,7 +98,7 @@
                   <!--提前结算按钮右侧icon按钮,点击可以展开提前结算滑块显示-->
                   <div class="bet-pre-handle"
                     @click.stop="show_bet_pre(index)" v-if="UserCtr.pcs=='1'">
-                    <icon name="icon-bet_pre" class="bet-pre-info" size="14px" :class="{'bet-pre-over':ref_data.cur_bet_pre.show_operate=='bet_pre'}"/>
+                    <!-- <icon name="icon-bet_pre" class="bet-pre-info" size="14px" :class="{'bet-pre-over':ref_data.cur_bet_pre.show_operate=='bet_pre'}"/> -->
                   </div>
                 </div>
               </div>
@@ -126,7 +124,7 @@
               </div>
             </template>
             <!--提前结算结算成功按钮显示-->
-            <template  v-else-if="item.bet_status=='end_bet_pre'">
+            <template v-else-if="item.bet_status=='end_bet_pre'">
               <div class="bet-pre-complete-btn" :class="{'mt0': item.settleType==1}">
                 <div class="bet-pre-left">
                   <!-- 已提前结算 成功 item.probabilities-->
@@ -134,43 +132,42 @@
                   <div class="bet-row-2">{{ format_balance(ref_data.amount) }}</div>
                 </div>
                 <div class="bet-pre-right">
-                  <icon name="icon-success" size="18px" color="#FFF"/>
+                  <!-- <icon name="icon-success" size="18px" color="#FFF"/> -->
                 </div>
               </div>
             </template>
             <!--提前结算提示及滑块显示-->
-            <template v-if="ref_data.cur_bet_pre.show_operate=='bet_pre' && ref_data.more_index == index">
-
-            <template v-if="show_count_operate">
-                <div class="row">
-                  <!-- 结算投注额 -->
-                  <div class="col bet-pre-money">
-                    {{i18n_t('bet_record.pre_bet_money')}}:<span class="bet-money">{{money_obj.money|format_currency}}</span>
+            <template v-if="false">
+              <template v-if="show_count_operate">
+                  <div class="row">
+                    <!-- 结算投注额 -->
+                    <div class="col bet-pre-money">
+                      {{i18n_t('bet_record.pre_bet_money')}}:<span class="bet-money">{{money_obj.money|format_currency}}</span>
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 bet-compute-money">
-                    <!--提前结算滑块展示-->
-                    <vue-slider
-                      :ref="`vue-slider-${index}`"
-                      :adsorb="true"
-                      :minRange="money_obj.min_money"
-                      :maxRange="money_obj.max_money"
-                      v-model="money_obj.money"
-                      :data="money_obj.bet_amount_data"
-                      :data-value="'id'"
-                      :data-label="'name'"
-                      :dot-options="[{tooltip:'none'}]"
-                      @change="change_slider"
-                      >
-                      <template v-slot:label="{ label, active }">
-                        <div :class="['vue-slider-mark-label', 'custom-label', {active}]">{{ label }}%</div>
-                      </template>
-                    </vue-slider>
-                  </div>
+                  <div class="row">
+                    <div class="col-12 bet-compute-money">
+                      <!--提前结算滑块展示-->
+                      <!-- <vue-slider
+                        :ref="`vue-slider-${index}`"
+                        :adsorb="true"
+                        :minRange="money_obj.min_money"
+                        :maxRange="money_obj.max_money"
+                        v-model="money_obj.money"
+                        :data="money_obj.bet_amount_data"
+                        :data-value="'id'"
+                        :data-label="'name'"
+                        :dot-options="[{tooltip:'none'}]"
+                        @change="change_slider"
+                        >
+                        <template v-slot:label="{ label, active }">
+                          <div :class="['vue-slider-mark-label', 'custom-label', {active}]">{{ label }}%</div>
+                        </template>
+                      </vue-slider> -->
+                    </div>
 
-                </div>
-            </template>
+                  </div>
+              </template>
                 <!--提前结算提示部分-->
               <template>
                 <div class="col-12 bet-pre-Remaining">
@@ -182,11 +179,7 @@
                       {{i18n_t("bet_record.settlement_bet_count")}}: {{ betPreCount }}
                     </div>
                 <div v-if="!show_count_operate" class="row">
-                  <icon
-                    name="icon-tips"
-                    class="bet-info"
-                    size="14px"
-                  />
+                  <!-- <icon name="icon-tips" class="bet-info" size="14px" /> -->
                   <div class="col bet-tips-info">
                     <!-- TIPS:部分结算后,剩余本金不支持再次提前结算! -->
                     <span>
@@ -200,8 +193,9 @@
               </template>
             </template>
           </template>
+
           <!--暂停提前结算-->
-          <template v-else-if="ref_data.amount<1 || lodash_.get(item,'orderVOS.0.hs')!=0 || item.cash_out_status==-1">
+          <template v-else-if="false">
             <!--当点击提前结算的时候遇到封关盘 给个提示提前结算申请未通过-->
             <div class="bet-pre-stop-tip" v-if="is_cancel"> {{i18n_t('bet_record.pre_not_approved')}}</div>
             <div class="row">
@@ -211,7 +205,7 @@
                   {{i18n_t('bet_record.pre_bet_stop')}}
                 </div>
                 <div class="bet-pre-handle" v-if="UserCtr.pcs=='1'">
-                  <icon name="icon-bet_pre" class="bet-pre-info" size="14px" color="#99A3B1"/>
+                  <!-- <icon name="icon-bet_pre" class="bet-pre-info" size="14px" color="#99A3B1"/> -->
                 </div>
               </div>
             </div>
@@ -225,11 +219,11 @@
             <div class="col yb-fontsize12 yb-flex-between cursor-pointer" >
               <span>{{i18n_t('bet_record.settlement_pre_info')}}</span>
               <span>
-                <icon
+                <!-- <icon
                   name="icon-triangle"
                   size="16px"
                   :class="{'icon-pull-down': ref_data.cur_bet_pre.show_detail, 'icon-pull-up': !ref_data.cur_bet_pre.show_detail}"
-                />
+                /> -->
               </span>
             </div>
           </div>
@@ -251,7 +245,7 @@
                       class="copy"
                       @click="copy(obj.preOrderNo)"
                     >
-                      <icon name="icon-icon_copy"/>
+                      <!-- <icon name="icon-icon_copy"/> -->
                     </span>
                   </span>
                 </template>
@@ -311,7 +305,7 @@ import { reactive, ref } from "vue"
 import { format_odds, format_currency, formatTime } from "src/output/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
-import { BetRecordLeft } from "src/core/bet-record/pc/bet-record-instance.js"
+import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
 
 import lodash_ from "lodash"
 const props = defineProps({
@@ -322,6 +316,8 @@ const props = defineProps({
   item: {},
   order: {},
 })
+
+const toast = ref(false)
 
 const ref_data = reactive({
  bet_pre_code: 0, // 提前结算编码 0 未结算 1 结算成功 其他结算失败 0400524(提示结算为通过审核) 0400500(按钮置灰)

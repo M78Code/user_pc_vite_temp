@@ -53,7 +53,7 @@ const set_match_list_mapping_relation_obj_type = () => {
     type = 7;
   }
   // 搜索页面
-  else if (page_source == "search") {
+  else if (route_name == "search") {
     type = 4;
   }
   // 电竞收藏
@@ -108,7 +108,6 @@ const set_match_list_mapping_relation_obj_type = () => {
       type = 8
     }
   }
-  
   return   type
 };
 
@@ -117,7 +116,7 @@ const set_match_list_mapping_relation_obj_type = () => {
  */
 const reset_all_card_data = () => {
   // 所有卡片样式对象
-  MatchListCardData.all_card_obj = {};
+  // MatchListCardData.reset_data();//走了元数据 这里会清空二次 元数据一次  接口一次
 };
 
 //计算 当前的 赛事列表 级别 的 卡片 数据
@@ -158,7 +157,6 @@ const reset_all_card_data = () => {
 
 export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
   (match_list, is_ws_call, is_remove_call, is_five_leagues=false) => {
-    console.log('jiffy5')
     // 虚拟体育 不走卡片逻辑
     if (MenuData.is_vr()) {
       MatchListCardData.is_run_card_function = false;

@@ -1,11 +1,11 @@
 <template>
   <div class="media-col-wrap">
     <!-- 无直播源 -->
+    <!--  :style="compute_css_obj({key:'pc-img-match-info-switch2'})" -->
     <div v-tooltip="{ content: i18n_t('common.score_board') }" class="icon-wrap after_tpl0 relative-position"
       :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'info' && 'active'"
       @click="on_switch_match('auto')" v-if="!menu_config.is_esports() || route.name == 'search'">
-      <div class="v-icon switch-icon"
-        :style="compute_css_obj({key:'pc-img-match-list-switch'})"
+      <div class="v-icon switch-icon info-icon"
         :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'info' && 'active'"></div>
     </div>
     <div class="yb-flex-center" :class="{ 'flex-center': menu_config.is_esports() }">
@@ -16,9 +16,11 @@
         <i aria-hidden="true" class="icon-star q-icon c-icon" :class="{ 'active': (match.mf == 1 || match.mf == true) }"></i>
       </div>
       <!-- 视频 -->
+      <!-- :style="compute_css_obj({key:'pc-img-match-list-video'})" -->
       <div v-if="cur_video_icon.type" @click="on_switch_match(cur_video_icon.type)"
-        :style="compute_css_obj({key:'pc-img-match-list-video'})"
-        v-tooltip="{ content: cur_video_icon.text }" class="icon-wrap relative-position">
+        
+        v-tooltip="{ content: cur_video_icon.text }"
+        class="icon-wrap relative-position video-icon">
         <div
           :class="['v-icon', `${cur_video_icon.type}-icon`, { 'active': vx_detail_params.mid == match.mid && (vx_play_media.media_type == cur_video_icon.type || (menu_config.is_esports() && route.name != 'search')) }]">
         </div>
@@ -26,10 +28,13 @@
     </div>
 
     <!-- 动画 -->
-    <div v-if="match.mvs > -1" class="icon-wrap relative-position" @click="on_switch_match('animation')"
+    <!-- :style="compute_css_obj({key:'pc-img-match-list-animation'})" -->
+    <div v-if="match.mvs > -1"
+      class="icon-wrap relative-position" 
+      @click="on_switch_match('animation')"
       v-tooltip="{ content: i18n_t('common.animate') }">
       <div class="v-icon animation-icon"
-        :style="compute_css_obj({key:'pc-img-match-list-animation'})"
+        
         :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'animation' && 'active'"></div>
     </div>
     <!-- 盘口数量 -->
@@ -69,7 +74,7 @@ const props = defineProps({
 
 const route = useRoute();
 // 左侧详情参数
-const vx_detail_params = reactive({})
+let vx_detail_params = reactive(MatchDetailCalss.params)
 //视屏播放类型
 const vx_play_media = ref(MatchDetailCalss.play_media)
 /*
@@ -79,7 +84,7 @@ watch(
   () => MatchDetailCalss.details_data_version.version,
   (val) => {
     if (val) {
-      vx_play_media.value = MatchDetailCalss.play_media
+      vx_play_media.value = MatchDetailCalss.play_media;
     }
   },
   { deep: true }
@@ -87,7 +92,6 @@ watch(
 let lang = UserCtr.lang;
 // 视频是否展开状态
 const vx_get_is_fold_status = ref(null)
-
 // 盘口数量
 const handicap_num = computed(() => {
   if (GlobalAccessConfig.get_handicapNum()) {
@@ -251,4 +255,28 @@ function collect (){
       margin: 0;
     }
   }
-}</style>/indexsrc/core/constant/project/data-class-ctr/index.jssrc/core/constant/common/module/csid-util
+}
+.video-icon {
+    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/video0.svg"); // TODO: video0.svg
+
+    &.active {
+      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/video2.svg"); // TODO: video2.svg)
+    }
+  }
+  .animation-icon {
+    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/animation0.svg"); // TODO: animation0.svg
+
+    &.active {
+      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/animation2.svg"); // TODO: animation2.svg
+    }
+  }
+
+  .info-icon {
+    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/switch0.svg");// TODO: switch0.svg
+    background-repeat: no-repeat;
+
+    &.active {
+      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/switch2.svg");// TODO: switch2.svg
+    }
+  }
+</style>

@@ -118,22 +118,25 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
    */
   const m_init = (param = { is_ws: false }) => {
     // console.log(MatchDataWarehouseInstance.get_quick_mid_obj(param),'11111');
-    // console.trace(2222)
     //给仓库类设置id
-   
+    //限流 防止mitt多次触发
+    if(allData.mid == param) return
     allData.details_params = param
     clearTimeout(allData.get_match_details_timer);
     //如果是ws推送
     let mid =null
     let is_ws = false
-    if( lodash.isObject(param)){
+    if(lodash.isObject(param)){
        mid  = param.mid;
        is_ws  = param.is_ws;
     }else{
       //如果是mitt 列表触发
+      if (route.name=='details') {
+        mid = route.params.mid;
+      }else{
         mid = param;
-    }
-    
+      }   
+    } 
     // 如果有传参，并且不是 ws 调用
     if (mid) {
       allData.mid = mid;
@@ -465,12 +468,12 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
                   }
                 }
                 // 同步数据到详情
-                let msc = detailUtils.build_msc(match_obj);
-                match_obj.msc = msc;
-                Object.assign(
-                  MatchDataWarehouseInstance.match_obj,
-                  match_obj
-                );
+                // let msc = detailUtils.build_msc(match_obj);
+                // match_obj.msc = msc;
+                // Object.assign(
+                //   MatchDataWarehouseInstance.match_obj,
+                //   match_obj
+                // );
               }
               // 是否是从详情页返回列表页
               allData.is_go_match_list = true;
@@ -776,6 +779,9 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
    * @param {number} loop_count 循环调用次数
    */
   const get_matchInfo = (loop_count) => {
+    if (route.name=='details') {
+      allData.mid = route.params.mid
+    }
     let params = {
       mid: allData.mid || 0, //赛事id
     };
@@ -844,10 +850,8 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
             let mststs = lodash.get(data, "mststs");
             MatchDetailCalss.set_match_details_params({mid,csid,media_type:'auto'})
             //获取赔率
-            lodash.throttle(() => {
-              get_match_detail_base()
-              console.error('iszhixing')
-            },1000);
+              // get_match_detail_base()
+              get_match_detail_base_throttle();
             //同步赛事时间
             update_match_time({ mid, mst, mstst, mststs });
             let { media_type, play_id } = allData.details_params;
@@ -1201,7 +1205,8 @@ watch(
     change_loading_state,
     set_handicap_this,
     setfoldStatus,
-    get_mattch_details
+    get_mattch_details,
+    refresh
   };
 
 };

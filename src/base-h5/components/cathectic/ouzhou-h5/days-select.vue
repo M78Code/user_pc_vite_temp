@@ -15,7 +15,7 @@
 import { ref, onMounted, onUnmounted } from "vue"
 import { IconWapper } from 'src/components/icon'
 import { i18n_t } from "src/boot/i18n.js";
-import { enum_time_type } from "src/core/bet-record/util.js";
+import { enum_time_type } from "src/core/bet-record/h5/util.js";
 
 let showList = ref(false)
 let _index = ref(2)

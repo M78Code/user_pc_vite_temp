@@ -13,6 +13,7 @@
 <script setup>
 import {reactive,onMounted,onUnmounted} from 'vue'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import UserCtr from 'src/core/user-config/user-ctr.js'
 let mitt_list = [];
 let load_video_js_timer = {};
 let run_timer = 0;
@@ -51,9 +52,10 @@ function iframe_loading(data){
   if(data==0){
     clearTimeout(run_timer);
     run_timer = setTimeout(() => {
+      const topic_obj = window.SEARCH_PARAMS.get_topic();
       iframe_before_loading({
-        activity_src: lodash.get(window, `BUILDIN_CONFIG.TOPIC.activity`),
-        rules_src: lodash.get(window, `BUILDIN_CONFIG.TOPIC.sports_rules`),
+        activity_src: UserCtr.get_topic_key_url('activity'),
+        rules_src: UserCtr.get_topic_key_url('sports_rules')
       })
     }, 10000);
   }

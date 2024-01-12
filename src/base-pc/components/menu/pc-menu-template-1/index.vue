@@ -18,59 +18,60 @@
         </div>
       </div>
     </div>
-    <div v-show="false">{{ BaseData.base_data_version }}</div>
+    
+    <div v-show="false">{{ BaseData.base_data_version }}-{{MenuData.menu_data_version}}</div>
+    <div class="menu-wap-nav">
+      <div v-for="item in (MenuData.left_menu_list || [] )" :key="`_${item.mi}`" :class="set_vr_or_guanjun_border(item.mi)">
+        <!--   赛种-->
+        <!-- {{ BaseData.filterSport_arr }} -- {{ BaseData.compute_sport_id(item) }} -->
+        <div class="menu-item menu-fold1 search" :class="current_lv_1_mi == item.mi? 'y-active' : ''" @click="lev_1_click(item)" v-if="item.ct">
+          <!-- icon -->
+          <div class="row items-center">
+            <span class="soprts_id_icon"
+              :style="compute_css_obj({key:current_lv_1_mi == item.mi?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif|| item.mi)}` })"
+              :alt="BaseData.menus_i18n_map[item.mif || item.mi]"></span>
 
-    <div v-for="item in (MenuData.left_menu_list || [] )" :key="`_${item.mi}`" :class="set_vr_or_guanjun_border(item.mi)">
-      <!--   赛种-->
-      <!-- {{ BaseData.filterSport_arr }} -- {{ BaseData.compute_sport_id(item) }} -->
-      <div class="menu-item menu-fold1 search" :class="current_lv_1_mi == item.mi? 'y-active' : ''" @click="lev_1_click(item)" v-if="item.ct">
-        <!-- icon -->
-        <div class="row items-center">
-          <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif|| item.mi)}` })"
-            :alt="BaseData.menus_i18n_map[item.mif || item.mi]"></span>
-
-        </div>
-        <div class="items-right row" style="flex-wrap: wrap">
-          <div style="line-height: 1; flex: 1">
-            <span class="menu-text">
-              <!-- 名字 {{ item }} -->
-              {{ BaseData.menus_i18n_map[item.mif || item.mi] || "" }}
-            </span>
           </div>
-          <!-- 数字 显示    有些赛种不显示 -->
-          <div class="col-right" style="min-width: 40px">
-            <!-- 有滚球赛事  hl 今日&&存在滚球赛事时  展示live图标 -->
-            <div class="live-text" :style="compute_css_obj('live_text')" v-if="MenuData.is_today() && BaseData.mi_gunqiu.includes(item.mif)" />
-            <span class="match-count yb-family-odds">{{ item.ct }}</span>
-          </div>
-        </div>
-      </div>
-
-      <!--  子菜单  ，  开始    -->
-      <!--  子菜单  ， 冠军 不显示子菜单  -->
-      <!--  常规体育 含 娱乐     子菜单  开始    -->
-      <div class="menu-fold2-wrap  1" :class="current_lv_1_mi == item.mi && !show_menu ? 'open' : ''" v-if="item.mi != 400">
-        <template v-for="item2 in item.sl" :key="`_${item.mi}_${item2.mi}_100`">
-          <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        开始   -->
-          <div @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })" :class="current_lv_2_mi == item2.mi ? 'active' : ''" class="menu-item menu-fold2">
-            <div class="row items-center relative-position">
-              <span class="menu-point"></span>
-              <span class="menu-text ellipsis">
-                <!-- 名字{{ item2.mi }}  -->
-                {{ BaseData.menus_i18n_map[item2.mi] || "" }}
+          <div class="items-right row" style="flex-wrap: wrap">
+            <div style="line-height: 1; flex: 1">
+              <span class="menu-text">
+                <!-- 名字 {{ item }} -->
+                {{ BaseData.menus_i18n_map[item.mif || item.mi] || "" }}
               </span>
             </div>
-            <div class="col-right relative-position" style="min-width: 40px">
-              <span class="match-count yb-family-odds" v-if="item.mif != 2000">
-                {{ item2["ct"] }}</span>
+            <!-- 数字 显示    有些赛种不显示 -->
+            <div class="col-right" style="min-width: 40px">
+              <!-- 有滚球赛事  hl 今日&&存在滚球赛事时  展示live图标 -->
+              <div class="live-text" :style="compute_css_obj('live_text')" v-if="MenuData.is_today() && BaseData.mi_gunqiu.includes(item.mif)" />
+              <span class="match-count yb-family-odds">{{ item.ct }}</span>
             </div>
           </div>
-          <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        结束    -->
-        </template>
+        </div>
+
+        <!--  子菜单  ，  开始    -->
+        <!--  子菜单  ， 冠军 不显示子菜单  -->
+        <!--  常规体育 含 娱乐     子菜单  开始    -->
+        <div class="menu-fold2-wrap  1" :class="current_lv_1_mi == item.mi && !show_menu ? 'open' : ''" v-if="item.mi != 400">
+          <template v-for="item2 in item.sl" :key="`_${item.mi}_${item2.mi}_100`">
+            <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        开始   -->
+            <div @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })" :class="MenuData?.get_lv2_mi_value() == item2.mi?'active':''" class="menu-item menu-fold2">
+              <div class="row items-center relative-position">
+                <span class="menu-point"></span>
+                <span class="menu-text ellipsis">
+                  <!-- 名字{{ item2.mi }}  -->
+                  {{ BaseData.menus_i18n_map[item2.mi] || "" }}
+                </span>
+              </div>
+              <div class="col-right relative-position" style="min-width: 40px">
+                <span class="match-count yb-family-odds" v-if="item.mif != 2000">
+                  {{ item2["ct"] }}</span>
+              </div>
+            </div>
+            <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        结束    -->
+          </template>
+        </div>
       </div>
     </div>
-
     <div class="box-line"></div>
   </div>
 </template>
@@ -96,7 +97,7 @@ const left_menu_list = ref(MenuData.left_menu_list||[])
 // 当前的一级菜单ID
 const current_lv_1_mi = ref(""); //"101",
 // 当前的二级菜单ID
-const current_lv_2_mi = ref(""); //"101201", // 101301
+// const current_lv_2_mi = ref(""); //"101201", // 101301
 // 当前赛种是否收起 状态
 const show_menu = ref(true);
 // 首次进入 刷新用
@@ -209,7 +210,7 @@ const esports_vr_switch = () => {
  * @param {*} obj 一级菜单id
  * @return {*}
  */
-const lev_1_click = (obj) => {
+const lev_1_click = async (obj) => {
   // show_menu 展开或者收起  收起是 true  展开是false
   // current_lv_1_mi 选中按钮  选中的情况下 点击一级菜单 收起或者展开
   // 收起的情况下 再次回来 还是收起 / 展开的情况下 再次回来还是展开
@@ -217,7 +218,7 @@ const lev_1_click = (obj) => {
   // lv1_mi 新菜单id
   // lv2_mi 二级菜单id
   let mi = obj.mi
-  let type = obj.mif
+  let type = obj.mif || obj.mi
   if(!MenuData.is_zaopan()){
     MenuData.set_menu_root(2)
   }
@@ -237,10 +238,10 @@ const lev_1_click = (obj) => {
   }
 
   // 获取具体的二级玩法
-  MenuData.set_post_menu_play_count(mi)
+  if ( MenuData.is_today() || MenuData.is_zaopan())MenuData.set_post_menu_play_count(mi)
 
   current_lv_1_mi.value = mi
-  current_lv_2_mi.value = get_lv_1_lv_2_mi(mi)
+  // current_lv_2_mi.value = get_lv_1_lv_2_mi(mi)
 
   let mid_obj = {}
   let left_obj = {}
@@ -283,19 +284,22 @@ const lev_1_click = (obj) => {
   } else if (type == 300) {
     // 1级 冠军和vr体育 点击后默认为早盘
     root = 300
-
-    // 设置左侧菜单
-    left_obj = {
-      lv1_mi: 300,
-      lv2_mi: 1010,
-      has_mid_menu: true,
+    const res = await MenuData.get_vr_menu_list();
+    if(res && res.length){
+      // 设置左侧菜单
+      left_obj = {
+        lv1_mi: 300,
+        lv2_mi: `3${res[0].menuId}`,
+        has_mid_menu: true,
+      }
+      //电竞  直接点英雄联盟
+      mid_obj = {
+        mi: `3${res[0].menuId}`,
+        tid: `${res[0].subList?.[0]?.field1}`, // 联赛
+      }
     }
-    //电竞  直接点英雄联盟
-    mid_obj = {
-      mi: 1010,
-      tid: '', // 联赛
-    }
-
+    
+    
   } else if (type == 118) {
     // 娱乐只有冠军
     left_obj ={
@@ -339,7 +343,7 @@ const lev_1_click = (obj) => {
   // 今日没有中间菜单 需要清空
   MenuData.set_mid_menu_result(mid_obj)
 
-  MenuData.set_menu_current_mi(left_obj.lv2_mi)
+  MenuData.set_menu_current_mi(left_obj.lv2_mi || "")
 
 };
 /**
@@ -360,7 +364,7 @@ const lev_2_click = (detail = {}) => {
     md: ''
   }
 
-  current_lv_2_mi.value = lv2_mi
+  // current_lv_2_mi.value = lv2_mi
 
   // 不是列表页 点击列表菜单
   if(route.name != 'home'){
@@ -394,15 +398,15 @@ const handle_click_jinri_zaopan = (val) => {
 
   let obj = {
     lv1_mi: `101${val}`,
-    lv2_mi: ''
+    lv2_mi: '',
+    root:val
   }
   obj.lv2_mi = get_lv_1_lv_2_mi( obj.lv1_mi )
-
   // mif 赛种id
   // lv1_mi 新菜单id
   // lv2_mi 二级菜单id
   current_lv_1_mi.value = obj.lv1_mi
-  current_lv_2_mi.value = obj.lv2_mi 
+  // current_lv_2_mi.value = obj.lv2_mi 
 
   MenuData.set_left_menu_result(obj)
 
@@ -411,10 +415,9 @@ const handle_click_jinri_zaopan = (val) => {
     MenuData.set_mid_menu_result({md:""})
   }
   
-
   if(set_route_url()) return
 
-  MenuData.set_menu_current_mi(obj.lv2_mi)
+  MenuData.set_menu_current_mi(obj.lv2_mi || "")
 };
 
 // 获取当前菜单下的二级菜单id
@@ -431,6 +434,18 @@ const get_lv_1_lv_2_mi = (mi) => {
 
   return lv2_mi
 }
+/**
+ * 
+ */
+// watch(MenuData.menu_data_version,()=>{
+//   const { left_menu_result } = MenuData;
+//   if( current_menu.value?.mi!=left_menu_result.lv2_mi){
+//     current_menu.value =
+//       dianjing_sublist.value.find((item) => item.mi == left_menu_result.lv2_mi) ||
+//       {};
+//     sport_click(current_menu.value);
+//   }
+// })
 /**
  * ws推送球种数量
  * @param {*} list 
@@ -517,8 +532,7 @@ onUnmounted(()=>{
           line-height: 30px;
           border: 0.5px solid #D7E1FD;
           box-shadow: 0px 3px 3px 0px rgba(0, 56, 98, 0.1) !important;
-          background: linear-gradient(0deg, #D7E1FD, #D7E1FD),
-          linear-gradient(180deg, #E4ECFD 0%, #F8FAFF 47.92%, #F5F8FF 100%);          
+          background: var(--q-gb-bg-lg-4);          
           &:last-child {
             margin-right: 0;
           }
@@ -539,10 +553,11 @@ onUnmounted(()=>{
 
         &.y-active{
           background: var(--q-gb-bg-lg-8);
-          color: var(--q-gb-t-c-15); 
+          color: var(--q-gb-t-c-16); 
         }
         &:hover{
           background: var(--q-gb-bg-lg-9);
+          color: var(--q-gb-t-c-16); 
         }
       }
       &.menu-fold2 {

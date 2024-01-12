@@ -2,7 +2,8 @@
   <div class="c-match-list-filter" :class="{
     'date-filter': menu_config.menu_root == 3,
     early: menu_config.menu_root == 3
-  }" v-if="menu_config.left_menu_result.jinri_zaopan == 3">
+  }" >
+  <!-- v-if="menu_config.left_menu_result.jinri_zaopan == 3" -->
     <!-- 早盘-日期 -->
     <DateTab />
   </div>

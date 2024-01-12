@@ -77,7 +77,7 @@ class BaseData {
     //菜单版本set_vr_mi_config
     this.menu_version = 1;
     // 菜单 国际化 数据  map
-    this.menus_i18n_map = [];
+    this.menus_i18n_map = menu_i18n_default;
     // 新的菜单 接口返回  数据
     this.mew_menu_list_res = [];
     //新的菜单 的基础信息相关的 （可以包含国际化）
@@ -158,9 +158,9 @@ class BaseData {
    * 目前 按照约定 走 api
    */
   init() {
-    // console.error('初始化菜单数据')
+    console.error('初始化菜单数据')
     // 用默认数据 初始化
-    this.init_by_default_data();
+    // this.init_by_default_data();
     // console.warn("BaseData.init()--------");
 
     // 获取 用户信息
@@ -196,6 +196,7 @@ class BaseData {
 
     // ws请求订阅
     BaseWsMessage.init()
+
   }
 
 
@@ -322,6 +323,17 @@ class BaseData {
         })
       }
     })
+  }
+
+  // 切换国际化 获取最新的数据
+  set_base_data_menu_i18n() {
+    api_base_data.post_base_data_menu_i18n({}).then((res) => {
+      this.init_base_menu_il8n(res)
+      nextTick(()=>{
+        // 切换国际化后 告知菜单有变化 页面菜单进行国际化内容修改
+        MenuData.set_menu_data_version()
+      })
+    }).catch(err => reject(err))
   }
 
   // 模拟数据推送 左侧菜单和顶部菜单 修改
@@ -643,20 +655,20 @@ class BaseData {
        *  一期只有足球篮球  暂定
        *  重置默认数据
        */
-      if(!IS_FOR_NEIBU_TEST){
-        this.left_menu_base_mi_arr = this.conventionalType;
+      // if(!IS_FOR_NEIBU_TEST){
+      //   this.left_menu_base_mi_arr = this.conventionalType;
        
-        let list_mi_lsit = []
-        left_menu_mi.forEach(item=>{
-          if(this.conventionalType.includes(item.mi*1)){
-            list_mi_lsit.push(item)
-          }
-        })
-        left_menu_list = list_mi_lsit
-      }else{
+      //   let list_mi_lsit = []
+      //   left_menu_mi.forEach(item=>{
+      //     if(this.conventionalType.includes(item.mi*1)){
+      //       list_mi_lsit.push(item)
+      //     }
+      //   })
+      //   left_menu_list = list_mi_lsit
+      // }else{
         this.left_menu_base_mi_arr = left_menu ; 
         left_menu_list = left_menu_mi;
-      }
+      // }
 
       // 赛种筛选
       left_menu_list.filter(item => {
@@ -697,6 +709,9 @@ class BaseData {
       } else {
         this.is_mi_300_open = true;
       }
+
+      // 菜单完成 更新顶部菜单tab
+      useMittEmit(MITT_TYPES.EMIT_MENU_INIT_DONE)
 
       // console.warn('left_menu',left_menu)get_virtual_menuvr
       // console.warn('菜单数据处理完成-----')
@@ -1232,5 +1247,4 @@ class BaseData {
 }
 
 const base_data_instance = new BaseData();
-useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=>base_data_instance.init())
 export default base_data_instance;

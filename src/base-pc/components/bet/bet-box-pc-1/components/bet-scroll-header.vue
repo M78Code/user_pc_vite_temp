@@ -4,7 +4,7 @@
 <template>
   <div class="bet-scorll-header">
 
-    <div style="display: none;"> {{ BetData.bet_data_class_version }} </div>
+    <div style="display: none;">{{ BetViewDataClass.bet_view_version }}--{{ BetData.bet_data_class_version }} </div>
 
     <div class="row bet-back-btn yb-flex-between" :class="{ 'free-style': LayOutMain_pc.is_iframe }">
       <!-- 返回菜单（投注记录、单/串关投注栏） -->
@@ -52,6 +52,7 @@
 import { computed, onMounted } from "vue"
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 
 import { IconWapper } from 'src/components/icon'
 
@@ -103,7 +104,7 @@ const set_change_bet_single = () => {
   padding-left: 15px;
   height: 34px;
   cursor: pointer;
-  background: var(--q-gb-bg-c-14);
+  background: var(--q-bet-box-8);
   border-bottom: 1px solid var(--q-gb-bd-c-8);
   border-right: 1px solid var(--q-gb-bd-c-6);
 
@@ -204,7 +205,8 @@ const set_change_bet_single = () => {
   display: flex;
   align-items: center;
   .bet-series-text{
-    color: var(--q-gb-t-c-10) ;
+    //color: var(--q-gb-t-c-10) ;
+    color: var(--q-gb-t-c-11) ;
     &.actions{
       color: var(--q-gb-t-c-16);
     }

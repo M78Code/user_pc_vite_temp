@@ -1,5 +1,5 @@
 <template>
-  <div class="c-match-item " :class="'tpl-'+match_style_obj.data_tpl_id">
+  <div class="c-match-item " :class="'tpl-'+match.tpl_id">
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
@@ -19,7 +19,7 @@
         <!-- 赛事盘口投注项 -->
         <match-handicap
           v-if="match"
-          :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].main_handicap_list"
+          :handicap_list="(match.main_handicap_list)"
           :match="match"
           :is_show_score="![20,22,23,25].includes(+match_style_obj.data_tpl_id)"
           :is_show_score_content="false"

@@ -18,7 +18,7 @@
         <div class="league-icon-wrap">
           <span class="soprts_id_icon"
             v-if="menu_config.is_esports()"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
           <img v-img="[lodash.get(card_style_obj.league_obj,'lurl')]" />
         </div>
         <!-- 联赛名称 -->
@@ -38,9 +38,8 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive, watch } from 'vue'
-import lodash from 'lodash';
-// import sportIcon from "src/public/components/sport_icon/sport-icon.vue"
+import lodash from 'lodash';    
+import { compute_sport_id  } from 'src/output/module/constant-utils.js'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import MatchListCardClass from 'src/core/match-list-pc/match-card/match-list-card-class.js';

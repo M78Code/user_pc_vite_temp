@@ -74,6 +74,8 @@ import { api_account,api_betting } from 'src/api/index';
 import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/output/index.js";
 import {LOCAL_PROJECT_FILE_PREFIX,format_money2 } from "src/output/index.js";
 import VMarquee from 'src/base-h5/components/marquee/marquee.vue'
+import BaseData from "src/core/base-data/base-data.js";
+
 //语言设置
 const lang = ref(UserCtr.lang)
 const router = useRouter();
@@ -168,12 +170,14 @@ const on_show_money = (flag) => {
 // 切换语言
 const on_change_lang = (key) => {
   lang.value = key
+  // 设置国际化语言
+  UserCtr.set_lang(lang.value) 
+  BaseData.set_base_data_menu_i18n()
   api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: lang.value }).then(res => {
     let code = lodash.get(res, 'code');
     if (code == 200) {
         // 设置国际化语言
         loadLanguageAsync(lang.value).then().finally(() => {
-          UserCtr.set_lang(lang.value) 
           marqueeRef.value.get_marquee_data()
         })
     } else if (code == '0401038') {

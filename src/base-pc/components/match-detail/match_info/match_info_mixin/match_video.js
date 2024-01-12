@@ -26,7 +26,12 @@ export default {
       type: Number,
       default: 0
     }, //刷新次数
-    mid:String || Number
+    mid:String || Number,
+    // 默认的展示类型
+    show_type_default: {
+      type: String,
+      default: ''
+    }
   },
   mixins: [video_replay],
   data() {
@@ -107,6 +112,16 @@ export default {
   },
 
   watch: {
+    /**
+     * 监听并修改设置的type
+     * @param {'play-video'} value 
+     */
+    show_type_default(value) {
+      if (value == "play-video") {
+        this.show_type = value;
+        MatchDetailCalss.set_play_media( { media_type: "video", mid: this.mid, time: Date.now() })
+      }
+    },
     // //监听详情类的版本号
     // "layout_version.value": {
     //   handler(res) {
@@ -117,7 +132,7 @@ export default {
     //监听详情类的版本号
     "details_data_version.version": {
       handler(res) {
-        
+      
         this.play_media = MatchDetailCalss.play_media
         this.vx_is_pause_video = MatchDetailCalss.is_pause_video
         // this.show_type =MatchDetailCalss.params.media_type
@@ -274,14 +289,15 @@ export default {
         this.callback_id++
         let callback_id = this.callback_id
         let { media_type } = this.play_media
+      
         let  mid="" ; let mms="" ;let mvs=""; let varl="" ;let vurl=""; let  csid=""; let lvs=""
-        if( this.match_info && JSON.stringify(this.match_info) == "{}" ) {
+        if( this.match_info ) {
           mid= this.match_info.mid
-          mms=this.match_info.mid
-          mvs = this.match_info.mid
-          varl = this.match_info.mid
-          csid= this.match_info.mid
-          lvs= this.match_info.mid
+          mms=this.match_info.mms
+          mvs = this.match_info.mvs
+          varl = this.match_info.varl
+          csid= this.match_info.csid
+          lvs= this.match_info.lvs
          }
         
         const {mid: last_mid, media_type: last_media_type} = this.last_media_info || {}
@@ -315,6 +331,8 @@ export default {
           }
           return
         }
+    
+
         // 比分板信息
         if((media_type == 'auto' && this.$route.name == 'home') || media_type == 'info'){
           this.show_type = 'info'
@@ -322,7 +340,7 @@ export default {
           video.set_play_media(this.mid,'info')
           return
         }
-
+        
         // 媒体类型auto进一步判断
         if (media_type == "auto") {
           if (mvs > -1) {
@@ -410,6 +428,7 @@ export default {
             if(callback_id != this.callback_id){
               return
             }
+         
             video.set_play_media(this.match_info.mid,'animation')
             this.show_type = show_type
             // 此处为最终的动画url
