@@ -1084,6 +1084,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if(bet_obj.bet_type == 'guanjun_bet'){
         bet_obj.handicap = ol_obj.on
         bet_obj.handicap_hv = ''
+        bet_obj.tid_name = mid_obj.onTn || mid_obj.tn
     }
 
     // 串关数据 提示  添加数据之前
