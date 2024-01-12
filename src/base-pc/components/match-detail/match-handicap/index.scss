@@ -421,12 +421,15 @@
     cursor: pointer;
     // to do use key
     // 这个是投注项背景颜色
-    -background: #EFF8FF;
-    background-color: var(--q-gb-bg-c-27);
+    //background: #EFF8FF;
+    background: var(--q-match-details-block-bg);
     &:hover {
-      -background: #ecf4ff;
+      //background: #ecf4ff;
       color: var(--q-gb-t-c-18);
-            background: var(--q-gb-t-c-16);
+      background: var(--q-match-details-hover);
+      .odds {
+        color: var(--q-gb-t-c-5);
+      }
     }
   }
 }

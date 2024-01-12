@@ -146,7 +146,7 @@
             .bet-item {
               color: var(--q-gb-t-c-5);
               .yb-family-odds {
-                color: var(--q-gb-t-c-16);
+                //color: var(--q-gb-t-c-16);
               }
               .yb-family-odds.normal_color {
                 color: var(--q-gb-t-c-5);
@@ -296,7 +296,7 @@
                 color: var(--q-gb-t-c-1);
               }
               .ellipsis-wrap {
-                color: var(--q-gb-t-c-1);
+                color: var(--q-gb-bg-c-11) !important;
               }
             }
           }
