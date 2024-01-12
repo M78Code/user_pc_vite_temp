@@ -6,6 +6,10 @@
       <!-- 联赛信息 -->
       <div class="leagues-wrap" :class="match_style_obj.data_tpl_id == 12 && 'jingcai'"
         :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
+        <div :class="[
+          'list-expand',
+          {'list-expand-fold': card_style_obj.is_league_fold}
+        ]" :style="compute_css_obj({ key: 'pc-home-list-expand' })"></div>
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
           <span class="soprts_id_icon" v-if="MenuData.is_esports()"
@@ -314,7 +318,15 @@ function set_fold() {
     display: flex;
     align-items: center;
     padding: 0 13px;
-
+    .list-expand {
+      width: 16px;
+      height: 16px;
+      margin-right: 30px;
+      transform: rotate(180deg);
+    }
+    .list-expand-fold {
+      transform: rotate(0deg);
+    }
     .icon-arrow {
       font-size: 20px;
       margin-right: 20px;
