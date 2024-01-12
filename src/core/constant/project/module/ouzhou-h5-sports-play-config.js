@@ -573,6 +573,7 @@ export const use_sports_play_title = () => {
         label: i18n_t('list.play1'),//'全场独赢',
         ol: [
           { ot: '1', title: i18n_t('list.win1') },
+          { ot: 'X', title: i18n_t('list.dogfall') }, // "平局"
           { ot: '2', title: i18n_t('list.win2')}
         ]
       },
@@ -621,14 +622,14 @@ export const use_sports_play_title = () => {
       },
     ],
     //联合式橄榄球
-    "414": [
+    "14": [
       {
         hpid: '1',
-        label: i18n_t('list.play1'),//'全场独赢',
+        label: i18n_t('list.play1'), //'全场独赢',
         ol: [
-          { ot: '1', title: i18n_t('list.win1') },// "主胜"
+          { ot: '1', title: i18n_t('list.win1') }, // "主胜"
           { ot: 'X', title: i18n_t('list.dogfall') }, // "平局"
-          { ot: '2', title: i18n_t('list.win2')}// "客胜"
+          { ot: '2', title: i18n_t('list.win2')} // "客胜"
         ]
       },
       {
