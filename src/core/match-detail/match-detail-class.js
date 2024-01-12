@@ -78,7 +78,8 @@ class MatchDetailCtr {
     // 电竞视频是否暂停
     this.is_pause_video = true;
     this.zoom = true;
-    this.layout_statu = 0;//玩法列表单双列 0单列， 1双列
+    /** 玩法列表单双列 0单列， 1双列 */
+    this.layout_statu = 0;
     this.is_fullscreen = false; //是否全屏
     // 赛事详情数量
     this.match_detail_count = 0;
