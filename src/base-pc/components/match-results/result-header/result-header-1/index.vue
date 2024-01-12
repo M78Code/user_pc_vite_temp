@@ -14,20 +14,16 @@
         ></Select-Wrapper>
       </div>
       <q-separator class="divider" color="#F2F5F8" inset /> -->
-    <div class="c-simple-header">
+    
+        <div class="c-simple-header">
       <div class="logo-icon"  :style="compute_css_obj({ key: 'pc-rule-logo' })"></div>
-      <div class="head-info">
-        <div class="rule-title">
-          赛果
-        </div>
-        <div class="systime">
-          <div class="refresh" v-if="$route.name == 'match_results'">
-            <refresh-comp :loaded="data_loaded" @click="refresh()" />
-          </div>
-          <!--右侧时间-->
-          <span>{{date_time}} (GMT+8)</span>
-        </div>
-      </div>
+      <div class="header-title">赛果</div>
+    </div>
+    <div>
+     
+      
+   
+      <q-separator class="divider" color="#F2F5F8" inset />
     </div>
     
     <div class="search-header">
