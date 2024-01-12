@@ -62,6 +62,7 @@ class MenuData {
       lv2_mi: "", // 二级菜单
     };
     //响应式左侧菜单 右侧菜单 电竞 vr  
+    this.ref_lv1_mi = ref('');
     this.ref_lv2_mi = ref('');
     // 左侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
     this.menu_root = 1;
@@ -132,7 +133,7 @@ class MenuData {
 
     if (Object.keys(session_info).length) {
       for(let item in session_info){
-        if(!['menu_data_version','match_list_version','api_config_version','ref_lv2_mi'].includes(item) ){
+        if(!['menu_data_version','match_list_version','api_config_version','ref_lv2_mi','ref_lv1_mi'].includes(item) ){
           this[item] = session_info[item]
         }
       }
@@ -380,7 +381,7 @@ class MenuData {
    */
   set_left_menu_result(obj) {
     this.menu_root_show_shoucang = obj.root;
-    this.menu_root = obj.root?obj.root:this.menu_root;
+    // this.menu_root = obj.root?obj.root:this.menu_root;
     // 设置 列表接口类型
     // this.set_match_list_api_type(obj);
     // console.error('set_left_menu_result',obj)
@@ -392,6 +393,7 @@ class MenuData {
       version: Date.now(),
       root: this.menu_root
     };
+    // this.ref_lv1_mi.value = obj.root?obj.root:this.menu_root;
     this.ref_lv2_mi.value =obj.lv2_mi?Number(obj.lv2_mi):"";
     if (obj.has_mid_menu) {
       //  如果 有   走 自然的 中间菜单组件渲染 ，
@@ -586,18 +588,6 @@ class MenuData {
     // store.dispatch("virtual_bet_clear");
   }
   /**
-   * @description 判断是电竞
-   * @param {undefined} undefined
-   * @return {undefined} undefined
-   */
-  is_esports() {
-    // this.$is_eports_csid(this.$route.params.csid)
-    return (
-      this.menu_root == 2000 ||
-      (this.match_list_api_config || {}).sports == "dianjing"
-    );
-  }
-  /**
    * @description 判断是虚拟体育
    * @param {undefined} undefined
    * @return {undefined} undefined
@@ -613,31 +603,14 @@ class MenuData {
   is_home() {
     return false
   }
-  is_common_kemp() {
-    return this._is_cur_mi(400, this.menu_root)
+  is_common_kemp(mi) {
+    return this._is_cur_mi(400, mi)
   }
   is_collect_kemp() {
     return this.is_collect && this.menu_root == 400
   }
-  /**
-   * 是否选中了滚球
-   *  mi [number|string] 要比对的值
-  */
-  is_scroll_ball() {
-    return this._is_cur_mi(1, this.menu_root)
-  }
   is_leagues() {
     return false
-  }
-  /**
-   * 是否选中了今日
-   *  mi [number|string] 要比对的值
-  */
-  is_today(mi) {
-    return this._is_cur_mi(2, mi)
-  }
-  is_left_zaopan(mi) {
-    return this._is_cur_mi(203, mi)
   }
   //root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
   //内部方法
@@ -645,7 +618,7 @@ class MenuData {
     if (param) {
       return mi == param
     }
-    return this.menu_root == mi
+    return this.ref_lv1_mi.value == mi
   }
   // is_multi_column(){
   //   return   this.match_list_api_config.is_multi_column ||false
@@ -767,7 +740,9 @@ class MenuData {
   
 
   set_menu_root(val){
+    val = val || 2;
     this.menu_root = val
+    this.ref_lv1_mi.value = val;
     let left_menu_list = []
     
     if(val == 2){
@@ -1072,15 +1047,6 @@ class MenuData {
   // 是否是 leagues
   is_leagues() {
     return this.mid_menu_result.filter_tab == 4002
-  }
-
-  //root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
-  //内部方法
-  _is_cur_mi(mi, param) {
-    if (param) {
-      return mi == param
-    }
-    return this.menu_root == mi
   }
   /**
    * 是否选中了 热门

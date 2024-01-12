@@ -16,7 +16,7 @@ import { api_details } from "src/api/index";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
 import {is_eports_csid,MatchDetailCalss, } from 'src/output/index.js';
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
-import { useMittEmit, useMittOn, MITT_TYPES,useMittEmitterGenerator } from "src/core/mitt/";
+import { useMittEmit, useMittOn, MITT_TYPES,useMittEmitterGenerator } from "src/core/mitt/index";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash";
 export const useMethods = ({ props,emit }) => {
@@ -345,7 +345,7 @@ export const useMethods = ({ props,emit }) => {
     MatchDetailCalss.set_layout_statu(statu)
     state.layout_statu = statu ? true : false;
     if (statu) {
-      state.waterfall = set_waterfall(state.details_data);
+      state.waterfall = details.set_waterfall(state.details_data);
     } else {
       state.waterfall = [this.details_data];
     }

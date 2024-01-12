@@ -49,6 +49,40 @@
       </div>
     </template>
     <!-- 专业版单关 未结算 可以提前结算 -->
+    <div class="info-wrap" v-if="calc_show">
+      <!--提前结算提示语-->
+      <div class="bet-pre-title">
+        <template v-if="ref_data.bet_pre_code>1 && ref_data.bet_pre_code!='0400524'">
+          <span style="color:red">
+            <template v-if="ref_data.bet_pre_code=='0400527'">
+              <!--功能暂停中，请稍后再试-->
+              {{i18n_t('bet_record.pre_suspend')}}
+            </template>
+            <template v-else-if="ref_data.bet_pre_code=='0400537'">
+              <!--提前结算金额调整中，请再试一次-->
+              {{i18n_t('bet_record.pre_amount_change')}}
+            </template>
+            <template v-else>
+              <!--提前结算申请未通过-->
+              {{i18n_t('bet_record.pre_not_approved')}}
+            </template>
+          </span>
+        </template>
+        <template v-else>
+          <!--提前结算金额已包含本金-->
+          <span>{{i18n_t('bet_record.pre_bet_include_money')}}</span>
+        </template>
+      </div>
+      <div class="bet-pre-wrap">
+        <!-- 提前结算按钮-->
+        <div class="bet-pre-btn">
+          <!-- 提前结算-->
+          <div class="bet-row-1">{{i18n_t("bet_record.settlement_pre")}} </div>
+          <div class="bet-row-2" v-if="status !== 5 && (Number(front_settle_amount) || expected_profit)">￥{{ betting_amount }}</div>
+        </div>
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/success.png`" alt="">
+      </div>
+    </div>
     <template v-if="item.seriesType=='1'">
       <div class="info-wrap">
         <!--选择的是未结算 且settleSwitch开关为1且enablePreSettle为true -->
@@ -301,13 +335,13 @@
   </div>
 </template>
 <script setup>
-import { reactive, ref } from "vue"
-import { format_odds, format_currency, formatTime } from "src/output/index.js"
+import { reactive, ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue"
+import lodash from 'lodash'
+import { format_odds, format_currency, formatTime, useMittEmit, useMittOn,  MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
 
-import lodash_ from "lodash"
 const props = defineProps({
   index: {
     type: Number,
@@ -325,6 +359,262 @@ const ref_data = reactive({
  cur_bet_pre: {},
  more_index: -1,//查看更多按钮index
 })
+
+
+// 1 - 初始状态，2 - 确认提前结算， 3 - 确认中..., 4 - 已提前结算, 5 - 暂停提前结算(置灰), 6 - 仅支持全额结算, 7 - 按钮不显示
+let status = ref(1)
+// 是否展示提前结算
+let calc_show = ref(false)
+// 提前结算申请未通过提示
+let unSuccessTips = ref(false)
+// 滑块是否显示
+let slider_show = ref(false)
+// 0  100
+let percentage = ref(100)
+// 接口返回的正在确认中的金额，当 [2, 3, 4, 6] 4种情况时，也用于赋值锁定金额
+let front_settle_amount = ref('')
+// 根据轮询获取的最新预计返还金额
+let expected_profit = ref(0)
+// 工具方法
+// let utils = ref(utils)
+// 接口调用次数计数 // 概率，用于计算钮下的预计返还（盈利），注意，查询订单记录接口是直接返回的金额，而ws推送返回的是概率，所以概率更新了需要重新计算钮下的预计返还（盈利）
+// 延时器
+let timer = null
+let timer2 = null
+let timer3 = null
+let timer4 = null
+
+let mitt_c201_handle = null
+let mitt_expected_profit = null
+
+
+const betting_amount = computed(() => {
+  let bet_amount;
+  // 提前结算应先取接口返回利率
+  if (status.value == 1) {
+    bet_amount = Number(expected_profit.value || front_settle_amount.value)
+  } else {
+    bet_amount = Number(front_settle_amount.value || expected_profit.value)
+  }
+  return bet_amount.toFixed(2)
+})
+/**
+ * 是否仅支持全额结算
+ */
+const is_only_fullbet = computed(() => {
+  return props.item.preSettleBetAmount != null && props.item.preSettleBetAmount <= min_bet_money && expected_profit.value >= 1
+})
+
+// 提前结算投注额,四舍五入取整
+const cashout_stake = computed(() => {
+  let pba = props.item.preSettleBetAmount || 0
+  let _money = Math.round(pba * (percentage.value / 100));
+  if (percentage.value == 100) {
+    _money = pba;
+  }
+  if (pba > min_bet_money) {
+    return _money < min_bet_money ? +min_bet_money : +_money;
+  } else {
+    return _money
+  }
+})
+
+// 单关最低投注金额
+const min_bet_money = computed(() => {
+  return lodash.get(UserCtr, "cvo.single.min") || 10;
+})
+
+watch(() => expected_profit.value, (_new, _old) => {
+  // 小于 1 时暂停提前结算
+  if (_new < 1) {
+    status.value = 5;
+  }
+  // 这4种情况时，不接受按钮中的金额变动
+  let flag = [2, 3, 4, 6].includes(status.value)
+  if (flag && !front_settle_amount.value) {
+    front_settle_amount.value = _old
+  }
+})
+
+onMounted(() => {
+  // 计算提前结算按钮是否显示
+  calc_show.value = (BetRecordLeft.selected === 0 && props.item.seriesType === '1' && props.item.enablePreSettle)
+  //  /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordLeft.selected + props.item.enablePreSettle + status.value);
+
+
+  if (is_only_fullbet.value) {
+    // 剩余的金额小于最低限额时，只支持全额结算
+    status.value = 6;
+  }
+  /**
+   * 监听轮询提前结算列表数据
+   * 给expected_profit赋值
+   */
+  mitt_expected_profit = useMittOn(MITT_TYPES.EMIT_EARLY_MONEY_LIST_CHANGE, (early_money_list_data) => {
+    // 如果early_money_list_data为null, 隐藏提前结算按钮
+    if(!early_money_list_data) {
+      calc_show.value = false
+      return
+    }
+    // 当前单号
+    const moneyData = lodash.find(early_money_list_data, (item) => {
+      return props.item.orderNo == item.orderNo
+    })
+    // 如果没有当前单号
+    // if(!moneyData) {
+    //   calc_show.value = false
+    //   return
+    // }
+    // 有当前单号
+    // calc_show.value = true
+    let _maxCashout = props.item.maxCashout
+    if (moneyData && moneyData.orderStatus === 0) {
+      if (moneyData.preSettleMaxWin !=  props.item.maxCashout) {
+        _maxCashout = moneyData.preSettleMaxWin
+      }
+    }
+    let _percentage = cashout_stake.value / parseInt(props.item.preSettleBetAmount)
+    //四舍五入至小数点第二位
+    expected_profit.value =  Math.round(_maxCashout * _percentage * 100) / 100
+  }).off;
+
+  // 处理ws订单状态推送
+  mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE_BET_RECORD, c201_handle).off;
+})
+onUnmounted(() => {
+  // 清除定时器 和 ws推送
+  clear_timer()
+  mitt_c201_handle()
+  mitt_expected_profit()
+})
+
+// ...mapMutations(["set_toast","set_early_moey_data"]),
+/**
+ *@description 处理ws订单状态推送
+ *@param {Object} · orderNo - 订单号, orderStatus - 订单状态
+ */
+const c201_handle = ({ orderNo, orderStatus }) => {
+  if (props.item.orderNo == orderNo) {
+    if (orderStatus == 1) {
+      // 成功
+      status.value = 4;
+    } else if (orderStatus == 2) {
+      // 失败
+      // 提示未通过
+      showUnSuccessTips()
+      status.value = 1;
+    }
+  }
+  // console.log("qwe", orderStatus, orderNo);
+}
+
+/**
+ *@description 滑块是否显示
+ */
+const change_slider_show = () => {
+  if (status.value == 5 || status.value == 6) return;
+  slider_show = !slider_show;
+}
+/**
+ *@description 改变滑块百分比
+ *@param {Number} val 滑块值
+ */
+const change_percentage = (val) => {
+  front_settle_amount.value = ''
+  percentage.value = val;
+}
+
+/**
+ *@description 提前结算提交事件
+ */
+const submit_early_settle = () => {
+  if (cashout_stake.value < 0.01) return;
+  status.value = 3;
+  unSuccessTips.value = false
+  let params = {
+    // 订单号
+    orderNo: props.item.orderNo,
+    // 结算金额
+    settleAmount: cashout_stake.value,
+    // 结算设备类型 1:H5（默认），2：PC，3:Android，4:IOS
+    deviceType: 1,
+    // 预计返还（盈利）
+    frontSettleAmount: String(front_settle_amount.value || expected_profit.value),
+  };
+  let message = ''
+  // 响应码【0000000 成功（仅在测试模式出现） | 0400524 确认中（仅在非测试模式出现）| 0400500 提交申请失败，提示message信息】
+  api_betting.post_pre_bet_order(params).then((reslut) => {
+    let res = reslut.status ? reslut.data : reslut
+    if (res.code == 200) {
+      status.value = 4;
+    } else if (res.code == "0400524") {
+      // 注单确认中···
+      // 等到ws推送，c201_handle处理后续注单状态
+    } else if (res.code == "0400527") {
+      // 不支持提前结算或者暂停
+      status.value = 5;
+    } else if (res.code == "0400537") {
+      // 金额有变动，需要更新按钮上的金额
+      status.value = 1;
+      message = i18n_t('early.info7');
+      let money = res.data
+      if (+money > 0) {
+        nextTick(() => {
+          front_settle_amount.value = money
+        })
+      }
+    } else {
+      // 提前结算申请未通过
+      status.value = 1;
+      // 提示未通过
+      showUnSuccessTips()
+    }
+    message && useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
+  }).catch((err) => {
+    // 提前结算申请未通过
+    status.value = 1;
+    // 提示未通过
+    showUnSuccessTips()
+  });
+}
+/**
+ *@description 橙色大按钮点击处理
+ */
+const submit_click = () => {
+  if (status.value == 1 || status.value == 6) {
+    slider_show = false;
+    status.value = 2;
+    // 提示5秒后消失
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      status.value = is_only_fullbet.value ? 6 : 1;
+    }, 5000);
+  } else if (status.value == 2) {
+    clearTimeout(timer);
+    timer = null;
+    submit_early_settle();
+  }
+}
+
+/**
+ * 提前结算申请未通过的提示
+ * 5s后消失
+ */
+const showUnSuccessTips = () => {
+  unSuccessTips.value = true
+  timer2 = setTimeout(() => {
+    unSuccessTips.value = false
+  }, 5000);
+}
+
+// 批量清除定时器
+const clear_timer = () => {
+  clearTimeout(timer)
+  clearTimeout(timer2)
+  clearTimeout(timer3)
+  clearTimeout(timer4)
+}
+
 </script>
 <style lang="scss" scoped>
 .pt10 {
@@ -334,187 +624,33 @@ const ref_data = reactive({
   margin-top: 0;
 }
 .info-wrap {
-  .row {
-    margin-top: 10px;
-  }
-  /*提前结算提示语*/
-  .bet-pre-title,
-  .bet-pre-money {
+  text-align: center;
+  .bet-pre-title {
     font-size: 12px;
-    text-align: center;
+    line-height: 30px;
   }
-  .bet-pre-money {
-    text-align: left;
-  }
-  .bet-tips-info {
-    font-size: 12px;
-  }
-  .record-item {
-    margin-top: 10px;
-  }
-  .red-bg {
-    display: inline-block;
-    margin-right: 5px;
-    width: 38px;
-    height: 16px;
-    line-height: 16px;
-    font-size: 12px;
-    text-align: center;
-    border-radius: 2px;
-  }
-  .bet-info {
-    cursor: pointer;
-    margin-right: 5px;
-    margin-top: -2px;
-  }
-  /* 提前结算 */
   .bet-pre-wrap {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0px;
+    width: 200px;
+    height: 38px;
+    background: var(--q-gb-bg-c-4);
+    border-radius: 50px;
+    position: relative;
     .bet-pre-btn {
-      flex: 1;
-      height: 40px;
       font-size: 12px;
-      text-align: center;
-      border-radius: 4px;
-      cursor: pointer;
-      div {
-        height: 20px;
-        &.bet-row-1 {
-          margin-top: 6px;
-        }
-        &.bet-row-2 {
-          margin-top: -3px;
-        }
-      }
-      &:hover {
-        cursor: pointer;
-        .bet-row-1,
-        .bet-row-2 {
-          color: var(--q-gb-t-c-1) !important;
-        }
-      }
-    }
-    .bet-pre-handle {
-      width: 30px;
-      cursor: pointer;
-      .bet-pre-info {
-        margin-left: 10px;
-      }
-    }
-    &.bet-pre-stop {
-      .bet-pre-btn {
-        border: 0px;
-        border-radius: 4px;
-        cursor: not-allowed;
-        line-height: 40px;
-      }
-    }
-  }
-  .bet-pre-confirming-btn,
-  .bet-pre-complete-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-count: 3;
-    height: 40px;
-    border-radius: 4px;
-    cursor: pointer;
-    .bet-pre-left {
-      width: 80%;
+      color: var(--q-gb-t-c-18);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       height: 100%;
-      text-align: center;
-      div {
-        height: 20px;
-        &.bet-row-1 {
-          margin-top: 5px;
-        }
-        &.bet-row-2 {
-          margin-top: -3px;
-        }
-      }
+      line-height: 1.2;
     }
-    .bet-pre-right {
-      margin-top: 3px;
-    }
-  }
-  .bet-pre-complete-btn {
-    margin-top: 10px;
-    cursor: unset;
-  }
-  .bet-money {
-    margin-left: 5px;
-  }
-  .bet-result-separator {
-    margin-top: 10px;
-    border: 0;
-  }
-  .bet-compute-money {
-    margin-bottom: 25px;
-    :deep(.vue-slider) {
-      cursor: pointer;
-      .vue-slider-rail {
-        .vue-slider-marks {
-          .vue-slider-mark {
-            .custom-label {
-              width: 22px;
-              height: 10px;
-              font-family: PingFangSC-Regular;
-              font-size: 10px;
-              margin-left: -5px;
-            }
-            &:first-child {
-              .custom-label {
-                opacity: 0;
-              }
-            }
-            &:last-child {
-              .custom-label {
-                margin-left: -20px;
-              }
-            }
-          }
-        }
-      }
-      .vue-slider-mark-step {
-        width: 1px;
-        height: 3px;
-        margin-top: 6px;
-        border-radius: 0;
-      }
-    }
-  }
-  .bet-detail-info {
-    .row {
-      padding: 5px 10px;
-      margin-bottom: -9px;
-    }
-    &:last-child {
-      margin-bottom: 10px;
-    }
-  }
-
-  /*  箭头向下样式 */
-  .icon-pull-down:before {
-    transform: rotate(180deg);
-    margin-left: 6px;
-  }
-  /*  箭头向上样式 */
-  .icon-pull-up:before {
-    transform: rotate(0deg);
-    margin-left: 6px;
-  }
-  .order-copy {
-    display: flex;
-    flex-wrap: nowrap;
-    .order-no {
-      display: block;
-      width: 100px;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    img {
+      position: absolute;
+      right: 14px;
+      top: 10px;
+      height: 18px;
+      width: 18px;
     }
   }
 }
