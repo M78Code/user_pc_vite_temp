@@ -19,7 +19,7 @@
       
     </div>
     <div>
-      <div>赛果11</div>
+      <div>赛果</div>
       <q-separator class="divider" color="#F2F5F8" inset />
     </div>
     
