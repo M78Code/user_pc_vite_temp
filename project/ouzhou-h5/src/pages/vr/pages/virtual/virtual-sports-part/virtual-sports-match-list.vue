@@ -42,7 +42,6 @@ export default {
   position: relative;
   width: 100%;
   height: auto;
-  padding-top: 0.08rem;
 
   .title-wrap-standard {
     // width: 3.61rem;
