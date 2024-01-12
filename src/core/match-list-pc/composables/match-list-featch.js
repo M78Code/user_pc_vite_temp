@@ -1,5 +1,5 @@
 import lodash from "lodash";
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { ref } from 'vue';
 
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
@@ -19,9 +19,7 @@ import * as api_websocket from "src/api/module/socket/socket_api.js";
 import filterHeader from 'src/core/filter-header/filter-header.js'
 import { match_list_handle_set } from '../match-handle-data'
 import { set_load_data_state } from '../match-list-composition'
-
-const league_list_obj = ref({})
-
+import { league_list_obj } from './match-list-processing'
 /**
  * @Description 删除赛事数据 卡片
  * @param {*} mid 删除赛事id
@@ -98,13 +96,6 @@ export const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
     MenuData.set_multi_column();
   }
 };
-/**
-   * @Description 设置联赛列表对象
-   * @param {object} league_list_obj
-   */
-const set_league_list_obj = (val = {}) => {
-  league_list_obj.value = val;
-}
 /**
    * @Description 获取前12场展开的赛事mid
    * @returns {array} mids 前12场赛事id
@@ -370,6 +361,4 @@ const api_bymids = (
 };
 export {
   api_bymids,
-  set_league_list_obj,
-  league_list_obj
 };

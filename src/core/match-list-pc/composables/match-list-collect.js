@@ -8,7 +8,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import UserCtr from "src/core/user-config/user-ctr.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import { league_list_obj } from './match-list-featch.js';
+import { league_list_obj } from './match-list-processing.js';
 import { api_common, api_match } from "src/api/index.js";
 // 全局赛事收藏信息
 const match_collect_data = { data: null };
