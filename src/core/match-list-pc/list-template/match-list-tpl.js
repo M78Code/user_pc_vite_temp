@@ -63,9 +63,9 @@ function get_match_tpl_number2() {
         return 28;
     }
     //搜索13列玩法
-    if (MenuData.is_multi_column) {
-        return 13
-    }
+    // if (MenuData.is_multi_column) {
+    //     return 13
+    // }
     let { orpt: r } = BaseData.mi_info_map[`mi_${MenuData.menu_current_mi}`] || {};
     return r == 0 ? 1 : r
 }

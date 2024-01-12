@@ -18,7 +18,7 @@ import {
   useMittEmit,
   MatchDetailCalss,
   GlobalSwitchClass,
-  computed_background
+  computed_background,
 } from "src/output/index.js";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
@@ -267,18 +267,18 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
   });
   //    // 是否为电竞
   const is_esports = computed(() => {
-    let is_esports_val;
-    // 详情页判断球种ID  其他页面取菜单
-    if (route.name == "details" || route.name == "video") {
-      is_esports_val = is_eports_csid(route.params.csid);
-    } else if (route.name == "search") {
-      is_esports_val = false;
-    } else {
-      // is_esports_val = allData.menu_data.is_esports //todo
-      is_esports_val = false;
-    }
-    console.log(is_esports_val, "is_esports_val");
-    return is_esports_val;
+    // let is_esports_val;
+    // // 详情页判断球种ID  其他页面取菜单
+    // if (route.name == "details" || route.name == "video") {
+    //   is_esports_val = is_eports_csid(route.params.csid);
+    // } else if (route.name == "search") {
+    //   is_esports_val = false;
+    // } else {
+    //   // is_esports_val = allData.menu_data.is_esports //todo
+    //   is_esports_val = false;
+    // }
+    // console.log(is_esports_val, "is_esports_val");
+    return MenuData.is_esports();
   });
 
   /**
