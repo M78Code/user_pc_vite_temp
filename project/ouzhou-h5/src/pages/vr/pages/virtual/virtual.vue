@@ -44,6 +44,7 @@
 import virtual_mixin from "src/core/vr/mixin/pages/virtual/virtual-mixin.js";
 import virtualSports from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/virtual-sports.vue";    // 虚拟体育
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+import { MenuData } from "src/output/index.js";
 
 export default {
   mixins:[virtual_mixin],
@@ -52,6 +53,7 @@ export default {
     virtualSports,
   },
   mounted(){
+    MenuData.set_vr_menu_csid('1001');
     // 重置所选 球种默认玩法 hpid
     MatchResponsive.reset_match_hpid_by_csid()
   }
