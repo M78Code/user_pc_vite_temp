@@ -4,6 +4,7 @@
   @click="cur_title_info.func_name(card_style_obj)">
     
     <div class="col-left">
+      <div class="list-play" v-if="is_no_start_title" :style="compute_css_obj({ key: 'pc-home-list-play' })"></div>
       <!-- 滚球盘 -->
       {{ cur_title_info.name }}
       <!-- 赛事数量 -->
@@ -20,14 +21,13 @@ import lodash from 'lodash';
 
 import MenuData from 'src/core/menu-pc/menu-data-class.js'
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
-import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
 import {
   recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie
 } from 'src/core/match-list-pc/match-card/module/fold-csid.js';
 import {
   recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie
 } from 'src/core/match-list-pc/match-card/module/fold-kaisai-weikaisi.js';
+import { compute_css_obj } from 'src/core/server-img/index.js'
 
 const route = useRoute()
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -65,6 +65,11 @@ const cur_title_info = computed(() => {
   return title_obj[card_type];
 })
 
+const is_no_start_title = computed(() => {
+  let { card_type = 'no_start_title', csna, match_count } = props.card_style_obj;
+  return card_type == 'no_start_title'
+})
+
 </script>
 <style lang="scss" scoped>
 .match-type {
@@ -73,9 +78,21 @@ const cur_title_info = computed(() => {
   line-height: 34px;
   font-size: 14px;
   cursor: pointer;
-
+  .col-left {
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    .list-play {
+      width: 18px;
+      height: 18px;
+      margin-right: 5px;
+    }
+  }
   .match-number {
     margin-left: 5px;
+    font-size: 14px;
+    font-weight: 500;
   }
 
   &.text-left {
@@ -83,6 +100,10 @@ const cur_title_info = computed(() => {
       border-radius: 0 0 6px 6px;
       border: 1px solid var(--q-gb-bd-c-6);
       border-top: 0;
+    }
+    &.match-type-even {
+      border-radius: 6px;
+      border-top: 1px solid var(--q-gb-bd-c-6);
     }
   }
 }

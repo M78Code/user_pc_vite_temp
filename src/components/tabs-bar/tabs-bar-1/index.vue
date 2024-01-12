@@ -7,7 +7,7 @@
  * @Description: 详情区--玩法集 Tab 选项
 -->
 <template>
-  <div>
+  <div class="component tabs-bar-index">
     <div v-if="handicap_this && handicap_this.category_list.length" class="scroll-fixed-header wrap-tabs">
     <div class="tabs-panel relative-position" ref="warp">
       <tab ref="tab" :list="handicap_this.category_list" :is_show_btn="is_details"  tab_name_key="marketName" @onclick="toggle_play" :currentIndex="currentIndex" :is_drag="!is_details" />
