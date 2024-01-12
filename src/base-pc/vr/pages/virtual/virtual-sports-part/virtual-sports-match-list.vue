@@ -49,7 +49,7 @@ export default {
 
   .title-wrap-standard {
     // width: 3.61rem;
-    width: 97vw;
+    width: 60vw;
     height: 0.24rem;
     margin: 0 auto;
     border-bottom: 1px solid  var(--q-gb-bd-c-4);

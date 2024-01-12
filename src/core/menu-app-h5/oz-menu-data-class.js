@@ -293,6 +293,10 @@ class MenuData {
     this.current_lv_2_menu_mi.value = val
     this.menu_csid = val*1 - 100
   }
+  // 设置vr菜单 csid
+  set_vr_menu_csid(val){
+    this.menu_csid = val
+  }
   /**
    * 设置收藏id 特殊处理
    * @param {*} val 

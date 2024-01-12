@@ -149,7 +149,7 @@
 <script>
 import virtual_sports_stage_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-stage-mixin.js";
 import virtualSportsTimer from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-timer.vue";
-import loading from 'src/base-h5/components/common/loading.vue';
+import loading from 'src/components/loading/loading.vue';
 import dateMatchList from 'src/base-pc/vr/pages/virtual/virtual-sports-part/date-match-list.vue'
 import virtualBasketball from 'src/base-pc/vr/pages/virtual/details/children/virtual-basketball.vue'
 export default {

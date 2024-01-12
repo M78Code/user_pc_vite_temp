@@ -127,12 +127,12 @@
 </template>
 <script>
 import virtual_match_container_mixin from "src/core/vr/mixin/pages/virtual/virtual-match-container-mixin.js";
-import data_pager from "src/base-h5/components/common/data-pager.vue"
+// import data_pager from "src/base-h5/components/common/data-pager.vue"
 export default {
   mixins:[virtual_match_container_mixin],
   name:'virtual_match_container',
   components:{
-    'data-pager':data_pager,
+    // 'data-pager':data_pager,
   },
 }
 </script>

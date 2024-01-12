@@ -118,6 +118,9 @@
                     :hl_hs="get_hl_hs(hp_i)"
                     bet_type="vr_bet"
                     :is_vr_lock="is_vr_lock"
+                    :ol_data="ol_item"
+                    :match_data_type="pc_list" 
+                    :is_scroll_ball="false"
                     />
                 </div>
               </div>
@@ -138,6 +141,9 @@
                     :odd_field="hp_i"
                     :hl_hs="get_hl_hs(hp_i)"
                     :is_vr_lock="is_vr_lock"
+                    :ol_data="ol_item"
+                    :match_data_type="pc_list" 
+                    :is_scroll_ball="false"
                     bet_type="vr_bet"/>
                 </div>
               </div>
@@ -187,8 +193,9 @@
 import virtual_sports_match_item_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-match-item-mixin.js";
 import v_s_odd_item from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-odd-item.vue"
 import v_s_match_timer from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-timer.vue"
-import odd_column_item from "src/base-h5/components/match-container/template/app/components/odd-column-item.vue"
-import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
+// import odd_column_item from "src/base-h5/components/match-container/template/app/components/odd-column-item.vue"
+import odd_column_item from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
+import ImageCacheLoad from "src/core/public-cache-image/public-cache-image.vue";
 import { IconWapper } from 'src/components/icon'
 
 export default {
@@ -238,7 +245,7 @@ export default {
 
 .match-item-wrap {
   // width: 3.61rem;
-  width: 97vw;
+  width: 60vw;
   min-height: 1.05rem;
   margin: 0 auto 0.08rem auto;
   border-radius: 0;

@@ -11,6 +11,7 @@ import { go_where } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { MatchDataWarehouse_H5_Detail_Common, MatchDataWarehouse_PC_Detail_Common} from "src/output/index.js"
 import { get_now_server, debounce_throttle_cancel } from 'src/core/utils/common/module/other.js'
+
 const MatchDataWarehouseInstance = window.BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_Detail_Common:MatchDataWarehouse_H5_Detail_Common;
 export default {
   mixins:[virtual_sports_mixin],
@@ -26,6 +27,10 @@ export default {
   },
   data(){
     return{
+      loading: false,
+      match_odds_info: [], 
+      match_detail: {},
+      MatchDataWarehouseInstance:MatchDataWarehouseInstance,
       vsport_operate:null,
       show_debug:sessionStorage.getItem('wsl') == '9999',
       mid:'',
