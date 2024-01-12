@@ -34,4 +34,5 @@
     "match-details-lose": "#50C042", // 输
     "match-details-win-bg": "rgba(233, 61, 61, 0.10)", // 赢背景色
     "match-details-lose-bg": "rgba(80, 192, 66, 0.10)", // 输背景色
+    // 2014/1/12 缺少颜色
 }
