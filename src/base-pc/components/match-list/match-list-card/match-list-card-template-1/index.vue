@@ -5,20 +5,20 @@
       'sport_title',
       'play_title',
       'no_start_title',
-    ].includes(card_type),
+    ].includes(card_style_obj?.card_type),
   }" :style="`height:${card_style_obj?.card_total_height}px  !important;width:${LayOutMain_pc.layout_content_width - 15
   }px  !important;${card_style}`">
     <div v-if="is_mounted" :class="{ 'list-card-inner': !MatchListCardData.is_champion }">
       <!-- 赛事状态 | 赛种类型 -->
-      <play-match-type v-if="['sport_title', 'play_title', 'no_start_title'].includes(card_type)
+      <play-match-type v-if="['sport_title', 'play_title', 'no_start_title'].includes(card_style_obj?.card_type)
         " :card_style_obj="card_style_obj" />
       <!-- 联赛标题 -->
-      <play-match-league v-else-if="card_type == 'league_title' && card_style_obj?.mid
-        " :card_style_obj="card_style_obj" :key="card_type" />
+      <play-match-league v-else-if="card_style_obj?.card_type == 'league_title' && card_style_obj?.mid
+        " :card_style_obj="card_style_obj" :key="card_style_obj?.card_type" />
       <!-- 冠军联赛标题 -->
-      <match-type-champion v-else-if="card_type == 'champion_league_title'" :card_style_obj="card_style_obj" />
+      <match-type-champion v-else-if="card_style_obj?.card_type == 'champion_league_title'" :card_style_obj="card_style_obj" />
       <!-- 暂无数据 -->
-      <div class="fit" v-else-if="card_type == 'no_data'">
+      <div class="fit" v-else-if="card_style_obj?.card_type == 'no_data'">
         <load-data style="max-height: 260px" state="empty" />
         <!-- 强力推荐 -->
         <div class="row">
@@ -27,7 +27,7 @@
         </div>
       </div>
       <!-- 赛事卡片 -->
-      <template v-else-if="card_type == 'league_container'">
+      <template v-else-if="card_style_obj?.card_type == 'league_container'">
         <!-- 数据加载状态 -->
         <!-- 赛事列表 -->
         <match-card v-for="mid in mids_arr" :key="mid" :mid="mid" />
@@ -56,15 +56,10 @@ const props = defineProps({
 });
 provide("MatchListData", props.MatchListData)
 // 卡片样式对象
-let card_style_obj = computed(() => {
-  return MatchListCardDataClass.get_card_obj_bymid(props.card_key, MatchListCardDataClass.list_version.value)
-});
+let card_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.card_key)
 
 provide("card_style_obj", card_style_obj)
-// 存储一个变量，减少对card_style_obj的重复访问和判断
-let card_type = computed(() => {
-  return (card_style_obj.value?.card_type)
-});
+
 let sticky_top = MatchListCardDataClass.sticky_top;
 // 组件是否加载完成
 const is_mounted = ref(false);
@@ -78,7 +73,7 @@ const card_style = computed(() => {
   // 如果卡片类型是球种标题、已开赛、未开赛标题  设置吸顶
   if (
     ["sport_title", "play_title", "no_start_title"].includes(
-      card_type.value
+      card_style_obj?.card_type
     )
   ) {
     let top = sticky_top?.type || 0;
@@ -87,7 +82,7 @@ const card_style = computed(() => {
   // 如果是联赛标题卡片  设置联赛吸顶
   else if (
     ["league_title", "champion_league_title"].includes(
-      card_type.value
+      card_style_obj?.card_type
     )
   ) {
     let top = sticky_top?.league || "";
@@ -101,8 +96,8 @@ const card_style = computed(() => {
  */
 const mids_arr = computed(() => {
   let _mids_arr = [];
-  if (card_style_obj.value?.card_type == "league_container") {
-    _mids_arr = card_style_obj.value?.mids.split(",");
+  if (card_style_obj?.card_type == "league_container") {
+    _mids_arr = card_style_obj?.mids.split(",");
     return _mids_arr;
   }
   return _mids_arr;

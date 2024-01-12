@@ -13,8 +13,8 @@ class MatchListCardDataClass {
     // scroll_top
     this.scroll_top = 0;
     // 所有卡片对象
-    this.all_card_obj = {};
-    this.list_version = ref('1')
+    this.all_card_obj = reactive({});
+    this.list_version = ref(Date.now() + "")
     //当前列表的卡片key列表  不包含赛事卡片
     this.match_list_card_key_arr = [
       // 'card_key'
@@ -72,6 +72,26 @@ class MatchListCardDataClass {
     this.match_list_key = []
     // 滚球页当前选中的赛事id
     this.current_mid = ref('')
+  }
+  reset_data() {
+    // this.all_card_obj = reactive({});
+    for (const key in this.all_card_obj) {
+      delete this.all_card_obj[key]
+    }
+    this.match_list_key = []
+    this.play_to_card_key_arr = [];
+    this.no_start_to_card_key_arr = [];
+    this.match_list_card_key_arr = [];
+    this.five_leagues_card_key_arr = [];
+    this.show_level_refer = {
+      level1_offset_top: "",
+      level1_offset_bottom: "",
+      level2_offset_top: "",
+      level2_offset_bottom: "",
+      level3_offset_top: "",
+      level3_offset_bottom: "",
+    };
+    this.set_list_version()
   }
   set_all_card_obj({
     all_card_obj, play_to_card_key_arr, no_start_to_card_key_arr, match_list_card_key_arr, five_leagues_card_key_arr, csid_to_card_key_obj

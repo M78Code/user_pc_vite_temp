@@ -118,9 +118,9 @@ const score_column_position = computed(() => {
 function get_cur_handicap_list(match) {
   // 当前局盘口列表
   let cur_handicap_list = [];
-  let play_config = match_tpl_info.value[`template_${match_style_obj.value.data_tpl_id}`]
+  let play_config = match_tpl_info.value[`template_${match_style_obj.data_tpl_id}`]
   // 篮球根据赛事阶段获取当前局盘口列表
-  if (match_style_obj.value.data_tpl_id == 7) {
+  if (match_style_obj.data_tpl_id == 7) {
     switch (+match.mmp) {
       case 1: //上半场
         cur_handicap_list = play_config.cur_handicap_list_up;
@@ -152,15 +152,15 @@ function get_cur_handicap_list(match) {
     }
   }
   // 斯诺克让球与大小当前局盘口列表
-  else if (match_style_obj.value.data_tpl_id == 11 && match.csid == 7) {
+  else if (match_style_obj.data_tpl_id == 11 && match.csid == 7) {
     cur_handicap_list = play_config.cur_handicap_list_7;
   }
   // 排球让球与大小当前局盘口列表
-  else if (match_style_obj.value.data_tpl_id == 11 && match.csid == 9) {
+  else if (match_style_obj.data_tpl_id == 11 && match.csid == 9) {
     cur_handicap_list = play_config.cur_handicap_list_9;
   }
   // 判断模板是否有当前局玩法
-  else if ([7, 9, 11, 16].includes(+match_style_obj.value.data_tpl_id)) {
+  else if ([7, 9, 11, 16].includes(+match_style_obj.data_tpl_id)) {
     cur_handicap_list = play_config.cur_handicap_list;
   }
   return cur_handicap_list;

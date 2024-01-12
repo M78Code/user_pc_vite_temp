@@ -116,7 +116,7 @@ const set_match_list_mapping_relation_obj_type = () => {
  */
 const reset_all_card_data = () => {
   // 所有卡片样式对象
-  MatchListCardData.all_card_obj = {};
+  // MatchListCardData.reset_data();//走了元数据 这里会清空二次 元数据一次  接口一次
 };
 
 //计算 当前的 赛事列表 级别 的 卡片 数据

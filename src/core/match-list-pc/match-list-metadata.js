@@ -184,7 +184,7 @@ function set_base_data_init() {
 	match_list_handle_set(matchs_list)
 	//右侧比分版 应该改变
 	MatchDataWarehouse_PC_Detail_Common.set_match_details(matchs_list[0], [])
-	handle_match_list_request_when_ok(data, false, true, true);
+	handle_match_list_request_when_ok(data, false, true);
 	let ts1 = Date.now();
 	let mids_arr = [];
 	(matchs_list || []).forEach((match) => {

@@ -130,7 +130,7 @@ function get_5min_classname() {
 function get_bet_width(index, other_class = '') {
   let { bet_width } = match_list_tpl_size.value
   // let bet_width = 110;
-  let { data_tpl_id } = match_style_obj.value
+  let { data_tpl_id } = match_style_obj
   if (other_class.includes('col1.5')) {
     bet_width *= 1.5
   } else if (other_class.includes('col2')) {
@@ -162,7 +162,7 @@ function get_bet_width(index, other_class = '') {
  */
 function get_bet_height(length) {
   let height = 35
-  let { data_tpl_id } = match_style_obj.value
+  let { data_tpl_id } = match_style_obj
   if (length == 1) {
     if (+data_tpl_id === 22) {
       height = height * 3
@@ -181,7 +181,7 @@ function get_bet_style(col_index, length, ol_data) {
   let other_class = lodash.get(ol_data, 'other_class', '')
   let style = `width:${get_bet_width(col_index, other_class)}px !important;height:${get_bet_height(length)}px !important;`
   if (other_class.includes('displacement')) {
-    let { data_tpl_id } = match_style_obj.value
+    let { data_tpl_id } = match_style_obj
     let { bet_width, media_width } = match_list_tpl_size.value
     let right = data_tpl_id == 13 ? bet_width * 7 + media_width - 1 : media_width - 1
     style += `right: ${right}px;`
@@ -210,6 +210,8 @@ function getCurState(hipo) {
 <style lang="scss" scoped>
 .handicap-col {
   .bet-item-wrap {
+    padding: 4px;
+    border-radius: 4px;
     &.visibility {
       visibility: hidden;
     }

@@ -229,7 +229,8 @@ const get_unsettle_tickets_count_config = () => {
 }
  /*  投注栏入口 */
  .item.bet_history.bet-record-count {
-  color: var(--q-gb-t-c-18);
+  color: var(--q-gb-t-c-16);
+  //color: var(--q-gb-t-c-18);
   background: var(--q-gb-bg-lg-1);
   margin-left: 0;
   width: 100%;

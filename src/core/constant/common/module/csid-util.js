@@ -44,6 +44,6 @@ export const compute_sport_id = (mi) => {
 		400: 10002,
 		2000: 10003,
 	};
-	return obj[mi];
+	return obj[mi] ||mi;
 }
 

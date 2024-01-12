@@ -10,7 +10,7 @@
       <div class="content" @mousedown="mousedown">
         <slot></slot>
         <div style="min-width:40px" v-show="has_scroll"></div>
-        <!-- <resize-observer v-if="is_mounted" @resize="scroll_height_change" /> -->
+        <resize-observer v-if="is_mounted" @resize="scroll_height_change" />
       </div>
     </div>
     <!-- 左右滚动按钮 -->
@@ -19,14 +19,11 @@
   </div>
 </template>
 <script>
-// import resizeObserver from "src/public/components/resize_observer/resize_observer.vue"
+import resizeObserver from "./resize_observer.vue"
 export default {
   name: "drag-scroll",
-  setup() {
-  
-  },
   components:{
-    // resizeObserver
+    resizeObserver
   },
   data() {
     return {
@@ -161,6 +158,8 @@ export default {
     */
     mouseup(){
       this.is_mousedown = false
+    },
+    mousemove(e){
     },
   },
 };

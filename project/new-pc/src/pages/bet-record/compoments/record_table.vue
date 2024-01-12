@@ -7,8 +7,6 @@
       :rows-per-page-options="[0]" 
       :columns="BetRecordHistory.columns"
       :bordered="false"
-      table-class="custom-table"
-      table-header-class="custom-header"
       row-key="orderNo" hide-pagination >
         <template v-slot:no-data>
           <div class="detail-loading" v-if="loading">
@@ -662,8 +660,9 @@ const hand_copy = (data) => {
   .settled {
     padding-bottom: 62px;
   }
-  &:deep(.q-table){
-    tbody{
+  &:deep(.q-table) {
+    thead tr{
+      background-color: var(--q-gb-bg-c-25);
     }
     tr{
       td:first-child{
@@ -690,14 +689,9 @@ const hand_copy = (data) => {
 
   }
 
-  &:deep(.q-table td) {
-
-  }
 
   &:deep(.q-table__bottom) {
-
     border-top: none;
-
   }
 
   &:deep(thead tr th) {
