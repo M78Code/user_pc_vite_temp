@@ -196,7 +196,7 @@
     // 详情页顶部 title 公共样式
     .wrap-title {
       background: var(--q-gb-bg-lg-18);
-      border: 1px solid var(--q-gb-bd-c-6); //bd-wrap-title
+      //border: 1px solid var(--q-gb-bd-c-6); //bd-wrap-title
       border-bottom: none;
       .group-back {
         i:before {
@@ -248,7 +248,7 @@
       }
     }
     .wrap-template {
-      border: 1px solid var(--q-gb-bd-c-6);
+      //border: 1px solid var(--q-gb-bd-c-6);
       background: var(--q-gb-bg-c-32);
       .template-title {
         //background: var(--q-gb-bg-lg-17);
@@ -519,7 +519,7 @@
         }
       }
       .right_details_header {
-        border: 1px solid var(--q-gb-bd-c-6);
+        //border: 1px solid var(--q-gb-bd-c-6);
         border-radius: 6px;
         overflow: hidden;
         &.is_esports {
@@ -533,7 +533,7 @@
         }
       }
       .scroll-fixed-header {
-        border-bottom: 1px solid var(--q-gb-bd-c-6) !important;
+        //border-bottom: 1px solid var(--q-gb-bd-c-6) !important;
       }
       /*  比分扳 */
       .head-info {
@@ -555,7 +555,7 @@
       /* 玩法集tab条 */
       .wrap-tabs {
         background: var(--q-gb-bg-c-32);
-        border: 1px solid var(--q-gb-bd-c-6);
+        //border: 1px solid var(--q-gb-bd-c-6);
         border-top: none;
         &.all_empty {
           border-bottom: 1px solid var(--q-gb-bd-c-8);
@@ -681,7 +681,8 @@
         .item-title {
           background: var(--q-gb-bg-lg-17);
           border-bottom: 1px solid var(--q-gb-bd-c-8);
-          color: var(--q-gb-t-c-4);
+          //color: var(--q-gb-t-c-4);
+          color: var(--q-gb-t-c-3);
           i {
             &::before {
               color: var(--q-gb-t-c-16);
