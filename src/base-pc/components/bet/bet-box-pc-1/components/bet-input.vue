@@ -45,12 +45,8 @@ import { UserCtr } from "src/output/index.js"
 
 const ref_data = reactive({
     DOM_ID_SHOW: false,
-    active: 1,    //投注项状态
-    appoint: true, // 是否预约
-    odds_change_up: false,  // 赔率上升
-    odds_change_down: false, // 赔率下降
-    min_money: 10, // 最小投注金额
-    max_money: 8888, // 最大投注金额
+    min_money: '', // 最小投注金额
+    max_money: '', // 最大投注金额
     win_money: 0.00, // 最高可赢
     money: '', // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
@@ -71,8 +67,11 @@ onMounted(() => {
     nextTick(()=>{
         // 监听 限额变化
         ref_data.emit_lsit = {
+            // 限额改变 修改限额内容
             emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
+            //  金额改变事件
             emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, change_money_handle).off,
+            // 获取多项单注金额
             emitter_3: useMittOn(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY, set_bet_multiple_money).off,
         }
     })
@@ -113,8 +112,6 @@ onUnmounted(() => {
         }
     }
 }
-
-
 
 // 清空输入框金额
 const bet_clear_handle = () => {
