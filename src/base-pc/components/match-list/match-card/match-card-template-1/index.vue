@@ -1,12 +1,12 @@
 <template>
   <!--赛事玩法模板-->
-  <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
   <div class="c-match-card relative-position" :id="`list-mid-${mid}`"
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
     v-if="match_style_obj.is_show_card">
+    <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
     <!-- 数据模版调试 -->
     <div v-show="GlobalAccessConfig.get_wsl()" style="position:absolute;color:red">{{ match.mid }}-{{
-      match_style_obj.view_tpl_id }}-{{ match_style_obj.data_tpl_id }}-{{ match_style_obj.show_level }}-{{ match.tpl_id }}{{LayOutMain_pc.layout_content_width }}
+      match_style_obj.view_tpl_id }}-{{ match_style_obj.data_tpl_id }}-{{ match_style_obj.show_level }}-{{ match.tpl_id }}
     </div>
     <component :is="`MatchTpl${match_style_obj.view_tpl_id}After`" v-if="[1, 2].includes(match_style_obj.show_level)"
       :mid="mid" />

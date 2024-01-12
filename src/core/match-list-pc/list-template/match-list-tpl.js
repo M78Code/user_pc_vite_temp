@@ -51,7 +51,10 @@ function get_menu_obj_by_menu_id(menu_id) {
    * @param {undefined} undefined
   */
 function get_match_tpl_number2() {
-
+    //搜索13列玩法
+    if (LayOutMain_pc.is_unfold_multi_column) {
+        return 13
+    }
     // 电竞常规赛事
     if (MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_esports_champion()) {
         return 18
@@ -62,10 +65,6 @@ function get_match_tpl_number2() {
     // 电竞
     else if (MenuData.is_esports()) {
         return 28;
-    }
-    //搜索13列玩法
-    if (LayOutMain_pc.is_unfold_multi_column) {
-        return 13
     }
     let { orpt: r } = BaseData.mi_info_map[`mi_${MenuData.menu_current_mi}`] || {};
     return r == 0 ? 1 : r
@@ -87,6 +86,10 @@ function get_match_template_id({ csid }) {
         "new-pc": 0,
     }
     let tpl_id;
+    //搜索13列玩法
+    if (LayOutMain_pc.is_unfold_multi_column) {
+        return 13
+    }
     if (MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp()) {
         tpl_id = 18
     } else {

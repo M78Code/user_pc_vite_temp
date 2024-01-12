@@ -146,9 +146,8 @@ const global_one_second_timer = () => {
 }
 function resize_() {
   LayOutMain_pc.set_layout_content_config()
-  set_template_width(LayOutMain_pc.layout_content_width-15)
 }
-// watch(() => [LayOutMain_pc.layout_version.value], lodash.throttle(() => set_template_width(LayOutMain_pc.layout_content_width), 10), { immediate: true })
+watch(LayOutMain_pc.layout_version, () => set_template_width(LayOutMain_pc.layout_content_width - 15), { immediate: true })
 watch(() => [router.path, MenuData.menu_data_version.value], lodash.throttle(set_sticky_top, 10), { immediate: true })
 </script>
 <style lang="scss">
