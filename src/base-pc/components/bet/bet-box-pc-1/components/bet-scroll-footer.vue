@@ -27,7 +27,7 @@
     <div class="bet-btn-wrap">
       <div class="full-width cursor-pointer bet-submit">
      
-        <div @click.stop="submit_handle('submit')" v-if="BetViewDataClass.bet_order_status == 1">
+        <div @click.stop="set_submit_handle()" v-if="BetViewDataClass.bet_order_status == 1">
           <!-- 投注 -->
           {{ i18n_t('common.betting') }}
         </div>
@@ -86,6 +86,18 @@ const lock_btn = ref(false)
 onMounted(() => {
   useMittEmit(MITT_TYPES.EMIT_BTN_CHANGE, set_lock_btn())
 })
+
+// 投注提交
+const set_submit_handle = () => {
+  if(BetViewDataClass.bet_order_status == 1){
+    // 投注loading启动
+    useMittEmit( MITT_TYPES.EMIT_BET_LOADING,true)
+
+    submit_handle()
+  }
+}
+
+
 
 /*** @description: 设置按钮失效
  * @param {boolean} value 是否锁定
