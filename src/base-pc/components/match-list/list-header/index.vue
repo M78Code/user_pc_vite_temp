@@ -6,7 +6,7 @@
 <template>
   <div style="display: none;"> {{ LayOutMain_pc.layout_version }}</div>
   <div class="c-match-list-header yb-flex-between "
-    :class="menu_config.menu_root == 2 && menu_config.match_list_api_config.guanjun ? 'today-champion' : ''">
+    :class="MenuData.menu_root == 2 && MenuData.match_list_api_config.guanjun ? 'today-champion' : ''">
     <!-- left -->
     <div class="col-left row items-center">
       <!--全部按钮-->
@@ -15,7 +15,7 @@
         {{ i18n_t("common.all") }}
       </div>
       <!--收藏按钮-->
-      <div v-show="menu_config.compute_if_can_show_shoucang() && !filterHeader.show_filter_popup && !is_search_page"
+      <div v-show="MenuData.compute_if_can_show_shoucang() && !filterHeader.show_filter_popup && !is_search_page"
         @click="(enable_collect_api ? collect_count : true) && on_change_list_type('collect')"
         class="btn-wrap collect-btn yb-flex-center cursor-pointer"
         :class="{ 'active': vx_layout_list_type == 'collect', }" :title="i18n_t('list.my_collect')">
@@ -47,13 +47,13 @@
       </div>
       <!-- 即将开赛筛选 -->
       <!-- 今日有 收藏没有 冠军没有 -->
-      <com-select v-else-if="menu_config.menu_root == 2 && vx_layout_list_type != 'collect' && !menu_config.is_kemp()"
+      <com-select v-else-if="MenuData.menu_root == 2 && vx_layout_list_type != 'collect' && !MenuData.is_kemp()"
         :options="time_list" v-model="filterHeader.open_select_time" showKey="title" @input="select_time_change">
         <template #prefix><span class="fg1">{{ i18n_t("common.match_soon_filtr") }}</span></template>
       </com-select>
       <!-- 选择联赛按钮 -->
       <!-- 电子竞技 vr 收藏 没有  -->
-      <div v-show="menu_config.compute_if_can_show_league_fliter() && vx_layout_list_type != 'collect'"
+      <div v-show="MenuData.compute_if_can_show_league_fliter() && vx_layout_list_type != 'collect'"
         @click.stop="toggle_filter_popup"
         class="select-btn leagues-btn yb-flex-center cursor-pointer filter-handle yb-hover-bg"
         :class="{ active: filterHeader.show_filter_popup, disable: load_data_state != 'data' && !filterHeader.show_filter_popup }"
@@ -66,7 +66,7 @@
       </div>
       <!-- 列表排序按钮 -->
       <!-- 电子竞技 vr 没有  -->
-      <div v-show="menu_config.compute_if_can_show_sort()" show_type="sort" class="flex list-sort select-btn  yb-hover-bg">
+      <div v-show="MenuData.compute_if_can_show_sort()" show_type="sort" class="flex list-sort select-btn  yb-hover-bg">
         <div v-for="(sort, index) in sort_option" @click="on_click_sort(sort)" :key="sort.id "
           :class="[sort.id == vx_match_sort ? 'active' : 'yb-hover-bg', 'list-sort-item']"
           v-show="!filterHeader.show_filter_popup && !is_search_page">
@@ -78,7 +78,7 @@
         <slot name="refresh_icon"></slot>
       </div>
       <div class="unfold-btn" @click="LayOutMain_pc.set_unfold_multi_column(false)"
-        v-if="menu_config.is_multi_column && !filterHeader.show_filter_popup && !is_search_page && LayOutMain_pc.is_unfold_multi_column">
+        v-if="MenuData.is_multi_column && !filterHeader.show_filter_popup && !is_search_page && LayOutMain_pc.is_unfold_multi_column">
         <span class="text">{{ i18n_t('icon_tips.unfold') }}</span>
         <icon-wapper class="icon-arrow q-icon c-icon" size="12px"></icon-wapper>
       </div>
@@ -90,9 +90,8 @@
 import { ref, computed } from 'vue';
 
 import comSelect from "src/base-pc/components/match-results/select/select/index.vue";
-import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { PageSourceData, GlobalSwitchClass } from "src/output/index.js";
+import { PageSourceData, GlobalSwitchClass,MenuData } from "src/output/index.js";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 // import UserCtr from 'src/core/user-config/user-ctr.js'
@@ -166,7 +165,7 @@ const computed_show_refresh = computed(() => {
 //当前页面菜单title
 const page_title = computed(() => {
   //当前点击的是今日还是早盘 今日 2 早盘为3
-  let { jinri_zaopan } = menu_config.left_menu_result || {}
+  let { jinri_zaopan } = MenuData.left_menu_result || {}
   let TITLE = {
     1: i18n_t("menu.match_play"), //"滚球",
     2: i18n_t("menu.match_today"), //"今日",
@@ -175,12 +174,12 @@ const page_title = computed(() => {
     400: i18n_t("menu.match_winner"), //"冠军"
   };
   let _page_title = ""
-  let _menu_type = menu_config.menu_root
+  let _menu_type = MenuData.menu_root
   if (is_search_page) {
     _page_title = i18n_t("common.search_title")
     // 今日|早盘|串关
   } else if ([2, 3].includes(_menu_type)) {
-    let sport_name = menu_config.get_current_left_menu_name()
+    let sport_name = MenuData.get_current_left_menu_name()
     if (sport_name) {
       _page_title = `${TITLE[_menu_type]}（${sport_name}）`
     } else {
@@ -235,7 +234,7 @@ function compute_quanbu_btn_class () {
   if (vx_layout_list_type.value == 'match') {
     str += 'active'
   }
-  let can_show = menu_config.compute_if_can_show_shoucang()
+  let can_show = MenuData.compute_if_can_show_shoucang()
   //如果不能显示收藏
   if (!can_show) {
     str += '   collect-btn'
@@ -302,7 +301,7 @@ function on_change_list_type (type) {
     return
   }
   vx_layout_list_type.value=type
-  // let { lv2_mi, lv1_mi, jinri_zaopan, root, guanjun } = menu_config.left_menu_result
+  // let { lv2_mi, lv1_mi, jinri_zaopan, root, guanjun } = MenuData.left_menu_result
   // let apiType = 1
   // const api_params = {
   //   2000: {
@@ -366,14 +365,14 @@ function on_change_list_type (type) {
   //   }
   //   if (root == 3) {
   //     // 早盘获取选中的时间
-  //     let { match_list: { params: { md, index } } } = menu_config.match_list_api_config
+  //     let { match_list: { params: { md, index } } } = MenuData.match_list_api_config
   //     lv2_mi_info.md = md
   //     lv2_mi_info.index = index || 0 // 早盘收藏 切换后回到原来的
   //   }
   // } else if (root == 400) {
   //   guanjun = "guanjun"
   //   // 冠军
-  //   let { mid_menu_result } = menu_config
+  //   let { mid_menu_result } = MenuData
   //   lv2_mi_info = {
   //     ...lv2_mi_info,
   //     apiType,
@@ -391,10 +390,10 @@ function on_change_list_type (type) {
   //     "csid": current_menu.csid,
   //     "collect": 1,
   //     apiType,
-  //     md: (menu_config.match_list_api_config.match_list || {}).params.md,
+  //     md: (MenuData.match_list_api_config.match_list || {}).params.md,
   //   }
   // } else if (root == 500) {
-  //   let { mid_menu_result } = menu_config
+  //   let { mid_menu_result } = MenuData
   //   euid = mid_menu_result.euid
   //   // 没有就重新获取
   //   if (!mid_menu_result.euid) {
@@ -418,7 +417,7 @@ function on_change_list_type (type) {
   //   }
   // } else if (root == 1) {
   //   // 滚球赛事
-  //   let { mid_menu_result } = menu_config
+  //   let { mid_menu_result } = MenuData
   //   lv2_mi_info = {
   //     ...lv2_mi_info,
   //     apiType,
@@ -444,8 +443,8 @@ function on_change_list_type (type) {
   //     },
   //   }
   // }
-  menu_config.set_is_collect(type === "collect")
-  menu_config.set_match_list_api_config(config);
+  MenuData.set_is_collect(type === "collect")
+  MenuData.set_match_list_api_config(config);
 }
 </script>
 <style lang="scss" scoped>

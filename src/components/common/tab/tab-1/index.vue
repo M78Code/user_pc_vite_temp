@@ -443,6 +443,7 @@ export default defineComponent({
         height: 100%;
         transition: all 0.3s;
         z-index: 10;
+        background-color: var(--q-site-header-color-3) !important;
       }
 
       &.pseudo {

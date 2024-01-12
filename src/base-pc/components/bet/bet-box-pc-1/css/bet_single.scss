@@ -576,7 +576,7 @@
         margin-right: 5px;
         margin-bottom: 0;
         border: 0px;
-        background: var(--q-gb-bg-c-22);
+        // background: var(--q-gb-bg-c-22);
         border-radius: 0 0 6px 6px;
         .bet-single-input{
           margin-top: 0;
@@ -767,7 +767,7 @@ body {
   .bet-view {
     .bet-single {
       .bet-single-record {
-        background: var(--q-gb-bg-c-22);
+        // background: var(--q-gb-bg-c-22);
         .row {
           margin: 0;
           padding-left: 10px;
@@ -822,8 +822,8 @@ body {
             padding: 8px 0px;
             margin-left: 10px;
             margin-right: 10px;
-            background: var(--q-gb-bg-c-11);
-            border: 0.5px solid var(--q-gb-bd-c-7);
+            background: var(--q-bet-box-6);
+            // border: 0.5px solid var(--q-gb-bd-c-7);
             border-radius: 6px;
             /*  盘口名称 */
             .bet-match-playing,

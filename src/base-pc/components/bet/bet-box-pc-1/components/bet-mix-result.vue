@@ -52,6 +52,9 @@
 import { IconWapper } from 'src/components/icon'
 // import bet_mix_result from "src/public/mixins/bet/bet_mix_result.js";
 // import { format_currency } from 'src/output/index.js'
+const props = defineProps({
+  series_obj:{}
+})
 
 </script>
 <style lang="scss" scoped>
