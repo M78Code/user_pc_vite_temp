@@ -12,7 +12,8 @@
     .league-rank,
     .group-rank,
     .rank-title {
-      background: var(--q-gb-bg-c-11);
+      background: var(--q-gb-bg-c-32);
+      // background: var(--q-gb-bg-c-11);
     }
     .wrap-hot {
       .info {
@@ -248,6 +249,7 @@
     }
     .wrap-template {
       border: 1px solid var(--q-gb-bd-c-6);
+      background: var(--q-gb-bg-c-32);
       .template-title {
         //background: var(--q-gb-bg-lg-17);
         // 详情玩法模版名称上划线
@@ -507,7 +509,7 @@
       color: var(--q-gb-t-c-3);
       // color: var(--q-gb-t-c-8) !important;
       // color: var(--q-gb-t-c-8) !important;
-      background: transparent;
+      //background: transparent;
       .c-video-ctrl {
         .ctrl-wrap {
           .name {
@@ -551,6 +553,7 @@
       }
       /* 玩法集tab条 */
       .wrap-tabs {
+        background: var(--q-gb-bg-c-32);
         border: 1px solid var(--q-gb-bd-c-6);
         border-top: none;
         &.all_empty {

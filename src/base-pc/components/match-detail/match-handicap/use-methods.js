@@ -337,7 +337,10 @@ export const useMethods = ({ props,emit }) => {
    * @return {undefined} undefined
    */
   const toggele_layout = (statu) => {
-    if (statu == get_layout_statu.value) {
+    // if (statu == get_layout_statu.value) {
+    //   return false;
+    // }
+    if (statu == MatchDetailCalss.layout_statu) {
       return false;
     }
     //设置玩法列表单双列 0单列， 1双列

@@ -2,49 +2,46 @@
 <template>
   <q-card flat class="bet-mix-result-card">
     <!--玩法,提示及删除区域-->
-    <q-card-section
-      :class="{'bet-fail-bg':(series_obj.orderStatusCode==0),
-      'bet-success-bg':(series_obj.orderStatusCode==1),
-      'bet-confirm-bg':(series_obj.orderStatusCode==2)
-      }">
+    <q-card-section>
       <div class="odds-wrap row">
-        <div class="line"></div>
         <!--几串几-->
-        <div class="col bet-play-info yb-fontsize13">{{series_obj.seriesValue}}</div>
+        <div >{{items.seriesValue}}</div>
         <!--投注状态0:投注失败 1:投注成功 2:投注确认中-->
         <div class="col-auto bet-icon-info">
-          <template v-if="series_obj.orderStatusCode==0">
+          <template v-if="items.orderStatusCode==0">
             <!--投注失败图标-->
             <icon-wapper name="icon-failure" size="18px"/>
           </template>
-          <template v-if="series_obj.orderStatusCode==1">
+          <template v-if="items.orderStatusCode==1">
             <!--投注成功图标-->
             <icon-wapper name="icon-success" size="18px"/>
           </template>
-          <template v-if="series_obj.orderStatusCode==2">
+          <template v-if="items.orderStatusCode==2">
             <!--投注确认中转圈-->
-            <span class="bet-confirm-handle"><img :src="(`/image/wwwassets/yabo/gif/${BetData.theme}/${BetData.theme}_confirming.gif`)" style="width:18px;height:18px"/></span>
+            <!-- <span class="bet-confirm-handle"><img :src="(`/image/wwwassets/yabo/gif/${BetData.theme}/${BetData.theme}_confirming.gif`)" style="width:18px;height:18px"/></span> -->
           </template>
         </div>
       </div>
-      <div class="row bet-win-info">
-        <div class="col yb-fontsize12">
+
+      <div >
+        <div >
           <!--投注额-->
           {{ i18n_t('common.bets_val')}}
         </div>
-         <div class="col-auto yb-fontsize12">
+          <div >
           {{ i18n_t('common.maxn_amount_val')}}
           <!-- 最高可赢额-->
         </div>
       </div>
-      <div class="row bet-win-info2 yb-fontsize12">
+      <div >
         <!--投注额(值)-->
-        <div class="col bet-win-value">
-          {{parseFloat(series_obj.seriesBetAmount/100) ||format_currency}}
+        <div >
+          {{parseFloat(items.seriesBetAmount/100) }}
         </div>
         <!--最高可赢额(值)-->
-        <div class="col-auto bet-win-value text-right yb-fontsize12">{{parseFloat(max_win_amount)}}</div>
+        <div>{{parseFloat(items.maxWinAmount/100)}}</div>
       </div>
+    
     </q-card-section>
   </q-card>
 </template>
@@ -53,7 +50,7 @@ import { IconWapper } from 'src/components/icon'
 // import bet_mix_result from "src/public/mixins/bet/bet_mix_result.js";
 // import { format_currency } from 'src/output/index.js'
 const props = defineProps({
-  series_obj:{}
+  items:{}
 })
 
 </script>
