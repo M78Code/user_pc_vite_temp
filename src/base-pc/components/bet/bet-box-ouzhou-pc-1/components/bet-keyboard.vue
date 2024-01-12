@@ -1,6 +1,6 @@
 
 <template>
-  <div class="q-gutter-xs keyboard-zone">
+  <div class="keyboard-zone background-color-bet-box">
     <div class="keyboard-btn" v-for="(item, index) in ref_data.user_max_min_money" :key="index" @click="set_click_keybord(item)" 
     :class="{'disable-key-btn disabled': item > UserCtr.balance}">
       <!--键盘按键文本显示 如果无效则置灰 以及MAX按钮文本显示-->
@@ -29,9 +29,14 @@ const ref_data = reactive({
 })
 
 onMounted(()=>{
-  BetData.set_user_max_min_money()
+  let arr = []
+  if (BetData.bet_is_single) {
+    arr = lodash.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200 })
+  } else {
+    arr = lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
+  }
   // 添加max按钮
-  ref_data.user_max_min_money = Object.assign(BetData.user_max_min_money, {max: 'MAX'})
+  ref_data.user_max_min_money = Object.assign(arr, {max: 'MAX'})
   
   BetData.set_bet_keyboard_config('',props.oid)
 })
@@ -53,6 +58,10 @@ const set_click_keybord = obj => {
 
 
 <style lang="scss" scoped>
+.background-color-bet-box {
+    background: var(--q-gb-bg-c-15);
+}
+
  /*  键盘按钮之间的间距 */
  .bet-keyboard-content {
   margin-left: 10px !important;
@@ -63,6 +72,7 @@ const set_click_keybord = obj => {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding: 10px 12px;
 }
 
 .is_big_vedio {
@@ -71,31 +81,32 @@ const set_click_keybord = obj => {
 
 /*  键盘按钮样式 */
 .keyboard-btn {
+  width: 76px;
+  height: 30px;
+  border: 0.5px solid var(--q-gb-bd-c-5);
+  background: var(--q-gb-bg-c-4);
+  color: #505050;
+  border-radius: 2px;
+  transition: .3s;
+  cursor: pointer;
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 58px;
-  height: 26px;
-  margin-bottom: 2px;
-  margin-left: 0px;
-  // margin-right: -2px;
-  /*  键盘文本前面加号的样式 */
-  .keyboard-btn-add {
-    margin-right: 20px;
+  justify-content: center;
+  font-size: .14rem;
+
+  &:hover {
+      // border: 1px solid #FF7000;
+      border: 1px solid var(--q-gb-bd-c-1);
   }
-  .text-disabled {
-    color: rgba(108,123,168,0.5);
-  }
-  /*  按钮文字样式 */
-  .keyboard-btn-text {
-    line-height: 24px;
+  &.disabled{
+      background: var(--q-gb-bg-c-19);
   }
   
 }
 
 
 /*  按键间距设置 */
-.big_keyboard-btn {
-  margin-right: 10px;
-}
+// .big_keyboard-btn {
+//   margin-right: 10px;
+// }
 </style>

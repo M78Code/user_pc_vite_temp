@@ -1,20 +1,27 @@
 <template>
     <div class="q-card__section">
-        
-        <div class="odds-wrap row">
-            <div class="line"></div>
-            <div class="col">{{i18n_t('bet.bet_multiple')}}</div>
-        </div>
         <!--金额输入区域包括键盘 -->
-        <div class="row bet-multiple-input yb-flex-nowrap">
-            <!--金额输入区-->
-            <div class="col bet-count">
-                <span>{{ BetData.bet_single_list.length}}</span>
-                <span>x</span>
+        <div class="row bet-multiple-input background-color-bet-box ">
+            <div class="col bet-win">
+                <div class="row font14">
+                    <div>{{i18n_t('bet.bet_multiple')}}</div>
+                    <div class="bet-count">
+                        <span>{{ BetData.bet_single_list.length}}</span>
+                        <span>x</span>
+                    </div>
+                </div>
+                <div class="row text-color-max-win mt2">
+                        <!--最高可赢额-->
+                    <div>{{ i18n_t('common.maxn_amount_val') }}</div>
+                    <div class="bet-win-money yb-number-bold"> {{ winMoney()  }} RMB</div>
+                </div>
+                    <!--金额-->
+                <!-- <div class="col-auto bet-win-money yb-number-bold"> {{ winMoney()  }} RMB</div> -->
             </div>
+            <!--金额输入区-->
             <div class="col-auto right-input">
                 <!--投注金额输入框-->
-                <input class="input-border" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
+                <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
                 :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${format_money3(ref_data.max_money)}`" maxLength="11" />
                 <!--清除输入金额按钮-->
                 <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money && !BetData.is_bet_single">
@@ -22,14 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="row bet-win yb-fontsize12">
-            <div class="col df-jb">
-                    <!--最高可赢额-->
-                 {{ i18n_t('common.maxn_amount_val') }}
-            </div>
-                <!--金额-->
-            <div class="col-auto bet-win-money yb-number-bold"> {{ winMoney()  }} RMB</div>
-        </div>
+        
         <div v-show="false">{{ UserCtr.user_version }}--{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
             <div class="col">
@@ -194,6 +194,13 @@ const set_win_money = () => {
 </script>
 
 <style scoped lang="scss">
+.text-color-max-win {
+    color: var(--q-gb-t-c-8) !important
+}
+.background-color-bet-box {
+    background: var(--q-gb-bg-c-15);
+}
+
 //谷歌
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -207,6 +214,21 @@ input[type="number"] {
 
 /**单关金额输入框**/
 .bet-multiple-input {
+    align-items: center;
+    height: .58rem;
+    border-bottom: 1px solid var(--q-gb-bd-c-6);
+    .font14 {
+        font-size: .14rem;
+    }
+    .bet-win {
+        padding-left: .3rem;
+    }
+    .right-input {
+        padding-right: .12rem;
+    }
+    .mt2 {
+        margin-top: .02rem;
+    }
     .bet-input-close {
         .icon-failure:before {
             color: var(--q-gb-t-c-18);
@@ -240,5 +262,52 @@ input[type="number"] {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+}
+
+.bet-input{
+    width: 160px;
+    height: 34px;
+    background: none;
+    border: 0.5px solid var(--q-gb-bd-c-5);
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    padding: 0 0 0 8px;
+    display: flex;
+    align-items: center;
+    transition: .3s;
+    caret-color:var(--q-gb-t-c-2) ;
+     
+    &:focus,&:focus-visible{
+        transition: .02s;
+        outline: none;   
+       // padding-left: 14px;
+        border: 0.5px solid var(--q-gb-bd-c-1);
+        box-shadow: 0px 1px 4px rgba(255, 112, 0, 0.1);
+        background: var(--q-gb-bg-c-18);
+    }
+    &::-webkit-input-placeholder {/*Chrome/Safari*/
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        color: var(--q-gb-t-c-8);
+    }
+    &::-moz-placeholder {/*Firefox*/
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        color: var(--q-gb-t-c-8);
+    }
+    &::-ms-input-placeholder {/*IE*/
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        color: var(--q-gb-t-c-8);
+    }
 }
 </style>
