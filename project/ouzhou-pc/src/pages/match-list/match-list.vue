@@ -26,6 +26,10 @@
     <div v-show="false"> {{ MenuData.menu_data_version }}{{ MatchListCardDataClass.list_version }}</div>
     <MatchesHeader />
     <!-- 列表容器 -->
+    <div v-if="MenuData.menu_root==300">
+      <virtual></virtual>
+    </div>
+    <template v-else>
     <load-data v-if="MenuData.menu_root_show_shoucang != 300 && !MenuData.is_leagues()" :state="load_data_state">
       <!--此处先写死高度用来调试UI -->
       <!-- 滚球其他列表 -->
@@ -68,6 +72,7 @@
         </div>
       </scroll-list>
     </load-data>
+  </template>
     <!-- <ConmingSoon v-show="is_conming_soon" :style="{
       width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
     }" /> -->
@@ -122,6 +127,7 @@ import {
 } from "./index"
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
+import virtual from 'src/base-pc/vr/pages/virtual/virtual.vue'
 export default {
   components: {
     LeagueTab,
@@ -142,6 +148,7 @@ export default {
     MatchesHeader,
     ConmingSoon,
     MatchMainTitle,
+    virtual,
     PlayMatchLeague
   },
   setup() {

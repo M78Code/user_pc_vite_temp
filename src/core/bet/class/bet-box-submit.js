@@ -764,8 +764,10 @@ const submit_handle_lastest_market = () => {
                 if(seriesOrderRespList.length == number_list.length){
                     // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
                     BetViewDataClass.set_bet_order_status(3)
+                    order_state = 3
                 }else{
                     BetViewDataClass.set_bet_order_status(2)
+                    order_state = 2
                 }
 
             }
@@ -816,6 +818,10 @@ const set_submit_btn = () => {
     // 提示错误 初始化滑块
     if(PROJECT_NAME.includes('app-h5')){
         useMittEmit(MITT_TYPES.EMIT_INIT_SLIDER_CONFIG)
+    }
+    // 投注栏loading
+    if(PROJECT_NAME.includes('new-pc')){
+        useMittEmit( MITT_TYPES.EMIT_BET_LOADING,false)
     }
     setTimeout(()=>{
         submit_btn = false

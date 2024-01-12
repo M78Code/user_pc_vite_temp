@@ -1,0 +1,157 @@
+/*
+ * @Author: Cable
+ * @Description: 虚拟体育样式
+ */
+[class*=theme0] {
+  .match-list-wrapper .title-wrap-standard .odd-title-wrapper > div {
+    color: var(--q-color-fs-color-13);
+  }
+  .match-item-wrap {
+    background:var(--q-color-page-bg-color-102);
+    .match-data-item {
+      .dir-standard {
+        .block {
+          background:  var(--q-color-page-bg-color-31);
+          &.selected {
+            background:  var(--q-color-page-bg-color-19);
+          }
+        }
+      }
+      .standard-odd-list {
+        .odd-wrap-min {
+          background-color: var(--q-color-page-bg-color-9);
+        }
+      }
+      .match-play-count {
+        color: var(--q-color-fs-color-13);
+        &.simple {
+          .yb-icon-arrow {
+            &:before {
+              border-color: var(--q-color-fs-color-7);
+            }
+          }
+        }
+      }
+      .team-title {
+        color: var(--q-color-fs-color-3);
+
+        &.over {
+          color: var(--q-color-com-fs-color-11);
+        }
+      }
+      .score {
+        color:var(--q-color-fs-color-120);
+      }
+      .img-playing {
+        background: var(--q-color-img-bg-85) no-repeat;
+      }
+      .img-play {
+        background: var(--q-color-img-bg-86) no-repeat;
+      }
+      .img-disabled {
+        background: var(--q-color-img-bg-87) no-repeat;
+      }
+    }
+    .time-wrap {
+      background-color: var(--q-color-fs-color-7);
+      color:  var(--q-color-fs-color-53);
+      background: var(--q-color-img-bg-88) no-repeat;
+      &.whistle {
+        background-image:  var(--q-color-img-bg-89);
+      }
+    }
+    .odd-column-item {
+      .odd-is-empty {
+        color: var(--q-color-com-fs-color-24);
+      }
+      .item-inner {
+        &.close {
+          .odd-title {
+            color:  var(--q-color-fs-color-17) !important;
+          }
+        }
+      }
+      .odd-value2 {
+        color:var(--q-color-com-fs-color-8) !important;
+      }
+      .odd-value {
+        &.focus {
+          color:var(--q-color-com-fs-color-9);
+        }
+        &.orange {
+          color: var(--q-color-com-fs-color-18);
+        }
+        &.red {
+          color: var(--q-color-com-fs-color-17) !important;
+        }
+        &.green {
+          color: var(--q-color-com-fs-color-10) !important;
+        }
+        &.result {
+          &.win {
+            color: var(--q-color-com-fs-color-17);
+          }
+          &.lose {
+            color: var(--q-color-com-fs-color-10);
+          }
+        }
+      }
+      .odd-title {
+        color: var(--q-color-fs-color-13);
+      }
+    }
+    .odd-column-item2 {
+      background: var(--q-color-page-bg-color-13);
+      &:after {
+        background-color: transparent;
+      }
+      .odd-title {
+        color:  var(--q-color-fs-color-10) !important;
+        span {
+          color:  var(--q-color-fs-color-10) !important;
+        }
+      }
+      .odd-value {
+        color:var(--q-color-com-fs-color-8);
+      }
+    }
+    .odd-item-w {
+      background-color: var(--q-color-page-bg-color-9);
+      .result-focus,
+      .o-i-inner {
+        .focus {
+          color:var(--q-color-com-fs-color-9);
+        }
+      }
+      .result-focus {
+        background: var(--q-color-page-bg-color-44);
+      }
+      .on {
+        color: var(--q-color-fs-color-13);
+      }
+      .odds-value {
+        color: var(--q-color-fs-color-3);
+      }
+      &:before {
+        background-color:  var(--q-color-page-bg-color-1);
+      }
+      &:after {
+        background-color:  var(--q-color-page-bg-color-1);
+      }
+    }
+    .odd-item-w2 {
+      background: var(--q-color-page-bg-color-13);
+      &:before {
+        background-color: transparent !important;
+      }
+      &:after {
+        background-color: transparent !important;
+      }
+    }
+    .odd-item-w2 {
+      div {
+        color:  var(--q-color-fs-color-10) !important;
+      }
+    }
+  }
+}

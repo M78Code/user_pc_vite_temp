@@ -1,5 +1,5 @@
 <!--
- * @Description: 单关投注项信息组件 正常
+ * @Description:投注项信息组件 正常
 -->
 <template>
   <!--单关投注项信息组件-->
@@ -13,7 +13,7 @@
 
       <div class="col bet-league-name">
         <!--联赛名称-->
-        {{ items.tid_name }}-{{ items.matchType }}
+        {{ items.tid_name }}
       </div>
       <!--删除按钮-->
       <div class="col-auto col-delete">
@@ -84,10 +84,9 @@
           </label>
 
         </div>
-       
       </div>
       <!--金额输入区域 'pr32': is_show_keyboard, 'input-focus':is_show_keyboard,-->
-      <div class="row">
+      <div class="row" v-if="BetData.is_bet_single">
         <bet-input :items="items" />
       </div>
     </q-card-section>

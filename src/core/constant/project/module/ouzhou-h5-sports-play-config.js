@@ -61,17 +61,17 @@ export const sports_play_data = {
       {
         label: i18n_t('ouzhou.match.play_map.153'),
         hpid: '153',
-        csid: '5'
+        csid: '10'
       },
       {
         label: i18n_t('ouzhou.match.play_map.172'),
         hpid: '172',
-        csid: '5'
+        csid: '10'
       },
       {
         label: i18n_t('ouzhou.match.play_map.173'),
         hpid: '173',
-        csid: '5'
+        csid: '10'
       },
     ],
     "8" : [
@@ -288,6 +288,23 @@ export const sports_play_data = {
         label: i18n_t('ouzhou.match.play_map.39'),
         hpid: '39',
         csid: '2'
+      },
+    ],
+    "1001" : [ 
+      {
+        label: i18n_t('ouzhou.match.play_map.1'),
+        hpid: '20001',
+        csid: '1001'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.2'),
+        hpid: '20002',
+        csid: '1001'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.4'),
+        hpid: '20004',
+        csid: '1001'
       },
     ],
 }
@@ -829,6 +846,34 @@ export const use_sports_play_title = () => {
         ol: [
           { ot: 'Over', title: i18n_t('ouzhou.bet_col.bet_col_30003.bet_col_1') }, // "总数"
           { ot: 'Under', title: i18n_t('ouzhou.bet_col.bet_col_30003.bet_col_2') }, // "总数"
+        ]
+      },
+    ],
+    // 虚拟足球
+    "1001": [  
+      {
+        hpid: '20001',
+        label: i18n_t('list.play1'), //'全场独赢',
+        ol: [
+          { ot: '1', title: i18n_t('list.win1') }, //"主胜"
+          { ot: 'X', title: i18n_t('list.dogfall') }, // "平局"
+          { ot: '2', title: i18n_t('list.win2')} // "客胜"
+        ]
+      },
+      {
+        hpid: '20002',
+        label: i18n_t('list.play3'), // '全场大小',
+        ol: [
+          { ot: 'Over', title: i18n_t('ouzhou.match.bet_col_Over') }, // "全场大"
+          { ot: 'Under', title: i18n_t('ouzhou.match.bet_col_Under') }, // "全场小"
+        ]
+      },
+      {
+        hpid: '20004',
+        label: i18n_t('list.play2'), // '全场让球',
+        ol: [
+          { ot: '1', title: i18n_t('ouzhou.bet_col.bet_col_4.bet_col_1') }, // "主队让球"
+          { ot: '2', title: i18n_t('ouzhou.bet_col.bet_col_4.bet_col_2') }, // "客队让球"
         ]
       },
     ],

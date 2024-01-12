@@ -15,7 +15,7 @@ import {
 } from "vue";
 // import store from "src/store-redux/index.js";
 import lodash from "lodash";
-import menu_config from "src/core/menu-pc/menu-data-class.js";
+import {  MenuData } from "src/output/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
 import { i18n_t, is_eports_csid,compute_value_by_cur_odd_type, get_odds_active } from "src/output/index.js";
 import math  from "src/core/bet/common/mathjs.js"
@@ -242,7 +242,7 @@ export const useGetItem = ({ props }) => {
     }
     let sport_id = lodash.get(state.ol_data_item, "csid");
     // 电竞赔率精度处理
-    if (lodash.isUndefined(sport_id) && menu_config.is_esports()) {
+    if (lodash.isUndefined(sport_id) && MenuData.is_esports()) {
       sport_id = "101";
     }
     state.match_odds = compute_value_by_cur_odd_type(
@@ -261,7 +261,7 @@ export const useGetItem = ({ props }) => {
    */
   const set_odds_lift = (cur, old) => {
     
-    if (menu_config.is_vr()) {
+    if (MenuData.is_vr()) {
       return;
     }
     let _odds_lift = "";

@@ -42,7 +42,7 @@ body {
 
     /*  投注项背景设置 */
     .q-card__section {
-      background: var(--q-gb-bg-c-30);
+      // background: var(--q-gb-bg-c-30);
       /*  投注记过项设置 */
       &.bet-item-result {
         border: 0;
@@ -54,7 +54,8 @@ body {
         }
         /*  显示金额样式 */
         .bet-value {
-          color: var(--qq--theme-color-bet-keyboard);
+          color: var(--q-gb-t-c-21);
+          // color: var(--qq--theme-color-bet-keyboard);
            /*  红色字体显示 */
           &.red-text {
             color: #FF4040;
@@ -133,12 +134,14 @@ body {
       }
       .match-time {
         margin: 6px 0;
-        color: var(--qq--theme-text-bet-outweight);
+        // color: var(--qq--theme-text-bet-outweight);
+        color: var(--q-gb-t-c-21);
       }
       .bet-content {
         padding: 8px;
-        background: var(--q-gb-bg-c-11);
-        border: 0.5px solid var(--q-gb-bd-c-8);//rgba(65,70,85,1)
+        // background: var(--q-gb-bg-c-11);
+        background: var(--q-gb-bg-c-30);
+        // border: 0.5px solid var(--q-gb-bd-c-8);//rgba(65,70,85,1)
         border-radius: 6px;
         word-break: break-all;
          /*  玩法及队名部分样式  */
@@ -233,12 +236,14 @@ body {
           /*  输的样式 */
           span {
             &.lose {
-              opacity: 0.6;
-              background: var(--qq--theme-bg-lose);
-              border: 1px solid var(--qq--theme-bd-lose);
+              // opacity: 0.6;
+              // background: var(--qq--theme-bg-lose);
+              // border: 1px solid var(--qq--theme-bd-lose);
+              background: #555555;
               border-radius: 4px;
-              color: var(--q-gb-t-c-1);
-              padding: 0px 3px 0px 3px;
+              color: var(--q-gb-t-c-18);
+              // padding: 0px 3px 0px 3px;
+              padding:3px 3px;
             }
           }
           /*  赢的样式 */

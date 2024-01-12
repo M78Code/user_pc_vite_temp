@@ -28,6 +28,7 @@
           nogoal: ol_data.ot === 'NoGoal',
         },
       ]"
+      v-if="ol_data.onbl || score || ol_data.onb"
     >
       <span class="handicap-more" v-show="ol_data.onbl"
         >{{ ol_data.onbl }}&nbsp;</span
@@ -43,7 +44,7 @@
           +ol_data._hpid
         ) && utils_info.is_iframe
           ? 'flex:1.5'
-          : ''
+          : !(ol_data.onbl || score || ol_data.onb) ? 'flex:0' : ''
       "
     >
       <div v-if="odds_state == 'seal'" class="lock" />
@@ -261,6 +262,7 @@ onUnmounted(() => {
 .c-bet-item {
   border-radius: 4px;
   background-color: var(--q-gb-bg-c-27);
+  justify-content: center;
 }
 .oddsup {
   background-color: var(--q-gb-bg-c-28) !important;
@@ -289,7 +291,7 @@ onUnmounted(() => {
   width: 10px;
   height: 10px;
   position: absolute;
-  left: -1px;
+  left: 2px;
   top: -6px;
   overflow: hidden;
 }

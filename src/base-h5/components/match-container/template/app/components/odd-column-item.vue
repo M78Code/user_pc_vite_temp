@@ -173,12 +173,16 @@ const is_http_update_info = computed(() => {
 
 // 判断边框border-radius样式
 const odds_class_object = () => {
+  let footer_sub_menu_id = 0;
+  if(MenuData.get_footer_sub_menu_id){
+    footer_sub_menu_id = MenuData.get_footer_sub_menu_id();
+  }
   let result = {
     'odd-column-item2':is_selected,
     'is-standard':PageSourceData.get_newer_standard_edition() === 2,
     'first-radius': props.odd_item_i === 0,
     'last-radius': props.odd_item_i > 1,
-    'is-jiaoqiu': MenuData.get_footer_sub_menu_id() == 114, 
+    'is-jiaoqiu': footer_sub_menu_id == 114, 
     'active': BetData.bet_oid_list.includes(odd_item.value.oid),
     'item-lock': is_lock()
   };

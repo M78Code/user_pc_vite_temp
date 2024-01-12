@@ -4,6 +4,7 @@
  * @Description: 右侧视频控制区域组件
 -->
 <template>
+      <div v-show="false"> {{ LayOutMain_pc.layout_version }}-{{ LayOutMain_pc.layout_content_width }}</div>
   <div class="component i-pc c-video-ctrl">
     <!-- 控制区 -->
     <div class="ctrl-wrap row items-center justify-between">
@@ -527,7 +528,7 @@ onUnmounted(() => {
     cursor: pointer;
     background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/unfold_close_thme01.svg");
     &.open {
-      background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/y0_unfold_open.svg"); // TODO:  unfold_open_them01.svg
+      background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/unfold_open_them01_copy.svg"); // TODO:  unfold_open_them01.svg
     }
   }
   .col-center {

@@ -120,7 +120,7 @@ export default {
   }
 
   .ranking-item {
-    width: 97vw;
+    width: 60vw;
     // height: 0.7rem;
     height: 0.87rem;
     // padding: 0.15rem 0.12rem 0.15rem 0.13rem;
