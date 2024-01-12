@@ -121,7 +121,7 @@ function handle_click_menu_mi_400(detail = {}) {
         // 当前赛种 菜单id
         mid_menu_mi: detail.mi,  
         // 当前菜单的赛种id
-        csid: (detail.mif*1 - 400), 
+        csid: (detail.mi*1 - 400), 
         current_mi: detail.mi,  
         lv1_mi:400
     }
@@ -140,6 +140,7 @@ function set_menu_config(obj = {}) {
         root:obj.lv1_mi
     }
     current_menu.value= obj.current_mi;
+    MenuData.set_current_ball_type(obj.csid);
     MenuData.set_left_menu_result(left_menu_result)
     MenuData.set_mid_menu_result(obj_config);
     // 设置   请求  列表结构  API 参数的  值

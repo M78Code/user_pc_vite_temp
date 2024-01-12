@@ -11,4 +11,5 @@ export default {
     'site-header-color-9': '#ffb780', //蓝色夜间版已录入
     'site-header-color-10': '#c1c1c1',
     'site-header-color-11': '#868686',
+    'site-header-notice-color': '#868686',
 }

@@ -3,17 +3,18 @@
 -->
 <template>
   <!--整个串关容器-->
-  <div class="bet-mix height-full" :class="bet_flag?'bet-layout':''">
+  <div class="bet-mix height-full">
     <div class="auto-wrap no-wrap column">
       <!-- 下注标识 -->
-      <div style="display:none"> ------ {{ BetData.bet_data_class_version }} -- {{  BetData.bet_s_list.length }} -----{{BetViewDataClass.bet_view_version}} </div>
-      <div class="scroll-wrap" :class="{'record-scoll-wrap': !bet_flag}">    
+      <div v-if="false"> -{{ BetData.bet_data_class_version }} -- {{  BetData.bet_s_list.length }} -{{BetViewDataClass.bet_view_version}} </div>
+      <div class="scroll-wrap" v-if="BetViewDataClass.bet_order_status == 1">    
 
         <!--未投注就是bet-mix-info组件-->
         <bet-mix-info></bet-mix-info>
+
         <template v-if="BetData.bet_s_list.length > 1">
           <!--复式连串过关投注-->
-          <div class="row bet-toggle" :class="{'bet-border-radius': BetData.bet_s_list.length==2,'bet-toggle-down':!is_expend, 'bet-toggle-up':is_expend}">
+          <div class="row bet-toggle">
             <div
               class="col bet-toggle-text cursor-pointer" 
               :class="{'disabled-toggle':BetData.bet_s_list.length==2}"              
@@ -34,17 +35,13 @@
               </span>
             </div>
           </div>
+          
           <div class="bet-single-mix-input" v-show="is_expend">
             <template v-if="BetData.bet_s_list.length > 2">
               <!--金额输入框-->
               <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
                 <!--2串1以及输入框-->
-                <!-- <bet-input
-                  :index="index"
-                  :item="item"
-                  :key="item.custom_id"
-                  v-if="index != 0"
-                ></bet-input> -->
+              
                 <q-card flat class="bet-mix-item-card">
                   <betSpecialInput :index="index" :items="item"  v-if="index!= 0"/>
                 </q-card>
@@ -53,6 +50,11 @@
           </div>
         </template>
       </div>
+
+      <!-- 投注结果 -->
+      <div v-else>
+        <bet-mix-record></bet-mix-record>
+      </div>
     </div>
   </div>
 </template>
@@ -60,7 +62,7 @@
 import { ref } from "vue"
 // import bet_mix from "src/public/mixins/bet/bet_mix.js"; // 下注混入js
 import BetMixInfo from "./bet-mix-info.vue"; // 下注混入信息组件
-import BetInput from "./bet-input.vue"; // 下注输入框
+import BetMixRecord from "./bet-mix-record.vue";
 import { IconWapper } from 'src/components/icon'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";

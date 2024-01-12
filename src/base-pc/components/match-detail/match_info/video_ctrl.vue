@@ -4,6 +4,7 @@
  * @Description: 右侧视频控制区域组件
 -->
 <template>
+      <div v-show="false"> {{ LayOutMain_pc.layout_version }}-{{ LayOutMain_pc.layout_content_width }}</div>
   <div class="component i-pc c-video-ctrl">
     <!-- 控制区 -->
     <div class="ctrl-wrap row items-center justify-between">
