@@ -1,4 +1,5 @@
 <template>
+  <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
   <div class="list-card-wrap v-scroll-item relative-position" :class="{
     'sticky-wrap': ['sport_title', 'play_title', 'no_start_title', 'league_title', 'champion_league_title'].includes(card_style_obj?.card_type),
     'matc-type-card': [
