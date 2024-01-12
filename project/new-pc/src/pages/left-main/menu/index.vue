@@ -100,7 +100,7 @@ const new_menu_click = (root) => {
     guanjun: "",
   };
 
-
+  MenuData.set_menu_root(root)
   // 设置 左侧菜单
   MenuData.set_left_menu_result({
     root: root,
