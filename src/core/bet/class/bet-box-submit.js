@@ -764,8 +764,10 @@ const submit_handle_lastest_market = () => {
                 if(seriesOrderRespList.length == number_list.length){
                     // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
                     BetViewDataClass.set_bet_order_status(3)
+                    order_state = 3
                 }else{
                     BetViewDataClass.set_bet_order_status(2)
+                    order_state = 2
                 }
 
             }
@@ -1082,6 +1084,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if(bet_obj.bet_type == 'guanjun_bet'){
         bet_obj.handicap = ol_obj.on
         bet_obj.handicap_hv = ''
+        bet_obj.tid_name = mid_obj.onTn || mid_obj.tn
     }
 
     // 串关数据 提示  添加数据之前

@@ -204,6 +204,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
 	})
 	if (Array.isArray(match_list)) { //有时候是 {}
 		MatchListData.set_list(match_list)
+		match_list_handle_set(match_list)
 	}
 	// 设置第一条数据为当前mid，给分数板高亮用
 	if (match_list.length) {

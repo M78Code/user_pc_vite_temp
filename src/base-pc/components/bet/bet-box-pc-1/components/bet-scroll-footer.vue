@@ -202,8 +202,10 @@ const set_bet_is_accept = () => {
     margin:-15px 0 15px 0;
     padding:0 5px;
     .bet-success {
-      background: rgba(100,194,88,0.2);
-      color: #64c258;
+      // background: rgba(100,194,88,0.2);
+      // color: #64c258;
+      background: rgba(80, 192, 66, 0.15);
+      color: #50C042;
       line-height: 30px;
       font-size: 12px;
       border-radius: 0px 0px 6px 6px;

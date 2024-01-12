@@ -50,50 +50,7 @@
       </div>
     </template>
     <!-- 专业版单关 未结算 可以提前结算 -->
-    <div class="info-wrap" v-if="calc_show">
-      <!--提前结算提示语-->
-      <div class="bet-pre-title">
-        <template v-if="unSuccessTips">
-          <span style="color:red">
-            <template v-if="bet_pre_code=='0400527'">
-              <!--功能暂停中，请稍后再试-->
-              {{i18n_t('bet_record.pre_suspend')}}
-            </template>
-            <template v-else-if="bet_pre_code=='0400537'">
-              <!--提前结算金额调整中，请再试一次-->
-              {{i18n_t('bet_record.pre_amount_change')}}
-            </template>
-            <template v-else>
-              <!--提前结算申请未通过-->
-              {{i18n_t('bet_record.pre_not_approved')}}
-            </template>
-          </span>
-        </template>
-        <template v-else>
-          <!--提前结算金额已包含本金-->
-          <span>{{i18n_t('bet_record.pre_bet_include_money')}}</span>
-        </template>
-      </div>
-      <div class="bet-pre-wrap">
-        <!-- 提前结算按钮-->
-        <div class="bet-pre-btn" @click="submit_click">
-          <!-- 提前结算-->
-          <div class="bet-row-1">
-            <!-- 提前结算 -->
-            <template v-if="status == 1 || status == 6">{{i18n_t("bet_record.settlement_pre")}} </template>
-            <!-- 确认提前结算 -->
-            <template v-if="status == 2">{{i18n_t("bet_record.confirm_bet_pre")}} </template>
-            <!-- 确认中... -->
-            <template v-if="status == 3">{{i18n_t("bet_record.confirm")}} </template>
-            <!-- 已提前结算 -->
-            <template v-if="status == 4">{{i18n_t("bet_record.finish_bet_pre")}} </template>
-          </div>
-          <div class="bet-row-2" v-if="(Number(front_settle_amount) || expected_profit)">￥{{ betting_amount }}</div>
-        </div>
-        <img v-if="status == 3" class="roll" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/suring.png`" alt="">
-        <img v-if="status == 4" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/success.png`" alt="">
-      </div>
-    </div>
+    <bet-early-settle v-if="BetRecordLeft.selected == 0" :item="item"></bet-early-settle>
     <template v-if="false">
       <div class="info-wrap">
         <!--选择的是未结算 且settleSwitch开关为1且enablePreSettle为true -->
@@ -352,6 +309,7 @@ import { format_odds, format_currency, formatTime, useMittEmit, useMittOn,  MITT
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
+import betEarlySettle from "src/base-pc/components/bet-record/record-table/bet-early-settle.vue"
 
 const props = defineProps({
   index: {
