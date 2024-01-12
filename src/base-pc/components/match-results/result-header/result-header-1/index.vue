@@ -14,12 +14,15 @@
         ></Select-Wrapper>
       </div>
       <q-separator class="divider" color="#F2F5F8" inset /> -->
-    <div class="c-simple-header">
+    
+        <div class="c-simple-header">
       <div class="logo-icon"  :style="compute_css_obj({ key: 'pc-rule-logo' })"></div>
-      
+      <div class="header-title">赛果</div>
     </div>
     <div>
-      <div>赛果</div>
+     
+      
+   
       <q-separator class="divider" color="#F2F5F8" inset />
     </div>
     
@@ -353,6 +356,10 @@ onMounted(()=>{
   min-height: 61px;
   align-items: center;
   text-transform: uppercase;
+  background-color: #ffffff;
+  .header-title{
+    color:#626262;
+  }
   .rule-logo {
     margin-right: 33.3px;
     height: 100%;
@@ -644,10 +651,12 @@ background: #ffffff;
   :deep(.material-icons){  
     line-height: 12px !important;
   }
-
-  .logo-icon{
-    width:130px;
-  }
 }
+.logo-icon{
+    width:130px;
+    height: 40px;
+    margin-right: 34px;
+  }
+
 
 </style>
