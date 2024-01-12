@@ -259,6 +259,7 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .c-bet-item {
+  border-radius: 4px;
   background-color: var(--q-gb-bg-c-27);
 }
 .oddsup {

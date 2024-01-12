@@ -345,7 +345,7 @@ export const useMethods = ({ props,emit }) => {
     MatchDetailCalss.set_layout_statu(statu)
     state.layout_statu = statu ? true : false;
     if (statu) {
-      state.waterfall = set_waterfall(state.details_data);
+      state.waterfall = details.set_waterfall(state.details_data);
     } else {
       state.waterfall = [this.details_data];
     }
