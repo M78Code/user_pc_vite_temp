@@ -41,7 +41,8 @@ const set_match_list_mapping_relation_obj_type = () => {
       'match-vr' ,// vr
       "virtual_details"// vr 详情
     */
-
+  const page_source = PageSourceData.page_source;
+  const route_name = PageSourceData.route_name;
   // 欧洲版也不区分赛种 且需要一个新的计算逻辑 但是因为接口结构不一样 所以需要有两套计算逻辑
   // 但是需要区分滚球全部和单球种
   if (PROJECT_NAME == 'ouzhou-pc') {
@@ -61,8 +62,7 @@ const set_match_list_mapping_relation_obj_type = () => {
     }
   }
   let type;
-  const page_source = PageSourceData.page_source;
-  const route_name = PageSourceData.route_name;
+
   // 列表页强力推荐
   if (PageSourceData.is_show_hot) {
     type = MenuData.is_esports() ? 7 : 2;
