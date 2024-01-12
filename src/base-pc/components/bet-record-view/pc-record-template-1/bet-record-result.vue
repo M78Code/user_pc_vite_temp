@@ -49,6 +49,40 @@
       </div>
     </template>
     <!-- 专业版单关 未结算 可以提前结算 -->
+    <div class="info-wrap">
+      <!--提前结算提示语-->
+      <div class="bet-pre-title">
+        <template v-if="ref_data.bet_pre_code>1 && ref_data.bet_pre_code!='0400524'">
+          <span style="color:red">
+            <template v-if="ref_data.bet_pre_code=='0400527'">
+              <!--功能暂停中，请稍后再试-->
+              {{i18n_t('bet_record.pre_suspend')}}
+            </template>
+            <template v-else-if="ref_data.bet_pre_code=='0400537'">
+              <!--提前结算金额调整中，请再试一次-->
+              {{i18n_t('bet_record.pre_amount_change')}}
+            </template>
+            <template v-else>
+              <!--提前结算申请未通过-->
+              {{i18n_t('bet_record.pre_not_approved')}}
+            </template>
+          </span>
+        </template>
+        <template v-else>
+          <!--提前结算金额已包含本金-->
+          <span>{{i18n_t('bet_record.pre_bet_include_money')}}</span>
+        </template>
+      </div>
+      <div class="bet-pre-wrap">
+        <!-- 提前结算按钮-->
+        <div class="bet-pre-btn">
+          <!-- 提前结算-->
+          <div class="bet-row-1">{{i18n_t("bet_record.settlement_pre")}} </div>
+          <div class="bet-row-2">18.00</div>
+        </div>
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/success.png`" alt="">
+      </div>
+    </div>
     <template v-if="item.seriesType=='1'">
       <div class="info-wrap">
         <!--选择的是未结算 且settleSwitch开关为1且enablePreSettle为true -->
@@ -302,7 +336,7 @@
 </template>
 <script setup>
 import { reactive, ref } from "vue"
-import { format_odds, format_currency, formatTime } from "src/output/index.js"
+import { format_odds, format_currency, formatTime, useMittEmit, useMittOn,  MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
@@ -334,188 +368,14 @@ const ref_data = reactive({
   margin-top: 0;
 }
 .info-wrap {
-  .row {
-    margin-top: 10px;
-  }
-  /*提前结算提示语*/
-  .bet-pre-title,
-  .bet-pre-money {
+  text-align: center;
+  .bet-pre-title {
     font-size: 12px;
-    text-align: center;
+    line-height: 30px;
   }
-  .bet-pre-money {
-    text-align: left;
-  }
-  .bet-tips-info {
-    font-size: 12px;
-  }
-  .record-item {
-    margin-top: 10px;
-  }
-  .red-bg {
-    display: inline-block;
-    margin-right: 5px;
-    width: 38px;
-    height: 16px;
-    line-height: 16px;
-    font-size: 12px;
-    text-align: center;
-    border-radius: 2px;
-  }
-  .bet-info {
-    cursor: pointer;
-    margin-right: 5px;
-    margin-top: -2px;
-  }
-  /* 提前结算 */
   .bet-pre-wrap {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0px;
-    .bet-pre-btn {
-      flex: 1;
-      height: 40px;
-      font-size: 12px;
-      text-align: center;
-      border-radius: 4px;
-      cursor: pointer;
-      div {
-        height: 20px;
-        &.bet-row-1 {
-          margin-top: 6px;
-        }
-        &.bet-row-2 {
-          margin-top: -3px;
-        }
-      }
-      &:hover {
-        cursor: pointer;
-        .bet-row-1,
-        .bet-row-2 {
-          color: var(--q-gb-t-c-1) !important;
-        }
-      }
-    }
-    .bet-pre-handle {
-      width: 30px;
-      cursor: pointer;
-      .bet-pre-info {
-        margin-left: 10px;
-      }
-    }
-    &.bet-pre-stop {
-      .bet-pre-btn {
-        border: 0px;
-        border-radius: 4px;
-        cursor: not-allowed;
-        line-height: 40px;
-      }
-    }
-  }
-  .bet-pre-confirming-btn,
-  .bet-pre-complete-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-count: 3;
-    height: 40px;
-    border-radius: 4px;
-    cursor: pointer;
-    .bet-pre-left {
-      width: 80%;
-      height: 100%;
-      text-align: center;
-      div {
-        height: 20px;
-        &.bet-row-1 {
-          margin-top: 5px;
-        }
-        &.bet-row-2 {
-          margin-top: -3px;
-        }
-      }
-    }
-    .bet-pre-right {
-      margin-top: 3px;
-    }
-  }
-  .bet-pre-complete-btn {
-    margin-top: 10px;
-    cursor: unset;
-  }
-  .bet-money {
-    margin-left: 5px;
-  }
-  .bet-result-separator {
-    margin-top: 10px;
-    border: 0;
-  }
-  .bet-compute-money {
-    margin-bottom: 25px;
-    :deep(.vue-slider) {
-      cursor: pointer;
-      .vue-slider-rail {
-        .vue-slider-marks {
-          .vue-slider-mark {
-            .custom-label {
-              width: 22px;
-              height: 10px;
-              font-family: PingFangSC-Regular;
-              font-size: 10px;
-              margin-left: -5px;
-            }
-            &:first-child {
-              .custom-label {
-                opacity: 0;
-              }
-            }
-            &:last-child {
-              .custom-label {
-                margin-left: -20px;
-              }
-            }
-          }
-        }
-      }
-      .vue-slider-mark-step {
-        width: 1px;
-        height: 3px;
-        margin-top: 6px;
-        border-radius: 0;
-      }
-    }
-  }
-  .bet-detail-info {
-    .row {
-      padding: 5px 10px;
-      margin-bottom: -9px;
-    }
-    &:last-child {
-      margin-bottom: 10px;
-    }
-  }
-
-  /*  箭头向下样式 */
-  .icon-pull-down:before {
-    transform: rotate(180deg);
-    margin-left: 6px;
-  }
-  /*  箭头向上样式 */
-  .icon-pull-up:before {
-    transform: rotate(0deg);
-    margin-left: 6px;
-  }
-  .order-copy {
-    display: flex;
-    flex-wrap: nowrap;
-    .order-no {
-      display: block;
-      width: 100px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    width: 200px;
+    height: 38px;
   }
 }
 .toast {
