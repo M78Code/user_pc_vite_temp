@@ -4,8 +4,7 @@
 <template>
   <div class="c-main-menu column" :class="{ 'bet-menu-upd': LayOutMain_pc.layout_left_show == 'bet_history' }">
 
-    <div style="display:none;"> {{ MenuData.menu_data_version }} --- {{ BetData.bet_data_class_version }} -- {{
-      LayOutMain_pc.layout_version }} </div>
+    <div style="display:none;"> {{ MenuData.menu_data_version }} --- {{ BetData.bet_data_class_version }} -- {{ LayOutMain_pc.layout_version }} </div>
 
     <div class="menu-wrap scroll-fixed-bg relative-position border-bottom">
       <div class="left-header-all">
