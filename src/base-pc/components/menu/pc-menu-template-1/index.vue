@@ -311,6 +311,7 @@ const lev_1_click = async (obj) => {
     root = 400
     MenuData.set_current_ball_type(left_obj.lv1_mi - 100)
   } else {
+    root = mi.substr(mi.length-1,1) || 2;
     // 常规体育
     left_obj = {
       lv1_mi: mi,

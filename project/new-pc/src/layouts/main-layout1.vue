@@ -1,6 +1,6 @@
 
 <template>
-  <div class="page-main full-height" id="parent">
+  <div class="page-main full-height" id="parent" :style="layout_style">
     <div :style="{ height: LayOutMain_pc.layout_top_height }">
       <!-- 搜索 -->
       <!--<search-wapper />-->
@@ -49,7 +49,7 @@
   </div>
 </template>
 <script setup>
-import { onUnmounted, watch,onMounted,onBeforeMount } from "vue";
+import { onUnmounted, watch,onMounted,onBeforeMount,ref,reactive,nextTick } from "vue";
 
 import { useRoute,useRouter } from "vue-router";
 // import "./main-layout.js"; //初始化数据
@@ -68,21 +68,51 @@ import confirmComponents from "src/base-pc/components/toast/confirm.vue";
 // import moveVideo from 'src/base-pc/components/video-replay/move-video.vue'
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import {set_sticky_top} from 'src/core/match-list-pc/match-card/module/sticky-top.js'
+import { compute_css_variables } from "src/core/css-var/index.js"
 
 // 监听页面是否转入休眠状态
 window.addEventListener("resize", resize_);
+
+const layout_style = ref('')
+const ref_data = reactive({
+  emit_lsit:{}
+})
 
 const route = useRoute();
 const router = useRouter();
 
 let upd_time_refresh_timer;
-onMounted(() => {
 
+onBeforeMount(()=>{
+  clearInterval(upd_time_refresh_timer)
+})
+
+onMounted(()=>{
   // 全局一秒钟定时器
   upd_time_refresh_timer = setInterval(global_one_second_timer, 1000);
+  
+  set_components_style()
+  ref_data.emit_lsit = {
+    emitter_3: useMittOn( MITT_TYPES.EMIT_THEME_CHANGE,  set_components_style ).off
+  }
+})
+
+onUnmounted(()=>{
+  Object.values(ref_data.emit_lsit).map((x) => x());
+
+  window.removeEventListener("resize", resize_);
+  clearInterval(upd_time_refresh_timer)
 
 })
 
+// 设置组件样式
+const set_components_style = () => {
+  nextTick(()=>{
+    layout_style.value = compute_css_variables({ category: 'component', module: 'layout' })
+
+    console.error('layout_style.value',layout_style.value)
+  })
+}
 
 /**
  * @Description 全局一秒钟定时器 
@@ -95,16 +125,6 @@ const global_one_second_timer = () => {
 function resize_() {
   LayOutMain_pc.set_layout_content_config()
 }
-
-onUnmounted(() => {
-  window.removeEventListener("resize", resize_);
-  clearInterval(upd_time_refresh_timer)
-})
-
-onBeforeMount(()=>{
-    clearInterval(upd_time_refresh_timer)
-  })
-
 
 
 watch(()=>[router.path,MenuData.menu_data_version.value],lodash.throttle(set_sticky_top,10),{immediate:true})

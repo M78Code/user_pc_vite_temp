@@ -267,7 +267,7 @@ import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 import ScoreList from 'src/base-h5/components/match-container/template/app/components/scroe-list2.vue';
-import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
+import ImageCacheLoad from "src/core/public-cache-image/public-cache-image.vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
 import { i18n_t, format_M_D, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX, PageSourceData, format_time_zone, ws_add_message_listener } from "src/output/index.js"

@@ -38,7 +38,7 @@ declare namespace TYPES {
     mearlys: number,
     mft: number,
   }
-  /** 盘口信息 */ interface OddInfo<T extends Ol|OlResult=Ol> extends K.hid,K.hpid,K.mid,K.hpn,K.hpt {
+  /** 盘口信息 */ interface OddInfo<T extends Ol|OlResult=Ol> extends K.hid,K.hpid,K.mid,K.hpn,K.hpt,K.hotName {
     hv:any,
     /** @deprecated 貌似没有这个属性 */ ol:T[]
     hl:Hl[]
@@ -218,6 +218,10 @@ declare namespace K {
 
   /** 盘口ID? */ type hid = {
     /** 盘口ID? */ hid: number,
+  };
+
+  /** 虚拟体育热门玩法 */ type  hotName = {
+    /** 盘口ID? */ hotName: string,
   };
 }
 

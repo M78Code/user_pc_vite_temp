@@ -85,4 +85,8 @@ export default {
   "pc-lock-img-details": {
     default: "pc-lock-img-details"
   },
+    //logo图片
+    "pc-rule-logo": {
+      default: "pc-rule-logo"
+    },
 };

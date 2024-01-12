@@ -13,6 +13,7 @@ export default {
     match_list_loaded:Number,
     v_menu_changed:Number | String,
     csid:Number | String,
+    lengue_name: String,
   },
   data(){
     return{

@@ -784,21 +784,22 @@ export default defineComponent({
 .icon_zd_default {
   width: 0.12rem;
   height: 0.12rem;
-  background: url($SCSSPROJECTPATH + "/image/svg/stick_btn_def.svg") no-repeat center / 96% 96% !important;
+  // background: url($SCSSPROJECTPATH + "/image/svg/stick_btn_def.svg") no-repeat center / 96% 96% !important;
+  background: url($SCSSPROJECTPATH + "/image/png/vector.png") no-repeat center / 96% 96% !important;
 }
 .base-font-weg {
   min-height: 0.29rem !important;
-  &:after {
-    content: ' ';
-    background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
-    display: block;
-    position: absolute;
-    width: 2px;
-    height: 0.16rem;
-    top: calc(50% - 0.08rem);
-    left: -0.18rem;
-    border-radius: 1.5px;
-  }
+  // &:after {
+  //   content: ' ';
+  //   background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
+  //   display: block;
+  //   position: absolute;
+  //   width: 2px;
+  //   height: 0.16rem;
+  //   top: calc(50% - 0.08rem);
+  //   left: -0.18rem;
+  //   border-radius: 1.5px;
+  // }
 }
 // 去除boredr
 .play-name{
@@ -814,6 +815,7 @@ export default defineComponent({
 .tournament-play {
   &.tournament-play-outer {
     background: var(--q-gb-bg-c-27) !important;
+    border-top: 0.01rem solid var(--q-gb-bd-c-16);
     .play-name-outer-wrapper {
       padding: 0 0.05rem 0.04rem 0.05rem;
     }

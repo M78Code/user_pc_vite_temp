@@ -639,7 +639,7 @@ class MenuData {
         ["101201", "101301"].includes(lv2_mi)
       ) {
         const { lv1_mi, guanjun } = this.left_menu_result;
-        if (lv1_mi == 101 && guanjun != "common-guanjun") {
+        if (lv1_mi == 1012 || lv1_mi == 1013 ) {
           is_multi_column = true;
         }
       }
