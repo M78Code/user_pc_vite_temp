@@ -353,10 +353,10 @@ onMounted(()=>{
   min-height: 61px;
   align-items: center;
   text-transform: uppercase;
-  .rule-logo{
-    width: 127px;
-    height: 30rpx;
-    .logo-img{
+  .rule-logo {
+    margin-right: 33.3px;
+    height: 100%;
+    .img-logo {
       width: 130px;
       height: 100%;
       background-repeat: no-repeat;

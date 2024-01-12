@@ -6,7 +6,7 @@
 <template>
   <div
     v-if="category_list_length>0"
-    class="scroll-fixed-header wrap-tabs"
+    class="component scroll-fixed-header wrap-tabs"
   >
     <div class="tabs-panel relative-position" ref="warp">
       <tab
@@ -114,6 +114,9 @@ export default defineComponent({
     handicap_this: Object,
     match_info: Object,
     whitchDetail: String,
+  },
+  data(){
+    return {}
   },
   setup(props, {emit}) {
     //当前选中
