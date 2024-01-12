@@ -10,7 +10,7 @@
         <!-- 串 ：可串关文字提示 ispo：0否 1普通串关 2局内串关 -->
         <div class="match-parlay">
           <template v-if="lodash.get(match, 'ispo', 0) != 0">
-            <div v-if="parlay_overflow" class="wd1" v-tooltip="{ content: 'Parlay', overflow: 1 }">P&nbsp;</div>
+            <div v-if="UserCtr.lang=='en'" class="wd1" v-tooltip="{ content: 'Parlay', overflow: 1 }">P&nbsp;</div>
             <div class="wd" v-else>{{ i18n_t('match_info.match_parlay') }}</div>
           </template>
           <div>{{ match.mfo }}</div>
@@ -45,6 +45,7 @@ import lodash from 'lodash'
 import { MatchBasisInfo2FullVersionWapper as BasisInfo2 } from 'src/base-pc/components/match-list/match-basis-info/template-2/index.js'
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
+import {UserCtr} from 'src/output/'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
 const props = defineProps({
   is_show_more: {
