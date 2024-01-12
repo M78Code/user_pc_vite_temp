@@ -586,13 +586,13 @@ body {
 
     .match-type {
       border: 1px solid var(--q-gb-bg-c-9);
-      background: var(--q-gb-bg-lg-7);
+      background: var(--q-gb-bg-c-30);
       border-radius: 6px;
       color: var(--q-gb-t-c-16);
 
       &.match-type-even {
         border: 1px solid var(--q-gb-bg-c-9);
-        background-image: var(--q-gb-bg-lg-7);
+        background-image: var(--q-gb-bg-c-30);
       }
     }
 
@@ -611,7 +611,7 @@ body {
 
       .tr-match-head {
         // background-image: var(--q-gb-bg-lg-18);
-        background: var(--q-gb-bg-lg-7);
+        background: var(--q-gb-bg-c-30);
         border: 1px solid var(--q-gb-bg-c-23);
         // border: 1px solid var(--q-gb-bg-c-9);
         border-radius: 6px;
