@@ -230,12 +230,13 @@ class LayOutMain {
  */
   set_unfold_multi_column(val){
     this.is_unfold_multi_column = val
+    const width = different_version_config[PROJECT_NAME].right_width
     if(!val){
-    this.layout_right_width = 441
-    this.layout_content_width -= 441
+    this.layout_right_width =  width
+    this.layout_content_width -=  width
     }else{
-    this.layout_right_width = 0
-    this.layout_content_width += 441
+      this.layout_right_width = 0
+      this.layout_content_width +=  width
     }
     this.set_layout_version()
   }
