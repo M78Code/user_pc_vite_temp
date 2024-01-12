@@ -808,7 +808,7 @@ class MatchMeta {
  * @returns 
  */
   get_default_ouzhou_home_hots() {
-    const http_key = `ouzhou_h5`
+    const http_key = `ouzhou_h5_hots`
     this.set_current_http_key(http_key)
     const res = localStorage.getItem('ouzhou_home_hots') && JSON.parse(localStorage.getItem('ouzhou_home_hots'))
     return this.get_ouzhou_home_hots_data(res)
@@ -818,7 +818,7 @@ class MatchMeta {
    * @description 获取欧洲版首页热门赛事
    */
   async get_ouzhou_home_hots() {
-    const http_key = `ouzhou_h5`
+    const http_key = `ouzhou_h5_hots`
     this.set_current_http_key(http_key)
     const params = {
       euid: "30199",
@@ -836,7 +836,7 @@ class MatchMeta {
    * @description 获取欧洲版首页热门赛事
    */
   get_ouzhou_home_hots_data(res) {
-    if (!this.is_current_http_key(http_key)) return []
+    if (!this.is_current_http_key(`ouzhou_h5_hots`)) return []
     if (!res || +res.code !== 200 || res.data.length < 1) return []
     localStorage.removeItem('ouzhou_home_hots')
     localStorage.setItem('ouzhou_home_hots', JSON.stringify(res))
@@ -894,14 +894,14 @@ class MatchMeta {
    * @description 处理欧洲版首页热门赛事
    */
   handle_ouzhou_home_data(res) {
-    if (!this.is_current_http_key(http_key)) return { p15_list: [], hots: [], dataList: [] }
+    if (!this.is_current_http_key(`ouzhou_h5`)) return { p15_list: [], hots: [], dataList: [] }
     if (!res || +res.code !== 200) return { p15_list: [], hots: [], dataList: [] }
     localStorage.setItem('ouzhou_home_data', JSON.stringify(res))
     const p15 = lodash.get(res, 'data.p15', [])
     const dataList = lodash.get(res, 'data.dataList', [])
 
     // 15分钟玩法赛事数据
-    const p15_list = this.assemble_15_minute_data(p15)
+    const p15_list = MatchUtils.get_ouzhou_15_minute_data(p15)
     // ws 订阅
     const p_15_mids = p15_list.map(t => t.mid)
     p_15_mids.length && p_15_mids.length > 0 && this.set_ws_active_mids({ list: p_15_mids, warehouse: MatchDataBasel5minsH5 })
@@ -920,24 +920,6 @@ class MatchMeta {
       this.handler_match_list_data({ list: match_list, warehouse: MatchDataBaseInPlayH5, type: 2, is_virtual: false, merge: 'cover' })
     }
     return { p15_list, dataList: match_list }
-  }
-
-  /**
-   * @description 获取最近一组15分玩法数据
-   * @param {*} payload 正在比赛的数据
-   */
-  assemble_15_minute_data = (payload) => {
-    return payload.map((item) => {
-      const { ms, mst } = item
-      const { title, isLock } = MatchUtils.get_match_15_minute_stage(ms, mst)
-      return {
-        title,
-        isLock,
-        ...item,
-        match_data_type: 'h5_ten_five_mins',
-        icon: String(Number(item.csid) + 100)
-      }
-    })
   }
 
   /**
