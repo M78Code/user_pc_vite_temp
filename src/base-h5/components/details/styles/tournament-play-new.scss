@@ -144,17 +144,17 @@
   max-width: 2.8rem;
   position: relative;
 
-  &:after {
-    content: ' ';
-    background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
-    display: block;
-    position: absolute;
-    width: 2px;
-    height: 0.16rem;
-    top: calc(50% - 0.08rem);
-    left: -0.18rem;
-    border-radius: 1.5px;
-  }
+  // &:after {
+  //   content: ' ';
+  //   background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
+  //   display: block;
+  //   position: absolute;
+  //   width: 2px;
+  //   height: 0.16rem;
+  //   top: calc(50% - 0.08rem);
+  //   left: -0.18rem;
+  //   border-radius: 1.5px;
+  // }
 }
 
 .corner-ball-weg {
@@ -387,7 +387,11 @@
 
     .base-font-weg {
       min-height: 0.34rem;
-      color: var((--q-gb-t-c-18));
+      // color: var((--q-gb-t-c-18));
+      color: var(--q-gb-t-c-4);
+      font-size: 0.16rem;
+      font-weight: 500;
+      font-family: Roboto;
     }
     .corner-ball-weg{
       color: var(--q-gb-t-c-18);

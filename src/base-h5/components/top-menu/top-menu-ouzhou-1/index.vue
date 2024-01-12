@@ -32,7 +32,7 @@
         </template>
          <!-- vr 头部 -->
         <template v-else-if="is_vr_page">
-            <vrTop />
+            <vrTop :is_vr_page="is_vr_page"/>
         </template>
         <!-- home 头部 -->
         <template v-else>
@@ -106,7 +106,7 @@ const is_personal_page = computed(() => {
  * vr 头部
  */
 const is_vr_page = computed(() => {
-  return ['/virtual', '/virtual/'].includes(router.currentRoute.value.path)
+  return ['/virtual', '/virtual/', '/virtual_sports_details', '/virtual_sports_details/'].includes(router.currentRoute.value.path)
 })
 /**
  * 公告  规则
