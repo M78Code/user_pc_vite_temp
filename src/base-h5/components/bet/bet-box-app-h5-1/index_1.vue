@@ -199,7 +199,7 @@ const scrollTo = () => {
   border-radius: .24rem .24rem 0 0;
   background-color: var(--q-gb-bg-c-23);
   z-index: 1999;
-  padding-bottom: .2rem;
+  padding-bottom: .3rem;
 }
 
 :deep(.bet-scroll) {
