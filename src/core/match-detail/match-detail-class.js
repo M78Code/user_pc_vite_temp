@@ -324,7 +324,7 @@ class MatchDetailCtr {
    * @return {*}
    */
   set_layout_statu(val){
-    this.ayout_statu = val
+    this.layout_statu = val
     this.set_details_data_version()  
   }
   /**
@@ -364,7 +364,7 @@ class MatchDetailCtr {
    * @return {*}
   */
   set_clear_all_play_data(){
-    this.ayout_statu = 0
+    this.layout_statu = 0
     this.current_category_id = ""
     this.details_data_cache={}
     this.category_arr = []
