@@ -375,6 +375,7 @@ export default {
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
+                margin-right: 0.1rem;
 
                 > img {
                 width: 0.05rem;

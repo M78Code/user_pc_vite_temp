@@ -3,9 +3,9 @@
 -->
 
 <template>
-  <div class="match-list-wrapper" :class="{standard: standard_edition == 2}">
+  <div class="match-list-wrapper">
     <div>
-      <div class="title-wrap-standard row justify-between items-center" v-if="standard_edition == 2">
+      <div class="title-wrap-standard row justify-between items-center" v-if=" virtual_match_list?.length ">
         <div class="lengue-name">{{ lengue_name }}</div>
         <div class="odd-title-wrapper row">
           <div class="odd-t-w-inner row items-center" :class="{status2:standard_odd_status}">
@@ -43,10 +43,6 @@ export default {
   width: 100%;
   height: auto;
   padding-top: 0.08rem;
-
-  &.standard {
-    padding-top: 0;
-  }
 
   .title-wrap-standard {
     // width: 3.61rem;
