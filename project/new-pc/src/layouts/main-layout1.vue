@@ -105,11 +105,32 @@ onUnmounted(()=>{
 
 })
 
+// 公共全局主题色
+function global_color_obj() {
+  // 背景色
+  let bg = compute_css_variables({ category: 'global', module: 'background' })
+  // 边框色
+  let bd = compute_css_variables({ category: 'global', module: 'border' })
+  // 字体色
+  let tc = compute_css_variables({ category: 'global', module: 'color' })
+  // 渐变色
+  let lg = compute_css_variables({ category: 'global', module: 'linear-gradient' })
+  // layout
+  let layout = compute_css_variables({ category: 'component', module: 'layout' })
+  return { 
+    ...bg,
+    ...bd,
+    ...tc,
+    ...lg,
+    ...layout
+  }
+}
+
 // 设置组件样式
 const set_components_style = () => {
   nextTick(()=>{
-    layout_style.value = compute_css_variables({ category: 'component', module: 'layout' })
-
+    // layout_style.value = compute_css_variables({ category: 'component', module: 'layout' })
+    layout_style.value = global_color_obj()
     console.error('layout_style.value',layout_style.value)
   })
 }
