@@ -38,7 +38,7 @@
       <div class="left-scroll-area">
         <!-- 菜单项 -->
         <v-scroll-area ref="ref_bet_scroll_area" position="menu" :observer_area="3"
-          v-if="LayOutMain_pc.layout_left_show == 'menu'" :observer_middle="LayOutMain_pc.layout_left_show == 'menu'">
+          v-show="LayOutMain_pc.layout_left_show == 'menu'" :observer_middle="LayOutMain_pc.layout_left_show == 'menu'">
           <!-- 滚动：头部 --------------------------------->
           <template v-slot:header>
             <div class="left-bg-box" :style="'height:'+LayOutMain_pc.layout_left_top"></div>

@@ -1,6 +1,6 @@
 <template>
   <!-- 菜单项 -->
-  <div v-show="LayOutMain_pc.layout_left_show == 'menu'" class="menu-wrap">
+  <div class="menu-wrap">
     <!-- 现场滚球盘 -->
     <div @click="new_menu_click(1)" class="menu-item menu-top menu-roll menu-border border-bottom" style="margin-bottom: 0px"
       :class="MenuData.menu_root == 1 && 'active'">
@@ -35,10 +35,9 @@
       </div>
     </div>
     
-    <div style="display: none">{{ base_data_instance.base_data_version }}</div>
+    <div style="display: none">{{ BaseData.base_data_version }}</div>
     <!-- 体育菜单 -->
-    <menu-wapper use_component_key="PcMenuTemplate1" :base_data="base_data_instance"
-      :version="base_data_instance.base_data_version"></menu-wapper>
+    <menu-wapper use_component_key="PcMenuTemplate1" ></menu-wapper>
   </div>
 </template>
 
@@ -46,9 +45,9 @@
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 
-import base_data_instance from "src/core/base-data/base-data.js";
+import BaseData from "src/core/base-data/base-data.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { MenuData,LayOutMain_pc } from "src/output/index.js";
+import { MenuData } from "src/output/index.js";
 import { compute_css_obj } from 'src/core/server-img/index.js'
 
 import { MenuWapper } from "src/base-pc/components/menu/index.js";
@@ -80,7 +79,7 @@ const new_menu_click = (root) => {
   } else if (root == 500) {
     mid_menu_show.list_filter_hot = true;
     // 热门默认赛事
-    let mi_500_obj = base_data_instance.mew_menu_list_res.find(
+    let mi_500_obj = BaseData.mew_menu_list_res.find(
       (x) => x.mi == 500
     ) || {
       sl: [],
