@@ -1,6 +1,6 @@
 <!-- @Description: 下划线跟随移动的tab组件 -->
 <template>
-  <div class="component tab-wrap fit relative-position" ref="wrap" @mousedown="mousedown">
+  <div class="component tab-wrap fit relative-position" ref="wrap" @mousedown="mousedown" :style="search_style">
     <div class="item-wrap relative-position" ref="item_wrap" :style="{ left: item_wrap_left + 'px' }" :key="key">
       <div class="tab-item yb-flex-center" :class="[{ active: currentIndex == index }, val.class]"
         v-for="(val, index) in list" :key="index" @click.stop="onclick(index, val)" @mouseenter="tabs_enter(index)"
@@ -43,6 +43,11 @@ import store from 'src/store-redux'
 // import { get_refs_info } from 'src/core/bet/common-helper/common-sport.js'
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 import { compute_css_obj } from 'src/core/server-img/index.js'
+
+import { compute_css_variables } from "src/core/css-var/index.js"
+
+const search_style = ref('')
+search_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
 
 const props = defineProps({
   /** tab列表 */

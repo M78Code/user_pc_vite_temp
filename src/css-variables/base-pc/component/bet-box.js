@@ -8,4 +8,5 @@ export default {
     'bet-box-6': '#f8faff',
     'bet-box-7': '#fe0200',
     'bet-box-8': 'rgba(153, 153, 153, 0.6)',
+    'bet-box-9': 'rgba(23, 156, 255, 0.08)', 
 }

@@ -45,8 +45,8 @@
       <div
         class="tabs-handel"
         v-if="
-          handicap_this.check_half &&
-          handicap_this.get_layout_list_size?.width >= 1680
+          handicap_this?.check_half&&
+          LayOutMain_pc.client_width  >= 1680
         "
       >
         <span>
@@ -103,7 +103,7 @@ import { IconWapper } from 'src/components/icon/index.js'
 import lodash from 'lodash'
 import {i18n_t} from "src/output/index.js"
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
-import { MatchDetailCalss } from "src/output/index.js"; 
+import { MatchDetailCalss,LayOutMain_pc } from "src/output/index.js"; 
 export default defineComponent({
   name: "HandicapTab",
   components: {
@@ -213,7 +213,8 @@ export default defineComponent({
       get_layout_statu,
       currentIndex,
       category_list_length,
-      tooltip_style
+      tooltip_style,
+      LayOutMain_pc
     };
   },
 });

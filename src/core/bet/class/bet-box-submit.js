@@ -337,7 +337,7 @@ const get_lastest_market_info = (type) => {
                         // 赛事状态
                         bet_item.mid_mhs = obj.matchHandicapStatus
                         // 投注项状态
-                        bet_item.oj_os = odds.oddsStatus
+                        bet_item.ol_os = odds.oddsStatus
                         // 盘口状态
                         bet_item.hl_hs = market.status
                         // 盘口id

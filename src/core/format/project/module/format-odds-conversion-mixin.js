@@ -92,7 +92,7 @@ export const compute_value_by_cur_odd_type = (val = '0.00', hpid, arr = '', csid
   }
 
   // 非港赔
-  if (arr.includes(cur_odds_num) && cur_odd) {
+  if (String(arr).includes(cur_odds_num) && cur_odd) {
     if( cur_odd == 'EU' ){
       str = calc_odds(odds_val, csid)
     } else {

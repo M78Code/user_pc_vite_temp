@@ -1263,7 +1263,7 @@ class AllDomain {
           break;
       }
       callback && callback(obj_);
-      LocalStorage.set('topic',JSON.stringify(obj_));
+      LocalStorage.set('topic',obj_);
       return;
     } catch (error) {
       // 所有  全部请求失败

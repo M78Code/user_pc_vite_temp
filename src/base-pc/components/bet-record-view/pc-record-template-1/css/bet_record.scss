@@ -42,7 +42,7 @@ body {
 
     /*  投注项背景设置 */
     .q-card__section {
-      background: var(--q-gb-bg-c-22);
+      background: var(--q-gb-bg-c-30);
       /*  投注记过项设置 */
       &.bet-item-result {
         border: 0;
@@ -248,7 +248,7 @@ body {
             line-height: 1.3;
             /*  盘口名称 */
             .bet-handicap-name,.sport-name {
-              color: var(--q-gb-t-c-7);
+              color: var(--q-gb-t-c-16);
             }
             .sport-name {
               margin-right: 5px;
@@ -283,7 +283,7 @@ body {
         }
         .bet-odds-value {
           font-size: 14px;
-          color: var(--q-gb-t-c-6);
+          color: var(--q-gb-t-c-3);
           font-weight: 700;
           span {
             position: relative;

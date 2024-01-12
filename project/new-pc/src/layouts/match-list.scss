@@ -94,7 +94,7 @@ body {
           .handicap-col:nth-of-type(n+4):nth-of-type(-n+6) {
             .bet-item-wrap {
               // background-color: var(--q-gb-bg-c-14);
-              background-color: var(--q-gb-bg-c-24);
+              // background-color: var(--q-gb-bg-c-24);
             }
           }
         }
@@ -244,7 +244,7 @@ body {
       .bet-item-wrap {
         // border-top: 0.5px solid var(--q-gb-bd-c-8);
         // border-right: 0.5px solid var(--q-gb-bd-c-8);
-        background-color: var(--q-gb-bg-c-25);
+        // background-color: var(--q-gb-bg-c-25);
         cursor: pointer;
         &:first-child {
           border-top: 0.5px solid var(--q-gb-bd-c-8);
@@ -279,7 +279,7 @@ body {
         border-right: 1px solid var(--q-gb-bd-c-8);
 
         .tab-tilte-bg {
-          background-color: var(--q-gb-bg-c-14);
+          // background-color: var(--q-gb-bg-c-14);
         }
       }
     }
@@ -585,7 +585,7 @@ body {
       border: 1px solid var(--q-gb-bg-c-9);
       background: var(--q-gb-bg-lg-7);
       border-radius: 6px;
-      color: var(--q-gb-t-c-18);
+      color: var(--q-gb-t-c-16);
 
       &.match-type-even {
         border: 1px solid var(--q-gb-bg-c-9);
@@ -631,13 +631,13 @@ body {
             font-weight: 500;
             color: var(--q-gb-t-c-6);
             font-family: "PingFangSC-Medium";
-            border-left: .5px solid transparent;
+            // border-left: .5px solid transparent;
 
             &.bet-col3,
             &.bet-col4,
             &.bet-col5 {
               // background: var(--q-gb-bg-c-22);
-              background: var(--q-gb-bg-c-23);
+              // background: var(--q-gb-bg-c-23);
               // font-weight: 400;
               &.no-bg {
                 background: none;
@@ -651,7 +651,7 @@ body {
 
             &.bet-col2,
             &.bet-col5 {
-              border-right: .5px solid var(--q-gb-bd-c-8);
+              // border-right: .5px solid var(--q-gb-bd-c-8);
             }
           }
 

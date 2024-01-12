@@ -146,7 +146,7 @@ export const set_card_show_level = () => {
     }
   });
   MatchListScrollClass.set_show_mids(show_mids_arr)
-  MatchListCardData.set_list_version()
+  // MatchListCardData.set_list_version()
   return show_mids_arr;
 };
 
@@ -217,7 +217,7 @@ export const set_card_show_level = () => {
       pre_card_obj = card_obj
     })
     set_card_show_level()
-    set_list_version()
+    // set_list_version()
   }
 
   /**

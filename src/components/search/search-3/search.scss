@@ -1,7 +1,7 @@
   :deep(.serach-wrap) {
     .init-wrap .init-row .line,
     .type-item .type-wrap .line {
-      background-color: var(--q-gb-bg-c-17);
+      background-color: var(--q-site-header-color-3);
     }
 
 
@@ -25,7 +25,7 @@
       }
 
       .search-icon {
-        color: rgb(171, 186, 200);
+        color: var(--q-header-search-color-7) !important;
       }
 
       /*  搜索框内部容器 */
@@ -189,7 +189,7 @@
               color: var(--q-gb-t-c-8);
 
               &.active {
-                color: var(--q-header-search-color-1);
+                color: var(--q-header-search-color-7);
               }
             }
           }

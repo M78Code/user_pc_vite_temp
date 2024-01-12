@@ -56,10 +56,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref,onMounted,nextTick, onUnmounted, reactive } from "vue"
 
 import BetData from "src/core/bet/class/bet-data-class.js";
-
+import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 // // 通屏垂直滚动
 import vScrollArea from "./v-scroll-area.vue";
 
@@ -72,11 +72,30 @@ import { IconWapper } from 'src/components/icon'
 import { compute_css_variables } from "src/core/css-var/index.js"
 
 const bet_style = ref('')
-bet_style.value = compute_css_variables({ category: 'component', module: 'bet-box' })
-console.error('page_style.value',bet_style.value)
-
 // 是否显示合并信息A
 const show_merge_info = ref(false)
+const ref_data = reactive({
+  emit_lsit:{}
+})
+
+
+onMounted(()=>{
+  set_components_style()
+  ref_data.emit_lsit = {
+    emitter_3: useMittOn( MITT_TYPES.EMIT_THEME_CHANGE,  set_components_style ).off
+  }
+})
+
+onUnmounted(()=>{
+  Object.values(ref_data.emit_lsit).map((x) => x());
+})
+
+// 设置组件样式
+const set_components_style = () => {
+  nextTick(()=>{
+    bet_style.value = compute_css_variables({ category: 'component', module: 'bet-box' })
+  })
+}
 
 const set_scroll_this = val => {
   console.error('val', val)
@@ -109,7 +128,7 @@ const toggle_merge = () => {
   justify-content: space-between;
   height: 40px;
   align-items: center;
-
+  background: var(--q-bet-box-6);
   .left {
     display: flex;
     align-items: center;
@@ -117,14 +136,14 @@ const toggle_merge = () => {
 
     .bet-single-count {
       border-radius: 10px;
-      color: var(--q---q-bet-box-8);
+      color: var(--q-bet-box-5);
       width: 20px;
       height: 20px;
       line-height: 20px;
       margin-left: 5px;
       text-align: center;
       transform: scale(0.8);
-      background: var(--q-gb-bg-c-18);
+      background: var(--q-bet-box-2);
     }
   }
 
