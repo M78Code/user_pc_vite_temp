@@ -262,10 +262,10 @@ onUnmounted(() => {
   background-color: var(--q-gb-bg-c-27);
 }
 .oddsup {
-  background-color: var(--q-gb-bg-c-28);
+  background-color: var(--q-gb-bg-c-28) !important;
 }
 .oddsdown {
-  background-color: var(--q-gb-bg-c-29);
+  background-color: var(--q-gb-bg-c-29) !important;
 }
 .show-odds-icon {
   &.up {
