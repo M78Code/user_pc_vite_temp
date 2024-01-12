@@ -329,6 +329,10 @@ class BaseData {
   set_base_data_menu_i18n() {
     api_base_data.post_base_data_menu_i18n({}).then((res) => {
       this.init_base_menu_il8n(res)
+      nextTick(()=>{
+        // 切换国际化后 告知菜单有变化 页面菜单进行国际化内容修改
+        MenuData.set_menu_data_version()
+      })
     }).catch(err => reject(err))
   }
 
