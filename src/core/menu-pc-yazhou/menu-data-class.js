@@ -614,7 +614,7 @@ class MenuData {
     return false
   }
   is_common_kemp() {
-    return false
+    return this._is_cur_mi(400, this.menu_root)
   }
   is_collect_kemp() {
     return this.is_collect && this.menu_root == 400
@@ -1143,7 +1143,8 @@ class MenuData {
     if (mi) {
       return this._is_cur_mi(400, mi)
     }
-    return this._is_cur_mi(400, mi) || (this.match_list_api_config.guanjun || "").includes("guanjun")
+    return this._is_cur_mi(400, this.menu_root)
+    // return this._is_cur_mi(400, mi) || (this.match_list_api_config.guanjun || "").includes("guanjun")
   }
 
   /**
