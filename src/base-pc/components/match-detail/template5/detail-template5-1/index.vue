@@ -258,8 +258,11 @@ const get_bet_item_class = (item_details, item, ol, hl_index) => {
     text-align: center;
     flex: unset !important;
     //background: red !important;
-    
-    background: var(--q-gb-bg-c-22) !important;
+    //background: var(--q-gb-bg-c-22) !important;
+    // to do use key
+    background: #fcfcfc !important;
+    padding: 5px !important;
+    background-clip: content-box !important;
   }
   :deep(.handicap) {
     flex-wrap: wrap;

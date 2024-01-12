@@ -8,7 +8,7 @@
     <!-- <div class="cathectic-ref_data.appoint"
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
-    <div v-show="false">{{ BetData.bet_data_class_version }}</div>
+    <div v-show="false">{{ BetData.bet_data_class_version }}-{{UserCtr.user_version}}</div>
     <q-card-section>
 
       <div class="col bet-league-name">
@@ -37,25 +37,25 @@
       </div>
 
       <div class="bet-content">
-        <div class="row">
+        <div class="row rowcontent">
           <!--玩法及队名部分样式-->
           <span class="mr-4 text-009 text-flow-none handicap-type" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
 
-          <span>{{ items.playName }}</span>
+          <span class="handicap-content">{{ items.playName }}</span>
 
-          <span class="handicap-type" v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
-          <span class="handicap-type" v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
+          <span class="handicap-type " v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
+          <span class="handicap-type " v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
 
         </div>
 
         <!-- vr 单独处理 -->
-        <div class="text-flow-none" v-if="items.bet_type== 'vr_bet' && ['1002','1011','1009','1010'].includes(items.sportId) && [20033,20034,20035,20036,20037,20038].includes(items.playId*1)">
+        <div class="text-flow-none handicap-size" v-if="items.bet_type== 'vr_bet' && ['1002','1011','1009','1010'].includes(items.sportId) && [20033,20034,20035,20036,20037,20038].includes(items.playId*1)">
           <div v-for="page in items.handicap" :key="page" class="f-s-c">
               <span class="virtual-count" :class="`virtual-num-${page.hv} csid-${items.sportId}`" ></span> {{page.text}} 
           </div>
         </div>
 
-        <div class="text-flow-none handicap-type" v-else>{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></div> 
+        <div class="text-flow-none handicap-type handicap-size" v-else>{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></div> 
 
         <!-- 预约投注组件 -->
         <!-- <div v-if="ref_data.show_appoint">
@@ -73,10 +73,16 @@
               <span>@</span>{{ items.oddFinally }}
             </span>
           </div>
+
+          <label v-if="!(items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0)">
+            已失效
+          </label>
+
           <!--【预约】-->
-          <label class="appoint appoint_cursor" v-if="pending_order_status(items.playOptionsId)" @click="set_show_appoint">
+          <label class="appoint appoint_cursor" v-else-if="BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
             +{{ `${i18n_t('bet.bet_book2')}` }}
           </label>
+
         </div>
        
       </div>
@@ -110,28 +116,7 @@ const props = defineProps({
   items: {}
 })
 
-/**
-* @description:是否支持预约 0 关闭 1 支持
-* @param {undefined} undefined
-* @returns {number}
-*/
-const pending_order_status = computed(() => options_id => {
-  // 判断投注项列表中 那些是可以预约的
-  let bet_obj = BetData.bet_pre_list.find(items => items == options_id) || '';
-  if (bet_obj && ref_data.active == 1 && [1, 2].includes(Number(props.items.sportId))) {
-    return 1
-  }
-  return 0;
-})
-
 const ref_data = reactive({
-  DOM_ID_SHOW: false,
-  matchType: 1,  // matchType 盘口类型 1:赛前盘，2: 滚球盘 3: 冠军盘 
-  active: 1,    //投注项状态
-  season: '',   // 赛季
-  timerly_basic_score: "",   // 计时比分 返回比分格式为: (主队得分-客队得分)
-  market_type: '',     // 赛事状态 0未开赛 滚球:进行中
-  basic_score: "",    /// 赛事比分 返回比分格式为: (主队得分-客队得分)
   show_appoint:false, // 是否显示预约 点击预约后其他地方需要显示
 })
 
@@ -223,7 +208,17 @@ const cancel_operate = () =>{
     }
   }
 }
-
+.rowcontent{
+  font-size: 12px;
+  line-height: 1.2;
+  .handicap-content{
+    margin: 0 4px;
+  }
+}
+.handicap-size{
+    font-size: 14px;
+    line-height: 1.4;
+  }
 /*  玩法部分样式 */
 .bet-play-team {
   display: flex;
@@ -405,6 +400,8 @@ const cancel_operate = () =>{
 }
 .against{
   color: var(--q-gb-t-c-20);
+  font-size: 12px;
+  line-height: 1.2;
 }
 .handicap-type{
   color: var(--q-gb-t-c-16);

@@ -67,15 +67,6 @@ class UseGlobal {
     this.global_switch_version =ref('22222')
   }
   /**
-   * @description: 设置获取视频是否展开状态
-   * @param {boolean} val
-   * @return {*}
-   */
-  set_is_fold_status(val){
-    this.is_fold_status = val
-    set_global_data_version()
-  }
-  /**
    * @description: 设置全局点击事件
    * @param {} 
    * @return {*}
@@ -146,6 +137,23 @@ class UseGlobal {
     this.error_data += "\n" + data.site + "\n" + error;
     }
     this.set_global_data_version()
+  }
+  /**
+  * @description: 设置视频是否展开状态
+  * @param {*} status
+  * @return {*}
+  */
+   set_is_fold_status( status) {
+     this.is_fold_status = status;
+     this.set_global_data_version()  
+   }
+   /**
+    * @description: 获取视频是否展开状态
+    * @param {*} state
+    * @return {*}
+    */
+   get_is_fold_status(state) {
+    return this.is_fold_status;
   }
 }
 

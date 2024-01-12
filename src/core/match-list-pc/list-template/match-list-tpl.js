@@ -50,19 +50,23 @@ function get_menu_obj_by_menu_id(menu_id) {
    * @param {undefined} undefined
   */
 function get_match_tpl_number2() {
-    let { orpt: r } = BaseData.mi_info_map[`mi_${MenuData.menu_current_mi}`] || {};
+
     // 电竞常规赛事
     if (MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_esports_champion()) {
-        r = 18
+        return 18
+    } else if (MenuData.is_scroll_ball() || MenuData.is_hot()) {
+        //热门和滚球走csid的
+        return;
     }
     // 电竞
     else if (MenuData.is_esports()) {
-        r = 28;
+        return 28;
     }
     //搜索13列玩法
     if (MenuData.is_multi_column) {
-        r = 13
+        return 13
     }
+    let { orpt: r } = BaseData.mi_info_map[`mi_${MenuData.menu_current_mi}`] || {};
     return r == 0 ? 1 : r
 }
 /**

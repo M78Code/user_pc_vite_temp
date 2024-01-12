@@ -97,7 +97,9 @@ import { i18n_t } from "src/boot/i18n.js"
 /** api */
 import { api_account } from "src/api/index.js";
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
-
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+import { MenuData } from "src/output/index.js"
+const { PROJECT_NAME } = BUILDIN_CONFIG ;
 const emit = defineEmits(['navigate'])
 
 /** props传参 */
@@ -248,7 +250,7 @@ function show_activity_page(n, urlType) { // 首页弹窗跳转判断
  * 导航栏菜单点击
  * @param {obj} 菜单路由对象 {id: 唯一id, tab_name: 菜单名, path: 跳转路径, _blank: 是否打开单独的窗口} 具体参考 vue init_site_header() 方法
  */
-function tab_click(obj) {
+async function tab_click(obj) {
     // 埋点配置
     let menu = props.nav_list[obj.index]
     if (menu.path.includes('/activity') && !globalAccessConfig.get_activitySwitch()) {
@@ -256,6 +258,17 @@ function tab_click(obj) {
     }
     // 电竞
     if (menu.id == 5) {
+        //兼容新版pc
+        if(PROJECT_NAME == 'new-pc'){
+            MenuData.set_menu_root(2000);
+            const  left_obj = {
+                lv1_mi: 2000,
+                lv2_mi: 2100,
+                has_mid_menu: true,
+            }
+            MenuData.set_left_menu_result(left_obj)
+            return;
+        }
         zhugeTag.send_zhuge_event('PC_导航_电子竞技');
         // TODO: 菜单数据
         // let menu_id = $menu.menu_data.cur_level1_menu == 'early' ? 3020225 : 3020125
@@ -263,6 +276,21 @@ function tab_click(obj) {
     }
     // 虚拟体育
     else if (menu.id == 3) {
+        //兼容新版pc
+        if(PROJECT_NAME == 'new-pc'){
+            MenuData.set_menu_root(300)
+            const res = await MenuData.get_vr_menu_list();
+            if(res && res.length){
+                // 设置左侧菜单
+                const  left_obj = {
+                    lv1_mi: 300,
+                    lv2_mi: `3${res[0].menuId}`,
+                    has_mid_menu: true,
+                }
+                MenuData.set_left_menu_result(left_obj)
+            }
+            return;
+        }
         // $menu.menu_change(1, 'virtual_sport', 'nav')
     }
     // 如果当前点击的是 Home

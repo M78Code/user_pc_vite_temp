@@ -337,7 +337,7 @@ const get_lastest_market_info = (type) => {
                         // 赛事状态
                         bet_item.mid_mhs = obj.matchHandicapStatus
                         // 投注项状态
-                        bet_item.oj_os = odds.oddsStatus
+                        bet_item.ol_os = odds.oddsStatus
                         // 盘口状态
                         bet_item.hl_hs = market.status
                         // 盘口id
@@ -816,6 +816,10 @@ const set_submit_btn = () => {
     // 提示错误 初始化滑块
     if(PROJECT_NAME.includes('app-h5')){
         useMittEmit(MITT_TYPES.EMIT_INIT_SLIDER_CONFIG)
+    }
+    // 投注栏loading
+    if(PROJECT_NAME.includes('new-pc')){
+        useMittEmit( MITT_TYPES.EMIT_BET_LOADING,false)
     }
     setTimeout(()=>{
         submit_btn = false

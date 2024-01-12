@@ -3,6 +3,7 @@
 -->
 <template>
   <div class="component bet-record-item">
+    <div style="display: none;">{{ BetRecordLeft.bet_record_version }}</div>
     <!--足球或者篮球，预约显示预约字样-->
     <template v-if="order.sportId == 1 || order.sportId == 2">
       <!-- <div class="row appoint-status" v-if="preOrder"> -->

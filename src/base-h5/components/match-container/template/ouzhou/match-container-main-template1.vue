@@ -279,7 +279,7 @@ import CountingDownStart from 'src/base-h5/components/common/counting-down-start
 import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
 import SportIcon from "src/base-h5/components/top-menu/top-menu-ouzhou-1/components/left-menu/sport-icon.vue"
 import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
-import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
+import ImageCacheLoad from "src/core/public-cache-image/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj, sports_play_data, use_sports_play_title, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/output/index.js"
@@ -1356,14 +1356,14 @@ export default {
           font-size: 12px;
         }
         .counting{
-          max-width: 40px;
+          max-width: 60px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
           font-size: 12px;
           color: #1A1A1A;
           position: relative;
-          top: -1px;
+          // top: -1px;
           font-weight: 500;
         }
         .special{

@@ -6,49 +6,32 @@
     <div class="c-bet-mix-info">
       <div v-show="false"> {{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
         <!---串关投注项部分-->
-        <bet-mix-item
-          :item="item"
-          :index="index"
-          :key="`${item}-${index}`"
-          v-for="(item, index) in BetData.bet_s_list"
-        ></bet-mix-item>
-      <template v-if="BetViewDataClass.bet_order_success_success && BetViewDataClass.bet_order_success_success.length>0">
-        <!--投注结果部分-->
-        <!-- <bet-mix-result 
-          :series_obj="item" 
-          v-for="(item, index) in BetViewDataClass.bet_order_success_success" 
-          :key="index"
-          :class="{'bet-mix-result-first':(index==0)}"
-        ></bet-mix-result> -->
-      </template>
-      <template v-else>
-        <!-- <div id="bet_input_defaut_one" class="bet_input_defaut_one" v-if="BetData.bet_s_list.length > 0"> -->
-          <!--第一个输入框的-->
-          <!-- <bet-input
-            ref="bet-mix-input-0"
-            class="bet-input"
-            :index="0"
-            :item="BetData.bet_s_list[0]"
-            :key="`0-${BetData.bet_s_list[0].custom_id}`"
-          ></bet-input>
-        </div> -->
-        <div v-if="BetData.bet_s_list.length > 1">
-          <q-card flat class="bet-mix-item-card">
-            <div v-show="false"> {{BetViewDataClass.bet_view_version}}</div>
-            <betSpecialInput  :items="BetViewDataClass.bet_special_series[0]"  />
-          </q-card>
-        </div>
-       
-      </template>
+        <template v-if="BetViewDataClass.bet_order_status == 1">
+
+          <bet-item :items="item" :index="index" :key="`${item}-${index}`" v-for="(item, index) in BetData.bet_s_list"></bet-item>
+         
+          <div v-if="BetData.bet_s_list.length > 1">
+            <q-card flat class="bet-mix-item-card">
+              <div v-show="false"> {{BetViewDataClass.bet_view_version}}</div>
+              <betSpecialInput :items="BetViewDataClass.bet_special_series[0]"  />
+            </q-card>
+          </div>
+
+        </template>
+
+        <template v-else>
+          <!--投注结果部分-->
+          <!-- <bet-mix-record ></bet-mix-record> -->
+        </template>
+   
     </div>
     
   </div>
  
 </template>
 <script setup>
-import BetMixItem from "./bet-mix-item.vue";
-import BetInput from "./bet-input.vue";
-import BetMixResult from "./bet-mix-result.vue";
+import BetItem from "./bet-item.vue";
+import BetMixRecord from "./bet-mix-record.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import betSpecialInput from "./bet-special-input.vue"
@@ -114,7 +97,7 @@ import betSpecialInput from "./bet-special-input.vue"
 
           /* 盘口值 -0.5 */
           label {
-            margin-left: 5px;
+            margin-left: 0;
             word-break: break-word;
 
             &.bet-handicap {

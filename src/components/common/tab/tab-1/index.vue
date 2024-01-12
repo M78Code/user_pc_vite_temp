@@ -7,7 +7,7 @@
         @mouseleave="tabs_leave(index)" :id="BUILDIN_CONFIG.DOM_ID_SHOW && `top-menu-ids-${val.id}`">
         <!-- BUILDIN_CONFIG.DOM_ID_SHOW 显示部分dom ID -->
         <!-- <img v-if="val.img_src" v-check-img="{ src: val.img_src, default: `/image/common/activity_banner/gift_package.png` }" /> -->
-        <div :class="val.class" class="img" :style="compute_css_obj('gift-package')"></div>
+        <div :class="val.class" v-if="val.img_src" class="img" :style="compute_css_obj({ key: 'gift-package' })"></div>
         {{ val[tab_name_key] }}
         <!-- 早盘||串关 主列表顶部日期后显示赛事数量 -->
         <span v-if="is_list_top_menu" class="match-count">({{ val.count }})</span>
@@ -16,6 +16,7 @@
           <br />{{ val.tab_name2 ||val.name}}
         </template>
       </div>
+      <div class="img" :style="compute_css_obj({ key: 'gift-package' })"></div>
       <template v-if="currentIndex !== -1 && width > 0 && is_show_line">
         <div :class="['line-wrap', { 'pseudo': line_width }]">
           <div class="line" :style="{ transform: 'translateX(' + left + 'px)', width: width + 'px' }"></div>
@@ -442,6 +443,7 @@ export default defineComponent({
         height: 100%;
         transition: all 0.3s;
         z-index: 10;
+        background-color: var(--q-site-header-color-3) !important;
       }
 
       &.pseudo {

@@ -1,7 +1,7 @@
 <template>
     <!-- 投注记录 未结算&已结算$ 预约 tab bar -->
     <div class="full-width bet-type" style="margin-top:0">
-
+      <div style="display: none;">{{ BetRecordLeft.bet_record_version }}</div>
       <div class="row bet-back-btn yb-flex-between" @click="set_menu_back('menu')">
         <!--bet-zone-head-width虚拟体育投注框宽度-->
         <div class="bet-zone-head justify-between align-items center cursor-pointer">
@@ -201,10 +201,10 @@ const set_menu_back = val => {
       margin-top: 10px;
       div.col {
         &.active {
-          color: #FFFFFF;
+          color: var(--q-gb-t-c-18);
           width: 77px;
           height: 32px;
-          background:var(--q-gb-bd-c-12);
+          background:var(--q-gb-bg-c-4);
           border-radius: 16px;
         }
       }
@@ -216,13 +216,13 @@ const set_menu_back = val => {
 
       .active {
         margin-top: -2px;
-        color: var(--q-gb-t-c-16);
+        color: var(--q-gb-bg-c-4);
       }
       /*  未结算,已结算中间分割线设置 */
       .tabs-line {
         width: 39px;
         height: 2px;
-        background: var(--q-gb-t-c-16);
+        background: var(--q-gb-bg-c-4);
         border-radius: 100px 100px 0px 0px;
         margin-left: auto;
         margin-right: auto;

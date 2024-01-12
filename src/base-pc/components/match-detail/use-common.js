@@ -47,7 +47,7 @@ export const useCommon = ({ emit, props }) => {
     () => props.item_details,
     (res) => {
       //投注项总数若为基数则补空
-      let data = res.hl[0].ol;
+      let data = lodash.get(res,'hl[0].ol',[]);
       if (data.length % 2) {
         res.hl[0].ol.push({});
       }

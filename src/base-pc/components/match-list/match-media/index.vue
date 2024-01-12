@@ -13,28 +13,23 @@
       <div
         v-if="menu_config.is_esports() && (![1, 500].includes(menu_config.menu_root)) && route.name != 'search' && GlobalAccessConfig.get_collectSwitch()"
         class="yb-flex-center yb-hover-bg play-count-wrap" @click.stop="collect">
-        <i aria-hidden="true" class="icon-star q-icon c-icon" :class="{ 'active': (match.mf == 1 || match.mf == true) }"></i>
+        <i aria-hidden="true" class="icon-star q-icon c-icon"
+          :class="{ 'active': (match.mf == 1 || match.mf == true) }"></i>
       </div>
       <!-- 视频 -->
       <!-- :style="compute_css_obj({key:'pc-img-match-list-video'})" -->
       <div v-if="cur_video_icon.type" @click="on_switch_match(cur_video_icon.type)"
-        
-        v-tooltip="{ content: cur_video_icon.text }"
-        class="icon-wrap relative-position video-icon">
+        v-tooltip="{ content: cur_video_icon.text }" class="icon-wrap relative-position video-icon">
         <div
           :class="['v-icon', `${cur_video_icon.type}-icon`, { 'active': vx_detail_params.mid == match.mid && (vx_play_media.media_type == cur_video_icon.type || (menu_config.is_esports() && route.name != 'search')) }]">
         </div>
       </div>
     </div>
-
     <!-- 动画 -->
     <!-- :style="compute_css_obj({key:'pc-img-match-list-animation'})" -->
-    <div v-if="match.mvs > -1"
-      class="icon-wrap relative-position" 
-      @click="on_switch_match('animation')"
+    <div v-if="match.mvs > -1" class="icon-wrap relative-position" @click="on_switch_match('animation')"
       v-tooltip="{ content: i18n_t('common.animate') }">
       <div class="v-icon animation-icon"
-        
         :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'animation' && 'active'"></div>
     </div>
     <!-- 盘口数量 -->
@@ -49,13 +44,13 @@
 </template>
 
 <script setup>
-import { computed, reactive, ref,watch } from 'vue';
-import { useRoute,useRouter } from 'vue-router';
+import { computed, reactive, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import {is_eports_csid}  from "src/core/constant/common/module/csid-util.js";
-import { get_match_status, compute_css_obj,MatchDetailCalss, other_play_name_to_playid } from "src/output/index.js"
+import { is_eports_csid } from "src/core/constant/common/module/csid-util.js";
+import { get_match_status, compute_css_obj, MatchDetailCalss, other_play_name_to_playid } from "src/output/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import details from 'src/core/match-list-pc/details-class/details.js'
 //import store from 'src/store-redux/index.js';
@@ -68,7 +63,7 @@ const router = useRouter()
 const props = defineProps({
   match: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
 })
 
@@ -85,6 +80,7 @@ watch(
   (val) => {
     if (val) {
       vx_play_media.value = MatchDetailCalss.play_media;
+      lodash.merge(vx_detail_params,MatchDetailCalss.params)
     }
   },
   { deep: true }
@@ -152,7 +148,7 @@ const cur_video_icon = computed(() => {
  * @param {string} media_type 播放类型
  * @param {undefined} undefined
 */
-function on_switch_match (media_type){
+function on_switch_match(media_type) {
   if ((route.name == 'details' || route.name == 'search') && media_type == 'auto') {
     media_type = 'info'
   }
@@ -177,7 +173,7 @@ function on_switch_match (media_type){
   details.on_switch_match(media_type, props.match, play_id)
   // 如果右侧视频区是折叠，则会展开
   if (!vx_get_is_fold_status.value) {
-    // store.dispatch({
+    // store.dispatch({p
     //   type: 'SET_IS_FOLD_STATUS',
     //   data: !vx_get_is_fold_status.value
     // })
@@ -187,17 +183,17 @@ function on_switch_match (media_type){
  * 跳转至详情
  * @return {undefined} undefined
  */
-function on_go_detail(){
+function on_go_detail() {
   if (is_eports_csid(props.match.csid)) {
     props.match.go_detail_type = 'no_switch'
   }
-  details.on_go_detail(props.match,null,router)
+  details.on_go_detail(props.match, null, router)
 }
 /**
  * @Description 赛事收藏
  * @param {undefined} undefined
 */
-function collect (){
+function collect() {
   useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
 }
 
@@ -256,27 +252,29 @@ function collect (){
     }
   }
 }
+
 .video-icon {
-    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/video0.svg"); // TODO: video0.svg
+  background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/video0.svg"); // TODO: video0.svg
 
-    &.active {
-      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/video2.svg"); // TODO: video2.svg)
-    }
+  &.active {
+    background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/video2.svg"); // TODO: video2.svg)
   }
-  .animation-icon {
-    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/animation0.svg"); // TODO: animation0.svg
+}
 
-    &.active {
-      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/animation2.svg"); // TODO: animation2.svg
-    }
+.animation-icon {
+  background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/animation0.svg"); // TODO: animation0.svg
+
+  &.active {
+    background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/animation2.svg"); // TODO: animation2.svg
   }
+}
 
-  .info-icon {
-    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/switch0.svg");// TODO: switch0.svg
-    background-repeat: no-repeat;
+.info-icon {
+  background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/switch0.svg"); // TODO: switch0.svg
+  background-repeat: no-repeat;
 
-    &.active {
-      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/switch2.svg");// TODO: switch2.svg
-    }
+  &.active {
+    background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/switch2.svg"); // TODO: switch2.svg
   }
+}
 </style>

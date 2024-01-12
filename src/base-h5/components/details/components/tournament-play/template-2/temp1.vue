@@ -626,7 +626,8 @@ export default defineComponent({
   width: 0.16rem;
   height: 0.16rem;
   vertical-align: middle;
-  margin: 0rem 0 0.076rem 0;
+  // margin: 0rem 0 0.076rem 0;
+  margin: 0rem 0 0 0.02rem;
 }
 
 .flex-center {

@@ -9,11 +9,11 @@
       <!--   今日、早盘、 -->
       <div class="menu-item menu-tab disable-hover double">
         <div class="item yb-flex-center" :style="compute_css_obj(`today_menu_bg_1${!MenuData.is_zaopan() ? '_active' : ''}`)" :class="!MenuData.is_zaopan() ? 'active' : ''"
-          @click="handle_click_jinri_zaopan(2)">
+          @click="handle_click_jinri_zaopan(2,'click')">
           {{ i18n_t("menu.match_today") }}
         </div>
         <div class="item yb-flex-center" :style="compute_css_obj(`today_menu_bg_1${MenuData.is_zaopan() ? '_active' : ''}`)" :class="MenuData.is_zaopan() ? 'active' : ''"
-          @click="handle_click_jinri_zaopan(3)">
+          @click="handle_click_jinri_zaopan(3,'click')">
           {{ i18n_t("menu.match_early") }}
         </div>
       </div>
@@ -24,11 +24,11 @@
       <div v-for="item in (MenuData.left_menu_list || [] )" :key="`_${item.mi}`" :class="set_vr_or_guanjun_border(item.mi)">
         <!--   赛种-->
         <!-- {{ BaseData.filterSport_arr }} -- {{ BaseData.compute_sport_id(item) }} -->
-        <div class="menu-item menu-fold1 search" :class="current_lv_1_mi == item.mi? 'y-active' : ''" @click="lev_1_click(item)" v-if="item.ct">
+        <div class="menu-item menu-fold1 search" :class="current_lv_1_mi == item.mi && is_zaopan_today? 'y-active' : ''" @click="lev_1_click(item)" v-if="item.ct">
           <!-- icon -->
           <div class="row items-center">
             <span class="soprts_id_icon"
-              :style="compute_css_obj({key:current_lv_1_mi == item.mi?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif|| item.mi)}` })"
+              :style="compute_css_obj({key:current_lv_1_mi == item.mi && is_zaopan_today?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif|| item.mi)}` })"
               :alt="BaseData.menus_i18n_map[item.mif || item.mi]"></span>
 
           </div>
@@ -47,14 +47,13 @@
             </div>
           </div>
         </div>
-
         <!--  子菜单  ，  开始    -->
         <!--  子菜单  ， 冠军 不显示子菜单  -->
         <!--  常规体育 含 娱乐     子菜单  开始    -->
-        <div class="menu-fold2-wrap  1" :class="current_lv_1_mi == item.mi && !show_menu ? 'open' : ''" v-if="item.mi != 400">
+        <div class="menu-fold2-wrap  1" :class="current_lv_1_mi == item.mi && !show_menu? 'open' : ''" v-if="item.mi != 400">
           <template v-for="item2 in item.sl" :key="`_${item.mi}_${item2.mi}_100`">
             <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        开始   -->
-            <div @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })" :class="MenuData?.get_lv2_mi_value() == item2.mi?'active':''" class="menu-item menu-fold2">
+            <div @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })" :class="MenuData?.get_lv2_mi_value() == item2.mi && is_zaopan_today?'active':''" class="menu-item menu-fold2">
               <div class="row items-center relative-position">
                 <span class="menu-point"></span>
                 <span class="menu-text ellipsis">
@@ -93,6 +92,9 @@ const router = useRouter();
 const ref_data = reactive({
     emit_lsit:{}
 })
+const is_zaopan_today = computed(()=>{
+  return !MenuData.is_hot() && !MenuData.is_scroll_ball();
+})
 const left_menu_list = ref(MenuData.left_menu_list||[])
 // 当前的一级菜单ID
 const current_lv_1_mi = ref(""); //"101",
@@ -102,6 +104,18 @@ const current_lv_1_mi = ref(""); //"101",
 const show_menu = ref(true);
 // 首次进入 刷新用
 const first_change = ref(false);
+/**
+ * 一级菜单id改变 设置2级
+ */
+watch(()=>MenuData.ref_lv1_mi.value,(_new)=>{
+  if([1,500].includes(_new)){
+    show_menu.value = true;
+  }
+  if([2000,300].includes(_new)){
+    current_lv_1_mi.value = _new;
+    show_menu.value = false;
+  }
+})
 /**
  * @description: 冠军 vr border 样式
  * @param {item} 赛种id
@@ -219,19 +233,18 @@ const lev_1_click = async (obj) => {
   // lv2_mi 二级菜单id
   let mi = obj.mi
   let type = obj.mif || obj.mi
-  if(!MenuData.is_zaopan()){
-    MenuData.set_menu_root(2)
-  }
-  if (MenuData.is_today() || MenuData.is_zaopan()) {
-    // 点击一级菜单
+  // if(!MenuData.is_zaopan()){
+  //   MenuData.set_menu_root(2)
+  // }
+  // if (MenuData.is_today() || MenuData.is_zaopan()) {
+  //   // 点击一级菜单
     if (current_lv_1_mi.value == mi) {
       // 一级菜单点击无效
       show_menu.value = !show_menu.value;
     } else {
       show_menu.value = false;
     }
-  }
-
+  // }
   // 今日 / 早盘 选中的情况下 点击无效
   if (( MenuData.is_today() || MenuData.is_zaopan() ) && current_lv_1_mi.value == mi) {
     return false;
@@ -300,17 +313,20 @@ const lev_1_click = async (obj) => {
     }
     
     
-  } else if (type == 118) {
-    // 娱乐只有冠军
-    left_obj ={
-      lv1_mi: 118,
-      lv2_mi: '1184',
-      has_mid_menu: true,
-    }
-    // 设置为冠军
-    root = 400
-    MenuData.set_current_ball_type(left_obj.lv1_mi - 100)
-  } else {
+  }
+  //  else if (type == 118) {
+  //   // 娱乐只有冠军
+  //   left_obj ={
+  //     lv1_mi: 118,
+  //     lv2_mi: '1184',
+  //     has_mid_menu: true,
+  //   }
+  //   // 设置为冠军
+  //   root = 400
+  //   MenuData.set_current_ball_type(left_obj.lv1_mi - 100)
+  // } 
+  else {
+    root = mi.substr(mi.length-1,1) || 2;
     // 常规体育
     left_obj = {
       lv1_mi: mi,
@@ -326,11 +342,7 @@ const lev_1_click = async (obj) => {
     }
     MenuData.set_current_ball_type(left_obj.lv1_mi - 100)
   }
-
-  // 今日 早盘不用设置 
-  if(root){
-    MenuData.set_menu_root(root)
-  }
+  MenuData.set_menu_root(root)
   // 不是列表页 点击列表菜单
   if(route.name != 'home'){
     router.push({name:'home'})
@@ -343,7 +355,7 @@ const lev_1_click = async (obj) => {
   // 今日没有中间菜单 需要清空
   MenuData.set_mid_menu_result(mid_obj)
 
-  MenuData.set_menu_current_mi(left_obj.lv2_mi || "")
+  MenuData.is_today() && MenuData.set_menu_current_mi(left_obj.lv2_mi || "")
 
 };
 /**
@@ -375,7 +387,7 @@ const lev_2_click = (detail = {}) => {
 
   MenuData.set_mid_menu_result(mid_obj)
 
-  MenuData.set_menu_current_mi(left_obj.lv2_mi)
+  MenuData.is_today() && MenuData.set_menu_current_mi(left_obj.lv2_mi)
 };
 
 /**
@@ -392,16 +404,27 @@ const set_route_url = () => {
  * 今日早盘按钮点击
  * @param {*} val
  */
-const handle_click_jinri_zaopan = (val) => {
+const handle_click_jinri_zaopan = (val,type) => {
   
   MenuData.set_menu_root(val)
 
-  let obj = {
+  let left_menu_config = {
     lv1_mi: `101${val}`,
-    lv2_mi: '',
-    root:val
+    lv2_mi: get_lv_1_lv_2_mi(`101${val}`)
   }
-  obj.lv2_mi = get_lv_1_lv_2_mi( obj.lv1_mi )
+  
+  // 点击事件 走默认配置 
+  // 非点击事件 走缓存逻辑
+  if(!type){
+    left_menu_config = lodash.get(MenuData,'left_menu_result',{}) || {}
+  }
+ 
+  let obj = {
+    lv1_mi: left_menu_config.lv1_mi,
+    lv2_mi: left_menu_config.lv2_mi,
+    root: val
+  }
+
   // mif 赛种id
   // lv1_mi 新菜单id
   // lv2_mi 二级菜单id
@@ -470,7 +493,9 @@ const get_lv_1_lv_2_mi = (mi) => {
     left_menu_list.value = wsList;
 }
 onMounted(()=>{
-  handle_click_jinri_zaopan(2)
+  // 刷新后使用 MenuData中的数据 menuData 是存在sessionStorage的 不影响首次进入
+  let menu_root = lodash.get(MenuData,'menu_root',2)
+  handle_click_jinri_zaopan(menu_root)
   return
   ref_data.emit_lsit = {
       emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, get_menu_ws_list).off,

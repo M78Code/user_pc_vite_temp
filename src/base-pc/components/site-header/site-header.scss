@@ -257,6 +257,7 @@
                     .activity_center {
                         .img {
                             width: 44px;
+                            height: 65px;
                             margin-right: 4px;
                         }
                     }
@@ -282,7 +283,7 @@
 
                         .img {
                             position: absolute;
-                            left: 15px;
+                            left: 0px;
                         }
                     }
                 }
@@ -850,7 +851,7 @@
     /**站点头部背景色 site_header.vue .c-site-header**/
     .c-site-header {
       background: var(--q-site-header-color-7); 
-      color: var(--q-gb-t-c-8);
+      color: var(--q-site-header-notice-color);
       border: 2px solid var(--q-site-header-color-1);;
       border-radius: 0 0 6px 6px;
       height: 96px;
