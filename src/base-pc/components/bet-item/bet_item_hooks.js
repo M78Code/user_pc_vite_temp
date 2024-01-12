@@ -136,7 +136,6 @@ export const useGetItem = ({ props }) => {
       // 热门推荐 || 近期关注
     } else if (bet_source === "hot" || bet_source === "recent") {
       let item_bet = lodash.get(bet_info,`mid_obj.hps[0].hl[0].ol`)
-      console.log(item_bet,'item_bet');
       let {
         bet_ids: { oid },
       } = props;

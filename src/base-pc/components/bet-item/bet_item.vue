@@ -191,7 +191,6 @@ const {
  */
  const bet_click_ol = () => {
   const {oid,_hid,_hn,_mid } = ol_data_item.value
-  console.log(ol_data_item,'ol_data_item');
   let bet_type = 'common_bet'
     if(MenuData.is_esports()){
         bet_type ="esports_bet"
@@ -200,6 +199,12 @@ const {
     }else if(MenuData.is_vr()){
         bet_type ="vr_bet"
     }
+  // 投注项来源 match_list:主列表、match_details：详情、hot：热门推荐、recent：近期关注
+  let match_data_type ="pc_detail"
+   if(props.bet_source !=  'match_details') {
+    match_data_type ="pc_list"
+   }
+
     let params = {
       oid, // 投注项id ol_obj
       _hid, // hl_obj 
@@ -214,7 +219,7 @@ const {
       // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
       device_type: 2,  
       // 数据仓库类型
-      match_data_type: "pc_detail",
+      match_data_type,
   }
   set_bet_obj_config(params,other)
 };
