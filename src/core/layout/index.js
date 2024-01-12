@@ -244,7 +244,7 @@ class LayOutMain {
     }
     this.set_layout_version()
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
-    //从接口拿值
+      //从接口拿值
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) 
   }
   get_is_unfold_multi_column() {

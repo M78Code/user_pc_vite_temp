@@ -212,13 +212,11 @@ const set_tpl_13_config = (template_left, template_right) => {
    * @param {number} total_width 列表总宽度
   */
   export  const set_template_width=(total_width)=>{
-    let base_config=  TemplateCommon.set_template_width_base(total_width, width_config)
-
+    let base_config=  TemplateCommon.set_template_width_base(total_width, width_config,(config)=>{
+      config.process_team_width = parseInt(total_width * 0.18)
+      config.media_width = parseInt(total_width * 0.03)
+    })
     // 加工 base_config 
-   
-    base_config.process_team_width = parseInt(total_width * 0.18)
-    base_config.media_width = parseInt(total_width * 0.03)
-
     return base_config
   }
 

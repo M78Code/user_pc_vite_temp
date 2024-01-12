@@ -30,11 +30,11 @@
       </div>
       <!-- 玩法名称 -->
       <div class="play-name row col">
-        <template v-if="[13, 3, 5, 21].includes(+match_style_obj.data_tpl_id)">
+        <!-- 这里有个1 应该是玩法的 -->
+        <template v-if="[3, 5, 21].includes(+match_style_obj.data_tpl_id)">
           <div class="col">
             {{ bet_title[0] }}
           </div>
-
           <div class="col" :class="{ 'bet-col4 y0-col4': [3, 21].includes(+match_style_obj.data_tpl_id) }"
             v-if="match_style_obj.data_tpl_id != 5">
             {{ bet_title[1] }}
@@ -126,6 +126,7 @@ const props = defineProps({
   }
 })
 const match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props.card_style_obj, 'mid'), MatchListCardDataClass.list_version.value)
+lodash.get(props.card_style_obj, 'mid')
 const match_list_tpl_size = computed(() => {
   return MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 })
