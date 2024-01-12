@@ -16,13 +16,9 @@
       <q-separator class="divider" color="#F2F5F8" inset /> -->
     <div class="c-simple-header">
       <div class="rule-logo">
-        <div class="img-logo custom-format-img-logo-01"></div>
+        <div class="img-logo custom-format-img-logo-01">1</div>
       </div>
-      
-    </div>
-    <div>
       <div>赛果</div>
-      <q-separator class="divider" color="#F2F5F8" inset />
     </div>
     
     <div class="search-header">
