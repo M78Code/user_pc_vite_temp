@@ -1,6 +1,6 @@
 <template>
   <!-- 左侧 菜单区域 -->
-  <div v-show="route.params.video_size != 1"
+  <div
     class="layout-left row relative-position full-height"
     :style="`width:${LayOutMain_pc.layout_left_width}`" >
   

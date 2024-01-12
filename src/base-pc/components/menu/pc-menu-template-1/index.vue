@@ -219,9 +219,9 @@ const lev_1_click = async (obj) => {
   // lv2_mi 二级菜单id
   let mi = obj.mi
   let type = obj.mif || obj.mi
-  if(!MenuData.is_zaopan()){
-    MenuData.set_menu_root(2)
-  }
+  // if(!MenuData.is_zaopan()){
+  //   MenuData.set_menu_root(2)
+  // }
   if (MenuData.is_today() || MenuData.is_zaopan()) {
     // 点击一级菜单
     if (current_lv_1_mi.value == mi) {
@@ -311,6 +311,7 @@ const lev_1_click = async (obj) => {
     root = 400
     MenuData.set_current_ball_type(left_obj.lv1_mi - 100)
   } else {
+    root = mi.substr(mi.length-1,1) || 2;
     // 常规体育
     left_obj = {
       lv1_mi: mi,
@@ -343,7 +344,7 @@ const lev_1_click = async (obj) => {
   // 今日没有中间菜单 需要清空
   MenuData.set_mid_menu_result(mid_obj)
 
-  MenuData.set_menu_current_mi(left_obj.lv2_mi || "")
+  MenuData.is_today() && MenuData.set_menu_current_mi(left_obj.lv2_mi || "")
 
 };
 /**
@@ -375,7 +376,7 @@ const lev_2_click = (detail = {}) => {
 
   MenuData.set_mid_menu_result(mid_obj)
 
-  MenuData.set_menu_current_mi(left_obj.lv2_mi)
+  MenuData.is_today() && MenuData.set_menu_current_mi(left_obj.lv2_mi)
 };
 
 /**

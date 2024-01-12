@@ -40,6 +40,7 @@
               @back_to="back_to"
               @get_mattch_details="get_mattch_details"
               @change_loading_state="change_loading_state"
+              @toggleLayout="onToggleLayout"
             ></detail-header>
           </template>
           <!-- 玩法列表 -->
@@ -130,8 +131,8 @@ const {
   is_request,
   headerHeight,
   init,
-  set_handicap_this,
   set_handicap_state,
+  set_handicap_this,
   get_mattch_details,
   change_loading_state,
   MatchDataWarehouseInstance,
@@ -231,6 +232,14 @@ let back_to_timer =null
 
     return is_esports_val;
   });
+
+  /** 切换单双列布局
+   * @param {0|1} status 0: 默认单列; 1:双列
+   */
+  function onToggleLayout(status) {
+
+    // handicap_this.value
+  }
 </script>
 
 <style lang="scss" scoped>

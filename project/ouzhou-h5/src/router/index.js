@@ -64,7 +64,13 @@ const router = createRouter({
         {
           path: "/virtual", // vr体育
           name: "virtual_sports",
-          component: () => import("../pages/virtual/index.vue"),
+          component: () => import("../pages/vr/pages/virtual/virtual.vue"),
+        },
+        // 虚拟赛事详情页
+        {
+          path: "/virtual_sports_details",
+          name: "virtual_sports_details",
+          component: () => import("../pages/vr/pages/virtual/virtual-sports-details.vue"),
         },
         {
           path: "/collect", // 收藏
