@@ -1356,14 +1356,14 @@ export default {
           font-size: 12px;
         }
         .counting{
-          max-width: 40px;
+          max-width: 60px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
           font-size: 12px;
           color: #1A1A1A;
           position: relative;
-          top: -1px;
+          // top: -1px;
           font-weight: 500;
         }
         .special{
