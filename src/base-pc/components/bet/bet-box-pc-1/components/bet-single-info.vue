@@ -37,25 +37,25 @@
       </div>
 
       <div class="bet-content">
-        <div class="row">
+        <div class="row rowcontent">
           <!--玩法及队名部分样式-->
           <span class="mr-4 text-009 text-flow-none handicap-type" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
 
-          <span>{{ items.playName }}</span>
+          <span class="handicap-content">{{ items.playName }}</span>
 
-          <span class="handicap-type" v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
-          <span class="handicap-type" v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
+          <span class="handicap-type " v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
+          <span class="handicap-type " v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
 
         </div>
 
         <!-- vr 单独处理 -->
-        <div class="text-flow-none" v-if="items.bet_type== 'vr_bet' && ['1002','1011','1009','1010'].includes(items.sportId) && [20033,20034,20035,20036,20037,20038].includes(items.playId*1)">
+        <div class="text-flow-none handicap-size" v-if="items.bet_type== 'vr_bet' && ['1002','1011','1009','1010'].includes(items.sportId) && [20033,20034,20035,20036,20037,20038].includes(items.playId*1)">
           <div v-for="page in items.handicap" :key="page" class="f-s-c">
               <span class="virtual-count" :class="`virtual-num-${page.hv} csid-${items.sportId}`" ></span> {{page.text}} 
           </div>
         </div>
 
-        <div class="text-flow-none handicap-type" v-else>{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></div> 
+        <div class="text-flow-none handicap-type handicap-size" v-else>{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></div> 
 
         <!-- 预约投注组件 -->
         <!-- <div v-if="ref_data.show_appoint">
@@ -208,7 +208,17 @@ const cancel_operate = () =>{
     }
   }
 }
-
+.rowcontent{
+  font-size: 12px;
+  line-height: 1.2;
+  .handicap-content{
+    margin: 0 4px;
+  }
+}
+.handicap-size{
+    font-size: 14px;
+    line-height: 1.4;
+  }
 /*  玩法部分样式 */
 .bet-play-team {
   display: flex;
@@ -390,6 +400,8 @@ const cancel_operate = () =>{
 }
 .against{
   color: var(--q-gb-t-c-20);
+  font-size: 12px;
+  line-height: 1.2;
 }
 .handicap-type{
   color: var(--q-gb-t-c-16);

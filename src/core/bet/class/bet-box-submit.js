@@ -817,6 +817,10 @@ const set_submit_btn = () => {
     if(PROJECT_NAME.includes('app-h5')){
         useMittEmit(MITT_TYPES.EMIT_INIT_SLIDER_CONFIG)
     }
+    // 投注栏loading
+    if(PROJECT_NAME.includes('new-pc')){
+        useMittEmit( MITT_TYPES.EMIT_BET_LOADING,false)
+    }
     setTimeout(()=>{
         submit_btn = false
     },500)

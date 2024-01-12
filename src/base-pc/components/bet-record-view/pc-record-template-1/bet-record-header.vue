@@ -1,7 +1,7 @@
 <template>
     <!-- 投注记录 未结算&已结算$ 预约 tab bar -->
     <div class="full-width bet-type" style="margin-top:0">
-
+      <div style="display: none;">{{ BetRecordLeft.bet_record_version }}</div>
       <div class="row bet-back-btn yb-flex-between" @click="set_menu_back('menu')">
         <!--bet-zone-head-width虚拟体育投注框宽度-->
         <div class="bet-zone-head justify-between align-items center cursor-pointer">

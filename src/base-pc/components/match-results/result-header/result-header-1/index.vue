@@ -15,9 +15,7 @@
       </div>
       <q-separator class="divider" color="#F2F5F8" inset /> -->
     <div class="c-simple-header">
-      <div class="rule-logo">
-        <img src="" alt="" class="logo-img">
-      </div>
+      <div class="logo-icon"  :style="compute_css_obj({ key: 'pc-rule-logo' })"></div>
       
     </div>
     <div>
@@ -187,6 +185,8 @@ import {
 } from "src/output/index.js";
 import lodash from "lodash"
 import { useGetResultConfig } from "src/base-pc/components/match-results/results-config.js";
+
+import { compute_css_obj } from 'src/core/server-img/index.js'
 const {
   //变量
   changePage
@@ -353,10 +353,10 @@ onMounted(()=>{
   min-height: 61px;
   align-items: center;
   text-transform: uppercase;
-  .rule-logo{
-    width: 127px;
-    height: 30rpx;
-    .logo-img{
+  .rule-logo {
+    margin-right: 33.3px;
+    height: 100%;
+    .img-logo {
       width: 130px;
       height: 100%;
       background-repeat: no-repeat;
@@ -643,6 +643,10 @@ background: #ffffff;
 .q_data{
   :deep(.material-icons){  
     line-height: 12px !important;
+  }
+
+  .logo-icon{
+    width:130px;
   }
 }
 

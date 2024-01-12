@@ -54,7 +54,8 @@ body {
         }
         /*  显示金额样式 */
         .bet-value {
-          color: var(--qq--theme-color-bet-keyboard);
+          color: var(--q-gb-t-c-21);
+          // color: var(--qq--theme-color-bet-keyboard);
            /*  红色字体显示 */
           &.red-text {
             color: #FF4040;
@@ -67,106 +68,7 @@ body {
             color: #FF4040;
           }
         }
-        /*  提前结算部分 */
-        .info-wrap {
-          .bet-pre-title,
-          .bet-pre-money {
-            color: var(--q-gb-t-c-6);
-          }
-          // 注单剩余本金
-          .bet-pre-Remaining {
-            margin-top: 10px;
-            font-size: 12px;
-            color: var(--qq--yb-text-active-color1);
-          }
-          // 提前结算可用次数
-          .bet-pre-count {
-              margin-top: 10px;
-              margin-bottom: 5px;
-              font-size: 12px;
-              color: var(--qq--yb-text-active-color1);
-            }
-          .bet-tips-info {
-            color: var(--qq--theme-color-pre-over)
-          }
-          .red-bg {
-            color: var(--q-gb-t-c-6);
-            background: #FF4040;
-          }
-          .bet-info {
-            &:before {
-              color: var(--qq--theme-color-bet-info) !important;
-            }
-          }
-          .bet-pre-wrap {
-            .bet-pre-btn {
-              background-image: var(--qq--theme-bg-pre-btn);
-              border: 0.5px solid var(--qq--theme-bd-pre-btn);
-              border-radius: 20px;
-              border-radius: var(--qq--theme-bd-radius-pre-btn);
-              div {
-                &.bet-row-1 {
-                  font-size: 14px;
-                //   color: #C0DBFF;
-                  color: var(--qq--theme-color-pre-btn2);
-                  font-weight: 500;
-                }
-                &.bet-row-2 {
-                  // color: var(--qq--theme-color-pre-btn-row-2);
-                  font-weight: bold;
-                }
-              }
-              &:hover {
-                background: var(--qq--theme-bg-pre-btn-hover);
-                cursor: pointer;
-                .bet-row-1,
-                .bet-row-2 {
-                  color: var(--q-gb-t-c-1) !important;
-                }
-              }
-            }
-            .bet-pre-handle {
-              .bet-pre-info {
-                color: var(--qq--yb-text-color1);
-                // &:before {
-                //   color: var(--qq--yb-text-color1);;
-                // }
-                // &:after {
-                //   color: var(--qq--y0-text-color1);
-                // }
-                // &:hover {
-                //   &:before {
-                //     color: var(--qq--yb-text-color1);
-                //   }
-                // }
-              }
-              .bet-pre-over {
-               color: var(--qq--theme-color-pre-over);
-              }
-            }
-            &.bet-pre-stop {
-              .bet-pre-btn {
-                color: var(--qq--theme-color-pre-stop-btn);
-                background: var(--qq--theme-bg-pre-stop-btn);
-                border: var(--qq--theme-bd-pre-stop-btn);
-                border-radius: var(--qq--theme-bd-radius-pre-btn);
-                pointer-events: none;
-              }
-              .bet-pre-handle {
-                .bet-pre-info {
-                  &:before {
-                    color: var(--q-gb-t-c-9);
-                  }
-                  &:hover {
-                    &:before {
-                      color: var(--q-gb-t-c-9);
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+
         .bet-result-separator {
           margin-left: -10px;
           margin-right: -10px;
@@ -232,12 +134,13 @@ body {
       }
       .match-time {
         margin: 6px 0;
-        color: var(--qq--theme-text-bet-outweight);
+        // color: var(--qq--theme-text-bet-outweight);
+        color: var(--q-gb-t-c-21);
       }
       .bet-content {
         padding: 8px;
         background: var(--q-gb-bg-c-11);
-        border: 0.5px solid var(--q-gb-bd-c-8);//rgba(65,70,85,1)
+        // border: 0.5px solid var(--q-gb-bd-c-8);//rgba(65,70,85,1)
         border-radius: 6px;
         word-break: break-all;
          /*  玩法及队名部分样式  */

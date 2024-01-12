@@ -26,24 +26,33 @@
 </template>
 
 <script setup>
+import { onUnmounted,onMounted, reactive, ref } from "vue";
 import leftMain from "../pages/left-main/index.vue";
-// import leftMainMin from "../pages/left-main/index-min.vue";
 
 import { useRoute } from "vue-router";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
-import { onBeforeUnmount, ref } from "vue";
 const route = useRoute();
 const bet_loadding = ref(false);
 
+const ref_data = reactive({
+  emit_lsit: {}
+})
 
+// 设置投注loading
+const set_bet_loadding = (val) =>{
+  bet_loadding.value = val
+}
 
+onMounted(()=>{
+  ref_data.emit_lsit = {
+    emitter_1: useMittOn( MITT_TYPES.EMIT_BET_LOADING,  set_bet_loadding ).off
+  }
+})
 
+onUnmounted(()=>{
+  Object.values(ref_data.emit_lsit).map((x) => x());
+})
 
 </script>
-
-<style scoped lang="scss">
-.layout-left {
- 
-}
-</style>

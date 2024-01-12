@@ -61,7 +61,7 @@
         {{ i18n_t('filter.select_league') }}
         <span class="status yb-font-bold" :class="filterHeader.show_filter_popup ? 'filter_full_all' : ''">{{ (filterHeader.vx_filter_checked_all
           ||
-          filterHeader.vx_get_checked_count == 0) ? i18n_t('common.all') : filterHeader.vx_get_checked_count }}</span>
+          filterHeader.checked_count == 0) ? i18n_t('common.all') : filterHeader.checked_count }}</span>
         <i class="icon-arrow q-icon c-icon" size="14px"></i>
       </div>
       <!-- 列表排序按钮 -->

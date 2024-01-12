@@ -56,7 +56,7 @@
             class="icon-toggle"
             color="#5A6074"
             :class="!get_layout_statu && 'active'"
-            @click="handicap_this.toggele_layout(0)"
+            @click="onToggleLayout(0)"
           />
           <q-tooltip
             anchor="top middle"
@@ -73,7 +73,7 @@
             class="icon-toggle"
             color="#5A6074"
             :class="get_layout_statu && 'active'"
-            @click="handicap_this.toggele_layout(1)"
+            @click="onToggleLayout(1)"
           />
           <q-tooltip
             anchor="top middle"
@@ -115,6 +115,9 @@ export default defineComponent({
     match_info: Object,
     whitchDetail: String,
   },
+  emits:[
+    'toggleLayout'
+  ],
   data(){
     return {}
   },
@@ -208,7 +211,13 @@ export default defineComponent({
 
     onUnmounted(() => {
     });
-
+    /** 切换单双列布局
+     * @param {0|1} status 0: 单列; 1: 双列
+     */
+    function onToggleLayout(status){
+      props.handicap_this.toggele_layout(status)
+      emit('toggleLayout')
+    }
     return {
       i18n_t,
       toggle_play,
@@ -217,7 +226,8 @@ export default defineComponent({
       currentIndex,
       category_list_length,
       tooltip_style,
-      LayOutMain_pc
+      LayOutMain_pc,
+      onToggleLayout,
     };
   },
 });
