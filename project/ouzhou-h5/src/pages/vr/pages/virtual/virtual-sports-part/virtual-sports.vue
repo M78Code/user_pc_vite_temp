@@ -138,6 +138,25 @@ export default {
     'virtual-skeleton':virtual_skeleton,
     'virtual-sports-tab':virtual_sports_tab,
   },
+  methods: {
+    /**
+     * 提前10秒通知封盘-覆盖mixin
+     * @params {Object} mid 赛事id,batchNo 期号
+     */
+     arrived10_handle({mid,batchNo}){
+      if(this.match_list_by_no && this.match_list_by_no.length){
+        this.match_list_by_no.forEach(m => {
+          if(m.batchNo == batchNo){
+            m.mhs = 1;
+          }
+        });
+      }
+      if(this.sub_menu_type == 1004 && !this.singleton_10second){
+        this.singleton_10second = true;
+        this.get_score_basket_ball();
+      }
+    },
+  }
 }
 </script>
 
