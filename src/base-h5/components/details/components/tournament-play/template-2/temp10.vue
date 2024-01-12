@@ -79,11 +79,11 @@ export default defineComponent({
       }
     );
     const temp_odds = () => {
-      data.hsw_single = _.get(props.item_data,'hsw').toString()
-      let odd_ol_list = _.get(props.item_data,'hl[0].ol')
+      data.hsw_single = lodash.get(props.item_data,'hsw').toString()
+      let odd_ol_list = lodash.get(props.item_data,'hl[0].ol')
 
       let odds_list = []
-      _.forEach(odd_ol_list,(ol_item,i) => {
+      lodash.forEach(odd_ol_list,(ol_item,i) => {
         let odds_obj = {}
         let ol_on = ol_item.on.split('/');
         odds_obj['two_num'] = ol_on;

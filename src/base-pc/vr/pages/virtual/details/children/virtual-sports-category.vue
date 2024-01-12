@@ -4,49 +4,35 @@
  * @Description: 虚拟体育玩法投注项区域
 -->
 <template>
-  <div class='category virtual-sport'>
-    <!-- loading效果 -->
-    <loading v-if="is_loading" :top="$route.name == 'virtual_sports' ? '76%' : '64%'"></loading>
-      <!-- 详情玩法投注项有数据 -->
-    <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;">
-      <div slot="scrollList" class="scrollList">
-        <!-- 置顶操作时增加动画 -->
-        <transition-group name="transition-play-list">
-          <!-- 置顶 -->
-          <template v-for="(item,keyscorll) in match_list_new">
-            <template v-if="item.hton!=0">
-              <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="get_list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
-            </template>
-          </template>
-          <!-- 非置顶 -->
-          <template v-for="(item,keyscorll) in match_list_normal">
-            <template v-if="item.hton==0">
-              <template v-if="match_list_new.length == 0">
-                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="get_list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
-              </template>
-              <template v-else>
-                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="get_list" :item_data="item"></tournament-play-new>
-              </template>
-            </template>
-          </template>
-        </transition-group>
-      </div>
-      <div class="empty-box"></div>
-    </div>
+  <div >
+    <odds_info
+      :show_close_thehand="show_close_thehand"
+      :matchDetail="current_match.odds_info"
+      :loading="detail_loading"
+      :detail_info="current_match || {}"
+    />
   </div>
 </template>
 
 <script>
 import virtual_sports_category_mixin from "src/core/vr/mixin/pages/virtual/details/children/virtual-sports-category-mixin.js";
 // 引入加载中的组件
-import loading from 'src/base-h5/components/common/loading.vue';
-import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue"
+// import loading from 'src/components/loading/loading.vue';
+// import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue"
+import odds_info from "project_path/src/pages/match-new-detail/components/odds_info.vue";
 export default {
   mixins:[virtual_sports_category_mixin],
   name:'virtual_sports_category',
   components: {
-    'tournament-play-new': tournament_play_new,
-    loading
+    // 'tournament-play-new': tournament_play_new,
+    // loading
+    'odds_info':odds_info,
+  },
+  data(){
+    return{
+      show_close_thehand:false,
+      detail_loading:false,
+    }
   },
 }
 </script>

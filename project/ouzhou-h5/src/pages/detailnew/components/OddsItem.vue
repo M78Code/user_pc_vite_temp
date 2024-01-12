@@ -1,8 +1,8 @@
 <template>
-  <div class="component odds-item odds-wrap" v-if="!(data.hl.every(item => item.hs == 2))" :style="{ 'order': order }">
+  <div class="component odds-item odds-wrap" v-if="!(data.hl && data.hl.every(item => item.hs == 2))" :style="{ 'order': order }">
     <q-separator color="orange" />
     <div class="odds-hpn" @click="toggleUnfold">
-      <span class="odds-hpn-text">{{ data.hpn }}</span>
+      <span class="odds-hpn-text">{{ data.hotName ? data.hotName : data.hpn }}</span>
       <!-- <template v-if="wsl">
         hpt{{ data.hpt }}
       </template> -->
@@ -12,7 +12,13 @@
     </div>
     <QSlideTransition :duration="200">
       <div v-show="unfold">
-        <OddTemplateDynamicComponent :data="data"></OddTemplateDynamicComponent>
+        <template v-if="[0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,18,51].includes(+data.hpt)">
+          <OddTemplateDynamicComponent :data="data"></OddTemplateDynamicComponent>
+        </template>
+        <!-- 虚拟体育赛马类-热门玩法模板 -->
+        <template v-else-if="data.hotName">
+          <Tem8 :item_data="data" />
+        </template>
       </div>
     </QSlideTransition>
   </div>
@@ -24,6 +30,7 @@ import OddsSetTop from './OddsSetTop.vue';
 import { QSlideTransition } from 'quasar'
 
 import OddTemplateDynamicComponent from "./template/OddTemplateDynamicComponent.vue";
+import Tem8 from "./template/tem8.vue";
 
 type Props = {
   data: TYPES.OddInfo
@@ -57,7 +64,7 @@ function changeUnfold(unfold:boolean){
 
 const order = computed(() => {
   // order 最小值-2147483648, hton目前长度13, 故substring(4)
-  return -Number(props.data.hton.substring(4))
+  return -Number(props.data?.hton?.substring(4))
   // return props.data.hpt
 })
 

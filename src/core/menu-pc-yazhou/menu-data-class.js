@@ -133,7 +133,7 @@ class MenuData {
 
     if (Object.keys(session_info).length) {
       for(let item in session_info){
-        if(!['menu_data_version','match_list_version','api_config_version','ref_lv2_mi'].includes(item) ){
+        if(!['menu_data_version','match_list_version','api_config_version','ref_lv2_mi','ref_lv1_mi'].includes(item) ){
           this[item] = session_info[item]
         }
       }
@@ -381,7 +381,7 @@ class MenuData {
    */
   set_left_menu_result(obj) {
     this.menu_root_show_shoucang = obj.root;
-    this.menu_root = obj.root?obj.root:this.menu_root;
+    // this.menu_root = obj.root?obj.root:this.menu_root;
     // 设置 列表接口类型
     // this.set_match_list_api_type(obj);
     // console.error('set_left_menu_result',obj)
@@ -393,7 +393,7 @@ class MenuData {
       version: Date.now(),
       root: this.menu_root
     };
-    this.ref_lv1_mi.value = obj.root?obj.root:this.menu_root;
+    // this.ref_lv1_mi.value = obj.root?obj.root:this.menu_root;
     this.ref_lv2_mi.value =obj.lv2_mi?Number(obj.lv2_mi):"";
     if (obj.has_mid_menu) {
       //  如果 有   走 自然的 中间菜单组件渲染 ，
@@ -603,12 +603,6 @@ class MenuData {
   is_home() {
     return false
   }
-  is_common_kemp(mi) {
-    return this._is_cur_mi(400, mi)
-  }
-  is_collect_kemp() {
-    return this.is_collect && this.menu_root == 400
-  }
   is_leagues() {
     return false
   }
@@ -639,7 +633,7 @@ class MenuData {
         ["101201", "101301"].includes(lv2_mi)
       ) {
         const { lv1_mi, guanjun } = this.left_menu_result;
-        if (lv1_mi == 101 && guanjun != "common-guanjun") {
+        if (lv1_mi == 1012 || lv1_mi == 1013 ) {
           is_multi_column = true;
         }
       }
@@ -740,7 +734,9 @@ class MenuData {
   
 
   set_menu_root(val){
+    val = val || 2;
     this.menu_root = val
+    this.ref_lv1_mi.value = val;
     let left_menu_list = []
     
     if(val == 2){
@@ -1148,7 +1144,8 @@ class MenuData {
   }
   // 是不是 常规赛种下的冠军
   is_common_kemp(mi) {
-    return this.left_menu_result.lv1_mi && this.left_menu_result.lv1_mi != 400 && this.menu_root == 400
+    mi = mi || this.left_menu_result.lv2_mi;
+    return  mi && mi.substr(mi.length-1,1) == 4;
   }
 
   is_collect_kemp() {

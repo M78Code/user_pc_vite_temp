@@ -145,6 +145,9 @@ const setPopularSort = (mi) =>{
  * @param {*} data 
  */
 const set_menu_obj = (data) => {
+  if(data.route == '/virtual'){
+    MenuData.set_vr_menu_csid('1001');
+  }
   router.push(data.route)
 }
 /**

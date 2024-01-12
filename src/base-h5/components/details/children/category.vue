@@ -88,7 +88,7 @@ import no_data from "src/base-h5/components/common/no-data.vue"
 
 import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js";
 // 引入加载中的组件
-import loading from "src/base-h5/components/common/loading.vue"
+import loading from "src/components/loading/loading.vue"
 // 精选赛事
 import detailMatchList from 'src/base-h5/components/details/components/detail-match-list.vue';
 import uid from "src/core/uuid/index.js"
