@@ -148,8 +148,8 @@
 
 <script setup>
 import { useCommon } from "../../use-common";
-import {computed,toRef} from 'vue'
-
+import {computed,toRef,ref} from 'vue'
+import { format_three_data } from "src/output/index.js";
 const emit = defineEmits(["sort_index", "set_panel_status"]);
 
 const props = defineProps({

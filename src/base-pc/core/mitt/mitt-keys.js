@@ -335,6 +335,9 @@ export const EMIT_GET_RECORD_LIST = "EMIT_GET_RECORD_LIST"
 export const EMIT_REF_DATA_BET_MONEY = "EMIT_REF_DATA_BET_MONEY"
 // 键盘输入
 export const EMIT_INPUT_BET_MONEY_KEYBOARD = "EMIT_INPUT_BET_MONEY_KEYBOARD"
+// 投注loading
+export const EMIT_BET_LOADING = "EMIT_BET_LOADING"
+
 
 // ------------------------------------------------------------------详情相关-----------------------------------------------------------------------------------
 
@@ -487,3 +490,6 @@ export const EMIT_BET_MULTIPLE_MONEY = 'EMIT_BET_MULTIPLE_MONEY'
 
 // 投注列表切换
 export const EMIT_BET_RECORD_SELECTED_CHANGE= "EMIT_BET_RECORD_SELECTED_CHANGE"
+
+// 提前结算列表金额变化
+export const EMIT_EARLY_MONEY_LIST_CHANGE= "EMIT_EARLY_MONEY_LIST_CHANGE"

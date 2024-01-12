@@ -44,6 +44,7 @@ export default class VSport {
     this.loop_callback = null;
     // 赛事状态
     this.match_status = 0;
+    this.match_status_old = -1;
     if(sport_data && callback){
       // 赛事信息对象,消费数据
       this.sport_data = sport_data;
@@ -69,6 +70,7 @@ export default class VSport {
   destroy(){
     // 赛事状态
     this.match_status = 0;
+    this.match_status_old = -1;
     // 消费开关
     this.run = false;
     // 初始化时间
@@ -209,7 +211,93 @@ export default class VSport {
     }
     return show_time;
   }
-
+  /**
+   * @description: 发送模拟ws命令推送
+   * @param {*} msg_obj 需要发送的消息体
+   */ 
+  send_ws(msg_obj){
+    if(msg_obj){
+      msg_obj.model = 'VR';
+      window.postMessage({event: 'WS', cmd:`WS_MSG_REV`, data:msg_obj},'*');
+    }
+  }
+  /**
+   * @description: 发送模拟ws命令c101
+   * @param {*} mid 赛事id
+   * @param {*} obj 赛事数据
+   */ 
+  send_ws_ms_c101(mid, obj={}){
+    // 0-未开始,1-进行中,2-比赛结束 (ms==>// 赛事状态 0:未开赛 1:赛事进行中  2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 )
+    if(mid) {
+      let ms = 0;
+      switch (lodash.get(obj,'ms',0)*1) {
+        case 0: // 0-未开始
+          ms = 0;
+          break;
+        case 1: // 1-进行中
+          ms = 1;
+          break;
+        case 2: // 2-比赛结束 
+          ms = 3;
+          break;
+        default:
+          break;
+      }
+      let data = {"cd":{"mid":mid,"ms":ms},"cmd":"C101","ctsp":new Date().getTime()};
+      Object.assign(data.cd, obj);
+      data.cd.ms = ms;
+      // 发送消息
+      this.send_ws(data);
+      console.error('发送send_ws_ms_c101,',data);
+      // 发送ws消息
+      // {"cd":{"mid":"2930371","ms":3},"cmd":"C101","ctsp":"1701499950916","ld":"KO_0af515682023120214522376054c9561b986"}
+    }
+  }
+  /**
+   * @description: 发送模拟ws命令c102
+   * @param {*} mid 赛事id
+   * @param {*} obj 赛事数据
+   */ 
+  send_ws_ms_c102(mid, obj={}){
+    if(mid) {
+      let data ={"cd":{"mid":mid},"cmd":"C102","ctsp":new Date().getTime()};
+      Object.assign(data.cd, obj);
+      // 发送消息
+      this.send_ws(data);
+      // 发送ws消息
+      // {"cd":{"cmec":"dang_poss","cmes":0,"csid":"1","mess":"1","mid":"2927014","mmp":"7","mst":5533},"cmd":"C102","ctsp":"1701499950962","ld":"RB_0af5157a2023120214522905378ce91e7626"}
+    }
+  }
+  /**
+   * @description: 发送模拟ws命令c103
+   * @param {*} mid 赛事id
+   * @param {*} obj 赛事数据
+   */ 
+  send_ws_ms_c103(mid, obj={}){
+    if(mid) {
+      let data ={"cd":{"mid":mid,"msc":[]},"cmd":"C103","ctsp":new Date().getTime()}
+      Object.assign(data.cd, obj);
+      // 发送消息
+      this.send_ws(data);
+      // 发送ws消息
+      // {"cd":{"csid":1,"mid":"2936750","mpid":"7","msc":["S1|0:1","S2|0:0","S3|0:1","S5|4:6","S6|17:11","S8|24:20","S10|0:1","S11|0:0","S12|0:3","S13|0:0","S14|0:1","S15|1:5","S16|3:1","S17|5:4","S18|3:1","S104|73:50","S105|0:0","S555|4:6","S1001|0:0","S1002|0:0","S1003|0:0","S1004|0:0","S1005|0:1","S1006|0:0","S1101|8:5","S1302|0:0","S1402|0:2","S5001|0:3","S5002|1:0","S5003|0:2","S5004|2:1","S5005|0:0","S5006|1:0","S10011|0:0","S10012|0:0","S10013|0:0","S10021|0:0","S10022|0:0","S10023|0:0","S10031|0:0","S10032|0:0","S10033|0:0","S10034|0:0","S10041|0:0","S10042|0:0","S10043|0:0","S10051|0:1","S10052|0:0","S10053|0:0","S10061|0:0","S10062|0:0","S10063|0:0","S10064|0:0","S10101|0:3","S10102|0:3","S10103|0:1","S10104|0:2","S11001|0:0","S12001|0:3","S50011|0:0","S50012|0:0","S50013|0:1","S50014|0:0","S50015|0:2","S50016|0:0"]},"cmd":"C103","ctsp":"1701499951470","ld":"RB_0af5157a2023120214523137731b17db5763"}
+    }
+  }
+  /**
+   * @description: 发送模拟ws命令c104
+   * @param {*} mid 赛事id
+   * @param {*} obj 赛事数据
+   */ 
+  send_ws_ms_c104(mid, obj={}){
+    if(mid) {
+      let data ={"cd":{"mid":mid},"cmd":"C104","ctsp":new Date().getTime()}
+      Object.assign(data.cd, obj);
+      // 发送消息
+      this.send_ws(data);
+      // 发送ws消息
+      // {"cd":{"csid":"1","mhs":1,"mid":"2930374","ms":"1"},"cmd":"C104","ctsp":"1701499970750","ld":"5524e428fdbe478c939e419d7b35ae39_trade_config"}
+    }
+  }
   /**
    * @description: 获取指定时间戳需要更新的数据信息
    * @param {*} list 所有需要刷新的数据信息集合(本函数会自行删掉过期的无用数据)
@@ -325,6 +413,17 @@ export default class VSport {
       if(this.item_obj_old.updateTime != item_obj.updateTime){
         upd = 1;
       }
+    }
+    // 发送ws同步消息
+    if(this.match_status_old != this.match_status){
+      list && list.forEach(match_item => {
+        const mid = lodash.get(match_item,'mid');
+        if(mid){
+          this.send_ws_ms_c101(mid, {ms:this.match_status});
+          this.send_ws_ms_c102(mid,{mst:Math.abs(upd_time)})
+        }
+      });
+      this.match_status_old = this.match_status;
     }
     this.item_obj_old = item_obj;
     let show_time = this.get_match_show_time();

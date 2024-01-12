@@ -440,7 +440,7 @@ import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue'
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 import ScoreList from 'src/base-h5/components/match-list/components/score-list.vue';
 import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
-import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
+import ImageCacheLoad from "src/core/public-cache-image/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
 import { i18n_t, compute_img_url, LOCAL_PROJECT_FILE_PREFIX, format_time_zone } from "src/output/index.js"

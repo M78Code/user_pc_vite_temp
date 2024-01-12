@@ -65,7 +65,7 @@ import standingsDisk from "src/base-h5/components/details/analysis-ky-matches/fo
 // import {mapGetters} from "vuex";
 import {api_analysis} from "src/api/index.js";
  // 加载中
-import loadingPage from "src/base-h5/components/common/loading.vue"
+import loadingPage from "src/components/loading/loading.vue"
 import { computed, ref, nextTick, onUnmounted, onMounted } from 'vue'
 import lodash from 'lodash'
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"

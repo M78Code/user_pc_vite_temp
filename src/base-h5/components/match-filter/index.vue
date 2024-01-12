@@ -100,7 +100,7 @@ import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted, toRefs } fr
 import search from "src/core/search-class/search.js"
 import { api_search } from 'src/api/'
 
-import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
+import ImageCacheLoad from "src/core/public-cache-image/public-cache-image.vue";
 
 const default_url = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup.svg` //默认图片地址
 // 无联赛logo图标黑色版

@@ -42,6 +42,7 @@
           {{ formatTime(item.match_time, "mm月DD日 HH:MM") }}
         </div>
       </div>
+      
       <div class="bet-content">
         <div class="row">
           <div class="col bet-play-game">

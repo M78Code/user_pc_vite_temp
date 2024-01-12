@@ -76,6 +76,12 @@ const routes = [
         name: "virtual_details",
         component: () => import(`../pages/virtual-details/index.vue`),
       },
+      // 虚拟赛事详情页
+      {
+        path: "/virtual_sports_details",
+        name: "virtual_sports_details",
+        component: () => import("src/base-pc/vr/pages/virtual/virtual-sports-details.vue"),
+      },
     ],
   },
   //赛事分析
