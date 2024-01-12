@@ -92,7 +92,6 @@ class MenuData {
 
     // api参数的版本
     this.api_config_version = ref("123");
-
     // 热门足球
     this.hot_500_sport_1 = false;
     //是否可以多列玩法的菜单

@@ -104,6 +104,9 @@ const current_lv_1_mi = ref(""); //"101",
 const show_menu = ref(true);
 // 首次进入 刷新用
 const first_change = ref(false);
+/**
+ * 一级菜单id改变 设置2级
+ */
 watch(()=>MenuData.ref_lv1_mi.value,(_new)=>{
   if([1,500].includes(_new)){
     show_menu.value = true;
