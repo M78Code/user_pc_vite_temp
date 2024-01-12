@@ -705,9 +705,11 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     //      play_id,
     //      time:new Date()*1,
     //    });
-    
+    console.log(get_is_fold_status.value);
+    GlobalSwitchClass.set_is_fold_status(!get_is_fold_status.value)
+    let { media_type, play_id } = allData.details_params;
     MatchDetailCalss.set_play_media({
-      mid,
+      mid: allData.mid,
       media_type,
       play_id,
       time: new Date() * 1,
@@ -1189,6 +1191,18 @@ watch(
   (val) => {
     if (val) {
      allData.details_params =  MatchDetailCalss.params
+    }
+  },
+  { deep: true }
+);
+/*
+ ** 监听GlobalSwitchClass的版本号  获取最新的全局状态
+ */
+ watch(
+  () => GlobalSwitchClass.global_switch_version,
+  (val) => {
+    if (val) {
+      get_is_fold_status.value = GlobalSwitchClass.is_fold_status;
     }
   },
   { deep: true }
