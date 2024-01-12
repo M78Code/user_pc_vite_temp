@@ -12,6 +12,7 @@
     <!-- 滚动：内容 --------------------------------->
     <!--投注记录内容-->
     <div class="bet-record-container" data-container="bet-record-container">
+      <div style="display: none;">{{ BetRecordLeft.bet_record_version }}</div>
       <!--投注记录卡片-->
       <q-card flat class="bet-record-card full-width">
         <template v-for="(item, index) in ref_data.record_data" :key="index">
@@ -71,17 +72,28 @@ import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import lodash_ from "lodash"
+import BetRecordWs from "src/core/bet-record/bet-record-ws.js";
+let wsObj = null
+let useMitt = null
+let timer = null
 
 onMounted(() => {
   get_record_list({
     orderStatus: 0,
     timeType: 5 
   })
-  useMittOn(MITT_TYPES.EMIT_GET_RECORD_LIST, get_record_list).on
+  // 监听tab切换，重新获取数据
+  useMitt = useMittOn(MITT_TYPES.EMIT_GET_RECORD_LIST, get_record_list).off
+  // ws监听
+  wsObj = new BetRecordWs()
 })
 
 onUnmounted(() => {
-  useMittOn(MITT_TYPES.EMIT_GET_RECORD_LIST, get_record_list).off
+  timer && clearInterval(timer)
+  useMitt && useMitt()
+  // 取消ws监听
+  wsObj && wsObj.destroy()
+  wsObj = null
 })
 
 const ref_data = reactive({
@@ -157,9 +169,14 @@ const get_record_list = (o_params, cur_page = 1) => {
       ref_data.record_data = records
       // 如果是已结算
       // 提前结算开关打开时订阅提前结算注单
-      if (BetRecordLeft.selected == 0 && UserCtr.settleSwitch) {
-        // 订阅C21
-        // this.SCMD_C21();
+      timer && clearInterval(timer)
+      if(BetRecordLeft.selected == 0) {
+        check_early_order()
+        timer = setInterval(() => {
+          if (document.visibilityState == 'visible') {
+            check_early_order()
+          }
+        }, 5000)
       }
     } else {
       if (code == '0401038') {
@@ -170,6 +187,32 @@ const get_record_list = (o_params, cur_page = 1) => {
     }
   }).catch(err => { console.error(err) });
 }
+
+  /**
+   * @description 检查订单中是否存在符合条件的提前结算订单号
+   * @description 如果存在， 则接口获取提前结算金额
+   */
+  const check_early_order = () =>  {
+    // 如果用户未开启提前结算
+    if (!UserCtr.user_info.settleSwitch) return;
+    // 循环列表查询需要提前结算的单号
+    let tempList = []
+    lodash.forEach(ref_data.record_data, (value, key) => {
+      lodash.forEach(value.data, (item) => {
+        // if (item.enablePreSettle) {
+          tempList.push(item.orderNo)
+        // }
+      })
+    })
+    if (tempList.length === 0) return;
+    // 如果有需要提前结算的订单，获取提前结算的金额
+    let params = { orderNo: tempList.join(',') }
+    api_betting.get_cashout_max_amount_list(params).then(reslut => {
+      let res = reslut.status ? reslut.data : reslut
+      // 通知提前结算组件 => 数据金额变化
+      useMittEmit(MITT_TYPES.EMIT_EARLY_MONEY_LIST_CHANGE, res.data)
+    })
+  }
 
 
 
