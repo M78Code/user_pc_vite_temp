@@ -4,7 +4,7 @@
  * @Description: 玩法模板条件加载 详情页面 玩法集下面的玩法 列表
 -->
 <template>
-  <div class="wrap-handicap relative-position">
+  <div class="component wrap-handicap relative-position">
     <div class="template-handicap" id="_handicap_list_wrap"> 
       <!-- 详情玩法列表容器，盘口关闭时会隐藏 -->
       <div class="details_data" v-if="showDetails">
