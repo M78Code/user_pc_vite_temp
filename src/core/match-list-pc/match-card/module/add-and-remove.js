@@ -4,11 +4,10 @@ import { conpute_match_list_card_offset } from "./card-show-offset.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./data-relation.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
 import MatchListCardData from "./match-list-card-data-class";
-import { league_list_obj } from '../../composables/match-list-featch.js'
+import { league_list_obj } from '../../composables/match-list-processing.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { fold_template } from "../config/card-template-config.js"
 import { MenuData } from 'src/output/project/index.js'
-import { replace } from "lodash";
 
 const { page_source, route_name } = PageSourceData;
 /**

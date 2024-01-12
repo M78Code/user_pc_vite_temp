@@ -65,7 +65,7 @@ class MenuData {
     this.ref_lv1_mi = ref('');
     this.ref_lv2_mi = ref('');
     // 左侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
-    this.menu_root = 1;
+    this.menu_root = 2;
     // 与 menu_root  类似，主要用于收藏按钮的显示隐藏，使用menu_root  由于这个值被监听，会有其他情况发生
     this.menu_root_show_shoucang = 1;
     // 滚球 盘数量总计

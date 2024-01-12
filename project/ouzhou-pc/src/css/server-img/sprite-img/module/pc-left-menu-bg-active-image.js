@@ -52,7 +52,7 @@ const item = {
   item_25: 29,
   item_26: 16,
 
-  item_27: 41,
+  item_27: 40,
 
   item_28: 22,
   item_29: 38,
@@ -61,7 +61,7 @@ const item = {
   item_31: 31,
   item_32: 37,
   item_33: 33,
-  item_34: 41,
+  item_34: 42,
   item_35: 40,
   item_36: 39,
   item_37: 19,

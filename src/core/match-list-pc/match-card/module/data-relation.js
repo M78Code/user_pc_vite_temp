@@ -41,14 +41,20 @@ const set_match_list_mapping_relation_obj_type = () => {
       'match-vr' ,// vr
       "virtual_details"// vr 详情
     */
+  let type;
 
+  const page_source = PageSourceData.page_source;
+  const route_name = PageSourceData.route_name;
   // 欧洲版也不区分赛种 且需要一个新的计算逻辑 但是因为接口结构不一样 所以需要有两套计算逻辑
   // 但是需要区分滚球全部和单球种
   if (PROJECT_NAME == 'ouzhou-pc') {
     //MenuData.menu_root 为0是首页 不能用！menu_root判断
+    // 热门赛事 或者 今日、早盘、串关
     if (
-      (page_source == "hot" && MenuData.match_list_api_params.euid != 30199)
-      || ["today", "early", "bet", 'match-play-common', 'match-collect'].includes(page_source)
+      //热门 & 不是竞足
+      (MenuData.is_hot() && MenuData.menu_current_mi != 50199) ||
+      [MenuData.is_today(), MenuData.is_zaopan(), MenuData.is_mix()].includes(true)
+      || ['match-play-common', 'match-collect'].includes(page_source)
       || route_name == 'search' || MenuData.is_top_events() || MenuData.is_leagues()
       // || lodash.isUndefined(MenuData.menu_root)|| lodash.isNull(MenuData.menu_root)
       || !MenuData.menu_root
@@ -60,9 +66,6 @@ const set_match_list_mapping_relation_obj_type = () => {
       return 8
     }
   }
-  let type;
-  const page_source = PageSourceData.page_source;
-  const route_name = PageSourceData.route_name;
   // 列表页强力推荐
   if (PageSourceData.is_show_hot) {
     type = MenuData.is_esports() ? 7 : 2;

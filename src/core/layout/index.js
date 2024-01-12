@@ -4,6 +4,7 @@ export const { PROJECT_NAME } = BUILDIN_CONFIG ;
 import PageSourceData from "src/core/page-source/page-source.js";
 const { page_source } = PageSourceData;
 import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
+import { useMittEmit, MITT_TYPES} from "src/core/mitt/index.js";
 // 浏览器高度
 let client_height = Math.max(
   document.body.clientHeight,
@@ -242,6 +243,9 @@ class LayOutMain {
       this.layout_content_width +=  width
     }
     this.set_layout_version()
+    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
+    //从接口拿值
+    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) 
   }
   get_is_unfold_multi_column() {
     return this.is_unfold_multi_column
