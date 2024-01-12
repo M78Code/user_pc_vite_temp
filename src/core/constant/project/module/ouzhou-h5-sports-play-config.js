@@ -61,17 +61,17 @@ export const sports_play_data = {
       {
         label: i18n_t('ouzhou.match.play_map.153'),
         hpid: '153',
-        csid: '5'
+        csid: '10'
       },
       {
         label: i18n_t('ouzhou.match.play_map.172'),
         hpid: '172',
-        csid: '5'
+        csid: '10'
       },
       {
         label: i18n_t('ouzhou.match.play_map.173'),
         hpid: '173',
-        csid: '5'
+        csid: '10'
       },
     ],
     "8" : [
