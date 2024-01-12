@@ -8,7 +8,7 @@
     <!-- <div class="cathectic-ref_data.appoint"
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
-    <div v-show="false">{{ BetData.bet_data_class_version }}</div>
+    <div v-show="false">{{ BetData.bet_data_class_version }}-{{UserCtr.user_version}}</div>
     <q-card-section>
 
       <div class="col bet-league-name">
@@ -73,10 +73,16 @@
               <span>@</span>{{ items.oddFinally }}
             </span>
           </div>
+
+          <label v-if="!(items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0)">
+            已失效
+          </label>
+
           <!--【预约】-->
-          <label class="appoint appoint_cursor" v-if="pending_order_status(items.playOptionsId)" @click="set_show_appoint">
+          <label class="appoint appoint_cursor" v-else-if="BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
             +{{ `${i18n_t('bet.bet_book2')}` }}
           </label>
+
         </div>
        
       </div>
@@ -110,28 +116,7 @@ const props = defineProps({
   items: {}
 })
 
-/**
-* @description:是否支持预约 0 关闭 1 支持
-* @param {undefined} undefined
-* @returns {number}
-*/
-const pending_order_status = computed(() => options_id => {
-  // 判断投注项列表中 那些是可以预约的
-  let bet_obj = BetData.bet_pre_list.find(items => items == options_id) || '';
-  if (bet_obj && ref_data.active == 1 && [1, 2].includes(Number(props.items.sportId))) {
-    return 1
-  }
-  return 0;
-})
-
 const ref_data = reactive({
-  DOM_ID_SHOW: false,
-  matchType: 1,  // matchType 盘口类型 1:赛前盘，2: 滚球盘 3: 冠军盘 
-  active: 1,    //投注项状态
-  season: '',   // 赛季
-  timerly_basic_score: "",   // 计时比分 返回比分格式为: (主队得分-客队得分)
-  market_type: '',     // 赛事状态 0未开赛 滚球:进行中
-  basic_score: "",    /// 赛事比分 返回比分格式为: (主队得分-客队得分)
   show_appoint:false, // 是否显示预约 点击预约后其他地方需要显示
 })
 

@@ -39,7 +39,7 @@
           </template>
         </div>
       </div>
-      <div class="row" v-if="item.matchType != 3">
+      <div class="row" v-if="item.matchType == 1">
         <!--时间例如 06月22日-->
         <div class="col match-time">
           {{ formatTime(item.match_time, "mm月DD日 HH:MM") }}
