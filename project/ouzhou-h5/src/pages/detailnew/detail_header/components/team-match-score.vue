@@ -58,7 +58,7 @@ const NowScore = computed(()=>{
                 <p>{{ detail_data?.man }}</p>
             </li>
         </ul>
-        <ul class="right">
+        <ul class="right" v-show="detail_data?.ms == '1'">
             <li class="total-score flex justify-between">
                 <p>{{ TotalScore?.home }}</p>
                 <p>{{ TotalScore?.away }}</p>

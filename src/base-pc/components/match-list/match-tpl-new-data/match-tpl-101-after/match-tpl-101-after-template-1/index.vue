@@ -26,7 +26,7 @@
         <div class="video" v-if="+lodash.get(match, 'mms') > 1"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
         </div>
-        <div v-else-if="+lodash.get(match, 'mvs') > -1"
+        <div v-else-if="+lodash.get(match, 'mvs') > -1 && lodash.get(UserCtr, 'user_info.ommv')"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
         </div>
         <div v-else>
