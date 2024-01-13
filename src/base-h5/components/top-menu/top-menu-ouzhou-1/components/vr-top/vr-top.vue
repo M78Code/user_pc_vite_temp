@@ -410,11 +410,15 @@ export default {
 
 <style lang="scss">
 .vr-menu-wrap {
-    width: 3.75rem !important;
-    max-width: 3.75rem !important;
+    // width: 3.75rem !important;
+    // max-width: 3.75rem !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
     left: 0 !important;
     right: 0 !important;
+    top: 0.495rem !important;
     background: #626262;
+    border-radius: 0;
     .q-item__label {
         font-size: 0.14rem;
         color: #fff;
