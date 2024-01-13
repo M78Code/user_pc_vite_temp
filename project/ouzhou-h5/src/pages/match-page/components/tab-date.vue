@@ -33,7 +33,7 @@
         <div :style="{ backgroundPositionY: `${farmatSportImg(store.current_menu_mi)}px` }"
             class="menu_list_top_tab_background"></div>
         <!-- 七天时间 -->
-        <div class="date_time" v-if="store.tabActive == 'Matches'">
+        <div class="date_time" v-if="store.tabActive == 'Matches' && week.length > 0">
             <q-virtual-scroll ref="scrollDateRef" :items="week" virtual-scroll-horizontal v-slot="{ item, index }">
                 <div @click="changeDatetab(item, index)" class="week"
                     :class="store.second_tab_index == index ? 'active' : ''">
@@ -45,7 +45,7 @@
             </q-virtual-scroll>
         </div>
         <!-- 联赛的区域选择 -->
-        <div class="date_time" v-if="store.tabActive == 'League'">
+        <div class="date_time" v-if="store.tabActive == 'League' && store.areaList.length > 0">
             <q-virtual-scroll ref="scrollRefArea" :items="store.areaList" virtual-scroll-horizontal
                 v-slot="{ item }">
                 <div @click="areaListChange(item)" class="week"
