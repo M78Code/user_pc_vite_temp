@@ -101,6 +101,7 @@ function sub_click(item, index) {
   border-radius: 6px;
   border: 2px solid #FFF;
   box-shadow: 0px 2px 8px 0px #E2E2E4;
+  background-color: #F6F9FF;
   .left-menu-content-item{
     display: flex;
     height: 34px;

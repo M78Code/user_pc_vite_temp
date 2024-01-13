@@ -4,6 +4,18 @@
         <!-- <simple-header :title="i18n_t('common.notice')"> -->
             <!-- <span>{{ i18n_t('common.notice') }}</span> -->
         <!-- </simple-header> -->
+      <div class="c-simple-header">
+        <div class="logo-icon"  :style="compute_css_obj({ key: 'pc-rule-logo' })"></div>
+        <div class="head-info">
+          <div class="rule-title">
+            公告
+          </div>
+          <div class="systime">
+            <!--右侧时间-->
+            <span>{{date_time}} (GMT+8)</span>
+          </div>
+        </div>
+      </div>
         <div class="announce-content">
             <!-- 头部菜单开始 -->
             <top-menu :data="announce_title" @tabs_click="tabs_click"  />
@@ -163,6 +175,56 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.c-simple-header{
+  display: flex;
+  padding: 0 20px 0 15px;
+  height: 61px;
+  margin-bottom: 14px;
+  min-height: 61px;
+  align-items: center;
+  text-transform: uppercase;
+  background-color: #F6F9FF;
+  .header-title{
+    color:var(--q-match-result-title-color);
+  }
+  .rule-logo {
+    margin-right: 33.3px;
+    height: 100%;
+    .img-logo {
+      width: 130px;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+  }
+}
+.logo-icon{
+  width:130px;
+  height: 40px;
+  margin-right: 34px;
+}
+.head-info {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  .rule-title {
+    color:var(--q-match-result-title-color);
+    font-size: 12px;
+  }
+  .systime {
+    min-width: 96px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    .refresh {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  }
+}
 .announce-area{
     width: 100%;
   border-radius: 6px;
@@ -175,7 +237,7 @@ onMounted(() => {
     width: 100%;
     height: 100vh;
   padding-bottom: 20px;
-  background: #F6F9FF;
+  background: #DEE4F2;
     display: flex;
     flex-direction: column;
     user-select: text;
@@ -187,14 +249,13 @@ onMounted(() => {
   display: flex;
     width: 100%;
     height: 100%;
-    background-color: #F6F9FF;
     // background: var(--q-gb-bg-c-4);
 
     .main-page {
         color: #5a6074;
-      margin-left: 6px;
         padding-top: 14px;
       padding: 24px;
+      background-color: #F6F9FF;
         :deep(.load-data-wrap ) {
             height: 75vh !important;
 
