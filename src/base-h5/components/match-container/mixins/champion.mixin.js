@@ -266,6 +266,7 @@ export default {
      */
     league_icon_error ($ev) {
       $ev.target.src = default_league_icon
+      $ev.target.onerror = null
     }
   }
 }
