@@ -552,7 +552,7 @@ onUnmounted(() => {
     .fold-btn {
       border-radius: 11px;
       padding: 2px 7px 2px 11px;
-      color: var(--q-gb-t-c-1);
+      color: var(--q-gb-t-c-18);
       display: flex;
       align-items: center;
       font-size: 12px;
