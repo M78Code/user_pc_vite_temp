@@ -13,7 +13,7 @@
                 <div class="row text-color-max-win mt2">
                         <!--最高可赢额-->
                     <div>{{ i18n_t('common.maxn_amount_val') }}</div>
-                    <div class="bet-win-money yb-number-bold"> {{ winMoney()  }} RMB</div>
+                    <div class="bet-win-money yb-number-bold"> {{ winMoney() }}</div>
                 </div>
                     <!--金额-->
                 <!-- <div class="col-auto bet-win-money yb-number-bold"> {{ winMoney()  }} RMB</div> -->
@@ -33,7 +33,7 @@
         <div v-show="false">{{ UserCtr.user_version }}--{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
             <div class="col">
-                <bet-keyboard />
+                <bet-keyboard :oid="ref_data.oid"/>
             </div>
         </div>
     </div>
@@ -86,6 +86,7 @@ const winMoney = computed(()=> state =>{
 
 onMounted(() => {
     nextTick(() => {
+        // set_ref_data_bet_money()
         // 监听 限额变化
         ref_data.emit_lsit = {
             emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
@@ -105,7 +106,7 @@ onUnmounted(() => {
 
 
  const change_money_handle = obj => {
-    if(!obj.id) {
+    if(obj.ids.length) {
         // 获取当前投注金额
         let money = BetData.bet_amount
         let money_ = obj.money
@@ -115,20 +116,27 @@ onUnmounted(() => {
         }
         // 计算投注金额
         let money_amount = mathJs.add(money,money_)
-        // 投注金额 不能大于最大投注金额 也不能大于用户余额
-        if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
-            BetData.set_bet_amount(mathJs.add(money,money_))
-            ref_data.money = money_amount
-        }else{
-            // 最大限额不能大于余额
-            let money_a = ref_data.max_money
-            if(UserCtr.balance < ref_data.max_money){
-                money_a = UserCtr.balance
-            }  
-            BetData.set_bet_amount(mathJs.add(money,money_))
-            ref_data.money = money_a
-        } 
-    }
+         // 投注金额 不能大于最大投注金额 也不能大于用户余额
+         if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
+                BetData.set_bet_amount(mathJs.add(money,money_))
+                obj.ids.forEach(oid => {
+                    BetData.set_bet_obj_amount(BetData.bet_amount, oid)
+                })
+                ref_data.money = money_amount
+            }else{
+                // 最大限额不能大于余额
+                let money_a = ref_data.max_money
+                if(UserCtr.balance < ref_data.max_money){
+                    money_a = UserCtr.balance
+                }  
+                BetData.set_bet_amount(mathJs.add(money,money_))
+                obj.ids.forEach(oid => {
+                    BetData.set_bet_obj_amount(BetData.bet_amount, oid)
+                })
+                ref_data.money = money_a
+            } 
+        }
+        useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
 }
 
 // 清空输入框金额
@@ -155,18 +163,19 @@ const set_ref_data_bet_money = () => {
 
     BetData.bet_single_list.forEach((item)=>{
         let value = item.playOptionsId
-            const { min_money = 10, max_money = 8888} = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
-            min_money_arr.push(min_money)
-            max_money_arr.push(max_money)
-            ref_data.oid.push(item.playOptionsId)
-            ref_data.oddFinallyArr.push(item.oddFinally)
-         })
+        const { min_money = 10, max_money = 8888} = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
+        min_money_arr.push(min_money)
+        max_money_arr.push(max_money)
+        ref_data.oid.push(item.playOptionsId)
+        ref_data.oddFinallyArr.push(item.oddFinally)
+    })
     ref_data.min_money = lodash_.max(min_money_arr) //多项单注限额最小值取多项里最大的
     ref_data.max_money = lodash_.min(max_money_arr) //多项单注限额最大值取多项里最小的
+    // console.log('-------------------------------------------------------------------------------', min_money_arr, max_money_arr)
     ref_data.money = ""
     //设置键盘MAX限额
     let max_money_obj = {max_money:ref_data.max_money}
-    BetData.set_bet_keyboard_config(max_money_obj)
+    BetData.set_bet_keyboard_config(Object.assign(BetData.bet_keyboard_config,max_money_obj))
 }
 
 // 输入判断

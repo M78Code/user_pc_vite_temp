@@ -88,6 +88,7 @@ onMounted(() => {
       // 监听 限额变化
     ref_data.emit_lsit = {
         emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
+        emitter_2: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE, set_ref_data_bet_money_update).off,
     }
 })
 
@@ -151,6 +152,11 @@ const keydown = (e) => {
     if(BetViewDataClass.bet_order_status == 1){
         submit_handle()
     }
+}
+
+// 输入金额数据更新
+const set_ref_data_bet_money_update = () => {
+    ref_data.money = props.items.bet_amount
 }
 
 // 限额改变 修改限额内容

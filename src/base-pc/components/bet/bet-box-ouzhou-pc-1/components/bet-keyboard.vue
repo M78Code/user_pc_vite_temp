@@ -21,7 +21,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 
 const props = defineProps({
-  oid:0
+  oid: 0
 })
 
 const ref_data = reactive({
@@ -37,8 +37,7 @@ onMounted(()=>{
   }
   // 添加max按钮
   ref_data.user_max_min_money = Object.assign(arr, {max: 'MAX'})
-  
-  BetData.set_bet_keyboard_config('',props.oid)
+  BetData.set_bet_keyboard_config(Object.assign(BetData.bet_keyboard_config, {ids: props.oid}))
 })
 
 
@@ -48,7 +47,8 @@ const set_click_keybord = obj => {
   if(obj === 'MAX') {
     UserCtr.balance < obj ? money = UserCtr.balance : money = obj
   }
-  let keyboard = { money: money, id: props.oid }
+  let keyboard = { money: money, ids: props.oid }
+  console.log('-----------------------------------------------------------------', keyboard, props)
   useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, keyboard)
 }
 
