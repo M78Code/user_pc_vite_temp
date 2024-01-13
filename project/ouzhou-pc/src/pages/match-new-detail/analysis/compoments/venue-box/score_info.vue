@@ -589,7 +589,10 @@ watch(
   (val) => {
     const detail_info = props.detail_info;
     columns.value = [];
-    columns.value = JSON.parse(JSON.stringify(sport_columns[detail_info.csid]));
+    if (sport_columns[detail_info.csid]) {
+      columns.value = JSON.parse(JSON.stringify(sport_columns[detail_info.csid]));
+    }
+   
 
     //加时赛
     if (["32", "41", "33", "42", "110"].includes(detail_info.mmp)) {

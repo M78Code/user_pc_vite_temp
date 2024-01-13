@@ -21,6 +21,23 @@ export default {
           .theme02_y0-root-loading #loading-root-main {
             color: #569ffd;
           }
+          .theme01, .theme01-root-loading {
+            background-color: transparent !important;
+          }
+          .theme01_y0,
+          .theme01_y0-root-loading {
+            background-color: transparent !important;
+          }
+    
+          .theme02,
+          .theme02-root-loading {
+            background-color: transparent !important;
+          }
+    
+          .theme02_y0,
+          .theme02_y0-root-loading {
+            background-color: transparent !important;
+          }
     `
      },
  

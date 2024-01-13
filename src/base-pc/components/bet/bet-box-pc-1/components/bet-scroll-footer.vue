@@ -228,7 +228,7 @@ const set_bet_is_accept = () => {
   align-items: center;
   cursor: pointer;
   padding: 0 10px;
-  color: var(--q-gb-t-c-11);
+  color: var(--q-gb-t-c-10);
 
   .check-wrap {
     padding: 0;
