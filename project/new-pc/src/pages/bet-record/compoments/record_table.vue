@@ -1,7 +1,8 @@
 <template>
   <div class="record-table">
     <div style="display: none;">{{ BetRecordHistory.bet_record_version }}</div>
-    <div>
+    <div class="changing" v-if="BetRecordHistory.loading">{{ i18n_t('common.loading') }}</div>
+    <div v-else>
       <q-table :rows="BetRecordHistory.table_data" 
       style="max-height:calc(100vh - 17rem)" 
       :rows-per-page-options="[0]" 
@@ -32,12 +33,10 @@
               <span>{{
                   formatTime(props.row.betTime, 'yyyy-mm-dd hh:MM:ss')
                 }}</span>
-              <div>
+              <div class="copy-warp">
                 <span class="datails-order">{{ props.row.orderNo }}</span>
-                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/bet_copy.png`" alt="" class="copy_icon"
+                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/copy.svg`" alt="" class="copy_icon"
                      :title="i18n_t('ouzhou.record.copy')" @click="hand_copy(props.row.orderNo)">
-                <!-- <img :src="bet_copy" alt="" class="copy_icon" title="copy"  @click="copy(props.row.orderNo)" > -->
-                <!-- <i class="icon-icon_copy copy" color="red" @copy_iconclick="copy(props.row.orderNo)"></i> -->
               </div>
             </q-td>
             <!-- 投注玩法 -->
@@ -46,7 +45,7 @@
               <template v-if="props.row.seriesType != '1' || props.row.seriesType == '3'">{{props.row.seriesValue}}</template>
               <!-- 单关 -->
               <template v-else>
-                <template v-for="(item, index) in props.row.orderVOS" :key="index">
+                <template v-for="(item, index) in data_list(props.row)" :key="index">
                   <div>{{matchType(item.matchType, props.row.langCode)}}</div>
                   <span>
                   {{ item.playName }}
@@ -62,10 +61,9 @@
             <q-td key="detail" :props="props">
               <div class="detail-options">
                 <div class="record-detail-list">
-                  <div v-for="(item, index) in props.row.orderVOS" :key="index" class="record-detail">
+                  <div v-for="(item, index) in data_list(props.row)" :key="index" class="record-detail">
                     <div class="record-detail-item">
                       <div class="record-detail-icon">
-                       
                         <sport-icon :sport_id="cts_mid.includes(props.row.managerCode*1) ? item.sportId == 1 ? '90': 91  : item.sportId" key_name="pc-left-menu-bg-image" size="18" class="icon"  style="margin:0 10px"/>
                       </div>
                       <span> {{ item.matchName }}</span>
@@ -78,11 +76,11 @@
                         <!-- [欧洲盘]-->
                           <span>[{{marketType(item.marketType, props.row.langCode)}}]</span></span>
                       <div>
-                        <span>{{ item.marketValue }}</span>
-                        <span style="margin-left:15px;color:#ff7000">@{{ item.oddFinally }}</span>
+                        <span v-if="item.marketValue" style="margin-right:15px;">{{ item.marketValue }}</span>
+                        <span style="color:#ff7000;">@{{ item.oddFinally }}</span>
                       </div>
 
-                      <div class="play-type settle-score" v-if="current_tab === 'settled' && item.settleScore">
+                      <div class="play-type settle-score" v-if="BetRecordHistory.selected == 1 && item.settleScore">
                         <!-- 赛果比分 -->
                         <span>{{item.settleScore}}</span>
                       </div>
@@ -192,26 +190,33 @@
             </q-td>
             <!-- 返回金额 return -->
             <q-td key="return" :props="props">
-               <span
-                 :class="{'win-color': [4,5].includes(props.row.outcome)}"
-               >
-                 {{ format_balance(current_tab === 'unsettled' ? props.row.maxWinAmount : props.row.backAmount) }}
+               <span :class="{'win-color': [4,5].includes(props.row.outcome)}">
+                 {{ format_balance(BetRecordHistory.selected === 1 ? props.row.backAmount : props.row.maxWinAmount ) }}
                </span>
-<!--              <span v-else>- -</span>-->
             </q-td>
             <!-- 状态 -->
             <q-td key="status" :props="props">
-              <!--
+              <!-- 预约 -->
+              <template v-if="BetRecordHistory.selected == 2">
+                <!-- 预约失败 -->
+                <span v-if="[2, 3].includes(props.row.preOrderStatus)">{{ i18n_t('bet.bet_book_failed') }}</span>
+                <!-- 已取消 -->
+                <span v-else-if="[4].includes(props.row.preOrderStatus)">{{ i18n_t('bet.bet_book_canceled') }}</span>
+                <!-- 预约中 -->
+                <div v-else class="pre-redording win-color">
+                  <span>{{ i18n_t('bet.bet_booking') }}</span>
+                  <bet-cancel-pre type="history" :item="props.row" @success="cancelSuccess"></bet-cancel-pre>
+                </div>
+              </template>
+              <!-- 未结算、已结算 -->
+              <template v-else>
+                  <!--
                    0:待处理,1:已处理,2:取消交易,3:待确认,4:已拒绝
                    0、3未结算
                    1、2、4已结算
                  -->
-              <span :class="status_class(props.row.orderStatus)">{{ order_status(props.row.orderStatus) }}</span>
-              <!--显示部分提前结算或者全额提前结算-->
-              <!--              <span v-if="current_tab=='settled'" class="bet-pre-color">-->
-              <!--                      <template v-if="props.row.settleType==4">{{i18n_t('bet_record.settlement_pre_part2')}}</template>-->
-              <!--                      <template v-else-if="props.row.settleType==5">{{i18n_t('bet_record.settlement_pre_all2')}}</template>-->
-              <!--                    </span>-->
+                <span :class="status_class(props.row.orderStatus)">{{ order_status(props.row.orderStatus) }}</span>
+              </template>
             </q-td>
           </q-tr>
         </template>
@@ -245,7 +250,6 @@
           <!-- <span>{{profit.indexOf("-")!=-1?'输':'赢'}}：{{profit}}</span> -->
         </div>
       </div>
-
       <!--分页组件-->
       <Pagination v-if="BetRecordHistory.table_data.length > 0" class="record-pagination" 
                   :count="BetRecordHistory.records.total" 
@@ -254,7 +258,6 @@
                   @goPageChange="goPageChange"
                   :reset_pagination="BetRecordHistory.params.page">
       </Pagination>
-
     </div>
   </div>
 </template>
@@ -275,6 +278,7 @@ import { copyToClipboard } from 'quasar'
 import GlobalSwitchClass from 'src/core/global/global.js'
 import BetRecordHistory from "src/core/bet-record/pc/bet-record-history.js"
 import betEarlySettle from "src/base-pc/components/bet-record/record-table/bet-early-settle.vue"
+import betCancelPre from "src/base-pc/components/bet-record/record-table/bet-cancel-pre.vue"
 
 const lang = computed(() => {
   return UserCtr.lang;
@@ -306,7 +310,7 @@ const match_type = {
   2: i18n_t("list.list_today_play_title"),
   3: i18n_t("menu.match_winner")
 }
-const { columns, tableData, loading, handle_fetch_order_list,records } = useGetOrderList()
+const { columns, tableData, loading, handle_fetch_order_list } = useGetOrderList()
 const labelClick = (row) => {
   console.log(row)
 }
@@ -583,6 +587,30 @@ const hand_copy = (data) => {
     text: i18n_t('bet_record.copyed')
   })
 }
+
+/**
+ *  0:未结算 1:已结算 数据源 orderVOS
+ *  2: 预约 数据源 detailList
+ * @param {*} item 
+ */
+ const data_list = (item) => {
+  // 0:未结算 1:已结算 2: 预约
+  if([0, 1].includes(BetRecordHistory.selected)) {
+    return item.orderVOS
+  } else {
+    return item.detailList
+  }
+}
+/**
+ * 取消预约成功
+ */
+const cancelSuccess = () => {
+  Object.assign(BetRecordHistory.params, {
+    page: 1
+  })
+  BetRecordHistory.handle_fetch_order_list()
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -648,6 +676,10 @@ const hand_copy = (data) => {
 .win-color {
   color: var(--q-gb-t-c-7)
 }
+.pre-redording {
+  display: flex;
+  flex-direction: column;
+}
 
 .no-data-icon {
   width: 200px;
@@ -658,11 +690,9 @@ const hand_copy = (data) => {
   position: relative;
   padding: 20px;
   padding-top: 0;
-  .unsettled {
-    //padding-bottom: 50px;
-  }
-  .settled {
-    padding-bottom: 62px;
+  .changing {
+    text-align: center;
+    padding-top: 50px;
   }
   &:deep(.q-table) {
     thead tr{
@@ -750,7 +780,10 @@ const hand_copy = (data) => {
   left: 50%;
   transform: translate(-50%, 0);
 }
-
+.copy-warp {
+  display: flex;
+  align-items: center;
+}
 .copy_icon {
   height: 15px;
   width: 15px;
