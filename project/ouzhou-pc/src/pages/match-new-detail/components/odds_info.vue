@@ -302,6 +302,7 @@ const get_icon = (otn) => {
 
 //  投注项点击投注,
 const betItemClick = (item, ol, play_name) => {
+
   if (item.hs || ol.os == 2) {
     return;
   }
@@ -324,7 +325,7 @@ const betItemClick = (item, ol, play_name) => {
       match_data_type: "pc_detail", // h5_detail
       play_name,
     };
-    set_bet_obj_config(params, other);
+     set_bet_obj_config(params, other);
   }
 };
 
@@ -464,7 +465,7 @@ onMounted(() => {});
 }
 
 .bottom-height {
-  height: 150px;
+  height: 50px;
   width: 100%;
   background-color: var(--q-gb-bg-c-4);
 }

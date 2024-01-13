@@ -15,7 +15,7 @@ import { MITT_TYPES, MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss, useM
 import UserCtr from "src/core/user-config/user-ctr.js";
 import video from "src/core/video/video.js"   // 视频相关公共方法
 import { useRoute } from 'vue-router';
-import { ref, onMounted, defineProps, computed, watch, onUnmounted } from "vue";
+import { ref, onMounted, computed, watch, onUnmounted } from "vue";
 import { api_common } from 'src/api';
 import OrientationSubscribe from 'src/base-h5/components/common/orientation/orientation-subscribe';
 const props = defineProps({

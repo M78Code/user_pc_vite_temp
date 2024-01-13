@@ -280,6 +280,7 @@ export default {
       display: flex;
       height: auto;
       justify-content: flex-start;
+      border-bottom: .01rem solid var(--q-gb-bg-c-19);
       :deep(.on) {
         color: var(--q-gb-t-c-4);
       }
@@ -303,6 +304,9 @@ export default {
       }
       .ol-li-item:nth-child(even) {
         border-right: 0;
+      }
+      .ol-li-item:nth-last-child(-n+1) {
+        border-bottom: none;
       }
       // .ol-li-item:hover, .ol-li-item:focus {
       //   background-color: var(--q-gb-bg-c-1);

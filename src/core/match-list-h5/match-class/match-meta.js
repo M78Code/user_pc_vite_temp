@@ -1188,15 +1188,17 @@ class MatchMeta {
 
     if (length < 1) return this.set_page_match_empty_status({ state: true });
 
-    let target_data = []
+    // 生成新的 联赛 归类 id
+    let target_data = MatchUtils.generate_match_classify_tid(list)
     if (is_classify) {
       // 赛事归类(开赛-未开赛) 里面包含了球种归类、联赛归类
       target_data = MatchUtils.handler_match_classify_by_ms(list).filter((t) => t.mid)
     } else {
+      target_data = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
       // 球种归类
-      const result_data = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
+      // const result_data = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
       // 联赛归类
-      target_data = MatchUtils.handler_match_classify_by_tid(result_data)
+      // target_data = MatchUtils.handler_match_classify_by_tid(result_data)
     }
 
     // 重置折叠对象
@@ -1483,7 +1485,7 @@ class MatchMeta {
     switch (obj.text) {
       // 活动
       case "activities":
-        console.log('每日活动')
+        // console.log('每日活动')
         break;
       // 排序
       case "sortRules":
