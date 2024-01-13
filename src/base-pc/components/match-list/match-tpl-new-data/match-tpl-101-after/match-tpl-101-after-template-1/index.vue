@@ -26,6 +26,7 @@
         <div class="video" v-if="+lodash.get(match, 'mms') > 0"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
         </div>
+        <!-- TODO: 动画图标需要加一个开关 lodash.get(UserCtr, 'user_info.ommv') -->
         <div v-else
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
         </div>

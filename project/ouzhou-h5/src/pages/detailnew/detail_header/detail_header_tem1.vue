@@ -29,7 +29,7 @@
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video_gray.png`" alt="" class="icon-video"/>
           </div>
           <!-- 显示动画按钮 -->
-          <div v-if="status == 1 || status == 2" @click="handleChange('animation')">
+          <div v-if="(status == 1 || status == 2) && lodash.get(UserCtr, 'user_info.ommv')" @click="handleChange('animation')">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/animation_gray.png`" alt="" class="icon-animation"/>
           </div>
           <img
@@ -142,7 +142,7 @@ const status = computed(() => {
       return 1;
     }
     // 动画状态大于-1时，显示动画按钮 
-    if (get_detail_data.mvs > -1) {
+    if (get_detail_data.mvs > -1 && lodash.get(UserCtr, 'user_info.ommv')) {
       return 2;
     }
     //  视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 --
@@ -704,8 +704,8 @@ const getLongTime=computed(()=>{
   background-color: #D9D9D9;
 }
 .icon-video, .icon-animation {
-  width: 14px;
-  height: 14px;
+  width: 16px !important;
+  height: 16px !important;
 }
 .flex {
   display: flex;

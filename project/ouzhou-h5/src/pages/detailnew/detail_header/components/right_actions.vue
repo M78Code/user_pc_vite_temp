@@ -3,7 +3,7 @@
         <ul class="list">
             <li v-for="(item, i) in list" :key="i" class="item" @click="handleClick(item, index)">
                 <div>
-                    <img :src="props.isCollect && item.label == 'collect' ? item.active : item.img" alt="" class="icon" v-if="item.img" />
+                    <img :src="props.isCollect && item.label == 'collect' ? item.active : item.img" alt="" :class="`${item.label}_icon`" class="icon" v-if="item.img" />
                     <p v-else class="score">
                         <span>{{ item.score[0] || 0 }}</span>
                         <span>:</span>
@@ -246,6 +246,9 @@ const handleClick = (item, index) => {
         
         .icon {
             height: 16px;
+        }
+        .score_icon.icon, .animation_icon.icon {
+            height: 18px;
         }
     }
 }

@@ -29,7 +29,7 @@
           />
           <!-- 动画图标 -->
           <img
-            v-if="detail_info.mvs > -1"
+            v-if="detail_info.mvs > -1 && lodash.get(UserCtr, 'user_info.ommv')"
             :src="show_type && show_type == 'animal' ? animal_active : animal"
             alt=""
             srcset=""
@@ -72,7 +72,7 @@ import { onMounted, ref, computed, watch } from "vue";
 import animal_box from "./animal_box.vue";
 import score_info from "./score_info.vue";
 import commingSoon from "./comming-soon.vue";
-import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX, MenuData, UserCtr } from "src/output/index.js";
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
 import { get_match_status } from 'src/output/module/constant-utils.js'
 
@@ -97,7 +97,7 @@ const props = defineProps({
     default: () => {},
   },
 });
-
+console.error(UserCtr);
 const animal_key = ref(false);
 const score_key = ref(true);
 const show_type = ref("");
@@ -219,7 +219,7 @@ const tab_click = (type) => {
       display: flex;
       margin-right: 15px;
       img {
-        height: 16px;
+        height: 22px;
         cursor: pointer;
       }
       .switch-icon-1 {
