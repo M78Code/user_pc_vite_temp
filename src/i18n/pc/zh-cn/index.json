@@ -3050,7 +3050,9 @@
     "theme_": "主题切换",
     "time_sort": "时间",
     "version": "版本",
-    "version_": "版本切换"
+    "version_": "版本切换",
+    "pro": "专业",
+     "beginner": "新手"
   },
   "small_extensive": {
     "bet_hide": "隐藏投注",

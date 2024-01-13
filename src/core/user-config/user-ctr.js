@@ -354,6 +354,7 @@ class UserCtr {
     if (user_obj.h5VerSysSwitch && user_obj.h5VersionSwitch) {
       user_obj.versionSwitch = user_obj.h5VerSysSwitch == 1 && user_obj.h5VersionSwitch == 1
     }
+    user_obj.ommv = user_obj.ommv == 1 || false
     if (this.user_info) {
       Object.assign(this.user_info, user_obj);
     } else {

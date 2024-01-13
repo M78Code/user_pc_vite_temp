@@ -34,7 +34,7 @@
           />
           <!-- 动画图标 -->
           <img
-            v-if="detail_info.mvs > -1"
+            v-if="detail_info.mvs > -1 && lodash.get(UserCtr, 'user_info.ommv')"
             :src="show_type && show_type == 'animal' ? animal_active : animal"
             alt=""
             srcset=""
