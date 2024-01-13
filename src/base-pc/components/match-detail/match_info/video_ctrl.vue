@@ -12,7 +12,7 @@
         class="unfold"
         :class="{ open: vx_get_is_fold_status }"
         @click="$emit('setfoldStatus')"
-        :style="compute_css_obj('pc-img-match-info-unfold-open')"
+        :style="compute_css_obj({key:'pc-img-match-info-unfold-open'})"
       ></div>
       
 
