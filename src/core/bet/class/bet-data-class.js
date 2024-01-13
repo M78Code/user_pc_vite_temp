@@ -910,7 +910,6 @@ this.bet_appoint_ball_head= null */
   // 设置键盘信息 
   // 限额 /
   set_bet_keyboard_config(val) {
-    // console.log('----------------------------------------432141234231--------------------------', val)
     this.bet_keyboard_config = val
     this.set_bet_data_class_version()
   }

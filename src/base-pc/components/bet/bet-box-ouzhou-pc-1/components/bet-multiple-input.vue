@@ -13,7 +13,7 @@
                 <div class="row text-color-max-win mt2">
                         <!--最高可赢额-->
                     <div>{{ i18n_t('common.maxn_amount_val') }}</div>
-                    <div class="bet-win-money yb-number-bold"> {{ winMoney()  }} RMB</div>
+                    <div class="bet-win-money yb-number-bold"> {{ winMoney() }}</div>
                 </div>
                     <!--金额-->
                 <!-- <div class="col-auto bet-win-money yb-number-bold"> {{ winMoney()  }} RMB</div> -->
@@ -106,7 +106,6 @@ onUnmounted(() => {
 
 
  const change_money_handle = obj => {
-    console.log('------------------------------change_money_handle--------------------------------', obj)
     if(obj.ids.length) {
         // 获取当前投注金额
         let money = BetData.bet_amount
@@ -137,6 +136,7 @@ onUnmounted(() => {
                 ref_data.money = money_a
             } 
         }
+        useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
 }
 
 // 清空输入框金额
