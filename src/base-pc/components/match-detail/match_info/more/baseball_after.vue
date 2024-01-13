@@ -531,7 +531,7 @@ export default {
   overflow: hidden;
   width: 560px;
   border-radius: 2px;
-  color: #d1d1d1;
+  color: var(--q-gb-bd-c-13) !important;
   font-size: 12px;
   .more-time,
   .both-item {
