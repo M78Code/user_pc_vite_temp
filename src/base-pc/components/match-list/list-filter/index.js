@@ -355,12 +355,12 @@ function compute_mi_400_sl_mi_csid(mi) {
  * 单个菜单按钮点击   滚球 的
  */
 function handle_click_menu_mi_1(detail = {}) {
-    
+    console.error('detail',detail)
     let obj = {
         // 当前赛种 菜单id
         mid_menu_mi: detail.mi,  
         // 当前菜单的赛种id
-        csid: (detail.mif*1 - 100), 
+        csid: (detail.mi*1 - 100), 
         current_mi: detail.mi,  
     } 
     set_menu_config(obj)
@@ -373,7 +373,7 @@ function handle_click_menu_mi_400(detail = {}) {
         // 当前赛种 菜单id
         mid_menu_mi: detail.mi,  
         // 当前菜单的赛种id
-        csid: (detail.mif*1 - 400), 
+        csid: (detail.mi*1 - 400), 
         current_mi: detail.mi,  
     }
     set_menu_config(obj)
