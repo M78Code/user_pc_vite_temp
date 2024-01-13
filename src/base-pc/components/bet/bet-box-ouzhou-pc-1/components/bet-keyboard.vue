@@ -29,14 +29,8 @@ const ref_data = reactive({
 })
 
 onMounted(()=>{
-  // let arr = []
-  // if (BetData.bet_is_single) {
-  //   arr = lodash.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200 })
-  // } else {
-  //   arr = lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
-  // }
-  // // 添加max按钮
-  // ref_data.user_max_min_money = Object.assign(arr, {max: 'MAX'})
+  BetData.set_user_max_min_money()
+  delete BetData.user_max_min_money?.qfi
   BetData.set_bet_keyboard_config(Object.assign(BetData.bet_keyboard_config, {ids: props.oid}))
 })
 
@@ -48,7 +42,6 @@ const set_click_keybord = obj => {
     UserCtr.balance < obj ? money = UserCtr.balance : money = obj
   }
   let keyboard = { money: money, ids: props.oid }
-  console.log('-----------------------------------------------------------------', keyboard, props)
   useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY_KEYBOARD, keyboard)
 }
 
