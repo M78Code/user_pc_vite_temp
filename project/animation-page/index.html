@@ -42,6 +42,9 @@
     
 
     <style>
+      em {
+        font-style: normal;
+      }
       /* 解决UC浏览器底部强制弹广告的问题,UC浏览器版本不同样式的匹配规则可能不同 */
       [id^="_"][style][data-text] {
         display: none !important;
@@ -581,7 +584,7 @@
     <!-- DO NOT touch the following DIV -->
     <div id="ty-app" class="full-height"></div>
     <!--loading 动画-->
-    <div id="loading-root-ele" class="loading"  >
+    <!-- <div id="loading-root-ele" class="loading"  >
       <div id="loading-root-main" class="la-line-scale loading-line">
         <div></div>
         <div></div>
@@ -589,7 +592,7 @@
         <div></div>
         <div></div>
       </div>
-    </div>
+    </div> -->
   </body>
 
   <script>
@@ -603,27 +606,12 @@
       start_time: new Date().getTime(),
       end_time: 0,
     };
-    // 获取TY_SDK_key持久化信息
-    function storage_get(storage,key){
-      let res = '';
-      if(storage && key){
-        let val = storage.getItem('TY_SDK_'+key.toUpperCase());
-        if(val){
-          try {
-            res = JSON.parse(val).value;
-          } catch (error) {
-            console.error(error);
-          }
-        }
-      }
-      return res;
-    }
     // 设置 loading 动画 主题
     function set_root_loading_theme(url_search) {
       //这里 除非 后面对接  theme 参数 否则 严禁 theme 写入 session ,session 在 root_layout 内进行纠正
       // 不去考虑所谓的  弹出窗口后 主页面再更改 主题 , 弹窗页面刷新不同步问题
       // 主题设置
-      let current_theme = url_search.get("theme") || storage_get(localStorage,'theme');
+      let current_theme = url_search.get("theme") || SEARCH_PARAMS.get_storage_sdk_key(localStorage,'theme');
       // 默认日间版
       current_theme && document.getElementById("ty-body").classList.add(current_theme);
       // 如果 主题  未知
@@ -653,7 +641,7 @@
     let url_search = SEARCH_PARAMS.init_param;
 
     // 设置 loading 动画 主题
-    set_root_loading_theme(url_search);
+    // set_root_loading_theme(url_search);
     if(!url_search.get('token')){
       document.getElementById("loading-root-ele").style.visibility = "hidden";
     }

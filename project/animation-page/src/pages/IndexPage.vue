@@ -1,8 +1,8 @@
 <template>
     <!-- <h1> DEMO </h1> -->
-    <div  id="statscorewidget" v-if="!loading"  :style="widget_style" ></div>
+    <div  id="statscorewidget"  :style="widget_style" ></div>
     <!-- loading -->
-    <div v-else-if="loading" class="loading-wrap" :style="{'background':theme == 'day' ? '#fff' : '#1f222b'}" >
+    <div v-if="!loading"  class="loading-wrap" :style="{'background':theme == 'day' ? '#fff' : '#1f222b'}" >
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
           <span :style="{'color':theme == 'night' ? '#fff' : '#1f222b'}">{{i18n_t('common.loading')}}</span>
