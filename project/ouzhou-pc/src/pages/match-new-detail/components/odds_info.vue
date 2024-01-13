@@ -465,7 +465,7 @@ onMounted(() => {});
 }
 
 .bottom-height {
-  height: 150px;
+  height: 50px;
   width: 100%;
   background-color: var(--q-gb-bg-c-4);
 }
