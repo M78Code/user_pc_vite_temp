@@ -75,10 +75,10 @@ const ChangeActive = function () {
         </aside>
 
         <div class="time">
-            <p class="score-point">{{ format_total_score(detail_data, 0) }}</p>
+            <p class="score-point">{{ detail_data.ms == 1 ? format_total_score(detail_data, 0) : '' }}</p>
             <!-- 赛事日期标准版 -->
             <EventDateStandard :ms_info="detail_data" :index="index"/>
-            <p class="score-point">{{ format_total_score(detail_data, 1) }}</p>
+            <p class="score-point">{{ detail_data.ms == 1 ? format_total_score(detail_data, 1) : '' }}</p>
         </div>
         <aside class="man team-image">
             <div class="figure">
