@@ -37,7 +37,7 @@ export default {
   width: 100%;
   height: 0.4rem;
   position: sticky;
-  top: 0.75rem;
+  top: 0.3rem;
   z-index: 99;
   display: flex;
   align-items: center;

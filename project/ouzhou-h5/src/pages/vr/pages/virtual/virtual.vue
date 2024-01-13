@@ -5,7 +5,7 @@
   <div>
     <div class="virtual-main router_scroll_layout" ref="scrollArea" @scroll="wrapper_scroll_handler">
       <!-- 头部 -->
-      <div class="virtual-head">
+      <div class="virtual-head" style="display: none;">
         <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
           <!-- 虚拟体育菜单 -->
           <div class="virtual-menu-list" ref='virtual_menu_list'>
@@ -45,6 +45,7 @@ import virtual_mixin from "src/core/vr/mixin/pages/virtual/virtual-mixin.js";
 import virtualSports from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/virtual-sports.vue";    // 虚拟体育
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { MenuData } from "src/output/index.js";
+import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 
 export default {
   mixins:[virtual_mixin],
@@ -52,10 +53,28 @@ export default {
   components: {
     virtualSports,
   },
+  methods: {
+    handle_menu_click(res){
+      this.virtual_sports_params = res.virtual_sports_params;
+      this.current_sub_menu = res.current_sub_menu;
+      this.refreshing = res.refreshing;
+      this.menu_list = res.menu_list;
+      this.v_match_router_ente = res.v_match_router_ente;
+      this.v_menu_changed = res.v_menu_changed;
+      console.log('ress', res);
+    }
+  }, 
   mounted(){
     MenuData.set_vr_menu_csid('1001');
     // 重置所选 球种默认玩法 hpid
     MatchResponsive.reset_match_hpid_by_csid()
+    // 监听vr-top组件菜单变化
+    this.emitters = [
+      useMittOn(MITT_TYPES.EMIT_VR_MENU_CLICK, this.handle_menu_click).off,
+    ]
+  },
+  unmounted(){
+    this.emitters.map((x) => x())
   }
 }
 </script>

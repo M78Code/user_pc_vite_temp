@@ -405,7 +405,7 @@ const set_route_url = () => {
  * @param {*} val
  */
 const handle_click_jinri_zaopan = (val,type) => {
-  
+
   MenuData.set_menu_root(val)
 
   let left_menu_config = {
@@ -420,8 +420,8 @@ const handle_click_jinri_zaopan = (val,type) => {
   }
  
   let obj = {
-    lv1_mi: left_menu_config.lv1_mi,
-    lv2_mi: left_menu_config.lv2_mi,
+    lv1_mi: left_menu_config.lv1_mi || `101${val}`,
+    lv2_mi: left_menu_config.lv2_mi || get_lv_1_lv_2_mi(`101${val}`),
     root: val
   }
 

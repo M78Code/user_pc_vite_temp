@@ -7,14 +7,7 @@
     <div class="row">
       <div style="display: none;">{{ BetRecordLeft.bet_record_version }}</div>
       <div class="col bet-money">
-        <template v-if="[0,1].includes(BetRecordLeft.selected)">
-          <!--投注额-->
-          {{i18n_t('common.bets_val')}}
-        </template>
-        <template v-else-if="BetRecordLeft.selected==2">
-          <!-- 预约投注额 -->
-          {{i18n_t("bet.bet_book_stake")}}
-        </template>
+        {{i18n_t('common.bets_val')}}
         <!-- 投注额 -->
       </div>
       <div class="col-auto bet-money">
@@ -27,7 +20,7 @@
     </div>
     <div class="row bet-win-input">
       <div class="col bet-value">
-       {{ format_currency(item.orderAmount) }}
+       {{ format_currency(item.orderAmountTotal) }}
       </div>
       <div class="col-auto bet-value" :class="{'red-text':(item.outcome=='4' || item.outcome=='5')}">
         <template v-if="[0,2].includes(BetRecordLeft.selected)">
