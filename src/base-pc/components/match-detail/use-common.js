@@ -5,10 +5,11 @@
 // -->
 import lodash from "lodash";
 import { ref, watch, onMounted, onUnmounted } from "vue";
-import {is_eports_csid} from 'src/output/index.js';
+import {MatchDetailCalss, UserCtr, is_eports_csid} from 'src/output/index.js';
 import { HandicapTitle } from "src/base-pc/components/match-detail/handicap-title/index.js";
 import betItem from "src/base-pc/components/bet-item/bet_item.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
+import { api_details } from "src/api/index";
 export const useCommon = ({ emit, props }) => {
   const isShow = ref(true); //主盘折叠
   const isShow_plus = ref(true); //附加盘折叠
@@ -92,14 +93,64 @@ export const useCommon = ({ emit, props }) => {
   //     this.updateCurMode(n);
   //   }
   // }
-
+  const cuid = UserCtr.get_cuid()
   /**
    * @description: 置顶
    * @param {Object} data handicao_title.vue组件传值
    * @return {undefined} undefined
    */
-  const sort_index = (data) => {
-    emit("sort_index", data);
+  function sort_index(titleData){
+    // emit("sort_index", data);
+    /** @type {TYPES.OddInfo} */ const data = props.item_details;
+    /** true取消置顶, false置顶 */ let type = data.hton != 0;
+    let params = {
+      cuid: cuid,
+      playId: data.hpid,
+      matchId: data.mid,
+      topKey: data.topKey,
+      status: type ? 1 : 0,
+    };
+    api_details.get_category_playTop(params).then((res) => {
+      const code = lodash.get(res, "data.code");
+      if (code == 200) {
+        // 保存置顶玩法的 id
+        MatchDetailCalss.set_top_id({
+          id: params.topKey,
+          type: !params.status,
+        })
+        // set_current_index(handicap);
+      }
+    });
+    if (type) {
+      data.hton = "0";
+    }else {
+      data.hton = new Date().getTime() + "";
+    }
+    // if (!params.status) {
+      //置顶
+      // if (handicap[index].hton == "0") {
+      //   handicap[index].hton = new Date().getTime() + "";
+      // }
+      // handicap.unshift(handicap.splice(index, 1)[0]);
+    // } else {
+      //取消置顶
+      // data.hton = "0";
+      // let arr = []; //暂存置顶的数据
+      // for (var i = 0; i < handicap.length; i++) {
+      //   if (handicap[i].hton != "0") {
+      //     arr.unshift(handicap.splice(i, 1)[0]);
+      //     i--;
+      //   }
+      // }
+      // //根据hpon排序
+      // handicap.sort(function (a, b) {
+      //   return a.hpon - b.hpon;
+      // });
+      // //插入置顶的数据
+      // for (var i in arr) {
+      //   handicap.unshift(arr[i]);
+      // }
+    // }
   };
 
   /**

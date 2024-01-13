@@ -87,5 +87,20 @@ const props = defineProps({
 
 
 <style lang="scss" scoped>
-
+.bet-content{
+  padding: 8px;
+  background: var(--q-bet-box-6);
+  border-radius: 6px;
+}
+.bet-league-name{
+  font-size: 13px;
+  color: var(--q-bet-box-1);
+  font-weight: 600;
+  line-height: 1.8;
+}
+.against{
+  color: var(--q-gb-t-c-20);
+  font-size: 13px;
+  line-height: 1.8;
+}
 </style>

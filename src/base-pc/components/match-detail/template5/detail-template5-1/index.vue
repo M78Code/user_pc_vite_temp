@@ -260,7 +260,8 @@ const get_bet_item_class = (item_details, item, ol, hl_index) => {
     //background: red !important;
     //background: var(--q-gb-bg-c-22) !important;
     // to do use key
-    background: #fcfcfc !important;
+    background: #fcfcfc;
+    //background: #fcfcfc !important;
     padding: 5px !important;
     background-clip: content-box !important;
   }

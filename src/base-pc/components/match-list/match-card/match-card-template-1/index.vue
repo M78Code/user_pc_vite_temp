@@ -1,9 +1,9 @@
 <template>
   <!--赛事玩法模板-->
-  <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
   <div class="c-match-card relative-position" :id="`list-mid-${mid}`"
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
     v-if="match_style_obj.is_show_card">
+    <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
     <!-- 数据模版调试 -->
     <div v-show="GlobalAccessConfig.get_wsl()" style="position:absolute;color:red">{{ match.mid }}-{{
       match_style_obj.view_tpl_id }}-{{ match_style_obj.data_tpl_id }}-{{ match_style_obj.show_level }}-{{ match.tpl_id }}
@@ -17,7 +17,7 @@
 import { provide, computed } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { MatchDataWarehouse_PC_List_Common, GlobalAccessConfig } from "src/output/index.js";
+import { MatchDataWarehouse_PC_List_Common, GlobalAccessConfig,MenuData } from "src/output/index.js";
 import { LayOutMain_pc } from "src/output/project/common/pc-common.js";
 // 玩法模板 0   足球-让球&大小  、 足球-角球 、 美足-让球&大小 、 手球-让球&大小
 import { MatchTpl1AfterFullVersionWapper as MatchTpl1After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-1-after/index.js";
@@ -90,7 +90,7 @@ export default {
     return {
       match,
       match_style_obj,
-      LayOutMain_pc,
+      LayOutMain_pc,MenuData,
       MatchListCardData,
       MatchListCardDataClass,
       GlobalAccessConfig

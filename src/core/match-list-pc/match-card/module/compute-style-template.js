@@ -311,14 +311,17 @@ export const get_league_title_card_height = (template_id) => {
 
 export const compute_style_template_by_matchinfo = (match) => {
 	let { tpl_id: template_id } = match;
-	if (template_id == 13) {
-		template_id = 1;
-	}
+	// if (template_id == 13) {
+	// 	template_id = 1;
+	// }
 	if (!template_id) {
 		template_id = get_match_template_id(match)//兜底
 	}
 	// 赛事列表模板配置
 	let template_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]["match_template_config"] || {};
+	if (template_id == 13) {
+		template_config = MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`]["match_template_config"] || {};
+	}
 	// 赛事样式对象
 	let style_obj = {
 		// 显示等级
@@ -361,7 +364,8 @@ export const compute_style_template_by_matchinfo = (match) => {
 	style_obj.csid = match.csid;
 	style_obj.is_show_card = true;
 
-	if (template_id == 1) {
+	if ([13, 1].includes(template_id)) {
+	
 		let obj = compute_style_template_by_matchinfo_template0_zuqiu(
 			match,
 			template_config
