@@ -14,6 +14,7 @@
           </div>
         </div>
       </div>
+      <v-sports-play-name />
       <template v-for="(match_item,i) in virtual_match_list" :key="i">
         <v-sports-tpl v-if="match_item.mid"
         :mid="match_item.mid"></v-sports-tpl>
@@ -29,13 +30,15 @@
 import virtual_sports_match_list_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-match-list-mixin.js";
 import v_s_match_timer from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-timer.vue";
 // import virtual_sports_match_item from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-item.vue";
-import virtual_sports_match_tpl from 'src/base-pc/vr/pages/virtual/virtual-sports-part//virtual-sports-match-tpl.vue'
+import virtual_sports_match_tpl from 'src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-tpl.vue'
+import virtual_sports_play_name from 'src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-play-name.vue'
 
 export default {
   mixins:[virtual_sports_match_list_mixin],
   components:{
     'v-s-match-timer':v_s_match_timer,
-    'v-sports-tpl': virtual_sports_match_tpl
+    'v-sports-tpl': virtual_sports_match_tpl,
+    'v-sports-play-name': virtual_sports_play_name
   }
 }
 </script>

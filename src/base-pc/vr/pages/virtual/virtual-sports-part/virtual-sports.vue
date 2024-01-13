@@ -17,17 +17,6 @@
           <div>{{tab_item.name}}</div>
         </div>
       </div>
-      <!-- 全部联赛折叠 -->
-      <div class="all-leagues"  @click="handle_all_league">
-        <div class="left">
-          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rili.png`" alt="">
-          <span>{{i18n_t('filter.all_leagues')}}</span>
-        </div>
-        <div class="right">
-          <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/gray-arrow.png`" :class="[!is_expend_all && 'expend_all_league']" alt=""> -->
-        <div class='img' :class="[!is_expend_all && 'expend_all_league']" :style="compute_css_obj({key:'h5-kyapp-expand-lague'})"></div>
-        </div>
-      </div>
     </div>
     <div class="virtual-content-wrapper">
       <div class="virtual-sports-top">

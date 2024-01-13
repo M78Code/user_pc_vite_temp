@@ -1,5 +1,5 @@
 <template>
-  <div class="match-tpl-101">
+  <div class="match-tpl-129">
     <div class="flex flex-start items-center">
       <!-- 赛事基础信息 -->
       <div class="basic-col"
@@ -105,13 +105,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.match-tpl-101 {
+.match-tpl-129 {
   background: var(--q-gb-bg-c-4);
 
   .vertical-line {
     width: 1px;
     height: 60px;
     background: var(--q-gb-bg-c-10);
+  }
+  :deep(.handicap-col-ouzhou){
+    width: 330px !important;
   }
 }
 
