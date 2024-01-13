@@ -11,12 +11,15 @@ import betItem from "src/base-pc/components/bet-item/bet_item.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { api_details } from "src/api/index";
 export const useCommon = ({ emit, props }) => {
-  const isShow = ref(true); //主盘折叠
-  const isShow_plus = ref(true); //附加盘折叠
-  const curIsShow = ref(true); // 是否展示当前玩法
+  /** 主盘折叠 */
+  const isShow = ref(true);
+  /** 附加盘折叠 */
+  const isShow_plus = ref(true);
+  /** 是否展示当前玩法 */
+  const curIsShow = ref(true);
 
 
-  //  当前电竞查询的模式 false单关模式
+  /** 当前电竞查询的模式 false单关模式 */
   const vx_cur_esports_mode = ref(BetData.cur_esports_mode);
   // 监听状态变化 todo
   // let un_subscribe = store.subscribe(() => {
@@ -26,7 +29,7 @@ export const useCommon = ({ emit, props }) => {
 
   /**
    * 数据或串关模式更新时，根据串关模式来显示或隐藏玩法
-   * @param mode  true 串关  false 单关
+   * @param {Boolean} mode  true 串关  false 单关
    */
   const updateCurMode = (mode) => {
     if (

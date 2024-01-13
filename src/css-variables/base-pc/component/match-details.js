@@ -50,4 +50,5 @@ export default{
    // 2014/1/12 缺少颜色
    "match-details-hover": "#ecf4ff", // 鼠标移入
    "match-details-left-title": "#fcfcfc", // 左侧标题
+   "match-details-video-top-bg": "#ffffff", // 右侧视频区域头部背景色
 }

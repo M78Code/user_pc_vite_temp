@@ -76,8 +76,8 @@ body {
       .list-sort{
         .list-sort-item {
           &.active{
-            background-image: var(--q-layout-color-11);
-            color: var(--q-gb-t-c-3);
+            background-color:  var(--q-gb-t-c-16);
+            color: var(--q-gb-t-c-18);
             border: 0;
           }
         }
@@ -146,7 +146,11 @@ body {
         }
       }
       .unfold-btn {
-        background-image: var(--q-gb-bg-lg-12);
+        background-color: var(--q-gb-t-c-16)!important;
+        color: var(--q-gb-t-c-18) !important;
+        i::before {
+          color: var(--q-gb-t-c-18) !important;
+        }
       }
     }
   }
