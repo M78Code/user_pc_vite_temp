@@ -28,7 +28,7 @@ import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { odd_lock_ouzhou, ouzhou_hps_up, ouzhou_hps_down } from 'src/base-h5/core/utils/local-image.js'
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, compute_value_by_cur_odd_type } from "src/output/index.js"
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, compute_value_by_cur_odd_type, MenuData } from "src/output/index.js"
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
 
 const props = defineProps({
@@ -116,8 +116,7 @@ const get_item_hpn = (s) => {
 
 // 是否锁盘
 const is_lock = computed(() => {
-  const { mhs = 0 } = props.match_info
-  return props.odd_item.os != 1 || props.item_hs == 1 || mhs == 1 || virtual_odds_state.value == 1
+  return props.odd_item.os != 1 || props.item_hs == 1 || props.match_info.mhs == 1 || virtual_odds_state.value == 1
 })
 
 const get_icon = (type) => {
@@ -142,11 +141,16 @@ const set_old_submit = () => {
     _hn,  // hn_obj
     _mid,  //赛事id mid_obj
   }
+
+  let bet_type = 'common_bet'
+  if (MenuData.is_vr()) {
+    bet_type = 'vr_bet'
+  }
   let other = {
     is_detail: false,
     // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
     // 根据赛事纬度判断当前赛事属于 那种投注类型
-    bet_type: 'common_bet',
+    bet_type,
     // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
     device_type: 1,  
     // 数据仓库类型

@@ -35,7 +35,8 @@ import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-
 import topMenu from "./top-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
 import { api_home } from "src/api/index.js"
-import { format_str } from "src/output/index.js";
+import { compute_css_obj, format_str } from 'src/output/index.js'
+import { get_remote_time,utc_to_gmt_no_8_ms2 } from "src/output/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
@@ -48,6 +49,8 @@ const props = defineProps({})
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
+const date_time = ref('')
+const timer_id = ref(null)
 /** 返回的大列表 */
 let res_list = reactive([])
 /** 左侧菜单 */
@@ -140,22 +143,39 @@ function get_list() {
         }
     }).finally(() => loadd_finish.value = true)
 }
+/**
+ * @Description:获取当前系统时间
+ * @return {undefined} undefined
+ */
+function get_date_time() {
+  let time = get_remote_time()
+  date_time.value = utc_to_gmt_no_8_ms2(time);
+  timer_id.value = setInterval(() => {
+    time += 1000;
+    date_time.value = utc_to_gmt_no_8_ms2(time);
+  }, 1000);
+}
 /** 钩子触发 */
 onMounted(() => {
     get_list()
+  get_date_time()
 })
 </script>
 
 <style lang="scss" scoped>
 .announce-area{
     width: 100%;
-    height: calc(100% - 80px);
-    padding-top: 6px;
-    padding-bottom: 50px;
+  border-radius: 6px;
+  margin-left: 6px;
+  margin-right: 6px;
+  border: 2px solid #FFF;
+  box-shadow: 0px 2px 8px 0px #E2E2E4;
 }
 .announce-wrap {
     width: 100%;
     height: 100vh;
+  padding-bottom: 20px;
+  background: #F6F9FF;
     display: flex;
     flex-direction: column;
     user-select: text;
@@ -164,13 +184,17 @@ onMounted(() => {
 
 /** 公告栏内容 -S*/
 .announce-content {
+  display: flex;
     width: 100%;
     height: 100%;
+    background-color: #F6F9FF;
     // background: var(--q-gb-bg-c-4);
 
     .main-page {
         color: #5a6074;
+      margin-left: 6px;
         padding-top: 14px;
+      padding: 24px;
         :deep(.load-data-wrap ) {
             height: 75vh !important;
 

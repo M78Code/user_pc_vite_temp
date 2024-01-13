@@ -5,7 +5,8 @@ import { i18n_t } from "src/boot/i18n.js"
 //  hpid  = 赛果 玩法 id,
 //  csid  = 球种 id  
 // }
-export const sports_play_data = {
+export const use_sports_play_data = () => {
+  return {
     "1" : [ 
       {
         label: i18n_t('ouzhou.match.play_map.1'),
@@ -246,15 +247,32 @@ export const sports_play_data = {
     ],
     "12" : [
       {
-        label: i18n_t('ouzhou.match.play_map.2'),
-        hpid: '2',
-        csid: '12'
-      },
-      {
         label: i18n_t('ouzhou.match.play_map.153'),
         hpid: '153',
         csid: '12'
-      }
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.12_2'),
+        hpid: '2',
+        csid: '12'
+      },
+    ],
+    "14" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.1'),
+        hpid: '1',
+        csid: '14'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.2'),
+        hpid: '2',
+        csid: '14'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.4'),
+        hpid: '4',
+        csid: '14'
+      },
     ],
     "90" : [ 
       {
@@ -307,6 +325,7 @@ export const sports_play_data = {
         csid: '1001'
       },
     ],
+  }
 }
 
 export const use_sports_play_title = () => {
@@ -567,19 +586,19 @@ export const use_sports_play_title = () => {
         ]
       },
       {
+        hpid: '2',
+        label: i18n_t('ouzhou.match.play_map.2'),// '全场大小',
+        ol: [
+          { ot: 'Over', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_Over') }, // "大于"
+          { ot: 'Under', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_Under') }, // "小于"
+        ]
+      },
+      {
         hpid: '4',
         label: i18n_t('ouzhou.match.play_map.4'),// '全场让球',
         ol: [
           { ot: '1', title: i18n_t('ouzhou.bet_col.bet_col_4.bet_col_1') },  // "主队"
           { ot: '2', title: i18n_t('ouzhou.bet_col.bet_col_4.bet_col_2') }, // "客队"
-        ]
-      },
-      {
-        hpid: '2',
-        label: i18n_t('ouzhou.match.play_map.2'),// '全场大小',
-        ol: [
-          { ot: 'Over', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_1') }, // "大于"
-          { ot: 'Under', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_2') }, // "小于"
         ]
       },
     ],
@@ -653,8 +672,8 @@ export const use_sports_play_title = () => {
         hpid: '2',
         label: i18n_t('ouzhou.match.play_map.2'), // '全场总分',
         ol: [
-          { ot: 'Over', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_1') }, // "总分"
-          { ot: 'Under', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_2') }, // "总分"
+          { ot: 'Over', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_Over') }, // "总分"
+          { ot: 'Under', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_Under') }, // "总分"
         ]
       },
       {
@@ -681,8 +700,8 @@ export const use_sports_play_title = () => {
         hpid: '2',
         label: i18n_t('ouzhou.match.play_map.2'), // '全场总分',
         ol: [
-          { ot: 'Over', title: i18n_t('ouzhou.match.bet_col_Over') }, // "全场大"
-          { ot: 'Under', title: i18n_t('ouzhou.match.bet_col_Under') }, // "全场小"
+          { ot: 'Over', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_Over') },  // "大于"
+          { ot: 'Under', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_Under') }, // "小于"
         ]
       },
       {
@@ -723,21 +742,21 @@ export const use_sports_play_title = () => {
       },
     ],
     //拳击/格斗
-    "112": [
+    "12": [
       {
         hpid: '153',
         label: i18n_t('list.play1'),//'全场独赢',
         ol: [
-          { ot: 'T1', title: i18n_t('list.win1') },// "主胜"
-          { ot: 'T2', title: i18n_t('list.win2')}// "客胜"
+          { ot: '1', title: i18n_t('list.win1') },// "主胜"
+          { ot: '2', title: i18n_t('list.win2')}// "客胜"
         ]
       },
       {
         hpid: '2',
-        label: i18n_t('ouzhou.match.play_map.2'), // '总回合数',
+        label: i18n_t('ouzhou.match.play_map.12_2'), // '总回合数',
         ol: [
-          { ot: 'Over', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_1') }, // "总分"
-          { ot: 'Under', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_2') }, // "总分"
+          { ot: 'Over', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_Over') }, // "总分"
+          { ot: 'Under', title: i18n_t('ouzhou.bet_col.bet_col_2.bet_col_Under') }, // "总分"
         ]
       },
     ],
@@ -768,7 +787,7 @@ export const use_sports_play_title = () => {
         ]
       },
     ],
-    //KOG
+    //王者荣耀 KOG
     "103": [
       {
         hpid: '30001',

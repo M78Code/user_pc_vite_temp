@@ -290,7 +290,7 @@ function menu_init_done() {
   const { is_mi_2000_open, is_mi_300_open } = BaseData
   if (is_mi_2000_open) {
     if (nav_list.findIndex(i => i.id == 5) == -1) {
-      nav_list.splice(1, 0, { id: 5, tab_name: i18n_t("common.e_sports"), path: "/e_sport" });
+      nav_list.splice(1, 0, { id: 5, tab_name: "common.e_sports", path: "/e_sport" });
     }
   }
   // 如果有虚拟体育
@@ -302,7 +302,7 @@ function menu_init_done() {
       } else {
         e_index++
       }
-      nav_list.splice(e_index, 0, { id: 3, tab_name: i18n_t("common.virtuals"), path: "", class: 'tab_virtaul_sport' });
+      nav_list.splice(e_index, 0, { id: 3, tab_name: "common.virtuals", path: "", class: 'tab_virtaul_sport' });
     }
   } else {
     let index = nav_list.findIndex(i => i.id == 3)
@@ -325,14 +325,14 @@ function menu_init_done() {
 function init_site_header(type = null) {
   console.error('init_site_header')
   let nav_list = [
-    { id: 1, tab_name: i18n_t("common.sports_betting"), path: "/home" }, //体育投注
-    { id: 2, tab_name: i18n_t('common.note_single_history'), path: "/bet_record", _blank: true }, //注单历史
+    { id: 1, tab_name: "common.sports_betting", path: "/home" }, //体育投注
+    { id: 2, tab_name:'common.note_single_history', path: "/bet_record", _blank: true }, //注单历史
     // { id: 8, tab_name: i18n_t("common.e_sports"), path: "" }, //电子竞技
     //{ id: 3, tab_name: i18n_t("common.winning_champions"), path: "" }, //优胜冠军
-    { id: 4, tab_name: i18n_t("common.amidithion"), path: "/match_results", _blank: true }, //赛果
+    { id: 4, tab_name: "common.amidithion", path: "/match_results", _blank: true }, //赛果
     // { id: 5, tab_name: i18n_t("common.score_center"), path: "" }, //比分中心
     // { id: 6, tab_name: i18n_t("common.statistic_analysis"), path: `${details.signal_url}/kaihongman/${src_lang}`,_blank:true }, //统计分析
-    { id: 7, tab_name: i18n_t("common.sports_betting_rules"), path: "/rule", _blank: true }, //体育竞猜规则
+    { id: 7, tab_name: "common.sports_betting_rules", path: "/rule", _blank: true }, //体育竞猜规则
   ];
   // 判断是否有活动
   let activityList = lodash.get(UserCtr.get_user(), 'activityList') || [];
@@ -340,7 +340,7 @@ function init_site_header(type = null) {
   if (activityList && activityList.length > 0 && UserCtr.lang == 'zh' && globalAccessConfig.get_activitySwitch()) {
     site_header_data.hasActivity = true;
     // 向顶部导航栏添加活动入口
-    let tab = { id: 9, tab_name: "任务中心", img_src: '', class: "activity_center animate-activity-entry activity_dot_bonus", path: "/activity", _blank: true };
+    let tab = { id: 9, tab_name: "common.mission_center", img_src: '', class: "activity_center animate-activity-entry activity_dot_bonus", path: "/activity", _blank: true };
     // 获取活动入口的图片
     let imgUrl = activityList.find(item => item.pcUrl != '');
     if (imgUrl) {

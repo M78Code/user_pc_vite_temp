@@ -12,7 +12,7 @@
         class="unfold"
         :class="{ open: vx_get_is_fold_status }"
         @click="$emit('setfoldStatus')"
-        :style="compute_css_obj('pc-img-match-info-unfold-open')"
+        :style="compute_css_obj({key:'pc-img-match-info-unfold-open'})"
       ></div>
       
 
@@ -36,14 +36,8 @@
             :content-style="tooltip_style + ';transform:translateY(8px)'"
             >{{ item.text }}</q-tooltip
           >
-          <div
-            :style="compute_css_obj(item.icon)"
-            :class="[
-              'vicon',
-              `${item.type}-icon`,
-              { active: vx_play_media.media_type == item.type },
-            ]"
-          ></div>
+          <div :style="compute_css_obj({ key: vx_play_media.media_type == item.type?item.icon_ac:item.icon })" style="width: 20px;height: 14px;;"></div>
+         
         </div>
       </div>
       <!-- 全屏 -->
@@ -113,7 +107,7 @@
         >
           <div class="line"></div>
           <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(menu_data.left_menu_result?.lv1_mi ? menu_data.left_menu_result?.lv1_mi?.slice(0,-1):0)}` })"
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: get_positon() })"
             :alt="BaseData.menus_i18n_map[menu_data.left_menu_result.lv1_mi]"></span>
           <!-- <sport-icon
             v-if="match_info.csid && match_info.csid != -1"
@@ -207,37 +201,43 @@ const media_icons = [
   {
     type: "info",
     text: i18n_t("common.score_board"),
-    icon: "pc-img-match-info-switch2",
+    icon: "pc-img-match-list-switch",
+    icon_ac: "pc-img-match-info-switch2",
   },
   /**演播室 */
   {
     type: "studio",
     text: i18n_t("common.studio"),
-    icon: "studio",
+    icon: "pc-img-match-list-video",
+    icon_ac: "pc-img-match-list-video2",
   },
   /**主播 */
   {
     type: "anchor",
     text: i18n_t("common.anchor"),
     icon: "anchor",
+    icon_ac:"anchor",
   },
   /** 专题*/
   {
     type: "topic",
     text: i18n_t("common.topic"),
     icon: "topic",
+    icon_ac:"topic",
   },
   /**源视频 */
   {
     type: "video",
     text: i18n_t("common.o_video"),
-    icon: "pc-img-match-info-video0",
+    icon: "pc-img-match-list-video",
+    icon_ac: "pc-img-match-list-video2",
   },
   /**动画 */
   {
     type: "animation",
     text: i18n_t("common.animate"),
-    icon: "pc-img-match-info-animation0",
+    icon: "pc-img-match-list-animation",
+    icon_ac: "pc-img-match-list-animation2",
   },
 ];
 const  isTop  = ref(MatchDetailCalss.isTop) //视频置顶
@@ -488,7 +488,10 @@ const full_screen = () => {
   );
   video.full_screen(props.match_info, play_type,route,router);
 };
-
+const get_positon = ()=>{
+  console.log(`item_${BaseData.compute_sport_id(menu_data.left_menu_result)}`,'111',menu_data.left_menu_result);
+  return `item_${BaseData.compute_sport_id(menu_data.left_menu_result?.lv1_mi ? menu_data.left_menu_result?.lv1_mi?.slice(0,-1):0)}`
+}
 onMounted(() => {
   vx_get_is_fold_status.value = GlobalSwitchClass.is_fold_status
 
@@ -549,7 +552,7 @@ onUnmounted(() => {
     .fold-btn {
       border-radius: 11px;
       padding: 2px 7px 2px 11px;
-      color: var(--q-gb-t-c-1);
+      color: var(--q-gb-t-c-18);
       display: flex;
       align-items: center;
       font-size: 12px;
@@ -686,29 +689,5 @@ onUnmounted(() => {
   background-size: 100% auto;
 }
 
-
-.video-icon {
-    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/video0.svg"); // TODO: video0.svg
-
-    &.active {
-      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/video2.svg"); // TODO: video2.svg)
-    }
-  }
-  .animation-icon {
-    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/animation0.svg"); // TODO: animation0.svg
-
-    &.active {
-      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/animation2.svg"); // TODO: animation2.svg
-    }
-  }
-
-  .info-icon {
-    background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/switch0.svg");// TODO: switch0.svg
-    background-repeat: no-repeat;
-
-    &.active {
-      background-image: url($SCSSPROJECTPATH+"/image/theme01/img/svg/switch2.svg");// TODO: switch2.svg
-    }
-  }
 /** 提示内容 -S*/
 </style>

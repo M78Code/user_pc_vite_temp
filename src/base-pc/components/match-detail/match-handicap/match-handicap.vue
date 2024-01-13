@@ -4,7 +4,7 @@
  * @Description: 玩法模板条件加载 详情页面 玩法集下面的玩法 列表
 -->
 <template>
-  <div class="wrap-handicap relative-position">
+  <div class="component wrap-handicap relative-position">
     <div class="template-handicap" id="_handicap_list_wrap"> 
       <!-- 详情玩法列表容器，盘口关闭时会隐藏 -->
       <div class="details_data" v-if="showDetails">
@@ -16,7 +16,7 @@
           <!-- waterfall 外层循环控制1栏布局和2栏布局 -->
         <!-- {{ waterfall }} -->
           <div
-            class="group-template"
+            class="group-template icontainer column"
             v-for="(list, index) in waterfall"
             :key="index"
           >
@@ -25,6 +25,9 @@
               v-for="item in list"
               :key="`hpid_${item.hpid}_topKey_${item.topKey}`"
               class="template"
+              :style="{
+                'order': -Number(item.hton?.substring(4))
+              }"
             >
               <!-- <div>{{ plays_list }}----{{ item.hpt }}---{{ item.chpid }}---{{ item.hpn }}---{{ currentRound }}</div> -->
               <div v-show="is_component_show(item)">

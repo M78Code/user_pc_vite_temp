@@ -1,8 +1,16 @@
 <template>
     <!-- <h1> DEMO </h1> -->
-    <div  id="statscorewidget" v-if="!no_data"  :style="widget_style" ></div>
+    <div  id="statscorewidget"  :style="widget_style" ></div>
+    <!-- loading -->
+    <div v-if="!loading"  class="loading-wrap" :style="{'background':theme == 'day' ? '#fff' : '#1f222b'}" >
+        <div class="img-loading custom-format-img-loading"></div>
+        <div class="text-center loading-text flex items-end justify-center">
+          <span :style="{'color':theme == 'night' ? '#fff' : '#1f222b'}">{{i18n_t('common.loading')}}</span>
+        </div>
+    </div>
+    <!-- loading -->
     <!-- 动画播放失败 -->
-    <animation_no_video v-else></animation_no_video>
+    <animation_no_video v-if="no_data"></animation_no_video>
 </template>
 <script>
 import { defineComponent } from 'vue'
@@ -16,7 +24,9 @@ export default defineComponent({
         // visibility: 'hidden' ,
         // visibility: 'unset',
       },
-      no_data:false
+      no_data:false,
+      loading:true,
+      theme:'day'
     }
   },
   created() {
@@ -26,6 +36,10 @@ export default defineComponent({
     animation_no_video
   },
   mounted(){
+    let url_obj = new URL(location.href)
+    console.log(url_obj,'url_obj');
+    this.theme  = url_obj.searchParams.get('style')
+    console.log(this.theme,'theme');
     this.init_widget();
   },
   methods: {
@@ -99,10 +113,15 @@ widget.once('someEvent', someEventCallback);
 widget.off('someEvent', someEventCallback);
 
 // Available lifecycle events:
-widget.on('beforeInsert', () => { /* Triggers when data necessary to display widget is loaded and widget is ready to be inserted into document */ });
-widget.on('load', () => { /* Triggers when widget is loaded but not yet interactive */ });
+widget.on('beforeInsert', () => { /* Triggers when data necessary to display widget is loaded and widget is ready to be inserted into document */ 
+  console.log(1111,'beforeInsert');
+});
+widget.on('load', () => { /* Triggers when widget is loaded but not yet interactive */
+  console.log(2222,'load');
+});
 widget.on('mount', () => { /* Triggers when widget is loaded and interactive */   
-
+  console.log(3333,'mount');
+this.loading = false
  this.widget_style= {
       
          visibility: 'unset',
@@ -144,6 +163,23 @@ this.widget = widget
 #statscorewidget{
   width: 100%;
   height: 100%;
+}  
+.loading-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-  
+.custom-format-img-loading {
+  width: 50px;
+  height: 50px;
+  background-image: url($SCSSPROJECTPATH+"/img/loading.gif");
+  background-size: 100%;
+  margin: 10px 0;
+}
+.loading-text {
+  font-size: 12px;
+}
 </style>

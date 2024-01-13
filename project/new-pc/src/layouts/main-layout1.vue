@@ -7,7 +7,8 @@
       <!-- 页面头部容器-->
       <layout-header />
     </div>
-    <div v-show="false"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version}}-{{ LayOutMain_pc.layout_content_width }}-{{ UserCtr.user_version }}</div>
+    <div v-show="false"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}-{{
+      LayOutMain_pc.layout_content_width }}-{{ UserCtr.user_version }}</div>
     <div class="flex">
       <!-- 左侧 菜单 -->
       <div :style="{ height: LayOutMain_pc.layout_content_height + 'px', width: LayOutMain_pc.layout_left_width + 'px' }"
@@ -49,9 +50,9 @@
   </div>
 </template>
 <script setup>
-import { onUnmounted, watch,onMounted,onBeforeMount,ref,reactive,nextTick } from "vue";
+import { onUnmounted, watch, onMounted, onBeforeMount, ref, reactive, nextTick } from "vue";
 
-import { useRoute,useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 // import "./main-layout.js"; //初始化数据
 
 import { LayOutMain_pc, UserCtr, MenuData } from "src/output/index.js";
@@ -67,15 +68,16 @@ import alertComponents from "src/base-pc/components/toast/alert.vue";
 import confirmComponents from "src/base-pc/components/toast/confirm.vue";
 // import moveVideo from 'src/base-pc/components/video-replay/move-video.vue'
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
-import {set_sticky_top} from 'src/core/match-list-pc/match-card/module/sticky-top.js'
+import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
 import { compute_css_variables } from "src/core/css-var/index.js"
+import { set_template_width } from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 
 // 监听页面是否转入休眠状态
 window.addEventListener("resize", resize_);
 
 const layout_style = ref('')
 const ref_data = reactive({
-  emit_lsit:{}
+  emit_lsit: {}
 })
 
 const route = useRoute();
@@ -83,21 +85,21 @@ const router = useRouter();
 
 let upd_time_refresh_timer;
 
-onBeforeMount(()=>{
+onBeforeMount(() => {
   clearInterval(upd_time_refresh_timer)
 })
 
-onMounted(()=>{
+onMounted(() => {
   // 全局一秒钟定时器
   upd_time_refresh_timer = setInterval(global_one_second_timer, 1000);
-  
+
   set_components_style()
   ref_data.emit_lsit = {
-    emitter_3: useMittOn( MITT_TYPES.EMIT_THEME_CHANGE,  set_components_style ).off
+    emitter_3: useMittOn(MITT_TYPES.EMIT_THEME_CHANGE, set_components_style).off
   }
 })
 
-onUnmounted(()=>{
+onUnmounted(() => {
   Object.values(ref_data.emit_lsit).map((x) => x());
 
   window.removeEventListener("resize", resize_);
@@ -117,7 +119,7 @@ function global_color_obj() {
   let lg = compute_css_variables({ category: 'global', module: 'linear-gradient' })
   // layout
   let layout = compute_css_variables({ category: 'component', module: 'layout' })
-  return { 
+  return {
     ...bg,
     ...bd,
     ...tc,
@@ -128,10 +130,10 @@ function global_color_obj() {
 
 // 设置组件样式
 const set_components_style = () => {
-  nextTick(()=>{
+  nextTick(() => {
     // layout_style.value = compute_css_variables({ category: 'component', module: 'layout' })
     layout_style.value = global_color_obj()
-    console.error('layout_style.value',layout_style.value)
+    console.error('layout_style.value', layout_style.value)
   })
 }
 
@@ -142,13 +144,11 @@ const set_components_style = () => {
 const global_one_second_timer = () => {
   useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, { time: new Date().getTime(), step: 1000 })
 }
-
 function resize_() {
   LayOutMain_pc.set_layout_content_config()
 }
-
-
-watch(()=>[router.path,MenuData.menu_data_version.value],lodash.throttle(set_sticky_top,10),{immediate:true})
+watch(LayOutMain_pc.layout_version, () => set_template_width(LayOutMain_pc.layout_content_width - 15), { immediate: true })
+watch(() => [router.path, MenuData.menu_data_version.value], lodash.throttle(set_sticky_top, 10), { immediate: true })
 </script>
 <style lang="scss">
 @import url(./content-layout.scss);

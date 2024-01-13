@@ -318,9 +318,11 @@ const checked_current_tab = (payload,type) => {
 
 	MenuData.set_mid_menu_result(obj)
 
+	// 电子竞技
 	if (MenuData.is_esports()) {
 		obj.current_mi = payload.value*1
 		MenuData.set_menu_current_mi(obj.current_mi)
+		MenuData.set_current_ball_type(obj.current_mi)
 	}
 	// get_sport_banner()
 

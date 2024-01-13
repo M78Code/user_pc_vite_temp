@@ -1,15 +1,11 @@
-import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-
+import { useMittEmit, MITT_TYPES} from 'src/core/mitt/index.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { MenuData } from 'src/output/project/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+import {LayOutMain_pc} from 'src/output'
 const { PROJECT_NAME } = BUILDIN_CONFIG ;
-setTimeout(() => {
-    window.MenuData=MenuData
-}, 0);
-
 //请求 参数的说明
 //     begin_request:
 //       "是否发起请求 默认 true ，如果有联赛层级的菜单需要在联赛点击 ,赛种点击不生效。也就是中间列表 如果存在多层菜单，非最终一层菜单点击是不发起请求的",
@@ -275,12 +271,18 @@ function match_list_all_params() {
         lv2_mi_info.outrightMatches = 1
     }
 
+    if(LayOutMain_pc.is_unfold_multi_column)
+    {
+        lv2_mi_info.orpt=13 //多列永远是13
+    }
     lodash.merge(
         config.match_list,
         {
             params: lv2_mi_info
         }
     )
+
+
     return config
 }
 export function get_collet_match_list_params() {
