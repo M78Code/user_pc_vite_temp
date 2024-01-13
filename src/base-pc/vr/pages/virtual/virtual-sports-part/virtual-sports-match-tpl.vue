@@ -71,26 +71,20 @@ export default {
   setup(props){
 
     const match = MatchListData.get_quick_mid_obj_ref(props.mid)
-
     provide("match", match)
     provide("MatchListData", MatchListData)
 
-    const { csid } = match.value || {}
-
     let current_mid = MatchListCardDataClass.current_mid;
 
-    const match_list_tpl_size = computed(() => {
-      return MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
-    })
-
-    const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
-    
+    const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_129_config`]
     
     let handicap_list = computed(() => {
       try{
-       return match_tpl_info.value?.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
+        const hpids = MatchListCardDataClass.get_csid_current_hpids(match.value.csid);
+        const list = match_tpl_info?.get_current_odds_list(hpids);
+       return list
       }catch(e){
-        console.log(match_tpl_info.value,e,'jiffy')
+        console.error(match_tpl_info,e)
       }
       return []
     });
@@ -99,7 +93,6 @@ export default {
   return {
       compute_css_obj,
       current_mid,
-      match_list_tpl_size,
       match,
       handicap_list
     }
