@@ -76,8 +76,8 @@ body {
       .list-sort{
         .list-sort-item {
           &.active{
-            background-image: var(--q-layout-color-11);
-            color: var(--q-gb-t-c-3);
+            background-color:  var(--q-gb-t-c-16);
+            color: var(--q-gb-t-c-18);
             border: 0;
           }
         }
