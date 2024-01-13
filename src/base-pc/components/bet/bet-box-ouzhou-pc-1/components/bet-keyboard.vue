@@ -1,7 +1,7 @@
 
 <template>
   <div class="keyboard-zone background-color-bet-box">
-    <div class="keyboard-btn" v-for="(item, index) in ref_data.user_max_min_money" :key="index" @click="set_click_keybord(item)" 
+    <div class="keyboard-btn" v-for="(item, index) in BetData.user_max_min_money" :key="index" @click="set_click_keybord(item)" 
     :class="{'disable-key-btn disabled': item > UserCtr.balance}">
       <!--键盘按键文本显示 如果无效则置灰 以及MAX按钮文本显示-->
       <div class="keyboard-btn-text">
@@ -29,14 +29,14 @@ const ref_data = reactive({
 })
 
 onMounted(()=>{
-  let arr = []
-  if (BetData.bet_is_single) {
-    arr = lodash.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200 })
-  } else {
-    arr = lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
-  }
-  // 添加max按钮
-  ref_data.user_max_min_money = Object.assign(arr, {max: 'MAX'})
+  // let arr = []
+  // if (BetData.bet_is_single) {
+  //   arr = lodash.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200 })
+  // } else {
+  //   arr = lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
+  // }
+  // // 添加max按钮
+  // ref_data.user_max_min_money = Object.assign(arr, {max: 'MAX'})
   BetData.set_bet_keyboard_config(Object.assign(BetData.bet_keyboard_config, {ids: props.oid}))
 })
 
