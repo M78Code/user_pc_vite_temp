@@ -62,6 +62,7 @@ const props = defineProps({
 
 
 async function get_list () {
+  choose_filter_tab([])
   const list = await get_ouzhou_leagues_data(props.date)
   localStorage.setItem('league_hours', props.date)
   leagues.value = list

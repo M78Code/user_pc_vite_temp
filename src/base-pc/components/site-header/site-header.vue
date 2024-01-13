@@ -86,7 +86,6 @@ import timer from "src/base-pc/components/site-header/timer.vue"
 
 /** 工具.js */
 import { useMittEmit, useMittEmitterGenerator, MITT_TYPES } from 'src/core/mitt/index.js'
-import store from "src/store-redux/index.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
@@ -159,40 +158,25 @@ const currentSwipperIndex = ref(0)
 /** 是否日间版 */
 const is_day = computed(() => UserCtr.theme == 'day')
 
-/** stroe仓库 */
-// const { menuReducer } = store.getState()
-// const unsubscribe = store.subscribe(() => {
-//     is_invalid.value = betInfoReducer.is_invalid
-//     left_menu_toggle.value = betInfoReducer.left_menu_toggle
-//     cur_menu_type.value = menuReducer.cur_menu_type || {}
-//     menu_collapse_status.value = menuReducer.menu_collapse_status
-//     main_menu_toggle.value = menuReducer.main_menu_toggle
-// })
-/** 销毁监听 */
-// onUnmounted(unsubscribe)
+
 /** 
  * 左侧菜单的切换状态 true: 展开 false: 收缩 default: true
- * 路径: project_path\src\store\module\betInfo.js
  */
 const left_menu_toggle = ref(true)
 /** 
  * 判断是否是登录状态 default: false
- * 路径: project_path\src\store\module\betInfo.js
  */
 const is_invalid = ref(false)
 /** 
  * 左侧列表显示形式 -- normal：展开 mini：收起 default: 'normal'
- * 路径: project_path\src\store\module\menu.js
  */
 const main_menu_toggle = ref({})
 /** 
  * 获取菜单收起状态 default: false
- * 路径: project_path\src\store\module\menu.js
  */
 const menu_collapse_status = ref({})
 /** 
  * 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关 default：Object
- * 路径: project_path\src\store\module\menu.js
  */
 const cur_menu_type = ref({})
 
@@ -251,6 +235,9 @@ function show_activity_page(n, urlType) { // 首页弹窗跳转判断
  * @param {obj} 菜单路由对象 {id: 唯一id, tab_name: 菜单名, path: 跳转路径, _blank: 是否打开单独的窗口} 具体参考 vue init_site_header() 方法
  */
 async function tab_click(obj) {
+
+    set_current_index(obj.index)
+    
     // 埋点配置
     let menu = props.nav_list[obj.index]
     if (menu.path.includes('/activity') && !globalAccessConfig.get_activitySwitch()) {
@@ -363,12 +350,6 @@ function get_hot_menuid(tid) {
     }
 }
 
-
-/** 保存显示搜索组件状态 */
-const set_show_login_popup = (data) => store.dispatch({
-    type: 'SET_SHOW_LOGIN_POPUP',
-    data
-})
 /**
  * 打开注单历史窗口
  */
@@ -415,56 +396,23 @@ function open_history_fun() {
  * @Description 设置tab选中
  * @param {undefined} undefined
 */
-function set_current_index() {
-    let c_index = 0
-    // TODO: $menu
-    // if ($menu.menu_data.is_esports && !['hot', 'play'].includes(cur_menu_type.value.type_name)) {
-    //     // 电竞
-    //     c_index = 1;
-    //     // TODO: $menu
-    // } else if ((route.name.includes('virtual') || $menu.menu_data.cur_level1_menu == 'virtual_sport') && cur_menu_type.value.type_name != 'play') {
-    //     // 虚拟体育
-    //     let index = props.nav_list.findIndex(item => item.id == 3)
-    //     if (index > 0) {
-    //         c_index = index
-    //     }
-    // }
+function set_current_index(c_index) {
     current_index.value = c_index;
 }
 
-/** 内嵌版 菜单收起状态 */
-const set_menu_collapse_status = (data) => store.dispatch({
-    type: 'SET_MENU_COLLAPSE_STATUS',
-    data
-})
+
 /** 内嵌版 菜单状态切换按钮 */
 function handle_menu_collapse() {
     set_menu_collapse_status(!menu_collapse_status.value)
 }
 
-/** 设置用户余额是否展示状态 */
-const set_show_balance = (data) => store.dispatch({
-    type: 'SET_SHOW_BALANCE',
-    data
-})
 
 /**
  * @description 获取用户余额
  * @return {undefined} undefined
  */
 function get_balance() {
-    data_loaded.value = false;
-    let uid = UserCtr.get_uid();
-    api_account.check_balance({ uid, t: new Date().getTime() }).then(res => {
-        const result = lodash.get(res, "data.data");
-        const code = lodash.get(res, "data.code");
-        data_loaded.value = true;
-        if (code == 200) { UserCtr.set_balance(result.amount) };
-        UserCtr.show_fail_alert()
-    }).catch(err => {
-        console.error(err)
-        data_loaded.value = true;
-    });
+    UserCtr.get_balance()
 }
 
 /**
@@ -523,32 +471,19 @@ function menu_change(side) {
 
 /** 监听路由变化 */
 watch(
-    () => route.name,
+    () => MenuData.menu_data_version,
     () => {
-        set_current_index()
+        console.error('MenuDataMenuDataMenuDataMenuDataMenuData')
+        if(MenuData.is_esports()){
+            set_current_index(2)
+        }else if(MenuData.is_vr()){
+            set_current_index(3)
+        }else{
+            set_current_index(1)
+        }
     }
 )
-/** 清除虚拟投注数据 */
-const virtual_bet_clear = (data) => store.dispatch({
-    type: 'virtual_bet_clear',
-    data
-})
-watch(
-    () => cur_menu_type.value.type_name,
-    () => {
-        set_current_index();
-        // 清除虚拟体育和电竞的投注项
-        virtual_bet_clear();
-    }
-)
-watch(
-    () => menu_data.cur_level2_menu,
-    () => set_current_index()
-)
-watch(
-    () => props.nav_list.length,
-    () => set_current_index()
-)
+
 </script>
 
 <style lang="scss">

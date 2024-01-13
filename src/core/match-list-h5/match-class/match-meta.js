@@ -504,7 +504,10 @@ class MatchMeta {
       return []
     }
     const list = lodash.get(res, 'data', [])
-    if (list.length < 1) return
+    if (list.length < 1) {
+      this.set_page_match_empty_status({ state: true, type: 'noMatch' });
+      return []
+    }
     MatchCollect.get_collect_match_data(list)
     this.handle_custom_matchs(list)
   }
