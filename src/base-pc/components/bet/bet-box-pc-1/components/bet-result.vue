@@ -87,7 +87,9 @@ const props = defineProps({
 
 
 <style lang="scss" scoped>
-.bet-content{
+.bet-single-items-card{
+  background: none;
+  .bet-content{
   padding: 8px;
   background: var(--q-bet-box-6);
   border-radius: 6px;
@@ -99,8 +101,10 @@ const props = defineProps({
   line-height: 1.8;
 }
 .against{
-  color: var(--q-gb-t-c-20);
+  color: var(--q-bet-box-1);
   font-size: 13px;
   line-height: 1.8;
 }
+}
+
 </style>

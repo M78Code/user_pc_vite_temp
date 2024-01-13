@@ -1,17 +1,16 @@
 <template>
     <!-- <h1> DEMO </h1> -->
-    <div  id="statscorewidget" v-if="!no_data"  :style="widget_style" ></div>
+    <div  id="statscorewidget"  :style="widget_style" ></div>
     <!-- loading -->
-    <div v-else-if="loading" class="loading-wrap" :style="{'background':theme == 'day' ? '#fff' : '#1f222b'}" >
+    <div v-if="!loading"  class="loading-wrap" :style="{'background':theme == 'day' ? '#fff' : '#1f222b'}" >
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
           <span :style="{'color':theme == 'night' ? '#fff' : '#1f222b'}">{{i18n_t('common.loading')}}</span>
-          <!-- 右侧详情内容加载中... -->
         </div>
-      </div>
+    </div>
     <!-- loading -->
     <!-- 动画播放失败 -->
-    <animation_no_video v-else></animation_no_video>
+    <animation_no_video v-if="no_data"></animation_no_video>
 </template>
 <script>
 import { defineComponent } from 'vue'
@@ -118,11 +117,11 @@ widget.on('beforeInsert', () => { /* Triggers when data necessary to display wid
   console.log(1111,'beforeInsert');
 });
 widget.on('load', () => { /* Triggers when widget is loaded but not yet interactive */
-  this.loading = false
   console.log(2222,'load');
 });
 widget.on('mount', () => { /* Triggers when widget is loaded and interactive */   
   console.log(3333,'mount');
+this.loading = false
  this.widget_style= {
       
          visibility: 'unset',

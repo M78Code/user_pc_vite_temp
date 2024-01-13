@@ -351,10 +351,15 @@ export default {
     const get_hps_play_data = () => {
       // let target_hps = []
       const { csid } = ctx.match_of_list
+      const sports_play = sports_play_data[csid] || []
+      hps_play_data.value = sports_play
+      const default_label = i18n_t(`ouzhou.match.play_map.${select_play.value}`)
       // target_hps = MatchResponsive.ball_seed_play_methods.value[`hps_csid_${csid}`]
-      hps_play_data.value = sports_play_data[csid] || []
-      select_label.value = sports_play_data[csid] && sports_play_data[csid][0] && sports_play_data[csid][0]?.label || i18n_t(`ouzhou.match.play_map.${select_play}`)
-      console.log(csid,sports_play_data)
+      if (!select_label.value) {
+        select_label.value = sports_play && sports_play[0] && sports_play[0]?.label || default_label
+      } else {
+        select_label.value = default_label
+      }
     }
 
     watch(() => ctx.match_of_list?.hps, () => {
