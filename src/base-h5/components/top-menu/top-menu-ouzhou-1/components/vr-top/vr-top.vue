@@ -219,6 +219,7 @@ export default {
      * 虚拟体育菜单切换
      */
     virtual_menu_changed(i){
+      
       tab_move.tab_move(i, this.$refs.scroll_main, this.$refs.scroll_box)
       this.sub_menu_i = i;
       this.current_sub_menu = this.sub_menu_list[i];
@@ -228,6 +229,16 @@ export default {
       console.log(this.get_curr_sub_menu_type, 'this.get_curr_sub_menu_type')
       this.set_virtual_current_sub_menuid(this.current_sub_menu.menuId);
       this.set_curr_sub_menu_type(this.current_sub_menu.menuType || this.current_sub_menu.menuId)
+
+      useMittEmit(MITT_TYPES.EMIT_VR_MENU_CLICK, {
+        virtual_sports_params: this.virtual_sports_params,
+        current_sub_menu: this.current_sub_menu,
+        refreshing: this.refreshing,
+        menu_list: this.current_sub_menu.subList ? this.current_sub_menu.subList : [],
+        v_match_router_ente: this.v_match_router_ente,
+        v_menu_changed: this.v_menu_changed,
+      });
+      
     },
     get_sub_menu_c_index(){
       let r = 0;

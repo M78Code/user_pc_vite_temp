@@ -164,7 +164,7 @@ export default {
 
 .fixed-head {
   position: sticky;
-  top: 0.45rem;
+  top: 0rem;
   background: var(--q-gb-bg-c-21);
   z-index: 100;
 }
