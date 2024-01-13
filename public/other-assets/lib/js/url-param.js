@@ -67,7 +67,7 @@ function get_url_param(url){
 // 同步局部参数到sessionStorage中location.search参数字符串中,并进行参数获取分流操作
 function get_location_href_param() {
   // 允许在url中直接累加的参数key
-  const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg', 'lang', 'theme', 'gr', 'ignore_iframe_pc','wpx','vconsole_h5'];
+  const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg', 'lang', 'theme', 'gr', 'ignore_iframe_pc','wpx','vconsole_h5', 'topic'];
   // 获取url参数
   let search_params_new = get_url_param(location.href);
   // 旧参数数据

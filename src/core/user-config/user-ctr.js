@@ -1432,6 +1432,8 @@ class UserCtr {
     res.api = this.api_encrypt(BUILDIN_CONFIG.DOMAIN_RESULT.first_one || get_value('best_api')) || '';
     // 项目来源;
     res.project = BUILDIN_CONFIG .PROJECT_NAME;
+    // topic
+    res.topic = encodeURIComponent(this.get_topic_key_url('domain') || '');
     // 功能附加参数
     const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
     PARAM_ADD_KEY.forEach(key => {
