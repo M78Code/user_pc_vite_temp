@@ -5,6 +5,7 @@
     <q-card-section>
       <div class="odds-wrap row">
         <!--几串几-->
+        <div data-v-c14bfede="" class="line"></div>
         <div class="col bet-play-info yb-fontsize13">{{items.seriesValue}}</div>
         <!--投注状态0:投注失败 1:投注成功 2:投注确认中-->
         <div class="col-auto bet-icon-info">
@@ -67,14 +68,6 @@ const props = defineProps({
     margin: 0;
     padding: 0;
     line-height: 0;
-    // margin-top: -15px;
-    // margin-left: -15px;
-    // margin-right: -15px;
-    // padding-top: 15px;
-    // padding-left: 10px;
-    // padding-right: 10px;
-    // margin-bottom: -15px;
-    // padding-bottom: 15px;
     /*  投注失败背景样式 */
     &.bet-fail-bg {
       background: rgba(255, 0, 0, 0.15);
@@ -91,7 +84,7 @@ const props = defineProps({
     /*  串关几串几样式 */
     .bet-play-info {
       line-height: 1;
-      padding-top: 3px;
+      padding-top: 1px;
       padding-left: 10px;
       border-radius: 1.5px;
     }
@@ -114,6 +107,12 @@ const props = defineProps({
       //   top: -2px;
       // }
     }
+  }
+  .line {
+      width: 3px;
+      height: 14px; 
+      background: var(--q-bet-box-2);
+      border-radius: 1.5px 
   }
 }
 </style>

@@ -13,8 +13,11 @@
     <!--投注记录内容-->
     <div class="bet-record-container" data-container="bet-record-container">
       <div style="display: none;">{{ BetRecordLeft.bet_record_version }}</div>
+      <div class="changing" v-if="ref_data.load_data_state === 'loading'">{{ i18n_t('common.loading') }}</div>
+      <div class="changing" v-if="ref_data.load_data_state === 'empty'">{{ i18n_t('common.no_data') }}</div>
+      <div class="changing" v-if="ref_data.load_data_state === 'api_limited'">{{ i18n_t('common.limited') }}</div>
       <!--投注记录卡片-->
-      <q-card flat class="bet-record-card full-width">
+      <q-card v-else flat class="bet-record-card full-width">
         <template v-for="(item, index) in ref_data.record_data" :key="index">
           <!--单关start (0:未结算,1:已结算,2:注单取消,3:确认中,4:投注失败)-->
           <div class="border-shq-card-actionsadow">
@@ -60,7 +63,6 @@
 import { onMounted, onUnmounted, reactive } from "vue";
 
 import BetRecordItem from "./bet-record-item.vue";
-import BetBookItem from "./bet-book-item.vue";
 import BetRecordResult from "./bet-record-result.vue";
 // 通屏垂直滚动
 import vScrollArea from "./v-scroll-area.vue";
@@ -133,6 +135,7 @@ const get_record_list = (o_params, cur_page = 1) => {
   };
   ref_data.cur_page = cur_page
   ref_data.load_data_state = "loading";
+  ref_data.record_data = []
 
   BetRecordLeft.api_url(params).then(res => {
     let code = lodash_.get(res, 'code')
@@ -161,12 +164,13 @@ const get_record_list = (o_params, cur_page = 1) => {
         ref_data.total_page = ((record_data.total % ref_data.page_size) == 0) ? ref_data.total_page : (ref_data.total_page + 1);
       }
 
-      if (!records) {
+      if (!records || records.length == 0) {
         // 投注记录不存在设置加载状态为empty
         ref_data.load_data_state = "empty";
         return;
       }
       ref_data.record_data = records
+      ref_data.load_data_state = "";
       // 如果是已结算
       // 提前结算开关打开时订阅提前结算注单
       timer && clearInterval(timer)
@@ -237,6 +241,10 @@ const order_class = () => { }
     margin-top: 90px;
     margin-bottom: 0px;
     width: 110px !important;
+  }
+  .changing {
+    text-align: center;
+    padding-top: 50px;
   }
 }
 
