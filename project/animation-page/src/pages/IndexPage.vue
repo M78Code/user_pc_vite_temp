@@ -2,10 +2,10 @@
     <!-- <h1> DEMO </h1> -->
     <div  id="statscorewidget" v-if="!no_data"  :style="widget_style" ></div>
     <!-- loading -->
-    <div v-else-if="loading" class="loading-wrap" >
+    <div v-else-if="loading" class="loading-wrap" :style="{'background':theme == 'day' ? '#fff' : '#1f222b'}" >
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
-          <span>{{i18n_t('common.loading')}}</span>
+          <span :style="{'color':theme == 'night' ? '#fff' : '#1f222b'}">{{i18n_t('common.loading')}}</span>
           <!-- 右侧详情内容加载中... -->
         </div>
       </div>
@@ -26,7 +26,8 @@ export default defineComponent({
         // visibility: 'unset',
       },
       no_data:false,
-      loading:true
+      loading:true,
+      theme:'day'
     }
   },
   created() {
@@ -36,6 +37,10 @@ export default defineComponent({
     animation_no_video
   },
   mounted(){
+    let url_obj = new URL(location.href)
+    console.log(url_obj,'url_obj');
+    this.theme  = url_obj.searchParams.get('style')
+    console.log(this.theme,'theme');
     this.init_widget();
   },
   methods: {
@@ -173,6 +178,9 @@ this.widget = widget
   height: 50px;
   background-image: url($SCSSPROJECTPATH+"/img/loading.gif");
   background-size: 100%;
-  margin-bottom: 10px;
+  margin: 10px 0;
+}
+.loading-text {
+  font-size: 12px;
 }
 </style>
