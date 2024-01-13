@@ -29,7 +29,7 @@ export const useCommon = ({ emit, props }) => {
 
   /**
    * 数据或串关模式更新时，根据串关模式来显示或隐藏玩法
-   * @param mode  true 串关  false 单关
+   * @param {Boolean} mode  true 串关  false 单关
    */
   const updateCurMode = (mode) => {
     if (

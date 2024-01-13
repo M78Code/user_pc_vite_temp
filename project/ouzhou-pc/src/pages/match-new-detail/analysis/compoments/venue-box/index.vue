@@ -167,7 +167,7 @@ const cur_video_icon = computed(() => {
     };
     //源视频                       非电竞 或者电竞有url
   }
-  if (mms == 2 && is_play) {
+  if (mms > 1 && is_play) {
     cur_video_icon = {
       type: "video",
       // text: i18n_t("common.o_video"),

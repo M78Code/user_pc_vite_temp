@@ -23,12 +23,14 @@
       <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
         :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
         <!-- 图片资源有问题，先用文字替代  -->
-        <div class="video" v-if="+lodash.get(match, 'mms') > 0"
+        <div class="video" v-if="+lodash.get(match, 'mms') > 1"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
         </div>
-        <!-- TODO: 动画图标需要加一个开关 lodash.get(UserCtr, 'user_info.ommv') -->
-        <div v-else
+        <div v-else-if="+lodash.get(match, 'mvs') > -1 && lodash.get(UserCtr, 'user_info.ommv')"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
+        </div>
+        <div v-else>
+          <img class="score" :src="score" alt="">
         </div>
       </div>
     </div>
@@ -48,7 +50,7 @@
 <script>
 import { computed, watch, inject } from 'vue';
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
-import { MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/output/index.js";
+import { MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
 import { MatchBasisInfo101FullVersionWapper as BasisInfo101 } from 'src/base-pc/components/match-list/match-basis-info/template-101/index.js'
@@ -59,6 +61,9 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import { useRouter } from 'vue-router';
 import { check_match_end } from 'src/core/match-list-pc/match-handle-data.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+
+const score = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score.png`;
+
 export default {
   components: {
     BasisInfo101,
@@ -151,7 +156,8 @@ export default {
       match,
       MenuData,
       current_mid,
-      match_style_obj
+      match_style_obj,
+      score
     }
   }
 }
@@ -170,7 +176,9 @@ export default {
     background: var(--q-gb-bg-c-10);
   }
 }
-
+.score {
+  width: 17px;
+}
 .other-play-tab {
   height: 32px;
   display: flex;

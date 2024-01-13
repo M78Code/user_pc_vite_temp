@@ -81,7 +81,7 @@
 </template>
 
 <script setup>
-import { ref, defineExpose, onUnmounted } from "vue";
+import { ref, onUnmounted } from "vue";
 import { i18n_t,is_eports_csid } from "src/output/index.js";
 import ZHUGE from "src/core/http/zhuge-tag";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
