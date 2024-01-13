@@ -26,7 +26,7 @@
       <div class="item ol-content">
         <div class="ol-content-ov">
           <span v-if="isLock">0.xx</span>
-          <span v-else>{{ compute_value_by_cur_odd_type(props.value.ov, props.value._hpid, props.value._hsw, sportId) }}</span>
+          <span v-else>{{ compute_value_by_cur_odd_type(value.ov, value._hpid,value._hsw, sportId) }}</span>
           <img class="odd-image" v-show="status != 'none'"
             :src="oddUp ? ouzhou_hps_up : ouzhou_hps_down" />
         </div>

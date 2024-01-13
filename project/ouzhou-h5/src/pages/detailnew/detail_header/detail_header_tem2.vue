@@ -124,7 +124,7 @@ const scoew_icon_list = ref({});
 const iframe_rdm = ref("")
 iframe_rdm.value = new Date().getTime();
 // 状态，是视频还是动画
-/** @type {import('vue').Ref<'animation'|'video'>} */
+/** @type {import('vue').Ref<'animation'|'video'|'score'>} */
 const right_actions_label = ref('')
 const animation_src = ref("");
 /** @type {import('vue').ComputedRef<number>} 1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示 */
@@ -143,6 +143,7 @@ const status = computed(() => {
       return 3;
     }
   }
+
   // <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
 
   //  如果有动画且后台动画开关 关闭后强制修改 
