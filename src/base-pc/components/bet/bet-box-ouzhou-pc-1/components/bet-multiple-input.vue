@@ -183,7 +183,7 @@ const set_win_money = () => {
     useMittEmit(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY,ref_data)
      // 输入控制
      let sum = 0
-     if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
+     if( ref_data.money *1 < ref_data.max_money *1 &&  ref_data.money*1 < UserCtr.balance*1){
         //计算多项最高可赢
         BetData.bet_single_list.forEach((item)=>{
             sum += mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)
@@ -191,7 +191,7 @@ const set_win_money = () => {
          ref_data.win_money = sum
     }else{
         // 最大限额不能大于余额
-        if(UserCtr.balance < ref_data.max_money){
+        if(UserCtr.balance*1 < ref_data.max_money*1){
             ref_data.max_money = UserCtr.balance
             ref_data.money = ref_data.max_money
         }
