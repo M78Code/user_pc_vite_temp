@@ -41,7 +41,7 @@
           <!--玩法及队名部分样式-->
           <span class="mr-4 text-009 text-flow-none handicap-type" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
 
-          <span>{{ items.playName }}</span>
+          <span class="handicap-content">{{ items.playName }}</span>
 
           <span class="handicap-type" v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
           <span class="handicap-type" v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
@@ -158,7 +158,17 @@ const cancel_operate = () =>{
 /**投注卡片*/
 .bet-card {
   //line-height: 0 !important;
-
+  padding: 15px;
+  margin-bottom: 5px;
+  .bet-league-name{
+    font-size: 13px;
+    color: var(--q-bet-box-1);
+    font-weight: 600;
+    line-height: 1.8;
+  }
+  .against{
+    line-height: 1.8;
+  }
   /* *蒙层* */
   .cathectic-shade {
     position: absolute;
@@ -170,12 +180,16 @@ const cancel_operate = () =>{
     z-index: 10;
     opacity: 0;
   }
-
   .mt5 {
     margin-top: 5px;
   }
 }
-
+.bet-content {
+    padding: 8px;
+    background: var(--q-bet-box-6);
+    border: none;
+    border-radius: 6px;
+}
 /* *卡片获取焦点时的样式background #FFD9D9 * */
 /* *卡片组件样式重写* */
 :deep(.q-card__section) {
@@ -245,7 +259,7 @@ const cancel_operate = () =>{
 /* *赔率的样式* */
 .bet-odds-value {
   display: inline-block;
-  text-align: right;
+  text-align: left;
 
   /*  赔率 */
   .odds-value {
@@ -336,7 +350,11 @@ const cancel_operate = () =>{
     height: auto;
   }
 }
-
+.handicap-content{
+  margin: 0px 4px;
+  font-size: 13px;
+  line-height: 1.4;
+}
 /* 最高可赢额 */
 .bet-win {
   line-height: 1;
@@ -392,5 +410,7 @@ const cancel_operate = () =>{
 }
 .handicap-type{
   color: var(--q-gb-t-c-16);
+  font-size: 13px;
+  line-height: 1.4;
 }
 </style>

@@ -1,6 +1,15 @@
 <template>
     <!-- <h1> DEMO </h1> -->
     <div  id="statscorewidget" v-if="!no_data"  :style="widget_style" ></div>
+    <!-- loading -->
+    <div v-else-if="loading" class="loading-wrap" >
+        <div class="img-loading custom-format-img-loading"></div>
+        <div class="text-center loading-text flex items-end justify-center">
+          <span>{{i18n_t('common.loading')}}</span>
+          <!-- 右侧详情内容加载中... -->
+        </div>
+      </div>
+    <!-- loading -->
     <!-- 动画播放失败 -->
     <animation_no_video v-else></animation_no_video>
 </template>
@@ -16,7 +25,8 @@ export default defineComponent({
         // visibility: 'hidden' ,
         // visibility: 'unset',
       },
-      no_data:false
+      no_data:false,
+      loading:true
     }
   },
   created() {
@@ -99,10 +109,15 @@ widget.once('someEvent', someEventCallback);
 widget.off('someEvent', someEventCallback);
 
 // Available lifecycle events:
-widget.on('beforeInsert', () => { /* Triggers when data necessary to display widget is loaded and widget is ready to be inserted into document */ });
-widget.on('load', () => { /* Triggers when widget is loaded but not yet interactive */ });
+widget.on('beforeInsert', () => { /* Triggers when data necessary to display widget is loaded and widget is ready to be inserted into document */ 
+  console.log(1111,'beforeInsert');
+});
+widget.on('load', () => { /* Triggers when widget is loaded but not yet interactive */
+  this.loading = false
+  console.log(2222,'load');
+});
 widget.on('mount', () => { /* Triggers when widget is loaded and interactive */   
-
+  console.log(3333,'mount');
  this.widget_style= {
       
          visibility: 'unset',
@@ -144,6 +159,20 @@ this.widget = widget
 #statscorewidget{
   width: 100%;
   height: 100%;
+}  
+.loading-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-  
+.custom-format-img-loading {
+  width: 50px;
+  height: 50px;
+  background-image: url($SCSSPROJECTPATH+"/img/loading.gif");
+  background-size: 100%;
+  margin-bottom: 10px;
+}
 </style>

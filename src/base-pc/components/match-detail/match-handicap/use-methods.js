@@ -373,6 +373,7 @@ export const useMethods = ({ props,emit }) => {
   };
   /**
    * 玩法置顶排序
+   * @deprecated 逻辑转移至 HandicapTitle 组件
    * @return {undefined} undefined
    */
   const sort_index = (titleData) => {

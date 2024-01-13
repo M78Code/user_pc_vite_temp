@@ -178,6 +178,7 @@
       justify-content: space-between;
       align-items: center;
       &.sub-title-2 {
+        background: var(--q-gb-bg-c-27);
         display: block;
         white-space: nowrap;
         overflow: hidden;
@@ -400,7 +401,7 @@
 
 
 .template-handicap .group-template .template {
-  background: #fff;
+  background: var(--q-gb-bg-c-32);
   border-radius: 8px;
   box-shadow: none !important;
 }
