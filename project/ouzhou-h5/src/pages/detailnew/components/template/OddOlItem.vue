@@ -2,10 +2,16 @@
   <div class="component odd-ol-item" v-show="value.os != 3"
     :class="[{ 'active': active }, status, type, calcOlResult(value['result'])]"
   >
+   
     <div class="icontainer" v-if="vif"
       :class="{'ol-v-hide': isLock}"
       @click="onClick"
     >
+      <!-- 欧洲h5 vr 详情专用 -->
+      <!-- <div v-if="['virtual_sports_details'].includes(route.name) && lodash.get(value, 'result')" class="mock">
+       {{ i18n_t('virtual_sports.result')[value['result']] }}
+      </div> -->
+
       <template v-if="isLock" @click.stop>
         <div class="ol-lock" :class="{'ol-v-show': isLock}">
           <img :src="odd_lock_ouzhou" alt="lock" class="ol-lock-img">
@@ -41,6 +47,7 @@
   </div>
 </template>
 <script setup>
+import { useRoute, useRouter } from "vue-router";
 import { ref, computed, watch } from 'vue'
 import { compute_value_by_cur_odd_type, MatchDetailCalss } from "src/output/index.js"
 import common, { state } from './common.js'
@@ -54,6 +61,9 @@ import {
 } from "src/base-h5/core/utils/local-image.js";
 import ResultOlItem from '../../result/ResultOlItem.vue';
 import { calcOlResult } from 'src/output/index'
+
+const route = useRoute();
+const router = useRouter();
 
 /** @type {{value: TYPES.OlResult|TYPES.Ol,type?: TYPES.OlItemType}} */
 const props = defineProps({
@@ -185,6 +195,17 @@ function resetStatus() {
   &.ol-result{
     --private-ol-content-color: #8A8986; //#TODO: css var
   }
+
+  // .mock{
+  //   position: absolute; 
+  //   z-index: 11; 
+  //   // float: left; 
+  //   width: 100%; 
+  //   padding: 0.2rem 0; 
+  //   background-color: rgba(200, 200, 200, 0.9); 
+  //   color: red; 
+  //   text-align: center;
+  // }
 }
 
 .separate {

@@ -1276,10 +1276,15 @@ const set_orderNo_bet_obj = order_no_list => {
         let match_time = lodash_.get( refer_obj, `match_time`)
         // 玩法id
         let playId = lodash_.get( refer_obj, `playId`)
+        let matchInfo = lodash_.get( refer_obj, `tid_name`)
         // 基准分
         let score_benchmark = lodash_.get( item, `scoreBenchmark`, '')
         if(score_benchmark){
             score_benchmark = `(${ score_benchmark.replace(':','-') })`
+        }
+        // 冠军没有赛事信息
+        if(!item.matchInfo){
+            item.matchInfo = matchInfo
         }
         return {
             ...item,
