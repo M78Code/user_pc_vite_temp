@@ -1,0 +1,40 @@
+// 此文件只做赛事配色说明使用
+{
+    "match-details-active": "#74C4FF", // 选中颜色
+    "match-details-container": "#191c24", // 基础背景色
+    "match-details-text": "#ffffff", // 基础文字颜色
+    "match-details-box-shadow": "#E2E2E4", // 阴影
+    "match-details-block-bg": "#FFFFFF0D", // 块颜色-深蓝
+    "match-details-block-bg-default": "rgba(255, 255, 255, 0.01)",  // 块颜色-浅蓝
+    "match-details-border": "#3d4152", // 边框颜色
+    "match-details-tab-bg": "#191c24", // 亚洲版无颜色，暂时和及出色保持一致
+    "match-details-active-shadow": "none",
+    "match-details-body": "#191c24",
+    "match-details-red": "#FC2222",
+    "match-details-orange": "rgb(239, 187, 1)",
+    "match-details-green": "#04c100",
+    "match-details-select-item": "linear-gradient(90deg, #FEF2F2 0%, #D6E6F4 99.22%);", // 视频选中背景色
+    "match-details-subtitle": "#A0A0A0", // 浅色文字
+    "match-details-team-bg": "#3b4359", // 队伍图片背景色 亚洲版无颜色
+    "match-details-hot-block-bg": "#FFFFFF0D", // 热门推荐块背景色
+    "match-details-home-bg": "#FFB001", // 主队圆点颜色
+    "match-details-tab-active-boxshadow": "rgba(0, 56, 98, 0.25)",
+    "match-details-slider-bg": "#FFFFFF0D", // swipe 滑块点背景色
+    // 2024/1/12
+    "match-details-desc": "#A0A0A0", // 介绍色
+    "match-details-bet-block": "rgba(255, 255, 255, 0.05)", // 投注块颜色
+    "match-detail-input-placeholder": "#F2F2F2", // 输入框placeholder
+    "match-details-back-menu-bg": "#3B3A3D",
+    "match-details-icon": "linear-gradient(180deg,#3b414e,#1d202a 65%,#262b37)", // icon 色 - 顶部tab切换 1
+    "match-details-border-bottom": "rgba(255, 255, 255, 0.10)", // 边框底色
+    "match-details-item-title": "#F2F2F2", // 每个分栏头部标题的字体颜色
+    "match-details-header": "#99A3B1", // 顶部title颜色
+    "match-details-title": "#f2f2f2", // 黑色标题
+    "match-details-win": "#FC2222", // 赢
+    "match-details-lose": "#04c100", // 输
+    "match-details-win-bg": "#e93d3d1a", // 赢背景色
+    "match-details-lose-bg": "#50c0421a", // 输背景色
+    // 2014/1/12 缺少颜色 #2d3749
+    "match-details-hover": "rgba(68, 75, 79, .6)", // 鼠标移入 1
+    "match-details-left-title": "#74C4FF", // 左侧标题
+}

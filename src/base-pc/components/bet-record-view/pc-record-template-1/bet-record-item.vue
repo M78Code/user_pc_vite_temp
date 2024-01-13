@@ -65,10 +65,10 @@
           <div class="col bet-against">
             <!--主队 v 客队-->
             <span class="home-vs-away">
-              {{ order.matchInfo.indexOf('(') ? (order.matchInfo.split('(')[0]) : order.matchInfo }}
+              {{ order.matchInfo }}
               <!--有括号就是有比分信息 当鼠标移上去显示，移出去就消失-->
-              <span v-if="order.matchInfo" @mouseover="show_score_info = true" @mouseout="show_score_info = false">{{ '('
-                + order.matchInfo.split('(')[1] }}</span>
+              <!-- <span v-if="order.matchInfo.indexOf('(')" @mouseover="show_score_info = true" @mouseout="show_score_info = false">{{ '('
+                + order.matchInfo.split('(')[1] }}</span> -->
               <!--对阵信息后面加的那个提示-->
               <q-tooltip content-class="bet-bg-tooltip" anchor="bottom left" self="top left" :offset="[-100, 5]"
                 v-if="show_score_info == true">
@@ -177,8 +177,8 @@
           </template>
           <template v-else>
             <!--非赛狗/非赛马时显示盘口值 赔率-->
-            <span class="part-one">{{ part().part1 }}</span><span class="part-two">{{ lodash_.trim(part().part2) }}</span>
-            <!-- <span>{{order.marketValue}}</span> -->
+            <span class="part-one">{{ part().part1 }}</span>
+            <span class="part-two">{{ lodash_.trim(part().part2) }}</span>
           </template>
         </div>
       </div>

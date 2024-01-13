@@ -6,6 +6,7 @@
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div
+    :style="page_style"
     v-if="
       ol_data_item &&
       odds_state != 'close' &&
@@ -95,7 +96,13 @@ import { useGetItem } from "./bet_item_hooks.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { MenuData } from 'src/output/project/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { compute_value_by_cur_odd_type } from "src/output/index.js";
+import { compute_value_by_cur_odd_type, compute_css_variables } from "src/output/index.js";
+import {ref} from "vue";
+const page_style = ref(null);
+page_style.value = compute_css_variables({
+  category: "component",
+  module: "match-details",
+});
 const props = defineProps({
   // 当前玩法信息
   play_data: Object,
