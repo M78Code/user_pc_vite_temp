@@ -83,14 +83,14 @@
                 "
               >
                 <span class="oid-width" :title="o.ott">{{ o.ott }}</span>
-                <span
+                <!-- <span
                   v-if="
                     [0].includes(match_info.hpt) && match_info.title.length > 0
                   "
                   v-html="getOn(match_info, o)"
-                ></span>
+                ></span> -->
                 <div
-                  v-else
+                
                   :style="{
                     color: [1].includes(match_info.hpt) ? '' : '#1A1A1A',
                   }"
@@ -175,11 +175,12 @@ const columnTotal = (item) => {
 };
 
 const betItemClick = (item, o) => {
-  if (o.os != 1) {
+  // 挂锁不可点击
+  if (o.os != 1&&o._hs!==0) {
     return;
   }
   bet_oid.value = o.oid;
-  emit("betItemClick", item, o, props.match_info.hpn);
+   emit("betItemClick", item, o, props.match_info.hpn);
 };
 //  模板hpt0 数字 需要给颜色
 const getOn = (match_info, o) => {
@@ -269,10 +270,17 @@ onMounted(() => {});
   // min-width: 50px;
   text-align: left;
   display: flex;
-  max-width: 75%;
+  // max-width: 85%;
   line-height: 20px;
   align-items: center;
   margin: 0 4px;
+  // height: 45px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
   // overflow: hidden;
   // text-overflow: ellipsis;
   // white-space: nowrap;

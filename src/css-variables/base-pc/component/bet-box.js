@@ -10,4 +10,5 @@ export default {
     'bet-box-8': 'rgba(153, 153, 153, 0.6)',
     'bet-box-9': 'rgba(23, 156, 255, 0.08)', 
     'bet-box-10': 'linear-gradient(180deg, #E5EDFE 0%, #F7FAFF 53.65%, #F6F9FF 100%)', 
+    'bet-box-11':'#179cff'
 }

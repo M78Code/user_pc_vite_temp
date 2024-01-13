@@ -1,6 +1,7 @@
 <template>
+   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div class="component odd-ol-item" v-show="value.os != 3"
-    :class="[{ 'active': active }, status, type, calcOlResult(value['result'])]"
+    :class="[{ 'active': BetData.bet_oid_list.includes(value['oid'] ) }, status, type, calcOlResult(value['result'])]"
   >
    
     <div class="icontainer" v-if="vif"

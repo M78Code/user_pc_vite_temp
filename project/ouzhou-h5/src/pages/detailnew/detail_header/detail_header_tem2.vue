@@ -67,6 +67,7 @@
       </div>
     </div>
      -->
+     {{right_actions_label}}
     <right_actions @handle-type="handle_type" v-show="right_actions_label != 'score'" :detail="props.get_match_detail"
                   :status="status" :right-actions-label="right_actions_label" :is-collect="is_collect" />
   </div>
@@ -145,14 +146,16 @@ const status = computed(() => {
   }
 
   // <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
+
+  //  如果有动画且后台动画开关 关闭后强制修改 
+  
   if (get_detail_data.mvs > -1 || (get_detail_data.mms > 1 && [1,2,7,10,110].includes(get_detail_data.ms*1))) {
     
-    if (get_detail_data.mvs > -1 && get_detail_data.mms > 1) {
-      // 动画视频都显示
+    if (get_detail_data.mvs > -1 && get_detail_data.mms > 1 && lodash.get(UserCtr, 'user_info.ommv')) {
       return 1;
     }
     // 动画状态大于-1时，显示动画按钮 
-    if (get_detail_data.mvs > -1) {
+    if (get_detail_data.mvs > -1 && lodash.get(UserCtr, 'user_info.ommv')) {
       return 2;
     }
     //  视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 --
