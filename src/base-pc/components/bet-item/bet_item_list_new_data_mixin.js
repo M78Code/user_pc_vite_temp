@@ -6,6 +6,7 @@
 import BetData from "src/core/bet/class/bet-data-class.js";
 import SetData from "src/core/bet/bet-data-ctr-class.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
+// import store from "project/activity/store";
 
 const bet_item = {
   inject:['match_list_data'], //子组件inject 接收数据
