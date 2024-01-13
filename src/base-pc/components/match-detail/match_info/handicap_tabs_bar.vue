@@ -126,7 +126,6 @@ export default defineComponent({
     const currentIndex = ref(0);
     const tab = ref(null);
     const isRouterAlive = ref(false);
-
     // defineExpose({
     //   tab,
     //   currentIndex,
@@ -142,7 +141,7 @@ export default defineComponent({
   (val) => {
     if (val) {
       tabs_active_index.value = MatchDetailCalss.mid;
-      get_layout_statu.value = MatchDetailCalss.mid;
+      get_layout_statu.value = MatchDetailCalss.layout_statu;
     }
   }
 );

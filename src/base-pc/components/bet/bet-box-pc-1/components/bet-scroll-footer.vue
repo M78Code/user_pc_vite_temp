@@ -171,7 +171,7 @@ const set_bet_is_accept = () => {
     height: 36px;
     line-height: 36px;
     font-size: 14px;
-    color: var(--q-gb-bd-c-13);
+    color: var(--q-gb-t-c-18);
     text-align: center;
     font-weight: 600;
     border-radius: 36px;
@@ -189,7 +189,7 @@ const set_bet_is_accept = () => {
     font-size: 14px;
     border: 0.5px solid var(--q-gb-bd-c-8);
     color: var(--q-gb-t-c-6);
-    background: linear-gradient(180deg, #E5EDFE 0%, #F7FAFF 53.65%, #F6F9FF 100%);
+    background: var(--q-bet-box-10);
     box-shadow: 0px 2px 2px 0px rgba(24, 81, 130, 0.12);
   }
   .bet-message {
@@ -202,8 +202,10 @@ const set_bet_is_accept = () => {
     margin:-15px 0 15px 0;
     padding:0 5px;
     .bet-success {
-      background: rgba(100,194,88,0.2);
-      color: #64c258;
+      // background: rgba(100,194,88,0.2);
+      // color: #64c258;
+      background: rgba(80, 192, 66, 0.15);
+      color: #50C042;
       line-height: 30px;
       font-size: 12px;
       border-radius: 0px 0px 6px 6px;

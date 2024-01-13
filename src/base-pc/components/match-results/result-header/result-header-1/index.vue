@@ -366,7 +366,7 @@ function refresh() {
  * @return {undefined} undefined
  */
 function get_date_time() {
-  const time = get_remote_time()
+  let time = get_remote_time()
   date_time.value = utc_to_gmt_no_8_ms2(time);
   timer_id.value = setInterval(() => {
     time += 1000;

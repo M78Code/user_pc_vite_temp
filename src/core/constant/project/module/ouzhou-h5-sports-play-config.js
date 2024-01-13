@@ -61,17 +61,17 @@ export const sports_play_data = {
       {
         label: i18n_t('ouzhou.match.play_map.153'),
         hpid: '153',
-        csid: '5'
+        csid: '10'
       },
       {
         label: i18n_t('ouzhou.match.play_map.172'),
         hpid: '172',
-        csid: '5'
+        csid: '10'
       },
       {
         label: i18n_t('ouzhou.match.play_map.173'),
         hpid: '173',
-        csid: '5'
+        csid: '10'
       },
     ],
     "8" : [
@@ -723,7 +723,7 @@ export const use_sports_play_title = () => {
       },
     ],
     //拳击/格斗
-    "112": [
+    "12": [
       {
         hpid: '153',
         label: i18n_t('list.play1'),//'全场独赢',
@@ -768,7 +768,7 @@ export const use_sports_play_title = () => {
         ]
       },
     ],
-    //KOG
+    //王者荣耀
     "103": [
       {
         hpid: '30001',

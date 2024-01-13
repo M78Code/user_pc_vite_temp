@@ -10,7 +10,7 @@ import {
 import { ref } from 'vue'
 import { set_load_data_state } from 'src/core/match-list-pc/match-list-composition.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import { set_league_list_obj } from 'src/core/match-list-pc/composables/match-list-featch.js'
+import { set_league_list_obj } from 'src/core/match-list-pc/composables/match-list-processing.js'
 import { set_match_play_current_index } from 'src/core/match-list-pc/composables/match-list-other.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
