@@ -1,15 +1,15 @@
 
 body {
   .match_results {
-    background: #eff1f6;
+    background: var(--q-match-result-bg-main-color);
     .main_wrap {
    
     }
     .wrap-table {
       .table-header {
-        background: var(--q-gb-bg-lg-22);
+        background: var(--q-match-result-table-head-color) !important;
         // color: var(--qq--yb-text-color3);
-        color: var(--q-match-result-text-color-1);
+        color: var(--q-match-result-text-color-1) !important;
         border: 1px solid var(--q-gb-bd-c-7); //#dce0e5
         .icon {
           background-repeat: no-repeat;

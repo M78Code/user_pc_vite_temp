@@ -387,6 +387,7 @@ onMounted(()=>{
   justify-content: space-between;
   flex: 1;
   .rule-title {
+    color:var(--q-match-result-title-color);
     font-size: 12px;
   }
   .systime {
@@ -410,9 +411,9 @@ onMounted(()=>{
   min-height: 61px;
   align-items: center;
   text-transform: uppercase;
-  background-color: #ffffff;
+  background-color: var(--q-match-result-bg-head-color-1);
   .header-title{
-    color:#626262;
+    color:var(--q-match-result-title-color);
   }
   .rule-logo {
     margin-right: 33.3px;
