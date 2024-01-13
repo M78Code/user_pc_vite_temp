@@ -65,7 +65,7 @@ class MenuData {
     this.ref_lv1_mi = ref('');
     this.ref_lv2_mi = ref('');
     // 左侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
-    this.menu_root = 1;
+    this.menu_root = 2;
     // 与 menu_root  类似，主要用于收藏按钮的显示隐藏，使用menu_root  由于这个值被监听，会有其他情况发生
     this.menu_root_show_shoucang = 1;
     // 滚球 盘数量总计
@@ -92,7 +92,6 @@ class MenuData {
 
     // api参数的版本
     this.api_config_version = ref("123");
-
     // 热门足球
     this.hot_500_sport_1 = false;
     //是否可以多列玩法的菜单
@@ -720,7 +719,8 @@ class MenuData {
    */
   set_match_list_api_config(config) {
     // 更新列表数据类型
-    this.set_match_list_api_type(this.mid_menu_result);
+    // this.set_match_list_api_type(this.mid_menu_result);
+    this.set_match_list_api_type(config.root?config:this.mid_menu_result);
     // 设置投注类别
     this.set_bet_category();
     set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())

@@ -283,7 +283,9 @@ const {
   font-size: 12px;
 }
 .active {
-  background: var(--q-gb-t-c-16);
+  //background: var(--q-gb-t-c-16);
+  // 投注项选中颜色
+  background: var(--q-match-details-active) !important;
   color: var(--q-gb-bg-c-11);
 }
 </style>

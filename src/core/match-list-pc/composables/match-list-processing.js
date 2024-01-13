@@ -3,7 +3,7 @@ import lodash from 'lodash';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { MenuData } from 'src/output/project/index.js'
 import { match_collect_status } from "./match-list-collect.js";
-import { api_bymids, set_league_list_obj } from "./match-list-featch.js";
+import { api_bymids } from "./match-list-featch.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/output/module/match-data-base.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
@@ -14,6 +14,7 @@ let vx_layout_list_type = 'match'
 const { route_name } = PageSourceData;
 let is_search = PageSourceData.is_search();
 let is_show_hot = ref(false);
+const league_list_obj = ref({})
 let vx_pre_filter_select_obj = []
 /**
  * @Description 合并连续相同的联赛
@@ -45,7 +46,13 @@ const merge_same_league = (league_obj) => {
 	return new_data;
 };
 
-
+/**
+   * @Description 设置联赛列表对象
+   * @param {object} league_list_obj
+   */
+const set_league_list_obj = (val = {}) => {
+  league_list_obj.value = val;
+}
 const deal_with_list_data = (data) => {
 	let mid_arr = []
 	data.forEach(item => {
@@ -204,6 +211,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
 	})
 	if (Array.isArray(match_list)) { //有时候是 {}
 		MatchListData.set_list(match_list)
+		match_list_handle_set(match_list)
 	}
 	// 设置第一条数据为当前mid，给分数板高亮用
 	if (match_list.length) {
@@ -357,6 +365,8 @@ function handle_match_list_request_when_ok(data, is_socket, is_base_data) {
 export {
 	// 处理服务器返回的 列表 数据 ---滚球
 	mx_use_list_res,
+	set_league_list_obj,
+	league_list_obj,
 	// 处理服务器返回的 列表 数据 ---联赛结构
 	mx_list_res,
 	handle_match_list_request_when_ok

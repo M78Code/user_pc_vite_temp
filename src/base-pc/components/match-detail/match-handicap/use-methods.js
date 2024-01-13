@@ -46,6 +46,9 @@ export const useMethods = ({ props,emit }) => {
   const get_layout_list_size = ref({});
   // 详情页玩法列表单双列 0单列， 1双列
   const get_layout_statu = ref(MatchDetailCalss.layout_statu);
+  watch(()=> MatchDetailCalss.details_data_version.version,()=>{
+    get_layout_statu.value = MatchDetailCalss.layout_statu
+  })
   // 获取用户uid
   // const get_uid = UserCtr.get_uid();
   const get_uid = ref(null);
@@ -337,7 +340,10 @@ export const useMethods = ({ props,emit }) => {
    * @return {undefined} undefined
    */
   const toggele_layout = (statu) => {
-    if (statu == get_layout_statu.value) {
+    // if (statu == get_layout_statu.value) {
+    //   return false;
+    // }
+    if (statu == MatchDetailCalss.layout_statu) {
       return false;
     }
     //设置玩法列表单双列 0单列， 1双列
@@ -367,6 +373,7 @@ export const useMethods = ({ props,emit }) => {
   };
   /**
    * 玩法置顶排序
+   * @deprecated 逻辑转移至 HandicapTitle 组件
    * @return {undefined} undefined
    */
   const sort_index = (titleData) => {

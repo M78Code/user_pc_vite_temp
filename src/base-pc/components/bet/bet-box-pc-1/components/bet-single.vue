@@ -12,7 +12,7 @@
     <!--未投注-->
     <template v-if="BetViewDataClass.bet_order_status == 1">
       <!--投注信息-->
-      <bet-single-info :items="item" :index="index" :key="`single_${index}`" v-for="(item, index) in BetData.bet_single_list"></bet-single-info>
+      <bet-item :items="item" :index="index" :key="`single_${index}`" v-for="(item, index) in BetData.bet_single_list"></bet-item>
       
       <!-- 多项单注 -->
       <div v-if="BetData.is_bet_merge && BetData.bet_single_list.length>1">
@@ -26,12 +26,7 @@
     <!-- 已投注 -->
     <template v-else>
       <!--投注后信息-->
-      <bet-single-record
-        :item="item"
-        :index="index"
-        :key="`record-${index}`"
-        v-for="(item, index) in BetViewDataClass.orderNo_bet_obj"
-      ></bet-single-record>
+      <bet-single-record></bet-single-record>
     </template>
 
   </div>
@@ -40,7 +35,7 @@
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 // 单关投注信息
-import BetSingleInfo from "./bet-single-info.vue";
+import BetItem from "./bet-item.vue";
 // 单关投注后信息
 import BetSingleRecord from "./bet-single-record.vue";
 import BetMultipleInput from "./bet-multiple-input.vue"

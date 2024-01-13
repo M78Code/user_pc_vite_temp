@@ -94,7 +94,7 @@ const score_data = computed(() => {
   const hps_item = hps.find(t => (t.chpid || t.hpid) == hpid)
 
   // structureLiveMatches 接口 结构不一样 hl 是对象
-  item_hs.value = hps_length > 0 ? lodash.get(hps_item, 'hl.hs', 1) :  lodash.get(hps_item, 'hl[0].hs', 1)
+  item_hs.value = hps_length > 0 ? lodash.get(hps_item, 'hl.hs', 0) :  lodash.get(hps_item, 'hl[0].hs', 0)
   
   // 本地 ol
   const plays = sports_play_title[csid]

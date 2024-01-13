@@ -595,6 +595,6 @@ const part = () => {
   padding: 0 8px;
   color: var(--qq--yb-text-color4);
 }
-</style>
+  
 
-src/output/index.js
+</style>

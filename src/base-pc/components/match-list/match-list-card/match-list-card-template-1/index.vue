@@ -8,6 +8,7 @@
     ].includes(card_style_obj?.card_type),
   }" :style="`height:${card_style_obj?.card_total_height}px  !important;width:${LayOutMain_pc.layout_content_width - 15
   }px  !important;${card_style}`">
+    <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
     <div v-if="is_mounted" :class="{ 'list-card-inner': !MatchListCardData.is_champion }">
       <!-- 赛事状态 | 赛种类型 -->
       <play-match-type v-if="['sport_title', 'play_title', 'no_start_title'].includes(card_style_obj?.card_type)

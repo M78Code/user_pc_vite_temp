@@ -12,7 +12,8 @@
     .league-rank,
     .group-rank,
     .rank-title {
-      background: var(--q-gb-bg-c-11);
+      background: var(--q-gb-bg-c-32);
+      // background: var(--q-gb-bg-c-11);
     }
     .wrap-hot {
       .info {
@@ -145,7 +146,7 @@
             .bet-item {
               color: var(--q-gb-t-c-5);
               .yb-family-odds {
-                color: var(--q-gb-t-c-16);
+                //color: var(--q-gb-t-c-16);
               }
               .yb-family-odds.normal_color {
                 color: var(--q-gb-t-c-5);
@@ -195,7 +196,7 @@
     // 详情页顶部 title 公共样式
     .wrap-title {
       background: var(--q-gb-bg-lg-18);
-      border: 1px solid var(--q-gb-bd-c-6); //bd-wrap-title
+      //border: 1px solid var(--q-gb-bd-c-6); //bd-wrap-title
       border-bottom: none;
       .group-back {
         i:before {
@@ -247,7 +248,8 @@
       }
     }
     .wrap-template {
-      border: 1px solid var(--q-gb-bd-c-6);
+      //border: 1px solid var(--q-gb-bd-c-6);
+      background: var(--q-gb-bg-c-32);
       .template-title {
         //background: var(--q-gb-bg-lg-17);
         // 详情玩法模版名称上划线
@@ -291,16 +293,17 @@
             .bet_handicap {
               color: var(--q-gb-t-c-18);
               .color {
-                color: var(--q-gb-t-c-1) !important;
+                color: var(--q-gb-t-c-1);
               }
               .ellipsis-wrap {
-                color: var(--q-gb-t-c-1) !important;
+                color: var(--q-gb-bg-c-11) !important;
               }
             }
           }
           .odds {
             span:hover {
               padding: 2px 4px;
+              
             }
           }
         }
@@ -507,7 +510,7 @@
       color: var(--q-gb-t-c-3);
       // color: var(--q-gb-t-c-8) !important;
       // color: var(--q-gb-t-c-8) !important;
-      background: transparent;
+      //background: transparent;
       .c-video-ctrl {
         .ctrl-wrap {
           .name {
@@ -516,7 +519,7 @@
         }
       }
       .right_details_header {
-        border: 1px solid var(--q-gb-bd-c-6);
+        //border: 1px solid var(--q-gb-bd-c-6);
         border-radius: 6px;
         overflow: hidden;
         &.is_esports {
@@ -530,7 +533,7 @@
         }
       }
       .scroll-fixed-header {
-        border-bottom: 1px solid var(--q-gb-bd-c-6) !important;
+        //border-bottom: 1px solid var(--q-gb-bd-c-6) !important;
       }
       /*  比分扳 */
       .head-info {
@@ -551,7 +554,8 @@
       }
       /* 玩法集tab条 */
       .wrap-tabs {
-        border: 1px solid var(--q-gb-bd-c-6);
+        background: var(--q-gb-bg-c-32);
+        //border: 1px solid var(--q-gb-bd-c-6);
         border-top: none;
         &.all_empty {
           border-bottom: 1px solid var(--q-gb-bd-c-8);
@@ -601,7 +605,7 @@
         .os-1 {
           .active {
             .bet_handicap {
-              color: var(--q-gb-t-c-1) !important;
+              color: var(--q-gb-t-c-1);
             }
           }
           &:hover {
@@ -611,7 +615,7 @@
             }
             .c-bet-item.active {
               .bet_handicap {
-                color: var(--q-gb-t-c-1) !important;
+                color: var(--q-gb-t-c-1);
               }
             }
           }
@@ -677,7 +681,8 @@
         .item-title {
           background: var(--q-gb-bg-lg-17);
           border-bottom: 1px solid var(--q-gb-bd-c-8);
-          color: var(--q-gb-t-c-4);
+          //color: var(--q-gb-t-c-4);
+          color: var(--q-gb-t-c-3);
           i {
             &::before {
               color: var(--q-gb-t-c-16);

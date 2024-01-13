@@ -104,6 +104,9 @@ const current_lv_1_mi = ref(""); //"101",
 const show_menu = ref(true);
 // 首次进入 刷新用
 const first_change = ref(false);
+/**
+ * 一级菜单id改变 设置2级
+ */
 watch(()=>MenuData.ref_lv1_mi.value,(_new)=>{
   if([1,500].includes(_new)){
     show_menu.value = true;
@@ -552,11 +555,12 @@ onUnmounted(()=>{
           height: 30px!important;
           min-width: 90px;
           line-height: 30px;
-          border: 0.5px solid #D7E1FD;
+          -border: 0.5px solid #D7E1FD;
           box-shadow: 0px 3px 3px 0px rgba(0, 56, 98, 0.1) !important;
           background: var(--q-gb-bg-lg-4);          
           &:last-child {
             margin-right: 0;
+             background: var(--q-gb-bg-c-11);   
           }
 
           &.active {
