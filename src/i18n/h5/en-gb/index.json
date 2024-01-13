@@ -620,7 +620,8 @@
     "xinshou": "Novice",
     "gongnengwanshan": "Functional & Practical",
     "yemianjianjie": "Simple content, Easy to use ",
-    "use":"Use"
+    "use":"Use",
+    "loading": "Loading"
   },
   "detail": {
     "less": "<",

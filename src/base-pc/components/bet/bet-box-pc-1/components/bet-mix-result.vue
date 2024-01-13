@@ -5,7 +5,8 @@
     <q-card-section>
       <div class="odds-wrap row">
         <!--几串几-->
-        <div >{{items.seriesValue}}</div>
+        <div data-v-c14bfede="" class="line"></div>
+        <div class="col bet-play-info yb-fontsize13">{{items.seriesValue}}</div>
         <!--投注状态0:投注失败 1:投注成功 2:投注确认中-->
         <div class="col-auto bet-icon-info">
           <template v-if="items.orderStatusCode==0">
@@ -23,23 +24,23 @@
         </div>
       </div>
 
-      <div >
-        <div >
+      <div class="row bet-win-info">
+        <div class="col">
           <!--投注额-->
           {{ i18n_t('common.bets_val')}}
         </div>
-          <div >
+          <div class="col auto text-right">
           {{ i18n_t('common.maxn_amount_val')}}
           <!-- 最高可赢额-->
         </div>
       </div>
-      <div >
+      <div class="row bet-win-info2">
         <!--投注额(值)-->
-        <div >
+        <div class="col bet-win-value">
           {{parseFloat(items.seriesBetAmount/100) }}
         </div>
         <!--最高可赢额(值)-->
-        <div>{{parseFloat(items.maxWinAmount/100)}}</div>
+        <div class="col auto bet-win-value text-right">{{parseFloat(items.maxWinAmount/100)}}</div>
       </div>
     
     </q-card-section>
@@ -58,23 +59,15 @@ const props = defineProps({
 /* *卡片获取焦点时的样式* */
 .bet-mix-result-card {
   padding: 15px;
-  margin: 0;
-  line-height: 0;
-  border: 0;
+  // margin: 0;
+  // line-height: 0;
+  // border: 0;
 
   /* *卡片组件样式重写* */
   :deep(.q-card__section){
     margin: 0;
     padding: 0;
     line-height: 0;
-    margin-top: -15px;
-    margin-left: -15px;
-    margin-right: -15px;
-    padding-top: 15px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-bottom: -15px;
-    padding-bottom: 15px;
     /*  投注失败背景样式 */
     &.bet-fail-bg {
       background: rgba(255, 0, 0, 0.15);
@@ -91,7 +84,7 @@ const props = defineProps({
     /*  串关几串几样式 */
     .bet-play-info {
       line-height: 1;
-      padding-top: 3px;
+      padding-top: 1px;
       padding-left: 10px;
       border-radius: 1.5px;
     }
@@ -108,12 +101,18 @@ const props = defineProps({
     .bet-win-info2 {
       line-height: 1;
       /*  确认中的样式位置   */
-      .bet-confirm-handle {
-        position: relative;
-        margin-right: 5px;
-        top: -2px;
-      }
+      // .bet-confirm-handle {
+      //   position: relative;
+      //   margin-right: 5px;
+      //   top: -2px;
+      // }
     }
+  }
+  .line {
+      width: 3px;
+      height: 14px; 
+      background: var(--q-bet-box-2);
+      border-radius: 1.5px 
   }
 }
 </style>

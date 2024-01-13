@@ -178,6 +178,7 @@
       justify-content: space-between;
       align-items: center;
       &.sub-title-2 {
+        background: var(--q-gb-bg-c-27);
         display: block;
         white-space: nowrap;
         overflow: hidden;
@@ -206,7 +207,8 @@
         }
         &:hover {
           .odds {
-            color: var(--qq--theme-color-handicap-item-bet-active) !important;
+            //color: var(--qq--theme-color-handicap-item-bet-active) !important;
+            color: var(--q-gb-t-c-18) !important;
           }
         }
       }
@@ -399,7 +401,7 @@
 
 
 .template-handicap .group-template .template {
-  background: #fff;
+  background: var(--q-gb-bg-c-32);
   border-radius: 8px;
   box-shadow: none !important;
 }
@@ -419,9 +421,15 @@
     cursor: pointer;
     // to do use key
     // 这个是投注项背景颜色
-    background: #EFF8FF;
+    //background: #EFF8FF;
+    background: var(--q-match-details-block-bg);
     &:hover {
-      background: #ecf4ff;
+      //background: #ecf4ff;
+      color: var(--q-gb-t-c-18);
+      background: var(--q-match-details-hover);
+      .odds {
+        color: var(--q-gb-t-c-5);
+      }
     }
   }
 }

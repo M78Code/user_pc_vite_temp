@@ -76,7 +76,7 @@
             </q-item-section>
           </q-item>
           <q-separator />
-          <q-item v-show="visible">
+          <q-item v-show="visible" class="language_li">
             <q-slide-transition>
               <q-item-section>
                 <div v-show="false">{{ UserCtr.user_version }}</div>
@@ -359,6 +359,7 @@ export default defineComponent({
   float: right;
   display: flex;
   margin-left: 40px;
+  cursor: pointer;
 
   // margin-right: 100px;
   .user-info {
@@ -407,6 +408,9 @@ export default defineComponent({
 .q-item:hover {
   background: #fff1e6 !important;
 }
+.q-item.language_li:hover {
+  background: transparent !important;
+}
 
 .icon {
   width: 20px;
@@ -428,6 +432,7 @@ export default defineComponent({
   padding: 0 18px 0 16px;
   transition: all 0.25s;
   justify-content: space-between;
+  cursor: pointer;
 
   &.active {
     // color: var(--q-gb-t-c-2);
@@ -450,8 +455,8 @@ export default defineComponent({
 }
 
 .language_item:hover {
-  color: var(--q-gb-t-c-2);
-  background: var(--q-gb-bg-c-5);
+  color: #ff7000;
+  background: #fff1e6;
 }
 
 .arrow {

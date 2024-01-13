@@ -312,6 +312,23 @@ class MatchUtils {
     })
     return result
   }
+   /**
+   * @description 获取最近一组15分玩法数据
+   * @param {*} payload 正在比赛的数据
+   */
+  get_ouzhou_15_minute_data (payload) {
+    return payload.map((item) => {
+      const { ms, mst } = item
+      const { title, isLock } = this.get_match_15_minute_stage(ms, mst)
+      return {
+        title,
+        isLock,
+        ...item,
+        match_data_type: 'h5_ten_five_mins',
+        icon: String(Number(item.csid) + 100)
+      }
+    })
+  }
   /**
    * @description 时间戳 转 当前时间的 开始时间
    * @param {*} md 

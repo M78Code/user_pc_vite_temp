@@ -3,7 +3,7 @@
 -->
 <template>
   <!-- :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon-black.svg`" alt=""> -->
-  <div class="select-league" :style="bounced_high">
+  <div class="select-league">
     <div class="sl-header">
     <!-- 取消 -->
       <div class="sl-btn" @click="closed">{{ i18n_t('common.cancel') }}</div>
@@ -131,12 +131,13 @@ defineProps({});
   width: 100%;
   max-width: unset !important;
   /*  兼容性问题,高度的调整影响到安卓手机的软键盘弹出 */
-  max-height: calc(var(--vh, 1vh) * 100 - 80px) !important;
+  // max-height: calc(var(--vh, 1vh) * 100 - 80px) !important;
   border-radius: 0.16rem 0.16rem 0 0;
   position: absolute;
   bottom: 0;
   background: var(--q-gb-bg-c-23) ;
   backdrop-filter: blur(5px);
+  height: 85%;
   .sl-header {
     display: flex;
     justify-content: space-between;

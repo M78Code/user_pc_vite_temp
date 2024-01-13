@@ -1084,6 +1084,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if(bet_obj.bet_type == 'guanjun_bet'){
         bet_obj.handicap = ol_obj.on
         bet_obj.handicap_hv = ''
+        bet_obj.tid_name = mid_obj.onTn || mid_obj.tn
     }
 
     // 串关数据 提示  添加数据之前
@@ -1275,10 +1276,15 @@ const set_orderNo_bet_obj = order_no_list => {
         let match_time = lodash_.get( refer_obj, `match_time`)
         // 玩法id
         let playId = lodash_.get( refer_obj, `playId`)
+        let matchInfo = lodash_.get( refer_obj, `tid_name`)
         // 基准分
         let score_benchmark = lodash_.get( item, `scoreBenchmark`, '')
         if(score_benchmark){
             score_benchmark = `(${ score_benchmark.replace(':','-') })`
+        }
+        // 冠军没有赛事信息
+        if(!item.matchInfo){
+            item.matchInfo = matchInfo
         }
         return {
             ...item,

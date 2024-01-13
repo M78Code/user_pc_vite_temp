@@ -118,7 +118,7 @@ const score_formate = computed(() => {
   return "";
 });
 
-const emit = defineEmits(["sort_index", "click"]);
+const emit = defineEmits(["sort_index", "click"]); //弃用 sort_index 事件, 置顶逻辑于本组件内处理
 
 /**
  * @description: 置顶

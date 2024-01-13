@@ -841,7 +841,8 @@
     "xinshou":"新手版",
     "gongnengwanshan":"功能完善,实用性强",
     "yemianjianjie":"页面简洁,操作简单",
-    "use":"使用"
+    "use":"使用",
+    "loading": "数据加载中...请稍后"
   },
   "detail": {
     "less": "小于",
