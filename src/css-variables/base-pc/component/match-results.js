@@ -10,4 +10,9 @@ export default {
         'match-result-boreder-1': '#d0d8de',
         'match-result-boreder-2': 'none',
         'match-result-boreder-3': '#ebecf4',
+        'match-result-boreder-3': '#ebecf4',
+        'match-result-title-color': '#626262',
+        'match-result-bg-head-color-1': '#ffffff',
+        'match-result-bg-main-color': '#eff1f6',
+        'match-result-table-head-color': '#ffffff',
       }
