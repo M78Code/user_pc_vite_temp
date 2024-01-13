@@ -3,6 +3,7 @@
   <q-card flat class="bet-mix-result-card">
     <!--玩法,提示及删除区域-->
     <q-card-section>
+      
       <div class="odds-wrap row">
         <!--几串几-->
         <div data-v-c14bfede="" class="line"></div>
@@ -48,8 +49,6 @@
 </template>
 <script setup>
 import { IconWapper } from 'src/components/icon'
-// import bet_mix_result from "src/public/mixins/bet/bet_mix_result.js";
-// import { format_currency } from 'src/output/index.js'
 const props = defineProps({
   items:{}
 })
@@ -58,11 +57,14 @@ const props = defineProps({
 <style lang="scss" scoped>
 /* *卡片获取焦点时的样式* */
 .bet-mix-result-card {
-  padding: 15px;
+  padding: 0;
+  background: var(--q-bet-box-6);
   // margin: 0;
   // line-height: 0;
   // border: 0;
-
+.odds-wrap{
+  padding-top: 15px;
+}
   /* *卡片组件样式重写* */
   :deep(.q-card__section){
     margin: 0;
@@ -93,26 +95,25 @@ const props = defineProps({
     .bet-win-info {
       line-height: 1;
       align-items: center;
-      margin-top: 10px !important;
+      margin-top: 6px !important;
       padding-bottom: 6px !important;
-
+      padding-left: 15px;
+      padding-right: 15px;
       /*  最高限额 */
     }
     .bet-win-info2 {
       line-height: 1;
-      /*  确认中的样式位置   */
-      // .bet-confirm-handle {
-      //   position: relative;
-      //   margin-right: 5px;
-      //   top: -2px;
-      // }
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-bottom: 15px;
     }
   }
   .line {
       width: 3px;
       height: 14px; 
       background: var(--q-bet-box-2);
-      border-radius: 1.5px 
+      border-radius: 1.5px ;
+      margin-left:2px;
   }
 }
 </style>
