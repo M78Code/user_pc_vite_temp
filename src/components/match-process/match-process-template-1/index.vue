@@ -34,7 +34,7 @@
   </div>
 </template>
 <script setup>
-import { computed, ref, watch,onMounted, onUnmounted, defineProps } from "vue";
+import { computed, ref, watch,onMounted, onUnmounted } from "vue";
 import matchDate from "src/components/match-process/match-process-template-1/match_date.vue";
 import {
   get_match_status,
