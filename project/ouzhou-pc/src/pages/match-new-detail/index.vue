@@ -62,6 +62,7 @@
               <span class="home-vs-away" :title="detail_info.man">{{ detail_info.man }}</span>
             </div>
             <img
+            
               :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
               class="expand-icon"
             />
@@ -186,11 +187,13 @@ export default {
     }, 500);
 
     const show_item = () => {
+   
       showDetailList.value = !showDetailList.value;
     };
     const detail_mitt = useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, init).off;
     function mousedown_fun(e) {
-      if (e.target.className != "home-vs-away") {
+  
+      if (e.target.className != "home-vs-away"&&e.target.className != "expand-icon") {
         showDetailList.value = false;
       }
       // expansion_ref.value&&expansion_ref.value.hide();
