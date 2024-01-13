@@ -555,11 +555,12 @@ onUnmounted(()=>{
           height: 30px!important;
           min-width: 90px;
           line-height: 30px;
-          border: 0.5px solid #D7E1FD;
+          -border: 0.5px solid #D7E1FD;
           box-shadow: 0px 3px 3px 0px rgba(0, 56, 98, 0.1) !important;
           background: var(--q-gb-bg-lg-4);          
           &:last-child {
             margin-right: 0;
+             background: var(--q-gb-bg-c-11);   
           }
 
           &.active {

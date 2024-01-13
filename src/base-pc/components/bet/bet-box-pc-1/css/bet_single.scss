@@ -17,6 +17,10 @@
       .bet-card {
         padding: 15px;
         margin-bottom: 5px;
+        background: var(--q-bet-box-5);
+        .q-card__section{
+          padding: 0 !important;
+        }
         // background: var(--q-gb-bg-c-22);
         /* *蒙层* */
         .cathectic-appoint {
@@ -288,7 +292,7 @@
            /* *输入框边框的样式* */
           .input-border {
             &:focus {
-              background: var(--q-gb-bg-c-11);
+              background: var(--q-bet-box-6);
               border: 0.5px solid var(--q-bet-box-2);
               border-radius: 6px;
               color: var(--q-gb-t-c-6);
