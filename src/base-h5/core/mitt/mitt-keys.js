@@ -235,6 +235,8 @@ export const EMIT_FORCE_END_PLAYING_BASKETBALL = "EMIT_FORCE_END_PLAYING_BASKETB
 export const EMIT_INGAME_RESULT_SHOW_END = "EMIT_INGAME_RESULT_SHOW_END";
 // 虚拟体育倒计时还剩10秒开赛时通知赛事关盘
 export const EMIT_ARRIVED10 = "EMIT_ARRIVED10";
+// 欧洲版h5虚拟体育-头部菜单点击
+export const EMIT_VR_MENU_CLICK = "EMIT_VR_MENU_CLICK";
 // 虚拟足球获取到赛果数据时通知子组件显示赛果数据
 export const EMIT_MATCH_RESULT_DATA_LOADED = "EMIT_MATCH_RESULT_DATA_LOADED";
 // 简版页脚菜单切换 玩法 全场独赢 , 全场让球 , 大小 , 角球等
