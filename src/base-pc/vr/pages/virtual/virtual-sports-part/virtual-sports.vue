@@ -75,11 +75,8 @@
       <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
        <div v-if="match_item_batch.remaining_time > 0" class="virtual-sports-card-content" :class="{'virtual-sports-card-simple': standard_edition === 1}">
         <div class="tab-title" @click.stop="expend_match(match_item_batch)">
-          <div class="league-name right-border">{{ lengue_name }}</div>
           <div class="status">
             <span class="num">{{ match_item_batch.no }}</span>
-            <span class="state">{{ match_item_batch.timer_format }}</span>
-            <icon-wapper class="icon" :class="[!match_item_batch.is_expend && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
           </div>
         </div>
         <template v-if="match_item_batch.is_expend">
@@ -183,7 +180,7 @@ export default {
 
 .fixed-head {
   position: sticky;
-  top: 0.89rem;
+  top: 45px;
   background: var(--q-gb-bg-c-21);
   z-index: 100;
 }
@@ -239,7 +236,7 @@ export default {
     padding-left: 0.07rem;
   }.status{
     .num {
-      color: var(--q-gb-t-c-18);
+      color: var(--q-gb-t-c-2);
     }
   
     .state{

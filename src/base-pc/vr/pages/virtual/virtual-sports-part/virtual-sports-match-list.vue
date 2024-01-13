@@ -15,10 +15,12 @@
         </div>
       </div>
       <template v-for="(match_item,i) in virtual_match_list" :key="i">
-        <v-sports-match-item :match_selected_i="selected_match_i" v-if="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)"
+        <v-sports-tpl v-if="match_item.mid"
+        :mid="match_item.mid"></v-sports-tpl>
+        <!-- <v-sports-match-item :match_selected_i="selected_match_i" v-if="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)"
           :i="i" :match_item="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)" @switch_match="switch_match_handle"
           @odd_pan="odd_pan_handle" :other_status="standard_odd_status" :is_vr_lock="match_item.is_vr_lock">
-        </v-sports-match-item>
+        </v-sports-match-item> -->
       </template>
     </div>
   </div>
@@ -26,12 +28,14 @@
 <script>
 import virtual_sports_match_list_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-match-list-mixin.js";
 import v_s_match_timer from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-timer.vue";
-import virtual_sports_match_item from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-item.vue";
+// import virtual_sports_match_item from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-item.vue";
+import virtual_sports_match_tpl from 'src/base-pc/vr/pages/virtual/virtual-sports-part//virtual-sports-match-tpl.vue'
+
 export default {
   mixins:[virtual_sports_match_list_mixin],
   components:{
     'v-s-match-timer':v_s_match_timer,
-    'v-sports-match-item':virtual_sports_match_item,
+    'v-sports-tpl': virtual_sports_match_tpl
   }
 }
 </script>
