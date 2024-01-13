@@ -15,7 +15,7 @@ import { nextTick } from "vue";
 import MatchMeta from './match-meta'
 import { get_now_server } from 'src/core/utils/common/module/other.js'
 import axios_api_loop from "src/core/http/axios-loop.js"
-import { get_handicap_index_by } from 'src/core/match-list-pc/match-handle-data.js'
+// import { get_handicap_index_by } from 'src/core/match-list-pc/match-handle-data.js'
 // import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
 class MatchPage {
   //当前调用的赛事列表接口方法
@@ -71,7 +71,7 @@ class MatchPage {
       // 如果当前赛事没有mid，有 matchId，则赋值给mid
       if (!match.mid && match.matchId) { match.mid = match.matchId }
       // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
-      assign_obj.handicap_index = get_handicap_index_by(match);
+      // assign_obj.handicap_index = get_handicap_index_by(match);
       // 对象浅拷贝
       Object.assign(match, assign_obj);
       // filtered 是 整个方法 return 的变量
