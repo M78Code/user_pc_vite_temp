@@ -21,7 +21,7 @@ body {
       /*  视频icon  */
       .q-icon {
         &:before {
-          color: var(--q-gb-t-c-8);
+          color: var(--q-gb-t-c-18) !important;
         }
       }
       .wrap_source {
@@ -48,7 +48,7 @@ body {
       }
       .col-right{
         .fold-btn{
-          background-image: linear-gradient(135deg, var(--q-gb-bg-c-18)  0%, var(--q-gb-bg-c-17)  100%);
+          background-color: var(--q-gb-t-c-16);
         }
       }
     }

@@ -6,10 +6,10 @@ import { api_hide } from "src/api/index.js";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 const {PROJECT_NAME,IS_PC} = BUILDIN_CONFIG;
 const HIDE_API_NAME_MAP1 = {
-  'yazhou-h5':'2023亚洲版',
-  'yazhou-pc':'2023亚洲版',
-  'ouzhou-h5':'2023欧洲版',
-  'ouzhou-pc':'2023欧洲版',
+  'yazhou-h5':{version:'2023亚洲版',version_id:''},
+  'yazhou-pc':{version:'2023亚洲版',version_id:''},
+  'ouzhou-h5':{version:'2023欧洲版',version_id:'3'},
+  'ouzhou-pc':{version:'2023欧洲版',version_id:'3'},
   'new-pc':'',
   'app-h5':'',
 }
@@ -76,7 +76,8 @@ const replay_click_event = (obj) => {
     tournamentId: obj.tournament_id, // 联赛id  (从obj对象总获取)  
     // user_id:_.get(window,'vue.$store.getters.get_user.userId'), // 玩家id (业务提供)
     // user_name:_.get(window,'vue.$store.getters.get_user.userName'), // 玩家名称 (业务提供)
-    version:HIDE_API_NAME_MAP1[PROJECT_NAME], //  >>>前端提供(格式)
+    version: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version'), //  >>>前端提供(格式)
+    versionId: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version_id'),
     deviceType:IS_PC?'1':'2', // 终端id：1-pc/2-h5/3-app/4  前端定义(h5/pc统一)     
     other1:'', // 其他扩展1
     other2:'', //其他扩展2
@@ -102,7 +103,8 @@ const into_home_event = (obj={}) => {
   }
   let event_obj = {
     eventId: 2,// 事件id  2-进入首页id
-    version: HIDE_API_NAME_MAP1[PROJECT_NAME], //  >>>前端提供(格式)
+    version: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version'), //  >>>前端提供(格式)
+    versionId: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version_id'),
     deviceType:IS_PC?'1':'2', // 终端id：1-pc/2-h5/3-app/4  前端定义(h5/pc统一)     
   }
   Object.assign(event_obj,obj);

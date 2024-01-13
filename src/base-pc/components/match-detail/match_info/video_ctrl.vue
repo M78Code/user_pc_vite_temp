@@ -12,7 +12,7 @@
         class="unfold"
         :class="{ open: vx_get_is_fold_status }"
         @click="$emit('setfoldStatus')"
-        :style="compute_css_obj('pc-img-match-info-unfold-open')"
+        :style="compute_css_obj({key:'pc-img-match-info-unfold-open'})"
       ></div>
       
 
@@ -552,7 +552,7 @@ onUnmounted(() => {
     .fold-btn {
       border-radius: 11px;
       padding: 2px 7px 2px 11px;
-      color: var(--q-gb-t-c-1);
+      color: var(--q-gb-t-c-18);
       display: flex;
       align-items: center;
       font-size: 12px;

@@ -28,7 +28,7 @@
   </div>
 </template>
 <script setup>
-import { defineComponent, onMounted, onBeforeUnmount, ref, defineProps, watch } from "vue";
+import { defineComponent, onMounted, onBeforeUnmount, ref, watch } from "vue";
 import { compute_css_obj } from 'src/core/server-img/index.js'
   const props = defineProps({
     is_show_btn: {

@@ -10,10 +10,21 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
+import { default_league_icon } from 'src/base-h5/core/utils/local-image'
+import { get_server_file_path } from "src/core/file-path/file-path.js";
+
 
 // i: 每个组件的 props 赛事下标， 来源 === 组件
 // match_of_list: 每个组件的 props 赛事对象， 来源 === 组件
 export default {
+  data () {
+    return {
+      image_src: ''
+    }
+  },
+  mounted() {
+    this.init_league_src()
+  },
   computed: {
     is_show () {
       let flag = true;
@@ -242,6 +253,21 @@ export default {
       };
       useMittEmit(MITT_TYPES.TOGGLE_COLLECT_LEAGUE,param);
     },
+    /**
+     * @description 初始化 联赛 图标
+     */
+    init_league_src () {
+      this.image_src = get_server_file_path(this.match_of_list.lurl)
+      console.log(this.image_src)
+    },
+    /**
+     * @description 图片加载出错
+     * @param {*} $ev 
+     */
+    league_icon_error ($ev) {
+      $ev.target.src = default_league_icon
+      $ev.target.onerror = null
+    }
   }
 }
 

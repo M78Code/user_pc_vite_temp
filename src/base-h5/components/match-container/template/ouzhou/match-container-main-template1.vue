@@ -15,13 +15,13 @@
         </div>
         <div class="select_time">
           <span @click.stop>
-            <q-btn-dropdown flat outline style="color: #FF7000"  padding="0" :label="i18n_t(`ouzhou.match.play_map.${select_play}`)"
+            <q-btn-dropdown flat outline style="color: #FF7000"  padding="0" :label="select_label"
               dropdown-icon="expand_more" content-class="select_time_style">
               <q-list>
                 <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
                    :class="{active: select_play === item.hpid}" clickable v-close-popup >
                   <q-item-section>
-                    <q-item-label>{{ i18n_t(`ouzhou.match.play_map.${item.hpid}`) }}</q-item-label>
+                    <q-item-label>{{ item.label || i18n_t(`ouzhou.match.play_map.${item.hpid}`)}}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -282,7 +282,7 @@ import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/co
 import ImageCacheLoad from "src/core/public-cache-image/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
-import { i18n_t, compute_img_url, compute_css_obj, sports_play_data, use_sports_play_title, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/output/index.js"
+import { i18n_t, compute_img_url, compute_css_obj, use_sports_play_data, use_sports_play_title, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/output/index.js"
 import { format_time_zone } from "src/output/index.js"
 import { MenuData } from "src/output/project/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou, neutral_site } from 'src/base-h5/core/utils/local-image.js'
@@ -317,7 +317,9 @@ export default {
   setup (ctx) {
     const match_hpid = ref('')
     const hps_play_data = ref([])
+    const select_label = ref('')
     const sports_play_title = use_sports_play_title()
+    const sports_play_data = use_sports_play_data()
 
     const select_play = computed(() => {
       const { csid } = ctx.match_of_list
@@ -349,8 +351,15 @@ export default {
     const get_hps_play_data = () => {
       // let target_hps = []
       const { csid } = ctx.match_of_list
+      const sports_play = sports_play_data[csid] || []
+      hps_play_data.value = sports_play
+      const default_label = i18n_t(`ouzhou.match.play_map.${select_play.value}`)
       // target_hps = MatchResponsive.ball_seed_play_methods.value[`hps_csid_${csid}`]
-      hps_play_data.value = sports_play_data[csid] || []
+      if (!select_label.value) {
+        select_label.value = sports_play && sports_play[0] && sports_play[0]?.label || default_label
+      } else {
+        select_label.value = default_label
+      }
     }
 
     watch(() => ctx.match_of_list?.hps, () => {
@@ -362,14 +371,15 @@ export default {
     // 切换玩法赔率
     const on_select_play = (item) => {
       const { hps, csid, mid, hn } = ctx.match_of_list
-      // select_play.value = item.hpid
+      select_play.value = item.hpid
+      select_label.value = item.label
       MatchResponsive.set_match_hpid(item.hpid, csid)
     }
 
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
-      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site, MenuData
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site, MenuData, select_label
     }
   }
 }

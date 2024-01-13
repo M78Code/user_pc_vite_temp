@@ -114,6 +114,7 @@ export default {
   },
   computed: {
     _tab_list_(){
+      return this.tab_list || [];
       // 不显示幸运盲盒
       return (this.tab_list || []).filter(v => v.activityId != '10009');
     }

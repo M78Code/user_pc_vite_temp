@@ -26,7 +26,7 @@ export default{
    "match-details-red": "#FF2A2A",
    "match-details-orange": "#FF9124",
    "match-details-green": "#49C000",
-   "match-details-select-item": "linear-gradient(90deg, #FEF2F2 0%, #D6E6F4 99.22%);", // 视频选中背景色
+   "match-details-select-item": "linear-gradient(90deg, #FEF2F2 0%, #D6E6F4 99.22%)", // 视频选中背景色
    "match-details-subtitle": "#868686", // 浅色文字
    "match-details-team-bg": "#F5F6FA", // 队伍图片背景色
    "match-details-hot-block-bg": "#F4FAFF", // 热门推荐块背景色
@@ -50,4 +50,5 @@ export default{
    // 2014/1/12 缺少颜色
    "match-details-hover": "#ecf4ff", // 鼠标移入
    "match-details-left-title": "#fcfcfc", // 左侧标题
+   "match-details-video-top-bg": "#ffffff", // 右侧视频区域头部背景色
 }

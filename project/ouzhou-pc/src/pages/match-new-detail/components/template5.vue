@@ -89,7 +89,7 @@ const props = defineProps({
     default: "",
   },
 });
-const hpidList = ["340", "359", "383","200","209","211","212",'238','20024']
+const hpidList = ["340","339", "359", "383","200","209","211","212",'238','20024']
 const matchInfo = computed(() => {
   let obj = {};
   props.match_info.hl.forEach((item) => {

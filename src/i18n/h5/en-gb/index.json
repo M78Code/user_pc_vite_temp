@@ -90,7 +90,8 @@
             "244": "Total Goals",
             "30001": "Match Winner",
             "30002": "Map Handicap",
-            "30003": "Total Maps"
+            "30003": "Total Maps",
+            "12_2": "Total Rounds"
           }
     },
     "setting_menu": {
@@ -2379,6 +2380,7 @@
   "time8": "dd/MM/yyyy hh:mm:ss",
   "time9": "hh:mm",
   "time10": "yyyy/MM/dd hh:mm",
+  "time11": "MM/dd hh:mm",
   "tips": {
     "msg1": "Combo bet",
     "msg2": "May switch Singles/Parlays after select. More bet items; Same handicap replace origin item."
