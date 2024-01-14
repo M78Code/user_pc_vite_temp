@@ -43,6 +43,10 @@ const api_params = {
         match: "post_fetch_match_list",
         colloet: "post_fetch_collect_list"
     },
+    5000: {
+        match: "post_fetch_match_list",
+        colloet: "post_fetch_collect_list"
+    },
     other: {
         match: "post_league_list",
         colloet: "post_fetch_collect_list",
@@ -183,65 +187,73 @@ function match_list_all_params() {
             apiType: 1,
             orpt: -1,
         };
-          if (mi == 50101) {
-            //hot-jingzu  热门 竟足 50101
-            // sports = "hot-jingzu";
+        if (mi == 50101) {
+        //hot-jingzu  热门 竟足 50101
+        // sports = "hot-jingzu";
+        lv2_mi_info = {
+        //   api_name: "post_fetch_match_list",
+        //   params: {
+            ...base_params,
+            euid: "30101",
+            pids: -999,
+            orpt: 12,
+        //   },
+        };
+        } else if (mi == 50199) {
+        //  hot-saishi 热门   赛事 50199
+        // sports = "hot-saishi";
+        lv2_mi_info = {
+        //   api_name: "post_fetch_match_list",
+        //   params: {
+            ...base_params,
+            euid: "30199",
+            orpt: -1,
+        //   },
+        };
+        } else {
+        //hot-liansai  热门 联赛
+        // sports = "hot-liansai";
+        let c_euid = "";
+        let api_name = "post_fetch_match_list";
+        if (mi.length > 10) {
+            // mi大于10为 是电竞
+            api_name = "post_fetch_esports_matchs";
             lv2_mi_info = {
-            //   api_name: "post_fetch_match_list",
-            //   params: {
+            api_name,
+            params: {
                 ...base_params,
-                euid: "30101",
-                pids: -999,
-                orpt: 12,
-            //   },
+            },
             };
-          } else if (mi == 50199) {
-            //  hot-saishi 热门   赛事 50199
-            // sports = "hot-saishi";
-            lv2_mi_info = {
-            //   api_name: "post_fetch_match_list",
-            //   params: {
-                ...base_params,
-                euid: "30199",
-                orpt: -1,
-            //   },
-            };
-          } else {
-            //hot-liansai  热门 联赛
-            // sports = "hot-liansai";
-            let c_euid = "";
-            let api_name = "post_fetch_match_list";
-            if (mi.length > 10) {
-              // mi大于10为 是电竞
-              api_name = "post_fetch_esports_matchs";
-              lv2_mi_info = {
-                api_name,
-                params: {
-                  ...base_params,
-                },
-              };
+        } else {
+            //常规联赛原菜单ID：301+联赛ID、新菜单：502+菜单ID；电竞联赛原菜单：30+联赛ID、新菜单ID：联赛ID
+            if (mi.startsWith("502")) {
+            // 旧菜单ID还有有个规则：301+联赛ID 如果长度是10位，则菜单ID为101+联赛ID 后端逻辑
+            let prefix = mi.length == 10 ? "101" : "301";
+            c_euid = prefix + mi.substring(3);
             } else {
-              //常规联赛原菜单ID：301+联赛ID、新菜单：502+菜单ID；电竞联赛原菜单：30+联赛ID、新菜单ID：联赛ID
-              if (mi.startsWith("502")) {
-                // 旧菜单ID还有有个规则：301+联赛ID 如果长度是10位，则菜单ID为101+联赛ID 后端逻辑
-                let prefix = mi.length == 10 ? "101" : "301";
-                c_euid = prefix + mi.substring(3);
-              } else {
-                c_euid = "30" + mi;
-              }
-              base_params.euid = c_euid;
-              lv2_mi_info = {
-                // api_name,
-                // params: {
-                  ...base_params,
-                  euid: c_euid,
-                  tid: "",
-                  // orpt: '0',
-                // },
-              };
+            c_euid = "30" + mi;
             }
-          }
-    } 
+            base_params.euid = c_euid;
+            lv2_mi_info = {
+            // api_name,
+            // params: {
+                ...base_params,
+                euid: c_euid,
+                tid: "",
+                // orpt: '0',
+            // },
+            };
+        }
+        }
+    } else if (menu_root == 5000){
+        // 热门赛种
+        const { current_mi } =  mid_menu_result;
+        lv2_mi_info = {
+            euid: "30199",
+            orpt: -1,
+            csid: current_mi - 5000
+        };
+    }
     else if (menu_root == 1) {
         lv2_mi_info = {
             ...lv2_mi_info,
