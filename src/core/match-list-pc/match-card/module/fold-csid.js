@@ -68,7 +68,7 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
    */
 export function recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie_2(click_card_obj) {
   // 是否赛种折叠
-  let is_sport_fold = !click_card_obj.is_sport_fold;
+  let is_sport_fold = Boolean(!click_card_obj.is_sport_fold);
   // 赛种下所有卡片key列表
   let sport_card_keys_arr = MatchListCardData.csid_to_card_key_obj['csid_' + click_card_obj.csid] || []
   // 赛种已折叠
@@ -87,7 +87,7 @@ export function recompute_match_list_style_obj_and_match_list_mapping_relation_o
     if (card_obj.card_type == 'sport_title')return;
     if (is_sport_fold) {
       //相当于点击联赛标题 折叠
-      if (['league_title', 'champion_league_title'].includes(card_obj.card_type) && card_obj.is_show_card) {
+      if (['league_title', 'champion_league_title'].includes(card_obj.card_type)&&!card_obj.is_league_fold) {
         recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(card_obj, false)
       }
     }else{
@@ -98,5 +98,6 @@ export function recompute_match_list_style_obj_and_match_list_mapping_relation_o
       }
     }
   })
+  console.log('jiffy2',Date.now(),count)
   conpute_match_list_card_offset()
 }

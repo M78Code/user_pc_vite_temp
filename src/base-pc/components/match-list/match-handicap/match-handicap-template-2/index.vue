@@ -29,11 +29,12 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js"
 
-const MatchListData=inject("MatchListData")
-const match=inject("match")
+const MatchListData = inject("MatchListData")
+const match = inject("match")
+const not_hn_obj_map = inject('not_hn_obj_map')
+
 const props = defineProps({
   // 盘口列表
   handicap_list: {
@@ -61,9 +62,8 @@ let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(match.value)
 let match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
 const col_ols_data = computed(() => {
   try {
-    let { hn, mid,csid } = match.value
+    let { hn, mid, csid } = match.value
     let handicap_type = hn || 1
-    const many_obj = get_match_to_map_obj(match.value); //非坑位对象
     const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
     return lodash.cloneDeep(props.handicap_list || []).map(col => {
       col.ols = col.ols.map(item => {
@@ -71,9 +71,9 @@ const col_ols_data = computed(() => {
         // 投注项数据拼接
         let hn_obj_config = MatchListData.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
         // 获取投注项内容 
-        return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config]||{};
+        return lodash.get(hn_obj, hn_obj_config) || not_hn_obj_map.value[hn_obj_config] || {};
       })
-      col.csid=csid;
+      col.csid = csid;
       return col
     })
   } catch (e) {
