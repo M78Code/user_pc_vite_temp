@@ -4,7 +4,7 @@
       <!-- 赛事基础信息 -->
       <div class="basic-col"
         @click="goto_details(match)"
-        :style="`width: 338px !important;height:80px !important;`">
+        :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
         <!-- 比赛进程 网球，羽毛球用105模板，别的用101 -->
         <!-- <BasisInfo101 v-if="match" :match="match" show_type="all"></BasisInfo101> -->
         <div class="team-num">{{index + 1}}</div>
@@ -30,14 +30,14 @@
       <!-- 竖线 -->
       <div class="vertical-line"></div>
       <!-- 图标信息 -->
-      <div :style="`width:115px !important;`">
+      <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`">
         <icon-box :match="match"></icon-box>
       </div>
       <!-- 投注信息 -->
       <match-handicap :handicap_list="handicap_list" use_component_key="MatchHandicap2" />
       <!-- 比分板 -->
       <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
-        :style="`width:46px !important;`">
+      :style="`width:${match_list_tpl_size.media_width}px !important;`">
         <!-- 图片资源有问题，先用文字替代  -->
         <div class="video" v-if="+lodash.get(match, 'mms') > 0"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
@@ -107,13 +107,19 @@ export default {
       }
       return []
     });
+
+    const match_list_tpl_size = computed(() => {
+      const width_config = MATCH_LIST_TEMPLATE_CONFIG[`template_129_config`].width_config
+      return width_config
+    })
     
 
   return {
       compute_css_obj,
       current_mid,
       match,
-      handicap_list
+      handicap_list,
+      match_list_tpl_size
     }
 }
  

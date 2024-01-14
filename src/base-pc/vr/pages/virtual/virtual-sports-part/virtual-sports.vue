@@ -20,12 +20,6 @@
     </div>
     <div class="virtual-content-wrapper">
       <div class="virtual-sports-top">
-        <!-- <div class="tab-title">
-          <div class="league-name right-border">{{ lengue_name }}</div>
-          <div class="status">
-            <span class="num">{{current_match.no}}</span>
-          </div>
-        </div> -->
         <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
         <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
         <virtual-sports-stage ref="virtual_sports_stage"
@@ -42,7 +36,13 @@
           @update_next_batch_match="update_n_batch_handle">
         </virtual-sports-stage>
         <div class="virtual-video-play-team" v-if="sub_menu_type && [1001,1004].includes(sub_menu_type)">
-          <div class="team-title">England League Round 6</div>
+          <div class="team-title">
+            <div class="info">
+            </div>
+            <div class="title">
+              {{lengue_name}} {{ current_match.no }}
+            </div>
+            </div>
                 <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']" v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
                   <div class="teams">
                     <div class="index">
@@ -175,18 +175,18 @@ export default {
 .fixed-head {
   position: sticky;
   top: 45px;
-  background: var(--q-gb-bg-c-21);
+  background: #fff;
   z-index: 100;
+  height: 44px;
 }
 
 /*  联赛菜单 */
 .tab-wrapper {
-  height: 0.32rem;
+  height: 44px;
   display: flex;
   flex-wrap: nowrap;
   overflow: auto;
   align-items: center;
-  padding: 0 0.08rem;
   background-color: var(--q-gb-bg-c-27);
 
   .tab-item {
@@ -196,20 +196,24 @@ export default {
     margin-right: 0.06rem;
     padding: 0 0.1rem;
     flex-shrink: 0;
-    color:var(--q-gb-t-c-24);
+    color: #777777;
     position: relative;
+    font-weight: 400;
+    cursor: pointer;
     &.active {
-      color: var(--q-gb-t-c-1);
+      color: #1A1A1A;
+      font-weight: 500;
       &:after {
         content: "";
         display: block;
-        width: 0.32rem;
-        height: 0.02rem;
-        background: var(--q-gb-t-c-1);
+        width: 8px;
+        height: 8px;
+        background: var(--q-gb-bg-c-1);
         position: absolute;
-        bottom: -0.03rem;
+        bottom: -12px;
         left: 50%;
-        margin-left: -0.16rem;
+        margin-left: -4px;
+        border-radius: 50%;
       }
     }
   }
@@ -330,6 +334,14 @@ export default {
       align-items: center;
       color: #fff;
       background: linear-gradient(to right, #3B3B3B 0%, #9C9C9C);
+      .info {
+        width: 30px;
+        height: 34px;
+        background-color: var(--q-gb-bg-c-1);
+      }
+      .title {
+        padding-left: 10px;
+      }
     }
     .vsm-options {
       width: 100%;
@@ -342,6 +354,7 @@ export default {
       font-size: .12rem;
       padding: .02rem .12rem;
       border-bottom: 1px solid #E2E2E2;
+      cursor: pointer;
       &.active {
         background: linear-gradient(to right, #FF7000 -700%, #fff);
         .teams {

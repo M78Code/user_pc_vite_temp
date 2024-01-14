@@ -216,6 +216,7 @@ export default {
           align-items: center;
           min-width: fit-content;
           padding-right: 0.18rem;
+          cursor: pointer;
           &:last-child {
             padding-right: 0.2rem;
           }
@@ -261,7 +262,7 @@ export default {
             color: var(--q-gb-t-c-19);
           }
           &.tabs-active > span {
-            color: var(--q-gb-t-c-18);
+            color: var(--q-gb-t-c-2);
           }
           
         }

@@ -44,7 +44,8 @@ export const  width_config ={
   play_icon_width: 115,
   league_title_height: 40,
   bet_width: 330,
-  process_team_width: 340
+  process_team_width: 340,
+  media_width: 40
 }
 
 
