@@ -92,7 +92,7 @@ onBeforeMount(() => {
 onMounted(() => {
   // 全局一秒钟定时器
   upd_time_refresh_timer = setInterval(global_one_second_timer, 1000);
-
+  UserCtr.set_e_sports_domain_img()
   set_components_style()
   ref_data.emit_lsit = {
     emitter_3: useMittOn(MITT_TYPES.EMIT_THEME_CHANGE, set_components_style).off
