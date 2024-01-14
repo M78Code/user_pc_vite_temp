@@ -11,7 +11,7 @@
     <!--联赛tab-->
     <!--只有足球展示多个联赛菜单 -->
     <div class="fixed-head">
-      <div class="tab-wrapper" v-if="sub_menu_type == 1001">
+      <div class="tab-wrapper">
         <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
           :key="i" @click="tab_item_click_handle(i,null,'user_change')">
           <div>{{tab_item.name}}</div>
@@ -35,7 +35,7 @@
           @time_ended="timer_ended_handle"
           @update_next_batch_match="update_n_batch_handle">
         </virtual-sports-stage>
-        <div class="virtual-video-play-team" v-if="sub_menu_type && [1001,1004].includes(sub_menu_type)">
+        <div class="virtual-video-play-team" v-if="sub_menu_type && [1001,1004].includes(sub_menu_type) && current_match.csid" >
           <div class="team-title">
             <div class="info">
             </div>
@@ -43,7 +43,9 @@
               {{lengue_name}} {{ current_match.no }}
             </div>
             </div>
-                <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']" v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
+                <div class="vsm-options" :class="[current_match.mid === item.mid && 'active',
+                 current_match.csid == 1001  && 'vsm-options-short']" 
+                v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
                   <div class="teams">
                     <div class="index row items-center justify-center">
                       {{ index  + 1}}
@@ -51,17 +53,20 @@
                     <div class="name home col ellipsis">
                       {{item.teams[0]}}
                     </div>
-                    <div class="score number_family">
+                    <div class="score" v-if="(item.csid == 1001 && current_match.match_status == 0) || 
+                    (item.csid == 1004 && item.mmp == 'PREGAME' && current_match.match_status == 0)">VS</div>
+                    <div v-else class="score number_family">
                       {{item.home || 0}}:{{item.away || 0}}
                     </div>
                     <div class="name away col ellipsis">
                       {{item.teams[1]}}
                     </div>
-                    <div class="right-col yb-flex-center">
-                      
+                    <div class="right-col row items-center justify-center">
+                        {{ item.show_time }}
                     </div>
                   </div>
                 </div>
+                <div class="vsm-options" v-if="current_match.csid == 1004"></div>
         </div>
         <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
         <template v-else-if="sub_menu_type && current_match && 0">
@@ -346,8 +351,8 @@ export default {
     }
     .vsm-options {
       width: 100%;
-      height: 29px;
-      line-height: 29px;
+      height: 48px;
+      line-height: 48px;
       background: #fff;
       display: flex;
       align-items: start;
@@ -355,7 +360,12 @@ export default {
       flex-direction: column;
       font-size: .12rem;
       border-bottom: 1px solid #E2E2E2;
+      overflow: hidden;
       cursor: pointer;
+      &-short {
+        height: 29px;
+        line-height: 29px;
+      }
       &.active {
         background: linear-gradient(to right, #FF7000 -700%, #fff);
         .teams {
@@ -369,7 +379,7 @@ export default {
         color: #1A1A1A;
         .index {
           width: 30px;
-          height: 29px;
+          height: 100%;
           background: #F5F5F5;
         }
         .name.home {
@@ -381,6 +391,11 @@ export default {
         .score {
           width: 64px;
           text-align: center;
+        }
+
+        .right-col {
+          width: 30px;
+          height: 29px;
         }
       }
     }
