@@ -185,12 +185,11 @@ class MenuData {
             mi: BaseData.base_menu_obj[item.menuId]
           }
         })
-        
         // 使用新的二级菜单数据 替换旧的菜单数据
         for(let item of this.left_menu_list){
           if(item.mi == mi){
             // 获取到菜单的二级菜单列表 和 接口返回的二级菜单列表 做对比 数量替换 
-            let item_sl = lodash.cloneDeep(lodash.get(item,'sl',[]))
+            let item_sl = lodash.cloneDeep(lodash.get(item,'sl',[])) || [];
             item_sl.forEach(item => {
               //对 匹配上的数据 做替换
               if(list_obj[item.mi] && list_obj[item.mi].mi == item.mi ){
