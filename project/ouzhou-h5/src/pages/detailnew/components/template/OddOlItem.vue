@@ -107,7 +107,7 @@ const isLock = computed(() => {
     // @ts-ignore
     const { _mhs,_hs } = props.value
     if(_mhs == 0 || _mhs == 11){
-      if( _hs == 0 || _mhs == 11){
+      if( _hs == 0 || _hs == 11){
         if(props.value.os == 1){
           return Number(ov) == 0 
         }
