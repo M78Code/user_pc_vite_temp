@@ -30,7 +30,7 @@
     <div class="menu-nav-li">
       <p>{{ i18n_t("ouzhou.menu.all_sports")}}</p>
       <ul class="menu-list">
-        <template v-for="item in BaseData.left_menu_base_mi" :key="item">
+        <template v-for="item in MenuData.left_menu_list" :key="item">
           <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi  == item.mi && MenuData.left_menu_result.menu_type==1 }"
            v-if="item.ct" @click="jump_func(item,'1')">
             <sport-icon :sport_id="BaseData.compute_sport_id(item.mi)" key_name="pc-left-menu-bg-active-image"  size="18" class="icon" />
@@ -46,16 +46,10 @@
           <sport-icon :sport_id="BaseData.compute_sport_id(400)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
-        <!-- <template v-if="IS_FOR_NEIBU_TEST"> -->
-          <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}">
-            <sport-icon :sport_id="BaseData.compute_sport_id(2000)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
-            {{ (BaseData.menus_i18n_map || {})[2000] || "" }}
-          </li>
-          <li class="f-s-c" @click="vrClick()" :class="{ 'menu_checked': MenuData.is_vr()}">
-            <sport-icon :sport_id="BaseData.compute_sport_id(300)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
-            {{ (BaseData.menus_i18n_map || {})[300] || "" }}
-          </li>
-        <!-- </template> -->
+        <li class="f-s-c" @click="vrClick()" :class="{ 'menu_checked': MenuData.is_vr()}">
+          <sport-icon :sport_id="BaseData.compute_sport_id(300)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
+          {{ (BaseData.menus_i18n_map || {})[300] || "" }}
+        </li>
       </ul>
     </div>
 
@@ -68,19 +62,19 @@
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useRouter,useRoute } from "vue-router";
 import BaseData from "src/core/base-data/base-data.js";
-// import sport-icon from "src/base-pc/components/sport-icon.vue";
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
-// import { use_base_data,useMenuData,useMenuI18n } from "./base_data";
 // 菜单配置
 import { MenuData,useMittEmit,MITT_TYPES } from "src/output/index.js"
-
-import BUILDIN_CONFIG from "app/job/output/env/index.js";;
-const { PROJECT_NAME,IS_FOR_NEIBU_TEST, BUILD_VERSION } = BUILDIN_CONFIG ;
+import { get_visit_sports_list,set_visit_count_list } from "src/core/menu_config/visit_count.js"
 
 const popular = ([{mi:101},{mi:102}])
 
 const router = useRouter();
 const route = useRoute();
+
+onMounted(()=>{
+  get_visit_sports_list()
+})
 
 // favouritse
 const go_to_favouritse = () => {
@@ -117,7 +111,11 @@ const jump_func = (payload ={},type) => {
   // if(MenuData.left_menu_result.lv1_mi  == payload.mi && MenuData.left_menu_result.menu_type==type ){
   //   return
   // }
-   // 点击菜单的时候如果在详情页应跳转出来先
+  // 电竞
+  if(payload.mi == 2000){
+    return esportsClick()
+  }
+  // 点击菜单的时候如果在详情页应跳转出来先
   if (['league','details','search'].includes(route.name)) {
     router.push('/home')
   }
@@ -143,6 +141,8 @@ const jump_func = (payload ={},type) => {
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload.mi)
+
+    set_visit_count_list()
   })
   
 }

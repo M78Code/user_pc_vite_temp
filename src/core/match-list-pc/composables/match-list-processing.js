@@ -254,7 +254,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
 	if (
 		vx_layout_list_type == "match" &&
 		[1, 500].includes(MenuData.menu_root) &&
-		!backend_run
+		!backend_run&&!is_base_data
 	) {
 		// 调用bymids接口
 		!is_base_data&&api_bymids({ is_first_load: true, inner_param: true });

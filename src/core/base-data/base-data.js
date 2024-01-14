@@ -549,7 +549,7 @@ class BaseData {
     this.set_left_menu_init(menu_old_or_nem_data_list);
 
     // app-h5使用
-    if( ['ouzhou-h5','app-h5','new-pc'].includes(PROJECT_NAME)){
+    if( ['ouzhou-h5','app-h5','new-pc','ouzhou-pc'].includes(PROJECT_NAME)){
       MenuData.set_init_menu_list()
     }
 
@@ -1195,6 +1195,7 @@ class BaseData {
       138: 38,
       139: 39,
       140: 40,
+      150: 50,
       190: 90,
       191: 91,
       300: 300,

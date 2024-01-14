@@ -34,7 +34,7 @@ const item = {
   item_10: 3,
   item_11: 13,
   item_12: 6,
-  item_13: 18,
+  item_13: 15,
   item_14: 14,
   item_15: 20,
 
@@ -66,11 +66,11 @@ const item = {
   item_36: 39,
   item_37: 19,
 
-  item_38: 42,
-  item_39: 43,
+  item_38: 28,
+  item_39: 18,
 
-  item_40: 14,
-  item_50: 9, // ？？
+  item_40: 57,
+  item_50: 35,
 
   item_90: 55,
   item_91: 56,

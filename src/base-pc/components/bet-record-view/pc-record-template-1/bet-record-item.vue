@@ -164,7 +164,7 @@
         </div>
       </template>
       <div class="row">
-        <div class="col bet-play-team">
+        <div class="col">
           <!--虚拟赛马,虚拟赛狗,虚拟摩托车,泥地摩托车玩法显示数字样式-->
           <template v-if="[
             VIURTUAL_SPORT.horse,
@@ -174,22 +174,24 @@
           ].includes(`${order.sportId}`)">
             <template v-if="!VIRTUAL_PLAY_NOT_NUMBER2.includes(`${order.playId}`)">
               <template v-for="num in get_numbers()" :key="num">
-                <div :class="[`ranking-icon ranking-bg-style1-${num}`, `csid-$ {order.sportId}`]"></div>
+                <div :class="[`ranking-icon ranking-bg-style1-${num}`, `csid-$ {order.sportId}`, 'bet-play-team']"></div>
               </template>
             </template>
             <!--盘口值-->
             <template v-if="order.marketValue && !order.marketValue.includes('/')">
-              <div class="bet-team-name">{{ order.marketValue }}</div>
+              <div class="bet-team-name bet-play-team">{{ order.marketValue }}</div>
             </template>
           </template>
           <template v-else>
-            <!--非赛狗/非赛马时显示盘口值 赔率-->
-            <span class="part-one">{{ part().part1 }}</span>
-            <span class="part-two">{{ lodash_.trim(part().part2) }}</span>
+            <div class="bet-play-team" v-if="part().part1 || part().part2">
+              <!--非赛狗/非赛马时显示盘口值 赔率-->
+              <span class="part-one">{{ part().part1 }}</span>
+              <span class="part-two">{{ lodash_.trim(part().part2) }}</span>
+            </div>
           </template>
         </div>
       </div>
-      <div class="row">
+      <div class="row" style="margin-top: 8px;">
         <div class="col">
           <!--赔率-->
           <label class="bet-odds-value"><span>@</span>{{ order.oddFinally }}</label>

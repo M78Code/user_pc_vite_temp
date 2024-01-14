@@ -21,7 +21,8 @@
       </div>
       <div class="record-settled-l">
         <div style="width:180px;">
-          <q-select v-model="select_value" @update:model-value="selectInput" :options="select_options"
+          <!-- <icon-wapper class="icon icon-sort_settle_time" size="14px" color="red" /> -->
+          <q-select v-model="select_value" popup-content-class="selet-sort-type" @update:model-value="selectInput" :options="select_options"
             :options-html="true">
           </q-select>
         </div>
@@ -58,6 +59,7 @@ import BetRecordHistory from "src/core/bet-record/pc/bet-record-history.js"
 import checkBoxWarp from './check_box_warp.vue'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { api_betting } from "src/api/index.js";
+import { IconWapper } from 'src/components/icon'
 import dayjs from 'dayjs'
 const _dayjs = dayjs()
 
@@ -112,11 +114,11 @@ const time_click = (item) => {
 }
 
 // 排序筛选   默认排序、按投注时间排序、按开赛时间排序
-const select_value = ref(`<i class="q-icon icon-calendar"> </i> <span>${i18n_t("bet_record.settled_time")}</span>`)
+const select_value = ref(`<i class="q-icon icon-sort_settle_time"> </i> <span>${i18n_t("bet_record.settled_time")}</span>`)
 const select_options = [
-  { value: i18n_t("bet_record.sort_by_settled_time"), label: `<i class="q-icon icon-calendar"> </i> <span>${i18n_t("bet_record.settled_time")}</span>`, id: 2 },
-  { value: i18n_t("bet_record.sort_by_bet_time"), label: `<i class="q-icon icon-calendar"> </i> <span>${i18n_t("bet_record.bet_time")}</span>`, id: 1 },
-  { value: i18n_t("bet_record.sort_by_match_time"), label: `<i class="q-icon icon-calendar"> </i> <span>${i18n_t("bet_record.match_time")}</span>`, id: 3 }
+  { value: i18n_t("bet_record.sort_by_settled_time"), label: `<i class="q-icon icon-sort_settle_time"> </i> <span>${i18n_t("bet_record.settled_time")}</span>`, id: 2 },
+  { value: i18n_t("bet_record.sort_by_bet_time"), label: `<i class="q-icon icon-sort_bet_time"> </i> <span>${i18n_t("bet_record.bet_time")}</span>`, id: 1 },
+  { value: i18n_t("bet_record.sort_by_match_time"), label: `<i class="q-icon icon-sort_match_time"> </i> <span>${i18n_t("bet_record.match_time")}</span>`, id: 3 }
 ]
 const selectInput = (v) => {
   Object.assign(BetRecordHistory.params, {
@@ -148,15 +150,21 @@ let params = {
 }
 
 watch(date, (newVal) => {
-  if (Array.isArray(newVal)) {
-    date_value.value = newVal[0] + '-' + newVal[0]
-    return;
+  if(newVal) { // newVal 可能为null
+    // 关闭弹框
+    qDateProxy.value && qDateProxy.value.hide()
+    if (Array.isArray(newVal)) {
+      date_value.value = newVal[0] + '-' + newVal[0]
+      return;
+    }
+    // 只选一天  2024/01/01 字符串
+    if(lodash.isString(newVal)) {
+      date_value.value = newVal + '-' + newVal
+      return;
+    }
+    // 正常选择时间段  {from: '2024/01/01', to: '2024/01/11'}
+    date_value.value = newVal.from + '-' + newVal.to
   }
-  if (newVal.from && newVal.from === newVal.to) {
-    date.value = [newVal.from]
-    return;
-  }
-  date_value.value = newVal.from + '-' + newVal.to
 })
 
 const search = () => {
@@ -242,6 +250,24 @@ div.q-menu {
   box-shadow: 0 1px 5px #0003, 0 2px 2px #00000024, 0 3px 1px -2px #0000001f;
   background: #fff;
 }
+.selet-sort-type {
+  border-radius: 4px;
+  .q-icon {
+    font-size: 14px;
+    margin-right: 3px;
+  }
+  .q-item--active {
+    color: var(--q-gb-t-c-7);
+    .q-icon {
+      &:before {
+        color: var(--q-gb-bg-c-4);
+      }
+    }
+  }
+  .q-item {
+    min-height: 40px;
+  }
+  }
 </style>
 <style lang="scss" scoped>
 .bg-white {
@@ -273,6 +299,9 @@ div.q-menu {
   .record-settled-l {
     display: flex;
     align-items: center;
+    &:deep(.q-field--standard .q-field__control:before) {
+      border-bottom: none;
+    }
   }
 
   .tips {
@@ -319,7 +348,15 @@ div.q-menu {
   &:deep(.q-field__native) {
     height: 29px;
     min-height: 28px;
+    padding-left: 10px;
+    .q-icon {
+      padding-bottom: 2px;
+      &:before {
+        color: var(--q-gb-bg-c-4);
+      }
+    }
   }
+
 
   .time-select {
     display: flex;
