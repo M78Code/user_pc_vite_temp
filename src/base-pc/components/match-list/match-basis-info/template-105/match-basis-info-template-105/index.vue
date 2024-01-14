@@ -145,7 +145,7 @@ const update_show_default = (value)=>{
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(match.value, 'match.mid'))
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
-    return `+${ lodash.get(match.value, 'mc') || 0}`
+    return `${ lodash.get(match.value, 'mc') || 0}`
   }else{
     return i18n_t('match_info.more')
   }

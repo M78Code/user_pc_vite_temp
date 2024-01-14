@@ -85,7 +85,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { mi_100_arr,mi_2000_arr,handle_click_menu_mi_1,handle_click_menu_mi_400,resolve_mew_menu_res, un_mounted } from "src/base-pc/components/match-list/list-filter/index.js"
 import { MenuData ,useMittOn,MITT_TYPES, } from "src/output/index.js"
 import { compute_img_url } from 'src/core/server-img/index.js'
-
+import lodash_ from "lodash"
 let area_obj = ref();
 let area_obj_wrap = ref();
 let for_count
@@ -106,7 +106,6 @@ const ref_data = reactive({
 onMounted(() => {
   //判断接口是否正常返回数据
   const { current_mi } = MenuData.mid_menu_result
-  console.error('current_mi',current_mi)
   if (!current_mi) {
     // 默认选中当前第一个tab
     if(MenuData.is_kemp()){
@@ -143,15 +142,18 @@ watch(() => mi_100_arr.value , () => {
 
 // 菜单数量修改
 const set_ref_base_menu = (list=[] ) => {
-  // 欧洲版 滚球
-  if(MenuData.is_scroll_ball()){
-    mi_100_arr.value = mi_100_arr.value.map(item => {
-      let obj = list.find( ob => ob.mi == item.mi) || {}
-      if(obj.mi){
-        item.ct = obj.count
-      }
-      return item
+  // 欧洲版 滚球/冠军  不是收藏
+  if((MenuData.is_scroll_ball() || MenuData.is_kemp()) && !MenuData.is_collect){
+    let top_menu_list = lodash_.cloneDeep(MenuData.top_menu_list)
+    list.forEach(item=>{
+      top_menu_list.filter(obj=>{
+        if(item.mi == obj.mi){
+          obj.ct = item.count
+        }
+      })
     })
+
+    MenuData.set_top_menu_list(top_menu_list)
   }
 }
 /**
