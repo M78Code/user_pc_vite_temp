@@ -45,7 +45,7 @@
           ol_data._hsw,
           csid || match?.csid
         ) }}
-      </span>
+      </span><span v-else>—</span>
       <div class="odds-arrows-wrap">
         <!-- 红升、绿降 -->
         <div class="odds-icon" v-if="odds_lift == 'up'" :style="compute_css_obj({ key: 'pc-home-arrow-up' })"></div>
@@ -53,6 +53,7 @@
       </div>
     </div>
   </div>
+  <div v-else>—</div>
 </template>
 
 <script setup>
