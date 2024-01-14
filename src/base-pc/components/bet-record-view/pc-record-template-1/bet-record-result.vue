@@ -22,7 +22,8 @@
       <div class="col bet-value">
        {{ format_currency(item.orderAmountTotal) }}
       </div>
-      <div class="col-auto bet-value" :class="{'red-text':(item.outcome=='4' || item.outcome=='5')}">
+      <!-- <div class="col-auto bet-value" :class="{'red-text':(item.outcome=='4' || item.outcome=='5')}"> -->
+      <div class="col-auto bet-value red-text">
         <template v-if="[0,2].includes(BetRecordLeft.selected)">
           {{  format_currency(item.maxWinAmount) }}
         </template>

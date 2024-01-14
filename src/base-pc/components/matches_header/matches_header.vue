@@ -253,7 +253,7 @@ const checked_current_tab = (payload,type) => {
 
 	// 点击热门赛种 切换到 500
 	if ([1002].includes(payload.value*1)) {
-		root = 500
+		root = 5000
 		obj.current_mi = 5001
 		MenuData.set_current_ball_type(1)
 	}
@@ -274,6 +274,7 @@ const checked_current_tab = (payload,type) => {
 	}
 	// 热门联赛
 	if(4002 == payload.value){
+		root = 202
 		MenuData.set_menu_current_mi('')
 	}
 	// 冠军
