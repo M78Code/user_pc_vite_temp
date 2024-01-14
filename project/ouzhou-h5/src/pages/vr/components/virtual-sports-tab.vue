@@ -16,11 +16,6 @@
       <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
         {{item.marketName}}
       </div>
-      <!-- <div class="menu-item">test1</div>
-      <div class="menu-item">test1</div>
-      <div class="menu-item">test1</div>
-      <div class="menu-item">test1</div>
-      <div class="menu-item">test1</div> -->
       <div class="menu-item lszj_click_icon" @click="change_tab('lszj')">
         <img :src="img"/>
       </div>
