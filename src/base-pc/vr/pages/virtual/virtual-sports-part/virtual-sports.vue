@@ -42,14 +42,23 @@
           @update_next_batch_match="update_n_batch_handle">
         </virtual-sports-stage>
         <div class="virtual-video-play-team" v-if="sub_menu_type && [1001,1004].includes(sub_menu_type)">
+          <div class="team-title">England League Round 6</div>
                 <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']" v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
                   <div class="teams">
-                    <span>{{item.teams[0]}}</span>
-                    <span class="number_family">{{item.home || 0}}</span>
-                  </div>
-                  <div class="teams">
-                    <span>{{item.teams[1]}}</span>
-                    <span class="number_family">{{item.away || 0}}</span>
+                    <div class="index">
+                      {{ index  + 1}}
+                    </div>
+                    <div class="play-teams row">
+                      <span>{{item.teams[0]}}</span>
+                      <div class="play-scores">
+                        <span class="number_family">{{item.home || 0}}</span>
+                        <span class="number_family">{{item.away || 0}}</span>
+                      </div>
+                      <span>{{item.teams[1]}}</span>
+                    </div>
+                    <div class="team-right">
+                      {{ index }}
+                    </div>
                   </div>
                 </div>
         </div>
@@ -311,30 +320,30 @@ export default {
 }
 
 .virtual-video-play-team {
-    display: flex;
-    padding: .1rem;
     padding-bottom: 0;
     background: var(--q-gb-bg-c-28);
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-content: space-between;
     border-bottom-left-radius: .04rem;
     border-bottom-right-radius: .04rem;
+    .team-title {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      color: #fff;
+      background: linear-gradient(to right, #3B3B3B 0%, #9C9C9C);
+    }
     .vsm-options {
-      width: 49%;
-      height: 0.52rem;
-      background: var(--q-gb-bg-c-18);
-      border-radius: .04rem;
-      margin-bottom: .08rem;
+      width: 100%;
+      height: 29px;
+      background: #fff;
       display: flex;
       align-items: start;
       justify-content: center;
       flex-direction: column;
       font-size: .12rem;
       padding: .02rem .12rem;
+      border-bottom: 1px solid #E2E2E2;
       &.active {
-        background: var(--q-gb-bg-c-37);
-        box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.04);
+        background: linear-gradient(to right, #FF7000 -700%, #fff);
         .teams {
           color: var(--q-gb-t-c-30);
         }
