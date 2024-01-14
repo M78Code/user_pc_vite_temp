@@ -21,15 +21,15 @@
       <match-handicap :handicap_list="handicap_list" use_component_key="MatchHandicap2" />
       <!-- 比分板 -->
       <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
-        :style="`width:${match_list_tpl_size.media_width}px !important;`">
+        :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
         <!-- 图片资源有问题，先用文字替代  -->
-        <div @click="jump_to_details('video')" class="video" v-if="+lodash.get(match, 'mms') > 1"
+        <div class="video" v-if="+lodash.get(match, 'mms') > 1"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
         </div>
-        <div @click="jump_to_details('animal')" v-else-if="+lodash.get(match, 'mvs') > -1 && lodash.get(UserCtr, 'user_info.ommv')"
+        <div v-else-if="+lodash.get(match, 'mvs') > -1"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
         </div>
-        <div @click="jump_to_details('score')" v-else>
+        <div v-else>
           <img class="score" :src="score" alt="">
         </div>
       </div>
@@ -50,7 +50,7 @@
 <script>
 import { computed, watch, inject } from 'vue';
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
-import { MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, LOCAL_PROJECT_FILE_PREFIX, UserCtr } from "src/output/index.js";
+import { MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
 import { MatchBasisInfo101FullVersionWapper as BasisInfo101 } from 'src/base-pc/components/match-list/match-basis-info/template-101/index.js'
@@ -87,7 +87,8 @@ export default {
     let current_mid = MatchListCardDataClass.current_mid;
     let handicap_list = computed(() => {
       try{
-       return match_tpl_info.value?.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
+        const _list=match_tpl_info.value?.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid),MatchListCardDataClass.list_version.value)
+        return _list
       }catch(e){
         console.log(match_tpl_info.value,e,'jiffy')
       }
@@ -125,7 +126,7 @@ export default {
     //     handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(lodash.get(match, 'csid')))
     //   }
     // })
-    function jump_to_details(type) {
+    function jump_to_details() {
       const { tid, csid, mid } = match.value;
       MatchListCardDataClass.set_current_mid(mid);
       if (MenuData.is_scroll_ball()) {
@@ -139,8 +140,7 @@ export default {
           params: {
             mid: mid,
             tid: tid,
-            csid: csid,
-            type: type
+            csid: csid
           }
         })
       }
@@ -158,8 +158,7 @@ export default {
       MenuData,
       current_mid,
       match_style_obj,
-      score,
-      UserCtr
+      score
     }
   }
 }

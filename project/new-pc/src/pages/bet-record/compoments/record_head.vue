@@ -150,7 +150,7 @@ onUnmounted(() => {
         position: relative;
         &::after {
           position: absolute;
-          bottom: -3px;
+          bottom: 0;
           left: 50%;
           transform: translateX(-50%);
           width: 30px;

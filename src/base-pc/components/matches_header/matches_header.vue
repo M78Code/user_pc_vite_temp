@@ -163,6 +163,7 @@ const set_tab_list = (news_) =>{
 		matches_header_title.value = 'ouzhou.match.inplay'
 		match_list_top.value = '146px'
 		resolve_mew_menu_res()
+		MenuData.set_menu_root(1)
 	}
 	
 	// 左侧菜单
@@ -241,7 +242,7 @@ const checked_current_tab = (payload,type) => {
 		filter_tab: payload.value*1,
 	}
 
-	let root = 1
+	let root = MenuData.menu_root || 1
 	// 判断头部高度
 	if ([1001,4003].includes(payload.value*1)) {
 		match_list_top.value = '80px'
@@ -328,6 +329,7 @@ const checked_current_tab = (payload,type) => {
 		obj.current_mi = payload.value*1
 		MenuData.set_menu_current_mi(obj.current_mi)
 		MenuData.set_current_ball_type(obj.current_mi)
+		useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE)
 	}
 	// get_sport_banner()
 
