@@ -19,7 +19,7 @@ import {
 } from "src/core/mitt/index.js";
 const menu_key = STANDARD_KEY.get("menu_pc");
 
-
+import { menu_default } from "./config/menu-default.js"
 
 import BaseData from "src/core/base-data/base-data.js"
 
@@ -252,7 +252,7 @@ class MenuData {
 
   // 初始化菜单 默认值
   set_left_menu_list_init(list = []){
-    this.left_menu_list = list
+    this.left_menu_list = list.length ? list : menu_default
     this.set_menu_data_version()
   }
 
@@ -280,6 +280,7 @@ class MenuData {
    * @param {*} is_fetch  是否立刻更新菜单 意味这立刻请求列表接口
    */
   set_menu_root(val) {
+    console.error('set_menu_root',val)
     this.menu_root = val;
     let menu_list = []
     switch(val*1){
@@ -293,7 +294,8 @@ class MenuData {
      
       case 5000:
         menu_list = this.hot_list
-      
+        break
+
       default:
         menu_list = this.to_day_list
         break 
@@ -319,7 +321,6 @@ class MenuData {
           break
       }
     }
-    console.error('menu_list',this.mid_menu_result.filter_tab,menu_list)
     this.top_menu_list = menu_list
     this.set_menu_data_version();
   }
@@ -728,6 +729,8 @@ class MenuData {
     // 获取菜单数据缓存
     let session_info = SessionStorage.get(menu_key);
     if (!session_info) {
+      // 没有数据 使用默认值
+      this.set_left_menu_list_init()
       return;
     }
     if (Object.keys(session_info).length) {
@@ -736,22 +739,6 @@ class MenuData {
           this[item] = session_info[item]
         }
       }
-      // const { left_menu_result, menu_root_count, mid_menu_result ,menu_current_mi ,menu_root,current_ball_type } = session_info;
-
-      // this.menu_root_count = menu_root_count;
-
-      // this.set_menu_root(menu_root)
-      // // 设置左侧菜单
-      // this.set_left_menu_result(left_menu_result);
-
-      // // 设置中间件
-      // this.set_mid_menu_result(mid_menu_result);
-
-      // // 设置当前请求的菜单id
-      // this.set_menu_current_mi(menu_current_mi)
-
-      // this.set_current_ball_type(current_ball_type)
-    
     }
   }
 
