@@ -119,7 +119,8 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid var(--q-analysis-bd-color-3);
-  background: var(--q-gb-bg-c-21);
+  //background: var(--q-gb-bg-c-21);
+  background: var(--q-gb-bg-c-23);
   position: sticky;
   top: 0.82rem;
   width: 100%;
