@@ -623,9 +623,9 @@ const cancelSuccess = () => {
   justify-content: flex-end;
   align-items: center;
   padding-right: 20px;
-  height: 36px;
+  height: 50px;
   font-size: 14px;
-  background-color: #f6f7fa;
+  background-color: var(--q-gb-bg-c-25);
 
   span {
     margin-left: 20px;
@@ -695,6 +695,8 @@ const cancelSuccess = () => {
     padding-top: 50px;
   }
   &:deep(.q-table) {
+    background-color: var(--q-gb-bg-c-22);
+    // border-collapse: collapse;
     thead tr{
       background-color: var(--q-gb-bg-c-25);
     }
@@ -702,12 +704,26 @@ const cancelSuccess = () => {
       td:first-child{
         border-radius: 8px 0 0 8px;
       }
+      td:last-child {
+        border-radius: 0 8px 8px 0;
+      }
+      td {
+        background-color: var(--q-gb-bg-c-25);
+        border-bottom-width: 4px;
+        border-top-width: 4px;
+        border-bottom-color: var(--q-gb-bg-c-22);
+        border-top-color: var(--q-gb-bg-c-22);
+        border-right-width: 1px;
+        border-right-color: var(--q-gb-bg-c-23);
+        &:last-child {
+          border-right: none;
+        }
+      }
     }
     th{
       border-top: 2px solid #fff;
       border-bottom: 2px solid #fff;
       &:first-child{
-        //border-radius: 6px;
         border-left: 2px solid #fff;
       }
       &:last-child{
