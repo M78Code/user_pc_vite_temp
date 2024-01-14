@@ -67,7 +67,7 @@ const item = {
   item_37: 19,
 
   item_38: 28,
-  item_39: 43,
+  item_39: 18,
 
   item_40: 57,
   item_50: 35,
