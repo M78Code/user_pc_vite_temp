@@ -728,8 +728,8 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    * @description 返回顶部
    * @return {Undefined} Undefined
    */
-  const on_go_top = () => {
-    // useMittEmit(MITT_TYPES.EMIT_SET_SCROLL_POSITION, [0, 0]);
+  function on_go_top() {
+    useMittEmit(MITT_TYPES.EMIT_SET_SCROLL_POSITION, [0, 0]);
   };
 
   /**

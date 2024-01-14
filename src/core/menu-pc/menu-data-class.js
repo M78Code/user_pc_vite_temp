@@ -1125,7 +1125,7 @@ class MenuData {
     if(mi){
       return this._is_cur_mi(2000, mi)
     }
-    return this._is_cur_mi(2000, mi) || this._is_cur_mi(2000, this.left_menu_result.lv1_mi)
+    return this._is_cur_mi(2000, mi)
   }
   /**
    * 是否选中了串关
