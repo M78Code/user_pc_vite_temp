@@ -386,6 +386,11 @@ onMounted(() => {});
       }
     }
   }
+  :deep(.temp-simple) {
+  .oid-width {
+    min-width: 35px;
+  }
+}
 }
 
 .temp-simple {
