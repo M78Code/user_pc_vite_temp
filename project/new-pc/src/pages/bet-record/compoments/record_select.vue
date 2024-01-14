@@ -150,15 +150,21 @@ let params = {
 }
 
 watch(date, (newVal) => {
-  if (Array.isArray(newVal)) {
-    date_value.value = newVal[0] + '-' + newVal[0]
-    return;
+  if(newVal) { // newVal 可能为null
+    // 关闭弹框
+    qDateProxy.value && qDateProxy.value.hide()
+    if (Array.isArray(newVal)) {
+      date_value.value = newVal[0] + '-' + newVal[0]
+      return;
+    }
+    // 只选一天  2024/01/01 字符串
+    if(lodash.isString(newVal)) {
+      date_value.value = newVal + '-' + newVal
+      return;
+    }
+    // 正常选择时间段  {from: '2024/01/01', to: '2024/01/11'}
+    date_value.value = newVal.from + '-' + newVal.to
   }
-  if (newVal.from && newVal.from === newVal.to) {
-    date.value = [newVal.from]
-    return;
-  }
-  date_value.value = newVal.from + '-' + newVal.to
 })
 
 const search = () => {
