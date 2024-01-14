@@ -16,7 +16,12 @@
       <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
         {{item.marketName}}
       </div>
+      <div class="menu-item lszj_click_icon" @click="change_tab('lszj')">
+        <img :src="img"/>
+      </div>
     </div>
+    
+    
     <!-- 分析icon(详情页面的时候显示分析,在其他页面不显示分析按钮) -->
     <!-- <div v-if="anlyse_show" class="icon-style" @click="analyse_btn">
       <div :class="[analyse ? 'analyse-icon':'analyse-close-icon']"></div>
@@ -26,6 +31,7 @@
 
 <script>
 import { api_common } from "src/api/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 export default {
@@ -36,6 +42,13 @@ export default {
       analyse:true,
       // 渲染的数据
       data_list:[],
+      lszj_turnon: false,
+      img: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/virtual-sports/lszj_click_icon.svg`,
+    }
+  },
+  setup(){
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
     }
   },
   computed:{
@@ -105,6 +118,19 @@ export default {
     set_fewer(data){},
     set_is_show_details_analyse(data){},
 
+    change_tab (val){
+      // this.viewTab =val
+      console.log("val===", val);
+      if(this.lszj_turnon){
+        this.lszj_turnon = false
+        this.img = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/virtual-sports/lszj_click_icon.svg`;
+        this.$emit('change_tab','bet')
+      }else{
+        this.lszj_turnon = true
+        this.img = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/virtual-sports/lszj_click_turnoff_icon.svg`;
+        this.$emit('change_tab','lszj')
+      }
+    },
     /**
      *@description: 虚拟体育分析按钮
      *@param {Undefined}
@@ -124,6 +150,11 @@ export default {
     },
     // 单击玩法集
     selete_item(uId,e){
+
+      this.lszj_turnon = false
+      this.img = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/virtual-sports/lszj_click_icon.svg`;
+      this.$emit('change_tab','bet')
+
       // 点击的玩法是当前选中的玩法
       if(this.get_details_item == uId) return false;
       if(this.is_show_analyse){
@@ -229,6 +260,10 @@ export default {
 .vir-details-tab {
   height: 0.4rem;
   margin-bottom: 0.04rem;
+
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .menu-s {
@@ -256,6 +291,18 @@ export default {
   display: inline-block;
   color: var(--q-gb-t-c-19);
 }
+
+.lszj_click_icon{
+  padding-left: 15px;
+    // background-color: red;
+    // border-radius: 100px;
+    background-color: var(--q-gb-bg-c-2);
+    // opacity: 0.8;
+    box-shadow: 0px 0px 40px 1px var(--q-gb-bg-c-2);
+    position: sticky;
+    right: 0;
+    left: 0;
+  }
 
 /*************** 选中的玩法集 *************** -S*/
 .t_color {

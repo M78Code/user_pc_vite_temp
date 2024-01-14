@@ -52,7 +52,6 @@ const thumb_top = ref(0);
 // 滚动内容高度
 const scrollHeight = ref(0);
 
-const area_height = ref(0);
 const is_bootom_height = ref(0);
 
 const area_ref = ref(null)
@@ -87,7 +86,6 @@ onUnmounted(() => {
   // this.debounce_throttle_cancel(this.update_list_card_offset);
 });
 onMounted(() => {
-  area_height.value = area_ref.value.offsetHeight;
   is_mounted.value = true;
   // 设置列表滚动条位置
   mitt_list = [
@@ -161,8 +159,9 @@ const on_scroll = (e) => {
  */
 const scroll_height_change = () => {
   scrollHeight.value = area_ref.value.scrollHeight;
-  is_bootom_height.value = scrollHeight.value - area_height.value - 500;
-  has_thumb.value = scrollHeight.value > area_height.value;
+  const area_height = area_ref.value.offsetHeight || 0
+  is_bootom_height.value = scrollHeight.value - area_height - 500;
+  has_thumb.value = scrollHeight.value > area_height;
 };
 
 /**
@@ -221,5 +220,8 @@ const setScrollPosition = (top) => {
   left: 0;
   bottom: 0;
   user-select: text;
+}
+.none-thumb {
+  display: none;
 }
 </style>
