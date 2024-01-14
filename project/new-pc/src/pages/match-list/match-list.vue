@@ -24,13 +24,14 @@
       <!-- banner -->
       <div class="banner-box" :style="{ height: GlobalAccessConfig.get_show_banner() ? '120px' : '0px' }"
         v-if="GlobalAccessConfig.get_show_banner()"></div>
-      <!-- 列表头 -->
+      <!-- 刷新组件 -->
+      <!-- 列表头  -->
       <list-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state">
         <template v-slot:refresh_icon>
-          <!-- 刷新组件 -->
           <refresh :loaded="load_data_state != 'loading'" :other_icon="true" :icon_name="1" @click="on_refresh" />
         </template>
       </list-header>
+      <!-- <match-detail-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state"/> -->
       <!-- <div>menu_config.match_list_menu_show.list_filter {{ menu_config.match_list_menu_show.list_filter }}</div> -->
       <!-- 顶部菜单  // 滚球  冠军 -->
       <list-filter v-if="MenuData.is_scroll_ball() || MenuData.is_kemp()" :collect_count="collect_count"
@@ -78,7 +79,7 @@
       <scroll-list v-if="MenuData.menu_root_show_shoucang != 300">
         <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
         <template v-slot:before>
-          <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }">333</div>
+          <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
         </template>
         <match-list-card v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :class="card_key" />
         <template v-slot:after>
@@ -117,7 +118,7 @@ import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import refresh from "src/components/refresh/refresh.vue"
 import EsportsHeader from "src/base-pc/components/match-list/esports-header/yz_index.vue";//电竞赛事列表筛选
-
+import MatchDetailHeader from "./match-detail-header.vue";
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/base-pc/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
 // import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
 // import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
