@@ -193,7 +193,8 @@ import lodash from "lodash"
 
         .team-name {
           font-size: 0.12rem;
-          color: var(--q-gb-t-c-4);
+          //color: var(--q-gb-t-c-4);
+          color: var(--q-analysis-text-color-20);
           font-weight: bold;
           line-height: 0.12rem;
         }
