@@ -26,8 +26,8 @@ export default {
 }
 .bg-tabs {
   width:100%;
-  background: var(--q-gb-bg-c-23);
-  box-shadow: 0 2px 8px 0 var(--q-gb-bd-c-14);
+  background: var(--q-gb-bg-c-21);
+  // box-shadow: 0 2px 8px 0 var(--q-gb-bd-c-14);
   
 .bg-active-tab {
   background: var(--q-gb-bg-c-15);

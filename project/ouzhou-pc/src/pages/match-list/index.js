@@ -14,6 +14,7 @@ import { set_league_list_obj } from 'src/core/match-list-pc/composables/match-li
 import { set_match_play_current_index } from 'src/core/match-list-pc/composables/match-list-other.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch';
 
 export const playingMethods_15 = [
   {
@@ -218,6 +219,7 @@ export const init_home_matches = async (is_socket=true) => {
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
           res, null, null, true
         );
+        api_bymids({mids:lodash.map(res,'mid')})
       } catch (error) {
       }
     },
