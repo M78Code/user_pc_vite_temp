@@ -58,16 +58,16 @@ const item = {
   item_31: 31,
   item_32: 37,
   item_33: 33,
-  item_34: 41,
+  item_34: 42,
   item_35: 40,
   item_36: 39,
   item_37: 19,
 
-  item_38: 42,
-  item_39: 43,
+  item_38: 28,
+  item_39: 18,
 
-  item_40: 14,
-  item_50: 9, // ？？
+  item_40: 57,
+  item_50: 35,
 
   item_90: 55,
   item_91: 56,
@@ -89,7 +89,6 @@ const item = {
   item_300: 43,
   item_2000: 36,
   item_400: 34, 
-
 };
 /**
  * 根据item 计算雪碧图位置
