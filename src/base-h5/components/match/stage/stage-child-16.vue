@@ -1,22 +1,4 @@
-<template>
-    <!-- 水球 -->
-    <div className="stage_child_16">
-        <span v-if="detail_data.mmp === 110">{{ i18n_t(`ms[${detail_data.ms}]`) }}</span>
-        <span v-else>{{ i18n_t('mmp')[16][detail_data.mmp] }}</span>
-
-        <!-- 四节休息阶段显示每节总时间 -->
-        <span v-if="mmp_arr1.includes(detail_data.mmp)">{{ detail_data.mlet }}</span>
-
-        <!-- 四节比赛阶段显示计时器 -->
-        <span v-if="!mmp_arr1.includes(detail_data.mmp) && showTime > 0">
-            &nbsp;&nbsp;
-            <span v-if="showTime > 0">
-                <span v-html="i18n_t('detail.less')"></span>{{ showTime | format_min_time }}{{ i18n_t("detail.mins") }}
-            </span>
-        </span>
-    </div>
-</template>
-
+<!-- 水球 -->
 <script setup>
 import {MITT_TYPES, useMittEmit} from "src/core/mitt/index.js";
 import {ref, watchEffect} from "vue"
@@ -88,4 +70,20 @@ watchEffect(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<template>
+    <div className="stage_child_16">
+        <span v-if="detail_data.mmp === 110">{{ i18n_t(`ms[${detail_data.ms}]`) }}</span>
+        <span v-else>{{ i18n_t('mmp')[16][detail_data.mmp] }}</span>
+
+        <!-- 四节休息阶段显示每节总时间 -->
+        <span v-if="mmp_arr1.includes(detail_data.mmp)">{{ detail_data.mlet }}</span>
+
+        <!-- 四节比赛阶段显示计时器 -->
+        <span v-if="!mmp_arr1.includes(detail_data.mmp) && showTime > 0">
+            &nbsp;&nbsp;
+            <span v-if="showTime > 0">
+                <span v-html="i18n_t('detail.less')"></span>{{ showTime | format_min_time }}{{ i18n_t("detail.mins") }}
+            </span>
+        </span>
+    </div>
+</template>
