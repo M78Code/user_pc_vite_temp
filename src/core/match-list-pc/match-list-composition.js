@@ -281,7 +281,7 @@ function mounted_fn(fun) {
 		useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(function(){
 			// 重新订阅C8
 			api_bymids({ is_show_mids_change: true })
-		}, 100)).off,
+		}, 1000)).off,
 		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids).off,
 	]
 	//如果创建后 菜单没有触发数据拉去
