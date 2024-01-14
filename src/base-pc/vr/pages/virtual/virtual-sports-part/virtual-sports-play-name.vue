@@ -7,10 +7,12 @@
       <div class="leagues-wrap" :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
         <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         </div>
-        <!-- 联赛名称 -->
-        <div class="ellipsis-wrap">
-          <div class="absolute-full league-name">
-            {{ match_item_batch_no }}
+        <div class="row items-center">
+          <!-- 未开赛时间 -->
+          <span class="state">{{ match_item_batch.timer_format }}</span>
+          <!-- 联赛轮次 -->
+          <div class="league-name">
+            {{ match_item_batch.no }}
           </div>
         </div>
       </div>
@@ -46,9 +48,9 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 
 const props = defineProps({
-  match_item_batch_no: {
-    type: String,
-    default: () => ''
+  match_item_batch: {
+    type: Object,
+    default: () => {}
   }
 })
 

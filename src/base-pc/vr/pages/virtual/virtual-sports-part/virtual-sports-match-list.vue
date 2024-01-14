@@ -5,7 +5,7 @@
 <template>
   <div class="match-list-wrapper" :class="{standard: standard_edition == 2}">
     <div>
-      <v-sports-play-name :match_item_batch_no="match_item_batch_no" />
+      <v-sports-play-name :match_item_batch="match_item_batch" />
       <template v-for="(match_item, index) in virtual_match_list" :key="index">
         <v-sports-tpl v-if="match_item.mid" :match_item="match_item" :index="index"
         :mid="match_item.mid"></v-sports-tpl>
@@ -31,7 +31,7 @@ export default {
     'v-sports-tpl': virtual_sports_match_tpl,
     'v-sports-play-name': virtual_sports_play_name
   },
-  props: ['match_item_batch_no']
+  props: ['match_item_batch']
 }
 </script>
 

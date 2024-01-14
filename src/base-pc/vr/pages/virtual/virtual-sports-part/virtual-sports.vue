@@ -45,19 +45,20 @@
             </div>
                 <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']" v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
                   <div class="teams">
-                    <div class="index">
+                    <div class="index row items-center justify-center">
                       {{ index  + 1}}
                     </div>
-                    <div class="play-teams row">
-                      <span>{{item.teams[0]}}</span>
-                      <div class="play-scores">
-                        <span class="number_family">{{item.home || 0}}</span>
-                        <span class="number_family">{{item.away || 0}}</span>
-                      </div>
-                      <span>{{item.teams[1]}}</span>
+                    <div class="name home col ellipsis">
+                      {{item.teams[0]}}
                     </div>
-                    <div class="team-right">
-                      {{ index }}
+                    <div class="score number_family">
+                      {{item.home || 0}}:{{item.away || 0}}
+                    </div>
+                    <div class="name away col ellipsis">
+                      {{item.teams[1]}}
+                    </div>
+                    <div class="right-col yb-flex-center">
+                      
                     </div>
                   </div>
                 </div>
@@ -82,7 +83,7 @@
               <!-- 虚拟体育足球赛事列表 -->
               <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
                 :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
-                :match_item_batch_no="match_item_batch.no"
+                :match_item_batch="match_item_batch"
                 @switch_match="switch_match_handle"  @start="match_start_handle">
               </v-s-match-list>
 
@@ -346,13 +347,13 @@ export default {
     .vsm-options {
       width: 100%;
       height: 29px;
+      line-height: 29px;
       background: #fff;
       display: flex;
       align-items: start;
       justify-content: center;
       flex-direction: column;
       font-size: .12rem;
-      padding: .02rem .12rem;
       border-bottom: 1px solid #E2E2E2;
       cursor: pointer;
       &.active {
@@ -365,6 +366,22 @@ export default {
         display: flex;
         justify-content: space-between;
         width: 100%;
+        color: #1A1A1A;
+        .index {
+          width: 30px;
+          height: 29px;
+          background: #F5F5F5;
+        }
+        .name.home {
+          text-align: right;
+        }
+        .name.home, .name.away {
+          flex: 10000 1 0%;
+        }
+        .score {
+          width: 64px;
+          text-align: center;
+        }
       }
     }
   }
