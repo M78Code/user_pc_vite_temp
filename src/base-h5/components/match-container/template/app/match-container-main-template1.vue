@@ -264,7 +264,7 @@
                     <div class="go-container-w flex no-wrap new-standard">
                       <!-- 直播 主播 视频 动画  icon 栏目   -->
                       <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
-                      <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
+                      <div v-if="lodash.get(UserCtr, 'user_info.ommv')" class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle">
                         <img :class="['live-icon-btn', { disabled: !media_button_state_obj.animationUrl }]" :src='animation_icon' />
                       </div>
                       <!-- 视频 -->
@@ -312,7 +312,7 @@ import ScoreList from 'src/base-h5/components/match-container/template/app/compo
 import ImageCacheLoad from "src/core/public-cache-image/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
-import { i18n_t,format_M_D, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData, format_time_zone } from "src/output/index.js"
+import { i18n_t,format_M_D, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData, format_time_zone, UserCtr } from "src/output/index.js"
 import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
@@ -356,7 +356,7 @@ export default {
     })
 
     return { 
-      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin, MenuData, get_date_time,
+      UserCtr, lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin, MenuData, get_date_time,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,icon_date, is_mix,
       normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan, expand_item,
       is_mix_no_today,
