@@ -20,7 +20,8 @@
         <span class="league-title-text row justify-between"
           :class="{ 'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch()) }">
             <div class="league-icon-mini">
-              <img :src="get_server_file_path(match_of_list.lurl)">
+              <!-- <img :src="get_server_file_path(match_of_list.lurl)"> -->
+              <img loading="lazy" decoding="async" :src="image_src" @error="league_icon_error">
             </div>
             <span>{{ menu_type == 100 ? match_of_list.onTn : match_of_list.tn }}</span>
         </span>
@@ -65,7 +66,6 @@ import { i18n_t } from 'src/output/index.js'
 import { lang, theme } from 'src/base-h5/mixin/userctr.js'
 import { menu_type } from 'src/base-h5/mixin/menu.js'
 import { compute_img_url } from "src/output/index.js"
-import { get_server_file_path } from "src/core/file-path/file-path.js";
 import SportIcon from "src/base-h5/components/top-menu/top-menu-ouzhou-1/components/left-menu/sport-icon.vue"
 import { IconWapper } from 'src/components/icon'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
@@ -73,6 +73,7 @@ import OddItemChampion from "src/base-h5/components/match-list/components/odd-it
 import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import champion_mixin from '../../mixins/champion.mixin.js'
 import 'src/base-h5/css/pages/match-container-champion.scss'
+import { get_server_file_path } from "src/core/file-path/file-path.js";
 
 export default {
   name: "match-container-main-template2",
@@ -100,9 +101,9 @@ export default {
       menu_type,
       compute_img_url,
       GlobalAccessConfig,
-      get_server_file_path,
       have_collect_ouzhou,
       no_collect_ouzhou,
+      get_server_file_path,
       routeName
     }
   }
@@ -279,6 +280,7 @@ export default {
       display: flex;
       height: auto;
       justify-content: flex-start;
+      border-bottom: .01rem solid var(--q-gb-bg-c-19);
       :deep(.on) {
         color: var(--q-gb-t-c-4);
       }
@@ -296,12 +298,16 @@ export default {
           color: var(--q-gb-t-c-1);
         }
         &.active{
-          background: linear-gradient(0deg,rgba(255,112,0,.1) 0%,rgba(255,112,0,.1) 100%),#FFF;
+          //background: linear-gradient(0deg,rgba(255,112,0,.1) 0%,rgba(255,112,0,.1) 100%),#FFF;
+          background-color: #FF7000 !important;
 
         }
       }
       .ol-li-item:nth-child(even) {
         border-right: 0;
+      }
+      .ol-li-item:nth-last-child(-n+1) {
+        border-bottom: none;
       }
       // .ol-li-item:hover, .ol-li-item:focus {
       //   background-color: var(--q-gb-bg-c-1);

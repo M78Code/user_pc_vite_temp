@@ -4,6 +4,18 @@
         <!-- <simple-header :title="i18n_t('common.notice')"> -->
             <!-- <span>{{ i18n_t('common.notice') }}</span> -->
         <!-- </simple-header> -->
+      <div class="c-simple-header">
+        <div class="logo-icon"  :style="compute_css_obj({ key: 'pc-rule-logo' })"></div>
+        <div class="head-info">
+          <div class="rule-title">
+            公告
+          </div>
+          <div class="systime">
+            <!--右侧时间-->
+            <span>{{date_time}} (GMT+8)</span>
+          </div>
+        </div>
+      </div>
         <div class="announce-content">
             <!-- 头部菜单开始 -->
             <top-menu :data="announce_title" @tabs_click="tabs_click"  />
@@ -35,7 +47,8 @@ import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-
 import topMenu from "./top-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
 import { api_home } from "src/api/index.js"
-import { format_str } from "src/output/index.js";
+import { compute_css_obj, format_str } from 'src/output/index.js'
+import { get_remote_time,utc_to_gmt_no_8_ms2 } from "src/output/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
@@ -48,6 +61,8 @@ const props = defineProps({})
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
+const date_time = ref('')
+const timer_id = ref(null)
 /** 返回的大列表 */
 let res_list = reactive([])
 /** 左侧菜单 */
@@ -140,22 +155,89 @@ function get_list() {
         }
     }).finally(() => loadd_finish.value = true)
 }
+/**
+ * @Description:获取当前系统时间
+ * @return {undefined} undefined
+ */
+function get_date_time() {
+  let time = get_remote_time()
+  date_time.value = utc_to_gmt_no_8_ms2(time);
+  timer_id.value = setInterval(() => {
+    time += 1000;
+    date_time.value = utc_to_gmt_no_8_ms2(time);
+  }, 1000);
+}
 /** 钩子触发 */
 onMounted(() => {
     get_list()
+  get_date_time()
 })
 </script>
 
 <style lang="scss" scoped>
+.c-simple-header{
+  display: flex;
+  padding: 0 20px 0 15px;
+  height: 61px;
+  margin-bottom: 14px;
+  min-height: 61px;
+  align-items: center;
+  text-transform: uppercase;
+  background-color: #F6F9FF;
+  .header-title{
+    color:var(--q-match-result-title-color);
+  }
+  .rule-logo {
+    margin-right: 33.3px;
+    height: 100%;
+    .img-logo {
+      width: 130px;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+    }
+  }
+}
+.logo-icon{
+  width:130px;
+  height: 40px;
+  margin-right: 34px;
+}
+.head-info {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  .rule-title {
+    color:var(--q-match-result-title-color);
+    font-size: 12px;
+  }
+  .systime {
+    min-width: 96px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    .refresh {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  }
+}
 .announce-area{
     width: 100%;
-    height: calc(100% - 80px);
-    padding-top: 6px;
-    padding-bottom: 50px;
+  border-radius: 6px;
+  margin-left: 6px;
+  margin-right: 6px;
+  border: 2px solid #FFF;
+  box-shadow: 0px 2px 8px 0px #E2E2E4;
 }
 .announce-wrap {
     width: 100%;
     height: 100vh;
+  padding-bottom: 20px;
+  background: #DEE4F2;
     display: flex;
     flex-direction: column;
     user-select: text;
@@ -164,6 +246,7 @@ onMounted(() => {
 
 /** 公告栏内容 -S*/
 .announce-content {
+  display: flex;
     width: 100%;
     height: 100%;
     // background: var(--q-gb-bg-c-4);
@@ -171,6 +254,8 @@ onMounted(() => {
     .main-page {
         color: #5a6074;
         padding-top: 14px;
+      padding: 24px;
+      background-color: #F6F9FF;
         :deep(.load-data-wrap ) {
             height: 75vh !important;
 

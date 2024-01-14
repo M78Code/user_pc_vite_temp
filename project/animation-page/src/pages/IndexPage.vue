@@ -1,15 +1,6 @@
 <template>
     <!-- <h1> DEMO </h1> -->
     <div  id="statscorewidget" v-if="!no_data"  :style="widget_style" ></div>
-    <!-- loading -->
-    <div v-else-if="loading" class="loading-wrap" :style="{'background':theme == 'day' ? '#fff' : '#1f222b'}" >
-        <div class="img-loading custom-format-img-loading"></div>
-        <div class="text-center loading-text flex items-end justify-center">
-          <span :style="{'color':theme == 'night' ? '#fff' : '#1f222b'}">{{i18n_t('common.loading')}}</span>
-          <!-- 右侧详情内容加载中... -->
-        </div>
-      </div>
-    <!-- loading -->
     <!-- 动画播放失败 -->
     <animation_no_video v-else></animation_no_video>
 </template>
@@ -118,7 +109,6 @@ widget.on('beforeInsert', () => { /* Triggers when data necessary to display wid
   console.log(1111,'beforeInsert');
 });
 widget.on('load', () => { /* Triggers when widget is loaded but not yet interactive */
-  this.loading = false
   console.log(2222,'load');
 });
 widget.on('mount', () => { /* Triggers when widget is loaded and interactive */   
@@ -136,7 +126,7 @@ this.widget_style= {
         visibility: 'hidden' ,
          
       }
-this.no_data = true      
+this.no_data = true   
 });
 
 // Event coverage:
@@ -165,22 +155,4 @@ this.widget = widget
   width: 100%;
   height: 100%;
 }  
-.loading-wrap {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.custom-format-img-loading {
-  width: 50px;
-  height: 50px;
-  background-image: url($SCSSPROJECTPATH+"/img/loading.gif");
-  background-size: 100%;
-  margin: 10px 0;
-}
-.loading-text {
-  font-size: 12px;
-}
 </style>

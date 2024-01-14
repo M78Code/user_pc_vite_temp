@@ -30,7 +30,6 @@ import { onMounted, onUnmounted, ref} from "vue";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
-import {defineExpose} from 'vue'
 const props = defineProps({
   // 吸顶高度
   sticky_height: {

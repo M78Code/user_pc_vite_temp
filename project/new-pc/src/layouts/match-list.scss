@@ -20,7 +20,7 @@ body {
       top: 0;
       left: 0;
       height: 6px;
-      background-color: var(--q-gb-bg-c-11);
+      // background-color: var(--q-gb-bg-c-11);
     }
 
     /*顶部下横线*/
@@ -196,7 +196,7 @@ body {
         /* 串 */
         .match-parlay {
           position: absolute;
-          top: 10px;
+          top: 5px;
           text-align: center;
           width: 100%;
           
@@ -289,7 +289,7 @@ body {
 
 
     .process-name {
-      color: var(--q-gb-bd-c-2);
+      color: var(--q-gb-t-c-8);
     }
 
     /*  竞彩足球样式 */
@@ -320,7 +320,7 @@ body {
     /* 其他背景样式 */
     .c-match-item {
       .process-col {
-        color: var(--q-gb-bg-c-2);
+        color: var(--q-gb-t-c-8);
       }
 
       .basic-col {
@@ -879,7 +879,7 @@ body {
 
       .match-type {
         border: 1px solid var(--q-gb-bg-c-9);
-        background-image: var(--q-gb-bg-lg-18);
+        background: var(--q-gb-bg-lg-18);
         color: var(--q-gb-bg-c-2);
 
         .basic-width {

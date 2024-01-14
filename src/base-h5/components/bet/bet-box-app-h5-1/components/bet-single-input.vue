@@ -148,7 +148,7 @@ const set_ref_data_bet_money = () => {
   ref_data.seriesOdds = seriesOdds
   // 限额改变 重置投注金额 如果大于当前额度为最大额度 如果最小额度旧是最小 否则保持
   if(ref_data.money)
-    ref_data.money = ref_data.money>max_money?max_money: ref_data.money<min_money?min_money:ref_data.money
+    ref_data.money = ref_data.money*1 > max_money ? max_money : ref_data.money*1 < min_money ? min_money : ref_data.money
   // 设置键盘设置的限额和数据
   BetData.set_bet_keyboard_config({playOptionsId:props.item.playOptionsId})
 }

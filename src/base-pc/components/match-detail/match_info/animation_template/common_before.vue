@@ -239,7 +239,7 @@ export default {
         display: flex;
         align-items: center;
         height: 46px;
-        color: var(--q-gb-t-c-1);
+        color: var(--q-gb-bd-c-13);
       }
       .match_time {
         display: block;

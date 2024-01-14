@@ -30,7 +30,7 @@ import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData , UserCtr} from "src/output/index.js";
 import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
-import { sports_play_data } from 'src/output/index.js'
+import { use_sports_play_data } from 'src/output/index.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import STANDARD_KEY from "src/core/standard-key";
@@ -184,6 +184,7 @@ const on_change_play = (item) => {
     emits('changeMenu',item.mi)
     
     const csid = MenuData.menu_csid
+    const sports_play_data = use_sports_play_data()
     const hpid = lodash.get(sports_play_data, `[${csid}][0].hpid`, '1')
     MatchResponsive.set_match_hpid(hpid, csid)
     // set_cont()

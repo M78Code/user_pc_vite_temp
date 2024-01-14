@@ -1,6 +1,7 @@
 <template>
+   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div class="component odd-ol-item" v-show="value.os != 3"
-    :class="[{ 'active': active }, status, type, calcOlResult(value['result'])]"
+    :class="[{ 'active': BetData.bet_oid_list.includes(value['oid'] ) }, status, type, calcOlResult(value['result'])]"
   >
    
     <div class="icontainer" v-if="vif"
@@ -25,7 +26,7 @@
       <div class="item ol-content">
         <div class="ol-content-ov">
           <span v-if="isLock">0.xx</span>
-          <span v-else>{{ compute_value_by_cur_odd_type(props.value.ov, props.value._hpid, props.value._hsw, sportId) }}</span>
+          <span v-else>{{ compute_value_by_cur_odd_type(value.ov, value._hpid,value._hsw, sportId) }}</span>
           <img class="odd-image" v-show="status != 'none'"
             :src="oddUp ? ouzhou_hps_up : ouzhou_hps_down" />
         </div>

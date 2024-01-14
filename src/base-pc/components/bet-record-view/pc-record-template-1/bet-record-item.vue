@@ -4,12 +4,19 @@
 <template>
   <div class="component bet-record-item">
     <div style="display: none;">{{ BetRecordLeft.bet_record_version }}</div>
-    <!--足球或者篮球，预约显示预约字样-->
-    <template v-if="order.sportId == 1 || order.sportId == 2">
-      <!-- <div class="row appoint-status" v-if="preOrder"> -->
-        <!--预约-->
-        <!-- <div class="col">{{ i18n_t('bet.bet_book_confirm') }}</div>
-      </div> -->
+    <!--预约-->
+    <template v-if="BetRecordLeft.selected == 2">
+      <div class="row pre-row">
+        <!-- 预约失败 -->
+        <span v-if="[2, 3].includes(item.preOrderStatus)">{{ i18n_t('bet.bet_book_failed') }}</span>
+        <!-- 已取消 -->
+        <span v-else-if="[4].includes(item.preOrderStatus)">{{ i18n_t('bet.bet_book_canceled') }}</span>
+        <!-- 预约中 -->
+        <div v-else class="pre-ing">
+          <span>{{ i18n_t('bet.bet_booking') }}</span>
+          <bet-cancel-pre :item="item" @success="cancelSuccess"></bet-cancel-pre>
+        </div>
+      </div>
     </template>
     <!--如果是虚拟体育-->
     <template v-if="VIRTUAL_SPORT_ID.includes(`${order.sportId}`)">
@@ -65,10 +72,10 @@
           <div class="col bet-against">
             <!--主队 v 客队-->
             <span class="home-vs-away">
-              {{ order.matchInfo.indexOf('(') ? (order.matchInfo.split('(')[0]) : order.matchInfo }}
+              {{ order.matchInfo }}
               <!--有括号就是有比分信息 当鼠标移上去显示，移出去就消失-->
-              <span v-if="order.matchInfo" @mouseover="show_score_info = true" @mouseout="show_score_info = false">{{ '('
-                + order.matchInfo.split('(')[1] }}</span>
+              <!-- <span v-if="order.matchInfo.indexOf('(')" @mouseover="show_score_info = true" @mouseout="show_score_info = false">{{ '('
+                + order.matchInfo.split('(')[1] }}</span> -->
               <!--对阵信息后面加的那个提示-->
               <q-tooltip content-class="bet-bg-tooltip" anchor="bottom left" self="top left" :offset="[-100, 5]"
                 v-if="show_score_info == true">
@@ -177,8 +184,8 @@
           </template>
           <template v-else>
             <!--非赛狗/非赛马时显示盘口值 赔率-->
-            <span class="part-one">{{ part().part1 }}</span><span class="part-two">{{ lodash_.trim(part().part2) }}</span>
-            <!-- <span>{{order.marketValue}}</span> -->
+            <span class="part-one">{{ part().part1 }}</span>
+            <span class="part-two">{{ lodash_.trim(part().part2) }}</span>
           </template>
         </div>
       </div>
@@ -213,11 +220,12 @@
 <script setup>
 import { ref } from "vue"
 import { VIURTUAL_SPORT, VIRTUAL_PLAY_NOT_NUMBER2, VIRTUAL_SPORT_ID,CANCEL_TYPE } from "src/output/module/constant-utils.js";
- 
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
 import { formatTime } from 'src/output/index.js'
+import betCancelPre from "src/base-pc/components/bet-record/record-table/bet-cancel-pre.vue"
 
 import lodash_ from "lodash"
 const props = defineProps({
@@ -572,8 +580,29 @@ const part = () => {
   }
 }
 
+/**
+ * 取消预约成功
+ */
+const cancelSuccess = () => {
+  // 通知 重新获取数据 
+  useMittEmit(MITT_TYPES.EMIT_GET_RECORD_LIST, {
+    jumpFrom: 1,
+    preOrderStatusList: [1]
+  })
+}
+
 </script>
 <style lang="scss" scoped>
+.pre-row {
+  color: var(--q-gb-t-c-7);
+    padding-top: 10px;
+    line-height: 1.5;
+  .pre-ing {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+}
 // 英文和泰语可能会换行
 .bet-name-info {
   white-space: normal;
