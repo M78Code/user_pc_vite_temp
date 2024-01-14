@@ -66,11 +66,11 @@ const item = {
   item_36: 39,
   item_37: 19,
 
-  item_38: 42,
+  item_38: 28,
   item_39: 43,
 
-  item_40: 14,
-  item_50: 9, // ？？
+  item_40: 57,
+  item_50: 35,
 
   item_90: 55,
   item_91: 56,
