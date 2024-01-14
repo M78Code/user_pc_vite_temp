@@ -10,7 +10,7 @@
         <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
           
           <!-- {{get_match_detail?.ms }}{{start_text}} -->
-          <span v-if="start_time  && get_match_detail.ms == 0  ">
+          <span v-if="start_time && get_match_detail.ms == 0  ">
             {{ i18n_tc('list.after_time_start2', [getLongTime]) }}
           </span>
           <match-stage :is_show_time="true" :detail_data="get_match_detail"  v-else ></match-stage>
