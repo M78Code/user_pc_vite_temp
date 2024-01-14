@@ -144,7 +144,6 @@ const props = defineProps({
 
 let match_style_obj =inject('match_style_obj')
 let match =inject('match')
-console.log('asdnadhsasdnjasd', match);
 const {
   home_score,
   away_score,
