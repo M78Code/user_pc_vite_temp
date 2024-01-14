@@ -120,6 +120,11 @@
           "2": "Total Points",
           "4": "Handicap"
         },
+        "16": {
+          "1": "1 X 2",
+          "2": "Total Goals",
+          "4": "Handicap"
+        },
         "100": {
           "30001": "Map Handicap",
           "30002": "Match Winner",
