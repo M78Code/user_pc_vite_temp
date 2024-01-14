@@ -65,11 +65,16 @@ import BaseData from "src/core/base-data/base-data.js";
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
 // 菜单配置
 import { MenuData,useMittEmit,MITT_TYPES } from "src/output/index.js"
+import { get_visit_sports_list,set_visit_count_list } from "src/core/menu_config/visit_count.js"
 
 const popular = ([{mi:101},{mi:102}])
 
 const router = useRouter();
 const route = useRoute();
+
+onMounted(()=>{
+  get_visit_sports_list()
+})
 
 // favouritse
 const go_to_favouritse = () => {
@@ -136,6 +141,8 @@ const jump_func = (payload ={},type) => {
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload.mi)
+
+    set_visit_count_list()
   })
   
 }

@@ -289,3 +289,9 @@ export const match_event = (params, config={}, url = "/v1/matchevent") => http.p
 export const get_event_info = (params, config = {}, url="/v1/w/eventInfo") => {
   return http.get(`${prefix}${url}`, params);
 };
+
+
+// 获取最近访问的赛种
+export const get_visit_sports = (params, config={}, url = "/v3/european/getVisitSports") => http.get(`${prefix}${url}`, params, config);
+// 设置最近访问的赛种
+export const set_visit_count = (params, config={}, url = "/v3/european/setVisitCount") => http.get(`${prefix}${url}`, params, config);
