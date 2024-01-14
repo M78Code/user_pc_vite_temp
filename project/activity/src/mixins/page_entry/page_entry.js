@@ -108,7 +108,7 @@ export default {
     }
     // 获取设置支持的参数isAPP
     //isAPP为true时,活动中心返回按钮就隐藏 不传isAPP或者为false时就正常显示
-    if (SEARCH_PARAMS.init_param.get("isAPP") == 1) {
+    if (SEARCH_PARAMS.init_param.get("isAPP") == 'true') {
       this.isAPP = true;
     }
 

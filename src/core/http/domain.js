@@ -154,6 +154,12 @@ class AllDomain {
    * @return {undefined} callback 回调方法通知   {type:'domain_api',status:0 ,list:[]} status字段:0-初始状态 1-已经发现最快的api域名并已经设置,  2-已经切换到最新的可用域名, 3-切换时发现没有域名可用
    */
   create(callback) {
+    // 初始化topic
+    let topic_url = window.SEARCH_PARAMS.init_param.get('topic');
+    if(topic_url){
+      topic_url = decodeURIComponent(topic_url);
+      this.set_topic(topic_url.split(','));
+    }
     //  初始化原始数据
     this.init();
     // 获取本地配置的oss url地址
@@ -831,6 +837,19 @@ class AllDomain {
       }
     }
   }
+/**
+ * @description: 设置topic
+ * @param {*} topic 域名列表
+ * @return {*}
+ */
+  set_topic(topic){
+    if (topic && topic.length) {
+      this.toppic_fast(topic,(api_obj)=>{
+        BUILDIN_CONFIG.TOPIC = api_obj;
+        LocalStorage.set('topic',api_obj);
+      });
+    }
+  }
   /**
    * @description: 设置oss文件中的数据到全局配置文件中
    * @param {*} data oss文件数据
@@ -854,11 +873,7 @@ class AllDomain {
     }
     // 设置topic
     let topic = lodash.get(oss_data, "topic");
-    if (topic && topic.length) {
-      this.toppic_fast(topic,(api_obj)=>{
-        BUILDIN_CONFIG.TOPIC = api_obj;
-      });
-    }
+    this.set_topic(topic);
     // 处理 api  逻辑
     this.set_all_config_from_oss_file_data_2_api(oss_data);
   }
@@ -1238,6 +1253,8 @@ class AllDomain {
       // 比如 https://test-topic.sportxxxifbdxm2.com/sports-rules/common/common
       // 获取项目信息
       const PROJECT_NAME = window.BUILDIN_CONFIG.PROJECT_NAME;
+      obj_.domain = c_url;
+      window.SEARCH_PARAMS.init_param_set({topic:obj_.domain});
       obj_.activity = `${c_url}/activity/common/common/`;
       switch (PROJECT_NAME) {
         case 'yazhou-h5':
@@ -1263,7 +1280,6 @@ class AllDomain {
           break;
       }
       callback && callback(obj_);
-      LocalStorage.set('topic',obj_);
       return;
     } catch (error) {
       // 所有  全部请求失败
