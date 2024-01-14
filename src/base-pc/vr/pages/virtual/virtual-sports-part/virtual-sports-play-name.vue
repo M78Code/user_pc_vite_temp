@@ -67,7 +67,7 @@ const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_129_
   background: var(--q-gb-bg-c-15);
   border-bottom: 1px solid var(--q-gb-bd-c-2);
   font-weight: 500;
-  cursor: pointer;
+  cursor: auto;
 
   .league-name {
     color: #1A1A1A;

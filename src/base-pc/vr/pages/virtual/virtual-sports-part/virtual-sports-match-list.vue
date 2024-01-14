@@ -6,8 +6,8 @@
   <div class="match-list-wrapper" :class="{standard: standard_edition == 2}">
     <div>
       <v-sports-play-name :match_item_batch_no="match_item_batch_no" />
-      <template v-for="(match_item,i) in virtual_match_list" :key="i">
-        <v-sports-tpl v-if="match_item.mid" :match_item="match_item"
+      <template v-for="(match_item, index) in virtual_match_list" :key="index">
+        <v-sports-tpl v-if="match_item.mid" :match_item="match_item" :index="index"
         :mid="match_item.mid"></v-sports-tpl>
         <!-- <v-sports-match-item :match_selected_i="selected_match_i" v-if="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)"
           :i="i" :match_item="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)" @switch_match="switch_match_handle"

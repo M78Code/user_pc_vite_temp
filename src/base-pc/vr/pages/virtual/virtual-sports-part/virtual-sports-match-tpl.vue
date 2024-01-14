@@ -3,19 +3,27 @@
     <div class="flex flex-start items-center">
       <!-- 赛事基础信息 -->
       <div class="basic-col"
+        @click="goto_details(match)"
         :style="`width: 338px !important;height:80px !important;`">
         <!-- 比赛进程 网球，羽毛球用105模板，别的用101 -->
         <!-- <BasisInfo101 v-if="match" :match="match" show_type="all"></BasisInfo101> -->
-        <div class="team-num">1</div>
-        <!-- 战队名称 -->
+        <div class="team-num">{{index + 1}}</div>
         <div class="team-title-wrap">
-            <div class="team-title" :class="{over:[2,11].includes(+match.match_status)}">
-              <div class="ellipsis">{{match.teams ? match.teams[0] : ''}}</div>
+            <!-- 战队名称 -->
+            <div>
+                <div class="team-title" :class="{over:[2,11].includes(+match.match_status)}">
+                  <div class="ellipsis">{{match.teams ? match.teams[0] : ''}}</div>
+                </div>
+                <div class="team-title" :class="{over:[2,11].includes(+match.match_status)}">
+                  <div class="ellipsis">
+                    {{match.teams ? match.teams[1] : ''}}
+                  </div>
+                </div>
             </div>
-            <div class="team-title" :class="{over:[2,11].includes(+match.match_status)}">
-              <div class="ellipsis">
-                {{match.teams ? match.teams[1] : ''}}
-              </div>
+             <!-- 玩法数量 -->
+             <div class="play-count">
+              {{lodash.get(get_access_config,'handicapNum') ? `${match.mc}`: i18n_t('footer_menu.more')}}
+              <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow"  />
             </div>
         </div>
       </div>
@@ -29,7 +37,7 @@
       <match-handicap :handicap_list="handicap_list" use_component_key="MatchHandicap2" />
       <!-- 比分板 -->
       <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
-        :style="`width:46px !important;`" @click="jump_to_details()">
+        :style="`width:46px !important;`">
         <!-- 图片资源有问题，先用文字替代  -->
         <div class="video" v-if="+lodash.get(match, 'mms') > 0"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
@@ -54,12 +62,16 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/output/index.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
+import virtual_sports_match_item_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-match-item-mixin.js";
+import { IconWapper } from 'src/components/icon'
 
 export default {
+  mixins:[virtual_sports_match_item_mixin],
   components: {
     BasisInfo101,
     MatchHandicap,
-    IconBox
+    IconBox,
+    'icon-wapper': IconWapper,
   },
   props: {
     is_show_more: {
@@ -68,6 +80,10 @@ export default {
     },
     mid: {
       type: String,
+      default: () => null
+    },
+    index: {
+      type: Number,
       default: () => null
     },
   },
@@ -119,11 +135,27 @@ export default {
   .basic-col {
     display: flex;
     align-items: center;
+    cursor: pointer;
     .team-num {
       color: #1A1A1A;
       font-weight: 500;
       font-size: 12px;
       margin: 0 15px 0 10px;
+    }
+    .team-title-wrap {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      .play-count {
+        flex: 1;
+        text-align: right;
+        margin-right: 14px;
+        color: #1A1A1A;
+        font-weight: 500;
+        > i {
+          transform: rotate(90deg);
+        }
+      }
     }
   }
   .team-title {
