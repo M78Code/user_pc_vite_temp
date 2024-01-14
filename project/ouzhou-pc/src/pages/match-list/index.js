@@ -107,14 +107,14 @@ export const get_15mins_data = payload => {
   }
 }
 
-// 新规则：足球15 ，篮球5
+// 新规则：足球10 ，篮球5, 其他球种5
 const filter_20_match_new = (data) => {
   const result = [];
-  // 足球最多15个
-  const max_football_count = 15;
+  // 足球最多10个
+  const max_football_count = 10;
+  const max_basketball_count = 5;
   let football_count = 0;
-  // 别的球种5个
-  const max_other_count = 5;
+  let basketball_count = 0;
 
   const football_csid = '1';
   const basketball_csid = '2';
@@ -123,7 +123,10 @@ const filter_20_match_new = (data) => {
     if (item.csid == football_csid && football_count < max_football_count) {
       result.push(item);
       football_count++;
-    } else if (item.csid == basketball_csid && result.length < 20) {
+    } else if (item.csid == basketball_csid && basketball_count < max_basketball_count) {
+      result.push(item);
+      basketball_count++;
+    } else if(result.length < 20 && item.csid !== football_csid && item.csid !== basketball_csid) {
       result.push(item);
     }
     // 大于20条时，跳出循环
