@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref,onMounted,onUnmounted, reactive, watch } from 'vue';
+import { ref,onMounted,onUnmounted, reactive, watch, nextTick } from 'vue';
 import lodash_ from "lodash"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
@@ -240,6 +240,8 @@ const checked_current_tab = (payload,type) => {
 		...MenuData.mid_menu_result,
 		filter_tab: payload.value*1,
 	}
+
+	let root = 1
 	// 判断头部高度
 	if ([1001,4003].includes(payload.value*1)) {
 		match_list_top.value = '80px'
@@ -251,13 +253,13 @@ const checked_current_tab = (payload,type) => {
 
 	// 点击热门赛种 切换到 500
 	if ([1002].includes(payload.value*1)) {
-		MenuData.set_menu_root(500)
+		root = 500
 		obj.current_mi = 5001
 		MenuData.set_current_ball_type(1)
 	}
 	// 还原top_event热门赛种 和 常规赛事的切换
 	if (1001 == payload.value) {
-		MenuData.set_menu_root(0)
+		root = 0
     useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
 	}
 
@@ -265,9 +267,9 @@ const checked_current_tab = (payload,type) => {
 	if (4001 == payload.value) {
 		// 有时间为 早盘
 		if(obj.md){
-			MenuData.set_menu_root(203)
+			root = 203
 		}else{
-			MenuData.set_menu_root(202)
+			root = 202
 		}
 	}
 	// 热门联赛
@@ -276,7 +278,7 @@ const checked_current_tab = (payload,type) => {
 	}
 	// 冠军
 	if(4003 == payload.value){
-		MenuData.set_menu_root(400)
+		root = 400
 		obj.current_mi = 400 + MenuData.current_ball_type*1
 		MenuData.set_menu_current_mi(obj.current_mi)
 	}
@@ -297,9 +299,9 @@ const checked_current_tab = (payload,type) => {
 		}
 		if( payload.value == 3004){
 			obj.current_mi = 401
-			MenuData.set_menu_root(400)
+			root = 400
 		}else{
-			MenuData.set_menu_root(2)
+			root = 2
 		}
 
 		if(type){
@@ -317,6 +319,8 @@ const checked_current_tab = (payload,type) => {
 	}
 
 	MenuData.set_mid_menu_result(obj)
+
+	MenuData.set_menu_root(root)
 
 	// 电子竞技
 	if (MenuData.is_esports()) {
