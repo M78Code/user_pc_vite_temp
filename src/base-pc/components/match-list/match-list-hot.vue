@@ -6,7 +6,7 @@
 <template>
   <div
     data-template="match_list_zhuanye"
-    class="yb-match-list hot-match-list  relative-position"
+    class="yb-match-list hot-match-list  relative-position column"
     v-if="load_data_state == 'data'"
   >
     <div class="detais-hot-head">
