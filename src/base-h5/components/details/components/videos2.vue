@@ -37,7 +37,7 @@
             <img :src="shipin"/>
           </div>
           <!-- 动画 -->
-          <div class="img-wrap" v-if="get_detail_data.mvs > -1 && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
+          <div class="img-wrap" v-if="get_detail_data.mvs > -1 && lodash.get(UersCtr, 'user_info.ommv') && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
             <img :src="donghua"/>
           </div>
 
@@ -242,7 +242,7 @@
           </template>
           <template v-if="show_animation_and_video_status">
             <!-- 动画 -->
-            <div class="img-wrap" v-if="get_detail_data.mvs > -1 && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
+            <div class="img-wrap" v-if="get_detail_data.mvs > -1 && lodash.get(UersCtr, 'user_info.ommv') && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
               <img :src="donghua"/>
             </div>
           </template>
