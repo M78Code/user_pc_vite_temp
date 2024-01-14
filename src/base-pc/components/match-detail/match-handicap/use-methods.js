@@ -552,6 +552,10 @@ const rang = ref([])
     state.details_data = null;
   });
 
+  function on_go_top(){
+    return emit('on_go_top')
+  }
+
   return {
     ...toRefs(state),
     showDetails,
@@ -563,6 +567,7 @@ const rang = ref([])
     lodash,
     check_half,
     toggle_panel,
-    panel_status
+    panel_status,
+    on_go_top,
   };
 };

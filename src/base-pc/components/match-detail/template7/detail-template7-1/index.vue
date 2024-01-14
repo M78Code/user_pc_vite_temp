@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <div class="wrap-template template7" data-template="template7">
+  <div class="component wrap-template template7" data-template="template7">
     <!-- 主盘 S-->
     <div class="main-handicap">
       <handicap-title

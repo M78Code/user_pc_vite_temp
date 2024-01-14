@@ -3,7 +3,7 @@
 -->
 <template>
   <!-- 投注记录 -->
-  <v-scroll-area ref="ref_bet_scroll_area_history" position="bet_history" :observer_area="3" :observer_middle="true">
+  <v-scroll-area ref="ref_bet_scroll_area_history" class="left-preview" position="bet_history" :observer_area="3" :observer_middle="true">
     <!-- 滚动：头部 --------------------------------->
     <template v-slot:header>
       <div class="left-bg-box"></div>
@@ -26,11 +26,6 @@
               @click="change_handle(item)">
               <!--单关还是串关-->
               <div class="bet-record-title">{{ item.seriesValue }}</div>
-              <div class="bet-record-title">
-                <!--输赢结算状态2是走水，3-输，4-赢，5-半赢，6-半输，7赛事取消，8赛事延期 -->
-                <!--订单状态(0:未结算,1:已结算,2:注单取消,3:确认中,4:投注失败)-->
-                <span :class="order_class(item.orderStatus)">{{ order_status(item.orderStatus) }}</span>
-              </div>
             </q-card-actions>
             <!--结算内容-->
             <template v-if="item.is_expand">
@@ -261,10 +256,17 @@ const order_class = () => { }
     font-size: 13px;
     height: 34px;
     line-height: 34px;
-
-    i {
+    position: relative;
+    padding-left: 8px;
+    &:after {
       position: absolute;
-      top: 8px;
+      content: '';
+      left: 0;
+      top: 9px;
+      width: 4px;
+      height: 14px;
+      background-color: var(--q-gb-bg-c-4);
+      border-radius: 0 3px 3px 0;
     }
   }
 
@@ -320,6 +322,12 @@ const order_class = () => { }
 
 .left-bg-box {
   height: 40px;
+}
+.left-preview {
+  &:deep(.q-scrollarea__content){
+        width: 100%;
+        background: var(--q-gb-bg-c-30);
+  }
 }
 </style>
 

@@ -27,8 +27,9 @@ const compute_get_date_menu_list_params = () => {
         tid = "",
     } = left_menu_result;
     if (lv1_mi == 2000) {
+        const { filter_tab } = MenuData.mid_menu_result
         //  早盘 或者 今日的  电竞
-        let csid = parseInt(lv2_mi) - 2000;
+        let csid = parseInt(filter_tab) - 2000;
         params = {
         csid,
         device: "PC_PRO",
@@ -66,11 +67,16 @@ const handle_click_menu_mi_3_date = (detail = {}) => {
       ...mid_menu_result,
       md: label,
     }
-    // type 早盘 今日 对赛种进行拼接
-    let current_menu = left_menu_result.lv1_mi +''+ type
-    let menu_root = 20 + '' + type
-    // 设置当前的一级菜单类型
-    MenuData.set_menu_root(menu_root)
+
+    let current_menu = mid_menu_result.current_mi
+
+    if(!MenuData.is_esports()){
+      // type 早盘 今日 对赛种进行拼接
+      current_menu = left_menu_result.lv1_mi +''+ type
+      let menu_root = 20 + '' + type
+      // 设置当前的一级菜单类型
+      MenuData.set_menu_root(menu_root)
+    }
     // 设置      中间 菜单输出
     MenuData.set_mid_menu_result(params);
     MenuData.set_menu_current_mi(current_menu)
