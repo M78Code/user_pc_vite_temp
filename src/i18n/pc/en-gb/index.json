@@ -120,6 +120,11 @@
           "2": "Total Points",
           "4": "Handicap"
         },
+        "15": {
+          "1": "Winner",
+          "2": "Total",
+          "4": "Handicap"
+        },
         "16": {
           "1": "1 X 2",
           "2": "Total Goals",
