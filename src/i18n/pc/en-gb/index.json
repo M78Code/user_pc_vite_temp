@@ -115,6 +115,11 @@
           "153": "Winner",
           "2": "Total Rounds"
         },
+        "13": {
+          "153": "Winner",
+          "172": "Point Handicap", 
+          "173": "Total Points"
+        },
         "14": {
           "1": "1 X 2",
           "2": "Total Points",

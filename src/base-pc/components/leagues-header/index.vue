@@ -238,9 +238,9 @@ const jumpTo = ()=>{
 		border-radius: 2px;
 		background: #FFF;
 		box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
-		width: 300px;
+		max-width: 300px;
 		z-index: 9;
-		height: 185px;
+		max-height: 185px;
 		padding: 12px 0;
 		overflow-y: auto;
 		.leagues_item {

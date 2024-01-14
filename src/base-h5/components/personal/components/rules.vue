@@ -37,7 +37,7 @@
         }
         const lang2 = lang_map[UserCtr.lang] || 'zh_cn';
         let url = '';
-        const [theme2, get_merchant_style] = UserCtr.theme.split('_')
+        const [theme2, get_merchant_style] = UserCtr.theme?.split('_')
         let domain = UserCtr.get_topic_key_url('sports_rules');
         // if (current_env == 'idc_online' || current_env == 'idc_ylcs') {
         //     // 生产环境
