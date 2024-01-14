@@ -31,7 +31,7 @@ const item = {
   item_10: 3,
   item_11: 13,
   item_12: 6,
-  item_13: 18,
+  item_13: 15,
   item_14: 14,
   item_15: 20,
 
