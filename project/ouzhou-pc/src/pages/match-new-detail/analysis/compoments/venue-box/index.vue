@@ -75,6 +75,7 @@ import commingSoon from "./comming-soon.vue";
 import { LOCAL_PROJECT_FILE_PREFIX, MenuData, UserCtr } from "src/output/index.js";
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
 import { get_match_status } from 'src/output/module/constant-utils.js'
+import { useRoute } from "vue-router";
 
 
 
@@ -85,6 +86,7 @@ const score_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score_active.
 const video_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/video_active.png`;
 const video = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/video.png`;
 
+const route = useRoute();
 const props = defineProps({
   detail_info: {
     // 赛事详情
@@ -97,7 +99,6 @@ const props = defineProps({
     default: () => {},
   },
 });
-console.error(UserCtr);
 const animal_key = ref(false);
 const score_key = ref(true);
 const show_type = ref("");
@@ -106,6 +107,10 @@ watch(
   () => props.detail_info,
   (val) => {
     if (val) {
+      if(route.params?.type) {
+        tab_click(route.params?.type)
+        return
+      }
       // 有动画优先播放动画
       if (val.mvs > -1) {
         animal_key.value = false;
