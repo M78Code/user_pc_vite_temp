@@ -98,6 +98,7 @@ import matchHandicap from "src/base-pc/components/match-detail/match-handicap/ma
 import matchListHot from "src/base-pc/components/match-list/match-list-hot.vue";
 import { useGetConfig } from "./detail.config";
 import { useRoute, useRouter } from "vue-router";
+import search from "src/core/search-class/search.js";
 const router = useRouter();
 const route = useRoute();
 //引入组件样式
@@ -136,15 +137,8 @@ const {
   get_mattch_details,
   change_loading_state,
   MatchDataWarehouseInstance,
+  on_go_top,
 } = useGetConfig(router,cur_menu_type,details_params,play_media);
-// /**
-//  * @Description:返回顶部
-//  * @return {Undefined} Undefined
-//  */
-const on_go_top = () => {
-  emit("on_go_top");
-};
-import search from "src/core/search-class/search.js";
 // const match_infoData = ref({});
 // const match_details = ref([]);
 /**

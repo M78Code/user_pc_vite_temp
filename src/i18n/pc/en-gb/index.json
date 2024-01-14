@@ -120,6 +120,16 @@
           "2": "Total Points",
           "4": "Handicap"
         },
+        "15": {
+          "1": "Winner",
+          "2": "Total",
+          "4": "Handicap"
+        },
+        "16": {
+          "1": "1 X 2",
+          "2": "Total Goals",
+          "4": "Handicap"
+        },
         "100": {
           "30001": "Map Handicap",
           "30002": "Match Winner",
@@ -511,7 +521,8 @@
     "bet_book_error_msg_0401038": "Too much traffic, please try again later",
     "bet_header_adjust": "It is already the min booking market value, pls adjust",
     "bet_header_hight_adjust": "It is already the max booking market value, pls adjust",
-    "bet_max_booked_odds": "It has reached the max booked odds, please readjust"
+    "bet_max_booked_odds": "It has reached the max booked odds, please readjust",
+    "bet_betting": "betting"
   },
   "bet_message":{
     "success": "Successful Betting",
