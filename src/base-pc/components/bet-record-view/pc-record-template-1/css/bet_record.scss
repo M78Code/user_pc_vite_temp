@@ -30,7 +30,6 @@ body {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top: 1px solid var(--q-gb-bd-c-8);
     }
     .icon-triangle {
       font-weight: bold;
@@ -42,11 +41,10 @@ body {
 
     /*  投注项背景设置 */
     .q-card__section {
-      background: var(--q-gb-bg-c-30);
+      background: var(--q-gb-bg-c-11);
       /*  投注记过项设置 */
       &.bet-item-result {
         border: 0;
-        border-top: 1px solid var(--q-gb-bd-c-8);
         border-radius: 0 0 4px 4px;
         /*  投注额,可赢额文本设置 */
         .bet-money {
@@ -54,11 +52,10 @@ body {
         }
         /*  显示金额样式 */
         .bet-value {
-          color: var(--q-gb-t-c-21);
           // color: var(--qq--theme-color-bet-keyboard);
            /*  红色字体显示 */
           &.red-text {
-            color: #FF4040;
+            color: var(--q-gb-t-c-16);
           }
         }
         /*  走水设置   */
@@ -139,7 +136,7 @@ body {
       }
       .bet-content {
         padding: 8px;
-        background: var(--q-gb-bg-c-11);
+        background: var(--q-gb-bg-c-30);
         // border: 0.5px solid var(--q-gb-bd-c-8);//rgba(65,70,85,1)
         border-radius: 6px;
         word-break: break-all;
@@ -148,10 +145,10 @@ body {
           /*  盘口部分样式 */
           .bet-play-handicap {
             color: var(--q-gb-t-c-6);
-            line-height: 1.3;
+            line-height: 1.5;
             /*  盘口名称 */
             .bet-handicap-name,.sport-name {
-              color: var(--q-gb-t-c-22);
+              color: var(--q-gb-t-c-16);
             }
             .sport-name {
               margin-right: 5px;
@@ -162,7 +159,7 @@ body {
             line-height: 1.3;
             /*  盘口名称 */
             .bet-handicap-name,.sport-name {
-              color: var(--q-gb-t-c-6);
+              color: var(--q-gb-t-c-16);
             }
             .sport-name {
               margin-right: 5px;
@@ -172,15 +169,12 @@ body {
         .bet-play-team {
           color: var(--q-gb-t-c-6);
           margin-top: 8px;
-          margin-bottom: 8px;
           .part-one {
-            color: var(--qq--y0-text-color1);
+            color: var(--q-gb-t-c-16);
           }
 
           .part-two {
             margin-left: 5px;
-            // color: var(--q-gb-t-c-6);
-            color:var(--qq--y0-text-color1);
             white-space: nowrap;
           }
         }
@@ -235,23 +229,21 @@ body {
           /*  输的样式 */
           span {
             &.lose {
-              opacity: 0.6;
-              background: var(--qq--theme-bg-lose);
-              border: 1px solid var(--qq--theme-bd-lose);
+              opacity: 0.8;
+              background: var(--q-gb-bg-c-2);
               border-radius: 4px;
-              color: var(--q-gb-t-c-1);
-              padding: 0px 3px 0px 3px;
+              color: var(--q-gb-t-c-18);
+              padding: 3px;
             }
           }
           /*  赢的样式 */
           span {
             &.win {
               opacity: 0.8;
-              background: var(--qq--theme-bg-win);
-              border: 1px solid var(--qq--theme-bd-win);
+              background: var(--q-gb-bg-c-16);
               border-radius: 4px;
-              color: var(--q-gb-t-c-1);
-              padding: 0px 3px 0px 3px;
+              color: var(--q-gb-t-c-18);
+              padding: 3px;
             }
           }
         }
@@ -260,7 +252,6 @@ body {
     .q-card__actions {
       margin-top: 5px;
       color: var(--q-gb-t-c-6);
-      background: var(--q-gb-bg-c-11);
       border-radius: 4px 4px 0 0;
       border: 0;
     }
