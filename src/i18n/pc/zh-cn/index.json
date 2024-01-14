@@ -523,7 +523,8 @@
     "bet_book_error_msg_0401038": "当前访问人数过多，请稍后再试 ",
     "bet_header_adjust": "已为最低预约盘口值，请重新调整",
     "bet_header_hight_adjust": "已为最高预约盘口值，请重新调整",
-    "bet_max_booked_odds": "已为最高预约赔率值，请重新调整"
+    "bet_max_booked_odds": "已为最高预约赔率值，请重新调整",
+    "bet_betting": "投注中"
   },
   "bet_message":{
     "success": "投注成功",
