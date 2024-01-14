@@ -25,7 +25,7 @@
         <!-- 列表容器 -->
         <load-data :state="load_data_state">
             <!-- 滚球其他列表 -->
-            <scroll-list v-if="MenuData.menu_root_show_shoucang != 300">
+            <scroll-list v-if="MenuData.menu_root_show_shoucang != 300 && match_list_card_key_arr.length">
                 <template v-slot:before>
                     <div :style="{ height: MatchListCardDataClass.sticky_top.type+'px' }"></div>
                 </template>
