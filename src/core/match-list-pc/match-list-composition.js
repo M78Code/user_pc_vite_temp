@@ -278,7 +278,7 @@ function mounted_fn(fun) {
 		}).off,
 		//请求元数据
 		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 50)).off,
-		useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(() => {
+		useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(function(){
 			// 重新订阅C8
 			api_bymids({ is_show_mids_change: true })
 		}, 1000)).off,

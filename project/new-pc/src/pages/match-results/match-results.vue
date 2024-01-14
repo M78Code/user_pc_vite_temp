@@ -151,6 +151,71 @@ onMounted(() => {
 }
 
 @import "./index.scss";
+.table-footer{
+  :deep{
+    .pagination-wrap{
+      background: none;
+    }
+  }
+}
+.main_wrap{
+  :deep{
+    .r-select {
+      .select-value,
+      .y-field-control{
+        border: 1px solid #fff;
+        background: #F6F9FF;
+        border-radius: 4px;
+      }
+    }
+    .wrap-handel .search {
+      input.ipt {
+        border: 1px solid #fff;
+        background: #F6F9FF;
+        border-radius: 4px;
+      }
+    }
+    .r-select {
+      .select-value,
+      .date-wrap,
+      .y-field-control{
+        border: 1px solid #fff;
+        background: #F6F9FF;
+        border-radius: 4px;
+      }
+      .date-wrap .icon-calendar:before{
+        color: #C1C1C1
+      }
+    }
+    .wrap-index{
+      .tbale-body{
+        background: none !important;
+        &>div{
+          margin-top: 6px;
+          margin-top: 6px;
+          border-radius: 6px;
+          border: 2px solid #FFF;
+          background: #F6F9FF;
+        }
+        .table-tr-td{
+          border-bottom: none !important;
+          border-left: none !important;
+          .table-col{
+            border-color: #DEE4F2 !important;
+            &:last-child{
+              border-right: none !important;
+            }
+          }
+        }
+      }
+      .table-header{
+        border-radius: 6px;
+        border: 2px solid #FFF !important;
+        background: #F6F9FF !important;
+      }
+    }
+  }
+}
 </style>
 
 <style lang="scss">
