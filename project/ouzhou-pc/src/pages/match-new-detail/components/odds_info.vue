@@ -12,7 +12,7 @@
       :class="{ 'odds-wrap': item.hl[0].hs != 2 }"
     >
       <q-expansion-item
-      v-if="item.hl[0].hs != 2"
+        v-if="item.hl[0].hs != 2"
         v-model="item.expanded"
         :expand-icon-toggle="false"
         :hide-expand-icon="true"
@@ -82,19 +82,15 @@
                         v-for="ol in sun_ol(item.hl[0].ol, item)"
                         :key="ol.oid"
                       >
-                        <template
-                          v-if="ol.otd === opt.otd || ol._otd === opt.otd"
-                        >
+                        <template v-if="ol.otd === opt.otd || ol._otd === opt.otd">
                           <div
-                            :class="{
-                              tem4: true,
-                              'tem4-active': BetData.bet_oid_list.includes(
-                                ol.oid
-                              ),
-                            }"
+                            :class="{ tem4: true, 'tem4-active': BetData.bet_oid_list.includes( ol.oid ) }"
                             @click="betItemClick(item.hl[0], ol, item.hpn)"
                           >
-                            <span><span v-if="txt_ol_name_fun(ol)" class="txt-ol-name">{{txt_ol_name_fun(ol)}}</span>{{ ol.on }}</span>
+                            <span style="line-height: 1;display: flex;justify-content:center;align-items: center">
+                              <span v-if="txt_ol_name_fun(ol)" class="txt-ol-name">{{txt_ol_name_fun(ol)}}</span>
+                              {{ ol.on }}
+                            </span>
                             <span>
                               <bet-item
                                 :key="`bet_4_${ol.hild}`"
@@ -102,23 +98,7 @@
                                 :current_ol="current_ol"
                               ></bet-item>
                             </span>
-                            <!-- <span v-else></span> -->
                           </div>
-                          <!-- <div
-                            class="tem4"
-                            style="
-                              justify-content: center;
-                              align-items: center;
-                              width: 100%;
-                            "
-                            v-show="item.hl[0].hs==1||item.hl[0].hs==11"
-                          >
-                            <img
-                              class="vector"
-                              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
-                              alt=""
-                            />
-                          </div> -->
                         </template>
                       </div>
                     </div>

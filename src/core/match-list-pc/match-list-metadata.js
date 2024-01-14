@@ -356,7 +356,7 @@ function set_base_data_init_ouzhou(play_num = '01') {
 			matchs_list,
 		);
 		match_list_handle_set(matchs_list)
-		handle_match_list_request_when_ok(data, false, true, true);
+		handle_match_list_request_when_ok(data, false, true);
 		let ts1 = Date.now();
 		let mids_arr = [];
 		(matchs_list || []).forEach((match) => {

@@ -149,7 +149,7 @@ let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(match
 const handicap_num = computed(() => {
   if (GlobalAccessConfig.get_handicapNum()) {
     const mc = lodash.get(match.value, 'mc')
-    return mc ? `+${lodash.get(match.value, 'mc')}` : '+0'
+    return mc ? `${lodash.get(match.value, 'mc')}` : '0'
   } else {
     return i18n_t('match_info.more')
   }

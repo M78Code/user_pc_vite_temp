@@ -26,7 +26,7 @@
         <div class="video" v-if="+lodash.get(match, 'mms') > 1"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
         </div>
-        <div v-else-if="+lodash.get(match, 'mvs') > -1 && lodash.get(UserCtr, 'user_info.ommv')"
+        <div v-else-if="+lodash.get(match, 'mvs') > -1"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
         </div>
         <div v-else>
@@ -87,7 +87,8 @@ export default {
     let current_mid = MatchListCardDataClass.current_mid;
     let handicap_list = computed(() => {
       try{
-       return match_tpl_info.value?.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
+        const _list=match_tpl_info.value?.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid),MatchListCardDataClass.list_version.value)
+        return _list
       }catch(e){
         console.log(match_tpl_info.value,e,'jiffy')
       }
