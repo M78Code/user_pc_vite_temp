@@ -201,6 +201,7 @@ function handle_hpid_choose(item) {
     &-item {
       padding: 0 16px;
       height: 40px;
+      text-align: center;
       >div {
         border-bottom: 1px solid var(--q-gb-bd-c-2);
       }
