@@ -15,6 +15,7 @@
           <template
             v-if="match_style_obj.data_tpl_id != 'esports' || (match_style_obj.data_tpl_id == 'esports' && getCurState(ol_data._hipo))">
             <bet-item v-if="is_mounted && ol_data && ol_data._hpid" match_data_type="pc_list" :ol_data="ol_data" />
+            <div class="c-bet-item" v-else></div>
           </template>
         </div>
       </div>
@@ -217,6 +218,11 @@ function getCurState(hipo) {
 
     &.right-rimless {
       border-right: none;
+    }
+    .c-bet-item {
+      border-radius: 4px;
+      background-color: var(--q-gb-bg-c-27);
+      justify-content: center;
     }
   }
 }
