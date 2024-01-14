@@ -12,7 +12,7 @@
       odds_state != 'close' &&
       lodash.get(ol_data_item, '_hs') != 2
     "
-    class="c-bet-item yb-flex-center relative-position"
+    class="component c-bet-item yb-flex-center relative-position"
     :class="[
       bet_source == 'match_list' && 'list-show',
       bet_tpl,
@@ -236,6 +236,7 @@ const {
 <style lang="scss" scoped>
 
 .c-bet-item {
+  border-radius: 4px;
   width: 100%;
   height: 100%;
 }
