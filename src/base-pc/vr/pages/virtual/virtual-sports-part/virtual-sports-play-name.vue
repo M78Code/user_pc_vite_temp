@@ -5,11 +5,12 @@
     <div class="tr-match-head">
       <!-- 联赛信息 -->
       <div class="leagues-wrap" :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
-        <div class="yb-flex-center" v-if="!MenuData.is_esports()" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
+        <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         </div>
         <!-- 联赛名称 -->
         <div class="ellipsis-wrap">
-          <div class="absolute-full">
+          <div class="absolute-full league-name">
+            {{ match_item_batch_no }}
           </div>
         </div>
       </div>
@@ -44,27 +45,18 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 
-// const props = defineProps({
-//   card_style_obj: {
-//     type: Object,
-//     default: () => { },
-//   },
-//   card_key: {
-//     type: String,
-//     default: () => ''
-//   }
-// })
+const props = defineProps({
+  match_item_batch_no: {
+    type: String,
+    default: () => ''
+  }
+})
 
 const csid = '1001'
 // let data_tpl_id = get_ouzhou_data_tpl_id(csid)
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_129_config`]
 const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_129_config`], 'width_config')
 
-
-
-onUnmounted(() => {
-  clearTimeout(timer)
-})
 
 </script>
 <style lang="scss">
@@ -76,6 +68,12 @@ onUnmounted(() => {
   border-bottom: 1px solid var(--q-gb-bd-c-2);
   font-weight: 500;
   cursor: pointer;
+
+  .league-name {
+    color: #1A1A1A;
+    font-weight: 500;
+    margin-left: 20px;
+  }
 
   .league-icon-wrap {
     width: 18px;
@@ -101,26 +99,11 @@ onUnmounted(() => {
     flex-grow: 1;
   }
 
-  .league-match-count {
-    height: 100%;
-    position: absolute;
-    right: 13px;
-    font-weight: 600;
-    color: var(--q-gb-t-c-5);
-
-    span {
-      display: flex;
-      height: 100%;
-      align-items: center;
-    }
+  .play-name-item {
+    color: var(--q-layout-color-1);
+    font-weight: 500;
   }
-
-  .collect-start {
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-    background-size: 100%;
-  }
+  
 
 }
 </style>

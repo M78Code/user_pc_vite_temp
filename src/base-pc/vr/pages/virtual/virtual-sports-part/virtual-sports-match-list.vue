@@ -5,18 +5,9 @@
 <template>
   <div class="match-list-wrapper" :class="{standard: standard_edition == 2}">
     <div>
-      <div class="title-wrap-standard row justify-end" v-if="standard_edition == 2">
-        <div class="odd-title-wrapper row">
-          <div class="odd-t-w-inner row items-center" :class="{status2:standard_odd_status}">
-            <div v-for="(hpl_title, hp_i) of i18n_t('list_title.'+csid+'.title')" :key="hp_i">
-              {{hpl_title}}
-            </div>
-          </div>
-        </div>
-      </div>
-      <v-sports-play-name />
+      <v-sports-play-name :match_item_batch_no="match_item_batch_no" />
       <template v-for="(match_item,i) in virtual_match_list" :key="i">
-        <v-sports-tpl v-if="match_item.mid"
+        <v-sports-tpl v-if="match_item.mid" :match_item="match_item"
         :mid="match_item.mid"></v-sports-tpl>
         <!-- <v-sports-match-item :match_selected_i="selected_match_i" v-if="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)"
           :i="i" :match_item="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)" @switch_match="switch_match_handle"
@@ -39,7 +30,8 @@ export default {
     'v-s-match-timer':v_s_match_timer,
     'v-sports-tpl': virtual_sports_match_tpl,
     'v-sports-play-name': virtual_sports_play_name
-  }
+  },
+  props: ['match_item_batch_no']
 }
 </script>
 

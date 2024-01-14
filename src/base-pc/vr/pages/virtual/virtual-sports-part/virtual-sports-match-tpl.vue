@@ -6,15 +6,18 @@
         :style="`width: 338px !important;height:80px !important;`">
         <!-- 比赛进程 网球，羽毛球用105模板，别的用101 -->
         <!-- <BasisInfo101 v-if="match" :match="match" show_type="all"></BasisInfo101> -->
+        <div class="team-num">1</div>
         <!-- 战队名称 -->
-        <div class="team-title" :class="{over:[2,11].includes(+match.match_status)}">
-            <div class="ellipsis">{{match.teams ? match.teams[0] : ''}}</div>
-          </div>
-          <div class="team-title" :class="{over:[2,11].includes(+match.match_status)}">
-            <div class="ellipsis">
-              {{match.teams ? match.teams[1] : ''}}
+        <div class="team-title-wrap">
+            <div class="team-title" :class="{over:[2,11].includes(+match.match_status)}">
+              <div class="ellipsis">{{match.teams ? match.teams[0] : ''}}</div>
             </div>
-          </div>
+            <div class="team-title" :class="{over:[2,11].includes(+match.match_status)}">
+              <div class="ellipsis">
+                {{match.teams ? match.teams[1] : ''}}
+              </div>
+            </div>
+        </div>
       </div>
       <!-- 竖线 -->
       <div class="vertical-line"></div>
@@ -107,11 +110,25 @@ export default {
 <style lang="scss" scoped>
 .match-tpl-129 {
   background: var(--q-gb-bg-c-4);
-
+  border-bottom: 1px solid var(--q-gb-bd-c-2);
   .vertical-line {
     width: 1px;
     height: 60px;
     background: var(--q-gb-bg-c-10);
+  }
+  .basic-col {
+    display: flex;
+    align-items: center;
+    .team-num {
+      color: #1A1A1A;
+      font-weight: 500;
+      font-size: 12px;
+      margin: 0 15px 0 10px;
+    }
+  }
+  .team-title {
+    color: #1A1A1A;
+    font-weight: 400;
   }
   :deep(.handicap-col-ouzhou){
     width: 330px !important;

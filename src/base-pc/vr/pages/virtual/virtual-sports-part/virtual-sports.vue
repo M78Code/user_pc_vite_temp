@@ -63,11 +63,6 @@
       </div>
       <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
        <div v-if="match_item_batch.remaining_time > 0" class="virtual-sports-card-content" :class="{'virtual-sports-card-simple': standard_edition === 1}">
-        <div class="tab-title" @click.stop="expend_match(match_item_batch)">
-          <div class="status">
-            <span class="num">{{ match_item_batch.no }}</span>
-          </div>
-        </div>
         <template v-if="match_item_batch.is_expend">
             <!--  虚拟体育主列表页面  -->
             <div
@@ -78,6 +73,7 @@
               <!-- 虚拟体育足球赛事列表 -->
               <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
                 :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
+                :match_item_batch_no="match_item_batch.no"
                 @switch_match="switch_match_handle"  @start="match_start_handle">
               </v-s-match-list>
 
@@ -306,7 +302,10 @@ export default {
   margin: 0.04rem 0;
   padding: 0 0.07rem;
 }
-
+.v-sports-main-list {
+  margin-top: 10px;
+  border-top: 1px solid #FF7000;
+}
 .v-sports-main-list-style {
   padding-bottom: .48rem;
 }
