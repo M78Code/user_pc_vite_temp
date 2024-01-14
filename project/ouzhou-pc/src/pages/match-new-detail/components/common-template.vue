@@ -70,7 +70,7 @@
                   item.ol.length % 2 !== 0 &&
                   index == item.ol.length - 1 &&
                   columnNum == 2,
-                  'close-temp-hover': item.hs,
+                  'close-temp-hover': o._mhs !=0 || o._hs != 0 || o.os != 1,
               }"
               @click="betItemClick(item, o)"
             >

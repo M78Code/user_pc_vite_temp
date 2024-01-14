@@ -84,7 +84,7 @@
                       >
                         <template v-if="ol.otd === opt.otd || ol._otd === opt.otd">
                           <div
-                            :class="{ tem4: true, 'close-tem4-hover': ol._mhs !=0 || ol._hs != 0 || os != 1, 'tem4-active': BetData.bet_oid_list.includes( ol.oid ) }"
+                            :class="{ tem4: true, 'close-tem4-hover': ol._mhs !=0 || ol._hs != 0 || ol.os != 1, 'tem4-active': BetData.bet_oid_list.includes( ol.oid ) }"
                             @click="betItemClick(item.hl[0], ol, item.hpn)"
                           >
                             <span style="line-height: 1;display: flex;justify-content:center;align-items: center">
