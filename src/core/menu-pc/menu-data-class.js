@@ -160,29 +160,48 @@ class MenuData {
   set_init_menu_list(){
     let menu_list = lodash.cloneDeep(lodash.get(BaseData,'left_menu_base_mi',[]))
     // 今日
-    let to_day_list = menu_list
+    let to_day_list = []
+    // 早盘
+    let early_list = []
     // 冠军
     let kemp_list = []
     // 滚球
     let in_play_list = []
     // 热门赛事
     let hot_list = []
+    // 左侧菜单
+    let left_list = menu_list
     
-    let type_list = [1]
+    // 菜单大类对应的code
+    let type_list = [1,2,3]
+
     menu_list.forEach(item => {
       let list_sl = lodash.get(item,'sl',[]) || []
       if(list_sl.length){
         type_list.forEach(type => {
           let item_obj = list_sl.find(obj => obj.mi == item.mi + ''+type ) || {}
           if(item_obj.mi){
+            item_obj.mif = item.mi
             switch(type){
               case 1:
-                item_obj.mif = item.mi
                 in_play_list.push(item_obj)
+                break;
+
+              case 2:
+                to_day_list.push(item_obj)
+                break;
+
+              case 3: 
+                early_list.push(item_obj)
                 break;
             }
           }
         })
+      }
+      // 娱乐 只有冠军 没有其他玩法
+      if(item.mi == 118){
+        to_day_list.push(item)
+        early_list.push(item)
       }
     })
   
@@ -214,19 +233,21 @@ class MenuData {
     }
 
     // 获取 电子足球，电子篮球的位置
-    let foot_index_of = lodash.findIndex(to_day_list,{mi:'190'})
-    let basket_index_of = lodash.findIndex(to_day_list,{mi:'191'})
+    let foot_index_of = lodash.findIndex(left_list,{mi:'190'})
+    let basket_index_of = lodash.findIndex(left_list,{mi:'191'})
     // 篮球在足球后面，有篮球就使用篮球当前的位置 没有就用足球 最后使用默认位置
     let e_sports_index = (basket_index_of > 0 ? basket_index_of : foot_index_of > 0 ? foot_index_of : 2 ) + 1
-    to_day_list.splice(e_sports_index , 0 ,esports_obj)
+    left_list.splice(e_sports_index , 0 ,esports_obj)
 
     this.kemp_list = kemp_list
     this.hot_list = hot_list
+    this.early_list = early_list
     this.to_day_list = to_day_list
     this.in_play_list = in_play_list
+    this.left_list = left_list
     
     // 默认设置 早盘数据
-    this.set_left_menu_list_init(to_day_list)
+    this.set_left_menu_list_init(left_list)
   }
 
   // 初始化菜单 默认值
@@ -286,11 +307,11 @@ class MenuData {
           break
     
         case 3002:
-        case 3003:
           menu_list = lodash_.cloneDeep(this.to_day_list)
-          menu_list = lodash_.remove(menu_list, item => {
-             return item.mi != 2000 
-          })
+          break
+
+        case 3003:
+          menu_list = lodash_.cloneDeep(this.early_list)
           break
       
         case 3004:
@@ -300,6 +321,12 @@ class MenuData {
     }
     console.error('menu_list',this.mid_menu_result.filter_tab,menu_list)
     this.top_menu_list = menu_list
+    this.set_menu_data_version();
+  }
+
+  // 设置顶部菜单数量
+  set_top_menu_list(list = []){
+    this.top_menu_list = list
     this.set_menu_data_version();
   }
 

@@ -126,7 +126,8 @@ class MenuData {
     top_events_list = (data.find((item)=>{return item.mi==5000}).sl || []).filter((n)=>{return menu_arr.includes(+n.mi-4900)});
 
     //冠军
-    champion_list = (data.find((item)=>{return item.mi==400}).sl || []).filter((n)=>{return menu_arr.includes(+n.mi-300)});
+    // champion_list = (data.find((item)=>{return item.mi==400}).sl || []).filter((n)=>{return menu_arr.includes(+n.mi-300)});
+    champion_list = (data.find((item)=>{return item.mi==400}).sl || []);
     //热门球种不存在取常规球种  1
     // top_events_list = top_events_list.length?top_events_list.map((item)=>{
     //   return {
