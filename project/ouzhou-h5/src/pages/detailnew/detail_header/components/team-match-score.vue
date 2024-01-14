@@ -26,6 +26,7 @@ const TotalScore = computed(()=>{
     let { home, away } = lodash.get(msc_obj,'S1') || {}
     return {home, away}
 })
+
 const NowScore = computed(()=>{
     const { msc_obj, csid } = props.detail_data
     if(!NeedShowNowScoreCsids.includes(+csid)) return {}
