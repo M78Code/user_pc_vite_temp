@@ -3,23 +3,22 @@
     <div class="current-filter-list" @scroll="on_scroll" ref="area_obj">
       <div v-show="false">{{UserCtr.user_version}}-{{BaseData.base_data_version}}-{{MenuData.menu_data_version}}</div>
       <!-- 常规体育 -->
-      <!-- 暂时只显示足、篮 => [101, 102] -->
-      <template v-for="(item, index) in mi_100_arr" :key="index">
+      <template v-for="(item, index) in MenuData.top_menu_list" :key="index">
         <div class="current-filter-tab" v-if="!MenuData.is_scroll_ball() || item.ct > 0 " >
           <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked:  MenuData.menu_current_mi == item.mi }">
             <div class="filter-tab-item">
               <div class="filter-icon">
-                <sport-icon :sport_id="BaseData.compute_sport_id(item.mif)" :key_name="MenuData.menu_current_mi == item.mi ?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image'"  size="22" class="icon" />
+                <sport-icon :sport_id="BaseData.compute_sport_id(MenuData.is_kemp()? item.mif : item.mif || item.mi)" :key_name="MenuData.menu_current_mi == item.mi ?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image'"  size="22" class="icon" />
                 <div class="filter-count" v-if="!MenuData.is_collect">{{ item.ct || 0 }}</div>
               </div>
               <div :class="{ checked_text: MenuData.menu_current_mi == item.mi }" class="label-text">
-                {{  BaseData.menus_i18n_map[MenuData.is_kemp()? item.mi : item.mif] || "" }}
+                {{  BaseData.menus_i18n_map[MenuData.is_kemp()? item.mi : item.mif||item.mi] || "" }}
               </div>
             </div>
             <!-- <img class="current-mark" :class="{ 'show-mark': MenuData.mid_menu_result.current_mi == item.mi }" :style="compute_css_obj({key: 'pc-home-mask-group'})" alt=""> -->
             <div class="current-mark" :class="{'show-mark':  MenuData.menu_current_mi == item.mi}"></div>
           </div>
-          <div class="filter-tab-split-line" v-show="index != mi_100_arr.length - 1"></div>
+          <div class="filter-tab-split-line" v-show="index != MenuData.top_menu_list.length - 1"></div>
         </div>
       </template>
       <!-- 电竞 -->

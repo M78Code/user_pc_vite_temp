@@ -8,7 +8,7 @@
       <div class="match-icon-item" v-if="detail_data.mms > 1" @click="icon_click_muUrl">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/live_app.svg`" alt />
         {{ i18n_t('match_info.video_live') }}</div>
-      <div class="match-icon-item" v-if="detail_data.mvs > -1" @click="icon_click_animationUrl">
+      <div class="match-icon-item" v-if="detail_data.mvs > -1 && lodash.get(UserCtr, 'user_info.ommv')" @click="icon_click_animationUrl">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/animate_app.svg`" alt />
         {{i18n_t('match_info.animation_live') }}</div>
     </div>
@@ -163,6 +163,7 @@ const {icon_click_animationUrl,icon_click_muUrl,icon_click_lvs} =  useIconInfo(g
       get_detail_data,
       GlobalAccessConfig,
       lodash,
+      UserCtr,
       i18n_t,
       icon_click_animationUrl,
       icon_click_muUrl,
