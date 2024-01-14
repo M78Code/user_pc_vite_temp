@@ -50,7 +50,7 @@
 import { ref, computed, onMounted ,onUnmounted,reactive, onBeforeMount, nextTick } from "vue";
 import lodash_ from "lodash"
 import { useRoute } from "vue-router";
-import { LayOutMain_pc, GlobalAccessConfig } from "src/output/index.js";
+import { LayOutMain_pc, GlobalAccessConfig ,MenuData} from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_betting, api_common } from "src/api/"
 import { compute_css_variables } from "src/core/css-var/index.js"
@@ -65,6 +65,7 @@ import alertComponents from "src/base-pc/components/toast/alert.vue";
 import confirmComponents from "src/base-pc/components/toast/confirm.vue";
 import secondaryModule from 'src/base-pc/components/secondary-module/index.vue'
 import { BetBoxWapper } from "src/base-pc/components/bet";
+import { set_template_width } from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 
 
 const page_style = ref('')
@@ -92,7 +93,7 @@ document.addEventListener('pagehide', event_listener_visibilitychange);
 const show_move_video = computed(() => {
   return lodash.get(UserCtr.get_user(), "merchantEventSwitchVO.eventSwitch")
 })
-
+set_template_width(LayOutMain_pc.layout_content_width - 15,MenuData.is_scroll_ball())
 let upd_time_refresh_timer;
 onMounted(() => {
   let obj = {

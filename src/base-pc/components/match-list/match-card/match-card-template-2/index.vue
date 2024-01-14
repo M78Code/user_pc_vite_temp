@@ -5,7 +5,7 @@
   <div class="c-match-card relative-position" :id="`list-mid-${mid}`" v-if="match_style_obj.is_show_card"
     :style="`height:${match_style_obj?.total_height}px !important;
                                         width:${LayOutMain_pc.oz_layout_content - LayOutMain_pc.oz_right_width - LayOutMain_pc.oz_left_width}px  !important;`">
-    <div  v-show="GlobalAccessConfig.get_wsl()" style="position:absolute;color:red">{{ match.mid }}-{{
+    <div  v-show="GlobalAccessConfig.get_wsl()" style="position:absolute;color:red">{{ match.mid }}-{{ match.csid }}-{{
       match_style_obj.view_tpl_id }}-{{ match_style_obj.data_tpl_id }}-{{ match_style_obj.show_level }}-
     </div>
     <component :is="`MatchTpl${get_current_template_number()}After`" :mid="mid" />

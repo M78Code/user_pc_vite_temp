@@ -24,7 +24,7 @@
                 <div class="bet-odds">
                     <span class="font14 font700 mr-10">@{{ items.oddsValues }}</span>
                 </div>
-                <div class="bet-loading mr-10" v-if="items.orderStatusCode == 2">{{i18n_t("common.betting")}}</div>  
+                <div class="bet-loading mr-10" v-if="items.orderStatusCode == 2">{{i18n_t("bet.bet_betting")}}</div>  
                 <div class="bet-failure mr-10" v-if="items.orderStatusCode == 0">{{i18n_t("bet.bet_order_info3")}}</div>
                 <div class="bet-success mr-10" v-if="items.orderStatusCode == 1">{{i18n_t("bet.bet_suc")}}</div>
               

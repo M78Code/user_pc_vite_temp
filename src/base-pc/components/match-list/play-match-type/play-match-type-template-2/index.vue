@@ -151,7 +151,9 @@ function handle_hpid_choose(item) {
   padding: 0 16px 0 20px;
   color: var(--q-gb-t-c-5);
   font-size: 13px;
-
+  .choose-list-item {
+    text-align: right;
+  }
   .left-box {
     display: flex;
     align-items: center;
@@ -188,7 +190,7 @@ function handle_hpid_choose(item) {
     position: absolute;
     right: 0;
     top: 41px;
-    min-width: 300px;
+    min-width: 280px;
     line-height: 40px;
     padding: 12px 0;
     border-radius: 2px;
