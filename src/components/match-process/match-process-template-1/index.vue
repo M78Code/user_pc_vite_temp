@@ -14,8 +14,7 @@
     <!-- ms值3-比赛结束 4-比赛关闭 -->
     <div
       v-show="
-        get_match_status(lodash.get(match, 'ms'))  || [3,4].includes(1*lodash.get(match, 'ms')) ||
-        (lodash.get(match, 'mcid') && lodash.get(match, 'mmp') != 0)
+        get_match_status(match.ms)  || [3,4].includes(1*match.ms) || (match.mcid && match.mmp != 0)
       "
       class="process-name"
       :class="[periodColor === 'gray' && 'gray-color']"
@@ -23,18 +22,18 @@
       v-html="computed_process_name"
     >
     </div>
-      <match-date
-        :rows="date_rows"
-        v-if="computed_show_date"
-        :match="match"
-        :date_show_type="date_show_type"
-        class="date-wrap"
-      />
+    <match-date
+      :rows="date_rows"
+      v-if="computed_show_date"
+      :match="match"
+      :date_show_type="date_show_type"
+      class="date-wrap"
+    />
   </template>
   </div>
 </template>
 <script setup>
-import { computed, ref, watch,onMounted, onUnmounted } from "vue";
+import { computed, ref, watch,onMounted, onUnmounted, inject } from "vue";
 import matchDate from "src/components/match-process/match-process-template-1/match_date.vue";
 import {
   get_match_status,
@@ -93,7 +92,7 @@ const mmp_time_obj = ref({
 const cur_mmp_time = ref(0); // 当前阶段时间(秒数)
 const cur_fill_time = ref(0); // 补充时间(秒数)
 const cur_fill_second = ref(0); // 补充的分钟
-
+const matchs = inject('match');
 /**
  * 显示补时时间
  */
@@ -220,7 +219,7 @@ const computed_process_name = computed(() => {
 
 //是否赛事显示时间
 const computed_show_date = computed(() => {
-  let { mmp, csid, ms, mlet } = props.match || {};
+  let { mmp, csid, ms, mlet, mgt } = props.match || {};
   csid = Number(csid);
   let show = false;
   // 全场结束 || 即将开赛 时不显示时间组件
@@ -232,9 +231,11 @@ const computed_show_date = computed(() => {
   // 欧洲版网球没有展示未开赛时间，在此处加了5
   else if (
     [1, 2, 4, 5, 6,7, 11, 12, 13, 14, 15, 16].includes(csid) ||
-    is_eports_csid(csid)
+    (is_eports_csid(csid))
   ) {
-    show = true;
+    if (mgt) {
+      show = true;
+    }
     // 冰、美足 mlet 为空时不显示
     if ([4, 6].includes(csid) && mlet == "") {
       show = false;
