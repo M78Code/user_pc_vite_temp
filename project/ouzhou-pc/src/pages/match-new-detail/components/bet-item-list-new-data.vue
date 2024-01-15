@@ -169,6 +169,7 @@ const match_odds = computed(() => {
  */
 const get_odds_state = (mhs, hs, os) => {
   let _active = get_odds_active(mhs, hs, os);
+  // console.log(1111111111111,_active)
   let id = lodash.get(props.ol_data, "_hn") || lodash.get(props.ol_data, "oid");
   let state = "";
   const STATE = {
@@ -177,7 +178,7 @@ const get_odds_state = (mhs, hs, os) => {
     // 关盘
     3: "close",
     // 封盘
-    4: "seal",
+    // 4: "seal",
   };
   if (!id) {
     state = "disable";
