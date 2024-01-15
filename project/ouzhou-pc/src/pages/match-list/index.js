@@ -207,11 +207,11 @@ export const init_home_matches = async (is_socket=true) => {
 
       try {
         //五大联赛，只显示滚球数据
-        if (res?.length) {
-          res = res.filter(match => {
-            return !!get_match_status(match.ms)
-          })
-        }
+        // if (res?.length) {
+        //   res = res.filter(match => {
+        //     return !!get_match_status(match.ms)
+        //   })
+        // }
         match_list.push(...res)
         set_league_list_obj(match_list)
         LocalStorage.set('get_five_leagues_list', res,12*3600)
