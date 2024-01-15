@@ -44,7 +44,7 @@ import { ref, watch, onBeforeUnmount } from 'vue';
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-import { api_details } from 'src/api';
+import { api_match } from 'src/api';
 import template2 from './template2.vue';
 import { useRouter, useRoute } from "vue-router";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
@@ -65,10 +65,15 @@ if (cache_data.length) {
 const matches_featured_list = ref(cache_data)
 const get_featurd_list = async () => {
   let params = {
-    isHot: 1,
-    cuid: UserCtr.get_uid()
+    apiType: 1,
+    cuid: UserCtr.get_uid(),
+    orpt: -1,
+    sort: 1,
+    euid: '30199',
+    selectionHour: null,
+    tid: ''
   }
-  let res = await api_details.get_hots(params)
+  let res = await api_match.post_fetch_match_list(params)
   if (res.data && res.data.length) {
     const mids = []
     //使用数据仓库的数据 因为ws会推送数据 会改变数据仓库的数据 用本地没有数据变化哦哦

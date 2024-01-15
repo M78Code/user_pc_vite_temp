@@ -60,7 +60,7 @@ const handle_jump_match = (item) => {
   border-top: 0.027rem solid #FF7000;
   :deep(.collapse_page){
     &:not(:last-child){
-      border-bottom: 10px solid #F1F1F1;
+      // border-bottom: 10px solid #F1F1F1;
     }
     .title{
       height: 50px;

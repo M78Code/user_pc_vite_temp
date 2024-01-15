@@ -111,4 +111,8 @@ export  const  choose_config= {
     "1001": [
       {first_hpid: "20001", second_hpid: "20002"},
     ],
+    // 虚拟篮球
+    "1004": [
+      {first_hpid: "20043", second_hpid: "20044"},
+    ],
   }

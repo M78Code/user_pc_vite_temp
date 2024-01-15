@@ -144,15 +144,16 @@ export default {
   }
 
   .rank_click_icon{
-    margin-left: 0.6rem;
+    // margin-left: 0.6rem;
     // background-color: red;
     // border-radius: 100px;
     background-color: var(--q-gb-bg-c-2);
     // opacity: 0.8;
     box-shadow: 0px 0px 0.4rem 0.01rem var(--q-gb-bg-c-2);
-    position: sticky;
+    position: absolute;
+    padding: 0 0.1rem;
     right: 0;
-    left: 0;
+    // left: 0;
   }
 }
 
