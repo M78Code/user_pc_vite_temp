@@ -334,6 +334,7 @@ const get_lastest_market_info = (type) => {
                     if(obj.matchInfoId == item.matchId && obj.playId == item.playId && market.placeNum == item.placeNum){
                         // bug 需要遍历 ot == oddsType
                         let odds = lodash_.get(market,'marketOddsList[0]', {})
+                        // let oddss = market.filter(i => ot == oddsType)
                         // 赛事状态
                         bet_item.mid_mhs = obj.matchHandicapStatus
                         // 投注项状态
@@ -354,7 +355,7 @@ const get_lastest_market_info = (type) => {
                         // bet_item.mark_score = 
 
                         // 球头
-                        bet_item.handicap_hv = market.marketValue
+                        bet_item.handicap_hv = odds.playOptions || market.marketValue
                         let play_option_name = ''
                         // 主队 客队
                         if( odds.oddsType == 1 ){
@@ -362,7 +363,7 @@ const get_lastest_market_info = (type) => {
                         }else{
                             play_option_name = obj.away  || ''
                         }
-                        bet_item.playOptionName = bet_item.handicap  + ' ' + market.marketValue
+                        bet_item.playOptionName = bet_item.handicap  + ' ' + ( odds.playOptions || market.marketValue )
                         bet_item.playOptions = odds.oddsType
 
                         bet_item.place_num = 'place_num'
@@ -977,7 +978,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // let other = { bet_type:'common_bet'}
     // 移动端 并且是串关 点击 非串关赛事 提示信息  
     // 电子赛事 电竞的不可串关赛事
-    if( PROJECT_NAME.includes('h5') && !BetData.is_bet_single && (( !ol_obj._ispo && other.bet_type == 'esports_bet' ) || (["C01","B03","O01"].includes(mid_obj.cds) || [2,4].includes(Number(mid_obj.mbmty))))){
+    if(!BetData.is_bet_single && (( !ol_obj._ispo && other.bet_type == 'esports_bet' ) || (["C01","B03","O01"].includes(mid_obj.cds) || [2,4].includes(Number(mid_obj.mbmty))))){
         let text = '不支持串关'
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
         return

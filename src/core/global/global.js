@@ -108,7 +108,7 @@ class UseGlobal {
   // 设置全局开关版本变更
   set_global_data_version = lodash.debounce(()=>{
     this.global_switch_version.value = Date.now()
-    console.error('set_global_data_version')
+    // console.error('set_global_data_version')
   },10)
   
   // 获取当前排序

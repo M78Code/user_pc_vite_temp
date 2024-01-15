@@ -153,7 +153,7 @@ export const init_home_matches = async (is_socket=true) => {
   const match_list = []
   const get_home_matches = LocalStorage.get('get_home_matches', [])
   const get_five_leagues_list = LocalStorage.get('get_five_leagues_list', [])
-  if (get_home_matches.length > 0) { //数据缓存先
+  if (get_home_matches.length > 0&&!is_socket) { //数据缓存先
     MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
     MatchDataWarehouse_PC_List_Common.set_list(get_home_matches.concat(get_five_leagues_list));
     MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(get_home_matches);
@@ -207,12 +207,17 @@ export const init_home_matches = async (is_socket=true) => {
 
       try {
         //五大联赛，只显示滚球数据
-        if (res?.length) {
-          res = res.filter(match => {
-            return !!get_match_status(match.ms)
-          })
-        }
-        match_list.push(...res)
+        // if (res?.length) {
+        //   res = res.filter(match => {
+        //     return !!get_match_status(match.ms)
+        //   })
+        // }
+        // 取五大联赛的前五场赛事
+        res.forEach(item => {
+          if (match_list.length < 5) {
+            match_list.push(item)        
+          }
+        })
         set_league_list_obj(match_list)
         LocalStorage.set('get_five_leagues_list', res,12*3600)
         MatchDataWarehouse_PC_List_Common.set_list(match_list);

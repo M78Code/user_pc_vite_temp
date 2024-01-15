@@ -31,7 +31,8 @@ const load_data_state = ref("loading");
 const is_show_hot = ref(false);
 // 是否继续请求
 const is_loading = ref(true);
-
+// 请求加载动画
+const loading = ref(false);
 
 let show_refresh_mask = ref(false);
 const timer_obj = ref({});
@@ -52,6 +53,7 @@ let tid_match_list;
 */
 export function fetch_match_list(is_socket = false) {
 	clearTimeout(axios_debounce_timer2); //取消上一次请求
+	loading.value = true;
 	const match_list_params = get_match_list_params();
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
@@ -153,8 +155,11 @@ export function fetch_match_list(is_socket = false) {
 					}
 					show_refresh_mask.value = false;
 				} catch (error) {
+					set_load_data_state("refresh")
 					//如果是代码报错不要走重复请求
 					console.log('error', error);
+				} finally {
+					loading.value = false;
 				}
 			})
 			.catch((err) => {
@@ -172,6 +177,8 @@ export function fetch_match_list(is_socket = false) {
 						set_load_data_state("refresh")
 					}
 				}
+			}).finally(() => {
+				loading.value = false;
 			});
 
 	};
@@ -477,5 +484,6 @@ export {
 	set_load_data_state,
 	check_match_last_update_time,
 	mounted_fn,
-	handle_destroyed
+	handle_destroyed,
+	loading
 }

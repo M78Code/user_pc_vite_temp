@@ -40,7 +40,7 @@
         v-if="cur_state == 'loading' || cur_state == 'box_opening'"
         class="loading-wrap padding-top"
       >
-        <div class="img-loading custom-format-img-loading"  :style="compute_css_obj('pc-img-loading')"></div>
+        <div class="img-loading custom-format-img-loading"  :style="compute_css_obj({key:'pc-loading'})"></div>
         <div class="text-center loading-text flex items-end justify-center">
           <span v-if="cur_state == 'box_opening'" style="font-size: 16px"
             >{{ i18n_t('common.in_box') }}</span
@@ -54,7 +54,7 @@
         v-if="cur_state == 'right_details_loading'"
         class="loading-wrap right_details_loading"
       >
-        <div class="img-loading custom-format-img-loading" :style="compute_css_obj('pc-img-loading')"></div>
+        <div class="img-loading custom-format-img-loading" :style="compute_css_obj({key:'pc-loading'})"></div>
         <div class="text-center loading-text flex items-end justify-center">
           <span>{{i18n_t("common.loading") }}</span>
           <!-- 右侧详情内容加载中... -->

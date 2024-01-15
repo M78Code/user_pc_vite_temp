@@ -16,7 +16,7 @@
       <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
         {{item.marketName}}
       </div>
-      <div class="menu-item lszj_click_icon" @click="change_tab('lszj')">
+      <div v-if="sub_menu_type == 1001" class="menu-item lszj_click_icon" @click="change_tab('lszj')">
         <img :src="img"/>
       </div>
     </div>
@@ -293,15 +293,15 @@ export default {
 }
 
 .lszj_click_icon{
-  padding-left: 15px;
+    padding-left: .15rem;
     // background-color: red;
     // border-radius: 100px;
     background-color: var(--q-gb-bg-c-2);
     // opacity: 0.8;
-    box-shadow: 0px 0px 40px 1px var(--q-gb-bg-c-2);
-    position: sticky;
+    box-shadow: 0px 0px .4rem 0.01rem var(--q-gb-bg-c-2);
+    position: absolute;
     right: 0;
-    left: 0;
+    // left: 0;
   }
 
 /*************** 选中的玩法集 *************** -S*/

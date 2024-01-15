@@ -196,6 +196,10 @@ function get_ouzhou_data_tpl_id(csid) {
         case 102:
         case 103:
             return 124;
+        case 1001://虚拟足球1001
+            return 129
+        case 1004://虚拟篮球1004
+            return 126
         default:
             return 101;
     }

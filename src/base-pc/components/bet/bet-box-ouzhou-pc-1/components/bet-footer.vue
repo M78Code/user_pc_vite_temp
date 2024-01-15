@@ -5,17 +5,26 @@
     <div class="bet-result f-b-c pl-30 pr-20" v-if="!BetData.is_bet_single">
         <div class="bet-result-info">
             <span class="font12 font500 bet-returm mr-4">{{ i18n_t("bet.total_bet")}}</span>
-            <span class="font14 font500 bet-money ">{{ format_money2(mathJs.divide(BetViewDataClass.bet_special_pc.bet_total)) }}</span>
+            <span class="font14 font500 bet-money ">{{ total() }}</span>
         </div>
         <div class="bet-result-info">
             <span class="font12 font400 bet-returm mr-4">{{ i18n_t("bet.total_income") }}</span>
-            <span class="font14 font500">{{ format_money2(mathJs.divide(BetViewDataClass.bet_special_pc.bet_win))}}</span>
+            <span class="font14 font500">{{ winMoney() }}</span>
         </div>
     </div>
+
+    <template>
+        <div>{{i18n_t("bet.bet_min_item").replace('%s',BetData.mix_min_count)}}</div>
+    </template>
 
     <div v-show="false">  {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{i18n_t.locale}}-{{UserCtr.user_version}}</div>
 
     <div class="bet-footer">
+        <div class="bet-state" v-if="!BetData.is_bet_single && BetData.bet_s_list.length < BetData.mix_min_count">
+            <div class="w-100 f-c-c bet-title bet-error">
+                {{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}
+            </div>
+        </div>
         <div class="bet-state" v-if="BetViewDataClass.error_message">
             <div class="w-100 f-c-c bet-title" :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
                 {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
@@ -29,16 +38,21 @@
             <div class="font16 font400 f-c-c bet-bet-cancel" @click="set_retain_selection">{{ i18n_t("bet.save_item") }}</div>
             <div class="font16 font600 f-c-c bet-place-bet" @click="set_confirm">{{ i18n_t("common.confirm") }}</div>
         </div>
+        <template v-if="BetData.bet_s_list.length < BetData.mix_min_count">
+            <!--至少选择2场比赛-->
+            
+        </template>
     </div>
 </template>
 
 <script setup>
+import {computed} from "vue"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
-import { i18n_t,UserCtr ,format_money2} from "src/output/index.js"
+import { i18n_t,UserCtr ,format_money2, formatMoney} from "src/output/index.js"
 
 // 提交投注信息
 const set_bet_submit = () => {
@@ -69,6 +83,38 @@ const set_confirm = () => {
     BetData.set_clear_bet_info()
     BetViewDataClass.set_clear_bet_view_config()
 }
+
+// 串关底部收益
+const winMoney = computed(()=> state =>{
+    console.log('-------------------------------------- BetData.bet_special_series----------------------------------',  BetViewDataClass.bet_special_series, BetViewDataClass.orderNo_bet_single_obj)
+    let sum = 0
+    // if (BetData.bet_amount) {
+    if (BetViewDataClass.bet_order_status === 1) {
+        BetViewDataClass.bet_special_series.forEach((item)=>{
+            sum += mathJs.subtract(mathJs.multiply(item.bet_amount, item.seriesOdds), item.bet_amount)
+        })
+    } else {
+        BetViewDataClass.orderNo_bet_single_obj.forEach((item)=>{
+            sum += mathJs.divide(item.maxWinAmount, 100)
+        })
+    }
+    // }
+    return formatMoney(sum) 
+})
+// 串关底部数量
+const total = computed(()=> state =>{
+    let sum = 0
+    if (BetViewDataClass.bet_order_status === 1) {
+        BetViewDataClass.bet_special_series.forEach((item)=>{
+            sum += (item.bet_amount ? item.bet_amount : 0)
+        })
+    } else {
+        BetViewDataClass.orderNo_bet_single_obj.forEach((item)=>{
+            sum += mathJs.divide(item.seriesBetAmount, 100)
+        })
+    }
+    return sum
+})
 
 </script>
 

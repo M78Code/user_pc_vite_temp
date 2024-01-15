@@ -38,7 +38,7 @@
       <!-- 单关 投注 -->
       <div class="bet-scroll">
         <div v-if="BetViewDataClass.bet_order_status == 1">
-          <template v-if="BetData.is_bet_single">
+          <template v-if="BetData.is_bet_single && BetData.bet_single_list.length">
             <div v-for="(item,index) in BetData.bet_single_list" :key="item.playOptionsId">
                 <betItem :items="item" :key="index" :index="index" />
             </div>
@@ -77,12 +77,16 @@
         <template v-else>
           <template v-if="BetData.is_bet_single">
             <div v-for="(item,index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
-              <betResult :items="item" :key="index" :index="index" />
+              <betResult :items="item" :key="'orderNo' + index" :index="index" />
             </div>
           </template>
           <template v-else>
+            <div v-for="(item,index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
+              <betResult :items="item" :key="'orderNo' + index" :index="index" />
+            </div>
             <div v-for="(item,index) in BetViewDataClass.orderNo_bet_single_obj" :key="item.orderNo">
-              <betResult :items="item" :key="index" :index="index" />
+              <!-- {{ item }} -->
+              <betMixResult :items="item" :key="index" :index="index" />
             </div>
           </template>
           
@@ -100,15 +104,17 @@
 
 <script setup>
 import { reactive, ref } from "vue"
-import { UserCtr} from "src/output/index.js"
+import { UserCtr, format_money2} from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import betTitle from "./components/bet-title.vue"  // 投注头部
 import betItem from "./components/bet-item.vue"  // 投注列表
 import betFooter from "./components/bet-footer.vue"  // 投注底部信息
 import betResult from "./components/bet-result.vue"  // 投注结果
+import betMixResult from "./components/bet-mix-result.vue"  // 串关投注结果
 import betSpecialInput from "./components/bet-special-input.vue"
 import BetMultipleInput from "./components/bet-multiple-input.vue"
+import mathJs from 'src/core/bet/common/mathjs.js'
 
 
 const ref_data = reactive({

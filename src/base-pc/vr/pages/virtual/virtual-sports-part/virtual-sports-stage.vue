@@ -152,6 +152,8 @@ import virtualSportsTimer from "src/base-pc/vr/pages/virtual/virtual-sports-part
 import loading from 'src/components/loading/loading.vue';
 import dateMatchList from 'src/base-pc/vr/pages/virtual/virtual-sports-part/date-match-list.vue'
 import virtualBasketball from 'src/base-pc/vr/pages/virtual/details/children/virtual-basketball.vue'
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
+
 export default {
   mixins:[virtual_sports_stage_mixin],
   name:'VirtualSportsStage',
@@ -161,12 +163,16 @@ export default {
     loading,
     virtualBasketball
   },
+  data(){
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .virtual-sports-stage {
-  min-height: 1.9rem;
   position: relative;
   background: var(--q-gb-bg-c-28);
 }
@@ -191,7 +197,7 @@ export default {
 .banner {
   border-radius: 0.05rem;
   width: 100%;
-  height: 1.9rem;
+  height: 3.24rem;
   margin: auto;
   overflow: hidden;
   background-image: url($SCSSPROJECTPATH+"/image/png/virtual_football.png"); //todo 后续上传到服务器

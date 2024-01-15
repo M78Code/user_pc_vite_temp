@@ -49,7 +49,12 @@
     >
       <div v-if="odds_state == 'seal'" class="lock" />
       <span v-else>
-        {{ ol_data.ov / 100000 }}
+        {{ compute_value_by_cur_odd_type(
+          ol_data.ov,
+          ol_data._hpid,
+          ol_data._hsw,
+          ol_data.csid || match?.csid
+        ) }}
       </span>
       <div class="odds-arrows-wrap">
         <!-- 红升、绿降 -->
@@ -61,17 +66,11 @@
 </template>
 
 <script setup>
-// import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { onMounted, ref, onUnmounted, computed, watch } from "vue";
+import {ref, onUnmounted,inject, computed, watch } from "vue";
 import lodash from 'lodash'
-import {
-  get_odds_active,
-} from "src/output/index.js";
-import { format_odds_value } from 'src/output/index.js';
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { compute_value_by_cur_odd_type, UserCtr } from "src/output/index.js";
-import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
 
@@ -82,7 +81,8 @@ const odds_state = ref("");
 const match_odds = ref("");
 // 赔率升降 up:上升 down:下降
 const odds_lift = ref("");
-
+//添加默认值 防警告
+const match = inject('match', null);
 const props = defineProps({
   ol_data: {
     type: [Object, Array],

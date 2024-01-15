@@ -82,22 +82,23 @@ const score_data = computed(() => {
   const hps_length = lodash.get(props.hps, 'length', 0)
   const hps = hps_length > 0 ? props.hps : props.match_info.hps
   const csid = props.match_info.csid
+  // 本地 ol
+  const plays = sports_play_title[csid]
+  const default_hpid = plays && plays[0] && plays[0].hpid ? plays[0].hpid : '1'
 
   // 真实 ol
-  const hpid = !props.is_change ? '1' : lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
+  const hpid = !props.is_change ? default_hpid : lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, default_hpid)
   const ol_length = hpid === '1' ? 3 : 2
 
   const length = lodash.get(hps, 'length', 0)
   if (length === 0) return Array.from({ length: ol_length }, (i) => { return { } })
-
 
   const hps_item = hps.find(t => (t.chpid || t.hpid) == hpid)
 
   // structureLiveMatches 接口 结构不一样 hl 是对象
   item_hs.value = hps_length > 0 ? lodash.get(hps_item, 'hl.hs', 0) :  lodash.get(hps_item, 'hl[0].hs', 0)
   
-  // 本地 ol
-  const plays = sports_play_title[csid]
+
   const play_item = plays && plays.find(t => t.hpid === hpid)
  
   // structureLiveMatches 接口 结构不一样 hl 是对象

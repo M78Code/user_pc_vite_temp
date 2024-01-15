@@ -16,9 +16,9 @@
           <div :class="['timer-wrapper-c flex items-center']">
 
             <!-- 赛事回合数mfo -->
-            <div v-if="item.mfo" class="mfo-title" :class="{ 'is-ms1': item.ms == 1 }">
+            <!-- <div v-if="item.mfo" class="mfo-title" :class="{ 'is-ms1': item.ms == 1 }">
               {{ item.mfo }}
-            </div>
+            </div> -->
 
             <!--即将开赛 ms = 110-->
 
@@ -51,7 +51,7 @@
         </div>
       </div>
       <template v-if="item">
-        <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" :hps="get_item_hps(item)" custom_type="hots" />
+        <ScoreList :match_info="item" height="39px" :show_hpn="true" :is_change="false" :hps="get_item_hps(item)" custom_type="hots" />
       </template>
     </div>
   </div>
@@ -182,6 +182,9 @@ function toDetails(item){
   overflow-x: auto;
   padding: 0 10px 0 15px;
   background: #E2E2E2;
+  touch-action: pan-x;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;/*解决移动端滑动卡顿问题*/
   &::-webkit-scrollbar {
     display: none; /* Chrome Safari */
   }
@@ -236,6 +239,9 @@ function toDetails(item){
           color: var(--q-gb-t-c-4);
           font-weight: 500;
         }
+      }
+      :deep(.counting-down-start){
+        white-space: nowrap;
       }
     }
     .game-name{

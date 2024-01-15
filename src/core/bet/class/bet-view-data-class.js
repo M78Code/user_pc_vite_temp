@@ -458,6 +458,14 @@ class BetViewData {
     this.set_bet_view_version()
   }
 
+  // 清空串关类型的投注金额
+  set_clear_bet_special() {
+    this.bet_special_series.filter(item=>{
+      item.bet_amount = ''
+    })
+
+    this.set_bet_view_version()
+  }
 
   // 设置限额对应的金额
   set_bet_special_series_item(item) {

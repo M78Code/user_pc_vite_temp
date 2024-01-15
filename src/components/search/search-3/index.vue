@@ -83,6 +83,10 @@ const main_menu_toggle = ref(MenuData.main_menu_toggle) /** 左侧列表显示�
 const search_width = ref(LayOutMain_pc.layout_search_width)
 const main_width = ref(LayOutMain_pc.layout_main_width + 'px')
 const search_isShow = ref(SearchPCClass.search_isShow) // 是否显示搜索组件 default: false
+
+
+
+
 // const route = useRoute()
 
 page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
@@ -101,6 +105,10 @@ const click_fun = () => set_search_status(false);
 // 是否展开多列玩法 default: object
 const is_unfold_multi_column = ref(LayOutMain_pc.is_unfold_multi_column)
 
+// const change_status = (pramas)=>{
+//   show_type.value = pramas.type
+//   search_text.value = pramas.text
+// }
 
 onMounted(() => {
   // if (search.back_keyword.keyword) {
@@ -109,7 +117,7 @@ onMounted(() => {
   document.addEventListener('click', click_fun)
   window.addEventListener('resize', on_resize)
   // 初始化球种菜单数据
-  mutations.get_sports_list_handle()
+mutations.get_sports_list_handle()
 })
 
 onUnmounted(() => {
@@ -185,7 +193,7 @@ function on_resize() {
     background: var(--q-header-search-color-6);
 
     :deep(.serach-background) {
-      background-color: var(--q-gb-bg-c-11);
+      background-color: var(--q-gb-bg-c-30);
       min-height: 400px;
       overflow: hidden;
     }
@@ -199,12 +207,12 @@ function on_resize() {
       padding: 10px 0 0 15px;
       z-index: 999;
       /* 修改此值  需注意是否被滚球倒计时遮挡 */
-      background-color: var(--q-gb-bg-c-11);
+      background-color: var(--q-gb-bg-c-30);
       border-bottom: 1px solid var(--q-header-search-color-5);
 
       .tab-item {
         height: 38px;
-        line-height: 40px;
+        line-height: 10px;
         padding: 0 10px;
       }
 
