@@ -190,8 +190,8 @@ export default {
       .item {
         .result-list {
           .result-item {
-            background: #FEAE2B;
-            color:var(--q-gb-t-c-14);
+            background: var(--q-gb-bg-c-30);
+            color:var(--q-gb-t-c-20);
             &.item-W {
               background: #E95B5B;
             }
