@@ -100,7 +100,7 @@ const props = defineProps({
       tabList.value.unshift(
         {
           // TODO: 国际化
-          name: UserCtr.lang == 'zh' ? '资讯' : '資訊',
+          name: ['zh', 'hk'].includes(UserCtr.lang) ? '资讯' : '資訊',
           component: articleMain
         },
       )

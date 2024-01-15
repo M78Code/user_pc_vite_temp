@@ -53,7 +53,11 @@ export default {
       try {
         let {code , data} = await api_v_sports.get_virtual_match_detail_count({mid: this.get_current_mid})
         if(code == 200 && data.length > 0) {
-          this.ranking_data = data
+          this.ranking_data = lodash.forEach(data, (item, index)=> {
+            if(!item.star){
+              item.star = 0
+            }
+          })
           // this.results_filter(this.ranking_data)
         } else {
           this.no_data = true
