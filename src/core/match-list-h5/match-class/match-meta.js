@@ -828,7 +828,6 @@ class MatchMeta {
       sort: 1,
       apiType: 1,
       orpt: -1,
-      csid: '1',
       cuid: UserCtr.get_uid(),
     }
     const res = await api_match.post_fetch_match_list(params)
@@ -844,7 +843,7 @@ class MatchMeta {
     localStorage.removeItem('ouzhou_home_hots')
     localStorage.setItem('ouzhou_home_hots', JSON.stringify(res))
     const hots = lodash.get(res, 'data', [])
-    const hots_list = hots.slice(0, 5)
+    const hots_list = hots.sort((a,b) => +a.csid - +b.csid).slice(0, 5)
     hots_list.map(t => {
       t.match_data_type = 'h5_hots_list'
     })

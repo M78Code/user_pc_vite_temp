@@ -134,7 +134,7 @@ const match_list_tpl_size = computed(() => {
   return MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 })
 const is_HDP = computed(() => {
-  return [1, 20, 24, 13, 29].includes(+match_style_obj.data_tpl_id)
+  return [1, 20, 24, 13, 25].includes(+match_style_obj.data_tpl_id)
 })
 
 /**
@@ -155,7 +155,7 @@ const bet_col = computed(() => {
     title_name = "corner_bet_col"
   }
   //罚牌主盘
-  else if ([29].includes(data_tpl_id)) {
+  else if ([25].includes(data_tpl_id)) {
     data_tpl_id = 1
     title_name = "punish_bet_col"
   } else if (data_tpl_id == 28) {

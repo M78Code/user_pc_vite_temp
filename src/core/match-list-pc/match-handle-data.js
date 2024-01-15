@@ -704,7 +704,7 @@ function get_match_cur_handicap_data(match, is_ws_call) {
     // 设置是否显示当前局玩法
     return {
         cur_handicap_list: match.cur_handicap_list,
-        ...get_is_show_cur_handicap(match)
+        is_show_cur_handicap:get_is_show_cur_handicap(match)
     }
 }
 /**
