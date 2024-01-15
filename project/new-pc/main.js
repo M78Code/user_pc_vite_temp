@@ -23,6 +23,7 @@ import router from './src/router/index.js'
 //引入全局初始化样式
 import "./src/css/app.scss"
 import "./src/css/style.css"
+import "./src/css/reset.css"
 import "app/public/yazhou-pc/image/com/com.css" //打包会警告: files in the public directory are served at the root path. Instead of /public/yazhou-pc/image/com/com.css, use /yazhou-pc/image/com/com.css.
 // import "app/yazhou-pc/image/com/com.css" //根据警告更改import 会报错
 // Assumes your root component is App.vue
