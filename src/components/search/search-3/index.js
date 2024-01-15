@@ -23,6 +23,7 @@ export class mutations {
             console.log('search.get_search_result', res)
             const { state, list } = res
             store.res_list = list
+            console.log('store.res_liststore.res_list',store.res_list)
             store.show_type = 'result'
             store.load_data_state = state
         })
@@ -34,7 +35,11 @@ export class mutations {
             if (lodash.get(res, 'code') == 200) {
                 const list = lodash.get(res, 'data') || []
                 // 根据商户过滤篮球赛事
-                store.sports_list = list
+                store.sports_list = list.map(item=>{
+                    item.name = item.sportName;
+                    return item;
+                })
+                
                 // 默认第一个 足球被禁用后 默认值不是1
                 store.search_csid = (list[0] || {}).id
                 if (csid) {
