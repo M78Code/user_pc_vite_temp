@@ -386,7 +386,7 @@ const lev_2_click = (detail = {}) => {
 
   MenuData.set_mid_menu_result(mid_obj)
 
-  MenuData.is_today() && MenuData.set_menu_current_mi(left_obj.lv2_mi)
+  MenuData.set_menu_current_mi(left_obj.lv2_mi)
 };
 
 /**
