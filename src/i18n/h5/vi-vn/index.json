@@ -105,7 +105,8 @@
     "victory": "T",
     "win": "T",
     "win_plate": "Thắng",
-    "Win_rate": "% Thắng"
+    "Win_rate": "% Thắng",
+    "analysis_information": "Thông tin"
   },
   "basketball_playing_way": {
     "first_half": "Hiệp 1",

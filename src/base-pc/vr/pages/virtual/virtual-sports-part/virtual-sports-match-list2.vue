@@ -5,34 +5,26 @@
 <template>
   <div class="match-list-wrapper" :class="{standard: standard_edition == 2}">
     <div>
-      <div class="title-wrap-standard row justify-end" v-if="standard_edition == 2 && false">
-        <div class="odd-title-wrapper row">
-          <div class="odd-t-w-inner row items-center" :class="{status2:standard_odd_status}">
-            <div v-for="(hpl_title, hp_i) of i18n_t('list_title.'+csid+'.title')" :key="hp_i">
-              {{hpl_title}}
-            </div>
-          </div>
-        </div>
-      </div>
-      <template v-for="(match_item,i) in virtual_match_list" :key="i">
-        <v-sports-match-item :match_selected_i="selected_match_i" v-if="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)"
-          :i="i" :match_item="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)" @switch_match="switch_match_handle"
-          @odd_pan="odd_pan_handle" :other_status="standard_odd_status">
-        </v-sports-match-item>
+      <v-sports-play-name :match_item_batch="match_item_batch" :csid="csid" />
+      <template v-for="(match_item, index) in virtual_match_list" :key="index">
+        <v-sports-tpl v-if="match_item.mid" :match_item="match_item" :index="index"
+        :mid="match_item.mid"></v-sports-tpl>
       </template>
     </div>
   </div>
 </template>
 <script>
 import virtual_sports_match_list2_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-match-list2-mixin.js";
-import v_s_match_timer from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-timer.vue";
-import virtual_sports_match_item from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-item2.vue";
+import virtual_sports_match_tpl from 'src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-tpl.vue'
+import virtual_sports_play_name from 'src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-play-name.vue'
+
 export default {
   mixins:[virtual_sports_match_list2_mixin],
   components:{
-    'v-s-match-timer':v_s_match_timer,
-    'v-sports-match-item':virtual_sports_match_item,
-  }
+    'v-sports-tpl': virtual_sports_match_tpl,
+    'v-sports-play-name': virtual_sports_play_name
+  },
+  props: ['match_item_batch', 'csid']
 }
 </script>
 

@@ -112,7 +112,8 @@
     "victory": "승리",
     "win": "승리",
     "win_plate": "승리",
-    "Win_rate": "승률"
+    "Win_rate": "승률",
+    "analysis_information": "뉴스"
   },
   "basketball_playing_way": {
     "first_half": "하프타임",

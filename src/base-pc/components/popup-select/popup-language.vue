@@ -2,19 +2,19 @@
     <div class="popup-wrap relative-position " :class="[versions_class, { active: show_popup }]">
         <div class="langeuage-text popup-text" :class="{ 'active': show_popup }" @click="toggle_popup">
             <div>
-                <span :class="['flag lang-active', UserCtr.lang]" :style="sprite_img['pc-popup-language-icon-image']({position: UserCtr.lang, theme: 'local'})"></span>
-                <span class="lang-label ellipsis">{{ langs[UserCtr.lang] }}</span>
+                <span :class="['flag lang-active', get_lang]" :style="sprite_img['pc-popup-language-icon-image']({position: get_lang, theme: 'local'})"></span>
+                <span class="lang-label ellipsis">{{ langs[get_lang] }}</span>
             </div>
             <div class="yb-icon-arrow"></div>
         </div>
         
         <div v-show="false">{{UserCtr.user_version}}-{{GlobalSwitchClass.global_switch_version}}</div>
 
-        <div class="wrap-language" v-if="show_popup">
+        <div class="wrap-language" v-show="show_popup">
             <div class="triangle"></div>
             <template v-for="(language, index) in language_arr">
-                <div v-if="languageList.includes(language)" :key="index" class="item ellipsis"
-                    :class="[{ active: UserCtr.lang == language }]" @click="on_click_lang(language)">
+                <div :id="language" v-if="languageList.includes(language)" :key="index" class="item ellipsis"
+                    :class="[{ active: get_lang == language }]" @click="on_click_lang(language)">
                     <span :class="['flag', language]" :style="sprite_img['pc-popup-language-icon-image']({position: language, theme: 'local'})"></span>{{ langs[language] }}
                 </div>
             </template>
@@ -27,11 +27,12 @@ import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue'
 
 import { api_account } from 'src/api/index';
 import langs_mjs from "src/i18n/pc/langs/index.mjs";
-import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+import { useMittOn, useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { loadLanguageAsync,GlobalSwitchClass } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js"
 import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
+import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 
 /** 是否展示 */
 const show_popup = ref(false)
@@ -41,6 +42,9 @@ const language_arr = ref(Object.keys(langs_mjs))
 const hits = ref(0)
 const langs = ref(langs_mjs)
 
+const get_lang = computed(() => {
+    return UserCtr.lang == 'hk' ? 'zh' : UserCtr.lang
+})
 
 // 监听全局点击事件， 语言切换是展开的 需要收起
 watch(
@@ -53,21 +57,35 @@ watch(
   },
   { immediate: true }
 );
-
 /** 语言列表 */
 const languageList = ref([])
 onMounted(() => languageList.value = lodash.get(UserCtr.get_user(), 'languageList') || [])
-onUnmounted(() => languageList.value = [])
+/* 监听简繁译切换mitt */
+const { off } = useMittOn(MITT_TYPES.EMIT_SET_MATCH_TRANSLATE, (param) => on_click_lang(param, 'switch'))
 
+onUnmounted(() => languageList.value = [])
+onUnmounted(off)
 /**
  * @Description:切换语言
  * @param {string} lang_ 语言
  * @return {undefined} undefined
  */
-function on_click_lang(lang_) {
+async function on_click_lang(language, type = '') {
+    let lang_ = 'zh'
+    // 如果切换到中文简体时，之前选中的是繁译则lang_设置为 hk
+    if (!type && language == 'zh' && LocalStorage.get('match_translate') == 'hk' && lodash.get(UserCtr, 'user_info.simpleTradSwitch')) {
+        lang_ = 'hk'
+    } else {
+        lang_ = language
+    }
+    // 切换语言后需要更新接口缓存数据get_user_language_switch
+    await api_account.get_user_language_switch({
+        languageSwitch: lang_ == 'hk' ? 1 : 0
+      })
     api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: lang_ }).then(res => {
         let code = lodash.get(res, 'code');
         if (code == 200) {
+            type == 'switch' && UserCtr.set_match_translate(lang_);
             UserCtr.set_lang(lang_);
             BaseData.set_base_data_menu_i18n()
             // 设置即将开赛筛选默认值为全部
@@ -80,8 +98,6 @@ function on_click_lang(lang_) {
             useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
         }
     })
-
-    toggle_popup()
 }
 /**
 * @description:

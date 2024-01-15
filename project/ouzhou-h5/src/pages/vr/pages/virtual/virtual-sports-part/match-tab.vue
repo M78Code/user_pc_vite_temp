@@ -45,15 +45,54 @@ export default {
     }
   },
   methods: {
+    /**
+     * 批次变化
+     * @param {String|Number} batchNo 当前最新期号
+     * @param {Undefined}
+     */
+     sub_nav_click_handle(batchNo, is_user_lick = false){
+      // 期号相同 且 是用户点击 则直接退出
+      if(batchNo == this.sub_focus_batch_no && is_user_lick){
+        return;
+      }
+      this.sub_nav_focus_i = lodash.findIndex(this.no_list,{batchNo:batchNo});
+      this.sub_focus_batch_no = batchNo;
+      // utils.tab_move2(this.sub_nav_focus_i, this.$refs.scrollBox)
+      let current_sub_nav = this.no_list[this.sub_nav_focus_i];
+
+      this.rank_turnon = false
+      this.img = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/virtual-sports/rank_click_icon.svg`;
+      this.$emit('change_tab','list')
+
+      this.$emit('sub_nav_change',{
+        nav:current_sub_nav,
+        i:this.sub_nav_focus_i
+      });
+
+      //将赛马赛事信息跟新到vuex
+      let match_info = lodash.get(current_sub_nav,'match[0]')
+      match_info && this.set_detail_data(lodash.cloneDeep(match_info))
+
+      //赛马传递赛事集合唯一赛事的赛事id
+      if([1002, 1011, 1010, 1009].includes(this.sub_menu_type)){
+        let mid = '';
+        try{
+          mid = current_sub_nav.match[0].mid;
+        }catch(e){console.error(e)}
+        if(mid){
+          this.set_current_mid(mid);
+        }
+      }
+    },
     change_tab(val){
       if(this.rank_turnon){
         this.rank_turnon = false
         this.img = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/virtual-sports/rank_click_icon.svg`;
-        // this.$emit('change_tab','bet')
+        this.$emit('change_tab','list')
       }else{
         this.rank_turnon = true
         this.img = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/virtual-sports/lszj_click_turnoff_icon.svg`;
-        // this.$emit('change_tab','rank')
+        this.$emit('change_tab','rank')
       }
     }
   }

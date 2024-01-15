@@ -330,6 +330,14 @@
       "bet_col_20002": {
         "bet_col_Over": "大于",
         "bet_col_Under": "小于"
+      },
+      "bet_col_20043": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_20044": {
+        "bet_col_Over": "总分",
+        "bet_col_Under": "总分"
       }
     }
   },
@@ -3077,7 +3085,9 @@
     "version": "版本",
     "version_": "版本切换",
     "pro": "专业",
-     "beginner": "新手"
+    "beginner": "新手",
+    "short_translation": "简译",
+    "traditional_translation": "繁译"
   },
   "small_extensive": {
     "bet_hide": "隐藏投注",

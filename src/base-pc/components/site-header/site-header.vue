@@ -235,9 +235,7 @@ function show_activity_page(n, urlType) { // 首页弹窗跳转判断
  * @param {obj} 菜单路由对象 {id: 唯一id, tab_name: 菜单名, path: 跳转路径, _blank: 是否打开单独的窗口} 具体参考 vue init_site_header() 方法
  */
 async function tab_click(obj) {
-
     set_current_index(obj.index)
-    
     // 埋点配置
     let menu = props.nav_list[obj.index]
     if (menu.path.includes('/activity') && !globalAccessConfig.get_activitySwitch()) {
@@ -384,32 +382,12 @@ function show_record(
  * @return {boolean} 
 */
 function open_history_fun() {
-    console.log('打开注单历史');
     tab_click({
         'index': 3, 'event': null, 'item': {
             'id': 2, 'path': "bet_record", 'tab_name': "注单历史", '_blank': true
         }
     });
 }
-
-/**
-  * @Description 处理tab阻止事件
-  * @param {array|string| number} [] // 过滤的参数 可以是数组 也可以单个处理 
-  * @param {string| number}  // 当前点击的tab index
-  * @return {boolean}
-*/
-
-// function _preventTabChange(list,index){
-//     let type = typeof list
-//     if(type == 'object'){
-//         list.includes(index)
-//         return
-//     }
-//     if(type == 'number' || type == 'string'){
-//         list == index
-//         return
-//     }
-// }
 
 /**
  * @Description 设置tab选中 [3,4,5,6] 注单 赛果 体育规则 任务中心特殊处理，不设置tab
@@ -492,7 +470,6 @@ function menu_change(side) {
 watch(
     () => MenuData.menu_data_version,
     () => {
-        console.error('MenuDataMenuDataMenuDataMenuDataMenuData')
         if(MenuData.is_esports()){
             set_current_index(2)
         }else if(MenuData.is_vr()){

@@ -275,7 +275,7 @@ const lev_1_click = async (obj) => {
     }
     // 设置为冠军
     root = 400
-
+    MenuData.set_current_ball_type("")
   } else if (type == 2000) {
     // 设置默认值
     root = 2000
@@ -341,7 +341,7 @@ const lev_1_click = async (obj) => {
       }
     }
     const sport_id = left_obj.lv1_mi?.substring(0,3) || 0;
-    MenuData.set_current_ball_type(sport_id?+sport_id-100:0)
+    MenuData.set_current_ball_type(sport_id?+sport_id-100:'')
   }
   MenuData.set_menu_root(root)
   // 不是列表页 点击列表菜单
@@ -356,7 +356,7 @@ const lev_1_click = async (obj) => {
   // 今日没有中间菜单 需要清空
   MenuData.set_mid_menu_result(mid_obj)
 
-  MenuData.is_today() && MenuData.set_menu_current_mi(left_obj.lv2_mi || "")
+   MenuData.set_menu_current_mi(left_obj.lv2_mi || "")
 
 };
 /**
@@ -386,7 +386,7 @@ const lev_2_click = (detail = {}) => {
 
   MenuData.set_mid_menu_result(mid_obj)
 
-  MenuData.is_today() && MenuData.set_menu_current_mi(left_obj.lv2_mi)
+  MenuData.set_menu_current_mi(left_obj.lv2_mi)
 };
 
 /**

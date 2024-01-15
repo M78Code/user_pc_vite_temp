@@ -13,7 +13,6 @@ let {
   components_keys,
   registered_component_key,
 } = wapper_config;
-console.log('MatchCardTemplate2', wapper_config);
 
 export default {
   inheritAttrs: false,

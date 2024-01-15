@@ -554,7 +554,8 @@
     "victory": "胜",
     "win": "赢",
     "win_plate": "赢盘",
-    "Win_rate": "赢盘率"
+    "Win_rate": "赢盘率",
+    "analysis_information": "资讯"
   },
   "basketball_playing_way": {
     "first_half": "半场",
@@ -2634,6 +2635,7 @@
     "novideo6": "您长时间未操作，视频暂停，若要继续观看请重新点击播放"
   },
   "virtual_sports": {
+    "rank": "排名",
     "advance": "进",
     "champion": "冠军",
     "comprehensive_rating": "综合评价",
