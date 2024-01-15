@@ -91,8 +91,8 @@ if (Object.keys(route.params).length) {
 // 只在简中和繁中的时候有赛事文章
 // if (['zh', 'tw'].includes(localStorage.getItem('lang'))) {
 // if (localStorage.getItem('lang') == 'zh') {
-if (['zh', 'tw'].includes(UserCtr.lang)) {
-  if (UserCtr.lang == 'zh') {
+if (['zh', 'tw', 'hk'].includes(UserCtr.lang)) {
+  if (['zh', 'hk'].includes(UserCtr.lang)) {
     newsTabName.value = '资讯'
   } else {
     newsTabName.value = '資訊'

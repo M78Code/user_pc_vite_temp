@@ -176,7 +176,7 @@ const counting_down_wrap_width = (title = '', counting_time = '') => {
   const special_match_time_show = [2,4,6,15,16].includes(+props.match.csid) && [301,302,303].includes(+props.match.mmp)
 
   // 中文、繁体定时器容器宽度适配
-  if (['zh', 'tw'].includes(lang)) {
+  if (['zh', 'tw', 'hk'].includes(lang)) {
     // 猜你喜欢
     if (props.u_like && title_length === 3) {
       counting_wrapper_width.value = show_time_counting.value ? (0.39 + 0.05 + 0.3) : 'auto'

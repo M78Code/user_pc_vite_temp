@@ -1,6 +1,6 @@
 <template>
   <div class="bet-box-info" ref="pondModel" id="drag" >
-    <div v-show="false"> {{UserCtr.user_version}} -- {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
+    <div v-show="false"> {{UserCtr.user_version}} -{{MenuData.menu_data_version}}- {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
     <!-- 头部信息 -->
     <betTitle />
     <!-- 展开项 -->
@@ -23,7 +23,7 @@
             <span v-else class="merge-checkbox ml-4"></span> 
           </div>
           <!-- 单关 串关 切换 -->
-          <div class="f-e-c ml-16" @click="show_single_change()">
+          <div class="f-e-c ml-16" @click="show_single_change()" v-if="!MenuData.is_kemp()">
             <span v-if="BetData.is_bet_single">{{ i18n_t('bet.bet_one_') }}</span>
             <span v-if="!BetData.is_bet_single">{{ i18n_t('bet.bet_series') }}</span>
 
@@ -104,7 +104,7 @@
 
 <script setup>
 import { reactive, ref } from "vue"
-import { UserCtr, format_money2} from "src/output/index.js"
+import { MenuData, UserCtr, format_money2} from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import betTitle from "./components/bet-title.vue"  // 投注头部
