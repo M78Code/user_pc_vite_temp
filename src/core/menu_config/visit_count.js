@@ -1,12 +1,19 @@
 import { api_common } from "src/api/index.js"
 import lodash_ from "lodash"
 import { MenuData } from "src/output/project/index.js"
+import { useMittEmit,MITT_TYPES } from "src/output"
 
 // 获取最近访问的赛种信息
 const get_visit_sports_list = () => {
-  api_common.get_visit_sports().then(res=>{
 
-  })
+    api_common.get_visit_sports().then(res=>{
+      let code = lodash_.get(res,'code','')
+      if(code == 200){
+        let data = lodash_.get(res,'data',[]) || []
+        useMittEmit(MITT_TYPES.EMIT_SET_VISIT_SPORTS_LIST,data)
+      }
+    })
+ 
 }
 
 // 点击赛种设置最近访问信息

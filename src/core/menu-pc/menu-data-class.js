@@ -280,7 +280,7 @@ class MenuData {
    * @param {*} is_fetch  是否立刻更新菜单 意味这立刻请求列表接口
    */
   set_menu_root(val) {
-    console.error('set_menu_root',val)
+    // console.error('set_menu_root',val)
     this.menu_root = val;
     let menu_list = []
     switch(val*1){
