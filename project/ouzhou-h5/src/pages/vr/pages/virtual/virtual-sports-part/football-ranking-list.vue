@@ -6,7 +6,7 @@
     <!-- <span class="navigation-title">{{ i18n_t('virtual_sports.leaderboard') }}</span> -->
     <!-- header -->
     <div class="header">
-      <div class="col1 col-label"></div>
+      <div class="col1 col-label">{{ i18n_t('virtual_sports.rank') }}</div>
       <div class="col2 col-label">{{ i18n_t('virtual_sports.team') }}</div>
       <div class="col3 col-label">{{ i18n_t('virtual_sports.game') }}</div>
       <div class="col4 col-label">{{ i18n_t('virtual_sports.win_tie_loss') }}</div>
@@ -70,17 +70,18 @@ export default {
   }
 
   .col-label{
-    font-size: 0.1rem;
-    color: var(--q-gb-t-c-19);
+    font-size: 0.12rem;
+    color: var(--q-gb-t-c-3);
+    text-align: center;
   }
 
   .col1 {
-    width: 0.4rem;
+    width: 0.32rem;
   }
 
   .col2 {
     width: 0.94rem;
-    text-align: left;
+    text-align: center;
     display: unset !important; /*  避免flex 没有显示省略号 */
   }
   /*  3~8 总宽度220px */
@@ -111,6 +112,7 @@ export default {
     line-height: 0.32rem;
     margin: 0 0.1rem;
 
+
     /* label字段 设计稿上是字体 10px，font-weight 400 */
     > div {
       font-family: PingFang SC;
@@ -139,9 +141,17 @@ export default {
     text-align: center;
     border-bottom: 1px solid var(--q-gb-bd-c-17);
 
+    .col-field{
+      color: var(--q-gb-t-c-3);
+      font-size: 0.14rem;
+    }
+
     .head-field{
+      font-family: 'Roboto';
       width: 0.32rem;
       height: 0.34rem;
+      font-size: 0.16rem;
+      color: var(--q-gb-t-c-4);
       background-color:var(--q-gb-bg-c-33);
     }
 
@@ -169,6 +179,7 @@ export default {
     
     .ellipsis{
       color: var(--q-gb-t-c-4);
+      text-align: center;
     }
 
     /* 列字段 设计稿上是字体 12px，font-weight 500 */
