@@ -26,12 +26,12 @@
         v-if="GlobalAccessConfig.get_show_banner()"></div>
       <!-- 刷新组件 -->
       <!-- 列表头  -->
-      <list-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state">
+      <!-- <list-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state">
         <template v-slot:refresh_icon>
           <refresh :loaded="load_data_state != 'loading'" :other_icon="true" :icon_name="1" @click="on_refresh" />
         </template>
-      </list-header>
-      <!-- <match-detail-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state"/> -->
+      </list-header> -->
+      <match-detail-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state"/>
       <!-- <div>menu_config.match_list_menu_show.list_filter {{ menu_config.match_list_menu_show.list_filter }}</div> -->
       <!-- 顶部菜单  // 滚球  冠军 -->
       <list-filter v-if="MenuData.is_scroll_ball() || MenuData.is_kemp()" :collect_count="collect_count"
@@ -198,5 +198,8 @@ watch(MatchListCardDataClass.list_version,
   top: 133px;
   z-index: 200;
   font-size: 13px;
+}
+.scroll-fixed-header {
+  // background-color: rgba(255,255,255,0.05);
 }
 </style>

@@ -4,7 +4,7 @@
        <div v-show="false"> {{UserCtr.user_version}} -- {{BetData.bet_data_class_version}}</div>
         <div class="f-b-c bet-content">
             <div class="f-s-c">
-                <div class="f-c-c bet-count" >{{ BetData.bet_single_list.length }}</div>
+                <div class="f-c-c bet-count" >{{ total() }}</div>
                 <div class="bet-slip">{{ i18n_t("common.bets_single") }}</div>
             </div>
        
@@ -18,12 +18,21 @@
 
 <script setup>
 import { format_money2,UserCtr } from "src/output/index.js"
+import { computed } from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js"
 
 // 展开 收起 投注项
 const set_bet_show = () => {
     BetData.set_bet_state_show(!BetData.bet_state_show)
 }
+
+const total = computed(()=> state =>{
+    if (BetData.is_bet_single) {
+        return BetData.bet_single_list.length
+    } else {
+        return BetData.bet_s_list.length
+    }
+})
 </script>
 
 <style scoped lang="scss">

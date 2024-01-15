@@ -2,9 +2,9 @@
  * @Description: 虚拟体育详情页最外层父组件
 -->
 <template>
-  <div class="virtual-detail" ref="virtual_detail_box">
+  <div class="virtual-detail row justify-between" ref="virtual_detail_box">
     <!-- 头部 -->
-    <div class="virtual-head">
+    <div class="virtual-head" v-if="0">
       <div class="type-bg bg1001">
         <div class="back-wrap">
           <!-- 返回按钮 -->
@@ -16,28 +16,7 @@
         </div>
       </div>
     </div>
-    <!--视频，tab和玩法集部分-->
-    <template v-if="true">
-      <div class="detail-header-bg"></div>
-      <div class="detail-header">
-        <!--视频区域-->
-        <div class="stage-wrapper">
-          <virtual-sports-stage source='detail'
-            :current_match="current_match" @update_next_batch_match="update_n_batch_handle"
-            :match_process_update="match_process_update"
-            :m_status="current_match.match_status"
-            :basketball_status="basketball_status"
-            @time_ended="timer_ended_handle">
-          </virtual-sports-stage>
-        </div>
-        <!--历史战绩，投注，排行榜tab键-->
-        <virtual-sports-detail-tab v-if="sub_menu_type != 1004" :current_match="current_match" @virtual_play_height="virtual_play_height" @change_tab="change_tab" />
-        <div class="debug-test" v-if="show_debug">
-          {{`batchNo:${current_batch.batchNo}-csid:${sub_menuid}-mid:${current_match.mid}`}}<br />
-          {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
-        </div>
-      </div>
-    </template>
+    
      <!--玩法集区域 -->
     <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
       <!-- 赔率列表页面 -->
@@ -61,6 +40,28 @@
         </div>
         <!--  非足球排行榜页面  -->
         <ranking-list-start v-else :mid="current_match.mid"/>
+      </div>
+    </div>
+
+    <!--视频，tab和玩法集部分-->
+    <div>
+      <div class="detail-header">
+        <!--视频区域-->
+        <div class="stage-wrapper">
+          <virtual-sports-stage source='detail'
+            :current_match="current_match" @update_next_batch_match="update_n_batch_handle"
+            :match_process_update="match_process_update"
+            :m_status="current_match.match_status"
+            :basketball_status="basketball_status"
+            @time_ended="timer_ended_handle">
+          </virtual-sports-stage>
+        </div>
+        <!--历史战绩，投注，排行榜tab键-->
+        <virtual-sports-detail-tab v-if="0" :current_match="current_match" @virtual_play_height="virtual_play_height" @change_tab="change_tab" />
+        <div class="debug-test" v-if="show_debug">
+          {{`batchNo:${current_batch.batchNo}-csid:${sub_menuid}-mid:${current_match.mid}`}}<br />
+          {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
+        </div>
       </div>
     </div>
   </div>
@@ -96,6 +97,12 @@ export default {
 .virtual-detail {
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
+  .detail-main {
+    width: 770px;
+  }
+  .virtual-sports-stage {
+    width: 400px;
+  }
 }
 /*  头部 */
 .virtual-head {
