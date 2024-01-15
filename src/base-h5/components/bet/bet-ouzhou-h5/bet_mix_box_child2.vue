@@ -5,6 +5,7 @@
 
 <template>
     <div class="bet-mix-show">
+      {{ '合并' }}
       <div v-if="true">{{BetData.bet_data_class_version}}</div>
       <div v-for="(items, index) in BetData.bet_single_list" :key="index">
         <div class="nonebox4-content">

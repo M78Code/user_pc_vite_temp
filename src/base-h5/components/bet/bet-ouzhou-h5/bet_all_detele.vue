@@ -62,6 +62,7 @@ const switch_handle = (state) => {
       BetData.set_is_bet_single('series')
       break;
     case 'merge':
+      BetData.set_is_bet_single('single')
       BetData.set_is_bet_merge('merge')
       break;
   }
