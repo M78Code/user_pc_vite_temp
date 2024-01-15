@@ -15,8 +15,8 @@
     <!-- 小组 -->
     <div class="group-item" v-if="!no_data">
       <div class="team-item" v-for="(item, i) in ranking_data" :key="i">
-        <div class="col1 col-field" v-if="+i > 2">{{+i + 1}}</div>
-        <div class="col1 col-field rank-img" v-else>
+        <div class="col1 col-field head-field" v-if="+i > 2">{{+i + 1}}</div>
+        <div class="col1 col-field head-field rank-img" :class="`rank-img-${i}`" v-else>
           <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rank${+i+1}.png`"/>
         </div>
         <div class="col2 ellipsis col-field">
@@ -137,11 +137,38 @@ export default {
     font-size: 0.13rem;
     height: 0.48rem;
     text-align: center;
-    border-bottom: 1px solid var(--q-gb-bd-c-4);
+    border-bottom: 1px solid var(--q-gb-bd-c-17);
+
+    .head-field{
+      width: 0.32rem;
+      height: 0.34rem;
+      background-color:var(--q-gb-bg-c-33);
+    }
+
+    .rank-img{
+      width: 0.32rem;
+      height: 0.34rem;
+    }
+
+    .rank-img-0{
+      background-color:var(--q-gb-bg-c-31);
+    }
+
+    .rank-img-1{
+      background-color:var(--q-gb-bg-c-32);
+    }
+
+    .rank-img-2{
+      background-color:var(--q-gb-bg-c-33);
+    }
 
     .rank-img img{
-      width: 14px;
-      height: 20px;
+      width: 0.16rem;
+      height: 0.16rem;
+    }
+    
+    .ellipsis{
+      color: var(--q-gb-t-c-4);
     }
 
     /* 列字段 设计稿上是字体 12px，font-weight 500 */
