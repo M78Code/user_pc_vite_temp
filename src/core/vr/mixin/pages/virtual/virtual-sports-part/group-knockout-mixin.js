@@ -71,7 +71,7 @@ export default {
   methods: {
     // 点击菜单切换
     tab_click(tab) {
-      console.log(tab);
+      // console.log(tab);
       // tab.disable = false;
       // console.log("============this.id++", this.tid)
       // console.log("============this.current_match===++", this.current_match)

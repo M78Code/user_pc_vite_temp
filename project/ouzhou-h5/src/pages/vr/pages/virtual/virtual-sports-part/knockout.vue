@@ -75,7 +75,7 @@
         </div>
       </div>
       <q-inner-loading :showing="visible">
-        <img alt class="loading-static-animation" src="image/wwwassets/bw3/svg/loading-more.svg"/>
+        <img alt class="loading-static-animation" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/loading-more.svg`"/>
       </q-inner-loading>
     </div>
     <!-- 没有数据 组件 -->

@@ -58,7 +58,7 @@ export default {
     // width: 3.52rem;
     width: 100vw;
     height: 0.4rem;
-    margin: 0.11rem 0 0.05rem 0;
+    // margin: 0.11rem 0 0.05rem 0;
     // border-radius: 0.08rem;
     position: relative;
     // background-color: var(--q-gb-bg-c-29);
