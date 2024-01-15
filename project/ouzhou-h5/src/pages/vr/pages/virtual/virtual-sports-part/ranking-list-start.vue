@@ -13,7 +13,7 @@
             <span class="ellipsis">{{ item.name }}</span>
           </div>
         </div>
-
+        
         <div class="ranking-item-right">
 
           <div class="right-item results_previous">
