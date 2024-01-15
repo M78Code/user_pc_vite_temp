@@ -153,12 +153,16 @@ function init_func() {
   let _wrap = warp.value || {}
   let dom = lodash.get(item_wrap.value, 'children', [])
   sizes.value = []
+  console.error(dom);
   for (let i = 0; i < dom.length; i++) {
     let { offsetLeft = 0, clientWidth = 0 } = dom[i]
-    sizes.value.push({
+    if (String(dom[i].className).includes('tab-item')) {
+      sizes.value.push({
       left: offsetLeft + props.padding,
       width: clientWidth - props.padding * 2
     })
+    }
+    
   }
   console.log('init_funcinit_funcinit_funcinit_func', sizes.value)
   if (sizes.value.length > 0) {
@@ -278,6 +282,7 @@ function hand_cilck_move(left) {
  */
 function tabs_enter(index) {
   tabs_hover(index, 'in')
+  
 }
 /**
  * @Description:鼠标移出选项
@@ -339,10 +344,10 @@ const { layoutReducer } = store.getState()
  * list语言变化时
  * 做异步处理防止data数据发生改变，初始化
 */
-// watch(
-//   () => props.list.value,
-//   () => nextTick(init), { deep: true }
-// )
+watch(
+  () => props.list.value,
+  () => nextTick(init), { deep: true }
+)
 
 /** 定时器 */
 let timer = null
