@@ -335,7 +335,8 @@
     "victory": "W",
     "win": "W",
     "win_plate": "Win",
-    "Win_rate": "W%"
+    "Win_rate": "W%",
+    "analysis_information": "news"
   },
   "basketball_playing_way": {
     "first_half": "FirstHalf",

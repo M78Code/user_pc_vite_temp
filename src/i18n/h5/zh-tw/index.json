@@ -106,7 +106,8 @@
     "victory": "勝",
     "win": "贏",
     "win_plate": "贏盤",
-    "Win_rate": "贏盤率"
+    "Win_rate": "贏盤率",
+    "analysis_information": "資訊"
   },
   "basketball_playing_way": {
     "first_half": "半場",
