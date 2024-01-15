@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     tabClick(item, i) {
-      console.log("this.list_data+++===", this.list_data);
+      // console.log("this.list_data+++===", this.list_data);
       if(this.tab_index == i) return
       // 判断选项卡里边有没有数据
       if (!Object.keys(this.check_if_there_tab).includes(item.key)) {
@@ -109,7 +109,7 @@ export default {
       } else {
         this.list_data = [...arr]
       }
-      console.log("this.list_data---knockout+++=====", JSON.stringify(this.list_data))
+      // console.log("this.list_data---knockout+++=====", JSON.stringify(this.list_data))
     },
     // 加工每一轮的比分
     processing_score(arr) {

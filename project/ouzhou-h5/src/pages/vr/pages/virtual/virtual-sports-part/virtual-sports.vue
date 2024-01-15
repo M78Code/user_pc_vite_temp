@@ -324,6 +324,7 @@ export default {
   }
   &:last-of-type {
     padding-bottom: 0.7rem;
+    // background-color: var(--q-gb-bg-c-34);
   }
   &-simple{
     background: var(--q-gb-bg-c-28);
