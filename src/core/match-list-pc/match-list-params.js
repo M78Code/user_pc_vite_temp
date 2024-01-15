@@ -116,7 +116,6 @@ function match_list_all_params() {
 
     // 当前 pid 和 orpt
     let lv2_mi_info = BaseData.mi_info_map[`mi_${menu_current_mi}`] || {};
-    console.error('menu_current_mi',menu_current_mi,lv2_mi_info)
     delete lv2_mi_info.h5_euid
     if (MenuData.is_esports()) {
         // 电子竞技
