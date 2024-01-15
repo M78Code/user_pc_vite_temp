@@ -1,22 +1,24 @@
 /**
- *  欧洲版 虚拟足球 赔率模板 129号
+ *  欧洲版 虚拟篮球 赔率模板 126号
  */
 import * as TemplateCommon from "./template-common.js"
 
- // 欧洲版 虚拟足球 赔率模板 全量赔率
- export const template_129={
+ // 欧洲版 虚拟篮球 赔率模板 全量赔率
+ export const template_126={
   main_handicap_list: [
     {
-      _hpid: 20001,
+      _hpid: 20043,
       ols: [
-        { _hpid: 20001, otb: "主胜" , ot: "1"},
-        { _hpid: 20001, otb: "平局" , ot: 'X'},
-        { _hpid: 20001, otb: "客胜" , ot: '2'},
+        {  _hpid: 20043, ot: '1', class: 'no-handicap' },
+        {  _hpid: 20043, ot: '2', class: 'no-handicap' },
       ],
     },
     {
-      _hpid: 20002, 
-      ols: [{ _hpid: 20002, otb: '全场大小', ot: "Over" }, { _hpid: 20002, otb: '全场大小', ot: "Under" }],
+      _hpid: 20044, 
+      ols: [
+        {  _hpid: 20044, ot: 'Over' },
+        {  _hpid: 20044, ot: 'Under' },
+      ],
     },
   ],
 }
@@ -27,13 +29,13 @@ import * as TemplateCommon from "./template-common.js"
 // 用于 拿取当前 用户选择的赔率模板
 // 这里传入的 是我们的玩法id
 export const get_current_odds_list = ({ first_hpid, second_hpid }) => {
-  let odds_list =  TemplateCommon.get_current_odds_list(template_129.main_handicap_list, { first_hpid, second_hpid })
+  let odds_list =  TemplateCommon.get_current_odds_list(template_126.main_handicap_list, { first_hpid, second_hpid })
   return odds_list
 }
 
 // 获取hots赔率模板
 export const get_hots_odds_list = () => {
-  let hots_odds_list = TemplateCommon.get_hots_odds_list(template_129.main_handicap_list)
+  let hots_odds_list = TemplateCommon.get_hots_odds_list(template_126.main_handicap_list)
   return hots_odds_list;
 }
 //   列表宽度计算模板

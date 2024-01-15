@@ -31,7 +31,14 @@
           <refresh :loaded="load_data_state != 'loading'" :other_icon="true" :icon_name="1" @click="on_refresh" />
         </template>
       </list-header> -->
-      <match-detail-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state"/>
+      <match-detail-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state">
+        <template #refresh>
+          <div class="refreh-container">
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/refresh_header.svg`" 
+                 alt="" :class="['refresh-icon',  loading ?'rotate-ani' :'']"  @click="on_refresh"/>
+          </div>
+        </template>
+      </match-detail-header>
       <!-- <div>menu_config.match_list_menu_show.list_filter {{ menu_config.match_list_menu_show.list_filter }}</div> -->
       <!-- 顶部菜单  // 滚球  冠军 -->
       <list-filter v-if="MenuData.is_scroll_ball() || MenuData.is_kemp()" :collect_count="collect_count"
@@ -125,8 +132,8 @@ import MatchDetailHeader from "./match-detail-header.vue";
 // import { VirtualMatchTpl2FullVersionWapper as VirtualMatchTpl2 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟赛马 、 虚拟赛狗
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
-import { MenuData } from "src/output/index.js"
-import { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh, handle_destroyed } from "src/core/match-list-pc/match-list-composition.js";
+import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
+import { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh, handle_destroyed, loading } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 import { LayOutMain_pc, compute_css_obj } from 'src/output/index.js';
@@ -200,6 +207,27 @@ watch(MatchListCardDataClass.list_version,
   font-size: 13px;
 }
 .scroll-fixed-header {
-  background-color: #F6F9FF;
+  background-color:var(--q-gb-bg-c-30);
+  border: 1px solid var(--q-gb-bg-c-23);
+  // background-color: rgba(255,255,255,0.05);
+}
+.refreh-container {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #fff;
+  margin-left: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .refresh-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.rotate-ani {
+  transition: 10s linear;
+  transform: rotate(3600deg);
 }
 </style>
