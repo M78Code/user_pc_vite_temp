@@ -93,9 +93,9 @@ const bet_oid = ref("");
 
 
 const betItemClick = (item, o) => {
-    if (o.os!=1) {
-        return
-    }
+    // if (o.os!=1) {
+    //     return
+    // }
   bet_oid.value = o.oid;
 
   emit("betItemClick", item, o,props.match_info.hpn);
