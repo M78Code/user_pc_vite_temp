@@ -6,7 +6,6 @@
         @click="goto_details(match)"
         :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
         <!-- 比赛进程 网球，羽毛球用105模板，别的用101 -->
-        <!-- <BasisInfo101 v-if="match" :match="match" show_type="all"></BasisInfo101> -->
         <div class="team-num">{{index + 1}}</div>
         <div class="team-title-wrap">
             <!-- 战队名称 -->
@@ -52,7 +51,6 @@
 
 <script>
 import { computed, watch, ref, provide} from 'vue';
-import { MatchBasisInfo101FullVersionWapper as BasisInfo101 } from 'src/base-pc/components/match-list/match-basis-info/template-101/index.js'
 import IconBox from 'src/base-pc/components/match-list/match-tpl-new-data/match-tpl-101-after/modules/iconBox/index.vue'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
@@ -69,7 +67,6 @@ import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.j
 export default {
   mixins:[virtual_sports_match_item_mixin],
   components: {
-    BasisInfo101,
     MatchHandicap,
     IconBox,
     'icon-wapper': IconWapper,
@@ -95,7 +92,7 @@ export default {
     provide("MatchListData", MatchListData)
 
     let current_mid = MatchListCardDataClass.current_mid;
-    const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_129_config`]
+    const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.value.csid == '1001' ? 129 : 126}_config`]
     
     let handicap_list = computed(() => {
       try{
@@ -109,7 +106,7 @@ export default {
     });
 
     const match_list_tpl_size = computed(() => {
-      const width_config = MATCH_LIST_TEMPLATE_CONFIG[`template_129_config`].width_config
+      const width_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.value.csid == '1001' ? 129 : 126}_config`].width_config
       return width_config
     })
 
