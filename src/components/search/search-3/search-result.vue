@@ -13,7 +13,7 @@
                 <div style="height:70px"></div>
                 <!-- 赛种 -->
                 <div class="type-item" :class="{ active: type.is_active, inplay: type.is_inplay }"
-                    v-for="(type, type_index) in store.sports_list" :key="type_index">
+                    v-for="(type, type_index) in store.res_list" :key="type_index">
                     <div class="type-wrap" @click="type.is_active = !type.is_active">
                         <div class="line"></div>
                         <div class="type-name">

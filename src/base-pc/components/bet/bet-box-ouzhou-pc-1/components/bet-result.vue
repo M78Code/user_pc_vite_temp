@@ -4,7 +4,7 @@
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1">
-                    <span class="text-flow-none">{{ items.playOptionName}}</span> 
+                    <span class="text-flow-none">{{ items.playOptionName }}</span> 
                     <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
                 </div>
                 <div class="w-100 my-4">
@@ -41,7 +41,7 @@
            
         </div>
 
-        <div class="bet-result f-b-c" >
+        <div v-if="BetData.is_bet_single" class="bet-result f-b-c" >
             <div class="bet-result-info">
                 <span class="font12 font500 bet-returm mr-4">{{ i18n_t("bet.total_bet")}}</span>
                 <span class="font14 font500 bet-money ">{{ format_money2(mathJs.divide(items.betMoney,100)) }}</span>
@@ -56,6 +56,7 @@
 </template>
 
 <script setup> 
+import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import {i18n_t,format_money2,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
@@ -67,6 +68,7 @@ const props = defineProps({
         default : () => {}
     }
 })
+
 </script>
 
 <style scoped lang="scss">
