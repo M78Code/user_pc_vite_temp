@@ -62,7 +62,20 @@
           <li :class="[select_type_hot == 0 ? 'select-type-active':'']" @click="handle_select_hot(0)">热门</li>
           <li :class="[select_type_hot == 1 ? 'select-type-active':'']" @click="handle_select_hot(1)">时间</li>
         </ul>
-
+        <!-- 列表简译/繁译按钮 只有中文展示-->
+      <ul
+       class="select-type row items-center curson-point"
+       v-show="lodash.get(UserCtr, 'user_info.simpleTradSwitch') && ['zh', 'hk'].includes(UserCtr.lang)"
+       >
+        <li 
+          v-for="(sort, index) in option" 
+          @click="on_click_translate(sort)"
+          :key="index"
+          :class="[UserCtr.match_translate == sort.id ? 'select-type-active':'']" 
+          >
+          {{ sort.name }}
+        </li>
+        </ul>
         <!-- 日间/夜间 -->
         <ul class="select-type row items-center curson-point">
           <li :class="[select_type_theme == 0 ? 'select-type-active':'']" @click="handle_select_theme(0)">日间</li>
@@ -80,6 +93,10 @@ import { ref, computed } from "vue";
 import filterHeader from "src/core/filter-header/filter-header.js";
 import { IconWapper } from 'src/components/icon'
 import { PageSourceData, GlobalSwitchClass, MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js"
+import { api_account } from "src/api/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
+
 const props = defineProps({
   collect_count: {
     type: Number,
@@ -116,6 +133,19 @@ const ver_option =  [
     name: 'set.beginner',//"新手版",
   }
 ]
+// 简繁译
+const option = [
+  {
+    id: 'zh',
+    name: i18n_t('set.short_translation'),//"简译",
+    icon: "icon-sort_league"
+  },
+  {
+    id: 'hk',
+    name: i18n_t('set.traditional_translation'),//"繁译",
+    icon: "icon-sort_date"
+  }
+]
 // 0欧盘/1亚盘
 const select_type = ref(0);
 // 0白天/1夜间
@@ -124,6 +154,8 @@ const select_type_theme = ref(0);
 const select_type_hot = ref(0);
 // 0专业/1新手
 const get_version = ref(ver_option[0].id)
+// 简繁译
+const select_type_simpleTrad = ref(UserCtr.match_translate)
 // 列表显示内容  match:赛事 collect:收藏 search:搜索
 const vx_layout_list_type = ref('match');
 const page_source = PageSourceData.page_source;
@@ -176,7 +208,15 @@ const page_title = computed(() => {
   }
   return _page_title;
 })
-
+/**
+ * @ Description:切换简译/繁译
+ * @param {object} row 切换的展示
+ * @return {undefined} undefined
+ */
+const on_click_translate = async (row) => {
+  if (UserCtr.match_translate == row.id) return
+  useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TRANSLATE, row.id)
+}
 /**
  * 计算 全部 按钮样式
  */

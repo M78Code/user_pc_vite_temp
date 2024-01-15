@@ -153,7 +153,6 @@ function init_func() {
   let _wrap = warp.value || {}
   let dom = lodash.get(item_wrap.value, 'children', [])
   sizes.value = []
-  console.error(dom);
   for (let i = 0; i < dom.length; i++) {
     let { offsetLeft = 0, clientWidth = 0 } = dom[i]
     if (String(dom[i].className).includes('tab-item')) {
@@ -164,7 +163,6 @@ function init_func() {
     }
     
   }
-  console.log('init_funcinit_funcinit_funcinit_func', sizes.value)
   if (sizes.value.length > 0) {
     let current_index = props.currentIndex == -1 ? 0 : props.currentIndex;
     left.value = lodash.get(sizes.value, `${current_index}.left`, 0)
