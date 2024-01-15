@@ -166,35 +166,37 @@
                       }">
                         <ImageCacheLoad :csid="match.csid" :path="match.mhlu" type="home" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
+                          <div class="right-box">
+                            <!-- 红、黄牌， 发球方绿点 -->
+                            <div class="team-left" v-if="home_red_score || home_yellow_score">
+                              <!-- 红牌 -->
+                              <span class='score-punish red' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
+                                {{ home_red_score }}
+                              </span>
+                              <!-- 黄牌 -->
+                              <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
+                                {{ home_yellow_score }}
+                              </span>
+                            </div>
+                            <!-- 主队事件动画-->
+                            <div class="yb-flex-center" v-if="is_new_init2">
+                              <!-- 进球图标 -->
+                              <template v-if="is_show_home_goal">
+                                <div class="yb-goal-gif yb-goal-yo"></div>
+                                <div class="gif-text">{{i18n_t('match_result.goal')}}</div>
+                              </template>
+                              <!-- VAR事件 -->
+                              <!-- <template v-if="is_show_home_var && is_show_var_event">
+                                <div class="gif-text"> {{ var_text }} </div>
+                              </template> -->
+                            </div>
+                          </div>
                           <div class='team-t-title-w' :class="{
                             'is-handicap': match.handicap_index == 1,
                             'is-handicap-1': match.handicap_index == 2,
                             'is-show-goal': is_show_home_goal
                           }">
-                          {{ match.mhn }}
-                        </div>
-                        <!-- 红、黄牌， 发球方绿点 -->
-                        <div class="team-left" v-if="home_red_score || home_yellow_score">
-                          <!-- 红牌 -->
-                          <span class='score-punish red' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
-                            {{ home_red_score }}
-                          </span>
-                          <!-- 黄牌 -->
-                          <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
-                            {{ home_yellow_score }}
-                          </span>
-                        </div>
-                           <!-- 主队事件动画-->
-                          <div class="yb-flex-center" v-if="is_new_init2">
-                            <!-- 进球图标 -->
-                            <template v-if="is_show_home_goal">
-                               <div class="yb-goal-gif yb-goal-yo"></div>
-                              <div class="gif-text">{{i18n_t('match_result.goal')}}</div>
-                            </template>
-                            <!-- VAR事件 -->
-                            <!-- <template v-if="is_show_home_var && is_show_var_event">
-                              <div class="gif-text"> {{ var_text }} </div>
-                            </template> -->
+                            {{ match.mhn }} 
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
@@ -208,35 +210,37 @@
                       <div class='team-title-container'>
                         <ImageCacheLoad :csid="match.csid" :path="match.malu" type="away" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
+                          <div class="right-box">
+                            <!-- 红、黄牌， 发球方绿点 -->
+                            <div class="team-left" v-if="away_red_score || away_yellow_score">
+                              <!-- 红牌 -->
+                              <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
+                                {{ away_red_score }}
+                              </span>
+                              <!-- 黄牌 -->
+                              <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
+                                {{ away_yellow_score }}
+                              </span>
+                            </div>
+                            <!-- 客队事件动画 -->
+                            <div class="yb-flex-center" v-if="is_new_init2">
+                              <!-- 进球图标 -->
+                              <template v-if="is_show_away_goal">
+                                <div class="yb-goal-gif yb-goal-yo"></div>
+                                <div class="gif-text">{{i18n_t('match_result.goal')}}</div>
+                              </template>
+                              <!-- VAR事件 -->
+                              <!-- <template v-if="is_show_away_var && is_show_var_event">
+                                <div class="gif-text"> {{ var_text }} </div>
+                              </template> -->
+                            </div>
+                          </div>
                           <div class='team-t-title-w visiting' :class="{
                             'is-handicap': match.handicap_index == 2,
                             'is-handicap-1': match.handicap_index == 1,
                             'is-show-goal': is_show_away_goal
                           }">
                             {{ match.man }}
-                          </div>
-                          <!-- 红、黄牌， 发球方绿点 -->
-                          <div class="team-left" v-if="away_red_score || away_yellow_score">
-                            <!-- 红牌 -->
-                            <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
-                              {{ away_red_score }}
-                            </span>
-                            <!-- 黄牌 -->
-                            <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
-                              {{ away_yellow_score }}
-                            </span>
-                          </div>
-                          <!-- 客队事件动画 -->
-                          <div class="yb-flex-center" v-if="is_new_init2">
-                            <!-- 进球图标 -->
-                            <template v-if="is_show_away_goal">
-                              <div class="yb-goal-gif yb-goal-yo"></div>
-                              <div class="gif-text">{{i18n_t('match_result.goal')}}</div>
-                            </template>
-                            <!-- VAR事件 -->
-                            <!-- <template v-if="is_show_away_var && is_show_var_event">
-                              <div class="gif-text"> {{ var_text }} </div>
-                            </template> -->
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
@@ -937,8 +941,6 @@ export default {
         align-items: center;
         position: relative;
         .team-left{
-          width: 20px;
-          flex-shrink: 0;
           margin-left: 2px;
           display: flex;
           align-items: center;
@@ -968,6 +970,15 @@ export default {
           line-height: 0.14rem;
           display: flex;
           align-items: center;
+          flex-direction: row-reverse;
+          .right-box{
+            flex: 1;
+            display: flex;
+            align-items: center;
+            .yb-flex-center{
+              justify-content: start;
+            }
+          }
           .yb-goal-gif{
             background-image: url($SCSSPROJECTPATH+"/image/common/goal_gif.png");
           }
@@ -1019,8 +1030,6 @@ export default {
             height: 24px;
             line-height: 24px;
             overflow: hidden;
-            flex-shrink: 0;
-            flex: 1;
             align-items: center;
             text-overflow: ellipsis;
             white-space: nowrap;

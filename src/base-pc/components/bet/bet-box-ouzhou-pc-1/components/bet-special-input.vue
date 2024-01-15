@@ -5,7 +5,7 @@
         <div class="px-12 bet-money" >
             <div class="f-b-c pl-18 bet-input-info">
                 <div>
-                    <div class="font14">{{items.name}} X{{items.count}} {{items.seriesOdds}}</div>
+                    <div class="font14">{{items?.name}} X{{items?.count}} {{items?.seriesOdds}}</div>
                     <div class="font12 h12">
                         <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
                         <span class="text-8A8986-i font500" v-if="[1].includes(items.playId*1)"> 
