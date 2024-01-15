@@ -330,6 +330,14 @@
       "bet_col_20002": {
         "bet_col_Over": "大于",
         "bet_col_Under": "小于"
+      },
+      "bet_col_20043": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_20044": {
+        "bet_col_Over": "总分",
+        "bet_col_Under": "总分"
       }
     }
   },
