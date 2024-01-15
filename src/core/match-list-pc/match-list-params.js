@@ -78,7 +78,6 @@ function match_list_all_params() {
     let apiType = 1;
     // 父级euid
     let euid = MenuData.get_mid_for_euid(menu_current_mi)
-    console.log(mid_menu_result,"mid_menu_result")
     // 有二级菜单 需要用一级才的euid
     if(['new-pc','yazhou-pc'].includes(PROJECT_NAME)){
         euid = MenuData.get_mid_for_euid(lv1_mi)
