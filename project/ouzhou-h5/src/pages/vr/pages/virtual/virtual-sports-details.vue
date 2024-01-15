@@ -42,7 +42,7 @@
     <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
 
       <!-- 赔率列表页面 -->
-      <virtual-sports-tab @change_tab="change_tab" :mid="mid" />
+      <virtual-sports-tab v-if="match" @change_tab="change_tab" :mid="mid" />
       <template  v-if="match && tabs_name == 'bet'">
         <virtual-sports-category v-if="match" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
       </template>

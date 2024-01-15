@@ -293,12 +293,12 @@ export default {
 }
 
 .lszj_click_icon{
-  padding-left: 15px;
+    padding-left: .15rem;
     // background-color: red;
     // border-radius: 100px;
     background-color: var(--q-gb-bg-c-2);
     // opacity: 0.8;
-    box-shadow: 0px 0px 40px 1px var(--q-gb-bg-c-2);
+    box-shadow: 0px 0px .4rem 0.01rem var(--q-gb-bg-c-2);
     position: sticky;
     right: 0;
     left: 0;

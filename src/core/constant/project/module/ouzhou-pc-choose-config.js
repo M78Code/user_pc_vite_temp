@@ -107,4 +107,8 @@ export  const  choose_config= {
       {first_hpid: "30002", second_hpid: "30003"},
       {first_hpid: "30003", second_hpid: "30001"},
     ],
+    // 虚拟足球
+    "1001": [
+      {first_hpid: "20001", second_hpid: "20002"},
+    ],
   }
