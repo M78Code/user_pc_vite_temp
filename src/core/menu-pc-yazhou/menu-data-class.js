@@ -178,12 +178,16 @@ class MenuData {
       if(res.code == 200){
         let menu_list = lodash.get(res,'data.subList',[])
         let list_obj = {}
+        let list_arr = [];
          menu_list.forEach(item=>{
-          // 旧菜单 转化为新的菜单 
-          list_obj[BaseData.base_menu_obj[item.menuId] || '0' ] = {
-            ct: item.count,
-            mi: BaseData.base_menu_obj[item.menuId]
-          }
+          // if(item.field2 == "18"){//冠军
+
+          // }else{
+            // 旧菜单 转化为新的菜单 
+            list_obj[BaseData.base_menu_obj[item.menuId] || '0' ] = {
+              ct: item.count,
+              mi: BaseData.base_menu_obj[item.menuId]
+            }
         })
         // 使用新的二级菜单数据 替换旧的菜单数据
         for(let item of this.left_menu_list){
@@ -787,6 +791,8 @@ class MenuData {
                   kemp = list_sl.find(obj => obj.mi == item.mi + '4' ) || {}
                   if(item_obj.sl){
                     item_obj.sl.push(kemp)
+                  }else{
+                    item_obj.sl = [kemp]
                   }
                   // mif 赛种id
                   // mi 新菜单id
@@ -820,7 +826,6 @@ class MenuData {
         early_list.push(item)
       }
     })
-  
     let mew_menu_list_res = lodash.get(BaseData,'mew_menu_list_res',[]) || []
     
     // 获取冠军的所有数据
@@ -1144,7 +1149,7 @@ class MenuData {
   // 是不是 常规赛种下的冠军
   is_common_kemp(mi) {
     mi = mi || this.left_menu_result.lv2_mi;
-    return  mi && mi.substr(mi.length-1,1) == 4;
+    return  mi && mi.length == 4 && mi.substr(mi.length-1,1) == 4;
   }
 
   is_collect_kemp() {
