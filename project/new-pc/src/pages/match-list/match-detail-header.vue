@@ -1,5 +1,5 @@
 <template>
-  <div class="header row justify-between">
+  <div class="header row justify-between" :style="computed_theme">
     <!-- left -->
     <div class="col-left row items-center">
       <div class="row items-center all-collect">
@@ -50,13 +50,19 @@
           <li :class="[select_type == 1 ? 'select-type-active':'']" @click="handle_select_type(1)">亚盘</li>
         </ul>
         <!-- 专业、新手 切换-->
-        <div show_type="sort" class="flex list-sort select-btn ya-zhou-border yb-hover-bg base-bg">
+        <!-- <div show_type="sort" class="flex list-sort select-btn ya-zhou-border yb-hover-bg base-bg">
           <div @click="set_click_version(item)" v-for="(item, index) in ver_option"
             :class="[get_version == item.id ? 'active special' : 'yb-hover-bg', 'list-sort-item']" :key="index">
             <span class="inner-text">{{ i18n_t(item.name) }}</span>
           </div>
-        </div>
-
+        </div> -->
+        <ul class="select-type row items-center curson-point">
+          <li :class="[get_version == item.id ? 'select-type-active-blue':'']" 
+              @click="set_click_version(item)" v-for="(item, index) in ver_option" :key="index"
+          >
+            {{ i18n_t(item.name) }}
+          </li>
+        </ul>
         <!-- 热门/时间 -->
         <ul class="select-type row items-center curson-point">
           <li :class="[select_type_hot == 0 ? 'select-type-active':'']" @click="handle_select_hot(0)">热门</li>
@@ -78,24 +84,27 @@
         </ul>
         <!-- 日间/夜间 -->
         <ul class="select-type row items-center curson-point">
-          <li :class="[select_type_theme == 0 ? 'select-type-active':'']" @click="handle_select_theme(0)">日间</li>
-          <li :class="[select_type_theme == 1 ? 'select-type-active':'']" @click="handle_select_theme(1)">夜间</li>
+          <li :class="[UserCtr.theme == item.key? 'select-type-active':'']" 
+              v-for="item in theme_list" :key="item.key" @click="handle_select_theme(item.key)">
+              {{ item.i18n[UserCtr.lang] || item.key }}
+          </li>
         </ul>
       </div>
-
-
+      <slot name="refresh"></slot>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed,onMounted } from "vue";
 import filterHeader from "src/core/filter-header/filter-header.js";
-import { IconWapper } from 'src/components/icon'
+import { IconWapper } from 'src/components/icon';
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { theme_list, theme_map } from "src/core/theme/"
 import { PageSourceData, GlobalSwitchClass, MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
-import UserCtr from "src/core/user-config/user-ctr.js"
 import { api_account } from "src/api/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
+import { compute_css_variables } from "src/core/css-var/index.js"
 
 const props = defineProps({
   collect_count: {
@@ -117,12 +126,12 @@ const props = defineProps({
 })
 /**
  * @description change_type 修改盘类型 0欧盘/1亚盘
- * @description change_theme 修改主题 0白天/1夜间
  * @description change_hot 修改热门 0热门/1时间
  * @description change_version 修改专业还是新手 0专业/1新手
  * 
  */
 const emits = defineEmits(['change_type', 'change_theme', 'change_hot', 'change_version']);
+const computed_theme = ref("")
 const ver_option =  [
   {
     id: 1,
@@ -217,6 +226,12 @@ const on_click_translate = async (row) => {
   if (UserCtr.match_translate == row.id) return
   useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TRANSLATE, row.id)
 }
+
+
+function get_css_obj() {
+ computed_theme.value = compute_css_variables({ category: 'component', module: 'match-details' }); 
+}
+
 /**
  * 计算 全部 按钮样式
  */
@@ -238,7 +253,7 @@ function compute_quanbu_btn_class() {
  * @param {*} value 
  */
 function handle_select_theme(value) {
-  emits('change_theme', value);
+  UserCtr.set_theme(value)
   select_type_theme.value = value;
 }
 /**
@@ -273,6 +288,11 @@ function set_click_version(value) {
   MenuData.set_is_collect(type === "collect")
   MenuData.set_match_list_api_config(config);
 }
+
+onMounted(() => {
+  get_css_obj();
+  console.log(theme_map[UserCtr.theme], "theme_map[UserCtr.theme]");
+})
 </script>
 
 <style lang="scss" scoped>
@@ -294,85 +314,6 @@ function set_click_version(value) {
   justify-content: space-between;
 }
 
-.list-sort {
-  padding: 0;
-  height: 26px;
-  line-height: 26px;
-  .list-sort-item {
-    font-weight: 400;
-    padding: 0px 11px;
-    border-radius: 12px;
-    font-size: 12px;
-
-    &.active {
-      //background: #626262;
-      color: #fff!important;
-      background: #179CFF!important;
-      font-weight: 500;
-      border: 0;
-    }
-
-    &.special {
-      // background-image: linear-gradient(225deg, var(--qq--match-bg-color6) 0%, var(--qq--match-bg-color6) 100%);
-      //background-color: #45B0FF;
-      // color: var(--qq--yb-text-color27_1);
-      /** copy 自src\css\pro\yabo\list_header\list_header.scss line:125 */
-      position: relative;
-      overflow: hidden;
-      background: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .inner-text {
-        position: relative;
-        z-index: 10;
-        height: 98%;
-        line-height: 26px;
-        display: inline-block;
-      }
-
-      &::before,
-      &::after {
-        content: '';
-        position: absolute;
-      }
-
-      &::before {
-        --private-inset: 1px;
-        // inset: var(--private-inset); // 考虑兼容性问题
-        top: var(--private-inset);
-        bottom: var(--private-inset);
-        left: var(--private-inset);
-        right: var(--private-inset);
-        background-color: var(--qq--background-gradient-1_2);
-        z-index: 9;
-        border-radius: 12px;
-      }
-
-      &::after {
-        z-index: 8;
-        width: 200%;
-        padding-bottom: 200%;
-        // 新手版专业版切换按钮边框流光
-        background: conic-gradient(at center, transparent, #479ff1 30%, transparent 30%); // #TODO: css var
-        animation: version-toggle-effect-animation 1s linear infinite;
-
-        @keyframes version-toggle-effect-animation {
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-      }
-
-      border: 0;
-      // &:hover {
-      // background-image: var(--qq--background-gradient-4);
-      // color: var(--qq--y0-text-color5);
-      // }
-    }
-  }
-}
 
 .cursor-pointer {
   cursor: pointer;
@@ -394,7 +335,7 @@ function set_click_version(value) {
 
   .active {
     background: #179CFF;
-    color: #fff;
+    color: #fff!important;
   }
 }
 .select-btn {
@@ -433,6 +374,7 @@ function set_click_version(value) {
     }
 
     .title-text {
+      color:var(--q-gb-t-c-20);
     }
 
     .path-icon-wrapper {
@@ -458,8 +400,11 @@ function set_click_version(value) {
   }
 
   .btn-wrap {
+    color:var(--q-gb-t-c-20);
+
     .number {
       margin-left: 6px;
+      // color:var(--q-gb-t-c-20);
     }
   }
 
@@ -469,7 +414,7 @@ function set_click_version(value) {
 }
 
 .select-competition {
-  background-color: #E9F0FF;
+  background-color: var(--q-match-details-icon);
   border-radius: 1000px;
   font-size: 12px;
   height: 24px;
@@ -490,12 +435,17 @@ function set_click_version(value) {
   border-radius: 1000px;
   height: 26px;
   overflow: hidden;
-  background-color: #E9F0FF;
+  background-color: var(--q-match-details-bet-block);
   color: #555;
   .select-type-active {
     color: #1D1D1D;
     background-color: #fff;
     border-radius: 1000px;
+  }
+  .select-type-active-blue {
+    background-color: var(--q-gb-bg-c-1);
+    border-radius: 1000px;
+    color: #fff;
   }
   li {
     padding: 0 11px;

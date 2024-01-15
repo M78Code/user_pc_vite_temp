@@ -318,7 +318,7 @@ let back_to_timer =null
 }
 .details_data_load {
   position: absolute;
-  z-index: 0;
+  z-index: 999;
   width: 100%;
   pointer-events: none;
   :deep(.yb-flex-center) {

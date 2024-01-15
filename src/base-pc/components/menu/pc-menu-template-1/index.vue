@@ -51,9 +51,9 @@
         <!--  子菜单  ， 冠军 不显示子菜单  -->
         <!--  常规体育 含 娱乐     子菜单  开始    -->
         <div class="menu-fold2-wrap  1" :class="current_lv_1_mi == item.mi && !show_menu? 'open' : ''" v-if="item.mi != 400">
-          <template v-for="item2 in item.sl" :key="`_${item.mi}_${item2.mi}_100`">
+          <template v-for="item2 in item.sl" :key="`_${item.mi}_${item2.mi}_100`" >
             <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        开始   -->
-            <div @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })" :class="MenuData?.get_lv2_mi_value() == item2.mi && is_zaopan_today?'active':''" class="menu-item menu-fold2">
+            <div v-if="!!item2?.ct" @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })" :class="MenuData?.get_lv2_mi_value() == item2.mi && is_zaopan_today?'active':''" class="menu-item menu-fold2">
               <div class="row items-center relative-position">
                 <span class="menu-point"></span>
                 <span class="menu-text ellipsis">
@@ -275,7 +275,7 @@ const lev_1_click = async (obj) => {
     }
     // 设置为冠军
     root = 400
-
+    MenuData.set_current_ball_type("")
   } else if (type == 2000) {
     // 设置默认值
     root = 2000
@@ -340,7 +340,8 @@ const lev_1_click = async (obj) => {
         md: ''
       }
     }
-    MenuData.set_current_ball_type(left_obj.lv1_mi - 100)
+    const sport_id = left_obj.lv1_mi?.substring(0,3) || 0;
+    MenuData.set_current_ball_type(sport_id?+sport_id-100:'')
   }
   MenuData.set_menu_root(root)
   // 不是列表页 点击列表菜单
@@ -355,7 +356,7 @@ const lev_1_click = async (obj) => {
   // 今日没有中间菜单 需要清空
   MenuData.set_mid_menu_result(mid_obj)
 
-  MenuData.is_today() && MenuData.set_menu_current_mi(left_obj.lv2_mi || "")
+   MenuData.set_menu_current_mi(left_obj.lv2_mi || "")
 
 };
 /**
@@ -371,11 +372,9 @@ const lev_2_click = (detail = {}) => {
     lv1_mi,
     lv2_mi
   }
-
   let mid_obj = {
     md: ''
   }
-
   // current_lv_2_mi.value = lv2_mi
 
   // 不是列表页 点击列表菜单
@@ -387,7 +386,7 @@ const lev_2_click = (detail = {}) => {
 
   MenuData.set_mid_menu_result(mid_obj)
 
-  MenuData.is_today() && MenuData.set_menu_current_mi(left_obj.lv2_mi)
+  MenuData.set_menu_current_mi(left_obj.lv2_mi)
 };
 
 /**

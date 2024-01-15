@@ -23,7 +23,6 @@
           v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))"
           :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
           <div class="play-name-item" v-for="(item_title, item_index) in item.ols" :key="item_index">
-            <!-- {{ item_title }} -->
             {{ i18n_t(`ouzhou.bet_col.bet_col_${item_title._hpid}.bet_col_${item_title.ot}`) }}
           </div>
         </div>
@@ -33,7 +32,6 @@
 </template>
 
 <script setup>
-// import sportIcon from "src/public/components/sport_icon/sport-icon.vue"
 import lodash from 'lodash';
 import { ref, computed, onUnmounted, watch } from 'vue';
 import BaseData from "src/core/base-data/base-data.js"
@@ -51,13 +49,15 @@ const props = defineProps({
   match_item_batch: {
     type: Object,
     default: () => {}
+  },
+  csid: {
+    type: Number,
+    default: () => null
   }
 })
 
-const csid = '1001'
-// let data_tpl_id = get_ouzhou_data_tpl_id(csid)
-const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_129_config`]
-const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_129_config`], 'width_config')
+const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${props.csid == '1001' ? 129 : 126}_config`]
+const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_${props.csid == '1001' ? 129 : 126}_config`], 'width_config')
 
 
 </script>

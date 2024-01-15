@@ -13,9 +13,18 @@
         </div>
     </div>
 
+    <template>
+        <div>{{i18n_t("bet.bet_min_item").replace('%s',BetData.mix_min_count)}}</div>
+    </template>
+
     <div v-show="false">  {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{i18n_t.locale}}-{{UserCtr.user_version}}</div>
 
     <div class="bet-footer">
+        <div class="bet-state" v-if="!BetData.is_bet_single && BetData.bet_s_list.length < BetData.mix_min_count">
+            <div class="w-100 f-c-c bet-title bet-error">
+                {{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}
+            </div>
+        </div>
         <div class="bet-state" v-if="BetViewDataClass.error_message">
             <div class="w-100 f-c-c bet-title" :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
                 {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
@@ -29,6 +38,10 @@
             <div class="font16 font400 f-c-c bet-bet-cancel" @click="set_retain_selection">{{ i18n_t("bet.save_item") }}</div>
             <div class="font16 font600 f-c-c bet-place-bet" @click="set_confirm">{{ i18n_t("common.confirm") }}</div>
         </div>
+        <template v-if="BetData.bet_s_list.length < BetData.mix_min_count">
+            <!--至少选择2场比赛-->
+            
+        </template>
     </div>
 </template>
 
@@ -73,21 +86,33 @@ const set_confirm = () => {
 
 // 串关底部收益
 const winMoney = computed(()=> state =>{
-    console.log('-------------------------------------- BetData.bet_s_list----------------------------------',  BetViewDataClass.bet_special_series)
+    console.log('-------------------------------------- BetData.bet_special_series----------------------------------',  BetViewDataClass.bet_special_series, BetViewDataClass.orderNo_bet_single_obj)
     let sum = 0
     // if (BetData.bet_amount) {
+    if (BetViewDataClass.bet_order_status === 1) {
         BetViewDataClass.bet_special_series.forEach((item)=>{
-        sum += mathJs.subtract(mathJs.multiply(item.bet_amount, item.seriesOdds), item.bet_amount)
-    })
+            sum += mathJs.subtract(mathJs.multiply(item.bet_amount, item.seriesOdds), item.bet_amount)
+        })
+    } else {
+        BetViewDataClass.orderNo_bet_single_obj.forEach((item)=>{
+            sum += mathJs.divide(item.maxWinAmount, 100)
+        })
+    }
     // }
     return formatMoney(sum) 
 })
 // 串关底部数量
 const total = computed(()=> state =>{
     let sum = 0
+    if (BetViewDataClass.bet_order_status === 1) {
         BetViewDataClass.bet_special_series.forEach((item)=>{
-        sum += item.bet_amount
-    })
+            sum += (item.bet_amount ? item.bet_amount : 0)
+        })
+    } else {
+        BetViewDataClass.orderNo_bet_single_obj.forEach((item)=>{
+            sum += mathJs.divide(item.seriesBetAmount, 100)
+        })
+    }
     return sum
 })
 

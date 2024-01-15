@@ -20,7 +20,7 @@
             </template>
             <!-- 特色赛事 -->
             <template v-if="featured_matches.length > 0">
-              <HeaderTitle :title="i18n_t('ouzhou.match.top_events')"></HeaderTitle>
+              <HeaderTitle :title="i18n_t('ouzhou.match.featured_events')"></HeaderTitle>
               <FeaturedMatches :featured_matches="featured_matches" />
             </template>
             <!-- 赛事列表 -->

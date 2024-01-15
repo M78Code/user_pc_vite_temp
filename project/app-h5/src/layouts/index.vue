@@ -117,7 +117,7 @@ const settle_dialog_bool = ref(true);
 
 // 活动页面不展示串关入口
 const is_activity = computed(() => {
-    return route.path === '/activity';
+    return ['activity','handicapTutorial','rules','rule_description'].includes(route.name)
   });
 
 

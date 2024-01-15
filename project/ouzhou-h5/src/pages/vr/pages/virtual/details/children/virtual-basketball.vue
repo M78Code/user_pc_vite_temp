@@ -51,6 +51,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import virtual_basketball_mixin from "src/core/vr/mixin/pages/virtual/details/children/virtual-basketball-mixin.js";
 import teamImg from 'project_path/src/pages/vr/components/team-img.vue';
@@ -85,7 +86,8 @@ export default {
   background-color: #D4080B;
   border-radius: 8px;
   font-size: 0.1rem;
-  color: var(--q-color-com-fs-color-8);
+  // color: var(--q-color-com-fs-color-8);
+  color: var(--q-gb-t-c-2);
 
   &.vir-end {
     // background-color: #5E88A7;
@@ -109,7 +111,8 @@ export default {
   text-align: center;
   font-size: 12px;
   margin-top: 0.52rem;
-  color: var(--q-color-com-fs-color-8);
+  // color: var(--q-color-com-fs-color-8);
+  color: var(--q-gb-t-c-2);
   font-weight: 600;
 
   background-size: 100% 100%;
@@ -219,7 +222,8 @@ export default {
   text-align: center;
   margin-right: 0.1rem;
   font-size: 14px;
-  color: var(--q-color-com-fs-color-8);
+  // color: var(--q-color-com-fs-color-8);
+  color: var(--q-gb-t-c-2);
   background: var(--q-color-com-bg-color-33);
 }
 
@@ -237,7 +241,8 @@ export default {
   line-height: 0.28rem;
   text-align: center;
   font-size: 14px;
-  color: var(--q-color-com-fs-color-8);
+  // color: var(--q-color-com-fs-color-8);
+  color: var(--q-gb-t-c-2);
   background: var(--q-color-com-bg-color-33);
 }
 
@@ -256,7 +261,8 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   font-size: 0.14rem;
-  color: var(--q-color-com-fs-color-1);
+  // color: var(--q-color-com-fs-color-1);
+  color: var(--q-gb-t-c-2);
   line-height: 14px;
   font-weight: 600;
 }
