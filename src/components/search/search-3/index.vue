@@ -193,7 +193,7 @@ function on_resize() {
     background: var(--q-header-search-color-6);
 
     :deep(.serach-background) {
-      background-color: var(--q-gb-bg-c-11);
+      background-color: var(--q-gb-bg-c-30);
       min-height: 400px;
       overflow: hidden;
     }
@@ -207,7 +207,7 @@ function on_resize() {
       padding: 10px 0 0 15px;
       z-index: 999;
       /* 修改此值  需注意是否被滚球倒计时遮挡 */
-      background-color: var(--q-gb-bg-c-11);
+      background-color: var(--q-gb-bg-c-30);
       border-bottom: 1px solid var(--q-header-search-color-5);
 
       .tab-item {
