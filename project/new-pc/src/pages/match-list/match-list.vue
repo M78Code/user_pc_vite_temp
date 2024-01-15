@@ -200,6 +200,6 @@ watch(MatchListCardDataClass.list_version,
   font-size: 13px;
 }
 .scroll-fixed-header {
-  background-color: #F6F9FF;
+  // background-color: rgba(255,255,255,0.05);
 }
 </style>
