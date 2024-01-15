@@ -78,9 +78,11 @@ const props = defineProps({
 //监听最高可赢变化
 const winMoney = computed(()=> state =>{
     let sum = 0
-    BetData.bet_single_list.forEach((item)=>{
+    if (BetData.bet_amount) {
+        BetData.bet_single_list.forEach((item)=>{
             sum += mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)
-    })
+        })
+    }
     return formatMoney(sum) 
 })
 

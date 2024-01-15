@@ -321,6 +321,15 @@
       "bet_col_243": {
         "bet_col_1": "主队",
         "bet_col_2": "客队"
+      },
+      "bet_col_20001": {
+        "bet_col_1": "主胜",
+        "bet_col_X": "平局",
+        "bet_col_2": "客胜"
+      },
+      "bet_col_20002": {
+        "bet_col_Over": "大于",
+        "bet_col_Under": "小于"
       }
     }
   },
