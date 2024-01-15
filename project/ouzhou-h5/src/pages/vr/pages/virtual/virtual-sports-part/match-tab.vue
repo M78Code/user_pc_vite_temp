@@ -10,7 +10,7 @@
         v-show="sub_menu_type != '1004' || item.mmp != 'PREGAME' || !pre_to_playing || i != 0"
         :key="i">
         {{item.no}}
-        <div class="line"></div>
+        <div v-if="i+1<no_list.length" class="line"></div>
       </div>
       <div v-if="no_list.length" class="row sub-nav-item footbal rank_click_icon" @click="change_tab('rank')">
         <img :src="img"/>
@@ -144,8 +144,8 @@ export default {
   }
 
   .rank_click_icon{
-    padding-left: 0.35rem;
-    background-color: red;
+    margin-left: 0.6rem;
+    // background-color: red;
     // border-radius: 100px;
     background-color: var(--q-gb-bg-c-2);
     // opacity: 0.8;
