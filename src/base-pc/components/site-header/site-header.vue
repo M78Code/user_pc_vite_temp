@@ -393,10 +393,30 @@ function open_history_fun() {
 }
 
 /**
- * @Description 设置tab选中
+  * @Description 处理tab阻止事件
+  * @param {array|string| number} [] // 过滤的参数 可以是数组 也可以单个处理 
+  * @param {string| number}  // 当前点击的tab index
+  * @return {boolean}
+*/
+
+// function _preventTabChange(list,index){
+//     let type = typeof list
+//     if(type == 'object'){
+//         list.includes(index)
+//         return
+//     }
+//     if(type == 'number' || type == 'string'){
+//         list == index
+//         return
+//     }
+// }
+
+/**
+ * @Description 设置tab选中 [3,4,5,6] 注单 赛果 体育规则 任务中心特殊处理，不设置tab
  * @param {undefined} undefined
 */
 function set_current_index(c_index) {
+    if([3,4,5,6].includes(c_index)) return
     current_index.value = c_index;
 }
 
@@ -405,7 +425,6 @@ function set_current_index(c_index) {
 function handle_menu_collapse() {
     set_menu_collapse_status(!menu_collapse_status.value)
 }
-
 
 /**
  * @description 获取用户余额

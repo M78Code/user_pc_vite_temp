@@ -78,13 +78,12 @@ function match_list_all_params() {
     let apiType = 1;
     // 父级euid
     let euid = MenuData.get_mid_for_euid(menu_current_mi)
-    console.log(mid_menu_result,"mid_menu_result")
     // 有二级菜单 需要用一级才的euid
     if(['new-pc','yazhou-pc'].includes(PROJECT_NAME)){
         euid = MenuData.get_mid_for_euid(lv1_mi)
     }
     let api_name = api_params[menu_root]?.match || api_params[lv1_mi]?.match || api_params.other.match;
-  
+    
     // type === "collect"
     if (is_collect) {
         // 前端控制是否禁用收藏功能
@@ -99,7 +98,9 @@ function match_list_all_params() {
         apiType = 2
         api_name = api_params[menu_root] ? api_params[menu_root].colloet : api_params.other.colloet
     }
-
+    if(MenuData.is_common_kemp()){
+        api_name = api_params[400]?.match;
+    }
     let config = {
         is_collect,
         root: menu_root,

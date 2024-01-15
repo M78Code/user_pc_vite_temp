@@ -23,8 +23,8 @@
       <span class="handicap-more" v-show="ol_data.onbl">{{ ol_data.onbl }}&nbsp;</span>
       <div class="handicap-value-text" :class="{ mvr:score||!['1', '32'].includes(ol_data._hpid)}">
         {{ score }} 
-        <span v-show="!['1', '32'].includes(ol_data._hpid)">
-          {{ ol_data.onb}}
+        <span v-show="(!['1', '32'].includes(ol_data._hpid) || !['MatchDataWarehouse_PC_List_Common', 'pc_list'].includes(match_data_type))">
+          {{ disk_text_replace(UserCtr.lang, ol_data.onb) }}
         </span>
       </div>
     </div>
@@ -45,7 +45,7 @@
           ol_data._hsw,
           csid || match?.csid
         ) }}
-      </span><span v-else>—</span>
+      </span><div v-else>—</div>
       <div class="odds-arrows-wrap">
         <!-- 红升、绿降 -->
         <div class="odds-icon" v-if="odds_lift == 'up'" :style="compute_css_obj({ key: 'pc-home-arrow-up' })"></div>

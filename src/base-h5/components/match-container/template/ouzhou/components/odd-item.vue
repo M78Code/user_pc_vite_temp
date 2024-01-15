@@ -5,8 +5,9 @@
 <template>
   <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
   <div :class="['odd-item', {active: BetData?.bet_oid_list?.includes(odd_item.oid) }]" @click="set_old_submit">
+    <template v-if="is_show_template"> <span class="template">-</span> </template>
     <!-- 锁 -->
-    <img v-if="is_lock" class="lock" :src="odd_lock_ouzhou" alt="lock">
+    <img v-else-if="is_lock" class="lock" :src="odd_lock_ouzhou" alt="lock">
     <!-- 是否显示赔率 -->
     <div v-else :class="['odd',  { 'up': is_up,  'down': is_down}]"> 
       <!-- 赔率 -->
@@ -28,7 +29,7 @@ import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { odd_lock_ouzhou, ouzhou_hps_up, ouzhou_hps_down } from 'src/base-h5/core/utils/local-image.js'
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, compute_value_by_cur_odd_type, MenuData } from "src/output/index.js"
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, compute_value_by_cur_odd_type, MenuData, use_sports_play_title } from "src/output/index.js"
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
 
 const props = defineProps({
@@ -60,18 +61,23 @@ const is_up = ref(false)
 const is_down = ref(false)
 const old_ov = ref(0)
 const emitters = ref({})
+const sports_play_title = use_sports_play_title()
 //虚拟体育开0 封1
 const virtual_odds_state = ref(0)
 
+// 是否显示标题
 const is_show_title = computed(() => {
-   const { csid = '1' } = props.match_info
-  const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
+  const { csid = '1' } = props.match_info
+  const plays = sports_play_title[csid]
+  const default_hpid = plays && plays[0] && plays[0].hpid ? plays[0].hpid : '1'
+  const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, default_hpid)
   return hpid != 1 && !props.show_hpn
 })
 
-const is_active = computed(() => {
-  const { match_id = 1 } = props.match_info.id
-  return MatchResponsive.active_odd.value === `${match_id}_${props.odd_item.oid}`
+// 是否显示 -
+const is_show_template = computed(() => {
+  const ol = lodash.get(props.match_info.hps, '[0].hl[0].ol', "")
+  return lodash.isEmpty(ol)
 })
 
 onMounted(()=>{
@@ -94,6 +100,7 @@ const arrived10_handle = () => {
   virtual_odds_state.value = 1
 }
 
+// 重置红升绿降
 const reset_status = () => {
   let timer = setTimeout(() => {
     is_up.value = false
@@ -108,15 +115,21 @@ const get_odd_os = (s) => {
   return compute_value_by_cur_odd_type(s.ov,s._hpid,s._hsw,props.match_info.csid)
 }
 
+// 15分 hot 玩法标题
 const get_item_hpn = (s) => {
+  const { csid = '1' } = props.match_info
   let result = s.ot
-  if (['hots', '15_mintues'].includes(props.custom_type)) result = s.onb.substring(0,1)
+  if (['hots', '15_mintues'].includes(props.custom_type)) {
+    const plays = sports_play_title[csid] && sports_play_title[csid][0].ol
+    const item = plays.find(t => t.ot === s.ot)
+    if (item) result = item.title.substring(0,1)
+  }
   return result
 }
 
 // 是否锁盘
 const is_lock = computed(() => {
-  return props.odd_item.os != 1 || props.item_hs == 1 || props.match_info.mhs == 1 || virtual_odds_state.value == 1
+  return props.odd_item.os != 1 || props.item_hs !== 0 || props.match_info.mhs !== 0 || virtual_odds_state.value == 1
 })
 
 const get_icon = (type) => {
@@ -187,6 +200,10 @@ onUnmounted(() => {
       top: 0px;
       color: #1A1A1A;
     }
+  }
+
+  .template{
+    color: #8A8986
   }
   .hpn{
     color: #8A8986

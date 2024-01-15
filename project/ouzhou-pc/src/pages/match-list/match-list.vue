@@ -26,53 +26,53 @@
     <div v-show="false"> {{ MenuData.menu_data_version }}{{ MatchListCardDataClass.list_version }}</div>
     <MatchesHeader />
     <!-- 列表容器 -->
-    <div v-if=" 0 && MenuData.menu_root==300">
+    <div v-if="MenuData.menu_root == 300">
       <virtual></virtual>
     </div>
     <template v-else>
-    <load-data v-if="MenuData.menu_root_show_shoucang != 300 && !MenuData.is_leagues()" :state="load_data_state">
-      <!--此处先写死高度用来调试UI -->
-      <!-- 滚球其他列表 -->
-      <scroll-list
-        v-if="MenuData.menu_root_show_shoucang != 300 && match_list_card_key_arr.length && !MenuData.is_leagues()">
-        <!-- <template v-slot:before> -->
-        <!-- 头部15 Mins模块 -->
-        <div
-          v-if="matches_15mins_list.length && MenuData.is_featured() && !(MenuData.is_kemp() && !MenuData.is_common_kemp())"
-          class="match-list-item">
-          <CurrentMatchTitle :title_value="i18n_t('ouzhou.match.15_mins')" :show_more_icon="false" />
-          <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
-        </div>
-        <!-- 头部Featured Matches模块 -->
-        <FeaturedMatches v-if="MenuData.is_featured() && !(MenuData.is_kemp() && !MenuData.is_common_kemp())" />
-        <!-- </template> -->
-        <!-- 滚球标题 -->
-        <Match-Main-Title :title="i18n_t('menu.match_playing')" :match_count="match_count"
-          v-show="match_list_card_key_arr.length && MenuData.is_home()" />
+      <load-data v-if="MenuData.menu_root_show_shoucang != 300 && !MenuData.is_leagues()" :state="load_data_state">
+        <!--此处先写死高度用来调试UI -->
+        <!-- 滚球其他列表 -->
+        <scroll-list
+          v-if="MenuData.menu_root_show_shoucang != 300 && match_list_card_key_arr.length && !MenuData.is_leagues()">
+          <!-- <template v-slot:before> -->
+          <!-- 头部15 Mins模块 -->
+          <div
+            v-if="matches_15mins_list.length && MenuData.is_featured() && !(MenuData.is_kemp() && !MenuData.is_common_kemp())"
+            class="match-list-item">
+            <CurrentMatchTitle :title_value="i18n_t('ouzhou.match.15_mins')" :show_more_icon="false" />
+            <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
+          </div>
+          <!-- 头部Featured Matches模块 -->
+          <FeaturedMatches v-if="MenuData.is_featured() && !(MenuData.is_kemp() && !MenuData.is_common_kemp())" />
+          <!-- </template> -->
+          <!-- 滚球标题 -->
+          <Match-Main-Title :title="i18n_t('menu.match_playing')" :match_count="match_count"
+            v-show="match_list_card_key_arr.length && MenuData.is_home()" />
 
-        <div v-for="card_key in match_list_card_key_arr" :key="card_key"
-          :class="{ 'have_margin': card_key.indexOf('sport_title') != -1 && card_key != 'sport_title_1' && MenuData.is_home() }">
-          <match-list-card :card_key="card_key" :key="`match-list-card1-${card_key}`" />
-        </div>
-        <Match-Main-Title :title="i18n_t('ouzhou.match.top_leagues')"
-          v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
-        <match-list-card v-for="card_key in five_leagues_card_key_arr" :card_key="card_key"
-          :key="`match-list-card2-${card_key}`" :class="`card_key_${card_key}`" />
-        <template v-slot:after>
-          <div style="height: 15px"></div>
-          <back-top :onClick="on_go_top" />
-        </template>
-      </scroll-list>
-    </load-data>
-    <load-data v-if="MenuData.is_leagues()" :state="get_league_list().length ? 'data' : 'empty'"
-      :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`, }">
-      <scroll-list>
-        <div v-for="league_item in get_league_list()" :class="`card_key_${league_item.id} league_card`">
-          <play-match-league :league_obj="league_item" />
-        </div>
-      </scroll-list>
-    </load-data>
-  </template>
+          <div v-for="card_key in match_list_card_key_arr" :key="card_key"
+            :class="{ 'have_margin': card_key.indexOf('sport_title') != -1 && card_key != 'sport_title_1' && MenuData.is_home() }">
+            <match-list-card :card_key="card_key" :key="`match-list-card1-${card_key}`" />
+          </div>
+          <Match-Main-Title :title="i18n_t('ouzhou.match.top_leagues')"
+            v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
+          <match-list-card v-for="card_key in five_leagues_card_key_arr" :card_key="card_key"
+            :key="`match-list-card2-${card_key}`" :class="`card_key_${card_key}`" />
+          <template v-slot:after>
+            <div style="height: 15px"></div>
+            <back-top :onClick="on_go_top" />
+          </template>
+        </scroll-list>
+      </load-data>
+      <load-data v-if="MenuData.is_leagues()" :state="get_league_list().length ? 'data' : 'empty'"
+        :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`, }">
+        <scroll-list>
+          <div v-for="league_item in get_league_list()" :class="`card_key_${league_item.id} league_card`">
+            <play-match-league :league_obj="league_item" />
+          </div>
+        </scroll-list>
+      </load-data>
+    </template>
     <!-- <ConmingSoon v-show="is_conming_soon" :style="{
       width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
     }" /> -->
@@ -152,9 +152,12 @@ export default {
     PlayMatchLeague
   },
   setup() {
-
-
-    const { ws_destroyed: ws_destroyed_common } = use_match_list_ws()
+    const { ws_destroyed: ws_destroyed_common } = use_match_list_ws(undefined,lodash.debounce(() => {
+      //首页删除后 拉接口
+      if (MenuData.is_featured()) {
+        init_home_matches(true);
+      }
+    },20000))
     const match_list_card_key_arr = ref([]);
     const five_leagues_card_key_arr = ref([]);
     const match_list_top = ref("76px");

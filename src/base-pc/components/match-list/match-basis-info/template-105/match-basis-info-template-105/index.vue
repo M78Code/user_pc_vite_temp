@@ -49,7 +49,7 @@
         </div>
       </div>
       <!-- 当前盘下的当前局比分 -->
-      <div class="score" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S103.home') }}</div>
+      <div class="score" v-if="get_match_status(match.ms)&&match.csid == 5">{{ lodash.get(match, 'msc_obj.S103.home') }}</div>
       <!-- 当前局比分 -->
       <div class="score-game" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S1.home') }}</div>
     </div>
@@ -83,7 +83,7 @@
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S103.away') }}</div>
+      <div class="score" v-if="get_match_status(match.ms)&&match.csid == 5">{{ lodash.get(match, 'msc_obj.S103.away') }}</div>
       <!-- 当前局比分 -->
       <div class="score-game" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S1.away') }}</div>
     </div>

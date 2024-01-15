@@ -151,6 +151,7 @@ onMounted(() => {
 }
 
 @import "./index.scss";
+@import "./table-cover.scss";
 </style>
 
 <style lang="scss">
