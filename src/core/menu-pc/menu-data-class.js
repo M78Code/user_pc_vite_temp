@@ -248,6 +248,8 @@ class MenuData {
     
     // 默认设置 早盘数据
     this.set_left_menu_list_init(left_list)
+
+    this.set_top_menu_list()
   }
 
   // 初始化菜单 默认值
@@ -327,7 +329,27 @@ class MenuData {
 
   // 设置顶部菜单数量
   set_top_menu_list(list = []){
-    this.top_menu_list = list
+    console.error('list',list)
+    let menu_list = lodash_.cloneDeep(list)
+    // 在滚球 和冠军页面 /但是不上收藏
+    if([1,400].includes(this.menu_root) && !this.is_collect){
+     
+      switch(this.menu_root*1){
+        case 1: 
+          menu_list = this.in_play_list
+          break
+        
+        case 400: 
+          menu_list = this.kemp_list
+          break
+      }
+      console.error('menu_list',menu_list)
+    }else {
+      // 没有数据就用以前的
+      menu_list = list.length ? list : lodash_.cloneDeep(this.top_menu_list)
+    }
+
+    this.top_menu_list = menu_list
     this.set_menu_data_version();
   }
 

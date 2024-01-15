@@ -106,6 +106,9 @@ class MenuData {
     }
   }
 
+  set_menu_data_version(){
+    this.update_time()
+  } 
   /**
    * 初始化
    */
