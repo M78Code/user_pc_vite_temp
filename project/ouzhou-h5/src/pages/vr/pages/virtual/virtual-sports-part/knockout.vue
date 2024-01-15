@@ -86,11 +86,17 @@
 <script>
 import knockout_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/knockout-mixin.js";
 import no_data from "project_path/src/pages/vr/components/common/vr-sport-no-data.vue";
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 export default {
   mixins:[knockout_mixin],
   name:'knockout',
   components: {
     "no-data": no_data
+  },
+  setup() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX,
+    }
   },
 }
 </script>
@@ -147,11 +153,11 @@ export default {
       }
       
       &.progress_bar {
-        color: #179CFF;
+        color: var(--q-gb-t-c-1);
         font-size: 0.14rem;
-        font-weight: 600;
+        font-weight: 400;
         i {
-          border-bottom: 0.05rem solid #179CFF;
+          border-bottom: 0.05rem solid var(--q-gb-bd-c-16);
         }
       }
     }

@@ -35,7 +35,7 @@
           @time_ended="timer_ended_handle"
           @update_next_batch_match="update_n_batch_handle">
         </virtual-sports-stage>
-        <div class="virtual-video-play-team" v-if="sub_menu_type && [1001,1004].includes(sub_menu_type) && current_match.csid" >
+        <div class="virtual-video-play-team" v-if="current_match.csid" >
           <div class="team-title">
             <div class="info">
             </div>
@@ -86,14 +86,14 @@
                 :style="{'padding-bottom': '0'}"
             >
               <!-- 虚拟体育足球赛事列表 -->
-              <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
+              <v-s-match-list :virtual_match_list="match_item_batch.matchs"
                 :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
                 :match_item_batch="match_item_batch"
                 @switch_match="switch_match_handle"  @start="match_start_handle">
               </v-s-match-list>
 
               <!-- 除当前赛事外，展示赔率信息 -->
-              <div class="v-sports-ranking" v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)">
+              <div class="v-sports-ranking" v-if="0 && sub_menu_type && ![1001,1004].includes(sub_menu_type)">
                   <div>
                     <!-- 赛马切换玩法集tab组件 -->
                     <!-- <virtual-sports-tab
