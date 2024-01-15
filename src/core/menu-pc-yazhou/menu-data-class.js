@@ -180,14 +180,19 @@ class MenuData {
         let list_obj = {}
         let list_arr = [];
          menu_list.forEach(item=>{
-          // if(item.field2 == "18"){//冠军
-
-          // }else{
+          if(item.field2 == "18"){//冠军
+            const kemp_mi = mi_.substring(0,3)+'4';
+            list_obj[kemp_mi] = {
+              ct: item.count,
+              mi: kemp_mi
+            }
+          }else{
             // 旧菜单 转化为新的菜单 
             list_obj[BaseData.base_menu_obj[item.menuId] || '0' ] = {
               ct: item.count,
               mi: BaseData.base_menu_obj[item.menuId]
             }
+          }
         })
         // 使用新的二级菜单数据 替换旧的菜单数据
         for(let item of this.left_menu_list){
