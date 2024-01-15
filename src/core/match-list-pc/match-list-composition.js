@@ -153,6 +153,7 @@ export function fetch_match_list(is_socket = false) {
 					}
 					show_refresh_mask.value = false;
 				} catch (error) {
+					set_load_data_state("refresh")
 					//如果是代码报错不要走重复请求
 					console.log('error', error);
 				}
