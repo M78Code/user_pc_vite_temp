@@ -131,7 +131,7 @@ function match_list_all_params() {
         // 冠军
         lv2_mi_info = {
             selectionHour: null,
-            "sportId": current_ball_type,
+            "sportId": current_ball_type || '',
             "outrightMatches": 1,
             tid: '',
             "orpt": 18,
