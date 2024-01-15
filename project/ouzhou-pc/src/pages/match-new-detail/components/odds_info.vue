@@ -286,8 +286,12 @@ const get_icon = (otn) => {
 const betItemClick = (item, ol, play_name) => {
 
   // 挂锁不可点击  // hs 11 锁盘状态，可点击
-  if (ol.os != 1&&(ol._hs>0&&ol._hs!=11)) {
+  if ((ol._hs>0&&ol._hs!=11)) {
     return;
+  }else{
+    if (ol.os != 1) {
+      return;
+    }
   }
   if (ol.cds) {
     current_ol.value = ol;
