@@ -197,7 +197,13 @@ const {
  * @return {undefined} undefined  组装投注项的数据
  */
  const bet_click_ol = () => {
+  // 如果不是串关应清空原来保存的数据
+  if (!MenuData.is_mix()) {
+    BetData.bet_oid_list = []
+  }
+
   const {oid,_hid,_hn,_mid } = ol_data_item.value
+
   let bet_type = 'common_bet'
     if(MenuData.is_esports()){
         bet_type ="esports_bet"
