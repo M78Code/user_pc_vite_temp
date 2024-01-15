@@ -154,7 +154,7 @@ function getActivityLists({ id = 1, type }) {
   // 判断是否有活动
   let activityList = lodash.get(UserCtr.get_user(), 'activityList');
   // 多语言屏蔽活动入口
-  if (activityList && activityList.length > 0 && UserCtr.lang == 'zh') {
+  if (activityList && activityList.length > 0 && ['zh', 'hk'].includes(UserCtr.lang)) {
     let param = new FormData();
     // 检测两个活动是否存在以及活动状态不能是未开始和已结束
     let daily = activityList.find(item => item.activityId == '10007' && item.period == 2) || null;
@@ -337,7 +337,7 @@ function init_site_header(type = null) {
   // 判断是否有活动
   let activityList = lodash.get(UserCtr.get_user(), 'activityList') || [];
   // 多语言屏蔽活动入口
-  if (activityList && activityList.length > 0 && UserCtr.lang == 'zh' && globalAccessConfig.get_activitySwitch()) {
+  if (activityList && activityList.length > 0 && ['zh', 'hk'].includes(UserCtr.lang) && globalAccessConfig.get_activitySwitch()) {
     site_header_data.hasActivity = true;
     // 向顶部导航栏添加活动入口
     let tab = { id: 9, tab_name: "common.mission_center", img_src: '', class: "activity_center animate-activity-entry activity_dot_bonus", path: "/activity", _blank: true };

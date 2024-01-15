@@ -78,27 +78,7 @@
               :lengue_name="lengue_name">
             </v-s-match-list>
 
-
-            <!-- 排行榜页面,小组赛淘汰赛页面    从vr详情(project\ouzhou-h5\src\pages\vr\pages\virtual\virtual-sports-details.vue)中 复制过的  start -->
-            <div v-if="tabs_name == 'rank'" class="list-wrapper">
-              <!-- {{ sub_menu_type }} -->
-              <div v-if="[1001,1004].includes(sub_menu_type)">
-                <!--  足球小组赛,淘汰赛页面  -->
-                <group-knockout
-                  v-if="current_league ? current_league.field3 != '': false"
-                  :tid="current_league.field1"
-                  :current_match="current_match"
-                />
-                <!--  足球排行榜页面  -->
-                <football-ranking-list v-else :tid="current_league.field1"/>
-              </div>
-              <!--  非足球排行榜页面  -->
-              <ranking-list-start v-else :mid="current_match.mid"/>
-            </div>
-            <!-- 从vr详情(project\ouzhou-h5\src\pages\vr\pages\virtual\virtual-sports-details.vue)中 复制过的  end -->
-
-
-            <div v-if="current_match.match_status == 0">
+            <div v-if="tabs_name == 'list' && current_match.match_status == 0">
               <!-- 赛马切换玩法集tab组件 -->
               <virtual-sports-tab
                 :batch="current_match_id"
@@ -118,7 +98,7 @@
             </div>
 
             <!-- 注释勿删除 -->
-            <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
+            <div class="v-sports-ranking" v-if="tabs_name == 'list' && ![1001,1004].includes(sub_menu_type)">
               <!-- 打印请勿删除 -->
               <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
               <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
@@ -126,6 +106,26 @@
               <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
               <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
             </div>
+
+
+            <!-- 排行榜页面,小组赛淘汰赛页面    从vr详情(project\ouzhou-h5\src\pages\vr\pages\virtual\virtual-sports-details.vue)中 复制过的  start -->
+            <div v-if="tabs_name == 'rank'" class="list-wrapper">
+              <!-- {{ sub_menu_type }} -->
+              <div v-if="[1001,1004].includes(sub_menu_type)">
+                <!--  足球小组赛,淘汰赛页面  -->
+                <group-knockout
+                  v-if="current_league ? current_league.field3 != '': false"
+                  :tid="current_league.field1"
+                  :current_match="current_match"
+                />
+                <!--  足球排行榜页面  -->
+                <football-ranking-list v-else :tid="current_league.field1"/>
+              </div>
+              <!--  非足球排行榜页面  -->
+              <ranking-list-start v-else :mid="current_match.mid"/>
+            </div>
+            <!-- 从vr详情(project\ouzhou-h5\src\pages\vr\pages\virtual\virtual-sports-details.vue)中 复制过的  end -->
+
             
           </div>
        </div>
@@ -324,6 +324,7 @@ export default {
   }
   &:last-of-type {
     padding-bottom: 0.7rem;
+    // background-color: var(--q-gb-bg-c-34);
   }
   &-simple{
     background: var(--q-gb-bg-c-28);

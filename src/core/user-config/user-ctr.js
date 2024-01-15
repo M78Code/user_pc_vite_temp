@@ -903,9 +903,13 @@ class UserCtr {
           lang = 'zh'
         }
       }
+      // 中文简体时 后台关闭简繁译开关后强制 转为 zh
+      if (PROJECT_NAME == 'new-pc' && !obj.simpleTradSwitch) {
+        lang = obj.languageName == 'hk' ? 'zh' : obj.languageName 
+      }
       try {
         let data = {
-          languageName: this.lang ? this.lang : lang,
+          languageName: lang,
           userMarketPrefer: obj.userMarketPrefer,
         };
         // 设置国际化语言
