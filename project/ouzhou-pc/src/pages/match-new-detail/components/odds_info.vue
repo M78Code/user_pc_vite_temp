@@ -92,7 +92,9 @@
                               {{ ol.on }}
                             </span>
                             <span>
+                            <!-- 有ov 才显示 -->
                               <bet-item
+                              v-if="ol.ov"
                                 :key="`bet_4_${ol.hild}`"
                                 :ol_data="ol"
                                 :current_ol="current_ol"

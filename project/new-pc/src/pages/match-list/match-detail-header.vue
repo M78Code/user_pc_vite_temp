@@ -36,11 +36,24 @@
     </div>
     <div class="row items-center">
       <div class="row items-center">
+        <!-- 选择联赛 -->
+        <div class="select-competition row items-center">
+          <span>选择联赛</span>
+          <div class="all">
+            <span>全部</span>
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/arrow.svg`" alt="" class="arrow"/>
+          </div>
+        </div> 
+        <!-- 欧盘/亚盘 -->
+        <ul class="select-type row items-center">
+          <li>欧盘</li>
+          <li>亚盘</li>
+        </ul>
         <!-- 专业、新手 切换-->
         <div show_type="sort" class="flex list-sort select-btn ya-zhou-border yb-hover-bg">
           <div @click="set_click_version(item)" v-for="(item, index) in ver_option"
             :class="[get_version == item.id ? 'active special' : 'yb-hover-bg', 'list-sort-item']" :key="index">
-            <span class="inner-text">{{ i18n_t("set.pro") }}</span>
+            <span class="inner-text">{{ i18n_t(item.name) }}</span>
           </div>
         </div>
       </div>
@@ -54,7 +67,7 @@
 import { ref, computed } from "vue";
 import filterHeader from "src/core/filter-header/filter-header.js";
 import { IconWapper } from 'src/components/icon'
-import { PageSourceData, GlobalSwitchClass, MenuData } from "src/output/index.js";
+import { PageSourceData, GlobalSwitchClass, MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 const props = defineProps({
   collect_count: {
     type: Number,
@@ -355,4 +368,27 @@ function set_click_version(item) {
   .w105 {
     width: 105px;
   }
-}</style>
+}
+
+.select-competition {
+  background-color: #E9F0FF;
+  border-radius: 1000px;
+  font-size: 12px;
+  height: 24px;
+  padding: 0 8px;
+  color: #555;
+  .all {
+    margin-left: 6px;
+    .arrow {
+      width: 10px;
+      height: 10px;
+      margin-left: 2px;
+    }
+  }
+}
+
+.select-type {
+  height: 26px;
+  background-color: #E9F0FF;
+}
+</style>

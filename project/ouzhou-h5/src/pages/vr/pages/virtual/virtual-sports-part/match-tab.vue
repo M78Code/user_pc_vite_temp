@@ -12,6 +12,9 @@
         {{item.no}}
         <div class="line"></div>
       </div>
+      <div v-if="no_list.length" class="row sub-nav-item footbal rank_click_icon" @click="change_tab('rank')">
+        <img :src="img"/>
+      </div>
     </div>
     <!-- 分析icon显示 -->
     <div class="sr-icon-wrapper row justify-center items-center" @click.stop="trend_event"  v-if="lodash.get(get_access_config,'statisticsSwitch') && sub_menu_type != 1004">
@@ -26,9 +29,34 @@
 </template>
 <script>
 import match_tab_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/match-tab-mixin.js";
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 export default {
   mixins:[match_tab_mixin],
   name:'match_tab',
+  setup(){
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
+  },
+  data(){
+    return {
+      rank_turnon: false,
+      img: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/virtual-sports/rank_click_icon.svg`,
+    }
+  },
+  methods: {
+    change_tab(val){
+      if(this.rank_turnon){
+        this.rank_turnon = false
+        this.img = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/virtual-sports/rank_click_icon.svg`;
+        // this.$emit('change_tab','bet')
+      }else{
+        this.rank_turnon = true
+        this.img = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/virtual-sports/lszj_click_turnoff_icon.svg`;
+        // this.$emit('change_tab','rank')
+      }
+    }
+  }
 }
 </script>
 
@@ -58,13 +86,13 @@ export default {
     width: 3.25rem;
   }
   
-  &:after {
-    content: ' ';
-    display: block;
-    width: 0.16rem;
-    height: 0.1rem;
-    flex-shrink: 0;
-  }
+  // &:after {
+  //   content: ' ';
+  //   display: block;
+  //   width: 0.16rem;
+  //   height: 0.1rem;
+  //   flex-shrink: 0;
+  // }
 
   .sub-nav-item {
     min-width: fit-content;
@@ -113,6 +141,18 @@ export default {
       background: url($SCSSPROJECTPATH+"/image/vr/circle.png") no-repeat center;
       background-size: 100% 100%;
     }
+  }
+
+  .rank_click_icon{
+    padding-left: 0.35rem;
+    background-color: red;
+    // border-radius: 100px;
+    background-color: var(--q-gb-bg-c-2);
+    // opacity: 0.8;
+    box-shadow: 0px 0px 0.4rem 0.01rem var(--q-gb-bg-c-2);
+    position: sticky;
+    right: 0;
+    left: 0;
   }
 }
 
