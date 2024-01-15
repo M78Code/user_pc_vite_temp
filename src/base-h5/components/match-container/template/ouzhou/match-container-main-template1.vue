@@ -156,6 +156,14 @@
                         standard: !show_newer_edition && !is_results,
                         result: is_results
                       }">
+                        <div class="team-title-inner-con">
+                          <div class='team-t-title-w' :class="{
+                            'is-handicap': match.handicap_index == 1,
+                            'is-handicap-1': match.handicap_index == 2,
+                            'is-show-goal': is_show_home_goal
+                          }">
+                          {{ match.mhn }}
+                        </div>
                         <!-- 红、黄牌， 发球方绿点 -->
                         <div class="team-left">
                           <template v-if="home_red_score || home_yellow_score">
@@ -169,14 +177,6 @@
                             </span>
                           </template>
                         </div>
-                        <div class="team-title-inner-con">
-                          <div class='team-t-title-w' :class="{
-                            'is-handicap': match.handicap_index == 1,
-                            'is-handicap-1': match.handicap_index == 2,
-                            'is-show-goal': is_show_home_goal
-                          }">
-                            {{ match.mhn }}
-                          </div>
                           <!-- 进球动画 -->
                           <!-- <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2">
                             <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
@@ -204,19 +204,6 @@
                       </div>
                       <!--客队图片和名称-->
                       <div class='team-title-container'>
-                        <!-- 红、黄牌， 发球方绿点 -->
-                        <div class="team-left">
-                          <template v-if="away_red_score || away_yellow_score">
-                            <!-- 红牌 -->
-                            <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
-                              {{ away_red_score }}
-                            </span>
-                            <!-- 黄牌 -->
-                            <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
-                              {{ away_yellow_score }}
-                            </span>
-                          </template>
-                        </div>
                         <div class="team-title-inner-con">
                           <div class='team-t-title-w visiting' :class="{
                             'is-handicap': match.handicap_index == 2,
@@ -224,6 +211,19 @@
                             'is-show-goal': is_show_away_goal
                           }">
                             {{ match.man }}
+                          </div>
+                          <!-- 红、黄牌， 发球方绿点 -->
+                          <div class="team-left">
+                            <template v-if="away_red_score || away_yellow_score">
+                              <!-- 红牌 -->
+                              <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
+                                {{ away_red_score }}
+                              </span>
+                              <!-- 黄牌 -->
+                              <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
+                                {{ away_yellow_score }}
+                              </span>
+                            </template>
                           </div>
                           <!-- 进球动画 -->
                           <!-- <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2">

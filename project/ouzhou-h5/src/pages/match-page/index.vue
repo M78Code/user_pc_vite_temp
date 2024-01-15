@@ -184,6 +184,7 @@ const goBackToLeague = () => {
 <style scoped lang="scss">
 /* ************** 赛事列表包装器 **************** -S */
 .match-list-page {
+  background-color: #e2e2e2 !important;
   width: 100%;
   height: 100%;
   overflow-y: scroll;

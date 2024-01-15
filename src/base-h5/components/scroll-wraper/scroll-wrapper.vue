@@ -226,7 +226,7 @@ onUnmounted(() => {
   height: 100%;
   overflow-y: auto;
   overflow-anchor: none;
-  // background-color: #f5f5f5;
+  background-color: #e2e2e2;
   touch-action: pan-y;
   overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;/*解决移动端滑动卡顿问题*/
