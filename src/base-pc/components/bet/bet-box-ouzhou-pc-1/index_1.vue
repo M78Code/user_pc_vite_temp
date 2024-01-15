@@ -114,7 +114,6 @@ import betResult from "./components/bet-result.vue"  // 投注结果
 import betMixResult from "./components/bet-mix-result.vue"  // 串关投注结果
 import betSpecialInput from "./components/bet-special-input.vue"
 import BetMultipleInput from "./components/bet-multiple-input.vue"
-import mathJs from 'src/core/bet/common/mathjs.js'
 
 
 const ref_data = reactive({
