@@ -5,7 +5,7 @@
 <template>
   <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
   <div :class="['odd-item', {active: BetData?.bet_oid_list?.includes(odd_item.oid) }]" @click="set_old_submit">
-    <template v-if="is_show_template"> - </template>
+    <template v-if="is_show_template"> <span class="template">-</span> </template>
     <!-- 锁 -->
     <img v-else-if="is_lock" class="lock" :src="odd_lock_ouzhou" alt="lock">
     <!-- 是否显示赔率 -->
@@ -200,6 +200,10 @@ onUnmounted(() => {
       top: 0px;
       color: #1A1A1A;
     }
+  }
+
+  .template{
+    color: #8A8986
   }
   .hpn{
     color: #8A8986
