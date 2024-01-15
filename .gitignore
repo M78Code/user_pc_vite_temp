@@ -56,6 +56,7 @@ public/app-h5/server-resource/*
 git-console.md
 
 # 脚本生成的文件
+/src/output/index.js
 /src/output/project/index.js
 /log
 /src/output/index.js
