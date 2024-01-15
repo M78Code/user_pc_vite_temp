@@ -47,6 +47,14 @@
                 <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
                 <img v-if='league_collect_state' :src="have_collect_ouzhou">
               </div>
+              <!-- 电竞图标 写死 -->
+              <div v-if="match.csid == 101" class="league-icon-mini league-icon-mini2" style="--num:39"></div>
+              <div v-else-if="match.csid == 103" class="league-icon-mini league-icon-mini2" style="--num:40"></div>
+              <div v-else-if="match.csid == 102" class="league-icon-mini league-icon-mini2" style="--num:41"></div>
+              <div v-else-if="match.csid == 100" class="league-icon-mini league-icon-mini2" style="--num:42"></div>
+              <div v-else :class="['league-icon-mini']">
+                <ImageCacheLoad :csid="match.csid" :path="match.lurl" type="league" ></ImageCacheLoad>
+              </div>
               <span class="league-title-text row justify-between">
                 <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
                   <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
@@ -156,6 +164,7 @@
                         standard: !show_newer_edition && !is_results,
                         result: is_results
                       }">
+                        <ImageCacheLoad :csid="match.csid" :path="match.mhlu" type="home" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
                           <div class='team-t-title-w' :class="{
                             'is-handicap': match.handicap_index == 1,
@@ -165,23 +174,16 @@
                           {{ match.mhn }}
                         </div>
                         <!-- 红、黄牌， 发球方绿点 -->
-                        <div class="team-left">
-                          <template v-if="home_red_score || home_yellow_score">
-                            <!-- 红牌 -->
-                            <span class='score-punish red' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
-                              {{ home_red_score }}
-                            </span>
-                            <!-- 黄牌 -->
-                            <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
-                              {{ home_yellow_score }}
-                            </span>
-                          </template>
+                        <div class="team-left" v-if="home_red_score || home_yellow_score">
+                          <!-- 红牌 -->
+                          <span class='score-punish red' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
+                            {{ home_red_score }}
+                          </span>
+                          <!-- 黄牌 -->
+                          <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
+                            {{ home_yellow_score }}
+                          </span>
                         </div>
-                          <!-- 进球动画 -->
-                          <!-- <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2">
-                            <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
-                            <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
-                          </div> -->
                            <!-- 主队事件动画-->
                           <div class="yb-flex-center" v-if="is_new_init2">
                             <!-- 进球图标 -->
@@ -204,6 +206,7 @@
                       </div>
                       <!--客队图片和名称-->
                       <div class='team-title-container'>
+                        <ImageCacheLoad :csid="match.csid" :path="match.malu" type="away" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
                           <div class='team-t-title-w visiting' :class="{
                             'is-handicap': match.handicap_index == 2,
@@ -213,23 +216,16 @@
                             {{ match.man }}
                           </div>
                           <!-- 红、黄牌， 发球方绿点 -->
-                          <div class="team-left">
-                            <template v-if="away_red_score || away_yellow_score">
-                              <!-- 红牌 -->
-                              <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
-                                {{ away_red_score }}
-                              </span>
-                              <!-- 黄牌 -->
-                              <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
-                                {{ away_yellow_score }}
-                              </span>
-                            </template>
+                          <div class="team-left" v-if="away_red_score || away_yellow_score">
+                            <!-- 红牌 -->
+                            <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
+                              {{ away_red_score }}
+                            </span>
+                            <!-- 黄牌 -->
+                            <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
+                              {{ away_yellow_score }}
+                            </span>
                           </div>
-                          <!-- 进球动画 -->
-                          <!-- <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2">
-                            <div class="yb-goal-gif yb-goal-yo"></div>
-                            <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
-                          </div> -->
                           <!-- 客队事件动画 -->
                           <div class="yb-flex-center" v-if="is_new_init2">
                             <!-- 进球图标 -->
@@ -693,7 +689,7 @@ export default {
          .favorited-icon{
           width: 15px;
           height: 14px;
-          margin: 0 10px 0 0;
+          margin: 0 4px 0 0;
           position: relative;
           flex-shrink: 0;
           > img {
@@ -938,6 +934,7 @@ export default {
 
       .team-title-container {
         display: flex;
+        align-items: center;
         position: relative;
         .team-left{
           width: 20px;
@@ -966,7 +963,7 @@ export default {
         }
 
         .team-title-inner-con {
-          width: 1.31rem;
+          width: 1.2rem;
           position: relative;
           line-height: 0.14rem;
           display: flex;
@@ -1021,9 +1018,9 @@ export default {
             font-size: 14px;
             height: 24px;
             line-height: 24px;
-            max-width: 1.31rem;
             overflow: hidden;
             flex-shrink: 0;
+            flex: 1;
             align-items: center;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -1295,7 +1292,7 @@ export default {
     height: 100%;
     height: 14px;
     flex-shrink: 0;
-    margin-right: .05rem;
+    margin-right: .08rem;
     position: relative;
     top: -1px;
 
