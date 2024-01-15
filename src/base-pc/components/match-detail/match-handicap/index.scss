@@ -404,6 +404,8 @@
   background: var(--q-gb-bg-c-32);
   border-radius: 8px;
   box-shadow: none !important;
+  // 宽度100% fix bug 53860
+  width: 100%;
 }
 
 :deep(.handicap-item) {
