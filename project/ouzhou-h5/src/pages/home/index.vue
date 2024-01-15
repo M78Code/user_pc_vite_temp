@@ -362,7 +362,9 @@ onUnmounted(() => {
   }
   // padding-bottom: 56px;
   .header_tabs{
-    border-bottom: 2px solid var(--q-gb-bd-c-1);
+    // border-bottom: 2px solid var(--q-gb-bd-c-1);
+    border-bottom: 2px solid #FF7000;
+
     :deep(.q-tabs--dense){
       .scroll--mobile{
         height: 50px;
