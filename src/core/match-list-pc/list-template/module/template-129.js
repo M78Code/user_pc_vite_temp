@@ -1,5 +1,5 @@
 /**
- *  欧洲版 虚拟足球 赔率模板 102号
+ *  欧洲版 虚拟足球 赔率模板 129号
  */
 import * as TemplateCommon from "./template-common.js"
 
