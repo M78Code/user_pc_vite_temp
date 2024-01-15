@@ -38,7 +38,7 @@
       <!-- 单关 投注 -->
       <div class="bet-scroll">
         <div v-if="BetViewDataClass.bet_order_status == 1">
-          <template v-if="BetData.is_bet_single">
+          <template v-if="BetData.is_bet_single && BetData.bet_single_list.length">
             <div v-for="(item,index) in BetData.bet_single_list" :key="item.playOptionsId">
                 <betItem :items="item" :key="index" :index="index" />
             </div>
