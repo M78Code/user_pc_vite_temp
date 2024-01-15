@@ -64,6 +64,7 @@ import { MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInst
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
 import virtual_sports_match_item_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-match-item-mixin.js";
 import { IconWapper } from 'src/components/icon'
+import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 
 export default {
   mixins:[virtual_sports_match_item_mixin],
@@ -94,7 +95,6 @@ export default {
     provide("MatchListData", MatchListData)
 
     let current_mid = MatchListCardDataClass.current_mid;
-
     const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_129_config`]
     
     let handicap_list = computed(() => {
@@ -112,7 +112,14 @@ export default {
       const width_config = MATCH_LIST_TEMPLATE_CONFIG[`template_129_config`].width_config
       return width_config
     })
+
+     //非坑位对象
+     const not_hn_obj_map = computed(() => {
+      const _not_hn_obj_map = get_match_to_map_obj(match.value, null); //非坑位对象
+      return _not_hn_obj_map
+    })
     
+    provide("not_hn_obj_map", not_hn_obj_map)
 
   return {
       compute_css_obj,
