@@ -212,7 +212,7 @@ function on_resize() {
 
       .tab-item {
         height: 38px;
-        //line-height: 40px;
+        line-height: 10px;
         padding: 0 10px;
       }
 
