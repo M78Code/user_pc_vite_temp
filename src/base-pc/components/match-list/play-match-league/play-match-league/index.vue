@@ -1,6 +1,7 @@
 <template>
   <div class="c-match-league"
-    :class="[{ 'match-tpl1-bg': match_style_obj.data_tpl_id == 1 }, card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${match_style_obj.data_tpl_id}`]">
+    :class="[{ 'match-tpl1-bg': match_style_obj.data_tpl_id == 1 },
+     card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${match_style_obj.data_tpl_id}`]">
     <!-- 第一行 -->
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
@@ -125,17 +126,15 @@ const props = defineProps({
     default: () => ''
   }
 })
+const is_kemp = computed(() => {
+  return (MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp() || MenuData.is_esports_champion()) && MenuData.menu_data_version.value
+})
 const match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props.card_style_obj, 'mid'), MatchListCardDataClass.list_version.value)
-lodash.get(props.card_style_obj, 'mid')
 const match_list_tpl_size = computed(() => {
   return MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 })
-// 获取菜单类型
-// if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(MenuData.menu_root)) {
-//   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {})
-// }
 const is_HDP = computed(() => {
-  return [1, 20, 24, 13, 29].includes(+match_style_obj.data_tpl_id)
+  return [1, 20, 24, 13, 25].includes(+match_style_obj.data_tpl_id)
 })
 
 /**
@@ -156,7 +155,7 @@ const bet_col = computed(() => {
     title_name = "corner_bet_col"
   }
   //罚牌主盘
-  else if ([29].includes(data_tpl_id)) {
+  else if ([25].includes(data_tpl_id)) {
     data_tpl_id = 1
     title_name = "punish_bet_col"
   } else if (data_tpl_id == 28) {
@@ -403,9 +402,9 @@ function set_fold() {
       }
     }
 
-    /* .play-name div {
+     .play-name div {
        display: none;
-     } */
+     } 
 
     .league-match-count {
       display: block;
