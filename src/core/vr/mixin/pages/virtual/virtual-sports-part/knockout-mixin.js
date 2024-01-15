@@ -50,6 +50,7 @@ export default {
   methods: {
     tabClick(item, i) {
       // console.log("this.list_data+++===", this.list_data);
+      // console.log("this.check_if_there_tab===", this.check_if_there_tab);
       if(this.tab_index == i) return
       // 判断选项卡里边有没有数据
       if (!Object.keys(this.check_if_there_tab).includes(item.key)) {
