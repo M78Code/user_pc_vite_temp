@@ -340,7 +340,8 @@ const lev_1_click = async (obj) => {
         md: ''
       }
     }
-    MenuData.set_current_ball_type(left_obj.lv1_mi - 100)
+    const sport_id = left_obj.lv1_mi?.substring(0,3) || 0;
+    MenuData.set_current_ball_type(sport_id?+sport_id-100:0)
   }
   MenuData.set_menu_root(root)
   // 不是列表页 点击列表菜单
@@ -375,7 +376,6 @@ const lev_2_click = (detail = {}) => {
   let mid_obj = {
     md: ''
   }
-
   // current_lv_2_mi.value = lv2_mi
 
   // 不是列表页 点击列表菜单
