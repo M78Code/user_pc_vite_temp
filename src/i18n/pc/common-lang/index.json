@@ -29,6 +29,21 @@
       "champion_handicap": "冠军盘"
     }
   },
+  "hk": {
+    "odds": {
+      "EU": "欧洲盘",
+      "GB": "英式盘",
+      "HK": "香港盘",
+      "ID": "印尼盘",
+      "MY": "马来盘",
+      "US": "美式盘"
+    },
+    "bet": {
+      "morning_session": "赛前",
+      "bowls": "滚球",
+      "champion_handicap": "冠军盘"
+    }
+  },
   "tw": {
     "odds": {
       "EU": "歐洲盤",

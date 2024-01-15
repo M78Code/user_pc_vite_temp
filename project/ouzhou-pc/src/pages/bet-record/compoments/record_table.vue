@@ -12,9 +12,9 @@
         }">
         <template v-slot:no-data>
           <div class="detail-loading" v-if="loading">
-            <q-circular-progress indeterminate rounded size="80px" :thickness="0.1" color="opt-basic" class="q-ma-md" />
+            <loading-ing />
           </div>
-          <div class="no-data" style="height:calc(100vh - 270px)">
+          <div class="no-data" style="height:calc(100vh - 270px)" v-else>
             <div class="c">
               <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/no-data.svg`" alt="" srcset="">
               <div style="text-align: center;color:#A1A3A5;font-weight: 500;">{{i18n_t('common.no_data')}}</div>
@@ -250,6 +250,9 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { format_balance, LOCAL_PROJECT_FILE_PREFIX,i18n_t } from 'src/output/index.js'
 import Pagination from 'project_path/src/components/Pagination.vue'
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
+// 引入加载中的组件
+import LoadingIng from "src/components/loading/loading.vue"
+
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 import sport_icon from './sport_icon.vue'
 // import football_icon from 'src/assets/images/football_icon.png'
@@ -709,6 +712,8 @@ const hand_copy = (data) => {
   top: 25%;
   left: 50%;
   transform: translate(-50%, 0);
+  padding-top: 150px;
+  width: 100px;
 }
 
 .copy_icon {

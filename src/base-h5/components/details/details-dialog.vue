@@ -197,7 +197,7 @@ function global_color_obj() {
 // 展示lvs 图标
 function show_lvs(item) {
   return item.lvs != -1 && ['string', 'number'].includes(typeof lodash.get(item, 'lss')) &&
-    ['zh', 'tw'].includes(UserCtr.lang) && menu_type != 3000
+    ['zh', 'tw', 'hk'].includes(UserCtr.lang) && menu_type != 3000
 }
 function is_eports_scoring(item) {
   //计算主分和客分，用全局的分支处理方法进行处理

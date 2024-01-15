@@ -311,6 +311,10 @@ const set_retain_selection = () => {
     BetData.set_bet_amount(0)
     BetViewDataClass.set_bet_before_message({})
     BetViewDataClass.set_is_finally(true)
+    if(!BetData.is_bet_single){
+      // 清空串关类型 的投注金额
+      return BetViewDataClass.set_clear_bet_special()
+    }
     setTimeout(() => {
         useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
     }, 200);

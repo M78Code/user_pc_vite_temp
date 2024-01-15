@@ -193,7 +193,8 @@ import lodash from "lodash"
 
         .team-name {
           font-size: 0.12rem;
-          color: var(--q-gb-t-c-4);
+          //color: var(--q-gb-t-c-4);
+          color: var(--q-analysis-text-color-20);
           font-weight: bold;
           line-height: 0.12rem;
         }
@@ -207,7 +208,9 @@ import lodash from "lodash"
         text-align: center;
         line-height: 0.32rem;
         padding: 0 0.1rem;  
-        color:var(--q-analysis-text-color-14); 
+        color:var(--q-analysis-text-color-14);
+        border-top: 1px solid var(--q-gb-bd-c-4);
+        border-bottom: 1px solid var(--q-gb-bd-c-4);
       }
 
       .team-item {

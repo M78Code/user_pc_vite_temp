@@ -60,7 +60,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     countMatchDetailErr: 0, // 计算详情比分面板接口报错次数
     currentRound: null, // 电竞动态玩法集配置--当前玩法集局数标记
     load_detail_statu: "right_details_loading", // loading 状态
-    headerHeight: 0, // 头部高度
+    headerHeight: 200, // 头部高度
     get_match_details_timer: null,
     back_to_timer: null,
     axios_debounce_timer: null,

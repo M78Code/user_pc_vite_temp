@@ -63,6 +63,7 @@ const route = useRoute()
 const inputRef = ref(null)
 page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
 function change_txt() {
+    store.show_type = 'init'
     store.keyword = store.keyword.replace(/#/g, "");
     if (store.keyword.length > 20) store.keyword = store.keyword.slice(0, 20);
 }
@@ -110,7 +111,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     cursor: pointer;
-    background-color: var(--q-gb-bg-c-11);
+    background-color: var(--q-gb-bg-c-30);
     border-top: 1px solid var(--q-header-search-color-3);
     border-bottom: 1px solid var(--q-header-search-color-3);
     margin-bottom: 5px;
@@ -137,13 +138,14 @@ export default defineComponent({
             color: var(--q-header-search-color-1);
             font-size: 12px;
             caret-color: #999999;
+            color: var(--q-gb-t-c-6);
 
             // &.key-is-empty {
             //   color: #0089e1 !important;
             // }
             &::placeholder {
                 font-size: 12px;
-                color: #999 !important;
+                color: #BACCFC;
                 opacity: 0.5;
             }
         }

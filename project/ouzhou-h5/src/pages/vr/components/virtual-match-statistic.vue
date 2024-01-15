@@ -44,7 +44,7 @@
       <!-- 胜负百分比 -->
       <div class="result-wrap row">
         <div class="home item  column items-center">
-          <div class="win-percent">{{ datas.win_home }}%</div>
+          <!-- <div class="win-percent">{{ datas.win_home }}%</div> -->
 
           <div class="result-list row ">
             <div
@@ -60,7 +60,7 @@
 
         </div>
         <div class="away item column items-center">
-          <div class="win-percent">{{ datas.win_away }}%</div>
+          <!-- <div class="win-percent">{{ datas.win_away }}%</div> -->
 
           <div class="result-list row">
             <div
@@ -190,8 +190,8 @@ export default {
       .item {
         .result-list {
           .result-item {
-            background: #FEAE2B;
-            color:var(--q-gb-t-c-14);
+            background: var(--q-gb-bg-c-30);
+            color:var(--q-gb-t-c-20);
             &.item-W {
               background: #E95B5B;
             }
@@ -231,7 +231,7 @@ export default {
         //按照设计图的3px太细了，故设置4px
         --private-score-line-height: .04rem;
         height: var(--private-score-line-height);
-        background-color: var(--q-gb-bg-c-18);
+        background-color: var(--q-gb-bg-c-2);
         .separate{
           background-color: transparent;
         }
@@ -257,6 +257,7 @@ export default {
         .line {
           border-radius: 1rem 0 0 1rem;
           height: var(--private-score-line-height);
+          background-color: var(--q-gb-bg-c-18);
 
           &.line0 {
             
@@ -268,6 +269,7 @@ export default {
 
           .line {
             border-radius: 0rem 1rem 1rem 0rem;
+            background-color: var(--q-gb-bg-c-29);
           }
         }
       }
@@ -283,7 +285,7 @@ export default {
     }
     .item {
       flex: 1;
-      background-color: var(--q-gb-bg-c-18);
+      // background-color: var(--q-gb-bg-c-18);
       border-radius: 0.04rem;
       padding: .08rem 0;
       .result-list {

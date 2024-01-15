@@ -33,6 +33,7 @@
   import { MenuData, useMittOn,MITT_TYPES } from 'src/output/index.js'
   import { get_data_menu_result,handle_click_menu_mi_3_date } from "src/base-pc/components/tab/date-tab/index.js"
   import { compute_img_url } from 'src/core/server-img/index.js'
+  import lodash_ from "lodash"
   // import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
     // 是否显示左边按钮
   const show_left_btn = ref(false);
@@ -66,13 +67,22 @@
   const dateWeekFormat = async () =>{
     const res = await get_data_menu_result();
     if(!res || !res?.length)return [];
-    return res?.filter((n)=>{return !!n.md}).map((item)=>{
-      return {
-        name: item.menuName,
-        label: item.md,
-        type: 3
-      }
-    })
+    if(MenuData.is_esports()){
+      return res.map(item=>{
+        return {
+          name: item.menuName,
+          label: item.md,
+        }
+      })
+    }else{
+      return res?.filter((n)=>{return !!n.md}).map((item)=>{
+        return {
+          name: item.menuName,
+          label: item.md,
+          type: 3
+        }
+      })
+    }
   }
   /**
    * 一周时间
@@ -105,9 +115,16 @@
     if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_esports()){
       let arr = [{label:'',name: i18n_t('ouzhou.match.today'),type:2}]
       // 电子赛事 没有早盘日期
-      if(!MenuData.is_electron_match()){
+      if(!MenuData.is_electron_match() && !MenuData.is_esports()){
         const week = await dateWeekFormat();
         arr = [...[{label:'',name: i18n_t('ouzhou.match.today'),type:2}],...week];
+      }
+
+      // 电子竞技
+      if(MenuData.is_esports()){
+        const week = await dateWeekFormat();
+        // let week_lsit = week.filter(item => item.label != 0)
+        arr = week
       }
      
       current_filter_list.value = arr;
@@ -115,6 +132,7 @@
         label: MenuData.mid_menu_result.md,
         type: MenuData.menu_root == 202 ? 2 : 3
       }
+     
       handle_click_menu_mi_3_date(obj)
     }
   }

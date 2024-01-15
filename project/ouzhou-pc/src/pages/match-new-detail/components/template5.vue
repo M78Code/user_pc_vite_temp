@@ -24,6 +24,7 @@
         :class="{
           'temp-active': BetData.bet_oid_list.includes(value[0].oid),
           temp_grid_item: true,
+          'close-temp5-hove': value[0]._hs !=0 || value[0]._mhs !=0 || value[0].os !=1,
         }"
       >
         <span v-show="value[0].hs">
@@ -43,6 +44,7 @@
           :class="{
             temp_grid_item: true,
             'temp-active': BetData.bet_oid_list.includes(o.oid),
+            'close-temp5-hove': value[0]._hs !=0 || value[0]._mhs !=0 || value[0].os !=1,
           }"
           :style="{ width: value.length > 1 ? '100%' : '200%' }"
           :key="o.oid"
@@ -121,9 +123,9 @@ const bet_oid = ref("");
 const active = ref(1);
 
 const betItemClick = (key, o) => {
-  if (o.os != 1) {
-    return;
-  }
+  // if (o.os != 1) {
+  //   return;
+  // }
   bet_oid.value = o.oid;
 
   let obj = "";
@@ -197,6 +199,11 @@ onMounted(() => {});
 
   &:hover {
     background: var(--q-gb-bg-c-5);
+  }
+  &.close-temp5-hove {
+    &:hover {
+      background: unset;
+    }
   }
 }
 

@@ -50,15 +50,20 @@ export default {
   align-items: center;
   justify-content: center;
 
+  .hairline-border{
+    border-radius: 0px !important;
+  }
+
   .tabs {
     // width: 3.52rem;
-    width: 98vw;
+    width: 100vw;
     height: 0.4rem;
-    margin: 0.11rem 0 0.05rem 0;
-    border-radius: 0.08rem;
+    // margin: 0.11rem 0 0.05rem 0;
+    // border-radius: 0.08rem;
     position: relative;
-    background-color: var(--q-gb-bg-c-29);
-    color: var(--q-gb-t-c-32);
+    // background-color: var(--q-gb-bg-c-29);
+    color: var(--q-gb-t-c-3);
+    // color: ;
     
     display: flex;
     flex-direction: row;
@@ -74,19 +79,19 @@ export default {
 
 
       &:nth-child(1) {
-        border-radius: 0.08rem 0 0 0.08rem;
+        // border-radius: 0.08rem 0 0 0.08rem;
       }
 
       &:nth-child(2) {
-        border-radius: 0 0.08rem 0.08rem 0;
+        // border-radius: 0 0.08rem 0.08rem 0;
       }
 
       &.is-active {
         // background: var(--q-color-page-bg-color-9);
-        color: var(--q-gb-t-c-18);
-        background-color: var(--q-gb-bg-c-28);
-        border-radius: 0.08rem;
-        height: 0.36rem;
+        color: var(--q-gb-t-c-2);
+        background-color: var(--q-gb-bg-c-1);
+        // border-radius: 0.08rem;
+        height: 100%;
       }
     }
   }
@@ -96,7 +101,7 @@ export default {
   }
 }
 :deep(.q-carousel){
-  background: var(--q-gb-bg-c-18);
+  background: var(--q-gb-bg-c-28);
 }
 
 </style>

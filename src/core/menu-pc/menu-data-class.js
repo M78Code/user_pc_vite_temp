@@ -280,7 +280,7 @@ class MenuData {
    * @param {*} is_fetch  是否立刻更新菜单 意味这立刻请求列表接口
    */
   set_menu_root(val) {
-    console.error('set_menu_root',val)
+    // console.error('set_menu_root',val)
     this.menu_root = val;
     let menu_list = []
     switch(val*1){
@@ -1125,7 +1125,7 @@ class MenuData {
     if(mi){
       return this._is_cur_mi(2000, mi)
     }
-    return this._is_cur_mi(2000, mi) || this._is_cur_mi(2000, this.left_menu_result.lv1_mi)
+    return this._is_cur_mi(2000, mi)
   }
   /**
    * 是否选中了串关

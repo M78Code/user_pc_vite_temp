@@ -67,7 +67,18 @@
           <!-- <div class="match-detail-odds-bottom"></div> -->
         </q-tab-panel>
         <q-tab-panel name="event_analysis">
-          <event_analysis :match_odds_info="match_odds_info" :match_detail="match_detail" :active_tab="detail_event_tabs_value" />
+          <analysisFootball
+              v-if="match_detail.csid == 1"
+              :active_tab="detail_event_tabs_value"
+              :match_odds_info="match_odds_info"
+          ></analysisFootball>
+          <analysisBasketball
+              v-if="match_detail.csid == 2"
+              :active_tab="detail_event_tabs_value"
+              :match_odds_info="match_odds_info"
+              :match_detail="match_detail"
+          ></analysisBasketball>
+          <!-- <event_analysis :match_odds_info="match_odds_info" :match_detail="match_detail" :active_tab="detail_event_tabs_value" /> -->
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -77,7 +88,7 @@
 </template>
 
 <script >
-import { onMounted, ref, watch, onUnmounted } from "vue";
+import { onMounted, ref, watch, onUnmounted, provide } from "vue";
 import { useRouter,useRoute } from "vue-router";
 import detail_header_tem0 from "./detail_header/detail_header_tem0.vue";
 import detail_header_tem1 from "./detail_header/detail_header_tem1.vue";
@@ -93,6 +104,9 @@ import { details_main } from "./details.js";
 import { i18n_t } from "src/output/index.js"
 import infoRules from "src/base-h5/components/details/components/info-rules.vue"  // 视频info说明弹框
 // import './index.scss'
+// 欧洲4期 赛事分析
+import analysisFootball from "./analysis/football/index.vue"
+import analysisBasketball from "./analysis/basketball/index.vue"
 export default {
   components:{
     detail_header_tem0,
@@ -104,7 +118,9 @@ export default {
     loading_page,
     event_analysis,
     OddsListContrainer,
-    infoRules
+    infoRules,
+    analysisFootball,
+    analysisBasketball
   },
   setup(ctx){
     const router = useRouter();
@@ -112,30 +128,30 @@ export default {
     const mid = ref(route?.params?.mid)
     const {
       detail_store,
-     match_odds_info,
-     match_detail,
-     category_list,
-     tab,
-     cuid,
-     scroller_height,
-     loading ,
-     detail_event_tabs_value,
-     timer ,
-     mst_timer ,
-     tab_selected_obj ,
-     change_header_fix ,
-     header_fix,
-     fixedHeight,
-     tabChange,
-     detail_event_tabs_change,
-     detail_scrolling,
-     touchmove,
-     touchend,
-     touchstart,
-     detail_tabs_change,
-     changeHeader,
-     MatchDataWarehouseInstance,
-     get_info_show
+      match_odds_info,
+      match_detail,
+      category_list,
+      tab,
+      cuid,
+      scroller_height,
+      loading ,
+      detail_event_tabs_value,
+      timer ,
+      mst_timer ,
+      tab_selected_obj ,
+      change_header_fix ,
+      header_fix,
+      fixedHeight,
+      tabChange,
+      detail_event_tabs_change,
+      detail_scrolling,
+      touchmove,
+      touchend,
+      touchstart,
+      detail_tabs_change,
+      changeHeader,
+      MatchDataWarehouseInstance,
+      get_info_show
     } = details_main(router,route)
 
     const label = ref("");
@@ -148,6 +164,8 @@ export default {
     watch(() => route.params.mid, (value) => {
       label.value = "";
     })
+
+    provide('match_detail',match_detail)
 
     return{
       label,
@@ -177,7 +195,7 @@ export default {
       changeHeader,
       mid,
       MatchDataWarehouseInstance,
-      get_info_show
+      get_info_show,
      }
   } 
 }

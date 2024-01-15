@@ -8,10 +8,9 @@
   <div class="details relative-position" :style="page_style">
     <!-- 加载中，无数据等显示模板 -->
     <div style="display:none">{{LayOutMain_pc.layout_version}}</div>
-    <load-data
+    <load-data class="details_data_load"
       v-show="load_detail_statu != 'data'"
       :class="[
-        'details_data_load',
         { details_loading: load_detail_statu == 'loading' },
       ]"
       :state="load_detail_statu"
@@ -319,7 +318,7 @@ let back_to_timer =null
 }
 .details_data_load {
   position: absolute;
-  z-index: 0;
+  z-index: 999;
   width: 100%;
   pointer-events: none;
   :deep(.yb-flex-center) {

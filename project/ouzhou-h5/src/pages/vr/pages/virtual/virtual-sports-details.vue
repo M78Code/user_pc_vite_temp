@@ -40,13 +40,16 @@
     </template>
      <!--玩法集区域 -->
     <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
+
       <!-- 赔率列表页面 -->
+      <virtual-sports-tab v-if="match" @change_tab="change_tab" :mid="mid" />
       <template  v-if="match && tabs_name == 'bet'">
-        <virtual-sports-tab :mid="mid" />
         <virtual-sports-category v-if="match" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
       </template>
+
       <!-- 历史战绩页面 -->
       <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
+
       <!-- 排行榜页面,小组赛淘汰赛页面  -->
       <div v-if="match && tabs_name == 'rank'" class="list-wrapper">
         <div v-if="[1001,1004].includes(sub_menu_type)">
@@ -62,6 +65,7 @@
         <!--  非足球排行榜页面  -->
         <ranking-list-start v-else :mid="current_match.mid"/>
       </div>
+
     </div>
   </div>
 </template>

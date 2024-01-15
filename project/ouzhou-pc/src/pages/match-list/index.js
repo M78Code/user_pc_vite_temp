@@ -14,6 +14,7 @@ import { set_league_list_obj } from 'src/core/match-list-pc/composables/match-li
 import { set_match_play_current_index } from 'src/core/match-list-pc/composables/match-list-other.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch';
 
 export const playingMethods_15 = [
   {
@@ -107,14 +108,14 @@ export const get_15mins_data = payload => {
   }
 }
 
-// 新规则：足球15 ，篮球5
+// 新规则：足球10 ，篮球5, 其他球种5
 const filter_20_match_new = (data) => {
   const result = [];
-  // 足球最多15个
-  const max_football_count = 15;
+  // 足球最多10个
+  const max_football_count = 10;
+  const max_basketball_count = 5;
   let football_count = 0;
-  // 别的球种5个
-  const max_other_count = 5;
+  let basketball_count = 0;
 
   const football_csid = '1';
   const basketball_csid = '2';
@@ -123,7 +124,10 @@ const filter_20_match_new = (data) => {
     if (item.csid == football_csid && football_count < max_football_count) {
       result.push(item);
       football_count++;
-    } else if (item.csid == basketball_csid && result.length < 20) {
+    } else if (item.csid == basketball_csid && basketball_count < max_basketball_count) {
+      result.push(item);
+      basketball_count++;
+    } else if(result.length < 20 && item.csid !== football_csid && item.csid !== basketball_csid) {
       result.push(item);
     }
     // 大于20条时，跳出循环
@@ -149,7 +153,7 @@ export const init_home_matches = async (is_socket=true) => {
   const match_list = []
   const get_home_matches = LocalStorage.get('get_home_matches', [])
   const get_five_leagues_list = LocalStorage.get('get_five_leagues_list', [])
-  if (get_home_matches.length > 0) { //数据缓存先
+  if (get_home_matches.length > 0&&!is_socket) { //数据缓存先
     MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
     MatchDataWarehouse_PC_List_Common.set_list(get_home_matches.concat(get_five_leagues_list));
     MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(get_home_matches);
@@ -203,18 +207,20 @@ export const init_home_matches = async (is_socket=true) => {
 
       try {
         //五大联赛，只显示滚球数据
-        if (res?.length) {
-          res = res.filter(match => {
-            return !!get_match_status(match.ms)
-          })
-        }
-        match_list.push(...res)
+        // if (res?.length) {
+        //   res = res.filter(match => {
+        //     return !!get_match_status(match.ms)
+        //   })
+        // }
+        // 取五大联赛的前五场赛事
+        match_list.push(...res.slice(0,5))
         set_league_list_obj(match_list)
         LocalStorage.set('get_five_leagues_list', res,12*3600)
         MatchDataWarehouse_PC_List_Common.set_list(match_list);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-          res, null, null, true
+          res.slice(0,5), null, null, true
         );
+        api_bymids({mids:lodash.map(res,'mid')})
       } catch (error) {
       }
     },

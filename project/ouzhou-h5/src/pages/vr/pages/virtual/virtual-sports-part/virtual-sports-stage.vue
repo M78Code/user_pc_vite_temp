@@ -152,6 +152,8 @@ import virtualSportsTimer from "project_path/src/pages/vr/pages/virtual/virtual-
 import loading from 'src/components/loading/loading.vue';
 import dateMatchList from 'project_path/src/pages/vr/pages/virtual/virtual-sports-part/date-match-list.vue'
 import virtualBasketball from 'project_path/src/pages/vr/pages/virtual/details/children/virtual-basketball.vue'
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
+
 export default {
   mixins:[virtual_sports_stage_mixin],
   name:'VirtualSportsStage',
@@ -161,6 +163,11 @@ export default {
     loading,
     virtualBasketball
   },
+  setup(){
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
+  }
 }
 </script>
 

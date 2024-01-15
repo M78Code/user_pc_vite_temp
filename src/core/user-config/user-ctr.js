@@ -138,6 +138,9 @@ class UserCtr {
     // 常规体育的 图片地址 
     this.common_img_domain = ''
 
+    // 简译/繁译展示 zh:按简译展示 hk:按繁译展示
+    this.match_translate = LocalStorage.get('match_translate') || 'zh',
+
     // 角球开关盘标识
     this.corner_oc_change = ''
     // 次要玩法数据更新
@@ -166,8 +169,16 @@ class UserCtr {
     return res;
   }
   
+  //简译/繁译展示
+  set_match_translate(match_translate) {
+    console.error(match_translate);
+    LocalStorage.set("match_translate", match_translate);
+    this.match_translate = match_translate;
+    this.update()
+  }
+
   // 刷新后 获取缓存数据
-  set_user_info_refresh() {
+  set_user_info_refresh () {
     // 获取数据缓存
     let session_info = SessionStorage.get(user_key);
     if (!session_info) {
@@ -354,6 +365,14 @@ class UserCtr {
     if (user_obj.h5VerSysSwitch && user_obj.h5VersionSwitch) {
       user_obj.versionSwitch = user_obj.h5VerSysSwitch == 1 && user_obj.h5VersionSwitch == 1
     }
+    user_obj.simpleTradSwitch = false
+    if (user_obj.languageSwitch && user_obj.languageSystemSwitch && PROJECT_NAME == 'new-pc') {
+      // 简译/繁译系统级别开关  1是开 0是关
+      user_obj.simpleTradSwitch = user_obj.languageSwitch == 1 && user_obj.languageSystemSwitch == 1
+      // 如果当前语言是中简并且后台关闭简翻译开关后，强制lang为zh
+      user_obj.languageName = user_obj.languageName == 'hk' && (user_obj.languageSwitch != 1 || user_obj.languageSystemSwitch != 1) ? 'zh' : user_obj.languageName
+    }
+    //控制动画是否展示  1是开0是关
     user_obj.ommv = user_obj.ommv == 1 || false
     if (this.user_info) {
       Object.assign(this.user_info, user_obj);
@@ -884,9 +903,13 @@ class UserCtr {
           lang = 'zh'
         }
       }
+      // 中文简体时 后台关闭简繁译开关后强制 转为 zh
+      if (PROJECT_NAME == 'new-pc' && !obj.simpleTradSwitch) {
+        lang = obj.languageName == 'hk' ? 'zh' : obj.languageName 
+      }
       try {
         let data = {
-          languageName: this.lang ? this.lang : lang,
+          languageName: lang,
           userMarketPrefer: obj.userMarketPrefer,
         };
         // 设置国际化语言

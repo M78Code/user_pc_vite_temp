@@ -12,7 +12,7 @@
       odds_state != 'close' &&
       lodash.get(ol_data_item, '_hs') != 2
     "
-    class="c-bet-item yb-flex-center relative-position"
+    class="component c-bet-item yb-flex-center relative-position"
     :class="[
       bet_source == 'match_list' && 'list-show',
       bet_tpl,
@@ -197,7 +197,13 @@ const {
  * @return {undefined} undefined  组装投注项的数据
  */
  const bet_click_ol = () => {
+  // 如果不是串关应清空原来保存的数据
+  if (!MenuData.is_mix()) {
+    BetData.bet_oid_list = []
+  }
+
   const {oid,_hid,_hn,_mid } = ol_data_item.value
+
   let bet_type = 'common_bet'
     if(MenuData.is_esports()){
         bet_type ="esports_bet"
@@ -236,6 +242,7 @@ const {
 <style lang="scss" scoped>
 
 .c-bet-item {
+  border-radius: 4px;
   width: 100%;
   height: 100%;
 }

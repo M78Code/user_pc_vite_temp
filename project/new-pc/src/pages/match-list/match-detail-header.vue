@@ -1,5 +1,5 @@
 <template>
-  <div class="header row justify-between">
+  <div class="header row justify-between" :style="computed_theme">
     <!-- left -->
     <div class="col-left row items-center">
       <div class="row items-center all-collect">
@@ -36,25 +36,76 @@
     </div>
     <div class="row items-center">
       <div class="row items-center">
+        <!-- 选择联赛 -->
+        <div class="select-competition row items-center curson-point">
+          <span>选择联赛</span>
+          <div class="all">
+            <span>全部</span>
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/arrow.svg`" alt="" class="arrow"/>
+          </div>
+        </div> 
+        <!-- 欧盘/亚盘 -->
+        <ul class="select-type row items-center curson-point">
+          <li :class="[select_type == 0 ? 'select-type-active':'']" @click="handle_select_type(0)">欧盘</li>
+          <li :class="[select_type == 1 ? 'select-type-active':'']" @click="handle_select_type(1)">亚盘</li>
+        </ul>
         <!-- 专业、新手 切换-->
-        <div show_type="sort" class="flex list-sort select-btn ya-zhou-border yb-hover-bg">
+        <!-- <div show_type="sort" class="flex list-sort select-btn ya-zhou-border yb-hover-bg base-bg">
           <div @click="set_click_version(item)" v-for="(item, index) in ver_option"
             :class="[get_version == item.id ? 'active special' : 'yb-hover-bg', 'list-sort-item']" :key="index">
-            <span class="inner-text">{{ i18n_t("set.pro") }}</span>
+            <span class="inner-text">{{ i18n_t(item.name) }}</span>
           </div>
-        </div>
+        </div> -->
+        <ul class="select-type row items-center curson-point">
+          <li :class="[get_version == item.id ? 'select-type-active-blue':'']" 
+              @click="set_click_version(item)" v-for="(item, index) in ver_option" :key="index"
+          >
+            {{ i18n_t(item.name) }}
+          </li>
+        </ul>
+        <!-- 热门/时间 -->
+        <ul class="select-type row items-center curson-point">
+          <li :class="[select_type_hot == 0 ? 'select-type-active':'']" @click="handle_select_hot(0)">热门</li>
+          <li :class="[select_type_hot == 1 ? 'select-type-active':'']" @click="handle_select_hot(1)">时间</li>
+        </ul>
+        <!-- 列表简译/繁译按钮 只有中文展示-->
+      <ul
+       class="select-type row items-center curson-point"
+       v-show="lodash.get(UserCtr, 'user_info.simpleTradSwitch') && ['zh', 'hk'].includes(UserCtr.lang)"
+       >
+        <li 
+          v-for="(sort, index) in option" 
+          @click="on_click_translate(sort)"
+          :key="index"
+          :class="[UserCtr.match_translate == sort.id ? 'select-type-active':'']" 
+          >
+          {{ sort.name }}
+        </li>
+        </ul>
+        <!-- 日间/夜间 -->
+        <ul class="select-type row items-center curson-point">
+          <li :class="[UserCtr.theme == item.key? 'select-type-active':'']" 
+              v-for="item in theme_list" :key="item.key" @click="handle_select_theme(item.key)">
+              {{ item.i18n[UserCtr.lang] || item.key }}
+          </li>
+        </ul>
       </div>
-
-
+      <slot name="refresh"></slot>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed,onMounted } from "vue";
 import filterHeader from "src/core/filter-header/filter-header.js";
-import { IconWapper } from 'src/components/icon'
-import { PageSourceData, GlobalSwitchClass, MenuData } from "src/output/index.js";
+import { IconWapper } from 'src/components/icon';
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { theme_list, theme_map } from "src/core/theme/"
+import { PageSourceData, GlobalSwitchClass, MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { api_account } from "src/api/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
+import { compute_css_variables } from "src/core/css-var/index.js"
+
 const props = defineProps({
   collect_count: {
     type: Number,
@@ -73,10 +124,14 @@ const props = defineProps({
     default: () => false,
   },
 })
-// 列表显示内容  match:赛事 collect:收藏 search:搜索
-const vx_layout_list_type = ref('match');
-const page_source = PageSourceData.page_source;
-const is_search_page = page_source.includes('search');
+/**
+ * @description change_type 修改盘类型 0欧盘/1亚盘
+ * @description change_hot 修改热门 0热门/1时间
+ * @description change_version 修改专业还是新手 0专业/1新手
+ * 
+ */
+const emits = defineEmits(['change_type', 'change_theme', 'change_hot', 'change_version']);
+const computed_theme = ref("")
 const ver_option =  [
   {
     id: 1,
@@ -87,11 +142,43 @@ const ver_option =  [
     name: 'set.beginner',//"新手版",
   }
 ]
-
-const get_version = ref(1)
+// 简繁译
+const option = [
+  {
+    id: 'zh',
+    name: i18n_t('set.short_translation'),//"简译",
+    icon: "icon-sort_league"
+  },
+  {
+    id: 'hk',
+    name: i18n_t('set.traditional_translation'),//"繁译",
+    icon: "icon-sort_date"
+  }
+]
+// 0欧盘/1亚盘
+const select_type = ref(0);
+// 0白天/1夜间
+const select_type_theme = ref(0);
+// 0热门/1时间
+const select_type_hot = ref(0);
+// 0专业/1新手
+const get_version = ref(ver_option[0].id)
+// 简繁译
+const select_type_simpleTrad = ref(UserCtr.match_translate)
+// 列表显示内容  match:赛事 collect:收藏 search:搜索
+const vx_layout_list_type = ref('match');
+const page_source = PageSourceData.page_source;
+const is_search_page = page_source.includes('search');
 
 let _menu_type = MenuData.menu_root;
 
+/**
+ * 修改类型 欧盘/亚盘
+ * @param {0|1} value 
+ */
+const handle_select_type = (value) => {
+  select_type.value = value;
+}
 
 //当前页面菜单title
 const page_title = computed(() => {
@@ -130,6 +217,20 @@ const page_title = computed(() => {
   }
   return _page_title;
 })
+/**
+ * @ Description:切换简译/繁译
+ * @param {object} row 切换的展示
+ * @return {undefined} undefined
+ */
+const on_click_translate = async (row) => {
+  if (UserCtr.match_translate == row.id) return
+  useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TRANSLATE, row.id)
+}
+
+
+function get_css_obj() {
+ computed_theme.value = compute_css_variables({ category: 'component', module: 'match-details' }); 
+}
 
 /**
  * 计算 全部 按钮样式
@@ -147,9 +248,30 @@ function compute_quanbu_btn_class() {
   return str
 }
 
+/**
+ * 设置主题
+ * @param {*} value 
+ */
+function handle_select_theme(value) {
+  UserCtr.set_theme(value)
+  select_type_theme.value = value;
+}
+/**
+ * 设置热门/时间
+ * @param {*} value 
+ */
+function handle_select_hot(value) {
+  emits('change_hot', value);
+  select_type_hot.value = value;
+}
 
-function set_click_version(item) {
-
+/**
+ * 设置新手版还是专业版
+ * @param {*} value 
+ */
+function set_click_version(value) {
+  emits('change_version', value);
+  get_version.value = value.id;
 }
 
 /**
@@ -166,6 +288,11 @@ function set_click_version(item) {
   MenuData.set_is_collect(type === "collect")
   MenuData.set_match_list_api_config(config);
 }
+
+onMounted(() => {
+  get_css_obj();
+  console.log(theme_map[UserCtr.theme], "theme_map[UserCtr.theme]");
+})
 </script>
 
 <style lang="scss" scoped>
@@ -187,81 +314,6 @@ function set_click_version(item) {
   justify-content: space-between;
 }
 
-.list-sort {
-  padding: 0;
-
-  .list-sort-item {
-    font-weight: 400;
-    padding: 2px 11px;
-    border-radius: 12px;
-    font-size: 12px;
-
-    &.active {
-      //background: #626262;
-      color: var(--qq--y0-text-color5_2);
-      background: var(--qq--background-gradient-1_2);
-      font-weight: 500;
-      border: 0;
-    }
-
-    &.special {
-      // background-image: linear-gradient(225deg, var(--qq--match-bg-color6) 0%, var(--qq--match-bg-color6) 100%);
-      //background-color: #45B0FF;
-      // color: var(--qq--yb-text-color27_1);
-      /** copy 自src\css\pro\yabo\list_header\list_header.scss line:125 */
-      position: relative;
-      overflow: hidden;
-      background: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .inner-text {
-        position: relative;
-        z-index: 10;
-      }
-
-      &::before,
-      &::after {
-        content: '';
-        position: absolute;
-      }
-
-      &::before {
-        --private-inset: 1px;
-        // inset: var(--private-inset); // 考虑兼容性问题
-        top: var(--private-inset);
-        bottom: var(--private-inset);
-        left: var(--private-inset);
-        right: var(--private-inset);
-        background-color: var(--qq--background-gradient-1_2);
-        z-index: 9;
-        border-radius: 12px;
-      }
-
-      &::after {
-        z-index: 8;
-        width: 200%;
-        padding-bottom: 200%;
-        // 新手版专业版切换按钮边框流光
-        background: conic-gradient(at center, transparent, #479ff1 30%, transparent 30%); // #TODO: css var
-        animation: version-toggle-effect-animation 1s linear infinite;
-
-        @keyframes version-toggle-effect-animation {
-          100% {
-            transform: rotate(360deg);
-          }
-        }
-      }
-
-      border: 0;
-      // &:hover {
-      // background-image: var(--qq--background-gradient-4);
-      // color: var(--qq--y0-text-color5);
-      // }
-    }
-  }
-}
 
 .cursor-pointer {
   cursor: pointer;
@@ -283,7 +335,7 @@ function set_click_version(item) {
 
   .active {
     background: #179CFF;
-    color: #fff;
+    color: #fff!important;
   }
 }
 .select-btn {
@@ -322,6 +374,7 @@ function set_click_version(item) {
     }
 
     .title-text {
+      color:var(--q-gb-t-c-20);
     }
 
     .path-icon-wrapper {
@@ -347,12 +400,62 @@ function set_click_version(item) {
   }
 
   .btn-wrap {
+    color:var(--q-gb-t-c-20);
+
     .number {
       margin-left: 6px;
+      // color:var(--q-gb-t-c-20);
     }
   }
 
   .w105 {
     width: 105px;
   }
-}</style>
+}
+
+.select-competition {
+  background-color: var(--q-match-details-icon);
+  border-radius: 1000px;
+  font-size: 12px;
+  height: 24px;
+  padding: 0 8px;
+  color: #555;
+  .all {
+    margin-left: 6px;
+    .arrow {
+      width: 10px;
+      height: 10px;
+      margin-left: 2px;
+    }
+  }
+}
+
+.select-type {
+  margin-left: 9px;
+  border-radius: 1000px;
+  height: 26px;
+  overflow: hidden;
+  background-color: var(--q-match-details-bet-block);
+  color: #555;
+  .select-type-active {
+    color: #1D1D1D;
+    background-color: #fff;
+    border-radius: 1000px;
+  }
+  .select-type-active-blue {
+    background-color: var(--q-gb-bg-c-1);
+    border-radius: 1000px;
+    color: #fff;
+  }
+  li {
+    padding: 0 11px;
+    height: 100%;
+    text-align: center;
+    line-height: 26px;
+  }
+}
+
+.base-bg {
+  background-color: #E9F0FF;
+}
+</style>

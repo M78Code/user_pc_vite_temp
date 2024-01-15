@@ -17,7 +17,7 @@
     <div class="menu-nav-li">
       <p>{{ i18n_t("ouzhou.menu.popular") }}</p>
       <ul class="menu-list">
-        <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi == item.mi && MenuData.left_menu_result.menu_type==0 }" v-for="item in popular" :key="item.mi"
+        <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi == item.mi && MenuData.left_menu_result.menu_type==0 }" v-for="item in ref_data.popular" :key="item.mi"
           @click="jump_func(item,'0')">
           <sport-icon :sport_id="BaseData.compute_sport_id(item.mi)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[item.mi] || "" }}
@@ -59,17 +59,48 @@
 </template>
   
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, onMounted, onUnmounted, nextTick, reactive } from "vue";
 import { useRouter,useRoute } from "vue-router";
 import BaseData from "src/core/base-data/base-data.js";
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
 // 菜单配置
-import { MenuData,useMittEmit,MITT_TYPES } from "src/output/index.js"
+import { MenuData,useMittEmit,MITT_TYPES,useMittOn } from "src/output/index.js"
+import { get_visit_sports_list,set_visit_count_list } from "src/core/menu_config/visit_count.js"
+import lodash_ from "lodash"
+import BetData from "src/core/bet/class/bet-data-class.js"
 
-const popular = ([{mi:101},{mi:102}])
+const ref_data = reactive({
+  popular: [],
+  emit_lsit: {}
+})
+// 默认值
+let popular_list = [{mi:101,ct:1},{mi:102,ct:1},{mi:105,ct:1}]
 
 const router = useRouter();
 const route = useRoute();
+
+onMounted(()=>{
+  get_visit_sports_list()
+
+  ref_data.emit_lsit = {
+    emitter_1: useMittOn(MITT_TYPES.EMIT_SET_VISIT_SPORTS_LIST, set_get_visit_sports_list).off,
+  }
+})
+
+// 获取最近访问信息
+const set_get_visit_sports_list = (data = []) =>{
+
+    let map_data = data.map(item => {
+      return {
+        mi: item*1 + 100,
+        ct: 1
+      }
+    })
+    // 默认值和 数据结合 
+    let popular = lodash_.concat(map_data,popular_list)
+    // 显示前三
+    ref_data.popular = lodash_.slice(popular,0,3)
+}
 
 // favouritse
 const go_to_favouritse = () => {
@@ -136,6 +167,8 @@ const jump_func = (payload ={},type) => {
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload.mi)
+
+    set_visit_count_list()
   })
   
 }
@@ -230,6 +263,9 @@ const outrights = () => {
     current_mi: '401'
   }
   MenuData.set_mid_menu_result(mid_config)
+
+
+  BetData.set_is_bet_single('single')
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE_OUTRIGHTS,401)

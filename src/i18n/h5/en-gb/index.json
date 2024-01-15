@@ -43,6 +43,7 @@
         "favorites": "Favorites",
         "matches": "Matches",
         "featured": "Featured",
+        "featured_events": "Featured Matches",
         "top_events": "Top Events",
         "top_leagues": "Top Leagues",
         "league": "League",
@@ -335,7 +336,8 @@
     "victory": "W",
     "win": "W",
     "win_plate": "Win",
-    "Win_rate": "W%"
+    "Win_rate": "W%",
+    "analysis_information": "news"
   },
   "basketball_playing_way": {
     "first_half": "FirstHalf",
@@ -2380,7 +2382,7 @@
   "time8": "dd/MM/yyyy hh:mm:ss",
   "time9": "hh:mm",
   "time10": "yyyy/MM/dd hh:mm",
-  "time11": "MM/dd hh:mm",
+  "time11": "dd/MM hh:mm",
   "tips": {
     "msg1": "Combo bet",
     "msg2": "May switch Singles/Parlays after select. More bet items; Same handicap replace origin item."

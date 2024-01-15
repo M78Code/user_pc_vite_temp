@@ -71,11 +71,11 @@ export default {
   methods: {
     // 点击菜单切换
     tab_click(tab) {
-      console.log(tab);
+      // console.log(tab);
       // tab.disable = false;
-      console.log("============this.id++", this.tid)
-      console.log("============this.current_match===++", this.current_match)
-      console.log("=========================+++++++++++++++++++++///////////////////")
+      // console.log("============this.id++", this.tid)
+      // console.log("============this.current_match===++", this.current_match)
+      // console.log("=========================+++++++++++++++++++++///////////////////")
       // return
       if(tab.index==1 && tab.disable) return
       this.tabIndex = tab.index

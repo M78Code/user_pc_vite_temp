@@ -237,6 +237,9 @@ const props = defineProps({
   .table-score {
     position: relative;
     // background-color: var(--q-analysis-bg-color-1);
+      .header{
+          border-bottom: 1px solid var(--q-gb-bd-c-4);
+      }
     // 头部
     &.backball-table {
       .header {

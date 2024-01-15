@@ -70,6 +70,7 @@
                   item.ol.length % 2 !== 0 &&
                   index == item.ol.length - 1 &&
                   columnNum == 2,
+                  'close-temp-hover': o._mhs !=0 || o._hs != 0 || o.os != 1,
               }"
               @click="betItemClick(item, o)"
             >
@@ -102,7 +103,7 @@
                 </div>
               </div>
               <div
-                v-show="!item.hs"
+                v-show="!item.hs||item.hs==11"
                 class="temp-on"
                 :style="{ color: '#ff7000' }"
                 style="font-weight: 500"
@@ -115,7 +116,7 @@
                 </bet-item>
               </div>
 
-              <div style="text-align: right; width: 100%" v-show="item.hs">
+              <div style="text-align: right; width: 100%" v-show="item.hs&&item.hs!=11">
                 <img
                   class="vector"
                   :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
@@ -175,10 +176,12 @@ const columnTotal = (item) => {
 };
 
 const betItemClick = (item, o) => {
+  console.log(11111111111111,o)
   // 挂锁不可点击
-  if (o.os != 1&&o._hs!==0) {
-    return;
-  }
+  // if (o.os != 1&&(o._hs>0&&o._hs!=11)) {
+  //   return;
+  // }
+  // console.log(111111111111133,o)
   bet_oid.value = o.oid;
    emit("betItemClick", item, o, props.match_info.hpn);
 };
@@ -229,6 +232,11 @@ onMounted(() => {});
 
     &:hover {
       background: var(--q-gb-bg-c-5);
+    }
+    &.close-temp-hover  {
+      &:hover {
+        background: unset;
+      }
     }
   }
 

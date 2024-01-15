@@ -3,7 +3,6 @@
   <div class="component odd-ol-item" v-show="value.os != 3"
     :class="[{ 'active': BetData.bet_oid_list.includes(value['oid'] ) }, status, type, calcOlResult(value['result'])]"
   >
-   
     <div class="icontainer" v-if="vif"
       :class="{'ol-v-hide': isLock}"
       @click="onClick"
@@ -12,7 +11,6 @@
       <!-- <div v-if="['virtual_sports_details'].includes(route.name) && lodash.get(value, 'result')" class="mock">
        {{ i18n_t('virtual_sports.result')[value['result']] }}
       </div> -->
-
       <template v-if="isLock" @click.stop>
         <div class="ol-lock" :class="{'ol-v-show': isLock}">
           <img :src="odd_lock_ouzhou" alt="lock" class="ol-lock-img">
@@ -33,7 +31,7 @@
       </div>
     </div>
     <!-- 赛果 -->
-    <div class="icontainer ol-result" v-else
+    <div class="icontainer ol-result" v-if="value['result']"
     >
       <div class="item ol-name" :alt="olName">
         <span class="ol-name-span">{{ olName }}</span>
@@ -77,7 +75,7 @@ const props = defineProps({
 })
 const sportId = MatchDetailCalss.params.sportId
 // @ts-ignore
-const vif =computed(()=>props.value._mhs == 0||props.value._mhs == 11)
+const vif =computed(()=>props.value._mhs == 0||props.value._mhs == 11 || props.value._mhs == 1)
 const olName = (function(){
   if(props.type == 'fill'){
     return props.value.otv || props.value.on || props.value.ott
@@ -108,8 +106,8 @@ const isLock = computed(() => {
   if (props.value) {
     // @ts-ignore
     const { _mhs,_hs } = props.value
-    if(_mhs == 0){
-      if( _hs == 0){
+    if(_mhs == 0 || _mhs == 11){
+      if( _hs == 0 || _hs == 11){
         if(props.value.os == 1){
           return Number(ov) == 0 
         }

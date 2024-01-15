@@ -164,10 +164,10 @@ export default defineComponent({
           }
         ]
       }
-      if (['zh', 'tw'].includes(UserCtr.lang)) {
+      if (['zh', 'tw', 'hk'].includes(UserCtr.lang)) {
         tabs.unshift(
           {
-            name: UserCtr.lang == 'zh' ? '资讯' : '資訊',
+            name: ['zh', 'hk'].includes(UserCtr.lang) ? '资讯' : '資訊',
             component: 'article-main'
           }
         )

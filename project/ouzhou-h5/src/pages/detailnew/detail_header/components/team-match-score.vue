@@ -26,9 +26,10 @@ const TotalScore = computed(()=>{
     let { home, away } = lodash.get(msc_obj,'S1') || {}
     return {home, away}
 })
+
 const NowScore = computed(()=>{
     const { msc_obj, csid } = props.detail_data
-    if(!NeedShowNowScoreCsids.includes(csid)) return {}
+    if(!NeedShowNowScoreCsids.includes(+csid)) return {}
 
     if(csid == 5){
         return lodash.get(msc_obj,'S103') || {}
@@ -44,21 +45,17 @@ const NowScore = computed(()=>{
     <div class="team-match-score flex justify-between">
         <ul class="left">
             <li class="left--team-name flex items-center">
-<!--                修复Bug: 52657 -->
-<!--              需要转Number统一类型再做判断-->
-                <span v-show="detail_data?.ms == 1 && NeedShowNowScoreCsids.includes(Number(detail_data?.csid))"
+                <span v-show="detail_data?.ms == 1 && NeedShowNowScoreCsids.includes(+detail_data?.csid)"
                       class="point" :class="[detail_data?.mat == 'home' ? 'active-circle' : 'circle']"></span>
                 <p>{{ detail_data?.mhn }}</p>
             </li>
             <li class="left--team-name flex items-center">
-              <!--                修复Bug: 52657 -->
-              <!--              需要转Number统一类型再做判断-->
-                <span v-show="detail_data?.ms == 1 && NeedShowNowScoreCsids.includes(Number(detail_data?.csid))"
+                <span v-show="detail_data?.ms == 1 && NeedShowNowScoreCsids.includes(+detail_data?.csid)"
                       class="point" :class="[detail_data?.mat == 'away' ? 'active-circle' : 'circle']"></span>
                 <p>{{ detail_data?.man }}</p>
             </li>
         </ul>
-        <ul class="right" v-show="detail_data?.ms == '1'">
+        <ul class="right" v-show="detail_data?.ms == 1">
             <li class="total-score flex justify-between">
                 <p>{{ TotalScore?.home }}</p>
                 <p>{{ TotalScore?.away }}</p>

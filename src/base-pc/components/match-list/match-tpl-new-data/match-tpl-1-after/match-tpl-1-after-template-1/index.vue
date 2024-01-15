@@ -164,9 +164,9 @@ const play_name_list = computed(() => {
     if (!tab_play_keys.includes(play_key)) {
       play_key = tab_play_keys[0]
     }
-    set_match_play_current_index(match.value, play_key)
+    // set_match_play_current_index(match.value, play_key)
   } else {
-    set_match_play_current_index(match.value, '')
+    // set_match_play_current_index(match.value, '')
   }
   return play_name_list_info
 });
