@@ -57,8 +57,11 @@
           @trend_event_change="trend_event_change"
           @time_ended="timer_ended_handle"
           @update_next_batch_match="v_basket_ball_update_n"
+          @change_tab="change_tab"
         ></match-tab>
 
+        <!-- {{ current_sub_menu }} -->
+        <!-- {{ sub_menu_type }} -->
       <div class="virtual-sports-card">
        <div  class="virtual-sports-card-content" :class="{'virtual-sports-card-simple': standard_edition === 1}">
           <!--  虚拟体育主列表页面  -->
@@ -69,11 +72,31 @@
           >
 
             <!-- 虚拟体育足球赛事列表 -->
-            <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_list_by_no"
+            <v-s-match-list v-if="tabs_name == 'list' && [1001,1004].includes(sub_menu_type)" :virtual_match_list="match_list_by_no"
               :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
               @switch_match="switch_match_handle"  @start="match_start_handle"
               :lengue_name="lengue_name">
             </v-s-match-list>
+
+
+            <!-- 排行榜页面,小组赛淘汰赛页面    从vr详情(project\ouzhou-h5\src\pages\vr\pages\virtual\virtual-sports-details.vue)中 复制过的  start -->
+            <div v-if="tabs_name == 'rank'" class="list-wrapper">
+              <!-- {{ sub_menu_type }} -->
+              <div v-if="[1001,1004].includes(sub_menu_type)">
+                <!--  足球小组赛,淘汰赛页面  -->
+                <group-knockout
+                  v-if="current_league ? current_league.field3 != '': false"
+                  :tid="current_league.field1"
+                  :current_match="current_match"
+                />
+                <!--  足球排行榜页面  -->
+                <football-ranking-list v-else :tid="current_league.field1"/>
+              </div>
+              <!--  非足球排行榜页面  -->
+              <ranking-list-start v-else :mid="current_match.mid"/>
+            </div>
+            <!-- 从vr详情(project\ouzhou-h5\src\pages\vr\pages\virtual\virtual-sports-details.vue)中 复制过的  end -->
+
 
             <div v-if="current_match.match_status == 0">
               <!-- 赛马切换玩法集tab组件 -->
@@ -123,6 +146,9 @@ import result_page from "project_path/src/pages/vr/pages/result/result-page.vue"
 import virtual_skeleton from "project_path/src/pages/vr/components/skeleton/virtual-sports/virtual.vue"
 import { IconWapper } from 'src/components/icon'
 import virtual_sports_tab from 'src/base-h5/vr/components/virtual-sports-tab.vue'
+import ranking_list_start from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/ranking-list-start.vue"
+import football_ranking_list from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/football-ranking-list.vue"
+import group_knockout from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/group-knockout.vue"
 
 export default {
   mixins:[virtual_sports_mixin],
@@ -137,6 +163,14 @@ export default {
     'icon-wapper': IconWapper,
     'virtual-skeleton':virtual_skeleton,
     'virtual-sports-tab':virtual_sports_tab,
+    'ranking-list-start':ranking_list_start,
+    'football-ranking-list':football_ranking_list,
+    'group-knockout':group_knockout,
+  },
+  data(){
+    return {
+      tabs_name: 'list'
+    }
   },
   methods: {
     /**
@@ -155,6 +189,10 @@ export default {
         this.singleton_10second = true;
         this.get_score_basket_ball();
       }
+    },
+    change_tab(tabs){
+      // console.log("tabs=======", tabs);
+      this.tabs_name = tabs
     },
   }
 }

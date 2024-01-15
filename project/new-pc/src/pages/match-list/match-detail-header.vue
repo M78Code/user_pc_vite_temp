@@ -77,8 +77,7 @@
           </li>
         </ul>
       </div>
-
-
+      <slot name="refresh"></slot>
     </div>
   </div>
 </template>
@@ -117,7 +116,7 @@ const props = defineProps({
  * 
  */
 const emits = defineEmits(['change_type', 'change_theme', 'change_hot', 'change_version']);
-const computed_theme = computed(() => compute_css_variables({ category: 'component', module: 'match-details' }))
+const computed_theme = ref("")
 const ver_option =  [
   {
     id: 1,
@@ -189,6 +188,11 @@ const page_title = computed(() => {
   return _page_title;
 })
 
+
+function get_css_obj() {
+ computed_theme.value = compute_css_variables({ category: 'component', module: 'match-details' }); 
+}
+
 /**
  * 计算 全部 按钮样式
  */
@@ -247,6 +251,7 @@ function set_click_version(value) {
 }
 
 onMounted(() => {
+  get_css_obj();
   console.log(theme_map[UserCtr.theme], "theme_map[UserCtr.theme]");
 })
 </script>
@@ -291,7 +296,7 @@ onMounted(() => {
 
   .active {
     background: #179CFF;
-    color: #fff;
+    color: #fff!important;
   }
 }
 .select-btn {
@@ -360,7 +365,7 @@ onMounted(() => {
 
     .number {
       margin-left: 6px;
-      color:var(--q-gb-t-c-20);
+      // color:var(--q-gb-t-c-20);
     }
   }
 
@@ -399,7 +404,7 @@ onMounted(() => {
     border-radius: 1000px;
   }
   .select-type-active-blue {
-    background-color: #179CFF;
+    background-color: var(--q-gb-bg-c-1);
     border-radius: 1000px;
     color: #fff;
   }

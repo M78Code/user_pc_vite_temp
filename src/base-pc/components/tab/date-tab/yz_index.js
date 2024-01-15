@@ -119,7 +119,7 @@ const get_date_menu_list = async () => {
       final_index.value = index_info
     }
     final_index.value = index_info;
-    handle_click_menu_mi_3_date({ md: md_info })
+    // handle_click_menu_mi_3_date({ md: md_info })
 }
 
 /**
