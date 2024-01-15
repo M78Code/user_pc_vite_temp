@@ -206,7 +206,7 @@ const props = defineProps({
 const set_top_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top.png`;
 const set_top__active_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top_active.png`;
 // `mhs` 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
-// <!-- ms: 0未开赛，1 进行中 -->
+// <!-- ms: 0未开赛，1 进行中 110 即将开赛-->
 //     <!-- hs: 0开 1封 2关 11锁 -->
 //     <!-- os: 1开 2封 3隐藏不显示不占地方-->
 const mouse_in = ref(false);
@@ -285,7 +285,8 @@ const get_icon = (otn) => {
 //  投注项点击投注,
 const betItemClick = (item, ol, play_name) => {
 
-  if (item.hs || ol.os == 2) {
+  // 挂锁不可点击  // hs 11 锁盘状态，可点击
+  if (ol.os != 1&&(ol._hs>0&&ol._hs!=11)) {
     return;
   }
   if (ol.cds) {

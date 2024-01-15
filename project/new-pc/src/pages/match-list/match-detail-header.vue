@@ -37,7 +37,7 @@
     <div class="row items-center">
       <div class="row items-center">
         <!-- 选择联赛 -->
-        <div class="select-competition row items-center">
+        <div class="select-competition row items-center curson-point">
           <span>选择联赛</span>
           <div class="all">
             <span>全部</span>
@@ -45,17 +45,29 @@
           </div>
         </div> 
         <!-- 欧盘/亚盘 -->
-        <ul class="select-type row items-center">
-          <li>欧盘</li>
-          <li>亚盘</li>
+        <ul class="select-type row items-center curson-point">
+          <li :class="[select_type == 0 ? 'select-type-active':'']" @click="handle_select_type(0)">欧盘</li>
+          <li :class="[select_type == 1 ? 'select-type-active':'']" @click="handle_select_type(1)">亚盘</li>
         </ul>
         <!-- 专业、新手 切换-->
-        <div show_type="sort" class="flex list-sort select-btn ya-zhou-border yb-hover-bg">
+        <div show_type="sort" class="flex list-sort select-btn ya-zhou-border yb-hover-bg base-bg">
           <div @click="set_click_version(item)" v-for="(item, index) in ver_option"
             :class="[get_version == item.id ? 'active special' : 'yb-hover-bg', 'list-sort-item']" :key="index">
             <span class="inner-text">{{ i18n_t(item.name) }}</span>
           </div>
         </div>
+
+        <!-- 热门/时间 -->
+        <ul class="select-type row items-center curson-point">
+          <li :class="[select_type_hot == 0 ? 'select-type-active':'']" @click="handle_select_hot(0)">热门</li>
+          <li :class="[select_type_hot == 1 ? 'select-type-active':'']" @click="handle_select_hot(1)">时间</li>
+        </ul>
+
+        <!-- 日间/夜间 -->
+        <ul class="select-type row items-center curson-point">
+          <li :class="[select_type_theme == 0 ? 'select-type-active':'']" @click="handle_select_theme(0)">日间</li>
+          <li :class="[select_type_theme == 1 ? 'select-type-active':'']" @click="handle_select_theme(1)">夜间</li>
+        </ul>
       </div>
 
 
@@ -86,10 +98,14 @@ const props = defineProps({
     default: () => false,
   },
 })
-// 列表显示内容  match:赛事 collect:收藏 search:搜索
-const vx_layout_list_type = ref('match');
-const page_source = PageSourceData.page_source;
-const is_search_page = page_source.includes('search');
+/**
+ * @description change_type 修改盘类型 0欧盘/1亚盘
+ * @description change_theme 修改主题 0白天/1夜间
+ * @description change_hot 修改热门 0热门/1时间
+ * @description change_version 修改专业还是新手 0专业/1新手
+ * 
+ */
+const emits = defineEmits(['change_type', 'change_theme', 'change_hot', 'change_version']);
 const ver_option =  [
   {
     id: 1,
@@ -100,11 +116,28 @@ const ver_option =  [
     name: 'set.beginner',//"新手版",
   }
 ]
-
-const get_version = ref(1)
+// 0欧盘/1亚盘
+const select_type = ref(0);
+// 0白天/1夜间
+const select_type_theme = ref(0);
+// 0热门/1时间
+const select_type_hot = ref(0);
+// 0专业/1新手
+const get_version = ref(ver_option[0].id)
+// 列表显示内容  match:赛事 collect:收藏 search:搜索
+const vx_layout_list_type = ref('match');
+const page_source = PageSourceData.page_source;
+const is_search_page = page_source.includes('search');
 
 let _menu_type = MenuData.menu_root;
 
+/**
+ * 修改类型 欧盘/亚盘
+ * @param {0|1} value 
+ */
+const handle_select_type = (value) => {
+  select_type.value = value;
+}
 
 //当前页面菜单title
 const page_title = computed(() => {
@@ -160,9 +193,30 @@ function compute_quanbu_btn_class() {
   return str
 }
 
+/**
+ * 设置主题
+ * @param {*} value 
+ */
+function handle_select_theme(value) {
+  emits('change_theme', value);
+  select_type_theme.value = value;
+}
+/**
+ * 设置热门/时间
+ * @param {*} value 
+ */
+function handle_select_hot(value) {
+  emits('change_hot', value);
+  select_type_hot.value = value;
+}
 
-function set_click_version(item) {
-
+/**
+ * 设置新手版还是专业版
+ * @param {*} value 
+ */
+function set_click_version(value) {
+  emits('change_version', value);
+  get_version.value = value.id;
 }
 
 /**
@@ -202,17 +256,18 @@ function set_click_version(item) {
 
 .list-sort {
   padding: 0;
-
+  height: 26px;
+  line-height: 26px;
   .list-sort-item {
     font-weight: 400;
-    padding: 2px 11px;
+    padding: 0px 11px;
     border-radius: 12px;
     font-size: 12px;
 
     &.active {
       //background: #626262;
-      color: var(--qq--y0-text-color5_2);
-      background: var(--qq--background-gradient-1_2);
+      color: #fff!important;
+      background: #179CFF!important;
       font-weight: 500;
       border: 0;
     }
@@ -232,6 +287,9 @@ function set_click_version(item) {
       .inner-text {
         position: relative;
         z-index: 10;
+        height: 98%;
+        line-height: 26px;
+        display: inline-block;
       }
 
       &::before,
@@ -388,7 +446,26 @@ function set_click_version(item) {
 }
 
 .select-type {
+  margin-left: 9px;
+  border-radius: 1000px;
   height: 26px;
+  overflow: hidden;
+  background-color: #E9F0FF;
+  color: #555;
+  .select-type-active {
+    color: #1D1D1D;
+    background-color: #fff;
+    border-radius: 1000px;
+  }
+  li {
+    padding: 0 11px;
+    height: 100%;
+    text-align: center;
+    line-height: 26px;
+  }
+}
+
+.base-bg {
   background-color: #E9F0FF;
 }
 </style>
