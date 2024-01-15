@@ -52,6 +52,7 @@ export default {
 
 <style lang="scss" scoped>
 .c-no-video {
+  position: absolute;
   width: 100%;
   height: 100%;
   background-image: url($SCSSPROJECTPATH+"/img/novideobg.jpg");
