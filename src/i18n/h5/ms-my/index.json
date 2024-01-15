@@ -112,7 +112,8 @@
     "victory": "Win",
     "win": "Win",
     "win_plate": "Win",
-    "Win_rate": "% win"
+    "Win_rate": "% win",
+    "analysis_information": "Berita"
   },
   "basketball_playing_way": {
     "first_half": "1st Half",

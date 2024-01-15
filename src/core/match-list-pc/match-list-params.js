@@ -131,7 +131,7 @@ function match_list_all_params() {
         // 冠军
         lv2_mi_info = {
             selectionHour: null,
-            "sportId": current_ball_type,
+            "sportId": current_ball_type || '',
             "outrightMatches": 1,
             tid: '',
             "orpt": 18,
@@ -149,11 +149,14 @@ function match_list_all_params() {
             ...lv2_mi_info,
             euid,
         }
+        
         if ([3, 203].includes(menu_root * 1)) {
             // 早盘获取选中的时间
             lv2_mi_info.md = md + ''
             lv2_mi_info.tid = ''
-            lv2_mi_info.orpt = '0'
+            if(!['new-pc'].includes(PROJECT_NAME)){
+                lv2_mi_info.orpt = '0'
+            }
             // lv2_mi_info.index = index || 0 // 早盘收藏 切换后回到原来的
         }
     } else if (menu_root == 500) {

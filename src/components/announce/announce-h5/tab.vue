@@ -85,10 +85,29 @@ function changeTab(tab,index) {
                 position: relative;
                 text-align: center;
                 font-size: 0.14rem;
-                margin-right: 0.24rem;
+              padding: 0 0.12rem;
+                //margin-right: 0.24rem;
                 min-width: fit-content;
+              color: #8a8986;
+              &:last-child{
+                &:before{
+                  display: none;
+                }
+              }
+              &:before{
+                content:'';
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                height: 0.12rem;
+                width: 1px;
+                background: #d9d9d9;
+                
+              }
                 &.tabs-active {
                     font-weight: bold;
+                  color: #1a1a1a;
                     &:after {
                         content: '';
                         width: 8px;

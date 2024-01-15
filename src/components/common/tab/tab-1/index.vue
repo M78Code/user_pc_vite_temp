@@ -161,7 +161,6 @@ function init_func() {
       width: clientWidth - props.padding * 2
     })
   }
-  console.log('init_funcinit_funcinit_funcinit_func', sizes.value)
   if (sizes.value.length > 0) {
     let current_index = props.currentIndex == -1 ? 0 : props.currentIndex;
     left.value = lodash.get(sizes.value, `${current_index}.left`, 0)
