@@ -28,7 +28,7 @@ import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { odd_lock_ouzhou, ouzhou_hps_up, ouzhou_hps_down } from 'src/base-h5/core/utils/local-image.js'
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, compute_value_by_cur_odd_type, MenuData } from "src/output/index.js"
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, compute_value_by_cur_odd_type, MenuData, use_sports_play_title } from "src/output/index.js"
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
 
 const props = defineProps({
@@ -60,12 +60,16 @@ const is_up = ref(false)
 const is_down = ref(false)
 const old_ov = ref(0)
 const emitters = ref({})
+const sports_play_title = use_sports_play_title()
 //虚拟体育开0 封1
 const virtual_odds_state = ref(0)
 
+
 const is_show_title = computed(() => {
-   const { csid = '1' } = props.match_info
-  const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
+  const { csid = '1' } = props.match_info
+  const plays = sports_play_title[csid]
+  const default_hpid = plays && plays[0] && plays[0].hpid ? plays[0].hpid : '1'
+  const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, default_hpid)
   return hpid != 1 && !props.show_hpn
 })
 
@@ -108,9 +112,15 @@ const get_odd_os = (s) => {
   return compute_value_by_cur_odd_type(s.ov,s._hpid,s._hsw,props.match_info.csid)
 }
 
+// 15分 hot 玩法标题
 const get_item_hpn = (s) => {
+  const { csid = '1' } = props.match_info
   let result = s.ot
-  if (['hots', '15_mintues'].includes(props.custom_type)) result = s.onb.substring(0,1)
+  if (['hots', '15_mintues'].includes(props.custom_type)) {
+    const plays = sports_play_title[csid] && sports_play_title[csid][0].ol
+    const item = plays.find(t => t.ot === s.ot)
+    if (item) result = item.title.substring(0,1)
+  }
   return result
 }
 
