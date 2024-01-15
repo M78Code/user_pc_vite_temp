@@ -26,7 +26,7 @@
     <div v-show="false"> {{ MenuData.menu_data_version }}{{ MatchListCardDataClass.list_version }}</div>
     <MatchesHeader />
     <!-- 列表容器 -->
-    <div v-if=" 0 && MenuData.menu_root==300">
+    <div v-if="MenuData.menu_root==300">
       <virtual></virtual>
     </div>
     <template v-else>
