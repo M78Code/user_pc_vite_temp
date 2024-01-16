@@ -19,7 +19,7 @@
                         <div>
                             <div class="nonebox4-content-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                               <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
-                                @{{compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId)}}
+                                {{compute_value_by_cur_odd_type(items.odds,items.playId,items.odds_hsw,items.sportId)}}
                               </div>
                               <div class="show_img">
                                 <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_up.png`" alt=""/>
@@ -168,6 +168,7 @@ import { reactive } from "vue";
       background: var(--q-gb-bd-c-2);
       padding: 10px;
       padding: 0.05rem 0.15rem;
+      border-bottom: 1px solid #ccc;
   }
   .nonebox4-content-left-title{
       font-size: 13px;
