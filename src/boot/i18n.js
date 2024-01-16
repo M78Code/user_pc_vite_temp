@@ -19,7 +19,6 @@ const loadLanguageAsync = async (lang_) => {
   let lang = lang_ == 'hk' ? 'zh' : lang_ || locale
   try {
     const langfile = await import( /* webpackChunkName: "lang-[request]" */ `../i18n/${IS_PC ? 'pc' : 'h5'}/${map_lang[lang]}/index.json`)
-    console.log(langfile,'langfile');
     const commLang = await import( /* webpackChunkName: "lang-[request]" */ `../i18n/${IS_PC ? 'pc' : 'h5'}/common-lang/index.json`)
     // 动态加载对应的语言包
     // let langFile = langfile.default || langfile;

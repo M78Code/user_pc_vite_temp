@@ -957,10 +957,14 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         query = h5_match_data_switch(other.match_data_type)
         // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
         // BetViewDataClass.set_bet_show(true)
-        // app-复刻版 逻辑不同
-        if(!PROJECT_NAME =='app-h5' || BetData.is_bet_single){
+        // h5 单关显示 
+        if(BetData.is_bet_single){
             // 点击投注项 显示投注栏
             BetData.set_bet_box_h5_show(true)
+        }
+        // 欧洲版 串关数量大于1的情况下 点击 投注项 默认收起
+        if( PROJECT_NAME == 'ouzhou-h5' && !BetData.is_bet_single ){
+            BetData.set_bet_state_show(false)
         }
       
         BetData.set_bet_keyboard_show(false)

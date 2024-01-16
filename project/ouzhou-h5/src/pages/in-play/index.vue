@@ -14,7 +14,7 @@ import lodash from 'lodash'
 import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import { onMounted, onUnmounted, ref } from 'vue';
-import { useMittOn, MITT_TYPES } from "src/core/mitt";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;
@@ -67,6 +67,7 @@ onUnmounted(() => {
  * @param {*} mi 
  */
 const changeMenu = (mi) =>{
+  useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
   MenuData.get_match_render_list();
   // 重置所选 球种默认玩法 hpid
   MatchResponsive.reset_match_hpid_by_csid()

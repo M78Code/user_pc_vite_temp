@@ -156,6 +156,7 @@ const set_menu_obj = (data) => {
  */
 const change_current_menu = (item) => {
   if (['matchList', 'champion'].includes(route.name) && current_mi.value && current_mi.value === item.mi) return emits('isLeftDrawer');
+  useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
   current_mi.value = item.mi
   MenuData.set_menu_mi(item.mi);
   setPopularSort(item.mi);
