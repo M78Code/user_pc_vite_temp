@@ -168,6 +168,7 @@ import { reactive } from "vue";
       background: var(--q-gb-bd-c-2);
       padding: 10px;
       padding: 0.05rem 0.15rem;
+      border-bottom: 1px solid #ccc;
   }
   .nonebox4-content-left-title{
       font-size: 13px;
