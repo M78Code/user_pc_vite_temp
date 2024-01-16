@@ -3,7 +3,7 @@
         <simple-header :title="i18n_t('common.sports_betting_rules')">
             <!-- <span>{{ i18n_t("common.sports_betting_rules") }}</span> -->
         </simple-header>
-        <iframe class="rule-content" :src="rule_url" frameborder="0"></iframe>
+        <!-- <iframe class="rule-content" :src="rule_url" frameborder="0"></iframe> -->
     </div>
 </template>
 

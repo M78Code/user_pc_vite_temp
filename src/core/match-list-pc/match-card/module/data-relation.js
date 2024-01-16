@@ -61,7 +61,7 @@ const set_match_list_mapping_relation_obj_type = () => {
     ) {
       return 9
     } else if (MenuData.is_kemp()) {
-      return 6
+      return 10
     } else {
       return 8
     }
@@ -83,15 +83,15 @@ const set_match_list_mapping_relation_obj_type = () => {
     type = 7;
   }
   // 冠军聚合页
-  else if (MenuData.is_kemp()) {
+  else if (MenuData.is_kemp()&&!MenuData.is_today()&&!MenuData.is_zaopan()) {
     type = 5;
   }
   // 电竞冠军
   else if (MenuData.is_esports_champion()) {
     type = 3;
   }
-  // 今日冠军
-  else if (MenuData.is_today() && MenuData.is_common_kemp()) {
+  // 今日/早盘 冠军
+  else if (MenuData.is_common_kemp()) {
     type = 6;
   }
   // 列表接口类型为赛事列表
@@ -210,7 +210,7 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
         match_list,
         is_ws_call
       );
-    } else if ([6].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
+    } else if ([10].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
       compute_match_list_style_obj_and_match_list_mapping_relation_obj_type6(
         match_list,
         is_ws_call

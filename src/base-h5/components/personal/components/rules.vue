@@ -1,5 +1,5 @@
 <template>
-    <div class="rule_page">
+    <div class="rule_page" :class="project_name">
       <iframe class="rules-iframe" :src="rule_url" frameborder="0" />
       <!-- <section>
         <div class="title">General Sports Explanation</div>
@@ -20,6 +20,10 @@
   <script setup>
   import { ref, onMounted } from 'vue'
   import UserCtr from 'src/core/user-config/user-ctr.js'
+  import { PROJECT_NAME } from "src/output/index.js"
+
+    // 模版名称
+    const project_name = PROJECT_NAME
     /** 环境变量 */
     const current_env = window.BUILDIN_CONFIG.CURRENT_ENV
     /** 体育规则地址-PC */
@@ -79,6 +83,13 @@
       height: 100%;
     }
   }
+  // ========欧洲版=======
+.ouzhou-h5.rule_page {
+  width: 100%;
+    height: calc(100vh - 50px);
+    position: fixed;
+    top: 50px;
+}
   
   </style>
   

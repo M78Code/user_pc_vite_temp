@@ -12,7 +12,9 @@ const config = {
 };
 
 // 字母顺序
-const item = { zh: 0, tw: 1, tw: 2, vi: 3, ms: 4, th: 5, ad: 6, md: 7, ry: 8, pty: 9, hy: 10 }
+// const item = { zh: 0, tw: 1, tw: 2, vi: 3, ms: 4, th: 5, ad: 6, md: 7, ry: 8, pty: 9, hy: 10 }
+const item = { zh: 0, en: 1, tw: 2,  vi: 3,  ms: 4, th: 5, ad: 6, mya: 7,ry:8, pt: 9, ko: 10, es: 11}
+
 /**
  * 根据item 计算雪碧图位置
  * @param {*} position 下标从0开始
@@ -27,9 +29,11 @@ function compute_position(position) {
   const height = 10; //表示是 纵 向
   const y_space = 15; //每张图的间距 y
   const _v = item[position];
+ 
   if (_v > -1) {
     const x = x_space * _v + _v * width + left;
-    const y = y_space * _v + _v * height + top;
+    const y = y_space * _v  + top;
+    // const y = y_space * _v + _v * height + top;
     return `-${x}px -${y}px`;
   }
   return "0 0";

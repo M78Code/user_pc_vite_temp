@@ -729,11 +729,9 @@ body {
         }
 
         .active-text {
-          color: var(--q-gb-bd-c-11);
+          color: var(--q-gb-t-c-22);
         }
-
         .icon-on_base1 {
-
           .path1,
           .path2,
           .path3 {
@@ -748,7 +746,6 @@ body {
         }
       }
     }
-
     .v-scroll-item-hot:last-child {
       border-bottom: 1px solid var(--q-gb-bd-c-8);
     }
@@ -779,7 +776,6 @@ body {
           color: var(--q-gb-bg-c-8);
         }
       }
-
       &:hover {
         i.icon-signal {
           &:before {
