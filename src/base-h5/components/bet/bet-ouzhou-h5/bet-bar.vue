@@ -11,7 +11,7 @@
     <div v-show="false">{{ BetData.bet_data_class_version }} {{BetViewDataClass.bet_view_version}}-{{BetData.is_bet_single}}-{{BetData.is_bet_merge}}</div>
     <div class="nonebox4-first">
         <div class="nonebox4-first-left">
-            <div class="nonebox4-first-left-img">{{BetData.bet_single_list.length}}</div>
+            <div class="nonebox4-first-left-img">{{BetData.is_bet_single ? BetData.bet_single_list.length : BetData.bet_s_list.length}}</div>
             <div class="nonebox4-first-left-text">{{i18n_t("bet.bet_record")}}</div>
         </div>
         <div class="nonebox4-first-right">
