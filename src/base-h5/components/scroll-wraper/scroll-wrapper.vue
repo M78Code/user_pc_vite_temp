@@ -140,10 +140,12 @@ const is_static = computed(() => {
     MatchResponsive.is_compute_origin.value || MenuData.get_mm_is_champion())
 })
 
+// 到底了容器
 const is_show_out = computed(() => {
   return max_height && !is_static.value && VirtualList.container_total_height.value > container.value?.offsetHeight
 })
 
+// 计算总高度
 const container_total_height = computed(() => {
   const height = is_show_out.value ? VirtualList.container_total_height.value : VirtualList.container_total_height.value - 181
   return `${height}px`

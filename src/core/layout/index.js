@@ -239,6 +239,7 @@ class LayOutMain {
  * @return {*}
  */
   set_unfold_multi_column(val){
+    if(this.is_unfold_multi_column==!!val)return//相同的值就什么不做
     this.is_unfold_multi_column = val
     const width = different_version_config[PROJECT_NAME].right_width
     if(!val){

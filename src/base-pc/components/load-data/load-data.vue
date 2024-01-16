@@ -315,6 +315,7 @@ const no_user_event = () => {
   // 右侧详情加载进行优化
   .loading-wrap.right_details_loading {
     margin-top: 10%;
+    margin-bottom: 10px;
     padding: 30px 11px;
     background: var(--qq--theme-bg-details_loading);
     box-shadow: 0px 2px 8px rgb(0 0 0 / 20%);

@@ -656,6 +656,8 @@ get_quick_mid_obj_ref(mid){
     match.cur_handicap_list = [] // 特定模版才会使用(模版7)
     // 足球角球玩法tab
     match.tab_play_keys = this.get_tab_play_keys(match);
+    match.play_current_index=-1;
+    match.play_current_key='';
     // 是否有其他玩法
     match.has_other_play = match.tab_play_keys&&String(match.tab_play_keys).split(',').length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
     match.other_handicap_list=[]
@@ -1663,7 +1665,8 @@ get_quick_mid_obj_ref(mid){
       } else if('array' == type){
         // console.error('new_value=',new_value);
         // 为数组的操作
-        new_value && old_value && (old_value.length = new_value.length)
+        if(typeof(new_value)=='array')
+         new_value && old_value && (old_value.length = new_value.length)
         // console.error('old_value===',JSON.stringify(old_value));
         // console.error('new_value===',JSON.stringify(new_value));
         for (let i = 0; i < new_value.length; i++) {
