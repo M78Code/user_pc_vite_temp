@@ -267,10 +267,6 @@ onUnmounted(()=>{
 
 }
 .top_header,.top_header_rule{
-  position: fixed;
-  top: 0;
-  z-index: 999;
-  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -296,6 +292,10 @@ onUnmounted(()=>{
   }
 }
 .top_header_rule{
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  width: 100%;
   background: url($SCSSPROJECTPATH+'/image/menu/top-menu/top_bg_rule.jpg') no-repeat;
   background-size: cover;
 }
