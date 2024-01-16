@@ -40,11 +40,11 @@
       >{{item == 'news' ? newsTabName : i18n_t(`analysis.${item}`)}}</span>
     </div>
 
-    <!-- <q-scroll-area class="rule-scroll-area" :visible="true" :style="{height:'100%',margin: hasNews && activeTab == 0 ? '0' : '0 20px'}">
+    <q-scroll-area class="rule-scroll-area" :visible="true" :style="{height:'100%',margin: hasNews && activeTab == 0 ? '0' : '0 20px'}">
    
       <news :mid="this.get_active_detail.mid" v-if="hasNews && activeTab == 0" />
     
-      <tab-results :match="matchDetail" v-if="show_tab('result')"/>
+      <!-- <tab-results :match="matchDetail" v-if="show_tab('result')"/>
       
       <tab-data :match="matchDetail" v-if="show_tab('data')"/>
      
@@ -52,8 +52,8 @@
       
       <tab-information :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 3"/>
       
-      <tab-odds :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 4"/>
-    </q-scroll-area> -->
+      <tab-odds :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 4"/> -->
+    </q-scroll-area>
   </div>
 </template>
 
@@ -66,7 +66,7 @@
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 // import {api_analysis} from 'src/public/api/index'
 import { api_analysis, api_details, api_common } from 'src/api/index.js'
-// import news from "./template/tab_news.vue"
+ import news from "./template/tab_news.vue"
 // import { mapGetters } from 'vuex'
 
 import { formatTime,msc_array_obj } from 'src/output/index.js'
@@ -101,7 +101,7 @@ export default {
   //   tabResults,tabData,tabLineup,tabInformation,tabOdds,matchDate,news
   // },
   components:{
-   matchDate
+   matchDate,news
   },
   created() {
     if (Object.keys(this.$route.params).length) {

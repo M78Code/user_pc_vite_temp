@@ -108,6 +108,7 @@
             <div class="yb-icon-arrow"></div>
           </span>
         </div>
+   
       </div>
     </div>
 
@@ -130,7 +131,7 @@ import { get_remote_time } from "src/output/index.js"
 import { get_handicap_index_by, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { BaseInfo } from "src/base-pc/mixin/base-info"
-
+import tips from "src/base-pc/components/match-detail/tips1/tips1.vue"
 const router = useRouter()
 const route = useRoute()
 const props = defineProps({
