@@ -38,7 +38,7 @@
       <div v-if="['seal'].includes(odds_state)" class="lock" :style="compute_css_obj({ key: 'pc-home-lock' })">
       </div>
       <span v-else-if="ol_data.ov">
-        <span class="odds_otb" v-if="ol_data.otb">{{ disk_text_replace(UserCtr.lang, i18n_t(`ouzhou.bet_col.bet_col_${ol_data._hpid}.bet_col_${ol_data.ot}`)) }}</span>
+        <!-- <span class="odds_otb" v-if="ol_data.otb">{{ disk_text_replace(UserCtr.lang, i18n_t(`ouzhou.bet_col.bet_col_${ol_data._hpid}.bet_col_${ol_data.ot}`)) }}</span> -->
         {{ compute_value_by_cur_odd_type(
           ol_data.ov,
           ol_data._hpid,

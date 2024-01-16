@@ -36,15 +36,15 @@
           @update_next_batch_match="update_n_batch_handle">
         </virtual-sports-stage>
         <div class="virtual-video-play-team" v-if="current_match.csid" >
-          <div class="team-title">
-            <div class="info">
-            </div>
-            <div class="title">
-              {{lengue_name}} {{ current_match.no }}
-            </div>
-            </div>
               <!-- 足蓝队伍比分 -->
               <div class="ball-rank" v-if="current_match.csid == 1001 || current_match.csid == 1004">
+                <div class="team-title">
+                  <div class="info">
+                  </div>
+                  <div class="title">
+                    {{lengue_name}} {{ current_match.no }}
+                  </div>
+                </div>
                 <div class="vsm-options"
                  :class="[current_match.mid === item.mid && 'active', current_match.csid == 1001  && 'vsm-options-short']" 
                   v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
@@ -72,6 +72,18 @@
               </div>
               <!-- 赛马类队伍 -->
               <div v-else>
+                <div class="team-title horse-title">
+                    <div class="info"></div>
+                    <div class="title">
+                      {{lengue_name}} {{ current_match.no }}
+                    </div>
+                    <!-- 冠军 -->
+                    <div class="horse-col">{{i18n_t('list.virtual_match_type_title.type1011.bet_col.0')}}</div>
+                    <!-- 前二 -->
+                    <div class="horse-col">{{i18n_t('list.virtual_match_type_title.type1011.bet_col.1')}}</div>
+                    <!-- 前三 -->
+                    <div class="horse-col" v-if="current_match.csid !='1009'">{{i18n_t('list.virtual_match_type_title.type1011.bet_col.2')}}</div>
+                </div>
                 <div class="vsm-options"
                  :class="[current_match.mid === item.mid && 'active', current_match.csid == 1001  && 'vsm-options-short']" 
                   v-for="(item, index) in match_list_by_no[0] && match_list_by_no[0].teams" :key="index">
@@ -407,6 +419,22 @@ export default {
           width: 30px;
           height: 29px;
         }
+      }
+    }
+
+    .horse-title {
+      display: flex;
+      align-items: center;
+      padding-right: 5px;
+      position: relative;
+      .title {
+        flex: 10000 1 0%;
+      }
+      .horse-col {
+          font-size: 12px;
+          width: 18%;
+          max-width: 96px;
+          text-align: center;
       }
     }
   }

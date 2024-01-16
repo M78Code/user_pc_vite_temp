@@ -12,7 +12,7 @@
       <p class="bet_cancel" @click="pack_up">{{i18n_t('bet.bet_retract')}}</p>
       <p class="place_bet"  @click="place_bet">
         <span>{{i18n_t('bet_record.bet_val')}}</span> 
-        <span class="right_amount">{{BetData.bet_amount}}</span> 
+        <span class="right_amount">{{bet_total()}}</span>
       </p>
     </div>
   <div style="display:none">{{ BetData.bet_data_class_version }} -{{UserCtr.user_version}}-{{ BetViewDataClass.bet_view_version }}</div>
@@ -23,6 +23,9 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js" 
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittEmit, MITT_TYPES,i18n_t,UserCtr  } from "src/output/index.js";
+import {computed} from "vue"
+import mathJs from 'src/core/bet/common/mathjs.js'
+
 
 const place_bet = () => {
   // 未投注之前 可以点击
@@ -30,6 +33,32 @@ const place_bet = () => {
     submit_handle()
   }
 }
+
+const bet_total = computed(()=> state =>{
+  let sum = 0
+  if (BetData.is_bet_single) {
+    if (BetData.is_bet_merge) {
+      BetData.bet_single_list.forEach(item => {
+        sum += item.bet_amount
+      });
+      return sum
+    }
+    sum = BetData.bet_amount
+    return sum
+  }
+  if (!BetData.is_bet_single) {
+    if (BetViewDataClass.bet_order_status === 1) {
+        BetViewDataClass.bet_special_series.forEach((item)=>{
+            sum += (item.bet_amount ? item.bet_amount : 0)
+        })
+    } else {
+        BetViewDataClass.orderNo_bet_single_obj.forEach((item)=>{
+            sum += mathJs.divide(item.seriesBetAmount, 100)
+        })
+    }
+  }
+})
+
 const pack_up = (val) => {
   BetData.set_clear_bet_info()
   // TODO: 临时调试用

@@ -20,7 +20,7 @@ export function set_sticky_top() {
     }
   }
   // 冠军聚合页
-  else if (MenuData.is_kemp()) {
+  else if (MenuData.is_kemp()&&!MenuData.is_today()&&!MenuData.is_zaopan()) {
     obj = {
       type: 84,
       league: 122
@@ -102,7 +102,7 @@ export function set_sticky_top() {
     }
   }
   // 热门赛事
-  else if (MenuData.is_hot) {
+  else if (MenuData.is_hot()) {
     obj = {
       type: 84,
       league: 122

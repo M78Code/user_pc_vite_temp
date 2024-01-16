@@ -32,7 +32,7 @@
           </div>
         </div>
       </div>
-      <div class="mask" v-if="is_dropdown" @click.stop="is_dropdown = !is_dropdown"></div>
+      <div class="mask" v-if="is_dropdown" @click.stop="is_dropdown = false"></div>
       <!-- <div class="del-info-dui">√</div> -->
     </div>
   </div>
@@ -41,11 +41,16 @@
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import { useMittEmit, MITT_TYPES } from "src/output/index.js";
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { UserCtr } from "src/output/index.js"
 
 
-const is_dropdown = ref(false)
+const props = defineProps({
+  is_dropdown: {
+    type: Boolean,
+    default: false,
+  },
+})
 
 const clear = () => {
   BetData.set_clear_bet_info()
@@ -53,6 +58,7 @@ const clear = () => {
 }
 
 const switch_handle = (state) => {
+  BetData.set_bet_amount(0)
   switch (state) {
     case 'single':
       BetData.set_is_bet_merge('no')
