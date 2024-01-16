@@ -15,7 +15,9 @@
 
           <span class="money-span" ref="money_span" v-if="show_money_span" :style="{ opacity: '1' }"></span>
           
-          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}<em class="yb_fontsize16 number_family">{{ ref_data.min_money }}-{{ format_money3(ref_data.max_money) }}</em></span>
+          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}
+            <em class="yb_fontsize16 number_family">{{ ref_data.min_money || '' }}-{{ref_data.max_money ? format_money3(ref_data.max_money) : '' }}</em>
+          </span>
         </div>
         <div class="content-rmb">{{ currency_code[UserCtr.currency] }}</div>
       </div>
@@ -61,8 +63,8 @@ const ref_data = reactive({
   appoint: true, // 是否预约
   odds_change_up: false,  // 赔率上升
   odds_change_down: false, // 赔率下降
-  min_money: 10, // 最小投注金额
-  max_money: 8888, // 最大投注金额
+  min_money: '', // 最小投注金额
+  max_money: '', // 最大投注金额
   win_money: 0.00, // 最高可赢
   money: '', // 投注金额
   keyborard: true, // 是否显示 最高可赢 和 键盘
@@ -75,14 +77,16 @@ const props = defineProps({
     type: Number,
     default: 0
   },
-  item: {}
+  item: {
+    default: () => {},
+  }
 })
 
 onMounted(() => {
   flicker_timer = null  //光标闪动计时器
   cursor_flashing()
   // 刷新数据后 设置限制 再设置金额
-  set_ref_data_bet_money()
+  // set_ref_data_bet_money()
   ref_data.money = BetData.bet_amount
   BetData.bet_keyboard_show = true
   //监听键盘金额改变事件
@@ -144,11 +148,13 @@ const set_ref_data_bet_money = () => {
   ref_data.min_money = min_money
   // 最大限额
   ref_data.max_money = max_money
+  // console.error(' ref_data.min_money ', ref_data.min_money )
   // 复试串关赔率
   ref_data.seriesOdds = seriesOdds
   // 限额改变 重置投注金额 如果大于当前额度为最大额度 如果最小额度旧是最小 否则保持
-  if(ref_data.money)
+  if(ref_data.money){
     ref_data.money = ref_data.money*1 > max_money ? max_money : ref_data.money*1 < min_money ? min_money : ref_data.money
+  }
   // 设置键盘设置的限额和数据
   BetData.set_bet_keyboard_config({playOptionsId:props.item.playOptionsId})
 }

@@ -88,7 +88,9 @@ import { is_up_app, is_down_app } from 'src/base-h5/core/utils/local-image.js'
 import betSingleInput from "./bet-single-input.vue"
 
 const props = defineProps({
-    items:{},
+    items:{
+        default: () => {},
+    },
     index:{}
 })
 
