@@ -107,7 +107,7 @@ const mx_list_res = (data, backend_run,is_base_data) => {
 					// 组装所有赛事
 					const temp_match = { mid: mid_, csid: item.csid, tid: item.tid }
 					// 设置收藏信息
-					match_collect_status(temp_match)
+					match_collect_status(temp_match,true)
 				});
 			});
 		} catch (error) {
@@ -207,7 +207,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
 		match_list = []
 	}
 	match_list.forEach(match => {
-		match_collect_status(match)
+		match_collect_status(match,true)
 	})
 	if (Array.isArray(match_list)) { //有时候是 {}
 		MatchListData.set_list(match_list)

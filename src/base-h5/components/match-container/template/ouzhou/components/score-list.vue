@@ -8,6 +8,7 @@
       <OddItem 
         v-for="s in score_data" 
         :key="s.oid"
+        :hps="hps"
         :odd_item="s"
         :item_hs="item_hs"
         :show_hpn="show_hpn"
