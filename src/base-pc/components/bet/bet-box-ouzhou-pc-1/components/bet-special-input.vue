@@ -5,15 +5,13 @@
         <div class="px-12 bet-money" >
             <div class="f-b-c pl-18 bet-input-info">
                 <div>
-                    <div class="font14">{{items?.name}} X{{items?.count}} {{items?.seriesOdds}}</div>
+                    <div class="font14">{{items?.name}} X{{items?.count}}</div>
                     <div class="font12 h12">
                         <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
-                        <span class="text-8A8986-i font500" v-if="[1].includes(items.playId*1)"> 
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} 
+                        <span class="text-8A8986-i font500"> 
+                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount)) }}
                         </span>
-                        <span class="text-8A8986-i font500" v-else>
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds),(UserCtr.odds.cur_odds == 'HK' ? 0 : items.bet_amount))) }} 
-                        </span>
+                     
                     </div>
                 </div>
         
