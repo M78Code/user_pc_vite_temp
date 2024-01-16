@@ -113,7 +113,7 @@ class MenuData {
     this.early_list = []
     this.in_play_list = []
     this.vr_list = [];
-    this.current_ball_type = 0
+    this.current_ball_type = ''
 
     this.left_menu_list = []
    
@@ -180,7 +180,7 @@ class MenuData {
         let list_obj = {}
         let list_arr = [];
          menu_list.forEach(item=>{
-          if(item.field2 == "18"){//冠军
+          if(item.field2 == "18" && mi_ != 118){//非娱乐冠军
             const kemp_mi = mi_.substring(0,3)+'4';
             list_obj[kemp_mi] = {
               ct: item.count,

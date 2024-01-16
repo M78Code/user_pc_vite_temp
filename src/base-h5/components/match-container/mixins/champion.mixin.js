@@ -258,7 +258,6 @@ export default {
      */
     init_league_src () {
       this.image_src = get_server_file_path(this.match_of_list.lurl)
-      console.log(this.image_src)
     },
     /**
      * @description 图片加载出错

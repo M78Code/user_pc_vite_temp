@@ -103,7 +103,6 @@ const router = useRouter();
  * @return 
  */
 const jumpHandle = () => {
-  BetData.set_is_bet_single('single')
   router.push({ name: "handicapTutorial" }); // 
   closedHandle();
 };
@@ -113,7 +112,6 @@ const jumpHandle = () => {
  * @return 
  */
 const jump_rule = () => {
-  BetData.set_is_bet_single('single')
   router.push({ name: "rule_description" }); 
   closedHandle();
 };

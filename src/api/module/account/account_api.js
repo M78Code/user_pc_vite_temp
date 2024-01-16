@@ -20,6 +20,8 @@ export const check_balance = (params, config={}, url = "/user/amount") => http.g
 
 // 根据 token 获取用户信息
 export const get_user_info = (params, config={}, url = "/user/getUserInfoPB") => http.get(`${prefix_12}${url}`, params, config);
+// 切换简译/翻译 此接口没有PB
+export const get_user_language_switch = (params, config={}, url = "/user/getUserLanguageSwitch") => http.get(`${prefix_12}${url}`, params, config);
 
 // 设置以及获取用户设置的语言
 export const set_user_lang = (params, config={}, url = "/user/setUserLanguage") => http.get(`${prefix_12}${url}`, params, config);

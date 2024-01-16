@@ -10,7 +10,7 @@ import { friendly_reminder_zh, friendly_reminder_en} from 'src/base-h5/core/util
 
 const lang = SEARCH_PARAMS.init_param.get("lang") || 'en';
 const get_no_token_image = computed(() => {
-  return (lang == 'zh') ? friendly_reminder_zh : friendly_reminder_en
+  return (['zh', 'hk'].includes(lang)) ? friendly_reminder_zh : friendly_reminder_en
 })
 
 const height = computed(() => {

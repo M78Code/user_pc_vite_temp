@@ -53,7 +53,7 @@ import TabMove from "src/core/tab-move/tab-move.js";
     // 初始化标签选中，足球和篮球在简体中文和繁体中文环境下，下标往后挪动一位,未开赛的赛事，再往后挪动一位
     nextTick(()=> {
       let i = 0
-      if (['zh', 'tw'].includes(UserCtr.lang)) {
+      if (['zh', 'tw', 'hk'].includes(UserCtr.lang)) {
         i++
       }
       if (props.detail_data.ms != 1) {

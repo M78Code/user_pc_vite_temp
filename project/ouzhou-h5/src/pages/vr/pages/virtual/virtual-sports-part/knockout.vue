@@ -68,14 +68,14 @@
           <span>{{ list_data[0].homeName }}</span>
         </div>
         <div class="middle">
-          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/finals.svg`" alt="">
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/virtual-sports/finals.svg`" alt="">
         </div>
         <div class="finals-team">
           <span>{{ list_data[0].awayName }}</span>
         </div>
       </div>
       <q-inner-loading :showing="visible">
-        <img alt class="loading-static-animation" src="image/wwwassets/bw3/svg/loading-more.svg"/>
+        <img alt class="loading-static-animation" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/loading-more.svg`"/>
       </q-inner-loading>
     </div>
     <!-- 没有数据 组件 -->
@@ -86,11 +86,17 @@
 <script>
 import knockout_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/knockout-mixin.js";
 import no_data from "project_path/src/pages/vr/components/common/vr-sport-no-data.vue";
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 export default {
   mixins:[knockout_mixin],
   name:'knockout',
   components: {
     "no-data": no_data
+  },
+  setup() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX,
+    }
   },
 }
 </script>
@@ -100,10 +106,12 @@ export default {
 
   min-height: 3.2rem;
 
+  background-color: var(--q-gb-bg-c-34);
+
   width: 98vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
   border-radius: 0.08rem;
@@ -147,11 +155,11 @@ export default {
       }
       
       &.progress_bar {
-        color: #179CFF;
+        color: var(--q-gb-t-c-1);
         font-size: 0.14rem;
-        font-weight: 600;
+        font-weight: 400;
         i {
-          border-bottom: 0.05rem solid #179CFF;
+          border-bottom: 0.05rem solid var(--q-gb-bd-c-16);
         }
       }
     }
@@ -196,7 +204,7 @@ export default {
         display: flex;
         flex-direction: row;
 
-        background-color: var(--q-gb-bg-c-18);
+        background-color: var(--q-gb-bg-c-28);
         
         &:nth-child(n+2){
           margin-top: 0.12rem;
@@ -239,7 +247,7 @@ export default {
             }
 
             &:nth-of-type(odd) {
-              border-bottom: 0.01rem solid var(--q-gb-bd-c-18);
+              border-bottom: 0.01rem solid var(--q-gb-bd-c-10);
               &:nth-child(2n){
                 background-color: red;
               }
@@ -254,8 +262,9 @@ export default {
               height: 100%;
               line-height: 0.32rem;
               .ellipsis {
-                color: var(--q-gb-t-c-18);
-                font-size: 0.14rem;
+                font-family: "PingFang SC";
+                color: var(--q-gb-t-c-12);
+                font-size: 0.12rem;
                 font-weight: 400;
               }
             }
@@ -268,8 +277,9 @@ export default {
               .score {
                 width: 0.28rem;
                 text-align: center;
-                color: var(--q-gb-t-c-18);
-                font-size: 0.14rem;
+                color: var(--q-gb-t-c-12);
+                font-family: 'DIN';
+                font-size: 0.12rem;
                 font-weight: 500;
               }
             }
@@ -298,17 +308,19 @@ export default {
         width: 0.82rem;
         height: 0.80rem;
         border-radius: 0.08rem;
-        background-color: var(--q-gb-bg-c-18);
-        color: var(--q-gb-t-c-18);
+        background-color: var(--q-gb-bg-c-28);
+        color: var(--q-gb-t-c-21);
+        font-family: 'PingFang SC';
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         .name{
-          font-size: 0.14rem;
-          font-weight: 500;
+          font-size: 0.12rem;
+          font-weight: 400;
         }
         .number {
+          color: var(--q-gb-t-c-18);
           font-size: 0.16rem;
           font-weight: 600;
         }
@@ -323,9 +335,9 @@ export default {
 
 
   .main-finals {
-    width: 3.56rem;
-    height: .64rem;
-    background-color: #F2F2F6;
+    width: 100%;
+    height: 1.22rem;
+    // background-color: #F2F2F6;
     border-radius: .08rem;
 
     display: flex;
@@ -337,13 +349,18 @@ export default {
     margin-top: 0.24rem;
 
     .finals-team {
-      width: 1.42rem;
-      height: 0.4rem;
+      width: 1.375rem;
+      height: 0.8rem;
+
+      border: 0.005rem;
+      border-radius: 0.08rem;
 
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
+      background-color: var(--q-gb-bg-c-28);
       
       span {
         // width: .56rem;
@@ -359,8 +376,8 @@ export default {
     }
 
     .middle {
-      width: .64rem;
-      height: .64rem;
+      width: .76rem;
+      height: .122rem;
 
       display: flex;
       flex-direction: column;
@@ -368,8 +385,8 @@ export default {
       align-items: center;
 
       > img {
-        width: .6309rem;
-        height: .5438rem;
+        width: 100%;
+        // height: .5438rem;
       }
     }
   }

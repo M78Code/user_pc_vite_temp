@@ -112,7 +112,8 @@
     "victory": "W",
     "win": "W",
     "win_plate": "Gana",
-    "Win_rate": "W%"
+    "Win_rate": "W%",
+    "analysis_information": "noticias"
   },
   "basketball_playing_way": {
     "first_half": "Primer Mitad",

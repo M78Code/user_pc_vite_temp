@@ -548,7 +548,10 @@ class BaseData {
     // 设置新菜单
     this.set_left_menu_init(menu_old_or_nem_data_list);
 
-    
+    // app-h5使用
+    if( ['ouzhou-h5','app-h5','new-pc','ouzhou-pc'].includes(PROJECT_NAME)){
+      MenuData.set_init_menu_list()
+    }
 
     // 计算   冠军 数据  对象形式   commn_sport_guanjun_obj
     // 计算虚拟体育 的 数据对象
@@ -720,12 +723,6 @@ class BaseData {
       // 计算 live
       this.set_mi_gunqiu();
       // }
-
-      // app-h5使用
-      if( ['ouzhou-h5','app-h5','new-pc','ouzhou-pc'].includes(PROJECT_NAME)){
-        MenuData.set_init_menu_list()
-      }
-
 
       // console.error("left_menu_base_mi_arr", this.left_menu_base_mi_arr);
 

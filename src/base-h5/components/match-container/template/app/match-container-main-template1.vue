@@ -148,7 +148,7 @@
                   <!-- 电竞串关标识 -->
                   <!-- <div v-if="is_esports && match.ispo" class="flag-chuan" -->
                   <div v-if="is_esports && match.ispo"  class="flag-chuan-icon" 
-                    :class="{ 'special-lang': ['zh', 'tw'].includes(lang) }"
+                    :class="{ 'special-lang': ['zh', 'tw', 'hk'].includes(lang) }"
                     :style="compute_css_obj({key:'h5-kyapp-crosstalk-icon'})">
                     <!-- {{ i18n_t('match_info.match_parlay') }} -->
                   </div>

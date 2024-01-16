@@ -156,12 +156,13 @@ function init_func() {
   sizes.value = []
   for (let i = 0; i < dom.length; i++) {
     let { offsetLeft = 0, clientWidth = 0 } = dom[i]
-    sizes.value.push({
+    if (String(dom[i].className).includes('tab-item')) {
+      sizes.value.push({
       left: offsetLeft + props.padding,
       width: clientWidth - props.padding * 2
     })
+    }
   }
-  console.log('init_funcinit_funcinit_funcinit_func', sizes.value)
   if (sizes.value.length > 0) {
     let current_index = props.currentIndex == -1 ? 0 : props.currentIndex;
     left.value = lodash.get(sizes.value, `${current_index}.left`, 0)
@@ -340,10 +341,10 @@ const { layoutReducer } = store.getState()
  * list语言变化时
  * 做异步处理防止data数据发生改变，初始化
 */
-// watch(
-//   () => props.list.value,
-//   () => nextTick(init), { deep: true }
-// )
+watch(
+  () => props.list.value,
+  () => nextTick(init), { deep: true }
+)
 
 /** 定时器 */
 let timer = null

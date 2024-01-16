@@ -514,8 +514,13 @@ get_quick_mid_obj_ref(mid){
         } else {
           match.play_obj = play_obj_temp;
         }
-        // 设置赛事默认数据
-        this.set_match_default_data(match);
+        let _match = this.get_quick_mid_obj(match.mid);
+        if(_match){
+          this.assign_with(_match, {...match, is_ws: true})
+        }else{
+          // 设置赛事默认数据
+          this.set_match_default_data(match);
+        }
         // 赛事数据格式化
         match && this._list_to_many_obj([match]);
         // 设置赛事更新时间
@@ -1658,7 +1663,8 @@ get_quick_mid_obj_ref(mid){
       } else if('array' == type){
         // console.error('new_value=',new_value);
         // 为数组的操作
-        new_value && old_value && (old_value.length = new_value.length)
+        if(typeof(new_value)=='array')
+         new_value && old_value && (old_value.length = new_value.length)
         // console.error('old_value===',JSON.stringify(old_value));
         // console.error('new_value===',JSON.stringify(new_value));
         for (let i = 0; i < new_value.length; i++) {

@@ -6,7 +6,7 @@
     <!-- <span class="navigation-title">{{ i18n_t('virtual_sports.leaderboard') }}</span> -->
     <!-- header -->
     <div class="header">
-      <div class="col1 col-label"></div>
+      <div class="col1 col-label">{{ i18n_t('virtual_sports.rank') }}</div>
       <div class="col2 col-label">{{ i18n_t('virtual_sports.team') }}</div>
       <div class="col3 col-label">{{ i18n_t('virtual_sports.game') }}</div>
       <div class="col4 col-label">{{ i18n_t('virtual_sports.win_tie_loss') }}</div>
@@ -15,8 +15,8 @@
     <!-- 小组 -->
     <div class="group-item" v-if="!no_data">
       <div class="team-item" v-for="(item, i) in ranking_data" :key="i">
-        <div class="col1 col-field" v-if="+i > 2">{{+i + 1}}</div>
-        <div class="col1 col-field rank-img" v-else>
+        <div class="col1 col-field head-field" v-if="+i > 2">{{+i + 1}}</div>
+        <div class="col1 col-field head-field rank-img" :class="`rank-img-${i}`" v-else>
           <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rank${+i+1}.png`"/>
         </div>
         <div class="col2 ellipsis col-field">
@@ -70,17 +70,18 @@ export default {
   }
 
   .col-label{
-    font-size: 0.1rem;
-    color: var(--q-gb-t-c-19);
+    font-size: 0.12rem;
+    color: var(--q-gb-t-c-3);
+    text-align: center;
   }
 
   .col1 {
-    width: 0.4rem;
+    width: 0.32rem;
   }
 
   .col2 {
     width: 0.94rem;
-    text-align: left;
+    text-align: center;
     display: unset !important; /*  避免flex 没有显示省略号 */
   }
   /*  3~8 总宽度220px */
@@ -111,6 +112,7 @@ export default {
     line-height: 0.32rem;
     margin: 0 0.1rem;
 
+
     /* label字段 设计稿上是字体 10px，font-weight 400 */
     > div {
       font-family: PingFang SC;
@@ -137,11 +139,47 @@ export default {
     font-size: 0.13rem;
     height: 0.48rem;
     text-align: center;
-    border-bottom: 1px solid var(--q-gb-bd-c-4);
+    border-bottom: 1px solid var(--q-gb-bd-c-17);
+
+    .col-field{
+      color: var(--q-gb-t-c-3);
+      font-size: 0.14rem;
+    }
+
+    .head-field{
+      font-family: 'Roboto';
+      width: 0.32rem;
+      height: 0.34rem;
+      font-size: 0.16rem;
+      color: var(--q-gb-t-c-4);
+      background-color:var(--q-gb-bg-c-33);
+    }
+
+    .rank-img{
+      width: 0.32rem;
+      height: 0.34rem;
+    }
+
+    .rank-img-0{
+      background-color:var(--q-gb-bg-c-31);
+    }
+
+    .rank-img-1{
+      background-color:var(--q-gb-bg-c-32);
+    }
+
+    .rank-img-2{
+      background-color:var(--q-gb-bg-c-33);
+    }
 
     .rank-img img{
-      width: 14px;
-      height: 20px;
+      width: 0.16rem;
+      height: 0.16rem;
+    }
+    
+    .ellipsis{
+      color: var(--q-gb-t-c-4);
+      text-align: center;
     }
 
     /* 列字段 设计稿上是字体 12px，font-weight 500 */

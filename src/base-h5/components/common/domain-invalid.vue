@@ -36,6 +36,7 @@ const token_bg = computed(() => {
     case 'vi':
       return 'token-vietnam'
     case 'zh':
+    case 'hk':
     case 'tw':
       return 'token-vietnam'
     case 'en':

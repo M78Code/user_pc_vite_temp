@@ -188,7 +188,6 @@
       // 赛事表征数据
       all_card_obj[_match.mid+'_'] =  compute_style_template_by_matchinfo(_match, get_match_template_id(_match), true)
     })
-    console.log('five_leagues_card_key_arr',five_leagues_card_key_arr)
      // 已开赛 到卡片key的 映射对象
      MatchListCardData.set_all_card_obj({
       // 合并所有卡片样式对象

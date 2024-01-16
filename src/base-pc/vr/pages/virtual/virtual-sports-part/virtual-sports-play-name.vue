@@ -23,7 +23,6 @@
           v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))"
           :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
           <div class="play-name-item" v-for="(item_title, item_index) in item.ols" :key="item_index">
-            <!-- {{ item_title }} -->
             {{ i18n_t(`ouzhou.bet_col.bet_col_${item_title._hpid}.bet_col_${item_title.ot}`) }}
           </div>
         </div>

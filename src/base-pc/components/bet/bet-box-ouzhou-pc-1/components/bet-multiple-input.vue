@@ -12,7 +12,7 @@
                 </div>
                 <div class="row text-color-max-win mt2">
                         <!--最高可赢额-->
-                    <div>{{ i18n_t('common.maxn_amount_val') }}</div>
+                    <div class="mr-10">{{ i18n_t('common.maxn_amount_val') }}</div>
                     <div class="bet-win-money yb-number-bold"> {{ winMoney() }}</div>
                 </div>
                     <!--金额-->
@@ -116,6 +116,7 @@ onUnmounted(() => {
         if(obj.money == "MAX"){
             money_ = ref_data.max_money
         }
+        if (money >= UserCtr.balance) return
         // 计算投注金额
         let money_amount = mathJs.add(money,money_)
          // 投注金额 不能大于最大投注金额 也不能大于用户余额
@@ -186,25 +187,33 @@ const set_win_money = () => {
      // 输入控制
      let sum = 0
      if( ref_data.money *1 < ref_data.max_money *1 &&  ref_data.money*1 < UserCtr.balance*1){
-        //计算多项最高可赢
-        BetData.bet_single_list.forEach((item)=>{
+        BetData.bet_single_list.forEach(item => {
             sum += mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)
+            BetData.set_bet_obj_amount(ref_data.money, item.playOptionsId)
         })
+        BetData.set_bet_amount(ref_data.money)
          ref_data.win_money = sum
     }else{
+        let money_a = ref_data.max_money
         // 最大限额不能大于余额
         if(UserCtr.balance*1 < ref_data.max_money*1){
-            ref_data.max_money = UserCtr.balance
-            ref_data.money = ref_data.max_money
+            money_a = UserCtr.balance
         }
+        ref_data.money = money_a
+        BetData.set_bet_amount(money_a)
+        BetData.bet_single_list.forEach(item => {
+            BetData.set_bet_obj_amount(money_a, item.playOptionsId)
+        })
     }
-    BetData.set_bet_amount(ref_data.money)
+    // BetData.set_bet_amount(ref_data.money)
+    useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
 }
 
     
 </script>
 
 <style scoped lang="scss">
+@import "../css/bet.scss";
 .text-color-max-win {
     color: var(--q-gb-t-c-8) !important
 }

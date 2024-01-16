@@ -112,7 +112,8 @@
     "victory": "Ganho",
     "win": "Ganho",
     "win_plate": "Handicap Vencedor",
-    "Win_rate": "Porcentagem de ganho"
+    "Win_rate": "Porcentagem de ganho",
+    "analysis_information": "Notícias"
   },
   "basketball_playing_way": {
     "first_half": "Meio tempo",

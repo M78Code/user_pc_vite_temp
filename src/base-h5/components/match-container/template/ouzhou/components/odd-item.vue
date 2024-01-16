@@ -25,7 +25,7 @@
  
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { odd_lock_ouzhou, ouzhou_hps_up, ouzhou_hps_down } from 'src/base-h5/core/utils/local-image.js'

@@ -103,7 +103,7 @@ const cur_video_icon = computed(() => {
   //滚球状态
   let is_play = get_match_status(ms)
   // 包含的语言
-  let status = ['zh', 'tw'].includes(localStorage.getItem(lang))
+  let status = ['zh', 'tw', 'hk'].includes(localStorage.getItem(lang))
   //演播厅
   if (lvs == 2 && status && [1, 0].includes(lss)) {
     if (lss === 1) {

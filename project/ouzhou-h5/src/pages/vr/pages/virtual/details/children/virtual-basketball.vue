@@ -51,6 +51,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import virtual_basketball_mixin from "src/core/vr/mixin/pages/virtual/details/children/virtual-basketball-mixin.js";
 import teamImg from 'project_path/src/pages/vr/components/team-img.vue';

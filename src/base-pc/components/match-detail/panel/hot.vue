@@ -60,7 +60,9 @@
             <div class="info-score">
               <div class="info-title">
                 <span class="title ellipsis">{{ item.tn }}</span>
-                <match-date :match_props="{ match: item }" />
+<!--                <match-date :match_props="{ match: item }" />-->
+<!--                Bug: 53791-->
+                <match-date :match_props="{ match: item }" :match="item" />
               </div>
               <span class="item" v-if="lodash.get(item, 'msc.S1')">{{
                 get_score_text(item)

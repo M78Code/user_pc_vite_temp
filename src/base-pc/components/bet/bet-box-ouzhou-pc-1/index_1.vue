@@ -1,6 +1,6 @@
 <template>
   <div class="bet-box-info" ref="pondModel" id="drag" >
-    <div v-show="false"> {{UserCtr.user_version}} -- {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
+    <div v-show="false"> {{UserCtr.user_version}} -{{MenuData.menu_data_version}}- {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
     <!-- 头部信息 -->
     <betTitle />
     <!-- 展开项 -->
@@ -23,7 +23,7 @@
             <span v-else class="merge-checkbox ml-4"></span> 
           </div>
           <!-- 单关 串关 切换 -->
-          <div class="f-e-c ml-16" @click="show_single_change()">
+          <div class="f-e-c ml-16" @click="show_single_change()" v-if="!MenuData.is_kemp()">
             <span v-if="BetData.is_bet_single">{{ i18n_t('bet.bet_one_') }}</span>
             <span v-if="!BetData.is_bet_single">{{ i18n_t('bet.bet_series') }}</span>
 
@@ -38,7 +38,7 @@
       <!-- 单关 投注 -->
       <div class="bet-scroll">
         <div v-if="BetViewDataClass.bet_order_status == 1">
-          <template v-if="BetData.is_bet_single">
+          <template v-if="BetData.is_bet_single && BetData.bet_single_list.length">
             <div v-for="(item,index) in BetData.bet_single_list" :key="item.playOptionsId">
                 <betItem :items="item" :key="index" :index="index" />
             </div>
@@ -104,7 +104,7 @@
 
 <script setup>
 import { reactive, ref } from "vue"
-import { UserCtr, format_money2} from "src/output/index.js"
+import { MenuData, UserCtr, format_money2} from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import betTitle from "./components/bet-title.vue"  // 投注头部
@@ -114,7 +114,6 @@ import betResult from "./components/bet-result.vue"  // 投注结果
 import betMixResult from "./components/bet-mix-result.vue"  // 串关投注结果
 import betSpecialInput from "./components/bet-special-input.vue"
 import BetMultipleInput from "./components/bet-multiple-input.vue"
-import mathJs from 'src/core/bet/common/mathjs.js'
 
 
 const ref_data = reactive({

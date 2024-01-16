@@ -207,17 +207,18 @@ export const init_home_matches = async (is_socket=true) => {
 
       try {
         //五大联赛，只显示滚球数据
-        if (res?.length) {
-          res = res.filter(match => {
-            return !!get_match_status(match.ms)
-          })
-        }
-        match_list.push(...res)
+        // if (res?.length) {
+        //   res = res.filter(match => {
+        //     return !!get_match_status(match.ms)
+        //   })
+        // }
+        // 取五大联赛的前五场赛事
+        match_list.push(...res.slice(0,5))
         set_league_list_obj(match_list)
         LocalStorage.set('get_five_leagues_list', res,12*3600)
         MatchDataWarehouse_PC_List_Common.set_list(match_list);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-          res, null, null, true
+          res.slice(0,5), null, null, true
         );
         api_bymids({mids:lodash.map(res,'mid')})
       } catch (error) {

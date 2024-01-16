@@ -44,8 +44,8 @@
                             </div>
                         </div>
                         <!-- 点点点 -->
-                        <div class="point-wrap" v-if="league.league_total > 3 && !league.is_active">
-                            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/point.svg`">
+                        <div class="point-wrap">
+                            <img :src="compute_local_project_file_path('/image/svg/point.svg')">
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@ import details from "src/core/match-list-pc/details-class/details.js"
 import search from "src/core/search-class/search.js"
 import {store, mutations} from './index.js'
 import loadData from "src/components/load_data/load_data.vue"
-
+import { compute_local_project_file_path } from "src/output/index.js";
 const router = useRouter()
 const scrollRef = ref(null)
 const timer = ref(null)
@@ -149,6 +149,7 @@ watch(
     () => store.keyword,
     lodash.debounce((res) => {
             get_search_result(res)
+            console.log(117887278)
     }, 300)
 )
 
@@ -158,6 +159,7 @@ watch(
     () => {
         if (store.keyword) {
             get_search_result()
+            console.log('jhkjksajk')
         }
     }
 )

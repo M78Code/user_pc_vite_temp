@@ -334,6 +334,7 @@ const get_lastest_market_info = (type) => {
                     if(obj.matchInfoId == item.matchId && obj.playId == item.playId && market.placeNum == item.placeNum){
                         // bug 需要遍历 ot == oddsType
                         let odds = lodash_.get(market,'marketOddsList[0]', {})
+                        // let oddss = market.filter(i => ot == oddsType)
                         // 赛事状态
                         bet_item.mid_mhs = obj.matchHandicapStatus
                         // 投注项状态
@@ -956,10 +957,14 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         query = h5_match_data_switch(other.match_data_type)
         // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
         // BetViewDataClass.set_bet_show(true)
-        // app-复刻版 逻辑不同
-        if(!PROJECT_NAME =='app-h5' || BetData.is_bet_single){
+        // h5 单关显示 
+        if(BetData.is_bet_single){
             // 点击投注项 显示投注栏
             BetData.set_bet_box_h5_show(true)
+        }
+        // 欧洲版 串关数量大于1的情况下 点击 投注项 默认收起
+        if( PROJECT_NAME == 'ouzhou-h5' && !BetData.is_bet_single ){
+            BetData.set_bet_state_show(false)
         }
       
         BetData.set_bet_keyboard_show(false)
@@ -977,7 +982,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // let other = { bet_type:'common_bet'}
     // 移动端 并且是串关 点击 非串关赛事 提示信息  
     // 电子赛事 电竞的不可串关赛事
-    if( PROJECT_NAME.includes('h5') && !BetData.is_bet_single && (( !ol_obj._ispo && other.bet_type == 'esports_bet' ) || (["C01","B03","O01"].includes(mid_obj.cds) || [2,4].includes(Number(mid_obj.mbmty))))){
+    if(!BetData.is_bet_single && (( !ol_obj._ispo && other.bet_type == 'esports_bet' ) || (["C01","B03","O01"].includes(mid_obj.cds) || [2,4].includes(Number(mid_obj.mbmty))))){
         let text = '不支持串关'
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
         return
