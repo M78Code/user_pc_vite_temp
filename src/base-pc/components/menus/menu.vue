@@ -89,7 +89,7 @@ onMounted(()=>{
 
 // 获取最近访问信息
 const set_get_visit_sports_list = (data = []) =>{
-
+    
     let map_data = data.map(item => {
       return {
         mi: item*1 + 100,
@@ -98,6 +98,8 @@ const set_get_visit_sports_list = (data = []) =>{
     })
     // 默认值和 数据结合 
     let popular = lodash_.concat(map_data,popular_list)
+    // 去重
+    popular = lodash_.uniqWith(popular, lodash_.isEqual)
     // 显示前三
     ref_data.popular = lodash_.slice(popular,0,3)
 }

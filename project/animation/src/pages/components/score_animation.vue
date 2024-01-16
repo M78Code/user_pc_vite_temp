@@ -8,7 +8,6 @@
 import headerTop from "./header-top.vue"; // 详情页视频区域中部(主副队logo+主副队名+赛事[阶段+时间+比分])
 import { api_details } from "project/animation/src/public/api/index"
 // import { MatchDataWarehouse_H5_Detail_Common } from "src/output/index.js";
-import courseData from "src/core/match-detail/match-detail-h5/config/course.js";
 import { ref,onMounted ,onUnmounted} from "vue";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
@@ -29,14 +28,7 @@ function getMatchDetailMatchInfo() {
  api_details.get_matchDetail_MatchInfo(params).then((res) => {
     const res_data = lodash.get(res, "data.data");
     if (res_data && res_data.mhid) {
-      match_detail.value = res_data;
-      match_detail.value.course =
-        lodash.get(res_data, "ms") == 110
-          ? "Soon"
-          : courseData[lodash.get(res_data, "csid")][
-              lodash.get(res_data, "mmp")
-            ] || "";
-      console.log(match_detail,'match_detail');      
+      match_detail.value = res_data;     
       // match_detail.value.mstValueTime = format_mst_data(match_detail.value);
    
     } 
