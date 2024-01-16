@@ -107,6 +107,9 @@ class MenuData {
     // 当前选中的菜单id----终极菜单id 根据此id获取对应的旧菜单id 
     this.menu_current_mi = ''
 
+    // 当前的mif
+    this.menu_current_mif = '';
+
     this.kemp_list = []
     this.hot_list = []
     this.to_day_list = []
@@ -347,6 +350,11 @@ class MenuData {
     //宽度请求变化 因为请求参数是在这里触发的
     this.set_match_list_api_config({})
     
+  }
+
+  // 设置当前mif
+  set_menu_current_mif(mif) {
+    this.menu_current_mif = mif
   }
 
   // 设置当前的赛种id

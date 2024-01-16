@@ -107,8 +107,8 @@
         >
           <div class="line"></div>
           <span class="soprts_id_icon"
-            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: get_positon() })"
-            :alt="BaseData.menus_i18n_map[menu_data.left_menu_result.lv1_mi]"></span>
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: get_positon(menu_data.menu_current_mif) })"
+            :alt="BaseData.menus_i18n_map[menu_data.menu_current_mif]"></span>
           <!-- <sport-icon
             v-if="match_info.csid && match_info.csid != -1"
             :sport_id="match_info.csid"
@@ -488,9 +488,9 @@ const full_screen = () => {
   );
   video.full_screen(props.match_info, play_type,route,router);
 };
-const get_positon = ()=>{
-  console.log(`item_${BaseData.compute_sport_id(menu_data.left_menu_result)}`,'111',menu_data.left_menu_result);
-  return `item_${BaseData.compute_sport_id(menu_data.left_menu_result?.lv1_mi ? menu_data.left_menu_result?.lv1_mi?.slice(0,-1):0)}`
+const get_positon = (mif)=>{
+  // console.log(`item_${BaseData.compute_sport_id(menu_data.left_menu_result)}`,'111',menu_data.left_menu_result);
+  return `item_${BaseData.compute_sport_id(mif)}`
 }
 onMounted(() => {
   vx_get_is_fold_status.value = GlobalSwitchClass.is_fold_status
