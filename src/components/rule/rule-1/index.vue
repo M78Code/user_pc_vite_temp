@@ -3,7 +3,7 @@
         <simple-header :title="i18n_t('common.sports_betting_rules')">
             <!-- <span>{{ i18n_t("common.sports_betting_rules") }}</span> -->
         </simple-header>
-        <iframe class="rule-content" :src="rule_url" frameborder="0"></iframe>
+        <!-- <iframe class="rule-content" :src="rule_url" frameborder="0"></iframe> -->
     </div>
 </template>
 
@@ -103,7 +103,7 @@ onMounted(()=>{
     }
 }
 // ========复刻版=======
-.app-h5.rule-wrap, .ouzhou-h5.rule-wrap {
+.app-h5.rule-wrap {
     height: calc(100vh - 46px);
     position: fixed;
     top: 46px;
