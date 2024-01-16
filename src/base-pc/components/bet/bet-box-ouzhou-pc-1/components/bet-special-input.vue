@@ -5,7 +5,9 @@
         <div class="px-12 bet-money" >
             <div class="f-b-c pl-18 bet-input-info">
                 <div>
-                    <div class="font14">{{items?.name}} X{{items?.count}}</div>
+                    <div class="font14">{{items?.name}} X{{items?.count}} 
+                        <span class="bet-series-odds" v-if="index == 0">@{{items.seriesOdds}}</span>
+                    </div>
                     <div class="font12 h12">
                         <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
                         <span class="text-8A8986-i font500"> 
@@ -43,7 +45,10 @@ import { UserCtr,formatMoney, format_money3 } from "src/output/index.js"
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 const props = defineProps({
-    items:{},
+    items:{
+        default: () => {},
+    },
+    index:{}
 })
 
 const ref_data = reactive({
@@ -103,7 +108,6 @@ const bet_money_btn_class = (obj, index) => {
 
 // 快捷金额
 const set_bet_money = obj => {
-    console.error('sss',obj)
     // 获取当前投注金额
     let money = props.items.bet_amount
     let money_ = obj
@@ -235,6 +239,11 @@ const show_quick_amount = () => {
     background: var(--q-gb-bg-c-18);
     transition: .3s;
 }
+
+.bet-series-odds{
+    color: var(--q-gb-t-c-2);
+}
+
 .bet-input{
     width: 160px;
     height: 34px;
