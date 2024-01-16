@@ -491,13 +491,22 @@ const get_lv_1_lv_2_mi = (mi) => {
     })
     left_menu_list.value = wsList;
 }
+/**
+ * 获取mini点击数据
+ * @param {*} obj 
+ */
+ const get_menu_click_data = (obj) =>{
+  if(obj.type){
+    lev_1_click(obj.data)
+  }
+}
 onMounted(()=>{
   // 刷新后使用 MenuData中的数据 menuData 是存在sessionStorage的 不影响首次进入
   let menu_root = lodash.get(MenuData,'menu_root',2)
   handle_click_jinri_zaopan(menu_root)
-  return
   ref_data.emit_lsit = {
-      emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, get_menu_ws_list).off,
+      // emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, get_menu_ws_list).off,
+      emitter_2: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_CHANGE, get_menu_click_data).off,
   }
 })
 onUnmounted(()=>{

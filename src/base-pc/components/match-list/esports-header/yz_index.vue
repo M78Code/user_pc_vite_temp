@@ -3,6 +3,7 @@
   <!-- :class="`sportsbg-${current_menu.csid}`" -->
   <div
     class="c-esports-header"
+    :class="'c-esports-header'+current_menu.csid"
     :style="compute_css_obj(`pc-img-esports-${current_menu.csid}-banner`)"
     v-show="MenuData.is_esports()"
   >
@@ -179,5 +180,17 @@ function tab_click(obj) {
     background-color: var(--qq--gb-bd-c-3);
     z-index: -1;
   }
+}
+.c-esports-header100{
+   background-image: url($SCSSPROJECTPATH+"/image/common/png/esportbg-lol.png"); 
+}
+.c-esports-header101{
+   background-image: url($SCSSPROJECTPATH+"/image/common/png/esportbg-dota2.png"); 
+}
+.c-esports-header102{
+   background-image: url($SCSSPROJECTPATH+"/image/common/png/esportbg-csgo.png"); 
+}
+.c-esports-header103{
+   background-image: url($SCSSPROJECTPATH+"/image/common/png/esportbg-honorkings.png"); 
 }
 </style>

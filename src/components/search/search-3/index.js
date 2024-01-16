@@ -23,7 +23,6 @@ export class mutations {
             console.log('search.get_search_result', res)
             const { state, list } = res
             store.res_list = list
-            console.log('store.res_liststore.res_list',store.res_list)
             store.show_type = 'result'
             store.load_data_state = state
         })
