@@ -205,7 +205,7 @@ const disk_text_replace = (lang, onb) => {
       case 'en':
       case 'ad':
       case 'ms':
-        text = onb.replace("Home", "H").replace("Away", "A").replace("Draw", "D")
+        text = onb.replace("Home", "1").replace("Away", "2").replace("Draw", "x")
         break;
       case 'vi':
         text = onb.replace("Chủ", "C").replace("Khách", "K").replace("Hòa", "H")
@@ -430,6 +430,9 @@ onUnmounted(() => {
   white-space: nowrap;
   &.mvr{
     margin-right: 4px;
+  }
+  span {
+    margin-right: 5px;
   }
 }
 
