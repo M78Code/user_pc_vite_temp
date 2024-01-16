@@ -5,13 +5,14 @@
         <!-- 详情页面包屑 -->
         <breadcrumbs :detail_info="detail_info || {}" />
         <div class="bread-right">
-          <!-- <img
+          <img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
             alt=""
+            v-if="is_show_sr_flg(detail_info)"
             srcset=""
             class="signal"
             @click="go_analyse"
-          /> -->
+          />
           <img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`"
             alt=""
@@ -125,7 +126,7 @@ import analysis from "./analysis/index.vue";
 import tabs from "./components/tabs.vue";
 import breadcrumbs from "./components/breadcrumbs.vue";
 import { usedetailData } from "./index";
-import { formatTime, format_M_D_PC, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js";
+import { formatTime,is_show_sr_flg, format_M_D_PC, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js";
 import loading from "./components/loading/index.vue";
 import { useRouter, useRoute } from "vue-router";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
@@ -171,10 +172,11 @@ export default {
         name: "details",
         params,
       });
-      // setTimeout(() => {
-      //   refresh();
-      // }, 200);
     };
+  //  打开赛事分析
+    const go_analyse = ()=>{
+
+    }
 
     const refresh_click = lodash.debounce(() => {
       refresh_data.value = true;
@@ -244,6 +246,8 @@ export default {
       refresh_click,
       show_item,
       showDetailList,
+      go_analyse,
+      is_show_sr_flg
     };
   },
 };
