@@ -61,6 +61,7 @@ import { compute_local_project_file_path, is_show_sr_flg } from "src/output/inde
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import details from "src/core/match-list-pc/details-class/details.js"
 import { get_history_score_list } from 'src/core/match-list-pc/match-handle-data.js'
+import { BaseInfo } from "src/base-pc/mixin/base-info"
 
 const router = useRouter()
 const route = useRoute()
@@ -98,6 +99,10 @@ const team_names = computed(() => {
   }
   return team_names
 })
+const {
+  collect,
+  handicap_num,
+} = BaseInfo(match)
 </script>
 
 <style lang="scss" scoped>
