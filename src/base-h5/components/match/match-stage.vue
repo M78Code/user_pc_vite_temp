@@ -38,7 +38,8 @@
       </span>
 
       <span v-else-if="detail_data.ms == 110">
-        {{ i18n_t(`ms[${detail_data.ms}]`) }}
+        <!-- 补偿赛事状态110没有 结束比赛的赛事 主要是针对赛果页面 -->
+        {{ (detail_data.mmp == '999' && route.name == 'result') ? i18n_t(`mmp[${detail_data.csid}][${detail_data.mmp}]`) : i18n_t(`ms[${detail_data.ms}]`)  }}
       </span>
       <span v-else>
         <!-- 显示 赛事阶段和赛事时间 -->

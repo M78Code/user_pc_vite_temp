@@ -16,7 +16,7 @@
         <football :right="right" :match_info="match_info" />
       </template>
       <!-- 2、篮球 6美足 -->
-      <template v-else-if="['2','6'].includes(String (match_info.csid))">
+      <template v-else-if="['2','6'].includes(String(match_info.csid))">
         <basketball :right="right" :match_info="match_info" />
       </template>
       <!-- 棒球 -->
@@ -24,7 +24,7 @@
         <baseball :match_info="match_info" :right="right" />
       </template>
       <!-- 3棒、4冰、5网、7斯诺克、8乒乓、9排球、10羽毛球、11手球、12拳击、13沙滩排球、16水球、15曲棍球、14橄榄球 -->
-      <template v-else-if="['4','5','7','8','9','10','11','12','13','16','15','14'].includes(lodash.get(match_info,'csid'))">
+      <template v-else-if="['4','5','7','8','9','10','11','12','13','16','15','14'].includes(String(match_info.csid))">
         <more :match_info="match_info" :right="right" />
       </template>
       <!-- 电竞赛种 -->
