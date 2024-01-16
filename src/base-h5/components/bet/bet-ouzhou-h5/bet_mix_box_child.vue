@@ -52,21 +52,55 @@
                   <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
                       @touchmove="touchmove_handle($event)">
                       <div v-if="BetViewDataClass.bet_order_status == 1">
-                          <bet-mix-box-child3 :items="BetData.bet_s_list"></bet-mix-box-child3>
-                        <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single">
-                            <bet-input-info1></bet-input-info1>
+                        <template v-for="(item, index) in BetData.bet_s_list" :key="index">
+                          <bet-mix-box-child1 :items="item" :index="index"></bet-mix-box-child1>
                         </template>
+                        
+                        <template v-if="BetViewDataClass.bet_special_series.length">
+                          <bet-special-input :items="BetViewDataClass.bet_special_series[0]" @input_click="handle_input_click" :index="0" />
+                        </template>
+
+                          <!-- <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single">
+                            <bet-input-info1></bet-input-info1>
+                        </template> -->
+
+                        <div>
+                          复式连串过关投注
+                        </div>
+
+                          <!-- 串关投注 限额 -->
+                          <!-- 复式连串过关投注 限额 -->
+                          <template v-if="BetData.bet_s_list.length > 1"  >
+                            <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
+                                <bet-special-input :items="item" @input_click="handle_input_click" v-if="index != 0" :index="index" />
+                            </template>
+                          </template>
+
+                          
                       </div>
-                      <bet-mix-box-child6 v-else></bet-mix-box-child6>
+                      
+                      <template v-else>
+                        <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
+                          <bet-special-result :items="item" :key="index" :index="index" />
+                        </div>
+          
+                        <div v-for="(item, index) in BetViewDataClass.orderNo_bet_single_obj" :key="item.orderNo">
+                          <bet-special-state :items="item" :key="index" :index="index" />
+                        </div>
+                      </template>
+                      <!-- <bet-mix-box-child6 v-else></bet-mix-box-child6> -->
                   </div>
+
+                  <key-board v-if="BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1"></key-board>
+
                   <!-- <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config"></key-board> -->
 
-                  <bet-info></bet-info>
+                  <!-- <bet-info></bet-info> -->
               </div>
 
-              <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">
+              <!-- <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">
                 <bet-input-info1></bet-input-info1>
-              </template>
+              </template> -->
 
               <!-- <div v-if="state == 4">
                 <bet-mix-box-child4></bet-mix-box-child4>
@@ -102,6 +136,11 @@ import betMixBoxChild3 from "./bet_mix_box_child3.vue";
 import betMixBoxChild4 from "./bet_mix_box_child4.vue";
 import betMixBoxChild5 from "./bet_mix_box_child5.vue";
 import betMixBoxChild6 from "./bet_mix_box_child6.vue";
+
+import betSpecialInput from "./bet-special-input.vue";
+import betSpecialState from "./bet-special-state.vue";
+import betSpecialResult from "./bet-special-result.vue";
+
 import betAllDetele from "./bet_all_detele.vue";
 import betBar from "./bet-bar.vue";
 //import betInputInfo from "//bet_input_info";
