@@ -21,15 +21,17 @@
       <match-handicap :handicap_list="handicap_list" use_component_key="MatchHandicap2" />
       <!-- 比分板 -->
       <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
-        :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
+        :style="`width:${match_list_tpl_size.media_width}px !important;`">
         <!-- 图片资源有问题，先用文字替代  -->
         <div class="video" v-if="+lodash.get(match, 'mms') > 1"
+          @click="jump_to_details('video')"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
         </div>
         <div v-else-if="+lodash.get(match, 'mvs') > -1"
+          @click="jump_to_details('animal')"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
         </div>
-        <div v-else>
+        <div @click="jump_to_details('score')" v-else>
           <img class="score" :src="score" alt="">
         </div>
       </div>
@@ -126,12 +128,12 @@ export default {
     //     handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(lodash.get(match, 'csid')))
     //   }
     // })
-    function jump_to_details() {
+    function jump_to_details(type) {
       const { tid, csid, mid } = match.value;
       MatchListCardDataClass.set_current_mid(mid);
       if (MenuData.is_scroll_ball()) {
         // 控制右侧比分板
-        MatchDataWarehouseInstance.set_match_details(match.value, [])
+        MatchDataWarehouseInstance.set_match_details(lodash.cloneDeep(match.value), [])
         useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
       } else {
         //比分板跳转到详情页
@@ -140,7 +142,8 @@ export default {
           params: {
             mid: mid,
             tid: tid,
-            csid: csid
+            csid: csid,
+            type: type
           }
         })
       }
