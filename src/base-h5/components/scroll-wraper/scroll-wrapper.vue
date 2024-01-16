@@ -11,7 +11,7 @@
     <div  :class="['scroll-i-con', { detail_list: is_detail, simple: standard_edition == 1, 'static': is_static }]"
       :style="get_container_style">
       <template v-if="MatchMeta.match_mids.length > 0">
-        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="index" :data-mid="match_mid"
+        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
           :class="['s-w-item', {last: index == MatchMeta.match_mids.length - 1 }]" 
           :style="{ transform: `translateY(${get_match_top_by_mid(match_mid)}px)`, zIndex: `${100 + index}` }">
           <!-- 调试用 -->

@@ -43,9 +43,11 @@
               {{lengue_name}} {{ current_match.no }}
             </div>
             </div>
-                <div class="vsm-options" :class="[current_match.mid === item.mid && 'active',
-                 current_match.csid == 1001  && 'vsm-options-short']" 
-                v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
+              <!-- 足蓝队伍比分 -->
+              <div class="ball-rank" v-if="current_match.csid == 1001 || current_match.csid == 1004">
+                <div class="vsm-options"
+                 :class="[current_match.mid === item.mid && 'active', current_match.csid == 1001  && 'vsm-options-short']" 
+                  v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
                   <div class="teams">
                     <div class="index row items-center justify-center">
                       {{ index  + 1}}
@@ -67,6 +69,23 @@
                   </div>
                 </div>
                 <div class="vsm-options" v-if="current_match.csid == 1004"></div>
+              </div>
+              <!-- 赛马类队伍 -->
+              <div v-else>
+                <div class="vsm-options"
+                 :class="[current_match.mid === item.mid && 'active', current_match.csid == 1001  && 'vsm-options-short']" 
+                  v-for="(item, index) in match_list_by_no[0] && match_list_by_no[0].teams" :key="index">
+                  <div class="teams">
+                    <div class="index row items-center justify-center">
+                      {{ index  + 1}}
+                    </div>
+                    <div class="horse-name col ellipsis">
+                      {{item}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+                
         </div>
         <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
         <template v-else-if="sub_menu_type && current_match && 0">
@@ -372,6 +391,9 @@ export default {
         }
         .name.home {
           text-align: right;
+        }
+        .horse-name {
+          padding-left: 15px;
         }
         .name.home, .name.away {
           flex: 10000 1 0%;
