@@ -4,8 +4,8 @@
   <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
   <div class="bet_single_info f-b-c">
     <div class="alert-rules">
-      <div class="font14 font500">
-        {{ items.name }} x{{ items.count }} <span class="ml-4" v-if="index == 0">{{ items.seriesOdds }}</span>
+      <div class="item-left font14 font500">
+        {{ items.name }} x{{ items.count }} <span class="ml-4 item-odds" v-if="index == 0">{{ items.seriesOdds }}</span>
       </div>
      <div class="font14">
       <span class="font400">最高可赢</span>
@@ -180,10 +180,22 @@ const alertRules = (id) => {
 <style scoped lang="scss">
   .bet_single_info{
     width: 100%;
-    height: 0.38rem;
-    margin-top: 0.04rem;
+    height: 0.68rem;
     //margin-left: .08rem;
     padding: 0 .12rem;
+    border-bottom: 1px solid #E2E2E2;
+    background: #F5F5F5;
+    .item-odds{
+      color: #FF7000;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .item-left{
+      display: flex;
+      align-items: center;
+      color: #1A1A1A;
+      font-size: 16px;
+    }
   }
   .bet_single_detail{
     //margin-top: 0.08rem;
