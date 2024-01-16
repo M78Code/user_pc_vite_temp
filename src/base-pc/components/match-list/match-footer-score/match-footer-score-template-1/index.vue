@@ -20,8 +20,8 @@
       </div>
     </template>
      <!-- lodash.get(match, 'score_list.length', 0) > 0 && -->
-    <template v-else-if="is_show_score_content &&
-      score_list.length > 0 &&
+     <template v-else-if="is_show_score_content &&
+      (lodash.get(score_list, '[0].length')) > 0 &&
       match_status
       ">
       <span class="scroll-arrow arrow-left" @click="scorll('left')" v-show="more_left_icon">
@@ -29,7 +29,7 @@
       </span>
       <!-- 历史比分列表 -->
       <div class="stage-score" ref="stage_score">
-        <span v-for="(score, index) in score_list" :key="index" class="item">{{ score.home }}-{{
+        <span v-for="(score, index) in lodash.get(score_list, '[0]', [])" :key="index" class="item">{{ score.home }}-{{
           score.away }}</span>
       </div>
       <span class="scroll-arrow arrow-right" v-show="more_right_icon" @click="scorll('right')">
@@ -50,7 +50,7 @@
                 : i18n_t("list.total_pp_score_count")
             }}
           </span>
-          <span class="active-text">{{ match.total_score_str }}</span>
+          <span class="active-text">{{ score_list[1]  }}</span>
         </div>
       </div>
     </template>
@@ -62,19 +62,9 @@
 </template>
 
 <script setup>
-
-import { computed, onMounted, reactive, ref } from 'vue';
-
-import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
-import {component_symbol ,need_register_props} from "../config/index.js"
-import { get_match_status } from 'src/output/index.js'
-import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
-import { get_history_score_list } from 'src/core/match-list-pc/match-handle-data.js'
-import lodash from 'lodash';
-// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-
+import { use_match_footer_score  } from '../match-footer-score'
+import {inject} from 'vue'
 const props = defineProps({
   match: {
     type: Object,
@@ -91,90 +81,15 @@ const props = defineProps({
     default: () => 0,
   },
 })
-
-let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
-// 赛事模板宽度
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-
-const more_right_icon = ref(false);
-const more_left_icon = ref(false);
-const stage_score = ref(null);
-// 当前赛事状态
-const match_status = computed(() => {
- return get_match_status(props.match.ms, [110]);
-})
-const score_list = computed(() => {
-    let score_list = get_history_score_list(props.match) || []
-    if (score_list.length > 0) {
-      return score_list[0]
-    }
-    return score_list
-});
-onMounted(() => {
-  // 异步设置组件是否挂载完成
-  setTimeout(() => {
-    scorll("init");
-  });
-})
-
-/**
- * 计算是否显示比分滚动箭头
- */
-function compute_is_show_more () {
-  if (!stage_score.value) return;
-  let length = score_list.value.length;
-  // let length = lodash.get(props.match, "score_list.length", 0);
-  if (length < 5) {
-    more_right_icon.value = false;
-    more_right_icon.value = false;
-    return;
-  }
-  //比分总宽度
-  let totalWidth = length * 50,
-    //已滚动的距离
-    scrollLeft = lodash.get(stage_score.value, "scrollLeft", 0),
-    //元素实际宽度
-    clientWidth = lodash.get(stage_score.value, "clientWidth", 0);
-  //总宽度大于实际宽度
-  if (totalWidth > clientWidth) {
-    more_right_icon.value = true;
-  }
-  //已经移动距离
-  if (scrollLeft > 0) {
-    more_left_icon.value = true;
-    //未移动距离
-  } else {
-    more_left_icon.value = false;
-  }
-  //移动到底了
-  if (totalWidth - 15 < scrollLeft + clientWidth) {
-    more_right_icon.value = false;
-  }
-}
-/**
- * 比分溢出时滚动方法
- */
-function scorll (type) {
-  let length = score_list.value.length;
-  // let length = lodash.get(props.match, "score_list.length", 0);
-  if (!stage_score.value || length < 5) return;
-  let stageScore = stage_score.value;
-  switch (type) {
-    case "left":
-      stageScore.scrollLeft -= 100;
-      break;
-    case "init":
-      stageScore.scrollLeft = 2000;
-      break;
-
-    default:
-      stageScore.scrollLeft += 100;
-      break;
-  }
-  compute_is_show_more();
-}
-
-
+const match_style_obj=inject('match_style_obj')
+const {
+  score_list,
+  scorll,
+  more_left_icon,
+  more_right_icon,
+  stage_score,
+  match_status,
+} = use_match_footer_score(props)
 </script>
 
 <style lang="scss" scoped>
