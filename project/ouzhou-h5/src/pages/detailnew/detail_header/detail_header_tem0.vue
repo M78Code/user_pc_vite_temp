@@ -10,8 +10,6 @@
       </div>
       <div class="detail-score">
         <div class="detail-score-time" :class="get_match_detail.mmp == 0?'active':''">
-          <!-- <span v-if="get_match_detail.mmp!=0">{{get_match_detail.course}}</span> -->
-          <!-- <span v-if="get_match_detail.ms != 110">{{get_match_detail.mstValue}} {{get_match_detail.mstValueTime}}</span> -->
           <match-stage :detail_data="get_match_detail" v-if="get_match_detail.ms != 110"></match-stage>
         </div>
       </div>
