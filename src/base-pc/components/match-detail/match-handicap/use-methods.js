@@ -353,7 +353,7 @@ export const useMethods = ({ props,emit }) => {
     if (statu) {
       state.waterfall = details.set_waterfall(state.details_data);
     } else {
-      state.waterfall = [this.details_data];
+      state.waterfall = [state.details_data];
     }
     // 判断是否显示【返回顶部】按钮
     set_go_top_show();
