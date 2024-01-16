@@ -57,7 +57,7 @@
         <div class="media-col"></div>
       </div>
       <!-- 当前局盘 -->
-      <div class="match-handicap-item" v-if="lodash.get(match_tpl_info, 'is_show_cur_handicap')">
+      <div class="match-handicap-item" v-if="match.is_show_cur_handicap">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:105px !important;`">
           <basis-info3 v-if="is_mounted" />

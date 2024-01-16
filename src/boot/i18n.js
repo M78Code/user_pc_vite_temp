@@ -15,11 +15,10 @@ import { i18n ,server_key_map ,map_lang } from  "./i18n-2.js"
  * @param {*} lang 如果沒有穿入就是用緩存的
  * @return {*}
  */
-const loadLanguageAsync = async (lang) => {
-  lang = lang || locale
+const loadLanguageAsync = async (lang_) => {
+  let lang = lang_ == 'hk' ? 'zh' : lang_ || locale
   try {
     const langfile = await import( /* webpackChunkName: "lang-[request]" */ `../i18n/${IS_PC ? 'pc' : 'h5'}/${map_lang[lang]}/index.json`)
-    console.log(langfile,'langfile');
     const commLang = await import( /* webpackChunkName: "lang-[request]" */ `../i18n/${IS_PC ? 'pc' : 'h5'}/common-lang/index.json`)
     // 动态加载对应的语言包
     // let langFile = langfile.default || langfile;
