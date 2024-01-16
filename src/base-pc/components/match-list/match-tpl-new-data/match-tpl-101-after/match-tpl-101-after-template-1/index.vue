@@ -31,8 +31,9 @@
           @click="jump_to_details('animal')"
           :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
         </div>
-        <div @click="jump_to_details('score')" v-else>
-          <img class="score" :src="score" alt="">
+        <div v-else @click="jump_to_details('score')"
+        :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-list-score-active' : 'pc-home-list-score' })"
+        >
         </div>
       </div>
     </div>
@@ -52,7 +53,7 @@
 <script>
 import { computed, watch, inject } from 'vue';
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
-import { MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
 import { MatchBasisInfo101FullVersionWapper as BasisInfo101 } from 'src/base-pc/components/match-list/match-basis-info/template-101/index.js'
@@ -63,8 +64,6 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import { useRouter } from 'vue-router';
 import { check_match_end } from 'src/core/match-list-pc/match-handle-data.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-
-const score = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score.png`;
 
 export default {
   components: {
