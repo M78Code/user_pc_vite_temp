@@ -334,7 +334,7 @@ const get_lastest_market_info = (type) => {
                     if(obj.matchInfoId == item.matchId && obj.playId == item.playId && market.placeNum == item.placeNum){
                         // bug 需要遍历 ot == oddsType
                         let market_odds_list = lodash_.get(market,'marketOddsList',[]) || []
-                        console.error('ssssssss')
+
                         let odds = market_odds_list.find(page=> page.oddsType == item.ot) || {}
 
                         if( odds.id ) {
