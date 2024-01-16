@@ -5,7 +5,12 @@
         <div class="f-b-c bet-content">
             <div class="f-s-c">
                 <div class="f-c-c bet-count" >{{ total() }}</div>
-                <div class="bet-slip">{{ i18n_t("common.bets_single") }}</div>
+                <!-- 单关 -->
+                <div class="bet-slip" v-if="BetData.is_bet_single && !BetData.is_bet_merge">{{ i18n_t("common.bets_single") }}</div>
+                <!-- 合并单关 -->
+                <div class="bet-slip" v-else-if="BetData.is_bet_single && BetData.is_bet_merge">{{ i18n_t("bet.bet_single_merge") }}</div>
+                <!-- 串关 -->
+                <div class="bet-slip" v-else-if="!BetData.is_bet_single">{{ i18n_t("bet.bet_series") }}</div>
             </div>
        
             <div class="f-e-c">
