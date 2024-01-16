@@ -63,9 +63,8 @@ export function match_list_handle_set(match_list) {
                 tpl_id: match.tpl_id,
                 hSpecial: match.hSpecial,
                 hSpecial5min: match.hSpecial5min,
-                play_current_key:match.tab_play_keys,
+                play_current_key:match.play_current_key,
                 tab_play_keys: match.tab_play_keys,
-                play_current_key: match.tab_play_keys,
                 has_other_play: match.has_other_play,
                 up_half_text: match.up_half_text
                 , ...ass

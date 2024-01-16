@@ -337,7 +337,7 @@ const transfer_on = (odd_item) => {
   let on = odd_item.onb || odd_item.on;
   if(props.match.csid == 1 && [18].includes(+lodash.get(props.current_tab_item, 'id')) ){
     on = odd_item.ot
-    if(odd_item.ot == 'Other' && ['zh', 'tw'].includes(get_lang)){
+    if(odd_item.ot == 'Other' && ['zh', 'tw', 'hk'].includes(get_lang)){
       on = '其他'
     }
   }

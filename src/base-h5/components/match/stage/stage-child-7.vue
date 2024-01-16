@@ -39,7 +39,7 @@ export default {
           mct = 1;
         }
         let new_num = mct;        
-        if(UserCtr.lang == 'zh'){      
+        if(['zh', 'hk'].includes(UserCtr.lang)){      
           new_num = numberToChinese(mct);
         }
         let game_count = i18n_t("mmp.7.x");

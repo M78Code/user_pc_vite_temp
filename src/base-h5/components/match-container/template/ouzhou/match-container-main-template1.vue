@@ -138,7 +138,7 @@
 
                           <!-- 电竞串关标识 -->
                           <div v-if="menu_type == 3000 && match.ispo" class="flag-chuan"
-                            :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ i18n_t('match_info.match_parlay') }}
+                            :class="{ 'special-lang': ['zh', 'tw', 'hk'].includes(get_lang) }">{{ i18n_t('match_info.match_parlay') }}
                           </div>
                           <!--中立场图标-->
                           <div class="live-i-b-wrap newer" v-show="match.mng * 1 && ![5, 10, 7, 8].includes(Number(match.csid))">

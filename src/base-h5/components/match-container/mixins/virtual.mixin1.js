@@ -54,7 +54,7 @@ export default defineComponent({
         if(this.match.matchDay){
           let m_str = i18n_t('virtual_sports.matchDay');
           let append_space = "&nbsp;&nbsp;"
-          if(['zh','tw'].includes(this.get_lang)){
+          if(['zh','tw', 'hk'].includes(this.get_lang)){
             append_space = "";
           }
           result = m_str.replace('%s',`<span style="{color:${color_1}">${append_space}${this.match.matchDay}</span>`);
@@ -82,7 +82,7 @@ export default defineComponent({
         if(this.match.legOrder){
           let lang_leg_order = i18n_t('virtual_sports.legOrder');
           let append_space = "&nbsp;&nbsp;"
-          if(['zh','tw'].includes(this.get_lang)){
+          if(['zh','tw', 'hk'].includes(this.get_lang)){
             append_space = "";
           }
           let result2 = lang_leg_order.replace('%',`<span style="color:${color_1}">${this.match.legOrder}${append_space}</span>`);
@@ -93,7 +93,7 @@ export default defineComponent({
       else if(this.match.matchDay && !this.match.sportId == '1004'){
         let m_str = i18n_t('virtual_sports.matchDay');
         let append_space = "&nbsp;&nbsp;"
-        if(['zh','tw'].includes(this.get_lang)){
+        if(['zh','tw', 'hk'].includes(this.get_lang)){
           append_space = "";
         }
         result = m_str.replace('%s',`<span style="color: ${color_1}">${append_space}${this.match.matchDay}</span>`);

@@ -169,7 +169,7 @@ export default {
         if(this.match.matchDay){
           let m_str = i18n_t('virtual_sports.matchDay');
           let append_space = "&nbsp;&nbsp;"
-          if(['zh','tw'].includes(lang.value)){
+          if(['zh','tw', 'hk'].includes(lang.value)){
             append_space = "";
           }
           result = m_str.replace('%s',`<span style="{color:${color_1}">${append_space}${this.match.matchDay}</span>`);

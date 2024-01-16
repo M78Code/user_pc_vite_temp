@@ -432,22 +432,30 @@ export function switch_other_play(mid, play_key, MatchListData = MatchDataWareho
   */
 export const set_match_play_current_index = (match, play_key) => {
   let tab_play_keys = String(match.tab_play_keys).split(",")
-  // 设置选中的玩法索引
-  match.play_current_index = tab_play_keys.findIndex(key => key == play_key)
-  // 设置选中的玩法key
-  match.play_current_key = play_key
-  // 保存当前选中的玩法
-  other_play_current_play[match.mid + '_'] = play_key
-  match.other_handicap_list = get_compute_other_play_data(match)
+  let idx = tab_play_keys.findIndex(key => key == play_key)
+  if (idx == -1) {
+    idx = 0
+  }
+  if (tab_play_keys.length) {
+    // 设置选中的玩法索引
+    match.play_current_index = idx
+    // 设置选中的玩法key
+    match.play_current_key = tab_play_keys[idx]
+    // 保存当前选中的玩法
+    other_play_current_play[match.mid + '_'] = tab_play_keys[idx]
+    match.other_handicap_list = get_compute_other_play_data(match)
+  }
 }
 //获取保存的盘口玩法
-export function get_play_current_play(match, tab_play_keys = '') {
+export function get_play_current_play(match, _tab_play_keys = '') {
   const cur = other_play_current_play[match.mid + '_']
-  if (cur && match.tab_play_keys.includes(cur)) {
+  let tab_play_keys = String(match.tab_play_keys || _tab_play_keys).split(",")
+  if (cur && tab_play_keys.includes(cur)) {
+    // 设置选中的玩法索引
     return cur
   }
-  if (match.tab_play_keys || tab_play_keys) {
-    return String(match.tab_play_keys || tab_play_keys).split(",")[0]
+  if (tab_play_keys.length) {
+    return tab_play_keys[0]
   }
   return undefined
 }

@@ -116,7 +116,7 @@ export default {
       let match = res.data
       mid.value = match.mid //设置news 需要的mid
       // 设置页面激活的tab
-      if (['zh', 'tw'].includes(UserCtr.lang)) {
+      if (['zh', 'tw', 'hk'].includes(UserCtr.lang)) {
         activeTab.value = match.ms == 1 ? 1 : 2
       }else {
         activeTab.value = match.ms == 1 ? 0 : 1
@@ -195,8 +195,8 @@ export default {
     // 只在简中和繁中的时候有赛事文章
     // if (['zh', 'tw'].includes(localStorage.getItem('lang'))) {
     // if (localStorage.getItem('lang') == 'zh') {
-    if (['zh', 'tw'].includes(UserCtr.lang)) {
-      if (UserCtr.lang == 'zh') {
+    if (['zh', 'tw', 'hk'].includes(UserCtr.lang)) {
+      if (['zh', 'hk'].includes(UserCtr.lang)) {
         newsTabName.value = '资讯'
       } else {
         newsTabName.value = '資訊'

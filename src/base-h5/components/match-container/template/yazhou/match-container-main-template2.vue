@@ -47,7 +47,7 @@
         <div v-if="!collapsed && hp.hmed" class="limit-time flex items-center justify-center"
           :class="{'first-t':index == 0}">
           <div class="limit-t-i row justify-center items-center">
-            <template v-if="!['zh', 'tw'].includes(lang)">
+            <template v-if="!['zh', 'tw', 'hk'].includes(lang)">
               {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ i18n_t('match_main.cut_off')}}
             </template>
             <template v-else>
