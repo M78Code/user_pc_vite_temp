@@ -223,6 +223,10 @@ declare namespace K {
   /** 虚拟体育热门玩法 */ type  hotName = {
     /** 盘口ID? */ hotName: string,
   };
+
+  /** 赛事阶段描述 */ type mmp = {
+    /** 赛事阶段描述 */ mmp: number,
+  };
 }
 
 /** annotation */ type template = {

@@ -8,7 +8,7 @@
         {{ items.name }} x{{ items.count }} <span class="ml-4 item-odds" v-if="index == 0">{{ items.seriesOdds }}</span>
       </div>
      <div class="font14">
-      <span class="font400">最高可赢</span>
+      <span class="font400 item-left-btm">最高可赢</span>
       <span v-if="items.seriesOdds">
         <em class="total-money number_family font500" > {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount)) }}</em>
       </span>
@@ -185,6 +185,11 @@ const alertRules = (id) => {
     padding: 0 .12rem;
     border-bottom: 1px solid #E2E2E2;
     background: #F5F5F5;
+    .item-left-btm{
+      margin-right: 0.04rem;
+      color: #8A8986;
+      font-size: 14px;
+    }
     .item-odds{
       color: #FF7000;
       font-size: 20px;
@@ -206,8 +211,9 @@ const alertRules = (id) => {
 
   /* ************** 右边内容 ************** -S */
   .content-b {
-    height: 0.32rem;
+    height: 0.44rem;
     width: 1.50rem;
+    padding-left: 0.16rem;
     border-radius: 0.08rem;
     font-size: 0.16rem;
     overflow: hidden;
@@ -215,13 +221,15 @@ const alertRules = (id) => {
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     padding-right: 0.1rem;
     background: var(--q-gb-bg-c-25);
     margin-left: 0.05rem;
-    border: 1px solid var(--q-gb-bd-c-16);
+    border-radius: 2px;
+    border: 0.5px solid #A4A4A4;
+    background: #FFF;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.10);
     .limit-txt {
-      color: var(--q-gb-t-c-16);
+      color: #8A8986;
       //font-size: 0.16rem;
     }
     &:hover {

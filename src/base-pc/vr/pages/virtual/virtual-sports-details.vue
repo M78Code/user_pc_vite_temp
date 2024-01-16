@@ -3,7 +3,87 @@
 -->
 <template>
   <div class="virtual-detail row justify-between" ref="virtual_detail_box">
-    <!-- 头部 -->
+
+    <div class="match-detail-bread">
+      <!-- 详情页面包屑 -->
+      <breadcrumbs :detail_info="match || {}" />
+      <div class="bread-right">
+        <img
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
+          alt=""
+          srcset=""
+          class="signal"
+          @click="()=>{}"
+        />
+        <img
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`"
+          alt=""
+          srcset=""
+          :class="{ balance_refresh: true}"
+          @click="()=>{}"
+        />
+      </div>
+    </div>
+    <div class="match-detail-head" v-if="0">
+      <div class="detail-head-leagal">
+        <span class="match-detail-head-name">{{ detail_info.tn }}</span>
+        <img
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
+          alt=""
+          srcset=""
+          style="margin: 0 10px; height: 14px"
+          v-if="detail_info.mng"
+        />
+        <span class="leagal-time">
+          <match-process
+            :match="detail_info"
+            show_page="match-list"
+            :rows="1"
+          />
+        </span>
+      </div>
+      <div>
+        <div
+          class="expansion_ref_slotHeader expansion-vs"
+          @click.stop="show_item"
+        >
+          <div style="display: flex;align-items: center;">
+            <span class="home-vs-away" :title="detail_info.mhn">{{ detail_info.mhn }} </span>
+            <span class="match-detail-head-name m-10">v</span>
+            <span class="home-vs-away" :title="detail_info.man">{{ detail_info.man }}</span>
+          </div>
+          <img
+          
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
+            class="expand-icon"
+          />
+        </div>
+        <!-- 显示赛事卡片 -->
+        <q-card
+          class="match-name-list"
+          :style="{ maxHeight: showDetailList ? '500px' : '0px' }"
+        >
+          <div v-for="item in matchDetailList" :key="item.mid">
+            <div
+              :class="{
+                'card-item': true,
+                'active-nav': current_id == item.mid,
+              }"
+              @click="match_click(item)"
+            >
+              {{ item.mhn + " v " + item.man }}
+            </div>
+          </div>
+        </q-card>
+      </div>
+      <div
+        class="header_banne sport_bg"
+        :style="`background-position:0 -${sport_ball_type[sportId]}px`"
+      ></div>
+    </div>
+
+    <div class="row virtual-detail-wrap row justify-between">
+      <!-- 头部 -->
     <div class="virtual-head" v-if="0">
       <div class="type-bg bg1001">
         <div class="back-wrap">
@@ -64,6 +144,7 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 </template>
 <script>
@@ -76,6 +157,9 @@ import ranking_list_start from "src/base-pc/vr/pages/virtual/virtual-sports-part
 import football_ranking_list from "src/base-pc/vr/pages/virtual/virtual-sports-part/football-ranking-list.vue"
 import group_knockout from "src/base-pc/vr/pages/virtual/virtual-sports-part/group-knockout.vue"
 import virtual_match_statistic from 'src/base-pc/vr/components/virtual-match-statistic.vue'
+import breadcrumbs from "src/base-pc/vr/pages/virtual/details/children/breadcrumbs.vue";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+
 export default {
   mixins:[virtual_sports_details_mixin],
   name:'virtual_sports_details',
@@ -88,7 +172,13 @@ export default {
     'ranking-list-start':ranking_list_start,
     'football-ranking-list':football_ranking_list,
     'group-knockout':group_knockout,
+    breadcrumbs
   },
+  data(){
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
+  }
 }
 </script>
 
@@ -97,6 +187,32 @@ export default {
 .virtual-detail {
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
+
+  .match-detail-bread {
+    width: 770px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    overflow: hidden;
+    background: var(--q-gb-bg-lg-5);
+    display: flex;
+    justify-content: space-between;
+    .bread-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: -20px;
+        width: 2px;
+        height: 20px;
+        top: 9px;
+        background-color: var(--q-gb-bg-c-10);
+      }
+    }
+  }
   .detail-main {
     width: 770px;
   }

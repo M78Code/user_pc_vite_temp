@@ -129,6 +129,7 @@ import { usedetailData } from "./index";
 import { formatTime,is_show_sr_flg, format_M_D_PC, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js";
 import loading from "./components/loading/index.vue";
 import { useRouter, useRoute } from "vue-router";
+import details from "src/core/match-list-pc/details-class/details.js"
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 export default {
   components: {
@@ -175,7 +176,7 @@ export default {
     };
   //  打开赛事分析
     const go_analyse = ()=>{
-
+      details.sr_click_handle(detail_info.value);
     }
 
     const refresh_click = lodash.debounce(() => {
