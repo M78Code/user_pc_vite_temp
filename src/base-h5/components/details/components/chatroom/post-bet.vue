@@ -147,7 +147,7 @@ export default defineComponent({
          * 前端  简体 zh 后端 zs
          * 前端  繁体 tw 后端 zh  tw
          */
-        const langCode = item.langCode === 'zs' ? 'zh' : 'tw'
+        const langCode = ['zs', 'hk'].includes(item.langCode) ? 'zh' : 'tw'
         // console.log(item)
         params.push({
           chatRoomId: get_chatroom_id,

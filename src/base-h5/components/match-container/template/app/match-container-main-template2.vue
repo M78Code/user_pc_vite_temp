@@ -44,7 +44,7 @@
           </div>
           <div v-if="collapsed && hp.hmed" class="limit-time">
             <div class="limit-t-i">
-              <template v-if="!['zh', 'tw'].includes(lang)">
+              <template v-if="!['zh', 'tw', 'hk'].includes(lang)">
                 {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ i18n_t('match_main.cut_off')}}
               </template>
               <template v-else>

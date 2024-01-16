@@ -22,12 +22,14 @@
     <!-- <left-main-min v-show="LayOutMain_pc.layout_left_menu_status == 'mini'" /> -->
     <!-- 左侧 -->
     <left-main v-show="LayOutMain_pc.layout_left_menu_status == 'normal'" />
+    <left-main-min v-show="LayOutMain_pc.layout_left_menu_status == 'mini'" />
   </div>
 </template>
 
 <script setup>
 import { onUnmounted,onMounted, reactive, ref } from "vue";
 import leftMain from "../pages/left-main/index.vue";
+import leftMainMin from "../pages/left-main/index-min.vue";
 
 import { useRoute } from "vue-router";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";

@@ -215,7 +215,7 @@
       <span>{{
         formatTime(
           order.closingTime,
-          ['zh', 'tw'].includes(lang) ? "yyyy-mm-dd hh:MM" : "dd/mm/yyyy hh:MM") }}</span>
+          ['zh', 'tw', 'hk'].includes(lang) ? "yyyy-mm-dd hh:MM" : "dd/mm/yyyy hh:MM") }}</span>
     </div>
   </div>
 </template>

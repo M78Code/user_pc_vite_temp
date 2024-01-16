@@ -96,7 +96,7 @@ const props = defineProps({
         analysis_basketball_matches.value.style.minHeight = window.innerHeight - rem(0.84) + 'px'; ;
       }
     })
-    if (['zh', 'tw'].includes(UserCtr.lang)) {
+    if (['zh', 'tw', 'hk'].includes(UserCtr.lang)) {
       tabList.value.unshift(
         {
           // TODO: 国际化

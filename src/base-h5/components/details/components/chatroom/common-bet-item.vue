@@ -174,7 +174,7 @@ export default defineComponent({
     });
     const i18n_data = (item) => {
       let txts = ''
-      const lang = data.langCode ? (data.langCode == 'zs' ? 'zh' : data.langCode) : 'zh'
+      const lang = data.langCode ? (['zs', 'hk'].includes(data.langCode) ? 'zh' : data.langCode) : 'zh'
       return {
         // #TODO $root替换
         // sport_name: i18n_t(`common_lang.${lang}.sport2`)[item.sportId],

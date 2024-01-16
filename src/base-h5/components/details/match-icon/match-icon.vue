@@ -256,7 +256,7 @@ const icon_click_muUrl = () => {
        // 开启视频
       useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true)
       let video_sorry_temp = "";
-      if (UserCtr.lang == 'zh') {
+      if (['zh', 'hk'].includes(UserCtr.lang)) {
         video_sorry_temp = "!";
       }
       // set_toast({
@@ -265,7 +265,7 @@ const icon_click_muUrl = () => {
     }
   }).catch((v) => {
     let video_sorry_temp = "";
-    if (UserCtr.lang == 'zh') {
+    if (['zh', 'hk'].includes(UserCtr.lang)) {
       video_sorry_temp = "!";
     }
     // set_toast({

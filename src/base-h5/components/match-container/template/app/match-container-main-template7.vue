@@ -87,7 +87,7 @@
 
               <!-- 电竞串关标识 -->
               <div v-if="is_esports && match.ispo" class="flag-chuan"
-                :class="{ 'special-lang': ['zh', 'tw'].includes(lang) }">{{ i18n_t('match_info.match_parlay') }}
+                :class="{ 'special-lang': ['zh', 'tw', 'hk'].includes(lang) }">{{ i18n_t('match_info.match_parlay') }}
               </div>
               <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
               <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle"
