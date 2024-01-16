@@ -4,6 +4,8 @@
 -->
 <template>
   <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
+    <div v-show="false"> {{ UserCtr.user_version }} --
+      {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
     <div class="key-row row">
       <div class="key-cell" data-num="qon">
         <span>+</span>{{addnum.qon}}
@@ -114,13 +116,13 @@ watch(() => pre_odds_value, (new_) => {
   }
 })
 
-watch(() => money.value, (new_) => {
-  let emit_name = 'EMIT_INPUT_BET_MONEY'
-  if(BetData.is_bet_single){
-    emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
-  }
-  useMittEmit(MITT_TYPES[emit_name],{ params:BetData.bet_keyboard_config, money: new_ })
-})
+// watch(() => money.value, (new_) => {
+//   let emit_name = 'EMIT_INPUT_BET_MONEY'
+//   if(BetData.is_bet_single){
+//     emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
+//   }
+//   useMittEmit(MITT_TYPES[emit_name],{ params:BetData.bet_keyboard_config, money: new_ })
+// })
 
 watch(() => active_index, (new_) => {
   if (money.value) delete_all.value = true;
@@ -157,9 +159,17 @@ const _handleKeyPress = (e) => {
   }
   let emit_name = 'EMIT_INPUT_BET_MONEY'
   if(BetData.is_bet_single){
-    emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
+    if (BetData.is_bet_merge) {
+      if (BetData.bet_keyboard_config.playOptionsId) {
+        emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
+      } else {
+        emit_name = 'EMIT_INPUT_BET_MONEY_MERGE'
+      }
+    } else {
+      emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
+    }
   }
-  useMittEmit(MITT_TYPES[emit_name], { params:BetData.bet_keyboard_config, money:money.value } )
+  useMittEmit(MITT_TYPES[emit_name], { params:BetData.bet_keyboard_config, money:money.value*1 } )
 }
 
 // 小数点 .
@@ -200,11 +210,13 @@ const _handmaxKey = () => {
 }
 // 删除键
 const _handleDeleteKey = () => {
-  if (!money.value) return   
+  let money_ = BetData.bet_amount.toString()
+  if (!money_) return   
   //删除最后一个
-  let s = money.value.toString()
+  let s = money_
+  console.log('=================================_handleDeleteKey================================', s)
   money.value = s.substring(0, s.length - 1);
-  BetData.set_bet_amount(money.value )
+  BetData.set_bet_amount(money.value*1)
 }
 
 // 数字建
