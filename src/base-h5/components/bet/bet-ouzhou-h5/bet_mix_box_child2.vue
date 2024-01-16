@@ -57,14 +57,12 @@
                   }} {{
   items.matchType == 2 ? items.mark_score : '' }}</div>
                 </div>
-
-
               </div>
             </div>
           </div>
         </div>
         <!-- 输入框 -->
-        <bet-input-info :item="items" :index="index"></bet-input-info>
+        <bet-input-info2 :item="items" :index="index"></bet-input-info2>
       </div>
     </template>
     <!-- 合并单关最下面的多个输入框 -->
@@ -72,7 +70,7 @@
   </div>
 </template>
 <script setup>
-import betInputInfo from "./bet_input_info.vue";
+import betInputInfo2 from "./bet_input_info2.vue";
 import { compute_value_by_cur_odd_type } from "src/output/index.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import BetData from "src/core/bet/class/bet-data-class.js";

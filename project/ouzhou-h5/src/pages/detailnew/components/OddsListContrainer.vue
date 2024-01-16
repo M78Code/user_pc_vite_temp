@@ -1,14 +1,14 @@
 <template>
   <div class="component odds-list-container">
     <template v-if="match_odds_info && match_odds_info.length > 0 && match_detail?.ms != 2">
-      <TransitionGroup>
+      <!-- <TransitionGroup> -->
         <template v-for="item in match_odds_info" :key="item.topKey">
           <OddsItem v-if="item.hton != '0'" :data="item"></OddsItem>
         </template>
         <template v-for="item in match_odds_info" :key="item.topKey">
           <OddsItem v-if="item.hton == '0'" :data="item"></OddsItem>
         </template>
-      </TransitionGroup>
+      <!-- </TransitionGroup> -->
     </template>
     <template v-else>
       <div v-if="!loading" class="no-data-wrap">
