@@ -3,8 +3,8 @@
  * @Description: 投注弹框，单关串关切换逻辑与普通赛事不一致，所以组件区分，避免逻辑混乱
 -->
 <template>
-  <div v-show="false">-{{ BetData.bet_data_class_version }}-{{BetData.bet_box_h5_show}}-{{BetData.bet_oid_list}}</div>
-  <div class="component bet-mix-box ouzhou-h5" v-if="BetData.bet_box_h5_show && BetData.bet_oid_list.length">
+  <div v-show="true">-{{ BetData.bet_data_class_version }}-{{BetData.bet_box_h5_show}}-{{BetData.bet_oid_list}}</div>
+  <div class="component bet-mix-box ouzhou-h5" v-if="BetData.bet_box_h5_show && BetData.bet_oid_list.length ">
     <betMixBoxChild></betMixBoxChild>
   </div>
 </template>
