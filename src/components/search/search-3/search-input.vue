@@ -63,7 +63,6 @@ const route = useRoute()
 const inputRef = ref(null)
 page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
 function change_txt() {
-    store.show_type = 'init'
     store.keyword = store.keyword.replace(/#/g, "");
     if (store.keyword.length > 20) store.keyword = store.keyword.slice(0, 20);
 }
@@ -82,6 +81,10 @@ function on_Close() {
 }
 
 function input_click() {
+    if (!store.keyword){
+      store.show_type = 'init'
+      return
+    }
     store.show_type = 'result'
 }
 

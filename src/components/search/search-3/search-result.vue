@@ -149,6 +149,7 @@ watch(
     () => store.keyword,
     lodash.debounce((res) => {
             get_search_result(res)
+            console.log(117887278)
     }, 300)
 )
 
@@ -158,6 +159,7 @@ watch(
     () => {
         if (store.keyword) {
             get_search_result()
+            console.log('jhkjksajk')
         }
     }
 )
