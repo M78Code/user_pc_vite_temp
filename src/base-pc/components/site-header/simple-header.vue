@@ -8,8 +8,9 @@
   <div class="c-simple-header">
     <div v-if="is_hide_icon" class="icon-layout"></div>
     <div v-else class="rule-logo">
-      <div class="img-logo custom-format-img-logo-01"></div>
-      <img src="" alt="">
+      <!-- <div class="img-logo custom-format-img-logo-01"></div> -->
+      <img v-if="PROJECT_NAME=='ouzhou-pc'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/ouzhou-logo.png`" alt="" srcset="" class="" />
+      <img src="" alt="" v-else>
     </div>
     <div class="head-info">
       <div class="rule-title">
@@ -29,8 +30,9 @@
 <script>
 // src\core\utils\module\match-list-js与src\core\format\module\format-date.js 存在get_remote_time的冲突导出
 // import { get_remote_time,utc_to_gmt_no_8_ms2 } from "src/output/index.js" 
-import { get_remote_time,utc_to_gmt_no_8_ms2 } from "src/output/index.js" 
+import { get_remote_time,utc_to_gmt_no_8_ms2,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js" 
 import refresh from "src/components/refresh/refresh.vue"
+import { compute_img_url } from 'src/core/server-img/index.js'
 
 export default {
   name: "rule",
@@ -38,6 +40,9 @@ export default {
     return {
       date_time: "",//当前系统时间
       is_hide_icon: false,
+      logo:'',
+      compute_img_url,
+      LOCAL_PROJECT_FILE_PREFIX
     };
   },
   components: {
@@ -46,10 +51,17 @@ export default {
   props: {
     data_loaded: {
       type: Boolean,
-      default: false//刷新按钮动画开关
+      default: false,//刷新按钮动画开关
+      PROJECT_NAME:''   // 当前系统
     }
   },
   created() {
+   
+    const {PROJECT_NAME} = window.BUILDIN_CONFIG
+    // if (PROJECT_NAME=='ouzhou-pc') {
+    //  this.logo = 'pc-home-logo-en'
+    // }
+    this.PROJECT_NAME = PROJECT_NAME
     this.is_hide_icon = (location.href.indexOf('i_h=1') != -1);
     this.get_date_time();
   },
@@ -99,6 +111,8 @@ export default {
   .rule-logo {
     margin-right: 33.3px;
     height: 100%;
+    display: flex;
+    align-items: center;
 
     .img-logo {
       width: 130px;
@@ -106,6 +120,10 @@ export default {
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
+      img{
+        height: 30px;
+        width: 130px;
+      }
     }
   }
 }

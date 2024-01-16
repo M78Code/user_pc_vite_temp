@@ -7,7 +7,6 @@
   <div class="bet-mix-show">
     <div v-show="false"> {{ UserCtr.user_version }} --
       {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
-    {{ console.log('BetData.bet_single_list!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', BetData.bet_single_list) }}
     <template v-if="BetData.bet_single_list[0]">
       <div v-for="(items, index) in BetData.bet_single_list" :key="index">
         <div class="nonebox4-content">
@@ -64,6 +63,10 @@
         <!-- 输入框 -->
         <bet-input-info2 :item="items" :index="index"></bet-input-info2>
       </div>
+      <!-- 多项合并 -->
+      <template v-if="BetData.bet_single_list.length > 1">
+        <bet-input-multiple></bet-input-multiple>
+      </template>
     </template>
     <!-- 合并单关最下面的多个输入框 -->
 
@@ -71,6 +74,7 @@
 </template>
 <script setup>
 import betInputInfo2 from "./bet_input_info2.vue";
+import betInputMultiple from "./bet_input_multiple.vue";
 import { compute_value_by_cur_odd_type } from "src/output/index.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
