@@ -1,3 +1,10 @@
+<!--
+ * @Date: 2022-07-06 18:31:56
+ * @FilePath: /user-pc1/src/public/components/analysis/template/article_details.vue
+ * @Description: 打开 猜你喜欢 文章
+ * @Author: 
+-->
+
 <template>
   <div class="wrap relative-position">
     <q-scroll-area class="rule-scroll-area" :visible="true" :style="{height:'100%'}">
@@ -15,7 +22,7 @@
 </template>
 
 <script>
-import {api_analysis} from 'src/public/api/index'
+import { api_analysis } from 'src/api/index'
 export default {
   data() {
     return {
@@ -75,11 +82,11 @@ export default {
         type: 2,
       }
       api_analysis.getArticlePB(params).then(res => {
-        const _data = _.get(res, 'data.data');
-        const _code = _.get(res, 'data.code');
+        const _data = lodash.get(res, 'data.data');
+        const _code = lodash.get(res, 'data.code');
 
-        if(_code == 200 && !_.isEmpty(_data)){          
-          let _item = typeof(_data) == 'string' ? JSON.parse(_data):_.cloneDeep(_data);     
+        if(_code == 200 && !lodash.isEmpty(_data)){          
+          let _item = typeof(_data) == 'string' ? JSON.parse(_data):lodash.cloneDeep(_data);     
           // 替换图片域名
           let domain = this.get_file_path('getArticle').replace('getArticle','')
           if(_item.articleContent){
@@ -167,81 +174,11 @@ export default {
     :deep(img){
       max-width: 100%;
     }  
+    
   }
 }
 /*  内容区 */
 .rule-scroll-area {
   flex: 1;
 }
-
-.event-item {
-  color: var(--qq--analysis-text-color-2);
-  display: flex;
-  align-items: center;
-  height: 40px;
-  border-bottom: 1px solid var(--qq--analysis-bd-color-2);
-  border-left: 1px solid var(--qq--analysis-bd-color-2);
-  border-right: 1px solid var(--qq--analysis-bd-color-2);
-  &:last-child {
-    border-bottom: 1px solid var(--qq--analysis-bd-color-2);
-    border-radius: 0 0 8px 8px;
-  }
-  .time {
-    width: 58px;
-    text-align: center;
-  }
-  .sign {
-    width: 7px;
-    height: 7px;
-    border-radius: 7px;
-    background: var(--qq--analysis-bg-color-16);
-    &.team-1 {
-      background: var(--qq--analysis-bg-color-13);
-    }
-    &.team-2 {
-      background: var(--qq--analysis-bg-color-12);
-    }
-    &:before {
-      content: "";
-      position: absolute;
-      bottom: 7px;
-      left: 3px;
-      height: 17px;
-      width: 1px;
-      background: var(--qq--analysis-bg-color-16);
-    }
-    &:after {
-      content: "";
-      position: absolute;
-      top: 7px;
-      left: 3px;
-      height: 17px;
-      width: 1px;
-      background: var(--qq--analysis-bg-color-16);
-    }
-  }
-  .info {
-    margin-left: 8px;
-    & > span {
-      margin-right: 8px;
-    }
-    .sign-icon {
-      margin-right: 8px;
-    }
-    .status-default {
-      color: var(--qq--analysis-text-color-4);
-    }
-  }
-  &:first-child {
-    .sign:before {
-      display: none;
-    }
-  }
-  &:last-child {
-    .sign:after {
-      display: none;
-    }
-  }
-}
-
 </style>
