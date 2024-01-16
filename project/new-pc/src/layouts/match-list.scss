@@ -326,12 +326,12 @@ body {
       .basic-col {
         .basic-wrap {
           position: relative;
-
           .tips-icon {
-            background-image: var(--qq--bg-image-url8);
-
+            // background-image: var(--qq--bg-image-url8);
+            // background-image: url($SCSSPROJECTPATH+"/image/svg/y0_details_info.svg");
             &:hover {
-              background-image: var(--qq--bg-image-url9);
+              // background-image: var(--qq--bg-image-url9);
+              // background-image: url($SCSSPROJECTPATH+"/image/svg/y0_details_info_focus.svg");
             }
           }
 

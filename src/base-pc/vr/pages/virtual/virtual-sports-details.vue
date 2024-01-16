@@ -2,7 +2,7 @@
  * @Description: 虚拟体育详情页最外层父组件
 -->
 <template>
-  <div class="virtual-detail row justify-between" ref="virtual_detail_box">
+  <div class="virtual-detail" ref="virtual_detail_box">
 
     <div class="match-detail-bread">
       <!-- 详情页面包屑 -->
@@ -20,26 +20,26 @@
           alt=""
           srcset=""
           :class="{ balance_refresh: true}"
-          @click="()=>{}"
+          @click="vir_refresh"
         />
       </div>
     </div>
-    <div class="match-detail-head" v-if="0">
+    <div class="match-detail-head" v-if="match">
       <div class="detail-head-leagal">
-        <span class="match-detail-head-name">{{ detail_info.tn }}</span>
+        <span class="match-detail-head-name">{{ match.tn }}</span>
         <img
           :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
           alt=""
           srcset=""
           style="margin: 0 10px; height: 14px"
-          v-if="detail_info.mng"
+          v-if="match.mng"
         />
         <span class="leagal-time">
-          <match-process
-            :match="detail_info"
+          <!-- <match-process
+            :match="match"
             show_page="match-list"
             :rows="1"
-          />
+          /> -->
         </span>
       </div>
       <div>
@@ -48,9 +48,9 @@
           @click.stop="show_item"
         >
           <div style="display: flex;align-items: center;">
-            <span class="home-vs-away" :title="detail_info.mhn">{{ detail_info.mhn }} </span>
+            <span class="home-vs-away" :title="match.mhn">{{ match.mhn }} </span>
             <span class="match-detail-head-name m-10">v</span>
-            <span class="home-vs-away" :title="detail_info.man">{{ detail_info.man }}</span>
+            <span class="home-vs-away" :title="match.man">{{ match.man }}</span>
           </div>
           <img
           
@@ -58,27 +58,10 @@
             class="expand-icon"
           />
         </div>
-        <!-- 显示赛事卡片 -->
-        <q-card
-          class="match-name-list"
-          :style="{ maxHeight: showDetailList ? '500px' : '0px' }"
-        >
-          <div v-for="item in matchDetailList" :key="item.mid">
-            <div
-              :class="{
-                'card-item': true,
-                'active-nav': current_id == item.mid,
-              }"
-              @click="match_click(item)"
-            >
-              {{ item.mhn + " v " + item.man }}
-            </div>
-          </div>
-        </q-card>
       </div>
       <div
         class="header_banne sport_bg"
-        :style="`background-position:0 -${sport_ball_type[sportId]}px`"
+        :style="`background-position:0 -${sport_ball_type[1]}px`"
       ></div>
     </div>
 
@@ -176,7 +159,22 @@ export default {
   },
   data(){
     return {
-      LOCAL_PROJECT_FILE_PREFIX
+      LOCAL_PROJECT_FILE_PREFIX,
+      sport_ball_type: {
+      1: 0,
+      2: 450,
+      3: 450,
+      4: 980,
+      5: 2790,
+      6: 90,
+      7: 2430,
+      8: 890,
+      9: 1440,
+      10: 1900,
+      11: 1990,
+      12: 540,
+      14: 180,
+    }
     }
   }
 }
@@ -211,6 +209,72 @@ export default {
         top: 9px;
         background-color: var(--q-gb-bg-c-10);
       }
+    }
+  }
+
+  .match-detail-head {
+    width: 770px;
+    position: relative;
+    height: 80px;
+
+    padding: 15px 0 16px 14px;
+    background: var(--q-gb-bg-lg-4);
+
+    :deep(.q-item) {
+      padding: 8px 0px;
+    }
+
+    .detail-head-leagal {
+      display: flex;
+      // justify-content: center;
+      align-items: center;
+
+      .leagal-time {
+        margin-left: 5px;
+        // background-color: var(--q-gb-bg-c-10);
+        // color: var(--q-gb-t-c-5);
+        padding: 2px 5px 2px 0px;
+        :deep(.date-wrap) {
+          display: flex;
+        }
+        :deep(.c-match-process) {
+          background-color: var(--q-gb-bg-c-10);
+          color: var(--q-gb-t-c-5);
+        }
+      }
+    }
+
+    .match-detail-head-name {
+      font-size: 13px;
+      line-height: 18px;
+      color: var(--q-gb-t-c-5);
+      opacity: 0.6;
+    }
+
+    .home-vs-away {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 25px;
+      color: var(--q-gb-t-c-5);
+      margin-top: 6px;
+      display: inline-block;
+      max-width: 350px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
+
+    .m-10 {
+      margin: 0 10px;
+      font-size: 18px;
+    }
+
+    .match-detail-head-bc {
+      position: absolute;
+      right: 0;
+      top: 0;
+      // opacity: 0.3;
+      height: 100%;
     }
   }
   .detail-main {

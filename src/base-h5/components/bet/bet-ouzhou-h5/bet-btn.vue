@@ -39,21 +39,21 @@ const bet_total = computed(()=> state =>{
   if (BetData.is_bet_single) {
     if (BetData.is_bet_merge) {
       BetData.bet_single_list.forEach(item => {
-        sum += item.bet_amount
+        sum += item.bet_amount*1
       });
       return sum
     }
-    sum = BetData.bet_amount
+    sum = BetData.bet_amount*1
     return sum
   }
   if (!BetData.is_bet_single) {
     if (BetViewDataClass.bet_order_status === 1) {
         BetViewDataClass.bet_special_series.forEach((item)=>{
-            sum += (item.bet_amount ? item.bet_amount : 0)
+            sum += (item.bet_amount ? item.bet_amount : 0)*1
         })
     } else {
         BetViewDataClass.orderNo_bet_single_obj.forEach((item)=>{
-            sum += mathJs.divide(item.seriesBetAmount, 100)
+            sum += mathJs.divide(item.seriesBetAmount, 100)*1
         })
     }
   }

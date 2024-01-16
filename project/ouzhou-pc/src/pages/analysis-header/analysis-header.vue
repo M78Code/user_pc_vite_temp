@@ -43,7 +43,7 @@ const get_match_details_net = () => {
 };
 
 onMounted(() => {
-  console.log(111111111, route);
+
   if (Object.keys(route.params).length) {
     // 从url中获取mid
 
