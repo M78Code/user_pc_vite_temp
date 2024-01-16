@@ -171,7 +171,6 @@ class UserCtr {
   
   //简译/繁译展示
   set_match_translate(match_translate) {
-    console.error(match_translate);
     LocalStorage.set("match_translate", match_translate);
     this.match_translate = match_translate;
     this.update()
