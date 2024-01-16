@@ -35,11 +35,11 @@
           v-if="match.mng"
         />
         <span class="leagal-time">
-          <!-- <match-process
+          <match-process
             :match="match"
             show_page="match-list"
             :rows="1"
-          /> -->
+          />
         </span>
       </div>
       <div>
@@ -48,15 +48,10 @@
           @click.stop="show_item"
         >
           <div style="display: flex;align-items: center;">
-            <span class="home-vs-away" :title="match.mhn">{{ match.mhn }} </span>
+            <span class="home-vs-away" :title="match.mhn">{{ match.teams[0] }} </span>
             <span class="match-detail-head-name m-10">v</span>
-            <span class="home-vs-away" :title="match.man">{{ match.man }}</span>
+            <span class="home-vs-away" :title="match.man">{{ match.teams[1] }}</span>
           </div>
-          <img
-          
-            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
-            class="expand-icon"
-          />
         </div>
       </div>
       <div
@@ -142,6 +137,7 @@ import group_knockout from "src/base-pc/vr/pages/virtual/virtual-sports-part/gro
 import virtual_match_statistic from 'src/base-pc/vr/components/virtual-match-statistic.vue'
 import breadcrumbs from "src/base-pc/vr/pages/virtual/details/children/breadcrumbs.vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 
 export default {
   mixins:[virtual_sports_details_mixin],
@@ -155,6 +151,7 @@ export default {
     'ranking-list-start':ranking_list_start,
     'football-ranking-list':football_ranking_list,
     'group-knockout':group_knockout,
+    'match-process': matchProcess,
     breadcrumbs
   },
   data(){
@@ -277,6 +274,26 @@ export default {
       height: 100%;
     }
   }
+
+  
+  .signal,.balance_refresh {
+    display: inline-block;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    margin-right: 15px;
+  }
+  
+  
+  .sport_bg {
+    width: 226px;
+    height: 80px;
+    background-image: url($SCSSPROJECTPATH + "/image/png/icon_sport_bg.png");
+    background-size: 226px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
   .detail-main {
     width: 770px;
   }
@@ -398,7 +415,6 @@ export default {
 }
 
 .detail-main {
-  margin-top: 0.04rem;
 
   &::-webkit-scrollbar {
     display: none;
