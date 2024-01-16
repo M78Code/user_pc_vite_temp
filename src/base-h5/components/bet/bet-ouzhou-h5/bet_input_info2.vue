@@ -87,7 +87,6 @@ onUnmounted(() => {
  *@param {Number} new_money 最新金额值
  */
 const change_money_handle = (params) => {
-    console.log('props.item.playOptionsId!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', props.item.playOptionsId, params.params.playOptionsId)
     if(props.item.playOptionsId == params.params.playOptionsId) {
         BetData.set_bet_obj_amount(params.money, params.params.playOptionsId)
         ref_data.money = params.money
