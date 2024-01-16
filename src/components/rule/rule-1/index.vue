@@ -36,6 +36,7 @@ const get_pc_rule_url = () => {
     const lang_map = {
         'en': 'en_gb',
         'zh': 'zh_cn',
+        'hk': 'zh_cn',
         'tw': 'zh_tw',
         'vi': 'vi_vn',
         'th': 'th_th',

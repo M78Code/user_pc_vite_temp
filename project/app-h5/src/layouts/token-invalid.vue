@@ -44,6 +44,7 @@
         return 'token-vietnam'
       case 'zh':
       case 'tw':
+      case 'hk':
         return 'token-vietnam'
       case 'en':
       case 'ms':

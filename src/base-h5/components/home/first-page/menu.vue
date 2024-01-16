@@ -7,7 +7,7 @@
           <div class="item" v-for="(item, index) in menu_list" :key="`menu-${index}`"
             :class="{ active: menu_type == item.mi }" :style="compute_css_obj('home-item-' + (menu_type == item.mi ? 'active' : 'unchecked'))
               " @click="change_menu(item, index)" v-show="calc_show2(item)">
-            <span class="label" :class="{ is_chinise: ['zh', 'tw'].includes(lang) }">{{ i18n_t(`new_menu.${item.mi}`)
+            <span class="label" :class="{ is_chinise: ['zh', 'tw', 'hk'].includes(lang) }">{{ i18n_t(`new_menu.${item.mi}`)
             }}</span>
             <span class="num" v-if="![407, 408, 410].includes(item.mi * 1)">{{
               MenuData.count_menu(item)

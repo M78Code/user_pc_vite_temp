@@ -42,7 +42,7 @@ export default {
     // 初始化标签选中，足球和篮球在简体中文和繁体中文环境下，下标往后挪动一位,未开赛的赛事，再往后挪动一位
     nextTick(()=> {
       let i = 0
-      if (['zh', 'tw'].includes(this.get_lang)) {
+      if (['zh', 'tw', 'hk'].includes(this.get_lang)) {
         i++
       }
       if (this.get_detail_data.ms != 1) {

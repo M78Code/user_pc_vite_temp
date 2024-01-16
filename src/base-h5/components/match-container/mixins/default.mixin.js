@@ -600,7 +600,7 @@ export default defineComponent({
           }
           state_obj.final_button_type = "lvs"
           // 如果不是中文和繁体，则隐藏
-          if (!['zh', 'tw'].includes(lang.value)) {
+          if (!['zh', 'tw', 'hk'].includes(lang.value)) {
             state_obj.lvs = false
             button_type = "muUrl";
             state_obj.icon_path = ''

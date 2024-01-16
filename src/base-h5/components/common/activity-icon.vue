@@ -45,7 +45,7 @@ function activity_icon_error($event) {
 }
 // 是否有活动可领取的任务数量
 function get_task_list(id = 1) {
-    if (UserCtr.lang == 'zh' && UserCtr.user_info && !UserCtr.user_info?.maintaining && UserCtr.user_info?.activityList) {
+    if (['zh', 'hk'].includes(UserCtr.lang) && UserCtr.user_info && !UserCtr.user_info?.maintaining && UserCtr.user_info?.activityList) {
         let isMaintaining = lodash.get(UserCtr.user_info, 'maintaining');
         // 如果活动处于维护状态，直接去掉小红点
         if (isMaintaining == true) {

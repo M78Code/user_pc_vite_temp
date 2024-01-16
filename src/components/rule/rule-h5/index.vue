@@ -34,6 +34,7 @@ const get_h5_rule_url = () => {
     //参数对应关系
     let lang_obj = {
         'zh': 'zh-cn',
+        'hk': 'zh-cn',
         'tw': 'zh-tw',
         'en': 'en-gb',
         'vi': 'en-gb', //越南文暂时对应英文显示

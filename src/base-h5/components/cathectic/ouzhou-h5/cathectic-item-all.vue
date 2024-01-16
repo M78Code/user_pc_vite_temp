@@ -31,7 +31,7 @@
           <q-slide-transition>
             <template>
               <div class="date-header flex">
-                <span class="date"><span>{{ formatTime(new Date(name).getTime(), lang === 'zh'?'mm/DD': 'DD/mm')}}</span></span>
+                <span class="date"><span>{{ formatTime(new Date(name).getTime(), ['zh', 'hk'].includes(lang)?'mm/DD': 'DD/mm')}}</span></span>
                 <!-- 当前日期的已结算信息总和 -->
                 <div class="settled-date" v-if="BetRecordClass.selected === 1">
                   {{ i18n_t('bet_record.number') }} <span>{{value.totalOrders}}</span>
