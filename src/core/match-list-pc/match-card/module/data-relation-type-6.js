@@ -10,7 +10,7 @@
      * 7. 列表数据类型为赛事列表   只有联赛
      * 
      * 
-     * 处理  56
+     * 处理 欧洲版  56
      */
     import MatchListCardData from "./match-list-card-data-class.js";
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"

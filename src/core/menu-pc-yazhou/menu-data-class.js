@@ -668,6 +668,7 @@ class MenuData {
     this.is_multi_column =
       is_multi_column &&
       !window.frames.length != parent.frames.length
+    !this.is_multi_colum&& LayOutMain_pc.set_unfold_multi_column(false)
       // && state.layoutReducer.is_unfold_multi_column;
     // store.dispatch("set_unfold_multi_column", this.is_multi_column);
     // console.warn('this.is_multi_column ',this.is_multi_column )
