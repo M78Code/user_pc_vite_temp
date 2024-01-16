@@ -34,7 +34,7 @@ const stage_result = computed(() => {
     if(match.matchDay){
       let m_str = i18n_t('virtual_sports.matchDay');
       let append_space = "&nbsp;&nbsp;"
-      if(['zh','tw'].includes(get_lang.value)){
+      if(['zh','tw', 'hk'].includes(get_lang.value)){
         append_space = "";
       }
       result = m_str.replace('%s',`<span style="{color:${color_1}">${append_space}${match.matchDay}</span>`);
@@ -62,7 +62,7 @@ const stage_result = computed(() => {
     if(match.legOrder){
       let lang_leg_order = i18n_t('virtual_sports.legOrder');
       let append_space = "&nbsp;&nbsp;"
-      if(['zh','tw'].includes(get_lang.value)){
+      if(['zh','tw', 'hk'].includes(get_lang.value)){
         append_space = "";
       }
       let result2 = lang_leg_order.replace('%',`<span style="color:${color_1}">${match.legOrder}${append_space}</span>`);
@@ -73,7 +73,7 @@ const stage_result = computed(() => {
   else if(match.matchDay && !match.sportId == '1004'){
     let m_str = i18n_t('virtual_sports.matchDay');
     let append_space = "&nbsp;&nbsp;"
-    if(['zh','tw'].includes(get_lang.value)){
+    if(['zh','tw', 'hk'].includes(get_lang.value)){
       append_space = "";
     }
     result = m_str.replace('%s',`<span style="color: ${color_1}">${append_space}${match.matchDay}</span>`);

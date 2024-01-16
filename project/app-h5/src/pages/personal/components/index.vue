@@ -71,7 +71,12 @@ const s_visible = ref(true)
 const languages = [{
   key: 'zh',
   language: '简体中文',
-}, {
+}, 
+{
+  key: 'hk',
+  language: '简体中文',
+},
+{
   key: 'en',
   language: 'English',
 }, {

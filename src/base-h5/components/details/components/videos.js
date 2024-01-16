@@ -169,7 +169,7 @@ export const video_info = () => {
   });
   // 展示lvs 图标
   const show_lvs = computed(() => {
-    return this.get_detail_data.lvs != -1 && this.get_video_url.active != 'lvs' && ['string', 'number'].includes(typeof _.get(this.get_detail_data, 'lss')) && ['zh', 'tw'].includes(this.get_lang)
+    return this.get_detail_data.lvs != -1 && this.get_video_url.active != 'lvs' && ['string', 'number'].includes(typeof _.get(this.get_detail_data, 'lss')) && ['zh', 'tw', 'hk'].includes(this.get_lang)
   });
   // 判断此商户是否属于乐天
   const is_letian = computed(() => {

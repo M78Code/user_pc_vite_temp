@@ -143,7 +143,7 @@ function getActivityLists({ id = 1, type }) {
   // 判断是否有活动
   let activityList = lodash.get(UserCtr.get_user(), 'activityList');
   // 多语言屏蔽活动入口
-  if (activityList && activityList.length > 0 && UserCtr.lang == 'zh') {
+  if (activityList && activityList.length > 0 && ['zh', 'hk'].includes(UserCtr.lang)) {
     let param = new FormData();
     // 检测两个活动是否存在以及活动状态不能是未开始和已结束
     let daily = activityList.find(item => item.activityId == '10007' && item.period == 2) || null;

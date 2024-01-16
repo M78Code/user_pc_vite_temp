@@ -214,6 +214,7 @@ const disk_text_replace = (lang, onb) => {
         text = onb.replace("เจ้าบ้าน", "H").replace("แขก", "A").replace("วาด", "D")
         break;
       case 'zh':
+      case 'hk':
       case 'tw':
         text = onb.replace("胜", "").replace("局", "").replace("勝", "")
         break;

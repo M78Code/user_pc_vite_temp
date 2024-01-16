@@ -23,7 +23,7 @@
         <div class="iframe-tab-wrapper yb-ml20" v-show="is_iframe && menu_collapse_status">
             <!--  `tab-icon-item-y0-${tab.icon_name}` :  -->
             <div :class="`tab-icon-item-${tab.icon_name}`"
-                v-for="(tab, index) in (UserCtr.lang === 'zh' ? right_tabs.slice(0, 2) : right_tabs.slice(0, 1))" :key="index"
+                v-for="(tab, index) in (['zh', 'hk'].includes(UserCtr.lang) ? right_tabs.slice(0, 2) : right_tabs.slice(0, 1))" :key="index"
                 @click="menu_change(tab)" @mouseenter="show_gif($event, tab, index)"
                 @mouseleave="hide_gif($event, tab, index)">
                 <!--  v-if="show_menu_icon(tab.id)"  -->
@@ -241,7 +241,7 @@ onMounted(init)
  */
 function show_menu_icon(icon_id) {
     // 中文语言下不存在活动内容，则不显示任务中心图标
-    if (UserCtr.lang === 'zh' && icon_id === 9 && !lodash.get(userCtr.get_user(), 'activityList.length')) {
+    if (['zh', 'hk'].includes(UserCtr.lang) && icon_id === 9 && !lodash.get(userCtr.get_user(), 'activityList.length')) {
         return false
     }
     return true
