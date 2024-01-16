@@ -76,7 +76,7 @@
                             </template>
                           </template>
 
-                          <key-board v-if="BetData.bet_keyboard_show"></key-board>
+                          
                       </div>
                       
                       <template v-else>
@@ -90,6 +90,9 @@
                       </template>
                       <!-- <bet-mix-box-child6 v-else></bet-mix-box-child6> -->
                   </div>
+
+                  <key-board v-if="BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1"></key-board>
+
                   <!-- <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config"></key-board> -->
 
                   <!-- <bet-info></bet-info> -->
