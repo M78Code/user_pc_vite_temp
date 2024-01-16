@@ -964,6 +964,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         }
         // 欧洲版 串关数量大于1的情况下 点击 投注项 默认收起
         if( PROJECT_NAME == 'ouzhou-h5' && !BetData.is_bet_single ){
+            BetData.set_bet_box_h5_show(true)
             BetData.set_bet_state_show(false)
         }
       
