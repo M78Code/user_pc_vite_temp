@@ -61,7 +61,7 @@ const set_match_list_mapping_relation_obj_type = () => {
     ) {
       return 9
     } else if (MenuData.is_kemp()) {
-      return 6
+      return 10
     } else {
       return 8
     }
@@ -210,7 +210,7 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
         match_list,
         is_ws_call
       );
-    } else if ([6].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
+    } else if ([10].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
       compute_match_list_style_obj_and_match_list_mapping_relation_obj_type6(
         match_list,
         is_ws_call
