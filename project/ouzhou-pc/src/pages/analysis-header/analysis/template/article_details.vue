@@ -1,3 +1,10 @@
+<!--
+ * @Date: 2022-07-06 18:31:56
+ * @FilePath: /user-pc1/src/public/components/analysis/template/article_details.vue
+ * @Description: 打开 猜你喜欢 文章
+ * @Author: 
+-->
+
 <template>
   <div class="wrap relative-position">
     <q-scroll-area class="rule-scroll-area" :visible="true" :style="{height:'100%'}">
@@ -15,7 +22,7 @@
 </template>
 
 <script>
-import {api_analysis} from 'src/public/api/index'
+import { api_analysis } from 'src/api/index'
 export default {
   data() {
     return {
@@ -75,11 +82,11 @@ export default {
         type: 2,
       }
       api_analysis.getArticlePB(params).then(res => {
-        const _data = _.get(res, 'data.data');
-        const _code = _.get(res, 'data.code');
+        const _data = lodash.get(res, 'data.data');
+        const _code = lodash.get(res, 'data.code');
 
-        if(_code == 200 && !_.isEmpty(_data)){          
-          let _item = typeof(_data) == 'string' ? JSON.parse(_data):_.cloneDeep(_data);     
+        if(_code == 200 && !lodash.isEmpty(_data)){          
+          let _item = typeof(_data) == 'string' ? JSON.parse(_data):lodash.cloneDeep(_data);     
           // 替换图片域名
           let domain = this.get_file_path('getArticle').replace('getArticle','')
           if(_item.articleContent){
@@ -167,6 +174,7 @@ export default {
     :deep(img){
       max-width: 100%;
     }  
+    
   }
 }
 /*  内容区 */
