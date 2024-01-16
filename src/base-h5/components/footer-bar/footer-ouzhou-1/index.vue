@@ -118,6 +118,16 @@ const jump_page = (item) => {
       height: 56px;
       background-size: 56px 56px !important;
       background-image: url($SCSSPROJECTPATH+"/image/footer/unselect_home_page.png");
+      &:after{
+        content:"";
+        display: inline-block;
+        width: 52px;
+        height: 14px;
+        margin-left: 2px;
+        box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.1);
+        border-radius:50%/100% 100%  0 0;
+        // border-radius: 50% / 100% 100% 0 0;
+      }
     }
 
 
