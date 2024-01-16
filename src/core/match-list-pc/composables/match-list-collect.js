@@ -117,7 +117,7 @@ const update_collect_data = (params) => {
       break;
     // 设置收藏状态
     case "set_status":
-      let match = MatchListData.list_to_obj.mid_obj[`${params.mid}_`] || {};
+      let match = MatchListData.get_quick_mid_obj(params.mid);
       if (match.mid) {
         match.mf = params.mf;
         set_collect_count({ type: "inc", count: params.mf ? 1 : -1 });
@@ -248,13 +248,7 @@ const match_collect_type = (match) => {
   * param{String} type 赛事类型 // 1：常规，2：冠军，3：电竞
   * return {Object} 收藏信息 {tf:false,mf:false}
   */
-export const match_collect_status = (match, obj) => {
-  // match={tid:'888',mid:'222'};
-  // obj= {"1":{"tids":{"888":1},"mids":{"222":1},"exclude":{"888":{"tids":"888","mids":{"2221":1}}}}}
-
-  if (!obj) {
-    obj = match_collect_data.data;
-  }
+export const match_collect_status = (match, is_set) => {
   let type = -1
   //冠军
   if (MenuData.is_kemp() || MenuData.is_collect_kemp() || MenuData.is_common_kemp() || MenuData.is_esports_champion()) {
@@ -263,8 +257,7 @@ export const match_collect_status = (match, obj) => {
     type = 3//电竞
   }
   let res = { tf: false, mf: false };
-
-  if (match && obj) {
+  if (match&&match_collect_data.data) {
     try {
       let tid = lodash.get(match, 'tid', 0);
       let mid = lodash.get(match, 'mid', 0);
@@ -272,7 +265,7 @@ export const match_collect_status = (match, obj) => {
       if (type == -1) {
         type = match_collect_type(match);
       }
-      let data = lodash.get(obj, `${type}`);
+      let data = lodash.get(match_collect_data.data, `${type}`);
       if (data) {
         const tids = lodash.get(data, 'tids');
         const exclude = lodash.get(data, 'exclude');
@@ -309,11 +302,9 @@ export const match_collect_status = (match, obj) => {
       console.error(error);
     }
   }
-  // console.error(type,'赛-事收藏信息:',match, res);
   // 数据合并
   Object.assign(match, res);
-  // console.log('adashfdf', match);
-
+  is_set&&res.mf&&set_collect_count({type:'inc',count:1})
   return res;
 }
 /**
@@ -412,9 +403,22 @@ const mx_collect_leagues = async (match, is_champion) => {
   // );
   
   mids_arr.forEach((mid) => {
-    let match_item = MatchListData.list_to_obj.mid_obj[mid + "_"] || {};
+    let match_item = MatchListData.get_quick_mid_obj(mid);
+    if(!match_item.tf&&cur_collect_state){ //如果以前为false  & 点了收藏 +1
+      set_collect_count({
+        type: 'inc',
+        count: 1,
+      });
+    }
+    if(!cur_collect_state&&match_item.tf){//如果以前为true  & 点了取消收藏 -1
+      set_collect_count({
+        type: 'dec',
+        count: 1,
+      });
+    }
     match_item.tf = cur_collect_state;
     match_item.mf = cur_collect_state;
+    
     // 在收藏列表页 移除收藏
     if (
       (PageSourceData.page_source == "collect" || MenuData.is_collect) &&

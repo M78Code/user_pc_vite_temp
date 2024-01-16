@@ -168,7 +168,7 @@ const bet_type_class = computed(()=> state =>{
 .del-info {
   display: flex;
   font-size: 0.14rem;
-  align-items: center;
+  align-items: baseline;
 }
 
 .bet-type {
@@ -220,6 +220,6 @@ const bet_type_class = computed(()=> state =>{
 
 .f-a-c {
   display: flex;
-  align-items: center;
+  // align-items: center;
 }
 </style>

@@ -8,7 +8,6 @@ import { other_play_name_to_playid } from 'src/core/constant/project/module/data
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 let other_play_current_play = {}; //存储赛事选中附加玩法的key
-
 /**
    * @Description 克隆数组
    * @param {array} arr 需要克隆的数值
@@ -39,10 +38,12 @@ export function get_tab_play_keys(match) {
       tab_play_keys.push(key)
     }
   })
+  const play_current_key = get_play_current_play(match, tab_play_keys.join(','))
   return {
     tab_play_keys: tab_play_keys.join(','),// 其他玩法key
     has_other_play: tab_play_keys.length > 0, // 是否有其他玩法,
-    play_current_key: get_play_current_play(match, tab_play_keys.join(','))
+    play_current_key: play_current_key,
+    play_current_index: tab_play_keys.findIndex(i => i == play_current_key)
   };
 }
 /**

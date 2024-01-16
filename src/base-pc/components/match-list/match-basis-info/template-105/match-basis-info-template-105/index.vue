@@ -49,7 +49,7 @@
         </div>
       </div>
       <!-- 当前盘下的当前局比分 -->
-      <div class="score" v-if="get_match_status(match.ms)&&match.csid == 5">{{ lodash.get(match, 'msc_obj.S103.home') }}</div>
+      <div class="score" v-if="get_match_status(match.ms)">{{ lodash.get(score_list, '[2].home')}}</div>
       <!-- 当前局比分 -->
       <div class="score-game" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S1.home') }}</div>
     </div>
@@ -82,9 +82,9 @@
           </div>
         </div>
       </div>
+       <!-- 当前局比分 -->
+      <div class="score" v-if="get_match_status(match.ms)">{{ lodash.get(score_list, '[2].away') }}</div>
       <!-- 主比分 -->
-      <div class="score" v-if="get_match_status(match.ms)&&match.csid == 5">{{ lodash.get(match, 'msc_obj.S103.away') }}</div>
-      <!-- 当前局比分 -->
       <div class="score-game" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S1.away') }}</div>
     </div>
 
@@ -108,7 +108,7 @@ import { useRouter,useRoute } from "vue-router";
 import { format_mst_data } from 'src/core/utils/matches_list.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
-import { get_handicap_index_by } from 'src/core/match-list-pc/match-handle-data.js'
+import { get_handicap_index_by,get_history_score_list } from 'src/core/match-list-pc/match-handle-data.js'
 
 const match=inject('match');
 
@@ -150,7 +150,9 @@ const handicap_num = computed(() => {
     return i18n_t('match_info.more')
   }
 })
-
+const score_list=computed(()=>{
+  return get_history_score_list(match.value)
+})
 const play_name_obj = computed(() => {
   let play_name_obj = {
     key: 'main',

@@ -33,10 +33,17 @@ import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, compute_value_by_
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
 
 const props = defineProps({
+  // 赔率 hps
+  hps: {
+    type: Array,
+    default: () => []
+  },
+  // 单个玩法数据
   odd_item: {
     type: Object,
     default: () => {}
   },
+  // 是否显示 左侧 hpn
   show_hpn: {
     type: Boolean,
     default: () => false
@@ -51,6 +58,7 @@ const props = defineProps({
     type: Object,
     default: () => {}
   },
+  // 是否使用传过来的赔率 hps 最为渲染数据
   custom_type: {
     type: String,
     default: () => ''
@@ -59,7 +67,6 @@ const props = defineProps({
 
 const is_up = ref(false)
 const is_down = ref(false)
-const old_ov = ref(0)
 const emitters = ref({})
 const sports_play_title = use_sports_play_title()
 //虚拟体育开0 封1
@@ -67,18 +74,42 @@ const virtual_odds_state = ref(0)
 
 // 是否显示标题
 const is_show_title = computed(() => {
-  const { csid = '1' } = props.match_info
-  const plays = sports_play_title[csid]
-  const default_hpid = plays && plays[0] && plays[0].hpid ? plays[0].hpid : '1'
-  const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, default_hpid)
-  return hpid != 1 && !props.show_hpn
+  return get_current_hpid() != 1 && !props.show_hpn
 })
 
 // 是否显示 -
 const is_show_template = computed(() => {
-  const ol = lodash.get(props.match_info.hps, '[0].hl[0].ol', "")
+  const ol = get_current_ol()
   return lodash.isEmpty(ol)
 })
+
+/**
+ * @description 获取当前玩法赔率
+ */
+const get_current_ol = () => {
+  const hpid = get_current_hpid()
+  const hps = is_custom_type() ? props.hps : props.match_info.hps
+  const item = lodash.find(hps, (t) => t.hpid === hpid)
+  // 有的接口 hl 是对象 （15分， 热门赛事）  有的是 数组
+  const ol = is_custom_type() ? lodash.get(item, 'hl.ol', "") : lodash.get(item, 'hl[0].ol', "")
+  return ol
+}
+
+// 获取 hpid
+const get_current_hpid = () => {
+  const { csid = '1' } = props.match_info
+  const plays = sports_play_title[csid]
+  const default_hpid = plays && plays[0] && plays[0].hpid ? plays[0].hpid : '1'
+  const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, default_hpid)
+  return hpid
+}
+
+/**
+ * @description 是否自定义 hps
+ */
+ const is_custom_type = () => {
+  return ['hots', '15_mintues'].includes(props.custom_type)
+}
 
 onMounted(()=>{
   emitters.value = {

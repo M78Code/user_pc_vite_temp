@@ -86,7 +86,8 @@
         <ul class="select-type row items-center curson-point">
           <li :class="[UserCtr.theme == item.key? 'select-type-active':'']" 
               v-for="item in theme_list" :key="item.key" @click="handle_select_theme(item.key)">
-              {{ item.i18n[UserCtr.lang] || item.key }}
+              <!-- 没有的字体默认展示简体中文-->
+              {{ item.i18n[UserCtr.lang] || item.i18n['zh']  }}
           </li>
         </ul>
       </div>
@@ -291,7 +292,6 @@ function set_click_version(value) {
 
 onMounted(() => {
   get_css_obj();
-  console.log(theme_map[UserCtr.theme], "theme_map[UserCtr.theme]");
 })
 </script>
 

@@ -474,8 +474,10 @@ get_quick_mid_obj_ref(mid){
   /**
    * @description: 格式化列表数据(比分数组转对象)
    * @param {Object} list 所有列表数据
+   * @param {Booblen} is_ws 所有列表数据
+   * 
    */
-  list_serialized_match_obj(list){
+  list_serialized_match_obj(list,is_ws=false){
     if(lodash.get(list,'length')){
       // 格式化比分信息
       list.forEach(match => {
@@ -516,7 +518,7 @@ get_quick_mid_obj_ref(mid){
         }
         let _match = this.get_quick_mid_obj(match.mid);
         if(_match){
-          this.assign_with(_match, {...match, is_ws: true})
+          this.assign_with(_match, {...match, is_ws})
         }else{
           // 设置赛事默认数据
           this.set_match_default_data(match);
@@ -656,6 +658,8 @@ get_quick_mid_obj_ref(mid){
     match.cur_handicap_list = [] // 特定模版才会使用(模版7)
     // 足球角球玩法tab
     match.tab_play_keys = this.get_tab_play_keys(match);
+    match.play_current_index=0;
+    match.play_current_key='';
     // 是否有其他玩法
     match.has_other_play = match.tab_play_keys&&String(match.tab_play_keys).split(',').length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
     match.other_handicap_list=[]
@@ -1660,10 +1664,9 @@ get_quick_mid_obj_ref(mid){
             }
           }
         }
-      } else if('array' == type){
+      } else if('array' == type&&typeof(new_value)=='array'){
         // console.error('new_value=',new_value);
         // 为数组的操作
-        if(typeof(new_value)=='array')
          new_value && old_value && (old_value.length = new_value.length)
         // console.error('old_value===',JSON.stringify(old_value));
         // console.error('new_value===',JSON.stringify(new_value));
