@@ -16,7 +16,7 @@
       </div>
       <div class="other" ref="otherEl">
         <template v-for="item in hl.ol">
-          <OddOlItem :value="item" v-if="item.otd == config.template14OtherOtd" :key="item.oid"
+          <OddOlItem :value="item" v-if="config.otherOtd.includes(Number(item.otd))" :key="item.oid"
             :type="olType"
           >
           </OddOlItem>
