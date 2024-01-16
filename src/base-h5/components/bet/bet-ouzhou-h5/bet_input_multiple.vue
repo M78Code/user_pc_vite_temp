@@ -29,7 +29,7 @@
 <script setup>
 import lodash_ from "lodash"
 import { onMounted, onUnmounted, reactive, ref, computed } from "vue"
-import { MITT_TYPES, useMittOn, formatMoney, UserCtr, format_money3 } from "src/output/index.js"
+import { MITT_TYPES, useMittOn, formatMoney, UserCtr, format_money3, useMittEmit } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
@@ -45,13 +45,14 @@ const props = defineProps({
 })
 
 const input_click = () => {
-    // console.error('index', index)
+    console.error('index', BetData.bet_single_list.length)
     // event.preventDefault()
     let oid = BetData.bet_single_list.map(item => {
         return item.playOptionsId
     })
     BetData.set_bet_keyboard_config({ids:oid})
     BetData.set_bet_keyboard_show(true)
+    BetData.set_active_index(BetData.bet_single_list.length)
     BetData.set_bet_amount(0)
 }
 
@@ -68,7 +69,7 @@ const ref_data = reactive({
     keyborard: true, // 是否显示 最高可赢 和 键盘
     emit_lsit: {},
     oddFinallyArr:[],
-    oid:[]
+    oid:[],
 })
 
 onMounted(() => {
@@ -132,7 +133,7 @@ const change_money_handle = (obj) => {
                 ref_data.money = money_a
             } 
         }
-        // useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
+        useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
 }
 
 
@@ -156,6 +157,7 @@ const set_ref_data_bet_money = () => {
     //设置键盘MAX限额
     let max_money_obj = {max_money:ref_data.max_money}
     BetData.set_bet_keyboard_config(Object.assign(BetData.bet_keyboard_config,max_money_obj))
+    console.log('BetData.bet_keyboard_config!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', BetData.bet_keyboard_config)
 }
 
 /**

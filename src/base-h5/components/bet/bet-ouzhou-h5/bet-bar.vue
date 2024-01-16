@@ -8,10 +8,10 @@
   <!-- 头部 -->
   <div class="bet-bar row justify-between items-center" @touchmove.prevent @click="menu_click"
     :class="{ 'fixed-bottom': $route.name != 'matchList' && get_bet_status == 0 }">
-    <div v-show="false">{{ userData.user_version }}</div>
+    <div v-show="false">{{ BetData.bet_data_class_version }} {{BetViewDataClass.bet_view_version}}-{{BetData.is_bet_single}}-{{BetData.is_bet_merge}}</div>
     <div class="nonebox4-first">
         <div class="nonebox4-first-left">
-            <div class="nonebox4-first-left-img">{{BetData.bet_single_list.length}}</div>
+            <div class="nonebox4-first-left-img">{{BetData.is_bet_single ? BetData.bet_single_list.length : BetData.bet_s_list.length}}</div>
             <div class="nonebox4-first-left-text">{{i18n_t("bet.bet_record")}}</div>
         </div>
         <div class="nonebox4-first-right">
@@ -30,6 +30,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { ref,computed,onUnmounted } from 'vue';
 import userData from "src/core/user-config/user-ctr.js"
 import { get_query_bet_amount_common,set_market_id_to_ws } from "src/core/bet/class/bet-box-submit.js"
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 
 
 const get_bet_status = ref(true)
