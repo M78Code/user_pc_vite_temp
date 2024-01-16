@@ -150,15 +150,16 @@ export default {
       api_analysis
         .getArticlePB(params)
         .then((res) => {
-          let _data = lodash.get(res, "data.data");
-          let _code = lodash.get(res, "data.code");
+          let _data = lodash.get(res, "data");
+          let _code = lodash.get(res, "code");
           if (_data && _code == 200) {
+          
             let _item =
               typeof _data == "string"
                 ? JSON.parse(_data)
                 : lodash.cloneDeep(_data);
             // 替换图片域名
-            let domain = this.get_file_path("getArticle").replace(
+            let domain = this.get_server_file_path("getArticle").replace(
               "getArticle",
               ""
             );
@@ -177,7 +178,7 @@ export default {
             this.state = "empty";
           }
         })
-        .catch(() => {
+        .catch((err) => {
           this.state = "empty";
         });
     },
@@ -189,8 +190,8 @@ export default {
         id: this.articleDetail.id,
         matchId: this.mid,
       };
-      api_analysis.get_favorite_article(params).then((res) => {
-        let list = lodash.get(res, "data.data");
+      api_common.getFavoriteArticle(params).then((res) => {
+        let list = lodash.get(res, "data");
         if (lodash.get(list, "length") > 0) {
           if (list.length == 1 && this.articleDetail.id == list[0].id) {
             this.articleList = [];
@@ -214,8 +215,8 @@ export default {
      * 文章阅读数
      */
     atrticleReadCount(id) {
-      api_analysis.get_article_count({ id: id }).then((res) => {
-        let count = lodash.get(res, "data.data");
+      api_common.addArticleCount({ id: id }).then((res) => {
+        let count = lodash.get(res, "data");
         if (Number(count)) {
           //更新列表阅读数
           this.articleDetail.readCounts = count;
@@ -242,10 +243,9 @@ export default {
       //设置默认值
       let strCount = "/0";
       //更新阅读数
-      api_analysis
-        .get_article_count({ id: item.id })
+      api_common.addArticleCount({ id: item.id })
         .then((res) => {
-          let count = lodash.get(res, "data.data");
+          let count = lodash.get(res, "data");
           if (Number(count)) {
             //更新列表阅读数
             this.openArticle.readCounts = count;
@@ -269,8 +269,8 @@ export default {
         type: 2,
       };
       api_analysis.getArticlePB(params).then((res) => {
-        const _data = lodash.get(res, "data.data");
-        const _code = lodash.get(res, "data.code");
+        const _data = lodash.get(res, "data");
+        const _code = lodash.get(res, "code");
 
         if (_code == 200 && !lodash.isEmpty(_data)) {
           let _item =
@@ -278,7 +278,7 @@ export default {
               ? JSON.parse(_data)
               : lodash.cloneDeep(_data);
           // 替换图片域名
-          let domain = this.get_file_path("getArticle").replace(
+          let domain = this.get_server_file_path("getArticle").replace(
             "getArticle",
             ""
           );
@@ -314,8 +314,8 @@ export default {
     }
   }
   .article_detail {
-    background: var(--qq--analysis-bg-color-1);
-    border: 1px solid var(--qq--analysis-bd-color-4);
+    background: #ffffff;
+    border: 1px solid #dce0e5;
     border-radius: 8px;
     height: 100%;
     padding: 15px 38px 38px;
@@ -325,11 +325,13 @@ export default {
     }
     .article_title {
       font-size: 16px;
-      color: var(--qq--analysis-text-color-10);
+      color: #333;
       font-weight: 600;
     }
-    .article {
-      ::v-deep {
+
+    
+    :deep(.article){
+    
         * {
           max-width: 100%;
         }
@@ -346,7 +348,7 @@ export default {
         p {
           font-family: PingFangSC-Regular;
           font-size: 12px;
-          color: var(--qq--analysis-text-color-2);
+          color: #666;
           letter-spacing: 0;
           text-align: justify;
           line-height: 24px;
@@ -354,27 +356,28 @@ export default {
         img {
           max-width: 100%;
         }
-      }
+      
     }
   }
   .favorite_list_title {
-    background-image: var(--qq--analysis-bg-gradient-4);
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    background-color: #ffffff;
+    // box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 8px 8px 0px 0px;
     height: 48px;
     line-height: 48px;
     padding-left: 30px;
     font-size: 16px;
-    color: var(--qq--analysis-text-color-1);
+    color: #2d2d2d;
     font-weight: 500;
     position: relative;
-    margin: 20px 20px 30px;
+    margin: 20px 20px 0px;
+    border-bottom: 1px solid #e2e2e2;
     &:after {
       content: "";
       display: block;
       width: 3px;
       height: 16px;
-      background: var(--qq--analysis-bg-color-15);
+      background: #FF7000;
       border-radius: 1.5px;
       position: absolute;
       top: 16px;
@@ -387,14 +390,16 @@ export default {
     padding: 0 20px;
     list-style: none;
     width: 100vw;
+    // background-color: #ffffff;
     li {
       .wrap {
         width: 100%;
         display: flex;
         justify-content: space-between;
-        border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+        border-bottom: 1px solid #dce0e5;
         padding: 20px 0;
         cursor: pointer;
+        background-color: #ffffff;
       }
       .img {
         width: 180px;
@@ -413,13 +418,13 @@ export default {
         }
         .title {
           font-size: 20px;
-          color: var(--qq--analysis-text-color-10);
+          color: #333;
           font-weight: 600;
           width: 100%;
           .tag {
             border-radius: 3px;
             font-size: 14px;
-            color: var(--qq--analysis-text-color-13);
+            color: #ffffff;
             letter-spacing: 0;
             text-align: center;
             // line-height: 12px;
@@ -429,7 +434,7 @@ export default {
         }
         .detail {
           font-size: 16px;
-          color: var(--qq--analysis-text-color-2);
+          color: #666;
           line-height: 16px;
           font-weight: 400;
         }
@@ -449,7 +454,7 @@ export default {
   :deep(.load-data-wrap){
     .empty-wrap {
       .text-center {
-        color: var(--qq--wrap-hot-text-color);
+        color: #414655;
       }
     }
     &.empty_data_padding_b {

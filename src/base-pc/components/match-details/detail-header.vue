@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <div class="detail-header-box">
+  <div class="component detail-header-box">
     <!-- 顶部栏 -->
     <div class="wrap-title" ref="wrap_title">
       <!-- 返回按钮 -->

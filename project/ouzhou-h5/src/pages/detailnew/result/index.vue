@@ -35,7 +35,7 @@ import loading_page from 'src/components/details/loading/index.vue'
 import { api_common, api_analysis } from "src/api/index.js";
 
 import './index.scss'
-
+const route = useRoute()
 const { mid, csid } = useRoute().params, cuid = UserCtr.get_uid()
 const loading = ref(true)
 /** @type {Ref<TYPES.MatchDetail>} */
@@ -62,7 +62,20 @@ function initial({mid}){
 /** 请求赛事详情 @param {{mid,cuid}} params 请求参数*/
 function getMatchDetail(params) {
   api_common.get_matchResultDetail_MatchInfo(params).then(
-    (res) => MatchDataWarehouseInstance.set_match_details(toRaw(matchDetail.value = res.data), [])
+    (res) =>{
+      // 补偿赛事状态110情况下mmp不是999
+      if(!(['90','80','61'].includes(res.data.mmp+''))){
+            res.data.mmp = '999'
+          }
+          if(['result_details', 'match_result'].includes(route.name) && res.data.mo == 1){
+            // 61-比赛延迟,80-比赛中断,90-比赛放弃
+            if(!(['90','80','61'].includes(res.data.mmp+''))){
+              res.data.mmp = '999'
+            }
+          }
+          MatchDataWarehouseInstance.set_match_details(toRaw(matchDetail.value = res.data), [])    
+    } 
+    
   );
 }
 

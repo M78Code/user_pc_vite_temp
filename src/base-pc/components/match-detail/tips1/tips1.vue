@@ -8,7 +8,7 @@
       <!-- 说明主体 -->
       <q-menu v-model="is_show" anchor="bottom left" self="top left" :content-class="`tips-body-match  ${popup_class}`">
         <!-- 箭头 fifteen-arrow十五分钟单独加样式 夜间模式使用 -->
-        <div class="direction fifteen-arrow"></div>
+        <!-- <div class="direction fifteen-arrow"></div> -->
         <!-- 内容主体 -->
         <div class="tips-box fifteen-bg" :class="{'fifteen': ['15minutes','5minutes'].includes(type), 'vi_content_width':['vi','ad'].includes(lang)}">
             <div class="tips-title" >
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { get_match_status,getScrollbarWidth } from 'src/core/utils/common/index'
 export default {
   data() {
     return {
@@ -93,7 +94,7 @@ export default {
       }else if(this.type === '5minutes'){
         // 5分钟
         // 滚球时  绝杀球（补时） 不展示  且标题展示 “下一个进球” 排除110-即将开赛的状态，即将开赛展示原文案
-        if (this.$get_match_status(lodash.get(this, 'ms'), [110]) == 1) {
+        if (get_match_status(lodash.get(this, 'ms'), [110]) == 1) {
           return {
             title:i18n_t('list.5minutes_roll'),
             content:lodash.dropRight(i18n_t('list.5minutes_details')),
@@ -115,7 +116,7 @@ export default {
   methods:{
     // 获取提示的标题  滚球时文案不同  排除110-即将开赛的状态，即将开赛展示原文案
     get_tip_title(item){
-      return this.$get_match_status(lodash.get(this, 'ms'), [110]) == 1 ? (item.title_roll || item.title) : item.title
+      return get_match_status(lodash.get(this, 'ms'), [110]) == 1 ? (item.title_roll || item.title) : item.title
     },
       //展开角球罚牌说明
     click_popup(e){
