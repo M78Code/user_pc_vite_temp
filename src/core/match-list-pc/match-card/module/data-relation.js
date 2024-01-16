@@ -83,15 +83,15 @@ const set_match_list_mapping_relation_obj_type = () => {
     type = 7;
   }
   // 冠军聚合页
-  else if (MenuData.is_kemp()) {
+  else if (MenuData.is_kemp()&&!MenuData.is_today()&&!MenuData.is_zaopan()) {
     type = 5;
   }
   // 电竞冠军
   else if (MenuData.is_esports_champion()) {
     type = 3;
   }
-  // 今日冠军
-  else if (MenuData.is_today() && MenuData.is_common_kemp()) {
+  // 今日/早盘 冠军
+  else if (MenuData.is_common_kemp()) {
     type = 6;
   }
   // 列表接口类型为赛事列表
