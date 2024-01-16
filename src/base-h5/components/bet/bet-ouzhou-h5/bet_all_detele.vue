@@ -59,6 +59,7 @@ const clear = () => {
 
 const switch_handle = (state) => {
   BetData.set_bet_amount(0)
+  // BetData.set_bet_keyboard_show(false)
   switch (state) {
     case 'single':
       BetData.set_is_bet_merge('no')
