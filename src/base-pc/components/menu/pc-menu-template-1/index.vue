@@ -358,6 +358,8 @@ const lev_1_click = async (obj) => {
 
    MenuData.set_menu_current_mi(left_obj.lv2_mi || "")
 
+  MenuData.set_menu_current_mif(obj.mif)
+
 };
 /**
  *   常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）     点击
