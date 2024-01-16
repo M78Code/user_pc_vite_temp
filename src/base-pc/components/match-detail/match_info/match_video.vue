@@ -210,7 +210,8 @@ export default {
       background-color: rgba(0, 0, 0, 0.8);
       padding: 9px 28px;
       font-size: 12px;
-      color: var(--q-gb-t-c-1);
+      line-height: 1.5;
+      color: var(--q-gb-t-c-18);
     }
     .yb-icon-triangle {
       position: absolute;

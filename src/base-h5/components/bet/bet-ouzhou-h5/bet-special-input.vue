@@ -4,7 +4,16 @@
   <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
   <div class="bet_single_info f-b-c">
     <div class="alert-rules">
-     {{ items.name }}  x{{ items.count }}
+      <div class="font14 font500">
+        {{ items.name }} x{{ items.count }} <span class="ml-4" v-if="index == 0">{{ items.seriesOdds }}</span>
+      </div>
+     <div class="font14">
+      <span class="font400">最高可赢</span>
+      <span v-if="items.seriesOdds">
+        <em class="total-money number_family font500" > {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount)) }}</em>
+      </span>
+      <span v-else><em class="number_family font500">0.00</em> </span>
+    </div>
     </div>
     
     <div class="bet_single_detail f-b-c">
@@ -15,15 +24,6 @@
         <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
       </div>
     </div>
-  </div>
-  <div class="toltal f-b-c" v-if="items.show_quick || items.bet_amount ">
-    <div>预计可赢：
-      <span v-if="items.seriesOdds">
-        <em class="total-money number_family" > {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount)) }}</em>{{currency_code[UserCtr.currency]}}
-      </span>
-      <span v-else><em class="number_family">0.00</em> {{currency_code[UserCtr.currency]}}</span>
-    </div>
-    <div>小计：<span class="number_family">{{ format_money2(items.bet_amount * items.count) }}</span>{{currency_code[UserCtr.currency]}} </div>
   </div>
   
 </template>
@@ -180,71 +180,16 @@ const alertRules = (id) => {
 <style scoped lang="scss">
   .bet_single_info{
     width: 100%;
-    font-size: .16rem;
-    background: var(--q-gb-bg-c-22);
-    border-radius: 0.12rem;
     height: 0.38rem;
     margin-top: 0.04rem;
     //margin-left: .08rem;
     padding: 0 .12rem;
-    color: var(--q-gb-t-c-18);
-    .alert-rules {
-      display: flex;
-      align-items: center;
-    }
-  }
-  .bet_single_info:nth-last-child(2) {
-    border-radius: 0.12rem 0.12rem 0 0;
-  }
-  .toltal {
-    border-top: 1px solid var(--q-gb-bg-c-18);
-    background: var(--q-gb-bg-c-22);
-    border-radius: 0 0 .12rem .12rem;
-    height: 0.24rem;
-    line-height: .24rem;
-    color: var(--q-gb-t-c-11);
-    padding: 0 .12rem;
-    font-weight: 700;
-    
-    .total-money {
-      color: var(--q-gb-t-c-21);
-    }
   }
   .bet_single_detail{
     //margin-top: 0.08rem;
     height: 0.44rem;
     //width: 1.68rem;
     font-size: 0.14rem;
-  }
-
-  .toltip{
-    background-color: var(--q-gb-bg-c-21);
-    color: #414655;
-    border-radius: 0.16rem;
-    width: 3.2rem;
-    padding: 0.2rem 0;
-    margin: auto;
-    > header{
-      font-size: 0.16rem;
-      color: var(--q-gb-t-c-18);;
-      letter-spacing: 0;
-      margin:0 0.2rem 0.1rem 0.2rem;
-      font-weight: 700;
-      text-align: center;
-    }
-    > div{
-      margin:0.12rem 0.2rem;
-      color:var(--q-gb-t-c-24);
-      font-size:0.14rem;
-    }
-    > footer {
-      font-size: 0.16rem;
-      color: var(--q-gb-t-c-1);
-      padding: 0.12rem 0.2rem 0;
-      font-weight: 700;
-      border-top: 1px solid var(--q-gb-bg-c-18);
-      text-align: center;
-    }
   }
 
   /* ************** 右边内容 ************** -S */

@@ -90,16 +90,19 @@ onMounted(()=>{
 // 获取最近访问信息
 const set_get_visit_sports_list = (data = []) =>{
 
-    let map_data = data.map(item => {
+  let map_data = []
+  if( data.length ) {
+    map_data = data.map(item => {
       return {
         mi: item*1 + 100,
         ct: 1
       }
     })
-    // 默认值和 数据结合 
-    let popular = lodash_.concat(map_data,popular_list)
-    // 显示前三
-    ref_data.popular = lodash_.slice(popular,0,3)
+    ref_data.popular = lodash_.slice(map_data,0,3)
+  } else {
+    // 使用默认最近范围信息 足/篮/网
+    ref_data.popular = popular_list
+  }
 }
 
 // favouritse
