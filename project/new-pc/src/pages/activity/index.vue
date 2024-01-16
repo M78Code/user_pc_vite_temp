@@ -39,17 +39,17 @@ url.value  = UserCtr.get_topic_key_url('activity');
 const  theme_value = ref('')
 // 设置默认主题
 let theme = 'theme01';
-console.log('st UserCtr.theme', UserCtr.theme)
+// console.log('st UserCtr.theme', UserCtr.theme)
 if(UserCtr.theme){
   // 主题转换
   theme = UserCtr.theme.replace("-", '0')
 }
 // 主题色在活动那边是反的
-if(theme === 'theme01'){
-  theme = 'theme02'
-} else {
-  theme = 'theme01'
-}
+// if(theme === 'theme01'){
+//   theme = 'theme02'
+// } else {
+//   theme = 'theme01'
+// }
 // 暂时强行设置蓝色
 if(1||lodash.get(UserCtr.user_info, 'stm') === 'blue') {
   // 设置y0样式
