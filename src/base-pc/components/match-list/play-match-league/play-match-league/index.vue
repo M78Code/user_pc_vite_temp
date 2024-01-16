@@ -15,7 +15,7 @@
         <div class="league-icon-wrap">
           <span class="soprts_id_icon" v-if="MenuData.is_esports()"
             :style="compute_css_obj({ key: 'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
-          <img v-else v-img="[lodash.get(card_style_obj, 'league_obj.lurl')]" />
+          <img v-else :src="leagueIcon" />
         </div>
         <!-- 联赛名称 -->
         <div class="ellipsis-wrap">
@@ -107,7 +107,7 @@ import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card
 import lodash from 'lodash';
 import { ref, computed } from 'vue';
 import BaseData from "src/core/base-data/base-data.js"
-import { compute_css_obj, MenuData } from "src/output/index.js";
+import { compute_css_obj, MenuData, compute_img_url } from "src/output/index.js";
 import { get_match_tpl_title } from 'src/core/format/common/index.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
@@ -115,6 +115,7 @@ import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { mx_collect } from "src/core/match-list-pc/composables/match-list-collect.js";
+import { get_server_file_path } from "src/core/file-path/file-path.js";
 
 const props = defineProps({
   card_style_obj: {
@@ -203,6 +204,11 @@ const bet_col = computed(() => {
 const bet_title = computed(() => {
   let bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.data_tpl_id}.title2`, props.card_style_obj.league_obj.csid)
   return bet_col
+})
+
+const leagueIcon = computed(() => {
+  const url = get_server_file_path(lodash.get(props.card_style_obj, 'league_obj.lurl'));
+  return url ? url : compute_img_url('pc-home-league-default')
 })
 
 /**
