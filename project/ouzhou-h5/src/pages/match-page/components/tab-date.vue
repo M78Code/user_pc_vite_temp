@@ -73,7 +73,7 @@ import { dateWeekMatchesFormat, farmatSportImg } from '../utils';
 import { MenuData } from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { store } from "project_path/src/pages/match-page/index.js"
-import { useMittOn, MITT_TYPES } from "src/core/mitt";
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import STANDARD_KEY from "src/core/standard-key";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { api_common } from "src/api";
@@ -167,6 +167,7 @@ const changeDate = (index) => {
  */
 const changeDatetab = (item, index) => {
     if (store.menu_time === item?.val) return
+    useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
     store.tabModel = false;
     MatchFold.clear_fold_info()
     const move_index = week.value.findIndex((t, _index) => _index === index);
