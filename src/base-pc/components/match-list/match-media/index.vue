@@ -2,11 +2,17 @@
   <div class="media-col-wrap">
     <!-- 无直播源 -->
     <!--  :style="compute_css_obj({key:'pc-img-match-info-switch2'})" -->
-    <div v-tooltip="{ content: i18n_t('common.score_board') }" class="icon-wrap after_tpl0 relative-position"
+    <div class="icon-wrap after_tpl0 relative-position"
       :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'info' && 'active'"
       @click="on_switch_match('auto')" v-if="!MenuData.is_esports() || route.name == 'search'">
       <div class="v-icon switch-icon info-icon"
         :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'info' && 'active'"></div>
+        <q-tooltip
+            anchor="top middle"
+            self="center middle"
+            :content-style="tooltip_style + ';transform:translateY(8px)'"
+            >{{ i18n_t('common.score_board') }}</q-tooltip
+          >
     </div>
     <div class="yb-flex-center" :class="{ 'flex-center': MenuData.is_esports() }">
       <!-- 收藏 -->
@@ -19,18 +25,29 @@
       <!-- 视频 -->
       <!-- :style="compute_css_obj({key:'pc-img-match-list-video'})" -->
       <div v-if="cur_video_icon.type" @click="on_switch_match(cur_video_icon.type)"
-        v-tooltip="{ content: cur_video_icon.text }" class="icon-wrap relative-position video-icon">
+        class="icon-wrap relative-position video-icon">
         <div
           :class="['v-icon', `${cur_video_icon.type}-icon`, { 'active': vx_detail_params.mid == match.mid && (vx_play_media.media_type == cur_video_icon.type || (MenuData.is_esports() && route.name != 'search')) }]">
         </div>
+        <q-tooltip
+            anchor="top middle"
+            self="center middle"
+            :content-style="tooltip_style + ';transform:translateY(8px)'"
+            >{{ cur_video_icon.text }}</q-tooltip
+          >
       </div>
     </div>
     <!-- 动画 -->
     <!-- :style="compute_css_obj({key:'pc-img-match-list-animation'})" -->
-    <div v-if="match.mvs > -1" class="icon-wrap relative-position" @click="on_switch_match('animation')"
-      v-tooltip="{ content: i18n_t('common.animate') }">
+    <div v-if="match.mvs > -1" class="icon-wrap relative-position" @click="on_switch_match('animation')">
       <div class="v-icon animation-icon"
         :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'animation' && 'active'"></div>
+        <q-tooltip
+            anchor="top middle"
+            self="center middle"
+            :content-style="tooltip_style + ';transform:translateY(8px)'"
+            >{{ i18n_t('common.animate') }}</q-tooltip
+          >
     </div>
     <!-- 盘口数量 -->
     <div class="play-count-wrap no-wrap yb-flex-center" @click="on_go_detail" style="margin-top:10px;"
@@ -46,7 +63,7 @@
 <script setup>
 import { computed, reactive, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-
+import { tooltip_style } from "src/core/config/global-component-style.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { is_eports_csid } from "src/core/constant/common/module/csid-util.js";
