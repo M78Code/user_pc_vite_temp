@@ -75,12 +75,19 @@ onMounted(() => {
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
     //监听键盘金额改变事件
     useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle)
+    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE, set_ref_data_bet_money_update)
 })
 
 onUnmounted(() => {
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
     useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle).off
+    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE, set_ref_data_bet_money_update).off
 })
+
+const set_ref_data_bet_money_update = () => {
+    console.log('set_ref_data_bet_money_updateset_ref_data_bet_money_update', props.item)
+    ref_data.money = props.item.bet_amount
+}
 
 /**
  *@description 金额改变事件

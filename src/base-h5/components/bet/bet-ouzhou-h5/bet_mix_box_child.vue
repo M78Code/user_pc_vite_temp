@@ -42,7 +42,7 @@
                           <bet-mix-box-child2></bet-mix-box-child2>
                       </div>
                       <!-- 键盘 -->
-                      <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config"></key-board>
+                      <key-board v-if="BetData.bet_keyboard_show && BetData.is_bet_merge"></key-board>
                   </div>
               </div>
 
