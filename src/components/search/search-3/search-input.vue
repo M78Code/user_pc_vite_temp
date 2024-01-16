@@ -81,6 +81,10 @@ function on_Close() {
 }
 
 function input_click() {
+    if (!store.keyword){
+      store.show_type = 'init'
+      return
+    }
     store.show_type = 'result'
 }
 

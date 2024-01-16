@@ -85,7 +85,7 @@ export default defineComponent({
     },
     menu_sport(){
       return {
-        menu_sport_id:MenuData.menu_mi.value,
+        menu_sport_id: MenuData.menu_mi.value,
         menu_sport_name:BaseData.menus_i18n_map[MenuData.menu_mi.value]
       }
     },

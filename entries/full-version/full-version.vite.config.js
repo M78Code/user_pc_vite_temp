@@ -43,7 +43,8 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: {
+     extensions:['.js','.vue','.json'], // 自动添加文件名后缀    
+  alias: {
    
       src: "./src",
       app: "./",

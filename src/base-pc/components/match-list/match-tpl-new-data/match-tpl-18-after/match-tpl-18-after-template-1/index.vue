@@ -56,18 +56,15 @@ const vx_main_menu_toggle = ref('mini')
   }
 }
 
-.bet-col {
+:deep(.bet-col) {
   width: 50%;
-
   .c-bet-item {
     justify-content: space-between;
     padding: 0 15px;
-
-    :deep(.handicap-value) {
+    .handicap-value {
       justify-content: flex-start !important;
     }
-
-    :deep(.odds) {
+    .odds {
       justify-content: flex-end;
     }
   }

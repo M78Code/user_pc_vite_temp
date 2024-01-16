@@ -5,7 +5,7 @@
 
 <template>
     <div class="bet-mix-show">
-
+      {{ '串关' }}
       <div v-for="(item, index) in items" :key=index>
         <div class="nonebox4-content">
             <div class="nonebox4-content-left">

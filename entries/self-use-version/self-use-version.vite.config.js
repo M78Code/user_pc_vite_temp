@@ -75,7 +75,8 @@ export default defineConfig({
     // drop: ['console,'debugger'], // 删除 所有的console 和 debugger
  },
   resolve: {
-    alias: {
+     extensions:['.js','.vue','.json'], // 自动添加文件名后缀    
+  alias: {
       src: path.resolve(process.cwd(), "./src"),
       app: path.resolve(process.cwd(), "./"),
       dist: path.resolve(process.cwd(), "./dist"),

@@ -67,6 +67,7 @@ import sportIcon from "src/components/sport_icon/sport-icon.vue";
 import { MenuData,useMittEmit,MITT_TYPES,useMittOn } from "src/output/index.js"
 import { get_visit_sports_list,set_visit_count_list } from "src/core/menu_config/visit_count.js"
 import lodash_ from "lodash"
+import BetData from "src/core/bet/class/bet-data-class.js"
 
 const ref_data = reactive({
   popular: [],
@@ -262,6 +263,9 @@ const outrights = () => {
     current_mi: '401'
   }
   MenuData.set_mid_menu_result(mid_config)
+
+
+  BetData.set_is_bet_single('single')
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE_OUTRIGHTS,401)

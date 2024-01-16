@@ -12,7 +12,7 @@
                 </div>
                 <div class="row text-color-max-win mt2">
                         <!--最高可赢额-->
-                    <div>{{ i18n_t('common.maxn_amount_val') }}</div>
+                    <div class="mr-10">{{ i18n_t('common.maxn_amount_val') }}</div>
                     <div class="bet-win-money yb-number-bold"> {{ winMoney() }}</div>
                 </div>
                     <!--金额-->
@@ -213,6 +213,7 @@ const set_win_money = () => {
 </script>
 
 <style scoped lang="scss">
+@import "../css/bet.scss";
 .text-color-max-win {
     color: var(--q-gb-t-c-8) !important
 }

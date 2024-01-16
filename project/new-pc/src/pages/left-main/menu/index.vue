@@ -42,18 +42,19 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive,onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 
 import BaseData from "src/core/base-data/base-data.js";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittEmit,useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { MenuData } from "src/output/index.js";
 import { compute_css_obj } from 'src/core/server-img/index.js'
-
 import { MenuWapper } from "src/base-pc/components/menu/index.js";
 
 const router = useRouter();
-
+const ref_data = reactive({
+    emit_lsit:{}
+})
 const props = defineProps({
   // 自动化测试
   DOM_ID_SHOW: {
@@ -124,6 +125,23 @@ const set_route_url = () => {
   }
   useMittEmit(MITT_TYPES.EMIT_LAYOUT_LIST_TYPE, "match");
 };
+/**
+ * 获取mini点击数据
+ * @param {*} obj 
+ */
+const get_menu_click_data = (obj) =>{
+  if(!obj.type){
+    new_menu_click(obj.data)
+  }
+}
+onMounted(()=>{
+  ref_data.emit_lsit = {
+      emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_CHANGE, get_menu_click_data).off,
+  }
+})
+onUnmounted(()=>{
+    Object.values(ref_data.emit_lsit).map((x) => x());
+})
 </script>
 
 <style scoped lang="scss">

@@ -161,7 +161,13 @@ class LayOutMain {
   }
  
   // 设置 左侧列表显示形式
-  set_layout_left_menu_status(){
+  set_layout_left_menu_status(type){
+    if(type){
+      this.layout_left_menu_status = type;
+      this.layout_left_width = (type == 'mini' ?  64 : 234 )
+      this.set_layout_version()
+      return;
+    }
      //小于最小宽度
     if (client_width <= this.layout_min_width) {
       //"mini-normal" 自己展开的 不做操作
