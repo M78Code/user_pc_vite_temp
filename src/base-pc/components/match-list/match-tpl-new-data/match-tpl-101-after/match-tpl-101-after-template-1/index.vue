@@ -160,7 +160,6 @@ export default {
       MenuData,
       current_mid,
       match_style_obj,
-      score
     }
   }
 }
