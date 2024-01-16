@@ -1663,7 +1663,8 @@ get_quick_mid_obj_ref(mid){
       } else if('array' == type){
         // console.error('new_value=',new_value);
         // 为数组的操作
-        new_value && old_value && (old_value.length = new_value.length)
+        if(typeof(new_value)=='array')
+         new_value && old_value && (old_value.length = new_value.length)
         // console.error('old_value===',JSON.stringify(old_value));
         // console.error('new_value===',JSON.stringify(new_value));
         for (let i = 0; i < new_value.length; i++) {
