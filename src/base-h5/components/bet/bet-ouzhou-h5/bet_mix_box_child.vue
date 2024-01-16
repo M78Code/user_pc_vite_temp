@@ -17,7 +17,7 @@
         
         <div v-show="BetData.bet_state_show">
                 <!-- 删除全部和选择type -->
-          <bet-all-detele v-if="BetViewDataClass.bet_order_status == 1"></bet-all-detele>
+          <bet-all-detele :is_dropdown="is_dropdown" v-if="BetViewDataClass.bet_order_status == 1"></bet-all-detele>
           <!-- --------{{BetViewDataClass.bet_order_status}} - {{BetData.is_bet_single}} -->
           <div>
               <!-- 单关  -->
@@ -159,7 +159,7 @@ const ref_data = reactive({
   money: 0,
   key_board_config: {}, //键盘配置信息
   index_: '', // 当前选中的数据
-  flicker_timer:"",
+  flicker_timer:""
 })
 
 //串关的按钮
@@ -175,6 +175,7 @@ const btn_show = ref(0) // 投注状态2
 const max_height1 = ref(250) // 投注赛事高度
 const get_mix_bet_flag = ref(false) // 最小投注开关
 const exist_code = ref(555)
+const is_dropdown = ref(false)
 
 const hide_bet_series_but = () => {
   let res = false;
@@ -234,6 +235,7 @@ const set_is_bet_single = () =>{
 // 蒙版点击 收起投注栏 事件
 const pack_up = (val) => {
   BetData.set_bet_state_show(false)
+  is_dropdown.value = false
 }
 
 const submit_order = (type) => {
