@@ -21,7 +21,7 @@ import simpleHeader from "src/base-pc/components/site-header/simple-header.vue";
 import { onMounted, nextTick, ref } from "vue";
 import { MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import { useRoute } from "vue-router";
-import { UserCtr } from "src/output/index.js";
+import { UserCtr,msc_array_obj } from "src/output/index.js";
 import { api_details } from "src/api/index.js";
 
 const route = useRoute();
@@ -37,6 +37,7 @@ const get_match_details_net = () => {
     let code = lodash.get(res, "code");
     if (code == 200) {
       match_data.value = res.data;
+      match_data.value.msc = msc_array_obj(match_data.value.msc)
       mid.value = res.data.mid;
     }
   });

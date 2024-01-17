@@ -14,7 +14,7 @@
 
 <script setup>
 // 公共主题文件引入
-import { onMounted, reactive } from "vue"
+import { onMounted, reactive, watch } from "vue"
 import { UserCtr } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -27,22 +27,29 @@ const props = defineProps({
 
 const ref_data = reactive({
   user_max_min_money:{},
-  max_money: props.max_money
+  max_money: 8888
 })
 
 onMounted(()=>{
   BetData.set_user_max_min_money()
   delete BetData.user_max_min_money?.qfi
   BetData.set_bet_keyboard_config(Object.assign(BetData.bet_keyboard_config, {ids: props.oid}))
+  ref_data.max_money = props.max_money
 })
+
+watch(
+  () => props.max_money,
+  (val) => {
+    ref_data.max_money = val
+  }
+);
 
 // 判断快捷金额按钮是否可点击
 const bet_money_btn_class = (obj, index) => {
-    console.log('pointer-events: none;pointer-events: none;pointer-events: none;', obj, index, ref_data.max_money, BetData.bet_amount)
     let className = '';
     if(ref_data.max_money > 0) {
         if(index === 'max') obj = UserCtr.balance
-        if(ref_data.max_money < obj || ref_data.max_money < BetData.bet_amount || UserCtr.balance < obj) {
+        if(ref_data.max_money < obj || UserCtr.balance < obj) {
             className = 'disabled'
         }
         

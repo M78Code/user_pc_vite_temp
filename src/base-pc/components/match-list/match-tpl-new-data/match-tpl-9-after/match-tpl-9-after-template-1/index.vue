@@ -21,12 +21,12 @@
       <div class="match-handicap-item">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
-          <basis-info2 v-if="is_mounted && match" :match="match" :is_show_more="!match_tpl_info.is_show_cur_handicap" />
+          <basis-info2 v-if="is_mounted && match" :match="match" :is_show_more="!match.is_show_cur_handicap" />
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap v-if="match"
           :handicap_list="(match.main_handicap_list)" :match="match"
-          :is_show_score="!match_tpl_info.is_show_cur_handicap && match.csid != 4" />
+          :is_show_score="!match.is_show_cur_handicap && match.csid != 4" />
 
         <!-- 视频按钮 -->
         <div class="media-col">

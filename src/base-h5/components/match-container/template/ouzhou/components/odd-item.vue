@@ -108,7 +108,7 @@ const get_current_hpid = () => {
  * @description 是否自定义 hps
  */
  const is_custom_type = () => {
-  return ['hots', '15_mintues'].includes(props.custom_type)
+  return ['hots'].includes(props.custom_type)
 }
 
 onMounted(()=>{

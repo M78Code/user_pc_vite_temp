@@ -14,7 +14,7 @@
             >{{ i18n_t('common.score_board') }}</q-tooltip
           >
     </div>
-    <div class="yb-flex-center" :class="{ 'flex-center': MenuData.is_esports() }">
+    <div>
       <!-- 收藏 -->
       <div
         v-if="MenuData.is_esports() && (![1, 500].includes(MenuData.menu_root)) && route.name != 'search' && GlobalAccessConfig.get_collectSwitch()"
@@ -228,8 +228,9 @@ function collect() {
   justify-content: center;
 
   .icon-wrap {
-    margin: 4px 0;
-
+    width: 20px;
+    height: 14px;
+    margin: 4px auto;
     .match_pre {
       width: 26px;
       height: auto;

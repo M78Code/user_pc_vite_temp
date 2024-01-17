@@ -284,9 +284,8 @@ const get_icon = (otn) => {
 
 //  投注项点击投注,
 const betItemClick = (item, ol, play_name) => {
-
   // 挂锁不可点击  // hs 11 锁盘状态，可点击
-  if ((ol._hs>0&&ol._hs!=11)) {
+  if ( (ol._mhs>0&&ol._mhs!=11) && (ol._hs>0&&ol._hs!=11)) {
     return;
   }else{
     if (ol.os != 1) {
