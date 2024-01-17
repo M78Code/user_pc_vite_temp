@@ -70,7 +70,7 @@ export default {
       let params = {
         sportId,
         tid: route.params.tid,
-        selectionHour: MatchLeagueData.get_select_hours()
+        selectionHour: route.params.type == 1 ? localStorage.getItem('league_hours') : 12
       };
       set_load_data_state("loading")
       api_match_list.get_leagues_list_match(params).then((res) => {
