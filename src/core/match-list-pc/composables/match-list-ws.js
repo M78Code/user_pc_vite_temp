@@ -123,6 +123,7 @@ function updata_match(cmd, data, MatchListData) {
 	if (!cur_match) {
 		return;
 	}
+	const skt_data = data.cd;
 	//更新表征
 	if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
 		if (skt_data.mmp == "999") {return}
@@ -130,7 +131,6 @@ function updata_match(cmd, data, MatchListData) {
 		MatchListCardClass.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs([cur_match.mid])
 	}
 	if (['C102'].includes(cmd)) {
-		const skt_data = data.cd;
 		if (skt_data.mmp != "999") {
 			// 篮球更新当前局盘口
 			// if (cur_match.csid == 2) {

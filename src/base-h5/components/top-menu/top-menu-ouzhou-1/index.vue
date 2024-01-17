@@ -1,10 +1,4 @@
-<!--
- * @Author: rise
- * @Date: 2023-11-02 16:27:18
- * @LastEditors: rise
- * @LastEditTime: 2023-11-07 16:29:35
- * @Description:  
--->
+
 <template>
   <!-- 规则 / 公告 头部 -->
   <template v-if="is_rule_page">
@@ -17,7 +11,7 @@
     </div>
   </template>
   <template v-else>
-    <div class="top_header">
+    <div class="top_header" id="top-header-oz">
       <div class="top_info">
         <template v-if="get_route_name == 'category' || get_route_name == 'result'">
           <detail-top-info />

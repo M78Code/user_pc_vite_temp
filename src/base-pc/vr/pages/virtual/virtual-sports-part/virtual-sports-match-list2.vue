@@ -15,7 +15,7 @@
 </template>
 <script>
 import virtual_sports_match_list2_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-match-list2-mixin.js";
-import virtual_sports_match_tpl from 'src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-tpl.vue'
+import virtual_sports_match_tpl from 'src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-tpl-2.vue'
 import virtual_sports_play_name from 'src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-play-name.vue'
 
 export default {

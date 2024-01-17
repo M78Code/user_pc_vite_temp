@@ -55,27 +55,14 @@
                         <template v-for="(item, index) in BetData.bet_s_list" :key="index">
                           <bet-mix-box-child1 :items="item" :index="index"></bet-mix-box-child1>
                         </template>
-                        
-                        <template v-if="BetViewDataClass.bet_special_series.length">
-                          <bet-special-input :items="BetViewDataClass.bet_special_series[0]" @input_click="handle_input_click" :index="0" />
-                        </template>
 
-                          <!-- <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single">
-                            <bet-input-info1></bet-input-info1>
-                        </template> -->
-
-                        <div>
-                          复式连串过关投注
-                        </div>
-
-                          <!-- 串关投注 限额 -->
-                          <!-- 复式连串过关投注 限额 -->
-                          <template v-if="BetData.bet_s_list.length > 1"  >
-                            <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
-                                <bet-special-input :items="item" @input_click="handle_input_click" v-if="index != 0" :index="index" />
-                            </template>
+                        <!-- 串关投注 限额 -->
+                        <!-- 复式连串过关投注 限额 -->
+                        <template v-if="BetData.bet_s_list.length > 1"  >
+                          <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
+                              <bet-special-input :items="item" @input_click="handle_input_click" v-if="index != 0" :index="index" />
                           </template>
-
+                        </template>
                           
                       </div>
                       
