@@ -128,6 +128,7 @@ onMounted(async () => {
   if (tabValue.value === 'top_events') {
     // 设置 元数据计算 流程
     state.current_mi = MenuData.top_events_list?.[0]?.mi;
+    //重置菜单项
     MenuData.set_menu_mi(state.current_mi);
     // console.log("~!!",state.current_mi)
     get_top_events_match(MenuData.top_events_list?.[0]?.csid)

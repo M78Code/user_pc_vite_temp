@@ -207,7 +207,8 @@ const goBackToLeague = () => {
       overflow-y: hidden;
       .scroll-i-con {
         height: 100% !important;
-         overflow-y: auto;
+        overflow-y: auto;
+        background-image: none !important;
         .s-w-item {
           position: relative;
           transform: translateY(0) !important;
