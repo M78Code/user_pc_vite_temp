@@ -597,11 +597,10 @@ export default defineComponent({
 .led {
   flex: 1;
   color: var(--q-gb-t-c-19);
-  font-size: 0.13rem;
+  font-size: 0.12rem;
 }
 
 .os-led {
-  font-size: 0.14rem;
   padding-bottom: 0.02rem;
   padding-top: 0.07rem;
   max-width: 1rem;

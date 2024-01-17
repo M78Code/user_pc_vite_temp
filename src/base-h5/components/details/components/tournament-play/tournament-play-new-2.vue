@@ -788,17 +788,19 @@ export default defineComponent({
 }
 .base-font-weg {
   min-height: 0.29rem !important;
-  &:after {
-    content: ' ';
-    background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
-    display: block;
-    position: absolute;
-    width: 2px;
-    height: 0.16rem;
-    top: calc(50% - 0.08rem);
-    left: -0.18rem;
-    border-radius: 1.5px;
-  }
+  font-size: 0.14rem !important;
+  color: var(--q-gb-t-c-18) !important;
+  // &:after {
+  //   content: ' ';
+  //   background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
+  //   display: block;
+  //   position: absolute;
+  //   width: 2px;
+  //   height: 0.16rem;
+  //   top: calc(50% - 0.08rem);
+  //   left: -0.18rem;
+  //   border-radius: 1.5px;
+  // }
 }
 // 去除boredr
 .play-name{

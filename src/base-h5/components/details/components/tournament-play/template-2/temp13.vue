@@ -40,7 +40,7 @@
                                :class="[BetData.bet_oid_list.includes(append_single.oid)?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
                             <div class="bet-item-ky-container" :class="[{'click-bet-bgc':BetData.bet_oid_list.includes(append_single.oid)}]">
                               <div class="single-name">
-                                <!-- <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
+                                <!-- <span class="fz_12 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
                                 <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_12">
                                 {{append_single.on}}
                               </span>
@@ -54,8 +54,8 @@
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="bet-item-ky-container">
                               <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
-                                <!-- <span class="fz_14 ver-ali-top ">{{devote_value_d(append_single.ot)}}</span> -->
-                                <span class="fz_14 odd-color">
+                                <!-- <span class="fz_12 ver-ali-top ">{{devote_value_d(append_single.ot)}}</span> -->
+                                <span class="fz_12 odd-color">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -76,8 +76,8 @@
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="bet-item-ky-container">
                               <div class="single-name" v-show="get_detail_data.csid != 1">
-                                <!-- <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
-                                <span class="fz_14 night-style">
+                                <!-- <span class="fz_12 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
+                                <span class="fz_12 night-style">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -91,8 +91,8 @@
                         <div class="play-box-sty details-color" style="flex:1;">
                           <div class="bet-item-ky-container">
                             <div class="single-name">
-                              <span class="fz_14 ver-ali-top"></span>
-                              <span class="fz_14"></span>
+                              <span class="fz_12 ver-ali-top"></span>
+                              <span class="fz_12"></span>
                             </div>
                           </div>
                         </div>
@@ -103,8 +103,8 @@
                       <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                         <div class="bet-item-ky-container">
                           <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
-                            <!-- <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
-                            <span class="size-color fz_14 odd-color">
+                            <!-- <span class="fz_12 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
+                            <span class="size-color fz_12 odd-color">
                             {{append_single.on}}
                           </span>
                           </div>
@@ -146,8 +146,8 @@
                                :class="[BetData.bet_oid_list.includes(append_single.oid)?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
                             <div class="bet-item-ky-container" :class="[{'click-bet-bgc':BetData.bet_oid_list.includes(append_single.oid)}]" >
                               <div class="single-name">
-                                <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
-                                <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_14">
+                                <!-- <span class="fz_12 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
+                                <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_12">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -160,8 +160,8 @@
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="bet-item-ky-container">
                               <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">22
-                                <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
-                                <span class="fz_14 odd-color">
+                                <!-- <span class="fz_12 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
+                                <span class="fz_12 odd-color">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -182,8 +182,8 @@
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="bet-item-ky-container">
                               <div class="single-name" v-show="get_detail_data.csid != 1">
-                                <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
-                                <span class="fz_14 night-style">
+                                <!-- <span class="fz_12 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
+                                <span class="fz_12 night-style">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -196,7 +196,7 @@
                       <template v-if="append_single._hs == 2">
                         <div class="play-box-sty details-color" style="flex:1;">
                           <div class="bet-item-ky-container">
-                            <div class="single-name"><span class="fz_14 ver-ali-top"></span><span class="fz_14"></span></div>
+                            <div class="single-name"><span class="fz_12 ver-ali-top"></span><span class="fz_12"></span></div>
                           </div>
                         </div>
                       </template>
@@ -206,8 +206,8 @@
                       <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                         <div class="bet-item-ky-container">
                           <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
-                            <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
-                            <span class="size-color fz_14 odd-color">
+                            <!-- <span class="fz_12 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
+                            <span class="size-color fz_12 odd-color">
                             {{append_single.on}}
                           </span>
                           </div>
@@ -657,7 +657,7 @@ export default defineComponent({
       height: .48rem;
       line-height: .48rem;
       text-align: center;
-      font-size: 0.14rem;
+      font-size: 0.12rem;
       background:var(--q-gb-bg-c-28);
       border-radius: 4px;
       color:var(--q-gb-t-c-10);
