@@ -2,7 +2,7 @@
 <template>
   <div class="keyboard-zone background-color-bet-box">
     <div class="keyboard-btn" v-for="(item, index) in BetData.user_max_min_money" :key="index" @click="set_click_keybord(item)" 
-    :class="{'disable-key-btn disabled': item > UserCtr.balance}">
+     :class="bet_money_btn_class(item, index)">
       <!--键盘按键文本显示 如果无效则置灰 以及MAX按钮文本显示-->
       <div class="keyboard-btn-text">
         <template v-if="item != 'MAX'">+</template>{{ item }}
@@ -21,11 +21,13 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 
 const props = defineProps({
-  oid: 0
+  oid: 0,
+  max_money: 0
 })
 
 const ref_data = reactive({
-  user_max_min_money:{}
+  user_max_min_money:{},
+  max_money: props.max_money
 })
 
 onMounted(()=>{
@@ -33,6 +35,20 @@ onMounted(()=>{
   delete BetData.user_max_min_money?.qfi
   BetData.set_bet_keyboard_config(Object.assign(BetData.bet_keyboard_config, {ids: props.oid}))
 })
+
+// 判断快捷金额按钮是否可点击
+const bet_money_btn_class = (obj, index) => {
+    console.log('pointer-events: none;pointer-events: none;pointer-events: none;', obj, index, ref_data.max_money, BetData.bet_amount)
+    let className = '';
+    if(ref_data.max_money > 0) {
+        if(index === 'max') obj = UserCtr.balance
+        if(ref_data.max_money < obj || ref_data.max_money < BetData.bet_amount || UserCtr.balance < obj) {
+            className = 'disabled'
+        }
+        
+    }
+    return className;
+}
 
 
 // 快捷金额
@@ -93,6 +109,7 @@ const set_click_keybord = obj => {
   }
   &.disabled{
       background: var(--q-gb-bg-c-19);
+      pointer-events: none;
   }
   
 }

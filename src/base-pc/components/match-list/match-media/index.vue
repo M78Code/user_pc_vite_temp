@@ -50,13 +50,13 @@
           >
     </div>
     <!-- 盘口数量 -->
-    <div class="play-count-wrap no-wrap yb-flex-center" @click="on_go_detail" style="margin-top:10px;"
+    <!-- <div class="play-count-wrap no-wrap yb-flex-center" @click="on_go_detail" style="margin-top:10px;"
       v-if="MenuData.is_esports() && route.name != 'search'">
       <span class="count">{{ handicap_num }}</span>
       <div class="yb-flex-center" style="margin-left:5px">
         <div class="yb-icon-arrow"></div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

@@ -108,10 +108,8 @@ const set_show_quick_money = (obj = {}) => {
 
 // 判断快捷金额按钮是否可点击
 const bet_money_btn_class = (obj, index) => {
-    console.log('pointer-events: none;pointer-events: none;pointer-events: none;', obj, index)
     let className = '';
     if(ref_data.max_money > 0) {
-        // ref_data.max_money = 99
         if(index === 'max') obj = UserCtr.balance
         if(ref_data.max_money < obj || ref_data.max_money < props.items.bet_amount || UserCtr.balance < obj) {
             className = 'disabled'
