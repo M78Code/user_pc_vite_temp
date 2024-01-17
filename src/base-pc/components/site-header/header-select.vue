@@ -73,9 +73,12 @@
             <popup-language />
             <!-- 切换盘口 -->
             <!-- <popup-handicap /> -->
-                            <!-- 设置浮层弹窗 -->
-                <g-settings v-if="show_g_settings" :show_settings="show_g_settings" :el="'.iframe-settings'"
-                    :settings_items="settings_items" @auto_close="show_g_settings = !show_g_settings"></g-settings>
+           <!-- 设置浮层弹窗 -->
+           <div>
+           <p @click="show_g_settings = !show_g_settings">设置</p>
+           <g-settings class="settings" v-if="show_g_settings" :show_settings="show_g_settings" :el="'.iframe-settings'"
+                :settings_items="settings_items" @auto_close="show_g_settings = !show_g_settings"></g-settings>
+           </div>
             <!-- 设置多语言、版本、颜色 -->
             <popup-set />
         </template>
@@ -95,14 +98,10 @@ import gSettings from 'src/base-pc/components/settings/index.vue';
 /* api */
 import { api_account, api_common } from "src/api/index.js";
 
-import {compute_img_url } from 'src/output/index.js'
+import {compute_img_url,format_money2,get_remote_time,compute_css_obj } from 'src/output/index.js'
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import store from "src/store-redux/index.js";
-import { format_money2 } from "src/output/index.js"
-// import userCtr from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { get_remote_time } from "src/output/index.js"
-
 /** 是否内嵌 */
 const is_iframe = ref(LayOutMain_pc.is_iframe)
 
@@ -147,31 +146,21 @@ const dayClickType = reactive({ typeL: 0, urlL: null })
 /** 夜间版 */
 const nightClickType = reactive({ typeL: 0, urlL: null })
 const settings_items = ref([
-        // {
-        //   id: 7,
-        //   name: this.$root.$t('menu.old_ersion'),
-        //   icon: {
-        //     day: require('public/image/yabo/svg/icon-version.svg'),
-        //     night: require('public/image/yabo/svg/icon-version-night.svg')
-        //   },
-        //   value_arr: [
-        //   ],
-        //   type: 'switch'
-        // },
         {
+          // 近期开赛
           id: 3,
-          name: 123,
+          name: i18n_t("common.match_soon_filtr"),
           icon: {
-            // day: require('public/image/yabo/svg/icon-skin.svg'),
-            // night: require('public/image/yabo/svg/icon-skin-night.svg'),
+            day: compute_css_obj('public/image/yabo/svg/icon-skin.svg'),
+            night: compute_css_obj('public/image/yabo/svg/icon-skin-night.svg'),
           },
           value_arr: [/*this.$root.$t('odds.HK'), this.$root.$t('odds.EU')*/],
           type: 'switch'
         },
         {
-          //列表附加玩法
+          //列表附加玩法默认展示
           id: 4,
-          name: '列表附加玩法',
+          name: '列表附加玩法默认展示',
           icon: {
             // day: require('public/image/yabo/svg/additional-plays.svg'),
             // night: require('public/image/yabo/svg/additional-plays.svg')
@@ -202,7 +191,7 @@ const settings_items = ref([
         {
           //附加盘
           id: 6,
-          name:  '附加盘',
+          name: i18n_t("match_info.append"),
           icon: {
             // day: require('public/image/yabo/svg/additional-disk.svg'),
             // night: require('public/image/yabo/svg/additional-disk.svg')

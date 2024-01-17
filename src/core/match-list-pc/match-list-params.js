@@ -291,13 +291,14 @@ function match_list_all_params() {
     {
         lv2_mi_info.orpt=13 //多列永远是13
     }
+    console.log(lv2_mi_info, "lv2_mi_info");
     lodash.merge(
         config.match_list,
         {
             params: lv2_mi_info
         }
     )
-
+    
 
     return config
 }
