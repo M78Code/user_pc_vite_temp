@@ -65,7 +65,7 @@ onUnmounted(clear_timer1_)
   /**
    * 点击视频
    */
-  const icon_click_muUrl = () => {
+  const icon_click_muUrl = (obj) => {
     let check = get_detail_data.mms >= 2 || get_detail_data.mvs > -1;
 
     if (!check) {
@@ -104,7 +104,7 @@ onUnmounted(clear_timer1_)
             });
           }
           // 发送进入动画和视频的埋点
-          into_video_anima_event('muUrl');
+          into_video_anima_event('muUrl',obj);
         } else {
           if (lodash.get(res, "code") == "0401038") {
             // set_toast({
@@ -139,7 +139,7 @@ onUnmounted(clear_timer1_)
   /**
    * 点击动画
    */
-  const icon_click_animationUrl = () => {
+  const icon_click_animationUrl = (obj) => {
     let check = get_detail_data.mms >= 2 || get_detail_data.mvs > -1;
 
     if (!check) {
@@ -185,7 +185,7 @@ onUnmounted(clear_timer1_)
       // 开启视频
       useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true);
       // 发送进入动画和视频的埋点
-      into_video_anima_event('animationUrl');
+      into_video_anima_event('animationUrl',obj);
     });
   };
 
