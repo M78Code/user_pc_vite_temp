@@ -789,6 +789,8 @@ export default defineComponent({
 }
 .base-font-weg {
   min-height: 0.29rem !important;
+  font-size: 0.14rem !important;
+  color: var(--q-gb-t-c-18) !important;
   // &:after {
   //   content: ' ';
   //   background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;

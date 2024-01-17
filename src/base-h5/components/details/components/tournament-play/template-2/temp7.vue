@@ -32,7 +32,7 @@
                               @click="go_to_bet(ol_item)"
                               :class="[BetData.bet_oid_list.includes(ol_item.oid)?['details-bg5','first-rad']:'',{'win': calc_win(ol_item.result)}]"
                           >
-                            <div class="ellipsis remark details_t_color6 fz_16">
+                            <div class="ellipsis remark details_t_color6 fz_12">
                             <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.oid)},'size-color']">
                               {{ol_item.on}}
                             </span>
@@ -46,7 +46,7 @@
                         <template v-if="ol_item.os == 2">
                           <!-- lock 锁状态 start -->
                           <div class="play-box-style details_color warp">
-                            <div class="size-color-imp size-color ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
+                            <div class="size-color-imp size-color ellipsis remark details_t_color7 fz_12">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
                               <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
@@ -62,7 +62,7 @@
                         <template v-else>
                           <!-- lock 锁状态 start -->
                           <div class="play-box-style details_color warp">
-                            <div class="size-color-imp ellipsis remark details_t_color6 fz_16">{{ol_item.on}}</div>
+                            <div class="size-color-imp ellipsis remark details_t_color6 fz_12">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
                               <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
@@ -80,7 +80,7 @@
                     <template v-if="ol_item._mhs == 1">
                       <!-- lock 锁状态 start -->
                       <div class="play-box-style details_color warp">
-                        <div class="size-color-imp ellipsis remark details_t_color6 fz_16">{{ol_item.on}}</div>
+                        <div class="size-color-imp ellipsis remark details_t_color6 fz_12">{{ol_item.on}}</div>
                         <div class="text-left text-right odds-wrap">
                           <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                         </div>
@@ -109,7 +109,7 @@
                               @click="go_to_bet(ol_item)"
                               :class="[BetData.bet_oid_list.includes(ol_item.oid)?['details-bg5','first-rad']:'',{'win':calc_win(ol_item.result)}]"
                           >
-                            <div class="ellipsis remark details_t_color6 fz_16">
+                            <div class="ellipsis remark details_t_color6 fz_12">
                             <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.oid)},'size-color']">
                               {{ol_item.on}}
                             </span>
@@ -123,7 +123,7 @@
                         <template v-if="ol_item.os == 2">
                           <!-- lock 锁状态 start -->
                           <div class="play-box-style details_color warp">
-                            <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
+                            <div class="size-color-imp ellipsis remark details_t_color7 fz_12">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
                               <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
@@ -139,7 +139,7 @@
                         <template v-else>
                           <!-- lock 锁状态 start -->
                           <div class="play-box-style details_color warp">
-                            <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
+                            <div class="size-color-imp ellipsis remark details_t_color7 fz_12">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
                               <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
@@ -157,7 +157,7 @@
                     <template v-if="ol_item._mhs == 1">
                       <!-- lock 锁状态 start -->
                       <div class="play-box-style details_color warp">
-                        <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
+                        <div class="size-color-imp ellipsis remark details_t_color7 fz_12">{{ol_item.on}}</div>
                         <div class="text-left text-right odds-wrap">
                           <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                         </div>
@@ -186,7 +186,7 @@
                               @click="go_to_bet(ol_item)"
                               :class="[BetData.bet_oid_list.includes(ol_item.oid)?'details-bg5':'',{'win':calc_win(ol_item.result)}]"
                           >
-                            <div class="ellipsis remark details_t_color6 fz_16">
+                            <div class="ellipsis remark details_t_color6 fz_12">
                             <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.oid)},'size-color']">
                               {{ol_item.on || ol_item.otv || ol_item.ott}}
                             </span>
@@ -200,7 +200,7 @@
                         <template v-if="ol_item.os == 2">
                           <!-- lock 锁状态 start -->
                           <div class="play-box-style details_color">
-                            <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
+                            <div class="size-color-imp ellipsis remark details_t_color7 fz_12">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
                               <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
@@ -216,7 +216,7 @@
                         <template v-else>
                           <!-- lock 锁状态 start -->
                           <div class="play-box-style details_color">
-                            <div class="size-color-imp size-color-imp ellipsis remark details_t_color6 fz_16">{{ol_item.on}}</div>
+                            <div class="size-color-imp size-color-imp ellipsis remark details_t_color6 fz_12">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
                               <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
@@ -234,7 +234,7 @@
                     <template v-if="ol_item._mhs == 1">
                       <!-- lock 锁状态 start -->
                       <div class="play-box-style details_color">
-                        <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
+                        <div class="size-color-imp ellipsis remark details_t_color7 fz_12">{{ol_item.on}}</div>
                         <div class="text-left text-right odds-wrap">
                           <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                         </div>

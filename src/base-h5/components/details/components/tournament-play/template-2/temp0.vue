@@ -29,7 +29,7 @@
                             @click="go_to_bet(ol_item)"
                             :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                           >
-                            <div class="ellipsis remark details_t_color6 fz_13 odds-on">
+                            <div class="ellipsis remark details_t_color6 fz_12 odds-on">
                               <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                                 <!-- {{ol_item.on || ol_item.otv || ol_item.ott}} -->
                                 <!-- 修改为: ott+on的值 来显示  下面的用法相同 -->
@@ -45,7 +45,7 @@
                         <template v-if="ol_item.os == 2">
                           <!-- lock 锁状态 start -->
                           <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
-                            <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
+                            <div class="ellipsis remark details_t_color7 fz_12" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                             <div class="text-left">
                               <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
@@ -59,7 +59,7 @@
                         <template v-else>
                           <!-- lock 锁状态 start -->
                           <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
-                            <div class="ellipsis remark details_t_color6 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
+                            <div class="ellipsis remark details_t_color6 fz_12" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                             <div class="text-left">
                               <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
@@ -77,7 +77,7 @@
                     <template v-if="ol_item._mhs == 1">
                       <!-- lock 锁状态 start -->
                       <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
-                        <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
+                        <div class="ellipsis remark details_t_color7 fz_12" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                         <div class="text-left">
                           <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                         </div>
@@ -110,7 +110,7 @@
                       @click="go_to_bet(ol_item)"
                       :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                     >
-                      <div class="ellipsis remark details_t_color6 fz_13">
+                      <div class="ellipsis remark details_t_color6 fz_12">
                         <span class="size-color" :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                           {{ol_item.ott}}{{ol_item.on}}
                         </span>
@@ -124,7 +124,7 @@
                   <template v-if="ol_item.os == 2">
                     <!-- lock 锁状态 start -->
                     <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
-                      <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
+                      <div class="ellipsis remark details_t_color7 fz_12" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                       <div class="text-left">
                         <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
@@ -138,7 +138,7 @@
                   <template v-else>
                     <!-- lock 锁状态 start -->
                     <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
-                      <div class="ellipsis remark details_t_color6 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
+                      <div class="ellipsis remark details_t_color6 fz_12" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                       <div class="text-left">
                         <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
@@ -156,7 +156,7 @@
               <template v-if="ol_item._mhs == 1">
                 <!-- lock 锁状态 start -->
                 <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
-                  <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
+                  <div class="ellipsis remark details_t_color7 fz_12" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                   <div class="text-left">
                     <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                   </div>

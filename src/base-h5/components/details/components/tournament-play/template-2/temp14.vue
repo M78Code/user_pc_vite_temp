@@ -329,7 +329,7 @@ export default defineComponent({
     //height: 0.52rem;
       height: .48rem;
 
-    font-size: 0.14rem;
+    font-size: 0.12rem;
     padding: 0.06rem 0.07rem 0;
       box-sizing: border-box;
     // margin-bottom: 1px;

@@ -135,6 +135,7 @@ import match_list_card from "src/core/match-list-pc/match-card/match-list-card-c
 import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
 import { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh, handle_destroyed, loading } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 
 import { LayOutMain_pc, compute_css_obj } from 'src/output/index.js';
 import { set_template_width } from 'src/core/match-list-pc/list-template/match-list-tpl.js'
@@ -144,6 +145,7 @@ const match_list_card_key_arr = ref([])
 function MatchListCardDataClass_match_list_card_key_arr() {
   match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
 }
+use_match_list_ws()
 const on_go_top = () => {
   useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0)
 }
