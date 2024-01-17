@@ -154,8 +154,14 @@ const settings_items = ref([
             day: compute_css_obj('public/image/yabo/svg/icon-skin.svg'),
             night: compute_css_obj('public/image/yabo/svg/icon-skin-night.svg'),
           },
-          value_arr: [/*this.$root.$t('odds.HK'), this.$root.$t('odds.EU')*/],
-          type: 'switch'
+          value_arr: [
+                { label: i18n_t('common.all'), title: i18n_t('common.all'), value: null },
+                { label: i18n_t('filter.select_time.3h'), title: '3' + i18n_t('common.hour'), value: 3 },
+                { label: i18n_t('filter.select_time.6h'), title: '6' + i18n_t('common.hour'), value: 6 },
+                { label: i18n_t('filter.select_time.9h'), title: '9' + i18n_t('common.hour'), value: 9 },
+                { label: i18n_t('filter.select_time.12h'), title: '12' + i18n_t('common.hour'), value: 12 },
+            ],
+          type: 'select'
         },
         {
           //列表附加玩法默认展示
