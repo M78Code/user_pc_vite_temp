@@ -9,7 +9,7 @@
     <div>
       <div v-for="(team,index) in item_data.team" :key="index" :style="{'margin-top':index > 0 ? '0.04rem':''}" class="hairline-border">
         <div class="row special items-center justify-between" >
-          <div class="row items-center">
+          <div class="row items-center" style="width: 338px">
             <div class="virtual-count" :class="`virtual-num-${index+1} csid-${[1010].includes(sub_menu_type)?'1002':sub_menu_type} ${[1010].includes(sub_menu_type) ? `motorcycle-${index+1}` : ''}`"></div>
             <div class="team-name">{{team.teamName}}</div>
           </div>
@@ -169,7 +169,7 @@ export default defineComponent({
   white-space: nowrap;
   line-height: 0.52rem;
   margin-left: 0.08rem;
-  color: var(--q-gb-t-c-3);
+  color: #1A1A1A;
   font-size: 0.14rem;
 }
 
@@ -182,11 +182,11 @@ export default defineComponent({
   text-align: center;
   font-size: 0.16rem;
   flex: 1;
-  color: var(--q-gb-t-c-3);
+  color: var(--q-gb-t-c-2);
   background: var(--q-gb-bg-c-28);
   border-radius: 0.08rem;
   >div {
-    color: var(--q-gb-t-c-3);
+    color: var(--q-gb-t-c-2);
     font-size: 0.14rem;
     font-weight: 700;
   }

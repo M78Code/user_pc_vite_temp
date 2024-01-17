@@ -1,7 +1,7 @@
 <template>
   <div class="match-tpl-129">
     <div class="flex flex-start items-center">
-        <tem8 :item_data="item_data" :csid="match.csid" v-if="match" />
+        <horse-template :item_data="item_data" :csid="match.csid" v-if="match" />
     </div>
   </div>
 </template>
@@ -20,7 +20,7 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/i
 import virtual_sports_match_item_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-match-item-mixin.js";
 import { IconWapper } from 'src/components/icon'
 import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
-import tem8 from "src/base-pc/vr/pages/virtual/virtual-sports-part/tem8.vue"
+import horseTemplate from "src/base-pc/vr/pages/virtual/virtual-sports-part/horse-template.vue"
 
 export default {
   mixins:[virtual_sports_match_item_mixin],
@@ -28,7 +28,7 @@ export default {
     MatchHandicap,
     IconBox,
     'icon-wapper': IconWapper,
-    tem8
+    'horse-template': horseTemplate,
   },
   props: {
     is_show_more: {
@@ -51,31 +51,6 @@ export default {
     provide("MatchListData", MatchListData)
 
     let current_mid = MatchListCardDataClass.current_mid;
-    const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.value.csid == '1001' ? 129 : 126}_config`]
-    
-    let handicap_list = computed(() => {
-      try{
-        const hpids = MatchListCardDataClass.get_csid_current_hpids(match.value.csid);
-        const list = match_tpl_info?.get_current_odds_list(hpids);
-       return list
-      }catch(e){
-        console.error(match_tpl_info,e)
-      }
-      return []
-    });
-
-    const match_list_tpl_size = computed(() => {
-      const width_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.value.csid == '1001' ? 129 : 126}_config`].width_config
-      return width_config
-    })
-
-     //非坑位对象
-     const not_hn_obj_map = computed(() => {
-      const _not_hn_obj_map = get_match_to_map_obj(match.value, null); //非坑位对象
-      return _not_hn_obj_map
-    })
-    
-    provide("not_hn_obj_map", not_hn_obj_map)
 
     // 获取赛马类赔率所需数据
     const item_data = {
@@ -95,8 +70,6 @@ export default {
       compute_css_obj,
       current_mid,
       match,
-      handicap_list,
-      match_list_tpl_size,
       item_data
     }
 }
