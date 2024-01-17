@@ -225,6 +225,9 @@ function getCurState(hipo) {
       display: flex;
       align-items: center;
       justify-content: center;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--q-gb-t-c-3);
     }
   }
 }
