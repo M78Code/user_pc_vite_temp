@@ -43,7 +43,32 @@
     </BaseVirtualList>
   </template>
   <template v-else>
-    <div class="refresh-container">
+    <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate">
+      <template #default="{ item, index }">
+        <!-- 冠军玩法 -->
+        <template v-if="is_kemp || MenuData.get_mm_is_champion()">
+          <MatchContainerMainTemplate2
+            :i="index"
+            :match_of_list="get_match_item(item)">
+          </MatchContainerMainTemplate2>
+        </template>
+        <!-- 常规赛果 -->
+        <template v-else-if="is_results">
+          <MatchContainerMainTemplate3
+            :i="index"
+            :match_of_list="get_match_item(item)">
+          </MatchContainerMainTemplate3>
+        </template>
+        <!-- 真实体育玩法 -->
+        <template v-else>
+          <MatchContainerMainTemplate1
+            :i="index"
+            :match_of_list="get_match_item(item)">
+          </MatchContainerMainTemplate1>
+        </template>
+      </template>
+    </BaseVirtualList>
+    <div class="refresh-container" v-if="false">
       <!--列表页 -->
       <ScrollWrapper>
         <template v-slot="{ match_item, index }">

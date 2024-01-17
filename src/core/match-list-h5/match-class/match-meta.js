@@ -21,6 +21,7 @@ import {
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5,
 } from 'src/output/module/match-data-base.js'
+import { nextTick } from 'licia';
 
 class MatchMeta {
 
@@ -1387,7 +1388,9 @@ class MatchMeta {
     warehouse.set_active_mids([])
     if (MenuData.is_results() && PageSourceData.route_name != 'match_result') return
     const mids = list.map(t => t)
-    warehouse.set_active_mids(mids)
+    nextTick(() => {
+      warehouse.set_active_mids(mids)
+    })
   }
 
   /**

@@ -2,9 +2,11 @@ import lodash from 'lodash'
 import MatchFold from 'src/core/match-fold/index.js'
 import BaseData from 'src/core/base-data/base-data.js'
 import { MenuData } from 'src/output/project/index.js'
+import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData from "src/core/page-source/page-source.js";
-import { use_playingMethods_15 } from "src/output/module/constant-utils.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+import { use_playingMethods_15, project_name } from "src/output/module/constant-utils.js";
+import { template_default_config } from "src/core/match-list-h5/match-card/template/template-common.js"
 
 
 class MatchUtils {
@@ -376,21 +378,27 @@ class MatchUtils {
    */
   get_default_estimateHeight (match) {
     const { is_show_league = true } = match
+    // 版本 1 简版   2  新版
+    const standard_edition = UserCtr.standard_edition
     // 折叠对象
     const fold_data = MatchFold.match_mid_fold_obj.value
     // 赛事折叠信息
     const fold_key = MatchFold.get_match_fold_key(match)
     // 赛事是否显示
     const show_card = lodash.get(fold_data[fold_key], `show_card`, false)
+    // 当前项目 默认配置
+    const project_config = template_default_config[project_name] || template_default_config['app-h5']
+    // 当前版本默认配置
+    const standard_config = project_config[standard_edition] || project_config['2']
     let estimateHeight;
-    if (is_show_league && show_card) { // 显示联赛  显示卡片
-      estimateHeight = 148
-    } else if (is_show_league && !show_card) { // 显示卡片 不显示联赛
-      estimateHeight = 31
+    if (is_show_league && show_card) {           // 显示联赛  显示卡片
+      estimateHeight = standard_config['1']
+    } else if (is_show_league && !show_card) {   // 显示卡片 不显示联赛
+      estimateHeight = standard_config['2']
     } else if (!is_show_league && show_card)  {  // 显示联赛  不显示卡片
-      estimateHeight = 103
-    } else { // 默认
-      estimateHeight = 31
+      estimateHeight = standard_config['3']
+    } else {                                     // 默认
+      estimateHeight = standard_config['default']
     }
     return estimateHeight
   }

@@ -158,7 +158,7 @@ const get_item_hpn = (s) => {
   return result
 }
 
-// 是否锁盘
+// 是否锁盘 
 const is_lock = computed(() => {
   return props.odd_item.os != 1 || props.item_hs !== 0 || props.match_info.mhs !== 0 || virtual_odds_state.value == 1
 })

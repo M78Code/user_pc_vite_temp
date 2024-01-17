@@ -31,6 +31,8 @@ class MatchResponsive {
     this.is_http_update_info = ref(true)
     // 复刻版下的热门联赛
     this.popular_league = ref({})
+    // 次要玩法展开映射
+    this.secondary_unfold_map = ref({})
   }
 
    /**
@@ -108,6 +110,20 @@ class MatchResponsive {
     Object.assign(this.ball_seed_count.value, {
       [key]: length
     })
+  }
+
+  /**
+   * @description 设置次要玩法展开映射
+   */
+  set_secondary_unfold_map (val) {
+    this.secondary_unfold_map.value = val
+  }
+
+  /**
+   * @description 重置次要玩法展开映射
+   */
+  clear_secondary_unfold_map () {
+    this.secondary_unfold_map.value = {}
   }
 
    /**

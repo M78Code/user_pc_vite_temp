@@ -296,6 +296,13 @@
               </div>
             </div>
           </div>
+          <!-- 次要玩法 DOM -->
+          <div class="secondary-game-play" v-if="[1,2,5,7,8].includes(+match.csid) && standard_edition != 1">
+            <MatchContainerSecondTemplate2
+              :i="i"
+              :match="match"
+            ></MatchContainerSecondTemplate2>
+          </div>
         </div>
       </div>
     </template>
@@ -312,6 +319,7 @@ import ScoreList from 'src/base-h5/components/match-container/template/app/compo
 import ImageCacheLoad from "src/core/public-cache-image/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
+import MatchContainerSecondTemplate2 from 'src/base-h5/components/match-container/second/match-container-second-template2.vue'
 import { i18n_t,format_M_D, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData, format_time_zone, UserCtr } from "src/output/index.js"
 import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
@@ -340,6 +348,7 @@ export default {
     ImageCacheLoad,
     CountingDownStart,
     CountingDownSecond,
+    MatchContainerSecondTemplate2,
   },
   setup (ctx) {
     // 是否显示球种标题

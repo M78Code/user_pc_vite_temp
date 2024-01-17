@@ -7,7 +7,7 @@ import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
-import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
+import MatchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/output/index.js"
 import { format_how_many_days, format_week } from "src/core/format/common/index.js"
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
@@ -303,7 +303,7 @@ export default defineComponent({
       deep: true,
       handler (c_match) {
         this.media_button_button_type_check()
-        this.mmp_map_title = matchListClass.match_period_map(c_match);
+        this.mmp_map_title = MatchListClass.match_period_map(c_match);
       }
     },
     'match_of_list.msc': {
@@ -311,12 +311,12 @@ export default defineComponent({
       deep: true,
       handler () {
         this.score_value();
-        this.mmp_map_title = matchListClass.match_period_map(this.match_of_list);
+        this.mmp_map_title = MatchListClass.match_period_map(this.match_of_list);
       }
     },
     'match_of_list.mmp': {
       handler () {
-        this.mmp_map_title = matchListClass.match_period_map(this.match_of_list);
+        this.mmp_map_title = MatchListClass.match_period_map(this.match_of_list);
       }
     },
     // 监听主队比分变化
