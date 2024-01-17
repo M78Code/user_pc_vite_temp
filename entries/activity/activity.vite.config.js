@@ -69,7 +69,7 @@ export default defineConfig({
     },
     server: {
         port,
-        open: `../../project/${project}/index.html`,
+        open: `./index.html`,
         hmr: true,
     },
 });

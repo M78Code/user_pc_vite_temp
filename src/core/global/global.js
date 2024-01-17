@@ -64,7 +64,15 @@ class UseGlobal {
     this.is_fold_status = true;
     this.champion_fold_obj = {};
     // 全局开关变更
-    this.global_switch_version =ref('22222')
+    this.global_switch_version =ref('22222');
+    // 附加盘开关
+    this.show_additional_disk = localStorage.getItem('additional_disk')?JSON.parse (localStorage.getItem('additional_disk')) :true;
+    // 附加玩法开关
+    this.show_additional_plays = localStorage.getItem('additional_plays')?JSON.parse (localStorage.getItem('additional_plays')) :true;
+    // 附加玩法配置展示行数
+    this.additional_plays_list_num = localStorage.getItem('additional_plays_num') || 11;
+    // 附加玩法配置展示更多行数
+    this.show_more_other_list_obj = {};
   }
   /**
    * @description: 设置全局点击事件

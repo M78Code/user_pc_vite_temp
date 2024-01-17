@@ -69,7 +69,7 @@ export default {
   watch: {
     '$route'(to, from) {
       PageSourceData && PageSourceData.set_from_page(from.name)
-      watch_route_fun(to, from);
+      watch_route_fun(to, from, this);
     },
     init_load(val){
       if(val&&document.getElementById("loading-root-ele")){

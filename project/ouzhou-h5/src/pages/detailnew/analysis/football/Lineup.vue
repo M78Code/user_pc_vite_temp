@@ -4,7 +4,7 @@
 </script>
 <template>
     <section>
-        这里是阵容
+<!--        这里是阵容-->
     </section>
 </template>
 

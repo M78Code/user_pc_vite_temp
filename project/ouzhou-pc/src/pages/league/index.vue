@@ -44,17 +44,19 @@ export default {
   setup() {
     const match_list_card_key_arr = ref([])
     const route = useRoute();
+
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
       MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
-      mounted_fn()
     })
    const off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,fetch_league_match_list).off
     watch(() => route.params, () => {
       fetch_league_match_list()
     }, { immediate: true, deep: true })
 
+    mounted_fn()
+    
     function MatchListCardDataClass_match_list_card_key_arr() {
       match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
     }
@@ -70,7 +72,7 @@ export default {
       let params = {
         sportId,
         tid: route.params.tid,
-        selectionHour: MatchLeagueData.get_select_hours()
+        selectionHour: route.params.type == 1 ? localStorage.getItem('league_hours') : 12
       };
       set_load_data_state("loading")
       api_match_list.get_leagues_list_match(params).then((res) => {

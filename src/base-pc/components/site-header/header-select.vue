@@ -73,6 +73,12 @@
             <popup-language />
             <!-- 切换盘口 -->
             <!-- <popup-handicap /> -->
+           <!-- 设置浮层弹窗 -->
+           <div>
+           <p @click="show_g_settings = !show_g_settings">设置</p>
+           <g-settings class="settings" v-if="show_g_settings" :show_settings="show_g_settings" :el="'.iframe-settings'"
+                :settings_items="settings_items" @auto_close="show_g_settings = !show_g_settings"></g-settings>
+           </div>
             <!-- 设置多语言、版本、颜色 -->
             <popup-set />
         </template>
@@ -81,26 +87,26 @@
 
 <script setup>
 import { onMounted, ref, computed, reactive, onUnmounted } from 'vue'
-import lodash from 'lodash'
+import lodash from 'lodash' 
 /* 组件 */
 import { RefreshWapper as refresh } from "src/components/common/refresh";
 import headerTime from "src/base-pc/components/site-header/header-time.vue"
 // import popupHandicap from "src/base-pc/components/popup-select/popup-handicap.vue"
 import popupSet from "src/base-pc/components/popup-select/popup-set.vue"
 import popupLanguage from "src/base-pc/components/popup-select/popup-language.vue"
+import gSettings from 'src/base-pc/components/settings/index.vue';
 /* api */
 import { api_account, api_common } from "src/api/index.js";
 
-import {compute_img_url } from 'src/output/index.js'
+import {compute_img_url,format_money2,get_remote_time,compute_css_obj } from 'src/output/index.js'
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import store from "src/store-redux/index.js";
-import { format_money2 } from "src/output/index.js"
-// import userCtr from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { get_remote_time } from "src/output/index.js"
-
 /** 是否内嵌 */
 const is_iframe = ref(LayOutMain_pc.is_iframe)
+
+/** 是否显示设置弹窗 */
+const show_g_settings = ref(false)
 
 /** stroe仓库 */
 const { menuReducer } = store.getState()
@@ -139,6 +145,62 @@ const isPre = ref(false)
 const dayClickType = reactive({ typeL: 0, urlL: null })
 /** 夜间版 */
 const nightClickType = reactive({ typeL: 0, urlL: null })
+const settings_items = ref([
+        {
+          // 近期开赛
+          id: 3,
+          name: i18n_t("common.match_soon_filtr"),
+          icon: {
+            day: compute_css_obj('public/image/yabo/svg/icon-skin.svg'),
+            night: compute_css_obj('public/image/yabo/svg/icon-skin-night.svg'),
+          },
+          value_arr: [/*this.$root.$t('odds.HK'), this.$root.$t('odds.EU')*/],
+          type: 'switch'
+        },
+        {
+          //列表附加玩法默认展示
+          id: 4,
+          name: '列表附加玩法默认展示',
+          icon: {
+            // day: require('public/image/yabo/svg/additional-plays.svg'),
+            // night: require('public/image/yabo/svg/additional-plays.svg')
+          },
+          value_arr: [],
+          type: 'switch'
+        },
+        {
+          //列表附加玩法配置
+          id: 5,
+          name: '列表附加玩法配置',
+          icon: {
+            // day: require('public/image/yabo/svg/additional-plays-cfg.svg'),
+            // night: require('public/image/yabo/svg/additional-plays-cfg.svg')
+          },
+          value_arr: [
+            // 3行展示
+            { label: '3行展示', label1: '3行展示', value: 3, icon: '', id: 1 },
+            // 全部行展示
+            { label: '全部行展示', label1: '全部行展示', value: 11, icon: '', id: 2 },
+            // // 3行展示
+            // { label: this.$root.$t('set.3Rows'), label1: this.$root.$t('set.3Rows'), value: 3, icon: '', id: 1 },
+            // // 全部行展示
+            // { label: this.$root.$t('set.moreRowsShow'), label1: this.$root.$t('set.moreRows'), value: 11, icon: '', id: 2 },
+          ],
+          type: 'select'
+        },
+        {
+          //附加盘
+          id: 6,
+          name: i18n_t("match_info.append"),
+          icon: {
+            // day: require('public/image/yabo/svg/additional-disk.svg'),
+            // night: require('public/image/yabo/svg/additional-disk.svg')
+          },
+          value_arr: [],
+          type: 'switch'
+        },
+      ])
+
 /**
 * @Description 节庆资源图片点击
 * @param {side} L 左边的图片点击 R 右边的图片点击

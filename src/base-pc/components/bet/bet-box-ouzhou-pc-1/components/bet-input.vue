@@ -110,9 +110,11 @@ const set_show_quick_money = (obj = {}) => {
 const bet_money_btn_class = (obj, index) => {
     let className = '';
     if(ref_data.max_money > 0) {
-        if(index != 'max' && (ref_data.max_money < obj || ref_data.max_money < props.items.bet_amount || UserCtr.balance < obj)) {
+        if(index === 'max') obj = UserCtr.balance
+        if(ref_data.max_money < obj || ref_data.max_money < props.items.bet_amount || UserCtr.balance < obj) {
             className = 'disabled'
         }
+        
     }
     return className;
 }
@@ -256,6 +258,7 @@ const show_quick_amount = state => {
         }
         &.disabled{
             background: var(--q-gb-bg-c-19);
+            pointer-events: none;
         }
     }
 }

@@ -127,9 +127,6 @@
             <!--</div>-->
             <!-- 全屏按钮 -->
             <!-- <div class="full-screen-btn" @click="exit_full_screen" v-if="!['result_details','match_result'].includes(route?.name)"> -->
-            <div class="full-screen-btn" @click="exit_full_screen" v-if="false">
-              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`">
-            </div>
           </div>
         </template>
 
@@ -211,7 +208,7 @@
           <template v-else>
             <div class="row justify-between full-height mx-15"  @click.stop="click_mask">
                <!-- 缩放按钮 -->
-              <img v-if="get_is_full_screen && show_exit_btn" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
+              <img v-if="get_is_full_screen && show_exit_btn && ProjectName != 'ouzhou-h5'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
             
               <div class="col-1 go-back-btn-wrap" @click="close_video" >
                 <div class="video_back"></div>
@@ -988,6 +985,8 @@ export default {
      * @Description 设置全屏
      */
     set_full_screen(){
+      console.log(document.querySelector("#top-header-oz"));
+    
       if(this.get_is_full_screen){
         this.set_is_hengping(false)
         this.exit_browser_full_screen()
@@ -1867,6 +1866,15 @@ export default {
     OrientationSubscrbe.instance.change_status(false);
     OrientationSubscrbe.instance.destory_notify();
 
+  },
+  watch:{
+    'get_is_full_screen':{
+      handler(){
+        document.querySelector("#top-header-oz").style.display=!this.get_is_full_screen ? "block" :"none"
+        document.querySelector("#page-footer").style.display=!this.get_is_full_screen ? "block" :"none"
+      },
+      immediate: true
+    },
   }
 }
 </script>

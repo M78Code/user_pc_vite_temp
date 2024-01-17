@@ -33,8 +33,8 @@ export function set_sticky_top() {
       league: 196
     }
   }
-  // 冠军 并且不是早盘
-  else if (MenuData.is_kemp() && !MenuData.is_zaopan()) {
+  // 常规冠军
+  else if (MenuData.is_common_kemp()) {
     obj = {
       type: 40,
       league: 40
