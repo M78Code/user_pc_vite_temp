@@ -8,7 +8,7 @@ import { format_total_score } from "src/core/format/common/index.js"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { nextTick } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX,set_hide_api_data_obj, into_video_anima_event } from "src/output";
+import { LOCAL_PROJECT_FILE_PREFIX} from "src/output";
 
 export const video_info = () => {
   const router = useRouter();
@@ -597,18 +597,9 @@ export const video_info = () => {
       }
 
       clearTimeout(this.media_type_change_timer)
-      if(val == 'muUrl'){
-        // 设置埋点缓存数据(列表页面) button:1.列表  2.右侧赛事信息 3.详情页
-        set_hide_api_data_obj(3,{match: this.get_detail_data, button:'3',txt:'赛事详情视频页面', type:val});
-      } else if(val =='animationUrl'){
-        // 设置埋点缓存数据(列表页面) button:1.列表  2.右侧赛事信息 3.详情页
-        set_hide_api_data_obj(4,{match: this.get_detail_data, button:'3',txt:'赛事详情视频页面', type:val});
-      }
       this.media_type_change_timer = setTimeout(() => {
         this.set_change_count(this.get_change_count + 1);
         this.icon_click(val);
-        // 发送进入动画和视频的埋点
-        into_video_anima_event(val);
       }, 50)
     }
   };
