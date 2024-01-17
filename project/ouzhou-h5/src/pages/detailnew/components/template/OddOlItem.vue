@@ -97,7 +97,7 @@ const ov = (() => {
   // @ts-ignore
   return compute_value_by_cur_odd_type(props.value.ov, props.value._hpid, props.value._hsw, sportId)
 })()
-// 反波胆玩法增加'非'
+/** Over|Under 添加 O|U;  反波胆玩法增加'非' */
 const txt_ol_name = (function(){
   if(props.value.ot == 'Over'){
     return 'O  '
