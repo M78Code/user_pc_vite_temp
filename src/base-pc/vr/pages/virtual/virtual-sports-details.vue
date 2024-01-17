@@ -7,7 +7,7 @@
     <div class="virtual-detail-wrap">
       <div class="match-detail-bread">
         <!-- 详情页面包屑 -->
-        <breadcrumbs :detail_info="match || {}" />
+        <breadcrumbs :detail_info="match || {}" v-if="match" />
         <div class="bread-right">
           <img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
@@ -83,21 +83,6 @@
         </template>
         <!-- 历史战绩页面 -->
         <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
-        <!-- 排行榜页面,小组赛淘汰赛页面  -->
-        <div v-if="match && tabs_name == 'rank'" class="list-wrapper">
-          <div v-if="[1001,1004].includes(sub_menu_type)">
-            <!--  足球小组赛,淘汰赛页面  -->
-            <group-knockout
-              v-if="current_league ? current_league.field3 != '': false"
-              :tid="current_league.field1"
-              :current_match="current_match"
-            />
-            <!--  足球排行榜页面  -->
-            <football-ranking-list v-else :tid="current_league.field1"/>
-          </div>
-          <!--  非足球排行榜页面  -->
-          <ranking-list-start v-else :mid="current_match.mid"/>
-        </div>
       </div>
     </div>
 
@@ -120,6 +105,21 @@
           {{`batchNo:${current_batch.batchNo}-csid:${sub_menuid}-mid:${current_match.mid}`}}<br />
           {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
         </div>
+      </div>
+      <!-- 排行榜页面,小组赛淘汰赛页面  -->
+      <div v-if="match" class="list-wrapper">
+        <div v-if="[1001,1004].includes(sub_menu_type)">
+          <!--  足球小组赛,淘汰赛页面  -->
+          <group-knockout
+            v-if="current_league ? current_league.field3 != '': false"
+            :tid="current_league.field1"
+            :current_match="current_match"
+          />
+          <!--  足球排行榜页面  -->
+          <football-ranking-list v-else :tid="current_league.field1"/>
+        </div>
+        <!--  非足球排行榜页面  -->
+        <ranking-list-start v-else :mid="current_match.mid"/>
       </div>
     </div>
   </div>
@@ -430,6 +430,10 @@ export default {
   width: 100%;
   height: 2.54rem;
   border-radius: 0;
+}
+
+.list-wrapper {
+  background: var(--q-gb-bg-c-4);
 }
 </style>
 

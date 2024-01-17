@@ -5,7 +5,7 @@
   <div class="bet_single_info f-b-c">
     <div class="alert-rules">
       <div class="item-left font14 font500">
-        {{ items.name }} x{{ items.count }} <span class="ml-4 item-odds" v-if="index == 0">{{ items.seriesOdds }}</span>
+        {{ items.name }} x{{ items.count }}
       </div>
      <div class="font14">
       <span class="font400 item-left-btm">最高可赢</span>

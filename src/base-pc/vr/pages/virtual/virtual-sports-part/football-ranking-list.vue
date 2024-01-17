@@ -16,7 +16,7 @@
     <div class="group-item" v-if="!no_data">
       <div class="team-item" v-for="(item, i) in ranking_data" :key="i">
         <div class="col1 col-field" v-if="+i > 2">{{+i + 1}}</div>
-        <div class="col1 col-field rank-img" v-else>
+        <div class="col1 col-field rank-img" :class="[`rank${+i+1}`]" v-else>
           <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/rank${+i+1}.png`"/>
         </div>
         <div class="col2 ellipsis col-field">
@@ -71,16 +71,19 @@ export default {
 
   .col-label{
     font-size: 0.1rem;
-    color: var(--q-gb-t-c-19);
+    color: var(--q-gb-t-c-8);
   }
 
   .col1 {
-    width: 0.4rem;
+    width: 30px;
+    height: 34px;
+    background-color: var(--q-gb-bg-c-15);
   }
 
   .col2 {
     width: 0.94rem;
     text-align: left;
+    padding-left: 12px;
     display: unset !important; /*  避免flex 没有显示省略号 */
   }
   /*  3~8 总宽度220px */
@@ -109,7 +112,7 @@ export default {
     display: flex;
     text-align: center;
     line-height: 0.32rem;
-    margin: 0 0.1rem;
+    background-color: #F5F5F5;
 
     /* label字段 设计稿上是字体 10px，font-weight 400 */
     > div {
@@ -133,15 +136,26 @@ export default {
   .team-item {
     display: flex;
     align-items: center;
-    margin: 0 0.1rem;
     font-size: 0.13rem;
-    height: 0.48rem;
+    height: 34px;
     text-align: center;
-    border-bottom: 1px solid var(--q-gb-bd-c-4);
+    overflow: hidden;
+    border-bottom: 1px solid var(--q-gb-bd-c-6);
 
-    .rank-img img{
-      width: 14px;
-      height: 20px;
+    .rank-img {
+      &.rank1 {
+        background-color: #FDCACA;
+      }
+      &.rank2 {
+        background-color: #FFEAD9;
+      }
+      &.rank3 {
+        background-color: #E9E9E9;
+      }
+      img{
+        width: 14px;
+        height: 14px;
+      }
     }
 
     /* 列字段 设计稿上是字体 12px，font-weight 500 */
@@ -151,7 +165,7 @@ export default {
       justify-content: center;
       font-size: 0.12rem;
       font-weight: 500;
-      color: var(--q-gb-t-c-18);
+      color: var(--q-gb-t-c-5);
     }
 
     /*  .field{} */

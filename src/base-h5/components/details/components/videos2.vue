@@ -37,7 +37,7 @@
             <img :src="shipin"/>
           </div>
           <!-- 动画 -->
-          <div class="img-wrap" v-if="get_detail_data.mvs > -1 && lodash.get(UersCtr, 'user_info.ommv') && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
+          <div class="img-wrap" v-if="get_detail_data.mvs > -1 && lodash.get(UserCtr, 'user_info.ommv') && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
             <img :src="donghua"/>
           </div>
 
@@ -239,7 +239,7 @@
           </template>
           <template v-if="show_animation_and_video_status">
             <!-- 动画 -->
-            <div class="img-wrap" v-if="get_detail_data.mvs > -1 && lodash.get(UersCtr, 'user_info.ommv') && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
+            <div class="img-wrap" v-if="get_detail_data.mvs > -1 && lodash.get(UserCtr, 'user_info.ommv') && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
               <img :src="donghua"/>
             </div>
           </template>
@@ -326,6 +326,7 @@ import basketball_match_analysis from "src/base-h5/components/details/analysis-m
 import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import slider from "src/base-h5/components/details/components/slider/slider.vue"
 import OrientationSubscrbe from 'src/base-h5/components/common/orientation/orientation-subscribe'
 import { useRoute } from "vue-router"
@@ -344,6 +345,7 @@ export default {
   },
   data() {
     return {
+      UserCtr,
       LOCAL_PROJECT_FILE_PREFIX:LOCAL_PROJECT_FILE_PREFIX,
       tips_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/details/info.svg`,
       // tips_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_b.svg`,
@@ -577,6 +579,11 @@ export default {
   watch: {
     get_is_full_screen(value) {
       this.$emit('change_fullscreen', value)
+      if(this.ProjectName == 'ouzhou-h5'){
+          document.querySelector("#top-header-oz").style.display=!this.get_is_full_screen ? "block" :"none"
+          document.querySelector("#page-footer").style.display=!this.get_is_full_screen ? "block" :"none"
+       }
+     
     },
     iframe_src(value) {
       console.log(value, "value======");
@@ -1876,15 +1883,6 @@ export default {
     OrientationSubscrbe.instance.destory_notify();
 
   },
-  watch:{
-    'get_is_full_screen':{
-      handler(){
-        document.querySelector("#top-header-oz").style.display=!this.get_is_full_screen ? "block" :"none"
-        document.querySelector("#page-footer").style.display=!this.get_is_full_screen ? "block" :"none"
-      },
-      immediate: true
-    },
-  }
 }
 </script>
 

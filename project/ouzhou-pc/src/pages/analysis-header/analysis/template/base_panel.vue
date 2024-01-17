@@ -116,6 +116,8 @@
       >
         <div class="unfold-table" @click="unfoldTable">
           {{ unfold ? i18n_t("icon_tips.fold") : i18n_t("icon_tips.unfold") }}
+
+          <img :src="compute_local_project_file_path('/image/details/arrow_down.png')" style="margin-left:5px" alt="" width="12">
         </div>
       </div>
     </div>
@@ -668,7 +670,7 @@
 
 <script>
 // import time_format from 'src/public/mixins/common/time_format'
-import { formatTime } from "src/output/index.js";
+import { formatTime,compute_local_project_file_path } from "src/output/index.js";
 import analysisData from "./analysis";
 import mSelect from "./m_select.vue";
 export default {
@@ -680,6 +682,7 @@ export default {
       unfold: false,
       vs_info_new: [],
       formatTime,
+      compute_local_project_file_path
     };
   },
   mixins: [analysisData],
@@ -1389,14 +1392,18 @@ export default {
 }
 
 .unfold-table {
-  width: 82px;
-  height: 24px;
-  background-color: #179cff;
-  line-height: 24px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // line-height: 40px;
+  background-color: #ffffff;
+
   font-size: 12px;
   text-align: center;
-  color: #414655;
-  border-radius: 0 0 6px 6px;
+  color: #ff7000;
+  // border-radius: 0 0 6px 6px;
   cursor: pointer;
 }
 </style>
