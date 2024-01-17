@@ -60,3 +60,6 @@ git-console.md
 /log
 /src/output/index.js
 /package-lock.json
+
+./index.html
+index.html

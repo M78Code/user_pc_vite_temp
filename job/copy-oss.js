@@ -21,23 +21,23 @@ const { BUILD_VERSION, CURRENT_ENV,BUILD_DIR_NAME ,BUILD_OUTDIR,IS_TOPIC_PROJECT
  
 
 // return  false
-// OSS--开发---- https://api-json.sportxxx25o1bmw.com/dev.json
-// OSS--测试---- https://api-json.sportxxx25o1bmw.com/test.json
-// OSS--隔离---- https://api-json.sportxxx25o1bmw.com/lspre.json
-// OSS--试玩预发布---- https://api-json.sportxxx25o1bmw.com/play.json
+// OSS--开发---- https://api-json.dbsportxxx3pk.com/dev.json
+// OSS--测试---- https://api-json.dbsportxxx3pk.com/test.json
+// OSS--隔离---- https://api-json.dbsportxxx3pk.com/lspre.json
+// OSS--试玩预发布---- https://api-json.dbsportxxx3pk.com/play.json
 // OSS--生产---- https://xbnhjktbwggfvyok.ybgjhb.com/prod.json
 // OSS--生产---- https://aukukktsxfauannt.zyakxf.com/prod.json
 // OSS--生产---- https://xbnhjktbwggfvyok.chinazjyh.com/prod.json
 // OSS--生产---- https://xbnhjktbwggfvyok.lcjzgt.com/prod.json
 const ENV_OSS_OBJ = {
-  local_local: ["https://api-json.sportxxx25o1bmw.com/dev.json"],
-  local_dev: ["https://api-json.sportxxx25o1bmw.com/dev.json"],
-  local_test: ["https://api-json.sportxxx25o1bmw.com/test.json"],
-  local_ylcs: ["https://api-json.sportxxx25o1bmw.com/test.json"],
-  idc_lspre: ["https://api-json.sportxxx25o1bmw.com/lspre.json"],
-  idc_pre: ["https://api-json.sportxxx25o1bmw.com/play.json"],
-  idc_sandbox: ["https://api-json.sportxxx25o1bmw.com/play.json"],
-  idc_ylcs: ["https://api-json.sportxxx25o1bmw.com/mini.json"],
+  local_local: ["https://api-json.dbsportxxx3pk.com/dev.json"],
+  local_dev: ["https://api-json.dbsportxxx3pk.com/dev.json"],
+  local_test: ["https://api-json.dbsportxxx3pk.com/test.json"],
+  local_ylcs: ["https://api-json.dbsportxxx3pk.com/test.json"],
+  idc_lspre: ["https://api-json.dbsportxxx3pk.com/lspre.json"],
+  idc_pre: ["https://api-json.dbsportxxx3pk.com/play.json"],
+  idc_sandbox: ["https://api-json.dbsportxxx3pk.com/play.json"],
+  idc_ylcs: ["https://api-json.dbsportxxx3pk.com/mini.json"],
   idc_online: [
     "https://xbnhjktbwggfvyok.ybgjhb.com/prod.json",
     "https://aukukktsxfauannt.zyakxf.com/prod.json",

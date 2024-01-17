@@ -392,7 +392,7 @@ export default defineComponent({
 }
 
 .on-color {
-  font-size: 0.14rem;
+  font-size: 0.12rem;
 }
 
 

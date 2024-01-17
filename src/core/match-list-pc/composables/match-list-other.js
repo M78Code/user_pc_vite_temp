@@ -424,8 +424,8 @@ export function get_5minutes_template(match = {}) {
 */
 export function switch_other_play(mid, play_key, MatchListData = MatchDataWarehouse_PC_List_Common) {
   let match = MatchListData.get_quick_mid_obj(mid)
-  set_match_play_current_index(match, play_key)
-  useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, { mids: [mid] });
+  match&&set_match_play_current_index(match, play_key)
+  match&&useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, { mids: [mid] });
 }
 /**
    * @Description 设置其他玩法选中索引    更新玩法模板及数据

@@ -14,7 +14,7 @@
                 <!-- 主程序 start -->
                 <div class="play-box-style details_color warp" @click="go_to_bet(ol_item)"
                      :class="[BetData.bet_oid_list.includes(ol_item.oid)?['details-bg5','first-rad']:'','bor-style',{'win':calc_win(ol_item.result)}]">
-                  <div class="ellipsis remark details_t_color6 fz_14" :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.oid)}]">
+                  <div class="ellipsis remark details_t_color6 fz_12" :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.oid)}]">
                   <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.oid)}]">
                     {{ol_item.on || ol_item.ott}}
                   </span>
@@ -28,7 +28,7 @@
               <template v-if="ol_item.os == 2">
                 <!-- lock 锁状态 start -->
                 <div class="play-box-style details_color warp bor-style">
-                  <div class="ellipsis remark details_t_color7 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
+                  <div class="ellipsis remark details_t_color7 fz_12" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                   <div class="text-center">
                     <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                   </div>
@@ -58,7 +58,7 @@
               <template v-else>
                 <!-- lock 锁状态 start -->
                 <div class="play-box-style details_color warp bor-style">
-                  <div class="ellipsis remark details_t_color7 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
+                  <div class="ellipsis remark details_t_color7 fz_12" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                   <div class="text-center">
                     <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                   </div>
@@ -79,7 +79,7 @@
           <template v-if="ol_item._mhs == 1">
             <!-- lock 锁状态 start -->
             <div class="play-box-style details_color warp bor-style">
-              <div class="ellipsis remark details_t_color7 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
+              <div class="ellipsis remark details_t_color7 fz_12" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
               <div class="text-center">
                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
               </div>
@@ -258,7 +258,6 @@ export default defineComponent({
   height: 0.18rem;
   line-height: 0.18rem;
 
-  font-size: 0.14rem;
 }
 .details_t_color6 {
   color: var(--q-gb-t-c-11);

@@ -94,7 +94,7 @@ export function fetch_match_list(is_socket = false) {
 	}
 	let match_api = match_list_params.match_list || {};
 	// let match_api = MenuData.match_list_api_config.match_list || {};
-	fethc_collect_match()
+	fethc_collect_match(is_socket)
 	// 设置列表接口 和 参数
 	let api = api_match[match_api.api_name];
 	let _params = lodash.clone(match_api.params) || {};
@@ -214,6 +214,7 @@ function handle_destroyed() {
 	if (hot_match_list_timeout) {
 		clearTimeout(hot_match_list_timeout);
 	}
+	set_load_data_state('loading')
 	mitt_list.forEach(i => i());
 	mitt_list = []
 	timer_obj.value = {};

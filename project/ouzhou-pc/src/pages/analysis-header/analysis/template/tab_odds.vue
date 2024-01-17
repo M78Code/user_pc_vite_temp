@@ -106,6 +106,7 @@
 
 <script>
 import { api_analysis } from 'src/api/index'
+import analysisData  from './analysis'
 export default {
   data() {
     return {
@@ -117,6 +118,7 @@ export default {
     //赛事
     match: Object
   },
+  mixins: [analysisData],
 
   created() {
     // 拉取数据
@@ -139,17 +141,7 @@ export default {
       })
     },
 
-        /**
-    * @description: 足球数据、情报、赔率接口
-    */
-    get_analysiseData(params, cb){
-      api_analysis.post_getMatchAnalysiseData(params).then((ret)=>{
-        let data = lodash.get(ret, 'data');
-        if(data && data.code == 200){
-          cb(data.data)
-        }
-      })
-    },
+
 
     /**
     * @description: 添加红升绿降样式
@@ -179,14 +171,15 @@ export default {
     display: flex;
     align-items: center;
     height: 30px;
-    color: var(--qq--y0-text-color5);
+    color: #414655;
     margin-bottom: 10px;
     // width: 300px;
     overflow: hidden;
     border-radius: 0 0 8px 8px;
-    border-left: 1px solid var(--qq--match-border-color5);
-    border-right: 1px solid var(--qq--match-border-color5);
-    background: var(--qq--match_details_analysis_title);
+    border-left: 1px solid #E4EAFF;
+    border-right: 1px solid #E4EAFF;
+    background: linear-gradient(94.17deg, rgba(255, 112, 0, 0.3) -25.38%, rgba(255, 112, 0, 0) 22.77%),
+linear-gradient(0deg, #FFFFFF, #FFFFFF);
     span {
       // width: 100px;
       height: 28px;
@@ -212,8 +205,8 @@ export default {
       &.active {
         // background-image: var(--qq--analysis-bg-gradient-2);
         // color: var(--qq--analysis-text-color-13);
-        color: var(--qq--theme-color-handicap-item-title);
-        border-bottom: 2px solid var(--qq--theme-color-handicap-item-title);
+        color: #ff7000;
+        border-bottom: 2px solid #ff7000;
       }
     }
   }
@@ -223,12 +216,12 @@ export default {
   }
   .d-header {
     height: 28px;
-    background: var(--qq--analysis-bg-color-16-1);
+    background: #Fff8f3;
     //background: var(--qq--y0-bg-color12);
     .d-td {
       flex: 1;
       text-align: center;
-      color: var(--qq--y0-text-color5-1);
+      color: #414655;
       &:first-child {
         flex: unset;
         width: 160px;
@@ -237,21 +230,21 @@ export default {
     }
   }
   .d-body {
-    border-bottom: 1px solid var(--qq--match-border-color5);
+    border-bottom: 1px solid #E4EAFF;
     &:last-child {
-      border-bottom: 1px solid var(--qq--match-border-color5);
+      border-bottom: 1px solid #E4EAFF;
       border-radius: 0 0 8px 8px;
     }
     .company {
-      color: var(--qq--y0-text-color5);
+      color: #414655;
       height: 80px;
       width: 160px;
-      border-right: 1px solid var(--qq--match-border-color5);
+      border-right: 1px solid #E4EAFF;
       display: flex;
       justify-content: center;
       align-items: center;
       padding-left: 30px;
-      background: var(--qq--y0-bg-color12);
+      background: #ffffff;
     }
     .content {
       flex: 1;
@@ -263,11 +256,11 @@ export default {
           align-items: center;
           justify-content: center;
           height: 40px;
-          border-right: 1px solid var(--qq--match-border-color5);
+          border-right: 1px solid #E4EAFF;
           flex: 1;
           position: relative;
           margin-bottom: 0;
-          color: var(--qq--y0-text-color5);
+          color: #414655;
           &:last-child {
             border-right: transparent;
           }
@@ -288,7 +281,7 @@ export default {
               content: "";
               width: 6px;
               height: 10px;
-              background: url("~public/image/common/svg/red_up.svg") no-repeat center;
+              background-image: url($SCSSPROJECTPATH + "/image/common/svg/red_up.svg");
             }
           }
         }
@@ -305,13 +298,14 @@ export default {
               content: "";
               width: 6px;
               height: 10px;
-              background: url("~public/image/common/svg/green_down.svg") no-repeat center;
+              background: url($SCSSPROJECTPATH+"/image/common/svg/green_down.svg")
+                no-repeat center;
             }
           }
         }
       }
       .handicap-before {
-        border-bottom: 1px solid var(--qq--match-border-color5);
+        border-bottom: 1px solid #E4EAFF;
       }
       .timer {
         width: 80px;

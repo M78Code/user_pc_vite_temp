@@ -17,8 +17,10 @@
       <i class="icon-arrow q-icon c-icon" size="14px" ></i>
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
-          <!-- <sport-icon v-if="menu_config.is_esports()" :sport_id="card_style_obj.league_obj.csid" status="2" size="18px" is_esports /> -->
-          <!-- <img v-else v-img="[lodash.get(card_style_obj.league_obj,'lurl')]" /> -->
+          <span class="soprts_id_icon"
+            v-if="menu_config.is_esports()"
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
+          <img v-img="[lodash.get(card_style_obj.league_obj,'lurl')]" />
         </div>
         <!-- 联赛名称 -->
         <div class="ellipsis-wrap">

@@ -1,50 +1,7 @@
 <template>
   <div class="match-tpl-129">
     <div class="flex flex-start items-center">
-      <!-- 赛事基础信息 -->
-      <div class="basic-col"
-        @click="goto_details(match)"
-        :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
-        <!-- 比赛进程 网球，羽毛球用105模板，别的用101 -->
-        <div class="team-num">{{index + 1}}</div>
-        <div class="team-title-wrap">
-            <!-- 战队名称 -->
-            <div>
-                <div class="team-title" :class="{over:[2,11].includes(+match.match_status)}">
-                  <div class="ellipsis">{{match.teams ? match.teams[0] : ''}}</div>
-                </div>
-                <div class="team-title" :class="{over:[2,11].includes(+match.match_status)}">
-                  <div class="ellipsis">
-                    {{match.teams ? match.teams[1] : ''}}
-                  </div>
-                </div>
-            </div>
-             <!-- 玩法数量 -->
-             <div class="play-count">
-              {{lodash.get(get_access_config,'handicapNum') ? `${match.mc}`: i18n_t('footer_menu.more')}}
-              <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow"  />
-            </div>
-        </div>
-      </div>
-      <!-- 竖线 -->
-      <div class="vertical-line"></div>
-      <!-- 图标信息 -->
-      <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`">
-        <icon-box :match="match"></icon-box>
-      </div>
-      <!-- 投注信息 -->
-      <match-handicap :handicap_list="handicap_list" use_component_key="MatchHandicap2" />
-      <!-- 比分板 -->
-      <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
-      :style="`width:${match_list_tpl_size.media_width}px !important;`">
-        <!-- 图片资源有问题，先用文字替代  -->
-        <div class="video" v-if="+lodash.get(match, 'mms') > 0"
-          :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
-        </div>
-        <div v-else
-          :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
-        </div>
-      </div>
+        <tem8 :item_data="item_data" :csid="match.csid" v-if="match" />
     </div>
   </div>
 </template>
@@ -63,6 +20,7 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/i
 import virtual_sports_match_item_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-match-item-mixin.js";
 import { IconWapper } from 'src/components/icon'
 import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
+import tem8 from "src/base-pc/vr/pages/virtual/virtual-sports-part/tem8.vue"
 
 export default {
   mixins:[virtual_sports_match_item_mixin],
@@ -70,6 +28,7 @@ export default {
     MatchHandicap,
     IconBox,
     'icon-wapper': IconWapper,
+    tem8
   },
   props: {
     is_show_more: {
@@ -118,12 +77,27 @@ export default {
     
     provide("not_hn_obj_map", not_hn_obj_map)
 
+    // 获取赛马类赔率所需数据
+    const item_data = {
+      team: match.value.teams.map(((item, index)=>{return { teamName: item, teamId: index + 1 }})),
+      plays: match.value.hps
+    }
+
+    lodash.each(item_data.plays,(item) => {
+        lodash.each(lodash.get(item,'hl[0].ol'), (ol_item, index) => {
+          ol_item.teamId = index + 1;
+        })
+      })
+
+    
+
   return {
       compute_css_obj,
       current_mid,
       match,
       handicap_list,
-      match_list_tpl_size
+      match_list_tpl_size,
+      item_data
     }
 }
  
