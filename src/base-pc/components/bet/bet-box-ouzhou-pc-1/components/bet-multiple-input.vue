@@ -33,7 +33,7 @@
         <div v-show="false">{{ UserCtr.user_version }}--{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
             <div class="col">
-                <bet-keyboard :oid="ref_data.oid"/>
+                <bet-keyboard :oid="ref_data.oid" :max_money="ref_data.max_money"/>
             </div>
         </div>
     </div>
