@@ -120,11 +120,6 @@ const set_init_sport = (val) =>{
 }
 let timer = 0;
 onMounted(async () => {
-  // 发送进入首页埋点消息
-  clearTimeout(timer)
-  timer = setTimeout(() => {
-    lodash.get(UserCtr,'user_info.userId') && into_home_event();
-  }, 2000);
   if (tabValue.value === 'top_events') {
     // 设置 元数据计算 流程
     state.current_mi = MenuData.top_events_list?.[0]?.mi;
