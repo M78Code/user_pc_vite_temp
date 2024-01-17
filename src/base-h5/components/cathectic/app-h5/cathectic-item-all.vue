@@ -28,7 +28,11 @@
                 <!-- 已结算列表 => 提前结算详情 -->
                 <early-settled-detail v-else-if="BetRecordClass.selected === 3" :item_data="item2"></early-settled-detail>
                 <!-- 预约列表 => 取消预约 -->
-                <cancel-reserve v-else-if="BetRecordClass.selected === 1" :orderNumber="item2.orderNo" @success="cancelSuccess"></cancel-reserve>
+                <cancel-reserve v-else-if="BetRecordClass.selected === 1" 
+                  :orderNo="item2.orderNo" 
+                  :marketType="item2.marketType" 
+                  :oddFinally="item2.detailList[0] && item2.detailList[0].oddFinally"
+                 @success="cancelSuccess"></cancel-reserve>
               </template>
             </div>
             </template>
