@@ -4,7 +4,7 @@
  * @Description: 赛事主列表页
 -->
 <template>
-  <div class="yb-match-list column full-height   relative-position" :data-version="MatchListCardDataClass.list_version">
+  <div v-if="!show_filter" class="yb-match-list column full-height   relative-position" :data-version="MatchListCardDataClass.list_version">
     <div class="test-info-wrap" v-show="GlobalAccessConfig.get_wsl()">
       <!-- <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div> -->
       <!-- 临时调试用 -->
@@ -31,7 +31,7 @@
           <refresh :loaded="load_data_state != 'loading'" :other_icon="true" :icon_name="1" @click="on_refresh" />
         </template>
       </list-header> -->
-      <match-detail-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state">
+      <match-detail-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state" @change_race="change_race">
         <template #refresh>
           <div class="refreh-container">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/refresh_header.svg`" 
@@ -108,6 +108,7 @@
       <div class="img-loading custom-format-img-loading" :style="compute_css_obj('pc-img-loading')"></div>
     </div>
   </div>
+  <match_list_filter v-else/>
 </template>
 <script setup>
 import { onMounted, onUnmounted, watch, ref } from "vue";
@@ -141,7 +142,9 @@ import { LayOutMain_pc, compute_css_obj } from 'src/output/index.js';
 import { set_template_width } from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/output/index.js";
 import "./match_list.scss";
+import match_list_filter from "./components/match-list-filter.vue";
 const match_list_card_key_arr = ref([])
+const show_filter = ref(false);
 function MatchListCardDataClass_match_list_card_key_arr() {
   match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
 }
@@ -153,6 +156,11 @@ function _resize() {
   set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15))
   MatchListCardDataClass.set_list_version()
 }
+
+function change_race() {
+  show_filter.value = !show_filter.value;
+}
+
 window.addEventListener('resize', _resize)
 mounted_fn()
 onMounted(() => {
