@@ -323,4 +323,7 @@ export default defineComponent({
     margin-left: .02rem !important;
   }
 }
+.remark {
+  font-size: 0.14rem;
+}
 </style>
