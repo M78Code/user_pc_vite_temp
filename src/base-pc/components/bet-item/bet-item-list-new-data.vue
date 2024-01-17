@@ -47,7 +47,7 @@
         <div class="odds-icon" v-if="odds_lift == 'down'" :style="compute_css_obj({ key: 'pc-home-arrow-down' })"></div>
       </div>
     </div>
-    <div v-else>-</div>
+    <div class="no-odds" v-else>-</div>
   </div>
 </template>
 
@@ -90,6 +90,11 @@ const {
 </script>
 
 <style lang="scss" scoped>
+.no-odds {
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--q-gb-t-c-3);
+}
 .c-bet-item {
   border-radius: 4px;
   background-color: var(--q-gb-bg-c-27);
@@ -185,6 +190,7 @@ const {
 .odds {
   flex: 1;
   font-weight: 600;
+  color: var(--q-gb-t-c-3);
 }
 
 .odds.hv {
