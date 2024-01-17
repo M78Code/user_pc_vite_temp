@@ -172,8 +172,10 @@ const set_ref_data_bet_money = () => {
         ref_data.oid.push(item.playOptionsId)
         ref_data.oddFinallyArr.push(item.oddFinally)
     })
-    ref_data.min_money = lodash_.max(min_money_arr) //多项单注限额最小值取多项里最大的
-    ref_data.max_money = lodash_.min(max_money_arr) //多项单注限额最大值取多项里最小的
+    //多项单注限额最小值取多项里最大的
+    ref_data.min_money = lodash_.max(min_money_arr) 
+    //多项单注限额最大值取多项里最小的
+    ref_data.max_money = lodash_.min(max_money_arr)
     // console.log('-------------------------------------------------------------------------------', min_money_arr, max_money_arr)
     ref_data.money = ""
     //设置键盘MAX限额
