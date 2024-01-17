@@ -155,7 +155,7 @@ const container_total_height = computed(() => {
 const get_container_style = computed(() => {
   const style_obj = { 'height': is_static.value ? 'auto' : container_total_height.value}
   const length = lodash.get(MatchMeta.match_mids, 'length', 0)
-  if (length > 0 && menu_type.value !== 100 && !(menu_type.value == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.value?.mi))) Object.assign(style_obj, {
+  if (!is_static.value && length > 0 && menu_type.value !== 100 && !(menu_type.value == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.value?.mi))) Object.assign(style_obj, {
     ...compute_css_obj({key: 'h5-kyapp-speciality-bg' })
   })
   return style_obj
