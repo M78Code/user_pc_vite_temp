@@ -355,7 +355,9 @@ export const compute_style_template_by_matchinfo = (match) => {
 		// 数据模板id
 		data_tpl_id: template_id,
 		// 渲染的视图模板id
-		view_tpl_id: compute_view_tpl_id(template_id)
+		view_tpl_id: compute_view_tpl_id(template_id),
+		// 底部玩法栏及赛制 高度
+		main_play_competition_height: template_config.main_play_competition_height || 0
 	};
 	// 如果没有赛事信息
 	if (!match || !match.mid) {
@@ -406,6 +408,7 @@ export const compute_style_template_by_matchinfo = (match) => {
 		style_obj.cur_handicap_height +
 		style_obj.add_handicap_height +
 		style_obj.tab_play_total_height +
+		style_obj.main_play_competition_height +
 		6;
 	if (PROJECT_NAME == 'ouzhou-pc') {
 		if (template_id == 118) {

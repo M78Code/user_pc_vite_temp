@@ -54,7 +54,7 @@ export default defineConfig({
   },
   server:{
     port:28600,
-    open: 'entries/custom-version/index.html',
+    open: `./index.html`,
     hmr:true
   }
 })

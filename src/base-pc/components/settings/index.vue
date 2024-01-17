@@ -5,7 +5,7 @@
     <div class="g-settings" style="max-width: 350px">
         <q-menu v-model="show_g_settings" self="bottom middle" :offset="[0, -32]" :content-class="'g-settings-style'">
 
-            <q-list bordered class="rounded-borders">
+            <q-list bordered class="rounded-borders list">
                 <div v-for="(settings, key) in settings_items" :key="settings.id">
 
                     <!-- 全局设置项 -->
@@ -16,7 +16,8 @@
                         <template v-slot:header>
                             <!-- 设置项 图标 -->
                             <q-item-section avatar>
-                                <i class="icon settings-icon" :style="compute_css_obj('icon-setting')"></i>
+                                <i class="icon settings-icon" :style="compute_css_obj({key:'pc-home-list-score-active'})"></i>
+                                <!-- <i class="icon settings-icon" :style="compute_css_obj({key:'icon-setting'})"></i> -->
                             </q-item-section>
 
                             <!-- 设置项 名称 -->
@@ -35,9 +36,39 @@
                                     </div>
 
                                     <!-- 主题设置 -->
-                                    <div v-else @click="change_theme" class="skin-toggle">
+                                    <div  v-else-if="settings.id == 3" @click="change_theme" class="skin-toggle">
                                         <div class="skin-icon skin-icon-day"></div>
                                         <div class="skin-icon skin-icon-night"></div>
+                                    </div>
+                                    <!-- 附加玩法 -->
+                                    <div
+                                        v-else-if="settings.id == 4"
+                                        @click="change_setting_additional_plays"
+                                        class="skin-toggle"
+                                    >
+                                        <div
+                                        class="skin-icon"
+                                        :class="{ 'skin-icon-off': get_show_additional_plays }"
+                                        ></div>
+                                        <div
+                                        class="skin-icon"
+                                        :class="{ 'skin-icon-night': !get_show_additional_plays }"
+                                        ></div>
+                                    </div>
+                                    <!-- 附加盘 -->
+                                    <div
+                                        v-else-if="settings.id == 6"
+                                        @click="change_setting_additional_disk"
+                                        class="skin-toggle"
+                                    >
+                                        <div
+                                        class="skin-icon"
+                                        :class="{ 'skin-icon-off': !get_show_additional_disk }"
+                                        ></div>
+                                        <div
+                                        class="skin-icon"
+                                        :class="{ 'skin-icon-night': get_show_additional_disk }"
+                                        ></div>
                                     </div>
                                 </div>
                             </q-item-section>
@@ -86,7 +117,7 @@
 </template>
 
 <script setup>
-import { ref, } from 'vue'
+import { ref,onUnmounted,computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
 import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js"
@@ -192,7 +223,35 @@ function set_user_preference(curr_odd) {
         });
     }
 }
-
+    /**
+     * @Description:列表附加玩法
+     * @return {undefined} undefined
+     */
+function   change_setting_additional_plays() {
+      // 列表附加玩法
+      const show_additional_plays = !this.get_show_additional_plays;
+      localStorage.setItem(
+        "additional_plays",
+        JSON.stringify(show_additional_plays)
+      );
+      this.set_show_additional_plays(show_additional_plays);
+      // 刷新列表重新计算
+      this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
+    }
+    /**
+     * @Description:附加盘
+     * @return {undefined} undefined
+     */
+ function   change_setting_additional_disk() {
+      const show_additional_disk = !this.get_show_additional_disk;
+      localStorage.setItem(
+        "additional_disk",
+        JSON.stringify(show_additional_disk)
+      );
+      this.set_show_additional_disk(show_additional_disk);
+      // 刷新列表重新计算
+      this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
+    }
 /**
  * @Description:切换语言
  * @param {string} lang_ 语言
@@ -303,6 +362,10 @@ function change_theme() {
 </script>
   
 <style  lang="scss">
+
+.list{
+    background: #fff;
+}
 .g-settings-style {
     width: 240px;
     max-height: 700px !important;

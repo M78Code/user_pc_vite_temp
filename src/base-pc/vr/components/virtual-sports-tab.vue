@@ -228,9 +228,9 @@ export default {
 <style lang="scss" scoped>
 .vir-details-tab {
   height: 0.4rem;
-  margin-bottom: 0.04rem;
   background-color: #fff;
   align-items: center;
+  border-bottom: 1px solid  var(--q-gb-bd-c-1);
 }
 
 .menu-s {
