@@ -17,8 +17,8 @@
             size="120px"
             v-model="score.round1.percentage"
             :thickness="0.16"
-            color="orange"
-            track-color="light-blue-13"
+            color="amber-7"
+            :track-color="score.round1.percentage==0?'grey-3':'indigo-12'"
             class="knob"
            
           >
@@ -30,8 +30,8 @@
             readonly
             v-model="score.round1.percentage"
             :thickness="0.3"
-            color="orange"
-            track-color="light-blue-13"
+            color="amber-7"
+            :track-color="score.round1.percentage==0?'grey-3':'indigo-12'"
             class="knob"
            
           >
@@ -70,8 +70,8 @@
             size="120px"
             v-model="score.round2.percentage"
             :thickness="0.16"
-            color="orange"
-            track-color="light-blue-13"
+            color="amber-7"
+            :track-color="score.round2.percentage==0?'grey-3':'indigo-12'"
             class="knob"
           >
             <span class="knob-label">{{chatLabel.round2}}</span>
@@ -82,8 +82,8 @@
             readonly
             v-model="score.round2.percentage"
             :thickness="0.3"
-            color="orange"
-            track-color="light-blue-13"
+            color="amber-7"
+            :track-color="score.round2.percentage==0?'grey-3':'indigo-12'"
             class="knob"
           >
           <!-- <span class="knob-label">{{chatLabel.round2}}</span> -->
@@ -119,8 +119,8 @@
             size="120px"
             v-model="score.round3.percentage"
             :thickness="0.16"
-            color="orange"
-            track-color="light-blue-13"
+            color="amber-7"
+            :track-color="score.round3.percentage==0?'grey-3':'indigo-12'"
             class="knob"
           >
             <span class="knob-label">{{chatLabel.round2}}</span>
@@ -131,8 +131,8 @@
             readonly
             v-model="score.round3.percentage"
             :thickness="0.3"
-            color="orange"
-            track-color="light-blue-13"
+            color="amber-7"
+            :track-color="score.round3.percentage==0?'grey-3':'indigo-12'"
             class="knob"
           >
           </q-knob>
@@ -300,19 +300,21 @@ export default {
         margin: 0 6px;
         width: 100%;
         height: 6px;
-        background: var(--qq--details-chat-origin-1);
+        background: linear-gradient(292.16deg, #FF8B00 12.63%, #FFB800 85.7%);
+
         border-radius: 5px;
         .progress-content {
           position: absolute;
           top: 0;
           left: 0;
           height: 6px;
-          background: var(--qq--details-chat-blue-1);
+          background: linear-gradient(296.13deg, #7B98FF 20.35%, #3D64EF 83.54%);
+
           border-radius: 5px 0 0 5px;
         }
       }
       .chat-label {
-        color: var(--qq--league-rank-title-text-color);
+        color: #1D1D1D;
       }
     }
     .analysisi-item {
@@ -321,7 +323,7 @@ export default {
   }
   .knob-label {
     font-size: 12px;
-    color: var(--qq--theme-text-bet-outweight);
+    color: #666;
     // padding: 0 10%;
     text-align: center;
   }
@@ -332,13 +334,13 @@ export default {
 }
 ::v-deep {
   .text-blue {
-    color: var(--qq--details-chat-blue-1) !important;
+    color: #179CFF !important;
   }
   .text-orange {
-    color: var(--qq--details-chat-origin-1) !important;
+    color: #FF7000 !important;
   }
   .text-light-blue-13 {
-    color: var(--qq--details-chat-blue-1) !important;
+    color: #179CFF !important;
   }
 }
 
@@ -347,17 +349,17 @@ export default {
   span.text-orange,
   span.text-light-blue-13 {
     // color: var(--qq--league-rank-title-text-color) !important;
-    color: var(--qq--details-chat-num_zero) !important;
+    color: #D1D1D1 !important;
   }   //E7EAEE D1D1D1
-  ::v-deep {
+  :deep() {
     .text-blue {
-      color: var(--qq--details-chat-num_zero) !important;
+      color: #D1D1D1 !important;
     }
     .text-orange {
       color: transparent !important;
     }
     .text-light-blue-13 {
-      color: var(--qq--details-chat-num_zero) !important;
+      color: #D1D1D1!important;
     }
   }
 }
@@ -365,7 +367,7 @@ export default {
   .line_num_zero {
     .bar-progress,
     .progress-content {
-      background: var(--qq--details-chat-num_zero) !important
+      background: #D1D1D1 !important
     }
   }
 }

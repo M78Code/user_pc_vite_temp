@@ -120,8 +120,8 @@ export default {
     width: 160px;
     height: 24px;
     // border: 1px solid var(--qq--yb-border-color9);
-    border: 1px solid var(--qq--y0-bg-color12_a_border);
-    background: var(--qq--y0-bg-color12_a);
+    border: 1px solid #EBECF3;
+    background: #ffffff;
     border-radius: 12px;
     cursor: pointer;
     &:first-child {
@@ -142,7 +142,7 @@ export default {
       display: none;
       width: 160px;
      // border: 1px solid var(--qq--yb-border-color9);
-      background: var(--qq--y0-bg-back12);
+      background: #ffffff;
       filter: drop-shadow(0 0 5px rgba(0, 0, 0, .3));
       position: absolute;
       border-radius:6px;
@@ -157,7 +157,7 @@ export default {
         border: 10px solid ;
         position: absolute;
         top: -20px;
-        border-color: transparent transparent var(--qq--y0-bg-back12);
+        border-color: transparent transparent #ffffff;
         z-index: 9;
         left: 70px;
       }
@@ -177,18 +177,18 @@ export default {
         cursor: pointer;
         position: relative;
         z-index: 19;
-        background: var(--qq--y0-bg-back12);
+        background: #ffffff;
         &:hover,
         &.selected {
-          color: var(--qq--y0-text-color1);
-          background: var(--qq--analysis-bg-color-11);
+          color: #ff7000;
+          background: #FF70000D;
         }
       }
       .options-box{
         position: relative;
         z-index: 19;
         width: 100%;
-        background: var(--qq--y0-bg-back12);
+        background: #ffffff;
         height: 6px;
         border-radius: 12px;
       }
@@ -210,19 +210,19 @@ export default {
       text-align: center;
       padding: 0 8px;
       // border: var(--qq--yb-border-color9);
-      border: 0.5px solid var(--qq--y0-bg-color12_a_border);
-      background: var(--qq--y0-bg-color12_a);
+      border: 0.5px solid #EBECF3;
+      background: #ffffff;
       cursor: pointer;
       margin-right: 10px;
       border-radius: 12px;
       font-family: PingFangSC-Regular;
       // 赛事分析那边设计的字体颜色是 --qq--theme-color-tab-item #555555/#A0A0A0
       // 未避免覆盖, 赛事分析处src\public\components\analysis\index.vue通过v-deep设置
-      color: var(--qq--theme-menu-text);
+      color: #1d1d1d;
       &.active {
-        background-color: var(--qq--y0-bg-color12_a_active) !important;
+        background-color: #ff7000 !important;
         // background-image: linear-gradient(225deg, var(--qq--background-gradient-color-1-s) 0%, var(--qq--background-gradient-color-1-e) 100%);
-        color: var(--qq--theme-color-tab-item-active);
+        color: #ffffff !important;
       }
     }
   }
