@@ -40,7 +40,43 @@
                                         <div class="skin-icon skin-icon-day"></div>
                                         <div class="skin-icon skin-icon-night"></div>
                                     </div>
-                                    <!-- 近期开赛 -->
+                           
+                                </div>
+                            </q-item-section>
+                        </template>
+
+                        <q-card v-if="settings.type === 'select'">
+                            <q-card-section>
+
+                                <!-- 盘口选项 -->
+                                <template v-if="settings.id === 1">
+                                    <template v-for="(item, index) in settings.value_arr">
+                                        <div v-if="['EU', 'HK'].includes(item.value)" :key="index"
+                                            class="child-item item-odds relative-position"
+                                            :class="cur_odd == item.value && 'active'" @click="on_click_handicap(item)">
+                                            {{ item.label }}
+                                            <i v-if="cur_odd == item.value"
+                                                class="icon-triangle3 q-icon c-icon arrow-show"></i>
+                                        </div>
+                                    </template>
+                                </template>
+
+                                <!-- 多语言选项 -->
+                                <template v-else-if="settings.id === 2">
+                                    <template v-for="(language, index) in settings.value_arr">
+                                        <div v-if="languageList.includes(language)" :key="index"
+                                            class="child-item ellipsis relative-position"
+                                            :class="[{ active: UserCtr.lang == language }]"
+                                            @click="on_click_lang(language)">
+                                            <span :class="['flag', language]"
+                                                :style="compute_css_obj({ key: 'pc-popup-language-icon-image', position: language, theme: 'local' })"></span>{{
+                                                    i18n_langs[language] }}
+                                            <i v-if="UserCtr.lang == language"
+                                                class="icon-triangle3 q-icon c-icon arrow-show"></i>
+                                        </div>
+                                    </template>
+                                </template>
+         <!-- 近期开赛 -->
                                     <template v-if="settings.id === 3">
                                       <template v-for="(item, index) in settings.value_arr" :key="index">
                                         <div class="child-item item-odds relative-position"
@@ -80,42 +116,6 @@
                                         :class="{ 'skin-icon-night': get_show_additional_disk }"
                                         ></div>
                                     </div>
-                                </div>
-                            </q-item-section>
-                        </template>
-
-                        <q-card v-if="settings.type === 'select'">
-                            <q-card-section>
-
-                                <!-- 盘口选项 -->
-                                <template v-if="settings.id === 1">
-                                    <template v-for="(item, index) in settings.value_arr">
-                                        <div v-if="['EU', 'HK'].includes(item.value)" :key="index"
-                                            class="child-item item-odds relative-position"
-                                            :class="cur_odd == item.value && 'active'" @click="on_click_handicap(item)">
-                                            {{ item.label }}
-                                            <i v-if="cur_odd == item.value"
-                                                class="icon-triangle3 q-icon c-icon arrow-show"></i>
-                                        </div>
-                                    </template>
-                                </template>
-
-                                <!-- 多语言选项 -->
-                                <template v-else-if="settings.id === 2">
-                                    <template v-for="(language, index) in settings.value_arr">
-                                        <div v-if="languageList.includes(language)" :key="index"
-                                            class="child-item ellipsis relative-position"
-                                            :class="[{ active: UserCtr.lang == language }]"
-                                            @click="on_click_lang(language)">
-                                            <span :class="['flag', language]"
-                                                :style="compute_css_obj({ key: 'pc-popup-language-icon-image', position: language, theme: 'local' })"></span>{{
-                                                    i18n_langs[language] }}
-                                            <i v-if="UserCtr.lang == language"
-                                                class="icon-triangle3 q-icon c-icon arrow-show"></i>
-                                        </div>
-                                    </template>
-                                </template>
-
                             </q-card-section>
                         </q-card>
                     </q-expansion-item>
