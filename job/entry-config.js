@@ -28,11 +28,11 @@ const COMPUTE_ENTRY_CONFIG = ({ port }) => {
     console.log("");
     console.log("");
     console.log("");
-    console.log("本地开发需要打开全路径：");
-    console.log(`http://localhost:${port}/project/${PROJECT_NAME}/index.html`);
-    console.log("");
-    console.log("");
-    console.log("");
+    // console.log("本地开发需要打开全路径：");
+    // console.log(`http://localhost:${port}/project/${PROJECT_NAME}/index.html`);
+    // console.log("");
+    // console.log("");
+    // console.log("");
     console.log(`相关目录：入口文件：  entries/${ENTRY_DIR_NAME}`);
     console.log(`相关目录：组件代码：  project/${PROJECT_NAME}`);
     console.log(`相关目录：静态素材：  public/${PROJECT_NAME}`);
