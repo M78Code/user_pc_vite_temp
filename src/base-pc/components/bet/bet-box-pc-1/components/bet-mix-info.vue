@@ -85,7 +85,7 @@ import betSpecialInput from "./bet-special-input.vue"
       /*  队伍名称 */
       .bet-play-team {
         display: flex;
-        align-item: center;
+        align-items: center;
         padding-right: 5px !important;
         min-height: 20px;
 
