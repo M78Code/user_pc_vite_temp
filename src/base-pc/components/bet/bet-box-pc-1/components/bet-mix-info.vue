@@ -61,7 +61,7 @@ import betSpecialInput from "./bet-special-input.vue"
       /*  玩法及队名部分样式 */
       .bet-play-game {
         display: flex;
-        align-item: flex-start;
+        align-items: flex-start;
         padding: 0;
         margin: 0;
         word-break: break-word;
