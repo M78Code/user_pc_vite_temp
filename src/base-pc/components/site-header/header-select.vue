@@ -73,6 +73,9 @@
             <popup-language />
             <!-- 切换盘口 -->
             <!-- <popup-handicap /> -->
+                            <!-- 设置浮层弹窗 -->
+                <g-settings v-if="show_g_settings" :show_settings="show_g_settings" :el="'.iframe-settings'"
+                    :settings_items="settings_items" @auto_close="show_g_settings = !show_g_settings"></g-settings>
             <!-- 设置多语言、版本、颜色 -->
             <popup-set />
         </template>
@@ -81,13 +84,14 @@
 
 <script setup>
 import { onMounted, ref, computed, reactive, onUnmounted } from 'vue'
-import lodash from 'lodash'
+import lodash from 'lodash' 
 /* 组件 */
 import { RefreshWapper as refresh } from "src/components/common/refresh";
 import headerTime from "src/base-pc/components/site-header/header-time.vue"
 // import popupHandicap from "src/base-pc/components/popup-select/popup-handicap.vue"
 import popupSet from "src/base-pc/components/popup-select/popup-set.vue"
 import popupLanguage from "src/base-pc/components/popup-select/popup-language.vue"
+import gSettings from 'src/base-pc/components/settings/index.vue';
 /* api */
 import { api_account, api_common } from "src/api/index.js";
 
@@ -101,6 +105,9 @@ import { get_remote_time } from "src/output/index.js"
 
 /** 是否内嵌 */
 const is_iframe = ref(LayOutMain_pc.is_iframe)
+
+/** 是否显示设置弹窗 */
+const show_g_settings = ref(false)
 
 /** stroe仓库 */
 const { menuReducer } = store.getState()
@@ -139,6 +146,72 @@ const isPre = ref(false)
 const dayClickType = reactive({ typeL: 0, urlL: null })
 /** 夜间版 */
 const nightClickType = reactive({ typeL: 0, urlL: null })
+const settings_items = ref([
+        // {
+        //   id: 7,
+        //   name: this.$root.$t('menu.old_ersion'),
+        //   icon: {
+        //     day: require('public/image/yabo/svg/icon-version.svg'),
+        //     night: require('public/image/yabo/svg/icon-version-night.svg')
+        //   },
+        //   value_arr: [
+        //   ],
+        //   type: 'switch'
+        // },
+        {
+          id: 3,
+          name: 123,
+          icon: {
+            // day: require('public/image/yabo/svg/icon-skin.svg'),
+            // night: require('public/image/yabo/svg/icon-skin-night.svg'),
+          },
+          value_arr: [/*this.$root.$t('odds.HK'), this.$root.$t('odds.EU')*/],
+          type: 'switch'
+        },
+        {
+          //列表附加玩法
+          id: 4,
+          name: '列表附加玩法',
+          icon: {
+            // day: require('public/image/yabo/svg/additional-plays.svg'),
+            // night: require('public/image/yabo/svg/additional-plays.svg')
+          },
+          value_arr: [],
+          type: 'switch'
+        },
+        {
+          //列表附加玩法配置
+          id: 5,
+          name: '列表附加玩法配置',
+          icon: {
+            // day: require('public/image/yabo/svg/additional-plays-cfg.svg'),
+            // night: require('public/image/yabo/svg/additional-plays-cfg.svg')
+          },
+          value_arr: [
+            // 3行展示
+            { label: '3行展示', label1: '3行展示', value: 3, icon: '', id: 1 },
+            // 全部行展示
+            { label: '全部行展示', label1: '全部行展示', value: 11, icon: '', id: 2 },
+            // // 3行展示
+            // { label: this.$root.$t('set.3Rows'), label1: this.$root.$t('set.3Rows'), value: 3, icon: '', id: 1 },
+            // // 全部行展示
+            // { label: this.$root.$t('set.moreRowsShow'), label1: this.$root.$t('set.moreRows'), value: 11, icon: '', id: 2 },
+          ],
+          type: 'select'
+        },
+        {
+          //附加盘
+          id: 6,
+          name:  '附加盘',
+          icon: {
+            // day: require('public/image/yabo/svg/additional-disk.svg'),
+            // night: require('public/image/yabo/svg/additional-disk.svg')
+          },
+          value_arr: [],
+          type: 'switch'
+        },
+      ])
+
 /**
 * @Description 节庆资源图片点击
 * @param {side} L 左边的图片点击 R 右边的图片点击
