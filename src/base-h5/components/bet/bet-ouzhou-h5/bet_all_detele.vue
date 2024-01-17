@@ -41,16 +41,12 @@
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import { useMittEmit, MITT_TYPES } from "src/output/index.js";
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { UserCtr } from "src/output/index.js"
 
 
-const props = defineProps({
-  is_dropdown: {
-    type: Boolean,
-    default: false,
-  },
-})
+const is_dropdown = ref(false)
+
 
 const clear = () => {
   BetData.set_clear_bet_info()
@@ -59,6 +55,7 @@ const clear = () => {
 
 const switch_handle = (state) => {
   BetData.set_bet_amount(0)
+  // BetData.set_bet_keyboard_show(false)
   switch (state) {
     case 'single':
       BetData.set_is_bet_merge('no')
@@ -72,6 +69,7 @@ const switch_handle = (state) => {
       BetData.set_is_bet_merge('merge')
       break;
   }
+  is_dropdown.value = false
 }
 
 const bet_type_text = computed(()=> state =>{

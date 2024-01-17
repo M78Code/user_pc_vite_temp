@@ -7,7 +7,7 @@ import Template18 from './Template18.vue';
 
 const hideTitle = [0,18]
 const innerTitle = [12,14]
-const templates = new Map([[4,TemplateColumn],[6,TemplateColumn],[14,Template14],[18,Template18]])
+const templates = new Map([[4,TemplateColumn],[6,Template14],[14,Template14],[18,Template18]])
 
 const rowHpid = '106,107'
 
@@ -26,7 +26,8 @@ const other = {
 
 export const config = {
   /** 模板hpt14中, 玩法ID:353(独赢 & 最先进球球队) [无进球]投注项的otd */
-  template14OtherOtd: 1130,
+  // template14OtherOtd: 1130,
+  otherOtd: [1130,0,-1]
 }
 export const state = reactive({
   active: -1

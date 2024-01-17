@@ -2,8 +2,66 @@
  * @Description: 虚拟体育详情页最外层父组件
 -->
 <template>
-  <div class="virtual-detail row justify-between" ref="virtual_detail_box">
-    <!-- 头部 -->
+  <div class="virtual-detail" ref="virtual_detail_box">
+
+    <div class="match-detail-bread">
+      <!-- 详情页面包屑 -->
+      <breadcrumbs :detail_info="match || {}" />
+      <div class="bread-right">
+        <img
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
+          alt=""
+          srcset=""
+          class="signal"
+          @click="()=>{}"
+        />
+        <img
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`"
+          alt=""
+          srcset=""
+          :class="{ balance_refresh: true}"
+          @click="vir_refresh"
+        />
+      </div>
+    </div>
+    <div class="match-detail-head" v-if="match">
+      <div class="detail-head-leagal">
+        <span class="match-detail-head-name">{{ match.tn }}</span>
+        <img
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
+          alt=""
+          srcset=""
+          style="margin: 0 10px; height: 14px"
+          v-if="match.mng"
+        />
+        <span class="leagal-time">
+          <match-process
+            :match="match"
+            show_page="match-list"
+            :rows="1"
+          />
+        </span>
+      </div>
+      <div>
+        <div
+          class="expansion_ref_slotHeader expansion-vs"
+          @click.stop="show_item"
+        >
+          <div style="display: flex;align-items: center;">
+            <span class="home-vs-away" :title="match.mhn">{{ match.teams[0] }} </span>
+            <span class="match-detail-head-name m-10">v</span>
+            <span class="home-vs-away" :title="match.man">{{ match.teams[1] }}</span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="header_banne sport_bg"
+        :style="`background-position:0 -${sport_ball_type[1]}px`"
+      ></div>
+    </div>
+
+    <div class="row virtual-detail-wrap row justify-between">
+      <!-- 头部 -->
     <div class="virtual-head" v-if="0">
       <div class="type-bg bg1001">
         <div class="back-wrap">
@@ -64,6 +122,7 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 </template>
 <script>
@@ -76,6 +135,10 @@ import ranking_list_start from "src/base-pc/vr/pages/virtual/virtual-sports-part
 import football_ranking_list from "src/base-pc/vr/pages/virtual/virtual-sports-part/football-ranking-list.vue"
 import group_knockout from "src/base-pc/vr/pages/virtual/virtual-sports-part/group-knockout.vue"
 import virtual_match_statistic from 'src/base-pc/vr/components/virtual-match-statistic.vue'
+import breadcrumbs from "src/base-pc/vr/pages/virtual/details/children/breadcrumbs.vue";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
+
 export default {
   mixins:[virtual_sports_details_mixin],
   name:'virtual_sports_details',
@@ -88,7 +151,29 @@ export default {
     'ranking-list-start':ranking_list_start,
     'football-ranking-list':football_ranking_list,
     'group-knockout':group_knockout,
+    'match-process': matchProcess,
+    breadcrumbs
   },
+  data(){
+    return {
+      LOCAL_PROJECT_FILE_PREFIX,
+      sport_ball_type: {
+      1: 0,
+      2: 450,
+      3: 450,
+      4: 980,
+      5: 2790,
+      6: 90,
+      7: 2430,
+      8: 890,
+      9: 1440,
+      10: 1900,
+      11: 1990,
+      12: 540,
+      14: 180,
+    }
+    }
+  }
 }
 </script>
 
@@ -97,6 +182,118 @@ export default {
 .virtual-detail {
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
+
+  .match-detail-bread {
+    width: 770px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    overflow: hidden;
+    background: var(--q-gb-bg-lg-5);
+    display: flex;
+    justify-content: space-between;
+    .bread-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: -20px;
+        width: 2px;
+        height: 20px;
+        top: 9px;
+        background-color: var(--q-gb-bg-c-10);
+      }
+    }
+  }
+
+  .match-detail-head {
+    width: 770px;
+    position: relative;
+    height: 80px;
+
+    padding: 15px 0 16px 14px;
+    background: var(--q-gb-bg-lg-4);
+
+    :deep(.q-item) {
+      padding: 8px 0px;
+    }
+
+    .detail-head-leagal {
+      display: flex;
+      // justify-content: center;
+      align-items: center;
+
+      .leagal-time {
+        margin-left: 5px;
+        // background-color: var(--q-gb-bg-c-10);
+        // color: var(--q-gb-t-c-5);
+        padding: 2px 5px 2px 0px;
+        :deep(.date-wrap) {
+          display: flex;
+        }
+        :deep(.c-match-process) {
+          background-color: var(--q-gb-bg-c-10);
+          color: var(--q-gb-t-c-5);
+        }
+      }
+    }
+
+    .match-detail-head-name {
+      font-size: 13px;
+      line-height: 18px;
+      color: var(--q-gb-t-c-5);
+      opacity: 0.6;
+    }
+
+    .home-vs-away {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 25px;
+      color: var(--q-gb-t-c-5);
+      margin-top: 6px;
+      display: inline-block;
+      max-width: 350px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
+
+    .m-10 {
+      margin: 0 10px;
+      font-size: 18px;
+    }
+
+    .match-detail-head-bc {
+      position: absolute;
+      right: 0;
+      top: 0;
+      // opacity: 0.3;
+      height: 100%;
+    }
+  }
+
+  
+  .signal,.balance_refresh {
+    display: inline-block;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    margin-right: 15px;
+  }
+  
+  
+  .sport_bg {
+    width: 226px;
+    height: 80px;
+    background-image: url($SCSSPROJECTPATH + "/image/png/icon_sport_bg.png");
+    background-size: 226px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
   .detail-main {
     width: 770px;
   }
@@ -218,7 +415,6 @@ export default {
 }
 
 .detail-main {
-  margin-top: 0.04rem;
 
   &::-webkit-scrollbar {
     display: none;

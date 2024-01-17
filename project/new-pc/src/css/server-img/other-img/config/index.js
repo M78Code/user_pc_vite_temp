@@ -89,4 +89,12 @@ export default {
     "pc-rule-logo": {
       default: "pc-rule-logo"
     },
+    //15分钟玩法提示图标
+    "pc-15-minutes-tips": {
+      default: "pc-15-minutes-tips"
+    },
+    //15分钟玩法提示图标激活
+    "pc-15-minutes-tips-active": {
+      default: "pc-15-minutes-tips-active"
+    },
 };

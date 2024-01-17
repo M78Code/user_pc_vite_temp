@@ -1,31 +1,27 @@
-<!-- 单关，串关，投注金额输入框 -->
+<!-- 多项合并输入 -->
 <template>
     <div class="bet_input_info flex_input component bet-input-info">
         <div v-show="false"> {{ UserCtr.user_version }} --
       {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
         <div class="info_left">
-            <div class="size_16 color_a1a1">{{ i18n_t('bet.bet') }}</div>
+            <div class="size_16 color_a1a1">
+              <span> {{ i18n_t('bet.single_more') }} </span> 
+              <span> {{ BetData.bet_single_list.length }}x </span> 
+            </div>
             <div class="size_14">
                 <span>{{ i18n_t('bet.total_win2') }}</span>
-                <!-- <span class="margin_left_4">&thinsp;{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span> -->
-                <span class="margin_left_4" v-if="[1].includes(item.playId * 1)">
-                    {{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount, item.oddFinally), item.bet_amount)) ||
-                        '0.00' }}
-                </span>
-                <span class="margin_left_4" v-else>
-                    {{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount, item.oddFinally), (UserCtr.odds.cur_odds
-                        == 'HK' ? 0 : item.bet_amount))) || '0.00' }}
+                <span class="margin_left_4" >
+                    {{ winMoney() }}
                 </span>
             </div>
         </div>
-        <div class="info_right size_14" @click.stop="input_click(item, index, $event)">
+        <div class="info_right size_14" @click.stop="input_click($event)">
             <div class="content-b">
                 <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
 
                 <span class="money-span" ref="money_span" :style="{ opacity: '1' }"></span>
 
-                <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('bet.money_range') }} {{
-                    ref_data.min_money }}~{{ formatMoney(ref_data.max_money) }}</span>
+                <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{i18n_t('bet.money_range')}} {{ref_data.min_money}}~{{format_money3(ref_data.max_money)}}</span>
             </div>
 
         </div>
@@ -34,12 +30,11 @@
 
 <script setup>
 import lodash_ from "lodash"
-import { onMounted, onUnmounted, reactive, ref } from "vue"
-import { MITT_TYPES, useMittOn, formatMoney, UserCtr } from "src/output/index.js"
+import { onMounted, onUnmounted, reactive, ref, computed } from "vue"
+import { MITT_TYPES, useMittOn, formatMoney, UserCtr, format_money3, useMittEmit } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
-import { nextTick } from "licia";
 
 const props = defineProps({
     item: {
@@ -51,16 +46,16 @@ const props = defineProps({
     }
 })
 
-const input_click = (item, index, event) => {
-    console.error('item.bet_amount', item.bet_amount)
+const input_click = (event) => {
+    // console.error('index', BetData.bet_single_list.length)
     // event.preventDefault()
-    BetData.set_bet_amount(item.bet_amount)
-    BetData.set_bet_keyboard_config(item)
-    BetData.set_bet_keyboard_show(false)
-    BetData.set_active_index(index)
-    nextTick(() => {
-        BetData.set_bet_keyboard_show(true)
+    let oid = BetData.bet_single_list.map(item => {
+        return item.playOptionsId
     })
+    BetData.set_bet_keyboard_config({ids:oid})
+    BetData.set_bet_keyboard_show(true)
+    BetData.set_active_index(BetData.bet_single_list.length)
+    BetData.set_bet_amount(0)
 }
 
 
@@ -69,61 +64,79 @@ const money_span = ref(null)
 let flicker_timer = null
 
 const ref_data = reactive({
-    min_money: '',  // 最小投注金额
-    max_money: '', // 最大投注金额
-    seriesOdds: '', // 串关复式投注赔率
-    money: '', // 投注金额
-
+    min_money: 10, // 最小投注金额
+    max_money: 8888, // 最大投注金额
+    win_money: 0.00, // 最高可赢
+    money: "", // 投注金额
+    keyborard: true, // 是否显示 最高可赢 和 键盘
+    emit_lsit: {},
+    oddFinallyArr:[],
+    oid:[],
 })
 
 onMounted(() => {
     cursor_flashing()
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
     //监听键盘金额改变事件
-    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle)
-    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE, set_ref_data_bet_money_update)
+    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_MERGE, change_money_handle)
 })
 
 onUnmounted(() => {
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
-    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle).off
-    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE, set_ref_data_bet_money_update).off
+    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_MERGE, change_money_handle).off
+})
+
+//监听最高可赢变化
+const winMoney = computed(()=> state =>{
+    let sum = 0
+    if (BetData.bet_amount) {
+        BetData.bet_single_list.forEach((item)=>{
+            sum += mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)
+        })
+    }
+    return formatMoney(sum) 
 })
 
 /**
  *@description 金额改变事件
  *@param {Number} new_money 最新金额值
  */
-const change_money_handle = (new_money = {}) => {
-    console.log('change_money_handlechange_money_handlechange_money_handlechange_money_handle', new_money)
-    if(new_money.params.playOptionsId === props.item.playOptionsId) {
-        ref_data.money = new_money.money
-        BetData.set_bet_obj_amount(ref_data.money, props.item.playOptionsId)
+const change_money_handle = (obj) => {
+    console.log('change_money_handle!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', obj)
+    if(obj.params.playOptionsId) return
+    if(obj.params.ids.length) {
+        let money_ = obj.money
+        BetData.set_bet_amount(money_)
+        obj.params.ids.forEach(oid => {
+            BetData.set_bet_obj_amount(BetData.bet_amount, oid)
+        })
+        ref_data.money = money_
+        useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
     }
-    // BetData.set_bet_amount(ref_data.money)
-}
-
-// 输入金额数据更新
-const set_ref_data_bet_money_update = () => {
-    ref_data.money = props.item.bet_amount
 }
 
 
 // 限额改变 修改限额内容
 const set_ref_data_bet_money = () => {
-    let value = props.item.playOptionsId
+    let min_money_arr = []
+    let max_money_arr = []
 
-    const { min_money = 10, max_money = 8888, seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
-    // 最小限额
-    ref_data.min_money = min_money
-    // 最大限额
-    ref_data.max_money = max_money
-    // 复试串关赔率
-    ref_data.seriesOdds = seriesOdds
-    // 限额改变 重置投注金额
-    ref_data.money = ''
-    // 设置键盘设置的限额和数据
-    BetData.set_bet_keyboard_config({ playOptionsId: props.item.playOptionsId })
+    BetData.bet_single_list.forEach((item)=>{
+        let value = item.playOptionsId
+        const { min_money = 10, max_money = 8888} = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
+        min_money_arr.push(min_money)
+        max_money_arr.push(max_money)
+        ref_data.oid.push(item.playOptionsId)
+        ref_data.oddFinallyArr.push(item.oddFinally)
+    })
+    ref_data.min_money = lodash_.max(min_money_arr) //多项单注限额最小值取多项里最大的
+    ref_data.max_money = lodash_.min(max_money_arr) //多项单注限额最大值取多项里最小的
+    // console.log('-------------------------------------------------------------------------------', min_money_arr, max_money_arr)
+    ref_data.money = ""
+    //设置键盘MAX限额
+    // let max_money_obj = {max_money:ref_data.max_money}
+    // BetData.set_bet_keyboard_config(Object.assign(BetData.bet_keyboard_config,max_money_obj))
+    console.log('BetData.bet_keyboard_config!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', BetData.bet_keyboard_config)
 }
 
 /**
@@ -161,7 +174,7 @@ const cursor_flashing = () => {
         display: flex;
         align-items: center;
         border-radius: 2px;
-
+        overflow: hidden;
         .content-b {
             display: flex;
             align-items: center;
