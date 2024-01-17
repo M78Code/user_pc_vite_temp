@@ -47,6 +47,7 @@
         <div class="odds-icon" v-if="odds_lift == 'down'" :style="compute_css_obj({ key: 'pc-home-arrow-down' })"></div>
       </div>
     </div>
+    <div v-else>—</div>
   </div>
 </template>
 

@@ -83,7 +83,6 @@ onMounted(() => {
 
 //坑位对象
 const hn_obj = toRef(MatchListData.list_to_obj,'hn_obj')
-console.log("jiffy",match.value.mid,hn_obj)
 const col_ols_data = computed(() => {
   try {
     let { mid, csid } =match.value
