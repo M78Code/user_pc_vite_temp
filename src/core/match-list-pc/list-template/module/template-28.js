@@ -96,6 +96,8 @@ export const match_template_config = {
   ...TemplateCommon.match_style_template,
     // 主盘口高度
     main_handicap_height:70,
+    // 底部玩法栏及赛制 高度
+    main_play_competition_height: 28,
 }
 
 
