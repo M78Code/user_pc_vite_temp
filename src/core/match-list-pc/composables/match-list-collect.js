@@ -248,7 +248,7 @@ const match_collect_type = (match) => {
   * param{String} type 赛事类型 // 1：常规，2：冠军，3：电竞
   * return {Object} 收藏信息 {tf:false,mf:false}
   */
-export const match_collect_status = (match, is_set) => {
+export const match_collect_status = (match, is_socket) => {
   let type = -1
   //冠军
   if (MenuData.is_kemp() || MenuData.is_collect_kemp() || MenuData.is_common_kemp() || MenuData.is_esports_champion()) {
@@ -304,7 +304,7 @@ export const match_collect_status = (match, is_set) => {
   }
   // 数据合并
   Object.assign(match, res);
-  is_set&&res.mf&&set_collect_count({type:'inc',count:1})
+  is_socket==false&&res.mf&&set_collect_count({type:'inc',count:1})
   return res;
 }
 /**
@@ -548,7 +548,8 @@ export const set_global_collect_data = (obj) => {
 }
 
 // 请求当前收藏的数据
-function fethc_collect_match() {
+function fethc_collect_match(is_socket) {
+  is_socket==false&&set_collect_count({type:'set',count:0})
   let matchType = 0;
   api_match
     .post_fetch_collect_list_high_light({ matchType, cuid: UserCtr.get_cuid() })
