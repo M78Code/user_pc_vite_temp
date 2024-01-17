@@ -301,6 +301,7 @@ export default {
     getData(){
       let params = {parentMenuId: 2, sonMenuId: this.tabIndex, standardMatchId: this.match.mid}//
       this.get_analysiseData(params, (res)=>{
+     
         // 基本面
         if(this.tabIndex == 1){
           if(Object.keys(res.basicInfoMap).length){
@@ -326,7 +327,7 @@ export default {
                 }
               })
             }
-
+            console.log(1111111111133,res)
             this.baseData = res.basicInfoMap
           }
         // 盘面
@@ -475,7 +476,10 @@ export default {
     border-radius: 0 0 8px 8px;
     // border: 1px solid var(--qq--match-border-color5);
     // border-bottom: 0;
-    background: linear-gradient(98.85deg, rgba(23, 156, 255, 0.12) -5.42%, rgba(23, 156, 255, 0) 21.76%),linear-gradient(0deg, #FFFFFF, #FFFFFF);
+    background: linear-gradient(94.17deg, rgba(255, 112, 0, 0.3) -25.38%, rgba(255, 112, 0, 0) 22.77%),
+linear-gradient(0deg, #FFFFFF, #FFFFFF);
+
+   
     box-sizing: border-box;
     border-left: 1px solid #E4EAFF;
     border-right: 1px solid #E4EAFF;
@@ -490,8 +494,8 @@ export default {
       text-align: center;
       font-weight: 600;
       &.active {
-        color: #179CFF;
-        border-bottom: 2px solid #179CFF;
+        color: #ff7000;
+        border-bottom: 2px solid #ff7000;
       }
     }
   }

@@ -1389,14 +1389,15 @@ export default {
 }
 
 .unfold-table {
-  width: 82px;
-  height: 24px;
-  background-color: #179cff;
-  line-height: 24px;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  background-color: #ffffff;
+
   font-size: 12px;
   text-align: center;
-  color: #414655;
-  border-radius: 0 0 6px 6px;
+  color: #ff7000;
+  // border-radius: 0 0 6px 6px;
   cursor: pointer;
 }
 </style>
