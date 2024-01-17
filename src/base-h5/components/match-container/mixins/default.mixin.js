@@ -8,7 +8,7 @@ import MatchCollect from 'src/core/match-collect'
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
-import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/output/index.js"
+import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss, set_hide_api_data_obj } from "src/output/index.js"
 import { format_how_many_days, format_week } from "src/core/format/common/index.js"
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
@@ -534,8 +534,12 @@ export default defineComponent({
           break;
         case "muUrl":
           this.media_button_handle_when_muUrl();
+          // 设置埋点缓存数据(列表页面) button:1.列表  2.右侧赛事信息 3.详情页
+          set_hide_api_data_obj(3,{match: this.match, button:'1',txt:'列表页面', type:final_button_type, main_source:this.main_source});
           break;
         case "animationUrl":
+          // 设置埋点缓存数据(列表页面) button:1.列表  2.右侧赛事信息 3.详情页
+          set_hide_api_data_obj(4,{match: this.match, button:'1',txt:'列表页面', type:final_button_type, main_source:this.main_source});
           break;
         default:
           break;
