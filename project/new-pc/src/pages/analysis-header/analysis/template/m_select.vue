@@ -227,4 +227,27 @@ export default {
     }
   }
 }
+
+.num_zero{
+  span.text-blue,
+  span.text-orange {
+    color: var(--q-analysis-color-1) !important;
+  }
+  :deep() {
+    .text-blue {
+      color: var(--q-gb-t-c-17) !important;
+    }
+    .text-orange {
+      color: var(--q-analysis-color-2) !important;
+    }
+  }
+}
+.line {
+  .line_num_zero {
+    .bar-progress,
+    .progress-content {
+      background: var(--q-analysis-color-12) !important;
+    }
+  }
+}
 </style>

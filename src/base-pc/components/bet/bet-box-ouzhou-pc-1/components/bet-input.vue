@@ -108,11 +108,15 @@ const set_show_quick_money = (obj = {}) => {
 
 // 判断快捷金额按钮是否可点击
 const bet_money_btn_class = (obj, index) => {
+    console.log('pointer-events: none;pointer-events: none;pointer-events: none;', obj, index)
     let className = '';
     if(ref_data.max_money > 0) {
-        if(index != 'max' && (ref_data.max_money < obj || ref_data.max_money < props.items.bet_amount || UserCtr.balance < obj)) {
+        // ref_data.max_money = 99
+        if(index === 'max') obj = UserCtr.balance
+        if(ref_data.max_money < obj || ref_data.max_money < props.items.bet_amount || UserCtr.balance < obj) {
             className = 'disabled'
         }
+        
     }
     return className;
 }
@@ -256,6 +260,7 @@ const show_quick_amount = state => {
         }
         &.disabled{
             background: var(--q-gb-bg-c-19);
+            pointer-events: none;
         }
     }
 }
