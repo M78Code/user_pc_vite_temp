@@ -213,12 +213,12 @@ export const init_home_matches = async (is_socket=true) => {
         //   })
         // }
         // 取五大联赛的前五场赛事
-        match_list.push(...res.slice(0,5))
+        match_list.push(...res)
         set_league_list_obj(match_list)
         LocalStorage.set('get_five_leagues_list', res,12*3600)
         MatchDataWarehouse_PC_List_Common.set_list(match_list);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-          res.slice(0,5), null, null, true
+          res, null, null, true
         );
         api_bymids({mids:lodash.map(res,'mid')})
       } catch (error) {

@@ -6,12 +6,12 @@ import { api_hide } from "src/api/index.js";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 const {PROJECT_NAME,IS_PC} = BUILDIN_CONFIG;
 const HIDE_API_NAME_MAP1 = {
-  'yazhou-h5':{version:'2023亚洲版',version_id:''},
-  'yazhou-pc':{version:'2023亚洲版',version_id:''},
+  'yazhou-h5':{version:'',version_id:''},
+  'yazhou-pc':{version:'',version_id:''},
   'ouzhou-h5':{version:'2023欧洲版',version_id:'3'},
   'ouzhou-pc':{version:'2023欧洲版',version_id:'3'},
   'new-pc':'',
-  'app-h5':'',
+  'app-h5':{version:'2023亚洲版',version_id:'2'},
 }
 /**
  * @description 埋点逻辑处理函数
@@ -85,7 +85,7 @@ const replay_click_event = (obj) => {
     other4:'', //其他扩展4
   }
   // eventCode提交埋点数据
-  api_hide.submit_event_collection(event_obj).then( res => {
+  event_obj.versionId && api_hide.submit_event_collection(event_obj).then( res => {
     if(lodash.get(res, 'data.code') == 200){
       console.log('提交成功!');
     }
@@ -98,7 +98,7 @@ const replay_click_event = (obj) => {
  */
 const into_home_event = (obj={}) => {
   // 暂时只发送欧洲版的埋点
-  if(!['ouzhou-h5','ouzhou-pc'].includes(PROJECT_NAME)){
+  if(!['ouzhou-h5','ouzhou-pc','app-h5'].includes(PROJECT_NAME)){
     return;
   }
   let event_obj = {
@@ -109,7 +109,7 @@ const into_home_event = (obj={}) => {
   }
   Object.assign(event_obj,obj);
   // eventCode提交埋点数据
-  api_hide.submit_event_collection(event_obj).then( res => {
+  event_obj.versionId && api_hide.submit_event_collection(event_obj).then( res => {
     if(lodash.get(res, 'data.code') == 200){
       console.log('提交成功!');
     }
