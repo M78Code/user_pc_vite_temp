@@ -42,13 +42,18 @@ const get_tab_play_height = (mid) => {
 	// let template_id = MenuData.get_match_tpl_number()
 	const match = MatchListData.get_quick_mid_obj(mid) || {};
 	let { play_current_key, other_handicap_list = [], tpl_id } = match
-	let { tab_play_handicap_height: handicap_height } = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${tpl_id}_config.match_template_config`, {});
+	let { tab_play_handicap_height: handicap_height } = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${tpl_id==13?1:tpl_id}_config.match_template_config`, {});
 	let length = lodash.get(other_handicap_list, "0.ols.length", 3);
 	//5分钟      波胆
 	if (["hps5Minutes", "hpsBold"].includes(play_current_key)) {
 		// 计算0号模板次要玩法 盘口+玩法标题高度
 		handicap_height = length * 35 + (40 - (!["en", "ad", "ms"].includes(UserCtr.lang) ? 16 : 0));
 	}
+	// 组合玩法
+    // if (['hpsCompose'].includes(play_current_key)) {
+	// 	// 计算0号模板次要玩法 盘口+玩法标题高度+更多一行高度35
+	// 	handicap_height = (length-1) * 2 * num + length * num * 35 + ((40 - 16) * num)+(num==2? 0 : 14) + 16
+	// }
 	return handicap_height;
 };
 
@@ -355,7 +360,9 @@ export const compute_style_template_by_matchinfo = (match) => {
 		// 数据模板id
 		data_tpl_id: template_id,
 		// 渲染的视图模板id
-		view_tpl_id: compute_view_tpl_id(template_id)
+		view_tpl_id: compute_view_tpl_id(template_id),
+		// 底部玩法栏及赛制 高度
+		main_play_competition_height: template_config.main_play_competition_height || 0
 	};
 	// 如果没有赛事信息
 	if (!match || !match.mid) {
@@ -406,6 +413,7 @@ export const compute_style_template_by_matchinfo = (match) => {
 		style_obj.cur_handicap_height +
 		style_obj.add_handicap_height +
 		style_obj.tab_play_total_height +
+		style_obj.main_play_competition_height +
 		6;
 	if (PROJECT_NAME == 'ouzhou-pc') {
 		if (template_id == 118) {

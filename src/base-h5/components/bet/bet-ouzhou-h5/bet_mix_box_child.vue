@@ -38,7 +38,7 @@
                   <div v-else>
                       <!-- 合并单关  -->
                       <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
-                          @touchmove="touchmove_handle($event)">
+                          >
                           <bet-mix-box-child2></bet-mix-box-child2>
                       </div>
                       <!-- 键盘 -->
@@ -50,32 +50,22 @@
               <div v-if="!BetData.is_bet_single">
                   <!-- 串关投注项列表  -->
                   <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
-                      @touchmove="touchmove_handle($event)">
+                      >
                       <div v-if="BetViewDataClass.bet_order_status == 1">
                         <template v-for="(item, index) in BetData.bet_s_list" :key="index">
                           <bet-mix-box-child1 :items="item" :index="index"></bet-mix-box-child1>
                         </template>
-                        
-                        <template v-if="BetViewDataClass.bet_special_series.length">
-                          <bet-special-input :items="BetViewDataClass.bet_special_series[0]" @input_click="handle_input_click" :index="0" />
-                        </template>
 
-                          <!-- <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single">
-                            <bet-input-info1></bet-input-info1>
-                        </template> -->
-
-                        <div>
-                          复式连串过关投注
-                        </div>
-
-                          <!-- 串关投注 限额 -->
-                          <!-- 复式连串过关投注 限额 -->
-                          <template v-if="BetData.bet_s_list.length > 1"  >
-                            <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
-                                <bet-special-input :items="item" @input_click="handle_input_click" v-if="index != 0" :index="index" />
-                            </template>
+                        <!-- 串关投注 限额 -->
+                        <!-- 复式连串过关投注 限额 -->
+                        <template v-if="BetData.bet_s_list.length > 1"  >
+                          <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
+                              <bet-special-input :items="item" @input_click="handle_input_click" :index="index" />
                           </template>
-
+                        </template>
+                        <template v-else>
+                          <div class="bet-title bet-error">{{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}</div>
+                        </template>
                           
                       </div>
                       
@@ -629,5 +619,18 @@ background: var(--q-gb-t-c-3) !important;
 }
 .set-opacity{
   background:var(--q-gb-bg-c-9)
+}
+
+.bet-title {
+  color: var(--q-gb-bd-c-4);
+    text-align: center;
+    font-size: 0.14rem;
+    width: 100%;
+    height: 0.36rem;
+    line-height: 0.36rem;
+
+  &.bet-error {
+      color: var(--q-gb-t-c-17);
+  }
 }
 </style>

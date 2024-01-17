@@ -34,7 +34,7 @@ export default {
   },
   watch: {
     '$route'(to, from) {
-      watch_route_fun(to, from);
+      watch_route_fun(to, from, this);
     },
     init_load(val){
       if(val&&document.getElementById("loading-root-ele")){

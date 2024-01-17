@@ -214,8 +214,8 @@ class MatchResponsive {
    * @description 联赛key
    */
   get_league_count_key (match) {
-    const { tid, warehouse_type = '' } = match
-    const key = warehouse_type ? `${warehouse_type}_tid_${tid}` : `tid_${tid}`
+    const { custom_tid, warehouse_type = '' } = match
+    const key = warehouse_type ? `${warehouse_type}_tid_${custom_tid}` : `tid_${custom_tid}`
     return key
   }
 

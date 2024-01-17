@@ -97,11 +97,17 @@ const ov = (() => {
   // @ts-ignore
   return compute_value_by_cur_odd_type(props.value.ov, props.value._hpid, props.value._hsw, sportId)
 })()
-// 反波胆玩法增加'非'
-const txt_ol_name = computed(() => {
+/** Over|Under 添加 O|U;  反波胆玩法增加'非' */
+const txt_ol_name = (function(){
+  if(props.value.ot == 'Over'){
+    return 'O  '
+  }else if(props.value.ot == 'Under'){
+    return 'U  '
+  }
   let res = (['367','368','369'].includes(props.value._hpid) && (props.value.ot != 'Other'))?i18n_t('detail.non') : '';
   return res;
-})
+})()
+
 const isLock = computed(() => {
   if (props.value) {
     // @ts-ignore
@@ -135,6 +141,7 @@ function resetStatus() {
 <style scoped lang="scss">
 .ol-name-span2{
   margin-right: 2px;
+  white-space: pre;
 }
 .overflow {
   flex: 1;

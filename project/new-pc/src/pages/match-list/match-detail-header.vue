@@ -37,7 +37,7 @@
     <div class="row items-center">
       <div class="row items-center">
         <!-- 选择联赛 -->
-        <div class="select-competition row items-center curson-point">
+        <div class="select-competition row items-center curson-point" @click="handle_select_race_species">
           <span>选择联赛</span>
           <div class="all">
             <span>全部</span>
@@ -131,7 +131,7 @@ const props = defineProps({
  * @description change_version 修改专业还是新手 0专业/1新手
  * 
  */
-const emits = defineEmits(['change_type', 'change_theme', 'change_hot', 'change_version']);
+const emits = defineEmits(['change_type', 'change_theme', 'change_hot', 'change_version', 'change_race']);
 const computed_theme = ref("")
 const ver_option =  [
   {
@@ -179,6 +179,10 @@ let _menu_type = MenuData.menu_root;
  */
 const handle_select_type = (value) => {
   select_type.value = value;
+}
+
+const handle_select_race_species = () => {
+  emits('change_race')
 }
 
 //当前页面菜单title

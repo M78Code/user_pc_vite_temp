@@ -61,13 +61,14 @@ const compute_get_date_menu_list_params = () => {
 */
 const handle_click_menu_mi_3_date = (detail = {}) => {
     let { md="" } = detail;
-    const { mid_menu_result,left_menu_result } = MenuData
+    const { mid_menu_result,left_menu_result,menu_current_mi} = MenuData
     let params = {
       ...mid_menu_result,
       md: md,
     }
     // type 早盘 今日 对赛种进行拼接
-    let current_menu = left_menu_result.lv1_mi
+    // let current_menu = left_menu_result.lv1_mi
+    let current_menu = menu_current_mi
     // let menu_root = 20 + '' + type
     // // 设置当前的一级菜单类型
     // MenuData.set_menu_root(menu_root)

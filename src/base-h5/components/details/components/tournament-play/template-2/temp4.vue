@@ -36,8 +36,8 @@
                                   'win': calc_win(ol_list_0[ol_index0 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }">
-                              <div class="size-color ellipsis remark details_t_color7 fz_16">{{['367','368','369'].includes(item_data.hpid)?i18n_t('detail.non') : ''}}</div>
-                              <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)}]">
+                              <div class="size-color ellipsis remark details_t_color7  fz_12">{{['367','368','369'].includes(item_data.hpid)?i18n_t('detail.non') : ''}}</div>
+                              <div class="size-color ellipsis remark details_t_color6  fz_12" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)}]">
                                 {{ol_list_0[ol_index0 - 1].on}}
                               </div>
                               <div class="odds-wrap" :class="{'text-right': !['344'].includes(item_data.hpid)}">
@@ -49,7 +49,7 @@
                           <template v-if="ol_list_0[ol_index0 - 1].os == 2">
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1?'bor-style':''">
-                              <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
+                              <div class="size-color-imp ellipsis remark details_t_color7  fz_12" v-show="get_detail_data?.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
                               <div class="text-left mar-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -63,7 +63,7 @@
                           <template v-else>
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ?'bor-style':''">
-                              <div class="size-color-imp ellipsis remark details_t_color6 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
+                              <div class="size-color-imp ellipsis remark details_t_color6  fz_12" v-show="get_detail_data?.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
                               <div class="text-left mar-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -81,7 +81,7 @@
                       <template v-if="ol_list_0[ol_index0 - 1]._mhs == 1">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1?'bor-style':''">
-                          <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
+                          <div class="size-color-imp ellipsis remark details_t_color7  fz_12" v-show="get_detail_data?.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
                           <div class="text-left mar-left">
                             <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
@@ -121,8 +121,8 @@
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }"
                             >
-                              <div class="size-color ellipsis remark details_t_color7 fz_16">{{['367','368','369'].includes(item_data.hpid)?i18n_t('detail.non') : ''}}</div>
-                              <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)}]">
+                              <div class="size-color ellipsis remark details_t_color7  fz_12">{{['367','368','369'].includes(item_data.hpid)?i18n_t('detail.non') : ''}}</div>
+                              <div class="size-color ellipsis remark details_t_color6  fz_12" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)}]">
                                 {{ol_list_1[ol_index1 - 1].on}}
                               </div>
                               <div class="odds-wrap" :class="{'text-right': !['344'].includes(item_data.hpid)}">
@@ -134,7 +134,7 @@
                           <template v-if="ol_list_1[ol_index1 - 1].os == 2">
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
-                              <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
+                              <div class="size-color-imp ellipsis remark details_t_color7  fz_12" v-show="get_detail_data?.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
                               <div class="text-left mar-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -148,7 +148,7 @@
                           <template v-else>
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
-                              <div class="size-color-imp ellipsis remark details_t_color6 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
+                              <div class="size-color-imp ellipsis remark details_t_color6  fz_12" v-show="get_detail_data?.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
                               <div class="text-left mar-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -166,7 +166,7 @@
                       <template v-if="ol_list_1[ol_index1 - 1]._mhs == 1">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
-                          <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
+                          <div class="size-color-imp ellipsis remark details_t_color7  fz_12" v-show="get_detail_data?.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
                           <div class="text-left mar-left ">
                             <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
@@ -204,8 +204,8 @@
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }"
                             >
-                              <div class="size-color ellipsis remark details_t_color7 fz_16">{{['367','368','369'].includes(item_data.hpid)?i18n_t('detail.non') : ''}}</div>
-                              <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_2[ol_index2 - 1].id_)}]">
+                              <div class="size-color ellipsis remark details_t_color7  fz_12">{{['367','368','369'].includes(item_data.hpid)?i18n_t('detail.non') : ''}}</div>
+                              <div class="size-color ellipsis remark details_t_color6  fz_12" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_2[ol_index2 - 1].id_)}]">
                                 {{ol_list_2[ol_index2 - 1].on}}
                               </div>
                               <div class="odds-wrap" :class="{'text-right': !['344'].includes(item_data.hpid)}">
@@ -217,7 +217,7 @@
                           <template v-if="ol_list_2[ol_index2 - 1].os == 2">
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
-                              <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
+                              <div class="size-color-imp ellipsis remark details_t_color7  fz_12" v-show="get_detail_data?.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
                               <div class="text-left mar-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -231,7 +231,7 @@
                           <template v-else>
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
-                              <div class="size-color-imp ellipsis remark details_t_color6 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
+                              <div class="size-color-imp ellipsis remark details_t_color6  fz_12" v-show="get_detail_data?.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
                               <div class="text-left mar-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -249,7 +249,7 @@
                       <template v-if="ol_list_2[ol_index2 - 1]._mhs == 1">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
-                          <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data?.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
+                          <div class="size-color-imp ellipsis remark details_t_color7  fz_12" v-show="get_detail_data?.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
                           <div class="text-left mar-left">
                             <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
@@ -280,7 +280,7 @@
                         class="play-box-style details_color"
                         @click="go_to_bet(ol_item)"
                         :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result)}]">
-                      <div class="ellipsis details_t_color6 fz_13" :class="{'text-right': !['344'].includes(item_data.hpid)}">
+                      <div class="ellipsis details_t_color6 fz_12" :class="{'text-right': !['344'].includes(item_data.hpid)}">
                         <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                           {{ol_item.on}}
                         </span>
@@ -296,7 +296,7 @@
                     <div class="play-box-style details_color">
                       <div
                         v-show="get_detail_data?.csid != 1"
-                        class="ellipsis remark details_t_color7 fz_13"
+                        class="ellipsis remark details_t_color7 fz_12"
                         :class="{'text-right': !['344'].includes(item_data.hpid)}"
                        >{{ol_item.on}}</div>
                       <div class="text-left mar-left">
@@ -314,7 +314,7 @@
                     <div class="play-box-style details_color">
                       <div
                           v-show="get_detail_data?.csid != 1"
-                          class="ellipsis remark details_t_color6 fz_13"
+                          class="ellipsis remark details_t_color6 fz_12"
                           :class="{'text-right': !['344'].includes(item_data.hpid)}"
                       >{{ol_item.on}}</div>
                       <div class="text-left mar-left">
@@ -336,7 +336,7 @@
                 <div class="play-box-style details_color">
                   <div
                       v-show="get_detail_data?.csid != 1"
-                      class="ellipsis remark details_t_color7 fz_13"
+                      class="ellipsis remark details_t_color7 fz_12"
                       :class="{'text-right': !['344'].includes(item_data.hpid)}"
                   >{{ol_item.on}}</div>
                   <div class="text-left mar-left">
