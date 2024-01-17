@@ -17,8 +17,8 @@
         </div>
       </div>
       <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`"></div>
-      <!-- 玩法名称 -->
-      <div class="play-name-ouzhou">
+      <!-- 足蓝玩法名称 -->
+      <div class="play-name-ouzhou" v-if="csid == 1001 || csid == 1004">
         <div class="play-name-title-box"
           v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))"
           :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
@@ -26,6 +26,15 @@
             {{ i18n_t(`ouzhou.bet_col.bet_col_${item_title._hpid}.bet_col_${item_title.ot}`) }}
           </div>
         </div>
+      </div>
+      <!-- 赛马类玩法名称 -->
+      <div v-else class="play-name-ouzhou" :style="{ 'width': 661 + 'px' }">
+        <!-- 冠军 -->
+        <div class="play-name-item">{{i18n_t('list.virtual_match_type_title.type1011.bet_col.0')}}</div>
+        <!-- 前二 -->
+        <div class="play-name-item">{{i18n_t('list.virtual_match_type_title.type1011.bet_col.1')}}</div>
+        <!-- 前三 -->
+        <div class="play-name-item" v-if="csid !='1009'">{{i18n_t('list.virtual_match_type_title.type1011.bet_col.2')}}</div>
       </div>
     </div>
   </div>
@@ -65,6 +74,15 @@ const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_${pr
   border-bottom: 1px solid var(--q-gb-bd-c-2);
   font-weight: 500;
   cursor: auto;
+
+  .play-name-ouzhou {
+    .play-name-item {
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      flex: 1;
+    }
+  }
 
   .league-name {
     color: #1A1A1A;
