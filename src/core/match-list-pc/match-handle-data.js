@@ -15,7 +15,6 @@ import { has_cur_handicap_tpl_ids } from 'src/core/constant/project/module/data-
 import { MenuData } from 'src/output';
 export * from './list-template/match-list-tpl'
 
-window.MatchListData = MatchListData
 /**
  * 设置到数据仓库缓存
  * @param {*} mid 
@@ -772,4 +771,58 @@ function get_basketball_is_show_cur_handicap(match) {
     return is_show_cur_handicap
 }
 
+  // 获取比赛阶段是否需要查询接口
+ export function get_phase_result(csid, mmp) {
+    let check_result = false;
+    if(csid == 2) {  // 篮球
+      if(mmp > 0 && mmp < 3) { // 上下半场
+        check_result = true;
+      } else if(mmp > 12 && mmp < 17) { // 第一节~第四节
+        check_result = true;
+      } else if(mmp == 40) { // 加时赛
+        check_result = true;
+      } else if(mmp == 303) { // 第三节休息
+        check_result = true;
+      }
+    } else if (csid == 3) { // 棒球
+      if(mmp > 400 && mmp < 421) { // 第一局上,第一局下~加时上,加时下
+        check_result = true;
+      }
+    } else if (csid == 4) { // 冰球
+      if(mmp > 0 && mmp < 4) { // 第一节~第三节
+        check_result = true;
+      } else if(mmp == 40) { // 加时赛
+        check_result = true;
+      }
+    } else if (csid == 5) { // 网球
+      if(mmp > 7 && mmp < 13) { // 第一盘~第五盘
+        check_result = true;
+      }
+    } else if (csid == 6) { // 美式足球
+      if(mmp > 12 && mmp < 17) { // 第一节~ 第四节 加时赛
+        check_result = true;
+      } else if(mmp == 40) { // 加时赛
+        check_result = true;
+      }
+    } else if (csid == 7) { // 斯洛克
+      if(mmp == 21) {    // 进行中
+        check_result = true;
+      }
+    } else if (csid == 8) { // 乒乓球
+      if((mmp > 7 && mmp < 13) || (mmp > 440 && mmp < 443)) { // 第一局~第七局
+        check_result = true;
+      }
+    } else if (csid == 9) { // 排球
+      if((mmp > 7 && mmp < 13) || mmp==17 || (mmp > 440 && mmp < 443)) { // 第一局~第七局
+        check_result = true;
+      } else if(mmp==17) { // 第五局
+        check_result = true;
+      }
+    } else if (csid == 10) { // 羽毛球
+      if((mmp > 7 && mmp < 13)) { // 第一局~第五局
+        check_result = true;
+      }
+    }
+    return check_result;
+  }
 
