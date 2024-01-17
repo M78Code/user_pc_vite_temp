@@ -88,6 +88,42 @@ const {
 </script>
 
 <style lang="scss" scoped>
+.have-chuan-guan {
+  span {
+    display: block;
+    background: var(--q-gb-t-c-16);
+    min-width: 14px;
+    height: 14px;
+    text-align: center;
+    line-height: 14px;
+    color: #fff;
+    border-radius: 2px;
+  }
+}
+.play-detail-box {
+  cursor: pointer;
+  display: flex;
+}
+.esports-play-competition {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+.esports-play-box {
+  height: 34px;
+  line-height: 34px;
+  display: flex;
+  border-top: 1px solid var(--q-gb-bd-c-8) !important;
+  border-right: 1px solid var(--q-gb-bd-c-8) !important;
+}
+.play-count-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px 0 17px;
+  border-right: 1px solid var(--q-gb-bd-c-8) !important;
+}
 .match-handicap-item-esports {
   flex: 1;
   box-sizing: border-box;
