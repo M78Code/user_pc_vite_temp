@@ -252,7 +252,7 @@ const alertRules = (id) => {
   /* ************** 右边内容 ************** -S */
   .content-b {
     height: 0.32rem;
-    width: 1.50rem;
+    min-width: 1.50rem;
     border-radius: 0.08rem;
     font-size: 0.16rem;
     overflow: hidden;
