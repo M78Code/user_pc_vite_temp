@@ -1,6 +1,8 @@
 <!-- 多项合并输入 -->
 <template>
     <div class="bet_input_info flex_input component bet-input-info">
+        <div v-show="false"> {{ UserCtr.user_version }} --
+      {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
         <div class="info_left">
             <div class="size_16 color_a1a1">
               <span> {{ i18n_t('bet.single_more') }} </span> 
@@ -13,8 +15,8 @@
                 </span>
             </div>
         </div>
-        <div class="info_right size_14">
-            <div class="content-b" @click.stop="input_click()">
+        <div class="info_right size_14" @click.stop="input_click($event)">
+            <div class="content-b">
                 <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
 
                 <span class="money-span" ref="money_span" :style="{ opacity: '1' }"></span>
@@ -44,8 +46,8 @@ const props = defineProps({
     }
 })
 
-const input_click = () => {
-    console.error('index', BetData.bet_single_list.length)
+const input_click = (event) => {
+    // console.error('index', BetData.bet_single_list.length)
     // event.preventDefault()
     let oid = BetData.bet_single_list.map(item => {
         return item.playOptionsId
@@ -76,12 +78,12 @@ onMounted(() => {
     cursor_flashing()
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
     //监听键盘金额改变事件
-    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle)
+    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_MERGE, change_money_handle)
 })
 
 onUnmounted(() => {
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
-    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle).off
+    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_MERGE, change_money_handle).off
 })
 
 //监听最高可赢变化
@@ -103,37 +105,14 @@ const change_money_handle = (obj) => {
     console.log('change_money_handle!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', obj)
     if(obj.params.playOptionsId) return
     if(obj.params.ids.length) {
-        // 获取当前投注金额
-        let money = BetData.bet_amount
         let money_ = obj.money
-        // 设置最大投注金额
-        if(obj.money == "MAX"){
-            money_ = ref_data.max_money
-        }
-        if (money >= UserCtr.balance) return
-        // 计算投注金额
-        let money_amount = mathJs.add(money,money_)
-         // 投注金额 不能大于最大投注金额 也不能大于用户余额
-         if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
-                BetData.set_bet_amount(mathJs.add(money,money_))
-                obj.params.ids.forEach(oid => {
-                    BetData.set_bet_obj_amount(BetData.bet_amount, oid)
-                })
-                ref_data.money = money_amount
-            }else{
-                // 最大限额不能大于余额
-                let money_a = ref_data.max_money
-                if(UserCtr.balance < ref_data.max_money){
-                    money_a = UserCtr.balance
-                }  
-                BetData.set_bet_amount(mathJs.add(money,money_))
-                obj.params.ids.forEach(oid => {
-                    BetData.set_bet_obj_amount(BetData.bet_amount, oid)
-                })
-                ref_data.money = money_a
-            } 
-        }
+        BetData.set_bet_amount(money_)
+        obj.params.ids.forEach(oid => {
+            BetData.set_bet_obj_amount(BetData.bet_amount, oid)
+        })
+        ref_data.money = money_
         useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
+    }
 }
 
 
@@ -155,8 +134,8 @@ const set_ref_data_bet_money = () => {
     // console.log('-------------------------------------------------------------------------------', min_money_arr, max_money_arr)
     ref_data.money = ""
     //设置键盘MAX限额
-    let max_money_obj = {max_money:ref_data.max_money}
-    BetData.set_bet_keyboard_config(Object.assign(BetData.bet_keyboard_config,max_money_obj))
+    // let max_money_obj = {max_money:ref_data.max_money}
+    // BetData.set_bet_keyboard_config(Object.assign(BetData.bet_keyboard_config,max_money_obj))
     console.log('BetData.bet_keyboard_config!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', BetData.bet_keyboard_config)
 }
 

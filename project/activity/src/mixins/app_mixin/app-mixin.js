@@ -40,7 +40,7 @@ export default {
   },
   watch: {
     '$route'(to, from) {
-      watch_route_fun(to, from);
+      watch_route_fun(to, from, this);
     },
     get_theme(val){
       // 主题变化时触发

@@ -527,7 +527,8 @@
     "bet_header_adjust": "It is already the min booking market value, pls adjust",
     "bet_header_hight_adjust": "It is already the max booking market value, pls adjust",
     "bet_max_booked_odds": "It has reached the max booked odds, please readjust",
-    "bet_betting": "betting"
+    "bet_betting": "betting",
+    "bet_single_merge":"Merge Single"
   },
   "bet_message":{
     "success": "Successful Betting",

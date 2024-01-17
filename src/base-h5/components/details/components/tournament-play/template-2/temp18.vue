@@ -285,7 +285,7 @@ export default defineComponent({
 
 // 统一间距
 .mg-4-bg {
-  margin: 0 !important;
+  margin:  0.04rem 0 !important;
   .play-box {
     margin-left: 0.02rem !important;
     margin-right: 0.02rem !important;

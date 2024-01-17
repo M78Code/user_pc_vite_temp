@@ -333,50 +333,55 @@ const get_lastest_market_info = (type) => {
                     // 赛事id 玩法id 坑位
                     if(obj.matchInfoId == item.matchId && obj.playId == item.playId && market.placeNum == item.placeNum){
                         // bug 需要遍历 ot == oddsType
-                        let odds = lodash_.get(market,'marketOddsList[0]', {})
-                        // let oddss = market.filter(i => ot == oddsType)
-                        // 赛事状态
-                        bet_item.mid_mhs = obj.matchHandicapStatus
-                        // 投注项状态
-                        bet_item.ol_os = odds.oddsStatus
-                        // 盘口状态
-                        bet_item.hl_hs = market.status
-                        // 盘口id
-                        bet_item.marketId = market.id
-                        // 赔率 10w位
-                        bet_item.odds = odds.oddsValue
-                        //最终赔率
-                        bet_item.oddFinally = compute_value_by_cur_odd_type(odds.oddsValue,obj.playId, item.odds_hsw, item.csisportIdd)
-                        // 投注项类型
-                        bet_item.ot = odds.oddsType
-                        // 投注项id
-                        bet_item.playOptionsId = odds.id
-                        // 基准分
-                        // bet_item.mark_score = 
+                        let market_odds_list = lodash_.get(market,'marketOddsList',[]) || []
 
-                        // 球头
-                        bet_item.handicap_hv = odds.playOptions || market.marketValue
-                        let play_option_name = ''
-                        // 主队 客队
-                        if( odds.oddsType == 1 ){
-                            play_option_name = obj.home || ''
-                        }else{
-                            play_option_name = obj.away  || ''
-                        }
-                        bet_item.playOptionName = bet_item.handicap  + ' ' + ( odds.playOptions || market.marketValue )
-                        bet_item.playOptions = odds.oddsType
+                        let odds = market_odds_list.find(page=> page.oddsType == item.ot) || {}
 
-                        bet_item.place_num = 'place_num'
-                       
-                        // 如果是早盘赛事 则设置当前的 赛事状态
-                        if(item.matchType == 1){
-                            // 赛事状态：0未开赛，1 进行中 4 结束 (对应:ms)
-                            if(obj.matchStatus == 0 ){
-                                bet_item.matchType = 1
+                        if( odds.id ) {
+                            // let oddss = market.filter(i => ot == oddsType)
+                            // 赛事状态
+                            bet_item.mid_mhs = obj.matchHandicapStatus
+                            // 投注项状态
+                            bet_item.ol_os = odds.oddsStatus
+                            // 盘口状态
+                            bet_item.hl_hs = market.status
+                            // 盘口id
+                            bet_item.marketId = market.id
+                            // 赔率 10w位
+                            bet_item.odds = odds.oddsValue
+                            //最终赔率
+                            bet_item.oddFinally = compute_value_by_cur_odd_type(odds.oddsValue,obj.playId, item.odds_hsw, item.csisportIdd)
+                            // 投注项类型
+                            bet_item.ot = odds.oddsType
+                            // 投注项id
+                            bet_item.playOptionsId = odds.id
+                            // 基准分
+                            // bet_item.mark_score = 
+
+                            // 球头
+                            bet_item.handicap_hv = odds.playOptions || market.marketValue
+                            let play_option_name = ''
+                            // 主队 客队
+                            if( odds.oddsType == 1 ){
+                                play_option_name = obj.home || ''
+                            }else{
+                                play_option_name = obj.away  || ''
                             }
-                            // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
-                            if(obj.matchStatus == 1 ){
-                                bet_item.matchType = 2
+                            bet_item.playOptionName = bet_item.handicap  + ' ' + ( odds.playOptions || market.marketValue )
+                            bet_item.playOptions = odds.oddsType
+
+                            bet_item.place_num = 'place_num'
+                        
+                            // 如果是早盘赛事 则设置当前的 赛事状态
+                            if(item.matchType == 1){
+                                // 赛事状态：0未开赛，1 进行中 4 结束 (对应:ms)
+                                if(obj.matchStatus == 0 ){
+                                    bet_item.matchType = 1
+                                }
+                                // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
+                                if(obj.matchStatus == 1 ){
+                                    bet_item.matchType = 2
+                                }
                             }
                         }
                     }

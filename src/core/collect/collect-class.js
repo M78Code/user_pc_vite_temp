@@ -15,7 +15,11 @@ const get_collect_count = () => {
     400:100,
   }
   // 移动端 才会走这里
-  if(!PROJECT_NAME.includes('h5')){
+  // if(!PROJECT_NAME.includes('h5')){
+  //   return
+  // }
+  //目前只有复刻版
+  if(!["app-h5"].includes(PROJECT_NAME)){
     return
   }
   // 获取到当前 tab的赛种

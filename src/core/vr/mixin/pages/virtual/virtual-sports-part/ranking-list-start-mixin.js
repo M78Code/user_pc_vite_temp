@@ -57,6 +57,9 @@ export default {
             if(!item.star){
               item.star = 0
             }
+            if(!lodash.isNumber(item.star)){
+              item.star = lodash.parseInt(item.star)
+            }
           })
           // this.results_filter(this.ranking_data)
         } else {

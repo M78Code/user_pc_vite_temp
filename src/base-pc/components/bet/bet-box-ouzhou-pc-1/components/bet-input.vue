@@ -5,7 +5,7 @@
         <div class="px-12 bet-money" >
             <div class="f-b-c pl-18 bet-input-info">
                 <div>
-                    <div class="font14">单关</div>
+                    <div class="font14">{{i18n_t('bet.bet_one_')}}</div>
                     <div class="font12 h12">
                         <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
                         <span class="text-8A8986-i font500" v-if="[1].includes(items.playId*1)"> 
@@ -19,7 +19,7 @@
         
                 <div>
                     <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
-                    :placeholder="`${i18n_t('bet.money_range')} ${format_money3(ref_data.min_money)}~${format_money3(ref_data.max_money)}`" maxLength="11"  />
+                    :placeholder="`${i18n_t('bet.money_range')} ${ ref_data.min_money ? format_money3(ref_data.min_money) :''}~${ref_data.max_money ? format_money3(ref_data.max_money) : ''}`" maxLength="11"  />
                 </div>
             
             </div>
@@ -48,8 +48,8 @@ const props = defineProps({
 })
 
 const ref_data = reactive({
-    min_money: 10, // 最小投注金额
-    max_money: 8888, // 最大投注金额
+    min_money: '', // 最小投注金额
+    max_money: '', // 最大投注金额
     win_money: 0.00, // 最高可赢
     money: '', // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
@@ -77,7 +77,8 @@ const stop_drap_fn = (state) => {
 }
 
 onMounted(() => {
-    set_ref_data_bet_money()
+    // 刷新后有问题 
+    // set_ref_data_bet_money()
     show_quick_amount(true)
     // // 单关 单注可以默认展开
     // if(BetData.is_bet_single && !BetData.is_bet_merge){
@@ -91,7 +92,6 @@ onMounted(() => {
         emitter_2: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE, set_ref_data_bet_money_update).off,
     }
 })
-
 
 onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());

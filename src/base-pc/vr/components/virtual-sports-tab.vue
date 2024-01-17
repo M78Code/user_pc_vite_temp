@@ -228,7 +228,9 @@ export default {
 <style lang="scss" scoped>
 .vir-details-tab {
   height: 0.4rem;
-  margin-bottom: 0.04rem;
+  background-color: #fff;
+  align-items: center;
+  border-bottom: 1px solid  var(--q-gb-bd-c-1);
 }
 
 .menu-s {
@@ -251,26 +253,23 @@ export default {
   font-size: 0.14rem;
   letter-spacing: 0;
   text-align: center;
-  line-height: 0.4rem;
-  padding: 0 0.12rem;
   display: inline-block;
-  color: var(--q-gb-t-c-19);
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 18px;
 }
 
 /*************** 选中的玩法集 *************** -S*/
 .t_color {
   position: relative;
-  font-size: 0.14rem;
+  font-size: 14px;
   letter-spacing: 0;
   text-align: center;
-  color: var(--q-gb-t-c-1);
-  background: var(--q-gb-bg-c-31);
-  width: 0.74rem;
-  height: 0.3rem;
-  line-height: 0.3rem;
-  border-radius: 0.22rem;
-  padding: 0;
   font-weight: bold;
+  background-color: var(--q-gb-bg-c-1);
+  border: 1px solid var(--q-gb-bd-c-1);
+  color: #fff;
+  font-weight: 500;
   &:after {
     content: ' ';
     display: block;

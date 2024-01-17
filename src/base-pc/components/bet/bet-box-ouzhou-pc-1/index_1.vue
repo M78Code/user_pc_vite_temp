@@ -54,17 +54,19 @@
 
             <!-- 串关投注 限额 -->
             <template v-if="BetData.bet_s_list.length > 1">
-              <betSpecialInput :items="BetViewDataClass.bet_special_series[0]" />
+              <template v-if="BetViewDataClass.bet_special_series.length">
+                <betSpecialInput :items="BetViewDataClass.bet_special_series[0]" :index="0" />
+              </template>
 
               <div class="f-s-c cursor h44 pl-30 bor-b" @click="set_show_single()">
                 <span class="fon12 font400 text-8a8">{{ i18n_t('bet.bet_n_') }}</span>
                 <span class="icon-arrow icon-arrow-series" :class="ref_data.show_single ?'arrow':''"></span>
               </div>
               <!-- 复式连串过关投注 限额 -->
-              <template v-if="BetData.bet_s_list.length > 1 && ref_data.show_single ">
+              <template v-if="BetData.bet_s_list.length > 2 && ref_data.show_single ">
                 <template v-for="(item,index) in BetViewDataClass.bet_special_series" :key="index" >
                   <div class="bor-b" v-if="index != 0">
-                    <betSpecialInput :items="item" />
+                    <betSpecialInput :items="item" :index="index" />
                   </div>
                 </template>
               </template>

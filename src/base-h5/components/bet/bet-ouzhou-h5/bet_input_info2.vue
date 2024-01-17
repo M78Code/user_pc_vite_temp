@@ -1,6 +1,8 @@
 <!-- 单关，串关，投注金额输入框 -->
 <template>
     <div class="bet_input_info flex_input component bet-input-info">
+        <div v-show="false"> {{ UserCtr.user_version }} --
+      {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
         <div class="info_left">
             <div class="size_16 color_a1a1">{{ i18n_t('bet.bet') }}</div>
             <div class="size_14">
@@ -16,8 +18,8 @@
                 </span>
             </div>
         </div>
-        <div class="info_right size_14">
-            <div class="content-b" @click.stop="input_click(item, index, $event)">
+        <div class="info_right size_14" @click.stop="input_click(item, index, $event)">
+            <div class="content-b">
                 <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
 
                 <span class="money-span" ref="money_span" :style="{ opacity: '1' }"></span>
@@ -37,6 +39,7 @@ import { MITT_TYPES, useMittOn, formatMoney, UserCtr } from "src/output/index.js
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
+import { nextTick } from "licia";
 
 const props = defineProps({
     item: {
@@ -49,12 +52,15 @@ const props = defineProps({
 })
 
 const input_click = (item, index, event) => {
-    console.error('index', index)
-    event.preventDefault()
+    console.error('item.bet_amount', item.bet_amount)
+    // event.preventDefault()
+    BetData.set_bet_amount(item.bet_amount)
     BetData.set_bet_keyboard_config(item)
-    BetData.set_bet_keyboard_show(true)
+    BetData.set_bet_keyboard_show(false)
     BetData.set_active_index(index)
-    BetData.set_bet_amount(0)
+    nextTick(() => {
+        BetData.set_bet_keyboard_show(true)
+    })
 }
 
 
@@ -84,21 +90,22 @@ onUnmounted(() => {
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE, set_ref_data_bet_money_update).off
 })
 
-const set_ref_data_bet_money_update = () => {
-    console.log('set_ref_data_bet_money_updateset_ref_data_bet_money_update', props.item)
-    ref_data.money = props.item.bet_amount
-}
-
 /**
  *@description 金额改变事件
  *@param {Number} new_money 最新金额值
  */
-const change_money_handle = (params) => {
-    if(props.item.playOptionsId == params.params.playOptionsId) {
-        BetData.set_bet_obj_amount(params.money, params.params.playOptionsId)
-        ref_data.money = params.money
+const change_money_handle = (new_money = {}) => {
+    console.log('change_money_handlechange_money_handlechange_money_handlechange_money_handle', new_money)
+    if(new_money.params.playOptionsId === props.item.playOptionsId) {
+        ref_data.money = new_money.money
+        BetData.set_bet_obj_amount(ref_data.money, props.item.playOptionsId)
     }
     // BetData.set_bet_amount(ref_data.money)
+}
+
+// 输入金额数据更新
+const set_ref_data_bet_money_update = () => {
+    ref_data.money = props.item.bet_amount
 }
 
 

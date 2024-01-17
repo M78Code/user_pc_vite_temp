@@ -61,12 +61,13 @@
           </div>
         </div>
         <!-- 输入框 -->
+        {{ items.bet_amount }}
         <bet-input-info2 :item="items" :index="index"></bet-input-info2>
       </div>
       <!-- 多项合并 -->
-      <!-- <template v-if="BetData.bet_single_list.length > 1">
+      <template v-if="BetData.bet_single_list.length > 1">
         <bet-input-multiple></bet-input-multiple>
-      </template> -->
+      </template>
     </template>
     <!-- 合并单关最下面的多个输入框 -->
 

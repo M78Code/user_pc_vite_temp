@@ -2,107 +2,102 @@
  * @Description: 虚拟体育详情页最外层父组件
 -->
 <template>
-  <div class="virtual-detail" ref="virtual_detail_box">
+  <div class="virtual-detail row justify-between" ref="virtual_detail_box">
 
-    <div class="match-detail-bread">
-      <!-- 详情页面包屑 -->
-      <breadcrumbs :detail_info="match || {}" />
-      <div class="bread-right">
-        <img
-          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
-          alt=""
-          srcset=""
-          class="signal"
-          @click="()=>{}"
-        />
-        <img
-          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`"
-          alt=""
-          srcset=""
-          :class="{ balance_refresh: true}"
-          @click="vir_refresh"
-        />
-      </div>
-    </div>
-    <div class="match-detail-head" v-if="match">
-      <div class="detail-head-leagal">
-        <span class="match-detail-head-name">{{ match.tn }}</span>
-        <img
-          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
-          alt=""
-          srcset=""
-          style="margin: 0 10px; height: 14px"
-          v-if="match.mng"
-        />
-        <span class="leagal-time">
-          <!-- <match-process
-            :match="match"
-            show_page="match-list"
-            :rows="1"
-          /> -->
-        </span>
-      </div>
-      <div>
-        <div
-          class="expansion_ref_slotHeader expansion-vs"
-          @click.stop="show_item"
-        >
-          <div style="display: flex;align-items: center;">
-            <span class="home-vs-away" :title="match.mhn">{{ match.mhn }} </span>
-            <span class="match-detail-head-name m-10">v</span>
-            <span class="home-vs-away" :title="match.man">{{ match.man }}</span>
-          </div>
+    <div class="virtual-detail-wrap">
+      <div class="match-detail-bread">
+        <!-- 详情页面包屑 -->
+        <breadcrumbs :detail_info="match || {}" />
+        <div class="bread-right">
           <img
-          
-            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
-            class="expand-icon"
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
+            alt=""
+            srcset=""
+            class="signal"
+            @click="()=>{}"
+          />
+          <img
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`"
+            alt=""
+            srcset=""
+            :class="{ balance_refresh: true}"
+            @click="vir_refresh"
           />
         </div>
       </div>
-      <div
-        class="header_banne sport_bg"
-        :style="`background-position:0 -${sport_ball_type[1]}px`"
-      ></div>
-    </div>
-
-    <div class="row virtual-detail-wrap row justify-between">
+      <div class="match-detail-head" v-if="match">
+        <div class="detail-head-leagal">
+          <span class="match-detail-head-name">{{ match.tn }}</span>
+          <img
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
+            alt=""
+            srcset=""
+            style="margin: 0 10px; height: 14px"
+            v-if="match.mng"
+          />
+          <span class="leagal-time">
+            <match-process
+              :match="match"
+              show_page="match-list"
+              :rows="1"
+            />
+          </span>
+        </div>
+        <div>
+          <div
+            class="expansion_ref_slotHeader expansion-vs"
+            @click.stop="show_item"
+          >
+            <div style="display: flex;align-items: center;">
+              <span class="home-vs-away" :title="match.mhn">{{ match.teams[0] }} </span>
+              <span class="match-detail-head-name m-10">v</span>
+              <span class="home-vs-away" :title="match.man">{{ match.teams[1] }}</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="header_banne sport_bg"
+          :style="`background-position:0 -${sport_ball_type[1]}px`"
+        ></div>
+      </div>
       <!-- 头部 -->
-    <div class="virtual-head" v-if="0">
-      <div class="type-bg bg1001">
-        <div class="back-wrap">
-          <!-- 返回按钮 -->
-          <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div>
-          <!-- 虚拟体育 -->
-          <div class="col">{{current_league.name}}</div>
-          <!--刷新按钮-->
-          <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
+      <div class="virtual-head" v-if="0">
+        <div class="type-bg bg1001">
+          <div class="back-wrap">
+            <!-- 返回按钮 -->
+            <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div>
+            <!-- 虚拟体育 -->
+            <div class="col">{{current_league.name}}</div>
+            <!--刷新按钮-->
+            <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
+          </div>
         </div>
       </div>
-    </div>
     
-     <!--玩法集区域 -->
-    <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
-      <!-- 赔率列表页面 -->
-      <template  v-if="match && tabs_name == 'bet'">
-        <virtual-sports-tab :mid="mid" />
-        <virtual-sports-category :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
-      </template>
-      <!-- 历史战绩页面 -->
-      <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
-      <!-- 排行榜页面,小组赛淘汰赛页面  -->
-      <div v-if="match && tabs_name == 'rank'" class="list-wrapper">
-        <div v-if="[1001,1004].includes(sub_menu_type)">
-          <!--  足球小组赛,淘汰赛页面  -->
-          <group-knockout
-            v-if="current_league ? current_league.field3 != '': false"
-            :tid="current_league.field1"
-            :current_match="current_match"
-          />
-          <!--  足球排行榜页面  -->
-          <football-ranking-list v-else :tid="current_league.field1"/>
+      <!--玩法集区域 -->
+      <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
+        <!-- 赔率列表页面 -->
+        <template  v-if="match && tabs_name == 'bet'">
+          <virtual-sports-tab :mid="mid" />
+          <virtual-sports-category :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
+        </template>
+        <!-- 历史战绩页面 -->
+        <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
+        <!-- 排行榜页面,小组赛淘汰赛页面  -->
+        <div v-if="match && tabs_name == 'rank'" class="list-wrapper">
+          <div v-if="[1001,1004].includes(sub_menu_type)">
+            <!--  足球小组赛,淘汰赛页面  -->
+            <group-knockout
+              v-if="current_league ? current_league.field3 != '': false"
+              :tid="current_league.field1"
+              :current_match="current_match"
+            />
+            <!--  足球排行榜页面  -->
+            <football-ranking-list v-else :tid="current_league.field1"/>
+          </div>
+          <!--  非足球排行榜页面  -->
+          <ranking-list-start v-else :mid="current_match.mid"/>
         </div>
-        <!--  非足球排行榜页面  -->
-        <ranking-list-start v-else :mid="current_match.mid"/>
       </div>
     </div>
 
@@ -127,7 +122,6 @@
         </div>
       </div>
     </div>
-    </div>
   </div>
 </template>
 <script>
@@ -142,6 +136,7 @@ import group_knockout from "src/base-pc/vr/pages/virtual/virtual-sports-part/gro
 import virtual_match_statistic from 'src/base-pc/vr/components/virtual-match-statistic.vue'
 import breadcrumbs from "src/base-pc/vr/pages/virtual/details/children/breadcrumbs.vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 
 export default {
   mixins:[virtual_sports_details_mixin],
@@ -155,6 +150,7 @@ export default {
     'ranking-list-start':ranking_list_start,
     'football-ranking-list':football_ranking_list,
     'group-knockout':group_knockout,
+    'match-process': matchProcess,
     breadcrumbs
   },
   data(){
@@ -277,6 +273,26 @@ export default {
       height: 100%;
     }
   }
+
+  
+  .signal,.balance_refresh {
+    display: inline-block;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    margin-right: 15px;
+  }
+  
+  
+  .sport_bg {
+    width: 226px;
+    height: 80px;
+    background-image: url($SCSSPROJECTPATH + "/image/png/icon_sport_bg.png");
+    background-size: 226px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
   .detail-main {
     width: 770px;
   }
@@ -398,7 +414,6 @@ export default {
 }
 
 .detail-main {
-  margin-top: 0.04rem;
 
   &::-webkit-scrollbar {
     display: none;
