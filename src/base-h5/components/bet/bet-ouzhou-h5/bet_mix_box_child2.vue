@@ -61,7 +61,7 @@
           </div>
         </div>
         <!-- 输入框 -->
-        {{ items.bet_amount }}
+        <!-- {{ items.bet_amount }} -->
         <bet-input-info2 :item="items" :index="index"></bet-input-info2>
       </div>
       <!-- 多项合并 -->
