@@ -36,7 +36,7 @@ const route = useRoute()
 const router = useRouter()
 const bread_list = ref([])
 const last_label = computed(() => {
-  return `${props.detail_info.mhn} vs ${props.detail_info.man}`
+  return `${props.detail_info.teams[0]} vs ${props.detail_info.teams[1]}`
 })
 // 面包屑导航第一项展示
 /*
