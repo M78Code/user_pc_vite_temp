@@ -1,13 +1,13 @@
 <script setup name="Information">
-
+import NoData from "../NoData.vue"
 </script>
 
 <template>
     <section>
-<!--        information-->
+        <NoData></NoData>
     </section>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>
