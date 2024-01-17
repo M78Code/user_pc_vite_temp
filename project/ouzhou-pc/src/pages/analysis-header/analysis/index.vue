@@ -9,48 +9,93 @@
     <div class="match-header">
       <div class="both home">
         <span class="team-name">
-          <div class="yb-absolute ellipsis">{{matchDetail.mhn}}</div>
+          <div class="yb-absolute ellipsis">{{ matchDetail.mhn }}</div>
         </span>
-        <img v-img="([lodash.get(matchDetail,'mhlu[0]'),lodash.get(matchDetail,'frmhn[0]')])" class="team_logo" alt/>
-        <span class="score">{{[0,110].includes(matchDetail.ms)?"—":lodash.get(matchDetail, 'msc.S1.home')}}</span>
+        <img
+          v-img="[
+            lodash.get(matchDetail, 'mhlu[0]'),
+            lodash.get(matchDetail, 'frmhn[0]'),
+          ]"
+          class="team_logo"
+          alt
+        />
+        <span class="score">{{
+          [0, 110].includes(matchDetail.ms)
+            ? "—"
+            : lodash.get(matchDetail, "msc.S1.home")
+        }}</span>
       </div>
       <div class="both-time">
-        <div >{{formatTime(matchDetail.mgt,'yyyy/mm/dd hh:MM:ss')}}</div>
-        <div class="match-tn">{{matchDetail.tn}}</div>
+        <div>{{ formatTime(matchDetail.mgt, "yyyy/mm/dd hh:MM:ss") }}</div>
+        <div class="match-tn">{{ matchDetail.tn }}</div>
         <!-- 未开始 -->
-        <span  v-if="[0,110].includes(matchDetail.ms)">{{i18n_t("analysis.not_start")}}</span>
-        <match-date v-else :match_props="{match: matchDetail}" style="justify-content:center;"></match-date>
+        <span v-if="[0, 110].includes(matchDetail.ms)">{{
+          i18n_t("analysis.not_start")
+        }}</span>
+        <match-date
+          v-else
+          :match_props="{ match: matchDetail }"
+          style="justify-content: center"
+        ></match-date>
       </div>
       <div class="both away">
-        <span class="score">{{[0,110].includes(matchDetail.ms)?"—":lodash.get(matchDetail, 'msc.S1.away')}}</span>
-        <img v-img="([lodash.get(matchDetail,'malu[0]'),lodash.get(matchDetail,'frman[0]')])" class="team_logo" alt/>
+        <span class="score">{{
+          [0, 110].includes(matchDetail.ms)
+            ? "—"
+            : lodash.get(matchDetail, "msc.S1.away")
+        }}</span>
+        <img
+          v-img="[
+            lodash.get(matchDetail, 'malu[0]'),
+            lodash.get(matchDetail, 'frman[0]'),
+          ]"
+          class="team_logo"
+          alt
+        />
         <span class="team-name">
-          <div class="yb-absolute ellipsis">{{matchDetail.man}}</div>
+          <div class="yb-absolute ellipsis">{{ matchDetail.man }}</div>
         </span>
       </div>
     </div>
 
-    <div class="tab relative-position" :class='{"tab-no-border": [2, 3, 4, 5].includes(activeTab), "mya_tab_style": ["mya"].includes(UserCtr.lang)}'>
+    <div
+      class="tab relative-position"
+      :class="{
+        'tab-no-border': [2, 3, 4, 5].includes(activeTab),
+        mya_tab_style: ['mya'].includes(UserCtr.lang),
+      }"
+    >
       <span
-      v-for="(item,index) in tab"
-      :key="index"
-      class="item"
-      :class="{'active':index == activeTab}"
-      @click="switchTabs(index)"
-      >{{item == 'news' ? newsTabName : i18n_t(`analysis.${item}`)}}</span>
+        v-for="(item, index) in tab"
+        :key="index"
+        class="item"
+        :class="{ active: index == activeTab }"
+        @click="switchTabs(index)"
+        >{{ item == "news" ? newsTabName : i18n_t(`analysis.${item}`) }}</span
+      >
     </div>
 
-    <q-scroll-area class="rule-scroll-area" :visible="true" :style="{height:'100%',margin: hasNews && activeTab == 0 ? '0' : '0 20px'}">
-   
-      <news :mid="this.get_active_detail.mid" v-if="hasNews && activeTab == 0" />
-    
-      <!-- <tab-results :match="matchDetail" v-if="show_tab('result')"/>
+    <q-scroll-area
+      class="rule-scroll-area"
+      :visible="true"
+      :style="{
+        height: '100%',
+        margin: hasNews && activeTab == 0 ? '0' : '0 20px',
+      }"
+    >
+      <!-- 文章资讯 -->
+      <news
+        :mid="this.get_active_detail.mid"
+        v-if="hasNews && activeTab == 0"
+      />
+      <!-- 赛况 -->
+      <tab-results :match="matchDetail" v-if="show_tab('result')" />
+           <!-- 数据 -->
+       <tab-data :match="matchDetail" v-if="show_tab('data')"/>
+     <!-- 阵容 -->
+     <tab-lineup :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 2"/>
       
-      <tab-data :match="matchDetail" v-if="show_tab('data')"/>
-     
-      <tab-lineup :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 2"/>
-      
-      <tab-information :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 3"/>
+      <!--  <tab-information :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 3"/>
       
       <tab-odds :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 4"/> -->
     </q-scroll-area>
@@ -58,177 +103,211 @@
 </template>
 
 <script>
-// import tabResults from './template/tab_results.vue'
-// import tabData from './template/tab_data.vue'
-// import tabLineup from './template/tab_lineup.vue'
+import tabResults from "./template/tab_results.vue";
+ import tabData from './template/tab_data.vue'
+ import tabLineup from './template/tab_lineup.vue'
 // import tabInformation from './template/tab_information.vue'
 // import tabOdds from './template/tab_odds.vue'
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 // import {api_analysis} from 'src/public/api/index'
-import { api_analysis, api_details, api_common } from 'src/api/index.js'
- import news from "./template/tab_news.vue"
+import { api_analysis, api_details, api_common } from "src/api/index.js";
+import news from "./template/tab_news.vue";
 // import { mapGetters } from 'vuex'
 
-import { formatTime,msc_array_obj } from 'src/output/index.js'
-import zhugeTag from "src/core/http/zhuge-tag.js"
+import { formatTime, msc_array_obj } from "src/output/index.js";
+import zhugeTag from "src/core/http/zhuge-tag.js";
 //import store from 'src/store-redux/index.js'
 import { UserCtr } from "src/output/index.js";
 export default {
   data() {
     return {
       //赛况，数据，阵容，情报，赔率
-      tab: ['result','data','lineup','information','odds'],
+      tab: ["result", "data", "lineup", "information", "odds"],
       activeTab: null,
-      sportDict:{
-        allScore:['S1','S11','S12','S5','S8','S105','S104','S1101',"S17", "S18",'S106','S109','S12345','S1235','S1088','S12346','S111','S108','S107','S110'],
-        line: ['S1101',"S17", "S18",'S108','S107','S110']
+      sportDict: {
+        allScore: [
+          "S1",
+          "S11",
+          "S12",
+          "S5",
+          "S8",
+          "S105",
+          "S104",
+          "S1101",
+          "S17",
+          "S18",
+          "S106",
+          "S109",
+          "S12345",
+          "S1235",
+          "S1088",
+          "S12346",
+          "S111",
+          "S108",
+          "S107",
+          "S110",
+        ],
+        line: ["S1101", "S17", "S18", "S108", "S107", "S110"],
       },
       hasNews: false,
       articleDetail: {},
       newsTabName: null,
       formatTime,
-      UserCtr
+      UserCtr,
     };
   },
   props: {
     // 获取详情页保存的比分面板数据
     get_active_detail: {
       type: Object,
-      default: {}
-    }
+      default: {},
+    },
   },
   // components:{
   //   tabResults,tabData,tabLineup,tabInformation,tabOdds,matchDate,news
   // },
-  components:{
-   matchDate,news
+  components: {
+    matchDate,
+    news,
+    tabResults,
+    tabData,
+    tabLineup
   },
   created() {
     if (Object.keys(this.$route.params).length) {
-      let { csid } = this.$route.params
+      let { csid } = this.$route.params;
       // 篮球只展示赛况、数据和阵容
-      if(csid == '2'){
-        this.tab = ['result','data','lineup']
+      if (csid == "2") {
+        this.tab = ["result", "data", "lineup"];
       }
     }
     // 只在简中和繁中的时候有赛事文章
-    if (['zh', 'tw', 'hk'].includes(this.UserCtr.lang)) {
-      if (this.UserCtr.lang == 'zh' || this.UserCtr.lang == 'hk') {
-        this.newsTabName = '资讯'
+    if (["zh", "tw", "hk"].includes(this.UserCtr.lang)) {
+      if (this.UserCtr.lang == "zh" || this.UserCtr.lang == "hk") {
+        this.newsTabName = "资讯";
       } else {
-        this.newsTabName = '資訊'
+        this.newsTabName = "資訊";
       }
-      this.tab.unshift('news');
+      this.tab.unshift("news");
       this.hasNews = true;
-      this.activeTab = this.get_active_detail.ms==1?1:2
+      this.activeTab = this.get_active_detail.ms == 1 ? 1 : 2;
       //  如果是C01数据，屏蔽其它tab 只展示资讯、数据
-      if (this.get_active_detail.cds=='C01') {
-      this.tab = ['news','data']
-    }
+      if (this.get_active_detail.cds == "C01") {
+        this.tab = ["news", "data"];
+      }
     } else {
-      this.activeTab = this.get_active_detail.ms==1?0:1
-      if (this.get_active_detail.cds=='C01') {
-      this.tab = ['data']
+      this.activeTab = this.get_active_detail.ms == 1 ? 0 : 1;
+      if (this.get_active_detail.cds == "C01") {
+        this.tab = ["data"];
+      }
     }
-    }
-   
   },
-  computed:{
+  computed: {
     // ...mapGetters({
     //   // get_active_detail: "get_active_detail", // 获取详情页保存的比分面板数据
     //   vx_get_user: 'get_user',
     //   lang: 'get_lang'
     // }),
-    matchDetail(){
-     
-      let match = lodash.cloneDeep(this.get_active_detail)
-      console.log(1111155,match)
-      let obj = {}
-      if(match.msc_obj){
-         this.sportDict.allScore.map(k=>{
-          if(!match.msc_obj[k]){
+    matchDetail() {
+      let match = lodash.cloneDeep(this.get_active_detail);
+    
+      let obj = {};
+      if (match.msc_obj) {
+        this.sportDict.allScore.map((k) => {
+          if (!match.msc_obj[k]) {
             obj[k] = {
               home: 0,
               away: 0,
-              percentage: 50
-            }
+              percentage: 50,
+            };
           } else {
             // 获取主客队得分数据
             let home = parseInt(lodash.get(match, `msc_obj[${k}][1]`)),
-                away = parseInt(lodash.get(match, `msc_obj[${k}][2]`));
-            if(this.sportDict.line.includes(k)){
+              away = parseInt(lodash.get(match, `msc_obj[${k}][2]`));
+            if (this.sportDict.line.includes(k)) {
               //'S108'三分球得分，'S107'两分球得分
-              if(k == 'S107'){
-                home*= 2
-                away*= 2
+              if (k == "S107") {
+                home *= 2;
+                away *= 2;
               }
-              if(k == 'S108'){
-                home*= 3
-                away*= 3
+              if (k == "S108") {
+                home *= 3;
+                away *= 3;
               }
               obj[k] = {
                 home: home,
                 away: away,
-                percentage: isNaN(home / (home+away))? 50: home / (home+away)*100
-              }
-            } else{
+                percentage: isNaN(home / (home + away))
+                  ? 50
+                  : (home / (home + away)) * 100,
+              };
+            } else {
               obj[k] = {
                 home: home,
                 away: away,
-                percentage: isNaN(away / (home+away))? 50: away / (home+away)*100
-              }
+                percentage: isNaN(away / (home + away))
+                  ? 50
+                  : (away / (home + away)) * 100,
+              };
             }
           }
-        })
+        });
       } else {
-        let msc = match.msc
+        let msc = match.msc;
 
-        this.sportDict.allScore.map(k=>{
-          if(!msc[k]){
+        this.sportDict.allScore.map((k) => {
+          if (!msc[k]) {
             obj[k] = {
               home: 0,
               away: 0,
-              percentage: 50
-            }
+              percentage: 50,
+            };
           }
-        })
-        Object.assign(obj, msc)
+        });
+        Object.assign(obj, msc);
       }
-      match.msc = obj
-      return match
-    }
+      match.msc = obj;
+      console.log(1111155, match);
+      return match;
+    },
   },
   methods: {
     // 赛况和数据显示与否
-    show_tab(type){
-      if (type=='result') {
-        return (this.hasNews ? this.activeTab - 1 : this.activeTab) == 0 && this.get_active_detail.cds!=='C01'
-      }else{
-        return (this.hasNews ? this.activeTab - 1 : this.activeTab) == (this.get_active_detail.cds=='C01'?0:1)
+    show_tab(type) {
+      if (type == "result") {
+        return (
+          (this.hasNews ? this.activeTab - 1 : this.activeTab) == 0 &&
+          this.get_active_detail.cds !== "C01"
+        );
+      } else {
+        return (
+          (this.hasNews ? this.activeTab - 1 : this.activeTab) ==
+          (this.get_active_detail.cds == "C01" ? 0 : 1)
+        );
       }
     },
-    
+
     switchTabs(index) {
       this.activeTab = index;
-      let eventLabel = '';
+      let eventLabel = "";
       switch (index) {
         case 0:
-          eventLabel = 'PC_情报分析_资讯'
-          break
+          eventLabel = "PC_情报分析_资讯";
+          break;
         case 1:
-          eventLabel = 'PC_情报分析_赛况'
+          eventLabel = "PC_情报分析_赛况";
           break;
         case 2:
-          eventLabel = 'PC_情报分析_数据'
+          eventLabel = "PC_情报分析_数据";
           break;
         case 3:
-          eventLabel = 'PC_情报分析_阵容'
+          eventLabel = "PC_情报分析_阵容";
           break;
         case 4:
-          eventLabel = 'PC_情报分析_情报'
+          eventLabel = "PC_情报分析_情报";
           break;
         default:
-          eventLabel = 'PC_情报分析_赔率'
+          eventLabel = "PC_情报分析_赔率";
       }
       // 发送埋点事件
       zhugeTag.send_zhuge_event(eventLabel);
@@ -237,15 +316,20 @@ export default {
      * 文章阅读数
      */
     atrticleReadCount(id) {
-      api_analysis.get_article_count({id: id}).then(res => {
-        let count = lodash.get(res, 'data.data');
-      })
+      api_analysis.get_article_count({ id: id }).then((res) => {
+        let count = lodash.get(res, "data.data");
+      });
     },
-  }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+// :deep(){
+//   .panel-title {
+//     color:red
+//   }
+// }
 .analysis-page {
   background: #e2e2e2;
   flex: 1;
@@ -270,10 +354,10 @@ export default {
       line-height: 17px;
       text-align: center;
       div:first-child {
-          color: var(--qq--analysis-both-time-color-1)
-        }
-       
-        :deep(.c-match-process){
+        color: var(--qq--analysis-both-time-color-1);
+      }
+
+      :deep(.c-match-process) {
         .process-name {
           padding: 0 5px 0 0;
         }
@@ -281,7 +365,7 @@ export default {
           padding: 0 0 0 5px;
         }
       }
-      .match-tn{
+      .match-tn {
         font-size: 14px;
         font-weight: 600;
         line-height: 20px;
@@ -335,26 +419,9 @@ export default {
   /*  tab 区 */
   .tab {
     display: flex;
-    // margin-bottom: 10px;
-    // height: 40px;
-    // border: 1px solid var(--qq--match-border-color2);
-    // background: var(--qq--background-gradient-14);
     background: #ffffff;
-    //border: 1px solid var(--qq--match-border-color5);
-    border-radius: 8px;
     margin-bottom: 5px;
     padding: 10px;
-    // border-radius: 8px;
-    // margin-bottom: 10px;
-    // &:after {
-    //   content: "";
-    //   position: absolute;
-    //   bottom: 0px;
-    //   height: 1px;
-    //   width: 100%;
-    //   background: var(--qq--analysis-bg-color-2);
-    //   z-index: 1;
-    // }
     .item {
       // width: 100px;
       height: 25px;
@@ -382,7 +449,7 @@ export default {
       }
       &:hover {
         background: #ff7000;
-        color: #ffffff 
+        color: #ffffff;
       }
     }
   }
@@ -390,39 +457,52 @@ export default {
     border-radius: 8px 8px 0 0;
     margin-bottom: 0;
     // border-bottom: 0;
-  .tab.mya_tab_style {
-    .item {
-      width: 110px;
+    .tab.mya_tab_style {
+      .item {
+        width: 110px;
+      }
+    }
+    /*  内容区 */
+    .rule-scroll-area {
+      flex: 1;
     }
   }
-  /*  内容区 */
-  .rule-scroll-area {
-    flex: 1;
+  :deep(.datum.mya_width_style) {
+    .select-wrap .selct-menu {
+      width: 190px;
+    }
+    .select-wrap .selct-menu .select-page {
+      width: 190px;
+    }
+    .before .content .d-title div {
+      max-width: 300px;
+      width: 24.15%;
+    }
+    .near .t-body .away .d-title div {
+      width: 270px;
+    }
+    .near .t-body .home .d-title div {
+      width: 270px;
+    }
+    .history .content .d-title span {
+      width: 100px;
+    }
   }
-  :deep(.panel) {
-   
+
+  :deep() {
+    .panel {
       border-top: transparent;
       .panel-title {
         position: relative;
         height: 32px;
         line-height: 32px;
         padding-left: 10px;
-        // background-image: var(--qq--analysis-bg-gradient-1) !important;
-        // color: var(--qq--analysis-text-color-5);
-
-       border-bottom: 1px solid var(--qq--analysis-bd-color-4-1);
-        // background: var(--qq--background-gradient-14);
-        //background: var(--qq--y0-bg-color15);
-        background: var(--qq--y0-bg-color12);
-       // border: 1px solid var(--qq--match-border-color5);
-        color: var(--qq--league-rank-title-text-color);
-        // border-bottom: 0;
-        border-radius: 8px 8px 0 0;
-        // margin-bottom: 5px;
+        border-bottom: 1px solid #e2e2e2;
+        background: #ffffff;
+        color: #1a1a1a;
+        // border-radius: 8px 8px 0 0;
         &:last-child {
-          border-radius: 8px;
-          // border-bottom: 1px solid var(--qq--analysis-bd-color-4);
-        //  border-bottom: 1px solid var(--qq--match-border-color5);
+          // border-radius: 8px;
         }
         &:before {
           content: "";
@@ -432,68 +512,45 @@ export default {
           transform: translate(0, -50%);
           width: 3px;
           height: 14px;
-          background: var(--qq--analysis-bg-color-4);
+          background: #ff7000;
+          border-radius: 0px 8px 8px 0;
         }
       }
       .content {
-        background: var(--qq--y0-bg-color12);
-        border-radius: 0 0 8px 8px;
+        background: #ffffff;
+        // border-radius: 0 0 8px 8px;
       }
       .d-header {
-      //  border-left: 1px solid var(--qq--match-border-color5);
-      //  border-right: 1px solid var(--qq--match-border-color5);
-      //  border-bottom: 1px solid var(--qq--match-border-color5);
+        //  border-left: 1px solid var(--qq--match-border-color5);
+        //  border-right: 1px solid var(--qq--match-border-color5);
+        //  border-bottom: 1px solid var(--qq--match-border-color5);
         &:last-child {
-          border-radius: 0 0 8px 8px;
+          // border-radius: 0 0 8px 8px;
         }
       }
       .win {
-        color: var(--qq--analysis-text-color-6);
+        color: #ff7373;
       }
       .lose {
-        color: var(--qq--analysis-text-color-7);
+        color: #71c866;
       }
       .dogfall {
-        color: var(--qq--analysis-text-color-8-1);
+        color: #5ab6f7;
       }
       .default {
-        color: var(--qq--analysis-text-color-9);
+        color: #afb3bb;
       }
       .simple-title {
-        border-left: 1px solid var(--qq--match-border-color5);
-        border-right: 1px solid var(--qq--match-border-color5);
+        border-left: 1px solid #E4EAFF;
+        border-right: 1px solid #E4EAFF;
         &:last-child {
           border-radius: 0 0 8px 8px;
         }
       }
-    
+    }
   }
-}
-:deep(.datum.mya_width_style) {
-     
-      .select-wrap .selct-menu {
-        width: 190px;
-      }
-      .select-wrap .selct-menu .select-page {
-        width: 190px;
-      }
-      .before .content .d-title div {
-        max-width: 300px;
-        width: 24.15%;
-      }
-      .near .t-body .away .d-title div {
-        width: 270px;
-      }
-      .near .t-body .home .d-title div {
-        width: 270px;
-      }
-      .history .content .d-title span {
-        width: 100px;
-      }
-    
+  :deep(.select-wrap .tab-menu span) {
+    color: #555555;
   }
-:deep(.select-wrap .tab-menu span) {
-  color: var(--qq--theme-color-tab-item);
-}
 }
 </style>

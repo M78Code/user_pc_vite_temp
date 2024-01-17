@@ -14,7 +14,7 @@
           <!-- 投注项组件 -->
           <template
             v-if="match_style_obj.data_tpl_id != 'esports' || (match_style_obj.data_tpl_id == 'esports' && getCurState(ol_data._hipo))">
-            <bet-item v-if="is_mounted && ol_data && ol_data._hpid" match_data_type="pc_list" :ol_data="ol_data" />
+            <bet-item v-if="is_mounted && ol_data" match_data_type="pc_list" :ol_data="ol_data" />
             <div class="c-bet-item" v-else></div>
           </template>
         </div>
@@ -83,6 +83,7 @@ onMounted(() => {
 
 //坑位对象
 const hn_obj = toRef(MatchListData.list_to_obj,'hn_obj')
+console.log("jiffy",match.value.mid,hn_obj)
 const col_ols_data = computed(() => {
   try {
     let { mid, csid } =match.value

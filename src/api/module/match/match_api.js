@@ -125,3 +125,11 @@ export const handle_user_tryPlay = (url = "https://api.sportxxxw1box.com/yewu6/u
   return http.get(url, params );
 };
 
+// https://api.f0sxv4zi.com/yewu11/v1/w/getFilterMatchListPB?euid=3020101&uuid=1dd4b62fd28247fb9d1179f128cbfb11&pids=&orpt=0&t=1705473982876 这个线上的
+/**
+ * pc端获取过滤数据
+ * @param {*} params 
+ * @returns 
+ */
+export const get_filter_match_list_pb = (params) => http.get(`${prefix_11}/v1/w/getFilterMatchListPB`, params);
+
