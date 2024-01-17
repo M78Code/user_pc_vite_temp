@@ -46,7 +46,6 @@ watch(
 
 // 判断快捷金额按钮是否可点击
 const bet_money_btn_class = (obj, index) => {
-    console.log('pointer-events: none;pointer-events: none;pointer-events: none;', UserCtr.balance, obj, index, ref_data.max_money, BetData.bet_amount)
     let className = '';
     if(ref_data.max_money > 0) {
         if(index === 'max') obj = UserCtr.balance
