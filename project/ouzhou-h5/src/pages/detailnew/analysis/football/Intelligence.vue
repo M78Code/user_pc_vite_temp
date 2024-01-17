@@ -5,7 +5,7 @@
 
 <template>
     <section>
-        Intelligence
+<!--        Intelligence-->
     </section>
 </template>
 

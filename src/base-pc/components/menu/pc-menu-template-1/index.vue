@@ -18,7 +18,6 @@
         </div>
       </div>
     </div>
-    
     <div v-show="false">{{ BaseData.base_data_version }}-{{MenuData.menu_data_version}}</div>
     <div class="menu-wap-nav">
       <div v-for="item in (MenuData.left_menu_list || [] )" :key="`_${item.mi}`" :class="set_vr_or_guanjun_border(item.mi)">
@@ -53,7 +52,7 @@
         <div class="menu-fold2-wrap  1" :class="current_lv_1_mi == item.mi && !show_menu? 'open' : ''" v-if="item.mi != 400">
           <template v-for="item2 in item.sl" :key="`_${item.mi}_${item2.mi}_100`" >
             <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        开始   -->
-            <div v-if="!!item2?.ct" @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })" :class="MenuData?.get_lv2_mi_value() == item2.mi && is_zaopan_today?'active':''" class="menu-item menu-fold2">
+            <div v-if="!!item2?.ct || (!item2?.ct && item.mi ==2000)" @click.stop="lev_2_click({ lv1_mi: item.mi, lv2_mi: item2.mi })" :class="MenuData?.get_lv2_mi_value() == item2.mi && is_zaopan_today?'active':''" class="menu-item menu-fold2">
               <div class="row items-center relative-position">
                 <span class="menu-point"></span>
                 <span class="menu-text ellipsis">
@@ -79,13 +78,12 @@ import { ref, watch,reactive,onMounted, onUnmounted,computed,nextTick } from "vu
 import { useRoute, useRouter } from 'vue-router'
 // 菜单配置
 import { MenuData } from "src/output/index.js"
-import UserCtr from "src/core/user-config/user-ctr.js";
+// import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js"
-import { compute_css_variables } from "src/core/css-var/index.js"
+// import { compute_css_variables } from "src/core/css-var/index.js"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
-import MenuItem from "./menu-item.vue";
-
+// import MenuItem from "./menu-item.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -251,7 +249,7 @@ const lev_1_click = async (obj) => {
   }
 
   // 获取具体的二级玩法
-  if ( MenuData.is_today() || MenuData.is_zaopan())MenuData.set_post_menu_play_count(mi)
+  if (( MenuData.is_today() || MenuData.is_zaopan()) && type != 2000)MenuData.set_post_menu_play_count(mi)
 
   current_lv_1_mi.value = mi
   // current_lv_2_mi.value = get_lv_1_lv_2_mi(mi)

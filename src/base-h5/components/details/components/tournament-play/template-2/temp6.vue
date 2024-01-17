@@ -37,7 +37,7 @@
                                   @click="go_to_bet(ol_list_0[ol_index0 - 1])"
                                   :class="[BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)?['details-bg5','first-rad']:'',{'win':calc_win(ol_list_0[ol_index0 - 1].result)}]"
                               >
-                                <div class="ellipsis-t remark details_t_color6 fz_16">
+                                <div class="ellipsis-t remark details_t_color6 fz_12">
                                 <span :class="[{'is-score':check_score(ol_list_0[ol_index0 - 1].on),'white_text':BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)},'size-color']">
                                   {{ ol_list_0[ol_index0 - 1].on }}
                                 </span>
@@ -51,7 +51,7 @@
                             <template v-if="ol_list_0[ol_index0 - 1].os == 2">
                               <!-- lock 锁状态 start -->
                               <div class="play-box-style details_color warp bor-style">
-                                <div class="size-color ellipsis-t remark details_t_color7 fz_16" :class="{'is-score':check_score(ol_list_0[ol_index0 - 1].on)}">{{ ol_list_0[ol_index0 - 1].on }}</div>
+                                <div class="size-color ellipsis-t remark details_t_color7 fz_12" :class="{'is-score':check_score(ol_list_0[ol_index0 - 1].on)}">{{ ol_list_0[ol_index0 - 1].on }}</div>
                                 <div class="text-left">
                                   <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                                 </div>
@@ -65,7 +65,7 @@
                             <template v-else>
                               <!-- lock 锁状态 start -->
                               <div class="play-box-style details_color warp bor-style">
-                                <div class="size-color ellipsis remark details_t_color6 fz_16" :class="{'is-score':check_score(ol_list_0[ol_index0 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_0[ol_index0 - 1].on }}</div>
+                                <div class="size-color ellipsis remark details_t_color6 fz_12" :class="{'is-score':check_score(ol_list_0[ol_index0 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_0[ol_index0 - 1].on }}</div>
                                 <div class="text-left">
                                   <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                                 </div>
@@ -83,7 +83,7 @@
                         <template v-if="ol_list_0[ol_index0 - 1]._mhs == 1">
                           <!-- lock 锁状态 start -->
                           <div class="play-box-style details_color warp bor-style">
-                            <div class="size-color ellipsis remark details_t_color7 fz_16" :class="{'is-score':check_score(ol_list_0[ol_index0 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_0[ol_index0 - 1].on }}</div>
+                            <div class="size-color ellipsis remark details_t_color7 fz_12" :class="{'is-score':check_score(ol_list_0[ol_index0 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_0[ol_index0 - 1].on }}</div>
                             <div class="text-left">
                               <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
@@ -119,7 +119,7 @@
                                   class="play-box-style details_color bor-style"
                                   @click="go_to_bet(ol_list_1[ol_index1 - 1])"
                                   :class="[BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)?'details-bg5':'',{'win':calc_win(ol_list_1[ol_index1 - 1].result)}]">
-                                <div class="ellipsis-t remark details_t_color6 fz_16">
+                                <div class="ellipsis-t remark details_t_color6 fz_12">
                                 <span :class="[{'is-score':check_score(ol_list_1[ol_index1 - 1].on),'white_text':BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)},'size-color']">
                                   {{ ol_list_1[ol_index1 - 1].on }}
                                 </span>
@@ -133,7 +133,7 @@
                             <template v-if="ol_list_1[ol_index1 - 1].os == 2">
                               <!-- lock 锁状态 start -->
                               <div class="play-box-style details_color bor-style">
-                                <div class="size-color ellipsis remark details_t_color7 fz_16" :class="{'is-score':check_score(ol_list_1[ol_index1 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_1[ol_index1 - 1].on }}</div>
+                                <div class="size-color ellipsis remark details_t_color7 fz_12" :class="{'is-score':check_score(ol_list_1[ol_index1 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_1[ol_index1 - 1].on }}</div>
                                 <div class="text-left">
                                   <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                                 </div>
@@ -147,7 +147,7 @@
                             <template v-else>
                               <!-- lock 锁状态 start -->
                               <div class="play-box-style details_color bor-style">
-                                <div class="size-color ellipsis remark details_t_color6 fz_16" :class="{'is-score':check_score(ol_list_1[ol_index1 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_1[ol_index1 - 1].on }}</div>
+                                <div class="size-color ellipsis remark details_t_color6 fz_12" :class="{'is-score':check_score(ol_list_1[ol_index1 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_1[ol_index1 - 1].on }}</div>
                                 <div class="text-left">
                                   <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                                 </div>
@@ -165,7 +165,7 @@
                         <template v-if="ol_list_1[ol_index1 - 1]._mhs == 1">
                           <!-- lock 锁状态 start -->
                           <div class="play-box-style details_color bor-style">
-                            <div class="size-color ellipsis remark details_t_color7 fz_16" :class="{'is-score':check_score(ol_list_1[ol_index1 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_1[ol_index1 - 1].on }}</div>
+                            <div class="size-color ellipsis remark details_t_color7 fz_12" :class="{'is-score':check_score(ol_list_1[ol_index1 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_1[ol_index1 - 1].on }}</div>
                             <div class="text-left">
                               <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
@@ -202,7 +202,7 @@
                                 class="play-box-style details_color"
                                 @click="go_to_bet(ol_item)"
                                 :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result)}]">
-                              <div class="ellipsis-t remark details_t_color6 fz_16">
+                              <div class="ellipsis-t remark details_t_color6 fz_12">
                               <span :class="[{'is-score':check_score(ol_item.on),'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                                 {{ ol_item.on }}
                               </span>
@@ -216,7 +216,7 @@
                           <template v-if="ol_item.os == 2">
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color">
-                              <div class="ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ ol_item.on }}</div>
+                              <div class="ellipsis remark details_t_color7 fz_12" v-show="get_detail_data.csid != 1">{{ ol_item.on }}</div>
                               <div class="text-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -230,7 +230,7 @@
                           <template v-else>
                             <!-- lock 锁状态 start -->
                             <div class="play-box-style details_color">
-                              <div class="ellipsis remark details_t_color6 fz_16" v-show="get_detail_data.csid != 1">{{ ol_item.on }}</div>
+                              <div class="ellipsis remark details_t_color6 fz_12" v-show="get_detail_data.csid != 1">{{ ol_item.on }}</div>
                               <div class="text-left">
                                 <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
@@ -248,7 +248,7 @@
                       <template v-if="ol_item._mhs == 1">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color">
-                          <div class="ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ ol_item.on }}</div>
+                          <div class="ellipsis remark details_t_color7 fz_12" v-show="get_detail_data.csid != 1">{{ ol_item.on }}</div>
                           <div class="text-left">
                             <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
@@ -537,8 +537,7 @@ export default defineComponent({
 .remark {
   flex: 1;
   letter-spacing: 0;
-  font-size: 0.14rem;
-  color: var(--q-analysis-text-color-14)!important;
+  font-size: 0.12rem;
   &.highlight {
     font-size: 16px;
     color: var(--q-color-fs-color-51);
