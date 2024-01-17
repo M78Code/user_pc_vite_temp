@@ -186,7 +186,7 @@ const sr_click_handle = (match) => {
       window.vue.i18n_t("msg.msg_09")
     );
   if ([1, 2].includes(match.csid * 1)) {
-    full_url = `/#/analysis_header/${match.csid}/${match.mid}`; // seid,match.srid
+    full_url = `index.html#/analysis_header/${match.csid}/${match.mid}`; // seid,match.srid
      // 保存数据,用于接口报错时填充
      MatchDetailCalss.set_active_detail((match))
   }
