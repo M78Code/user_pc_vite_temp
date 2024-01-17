@@ -28,13 +28,14 @@
             {{ lodash.get(match_info, "mhn") }}
           </div>
           <div class="img-wrap">
-            <!-- <img
+            <!-- Bug: 53953 -->
+            <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
               v-img="([lodash.get(match_info,'mhlu[0]'),lodash.get(match_info,'frmhn[0]'),lodash.get(match_info,'csid')])"
               class="team_logo"
               alt
-            /> -->
-            <div
+            />
+            <!-- <div
               :style="
                 sprite_img['pc-team-logo-image']({
                   position: [
@@ -47,14 +48,15 @@
               "
               class="team_logo"
             ></div>
-            <!-- <img
+            -->
+            <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
               v-if="!is_eports_csid(match_info.csid) && (lodash.get(match_info,'mhlu') && lodash.get(match_info,'mhlu').length>1)"
               v-img="([lodash.get(match_info,'mhlu[1]'),lodash.get(match_info,'frmhn[1]'),lodash.get(match_info,'csid')])"
               class="team_logo logo-double"
               alt
-            /> -->
-            <div
+            />
+            <!-- <div
               v-if="
                 !is_eports_csid(match_info.csid) &&
                 lodash.get(match_info, 'mhlu') &&
@@ -72,6 +74,7 @@
               "
               class="team_logo logo-double"
             ></div>
+            -->
           </div>
         </div>
         <!-- 主队 结束 -->
@@ -93,7 +96,7 @@
         <!-- 客队 S -->
         <div class="away">
           <div class="img-wrap">
-            <!-- <img
+            <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
               v-img="[
                 lodash.get(match_info, 'malu[0]'),
@@ -102,8 +105,8 @@
               ]"
               class="team_logo"
               alt
-            /> -->
-            <div
+            />
+            <!-- <div
               :style="
                 sprite_img['pc-team-logo-image']({
                   position: [
@@ -116,7 +119,8 @@
               "
               class="team_logo"
             ></div>
-            <!-- <img
+            -->
+            <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
               v-if="
                 !is_eports_csid(match_info.csid) &&
@@ -130,8 +134,8 @@
               ]"
               class="team_logo logo-double"
               alt
-            /> -->
-            <div
+            />
+            <!-- <div
               v-if="
                 !is_eports_csid(match_info.csid) &&
                 lodash.get(match_info, 'malu') &&
@@ -149,6 +153,7 @@
               "
               class="team_logo logo-double"
             ></div>
+            -->
           </div>
           <!-- 客队名 -->
           <div
