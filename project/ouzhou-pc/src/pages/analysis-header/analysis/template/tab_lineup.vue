@@ -15,7 +15,7 @@
         <!-- 主队/客队 -->
         <div v-if="$route.name !== 'analysis_header'" class="panel-title">{{tabIndex==1 ? match.mhn : match.man}}</div>
       
-        <img :src="`${$g_image_preffix}/image/yabo/png/analysis-lineup-${match.csid}.png`" alt="" class="lineup-img" />
+        <img :src="compute_local_project_file_path(`/image/png/analysis-lineup-${match.csid}.png`)" alt="" class="lineup-img" />
       </div>
       <div class="lineup-bg-wrap" :class="{'basketball': match.csid=='2'}">
         <!-- 主队 -->
@@ -163,7 +163,8 @@
 
 <script>
 import { api_analysis } from 'src/api/index'
-import analysisData  from 'src/public/mixins/analysis/analysis'
+import analysisData  from './analysis'
+import { compute_local_project_file_path } from "src/output/index.js";
 export default {
   data() {
     return {
@@ -172,6 +173,7 @@ export default {
       lineupData: {},
       first_home_lineup: [],//主队首发阵容
       first_away_lineup: [],//客队首发阵容
+      compute_local_project_file_path
     };
   },
   mixins: [analysisData],
@@ -188,7 +190,7 @@ export default {
     * @description: 阵容数据
     */
     get_lineup(){
-      api_analysis.get_lineupList({matchInfoId: this.match.mid}).then(({data}) =>{
+      api_analysis.get_lineupList({matchInfoId: this.match.mid}).then((data) =>{
         if(data.code == 200){
           let lineupData = data.data
           let lineup_formation = {
@@ -258,11 +260,11 @@ export default {
   display: flex;
   align-items: center;
   height: 34px;
-  color: var(--qq--y0-text-color5);
+  color: #414655;
   margin-bottom: 10px;
   border-radius: 0 0 8px 8px;
-  border-left: 1px solid var(--qq--match-border-color5);
-  border-right: 1px solid var(--qq--match-border-color5);
+  border-left: 1px solid #E4EAFF;
+  border-right: 1px solid #E4EAFF;
   background: var(--qq--match_details_analysis_title);
   span {
     // width: 150px;
@@ -304,7 +306,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    color: var(--qq--analysis-text-color-13);
+    color: #ffffff;
     // padding: 20px 0;
     padding-top: 30px;
     .home,
@@ -356,12 +358,12 @@ export default {
     }
     .home {
       .player-num {
-        background: var(--qq--analysis-bg-color-12-1);
+        background: #ffaa01;
       }
     }
     .away {
       .player-num {
-        background: var(--qq--analysis-bg-color-13-1);
+        background: #4268f1;
       }
     }
     &.basketball {
@@ -395,8 +397,8 @@ export default {
         margin-bottom: 10px;
       }
       .d-table {
-        background: var(--qq--y0-bg-color12);
-        // border: 1px solid var(--qq--match-border-color5);
+        background: #ffffff;
+        // border: 1px solid #E4EAFF;
         border-top: 0;
         border-radius: 0 0 8px 8px;
         overflow: hidden;
@@ -405,8 +407,8 @@ export default {
           align-items: center;
           height: 28px;
           //background: var(--qq--y0-bg-color12);
-          background: var(--qq--match_details_analysis_pannel_title);
-          color: var(--qq--y0-text-color5);
+          background: #F4FAFF;
+          color: #414655;
           &:last-child {
             border-radius: 0 0 8px 8px;
           }
@@ -415,7 +417,7 @@ export default {
           display: flex;
           align-items: center;
           height: 40px;
-          border-bottom: 1px solid var(--qq--match-border-color5);
+          border-bottom: 1px solid #E4EAFF;
           &:last-child {
             border-bottom: transparent;
           }
@@ -431,12 +433,12 @@ export default {
               margin-top: -7px;
               height: 14px;
               width: 1px;
-              background-color: var(--qq--match-border-color5);
+              background-color: #E4EAFF;
             }
           }
             
             &:nth-child(2){
-            border-right: 1px solid var(--qq--match-border-color5);
+            border-right: 1px solid #E4EAFF;
           }
           }
           
@@ -446,7 +448,7 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
-          color: var(--qq--y0-text-color5);
+          color: #414655;
           &:first-child {
             width: 100px;
           }
@@ -472,7 +474,7 @@ export default {
           font-weight: bold;
         }
           .player-name {
-            color: var(--qq--y0-text-color5);
+            color: #414655;
             min-width: 24px;
             text-align: right;
           }
@@ -483,12 +485,12 @@ export default {
 }
 .home {
   .panel-title:before {
-    background: var(--qq--analysis-bg-color-12-1) !important;
+    background: #ff7000 !important;
   }
 }
 .away {
   .panel-title:before {
-    background: var(--qq--analysis-bg-color-12-1) !important;
+    background: #ff7000 !important;
   }
 }
 </style>
