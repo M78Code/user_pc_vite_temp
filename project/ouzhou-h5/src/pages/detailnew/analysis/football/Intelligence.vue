@@ -1,14 +1,14 @@
 <script setup name="Intelligence">
-
+import NoData from "../NoData.vue"
 
 </script>
 
 <template>
     <section>
-<!--        Intelligence-->
+        <NoData></NoData>
     </section>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

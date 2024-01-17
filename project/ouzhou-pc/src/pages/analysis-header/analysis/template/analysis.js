@@ -17,8 +17,9 @@ export default{
     */
      get_analysiseData(params, cb){
       api_analysis.get_match_analysise_data(params).then((ret)=>{
+    
         let data = lodash.get(ret, 'data');
-        if(data && data.code == 200){
+        if(data && ret.code == 200){
           cb(data)
         }
       })
