@@ -162,11 +162,6 @@ export default {
 
     let timer = 0;
     onMounted(() => {
-      // 发送进入首页埋点消息
-      clearTimeout(timer)
-      timer = setTimeout(() => {
-        lodash.get(UserCtr,'user_info.userId') && into_home_event();
-      }, 2000);
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
       MenuData.is_home() && get_data_info({ is_socket: false })//欧洲版只有首页才执行  其他是由菜单驱动列表的
