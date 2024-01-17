@@ -13,6 +13,8 @@ const HIDE_API_NAME_MAP1 = {
   'new-pc':'',
   'app-h5':{version:'2023亚洲版',version_id:'2'},
 }
+// 埋点使用的缓存数据
+let hide_api_data_obj = {};
 /**
  * @description 埋点逻辑处理函数
  * @param obj 埋点提交数据,必传参数play_back_id,page_id,sport_id,match_id,tournament_id
@@ -115,9 +117,75 @@ const into_home_event = (obj={}) => {
     }
   })
 }
+/**
+ * @description 设置埋点缓存数据
+ * @param event_id: 3-video查看视频, 4-animation	查看动画
+ * @return 
+ */
+const set_hide_api_data_obj = (event_id, obj={})=>{
+  console.error('set_hide_api_data_obj:',obj);
+  hide_api_data_obj['event_id_'+event_id] = obj;
+}
+/**
+ * @description 获取埋点缓存数据
+ * @param obj 
+ * @return 
+ */
+const get_hide_api_data_obj = (event_id)=>{
+  return hide_api_data_obj['event_id_'+event_id] || {}
+}
+
+/**
+ * @description 进入动画和视频的埋点逻辑处理函数
+ * @param obj 
+ * @return 
+ */
+const into_video_anima_event = (type)=>{
+  console.error('into_video_anima_event:',type);
+
+  // event_id:3	video	查看视频
+  // event_id:4	animation	查看动画
+  let event_id = '';
+  switch (type+'') {
+    case 'muUrl':
+      event_id = 3;
+      break;
+    case 'animationUrl':
+      event_id = 4;
+      break;
+  
+    default:
+      break;
+  }
+  if(event_id){
+    // 获取埋点缓存数据
+    const hide_api_obj = get_hide_api_data_obj(event_id);
+    let event_obj = {
+      eventId: event_id,// 事件id
+      version: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version'), //  >>>前端提供(格式)
+      versionId: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version_id'),
+      deviceType:IS_PC?'1':'2', // 终端id：1-pc/2-h5/3-app/4  前端定义(h5/pc统一)
+      sportId: lodash.get(hide_api_obj, 'match.csid','1'),
+      buttonId: lodash.get(hide_api_obj, 'button','3'), // 1.列表  2.右侧赛事信息 3.详情页  
+      matchId:lodash.get(hide_api_obj, 'match.mid',''),
+      tournamentId:lodash.get(hide_api_obj, 'match.tid',''),
+    }
+    // 情况埋点缓存数据
+    set_hide_api_data_obj(event_id,{});
+    // eventCode提交埋点数据
+    event_obj.versionId && api_hide.submit_event_collection(event_obj).then( res => {
+      if(lodash.get(res, 'data.code') == 200){
+        console.log('提交成功!');
+      }
+    })
+  }
+}
 
 export { 
   replay_click_event, 
   into_home_event, 
+  into_video_anima_event,
+  set_hide_api_data_obj,
+  get_hide_api_data_obj
 };
   
