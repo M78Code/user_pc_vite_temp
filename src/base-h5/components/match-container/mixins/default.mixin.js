@@ -145,7 +145,7 @@ export default defineComponent({
       return r;
     },
     show_newer_edition () {
-      return standard_edition.value == 1 || this.main_source == 'detail_match_list';
+      return standard_edition.value == 1
     },
     // 是否显示进球动画
     is_show_goal_event () {

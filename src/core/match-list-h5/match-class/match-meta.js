@@ -735,7 +735,7 @@ class MatchMeta {
       ...params,
       ...other_params
     }
-    if (params_tid) this.set_show_skeleton_state(true)
+    // if (params_tid) this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_common.post_match_full_list, params: target_params, key: 'post_match_full_list' })
     if (!this.is_current_http_key(http_key) || MenuData.is_collect() || MenuData.is_esports()) return
     const code = lodash.get(res, 'code', 0)
@@ -1617,7 +1617,13 @@ class MatchMeta {
       if (_mids.some((_mid) => this.match_mids.includes(_mid))) this.get_match_base_hps_by_mids({})
     }
   }
-  async get_match_base_hps_by_mids({ mids = [], warehouse }) {
+  /**
+   * @description 获取赛事赔率    TODO:  废弃 待删除
+   * @param { mids } mids
+   * @param { Object } other 其他参数， 比如 次要玩法拉取
+   * @param {  } warehouse 仓库
+   */
+  async get_match_base_hps_by_mids({ mids = [], other = {}, warehouse }) {
     // 赛果页不需要获取赔率
     if (MenuData.is_results() && PageSourceData.route_name == 'matchResults') return
     if (this.match_mids.length < 1 && mids.length < 1) return
@@ -1632,6 +1638,8 @@ class MatchMeta {
       euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
       device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
     };
+    // other 不为空则合并参数
+    if (!lodash.isEmpty(other)) Object.assign(params, other)
     //如果是赛果详情精选列表
     if (PageSourceData.route_name == 'match_result') {
       delete params.euid;
@@ -1668,81 +1676,6 @@ class MatchMeta {
     // 设置仓库渲染数据
     this.handle_update_match_info({ list: data, merge: 'cover', warehouse })
   }
-  /**
-   * @description 获取赛事赔率    TODO:  废弃 待删除
-   * @param { mids } mids
-   */
-  async get_match_base_hps_by_mids1({ mids = [], warehouse, is_again = true }) {
-    try {
-      // 赛果页不需要获取赔率
-      if (MenuData.is_results() && PageSourceData.route_name == 'matchResults') return
-      if (this.match_mids.length < 1 && mids.length < 1) return
-      const match_mids = this.match_mids.join(',')
-      // 冠军不需要调用
-      if (MenuData.is_esports()) return
-      // 竞足409 不需要euid
-      const params = {
-        mids: mids.length > 0 ? mids : match_mids,
-        cuid: UserCtr.get_uid(),
-        sort: UserCtr.sort_type,
-        // sort: PageSourceData.sort_type,
-        euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
-        device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
-      };
-      //如果是赛果详情精选列表
-      if (PageSourceData.route_name == 'match_result') {
-        delete params.euid;
-        params.versionNewStatus = 'matcheHandpick';
-        params.sort = 1;
-      }
-
-      let res = ''
-      // 赛果
-      if (MenuData.is_esports()) {
-        res = await api_common.get_esports_match_by_mids(params)
-      } else {
-        res = await api_common.get_match_base_info_by_mids(params)
-      }
-      if (!res) return
-      const { code, data } = res
-      if (+code !== 200) return
-      this.error_http_count.bymids = 1
-      const length = lodash.get(data, 'length', 0)
-      if (length > 0) {
-        MatchResponsive.set_is_http_update_info(true)
-        data.forEach(t => {
-          // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
-          t.handicap_index = MatchUtils.get_handicap_index_by(t);
-          const item = lodash.find(this.complete_matchs, (match) => match.mid === t.mid)
-          if (item) {
-            const index = lodash.findIndex(this.complete_matchs, (match) => match.mid === t.mid)
-            if (index > -1) this.complete_matchs[index] = Object.assign({}, item, t)
-          }
-          // 更新 current_matchs
-          const c_item = lodash.find(this.current_matchs, (match) => match.mid === t.mid)
-          if (c_item) {
-            const c_index = lodash.findIndex(this.current_matchs, (match) => match.mid === t.mid)
-            if (c_index > -1) this.current_matchs[c_index] = Object.assign({}, c_item, t)
-          }
-        })
-        // 设置仓库渲染数据
-        this.handle_update_match_info({ list: data, merge: 'cover', warehouse })
-      }
-    } catch {
-      // 当接口 报错，或者出现限频， 调用3次
-      if (is_again && this.error_http_count.bymids < 3) {
-        this.error_http_count.bymids++
-        let timer = setTimeout(() => {
-          this.get_match_base_hps_by_mids({ mids, warehouse })
-          clearTimeout(timer)
-          timer = null
-        }, 3000)
-      } else {
-        this.update_is_http_update_info()
-      }
-    }
-  }
-
   /**
    * @description 更新对应赛事
    * @param { list } 赛事数据 

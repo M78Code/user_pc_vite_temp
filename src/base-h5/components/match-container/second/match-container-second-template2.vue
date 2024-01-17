@@ -2,17 +2,30 @@
  * @Description: 复刻版  次要玩法 
 -->
 <template>
-  <div class="m-o-p-wrapper match-container-second-template2" v-show="show_tab_by_data">
+  <div class="second-container match-container-second-template2" v-if="show_tab_by_data">
     <!--次要玩法 标题主名称-->
     <div class="tab-m-o-w row items-center" ref="sub_play_scroller">
-      <div v-for="(t_item, i) of tab_list.filter(x => x.show_tab)" 
-        :key="i" 
-        ref="sub_play_scroll_item"
+      <div v-for="(t_item, i) of current_second_data" 
+        :key="t_item.id" 
         :class="['tab-item-h row items-center', { 'collapsed': t_item.unfold == 1 }]"
         @click="overtime_tab_handle(t_item, undefined, 'is-user', i)">
         <div> {{ t_item.title }} </div>
-        <!--折叠得箭头图标-->
-        <span class="league-collapse-dir" :class="{ 'collapsed': t_item.unfold == 1 }" :style="compute_css_obj('icon-collapse')" ></span>
+        <IconWapper name="icon-triangle1" size="14px" class="league-collapse-dir" />
+      </div>
+      <div class="select_time" v-if="second_play_data.length > 0">
+        <span @click.stop>
+          <q-btn-dropdown flat outline style="color: #FF7000"  padding="0" :label="select_second_label"
+            dropdown-icon="expand_more" content-class="select_time_style">
+            <q-list>
+              <q-item v-for="item in second_play_data" :key="item.hpid" @click.stop="on_select_second_play(item)"
+                  :class="{active: select_play === item.hpid}" clickable v-close-popup >
+                <q-item-section>
+                  <q-item-label>{{ item.label || i18n_t(`ouzhou.match.play_map.${item.hpid}`)}}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
+        </span>
       </div>
     </div>
     <!-- 次要玩法   1. 左边队伍名标题   2. 右边 盘口组件  模块 -->
@@ -21,13 +34,11 @@
       :mid="match_info.mid"  
       :class="['transition-w-odd', {
       expanded: any_unfold && any_unfold != '0',
-      bodan_wanfa: [18].includes(+ lodash.get(current_tab_item, 'id')) && bold_gaodu_css > 3,
-      bodan_wanfa_small: any_unfold && [18].includes(+ lodash.get(current_tab_item, 'id')) && bold_gaodu_css <= 3,
       five_minutes_wanfa: any_unfold && any_unfold != '0' && [19].includes(+ lodash.get(current_tab_item, 'id')),}]">
       <!--次要玩法标 队名 和 比分 和 盘口-->
-      <div class="row justify-between" v-if="any_unfold">
+      <div class="content row justify-between" v-if="any_unfold">
         <!--次要玩法标 队名 和 比分  次要玩法 左边的 区域    波胆，5分钟玩法  不显示-->
-        <div class="team-title-container" v-if="![18, 19].includes(+ lodash.get(current_tab_item, 'id'))">
+        <div class="team-title-container" v-if="![18, 19, 11].includes(+ lodash.get(current_tab_item, 'id'))">
           <!--主队名 和 比分-->
           <div :class="['team-t-title-w', { 'is-handicap': current_tab_handicap_index == 1, 'is-handicap-1': current_tab_handicap_index == 2, }]">
             <div class='team-title'> {{ match_info.mhn }}  </div>
@@ -51,7 +62,6 @@
         </div>
         <!--次要玩法 盘口 右边的 区域-->
         <OddListWrap 
-          :main_source="main_source"
           :match="match_info"
           :hps="current_tab_item.hps"
           :current_tab_item="current_tab_item"
@@ -64,134 +74,104 @@
 </template>
 
 <script>
+import lodash from 'lodash'
+import { ref, computed, defineComponent, getCurrentInstance } from 'vue'
 import second_mixin from '../mixins/second.mixin.js';
+import { IconWapper } from 'src/components/icon'
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
 import { compute_css_obj } from "src/output/index.js"
 
-export default {
+export default defineComponent({
   name: "match-container-second-template2",
   mixins: [second_mixin],
-  props: {
-    main_source:String,   //数据源
-    matchCtr:Object,      //数据仓库数据
-    i:Number,   //所在位置
-  },
   components: {
+    IconWapper,
     OddListWrap
   },
-  setup (ctx) {
+  setup () {
+    const { proxy } = getCurrentInstance()
 
+    // 当前总的要显示的次要玩法
+    const show_second_data = computed(() => {
+      return proxy.tab_list.filter((t) => t.show_tab)
+    })
+    // 当前显示的 次要玩法
+    const current_second_data = computed(() => {
+      return show_second_data.value.slice(0, 4)
+    })
+    // 更多次要玩法数据
+    const second_play_data = computed(() => {
+      const length = lodash.get(show_second_data.value, 'length', 0)
+      return show_second_data.value.slice(4, length - 1)
+    })
+    // 更多次要玩法 当前所选玩法
+    const select_second_label = ref('')
+    // 更多次要玩法选择
+    const on_select_second_play = (item) => {
+      console.log(item)
+    }
     return { 
-      compute_css_obj
+      compute_css_obj, on_select_second_play, select_second_label, second_play_data, current_second_data
     }
   }
-}
+})
 
 
 </script>
   
 <style scoped lang="scss">
-.m-o-p-wrapper {
-  width: 100%;
-  height: auto;
-  padding: 0 0.07rem;
-  position: relative;
-  .wsl_flag_777{
-    position: absolute;
-    color: red;
-    top: .24rem;
-    //left: 1.08rem;
-  }
-
+.second-container {
+  margin-bottom: 5px;
   .tab-m-o-w {
-    //width: 3.58rem;
-    /*height: 0.44rem;*/
+    display: flex;
+    gap: 8px;
+    align-items: center;
     margin: 0 auto;
-    padding-left: 0.02rem;
     flex-wrap: nowrap;
-    overflow: scroll;
+    height: 22px;
 
     .tab-item-h {
-      width: auto;
-      height: 0.24rem;
-      margin-right: 0.05rem;
-      padding: 0 0.084rem;
+      height: 0.18rem;
       border-radius: 0.04rem;
-      margin-bottom: 0.12rem;
       flex-wrap: nowrap;
       white-space: nowrap;
       flex-shrink: 0;
-      font-size: 12px;
-
-      &:last-child {
-        margin-right: 0;
+      font-size: 0.1rem;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 0.01rem 0 0.03rem;
+      border: 0.02rem solid transparent;
+      justify-content: center;
+      &.collapsed{
+        color: #179cff;
+        border-color: #179cff;
+        .league-collapse-dir{
+          color: #179cff;
+          transform: rotateZ(-180deg);
+          &.icon-triangle1:before{
+            color: #179cff;
+          }
+        }
       }
-
-      &.pena {
-        margin-left: 0.2rem;
-      }
-
       .league-collapse-dir {
-        width: 0.1rem;
-        height: 0.04rem;
-        margin-left: 0.07rem;
-        display: block;
-        transform: rotateZ(180deg);
-        transition: transform 0.2s ease-in;
-        &.collapsed {
-          transform: rotateZ(0);
-        }
-      }
-    }
-  }
-
-  .odd-l-head-w {
-    width: 1.84rem;
-    height: 0.48rem;
-    overflow: hidden;
-
-    .o-w-h-c {
-
-      height: 100%;
-      flex-shrink: 0;
-      flex-wrap: nowrap;
-
-      .hpl-t {
+        transform: rotateZ(0);
         position: relative;
-        width: 0.6rem;
-        height: 100%;
-        line-height: 1;
-        transition: transform 0.2s;
-        padding: 0 0.02rem;
-        margin-right: 0.02rem;
-
-        &:nth-child(n + 4) {
-          margin-right: 0;
-        }
-
-        &.status2 {
-          transform: translateX(-1.84rem);
-        }
-
-        .div-inner-2 {
-          width: 0.05rem;
-          height: 100%;
-          background-color: var(--q-color-com-bg-color-12);
-          position: absolute;
-          top: 0;
-          right: -0.05rem;
-          z-index: 1;
+        top: -1px;
+        margin-left: 1px;
+        transition: transform 0.2s ease-in;
+        &.icon-triangle1:before{
+          color: #888;  
         }
       }
     }
   }
 
   .team-title-container {
+    flex: 1;
     .team-t-title-w {
-      width: 1.30rem;
-      margin-left: 0.20rem;
-      height: 0.31rem;
-      font-size: 0.14rem;
+      height: 0.32rem;
+      font-size: 0.12rem;
       display: flex;
       align-items: center;
       position: relative;
@@ -202,7 +182,7 @@ export default {
 
       &.fight-type {
         font-size: 0.12rem;
-     //   margin-left: 0.04rem;
+        color: #7981a4;
 
         img {
           display: block;
@@ -219,12 +199,12 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 1.07rem;
+        color: var(--q-gb-t-c-18);
       }
 
       .way-score {
         position: absolute;
-        right: 0;
+        right: 8px;
       }
     }
   }
@@ -242,20 +222,10 @@ export default {
   .transition-w-odd {
     font-size: 0.1rem;
     max-height: 0;
-
+    margin-top: 0.05rem;
     &.expanded {
       height: auto;
       max-height: none;
-      padding-bottom: 0.06rem;
-      &.five_minutes_wanfa {
-        padding-bottom: 0.085rem;
-      }
-      &.bodan_wanfa{
-        padding-bottom: 0.44rem!important;
-      }
-      &.bodan_wanfa_small{
-        padding-bottom: 0.12rem!important;
-      }
     }
   }
 }

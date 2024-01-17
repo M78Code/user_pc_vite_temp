@@ -265,8 +265,7 @@ const stickyAside = (x) => {
 }
 
 onMounted(  () => {
-  console.log("~~~~~~~~~~~",is_activity)
-    //设置当前默认版本
+  //设置当前默认版本
   set_standard_edition_fun()
   //获取当前版本默认值
   window.onresize = debounce((e) => {

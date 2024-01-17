@@ -87,9 +87,7 @@
                 :class="{ 'status2': PageSourceData.standard_odd_status.value == 1 && i18n_t('list_title.' + match.csid + '.title').length > 3 }">
                 <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
                   :key="i" v-for="(hpl_title, i) of i18n_t('list_title.' + match.csid + '.title')">
-                  <div class="hpl-t-inner">
-                    {{ hpl_title }}
-                  </div>
+                  <div class="hpl-t-inner"> {{ hpl_title }} </div>
                 </div>
               </div>
             </div>
@@ -252,7 +250,7 @@
                 <!--  -->
                 <div class="right-content-style">
                   <!-- 右边盘口组件 -->
-                  <OddListWrap :main_source="main_source" :match="match_of_list" />
+                  <OddListWrap :match="match_of_list" />
                 </div>
                 </div>
               </div>
@@ -290,14 +288,14 @@
                 <!-- 展示三行的不展示比分 -->
                 <template v-if="![1, 4, 11, 14, 15, 16].includes(+match.csid)">
                   <div class="score-content">
-                    <ScoreList :class="[[7, 9].includes(+match.csid) && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
+                    <ScoreList :class="[[7, 9].includes(+match.csid) && 'score-content-snooker']" :match="match_of_list" />
                   </div>
                 </template>
               </div>
             </div>
           </div>
           <!-- 次要玩法 DOM -->
-          <div class="secondary-game-play" v-if="[1,2,5,7,8].includes(+match.csid) && standard_edition != 1">
+          <div class="secondary-game-play" v-if="[1,2,5,7,8].includes(+match.csid) && standard_edition != 1" @click.stop>
             <MatchContainerSecondTemplate2
               :i="i"
               :match="match"
@@ -337,9 +335,6 @@ export default {
     match_of_list: Object,
     // 赛事处于列表中的下标
     i: Number,
-    // 赛事列表相关操作的类型封装对象
-    matchCtr: Object,
-    main_source:String,
   },
   components: {
     ScoreList,
@@ -526,6 +521,9 @@ export default {
         border-bottom: 1px solid var(--q-gb-bd-c-15) !important;
         border: 1px solid var(--q-gb-bd-c-15);
       }
+    }
+    .secondary-game-play{
+      position: relative;
     }
   }
 
@@ -1002,7 +1000,7 @@ export default {
 
   .right-content-style {
     position: relative;
-    width: 1.8rem;
+    width: 1.84rem;
     flex-shrink: 0;
   }
 
@@ -1397,7 +1395,7 @@ export default {
 
 .card-footer{
   position: absolute;
-  bottom: 5px;
+  bottom: 2px;
   width: 100%;
   height: 25px;
   z-index: 100;

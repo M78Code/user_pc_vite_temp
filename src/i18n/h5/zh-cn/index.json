@@ -1250,7 +1250,12 @@
     "full_time_draw": "全场平局",
     "half_time_draw": "半场平局",
     "minutes_of_the_Xth_goal": "第{goalnr}个进球时分",
-    "any_goal": "5分钟时段进球"
+    "any_goal": "5分钟时段进球",
+    "feature": "特色组合",
+    "all_both": "全场独赢 & 两队都进球",
+    "all_total_goal": "全场独赢 & 进球大小",
+    "half_both": "半场独赢 & 两队都进球",
+    "half_total_goal": "半场独赢 & 进球大小"
   },
   "footer_menu": {
     "adviser": "投注教程",

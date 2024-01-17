@@ -164,8 +164,15 @@ const get_match_item = (item) => {
 const handlerUpdate = lodash.debounce((data) => {
   const length = lodash.get(data, 'length', 0)
   if (length < 1) return
-  const mids = data.map(t => t.mid)
-  mids_string.value = mids.join(',')
+  console.log('当前可视区数据更新数据', data)
+  let flag = false
+  const mids = []
+  data.forEach(t => {
+    if (t.is_meta) return
+    flag = true
+    mids.push(t.mid)
+  })
+  if (flag) mids_string.value = mids.join(',')
 }, 1000)
 
 // BaseVirtualList 组件 所需 end ·············································
