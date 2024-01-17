@@ -138,7 +138,7 @@ watch(() => mi_100_arr.value , () => {
       show_right_btn.value = false;
     }
   })
-})
+}, { immediate: true })
 
 // 菜单数量修改
 const set_ref_base_menu = (list=[] ) => {
