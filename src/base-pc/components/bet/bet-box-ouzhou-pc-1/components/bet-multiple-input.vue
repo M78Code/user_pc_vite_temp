@@ -176,7 +176,7 @@ const set_ref_data_bet_money = () => {
     ref_data.min_money = lodash_.max(min_money_arr) 
     //多项单注限额最大值取多项里最小的
     ref_data.max_money = lodash_.min(max_money_arr)
-    // console.log('-------------------------------------------------------------------------------', min_money_arr, max_money_arr)
+    // console.log('----------------------------------------ref_data.max_money ---------------------------------------', ref_data.max_money)
     ref_data.money = ""
     //设置键盘MAX限额
     let max_money_obj = {max_money:ref_data.max_money}
