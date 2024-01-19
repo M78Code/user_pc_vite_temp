@@ -108,7 +108,7 @@
       <div class="img-loading custom-format-img-loading" :style="compute_css_obj('pc-img-loading')"></div>
     </div>
   </div>
-  <match_list_filter v-else/>
+  <match_list_filter v-else @close="match_list_close"/>
 </template>
 <script setup>
 import { onMounted, onUnmounted, watch, ref } from "vue";
@@ -149,6 +149,15 @@ function MatchListCardDataClass_match_list_card_key_arr() {
   match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
 }
 use_match_list_ws()
+
+/**
+ * 关闭筛选
+ */
+function match_list_close() {
+  show_filter.value = !show_filter.value;
+  // TODO: 关闭筛选，刷新列表
+}
+
 const on_go_top = () => {
   useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0)
 }

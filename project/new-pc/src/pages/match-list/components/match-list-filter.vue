@@ -58,8 +58,8 @@
                     <p class="select-all-text">选择全部赛事</p>
                 </div>
                 <ul class="btn-group">
-                    <li class="submit">确定</li>
-                    <li class="close">关闭</li>
+                    <li class="submit" @click="submit">确定</li>
+                    <li class="close" @click="close">关闭</li>
                 </ul>
                 <div></div>
             </div>
@@ -76,7 +76,9 @@ import get_match_list_params from "src/core/match-list-pc/match-list-params.js";
 import { UserCtr } from "src/output/index.js";
 import check_icon from "./checked.vue";
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
+import _ from "lodash"
 
+const emits = defineEmits(['close'])
 const data = reactive({
     total: null, //赛事总数
     total_league: null,
@@ -108,7 +110,6 @@ const tid = computed(() => {
             },[])) 
         }else {
             // 子模块选择
-            console.log(c.sportVOs, "c.sportVOs");
            p = p.concat((c.sportVOs||[]).reduce((p1, c1) => {
                 const current = (c1.tournamentList||[]).reduce((p2, c2) => {
                     if (c2.status) {
@@ -143,6 +144,10 @@ function handle_checked_all() {
     });
 }
 
+function close() {
+    emits('close')
+}
+
 /**
  * 
  * @param {number} parent 最外层
@@ -151,13 +156,15 @@ function handle_checked_all() {
  */
 function handle_select(parent, child, current) {
     console.log(parent, child, current, "第三层");
-    if (!!child && !!current) {
+    if (child != undefined && current != undefined) {
         // 子类选择
         const _data = _.clone(data.list_data);
         _data[parent].sportVOs[child].tournamentList[current].status = !_data[parent].sportVOs[child].tournamentList[current].status;
 
         data.list_data = _data.map((e, i) => {
-            const current = e.
+            const can_select_all = e.sportVOs.every(item => item.tournamentList.every(q => q.status));
+            e.status = can_select_all;
+            return e;
         })
     }else {
         data.list_data = data.list_data.map((e, i) => {
@@ -201,8 +208,10 @@ async function submit() {
     //  https://api-c.sportxxx1zx.com/yewu11/v1/w/collectMatchesPB
     // 参数 {"matchType":0,"cuid":"331188967994322944"}
     const collect_matches_PB_params = {
-        matchType: 0
+        matchType: 0,
+        cuid: UserCtr.get_uid(),
     };
+    // TODO: mid 暂时不知道有啥用 根据赛事id 集查询赛事信息  PB
     //  https://api-c.sportxxx1zx.com/yewu11/v1/w/structureMatchBaseInfoByMidsPB
     // mids 获取路径位置
     // 参数 {"mids":"3050464,3050470,3050476","cuid":"331188967994322944","euid":"3020101","orpt":"0","sort":1,"pids":"","cos":0}
@@ -225,7 +234,9 @@ async function submit() {
       selectionHour: null,
     }
     try {
-        const res = await api_filter.structure_tournament_matches_PB(params)
+        const res = await api_filter.structure_tournament_matches_PB(params);
+        const collect_matches_res = await api_filter.collect_matches_PB(collect_matches_PB_params)
+        emits('close')
     } catch (error) {
         
     }
