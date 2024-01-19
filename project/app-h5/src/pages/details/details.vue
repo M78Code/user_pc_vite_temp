@@ -653,6 +653,9 @@ export default defineComponent({
   // border-top:0.5px solid #F2F2F6;
   background: var(--q-gb-bg-c-23);
  } 
+ .q-focus-helper {
+  opacity: 0 !important;
+} 
 </style>
 <style lang="scss">
 .detail-top-pop .q-dialog__inner--minimized {

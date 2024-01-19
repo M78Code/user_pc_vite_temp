@@ -121,7 +121,7 @@ export default {
   border-radius: 0px 4px 4px 0;
   background: var(--q-gb-bg-c-28);
   font-weight: 700;
-  color: var(--q-gb-t-c-18);
+  color: var(--q-gb-t-c-5);
 
   // &::after {
   //   content: "";

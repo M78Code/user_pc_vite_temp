@@ -104,6 +104,26 @@ const handicap_num = computed(() => {
 
 </script>
 <style lang="scss" scoped>
+.point {
+  width: 100%;
+  height: 7px;
+  border-radius: 50%;
+  margin-top: 14px;
+  background-color: #d0d8de;
+}
+.point.away {
+  margin-top: 26px;
+}
+.basic-wrap {
+  position: relative;
+}
+.serve-ball {
+  left: -24px;
+  position: absolute;
+  top: 0;
+  width: 7px;
+  height: 100%;
+}
 .basic-col {
   .row-item {
     display: flex;

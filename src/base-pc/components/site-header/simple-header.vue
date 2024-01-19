@@ -17,11 +17,11 @@
         <slot /> <!--插入注单历史标题-->
       </div>
       <div class="systime">
-        <div class="refresh" v-if="$route.name == 'match_results'">
+        <div class="refresh" v-if="['match_results','analysis_header'].includes( $route.name)">
           <refresh :loaded="data_loaded" @click="refresh()" />
         </div>
         <!--右侧时间-->
-        <span>{{ date_time }} (GMT+8)</span>
+        <span>{{ date_time }}(GMT+8)</span>
       </div>
     </div>
   </div>
@@ -41,6 +41,7 @@ export default {
       date_time: "",//当前系统时间
       is_hide_icon: false,
       logo:'',
+      data_loaded:false,
       compute_img_url,
       LOCAL_PROJECT_FILE_PREFIX
     };
@@ -49,11 +50,11 @@ export default {
     refresh
   },
   props: {
-    data_loaded: {
-      type: Boolean,
-      default: false,//刷新按钮动画开关
-      PROJECT_NAME:''   // 当前系统
-    }
+    // data_loaded: {
+    //   type: Boolean,
+    //   default: false,//刷新按钮动画开关
+    //   PROJECT_NAME:''   // 当前系统
+    // }
   },
   created() {
    
@@ -84,10 +85,15 @@ export default {
       }, 1000);
     },
     /**
-    * @description: 赛果刷新当前数据
+    * @description: 刷新当前数据
     * @return {}
     */
     refresh() {
+      this.data_loaded = true
+      this.refresh_loading_timer && clearTimeout(this.refresh_loading_timer)
+      this.refresh_loading_timer = setTimeout(() => {
+        this.data_loaded = false
+      }, 3000)
       this.$emit("refresh")
     }
   },

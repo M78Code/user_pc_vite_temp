@@ -31,6 +31,16 @@ class MatchResponsive {
     this.is_http_update_info = ref(true)
     // 复刻版下的热门联赛
     this.popular_league = ref({})
+    //是否欧洲版联赛详情
+    this.is_league_detail = ref(false);
+  }
+
+  /**
+   * @description 设置欧洲版联赛详情
+   * @param {Boolean} val
+  */
+  set_is_league_detail(val){
+    this.is_league_detail.value = val
   }
 
    /**

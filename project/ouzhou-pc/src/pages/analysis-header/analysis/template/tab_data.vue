@@ -473,7 +473,7 @@ export default {
     margin-bottom: 10px;
     // width: 309px;
     // border-radius: 8px;
-    border-radius: 0 0 8px 8px;
+    // border-radius: 0 0 8px 8px;
     // border: 1px solid var(--qq--match-border-color5);
     // border-bottom: 0;
     background: linear-gradient(94.17deg, rgba(255, 112, 0, 0.3) -25.38%, rgba(255, 112, 0, 0) 22.77%),
