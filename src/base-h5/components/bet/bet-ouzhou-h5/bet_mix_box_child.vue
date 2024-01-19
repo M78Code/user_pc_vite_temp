@@ -37,7 +37,7 @@
                   <!-- 单关合并 -->
                   <div v-else>
                       <!-- 合并单关  -->
-                      <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
+                      <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}rem` }"
                           @touchmove="touchmove_handle($event)">
                           <bet-mix-box-child2></bet-mix-box-child2>
                       </div>
@@ -49,7 +49,7 @@
               <!-- 串关 -->
               <div v-if="!BetData.is_bet_single">
                   <!-- 串关投注项列表  -->
-                  <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
+                  <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height2}rem` }"
                       @touchmove="touchmove_handle($event)">
                       <div v-if="BetViewDataClass.bet_order_status == 1">
                         <template v-for="(item, index) in BetData.bet_s_list" :key="index">
@@ -159,7 +159,8 @@ const tips_msg = ref('失效')  // 提示信息
 
 const get_bet_status = ref(0) // 投注状态
 const btn_show = ref(0) // 投注状态2
-const max_height1 = ref(250) // 投注赛事高度
+const max_height1 = ref(2.5) // 投注赛事高度
+const max_height2 = ref(3.5)
 const get_mix_bet_flag = ref(false) // 最小投注开关
 const exist_code = ref(555)
 const is_dropdown = ref(false)
@@ -212,6 +213,10 @@ const is_bet_check_rc = () => {
     }
   }
   return res;
+}
+
+const touchmove_handle = ()=>{
+  
 }
 
 // 单关 串关切换
