@@ -288,11 +288,11 @@ export default {
         height: 6px;
         border-radius: 6px;
         &.home-round {
-          background: #179CFF;
+          background: #ffaa01;
           margin-right: 5px;
         }
         &.away-round {
-          background: #FF7000;
+          background: #4268f1;
           margin-left: 5px;
         }
       }
@@ -338,7 +338,7 @@ export default {
     justify-content: space-between;
     padding-right: 20px;
     &:last-child {
-      border-radius: 8px;
+      // border-radius: 8px;
       border-bottom: 1px solid var(--q-analysis-color-10);
     }
     .stage-tab {

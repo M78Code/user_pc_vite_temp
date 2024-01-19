@@ -454,7 +454,7 @@ export default {
     }
   }
   .tab-no-border {
-    border-radius: 8px 8px 0 0;
+    // border-radius: 8px 8px 0 0;
     margin-bottom: 0;
     // border-bottom: 0;
     .tab.mya_tab_style {
@@ -494,12 +494,13 @@ export default {
       border-top: transparent;
       .panel-title {
         position: relative;
-        height: 32px;
-        line-height: 32px;
+        height: 40px;
+        line-height: 40px;
         padding-left: 10px;
         border-bottom: 1px solid #e2e2e2;
         background: #ffffff;
         color: #1a1a1a;
+        font-weight: 500;
         // border-radius: 8px 8px 0 0;
         &:last-child {
           // border-radius: 8px;

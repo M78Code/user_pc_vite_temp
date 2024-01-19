@@ -166,7 +166,7 @@ export default {
     localStorage.setItem('test_match_info', JSON.stringify(match))
     // if(!GlobalAccessConfig.get_statisticsSwitch()) return window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD, window.vue.i18n_t("msg.msg_09")); 
     // if([1,2].includes(match.csid*1)){
-      full_url = `index.html#/analysis_header/${match.csid}/${match.mid}/${euid}` // seid,match.srid
+      full_url = `index.html#/analysis_header/${match.csid}/${match.mid}` // seid,match.srid
     //   store.dispatch("set_active_detail", match)
     // }
     
