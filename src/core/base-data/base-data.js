@@ -442,6 +442,8 @@ class BaseData {
     // 获取菜单数据缓存
     let session_info = localStorage.getItem("is_session_base_data");
     if (!session_info) {
+      // 设置新旧菜单关系 使用默认值
+      this.mi_euid_map_res = mi_euid_mapping_default;
       return;
     }
     const session_base_data = JSON.parse(session_info);

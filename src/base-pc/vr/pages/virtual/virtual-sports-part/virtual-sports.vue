@@ -282,7 +282,7 @@ export default {
   padding: 0.08rem 0.05rem 0;
   color: var(--q-gb-t-c-2);
   // background: #F2F2F6;
-  background-color: var(--q-gb-bg-c-21) ;
+  background-color: var(--q-gb-bd-c-2) ;
   padding-bottom: 0.66rem;
 }
 .virtual-sports-card {

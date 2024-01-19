@@ -26,6 +26,7 @@ import { project_name, MenuData } from "src/output/index.js";
 import { set_menu_init,sort_type,standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { is_esports } from 'src/base-h5/mixin/menu.js'
 import MatchFold from 'src/core/match-fold/index.js'
+import { api_account } from "src/api/index.js";
 
 /**
  * 首页switch wap
@@ -115,10 +116,14 @@ const handler_version_change = (val = 2) => {
 }
 
 // 排序切换
-const handler_sort_change = (val) => {
+const handler_sort_change = async(val) => {
     //电竞 不会热门排序 和 盘口
     if(val === 1 && is_esports.value) return;
     change_is_show_mask(true)
+    const param = {
+        sort: val
+    }
+  await api_account.get_remember_select(param)
     UserCtr.set_sort_type(val);
     reset_is_show_mask()
 }

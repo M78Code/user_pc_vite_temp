@@ -29,6 +29,7 @@
             </div>
          
         </div>
+        <span class="sport-bg" :style="compute_css_obj({key:'eu-menu-sport-bg-image', position:format_type(MenuData.menu_mi.value)})"></span>
         <!-- :class="'store.current_menu_mi_' + store.current_menu_mi" -->
         <div :style="{ backgroundPositionY: `${farmatSportImg(store.current_menu_mi)}px` }"
             class="menu_list_top_tab_background"></div>
@@ -70,7 +71,7 @@ import {
     computed
 } from "vue";
 import { dateWeekMatchesFormat, farmatSportImg } from '../utils';
-import { MenuData } from "src/output/index.js";
+import { MenuData ,compute_css_obj} from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { store } from "project_path/src/pages/match-page/index.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
@@ -78,6 +79,7 @@ import STANDARD_KEY from "src/core/standard-key";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { api_common } from "src/api";
 import MatchFold from 'src/core/match-fold/index.js'
+import { oz_sprite_bg_images_postion } from "src/output/module/constant-utils.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 const emitters = ref({})
@@ -106,6 +108,14 @@ const DateOptionsOffset = computed(() => {
         'left': result + 'px'
     }
 })
+/**
+ * @description: 球类id转化背景
+ * @param {String} id 球类id
+ * @return {}
+ */
+ const format_type = ( id ) => {
+  return oz_sprite_bg_images_postion[id]
+}
 /**
  * 获取对应日期
  */
@@ -254,7 +264,17 @@ const areaListChange = (item) => {
 .header {
     font-size: 16px;
     font-family: Roboto;
-
+    .sport-bg{
+      --per:-0.5rem;
+      position: absolute;
+      right: 0;
+      top: 0;
+      display: inline-block;
+      width: 141.25px;
+      height: 50px;
+      background-size: 100% auto;
+      background-position: right;
+    }
 
     // 头部tab样式
     .tabs {

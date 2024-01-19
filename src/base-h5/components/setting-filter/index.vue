@@ -87,13 +87,13 @@ import { i18n_t } from "src/boot/i18n.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { is_vr } from 'src/base-h5/mixin/menu.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
+import { api_account } from "src/api/index.js";
 // 本次打包的 客户端版本
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 
 defineOptions({
   name: "settingFilter" // 设置组件名称
 });
-
 const router = useRouter();
  // 新旧版
  const current_version= ref('new')
@@ -267,8 +267,12 @@ const version_handle = item => {
  *@description 处理排序规则
  *@return {Undefined} undefined
  */
-const sort_handle = item => {
+const sort_handle = async(item) => {
   const status = item.switchValue === "rightVal" ? 2 : 1;
+  const param = {
+    sort: status
+  }
+  await api_account.get_remember_select(param)
   UserCtr.set_sort_type(status);
 };
 /**

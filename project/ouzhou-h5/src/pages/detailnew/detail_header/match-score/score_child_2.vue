@@ -29,8 +29,10 @@ const BasketballScore = computed(()=>{
     let scoreKeyArray = mle == 17 ? basketball_score1 : basketball_score2
     let scoreArray = []
     lodash.forEach(scoreKeyArray,item=>{
-        let { home, away } = msc_obj[item.msc_key]
-        if (home && away){
+        let tmp = msc_obj[item.msc_key]
+        if(!tmp) return
+        let { home, away } = tmp
+        if (home && away){      
             scoreArray.push({
                 key: item.msc_key,
                 home,
@@ -71,7 +73,7 @@ const BasketballScore = computed(()=>{
     flex-wrap: nowrap;
     flex-shrink: 0;
     box-sizing: border-box;
-    font:{
+    font: {
         size: .14rem;
         weight: bold;
     }

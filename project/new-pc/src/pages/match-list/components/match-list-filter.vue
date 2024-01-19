@@ -10,9 +10,9 @@
                     <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/search.svg`" alt="" class="search-icon" />
                 </div>
                 <!-- 选择联赛 -->
-                <div class="chose-league">
+                <div class="chose-league curson-point" >
                     <span>选择联赛</span>
-                    <span class="active">全部</span>
+                    <span class="active">{{ data.all_select ? '全部' : tid.length }}</span>
                     <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/arrow.svg`" alt="" class="arrow active" />
                 </div>
                 <!-- 刷新 -->
@@ -58,8 +58,8 @@
                     <p class="select-all-text">选择全部赛事</p>
                 </div>
                 <ul class="btn-group">
-                    <li class="submit">确定</li>
-                    <li class="close">关闭</li>
+                    <li class="submit" @click="submit">确定</li>
+                    <li class="close" @click="close">关闭</li>
                 </ul>
                 <div></div>
             </div>
@@ -76,14 +76,16 @@ import get_match_list_params from "src/core/match-list-pc/match-list-params.js";
 import { UserCtr } from "src/output/index.js";
 import check_icon from "./checked.vue";
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
+import _ from "lodash"
 
+const emits = defineEmits(['close'])
 const data = reactive({
     total: null, //赛事总数
     total_league: null,
-    is_active: false, //确认按钮是否激活
+    is_active: true, //确认按钮是否激活
     all_filter_list: [],//筛选全部数据
     filter_list: [],//筛选数据
-    all_select: false,// 是否全选
+    all_select: true,// 是否全选
     load_data_state: "loading",//数据加载状态
     search_filter_data: "data",//数据加载状态
     is_suck_down: false,//确定按钮是否低吸
@@ -100,23 +102,23 @@ const tid = computed(() => {
     const res = data.list_data.reduce((p, c) => {
         //大模块选择，子模块全选
         if (c.status) {
-            p = p.concat(c.sportVOs.reduce((p1, c1) => {
-                const current = c1.tournamentList.map(e => {
+            p = p.concat((c.sportVOs||[]).reduce((p1, c1) => {
+                const current = (c1.tournamentList||[]).map(e => {
                     return e.id
                 })
                 return [...p1, ...current];
             },[])) 
         }else {
             // 子模块选择
-           p = p.concat(c.sportVOs.reduce((p1, c1) => {
-                const current = c1.tournamentList.reduce((p2, c2) => {
+           p = p.concat((c.sportVOs||[]).reduce((p1, c1) => {
+                const current = (c1.tournamentList||[]).reduce((p2, c2) => {
                     if (c2.status) {
                         p2 = [...p2, c2.id]
                     }
                     return p2;
                 }, [])
                 return [...p1, ...current]
-            })) 
+            }, [])) 
         }
         return p;
     }, [])
@@ -131,7 +133,8 @@ watch(tid, (value)=> {
 
 function handle_checked_all() {
     data.all_select = !data.all_select;
-    data.list_data = (res.data || []).map(e => {
+    
+    data.list_data = (data.list_data || []).map(e => {
         e.status = data.all_select;
         e.sportVOs = (e.sportVOs || []).map(p => {
             p.tournamentList = (p.tournamentList || []).map(q => ({ ...q, status: data.all_select }))
@@ -141,6 +144,10 @@ function handle_checked_all() {
     });
 }
 
+function close() {
+    emits('close', tid.value)
+}
+
 /**
  * 
  * @param {number} parent 最外层
@@ -148,9 +155,17 @@ function handle_checked_all() {
  * @param {number} current 第三层
  */
 function handle_select(parent, child, current) {
-    console.log(parent, child, current);
-    if (child && current) {
+    console.log(parent, child, current, "第三层");
+    if (child != undefined && current != undefined) {
+        // 子类选择
+        const _data = _.clone(data.list_data);
+        _data[parent].sportVOs[child].tournamentList[current].status = !_data[parent].sportVOs[child].tournamentList[current].status;
 
+        data.list_data = _data.map((e, i) => {
+            const can_select_all = e.sportVOs.every(item => item.tournamentList.every(q => q.status));
+            e.status = can_select_all;
+            return e;
+        })
     }else {
         data.list_data = data.list_data.map((e, i) => {
             if (i == parent) {
@@ -160,13 +175,19 @@ function handle_select(parent, child, current) {
                     return p;
                 })
             }
-            
             return e;
         })
     }
+    data.all_select = data.list_data.every(e => e.status);
 }
 
 async function submit() {
+    if (!data.is_active) {
+        return;
+    }
+    if (tid.value.length == 0) {
+        return;
+    }
     // {
     //  "apiType":1,
     //  "cuid":"331188967994322944",
@@ -190,12 +211,14 @@ async function submit() {
     const current_params = match_list_params.match_list.params;
     // https://api-c.sportxxx1zx.com/yewu11/v2/w/structureTournamentMatchesPB
 
-    // 不知道干啥的 https://api-c.sportxxx1zx.com/yewu11/v1/w/collectMatchesPB
+    //  https://api-c.sportxxx1zx.com/yewu11/v1/w/collectMatchesPB
     // 参数 {"matchType":0,"cuid":"331188967994322944"}
     const collect_matches_PB_params = {
-        matchType: 0
+        matchType: 0,
+        cuid: UserCtr.get_uid(),
     };
-    // 不知道干啥的 https://api-c.sportxxx1zx.com/yewu11/v1/w/structureMatchBaseInfoByMidsPB
+    // TODO: mid 暂时不知道有啥用 根据赛事id 集查询赛事信息  PB
+    //  https://api-c.sportxxx1zx.com/yewu11/v1/w/structureMatchBaseInfoByMidsPB
     // mids 获取路径位置
     // 参数 {"mids":"3050464,3050470,3050476","cuid":"331188967994322944","euid":"3020101","orpt":"0","sort":1,"pids":"","cos":0}
     let params = {
@@ -217,9 +240,14 @@ async function submit() {
       selectionHour: null,
     }
     try {
-        const res = await api_filter.structure_tournament_matches_PB(params)
+        data.is_active = false;
+        const res = await api_filter.structure_tournament_matches_PB(params);
+        const collect_matches_res = await api_filter.collect_matches_PB(collect_matches_PB_params)
+        close();
     } catch (error) {
         
+    } finally {
+        data.is_active = true;
     }
 }
 
@@ -253,16 +281,15 @@ async function init() {
             pids: current_params.pids,
             // inputText: "",
             // cuid: current_params.cuid,
-
         });
-        data.list_data = (res.data || []).map(e => {
+        data.list_data = Object.freeze((res.data || []).map(e => {
             e.status = true;
             e.sportVOs = (e.sportVOs || []).map(p => {
                 p.tournamentList = (p.tournamentList || []).map(q => ({ ...q, status: true }))
                 return p;
             })
             return e;
-        });
+        })) ;
         console.log(res, "结果");
     } catch (error) {
         console.log(error, "errors");
