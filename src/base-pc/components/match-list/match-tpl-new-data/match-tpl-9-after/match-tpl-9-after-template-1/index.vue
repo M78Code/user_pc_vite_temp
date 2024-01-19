@@ -2,16 +2,15 @@
   <div class="c-match-item  match-tpl1-bg"
     :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
     <!-- 比赛进程 -->
-    <div class="process-col yb-flex-center">
+    <div class="process-col">
       <!--热门赛事显示hot标识-->
       <img class="match-hot" :src="compute_local_project_file_path('/image/common/svg/hot.svg')"
         v-show="lodash.get(match, 'is_hot')" />
       <!-- 比赛进程 -->
-      <match-process v-if="match" :match="match" source='match_list' show_page="match-list" :rows="2" />
-      <!-- 比赛进程 -->
       <div class="yb-flex-center full-width" :style="`height:105px;margin-top:${process_margin}px`">
-        <match-process v-if="is_mounted && match && match.api_update_time != 0"
-          :match_props="{ match, source: 'match_list' }" show_page="match-list" :rows="2" />
+        <!-- <match-process v-if="is_mounted && match && match.api_update_time != 0"
+          :match_props="{ match, source: 'match_list' }" show_page="match-list" :rows="2" /> -->
+        <match-process v-if="match" :match="match" source='match_list' show_page="match-list" :rows="2" />
       </div>
     </div>
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
@@ -65,15 +64,15 @@ let match_list_tpl_size = inject('match_list_tpl_size')
 let match_tpl_info = inject('match_tpl_info')
 const is_mounted = ref(true)
 const process_margin = computed(() => {
-  let { is_show_cur_handicap } = match_tpl_info.value
+  let { is_show_cur_handicap } = match.value
   let process_margin = 0
   if (is_show_cur_handicap) {
-    process_margin = 70
+    process_margin = 52
     if (match.value.has_add1) {
-      process_margin += 70
+      process_margin += 52
     }
     if (match.value.has_add2) {
-      process_margin += 70
+      process_margin += 52
     }
     if (match.value.csid == 4) {
       process_margin += 35

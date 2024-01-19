@@ -424,7 +424,7 @@ export const compute_style_template_by_matchinfo = (match) => {
 				style_obj.tab_play_total_height
 		} else {
 			style_obj.total_height = style_obj.main_handicap_height;
-			if ([109].includes(+template_id)) {//有赛局制度
+			if ([109, 112].includes(+template_id)) {//有赛局制度
 				style_obj.total_height += template_config.cur_handicap_height;
 			}
 		}

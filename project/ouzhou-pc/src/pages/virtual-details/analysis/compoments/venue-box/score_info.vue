@@ -451,7 +451,7 @@ const computed_score = (res) => {
 
 const get_icon = (icon) => {
   return new URL(
-    `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/${icon}.png`,
+    `${LOCAL_PROJECT_FILE_PREFIX}/image/details/${icon}.png`,
     import.meta.url
   ).href;
 };

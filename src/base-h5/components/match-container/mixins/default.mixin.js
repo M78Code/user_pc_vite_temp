@@ -20,7 +20,6 @@ import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, is_detail, is_results, menu_lv1 } from 'src/base-h5/mixin/menu.js'
 import BaseData from "src/core/base-data/base-data.js";
 import { get_collect_count } from 'src/core/collect/collect-class.js'
-import { store } from "project_path/src/pages/match-page/index.js"
 
 // i: 每个组件的 props 赛事下标， 来源 === 组件
 // match_of_list: 每个组件的 props 赛事对象， 来源 === 组件
@@ -460,7 +459,7 @@ export default defineComponent({
     handle_league_fold () {
       const { tid, is_virtual = false, warehouse_type = '', start_flag = '' }  = this.match_of_list
       // 首页热门，详情页，不需要用到折叠
-      if (is_hot.value || is_detail.value || store.isLeagueDetail) return;
+      if (is_hot.value || is_detail.value || MatchResponsive.is_league_detail.value) return;
       MatchFold.set_league_fold(this.match_of_list, start_flag)
       // 不需要虚拟计算，欧洲版五大联赛
       if (is_virtual || ['five_league'].includes(warehouse_type)) return

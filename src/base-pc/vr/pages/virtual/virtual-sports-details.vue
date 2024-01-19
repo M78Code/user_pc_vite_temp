@@ -106,9 +106,13 @@
           {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
         </div>
       </div>
+
+      <!-- vr详情页右侧区域，包括足蓝队伍比分，赛马队伍和赛果 -->
+      <virtual-sports-right v-if="match" :current_match="match" :match_list_by_no="[]" :switch_match_handle="()=>{}" />
+
       <!-- 排行榜页面,小组赛淘汰赛页面  -->
       <div v-if="match" class="list-wrapper">
-        <div v-if="sub_menu_type = 1001">
+        <div v-if="sub_menu_type == 1001">
           <!--  足球小组赛,淘汰赛页面  -->
           <group-knockout
             v-if="current_league ? current_league.field3 != '': false"
@@ -138,6 +142,8 @@ import breadcrumbs from "src/base-pc/vr/pages/virtual/details/children/breadcrum
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 import virtual_sports_right from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-right.vue"
+import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
+import {api_v_sports} from "src/api/index.js";
 
 export default {
   mixins:[virtual_sports_details_mixin],
@@ -174,6 +180,31 @@ export default {
       14: 180,
     }
     }
+  },
+  mounted(){
+    // 获取队伍列表
+    this.get_virtual_sport_local()
+  },
+  methods: {
+    /**
+     * @description: 获取虚拟体育赛事列表
+     */
+     get_virtual_sport_local(){
+      let params = {
+        csid: this.sub_menu_type,
+        tid: this.current_league.menuId
+      };
+      api_v_sports.get_virtual_sport_list(params).then(res => {
+        console.log('res', res);
+        
+      }).catch((e) => {
+     
+      });
+    }
+  },
+  computed:{
+    current_league(){return VR_CTR.state.current_league},
+    sub_menu_type(){return VR_CTR.state.curr_sub_menu_type},
   }
 }
 </script>
