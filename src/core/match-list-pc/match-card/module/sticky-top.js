@@ -34,7 +34,7 @@ export function set_sticky_top() {
     }
   }
   // 常规冠军
-  else if (MenuData.is_common_kemp()) {
+  else if (MenuData.is_common_kemp()&&MenuData.is_today()) {
     obj = {
       type: 40,
       league: 40
