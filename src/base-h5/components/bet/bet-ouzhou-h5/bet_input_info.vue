@@ -5,12 +5,8 @@
        <div class="size_16 color_a1a1">{{i18n_t('bet.bet')}}</div>
         <div class="size_14">
             <span>{{i18n_t('bet.total_win2')}}</span>
-            <!-- <span class="margin_left_4">&thinsp;{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span> -->
-            <span class="margin_left_4" v-if="[1].includes(item.playId*1)">
-                {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,item.oddFinally), BetData.bet_amount)) || '0.00' }}
-            </span>
-            <span class="margin_left_4" v-else>
-                {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,item.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : BetData.bet_amount))) || '0.00' }}
+            <span class="margin_left_4">
+                {{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)) }}
             </span>
         </div>
        </div>
@@ -53,7 +49,6 @@ const input_click = (item,index,event) => {
   BetData.set_active_index(index)
 }
 
-
 // 光标
 const money_span = ref(null)
 let flicker_timer = null
@@ -63,19 +58,21 @@ const ref_data = reactive({
     max_money: '', // 最大投注金额
     seriesOdds: '', // 串关复式投注赔率
     money: '', // 投注金额
+    emit_lsit: {}
 
 })
 
 onMounted(()=>{
     cursor_flashing()
-    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
-    //监听键盘金额改变事件
-    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle)
+    set_ref_data_bet_money()
+    ref_data.emit_lsit = {
+        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
+        emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle).off,
+    }
 })
 
 onUnmounted(()=>{
-    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY,set_ref_data_bet_money).off
-    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle).off
+    Object.values(ref_data.emit_lsit).map((x) => x());
 })
 
 /**
@@ -88,22 +85,11 @@ onUnmounted(()=>{
   BetData.set_bet_amount(ref_data.money)
 }
 
-
 // 限额改变 修改限额内容
 const set_ref_data_bet_money = () => {
+    console.error('set_ref_data_bet_money')
     let value = props.item.playOptionsId
-    // 串关获取 复试连串
-    if (!BetData.is_bet_single) {
-
-        // 复式连串关投注
-        const { id, name, count } = BetViewDataClass.bet_special_series[props.index] || {}
-        special_series.id = id
-        special_series.name = name
-        special_series.count = count
-        // 串关 type
-        value = id
-    }
-
+   
     const { min_money = 10, max_money = 8888, seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
     // 最小限额
     ref_data.min_money = min_money

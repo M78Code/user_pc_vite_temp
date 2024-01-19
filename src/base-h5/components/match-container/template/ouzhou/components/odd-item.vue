@@ -261,6 +261,8 @@ onUnmounted(() => {
     .hps_img{
       width: 6px;
       height: 10px;
+      position: absolute;
+      margin: 3.5px 0 0 2px;
     }
   }
   .lock{
