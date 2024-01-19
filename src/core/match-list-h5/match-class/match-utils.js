@@ -402,7 +402,6 @@ class MatchUtils {
     } else {                                     // 默认
       estimateHeight = standard_config['default']
     }
-    console.log(estimateHeight)
     return estimateHeight
   }
   /**

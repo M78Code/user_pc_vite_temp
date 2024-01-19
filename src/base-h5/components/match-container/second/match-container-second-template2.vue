@@ -177,9 +177,13 @@ export default defineComponent({
     }
 
     .select-play{
+      .q-btn{
+        line-height: 22px;
+      }
       :deep(.q-btn__content){
         color: var(--q-gb-t-c-18);
         font-size: 0.1rem;
+        
         .q-btn-dropdown__arrow-container{
           display: none;
         }

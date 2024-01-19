@@ -1220,6 +1220,7 @@ onUnmounted(() => {
 .odd-list-wrap {
   position: relative;
   flex-shrink: 0;
+  width: 100%;
 
   &.standard {
     width: 1.84rem;
