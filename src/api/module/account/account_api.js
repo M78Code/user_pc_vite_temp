@@ -51,3 +51,8 @@ export const upload_tablet_comput = (params, config, url = "/tablet_comput/creat
 export const get_UserVersion = (params, config={}, url="/user/getUserVersion") => {
   return http.get(`${prefix_12}${url}`, params, config);
 };
+
+// 记住用户选择(1 按热门 2按时间)此接口不支持PB
+export const get_remember_select = (params, config, url='/user/rememberSelect') => {
+  return http.post(`${prefix_12}${url}`, params, config)
+};
