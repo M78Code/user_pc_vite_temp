@@ -36,7 +36,7 @@
           @update_next_batch_match="update_n_batch_handle">
         </virtual-sports-stage>
         <!-- vr右侧区域，包括足蓝队伍比分，赛马队伍和赛果 -->
-        <div>
+        <div v-if="current_match.csid">
           <div class="team-title"  v-if="current_match.csid == 1001 || current_match.csid == 1004">
             <div class="info">
             </div>
@@ -218,7 +218,7 @@ export default {
     border-bottom: 1px solid var(--q-gb-bd-c-4);
   }
   .league-name{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-5);
     font-weight: 600;
     padding-left: 0.07rem;
   }.status{
@@ -257,7 +257,7 @@ export default {
 
   .left {
     font-size: 0.12rem;
-    color: var(--q-gb-t-c-18);;
+    color: var(--q-gb-t-c-5);;
     display: flex;
     align-items: center;
     img {
@@ -325,6 +325,21 @@ export default {
   }
   .title {
     padding-left: 10px;
+  }
+}
+.horse-title {
+  display: flex;
+  align-items: center;
+  padding-right: 5px;
+  position: relative;
+  .title {
+    flex: 10000 1 0%;
+  }
+  .horse-col {
+      font-size: 12px;
+      width: 18%;
+      max-width: 96px;
+      text-align: center;
   }
 }
 </style>
