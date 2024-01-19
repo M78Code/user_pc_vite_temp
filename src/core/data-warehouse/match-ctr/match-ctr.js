@@ -517,12 +517,8 @@ get_quick_mid_obj_ref(mid){
           match.play_obj = play_obj_temp;
         }
         let _match = this.get_quick_mid_obj(match.mid);
-        if(_match){
-          this.assign_with(_match, {...match, is_ws})
-        }else{
           // 设置赛事默认数据
           this.set_match_default_data(match);
-        }
         // 赛事数据格式化
         match && this._list_to_many_obj([match]);
         // 设置赛事更新时间
@@ -641,47 +637,49 @@ get_quick_mid_obj_ref(mid){
    * @param {undefined} undefined
   */
    set_match_default_data(match){
+    let _match = this.get_quick_mid_obj(match.mid)||{};
     // api数据更新时间
     this.match_upd_time_ret_change(match);
     // 获取是否有附加盘数据
     const has_add_n =this._get_has_add_n(match);
     // 是否有附加盘1
-    match.has_add1 = has_add_n.has_add1;
+    match.has_add1 =lodash.get(_match,'has_add1',has_add_n.has_add1) ;
     // 是否有附加盘2
-    match.has_add2 = has_add_n.has_add2;
+    match.has_add2 =lodash.get(_match,'has_add2',has_add_n.has_add2) ;
 
     // 设置是否显示当前局玩法 // 组件显示时,组件内进行设置
-    match.is_show_cur_handicap = false
+    match.is_show_cur_handicap = lodash.get(_match,'is_show_cur_handicap',false) ;
     // 主客队名称后面是否显示上半场字符串
-    match.up_half_text = '' // 组件显示时,组件内进行设置
+    match.up_half_text =lodash.get(_match,'up_half_text','') ; // 组件显示时,组件内进行设置
     // 当前局盘口列表
-    match.cur_handicap_list = [] // 特定模版才会使用(模版7)
+    match.cur_handicap_list =  lodash.get(_match,'cur_handicap_list',[]) ;// 特定模版才会使用(模版7)
     // 足球角球玩法tab
     match.tab_play_keys = this.get_tab_play_keys(match);
-    match.play_current_index=0;
-    match.play_current_key='';
+    match.play_current_index= lodash.get(_match,'play_current_index',0);
+    match.play_current_key=lodash.get(_match,'play_current_key','');
     // 是否有其他玩法
     match.has_other_play = match.tab_play_keys&&String(match.tab_play_keys).split(',').length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
-    match.other_handicap_list=[]
+    match.other_handicap_list=lodash.get(_match,'other_handicap_list',[]);
+
     // 默认比分数据
     // match.score_obj = serialized_score([],true)
     // 当前局比分 
-    match.cur_score = { // 组件显示时,组件内进行设置
+    match.cur_score =lodash.get(_match,'cur_score', { // 组件显示时,组件内进行设置
       home:'',
       away:''
-    }
+    });
     // 主队比分
-    match.home_score = '' // 组件显示时,组件内进行设置
+    match.home_score =lodash.get(_match,'home_score', '') // 组件显示时,组件内进行设置
     // 客队比分
-    match.away_score = '' // 组件显示时,组件内进行设置
+    match.away_score =lodash.get(_match,'away_score', '') // 组件显示时,组件内进行设置
     // 历史比分列表
-    match.score_list = []
+    match.score_list = lodash.get(_match,'score_list', [])
     // 赛事比分总分
-    match.total_score_str = ''
+    match.total_score_str = lodash.get(_match,'total_score_str', '')
     // 15分钟玩法阶段
-    match.hSpecial = 1
+    match.hSpecial = lodash.get(_match,'hSpecial', 1)
     // 5分钟玩法阶段
-    match.hSpecial5min = 1
+    match.hSpecial5min =  lodash.get(_match,'hSpecial5min', 1)
     // 赛事更新时间 match._upd_time
     // this.match_upd_time_ret_change(match);
     // tpl_21_hpids = ""
@@ -1653,7 +1651,7 @@ get_quick_mid_obj_ref(mid){
         } else {
           for (const key in old_value) {
             if (old_value[key]) {
-              if(new_value[key] == undefined){
+              if(new_value[key] == undefined&&new_value.hasOwnProperty(key)){
                 // 删除右侧没有的对象key数据
                 delete old_value[key]
               } else {

@@ -373,6 +373,10 @@ class UserCtr {
     }
     //控制动画是否展示  1是开0是关
     user_obj.ommv = user_obj.ommv == 1 || false
+    // 复刻版H5 热门/时间排序 单子45241
+    if (PROJECT_NAME == 'app-h5' && user_obj.sort) {
+      this.sort_type = user_obj.sort
+    }
     if (this.user_info) {
       Object.assign(this.user_info, user_obj);
     } else {
