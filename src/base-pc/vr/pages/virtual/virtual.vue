@@ -112,7 +112,7 @@ export default {
         font-weight: 500;
         font-size: 0.18rem;
         line-height: 0.44rem;
-        color: var(--q-gb-t-c-18);
+        color: var(--q-gb-t-c-5);
         position: absolute;
         width: 1.6rem;
         height: 0.44rem;
@@ -177,7 +177,7 @@ export default {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            color: var(--q-gb-t-c-18);
+            color: var(--q-gb-t-c-5);
         }
       }
 
