@@ -149,6 +149,10 @@ import { set_template_width } from 'src/core/match-list-pc/list-template/match-l
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/output/index.js";
 import "./match_list.scss";
 import match_list_filter from "./components/match-list-filter.vue";
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { UserCtr } from "src/output/index.js";
+
 const match_list_card_key_arr = ref([])
 const show_filter = ref(false);
 // 选择的联赛
@@ -165,6 +169,22 @@ use_match_list_ws()
 function change_version(params) {
   //TODO: 切换专业/新手版 1 专业版 2 新手版
   const type = params.id;
+  useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true)
+  UserCtr.set_standard_edition(params)
+  useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
+  let timer = setTimeout(() => {
+        // VirtualList.set_is_show_ball(true)
+        MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+        clearTimeout(timer)
+        timer = null
+        // if (MenuData.is_collect()) {
+        //     MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+        // } else {
+        //     MatchMeta.clear_match_info()
+        //     MatchMeta.set_origin_match_data({})
+        // }
+        // MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
+    }, 350)
 
 }
 
