@@ -151,9 +151,10 @@ const matchs_data = computed(() =>{
 })
 
 // 根据当前可视区 mids 获取赛事赔率
-watch(() => mids_string.value, () => {
-  MatchMeta.get_match_base_hps_by_mids({mids: mids_string.value})
-})
+// watch(() => mids_string.value, (n,o) => {
+//   if (n === o) return
+//   MatchMeta.get_match_base_hps_by_mids({mids: mids_string.value})
+// })
 
 //获取数据仓库赛事数据
 const get_match_item = (item) => {
@@ -172,7 +173,16 @@ const handlerUpdate = lodash.debounce((data) => {
     flag = true
     mids.push(t.mid)
   })
-  if (flag) mids_string.value = mids.join(',')
+  if (flag && mids_string.value !== mids.join(',')) {
+    // 设置当前激活的赛事
+    MatchMeta.set_current_match_mids(mids)
+    // 更新仓库赛事数据
+    MatchMeta.handle_update_match_info({ list: data })
+    // 根据当前可视区 mids 获取赛事赔率
+    MatchMeta.get_match_base_hps_by_mids({mids: mids.join(',')})
+    
+    // mids_string.value = mids.join(',')
+  }
 }, 1000)
 
 // BaseVirtualList 组件 所需 end ·············································

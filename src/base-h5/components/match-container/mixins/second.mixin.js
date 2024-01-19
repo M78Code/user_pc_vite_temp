@@ -195,11 +195,15 @@ export default defineComponent({
      *  is-auto(自动展开) is-user(用户点击展开) is-mmp-change(赛事阶段变化)
      * @return {Undefined}
      */
-    overtime_tab_handle(item, unfold, operate_type, sub_i){
+    async overtime_tab_handle(item, unfold, operate_type, sub_i){
       if(['category','virtual_sports'].includes(this.$route.name) || 900 == menu_type.value || !item){
         return;
       }
 
+      // 重置所选的更多玩法选项
+      this.select_second_item = {}
+
+      // 当前所选更多玩法
       this.current_select_tab = item
 
       // 滚动次要玩法选中项到屏幕显示区域
@@ -256,14 +260,15 @@ export default defineComponent({
         //拉接口更新数据
         if(operate_type == 'is-user' || operate_type == 'mounted'){
           params.is_user = operate_type;
-          MatchMeta.get_match_base_hps_by_mids({ mids: this.match.mid, other: {
+          await MatchMeta.get_match_base_hps_by_mids({ mids: this.match.mid, other: {
             pids:item.pids,
             inner_param: 'is_by_mids',
             playId:item.play_id,
             is_user: operate_type,
             device: 'v2_h5_st' ,
             sort:1,//排序	 int 类型 1 按热门排序 2 按时间排序
-          } })
+          }})
+          this.update_match_data()
         }
       }
       // this.save_second_play_mid_map_unfold_status(item);
@@ -688,9 +693,8 @@ export default defineComponent({
     },
     // 判断是否显示tab栏
     show_tab_by_data(){
-      let flag = false;
       let{cosCorner,cosOvertime,cosBold,cosPenalty,cosPromotion, cosOutright ,cosPunish,hpsAdd,cos15Minutes,compose,cds,mbmty} = this.match;
-      flag = cos15Minutes || cosCorner || cosOvertime|| cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || compose || (hpsAdd && hpsAdd.length > 0)
+      let flag = cos15Minutes || cosCorner || cosOvertime|| cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || compose || (hpsAdd && hpsAdd.length > 0)
 
       // 电子篮球 不显示次要玩法 对应 BUG 44554
       if (['B03', 'BE'].includes(cds) && mbmty === 2) {
@@ -752,7 +756,6 @@ export default defineComponent({
   watch:{
     match(c_m,o_m){
       this.init_tab_async_show()
-      this.update_match_data()
     },
     // 是否至少存在一个展开tab状态变化,tab展开 属于唯一有用的方法之一
     any_unfold(){

@@ -27,7 +27,19 @@
     }
   }
 }
-
+.select-play-style{
+  padding: 5px 0;
+  .q-item{
+    width: 80px;
+    padding: 3px 12px;
+    font-size: 0.1rem;
+    min-height: 35px;
+    &.active{
+      background: #ECEDF1;
+      color: var(--q-gb-t-c-18);
+    }
+  }
+}
 .h-full {
   height: 100%;
 }

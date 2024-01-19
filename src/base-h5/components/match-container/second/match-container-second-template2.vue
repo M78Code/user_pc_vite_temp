@@ -12,15 +12,26 @@
         <div> {{ t_item.title }} </div>
         <IconWapper name="icon-triangle1" size="14px" class="league-collapse-dir" />
       </div>
-      <div class="select_time" v-if="second_play_data.length > 0">
+      <div class="select-play" v-if="second_play_data.length > 0">
         <span @click.stop>
-          <q-btn-dropdown flat outline style="color: #FF7000"  padding="0" :label="select_second_label"
-            dropdown-icon="expand_more" content-class="select_time_style">
+          <q-btn-dropdown flat outline padding="0" dropdown-icon="expand_more" content-class="select-play-style">
+            <template v-slot:label>
+              <template v-if="!select_second_item?.id">
+                <IconWapper name="icon-close" size="7px" color="#C9CDDB" class="icon-del" />
+                <span class="label"> 更多玩法 </span>
+              </template>
+              <template v-else>
+                <div class="active-item">
+                  <span class="label"> {{ select_second_item.title }} </span>
+                  <IconWapper name="icon-triangle1" size="14px" />
+                </div>
+              </template>
+            </template>
             <q-list>
-              <q-item v-for="item in second_play_data" :key="item.hpid" @click.stop="on_select_second_play(item)"
-                  :class="{active: select_play === item.hpid}" clickable v-close-popup >
+              <q-item v-for="item, i in second_play_data" :key="item.hps_key" @click.stop="on_select_second_play(item, i)"
+                  :class="{active: select_second_item.id === item.id}" clickable v-close-popup >
                 <q-item-section>
-                  <q-item-label>{{ item.label || i18n_t(`ouzhou.match.play_map.${item.hpid}`)}}</q-item-label>
+                  <q-item-label>{{ item.title }}</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -53,10 +64,8 @@
           </div>
           <!--  玩法描述图标显示  -->
           <div class="team-t-title-w fight-type" v-if="[1, 3, 5, 7, 8, 9].includes(+match_info.csid)">
-            <span v-if="[2, 5, 17].includes(+current_tab_item.id)" 
-              @click="info_icon_click($event, match_info.mid)"
-              :style="compute_css_obj(show_tips?'icon-tips':'icon-tips-d')"
-            ></span>
+            <span v-if="[2, 5, 17].includes(+current_tab_item.id)" @click="info_icon_click($event, match_info.mid)"
+              :style="compute_css_obj(show_tips?'icon-tips':'icon-tips-d')" ></span>
             {{ match_info.csid == 1 ? current_tab_item.title : mmp_map_title }}
           </div>
         </div>
@@ -97,21 +106,22 @@ export default defineComponent({
     })
     // 当前显示的 次要玩法
     const current_second_data = computed(() => {
-      return show_second_data.value.slice(0, 4)
+      return show_second_data.value.slice(0, 2)
     })
     // 更多次要玩法数据
     const second_play_data = computed(() => {
       const length = lodash.get(show_second_data.value, 'length', 0)
-      return show_second_data.value.slice(4, length - 1)
+      return show_second_data.value.slice(2, length - 1)
     })
     // 更多次要玩法 当前所选玩法
-    const select_second_label = ref('')
+    const select_second_item = ref({})
     // 更多次要玩法选择
-    const on_select_second_play = (item) => {
-      console.log(item)
+    const on_select_second_play = (item, i) => {
+      proxy.overtime_tab_handle(item, undefined, 'is-user', i)
+      select_second_item.value = item
     }
     return { 
-      compute_css_obj, on_select_second_play, select_second_label, second_play_data, current_second_data
+      compute_css_obj, on_select_second_play, select_second_item, second_play_data, current_second_data
     }
   }
 })
@@ -162,6 +172,35 @@ export default defineComponent({
         transition: transform 0.2s ease-in;
         &.icon-triangle1:before{
           color: #888;  
+        }
+      }
+    }
+
+    .select-play{
+      :deep(.q-btn__content){
+        color: var(--q-gb-t-c-18);
+        font-size: 0.1rem;
+        .q-btn-dropdown__arrow-container{
+          display: none;
+        }
+        .icon-close{
+          margin-right: 4px;
+          transform: rotate(45deg);
+        }
+        .label{
+          color: #949AB6;
+        }
+        .active-item{
+          .label{
+            color: #179cff;
+            border-color: #179cff;
+          }
+          .q-icon {
+            transform: rotateZ(-180deg);
+            &.icon-triangle1:before{
+              color: #179cff;
+            }
+          }
         }
       }
     }
@@ -222,7 +261,7 @@ export default defineComponent({
   .transition-w-odd {
     font-size: 0.1rem;
     max-height: 0;
-    margin-top: 0.05rem;
+    margin-top: 5px;
     &.expanded {
       height: auto;
       max-height: none;

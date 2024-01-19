@@ -35,7 +35,7 @@ const i18n = createI18n({
  * @return {*}
  */
 const  loadLanguageAsync= async(lang)=>{
-
+  console.log(lang)
   try {
     const langfile =  await  import(/* webpackChunkName: "lang-[request]" */`../i18n/${map_lang[lang]}/index.json`) 
     // 设置语言信息

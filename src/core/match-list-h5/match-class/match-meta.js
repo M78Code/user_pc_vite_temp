@@ -1240,21 +1240,26 @@ class MatchMeta {
       this.complete_mids = result_mids
     }
 
+    // base-virtual-list 所需数据
     this.compute_current_matchs()
-    if (!is_virtual) {
-      // 清除虚拟计算信息
-      VirtualList.clear_virtual_info()
-      this.match_mids = lodash.uniq(result_mids)
-      if (type === 2) {
-        // 不获取赔率  type 删除收藏赛事 需要以最新的为准 提交仓库需设置 merge: 'cover'
-        this.handle_update_match_info({ list: matchs_data, warehouse, merge: merge })
-      } else if (type === 1) {
-        // 获取赔率
-        this.handle_submit_warehouse({ list: matchs_data, warehouse })
+
+    // 复刻版 base-virtual-list 组件 不需要走下面的逻辑
+    if (project_name !== 'app-h5') {
+      if (!is_virtual) {
+        // 清除虚拟计算信息
+        VirtualList.clear_virtual_info()
+        this.match_mids = lodash.uniq(result_mids)
+        if (type === 2) {
+          // 不获取赔率  type 删除收藏赛事 需要以最新的为准 提交仓库需设置 merge: 'cover'
+          this.handle_update_match_info({ list: matchs_data, warehouse, merge: merge })
+        } else if (type === 1) {
+          // 获取赔率
+          this.handle_submit_warehouse({ list: matchs_data, warehouse })
+        }
+      } else {
+        // 计算所需渲染数据
+        this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
       }
-    } else {
-      // 计算所需渲染数据
-      this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
     }
 
     // 重置数据为空状态
@@ -1305,7 +1310,7 @@ class MatchMeta {
    */
   compute_page_render_list(config) {
 
-    const { scrollTop = 0, type = 1, is_scroll = true, is_again = true, merge = '', warehouse = MatchDataBaseH5 } = config
+    const { scrollTop = 0, type = 1, is_scroll = true, merge = '', warehouse = MatchDataBaseH5 } = config
 
     // 计算当前页所需渲染数据
     const scroll_top = is_scroll ? scrollTop : this.prev_scroll
@@ -1333,7 +1338,7 @@ class MatchMeta {
     if (type === 2) return this.handle_update_match_info({ list: match_datas, warehouse, merge })
 
     // 获取赔率
-    if (type === 1) return this.handle_submit_warehouse({ list: match_datas, warehouse, is_again })
+    if (type === 1) return this.handle_submit_warehouse({ list: match_datas, warehouse })
 
   }
 
@@ -1386,11 +1391,17 @@ class MatchMeta {
    */
   set_ws_active_mids({ list = [], warehouse = MatchDataBaseH5 }) {
     warehouse.set_active_mids([])
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) return
     if (MenuData.is_results() && PageSourceData.route_name != 'match_result') return
-    const mids = list.map(t => t)
+    const mids = list.map(t => t.mid)
     nextTick(() => {
       warehouse.set_active_mids(mids)
     })
+  }
+
+  set_current_match_mids(mids) {
+    this.match_mids = mids
   }
 
   /**
@@ -1684,10 +1695,9 @@ class MatchMeta {
    */
   handle_update_match_info(config) {
     MatchResponsive.set_is_http_update_info(true)
-    let { list = [], merge = '', warehouse = MatchDataBaseH5 } = config
-
+    const { list = [], merge = '', warehouse = MatchDataBaseH5 } = config
     // 合并前后两次赛事数据
-    list = lodash.map(list, t => {
+    const result = lodash.map(list, t => {
       // MatchResponsive.get_ball_seed_methods(t)
       const match = warehouse.get_quick_mid_obj(t.mid)
       let target = {}
@@ -1699,10 +1709,10 @@ class MatchMeta {
       return target
     })
     // ws 订阅
-    this.set_ws_active_mids({ list: this.match_mids, warehouse })
+    this.set_ws_active_mids({ list: list, warehouse })
     // 设置仓库渲染数据
     // this.is_ws_trigger = false
-    warehouse.set_list(list)
+    warehouse.set_list(result)
     this.is_ws_trigger = false
     this.update_is_http_update_info()
   }
@@ -1714,16 +1724,14 @@ class MatchMeta {
    */
   handle_submit_warehouse(config) {
     MatchResponsive.set_is_http_update_info(true)
-    let { list = [], warehouse = MatchDataBaseH5, is_again = true } = config
-
+    const { list = [], warehouse = MatchDataBaseH5 } = config
     // ws 订阅
-    this.set_ws_active_mids({ list: this.match_mids, warehouse })
+    // this.set_ws_active_mids({ list: list, warehouse })
     warehouse.clear()
     // 设置仓库渲染数据
     warehouse.set_list(list)
     this.is_ws_trigger = false
-    // 获取赛事赔率
-    this.get_match_base_hps_by_mids({ is_again })
+    this.get_match_base_hps_by_mids({ })
   }
 }
 

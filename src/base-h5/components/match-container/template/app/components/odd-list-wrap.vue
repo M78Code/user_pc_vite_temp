@@ -318,8 +318,8 @@ const hps_compose_data = computed(() => {
     { hl: [], title: all_both, hpid: 101 },
     { hl: [], title: all_total_goal, hpid: 13 },
   ]
-  if (!props.hps || props.hps.length < 1) return standard_odd_status.value === 0 ? default_ol_0 : default_ol_1
-  const result = []
+  const result = standard_odd_status.value === 0 ? default_ol_0 : default_ol_1
+  if (!props.hps || props.hps.length < 1) return result
   props.hps.forEach(t => {
     const flag = t && t.hl && t.hl.length > 0 && t.hl[0].ol && t.hl[0].ol.length > 0
     if (!flag) t.hl = [{}]
@@ -341,7 +341,10 @@ const hps_compose_data = computed(() => {
           t.hl[0].ol = t.hl[0].ol.sort((a, b) => a.index - b.index)
         }
       }
-      if ([13, 101].includes(+t.hpid)) result.push(t)
+      if ([13, 101].includes(+t.hpid)) {
+        const index = result.findIndex(l => +l.hpid === +t.hpid)
+        result.splice(index, 1, t)
+      }
     } else {
       // 半场
       if (+t.hpid === 105) {
@@ -359,13 +362,18 @@ const hps_compose_data = computed(() => {
         }
       }
       if (+t.hpid === 345) t.title = half_total_goal
-      if ([345, 105].includes(+t.hpid)) result.push(t)
+      if ([345, 105].includes(+t.hpid)) {
+        const index = result.findIndex(l => +l.hpid === +t.hpid)
+        result.splice(index, 1, t)
+      }
     }
   })
   if (result.length < 1) {
     return standard_odd_status.value === 0 ? [{hl: [{}], title: all_both}, {hl: [{}], title: all_total_goal}] : [{hl: [{}], title: half_both}, {hl: [{}], title: half_total_goal}] 
   }
+
   const result_data = standard_odd_status.value === 0 ? result.sort((a, b) => +b.hpid - +a.hpid) : result.sort((a, b) => +a.hpid - +b.hpid)
+  console.log(result_data)
   return result_data
 })
 

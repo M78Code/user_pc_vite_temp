@@ -386,20 +386,23 @@ class MatchUtils {
     const fold_key = MatchFold.get_match_fold_key(match)
     // 赛事是否显示
     const show_card = lodash.get(fold_data[fold_key], `show_card`, false)
+    // 是否显示次要玩法
+    const show_tab = lodash.get(fold_data[fold_key], `show_tab`, false)
     // 当前项目 默认配置
     const project_config = template_default_config[project_name] || template_default_config['app-h5']
     // 当前版本默认配置
     const standard_config = project_config[standard_edition] || project_config['2']
     let estimateHeight;
     if (is_show_league && show_card) {           // 显示联赛  显示卡片
-      estimateHeight = standard_config['1']
+      estimateHeight = show_tab ? standard_config['4'] : standard_config['1'] // 4 显示次要玩法  1 不显示次要玩法
     } else if (is_show_league && !show_card) {   // 显示卡片 不显示联赛
-      estimateHeight = standard_config['2']
+      estimateHeight = show_tab ? standard_config['5'] : standard_config['2'] // 5 显示次要玩法  2 不显示次要玩法
     } else if (!is_show_league && show_card)  {  // 显示联赛  不显示卡片
       estimateHeight = standard_config['3']
     } else {                                     // 默认
       estimateHeight = standard_config['default']
     }
+    console.log(estimateHeight)
     return estimateHeight
   }
   /**
