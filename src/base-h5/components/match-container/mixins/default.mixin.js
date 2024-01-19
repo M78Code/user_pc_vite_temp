@@ -20,6 +20,7 @@ import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, is_detail, is_results, menu_lv1 } from 'src/base-h5/mixin/menu.js'
 import BaseData from "src/core/base-data/base-data.js";
 import { get_collect_count } from 'src/core/collect/collect-class.js'
+import { store } from "project_path/src/pages/match-page/index.js"
 
 // i: 每个组件的 props 赛事下标， 来源 === 组件
 // match_of_list: 每个组件的 props 赛事对象， 来源 === 组件
