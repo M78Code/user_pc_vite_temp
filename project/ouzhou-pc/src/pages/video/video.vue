@@ -71,6 +71,7 @@ function exit_browser_full_screen(){
 <style lang="scss" scoped>
 .video-wrap {
   padding-right: 14px;
+  height: 100%;
   &.big-video-right {
     padding-right:0;
     &::after{

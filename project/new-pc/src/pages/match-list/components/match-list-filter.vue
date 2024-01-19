@@ -10,9 +10,9 @@
                     <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/search.svg`" alt="" class="search-icon" />
                 </div>
                 <!-- 选择联赛 -->
-                <div class="chose-league">
+                <div class="chose-league curson-point" >
                     <span>选择联赛</span>
-                    <span class="active">全部</span>
+                    <span class="active">{{ data.all_select ? '全部' : tid.length }}</span>
                     <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/arrow.svg`" alt="" class="arrow active" />
                 </div>
                 <!-- 刷新 -->
@@ -82,7 +82,7 @@ const emits = defineEmits(['close'])
 const data = reactive({
     total: null, //赛事总数
     total_league: null,
-    is_active: false, //确认按钮是否激活
+    is_active: true, //确认按钮是否激活
     all_filter_list: [],//筛选全部数据
     filter_list: [],//筛选数据
     all_select: true,// 是否全选
@@ -145,7 +145,7 @@ function handle_checked_all() {
 }
 
 function close() {
-    emits('close')
+    emits('close', tid.value)
 }
 
 /**
@@ -175,13 +175,19 @@ function handle_select(parent, child, current) {
                     return p;
                 })
             }
-            
             return e;
         })
     }
+    data.all_select = data.list_data.every(e => e.status);
 }
 
 async function submit() {
+    if (!data.is_active) {
+        return;
+    }
+    if (tid.value.length == 0) {
+        return;
+    }
     // {
     //  "apiType":1,
     //  "cuid":"331188967994322944",
@@ -234,11 +240,14 @@ async function submit() {
       selectionHour: null,
     }
     try {
+        data.is_active = false;
         const res = await api_filter.structure_tournament_matches_PB(params);
         const collect_matches_res = await api_filter.collect_matches_PB(collect_matches_PB_params)
-        emits('close')
+        close();
     } catch (error) {
         
+    } finally {
+        data.is_active = true;
     }
 }
 
@@ -272,7 +281,6 @@ async function init() {
             pids: current_params.pids,
             // inputText: "",
             // cuid: current_params.cuid,
-
         });
         data.list_data = Object.freeze((res.data || []).map(e => {
             e.status = true;
