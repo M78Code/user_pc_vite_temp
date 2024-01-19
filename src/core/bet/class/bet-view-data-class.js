@@ -488,6 +488,7 @@ class BetViewData {
     this.bet_special_series.filter(obj=>{
         obj.min_money = 0
         obj.max_money = 8888
+        obj.bet_amount = 0
     })
  
     this.set_bet_view_version()

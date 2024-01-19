@@ -54,7 +54,7 @@ export default {
 }
   .q-tab__label {
     font-size: 0.14rem;
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-5);
     
   }
 }

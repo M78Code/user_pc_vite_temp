@@ -80,6 +80,7 @@ import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { api_common } from "src/api";
 import MatchFold from 'src/core/match-fold/index.js'
 import { oz_sprite_bg_images_postion } from "src/output/module/constant-utils.js";
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 const emitters = ref({})
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
@@ -113,7 +114,6 @@ const DateOptionsOffset = computed(() => {
  * @return {}
  */
  const format_type = ( id ) => {
-    console.log("id",id)
   return oz_sprite_bg_images_postion[id]
 }
 /**
@@ -153,6 +153,11 @@ const changeTab = (name, index) => {
     emit("changeTab", name);
     if (name === 'Matches') {
         changeDatetab(week.value[0], 0)
+    }else if(name != 'League'){
+        MatchResponsive.set_is_league_detail(false)
+    }
+    if(name === 'League'){
+        MatchFold.clear_fold_info()
     }
 }
 /**

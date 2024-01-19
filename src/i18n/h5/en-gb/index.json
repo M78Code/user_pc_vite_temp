@@ -412,6 +412,7 @@
     "match_max2": "The number of betting items has reached",
     "match_min": "Select {0} matches at least",
     "max": "Max",
+    "merge": "Combo",
     "millions": "Million",
     "millions_10": "Ten Million",
     "money_limit": "Limit %s~%s",
@@ -2430,6 +2431,7 @@
     "28": "Results"
   },
   "virtual_sports": {
+    "rank": "Ranking",
     "advance": "GF",
     "champion": "No.1",
     "comprehensive_rating": "Comprehensive Rating",

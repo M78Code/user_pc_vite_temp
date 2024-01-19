@@ -3,6 +3,7 @@
     <div v-show="false">{{ MatchListCardDataClass.list_version }}
     </div>
     <div class="flex flex-start items-center">
+    <!-- {{ match_style_obj.data_tpl_id }} -->
       <!-- 赛事基础信息 -->
       <div class="basic-col"
         :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
@@ -37,7 +38,7 @@
         </div>
       </div>
     </div>
-    <div class="flex" v-if="match_style_obj.data_tpl_id == 109">
+    <div class="flex" v-if="is_score">
       <div :style="`width:${match_list_tpl_size.process_team_width}px !important;height:28px !important;`">
       </div>
       <div class="flex col items-start">
@@ -95,6 +96,16 @@ export default {
       }
       return []
     });
+
+    let is_score = computed(() => {
+      let status = false
+      if ([109, 111, 112].includes(+match_style_obj.data_tpl_id)) {
+        status = true
+      }
+
+      return status
+    })
+
     // watch(() => MatchListCardDataClass.list_version, (new_value, old_value) => {
     //   if (match.value) {
     //     const csid = lodash.get(match.value, 'csid')
@@ -161,6 +172,7 @@ export default {
       MenuData,
       current_mid,
       match_style_obj,
+      is_score
     }
   }
 }

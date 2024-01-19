@@ -30,6 +30,7 @@ import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll
 import { MenuData, UserCtr,compute_css_obj } from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { oz_sprite_bg_images_postion } from "src/output/module/constant-utils.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
 const tabValue = ref('outrights');
 const state = reactive({
     current_mi:"101",
@@ -55,6 +56,9 @@ const changeMenu = (item) =>{
 onMounted(async () => {
   // 冠军设置为欧赔
   UserCtr.set_cur_odds("EU");
+  // 冠军设置为单关投注
+  BetData.set_is_bet_single('single')
+  BetData.set_is_bet_merge()
 
   MenuData.set_current_lv1_menu(400);
   MenuData.set_menu_mi('101');

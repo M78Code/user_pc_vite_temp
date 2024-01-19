@@ -95,12 +95,12 @@ import sportIcon from "src/components/sport_icon/sport-icon.vue";
 import { get_match_status } from "src/output/module/constant-utils.js";
 import { useRoute } from "vue-router";
 
-const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`;
-const animal_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal_active.png`;
-const score = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score.png`;
-const score_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score_active.png`;
-const video_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/video_active.png`;
-const video = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/video.png`;
+const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/animal.png`;
+const animal_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/animal_active.png`;
+const score = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/score.png`;
+const score_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/score_active.png`;
+const video_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/video_active.png`;
+const video = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/video.png`;
 
 const route = useRoute();
 const props = defineProps({
