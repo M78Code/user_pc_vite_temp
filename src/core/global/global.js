@@ -64,7 +64,15 @@ class UseGlobal {
     this.is_fold_status = true;
     this.champion_fold_obj = {};
     // 全局开关变更
-    this.global_switch_version =ref('22222')
+    this.global_switch_version =ref('22222');
+    // 附加盘开关
+    this.show_additional_disk = localStorage.getItem('additional_disk')?JSON.parse (localStorage.getItem('additional_disk')) :true;
+    // 附加玩法开关
+    this.show_additional_plays = localStorage.getItem('additional_plays')?JSON.parse (localStorage.getItem('additional_plays')) :true;
+    // 附加玩法配置展示行数
+    this.additional_plays_list_num = localStorage.getItem('additional_plays_num') || 11;
+    // 附加玩法配置展示更多行数
+    this.show_more_other_list_obj = {};
   }
   /**
    * @description: 设置全局点击事件
@@ -155,6 +163,43 @@ class UseGlobal {
    get_is_fold_status(state) {
     return this.is_fold_status;
   }
+/**
+ * @Description:列表附加玩法
+ * @return {undefined} undefined
+ */
+ change_setting_additional_plays() {
+  // 列表附加玩法
+  const show_additional_plays = !this.get_show_additional_plays;
+  localStorage.setItem(
+    "additional_plays",
+    JSON.stringify(show_additional_plays)
+  );
+  this.set_show_additional_plays(show_additional_plays);
+  // 刷新列表重新计算
+  // this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
+}
+/**
+ * @Description:附加盘
+ * @return {undefined} undefined
+ */
+ change_setting_additional_disk() {
+  const show_additional_disk = !this.get_show_additional_disk;
+  localStorage.setItem(
+    "additional_disk",
+    JSON.stringify(show_additional_disk)
+  );
+  this.set_show_additional_disk(show_additional_disk);
+  // 刷新列表重新计算
+  // this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
+}
+//列表附加玩法是否展开状态
+set_show_more_other_list(state, obj) {
+  if (obj.reset) {
+    state.show_more_other_list_obj = {}
+  }else{
+    state.show_more_other_list_obj[obj.mid] = {...state.show_more_other_list_obj[obj.mid],...obj}
+  }
+}
 }
 
 export default new UseGlobal();

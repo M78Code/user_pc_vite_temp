@@ -261,10 +261,12 @@ const watch_route_fun = (to, from, that)=>{
   // if(BUILDIN_CONFIG.PROJECT_NAME == 'app-h5' && to.name == 'virtual_sports_details'){
   //   return;
   // }
+  console.error('to.name:',to.name,that);
   // 发送进入首页埋点消息
   if(that && ['matchList','home'].includes(to.name)){
     clearTimeout(that.timer);
     that.timer = setTimeout(() => {
+      console.error('发送进入首页埋点消息.',lodash.get(UserCtr,'user_info.userId'));
       lodash.get(UserCtr,'user_info.userId') && into_home_event();
     }, 2000);
   }

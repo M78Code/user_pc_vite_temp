@@ -532,7 +532,8 @@ const rang = ref([])
       category_list:props.category_list,
       toggele_layout,
       check_half:check_half(),
-      toggle_panel
+      toggle_panel,
+      panel_status,
     }
     useMittEmit(MITT_TYPES.EMIT_SET_HANDICAP_THIS, data)
   })

@@ -37,7 +37,7 @@
             <img :src="shipin"/>
           </div>
           <!-- 动画 -->
-          <div class="img-wrap" v-if="get_detail_data.mvs > -1 && lodash.get(UersCtr, 'user_info.ommv') && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
+          <div class="img-wrap" v-if="get_detail_data.mvs > -1 && lodash.get(UserCtr, 'user_info.ommv') && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
             <img :src="donghua"/>
           </div>
 
@@ -127,9 +127,6 @@
             <!--</div>-->
             <!-- 全屏按钮 -->
             <!-- <div class="full-screen-btn" @click="exit_full_screen" v-if="!['result_details','match_result'].includes(route?.name)"> -->
-            <div class="full-screen-btn" @click="exit_full_screen" v-if="false">
-              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`">
-            </div>
           </div>
         </template>
 
@@ -211,7 +208,7 @@
           <template v-else>
             <div class="row justify-between full-height mx-15"  @click.stop="click_mask">
                <!-- 缩放按钮 -->
-              <img v-if="get_is_full_screen && show_exit_btn" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
+              <img v-if="get_is_full_screen && show_exit_btn && ProjectName != 'ouzhou-h5'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
             
               <div class="col-1 go-back-btn-wrap" @click="close_video" >
                 <div class="video_back"></div>
@@ -242,7 +239,7 @@
           </template>
           <template v-if="show_animation_and_video_status">
             <!-- 动画 -->
-            <div class="img-wrap" v-if="get_detail_data.mvs > -1 && lodash.get(UersCtr, 'user_info.ommv') && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
+            <div class="img-wrap" v-if="get_detail_data.mvs > -1 && lodash.get(UserCtr, 'user_info.ommv') && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
               <img :src="donghua"/>
             </div>
           </template>
@@ -329,10 +326,11 @@ import basketball_match_analysis from "src/base-h5/components/details/analysis-m
 import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import slider from "src/base-h5/components/details/components/slider/slider.vue"
 import OrientationSubscrbe from 'src/base-h5/components/common/orientation/orientation-subscribe'
 import { useRoute } from "vue-router"
-import { project_name } from "src/output/index.js"
+import { project_name ,into_video_anima_event} from "src/output/index.js"
 console.log(project_name,'project_name');
 export default {
   name: "videos",
@@ -347,6 +345,7 @@ export default {
   },
   data() {
     return {
+      UserCtr,
       LOCAL_PROJECT_FILE_PREFIX:LOCAL_PROJECT_FILE_PREFIX,
       tips_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/details/info.svg`,
       // tips_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_b.svg`,
@@ -580,6 +579,11 @@ export default {
   watch: {
     get_is_full_screen(value) {
       this.$emit('change_fullscreen', value)
+      if(this.ProjectName == 'ouzhou-h5'){
+          document.querySelector("#top-header-oz").style.display=!this.get_is_full_screen ? "block" :"none"
+          document.querySelector("#page-footer").style.display=!this.get_is_full_screen ? "block" :"none"
+       }
+     
     },
     iframe_src(value) {
       console.log(value, "value======");
@@ -988,6 +992,8 @@ export default {
      * @Description 设置全屏
      */
     set_full_screen(){
+      console.log(document.querySelector("#top-header-oz"));
+    
       if(this.get_is_full_screen){
         this.set_is_hengping(false)
         this.exit_browser_full_screen()
@@ -1197,6 +1203,8 @@ export default {
         this.media_type_change_timer = setTimeout(() => {
           this.set_change_count(this.get_change_count + 1);
           this.icon_click(val);
+          // 发送进入动画和视频的埋点
+    	    into_video_anima_event(val,{match:this.get_detail_data,source:'details'});
         }, 50)
       }
     },
@@ -1867,7 +1875,7 @@ export default {
     OrientationSubscrbe.instance.change_status(false);
     OrientationSubscrbe.instance.destory_notify();
 
-  }
+  },
 }
 </script>
 

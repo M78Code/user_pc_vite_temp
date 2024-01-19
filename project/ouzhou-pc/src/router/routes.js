@@ -86,7 +86,7 @@ const routes = [
   },
   //赛事分析
   {
-    path: "/analysis_header/:csid/:mid/:euid",
+    path: "/analysis_header/:csid/:mid",
     name: "analysis_header",
 
     component: () => import('../pages/analysis-header/analysis-header.vue'),

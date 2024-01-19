@@ -132,6 +132,7 @@ export default {
       MatchListCardDataClass.set_current_mid(mid);
       if (MenuData.is_scroll_ball()) {
         // 控制右侧比分板
+        match.value.showType = type   // 右侧比分榜需要将type 传过去
         MatchDataWarehouseInstance.set_match_details(lodash.cloneDeep(match.value), [])
         useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
       } else {

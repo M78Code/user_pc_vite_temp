@@ -35,11 +35,11 @@
               </template>
               <template v-if="match.csid =='2'">
                 <div>
-                  <img src="~public/image/yabo/svg/analysis-foul.svg" alt="" width="14">
+                  <img :src="compute_local_project_file_path('/image/svg/analysis-foul.svg')" alt="" width="14">
                   <div>{{lodash.get(match, 'msc.S106.home')}}</div>
                 </div>
                 <div>
-                  <img src="~public/image/yabo/svg/analysis-pause.svg" alt="" width="14">
+                  <img :src="compute_local_project_file_path('/image/svg/analysis-pause.svg')" alt="" width="14">
                   <div>{{lodash.get(match, 'msc.S109.home')}}</div>
                 </div>
               </template>
@@ -74,11 +74,11 @@
               <!-- 篮球 -->
               <template v-if="match.csid =='2'">
                 <div>
-                  <img src="~public/image/yabo/svg/analysis-pause.svg" alt="" width="14">
+                  <img :src="compute_local_project_file_path('/image/svg/analysis-pause.svg')" alt="" width="14">
                   <div>{{lodash.get(match, 'msc.S109.away')}}</div>
                 </div>
                 <div>
-                  <img src="~public/image/yabo/svg/analysis-foul.svg" alt="" width="14">
+                  <img :src="compute_local_project_file_path('/image/svg/analysis-foul.svg')" alt="" width="14">
                   <div>{{lodash.get(match, 'msc.S106.away')}}</div>
                 </div>
               </template>
@@ -117,6 +117,7 @@
 
 <script>
 import {api_analysis} from 'src/api/index.js'
+import { compute_local_project_file_path } from 'src/output/index.js';
 // import analysisData  from 'src/public/mixins/analysis/analysis'
 import chat from './chat.vue'
 import trace from './trace.vue'
@@ -137,6 +138,7 @@ export default {
       event_data: [],
       // 篮球事件
       event_all_data: [],
+      compute_local_project_file_path,
       icons:[
         // 黄牌
   { name: 'public/image/yabo/svg/analysis-yellow_card.svg', label: i18n_t("icon_tips.yellow_card") },
@@ -264,10 +266,10 @@ export default {
 /*  统计图表 */
 .total {
   padding: 15px;
-  background: var(--qq--y0-bg-color12);
+  background: #ffffff;
   //border: 1px solid var(--qq--match-border-color5);
   border-top: 0;
-  border-radius: 0 0 8px 8px;
+  // border-radius: 0 0 8px 8px;
   .list {
     display: flex;
     justify-content: space-between;
@@ -277,7 +279,7 @@ export default {
       flex-direction: column;
     }
     .name {
-      color: var(--qq--wrap-hot-text-color);
+      color: #414655;
       display: flex;
       align-items: center;
       margin-bottom: 18px;
@@ -286,24 +288,24 @@ export default {
         height: 6px;
         border-radius: 6px;
         &.home-round {
-          background: var(--qq--details-chat-blue-1);
+          background: #ffaa01;
           margin-right: 5px;
         }
         &.away-round {
-          background: var(--qq--details-chat-origin-1);
+          background: #4268f1;
           margin-left: 5px;
         }
       }
     }
     .result {
       display: flex;
-      color: var(--qq--wrap-hot-text-color);
+      color: #414655;
       margin-bottom: 15px;
       .icon {
         width: 14px;
         height: 14px;
         background-repeat: no-repeat;
-        background-image: url("~public/image/common/png/sports_play_icon.png");
+        background-image: url($SCSSPROJECTPATH+"/image/common/png/sports_play_icon.png");
         background-size: 100%;
         &.rs_jiao_quan {
           background-position: 0 -224px;
@@ -336,8 +338,8 @@ export default {
     justify-content: space-between;
     padding-right: 20px;
     &:last-child {
-      border-radius: 8px;
-      border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+      // border-radius: 8px;
+      border-bottom: 1px solid var(--q-analysis-color-10);
     }
     .stage-tab {
       display: flex;
@@ -346,16 +348,16 @@ export default {
         width: 60px;
         height: 24px;
         margin-right: 6px;
-        background: var(--qq--analysis-bg-color-1);
+        background: var(--q-analysis-color-16);
         border-radius: 2px;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--qq--wrap-hot-text-color);
+        color: var(--q-analysis-color-3);
         &.active {
-          color: var(--qq--analysis-text-color-13);
-          background-image: var(--qq--analysis-bg-gradient-2);
+          color: var(--q-analysis-color-13);
+          background-image: var(--q-analysis-bg-gradient-2);
         }
         &:last-child {
           margin-right: 0;
@@ -375,7 +377,7 @@ export default {
     margin-right: 20px;
     span {
       margin-left: 6px;
-      color: var(--qq--y0-text-color5);
+      color: #414655;
     }
     &:last-child {
       margin: 0;

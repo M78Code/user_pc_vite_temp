@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import analysisData  from 'src/public/mixins/analysis/analysis'
+import analysisData  from './analysis'
 export default {
   data() {
     return {
@@ -96,12 +96,13 @@ export default {
     display: flex;
     align-items: center;
     height: 34px;
-    color: var(--qq--y0-text-color5);
+    color: #414655;
     margin-bottom: 10px;
     border-radius: 0 0 8px 8px;
-    border-left: 1px solid var(--qq--match-border-color5);
-    border-right: 1px solid var(--qq--match-border-color5);
-    background: var(--qq--match_details_analysis_title);
+    border-left: 1px solid #E4EAFF;
+    border-right: 1px solid #E4EAFF;
+    background: linear-gradient(94.17deg, rgba(255, 112, 0, 0.3) -25.38%, rgba(255, 112, 0, 0) 22.77%),
+linear-gradient(0deg, #FFFFFF, #FFFFFF);
     span {
       // width: 150px;
       height: 28px;
@@ -123,8 +124,8 @@ export default {
       &.active {
         // background-image: var(--qq--analysis-bg-gradient-2);
         // color: var(--qq--analysis-text-color-13);
-        color: var(--qq--theme-color-handicap-item-title);
-        border-bottom: 2px solid var(--qq--theme-color-handicap-item-title);
+        color: #ff7000;
+        border-bottom: 2px solid #ff7000;
       }
     }
   }
@@ -134,7 +135,7 @@ export default {
       background: #E93D3D;
     }
     .panel-title.color50C042:before {
-      //background: #50C042;
+      background: #50C042;
     }
     .item {
       padding: 14px 30px;

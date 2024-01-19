@@ -60,12 +60,12 @@ const deal_with_list_data = (data) => {
 		let mid = item.mids.split(',');
 		mid.forEach(option => {
 			const match = MatchListData.get_quick_mid_obj(mid) || {}
-			const match_cache = MatchListData.cache_match[mid] || {}
+			// const match_cache = MatchListData.cache_match[mid] || {}
 			let mid_info = {
 				...item,
 				mid: option,
 				...match,
-				...match_cache,
+				// ...match_cache,
 			}
 			delete mid_info.mids;
 			mid_arr.push(mid_info)
@@ -107,7 +107,7 @@ const mx_list_res = (data, backend_run,is_base_data) => {
 					// 组装所有赛事
 					const temp_match = { mid: mid_, csid: item.csid, tid: item.tid }
 					// 设置收藏信息
-					match_collect_status(temp_match,true)
+					match_collect_status(temp_match,backend_run)
 				});
 			});
 		} catch (error) {
@@ -207,7 +207,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
 		match_list = []
 	}
 	match_list.forEach(match => {
-		match_collect_status(match,true)
+		match_collect_status(match,backend_run)
 	})
 	if (Array.isArray(match_list)) { //有时候是 {}
 		MatchListData.set_list(match_list)
@@ -328,7 +328,6 @@ const mx_use_list_res = (data, backend_run,is_base_data) => {
 	}
 	set_league_list_obj(match_list)
 	//虚拟体育 接口数据结构转换
-	// // lockie
 	// if (MenuData.is_vr() && !is_search && false) {
 	// 	// 格式化
 	// 	match_list = virtual_sport_format(match_list);

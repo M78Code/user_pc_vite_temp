@@ -5,8 +5,8 @@
     <div class="g-settings" style="max-width: 350px">
         <q-menu v-model="show_g_settings" self="bottom middle" :offset="[0, -32]" :content-class="'g-settings-style'">
 
-            <q-list bordered class="rounded-borders">
-                <div v-for="(settings, key) in settings_items" :key="settings.id">
+            <q-list bordered class="rounded-borders list">
+                <div v-for="(settings, key) in settings_items_list" :key="settings.id">
 
                     <!-- 全局设置项 -->
                     <q-expansion-item group="settings"
@@ -16,7 +16,8 @@
                         <template v-slot:header>
                             <!-- 设置项 图标 -->
                             <q-item-section avatar>
-                                <i class="icon settings-icon" :style="compute_css_obj('icon-setting')"></i>
+                                <i class="icon settings-icon" :style="compute_css_obj({key:'pc-home-list-score-active'})"></i>
+                                <!-- <i class="icon settings-icon" :style="compute_css_obj({key:'icon-setting'})"></i> -->
                             </q-item-section>
 
                             <!-- 设置项 名称 -->
@@ -35,9 +36,24 @@
                                     </div>
 
                                     <!-- 主题设置 -->
-                                    <div v-else @click="change_theme" class="skin-toggle">
+                                    <div  v-else-if="settings.id == 3" @click="change_theme" class="skin-toggle">
                                         <div class="skin-icon skin-icon-day"></div>
                                         <div class="skin-icon skin-icon-night"></div>
+                                    </div>
+                                   <!-- 附加玩法 -->
+                                    <div
+                                        v-else-if="settings.id == 4"
+                                        @click="change_setting_additional_plays"
+                                        class="skin-toggle"
+                                    >
+                                        <div
+                                        class="skin-icon"
+                                        :class="{ 'skin-icon-off': get_show_additional_plays }"
+                                        ></div>
+                                        <div
+                                        class="skin-icon"
+                                        :class="{ 'skin-icon-night': !get_show_additional_plays }"
+                                        ></div>
                                     </div>
                                 </div>
                             </q-item-section>
@@ -74,7 +90,32 @@
                                         </div>
                                     </template>
                                 </template>
-
+                                <!-- 近期开赛 -->
+                                    <template v-if="settings.id === 3">
+                                      <template v-for="(item, index) in settings.value_arr" :key="index">
+                                        <div class="child-item item-odds relative-position"
+                                        :class="vx_cur_odd == item.value && 'active'" @click="select_time_change(item)">
+                                        {{ item.label }}
+                                        <i v-if="vx_cur_odd == item.value" class="icon-triangle3 q-icon c-icon arrow-show"></i>
+                                        </div>
+                                    </template>
+                                    </template>
+                                   
+                                    <!-- 附加盘 -->
+                                    <div
+                                        v-else-if="settings.id == 6"
+                                        @click="change_setting_additional_disk"
+                                        class="skin-toggle"
+                                    >
+                                        <div
+                                        class="skin-icon"
+                                        :class="{ 'skin-icon-off': !get_show_additional_disk }"
+                                        ></div>
+                                        <div
+                                        class="skin-icon"
+                                        :class="{ 'skin-icon-night': get_show_additional_disk }"
+                                        ></div>
+                                    </div>
                             </q-card-section>
                         </q-card>
                     </q-expansion-item>
@@ -99,7 +140,7 @@ import { useMittEmit, MITT_TYPES, compute_css_obj } from "src/output/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { theme_map } from "src/core/theme/"
-
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 // import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 
 
@@ -144,9 +185,18 @@ const bet_obj = ref(BetData.bet_obj || {})
 const is_virtual_bet = ref(BetData.is_virtual_bet)
 /** 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关 */
 const left_menu_toggle = ref(BetData.left_menu_toggle)
-
+//获取当前菜单信息
+const vx_cur_menu_type = MenuData.cur_menu_type
 /** 虚拟投注列表对象 */
 const cur_menu_type = ref({})
+// 附加盘配置
+const get_show_additional_disk = "get_show_additional_disk"
+// 附加玩法
+const get_show_additional_plays =  "get_show_additional_plays"
+// 附加玩法配置
+const get_additional_plays_list_num = "get_additional_plays_list_num"
+ // 附加玩法配置展示更多行数
+const show_more_other_list_obj = {}
 /** stroe仓库 */
 const unsubscribe = store.subscribe(() => {
     cur_menu_type.value = new_state.cur_menu_type
@@ -156,6 +206,21 @@ onUnmounted(unsubscribe)
 /** 语言列表 */
 const languageList = computed(() => lodash.get(UserCtr.get_user(), 'languageList', []))
 
+
+// 菜单收起隐藏新版本切换
+const settings_items_list = computed(()=>{
+      let type_name = vx_cur_menu_type.type_name;
+
+      let list = JSON.parse(JSON.stringify(props.settings_items))
+      // 今日才显示近期开赛
+    //   if(!['today'].includes(type_name)) {  
+    //     list = list.filter(item=>item.id!==3)
+    //   }
+    //   if (this.get_version==2) {
+    //     list = list.filter(item=>![4,5,6].includes(item.id))    // 新手版不需要显示附加玩法配置
+    //   }
+    return list
+  })
 /**
  * @Description:切换盘口
  * @param {object} row 盘口数据
@@ -192,6 +257,18 @@ function set_user_preference(curr_odd) {
         });
     }
 }
+ /**
+ * 近期开赛筛选
+ */
+ function select_time_change(item) {
+      this.time_value = item.value
+      //设置session
+      sessionStorage.setItem('is_select_time', '1')
+    //   this.set_select_time(item.value);
+      //清空联赛筛选条件
+    //   this.set_filter_select_obj([]);
+    //   this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
+    }
 
 /**
  * @Description:切换语言
@@ -303,6 +380,10 @@ function change_theme() {
 </script>
   
 <style  lang="scss">
+
+.list{
+    background: #fff;
+}
 .g-settings-style {
     width: 240px;
     max-height: 700px !important;
