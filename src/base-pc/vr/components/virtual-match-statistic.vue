@@ -210,7 +210,7 @@ export default {
 .c-match-startistic {
   min-width: 3.75rem;
   padding:0.05rem;
-  background:var(--q-gb-bg-c-21);
+  background:var(--q-gb-bd-c-2);
   .bg-card-startistic{
     background: var(--q-gb-bg-c-25);
     border-radius: 4px;

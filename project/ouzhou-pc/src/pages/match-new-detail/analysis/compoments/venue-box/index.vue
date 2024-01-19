@@ -31,7 +31,7 @@
             detail_info.man
           }}</span>
         </div>
-        <div class="analysis-top-right">
+        <div class="analysis-top-right" v-if="!MenuData.is_esports()">
           <!-- 视频图标 -->
           <img
             v-if="cur_video_icon.type"
@@ -123,6 +123,11 @@ watch(
   () => props.detail_info,
   (val) => {
     if (val) {
+      console.log(route.params,'params');
+      if(MenuData.is_esports()){
+        tab_click('video');
+        return
+      }
       if (route.params?.type) {
         tab_click(route.params?.type);
         return;
