@@ -47,6 +47,7 @@
 </template>
 
 <script>
+
 export default {
   props: ['current_match', 'match_list_by_no', 'switch_match_handle']
 }
@@ -109,22 +110,6 @@ export default {
           width: 30px;
           height: 29px;
         }
-      }
-    }
-
-    .horse-title {
-      display: flex;
-      align-items: center;
-      padding-right: 5px;
-      position: relative;
-      .title {
-        flex: 10000 1 0%;
-      }
-      .horse-col {
-          font-size: 12px;
-          width: 18%;
-          max-width: 96px;
-          text-align: center;
       }
     }
   }

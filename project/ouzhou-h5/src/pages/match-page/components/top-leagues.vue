@@ -26,6 +26,7 @@ import collapse from "project_path/src/pages/home/components/collapse.vue"
 import MatchCollect from 'src/core/match-collect'
 import { api_common } from "src/api/index.js";
 import { store } from "project_path/src/pages/match-page/index.js"
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 const league_collect_state = (value) => {
   return MatchCollect.get_league_collect_state(value.tid)
@@ -48,6 +49,7 @@ const handle_match_collect = (value) => {
 
 const handle_jump_match = (item) => {
   store.isLeagueDetail = true
+  MatchResponsive.set_is_league_detail(true)
   store.selectLeague = item
   MatchMeta.clear_match_info()
   MatchMeta.get_ouzhou_leagues_list_data(item.tid, store.curSelectedOption.timestamp)
