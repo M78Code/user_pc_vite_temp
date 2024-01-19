@@ -97,7 +97,7 @@ const replay_click_event = (obj) => {
  * @return 
  */
 const into_home_event = (obj={}) => {
-  // 暂时只发送欧洲版的埋点
+  // 暂时只发送欧洲版和H5复刻版的埋点
   if(!['ouzhou-h5','ouzhou-pc','app-h5'].includes(PROJECT_NAME)){
     return;
   }
@@ -115,9 +115,66 @@ const into_home_event = (obj={}) => {
     }
   })
 }
+/**
+ * @description 进入动画和视频的埋点逻辑处理函数
+ * @param obj 
+ * @return 
+ */
+const into_video_anima_event = (type, obj)=>{
+  // 暂时只发送H5复刻版的埋点
+  if(!['app-h5'].includes(PROJECT_NAME)){
+    return;
+  }
+  if(!type || !obj){
+    return;
+  }
+  // event_id:3	video	查看视频
+  // event_id:4	animation	查看动画
+  let event_id = '';
+  switch (type+'') {
+    case 'muUrl':
+      event_id = 3;
+      break;
+    case 'animationUrl':
+      event_id = 4;
+      break;
+  
+    default:
+      break;
+  }
+
+  let button_id = '';
+  switch (lodash.get(obj, 'source')) {
+    case 'details': // 赛事详情
+      button_id = '3';
+      break;
+  
+    default:
+      break;
+  }
+  if(event_id){
+    let event_obj = {
+      eventId: event_id,// 事件id
+      version: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version'), //  >>>前端提供(格式)
+      versionId: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version_id'),
+      deviceType:IS_PC?'1':'2', // 终端id：1-pc/2-h5/3-app/4  前端定义(h5/pc统一)
+      sportId: lodash.get(obj, 'match.csid','1'),
+      buttonId: button_id, // 1.列表  2.右侧赛事信息 3.详情页  
+      matchId:lodash.get(obj, 'match.mid',''),
+      tournamentId:lodash.get(obj, 'match.tid',''),
+    }
+    // eventCode提交埋点数据
+    event_obj.versionId && api_hide.submit_event_collection(event_obj).then( res => {
+      if(lodash.get(res, 'data.code') == 200){
+        console.log('提交成功!');
+      }
+    })
+  }
+}
 
 export { 
   replay_click_event, 
   into_home_event, 
+  into_video_anima_event
 };
   
