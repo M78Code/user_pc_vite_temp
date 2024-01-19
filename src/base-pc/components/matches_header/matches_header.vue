@@ -2,7 +2,7 @@
 	<div class="matches_header_wrap" :style="`height:${match_list_top}`">
 		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.mid_menu_result.filter_tab }}-{{MenuData.menu_current_mi }}-{{MenuData.menu_root}}-{{MenuData.is_kemp()}}- {{ MenuData.is_collect_kemp() }}-{{MenuData.is_common_kemp() }}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}--{{ BaseData.base_data_version }}</div>
 		<div class="matches_header">
-			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
+			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.is_kemp() ? 400 : MenuData.current_ball_type })"></div>
 			<div :class="['matches-title', (MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect) ? 'matches_outrights' : '']">
 				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ is_left_sports ?  matches_header_title : i18n_t(matches_header_title) }}</div>
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">{{ i18n_t('ouzhou.match.all_matches')}}</div>

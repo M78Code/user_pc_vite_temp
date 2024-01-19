@@ -86,12 +86,15 @@ const set_confirm = () => {
 
 // 串关底部收益
 const winMoney = computed(()=> state =>{
-    console.log('-------------------------------------- BetData.bet_special_series----------------------------------',  BetViewDataClass.bet_special_series, BetViewDataClass.orderNo_bet_single_obj)
     let sum = 0
     // if (BetData.bet_amount) {
     if (BetViewDataClass.bet_order_status === 1) {
         BetViewDataClass.bet_special_series.forEach((item)=>{
-            sum += mathJs.subtract(mathJs.multiply(item.bet_amount, item.seriesOdds), item.bet_amount)
+            if (item.bet_amount && item.seriesOdds) {
+                sum += mathJs.subtract(mathJs.multiply(item.bet_amount, item.seriesOdds), item.bet_amount)
+            } else {
+                sum += 0
+            }
         })
     } else {
         BetViewDataClass.orderNo_bet_single_obj.forEach((item)=>{
