@@ -29,12 +29,12 @@ export function set_sticky_top() {
   // 非滚球电竞
   else if (MenuData.is_esports() && !['hot', 'play'].includes(type_name)) {
     obj = {
-      type: 196,
-      league: 196
+      type: 170,
+      league: 170
     }
   }
   // 常规冠军
-  else if (MenuData.is_common_kemp()) {
+  else if (MenuData.is_common_kemp()&&MenuData.is_today()) {
     obj = {
       type: 40,
       league: 40
@@ -117,8 +117,8 @@ export function set_sticky_top() {
     // 电竞收藏
     if (MenuData.is_esports()) {
       obj = {
-        type: 196,
-        league: 196
+        type: 170,
+        league: 170
       }
     }
     // 冠军收藏

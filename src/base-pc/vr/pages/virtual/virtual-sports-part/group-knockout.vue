@@ -83,7 +83,7 @@ export default {
 
       &.is-active {
         // background: var(--q-color-page-bg-color-9);
-        color: var(--q-gb-t-c-18);
+        color: var(--q-gb-t-c-5);
         background-color: var(--q-gb-bg-c-28);
         border-radius: 0.08rem;
         height: 0.36rem;

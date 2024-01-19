@@ -482,3 +482,7 @@ export const sprite_images_postion_new_pc = {
   item_1011: 23,
   item_1009: 5
 }
+// 欧洲版图标对应背景 
+export const oz_sprite_bg_images_postion = {
+ 400:51
+}

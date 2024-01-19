@@ -106,9 +106,13 @@
           {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
         </div>
       </div>
+
+      <!-- vr详情页右侧区域，包括足蓝队伍比分，赛马队伍和赛果 -->
+      <virtual-sports-right v-if="match" :current_match="match" :match_list_by_no="[]" :switch_match_handle="()=>{}" />
+
       <!-- 排行榜页面,小组赛淘汰赛页面  -->
       <div v-if="match" class="list-wrapper">
-        <div v-if="[1001,1004].includes(sub_menu_type)">
+        <div v-if="sub_menu_type == 1001">
           <!--  足球小组赛,淘汰赛页面  -->
           <group-knockout
             v-if="current_league ? current_league.field3 != '': false"
@@ -137,6 +141,7 @@ import virtual_match_statistic from 'src/base-pc/vr/components/virtual-match-sta
 import breadcrumbs from "src/base-pc/vr/pages/virtual/details/children/breadcrumbs.vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
+import virtual_sports_right from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-right.vue"
 
 export default {
   mixins:[virtual_sports_details_mixin],
@@ -151,6 +156,7 @@ export default {
     'football-ranking-list':football_ranking_list,
     'group-knockout':group_knockout,
     'match-process': matchProcess,
+    'virtual-sports-right':virtual_sports_right,
     breadcrumbs
   },
   data(){
