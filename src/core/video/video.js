@@ -12,6 +12,7 @@ import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { get_media_icon_index,get_match_status, is_eports_csid } from 'src/output/module/constant-utils.js'
 import { MatchDetailCalss }  from "src/output/module/project-single.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { MenuData } from "src/output/index.js";
 export default {
 
   /**
@@ -846,6 +847,10 @@ export default {
         // 如果地址不是//开头  加上// 本地代码连生产时放开可播放大视频
         if(url.substr(0,2) != '//'){
           url = '//'+url
+        }
+        // 电竞只有视频
+        if(MenuData.is_esports()){
+           url = match.vurl
         }
         //校验url是否可以打开
         this.check_url(url, res => {
