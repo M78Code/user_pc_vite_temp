@@ -316,7 +316,7 @@ export default {
   .article_detail {
     background: #ffffff;
     border: 1px solid #dce0e5;
-    border-radius: 8px;
+    // border-radius: 8px;
     height: 100%;
     padding: 15px 38px 38px;
     margin: 0 20px;
@@ -362,12 +362,12 @@ export default {
   .favorite_list_title {
     background-color: #ffffff;
     // box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 8px 8px 0px 0px;
+    // border-radius: 8px 8px 0px 0px;
     height: 48px;
     line-height: 48px;
-    padding-left: 30px;
+    padding-left: 15px;
     font-size: 16px;
-    color: #2d2d2d;
+    color: #1a1a1a;
     font-weight: 500;
     position: relative;
     margin: 20px 20px 0px;
@@ -378,10 +378,10 @@ export default {
       width: 3px;
       height: 16px;
       background: #FF7000;
-      border-radius: 1.5px;
+      border-radius:0 8px 8px 0px;
       position: absolute;
       top: 16px;
-      left: 15px;
+      left: 0px;
     }
   }
   // 猜你喜欢 列表

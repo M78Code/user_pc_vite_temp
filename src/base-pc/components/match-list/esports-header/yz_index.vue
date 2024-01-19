@@ -3,10 +3,9 @@
   <!-- :class="`sportsbg-${current_menu.csid}`" -->
   <div
     class="c-esports-header"
-    :class="'c-esports-header'+current_menu.csid"
-    :style="compute_css_obj(`pc-img-esports-${current_menu.csid}-banner`)"
     v-show="MenuData.is_esports()"
   >
+    <div class="e-esports-bg-img" :class="'c-esports-header'+current_menu.csid" :style="compute_css_obj(`pc-img-esports-${current_menu.csid}-banner`)"></div>
     <!-- 游戏种类列表 -->
     <div class="sport-tab">
       <div
@@ -129,15 +128,28 @@ function tab_click(obj) {
   position: relative;
   width: 100%;
   background-size: 100% auto;
-  padding-top: 56px;
+  padding-top: 35px;
   z-index: -1;
-  background-image: url($SCSSPROJECTPATH+"/image/common/png/esportbg-lol.png");
-  
+  // background-image: url($SCSSPROJECTPATH+"/image/common/png/esportbg-lol.png");
+  .e-esports-bg-img {
+    height: 95px;
+    width: 100%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: 100%;
+    background-color: #15141c;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
   .sport-tab {
     height: 118px;
     display: flex;
     margin-left: 20px;
     height: 60px;
+    position: relative;
+    z-index: 9;
     .sport-item {
       width: 80px;
       height: 100%;
@@ -150,17 +162,16 @@ function tab_click(obj) {
         height: 24px;
         background-size: 100% auto;
         display: inline-block;
+        margin: 6px auto;
       }
       // .sport-img {
       //   margin: 6px auto;
       //   display: block;
       //   background-image: url($SCSSPROJECTPATH+"/image/common/png/elf_esports.png");
       // }
-      // &.active {
-      //   .sport-img {
-      //     background-image: url($SCSSPROJECTPATH+"/image/common/png/sport_old_icon.png");
-      //   }
-      // }
+      &.active {
+        color: #fff;
+      }
     }
   }
   .date-wrap {
