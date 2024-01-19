@@ -72,7 +72,7 @@ import { useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_account,api_betting } from 'src/api/index';
 import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/output/index.js";
-import {LOCAL_PROJECT_FILE_PREFIX,format_money2 } from "src/output/index.js";
+import {LOCAL_PROJECT_FILE_PREFIX,format_money2,MenuData } from "src/output/index.js";
 import VMarquee from 'src/base-h5/components/marquee/marquee.vue'
 import BaseData from "src/core/base-data/base-data.js";
 
@@ -87,7 +87,6 @@ const s_visible = ref(true)
 const show = ref()
 const marqueeRef = ref(null)
 // 用户信息
-const user_info = ref(UserCtr.user_info)
 const languages = [{
   key: 'zh',
   language: '简体中文',
@@ -143,22 +142,22 @@ const settingData = ref([{
 // }
 ])
 function handel_change(s,idx){
-  let params = {
-    userMarketPrefer: s
+  // 冠军不能切换 默认为欧赔
+  if(MenuData.is_kemp()){
+    return
   }
-  api_betting.record_user_preference(params).then((res ={}) =>{
-    if(res.code == 200){
-      if(idx==0){
-        UserCtr.set_cur_odds(s) //HK/EU
-      }
-    }else{
-      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '请稍后再试！')
-    }
-  })
+  UserCtr.set_cur_odds(s) //HK/EU
 }
+
+
 onMounted(() => {
   //初始化金额隐藏
   on_show_money(UserCtr.show_balance)
+
+  // 冠军默认欧赔
+  if(MenuData.is_kemp() && UserCtr.odds.cur_odds != 'EU'){
+    UserCtr.set_cur_odds("EU") //HK/EU
+  }
 
 })
 
