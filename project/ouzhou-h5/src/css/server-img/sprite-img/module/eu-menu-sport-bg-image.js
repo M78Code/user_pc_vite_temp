@@ -7,13 +7,13 @@ const { CURRENT_ENV } = BUILDIN_CONFIG;
 const config = {
     default: "eu-menu-sport-bg-image",
 };
-const  compute_position = (size,id) =>{
-    // 226 80
-    size = 80 || 80;
-    const height_l = size/80;
-    // const height = 80/width_l;
-    return `${height_l*id}px`;
-}
+// const  compute_position = (size,id) =>{
+//     // 226 80
+//     size = size || 80;
+//     const height_l = size/80;
+//     // const height = 80/width_l;
+//     return `${height_l*id}px`;
+// }
 /**
  * 拿图片地址 和位置
  * @param {*} param0
