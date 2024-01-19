@@ -441,7 +441,7 @@ export default defineComponent({
      * @description 球种折叠
      */
     handle_ball_seed_fold () {
-      const { csid, is_virtual = false, start_flag = '', warehouse_type = '' } = this.match_of_list
+      const { csid, is_virtual = false, start_flag = '', warehouse_type = '' } = this.match_of_list 
       const is_fold_all = MenuData.is_collect() && project_name === 'app-h5'
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag, is_fold_all)
       // 不需要虚拟计算，欧洲版五大联赛
@@ -459,7 +459,7 @@ export default defineComponent({
     handle_league_fold () {
       const { tid, is_virtual = false, warehouse_type = '', start_flag = '' }  = this.match_of_list
       // 首页热门，详情页，不需要用到折叠
-      if (is_hot.value || is_detail.value) return;
+      if (is_hot.value || is_detail.value || MatchResponsive.is_league_detail.value) return;
       MatchFold.set_league_fold(this.match_of_list, start_flag)
       // 不需要虚拟计算，欧洲版五大联赛
       if (is_virtual || ['five_league'].includes(warehouse_type)) return

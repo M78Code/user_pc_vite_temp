@@ -40,7 +40,21 @@
                                         <div class="skin-icon skin-icon-day"></div>
                                         <div class="skin-icon skin-icon-night"></div>
                                     </div>
-                           
+                                   <!-- 附加玩法 -->
+                                    <div
+                                        v-else-if="settings.id == 4"
+                                        @click="change_setting_additional_plays"
+                                        class="skin-toggle"
+                                    >
+                                        <div
+                                        class="skin-icon"
+                                        :class="{ 'skin-icon-off': get_show_additional_plays }"
+                                        ></div>
+                                        <div
+                                        class="skin-icon"
+                                        :class="{ 'skin-icon-night': !get_show_additional_plays }"
+                                        ></div>
+                                    </div>
                                 </div>
                             </q-item-section>
                         </template>
@@ -76,7 +90,7 @@
                                         </div>
                                     </template>
                                 </template>
-         <!-- 近期开赛 -->
+                                <!-- 近期开赛 -->
                                     <template v-if="settings.id === 3">
                                       <template v-for="(item, index) in settings.value_arr" :key="index">
                                         <div class="child-item item-odds relative-position"
@@ -86,21 +100,7 @@
                                         </div>
                                     </template>
                                     </template>
-                                    <!-- 附加玩法 -->
-                                    <div
-                                        v-else-if="settings.id == 4"
-                                        @click="change_setting_additional_plays"
-                                        class="skin-toggle"
-                                    >
-                                        <div
-                                        class="skin-icon"
-                                        :class="{ 'skin-icon-off': get_show_additional_plays }"
-                                        ></div>
-                                        <div
-                                        class="skin-icon"
-                                        :class="{ 'skin-icon-night': !get_show_additional_plays }"
-                                        ></div>
-                                    </div>
+                                   
                                     <!-- 附加盘 -->
                                     <div
                                         v-else-if="settings.id == 6"
@@ -189,6 +189,14 @@ const left_menu_toggle = ref(BetData.left_menu_toggle)
 const vx_cur_menu_type = MenuData.cur_menu_type
 /** 虚拟投注列表对象 */
 const cur_menu_type = ref({})
+// 附加盘配置
+const get_show_additional_disk = "get_show_additional_disk"
+// 附加玩法
+const get_show_additional_plays =  "get_show_additional_plays"
+// 附加玩法配置
+const get_additional_plays_list_num = "get_additional_plays_list_num"
+ // 附加玩法配置展示更多行数
+const show_more_other_list_obj = {}
 /** stroe仓库 */
 const unsubscribe = store.subscribe(() => {
     cur_menu_type.value = new_state.cur_menu_type
@@ -261,35 +269,7 @@ function set_user_preference(curr_odd) {
     //   this.set_filter_select_obj([]);
     //   this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
     }
-/**
- * @Description:列表附加玩法
- * @return {undefined} undefined
- */
-function change_setting_additional_plays() {
-      // 列表附加玩法
-      const show_additional_plays = !this.get_show_additional_plays;
-      localStorage.setItem(
-        "additional_plays",
-        JSON.stringify(show_additional_plays)
-      );
-      this.set_show_additional_plays(show_additional_plays);
-      // 刷新列表重新计算
-      this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
-    }
-    /**
-     * @Description:附加盘
-     * @return {undefined} undefined
-     */
- function   change_setting_additional_disk() {
-      const show_additional_disk = !this.get_show_additional_disk;
-      localStorage.setItem(
-        "additional_disk",
-        JSON.stringify(show_additional_disk)
-      );
-      this.set_show_additional_disk(show_additional_disk);
-      // 刷新列表重新计算
-      this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
-    }
+
 /**
  * @Description:切换语言
  * @param {string} lang_ 语言

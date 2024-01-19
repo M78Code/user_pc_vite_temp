@@ -157,7 +157,7 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-5);
 
     span {
       &:nth-child(1){
