@@ -140,9 +140,11 @@ export function usedetailData(route) {
       cuid: user_info.userId,
       t: new Date().getTime(),
     };
+    console.log(MenuData.is_esports() ,'MenuData.is_esports ');
+    //api_details
     let obj_ = {
       // axios api对象
-      axios_api: get_detail_data,
+      axios_api:MenuData.is_esports() ? api_details.get_match_detail_ESMatchInfo  :  get_detail_data ,
       // axios api对象参数
       params: params,
       // 唯一key值
@@ -249,7 +251,7 @@ export function usedetailData(route) {
       };
     let obj_ = {
       // axios api对象
-      axios_api: get_detail_list,
+      axios_api: MenuData.is_esports() ? api_details.get_match_odds_info_ES : get_detail_list ,
       // axios api对象参数
       params: params,
       // 唯一key值
@@ -292,7 +294,8 @@ export function usedetailData(route) {
           newUser: 0,
           t: new Date().getTime(),
         };
-        const res = await get_detail_list(params);
+        let api = MenuData.is_esports() ? api_details.get_match_odds_info_ES : get_detail_list 
+        const res = await api(params);
         all_list.value = res.data || [];
         res.data && res.data.forEach((item) => (item.expanded = true));
         detail_loading.value = false;

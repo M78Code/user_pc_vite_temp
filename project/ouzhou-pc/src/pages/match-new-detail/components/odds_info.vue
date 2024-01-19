@@ -173,6 +173,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed } from "vue";
 import {
   LOCAL_PROJECT_FILE_PREFIX,
+  MenuData,
   get_match_status,
 } from "src/output/index.js";
 import template5 from "./template5.vue";
@@ -216,8 +217,8 @@ const emit = defineEmits(["change"]);
 
 const columnTotal = (item) => {
   let total;
-  if (item.title.length > 0) {
-    total = [5].includes(item.hpt) ? item.title.length + 1 : item.title.length;
+  if (item.title?.length > 0) {
+    total = [5].includes(item.hpt) ? item.title?.length + 1 : item.title?.length;
   } else {
     total = 2;
   }
@@ -292,7 +293,7 @@ const betItemClick = (item, ol, play_name) => {
       return;
     }
   }
-  if (ol.cds) {
+  // if (ol.cds) {
     current_ol.value = ol;
     let params = {
       oid: ol.oid, // 投注项id ol_obj
@@ -300,11 +301,24 @@ const betItemClick = (item, ol, play_name) => {
       _hn: ol._hn, // hn_obj
       _mid: ol._mid, //赛事id mid_obj
     };
+    let bet_type = 'common_bet'
+     // 冠军
+     if (MenuData.is_kemp()) {
+         bet_type = 'guanjun_bet'
+     }
+     // 电竞
+     if (MenuData.is_esports()) {
+         bet_type = 'esports_bet'
+     }
+     // vr体育
+     if (MenuData.is_vr()) {
+         bet_type = 'vt_bet'
+     }
     let other = {
       is_detail: true,
       // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
       // 根据赛事纬度判断当前赛事属于 那种投注类型
-      bet_type: "common_bet",
+      bet_type,
       // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
       device_type: 2,
       // 数据仓库类型
@@ -312,7 +326,7 @@ const betItemClick = (item, ol, play_name) => {
       play_name,
     };
      set_bet_obj_config(params, other);
-  }
+  // }
 };
 
 onMounted(() => {});
