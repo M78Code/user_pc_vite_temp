@@ -26,7 +26,7 @@
 import { onMounted, ref ,reactive } from "vue";
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
-import { MenuData } from "src/output/index.js";
+import { MenuData, UserCtr } from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 const tabValue = ref('outrights');
 const state = reactive({
@@ -43,6 +43,9 @@ const changeMenu = (item) =>{
     MatchMeta.get_champion_match()
 }
 onMounted(async () => {
+  // 冠军设置为欧赔
+  UserCtr.set_cur_odds("EU");
+
   MenuData.set_current_lv1_menu(400);
   MenuData.set_menu_mi('101');
 //   MatchMeta.set_origin_match_data()

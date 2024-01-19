@@ -349,6 +349,7 @@ export const useMethods = ({ props,emit }) => {
     //设置玩法列表单双列 0单列， 1双列
     //玩法列表单双列切换为单列
     MatchDetailCalss.set_layout_statu(statu)
+    get_layout_statu.value = statu
     state.layout_statu = statu ? true : false;
     if (statu) {
       state.waterfall = details.set_waterfall(state.details_data);
@@ -356,7 +357,8 @@ export const useMethods = ({ props,emit }) => {
       state.waterfall = [state.details_data];
     }
     // 判断是否显示【返回顶部】按钮
-    set_go_top_show();
+    // 单双列的页面变化延迟了两个Tick
+    set_go_top_show()
     // 设置玩法展开和折叠状态
     int_is_show();
   };
