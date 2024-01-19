@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, computed } from "vue";
 import { api_match } from "src/api/index.js";
 import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
 import get_match_list_params from "src/core/match-list-pc/match-list-params.js";
@@ -79,6 +79,25 @@ const data = reactive({
 })
 
 const loading = ref(false);
+
+const tid = computed(() => {
+    const res = data.list_data.reduce((p, c) => {
+        //大模块选择，子模块全选
+        if (c.status) {
+            p = c.reduce((p1, c1) => {
+                const current = c1.map(e => {
+                    return e.id
+                })
+                return [...p1, ...current];
+            },[])
+        }else {
+            // 子模块选择
+            
+        }
+        return p;
+    }, [])
+    return [...new Set(res)];
+})
 
 /**
  * 
@@ -116,23 +135,35 @@ async function submit() {
     //  "tid":"1682748478869187623,1682748470622372141",
     //  "selectionHour":null
     // }
+    // 热门
+    // apiType: 1
+    // cuid: "331188967994322944"
+    // euid: "3020101"
+    // orpt: "0"
+    // pids: ""
+    // selectionHour: null
+    // sort: 1
+    // tid: "217,535,1682748478869187623,1682748470622372141"
+    const match_list_params = get_match_list_params();
+    const current_params = match_list_params.match_list.params;
+
     let params = {
       // 接口类型 1非收藏  2收藏
-      apiType: is_collect ? 2 : 1,
+      apiType: 1,
       // 用户ID
-      cuid: store.getters.get_uid,
+      cuid: UserCtr.get_uid(),
       // 菜单ID
-      euid: cur_level2_menu,
+      euid: current_params.euid,
       // 设置当前列表模板编号
-      orpt,
+      orpt: current_params.orpt,
       // 玩法ID
-      pids: this.get_menu_obj_by_menu_id(cur_level3_menu).field1,
+      pids: "",
       // 列表排序类型
-      sort: store.getters.get_match_sort,
+      sort: 1,
       // 联赛筛选
-      tid: store.getters.get_filter_select_obj.join(","),
+      tid: [].join(","),
       //即将开赛筛选
-      selectionHour: store.state.filter.open_select_time,
+      selectionHour: null,
     }
     try {
         
