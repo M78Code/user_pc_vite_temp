@@ -41,7 +41,7 @@
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import { useMittEmit, MITT_TYPES } from "src/output/index.js";
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { UserCtr } from "src/output/index.js"
 
 
@@ -70,6 +70,11 @@ const switch_handle = (state) => {
       break;
   }
   is_dropdown.value = false
+
+  nextTick(()=>{
+    // 切换投注类型 重新设置限额
+    useMittEmit(MITT_TYPES.set_ref_data_bet_money);
+  })
 }
 
 const bet_type_text = computed(()=> state =>{
