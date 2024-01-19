@@ -89,7 +89,7 @@
 
 import { ref, computed } from 'vue';
 
-import comSelect from "src/base-pc/components/match-results/select/select/index.vue";
+import comSelect from "src/base-pc/components/match-results/select/select/index.vue"; 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { PageSourceData, GlobalSwitchClass,MenuData } from "src/output/index.js";
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";

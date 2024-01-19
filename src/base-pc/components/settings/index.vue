@@ -10,13 +10,15 @@
 
                     <!-- 全局设置项 -->
                     <q-expansion-item group="settings"
-                        :expand-icon-class="settings.type === 'switch' ? 'settings-no-expand' : ''"
+                        :expand-icon-class="settings.type === 'switch' ? '' : ''"
                         :header-class="settings.type === 'switch' ? 'settings-item-header' : ''"
-                        expand-icon="icon-triangle1">
+                        expand-icon="icon-triangle1"
+                        icon="perm_identity">
                         <template v-slot:header>
                             <!-- 设置项 图标 -->
                             <q-item-section avatar>
-                                <i class="icon settings-icon" :style="compute_css_obj({key:'pc-home-list-score-active'})"></i>
+                                <i class="icon settings-icon" :style="compute_css_obj({key:'pc-img-match-list-animation'})"></i>
+                                <!-- <i class="icon settings-icon" :style="compute_css_obj({key:'pc-home-list-score-active'})"></i> -->
                                 <!-- <i class="icon settings-icon" :style="compute_css_obj({key:'icon-setting'})"></i> -->
                             </q-item-section>
 
@@ -28,9 +30,8 @@
                             <!-- 设置项 当前状态 -->
                             <q-item-section side>
                                 <div class="row items-center">
-
                                     <!-- 盘口/多语言 -->
-                                    <div class="curr-item" v-if="settings.type === 'select'">
+                                    <div class="curr-item" v-if="settings.id == 1">
                                         <template v-if="settings.id === 1">{{ i18n_t('odds')[cur_odd] }}</template>
                                         <template v-else-if="settings.id === 2">{{ i18n_langs[UserCtr.lang] }}</template>
                                     </div>
@@ -40,9 +41,35 @@
                                         <div class="skin-icon skin-icon-day"></div>
                                         <div class="skin-icon skin-icon-night"></div>
                                     </div>
+                                    <!-- 主题设置 -->
+                                    <div  v-else-if="settings.id == 4" @click="change_theme" class="skin-toggle">
+                                       全部
+                                    </div>
+                                   <!-- 列表附加玩法默认展示 -->
+                                    <div
+                                        v-else-if="settings.id == 5"
+                                        @click="change_setting_additional_plays"
+                                        class="skin-toggle"
+                                    >
+                                    <div
+                                        class="skin-icon"
+                                        :class="{ 'skin-icon-off': get_show_additional_plays }"
+                                        ></div>
+                                        <div
+                                        class="skin-icon"
+                                        :class="{ 'skin-icon-night': !get_show_additional_plays }"
+                                        ></div>
+                                    </div>
                                    <!-- 附加玩法 -->
                                     <div
-                                        v-else-if="settings.id == 4"
+                                        v-else-if="settings.id == 6"
+                                        @click="change_setting_additional_plays"
+                                        class="skin-toggle"
+                                    >
+                                        全部行
+                                    </div>
+                                    <div
+                                        v-else-if="settings.id == 7"
                                         @click="change_setting_additional_plays"
                                         class="skin-toggle"
                                     >
@@ -91,30 +118,37 @@
                                     </template>
                                 </template>
                                 <!-- 近期开赛 -->
-                                    <template v-if="settings.id === 3">
-                                      <template v-for="(item, index) in settings.value_arr" :key="index">
+                                    <template v-if="settings.id === 4">
+                                      <!-- <template v-for="(item, index) in settings.value_arr" :key="index">
+                                        <div class="child-item item-odds relative-position"
+                                        :class="vx_cur_odd == item.value && 'active'" @click="select_time_change(item)">
+                                        {{ item.label }}
+                                        <i v-if="vx_cur_odd == item.value" class="icon-triangle3 q-icon c-icon arrow-show"></i>
+                                        </div>
+                                    </template> -->
+
+                                        <div class="kicfoff_list" >
+                                    <div class="triangle"></div>
+                                    <div v-for="(item, i) in settings.value_arr" :key="i" @click="onClick(opt, i)"
+                                    class="option">        
+                                        <span class="text">{{ item.label }}</span>
+                                    </div>
+                                    </div>
+                                    </template>
+                                
+                                    <!-- 列表附加玩法配置 -->
+                                    <div
+                                        v-else-if="settings.id == 6"
+                                        @click="change_setting_additional_disk"
+                                        class="skin-toggle"
+                                    >
+                                     <template v-for="(item, index) in settings.value_arr" :key="index">
                                         <div class="child-item item-odds relative-position"
                                         :class="vx_cur_odd == item.value && 'active'" @click="select_time_change(item)">
                                         {{ item.label }}
                                         <i v-if="vx_cur_odd == item.value" class="icon-triangle3 q-icon c-icon arrow-show"></i>
                                         </div>
                                     </template>
-                                    </template>
-                                   
-                                    <!-- 附加盘 -->
-                                    <div
-                                        v-else-if="settings.id == 6"
-                                        @click="change_setting_additional_disk"
-                                        class="skin-toggle"
-                                    >
-                                        <div
-                                        class="skin-icon"
-                                        :class="{ 'skin-icon-off': !get_show_additional_disk }"
-                                        ></div>
-                                        <div
-                                        class="skin-icon"
-                                        :class="{ 'skin-icon-night': get_show_additional_disk }"
-                                        ></div>
                                     </div>
                             </q-card-section>
                         </q-card>
@@ -141,6 +175,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { theme_map } from "src/core/theme/"
 import MenuData from "src/core/menu-pc/menu-data-class.js";
+import comSelect from "src/base-pc/components/match-results/select/select/index.vue"; 
 // import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 
 
@@ -384,6 +419,12 @@ function change_theme() {
 .list{
     background: #fff;
 }
+.skin-icon-off {
+  width: 12px !important;
+  height: 12px !important;
+  background: #8a96ba;
+  border-radius: 50%;
+}
 .g-settings-style {
     width: 240px;
     max-height: 700px !important;
@@ -499,5 +540,26 @@ function change_theme() {
         }
     }
 }
+    .settings-icon {
+        width: 14px;
+        height: 14px;
+    }
+  .kicfoff_list {
+    border-radius: 4px;
+    background: var(--qq--popup-wrap-bg-color);
+    color: var(--qq--menu-text-color2);
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
+    padding: 5px 0;
+    z-index: 99;
+    .option {     
+      min-height: 30px; 
+      padding-top: 6px;
+    }
+    .active{//,.option:hover
+      background: var(--qq--menu-bg-color8)!important;
+    }        
+  }
 </style>
  
