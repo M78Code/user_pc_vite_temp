@@ -189,7 +189,7 @@
         <football-events></football-events>
 
         <!-- 展示球队名称、比分 -->
-        <div v-show="show_icons" class="title">
+        <div v-show="get_show_back_icons"  class="title" :class="{'opacity-header': ProjectName === 'app-h5' }">
           <!-- 视频全屏时的样式单独处理 -->
           <template v-if="get_is_full_screen && get_video_url.active == 'muUrl' && get_is_hengping">
             <div class="hengping-title row">
@@ -467,6 +467,13 @@ export default {
       get_hd_sd(){return '';},
       get_lang(){return '';},
       get_is_dp_video_full_screen(){return '';},
+      get_show_back_icons(){
+        if(this.ProjectName ==='app-h5'){
+          return true
+        }else{
+          return this.show_icons
+        }
+      },
 
     replay_video_src() {
       const host_url = window.BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0] || lodash.get(this.get_user,'oss.live_h5')
@@ -1895,7 +1902,9 @@ export default {
     // bottom: 30px;
     // z-index: 2;
   }
-
+  .opacity-header {
+    opacity: 0.5;  
+  }
   .title {
     position: absolute;
     top: 0px;
