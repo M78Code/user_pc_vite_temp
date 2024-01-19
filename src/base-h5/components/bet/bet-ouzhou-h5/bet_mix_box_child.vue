@@ -62,6 +62,8 @@
                           <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
                               <bet-special-input :items="item" @input_click="handle_input_click" :index="index" />
                           </template>
+                          <!-- 最高可赢 -->
+                          <bet-special-winning/>
                         </template>
                         <template v-else>
                           <div class="bet-title bet-error">{{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}</div>
@@ -130,6 +132,7 @@ import betMixBoxChild6 from "./bet_mix_box_child6.vue";
 import betSpecialInput from "./bet-special-input.vue";
 import betSpecialState from "./bet-special-state.vue";
 import betSpecialResult from "./bet-special-result.vue";
+import betSpecialWinning from "./bet-special-winning.vue";
 
 import betAllDetele from "./bet_all_detele.vue";
 import betBar from "./bet-bar.vue";
