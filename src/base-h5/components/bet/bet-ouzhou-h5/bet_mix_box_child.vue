@@ -19,89 +19,68 @@
                 <!-- 删除全部和选择type -->
           <bet-all-detele :is_dropdown="is_dropdown" v-if="BetViewDataClass.bet_order_status == 1"></bet-all-detele>
           <!-- --------{{BetViewDataClass.bet_order_status}} - {{BetData.is_bet_single}} -->
-          <div>
-              <!-- 单关  -->
-              <div v-if="BetData.is_bet_single">
-                  <!-- 单关单注  -->
-                  <div v-if="!BetData.is_bet_merge">
-                    <div v-if="BetViewDataClass.bet_order_status == 1 && BetData.bet_single_list.length ">
-                        <!-- 单关投注项列表  -->
-                          <bet-mix-box-child1 :items="BetData.bet_single_list[0]" :index="0"></bet-mix-box-child1>
-                        <!-- 单关的输入框 -->
-                        <bet-input-info :item="BetData.bet_single_list[0]" ></bet-input-info>
-                        <!-- 键盘 -->
-                        <key-board></key-board>
-                    </div>
-                    <bet-mix-box-child4 v-else :item="BetData.bet_single_list[0]" :index="0" ></bet-mix-box-child4>
+          <!-- 单关  -->
+          <template v-if="BetData.is_bet_single ">
+            <template v-if="BetViewDataClass.bet_order_status == 1">
+              <!-- 单关单注  -->
+              <template v-if="!BetData.is_bet_merge">
+                <template v-if="BetViewDataClass.bet_order_status == 1 && BetData.bet_single_list.length ">
+                    <!-- 单关投注项列表  -->
+                    <bet-mix-box-child1 :items="BetData.bet_single_list[0]" :index="0"></bet-mix-box-child1>
+                    <!-- 单关的输入框 -->
+                    <bet-input-info :item="BetData.bet_single_list[0]" ></bet-input-info>
+                </template>
+              </template>
+              <!-- 单关合并 -->
+              <template v-else>
+                  <!-- 合并单关  -->
+                  <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}rem` }">
+                      <bet-mix-box-child2></bet-mix-box-child2>
                   </div>
-                  <!-- 单关合并 -->
-                  <div v-else>
-                      <!-- 合并单关  -->
-                      <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
-                          >
-                          <bet-mix-box-child2></bet-mix-box-child2>
-                      </div>
-                      <!-- 键盘 -->
-                      <key-board></key-board>
+              </template>
+              <!-- 键盘 -->
+              <key-board></key-board>
+            </template>
+
+            <bet-mix-box-child4 v-else :item="BetData.bet_single_list[0]" :index="0" ></bet-mix-box-child4>
+          </template>
+
+          <!-- 串关 -->
+          <template v-if="!BetData.is_bet_single">
+              <!-- 串关投注项列表  -->
+              <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}rem` }">
+                <div v-if="BetViewDataClass.bet_order_status == 1">
+                  <template v-for="(item, index) in BetData.bet_s_list" :key="index">
+                    <bet-mix-box-child1 :items="item" :index="index"></bet-mix-box-child1>
+                  </template>
+
+                  <!-- 串关投注 限额 -->
+                  <!-- 复式连串过关投注 限额 -->
+                  <template v-if="BetData.bet_s_list.length > 1"  >
+                    <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
+                        <bet-special-input :items="item" @input_click="handle_input_click" :index="index" />
+                    </template>
+                  </template>
+                  <template v-else>
+                    <div class="bet-title bet-error">{{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}</div>
+                  </template>
+                    
+                </div>
+                
+                <template v-else>
+                  <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
+                    <bet-special-result :items="item" :key="index" :index="index" />
                   </div>
-              </div>
-
-              <!-- 串关 -->
-              <div v-if="!BetData.is_bet_single">
-                  <!-- 串关投注项列表  -->
-                  <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
-                      >
-                      <div v-if="BetViewDataClass.bet_order_status == 1">
-                        <template v-for="(item, index) in BetData.bet_s_list" :key="index">
-                          <bet-mix-box-child1 :items="item" :index="index"></bet-mix-box-child1>
-                        </template>
-
-                        <!-- 串关投注 限额 -->
-                        <!-- 复式连串过关投注 限额 -->
-                        <template v-if="BetData.bet_s_list.length > 1"  >
-                          <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
-                              <bet-special-input :items="item" @input_click="handle_input_click" :index="index" />
-                          </template>
-                        </template>
-                        <template v-else>
-                          <div class="bet-title bet-error">{{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}</div>
-                        </template>
-                          
-                      </div>
-                      
-                      <template v-else>
-                        <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
-                          <bet-special-result :items="item" :key="index" :index="index" />
-                        </div>
-          
-                        <div v-for="(item, index) in BetViewDataClass.orderNo_bet_single_obj" :key="item.orderNo">
-                          <bet-special-state :items="item" :key="index" :index="index" />
-                        </div>
-                      </template>
-                      <!-- <bet-mix-box-child6 v-else></bet-mix-box-child6> -->
+    
+                  <div v-for="(item, index) in BetViewDataClass.orderNo_bet_single_obj" :key="item.orderNo">
+                    <bet-special-state :items="item" :key="index" :index="index" />
                   </div>
-
-                  <key-board v-if="BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1"></key-board>
-
-                  <!-- <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config"></key-board> -->
-
-                  <!-- <bet-info></bet-info> -->
+                </template>
               </div>
 
-              <!-- <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">
-                <bet-input-info1></bet-input-info1>
-              </template> -->
+              <key-board v-if="BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1"></key-board>
+          </template>
 
-              <!-- <div v-if="state == 4">
-                <bet-mix-box-child4></bet-mix-box-child4>
-              </div>
-              <div v-if="state == 5">
-                <bet-mix-box-child5></bet-mix-box-child5>
-              </div>
-              <div v-if="state == 6">
-                <bet-mix-box-child6></bet-mix-box-child6>
-              </div> -->
-          </div>
           <!-- 键盘 -->
           <key-board v-if="state < 4"></key-board>
           <!-- 按钮 -->
@@ -114,15 +93,12 @@
 </template>
 
 <script setup>
-import betInputInfo1 from "./bet_input_info1.vue";
-import betInfo from "./bet_info.vue";
 import betBtn from './bet-btn.vue';
 import betBtn1 from './bet-btn1.vue';
 import keyBoard from './keyboard.vue';
 import betInputInfo from "./bet_input_info.vue";
 import betMixBoxChild1 from "./bet_mix_box_child1.vue";
 import betMixBoxChild2 from "./bet_mix_box_child2.vue";
-import betMixBoxChild3 from "./bet_mix_box_child3.vue";
 import betMixBoxChild4 from "./bet_mix_box_child4.vue";
 import betMixBoxChild5 from "./bet_mix_box_child5.vue";
 import betMixBoxChild6 from "./bet_mix_box_child6.vue";
@@ -130,6 +106,7 @@ import betMixBoxChild6 from "./bet_mix_box_child6.vue";
 import betSpecialInput from "./bet-special-input.vue";
 import betSpecialState from "./bet-special-state.vue";
 import betSpecialResult from "./bet-special-result.vue";
+import betSpecialWinning from "./bet-special-winning.vue";
 
 import betAllDetele from "./bet_all_detele.vue";
 import betBar from "./bet-bar.vue";
@@ -153,19 +130,13 @@ const ref_data = reactive({
 })
 
 //串关的按钮
-const is_strand = ref(true)
 const scroll_box = ref()
-const series_order_respList = ref([])
 const award_total = ref()
-const bet_list_data = ref([])
-const tips_msg = ref('失效')  // 提示信息
 
 const get_bet_status = ref(0) // 投注状态
 const btn_show = ref(0) // 投注状态2
 const max_height1 = ref(2.5) // 投注赛事高度
 const max_height2 = ref(3.5)
-const get_mix_bet_flag = ref(false) // 最小投注开关
-const exist_code = ref(555)
 const is_dropdown = ref(false)
 
 const hide_bet_series_but = () => {
