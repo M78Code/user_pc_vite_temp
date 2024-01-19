@@ -29,6 +29,7 @@ import BaseData from 'src/core/base-data/base-data.js'
 import { MenuData } from "src/output/index.js";
 import NoData from "src/base-h5/components/common/no-data.vue";
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 let message_fun = null
 let handler_func = null
@@ -73,6 +74,7 @@ onMounted(() => {
     }).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
       store.isLeagueDetail = false
+      MatchResponsive.set_is_league_detail(false)
       onTabChange()
     }).off,
     emitter_3: useMittOn(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, () => {
@@ -88,6 +90,7 @@ onUnmounted(() => {
   message_fun = null
   // sessionStorage.removeItem('match_list_params')
   window.addEventListener('beforeunload', clearSessionStorageData)
+  MatchResponsive.set_is_league_detail(false)
 })
 
 const cacheStoreData = () => {
@@ -172,11 +175,14 @@ const onChangeArea = (obj) => {
 const initMatchPage = () => {
   // store.tabActive = 'Matches'
   store.isLeagueDetail = false
+  MatchResponsive.set_is_league_detail(false)
+
 }
 
 const goBackToLeague = () => {
   store.tabActive = 'League'
   store.isLeagueDetail = false
+  MatchResponsive.set_is_league_detail(false)
   onTabChange()
 }
 

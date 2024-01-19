@@ -154,7 +154,7 @@ export default {
         display: flex;
         flex-direction: row;
         align-items: center;
-        color: var(--q-gb-t-c-18);
+        color: var(--q-gb-t-c-5);
         font-size: 0.12rem;
         font-weight: 400;
 
@@ -220,7 +220,7 @@ export default {
         .right-item-label{
           display: block;
           width: 0.48rem;
-          color: var(--q-gb-t-c-18);
+          color: var(--q-gb-t-c-5);
           font-weight: 400;
           font-size: 0.12rem;
           font-family: PingFang SC;

@@ -104,6 +104,7 @@ const get_detail_info = (mid) => {
   MatchListCardDataClass.set_current_mid(mid)
   const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
   detail_info.value = infomation
+ 
   // setInterval(function (){
   // },2000)
 }

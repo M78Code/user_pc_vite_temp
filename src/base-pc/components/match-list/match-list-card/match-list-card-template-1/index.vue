@@ -111,6 +111,16 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+.matc-type-card:before {
+  content: "";
+  position: absolute;
+  height: 10px;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  background-color: var(--q-gb-bg-c-22);
+  z-index: 0;
+}
 .list-card-wrap {
   overflow: hidden;
 
