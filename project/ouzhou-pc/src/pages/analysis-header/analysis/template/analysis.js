@@ -16,10 +16,11 @@ export default{
     * @description: 足球数据、情报、赔率接口
     */
      get_analysiseData(params, cb){
-      api_analysis.post_getMatchAnalysiseData(params).then((ret)=>{
+      api_analysis.get_match_analysise_data(params).then((ret)=>{
+    
         let data = lodash.get(ret, 'data');
-        if(data && data.code == 200){
-          cb(data.data)
+        if(data && ret.code == 200){
+          cb(data)
         }
       })
     },

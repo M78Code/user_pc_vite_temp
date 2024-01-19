@@ -31,11 +31,7 @@ export const get_current_odds_list = ({ first_hpid, second_hpid }) => {
   return odds_list
 }
 
-// 获取hots赔率模板
-export const get_hots_odds_list = () => {
-  let hots_odds_list = TemplateCommon.get_hots_odds_list(template_129.main_handicap_list)
-  return hots_odds_list;
-}
+
 //   列表宽度计算模板
 export const  width_config ={
   ...TemplateCommon.width_config_template,

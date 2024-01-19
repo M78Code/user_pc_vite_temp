@@ -237,7 +237,7 @@
 
 <script>
 import basePanel from './base_panel.vue'
-import analysisData  from 'src/public/mixins/analysis/analysis'
+import analysisData  from './analysis'
 import { api_analysis } from 'src/api/index'
 import { i18n_t,result_filter } from "src/output/index.js";
 import { UserCtr } from "src/output/index.js";
@@ -301,6 +301,7 @@ export default {
     getData(){
       let params = {parentMenuId: 2, sonMenuId: this.tabIndex, standardMatchId: this.match.mid}//
       this.get_analysiseData(params, (res)=>{
+     
         // 基本面
         if(this.tabIndex == 1){
           if(Object.keys(res.basicInfoMap).length){
@@ -326,7 +327,7 @@ export default {
                 }
               })
             }
-
+            console.log(1111111111133,res)
             this.baseData = res.basicInfoMap
           }
         // 盘面
@@ -342,7 +343,7 @@ export default {
     * @description: 杯赛积分
     */
     get_vs_info(flag){
-      api_analysis.get_vs_info({mid: this.match.mid, flag: 0}).then(({data}) =>{
+      api_analysis.get_vs_info({mid: this.match.mid, flag: 0}).then((data) =>{
         if(data.code == 200){
           this.tournamentTypeFinish = true
           this.vs_info_data = data.data
@@ -363,7 +364,7 @@ export default {
     * @description: 历史交战
     */
     get_team_vs_history(){
-      api_analysis.get_team_vs_history(this.params).then(({data}) =>{
+      api_analysis.get_team_vs_history(this.params).then((data) =>{
         if(data.code == 200 && data.data){
           this.team_vs_history = data.data
           let result = this.format_result(data.data)
@@ -382,7 +383,7 @@ export default {
     * @description: 近期战绩
     */
     get_team_vs_other_team(){
-      api_analysis.get_team_vs_other_team(this.params).then(({data}) =>{
+      api_analysis.get_team_vs_other_team(this.params).then((data) =>{
         if(data.code == 200 && data.data){
           let results = lodash.get(data, "data");
           if (!results || !results.length) {return;}
@@ -468,45 +469,33 @@ export default {
     min-width: 950px;
     align-items: center;
     height: 34px;
-    color: var(--qq--y0-text-color5);
+    color: #414655;
     margin-bottom: 10px;
     // width: 309px;
     // border-radius: 8px;
     border-radius: 0 0 8px 8px;
     // border: 1px solid var(--qq--match-border-color5);
     // border-bottom: 0;
-    background: var(--qq--match_details_analysis_title);
+    background: linear-gradient(94.17deg, rgba(255, 112, 0, 0.3) -25.38%, rgba(255, 112, 0, 0) 22.77%),
+linear-gradient(0deg, #FFFFFF, #FFFFFF);
+
+   
     box-sizing: border-box;
-    border-left: 1px solid var(--qq--match-border-color5);
-    border-right: 1px solid var(--qq--match-border-color5);
+    border-left: 1px solid #E4EAFF;
+    border-right: 1px solid #E4EAFF;
     // background-image: linear-gradient(-40deg, #179CFF 12%, #179CFF 0);
     span {
       // width: 103px;
       margin: 0 10px;
       height: 28px;
       line-height: 28px;
-      color: var(--qq--y0-text-color5);;
+      color: #414655;;
       cursor: pointer;
       text-align: center;
       font-weight: 600;
-      // border: 1px solid var(--qq--match-border-color5);
-      // &:first-child {
-      //   border-radius: 8px 0 0 8px;
-      // }
-      // &:last-child {
-      //   border-left: none;
-      //   border-radius: 0 8px 8px 0;
-      // }
-      // &:nth-child(2) {
-      //   border-left: none;
-      // }
-      // &:not(:last-child) {
-      //   border-right: none;
-      // }
       &.active {
-        // background-image: var(--qq--analysis-bg-gradient-2);
-        color: var(--qq--theme-color-handicap-item-title);
-        border-bottom: 2px solid var(--qq--theme-color-handicap-item-title);
+        color: #ff7000;
+        border-bottom: 2px solid #ff7000;
       }
     }
   }
@@ -517,7 +506,7 @@ export default {
     margin-bottom: 20px;
     min-width: 950px;
     // width: 100%;
-    background: var(--qq--y0-bg-color12);
+    background: #ffffff;
     .panel-title {
       display: flex;
       // background: #F4FAFF;
@@ -528,13 +517,13 @@ export default {
 
   /*  盘面 */
   .disk {
-    background: var(--qq--y0-bg-color12);
+    background: #ffffff;
     .match-info {
       padding: 20px 20px 10px;
       .team {
         display: flex;
         align-items: center;
-        color: var(--qq--analysis-text-color-1);
+        color: #2d2d2d;
         margin-bottom: 10px;
         .logo {
           width: 20px;
@@ -550,7 +539,7 @@ export default {
           align-items: center;
           margin-right: 80px;
           .label {
-            color: var(--qq--analysis-text-color-4);
+            color: #000;
             font-size: 16px;
             margin-right: 10px;
           }
@@ -564,7 +553,7 @@ export default {
             width: 20px;
             height: 20px;
             border-radius: 2px;
-            color: var(--qq--analysis-text-color-13);
+            color: #fff;
             margin-right: 6px;
           }
         }
@@ -576,8 +565,8 @@ export default {
         flex: 1;
         display: flex;
         align-items: center;
-        border: 1px solid var(--qq--match-border-color5);
-        color: var(--qq--y0-text-color5);
+        border: 1px solid #E4EAFF;
+        color: #414655;
         justify-content: center;
         &:first-child {
           width: 84px;
@@ -589,14 +578,14 @@ export default {
     .d-header {
       // background: var(--qq--y0-bg-color12);
       // color:  var(--qq--y0-text-color5);
-      background: var(--qq--analysis-bg-color-16);
-      color: var(--qq--y0-text-color5);
+      background: #F4FAFF;
+      color: #414655;
       border-bottom: none !important;
       .d-td {
         height: 28px;
       }
       .border_r {
-        border: 1px solid var(--qq--match-border-color5);
+        border: 1px solid #E4EAFF;
         &:first-child {
           display: flex;
           justify-content: center;
@@ -607,14 +596,14 @@ export default {
       }
     }
     .d-body {
-      border-bottom: 1px solid var(--qq--match-border-color5);
+      border-bottom: 1px solid #E4EAFF;
       font-weight: 500;
       .color_83838a {
-        color: var(--qq--y0-text-color5);
+        color: #414655;
       }
       .d-td {
         height: 40px;
-        border: 1px solid var(--qq--match-border-color5);
+        border: 1px solid #E4EAFF;
         &:last-child {
           border-right: transparent;
         }
@@ -623,7 +612,7 @@ export default {
           display: flex;
           justify-content: center;
           &:first-child {
-            color: var(--qq--y0-text-color5);
+            color: #414655;
           }
         }
       }
@@ -651,7 +640,7 @@ export default {
   .technical {
     .panel-title:last-child {
       border-radius: 8px;
-      border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+      border-bottom: 1px solid #dce0e5;
     }
     .match-info {
       padding: 10px 20px;
