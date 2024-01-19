@@ -198,7 +198,7 @@ export default {
     height: 0.34rem;
     line-height: 0.34rem;
     text-align: center;
-    border-bottom: 0.01rem solid var(--q-gb-bd-c-18);
+    border-bottom: 0.01rem solid var(--q-gb-bd-c-10);
 
 
     > div {
