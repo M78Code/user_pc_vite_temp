@@ -170,8 +170,7 @@ const on_scroll = (position) => {
 // 设置滚动位置
 const set_scroll_position = (position) => {
  const dir=['vertical','horizontal'].includes(position[1])?position[1]:'vertical'
- debugger
- ref_v_scroll_area.value.setScrollPosition(dir,position[0])
+ ref_v_scroll_area.value?.setScrollPosition(dir,position[0])
 }
 
 onMounted(() => {
