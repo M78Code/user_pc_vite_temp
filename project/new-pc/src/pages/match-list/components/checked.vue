@@ -1,6 +1,6 @@
 <template>
-    <div :class="['checked',  checked ? 'checked-active':'']" @click="handle_check">
-        <img v-show="checked" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/checked.svg`" alt="" class="checked-icon"/>
+    <div :class="['checked',  props.is_checked || checked ? 'checked-active':'']" @click="handle_check">
+        <img v-show="props.is_checked || checked" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/checked.svg`" alt="" class="checked-icon"/>
     </div>
 </template>
 <script setup>
@@ -17,6 +17,8 @@ const checked = ref(false);
 
 watch(() => props.is_checked, (value) => {
     checked.value = value;
+}, {
+    deep: true,
 })
 
 const handle_check = () => {
