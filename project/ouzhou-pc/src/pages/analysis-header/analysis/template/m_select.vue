@@ -206,9 +206,9 @@ export default {
     display: flex;
     span {
       line-height: 24px;
-      min-width: 64px;
+      // min-width: 64px;
       text-align: center;
-      padding: 0 8px;
+      padding: 0 12px;
       // border: var(--qq--yb-border-color9);
       border: 0.5px solid #EBECF3;
       background: #ffffff;
