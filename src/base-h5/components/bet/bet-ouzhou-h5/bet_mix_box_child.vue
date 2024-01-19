@@ -106,6 +106,7 @@ import betMixBoxChild6 from "./bet_mix_box_child6.vue";
 import betSpecialInput from "./bet-special-input.vue";
 import betSpecialState from "./bet-special-state.vue";
 import betSpecialResult from "./bet-special-result.vue";
+import betSpecialWinning from "./bet-special-winning.vue";
 
 import betAllDetele from "./bet_all_detele.vue";
 import betBar from "./bet-bar.vue";

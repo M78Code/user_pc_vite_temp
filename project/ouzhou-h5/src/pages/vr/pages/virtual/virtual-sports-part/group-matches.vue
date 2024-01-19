@@ -65,6 +65,7 @@ export default {
   align-items: center;
   // background-color: yellowgreen;
   background-color: var(--q-gb-bg-c-21);
+  
 
   .col1 {
     width: 10%;
@@ -78,6 +79,13 @@ export default {
     .ellipsis {
       // width: 1rem;
       width: 100%;
+      font-family: Roboto;
+      font-size: 0.16rem;
+      font-weight: 400;
+      // line-height: 0.19rem;
+      letter-spacing: 0;
+      text-align: left;
+      color: var(--q-gb-t-c-4);
     }
   }
 
@@ -119,7 +127,8 @@ export default {
     > div {
       font-size: 0.1rem;
       font-weight: 400;
-      color: #949AB6;
+      // color: #949AB6;
+      color: var(--q-gb-t-c-3);
       &.col2 {
         // width: 1.084rem;
         width: 23%;
@@ -158,6 +167,14 @@ export default {
     justify-content: flex-start;
     align-items: center;
     color: var(--q-gb-t-c-18);
+    
+
+    font-family: Roboto;
+    font-size: 0.16rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-align: center;
+
 
     span {
       &:nth-child(1){
@@ -187,7 +204,7 @@ export default {
     > div {
       font-size: 0.12rem;
       font-weight: 400;
-      color: var(--q-gb-t-c-18);
+      color: var(--q-gb-t-c-3);
     }
 
     &:last-child {
