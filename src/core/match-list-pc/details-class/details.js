@@ -164,7 +164,6 @@ export default {
     let full_url = this.get_full_sr_url(match) // seid,match.srid
     let euid = lodash.get(MenuData, 'match_list_api_config.match_list.params.euid')
     localStorage.setItem('test_match_info', JSON.stringify(match))
-    // lockie
     // if(!GlobalAccessConfig.get_statisticsSwitch()) return window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD, window.vue.i18n_t("msg.msg_09")); 
     // if([1,2].includes(match.csid*1)){
       full_url = `index.html#/analysis_header/${match.csid}/${match.mid}` // seid,match.srid
