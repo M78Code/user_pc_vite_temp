@@ -67,7 +67,7 @@ const routes = [
         }
       },
       {
-        path: "/video/:mid/:tid/:csid/:play_type/:video_size",
+        path: "/video/:mid/:csid/:tid/:play_type/:video_size",
         name: "video",
         component: () => import("../pages/video/video.vue")
       },

@@ -83,7 +83,7 @@ const data = reactive({
     is_active: false, //确认按钮是否激活
     all_filter_list: [],//筛选全部数据
     filter_list: [],//筛选数据
-    all_select: false,// 是否全选
+    all_select: true,// 是否全选
     load_data_state: "loading",//数据加载状态
     search_filter_data: "data",//数据加载状态
     is_suck_down: false,//确定按钮是否低吸
@@ -100,23 +100,24 @@ const tid = computed(() => {
     const res = data.list_data.reduce((p, c) => {
         //大模块选择，子模块全选
         if (c.status) {
-            p = p.concat(c.sportVOs.reduce((p1, c1) => {
-                const current = c1.tournamentList.map(e => {
+            p = p.concat((c.sportVOs||[]).reduce((p1, c1) => {
+                const current = (c1.tournamentList||[]).map(e => {
                     return e.id
                 })
                 return [...p1, ...current];
             },[])) 
         }else {
             // 子模块选择
-           p = p.concat(c.sportVOs.reduce((p1, c1) => {
-                const current = c1.tournamentList.reduce((p2, c2) => {
+            console.log(c.sportVOs, "c.sportVOs");
+           p = p.concat((c.sportVOs||[]).reduce((p1, c1) => {
+                const current = (c1.tournamentList||[]).reduce((p2, c2) => {
                     if (c2.status) {
                         p2 = [...p2, c2.id]
                     }
                     return p2;
                 }, [])
                 return [...p1, ...current]
-            })) 
+            }, [])) 
         }
         return p;
     }, [])
@@ -131,7 +132,8 @@ watch(tid, (value)=> {
 
 function handle_checked_all() {
     data.all_select = !data.all_select;
-    data.list_data = (res.data || []).map(e => {
+    
+    data.list_data = (data.list_data || []).map(e => {
         e.status = data.all_select;
         e.sportVOs = (e.sportVOs || []).map(p => {
             p.tournamentList = (p.tournamentList || []).map(q => ({ ...q, status: data.all_select }))
@@ -148,9 +150,15 @@ function handle_checked_all() {
  * @param {number} current 第三层
  */
 function handle_select(parent, child, current) {
-    console.log(parent, child, current);
-    if (child && current) {
+    console.log(parent, child, current, "第三层");
+    if (!!child && !!current) {
+        // 子类选择
+        const _data = _.clone(data.list_data);
+        _data[parent].sportVOs[child].tournamentList[current].status = !_data[parent].sportVOs[child].tournamentList[current].status;
 
+        data.list_data = _data.map((e, i) => {
+            const current = e.
+        })
     }else {
         data.list_data = data.list_data.map((e, i) => {
             if (i == parent) {
@@ -190,12 +198,12 @@ async function submit() {
     const current_params = match_list_params.match_list.params;
     // https://api-c.sportxxx1zx.com/yewu11/v2/w/structureTournamentMatchesPB
 
-    // 不知道干啥的 https://api-c.sportxxx1zx.com/yewu11/v1/w/collectMatchesPB
+    //  https://api-c.sportxxx1zx.com/yewu11/v1/w/collectMatchesPB
     // 参数 {"matchType":0,"cuid":"331188967994322944"}
     const collect_matches_PB_params = {
         matchType: 0
     };
-    // 不知道干啥的 https://api-c.sportxxx1zx.com/yewu11/v1/w/structureMatchBaseInfoByMidsPB
+    //  https://api-c.sportxxx1zx.com/yewu11/v1/w/structureMatchBaseInfoByMidsPB
     // mids 获取路径位置
     // 参数 {"mids":"3050464,3050470,3050476","cuid":"331188967994322944","euid":"3020101","orpt":"0","sort":1,"pids":"","cos":0}
     let params = {
@@ -255,14 +263,14 @@ async function init() {
             // cuid: current_params.cuid,
 
         });
-        data.list_data = (res.data || []).map(e => {
+        data.list_data = Object.freeze((res.data || []).map(e => {
             e.status = true;
             e.sportVOs = (e.sportVOs || []).map(p => {
                 p.tournamentList = (p.tournamentList || []).map(q => ({ ...q, status: true }))
                 return p;
             })
             return e;
-        });
+        })) ;
         console.log(res, "结果");
     } catch (error) {
         console.log(error, "errors");

@@ -17,7 +17,6 @@
     </div>
     
     <div class="bet_single_detail f-b-c">
-      
       <div class="content-b" @click="input_click">
         <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
         <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}<em class="number_family">{{ items.min_money }}-{{ format_money3(items.max_money) }}</em></span>
@@ -25,7 +24,6 @@
       </div>
     </div>
   </div>
-  
 </template>
 
 <script setup> 
@@ -183,22 +181,22 @@ const alertRules = (id) => {
     height: 0.68rem;
     //margin-left: .08rem;
     padding: 0 .12rem;
-    border-bottom: 1px solid #E2E2E2;
-    background: #F5F5F5;
+    border-bottom: 1px solid var(--q-gb-bd-c-17);
+    background: var(--q-gb-bg-c-10);
     .item-left-btm{
       margin-right: 0.04rem;
-      color: #8A8986;
+      color: var(--q-gb-t-c-3);
       font-size: 14px;
     }
     .item-odds{
-      color: #FF7000;
+      color: var(--q-gb-t-c-1);
       font-size: 20px;
       font-weight: 700;
     }
     .item-left{
       display: flex;
       align-items: center;
-      color: #1A1A1A;
+      color: var(--q-gb-t-c-4);
       font-size: 16px;
     }
   }
@@ -212,7 +210,7 @@ const alertRules = (id) => {
   /* ************** 右边内容 ************** -S */
   .content-b {
     height: 0.44rem;
-    min-width: 1.50rem;
+    min-width: 1.52rem;
     padding-left: 0.16rem;
     border-radius: 0.08rem;
     font-size: 0.16rem;
@@ -225,8 +223,8 @@ const alertRules = (id) => {
     background: var(--q-gb-bg-c-25);
     margin-left: 0.05rem;
     border-radius: 2px;
-    border: 0.5px solid #A4A4A4;
-    background: #FFF;
+    border: 0.5px solid var(--q-gb-bd-c-12);
+    background: var(--q-gb-bg-c-2);
     box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.10);
     .limit-txt {
       color: #8A8986;

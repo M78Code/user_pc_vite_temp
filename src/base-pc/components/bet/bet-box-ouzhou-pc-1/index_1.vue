@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue"
+import { reactive, ref, onMounted } from "vue"
 import { MenuData, UserCtr, format_money2} from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
@@ -145,6 +145,11 @@ const show_merge_change = () => {
   }
   BetData.set_is_bet_merge('merge')
 }
+
+
+onMounted(() => {
+  BetData.switch_bet_query_bet_amount()
+})
 
 
 </script>
