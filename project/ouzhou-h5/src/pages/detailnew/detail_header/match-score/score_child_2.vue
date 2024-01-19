@@ -73,7 +73,7 @@ const BasketballScore = computed(()=>{
     flex-wrap: nowrap;
     flex-shrink: 0;
     box-sizing: border-box;
-    font:{
+    font: {
         size: .14rem;
         weight: bold;
     }
