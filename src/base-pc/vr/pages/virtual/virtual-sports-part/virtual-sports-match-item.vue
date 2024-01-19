@@ -623,7 +623,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--q-gb-t-c-18);
+        color: var(--q-gb-t-c-5);
         font-size: 12px;
         font-weight: 400;
 

@@ -208,7 +208,7 @@ const api_bymids = (
   if (MenuData.menu_root != "1" && PageSourceData.page_source != "search") {
     params.pids = _params.pids;
   }
-  if (tabs.length > 0 && !params.pids && params.orpt != 0) {
+  if (tabs.length > 0 && !params.pids) {
     params.tabs = tabs;
   }
   //today：今日  early：早盘 角球玩法

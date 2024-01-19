@@ -81,7 +81,7 @@ export default {
   }
   .odds-value {
     font-size: 0.1rem;
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-5);
   }
 
   .lock {
