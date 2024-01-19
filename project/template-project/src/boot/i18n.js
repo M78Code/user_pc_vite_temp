@@ -17,6 +17,7 @@ const i18n = createI18n({
   let map_lang = {
     'en': 'en-gb',// 英语
     'zh': 'zh-cn',// 中文
+    'hk': 'zh-cn',// 中文
     'tw': 'zh-tw',// 繁体
     // 'vi': 'vi-vn',// 越南语
     // 'th': 'th-th',// 泰语

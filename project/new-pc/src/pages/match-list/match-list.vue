@@ -4,7 +4,7 @@
  * @Description: 赛事主列表页
 -->
 <template>
-  <div v-if="!show_filter" class="yb-match-list column full-height   relative-position" :data-version="MatchListCardDataClass.list_version">
+  <div v-show="!show_filter" class="yb-match-list column full-height   relative-position" :data-version="MatchListCardDataClass.list_version">
     <div class="test-info-wrap" v-show="GlobalAccessConfig.get_wsl()">
       <!-- <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div> -->
       <!-- 临时调试用 -->
@@ -31,7 +31,13 @@
           <refresh :loaded="load_data_state != 'loading'" :other_icon="true" :icon_name="1" @click="on_refresh" />
         </template>
       </list-header> -->
-      <match-detail-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state" @change_race="change_race">
+      <match-detail-header 
+        :collect_count="collect_count" :is_show_hot="is_show_hot" 
+        :select_list="select_list" :load_data_state="load_data_state" 
+        @change_race="change_race"
+        @change_version="change_version"
+        @change_hot="change_hot"
+        >
         <template #refresh>
           <div class="refreh-container">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/refresh_header.svg`" 
@@ -108,7 +114,7 @@
       <div class="img-loading custom-format-img-loading" :style="compute_css_obj('pc-img-loading')"></div>
     </div>
   </div>
-  <match_list_filter v-else/>
+  <match_list_filter v-show="show_filter" @close="match_list_close"/>
 </template>
 <script setup>
 import { onMounted, onUnmounted, watch, ref } from "vue";
@@ -145,10 +151,41 @@ import "./match_list.scss";
 import match_list_filter from "./components/match-list-filter.vue";
 const match_list_card_key_arr = ref([])
 const show_filter = ref(false);
+// 选择的联赛
+const select_list = ref([]);
 function MatchListCardDataClass_match_list_card_key_arr() {
   match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
 }
 use_match_list_ws()
+
+/**
+ * 切换专业/新手版
+ * @param {{id: number}} params 
+ */
+function change_version(params) {
+  //TODO: 切换专业/新手版 1 专业版 2 新手版
+  const type = params.id;
+
+}
+
+/**
+ * 修改热门
+ * @param {number} params 
+ */
+function change_hot(params) {
+  // TODO: 修改热门 0热门/1时间
+}
+
+/**
+ * 关闭筛选
+ * @param {Array<string>} value 选择的id
+ */
+function match_list_close(value) {
+  show_filter.value = !show_filter.value;
+  select_list.value = value;
+  // TODO: 关闭筛选，刷新列表
+}
+
 const on_go_top = () => {
   useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0)
 }
@@ -217,6 +254,7 @@ watch(MatchListCardDataClass.list_version,
   font-size: 13px;
 }
 .scroll-fixed-header {
+  height: 36px;
   background-color:var(--q-gb-bg-c-30);
   border: 1px solid var(--q-gb-bg-c-23);
   // background-color: rgba(255,255,255,0.05);

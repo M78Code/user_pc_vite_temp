@@ -3,6 +3,7 @@
     <div v-show="false">{{ MatchListCardDataClass.list_version }}
     </div>
     <div class="flex flex-start items-center">
+    <!-- {{ match_style_obj.data_tpl_id }} -->
       <!-- 赛事基础信息 -->
       <div class="basic-col"
         :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
@@ -37,7 +38,7 @@
         </div>
       </div>
     </div>
-    <div class="flex" v-if="match_style_obj.data_tpl_id == 109">
+    <div class="flex" v-if="is_score">
       <div :style="`width:${match_list_tpl_size.process_team_width}px !important;height:28px !important;`">
       </div>
       <div class="flex col items-start">
@@ -95,6 +96,16 @@ export default {
       }
       return []
     });
+
+    let is_score = computed(() => {
+      let status = false
+      if (match_style_obj.data_tpl_id == 109 || match_style_obj.data_tpl_id == 112) {
+        status = true
+      }
+
+      return status
+    })
+
     // watch(() => MatchListCardDataClass.list_version, (new_value, old_value) => {
     //   if (match.value) {
     //     const csid = lodash.get(match.value, 'csid')
@@ -132,6 +143,7 @@ export default {
       MatchListCardDataClass.set_current_mid(mid);
       if (MenuData.is_scroll_ball()) {
         // 控制右侧比分板
+        match.value.showType = type   // 右侧比分榜需要将type 传过去
         MatchDataWarehouseInstance.set_match_details(lodash.cloneDeep(match.value), [])
         useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
       } else {
@@ -160,6 +172,7 @@ export default {
       MenuData,
       current_mid,
       match_style_obj,
+      is_score
     }
   }
 }

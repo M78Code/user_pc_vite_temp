@@ -157,7 +157,7 @@ export default {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-5);
 
     span {
       &:nth-child(1){
@@ -187,7 +187,7 @@ export default {
     > div {
       font-size: 0.12rem;
       font-weight: 400;
-      color: var(--q-gb-t-c-18);
+      color: var(--q-gb-t-c-5);
     }
 
     &:last-child {

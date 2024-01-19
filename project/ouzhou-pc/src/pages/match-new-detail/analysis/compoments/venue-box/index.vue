@@ -9,13 +9,27 @@
       <div class="analysis-top">
         <div class="analysis-top-l">
           <!-- <div class="v-icon switch-icon"></div> -->
-          <sport-icon style="margin: 0 10px"
-          :sport_id="MenuData.current_ball_type=='0'?detail_info.csid:MenuData.current_ball_type" :key="MenuData.current_ball_type" key_name="pc-left-menu-bg-image" size="20" class="icon" />
-    
+          <sport-icon
+            style="margin: 0 10px"
+            :sport_id="
+              MenuData.current_ball_type == '0'
+                ? detail_info.csid
+                : MenuData.current_ball_type
+            "
+            :key="MenuData.current_ball_type"
+            key_name="pc-left-menu-bg-image"
+            size="20"
+            class="icon"
+          />
+
           <!--<span class="analysis-top-txt">{{ detail_info.tn }}</span>-->
-          <span class="home-vs-away" :title="detail_info.mhn">{{ detail_info.mhn }} </span>
+          <span class="home-vs-away" :title="detail_info.mhn"
+            >{{ detail_info.mhn }}
+          </span>
           <span class="match-detail-head-name m-10">v</span>
-          <span class="home-vs-away" :title="detail_info.man">{{ detail_info.man }}</span>
+          <span class="home-vs-away" :title="detail_info.man">{{
+            detail_info.man
+          }}</span>
         </div>
         <div class="analysis-top-right">
           <!-- 视频图标 -->
@@ -72,19 +86,21 @@ import { onMounted, ref, computed, watch } from "vue";
 import animal_box from "./animal_box.vue";
 import score_info from "./score_info.vue";
 import commingSoon from "./comming-soon.vue";
-import { LOCAL_PROJECT_FILE_PREFIX, MenuData, UserCtr } from "src/output/index.js";
+import {
+  LOCAL_PROJECT_FILE_PREFIX,
+  MenuData,
+  UserCtr,
+} from "src/output/index.js";
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
-import { get_match_status } from 'src/output/module/constant-utils.js'
+import { get_match_status } from "src/output/module/constant-utils.js";
 import { useRoute } from "vue-router";
 
-
-
-const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`;
-const animal_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal_active.png`;
-const score = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score.png`;
-const score_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score_active.png`;
-const video_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/video_active.png`;
-const video = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/video.png`;
+const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/animal.png`;
+const animal_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/animal_active.png`;
+const score = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/score.png`;
+const score_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/score_active.png`;
+const video_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/video_active.png`;
+const video = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/video.png`;
 
 const route = useRoute();
 const props = defineProps({
@@ -107,9 +123,13 @@ watch(
   () => props.detail_info,
   (val) => {
     if (val) {
-      if(route.params?.type) {
-        tab_click(route.params?.type)
-        return
+      if (route.params?.type) {
+        tab_click(route.params?.type);
+        return;
+      }
+      if (val.showType) {
+        tab_click(val.showType);
+        return;
       }
       // 有动画优先播放动画
       if (val.mvs > -1) {
@@ -254,15 +274,14 @@ const tab_click = (type) => {
   color: rgb(255, 112, 0) !important;
 }
 
-.home-vs-away{
+.home-vs-away {
   max-width: 130px;
   overflow: hidden;
   display: inline-block;
   text-overflow: ellipsis;
-    white-space: nowrap;
-
+  white-space: nowrap;
 }
-.m-10{
+.m-10 {
   margin: 0 10px;
 }
 </style>

@@ -33,6 +33,16 @@ class MatchResponsive {
     this.popular_league = ref({})
     // 次要玩法展开映射
     this.secondary_unfold_map = ref({})
+    //是否欧洲版联赛详情
+    this.is_league_detail = ref(false);
+  }
+
+  /**
+   * @description 设置欧洲版联赛详情
+   * @param {Boolean} val
+  */
+  set_is_league_detail(val){
+    this.is_league_detail.value = val
   }
 
    /**

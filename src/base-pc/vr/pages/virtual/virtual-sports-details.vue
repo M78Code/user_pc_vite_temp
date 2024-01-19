@@ -7,7 +7,7 @@
     <div class="virtual-detail-wrap">
       <div class="match-detail-bread">
         <!-- 详情页面包屑 -->
-        <breadcrumbs :detail_info="match || {}" />
+        <breadcrumbs :detail_info="match || {}" v-if="match" />
         <div class="bread-right">
           <img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
@@ -83,21 +83,6 @@
         </template>
         <!-- 历史战绩页面 -->
         <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
-        <!-- 排行榜页面,小组赛淘汰赛页面  -->
-        <div v-if="match && tabs_name == 'rank'" class="list-wrapper">
-          <div v-if="[1001,1004].includes(sub_menu_type)">
-            <!--  足球小组赛,淘汰赛页面  -->
-            <group-knockout
-              v-if="current_league ? current_league.field3 != '': false"
-              :tid="current_league.field1"
-              :current_match="current_match"
-            />
-            <!--  足球排行榜页面  -->
-            <football-ranking-list v-else :tid="current_league.field1"/>
-          </div>
-          <!--  非足球排行榜页面  -->
-          <ranking-list-start v-else :mid="current_match.mid"/>
-        </div>
       </div>
     </div>
 
@@ -121,6 +106,25 @@
           {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
         </div>
       </div>
+
+      <!-- vr详情页右侧区域，包括足蓝队伍比分，赛马队伍和赛果 -->
+      <virtual-sports-right v-if="match" :current_match="match" :match_list_by_no="[]" :switch_match_handle="()=>{}" />
+
+      <!-- 排行榜页面,小组赛淘汰赛页面  -->
+      <div v-if="match" class="list-wrapper">
+        <div v-if="sub_menu_type == 1001">
+          <!--  足球小组赛,淘汰赛页面  -->
+          <group-knockout
+            v-if="current_league ? current_league.field3 != '': false"
+            :tid="current_league.field1"
+            :current_match="current_match"
+          />
+          <!--  足球排行榜页面  -->
+          <football-ranking-list v-else :tid="current_league.field1"/>
+        </div>
+        <!--  非足球排行榜页面  -->
+        <ranking-list-start v-else :mid="current_match.mid"/>
+      </div>
     </div>
   </div>
 </template>
@@ -137,6 +141,9 @@ import virtual_match_statistic from 'src/base-pc/vr/components/virtual-match-sta
 import breadcrumbs from "src/base-pc/vr/pages/virtual/details/children/breadcrumbs.vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
+import virtual_sports_right from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-right.vue"
+import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
+import {api_v_sports} from "src/api/index.js";
 
 export default {
   mixins:[virtual_sports_details_mixin],
@@ -151,6 +158,7 @@ export default {
     'football-ranking-list':football_ranking_list,
     'group-knockout':group_knockout,
     'match-process': matchProcess,
+    'virtual-sports-right':virtual_sports_right,
     breadcrumbs
   },
   data(){
@@ -172,6 +180,31 @@ export default {
       14: 180,
     }
     }
+  },
+  mounted(){
+    // 获取队伍列表
+    this.get_virtual_sport_local()
+  },
+  methods: {
+    /**
+     * @description: 获取虚拟体育赛事列表
+     */
+     get_virtual_sport_local(){
+      let params = {
+        csid: this.sub_menu_type,
+        tid: this.current_league.menuId
+      };
+      api_v_sports.get_virtual_sport_list(params).then(res => {
+        console.log('res', res);
+        
+      }).catch((e) => {
+     
+      });
+    }
+  },
+  computed:{
+    current_league(){return VR_CTR.state.current_league},
+    sub_menu_type(){return VR_CTR.state.curr_sub_menu_type},
   }
 }
 </script>
@@ -430,6 +463,10 @@ export default {
   width: 100%;
   height: 2.54rem;
   border-radius: 0;
+}
+
+.list-wrapper {
+  background: var(--q-gb-bg-c-4);
 }
 </style>
 
