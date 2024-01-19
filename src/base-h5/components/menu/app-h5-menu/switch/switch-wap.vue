@@ -123,7 +123,7 @@ const handler_sort_change = async(val) => {
     const param = {
         sort: val
     }
-  await api_account.get_remember_select(param)
+//   await api_account.get_remember_select(param)
     UserCtr.set_sort_type(val);
     reset_is_show_mask()
 }
