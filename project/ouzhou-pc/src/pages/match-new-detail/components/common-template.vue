@@ -158,14 +158,14 @@ const columnNum = ref(0); // 获取当前分成几列展示
 const columnTotal = (item) => {
   let total;
   const { match_info } = props;
-  if (match_info.title.length > 0 && ![0, 3].includes(match_info.hpt)) {
+  if (match_info.title?.length > 0 && ![0, 3].includes(match_info.hpt)) {
     if (match_info.hpt === 10) {
       total = 3;
     } else {
       if (["362"].includes(match_info.hpid)) {
         total = 2;
       } else {
-        total = match_info.title.length;
+        total = match_info.title?.length;
       }
     }
   } else {
@@ -192,7 +192,7 @@ const getOn = (match_info, o) => {
     match_info &&
     match_info.hl[0].hv &&
     match_info.hpt == 0 &&
-    match_info.title.length > 0
+    match_info.title?.length > 0
   ) {
     const hv = match_info.hl[0].hv;
     result = o.on.replace(hv, `<span>${hv}</span>`);
