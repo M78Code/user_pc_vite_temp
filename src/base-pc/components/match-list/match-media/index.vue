@@ -14,7 +14,7 @@
             >{{ i18n_t('common.score_board') }}</q-tooltip
           >
     </div>
-    <div class="yb-flex-center" :class="{ 'flex-center': MenuData.is_esports() }">
+    <div>
       <!-- 收藏 -->
       <div
         v-if="MenuData.is_esports() && (![1, 500].includes(MenuData.menu_root)) && route.name != 'search' && GlobalAccessConfig.get_collectSwitch()"
@@ -50,13 +50,13 @@
           >
     </div>
     <!-- 盘口数量 -->
-    <div class="play-count-wrap no-wrap yb-flex-center" @click="on_go_detail" style="margin-top:10px;"
+    <!-- <div class="play-count-wrap no-wrap yb-flex-center" @click="on_go_detail" style="margin-top:10px;"
       v-if="MenuData.is_esports() && route.name != 'search'">
       <span class="count">{{ handicap_num }}</span>
       <div class="yb-flex-center" style="margin-left:5px">
         <div class="yb-icon-arrow"></div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -228,8 +228,9 @@ function collect() {
   justify-content: center;
 
   .icon-wrap {
-    margin: 4px 0;
-
+    width: 20px;
+    height: 14px;
+    margin: 4px auto;
     .match_pre {
       width: 26px;
       height: auto;

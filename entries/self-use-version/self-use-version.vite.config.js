@@ -89,8 +89,7 @@ export default defineConfig({
   server: {
     port,
     host: '0.0.0.0',
-     open: `../../project/${project}/index.html`,
-    // open:    "../../project/yazhou-pc/index.html" ,
+    open: false,
     hmr: true,
   },
 });

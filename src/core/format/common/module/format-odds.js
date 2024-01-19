@@ -206,11 +206,15 @@ export const calc_bifen = (msc, csid, ms, hpid) => {
 export const get_odds_active = (matchHandicapStatus, status, active) => {
   var active_ = 1;
   if (matchHandicapStatus) { // 赛事盘口有操作变化时
-    if (matchHandicapStatus == 1) { //赛事封盘
+    if (matchHandicapStatus == 1) { //赛事封盘状态
       active_ = 2;
     } else if (matchHandicapStatus == 11) { //赛事锁盘
-      active_ = 4;
-    } else if (matchHandicapStatus == 2) { //赛事关盘
+      if(active!=1){
+        active_ = active;
+      } else{
+        active_ = 4;
+      }
+    } else if (matchHandicapStatus == 2 || matchHandicapStatus == 3 || matchHandicapStatus == 4 || matchHandicapStatus == 5) { //赛事关盘
       active_ = 3;
     }
     return active_;
@@ -218,19 +222,11 @@ export const get_odds_active = (matchHandicapStatus, status, active) => {
 
   if (status) { // 盘口有操作变化时
     if (status == 1) { //盘口封盘
-      if (active == 3) {
-        active_ = active;
-      } else {
-        active_ = 2;
-      }
-    } else if (status == 2) { //盘口关盘
+      active_ = 2;
+    } else if (status == 2 || status == 3 || status == 4 || status == 5) { //盘口关盘
       active_ = 3;
     } else if (status == 11) { //盘口锁盘
-      if (active != 1) {
-        active_ = active;
-      } else {
-        active_ = 4;
-      }
+      active_ = 4;
     }
     return active_;
   }

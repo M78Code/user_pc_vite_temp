@@ -1,7 +1,7 @@
 import {ref,onUnmounted} from 'vue'
 import { api_common } from "src/api/index.js";
 import video from "src/core/video/video.js"; // 视频相关公共方法
-import { MatchDetailCalss, useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+import { MatchDetailCalss, useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX ,into_video_anima_event } from "src/output/index.js"
 import uid from "src/core/uuid/index.js"
 export function useIconInfo(get_detail_data, match_id) {
 
@@ -65,7 +65,7 @@ onUnmounted(clear_timer1_)
   /**
    * 点击视频
    */
-  const icon_click_muUrl = () => {
+  const icon_click_muUrl = (obj) => {
     let check = get_detail_data.mms >= 2 || get_detail_data.mvs > -1;
 
     if (!check) {
@@ -103,6 +103,8 @@ onUnmounted(clear_timer1_)
               check_url(media_src);
             });
           }
+          // 发送进入动画和视频的埋点
+          into_video_anima_event('muUrl',obj);
         } else {
           if (lodash.get(res, "code") == "0401038") {
             // set_toast({
@@ -137,7 +139,7 @@ onUnmounted(clear_timer1_)
   /**
    * 点击动画
    */
-  const icon_click_animationUrl = () => {
+  const icon_click_animationUrl = (obj) => {
     let check = get_detail_data.mms >= 2 || get_detail_data.mvs > -1;
 
     if (!check) {
@@ -182,6 +184,8 @@ onUnmounted(clear_timer1_)
       MatchDetailCalss.set_video_url(data);
       // 开启视频
       useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true);
+      // 发送进入动画和视频的埋点
+      into_video_anima_event('animationUrl',obj);
     });
   };
 

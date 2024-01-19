@@ -9,11 +9,15 @@
     <div>
       <div v-for="(team,index) in item_data.team" :key="index" :style="{'margin-top':index > 0 ? '0.04rem':''}" class="hairline-border">
         <div class="row special items-center justify-between" >
-          <div class="row items-center">
+          <div class="row items-center" style="width: 338px">
             <div class="virtual-count" :class="`virtual-num-${index+1} csid-${[1010].includes(sub_menu_type)?'1002':sub_menu_type} ${[1010].includes(sub_menu_type) ? `motorcycle-${index+1}` : ''}`"></div>
             <div class="team-name">{{team.teamName}}</div>
           </div>
-          <div class="row team justify-between">
+          <!-- 竖线 -->
+          <div class="vertical-line"></div>
+          <!-- 图标信息 -->
+          <div style="width:115px"></div>
+          <div class="row team justify-between" style="width: 661px">
             <div class="col-4 team-odds" @click="go_to_fun(`20033${team.teamId}`,index)" :class="[BetData.bet_oid_list.includes(play_obj && play_obj[`20033${team.teamId}`] && play_obj[`20033${team.teamId}`].oid) && 'team-odds2']">
               <div v-if="lodash.get(play_obj,`20033${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
               <div v-else>
@@ -160,6 +164,16 @@ export default defineComponent({
   overflow: hidden;
 }
 
+.vertical-line {
+  width: 1px;
+  height: 30px;
+  background: var(--q-gb-bg-c-10);
+}
+
+.hairline-border {
+  border-bottom: 1px solid var(--q-gb-bd-c-2);
+}
+
 /*************** 每项热门结束 *************** -E*/
 /*************** 每项team开始 *************** -S*/
 .team-name {
@@ -169,7 +183,7 @@ export default defineComponent({
   white-space: nowrap;
   line-height: 0.52rem;
   margin-left: 0.08rem;
-  color: var(--q-gb-t-c-3);
+  color: #1A1A1A;
   font-size: 0.14rem;
 }
 
@@ -177,17 +191,19 @@ export default defineComponent({
 /*************** 每项team结束 *************** -E*/
 /*************** 每项odds开始 *************** -S*/
 .team-odds {
-  line-height: 0.4rem;
-  height: 0.4rem;
+  line-height: 30px;
+  height: 30px;
   text-align: center;
   font-size: 0.16rem;
   flex: 1;
-  color: var(--q-gb-t-c-3);
-  background: var(--q-gb-bg-c-28);
-  border-radius: 0.08rem;
+  color: var(--q-gb-t-c-2);
+  &:hover {
+    cursor: pointer;
+    background: var(--q-gb-t-c-4);
+  }
   >div {
-    color: var(--q-gb-t-c-3);
-    font-size: 0.14rem;
+    color: var(--q-gb-t-c-2);
+    font-size: 14px;
     font-weight: 700;
   }
 }

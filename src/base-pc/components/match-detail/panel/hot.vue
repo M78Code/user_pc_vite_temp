@@ -219,6 +219,8 @@
 </template>
 
 <script>
+import ZHUGE from "src/core/http/zhuge-tag.js";
+
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 import { api_details, api_match } from "src/api/index";
 import { MatchProcessFullVersionWapper } from "src/components/match-process/index.js";
@@ -241,6 +243,7 @@ import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, onUnmounted } from "vue";
+import details from "src/core/match-detail/match-detail-pc/match-detail.js";
 export default {
   // mixins: [skt_data_list_hot],
   components: {
@@ -588,6 +591,18 @@ export default {
         `height=${_window_height}, width=${_window_width}, top=${_window_offset_top}, left=${_window_offset_left}, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
       );
     },
+
+    // sr 分析数据点击跳转
+    sr_click_handle(match, type) {
+      if (type == "details") {
+        // 发送埋点事件
+        ZHUGE.send_zhuge_event("PC_情报分析");
+      } else if (type == 1) {
+        ZHUGE.send_zhuge_event("PC_热门推荐_赛事分析点击");
+      }
+      details.sr_click_handle(match);
+    }
+
   },
 };
 </script>

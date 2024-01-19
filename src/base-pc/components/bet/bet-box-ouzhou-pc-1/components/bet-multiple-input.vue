@@ -33,7 +33,7 @@
         <div v-show="false">{{ UserCtr.user_version }}--{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         <div v-show="ref_data.keyborard" class="row bet-keyboard bet-keyboard-content">
             <div class="col">
-                <bet-keyboard :oid="ref_data.oid"/>
+                <bet-keyboard :oid="ref_data.oid" :max_money="ref_data.max_money"/>
             </div>
         </div>
     </div>
@@ -176,7 +176,7 @@ const set_ref_data_bet_money = () => {
     ref_data.min_money = lodash_.max(min_money_arr) 
     //多项单注限额最大值取多项里最小的
     ref_data.max_money = lodash_.min(max_money_arr)
-    // console.log('-------------------------------------------------------------------------------', min_money_arr, max_money_arr)
+    // console.log('----------------------------------------ref_data.max_money ---------------------------------------', ref_data.max_money)
     ref_data.money = ""
     //设置键盘MAX限额
     let max_money_obj = {max_money:ref_data.max_money}
