@@ -1012,7 +1012,7 @@ onUnmounted(() => {
     >div{
       display: flex;
       flex: 1;
-      gap: 4px;
+      // gap: 4px;
       >span{
         flex: 1;
         font-size: 10px;
@@ -1229,7 +1229,7 @@ onUnmounted(() => {
     overflow: hidden;
   }
   &.special_play{
-    width: unset;
+    width: 100%;
     height: unset;
     overflow: unset;
     //padding-bottom: .31rem;

@@ -108,6 +108,7 @@ export const no_collect_ouzhou = compute_local_project_file_path('/image/list/co
 export const have_collect_ouzhou = compute_local_project_file_path('/image/list/collect-y.svg')
 // 投注项锁
 export const odd_lock_ouzhou = compute_local_project_file_path('/image/list/lock.png')
+export const select_check = compute_local_project_file_path('/image/list/select.png')
 
 // 欧洲 赔率升高图标
 export const ouzhou_hps_up = compute_local_project_file_path('/image/list/icon_up.png')

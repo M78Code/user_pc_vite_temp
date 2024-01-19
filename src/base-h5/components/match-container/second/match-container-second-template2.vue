@@ -14,7 +14,7 @@
       </div>
       <div class="select-play" v-if="second_play_data.length > 0">
         <span @click.stop>
-          <q-btn-dropdown flat outline padding="0" dropdown-icon="expand_more" content-class="select-play-style">
+          <q-btn-dropdown menu-self="top middle" flat outline padding="0" dropdown-icon="expand_more" content-class="select-play-style">
             <template v-slot:label>
               <template v-if="!select_second_item?.id">
                 <IconWapper name="icon-close" size="7px" color="#C9CDDB" class="icon-del" />
@@ -31,7 +31,10 @@
               <q-item v-for="item, i in second_play_data" :key="item.hps_key" @click.stop="on_select_second_play(item, i)"
                   :class="{active: select_second_item.id === item.id}" clickable v-close-popup >
                 <q-item-section>
-                  <q-item-label>{{ item.title }}</q-item-label>
+                  <q-item-label> 
+                    <span>{{ item.title }}</span> 
+                    <img v-if="select_second_item.id === item.id" :src="select_check" alt="select check" /> 
+                  </q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -89,6 +92,7 @@ import second_mixin from '../mixins/second.mixin.js';
 import { IconWapper } from 'src/components/icon'
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
 import { compute_css_obj } from "src/output/index.js"
+import { select_check } from 'src/base-h5/core/utils/local-image.js'
 
 export default defineComponent({
   name: "match-container-second-template2",
@@ -106,12 +110,12 @@ export default defineComponent({
     })
     // 当前显示的 次要玩法
     const current_second_data = computed(() => {
-      return show_second_data.value.slice(0, 2)
+      return show_second_data.value.slice(0, 1)
     })
     // 更多次要玩法数据
     const second_play_data = computed(() => {
       const length = lodash.get(show_second_data.value, 'length', 0)
-      return show_second_data.value.slice(2, length - 1)
+      return show_second_data.value.slice(1, length - 1)
     })
     // 更多次要玩法 当前所选玩法
     const select_second_item = ref({})
@@ -121,7 +125,7 @@ export default defineComponent({
       select_second_item.value = item
     }
     return { 
-      compute_css_obj, on_select_second_play, select_second_item, second_play_data, current_second_data
+      compute_css_obj, on_select_second_play, select_second_item, second_play_data, current_second_data, select_check
     }
   }
 })
@@ -151,7 +155,7 @@ export default defineComponent({
       display: flex;
       align-items: center;
       padding: 0 0.01rem 0 0.03rem;
-      border: 0.02rem solid transparent;
+      border: 1px solid transparent;
       justify-content: center;
       &.collapsed{
         color: #179cff;
@@ -195,11 +199,15 @@ export default defineComponent({
           color: #949AB6;
         }
         .active-item{
+          display: flex;
+          align-items: center;
           .label{
             color: #179cff;
             border-color: #179cff;
           }
           .q-icon {
+            position: relative;
+            top: -0.5px;
             transform: rotateZ(-180deg);
             &.icon-triangle1:before{
               color: #179cff;

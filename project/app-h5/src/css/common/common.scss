@@ -32,11 +32,21 @@
   .q-item{
     width: 80px;
     padding: 3px 12px;
-    font-size: 0.1rem;
+    font-size: 0.11rem;
     min-height: 35px;
     &.active{
+      font-weight: 600;
       background: #ECEDF1;
       color: var(--q-gb-t-c-18);
+    }
+    .q-item__label{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      > img {
+        width: 11px;
+        height: 11px;
+      }
     }
   }
 }
