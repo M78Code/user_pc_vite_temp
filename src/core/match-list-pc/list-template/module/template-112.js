@@ -71,5 +71,7 @@ export const match_template_config = {
     ...TemplateCommon.match_style_template_ouzhou,
     // 是否需要动态计算高度
     is_dynamic_compute_height:true,
+     // 当前局玩法高度
+    cur_handicap_height:28,
   };
   
