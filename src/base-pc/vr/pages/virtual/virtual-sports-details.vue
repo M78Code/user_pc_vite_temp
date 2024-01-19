@@ -106,9 +106,13 @@
           {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
         </div>
       </div>
+
+      <!-- vr详情页右侧区域，包括足蓝队伍比分，赛马队伍和赛果 -->
+      <virtual-sports-right v-if="match" :current_match="match" :match_list_by_no="[]" :switch_match_handle="()=>{}" />
+
       <!-- 排行榜页面,小组赛淘汰赛页面  -->
       <div v-if="match" class="list-wrapper">
-        <div v-if="sub_menu_type = 1001">
+        <div v-if="sub_menu_type == 1001">
           <!--  足球小组赛,淘汰赛页面  -->
           <group-knockout
             v-if="current_league ? current_league.field3 != '': false"
