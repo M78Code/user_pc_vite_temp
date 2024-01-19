@@ -2,10 +2,16 @@
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
         <div class="f-b-s bet-content">
+            <img class="img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/success.svg`" alt="" />
+
+            <section class="bet-content-main">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 font14">
                     <span class="text-flow-none">{{ items.playOptionName}}</span> 
                     <!-- <span class="bet-market mx-4 text-ff7">{{ items.marketValues }}</span> -->
+                    
+                    <!-- <span class="text-flow-none">Sevilla Fútbol Club </span> -->
+                    <span class="text-flow-none">【{{ i18n_t(`odds.${items.marketType}`) }}】</span>
                 </div>
                 <div class="w-100 my-4">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bet_inplay") + ']'}}</span>
@@ -13,7 +19,7 @@
                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                     </span>
                     
-                    <span class="mr-4 text-009"> [{{ i18n_t(`odds.${items.marketType}`) }}]</span>
+                    <!-- <span class="mr-4 text-009"> [{{ i18n_t(`odds.${items.marketType}`) }}]</span> -->
                 
                     <div class="w-100 font12 font400 font-style" v-if="items.matchType != 3">{{items.matchName}}</div>
                     <div class="w-100 font12 font400 font-style">{{ items.matchInfo }}</div>
@@ -25,6 +31,7 @@
                     <span class="font14 font700 mr-10">@<span class="font22">{{ items.oddsValues }}</span></span>
                 </div>
             </div>
+            </section>
         </div>
     </div>
 </template>
@@ -56,11 +63,13 @@ const props = defineProps({
     .bet-content {
         min-height: .76rem;
         padding: .12rem;
+        padding-right: 0;
         font-size: .13rem;
         font-weight: 500;
         font-style: normal;
         position: relative;
-        background: var(--q-gb-bg-c-22);
+        background: var(--q-gb-bg-c-28);
+        //background: var(--q-gb-bg-c-22);
         margin-bottom: .04rem;
         border-radius: .12rem;
 
@@ -75,7 +84,8 @@ const props = defineProps({
         .bet-right {
             width: 1.6rem;
             text-align: right;
-            color: var(--q-gb-t-c-17);
+            color: var(--q-gb-t-c-6);
+            //color: var(--q-gb-t-c-17);
         }
 
         .bet-loading{
@@ -95,7 +105,8 @@ const props = defineProps({
         padding: 0 0.04rem;
         color: var(--q-gb-bg-c-30);
         .font-style{
-            color: var(--q-gb-t-c-11);
+            //color: var(--q-gb-t-c-11);
+            color: var(--q-gb-t-c-3);
         }
       }
 
@@ -108,11 +119,16 @@ const props = defineProps({
     .text-flow-none{
         max-width: 84%;
         line-height: .16rem;
-        color: var(--q-gb-t-c-17);
+        font-weight: 500;
+        //color: var(--q-gb-t-c-17);
+        color: var(--q-gb-t-c-6);
         :deep(.ty-span) {
             margin-left: .04rem;
             color: var(--q-gb-t-c-2);
         }
+    }
+    .text-flow-club{
+        color: var(--q-gb-t-c-4);
     }
 }
 </style>
@@ -133,5 +149,13 @@ const props = defineProps({
         width: .12rem;
         height: .12rem;
     }
+}
+.bet-content-main{
+    display: flex;
+    border-bottom: 1px solid #E2E2E2;
+    padding-bottom: 0.15r;
+}
+.img{
+    margin-right: 0.1rem;
 }
 </style>
