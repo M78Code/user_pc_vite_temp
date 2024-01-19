@@ -11,7 +11,7 @@
                     <div class="font12 h12">
                         <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
                         <span class="text-8A8986-i font500">
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount)) }}
+                            {{ amount }}
                         </span>
                      
                     </div>
@@ -36,7 +36,7 @@
 </template>
 
 <script setup> 
-import { reactive,onMounted,onUnmounted } from "vue"
+import { reactive,onMounted,onUnmounted, computed } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -86,6 +86,16 @@ onMounted(() => {
     
 })
 
+
+const amount = computed(() => {
+    console.log('props.items.bet_amountprops.items.bet_amountprops.items.bet_amountprops.items.bet_amount', props.items)
+    if (props.items.bet_amount && props.items.seriesOdds) {
+        return formatMoney(mathJs.subtract(mathJs.multiply(props.items.bet_amount, props.items.seriesOdds), props.items.bet_amount))
+    } else {
+        return 0
+    }
+    
+})
 
 onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());
