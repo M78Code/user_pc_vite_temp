@@ -328,7 +328,6 @@ const mx_use_list_res = (data, backend_run,is_base_data) => {
 	}
 	set_league_list_obj(match_list)
 	//虚拟体育 接口数据结构转换
-	// // lockie
 	// if (MenuData.is_vr() && !is_search && false) {
 	// 	// 格式化
 	// 	match_list = virtual_sport_format(match_list);
