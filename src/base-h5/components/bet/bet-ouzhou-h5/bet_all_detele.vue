@@ -27,7 +27,7 @@
           <div :class="[bet_type_class() === 'merge' && 'active']" @click.stop="switch_handle('merge')">
             {{ i18n_t('bet.merge') }}
           </div>
-          <div :class="[bet_type_class() === 'series' && 'active']" @click.stop="switch_handle('series')">
+          <div :class="[bet_type_class() === 'series' && 'active']" @click.stop="switch_handle('series')" v-if="!MenuData.is_kemp()">
             {{ i18n_t('bet.kushikatsu') }}
           </div>
         </div>
@@ -42,7 +42,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import { useMittEmit, MITT_TYPES } from "src/output/index.js";
 import { computed, nextTick, ref } from 'vue';
-import { UserCtr } from "src/output/index.js"
+import { UserCtr,MenuData } from "src/output/index.js"
 
 
 const is_dropdown = ref(false)
