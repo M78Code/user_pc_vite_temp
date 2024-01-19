@@ -68,7 +68,7 @@
               </div>
 
               <div v-else>
-                <img :src="get_icon(col.icon)" alt="" class="top-icon" />
+                <img :src="get_score_icon(col.icon)" alt="" class="top-icon" />
                 <q-tooltip v-if="col.tooltip&&col.icon!='C01'">
                   {{ col.tooltip }}
                 </q-tooltip>
@@ -477,10 +477,9 @@ const computed_score = (res) => {
   }
   return current_data;
 };
-
-const get_icon = (icon) => {
+const get_score_icon = (icon) => {
   return new URL(
-    `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/${icon}.png`,
+    `${LOCAL_PROJECT_FILE_PREFIX}/image/details/${icon}.png`,
     import.meta.url
   ).href;
 };

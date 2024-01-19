@@ -57,7 +57,7 @@ export default {
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
-  background-color: var(--q-gb-bg-c-21) ;
+  background-color: var(--q-gb-bd-c-2) ;
 
   /* ************** 列表上滑箭头图标 **************** -S */
   .list-scroll-to-top {

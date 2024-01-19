@@ -1,6 +1,6 @@
 <template>
   <div class="current-filter-wrap" ref="area_obj_wrap">
-    <div class="current-filter-list" @scroll="on_scroll" ref="area_obj">
+    <div class="current-filter-list" v-if="lodash.get(leagues, 'length')" @scroll="on_scroll" ref="area_obj">
       <!-- 常规体育 -->
       <template v-for="(item, index) in leagues" :key="index">
         <div class="current-filter-tab">

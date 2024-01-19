@@ -64,7 +64,7 @@ export default {
   justify-content: center;
   align-items: center;
   // background-color: yellowgreen;
-  background-color: var(--q-gb-bg-c-21);
+  background-color: var(--q-gb-bd-c-2);
 
   .col1 {
     width: 10%;

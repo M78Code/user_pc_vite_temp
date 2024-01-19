@@ -67,11 +67,6 @@ const routes = [
         }
       },
       {
-        path: "/video/:mid/:csid/:tid/:play_type/:video_size",
-        name: "video",
-        component: () => import("../pages/video/video.vue")
-      },
-      {
         path: "/virtual_details/:mid/:tid/:csid",
         name: "virtual_details",
         component: () => import(`../pages/virtual-details/index.vue`),
@@ -83,6 +78,12 @@ const routes = [
         component: () => import("src/base-pc/vr/pages/virtual/virtual-sports-details.vue"),
       },
     ],
+  },
+  // 视频全屏
+  {
+    path: "/video/:mid/:csid/:tid/:play_type/:video_size",
+    name: "video",
+    component: () => import("../pages/video/video.vue")
   },
   //赛事分析
   {

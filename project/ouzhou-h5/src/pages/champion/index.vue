@@ -6,7 +6,7 @@
         <!-- <q-tab name="featured" :label="`${i18n_t('ouzhou.match.Outrights')}`" /> -->
         <q-tab name="outrights" :label="`${i18n_t('ouzhou.match.outrights')}`" />
       </q-tabs>
-      <span class="sport-bg" :style="compute_css_obj({key:'eu-menu-sport-bg-image', position:format_type(400),size:50,a:1})"></span>
+      <span class="sport-bg" :style="compute_css_obj({key:'eu-menu-sport-bg-image', position:format_type(400)})"></span>
     </div>
     <!-- 主内容区 -->
     <div class="home_content" ref="scrollAreaRef" :visible="false">

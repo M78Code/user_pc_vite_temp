@@ -2,7 +2,7 @@
 	<div class="matches_header_wrap" :style="`height:${match_list_top}`">
 		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.mid_menu_result.filter_tab }}-{{MenuData.menu_current_mi }}-{{MenuData.menu_root}}-{{MenuData.is_kemp()}}- {{ MenuData.is_collect_kemp() }}-{{MenuData.is_common_kemp() }}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}--{{ BaseData.base_data_version }}</div>
 		<div class="matches_header">
-			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
+			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.is_kemp() ? 400 : MenuData.current_ball_type })"></div>
 			<div :class="['matches-title', (MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect) ? 'matches_outrights' : '']">
 				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ is_left_sports ?  matches_header_title : i18n_t(matches_header_title) }}</div>
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">{{ i18n_t('ouzhou.match.all_matches')}}</div>
@@ -44,7 +44,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
 import MatchesLeaguesTab from "./matches_filter_tab_leagues.vue"
-import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t, } from "src/output/index.js"
+import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t, UserCtr} from "src/output/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
@@ -256,7 +256,10 @@ const checked_current_tab = (payload,type) => {
 	if ([1002].includes(payload.value*1)) {
 		root = 5000
 		obj.current_mi = 5001
+		UserCtr.set_sort_type(1);
 		MenuData.set_current_ball_type(1)
+	} else {
+		UserCtr.set_sort_type(2);
 	}
 	// 还原top_event热门赛种 和 常规赛事的切换
 	if (1001 == payload.value) {

@@ -84,5 +84,9 @@ get_video_url()
 </script>
 
 <style lang="scss" scoped>
+.video-iframe {
+  height: 100%;
+}
+
 
 </style>
