@@ -10,7 +10,7 @@
                     </div>
                     <div class="font12 h12">
                         <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
-                        <span class="text-8A8986-i font500"> 
+                        <span class="text-8A8986-i font500">
                             {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount)) }}
                         </span>
                      
@@ -41,7 +41,7 @@ import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 
-import { UserCtr,formatMoney, format_money3 } from "src/output/index.js"
+import { UserCtr,formatMoney, format_money3, useMittOn, MITT_TYPES } from "src/output/index.js"
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 const props = defineProps({
@@ -79,6 +79,10 @@ onMounted(() => {
     // }
     show_quick_amount()
     ref_data.money = props.items.bet_amount
+    // 监听 限额变化
+    ref_data.emit_lsit = {
+        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
+    }
     
 })
 
@@ -132,6 +136,37 @@ const set_bet_money = obj => {
     ref_data.money = money_amount
     BetViewDataClass.set_bet_special_series_item(items_obj)
     
+}
+
+// 限额改变 修改限额内容
+const set_ref_data_bet_money = () => {
+    let value = props.items.playOptionsId
+    // 串关获取 复试连串
+    if (!BetData.is_bet_single) {
+
+        // 复式连串关投注
+        const { id, name, count } = lodash_.get(BetViewDataClass.bet_special_series, `[${props.index}]`, {}) 
+        special_series.id = id
+        special_series.name = name
+        special_series.count = count
+        // 串关 type
+        value = id
+    }
+  
+    const { min_money = 10, max_money = 8888, seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
+ 
+    // 最小限额
+    ref_data.min_money = min_money
+    // 最大限额
+    ref_data.max_money = max_money
+    // 复试串关赔率
+    ref_data.seriesOdds = seriesOdds
+    // 限额改变 重置投注金额
+    ref_data.money = ''
+
+    if(ref_data.show_quick){
+        show_quick_amount(ref_data.show_quick)
+    }
 }
 
 // 键盘回车事件

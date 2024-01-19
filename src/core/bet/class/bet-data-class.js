@@ -638,7 +638,6 @@ this.bet_appoint_ball_head= null */
     }
     // true 单关 false 串关
     this.is_bet_single = is_bet_single
-    // 切换单关、串关、合并时调用获取限额
     this.switch_bet_query_bet_amount()
   
     this.set_bet_data_class_version()
@@ -960,7 +959,7 @@ this.bet_appoint_ball_head= null */
       }
     }
     // 串关要大于1条才能去请求限额
-    if(!this.is_bet_single && this.bet_single_list.length > 1){
+    if(!this.is_bet_single && this.bet_s_list.length > 1 || this.bet_single_list.length > 1){
       let obj = this.bet_single_list.find(item => ['esports_bet','vr_bet'].includes(item.bet_type)) || {}
       // 串关 在vr或者电竞里面 
       if(obj.bet_type){
