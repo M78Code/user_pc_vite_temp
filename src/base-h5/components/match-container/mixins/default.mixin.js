@@ -13,13 +13,14 @@ import { format_how_many_days, format_week } from "src/core/format/common/index.
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0 } from 'src/base-h5/core/utils/local-image.js'
-
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, is_detail, is_results, menu_lv1 } from 'src/base-h5/mixin/menu.js'
 import BaseData from "src/core/base-data/base-data.js";
 import { get_collect_count } from 'src/core/collect/collect-class.js'
+import { store } from "project_path/src/pages/match-page/index.js"
+
 
 // i: 每个组件的 props 赛事下标， 来源 === 组件
 // match_of_list: 每个组件的 props 赛事对象， 来源 === 组件
@@ -441,7 +442,7 @@ export default defineComponent({
      * @description 球种折叠
      */
     handle_ball_seed_fold () {
-      const { csid, is_virtual = false, start_flag = '', warehouse_type = '' } = this.match_of_list
+      const { csid, is_virtual = false, start_flag = '', warehouse_type = '' } = this.match_of_list 
       const is_fold_all = MenuData.is_collect() && project_name === 'app-h5'
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag, is_fold_all)
       // 不需要虚拟计算，欧洲版五大联赛
@@ -459,7 +460,7 @@ export default defineComponent({
     handle_league_fold () {
       const { tid, is_virtual = false, warehouse_type = '', start_flag = '' }  = this.match_of_list
       // 首页热门，详情页，不需要用到折叠
-      if (is_hot.value || is_detail.value) return;
+      if (is_hot.value || is_detail.value || store.isLeagueDetail) return;
       MatchFold.set_league_fold(this.match_of_list, start_flag)
       // 不需要虚拟计算，欧洲版五大联赛
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
