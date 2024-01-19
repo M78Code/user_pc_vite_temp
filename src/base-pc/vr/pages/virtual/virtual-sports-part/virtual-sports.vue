@@ -35,72 +35,33 @@
           @time_ended="timer_ended_handle"
           @update_next_batch_match="update_n_batch_handle">
         </virtual-sports-stage>
-        <div class="virtual-video-play-team" v-if="current_match.csid" >
-              <!-- 足蓝队伍比分 -->
-              <div class="ball-rank" v-if="current_match.csid == 1001 || current_match.csid == 1004">
-                <div class="team-title">
-                  <div class="info">
-                  </div>
-                  <div class="title">
-                    {{lengue_name}} {{ current_match.no }}
-                  </div>
-                </div>
-                <div class="vsm-options"
-                 :class="[current_match.mid === item.mid && 'active', current_match.csid == 1001  && 'vsm-options-short']" 
-                  v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
-                  <div class="teams">
-                    <div class="index row items-center justify-center">
-                      {{ index  + 1}}
-                    </div>
-                    <div class="name home col ellipsis">
-                      {{item.teams[0]}}
-                    </div>
-                    <div class="score" v-if="(item.csid == 1001 && current_match.match_status == 0) || 
-                    (item.csid == 1004 && item.mmp == 'PREGAME' && current_match.match_status == 0)">VS</div>
-                    <div v-else class="score number_family">
-                      {{item.home || 0}}:{{item.away || 0}}
-                    </div>
-                    <div class="name away col ellipsis">
-                      {{item.teams[1]}}
-                    </div>
-                    <div class="right-col row items-center justify-center">
-                        {{ item.show_time }}
-                    </div>
-                  </div>
-                </div>
-                <div class="vsm-options" v-if="current_match.csid == 1004"></div>
+        <!-- vr右侧区域，包括足蓝队伍比分，赛马队伍和赛果 -->
+        <div>
+          <div class="team-title"  v-if="current_match.csid == 1001 || current_match.csid == 1004">
+            <div class="info">
+            </div>
+            <div class="title">
+                {{ lengue_name }} {{ current_match.no }}
+            </div>
+          </div>
+          <div class="team-title horse-title" v-else>
+              <div class="info"></div>
+              <div class="title">
+                  {{ lengue_name }} {{ current_match.no }}
               </div>
-              <!-- 赛马类队伍 -->
-              <div v-else>
-                <div class="team-title horse-title">
-                    <div class="info"></div>
-                    <div class="title">
-                      {{lengue_name}} {{ current_match.no }}
-                    </div>
-                    <!-- 冠军 -->
-                    <div class="horse-col">{{i18n_t('list.virtual_match_type_title.type1011.bet_col.0')}}</div>
-                    <!-- 前二 -->
-                    <div class="horse-col">{{i18n_t('list.virtual_match_type_title.type1011.bet_col.1')}}</div>
-                    <!-- 前三 -->
-                    <div class="horse-col" v-if="current_match.csid !='1009'">{{i18n_t('list.virtual_match_type_title.type1011.bet_col.2')}}</div>
-                </div>
-                <div class="vsm-options"
-                 :class="[current_match.mid === item.mid && 'active', current_match.csid == 1001  && 'vsm-options-short']" 
-                  v-for="(item, index) in match_list_by_no[0] && match_list_by_no[0].teams" :key="index">
-                  <div class="teams">
-                    <div class="index row items-center justify-center">
-                      {{ index  + 1}}
-                    </div>
-                    <div class="horse-name col ellipsis">
-                      {{item}}
-                    </div>
-                  </div>
-                </div>
-              </div>
-                
+              <!-- 冠军 -->
+              <div class="horse-col">{{ i18n_t('list.virtual_match_type_title.type1011.bet_col.0') }}</div>
+              <!-- 前二 -->
+              <div class="horse-col">{{ i18n_t('list.virtual_match_type_title.type1011.bet_col.1') }}</div>
+              <!-- 前三 -->
+              <div class="horse-col" v-if="current_match.csid != '1009'">
+                  {{ i18n_t('list.virtual_match_type_title.type1011.bet_col.2') }}</div>
+          </div>
+          <virtual-sports-right :current_match="current_match" :match_list_by_no="match_list_by_no" :switch_match_handle="switch_match_handle" />
         </div>
+        
         <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
-        <template v-else-if="sub_menu_type && current_match && 0">
+        <template v-if="0">
             <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
             <dynamic-ranking v-if="current_match.match_status == 0 || current_match.match_status == 1" :virtual_match_list="[current_match]" />
             <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
@@ -169,7 +130,9 @@ import virtual_sports_stage from "src/base-pc/vr/pages/virtual/virtual-sports-pa
 import dynamic_ranking from "src/base-pc/vr/pages/virtual/virtual-sports-part/dynamic-ranking.vue"
 import result_page from "src/base-pc/vr/pages/result/result-page.vue"
 import virtual_skeleton from "src/base-pc/vr/components/skeleton/virtual-sports/virtual.vue"
+import virtual_sports_right from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-right.vue"
 import { IconWapper } from 'src/components/icon'
+
 export default {
   mixins:[virtual_sports_mixin],
   components:{
@@ -183,6 +146,7 @@ export default {
     noData,
     'icon-wapper': IconWapper,
     'virtual-skeleton':virtual_skeleton,
+    'virtual-sports-right':virtual_sports_right
   },
 }
 </script>
@@ -348,95 +312,20 @@ export default {
   padding-bottom: .48rem;
 }
 
-.virtual-video-play-team {
-    padding-bottom: 0;
-    background: var(--q-gb-bg-c-28);
-    border-bottom-left-radius: .04rem;
-    border-bottom-right-radius: .04rem;
-    .team-title {
-      height: 34px;
-      display: flex;
-      align-items: center;
-      color: #fff;
-      background: linear-gradient(to right, #3B3B3B 0%, #9C9C9C);
-      .info {
-        width: 30px;
-        height: 34px;
-        background-color: var(--q-gb-bg-c-1);
-      }
-      .title {
-        padding-left: 10px;
-      }
-    }
-    .vsm-options {
-      width: 100%;
-      height: 48px;
-      line-height: 48px;
-      background: #fff;
-      display: flex;
-      align-items: start;
-      justify-content: center;
-      flex-direction: column;
-      font-size: .12rem;
-      border-bottom: 1px solid #E2E2E2;
-      overflow: hidden;
-      cursor: pointer;
-      &-short {
-        height: 29px;
-        line-height: 29px;
-      }
-      &.active {
-        background: linear-gradient(to right, #FF7000 -700%, #fff);
-        .teams {
-          color: var(--q-gb-t-c-30);
-        }
-      }
-      .teams {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        color: #1A1A1A;
-        .index {
-          width: 30px;
-          height: 100%;
-          background: #F5F5F5;
-        }
-        .name.home {
-          text-align: right;
-        }
-        .horse-name {
-          padding-left: 15px;
-        }
-        .name.home, .name.away {
-          flex: 10000 1 0%;
-        }
-        .score {
-          width: 64px;
-          text-align: center;
-        }
-
-        .right-col {
-          width: 30px;
-          height: 29px;
-        }
-      }
-    }
-
-    .horse-title {
-      display: flex;
-      align-items: center;
-      padding-right: 5px;
-      position: relative;
-      .title {
-        flex: 10000 1 0%;
-      }
-      .horse-col {
-          font-size: 12px;
-          width: 18%;
-          max-width: 96px;
-          text-align: center;
-      }
-    }
+.team-title {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  background: linear-gradient(to right, #3B3B3B 0%, #9C9C9C);
+  .info {
+    width: 30px;
+    height: 34px;
+    background-color: var(--q-gb-bg-c-1);
   }
+  .title {
+    padding-left: 10px;
+  }
+}
 </style>
 src/core/vr/mixin/pages/virtual/virtual-sports_part/virtual_sports_mixin.js
