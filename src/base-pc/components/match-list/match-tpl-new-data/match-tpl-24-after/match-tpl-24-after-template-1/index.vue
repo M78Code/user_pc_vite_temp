@@ -68,7 +68,7 @@ const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_o
 // 其他玩法标题
 const bet_col = computed(() => {
   let bet_col,
-    hSpecial = match.value.hSpecial;
+    {hSpecial=1} = match.value;
   // 15分钟玩法
   let start = hSpecial - 1,
     end = hSpecial + 1;
