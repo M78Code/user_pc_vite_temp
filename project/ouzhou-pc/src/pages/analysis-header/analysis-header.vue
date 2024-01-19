@@ -8,7 +8,7 @@
   <div class="analysis">
     <!-- 赛事分析 -->
     <simple-header
-      ><span>{{ i18n_t("common.analysis") }}</span></simple-header
+      @refresh="refresh"><span>{{ i18n_t("common.analysis") }}</span></simple-header
     >
 
     <analysis-page v-if="match_data" :get_active_detail = "match_data"/>
@@ -42,6 +42,11 @@ const get_match_details_net = () => {
     }
   });
 };
+// 刷新
+const refresh = ()=>{
+  get_match_details_net();
+
+}
 
 onMounted(() => {
 
