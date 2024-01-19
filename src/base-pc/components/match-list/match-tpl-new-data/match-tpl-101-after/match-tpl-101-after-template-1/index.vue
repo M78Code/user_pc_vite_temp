@@ -99,7 +99,7 @@ export default {
 
     let is_score = computed(() => {
       let status = false
-      if (match_style_obj.data_tpl_id == 109 || match_style_obj.data_tpl_id == 112) {
+      if ([109, 111, 112].includes(+match_style_obj.data_tpl_id)) {
         status = true
       }
 
