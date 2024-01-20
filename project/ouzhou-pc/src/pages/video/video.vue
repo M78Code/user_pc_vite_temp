@@ -19,6 +19,8 @@ import {useRoute, useRouter} from "vue-router";
 import { usedetailData } from "./index";
 import loading from "./components/loading/index.vue";
 import VideoIframe from "./video_iframe.vue"
+import {MITT_TYPES, useMittOn} from "src/core/mitt/index.js";
+import {i18n_t} from "src/boot/i18n.js";
 
 const router = useRouter();
 const route = useRoute();
@@ -65,6 +67,61 @@ function exit_browser_full_screen(){
     cfs.call(video_dm);
   }
 }
+
+/**
+ * @Description:退出全屏  返回上一个页面
+ * @return {undefined} undefined
+ */
+function exit_full_screen(size){
+  window.history.go(-2)
+  // const { mid, tid, csid } = this.match_info
+  // // 如果是从详情页进入大屏返回详情页
+  // if(this.from == 'details'){
+  //   if(this.$route.params.video_size == 1 && video.from ==0){
+  //     //  window.vue.$router.back()
+  //     window.history.go(-2)
+  //     //  this.exit_browser_full_screen()
+  //   }else{
+  //     this.$router.push({
+  //       name: 'details',
+  //       params: {
+  //         mid,
+  //         tid,
+  //         csid
+  //       }
+  //     })
+  //     sessionStorage.setItem('auto_play_media', '1');
+  //   }
+  // }else if(video.from == 0 && size =='xl' && !this.$utils.is_eports_csid(this.$route.params.csid)){
+  //   this.$router.push({
+  //     name: 'video',
+  //     params: {
+  //       mid,
+  //       tid,
+  //       csid,
+  //       play_type: this.$route.params.play_type,
+  //       video_size: '0'
+  //     }
+  //   })
+  // }else{
+  //   this.set_is_back_btn_click(true);
+  //   this.$utils.redirect_router('/home')
+  // }
+  // let time = Date.now()
+  // this.set_play_media({
+  //   mid:this.match_info.mid,
+  //   media_type: this.vx_play_media.media_type,
+  //   time
+  // })
+  // if(size =='xl'){
+  //   this.exit_browser_full_screen()
+  // }
+}
+
+//首页活动弹框
+useMittOn(MITT_TYPES.EMIT_EXIT_FULL_SCREEN_MSG_EVENT, function (imgUrl) {
+  exit_full_screen();
+}).off;
 
 </script>
 

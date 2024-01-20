@@ -1150,8 +1150,9 @@ class MatchMeta {
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return
 
-    const target_list = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
-
+    const target_data = MatchUtils.generate_match_classify_tid(list)
+    // console.log(target_data)
+    const target_list = MatchUtils.handler_match_classify_by_csid(target_data).filter((t) => t.mid)
     const custom_match_mids = target_list.map(t => t.mid)
 
     this.complete_matchs = lodash.uniqBy(target_list, 'mid')

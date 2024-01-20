@@ -587,6 +587,7 @@
     "match_no": "Unfinished"
   },
   "common": {
+    "edit": "edit",
     "in_box": "In the box......",
     "temporarily_unavailable": "This feature is temporarily unavailable",
     "please_refresh": "Please refresh the page and try again",

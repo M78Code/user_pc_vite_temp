@@ -28,7 +28,13 @@
                 <!-- 已结算列表 => 提前结算详情 -->
                 <early-settled-detail v-else-if="BetRecordClass.selected === 3" :item_data="item2"></early-settled-detail>
                 <!-- 预约列表 => 取消预约 -->
-                <cancel-reserve v-else-if="BetRecordClass.selected === 1" :orderNumber="item2.orderNo" @success="cancelSuccess"></cancel-reserve>
+                <cancel-reserve v-else-if="BetRecordClass.selected === 1" 
+                  :show_appoint="item2.show_appoint"
+                  :orderNo="item2.orderNo" 
+                  :marketType="item2.marketType" 
+                  :oddFinally="item2.detailList[0] && item2.detailList[0].oddFinally"
+                  @change_show_appoint="(bol) => BetRecordClass.change_show_appoint(name, key, bol)"
+                  @success="cancelSuccess"></cancel-reserve>
               </template>
             </div>
             </template>
@@ -66,6 +72,8 @@ let wsObj = null
 
 // 延时器
 let timer = null
+// 延时器
+let timer2 = null
 
 onMounted(() => {
   // 首次进入获取数据
@@ -80,6 +88,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   timer && clearInterval(timer)
+  timer2 && clearInterval(timer2)
   useMitt && useMitt()
   // 初始化BetRecordClass状态
   BetRecordClass.init_core()
@@ -106,6 +115,16 @@ const init_data = (_index) => {
     timer = setInterval(() => {
       if (document.visibilityState == 'visible') {
         BetRecordClass.check_early_order()
+      }
+    }, 5000)
+  }
+
+  // 如果预约中页面, 轮询状态
+  timer2 && clearInterval(timer2)
+  if(_index === 1) {
+    timer2 = setInterval(() => {
+      if (document.visibilityState == 'visible') {
+        BetRecordClass.change_pre_status()
       }
     }, 5000)
   }
@@ -172,6 +191,7 @@ const onPull = () => {
 
 const cancelSuccess = () => {
     setTimeout( () => {
+      BetRecordClass.last_record = ''
       init_data(1)
     }, 1000)
 }
