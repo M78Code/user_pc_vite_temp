@@ -221,7 +221,6 @@ export default defineComponent({
       } else{
         item.unfold = !item.unfold ? 1 : 0
       }
-      return
       //检测到当前赛事无展开的次要玩法时移除vuex中的赛事/展开状态映射key
       this.any_unfold = this.tab_list.filter(t => t.unfold == 1).length;
       //  如果没有展开的选项，则所有都折叠
