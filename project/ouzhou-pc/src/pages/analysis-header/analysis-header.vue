@@ -6,6 +6,7 @@
 -->
 <template>
   <div class="analysis">
+  
     <!-- 赛事分析 -->
     <simple-header
       @refresh="refresh"><span>{{ i18n_t("common.analysis") }}</span></simple-header
@@ -28,7 +29,7 @@ const route = useRoute();
 const match_data = ref(null);
 
 const mid = ref(""); // 赛事mid
-
+console.log(111111155555533)
 // 从网络获取数据
 const get_match_details_net = () => {
   let params = { mid: route.params.mid, cuid: UserCtr.get_uid() };

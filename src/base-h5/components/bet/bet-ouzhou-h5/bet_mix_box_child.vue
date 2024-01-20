@@ -59,6 +59,7 @@
                   <template v-if="BetData.bet_s_list.length > 1"  >
                     <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
                         <bet-special-input :items="item" @input_click="handle_input_click" :index="index" />
+                        <bet-special-winning :is_type="true"/>
                     </template>
                   </template>
                   <template v-else>

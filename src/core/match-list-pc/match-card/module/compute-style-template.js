@@ -49,11 +49,14 @@ const get_tab_play_height = (mid) => {
 		// 计算0号模板次要玩法 盘口+玩法标题高度
 		handicap_height = length * 35 + (40 - (!["en", "ad", "ms"].includes(UserCtr.lang) ? 16 : 0));
 	}
-	// 组合玩法
-    // if (['hpsCompose'].includes(play_current_key)) {
-	// 	// 计算0号模板次要玩法 盘口+玩法标题高度+更多一行高度35
-	// 	handicap_height = (length-1) * 2 * num + length * num * 35 + ((40 - 16) * num)+(num==2? 0 : 14) + 16
-	// }
+    //组合玩法 TODO 未玩 show_more_other_list获取方式补一样
+    if (['hpsCompose'].includes(play_current_key)) {
+		// 获取展示的附加玩法配置 TODO
+		let show_more_other_list=false
+		const num = show_more_other_list?2:1
+		// 计算0号模板次要玩法 盘口+玩法标题高度+更多一行高度35
+		handicap_height = length * num * 35 + ((40 - (!['en','ad','ms'].includes(UserCtr.lang) ? 16 : 0)) * num)+(num==2?0:35)
+	} 
 	return handicap_height;
 };
 

@@ -289,11 +289,11 @@ const bet_click_ol = () => {
   }
   // vr体育
   if(MenuData.is_vr()){
-    bet_type = 'vt_bet'
+    bet_type = 'vr_bet'
   }
   let other = {
         is_detail: false,
-        // 投注类型 "vt_bet", "common_bet", "guanjun_bet", "esports_bet"
+        // 投注类型 "vr_bet", "common_bet", "guanjun_bet", "esports_bet"
         // 根据赛事纬度判断当前赛事属于 那种投注类型
         bet_type,
         // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备

@@ -25,5 +25,6 @@ export const other_play_name_to_playid = {
     hpsOvertime:1002,
     // 点球大战
     hpsPenalty:1004,
-   
+    // 特色组合
+    hpsCompose: 1010,
   }
