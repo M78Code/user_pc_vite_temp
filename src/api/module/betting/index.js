@@ -89,5 +89,6 @@ export const query_order_status = (params, config, url = "/v1/betOrder/queryOrde
 export const get_preOrderList_news = (params, config, url = "/order/betRecord/getH5PreBetOrderlist") => http.post(`${prefix_13}${url}`, params, config)
 // 取消预约投注单（david）
 export const cancle_pre_order = (params, config, url = "/v1/betOrder/cancelPreBetOrder") => http.get(`${prefix_13}${url}`, params, config)
-
  
+// 预约修改 修改预约赔率
+export const set_update_pre_bet_odds = (params, config={}, url = "/order/betRecord/updatePreBetOdds") => http.post(`${prefix_13}${url}`, params, config);
