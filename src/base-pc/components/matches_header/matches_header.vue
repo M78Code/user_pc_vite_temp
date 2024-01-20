@@ -29,8 +29,8 @@
 						</div>
 					</template>
 				</div>
-				<!-- MenuData.is_vr没生效，先注释了 -->
-				<!-- <virtualSportsTab v-if="MenuData.is_vr" /> -->
+				<!-- 虚拟体育菜单，单独的一套逻辑 -->
+				<virtualSportsTab v-if="MenuData.is_vr()" />
 			</div>
 		</div>
 		<MatchesFilterTab v-if="MenuData.is_scroll_ball() || MenuData.is_hot() || (MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp()) || MenuData.is_collect || MenuData.is_top_events()"  />
