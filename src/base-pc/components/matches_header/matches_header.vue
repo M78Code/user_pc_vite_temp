@@ -4,7 +4,7 @@
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.is_kemp() ? 400 : MenuData.current_ball_type })"></div>
 			<div :class="['matches-title', (MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect) ? 'matches_outrights' : '']">
-				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ is_left_sports ?  matches_header_title : i18n_t(matches_header_title) }}</div>
+				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ is_left_sports ?  BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] : i18n_t(matches_header_title) }}</div>
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">{{ i18n_t('ouzhou.match.all_matches')}}</div>
 				<div v-else class="matches_tab" >
 					<template v-if="tab_list.length">
@@ -184,7 +184,7 @@ const set_tab_list = (news_) =>{
 		if(!MenuData.is_collect){
 			is_left_sports.value = true
 			// 设置赛种名称
-			matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
+			// matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 		}
 	}
 
@@ -210,7 +210,7 @@ const set_tab_list = (news_) =>{
 	// 电竞
 	if (MenuData.is_esports()) {
 		is_left_sports.value = true
-		matches_header_title.value = BaseData.menus_i18n_map[2000]
+		// matches_header_title.value = BaseData.menus_i18n_map[2000]
 		match_list_top.value = '134px'
 		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'esports', [])  
 		tab_list.value = ouzhou_filter_config
@@ -236,7 +236,7 @@ watch(BaseData.base_data_version,()=>{
 	//元数据变化后 需要改变球种的ii8n 翻译是i18n来的
 	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp()){
 		is_left_sports.value = true
-		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
+		// matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 	}
 })
 const checked_current_tab = (payload,type) => {

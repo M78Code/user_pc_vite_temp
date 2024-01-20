@@ -9,7 +9,7 @@
                 }}</span>
                 <template v-if="item === 'League'">
                     <!-- league的下拉项 -->
-                    <div class="select" v-if="store.tabActive == 'League'" ref="dateOptionsRef" @click="toggerModel">
+                    <div class="select" v-if="store.tabActive == 'League'" ref="dateOptionsRef" @click.stop="toggerModel">
                         <span class="select-text">{{
                             i18n_t(store.curSelectedOption.label)   
                         }}</span>
@@ -166,6 +166,7 @@ const changeTab = (name, index) => {
 const toggerModel = () => {
     store.tabModel = !store.tabModel;
 }
+
 /**
  * 下拉框选择
  * @param {*} index 
@@ -176,6 +177,7 @@ const changeDate = (index) => {
     emit("changeDate", store.selectOptions[index].timestamp);
     store.curSelectedOption = store.selectOptions[index]
 }
+
 /**
  * 时间选择tab-赛事列表筛选
  * @param {*} item 
@@ -231,6 +233,13 @@ const setDefaultData = async (val,type) => {
     scrollDateRef.value && scrollDateRef.value.scrollTo(index?index-2:0, "start-force");
     
 }
+
+const click_tabs = ()=> {
+    if(store.tabModel){
+       return !store.tabModel;
+    };
+}
+
 onMounted(async () => {
     //当前激活球种id  如果本地有存储值就取本地存储的值
     const session_info = LocalStorage.get(menu_h5);
@@ -240,6 +249,12 @@ onMounted(async () => {
     emitters.value = {
         emitters_1: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, setDefaultData).off
     }
+
+    const el = document.querySelector('.ouzhou-h5-layout')
+    el.addEventListener('click', () => {
+        store.tabModel = false
+    });
+
 })
 onUnmounted(() => {
     Object.values(emitters.value).map((x) => x());
