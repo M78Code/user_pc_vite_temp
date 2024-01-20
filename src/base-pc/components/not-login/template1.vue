@@ -10,13 +10,13 @@ import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { ref, reactive } from 'vue'
 const lang = ref(LocalStorage.get('lang', UserCtr.lang || i18n.global.fallbackLocale))
 /* 退出登录通知-中文 */
-const logout_notice = compute_local_project_file_path('/image/image/not_login_zh.png')
+const logout_notice = compute_local_project_file_path('/image/image/not_login_zh.jpg')
 /* 退出登录通知-英文 */
-const logout_notice_en = compute_local_project_file_path('/image/image/not_login_en.png')
+const logout_notice_en = compute_local_project_file_path('/image/image/not_login_en.jpg')
 /* 退出登录通知-越南语 */
-const logout_notice_vi = compute_local_project_file_path('/image/image/not_login_en.png')
+const logout_notice_vi = compute_local_project_file_path('/image/image/not_login_en.jpg')
 /* 退出登录通知-泰语 */
-const logout_notice_th = compute_local_project_file_path('/image/image/not_login_en.png')
+const logout_notice_th = compute_local_project_file_path('/image/image/not_login_en.jpg')
 /* 退出登录通知-马来语 */
 // const logout_notice_ma = compute_local_project_file_path('/image/image/logout_notice_ma.png')
 const imgSrc = reactive({

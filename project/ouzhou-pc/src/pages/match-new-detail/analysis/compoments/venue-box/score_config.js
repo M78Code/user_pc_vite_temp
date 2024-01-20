@@ -884,7 +884,7 @@ export const allBallObj = {
       value_key: "S115",
     },
     {
-      title: () => "接收点得分",
+      title: () => `${i18n_t("common.receiving_point_score")}`,
       value_key: "S116",
     },
     {
