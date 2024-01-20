@@ -3,7 +3,7 @@
 -->
 
 <template>
-  <template v-if="is_base_virtual_list">
+  <template v-if="!is_scroll_component">
     <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate">
       <template #default="{ item, index }">
         <!-- 赛果详情精选赛事 -->
@@ -34,67 +34,33 @@
         </template>
         <!-- 常规赛事 -->
         <template v-else>
-          <MatchContainerMainTemplate5
-            :i="index"
-            :match_of_list="get_match_item(item)">
-          </MatchContainerMainTemplate5>
+          <template v-if="standard_edition == 1">
+            <MatchContainerMainTemplate5
+              :i="index"
+              :match_of_list="get_match_item(item)">
+            </MatchContainerMainTemplate5>
+          </template>
+          <template v-else>
+            <MatchContainerMainTemplate1
+              :i="index"
+              :match_of_list="get_match_item(item)">
+            </MatchContainerMainTemplate1>
+          </template>
         </template>
       </template>
     </BaseVirtualList>
   </template>
   <template v-else>
-    <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate">
-      <template #default="{ item, index }">
-        <!-- 冠军玩法 -->
-        <template v-if="is_kemp || MenuData.get_mm_is_champion()">
-          <MatchContainerMainTemplate2
-            :i="index"
-            :match_of_list="get_match_item(item)">
-          </MatchContainerMainTemplate2>
-        </template>
-        <!-- 常规赛果 -->
-        <template v-else-if="is_results">
-          <MatchContainerMainTemplate3
-            :i="index"
-            :match_of_list="get_match_item(item)">
-          </MatchContainerMainTemplate3>
-        </template>
-        <!-- 真实体育玩法 -->
-        <template v-else>
-          <MatchContainerMainTemplate1
-            :i="index"
-            :match_of_list="get_match_item(item)">
-          </MatchContainerMainTemplate1>
-        </template>
-      </template>
-    </BaseVirtualList>
-    <div class="refresh-container" v-if="false">
-      <!--列表页 -->
+    <div class="refresh-container">
+      <!--冠军玩法 列表页 -->
       <ScrollWrapper>
         <template v-slot="{ match_item, index }">
           <!--此data-mid用于分频订阅赛事,请勿修改-->
           <div class="data_mid" v-if="match_item"> 
-            <!-- 冠军玩法 -->
-            <template v-if="is_kemp || MenuData.get_mm_is_champion()">
-              <MatchContainerMainTemplate2
-                :i="index"
-                :match_of_list="match_item">
-              </MatchContainerMainTemplate2>
-            </template>
-            <!-- 常规赛果 -->
-            <template v-else-if="is_results">
-              <MatchContainerMainTemplate3
-                :i="index"
-                :match_of_list="match_item">
-              </MatchContainerMainTemplate3>
-            </template>
-            <!-- 真实体育玩法 -->
-            <template v-else>
-              <MatchContainerMainTemplate1
-                :i="index"
-                :match_of_list="match_item">
-              </MatchContainerMainTemplate1>
-            </template>
+            <MatchContainerMainTemplate2
+              :i="index"
+              :match_of_list="match_item">
+            </MatchContainerMainTemplate2>
           </div>
         </template>
       </ScrollWrapper>
@@ -134,8 +100,9 @@ import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MenuData } from '
 const route = useRoute()
 
 // 是否使用 BaseVirtualList 组件  BaseVirtualList 试运行， 稳定后替换其他模板
-const is_base_virtual_list = computed(() => {
-  return MenuData.update_time.value && !MenuData.get_mm_is_champion() && (is_results.value || (standard_edition.value == 1 && !is_kemp.value && route.name !== 'match_result'))
+const is_scroll_component = computed(() => {
+  return MenuData.update_time.value && (is_kemp.value || MenuData.get_mm_is_champion())
+  // return MenuData.update_time.value && !MenuData.get_mm_is_champion() && (is_results.value || (standard_edition.value == 1 && !is_kemp.value && route.name !== 'match_result'))
   // return is_results.value || (standard_edition.value == 1 && !is_kemp.value && route.name !== 'match_result')
   // return standard_edition.value == 1 && ! is_results.value && !is_kemp.value && route.name !== 'match_result'
 })
@@ -173,6 +140,7 @@ const handlerUpdate = lodash.debounce((data) => {
     flag = true
     mids.push(t.mid)
   })
+  
   if (flag && mids_string.value !== mids.join(',')) {
     // 设置当前激活的赛事
     MatchMeta.set_current_match_mids(mids)
@@ -181,24 +149,11 @@ const handlerUpdate = lodash.debounce((data) => {
     // 根据当前可视区 mids 获取赛事赔率
     MatchMeta.get_match_base_hps_by_mids({mids: mids.join(',')})
     
-    // mids_string.value = mids.join(',')
+    mids_string.value = mids.join(',')
   }
-}, 1000)
+}, 800)
 
 // BaseVirtualList 组件 所需 end ·············································
-
-// 赛果的判断
-const is_match_results_kemp = computed(() => {
- return MenuData.is_results_type === 3
-})
-
-const is_match_results_virtual = computed(() => {
- return MenuData.is_results_type === 2
-})
-
-const is_match_results_game = computed(() => {
- return MenuData.is_results_type === 1
-})
 
 </script>
  

@@ -88,7 +88,7 @@
 
 <script>
 import lodash from 'lodash'
-import { ref, computed, defineComponent, getCurrentInstance } from 'vue'
+import { ref, computed, defineComponent, getCurrentInstance, nextTick } from 'vue'
 import second_mixin from '../mixins/second.mixin.js';
 import { IconWapper } from 'src/components/icon'
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
@@ -123,9 +123,9 @@ export default defineComponent({
     // 更多次要玩法选择
     const on_select_second_play = (item, i) => {
       proxy.overtime_tab_handle(item, undefined, 'is-user', i)
-      nextTick(() => [
+      nextTick(() => {
         select_second_item.value = item
-      ])
+      })
     }
     return { 
       compute_css_obj, on_select_second_play, select_second_item, second_play_data, current_second_data, select_check

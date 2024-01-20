@@ -676,7 +676,7 @@ class MatchMeta {
   async get_esports_match() {
     this.clear_match_info()
     VirtualList.clear_virtual_info()
-    //兼容复刻版电竞冠军
+    // 兼容复刻版电竞冠军
     const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "");
     const menuType = lodash.get(MenuData.current_lv_3_menu, 'menuType', "");
     const is_kemp = menuType == '100';
@@ -704,7 +704,8 @@ class MatchMeta {
     }
     const list = lodash.get(res, 'data', [])
     MatchCollect.get_collect_match_data(list)
-    return this.handler_match_list_data({ list: list })
+
+    return is_kemp ? this.handle_custom_matchs(list) : this.handler_match_list_data({ list: list })
   }
 
   /**
@@ -1151,7 +1152,7 @@ class MatchMeta {
     if (length < 1) return
 
     const target_data = MatchUtils.generate_match_classify_tid(list)
-    // console.log(target_data)
+
     const target_list = MatchUtils.handler_match_classify_by_csid(target_data).filter((t) => t.mid)
     const custom_match_mids = target_list.map(t => t.mid)
 
@@ -1234,6 +1235,7 @@ class MatchMeta {
       this.match_assistance_operations(match, index)
 
       Object.assign(match, params, {
+        is_meta: false,
         estimateHeight: MatchUtils.get_default_estimateHeight(match),
         is_show_league: MatchUtils.get_match_is_show_league(index, target_data),
         is_show_ball_title: MatchUtils.get_match_is_show_ball_title(index, target_data),
