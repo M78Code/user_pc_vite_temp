@@ -57,7 +57,7 @@
           <Match-Main-Title :title="i18n_t('ouzhou.match.top_leagues')"
             v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
           <match-list-card v-for="card_key in five_leagues_card_key_arr" :card_key="card_key"
-            :key="`match-list-card2-${card_key}`" :class="`card_key_${card_key}`" />
+            :key="`match-list-card2-${card_key}`" />
           <template v-slot:after>
             <div style="height: 15px"></div>
             <back-top :onClick="on_go_top" />
