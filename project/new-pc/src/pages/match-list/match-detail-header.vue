@@ -341,9 +341,16 @@ onMounted(() => {
   border: 1px solid  #179CFF;
   font-size: 12px;
 
-  .active {
+  .match-btn.active {
     background: #179CFF;
     color: #fff!important;
+  }
+  .collect-btn.active {
+    background: #179CFF;
+    color: #fff!important;
+    :before {
+      color: var(--q-gb-bg-c-8) !important;
+    }
   }
 }
 .select-btn {
