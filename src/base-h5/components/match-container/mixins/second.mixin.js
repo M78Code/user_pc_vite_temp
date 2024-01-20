@@ -241,14 +241,18 @@ export default defineComponent({
       useMittEmit(MITT_TYPES.EMIT_INFO_ICON_CLICK, null);
       //先用本地数据填充次要玩法投注项,避免拉取接口过程中的模板不完整， 获取 key （如：hpsAdd, hps15Minutes）
       // 展开次要玩法
+      alert(4444)
       if(item.unfold == 1){
+        alert(555)
         //自动展开次要玩法无需拉取新数据
         if(operate_type == 'is-auto') {
+          alert(666)
           // this.save_second_play_mid_map_unfold_status(item);
           return;
         }
         //拉接口更新数据
         if(operate_type == 'is-user' || operate_type == 'mounted'){
+          alert(777)
           await MatchMeta.get_match_base_hps_by_mids({ mids: this.match.mid, other: {
             pids:item.pids,
             inner_param: 'is_by_mids',
