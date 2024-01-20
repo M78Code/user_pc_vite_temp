@@ -5,6 +5,7 @@
   <div class="ranking_list hairline-border">
     <!-- <span class="navigation-title">{{ i18n_t('virtual_sports.leaderboard') }}</span> -->
     <!-- header -->
+    <div class="leaderboard">Leaderboard</div>
     <div class="header">
       <div class="col1 col-label"></div>
       <div class="col2 col-label">{{ i18n_t('virtual_sports.team') }}</div>
@@ -106,6 +107,15 @@ export default {
   }
 
   /*  头部 */
+  .leaderboard {
+    height: 40px;
+    background: #fff;
+    line-height: 40px;
+    font-weight: 500;
+    padding-left: 20px;
+    border-top: 1px solid var(--q-gb-bd-c-1);
+    margin-top: 10px;
+  }
   .header {
     height: 0.32rem;
 

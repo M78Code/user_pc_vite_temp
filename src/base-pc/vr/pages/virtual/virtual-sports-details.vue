@@ -89,6 +89,9 @@
     <!--视频，tab和玩法集部分-->
     <div>
       <div class="detail-header">
+        <div class="title">
+           {{ current_match.no }}
+        </div>
         <!--视频区域-->
         <div class="stage-wrapper">
           <virtual-sports-stage source='detail'
@@ -437,6 +440,14 @@ export default {
   top: 0;
   right: 0;
   z-index: 99;
+
+  .title {
+    height: 40px;
+    line-height: 40px;
+    background: #fff;
+    color: #1A1A1A;
+    padding-left: 10px;
+  }
 
   .stage-wrapper {
     width: 100%;
