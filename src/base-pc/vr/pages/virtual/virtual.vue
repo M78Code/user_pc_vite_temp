@@ -4,8 +4,8 @@
 <template>
   <div>
     <div class="virtual-main router_scroll_layout" ref="scrollArea" @scroll="wrapper_scroll_handler">
-      <!-- 头部 -->
-      <div class="virtual-head">
+      <!-- 头部，在matches_header中已引入，此处隐藏 -->
+      <div class="virtual-head" v-if="0">
         <div class="type-bg">
           <!-- 虚拟体育菜单 -->
           <div class="virtual-menu-list" ref='virtual_menu_list'>
@@ -43,11 +43,35 @@
 <script>
 import virtual_mixin from "src/core/vr/mixin/pages/virtual/virtual-mixin.js";
 import virtualSports from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports.vue";    // 虚拟体育
+import { useMittOn, MITT_TYPES } from "src/core/mitt/"
+
 export default {
   mixins:[virtual_mixin],
   name:'match_main',
   components: {
     virtualSports,
+  },
+  mounted(){
+    // 监听vr顶部组件菜单变化
+    this.emitters = [
+      useMittOn(MITT_TYPES.EMIT_VR_MENU_CLICK, this.handle_menu_click).off,
+    ]
+    console.log('ress', 11);
+  },
+  methods: {
+    handle_menu_click(res){
+      // alert('onn')
+      this.virtual_sports_params = res.virtual_sports_params;
+      this.current_sub_menu = res.current_sub_menu;
+      this.refreshing = res.refreshing;
+      this.menu_list = res.menu_list;
+      this.v_match_router_ente = res.v_match_router_ente;
+      this.v_menu_changed = res.v_menu_changed;
+      console.log('ress', res);
+    }
+  }, 
+  unmounted(){
+    this.emitters.map((x) => x())
   }
 }
 </script>
@@ -57,7 +81,7 @@ export default {
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
-  background-color: var(--q-gb-bg-c-21) ;
+  background-color: var(--q-gb-bd-c-2) ;
 
   /* ************** 列表上滑箭头图标 **************** -S */
   .list-scroll-to-top {

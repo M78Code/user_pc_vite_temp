@@ -183,8 +183,13 @@ export const get_DJ_matchDetail_getMatchOddsInfo = (params, config, url = "/v1/m
   return http.get(`${prefix}${url}`, params, {axios_debounce_cache_key:'match_detail_odds_info'});
 };
 
-// 虚拟体育根据玩法查询盘口信息
+// 虚拟体育根据玩法查询盘口信息-h5
 export const get_matchDetail_getVirtualMatchOddsInfo = (params, config, url = "/v1/m/matchDetail/getVirtualMatchOddsInfo") => {
+  return http.get(`${prefix}${url}`, params, {axios_debounce_cache_key:'match_detail_odds_info'});
+};
+
+// 虚拟体育根据玩法查询盘口信息-pc
+export const get_matchDetail_getVirtualMatchOddsInfo_pc = (params, config, url = "/v1/w/matchDetail/getVirtualMatchOddsInfo") => {
   return http.get(`${prefix}${url}`, params, {axios_debounce_cache_key:'match_detail_odds_info'});
 };
 

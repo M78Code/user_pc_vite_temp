@@ -6,7 +6,14 @@
 
 <template>
   <div class="video-iframe relative-position" :style="{height:300}">
-
+    <video_type_ctr
+        class="is-video-page"
+        :ctr_data={video_type:1}
+        :is_video_hover="true"
+        :video_fullscreen_disabled="false"
+        :match_info="detail_info"
+        :is_esports="false"
+    ></video_type_ctr>
     <!-- 有直播可放-->
     <iframe class="fit"
             id="video-iframe"
@@ -27,9 +34,9 @@
 <script setup>
 import {watch, ref} from "vue";
 import video from "src/core/video/video.js";
+import video_type_ctr from "src/core/video/video_type_ctr.vue";
 import url_add_param from "src/core/enter-params/util/index.js";
 import {useRoute, useRouter} from "vue-router";
-
 
 const props = defineProps({
   detail_info: {
