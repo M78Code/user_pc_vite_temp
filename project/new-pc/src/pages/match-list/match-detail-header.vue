@@ -186,6 +186,10 @@ let _menu_type = MenuData.menu_root;
  * @param {0|1} value 
  */
 const handle_select_type = (value) => {
+  //亚盘禁止
+  if (value === 1 ){
+    return
+  }
   select_type.value = value;
 }
 
@@ -230,6 +234,7 @@ const get_page_title = () => {
 }
 
 watch(() =>MenuData.menu_data_version.value, () => {
+  console.error('get_page_title()',get_page_title())
   get_page_title()
 })
 
