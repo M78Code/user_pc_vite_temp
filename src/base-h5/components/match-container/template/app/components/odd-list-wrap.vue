@@ -304,6 +304,7 @@ const show_newer_edition = computed(() => {
 
 // 特色组合玩法
 const hps_compose_data = computed(() => {
+  console.error(1111111111111)
   const all_both = i18n_t('football_playing_way.all_both')
   const half_both = i18n_t('football_playing_way.half_both')
   const all_total_goal = i18n_t('football_playing_way.all_total_goal')
@@ -320,7 +321,6 @@ const hps_compose_data = computed(() => {
     { hl: [], title: all_total_goal, hpid: 13 },
   ]
   const result = standard_odd_status.value === 0 ? default_ol_0 : default_ol_1
-  return result
   
   if (!props.hps || props.hps.length < 1) return result
   props.hps.forEach(t => {
