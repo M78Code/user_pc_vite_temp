@@ -122,7 +122,9 @@ export default defineComponent({
     // 更多次要玩法选择
     const on_select_second_play = (item, i) => {
       proxy.overtime_tab_handle(item, undefined, 'is-user', i)
-      select_second_item.value = item
+      nextTick(() => [
+        select_second_item.value = item
+      ])
     }
     return { 
       compute_css_obj, on_select_second_play, select_second_item, second_play_data, current_second_data, select_check

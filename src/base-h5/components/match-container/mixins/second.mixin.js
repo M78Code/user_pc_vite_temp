@@ -200,7 +200,6 @@ export default defineComponent({
       if(['category','virtual_sports'].includes(this.$route.name) || 900 == menu_type.value || !item){
         return;
       }
-      alert(1111)
       // 重置所选的更多玩法选项
       this.select_second_item = {}
 
@@ -213,7 +212,6 @@ export default defineComponent({
         this.current_tab_item.title = item.title
         this.current_tab_item.id = item.id
       }
-      alert(22222)
       // 重置其他 tab 项
       this.tab_list.forEach((t) => {
         if (item.id !== t.id) t.unfold = 0
@@ -223,7 +221,7 @@ export default defineComponent({
       } else{
         item.unfold = !item.unfold ? 1 : 0
       }
-      alert(3333333)
+      return
       //检测到当前赛事无展开的次要玩法时移除vuex中的赛事/展开状态映射key
       this.any_unfold = this.tab_list.filter(t => t.unfold == 1).length;
       //  如果没有展开的选项，则所有都折叠
@@ -236,23 +234,18 @@ export default defineComponent({
         }
         MatchResponsive.set_secondary_unfold_map(unfold_map);
       }
-      alert(4444)
       //隐藏次要玩法描述弹层
       useMittEmit(MITT_TYPES.EMIT_INFO_ICON_CLICK, null);
       //先用本地数据填充次要玩法投注项,避免拉取接口过程中的模板不完整， 获取 key （如：hpsAdd, hps15Minutes）
       // 展开次要玩法
-      alert(4444)
       if(item.unfold == 1){
-        alert(555)
         //自动展开次要玩法无需拉取新数据
         if(operate_type == 'is-auto') {
-          alert(666)
           // this.save_second_play_mid_map_unfold_status(item);
           return;
         }
         //拉接口更新数据
         if(operate_type == 'is-user' || operate_type == 'mounted'){
-          alert(777)
           await MatchMeta.get_match_base_hps_by_mids({ mids: this.match.mid, other: {
             pids:item.pids,
             inner_param: 'is_by_mids',
