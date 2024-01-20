@@ -224,17 +224,17 @@ export default defineComponent({
       //检测到当前赛事无展开的次要玩法时移除vuex中的赛事/展开状态映射key
       this.any_unfold = this.tab_list.filter(t => t.unfold == 1).length;
       //  如果没有展开的选项，则所有都折叠
-      if(!this.any_unfold){
-        let unfold_map = lodash.cloneDeep(this.get_secondary_unfold_map);
-        if(this.match.mid in unfold_map){
-          let id = unfold_map[this.match.mid] && unfold_map[this.match.mid].split('-')[0];
-          let status = 0;
-          unfold_map[this.match.mid] = `${id}-${status}`;
-        }
-        MatchResponsive.set_secondary_unfold_map(unfold_map);
-      }
+      // if(!this.any_unfold){
+      //   let unfold_map = lodash.cloneDeep(this.get_secondary_unfold_map);
+      //   if(this.match.mid in unfold_map){
+      //     let id = unfold_map[this.match.mid] && unfold_map[this.match.mid].split('-')[0];
+      //     let status = 0;
+      //     unfold_map[this.match.mid] = `${id}-${status}`;
+      //   }
+      //   MatchResponsive.set_secondary_unfold_map(unfold_map);
+      // }
       //隐藏次要玩法描述弹层
-      useMittEmit(MITT_TYPES.EMIT_INFO_ICON_CLICK, null);
+      // useMittEmit(MITT_TYPES.EMIT_INFO_ICON_CLICK, null);
       //先用本地数据填充次要玩法投注项,避免拉取接口过程中的模板不完整， 获取 key （如：hpsAdd, hps15Minutes）
       // 展开次要玩法
       if(item.unfold == 1){
@@ -244,17 +244,17 @@ export default defineComponent({
           return;
         }
         //拉接口更新数据
-        if(operate_type == 'is-user' || operate_type == 'mounted'){
-          await MatchMeta.get_match_base_hps_by_mids({ mids: this.match.mid, other: {
-            pids:item.pids,
-            inner_param: 'is_by_mids',
-            playId:item.play_id,
-            is_user: operate_type,
-            device: 'v2_h5_st' ,
-            sort:1,//排序	 int 类型 1 按热门排序 2 按时间排序
-          }})
-          this.update_match_data()
-        }
+        // if(operate_type == 'is-user' || operate_type == 'mounted'){
+        //   await MatchMeta.get_match_base_hps_by_mids({ mids: this.match.mid, other: {
+        //     pids:item.pids,
+        //     inner_param: 'is_by_mids',
+        //     playId:item.play_id,
+        //     is_user: operate_type,
+        //     device: 'v2_h5_st' ,
+        //     sort:1,//排序	 int 类型 1 按热门排序 2 按时间排序
+        //   }})
+        //   this.update_match_data()
+        // }
       }
       // this.save_second_play_mid_map_unfold_status(item);
       if(item.id==17){

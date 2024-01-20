@@ -12,6 +12,7 @@
         <div> {{ t_item.title }} </div>
         <IconWapper name="icon-triangle1" size="14px" class="league-collapse-dir" />
       </div>
+      <!--更多玩法-->
       <div class="select-play" v-if="second_play_data.length > 0">
         <span @click.stop>
           <q-btn-dropdown menu-self="top middle" flat outline padding="0" dropdown-icon="expand_more" content-class="select-play-style">
