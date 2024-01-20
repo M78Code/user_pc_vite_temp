@@ -3,6 +3,9 @@
     <div class="flex flex-start items-center">
         <horse-template :item_data="item_data" :csid="match.csid" v-if="match" />
     </div>
+    <div class="row justify-end to-detail"  @click="goto_details(match)">
+      All Markets &nbsp;>
+    </div>
   </div>
 </template>
 
@@ -209,5 +212,12 @@ export default {
   &:hover {
     color: var(--q-gb-bg-c-17);
   }
+}
+
+.to-detail {
+  padding: 13px;
+  cursor: pointer;
+  color: #1A1A1A;
+  background: var(--q-gb-bd-c-2);
 }
 </style>

@@ -44,7 +44,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
 import MatchesLeaguesTab from "./matches_filter_tab_leagues.vue"
-import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t, } from "src/output/index.js"
+import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t, UserCtr} from "src/output/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
@@ -257,7 +257,10 @@ const checked_current_tab = (payload,type) => {
 	if ([1002].includes(payload.value*1)) {
 		root = 5000
 		obj.current_mi = 5001
+		UserCtr.set_sort_type(1);
 		MenuData.set_current_ball_type(1)
+	} else {
+		UserCtr.set_sort_type(2);
 	}
 	// 还原top_event热门赛种 和 常规赛事的切换
 	if (1001 == payload.value) {

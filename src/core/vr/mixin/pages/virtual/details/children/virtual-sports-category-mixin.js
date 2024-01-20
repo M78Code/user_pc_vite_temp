@@ -637,7 +637,7 @@ export default {
       // 获取缓存数据，将参数params传进去
       this.getdetail_cache_session(params);
       axios_api_loop({
-        axios_api:api_common.get_matchDetail_getVirtualMatchOddsInfo,
+        axios_api: window.BUILDIN_CONFIG.IS_PC ? api_common.get_matchDetail_getVirtualMatchOddsInfo_pc : api_common.get_matchDetail_getVirtualMatchOddsInfo,
         params,
         error_codes: ["0401038"], //此状态码会重新循环执行一次
         fun_then:(res)=>{
