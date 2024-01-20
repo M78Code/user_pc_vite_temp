@@ -108,6 +108,7 @@ onUnmounted(() => {
 
 
  const change_money_handle = obj => {
+    // debugger
     if(obj.ids.length) {
         // 获取当前投注金额
         let money = BetData.bet_amount
@@ -132,9 +133,10 @@ onUnmounted(() => {
                 if(UserCtr.balance < ref_data.max_money){
                     money_a = UserCtr.balance
                 }  
-                BetData.set_bet_amount(mathJs.add(money,money_))
+                BetData.set_bet_amount(mathJs.add(money,money_a))
+                let ratio_amount = mathJs.divide(money_a, obj.ids.length)
                 obj.ids.forEach(oid => {
-                    BetData.set_bet_obj_amount(BetData.bet_amount, oid)
+                    BetData.set_bet_obj_amount(ratio_amount, oid)
                 })
                 ref_data.money = money_a
             } 
