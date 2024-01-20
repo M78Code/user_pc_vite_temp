@@ -6,7 +6,7 @@
 <template>
   <div>
 <!--    <div>{{  }}</div>-->
-    <div class="analysis-body">
+    <div class="component analysis-body">
       <!-- 动画/视频/比分榜 -->
       <venue-box
         :score_list="score_list"
