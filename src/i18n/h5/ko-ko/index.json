@@ -326,6 +326,7 @@
     "match_no": "종료 되지 않음"
   },
   "common": {
+    "edit": "수정",
     "in_box": "In the box......",
     "all_notice": "모든 공지 사항",
     "all_select": "모두 선택",

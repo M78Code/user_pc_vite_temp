@@ -4,19 +4,19 @@
 -->
 <template>
     <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-    <div class="odd-finnally" v-if="showChange">
+    <div class="odd-finnally" v-if="show_appoint">
       <span v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(1)">—</span>
       @ {{ odds_value_edit }}
       <span v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(2)">+</span>
     </div>
     <div class="cancel-warp">
-      <template v-if="showChange">
-        <div class="cancel-btn" @click.stop="showChange=false;">{{i18n_t('common.cancel')}}</div>
+      <template v-if="show_appoint">
+        <div class="cancel-btn" @click.stop="change_show_appoint(false)">{{i18n_t('common.cancel')}}</div>
         <div class="change-btn" @click.stop="sure">{{i18n_t('app_h5.bet.confirm')}}</div>
       </template>
       <template v-else>
         <div class="cancel-btn" @click="alertTips=true;">{{i18n_t('app_h5.bet.cancel_appoint')}}</div>
-        <div class="change-btn" @click.stop="showChange=true;">修改</div>
+        <div class="change-btn" @click.stop="change_show_appoint(true)">{{i18n_t('common.edit')}}</div>
       </template>
       
     </div>
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { api_betting } from "src/api/index.js";
 import { i18n_t } from "src/output/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
@@ -52,6 +52,10 @@ const props = defineProps({
   marketType: {
     type: String,
     default: ''
+  },
+  show_appoint: {
+    type: Boolean,
+    default: false
   }
 })
 // 取消预约
@@ -61,7 +65,7 @@ let alertTips = ref(false)
  *@descript 取消预约投注项
 *@param {String} orderNumer 订单号
 */
-const emit = defineEmits(['success'])
+const emit = defineEmits(['success', 'change_show_appoint'])
 const cancle_pre_order = () => {
     api_betting.cancle_pre_order({ orderNo: props.orderNo }).then((result) => {
         let res = result.status ? result.data : result;
@@ -77,13 +81,16 @@ const cancle_pre_order = () => {
     })
 }
 
-
 /**
  * 修改赔率
  */
 // 修改赔率
-let showChange = ref(false)
 let odds_value_edit = ref(0)
+
+onMounted(() => {
+  odds_value_edit.value = props.oddFinally
+})
+
 //长按事件（起始）
 const gtouchstart = (type) => {
   if(type==1){
@@ -92,6 +99,11 @@ const gtouchstart = (type) => {
     return add_odd
   }
 }
+
+const change_show_appoint = (bol) => {
+  emit('change_show_appoint', bol)
+}
+
 
 /**
 *@description 点击减号减少赔率
@@ -125,7 +137,12 @@ const sure = () => {
     marketType: props.marketType // 盘口类型(EU:欧盘 HK:香港盘 US:美式盘 ID:印尼盘 MY:马来盘 GB:英式盘）
   }
   api_betting.set_update_pre_bet_odds(params).then(res=>{
-
+    let code = lodash.get(res,'code')
+    let msg = lodash.get(res,'message')
+    if(code == '0000000'){
+        emit('success')
+      }
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, msg)
   })
 }
 
