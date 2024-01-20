@@ -50,7 +50,7 @@ const on_update = (val) => {
     state.currentSlideValue = item.val
 }
 onMounted(()=>{
-    MenuData.set_menu_mi(+MenuData.current_lv_2_menu_mi.value || 2100);
+    MenuData.set_menu_mi(+MenuData.current_lv_2_menu_mi.value || '2100');
     getDateList(tabValue.value)
 })
 </script>
