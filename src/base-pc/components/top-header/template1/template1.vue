@@ -4,7 +4,9 @@
   <div class="header-main">
     <div class="header-content">
       <div class="logo">
-        <img :src="compute_img_url(logo)" alt="" srcset="" class="" />
+        <!-- 1704044740812607488  -->
+        <div class="box-line" v-if="UserCtr.user_info.mId == '1261540827428163584'"></div>
+        <img :src="compute_img_url(logo)" alt="" srcset="" class="" v-else />
       </div>
       <div class="header-right">
         <!-- 头部菜单 -->
@@ -120,15 +122,24 @@ export default defineComponent({
   background-color: var(--q-gb-bg-c-1);
   .header-content {
     display: flex;
-    align-items: center;
+    justify-content: flex-start;
     max-width: 1440px;
     padding-right: 10px;
     margin: 0 auto;
 
     .logo {
-      margin-right: 110px;
+      margin-right: 47px;
       margin-left: 18px;
+      width: 185px;
+      height: 68px;
+      display: flex;
+      align-items: center;
       img {
+        width: 185px;
+        height: 44px;
+      }
+      .box-line{
+        width: 185px;
         height: 44px;
       }
     }

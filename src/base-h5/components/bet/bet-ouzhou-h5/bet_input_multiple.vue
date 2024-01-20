@@ -124,8 +124,8 @@ const set_ref_data_bet_money = () => {
     BetData.bet_single_list.forEach((item)=>{
         let value = item.playOptionsId
         const { min_money = 10, max_money = 8888} = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
-        min_money_arr.push(min_money)
-        max_money_arr.push(max_money)
+        min_money_arr.push(min_money*1)
+        max_money_arr.push(max_money*1)
         ref_data.oid.push(item.playOptionsId)
         ref_data.oddFinallyArr.push(item.oddFinally)
     })
