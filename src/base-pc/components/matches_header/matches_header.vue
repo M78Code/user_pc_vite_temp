@@ -29,6 +29,8 @@
 						</div>
 					</template>
 				</div>
+				<!-- MenuData.is_vr没生效，先注释了 -->
+				<!-- <virtualSportsTab v-if="MenuData.is_vr" /> -->
 			</div>
 		</div>
 		<MatchesFilterTab v-if="MenuData.is_scroll_ball() || MenuData.is_hot() || (MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp()) || MenuData.is_collect || MenuData.is_top_events()"  />
@@ -48,7 +50,8 @@ import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t, UserCtr} from "src/
 import BaseData from "src/core/base-data/base-data.js";
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
-import { resolve_mew_menu_res, un_mounted } from "src/base-pc/components/match-list/list-filter/index.js"
+import { resolve_mew_menu_res, un_mounted } from "src/base-pc/components/match-list/list-filter/index.js";
+import virtualSportsTab from "./virtual_sports_tab.vue"
 const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG ;
 
 const tab_list = ref([])
