@@ -371,7 +371,7 @@ export default {
     // 切换玩法赔率
     const on_select_play = (item) => {
       const { hps, csid, mid, hn } = ctx.match_of_list
-      select_play.value = item.hpid
+      // select_play.value = item.hpid
       select_label.value = item.label
       MatchResponsive.set_match_hpid(item.hpid, csid)
     }

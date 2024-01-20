@@ -7,6 +7,10 @@
             </q-tabs>
         </div>
         <tab-date v-if="state.slideMenu" :defaultVal="state.currentSlideValue"  :dateList="state.slideMenu" @changeDate="changeDate"/>
+        <!--二级赛事列表-->
+        <div class="match-list-page">
+            <MatchContainer />
+        </div>
     </div>
 </template>
 <script setup>
@@ -14,6 +18,8 @@ import { onMounted, ref ,reactive } from "vue";
 import { MenuData  } from "src/output/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import tabDate from './tab-date.vue';
+import MatchContainer from "src/base-h5/components/match-list/index.vue";
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
 const state = reactive({
     slideMenu:[],
@@ -26,6 +32,7 @@ const tabValue = ref(MenuData.current_lv_2_menu_mi.value || '');
 const getDateList = async (csid) =>{
     const list = await MenuData.getDateList(+csid-2000);
     state.slideMenu = list;
+    MatchMeta.get_esports_match()
 }
 // tabs 切换
 const on_update = (val) => {
@@ -87,6 +94,27 @@ onMounted(()=>{
                 background-color: var(--q-gb-bg-c-1);
             }
             }
+        }
+        .match-list-page {
+            background-color: #e2e2e2 !important;
+            width: 100%;
+            height: 100%;
+            overflow-y: scroll;
+            position: relative;
+
+            .match-list-container {
+                height: 100%;
+                background-color: var(--q-gb-bg-c-2) !important;
+
+                :deep(.scroll-wrapper) {
+                // background-color: var(--q-gb-bg-c-2) !important;
+
+                    .s-w-item {
+                        background-color: var(--q-gb-bg-c-2) !important;
+                    }
+                }
+            }
+     
         }
     }
 </style>
