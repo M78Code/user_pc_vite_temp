@@ -88,27 +88,29 @@
       </template>
 
       <!-- 标准版 特色组合 赔率组件 -->
-      <div v-if="[11].includes(+lodash.get(current_tab_item, 'id'))" v-touch-swipe.mouse.right.left="odd_wrapper_pan"
-        :class="['standard-odd-l-w featured-combination', { 'status3':standard_odd_status == 1 }]">
-        <div :class="['odds-content', {'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}]">
-          <div class="item" v-for="compose_data, index in hps_compose_data" :key="index">
-            <div :class="['title', { 'blue-color': standard_odd_status === 1 }]">{{ compose_data.title }}</div>
-            <div class="odds-info">
-              <div class="odd-column odd-wrap-min" v-for="ol_item, ol_item_i in get_compose_ol_data(compose_data)" :key="ol_item_i">
-                <odd-column-item
-                  :placeholder="ol_item.placeholder"
-                  :n_s="standard_odd_status"
-                  :ol_list_item="ol_item"
-                  :match="match"
-                  :odd_field="compose_data"
-                  :hl_hs="get_hl_hs(compose_data)"
-                  :current_tab_item="current_tab_item"
-                />
+      <template v-if="[11].includes(+lodash.get(current_tab_item, 'id'))">
+        <div v-touch-swipe.mouse.right.left="odd_wrapper_pan"
+          :class="['standard-odd-l-w featured-combination', { 'status3':standard_odd_status == 1 }]">
+          <div :class="['odds-content', {'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}]">
+            <div class="item" v-for="(compose_data, index) in hps_compose_data()" :key="compose_data.chpid">
+              <div :class="['title', { 'blue-color': standard_odd_status === 1 }]">{{ compose_data.title }}</div>
+              <div class="odds-info">
+                <div class="odd-column odd-wrap-min" v-for="(ol_item, ol_item_i) in get_compose_ol_data(compose_data)" :key="ol_item.hid">
+                  <odd-column-item
+                    :placeholder="ol_item.placeholder"
+                    :n_s="standard_odd_status"
+                    :ol_list_item="ol_item"
+                    :match="match"
+                    :odd_field="compose_data"
+                    :hl_hs="get_hl_hs(compose_data)"
+                    :current_tab_item="current_tab_item"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </template>
 
       <!--标准版 才有的样式 下划线 -->
       <div :class="['dir-standard row justify-center items-center', {'max-width': [11].includes(+lodash.get(current_tab_item, 'id'))} ]"
@@ -226,6 +228,8 @@ const props = defineProps({
     }
   },
   hps: Array,
+  // 特色组合数据,
+  compose_hps: null,
   // 波胆玩法的数据
   bold_all_list: null,
   // 5分钟玩法的数据
@@ -303,8 +307,7 @@ const show_newer_edition = computed(() => {
 });
 
 // 特色组合玩法
-const hps_compose_data = computed(() => {
-  console.error(1111111111111)
+const hps_compose_data = () => {
   const all_both = i18n_t('football_playing_way.all_both')
   const half_both = i18n_t('football_playing_way.half_both')
   const all_total_goal = i18n_t('football_playing_way.all_total_goal')
@@ -321,9 +324,12 @@ const hps_compose_data = computed(() => {
     { hl: [], title: all_total_goal, hpid: 13 },
   ]
   const result = standard_odd_status.value === 0 ? default_ol_0 : default_ol_1
-  
-  if (!props.hps || props.hps.length < 1) return result
-  props.hps.forEach(t => {
+
+  const hps_data = lodash.cloneDeep(props.hps)
+  const length = lodash(hps_data, 'length', 0)
+  if (length < 1) return result
+
+  hps_data.forEach(t => {
     const flag = t && t.hl && t.hl.length > 0 && t.hl[0].ol && t.hl[0].ol.length > 0
     if (!flag) t.hl = [{}]
     if (standard_odd_status.value === 0) {
@@ -374,10 +380,10 @@ const hps_compose_data = computed(() => {
   if (result.length < 1) {
     return standard_odd_status.value === 0 ? [{hl: [{}], title: all_both}, {hl: [{}], title: all_total_goal}] : [{hl: [{}], title: half_both}, {hl: [{}], title: half_total_goal}] 
   }
-
+  
   const result_data = standard_odd_status.value === 0 ? result.sort((a, b) => +b.hpid - +a.hpid) : result.sort((a, b) => +a.hpid - +b.hpid)
   return result_data
-})
+}
 
 // 新手版赔率
 const ol_list = computed(() => {
