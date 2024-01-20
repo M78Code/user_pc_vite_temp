@@ -197,13 +197,11 @@ export default defineComponent({
      * @return {Undefined}
      */
     async overtime_tab_handle(item, unfold, operate_type, sub_i){
-      console.log(111111111)
-      console.error(2222222222)
       if(['category','virtual_sports'].includes(this.$route.name) || 900 == menu_type.value || !item){
         return;
       }
       // 重置所选的更多玩法选项
-      // this.select_second_item = {}
+      this.select_second_item = {}
       
 
       // 滚动次要玩法选中项到屏幕显示区域
