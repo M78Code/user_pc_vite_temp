@@ -242,6 +242,7 @@ watch(BaseData.base_data_version,()=>{
 const checked_current_tab = (payload,type) => {
 	let obj = {
 		...MenuData.mid_menu_result,
+		md: "",
 		filter_tab: payload.value*1,
 	}
 
