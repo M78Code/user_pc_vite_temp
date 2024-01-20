@@ -134,9 +134,9 @@ onUnmounted(() => {
                     money_a = UserCtr.balance
                 }  
                 BetData.set_bet_amount(mathJs.add(money,money_a))
-                let ratio_amount = mathJs.divide(money_a, obj.ids.length)
+                // let ratio_amount = mathJs.divide(money_a, obj.ids.length)
                 obj.ids.forEach(oid => {
-                    BetData.set_bet_obj_amount(ratio_amount, oid)
+                    BetData.set_bet_obj_amount(money_a, oid)
                 })
                 ref_data.money = money_a
             } 
