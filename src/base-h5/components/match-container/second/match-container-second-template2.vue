@@ -45,7 +45,7 @@
     <!-- 次要玩法   1. 左边队伍名标题   2. 右边 盘口组件  模块 -->
     <div 
       v-if="current_tab_item.hps" 
-      :mid="match_info.mid"  
+      :mid="match.mid"  
       :class="['transition-w-odd', {
       expanded: any_unfold && any_unfold != '0',
       five_minutes_wanfa: any_unfold && any_unfold != '0' && [19].includes(+ lodash.get(current_tab_item, 'id')),}]">
@@ -55,26 +55,26 @@
         <div class="team-title-container" v-if="![18, 19, 11].includes(+ lodash.get(current_tab_item, 'id'))">
           <!--主队名 和 比分-->
           <div :class="['team-t-title-w', { 'is-handicap': current_tab_handicap_index == 1, 'is-handicap-1': current_tab_handicap_index == 2, }]">
-            <div class='team-title'> {{ match_info.mhn }}  </div>
+            <div class='team-title'> {{ match.mhn }}  </div>
             <!--显示次要玩法比分 7,8,9 网,乒,斯-->
-            <div class="way-score" v-if="[1, 5, 7, 8, 9].includes(+current_tab_item.id) && match_info.ms == 1"> {{ home_score }} </div>
+            <div class="way-score" v-if="[1, 5, 7, 8, 9].includes(+current_tab_item.id) && match.ms == 1"> {{ home_score }} </div>
           </div>
           <!--副队名 和 比分-->
           <div :class="['team-t-title-w', { 'is-handicap': current_tab_handicap_index == 2, 'is-handicap-1': current_tab_handicap_index == 1, }]">
-            <div class='team-title'> {{ match_info.man }} </div>
+            <div class='team-title'> {{ match.man }} </div>
             <!--显示次要玩法比分 7,8,9 网,乒,斯-->
-            <div class="way-score" v-if="[1, 5, 7, 8, 9].includes(+current_tab_item.id) && match_info.ms == 1"> {{ away_score }}</div>
+            <div class="way-score" v-if="[1, 5, 7, 8, 9].includes(+current_tab_item.id) && match.ms == 1"> {{ away_score }}</div>
           </div>
           <!--  玩法描述图标显示  -->
-          <div class="team-t-title-w fight-type" v-if="[1, 3, 5, 7, 8, 9].includes(+match_info.csid)">
-            <span v-if="[2, 5, 17].includes(+current_tab_item.id)" @click="info_icon_click($event, match_info.mid)"
+          <div class="team-t-title-w fight-type" v-if="[1, 3, 5, 7, 8, 9].includes(+match.csid)">
+            <span v-if="[2, 5, 17].includes(+current_tab_item.id)" @click="info_icon_click($event, match.mid)"
               :style="compute_css_obj(show_tips?'icon-tips':'icon-tips-d')" ></span>
-            {{ match_info.csid == 1 ? current_tab_item.title : mmp_map_title }}
+            {{ match.csid == 1 ? current_tab_item.title : mmp_map_title }}
           </div>
         </div>
         <!--次要玩法 盘口 右边的 区域-->
         <OddListWrap 
-          :match="match_info"
+          :match="match"
           :hps="current_tab_item.hps"
           :current_tab_item="current_tab_item"
           :invoke_source="'attached'"
@@ -110,12 +110,12 @@ export default defineComponent({
     })
     // 当前显示的 次要玩法
     const current_second_data = computed(() => {
-      return show_second_data.value.slice(0, 1)
+      return show_second_data.value.slice(0, 5)
     })
     // 更多次要玩法数据
     const second_play_data = computed(() => {
       const length = lodash.get(show_second_data.value, 'length', 0)
-      return show_second_data.value.slice(1, length - 1)
+      return show_second_data.value.slice(5, length - 1)
     })
     // 更多次要玩法 当前所选玩法
     const select_second_item = ref({})

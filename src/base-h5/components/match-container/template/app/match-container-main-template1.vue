@@ -351,7 +351,7 @@ export default {
       const { is_show_ball_title } = ctx.match_of_list
       return is_show_ball_title
     })
-    const get_date_time =computed(() => {
+    const get_date_time = computed(() => {
       return is_zaopan.value&&Number(date_time.value)>0?format_M_D(date_time.value):i18n_t("filter.all_leagues")
     })
 

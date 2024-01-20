@@ -3,22 +3,24 @@ import lodash from 'lodash'
 import { defineComponent } from 'vue'
 import { api_common } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES, UserCtr, project_name } from  "src/output"
-import MatchFold from 'src/core/match-fold'
-import MatchCollect from 'src/core/match-collect'
-import PageSourceData from "src/core/page-source/page-source.js";
+
+import MatchFold from 'src/core/match-fold/index.js'
+import MatchCollect from 'src/core/match-collect/index.js'
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+
 import MatchListClass from 'src/core/match-list-h5/match-class/match-list.js'
+import BaseData from "src/core/base-data/base-data.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/output/index.js"
 import { format_how_many_days, format_week } from "src/core/format/common/index.js"
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0 } from 'src/base-h5/core/utils/local-image.js'
 
-import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, is_detail, is_results, menu_lv1 } from 'src/base-h5/mixin/menu.js'
-import BaseData from "src/core/base-data/base-data.js";
 import { get_collect_count } from 'src/core/collect/collect-class.js'
 
 // i: 每个组件的 props 赛事下标， 来源 === 组件

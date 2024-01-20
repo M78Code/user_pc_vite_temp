@@ -268,6 +268,7 @@ class MatchMeta {
    * @param { index } 赛事对应下标
    */
   set_match_default_properties(match, index, mids) {
+    // this.delete_default_field(match)
     // 是否展示联赛标题
     const is_show_league = MatchUtils.get_origin_match_is_show_league(index, mids)
     const is_show_no_play = MatchUtils.get_match_is_show_no_play(index, mids)
@@ -287,6 +288,18 @@ class MatchMeta {
       away_yellow_score,
       handicap_index
     }
+  }
+
+  /**
+   * @description 删除 赛事 默认字段
+   */
+  delete_default_field (t) {
+    const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
+    if (!match) return
+    // 开赛 未开赛  标识
+    delete match.start_flag
+    // 全部联赛标识
+    delete match.source_index
   }
 
   /**

@@ -221,9 +221,16 @@ class MatchFold {
    * @param {match} 赛事对象 
    */
   compute_show_tab_play = (match) => {
-    const { compose = false, cos15Minutes = false, cosBold = false, cosCorner = false, cosOutright = false, cosOvertime = false, cosPenalty = false, cosPromotion = false, 
-      cosPunish = false } = match;
-    return compose || cos15Minutes || cosBold || cosCorner || cosOutright || cosOvertime || cosPenalty || cosPromotion || cos15Minutes || cosPunish
+    const { compose = false, cos15Minutes = false, cosBold = false, cosCorner = false, cosOutright = false, cosOvertime = false, cosPenalty = false, 
+      cosPromotion = false, cosPunish = false, hpsAdd = [], cds = '', mbmty = '' } = match;
+    
+    let is_show = compose || cos15Minutes || cosBold || cosCorner || cosOutright || cosOvertime || cosPenalty || cosPromotion || cos15Minutes || 
+    cosPunish || hpsAdd.length > 0
+
+    // 电子篮球 不显示次要玩法 对应 BUG 44554
+    if(['B03', 'BE'].includes(cds) && mbmty === 2) is_show = false
+
+    return is_show
   }
 }
 

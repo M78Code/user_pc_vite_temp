@@ -11,8 +11,10 @@ import PageSourceData  from  "src/core/page-source/page-source.js";
 import MatchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { menu_type } from 'src/base-h5/mixin/menu.js'
-import { api_common } from "src/api/index.js";
+
+import MatchFold from 'src/core/match-fold/index.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+
 export default defineComponent({
   props:{
     match: Object,  // 赛事数据
@@ -41,7 +43,6 @@ export default defineComponent({
       bold_gaodu_css: 3,
       emitters: {},
       init_tab_timer: null,
-      current_select_tab: 0,
       standard_odd_status: PageSourceData.standard_odd_status.value
     }
   },
@@ -199,12 +200,9 @@ export default defineComponent({
       if(['category','virtual_sports'].includes(this.$route.name) || 900 == menu_type.value || !item){
         return;
       }
-
+      console.log(1111)
       // 重置所选的更多玩法选项
       this.select_second_item = {}
-
-      // 当前所选更多玩法
-      this.current_select_tab = item
 
       // 滚动次要玩法选中项到屏幕显示区域
       // this.$nextTick(()=>{
@@ -215,17 +213,17 @@ export default defineComponent({
         this.current_tab_item.title = item.title
         this.current_tab_item.id = item.id
       }
-      //改变折叠tab选项
-      this.tab_list.forEach((t,i) => {
-        if(item.id != t.id){
-          this.tab_list[i].unfold = 0;
-        }
-      });
-      if(typeof unfold != 'undefined'){
-        item.unfold = unfold;
+      console.log(22222)
+      // 重置其他 tab 项
+      this.tab_list.forEach((t) => {
+        if (item.id !== t.id) t.unfold = 0
+      })
+      if(unfold){
+        item.unfold = unfold
       } else{
-        item.unfold = !item.unfold ? 1 : 0;
+        item.unfold = !item.unfold ? 1 : 0
       }
+      console.log(3333333)
       //检测到当前赛事无展开的次要玩法时移除vuex中的赛事/展开状态映射key
       this.any_unfold = this.tab_list.filter(t => t.unfold == 1).length;
       //  如果没有展开的选项，则所有都折叠
@@ -238,20 +236,12 @@ export default defineComponent({
         }
         MatchResponsive.set_secondary_unfold_map(unfold_map);
       }
+      console.log(4444)
       //隐藏次要玩法描述弹层
       useMittEmit(MITT_TYPES.EMIT_INFO_ICON_CLICK, null);
       //先用本地数据填充次要玩法投注项,避免拉取接口过程中的模板不完整， 获取 key （如：hpsAdd, hps15Minutes）
       // 展开次要玩法
       if(item.unfold == 1){
-        let params = {
-          mids: this.match.mid,
-          cuid: UserCtr.get_uid(),
-          pids:item.pids,
-          playId:item.play_id,
-          device: 'v2_h5_st' ,
-          sort:1,//排序	 int 类型 1 按热门排序 2 按时间排序
-          inner_param: 'is_by_mids'
-        };
         //自动展开次要玩法无需拉取新数据
         if(operate_type == 'is-auto') {
           // this.save_second_play_mid_map_unfold_status(item);
@@ -259,7 +249,6 @@ export default defineComponent({
         }
         //拉接口更新数据
         if(operate_type == 'is-user' || operate_type == 'mounted'){
-          params.is_user = operate_type;
           await MatchMeta.get_match_base_hps_by_mids({ mids: this.match.mid, other: {
             pids:item.pids,
             inner_param: 'is_by_mids',
@@ -278,8 +267,11 @@ export default defineComponent({
       //次要玩法展开或者关闭通知列表页重新计算dom高度
       // this.$root.$emit(this.emit_cmd.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, 'ciyao_bold');
     },
+    /**
+     * @description 更新赛事数据
+     */
     update_match_data () {
-      let o_hps_key = this.get_hps_key_by(this.current_select_tab);
+      let o_hps_key = this.get_hps_key_by(this.current_tab_item);
       if(this.match[o_hps_key]){
         // 根据业务需求，修改冠军小节玩法  1585 单对应
         this.current_tab_item.hps = this.match[o_hps_key];
@@ -675,31 +667,22 @@ export default defineComponent({
     },
   },
   computed:{
-    match_info () {
-      if(this.current_hps_key){
-        // 如果是波胆 和 5分钟玩法
-        if([18].includes(+ lodash.get(this.current_tab_item, 'id'))){
-          // 波胆玩法 数据加工处理
-          this.bold_all_list = this.corrective_action_data_processing(lodash.get(this.current_tab_item,'hps'), this.match )
-        }else if([19].includes(+ lodash.get(this.current_tab_item, 'id'))){
-          // 5分钟 玩法 数据加工处理
-          this.five_minutes_all_list = this.five_minutes_gameplay_data_processing(lodash.get(this.current_tab_item,'hps'), this.match )
-        }
-      }
-      return this.match
-    },
     get_secondary_unfold_map () {
       return MatchResponsive.secondary_unfold_map.value;
     },
     // 判断是否显示tab栏
     show_tab_by_data(){
-      let{cosCorner,cosOvertime,cosBold,cosPenalty,cosPromotion, cosOutright ,cosPunish,hpsAdd,cos15Minutes,compose,cds,mbmty} = this.match;
-      let flag = cos15Minutes || cosCorner || cosOvertime|| cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || compose || (hpsAdd && hpsAdd.length > 0)
+      
+      const key = MatchFold.get_match_fold_key(this.match)
+      const flag = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_tab`, true)
+
+      // let{cosCorner,cosOvertime,cosBold,cosPenalty,cosPromotion, cosOutright ,cosPunish,hpsAdd,cos15Minutes,compose,cds,mbmty} = this.match;
+      // let flag = cos15Minutes || cosCorner || cosOvertime|| cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || compose || (hpsAdd && hpsAdd.length > 0)
 
       // 电子篮球 不显示次要玩法 对应 BUG 44554
-      if (['B03', 'BE'].includes(cds) && mbmty === 2) {
-        flag = false
-      }
+      // if (['B03', 'BE'].includes(cds) && mbmty === 2) {
+      //   flag = false
+      // }
       // 如果没有 玩法时
       if(!flag ){
         let unfold_map = _.cloneDeep(this.get_secondary_unfold_map);
@@ -756,6 +739,16 @@ export default defineComponent({
   watch:{
     match(c_m,o_m){
       this.init_tab_async_show()
+      if(this.current_hps_key){
+        // 如果是波胆 和 5分钟玩法
+        if([18].includes(+ lodash.get(this.current_tab_item, 'id'))){
+          // 波胆玩法 数据加工处理
+          this.bold_all_list = this.corrective_action_data_processing(lodash.get(this.current_tab_item,'hps'), this.match )
+        }else if([19].includes(+ lodash.get(this.current_tab_item, 'id'))){
+          // 5分钟 玩法 数据加工处理
+          this.five_minutes_all_list = this.five_minutes_gameplay_data_processing(lodash.get(this.current_tab_item,'hps'), this.match )
+        }
+      }
     },
     // 是否至少存在一个展开tab状态变化,tab展开 属于唯一有用的方法之一
     any_unfold(){

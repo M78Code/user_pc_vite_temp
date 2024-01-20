@@ -373,7 +373,6 @@ const hps_compose_data = computed(() => {
   }
 
   const result_data = standard_odd_status.value === 0 ? result.sort((a, b) => +b.hpid - +a.hpid) : result.sort((a, b) => +a.hpid - +b.hpid)
-  console.log(result_data)
   return result_data
 })
 
