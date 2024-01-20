@@ -78,6 +78,7 @@ const set_scoew_icon_list = (new_value) => {
 
 watch(() => props.rightActionsLabel, (value) => {
     select.value = value;
+    console.log(value, "valueoooooo");
     if (value == "video") {
         is_video.value = true;
     }
@@ -139,9 +140,14 @@ const list = computed(() => {
         return mapObj.value[props.status].includes(e.value)
     });
     // 再次遍历，如果只显示视频或者动画
-    filter_list = filter_list.filter((e, i) => {
-        return props.status != 1 & i != 0;
-    });
+    // filter_list = filter_list.filter((e, i) => {
+    //     console.log( props.status, i != 0,  "props.status != 1 & i != 0");
+    //     return props.status != 1 & i != 0;
+    // });
+    // 只显示视频或者动画 删除动画，视频切换按钮
+    if (props.status != 1) {
+        filter_list.shift();
+    }
     return filter_list;
 })
 
@@ -214,6 +220,7 @@ const handleClick = (item, index) => {
     }
 
 }
+
 
 </script>
 
