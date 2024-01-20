@@ -7,20 +7,17 @@
     <!-- 顶部菜单 -->
     <TopMenuWapper />
     <q-page-container id="ouzhou-h5" class="page_container" >
-      
-
       <router-view />
-
-     
     </q-page-container>
     <div class="footer" id="page-footer">
-
        <!-- 投注框 -->
        <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
-
       <FooterWapper />
     </div>
   </q-layout>
+
+  <!-- token 失效页面 -->
+  <token-invalid v-if="is_token_invalid_show" ></token-invalid>
 
   <!-- 吐司提示框 v-if="toast_show" -->
   <toast></toast>
@@ -45,10 +42,11 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { api_common } from "src/api/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit, i18n_t } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-
+import TokenInvalid from "./token-invalid.vue"
 import toast from "src/base-h5/components/common/toast.vue"
 
 var tou_show = ref(true)
+const is_token_invalid_show = ref(false); // token失效
 
 let routerPath = ref<String>('')
 const route = useRoute()
@@ -116,6 +114,55 @@ const init_local_server_time = () => {
     // });
   });
 }
+
+// 跳转第三方提供商链接
+const is_go_vender_url = (value) => {
+  is_token_invalid_show.value = false;
+  window.is_token_invalid_show=false;
+  UserCtr.set_user_token('')
+  if (value) goto_vender_url();
+}
+// 跳转第三方提供商链接
+const goto_vender_url = () => {
+  // let url = lodash.get(UserCtr,'callbackUrl',lodash.get(UserCtr,'loginUrl')) 
+  // if (url) {
+  //   nextTick(()=> {
+  //     location.href = url;
+  //   })
+  // } else {
+    window.close();
+    // console.warn('跳转地址不存在！')
+  // }
+}
+
+
+// const mitt_list = [
+//   // 监听设置框状态
+//   useMittOn(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, function (value) {
+
+//     setting_dialog.value = value.open
+//   }).off,
+
+//   // 监听当前国际化语言
+//   useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, () => {
+//     UserCtr.fetch_actimg()
+//     UserCtr.set_e_sports_domain_img()
+//   }).off,
+//   // 开启注单历史弹窗
+//   useMittOn(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, (val) => {
+//     // footer中点击，传过来的是对象，根据settle值确定显示未结注单还是已结注单
+//     if(typeof(val) === 'object') {
+//       const num = val.settle ? 3 : 0;
+//       BetRecordClass.set_selected(num);
+//     }
+//     change_settle_status(Boolean(val));
+//   }).off,
+//   // 登录失效
+//   useMittOn(MITT_TYPES.EMIT_GO_TO_VENDER, () => {
+//     if (!is_token_invalid_show.value) is_token_invalid_show.value = true
+//   }).off
+// ]
+
 onMounted(() => {
   // 阻止双击放大
   document.addEventListener("touchstart", touchstart_event_fun, false);

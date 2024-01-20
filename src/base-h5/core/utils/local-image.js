@@ -109,6 +109,11 @@ export const have_collect_ouzhou = compute_local_project_file_path('/image/list/
 // 投注项锁
 export const odd_lock_ouzhou = compute_local_project_file_path('/image/list/lock.png')
 
+//欧洲h5 token 失效图片
+export const ouzhou_token_bg = compute_local_project_file_path('/image/list/ouzhou_token_bg.png')
+export const ouzhou_token_tips = compute_local_project_file_path('/image/list/ouzhou_token_tips.png')
+
+
 // 欧洲 赔率升高图标
 export const ouzhou_hps_up = compute_local_project_file_path('/image/list/icon_up.png')
 export const ouzhou_hps_down = compute_local_project_file_path('/image/list/icon_down.png')
