@@ -312,7 +312,7 @@ const betItemClick = (item, ol, play_name) => {
      }
      // vr体育
      if (MenuData.is_vr()) {
-         bet_type = 'vt_bet'
+         bet_type = 'vr_bet'
      }
     let other = {
       is_detail: true,
