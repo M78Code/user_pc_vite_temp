@@ -184,7 +184,6 @@ export const useGetGlobal = ({  back_to }) => {
    * @return {undefined} undefined
    */
   const mx_autoset_active_match = (params = { mid: 0 }) => {
- 
     let { name: route_name, params: cur_params } = route;
     let return_status =
       (route_name === "video" && [3, 4, 5].includes(+cur_params.play_type)) ||
@@ -209,7 +208,6 @@ export const useGetGlobal = ({  back_to }) => {
         return false;
       }
     }
-
     details.auto_swich_match = true;
     let { mid: remove_mid, tid } = params;
     let { cur: cur_page, from: from_page } = layout_cur_page.value;
@@ -227,8 +225,10 @@ export const useGetGlobal = ({  back_to }) => {
     let csid = 0;
 
     if (cur_page == "details") {
+      
       let { tid: _tid, csid: _csid } = route.params;
-      let { tid, csid } = details_params.value;
+       tid = details_params.value.tid;
+       csid = details_params.value.csid;
       if (_tid) {
         tid = _tid;
         csid = _csid;
