@@ -685,7 +685,7 @@ class MenuData {
    * 获取 当前 左侧菜单赛种的 名字
    */
   get_current_left_menu_name() {
-    let mi = this.left_menu_result.lv1_mi;
+    let mi = this.menu_current_mif;
     let str = BaseData.menus_i18n_map[mi] || mi;
     return str;
   }

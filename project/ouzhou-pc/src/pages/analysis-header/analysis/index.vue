@@ -90,24 +90,33 @@
       />
       <!-- 赛况 -->
       <tab-results :match="matchDetail" v-if="show_tab('result')" />
-           <!-- 数据 -->
-       <tab-data :match="matchDetail" v-if="show_tab('data')"/>
-     <!-- 阵容 -->
-     <tab-lineup :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 2"/>
-      
-       <tab-information :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 3"/>
-      
-      <tab-odds :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 4"/>
+      <!-- 数据 -->
+      <tab-data :match="matchDetail" v-if="show_tab('data')" />
+      <!-- 阵容 -->
+      <tab-lineup
+        :match="matchDetail"
+        v-if="(hasNews ? activeTab - 1 : activeTab) == 2"
+      />
+      <!-- 情报 -->
+      <tab-information
+        :match="matchDetail"
+        v-if="(hasNews ? activeTab - 1 : activeTab) == 3"
+      />
+      <!-- 赔率 -->
+      <tab-odds
+        :match="matchDetail"
+        v-if="(hasNews ? activeTab - 1 : activeTab) == 4"
+      />
     </q-scroll-area>
   </div>
 </template>
 
 <script>
 import tabResults from "./template/tab_results.vue";
- import tabData from './template/tab_data.vue'
- import tabLineup from './template/tab_lineup.vue'
-  import tabInformation from './template/tab_information.vue'
- import tabOdds from './template/tab_odds.vue'
+import tabData from "./template/tab_data.vue";
+import tabLineup from "./template/tab_lineup.vue";
+import tabInformation from "./template/tab_information.vue";
+import tabOdds from "./template/tab_odds.vue";
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 // import {api_analysis} from 'src/public/api/index'
 import { api_analysis, api_details, api_common } from "src/api/index.js";
@@ -170,8 +179,8 @@ export default {
     tabResults,
     tabData,
     tabLineup,
-     tabInformation,
-    tabOdds
+    tabInformation,
+    tabOdds,
   },
   created() {
     if (Object.keys(this.$route.params).length) {
@@ -210,7 +219,7 @@ export default {
     // }),
     matchDetail() {
       let match = lodash.cloneDeep(this.get_active_detail);
-    
+
       let obj = {};
       if (match.msc_obj) {
         this.sportDict.allScore.map((k) => {
@@ -543,8 +552,8 @@ export default {
       }
       .simple-title {
         background: #ffffff;
-        border-left: 1px solid #E4EAFF;
-        border-right: 1px solid #E4EAFF;
+        border-left: 1px solid #e4eaff;
+        border-right: 1px solid #e4eaff;
         &:last-child {
           border-radius: 0 0 8px 8px;
         }
