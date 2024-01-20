@@ -1,6 +1,7 @@
 <template>
   <div class="virtual-tab matches_tab">
-    <div  v-for="(item, i) in sub_menu_list" :class="[sub_menu_i == i ? 'checked' : '']" :key="i" >
+    <div  v-for="(item, i) in sub_menu_list" :class="[sub_menu_i == i ? 'checked' : '']" 
+    :key="i" @click="virtual_menu_changed(i)">
       {{ item.name }}
     </div>
   </div>
@@ -13,12 +14,8 @@ import { useRouter, useRoute } from "vue-router";
 import { api_v_sports } from "src/api/index.js";
 import axios_api_loop from "src/core/http/axios-loop.js"
 import { debounce_throttle_cancel } from "src/core/utils/common/module/other.js";
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
-import tab_move from "src/core/tab-move/tab-move.js";
-import { go_where } from "src/output/index.js";
-import { format_money2, compute_local_project_file_path, UserCtr } from "src/output/index.js";
-import { compute_css_obj, MenuData } from "src/output/index.js";
+import {  compute_css_obj, MenuData, MITT_TYPES, useMittEmit } from "src/output/index.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 
@@ -49,7 +46,6 @@ export default {
       list_scroll_top: 0,
       router: useRouter(),
       route: useRoute(),
-      UserCtr,
       BetViewDataClass,
       LOCAL_PROJECT_FILE_PREFIX
     };
@@ -123,8 +119,6 @@ export default {
      * 虚拟体育菜单切换
      */
     virtual_menu_changed(i) {
-
-      tab_move.tab_move(i, this.$refs.scroll_main, this.$refs.scroll_box)
       this.sub_menu_i = i;
       this.current_sub_menu = this.sub_menu_list[i];
       this.virtual_sports_params.csid = this.current_sub_menu.menuId;
@@ -133,7 +127,7 @@ export default {
       console.log(this.get_curr_sub_menu_type, 'this.get_curr_sub_menu_type')
       this.set_virtual_current_sub_menuid(this.current_sub_menu.menuId);
       this.set_curr_sub_menu_type(this.current_sub_menu.menuType || this.current_sub_menu.menuId)
-
+      console.log('ress', 222);
       useMittEmit(MITT_TYPES.EMIT_VR_MENU_CLICK, {
         virtual_sports_params: this.virtual_sports_params,
         current_sub_menu: this.current_sub_menu,
@@ -217,13 +211,10 @@ export default {
       }
       this.current_sub_menu = menues[this.sub_menu_i];
     },
-    go_where,
-    format_money2,
     compute_css_obj,
     format_type: (item) => {
       return MenuData.recombine_menu_bg ? MenuData.recombine_menu_bg(item, true) : 0
     },
-    compute_local_project_file_path
   },
   computed: {
     // 当前选中的二级菜单id

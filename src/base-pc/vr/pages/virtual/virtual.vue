@@ -43,11 +43,35 @@
 <script>
 import virtual_mixin from "src/core/vr/mixin/pages/virtual/virtual-mixin.js";
 import virtualSports from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports.vue";    // 虚拟体育
+import { useMittOn, MITT_TYPES } from "src/core/mitt/"
+
 export default {
   mixins:[virtual_mixin],
   name:'match_main',
   components: {
     virtualSports,
+  },
+  mounted(){
+    // 监听vr顶部组件菜单变化
+    this.emitters = [
+      useMittOn(MITT_TYPES.EMIT_VR_MENU_CLICK, this.handle_menu_click).off,
+    ]
+    console.log('ress', 11);
+  },
+  methods: {
+    handle_menu_click(res){
+      // alert('onn')
+      this.virtual_sports_params = res.virtual_sports_params;
+      this.current_sub_menu = res.current_sub_menu;
+      this.refreshing = res.refreshing;
+      this.menu_list = res.menu_list;
+      this.v_match_router_ente = res.v_match_router_ente;
+      this.v_menu_changed = res.v_menu_changed;
+      console.log('ress', res);
+    }
+  }, 
+  unmounted(){
+    this.emitters.map((x) => x())
   }
 }
 </script>
