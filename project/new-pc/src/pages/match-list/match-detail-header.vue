@@ -40,7 +40,7 @@
         <div class="select-competition row items-center curson-point" @click="handle_select_race_species">
           <span>选择联赛</span>
           <div class="all">
-            <span>{{ props.select_list.length == 0 ? '全部':  `${props.select_list.length}` }}</span>
+            <p>{{ props.select_list.length == 0 ? '全部':  `${props.select_list.length}` }}</p>
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/arrow.svg`" alt="" class="arrow"/>
           </div>
         </div> 
