@@ -167,11 +167,12 @@ const set_ref_data_bet_money = () => {
     BetData.bet_single_list.forEach((item)=>{
         let value = item.playOptionsId
         const { min_money = 10, max_money = 8888} = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
-        min_money_arr.push(min_money)
-        max_money_arr.push(max_money)
+        min_money_arr.push(min_money*1)
+        max_money_arr.push(max_money*1)
         ref_data.oid.push(item.playOptionsId)
         ref_data.oddFinallyArr.push(item.oddFinally)
     })
+    console.log('!!max_money_arrmax_money_arrmax_money_arrmax_money_arrmax_money_arrmax_money_arr!!', max_money_arr, lodash_.min(max_money_arr))
     //多项单注限额最小值取多项里最大的
     ref_data.min_money = lodash_.max(min_money_arr) 
     //多项单注限额最大值取多项里最小的
