@@ -86,7 +86,7 @@
                             </q-item-section>
                         </template>
 
-                        <q-card v-if="settings.type === 'select'">
+                        <q-card class="setting-card" v-if="settings.type === 'select'">
                             <q-card-section>
 
                                 <!-- 盘口选项 -->
@@ -127,7 +127,7 @@
                                         </div>
                                     </template> -->
 
-                                        <div class="kicfoff_list" >
+                                <div class="kicfoff_list" >
                                     <div class="triangle"></div>
                                     <div v-for="(item, i) in settings.value_arr" :key="i" @click="onClick(opt, i)"
                                     class="option">        
@@ -548,18 +548,22 @@ function change_theme() {
     border-radius: 4px;
     background: var(--qq--popup-wrap-bg-color);
     color: var(--qq--menu-text-color2);
-    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
     width: 100%;
-    text-align: center;
-    padding: 5px 0;
-    z-index: 99;
     .option {     
-      min-height: 30px; 
-      padding-top: 6px;
+      width: 100%;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 16px 0 17px;
+        cursor: pointer;
     }
     .active{//,.option:hover
       background: var(--qq--menu-bg-color8)!important;
     }        
+  }
+  .setting-card{
+    .q-card__section--vert{
+       padding: 0;
+    }
   }
 </style>
  

@@ -97,6 +97,7 @@ class BetRecord {
           if(prevData) {
             for (var i = 0; i < item.data.length; i++) {
               item.data[i].orderVOS = item.data[i].detailList
+              item.data[i].show_appoint = false
             }
           }
         }
@@ -153,6 +154,7 @@ class BetRecord {
           for (let item of Object.values(record)) {
             for (var i = 0; i < item.data.length; i++) {
               item.data[i].orderVOS = item.data[i].detailList
+              item.data[i].show_appoint = false
             }
           }
         }
@@ -192,6 +194,48 @@ class BetRecord {
     })
   }
 
+  //获取预约订单状态
+  change_pre_status() {
+    // 循环列表查询的单号
+    let orderNoList = []
+    lodash.forEach(this.list_data, (value, key) => {
+      lodash.forEach(value.data, (item) => {
+        orderNoList.push(item.orderNo)
+      })
+    })
+    api_betting.get_book_status_record({
+      orderNoList: orderNoList
+    }).then(res => {
+      let code = lodash.get(res, "data.code");
+      let data = lodash.get(res, "data.data");
+      if (code == 200 && data && data.length>0) {
+        let list = lodash.filter(data, (item)=>{ return item.preOrderStatus!=0 });
+        let list_ =  lodash.map(list, 'orderNo')
+        
+        const list_data = lodash.cloneDeep(this.list_data)
+        for (let key in list_data) {
+            let listItem = list_data[key]
+            for (let i = 0; i < listItem.data.length; i++) {
+              // 当前订单 并且 非修改预约状态
+              if (list_.includes(listItem[i].orderNo) && listItem[i].show_appoint === false) {
+                listItem.splice(i, 1)
+              }
+            }
+        }
+        this.set_list_data(list_data)
+      }
+    }).catch(() => {
+        //不处理
+    })
+  }
+  // 修改赔率显示隐藏
+  change_show_appoint(name, key, bol) {
+    console.log(name, key, bol);
+    const list_data = lodash.cloneDeep(this.list_data)
+    console.log(list_data);
+    list_data[name].data[key].show_appoint = bol
+    this.set_list_data(list_data)
+  }
 }
 
 export default new BetRecord();
