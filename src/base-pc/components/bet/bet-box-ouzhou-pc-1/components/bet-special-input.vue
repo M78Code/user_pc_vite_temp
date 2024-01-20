@@ -88,7 +88,7 @@ onMounted(() => {
 
 
 const amount = computed(() => {
-    console.log('props.items.bet_amountprops.items.bet_amountprops.items.bet_amountprops.items.bet_amount', props.items)
+    ref_data.money = props.items.bet_amount
     if (props.items.bet_amount && props.items.seriesOdds) {
         return formatMoney(mathJs.subtract(mathJs.multiply(props.items.bet_amount, props.items.seriesOdds), props.items.bet_amount))
     } else {

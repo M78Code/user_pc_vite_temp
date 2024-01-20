@@ -28,7 +28,7 @@
       <div v-if="!lodash_.isEmpty(score_list) && detail_info.ms > 0">
         <div
           class="tabs-wrap"
-          v-if="['1', '2', '5', '9', '10'].includes(String(detail_info.csid))"
+          v-if="['1', '2', '5', '9','7', '10'].includes(String(detail_info.csid))"
         >
           <span
             v-for="item in tabList"
@@ -45,9 +45,9 @@
           :detail_info="detail_info"
           :score_list="score_list"
         />
-        <!-- 2篮球、5网、9排球、10羽毛球 -->
+        <!-- 2篮球、5网、7,斯诺克， 9排球、10羽毛球 -->
         <basket-ball-stats
-          v-if="['2', '5', '9', '10'].includes(String(detail_info.csid))"
+          v-if="['2', '5', '7','9', '10'].includes(String(detail_info.csid))"
           :detail_info="detail_info"
           :score_list="score_list"
         />
