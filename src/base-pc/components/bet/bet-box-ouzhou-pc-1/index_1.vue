@@ -63,7 +63,7 @@
                 <span class="icon-arrow icon-arrow-series" :class="ref_data.show_single ?'arrow':''"></span>
               </div>
               <!-- 复式连串过关投注 限额 -->
-              <template v-if="BetData.bet_s_list.length > 2 && ref_data.show_single ">
+              <template v-if="BetData.bet_s_list.length > 2 && !ref_data.show_single ">
                 <template v-for="(item,index) in BetViewDataClass.bet_special_series" :key="index" >
                   <div class="bor-b" v-if="index != 0">
                     <betSpecialInput :items="item" :index="index" />
