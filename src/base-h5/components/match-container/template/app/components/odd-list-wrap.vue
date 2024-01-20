@@ -308,6 +308,7 @@ const hps_compose_data = computed(() => {
   const half_both = i18n_t('football_playing_way.half_both')
   const all_total_goal = i18n_t('football_playing_way.all_total_goal')
   const half_total_goal = i18n_t('football_playing_way.half_total_goal')
+
   // 全场默认
   const default_ol_0 = [
     { hl: [], title: all_both, hpid: 101 },
@@ -319,6 +320,8 @@ const hps_compose_data = computed(() => {
     { hl: [], title: all_total_goal, hpid: 13 },
   ]
   const result = standard_odd_status.value === 0 ? default_ol_0 : default_ol_1
+  return result
+  
   if (!props.hps || props.hps.length < 1) return result
   props.hps.forEach(t => {
     const flag = t && t.hl && t.hl.length > 0 && t.hl[0].ol && t.hl[0].ol.length > 0

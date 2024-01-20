@@ -43,7 +43,7 @@
     </BaseVirtualList>
   </template>
   <template v-else>
-    <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate" v-if="false">
+    <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate">
       <template #default="{ item, index }">
         <!-- 冠军玩法 -->
         <template v-if="is_kemp || MenuData.get_mm_is_champion()">
@@ -68,7 +68,7 @@
         </template>
       </template>
     </BaseVirtualList>
-    <div class="refresh-container" v-if="true">
+    <div class="refresh-container" v-if="false">
       <!--列表页 -->
       <ScrollWrapper>
         <template v-slot="{ match_item, index }">
