@@ -94,7 +94,8 @@ const get_route_name = computed(() => {
  * 个人中心 电竞
  */
 const is_personal_page = computed(() => {
-  return ['/personal','/esports'].includes(router.currentRoute.value.path)
+  // ,'/esports'
+  return ['/personal'].includes(router.currentRoute.value.path)
 })
 /**
  * vr 头部
