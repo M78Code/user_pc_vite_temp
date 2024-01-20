@@ -79,6 +79,7 @@ const props = defineProps({
 
         .bet-odds {
             height: .24rem;
+            line-height: 0.22rem;
         }
 
         .bet-right {
@@ -101,7 +102,6 @@ const props = defineProps({
       .my-4 {
         margin: .04rem 0;
         margin: 0.04rem 0;
-        border-left: 2px solid var(--q-gb-bg-c-13);
         padding: 0 0.04rem;
         color: var(--q-gb-bg-c-30);
         .font-style{

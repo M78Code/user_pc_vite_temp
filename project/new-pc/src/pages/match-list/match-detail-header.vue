@@ -224,6 +224,7 @@ const page_title = computed(() => {
     //'早盘  (电子竞技)'
     _page_title = `  ${i18n_t("menu.match_early")} (${i18n_t("common.e_sports")})`
   }
+  console.error('_page_title',_page_title)
   return _page_title;
 })
 /**
