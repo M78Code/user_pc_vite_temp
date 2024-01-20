@@ -918,7 +918,7 @@ const set_error_message_config = (res ={},type,order_state) => {
  * @param {{ oid, _hid, _hn, _mid}} params 
  * @param {Object} other 
  * @param {Boolean} other.is_detail
- * @param {'common_bet'|''} other.bet_type
+ * @param {'common_bet'|'guanjun_bet'|'vr_bet'|'esports_bet'} other.bet_type 根据赛事纬度判断当前赛事属于 那种投注类型
  * @param {1|2|3|4|5} other.device_type 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
  * @param {'h5_detail'|'h5_list'} other.match_data_type
  * @param {String} other.play_name 玩法名

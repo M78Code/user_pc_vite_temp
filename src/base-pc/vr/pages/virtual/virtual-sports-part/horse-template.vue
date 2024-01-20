@@ -51,12 +51,14 @@ import store from "src/store-redux/index.js";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, ref, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { useMittEmit, MITT_TYPES,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { useRoute, useRouter } from "vue-router"
 import BetData from "src/core/bet/class/bet-data-class.js"
-import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
+// core里的 go_to_bet 里的 device_type 被写死成了1 ，先注释了等后面改了再用
+// import { go_to_bet } from "src/core/bet/class/bet-box-submit.js"; 
 import {compute_value_by_cur_odd_type} from "src/output/index.js"
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
+
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -83,9 +85,6 @@ export default defineComponent({
       return ""
     });
     const route = useRoute()
-    const get_detail_data = computed(() => {
-      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid||lodash.get(props.item_data,'mid'))
-    });
     const get_curr_sub_menu_type = computed(() => {
       return ""
     });
@@ -122,6 +121,33 @@ export default defineComponent({
       })
       play_obj.value = play_obj1
     };
+    
+    /**
+     * @description 投注项点击
+     * @return {undefined} undefined  组装投注项的数据
+     */
+    const go_to_bet = (ol_item, match_data_type) => {
+      // 如果是赛果详情
+      const {oid,_hid,_hn,_mid,_hpid } = ol_item
+      let params = {
+        oid, // 投注项id ol_obj
+        _hid, // hl_obj 
+        _hn,  // hn_obj
+        _mid,  //赛事id mid_obj
+      }
+      let other = {
+        is_detail: false,
+        // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
+        // 根据赛事纬度判断当前赛事属于 那种投注类型
+        bet_type: 'vr_bet',
+        // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+        device_type: 2,  
+        // 数据仓库类型
+        match_data_type: match_data_type,
+      }
+      set_bet_obj_config(params,other)
+    }  
+
     /**
      *@description 虚拟体育(赛马)点击详细页小方块投注
      *@param {Object} ol_item 里层ol数据
@@ -131,7 +157,7 @@ export default defineComponent({
     const go_to_fun = (ol_item,index) => {
       ol_item = play_obj.value[ol_item]
       ol_item.num = index + 1
-      go_to_bet(ol_item)
+      go_to_bet(ol_item, "pc_list")
       // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
@@ -141,7 +167,6 @@ export default defineComponent({
       lodash,
       BetData,
       get_cur_odd,
-      get_detail_data,
       get_curr_sub_menu_type,
       LOCAL_PROJECT_FILE_PREFIX,
       is_select,

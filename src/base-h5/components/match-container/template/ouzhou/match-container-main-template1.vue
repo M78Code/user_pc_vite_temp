@@ -166,7 +166,7 @@
                       }">
                         <ImageCacheLoad :csid="match.csid" :path="match.mhlu" type="home" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
-                          <div class="right-box">
+                          <div class="right-content">
                             <!-- 红、黄牌， 发球方绿点 -->
                             <div class="team-left" v-if="home_red_score || home_yellow_score">
                               <!-- 红牌 -->
@@ -210,7 +210,7 @@
                       <div class='team-title-container'>
                         <ImageCacheLoad :csid="match.csid" :path="match.malu" type="away" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
-                          <div class="right-box">
+                          <div class="right-content">
                             <!-- 红、黄牌， 发球方绿点 -->
                             <div class="team-left" v-if="away_red_score || away_yellow_score">
                               <!-- 红牌 -->
@@ -371,7 +371,7 @@ export default {
     // 切换玩法赔率
     const on_select_play = (item) => {
       const { hps, csid, mid, hn } = ctx.match_of_list
-      select_play.value = item.hpid
+      // select_play.value = item.hpid
       select_label.value = item.label
       MatchResponsive.set_match_hpid(item.hpid, csid)
     }
@@ -971,7 +971,7 @@ export default {
           display: flex;
           align-items: center;
           flex-direction: row-reverse;
-          .right-box{
+          .right-content{
             flex: 1;
             display: flex;
             align-items: center;

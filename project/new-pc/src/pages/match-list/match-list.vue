@@ -94,7 +94,7 @@
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
         </template>
-        <match-list-card v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :class="card_key" />
+        <match-list-card v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key"/>
         <template v-slot:after>
           <div style="height:15px"></div>
           <div class="pager-wrap row justify-end">

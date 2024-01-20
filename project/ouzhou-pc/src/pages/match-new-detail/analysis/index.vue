@@ -25,7 +25,8 @@
         </div>
       </div> -->
       <!-- 分析页动画 -->
-      <div v-if="!lodash_.isEmpty(score_list) && detail_info.ms > 0">
+      <!-- csid==1 || csid==2 并且 mbmty == 2 || mbmty == 4 为电子足球/篮球 -->
+      <div v-if="!lodash_.isEmpty(score_list) && detail_info.ms > 0 && !((detail_info.csid == 1 || detail_info.csid == 2 ) && ([2,4].includes(detail_info.mbmty)))">
         <div
           class="tabs-wrap"
           v-if="['1', '2', '5', '9','7', '10'].includes(String(detail_info.csid))"
