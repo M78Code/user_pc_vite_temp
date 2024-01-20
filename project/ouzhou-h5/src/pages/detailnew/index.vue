@@ -235,7 +235,7 @@ export default {
   .change-header-fix {
     width: 100vw;
     position: fixed;
-    top: 49px;
+    top: .5rem;
     z-index: 91;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   }
