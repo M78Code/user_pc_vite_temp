@@ -139,7 +139,7 @@ const sure = () => {
   api_betting.set_update_pre_bet_odds(params).then(res=>{
     let code = lodash.get(res,'code')
     let msg = lodash.get(res,'message')
-    if(code == '0000000'){
+    if(code == 200){
         emit('success')
       }
     useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, msg)
