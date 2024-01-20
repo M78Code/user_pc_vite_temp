@@ -179,13 +179,17 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "dataSource": item.dataSource,   // 数据源
             }
 
-             // 获取当前的盘口赔率
-             let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
-             // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
-             let hsw = lodash_.get(item,'odds_hsw', '')
-             if(!hsw.includes(cur_odds)){
-                 bet_s_obj.marketTypeFinally = 'EU'
-             }
+            // 获取当前的盘口赔率
+            let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
+            // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
+            let hsw = lodash_.get(item,'odds_hsw', '')
+            if(!hsw.includes(cur_odds)){
+                bet_s_obj.marketTypeFinally = 'EU'
+            }
+            // 预约投注 设置预约盘口值
+            if(BetData.is_bet_pre){
+                bet_s_obj.marketValue = item.marketValue
+            }
 
             // 预约投注
             // 需要用对应的数据 对投注数据进行覆盖
@@ -357,6 +361,8 @@ const get_lastest_market_info = (type) => {
                             bet_item.playOptionsId = odds.id
                             // 基准分
                             // bet_item.mark_score = 
+                            // 盘口值
+                            bet_item.marketValue = market.marketValue
 
                             // 球头
                             bet_item.handicap_hv = odds.playOptions || market.marketValue
