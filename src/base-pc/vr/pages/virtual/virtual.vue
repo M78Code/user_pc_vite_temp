@@ -4,8 +4,8 @@
 <template>
   <div>
     <div class="virtual-main router_scroll_layout" ref="scrollArea" @scroll="wrapper_scroll_handler">
-      <!-- 头部 -->
-      <div class="virtual-head">
+      <!-- 头部，在matches_header中已引入，此处隐藏 -->
+      <div class="virtual-head" v-if="0">
         <div class="type-bg">
           <!-- 虚拟体育菜单 -->
           <div class="virtual-menu-list" ref='virtual_menu_list'>

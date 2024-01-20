@@ -151,6 +151,7 @@ export default {
      * 获取虚拟体育菜单
      */
     get_virtual_menus() {
+      this.set_virtual_data_loading(1)
       let obj_ = {
         // axios api对象
         axios_api: api_v_sports.get_virtual_menus,
