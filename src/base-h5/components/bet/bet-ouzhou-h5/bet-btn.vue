@@ -9,7 +9,11 @@
     </div>
   </div> 
     <div class="bet_content_bottom component bet-btn-item">
-      <p class="bet_cancel" @click="pack_up">{{i18n_t('bet.bet_retract')}}</p>
+      <!-- <p class="bet_cancel" @click="pack_up">{{i18n_t('bet.bet_retract')}}</p> -->
+      <!-- 串关 -->
+      <p class="bet_crosstalk_active">串关</p>
+      <!-- <p class="bet_crosstalk">串关</p> -->
+      <p></p>
       <p class="place_bet"  @click="place_bet">
         <span>{{i18n_t('bet_record.bet_val')}}</span> 
         <span class="right_amount">{{bet_total()}}</span>
@@ -92,7 +96,7 @@ const pack_up = (val) => {
     justify-content: space-between;
     align-content: space-between;
     padding: 0 0.12rem .12rem;
-   .bet_cancel{
+   .bet_cancel,.bet_crosstalk,.bet_crosstalk_active{
       width: 1rem;
       line-height: 0.46rem;
       border-radius: 0.02rem;
@@ -103,6 +107,36 @@ const pack_up = (val) => {
       border: 0.5px solid var(--q-gb-bd-c-12);
       text-align: center;
       color: var(--q-gb-t-c-4);
+    }
+    /* ************** 串关 ************** -S */
+    .bet_crosstalk{
+      position: relative;
+      &:before{
+        content: '';
+        width: 0.14rem;
+        height: 0.38rem;
+        position:absolute;
+        background: var(--q-gb-t-c-14);
+        left: 0.08rem;
+        top: 0.02rem;
+        border-radius: 0.4rem;
+      }
+    }
+     /* ************** 串关激活 ************** -S */
+    .bet_crosstalk_active{
+      position: relative;
+      background: var(--q-gb-bg-c-1);
+      color: var(--q-gb-t-c-2);
+        &:before{
+        content: '';
+        width: 0.14rem;
+        height: 0.38rem;
+        position:absolute;
+        background: var(--q-gb-t-c-2);
+        right: 0.08rem;
+        top: 0.02rem;
+        border-radius: 0.4rem;
+      }
     }
     .place_bet{
       height: 0.46rem;
