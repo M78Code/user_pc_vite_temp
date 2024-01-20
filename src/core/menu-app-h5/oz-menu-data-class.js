@@ -21,6 +21,7 @@ import {
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 const { IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG ;
 import STANDARD_KEY from "src/core/standard-key";
+import { api_common } from "src/api";
 const menu_h5_key = STANDARD_KEY.get("menu_h5_key");
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 
@@ -179,9 +180,15 @@ class MenuData {
     this.top_events_list = top_events_list;
     this.champion_list = champion_list;
     if(session_info){//取session球种id
-      this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
-      this.menu_mi.value = session_info.menu_mi;
-      this.menu_csid = +session_info.menu_mi - 100
+      if(this.is_esports()){
+        this.current_lv_2_menu_i = session_info.menu_mi;
+        this.menu_mi.value = session_info.menu_mi;
+        this.menu_csid = +session_info.menu_mi - 2000
+      }else{
+        this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
+        this.menu_mi.value = session_info.menu_mi;
+        this.menu_csid = +session_info.menu_mi - 100
+      }
     }
     !arr && useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA,menu_list);
   }
@@ -278,18 +285,26 @@ class MenuData {
     if(this.menu_type.value == 400){//冠军
       this.current_lv_2_menu_i = +mi+300;
       this.current_lv_2_menu_mi.value = +mi+300;
+      this.menu_csid = mi*1 - 100
+    }else if(this.menu_type.value == 28){
+      this.current_lv_2_menu_i = `${mi}2`;
+      this.current_lv_2_menu_mi.value = `${mi}2`;
+    }else if(this.menu_type.value == 2000){
+      this.current_lv_2_menu_i = mi;
+      this.current_lv_2_menu_mi.value = mi;
+      this.menu_csid = mi*1 - 2000
     }else{
       this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
       this.current_lv_2_menu_mi.value = `${mi}${this.menu_type.value}`;
+      this.menu_csid = mi*1 - 100
     }
-   
     // SessionStorage.set(menu_h5,{
     //   menu_mi:mi
     // });
     LocalStorage.set(menu_h5,{
       menu_mi:mi
     });
-    this.menu_csid = mi*1 - 100
+    
     this.update()
   }
   // 设置二级菜单 id
@@ -362,6 +377,28 @@ class MenuData {
     this.update();
     return menu_lv_mi_lsit
   }
+   /**
+ * 获取对应日期
+ */
+   async getDateList(csid){
+    const params = {
+      csid:csid || this.menu_csid,
+      device:"H5"
+    };
+    const res = await api_common.get_esports_date_menu(params);
+    if(res?.code == '200'){
+        const data = res?.data?.map((item)=>{
+            return {
+                name: item.menuName,
+                val: item.field1,
+                menuType:item.menuType
+            }
+        })||[];
+        // return [...[{name:i18n_t('ouzhou.match.today'),val:'',type:0}],...data]
+        return data
+    }
+    return [];
+  };
   /**
    *一级菜单顶层菜单的 菜单类型  ，没有则是0
    * */

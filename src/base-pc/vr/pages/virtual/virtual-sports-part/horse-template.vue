@@ -51,7 +51,6 @@ import store from "src/store-redux/index.js";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, ref, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { useMittEmit, MITT_TYPES,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { useRoute, useRouter } from "vue-router"
 import BetData from "src/core/bet/class/bet-data-class.js"
@@ -83,9 +82,6 @@ export default defineComponent({
       return ""
     });
     const route = useRoute()
-    const get_detail_data = computed(() => {
-      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid||lodash.get(props.item_data,'mid'))
-    });
     const get_curr_sub_menu_type = computed(() => {
       return ""
     });
@@ -131,7 +127,7 @@ export default defineComponent({
     const go_to_fun = (ol_item,index) => {
       ol_item = play_obj.value[ol_item]
       ol_item.num = index + 1
-      go_to_bet(ol_item)
+      go_to_bet(ol_item, "pc_list")
       // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
@@ -141,7 +137,6 @@ export default defineComponent({
       lodash,
       BetData,
       get_cur_odd,
-      get_detail_data,
       get_curr_sub_menu_type,
       LOCAL_PROJECT_FILE_PREFIX,
       is_select,

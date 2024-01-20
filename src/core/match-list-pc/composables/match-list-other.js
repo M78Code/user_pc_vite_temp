@@ -29,6 +29,10 @@ export function get_tab_play_keys(match) {
   let play_keys = Object.keys(other_play_name_to_playid)
   lodash.each(play_keys, key => {
     let status_key = 'cos' + key.slice(3)
+    // 当为组合玩法的时候 不走通用逻辑
+    if (key === 'hpsCompose') {
+      status_key = 'compose'
+    }
     let status = match[status_key]
     //15分钟次要玩法前端强制关闭
     let cos15min_status = !(status_key === 'cos15Minutes' && match.hSpecial == 6)
@@ -69,6 +73,10 @@ export const get_compute_other_play_data = (match) => {
   if (play_key == 'hps5Minutes') {
     handicap_list = get_5minutes_template(match);
   }
+  // // 组合玩法 特殊处理
+  // if(play_key =='hpsCompose') {
+  //   handicap_list = clone_arr(match_tpl_info[template_name][cur_other_play])
+  // }
   if (!play_key) {
     handicap_list = clone_arr(match_tpl_info.hpsCorner)
   }

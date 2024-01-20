@@ -545,6 +545,10 @@ get_quick_mid_obj_ref(mid){
     let play_keys = Object.keys(other_play_name_to_playid)
     lodash.each(play_keys,key=>{
       let status_key = 'cos'+key.slice(3)
+      // 当为组合玩法的时候 不走通用逻辑
+      if (key === 'hpsCompose') {
+        status_key = 'compose'
+      }
       let status =  match[status_key]
       //15分钟次要玩法前端强制关闭
       let cos15min_status = !(status_key === 'cos15Minutes' && match.hSpecial == 6)
