@@ -67,7 +67,7 @@
             <div class="handicap-col fifteen-item bet-item-wrap fifteen_tab_txt" v-for="(item, key) in bet_col" :class="[{ 'tab-tilte-bg': set_secondary_bg(key, bet_col.length) },
             { 'flex justify-center items-center': item.includes('%n') },
             { 'highlight-t': set_secondary_bg(key, bet_col.length) && !item.includes('%n') }]" :key="key"
-              :style="`width:${get_bet_width(key, bet_col.length)}px !important;`"
+              :style="`width:${get_bet_width(key, bet_col.length,match.play_current_key == 'hpsCompose')}px !important;`"
               v-tooltip="{ content: item.includes('%n') ? '' : item, overflow: 1 }">
               <div class="double-row" v-if="item.includes('%n')">
                 <div v-for="(text, i) in item.split('%n')"
@@ -137,6 +137,12 @@ const play_name_list = computed(() => {
     hpsCorner: { play_name: i18n_t('list.corner'), field: 'hpsCorner' },
     // 罚牌
     hpsPunish: { play_name: i18n_t('list.punish'), field: 'hpsPunish' },
+    // 组合玩法
+    hpsCompose: {
+      // play_name: i18n_t("hps.compose.details.feature"),
+      play_name: "特色玩法",
+      field: "hpsCompose",
+    },
     // 晋级赛
     hpsPromotion: { play_name: i18n_t('list.promotion'), field: 'hpsPromotion' },
     // 冠军
@@ -245,6 +251,16 @@ const bet_col = computed(() => {
       bet_col.push(...['', '', '', '', '', '', ''])
     }
     // 晋级
+  } else if (_play_current_key == "hpsCompose") {
+    bet_col = [
+      "全場獨贏 & 兩隊都進球",
+      "半場獨贏 & 兩隊都進球",
+      // i18n_t("hps.compose.details.all_both"),
+      // i18n_t("hps.compose.details.half_both"),
+    ];
+    if (multi_column) {
+      bet_col.push(...["", "", ""]);
+    }
   } else if (_play_current_key == 'hpsPromotion') {
     bet_col = [i18n_t('list.promotion'), '', '', '', '', '']
     if (multi_column) {
@@ -305,9 +321,9 @@ function set_secondary_bg(index, length) {
  * @Description 设置次要玩法 标题宽度
  * @param {Number} index  当前标题索引
  * @param {Number} length 整行标题个数
- * @return {Number} bet_width 标题长度
+ * @return {Number} isCompose 标题长度
 */
-function get_bet_width(index, length) {
+function get_bet_width(index, length, isCompose) {
   //是否多列
   let multi_column = lodash.get(match_style_obj, 'data_tpl_id') == 13
   let bet_width = match_list_tpl_size.value.bet_width
@@ -318,11 +334,17 @@ function get_bet_width(index, length) {
       }
     } else if (length === 1) {
       bet_width = bet_width * 13
-    } else if (length === 2) {
+    } else if (length === 2 && !isCompose) {
       if (index === 0) {
         bet_width = bet_width * 6
       } else {
         bet_width = bet_width * 7
+      }
+    } else if (isCompose) {
+      if (index < 2) {
+        bet_width = bet_width * 3;
+      } else {
+        bet_width = bet_width * 7;
       }
     }
   } else {
@@ -330,6 +352,12 @@ function get_bet_width(index, length) {
       bet_width = bet_width * 6
     } else if (length == 2) {
       bet_width = bet_width * 3
+    } else if (isCompose) {
+      if (index < 2) {
+        bet_width = bet_width * 3;
+      } else {
+        bet_width = bet_width * 0;
+      }
     } else {
       if (utils_info.is_iframe) {
         if ([0, 3].includes(index)) {
@@ -342,6 +370,7 @@ function get_bet_width(index, length) {
   }
   return bet_width
 }
+
 
 /**
  * @Description 点击tab玩法
