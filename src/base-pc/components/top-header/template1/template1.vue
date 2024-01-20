@@ -4,8 +4,8 @@
   <div class="header-main">
     <div class="header-content">
       <div class="logo">
-        <div class="box-line"></div>
-        <!-- <img :src="compute_img_url(logo)" alt="" srcset="" class="" /> -->
+        <!-- <div class="box-line"></div> -->
+        <img :src="compute_img_url(logo)" alt="" srcset="" class=""  v-if="UserCtr.user_info.mId != '2'" />
       </div>
       <div class="header-right">
         <!-- 头部菜单 -->
