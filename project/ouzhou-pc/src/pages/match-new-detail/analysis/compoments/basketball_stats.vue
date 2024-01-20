@@ -4,7 +4,7 @@
  * @Description: 篮球赛事分析页
 -->
 <template>
-  <div class="detail-tab" v-if="!lodash.isEmpty(score_list)">
+  <div class="detail-tab" >
     <div>
       <div class="detail-tab-team">
         <div class="detail-tab-team-pos">
