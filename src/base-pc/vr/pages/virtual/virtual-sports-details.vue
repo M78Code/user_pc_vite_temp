@@ -108,7 +108,7 @@
       </div>
 
       <!-- vr详情页右侧区域，包括足蓝队伍比分，赛马队伍和赛果 -->
-      <virtual-sports-right v-if="match" :current_match="match" :match_list_by_no="[]" :switch_match_handle="()=>{}" />
+      <virtual-sports-right v-if="match" :current_match="match" :match_list_by_no="match_list_by_no" :switch_match_handle="()=>{}" />
 
       <!-- 排行榜页面,小组赛淘汰赛页面  -->
       <div v-if="match" class="list-wrapper">
@@ -122,8 +122,6 @@
           <!--  足球排行榜页面  -->
           <football-ranking-list v-else :tid="current_league.field1"/>
         </div>
-        <!--  非足球排行榜页面  -->
-        <ranking-list-start v-else :mid="current_match.mid"/>
       </div>
     </div>
   </div>
@@ -134,7 +132,6 @@ import virtual_sports_tab from 'src/base-pc/vr/components/virtual-sports-tab.vue
 import virtual_sports_stage from 'src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-stage.vue'
 import virtual_sports_category from "src/base-pc/vr/pages/virtual/details/children/virtual-sports-category.vue"
 import virtual_sports_detail_tab from 'src/base-pc/vr/pages/virtual/details/children/virtual-sports-detail-tab.vue'
-import ranking_list_start from "src/base-pc/vr/pages/virtual/virtual-sports-part/ranking-list-start.vue"
 import football_ranking_list from "src/base-pc/vr/pages/virtual/virtual-sports-part/football-ranking-list.vue"
 import group_knockout from "src/base-pc/vr/pages/virtual/virtual-sports-part/group-knockout.vue"
 import virtual_match_statistic from 'src/base-pc/vr/components/virtual-match-statistic.vue'
@@ -154,7 +151,6 @@ export default {
     'virtual-sports-stage': virtual_sports_stage,
     'virtual-sports-category': virtual_sports_category,
     'virtual-sports-detail-tab': virtual_sports_detail_tab,
-    'ranking-list-start':ranking_list_start,
     'football-ranking-list':football_ranking_list,
     'group-knockout':group_knockout,
     'match-process': matchProcess,
@@ -163,6 +159,7 @@ export default {
   },
   data(){
     return {
+      match_list_by_no: [],
       LOCAL_PROJECT_FILE_PREFIX,
       sport_ball_type: {
       1: 0,
@@ -195,8 +192,15 @@ export default {
         tid: this.current_league.menuId
       };
       api_v_sports.get_virtual_sport_list(params).then(res => {
-        console.log('res', res);
-        
+        if(res.code == 200 && res.data && res.data.length){
+          // 获取当前轮次赛事
+          let found = res.data.filter(vm => {
+            return this.match.batchNo == vm.batchNo;
+          })[0];
+          if(found){
+            this.match_list_by_no = found.matchs;
+          }
+        }
       }).catch((e) => {
      
       });
