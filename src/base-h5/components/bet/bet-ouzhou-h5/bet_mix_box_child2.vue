@@ -78,7 +78,7 @@
 <script setup>
 import betInputInfo2 from "./bet_input_info2.vue";
 import betInputMultiple from "./bet_input_multiple.vue";
-import { compute_value_by_cur_odd_type,UserCtr } from "src/output/index.js"
+import { LOCAL_PROJECT_FILE_PREFIX, compute_value_by_cur_odd_type,UserCtr } from "src/output/index.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 
