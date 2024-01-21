@@ -454,7 +454,7 @@ export default {
   }
 
   .buffer-container {
-    background: var(--q-gb-bg-c-17);
+    // background: var(--q-gb-bg-c-17);
     height: 5px;
   }
 

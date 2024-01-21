@@ -1443,7 +1443,7 @@ const get_score_config = (obj={}) => {
         query = pc_match_data_switch(obj.match_ctr)
     }
     const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${obj.matchId}_`, {})
-    const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${obj.matchId}_${obj.playOptionId}`, {})
+    const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${obj.matchId}_${obj.playOptionsId}`, {})
 
     return calc_bifen(mid_obj.msc,mid_obj.csid,mid_obj.ms,ol_obj._hpid)
 }
@@ -1463,6 +1463,7 @@ const get_market_is_show = (obj={}) =>{
     return !!hl_obj.hid
 }
 const go_to_bet = (ol_item, match_data_type) => {
+    console.log(MenuData)
     // 如果是赛果详情
     if(PageSourceData.route_name == 'match_result') return
     const {oid,_hid,_hn,_mid,_hpid } = ol_item
