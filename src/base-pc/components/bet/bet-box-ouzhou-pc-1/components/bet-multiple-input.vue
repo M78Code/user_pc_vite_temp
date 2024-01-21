@@ -22,7 +22,7 @@
             <div class="col-auto right-input">
                 <!--投注金额输入框-->
                 <input class="bet-input" v-model="ref_data.money" type="text" @input="set_win_money" @keydown.enter="keydown($event)"
-                :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${format_money3(ref_data.max_money)}`" maxLength="11" />
+                :placeholder="placeholder" maxLength="11" />
                 <!--清除输入金额按钮-->
                 <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money && !BetData.is_bet_single">
                     <icon-wapper name="icon-failure" size="12px" />
@@ -58,8 +58,8 @@ const ref_data = reactive({
     appoint: true, // 是否预约
     odds_change_up: false,  // 赔率上升
     odds_change_down: false, // 赔率下降
-    min_money: 10, // 最小投注金额
-    max_money: 8888, // 最大投注金额
+    min_money: '', // 最小投注金额
+    max_money: '', // 最大投注金额
     win_money: 0.00, // 最高可赢
     money: "", // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
@@ -214,6 +214,14 @@ const set_win_money = () => {
     // BetData.set_bet_amount(ref_data.money)
     useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
 }
+
+const placeholder = computed(() => {
+    if(ref_data.min_money && ref_data.max_money) {
+        return `${i18n_t('bet.money_range')} ${format_money3(ref_data.min_money)}~${format_money3(ref_data.max_money)}`
+    } else {
+        return ''
+    }
+})
 
     
 </script>
