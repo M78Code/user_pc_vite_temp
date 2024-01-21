@@ -38,6 +38,8 @@
                       <bet-mix-box-child2></bet-mix-box-child2>
                   </div>
               </template>
+              <!-- 合并投注 常用金额 -->
+              <bet-merge />
               <!-- 键盘 -->
               <key-board></key-board>
             </template>
@@ -108,6 +110,7 @@ import betSpecialInput from "./bet-special-input.vue";
 import betSpecialState from "./bet-special-state.vue";
 import betSpecialResult from "./bet-special-result.vue";
 import betSpecialWinning from "./bet-special-winning.vue";
+import betMerge from "./bet-merge.vue"
 
 import betAllDetele from "./bet_all_detele.vue";
 import betBar from "./bet-bar.vue";
@@ -420,9 +423,6 @@ background: var(--q-gb-t-c-3) !important;
   //background-color: var(--q-gb-t-c-7);
   //padding: 12px;
   //border-radius: 12px;
-}
-.scroll-box-center{
-  margin: 0 0 0.1rem 0;
 }
 
 .full-shadow2 {

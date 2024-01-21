@@ -1464,6 +1464,7 @@ const get_market_is_show = (obj={}) =>{
     return !!hl_obj.hid
 }
 const go_to_bet = (ol_item, match_data_type) => {
+    console.log(MenuData)
     // 如果是赛果详情
     if(PageSourceData.route_name == 'match_result') return
     const {oid,_hid,_hn,_mid,_hpid } = ol_item

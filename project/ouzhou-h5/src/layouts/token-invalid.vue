@@ -9,7 +9,7 @@
     <!-- 暂时写死 token失效 页面内容 -->
     <span class="Landing">Landing Failure</span>
     <div class="prompt_relanding">
-      <span class="prompt">Your login information is invalid,please close this page, Enter the site again, Wish you a happy life</span>
+      <span class="prompt">Your login information is invalid, please close this page, Enter the site again, Wish you a happy life</span>
     </div>
     <div class="relan_ding" @click="is_go_vender_url(true)">
       <span class="relanding">Relanding</span>
