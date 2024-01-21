@@ -181,7 +181,7 @@ const router = createRouter({
 /**
  * 不清除menuid路由
  */
-const detailsName = ['category','result','personal'];
+const detailsName = ['category','result','personal','champion'];
 /**
  * 路由切换清除默认球种
  */

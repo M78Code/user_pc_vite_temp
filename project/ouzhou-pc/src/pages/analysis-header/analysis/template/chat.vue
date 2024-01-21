@@ -332,7 +332,7 @@ export default {
     font-weight: 700;
   }
 }
-::v-deep {
+:deep() {
   .text-blue {
     color: #179CFF !important;
   }

@@ -25,14 +25,14 @@ const state = reactive({
     slideMenu:[],
     currentSlideValue:""
 })
-const tabValue = ref(MenuData.current_lv_2_menu_mi.value || '');
+const tabValue = ref('');
 /**
  * 获取时间
  */
 const getDateList = async (csid) =>{
     const list = await MenuData.getDateList(+csid-2000);
     state.slideMenu = list;
-    state.currentSlideValue = list[0]?.val || "";
+    state.currentSlideValue = list[MenuData.date_tab_index]?.val || "";
     MatchMeta.get_esports_match()
 }
 // tabs 切换
@@ -51,13 +51,16 @@ const on_update = (val) => {
     state.currentSlideValue = item.val;
     MenuData.set_current_lv_3_menu({
         field1:item.val,
-        menuType:item.menuType
+        menuType:item.menuType,
+        index:index
     });
     MatchMeta.get_esports_match();
 }
 onMounted(()=>{
     MenuData.set_current_lv1_menu(2000);
-    MenuData.set_menu_mi(+MenuData.current_lv_2_menu_mi.value || '2100');
+    const tab_value = MenuData.current_lv_2_menu_mi.value|| '2100';
+    MenuData.set_menu_mi(tab_value);
+    tabValue.value = tab_value;
     getDateList(tabValue.value)
 })
 </script>

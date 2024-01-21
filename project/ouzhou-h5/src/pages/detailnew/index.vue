@@ -31,7 +31,7 @@
     <div class="detail-container-position">
       <div class="match-detail-tabs-header">
         <div class="separator" style="height: 1px; background-color: #F5F5F5;"></div>
-        <div class="match-detail-tabs" v-if="[1,2,'1','2'].includes(match_detail?.csid)">
+        <div class="match-detail-tabs" v-if="[1,2,'1','2'].includes(match_detail?.csid) && !['BE', 'C01', 'OD'].includes(match_detail?.cds)">
           <div
             :class="[{ 'tab-active': tab == 'betting' }, 'tabs-item']"
             @click="tabChange('betting')"
@@ -67,7 +67,7 @@
           <!-- <div class="match-detail-odds-bottom"></div> -->
         </q-tab-panel>
         <q-tab-panel name="event_analysis">
-          <analysisFootball
+<!--          <analysisFootball
               v-if="match_detail.csid == 1"
               :active_tab="detail_event_tabs_value"
               :match_odds_info="match_odds_info"
@@ -77,8 +77,8 @@
               :active_tab="detail_event_tabs_value"
               :match_odds_info="match_odds_info"
               :match_detail="match_detail"
-          ></analysisBasketball>
-<!--           <event_analysis :match_odds_info="match_odds_info" :match_detail="match_detail" :active_tab="detail_event_tabs_value" />-->
+          ></analysisBasketball>-->
+           <event_analysis :match_odds_info="match_odds_info" :match_detail="match_detail" :active_tab="detail_event_tabs_value" />
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -105,8 +105,8 @@ import { i18n_t } from "src/output/index.js"
 import infoRules from "src/base-h5/components/details/components/info-rules.vue"  // 视频info说明弹框
 // import './index.scss'
 // 欧洲4期 赛事分析
-import analysisFootball from "./analysis/football/index.vue"
-import analysisBasketball from "./analysis/basketball/index.vue"
+// import analysisFootball from "./analysis/football/index.vue"
+// import analysisBasketball from "./analysis/basketball/index.vue"
 export default {
   components:{
     detail_header_tem0,

@@ -424,9 +424,6 @@ background: var(--q-gb-t-c-3) !important;
   //padding: 12px;
   //border-radius: 12px;
 }
-.scroll-box-center{
-  margin: 0 0 0.1rem 0;
-}
 
 .full-shadow2 {
   opacity: 0;
