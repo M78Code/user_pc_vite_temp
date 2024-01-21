@@ -22,6 +22,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import { ref,computed } from 'vue'
 import OddHlWrap from "./OddHlWrap.vue";
 import OddsTitle from "./OddsTitle.vue";
 import OddOlItem from "./OddOlItem.vue";
@@ -31,6 +32,23 @@ const props = defineProps<{
 }>()
 
 const olType = common.getOlTypeOfTemplate4(props.data)
+
+/** @type {} */
+const titles = ref(new Map())
+const other = ref([])
+props.data.title.forEach(item=>titles.value.set(item.otd,[]))
+
+const list = computed(()=>{
+  props.data.hl.forEach(hl=> {
+    hl.ol.forEach(ol=> {
+      if(titles.value.has(ol.otd)){
+        titles.value.get(ol.otd)
+      }else {
+
+      }
+    })
+  })
+})
 
 </script>
 

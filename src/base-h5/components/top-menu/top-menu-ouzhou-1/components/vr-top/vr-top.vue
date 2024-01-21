@@ -29,7 +29,7 @@
                 </q-menu>
             </div>
         </div>
-        <div class="right">
+        <div class="right" :class="{'refreshing': refreshing}" @click="vir_refresh">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX }/image/menu/top-menu/refresh.png`" alt="">
         </div>
     </div>
@@ -214,6 +214,8 @@ export default {
     vir_refresh(){
       if(this.refreshing) return;
       this.refreshing = true;
+      // 触发刷新事件
+      useMittEmit(MITT_TYPES.EMIT_VR_REFRESH_CLICK);
       this.timer_super27 = setTimeout(() => {
         // 取消刷新 已做节流
         this.cancel_ref();
@@ -356,6 +358,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/*  刷新按钮 */
+@keyframes loading-ring-animate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+}
     .info_box{
         width: 100%;
         display: flex;
@@ -420,6 +431,9 @@ export default {
             flex-direction: row;
             justify-content: center;
             align-items: center;
+            &.refreshing {
+              animation: 0.7s loading-ring-animate linear;
+            }
         }
   }
 </style>
