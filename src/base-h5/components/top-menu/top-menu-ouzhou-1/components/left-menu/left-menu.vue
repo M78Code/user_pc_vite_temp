@@ -81,7 +81,6 @@ const sportsGenre = reactive([
   { name: i18n_t("common.esports"), className: "esports", mi: "2000",route: '/esports'},
   { name: i18n_t("common.virtual_sports"), className: "vr-sports", mi: "300",route: '/virtual' },
 ])
-console.log(i18n_t("ouzhou.menu_itme_name"))
 /**
  * 默认所有球种
  */
@@ -186,7 +185,6 @@ const change_current_menu = (item) => {
  */
 const get_init_data = (val) =>{
   const list = val || MenuData.menu_list;
-  console.log(list,defaultSports, 'defaultSports' );
   leftDataList.value = list && list.length?list:defaultSports;
   const popularSortListH5 = LocalStorage.get("popularSortListH5") ||[];
   popularList.value = popularListSort(popularSortListH5);

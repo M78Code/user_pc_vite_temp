@@ -190,7 +190,7 @@ class MatchMeta {
       // 联赛名称
       const tn = BaseData?.tids_map[`tid_${match.tid}`]?.tn
       // 赛事其他操作
-      this.match_assistance_operations(target, index)
+      this.match_assistance_operations(target, index, false)
       return { ...target, tn, csna, is_meta: true, estimateHeight: MatchUtils.get_default_estimateHeight(match) }
     })
     // 设置 元数据计算 流程
@@ -292,27 +292,28 @@ class MatchMeta {
    * @description 赛事操作
    * @param { match } 赛事对象
    */
-  match_assistance_operations(match, index) {
+  match_assistance_operations(match, index, flag = true) {
     const { tid, csid, mid, ms } = match
     // 初始化赛事折叠
     // MatchFold.set_match_mid_fold_obj(match)
     MatchResponsive.set_show_match_info(`mid_${match.mid}`, index < 20 ? true : false)
+    
+    if (flag) {
+      // 球种数量
+      MatchResponsive.set_default_ball_seed_count(match)
+      const key = MatchFold.get_match_fold_key(match)
+      if (!(key in MatchFold.match_mid_fold_obj.value)) MatchFold.set_match_mid_fold_obj(match)
+      // 初始化赛事折叠
 
-    // 球种数量
-    MatchResponsive.set_default_ball_seed_count(match)
+      const fold_key = MatchFold.get_fold_key(match)
 
-    const key = MatchFold.get_match_fold_key(match)
-    if (!(key in MatchFold.match_mid_fold_obj.value)) MatchFold.set_match_mid_fold_obj(match)
-    // 初始化赛事折叠
-
-    const fold_key = MatchFold.get_fold_key(match)
-
-    //  初始化全部球种折叠状态
-    if (!(fold_key in MatchFold.ball_seed_csid_fold_obj.value)) MatchFold.set_ball_seed_csid_fold_obj(fold_key)
-    // 进行中
-    if (!(fold_key in MatchFold.progress_csid_fold_obj.value) && [1, 110].includes(+ms)) MatchFold.set_progress_csid_fold_obj(fold_key)
-    // 未开赛
-    if (!(fold_key in MatchFold.not_begin_csid_fold_obj.value) && [1, 110].includes(+ms)) MatchFold.set_not_begin_csid_fold_obj(fold_key)
+      //  初始化全部球种折叠状态
+      if (!(fold_key in MatchFold.ball_seed_csid_fold_obj.value)) MatchFold.set_ball_seed_csid_fold_obj(fold_key)
+      // 进行中
+      if (!(fold_key in MatchFold.progress_csid_fold_obj.value) && [1, 110].includes(+ms)) MatchFold.set_progress_csid_fold_obj(fold_key)
+      // 未开赛
+      if (!(fold_key in MatchFold.not_begin_csid_fold_obj.value) && [1, 110].includes(+ms)) MatchFold.set_not_begin_csid_fold_obj(fold_key)
+    }
 
     // 获取模板默认高度
     const template_config = this.get_match_default_template_config(csid)
@@ -1152,6 +1153,8 @@ class MatchMeta {
     // 重置折叠对象
     // MatchFold.clear_fold_info()
     MatchResponsive.clear_ball_seed_count()
+    MatchResponsive.clear_ball_seed_league_count()
+
     target_list.forEach((t, i) => {
       this.match_assistance_operations(t, i)
       Object.assign(t, {
@@ -1177,6 +1180,9 @@ class MatchMeta {
     const { list = [], type = 1, is_virtual = true, warehouse = MatchDataBaseH5, scroll_top = 0, merge = '' } = config
 
     const is_classify = this.get_is_classify()
+
+    // 重置元数据计算流程
+    MatchResponsive.set_is_compute_origin(false)
 
     // 清除联赛下得赛事数量
     if (this.is_other_warehouse(warehouse.name_code)) {
@@ -1274,7 +1280,9 @@ class MatchMeta {
   set_match_mids(mids = [], match_list = [], is_compute = true) {
 
     // 清除联赛下得赛事数量
+    MatchResponsive.clear_ball_seed_count()
     MatchResponsive.clear_ball_seed_league_count()
+    
 
     // 是否需要开赛、未开赛归类
     const is_classify = this.get_is_classify()
@@ -1285,7 +1293,7 @@ class MatchMeta {
     this.complete_mids = mids
     this.complete_matchs = target_data.map((t, index) => {
       // 设置联赛下的赛事数量， 不能是虚拟计算过后得
-      MatchResponsive.set_ball_seed_league_count(t)
+      // MatchResponsive.set_ball_seed_league_count(t)
       // is_show_ball_title 和顺序有关 得放在最终赋值处
       const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, target_data)
       return {
@@ -1328,9 +1336,6 @@ class MatchMeta {
 
     // 欧洲版首页 五大联赛 当前渲染的 mids
     this.match_mids = match_datas.map(t => t.mid)
-
-    // 重置元数据计算流程
-    MatchResponsive.set_is_compute_origin(false)
 
     // 不获取赔率
     if (type === 2) return this.handle_update_match_info({ list: match_datas, warehouse, merge })
@@ -1547,7 +1552,6 @@ class MatchMeta {
 
     // mhs === 2  || mmp === 999 为关盘 则移除赛事
     const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
-
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
       // match_mids是可视区域id
       const active_index = this.match_mids.findIndex(t => t === mid)
@@ -1563,8 +1567,8 @@ class MatchMeta {
             // this.handle_custom_matchs({ list: this.complete_matchs })
           } else {
             // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
-            // this.compute_current_matchs()
-            // this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+            this.compute_current_matchs()
+            this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
             this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
           }
           clearTimeout(this.debounce_timer)
