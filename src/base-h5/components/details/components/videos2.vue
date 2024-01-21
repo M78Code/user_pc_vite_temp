@@ -333,7 +333,7 @@ import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX }
 import slider from "src/base-h5/components/details/components/slider/slider.vue"
 import OrientationSubscrbe from 'src/base-h5/components/common/orientation/orientation-subscribe'
 import { useRoute } from "vue-router"
-import { project_name } from "src/output/index.js"
+import { project_name ,into_video_anima_event} from "src/output/index.js"
 export default {
   name: "videos",
   components: {
@@ -1189,6 +1189,8 @@ export default {
         this.media_type_change_timer = setTimeout(() => {
           this.set_change_count(this.get_change_count + 1);
           this.icon_click(val);
+          // 发送进入动画和视频的埋点
+    	    into_video_anima_event(val,{match:this.get_detail_data,source:'details'});
         }, 50)
       }
     },

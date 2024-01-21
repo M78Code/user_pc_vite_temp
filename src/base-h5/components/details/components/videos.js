@@ -8,7 +8,8 @@ import { format_total_score } from "src/core/format/common/index.js"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { nextTick } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/output";
+import { LOCAL_PROJECT_FILE_PREFIX} from "src/output";
+
 export const video_info = () => {
   const router = useRouter();
   const route = useRoute();

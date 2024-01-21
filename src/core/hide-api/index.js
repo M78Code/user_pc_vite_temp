@@ -6,12 +6,12 @@ import { api_hide } from "src/api/index.js";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 const {PROJECT_NAME,IS_PC} = BUILDIN_CONFIG;
 const HIDE_API_NAME_MAP1 = {
-  'yazhou-h5':'2023亚洲版',
-  'yazhou-pc':'2023亚洲版',
-  'ouzhou-h5':'2023欧洲版',
-  'ouzhou-pc':'2023欧洲版',
+  'yazhou-h5':{version:'',version_id:''},
+  'yazhou-pc':{version:'',version_id:''},
+  'ouzhou-h5':{version:'2023欧洲版',version_id:'3'},
+  'ouzhou-pc':{version:'2023欧洲版',version_id:'3'},
   'new-pc':'',
-  'app-h5':'',
+  'app-h5':{version:'2023亚洲版',version_id:'2'},
 }
 /**
  * @description 埋点逻辑处理函数
@@ -76,7 +76,8 @@ const replay_click_event = (obj) => {
     tournamentId: obj.tournament_id, // 联赛id  (从obj对象总获取)  
     // user_id:_.get(window,'vue.$store.getters.get_user.userId'), // 玩家id (业务提供)
     // user_name:_.get(window,'vue.$store.getters.get_user.userName'), // 玩家名称 (业务提供)
-    version:HIDE_API_NAME_MAP1[PROJECT_NAME], //  >>>前端提供(格式)
+    version: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version'), //  >>>前端提供(格式)
+    versionId: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version_id'),
     deviceType:IS_PC?'1':'2', // 终端id：1-pc/2-h5/3-app/4  前端定义(h5/pc统一)     
     other1:'', // 其他扩展1
     other2:'', //其他扩展2
@@ -84,7 +85,7 @@ const replay_click_event = (obj) => {
     other4:'', //其他扩展4
   }
   // eventCode提交埋点数据
-  api_hide.submit_event_collection(event_obj).then( res => {
+  event_obj.versionId && api_hide.submit_event_collection(event_obj).then( res => {
     if(lodash.get(res, 'data.code') == 200){
       console.log('提交成功!');
     }
@@ -96,26 +97,84 @@ const replay_click_event = (obj) => {
  * @return 
  */
 const into_home_event = (obj={}) => {
-  // 暂时只发送欧洲版的埋点
-  if(!['ouzhou-h5','ouzhou-pc'].includes(PROJECT_NAME)){
+  // 暂时只发送欧洲版和H5复刻版的埋点
+  if(!['ouzhou-h5','ouzhou-pc','app-h5'].includes(PROJECT_NAME)){
     return;
   }
   let event_obj = {
     eventId: 2,// 事件id  2-进入首页id
-    version: HIDE_API_NAME_MAP1[PROJECT_NAME], //  >>>前端提供(格式)
+    version: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version'), //  >>>前端提供(格式)
+    versionId: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version_id'),
     deviceType:IS_PC?'1':'2', // 终端id：1-pc/2-h5/3-app/4  前端定义(h5/pc统一)     
   }
   Object.assign(event_obj,obj);
   // eventCode提交埋点数据
-  api_hide.submit_event_collection(event_obj).then( res => {
+  event_obj.versionId && api_hide.submit_event_collection(event_obj).then( res => {
     if(lodash.get(res, 'data.code') == 200){
       console.log('提交成功!');
     }
   })
 }
+/**
+ * @description 进入动画和视频的埋点逻辑处理函数
+ * @param obj 
+ * @return 
+ */
+const into_video_anima_event = (type, obj)=>{
+  // 暂时只发送H5复刻版的埋点
+  if(!['app-h5'].includes(PROJECT_NAME)){
+    return;
+  }
+  if(!type || !obj){
+    return;
+  }
+  // event_id:3	video	查看视频
+  // event_id:4	animation	查看动画
+  let event_id = '';
+  switch (type+'') {
+    case 'muUrl':
+      event_id = 3;
+      break;
+    case 'animationUrl':
+      event_id = 4;
+      break;
+  
+    default:
+      break;
+  }
+
+  let button_id = '';
+  switch (lodash.get(obj, 'source')) {
+    case 'details': // 赛事详情
+      button_id = '3';
+      break;
+  
+    default:
+      break;
+  }
+  if(event_id){
+    let event_obj = {
+      eventId: event_id,// 事件id
+      version: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version'), //  >>>前端提供(格式)
+      versionId: lodash.get(HIDE_API_NAME_MAP1[PROJECT_NAME], 'version_id'),
+      deviceType:IS_PC?'1':'2', // 终端id：1-pc/2-h5/3-app/4  前端定义(h5/pc统一)
+      sportId: lodash.get(obj, 'match.csid','1'),
+      buttonId: button_id, // 1.列表  2.右侧赛事信息 3.详情页  
+      matchId:lodash.get(obj, 'match.mid',''),
+      tournamentId:lodash.get(obj, 'match.tid',''),
+    }
+    // eventCode提交埋点数据
+    event_obj.versionId && api_hide.submit_event_collection(event_obj).then( res => {
+      if(lodash.get(res, 'data.code') == 200){
+        console.log('提交成功!');
+      }
+    })
+  }
+}
 
 export { 
   replay_click_event, 
   into_home_event, 
+  into_video_anima_event
 };
   
