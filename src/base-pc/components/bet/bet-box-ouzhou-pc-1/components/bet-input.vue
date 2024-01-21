@@ -194,18 +194,26 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
+    let money = 0
     // 输入控制
-    if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
-        BetData.set_bet_obj_amount(ref_data.money,props.items.playOptionsId)
+    if( ref_data.money*1 < ref_data.max_money*1 &&  ref_data.money*1 < UserCtr.balance*1 ){
+        money = ref_data.money
     }else{
         // 最大限额不能大于余额
         let money_a = ref_data.max_money
-        if(UserCtr.balance < ref_data.max_money){
+        if(UserCtr.balance*1 < ref_data.max_money*1){
             money_a = UserCtr.balance
         }
         ref_data.money = money_a
-        BetData.set_bet_obj_amount(money_a,props.items.playOptionsId)
+        money = money_a
     }
+
+    if( money*1 == 0 ) {
+        money = 0
+        ref_data.money = 0
+    }
+    BetData.set_bet_obj_amount(money,props.items.playOptionsId)
+
 }
 
 // 快捷金额 state true   false
