@@ -73,7 +73,7 @@
                 {{ calc_text_item(item).text }} 
               </span>
             </span>
-            <!-- 单关不需要下划线 -->
+            <!-- 单关、冠军不需要下划线 -->
             <div v-if="!['1', '3'].includes(data_b.seriesType)" class="line"></div>
           </div>
         </div>

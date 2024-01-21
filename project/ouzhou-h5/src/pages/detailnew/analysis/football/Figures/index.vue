@@ -2,10 +2,11 @@
 import {inject, onBeforeMount, reactive} from "vue";
 import figuresStandings from "./figures-standings.vue"
 import figuresHistoryEngagement from "./figures-history-engagement.vue"
-import figuresRecentResults from "./figures-recent-results.vue"
+import figuresRecentResults from "./figures-recent-results.vue"     // 近期战绩
 import figuresFutureSchedule from "./figures-future-schedule.vue"
 import figuresInjurySituation from "./figures-injury-situation.vue"
 import figuresMarketSituation from "./figures-market-situation.vue"     // 盘面
+import figuresTechnicalInterview from "./figures-technical-interview.vue"
 
 import {api_analysis} from "src/api/index.js";      // 赛事分析接口文件
 
@@ -23,7 +24,7 @@ const State = reactive({
     futureScheduleData: {}, // 基本面的数据
     injurySituationData: {init: null}, // 伤停情况
     matchHistoryBattleDtoMap: {init: null}, // 盘面的数据
-    homeAwayGoal_and_coach_map: {init: null}, // 盘面的数据
+    homeAwayGoalAndCoachMap: {init: null}, // 盘面的数据
     loading: false,
 })
 const ChangeSelectedTabId = function (event) {
@@ -48,7 +49,7 @@ const _getDataList = async function () {
         State.futureScheduleData = lodash.get(data, 'basicInfoMap.sThirdMatchFutureStatisticsDTOMap', {})
         State.injurySituationData = lodash.get(data, 'basicInfoMap.sThirdMatchSidelinedDTOMap', {})
         State.matchHistoryBattleDtoMap = lodash.get(data, 'matchHistoryBattleDTOMap', {})
-        State.homeAwayGoal_and_coach_map = lodash.get(data, 'homeAwayGoalAndCoachMap.sThirdMatchCoachDTOMap', {})
+        State.homeAwayGoalAndCoachMap = lodash.get(data, 'homeAwayGoalAndCoachMap.sThirdMatchCoachDTOMap', {})
         console.log(State.matchHistoryBattleDtoMap,"State.matchHistoryBattleDtoMap")
     } catch (error) {
         console.error(error);
@@ -74,19 +75,26 @@ onBeforeMount(() => {
         <!-- 基本面 -->
         <template v-if="State.selectedTabId == 1">
             <!-- 杯赛积分 或者 联赛积分 -->
-            <figuresStandings></figuresStandings>
+            <figuresStandings />
             <!-- 历史交战 -->
-            <figuresHistoryEngagement></figuresHistoryEngagement>
+            <figuresHistoryEngagement />
             <!-- 近期战绩 -->
-            <figuresRecentResults></figuresRecentResults>
+            <figuresRecentResults />
             <!-- 未来赛程  只有 足球才有-->
-            <figuresFutureSchedule :futureScheduleData="State.futureScheduleData"></figuresFutureSchedule>
+            <figuresFutureSchedule :futureScheduleData="State.futureScheduleData" />
             <!-- 伤停情况 只有 足球才有 -->
-            <figuresInjurySituation :injurySituationData="State.injurySituationData"></figuresInjurySituation>
+            <figuresInjurySituation :injurySituationData="State.injurySituationData" />
         </template>
         <!-- 盘面 -->
-        <figuresMarketSituation v-if="State.selectedTabId == 2" :matchHistory_battle_dto_map="State.matchHistoryBattleDtoMap"></figuresMarketSituation>
+        <figuresMarketSituation
+            v-if="State.selectedTabId == 2"
+            :matchHistory_battle_dto_map="State.matchHistoryBattleDtoMap"
+        />
         <!-- 技术面 -->
+        <figuresTechnicalInterview
+            v-if="State.selectedTabId == 3"
+            :homeAwayGoal_and_coach_map="State.homeAwayGoalAndCoachMap"
+        />
     </section>
 </template>
 
