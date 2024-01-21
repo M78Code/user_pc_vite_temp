@@ -52,7 +52,8 @@ const bet_total = computed(()=> status => {
   // 计算出合计金额
   ref_data.total_money = format_money2(bet_total_money)
 
-  ref_data.win_money = mathJs.subtract( mathJs.multiply(bet_total_odds,bet_total_money) ,bet_total_money)
+  let money = mathJs.subtract(mathJs.multiply(bet_total_odds,bet_total_money) ,bet_total_money)
+  ref_data.win_money = format_money2(money)
 })
 
 </script>

@@ -19,8 +19,8 @@
     
     <div class="bet_single_detail f-b-c">
       <div class="content-b" @click="input_click">
-        <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
-        <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}<em class="number_family">{{ items.min_money }}-{{ format_money3(items.max_money) }}</em></span>
+        <span v-if="items.bet_amount" class="yb_fontsize20 money-number">{{ items.bet_amount }}</span>
+        <span class="yb_fontsize14 limit-txt" v-show="!items.bet_amount">{{ i18n_t('app_h5.bet.limit')}}<em class="number_family">{{ items.min_money }}-{{ format_money3(items.max_money) }}</em></span>
         <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
       </div>
     </div>
@@ -30,7 +30,7 @@
 </template>
 
 <script setup> 
-import { reactive,onMounted,onUnmounted,ref, computed } from "vue"
+import { reactive,onMounted,onUnmounted,ref, computed,watch } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -64,7 +64,7 @@ const tooltipbox = ref(false)
 const itemid = ref()
 
 onMounted(() => {
-  ref_data.money = props.items.bet_amount
+  ref_data.money = ''
   //监听键盘金额改变事件
   ref_data.emit_lsit = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle).off,
@@ -127,15 +127,12 @@ const set_special_series = (money,ty_id) => {
  */
  const input_click = (evnet) => {
   event.preventDefault()
-  set_special_series()
   BetData.set_bet_keyboard_show(true)
-
   cursor_flashing()
 
   // 串关 设置键盘需要设置当前的金额
-  BetData.set_bet_amount(ref_data.money)
+  BetData.set_bet_amount(props.items.bet_amount)
   BetData.set_bet_keyboard_config(props.items)
-  emits("input_click",event)
   add_or_remove_active(evnet)
 }
 

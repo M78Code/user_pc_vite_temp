@@ -16,7 +16,7 @@
         <bet-bar></bet-bar>
         
         <div v-show="BetData.bet_state_show">
-                <!-- 删除全部和选择type -->
+          <!-- 删除全部和选择type -->
           <bet-all-detele :is_dropdown="is_dropdown" v-if="BetViewDataClass.bet_order_status == 1"></bet-all-detele>
           <!-- --------{{BetViewDataClass.bet_order_status}} - {{BetData.is_bet_single}} -->
           <!-- 单关  -->
