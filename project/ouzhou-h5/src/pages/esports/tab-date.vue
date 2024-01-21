@@ -2,9 +2,9 @@
     <div class="header">
         <!-- 七天时间 -->
         <div class="date_time">
-            <q-virtual-scroll ref="scrollDateRef" :items="week" virtual-scroll-horizontal v-slot="{ item, index }">
+            <q-virtual-scroll ref="scrollDateRef" :items="dateList" virtual-scroll-horizontal v-slot="{ item, index }">
                 <div @click="changeDatetab(item, index)" class="week"
-                    :class="store.second_tab_index == index ? 'active' : ''">
+                    :class="defaultVal == item.val ? 'active' : ''">
                     <span>
                         <span>{{ item.name }}</span>
                     </span>
@@ -20,31 +20,27 @@ import {
     ref,
     defineEmits,
 } from "vue";
-import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
-const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
+const emit = defineEmits(["changeDate"]);
 const scrollDateRef = ref(null);
-const week = ref([]);
+const props = defineProps({
+    dateList: {
+      type: Array,
+      default: [],
+    },
+    defaultVal:{
+      type: String,
+      default: "",
+    },
+})
 /**
- * tab点击
- * @param {*} name 
+ * 时间点击
+ * @param {*} item 
+ * @param {*} index 
  */
-const changeTab = (name, index) => {
-    store.tabActive = name;
-    store.tabModel = false;
-    store.curSelectedOption = store.selectOptions[0]
-    store.dateIndex = 0
-    emit("changeTab", name);
-    if (name === 'Matches') {
-        changeDatetab(week.value[0], 0)
-    }else if(name != 'League'){
-        MatchResponsive.set_is_league_detail(false)
-    }
-    if(name === 'League'){
-        MatchFold.clear_fold_info()
-    }
+const changeDatetab = (item, index) =>{
+    emit("changeDate",item,index)
 }
 </script>
-  
 <style lang="scss" scoped>
 .header {
     font-size: 16px;

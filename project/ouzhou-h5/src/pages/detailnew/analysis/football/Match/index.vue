@@ -4,9 +4,9 @@
 * */
 import {api_analysis} from "src/api/index.js";
 import {inject, onBeforeMount, reactive} from "vue"
-import AnalysisCard from "../AnalysisCard.vue"      // 外层卡片壳子
-import statistics from "../statistics.vue"      // 统计
-import incident from "./incident.vue"       // 事件
+import AnalysisCard from "../../AnalysisCard.vue"      // 外层卡片壳子
+import statistics from "../../statistics.vue"      // 统计
+import incident from "../incident.vue"       // 事件
 
 /*
 * provide 和 inject

@@ -62,15 +62,24 @@ const iframe_loading = ref();
 const is_video_hover = ref(false); // 鼠标是否经过视频
 
 const { videoAnimationUrl } = api_common; // 接口
+
+// 监听滚球切换
 watch(
   () => props.detail_info,
   (val) => {
+ 
+    iframe_loading.value = true;
+    media_src.value = "";
+    setTimeout(() => {
+      init();
+    }, 1500);
   }
 );
 // 监听动画视频切换
 watch(
   () => props.show_type,
   (val) => {
+  
     iframe_loading.value = true;
     media_src.value = "";
     setTimeout(() => {
@@ -82,6 +91,7 @@ watch(
 let iframe = null;
 
 onMounted(() => {
+ 
   iframe_loading.value = true;
     media_src.value = "";
     setTimeout(() => {

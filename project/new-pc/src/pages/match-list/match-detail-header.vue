@@ -294,6 +294,7 @@ function handle_select_hot(value) {
 function set_click_version(value) {
   emits('change_version', value);
   get_version.value = value.id;
+  MenuData.set_template_version(value.id)
 }
 
 /**
@@ -450,6 +451,8 @@ onMounted(() => {
   color: #555;
   .all {
     margin-left: 6px;
+    display: flex;
+    justify-content: center;
     .arrow {
       width: 10px;
       height: 10px;

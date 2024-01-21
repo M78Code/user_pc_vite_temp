@@ -57,6 +57,12 @@ class MenuData {
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = '';
     this.current_lv_2_menu_mi = ref('0');
+    //电竞日期
+    this.current_lv_3_menu = {
+      field1:"",
+      menuType:""
+    };
+    this.date_tab_index = 0;
     this.menu_lv_mi_lsit = []
     // 赛果 日期/赛中
     this.result_menu_api_params = {}
@@ -92,7 +98,7 @@ class MenuData {
   
   // 刷新后 获取缓存数据
   set_menu_h5_key_refresh() {
-    const notItem = ['menu_type','current_lv_2_menu_mi','update_time']
+    const notItem = ['menu_type','current_lv_2_menu_mi','current_lv_2_menu_i','update_time']
     // 获取数据缓存
     let session_info = SessionStorage.get(menu_h5_key);
     if (!session_info) {
@@ -180,17 +186,32 @@ class MenuData {
     this.top_events_list = top_events_list;
     this.champion_list = champion_list;
     if(session_info){//取session球种id
-      if(this.is_esports()){
+      if(this.current_lv_1_menu_i == 2000){
+        this.current_lv_2_menu_mi.value = session_info.menu_mi;
         this.current_lv_2_menu_i = session_info.menu_mi;
         this.menu_mi.value = session_info.menu_mi;
         this.menu_csid = +session_info.menu_mi - 2000
       }else{
         this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
+        this.current_lv_2_menu_mi.value = `${session_info.menu_mi}${this.menu_type.value}`;
         this.menu_mi.value = session_info.menu_mi;
         this.menu_csid = +session_info.menu_mi - 100
       }
     }
     !arr && useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA,menu_list);
+  }
+  /**
+   * 
+   * @param {*} mi 
+   * @returns 
+   */
+  set_current_lv_3_menu(item){
+    this.current_lv_3_menu = {
+      ...this.current_lv_3_menu,
+      ...(item || {})
+    }
+    this.date_tab_index = item.index || 0;
+    this.update();
   }
   // 根据菜单id 获取对应的euid
   get_mid_for_euid(mi) {
