@@ -8,7 +8,7 @@
     <div v-show="GlobalAccessConfig.get_wsl()" style="position:absolute;color:red">{{ match.mid }}-{{
       match_style_obj.view_tpl_id }}-{{ match_style_obj.data_tpl_id }}-{{ match_style_obj.show_level }}-{{ match.tpl_id }}
     </div>
-    <template v-if="MenuData.get_template_version == 1">
+    <template v-if="true">
       <component :is="`MatchTpl${match_style_obj.view_tpl_id}After`" v-if="[1, 2].includes(match_style_obj.show_level)"
       :mid="mid" />
     </template>
@@ -49,7 +49,7 @@ import { MatchTpl21AfterFullVersionWapper as MatchTpl21After } from "src/base-pc
 import { MatchTpl24AfterFullVersionWapper as MatchTpl24After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-24-after/index.js";
 // // // 玩法模板 新手版
 import MatchNewCard from "src/base-pc/components/match-list/match-tpl-new-data/match_new_card";
-
+import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 // // 电竞玩法模板
 import { MatchTplEsportsAfterFullVersionWapper as MatchTplEsportsAfter } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-esports-after/index.js";
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -98,13 +98,14 @@ export default {
     provide("match_list_tpl_size", match_list_tpl_size)
     provide("match_tpl_info", match_tpl_info)
     provide("not_hn_obj_map", not_hn_obj_map)
+
     return {
       match,
       match_style_obj,
       LayOutMain_pc,MenuData,
       MatchListCardData,
       MatchListCardDataClass,
-      GlobalAccessConfig
+      GlobalAccessConfig,
     }
   }
 }
