@@ -2,7 +2,7 @@
  * @Description: ouzhou-h5 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
-  <div class="match-container component match-container-main-template1" 
+  <div class="component match-container-main-template1 match-container" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 体育类别 -->
@@ -313,6 +313,9 @@ export default {
     ImageCacheLoad,
     CountingDownStart,
     CountingDownSecond,
+  },
+  data(){
+    return {}
   },
   setup (ctx) {
     const match_hpid = ref('')
