@@ -19,6 +19,8 @@ class MatchFold {
     this.progress_csid_fold_obj = ref({})
     // 未开赛球种折叠对象
     this.not_begin_csid_fold_obj = ref({})
+    // 联赛折叠信息，用于 新增赛事时 卡片状态跟随当前联赛 折叠状态
+    this.custom_tid_fold_info = ref({})
   }
   /**
    * @description 设置折叠映射对象
@@ -26,17 +28,30 @@ class MatchFold {
    */
   set_match_mid_fold_obj (match) {
     if (!match) return
+    const { custom_tid = '', start_flag = '' } = match
     const key = this.get_match_fold_key(match)
     // 次要玩法头部是否显示
     const show_tab = this.compute_show_tab_play(match)
+    // 当前赛事折叠状态， 需要根据 当前联赛 的状态来确定
+    const show_card = lodash.get(this.custom_tid_fold_info.value, `${start_flag}_${custom_tid}`, true)
     Object.assign(this.match_mid_fold_obj.value, {
       [key]: {
         show_tab,
         // 赛事区域
-        show_card: true,
+        show_card,
         // 次要玩法内容区
         show_tab_content: false
       }
+    })
+  }
+  /**
+   * @description 获取 通个联赛 的折叠状态
+   */
+  set_custom_tid_fold_info (match, value) {
+    const { custom_tid = '', start_flag = '' } = match
+    if (!custom_tid) return
+    Object.assign(this.custom_tid_fold_info.value, {
+      [`${start_flag}_${custom_tid}`]: value
     })
   }
   /**
@@ -89,6 +104,8 @@ class MatchFold {
       if (!item || item.custom_tid !== custom_tid) return
       const key = this.get_match_fold_key(item)
       const show_card = !lodash.get(this.match_mid_fold_obj.value, `${key}.show_card`, false)
+      // 设置联赛折叠状态
+      this.set_custom_tid_fold_info(item, show_card)
       // 全部
       if (!type) return this.set_match_fold(key, { show_card })
       // 进行中
@@ -126,6 +143,8 @@ class MatchFold {
     matchs.forEach(item => {
       if (!is_fold_all && (!item || item.csid != obj.csid)) return
       const key = this.get_match_fold_key(item)
+      // 设置联赛折叠状态
+      this.set_custom_tid_fold_info(item, !status)
       // 全部
       if (!type) return this.set_match_fold(key, { show_card: !status })
       // 进行中
