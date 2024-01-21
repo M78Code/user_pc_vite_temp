@@ -119,9 +119,14 @@ class MenuData {
     this.current_ball_type = ''
 
     this.left_menu_list = []
+
+    this.get_template_version = ref(1)
    
   }
-
+  // 设置在专业版1 新手版2
+  set_template_version(version) {
+    this.get_template_version.value = version
+  }
 
   // 获取数据缓存 ，用于刷新
   get_new_data() {

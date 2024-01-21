@@ -9,15 +9,16 @@
     </div>
   </div> 
     <div class="bet_content_bottom component bet-btn-item">
-      <!-- <p class="bet_cancel" @click="pack_up">{{i18n_t('bet.bet_retract')}}</p> -->
       <!-- 串关 -->
-      <p class="bet_crosstalk_active">串关</p>
-      <!-- <p class="bet_crosstalk">串关</p> -->
-      <p></p>
-      <p class="place_bet"  @click="place_bet">
+      <div class="bet_crosstalk" @click="set_bet_single_change()" :class="{active:BetData.is_bet_single}">
+        <span class="bet-title">串关</span>
+        <span class="bet-single"></span>
+      </div>
+
+      <div class="place_bet"  @click="place_bet">
         <span>{{i18n_t('bet_record.bet_val')}}</span> 
         <span class="right_amount">{{bet_total()}}</span>
-      </p>
+      </div>
     </div>
   <div style="display:none">{{ BetData.bet_data_class_version }} -{{UserCtr.user_version}}-{{ BetViewDataClass.bet_view_version }}</div>
 </template>
@@ -30,12 +31,16 @@ import { useMittEmit, MITT_TYPES,i18n_t,UserCtr  } from "src/output/index.js";
 import {computed} from "vue"
 import mathJs from 'src/core/bet/common/mathjs.js'
 
-
 const place_bet = () => {
   // 未投注之前 可以点击
   if(BetViewDataClass.bet_order_status == 1){
     submit_handle()
   }
+}
+
+// 单串关切换
+const set_bet_single_change = () => {
+  BetData.set_is_bet_single()
 }
 
 const bet_total = computed(()=> state =>{
@@ -63,13 +68,7 @@ const bet_total = computed(()=> state =>{
   }
 })
 
-const pack_up = (val) => {
-  BetData.set_clear_bet_info()
-  // TODO: 临时调试用
-  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
-  // BetData.set_clear_bet_info()
-  // BetViewDataClass.set_clear_bet_view_config()
-}
+
 </script>
 
 <style lang="scss" scoped>
@@ -104,40 +103,40 @@ const pack_up = (val) => {
       font-weight: 400;
       height: 0.46rem;
       letter-spacing: 0px;
-      border: 0.5px solid var(--q-gb-bd-c-12);
       text-align: center;
       color: var(--q-gb-t-c-4);
     }
     /* ************** 串关 ************** -S */
     .bet_crosstalk{
       position: relative;
-      &:before{
-        content: '';
+      border: 1px solid var(--q-gb-bd-c-1);
+      border-radius: .02rem;
+      .bet-title{
+        width: .88rem;
+        height: 0.58rem;
+      }
+      .bet-single{
         width: 0.14rem;
         height: 0.38rem;
         position:absolute;
         background: var(--q-gb-t-c-14);
         left: 0.08rem;
-        top: 0.02rem;
-        border-radius: 0.4rem;
+        top: 0.03rem;
+        border-radius: 0.04rem;
+      }
+      &.active{
+        background: var(--q-gb-bg-c-1);
+        border: 1px solid var(--q-gb-bd-c-2);
+        color: var(--q-gb-t-c-2);
+        border-radius: .02rem;
+        .bet-single{
+          background: var(--q-gb-t-c-2);
+          left: .78rem;
+        }
       }
     }
      /* ************** 串关激活 ************** -S */
-    .bet_crosstalk_active{
-      position: relative;
-      background: var(--q-gb-bg-c-1);
-      color: var(--q-gb-t-c-2);
-        &:before{
-        content: '';
-        width: 0.14rem;
-        height: 0.38rem;
-        position:absolute;
-        background: var(--q-gb-t-c-2);
-        right: 0.08rem;
-        top: 0.02rem;
-        border-radius: 0.4rem;
-      }
-    }
+    
     .place_bet{
       height: 0.46rem;
       font-size: 0.14rem;
