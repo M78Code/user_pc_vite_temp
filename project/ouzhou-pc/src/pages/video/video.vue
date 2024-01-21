@@ -155,7 +155,7 @@ useMittOn(MITT_TYPES.EMIT_EXIT_FULL_SCREEN_MSG_EVENT, function (imgUrl) {
     background-color: var(--qq--yb-bg-color18_big_screen_1);
     border-radius: 6px;
     padding: 15px 0;
-    ::v-deep .column-between {
+    &:deep( .column-between) {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -167,7 +167,7 @@ useMittOn(MITT_TYPES.EMIT_EXIT_FULL_SCREEN_MSG_EVENT, function (imgUrl) {
     margin-bottom: 1px;
     &.iframe-video-bottom-panel {
       .panel-wrapper {
-        ::v-deep {
+        &:deep() {
           .chatroom {
             margin-top: 0;
             .chat-scroll-area {
@@ -196,7 +196,7 @@ useMittOn(MITT_TYPES.EMIT_EXIT_FULL_SCREEN_MSG_EVENT, function (imgUrl) {
         border: none;
         // border: 1px solid var(--qq--match-border-color2);
       }
-      ::v-deep {
+      :deep() {
         .video-history-line {
           margin-bottom: 4px;
         }
