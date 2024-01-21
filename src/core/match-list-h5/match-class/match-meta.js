@@ -1509,7 +1509,7 @@ class MatchMeta {
       const active_index = this.match_mids.findIndex(t => t === mid)
       // active_index>-1&& this.match_mids.splice(active_index,1)
       const index = this.complete_matchs.findIndex(t => t.mid == mid)
-      // index > -1 && this.complete_matchs.splice(index, 1)
+      index > -1 && this.complete_matchs.splice(index, 1)
       if (index > -1) {
         if (this.debounce_timer) return
         this.debounce_timer = setTimeout(() => {
@@ -1520,8 +1520,8 @@ class MatchMeta {
           } else {
             // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
             // this.compute_current_matchs()
-            // this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
-            this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
+            this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+            // this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
           }
           clearTimeout(this.debounce_timer)
           this.debounce_timer = null
