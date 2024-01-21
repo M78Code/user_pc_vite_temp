@@ -23,7 +23,6 @@
 
                 <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{i18n_t('bet.money_range')}} {{ref_data.min_money}}~{{format_money3(ref_data.max_money)}}</span>
             </div>
-
         </div>
     </div>
 </template>
@@ -46,7 +45,10 @@ const props = defineProps({
     }
 })
 
+const emit = defineEmits(['focus_on'])
+
 const input_click = (event) => {
+    emit('focus_on', 'on')
     // console.error('index', BetData.bet_single_list.length)
     // event.preventDefault()
     let oid = BetData.bet_single_list.map(item => {
@@ -57,6 +59,8 @@ const input_click = (event) => {
     BetData.set_active_index(BetData.bet_single_list.length)
     // BetData.set_bet_amount(0)
 }
+
+
 
 
 // 光标
