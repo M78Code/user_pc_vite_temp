@@ -22,8 +22,8 @@ let pre_load_video = {
     let hls_el = document.createElement("script");
     dplayer_el.src = `${
       BUILD_VERSION ? "/" + BUILD_VERSION : ""
-    }/other-assets/lib/vr-video/${is_old ? 'DPlayer2' : 'DPlayer'}.min.js`;
-    hls_el.src = `${BUILD_VERSION ? "/" + BUILD_VERSION : ""}/other-assets/lib/vr-video/${is_old ? 'hls2': 'hls'}.js`;
+    }/other-assets/lib/js/${is_old ? 'DPlayer2' : 'DPlayer'}.min.js`;
+    hls_el.src = `${BUILD_VERSION ? "/" + BUILD_VERSION : ""}/other-assets/lib/js/${is_old ? 'hls2': 'hls'}.js`;
     document.head.appendChild(dplayer_el);
     document.head.appendChild(hls_el);
   },
