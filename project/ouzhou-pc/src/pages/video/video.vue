@@ -22,10 +22,83 @@ import VideoIframe from "./video_iframe.vue"
 import {MITT_TYPES, useMittOn} from "src/core/mitt/index.js";
 import {i18n_t} from "src/boot/i18n.js";
 
-const router = useRouter();
-const route = useRoute();
-
-const refresh_time = ref(0);
+import { onMounted } from "vue";
+import LoadData from "src/base-pc/components/load-data/load-data.vue"
+// 视屏头部
+import VideoHeader from "src/base-pc/components/video/video-header.vue"
+// 视频组件dn
+// import VideoIframe from "src/project/yabo/components/video/video_iframe.vue"
+// 比分板足球模板
+// import DataTemplate1 from "src/project/yabo/components/video/data_template/template1.vue"
+// 比分板篮球模板
+// import DataTemplate2 from "src/project/yabo/components/video/data_template/template2.vue"
+// 比分板棒球模板
+// import DataTemplate3 from "src/project/yabo/components/video/data_template/template3.vue"
+// 比分板模板 冰球4  网球5  美足6  斯诺克7  排球9  羽毛球10 沙滩排球13  曲棍球15  水球16
+// import DataTemplate4 from "src/project/yabo/components/video/data_template/template4.vue"
+// 比分板模板 兵乓球8 手球11 橄榄球14
+// import DataTemplate8 from "src/project/yabo/components/video/data_template/template8.vue"
+// 聊天室组件
+// import Chatroom from "src/project/yabo/components/match_details/panel/chatroom.vue"
+// 统计组件
+// import Stats from "src/project/yabo/components/match_details/panel/stats.vue"
+// 精彩回放组件
+// import VideoHistoryLine from "src/project/yabo/components/video/video_history_line.vue";
+// 视频操作相关工具库
+// import video from "project_path/src/utils/video/video.js"
+// websocket数据页面数据接入
+// import skt_data_video from "project_path/src/mixins/websocket/data/skt_data_video.js"
+// 赛事详情页面信息操作类
+// import MatchInfoCtr from "project_path/src/utils/dataClassCtr/match_info_ctr.js"
+//  直播聊天室相关
+// import live_chatroom from "src/project/yabo/mixins/live_chatroom/live_chatroom";
+// import { mapGetters, mapActions } from "vuex"
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useRoute } from "vue-router";
+import { reactive } from "vue";
+import { useRouter } from "vue-router";
+//   export default {
+// name: "Video",
+// mixins:[skt_data_video, live_chatroom],
+// components:{
+//   LoadData,
+//   VideoHeader,
+//   VideoIframe,
+//   DataTemplate1,
+//   DataTemplate2,
+//   DataTemplate3,
+//   DataTemplate4,
+//   DataTemplate8,
+//   Stats,
+//   Chatroom,
+//   VideoHistoryLine
+// },
+// data(){
+//   return {
+//     load_data_state:'loading',//数据加载状态
+//     mid:0,//赛事ID
+//     match_info:{},//赛事详情数据
+//     match_info_ctr: new MatchInfoCtr(), // 赛事控制类
+//     socket_name: 'skt_data_video', //对应的socket名称
+//     refresh_loading: false, // 刷新loading、
+//     refresh_time: 0, // 刷新次数
+//     chatroom_info: {
+//       all_mute: 0,
+//       chatRoomId: '',
+//       crs: 0,
+//     }
+//   }
+// },
+// computed: {
+//   ...mapGetters({
+//     get_lang: 'get_lang',
+//     vx_details_params: "get_match_details_params",
+//     vx_play_media: "get_play_media",
+//     get_layout_cur_page: "get_layout_cur_page",
+//     vx_get_chatroom_available: "get_chatroom_available",
+//     vx_get_user: "get_user",
+//     get_chatroom_id: "get_chatroom_id",
+//   }),
 
 
 const {
@@ -33,14 +106,21 @@ const {
   detail_info,
 } = usedetailData(route);
 
+//   ...mapActions([
+//     'set_match_details_params',
+//     "set_play_media",
+//     "set_is_back_btn_click",
+//   ]),
+const $route = useRoute();
+const $router = useRouter();
+const match_info = reactive({
+  mid: $route.params?.mid || '', 
+  tid: $route.params?.tid || '', 
+  csid: $route.params?.csid || ''
+});
 
-//设置全屏状态
-function set_full_screen_status(){
-  if(this.$route.params.video_size == 1) {
-    browser_full_screen()
-  }else{
-    exit_browser_full_screen()
-  }
+function emit_site_tab_active() {
+  get_match_info(false)
 }
 
 
@@ -55,7 +135,59 @@ function browser_full_screen(){
     rfs.call(video_dm);
   }
 }
-
+/**
+ * @Description:键盘事件
+ * @param {object} e 事件详情
+ * @return {undefined} undefined
+ */
+function cur_keydown(e) {
+  if (e.keyCode == 27) {
+    //video_type ==1 从大屏退出
+    exit_full_screen($route.params.video_size == 1 ? 'xl' : '')
+  }
+}
+/**
+ * @Description:退出全屏  返回上一个页面
+ * @return {undefined} undefined
+ */
+function exit_full_screen(size) {
+  const { mid, tid, csid } = match_info;
+  // 如果是从详情页进入大屏返回详情页
+  if (from == 'details') {
+    $router.push({
+      name: 'details',
+      params: {
+        mid,
+        tid,
+        csid
+      }
+    })
+    sessionStorage.setItem('auto_play_media', '1');
+  } else if (video.from == 0 && size == 'xl' && $is_eports_csid($route.params.csid)) {
+    $router.push({
+      name: 'video',
+      params: {
+        mid,
+        tid,
+        csid,
+        play_type: this.$route.params.play_type,
+        video_size: '0'
+      }
+    })
+  } else {
+    MatchDetailCalss.set_is_back_btn_click(true);
+    this.$redirect_router('/home')
+  }
+  let time = Date.now()
+  MatchDetailCalss.set_play_media({
+    mid: this.match_info.mid,
+    media_type: this.vx_play_media.media_type,
+    time
+  })
+  if (size == 'xl') {
+    this.exit_browser_full_screen()
+  }
+}
 /**
  * @Description 退出浏览器全屏
  * @param {undefined} undefined
@@ -72,50 +204,41 @@ function exit_browser_full_screen(){
  * @Description:退出全屏  返回上一个页面
  * @return {undefined} undefined
  */
-function exit_full_screen(size){
-  window.history.go(-2)
-  // const { mid, tid, csid } = this.match_info
-  // // 如果是从详情页进入大屏返回详情页
-  // if(this.from == 'details'){
-  //   if(this.$route.params.video_size == 1 && video.from ==0){
-  //     //  window.vue.$router.back()
-  //     window.history.go(-2)
-  //     //  this.exit_browser_full_screen()
-  //   }else{
-  //     this.$router.push({
-  //       name: 'details',
-  //       params: {
-  //         mid,
-  //         tid,
-  //         csid
-  //       }
-  //     })
-  //     sessionStorage.setItem('auto_play_media', '1');
-  //   }
-  // }else if(video.from == 0 && size =='xl' && !this.$utils.is_eports_csid(this.$route.params.csid)){
-  //   this.$router.push({
-  //     name: 'video',
-  //     params: {
-  //       mid,
-  //       tid,
-  //       csid,
-  //       play_type: this.$route.params.play_type,
-  //       video_size: '0'
-  //     }
-  //   })
-  // }else{
-  //   this.set_is_back_btn_click(true);
-  //   this.$utils.redirect_router('/home')
+function get_match_info(show_loading = true) {
+  show_loading && (load_data_state = 'loading')
+
+  video.api_get_match_info(this.mid,this.$route, (match_info, load_data_state) => {
+    this.load_data_state = load_data_state
+    this.match_info_ctr.init_match_obj(match_info); // 初始化赛事控制类
+    this.match_info = this.match_info_ctr.match_obj
+  })
+}
+//设置全屏状态
+function set_full_screen_status() {
+  if (this.$route.params.video_size == 1) {
+    this.browser_full_screen()
+  } else {
+    this.exit_browser_full_screen()
+  }
+}
+// 刷新数据
+function refresh_data() {
+  // if (this.refresh_loading) {
+  //   return false
   // }
-  // let time = Date.now()
-  // this.set_play_media({
-  //   mid:this.match_info.mid,
-  //   media_type: this.vx_play_media.media_type,
-  //   time
-  // })
-  // if(size =='xl'){
-  //   this.exit_browser_full_screen()
-  // }
+  refresh_loading = true
+  refresh_time += 1
+  // 重新获取赛事信息
+  get_match_info(false)
+  // 刷新前 先关闭聊天室
+  set_chatroom_available(0)
+  // 聊天室开关开启后才显示聊天室
+  if (UserCtr.user_info.chatRoomSwitch) {
+    // 获取直播、聊天室信息
+    get_live_chat_info()
+  }
+  refresh_loading_timer && clearTimeout(this.refresh_loading_timer)
+  refresh_loading_timer = setTimeout(() => this.refresh_loading = false, 2500)
 }
 
 //首页活动弹框
