@@ -8,8 +8,9 @@
       self="bottom middle"
       :offset="[0, -32]"
       :content-class="'g-settings-style'"
+      class="g-settings-style"
     >
-      <q-list bordered class="rounded-borders list">
+      <q-list  class="rounded-borders list">
         <div v-for="(settings, key) in settings_items_list" :key="settings.id">
           <!-- 全局设置项 -->
           <q-expansion-item
@@ -175,30 +176,18 @@
                 </template>
 
                 <!-- 列表附加玩法配置 -->
-                <div
-                  v-else-if="settings.id == 6"
-                  @click="change_setting_additional_disk"
-                  class="skin-toggle"
-                >
-                  <div
-                   class="kicfoff_list"
-                    v-for="(item, index) in settings.value_arr"
-                    :key="index"
-                    
-                  >
+                <template v-else-if="settings.id == 6">
+                   <div class="kicfoff_list">
                     <div
-                      class="option child-item item-odds relative-position"
-                      :class="vx_cur_odd == item.value && 'active'"
-                      @click="select_time_change(item)"
+                      v-for="(item, i) in settings.value_arr"
+                      :key="i"
+                      @click="onClick(opt, i)"
+                      class="option"
                     >
-                      {{ item.label }}
-                      <i
-                        v-if="vx_cur_odd == item.value"
-                        class="icon-triangle3 q-icon c-icon arrow-show"
-                      ></i>
+                      <span class="text">{{ item.label }}</span>
                     </div>
                   </div>
-                </div>
+                </template>
               </q-card-section>
             </q-card>
           </q-expansion-item>
@@ -483,21 +472,13 @@ function change_theme() {
 .list {
   background: #fff;
 }
-.skin-icon-off {
-  width: 12px;
-  height: 12px;
-  background: #8a96ba;
-  border-radius: 50%;
-}
 .g-settings-style {
   width: 240px;
   max-height: 700px !important;
   border-radius: 4px !important;
   padding: 5px 0 10px 0;
   filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
-  //filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, .05));
   overflow: unset;
-
   &::before {
     content: "";
     position: absolute;
@@ -507,7 +488,6 @@ function change_theme() {
     top: -20px;
     left: 50%;
   }
-
   &::after {
     content: "";
     position: absolute;
@@ -515,98 +495,14 @@ function change_theme() {
     height: 0;
     border: 10px solid transparent;
     top: -19px;
-    left: 50%;
-  }
-
-  .q-list--bordered {
-    border: 0;
-  }
-
-  .settings-no-expand {
-    display: none;
-  }
-
-  .settings-item-header {
-    padding-right: 11px;
-  }
-
-  .skin-toggle {
-    display: flex;
-    width: 32px;
-    height: 16px;
-    justify-content: space-between;
-    align-items: center;
-    margin-right: 21px;
-    padding: 0 3px;
-    border-radius: 13px;
-
-    .skin-icon {
-      width: 8px;
-      height: 8px;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-  }
-
-  .settings-icon {
-    width: 14px;
-    height: 14px;
-  }
-
-  .child-item {
-    width: 100%;
-    height: 30px;
-    line-height: 30px;
-    padding: 0 16px 0 17px;
-    cursor: pointer;
-
-    .flag {
-      width: 14px;
-      height: 10px;
-      display: inline-block !important;
-      background-repeat: no-repeat;
-      background-size: 100%;
-      margin-right: 6px;
-    }
-
-    i.arrow-show {
-      position: absolute;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-weight: 700;
-    }
-  }
-
-  i.icon-triangle1 {
-    font-weight: 700;
-  }
-
-  .q-item {
-    min-height: 40px;
-  }
-
-  .q-card__section {
-    padding: 0;
-  }
-
-  .q-item__section--side {
-    padding-left: 4px;
-
-    &.q-item__section--avatar {
-      min-width: 14px;
-      padding-right: 6px;
-      padding-left: 0;
-    }
-
-    .q-expansion-item__toggle-icon {
-      font-size: 12px;
-    }
+    left:50%;
   }
 }
-.settings-icon {
-  width: 14px;
-  height: 14px;
+.skin-icon-off {
+  width: 12px;
+  height: 12px;
+  background: #8a96ba;
+  border-radius: 50%;
 }
 .kicfoff_list {
   //background: var(--qq--popup-wrap-bg-color);
@@ -644,12 +540,9 @@ function change_theme() {
     padding: 0;
   }
 }
-  .skin-icon-day {
-    background: url("~public/image/yabo/svg/icon_skin_day-black.svg") no-repeat center;
-  }
   .skin-icon-night {
-    width: 12px !important;
-    height: 12px !important;
+    width: 12px;
+    height: 12px;
     background-color: var(--qq--theme-bg-bet-text-delete);
     border-radius: 50%;
   }
