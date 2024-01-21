@@ -947,7 +947,7 @@ this.bet_appoint_ball_head= null */
   switch_bet_query_bet_amount() {
     // 单关且有数据 才能去请求限额
     if(this.is_bet_single && this.bet_single_list.length) {
-      let obj = this.bet_single_list.find(item => ["C01","B03","O01"].includes(item.dataSource)) || {}
+      let obj = this.bet_single_list.find(item => ["C01","B03","O01"].includes(item?.dataSource)) || {}
       // 合并投注 多项
       if(this.is_bet_merge){
         get_query_bet_amount_common()
