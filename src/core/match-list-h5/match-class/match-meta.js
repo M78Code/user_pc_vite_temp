@@ -1543,7 +1543,7 @@ class MatchMeta {
   handle_ws_directive({ cmd = '', data = {} }) {
     console.log('--------wswswswswswsws-cmd:', cmd, data)
     // 赛事新增
-    if (['C109', 'C302'].includes(cmd)) {
+    if (['C109'].includes(cmd)) {
       const { cd = [] } = data
       if (cd.length < 1) return
       const item = cd.find(t => t.csid == MenuData.menu_csid)
