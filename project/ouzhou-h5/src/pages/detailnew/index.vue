@@ -105,8 +105,8 @@ import { i18n_t } from "src/output/index.js"
 import infoRules from "src/base-h5/components/details/components/info-rules.vue"  // 视频info说明弹框
 // import './index.scss'
 // 欧洲4期 赛事分析
-import analysisFootball from "./analysis/football/index.vue"
-import analysisBasketball from "./analysis/basketball/index.vue"
+// import analysisFootball from "./analysis/football/index.vue"
+// import analysisBasketball from "./analysis/basketball/index.vue"
 export default {
   components:{
     detail_header_tem0,
