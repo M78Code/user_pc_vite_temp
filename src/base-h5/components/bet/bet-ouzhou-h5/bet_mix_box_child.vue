@@ -38,6 +38,8 @@
                       <bet-mix-box-child2></bet-mix-box-child2>
                   </div>
               </template>
+              <!-- 合并投注 常用金额 -->
+              <bet-merge />
               <!-- 键盘 -->
               <key-board></key-board>
             </template>
@@ -108,6 +110,7 @@ import betSpecialInput from "./bet-special-input.vue";
 import betSpecialState from "./bet-special-state.vue";
 import betSpecialResult from "./bet-special-result.vue";
 import betSpecialWinning from "./bet-special-winning.vue";
+import betMerge from "./bet-merge.vue"
 
 import betAllDetele from "./bet_all_detele.vue";
 import betBar from "./bet-bar.vue";
