@@ -180,13 +180,16 @@ export default {
         MatchDataBaseH5.clear();
         this.virtual_data_loading = true;
       }
-      api_v_sports.get_virtual_sport_list(params).then(res => {
+      api_v_sports[window.BUILDIN_CONFIG.IS_PC ? 'get_virtual_sport_list_pc' : 'get_virtual_sport_list'](params).then(res => {
         this.virtual_data_loading = false;
         // useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
         this.set_virtual_data_loading(0);
         // useMittEmit(MITT_TYPES.EMIT_IS_FIRST_LOADED);
         // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED);
-
+        // 兼容pc接口数据
+        if(res.data?.data && window.BUILDIN_CONFIG.IS_PC){
+          res.data = res.data.data;
+        }
         if(res.code == 200 && res.data && res.data.length){
           this.virtual_match_list = this.append_result_fields(res.data);
           this.check_next_no_start_time();
@@ -285,7 +288,11 @@ export default {
     v_basket_ball_update_n(){
       let params = this.param_generate();
       if(!params) return;
-      api_v_sports.get_virtual_sport_list(params).then(res => {
+      api_v_sports[window.BUILDIN_CONFIG.IS_PC ? 'get_virtual_sport_list_pc' : 'get_virtual_sport_list'](params).then(res => {
+        // 兼容pc接口数据
+        if(res.data?.data && window.BUILDIN_CONFIG.IS_PC){
+          res.data = res.data.data;
+        }
         if(res.code == 200 && res.data && res.data.length){
           this.virtual_match_list = this.append_result_fields(res.data);
 
@@ -327,7 +334,11 @@ export default {
         let params = this.param_generate();
         if(!params) return;
         if(this.current_batch.mmp == 'PREGAME' && this.no_title_list.length == 2) return
-        api_v_sports.get_virtual_sport_list(params).then(res => {
+        api_v_sports[window.BUILDIN_CONFIG.IS_PC ? 'get_virtual_sport_list_pc' : 'get_virtual_sport_list'](params).then(res => {
+          // 兼容pc接口数据
+          if(res.data?.data && window.BUILDIN_CONFIG.IS_PC){
+            res.data = res.data.data;
+          }
           if(res.code == 200 && res.data && res.data.length){
             this.virtual_match_list = this.append_result_fields(res.data);
             if(this.current_match.mmp == "INGAME" && res.data.length == 1 && res.data[0].mmp == "PREGAME"){
@@ -738,7 +749,11 @@ export default {
     update_no_title_list(){
       let params = this.param_generate();
       if(!params) return;
-      api_v_sports.get_virtual_sport_list(params).then(res => {
+      api_v_sports[window.BUILDIN_CONFIG.IS_PC ? 'get_virtual_sport_list_pc' : 'get_virtual_sport_list'](params).then(res => {
+        // 兼容pc接口数据
+        if(res.data?.data && window.BUILDIN_CONFIG.IS_PC){
+          res.data = res.data.data;
+        }
         if(res.code == 200 && res.data && res.data.length){
           let n_title_list = res.data.map(res_item => {
             let {no,mmp,batchNo} = res_item;
