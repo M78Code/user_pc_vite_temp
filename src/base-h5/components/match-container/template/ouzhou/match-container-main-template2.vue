@@ -299,7 +299,7 @@ export default {
         }
         &.active{
           //background: linear-gradient(0deg,rgba(255,112,0,.1) 0%,rgba(255,112,0,.1) 100%),#FFF;
-          background-color: #FF7000 !important;
+          background-color: var(--q-gb-bg-c-1) !important;
 
         }
       }
