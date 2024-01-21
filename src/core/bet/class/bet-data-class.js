@@ -611,10 +611,8 @@ this.bet_appoint_ball_head= null */
 
   // 设置 切换单关/串关切换
   set_is_bet_single(state) {
-    // 单关 切换到 串关 
-    // is_bet_single true 是单关 false 是串关
-    // is_bet_merge true 是合并  false是单关
-    if (this.is_bet_single && !this.is_bet_merge) {
+    // 单关 切换到串关 / 
+    if (this.is_bet_single) {
       // 串关数据 == 单关数据 // 同赛事不能大于一个投注项
       if(!this.bet_s_list.length){
         this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
@@ -628,27 +626,6 @@ this.bet_appoint_ball_head= null */
         }
       })
     }
-    // 合并 切换到 串关 
-    if (this.is_bet_single && this.is_bet_merge) {
-      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
-      getSeriesCountJointNumber((code, data) => {
-        if (code == 200) {
-            BetViewDataClass.set_bet_special_series(data)
-
-            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
-        }
-      })
-    }
-    // 串关 切换到 合并
-    if (!this.is_bet_single && this.is_bet_merge) {
-      console.log('串关 切换到 合并')
-      this.bet_single_list = lodash_.cloneDeep(this.bet_s_list)
-    }
-    // 串关 切换到 单关
-    if (!this.is_bet_single && !this.is_bet_merge) {
-      console.log('串关 切换到 单关')
-      this.bet_single_list = [lodash_.cloneDeep(this.bet_s_list).pop()]
-    }
 
     let is_bet_single = !this.is_bet_single
     // 有设置值 则使用设置的值
@@ -661,13 +638,11 @@ this.bet_appoint_ball_head= null */
     }
     // true 单关 false 串关
     this.is_bet_single = is_bet_single
-    // 重新去获取一次当前投注选项 并在列表中渲染
-    this.set_bet_oid_list()
-
     this.switch_bet_query_bet_amount()
-  
+    this.set_bet_oid_list()
     this.set_bet_data_class_version()
   }
+
 
   // 设置单关/单关合并 切换
   set_is_bet_merge(merge) {
@@ -973,7 +948,7 @@ this.bet_appoint_ball_head= null */
   switch_bet_query_bet_amount() {
     // 单关且有数据 才能去请求限额
     if(this.is_bet_single && this.bet_single_list.length) {
-      let obj = this.bet_single_list.find(item => ["C01","B03","O01"].includes(item?.dataSource)) || {}
+      let obj = this.bet_single_list.find(item => ["C01","B03","O01"].includes(item.dataSource)) || {}
       // 合并投注 多项
       if(this.is_bet_merge){
         get_query_bet_amount_common()
