@@ -62,7 +62,8 @@ export default {
       this.menu_list = res.menu_list;
       this.v_match_router_ente = res.v_match_router_ente;
       this.v_menu_changed = res.v_menu_changed;
-      console.log('ress', res);
+      // 切换菜单时修改csid
+      MenuData.set_vr_menu_csid(this.current_sub_menu.menuId);
     }
   }, 
   mounted(){

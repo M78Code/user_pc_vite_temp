@@ -1,33 +1,38 @@
 <!--
-* @Author: Router
-* @Description: 常规赛事的单关和串关投注信息展示组件
+* @Description: 合并单关 常用金额
 -->
-
 <template>
   <div class="bet-all-detele">
-    <div v-show="false"> {{ UserCtr.user_version }}-{{ BetData.bet_data_class_version }}</div>
-    <div class="del-info " @click.stop="clear">
-      <span class="icon-delete del-info-icon"></span>
-      <div class="del-info-name">{{ i18n_t('bet.delete_all') }}</div>
+    <div v-show="false">{{ BetData.bet_data_class_version }}</div>
+    
+    <!-- 合并单关 -->
+    <div class="del-info-select" @click.stop="set_is_bet_merge()">
+      <img class="" v-if="BetData.is_bet_merge" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
+      <img class="" v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_b.svg`" alt="" />
+      <span class="del-info-name">{{ i18n_t('bet.bet_merge') }}</span>
     </div>
-    <div class="del-info-select" @click.stop="switch_handle()">
-      <span class="del-info-name">{{ i18n_t('bet.bet_auto_msg_1') }}</span>
-      <img class="" v-if="BetData.bet_is_accept" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
+    
+    <!-- 常用金额 -->
+    <div class="del-info-select" @click.stop="set_is_regular_amount()">
+      <span class="del-info-name">{{ i18n_t('bet.used_money2') }}</span>
+      <img class="" v-if="BetData.is_regular_amount" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
       <img class="" v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_b.svg`" alt="" />
     </div>
+
   </div>
 </template>
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 
-const clear = () => {
-  BetData.set_clear_bet_info()
-  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+// 常用金额
+const set_is_regular_amount = () => {
+  BetData.set_regular_amount()
 }
 
-const switch_handle = () => {
-  BetData.set_bet_is_accept(!BetData.bet_is_accept)
+// 合并单关
+const set_is_bet_merge = () => {
+  BetData.set_is_bet_merge()
 }
 
 </script>
@@ -35,7 +40,7 @@ const switch_handle = () => {
 <style lang="scss" scoped>
 
 .del-info-name {
-  margin-left: 0.16rem;
+  margin-left: 0.1rem;
   color: var(--q-gb-bg-c-4);
   // margin-top: -.03rem;
   font-size: .14rem;
@@ -63,9 +68,10 @@ const switch_handle = () => {
   display: flex;
   justify-content: space-between;
   padding: 0 0.15rem;
-  background: var(--q-gb-bg-c-10);
+  background: var(--q-gb-bd-c-2);
   height: 0.4rem;
   align-items: center;
+  border-top: 1px solid  var(--q-gb-bd-c-1);
 
   .mask {
     position: absolute;
