@@ -67,7 +67,7 @@
           <!-- <div class="match-detail-odds-bottom"></div> -->
         </q-tab-panel>
         <q-tab-panel name="event_analysis">
-          <analysisFootball
+<!--          <analysisFootball
               v-if="match_detail.csid == 1"
               :active_tab="detail_event_tabs_value"
               :match_odds_info="match_odds_info"
@@ -77,8 +77,8 @@
               :active_tab="detail_event_tabs_value"
               :match_odds_info="match_odds_info"
               :match_detail="match_detail"
-          ></analysisBasketball>
-<!--           <event_analysis :match_odds_info="match_odds_info" :match_detail="match_detail" :active_tab="detail_event_tabs_value" />-->
+          ></analysisBasketball>-->
+           <event_analysis :match_odds_info="match_odds_info" :match_detail="match_detail" :active_tab="detail_event_tabs_value" />
         </q-tab-panel>
       </q-tab-panels>
     </div>
