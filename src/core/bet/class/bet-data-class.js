@@ -47,7 +47,7 @@ class BetData {
     // 投注记录数量
     this.bet_record_count = 0
     // 是否勾选常用金额
-    this.is_checked_regular_amount = true
+    this.is_regular_amount = true
 
     // 是否为合并模式
     this.is_bet_merge = false;
@@ -280,11 +280,11 @@ this.bet_appoint_ball_head= null */
   */
   set_bet_is_accept(val) {
     this.bet_is_accept = val
-    BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet.bet_upd"})
+    // BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet.bet_upd"})
 
-    setTimeout(()=>{
-      BetViewDataClass.set_bet_before_message({code:'',message:""})
-    },5000)
+    // setTimeout(()=>{
+    //   BetViewDataClass.set_bet_before_message({code:'',message:""})
+    // },5000)
 
     this.set_bet_data_class_version()
   }
@@ -293,7 +293,7 @@ this.bet_appoint_ball_head= null */
    * 设置 是否使用常用金额
    */
   set_regular_amount() {
-    this.is_checked_regular_amount = !this.is_checked_regular_amount
+    this.is_regular_amount = !this.is_regular_amount
     this.set_bet_data_class_version()
   }
 
@@ -611,8 +611,10 @@ this.bet_appoint_ball_head= null */
 
   // 设置 切换单关/串关切换
   set_is_bet_single(state) {
-    // 单关 切换到串关 / 
-    if (this.is_bet_single) {
+    // 单关 切换到 串关 
+    // is_bet_single true 是单关 false 是串关
+    // is_bet_merge true 是合并  false是单关
+    if (this.is_bet_single && !this.is_bet_merge) {
       // 串关数据 == 单关数据 // 同赛事不能大于一个投注项
       if(!this.bet_s_list.length){
         this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
@@ -626,6 +628,27 @@ this.bet_appoint_ball_head= null */
         }
       })
     }
+    // 合并 切换到 串关 
+    if (this.is_bet_single && this.is_bet_merge) {
+      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
+      getSeriesCountJointNumber((code, data) => {
+        if (code == 200) {
+            BetViewDataClass.set_bet_special_series(data)
+
+            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+        }
+      })
+    }
+    // 串关 切换到 合并
+    if (!this.is_bet_single && this.is_bet_merge) {
+      console.log('串关 切换到 合并')
+      this.bet_single_list = lodash_.cloneDeep(this.bet_s_list)
+    }
+    // 串关 切换到 单关
+    if (!this.is_bet_single && !this.is_bet_merge) {
+      console.log('串关 切换到 单关')
+      this.bet_single_list = [lodash_.cloneDeep(this.bet_s_list).pop()]
+    }
 
     let is_bet_single = !this.is_bet_single
     // 有设置值 则使用设置的值
@@ -638,6 +661,9 @@ this.bet_appoint_ball_head= null */
     }
     // true 单关 false 串关
     this.is_bet_single = is_bet_single
+    // 重新去获取一次当前投注选项 并在列表中渲染
+    this.set_bet_oid_list()
+
     this.switch_bet_query_bet_amount()
   
     this.set_bet_data_class_version()
@@ -662,7 +688,7 @@ this.bet_appoint_ball_head= null */
     }
     this.is_bet_merge = is_merge
 
-    this.switch_bet_query_bet_amount()
+    // this.switch_bet_query_bet_amount()
 
     this.set_bet_data_class_version()
   }
@@ -961,8 +987,8 @@ this.bet_appoint_ball_head= null */
       }
     }
     // 串关要大于1条才能去请求限额
-    if(!this.is_bet_single && (this.bet_s_list.length > 1 || this.bet_single_list.length > 1)){
-      let obj = this.bet_single_list.find(item => ['esports_bet','vr_bet'].includes(item.bet_type)) || {}
+    if(!this.is_bet_single && (this.bet_s_list.length > 1)){
+      let obj = this.bet_s_list.find(item => ['esports_bet','vr_bet'].includes(item.bet_type)) || {}
       // 串关 在vr或者电竞里面 
       if(obj.bet_type){
         get_query_bet_amount_esports_or_vr()
