@@ -64,7 +64,7 @@
           v-if="!match_style_obj.is_fold_tab_play">
           <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`"></div>
           <div class="row">
-            <div class="handicap-col fifteen-item bet-item-wrap fifteen_tab_txt" v-for="(item, key) in bet_col" :class="[{ 'tab-tilte-bg': set_secondary_bg(key, bet_col.length) },
+            <div class="handicap-col fifteen-item bet-item-wrap fifteen_tab_txt secondary-gameplay-title-text" v-for="(item, key) in bet_col" :class="[{ 'tab-tilte-bg': set_secondary_bg(key, bet_col.length) },
             { 'flex justify-center items-center': item.includes('%n') },
             { 'highlight-t': set_secondary_bg(key, bet_col.length) && !item.includes('%n') }]" :key="key"
               :style="`width:${get_bet_width(key, bet_col.length,match.play_current_key == 'hpsCompose')}px !important;`"

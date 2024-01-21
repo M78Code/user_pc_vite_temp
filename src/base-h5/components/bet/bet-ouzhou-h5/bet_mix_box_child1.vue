@@ -14,8 +14,9 @@
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one">
                         <div class="nonebox4-content-left-content-text-one-tit">
-                          <!-- <span class="text-flow-none">{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></span>  -->
-                          <span class="text-flow-none">Sevilla Fútbol Club 【{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}】 <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></span> 
+                          <span class="text-flow-none">{{items.handicap}}  <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em>
+                            【{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}】
+                          </span> 
                         </div>
                         <div>
                             <div class="nonebox4-content-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
@@ -35,17 +36,16 @@
                       <div class="nonebox4-content-left-content-text-two">
                        {{items.matchType == 2? '['+i18n_t("bet.bet_inplay")+']' :''}} 
                        <span class="text-two-span">
-                       <!-- [{{items.playName}}] -->
+                        <span>{{items.playName}} </span>
+                        {{ items.matchType == 2 && [1,2,3,8,9].includes(items.sportId *1) ? items.mark_score : '' }}
                        <!-- <span class="text-two-span">{{items.playName}} -->
-                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
-                         <span>1X2</span>
                         </span>
                         <!-- <span v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]</span> 
                         <span v-else>[{{ i18n_t(`odds.EU`) }}]</span>  -->
                         
                       </div>
                       <div class="nonebox4-content-left-content-text-three">{{items.tid_name}}</div>
-                      <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{ items.matchType == 2? items.mark_score : ''}}</div>
+                      <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{items.matchType == 2? items.mark_score : ''}}</div>
                     </div>
                    
                     
@@ -198,7 +198,6 @@ import { reactive } from "vue";
       line-height: 0.25rem;
       margin-top: 0.02rem;
       width: 100%;
-      border-bottom: 1px solid #E2E2E2;
   }
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
@@ -229,7 +228,8 @@ import { reactive } from "vue";
       }
     }
     .bet-disabled{
-      padding: 0 0.2rem;
+      width: .6rem;
+      text-align: center;
       height: .26rem;
       display: inline-block;
       border-radius: 0.02rem;
