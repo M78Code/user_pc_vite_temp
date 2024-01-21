@@ -18,7 +18,7 @@
                 </div>
         
                 <div>
-                    <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
+                    <input class="bet-input" v-model="ref_data.money" type="text" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
                     :placeholder="`${i18n_t('bet.money_range')} ${ ref_data.min_money ? format_money3(ref_data.min_money) :''}~${ref_data.max_money ? format_money3(ref_data.max_money) : ''}`" maxLength="11"  />
                 </div>
             
@@ -194,26 +194,19 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
-    let money = 0
+    ref_data.money = Number(ref_data.money)
     // 输入控制
-    if( ref_data.money*1 < ref_data.max_money*1 &&  ref_data.money*1 < UserCtr.balance*1 ){
-        money = ref_data.money
+    if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
+        BetData.set_bet_obj_amount(ref_data.money,props.items.playOptionsId)
     }else{
         // 最大限额不能大于余额
         let money_a = ref_data.max_money
-        if(UserCtr.balance*1 < ref_data.max_money*1){
+        if(UserCtr.balance < ref_data.max_money){
             money_a = UserCtr.balance
         }
         ref_data.money = money_a
-        money = money_a
+        BetData.set_bet_obj_amount(money_a,props.items.playOptionsId)
     }
-
-    if( money*1 == 0 ) {
-        money = 0
-        ref_data.money = 0
-    }
-    BetData.set_bet_obj_amount(money,props.items.playOptionsId)
-
 }
 
 // 快捷金额 state true   false
