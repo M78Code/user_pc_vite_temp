@@ -395,6 +395,10 @@ class MenuData {
     this.collect_menu = '';
     this.result_menu =  0;
     this.date_tab_index = 0;
+    this.current_lv_3_menu = {
+      field1:"",
+      menuType:""
+    };
   }
   /**
    * 设置时间 并且设置时间请求参数
