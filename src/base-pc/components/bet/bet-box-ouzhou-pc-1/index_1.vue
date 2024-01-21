@@ -151,24 +151,24 @@ const show_merge_change = () => {
   BetData.set_is_bet_merge('merge')
 }
 
+// 使用ResizeObserver来监听高度变化
+const resizeObserver = new ResizeObserver(() => {
+    ref_data.bet_scroll_height = betScrollContent.value?.clientHeight;
+
+    // 在高度变化时执行一些操作
+    betScrollView.value.scrollTop = ref_data.bet_scroll_height
+  });
+  
 watchEffect(() => {
   if (betScrollContent.value) {
-    // 使用ResizeObserver来监听高度变化
-    const resizeObserver = new ResizeObserver(() => {
-      ref_data.bet_scroll_height = betScrollContent.value?.clientHeight;
-
-      // 在高度变化时执行一些操作
-      betScrollView.value.scrollTop = ref_data.bet_scroll_height
-    });
-
     // 开始监听
     resizeObserver.observe(betScrollContent.value);
-
-    // 在组件销毁时停止监听
-    onBeforeUnmount(() => {
-      resizeObserver.disconnect();
-    });
   }
+});
+
+// 在组件销毁时停止监听
+onBeforeUnmount(() => {
+  resizeObserver.disconnect();
 });
 
 onMounted(() => {
