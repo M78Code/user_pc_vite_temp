@@ -1,6 +1,6 @@
 <template>
   <div class="component template-column">
-    <div class="main ol-list-container">
+    <!-- <div class="main ol-list-container">
       <template v-for="title in data.title" :key="title.otd">
         <div class="ol-column">
           <OddsTitle class="ol-title" :list="[title]"></OddsTitle>
@@ -18,6 +18,26 @@
         <OddOlItem :value="item" v-if="item.otd == -1" :key="item.oid"
           :type="olType"></OddOlItem>
       </template>
+    </div> -->
+
+    <div class="main ol-list-container">
+      <template v-for="title in data.title" :key="title.otd">
+        <div class="ol-column">
+          <OddsTitle class="ol-title" :list="[title]"></OddsTitle>
+          <template v-for="item in mains[title.otd]" :key="item.oid">
+            <OddOlItem :value="item"
+            :type="olType"
+            >
+            </OddOlItem>
+          </template>
+        </div>
+      </template>
+    </div>
+    <div class="other ol-item">
+      <template v-for="item in others" :key="item.oid">
+        <OddOlItem :value="item"
+          :type="olType"></OddOlItem>
+      </template>
     </div>
   </div>
 </template>
@@ -33,21 +53,23 @@ const props = defineProps<{
 
 const olType = common.getOlTypeOfTemplate4(props.data)
 
-/** @type {} */
-const titles = ref(new Map())
-const other = ref([])
+const titles = ref(new Map<Number,Array<TYPES.Ol>>())
+const others = ref<Array<TYPES.Ol>>([])
 props.data.title.forEach(item=>titles.value.set(item.otd,[]))
 
-const list = computed(()=>{
+const mains = computed(()=>{
+  titles.value = new Map()
+  others.value = []
   props.data.hl.forEach(hl=> {
     hl.ol.forEach(ol=> {
       if(titles.value.has(ol.otd)){
-        titles.value.get(ol.otd)
+        titles.value.get(ol.otd).push(ol)
       }else {
-
+        others.value.push(ol)
       }
     })
   })
+  return titles.value
 })
 
 </script>
