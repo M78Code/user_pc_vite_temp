@@ -3,7 +3,7 @@
  * @Date: 2023-11-12 13:52:55
  * @Description: url参数页面跳转核心逻辑
  */
-import { into_home_event } from "src/output/index.js"
+import { into_home_event } from "src/core/hide-api/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 // 获取sessionStorage中的location_search数据
 const get_session_storage_location_search = () =>
@@ -261,12 +261,10 @@ const watch_route_fun = (to, from, that)=>{
   // if(BUILDIN_CONFIG.PROJECT_NAME == 'app-h5' && to.name == 'virtual_sports_details'){
   //   return;
   // }
-  console.error('to.name:',to.name,that);
   // 发送进入首页埋点消息
   if(that && ['matchList','home'].includes(to.name)){
     clearTimeout(that.timer);
     that.timer = setTimeout(() => {
-      console.error('发送进入首页埋点消息.',lodash.get(UserCtr,'user_info.userId'));
       lodash.get(UserCtr,'user_info.userId') && into_home_event();
     }, 2000);
   }

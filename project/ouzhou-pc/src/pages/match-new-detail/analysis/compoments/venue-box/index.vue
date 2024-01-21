@@ -5,7 +5,7 @@
 -->
 <template>
   <div>
-    <div class="analysis-body">
+    <div class="component analysis-body">
       <div class="analysis-top">
         <div class="analysis-top-l">
           <!-- <div class="v-icon switch-icon"></div> -->
@@ -31,7 +31,7 @@
             detail_info.man
           }}</span>
         </div>
-        <div class="analysis-top-right">
+        <div class="analysis-top-right" v-if="!MenuData.is_esports()">
           <!-- 视频图标 -->
           <img
             v-if="cur_video_icon.type"
@@ -95,12 +95,12 @@ import sportIcon from "src/components/sport_icon/sport-icon.vue";
 import { get_match_status } from "src/output/module/constant-utils.js";
 import { useRoute } from "vue-router";
 
-const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`;
-const animal_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal_active.png`;
-const score = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score.png`;
-const score_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score_active.png`;
-const video_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/video_active.png`;
-const video = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/video.png`;
+const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/animal.png`;
+const animal_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/animal_active.png`;
+const score = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/score.png`;
+const score_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/score_active.png`;
+const video_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/video_active.png`;
+const video = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/video.png`;
 
 const route = useRoute();
 const props = defineProps({
@@ -123,6 +123,11 @@ watch(
   () => props.detail_info,
   (val) => {
     if (val) {
+      console.log(route.params,'params');
+      if(MenuData.is_esports()){
+        tab_click('video');
+        return
+      }
       if (route.params?.type) {
         tab_click(route.params?.type);
         return;

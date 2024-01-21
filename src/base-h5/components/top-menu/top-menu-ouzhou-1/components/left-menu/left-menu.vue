@@ -146,7 +146,12 @@ const setPopularSort = (mi) =>{
  */
 const set_menu_obj = (data) => {
   if(data.route == '/virtual'){
+    MenuData.set_current_lv1_menu(300);
     MenuData.set_vr_menu_csid('1001');
+  }
+  if(data.route == '/esports'){
+    MenuData.set_current_lv1_menu(2000);
+    MenuData.set_menu_mi('2100');
   }
   router.push(data.route)
 }
@@ -174,11 +179,11 @@ const change_current_menu = (item) => {
     return router.push({name: 'champion'})
   }else{
     // MatchMeta.set_origin_match_data()
-    useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,item.mi);
     BaseData.set_is_emit(false)
     // 重置所选 球种默认玩法 hpid
     MenuData.set_current_lv1_menu('2');
     MatchResponsive.reset_match_hpid_by_csid()
+    useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,item.mi);
   }
   if(route.name != "matchList"){
     //跳转今日列表

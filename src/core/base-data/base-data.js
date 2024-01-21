@@ -351,7 +351,7 @@ class BaseData {
   set_ws_send_new_vr_menu_init() {
     // console.warn('开始模拟推送菜单数据-----')
     this.vr_mi_config = vr_menu_info;
-    this.base_data_version.value = Date.now();
+  this.set_base_data_version()
   }
 
   // 菜单初始化 因为菜单是去轮询的 so
@@ -442,6 +442,9 @@ class BaseData {
     // 获取菜单数据缓存
     let session_info = localStorage.getItem("is_session_base_data");
     if (!session_info) {
+      // 设置新旧菜单关系 使用默认值
+      this.mi_euid_map_res = mi_euid_mapping_default;
+      this.base_data_version()
       return;
     }
     const session_base_data = JSON.parse(session_info);
@@ -455,6 +458,7 @@ class BaseData {
       // this.resolve_menus(menu_i18n_default)
     }
     this.conventionalType = [101,102]; 
+    this.base_data_version()
   }
   /**
    * 滚球赛事的赛种id
@@ -727,7 +731,7 @@ class BaseData {
       // console.error("left_menu_base_mi_arr", this.left_menu_base_mi_arr);
 
       // 更新版本
-      this.base_data_version.value = Date.now();
+    this.set_base_data_version()
     }
     // console.error('this',this)
   }
@@ -785,6 +789,12 @@ class BaseData {
     this.commn_sport_guanjun_obj = commn_sport_guanjun_obj;
   }
 
+  // 设置版本变更
+  set_base_data_version = lodash_.debounce(() => {
+    this.base_data_version.value = Date.now()
+    console.error('thius',this)
+  }, 10)
+
   /**
    * 获取 菜单-联赛-赛事
    */
@@ -803,7 +813,7 @@ class BaseData {
       if (!this.is_emit) {
         useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
       }
-      this.base_data_version.value = Date.now();
+    this.set_base_data_version()
     } catch (error) {
       console.error("获取 元数据接口 error", error);
     }
@@ -875,8 +885,8 @@ class BaseData {
   /**
    * 解析  菜单 国际化
    */
-  resolve_menus(res) {
-    if (!res) return
+  resolve_menus(res = {}) {
+    if (!Object.keys(res).length) return
     // 获取语言类型
     let locale = lodash_.get(i18n,'global.locale','zh') || "zh";
     // 设置 语言变量
@@ -1246,7 +1256,7 @@ class BaseData {
 
     // this.is_mi_300_open = res_2.includes("false");
 
-    this.base_data_version.value = Date.now();
+  this.set_base_data_version()
     // console.warn(
     //   "用户数据解析完成----------电竞--",
     //   this.is_mi_300_open_int,

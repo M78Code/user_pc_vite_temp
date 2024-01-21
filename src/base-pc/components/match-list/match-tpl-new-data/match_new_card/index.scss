@@ -1,0 +1,209 @@
+.match-new-card {
+    height: 80px;
+    background-color: var(--qq--list-new-bg-color);
+    border-radius: 6px;
+    // box-shadow: 0px 2px 8px 0px #d9deea;
+    display: flex;
+    // z-index: -1;
+    // position: relative;
+
+    .match-part {
+        width: 54px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        span {
+            color: #555555;
+            font-size: 12px;
+
+            &:nth-child(1) {
+                font-weight: 600;
+                line-height: 20px;
+            }
+        }
+
+    }
+
+    .match-des {
+        flex: 1;
+        border-left: 1px solid var(--qq--list-new-border-color);
+        ;
+        border-right: 1px solid var(--qq--list-new-border-color);
+        ;
+        padding: 14px 15px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+
+        .match-data {
+            width: 40px;
+            height: 52px;
+            font-size: 12px;
+            line-height: 52px;
+            text-align: center;
+            background-color: var(--qq--list-data-bg-color);
+            //  padding: 0px 4px;
+            border-radius: 2px;
+            color: var(--qq--match-new-text-color1);
+            cursor: pointer;   
+        }
+        .no-data {
+            cursor: auto !important;
+        }
+        .match-new-handicap {
+            --private-match-new-handicap-margin: 10px;
+            --private-match-new-handicap-padding-y: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            // min-width: 324px;
+            flex: 1;
+            height: 52px;
+            background-color: var(--qq--handicap-new-bg-color);
+            border-radius: 3px;
+            &:hover{
+                background-color: var(--qq--match-bg-color7);
+            }
+            &.active{
+                color: var(--qq--match-text-color2) !important;
+                background: var(--qq--match-bg-color6) !important;
+            }
+            &.is_iframe {
+                width: 200px;
+            }
+            img {
+                height: 28px;
+                width: 28px;
+            }
+        }
+
+        .match-left {
+            margin-left: var(--private-match-new-handicap-margin);
+            // 兼容内嵌版宽度, 缩小内边距为内容提供更多空间
+            padding: 0px var(--private-match-new-handicap-padding-y);
+
+            img {
+                margin-left: 6px;
+            }
+        }
+
+        .match-right {
+            margin-right: var(--private-match-new-handicap-margin);
+            // 兼容内嵌版宽度, 缩小内边距为内容提供更多空间
+            padding: 0px var(--private-match-new-handicap-padding-y);
+
+            img {
+                margin-right: 6px;
+            }
+        }
+    }
+
+    .match-method {
+        width: 54px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .match-odd {
+        font-weight: 700;
+        font-size: 14px;
+        color: #1d1d1d
+    }
+
+    .match-score {
+        color: var(--qq--y0-text-color1);
+        font-size: 20px;
+        width: 50px;
+        text-align: center;
+    }
+
+    .odd-detail {
+        width: 120px;
+        height: 52px;
+        background-color: var(--qq--handicap-new-bg-color);
+        &:hover{
+            background-color: var(--qq--match-bg-color7);
+        }
+        &.active{
+            color: var(--qq--match-text-color2) !important;
+            background: var(--qq--match-bg-color6) !important;
+        }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 3px;
+
+    }
+    .active .common-text{
+        color: var(--qq--match-text-color2);
+    }
+    .common-text {
+        color: var(--qq--yb-text-color4_6);
+        font-size: 12px;
+    }
+
+    .mr-8 {
+        margin-right: 8px;
+        white-space: nowrap;
+    }
+
+    .mb-15 {
+        margin-bottom: 15px;
+    }
+
+    .lift_up {
+        // opacity: .1;
+        background-color: var(--qq--odd-up-bg-color) !important;
+    }
+
+    .lift_down {
+        // opacity: .1;
+        background-color: var(--qq--odd-down-bg-color) !important;
+    }
+
+
+    .v-icon {
+        // width: 20px;
+        // height: 14px;
+        cursor: pointer;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 1px 3px 1px 3px;
+        color: var(--qq--theme-color-bet-keyboard_2);
+        border-radius: 2px;
+        font-size: 12px;
+        line-height: 14px;
+        border: 1px solid var(--qq--theme-color-bet-keyboard_2);
+        margin-bottom: 4px;
+    }
+
+    .video-active {
+
+        color: var(--qq--y0-text-color2)
+        ;
+        border: 1px solid var(--qq--y0-text-color2);
+        ;
+    }
+    .match-left .match-item-team-name{
+        text-align: right;
+        justify-content: flex-end;
+    }
+    .match-name {
+        max-width: 130px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        // 由BUG:45536 要求队伍名只显示一行, 覆盖以下样式
+        // display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        width: 0;
+        flex: 1;
+
+    }
+}

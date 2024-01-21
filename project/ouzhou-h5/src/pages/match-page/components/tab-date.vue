@@ -9,7 +9,7 @@
                 }}</span>
                 <template v-if="item === 'League'">
                     <!-- league的下拉项 -->
-                    <div class="select" v-if="store.tabActive == 'League'" ref="dateOptionsRef" @click="toggerModel">
+                    <div class="select" v-if="store.tabActive == 'League'" ref="dateOptionsRef" @click.stop="toggerModel">
                         <span class="select-text">{{
                             i18n_t(store.curSelectedOption.label)   
                         }}</span>
@@ -29,6 +29,7 @@
             </div>
          
         </div>
+        <span class="sport-bg" :style="compute_css_obj({key:'eu-menu-sport-bg-image', position:format_type(MenuData.menu_mi.value)})"></span>
         <!-- :class="'store.current_menu_mi_' + store.current_menu_mi" -->
         <div :style="{ backgroundPositionY: `${farmatSportImg(store.current_menu_mi)}px` }"
             class="menu_list_top_tab_background"></div>
@@ -70,7 +71,7 @@ import {
     computed
 } from "vue";
 import { dateWeekMatchesFormat, farmatSportImg } from '../utils';
-import { MenuData } from "src/output/index.js";
+import { MenuData ,compute_css_obj} from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { store } from "project_path/src/pages/match-page/index.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
@@ -78,6 +79,7 @@ import STANDARD_KEY from "src/core/standard-key";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { api_common } from "src/api";
 import MatchFold from 'src/core/match-fold/index.js'
+import { oz_sprite_bg_images_postion } from "src/output/module/constant-utils.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 const emitters = ref({})
@@ -106,6 +108,14 @@ const DateOptionsOffset = computed(() => {
         'left': result + 'px'
     }
 })
+/**
+ * @description: 球类id转化背景
+ * @param {String} id 球类id
+ * @return {}
+ */
+ const format_type = ( id ) => {
+  return oz_sprite_bg_images_postion[id]
+}
 /**
  * 获取对应日期
  */
@@ -156,6 +166,7 @@ const changeTab = (name, index) => {
 const toggerModel = () => {
     store.tabModel = !store.tabModel;
 }
+
 /**
  * 下拉框选择
  * @param {*} index 
@@ -166,6 +177,7 @@ const changeDate = (index) => {
     emit("changeDate", store.selectOptions[index].timestamp);
     store.curSelectedOption = store.selectOptions[index]
 }
+
 /**
  * 时间选择tab-赛事列表筛选
  * @param {*} item 
@@ -221,6 +233,13 @@ const setDefaultData = async (val,type) => {
     scrollDateRef.value && scrollDateRef.value.scrollTo(index?index-2:0, "start-force");
     
 }
+
+const click_tabs = ()=> {
+    if(store.tabModel){
+       return !store.tabModel;
+    };
+}
+
 onMounted(async () => {
     //当前激活球种id  如果本地有存储值就取本地存储的值
     const session_info = LocalStorage.get(menu_h5);
@@ -230,6 +249,12 @@ onMounted(async () => {
     emitters.value = {
         emitters_1: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, setDefaultData).off
     }
+
+    const el = document.querySelector('.ouzhou-h5-layout')
+    el.addEventListener('click', () => {
+        store.tabModel = false
+    });
+
 })
 onUnmounted(() => {
     Object.values(emitters.value).map((x) => x());
@@ -254,7 +279,17 @@ const areaListChange = (item) => {
 .header {
     font-size: 16px;
     font-family: Roboto;
-
+    .sport-bg{
+      --per:-0.5rem;
+      position: absolute;
+      right: 0;
+      top: 0;
+      display: inline-block;
+      width: 141.25px;
+      height: 50px;
+      background-size: 100% auto;
+      background-position: right;
+    }
 
     // 头部tab样式
     .tabs {

@@ -294,6 +294,7 @@ export default {
 }
 /*  阵容图 */
 .lineup-bg {
+  margin-top:10px;
   // min-width: 950px;
   .lineup-img {
     width: 100%;

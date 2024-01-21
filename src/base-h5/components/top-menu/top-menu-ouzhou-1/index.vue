@@ -26,7 +26,7 @@
         </template>
          <!-- vr 头部 -->
         <template v-else-if="is_vr_page">
-            <vrTop :is_vr_page="is_vr_page"/>
+            <vrTop :is_vr_page="is_vr_page" @toggle_drawer="toggleLeftDrawer" />
         </template>
         <!-- home 头部 -->
         <template v-else>
@@ -94,7 +94,8 @@ const get_route_name = computed(() => {
  * 个人中心 电竞
  */
 const is_personal_page = computed(() => {
-  return ['/personal','/esports'].includes(router.currentRoute.value.path)
+  // ,'/esports'
+  return ['/personal'].includes(router.currentRoute.value.path)
 })
 /**
  * vr 头部

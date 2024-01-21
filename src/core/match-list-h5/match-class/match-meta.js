@@ -663,12 +663,14 @@ class MatchMeta {
     this.clear_match_info()
     VirtualList.clear_virtual_info()
     //兼容复刻版电竞冠军
+    console.log(MenuData)
     const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "");
     const menuType = lodash.get(MenuData.current_lv_3_menu, 'menuType', "");
     const is_kemp = menuType == '100';
     // 电竞的冠军
     const category = MenuData.get_menu_type() === 100 || is_kemp ? 2 : 1
-    const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
+    // 复刻版 lodash.get(MenuData.current_lv_2_menu, 'csid'； 欧洲版 lodash.get(MenuData, 'menu_csid', 100)
+    const csid = lodash.get(MenuData.current_lv_2_menu, 'csid') || lodash.get(MenuData, 'menu_csid', 100)
     const params = this.get_base_params()
     const http_key = `exports_${csid}_${md}`
     this.set_current_http_key(http_key)
@@ -1136,8 +1138,9 @@ class MatchMeta {
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return
 
-    const target_list = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
-
+    const target_data = MatchUtils.generate_match_classify_tid(list)
+    // console.log(target_data)
+    const target_list = MatchUtils.handler_match_classify_by_csid(target_data).filter((t) => t.mid)
     const custom_match_mids = target_list.map(t => t.mid)
 
     this.complete_matchs = lodash.uniqBy(target_list, 'mid')
@@ -1576,8 +1579,9 @@ class MatchMeta {
             // this.handle_custom_matchs({ list: this.complete_matchs })
           } else {
             // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
-            this.compute_current_matchs()
-            this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+            // this.compute_current_matchs()
+            // this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+            this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
           }
           clearTimeout(this.debounce_timer)
           this.debounce_timer = null

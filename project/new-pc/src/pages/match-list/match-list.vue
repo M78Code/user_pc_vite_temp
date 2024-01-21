@@ -4,7 +4,7 @@
  * @Description: 赛事主列表页
 -->
 <template>
-  <div v-if="!show_filter" class="yb-match-list column full-height   relative-position" :data-version="MatchListCardDataClass.list_version">
+  <div v-show="!show_filter" class="yb-match-list column full-height   relative-position" :data-version="MatchListCardDataClass.list_version">
     <div class="test-info-wrap" v-show="GlobalAccessConfig.get_wsl()">
       <!-- <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div> -->
       <!-- 临时调试用 -->
@@ -31,7 +31,13 @@
           <refresh :loaded="load_data_state != 'loading'" :other_icon="true" :icon_name="1" @click="on_refresh" />
         </template>
       </list-header> -->
-      <match-detail-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state" @change_race="change_race">
+      <match-detail-header 
+        :collect_count="collect_count" :is_show_hot="is_show_hot" 
+        :select_list="select_list" :load_data_state="load_data_state" 
+        @change_race="change_race"
+        @change_version="change_version"
+        @change_hot="change_hot"
+        >
         <template #refresh>
           <div class="refreh-container">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/refresh_header.svg`" 
@@ -88,7 +94,7 @@
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
         </template>
-        <match-list-card v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :class="card_key" />
+        <match-list-card v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key"/>
         <template v-slot:after>
           <div style="height:15px"></div>
           <div class="pager-wrap row justify-end">
@@ -108,7 +114,7 @@
       <div class="img-loading custom-format-img-loading" :style="compute_css_obj('pc-img-loading')"></div>
     </div>
   </div>
-  <match_list_filter v-else @close="match_list_close"/>
+  <match_list_filter v-show="show_filter" @close="match_list_close"/>
 </template>
 <script setup>
 import { onMounted, onUnmounted, watch, ref } from "vue";
@@ -143,18 +149,60 @@ import { set_template_width } from 'src/core/match-list-pc/list-template/match-l
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/output/index.js";
 import "./match_list.scss";
 import match_list_filter from "./components/match-list-filter.vue";
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { UserCtr } from "src/output/index.js";
+
 const match_list_card_key_arr = ref([])
 const show_filter = ref(false);
+// 选择的联赛
+const select_list = ref([]);
 function MatchListCardDataClass_match_list_card_key_arr() {
   match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
 }
 use_match_list_ws()
 
 /**
- * 关闭筛选
+ * 切换专业/新手版
+ * @param {{id: number}} params 
  */
-function match_list_close() {
+function change_version(params) {
+  //TODO: 切换专业/新手版 1 专业版 2 新手版
+  const type = params.id;
+  useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true)
+  UserCtr.set_standard_edition(params)
+  useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
+  let timer = setTimeout(() => {
+        // VirtualList.set_is_show_ball(true)
+        MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+        clearTimeout(timer)
+        timer = null
+        // if (MenuData.is_collect()) {
+        //     MatchMeta.handler_match_list_data({ list: MatchMeta.complete_matchs, scroll_top: 0 })
+        // } else {
+        //     MatchMeta.clear_match_info()
+        //     MatchMeta.set_origin_match_data({})
+        // }
+        // MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
+    }, 350)
+
+}
+
+/**
+ * 修改热门
+ * @param {number} params 
+ */
+function change_hot(params) {
+  // TODO: 修改热门 0热门/1时间
+}
+
+/**
+ * 关闭筛选
+ * @param {Array<string>} value 选择的id
+ */
+function match_list_close(value) {
   show_filter.value = !show_filter.value;
+  select_list.value = value;
   // TODO: 关闭筛选，刷新列表
 }
 

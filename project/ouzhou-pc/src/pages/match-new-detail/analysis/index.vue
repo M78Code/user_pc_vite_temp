@@ -25,10 +25,11 @@
         </div>
       </div> -->
       <!-- 分析页动画 -->
-      <div v-if="!lodash_.isEmpty(score_list) && detail_info.ms > 0">
+      <!-- csid==1 || csid==2 并且 mbmty == 2 || mbmty == 4 为电子足球/篮球 -->
+      <div v-if="!lodash_.isEmpty(score_list) && detail_info.ms > 0 && !((detail_info.csid == 1 || detail_info.csid == 2 ) && ([2,4].includes(detail_info.mbmty)))">
         <div
           class="tabs-wrap"
-          v-if="['1', '2', '5', '9', '10'].includes(String(detail_info.csid))"
+          v-if="['1', '2', '5', '9','7', '10'].includes(String(detail_info.csid))"
         >
           <span
             v-for="item in tabList"
@@ -45,9 +46,9 @@
           :detail_info="detail_info"
           :score_list="score_list"
         />
-        <!-- 2篮球、5网、9排球、10羽毛球 -->
+        <!-- 2篮球、5网、7,斯诺克， 9排球、10羽毛球 -->
         <basket-ball-stats
-          v-if="['2', '5', '9', '10'].includes(String(detail_info.csid))"
+          v-if="['2', '5', '7','9', '10'].includes(String(detail_info.csid))"
           :detail_info="detail_info"
           :score_list="score_list"
         />

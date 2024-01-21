@@ -148,14 +148,13 @@ const nightClickType = reactive({ typeL: 0, urlL: null })
 const settings_items = ref([
         {
           // 近期开赛
-          id: 3,
+          id: 4,
           name: i18n_t("common.match_soon_filtr"),
           icon: {
             day: compute_css_obj('public/image/yabo/svg/icon-skin.svg'),
             night: compute_css_obj('public/image/yabo/svg/icon-skin-night.svg'),
           },
           value_arr: [
-                { label: i18n_t('common.all'), title: i18n_t('common.all'), value: null },
                 { label: i18n_t('filter.select_time.3h'), title: '3' + i18n_t('common.hour'), value: 3 },
                 { label: i18n_t('filter.select_time.6h'), title: '6' + i18n_t('common.hour'), value: 6 },
                 { label: i18n_t('filter.select_time.9h'), title: '9' + i18n_t('common.hour'), value: 9 },
@@ -165,7 +164,7 @@ const settings_items = ref([
         },
         {
           //列表附加玩法默认展示
-          id: 4,
+          id: 5,
           name: '列表附加玩法默认展示',
           icon: {
             // day: require('public/image/yabo/svg/additional-plays.svg'),
@@ -176,7 +175,7 @@ const settings_items = ref([
         },
         {
           //列表附加玩法配置
-          id: 5,
+          id: 6,
           name: '列表附加玩法配置',
           icon: {
             // day: require('public/image/yabo/svg/additional-plays-cfg.svg'),
@@ -196,7 +195,7 @@ const settings_items = ref([
         },
         {
           //附加盘
-          id: 6,
+          id: 7,
           name: i18n_t("match_info.append"),
           icon: {
             // day: require('public/image/yabo/svg/additional-disk.svg'),

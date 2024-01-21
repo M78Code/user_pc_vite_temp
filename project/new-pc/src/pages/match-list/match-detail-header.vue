@@ -1,5 +1,6 @@
 <template>
   <div class="header row justify-between" :style="computed_theme">
+    <div v-show="false">{{ MenuData.menu_data_version }}</div>
     <!-- left -->
     <div class="col-left row items-center">
       <div class="row items-center all-collect">
@@ -40,7 +41,7 @@
         <div class="select-competition row items-center curson-point" @click="handle_select_race_species">
           <span>选择联赛</span>
           <div class="all">
-            <span>全部</span>
+            <p>{{ props.select_list.length == 0 ? '全部':  `${props.select_list.length}` }}</p>
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/arrow.svg`" alt="" class="arrow"/>
           </div>
         </div> 
@@ -97,12 +98,13 @@
 </template>
 
 <script setup>
-import { ref, computed,onMounted } from "vue";
+import { ref, computed,onMounted, watch } from "vue";
 import filterHeader from "src/core/filter-header/filter-header.js";
 import { IconWapper } from 'src/components/icon';
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { theme_list, theme_map } from "src/core/theme/"
 import { PageSourceData, GlobalSwitchClass, MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import BaseData from "src/core/base-data/base-data.js";
 import { api_account } from "src/api/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import { compute_css_variables } from "src/core/css-var/index.js"
@@ -124,6 +126,10 @@ const props = defineProps({
     type: Boolean,
     default: () => false,
   },
+  select_list: {
+    type: Array,
+    default: () => ([])
+  }
 })
 /**
  * @description change_type 修改盘类型 0欧盘/1亚盘
@@ -171,6 +177,8 @@ const vx_layout_list_type = ref('match');
 const page_source = PageSourceData.page_source;
 const is_search_page = page_source.includes('search');
 
+const page_title= ref('')
+
 let _menu_type = MenuData.menu_root;
 
 /**
@@ -178,6 +186,10 @@ let _menu_type = MenuData.menu_root;
  * @param {0|1} value 
  */
 const handle_select_type = (value) => {
+  //亚盘禁止
+  if (value === 1 ){
+    return
+  }
   select_type.value = value;
 }
 
@@ -186,9 +198,8 @@ const handle_select_race_species = () => {
 }
 
 //当前页面菜单title
-const page_title = computed(() => {
+const get_page_title = () => {
   //当前点击的是今日还是早盘 今日 2 早盘为3
-  let { jinri_zaopan } = MenuData.left_menu_result || {}
   let TITLE = {
     1: i18n_t("menu.match_play"), //"滚球",
     2: i18n_t("menu.match_today"), //"今日",
@@ -201,27 +212,33 @@ const page_title = computed(() => {
   if (is_search_page) {
     _page_title = i18n_t("common.search_title")
     // 今日|早盘|串关
-  } else if ([2, 3].includes(_menu_type)) {
-    let sport_name = MenuData.get_current_left_menu_name()
-    if (sport_name) {
-      _page_title = `${TITLE[_menu_type]}（${sport_name}）`
+  } else if ([2, 3].includes(+_menu_type)) {
+    if (MenuData.menu_current_mif) {
+      _page_title = `${TITLE[_menu_type]}（${BaseData.menus_i18n_map[MenuData.menu_current_mif]}）`
     } else {
       _page_title = TITLE[_menu_type]
     }
-  } else if ([1, 500].includes(_menu_type)) {
+  } else if ([1, 500].includes(+_menu_type)) {
     _page_title = TITLE[_menu_type]
   } else if (_menu_type == 400) {
     _page_title = TITLE[_menu_type]
   }
-  if (jinri_zaopan == 2 && _menu_type == 2000) {
+  if (MenuData.is_today() && _menu_type == 2000) {
     //'今日  (电子竞技)'
     _page_title = `  ${i18n_t("menu.match_today")} (${i18n_t("common.e_sports")})`
-  } else if (jinri_zaopan == 3 && _menu_type == 2000) {
+  } else if (MenuData.is_zaopan() && _menu_type == 2000) {
     //'早盘  (电子竞技)'
     _page_title = `  ${i18n_t("menu.match_early")} (${i18n_t("common.e_sports")})`
   }
-  return _page_title;
+  page_title.value = _page_title
+}
+
+watch(() =>MenuData.menu_data_version.value, () => {
+  console.error('get_page_title()',get_page_title())
+  get_page_title()
 })
+
+
 /**
  * @ Description:切换简译/繁译
  * @param {object} row 切换的展示
@@ -337,9 +354,16 @@ onMounted(() => {
   border: 1px solid  #179CFF;
   font-size: 12px;
 
-  .active {
+  .match-btn.active {
     background: #179CFF;
     color: #fff!important;
+  }
+  .collect-btn.active {
+    background: #179CFF;
+    color: #fff!important;
+    :before {
+      color: var(--q-gb-bg-c-8) !important;
+    }
   }
 }
 .select-btn {

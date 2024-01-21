@@ -12,25 +12,23 @@ try {
  
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
-const { BUILD_VERSION, PROJECT_NAME ,MODULE_SDK_VERSION} = BUILD_VERSION_CONFIG;
+const { BUILD_VERSION, PROJECT_NAME ,MODULE_SDK_VERSION ,LAYOUT_META} = BUILD_VERSION_CONFIG;
 
 
 let server_html_info = final_merchant_config.html_info  ||{}
 let default_html_info = {
   // 网站标题
   title: {
-    zh: "亚洲在线体育竞猜投注",
-    en: "Asian Online Gaming Platform",
-    tw: "亞洲在線體育競猜投注",
+    // zh: "亚洲在线体育竞猜投注",
+    // en: "Asian Online Gaming Platform",
+    // tw: "亞洲在線體育競猜投注",
   },
   // 网站icon
   icon: "",
   // 产品名称
-  productName: "亚洲在线体育竞猜投注",
+  productName: "",
   // 产品描述
-  productDescription: "亚洲在线体育竞猜投注",
-  // 产品版本
-  version: "0.0.1",
+  productDescription: "",
   // 企业代号
   com: "com1",
   // 名称
@@ -59,8 +57,7 @@ export const   htmlVariables = {
     icon: `${html_info.icon}`,
     productName: `${html_info.productName}`,
     productDescription: `${html_info.productDescription}`,
-    version: `${html_info.version}`,
-    versionName: `${html_info.versionName}`,
+ 
     versionDate: `${new Date().toLocaleString()}`,
     max_width: `${html_info.max_width}`,
     body_bg_day: `${html_info.body_bg_day}`,
@@ -70,6 +67,7 @@ export const   htmlVariables = {
     TAG: process.env.TAG,
     BUILD_TAG: process.env.BUILD_TAG  ,
     PROJECT_NAME,
+    LAYOUT_META,
     BUILD_VERSION,
     MODULE_SDK_VERSION,
 
