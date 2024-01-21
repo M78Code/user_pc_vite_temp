@@ -149,6 +149,7 @@ import virtual_sports_tab from 'src/base-h5/vr/components/virtual-sports-tab.vue
 import ranking_list_start from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/ranking-list-start.vue"
 import football_ranking_list from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/football-ranking-list.vue"
 import group_knockout from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/group-knockout.vue"
+import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 
 export default {
   mixins:[virtual_sports_mixin],
@@ -171,6 +172,15 @@ export default {
     return {
       tabs_name: 'list'
     }
+  },
+  mounted(){
+    // 监听vr-top组件刷新变化
+    this.emitters = [
+      useMittOn(MITT_TYPES.EMIT_VR_REFRESH_CLICK, this.get_virtual_sport_local).off,
+    ]
+  },
+  unmounted(){
+    this.emitters.map((x) => x())
   },
   methods: {
     /**

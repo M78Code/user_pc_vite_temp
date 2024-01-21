@@ -31,7 +31,7 @@
     <div class="detail-container-position">
       <div class="match-detail-tabs-header">
         <div class="separator" style="height: 1px; background-color: #F5F5F5;"></div>
-        <div class="match-detail-tabs" v-if="[1,2,'1','2'].includes(match_detail?.csid)">
+        <div class="match-detail-tabs" v-if="[1,2,'1','2'].includes(match_detail?.csid) && !['BE', 'C01', 'OD'].includes(match_detail?.cds)">
           <div
             :class="[{ 'tab-active': tab == 'betting' }, 'tabs-item']"
             @click="tabChange('betting')"
