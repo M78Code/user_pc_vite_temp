@@ -498,6 +498,8 @@ this.bet_appoint_ball_head= null */
     // 设置投注项id 页面选中
     this.set_bet_oid_list()
 
+    this.set_options_state()
+
     this.set_bet_data_class_version()
   }
 
@@ -941,7 +943,8 @@ this.bet_appoint_ball_head= null */
     }else{
       this.bet_s_list[index] = obj
     }
-    this.set_bet_data_class_version()
+
+    this.set_options_state()
   }
 
   // 切换单关、串关、合并时调用获取限额
@@ -1029,6 +1032,8 @@ this.bet_appoint_ball_head= null */
         get_query_bet_amount_common()
       }
     }
+
+    this.set_options_state()
     
   }
 
@@ -1120,11 +1125,6 @@ this.bet_appoint_ball_head= null */
               // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
               ol_obj.hl_hs = item.hs
 
-              // 盘口变更中 需要显示盘口变更的状态
-              if(item.hs == 11 && ws_ol_obj.os == 1){
-                this.set_bet_is_accept('mark_change')
-              }
-
               // 获取新的基准分
               ol_obj.mark_score = get_score_config(ol_obj)
               // 赔率数据
@@ -1176,7 +1176,8 @@ this.bet_appoint_ball_head= null */
 
       this[single_name] = array_list
 
-      this.set_bet_data_class_version()
+      this.set_options_state()
+
     }
   }
 
@@ -1201,6 +1202,54 @@ this.bet_appoint_ball_head= null */
       if(this.is_bet_single && [1,2].includes(status*1)){
         BetViewDataClass.orderNo_bet_obj_config({orderNo: obj.orderNo,status: obj.status})
       }
+    }
+  }
+
+  // 设置投注项状态
+  set_options_state() {
+    let single_name = ''
+    if(this.is_bet_single){
+      single_name = 'bet_single_list'
+    } else {
+      single_name = 'bet_s_list'
+    }
+    const array_list = lodash_.cloneDeep(lodash_.get(this,single_name))
+    // ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
+    // hl_hs: hl_obj.hs || ol_obj._hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+    // mid_mhs: ol_obj._mhs, // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
+    // 预期行为:
+    // 锁盘: 投注单上跳出: 赔率更新中 提示文字
+    // 封盘: 投注单上跳出: 投注项目不存在 提示文字 且投注按钮反灰
+    // 关盘: 投注单上跳出: 投注项目不存在 提示文字 且投注按钮反灰
+
+    // 锁盘
+    let obj = array_list.find( item => item.mid_mhs == 11 || item.hl_hs == 11 || item.ol_os == 4 ) || {}
+    if(obj.playOptionsId){
+      BetViewDataClass.set_bet_expired(false)
+      BetViewDataClass.set_bet_before_message({code:200, message:"bet.bet_upd"})
+      this[single_name] = array_list
+      this.set_bet_data_class_version()
+      return
+    }
+
+    // 封盘 关盘
+    let obj_ = array_list.find( item => [1,2].includes(item.mid_mhs *1) || [1,2].includes(item.hl_hs *1) || [2,3].includes(item.ol_os *1) ) || {}
+    if(obj_.playOptionsId){
+      BetViewDataClass.set_bet_expired(true)
+      BetViewDataClass.set_bet_before_message({code:"0402001", message:"bet_message.m_0402001"})
+      this[single_name] = array_list
+      this.set_bet_data_class_version()
+      return
+    }
+
+    // 开盘
+    let obj_o = array_list.find( item => item.mid_mhs == 0 && item.hl_hs == 0 && item.ol_os == 1 ) || {}
+    if(obj_o.playOptionsId){
+      BetViewDataClass.set_bet_expired(false)
+      BetViewDataClass.set_bet_before_message({})
+      this[single_name] = array_list
+      this.set_bet_data_class_version()
+      return
     }
   }
 }
