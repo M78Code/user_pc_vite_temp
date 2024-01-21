@@ -44,8 +44,9 @@ let submit_btn = false
 // is_single 是否单关/串关 
 // is_merge  是否单关合并
 const set_min_max_money = (bet_list, is_single, is_merge) => {
-    
-    let order_min_max_money = bet_list.map(item => {
+    // 过滤 数组中undefined,bet_list数据待优化
+    let arr = bet_list.filter(item => item != undefined)    
+    let order_min_max_money = arr.map(item => {
         let obj = {
             "sportId": item.sportId,   // 赛种id
             "marketId": item.marketId,  //盘口id
