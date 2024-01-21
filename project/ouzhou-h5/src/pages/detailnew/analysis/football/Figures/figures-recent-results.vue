@@ -107,32 +107,32 @@ onBeforeMount(() => {
                             <template v-if="index">
                                 <TeamImg
                                     :type="0"
-                                    :csid="match_detail.value?.csid"
-                                    :url="match_detail.value?.malu[0]"
-                                    :fr="match_detail.value?.frman[0]"
+                                    :csid="match_detail?.csid"
+                                    :url="match_detail?.malu[0]"
+                                    :fr="match_detail?.frman[0]"
                                     :size="22"
                                 />
                                 <TeamImg
-                                    v-if="match_detail.value?.malu.length > 1"
-                                    :type="0" :csid="match_detail.value?.csid"
-                                    :url="match_detail.value?.malu[1]"
-                                    :fr="match_detail.value?.frman[1]"
+                                    v-if="match_detail?.malu.length > 1"
+                                    :type="0" :csid="match_detail?.csid"
+                                    :url="match_detail?.malu[1]"
+                                    :fr="match_detail?.frman[1]"
                                     :size="22"
                                 />
                             </template>
                             <template v-else>
                                 <TeamImg
                                     :type="0"
-                                    :csid="match_detail.value?.csid"
-                                    :url="match_detail.value?.mhlu[0]"
-                                    :fr="match_detail.value?.frmhn[0]"
+                                    :csid="match_detail?.csid"
+                                    :url="match_detail?.mhlu[0]"
+                                    :fr="match_detail?.frmhn[0]"
                                     :size="22"
                                 />
                                 <TeamImg
-                                    v-if="match_detail.value?.mhlu.length > 1"
-                                    :type="0" :csid="match_detail.value?.csid"
-                                    :url="match_detail.value?.mhlu[1]"
-                                    :fr="match_detail.value?.frmhn[1]"
+                                    v-if="match_detail?.mhlu.length > 1"
+                                    :type="0" :csid="match_detail?.csid"
+                                    :url="match_detail?.mhlu[1]"
+                                    :fr="match_detail?.frmhn[1]"
                                     :size="22"
                                 />
                             </template>
@@ -165,11 +165,13 @@ onBeforeMount(() => {
     align-items: center;
     justify-content: space-between;
     padding: 0 .08rem;
+    height: .4rem;
     &--left{
         display: flex;
         align-items: center;
         .team-name{
             color: #1A1A1A;
+            margin-left: .04rem;
             font: {
                 size: .12rem;
                 weight: 500;
@@ -182,7 +184,7 @@ onBeforeMount(() => {
         color: #1A1A1A;
         font: {
             size: .14rem;
-            weight: 500;
+            weight: 600;
         };
     }
 }
