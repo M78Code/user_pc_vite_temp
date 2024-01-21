@@ -119,8 +119,8 @@ export default {
     event_analysis,
     OddsListContrainer,
     infoRules,
-    analysisFootball,
-    analysisBasketball
+    // analysisFootball,
+    // analysisBasketball
   },
   setup(ctx){
     const router = useRouter();

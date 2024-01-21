@@ -186,17 +186,18 @@ class MenuData {
     this.top_events_list = top_events_list;
     this.champion_list = champion_list;
     if(session_info){//取session球种id
-      if(this.current_lv_1_menu_i == 2000){
-        this.current_lv_2_menu_mi.value = session_info.menu_mi;
-        this.current_lv_2_menu_i = session_info.menu_mi;
-        this.menu_mi.value = session_info.menu_mi;
-        this.menu_csid = +session_info.menu_mi - 2000
-      }else{
-        this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
-        this.current_lv_2_menu_mi.value = `${session_info.menu_mi}${this.menu_type.value}`;
-        this.menu_mi.value = session_info.menu_mi;
-        this.menu_csid = +session_info.menu_mi - 100
-      }
+      this.set_menu_mi_format(this.current_lv_1_menu_i,session_info.menu_mi);
+      // if(this.current_lv_1_menu_i == 2000){
+      //   this.current_lv_2_menu_mi.value = session_info.menu_mi;
+      //   this.current_lv_2_menu_i = session_info.menu_mi;
+      //   this.menu_mi.value = session_info.menu_mi;
+      //   this.menu_csid = +session_info.menu_mi - 2000
+      // }else{
+      //   this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
+      //   this.current_lv_2_menu_mi.value = `${session_info.menu_mi}${this.menu_type.value}`;
+      //   this.menu_mi.value = session_info.menu_mi;
+      //   this.menu_csid = +session_info.menu_mi - 100
+      // }
     }
     !arr && useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA,menu_list);
   }
@@ -298,27 +299,65 @@ class MenuData {
     this.update()
   }
   /**
+   * 重置2级菜单 csid
+   * @param {*} menu_type 
+   * @param {*} mi 
+   */
+  set_menu_mi_format(menu_type,mi){
+    console.log(menu_type)
+          //   this.current_lv_2_menu_mi.value = session_info.menu_mi;
+      //   this.current_lv_2_menu_i = session_info.menu_mi;
+      //   this.menu_mi.value = session_info.menu_mi;
+      //   this.menu_csid = +session_info.menu_mi - 2000
+    switch (menu_type) {
+      case 400:
+        this.current_lv_2_menu_i = +mi+300;
+        this.current_lv_2_menu_mi.value = +mi+300;
+        this.menu_mi.value = mi;
+        this.menu_csid = mi*1 - 100
+        break;
+      case 28:
+        this.current_lv_2_menu_i = `${mi}2`;
+        this.current_lv_2_menu_mi.value = `${mi}2`;
+        this.menu_mi.value = mi;
+        break;
+      case 2000:
+        this.current_lv_2_menu_i = mi;
+        this.current_lv_2_menu_mi.value = mi;
+        this.menu_mi.value = mi;
+        this.menu_csid = mi*1 - 2000;
+        break;
+      default:
+        this.current_lv_2_menu_i = `${mi}${menu_type}`;
+        this.current_lv_2_menu_mi.value = `${mi}${menu_type}`;
+        this.menu_mi.value = mi;
+        this.menu_csid = mi*1 - 100
+        break;
+    }
+  }
+  /**
    * 设置常规球种
    * @param {*} mi 
    */
   set_menu_mi(mi){
     this.menu_mi.value = mi;
-    if(this.menu_type.value == 400){//冠军
-      this.current_lv_2_menu_i = +mi+300;
-      this.current_lv_2_menu_mi.value = +mi+300;
-      this.menu_csid = mi*1 - 100
-    }else if(this.menu_type.value == 28){
-      this.current_lv_2_menu_i = `${mi}2`;
-      this.current_lv_2_menu_mi.value = `${mi}2`;
-    }else if(this.menu_type.value == 2000){
-      this.current_lv_2_menu_i = mi;
-      this.current_lv_2_menu_mi.value = mi;
-      this.menu_csid = mi*1 - 2000
-    }else{
-      this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
-      this.current_lv_2_menu_mi.value = `${mi}${this.menu_type.value}`;
-      this.menu_csid = mi*1 - 100
-    }
+    this.set_menu_mi_format(this.menu_type.value,mi);
+    // if(this.menu_type.value == 400){//冠军
+    //   this.current_lv_2_menu_i = +mi+300;
+    //   this.current_lv_2_menu_mi.value = +mi+300;
+    //   this.menu_csid = mi*1 - 100
+    // }else if(this.menu_type.value == 28){
+    //   this.current_lv_2_menu_i = `${mi}2`;
+    //   this.current_lv_2_menu_mi.value = `${mi}2`;
+    // }else if(this.menu_type.value == 2000){
+    //   this.current_lv_2_menu_i = mi;
+    //   this.current_lv_2_menu_mi.value = mi;
+    //   this.menu_csid = mi*1 - 2000
+    // }else{
+    //   this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
+    //   this.current_lv_2_menu_mi.value = `${mi}${this.menu_type.value}`;
+    //   this.menu_csid = mi*1 - 100
+    // }
     // SessionStorage.set(menu_h5,{
     //   menu_mi:mi
     // });
@@ -355,6 +394,7 @@ class MenuData {
     this.home_menu = 'featured';
     this.collect_menu = '';
     this.result_menu =  0;
+    this.date_tab_index = 0;
   }
   /**
    * 设置时间 并且设置时间请求参数

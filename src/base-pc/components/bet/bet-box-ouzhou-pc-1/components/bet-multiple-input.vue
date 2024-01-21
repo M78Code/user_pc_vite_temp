@@ -188,6 +188,7 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
+    ref_data.money = Number(ref_data.money)
     useMittEmit(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY,ref_data)
      // 输入控制
      let sum = 0
