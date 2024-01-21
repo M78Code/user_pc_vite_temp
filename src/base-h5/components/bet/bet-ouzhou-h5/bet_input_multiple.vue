@@ -55,7 +55,7 @@ const input_click = (event) => {
     BetData.set_bet_keyboard_config({ids:oid})
     BetData.set_bet_keyboard_show(true)
     BetData.set_active_index(BetData.bet_single_list.length)
-    BetData.set_bet_amount(0)
+    // BetData.set_bet_amount(0)
 }
 
 
@@ -64,8 +64,8 @@ const money_span = ref(null)
 let flicker_timer = null
 
 const ref_data = reactive({
-    min_money: 10, // 最小投注金额
-    max_money: 8888, // 最大投注金额
+    min_money: '', // 最小投注金额
+    max_money: '', // 最大投注金额
     win_money: 0.00, // 最高可赢
     money: "", // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
