@@ -19,7 +19,7 @@
       <ScrollWrapper>
         <template v-slot="{ match_item, index }">
           <div class="data_mid" v-if="match_item"> <!--此data-mid用于分频订阅赛事,请勿修改-->
-            <template v-if="is_kemp">
+            <template v-if="is_kemp || MenuData.get_mm_is_champion()">
               <MatchContainerMainTemplate2
                 :i="index"
                 :match_of_list="match_item">
@@ -55,6 +55,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
 import { is_kemp, is_results } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+import { MenuData } from 'src/output/index.js';
 
 
 const matchs_data = computed(() => {

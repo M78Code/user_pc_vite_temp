@@ -395,6 +395,10 @@ class MenuData {
     this.collect_menu = '';
     this.result_menu =  0;
     this.date_tab_index = 0;
+    this.current_lv_3_menu = {
+      field1:"",
+      menuType:""
+    };
   }
   /**
    * 设置时间 并且设置时间请求参数
@@ -608,7 +612,7 @@ class MenuData {
    * 判断是否为冠军和电竞冠军  暂时同步 复刻版方法   不然会报错
    */
   get_mm_is_champion() {
-    return false
+    return lodash_.get(this.current_lv_3_menu, "menuType") == 100;
   }
 }
 export default new MenuData();
