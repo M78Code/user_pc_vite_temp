@@ -1515,8 +1515,9 @@ class MatchMeta {
             // this.handle_custom_matchs({ list: this.complete_matchs })
           } else {
             // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
-            this.compute_current_matchs()
-            this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+            // this.compute_current_matchs()
+            // this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+            this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
           }
           clearTimeout(this.debounce_timer)
           this.debounce_timer = null
