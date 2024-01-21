@@ -111,7 +111,7 @@ const change_show_appoint = (bol) => {
 const reduce_odd = () => {
     const num = step(props.oddFinally)
     // 最小值
-    if(parseFloat(odds_value_edit.value) <= parseFloat(props.oddFinally) ){
+    if(parseFloat(odds_value_edit.value) <= 0 ){
         return
       }
     odds_value_edit.value = acc_sub(odds_value_edit.value, num)
