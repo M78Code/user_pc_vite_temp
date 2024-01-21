@@ -495,5 +495,11 @@ class MenuData {
    is_collect() {
     return this.collect_id == 50000;
   }
+  /**
+   * 判断是否为冠军和电竞冠军
+   */
+  get_mm_is_champion() {
+    return false
+  }
 }
 export default new MenuData();
