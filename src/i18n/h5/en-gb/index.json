@@ -344,6 +344,8 @@
     "quarter": "Quarter"
   },
   "bet": {
+    "edit_success": "Odds modification successful!",
+    "edit_fail": "Odds modification failed!",
     "account_balance": "Balance",
     "agree_change": "Accept Changes",
     "agree_change2": "Accept change and bet",
