@@ -3,7 +3,7 @@
  * @Date: 2023-11-12 13:52:55
  * @Description: url参数页面跳转核心逻辑
  */
-import { into_home_event } from "src/output/index.js"
+import { into_home_event } from "src/core/hide-api/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 // 获取sessionStorage中的location_search数据
 const get_session_storage_location_search = () =>

@@ -1,8 +1,11 @@
 <template>
     <div class="info_box">
         <div class="left">
-            <div class="back" @click="go_back">
+            <div class="back" @click="go_back" v-if="['/virtual_sports_details', '/virtual_sports_details/'].includes(router.currentRoute.path)">
                 <img class="bakc-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/back.png`" alt="" />
+            </div>
+            <div class="navigation" @click="handle_drawer" v-else>
+              <img  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/navigation.png`" alt="">
             </div>
             <!-- <div class="detail-back" v-if="['/virtual_sports_details', '/virtual_sports_details/'].includes(router.currentRoute.value.path)" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div> -->
             <div class="vr_name">
@@ -151,6 +154,10 @@ export default {
     }
   },
   methods: {
+    // 切换左侧抽屉
+    handle_drawer(){
+      this.$emit('toggle_drawer');
+    },  
     // 回到上一页
     go_back () {
         if(this.is_vr_page){
@@ -360,6 +367,15 @@ export default {
             flex-direction: row;
             justify-content: center;
             align-items: center;
+
+            .navigation {
+              height: 0.16rem;
+              img {
+                width: 0.16rem;
+                height: 0.16rem;
+              }
+              
+            }
 
             .back{
                 color: #ffd5b2;

@@ -6,7 +6,7 @@
                 <q-tab v-for="(item, index) in BaseData.dianjing_sublist" :name="item.mi" :label="BaseData.menus_i18n_map[item.mi]" />
             </q-tabs>
         </div>
-        <tab-date v-if="state.slideMenu" :defaultVal="state.currentSlideValue"  :dateList="state.slideMenu" @changeDate="changeDate"/>
+        <tab-date v-if="state.slideMenu.length" :defaultVal="state.currentSlideValue"  :dateList="state.slideMenu" @changeDate="changeDate"/>
         <!--二级赛事列表-->
         <div class="match-list-page">
             <MatchContainer />
@@ -32,6 +32,7 @@ const tabValue = ref(MenuData.current_lv_2_menu_mi.value || '');
 const getDateList = async (csid) =>{
     const list = await MenuData.getDateList(+csid-2000);
     state.slideMenu = list;
+    state.currentSlideValue = list[0]?.val || "";
     MatchMeta.get_esports_match()
 }
 // tabs 切换
@@ -47,7 +48,12 @@ const on_update = (val) => {
  */
  const changeDate = (item,index) =>{
     if (state.currentSlideValue === item.val) return
-    state.currentSlideValue = item.val
+    state.currentSlideValue = item.val;
+    MenuData.set_current_lv_3_menu({
+        field1:item.val,
+        menuType:item.menuType
+    });
+    MatchMeta.get_esports_match();
 }
 onMounted(()=>{
     MenuData.set_menu_mi(+MenuData.current_lv_2_menu_mi.value || '2100');

@@ -66,20 +66,38 @@ const title_calculation = (main, name) => {
                     <div class="technical-home team-recent">
                         <template v-if="index == 1">
                             <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
-                            <TeamImg :type="0" :csid="match_detail.csid" :url="match_detail.mhlu[0]"
-                                      :fr="match_detail.frmhn[0]" :size="22"></TeamImg>
-                            <TeamImg v-if="match_detail.mhlu.length > 1" :type="0" :csid="match_detail.csid"
-                                      :url="match_detail.mhlu[1]" :fr="match_detail.frmhn[1]" :size="22"
-                                      style="margin-top: 0.11rem; margin-left:-0.08rem;"></TeamImg>
+                            <TeamImg
+                                :type="0"
+                                :csid="match_detail.csid"
+                                :url="match_detail.mhlu[0]"
+                                :fr="match_detail.frmhn[0]"
+                                :size="22"
+                            />
+                            <TeamImg
+                                v-if="match_detail.mhlu.length > 1"
+                                :type="0" :csid="match_detail.csid"
+                                :url="match_detail.mhlu[1]"
+                                :fr="match_detail.frmhn[1]" :size="22"
+                                style="margin-top: 0.11rem; margin-left:-0.08rem;"
+                            />
                             <span class="team-name">{{ match_detail.mhn }}</span>
                         </template>
                         <template v-if="index == 2">
                             <!-- 右侧双打图标 type 1 表示客队,malu 客队的url  -->
-                            <TeamImg :type="1" :csid="match_detail.csid" :url="match_detail.malu[0]"
-                                      :fr="match_detail.frman[0]" :size="22"></TeamImg>
-                            <TeamImg v-if="match_detail.malu.length > 1" :type="1" :csid="match_detail.csid"
-                                      :url="match_detail.malu[1]" :fr="match_detail.frman[1]" :size="22"
-                                      style="margin-top: 0.11rem; margin-left:-0.08rem;"></TeamImg>
+                            <TeamImg
+                                :type="1"
+                                :csid="match_detail.csid"
+                                :url="match_detail.malu[0]"
+                                :fr="match_detail.frman[0]"
+                                :size="22"
+                            />
+                            <TeamImg
+                                v-if="match_detail.malu.length > 1"
+                                :type="1" :csid="match_detail.csid"
+                                :url="match_detail.malu[1]"
+                                :fr="match_detail.frman[1]" :size="22"
+                                style="margin-top: 0.11rem; margin-left:-0.08rem;"
+                            />
                             <span class="team-name">{{ match_detail.man }}</span>
                         </template>
                     </div>
@@ -166,26 +184,6 @@ const title_calculation = (main, name) => {
 </template>
 
 <style lang="scss" scoped>
-.title {
-    height: 0.4rem;
-    line-height: 0.45rem;
-    padding-left: 0.24rem;
-    font-size: 0.14rem;
-    letter-spacing: 0;
-    font-weight: bold;
-    position: relative;
-
-    &:before {
-        content: '';
-        width: 0.03rem;
-        height: 0.12rem;
-        position: absolute;
-        left: 0.16rem;
-        top: 0.15rem;
-        border-radius: 1.5px;
-    }
-}
-
 .standings_technical {
     .standings-technical-home {
         .technical-home {
