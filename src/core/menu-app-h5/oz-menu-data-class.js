@@ -608,7 +608,7 @@ class MenuData {
    * 判断是否为冠军和电竞冠军  暂时同步 复刻版方法   不然会报错
    */
   get_mm_is_champion() {
-    return false
+    return lodash_.get(this.current_lv_3_menu, "menuType") == 100;
   }
 }
 export default new MenuData();
