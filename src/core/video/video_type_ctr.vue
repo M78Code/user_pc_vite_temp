@@ -25,7 +25,7 @@
     </div>
     <!-- 画中画提示框 -->
       <div v-show="pip_mouseover&&$route.name == 'home'" class="pip_mouseover">{{ i18n_t('video.open_pip')}}</div>
-    <!-- 大屏 -->
+    <div id="vide_size">{{ $route.params.video_size  }}</div> 
     <div class="full-screen-wrap" :class="{esports:is_esports}" v-if="$route.params.video_size !=1 && !is_esports">
       <!-- 退出中屏 -->
       <icon-wapper v-if="$route.name == 'video'" size="14px" src="" color="#FFFFFF" name="icon-small"  @click="exit_full_screen" />
