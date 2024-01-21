@@ -3,6 +3,7 @@
 -->
 <template>
   <div>
+    
     <div class="virtual-main router_scroll_layout" ref="scrollArea" @scroll="wrapper_scroll_handler">
       <!-- 头部 -->
       <div class="virtual-head" style="display: none;">
@@ -66,6 +67,7 @@ export default {
     }
   }, 
   mounted(){
+    MenuData.set_current_lv1_menu(300);
     MenuData.set_vr_menu_csid('1001');
     // 重置所选 球种默认玩法 hpid
     MatchResponsive.reset_match_hpid_by_csid()
