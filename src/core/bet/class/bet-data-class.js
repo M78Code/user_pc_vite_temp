@@ -47,7 +47,7 @@ class BetData {
     // 投注记录数量
     this.bet_record_count = 0
     // 是否勾选常用金额
-    this.is_checked_regular_amount = true
+    this.is_regular_amount = true
 
     // 是否为合并模式
     this.is_bet_merge = false;
@@ -280,11 +280,11 @@ this.bet_appoint_ball_head= null */
   */
   set_bet_is_accept(val) {
     this.bet_is_accept = val
-    BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet.bet_upd"})
+    // BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet.bet_upd"})
 
-    setTimeout(()=>{
-      BetViewDataClass.set_bet_before_message({code:'',message:""})
-    },5000)
+    // setTimeout(()=>{
+    //   BetViewDataClass.set_bet_before_message({code:'',message:""})
+    // },5000)
 
     this.set_bet_data_class_version()
   }
@@ -293,7 +293,7 @@ this.bet_appoint_ball_head= null */
    * 设置 是否使用常用金额
    */
   set_regular_amount() {
-    this.is_checked_regular_amount = !this.is_checked_regular_amount
+    this.is_regular_amount = !this.is_regular_amount
     this.set_bet_data_class_version()
   }
 
@@ -662,7 +662,7 @@ this.bet_appoint_ball_head= null */
     }
     this.is_bet_merge = is_merge
 
-    this.switch_bet_query_bet_amount()
+    // this.switch_bet_query_bet_amount()
 
     this.set_bet_data_class_version()
   }
@@ -961,8 +961,8 @@ this.bet_appoint_ball_head= null */
       }
     }
     // 串关要大于1条才能去请求限额
-    if(!this.is_bet_single && (this.bet_s_list.length > 1 || this.bet_single_list.length > 1)){
-      let obj = this.bet_single_list.find(item => ['esports_bet','vr_bet'].includes(item.bet_type)) || {}
+    if(!this.is_bet_single && (this.bet_s_list.length > 1)){
+      let obj = this.bet_s_list.find(item => ['esports_bet','vr_bet'].includes(item.bet_type)) || {}
       // 串关 在vr或者电竞里面 
       if(obj.bet_type){
         get_query_bet_amount_esports_or_vr()
