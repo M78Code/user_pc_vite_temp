@@ -562,6 +562,8 @@
     "quarter": "第一节"
   },
   "bet": {
+    "edit_success": "赔率修改成功！",
+    "edit_fail": "赔率修改失败！",
     "account_balance": "账户余额",
     "agree_change": "接受变化",
     "agree_change2": "接受变化并投注",

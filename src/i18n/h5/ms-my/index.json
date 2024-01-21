@@ -120,6 +120,8 @@
     "quarter": "Q1"
   },
   "bet": {
+    "edit_success": "Penyesuaian kadar berjaya!",
+    "edit_fail": "Pindaan kadar gagal!",
     "account_balance": "Baki akaun",
     "agree_change": "Terima ubahan",
     "agree_change2": "Terima ubahan dan bertaruh",
