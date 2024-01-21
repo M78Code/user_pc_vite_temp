@@ -29,11 +29,11 @@ export const ensure_write_folder_exist = (write_folder) => {
  * @param {*} file_path
  * @param {*} str
  */
-export const write_file = (file_path, str) => {
+export const write_file = (file_path, str,log=true) => {
   try {
     // 创建文件
     fs.writeFileSync(file_path, str);
-    console.log(colors.green(`写入文件   ${file_path}  完成`));
+   log &&console.log(colors.green(`写入文件   ${file_path}  完成`));
   } catch (err) {
     console.log(`写入文件   ${file_path}  出错`, err);
   }
@@ -64,9 +64,9 @@ export const remove_file = (file_path) => {
  
  
  // 复制文件
- const copyFile =(src_path,target_path)=>{
+ const copyFile =(src_path,target_path,log=true)=>{
   let  file_content= fs.readFileSync(src_path);
-  write_file( target_path ,file_content)
+  write_file( target_path ,file_content,log)
 }
 
  
@@ -83,7 +83,7 @@ export  const copyDir = function(src,dist){
     var _dist = dist + '/' +p;
     var stat = fs.statSync(_src)
     if(stat.isFile()) {// 判断是文件还是目录
-      copyFile(_src,_dist)
+      copyFile(_src,_dist,false)
     } else if(stat.isDirectory()) {
       copyDir(_src, _dist)// 当是目录是，递归复制
     }

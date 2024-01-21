@@ -146,6 +146,7 @@ const setPopularSort = (mi) =>{
  */
 const set_menu_obj = (data) => {
   if(data.route == '/virtual'){
+    MenuData.set_current_lv1_menu(300);
     MenuData.set_vr_menu_csid('1001');
   }
   if(data.route == '/esports'){
