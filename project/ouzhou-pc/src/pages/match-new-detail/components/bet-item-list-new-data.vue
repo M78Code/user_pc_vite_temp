@@ -49,7 +49,7 @@
     >
       <!-- <div v-if="['seal'].includes(odds_state)" class="lock" /> -->
 
-      <div
+      <!-- <div
         style="text-align: center; width: 100%"
         v-if="['seal','close'].includes(odds_state)"
       >
@@ -58,17 +58,37 @@
           :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
           alt=""
         />
-      </div>
-      <div v-else class="odds-arrows-wrap">
+      </div> -->
+      <div class="odds-arrows-wrap">
         <span
           :class="{
             default: true,
             up: odds_lift == 'up',
             down: odds_lift == 'down',
-          
           }"
         >
-          {{ compute_value_by_cur_odd_type(ol_data.ov, ol_data._hpid, ol_data._hsw, ol_data.csid) }}
+       <!-- 挂锁 -->
+          <div
+            style="text-align: center; width: 100%"
+            v-if="['seal', 'close'].includes(odds_state)"
+          >
+            <img
+              class="vector"
+              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
+              alt=""
+            />
+          </div>
+          <!-- 赔率 -->
+          <span v-else>
+            {{
+              compute_value_by_cur_odd_type(
+                ol_data.ov,
+                ol_data._hpid,
+                ol_data._hsw,
+                ol_data.csid
+              )
+            }}</span
+          >
         </span>
         <span class="default-point" v-if="!odds_lift"></span>
         <div v-if="odds_state != 'seal'">
@@ -86,10 +106,15 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 // import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
 import { onMounted, ref, onUnmounted, computed, watch } from "vue";
 // import lodash from "lodash";
-import { LOCAL_PROJECT_FILE_PREFIX ,get_odds_active,format_odds_value,compute_value_by_cur_odd_type} from "src/output/index.js";
+import {
+  LOCAL_PROJECT_FILE_PREFIX,
+  get_odds_active,
+  format_odds_value,
+  compute_value_by_cur_odd_type,
+} from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { useRoute } from "vue-router";
-import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
+import { utils_info } from "src/core/utils/common/module/match-list-utils.js";
 
 const is_mounted = ref(true);
 
@@ -100,7 +125,7 @@ const odds_lift = ref("");
 // 是否红升绿降中
 const odds_lift_show = ref(false);
 
-const route = useRoute()
+const route = useRoute();
 
 // 定时器对象
 let timer_obj = {};
@@ -116,7 +141,6 @@ const props = defineProps({
     default: () => {},
   },
 });
-
 
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
 const odds_state = computed(() => {
@@ -220,11 +244,10 @@ const set_odds_lift = (cur, old) => {
   if (!["lock", "seal"].includes(odds_state.value) && old && !is_odds_seal()) {
     odds_lift.value = cur > old ? "up" : "down";
     // props.ol_data.odds_lift =  odds_lift.value
-     clearTimeout(tid);
+    clearTimeout(tid);
     tid = setTimeout(() => {
       odds_lift.value = "";
       // props.ol_data.odds_lift = ''
-
     }, 3000);
   }
 };
@@ -315,15 +338,14 @@ onUnmounted(() => {
     color: var(--q-gb-t-c-2);
   }
   .active {
-    color: var(--q-gb-t-c-1) ;
+    color: var(--q-gb-t-c-1);
   }
 }
-.default-point{
+.default-point {
   width: 10px;
   height: 10px;
   margin-left: 5px;
   display: inline-block;
-
 }
 .odds-icon {
   width: 10px;

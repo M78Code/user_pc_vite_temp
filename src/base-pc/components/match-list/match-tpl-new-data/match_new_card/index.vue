@@ -58,7 +58,7 @@
             ref="betItemLeft"
             @stateChage="onBetItemStateChange('left', $event)"
             direction="left"
-            :odds_state_default_val="get_version==2?'seal':''"
+            :odds_state_default_val="MenuData.get_template_version==2?'seal':''"
           />
         </div>
         <div
@@ -118,7 +118,7 @@
             ref="betItemDetail"
             @stateChage="onBetItemStateChange('detail', $event)"
             :ol_data="handicap_list[2]"
-            :odds_state_default_val="get_version==2?'seal':''"
+            :odds_state_default_val="MenuData.get_template_version==2?'seal':''"
         /></span>
       </div>
       <div v-else style="width: 120px; text-align: center">—</div>
@@ -178,7 +178,7 @@
               ref="betItemRight"
               @stateChage="onBetItemStateChange('right', $event)"
               :ol_data="handicap_list[1]"
-              :odds_state_default_val="get_version==2?'seal':''"
+              :odds_state_default_val="MenuData.get_template_version==2?'seal':''"
           /></span>
         </div>
       </div>

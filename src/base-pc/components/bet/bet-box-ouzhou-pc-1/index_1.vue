@@ -36,8 +36,8 @@
 
       <!-- {{BetData.is_bet_single}}-{{BetViewDataClass.bet_order_status}}-{{ BetViewDataClass.orderNo_bet_obj}}-{{ BetData.bet_s_list.length > 1 }}-{{ BetViewDataClass.bet_special_series }} -->
       <!-- 单关 投注 -->
-      <div class="bet-scroll">
-        <div v-if="BetViewDataClass.bet_order_status == 1">
+      <div class="bet-scroll" ref="betScrollView">
+        <div ref="betScrollContent" v-if="BetViewDataClass.bet_order_status == 1">
           <template v-if="BetData.is_bet_single && BetData.bet_single_list.length">
             <div v-for="(item,index) in BetData.bet_single_list" :key="item.playOptionsId">
                 <betItem :items="item" :key="index" :index="index" />
@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from "vue"
+import { reactive, ref, onMounted, watchEffect, onBeforeUnmount } from "vue"
 import { MenuData, UserCtr, format_money2} from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
@@ -116,11 +116,16 @@ import betResult from "./components/bet-result.vue"  // 投注结果
 import betMixResult from "./components/bet-mix-result.vue"  // 串关投注结果
 import betSpecialInput from "./components/bet-special-input.vue"
 import BetMultipleInput from "./components/bet-multiple-input.vue"
+import { nextTick } from "licia"
 
 
 const ref_data = reactive({
   show_single: false,
+  bet_scroll_height: 0
 })
+
+const betScrollView = ref(null)
+const betScrollContent = ref(null)
 
 // 复合式串关 开关
 const set_show_single = () =>{
@@ -146,6 +151,25 @@ const show_merge_change = () => {
   BetData.set_is_bet_merge('merge')
 }
 
+watchEffect(() => {
+  if (betScrollContent.value) {
+    // 使用ResizeObserver来监听高度变化
+    const resizeObserver = new ResizeObserver(() => {
+      ref_data.bet_scroll_height = betScrollContent.value?.clientHeight;
+
+      // 在高度变化时执行一些操作
+      betScrollView.value.scrollTop = ref_data.bet_scroll_height
+    });
+
+    // 开始监听
+    resizeObserver.observe(betScrollContent.value);
+
+    // 在组件销毁时停止监听
+    onBeforeUnmount(() => {
+      resizeObserver.disconnect();
+    });
+  }
+});
 
 onMounted(() => {
   BetData.switch_bet_query_bet_amount()
