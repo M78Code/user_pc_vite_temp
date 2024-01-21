@@ -5,7 +5,7 @@
     <div class="header-content">
       <div class="logo">
         <!-- 1704044740812607488  -->
-        <div class="box-line" v-if="UserCtr.user_info.mId == '1261540827428163584'"></div>
+        <div class="box-line" v-if="UserCtr.user_info.mId == '1261552851050696704'"></div>
         <img :src="compute_img_url(logo)" alt="" srcset="" class="" v-else />
       </div>
       <div class="header-right">
