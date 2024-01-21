@@ -29,7 +29,8 @@ export default {
  
      script1:{
         placeholder: placeholder_const.script1,
-        content: ''
+        // 动态计算rem
+        content: '<script src="%VITE_APP_LOCAL_COMMON_FILE_PREFIX%/other-assets/lib/js/rem.js"></script>'
      }
 
 

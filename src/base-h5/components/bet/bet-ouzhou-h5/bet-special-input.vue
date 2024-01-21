@@ -6,7 +6,7 @@
     <div class="alert-rules">
       <div class="item-left font14 font500">
         {{ items.name }} x{{ items.count }}
-        <span class="multiple-text">@3.48</span>
+        <span class="multiple-text" v-if="index == 0">@{{items.seriesOdds }}</span>
       </div>
      <div class="font14">
       <span class="font400 item-left-btm">最高可赢</span>

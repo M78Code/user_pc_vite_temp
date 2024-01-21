@@ -9,7 +9,7 @@
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
-                  <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="del"></span>
+                  <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="del_bet_options"></span>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one">
@@ -68,14 +68,11 @@ import { reactive } from "vue";
     items:{},
     index:{}
   })
-
-  const type = 2;//1:不涨也不少    2：增长     3：减少
-  const del=()=>{
-    console.error('items',props.items)
-    // BetData.bet_list_remove(0)
-    BetData.set_clear_bet_info()
-    // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+  
+  const del_bet_options = () =>{
+    BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
   }
+
   </script>
   
   <style lang="scss" scoped>
