@@ -21,7 +21,7 @@
             <!--金额输入区-->
             <div class="col-auto right-input">
                 <!--投注金额输入框-->
-                <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @keydown.enter="keydown($event)"
+                <input class="bet-input" v-model="ref_data.money" type="text" @input="set_win_money" @keydown.enter="keydown($event)"
                 :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${format_money3(ref_data.max_money)}`" maxLength="11" />
                 <!--清除输入金额按钮-->
                 <div class="bet-input-close" @click.stop="bet_clear_handle" v-if="ref_data.money && !BetData.is_bet_single">
@@ -188,6 +188,7 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
+    ref_data.money = Number(ref_data.money)
     useMittEmit(MITT_TYPES.EMIT_BET_MULTIPLE_MONEY,ref_data)
      // 输入控制
      let sum = 0
