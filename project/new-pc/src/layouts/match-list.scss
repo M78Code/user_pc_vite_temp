@@ -243,7 +243,11 @@ body {
       .c-match-handicap {
         border-right: 1px solid var(--q-gb-bd-c-8);
       }
-
+      .secondary-gameplay-title-text{
+        &:nth-child(n-1){
+          border-top: 0.5px solid var(--q-gb-bd-c-8);
+        }
+      }
       .bet-item-wrap {
         // border-top: 0.5px solid var(--q-gb-bd-c-8);
         // border-right: 0.5px solid var(--q-gb-bd-c-8);
@@ -252,7 +256,7 @@ body {
         &:first-child {
           border-top: 0.5px solid var(--q-gb-bd-c-8);
         }
-
+        
         &:last-child {
           border-bottom: none;
         }
