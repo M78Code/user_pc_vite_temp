@@ -8,8 +8,16 @@
     <div v-show="GlobalAccessConfig.get_wsl()" style="position:absolute;color:red">{{ match.mid }}-{{
       match_style_obj.view_tpl_id }}-{{ match_style_obj.data_tpl_id }}-{{ match_style_obj.show_level }}-{{ match.tpl_id }}
     </div>
-    <component :is="`MatchTpl${match_style_obj.view_tpl_id}After`" v-if="[1, 2].includes(match_style_obj.show_level)"
+    <template v-if="true">
+      <component :is="`MatchTpl${match_style_obj.view_tpl_id}After`" v-if="[1, 2].includes(match_style_obj.show_level)"
       :mid="mid" />
+    </template>
+    <template v-else>
+      <div  v-if="[1, 2].includes(match_style_obj.show_level)" >
+        <MatchNewCard v-if="match_style_obj.tpl_id!=18" :key="mid" :mid="mid"
+          style="margin-bottom: 6px;" :tpl_id="match_style_obj.tpl_id"/>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -39,6 +47,8 @@ import { MatchTpl18AfterFullVersionWapper as MatchTpl18After } from "src/base-pc
 import { MatchTpl21AfterFullVersionWapper as MatchTpl21After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-21-after/index.js";
 // // // 玩法模板 24  足球-15分钟
 import { MatchTpl24AfterFullVersionWapper as MatchTpl24After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-24-after/index.js";
+// // // 玩法模板 新手版
+import MatchNewCard from "src/base-pc/components/match-list/match-tpl-new-data/match_new_card";
 
 // // 电竞玩法模板
 import { MatchTplEsportsAfterFullVersionWapper as MatchTplEsportsAfter } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-esports-after/index.js";
@@ -63,7 +73,8 @@ export default {
     MatchTpl12After,
     MatchTpl18After,
     MatchTpl24After,
-    MatchTplEsportsAfter
+    MatchTplEsportsAfter,
+    MatchNewCard
   },
   setup(props) {
     // 赛事样式对象

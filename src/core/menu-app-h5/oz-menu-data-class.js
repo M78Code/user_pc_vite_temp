@@ -57,6 +57,11 @@ class MenuData {
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = '';
     this.current_lv_2_menu_mi = ref('0');
+    //电竞日期
+    this.current_lv_3_menu = {
+      field1:"",
+      menuType:""
+    };
     this.menu_lv_mi_lsit = []
     // 赛果 日期/赛中
     this.result_menu_api_params = {}
@@ -191,6 +196,18 @@ class MenuData {
       }
     }
     !arr && useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA,menu_list);
+  }
+  /**
+   * 
+   * @param {*} mi 
+   * @returns 
+   */
+  set_current_lv_3_menu(item){
+    this.current_lv_3_menu = {
+      ...this.current_lv_3_menu,
+      ...(item || {})
+    }
+    this.update();
   }
   // 根据菜单id 获取对应的euid
   get_mid_for_euid(mi) {

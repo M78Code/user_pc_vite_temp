@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="description" content="%VITE_APP_productDescription%" />
     <meta name="product-name" content="%VITE_APP_productName%" />
+    <meta name="version-LAYOUT_META" content="%VITE_APP_LAYOUT_META%" />
     <meta name="version" content="%VITE_APP_version%" />
     <meta name="version-name" content="%VITE_APP_versionName%" />
     <meta name="version-date" content="%VITE_APP_versionDate%" />
@@ -107,6 +108,23 @@
           }
           .theme02_y0-root-loading #loading-root-main {
             color: #569ffd;
+          }
+          .theme01, .theme01-root-loading {
+            background-color: transparent !important;
+          }
+          .theme01_y0,
+          .theme01_y0-root-loading {
+            background-color: transparent !important;
+          }
+    
+          .theme02,
+          .theme02-root-loading {
+            background-color: transparent !important;
+          }
+    
+          .theme02_y0,
+          .theme02_y0-root-loading {
+            background-color: transparent !important;
           }
     
 
@@ -584,7 +602,7 @@
     <!-- DO NOT touch the following DIV -->
     <div id="ty-app" class="full-height"></div>
     <!--loading 动画-->
-    <!-- <div id="loading-root-ele" class="loading"  >
+    <div id="loading-root-ele" class="loading"  >
       <div id="loading-root-main" class="la-line-scale loading-line">
         <div></div>
         <div></div>
@@ -592,7 +610,7 @@
         <div></div>
         <div></div>
       </div>
-    </div> -->
+    </div>
   </body>
 
   <script>
@@ -641,7 +659,7 @@
     let url_search = SEARCH_PARAMS.init_param;
 
     // 设置 loading 动画 主题
-    // set_root_loading_theme(url_search);
+    set_root_loading_theme(url_search);
     if(!url_search.get('token')){
       document.getElementById("loading-root-ele").style.visibility = "hidden";
     }
@@ -671,6 +689,7 @@
         
      </script>
         
+
 
   <script type="module" src="./main.js"></script>
 </html>
