@@ -194,6 +194,7 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
+    ref_data.money = Number(ref_data.money)
     // 输入控制
     if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
         BetData.set_bet_obj_amount(ref_data.money,props.items.playOptionsId)

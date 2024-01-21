@@ -46,8 +46,6 @@ import {
   MITT_TYPES,
 } from "src/core/mitt/index.js";
 
-import STANDARD_KEY from "src/core/standard-key";
-const base_data_key = STANDARD_KEY.get("base_data_key");
 
 const base_menu_id_new = {
   30002: "1011",
@@ -276,11 +274,11 @@ class BaseData {
     });
     // 等待以上4个接口同时请求完成再通知列表获取
     return Promise.all([p1, p2, p3, p4, p5]).then((res) => {
-      // const base_data = LocalStorage.get(base_data_key)
+      // const base_data = LocalStorage.get("base_data_key")
       // //   !base_data && this.handle_base_data(res)
       this.handle_base_data(res)
       nextTick(()=>{
-        LocalStorage.set(base_data_key,res)
+        LocalStorage.set("base_data_key",res)
       })
     }).catch((err) => {
       this.set_default_base_data()
@@ -290,7 +288,7 @@ class BaseData {
 
   // 从缓存读取默认数据
   set_default_base_data () {
-    const base_data = LocalStorage.get(base_data_key)
+    const base_data = LocalStorage.get("base_data_key")
     if (base_data) {
       this.set_is_emit(true)
       this.handle_base_data(base_data)
@@ -886,7 +884,7 @@ class BaseData {
    * 解析  菜单 国际化
    */
   resolve_menus(res = {}) {
-    if (!Object.keys(res).length) return
+    if (!res && !Object.keys(res).length) return
     // 获取语言类型
     let locale = lodash_.get(i18n,'global.locale','zh') || "zh";
     // 设置 语言变量

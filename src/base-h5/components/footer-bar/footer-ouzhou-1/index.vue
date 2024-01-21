@@ -51,6 +51,7 @@ const jump_page = (item) => {
   // 设置一级菜单 注： 普通赛果是28, 投注赛果是29， 欧洲版不考虑投注
   VirtualList.set_is_show_ball(item.route === '/matchResults' ? false : true)
   item.type && MenuData.set_current_lv1_menu(item.type)
+  if(item.route === '/inPlay')MenuData.set_menu_mi('101');
   BaseData.set_is_emit(true)
 
   MatchMeta.clear_match_info()
