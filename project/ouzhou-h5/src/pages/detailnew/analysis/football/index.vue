@@ -1,6 +1,6 @@
 <script setup name="analysisFootball">
 import {computed, defineProps, defineAsyncComponent, ref, markRaw, reactive} from "vue";
-import Match from "./Match.vue"     // 赛况
+import Match from "./Match/index.vue"     // 赛况
 import Figures from "./Figures/index.vue"     // 数据
 import Lineup from "./Lineup/index.vue"     // 阵容
 import Information from "./Information.vue"     // 资讯

@@ -278,53 +278,104 @@ export const use_sports_play_data = () => {
       {
         label: i18n_t('ouzhou.match.play_map.1'),
         hpid: '1',
-        csid: '1'
+        csid: '90'
       },
       {
         label: i18n_t('ouzhou.match.play_map.2'),
         hpid: '2',
-        csid: '1'
+        csid: '90'
       },
       {
         label: i18n_t('ouzhou.match.play_map.4'),
         hpid: '4',
-        csid: '1'
+        csid: '90'
       },
     ],
     "91" : [
       {
         label: i18n_t('ouzhou.match.play_map.37'),
         hpid: '37',
-        csid: '2'
+        csid: '91'
       },
       {
         label: i18n_t('ouzhou.match.play_map.38'),
         hpid: '38',
-        csid: '2'
+        csid: '91'
       },
       {
         label: i18n_t('ouzhou.match.play_map.39'),
         hpid: '39',
-        csid: '2'
+        csid: '91'
       },
     ],
-    "1001" : [ 
+    "100" : [ 
       {
-        label: i18n_t('ouzhou.match.play_map.1'),
-        hpid: '20001',
-        csid: '1001'
+        label: i18n_t('ouzhou.match.play_map.30001'),
+        hpid: '30001',
+        csid: '100'
       },
       {
-        label: i18n_t('ouzhou.match.play_map.2'),
-        hpid: '20002',
-        csid: '1001'
+        label: i18n_t('ouzhou.match.play_map.30002'),
+        hpid: '30002',
+        csid: '100'
       },
       {
-        label: i18n_t('ouzhou.match.play_map.4'),
-        hpid: '20004',
-        csid: '1001'
+        label: i18n_t('ouzhou.match.play_map.30003'),
+        hpid: '30003',
+        csid: '100'
       },
     ],
+    "101" : [ 
+      {
+        label: i18n_t('ouzhou.match.play_map.30001'),
+        hpid: '30001',
+        csid: '100'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.30002'),
+        hpid: '30002',
+        csid: '100'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.30003'),
+        hpid: '30003',
+        csid: '100'
+      },
+    ],
+    "102" : [ 
+      {
+        label: i18n_t('ouzhou.match.play_map.30001'),
+        hpid: '30001',
+        csid: '100'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.30002'),
+        hpid: '30002',
+        csid: '100'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.30003'),
+        hpid: '30003',
+        csid: '100'
+      },
+    ],
+    "103" : [ 
+      {
+        label: i18n_t('ouzhou.match.play_map.30001'),
+        hpid: '30001',
+        csid: '100'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.30002'),
+        hpid: '30002',
+        csid: '100'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.30003'),
+        hpid: '30003',
+        csid: '100'
+      },
+    ]
   }
 }
 
@@ -764,10 +815,10 @@ export const use_sports_play_title = () => {
     "100": [
       {
         hpid: '30001',
-        label: i18n_t('ouzhou.match.play_map.1'),//'全局获胜',
+        label: i18n_t('ouzhou.match.play_map.30001'),//'全局获胜',
         ol: [
-          { ot: 'T1', title: i18n_t('list.win1') },// "主胜"
-          { ot: 'T2', title: i18n_t('list.win2')} // "客胜"
+          { ot: 'T1', title: i18n_t('ouzhou.bet_col.bet_col_30001.bet_col_1') }, // "让分"
+          { ot: 'T2', title: i18n_t('ouzhou.bet_col.bet_col_30001.bet_col_2') }, // "让分"
         ]
       },
       {
@@ -791,10 +842,10 @@ export const use_sports_play_title = () => {
     "101": [
       {
         hpid: '30001',
-        label: i18n_t('ouzhou.match.play_map.1'),//'全局获胜',
+        label: i18n_t('ouzhou.match.play_map.30001'),//'全局获胜',
         ol: [
-          { ot: 'T1', title: i18n_t('list.win1') },// "主胜"
-          { ot: 'T2', title: i18n_t('list.win2')}// "客胜"
+          { ot: 'T1', title: i18n_t('ouzhou.bet_col.bet_col_30001.bet_col_1') }, // "让分"
+          { ot: 'T2', title: i18n_t('ouzhou.bet_col.bet_col_30001.bet_col_2') }, // "让分"
         ]
       },
       {
@@ -818,10 +869,10 @@ export const use_sports_play_title = () => {
     "102": [
       {
         hpid: '30001',
-        label: i18n_t('ouzhou.match.play_map.1'),//'全局获胜',
+        label: i18n_t('ouzhou.match.play_map.30001'),//'全局获胜',
         ol: [
-          { ot: 'T1', title: i18n_t('list.win1') },// "主胜"
-          { ot: 'T2', title: i18n_t('list.win2')}// "客胜"
+          { ot: 'T1', title: i18n_t('ouzhou.bet_col.bet_col_30001.bet_col_1') }, // "让分"
+          { ot: 'T2', title: i18n_t('ouzhou.bet_col.bet_col_30001.bet_col_2') }, // "让分"
         ]
       },
       {
@@ -845,10 +896,10 @@ export const use_sports_play_title = () => {
     "103": [
       {
         hpid: '30001',
-        label: i18n_t('ouzhou.match.play_map.1'),//'全局获胜',
+        label: i18n_t('ouzhou.match.play_map.30001'),//'全局获胜',
         ol: [
-          { ot: 'T1', title: i18n_t('list.win1') },// "主胜"
-          { ot: 'T2', title: i18n_t('list.win2')}// "客胜"
+          { ot: 'T1', title: i18n_t('ouzhou.bet_col.bet_col_30001.bet_col_1') }, // "让分"
+          { ot: 'T2', title: i18n_t('ouzhou.bet_col.bet_col_30001.bet_col_2') }, // "让分"
         ]
       },
       {
