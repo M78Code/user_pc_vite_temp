@@ -113,6 +113,7 @@ export const odd_lock_ouzhou = compute_local_project_file_path('/image/list/lock
 export const ouzhou_token_bg = compute_local_project_file_path('/image/list/ouzhou_token_bg.png')
 export const ouzhou_token_tips = compute_local_project_file_path('/image/list/ouzhou_token_tips.png')
 
+export const ouzhou_login_failure = compute_local_project_file_path('/image/list/login_failure.png')
 
 // 欧洲 赔率升高图标
 export const ouzhou_hps_up = compute_local_project_file_path('/image/list/icon_up.png')
