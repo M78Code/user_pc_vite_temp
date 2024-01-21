@@ -133,6 +133,7 @@ watch(
         return;
       }
       if (val.showType) {
+       
         tab_click(val.showType);
         return;
       }

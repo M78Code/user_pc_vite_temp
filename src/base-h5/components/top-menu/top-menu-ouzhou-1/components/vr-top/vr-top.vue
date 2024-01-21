@@ -1,12 +1,12 @@
 <template>
     <div class="info_box">
         <div class="left">
-            <div class="navigation" @click="handle_drawer" >
+            <div class="back" @click="go_back" v-if="['/virtual_sports_details', '/virtual_sports_details/'].includes(router.currentRoute.path)">
+                <img class="bakc-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/back.png`" alt="" />
+            </div>
+            <div class="navigation" @click="handle_drawer" v-else>
               <img  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/navigation.png`" alt="">
             </div>
-            <!-- <div class="back" @click="go_back">
-                <img class="bakc-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/back.png`" alt="" />
-            </div> -->
             <!-- <div class="detail-back" v-if="['/virtual_sports_details', '/virtual_sports_details/'].includes(router.currentRoute.value.path)" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div> -->
             <div class="vr_name">
                 <span style="margin-left: 0.01rem;">VR Sports</span>

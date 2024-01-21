@@ -194,6 +194,9 @@ function change_version(params) {
  */
 function change_hot(params) {
   // TODO: 修改热门 0热门/1时间
+  console.log(params, "TODO: 修改热门 0热门/1时间");
+  UserCtr.set_sort_type(params == 0 ? 1 : 2)
+  on_refresh();
 }
 
 /**

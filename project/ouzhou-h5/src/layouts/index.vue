@@ -17,7 +17,7 @@
   </q-layout>
 
   <!-- token 失效页面 -->
-  <token-invalid v-if="is_token_invalid_show" ></token-invalid>
+  <token-invalid v-if="is_token_invalid_show" @is_go_vender_url="is_go_vender_url"></token-invalid>
 
   <!-- 吐司提示框 v-if="toast_show" -->
   <toast></toast>
@@ -136,32 +136,6 @@ const goto_vender_url = () => {
 }
 
 
-// const mitt_list = [
-//   // 监听设置框状态
-//   useMittOn(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, function (value) {
-
-//     setting_dialog.value = value.open
-//   }).off,
-
-//   // 监听当前国际化语言
-//   useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, () => {
-//     UserCtr.fetch_actimg()
-//     UserCtr.set_e_sports_domain_img()
-//   }).off,
-//   // 开启注单历史弹窗
-//   useMittOn(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, (val) => {
-//     // footer中点击，传过来的是对象，根据settle值确定显示未结注单还是已结注单
-//     if(typeof(val) === 'object') {
-//       const num = val.settle ? 3 : 0;
-//       BetRecordClass.set_selected(num);
-//     }
-//     change_settle_status(Boolean(val));
-//   }).off,
-//   // 登录失效
-//   useMittOn(MITT_TYPES.EMIT_GO_TO_VENDER, () => {
-//     if (!is_token_invalid_show.value) is_token_invalid_show.value = true
-//   }).off
-// ]
 
 onMounted(() => {
   // 阻止双击放大
@@ -213,6 +187,10 @@ const mitt_list = [
   useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, () => {
     UserCtr.fetch_actimg()
     UserCtr.set_e_sports_domain_img()
+  }).off,
+  // 登录失效
+  useMittOn(MITT_TYPES.EMIT_GO_TO_VENDER, () => {
+    if (!is_token_invalid_show.value) is_token_invalid_show.value = true
   }).off
 ]
 // 监听搜索弹框是否展示
