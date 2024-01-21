@@ -59,7 +59,7 @@
 
     <div>
       <span class="check-box" :class="{'p-d-20': BetData.is_bet_single}" v-if="BetData.is_bet_single" @click="BetData.set_regular_amount()">
-        <span class="check-wrap relative-position" :class="{'active': BetData.is_checked_regular_amount}" />
+        <span class="check-wrap relative-position" :class="{'active': BetData.is_regular_amount}" />
         <span>{{ i18n_t('bet.common_amount') }}</span>
       </span>
     </div>

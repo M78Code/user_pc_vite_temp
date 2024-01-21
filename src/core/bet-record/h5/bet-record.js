@@ -179,9 +179,9 @@ class BetRecord {
     let tempList = []
     lodash.forEach(this.list_data, (value, key) => {
       lodash.forEach(value.data, (item) => {
-        // if (item.enablePreSettle) {
+        if (item.enablePreSettle) {
           tempList.push(item.orderNo)
-        // }
+        }
       })
     })
     if (tempList.length === 0) return;

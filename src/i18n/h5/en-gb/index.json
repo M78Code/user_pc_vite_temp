@@ -458,7 +458,8 @@
     "bet_retract": "Bet Retract",
     "error_message": "The selected betting odds, market or validity has changed.",
     "bet_min_item": "至少选择{num}场比赛",
-    "bet_max_item": "最多选择{num}场比赛"
+    "bet_max_item": "最多选择{num}场比赛",
+    "bet_auto_msg_1": "自动接受更好的赔率"
   },
   "bet_message":{
     "success": "Successful Betting",
