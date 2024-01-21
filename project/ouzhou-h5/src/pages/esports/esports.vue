@@ -56,6 +56,7 @@ const on_update = (val) => {
     MatchMeta.get_esports_match();
 }
 onMounted(()=>{
+    MenuData.set_current_lv1_menu(2000);
     MenuData.set_menu_mi(+MenuData.current_lv_2_menu_mi.value || '2100');
     getDateList(tabValue.value)
 })

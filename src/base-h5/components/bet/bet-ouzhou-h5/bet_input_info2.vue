@@ -146,6 +146,7 @@ const cursor_flashing = () => {
     padding-left: 0.7rem;
     background: var(--q-gb-bg-c-10);
     padding: 0 0.15rem;
+    border-bottom: 1px solid  var(--q-gb-bd-c-1);
 
     .info_right {
         width: 162px;

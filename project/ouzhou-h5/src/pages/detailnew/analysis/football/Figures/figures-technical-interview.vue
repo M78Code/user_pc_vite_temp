@@ -124,7 +124,7 @@ const calculateAge = (birthday) => {
             align-items: center;
             padding-left: 0.1rem;
 
-            :deep(.TeamImg) {
+            &:deep(.TeamImg){
                 width: 0.2rem;
                 height: 0.2rem;
                 margin: 0.05rem;
