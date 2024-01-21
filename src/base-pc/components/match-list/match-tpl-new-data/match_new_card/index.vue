@@ -67,7 +67,7 @@
         >
           <div class="match-name" v-tooltip='{content:match.mhn, overflow: 2 }'>
             {{
-              MenuData.is_virtual_sport ? _.get(match, "teams[0]") : match.mhn
+              MenuData.is_virtual_sport ? lodash.get(match, "teams[0]") : match.mhn
             }}
           </div>
           <img
@@ -85,7 +85,7 @@
       <div class="match-score">
         {{
           play_name_obj.score_key
-            ? _.get(match, `score_obj.${play_name_obj.score_key}.home`)
+            ? lodash.get(match, `score_obj.${play_name_obj.score_key}.home`)
             : match.home_score
             ? match.home_score
             : ""
@@ -126,7 +126,7 @@
       <div class="match-score">
         {{
           play_name_obj.score_key
-            ? _.get(match, `score_obj.${play_name_obj.score_key}.away`)
+            ? lodash.get(match, `score_obj.${play_name_obj.score_key}.away`)
             : match.away_score
             ? match.away_score
             : ""
@@ -162,7 +162,7 @@
 
           <div class="match-name" v-tooltip='{content:match.man, overflow: 2 }'>
             {{
-              MenuData.is_virtual_sport ? _.get(match, "teams[1]") : match.man
+              MenuData.is_virtual_sport ? lodash.get(match, "teams[1]") : match.man
             }}
           </div>
         </div>
@@ -197,7 +197,7 @@
       <span
         @click.stop="collect"
         class="yb-flex-center yb-hover-bg m-star-wrap-match mb-15"
-        v-if="get_global_switch.collect_switch"
+        v-if="GlobalAccessConfig.get_collectSwitch()"
       >
         <i
           aria-hidden="true"
@@ -315,10 +315,12 @@
 <script setup>
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
-import { ref, computed, watch, onMounted, inject, reactive } from 'vue';
-import { MenuData } from "src/output/index.js";
+import { ref, computed, watch, onMounted, inject, reactive, nextTick } from 'vue';
+import { MenuData, get_match_status, UserCtr, MatchDetailCalss } from "src/output/index.js";
 import { getScrollbarWidth } from 'src/core/utils/common/index'
 import { useRoute, useRouter } from 'vue-router';
+import lodash from 'lodash'
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
 const route = useRoute();
 const match = inject("match")
@@ -328,9 +330,16 @@ const betItemActive = reactive({
   right: false,
 })
 const popup_class = ref("")
+const lift_obj = ref({})
+const lift_obj1 = ref({})
+const lift_obj2 = ref({})
+const is_iframe = window.is_iframe
+// 组件是否加载完成
+const is_mounted = ref(false);
+const vx_detail_params = ref(MatchDetailCalss.params)
 
 // 获取胜平负数据
-const handicap_list = ()  => {
+const handicap_list = computed(()  => {
   if(MenuData.cur_level2_menu=='30101'){
     let ols = []
     ols = match.value.main_handicap_list.map(item=>item.ols[0])
@@ -339,16 +348,106 @@ const handicap_list = ()  => {
     return match.value.main_handicap_list[0].ols;
   }
   
-}
-
-const show_data = () => {
+})
+// 获取当前csid
+const play_csid = computed(() => {
+  return match.value.csid;
+})
+const show_data = computed(() => {
   let state = false
     //足球 篮球 电竞 vr足球  B03电子足球、C01、O01等
   if(['1','2','100','101','102','103','1001'].includes(match.value.csid) && !['B03','C01','O01'].includes(match.value.cds)){
     state = true
   }
   return state;
-}
+})
+const play_name_obj = computed(() => {
+  let play_name_obj = {
+    key: "main",
+    suffix_name: "",
+    score_key: "",
+  };
+  let { ms, tpl_id, hSpecial } = match.value || {};
+  //滚球
+  if (get_match_status(ms, [110]) == 1) {
+    //角球后缀
+    if (MenuData.is_corner_menu()) {
+      play_name_obj = {
+        key: "corner",
+        suffix_name: " - " + i18n_t("list.corner"),
+        score_key: "S5",
+      };
+      //罚牌后缀
+    } else if (tpl_id == 25) {
+      play_name_obj = {
+        key: "punish",
+        suffix_name: " - " + i18n_t("list.punish"),
+        score_key: "S10102",
+      };
+      // 15分钟比分
+    } else if (tpl_id == 24) {
+      play_name_obj = {
+        key: "main",
+        suffix_name: "",
+        score_key: `S100${hSpecial}`,
+      };
+    }
+  }
+  return play_name_obj;
+})
+/**
+ * @Description 计算当前视频图标
+ * @return {Object}
+ */
+const cur_video_icon = computed(() => {
+  let {
+    lvs = -1,
+    mms = -1,
+    lss = -1,
+    tvs = -1,
+    ms,
+    varl = "",
+    vurl = "",
+  } = match.value;
+  let cur_video_icon = {
+    type: "",
+    text: "",
+  };
+  //电竞
+  let is_esports = MenuData.is_esports();
+  //滚球状态
+  let is_play = get_match_status(ms);
+  // 包含的语言
+  let status = ["zh", "tw",'hk'].includes(UserCtr.lang);
+  //演播厅
+  if (lvs == 2 && status && [1, 0].includes(lss)) {
+    if (lss === 1) {
+      cur_video_icon = {
+        type: "studio",
+        text: i18n_t("common.studio"),
+      };
+      //专题
+    } else if (lss === 0 && !is_play) {
+      cur_video_icon = {
+        type: "topic",
+        text: i18n_t("common.topic"),
+      };
+    }
+    //主播
+  } else if (tvs == 2 && status) {
+    cur_video_icon = {
+      type: "anchor",
+      text: i18n_t("common.anchor"),
+    };
+    //源视频                       非电竞 或者电竞有url
+  } else if (mms == 2 && (varl || vurl || !is_esports) && is_play) {
+    cur_video_icon = {
+      type: "video",
+      text: i18n_t("common.o_video"),
+    };
+  }
+  return cur_video_icon;
+})
 /**
  * @Description 点击弹层 
  * @param {undefined} undefined
@@ -375,6 +474,13 @@ const onBetItemStateChange = (activeKey, state) => {
     betItemActive[activeKey] = false;
   }
 }
+
+onMounted(() => {
+  // 异步设置组件是否挂载完成
+  nextTick(()=>{
+    is_mounted.value = true
+  })
+});
 
 </script>
 

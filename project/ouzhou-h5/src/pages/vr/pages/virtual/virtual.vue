@@ -3,6 +3,7 @@
 -->
 <template>
   <div>
+    
     <div class="virtual-main router_scroll_layout" ref="scrollArea" @scroll="wrapper_scroll_handler">
       <!-- 头部 -->
       <div class="virtual-head" style="display: none;">
@@ -61,10 +62,12 @@ export default {
       this.menu_list = res.menu_list;
       this.v_match_router_ente = res.v_match_router_ente;
       this.v_menu_changed = res.v_menu_changed;
-      console.log('ress', res);
+      // 切换菜单时修改csid
+      MenuData.set_vr_menu_csid(this.current_sub_menu.menuId);
     }
   }, 
   mounted(){
+    MenuData.set_current_lv1_menu(300);
     MenuData.set_vr_menu_csid('1001');
     // 重置所选 球种默认玩法 hpid
     MatchResponsive.reset_match_hpid_by_csid()

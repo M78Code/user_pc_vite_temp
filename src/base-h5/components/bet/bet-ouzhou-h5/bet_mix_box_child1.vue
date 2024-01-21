@@ -14,8 +14,14 @@
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one">
                         <div class="nonebox4-content-left-content-text-one-tit">
-                          <span class="text-flow-none">{{items.handicap}}  <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em>
-                            【{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}】
+                          <span class="text-flow-none">{{items.handicap}}  
+                            
+                            <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em>
+                            
+                            <span v-if="UserCtr.is_cur_odds(items.odds_hsw)">
+                              [{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]
+                            </span>
+                            <span v-else>[{{ i18n_t(`odds.EU`) }}]</span>
                           </span> 
                         </div>
                         <div>
@@ -38,16 +44,12 @@
                        <span class="text-two-span">
                         <span>{{items.playName}} </span>
                         {{ items.matchType == 2 && [1,2,3,8,9].includes(items.sportId *1) ? items.mark_score : '' }}
-                       <!-- <span class="text-two-span">{{items.playName}} -->
                         </span>
-                        <!-- <span v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]</span> 
-                        <span v-else>[{{ i18n_t(`odds.EU`) }}]</span>  -->
-                        
                       </div>
+
                       <div class="nonebox4-content-left-content-text-three">{{items.tid_name}}</div>
                       <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{items.matchType == 2? items.mark_score : ''}}</div>
                     </div>
-                   
                     
                   </div>
               </div>
@@ -63,7 +65,8 @@
 import { reactive } from "vue";
 
   const props = defineProps({
-    items:{}
+    items:{},
+    index:{}
   })
 
   const type = 2;//1:不涨也不少    2：增长     3：减少
