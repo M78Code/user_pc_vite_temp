@@ -170,7 +170,7 @@ function change_version(params) {
   //TODO: 切换专业/新手版 1 专业版 2 新手版
   const type = params.id;
   useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true)
-  UserCtr.set_standard_edition(params)
+  UserCtr.set_standard_edition(params.id)
   useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
   let timer = setTimeout(() => {
         // VirtualList.set_is_show_ball(true)
