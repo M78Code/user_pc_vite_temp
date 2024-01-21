@@ -1601,7 +1601,7 @@ class MatchMeta {
       // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
       t.handicap_index = MatchUtils.get_handicap_index_by(t);
 
-      const match = warehouse.get_quick_mid_obj(t.mid)
+      const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
       if (match) {
         t.start_flag = lodash.get(match, 'start_flag', 0)
         t.is_show_league = lodash.get(match, 'is_show_league', false)
