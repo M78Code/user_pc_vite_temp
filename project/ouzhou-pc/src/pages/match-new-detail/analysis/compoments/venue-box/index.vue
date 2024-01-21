@@ -5,7 +5,7 @@
 -->
 <template>
   <div>
-    <div class="analysis-body">
+    <div class="component analysis-body">
       <div class="analysis-top">
         <div class="analysis-top-l">
           <!-- <div class="v-icon switch-icon"></div> -->

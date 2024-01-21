@@ -1,6 +1,6 @@
 
 <template>
-  <div v-show="false"> {{ MenuData.menu_data_version }} </div>
+  <div v-show="false"> {{ MenuData.menu_data_version }}-{{ BaseData.base_data_version }} </div>
   <div class="left-container">
     <!-- 左侧菜单 -->
     <div class="menu-nav-li">

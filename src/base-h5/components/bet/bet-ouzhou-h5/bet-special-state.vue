@@ -1,7 +1,14 @@
 <template>
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
-        <div class="bet-info">
+          <!-- 备注123 -->
+                <div class="info-top row items-center justify-between">
+                <p class="left-text"><span>4-fold X 1</span>
+                <span>@3.48</span> </p>
+                <p class="right-text">bet placed</p>
+            </div>
+             <bet-special-winning/>
+        <!-- <div class="bet-info">
             <div class="f-b-c px-12">
                 <div class="f-s-c">
                     <img :src="compute_local_project_file_path('/image/bet/request.svg')" alt="" @click="alertRules(items.seriesValue)">
@@ -21,7 +28,7 @@
             <div>
                 <span>小计：{{ format_money2(mathJs.divide(items.seriesBetAmount,100))}} {{currency_code[UserCtr.currency]}}</span>
             </div>
-        </div>
+        </div> -->
         <bet-dialog  @close="tooltipbox=false" :item="items" :id="itemid" :tooltipboxs="tooltipbox" v-model="tooltipbox"></bet-dialog>
     </div>
 </template>
@@ -30,6 +37,7 @@
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import {UserCtr,format_money2,LOCAL_PROJECT_FILE_PREFIX,currency_code ,compute_local_project_file_path } from "src/output/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
+import betSpecialWinning from "./bet-special-winning.vue";
 import { ref } from "vue"
 
 const props = defineProps({
@@ -149,4 +157,28 @@ const alertRules = (id) => {
         margin-bottom: .04rem;
     }
 }
+  .info-top{
+    width: 100%;
+    height:0.56rem ;
+    padding: 0.12rem;
+    background: var(--q-gb-t-c-10);
+    .left-text{
+      font-size: 0.18rem;
+      span{
+        font-weight: 500;
+        color: var(--q-gb-t-c-4);
+      }
+      :nth-child(2){
+        font-weight: 700;
+        color: var(--q-gb-t-c-1);
+        margin-left: 0.07rem;
+      }
+  }
+  .right-text{
+    color: var(--q-gb-t-c-1);
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+  }
 </style>

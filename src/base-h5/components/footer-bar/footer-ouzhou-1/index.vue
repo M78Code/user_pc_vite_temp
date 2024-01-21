@@ -5,7 +5,7 @@
 <template>
   <div class="footer_menu" v-if="is_rule_page">
     <!-- 中间弧形 -->
-    <span class="arc"></span>
+    <!-- <span class="arc"></span> -->
     <!-- 底部菜单 -->
     <div v-for="( item, index ) in tab_list" :key="index" class="footer_menu_item"
       :class="tab_active == item.route ? 'active' : ''" @click="jump_page(item)">
@@ -116,18 +116,20 @@ const jump_page = (item) => {
       margin-left: -28px;
       width: 56px;
       height: 56px;
+      border-radius: 50%;
+      box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.1);
       background-size: 56px 56px !important;
       background-image: url($SCSSPROJECTPATH+"/image/footer/unselect_home_page.png");
-      &:after{
-        content:"";
-        display: inline-block;
-        width: 52px;
-        height: 14px;
-        margin-left: 2px;
-        box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.1);
-        border-radius:50%/100% 100%  0 0;
-        // border-radius: 50% / 100% 100% 0 0;
-      }
+      // &:after{
+      //   content:"";
+      //   display: inline-block;
+      //   width: 52px;
+      //   height: 14px;
+      //   margin-left: 2px;
+      //   box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.1);
+      //   border-radius:50%/100% 100%  0 0;
+      //   // border-radius: 50% / 100% 100% 0 0;
+      // }
     }
 
 

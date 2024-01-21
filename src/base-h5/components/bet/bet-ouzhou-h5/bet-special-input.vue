@@ -6,6 +6,7 @@
     <div class="alert-rules">
       <div class="item-left font14 font500">
         {{ items.name }} x{{ items.count }}
+        <span class="multiple-text">@3.48</span>
       </div>
      <div class="font14">
       <span class="font400 item-left-btm">最高可赢</span>
@@ -23,6 +24,8 @@
         <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
       </div>
     </div>
+  </div>
+  <div>
   </div>
 </template>
 
@@ -198,6 +201,13 @@ const alertRules = (id) => {
       align-items: center;
       color: var(--q-gb-t-c-4);
       font-size: 16px;
+      .multiple-text{
+        color: var(--q-gb-t-c-1);
+        font-size: 0.2rem;
+        font-weight: 700;
+        text-transform: capitalize;
+        margin-left: 0.08rem;
+      }
     }
   }
   .bet_single_detail{
@@ -291,5 +301,5 @@ const alertRules = (id) => {
       line-height: 0.14rem;
     }
   }
-  
+
 </style>

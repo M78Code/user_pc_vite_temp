@@ -1,6 +1,6 @@
 <script setup >
 import {computed, defineProps, defineAsyncComponent, ref, markRaw, reactive} from "vue";
-import Match from "../football/Match.vue"     // 赛况
+import Match from "../football/Match/index.vue"     // 赛况
 import Figures from "../football/Figures/index.vue"     // 数据
 import Lineup from "../football/Lineup/index.vue"     // 阵容
 import Information from "../football/Information.vue"     // 资讯

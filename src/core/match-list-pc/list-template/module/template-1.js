@@ -331,6 +331,73 @@ export const template_1 = {
       ],
     },
   ],
+  // 组合玩法
+  hpsCompose: [
+    {
+      ols: [
+        {  _hpid: 101, ot: '1AndYes', other_class:"col1.5", class: "compose_handicap", },
+        {  _hpid: 101, ot: '2AndYes', other_class:"col1.5", class: "compose_handicap", },
+        {  _hpid: 101, ot: 'XAndYes', other_class:"col1.5", class: "compose_handicap", },
+      ],
+    },
+
+    {
+      ols: [
+        {  _hpid: 101, ot: '1AndNo', other_class:"col1.5", class: "compose_handicap", },
+        {  _hpid: 101, ot: '2AndNo', other_class:"col1.5", class: "compose_handicap", },
+        {  _hpid: 101, ot: 'XAndNo', other_class:"col1.5", class: "compose_handicap", },
+      ],
+    },
+
+    {
+      ols: [
+        {  _hpid: 105, ot: '1AndYes', other_class:"col1.5 high_light", class: "compose_handicap", },
+        {  _hpid: 105, ot: '2AndYes', other_class:"col1.5 high_light", class: "compose_handicap", },
+        {  _hpid: 105, ot: 'XAndYes', other_class:"col1.5 high_light", class: "compose_handicap", },
+      ],
+    },
+
+    {
+      ols: [
+        {  _hpid: 105, ot: '1AndNo', other_class:"col1.5 high_light", class: "compose_handicap", },
+        {  _hpid: 105, ot: '2AndNo', other_class:"col1.5 high_light", class: "compose_handicap", },
+        {  _hpid: 105, ot: 'XAndNo', other_class:"col1.5 high_light", class: "compose_handicap", },
+      ],
+    },
+
+    {
+      ols: [
+        {  _hpid: 13, ot: '1AndOver', other_class:"col1.5", class: "compose_handicap", },
+        {  _hpid: 13, ot: '2AndOver', other_class:"col1.5", class: "compose_handicap", },
+        {  _hpid: 13, ot: 'XAndOver', other_class:"col1.5", class: "compose_handicap", },
+      ],
+    },
+
+    {
+      ols: [
+        {  _hpid: 13, ot: '1AndUnder', other_class:"col1.5", class: "compose_handicap", },
+        {  _hpid: 13, ot: '2AndUnder', other_class:"col1.5", class: "compose_handicap", },
+        {  _hpid: 13, ot: 'XAndUnder', other_class:"col1.5", class: "compose_handicap", },
+      ],
+    },
+
+    {
+      ols: [
+        {  _hpid: 345, ot: '1AndOver', other_class:"col1.5 high_light", class: "compose_handicap", },
+        {  _hpid: 345, ot: '2AndOver', other_class:"col1.5 high_light", class: "compose_handicap", },
+        {  _hpid: 345, ot: 'XAndOver', other_class:"col1.5 high_light", class: "compose_handicap", },
+      ],
+    },
+
+    {
+      ols: [
+        {  _hpid: 345, ot: '1AndUnder', other_class:"col1.5 high_light", class: "compose_handicap", },
+        {  _hpid: 345, ot: '2AndUnder', other_class:"col1.5 high_light", class: "compose_handicap", },
+        {  _hpid: 345, ot: 'XAndUnder', other_class:"col1.5 high_light", class: "compose_handicap", },
+      ],
+    },
+    // ...set_default_tpl(ol_template)
+  ],
 };
 //   列表宽度计算模板
 export const width_config = {

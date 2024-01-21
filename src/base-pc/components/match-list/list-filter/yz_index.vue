@@ -214,8 +214,8 @@ import { compute_css_obj } from "src/output/index.js";
 <style lang="scss" scoped>
 .c-match-list-filter {
   width: 100%;
-  height: 48px;
-  padding-bottom: 1px;
+  height: 52px;
+  -padding-bottom: 1px;
   .more-btn {
     z-index: 10;
     width: 30px;
