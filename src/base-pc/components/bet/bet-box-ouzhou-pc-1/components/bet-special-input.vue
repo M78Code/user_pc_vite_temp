@@ -19,7 +19,7 @@
         
                 <div>
                     <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount()" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
-                    :placeholder="`${i18n_t('bet.money_range')} ${format_money3(items.min_money)}~${format_money3(items.max_money)}`" maxLength="11"  />
+                    :placeholder="placeholder(items)" maxLength="11"  />
                 </div>
             
             </div>
@@ -234,6 +234,14 @@ const show_quick_amount = () => {
 
     set_show_quick_money(obj)
 }
+
+const placeholder = computed(() => (items) => {
+    if(items.min_money && items.max_money) {
+        return `${i18n_t('bet.money_range')} ${format_money3(items.min_money)}~${format_money3(items.max_money)}`
+    } else {
+        return ''
+    }
+})
 
 </script>
 

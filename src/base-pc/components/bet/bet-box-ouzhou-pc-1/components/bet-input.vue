@@ -19,7 +19,7 @@
         
                 <div>
                     <input class="bet-input" v-model="ref_data.money" type="text" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
-                    :placeholder="`${i18n_t('bet.money_range')} ${ ref_data.min_money ? format_money3(ref_data.min_money) :''}~${ref_data.max_money ? format_money3(ref_data.max_money) : ''}`" maxLength="11"  />
+                    :placeholder="placeholder" maxLength="11"  />
                 </div>
             
             </div>
@@ -36,7 +36,7 @@
 </template>
 
 <script setup> 
-import { reactive,onMounted,onUnmounted } from "vue"
+import { reactive,onMounted,onUnmounted,computed } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -194,7 +194,7 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
-    ref_data.money = Number(ref_data.money)
+    ref_data.money = Number(ref_data.money) ? Number(ref_data.money) : 0
     // 输入控制
     if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
         BetData.set_bet_obj_amount(ref_data.money,props.items.playOptionsId)
@@ -227,6 +227,15 @@ const show_quick_amount = state => {
     }
     set_show_quick_money(obj)
 }
+
+const placeholder = computed(() => {
+    console.log('--------------------------------1111-----------------------------------', ref_data.min_money , ref_data.max_money)
+    if(ref_data.min_money && ref_data.max_money) {
+        return `${i18n_t('bet.money_range')} ${format_money3(ref_data.min_money)}~${format_money3(ref_data.max_money)}`
+    } else {
+        return ''
+    }
+})
 
 </script>
 

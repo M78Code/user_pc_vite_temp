@@ -109,11 +109,11 @@ const total = computed(()=> state =>{
     let sum = 0
     if (BetViewDataClass.bet_order_status === 1) {
         BetViewDataClass.bet_special_series.forEach((item)=>{
-            sum += (item.bet_amount ? item.bet_amount : 0)
+            sum = mathJs.add((item.bet_amount ? item.bet_amount : 0), sum)
         })
     } else {
         BetViewDataClass.orderNo_bet_single_obj.forEach((item)=>{
-            sum += mathJs.divide(item.seriesBetAmount, 100)
+            sum = mathJs.add(mathJs.divide(item.seriesBetAmount, 100), sum)
         })
     }
     return sum
