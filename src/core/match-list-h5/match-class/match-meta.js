@@ -1522,6 +1522,12 @@ class MatchMeta {
             // this.compute_current_matchs()
             this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
             // this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
+            // TODO: 测试 赛事移除后的效果
+            let timer = setTimeout(() => {
+              this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
+              clearTimeout(timer)
+              timer = null
+            }, 1000 * 60 * 5)
           }
           clearTimeout(this.debounce_timer)
           this.debounce_timer = null
@@ -1537,7 +1543,7 @@ class MatchMeta {
   handle_ws_directive({ cmd = '', data = {} }) {
     console.log('--------wswswswswswsws-cmd:', cmd, data)
     // 赛事新增
-    if (['C109'].includes(cmd)) {
+    if (['C109', 'C302'].includes(cmd)) {
       const { cd = [] } = data
       if (cd.length < 1) return
       const item = cd.find(t => t.csid == MenuData.menu_csid)
