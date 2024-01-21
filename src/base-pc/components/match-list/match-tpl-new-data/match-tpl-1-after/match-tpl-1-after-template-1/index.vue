@@ -297,6 +297,7 @@ const bet_col = computed(() => {
       bet_col.push(...['', '', '', '', '', '', ''])
     }
   }
+  console.error('bet_colbet_co9-----------l',bet_col)
   return bet_col
 })
 

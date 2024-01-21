@@ -6,11 +6,11 @@
             </div>
             <div class="right">
                 <div class="search">
-                    <input type="text" class="search-input" placeholder="搜索" />
+                    <input type="text" class="search-input" placeholder="搜索" v-model="data.search_val"/>
                     <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/search.svg`" alt="" class="search-icon" />
                 </div>
                 <!-- 选择联赛 -->
-                <div class="chose-league curson-point" >
+                <div class="chose-league curson-point" @click="back">
                     <span>选择联赛</span>
                     <span class="active">{{ data.all_select ? '全部' : tid.length }}</span>
                     <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/arrow.svg`" alt="" class="arrow active" />
@@ -91,10 +91,27 @@ const data = reactive({
     is_suck_down: false,//确定按钮是否低吸
     hot_real_list: [], // 真正的热门数据
     un_hot_list: [], // 所有的非热门数据
-    list_data: [] //接口返回数据
+    list_data: [], //接口返回数据
+    search_val: "", // 搜索
 })
 
 const loading = ref(false);
+
+watch(() => data.search_val, (value) => {
+    console.log(value);
+    data.filter_list = data.list_data.reduce((p, c) => {
+        
+        return p;
+    },[])
+    // data.filter_list = data.list_data.filter(e => {
+    //     return ( e.sportVOs||[]).filter(q => {
+    //         return (q.tournamentList||[]).filter(w => w.nameText.includes(value) || w.id == value)
+    //     })
+        
+    // })
+    console.log(JSON.stringify(data.list_data) , "data.filter_list");
+    
+})
 
 // 筛选的tid
 const tid = computed(() => {
@@ -146,6 +163,11 @@ function handle_checked_all() {
 
 function close() {
     emits('close', tid.value)
+}
+
+function back() {
+    emits('close')
+    
 }
 
 /**
@@ -290,6 +312,7 @@ async function init() {
             })
             return e;
         })) ;
+        data.filter_list = data.list_data;
         console.log(res, "结果");
     } catch (error) {
         console.log(error, "errors");

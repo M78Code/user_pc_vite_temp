@@ -38,7 +38,7 @@ const props = defineProps({
  * @param {*} index 
  */
 const changeDatetab = (item, index) =>{
-    emit("changeDate",item)
+    emit("changeDate",item,index)
 }
 </script>
 <style lang="scss" scoped>
