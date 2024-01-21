@@ -33,7 +33,7 @@ import { oz_sprite_bg_images_postion } from "src/output/module/constant-utils.js
 import BetData from "src/core/bet/class/bet-data-class.js";
 const tabValue = ref('outrights');
 const state = reactive({
-    current_mi:"101",
+    current_mi:MenuData.menu_mi.value || "101",
 })
 /**
  * @description: 球类id转化背景
@@ -59,9 +59,7 @@ onMounted(async () => {
   // 冠军设置为单关投注
   BetData.set_is_bet_single('single')
   BetData.set_is_bet_merge()
-
   MenuData.set_current_lv1_menu(400);
-  MenuData.set_menu_mi('101');
 //   MatchMeta.set_origin_match_data()
   MatchMeta.get_champion_match()
 })

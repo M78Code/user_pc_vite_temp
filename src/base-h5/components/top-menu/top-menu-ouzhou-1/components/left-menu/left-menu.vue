@@ -176,6 +176,8 @@ const change_current_menu = (item) => {
   // 重置所选 球种默认玩法 hpid
   // MatchResponsive.reset_match_hpid_by_csid()
   if(item.mi == 400){
+    MenuData.set_current_lv1_menu(400);
+    MenuData.set_menu_mi('101');
     return router.push({name: 'champion'})
   }else{
     // MatchMeta.set_origin_match_data()
