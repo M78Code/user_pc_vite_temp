@@ -450,6 +450,8 @@ onMounted(() => {
   color: #555;
   .all {
     margin-left: 6px;
+    display: flex;
+    justify-content: center;
     .arrow {
       width: 10px;
       height: 10px;

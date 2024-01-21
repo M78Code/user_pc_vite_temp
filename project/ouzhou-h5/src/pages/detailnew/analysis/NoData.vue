@@ -12,7 +12,7 @@ import {LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js";
 <style scoped lang="scss">
 .nodata-box{
     width: 100%;
-    height: 2rem;
+    min-height: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
