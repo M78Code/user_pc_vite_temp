@@ -127,6 +127,7 @@ const set_special_series = (money,ty_id) => {
  */
  const input_click = (evnet) => {
   event.preventDefault()
+  set_special_series()
   BetData.set_bet_keyboard_show(true)
   cursor_flashing()
 
