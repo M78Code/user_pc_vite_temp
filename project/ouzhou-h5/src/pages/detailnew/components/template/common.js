@@ -4,6 +4,7 @@ import DefaultTemplate from './DefaultTemplate.vue';
 import TemplateColumn from './TemplateColumn.vue';
 import Template14 from './Template14.vue';
 import Template18 from './Template18.vue';
+import { MenuData } from "src/output/index.js"
 
 const hideTitle = [0,18]
 const innerTitle = [12,14]
@@ -15,7 +16,7 @@ const other = {
   is_detail: true,
   // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
   // 根据赛事纬度判断当前赛事属于 那种投注类型
-  bet_type: 'vr_bet',
+  bet_type: 'common_bet',
   // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
   device_type: 1,
   // 数据仓库类型
@@ -44,7 +45,11 @@ const common = {
     }else {
       state.active = +ol.oid
     }
-    
+    // console.log("other===ttt", MenuData.is_vr())
+    if (MenuData.is_vr()) {
+      other.bet_type = 'vr_bet'
+    }
+    // console.log("other===ccc", other)
     const { oid, _hid, _hn, _mid } = ol
     set_bet_obj_config({
       oid, _hid, _hn, _mid
