@@ -7,7 +7,7 @@ import Template18 from './Template18.vue';
 
 const hideTitle = [0,18]
 const innerTitle = [12,14]
-const templates = new Map([[4,TemplateColumn],[6,Template14],[14,Template14],[18,Template18]])
+const templates = new Map([[4,TemplateColumn],[6,TemplateColumn],[14,TemplateColumn],[18,Template18]])
 
 const rowHpid = '106,107'
 
