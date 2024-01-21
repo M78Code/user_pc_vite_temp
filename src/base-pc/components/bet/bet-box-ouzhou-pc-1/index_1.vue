@@ -172,7 +172,7 @@ onBeforeUnmount(() => {
 });
 
 onMounted(() => {
-  BetData.switch_bet_query_bet_amount()
+  // BetData.switch_bet_query_bet_amount()
 })
 
 
