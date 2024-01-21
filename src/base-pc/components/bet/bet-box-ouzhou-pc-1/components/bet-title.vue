@@ -5,6 +5,12 @@
         <div class="f-b-c bet-content">
             <div class="f-s-c">
                 <div class="f-c-c bet-count" >{{ total() }}</div>
+
+                <!-- <div @click="match_a">赛事推送</div>
+                <div @click="match_b">赛事推送还原</div>
+                <div @click="marcket_a" class="mr-4">盘口推送</div>
+                <div @click="marcket_b" class="mr-4">盘口推送还原</div> -->
+
                 <!-- 单关 -->
                 <div class="bet-slip" v-if="BetData.is_bet_single && !BetData.is_bet_merge">{{ i18n_t("common.bets_single") }}</div>
                 <!-- 合并单关 -->
@@ -38,6 +44,45 @@ const total = computed(()=> state =>{
         return BetData.bet_s_list.length
     }
 })
+
+const match_a = () => {
+    let obj = {
+        "csid": "1",
+            "mhs": 4,
+            "mid": "3080293",
+            "ms": "1",
+            "tid": "33358"
+    }
+    BetData.set_bet_c104_change(obj)
+}
+
+const match_b = () => {
+    let obj = {
+        "csid": "1",
+            "mhs": 1,
+            "mid": "3080293",
+            "ms": "0",
+            "tid": "33358"
+    }
+    BetData.set_bet_c104_change(obj)
+}
+
+// ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
+//         hl_hs: hl_obj.hs || ol_obj._hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+//         mid_mhs: ol_obj._mhs, // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
+
+const marcket_a = () => {
+    let obj = 
+    {"hls":[{"hid":"141154416162602430","hmt":0,"hn":1,"hpid":"2","hs":1,"mid":"3106887","ol":[{"obv":"322000","oid":"148148527401337534","os":1,"ot":"Over","ov":"322000"},{"obv":"119000","oid":"141214079215032754","os":1,"ot":"Under","ov":"119000"}]}],"ld":"AO_0af526a920240121204033841afb91e9_0","mid":"3106887"}
+    BetData.set_bet_c106_change(obj)
+}
+
+const marcket_b = () => {
+    let obj = {"hls":[{"hid":"141154416162602430","hmt":0,"hn":1,"hpid":"2","hs":0,"mid":"3106887","ol":[{"obv":"322000","oid":"148148527401337534","os":1,"ot":"Over","ov":"322000"},{"obv":"119000","oid":"141214079215032754","os":1,"ot":"Under","ov":"119000"}]}],"ld":"AO_0af526a920240121204033841afb91e9_0","mid":"3106887"}
+   
+    BetData.set_bet_c106_change(obj)
+}
+
 </script>
 
 <style scoped lang="scss">
