@@ -576,6 +576,9 @@ export default {
   .match-status-title {
     display: flex;
     align-items: center;
+    > img {
+      margin-right: 6px;
+    }
   }
 
   .match-inner-container {
