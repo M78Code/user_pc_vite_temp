@@ -24,8 +24,7 @@
 
                 <span class="money-span" ref="money_span" :style="{ opacity: '1' }"></span>
 
-                <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('bet.money_range') }} {{
-                    ref_data.min_money }}~{{ formatMoney(ref_data.max_money) }}</span>
+                <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('bet.money_range') }} {{ ref_data.min_money }}~{{ formatMoney(ref_data.max_money) }}</span>
             </div>
 
         </div>

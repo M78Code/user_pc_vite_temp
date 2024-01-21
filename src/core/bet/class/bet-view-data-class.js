@@ -96,6 +96,8 @@ class BetViewData {
     this.orderNo_bet_obj = []
     // 投注后串关信息 
     this.orderNo_bet_single_obj = []
+    // 是否已失效
+    this.bet_expired = false
 
     this.bet_view_version = ref('11')
 
@@ -110,6 +112,11 @@ class BetViewData {
     nextTick(()=>{
       this.set_loacl_config()
     })
+  }
+
+  // 设置失效状态
+  set_bet_expired(state) {
+    this.bet_expired = state
   }
 
   // 根据缓存信息 设置数据

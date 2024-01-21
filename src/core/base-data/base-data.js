@@ -884,7 +884,7 @@ class BaseData {
    * 解析  菜单 国际化
    */
   resolve_menus(res = {}) {
-    if (!res && !Object.keys(res).length) return
+    if (!res) return
     // 获取语言类型
     let locale = lodash_.get(i18n,'global.locale','zh') || "zh";
     // 设置 语言变量
