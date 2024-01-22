@@ -228,7 +228,7 @@ import { reactive } from "vue";
       }
     }
     .bet-disabled{
-      width: .6rem;
+      width: .5rem;
       text-align: center;
       height: .26rem;
       display: inline-block;
@@ -238,6 +238,7 @@ import { reactive } from "vue";
       font-weight: 500;
       letter-spacing: 0px;
       color: var(--q-gb-t-c-3);
+      margin-left: .2rem;
     }
   }
   
