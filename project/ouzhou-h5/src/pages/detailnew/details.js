@@ -216,7 +216,7 @@ export const details_main = (router, route) => {
     //接口调用
     let obj_ = {
       // axios api对象
-      axios_api: api_common.get_matchDetail_getMatchOddsInfo,
+      axios_api:  MenuData.is_esports ? api_common.get_DJ_matchDetail_getMatchOddsInfo  :  api_common.get_matchDetail_getMatchOddsInfo,
       // axios api对象参数
       params: params,
       // 唯一key值
@@ -318,7 +318,7 @@ export const details_main = (router, route) => {
   function getMatchDetailMatchInfo(params) {
     let obj_ = {
       // axios api对象
-      axios_api: api_common.get_matchDetail_MatchInfo,
+      axios_api:MenuData.is_esports ? api_common.get_DJ_matchDetail_MatchInfo  :  api_common.get_matchDetail_MatchInfo,
       // axios api对象参数
       params: params,
       // 唯一key值
