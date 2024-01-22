@@ -33,5 +33,6 @@ export default {
   'gb-t-c-32': '#AFB3C8',
   'gb-t-c-33': '#707070',
   'gb-t-c-34': '#74c4FF',
-  'gb-t-c-35': '#FEBE55'
+  'gb-t-c-35': '#FEBE55',
+  'gb-t-c-36': '#ffffff'
 }
