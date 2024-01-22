@@ -10,8 +10,10 @@
         <img class="icon_loading" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt=""  v-if="BetViewDataClass.bet_order_status == 2"/>
       </div>
     </div>
-    
   </div> 
+  
+  <div v-else class="box-line"></div>
+
   <div class="bet_content_bottom">
     <p class="bet_cancel"  @click.self="set_retain_selection">{{i18n_t('bet.save')}}</p>
     <p class="place_bet" @click="pack_up">
@@ -121,5 +123,9 @@ const set_retain_selection = () => {
         margin-left: 6px;
       }
     }
+  }
+  .box-line{
+    width: 100%;
+    height: 0.1rem;
   }
 </style>
