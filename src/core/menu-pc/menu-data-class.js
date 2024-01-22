@@ -6,7 +6,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
 import { computed_menu_to_match_templte_ouzhou } from 'src/core/match-list-pc/list-template/ouzhou-pc-menu-match-template.js'
 import PageSource from 'src/core/page-source/page-source.js'
-import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
+// import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 
 import {
   SessionStorage,
@@ -24,7 +24,7 @@ import { menu_default } from "./config/menu-default.js"
 import BaseData from "src/core/base-data/base-data.js"
 
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+const { IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 
 // 热门除了50199-30199  赛事、50101-30101 竞足外，
