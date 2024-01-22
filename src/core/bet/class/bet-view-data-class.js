@@ -493,7 +493,7 @@ class BetViewData {
   // 设置默认限额
   set_bet_special_series_defalut() {
     this.bet_special_series.filter(obj=>{
-        obj.min_money = 0
+        obj.min_money = 5
         obj.max_money = 8888
         obj.bet_amount = 0
     })

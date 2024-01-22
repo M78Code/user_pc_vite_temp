@@ -51,7 +51,6 @@
                     {{ items.playName }}
                     {{ items.matchType == 2 && [1,2,3,8,9].includes(items.sportId *1) ? items.mark_score : '' }}
                   </span>
-                  
 
                 </div>
                 <div class="nonebox4-content-left-content-text-three">{{ items.tid_name }}</div>
@@ -69,7 +68,7 @@
     </div>
     <!-- 多项合并 -->
     <template v-if="BetData.bet_single_list.length > 1">
-      <bet-input-multiple></bet-input-multiple>
+      <bet-input-multiple @focus_on="handler_focus_on"></bet-input-multiple>
     </template>
     <!-- 合并单关最下面的多个输入框 -->
 
@@ -84,6 +83,10 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 
 const set_delete = (items, index) => {
   BetData.set_delete_bet_info(items.playOptionsId, index)
+}
+
+const handler_focus_on = (data)=>{
+  console.log("data===", data)
 }
 
 </script>

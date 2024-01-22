@@ -10,7 +10,7 @@
   </div> 
     <div class="bet_content_bottom component bet-btn-item">
       <!-- 串关 -->
-      <div class="bet_crosstalk" @click="set_bet_single_change()" :class="{active:BetData.is_bet_single}">
+      <div class="bet_crosstalk" @click="set_bet_single_change()" :class="{active:!BetData.is_bet_single}">
         <span class="bet-title">串关</span>
         <span class="bet-single"></span>
       </div>
