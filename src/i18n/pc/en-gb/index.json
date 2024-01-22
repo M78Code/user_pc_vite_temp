@@ -314,6 +314,23 @@
       "bet_col_243": {
         "bet_col_1": "HDP",
         "bet_col_2": "HDP"
+      },
+      "bet_col_20001": {
+        "bet_col_1": "1",
+        "bet_col_X": "X",
+        "bet_col_2": "2"
+      },
+      "bet_col_20002": {
+        "bet_col_Over": "Over",
+        "bet_col_Under": "Under"
+      },
+      "bet_col_20043": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_20044": {
+        "bet_col_Over": "Total",
+        "bet_col_Under": "Total"
       }
     }
   },
