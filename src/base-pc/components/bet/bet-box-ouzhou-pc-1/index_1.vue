@@ -52,6 +52,8 @@
               <betItem :items="item" :key="index" :index="index" />
             </div>
 
+            {{ BetViewDataClass.bet_special_series }}
+
             <!-- 串关投注 限额 -->
             <template v-if="BetData.bet_s_list.length > 1">
               <template v-if="BetViewDataClass.bet_special_series.length">
