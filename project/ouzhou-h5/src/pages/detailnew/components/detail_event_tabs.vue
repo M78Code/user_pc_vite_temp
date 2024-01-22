@@ -12,19 +12,28 @@
 
 <script setup>
 import {onMounted, ref} from "vue";
+import {useRoute} from 'vue-router'
+
 const tabList = ref([
   { label: i18n_t('analysis_football_matches.analysis_information'), id: 6, subassembly: 'Information' },       // 资讯
   { label: i18n_t('analysis_football_matches.match') , id: 1, subassembly: 'Match' },     // 赛况
   { label: i18n_t('analysis_football_matches.analysis_data'), id: 2, subassembly: 'Figures' },      // 数据
   { label: i18n_t('analysis_football_matches.line_up'), id: 3, subassembly: 'Lineup' },        // 阵容
-  { label: i18n_t('analysis_football_matches.intelligence'), id: 4, subassembly: 'Intelligence' },       // 情报
-  { label: i18n_t('analysis_football_matches.Odds'), id: 5, subassembly: 'Odds' },       // 赔率
 ]);
 
 const emit = defineEmits(['change'])
 
 // 事件执行函数
 const active = ref(1)
+const route = useRoute()
+
+/** 非篮球添加情报和赔率 */
+if( 2 != route.params.csid){
+  tabList.value.push(
+    { label: i18n_t('analysis_football_matches.intelligence'), id: 4, subassembly: 'Intelligence' },       // 情报
+    { label: i18n_t('analysis_football_matches.Odds'), id: 5, subassembly: 'Odds' } // 赔率
+  )
+}
 
 const tabClick = (item) => {
   active.value = item.id
