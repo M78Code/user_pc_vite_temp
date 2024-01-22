@@ -93,6 +93,10 @@ const props = defineProps({
   if (props.get_match_detail?.csid ){
     id = 100 + Number(props.get_match_detail?.csid)
   }
+  // 如果是电子赛事
+  if (MenuData.is_esports() ){
+    id = +MenuData.menu_mi.value;
+  }
   return oz_sprite_bg_images_postion[id]
 }
 /**

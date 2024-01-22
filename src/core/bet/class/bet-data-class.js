@@ -1111,7 +1111,7 @@ this.bet_appoint_ball_head= null */
               return
             }
             if(ws_ol_obj.ov){
-              clearTimeout(time_out)
+              // clearTimeout(time_out)
               // "odds": item.odds,  // 赔率 万位
               // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
               //  红升绿降
@@ -1141,7 +1141,8 @@ this.bet_appoint_ball_head= null */
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
 
               // 5秒后清除 红升绿降
-              time_out = setTimeout(()=>{
+              // time_out = setTimeout(()=>{
+              setTimeout(()=>{
                 ol_obj.red_green = ''
                 this.set_ws_message_bet_info(ol_obj,ol_obj_index)
               },3000)
