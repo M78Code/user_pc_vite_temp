@@ -1,6 +1,7 @@
 <template>
     <div class="rule_page" :class="project_name">
-      <iframe class="rules-iframe" :src="rule_url" frameborder="0" />
+      <iframe v-if="domain" class="rules-iframe" :src="rule_url" frameborder="0" />
+      <error01 v-else></error01>
       <!-- <section>
         <div class="title">General Sports Explanation</div>
         <q-scroll-area style="height: 100%;">
@@ -21,7 +22,8 @@
   import { ref, onMounted } from 'vue'
   import UserCtr from 'src/core/user-config/user-ctr.js'
   import { PROJECT_NAME } from "src/output/index.js"
-
+  import error01 from "src/components/error/error01.vue";
+  const domain = UserCtr.get_topic_key_url('sports_rules');
     // 模版名称
     const project_name = PROJECT_NAME
     /** 环境变量 */
