@@ -8,6 +8,7 @@
         <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         </div>
         <div class="row items-center">
+          <img class="vr-clock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr_clock.png`"/>
           <!-- 未开赛时间 -->
           <span class="state">{{ match_item_batch.timer_format }}</span>
           <!-- 联赛轮次 -->
@@ -24,7 +25,6 @@
           :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
           <div class="play-name-item" v-for="(item_title, item_index) in item.ols" :key="item_index">
             {{ i18n_t(`ouzhou.bet_col.bet_col_${item_title._hpid}.bet_col_${item_title.ot}`) }}
-            {{ item_title._hpid }}
           </div>
         </div>
       </div>
@@ -44,11 +44,9 @@
 <script setup>
 import lodash from 'lodash';
 import { ref, computed, onUnmounted, watch } from 'vue';
-import { MenuData, compute_css_obj, compute_img_url } from "src/output/index.js";
-import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { get_server_file_path } from "src/core/file-path/file-path.js";
+import { MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 
 const props = defineProps({
   match_item_batch: {
@@ -84,11 +82,18 @@ const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_${pr
       flex: 1;
     }
   }
-
+  .vr-clock {
+    width: 14px;
+    height: 13px;
+    margin-right: 9px;
+  }
   .league-name {
     color: #1A1A1A;
     font-weight: 500;
     margin-left: 20px;
+  }
+  .state {
+    color: #1A1A1A
   }
 
   .league-icon-wrap {
