@@ -8,6 +8,7 @@
       {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
     </div>
   </div> 
+  <div v-else class="box-line"></div>
     <div class="bet_content_bottom component bet-btn-item">
       <!-- 串关 -->
       <div class="bet_crosstalk" @click="set_bet_single_change()" :class="{active:!BetData.is_bet_single}">
@@ -151,5 +152,9 @@ const bet_total = computed(()=> state =>{
         margin-left: 0.06rem;
       }
     }
+  }
+  .box-line{
+    width: 100%;
+    height: 0.1rem;
   }
 </style>

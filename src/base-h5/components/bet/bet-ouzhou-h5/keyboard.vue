@@ -8,7 +8,7 @@
       {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
     <div class="key-row row">
       <div class="key-cell" data-num="qon">
-        <span>+</span>{{addnum.qon}}
+        <span>+</span>{{BetData.user_max_min_money.qon}}
       </div>
       <div class="key-cell" data-num="1">1</div>
       <div class="key-cell" data-num="2">2</div>
@@ -16,7 +16,7 @@
     </div>
     <div class="key-row row">
       <div class="key-cell" data-num="qtw">
-        <span>+</span>{{addnum.qtw}}
+        <span>+</span>{{BetData.user_max_min_money.qtw}}
       </div>
       <div class="key-cell" data-num="4">4</div>
       <div class="key-cell" data-num="5">5</div>
@@ -24,7 +24,7 @@
     </div>
     <div class="key-row row">
       <div class="key-cell" data-num="qth">
-        <span>+</span>{{addnum.qth}}
+        <span>+</span>{{BetData.user_max_min_money.qth}}
       </div>
       <div class="key-cell" data-num="7">7</div>
       <div class="key-cell" data-num="8">8</div>
@@ -46,19 +46,17 @@
 
 <script setup>
 
-import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
+import { ref, reactive, onMounted, watch } from 'vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import { UserCtr, compute_local_project_file_path, i18n_t } from "src/output/index.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import { UserCtr, compute_local_project_file_path } from "src/output/index.js";
 import lodash_ from 'lodash'
-import userData from "src/core/user-config/user-ctr.js"
 
 
 const active_index = ref(BetData.active_index)
 const money = ref('') //用户输入金额
 const delete_all = ref(false) //键盘出现时，第一次按删除键把金额一次删完
-const max_money = ref()   //最大可投注的金额
 const pre_odds_value = ref("") //预约输入赔率或者盘口
 
 const ref_data = reactive({
@@ -70,11 +68,9 @@ const ref_data = reactive({
   add_num: {},
 })
 
-const shou = (item,evnet) => {
-  // event.preventDefault()
-  // BetData.set_bet_keyboard_config(item)
-  BetData.set_bet_keyboard_show(false)
-}
+onMounted(()=>{
+  BetData.set_user_max_min_money()
+})
 
 // 预约输入赔率或者盘口
 watch(() => pre_odds_value, (new_) => {
@@ -269,48 +265,19 @@ const _handleNumberKey = (num) => {
   BetData.set_bet_amount(money_)
 }
 
-// 获取商户配置的 快捷金额
-const addnum = computed(() => {
-  if (BetData.bet_is_single) {
-    ref_data.add_num = lodash.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200, qfi: 500 })
-    return ref_data.add_num
-  } else {
-    ref_data.add_num = lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })
-    return ref_data.add_num
-  }
-})
-
-// 左侧+的按钮 置灰
-const prevent_click = computed((value) => {
-  return function (v) {
-    if (active_index.toString().indexOf('pre') > -1) {
-      return true
-    }
-    if (Number(value) + Number(money.value) > max_money.value) { return true };
-  }
-})
-
-
-
-// 预约投注赔率值可通过键盘输入 max，左侧三个按钮置灰，输入金额时放开
-const has_pre_market = computed(() => {
-  return active_index.toString().indexOf('pre') > -1 || active_index.toString().indexOf('market') > -1
-})
-
-onUnmounted(() => {
-})
 
 </script>
 
 <style lang="scss" scoped>
 .key-row{
-  border-bottom: 1px solid var(--q-gb-bd-c-1);
+  height: 0.46rem;
+  border-bottom: .01rem solid var(--q-gb-bd-c-1);
 }
 .key-cell{
-  border-right: 1px solid var(--q-gb-bd-c-1);
+  border-right: .01rem solid var(--q-gb-bd-c-1);
 }
 .keyboard {
-  height: 185px;
+  height: 1.85rem;
   -webkit-overflow-scrolling: touch;
   font-size: 0.16rem;
   font-weight: 600;
@@ -321,7 +288,7 @@ onUnmounted(() => {
 .key-cell {
   flex: 1;
   box-sizing: border-box;
-  line-height: 46px;
+  line-height: .46rem;
   text-align: center;
   background: var(--q-bg-c-2);
   font-size: .22rem;
