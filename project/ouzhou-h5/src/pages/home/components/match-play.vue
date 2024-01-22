@@ -40,7 +40,9 @@ const props = defineProps({
 .match-play-page{
   // height: 100%;
   .match-item{
-    content-visibility: auto;
+    
+    // 因BUG:54324注释该样式
+    // content-visibility: auto;
   }
 }
 </style>

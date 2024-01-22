@@ -74,6 +74,8 @@ const common = {
       }
     }else if(oddInfo.hpt == 18){
       return 'fill'
+    }else if(oddInfo.hpt == 51){
+      return 'column'
     }
     return 'default'
   },
@@ -121,7 +123,7 @@ const common = {
    * @returns {Boolean}
    */
   haveTitle(oddInfo){
-    const len = oddInfo.title.length
+    const len = oddInfo.title?.length
     return len > 1 && len <= 4
   },
   computedTemplate(hpt){
