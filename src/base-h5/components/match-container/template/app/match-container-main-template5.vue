@@ -45,9 +45,9 @@
       </div>
 
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
-      <div :class="['match-inner-container', { 'collapsed': !collapsed }]">
+      <div :class="['match-inner-container', { 'collapsed': !collapsed }]" :data-is="match_of_list.is_show_league">
         <!--联赛标题 -->
-        <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
+        <div @click="handle_league_fold" v-if="match_of_list.is_show_league"
           :class="[(' match-indent league')]">
           <div class="league-t-wrap right-border">
             <!-- 联赛收藏 -->
@@ -576,6 +576,9 @@ export default {
   .match-status-title {
     display: flex;
     align-items: center;
+    > img {
+      margin-right: 6px;
+    }
   }
 
   .match-inner-container {
