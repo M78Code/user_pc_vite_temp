@@ -919,7 +919,7 @@ export default {
       align-items: center;
       // background: var(--qq--analysis-bg-color-5);
       background: #fff8f3;
-      height: 28px;
+      height: 40px;
       color: #414655;
       padding: 0 20px;
       &:last-child {

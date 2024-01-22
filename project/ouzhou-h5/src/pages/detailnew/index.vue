@@ -67,18 +67,18 @@
           <!-- <div class="match-detail-odds-bottom"></div> -->
         </q-tab-panel>
         <q-tab-panel name="event_analysis">
-<!--          <analysisFootball
-              v-if="match_detail.csid == 1"
-              :active_tab="detail_event_tabs_value"
-              :match_odds_info="match_odds_info"
+         <analysisFootball
+            v-if="match_detail.csid == 1"
+            :active_tab="detail_event_tabs_value"
+            :match_odds_info="match_odds_info"
           ></analysisFootball>
           <analysisBasketball
-              v-if="match_detail.csid == 2"
-              :active_tab="detail_event_tabs_value"
-              :match_odds_info="match_odds_info"
-              :match_detail="match_detail"
-          ></analysisBasketball>-->
-           <event_analysis :match_odds_info="match_odds_info" :match_detail="match_detail" :active_tab="detail_event_tabs_value" />
+            v-if="match_detail.csid == 2"
+            :active_tab="detail_event_tabs_value"
+            :match_odds_info="match_odds_info"
+            :match_detail="match_detail"
+          ></analysisBasketball>
+           <!-- <event_analysis :match_odds_info="match_odds_info" :match_detail="match_detail" :active_tab="detail_event_tabs_value" /> -->
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -105,8 +105,8 @@ import { i18n_t } from "src/output/index.js"
 import infoRules from "src/base-h5/components/details/components/info-rules.vue"  // 视频info说明弹框
 // import './index.scss'
 // 欧洲4期 赛事分析
-// import analysisFootball from "./analysis/football/index.vue"
-// import analysisBasketball from "./analysis/basketball/index.vue"
+import analysisFootball from "./analysis/football/index.vue"
+import analysisBasketball from "./analysis/basketball/index.vue"
 export default {
   components:{
     detail_header_tem0,
@@ -119,8 +119,8 @@ export default {
     event_analysis,
     OddsListContrainer,
     infoRules,
-    // analysisFootball,
-    // analysisBasketball
+    analysisFootball,
+    analysisBasketball
   },
   setup(ctx){
     const router = useRouter();

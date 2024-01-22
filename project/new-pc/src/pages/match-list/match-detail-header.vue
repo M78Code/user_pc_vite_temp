@@ -80,7 +80,7 @@
           :key="index"
           :class="[UserCtr.match_translate == sort.id ? 'select-type-active':'']" 
           >
-          {{ sort.name }}
+          {{ i18n_t(sort.name) }}
         </li>
         </ul>
         <!-- 日间/夜间 -->
@@ -153,12 +153,12 @@ const ver_option =  [
 const option = [
   {
     id: 'zh',
-    name: i18n_t('set.short_translation'),//"简译",
+    name: 'set.short_translation',//"简译",
     icon: "icon-sort_league"
   },
   {
     id: 'hk',
-    name: i18n_t('set.traditional_translation'),//"繁译",
+    name: 'set.traditional_translation',//"繁译",
     icon: "icon-sort_date"
   }
 ]

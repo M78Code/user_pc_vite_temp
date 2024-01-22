@@ -422,4 +422,7 @@ const no_user_event = () => {
     left: 0px;
   }
 }
+.fit {
+  height: 100%;
+}
 </style>

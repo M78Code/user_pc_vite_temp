@@ -37,6 +37,7 @@ const app = createApp(App);
 app.config.globalProperties.lodash = lodash;
 app.config.globalProperties.i18n_t = i18n_t;
 window.lodash = lodash;
+window._ = lodash;
 window.i18n_t = i18n_t;
 app.config.globalProperties.i18n_tc = i18n_tc;
 window.i18n_tc = i18n_tc;

@@ -56,8 +56,7 @@
               }
             "
             ref="betItemLeft"
-            :stateChage="onBetItemStateChange('left', $event)"
-            direction="left"
+            @stateChage="onBetItemStateChange('left', $event)"
           />
         </div>
         <div
@@ -115,7 +114,7 @@
               }
             "
             ref="betItemDetail"
-            :stateChage="onBetItemStateChange('detail', $event)"
+            @stateChage="onBetItemStateChange('detail', $event)"
             :ol_data="handicap_list[2]"
         /></span>
       </div>
@@ -174,7 +173,7 @@
                 }
               "
               ref="betItemRight"
-              :stateChage="onBetItemStateChange('right', $event)"
+              @stateChage="onBetItemStateChange('right', $event)"
               :ol_data="handicap_list[1]"
           /></span>
         </div>
