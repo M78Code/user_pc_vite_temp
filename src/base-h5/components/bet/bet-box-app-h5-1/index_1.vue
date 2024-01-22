@@ -3,6 +3,11 @@
   <div v-if="BetData.bet_box_h5_show && (BetData.bet_single_list.length || BetData.bet_s_list.length)">
     <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <div class="bet-box-info">
+
+      <div class="bet-icon-delete f-c-c" @click.stop="pack_up">
+        <span class="icon-del1"></span>
+      </div>
+      
       <!-- 头部信息 -->
       <betTitle v-if="BetViewDataClass.bet_order_status == 1"/>
       <!-- 投注状态 -->
@@ -201,7 +206,6 @@ const scrollTo = () => {
   left: 50%;
   transform: translateX(-50%);
   z-index: 600;
-  overflow: hidden;
   width: 100%;
   padding: 0 0.14rem;
   -webkit-overflow-scrolling: touch;
@@ -209,6 +213,20 @@ const scrollTo = () => {
   background-color: var(--q-gb-bg-c-23);
   z-index: 1999;
   padding-bottom: .3rem;
+
+  .bet-icon-delete {
+    width: .32rem;
+    height: .32rem;
+    position: absolute;
+    top: -.46rem;
+    right: .14rem;
+    background: var(--q-gb-bg-c-47);
+    border-radius: 50%;
+    .icon-del1{
+      color: var(--q-gb-t-c-36);
+      font-size: .16rem;
+    }
+  }
 }
 
 :deep(.bet-scroll) {

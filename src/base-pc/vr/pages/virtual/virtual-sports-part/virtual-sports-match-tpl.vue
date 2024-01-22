@@ -37,13 +37,8 @@
       <!-- 比分板 -->
       <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
       :style="`width:${match_list_tpl_size.media_width}px !important;`">
-        <!-- 图片资源有问题，先用文字替代  -->
-        <div class="video" v-if="+lodash.get(match, 'mms') > 0"
-          :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-img-match-list-video' : 'pc-img-match-info-video0' })">
-        </div>
-        <div v-else
-          :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
-        </div>
+        <img class="vr-video" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr_video.png`"/>
+        <img class="vr-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr_data.png`"/>
       </div>
     </div>
   </div>
@@ -58,7 +53,7 @@ import { useRouter } from 'vue-router';
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/output/index.js";
+import { MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
 import virtual_sports_match_item_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-match-item-mixin.js";
 import { IconWapper } from 'src/components/icon'
@@ -123,7 +118,8 @@ export default {
       current_mid,
       match,
       handicap_list,
-      match_list_tpl_size
+      match_list_tpl_size,
+      LOCAL_PROJECT_FILE_PREFIX
     }
 }
  
@@ -248,15 +244,18 @@ export default {
   cursor: pointer;
   text-align: center;
   margin-left: auto;
-
-  >div {
-    width: 16px;
-    height: 16px;
-    background-size: 100%;
+  img {
+    display: block;
   }
 
-  .video {
-    width: 18px;
+  .vr-video {
+    width: 16px;
+    height: 12px;
+  }
+  .vr-data {
+    width: 16px;
+    height: 16px;
+    margin-top: 10px;
   }
 
   &:hover {

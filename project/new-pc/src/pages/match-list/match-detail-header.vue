@@ -141,11 +141,11 @@ const emits = defineEmits(['change_type', 'change_theme', 'change_hot', 'change_
 const computed_theme = ref("")
 const ver_option =  [
   {
-    id: 1,
+    id: 2,
     name: 'set.pro',//"专业版",
   },
   {
-    id: 2,
+    id: 1,
     name: 'set.beginner',//"新手版",
   }
 ]
@@ -169,7 +169,7 @@ const select_type_theme = ref(0);
 // 0热门/1时间
 const select_type_hot = ref(0);
 // 0专业/1新手
-const get_version = ref(ver_option[0].id)
+const get_version = ref(UserCtr.standard_edition)
 // 简繁译
 const select_type_simpleTrad = ref(UserCtr.match_translate)
 // 列表显示内容  match:赛事 collect:收藏 search:搜索
@@ -234,7 +234,6 @@ const get_page_title = () => {
 }
 
 watch(() =>MenuData.menu_data_version.value, () => {
-  console.error('get_page_title()',get_page_title())
   get_page_title()
 })
 
