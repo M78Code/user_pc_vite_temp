@@ -76,12 +76,12 @@
 
 <script>
 import {MatchProcessFullVersionWapper as MatchProgress} from "src/components/match-process/index.js"
-
+import { defineComponent } from "vue";
 import details from "src/core/match-list-pc/details-class/details.js"
 import video from "src/core/video/video.js"
 import refresh from "src/components/refresh/refresh.vue"
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
-export default {
+export default defineComponent({
   name: "VideoHeader",
   components:{
     MatchProgress,
@@ -207,7 +207,7 @@ export default {
     this.debounce_throttle_cancel(this.refresh);
     this.back_to_timer = null
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

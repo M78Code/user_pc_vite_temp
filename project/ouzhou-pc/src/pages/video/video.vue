@@ -1,356 +1,132 @@
-<!--
- * @Description: 视频大屏版页面
--->
 <template>
-  <div v-if="!detail_loading" class="video-wrap c-big-video v-scroll-area relative-position" :class="{'big-video-right':$route.params.video_size ==1}">
-    <video-iframe
-        :detail_info="detail_info"
-        :refresh_time="refresh_time"
-        @set_full_screen_status="set_full_screen_status" />
-  </div>
-  <div class="detail-loading" v-if="detail_loading">
-    <loading></loading>
+  <div class="video-wrap">
+    <load-data class="fit" :state="load_data_state" >
+        <!-- <video-header v-if="route.params.video_size != 1" :refresh_loading="refresh_loading" :match_info="match_info"
+          @refresh="refresh_data" /> -->
+        <iframe
+          id="video-iframe"
+          class="video-iframe fit"
+          :src="media_src"
+          frameborder="0"
+          marginwidth="0"
+          marginheight="0"
+          hspace="0"
+          vspace="0"
+          scrolling="no"
+          allowfullscreen="true"
+          allow="autoplay"
+        ></iframe>
+      
+    </load-data>
+
+    <!-- <video-header v-if="route.params.video_size != 1" :refresh_loading="refresh_loading" :match_info="match_info"
+          @refresh="refresh_data" /> -->
+        <!-- <iframe
+          v-if="media_src"
+          id="video-iframe"
+          class="video-iframe fit"
+          :src="media_src"
+          frameborder="0"
+          marginwidth="0"
+          marginheight="0"
+          hspace="0"
+          vspace="0"
+          scrolling="no"
+          allowfullscreen="true"
+          allow="autoplay"
+        ></iframe> -->
   </div>
 </template>
 
 <script setup>
-import {ref} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import { usedetailData } from "./index";
-import loading from "./components/loading/index.vue";
-import VideoIframe from "./video_iframe.vue"
-import {MITT_TYPES, useMittOn} from "src/core/mitt/index.js";
-import {i18n_t} from "src/boot/i18n.js";
-
-import { onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { ref, onMounted, computed } from "vue";
 import LoadData from "src/base-pc/components/load-data/load-data.vue"
-// 视屏头部
 import VideoHeader from "src/base-pc/components/video/video-header.vue"
-// 视频组件dn
-// import VideoIframe from "src/project/yabo/components/video/video_iframe.vue"
-// 比分板足球模板
-// import DataTemplate1 from "src/project/yabo/components/video/data_template/template1.vue"
-// 比分板篮球模板
-// import DataTemplate2 from "src/project/yabo/components/video/data_template/template2.vue"
-// 比分板棒球模板
-// import DataTemplate3 from "src/project/yabo/components/video/data_template/template3.vue"
-// 比分板模板 冰球4  网球5  美足6  斯诺克7  排球9  羽毛球10 沙滩排球13  曲棍球15  水球16
-// import DataTemplate4 from "src/project/yabo/components/video/data_template/template4.vue"
-// 比分板模板 兵乓球8 手球11 橄榄球14
-// import DataTemplate8 from "src/project/yabo/components/video/data_template/template8.vue"
-// 聊天室组件
-// import Chatroom from "src/project/yabo/components/match_details/panel/chatroom.vue"
-// 统计组件
-// import Stats from "src/project/yabo/components/match_details/panel/stats.vue"
-// 精彩回放组件
-// import VideoHistoryLine from "src/project/yabo/components/video/video_history_line.vue";
-// 视频操作相关工具库
-// import video from "project_path/src/utils/video/video.js"
-// websocket数据页面数据接入
-// import skt_data_video from "project_path/src/mixins/websocket/data/skt_data_video.js"
-// 赛事详情页面信息操作类
-// import MatchInfoCtr from "project_path/src/utils/dataClassCtr/match_info_ctr.js"
-//  直播聊天室相关
-// import live_chatroom from "src/project/yabo/mixins/live_chatroom/live_chatroom";
-// import { mapGetters, mapActions } from "vuex"
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { useRoute } from "vue-router";
-import { reactive } from "vue";
-import { useRouter } from "vue-router";
-//   export default {
-// name: "Video",
-// mixins:[skt_data_video, live_chatroom],
-// components:{
-//   LoadData,
-//   VideoHeader,
-//   VideoIframe,
-//   DataTemplate1,
-//   DataTemplate2,
-//   DataTemplate3,
-//   DataTemplate4,
-//   DataTemplate8,
-//   Stats,
-//   Chatroom,
-//   VideoHistoryLine
-// },
-// data(){
-//   return {
-//     load_data_state:'loading',//数据加载状态
-//     mid:0,//赛事ID
-//     match_info:{},//赛事详情数据
-//     match_info_ctr: new MatchInfoCtr(), // 赛事控制类
-//     socket_name: 'skt_data_video', //对应的socket名称
-//     refresh_loading: false, // 刷新loading、
-//     refresh_time: 0, // 刷新次数
-//     chatroom_info: {
-//       all_mute: 0,
-//       chatRoomId: '',
-//       crs: 0,
-//     }
-//   }
-// },
-// computed: {
-//   ...mapGetters({
-//     get_lang: 'get_lang',
-//     vx_details_params: "get_match_details_params",
-//     vx_play_media: "get_play_media",
-//     get_layout_cur_page: "get_layout_cur_page",
-//     vx_get_chatroom_available: "get_chatroom_available",
-//     vx_get_user: "get_user",
-//     get_chatroom_id: "get_chatroom_id",
-//   }),
-
-
-const {
-  detail_loading,
-  detail_info,
-} = usedetailData(route);
-
-//   ...mapActions([
-//     'set_match_details_params',
-//     "set_play_media",
-//     "set_is_back_btn_click",
-//   ]),
-const $route = useRoute();
-const $router = useRouter();
-const match_info = reactive({
-  mid: $route.params?.mid || '', 
-  tid: $route.params?.tid || '', 
-  csid: $route.params?.csid || ''
-});
-
-function emit_site_tab_active() {
-  get_match_info(false)
-}
-
+import video from "src/core/video/video.js";
+import {
+  MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, UserCtr,
+} from "src/output/index.js";
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import {api_match_list } from "src/api/index";
+import url_add_param from "src/core/enter-params/util";
+const route = useRoute();
+const load_data_state = ref('loading');
+const refresh_loading = ref(false);
+const match_info = ref({});
+const params = computed(() => route.params);
+const media_src = ref("");
+const iframe_loading = ref(true);
 
 /**
- * @Description 浏览器全屏
- * @param {undefined} undefined
+ * @Description:获取视频播放地址
+ * @Author Cable
+ * @param {object} match  赛事信息
+ * @param {function} callback  回调函数
  */
-function browser_full_screen(){
-  let video_dm = document.documentElement;
-  let rfs = video_dm.requestFullScreen || video_dm.webkitRequestFullScreen || video_dm.mozRequestFullScreen || video_dm.msRequestFullScreen;
-  if (rfs) {
-    rfs.call(video_dm);
-  }
-}
-/**
- * @Description:键盘事件
- * @param {object} e 事件详情
- * @return {undefined} undefined
- */
-function cur_keydown(e) {
-  if (e.keyCode == 27) {
-    //video_type ==1 从大屏退出
-    exit_full_screen($route.params.video_size == 1 ? 'xl' : '')
-  }
-}
-/**
- * @Description:退出全屏  返回上一个页面
- * @return {undefined} undefined
- */
-function exit_full_screen(size) {
-  const { mid, tid, csid } = match_info;
-  // 如果是从详情页进入大屏返回详情页
-  if (from == 'details') {
-    $router.push({
-      name: 'details',
-      params: {
-        mid,
-        tid,
-        csid
+ const get_video_url = () => {
+  // play_type  数据源类型 1 ：源视频 2：动画 3 ：演播室 4 ：主播 5：专题
+
+  // 目标赛事视频url相关信息获取
+  video.get_video_url(
+    match_info.value,
+    { params: { play_type: 1 } },
+    (show_type, url_src) => {
+      console.log(url_src, show_type, "url_src");
+      // 未登录
+      if (url_src === true && show_type === "no-login") {
+        // this.is_limited = true
+        // this.show_type = show_type
+        load_data_state.value = "empty";
+        return;
       }
-    })
-    sessionStorage.setItem('auto_play_media', '1');
-  } else if (video.from == 0 && size == 'xl' && $is_eports_csid($route.params.csid)) {
-    $router.push({
-      name: 'video',
-      params: {
-        mid,
-        tid,
-        csid,
-        play_type: this.$route.params.play_type,
-        video_size: '0'
-      }
-    })
-  } else {
-    MatchDetailCalss.set_is_back_btn_click(true);
-    this.$redirect_router('/home')
-  }
-  let time = Date.now()
-  MatchDetailCalss.set_play_media({
-    mid: this.match_info.mid,
-    media_type: this.vx_play_media.media_type,
-    time
-  })
-  if (size == 'xl') {
-    this.exit_browser_full_screen()
-  }
-}
-/**
- * @Description 退出浏览器全屏
- * @param {undefined} undefined
- */
-function exit_browser_full_screen(){
-  let video_dm = document;
-  let cfs = video_dm.cancelFullScreen || video_dm.webkitCancelFullScreen || video_dm.mozCancelFullScreen || video_dm.exitFullScreen;
-  if(cfs) {
-    cfs.call(video_dm);
-  }
-}
+      
+      // let live_type = this.$get_media_icon_index(media_type)
+      let live_type = 1;
 
-/**
- * @Description:退出全屏  返回上一个页面
- * @return {undefined} undefined
- */
-function get_match_info(show_loading = true) {
-  show_loading && (load_data_state = 'loading')
+      // 此处为最终处理后的视频url
+      media_src.value =
+        url_add_param(url_src, "video_type", 1) +
+        `&live_type=${live_type}&csid=${match_info.value.csid}&icons_right=163&pip_right=80`;
+      iframe_loading.value = false;
+      load_data_state.value = "data";
+      console.log(media_src.value, "media_src.value");
+    }
+  );
+};
 
-  video.api_get_match_info(this.mid,this.$route, (match_info, load_data_state) => {
-    this.load_data_state = load_data_state
-    this.match_info_ctr.init_match_obj(match_info); // 初始化赛事控制类
-    this.match_info = this.match_info_ctr.match_obj
-  })
-}
-//设置全屏状态
-function set_full_screen_status() {
-  if (this.$route.params.video_size == 1) {
-    this.browser_full_screen()
-  } else {
-    this.exit_browser_full_screen()
+const init = async() => {
+  const cuid = UserCtr.get_cuid();
+  try {
+    const res = await api_match_list.get_detail_data({
+      mid: params.value.mid,
+      cuid
+    });
+    console.log(res, "详情");
+    match_info.value = res.data;
+    get_video_url();
+  } catch (error) {
+    
   }
 }
-// 刷新数据
-function refresh_data() {
-  // if (this.refresh_loading) {
-  //   return false
-  // }
-  refresh_loading = true
-  refresh_time += 1
-  // 重新获取赛事信息
-  get_match_info(false)
-  // 刷新前 先关闭聊天室
-  set_chatroom_available(0)
-  // 聊天室开关开启后才显示聊天室
-  if (UserCtr.user_info.chatRoomSwitch) {
-    // 获取直播、聊天室信息
-    get_live_chat_info()
-  }
-  refresh_loading_timer && clearTimeout(this.refresh_loading_timer)
-  refresh_loading_timer = setTimeout(() => this.refresh_loading = false, 2500)
-}
-
-//首页活动弹框
-useMittOn(MITT_TYPES.EMIT_EXIT_FULL_SCREEN_MSG_EVENT, function (imgUrl) {
-  exit_full_screen();
-}).off;
-
+onMounted(() => {
+  // csid: "1"
+  // mid: "287946322483154946"
+  // play_type: "1"
+  // tid: "1682748461414224369"
+  // video_size: "0"
+  init();
+  console.log(params.value, "route.params.video_size");
+})
 </script>
+
 
 <style lang="scss" scoped>
 .video-wrap {
   padding-right: 14px;
-  height: 100%;
-  &.big-video-right {
-    padding-right:0;
-    &::after{
-      width: 0;
-      background: none;
-      border:none;
-    }
-  }
-  .data-title {
-    height: 40px;
-    margin-bottom: 15px;
-    .img {
-      width: 16px;
-      height: 16px;
-      margin-right: 9px;
-      background-repeat: no-repeat;
-    }
-  }
-
-  /* 比分数据 */
-  .data-template {
-    display: flex;
-    justify-content: center;
-    background-color: var(--qq--yb-bg-color18_big_screen_1);
-    border-radius: 6px;
-    padding: 15px 0;
-    &:deep( .column-between) {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-  }
-
-  .video-bottom-panel {
-    margin-top: 4px;
-    margin-bottom: 1px;
-    &.iframe-video-bottom-panel {
-      .panel-wrapper {
-        &:deep() {
-          .chatroom {
-            margin-top: 0;
-            .chat-scroll-area {
-              height: 171px;
-            }
-            .emoji-picker {
-              height: 145px;
-            }
-          }
-          .total_chart {
-            .wrap-score {
-              padding: 29px 40px 33px 40px;
-            }
-          }
-        }
-      }
-    }
-    .panel-wrapper {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0 8px;
-      &.no-chatroom {
-        display: block;
-      }
-      > div {
-        border: none;
-        // border: 1px solid var(--qq--match-border-color2);
-      }
-      :deep() {
-        .video-history-line {
-          margin-bottom: 4px;
-        }
-        .stats-wrapper, .chatroom, .video-history-line {
-          border: 1px solid var(--qq--match-border-color2);
-        }
-        .chatroom {
-          margin-top: 0;
-          .chat-scroll-area {
-            //height: 230px;
-            height: 171px;
-          }
-          .emoji-picker {
-            //height: 238px;
-            height: 145px;
-          }
-        }
-        .total_chart {
-          .wrap-score {
-            //padding: 57px 40px 70px 40px;
-            padding: 29px 40px 33px 40px;
-            &.basketball-score {
-              padding: 0;
-            }
-          }
-          .q-knob {
-            font-size: 54px;
-          }
-        }
-      }
-    }
+  .video-iframe {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>
