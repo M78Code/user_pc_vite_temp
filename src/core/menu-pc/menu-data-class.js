@@ -23,6 +23,9 @@ import { menu_default } from "./config/menu-default.js"
 
 import BaseData from "src/core/base-data/base-data.js"
 
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+
 
 // 热门除了50199-30199  赛事、50101-30101 竞足外，
 // 常规联赛原菜单ID：301+联赛ID、新菜单：502+菜单ID；电竞联赛原菜单：30+联赛ID、新菜单ID：联赛ID
@@ -237,7 +240,11 @@ class MenuData {
     let basket_index_of = lodash.findIndex(left_list,{mi:'191'})
     // 篮球在足球后面，有篮球就使用篮球当前的位置 没有就用足球 最后使用默认位置
     let e_sports_index = (basket_index_of > 0 ? basket_index_of : foot_index_of > 0 ? foot_index_of : 2 ) + 1
-    left_list.splice(e_sports_index , 0 ,esports_obj)
+
+    // 线上屏蔽
+    if(IS_FOR_NEIBU_TEST){
+      left_list.splice(e_sports_index , 0 ,esports_obj)
+    }
 
     this.kemp_list = kemp_list
     this.hot_list = hot_list

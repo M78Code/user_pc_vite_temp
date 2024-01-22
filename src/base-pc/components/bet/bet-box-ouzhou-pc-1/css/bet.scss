@@ -158,6 +158,14 @@
     justify-content: flex-end;
     align-content: flex-end;
 }
+.fw-c-e-e {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-content: end;
+    flex-direction: column;
+}
+
 
 .bor-b{
     border-bottom: 1px solid var(--q-gb-bd-c-6);
