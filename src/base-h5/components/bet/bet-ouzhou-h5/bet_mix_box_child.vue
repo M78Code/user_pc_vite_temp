@@ -16,7 +16,7 @@
         <bet-bar></bet-bar>
         
         <div v-show="BetData.bet_state_show">
-                <!-- 删除全部和选择type -->
+          <!-- 删除全部和选择type -->
           <bet-all-detele :is_dropdown="is_dropdown" v-if="BetViewDataClass.bet_order_status == 1"></bet-all-detele>
           <!-- --------{{BetViewDataClass.bet_order_status}} - {{BetData.is_bet_single}} -->
           <!-- 单关  -->
@@ -34,7 +34,7 @@
               <!-- 单关合并 -->
               <template v-else>
                   <!-- 合并单关  -->
-                  <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}rem` }">
+                  <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${ref_min_height_max}rem` }">
                       <bet-mix-box-child2></bet-mix-box-child2>
                   </div>
               </template>
@@ -49,43 +49,47 @@
 
           <!-- 串关 -->
           <template v-if="!BetData.is_bet_single">
-              <!-- 串关投注项列表  -->
-              <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}rem` }">
-                <div v-if="BetViewDataClass.bet_order_status == 1">
-                  <template v-for="(item, index) in BetData.bet_s_list" :key="index">
-                    <bet-mix-box-child1 :items="item" :index="index"></bet-mix-box-child1>
-                  </template>
+            <!-- 串关投注项列表  -->
+            <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${ref_min_height_max}rem` }">
+              <template v-if="BetViewDataClass.bet_order_status == 1">
+                <template v-for="(item, index) in BetData.bet_s_list" :key="index">
+                  <bet-mix-box-child1 :items="item" :index="index"></bet-mix-box-child1>
+                </template>
 
-                  <!-- 串关投注 限额 -->
-                  <!-- 复式连串过关投注 限额 -->
-                  <template v-if="BetData.bet_s_list.length > 1"  >
-                    <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
-                        <bet-special-input :items="item" @input_click="handle_input_click" :index="index" />
-                        <bet-special-winning :is_type="true"/>
+                <!-- 串关投注 限额 -->
+                <!-- 复式连串过关投注 限额 -->
+                <template v-if="BetData.bet_s_list.length > 1"  >
+                  <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
+                    <template v-if="BetData.special_type || !index">
+                      <bet-special-input :items="item" :index="index" />
                     </template>
                   </template>
-                  <template v-else>
-                    <div class="bet-title bet-error">{{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}</div>
-                  </template>
-                    
-                </div>
-                
-                <template v-else>
-                  <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
-                    <bet-special-result :items="item" :key="index" :index="index" />
-                  </div>
-    
-                  <div v-for="(item, index) in BetViewDataClass.orderNo_bet_single_obj" :key="item.orderNo">
-                    <bet-special-state :items="item" :key="index" :index="index" />
-                  </div>
                 </template>
-              </div>
 
-              <key-board v-if="BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1"></key-board>
+                <template v-else>
+                  <div class="bet-title bet-error">{{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}</div>
+                </template>
+              </template>
+              
+              <template v-else>
+                <!-- 串关投注项结果 -->
+                <template v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
+                  <bet-special-result :items="item" :index="index" />
+                </template>
+                <!-- 串关投注项类型结果 -->
+                <template v-for="(item, index) in BetViewDataClass.orderNo_bet_single_obj" :key="item.orderNo">
+                  <bet-special-state :items="item" :index="index" />
+                </template>
+              </template>
+            </div>
+
+            <!-- 串关最高可赢金额 合计投注金额 -->
+            <bet-special-winning />
+
+            <!-- 键盘 -->
+            <key-board v-if="BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1"></key-board>
           </template>
 
-          <!-- 键盘 -->
-          <key-board v-if="state < 4"></key-board>
           <!-- 按钮 -->
           <bet-btn v-if="BetViewDataClass.bet_order_status == 1"></bet-btn>
           <bet-btn1 v-else></bet-btn1>
@@ -117,12 +121,10 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { ref, onMounted, reactive } from 'vue';
 
-
-const ref_data = reactive({
-  money: 0,
-  key_board_config: {}, //键盘配置信息
-  index_: '', // 当前选中的数据
-  flicker_timer:""
+// 键盘收起的高度
+let ref_min_height_max = ref('3.6') // rem 高长屏幕
+onMounted(()=>{
+  ref_min_height_max.value = document.body.clientHeight > 600 ? '2.5' : '2'
 })
 
 //串关的按钮

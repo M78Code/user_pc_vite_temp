@@ -3,7 +3,8 @@
         <simple-header :title="i18n_t('common.sports_betting_rules')">
             <!-- <span>{{ i18n_t("common.sports_betting_rules") }}</span> -->
         </simple-header>
-        <!-- <iframe class="rule-content" :src="rule_url" frameborder="0"></iframe> -->
+        <iframe v-if="sports_rules_domain" class="rule-content" :src="rule_url" frameborder="0"></iframe>
+        <error01 v-else></error01>
     </div>
 </template>
 
@@ -13,6 +14,7 @@ import lodash from 'lodash'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { i18n_t } from "src/boot/i18n.js"
 import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
+import error01 from "src/components/error/error01.vue";
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -31,6 +33,7 @@ const project_name = PROJECT_NAME
 const current_env = window.BUILDIN_CONFIG.CURRENT_ENV
 /** 体育规则地址-PC */
 const rule_url = ref('')
+const sports_rules_domain = UserCtr.get_topic_key_url('sports_rules');
 /** 获取pc体育规则地址 */
 const get_pc_rule_url = () => {
     const lang_map = {

@@ -134,11 +134,13 @@ class MenuData {
     menu_list = [...BaseData.left_menu_base_mi,{mi:400,ct:1},{mi:2000,ct:0},{mi:300,ct:0}];
     menu_arr = menu_list.map((item)=>{return +item.mi});
     //热门球种
-    top_events_list = (data.find((item)=>{return item.mi==5000}).sl || []).filter((n)=>{return menu_arr.includes(+n.mi-4900)});
+    let events_list = data.find((item)=>{return item.mi==5000}) || {}
+    top_events_list = (events_list.sl || []).filter((n)=>{return menu_arr.includes(+n.mi-4900)});
 
     //冠军
     // champion_list = (data.find((item)=>{return item.mi==400}).sl || []).filter((n)=>{return menu_arr.includes(+n.mi-300)});
-    champion_list = (data.find((item)=>{return item.mi==400}).sl || []);
+    let kemp_list = data.find((item)=>{return item.mi==400}) || {}
+    champion_list = (kemp_list.sl || []);
     //热门球种不存在取常规球种  1
     // top_events_list = top_events_list.length?top_events_list.map((item)=>{
     //   return {

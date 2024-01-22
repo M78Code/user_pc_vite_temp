@@ -148,9 +148,12 @@ body {
       }
     }
     .skin-toggle {
-      border: 0.5px solid var(--q-layout-color-5);
+      // border: 0.5px solid var(--q-layout-color-5);
+      // opacity: 0.96;
+      // background-image: var(--q-layout-color-6);
+      border: 0.5px solid #e4eaff;
       opacity: 0.96;
-      background-image: var(--q-layout-color-6);
+      background-image: #F8F8F8;
     }
   }
 }

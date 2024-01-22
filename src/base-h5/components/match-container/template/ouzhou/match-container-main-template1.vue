@@ -389,19 +389,22 @@ export default {
 
     // 切换玩法赔率
     const on_select_play = (item) => {
-      debugger
       const { hps, csid, mid, hn } = ctx.match_of_list
       // select_play.value = item.hpid
       select_label.value = item.label
       MatchResponsive.set_match_hpid(item.hpid, csid)
     }
 
-    const showDropdown = ref(false)
+    // 是否元数据
+    const is_compute_origin = computed(() => {
+      return MatchResponsive.is_compute_origin.value
+    })
 
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
-      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site, MenuData, select_label,
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site, MenuData, select_label
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site, MenuData, is_compute_origin, select_label
       showDropdown,
     }
   }

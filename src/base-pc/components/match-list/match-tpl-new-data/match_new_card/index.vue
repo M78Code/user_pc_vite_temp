@@ -58,7 +58,6 @@
             ref="betItemLeft"
             @stateChage="onBetItemStateChange('left', $event)"
             direction="left"
-            :odds_state_default_val="MenuData.get_template_version==2?'seal':''"
           />
         </div>
         <div
@@ -118,7 +117,6 @@
             ref="betItemDetail"
             @stateChage="onBetItemStateChange('detail', $event)"
             :ol_data="handicap_list[2]"
-            :odds_state_default_val="MenuData.get_template_version==2?'seal':''"
         /></span>
       </div>
       <div v-else style="width: 120px; text-align: center">—</div>
@@ -178,7 +176,6 @@
               ref="betItemRight"
               @stateChage="onBetItemStateChange('right', $event)"
               :ol_data="handicap_list[1]"
-              :odds_state_default_val="MenuData.get_template_version==2?'seal':''"
           /></span>
         </div>
       </div>
@@ -314,7 +311,7 @@
 
 <script setup>
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
+import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data"
 import { ref, computed, watch, onMounted, inject, reactive, nextTick } from 'vue';
 import { MenuData, get_match_status, UserCtr, MatchDetailCalss } from "src/output/index.js";
 import { getScrollbarWidth } from 'src/core/utils/common/index'
@@ -337,6 +334,26 @@ const is_iframe = window.is_iframe
 // 组件是否加载完成
 const is_mounted = ref(false);
 const vx_detail_params = ref(MatchDetailCalss.params)
+
+const betItemRight = ref(null)
+const betItemDetail = ref(null)
+const betItemLeft = ref(null)
+
+//视屏播放类型
+const vx_play_media = ref(MatchDetailCalss.play_media)
+/*
+ ** 监听MatchDetailCalss的版本号  获取视屏播放类型
+ */
+watch(
+  () => MatchDetailCalss.details_data_version.version,
+  (val) => {
+    if (val) {
+      vx_play_media.value = MatchDetailCalss.play_media;
+      lodash.merge(vx_detail_params,MatchDetailCalss.params)
+    }
+  },
+  { deep: true }
+);
 
 // 获取胜平负数据
 const handicap_list = computed(()  => {
@@ -465,6 +482,26 @@ const click_popup = (e) =>{
   }else{
     popup_class.value = 'style1'
   }
+}
+/** 监听赔率父节点的click, 调用赔率子节点的click事件处理器完成*/
+const onMatchNewHandicapClick = (refNodeName) => {
+  if (refNodeName == 'betItemLeft') {
+    betItemLeft.value.bet_click()
+  } else if (refNodeName == 'betItemRight') {
+    betItemRight.value.bet_click()
+  } else {
+    betItemDetail.value.bet_click()
+  }
+}
+/**
+ * @Description 打开赛事分析
+ * @param {undefined} undefined
+ */
+const click_handle = () => {
+  if (["7"].includes(play_csid.value)) {
+    return;
+  }
+  // this.sr_click_handle(match.value);
 }
 
 const onBetItemStateChange = (activeKey, state) => {

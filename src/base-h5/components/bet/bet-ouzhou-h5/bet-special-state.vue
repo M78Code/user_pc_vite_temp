@@ -2,42 +2,16 @@
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
           <!-- 备注123 -->
-                <div class="info-top row items-center justify-between">
-                <p class="left-text"><span>4-fold X 1</span>
-                <span>@3.48</span> </p>
-                <p class="right-text">bet placed</p>
-            </div>
-             <bet-special-winning/>
-        <!-- <div class="bet-info">
-            <div class="f-b-c px-12">
-                <div class="f-s-c">
-                    <img :src="compute_local_project_file_path('/image/bet/request.svg')" alt="" @click="alertRules(items.seriesValue)">
-                    <span class="font14 font500 text-18">{{ items.seriesValue}}</span> 
-                    <span class="text-45B0FF ml-4" v-if="items.orderStatusCode == 1">注单已确认</span>
-                </div>
-                <div class="">
-                    <span class="bet-amount-box font700">{{ format_money2(mathJs.divide(items.betAmount,100))}}</span>
-                    <span class="left-rx"> x{{ items.seriesSum }} </span>
-                </div>
-            </div>
+        <div class="info-top row items-center justify-between">
+            <p class="left-text"><span>{{items.seriesValue}}  x{{ items.seriesSum }} </span></p>
+            <p class="right-text" v-if="items.orderStatusCode == 1">注单已确认</p>
         </div>
-        <div class="toltal f-b-c">
-            <div >
-                <span>预计可赢：{{ format_money2(mathJs.divide(items.maxWinAmount,100))}} {{currency_code[UserCtr.currency]}}</span>
-            </div>
-            <div>
-                <span>小计：{{ format_money2(mathJs.divide(items.seriesBetAmount,100))}} {{currency_code[UserCtr.currency]}}</span>
-            </div>
-        </div> -->
-        <bet-dialog  @close="tooltipbox=false" :item="items" :id="itemid" :tooltipboxs="tooltipbox" v-model="tooltipbox"></bet-dialog>
     </div>
 </template>
 
 <script setup> 
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import {UserCtr,format_money2,LOCAL_PROJECT_FILE_PREFIX,currency_code ,compute_local_project_file_path } from "src/output/index.js"
-import mathJs from 'src/core/bet/common/mathjs.js'
-import betSpecialWinning from "./bet-special-winning.vue";
 import { ref } from "vue"
 
 const props = defineProps({
@@ -46,17 +20,7 @@ const props = defineProps({
         default : () => {}
     }
 })
-const tooltipbox = ref(false)
-const itemid = ref()
-// 弹出规则
-const alertRules = (id) => {
-    if(id && id.includes(i18n_t(`app_h5.bet.toltipc`))){
-        itemid.value =  id.replace('串','00')
-    }else{
-        itemid.value =  id
-    } 
-    tooltipbox.value = !tooltipbox.value
-}
+
 </script>
 
 <style scoped lang="scss">

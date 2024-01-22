@@ -9,7 +9,17 @@
   font-style: normal;
   font-display: block;
 }
-
+@font-face {
+  font-family: 'DIN';
+  src:
+    url('fonts/DIN-Regular.otf');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+.number_family {
+  font-family: 'DIN';
+}
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;

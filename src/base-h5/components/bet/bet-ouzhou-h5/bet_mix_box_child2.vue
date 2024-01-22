@@ -51,7 +51,6 @@
                     {{ items.playName }}
                     {{ items.matchType == 2 && [1,2,3,8,9].includes(items.sportId *1) ? items.mark_score : '' }}
                   </span>
-                  
 
                 </div>
                 <div class="nonebox4-content-left-content-text-three">{{ items.tid_name }}</div>
@@ -67,9 +66,10 @@
       <!-- {{ items.bet_amount }} -->
       <bet-input-info2 :item="items" :index="index"></bet-input-info2>
     </div>
+   
     <!-- 多项合并 -->
     <template v-if="BetData.bet_single_list.length > 1">
-      <bet-input-multiple></bet-input-multiple>
+      <bet-input-multiple @focus_on="handler_focus_on"></bet-input-multiple>
     </template>
     <!-- 合并单关最下面的多个输入框 -->
 
@@ -78,13 +78,19 @@
 <script setup>
 import betInputInfo2 from "./bet_input_info2.vue";
 import betInputMultiple from "./bet_input_multiple.vue";
-import { compute_value_by_cur_odd_type,UserCtr } from "src/output/index.js"
+import { LOCAL_PROJECT_FILE_PREFIX, compute_value_by_cur_odd_type,UserCtr } from "src/output/index.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
+
 
 const set_delete = (items, index) => {
   BetData.set_delete_bet_info(items.playOptionsId, index)
 }
+
+const handler_focus_on = (data)=>{
+  console.log("data===", data)
+}
+
 
 </script>
   
@@ -266,8 +272,9 @@ const set_delete = (items, index) => {
     }
   }
 
-  .bet-disabled {
-    padding: 0 0.2rem;
+  .bet-disabled{
+    width: .5rem;
+    text-align: center;
     height: .26rem;
     display: inline-block;
     border-radius: 0.02rem;
@@ -276,6 +283,7 @@ const set_delete = (items, index) => {
     font-weight: 500;
     letter-spacing: 0px;
     color: var(--q-gb-t-c-3);
+    margin-left: .2rem;
   }
 }</style>
   

@@ -166,6 +166,8 @@ export default {
     })
 
     provide('match_detail',match_detail)
+    provide('match_odds_info',match_odds_info)
+    provide('active_tab',detail_event_tabs_value)
 
     return{
       label,

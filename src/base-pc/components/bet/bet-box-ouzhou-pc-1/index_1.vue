@@ -17,13 +17,13 @@
         
         <div class="cursor re f-e-c bet-text">
            <!--  单关 合并 切换 -->
-          <div class="f-e-c" @click="show_merge_change()" v-if="BetData.is_bet_single">
+          <div class="f-e-c" @click.prevent="show_merge_change()" v-if="BetData.is_bet_single">
             {{ i18n_t('bet.merge') }} 
             <span v-if="BetData.is_bet_merge" class="icon-arrow icon-arrow-merge ml-4"></span>
             <span v-else class="merge-checkbox ml-4"></span> 
           </div>
           <!-- 单关 串关 切换 -->
-          <div class="f-e-c ml-16" @click="show_single_change()" v-if="!MenuData.is_kemp()">
+          <div class="f-e-c ml-16" @click.prevent="show_single_change()" v-if="!MenuData.is_kemp()">
             <span v-if="BetData.is_bet_single">{{ i18n_t('bet.bet_one_') }}</span>
             <span v-if="!BetData.is_bet_single">{{ i18n_t('bet.bet_series') }}</span>
 
@@ -138,17 +138,30 @@ const set_show_single = () =>{
 // 单关/串关 切换
 const show_single_change = () => {
   if(BetData.is_bet_single){
-   return BetData.set_is_bet_single('series')
+   BetData.set_is_bet_single('series')
+   next()
+   return
   }
   BetData.set_is_bet_single('single')
+  next()
+}
+
+const next = () => {
+  nextTick(() => {
+    BetData.switch_bet_query_bet_amount()
+    BetData.set_bet_oid_list()
+  })
 }
 
 // 单关/ 合并切换
 const show_merge_change = () => {
   if(BetData.is_bet_merge){
-   return BetData.set_is_bet_merge('no')
+    BetData.set_is_bet_merge('no')
+    next()
+    return
   }
   BetData.set_is_bet_merge('merge')
+  next()
 }
 
 // 使用ResizeObserver来监听高度变化
@@ -172,7 +185,7 @@ onBeforeUnmount(() => {
 });
 
 onMounted(() => {
-  BetData.switch_bet_query_bet_amount()
+  // BetData.switch_bet_query_bet_amount()
 })
 
 

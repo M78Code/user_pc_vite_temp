@@ -7,25 +7,19 @@
             <div class="size_16 color_a1a1">{{ i18n_t('bet.bet') }}</div>
             <div class="size_14">
                 <span>{{ i18n_t('bet.total_win2') }}</span>
-                <!-- <span class="margin_left_4">&thinsp;{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span> -->
-                <span class="margin_left_4" v-if="[1].includes(item.playId * 1)">
-                    {{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount, item.oddFinally), item.bet_amount)) ||
-                        '0.00' }}
-                </span>
-                <span class="margin_left_4" v-else>
-                    {{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount, item.oddFinally), (UserCtr.odds.cur_odds
-                        == 'HK' ? 0 : item.bet_amount))) || '0.00' }}
+                <span class="margin_left_4">
+                    {{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)) }}
                 </span>
             </div>
         </div>
-        <div class="info_right size_14" @click.stop="input_click(item, index, $event)">
+      
+        <div class="info_right size_14" @click.stop="input_click(item, index, $event)" :class="{'active':BetData.active_index == index}">
             <div class="content-b">
-                <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
+                <span v-if="item.bet_amount" class="yb_fontsize20 money-number">{{item.bet_amount }}</span>
 
-                <span class="money-span" ref="money_span" :style="{ opacity: '1' }"></span>
+                <span class="money-span" ref="money_span" v-if="BetData.active_index == index" :style="{ opacity: '1' }"></span>
 
-                <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('bet.money_range') }} {{
-                    ref_data.min_money }}~{{ formatMoney(ref_data.max_money) }}</span>
+                <span class="yb_fontsize14 limit-txt" v-show="!item.bet_amount">{{ i18n_t('bet.money_range') }} {{ ref_data.min_money }}~{{ formatMoney(ref_data.max_money) }}</span>
             </div>
 
         </div>
@@ -48,21 +42,18 @@ const props = defineProps({
     },
     index: {
         default: 0,
-    }
+    },
 })
 
 const input_click = (item, index, event) => {
-    console.error('item.bet_amount', item.bet_amount)
-    // event.preventDefault()
+    event.preventDefault()
     BetData.set_bet_amount(item.bet_amount)
     BetData.set_bet_keyboard_config(item)
-    BetData.set_bet_keyboard_show(false)
     BetData.set_active_index(index)
     nextTick(() => {
         BetData.set_bet_keyboard_show(true)
     })
 }
-
 
 // 光标
 const money_span = ref(null)
@@ -95,7 +86,6 @@ onUnmounted(() => {
  *@param {Number} new_money 最新金额值
  */
 const change_money_handle = (new_money = {}) => {
-    console.log('change_money_handlechange_money_handlechange_money_handlechange_money_handle', new_money)
     if(new_money.params.playOptionsId === props.item.playOptionsId) {
         ref_data.money = new_money.money
         BetData.set_bet_obj_amount(ref_data.money, props.item.playOptionsId)
@@ -149,19 +139,22 @@ const cursor_flashing = () => {
     border-bottom: 1px solid  var(--q-gb-bd-c-1);
 
     .info_right {
-        width: 162px;
-        height: 42px;
-        box-shadow: 0px 1px 4px 0px rgba(255, 112, 0, 0.10);
-        border: 1px solid var(--q-gb-bg-c-1);
-        padding-left: 6px;
-        background: #FFF6F0;
-        caret-color: var(--q-gb-bd-c-1);
-        font-family: DIN;
-        font-size: 20px;
+        width: 1.62rem;
+        height: .42rem;
+        padding-left: .06rem;
+        font-size: .20rem;
         font-weight: 500;
         display: flex;
         align-items: center;
-        border-radius: 2px;
+        border-radius: .02rem;
+        border: 0.5px solid var(--q-gb-bd-c-12);
+        background: var(--q-gb-bg-c-2);
+        box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+        &.active{
+            border: 1px solid var(--q-gb-bg-c-1);
+            box-shadow: 0px 1px 4px 0px rgba(255, 112, 0, 0.10);
+            caret-color: var(--q-gb-bd-c-1);
+        }
 
         .content-b {
             display: flex;
