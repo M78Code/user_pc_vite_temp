@@ -24,7 +24,7 @@ import { menu_default } from "./config/menu-default.js"
 import BaseData from "src/core/base-data/base-data.js"
 
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+const { IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 
 // 热门除了50199-30199  赛事、50101-30101 竞足外，
