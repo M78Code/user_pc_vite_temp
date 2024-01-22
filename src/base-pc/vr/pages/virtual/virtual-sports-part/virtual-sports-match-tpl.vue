@@ -37,8 +37,22 @@
       <!-- 比分板 -->
       <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
       :style="`width:${match_list_tpl_size.media_width}px !important;`">
-        <img class="vr-video" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr_video.png`"/>
-        <img class="vr-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr_data.png`"/>
+      <img class="vr-video" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr_video.png`"/>
+      <!-- 统计分析 -->
+      <div class="item">   
+          <!-- 统计图标 -->
+          <div>
+            <img class="vr-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr_data.png`"/>
+              <!-- 统计分析 弹层-->
+              <q-menu>
+                  <div>
+                    <!-- 历史战绩页面 -->
+                    <virtual-match-statistic v-if="match" :match="match" row_index="-1" />
+                  </div>
+              </q-menu>
+          </div>
+          
+        </div>
       </div>
     </div>
   </div>
@@ -58,6 +72,7 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/i
 import virtual_sports_match_item_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-match-item-mixin.js";
 import { IconWapper } from 'src/components/icon'
 import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
+import virtual_match_statistic from 'src/base-pc/vr/components/virtual-match-statistic.vue'
 
 export default {
   mixins:[virtual_sports_match_item_mixin],
@@ -65,6 +80,7 @@ export default {
     MatchHandicap,
     IconBox,
     'icon-wapper': IconWapper,
+    'virtual-match-statistic': virtual_match_statistic,
   },
   props: {
     is_show_more: {
