@@ -73,7 +73,7 @@ export default {
         IconWapper,
         BackTop,
         LoadData,
-        ConmingSoon
+        // ConmingSoon
     },
     setup() {
         // 设置 左侧菜单
