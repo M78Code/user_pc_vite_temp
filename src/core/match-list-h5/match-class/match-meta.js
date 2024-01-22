@@ -182,13 +182,13 @@ class MatchMeta {
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, result_mids)
       // 赛事最终数据
-      const target = Object.assign(match, template, params)
+      const target = Object.assign(match, template, params, { custom_tid: 'origin' })
       // 球种名称
       const csna = BaseData?.menus_i18n_map[`${100 + Number(match.csid)}`]
       // 联赛名称
       const tn = BaseData?.tids_map[`tid_${match.tid}`]?.tn
       // 赛事其他操作
-      this.match_assistance_operations(target, index, false)
+      this.match_assistance_operations(target, index)
       return { ...target, tn, csna, is_meta: true, estimateHeight: MatchUtils.get_default_estimateHeight(match) }
     })
     // 设置 元数据计算 流程
@@ -296,22 +296,20 @@ class MatchMeta {
     // MatchFold.set_match_mid_fold_obj(match)
     MatchResponsive.set_show_match_info(`mid_${match.mid}`, index < 20 ? true : false)
     
-    if (flag) {
-      // 球种数量
-      MatchResponsive.set_default_ball_seed_count(match)
-      const key = MatchFold.get_match_fold_key(match)
-      if (!(key in MatchFold.match_mid_fold_obj.value)) MatchFold.set_match_mid_fold_obj(match)
-      // 初始化赛事折叠
+    // 球种数量
+    MatchResponsive.set_default_ball_seed_count(match)
+    const key = MatchFold.get_match_fold_key(match)
+    if (!(key in MatchFold.match_mid_fold_obj.value)) MatchFold.set_match_mid_fold_obj(match)
+    // 初始化赛事折叠
 
-      const fold_key = MatchFold.get_fold_key(match)
+    const fold_key = MatchFold.get_fold_key(match)
 
-      //  初始化全部球种折叠状态
-      if (!(fold_key in MatchFold.ball_seed_csid_fold_obj.value)) MatchFold.set_ball_seed_csid_fold_obj(fold_key)
-      // 进行中
-      if (!(fold_key in MatchFold.progress_csid_fold_obj.value) && [1, 110].includes(+ms)) MatchFold.set_progress_csid_fold_obj(fold_key)
-      // 未开赛
-      if (!(fold_key in MatchFold.not_begin_csid_fold_obj.value) && [1, 110].includes(+ms)) MatchFold.set_not_begin_csid_fold_obj(fold_key)
-    }
+    //  初始化全部球种折叠状态
+    if (!(fold_key in MatchFold.ball_seed_csid_fold_obj.value)) MatchFold.set_ball_seed_csid_fold_obj(fold_key)
+    // 进行中
+    if (!(fold_key in MatchFold.progress_csid_fold_obj.value) && [1, 110].includes(+ms)) MatchFold.set_progress_csid_fold_obj(fold_key)
+    // 未开赛
+    if (!(fold_key in MatchFold.not_begin_csid_fold_obj.value) && [1, 110].includes(+ms)) MatchFold.set_not_begin_csid_fold_obj(fold_key)
 
     // 获取模板默认高度
     const template_config = this.get_match_default_template_config(csid)
@@ -1149,6 +1147,7 @@ class MatchMeta {
     target_list.forEach((t, i) => {
       this.match_assistance_operations(t, i)
       Object.assign(t, {
+        is_meta: false,
         estimateHeight: MatchUtils.get_default_estimateHeight(t),
         is_show_league: MatchUtils.get_match_is_show_league(i, target_list)
       })
@@ -1219,6 +1218,7 @@ class MatchMeta {
       this.match_assistance_operations(match, index)
 
       Object.assign(match, params, {
+        is_meta: false,
         estimateHeight: MatchUtils.get_default_estimateHeight(match),
         is_show_league: MatchUtils.get_match_is_show_league(index, target_data),
         is_show_ball_title: MatchUtils.get_match_is_show_ball_title(index, target_data),
@@ -1648,12 +1648,6 @@ class MatchMeta {
     data.forEach(t => {
       // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
       t.handicap_index = MatchUtils.get_handicap_index_by(t);
-
-      const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
-      if (match) {
-        t.start_flag = lodash.get(match, 'start_flag', 0)
-        t.is_show_league = lodash.get(match, 'is_show_league', false)
-      }
 
       const item = lodash.find(this.complete_matchs, (match) => match.mid === t.mid)
       if (item) {

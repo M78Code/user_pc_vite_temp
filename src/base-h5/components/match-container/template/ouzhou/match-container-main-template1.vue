@@ -71,7 +71,7 @@
                 </div>
               </template>
               <template v-else>
-                <span v-if="!is_compute_origin" class="number">{{ get_ball_seed_league_count }}</span>
+                <span class="number">{{ get_ball_seed_league_count }}</span>
               </template>
             </div>
           </div>
