@@ -63,11 +63,10 @@
                     <div class="skin-icon skin-icon-day"></div>
                     <div class="skin-icon skin-icon-night"></div>
                   </div>
-                  <!-- 主题设置 -->
+                  <!-- 近期开赛 -->
                   <div
                     v-else-if="settings.id == 4"
                     @click="change_theme"
-                    class="skin-toggle"
                   >
                     全部
                   </div>
@@ -90,7 +89,6 @@
                   <div
                     v-else-if="settings.id == 6"
                     @click="change_setting_additional_plays"
-                    class="skin-toggle"
                   >
                     全部行
                   </div>
@@ -497,6 +495,90 @@ function change_theme() {
     top: -19px;
     left:50%;
   }
+ .q-list--bordered {
+        border: 0;
+    }
+
+    .settings-no-expand {
+        display: none;
+    }
+
+    .settings-item-header {
+        padding-right: 11px;
+    }
+
+    .skin-toggle {
+        display: flex;
+        width: 32px;
+        height: 16px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 3px;
+        border-radius: 13px;
+        margin-right: 21px;
+        .skin-icon {
+            width: 8px;
+            height: 8px;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+
+    .settings-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .child-item {
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 16px 0 17px;
+        cursor: pointer;
+
+        .flag {
+            width: 14px;
+            height: 10px;
+            display: inline-block !important;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            margin-right: 6px;
+        }
+
+        i.arrow-show {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: 700;
+        }
+    }
+
+    i.icon-triangle1 {
+        font-weight: 700;
+    }
+
+    .q-item {
+        min-height: 40px;
+    }
+
+    .q-card__section {
+        padding: 0;
+    }
+
+    .q-item__section--side {
+        padding-left: 4px;
+
+        &.q-item__section--avatar {
+            min-width: 14px;
+            padding-right: 6px;
+            padding-left: 0;
+        }
+
+        .q-expansion-item__toggle-icon {
+            font-size: 12px;
+        }
+    }
 }
 .skin-icon-off {
   width: 12px;
@@ -546,6 +628,5 @@ function change_theme() {
     background-color: var(--qq--theme-bg-bet-text-delete);
     border-radius: 50%;
   }
-  
 </style>
  
