@@ -57,7 +57,7 @@
               <div class="horse-col" v-if="current_match.csid != '1009'">
                   {{ i18n_t('list.virtual_match_type_title.type1011.bet_col.2') }}</div>
           </div>
-          <virtual-sports-right :current_match="current_match" :match_list_by_no="match_list_by_no" :switch_match_handle="switch_match_handle" />
+          <virtual-sports-right v-if="current_match" :current_match="current_match" :match_list_by_no="match_list_by_no" :switch_match_handle="switch_match_handle" />
         </div>
         
         <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
