@@ -214,6 +214,8 @@ import PageSourceData  from  "src/core/page-source/page-source.js";
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
+const emits = defineEmits(['on_update_standard'])
+
 const props = defineProps({
   // 赛事信息
   match: Object,
@@ -791,6 +793,7 @@ const odd_wrapper_pan = ({ direction }) => {
       status = 0;
     }
     MatchResponsive.set_is_http_update_info(true)
+    emits('on_update_standard', status)
     PageSourceData.set_standard_odd_status(status)
     let timer = setTimeout(() => {
       MatchResponsive.set_is_http_update_info(false)

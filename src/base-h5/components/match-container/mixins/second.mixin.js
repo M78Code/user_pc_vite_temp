@@ -582,10 +582,11 @@ export default defineComponent({
     },
     // 15分钟 次要玩法模块  左下角的 小标题
     apply_15min_title(){
+      const standard_odd_status = PageSourceData.standard_odd_status.value
       if(this.current_tab_item.id==17){
         // 如果是15分钟玩法下展示玩法时段 ,如果没有滑动取最小值(因为在更新时已经进行了排序因此第一个为最小值),如果滑动到第二个tab取+1值
         let hSpecial=lodash.get(this.match.hps15Minutes,'[0].hSpecial',1) - 1;
-        if(this.standard_odd_status==1 && lodash.get(this.match,'hps15Minutes',[]).length == 6){ // 翻转后取第二个值
+        if(standard_odd_status==1 && lodash.get(this.match,'hps15Minutes',[]).length == 6){ // 翻转后取第二个值
           hSpecial=lodash.get(this.match.hps15Minutes,'[3].hSpecial',1)-1;
         }
         if(hSpecial>4){
@@ -671,7 +672,7 @@ export default defineComponent({
       Object.values(this.emitters).map((x) => x());
     },
     on_update_standard (val) {
-      console.log(val)
+      this.apply_15min_title();// 15分钟 次要玩法模块  左下角的 小标题
     }
   },
   computed:{
@@ -777,10 +778,6 @@ export default defineComponent({
       //篮球赛事阶段变化处理
       this.basketball_mmp_change(curr);
       this.update_mmp_map_title();
-    },
-    'PageSourceData.standard_odd_status.value'(){
-      console.log(11111111)
-      this.apply_15min_title();// 15分钟 次要玩法模块  左下角的 小标题
     },
     // 一级菜单切换，次要玩法，默认折叠
     menu_type(){
