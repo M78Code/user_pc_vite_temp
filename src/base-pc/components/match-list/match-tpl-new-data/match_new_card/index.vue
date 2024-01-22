@@ -335,6 +335,10 @@ const is_iframe = window.is_iframe
 const is_mounted = ref(false);
 const vx_detail_params = ref(MatchDetailCalss.params)
 
+const betItemRight = ref(null)
+const betItemDetail = ref(null)
+const betItemLeft = ref(null)
+
 //视屏播放类型
 const vx_play_media = ref(MatchDetailCalss.play_media)
 /*
@@ -478,6 +482,26 @@ const click_popup = (e) =>{
   }else{
     popup_class.value = 'style1'
   }
+}
+/** 监听赔率父节点的click, 调用赔率子节点的click事件处理器完成*/
+const onMatchNewHandicapClick = (refNodeName) => {
+  if (refNodeName == 'betItemLeft') {
+    betItemLeft.value.bet_click()
+  } else if (refNodeName == 'betItemRight') {
+    betItemRight.value.bet_click()
+  } else {
+    betItemDetail.value.bet_click()
+  }
+}
+/**
+ * @Description 打开赛事分析
+ * @param {undefined} undefined
+ */
+const click_handle = () => {
+  if (["7"].includes(play_csid.value)) {
+    return;
+  }
+  // this.sr_click_handle(match.value);
 }
 
 const onBetItemStateChange = (activeKey, state) => {
