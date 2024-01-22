@@ -25,7 +25,7 @@
           v-show="is_video_hover"
           :ctr_data={video_type:1}
           :is_video_hover="is_video_hover"
-          :video_fullscreen_disabled="false"
+          :video_fullscreen_disabled="true"
           :match_info="detail_info"
           :is_esports="false"
       ></video_type_ctr>
@@ -271,10 +271,10 @@ const video_leave = () => {
 
 // 屏蔽不需要的功能
 .box-bc :deep(.full-screen-wrap) {
-  // display: none !important;
+  display: none !important;
 }
 .box-bc :deep(.xl-screen-wrap) {
-  // display: none !important;
+  display: none !important;
 }
 
 </style>
