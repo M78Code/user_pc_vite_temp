@@ -9,7 +9,7 @@
     <div class="item" :class="{'num_zero': get_num(score.round1.home,score.round1.away,0) == 0 && get_num(score.round1.home,score.round1.away,1) == 0}">
       <div class="round" :class="{'margin30': $route.name === 'analysis_header'}">
         <!-- score.round1.home -->
-        <span class="text-blue chat-label">{{match.csid == 1 ? score.round1.home : get_num(score.round1.home,score.round1.away,0)}}%</span>
+        <span class="text-blue chat-label">{{match.csid == 1 ? score.round1.home : get_num(score.round1.home,score.round1.away,0)}}</span>
         <template v-if="$route.name === 'analysis_header'">
           <q-knob
             readonly
@@ -39,7 +39,7 @@
         </template>
         
         
-        <span class="text-orange chat-label">{{match.csid == 1 ? score.round1.away : get_num(score.round1.home,score.round1.away,1)}}%</span>
+        <span class="text-orange chat-label">{{match.csid == 1 ? score.round1.away : get_num(score.round1.home,score.round1.away,1)}}</span>
       </div>
       <div class="text-c knob-label" v-if="$route.name !== 'analysis_header'">
         {{chatLabel.round1}}
@@ -123,7 +123,7 @@
             :track-color="score.round3.percentage==0?'grey-3':'indigo-12'"
             class="knob"
           >
-            <span class="knob-label">{{chatLabel.round2}}</span>
+            <span class="knob-label">{{chatLabel.round3}}</span>
           </q-knob>
         </template>
         <template v-else>
