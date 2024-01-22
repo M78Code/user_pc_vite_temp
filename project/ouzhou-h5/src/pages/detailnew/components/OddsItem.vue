@@ -1,5 +1,5 @@
 <template>
-  <div class="component odds-item odds-wrap" v-if="!(data.hl && data.hl.every(item => item.hs == 2 || item.hs==11))" :style="{ 'order': order }">
+  <div class="component odds-item odds-wrap" v-if="!(data.hl && data.hl.every(item => item.hs == 2))" :style="{ 'order': order }">
     <q-separator color="orange" />
     <div class="odds-hpn" @click="toggleUnfold">
       <span class="odds-hpn-text">{{ data.hotName ? data.hotName : data.hpn }}</span>
