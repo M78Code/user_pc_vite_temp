@@ -3217,6 +3217,12 @@
     "xlun": "Round %s",
     "xqi": "%s"
   },
+  "virtual_sports": {
+    "game": "Game",
+    "integral": "Pts",
+    "team": "team",
+    "win_tie_loss": "Win/Draw/Lose"
+  },
   "basketball": {
     "penalty": "Free Throw",
     "pause": "Time Out"
