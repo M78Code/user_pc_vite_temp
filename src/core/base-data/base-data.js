@@ -790,7 +790,6 @@ class BaseData {
   // 设置版本变更
   set_base_data_version = lodash_.debounce(() => {
     this.base_data_version.value = Date.now()
-    console.error('thius',this)
   }, 10)
 
   /**
