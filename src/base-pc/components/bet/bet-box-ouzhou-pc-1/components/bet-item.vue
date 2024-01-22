@@ -38,6 +38,15 @@
                     <span>{{ i18n_t('bet.bet_invalid') }}</span>
                 </div>
             </div>
+
+            <!-- <label class="appoint appoint_cursor" @click="set_show_appoint">+{{ `${i18n_t('bet.bet_book2')}` }}</label> -->
+
+
+            <!-- 预约投注组件 -->
+            
+            <!-- <div v-if="ref_data.show_appoint">
+                <bet-pro-appoint :item="items" @cancel_operate="cancel_operate" />
+            </div> -->
           
 
             <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1" @click="set_delete">
@@ -69,14 +78,31 @@ import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_T
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import betInput from "./bet-input.vue"
+import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
+import BetProAppoint from "./bet-pre-appoint.vue"
 
 const props = defineProps({
     items:{},
     index:{}
 })
 
+const ref_data = reactive({
+  show_appoint:true, // 是否显示预约 点击预约后其他地方需要显示
+})
+
 const set_delete = () => {
     BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
+}
+
+// 预约投注
+const set_show_appoint = () =>{
+  // 预约投注点击后展示后 需要请求预约限额接口
+  if(!ref_data.show_appoint){
+    get_query_bet_amount_pre()
+  }
+  // 显示预约投注内容
+  ref_data.show_appoint = !ref_data.show_appoint
+ 
 }
 
 </script>

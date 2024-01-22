@@ -163,41 +163,28 @@ class UseGlobal {
    get_is_fold_status(state) {
     return this.is_fold_status;
   }
-/**
- * @Description:列表附加玩法
- * @return {undefined} undefined
- */
- change_setting_additional_plays() {
-  // 列表附加玩法
-  const show_additional_plays = !this.get_show_additional_plays;
-  localStorage.setItem(
-    "additional_plays",
-    JSON.stringify(show_additional_plays)
-  );
-  this.set_show_additional_plays(show_additional_plays);
-  // 刷新列表重新计算
-  // this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
-}
-/**
- * @Description:附加盘
- * @return {undefined} undefined
- */
- change_setting_additional_disk() {
-  const show_additional_disk = !this.get_show_additional_disk;
-  localStorage.setItem(
-    "additional_disk",
-    JSON.stringify(show_additional_disk)
-  );
-  this.set_show_additional_disk(show_additional_disk);
-  // 刷新列表重新计算
-  // this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
-}
+    //设置附加盘开关
+    set_show_additional_disk(val) {
+      this.show_additional_disk = val;
+    }
+    //设置附加玩法开关
+    set_show_additional_plays(val) {
+      this.show_additional_plays = val;
+    }
+    //设置附加玩法配置展示行数
+    set_additional_plays_list_num(val) {
+      this.additional_plays_list_num = val;
+    }
+  //是否展开多列玩法
+  set_unfold_multi_column(status) {
+    this.is_unfold_multi_column = status;
+  }
 //列表附加玩法是否展开状态
-set_show_more_other_list(state, obj) {
+set_show_more_other_list(obj) {
   if (obj.reset) {
-    state.show_more_other_list_obj = {}
+    this.show_more_other_list_obj = {}
   }else{
-    state.show_more_other_list_obj[obj.mid] = {...state.show_more_other_list_obj[obj.mid],...obj}
+    this.show_more_other_list_obj[obj.mid] = {...this.show_more_other_list_obj[obj.mid],...obj}
   }
 }
 }

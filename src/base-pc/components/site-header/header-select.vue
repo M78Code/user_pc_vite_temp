@@ -155,6 +155,7 @@ const settings_items = ref([
             night: compute_css_obj('public/image/yabo/svg/icon-skin-night.svg'),
           },
           value_arr: [
+                { label: i18n_t('common.all'), title: i18n_t('common.all'), value: null },
                 { label: i18n_t('filter.select_time.3h'), title: '3' + i18n_t('common.hour'), value: 3 },
                 { label: i18n_t('filter.select_time.6h'), title: '6' + i18n_t('common.hour'), value: 6 },
                 { label: i18n_t('filter.select_time.9h'), title: '9' + i18n_t('common.hour'), value: 9 },
