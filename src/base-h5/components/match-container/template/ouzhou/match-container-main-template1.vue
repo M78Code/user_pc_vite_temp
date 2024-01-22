@@ -394,6 +394,7 @@ export default {
       select_label.value = item.label
       MatchResponsive.set_match_hpid(item.hpid, csid)
     }
+    const showDropdown = ref(false)
 
     // 是否元数据
     const is_compute_origin = computed(() => {
