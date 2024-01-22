@@ -6,7 +6,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
 import { computed_menu_to_match_templte_ouzhou } from 'src/core/match-list-pc/list-template/ouzhou-pc-menu-match-template.js'
 import PageSource from 'src/core/page-source/page-source.js'
-import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
+// import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 
 import {
   SessionStorage,
