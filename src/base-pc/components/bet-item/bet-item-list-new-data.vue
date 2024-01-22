@@ -81,23 +81,19 @@ const props = defineProps({
   csid: {
     type: String,
     default: () => ''
-  },
-  stateChage: {
-    type: Function,
-    default: null
   }
 });
 const match = inject('match', null)
 const {
   bet_click_ol, disk_text_replace, bet_item_select, score, odds_state, odds_lift, is_mounted
-
 } = use_bet_item(props)
+const emit = defineEmits(['oddsChange', 'stateChage'])
 
 onMounted(() => {
   // 异步设置组件是否挂载完成
   setTimeout(()=>{
     // 冒泡初始化时的选中状态
-    props.stateChage && props.stateChage(odds_state)
+    emit('stateChage', odds_state)
   })
 })
 

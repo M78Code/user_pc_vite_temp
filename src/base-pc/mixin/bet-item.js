@@ -1,4 +1,4 @@
-import { onMounted, ref, onUnmounted, computed, watch, inject } from "vue";
+import { onMounted, ref, onUnmounted, computed, watch, inject, defineEmits } from "vue";
 import lodash from 'lodash'
 import { get_odds_active, MenuData } from "src/output/index.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
@@ -6,6 +6,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 
 export function use_bet_item(props) {
 
+    const emit = defineEmits(['oddsChange', 'stateChage'])
     // 定时器对象
     let timer_obj = {};
 
@@ -52,7 +53,7 @@ export function use_bet_item(props) {
     watch(() => props.ol_data.ov, (cur, old) => {
         if (cur == old) return
         // 红升绿降变化
-        set_odds_lift(cur, old);
+        set_odds_lift(cur, old, props.ol_data);
     }, { deep: true })
     let tid;
     /**
@@ -61,7 +62,7 @@ export function use_bet_item(props) {
      * @param  {number} old - 上次赔率值
      * @return {undefined} undefined
      */
-    const set_odds_lift = (cur, old) => {
+    const set_odds_lift = (cur, old, ol_data) => {
         if (!["lock", 'seal'].includes(odds_state.value) && old && !is_odds_seal()
         ) {
             if (cur > old) {
@@ -73,7 +74,15 @@ export function use_bet_item(props) {
             clearTimeout(tid)
             tid = setTimeout(() => {
                 odds_lift.value = "";
+                emit('oddsChange', {
+                    odds_lift:odds_lift.value,
+                    oid:ol_data.oid
+                })
             }, 3000);
+            emit('oddsChange',  {
+                odds_lift:odds_lift.value,
+                oid:ol_data.oid
+            })
         }
     };
 
