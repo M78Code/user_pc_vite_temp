@@ -3,300 +3,276 @@
  * @Description: 复刻版-虚拟体育详情页赛事统计
 -->
 <template>
-  <div class="c-match-startistic">
-    <div class="bg-card-startistic">
-      <!-- 比分板 -->
+  <div v-if="datas" class="c-match-startistic column" :class="show_style">
+    <!-- 样式1(style1)：足球 -->
+    <template v-if="show_style == 'style1'">
       <div class="score-list">
-        <div
-          v-for="(score, index) in datas.score_list"
-          :key="index+'-'"
-          class="score-item items-center col"
-        >
-          <div class="score-header row justify-center items-center">
-            <div class="left team team-home">
-              <span class="score">{{ score.home }}</span>
-            </div>
-            <div class="separate"></div>
-            <div class="right team team-away">
-              <span class="score">{{ score.away }}</span>
-            </div>
+        <div v-for="(score, index) in  datas.score_list" :key="index" class="score-item items-center row">
+          <!-- 主队进球 -->
+          <div class="info main">
+            <span :class="['line', score.home == 0 && 'line0']" :style="`width:${score.home * 10}%`"></span>
+            <span class="score">{{ score.home }}</span>
           </div>
-          <!-- 占比条 -->
-          <div class="score-line row">
-            <div class="info main">
-              <span
-                :class="['line', score.home == 0 && 'line0']"
-                :style="`width:${score.home * 10}%`"
-              ></span>
-            </div>
-            <div class="separate"></div>
-            <div class="info away">
-              <span
-                :class="['line', score.away == 0 && 'line0']"
-                :style="`width:${score.away * 10}%`"
-              ></span>
-            </div>
+          <div class="separate"></div>
+          <!-- 客队进球 -->
+          <div class="info away">
+            <span :class="['line', score.away == 0 && 'line0']" :style="`width:${score.away * 10}%`"></span>
+            <span class="score">{{ score.away }}</span>
           </div>
-
         </div>
       </div>
-      
-      <!-- 胜负百分比 -->
+
       <div class="result-wrap row">
-        <div class="home item  column items-center">
+        <div class="home item column items-center">
+          <!-- 主队进球比例 -->
           <div class="win-percent">{{ datas.win_home }}%</div>
-
-          <div class="result-list row ">
-            <div
-              v-for="(item, index) in datas.result_home"
-              :key="index"
-              :class="['result-item', 'item-' + item]"
-            >
+          <div class="result-list row">
+            <!-- 主队近10场输赢结果 -->
+            <div v-for="(item, index) in datas.result_home" :key="index" :class="['result-item yb-flex-center', 'item-' + item]">
               {{ item }}
             </div>
           </div>
         </div>
-        <div class="separate">
 
-        </div>
         <div class="away item column items-center">
+          <!-- 客队进球比例 -->
           <div class="win-percent">{{ datas.win_away }}%</div>
-
+          <!-- 客队近10场输赢结果 -->
           <div class="result-list row">
-            <div
-              v-for="(item, index) in datas.result_away"
-              :key="index"
-              :class="['result-item', 'item-' + item]"
-            >
+            <div v-for="(item, index) in datas.result_away" :key="index" :class="['result-item yb-flex-center', 'item-' + item]">
               {{ item }}
             </div>
           </div>
         </div>
       </div>
-    </div> 
+    </template>
+
+    <!-- 样式2(style2)：赛马|赛狗|摩托车|泥地摩托车 -->
+    <template v-else>
+      <div class="item">
+        <!-- 上期结果 -->
+        <span class="name">{{$root.$t("list.virtual_last_result")}}</span>
+        <span v-for="(num,index) in datas.forecast" :key="index" class="rs-number">{{ num ? num :'X' }}</span>
+      </div>
+
+      <div class="item">
+        <!-- 活力表现 -->
+        <span class="name">{{$root.$t("list.virtual_vitality")}}</span>
+        <span class="percent-line row">
+          <span class="proccss" :style="`width:${datas.form}%`"></span>
+        </span>
+        <span>{{ datas.form }}%</span>
+      </div>
+
+      <div class="item">
+        <!-- 综合评级 -->
+        <span class="name">{{$root.$t("list.virtual_star")}}</span>
+        <template v-for="item in 5" :key="item">
+          <icon name="icon-star" :class="item<=datas.star && 'active'"/>
+        </template>
+      </div>
+    </template>
   </div>
 </template>
  
 <script>
-import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
 export default {
+  props: {
+    // 单场赛事信息
+    match: Object,
+    row_index: Number,
+  },
+
   data() {
     return {
-      // 定时对象
-      datas: null,
+      datas: null,//赛事统计信息
+      show_style: "style1",//展示样式几?
     };
   },
-  computed:{
-    match(){
-      return VR_CTR.state.current_gotodetail_match
-    },
-  },
+
   created() {
     this.datas = this.format_datas();
   },
 
   methods: {
+    /**
+     * @description 格式化赛事信息
+     * @return {undefined} undefined
+     */
     format_datas() {
-      let { msc } = this.match;
-      // 比分
-      let score_list = [];
-      /** 赛果 L：负 D：平 W：胜 ******/
-      // 主队
-      let result_home = [];
-      // 客队
-      let result_away = [];
-      // 主队赢的次数
-      let win_home = 0;
-      //  客队赢的次数
-      let win_away = 0;
+      let { msc,csid } = this.match;
+      // 1001：足球
+      let style1 = [1001];
 
-      if (Array.isArray(msc)) {
-        msc.map((item) => {
-          let score = item.split(":");
-          let { 0: home, 1: away } = score;
-          let home_rs = home - away;
+      if (style1.includes(+csid)) {
+        // 比分
+        let score_list = [];
 
-          score_list.push({
-            home,
-            away,
+        /** 赛果 L：负 D：平 W：胜 ******/
+        // 主队
+        let result_home = [];
+        // 客队
+        let result_away = [];
+
+        // 主队赢的次数
+        let win_home = 0;
+        //  客队赢的次数
+        let win_away = 0;
+
+        if (Array.isArray(msc)) {
+          msc.map((item) => {
+            let score = item.split(":");
+            let { 0: home, 1: away } = score;
+            let home_rs = home - away;
+
+            score_list.push({
+              home,
+              away,
+            });
+
+            // 主胜、客负
+            if (home_rs > 0) {
+              result_home.push("W");
+              result_away.push("L");
+              win_home += 1;
+              // 主负、客胜
+            } else if (home_rs < 0) {
+              result_home.push("L");
+              result_away.push("W");
+              win_away += 1;
+              // 平
+            } else {
+              result_home.push("D");
+              result_away.push("D");
+            }
           });
+        }
 
-          // 主胜、客负
-          if (home_rs > 0) {
-            result_home.push("W");
-            result_away.push("L");
-            win_home += 1;
-            // 主负、客胜
-          } else if (home_rs < 0) {
-            result_home.push("L");
-            result_away.push("W");
-            win_away += 1;
-            // 平
-          } else {
-            result_home.push("D");
-            result_away.push("D");
-          }
-        });
+        // 比赛总轮次
+        let match_total = 5;
+        let _win_home = (win_home / match_total) * 100;
+        let _win_away = (win_away / match_total) * 100;
+
+        return {
+          score_list,
+          result_home,
+          result_away,
+          win_home: _win_home,
+          win_away: _win_away,
+        };
+      } else {
+        this.show_style = "style2";
+        return this.match.rank[this.row_index];
       }
-
-      // 比赛总轮次
-      let match_total = msc.length;
-      let _win_home = (win_home / match_total) * 100;
-      let _win_away = (win_away / match_total) * 100;
-      
-      return {
-        score_list,
-        result_home,
-        result_away,
-        win_home: _win_home,
-        win_away: _win_away,
-      };
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
+//弹窗容器
 .c-match-startistic {
-     background-color:var(--q-color-page-bg-color-2);
-    color: var(--q-gb-t-c-3);
-    &::after {
-      border-color: var(--q-gb-bd-c-3) !important;
-    }
+  background: #fff;
+  border-radius: 4px;
+  color: #5a6074;
+  box-shadow: 0 0 3px 0px rgba(0, 0, 0, 0.2);
+  margin: 2px;
+  //虚拟摩托车等弹窗内容样式
+  &.style1 {
+    padding: 15px 10px;
+    width: 240px;
     .score-list {
       .score-item {
+        font-size: 12px;
         .info {
-          .score {
-            color: var(--q-gb-t-c-3);
-          }
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
           .line {
-            background:var(--q-gb-bg-c-35);
+            margin-right: 8px;
+            height: 4px;
+            background: #ff9124;
+
+            /*  比分为0 时的默认长度 */
+            &.line0 {
+              width: 2px !important;
+            }
           }
           &.away {
+            flex-direction: row-reverse;
             .line {
-              // background: #74C4FF;
-              background: var(--q-gb-bg-c-36);
+              margin: 0 0 0 8px;
+              background: #006aff;
             }
           }
         }
         .separate {
-          background-color: var(--q-gb-t-c-5);
+          margin: 0 3px;
+          width: 8px;
+          height: 2px;
+          background: #dfe0e8;
         }
       }
     }
     .result-wrap {
-      border-bottom: 1px solid  var(--q-color-border-color-27);
+      margin-top: 10px;
       .item {
+        flex: 1;
         .result-list {
+          margin-top: 8px;
           .result-item {
-            background: #FEAE2B;
-            color:var(--q-gb-t-c-14);
+            margin: 0 1px;
+            width: 16px;
+            height: 16px;
+            background: #99a3b1;
+            color: #fff;
             &.item-W {
-              background: #E95B5B;
+              background: #ff2a2a;
             }
             &.item-L {
-              background: #4AB06A;
-
+              background: #499b16;
             }
           }
         }
       }
     }
   }
-  .win-percent {
-    color:var(--q-gb-t-c-5);
-  }
-.c-match-startistic {
-  min-width: 3.75rem;
-  padding:0.05rem;
-  background:var(--q-gb-bd-c-2);
-  .bg-card-startistic{
-    background: var(--q-gb-bg-c-25);
-    border-radius: 4px;
-    padding: 0.08rem;
-  }
-  .score-list {
-    // margin-top: 0.2rem;
-    .score-item {
-
-      font-size: 0.12rem;
-      font-weight: 700;
-      color: var(--q-gb-t-c-5);
-      margin-bottom: 0.12rem;
-      .score-header{
-        padding: .05rem 0;
-      }
-      .score-line{
-        //按照设计图的3px太细了，故设置4px
-        --private-score-line-height: .04rem;
-        height: var(--private-score-line-height);
-        background-color: var(--q-gb-bg-c-18);
-        .separate{
-          background-color: transparent;
-        }
-      }
-      .separate {
-        text-align: center;
-        margin: 0 .025rem;
-        height: 0.02rem;
-        width: 0.06rem;
-      }
-
-      .info {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-
-        .score {
-          font-size: 0.12rem;
-          letter-spacing: 0;
-        }
-
-        .line {
-          border-radius: 1rem 0 0 1rem;
-          height: var(--private-score-line-height);
-
-          &.line0 {
-            
-          }
-        }
-
-        &.away {
-          flex-direction: row-reverse;
-
-          .line {
-            border-radius: 0rem 1rem 1rem 0rem;
-          }
-        }
-      }
-    }
-  }
-
-  .result-wrap {
-    margin-top: 0.2rem;
-    // padding: 0 0.7rem;
-    padding-bottom: 0.35rem;
-    .separate{
-      width: 0.08rem;
-    }
+  //虚拟足球等弹窗内容样式
+  &.style2 {
+    top: 35px;
+    right: 32%;
+    padding: 5px 20px;
+    width: 220px;
+    align-items: flex-start;
     .item {
-      flex: 1;
-      background-color: var(--q-gb-bg-c-18);
-      border-radius: 0.04rem;
-      padding: .08rem 0;
-      .result-list {
-        margin-top: 0.04rem;
-        font-size: 0.10rem;
-        display: flex;
-        justify-content: center;
-        .result-item {
-          border-radius: 2px;
-          margin: 0.02rem;
-          text-align: center;
-          width: 0.20rem;
-          height: 0.16rem;
+      display: flex;
+      justify-self: start;
+      align-items: center;
+      width: 100%;
+      margin: 5px 0px;
+      .name {
+        margin-right: 15px;
+        white-space: nowrap;
+      }
+      .rs-number {
+        margin-right: 10px;
+      }
+      .percent-line {
+        margin-right: 10px;
+        flex: 1;
+        height: 6px;
+        background: #dfe0e8;
+        .proccss {
+          display: inline-block;
+          height: 100%;
+        }
+      }
+      .icon-star {
+        margin-right: 5px;
+        &:before {
+          font-size: 12px;
+          color: #dfe0e8;
         }
       }
     }
