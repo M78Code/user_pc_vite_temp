@@ -14,6 +14,7 @@
       <div v-show="unfold">
         <template v-if="[0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,18,51].includes(+data.hpt)">
           <OddTemplateDynamicComponent :data="data"></OddTemplateDynamicComponent>
+          <!-- <DefaultTemplate :data="data"></DefaultTemplate> -->
         </template>
         <!-- 虚拟体育赛马类-热门玩法模板 -->
         <template v-else-if="data.hotName">
@@ -28,6 +29,7 @@ import { onMounted, reactive, ref, watch, computed } from "vue";
 import AllCloseControl, { UnfoldCache } from "./AllCloseControl";
 import OddsSetTop from './OddsSetTop.vue';
 import { QSlideTransition } from 'quasar'
+// import DefaultTemplate from './template/DefaultTemplate.vue';
 
 import OddTemplateDynamicComponent from "./template/OddTemplateDynamicComponent.vue";
 import Tem8 from "./template/tem8.vue";
