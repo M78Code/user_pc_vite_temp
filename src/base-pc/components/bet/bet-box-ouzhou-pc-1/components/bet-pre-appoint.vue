@@ -4,7 +4,7 @@
       <!--预-->
       <div class="col-2 center yb-fontsize12">{{ i18n_t('bet.bet_dish') }}</div>
       <!--此处为盘口区域，-->
-      <div class="col-9 input-number">
+      <div class="input-number">
         <!-- 盘口减- -->
         <div @click="sub_handle('ball_head')" class="sub-number" :class="{ 'disabled': head_sub_style }">-</div>
         <input class="pre-input" v-model="ref_data.computed_appoint_ball_head" v-if="item.sportId == 1" readonly>
@@ -17,7 +17,7 @@
     <div class="row yb-flex-center book-content">
       <div class="col-2 mt5 center yb-fontsize12">{{ i18n_t('bet.bet_odds') }}</div>
       <!--减号 赔率输入框 加号-->
-      <div class="col-9 input-number mt5">
+      <div class="input-number mt5">
         <div class="sub-number" :class="{ 'disabled': ref_data.min_odds_value == ref_data.appoint_odds_value }"
           v-touch-repeat:0:300.mouse.enter.space="() => {
             sub_handle('odds_value')

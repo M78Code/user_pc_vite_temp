@@ -39,7 +39,6 @@
                 </template>
             </scroll-list>
         </load-data>
-        <!-- <ConmingSoon v-show="coom_soon_state" /> -->
     </div>
 </template>
 <script>
@@ -50,7 +49,6 @@ import { IconWapper } from 'src/components/icon'
 import { BackTop } from "src/components/back-top";
 import LoadData from 'src/components/load_data/load_data.vue';
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
-import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue"
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
