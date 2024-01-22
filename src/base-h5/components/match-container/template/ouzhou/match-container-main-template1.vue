@@ -10,7 +10,7 @@
         <div>
           <!-- <SportIcon size="20"  :status="false" :sport_id="String(Number(match.csid ) + 100)" />
           <span>{{ match.csna }}</span> -->
-          <SportIcon size="20"  :status="false" :sport_id="[190, 191].includes(+MenuData.menu_mi.value)?menu_sport.menu_sport_id:String(Number(match.csid ) + 100)" />
+          <SportIcon size="20"  :status="false" :sport_id="[190, 191].includes(+MenuData.menu_mi.value)?menu_sport.menu_sport_id:MenuData.is_esports()?`2${match.csid}`:String(Number(match.csid ) + 100)" />
           <span>{{[190, 191].includes(+MenuData.menu_mi.value) ? menu_sport.menu_sport_name || match.csna : match.csna }}</span>
         </div>
         <div class="select_time">

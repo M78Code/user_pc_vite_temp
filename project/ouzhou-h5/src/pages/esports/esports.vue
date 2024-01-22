@@ -53,6 +53,11 @@ const on_update = (val) => {
     // if(tabValue.value == val)return;
     tabValue.value = val;
     MenuData.set_menu_mi(val);
+    MenuData.set_current_lv_3_menu({
+        field1: '',
+        menuType: '',
+        index: 0
+    });
     getDateList(val);
 }
 /**
