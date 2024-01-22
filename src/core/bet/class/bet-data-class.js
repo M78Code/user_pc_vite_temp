@@ -640,8 +640,8 @@ this.bet_appoint_ball_head= null */
     }
     // true 单关 false 串关
     this.is_bet_single = is_bet_single
-    this.switch_bet_query_bet_amount()
-    this.set_bet_oid_list()
+    // this.switch_bet_query_bet_amount()
+    // this.set_bet_oid_list()
     this.set_bet_data_class_version()
   }
 
