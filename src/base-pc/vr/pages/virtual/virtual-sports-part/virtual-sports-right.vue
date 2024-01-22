@@ -84,30 +84,34 @@ export default defineComponent({
     const play_obj2 = reactive({});
     // hsw对象
     const hsw_obj = reactive({});
+    // 获取赛马类赔率所需数据
+    const item_data = ref({})
     
     const sub_menu_type = props.current_match.csid;
 
     const match = MatchListData.get_quick_mid_obj_ref(props.current_match.mid)
 
-    // 获取赛马类赔率所需数据
-    const item_data = {
-      team: match.value.teams.map(((item, index)=>{return { teamName: item, teamId: index + 1 }})),
-      plays: match.value?.hpsData[0]?.hps
-    }
-
-    lodash.each(item_data.plays,(item) => {
-      lodash.each(lodash.get(item,'hl.ol'), (ol_item, index) => {
-        ol_item.teamId = index + 1;
-      })
-    })
-
     onMounted(() => {
-      get_odds()
+      if(sub_menu_type !== '1001' && sub_menu_type !== '1004'){
+        item_data.value = {
+          team: match.value.teams.map(((item, index)=>{return { teamName: item, teamId: index + 1 }})),
+          plays: match.value?.hpsData[0]?.hps
+        }
+
+        lodash.each(item_data.value.plays,(item) => {
+          lodash.each(lodash.get(item,'hl.ol'), (ol_item, index) => {
+            ol_item.teamId = index + 1;
+          })
+        })
+        
+        get_odds()
+      }
+      
     });
 
     const get_odds = () => {
       // plays集合
-      let play_ = lodash.get(item_data,'plays')
+      let play_ = lodash.get(item_data.value,'plays')
       let play_obj1 = {}
       lodash.each(play_,(item) => {
         lodash.each(lodash.get(item,'hl.ol'), ol_item => {

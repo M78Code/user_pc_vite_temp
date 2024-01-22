@@ -30,7 +30,7 @@
 
       </div>
       <!-- 玩法名称 -->
-      <div class="play-name row col">
+      <div v-if="version == 2" class="play-name row col">
         <!-- 这里有个1 应该是玩法的 -->
         <template v-if="[3, 5, 21].includes(+match_style_obj.data_tpl_id)">
           <div class="col">
@@ -72,6 +72,8 @@
           </div>
         </template>
       </div>
+      <div v-else class="play-name row col">
+      </div>
       <div class="action-col" style="width:60px" v-if="match_style_obj.data_tpl_id == 12"></div>
       <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         <!-- 联赛是否收藏 -->
@@ -105,9 +107,9 @@
 // import sportIcon from "src/public/components/sport_icon/sport-icon.vue"
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import lodash from 'lodash';
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import BaseData from "src/core/base-data/base-data.js"
-import { compute_css_obj, MenuData, compute_img_url } from "src/output/index.js";
+import { compute_css_obj, MenuData, compute_img_url, UserCtr } from "src/output/index.js";
 import { get_match_tpl_title } from 'src/core/format/common/index.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
@@ -136,6 +138,11 @@ const match_list_tpl_size = computed(() => {
 })
 const is_HDP = computed(() => {
   return [1, 20, 24, 13, 25].includes(+match_style_obj.data_tpl_id)
+})
+
+const version = ref(UserCtr.standard_edition)
+watch(() => UserCtr.user_version, () => {
+  version.value = UserCtr.standard_edition
 })
 
 /**

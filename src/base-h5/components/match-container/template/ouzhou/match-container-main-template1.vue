@@ -2,7 +2,7 @@
  * @Description: ouzhou-h5 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
-  <div class="match-container component match-container-main-template1" 
+  <div class="component match-container-main-template1 match-container" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 体育类别 -->
@@ -16,16 +16,32 @@
         <div class="select_time">
           <span @click.stop>
             <q-btn-dropdown flat outline style="color: #FF7000"  padding="0" :label="select_label"
-              dropdown-icon="expand_more" content-class="select_time_style">
-              <q-list>
-                <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
-                   :class="{active: select_play === item.hpid}" clickable v-close-popup >
-                  <q-item-section>
-                    <q-item-label>{{ item.label || i18n_t(`ouzhou.match.play_map.${item.hpid}`)}}</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
+              dropdown-icon="expand_more" content-class="select_time_style" v-model="showDropdown">
+              <!-- <q-list>
+                  <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
+                      :class="{active: select_play === item.hpid}"
+                      >
+                    <q-item-section>
+                      <q-item-label>{{ item.label || i18n_t(`ouzhou.match.play_map.${item.hpid}`)}}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list> -->
             </q-btn-dropdown>
+            <!-- <span>{{ select_label }}</span>
+            <q-icon name="expand_more"></q-icon> -->
+            <Transition>
+              <div class="dropdown-list q-menu" v-show="showDropdown">
+                <q-list>
+                  <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
+                      :class="{active: select_play === item.hpid}"
+                      >
+                    <q-item-section>
+                      <q-item-label>{{ item.label || i18n_t(`ouzhou.match.play_map.${item.hpid}`)}}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+            </Transition>
           </span>
         </div>
       </header>
@@ -314,6 +330,9 @@ export default {
     CountingDownStart,
     CountingDownSecond,
   },
+  data(){
+    return {}
+  },
   setup (ctx) {
     const match_hpid = ref('')
     const hps_play_data = ref([])
@@ -384,7 +403,9 @@ export default {
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site, MenuData, select_label
       PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site, MenuData, is_compute_origin, select_label
+      showDropdown,
     }
   }
 }
@@ -424,6 +445,24 @@ export default {
     color: #FF7000;
     justify-content: flex-end;
     padding-right: 5px;
+    font-size: .13rem;
+    position: relative;
+    .dropdown-list{
+      position: absolute !important;
+      z-index: 999;
+      background-color: #fff;
+      color: #414655;
+      font-size: 12px;
+      right: 0;
+      top: 100%;
+      .active{
+        color: #FF7000;
+      }
+      .z-index{
+        position: relative;
+        z-index: 999;
+      }
+    }
     > img {
       padding-left: 8px;
     }

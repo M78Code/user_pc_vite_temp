@@ -206,6 +206,10 @@ class BetViewData {
             bet_amount: '', // 投注金额
             show_quick: showQuick, // 快捷金额
           }
+        } else {
+          return {
+            ...item
+          }
         }
       })
       this.bet_special_series = special_series
@@ -458,7 +462,7 @@ class BetViewData {
   // 串关专用参数
   set_bet_special_series(array) {
     array.filter(item=>{
-      item.min_money = item.min_money || 0
+      item.min_money = item.min_money || 5
       item.max_money = item.max_money || 8888
     })
     this.bet_special_series = array
