@@ -320,12 +320,12 @@ const hps_compose_data = () => {
   ]
   // 半场默认
   const default_ol_1 = [
-    { hl: [], title: all_both, hpid: 101 },
-    { hl: [], title: all_total_goal, hpid: 13 },
+    { hl: [], title: half_both, hpid: 105 },
+    { hl: [], title: half_total_goal, hpid: 345 },
   ]
   const result = standard_odd_status.value === 0 ? default_ol_0 : default_ol_1
-
-  const hps_data = lodash.cloneDeep(props.hps)
+  const hps_data = lodash.cloneDeep(props.match.hpsCompose)
+  if (!hps_data) return
   const length = lodash(hps_data, 'length', 0)
   if (length < 1) return result
 
@@ -690,10 +690,11 @@ const get_bold_ol_list = (data, index) => {
     [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }],
     [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }],
   ];
-  
-  let mapping = lodash.get(MatchResponsive.secondary_unfold_map.value, 'props.match.mid')
+
+  let mapping = lodash.get(MatchResponsive.secondary_unfold_map.value, `${props.match.mid}`)
   let bodan_len = 0;
   if (mapping && mapping.split("-") && mapping.split("-")[2]) {
+    
     bodan_len = mapping.split("-")[2] - 1;
   }
   if (lodash.get(data, "hl[0].ol")) {
@@ -738,12 +739,9 @@ const get_bold_ol_list = (data, index) => {
     return ol_list;
   }
 };
+
 // 波胆玩法补充 封盘空格
-const supplementary_spaces = (
-  all_bold_list_length,
-  all_bold_list,
-  bodan_len
-) => {
+const supplementary_spaces = ( all_bold_list_length, all_bold_list, bodan_len ) => {
   for (let j = 0; j < all_bold_list_length; j++) {
     if (all_bold_list[j].length < bodan_len) {
       for (let x = all_bold_list[j].length; x < bodan_len; x++) {
@@ -1083,7 +1081,7 @@ onUnmounted(() => {
             .odd-title{
               font-size: .1rem;
               margin-bottom: unset;
-              color:var(--q-gb-t-c-19);
+              color: #179cff;
             }
             .odd-value{
               color: var(--q-gb-t-c-18);

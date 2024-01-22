@@ -298,7 +298,7 @@
           <div class="secondary-game-play" v-if="[1,2,5,7,8].includes(+match.csid) && standard_edition != 1" @click.stop>
             <MatchContainerSecondTemplate2
               :i="i"
-              :match="match"
+              :match="match_of_list"
             ></MatchContainerSecondTemplate2>
           </div>
         </div>

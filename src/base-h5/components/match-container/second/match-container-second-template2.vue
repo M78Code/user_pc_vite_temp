@@ -82,7 +82,8 @@
           :current_tab_item="current_tab_item"
           :invoke_source="'attached'"
           :bold_all_list="bold_all_list"
-          :five_minutes_all_list="five_minutes_all_list" />
+          :five_minutes_all_list="five_minutes_all_list"
+          @on_update_standard="on_update_standard" />
       </div>
     </div>
   </div>

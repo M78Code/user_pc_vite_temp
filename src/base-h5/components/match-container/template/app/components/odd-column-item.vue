@@ -495,6 +495,7 @@ const item_click3 = lodash.debounce(() => {
     if (MenuData.get_menu_type() == 900 && $route.name == 'virtual_sports') { //虚拟体育走这里逻辑
       if (props.match.match_status) return
     } else { //正常赛事走这里逻辑
+      console.log(odd_item.value)
       const {oid,_hid,_hn,_mid } = odd_item.value
       let params = {
         oid, // 投注项id ol_obj

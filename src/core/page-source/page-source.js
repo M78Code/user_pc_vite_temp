@@ -99,6 +99,7 @@ class PageSourceData {
 
   // 设置所选主要玩法
   set_standard_odd_status (val) {
+    console.log(val)
     this.standard_odd_status.value = val
   }
 

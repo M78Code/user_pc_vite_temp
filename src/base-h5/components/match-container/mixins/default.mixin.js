@@ -471,6 +471,10 @@ export default defineComponent({
       // 赛事个数小于18 不需要继续获取赔率
       if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },
+    // 获取仓库赛事数据
+    get_match_item (item) {
+      return MatchDataBaseH5.get_quick_mid_obj(item.mid)
+    },
     /**
      *启动 组件新初始化后 ，判定组件是否是刚刚新初始化的 定时器
     *主要用于 进球动画 显示 的第一层时间段 屏蔽开关

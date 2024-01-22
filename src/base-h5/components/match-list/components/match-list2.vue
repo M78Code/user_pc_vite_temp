@@ -59,7 +59,7 @@
           <div class="data_mid" v-if="match_item"> 
             <MatchContainerMainTemplate2
               :i="index"
-              :match_of_list="match_item">
+              :match_of_list="get_match_item(match_item)">
             </MatchContainerMainTemplate2>
           </div>
         </template>

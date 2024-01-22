@@ -101,7 +101,7 @@ export default defineComponent({
       if(item.id == 18){
         // 最终 的波胆列表长度     波胆的高度      默认三行
         let finall = [], bold_gaodu = 3, ol_list = [{placeholder:1},{placeholder:1},{placeholder:1}];
-        if( lodash.size(bold_list) ){
+        if(lodash.size(bold_list)){
           for (let m =0, hps_length = bold_list.length; m < hps_length; m++){
             if(lodash.get(bold_list[m], 'hl[0].ol')) {
               ol_list = bold_list[m].hl[0].ol
@@ -115,9 +115,9 @@ export default defineComponent({
             bold_gaodu = Math.max(...finall) + 1
           }
         }
-        if(this.is_show_tree_line){
-          bold_gaodu=3
-        }
+        // if(this.is_show_tree_line){
+        //   bold_gaodu=3
+        // }
         if(bold_gaodu > 3){
          this.bold_gaodu_css = bold_gaodu
         }else{
@@ -241,7 +241,7 @@ export default defineComponent({
       if(item.unfold == 1){
         //自动展开次要玩法无需拉取新数据
         if(operate_type == 'is-auto') {
-          // this.save_second_play_mid_map_unfold_status(item);
+          this.save_second_play_mid_map_unfold_status(item);
           return;
         }
         //拉接口更新数据
@@ -254,10 +254,9 @@ export default defineComponent({
             device: 'v2_h5_st' ,
             sort:1,//排序	 int 类型 1 按热门排序 2 按时间排序
           }})
-          this.update_match_data()
+          this.update_match_data(item)
         }
       }
-      // this.save_second_play_mid_map_unfold_status(item);
       if(item.id==17){
         this.apply_15min_title();// 15分钟 次要玩法模块  左下角的 小标题
       }
@@ -267,7 +266,7 @@ export default defineComponent({
     /**
      * @description 更新赛事数据
      */
-    update_match_data () {
+    update_match_data (item) {
       let o_hps_key = this.get_hps_key_by(this.current_tab_item);
       if(this.match[o_hps_key]){
         // 根据业务需求，修改冠军小节玩法  1585 单对应
@@ -280,6 +279,11 @@ export default defineComponent({
           this.five_minutes_all_list = this.five_minutes_gameplay_data_processing(lodash.get(this.current_tab_item,'hps'), this.match )
         }
         this.current_hps_key = o_hps_key;
+      }
+      //次要玩法展开或者关闭通知列表页重新计算dom高度
+      this.save_second_play_mid_map_unfold_status(item, this.bold_all_list, this.five_minutes_all_list);
+      if(item.id==17){
+        this.apply_15min_title(); // 15分钟 次要玩法模块  左下角的 小标题
       }
     },
     //玩法说明图标点击
@@ -666,6 +670,9 @@ export default defineComponent({
     off_listeners() {
       Object.values(this.emitters).map((x) => x());
     },
+    on_update_standard (val) {
+      console.log(val)
+    }
   },
   computed:{
     get_secondary_unfold_map () {
@@ -771,7 +778,8 @@ export default defineComponent({
       this.basketball_mmp_change(curr);
       this.update_mmp_map_title();
     },
-    standard_odd_status(){
+    'PageSourceData.standard_odd_status.value'(){
+      console.log(11111111)
       this.apply_15min_title();// 15分钟 次要玩法模块  左下角的 小标题
     },
     // 一级菜单切换，次要玩法，默认折叠

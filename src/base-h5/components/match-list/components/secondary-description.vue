@@ -182,6 +182,57 @@ onUnmounted(() => {
     position: fixed;
     z-index: 502;
     background-color: rgba(0,0,0,0.3);
+    .arr-top{
+      &:before{
+        content: "";
+        width: 0px;
+        height: 0px;
+        border-left: 0.1rem solid transparent;
+        border-right: 0.1rem solid transparent;
+        border-bottom: 0.1rem solid #fff;
+        position: absolute;
+        top: -9px;
+        left: 10px;
+      }
+
+      &:after{
+        content: "";
+        width: 0px;
+        height: 0px;
+        border-left: 0.095rem solid transparent;
+        border-right: 0.095rem solid transparent;
+        border-bottom: 0.095rem solid #fff;
+        position: absolute;
+        top: -9px;
+        left: 10px;
+      }
+    }
+
+    .arr-down{
+      &:before{
+        content: "";
+        width: 0px;
+        height: 0px;
+        border-left: 0.1rem solid transparent;
+        border-right: 0.1rem solid transparent;
+        border-top: 0.1rem solid #fff;
+        position: absolute;
+        bottom: -9px;
+        left: 10px;
+      }
+
+      &:after{
+        content: "";
+        width: 0px;
+        height: 0px;
+        border-left: 0.095rem solid transparent;
+        border-right: 0.095rem solid transparent;
+        border-top: 0.095rem solid #fff;
+        position: absolute;
+        bottom: -9px;
+        left: 10px;
+      }
+    }
   }
 
   .other-way-info-wrapper {
@@ -193,6 +244,7 @@ onUnmounted(() => {
     border-radius: 0.04rem;
     padding: 10px 5px;
     z-index: 1000;
+    color: #7981a4;
 
     .triangle-icon {
       width: 0.1rem;
