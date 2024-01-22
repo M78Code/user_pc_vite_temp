@@ -601,11 +601,20 @@ const set_computed_appoint_ball_head = () => {
 .bet-pre-appoint {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  padding: 12px 34px;
+  justify-content: space-between;
+  position: relative;
+  .cancel {
+    position: absolute;
+    right: 22px;
+  }
 }
 
 //预约投注内容
 .book-content {
-  color: var(--q-gb-t-c-16);
+  color: var(--q-gb-t-c-8);
+  flex-wrap: nowrap;
 
   .input-number {
     display: flex;
@@ -613,42 +622,43 @@ const set_computed_appoint_ball_head = () => {
     //预约加
     .sub-number {
       font-size: 16px;
-      color: var(--qq--theme-text-color-handicap);
+      color: var(--q-gb-t-c-1);
       text-align: center;
-      width: 22px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       line-height: 26px;
-      margin-left: 2px;
-      background: var(--qq--theme-bg-add-sub);
-      border: 0.5px solid var(--q-gb-bd-c-7);
+      margin-left: 6px;
+      background: var(--q-gb-bg-c-1);
+      // border: 0.5px solid var(--q-gb-bd-c-7);
       border-radius: 4px 0px 0px 4px;
     }
 
     //预约投注输入框样式
     input {
-      color: var(--qq--theme-text-color-handicap);
+      color: var(--q-gb-t-c-5);
       border-radius: 0;
       background-color: var(--q-gb-bg-c-21);
-      border: 0.5px solid var(--q-gb-bd-c-7);
+      // border: 0.5px solid var(--q-gb-bd-c-7);
       border-left: 0;
       border-right: 0;
       width: 74px;
-      height: 26px;
+      height: 24px;
       text-align: center;
       outline: none;
+      font-weight: bold;
     }
 
     //预约减
     .add-number {
       font-size: 16px;
-      color: var(--qq--theme-text-color-handicap);
+      color: var(--q-gb-t-c-1);
       text-align: center;
-      width: 22px;
-      height: 26px;
-      line-height: 26px;
-      background: var(--qq--theme-bg-add-sub);
-      border: 0.5px solid var(--q-gb-bd-c-7);
-      border-radius: 0px 4px 4px 0px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      background: var(--q-gb-bg-c-1);
+      // border: 0.5px solid var(--q-gb-bd-c-7);
+      border-radius: 0px 2px 2px 0px;
       cursor: pointer;
     }
   }
