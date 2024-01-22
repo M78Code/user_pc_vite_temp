@@ -73,9 +73,6 @@
         </scroll-list>
       </load-data>
     </template>
-    <!-- <ConmingSoon v-show="is_conming_soon" :style="{
-      width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-    }" /> -->
     <!-- 联赛筛选层 -->
     <!-- <leagues-filter v-if="vx_show_filter_popup" /> -->
     <!-- 点击头部刷新弹出 loading 蒙层 -->
@@ -99,7 +96,6 @@ import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "s
 import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"; //头部
 import ScrollList from "src/base-pc/components/cus-scroll/scroll_list.vue";
 import EsportsHeader from "src/base-pc/components/match-list/esports-header/index.vue"; //电竞赛事列表筛选
-import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue";
 import PlayMatchLeague from './play-match-league.vue'
 
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
@@ -146,7 +142,6 @@ export default {
     FeaturedMatches,
     MatchCardList15Mins,
     MatchesHeader,
-    ConmingSoon,
     MatchMainTitle,
     virtual,
     PlayMatchLeague
@@ -160,7 +155,6 @@ export default {
     },20000))
     const match_list_card_key_arr = ref([]);
     const five_leagues_card_key_arr = ref([]);
-    const match_list_top = ref("76px");
     let mitt_list = null
     const MatchListCardDataClass_match_list_card_key_arr = () => {
       match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr;
@@ -217,7 +211,6 @@ export default {
       compute_css_obj,
       MatchListCardDataClass,
       load_data_state,
-      match_list_top,
       match_list_card,
       MenuData,
       on_go_top,

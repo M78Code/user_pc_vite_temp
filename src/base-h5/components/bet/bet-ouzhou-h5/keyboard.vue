@@ -219,12 +219,12 @@ const _handleDeleteKey = () => {
 const _handleNumberKey = (num) => {
   
   if (!num) return
-  let money_ = BetData.bet_amount
+  let money_ = BetData.bet_amount || 0
   if (['qon', 'qtw', 'qth','qfo','qfi'].includes(num)) {
     if (!money_) {
-      money_ = ref_data.add_num[num]
+      money_ = BetData.user_max_min_money[num]
     } else {
-      money_ = (+money_ + ref_data.add_num[num]).toString();
+      money_ = (+money_ + BetData.user_max_min_money[num]).toString();
     }
   } else {
     if (!money_) { // 输入第一位
