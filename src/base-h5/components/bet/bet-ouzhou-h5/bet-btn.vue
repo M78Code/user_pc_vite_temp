@@ -3,7 +3,7 @@
  * @Description: 虚拟小键盘
 -->
 <template>
-  <div class="tip component bet-btn-item">
+  <div class="tip component bet-btn-item" v-if="BetViewDataClass.error_message">
     <div class="bet-error" v-if="BetViewDataClass.error_message">
       {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
     </div>
@@ -89,12 +89,12 @@ const bet_total = computed(()=> state =>{
   }
 }
 .bet_content_bottom{
-    height: 0.58rem;
+    height: 0.68rem;
     display: flex;
     text-align: center;
     justify-content: space-between;
     align-content: space-between;
-    padding: 0 0.12rem .12rem;
+    padding: 0 0.12rem .22rem;
    .bet_cancel,.bet_crosstalk,.bet_crosstalk_active{
       width: 1rem;
       line-height: 0.46rem;

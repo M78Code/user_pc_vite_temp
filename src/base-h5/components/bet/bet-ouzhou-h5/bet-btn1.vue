@@ -3,7 +3,7 @@
  * @Description: 虚拟小键盘
 -->
 <template>
-  <div class="tip component bet-btn-item">
+  <div class="tip component bet-btn-item" v-if="BetViewDataClass.error_message">
     <div :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
       <div class="displayflex">
         {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
@@ -14,7 +14,6 @@
   </div> 
   <div class="bet_content_bottom">
     <p class="bet_cancel"  @click.self="set_retain_selection">{{i18n_t('bet.save')}}</p>
-    <!-- <p class="bet_cancel"  @touchmove.prevent>{{i18n_t('bet.save')}}</p> -->
     <p class="place_bet" @click="pack_up">
       <span>{{i18n_t('bet.understand')}}</span>
     </p>
@@ -89,12 +88,12 @@ const set_retain_selection = () => {
   }
 }
 .bet_content_bottom{
-  height: 0.58rem;
+  height: 0.68rem;
   display: flex;
   text-align: center;
   justify-content: space-between;
   align-content: space-between;
-  padding: 0 0.12rem .12rem;
+  padding: 0 0.12rem .22rem;
     // margin-top: 26px;
    .bet_cancel{
       width: 1rem;
