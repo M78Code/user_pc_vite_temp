@@ -67,6 +67,8 @@ class BetData {
     this.is_virtual_handle = false;
     // 处于活动的投注项子项
     this.active_index = 0
+    // 复合串关类型
+    this.special_type = false
 
     //==============================================投注之前 无注单ID=============
     // 虚拟投注对象  VR 菜单下的那种 
@@ -219,6 +221,12 @@ this.bet_appoint_ball_head= null */
       const {qon,qtw,qth,qfo,qfi,qsi } = lodash_.get(UserCtr, 'user_info.cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200, qfi: 500, qsi: 1000 })
       this.user_max_min_money = {qon,qtw,qth,qfo,qfi,qsi}
     }
+  }
+
+  // 复合串关类型 
+  set_special_type(val){
+    this.special_type = val
+    this.set_bet_data_class_version()
   }
 
   // 根据缓存信息 设置数据
@@ -640,8 +648,8 @@ this.bet_appoint_ball_head= null */
     }
     // true 单关 false 串关
     this.is_bet_single = is_bet_single
-    this.switch_bet_query_bet_amount()
-    this.set_bet_oid_list()
+    // this.switch_bet_query_bet_amount()
+    // this.set_bet_oid_list()
     this.set_bet_data_class_version()
   }
 

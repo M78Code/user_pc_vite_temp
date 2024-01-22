@@ -165,7 +165,7 @@
                     <div
                       v-for="(item, i) in settings.value_arr"
                       :key="i"
-                      @click="onClick(opt, i)"
+                      @click="select_time_change(item)"
                       class="option"
                     >
                       <span class="text">{{ item.label }}</span>
@@ -179,7 +179,7 @@
                     <div
                       v-for="(item, i) in settings.value_arr"
                       :key="i"
-                      @click="onClick(opt, i)"
+                      @click="on_click_additional(item)"
                       class="option"
                     >
                       <span class="text">{{ item.label }}</span>
@@ -266,6 +266,8 @@ const get_show_additional_plays = "get_show_additional_plays";
 const get_additional_plays_list_num = "get_additional_plays_list_num";
 // 附加玩法配置展示更多行数
 const show_more_other_list_obj = {};
+// 近期开赛选择时间
+const time_value = ref('')
 /** stroe仓库 */
 const unsubscribe = store.subscribe(() => {
   cur_menu_type.value = new_state.cur_menu_type;
@@ -334,15 +336,23 @@ function set_user_preference(curr_odd) {
  * 近期开赛筛选
  */
 function select_time_change(item) {
-  this.time_value = item.value;
+  time_value.value = item.value;
   //设置session
-  sessionStorage.setItem("is_select_time", "1");
-  //   this.set_select_time(item.value);
-  //清空联赛筛选条件
-  //   this.set_filter_select_obj([]);
-  //   this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
+  sessionStorage.setItem("is_select_time", time_value.value);
 }
+function  on_click_additional(item) {
+      if (get_additional_plays_list_num.value == item.value) {
+        return;
+      }
+      //列表附加玩法是否展开状态
+      // this.set_show_more_other_list({ reset: true });
 
+      // this.additional_plays_id = item.id;
+      localStorage.setItem("additional_plays_num", item.value);
+      // this.set_additional_plays_list_num(item.value);
+      // 刷新列表重新计算
+      // this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
+  }
 /**
  * @Description:切换语言
  * @param {string} lang_ 语言
@@ -449,7 +459,6 @@ function on_click_lang(lang_) {
  * @return {undefined} undefined
  */
 function change_theme() {
-  console.log("fsudhfudshgbsdghsdg");
   const theme = UserCtr.theme;
   const ary = Object.keys(theme_map);
   let idx = ary.findIndex((i) => i == theme);
