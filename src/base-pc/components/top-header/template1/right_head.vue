@@ -144,34 +144,34 @@ export default defineComponent({
       key: 'en',
       language: 'English',
     },
-      // {
-      //   key: 'tw',
-      //   language: '繁體中文',
-      // }, {
-      //   key: 'vi',
-      //   language: 'Tiếng Việt',
-      // }, {
-      //   key: 'th',
-      //   language: 'ไทย',
-      // }, {
-      //   key: 'ms',
-      //   language: 'Melayu',
-      // }, {
-      //   key: 'ad',
-      //   language: 'Indonesia',
-      // }, {
-      //   key: 'md',
-      //   language: 'Burmese',
-      // }, {
-      //   key: 'ry',
-      //   language: 'Japanese',
-      // }, {
-      //   key: 'pty',
-      //   language: 'Portuguese',
-      // }, {
-      //   key: 'hy',
-      //   language: 'Korean',
-      // }
+      {
+        key: 'tw',
+        language: '繁體中文',
+      }, {
+        key: 'vi',
+        language: 'Tiếng Việt',
+      }, {
+        key: 'th',
+        language: 'ไทย',
+      }, {
+        key: 'ms',
+        language: 'Melayu',
+      }, {
+        key: 'ad',
+        language: 'Indonesia',
+      }, {
+        key: 'md',
+        language: 'Burmese',
+      }, {
+        key: 'ry',
+        language: 'Japanese',
+      }, {
+        key: 'pty',
+        language: 'Portuguese',
+      }, {
+        key: 'hy',
+        language: 'Korean',
+      }
     ]
     const settingData = ref([{
       title: "ouzhou.setting_menu.odds_display",
