@@ -342,7 +342,7 @@ export default {
 .analysis-page {
   background: #e2e2e2;
   flex: 1;
-  // padding: 0 20px 20px;
+   padding: 0 0px 20px;
   display: flex;
   flex-direction: column;
   min-width: 1000px;
