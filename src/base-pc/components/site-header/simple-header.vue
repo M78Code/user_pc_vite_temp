@@ -151,8 +151,10 @@ export default {
     align-items: center;
 
     .refresh {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
+      border:1px solid #e2e2e2;
+      border-radius: 50%;
       margin-right: 5px;
       cursor: pointer;
     }
