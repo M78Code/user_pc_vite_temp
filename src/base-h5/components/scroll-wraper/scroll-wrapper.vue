@@ -12,7 +12,8 @@
       :style="get_container_style">
       <template v-if="MatchMeta.match_mids.length > 0">
         <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
-          :class="['s-w-item', {last: index == MatchMeta.match_mids.length - 1 }]" 
+          class='s-w-item'
+          :class="[{last: index == MatchMeta.match_mids.length - 1 }]" 
           :style="{ transform: `translateY(${get_match_top_by_mid(match_mid)}px)`, zIndex: `${100 + index}` }">
           <!-- 调试用 -->
           <div v-if="test" class="debug-head data_mid" :data-mid="match_mid" :class="{ first: index === 0 }">
@@ -260,7 +261,11 @@ onUnmounted(() => {
       position: absolute;
       top: 0;
       left: 0;
-      content-visibility: auto;
+      // 因BUG:54324注释该样式
+      // content-visibility: auto;
+      &:first-child{
+        z-index: 999 !important;   
+      }
       &.last{
         // padding-bottom: 0.01rem;
         .match-container{
