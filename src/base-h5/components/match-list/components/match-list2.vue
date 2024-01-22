@@ -139,6 +139,8 @@ const get_match_item = (item) => {
 const handlerUpdate = lodash.debounce((data) => {
   const length = lodash.get(data, 'length', 0)
   if (length < 1) return
+  // 更新仓库
+  MatchMeta.handle_update_match_info({ list: data, merge: 'cover' })
   const mids = data.map(t => t.mid)
   mids_string.value = mids.join(',')
 }, 1000)
