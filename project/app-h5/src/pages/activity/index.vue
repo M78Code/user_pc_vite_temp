@@ -5,7 +5,8 @@
 -->
 <template>
     <div class="acticity-content" >
-      <iframe style="width:100%;height: 100vh" allow="autoplay" frameborder="0" scrolling="no" :src="acticity_src" ></iframe>
+      <iframe v-if="domain" style="width:100%;height: 100vh" allow="autoplay" frameborder="0" scrolling="no" :src="acticity_src" ></iframe>
+      <error01 :type="'activity'" v-else></error01>
   </div>
 </template>
 
@@ -13,6 +14,8 @@
 <script setup>
 import { ref,nextTick } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import error01 from "src/components/error/error01.vue";
+const domain = UserCtr.get_topic_key_url('activity');
 /** 环境变量 */ 
 const current_env = window.BUILDIN_CONFIG.CURRENT_ENV
 // 活动访问地址暂时写死
