@@ -4,9 +4,8 @@ import { get_odds_active, MenuData } from "src/output/index.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 
-export function use_bet_item(props) {
+export function use_bet_item(props, emit) {
 
-    const emit = defineEmits(['oddsChange', 'stateChage'])
     // 定时器对象
     let timer_obj = {};
 
@@ -74,12 +73,12 @@ export function use_bet_item(props) {
             clearTimeout(tid)
             tid = setTimeout(() => {
                 odds_lift.value = "";
-                emit('oddsChange', {
+                emit && emit('oddsChange', {
                     odds_lift:odds_lift.value,
                     oid:ol_data.oid
                 })
             }, 3000);
-            emit('oddsChange',  {
+            emit && emit('oddsChange',  {
                 odds_lift:odds_lift.value,
                 oid:ol_data.oid
             })
