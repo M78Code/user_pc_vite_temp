@@ -89,7 +89,11 @@ const props = defineProps({
  * @return {}
  */
  const format_type = ( id ) => {
-  id = id || +MenuData.menu_mi.value;
+  id = id ||+MenuData.menu_mi.value;
+  //如果是赛事详情直接进
+  if (props.get_match_detail?.csid ){
+    id = 100 + Number(props.get_match_detail?.csid)
+  }
   return oz_sprite_bg_images_postion[id]
 }
 /**
