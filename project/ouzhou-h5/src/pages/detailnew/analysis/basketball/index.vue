@@ -4,12 +4,12 @@ provide('match_odds_info',match_odds_info)
 provide('active_tab',detail_event_tabs_value)*/
 
 import {computed, defineProps} from "vue";
-import Match from "..football/Match/index.vue"     // 赛况
-import Figures from "..football/Figures/index.vue"     // 数据
-import Lineup from "..football/Lineup/index.vue"     // 阵容
-import Information from "..football/Information.vue"     // 资讯
-import Odds from "..football/Odds/index.vue"     // 赔率
-import Intelligence from "..football/Intelligence.vue"     // 情报
+import Match from "../football/Match/index.vue"     // 赛况
+import Figures from "../football/Figures/index.vue"     // 数据
+import Lineup from "../football/Lineup/index.vue"     // 阵容
+import Information from "../football/Information.vue"     // 资讯
+import Odds from "../football/Odds/index.vue"     // 赔率
+import Intelligence from "../football/Intelligence.vue"     // 情报
 
 const props = defineProps(['active_tab', 'match_odds_info', 'match_detail']);
 
