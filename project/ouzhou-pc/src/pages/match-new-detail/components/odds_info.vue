@@ -108,9 +108,9 @@
                 </div>
               </template>
             </div>
-            <!-- 公共模板 -->
+            <!-- 公共模板  51 为电子竞技模版 -->
             <common-template
-              v-if="[0, 1, 2, 3, 7, 10,13,14,15].includes(item.hpt) && item.hpid != 103"
+              v-if="[0, 1, 2, 3, 7, 10,13,14,15,51].includes(item.hpt) && item.hpid != 103"
               :match_info="item"
               :get_icon="get_icon"
               :current_ol="current_ol"

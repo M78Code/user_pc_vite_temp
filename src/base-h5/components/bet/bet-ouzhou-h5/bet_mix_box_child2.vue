@@ -66,6 +66,7 @@
       <!-- {{ items.bet_amount }} -->
       <bet-input-info2 :item="items" :index="index"></bet-input-info2>
     </div>
+   
     <!-- 多项合并 -->
     <template v-if="BetData.bet_single_list.length > 1">
       <bet-input-multiple @focus_on="handler_focus_on"></bet-input-multiple>
@@ -81,6 +82,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, compute_value_by_cur_odd_type,UserCtr } from
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 
+
 const set_delete = (items, index) => {
   BetData.set_delete_bet_info(items.playOptionsId, index)
 }
@@ -88,6 +90,7 @@ const set_delete = (items, index) => {
 const handler_focus_on = (data)=>{
   console.log("data===", data)
 }
+
 
 </script>
   
@@ -269,8 +272,9 @@ const handler_focus_on = (data)=>{
     }
   }
 
-  .bet-disabled {
-    padding: 0 0.2rem;
+  .bet-disabled{
+    width: .5rem;
+    text-align: center;
     height: .26rem;
     display: inline-block;
     border-radius: 0.02rem;
@@ -279,6 +283,7 @@ const handler_focus_on = (data)=>{
     font-weight: 500;
     letter-spacing: 0px;
     color: var(--q-gb-t-c-3);
+    margin-left: .2rem;
   }
 }</style>
   
