@@ -10,7 +10,8 @@ import {
   remove_file,
 } from "./write-folder-file.js";
 
-import {format_date ,PROJECT_MAP_WITH_DESCRIPTION} from "./build-version-common.js"
+import {format_date  } from "./util.js"
+import {PROJECT_MAP_WITH_DESCRIPTION} from "./config.js"
 
 import axios from "axios";
 
