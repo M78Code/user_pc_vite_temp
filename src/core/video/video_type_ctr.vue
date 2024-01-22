@@ -25,7 +25,7 @@
     </div>
     <!-- 画中画提示框 -->
       <div v-show="pip_mouseover&&$route.name == 'home'" class="pip_mouseover">{{ i18n_t('video.open_pip')}}</div>
-    <!-- 大屏 -->
+    <div id="vide_size">{{ $route.params.video_size  }}</div> 
     <div class="full-screen-wrap" :class="{esports:is_esports}" v-if="$route.params.video_size !=1 && !is_esports">
       <!-- 退出中屏 -->
       <icon-wapper v-if="$route.name == 'video'" size="14px" src="" color="#FFFFFF" name="icon-small"  @click="exit_full_screen" />
@@ -175,7 +175,10 @@ export default {
       if(this.is_esports ){
         play_type = 1
       }
-      
+      if (size == 'xl') {
+        // 进入全屏
+        play_type = 2;
+      }
       if (this.vx_play_media.media_type === 'topic') {
         video.send_message({
           cmd: 'record_play_info',
@@ -184,7 +187,7 @@ export default {
           }
         })
       }
-      
+      console.log(play_type, "play_type2222");
       clearTimeout(this.handle_screen_timer)
       this.handle_screen_timer = setTimeout(() => {
         video.full_screen(this.match_info,play_type,size,this.$route,this.$router)

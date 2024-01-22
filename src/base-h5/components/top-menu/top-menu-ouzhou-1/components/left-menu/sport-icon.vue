@@ -17,7 +17,8 @@
 
 <script setup>
   import { computed } from 'vue';
-  import { compute_css_obj } from "src/output/index.js";
+  import { MenuData,compute_css_obj } from "src/output/index.js";
+
 // 球种雪碧图序号
   const sport_number = {
     101:0,  //足球
@@ -124,13 +125,13 @@
     let number =  sport_number[props.sport_id];
     // 如果是未选中状态Y轴坐标下移一位
     // number = props.status ? number : number + 1;
-    if(!number && number !==0){
-      if(props.is_esports){
-        return 54
-      }else{
-        return 57
-      }
-    }
+    // if(!number && number !==0){
+    //   if(props.is_esports){
+    //     return 54
+    //   }else{
+    //     return 57
+    //   }
+    // }
     let size = props.size.replace('px','')
     return parseInt(number * size * 100) / 100
   })
