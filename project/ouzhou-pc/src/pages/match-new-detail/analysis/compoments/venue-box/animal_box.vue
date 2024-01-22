@@ -270,11 +270,11 @@ const video_leave = () => {
 }
 
 // 屏蔽不需要的功能
-//.box-bc :deep(.full-screen-wrap) {
-//  display: none !important;
-//}
-//.box-bc :deep(.xl-screen-wrap) {
-//  display: none !important;
-//}
+.box-bc :deep(.full-screen-wrap) {
+  // display: none !important;
+}
+.box-bc :deep(.xl-screen-wrap) {
+  // display: none !important;
+}
 
 </style>

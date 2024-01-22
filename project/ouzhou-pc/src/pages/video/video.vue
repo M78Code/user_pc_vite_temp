@@ -105,6 +105,10 @@ const init = async() => {
     console.log(res, "详情");
     match_info.value = res.data;
     get_video_url();
+    // 如果是全屏，进入全屏
+    if (route.params.play_type == 2) {
+      
+    }
   } catch (error) {
     
   }
@@ -124,6 +128,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .video-wrap {
   padding-right: 14px;
+  height: 100%;
   .video-iframe {
     width: 100%;
     height: 100%;

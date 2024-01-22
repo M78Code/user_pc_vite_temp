@@ -175,7 +175,10 @@ export default {
       if(this.is_esports ){
         play_type = 1
       }
-      
+      if (size == 'xl') {
+        // 进入全屏
+        play_type = 2;
+      }
       if (this.vx_play_media.media_type === 'topic') {
         video.send_message({
           cmd: 'record_play_info',
@@ -184,7 +187,7 @@ export default {
           }
         })
       }
-      
+      console.log(play_type, "play_type2222");
       clearTimeout(this.handle_screen_timer)
       this.handle_screen_timer = setTimeout(() => {
         video.full_screen(this.match_info,play_type,size,this.$route,this.$router)
