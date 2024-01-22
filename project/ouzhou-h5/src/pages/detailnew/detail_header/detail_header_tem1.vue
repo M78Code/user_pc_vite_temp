@@ -1,7 +1,6 @@
 <template>
   <div class="component detail_header_tem1">
     <div class="match-detail-head">
-      <!-- <div v-show="get_match_detail?.csid" :class="['sport_bg', `sports_bg${get_match_detail?.csid}`]"></div> -->
       <span class="sport_bg" :style="compute_css_obj({key:'eu-menu-sport-bg-image', position:format_type()})"></span>
       <div class="match-detail-time">
         <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
@@ -480,198 +479,11 @@ const getLongTime = computed(() => {
     background-color: var(--q-gb-bg-c-2);
     font-weight: 700; //使用设计稿的500不明显，故使用700. 初步判断为苹方字体不包含500字重的缘故
 
-    // background: linear-gradient(
-    //   90.05deg,
-    //   rgba(255, 255, 255, 0.81) 0.04%,
-    //   rgba(204, 204, 204, 0.6) 99.96%
-    // );
-    // .sports_bg0 {
-    //   background:url('src/assets/images/detail/baseball_bg.png') no-repeat;
-    // }
     .actions {
       position: absolute;
       right: 0;
     }
 
-    // .sports_bg1 {
-    //   background: url($SCSSPROJECTPATH + "/image/detail/football_bg.png")
-    //     no-repeat;
-    // }
-    /*
-    1:足球   2:篮球   3:棒球   4:冰球   5:网球   6:美式足球   7:斯诺克 8:兵乓球   9:排球   10:羽毛球
-    11：手球
-    */ 
-    // .sports_bg0 {
-    //   background-position-y: -156px;
-    // }
-    // // 1:足球
-    // .sports_bg1 {
-    //   background-position-y: 0;
-    // }
-    // // 2:篮球
-    // .sports_bg2 {
-    //   background-position-y: -80px;
-    // }
-    // // 3:棒球
-    // .sports_bg3 {
-    //   background-position-y: -380px;
-    // }
-    // // 4:冰球
-    // .sports_bg4 {
-    //   background-position-y: -760px;
-    // }
-    // // 5:网球
-    // .sports_bg5 {
-    //   background-position-y: -450px;
-    // }
-    // // 6:美式足球
-    // .sports_bg6 {
-    //   background-position-y: -603px;
-    // }
-    // // 7:斯诺克
-    // .sports_bg7 {
-    //   background-position-y: -990px;
-    // }
-    // // 8:兵乓球
-    // .sports_bg8 {
-    //   background-position-y: -150px;
-    // }
-    // // 9:排球
-    // .sports_bg9 {
-    //   background-position-y: -230px;
-    // }
-    // // 10:羽毛球
-    // .sports_bg10 {
-    //   background-position-y: -300px;
-    // }
-    // // 11：手球
-    // .sports_bg11 {
-    //   background-position-y: -905px;
-    // }
-    // // 12：拳击
-    // .sports_bg12 {
-    //   background-position-y: -680px;
-    // }
-    // // 13：沙滩排球
-    // .sports_bg13 {
-    //   background-position-y: -1055px;
-    // }
-    // // 14：联合式橄榄球
-    // .sports_bg14 {
-    //   background-position-y: -1133px;
-    // }
-    // // 曲棍球
-    // .sports_bg15 {
-    //   background-position-y: -1205px;
-    // }
-    // // 水球
-    // .sports_bg16 {
-    //   background-position-y: -1590px; 
-    // }
-    // // 田径
-    // .sports_bg17 {
-    //   background-position-y: -1510px; 
-    // }
-    // // 政治娱乐
-    // .sports_bg18 {
-    //   background-position-y: -1590px; 
-    // }
-    // // 游泳
-    // .sports_bg19 {
-    //   background-position-y: -1665px; 
-    // }
-    // // 体操
-    // .sports_bg20 {
-    //   background-position-y: -2045px; 
-    // }
-    // // 跳水
-    // .sports_bg21 {
-    //   background-position-y: -1590px; 
-    // }
-    // // 射击
-    // .sports_bg22 {
-    //   background-position-y: -1740px; 
-    // }
-    // // 举重
-    // .sports_bg23 {
-    //   background-position-y: -1282px; 
-    // }
-    // // 射箭
-    // .sports_bg24 {
-    //   background-position-y: -1360px; 
-    // }
-    // // 击剑
-    // .sports_bg25 {
-    //   background-position-y: -1437px; 
-    // }
-    // // 冰壶
-    // .sports_bg26 {
-    //   background-position-y: -830px; 
-    // }
-    // // 跆拳道
-    // .sports_bg27 {
-    //   background-position-y: -2425px; 
-    // }
-    // // 高尔夫
-    // .sports_bg28 {
-    //   background-position-y: -1813px; 
-    // }
-    // // 自行车
-    // .sports_bg29 {
-    //   background-position-y: -2116px; 
-    // }
-    // // 赛马
-    // .sports_bg30 {
-    //   background-position-y: -2191px; 
-    // }
-    // // 帆船
-    // .sports_bg31 {
-    //   background-position-y: -2343px; 
-    // }
-    // // 划船
-    // .sports_bg32 {
-    //   background-position-y: -2274px; 
-    // }
-    // // 赛车运动
-    // .sports_bg33 {
-    //   background-position-y: -2191px; 
-    // }
-    // // 柔道
-    // .sports_bg34 {
-    //   background-position-y: -2425px; 
-    // }
-    // // 空手道
-    // .sports_bg35 {
-    //   background-position-y: -2425px; 
-    // }
-    // // 摔跤
-    // .sports_bg36 {
-    //   background-position-y: -2425px; 
-    // }
-    // // 板球
-    // .sports_bg37 {
-    //   background-position-y: -1965px; 
-    // }
-    // // 飞镖
-    // .sports_bg38 {
-    //   background-position-y: -1889px; 
-    // }
-    // // 沙滩足球
-    // .sports_bg39 {
-    //   background-position-y: -2191px; 
-    // }
-    // // 其他
-    // .sports_bg40 {
-    //   background-position-y: -2191px; 
-    // }
-    // // 联盟式橄榄球
-    // .sports_bg41 {
-    //   background-position-y: -2191px; 
-    // }
-    // // 趣味
-    // .sports_bg50 {
-    //   background-position-y: -2191px; 
-    // }
 
     .sport_bg {
       --per:-0.7rem;
@@ -703,6 +515,7 @@ const getLongTime = computed(() => {
         font-size: 15px;
         font-weight: 500;
         display: flex;
+        height: 100%;
       }
 
       .q-badge {

@@ -170,7 +170,7 @@ export default {
     //   store.dispatch("set_active_detail", match)
     // }
     
-    let _window_width = 1000
+    let _window_width = 1200
     let _window_height = 650
     let _window_offset_left = (screen.width - _window_width) / 2
     let _window_offset_top = (screen.height - _window_height) / 2
