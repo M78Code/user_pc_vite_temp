@@ -14,7 +14,7 @@
     </div>
   </div>
   <!-- 展开串关类型 -->
-  <div class="open-crosstalk" v-if="BetViewDataClass.bet_order_status == 1">
+  <div class="open-crosstalk" v-if="BetViewDataClass.bet_order_status == 1" :class="{ 'active': BetData.special_type }" @click="set_special_type()" >
     <span>展开串关类型</span>
     <img class='icon' :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/odds_down.png`" alt=""/>
   </div>
@@ -37,6 +37,10 @@ const ref_data = reactive({
   total_money: '',
   win_money:''
 })
+
+const set_special_type = () => {
+  BetData.set_special_type(!BetData.special_type)
+}
 
 // status 是响应式的 可以用于重新计算
 const bet_total = computed(()=> status => {
@@ -97,8 +101,15 @@ const bet_total = computed(()=> status => {
     background: #FFF;
     color: var(--q-gb-t-c-3);
     font-size: 0.12rem;
+    &.active{
+      .icon{
+        transform: rotate(180deg);
+      }
+    }
     .icon{
       margin-left: 0.08rem;
+      position: relative;
+      transition: .3s;
     }
   }
   
