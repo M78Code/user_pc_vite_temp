@@ -12,7 +12,7 @@
           <sport-icon
             style="margin: 0 10px"
             :sport_id="
-              MenuData.current_ball_type == '0'
+              MenuData.current_ball_type == '0'||MenuData.is_esports()
                 ? detail_info.csid
                 : MenuData.current_ball_type
             "
@@ -123,17 +123,17 @@ watch(
   () => props.detail_info,
   (val) => {
     if (val) {
-      console.log(route.params,'params');
-      if(MenuData.is_esports()){
-        tab_click('video');
-        return
+     
+      console.log(route.params, "params");
+      if (MenuData.is_esports()) {
+        tab_click("video");
+        return;
       }
       if (route.params?.type) {
         tab_click(route.params?.type);
         return;
       }
       if (val.showType) {
-       
         tab_click(val.showType);
         return;
       }
