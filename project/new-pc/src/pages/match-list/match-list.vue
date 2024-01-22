@@ -17,7 +17,7 @@
       <div class="fold-btn" @click="match_list_card.test_log_data()">
         打印数据
       </div>
-      {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--length--- {{ match_list_card_key_arr.length }}
+      <!-- {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--length--- {{ match_list_card_key_arr.length }} -->
     </div>
     <!--  :class="{ 'no-data': load_data_state != 'data' }" -->
     <div class="scroll-fixed-header">

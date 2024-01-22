@@ -6,7 +6,8 @@
 <template>
   <!-- 电竞dota2 -->
   <div class="stage_child_101">
-    <span>{{lodash.get(i18n_t('mmp') ,"[detail_data.csid][detail_data.mmp]") }}</span>
+    <span>{{ i18n_t(Stage) }}</span>
+    <!-- <span>{{lodash.get(i18n_t('mmp') ,"[detail_data.csid][detail_data.mmp]") }}</span> -->
     <!-- 倒/正计时组件 -->
     <counting-down
       v-if="+detail_data.mmp >0 && +detail_data.mst > 0"
@@ -16,26 +17,21 @@
       :second="detail_data.mst"
       :match="detail_data"
       :is_add="[100,101,102,103,104].includes(+detail_data.csid)"
+      class="counting-down"
     />
   </div>
 </template>
 
-<script>
-import counting_down from 'src/base-h5/components/common/counting-down.vue'
-import { useRoute } from "vue-router"
-export default {
-  name: "stage_child_101",
-  data() {
-    return {
+<script setup>
+import countingDown from 'src/base-h5/components/common/counting-down.vue'
+import { computed } from 'vue'
 
-    };
-  },
-  components: {
-    "counting-down": counting_down,
-  },
-  props: ["detail_data"],
-  
-};
+const props = defineProps(["detail_data"])
+
+const Stage = computed(()=>{
+  const { csid,mmp } = props.detail_data || {}
+  return `mmp.${csid}.${mmp}`
+})
 </script>
 
 <style lang="scss" scoped>
@@ -43,6 +39,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  .counting-down{
+    position: unset;
+    margin-left: .08rem;
+  }
 }
 </style>
 <style lang="scss">

@@ -453,6 +453,8 @@ export default {
   border-radius: 2px;
   color: var(--q-gb-t-c-18);
   font-size: 12px;
+  // 非嵌套模式
+  margin: 0 5px;
   .info-time {
     display: flex;
     justify-content: space-between;

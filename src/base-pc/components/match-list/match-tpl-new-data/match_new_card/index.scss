@@ -1,6 +1,6 @@
 .match-new-card {
     height: 80px;
-    background-color: var(--qq--list-new-bg-color);
+    background-color: var(--q-gb-bd-c-13);
     border-radius: 6px;
     // box-shadow: 0px 2px 8px 0px #d9deea;
     display: flex;
@@ -13,7 +13,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-
         span {
             color: #555555;
             font-size: 12px;
@@ -28,10 +27,8 @@
 
     .match-des {
         flex: 1;
-        border-left: 1px solid var(--qq--list-new-border-color);
-        ;
-        border-right: 1px solid var(--qq--list-new-border-color);
-        ;
+        border-left: 1px solid var(--q-gb-bd-c-8);
+        border-right: 1px solid var(--q-gb-bd-c-8);
         padding: 14px 15px;
         overflow: hidden;
         display: flex;
@@ -44,10 +41,10 @@
             font-size: 12px;
             line-height: 52px;
             text-align: center;
-            background-color: var(--qq--list-data-bg-color);
+            background-color: var(--q-gb-bg-c-27);
             //  padding: 0px 4px;
             border-radius: 2px;
-            color: var(--qq--match-new-text-color1);
+            color: var(--q-gb-t-c-6);
             cursor: pointer;   
         }
         .no-data {
@@ -62,14 +59,14 @@
             // min-width: 324px;
             flex: 1;
             height: 52px;
-            background-color: var(--qq--handicap-new-bg-color);
+            background-color: var(--q-gb-bg-c-27);
             border-radius: 3px;
             &:hover{
-                background-color: var(--qq--match-bg-color7);
+                background-color: var(--q-gb-bg-c-31);
             }
             &.active{
-                color: var(--qq--match-text-color2) !important;
-                background: var(--qq--match-bg-color6) !important;
+                color: var(--q-gb-t-c-18) !important;
+                background: var(--q-gb-t-c-16) !important;
             }
             &.is_iframe {
                 width: 200px;
@@ -125,13 +122,13 @@
     .odd-detail {
         width: 120px;
         height: 52px;
-        background-color: var(--qq--handicap-new-bg-color);
+        background-color: var(--q-gb-bg-c-27);
         &:hover{
-            background-color: var(--qq--match-bg-color7);
+            background-color: var(--q-gb-bg-c-31);
         }
         &.active{
-            color: var(--qq--match-text-color2) !important;
-            background: var(--qq--match-bg-color6) !important;
+            color: var(--q-gb-t-c-18) !important;
+            background: var(--q-gb-t-c-16) !important;
         }
         display: flex;
         align-items: center;
@@ -158,12 +155,12 @@
 
     .lift_up {
         // opacity: .1;
-        background-color: var(--qq--odd-up-bg-color) !important;
+        background-color: var(--q-gb-bg-c-28) !important;
     }
 
     .lift_down {
         // opacity: .1;
-        background-color: var(--qq--odd-down-bg-color) !important;
+        background-color: var(--q-gb-bg-c-29) !important;
     }
 
 

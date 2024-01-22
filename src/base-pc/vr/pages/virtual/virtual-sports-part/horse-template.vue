@@ -47,9 +47,6 @@
 // #TODO vuex
 // import { mapGetters } from "vuex";
 import lodash from "lodash";
-import store from "src/store-redux/index.js";
-import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
-// import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, ref, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { useRoute, useRouter } from "vue-router"
@@ -60,8 +57,6 @@ import {compute_value_by_cur_odd_type} from "src/output/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 
 export default defineComponent({
-  // #TODO mixins
-  // mixins: [odd_convert],
   name: "temp8",
   props: ["item_data", "csid"],
   components: {
@@ -110,7 +105,7 @@ export default defineComponent({
       let play_ = lodash.get(props.item_data,'plays')
       let play_obj1 = {}
       lodash.each(play_,(item) => {
-        lodash.each(lodash.get(item,'hl[0].ol'), ol_item => {
+        lodash.each(lodash.get(item,'hl.ol'), ol_item => {
           let hpid = lodash.get(item,'hpid')
           hsw_obj[hpid] =  lodash.get(item,'hsw').toString()
           let key = hpid + '' + ol_item.teamId;

@@ -65,7 +65,6 @@ const match_detail = inject('match_detail')
                     <injuryForm :list_data="item"></injuryForm>
                 </ul>
             </div>
-
         </template>
     </AnalysisCard>
 </template>

@@ -15,11 +15,11 @@
                 </span>
             </div>
         </div>
-        <div class="info_right size_14" @click.stop="input_click($event)">
+        <div class="info_right size_14" @click.stop="input_click($event)" :class="{'active':BetData.active_index == BetData.bet_single_list.length}">
             <div class="content-b">
                 <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
 
-                <span class="money-span" ref="money_span" :style="{ opacity: '1' }"></span>
+                <span class="money-span" ref="money_span" v-if="BetData.active_index == BetData.bet_single_list.length" :style="{ opacity: '1' }"></span>
 
                 <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{i18n_t('bet.money_range')}} {{ref_data.min_money}}~{{format_money3(ref_data.max_money)}}</span>
             </div>
@@ -42,21 +42,20 @@ const props = defineProps({
     },
     index: {
         default: 0,
-    }
+    },
 })
 
 const emit = defineEmits(['focus_on'])
 
 const input_click = (event) => {
-    emit('focus_on', 'on')
     // console.error('index', BetData.bet_single_list.length)
-    // event.preventDefault()
+    event.preventDefault()
     let oid = BetData.bet_single_list.map(item => {
         return item.playOptionsId
     })
+    BetData.set_active_index(BetData.bet_single_list.length)
     BetData.set_bet_keyboard_config({ids:oid})
     BetData.set_bet_keyboard_show(true)
-    BetData.set_active_index(BetData.bet_single_list.length)
     // BetData.set_bet_amount(0)
 }
 
@@ -165,20 +164,22 @@ const cursor_flashing = () => {
     padding: 0 0.15rem;
 
     .info_right {
-        width: 162px;
-        height: 42px;
-        box-shadow: 0px 1px 4px 0px rgba(255, 112, 0, 0.10);
-        border: 1px solid var(--q-gb-bg-c-1);
-        padding-left: 6px;
-        background: #FFF6F0;
-        caret-color: var(--q-gb-bd-c-1);
-        font-family: DIN;
-        font-size: 20px;
+        width: 1.62rem;
+        height: .42rem;
+        padding-left: .06rem;
+        font-size: .20rem;
         font-weight: 500;
         display: flex;
         align-items: center;
-        border-radius: 2px;
-        overflow: hidden;
+        border-radius: .02rem;
+        border: 0.5px solid var(--q-gb-bd-c-12);
+        background: var(--q-gb-bg-c-2);
+        box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+        &.active{
+            border: 1px solid var(--q-gb-bg-c-1);
+            box-shadow: 0px 1px 4px 0px rgba(255, 112, 0, 0.10);
+            caret-color: var(--q-gb-bd-c-1);
+        }
         .content-b {
             display: flex;
             align-items: center;

@@ -486,6 +486,7 @@ class UserCtr {
     sessionStorage.setItem('standard_edition', v)
     LocalStorage.set('standard_edition',v)
     useMittEmit(MITT_TYPES.EMIT_STANDARD_EDITION_CHANGE, this.standard_edition)
+    this.update()
     // set_newer_standard_edition(edition);
     // set_secondary_unfold_map({}); // 清空次要玩法折叠的记录，收起来
     // // 发送埋点

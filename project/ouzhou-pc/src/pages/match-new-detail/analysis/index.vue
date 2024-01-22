@@ -104,6 +104,9 @@ const get_detail_info = (mid) => {
   // 3572298
   MatchListCardDataClass.set_current_mid(mid)
   const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
+  console.log(infomation, "infomation");
+  // 存入本地，点击大屏视频的时候使用
+  sessionStorage.setItem('DETAIL_INFO', JSON.stringify(infomation))
   detail_info.value = infomation
  
   // setInterval(function (){
