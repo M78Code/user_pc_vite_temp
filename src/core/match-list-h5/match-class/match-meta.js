@@ -1507,7 +1507,7 @@ class MatchMeta {
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
       // match_mids是可视区域id
       const active_index = this.match_mids.findIndex(t => t === mid)
-      // active_index>-1&& this.match_mids.splice(active_index,1)
+      active_index>-1&& this.match_mids.splice(active_index,1)
       const index = this.complete_matchs.findIndex(t => t.mid == mid)
       index > -1 && this.complete_matchs.splice(index, 1)
       if (index > -1) {
@@ -1522,12 +1522,6 @@ class MatchMeta {
             // this.compute_current_matchs()
             this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
             // this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
-            // TODO: 测试 赛事移除后的效果
-            let timer = setTimeout(() => {
-              this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
-              clearTimeout(timer)
-              timer = null
-            }, 1000 * 60 * 5)
           }
           clearTimeout(this.debounce_timer)
           this.debounce_timer = null
