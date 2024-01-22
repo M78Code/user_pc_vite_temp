@@ -3,10 +3,11 @@
         <simple-header :title="i18n_t('common.sports_betting_rules')" use_component_key="SimpleHeader_H5">
             <!-- {{ i18n_t('common.rule_description') }} -->
         </simple-header>
-        <div class="description-content">
+        <div v-if="sports_rules_domain" class="description-content">
             <iframe style="width:100%;height: 100%" allow="autoplay" frameborder="0" scrolling="no" :src="more_lang"
                 v-if="more_lang.length > 0"></iframe>
         </div>
+        <error01 v-else></error01>
     </div>
 </template>
 
@@ -16,7 +17,7 @@ import lodash from "lodash"
 import { i18n_t } from "src/boot/i18n.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
-
+import error01 from "src/components/error/error01.vue";
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
@@ -29,6 +30,7 @@ const props = defineProps({})
 
 /** 体育规则地址-H5 */
 const more_lang = ref('')
+const sports_rules_domain =  UserCtr.get_topic_key_url('sports_rules');
 /** 获取h5体育规则地址 */
 const get_h5_rule_url = () => {
     //参数对应关系
