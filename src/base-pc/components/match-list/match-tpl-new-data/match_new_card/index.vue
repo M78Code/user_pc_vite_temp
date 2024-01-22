@@ -57,7 +57,6 @@
             "
             ref="betItemLeft"
             @stateChage="onBetItemStateChange('left', $event)"
-            direction="left"
           />
         </div>
         <div
