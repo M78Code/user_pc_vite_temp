@@ -1,5 +1,5 @@
 <template>
-	<div class="matches_header_wrap" :style="`height:${match_list_top}`">
+	<div class="matches_header_wrap">
 		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.mid_menu_result.filter_tab }}-{{MenuData.menu_current_mi }}-{{MenuData.menu_root}}-{{MenuData.is_kemp()}}- {{ MenuData.is_collect_kemp() }}-{{MenuData.is_common_kemp() }}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}--{{ BaseData.base_data_version }}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.is_kemp() ? 400 : MenuData.current_ball_type })"></div>
@@ -351,6 +351,8 @@ const checked_current_tab = (payload,type) => {
 .matches_header_wrap {
 	//height: v-bind('match_list_top');
 	// padding-right: 7px;
+	min-height: 0.8rem;
+	padding-bottom: 0.08rem;
 	box-sizing: border-box;
 }
 
