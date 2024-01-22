@@ -8,7 +8,7 @@ import {
 } from "./write-folder-file.js";
 import { compute_build_in_config } from "./build-in-config-fn.js";
 import { write_env_file } from "./write-env-file.js";
-import { ALL_ENV_ARR } from "./util.js";
+import { ALL_ENV_ARR } from "./config.js";
  
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";

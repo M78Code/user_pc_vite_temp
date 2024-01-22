@@ -8,14 +8,17 @@
           <q-img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
             alt=""
-            v-if="is_show_sr_flg(detail_info)"
+            v-if="is_show_sr_flg(detail_info) && IS_FOR_NEIBU_TEST"
             srcset=""
             class="signal"
             @click="go_analyse"
-            
           >
-            <q-tooltip anchor="bottom middle" self="top middle" :offset="[40, 10]">
-             {{ i18n_t('common.analysis') }}
+            <q-tooltip
+              anchor="bottom middle"
+              self="top middle"
+              :offset="[40, 10]"
+            >
+              {{ i18n_t("common.analysis") }}
             </q-tooltip>
           </q-img>
           <img
@@ -121,7 +124,7 @@
 </template>
 
 <script>
-import { onMounted, ref, onUnmounted } from "vue";
+import { onMounted, ref, onUnmounted, computed } from "vue";
 import {
   MenuData,
   LOCAL_PROJECT_FILE_PREFIX,
@@ -143,6 +146,7 @@ import loading from "./components/loading/index.vue";
 import { useRouter, useRoute } from "vue-router";
 import details from "src/core/match-list-pc/details-class/details.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 export default {
   components: {
     tabs,
@@ -242,6 +246,8 @@ export default {
       102: 3510, // cs
       103: 3600, // 王者荣耀
     };
+
+    const { IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG;
     return {
       tabList,
       detail_list,
@@ -266,6 +272,7 @@ export default {
       showDetailList,
       go_analyse,
       is_show_sr_flg,
+      IS_FOR_NEIBU_TEST,
     };
   },
 };
