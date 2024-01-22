@@ -30,15 +30,38 @@
         <!-- 赛马类队伍 -->
         <div v-else>
             <div class="vsm-options"
-                :class="[current_match.mid === item.mid && 'active', current_match.csid == 1001 && 'vsm-options-short']"
-                v-for="(item, index) in match_list_by_no[0] && match_list_by_no[0].teams" :key="index">
+                :class="[current_match.mid === team.mid && 'active', current_match.csid == 1001 && 'vsm-options-short']"
+                v-for="(team, index) in item_data.team" :key="index">
                 <div class="teams">
                     <div class="index row items-center justify-center">
                         {{ index + 1 }}
                     </div>
                     <div class="horse-name col ellipsis">
-                        {{ item }}
+                        {{ team.teamName }}
                     </div>
+
+                    <div class="row team justify-between" style="width: 361px">
+                      <div class="col-4 team-odds">
+                        <div v-if="lodash.get(play_obj,`20033${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
+                        <div v-else>
+                          {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20033${team.teamId}.ov`) ,null,hsw_obj[20033])}}
+                        </div>
+                      </div>
+                      <div class="col-4 team-odds">
+                        <div v-if="lodash.get(play_obj,`20034${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
+                        <div v-else>
+                          {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20034${team.teamId}.ov`) ,null,hsw_obj[20034])}}
+                        </div>
+                      </div>
+                      <div v-if="'1009' != sub_menu_type"
+                      class="col-4 team-odds">
+                        <div v-if="lodash.get(play_obj,`20035${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
+                        <div v-else>
+                          {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20035${team.teamId}.ov`) ,null,hsw_obj[20035])}}
+                        </div>
+                      </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -47,10 +70,72 @@
 </template>
 
 <script>
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { reactive, ref, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
+import {compute_value_by_cur_odd_type} from "src/output/index.js"
 
-export default {
-  props: ['current_match', 'match_list_by_no', 'switch_match_handle']
-}
+export default defineComponent({
+  props: ['current_match', 'match_list_by_no', 'switch_match_handle'],
+  setup(props, evnet) {
+    // 冠军/前二/前三赔率
+    const play_obj = ref({});
+    //组装的盘口数据
+    const play_obj2 = reactive({});
+    // hsw对象
+    const hsw_obj = reactive({});
+    
+    const sub_menu_type = props.current_match.csid;
+
+    const match = MatchListData.get_quick_mid_obj_ref(props.current_match.mid)
+
+    // 获取赛马类赔率所需数据
+    const item_data = {
+      team: match.value.teams.map(((item, index)=>{return { teamName: item, teamId: index + 1 }})),
+      plays: match.value?.hpsData[0]?.hps
+    }
+
+    lodash.each(item_data.plays,(item) => {
+      lodash.each(lodash.get(item,'hl.ol'), (ol_item, index) => {
+        ol_item.teamId = index + 1;
+      })
+    })
+
+    onMounted(() => {
+      get_odds()
+    });
+
+    const get_odds = () => {
+      // plays集合
+      let play_ = lodash.get(item_data,'plays')
+      let play_obj1 = {}
+      lodash.each(play_,(item) => {
+        lodash.each(lodash.get(item,'hl.ol'), ol_item => {
+          let hpid = lodash.get(item,'hpid')
+          hsw_obj[hpid] =  lodash.get(item,'hsw').toString()
+          let key = hpid + '' + ol_item.teamId;
+          ol_item.hpid = hpid;
+          play_obj1[key] = ol_item
+        })
+        play_obj2[item.hpid] = item;
+      })
+      play_obj.value = play_obj1
+    };
+    
+    return {
+      hsw_obj,
+      play_obj2,
+      lodash,
+      LOCAL_PROJECT_FILE_PREFIX,
+      get_odds,
+      play_obj,
+      sub_menu_type,
+      match,
+      item_data,
+      compute_value_by_cur_odd_type
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>

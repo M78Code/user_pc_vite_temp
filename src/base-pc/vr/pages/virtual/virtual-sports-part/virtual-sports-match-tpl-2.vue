@@ -58,11 +58,10 @@ export default {
     // 获取赛马类赔率所需数据
     const item_data = {
       team: match.value.teams.map(((item, index)=>{return { teamName: item, teamId: index + 1 }})),
-      plays: match.value.hps
+      plays: match.value?.hpsData[0]?.hps
     }
-
     lodash.each(item_data.plays,(item) => {
-        lodash.each(lodash.get(item,'hl[0].ol'), (ol_item, index) => {
+        lodash.each(lodash.get(item,'hl.ol'), (ol_item, index) => {
           ol_item.teamId = index + 1;
         })
       })

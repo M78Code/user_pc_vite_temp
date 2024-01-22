@@ -216,6 +216,10 @@ class MatchFold {
     const csid_key = warehouse_type ? `${warehouse_type}_csid_${csid}` : `csid_${csid}`
     return csid_key
   }
+  // 清除联赛折叠信息
+  clear_custom_tid_fold_info () {
+    this.custom_tid_fold_info.value = {}
+  }
   // 清除球种折叠对象
   clear_ball_seed_csid_fold_obj () {
     this.ball_seed_csid_fold_obj.value = {}
@@ -228,6 +232,7 @@ class MatchFold {
   clear_fold_info () {
     this.clear_ball_seed_csid_fold_obj()
     this.clear_match_mid_fold_obj()
+    this.clear_custom_tid_fold_info()
     //全部联赛 折叠
     this.set_all_csid_fold_status(true)
     //已开赛 折叠
