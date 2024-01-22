@@ -5,6 +5,7 @@
             <q-tabs v-model="tabValue" dense class="bg-grey-3" align="justify" narrow-indicator @update:modelValue="on_update">
                 <q-tab v-for="(item, index) in BaseData.dianjing_sublist" :name="item.mi" :label="BaseData.menus_i18n_map[item.mi]" />
             </q-tabs>
+            <span class="sport-bg" :style="compute_css_obj({key:'eu-menu-sport-bg-image', position:format_type()})"></span>
         </div>
         <tab-date v-if="state.slideMenu.length" :defaultVal="state.currentSlideValue"  :dateList="state.slideMenu" @changeDate="changeDate"/>
         <!--二级赛事列表-->
@@ -15,17 +16,26 @@
 </template>
 <script setup>
 import { onMounted, ref ,reactive } from "vue";
-import { MenuData  } from "src/output/index.js";
+import { MenuData , compute_css_obj } from "src/output/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import tabDate from './tab-date.vue';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-
+import { oz_sprite_bg_images_postion } from "src/output/module/constant-utils.js";
 const state = reactive({
     slideMenu:[],
     currentSlideValue:""
 })
 const tabValue = ref('');
+/**
+ * @description: 球类id转化背景
+ * @param {String} id 球类id
+ * @return {}
+ */
+ const format_type = ( id ) => {
+    id = id || MenuData.current_lv_2_menu_mi.value;
+  return oz_sprite_bg_images_postion[id]
+}
 /**
  * 获取时间
  */
@@ -72,15 +82,27 @@ onMounted(()=>{
         flex-direction: column;
         .header_tabs{
             border-bottom: 2px solid #FF7000;
+            position: relative;
+            .sport-bg{
+                --per:-0.5rem;
+                position: absolute;
+                right: 0;
+                top: 0;
+                display: inline-block;
+                width: 110.25px;
+                height: 50px;
+                background-size: 141.25px auto;
+                background-position: right;
+                }
             :deep(.q-tabs--dense){
             .scroll--mobile{
                 height: 50px;
                 background-color: var(--q-gb-bg-c-2);
                 padding: 0 10px;
-                background-repeat: no-repeat;
-                background-image:url($SCSSPROJECTPATH + "/image/list/mask_group.png");
-                background-size: contain;
-                background-position: right;
+                // background-repeat: no-repeat;
+                // background-image:url($SCSSPROJECTPATH + "/image/list/mask_group.png");
+                // background-size: contain;
+                // background-position: right;
                 .q-tab{
                 flex: none;
                 padding:0 0.05rem;
