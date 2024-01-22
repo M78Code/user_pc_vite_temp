@@ -485,12 +485,13 @@ const click_popup = (e) =>{
 }
 /** 监听赔率父节点的click, 调用赔率子节点的click事件处理器完成*/
 const onMatchNewHandicapClick = (refNodeName) => {
+  console.log(betItemLeft, 'betItemLeft.value')
   if (refNodeName == 'betItemLeft') {
-    betItemLeft.value.bet_click()
+    betItemLeft.value.bet_click_ol()
   } else if (refNodeName == 'betItemRight') {
-    betItemRight.value.bet_click()
+    betItemRight.value.bet_click_ol()
   } else {
-    betItemDetail.value.bet_click()
+    betItemDetail.value.bet_click_ol()
   }
 }
 /**

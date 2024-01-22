@@ -86,8 +86,8 @@ onBeforeUnmount(() => {
 
 <template>
     <section>
-<!--        <NoData></NoData>-->
-        <div class="header">
+       <NoData></NoData>
+        <!-- <div class="header">
             <div class="tab-radio-button" v-for="(item, index) in State.tabRadioButton" :key="index+'b'"
                  :class="{active: State.radioButtonIndex == index}" @click="radioButton(index)">
                 <span class="ellipsis">{{ item }}</span>
@@ -104,7 +104,7 @@ onBeforeUnmount(() => {
         </div>
         <div v-if="!State.dataList.length && State.is_done" class="yb_py18 text-center no-list">
             {{ i18n_t('common.no_data') }}
-        </div>
+        </div> -->
     </section>
 </template>
 

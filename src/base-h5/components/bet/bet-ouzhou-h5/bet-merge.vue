@@ -33,6 +33,12 @@ const set_is_regular_amount = () => {
 // 合并单关
 const set_is_bet_merge = () => {
   BetData.set_is_bet_merge()
+  // 如果是合并单关模式默认选中多项单注部分
+  if (BetData.is_bet_merge){
+    BetData.set_active_index(2)
+  }else {
+    BetData.set_active_index(0)
+  }
 }
 
 </script>
