@@ -756,10 +756,12 @@ const supplementary_spaces = (
 const info_icon_click = ($event, mid) => {
   useMittEmit(
     MITT_TYPES.EMIT_INFO_ICON_CLICK,
-    $event,
-    mid,
-    props.current_tab_item,
-    props.match
+    {
+      e: $event,
+      mid,
+      item: props.current_tab_item,
+      match: props.match
+    }
   );
 };
 /**

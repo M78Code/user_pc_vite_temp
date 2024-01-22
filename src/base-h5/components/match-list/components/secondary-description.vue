@@ -63,6 +63,7 @@ const other_way_style = ref({
   top: 0,
 })
 const pre_info_clicked_mid = ref('')
+const show_15min_data = ref('')
 const play_way_info = ref('')
 const current_way_name = ref('')
 // 次要玩法info tips----当前展开的次要玩法tab信息
@@ -101,7 +102,9 @@ const close_other_w_info = () => {
 /**
  * 玩法信息图标点击
  */
-const info_icon_click_h = (e, mid, menu, match) => {
+const info_icon_click_h = (params = {}) => {
+  console.log(params)
+  const { e = null, mid = '', item = '', match = {} } = params
   if (!e) {
     other_way_info_show.value = false;
     return;
@@ -110,11 +113,11 @@ const info_icon_click_h = (e, mid, menu, match) => {
   // 获取当前赛事状态
   curr_play_info.value = {
     ms: lodash.get(match, 'ms', 1),
-    menu_id: menu.id
+    menu_id: item.id
   }
 
-  current_way_name.value = menu.title;
-  let menu_id = menu.id;
+  current_way_name.value = item.title;
+  let menu_id = item.id;
   other_way_style.value.left = rem(0.1);
   other_way_style.value.top = e.clientY + rem(.16);
   if (mid != pre_info_clicked_mid.value) {
@@ -130,12 +133,12 @@ const info_icon_click_h = (e, mid, menu, match) => {
     // 5分钟
     if (19 == menu_id) {
       arr_top_off_set = 2 // 单位rem
-      show_15min_data = false
+      show_15min_data.value = false
     }
     // 15分钟
     else if (17 == menu_id) {
       arr_top_off_set = 1.8 // 单位rem
-      show_15min_data = true
+      show_15min_data.value = true
     }
     // 罚牌
     else if (5 == menu_id) {
@@ -154,15 +157,20 @@ const info_icon_click_h = (e, mid, menu, match) => {
   pre_info_clicked_mid.value = mid;
 }
 
-onMounted(() => {
-  Object.values(emitters.value).map((x) => x())
-})
+const rem = (value) => {
+  let font_size = window.innerWidth * 100 / 375;
+  return Math.ceil(value * font_size);
+}
 
-onUnmounted(() => {
+onMounted(() => {
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_INFO_ICON_CLICK, info_icon_click_h).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING, tab_changing_handle).off,
   }
+})
+
+onUnmounted(() => {
+  Object.values(emitters.value).map((x) => x())
 })
 
 </script>src/output/index.js

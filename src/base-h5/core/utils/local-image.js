@@ -138,6 +138,8 @@ export const baseball_bg = compute_local_project_file_path('/image/featured/base
 export const app_token_tips = compute_local_project_file_path('/image/login/tips.png')
 export const app_token_center = compute_local_project_file_path('/image/login/center.png')
 
+export const information_icon = compute_local_project_file_path('/image/svg/match-list/information-icon_y0.svg')
+
 // 无token页面
 export const friendly_reminder_zh = compute_local_project_file_path('/image/common/friendly_reminder_zh.jpg')
 export const friendly_reminder_en = compute_local_project_file_path('/image/common/friendly_reminder_en.jpg')

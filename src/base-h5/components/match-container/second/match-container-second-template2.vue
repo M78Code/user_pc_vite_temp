@@ -68,8 +68,10 @@
           </div>
           <!--  玩法描述图标显示  -->
           <div class="team-t-title-w fight-type" v-if="[1, 3, 5, 7, 8, 9].includes(+match.csid)">
-            <span v-if="[2, 5, 17].includes(+current_tab_item.id)" @click="info_icon_click($event, match.mid)"
-              :style="compute_css_obj(show_tips?'icon-tips':'icon-tips-d')" ></span>
+            <!-- :style="compute_css_obj(show_tips?'icon-tips':'icon-tips-d')" -->
+            <span v-if="[2, 5, 17].includes(+current_tab_item.id)" @click="info_icon_click($event, match.mid)">
+              <img :src="information_icon" alt="">
+            </span>
             {{ match.csid == 1 ? current_tab_item.title : mmp_map_title }}
           </div>
         </div>
@@ -93,7 +95,7 @@ import second_mixin from '../mixins/second.mixin.js';
 import { IconWapper } from 'src/components/icon'
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
 import { compute_css_obj } from "src/output/index.js"
-import { select_check } from 'src/base-h5/core/utils/local-image.js'
+import { select_check, information_icon } from 'src/base-h5/core/utils/local-image.js'
 
 export default defineComponent({
   name: "match-container-second-template2",
@@ -128,7 +130,7 @@ export default defineComponent({
       })
     }
     return { 
-      compute_css_obj, on_select_second_play, select_second_item, second_play_data, current_second_data, select_check
+      compute_css_obj, on_select_second_play, select_second_item, second_play_data, current_second_data, select_check, information_icon
     }
   }
 })
@@ -243,7 +245,6 @@ export default defineComponent({
           /*width: 0.14rem;*/
           /*height: 0.14rem;*/
           margin-right: 0.055rem;
-          margin-left: -0.17rem;
 
           margin-bottom: 0.02rem
         }

@@ -285,7 +285,11 @@ export default defineComponent({
     //玩法说明图标点击
     // $event 时间对象 mid 赛事id
     info_icon_click($event,mid){
-      useMittEmit(MITT_TYPES.EMIT_INFO_ICON_CLICK, $event, mid, this.current_tab_item);
+      useMittEmit(MITT_TYPES.EMIT_INFO_ICON_CLICK, {
+        e: $event, 
+        mid, 
+        item: this.current_tab_item
+      });
     },
     // 足球之外调用此方法， 获取要展开的tab项  获取次要玩法 id
     get_tabid_auto_unfold(){
