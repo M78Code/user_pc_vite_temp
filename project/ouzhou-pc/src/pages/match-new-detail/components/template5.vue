@@ -18,7 +18,7 @@
       <div class="temp5-hv">{{ key > 0 && hpid == 39 ? "+" + key : key }}</div>
       <div
         v-if="
-          value.length == 1 &&
+          value&&value.length == 1 &&
           !hpidList.includes(props.match_info.hpid)
         "
         style="width: 200%"
