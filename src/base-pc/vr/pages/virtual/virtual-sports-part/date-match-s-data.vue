@@ -168,4 +168,3 @@ export default {
   }
 }
 </style>
-src/core/vr/mixin/pages/virtual/virtual-sports_part/date_match_s_data_mixin.js

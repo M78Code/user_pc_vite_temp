@@ -31,4 +31,3 @@ export default {
   border-bottom: none;
 }
 </style>
-src/core/vr/mixin/pages/virtual/virtual-sports_part/dynamic_ranking_mixin.js
