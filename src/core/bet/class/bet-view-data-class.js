@@ -521,6 +521,17 @@ class BetViewData {
     this.set_bet_view_version()
   }
 
+  orderNo_bet_single_obj(obj) {
+    console.error('orderNo_bet_single_obj',obj)
+    this.orderNo_bet_single_obj = this.orderNo_bet_single_obj.map(item => {
+      if(item.orderNo == obj.orderNo){
+        item.orderStatusCode = obj.status
+      }
+      return item
+    })
+    this.set_bet_view_version()
+  }
+
   // 投注后的 串关信息数据
   set_orderNo_bet_single_obj(array) {
     this.orderNo_bet_single_obj = array

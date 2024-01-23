@@ -215,5 +215,3 @@ div[class*="virtual-num"] {
 
 /*************** 编号背景色结束 *************** -E*/
 </style>
-
-src/core/vr/mixin/pages/virtual/virtual-sports_part/virtual_sports_d_r_timer_mixin.js
