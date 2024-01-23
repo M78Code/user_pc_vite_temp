@@ -130,4 +130,3 @@ export default {
 
 /* ************** 选中的样式 ************** -EE */
 </style>
-src/core/vr/mixin/pages/virtual/virtual-sports_part/virtual_sports_odd_item_mixin.js
