@@ -12,7 +12,7 @@
                 </span>
             </div>
         </div>
-      
+      <!-- {{ BetData.active_index }}-{{ index }} -->
         <div class="info_right size_14" @click.stop="input_click(item, index, $event)" :class="{'active':BetData.active_index == index}">
             <div class="content-b">
                 <span v-if="item.bet_amount" class="yb_fontsize20 money-number">{{item.bet_amount }}</span>
@@ -48,7 +48,13 @@ const props = defineProps({
 const input_click = (item, index, event) => {
     event.preventDefault()
     BetData.set_bet_amount(item.bet_amount)
-    BetData.set_bet_keyboard_config(item)
+    let obj_config = lodash_.get(BetViewDataClass,`bet_min_max_money[${item.playOptionsId}]`,{}) || {}
+    let obj = { 
+        playOptionsId:props.item.playOptionsId,
+        max_money:obj_config.max_money
+    }
+    // 设置 限额
+    BetData.set_bet_keyboard_config(obj)
     BetData.set_active_index(index)
     nextTick(() => {
         BetData.set_bet_keyboard_show(true)
@@ -113,7 +119,10 @@ const set_ref_data_bet_money = () => {
     // 限额改变 重置投注金额
     ref_data.money = ''
     // 设置键盘设置的限额和数据
-    BetData.set_bet_keyboard_config({ playOptionsId: props.item.playOptionsId })
+    BetData.set_bet_keyboard_config({ 
+        playOptionsId: props.item.playOptionsId,
+        max_money
+     })
 }
 
 /**

@@ -149,12 +149,12 @@ const set_active_time = (item) => {
 const set_tab_list = (news_) =>{
 	tab_list.value = []
 	is_left_sports.value = false
-	// 首页
-	if(news_ == 0 || news_ == 500){
+	// 首页  500 5000都是热门
+	if(news_ == 0 || news_ == 500 || news_ == 5000){
 		tab_list.value =  lodash_.get( ref_data.ouzhou_filter_config,'home_tab', [])
 		matches_header_title.value = 'ouzhou.match.matches'
 		// top evnets
-		if (news_ == 500) {
+		if (news_ == 500 || news_ == 5000) {
 			checked_current_tab(tab_list.value[1])
 			return
 		}

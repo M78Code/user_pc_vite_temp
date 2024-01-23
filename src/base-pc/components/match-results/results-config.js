@@ -28,6 +28,8 @@ import {
   formatTime,
   MITT_TYPES,
 } from "src/output/index.js";
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 export const useGetResultConfig = () => {
   const route = useRoute();
   const router = useRouter();
@@ -363,7 +365,11 @@ export const useGetResultConfig = () => {
               if ([18, 28, 29, 33].includes(data[i].id * 1)) {
                 state.sport_type.push(""); //撑住位置,保证数据长度不变
               } else {
-                state.sport_type.push(data[i].name);
+                //欧洲版屏蔽4期电竞vr
+                if(IS_FOR_NEIBU_TEST || (!IS_FOR_NEIBU_TEST && +data[i].id < 100)){
+                  state.sport_type.push(data[i].name);
+                }
+                // state.sport_type.push(data[i].name);
               }
               // 冠军球种剔除【冠军】选项,增加[全部球种],剔除虚拟赛种
               if (

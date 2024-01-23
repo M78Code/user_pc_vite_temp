@@ -219,7 +219,12 @@ class MenuData {
     // 获取热门赛种
     let hot_list_ = mew_menu_list_res.find(item => item.mi == 5000) || {}
     hot_list = lodash.get(hot_list_,'sl',[]) || []
-
+    hot_list = hot_list.map((item)=>{
+      return {
+        ...item,
+        mif:item.mi?+item.mi-4900:0
+      }
+    })
     let esports_list = mew_menu_list_res.filter(item => item.mi > 2000 && item.mi < 3000 ) || []
     // 获取电子竞技的赛事数量
     let esports_ct = esports_list.reduce((cur,pre) => {
@@ -1062,7 +1067,7 @@ class MenuData {
    * 没有传递对比当前菜单
   */
   is_hot(mi) {
-    return this._is_cur_mi(500, mi)
+    return this._is_cur_mi(500, mi) || this._is_cur_mi(5000, mi)
   }
   /**
    * 是否选中了VR 
