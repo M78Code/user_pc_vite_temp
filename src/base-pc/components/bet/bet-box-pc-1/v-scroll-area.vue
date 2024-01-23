@@ -38,7 +38,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue"
 import { useRouter } from "vue-router";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 
 import { useMittEmit, useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'

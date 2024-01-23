@@ -12,7 +12,7 @@ import {
   SessionStorage,
 } from "src/output/module/constant-utils.js"
 import STANDARD_KEY from "src/core/standard-key";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import {
   useMittEmit,
   MITT_TYPES,

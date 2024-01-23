@@ -63,7 +63,7 @@ import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt'
 import {  MenuData,  GlobalSwitchClass,SearchPCClass } from 'src/output/index.js'
-import { LayOutMain_pc } from "src/output/project/common/pc-common.js";
+import { LayOutMain_pc } from "src/output/project/index.js";
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 import search from "src/core/search-class/search.js"
 import searchInput from "./search-input.vue"

@@ -89,7 +89,7 @@ import { BetRecordViewWapper } from "src/base-pc/components/bet-record-view";
 import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { MenuData } from "src/output/index.js";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 
 import { api_betting } from "src/api/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";

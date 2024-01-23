@@ -5,6 +5,7 @@
   <div class="virtual-detail row justify-between" ref="virtual_detail_box">
 
     <div class="virtual-detail-wrap">
+      <!-- 头部 -->
       <div class="match-detail-bread">
         <!-- 详情页面包屑 -->
         <breadcrumbs :detail_info="match || {}" v-if="match" />
@@ -20,7 +21,7 @@
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`"
             alt=""
             srcset=""
-            :class="{ balance_refresh: true}"
+            :class="['refresh', refreshing && 'refreshing']"
             @click="vir_refresh"
           />
         </div>
@@ -60,20 +61,6 @@
           :style="`background-position:0 -${sport_ball_type[1]}px`"
         ></div>
       </div>
-      <!-- 头部 -->
-      <div class="virtual-head" v-if="0">
-        <div class="type-bg bg1001">
-          <div class="back-wrap">
-            <!-- 返回按钮 -->
-            <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div>
-            <!-- 虚拟体育 -->
-            <div class="col">{{current_league.name}}</div>
-            <!--刷新按钮-->
-            <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
-          </div>
-        </div>
-      </div>
-    
       <!--玩法集区域 -->
       <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
         <!-- 赔率列表页面 -->
@@ -245,6 +232,9 @@ export default {
         top: 9px;
         background-color: var(--q-gb-bg-c-10);
       }
+      .refreshing {
+          animation: 0.7s loading-ring-animate linear;
+        }
     }
   }
 
@@ -315,7 +305,7 @@ export default {
   }
 
   
-  .signal,.balance_refresh {
+  .signal,.refresh {
     display: inline-block;
     cursor: pointer;
     width: 18px;
@@ -340,6 +330,15 @@ export default {
     width: 400px;
   }
 }
+/*  刷新按钮 */
+@keyframes loading-ring-animate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 /*  头部 */
 .virtual-head {
   width: 100%;
@@ -373,15 +372,6 @@ export default {
       }
     }
 
-    /*  刷新按钮 */
-    @keyframes loading-ring-animate {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
 
     .virtual-ref {
       width: 0.4rem;

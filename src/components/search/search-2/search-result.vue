@@ -283,7 +283,7 @@ const expand_team = ref(true)
  function league_click(match) {
 	if(!match) return;
 	search.insert_history(match.leagueName)
-	const { csid } = match.matchList[0];
+	const { csid, tid } = match.matchList[0];
 	//设置左侧菜单联动
 	MenuData.set_left_menu_result({
 		...MenuData.left_menu_result,
@@ -292,7 +292,8 @@ const expand_team = ref(true)
 	})
 	MenuData.set_current_ball_type(csid);
 	// MenuData.set_menu_current_mi(`${+csid+100}2`)
-	router.push(`/search/${match.leagueName}/${csid}`)
+	// router.push(`/search/${match.leagueName}/${csid}`)
+	router.push(`/league/${csid}/${tid}/2`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,
@@ -325,16 +326,17 @@ const expand_team = ref(true)
 function bowling_click(match) {
 	search.insert_history(match.mhn + 'vs' + match.man)
 	update_show_type('none')
-	const { mid, tid, csid } = match;
-	//设置左侧菜单联动
-	MenuData.set_left_menu_result({
-		...MenuData.left_menu_result,
-		lv1_mi: `${+csid+100}`,
-		lv2_mi: `${+csid+100}1`
-	})
-	MenuData.set_current_ball_type(csid);
-	// MenuData.set_menu_current_mi(`${+csid+100}2`)
-	router.push(`/details/${mid}/${csid}/${tid}`)
+	const { mid, tid, csid,ms } = match
+	router.push({
+      name: 'details',
+      params: {
+        mid,
+        tid,
+        csid
+      },
+      query: {ms}  // 传多个ms  提前判断是否需要显示右侧
+    });
+	// router.push(`/details/${mid}/${csid}/${tid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,
@@ -359,7 +361,15 @@ function match_click(match) {
 	})
 	MenuData.set_current_ball_type(csid);
 	// MenuData.set_menu_current_mi(`${+csid+100}2`)
-	router.push(`/details/${mid}/${csid}/${tid}`)
+	router.push({
+      name: 'details',
+      params: {
+        mid,
+        tid,
+        csid
+      },
+      query: {ms}  // 传多个ms  提前判断是否需要显示右侧
+    });
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,

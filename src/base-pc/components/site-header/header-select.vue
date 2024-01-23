@@ -99,7 +99,7 @@ import gSettings from 'src/base-pc/components/settings/index.vue';
 import { api_account, api_common } from "src/api/index.js";
 
 import {compute_img_url,format_money2,get_remote_time,compute_css_obj } from 'src/output/index.js'
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 /** 是否内嵌 */

@@ -43,7 +43,7 @@ import { ref, onMounted, provide ,onUnmounted} from "vue"
 import {compute_local_project_file_path, LayOutMain_pc} from 'src/output/index.js'
 
 import UserCtr from "src/core/user-config/user-ctr.js"
-import {SearchPCClass} from 'src/output/project/common/pc-common.js'
+import {SearchPCClass} from 'src/output/project/index.js'
 
 const img_search_icon = compute_local_project_file_path('/image/svg/search-icon.svg')
 const img_search_icon_y0 = compute_local_project_file_path('/image/svg/y0-search-icon.svg')

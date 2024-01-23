@@ -36,7 +36,7 @@ import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { tooltip_style } from "src/core/config/global-component-style.js";
 import { compute_local_project_file_path } from 'src/output/index.js';
-import {SearchPCClass} from 'src/output/project/common/pc-common.js'
+import {SearchPCClass} from 'src/output/project/index.js'
 import { IconWapper } from 'src/components/icon/index.js'
 
 import UserCtr from "src/core/user-config/user-ctr.js";

@@ -11,9 +11,9 @@ console.log("----process.argv---");
 console.log(colors.red('删除脚本生成文件 目录：/job/output'))
  
  
-let full_path = `./job/output`;
-remove_file(full_path);
-
-
- 
+remove_file(`./job/output/`);
 remove_file(`./dist/`);
+remove_file(`./src/output/project/`);
+remove_file(`./src/api/index.js`);
+
+remove_file(`./index.html`);

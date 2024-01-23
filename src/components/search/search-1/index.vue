@@ -68,7 +68,7 @@ import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt'
 import {  MenuData,  GlobalSwitchClass,SearchPCClass } from 'src/output/index.js'
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
