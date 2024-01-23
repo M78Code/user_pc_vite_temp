@@ -2846,6 +2846,9 @@
 	},
 	"video": {
 		"animation": "Anime",
+		"icon_animation": "Anime",
+		"icon_video": "Video",
+		"icon_score": "Score",
 		"cancel_mute": "Desactivar",
 		"clarity1": "HD",
 		"big_screen_mode": "Modo de pantalla grande",

@@ -198,13 +198,18 @@ const set_bet_order_list = (bet_list, is_single) => {
             //     ...bet_s_obj,
             //     ...BetData.bet_pre_obj[item.playOptionsId]
             // }
-            order_list.push({
-                "seriesSum": 1,   // 串关数量
-                "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
-                "seriesValues": "单关",  // 串关值 2串1 3串1...
-                "fullBet": 0,   // 是否满额投注，1：是，0：否
-                "orderDetailList": [bet_s_obj] 
-            })
+            console.error('item',item)
+            // 在前面就有判断 是否有金额 
+            if(item.bet_amount){
+                order_list.push({
+                    "seriesSum": 1,   // 串关数量
+                    "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
+                    "seriesValues": "单关",  // 串关值 2串1 3串1...
+                    "fullBet": 0,   // 是否满额投注，1：是，0：否
+                    "orderDetailList": [bet_s_obj] 
+                })
+            }
+           
         }) 
         
     }
@@ -593,34 +598,38 @@ const submit_handle_lastest_market = () => {
     // 是否投注中遇到了问题 
     let is_bet_error = false
     if(BetData.is_bet_single){
-        let ol_obj = lodash_.get(BetData.bet_single_list,'[0]','')
-        // 投注项状态 1：开 2：封 3：关 4：锁
-        // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
-        // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
-        if(ol_obj.ol_os != 1 || ol_obj.hl_hs != 0 || ol_obj.mid_mhs != 0){
-            set_submit_btn()
-            return set_error_message_config({code:"0402001"},'bet')
-        }
-        // 投注金额未达最低限额
-        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${ol_obj.playOptionsId}`, {})
-    
-        // 投注金额未达最低限额
-        if(ol_obj.bet_amount*1 < min_max.min_money*1 ){
-            set_submit_btn()
-            // 已失效
-            return set_error_message_config({code:"M400010"},'bet')
+        for(let ol_obj of BetData.bet_single_list) {
+            // 投注项状态 1：开 2：封 3：关 4：锁
+            // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+            // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
+            if(ol_obj.ol_os != 1 || ol_obj.hl_hs != 0 || ol_obj.mid_mhs != 0){
+                set_submit_btn()
+                return set_error_message_config({code:"0402001"},'bet')
+            }
         }
         
-        // 投注金额 验证
-        if(!ol_obj.bet_amount){
-            is_bet_error = true
+        // 串关投注 有且至少有一个投注金额 就可以投注
+        const count = BetData.bet_single_list.reduce((pre, cur) => {
+            return pre + (cur.bet_amount || 0 );
+        }, 0)
+
+        // 请输入投注金额
+        if( count == 0 ) {
             set_submit_btn()
-            // 请您输入投注金额
             return set_error_message_config({code:"M400005"},'bet')
+        }
+        
+        // 有金额的情况下 判断限额
+        for ( let item of BetData.bet_single_list ) {
+            // 投注金额 小于最小限额
+            if( item.bet_amount && (item.bet_amount*1 < item.min_money*1) ) {
+                set_submit_btn()
+                return set_error_message_config({code:"M400010"},'bet')
+            }
         }
 
         pre_type = BetData.is_bet_pre ? 1 : 0
-        milt_single = BetData.bet_single_list.length > 1 ? 1 : 0
+        milt_single = BetData.bet_single_list.length 
     } else {
         // 未满足串关条件 不允许投注
         if(!bet_special_series_change()){
@@ -931,7 +940,7 @@ const set_error_message_config = (res ={},type,order_state) => {
  * @returns 
  */
 const set_bet_obj_config = (params = {}, other = {}) => {
-    console.error('投注项需要数据', params, 'other', other);
+    // console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 

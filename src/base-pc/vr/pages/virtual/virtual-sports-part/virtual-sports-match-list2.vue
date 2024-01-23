@@ -7,7 +7,7 @@
     <div>
       <v-sports-play-name :match_item_batch="match_item_batch" :csid="csid" />
       <template v-for="(match_item, index) in virtual_match_list">
-        <v-sports-tpl v-if="lodash.get(match_item, 'mid')"  :match_item="match_item" :index="index"  :key="index"
+        <v-sports-tpl v-if="MatchListData.get_quick_mid_obj_ref(match_item.mid)" :match_item="match_item" :index="index" :key="index"
         :mid="match_item.mid"></v-sports-tpl>
       </template>
     </div>
@@ -17,6 +17,7 @@
 import virtual_sports_match_list2_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-match-list2-mixin.js";
 import virtual_sports_match_tpl from 'src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-tpl-2.vue'
 import virtual_sports_play_name from 'src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-play-name.vue'
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
 
 export default {
   mixins:[virtual_sports_match_list2_mixin],
@@ -24,7 +25,12 @@ export default {
     'v-sports-tpl': virtual_sports_match_tpl,
     'v-sports-play-name': virtual_sports_play_name
   },
-  props: ['match_item_batch', 'csid']
+  props: ['match_item_batch', 'csid'],
+  data(){
+    return {
+      MatchListData
+    }
+  }
 }
 </script>
 

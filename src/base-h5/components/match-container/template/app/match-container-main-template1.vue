@@ -971,6 +971,7 @@ export default {
       align-items: center;
       > span {
         padding-right: 3px;
+        color: #c9c9c9;
       }
       > i {
         position: relative;

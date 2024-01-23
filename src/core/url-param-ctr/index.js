@@ -271,6 +271,13 @@ const watch_route_fun = (to, from, that)=>{
   if(location.href.indexOf('token') == -1){
     return;
   }
+  // 发送进入首页埋点消息
+  if(that && ['matchList','home'].includes(to.name)){
+    clearTimeout(that.timer);
+    that.timer = setTimeout(() => {
+      lodash.get(UserCtr,'user_info.userId') && into_home_event();
+    }, 2000);
+  }
   timer = setTimeout(() => {
     // 删除所有url参数
     let hash = location.hash;

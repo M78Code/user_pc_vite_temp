@@ -64,7 +64,10 @@ const common = {
    */
   getOlType(oddInfo){
     const {hpt} = oddInfo
-    if(oddInfo.hpt == 0){
+    if(oddInfo.hpid == '344'){
+      return 'column'
+    }
+    if(hpt == 0){
       if(oddInfo.title.length){
         return 'fill'
       }
@@ -72,19 +75,9 @@ const common = {
       if(!common.haveTitle(oddInfo)){
         return 'column'
       }
-    }else if(oddInfo.hpt == 18){
+    }else if(hpt == 18){
       return 'fill'
-    }else if(oddInfo.hpt == 51){
-      return 'column'
-    }
-    return 'default'
-  },
-  /**
-   * @param {TYPES.OddInfo} oddInfo
-   * @returns {TYPES.OlItemType}
-   */
-  getOlTypeOfTemplate4(oddInfo){
-    if(oddInfo.hpid == '344'){
+    }else if(hpt == 51||hpt == 6){
       return 'column'
     }
     return 'default'

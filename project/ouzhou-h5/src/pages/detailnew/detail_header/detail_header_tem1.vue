@@ -681,8 +681,7 @@ const getLongTime = computed(() => {
   background-color: #D9D9D9;
 }
 
-.icon-video,
-.icon-animation {
+.icon-video, .icon-animation {
   width: 16px !important;
   height: 16px !important;
 }

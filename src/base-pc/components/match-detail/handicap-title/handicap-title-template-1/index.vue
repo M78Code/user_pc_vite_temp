@@ -15,7 +15,16 @@
     <div class="play-name col">
       <span class="ellipsis">
         <!-- 玩法名称 -->
-        {{ lodash.get(item_details, "hpn") }}
+        <!-- {{ lodash.get(item_details, "hpn") }} -->
+        <!-- 上半场下半场tag -->
+        <div 
+          class="play-btn" 
+          :style="{background:item_details.halfLg==1?'#EFBB01':'#04C100'}"  
+          v-if="lodash.get(item_details,'halfLg') && lodash.get(item_details,'hpn2')"
+          >
+          {{item_details.halfLg==1 ? i18n_t('common.half_1') : i18n_t('common.half_2')}}
+        </div>
+        {{getHpn(item_details) }}
         <template
           v-if="
             ![0, 110].includes(lodash.get(match_info, 'ms')) &&
@@ -119,7 +128,14 @@ const score_formate = computed(() => {
 });
 
 const emit = defineEmits(["sort_index", "click"]); //弃用 sort_index 事件, 置顶逻辑于本组件内处理
+const getHpn = (item_details) => {
+  if(item_details.hpn2 && item_details.halfLg){
+    return item_details.hpn2
+  }else{
+    return item_details.hpn
+  }
 
+}
 /**
  * @description: 置顶
  * @param {Boolean} type true取消置顶, false置顶
@@ -162,5 +178,22 @@ const toggle_downMenu = () => {
 }
 .ellipsis{
   color: var(--q-gb-t-c-3);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  .play-btn {
+    text-align: center;
+    padding: 3px 8px;
+    line-height: 15px;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+    margin-right: 6px;
+  }
+  .play-btn {
+    color: #ffffff;
+  }
 }
 </style>
