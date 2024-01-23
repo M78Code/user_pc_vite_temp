@@ -79,7 +79,7 @@ import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { i18n_t,UserCtr,format_money2} from "src/output/index.js"
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 //是否失效
 const lock_btn = ref(false)
 

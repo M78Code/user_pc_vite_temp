@@ -1,1 +1,0 @@
-export { default as MenuData } from "src/core/menu-pc-yazhou/menu-data-class.js";

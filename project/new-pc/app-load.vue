@@ -205,7 +205,7 @@ onUnmounted(() => {
 });
 </script>
 <script>
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 export default {
   watch: {
   // 监听路由变化 并记录到layout类中

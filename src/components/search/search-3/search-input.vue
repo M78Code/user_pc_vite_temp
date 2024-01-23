@@ -52,7 +52,7 @@
 <script setup>
 import { defineComponent, ref, nextTick, onMounted } from 'vue'
 import { IconWapper } from 'src/components/icon/index.js'
-import {SearchPCClass} from 'src/output/project/common/pc-common.js'
+import {SearchPCClass} from 'src/output/project/index.js'
 import { i18n_t } from "src/boot/i18n.js"
 import {store, mutations} from "./index";
 import { useRoute, useRouter } from 'vue-router'

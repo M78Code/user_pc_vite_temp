@@ -67,7 +67,7 @@
 <script setup>
 import { ref } from "vue"
 import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import { IconWapper } from 'src/components/icon'

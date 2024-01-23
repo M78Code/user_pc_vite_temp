@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import { compute_local_project_file_path } from "src/output/index.js";
 import { ref, reactive,toRef, toRefs } from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
