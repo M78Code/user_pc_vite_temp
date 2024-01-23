@@ -88,32 +88,10 @@ export default defineComponent({
     // 获取赛马类赔率所需数据
     const item_data = ref({})
     
-    const match = MatchListData.get_quick_mid_obj_ref(props.current_match.mid)
-
+    const match = ref({})
+    
     const sub_menu_type = computed(()=>{
       return VR_CTR.state.curr_sub_menu_type
-    })
-
-    // 切换菜单时，加载赛马所需数据
-    watch(sub_menu_type, ()=>{
-      console.log('sub_menu_type', sub_menu_type);
-      
-      if(sub_menu_type !== '1001' && sub_menu_type !== '1004' && match?.value){
-        item_data.value = {
-          team: match.value.teams.map(((item, index)=>{return { teamName: item, teamId: index + 1 }})),
-          plays: match.value?.hpsData[0]?.hps
-        }
-
-        lodash.each(item_data.value.plays, (item) => {
-          lodash.each(lodash.get(item,'hl.ol'), (ol_item, index) => {
-            ol_item.teamId = index + 1;
-          })
-        })
-        
-        get_odds()
-      }
-    }, {
-      deep: true
     })
 
     const get_odds = () => {
@@ -132,7 +110,31 @@ export default defineComponent({
       })
       play_obj.value = play_obj1
     };
-    
+
+    // 切换菜单时，加载赛马所需数据
+    watch(() => props.current_match.mid, ()=>{
+      match.value = MatchListData.get_quick_mid_obj_ref(props.current_match.mid)?.value;
+      console.log('sub_menu_type', match.value, sub_menu_type.value);
+      
+      if(sub_menu_type.value != '1001' && sub_menu_type.value != '1004' && match?.value){
+        item_data.value = {
+          team: match.value.teams.map(((item, index)=>{return { teamName: item, teamId: index + 1 }})),
+          plays: match.value?.hpsData[0]?.hps
+        }
+
+        lodash.each(item_data.value.plays, (item) => {
+          lodash.each(lodash.get(item,'hl.ol'), (ol_item, index) => {
+            ol_item.teamId = index + 1;
+          })
+        })
+        
+        get_odds()
+      }
+    }, {
+      deep: true,
+      immediate: true
+    })
+
     return {
       hsw_obj,
       play_obj2,
