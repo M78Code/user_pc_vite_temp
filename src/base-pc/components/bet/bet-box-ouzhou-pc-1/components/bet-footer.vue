@@ -20,6 +20,12 @@
     <div v-show="false">  {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{i18n_t.locale}}-{{UserCtr.user_version}}</div>
 
     <div class="bet-footer">
+
+        <div class="bet-state" v-if="set_special_state(BetData.bet_data_class_version)">
+            <div class="w-100 f-c-c bet-title bet-error">
+                {{i18n_t("error_msg_info.0400477.client_msg1")}}
+            </div>
+        </div>
         <div class="bet-state" v-if="!BetData.is_bet_single && BetData.bet_s_list.length < BetData.mix_min_count">
             <div class="w-100 f-c-c bet-title bet-error">
                 {{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}
@@ -32,7 +38,7 @@
         </div>
         <div class="f-b-c bet-content" v-if="BetViewDataClass.bet_order_status == 1" >
             <div class="font16 font400 f-c-c bet-bet-cancel" @click="set_bet_cancel">{{ i18n_t("bet.bet_cancel") }}</div>
-            <div class="font16 font600 f-c-c bet-place-bet" @click="set_bet_submit" :class="{ 'bet-expired': BetViewDataClass.bet_expired}" >{{ i18n_t("ouzhou.bet.place_bet") }}</div>
+            <div class="font16 font600 f-c-c bet-place-bet" @click="set_bet_submit" :class="{ 'bet-expired': BetViewDataClass.bet_expired, 'disabled': set_special_state(BetData.bet_data_class_version)}" >{{ i18n_t("ouzhou.bet.place_bet") }}</div>
         </div>
         <div class="f-b-c bet-content" v-else>
             <div class="font16 font400 f-c-c bet-bet-cancel" @click="set_retain_selection">{{ i18n_t("bet.save_item") }}</div>
@@ -47,12 +53,19 @@
 
 <script setup>
 import {computed} from "vue"
+import lodash_ from "lodash"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { i18n_t,UserCtr ,format_money2, formatMoney} from "src/output/index.js"
+
+// 是否可以投注
+let is_bet_single = true
+// 是否支持串关
+let is_bet_special = true
+
 
 // 提交投注信息
 const set_bet_submit = () => {
@@ -119,6 +132,58 @@ const total = computed(()=> state =>{
     return sum
 })
 
+
+// status 是响应式的 可以用于重新计算
+const set_special_state = computed(()=> status => {
+  is_bet_single = true
+  is_bet_special = true
+  let bet_list = []
+  let is_repeat_match = true
+  if( BetData.is_bet_single ) {
+    bet_list = lodash_.cloneDeep(BetData.bet_single_list)
+    let bet_obj = lodash_.get(bet_list,'[0]', {})
+    // 单关 电竞赛事 不支持串关 串关切换按钮置灰
+    if(!bet_obj.ispo && bet_obj.bet_type == 'esports_bet'){
+      is_bet_special = false
+    }
+  } else {
+    bet_list = lodash_.cloneDeep(BetData.bet_s_list)
+    // 判断有没有相同的赛事 有则不能投注 false 没有 true 有
+    is_repeat_match = lodash_.uniqBy(bet_list, 'matchId').length !== bet_list.length
+    console.log('is_repeat_match----------===================', is_repeat_match)
+    // 获取商户配置的 串关投注项
+    let min_series = lodash_.get(UserCtr.user_info,'configVO.minSeriesNum',2)
+    let man_series = lodash_.get(UserCtr.user_info,'configVO.maxSeriesNum',10)
+    if(is_repeat_match) {
+        is_bet_single = false
+        return true
+    }
+    // 不能超过 用户设置的最大最小串关数量
+    if(min_series > bet_list.length || man_series < bet_list.length){
+      // 不允许投注
+      is_bet_single = false
+      return true
+    }
+  } 
+
+  for(let item of  bet_list) {
+    // 盘口已关闭 盘口关闭不允许投注
+    if(item.ol_os != 1 || item.hl_hs != 0 || item.mid_mhs != 0){
+      ref_data.show_title = i18n_t('bet.close')
+      // 不允许投注
+      is_bet_single = false
+      return true
+    }
+    // 当前投注项中混入不能串关的投注项
+    if(item.is_serial && !BetData.is_bet_single ){
+      // 不允许投注
+      is_bet_single = false
+      return true
+    }
+  }
+  return false
+})
+
 </script>
 
 <style scoped lang="scss">
@@ -159,6 +224,10 @@ const total = computed(()=> state =>{
         border-radius: 2px;
         background: var(--q-gb-bg-c-1) ;
         color: var(--q-gb-t-c-1);
+        &.disabled{
+            background: var(--q-gb-bg-c-19);
+            pointer-events: none;
+        }
     }
 
     .bet-state {
