@@ -20,10 +20,6 @@
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video_gray.png`" alt="" class="icon-video" />
           </div>
           <!-- 显示动画按钮 -->
-          <div v-if="(status == 1 || status == 2) && lodash.get(UserCtr, 'user_info.ommv')"
-            @click="handleChange('animation')">
-            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/animation_gray.png`" alt="" class="icon-animation" />
-          </div>
           <img v-if="is_collect" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`" alt=""
             @click="collect_click" />
           <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collect.png`" alt="" @click="collect_click" />
@@ -681,8 +677,7 @@ const getLongTime = computed(() => {
   background-color: #D9D9D9;
 }
 
-.icon-video,
-.icon-animation {
+.icon-video, .icon-animation {
   width: 16px !important;
   height: 16px !important;
 }
