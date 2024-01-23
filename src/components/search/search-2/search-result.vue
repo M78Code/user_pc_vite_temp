@@ -310,8 +310,17 @@ const expand_team = ref(true)
 function bowling_click(match) {
 	search.insert_history(match.mhn + 'vs' + match.man)
 	update_show_type('none')
-	const { mid, tid, csid } = match
-	router.push(`/details/${mid}/${csid}/${tid}`)
+	const { mid, tid, csid,ms } = match
+	router.push({
+      name: 'details',
+      params: {
+        mid,
+        tid,
+        csid
+      },
+      query: {ms}  // 传多个ms  提前判断是否需要显示右侧
+    });
+	// router.push(`/details/${mid}/${csid}/${tid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,
@@ -327,8 +336,18 @@ const scrollRef = ref(null)
 function match_click(match) {
 	if(!match) return;
 	search.insert_history(match.name)
-	const { mid, tid, csid } = match.matchList[0]
-	router.push(`/details/${mid}/${csid}/${tid}`)
+	const { mid, tid, csid,ms } = match.matchList[0]
+	MatchDetailCalss.set_ms(ms)  // 存储ms  欧洲详情用
+	// router.push(`/details/${mid}/${csid}/${tid}`)
+	router.push({
+      name: 'details',
+      params: {
+        mid,
+        tid,
+        csid
+      },
+      query: {ms}  // 传多个ms  提前判断是否需要显示右侧
+    });
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,

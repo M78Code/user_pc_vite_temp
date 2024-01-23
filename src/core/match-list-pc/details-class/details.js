@@ -52,7 +52,7 @@ export default {
         tid,
         csid
       },
-      query: route_query
+      query: {...route_query,ms}  // 传多个ms  提前判断是否需要显示右侧
     });
     if(go_detail_type != 'no_switch' || ((varl || vurl) && mms == 2 && get_match_status(ms) == 1)){
       // 供右侧数据加载使用
