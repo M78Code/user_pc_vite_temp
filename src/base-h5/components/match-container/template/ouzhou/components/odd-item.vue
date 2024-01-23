@@ -187,7 +187,11 @@ const set_old_submit = () => {
   }
 
   let bet_type = 'common_bet'
-  if (MenuData.is_vr()) {
+  if (MenuData.is_esports()) {
+    bet_type = 'esports_bet'
+  } else if (MenuData.is_kemp()) {
+    bet_type = 'guanjun_bet'
+  } else if (MenuData.is_vr()) {
     bet_type = 'vr_bet'
   }
   let other = {

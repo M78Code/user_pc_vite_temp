@@ -36,6 +36,11 @@ export const get_virtual_sport_list = (params, config={}, url = "/v1/m/virtualMa
   return http.post(`${prefix}${url}`, params, config);
 }
 
+//虚拟体育赛事列表-pc
+export const get_virtual_sport_list_pc = (params, config={}, url = "/v1/w/virtualProMatches") => {
+  return http.post(`${prefix}${url}`, params, config);
+}
+
 // 虚拟赛事详情获取统计数据H5  (后端 star负责)
 export const get_virtual_match_detail_count = (params, config={}, url = "/v1/m/matchDetail/getVirtualMatchDetailCount") => http.get(`${prefix}${url}`, params, config);
 

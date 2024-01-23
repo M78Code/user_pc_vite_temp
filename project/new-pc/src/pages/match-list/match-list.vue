@@ -17,7 +17,7 @@
       <div class="fold-btn" @click="match_list_card.test_log_data()">
         打印数据
       </div>
-      {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--length--- {{ match_list_card_key_arr.length }}
+      <!-- {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--length--- {{ match_list_card_key_arr.length }} -->
     </div>
     <!--  :class="{ 'no-data': load_data_state != 'data' }" -->
     <div class="scroll-fixed-header">
@@ -94,7 +94,7 @@
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
         </template>
-        <match-list-card v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :class="card_key" />
+        <match-list-card v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key"/>
         <template v-slot:after>
           <div style="height:15px"></div>
           <div class="pager-wrap row justify-end">
@@ -170,7 +170,7 @@ function change_version(params) {
   //TODO: 切换专业/新手版 1 专业版 2 新手版
   const type = params.id;
   useMittEmit(MITT_TYPES.EMIT_SHOW_SKELETON_DIAGRAM, true)
-  UserCtr.set_standard_edition(params)
+  UserCtr.set_standard_edition(params.id)
   useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
   let timer = setTimeout(() => {
         // VirtualList.set_is_show_ball(true)
@@ -194,6 +194,9 @@ function change_version(params) {
  */
 function change_hot(params) {
   // TODO: 修改热门 0热门/1时间
+  console.log(params, "TODO: 修改热门 0热门/1时间");
+  UserCtr.set_sort_type(params == 0 ? 1 : 2)
+  on_refresh();
 }
 
 /**

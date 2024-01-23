@@ -47,7 +47,7 @@ class BetData {
     // 投注记录数量
     this.bet_record_count = 0
     // 是否勾选常用金额
-    this.is_checked_regular_amount = true
+    this.is_regular_amount = true
 
     // 是否为合并模式
     this.is_bet_merge = false;
@@ -67,6 +67,8 @@ class BetData {
     this.is_virtual_handle = false;
     // 处于活动的投注项子项
     this.active_index = 0
+    // 复合串关类型
+    this.special_type = false
 
     //==============================================投注之前 无注单ID=============
     // 虚拟投注对象  VR 菜单下的那种 
@@ -221,6 +223,12 @@ this.bet_appoint_ball_head= null */
     }
   }
 
+  // 复合串关类型 
+  set_special_type(val){
+    this.special_type = val
+    this.set_bet_data_class_version()
+  }
+
   // 根据缓存信息 设置数据
   set_loacl_config(){
     // 获取数据缓存
@@ -280,11 +288,11 @@ this.bet_appoint_ball_head= null */
   */
   set_bet_is_accept(val) {
     this.bet_is_accept = val
-    BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet.bet_upd"})
+    // BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet.bet_upd"})
 
-    setTimeout(()=>{
-      BetViewDataClass.set_bet_before_message({code:'',message:""})
-    },5000)
+    // setTimeout(()=>{
+    //   BetViewDataClass.set_bet_before_message({code:'',message:""})
+    // },5000)
 
     this.set_bet_data_class_version()
   }
@@ -293,7 +301,7 @@ this.bet_appoint_ball_head= null */
    * 设置 是否使用常用金额
    */
   set_regular_amount() {
-    this.is_checked_regular_amount = !this.is_checked_regular_amount
+    this.is_regular_amount = !this.is_regular_amount
     this.set_bet_data_class_version()
   }
 
@@ -458,11 +466,14 @@ this.bet_appoint_ball_head= null */
           this.bet_single_list.splice(index_,1)
         }
         this.bet_single_list.push(bet_refer_obj)
+        this.set_active_index( this.bet_single_list.length)
       } else {
         this.bet_single_list = [bet_refer_obj]
+        this.set_active_index(0)
       }
       // 单关数据收集器
       this.single_list_copy.push(bet_refer_obj)
+      
     } else {
       // 串关
       
@@ -497,6 +508,8 @@ this.bet_appoint_ball_head= null */
 
     // 设置投注项id 页面选中
     this.set_bet_oid_list()
+
+    this.set_options_state()
 
     this.set_bet_data_class_version()
   }
@@ -612,7 +625,7 @@ this.bet_appoint_ball_head= null */
   // 设置 切换单关/串关切换
   set_is_bet_single(state) {
     // 单关 切换到串关 / 
-    if (this.is_bet_single) {
+    if (this.is_bet_single && !this.is_bet_merge) {
       // 串关数据 == 单关数据 // 同赛事不能大于一个投注项
       if(!this.bet_s_list.length){
         this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
@@ -627,6 +640,25 @@ this.bet_appoint_ball_head= null */
       })
     }
 
+    if (this.is_bet_single && this.is_bet_merge) {
+      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
+      getSeriesCountJointNumber((code, data) => {
+        if (code == 200) {
+            BetViewDataClass.set_bet_special_series(data)
+
+            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+        }
+      })
+    }
+
+    if (!this.is_bet_single && this.is_bet_merge) {
+      this.bet_single_list = lodash_.cloneDeep(this.bet_s_list)
+    }
+
+    if (!this.is_bet_single && !this.is_bet_merge) {
+      this.bet_single_list = [lodash_.cloneDeep(this.bet_s_list).pop()]
+    }
+
     let is_bet_single = !this.is_bet_single
     // 有设置值 则使用设置的值
     if(state){
@@ -638,10 +670,11 @@ this.bet_appoint_ball_head= null */
     }
     // true 单关 false 串关
     this.is_bet_single = is_bet_single
-    this.switch_bet_query_bet_amount()
-  
+    // this.switch_bet_query_bet_amount()
+    // this.set_bet_oid_list()
     this.set_bet_data_class_version()
   }
+
 
   // 设置单关/单关合并 切换
   set_is_bet_merge(merge) {
@@ -662,7 +695,7 @@ this.bet_appoint_ball_head= null */
     }
     this.is_bet_merge = is_merge
 
-    this.switch_bet_query_bet_amount()
+    // this.switch_bet_query_bet_amount()
 
     this.set_bet_data_class_version()
   }
@@ -940,7 +973,8 @@ this.bet_appoint_ball_head= null */
     }else{
       this.bet_s_list[index] = obj
     }
-    this.set_bet_data_class_version()
+
+    this.set_options_state()
   }
 
   // 切换单关、串关、合并时调用获取限额
@@ -961,8 +995,8 @@ this.bet_appoint_ball_head= null */
       }
     }
     // 串关要大于1条才能去请求限额
-    if(!this.is_bet_single && (this.bet_s_list.length > 1 || this.bet_single_list.length > 1)){
-      let obj = this.bet_single_list.find(item => ['esports_bet','vr_bet'].includes(item.bet_type)) || {}
+    if(!this.is_bet_single && (this.bet_s_list.length > 1)){
+      let obj = this.bet_s_list.find(item => ['esports_bet','vr_bet'].includes(item.bet_type)) || {}
       // 串关 在vr或者电竞里面 
       if(obj.bet_type){
         get_query_bet_amount_esports_or_vr()
@@ -1028,6 +1062,8 @@ this.bet_appoint_ball_head= null */
         get_query_bet_amount_common()
       }
     }
+
+    this.set_options_state()
     
   }
 
@@ -1097,7 +1133,7 @@ this.bet_appoint_ball_head= null */
               return
             }
             if(ws_ol_obj.ov){
-              clearTimeout(time_out)
+              // clearTimeout(time_out)
               // "odds": item.odds,  // 赔率 万位
               // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
               //  红升绿降
@@ -1119,11 +1155,6 @@ this.bet_appoint_ball_head= null */
               // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
               ol_obj.hl_hs = item.hs
 
-              // 盘口变更中 需要显示盘口变更的状态
-              if(item.hs == 11 && ws_ol_obj.os == 1){
-                this.set_bet_is_accept('mark_change')
-              }
-
               // 获取新的基准分
               ol_obj.mark_score = get_score_config(ol_obj)
               // 赔率数据
@@ -1132,7 +1163,8 @@ this.bet_appoint_ball_head= null */
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
 
               // 5秒后清除 红升绿降
-              time_out = setTimeout(()=>{
+              // time_out = setTimeout(()=>{
+              setTimeout(()=>{
                 ol_obj.red_green = ''
                 this.set_ws_message_bet_info(ol_obj,ol_obj_index)
               },3000)
@@ -1175,7 +1207,8 @@ this.bet_appoint_ball_head= null */
 
       this[single_name] = array_list
 
-      this.set_bet_data_class_version()
+      this.set_options_state()
+
     }
   }
 
@@ -1187,19 +1220,71 @@ this.bet_appoint_ball_head= null */
     // console.error('BetViewDataClass.set_bet_c201_change',BetViewDataClass.is_finally)
     // 订单已经完成 不需要去设置 用户点击了 保留选项 或者投注的确定
     if(!BetViewDataClass.is_finally){
-      // 单关 单注 简单 粗暴 其他的后面做
-      if(status == 1){
-        BetViewDataClass.set_bet_before_message({code:200,message:"bet_message.success"})
-        BetViewDataClass.set_bet_order_status(3)
-      }
-      if(status == 2){
-        BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet_message.error"})
-        BetViewDataClass.set_bet_order_status(4)
-      }
+      if(BetData.is_bet_single){
+        // 单关 单注 简单 粗暴 其他的后面做
+        if(status == 1){
+          BetViewDataClass.set_bet_before_message({code:200,message:"bet_message.success"})
+          BetViewDataClass.set_bet_order_status(3)
+        }
+        if(status == 2){
+          BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet_message.error"})
+          BetViewDataClass.set_bet_order_status(4)
+        }
 
-      if(this.is_bet_single && [1,2].includes(status*1)){
-        BetViewDataClass.orderNo_bet_obj_config({orderNo: obj.orderNo,status: obj.status})
+        if(this.is_bet_single && [1,2].includes(status*1)){
+          BetViewDataClass.orderNo_bet_obj_config({orderNo: obj.orderNo,status: obj.status})
+        }
+      } else {
+        BetViewDataClass.orderNo_bet_single_obj({orderNo: obj.orderNo, status: obj.status})
       }
+    }
+  }
+
+  // 设置投注项状态
+  set_options_state() {
+    let single_name = ''
+    if(this.is_bet_single){
+      single_name = 'bet_single_list'
+    } else {
+      single_name = 'bet_s_list'
+    }
+    const array_list = lodash_.cloneDeep(lodash_.get(this,single_name))
+    // ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
+    // hl_hs: hl_obj.hs || ol_obj._hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+    // mid_mhs: ol_obj._mhs, // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
+    // 预期行为:
+    // 锁盘: 投注单上跳出: 赔率更新中 提示文字
+    // 封盘: 投注单上跳出: 投注项目不存在 提示文字 且投注按钮反灰
+    // 关盘: 投注单上跳出: 投注项目不存在 提示文字 且投注按钮反灰
+
+    // 锁盘
+    let obj = array_list.find( item => item.mid_mhs == 11 || item.hl_hs == 11 || item.ol_os == 4 ) || {}
+    if(obj.playOptionsId){
+      BetViewDataClass.set_bet_expired(false)
+      BetViewDataClass.set_bet_before_message({code:200, message:"bet.bet_upd"})
+      this[single_name] = array_list
+      this.set_bet_data_class_version()
+      return
+    }
+
+    // 封盘 关盘
+    let obj_ = array_list.find( item => [1,2].includes(item.mid_mhs *1) || [1,2].includes(item.hl_hs *1) || [2,3].includes(item.ol_os *1) ) || {}
+    if(obj_.playOptionsId){
+      BetViewDataClass.set_bet_expired(true)
+      BetViewDataClass.set_bet_before_message({code:"0402001", message:"bet_message.m_0402001"})
+      this[single_name] = array_list
+      this.set_bet_data_class_version()
+      return
+    }
+
+    // 开盘
+    let obj_o = array_list.find( item => item.mid_mhs == 0 && item.hl_hs == 0 && item.ol_os == 1 ) || {}
+    if(obj_o.playOptionsId){
+      BetViewDataClass.set_bet_expired(false)
+      BetViewDataClass.set_bet_before_message({})
+      this[single_name] = array_list
+      this.set_bet_data_class_version()
+      return
     }
   }
 }

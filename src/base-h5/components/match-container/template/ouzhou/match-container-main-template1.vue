@@ -2,7 +2,7 @@
  * @Description: ouzhou-h5 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
-  <div class="match-container component match-container-main-template1" 
+  <div class="component match-container-main-template1 match-container" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 体育类别 -->
@@ -10,22 +10,31 @@
         <div>
           <!-- <SportIcon size="20"  :status="false" :sport_id="String(Number(match.csid ) + 100)" />
           <span>{{ match.csna }}</span> -->
-          <SportIcon size="20"  :status="false" :sport_id="[190, 191].includes(+MenuData.menu_mi.value)?menu_sport.menu_sport_id:String(Number(match.csid ) + 100)" />
+          <SportIcon size="20"  :status="false" :sport_id="[190, 191].includes(+MenuData.menu_mi.value)?menu_sport.menu_sport_id:MenuData.is_esports()?`2${match.csid}`:String(Number(match.csid ) + 100)" />
           <span>{{[190, 191].includes(+MenuData.menu_mi.value) ? menu_sport.menu_sport_name || match.csna : match.csna }}</span>
         </div>
         <div class="select_time">
           <span @click.stop>
             <q-btn-dropdown flat outline style="color: #FF7000"  padding="0" :label="select_label"
-              dropdown-icon="expand_more" content-class="select_time_style">
-              <q-list>
-                <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
-                   :class="{active: select_play === item.hpid}" clickable v-close-popup >
-                  <q-item-section>
-                    <q-item-label>{{ item.label || i18n_t(`ouzhou.match.play_map.${item.hpid}`)}}</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
+              dropdown-icon="expand_more" content-class="select_time_style" v-model="showDropdown"
+              :persistent="true"
+            >
             </q-btn-dropdown>
+            <!-- <span>{{ select_label }}</span>
+            <q-icon name="expand_more"></q-icon> -->
+            <Transition>
+              <div class="dropdown-list q-menu" v-show="showDropdown">
+                <q-list>
+                  <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
+                      :class="{active: select_play === item.hpid}"
+                      >
+                    <q-item-section @click.stop="on_select_play(item)">
+                      <q-item-label>{{ item.label || i18n_t(`ouzhou.match.play_map.${item.hpid}`)}}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+            </Transition>
           </span>
         </div>
       </header>
@@ -164,9 +173,11 @@
                         standard: !show_newer_edition && !is_results,
                         result: is_results
                       }">
-                        <ImageCacheLoad :csid="match.csid" :path="match.mhlu" type="home" ></ImageCacheLoad>
+                        <!-- 网球csid: 5   兵乓球csid: 8-->
+                        <ImageCacheLoad :class="{ 'team_icon2': match.mhlu[1] && [5].includes(+match.csid)}" :csid="match.csid" :path="match.mhlu" type="home" ></ImageCacheLoad>
+                        <ImageCacheLoad v-if="match.mhlu.length > 1 && [5].includes(+match.csid)" :csid="match.csid" :path="match.mhlu[1]" type="home" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
-                          <div class="right-box">
+                          <div class="right-content">
                             <!-- 红、黄牌， 发球方绿点 -->
                             <div class="team-left" v-if="home_red_score || home_yellow_score">
                               <!-- 红牌 -->
@@ -208,9 +219,11 @@
                       </div>
                       <!--客队图片和名称-->
                       <div class='team-title-container'>
-                        <ImageCacheLoad :csid="match.csid" :path="match.malu" type="away" ></ImageCacheLoad>
+                        <!-- 网球csid: 5   兵乓球csid: 8-->
+                        <ImageCacheLoad :class="{ 'team_icon2': match.mhlu[1] && [5].includes(+match.csid) }" :csid="match.csid" :path="match.malu" type="away" ></ImageCacheLoad>
+                        <ImageCacheLoad v-if="match.malu.length > 1 && [5].includes(+match.csid)" :csid="match.csid" :path="match.malu[1]" type="home" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
-                          <div class="right-box">
+                          <div class="right-content">
                             <!-- 红、黄牌， 发球方绿点 -->
                             <div class="team-left" v-if="away_red_score || away_yellow_score">
                               <!-- 红牌 -->
@@ -314,6 +327,9 @@ export default {
     CountingDownStart,
     CountingDownSecond,
   },
+  data(){
+    return {}
+  },
   setup (ctx) {
     const match_hpid = ref('')
     const hps_play_data = ref([])
@@ -371,15 +387,23 @@ export default {
     // 切换玩法赔率
     const on_select_play = (item) => {
       const { hps, csid, mid, hn } = ctx.match_of_list
-      select_play.value = item.hpid
+      // select_play.value = item.hpid
       select_label.value = item.label
       MatchResponsive.set_match_hpid(item.hpid, csid)
+      showDropdown.value = false;
     }
+    const showDropdown = ref(false)
+
+    // 是否元数据
+    const is_compute_origin = computed(() => {
+      return MatchResponsive.is_compute_origin.value
+    })
 
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
-      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site, MenuData, select_label
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site, MenuData, is_compute_origin, select_label,
+      showDropdown,
     }
   }
 }
@@ -419,6 +443,24 @@ export default {
     color: #FF7000;
     justify-content: flex-end;
     padding-right: 5px;
+    font-size: .13rem;
+    position: relative;
+    .dropdown-list{
+      position: absolute !important;
+      z-index: 999;
+      background-color: #fff;
+      color: #414655;
+      font-size: 12px;
+      right: 0;
+      top: 100%;
+      .active{
+        color: #FF7000;
+      }
+      .z-index{
+        position: relative;
+        z-index: 999;
+      }
+    }
     > img {
       padding-left: 8px;
     }
@@ -945,6 +987,13 @@ export default {
           display: flex;
           align-items: center;
         }
+        .team_icon2{
+          width: 0.18rem;
+          height: 0.18rem;
+          margin-right:-8px;
+          flex-shrink: 0;
+          justify-content: center;
+        }
 
         &.simple {
           width: 1.72rem;
@@ -971,7 +1020,7 @@ export default {
           display: flex;
           align-items: center;
           flex-direction: row-reverse;
-          .right-box{
+          .right-content{
             flex: 1;
             display: flex;
             align-items: center;
@@ -1200,7 +1249,7 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      max-width: 70px;
+      max-width: 74px;
     }
   }
 
@@ -1434,7 +1483,7 @@ export default {
   }
 
   .mfo-title {
-    margin-right: .05rem;
+    margin-right: .03rem;
   }
 
   .flag-chuan {

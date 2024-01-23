@@ -31,7 +31,7 @@
     <div class="detail-container-position">
       <div class="match-detail-tabs-header">
         <div class="separator" style="height: 1px; background-color: #F5F5F5;"></div>
-        <div class="match-detail-tabs" v-if="[1,2,'1','2'].includes(match_detail?.csid)">
+        <div class="match-detail-tabs" v-if="[1,2,'1','2'].includes(match_detail?.csid) && !['BE', 'C01', 'OD'].includes(match_detail?.cds)">
           <div
             :class="[{ 'tab-active': tab == 'betting' }, 'tabs-item']"
             @click="tabChange('betting')"
@@ -67,18 +67,20 @@
           <!-- <div class="match-detail-odds-bottom"></div> -->
         </q-tab-panel>
         <q-tab-panel name="event_analysis">
-          <analysisFootball
+          <template v-if="IS_FOR_NEIBU_TEST">
+            <analysisFootball
               v-if="match_detail.csid == 1"
               :active_tab="detail_event_tabs_value"
               :match_odds_info="match_odds_info"
-          ></analysisFootball>
-          <analysisBasketball
+            ></analysisFootball>
+            <analysisBasketball
               v-if="match_detail.csid == 2"
               :active_tab="detail_event_tabs_value"
               :match_odds_info="match_odds_info"
               :match_detail="match_detail"
-          ></analysisBasketball>
-<!--           <event_analysis :match_odds_info="match_odds_info" :match_detail="match_detail" :active_tab="detail_event_tabs_value" />-->
+            ></analysisBasketball>
+          </template>
+          <event_analysis v-else :match_odds_info="match_odds_info" :match_detail="match_detail" :active_tab="detail_event_tabs_value" />
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -107,6 +109,9 @@ import infoRules from "src/base-h5/components/details/components/info-rules.vue"
 // 欧洲4期 赛事分析
 import analysisFootball from "./analysis/football/index.vue"
 import analysisBasketball from "./analysis/basketball/index.vue"
+
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG ;
 export default {
   components:{
     detail_header_tem0,
@@ -166,6 +171,8 @@ export default {
     })
 
     provide('match_detail',match_detail)
+    provide('match_odds_info',match_odds_info)
+    provide('active_tab',detail_event_tabs_value)
 
     return{
       label,
@@ -196,7 +203,8 @@ export default {
       mid,
       MatchDataWarehouseInstance,
       get_info_show,
-     }
+      IS_FOR_NEIBU_TEST
+    }
   } 
 }
 
@@ -235,7 +243,7 @@ export default {
   .change-header-fix {
     width: 100vw;
     position: fixed;
-    top: 49px;
+    top: .5rem;
     z-index: 91;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   }

@@ -120,6 +120,8 @@
     "quarter": "Primeiro trimestre"
   },
   "bet": {
+    "edit_success": "Mudança de quota efectiva!",
+    "edit_fail": "Alteração de quotas falhada! ",
     "account_balance": "Saldo da conta",
     "agree_change2": "Aceite as mudanças e aposta",
     "agree_change": "Aceite as mudanças",

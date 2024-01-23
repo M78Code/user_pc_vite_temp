@@ -299,7 +299,7 @@ export default {
     background-color: var(--q-gb-bg-c-2);
     // opacity: 0.8;
     box-shadow: 0px 0px .4rem 0.01rem var(--q-gb-bg-c-2);
-    position: absolute;
+    position: sticky;
     right: 0;
     // left: 0;
   }

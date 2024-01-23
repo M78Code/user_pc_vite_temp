@@ -613,6 +613,8 @@ export default {
   border-radius: 2px;
   color: var(--q-gb-bd-c-13) !important;
   font-size: 12px;
+  // 非嵌套模式
+  margin: 0 5px;
   .more-time,
   .both-item {
     display: flex;

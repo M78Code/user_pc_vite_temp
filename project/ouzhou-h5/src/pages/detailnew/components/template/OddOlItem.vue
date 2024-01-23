@@ -109,21 +109,27 @@ const txt_ol_name = (function(){
 })()
 
 const isLock = computed(() => {
+  // console.log("props.value====", props.value)
   if (props.value) {
     // @ts-ignore
     const { _mhs,_hs } = props.value
     if(_mhs == 0 || _mhs == 11){
       if( _hs == 0 || _hs == 11){
         if(props.value.os == 1){
-          return Number(ov) == 0 
+          return Number(ov) == 0
         }
       }
     }
   }
   return true
 })
+
 function onClick(){
   if(isLock.value){
+    return
+  }
+  // console.log("lodash.get(props.value, 'result')", lodash.get(props.value, 'result'))
+  if(lodash.get(props.value, 'result')){
     return
   }
   common.betClick(props.value)
@@ -159,6 +165,7 @@ function resetStatus() {
 
 .component.odd-ol-item{
   width: 100%;
+  height: .58rem;
   display: flex;
   align-items: center;
   justify-content: center;

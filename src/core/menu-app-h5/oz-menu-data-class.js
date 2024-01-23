@@ -21,6 +21,7 @@ import {
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 const { IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG ;
 import STANDARD_KEY from "src/core/standard-key";
+import { api_common } from "src/api";
 const menu_h5_key = STANDARD_KEY.get("menu_h5_key");
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 
@@ -56,6 +57,12 @@ class MenuData {
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = '';
     this.current_lv_2_menu_mi = ref('0');
+    //电竞日期
+    this.current_lv_3_menu = {
+      field1:"",
+      menuType:""
+    };
+    this.date_tab_index = 0;
     this.menu_lv_mi_lsit = []
     // 赛果 日期/赛中
     this.result_menu_api_params = {}
@@ -91,7 +98,7 @@ class MenuData {
   
   // 刷新后 获取缓存数据
   set_menu_h5_key_refresh() {
-    const notItem = ['menu_type','current_lv_2_menu_mi','update_time']
+    const notItem = ['menu_type','current_lv_2_menu_mi','current_lv_2_menu_i','update_time']
     // 获取数据缓存
     let session_info = SessionStorage.get(menu_h5_key);
     if (!session_info) {
@@ -122,16 +129,18 @@ class MenuData {
     // const session_info = SessionStorage.get(menu_h5);
     let session_info = LocalStorage.get(menu_h5);
     //常规球种
-    // menu_list = IS_FOR_NEIBU_TEST?[...BaseData.left_menu_base_mi,{mi:400,ct:1},{mi:2000,ct:0},{mi:300,ct:0}]:[...BaseData.left_menu_base_mi,{mi:400,ct:1}];
+    menu_list = IS_FOR_NEIBU_TEST?[...BaseData.left_menu_base_mi,{mi:400,ct:1},{mi:2000,ct:0},{mi:300,ct:0}]:[...BaseData.left_menu_base_mi,{mi:400,ct:1}];
     //二期测试环境全放开
-    menu_list = [...BaseData.left_menu_base_mi,{mi:400,ct:1},{mi:2000,ct:0},{mi:300,ct:0}];
+    // menu_list = [...BaseData.left_menu_base_mi,{mi:400,ct:1},{mi:2000,ct:0},{mi:300,ct:0}];
     menu_arr = menu_list.map((item)=>{return +item.mi});
     //热门球种
-    top_events_list = (data.find((item)=>{return item.mi==5000}).sl || []).filter((n)=>{return menu_arr.includes(+n.mi-4900)});
+    let events_list = data.find((item)=>{return item.mi==5000}) || {}
+    top_events_list = (events_list.sl || []).filter((n)=>{return menu_arr.includes(+n.mi-4900)});
 
     //冠军
     // champion_list = (data.find((item)=>{return item.mi==400}).sl || []).filter((n)=>{return menu_arr.includes(+n.mi-300)});
-    champion_list = (data.find((item)=>{return item.mi==400}).sl || []);
+    let kemp_list = data.find((item)=>{return item.mi==400}) || {}
+    champion_list = (kemp_list.sl || []);
     //热门球种不存在取常规球种  1
     // top_events_list = top_events_list.length?top_events_list.map((item)=>{
     //   return {
@@ -179,11 +188,33 @@ class MenuData {
     this.top_events_list = top_events_list;
     this.champion_list = champion_list;
     if(session_info){//取session球种id
-      this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
-      this.menu_mi.value = session_info.menu_mi;
-      this.menu_csid = +session_info.menu_mi - 100
+      this.set_menu_mi_format(this.current_lv_1_menu_i,session_info.menu_mi);
+      // if(this.current_lv_1_menu_i == 2000){
+      //   this.current_lv_2_menu_mi.value = session_info.menu_mi;
+      //   this.current_lv_2_menu_i = session_info.menu_mi;
+      //   this.menu_mi.value = session_info.menu_mi;
+      //   this.menu_csid = +session_info.menu_mi - 2000
+      // }else{
+      //   this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
+      //   this.current_lv_2_menu_mi.value = `${session_info.menu_mi}${this.menu_type.value}`;
+      //   this.menu_mi.value = session_info.menu_mi;
+      //   this.menu_csid = +session_info.menu_mi - 100
+      // }
     }
     !arr && useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA,menu_list);
+  }
+  /**
+   * 
+   * @param {*} mi 
+   * @returns 
+   */
+  set_current_lv_3_menu(item){
+    this.current_lv_3_menu = {
+      ...this.current_lv_3_menu,
+      ...(item || {})
+    }
+    this.date_tab_index = item.index || 0;
+    this.update();
   }
   // 根据菜单id 获取对应的euid
   get_mid_for_euid(mi) {
@@ -270,26 +301,72 @@ class MenuData {
     this.update()
   }
   /**
+   * 重置2级菜单 csid
+   * @param {*} menu_type 
+   * @param {*} mi 
+   */
+  set_menu_mi_format(menu_type,mi){
+    console.log(menu_type)
+          //   this.current_lv_2_menu_mi.value = session_info.menu_mi;
+      //   this.current_lv_2_menu_i = session_info.menu_mi;
+      //   this.menu_mi.value = session_info.menu_mi;
+      //   this.menu_csid = +session_info.menu_mi - 2000
+    switch (menu_type) {
+      case 400:
+        this.current_lv_2_menu_i = +mi+300;
+        this.current_lv_2_menu_mi.value = +mi+300;
+        this.menu_mi.value = mi;
+        this.menu_csid = mi*1 - 100
+        break;
+      case 28:
+        this.current_lv_2_menu_i = `${mi}2`;
+        this.current_lv_2_menu_mi.value = `${mi}2`;
+        this.menu_mi.value = mi;
+        break;
+      case 2000:
+        this.current_lv_2_menu_i = mi;
+        this.current_lv_2_menu_mi.value = mi;
+        this.menu_mi.value = mi;
+        this.menu_csid = mi*1 - 2000;
+        break;
+      default:
+        this.current_lv_2_menu_i = `${mi}${menu_type}`;
+        this.current_lv_2_menu_mi.value = `${mi}${menu_type}`;
+        this.menu_mi.value = mi;
+        this.menu_csid = mi*1 - 100
+        break;
+    }
+  }
+  /**
    * 设置常规球种
    * @param {*} mi 
    */
   set_menu_mi(mi){
     this.menu_mi.value = mi;
-    if(this.menu_type.value == 400){//冠军
-      this.current_lv_2_menu_i = +mi+300;
-      this.current_lv_2_menu_mi.value = +mi+300;
-    }else{
-      this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
-      this.current_lv_2_menu_mi.value = `${mi}${this.menu_type.value}`;
-    }
-   
+    this.set_menu_mi_format(this.menu_type.value,mi);
+    // if(this.menu_type.value == 400){//冠军
+    //   this.current_lv_2_menu_i = +mi+300;
+    //   this.current_lv_2_menu_mi.value = +mi+300;
+    //   this.menu_csid = mi*1 - 100
+    // }else if(this.menu_type.value == 28){
+    //   this.current_lv_2_menu_i = `${mi}2`;
+    //   this.current_lv_2_menu_mi.value = `${mi}2`;
+    // }else if(this.menu_type.value == 2000){
+    //   this.current_lv_2_menu_i = mi;
+    //   this.current_lv_2_menu_mi.value = mi;
+    //   this.menu_csid = mi*1 - 2000
+    // }else{
+    //   this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
+    //   this.current_lv_2_menu_mi.value = `${mi}${this.menu_type.value}`;
+    //   this.menu_csid = mi*1 - 100
+    // }
     // SessionStorage.set(menu_h5,{
     //   menu_mi:mi
     // });
     LocalStorage.set(menu_h5,{
       menu_mi:mi
     });
-    this.menu_csid = mi*1 - 100
+    
     this.update()
   }
   // 设置二级菜单 id
@@ -319,6 +396,11 @@ class MenuData {
     this.home_menu = 'featured';
     this.collect_menu = '';
     this.result_menu =  0;
+    this.date_tab_index = 0;
+    this.current_lv_3_menu = {
+      field1:"",
+      menuType:""
+    };
   }
   /**
    * 设置时间 并且设置时间请求参数
@@ -362,6 +444,28 @@ class MenuData {
     this.update();
     return menu_lv_mi_lsit
   }
+   /**
+ * 获取对应日期
+ */
+   async getDateList(csid){
+    const params = {
+      csid:csid || this.menu_csid,
+      device:"H5"
+    };
+    const res = await api_common.get_esports_date_menu(params);
+    if(res?.code == '200'){
+        const data = res?.data?.map((item)=>{
+            return {
+                name: item.menuName,
+                val: item.field1,
+                menuType:item.menuType
+            }
+        })||[];
+        // return [...[{name:i18n_t('ouzhou.match.today'),val:'',type:0}],...data]
+        return data
+    }
+    return [];
+  };
   /**
    *一级菜单顶层菜单的 菜单类型  ，没有则是0
    * */
@@ -510,7 +614,7 @@ class MenuData {
    * 判断是否为冠军和电竞冠军  暂时同步 复刻版方法   不然会报错
    */
   get_mm_is_champion() {
-    return false
+    return lodash_.get(this.current_lv_3_menu, "menuType") == 100;
   }
 }
 export default new MenuData();

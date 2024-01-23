@@ -5,14 +5,22 @@
         <!-- 详情页面包屑 -->
         <breadcrumbs :detail_info="detail_info || {}" />
         <div class="bread-right">
-          <img
+          <q-img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
             alt=""
-            v-if="is_show_sr_flg(detail_info)"
+            v-if="is_show_sr_flg(detail_info) && IS_FOR_NEIBU_TEST"
             srcset=""
             class="signal"
             @click="go_analyse"
-          />
+          >
+            <q-tooltip
+              anchor="bottom middle"
+              self="top middle"
+              :offset="[40, 10]"
+            >
+              {{ i18n_t("common.analysis") }}
+            </q-tooltip>
+          </q-img>
           <img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`"
             alt=""
@@ -57,13 +65,16 @@
             class="expansion_ref_slotHeader expansion-vs"
             @click.stop="show_item"
           >
-            <div style="display: flex;align-items: center;">
-              <span class="home-vs-away" :title="detail_info.mhn">{{ detail_info.mhn }} </span>
+            <div style="display: flex; align-items: center">
+              <span class="home-vs-away" :title="detail_info.mhn"
+                >{{ detail_info.mhn }}
+              </span>
               <span class="match-detail-head-name m-10">v</span>
-              <span class="home-vs-away" :title="detail_info.man">{{ detail_info.man }}</span>
+              <span class="home-vs-away" :title="detail_info.man">{{
+                detail_info.man
+              }}</span>
             </div>
             <img
-            
               :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
               class="expand-icon"
             />
@@ -113,9 +124,8 @@
 </template>
 
 <script>
-import { onMounted, ref, onUnmounted } from "vue";
+import { onMounted, ref, onUnmounted, computed } from "vue";
 import {
-  
   MenuData,
   LOCAL_PROJECT_FILE_PREFIX,
   useMittOn,
@@ -126,11 +136,17 @@ import analysis from "./analysis/index.vue";
 import tabs from "./components/tabs.vue";
 import breadcrumbs from "./components/breadcrumbs.vue";
 import { usedetailData } from "./index";
-import { formatTime,is_show_sr_flg, format_M_D_PC, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js";
+import {
+  formatTime,
+  is_show_sr_flg,
+  format_M_D_PC,
+  MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,
+} from "src/output/index.js";
 import loading from "./components/loading/index.vue";
 import { useRouter, useRoute } from "vue-router";
-import details from "src/core/match-list-pc/details-class/details.js"
+import details from "src/core/match-list-pc/details-class/details.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 export default {
   components: {
     tabs,
@@ -174,10 +190,10 @@ export default {
         params,
       });
     };
-  //  打开赛事分析
-    const go_analyse = ()=>{
+    //  打开赛事分析
+    const go_analyse = () => {
       details.sr_click_handle(detail_info.value);
-    }
+    };
 
     const refresh_click = lodash.debounce(() => {
       refresh_data.value = true;
@@ -190,13 +206,14 @@ export default {
     }, 500);
 
     const show_item = () => {
-   
       showDetailList.value = !showDetailList.value;
     };
     const detail_mitt = useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, init).off;
     function mousedown_fun(e) {
-  
-      if (e.target.className != "home-vs-away"&&e.target.className != "expand-icon") {
+      if (
+        e.target.className != "home-vs-away" &&
+        e.target.className != "expand-icon"
+      ) {
         showDetailList.value = false;
       }
       // expansion_ref.value&&expansion_ref.value.hide();
@@ -217,14 +234,20 @@ export default {
       4: 980,
       5: 2790,
       6: 90,
-      7: 2430,
-      8: 890,
+      7: 2430, // 斯诺克
+      8: 890, // 乒乓球
       9: 1440,
       10: 1900,
       11: 1990,
       12: 540,
       14: 180,
+      100: 1340, // 英雄联盟
+      101: 3420, // dota
+      102: 3510, // cs
+      103: 3600, // 王者荣耀
     };
+
+    const { IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG;
     return {
       tabList,
       detail_list,
@@ -248,7 +271,8 @@ export default {
       show_item,
       showDetailList,
       go_analyse,
-      is_show_sr_flg
+      is_show_sr_flg,
+      IS_FOR_NEIBU_TEST,
     };
   },
 };
@@ -351,9 +375,9 @@ export default {
       margin-top: 6px;
       display: inline-block;
       max-width: 350px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .m-10 {
@@ -396,8 +420,9 @@ export default {
 .signal {
   display: inline-block;
   cursor: pointer;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+
   // background: url('../../../assets/images/detail_refresh.png') no-repeat;
   // // transform: scale(0.55);
   // background-position: -16px 10px;
@@ -469,10 +494,9 @@ export default {
 }
 .detail-loading {
   height: 100%;
-   
+
   & :deep(.loading_box) {
-      padding-top: 330px;
-    
+    padding-top: 330px;
   }
 }
 .match-name-list {
@@ -510,7 +534,6 @@ export default {
 }
 //q-item-type row no-wrap q-item--clickable q-link cursor-pointer q-focusable q-hoverable
 
-
 // 这里添加的css为了修复Bug：49115 【UAT】【欧洲版二期】【PC】足篮赛事详情页顶部栏赛事开赛时间/赛事进行时间偏上没有居中展示
 .leagal-time {
   padding: 4px 10px 2px 10px !important;
@@ -524,5 +547,4 @@ export default {
     padding: 0 0 0 0 !important;
   }
 }
-
 </style>

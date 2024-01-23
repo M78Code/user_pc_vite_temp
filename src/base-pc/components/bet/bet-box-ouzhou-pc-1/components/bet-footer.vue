@@ -30,9 +30,9 @@
                 {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
             </div>
         </div>
-        <div class="f-b-c bet-content" v-if="BetViewDataClass.bet_order_status == 1">
+        <div class="f-b-c bet-content" v-if="BetViewDataClass.bet_order_status == 1" >
             <div class="font16 font400 f-c-c bet-bet-cancel" @click="set_bet_cancel">{{ i18n_t("bet.bet_cancel") }}</div>
-            <div class="font16 font600 f-c-c bet-place-bet" @click="set_bet_submit">{{ i18n_t("ouzhou.bet.place_bet") }}</div>
+            <div class="font16 font600 f-c-c bet-place-bet" @click="set_bet_submit" :class="{ 'bet-expired': BetViewDataClass.bet_expired}" >{{ i18n_t("ouzhou.bet.place_bet") }}</div>
         </div>
         <div class="f-b-c bet-content" v-else>
             <div class="font16 font400 f-c-c bet-bet-cancel" @click="set_retain_selection">{{ i18n_t("bet.save_item") }}</div>
@@ -57,7 +57,7 @@ import { i18n_t,UserCtr ,format_money2, formatMoney} from "src/output/index.js"
 // 提交投注信息
 const set_bet_submit = () => {
     // 未投注之前 可以点击
-    if(BetViewDataClass.bet_order_status == 1){
+    if(BetViewDataClass.bet_order_status == 1 && !BetViewDataClass.bet_expired){
         submit_handle()
     }
 }
@@ -109,11 +109,11 @@ const total = computed(()=> state =>{
     let sum = 0
     if (BetViewDataClass.bet_order_status === 1) {
         BetViewDataClass.bet_special_series.forEach((item)=>{
-            sum += (item.bet_amount ? item.bet_amount : 0)
+            sum = mathJs.add((item.bet_amount ? item.bet_amount : 0), sum)
         })
     } else {
         BetViewDataClass.orderNo_bet_single_obj.forEach((item)=>{
-            sum += mathJs.divide(item.seriesBetAmount, 100)
+            sum = mathJs.add(mathJs.divide(item.seriesBetAmount, 100), sum)
         })
     }
     return sum
@@ -135,6 +135,10 @@ const total = computed(()=> state =>{
         width: 100%;
         height: 100%;
         padding: 17px 12px;
+
+        .bet-expired{
+            background: var(--q-gb-bg-c-10) !important;
+        }
 
         div {
             cursor: pointer;

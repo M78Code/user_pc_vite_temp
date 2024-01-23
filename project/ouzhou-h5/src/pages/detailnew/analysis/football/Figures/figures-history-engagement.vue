@@ -7,6 +7,7 @@ import {api_analysis} from "src/api/index.js";      // 赛事分析接口文件
 import AnalysisCard from "../../AnalysisCard.vue"
 import RecordMenu from "../../RecordMenu.vue"
 import UserCtr from "src/core/user-config/user-ctr.js";
+import BaseTableInfo from "../../BaseTableInfo.vue"
 
 import {inject, reactive, onBeforeMount, computed} from "vue";
 /* match_detail 来自 project/ouzhou-h5/src/pages/detailnew/index.vue */
@@ -96,36 +97,8 @@ onBeforeMount(()=>{
             <RecordMenu @ChangeCheckbox="ChangeFlag" @ChangeRadio="ChangeCps"></RecordMenu>
         </template>
         <template #body>
-            <ul class="table">
-                <li class="table-header table-item">
-                    <p class="col1">{{i18n_t('analysis_football_matches.date')}}</p>
-                    <p class="col2">{{i18n_t('analysis_football_matches.league')}}</p>
-                    <p class="col3">{{colLabel}}</p>
-                    <p class="col4" v-if="State.futureSchedule == 'future_schedule'">
-                        {{ i18n_t('analysis_football_matches.Interval_days') }}
-                    </p>
-                    <p class="col4" @click="changeDefaultNumber" v-else>
-                        <span v-if="State.defaultIndex == 0">{{i18n_t('analysis_football_matches.results')}}</span>
-                        <span v-else-if="State.defaultIndex == 1">{{i18n_t('analysis_football_matches.turn_around')}}</span>
-                        <span v-else-if="State.defaultIndex == 2">{{i18n_t('analysis_football_matches.size')}}</span>
-                        <i class="icon sort-flag"></i>
-                    </p>
-                </li>
-                <li class="table-body table-item" v-for="(item,index) of State.historicalEngagementData" :key="index">
-                    <p class="table-body-item ellipsis">{{(new Date(+item.beginTime)).Format(i18n_t('time5'))}}</p>
-                    <p class="table-body-item tournamentName">{{ item.tournamentName }}</p>
-                    <p class="table-body-item col3 ellipsis">
-                        <span class="home ellipsis" :class="[item.homeTeamName == hm_index_name ? 'add_bold' :'']">{{ item.homeTeamName }}</span>
-                        <span class="future_schedule" v-if="future_schedule == 'future_schedule'">VS</span>
-                        <span class="number" v-else>{{item.homeTeamScore}}-{{item.awayTeamScore}}</span>
-                        <span class="away ellipsis" :class="[item.awayTeamName == hm_index_name ? 'add_bold' :'']">{{ item.awayTeamName }}</span>
-                    </p>
-                    <p class="table-body-item col4" v-if="future_schedule == 'future_schedule'">
-                        {{ item.intervalDay }}
-                    </p>
-                    <p></p>
-                </li>
-            </ul>
+            <div class="no-data" v-if="lodash.isEmpty(State.historicalEngagementData)">{{i18n_t('analysis_football_matches.no_data')}}</div>
+            <BaseTableInfo v-else :list_data="State.historicalEngagementData" :hm_index_name="match_detail.mhn"></BaseTableInfo>
         </template>
     </AnalysisCard>
 </template>
@@ -162,5 +135,14 @@ onBeforeMount(()=>{
             justify-content: space-around;
         }
     }
+}
+
+.no-data{
+    width: 100%;
+    height: .56rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #E2E2E2;
 }
 </style>

@@ -16,8 +16,15 @@
               <div class="nonebox4-content-left-content-text">
                 <div class="nonebox4-content-left-content-text-one">
                   <div class="nonebox4-content-left-content-text-one-tit">
-                    <span class="text-flow-none">{{ items?.handicap }} <em v-if="items?.handicap_hv" class="ty-span">{{
-                      items?.handicap_hv }}</em></span>
+                    <span class="text-flow-none">{{items.handicap}} 
+                     
+                      <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em>
+                      
+                      <span v-if="UserCtr.is_cur_odds(items.odds_hsw)">
+                        [{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]
+                      </span>
+                      <span v-else>[{{ i18n_t(`odds.EU`) }}]</span>
+                    </span> 
                   </div>
                   <div>
                     <div class="nonebox4-content-right"
@@ -40,32 +47,30 @@
                 </div>
                 <div class="nonebox4-content-left-content-text-two">
                   {{ items.matchType == 2 ? '[' + i18n_t("bet.bet_inplay") + ']' : '' }}
-                  <span class="text-two-span">{{ items.playName }}
-                    <span v-if="[4, 19, 143, 113].includes(items.playId * 1)">{{ items.matchType == 2 ? items.mark_score
-                      :
-                      '' }}</span>
+                  <span class="text-two-span">
+                    {{ items.playName }}
+                    {{ items.matchType == 2 && [1,2,3,8,9].includes(items.sportId *1) ? items.mark_score : '' }}
                   </span>
-                  <span v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`)
-                  }}]</span>
-                  <span v-else>[{{ i18n_t(`odds.EU`) }}]</span>
 
                 </div>
                 <div class="nonebox4-content-left-content-text-three">{{ items.tid_name }}</div>
-                <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{ items.home }} v {{ items.away
-                }} {{
-items.matchType == 2 ? items.mark_score : '' }}</div>
+                <div class="nonebox4-content-left-content-text-three" v-if="items.home">
+                  {{ items.home }} v {{ items.away}} 
+                  {{items.matchType == 2 ? items.mark_score : '' }}</div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <!-- 输入框 -->
+      <!-- {{ BetData.active_index }}---{{ index }} -->
       <!-- {{ items.bet_amount }} -->
       <bet-input-info2 :item="items" :index="index"></bet-input-info2>
     </div>
+   
     <!-- 多项合并 -->
     <template v-if="BetData.bet_single_list.length > 1">
-      <bet-input-multiple></bet-input-multiple>
+      <bet-input-multiple @focus_on="handler_focus_on"></bet-input-multiple>
     </template>
     <!-- 合并单关最下面的多个输入框 -->
 
@@ -74,15 +79,19 @@ items.matchType == 2 ? items.mark_score : '' }}</div>
 <script setup>
 import betInputInfo2 from "./bet_input_info2.vue";
 import betInputMultiple from "./bet_input_multiple.vue";
-import { compute_value_by_cur_odd_type } from "src/output/index.js"
+import { LOCAL_PROJECT_FILE_PREFIX, compute_value_by_cur_odd_type,UserCtr } from "src/output/index.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { UserCtr } from "src/output/index.js"
-import keyBoard from './keyboard.vue';
+
 
 const set_delete = (items, index) => {
   BetData.set_delete_bet_info(items.playOptionsId, index)
 }
+
+const handler_focus_on = (data)=>{
+  console.log("data===", data)
+}
+
 
 </script>
   
@@ -201,7 +210,6 @@ const set_delete = (items, index) => {
   background: var(--q-gb-bd-c-2);
   padding: 10px;
   padding: 0.05rem 0.15rem;
-  border-bottom: 1px solid #ccc;
 }
 
 .nonebox4-content-left-title {
@@ -265,8 +273,9 @@ const set_delete = (items, index) => {
     }
   }
 
-  .bet-disabled {
-    padding: 0 0.2rem;
+  .bet-disabled{
+    width: .5rem;
+    text-align: center;
     height: .26rem;
     display: inline-block;
     border-radius: 0.02rem;
@@ -275,6 +284,7 @@ const set_delete = (items, index) => {
     font-weight: 500;
     letter-spacing: 0px;
     color: var(--q-gb-t-c-3);
+    margin-left: .2rem;
   }
 }</style>
   

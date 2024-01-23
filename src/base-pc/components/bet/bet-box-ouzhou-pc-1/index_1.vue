@@ -17,13 +17,13 @@
         
         <div class="cursor re f-e-c bet-text">
            <!--  单关 合并 切换 -->
-          <div class="f-e-c" @click="show_merge_change()" v-if="BetData.is_bet_single">
+          <div class="f-e-c" @click.prevent="show_merge_change()" v-if="BetData.is_bet_single">
             {{ i18n_t('bet.merge') }} 
             <span v-if="BetData.is_bet_merge" class="icon-arrow icon-arrow-merge ml-4"></span>
             <span v-else class="merge-checkbox ml-4"></span> 
           </div>
           <!-- 单关 串关 切换 -->
-          <div class="f-e-c ml-16" @click="show_single_change()" v-if="!MenuData.is_kemp()">
+          <div class="f-e-c ml-16" @click.prevent="show_single_change()" v-if="!MenuData.is_kemp()">
             <span v-if="BetData.is_bet_single">{{ i18n_t('bet.bet_one_') }}</span>
             <span v-if="!BetData.is_bet_single">{{ i18n_t('bet.bet_series') }}</span>
 
@@ -36,8 +36,8 @@
 
       <!-- {{BetData.is_bet_single}}-{{BetViewDataClass.bet_order_status}}-{{ BetViewDataClass.orderNo_bet_obj}}-{{ BetData.bet_s_list.length > 1 }}-{{ BetViewDataClass.bet_special_series }} -->
       <!-- 单关 投注 -->
-      <div class="bet-scroll">
-        <div v-if="BetViewDataClass.bet_order_status == 1">
+      <div class="bet-scroll" ref="betScrollView">
+        <div ref="betScrollContent" v-if="BetViewDataClass.bet_order_status == 1">
           <template v-if="BetData.is_bet_single && BetData.bet_single_list.length">
             <div v-for="(item,index) in BetData.bet_single_list" :key="item.playOptionsId">
                 <betItem :items="item" :key="index" :index="index" />
@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from "vue"
+import { reactive, ref, onMounted, watchEffect, onBeforeUnmount } from "vue"
 import { MenuData, UserCtr, format_money2} from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
@@ -116,11 +116,16 @@ import betResult from "./components/bet-result.vue"  // 投注结果
 import betMixResult from "./components/bet-mix-result.vue"  // 串关投注结果
 import betSpecialInput from "./components/bet-special-input.vue"
 import BetMultipleInput from "./components/bet-multiple-input.vue"
+import { nextTick } from "licia"
 
 
 const ref_data = reactive({
   show_single: false,
+  bet_scroll_height: 0
 })
+
+const betScrollView = ref(null)
+const betScrollContent = ref(null)
 
 // 复合式串关 开关
 const set_show_single = () =>{
@@ -133,22 +138,54 @@ const set_show_single = () =>{
 // 单关/串关 切换
 const show_single_change = () => {
   if(BetData.is_bet_single){
-   return BetData.set_is_bet_single('series')
+   BetData.set_is_bet_single('series')
+   next()
+   return
   }
   BetData.set_is_bet_single('single')
+  next()
+}
+
+const next = () => {
+  nextTick(() => {
+    BetData.switch_bet_query_bet_amount()
+    BetData.set_bet_oid_list()
+  })
 }
 
 // 单关/ 合并切换
 const show_merge_change = () => {
   if(BetData.is_bet_merge){
-   return BetData.set_is_bet_merge('no')
+    BetData.set_is_bet_merge('no')
+    next()
+    return
   }
   BetData.set_is_bet_merge('merge')
+  next()
 }
 
+// 使用ResizeObserver来监听高度变化
+// const resizeObserver = new ResizeObserver(() => {
+//     ref_data.bet_scroll_height = betScrollContent.value?.clientHeight;
+
+//     // 在高度变化时执行一些操作
+//     betScrollView.value.scrollTop = ref_data.bet_scroll_height
+//   });
+  
+// watchEffect(() => {
+//   if (betScrollContent.value) {
+//     // 开始监听
+//     resizeObserver.observe(betScrollContent.value);
+//   }
+// });
+
+// 在组件销毁时停止监听
+// onBeforeUnmount(() => {
+//   resizeObserver.disconnect();
+// });
 
 onMounted(() => {
-  BetData.switch_bet_query_bet_amount()
+  // BetData.switch_bet_query_bet_amount()
 })
 
 

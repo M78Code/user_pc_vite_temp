@@ -1,6 +1,6 @@
 
 <template>
-  <div v-show="false"> {{ MenuData.menu_data_version }} </div>
+  <div v-show="false"> {{ MenuData.menu_data_version }}-{{ BaseData.base_data_version }} </div>
   <div class="left-container">
     <!-- 左侧菜单 -->
     <div class="menu-nav-li">
@@ -46,7 +46,7 @@
           <sport-icon :sport_id="BaseData.compute_sport_id(400)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
-        <li class="f-s-c" @click="vrClick()" :class="{ 'menu_checked': MenuData.is_vr()}">
+        <li class="f-s-c" @click="vrClick()" v-if="IS_FOR_NEIBU_TEST" :class="{ 'menu_checked': MenuData.is_vr()}">
           <sport-icon :sport_id="BaseData.compute_sport_id(300)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[300] || "" }}
         </li>
@@ -68,6 +68,8 @@ import { MenuData,useMittEmit,MITT_TYPES,useMittOn } from "src/output/index.js"
 import { get_visit_sports_list,set_visit_count_list } from "src/core/menu_config/visit_count.js"
 import lodash_ from "lodash"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 const ref_data = reactive({
   popular: [],

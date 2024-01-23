@@ -15,15 +15,15 @@
                 </span>
             </div>
         </div>
-        <div class="info_right size_14" @click.stop="input_click($event)">
+        <!-- {{ BetData.active_index }}---{{ BetData.bet_single_list.length }} -->
+        <div class="info_right size_14" @click.stop="input_click($event)" :class="{'active':BetData.active_index == BetData.bet_single_list.length}">
             <div class="content-b">
                 <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
 
-                <span class="money-span" ref="money_span" :style="{ opacity: '1' }"></span>
+                <span class="money-span" ref="money_span" v-if="BetData.active_index == BetData.bet_single_list.length" :style="{ opacity: '1' }"></span>
 
                 <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{i18n_t('bet.money_range')}} {{ref_data.min_money}}~{{format_money3(ref_data.max_money)}}</span>
             </div>
-
         </div>
     </div>
 </template>
@@ -43,20 +43,24 @@ const props = defineProps({
     },
     index: {
         default: 0,
-    }
+    },
 })
+
+const emit = defineEmits(['focus_on'])
 
 const input_click = (event) => {
     // console.error('index', BetData.bet_single_list.length)
-    // event.preventDefault()
+    event.preventDefault()
     let oid = BetData.bet_single_list.map(item => {
         return item.playOptionsId
     })
+    BetData.set_active_index(BetData.bet_single_list.length)
     BetData.set_bet_keyboard_config({ids:oid})
     BetData.set_bet_keyboard_show(true)
-    BetData.set_active_index(BetData.bet_single_list.length)
-    BetData.set_bet_amount(0)
+    // BetData.set_bet_amount(0)
 }
+
+
 
 
 // 光标
@@ -64,8 +68,8 @@ const money_span = ref(null)
 let flicker_timer = null
 
 const ref_data = reactive({
-    min_money: 10, // 最小投注金额
-    max_money: 8888, // 最大投注金额
+    min_money: '', // 最小投注金额
+    max_money: '', // 最大投注金额
     win_money: 0.00, // 最高可赢
     money: "", // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
@@ -76,14 +80,14 @@ const ref_data = reactive({
 
 onMounted(() => {
     cursor_flashing()
-    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
-    //监听键盘金额改变事件
-    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_MERGE, change_money_handle)
+    ref_data.emit_lsit = {
+        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
+        emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_MERGE, change_money_handle).off,
+    }
 })
 
 onUnmounted(() => {
-    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
-    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_MERGE, change_money_handle).off
+    Object.values(ref_data.emit_lsit).map((x) => x());
 })
 
 //监听最高可赢变化
@@ -102,17 +106,12 @@ const winMoney = computed(()=> state =>{
  *@param {Number} new_money 最新金额值
  */
 const change_money_handle = (obj) => {
-    console.log('change_money_handle!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', obj)
-    if(obj.params.playOptionsId) return
-    if(obj.params.ids.length) {
-        let money_ = obj.money
-        BetData.set_bet_amount(money_)
-        obj.params.ids.forEach(oid => {
-            BetData.set_bet_obj_amount(BetData.bet_amount, oid)
-        })
-        ref_data.money = money_
+    BetData.bet_single_list.forEach(item => {
+        BetData.set_bet_amount(obj.money)
+        BetData.set_bet_obj_amount(BetData.bet_amount, item.playOptionsId)
+        ref_data.money = obj.money
         useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
-    }
+    })
 }
 
 
@@ -136,7 +135,7 @@ const set_ref_data_bet_money = () => {
     //设置键盘MAX限额
     // let max_money_obj = {max_money:ref_data.max_money}
     // BetData.set_bet_keyboard_config(Object.assign(BetData.bet_keyboard_config,max_money_obj))
-    console.log('BetData.bet_keyboard_config!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', BetData.bet_keyboard_config)
+    // console.log('BetData.bet_keyboard_config!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', BetData.bet_keyboard_config)
 }
 
 /**
@@ -161,20 +160,22 @@ const cursor_flashing = () => {
     padding: 0 0.15rem;
 
     .info_right {
-        width: 162px;
-        height: 42px;
-        box-shadow: 0px 1px 4px 0px rgba(255, 112, 0, 0.10);
-        border: 1px solid var(--q-gb-bg-c-1);
-        padding-left: 6px;
-        background: #FFF6F0;
-        caret-color: var(--q-gb-bd-c-1);
-        font-family: DIN;
-        font-size: 20px;
+        width: 1.62rem;
+        height: .42rem;
+        padding-left: .06rem;
+        font-size: .20rem;
         font-weight: 500;
         display: flex;
         align-items: center;
-        border-radius: 2px;
-        overflow: hidden;
+        border-radius: .02rem;
+        border: 0.5px solid var(--q-gb-bd-c-12);
+        background: var(--q-gb-bg-c-2);
+        box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+        &.active{
+            border: 1px solid var(--q-gb-bg-c-1);
+            box-shadow: 0px 1px 4px 0px rgba(255, 112, 0, 0.10);
+            caret-color: var(--q-gb-bd-c-1);
+        }
         .content-b {
             display: flex;
             align-items: center;

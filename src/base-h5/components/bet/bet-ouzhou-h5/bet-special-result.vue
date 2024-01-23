@@ -2,7 +2,7 @@
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
         <div class="f-b-s bet-content">
-            <img class="img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/success.svg`" alt="" />
+            <!-- <img class="img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/success.svg`" alt="" /> -->
 
             <section class="bet-content-main">
             <div class="fw-s-s bet-left">
@@ -63,6 +63,7 @@ const props = defineProps({
     .bet-content {
         min-height: .76rem;
         padding: .12rem;
+        padding-bottom: 0;
         padding-right: 0;
         font-size: .13rem;
         font-weight: 500;
@@ -79,6 +80,7 @@ const props = defineProps({
 
         .bet-odds {
             height: .24rem;
+            line-height: 0.22rem;
         }
 
         .bet-right {
@@ -101,7 +103,6 @@ const props = defineProps({
       .my-4 {
         margin: .04rem 0;
         margin: 0.04rem 0;
-        border-left: 2px solid var(--q-gb-bg-c-13);
         padding: 0 0.04rem;
         color: var(--q-gb-bg-c-30);
         .font-style{
@@ -152,8 +153,6 @@ const props = defineProps({
 }
 .bet-content-main{
     display: flex;
-    border-bottom: 1px solid #E2E2E2;
-    padding-bottom: 0.15r;
 }
 .img{
     margin-right: 0.1rem;

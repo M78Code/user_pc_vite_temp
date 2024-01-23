@@ -4,10 +4,11 @@ import DefaultTemplate from './DefaultTemplate.vue';
 import TemplateColumn from './TemplateColumn.vue';
 import Template14 from './Template14.vue';
 import Template18 from './Template18.vue';
+import { MenuData } from "src/output/index.js"
 
 const hideTitle = [0,18]
 const innerTitle = [12,14]
-const templates = new Map([[4,TemplateColumn],[6,Template14],[14,Template14],[18,Template18]])
+const templates = new Map([[4,TemplateColumn],[6,TemplateColumn],[14,TemplateColumn],[18,Template18]])
 
 const rowHpid = '106,107'
 
@@ -44,7 +45,11 @@ const common = {
     }else {
       state.active = +ol.oid
     }
-    
+    // console.log("other===ttt", MenuData.is_vr())
+    if (MenuData.is_vr()) {
+      other.bet_type = 'vr_bet'
+    }
+    // console.log("other===ccc", other)
     const { oid, _hid, _hn, _mid } = ol
     set_bet_obj_config({
       oid, _hid, _hn, _mid
@@ -69,6 +74,8 @@ const common = {
       }
     }else if(oddInfo.hpt == 18){
       return 'fill'
+    }else if(oddInfo.hpt == 51){
+      return 'column'
     }
     return 'default'
   },
@@ -116,7 +123,7 @@ const common = {
    * @returns {Boolean}
    */
   haveTitle(oddInfo){
-    const len = oddInfo.title.length
+    const len = oddInfo.title?.length
     return len > 1 && len <= 4
   },
   computedTemplate(hpt){

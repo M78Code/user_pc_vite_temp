@@ -25,8 +25,8 @@
         </div>
       </div> -->
       <!-- 分析页动画 -->
-      <!-- csid==1 并且 mbmty == 2 为电子足球  ｜｜ csid==2 并且 mbmty == 4 为电子篮球-->
-      <div v-if="!lodash_.isEmpty(score_list) && detail_info.ms > 0 && !((detail_info.csid == 1 && detail_info.mbmty == 2) || (detail_info.csid == 2 && detail_info.mbmty == 4))">
+      <!-- csid==1 || csid==2 并且 mbmty == 2 || mbmty == 4 为电子足球/篮球 -->
+      <div v-if="!lodash_.isEmpty(score_list) && detail_info.ms > 0 && !((detail_info.csid == 1 || detail_info.csid == 2 ) && ([2,4].includes(detail_info.mbmty)))">
         <div
           class="tabs-wrap"
           v-if="['1', '2', '5', '9','7', '10'].includes(String(detail_info.csid))"
@@ -104,6 +104,9 @@ const get_detail_info = (mid) => {
   // 3572298
   MatchListCardDataClass.set_current_mid(mid)
   const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
+  console.log(infomation, "infomation");
+  // 存入本地，点击大屏视频的时候使用
+  sessionStorage.setItem('DETAIL_INFO', JSON.stringify(infomation))
   detail_info.value = infomation
  
   // setInterval(function (){

@@ -9,12 +9,20 @@
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
-                  <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="del"></span>
+                  <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="del_bet_options"></span>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one">
                         <div class="nonebox4-content-left-content-text-one-tit">
-                          <span class="text-flow-none">{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></span> 
+                          <span class="text-flow-none">{{items.handicap}}  
+                            
+                            <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em>
+                            
+                            <span v-if="UserCtr.is_cur_odds(items.odds_hsw)">
+                              [{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]
+                            </span>
+                            <span v-else>[{{ i18n_t(`odds.EU`) }}]</span>
+                          </span> 
                         </div>
                         <div>
                             <div class="nonebox4-content-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
@@ -33,17 +41,15 @@
                       </div>
                       <div class="nonebox4-content-left-content-text-two">
                        {{items.matchType == 2? '['+i18n_t("bet.bet_inplay")+']' :''}} 
-                       <span class="text-two-span">{{items.playName}}
-                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
+                       <span class="text-two-span">
+                        <span>{{items.playName}} </span>
+                        {{ items.matchType == 2 && [1,2,3,8,9].includes(items.sportId *1) ? items.mark_score : '' }}
                         </span>
-                        <span v-if="UserCtr.is_cur_odds(items.odds_hsw)">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]</span> 
-                        <span v-else>[{{ i18n_t(`odds.EU`) }}]</span> 
-                        
                       </div>
+
                       <div class="nonebox4-content-left-content-text-three">{{items.tid_name}}</div>
-                      <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{ items.matchType == 2? items.mark_score : ''}}</div>
+                      <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{items.matchType == 2? items.mark_score : ''}}</div>
                     </div>
-                   
                     
                   </div>
               </div>
@@ -59,16 +65,14 @@
 import { reactive } from "vue";
 
   const props = defineProps({
-    items:{}
+    items:{},
+    index:{}
   })
-
-  const type = 2;//1:不涨也不少    2：增长     3：减少
-  const del=()=>{
-    console.error('items',props.items)
-    // BetData.bet_list_remove(0)
-    BetData.set_clear_bet_info()
-    // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+  
+  const del_bet_options = () =>{
+    BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
   }
+
   </script>
   
   <style lang="scss" scoped>
@@ -166,9 +170,9 @@ import { reactive } from "vue";
   .nonebox4-content{
       width: 100%;
       background: var(--q-gb-bd-c-2);
-      padding: 10px;
       padding: 0.05rem 0.15rem;
-      border-bottom: 1px solid #ccc;
+      padding-right: 0;
+      //border-bottom: 1px solid #ccc;
   }
   .nonebox4-content-left-title{
       font-size: 13px;
@@ -198,7 +202,7 @@ import { reactive } from "vue";
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: 700;
-      color: var(--q-gb-t-c-1);
+      color: var(--q-gb-t-c-4);
       &.red-up{
           color: var(--q-gb-t-c-17);
       }
@@ -211,6 +215,8 @@ import { reactive } from "vue";
     //flex-direction: row-reverse;
     height: 0.26rem;
     list-style: 0.26rem;
+    margin-right:0.15rem ;
+    
     .show_img{
       display: flex;
       height: 0.26rem;
@@ -222,7 +228,8 @@ import { reactive } from "vue";
       }
     }
     .bet-disabled{
-      padding: 0 0.2rem;
+      width: .5rem;
+      text-align: center;
       height: .26rem;
       display: inline-block;
       border-radius: 0.02rem;
@@ -231,6 +238,7 @@ import { reactive } from "vue";
       font-weight: 500;
       letter-spacing: 0px;
       color: var(--q-gb-t-c-3);
+      margin-left: .2rem;
     }
   }
   

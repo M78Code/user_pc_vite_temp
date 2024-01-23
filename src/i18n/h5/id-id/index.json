@@ -121,6 +121,8 @@
     "quarter": "Q1"
   },
   "bet": {
+    "edit_success": "Pengubahan odds berhasil!",
+    "edit_fail": "Pengubahan odds gagal!",
     "account_balance": "Saldo",
     "agree_change": "Terima perubahan",
     "agree_change2": "Terima perubahan & taruh",

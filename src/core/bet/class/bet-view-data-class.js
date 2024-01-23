@@ -96,6 +96,8 @@ class BetViewData {
     this.orderNo_bet_obj = []
     // 投注后串关信息 
     this.orderNo_bet_single_obj = []
+    // 是否已失效
+    this.bet_expired = false
 
     this.bet_view_version = ref('11')
 
@@ -110,6 +112,11 @@ class BetViewData {
     nextTick(()=>{
       this.set_loacl_config()
     })
+  }
+
+  // 设置失效状态
+  set_bet_expired(state) {
+    this.bet_expired = state
   }
 
   // 根据缓存信息 设置数据
@@ -198,6 +205,10 @@ class BetViewData {
             seriesOdds: obj.seriesOdds, // 赔率  // 串关使用 3串1
             bet_amount: '', // 投注金额
             show_quick: showQuick, // 快捷金额
+          }
+        } else {
+          return {
+            ...item
           }
         }
       })
@@ -451,7 +462,7 @@ class BetViewData {
   // 串关专用参数
   set_bet_special_series(array) {
     array.filter(item=>{
-      item.min_money = item.min_money || 0
+      item.min_money = item.min_money || 5
       item.max_money = item.max_money || 8888
     })
     this.bet_special_series = array
@@ -486,7 +497,7 @@ class BetViewData {
   // 设置默认限额
   set_bet_special_series_defalut() {
     this.bet_special_series.filter(obj=>{
-        obj.min_money = 0
+        obj.min_money = 5
         obj.max_money = 8888
         obj.bet_amount = 0
     })
@@ -502,6 +513,17 @@ class BetViewData {
   orderNo_bet_obj_config(obj) {
     console.error('orderNo_bet_obj_config',obj)
     this.orderNo_bet_obj = this.orderNo_bet_obj.map(item => {
+      if(item.orderNo == obj.orderNo){
+        item.orderStatusCode = obj.status
+      }
+      return item
+    })
+    this.set_bet_view_version()
+  }
+
+  orderNo_bet_single_obj(obj) {
+    console.error('orderNo_bet_single_obj',obj)
+    this.orderNo_bet_single_obj = this.orderNo_bet_single_obj.map(item => {
       if(item.orderNo == obj.orderNo){
         item.orderStatusCode = obj.status
       }

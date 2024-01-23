@@ -17,7 +17,8 @@
 
 <script setup>
   import { computed } from 'vue';
-  import { compute_css_obj } from "src/output/index.js";
+  import { MenuData,compute_css_obj } from "src/output/index.js";
+
 // 球种雪碧图序号
   const sport_number = {
     101:0,  //足球
@@ -46,15 +47,15 @@
     124:27, //射箭
     125:29, //击剑
     126:16,//冰壶
-    127:42,//跆拳道
+    127:40,//跆拳道
     128:22, //高尔夫
     129:38, //自行车
     130:30,//赛马
     131:31,//帆船
     132:37,//划船
     133:33,//赛车运动
-    134:40,//柔道
-    135:41,//空手道
+    134:41,//柔道
+    135:42,//空手道
     136:39,//摔跤
     137:19,//板球
     138:28,//飞镖
@@ -124,13 +125,13 @@
     let number =  sport_number[props.sport_id];
     // 如果是未选中状态Y轴坐标下移一位
     // number = props.status ? number : number + 1;
-    if(!number && number !==0){
-      if(props.is_esports){
-        return 54
-      }else{
-        return 57
-      }
-    }
+    // if(!number && number !==0){
+    //   if(props.is_esports){
+    //     return 54
+    //   }else{
+    //     return 57
+    //   }
+    // }
     let size = props.size.replace('px','')
     return parseInt(number * size * 100) / 100
   })

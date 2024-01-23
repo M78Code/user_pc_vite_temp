@@ -5,14 +5,14 @@
 -->
 <template>
   <div>
-    <div class="analysis-body">
+    <div class="component analysis-body">
       <div class="analysis-top">
         <div class="analysis-top-l">
           <!-- <div class="v-icon switch-icon"></div> -->
           <sport-icon
             style="margin: 0 10px"
             :sport_id="
-              MenuData.current_ball_type == '0'
+              MenuData.current_ball_type == '0'||MenuData.is_esports()
                 ? detail_info.csid
                 : MenuData.current_ball_type
             "
@@ -123,10 +123,11 @@ watch(
   () => props.detail_info,
   (val) => {
     if (val) {
-      console.log(route.params,'params');
-      if(MenuData.is_esports()){
-        tab_click('video');
-        return
+     
+      console.log(route.params, "params");
+      if (MenuData.is_esports()) {
+        tab_click("video");
+        return;
       }
       if (route.params?.type) {
         tab_click(route.params?.type);

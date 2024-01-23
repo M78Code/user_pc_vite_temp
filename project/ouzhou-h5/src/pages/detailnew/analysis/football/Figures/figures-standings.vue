@@ -109,7 +109,7 @@ onBeforeMount(() => {
 <template>
     <AnalysisCard :title="title" v-if="State.rankingData.length && !State.noData">
         <template #body>
-            <ul class="table">
+            <ul class="table" v-if="State.rankingData.length">
                 <li class="table-header table-item">
                     <p>{{ i18n_t('analysis_football_matches.rank') }}</p>
                     <p>{{ i18n_t('analysis_football_matches.team') }}</p>
@@ -138,6 +138,7 @@ onBeforeMount(() => {
                 </li>
                 <li class="more-btn" @click="toggle_box" v-if="State.rankingAllData.length > 2">展开</li>
             </ul>
+            <div class="no-data" v-else>{{i18n_t('analysis_football_matches.no_data')}}</div>
         </template>
     </AnalysisCard>
 </template>
@@ -169,5 +170,14 @@ onBeforeMount(() => {
         background: #FFFFFF;
         color: #FF7000;
     }
+}
+
+.no-data {
+    width: 100%;
+    height: .56rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #E2E2E2;
 }
 </style>

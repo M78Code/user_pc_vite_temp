@@ -28,6 +28,14 @@ const router = createRouter({
           },
         },
         {
+          path: "/esports",
+          name: "esports",
+          component: () => import("../pages/esports/esports.vue"),
+          meta: {
+            keepAlive: true, // 需要缓存
+          },
+        },
+        {
           path: "/match",
           name: "matchList",
           component: () => import("../pages/match-page/index.vue"),
@@ -173,7 +181,7 @@ const router = createRouter({
 /**
  * 不清除menuid路由
  */
-const detailsName = ['category','result','personal'];
+const detailsName = ['category','result','personal','champion'];
 /**
  * 路由切换清除默认球种
  */

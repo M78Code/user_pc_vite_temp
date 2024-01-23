@@ -16,7 +16,7 @@
         <bet-bar></bet-bar>
         
         <div v-show="BetData.bet_state_show">
-                <!-- 删除全部和选择type -->
+          <!-- 删除全部和选择type -->
           <bet-all-detele :is_dropdown="is_dropdown" v-if="BetViewDataClass.bet_order_status == 1"></bet-all-detele>
           <!-- --------{{BetViewDataClass.bet_order_status}} - {{BetData.is_bet_single}} -->
           <!-- 单关  -->
@@ -28,16 +28,18 @@
                     <!-- 单关投注项列表  -->
                     <bet-mix-box-child1 :items="BetData.bet_single_list[0]" :index="0"></bet-mix-box-child1>
                     <!-- 单关的输入框 -->
-                    <bet-input-info :item="BetData.bet_single_list[0]" ></bet-input-info>
+                    <bet-input-info :item="BetData.bet_single_list[0]" :index="0" ></bet-input-info>
                 </template>
               </template>
               <!-- 单关合并 -->
               <template v-else>
                   <!-- 合并单关  -->
-                  <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}rem` }">
+                  <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${ref_min_height_max}rem` }">
                       <bet-mix-box-child2></bet-mix-box-child2>
                   </div>
               </template>
+              <!-- 合并投注 常用金额 -->
+              <bet-merge />
               <!-- 键盘 -->
               <key-board></key-board>
             </template>
@@ -47,42 +49,47 @@
 
           <!-- 串关 -->
           <template v-if="!BetData.is_bet_single">
-              <!-- 串关投注项列表  -->
-              <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}rem` }">
-                <div v-if="BetViewDataClass.bet_order_status == 1">
-                  <template v-for="(item, index) in BetData.bet_s_list" :key="index">
-                    <bet-mix-box-child1 :items="item" :index="index"></bet-mix-box-child1>
-                  </template>
+            <!-- 串关投注项列表  -->
+            <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${ref_min_height_max}rem` }">
+              <template v-if="BetViewDataClass.bet_order_status == 1">
+                <template v-for="(item, index) in BetData.bet_s_list" :key="index">
+                  <bet-mix-box-child1 :items="item" :index="index"></bet-mix-box-child1>
+                </template>
 
-                  <!-- 串关投注 限额 -->
-                  <!-- 复式连串过关投注 限额 -->
-                  <template v-if="BetData.bet_s_list.length > 1"  >
-                    <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
-                        <bet-special-input :items="item" @input_click="handle_input_click" :index="index" />
+                <!-- 串关投注 限额 -->
+                <!-- 复式连串过关投注 限额 -->
+                <template v-if="BetData.bet_s_list.length > 1"  >
+                  <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
+                    <template v-if="BetData.special_type || !index">
+                      <bet-special-input :items="item" :index="index" />
                     </template>
                   </template>
-                  <template v-else>
-                    <div class="bet-title bet-error">{{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}</div>
-                  </template>
-                    
-                </div>
-                
-                <template v-else>
-                  <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
-                    <bet-special-result :items="item" :key="index" :index="index" />
-                  </div>
-    
-                  <div v-for="(item, index) in BetViewDataClass.orderNo_bet_single_obj" :key="item.orderNo">
-                    <bet-special-state :items="item" :key="index" :index="index" />
-                  </div>
                 </template>
-              </div>
 
-              <key-board v-if="BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1"></key-board>
+                <template v-else>
+                  <div class="bet-title bet-error">{{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}</div>
+                </template>
+              </template>
+              
+              <template v-else>
+                <!-- 串关投注项结果 -->
+                <template v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
+                  <bet-special-result :items="item" :index="index" />
+                </template>
+                <!-- 串关投注项类型结果 -->
+                <template v-for="(item, index) in BetViewDataClass.orderNo_bet_single_obj" :key="item.orderNo">
+                  <bet-special-state :items="item" :index="index" />
+                </template>
+              </template>
+            </div>
+
+            <!-- 串关最高可赢金额 合计投注金额 -->
+            <bet-special-winning />
+
+            <!-- 键盘 -->
+            <key-board v-if="BetData.bet_keyboard_show && BetViewDataClass.bet_order_status == 1"></key-board>
           </template>
 
-          <!-- 键盘 -->
-          <key-board v-if="state < 4"></key-board>
           <!-- 按钮 -->
           <bet-btn v-if="BetViewDataClass.bet_order_status == 1"></bet-btn>
           <bet-btn1 v-else></bet-btn1>
@@ -100,33 +107,24 @@ import betInputInfo from "./bet_input_info.vue";
 import betMixBoxChild1 from "./bet_mix_box_child1.vue";
 import betMixBoxChild2 from "./bet_mix_box_child2.vue";
 import betMixBoxChild4 from "./bet_mix_box_child4.vue";
-import betMixBoxChild5 from "./bet_mix_box_child5.vue";
-import betMixBoxChild6 from "./bet_mix_box_child6.vue";
 
 import betSpecialInput from "./bet-special-input.vue";
 import betSpecialState from "./bet-special-state.vue";
 import betSpecialResult from "./bet-special-result.vue";
 import betSpecialWinning from "./bet-special-winning.vue";
+import betMerge from "./bet-merge.vue"
 
 import betAllDetele from "./bet_all_detele.vue";
 import betBar from "./bet-bar.vue";
 //import betInputInfo from "//bet_input_info";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { UserCtr, i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/output/index.js";
-import { ref, onMounted, watch, computed, onUnmounted, reactive } from 'vue';
-import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
-import lodash from 'lodash'
-import { format_money3, format_money2 } from 'src/output/index.js'
-import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
+import { ref, onMounted, reactive } from 'vue';
 
-const state = 6 //1单关投注  2：合并单关   3：串关投注   4:单关投注等待、单关投注成功、单关投注失败    5:合并单关等待、合并单关成功、合并单关失败   6：串关投注等待、串关投注成功、串关投注失败
-
-const ref_data = reactive({
-  money: 0,
-  key_board_config: {}, //键盘配置信息
-  index_: '', // 当前选中的数据
-  flicker_timer:""
+// 键盘收起的高度
+let ref_min_height_max = ref('3.6') // rem 高长屏幕
+onMounted(()=>{
+  ref_min_height_max.value = document.body.clientHeight > 600 ? '2.5' : '2'
 })
 
 //串关的按钮
@@ -139,132 +137,17 @@ const max_height1 = ref(2.5) // 投注赛事高度
 const max_height2 = ref(3.5)
 const is_dropdown = ref(false)
 
-const hide_bet_series_but = () => {
-  let res = false;
-  // 单关时,获取投注列表数据
-  if (!BetData.bet_is_mix && lodash.get(BetData, 'bet_list.length')) {
-    // 遍历投注列表数据,检测是否红猫赛事
-    for (let i = 0; i < BetData.bet_list.length; i++) {
-      // 获取投注项id
-      let id = lodash.get(BetData, `bet_list[${i}]`);
-      // 获取投注项的数据源
-      let cds = lodash.get(BetData, `bet_obj[${id}].bs.cds`);
-      if (cds == "C01") {
-        // C301赛事时,隐藏串关按钮
-        res = true;
-        break;
-      }
-    }
-  }
-  return res;
-}
-
-// 投注成功，最高可赢 滚动条需下拉到底
-const update_scroll_top = () => {
-  if (scroll_box.value) {
-    scrollTop.value = scrollTop.value.scrollHeight
-  }
-}
-
-const max_win_money_emit = (val) => {
-  award_total.value = val
-}
-
-
-/**
-    * 串关时检查是否有C01赛事
-    */
-const is_bet_check_rc = () => {
-  let res = false;
-  if (this.get_is_mix && this.get_bet_list.length > 1) {
-    // 串关时
-    for (let i = 0; i < this.get_bet_list.length; i++) {
-      // 检测是否C01赛事
-      if (_.get(this.get_bet_obj, `[${this.get_bet_list[i]}].cs.cds`) == "C01") {
-        res = true;
-        break;
-      }
-    }
-  }
-  return res;
-}
-
-const touchmove_handle = ()=>{
-  
-}
-
-// 单关 串关切换
-const set_is_bet_single = () =>{
-  BetData.set_is_bet_single()
-  BetData.set_bet_state_show(false)
-}
 // 蒙版点击 收起投注栏 事件
 const pack_up = (val) => {
   BetData.set_bet_state_show(false)
   is_dropdown.value = false
 }
 
-const submit_order = (type) => {
-  submit_handle()
-}
-
-//切换是否接受更好赔率
-const toggle_accept = () => {
-  BetData.set_bet_is_accept()
-}
-
-//更好赔率规则
-const change_accept = () => {
-  BetData.set_accept_show(true)
-}
-
-//是否有重复的球员id或者球队id，有的话要禁止串关
-const is_conflict = computed(() => {
-  return false
-})
-
-// 是否展示不支持串关提示
-const is_conflict2 = computed(() => {
-  return true
-  let flag =
-    (get_cannot_mix_len.value || get_invalid_ids.value.length) &&
-    BetData.bet_list.length > 1 &&
-    ![900, 3000].includes(+get_menu_type)
-
-  if (flag) {
-    btn_show.value = 5
-  } else if (get_bet_status.value == 1) {
-    btn_show.value = 0
-  }
-  return flag
-})
-
-//计算样式，下面几种情况左下角按钮需要置灰不让点击
-const calc_class = computed(() => {
-  return true
-  let flag = [2, 4].includes(+get_bet_status.value)
-    || get_is_champion.value() && !BetData.is_bet_success_status
-    || get_bet_status.value == 5 && BetData.bet_list.length == 1
-    || get_menu_type == 3000 && lodash.get(single_item, 'hps[0].hl[0].hipo') != 1 && !BetData.is_bet_success_status
-    || get_menu_type != 3000 && lodash.get(single_item, 'hps[0].hids') == 0 && !BetData.is_bet_success_status
-    || btn_show.value == 5;
-  return flag
-})
 
 onMounted(() => {
-  let munu_type = true
-  if (munu_type) {
-    // get_query_bet_amount_common()
-  }
+  
 })
 
-// 清空数据
-const set_clear = () => {
-  // 关闭弹窗 清空数据
-  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX)
-  BetData.set_clear_bet_info()
-  BetViewDataClass.set_clear_bet_view_config()
-}
 
 </script>
 <style lang="scss" scoped>
@@ -419,9 +302,6 @@ background: var(--q-gb-t-c-3) !important;
   //background-color: var(--q-gb-t-c-7);
   //padding: 12px;
   //border-radius: 12px;
-}
-.scroll-box-center{
-  margin: 0 0 0.1rem 0;
 }
 
 .full-shadow2 {

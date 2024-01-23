@@ -81,7 +81,6 @@ const sportsGenre = reactive([
   { name: i18n_t("common.esports"), className: "esports", mi: "2000",route: '/esports'},
   { name: i18n_t("common.virtual_sports"), className: "vr-sports", mi: "300",route: '/virtual' },
 ])
-console.log(i18n_t("ouzhou.menu_itme_name"))
 /**
  * 默认所有球种
  */
@@ -146,7 +145,12 @@ const setPopularSort = (mi) =>{
  */
 const set_menu_obj = (data) => {
   if(data.route == '/virtual'){
+    MenuData.set_current_lv1_menu(300);
     MenuData.set_vr_menu_csid('1001');
+  }
+  if(data.route == '/esports'){
+    MenuData.set_current_lv1_menu(2000);
+    MenuData.set_menu_mi('2100');
   }
   router.push(data.route)
 }
@@ -171,14 +175,16 @@ const change_current_menu = (item) => {
   // 重置所选 球种默认玩法 hpid
   // MatchResponsive.reset_match_hpid_by_csid()
   if(item.mi == 400){
+    MenuData.set_current_lv1_menu(400);
+    MenuData.set_menu_mi('101');
     return router.push({name: 'champion'})
   }else{
     // MatchMeta.set_origin_match_data()
-    useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,item.mi);
     BaseData.set_is_emit(false)
     // 重置所选 球种默认玩法 hpid
     MenuData.set_current_lv1_menu('2');
     MatchResponsive.reset_match_hpid_by_csid()
+    useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,item.mi);
   }
   if(route.name != "matchList"){
     //跳转今日列表
@@ -190,7 +196,6 @@ const change_current_menu = (item) => {
  */
 const get_init_data = (val) =>{
   const list = val || MenuData.menu_list;
-  console.log(list,defaultSports, 'defaultSports' );
   leftDataList.value = list && list.length?list:defaultSports;
   const popularSortListH5 = LocalStorage.get("popularSortListH5") ||[];
   popularList.value = popularListSort(popularSortListH5);

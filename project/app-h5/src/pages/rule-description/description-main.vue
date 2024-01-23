@@ -6,7 +6,8 @@
                 {{$root.$t('common.rule_description')}}
             </span>
         </div>
-        <rule-wapper use_component_key="Rule_h5"></rule-wapper>
+        <rule-wapper v-if="domain" use_component_key="Rule_h5"></rule-wapper>
+        <error01 v-else></error01>
     </div>
     
 </template>
@@ -16,9 +17,10 @@ import { RuleWapper } from 'src/components/rule'
 import { useRouter, useRoute } from "vue-router";
 import {compute_local_project_file_path} from "src/output/index.js";
 import GoBackSvg from 'src/components/go_back/index.vue'
-
+import error01 from "src/components/error/error01.vue";
+import UserCtr from 'src/core/user-config/user-ctr.js'
 const router = useRouter();
-
+const domain = UserCtr.get_topic_key_url('sports_rules');
 const go_back = () => {
     router.push({ name: "matchList" });
 }

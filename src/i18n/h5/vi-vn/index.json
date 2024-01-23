@@ -113,6 +113,8 @@
     "quarter": "Q1"
   },
   "bet": {
+    "edit_success": "Tỷ lệ cược thay đổi thành công!",
+    "edit_fail": "Tỷ lệ cược thay đổi thất bại!",
     "account_balance": "Số dư",
     "agree_change": "Chấp nhận thay đổi",
     "agree_change2": "Chấp nhận thay đổi và đặt cược",

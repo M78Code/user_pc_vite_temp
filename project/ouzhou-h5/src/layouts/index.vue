@@ -7,20 +7,17 @@
     <!-- 顶部菜单 -->
     <TopMenuWapper />
     <q-page-container id="ouzhou-h5" class="page_container" >
-      
-
       <router-view />
-
-     
     </q-page-container>
     <div class="footer" id="page-footer">
-
        <!-- 投注框 -->
        <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
-
       <FooterWapper />
     </div>
   </q-layout>
+
+  <!-- token 失效页面 -->
+  <token-invalid v-if="is_token_invalid_show" @is_go_vender_url="is_go_vender_url"></token-invalid>
 
   <!-- 吐司提示框 v-if="toast_show" -->
   <toast></toast>
@@ -45,10 +42,11 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { api_common } from "src/api/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit, i18n_t } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-
+import TokenInvalid from "./token-invalid.vue"
 import toast from "src/base-h5/components/common/toast.vue"
 
 var tou_show = ref(true)
+const is_token_invalid_show = ref(false); // token失效
 
 let routerPath = ref<String>('')
 const route = useRoute()
@@ -116,6 +114,29 @@ const init_local_server_time = () => {
     // });
   });
 }
+
+// 跳转第三方提供商链接
+const is_go_vender_url = (value) => {
+  is_token_invalid_show.value = false;
+  window.is_token_invalid_show=false;
+  UserCtr.set_user_token('')
+  if (value) goto_vender_url();
+}
+// 跳转第三方提供商链接
+const goto_vender_url = () => {
+  // let url = lodash.get(UserCtr,'callbackUrl',lodash.get(UserCtr,'loginUrl')) 
+  // if (url) {
+  //   nextTick(()=> {
+  //     location.href = url;
+  //   })
+  // } else {
+    window.close();
+    // console.warn('跳转地址不存在！')
+  // }
+}
+
+
+
 onMounted(() => {
   // 阻止双击放大
   document.addEventListener("touchstart", touchstart_event_fun, false);
@@ -166,6 +187,10 @@ const mitt_list = [
   useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, () => {
     UserCtr.fetch_actimg()
     UserCtr.set_e_sports_domain_img()
+  }).off,
+  // 登录失效
+  useMittOn(MITT_TYPES.EMIT_GO_TO_VENDER, () => {
+    if (!is_token_invalid_show.value) is_token_invalid_show.value = true
   }).off
 ]
 // 监听搜索弹框是否展示

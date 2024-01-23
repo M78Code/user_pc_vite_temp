@@ -5,7 +5,7 @@
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <!-- 提前兑换按钮 -->
-  <div class="early-settle" v-if="calc_show">
+  <div class="early-settle" v-if="calc_show && IS_FOR_NEIBU_TEST">
     <div class="early-tips row">
       <p>{{ i18n_t('early.info1') }}</p>
       <span v-if="status == 2 || status == 3">{{ i18n_t('early.info3') }}</span>
@@ -44,6 +44,8 @@ import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { IconWapper } from 'src/components/icon'
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 const props = defineProps({
   item_data: {
@@ -144,7 +146,7 @@ watch(() => queryorderpresettleconfirm_data.value, (_new) => {
 
 onMounted(() => {
   // 计算提前结算按钮是否显示
-  // calc_show.value = (BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle)
+  calc_show.value = (BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle)
   //  /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordClass.selected + props.item_data.enablePreSettle + status.value);
 
   // 接口：当 enablePreSettle=true && hs = 0  提前结算显示高亮， 当 enablePreSettle=true && hs != 0  显示置灰， 当 enablePreSettle=false 不显示

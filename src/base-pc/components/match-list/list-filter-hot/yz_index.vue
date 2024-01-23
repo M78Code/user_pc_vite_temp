@@ -328,8 +328,8 @@ function handle_click_menu_mi_500(mi) {
 <style lang="scss" scoped>
 .c-match-list-filter {
   width: 100%;
-  height: 48px;
-  padding-bottom: 1px;
+  height: 52px;
+  -padding-bottom: 1px;
   .filter-sports {
     overflow: hidden;
     .item {

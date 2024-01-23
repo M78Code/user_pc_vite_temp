@@ -1,46 +1,102 @@
-<!--
- * @Description: 视频大屏版页面
--->
 <template>
-  <div v-if="!detail_loading" class="video-wrap c-big-video v-scroll-area relative-position" :class="{'big-video-right':$route.params.video_size ==1}">
-    <video-iframe
-        :detail_info="detail_info"
-        :refresh_time="refresh_time"
-        @set_full_screen_status="set_full_screen_status" />
-  </div>
-  <div class="detail-loading" v-if="detail_loading">
-    <loading></loading>
+  <div class="video-wrap">
+    <load-data class="fit" :state="load_data_state">
+      <!-- <video-header v-if="route.params.video_size != 1" :refresh_loading="refresh_loading" :match_info="match_info"
+          @refresh="refresh_data" /> -->
+      <div class="container">
+        <iframe id="video-iframe" :class="['video-iframe fit', is_full_screen ? 'full-screen' : '']" :src="media_src"
+          frameborder="0" marginwidth="0" marginheight="0" hspace="0" vspace="0" scrolling="no" allowfullscreen="true"
+          allow="autoplay"></iframe>
+        <!-- <video_type_ctr @mouseenter="video_enter" v-show="is_full_screen" :ctr_data={ video_type: 1 } :is_video_hover="true"
+          :video_fullscreen_disabled="false" :match_info="match_info" :is_esports="false"></video_type_ctr> -->
+      </div>
+    </load-data>
+
+    <!-- <video-header v-if="route.params.video_size != 1" :refresh_loading="refresh_loading" :match_info="match_info"
+          @refresh="refresh_data" /> -->
+    <!-- <iframe
+          v-if="media_src"
+          id="video-iframe"
+          class="video-iframe fit"
+          :src="media_src"
+          frameborder="0"
+          marginwidth="0"
+          marginheight="0"
+          hspace="0"
+          vspace="0"
+          scrolling="no"
+          allowfullscreen="true"
+          allow="autoplay"
+        ></iframe> -->
   </div>
 </template>
 
 <script setup>
-import {ref} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import { usedetailData } from "./index";
-import loading from "./components/loading/index.vue";
-import VideoIframe from "./video_iframe.vue"
-import {MITT_TYPES, useMittOn} from "src/core/mitt/index.js";
-import {i18n_t} from "src/boot/i18n.js";
+import { useRoute, useRouter, } from "vue-router";
+import { ref, onMounted, computed, nextTick, onUnmounted } from "vue";
+import LoadData from "src/base-pc/components/load-data/load-data.vue"
+import VideoHeader from "src/base-pc/components/video/video-header.vue"
+import video from "src/core/video/video.js";
+import {
+  MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, UserCtr,
+} from "src/output/index.js";
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import { api_match_list } from "src/api/index";
+import url_add_param from "src/core/enter-params/util";
+import video_type_ctr from "src/core/video/video_type_ctr.vue";
 
-const router = useRouter();
 const route = useRoute();
+const router = useRouter();
+const load_data_state = ref('loading');
+const refresh_loading = ref(false);
+const match_info = ref({});
+const params = computed(() => route.params);
+const media_src = ref("");
+const iframe_loading = ref(true);
+const is_full_screen = ref(false);
+/**
+ * @Description:获取视频播放地址
+ * @Author Cable
+ * @param {object} match  赛事信息
+ * @param {function} callback  回调函数
+ */
+const get_video_url = () => {
+  // play_type  数据源类型 1 ：源视频 2：动画 3 ：演播室 4 ：主播 5：专题
 
-const refresh_time = ref(0);
+  // 目标赛事视频url相关信息获取
+  video.get_video_url(
+    match_info.value,
+    { params: { play_type: 1 } },
+    (show_type, url_src) => {
+      console.log(url_src, show_type, "url_src");
+      // 未登录
+      if (url_src === true && show_type === "no-login") {
+        // this.is_limited = true
+        // this.show_type = show_type
+        load_data_state.value = "empty";
+        return;
+      }
 
+      // let live_type = this.$get_media_icon_index(media_type)
+      let live_type = 1;
 
-const {
-  detail_loading,
-  detail_info,
-} = usedetailData(route);
+      // 此处为最终处理后的视频url
+      media_src.value =
+        url_add_param(url_src, "video_type", 1) +
+        `&live_type=${live_type}&csid=${match_info.value.csid}&icons_right=163&pip_right=80`;
+      iframe_loading.value = false;
+      load_data_state.value = "data";
+      nextTick(() => {
+        // 如果是全屏，进入全屏
 
+      })
+      console.log(media_src.value, "media_src.value");
+    }
+  );
+};
 
-//设置全屏状态
-function set_full_screen_status(){
-  if(this.$route.params.video_size == 1) {
-    browser_full_screen()
-  }else{
-    exit_browser_full_screen()
-  }
+const video_enter = () => {
+
 }
 
 
@@ -48,186 +104,94 @@ function set_full_screen_status(){
  * @Description 浏览器全屏
  * @param {undefined} undefined
  */
-function browser_full_screen(){
+function browser_full_screen() {
   let video_dm = document.documentElement;
   let rfs = video_dm.requestFullScreen || video_dm.webkitRequestFullScreen || video_dm.mozRequestFullScreen || video_dm.msRequestFullScreen;
   if (rfs) {
+    is_full_screen.value = true;
     rfs.call(video_dm);
   }
 }
 
-/**
- * @Description 退出浏览器全屏
- * @param {undefined} undefined
- */
-function exit_browser_full_screen(){
-  let video_dm = document;
-  let cfs = video_dm.cancelFullScreen || video_dm.webkitCancelFullScreen || video_dm.mozCancelFullScreen || video_dm.exitFullScreen;
-  if(cfs) {
-    cfs.call(video_dm);
+const init = async () => {
+  const cuid = UserCtr.get_cuid();
+  if (route.params.play_type == 2) {
+    browser_full_screen();
+  }
+  try {
+    const res = await api_match_list.get_detail_data({
+      mid: params.value.mid,
+      cuid
+    });
+    console.log(res, "详情");
+    match_info.value = res.data;
+    get_video_url();
+
+  } catch (error) {
+
   }
 }
 
+
+onMounted(() => {
+  // csid: "1"
+  // mid: "287946322483154946"
+  // play_type: "1"
+  // tid: "1682748461414224369"
+  // video_size: "0"
+  init();
+  console.log(params.value, "route.params.video_size");
+})
+
+
 /**
- * @Description:退出全屏  返回上一个页面
- * @return {undefined} undefined
- */
-function exit_full_screen(size){
-  window.history.go(-2)
-  // const { mid, tid, csid } = this.match_info
-  // // 如果是从详情页进入大屏返回详情页
-  // if(this.from == 'details'){
-  //   if(this.$route.params.video_size == 1 && video.from ==0){
-  //     //  window.vue.$router.back()
-  //     window.history.go(-2)
-  //     //  this.exit_browser_full_screen()
-  //   }else{
-  //     this.$router.push({
-  //       name: 'details',
-  //       params: {
-  //         mid,
-  //         tid,
-  //         csid
-  //       }
-  //     })
-  //     sessionStorage.setItem('auto_play_media', '1');
-  //   }
-  // }else if(video.from == 0 && size =='xl' && !this.$utils.is_eports_csid(this.$route.params.csid)){
-  //   this.$router.push({
-  //     name: 'video',
-  //     params: {
-  //       mid,
-  //       tid,
-  //       csid,
-  //       play_type: this.$route.params.play_type,
-  //       video_size: '0'
-  //     }
-  //   })
-  // }else{
-  //   this.set_is_back_btn_click(true);
-  //   this.$utils.redirect_router('/home')
-  // }
-  // let time = Date.now()
-  // this.set_play_media({
-  //   mid:this.match_info.mid,
-  //   media_type: this.vx_play_media.media_type,
-  //   time
-  // })
-  // if(size =='xl'){
-  //   this.exit_browser_full_screen()
-  // }
+   * @Description:退出全屏  返回上一个页面
+   * @return {undefined} undefined
+   */
+function exit_full_screen(size) {
+  const { mid, tid, csid } = match_info.value;
+  // 如果是从详情页进入大屏返回详情页
+  if (is_full_screen.value) {
+    router.push({
+      name: 'details',
+      params: {
+        mid,
+        tid,
+        csid
+      }
+    })
+    sessionStorage.setItem('auto_play_media', '1');
+  } 
+  
 }
 
-//首页活动弹框
-useMittOn(MITT_TYPES.EMIT_EXIT_FULL_SCREEN_MSG_EVENT, function (imgUrl) {
+onUnmounted(() => {
   exit_full_screen();
-}).off;
+})
 
 </script>
+
 
 <style lang="scss" scoped>
 .video-wrap {
   padding-right: 14px;
   height: 100%;
-  &.big-video-right {
-    padding-right:0;
-    &::after{
-      width: 0;
-      background: none;
-      border:none;
-    }
-  }
-  .data-title {
-    height: 40px;
-    margin-bottom: 15px;
-    .img {
-      width: 16px;
-      height: 16px;
-      margin-right: 9px;
-      background-repeat: no-repeat;
-    }
-  }
 
-  /* 比分数据 */
-  .data-template {
-    display: flex;
-    justify-content: center;
-    background-color: var(--qq--yb-bg-color18_big_screen_1);
-    border-radius: 6px;
-    padding: 15px 0;
-    ::v-deep .column-between {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+  .video-iframe {
+    width: 100%;
+    height: 100%;
   }
+}
 
-  .video-bottom-panel {
-    margin-top: 4px;
-    margin-bottom: 1px;
-    &.iframe-video-bottom-panel {
-      .panel-wrapper {
-        ::v-deep {
-          .chatroom {
-            margin-top: 0;
-            .chat-scroll-area {
-              height: 171px;
-            }
-            .emoji-picker {
-              height: 145px;
-            }
-          }
-          .total_chart {
-            .wrap-score {
-              padding: 29px 40px 33px 40px;
-            }
-          }
-        }
-      }
-    }
-    .panel-wrapper {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0 8px;
-      &.no-chatroom {
-        display: block;
-      }
-      > div {
-        border: none;
-        // border: 1px solid var(--qq--match-border-color2);
-      }
-      ::v-deep {
-        .video-history-line {
-          margin-bottom: 4px;
-        }
-        .stats-wrapper, .chatroom, .video-history-line {
-          border: 1px solid var(--qq--match-border-color2);
-        }
-        .chatroom {
-          margin-top: 0;
-          .chat-scroll-area {
-            //height: 230px;
-            height: 171px;
-          }
-          .emoji-picker {
-            //height: 238px;
-            height: 145px;
-          }
-        }
-        .total_chart {
-          .wrap-score {
-            //padding: 57px 40px 70px 40px;
-            padding: 29px 40px 33px 40px;
-            &.basketball-score {
-              padding: 0;
-            }
-          }
-          .q-knob {
-            font-size: 54px;
-          }
-        }
-      }
-    }
-  }
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.full-screen {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
 }
 </style>

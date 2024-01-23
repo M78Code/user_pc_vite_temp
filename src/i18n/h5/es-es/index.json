@@ -120,6 +120,8 @@
     "quarter": "Cuarto"
   },
   "bet": {
+    "edit_success": "Cambio de cuotas efectivo !",
+    "edit_fail": "Cambio de cuota fallido!",
     "account_balance": "Saldo",
     "agree_change2": "Aceptar cambios y apostar",
     "agree_change": "Aceptar cambios",

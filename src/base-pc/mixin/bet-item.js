@@ -1,10 +1,10 @@
-import { onMounted, ref, onUnmounted, computed, watch, inject } from "vue";
+import { onMounted, ref, onUnmounted, computed, watch, inject, defineEmits } from "vue";
 import lodash from 'lodash'
 import { get_odds_active, MenuData } from "src/output/index.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 
-export function use_bet_item(props) {
+export function use_bet_item(props, emit) {
 
     // 定时器对象
     let timer_obj = {};
@@ -52,7 +52,7 @@ export function use_bet_item(props) {
     watch(() => props.ol_data.ov, (cur, old) => {
         if (cur == old) return
         // 红升绿降变化
-        set_odds_lift(cur, old);
+        set_odds_lift(cur, old, props.ol_data);
     }, { deep: true })
     let tid;
     /**
@@ -61,7 +61,7 @@ export function use_bet_item(props) {
      * @param  {number} old - 上次赔率值
      * @return {undefined} undefined
      */
-    const set_odds_lift = (cur, old) => {
+    const set_odds_lift = (cur, old, ol_data) => {
         if (!["lock", 'seal'].includes(odds_state.value) && old && !is_odds_seal()
         ) {
             if (cur > old) {
@@ -73,7 +73,15 @@ export function use_bet_item(props) {
             clearTimeout(tid)
             tid = setTimeout(() => {
                 odds_lift.value = "";
+                emit && emit('oddsChange', {
+                    odds_lift:odds_lift.value,
+                    oid:ol_data.oid
+                })
             }, 3000);
+            emit && emit('oddsChange',  {
+                odds_lift:odds_lift.value,
+                oid:ol_data.oid
+            })
         }
     };
 
@@ -203,11 +211,11 @@ export function use_bet_item(props) {
         }
         // vr体育
         if (MenuData.is_vr()) {
-            bet_type = 'vt_bet'
+            bet_type = 'vr_bet'
         }
         let other = {
             is_detail: false,
-            // 投注类型 "vt_bet", "common_bet", "guanjun_bet", "esports_bet"
+            // 投注类型 "vr_bet", "common_bet", "guanjun_bet", "esports_bet"
             // 根据赛事纬度判断当前赛事属于 那种投注类型
             bet_type,
             // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备

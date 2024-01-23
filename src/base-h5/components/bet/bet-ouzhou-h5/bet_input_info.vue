@@ -10,8 +10,9 @@
             </span>
         </div>
        </div>
+       {{ BetData.active_index }}--{{ index }}
        <div class="info_right size_14">
-        <div class="content-b" @click.stop="input_click(item,index,$event)">
+        <div class="content-b" @click.stop="input_click(item,index,$event)" :class="{'active':BetData.active_index == index}">
             <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
   
             <span class="money-span" ref="money_span" :style="{ opacity:  '1' }"></span>
@@ -42,7 +43,6 @@ const props = defineProps({
 })
 
 const input_click = (item,index,event) => {
-    console.error('index', index)
   event.preventDefault()
   BetData.set_bet_keyboard_config(item)
   BetData.set_bet_keyboard_show(true)

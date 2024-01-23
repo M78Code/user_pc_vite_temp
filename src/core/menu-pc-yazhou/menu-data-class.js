@@ -119,9 +119,7 @@ class MenuData {
     this.current_ball_type = ''
 
     this.left_menu_list = []
-   
   }
-
 
   // 获取数据缓存 ，用于刷新
   get_new_data() {

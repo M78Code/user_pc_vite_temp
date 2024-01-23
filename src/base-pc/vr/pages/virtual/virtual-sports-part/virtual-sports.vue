@@ -57,7 +57,7 @@
               <div class="horse-col" v-if="current_match.csid != '1009'">
                   {{ i18n_t('list.virtual_match_type_title.type1011.bet_col.2') }}</div>
           </div>
-          <virtual-sports-right :current_match="current_match" :match_list_by_no="match_list_by_no" :switch_match_handle="switch_match_handle" />
+          <virtual-sports-right v-if="current_match" :current_match="current_match" :match_list_by_no="match_list_by_no" :switch_match_handle="switch_match_handle" />
         </div>
         
         <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
@@ -125,7 +125,7 @@ import noData from "src/base-pc/vr/components/common/vr-sport-no-data.vue";
 import matchTab from "src/base-pc/vr/pages/virtual/virtual-sports-part/match-tab.vue"
 import v_s_match_list from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-list.vue"
 import v_s_match_list2 from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-list2.vue"
-import virtual_sports_category from "src/base-pc/vr/pages/virtual/details/children/virtual-sports-category.vue"
+// import virtual_sports_category from "src/base-pc/vr/pages/virtual/details/children/virtual-sports-category.vue"
 import virtual_sports_stage from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-stage.vue"
 import dynamic_ranking from "src/base-pc/vr/pages/virtual/virtual-sports-part/dynamic-ranking.vue"
 import result_page from "src/base-pc/vr/pages/result/result-page.vue"
@@ -136,7 +136,7 @@ import { IconWapper } from 'src/components/icon'
 export default {
   mixins:[virtual_sports_mixin],
   components:{
-    'virtual-sports-category':virtual_sports_category,
+    // 'virtual-sports-category':virtual_sports_category,
     'match-tab':matchTab,
     'v-s-match-list':v_s_match_list,
     'v-s-match-list2':v_s_match_list2,
@@ -343,4 +343,3 @@ export default {
   }
 }
 </style>
-src/core/vr/mixin/pages/virtual/virtual-sports_part/virtual_sports_mixin.js

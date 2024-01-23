@@ -44,8 +44,9 @@ let submit_btn = false
 // is_single 是否单关/串关 
 // is_merge  是否单关合并
 const set_min_max_money = (bet_list, is_single, is_merge) => {
-    
-    let order_min_max_money = bet_list.map(item => {
+    // 过滤 数组中undefined,bet_list数据待优化
+    let arr = bet_list.filter(item => item != undefined)    
+    let order_min_max_money = arr.map(item => {
         let obj = {
             "sportId": item.sportId,   // 赛种id
             "marketId": item.marketId,  //盘口id
@@ -179,13 +180,17 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "dataSource": item.dataSource,   // 数据源
             }
 
-             // 获取当前的盘口赔率
-             let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
-             // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
-             let hsw = lodash_.get(item,'odds_hsw', '')
-             if(!hsw.includes(cur_odds)){
-                 bet_s_obj.marketTypeFinally = 'EU'
-             }
+            // 获取当前的盘口赔率
+            let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
+            // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
+            let hsw = lodash_.get(item,'odds_hsw', '')
+            if(!hsw.includes(cur_odds)){
+                bet_s_obj.marketTypeFinally = 'EU'
+            }
+            // 预约投注 设置预约盘口值
+            if(BetData.is_bet_pre){
+                bet_s_obj.marketValue = item.marketValue
+            }
 
             // 预约投注
             // 需要用对应的数据 对投注数据进行覆盖
@@ -357,6 +362,8 @@ const get_lastest_market_info = (type) => {
                             bet_item.playOptionsId = odds.id
                             // 基准分
                             // bet_item.mark_score = 
+                            // 盘口值
+                            bet_item.marketValue = market.marketValue
 
                             // 球头
                             bet_item.handicap_hv = odds.playOptions || market.marketValue
@@ -764,17 +771,19 @@ const submit_handle_lastest_market = () => {
                 set_orderNo_bet_obj(orderDetailRespList)
                 BetViewDataClass.set_orderNo_bet_single_obj(seriesOrderRespList)
 
-                let number_list = []
-                number_list = seriesOrderRespList.filter(item=> item.orderStatusCode == 1)
+                // let number_list = []
+                // number_list = seriesOrderRespList.filter(item=> item.orderStatusCode == 1)
                 
-                if(seriesOrderRespList.length == number_list.length){
-                    // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
-                    BetViewDataClass.set_bet_order_status(3)
-                    order_state = 3
-                }else{
-                    BetViewDataClass.set_bet_order_status(2)
-                    order_state = 2
-                }
+                // if(seriesOrderRespList.length == number_list.length){
+                //     // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
+                //     BetViewDataClass.set_bet_order_status(3)
+                //     order_state = 3
+                // }else{
+                //     BetViewDataClass.set_bet_order_status(2)
+                //     order_state = 2
+                // }
+                // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
+                BetViewDataClass.set_bet_order_status(3)
 
             }
             // 投注成功 更新余额
@@ -793,7 +802,10 @@ const submit_handle_lastest_market = () => {
             // 6 预约确认中 3 投注确认中
             if( [2,6].includes(order_state*1)){
                 let order_no =  lodash_.get(orderDetailRespList,'[0].orderNo', '')
-                set_order_status_info(order_no)
+                // 单关才有
+                if(BetData.is_bet_single){
+                    set_order_status_info(order_no)
+                }
 
                 let obj = {};
                 obj.hid = ''
@@ -912,7 +924,7 @@ const set_error_message_config = (res ={},type,order_state) => {
  * @param {{ oid, _hid, _hn, _mid}} params 
  * @param {Object} other 
  * @param {Boolean} other.is_detail
- * @param {'common_bet'|''} other.bet_type
+ * @param {'common_bet'|'guanjun_bet'|'vr_bet'|'esports_bet'} other.bet_type 根据赛事纬度判断当前赛事属于 那种投注类型
  * @param {1|2|3|4|5} other.device_type 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
  * @param {'h5_detail'|'h5_list'} other.match_data_type
  * @param {String} other.play_name 玩法名
@@ -1437,7 +1449,7 @@ const get_score_config = (obj={}) => {
         query = pc_match_data_switch(obj.match_ctr)
     }
     const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${obj.matchId}_`, {})
-    const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${obj.matchId}_${obj.playOptionId}`, {})
+    const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${obj.matchId}_${obj.playOptionsId}`, {})
 
     return calc_bifen(mid_obj.msc,mid_obj.csid,mid_obj.ms,ol_obj._hpid)
 }
@@ -1457,6 +1469,7 @@ const get_market_is_show = (obj={}) =>{
     return !!hl_obj.hid
 }
 const go_to_bet = (ol_item, match_data_type) => {
+    console.log(MenuData)
     // 如果是赛果详情
     if(PageSourceData.route_name == 'match_result') return
     const {oid,_hid,_hn,_mid,_hpid } = ol_item

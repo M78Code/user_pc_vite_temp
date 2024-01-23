@@ -25,7 +25,7 @@
           v-show="is_video_hover"
           :ctr_data={video_type:1}
           :is_video_hover="is_video_hover"
-          :video_fullscreen_disabled="false"
+          :video_fullscreen_disabled="true"
           :match_info="detail_info"
           :is_esports="false"
       ></video_type_ctr>
@@ -62,15 +62,24 @@ const iframe_loading = ref();
 const is_video_hover = ref(false); // 鼠标是否经过视频
 
 const { videoAnimationUrl } = api_common; // 接口
+
+// 监听滚球切换
 watch(
   () => props.detail_info,
   (val) => {
+ 
+    iframe_loading.value = true;
+    media_src.value = "";
+    setTimeout(() => {
+      init();
+    }, 1500);
   }
 );
 // 监听动画视频切换
 watch(
   () => props.show_type,
   (val) => {
+  
     iframe_loading.value = true;
     media_src.value = "";
     setTimeout(() => {
@@ -82,6 +91,7 @@ watch(
 let iframe = null;
 
 onMounted(() => {
+ 
   iframe_loading.value = true;
     media_src.value = "";
     setTimeout(() => {
@@ -260,11 +270,11 @@ const video_leave = () => {
 }
 
 // 屏蔽不需要的功能
-//.box-bc :deep(.full-screen-wrap) {
-//  display: none !important;
-//}
-//.box-bc :deep(.xl-screen-wrap) {
-//  display: none !important;
-//}
+.box-bc :deep(.full-screen-wrap) {
+  display: none !important;
+}
+.box-bc :deep(.xl-screen-wrap) {
+  display: none !important;
+}
 
 </style>

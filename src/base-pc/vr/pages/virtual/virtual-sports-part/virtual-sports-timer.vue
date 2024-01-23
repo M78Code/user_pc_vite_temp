@@ -38,6 +38,7 @@ export default {
   justify-content: center;
   align-items: center;
   margin-bottom: 0.38rem;
+  z-index:555;
   .circle-time-wrapper svg path{
     stroke: var(--q-gb-t-c-35);
   }
@@ -72,12 +73,14 @@ export default {
     width: 1.1rem;
     height: 100%;
     position: absolute;
+    z-index: 566;
     top: 0;
     left: 0;
   }
 
   canvas {
     position: absolute;
+    z-index: 577;
     top: 50%;
     left: 50%;
     z-index: 2;
@@ -86,6 +89,7 @@ export default {
 
   .count-wrap {
     position: absolute;
+    z-index: 588;
     left: 50%;
     bottom: -0.38rem;
     display: flex;
@@ -111,4 +115,4 @@ export default {
   }
 }
 </style>
-src/core/vr/mixin/pages/virtual/virtual-sports_part/virtual_sports_timer_mixin.js
+ 
