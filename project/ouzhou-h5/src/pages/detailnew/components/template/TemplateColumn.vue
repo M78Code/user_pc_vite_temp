@@ -52,7 +52,7 @@ const props = defineProps<{
   data:TYPES.OddInfo
 }>()
 
-const olType = common.getOlTypeOfTemplate4(props.data)
+const olType = common.getOlType(props.data)
 
 const others = ref<Array<TYPES.Ol>>([])
 
