@@ -124,10 +124,8 @@ export default {
       this.virtual_sports_params.csid = this.current_sub_menu.menuId;
       // 足蓝跳转到其他虚拟赛种前， 给状态一个标识
       this.v_menu_changed = ([1001, 1004].includes(this.get_curr_sub_menu_type) ? 'zu_lan_' : '') + Math.random();
-      console.log(this.get_curr_sub_menu_type, 'this.get_curr_sub_menu_type')
       this.set_virtual_current_sub_menuid(this.current_sub_menu.menuId);
       this.set_curr_sub_menu_type(this.current_sub_menu.menuType || this.current_sub_menu.menuId)
-      console.log('ress', 222);
       useMittEmit(MITT_TYPES.EMIT_VR_MENU_CLICK, {
         virtual_sports_params: this.virtual_sports_params,
         current_sub_menu: this.current_sub_menu,
