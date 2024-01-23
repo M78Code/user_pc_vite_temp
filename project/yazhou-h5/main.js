@@ -11,7 +11,7 @@ import "quasar/src/css/index.sass";
 // 引入 当前 计算出的植入配置
 
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
-
+import { main_js_common_fun } from "src/core/main-js-common-fun/index.js";
 window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 
 // Assumes your root component is App.vue
@@ -42,4 +42,6 @@ import { i18n } from "src/boot/i18n.js";
 app.use(i18n).use(router);
 // 使用自定义指令
 useDirective(app)
+// app文件配置
+main_js_common_fun(app);
 app.mount("#ty-app");
