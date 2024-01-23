@@ -8,11 +8,13 @@
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div class="temp-simple">
     <div
-      v-for="(value, key) in matchInfo"
-      :key="key"
+      v-for="(item, i) in props.match_info?.hl"
+      :key="item.hv"
       class="temp_grid"
       :class="{ temp_grid: true }"
     >
+    {{ void(value = matchInfo[item.hv]) }}
+    {{ void(key=item.hv) }}
       <div class="temp5-hv">{{ key > 0 && hpid == 39 ? "+" + key : key }}</div>
       <div
         v-if="
