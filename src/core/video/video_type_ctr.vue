@@ -84,7 +84,17 @@ export default {
     video_fullscreen_disabled: {
       type: Boolean,
       default: false
-    }
+    },
+    // 屏蔽兼容以前的显示 中屏
+    show_full_screen_wrap: {
+      type: Boolean,
+      default: true
+    },
+    // 屏蔽兼容以前的显示 大屏
+    show_xl_full_screen_wrap: {
+      type: Boolean,
+      default: true
+    },
   },
   data(){
     return {
@@ -179,6 +189,7 @@ export default {
         // 进入全屏
         play_type = 2;
       }
+      console.log(play_type, size, " 进入全屏");
       if (this.vx_play_media.media_type === 'topic') {
         video.send_message({
           cmd: 'record_play_info',
