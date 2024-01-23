@@ -2741,6 +2741,9 @@
   },
   "video": {
     "animation": "Anime",
+    "icon_animation": "Anime",
+    "icon_video": "Video",
+    "icon_score": "Score",
     "cancel_mute": "Unmute",
     "data": "Field data",
     "flv": "HD1",
