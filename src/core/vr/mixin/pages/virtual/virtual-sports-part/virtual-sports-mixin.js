@@ -11,6 +11,7 @@ import { get_now_server } from 'src/core/utils/common/module/other.js'
 import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDataWarehouse_H5_List_Common, MatchDataWarehouse_PC_List_Common, LOCAL_PROJECT_FILE_PREFIX,compute_css_obj } from "src/output/index.js"
+import { ref } from "vue";
 const MatchDataBaseH5 = window.BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_List_Common:MatchDataWarehouse_H5_List_Common;
 export default {
   mixins:[virtual_sports_mixin],
@@ -82,7 +83,7 @@ export default {
       // 存储定时器id的映射
       interval_ids: new Map(),
       // 当前联赛的全部轮次
-      match_list_all_batches:[],
+      match_list_all_batches:ref([]),
     }
   },
   created() {
@@ -431,19 +432,23 @@ export default {
      */
     handle_match_time(batch){
       const match = batch.matchs[0];
-      if(match){
-        let remaining_time = Number(match.mgt) - get_now_server();
-        //毫秒格式化为: 分钟'秒''
-        let minutes = Math.floor(remaining_time / (1000 * 60));
-        let sub_ms_r = remaining_time - minutes * 60 * 1000;
-        let seconds_f = Math.floor(sub_ms_r / 1000);
-        minutes = String(minutes);
-        seconds_f = String(seconds_f);
-
-        let minutes_format = minutes.padStart(2, '0');
-        let seconds_f_format = seconds_f.padStart(2, '0');
-        batch.remaining_time = remaining_time;
-        batch.timer_format = `${minutes_format}:${seconds_f_format}`;
+      try {
+        if(match){
+          let remaining_time = Number(match.mgt) - get_now_server();
+          //毫秒格式化为: 分钟'秒''
+          let minutes = Math.floor(remaining_time / (1000 * 60));
+          let sub_ms_r = remaining_time - minutes * 60 * 1000;
+          let seconds_f = Math.floor(sub_ms_r / 1000);
+          minutes = String(minutes);
+          seconds_f = String(seconds_f);
+  
+          let minutes_format = minutes.padStart(2, '0');
+          let seconds_f_format = seconds_f.padStart(2, '0');
+          batch.remaining_time = remaining_time;
+          batch.timer_format = `${minutes_format}:${seconds_f_format}`;
+        }
+      } catch (error) {
+        console.error(error);
       }
     },
     /**
@@ -469,17 +474,23 @@ export default {
      },
      // 设置当前联赛的全部轮次
      set_match_list_all_batches(val){
-      const match_list_all_batches_ = [...val];
-      match_list_all_batches_.forEach(batch=> {
-        this.handle_match_time(batch);
-        this.set_batch_timer(batch);
-      })
-      
-      // 各球种都全部展开
-      match_list_all_batches_.forEach(batch=> {
-        batch.is_expend = true
-      })
-      this.match_list_all_batches = match_list_all_batches_;
+        const match_list_all_batches_ = [...val];
+        try {
+          match_list_all_batches_.forEach(batch=> {
+            if(batch){
+              this.handle_match_time(batch);
+              this.set_batch_timer(batch);
+            }
+          })
+          
+          // 各球种都全部展开
+          match_list_all_batches_.forEach(batch=> {
+            batch.is_expend = true
+          })
+        } catch (error) {
+          console.error(error);
+        }
+        this.match_list_all_batches = match_list_all_batches_;
     }
   },
   computed:{
@@ -532,6 +543,12 @@ export default {
         this.set_match_list_all_batches(val)
       },
       deep: true,
+    },
+    virtual_match_list_upd(val){
+      // this.set_match_list_all_batches(this.virtual_match_list)
+      this.$nextTick(() => {
+        this.set_match_list_all_batches(this.virtual_match_list)
+      });
     },
     v_menu_changed(change_str){
       this.tab_item_i = 0;

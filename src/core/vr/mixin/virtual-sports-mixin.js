@@ -16,6 +16,8 @@ export default {
     return {
       //虚拟赛事列表
       virtual_match_list:[],
+      // 虚拟赛事列表变更时间戳
+      virtual_match_list_upd:0,
       //视频进程接口未拉取到数据的参数key
       no_process_data_p_key:'',
       //重调用视频进程接口次数
@@ -70,6 +72,13 @@ export default {
     MatchDataBaseH5.clear();
   },
   methods:{
+  	// 设置虚拟赛事列表
+    set_virtual_match_list_arr(arr){
+      if(arr){
+        this.virtual_match_list = arr;
+        this.virtual_match_list_upd = new Date().getTime();
+      }
+    },
 	set_virtual_data_loading(data){VR_CTR.state.virtual_data_loading = data},
 	set_prev_v_sports(data){VR_CTR.state.prev_v_sports = data},
 	set_current_batch(data){
@@ -174,7 +183,8 @@ export default {
       }
       if(is_user_clicked != 'is_user_refreshing'){
         // useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,true);
-        this.virtual_match_list = [];
+        // this.virtual_match_list = [];
+        this.set_virtual_match_list_arr([]);
         this.match_list_by_no = [];
         this.no_title_list = [];
         MatchDataBaseH5.clear();
@@ -191,7 +201,8 @@ export default {
           res.data = res.data.data;
         }
         if(res.code == 200 && res.data && res.data.length){
-          this.virtual_match_list = this.append_result_fields(res.data);
+          // this.virtual_match_list = this.append_result_fields(res.data);
+          this.set_virtual_match_list_arr(this.append_result_fields(res.data));
           this.check_next_no_start_time();
           this.no_title_list = this.virtual_match_list.map(m => {
             let {no,mmp,batchNo} = m;
@@ -228,7 +239,8 @@ export default {
           }
         }
         else{
-          this.virtual_match_list = [];
+          // this.virtual_match_list = [];
+          this.set_virtual_match_list_arr([]);
           this.match_list_by_no = [];
         }
         this.match_list_is_empty = !this.virtual_match_list.length;
@@ -274,7 +286,8 @@ export default {
         useMittEmit(MITT_TYPES.EMIT_IS_FIRST_LOADED);
         useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED);
 
-        this.virtual_match_list = [];
+        // this.virtual_match_list = [];
+        this.set_virtual_match_list_arr([]);
         this.match_list_by_no = [];
         this.match_list_is_empty = true;
         this.current_match = {};
@@ -294,8 +307,8 @@ export default {
           res.data = res.data.data;
         }
         if(res.code == 200 && res.data && res.data.length){
-          this.virtual_match_list = this.append_result_fields(res.data);
-
+          // this.virtual_match_list = this.append_result_fields(res.data);
+          this.set_virtual_match_list_arr(this.append_result_fields(res.data));
           if(this.current_match.mmp == "INGAME" && res.data.length < 2){
             return;
           }
@@ -340,7 +353,8 @@ export default {
             res.data = res.data.data;
           }
           if(res.code == 200 && res.data && res.data.length){
-            this.virtual_match_list = this.append_result_fields(res.data);
+            // this.virtual_match_list = this.append_result_fields(res.data);
+            this.set_virtual_match_list_arr(this.append_result_fields(res.data));
             if(this.current_match.mmp == "INGAME" && res.data.length == 1 && res.data[0].mmp == "PREGAME"){
               useMittEmit(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL);
               return;
@@ -429,7 +443,8 @@ export default {
         match_list.forEach(m => {
           m.mhs = 11;
         });
-        this.virtual_match_list = match_list;
+        // this.virtual_match_list = match_list;
+        this.set_virtual_match_list_arr(match_list);
         this.sub_nav_changed({
           nav:lodash.cloneDeep(this.virtual_match_list[0]),
           i:0
