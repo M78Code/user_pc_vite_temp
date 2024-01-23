@@ -164,7 +164,10 @@ export function usedetailData(route) {
           detail_info.value = { ...detail_info.value, ...res.data };
           detail_info.value["course"] = handle_course_data(detail_info.value);
           setTimeout(() => {
-            LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
+             if (!route.query.ms) {
+              LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
+                }
+           
           }, 200);
   
           MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
@@ -416,7 +419,12 @@ export function usedetailData(route) {
     mid = route.params.mid;
     tid = route.params.tid;
     current_id.value = route.params.mid;
-    LayOutMain_pc.set_oz_show_right(true); // 显示右侧
+     // 有ms 字段优先判断是否显示右侧
+    if (route.query.ms) {
+      LayOutMain_pc.set_oz_show_right(Number(route.query.ms)>0); // 显示右侧
+    }else{
+      LayOutMain_pc.set_oz_show_right(true); // 显示右侧
+    }
     LayOutMain_pc.set_oz_show_left(true); // 显示菜单
     init();
     // 一键折叠监听
