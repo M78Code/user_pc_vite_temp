@@ -1,5 +1,5 @@
 <template>
-  <div class="match-tpl-129">
+  <div class="match-tpl-129" v-if="match">
     <div class="flex flex-start items-center">
       <!-- 赛事基础信息 -->
       <div class="basic-col"
@@ -10,10 +10,10 @@
         <div class="team-title-wrap">
             <!-- 战队名称 -->
             <div>
-                <div class="team-title" :class="{over:[2,11].includes(+match.match_status)}">
+                <div class="team-title" :class="{over:[2,11].includes(+lodash.get(match,'match_status',0))}">
                   <div class="ellipsis">{{match.teams ? match.teams[0] : ''}}</div>
                 </div>
-                <div class="team-title" :class="{over:[2,11].includes(+match.match_status)}">
+                <div class="team-title" :class="{over:[2,11].includes(+lodash.get(match,'match_status',0))}">
                   <div class="ellipsis">
                     {{match.teams ? match.teams[1] : ''}}
                   </div>
@@ -107,7 +107,7 @@ export default {
     provide("MatchListData", MatchListData)
 
     let current_mid = MatchListCardDataClass.current_mid;
-    const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.value.csid == '1001' ? 129 : 126}_config`]
+    const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${lodash.get(match,'value.csid') == '1001' ? 129 : 126}_config`]
     
     let handicap_list = computed(() => {
       try{
@@ -121,7 +121,7 @@ export default {
     });
 
     const match_list_tpl_size = computed(() => {
-      const width_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.value.csid == '1001' ? 129 : 126}_config`].width_config
+      const width_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${lodash.get(match,'value.csid')  == '1001' ? 129 : 126}_config`].width_config
       return width_config
     })
 
