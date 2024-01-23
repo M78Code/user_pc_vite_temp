@@ -270,13 +270,20 @@ export default defineComponent({
       let o_hps_key = this.get_hps_key_by(this.current_tab_item);
       if(this.match[o_hps_key]){
         // 根据业务需求，修改冠军小节玩法  1585 单对应
-        this.current_tab_item.hps = this.match[o_hps_key];
-        if([18].includes(+ lodash.get(this.current_tab_item, 'id'))){
+        const hps = lodash.get(this.match, `${o_hps_key}`)
+        const id = +lodash.get(this.current_tab_item, 'id')
+        this.current_tab_item.hps = hps
+        if([18].includes(id)){
           // 波胆玩法 数据加工处理
-          this.bold_all_list = this.corrective_action_data_processing(lodash.get(this.current_tab_item,'hps'), this.match )
-        }else if([19].includes(+ lodash.get(this.current_tab_item, 'id'))){
+          this.bold_all_list = this.corrective_action_data_processing(hps, this.match )
+        }else if([19].includes(id)){
           // 5分钟 玩法 数据加工处理
-          this.five_minutes_all_list = this.five_minutes_gameplay_data_processing(lodash.get(this.current_tab_item,'hps'), this.match )
+          this.five_minutes_all_list = this.five_minutes_gameplay_data_processing(hps, this.match )
+        } else if ([17].includes(id)) {
+          // 15分钟 数据处理
+          if (!hps || hps.length < 1) return
+          const hps_data = lodash.cloneDeep(hps).sort((a, b) => +a.hSpecial - +b.hSpecial)
+          this.current_tab_item.hps = hps_data
         }
         this.current_hps_key = o_hps_key;
       }
@@ -749,13 +756,20 @@ export default defineComponent({
     match(c_m,o_m){
       this.init_tab_async_show()
       if(this.current_hps_key){
+        const id = +lodash.get(this.current_tab_item, 'id')
+        const hps = lodash.get(this.current_tab_item, 'hps')
         // 如果是波胆 和 5分钟玩法
-        if([18].includes(+ lodash.get(this.current_tab_item, 'id'))){
+        if([18].includes(id)){
           // 波胆玩法 数据加工处理
-          this.bold_all_list = this.corrective_action_data_processing(lodash.get(this.current_tab_item,'hps'), this.match )
-        }else if([19].includes(+ lodash.get(this.current_tab_item, 'id'))){
+          this.bold_all_list = this.corrective_action_data_processing(hps, this.match )
+        }else if([19].includes(id)){
           // 5分钟 玩法 数据加工处理
-          this.five_minutes_all_list = this.five_minutes_gameplay_data_processing(lodash.get(this.current_tab_item,'hps'), this.match )
+          this.five_minutes_all_list = this.five_minutes_gameplay_data_processing(hps, this.match )
+        } else if ([17].includes(id)) {
+          // 15分钟 数据处理
+          if (!hps || hps.length < 1) return
+          const hps_data = lodash.cloneDeep(hps).sort((a, b) => +a.hSpecial - +b.hSpecial)
+          this.current_tab_item.hps = hps_data
         }
       }
     },
