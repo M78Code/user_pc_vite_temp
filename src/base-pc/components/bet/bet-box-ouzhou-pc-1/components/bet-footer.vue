@@ -150,7 +150,6 @@ const set_special_state = computed(()=> status => {
     bet_list = lodash_.cloneDeep(BetData.bet_s_list)
     // 判断有没有相同的赛事 有则不能投注 false 没有 true 有
     is_repeat_match = lodash_.uniqBy(bet_list, 'matchId').length !== bet_list.length
-    console.log('is_repeat_match----------===================', is_repeat_match)
     // 获取商户配置的 串关投注项
     let min_series = lodash_.get(UserCtr.user_info,'configVO.minSeriesNum',2)
     let man_series = lodash_.get(UserCtr.user_info,'configVO.maxSeriesNum',10)
