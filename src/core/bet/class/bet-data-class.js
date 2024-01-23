@@ -639,7 +639,7 @@ this.bet_appoint_ball_head= null */
         }
       })
     }
-
+    // 合并 切换到 串关
     if (this.is_bet_single && this.is_bet_merge) {
       this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
       getSeriesCountJointNumber((code, data) => {
@@ -650,11 +650,11 @@ this.bet_appoint_ball_head= null */
         }
       })
     }
-
+    // 串关 切换到 合并
     if (!this.is_bet_single && this.is_bet_merge) {
       this.bet_single_list = lodash_.cloneDeep(this.bet_s_list)
     }
-
+    // 串关 切换到 单关
     if (!this.is_bet_single && !this.is_bet_merge) {
       this.bet_single_list = [lodash_.cloneDeep(this.bet_s_list).pop()]
     }
