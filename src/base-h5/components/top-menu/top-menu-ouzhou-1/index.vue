@@ -2,7 +2,7 @@
 <template>
   <!-- 规则 / 公告 头部 -->
   <template v-if="is_rule_page">
-    <div class="top_header_rule" @click="go_back">
+    <div class="top_header_rule" :class="['rules'].includes(route.name) ? 'rules-page' : ''" @click="go_back">
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/back.png`" alt="" />
       <span>{{ i18n_t("ouzhou.setting_menu.personal") }}</span>
       <span class="line"></span>
@@ -286,7 +286,8 @@ onUnmounted(()=>{
     color: #fff;
   }
 }
-.top_header_rule{
+// 欧洲版体育规则头部样式调整
+.rules-page.top_header_rule{
   position: fixed;
   top: 0;
   z-index: 999;

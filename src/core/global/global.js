@@ -65,6 +65,8 @@ class UseGlobal {
     this.champion_fold_obj = {};
     // 全局开关变更
     this.global_switch_version =ref('22222');
+    //近期开赛
+    this.kick_off_time = localStorage.getItem('kick_off_time')?JSON.parse (localStorage.getItem('kick_off_time')) :'';
     // 附加盘开关
     this.show_additional_disk = localStorage.getItem('additional_disk')?JSON.parse (localStorage.getItem('additional_disk')) :true;
     // 附加玩法开关
@@ -163,21 +165,30 @@ class UseGlobal {
    get_is_fold_status(state) {
     return this.is_fold_status;
   }
+    //设置即将开赛时间
+    set_kick_off_time(val) {
+      this.kick_off_time = val;
+      this.set_global_data_version()  
+    }
     //设置附加盘开关
     set_show_additional_disk(val) {
       this.show_additional_disk = val;
+      this.set_global_data_version()  
     }
     //设置附加玩法开关
     set_show_additional_plays(val) {
       this.show_additional_plays = val;
+      this.set_global_data_version()  
     }
     //设置附加玩法配置展示行数
     set_additional_plays_list_num(val) {
       this.additional_plays_list_num = val;
+      this.set_global_data_version()  
     }
   //是否展开多列玩法
   set_unfold_multi_column(status) {
     this.is_unfold_multi_column = status;
+    this.set_global_data_version()  
   }
 //列表附加玩法是否展开状态
 set_show_more_other_list(obj) {
@@ -186,6 +197,7 @@ set_show_more_other_list(obj) {
   }else{
     this.show_more_other_list_obj[obj.mid] = {...this.show_more_other_list_obj[obj.mid],...obj}
   }
+  this.set_global_data_version()  
 }
 }
 
