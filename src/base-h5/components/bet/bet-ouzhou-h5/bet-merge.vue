@@ -35,7 +35,7 @@ const set_is_bet_merge = () => {
   BetData.set_is_bet_merge()
   // 如果是合并单关模式默认选中多项单注部分
   if (BetData.is_bet_merge){
-    BetData.set_active_index(2)
+    BetData.set_active_index(BetData.bet_single_list.length)
   }else {
     BetData.set_active_index(0)
   }

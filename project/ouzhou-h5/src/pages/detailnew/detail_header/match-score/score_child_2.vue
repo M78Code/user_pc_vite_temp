@@ -49,7 +49,6 @@ const BasketballScore = computed(()=>{
 <template>
     <ul
         class="score_child_2"
-        v-if="[1,3].includes(+detail_data.ms)"
         :class="{ 'game-on':[1,2].includes(+detail_data.ms) }"
     >
         <li v-for="item of BasketballScore" :key="item.key" class="score-item">

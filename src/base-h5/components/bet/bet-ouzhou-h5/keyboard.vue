@@ -156,11 +156,7 @@ const _handleKeyPress = (e) => {
   let emit_name = 'EMIT_INPUT_BET_MONEY'
   if(BetData.is_bet_single){
     if (BetData.is_bet_merge) {
-      if (BetData.bet_keyboard_config.playOptionsId) {
-        emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
-      } else {
-        emit_name = 'EMIT_INPUT_BET_MONEY_MERGE'
-      }
+      emit_name = 'EMIT_INPUT_BET_MONEY_MERGE'
     } else {
       emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
     }
