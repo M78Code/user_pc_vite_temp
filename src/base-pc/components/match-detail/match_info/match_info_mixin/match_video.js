@@ -12,7 +12,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES,useMittEmitterGenerator,useMittOn } from  "src/core/mitt"
 import {is_eports_csid,MatchDetailCalss,get_media_icon_index,GlobalSwitchClass,UserCtr, MatchDataWarehouse_PC_Detail_Common as MatchDetailsData } from "src/output/index"
 import url_add_param  from "src/core/enter-params/util/index.js"
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import lodash from "lodash"
 export default {
   components: {

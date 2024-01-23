@@ -13,10 +13,10 @@ import {
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
 let { PROJECT_NAME ,IS_DEV } = BUILD_VERSION_CONFIG;
 console.log(colors.bgRed("export-html.js----------   ----"));
-import { html_config, config_key } from "./template-html/config/index.js";
+import { html_config  } from "./template-html/common-config.js";
 
  
-let project_html_config = html_config[config_key] || {};
+let project_html_config = html_config[PROJECT_NAME] || {};
 
 let all_placeholder = [];
 let all_config = [];
@@ -51,6 +51,9 @@ Object.values(project_html_config).map((x) => {
 all_placeholder.map((x) => {
     html_file = html_file.replace(''+ x, "");
 });
+
+
+
 
 
 let output_file_path=''

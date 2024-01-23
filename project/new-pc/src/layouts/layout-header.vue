@@ -30,7 +30,7 @@ import { useRoute, useRouter } from "vue-router";
 
 //import store from 'src/store-redux/index.js'
 import { SessionStorage} from 'src/output/index.js'
-import {SearchPCClass} from "src/output/project/common/pc-common.js";
+import {SearchPCClass} from "src/output/project/index.js";
 
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"

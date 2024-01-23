@@ -26,7 +26,7 @@ import { provide, computed, watch, ref } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { MatchDataWarehouse_PC_List_Common, GlobalAccessConfig,MenuData, UserCtr } from "src/output/index.js";
-import { LayOutMain_pc } from "src/output/project/common/pc-common.js";
+import { LayOutMain_pc } from "src/output/project/index.js";
 // 玩法模板 0   足球-让球&大小  、 足球-角球 、 美足-让球&大小 、 手球-让球&大小
 import { MatchTpl1AfterFullVersionWapper as MatchTpl1After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-1-after/index.js";
 // // 玩法模板 2   足球-半/全

@@ -19,7 +19,7 @@ import { onMounted, ref, onActivated } from 'vue'
 import record_head from './compoments/record_head.vue'
 import record_select from './compoments/record_select.vue'
 import record_table from './compoments/record_table.vue'
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import BetRecordHistory from "src/core/bet-record/pc/bet-record-history.js"
 
 

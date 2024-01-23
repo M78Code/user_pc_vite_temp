@@ -2,7 +2,7 @@
  * 删除 服务器上可能的历史版本输出缓存，确保不出错
  */
 import colors from "colors" 
-import { remove_file,copyDir } from "./write-folder-file.js";
+import { remove_file,copy_dir } from "./write-folder-file.js";
 console.log("----process.argv---", process.argv);
 // 代码内 配置的          ，一般是  本地测试 打包指定版本用
 
@@ -29,7 +29,7 @@ if(BUILD_STATIC_DIR_NEED_CHANGE){
 
   all_static.map(x=>{
 
-    copyDir(`./public/${x}/`,`${BUILD_STATIC_DIR_TARGET_PATH}${x}/`)
+    copy_dir(`./public/${x}/`,`${BUILD_STATIC_DIR_TARGET_PATH}${x}/`)
 
 
   })
