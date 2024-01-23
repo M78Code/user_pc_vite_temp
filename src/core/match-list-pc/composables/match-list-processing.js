@@ -9,6 +9,7 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { match_list_handle_set } from '../match-handle-data.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import BaseData from 'src/core/base-data/base-data.js';
 const vx_filter_select_obj = ref([])
 let vx_layout_list_type = 'match'
 const { route_name } = PageSourceData;
@@ -51,19 +52,23 @@ const merge_same_league = (league_obj) => {
    * @param {object} league_list_obj
    */
 const set_league_list_obj = (val = {}) => {
-  league_list_obj.value = val;
+	league_list_obj.value = val;
 }
 const deal_with_list_data = (data) => {
+	const { mids_map, tids_map } = BaseData;
 	let mid_arr = []
 	data.forEach(item => {
 		// mids 为  123,44344,1231232, 格式的mids字符串 转化为 mid层级
-		let mid = item.mids.split(',');
-		mid.forEach(option => {
+		console.log("jiffy")
+		let mids_ary = item.mids.split(',');
+		mids_ary.forEach(mid => {
 			const match = MatchListData.get_quick_mid_obj(mid) || {}
 			// const match_cache = MatchListData.cache_match[mid] || {}
 			let mid_info = {
+				...lodash.get(mids_map, `mid_` + mid, {}),
+				...lodash.get(tids_map, `tid_` + item.tid, {}),
 				...item,
-				mid: option,
+				mid,
 				...match,
 				// ...match_cache,
 			}
@@ -74,13 +79,14 @@ const deal_with_list_data = (data) => {
 	MatchListData.set_list(mid_arr)
 	match_list_handle_set(mid_arr)
 }
+
 /**
  * @description 专业处理服务器返回的 列表 数据---联赛结构
  * @param {object} data   服务器返回数据
  * @param {boolean} backend_run / is_socket 是否静默拉取 
  * @return {undefined} undefined
  */
-const mx_list_res = (data, backend_run,is_base_data) => {
+const mx_list_res = (data, backend_run, is_base_data) => {
 	let code = lodash.get(data, "code");
 	let res_data = lodash.get(data, "data");
 	// 将全量数据接口 切割成含有mid元素的对象数组
@@ -107,7 +113,7 @@ const mx_list_res = (data, backend_run,is_base_data) => {
 					// 组装所有赛事
 					const temp_match = { mid: mid_, csid: item.csid, tid: item.tid }
 					// 设置收藏信息
-					match_collect_status(temp_match,backend_run)
+					match_collect_status(temp_match, backend_run)
 				});
 			});
 		} catch (error) {
@@ -191,7 +197,7 @@ const mx_list_res = (data, backend_run,is_base_data) => {
 				}, 10);
 			}
 			// 调用bymids更新前12场赛事
-			!is_base_data&&api_bymids(
+			!is_base_data && api_bymids(
 				{ is_league_first: true, inner_param: true },
 				callback_func
 			);
@@ -201,13 +207,13 @@ const mx_list_res = (data, backend_run,is_base_data) => {
 /***
  * @description 当接口状态为成功且有数据时 调用此方法
  */
-const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backend_run,is_base_data }) => {
+const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backend_run, is_base_data }) => {
 	is_show_hot.value = false;
 	if (!Array.isArray(match_list)) {
 		match_list = []
 	}
 	match_list.forEach(match => {
-		match_collect_status(match,backend_run)
+		match_collect_status(match, backend_run)
 	})
 	if (Array.isArray(match_list)) { //有时候是 {}
 		MatchListData.set_list(match_list)
@@ -254,10 +260,10 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
 	if (
 		vx_layout_list_type == "match" &&
 		[1, 500].includes(MenuData.menu_root) &&
-		!backend_run&&!is_base_data
+		!backend_run && !is_base_data
 	) {
 		// 调用bymids接口
-		!is_base_data&&api_bymids({ is_first_load: true, inner_param: true });
+		!is_base_data && api_bymids({ is_first_load: true, inner_param: true });
 	}
 };
 /***
@@ -319,7 +325,7 @@ const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, backend_
  * @param  {boolean} collect   是否 请求收藏数量  true 不请求
  * @return {undefined} undefined
  */
-const mx_use_list_res = (data, backend_run,is_base_data) => {
+const mx_use_list_res = (data, backend_run, is_base_data) => {
 	let code = lodash.get(data, "code");
 	// 赛事列表
 	let match_list = lodash.get(data, "data.data", []);
@@ -333,9 +339,9 @@ const mx_use_list_res = (data, backend_run,is_base_data) => {
 	// 	match_list = virtual_sport_format(match_list);
 	// }
 	if (code == 200 && match_list) {
-		mx_use_list_res_when_code_200_and_list_length_gt_0({ match_list, backend_run,is_base_data });
+		mx_use_list_res_when_code_200_and_list_length_gt_0({ match_list, backend_run, is_base_data });
 	} else {
-		mx_use_list_res_when_code_error_or_list_length_0({ match_list, backend_run,is_base_data });
+		mx_use_list_res_when_code_error_or_list_length_0({ match_list, backend_run, is_base_data });
 	}
 };
 /**
@@ -358,7 +364,7 @@ function handle_match_list_request_when_ok(data, is_socket, is_base_data) {
 		//  今日早盘   常规球种下的   常规球种下的 冠军
 		// 虚拟体育 单页 的  所有赛种
 		// 收藏
-		mx_use_list_res(data, is_socket,is_base_data);
+		mx_use_list_res(data, is_socket, is_base_data);
 	}
 };
 export {
