@@ -3,52 +3,20 @@
 <template>
 
 <div>
-  <!-- <div class="top-menu-content"> -->
+  <div class="top-menu-content">
         <!-- 体育 -->
         <!-- <span class="label">{{ i18n_t("results.sport") }}</span> -->
-        <!-- <Select-Wrapper
+        <Select-Wrapper
           :sportType="sport"
           :options="sport_type"
           :isChampion="0"
           use_component_key="Select_n"
         ></Select-Wrapper>
       </div>
-      <q-separator class="divider" color="#F2F5F8" inset /> -->
-    
-        <div class="c-simple-header">
-      <div class="logo-icon"  :style="compute_css_obj({ key: 'pc-rule-logo' })"></div>
-          <div class="head-info">
-            <div class="rule-title">
-              赛果
-            </div>
-            <div class="systime">
-              <div class="refresh" v-if="$route.name == 'match_results'">
-                <refresh-comp :loaded="data_loaded" @click="refresh()" />
-              </div>
-              <!--右侧时间-->
-              <span>{{date_time}} (GMT+8)</span>
-            </div>
-          </div>
-    </div>
-    <div>
-     
-      
-   
       <q-separator class="divider" color="#F2F5F8" inset />
-    </div>
-    
     <div class="search-header">
     <div class="wrap-select">
-      <div class="r-select ball-games">
-        <!-- 体育 -->
-        <span class="label  ball-games-label">{{$root.$t('results.sport')}}</span>
-        <normal-select
-          :value="sport"
-          :options="sport_type"
-          :isChampion="0"
-          class="select-style"
-        ></normal-select>
-      </div>
+      
       <!-- 冠军球种才展示这个下拉选择框 -->
       <div class="r-select ball-games" v-if="current_sport_id == 0">
         <!-- 球种 -->
@@ -140,36 +108,35 @@
             <!-- 滚球 -->
             <span>{{ i18n_t("results.roll_ball") }}</span>
           </div>
-          <div
+          <!-- <div
             class="checkbox"
             v-if="results_params.sportType == '1' && show_play_back"
             @click="highlights_input_radio"
           >
-            <fliter-checkbox :checked="is_highlights" /> 
+            <fliter-checkbox :checked="is_highlights" /> -->
             <!-- 精彩回放筛选 -->
-            <span>{{ i18n_t("video.video_event_history") }}</span>
-          </div> 
+            <!-- <span>{{ i18n_t("video.video_event_history") }}</span>
+          </div> -->
         </div>
       </div>
-      
       <div class="flex items-center">
         <div>
         <!-- 提示语 -->
           <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
             <div>{{ i18n_t("results.tips") }}</div>
-          </q-tooltip>
-          <div
-            class="match-resultstips-icon relative-position"
-            @click="click_popup"
-            @mouseleave="img_mouseleave"
-          >
-            <span class="cursor-pointer"></span>
-          </div>
+        </q-tooltip>
+        <div
+          class="match-resultstips-icon relative-position"
+          @click="click_popup"
+          @mouseleave="img_mouseleave"
+        >
+          <span class="cursor-pointer"></span>
         </div>
-        <!-- 搜索 -->
-        <div class="search-btn" @click="refresh()">
-            {{ i18n_t("results.search") }}
-        </div>
+      </div>
+      <!-- 搜索 -->
+      <div class="search-btn" @click="refresh()">
+          {{ i18n_t("results.search") }}
+      </div>
       </div>
       
     </div>
@@ -182,16 +149,14 @@
 import {  ref,computed,onMounted, reactive,watch } from 'vue';
 import {SelectWrapper} from "src/base-pc/components/match-results/select/index.js";
 import {FliterCheckbox} from "src/components/fliter-checkbox/index.js";
-import normalSelect from "src/base-pc/components/match-results/select/components/normal-select.vue";
 import selectY from "src/base-pc/components/match-results/select/components/select-y.vue"
 import { api_analysis } from "src/api/";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import { LayOutMain_pc } from "src/output/index.js";
 import { GlobalSwitchClass} from "src/output/index.js";
 
 import { loadLanguageAsync } from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
-import refreshComp from "src/components/refresh/refresh.vue";
 import {
   i18n_t,
   useMittEmit,
@@ -199,21 +164,8 @@ import {
   MITT_TYPES,
 } from "src/output/index.js";
 import lodash from "lodash"
-import { useGetResultConfig } from "src/base-pc/components/match-results/results-config.js";
-
-import userCtr from 'src/core/user-config/user-ctr.js'
-import { get_remote_time,utc_to_gmt_no_8_ms2 } from "src/output/index.js"
-import { compute_css_obj } from 'src/core/server-img/index.js'
-const {
-  //变量
-  changePage
-} = useGetResultConfig();
 const emit = defineEmits(['refresh'])
 const props = defineProps({
-  data_loaded:{
-    type: Boolean,
-    default: true//刷新按钮动画开关
-  },
   current_sport_id:{
     type: null
   },
@@ -297,9 +249,9 @@ const props = defineProps({
 });
 // 全局点击事件
   watch(
-    () => GlobalSwitchClass.global_switch_version,
+    () => GlobalSwitchClass.global_switch_version.version,
     (new_) => {
-    //  props.hideSelect()
+     props.hideSelect()
     },
     {deep:true, immediate: true }
   );
@@ -342,8 +294,6 @@ const locales = {
       }
 const  date = ref(props.dateValue)
 const  showBtn = ref(props.is_show)
-const date_time = ref('')
-const timer_id = ref(null)
 /**
 * @description: 时间选择确认
 * @return {}
@@ -358,76 +308,16 @@ const confirmDate=()=>{
 * @return {}
 */
 function refresh() {
-  changePage({changePage: 1});
-  // emit("refresh")
-}
-/**
- * @Description:获取当前系统时间
- * @return {undefined} undefined
- */
-function get_date_time() {
-  let time = get_remote_time()
-  date_time.value = utc_to_gmt_no_8_ms2(time);
-  timer_id.value = setInterval(() => {
-    time += 1000;
-    date_time.value = utc_to_gmt_no_8_ms2(time);
-  }, 1000);
+  emit("refresh")
 }
 onMounted(()=>{
  loadLanguageAsync(LocalStorage.get('lang'));
-  get_date_time()
 })
 </script>
 
 <style scoped lang="scss">
 
 @import "./result-header.scss";
-.head-info {
-  display: flex;
-  justify-content: space-between;
-  flex: 1;
-  .rule-title {
-    color:var(--q-match-result-title-color);
-    font-size: 12px;
-  }
-  .systime {
-    min-width: 96px;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    .refresh {
-      width: 20px;
-      height: 20px;
-      margin-right: 5px;
-      cursor: pointer;
-    }
-  }
-}
-
-.c-simple-header{
-  display: flex;
-  padding: 0 20px 0 15px;
-  height: 61px;
-  min-height: 61px;
-  align-items: center;
-  text-transform: uppercase;
-  background-color: var(--q-match-result-bg-head-color-1);
-  .header-title{
-    color:var(--q-match-result-title-color);
-  }
-  .rule-logo {
-    margin-right: 33.3px;
-    height: 100%;
-    .img-logo {
-      width: 130px;
-      height: 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-    }
-  }
-}
-
 .top-menu-content {
     height: 40px;
     border-top: 1px solid var(--q-announce-left-menu-color-2);
@@ -456,7 +346,7 @@ onMounted(()=>{
 .search-header {
   display: flex;
   align-items: center;
-  padding: 28px 0px 14px 0px;
+  padding: 28px 20px 14px 20px;
   border-bottom:1px solid #ff7000;
   
 
@@ -526,7 +416,7 @@ onMounted(()=>{
       }
 
       .ball-games-label {
-        //margin-left: 10px;
+        margin-left: 10px;
         white-space: nowrap;
       }
     }
@@ -624,7 +514,7 @@ onMounted(()=>{
   /* ************** select *************** -E */
   /* ************** 日期、单选框、搜索 *************** -S */
   .wrap-handel {
-    // width: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -683,13 +573,13 @@ onMounted(()=>{
 
     .search-btn {
       display: inline-block;
-      width: 80px;
+      width: 90px;
       height: 28px;
-      border-radius: 100px;
+      border-radius: 4px;
       text-align: center;
       line-height: 28px;
       cursor: pointer;
-      background: #179CFF;
+      background: #ff7000;
       color:#ffffff;
       // &:hover {
       //     background: #ffb001;
@@ -707,11 +597,5 @@ background: #ffffff;
     line-height: 12px !important;
   }
 }
-.logo-icon{
-    width:130px;
-    height: 40px;
-    margin-right: 34px;
-  }
-
 
 </style>
