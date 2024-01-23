@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <g id="控件" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组">
+            <rect id="矩形备份-3" stroke-opacity="0.25" stroke="#000000" fill="#62AA62" x="0.5" y="0.5" width="19" height="19" rx="2"></rect>
+            <path d="M10.108,15.052 C11.872,15.052 13.216,13.904 13.216,11.944 C13.216,10.096 11.942,8.99 10.598,8.99 C10.36,8.99 10.094,9.018 9.856,9.116 L11.928,5 L9.94,5 L7.84,9.312 C7.392,10.222 7,11.062 7,11.972 C7,13.946 8.344,15.052 10.108,15.052 Z M10.108,13.414 C9.366,13.414 8.82,12.882 8.82,11.958 C8.82,11.034 9.366,10.502 10.108,10.502 C10.878,10.502 11.396,11.076 11.396,11.958 C11.396,12.882 10.85,13.414 10.108,13.414 Z" id="6" fill="#FFFFFF" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>
