@@ -383,4 +383,3 @@ export default {
   }
 }
 </style>
-src/core/vr/mixin/pages/virtual/virtual-sports_part/knockout_mixin.js

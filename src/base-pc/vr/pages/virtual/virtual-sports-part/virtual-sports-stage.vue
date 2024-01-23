@@ -649,4 +649,3 @@ export default {
   }
 }
 </style>
-src/core/vr/mixin/pages/virtual/virtual-sports_part/virtual_sports_stage_mixin.js
