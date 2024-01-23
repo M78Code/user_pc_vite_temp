@@ -230,9 +230,15 @@ const set_special_state = computed(()=> status => {
     }
   } else {
     bet_list = lodash_.cloneDeep(BetData.bet_s_list)
+    // 判断有没有相同的赛事 有则不能投注 false 没有 true 有
+    is_repeat_match = lodash_.uniqBy(bet_list, 'matchId').length !== bet_list.length
     // 获取商户配置的 串关投注项
     let min_series = lodash_.get(UserCtr.user_info,'configVO.minSeriesNum',2)
     let man_series = lodash_.get(UserCtr.user_info,'configVO.maxSeriesNum',10)
+    if(is_repeat_match) {
+        is_bet_single = false
+        return true
+    }
     // 不能超过 用户设置的最大最小串关数量
     if(min_series > bet_list.length || man_series < bet_list.length){
       // 不允许投注
