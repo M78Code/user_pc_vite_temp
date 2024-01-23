@@ -3,11 +3,11 @@
 -->
 
 <template>
-  <div class="match-list-wrapper" :class="{standard: standard_edition == 2}">
+  <div class="match-list-wrapper" v-if="lodash.get(virtual_match_list, 'length')"  :class="{standard: standard_edition == 2}">
     <div>
       <v-sports-play-name :match_item_batch="match_item_batch" :csid="csid" />
-      <template v-for="(match_item, index) in virtual_match_list" :key="index">
-        <v-sports-tpl v-if="MatchListData.get_quick_mid_obj_ref(match_item.mid)" :match_item="match_item" :index="index"
+      <template v-for="(match_item, index) in virtual_match_list">
+        <v-sports-tpl v-if="MatchListData.get_quick_mid_obj_ref(match_item.mid)" :match_item="match_item" :index="index" :key="index"
         :mid="match_item.mid"></v-sports-tpl>
       </template>
     </div>
