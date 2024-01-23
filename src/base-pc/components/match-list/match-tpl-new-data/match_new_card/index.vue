@@ -178,7 +178,7 @@
       <div
         class="match-data"
         :class="!show_data ? 'md-more' : ''"
-        @click="toDetail()"
+        @click.stop="details.on_go_detail(match,null,router,route)" 
       >
         <!-- 更多 -->
         {{ i18n_t("match_info.more") }}
@@ -314,8 +314,10 @@ import { getScrollbarWidth } from 'src/core/utils/common/index'
 import { useRoute, useRouter } from 'vue-router';
 import lodash from 'lodash'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+import details  from "src/core/match-list-pc/details-class/details.js"
 
 const route = useRoute();
+const router = useRouter()
 const match = inject("match")
 const betItemActive = reactive({
   left: false,
