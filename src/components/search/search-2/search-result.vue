@@ -145,7 +145,7 @@
 									<div class="list_top">
 											<span v-html="red_color(item.teamName)"></span>
 										</div>
-									<div class="list_bottom"  v-for="(list, i) in item?.matchList" @click="match_click(item)">
+									<div class="list_bottom"  v-for="(list, i) in item?.matchList" @click.stop="match_click(item)">
 										<div style="width: 60%; word-break: break-all">
 											<p>
 												<span class="home" v-html="red_color(list.mhn)"></span>
@@ -210,7 +210,7 @@ import lodash from 'lodash'
 
 import search from "src/core/search-class/search.js"
 import { get_search_result } from "src/api/module/search/index.js";
-import { compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/output/index.js";
+import { MenuData,compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js';
@@ -218,7 +218,6 @@ import { api_common, api_match_list } from "src/api/index.js";
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import { get_match_score_result } from 'src/core/match-list-pc/match-handle-data.js'
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-
 const props = defineProps({
 	show_type: {
 		type: String,
@@ -261,6 +260,14 @@ const expand_team = ref(true)
  function bowling_top_click(match) {
 	update_show_type('none')
 	const { csid, tn } = match;
+	//设置左侧菜单联动
+	MenuData.set_left_menu_result({
+		...MenuData.left_menu_result,
+		lv1_mi: `${+csid+100}`,
+		lv2_mi: `${+csid+100}1`
+	})
+	MenuData.set_current_ball_type(csid);
+	// MenuData.set_menu_current_mi(`${+csid+100}2`)
 	router.push(`/search/${tn}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
@@ -276,7 +283,15 @@ const expand_team = ref(true)
  function league_click(match) {
 	if(!match) return;
 	search.insert_history(match.leagueName)
-	const { csid } = match.matchList[0]
+	const { csid } = match.matchList[0];
+	//设置左侧菜单联动
+	MenuData.set_left_menu_result({
+		...MenuData.left_menu_result,
+		lv1_mi: `${+csid+100}`,
+		lv2_mi: `${+csid+100}2`
+	})
+	MenuData.set_current_ball_type(csid);
+	// MenuData.set_menu_current_mi(`${+csid+100}2`)
 	router.push(`/search/${match.leagueName}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
@@ -310,7 +325,15 @@ const expand_team = ref(true)
 function bowling_click(match) {
 	search.insert_history(match.mhn + 'vs' + match.man)
 	update_show_type('none')
-	const { mid, tid, csid } = match
+	const { mid, tid, csid } = match;
+	//设置左侧菜单联动
+	MenuData.set_left_menu_result({
+		...MenuData.left_menu_result,
+		lv1_mi: `${+csid+100}`,
+		lv2_mi: `${+csid+100}1`
+	})
+	MenuData.set_current_ball_type(csid);
+	// MenuData.set_menu_current_mi(`${+csid+100}2`)
 	router.push(`/details/${mid}/${csid}/${tid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
@@ -327,7 +350,15 @@ const scrollRef = ref(null)
 function match_click(match) {
 	if(!match) return;
 	search.insert_history(match.name)
-	const { mid, tid, csid } = match.matchList[0]
+	const { mid, tid, csid } = match.matchList[0];
+	//设置左侧菜单联动
+	MenuData.set_left_menu_result({
+		...MenuData.left_menu_result,
+		lv1_mi: `${+csid+100}`,
+		lv2_mi: `${+csid+100}2`
+	})
+	MenuData.set_current_ball_type(csid);
+	// MenuData.set_menu_current_mi(`${+csid+100}2`)
 	router.push(`/details/${mid}/${csid}/${tid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
@@ -342,7 +373,15 @@ function match_click(match) {
  */
 function league_item_click(match) {
 	if(!match) return;
-	const { mid, tid, csid } = match
+	const { mid, tid, csid } = match;
+	//设置左侧菜单联动
+	MenuData.set_left_menu_result({
+		...MenuData.left_menu_result,
+		lv1_mi: `${+csid+100}`,
+		lv2_mi: `${+csid+100}2`
+	})
+	MenuData.set_current_ball_type(csid);
+	// MenuData.set_menu_current_mi(`${+csid+100}2`)
 	router.push(`/details/${mid}/${csid}/${tid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {

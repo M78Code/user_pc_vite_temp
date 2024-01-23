@@ -138,7 +138,7 @@ const set_special_state = computed(()=> status => {
   is_bet_single = true
   is_bet_special = true
   let bet_list = []
-  let is_repeat_match = true
+  let is_repeat_match = false
   if( BetData.is_bet_single ) {
     bet_list = lodash_.cloneDeep(BetData.bet_single_list)
     let bet_obj = lodash_.get(bet_list,'[0]', {})
@@ -148,6 +148,10 @@ const set_special_state = computed(()=> status => {
     }
   } else {
     bet_list = lodash_.cloneDeep(BetData.bet_s_list)
+    if (bet_list.length === 1) {
+        is_bet_single = false
+        return false
+    }
     // 判断有没有相同的赛事 有则不能投注 false 没有 true 有
     is_repeat_match = lodash_.uniqBy(bet_list, 'matchId').length !== bet_list.length
     // 获取商户配置的 串关投注项

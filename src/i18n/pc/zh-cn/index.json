@@ -3172,6 +3172,9 @@
   },
   "video": {
     "animation": "动画",
+    "icon_animation": "动画",
+    "icon_video": "视频",
+    "icon_score": "比分",
     "cancel_mute": "取消静音",
     "data": "本场数据",
     "flv": "高清一",
