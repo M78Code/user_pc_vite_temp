@@ -49,7 +49,7 @@ import { useRouter } from "vue-router";
 import base_data_instance from "src/core/base-data/base-data.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { MenuData } from "src/output/index.js";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import { compute_css_obj } from 'src/core/server-img/index.js'
 
 import { MenuWapper } from "src/base-pc/components/menu/index.js";

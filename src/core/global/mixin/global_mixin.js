@@ -16,7 +16,7 @@ import filterHeader from "src/core/filter-header/filter-header.js";
 import { MatchDetailCalss }  from "src/output/module/project-single.js"; 
 import { MenuData } from 'src/output/project/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import GlobalSwitchClass  from "src/core/global/global.js";
 import SearchPCClass  from "src/core/search-class/seach-pc-calss.js";
 import {

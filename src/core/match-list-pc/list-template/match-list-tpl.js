@@ -5,7 +5,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from './index.js'
 import { get } from 'lodash'
 import BaseData from "src/core/base-data/base-data.js";
 import { project_name } from 'src/output/module/constant-utils.js'
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 
 /**
 * 获取当前的列表的默认的 模板配置

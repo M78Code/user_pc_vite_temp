@@ -64,7 +64,7 @@ export const remove_file = (file_path) => {
  
  
  // 复制文件
- const copyFile =(src_path,target_path,log=true)=>{
+ export const copy_file =(src_path,target_path,log=true)=>{
   let  file_content= fs.readFileSync(src_path);
   write_file( target_path ,file_content,log)
 }
@@ -73,7 +73,7 @@ export const remove_file = (file_path) => {
  
 
 // 复制文件夹
-export  const copyDir = function(src,dist){
+export  const copy_dir = function(src,dist){
 
   ensure_write_folder_exist(dist);//创建目录
 
@@ -83,9 +83,9 @@ export  const copyDir = function(src,dist){
     var _dist = dist + '/' +p;
     var stat = fs.statSync(_src)
     if(stat.isFile()) {// 判断是文件还是目录
-      copyFile(_src,_dist,false)
+      copy_file(_src,_dist,false)
     } else if(stat.isDirectory()) {
-      copyDir(_src, _dist)// 当是目录是，递归复制
+      copy_dir(_src, _dist)// 当是目录是，递归复制
     }
   })
 }

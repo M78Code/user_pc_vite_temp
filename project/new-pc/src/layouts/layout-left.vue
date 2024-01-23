@@ -32,7 +32,7 @@ import leftMain from "../pages/left-main/index.vue";
 import leftMainMin from "../pages/left-main/index-min.vue";
 
 import { useRoute } from "vue-router";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
 const route = useRoute();

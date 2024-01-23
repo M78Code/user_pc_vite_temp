@@ -61,7 +61,7 @@ import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 // 搜索初始化组件
 import searchInt from "./search-init.vue"
 // 搜索tabs组件

@@ -11,7 +11,7 @@ import {
 } from "./write-folder-file.js";
 
 import {format_date  } from "./util.js"
-import {PROJECT_MAP_WITH_DESCRIPTION} from "./config.js"
+import {PROJECT_ENTRY_CONFIG} from "./config.js"
 
 import axios from "axios";
 
@@ -61,7 +61,7 @@ const resolve_recent_pack_config=()=>{
     for( let project_key in recent_pack_config){
        
   
-    let project_description = PROJECT_MAP_WITH_DESCRIPTION[project_key]
+    let project_description = PROJECT_ENTRY_CONFIG[project_key]
     
     result_str +=`\n`
     result_str +=`\n`
