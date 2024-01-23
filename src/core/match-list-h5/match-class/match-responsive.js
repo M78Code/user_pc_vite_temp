@@ -129,13 +129,6 @@ class MatchResponsive {
     this.secondary_unfold_map.value = val
   }
 
-  /**
-   * @description 重置次要玩法展开映射
-   */
-  clear_secondary_unfold_map () {
-    this.secondary_unfold_map.value = {}
-  }
-
    /**
    * @description 设置球种的 数量
    * @param {Object} match 

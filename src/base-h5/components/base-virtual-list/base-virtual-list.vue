@@ -9,7 +9,7 @@
     <div class="scrollerContainer" ref="scrollerContainerRef" @scroll="onScroll">
       <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
       <div class="contentList" :style="styleTranslate" ref="contentListRef">
-        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index">
+        <div class="item" v-for="item, index in renderData" :key="get_match_key(item)" :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index">
           <slot name="default" :item="item" :index="index"></slot>
         </div>
         <!-- 到底了容器-->
@@ -29,7 +29,7 @@
 <script setup>
 import { computed, markRaw, nextTick, onMounted, onUnmounted, onUpdated, ref, toRefs, watch } from 'vue'
 
-import { useMittOn, MITT_TYPES } from "src/output"
+import { useMittOn, MITT_TYPES, MenuData } from "src/output"
 
 import SList from "src/base-h5/components/skeleton/skeleton-list.vue" 
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
@@ -370,6 +370,12 @@ const gotTop = () => {
 const reset_show_skeleton_state = lodash.debounce(() => {
   if (show_skeleton_screen.value) show_skeleton_screen.value = false
 }, 8000)
+
+// 早盘 今日 key 不能一样
+const get_match_key = (item) => {
+  const menu_lv1 = lodash.get(MenuData, 'current_lv_1_menu_i', 2)
+  return `${menu_lv1}_${item?.mid}`
+}
 
 onUnmounted(() => {
   Object.values(emitters.value).map((x) => x());

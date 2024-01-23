@@ -1,31 +1,6 @@
 import { i18n_t } from "src/boot/i18n.js";
 export const play_title = (title = 'coming song') => {
   return [
-    {// 晋级
-      title: i18n_t('football_playing_way.promotion'),
-      id:3,
-      unfold:0,
-      show_tab:false,
-      hps:[{
-        hl:[{}]
-      }],
-      pids:'-135,-136',
-      hps_key:'hpsPromotion',
-      play_id:1005,
-    },
-    // 冠军
-    {
-      title: i18n_t('football_playing_way.champion'),
-      id:30,
-      unfold:0,
-      show_tab:false,
-      hps:[{
-        hl:[{}]
-      }],
-      pids:'136',
-      hps_key:'hpsOutright',
-      play_id:1006,
-    },
     { // 角球
       title: i18n_t('football_playing_way.corner'),
       id:1,
@@ -85,6 +60,31 @@ export const play_title = (title = 'coming song') => {
       pids:'310,306,307,311,308,309',
       hps_key:'hpsPunish',// 罚牌
       play_id:1003,
+    },
+    {// 晋级
+      title: i18n_t('football_playing_way.promotion'),
+      id:3,
+      unfold:0,
+      show_tab:false,
+      hps:[{
+        hl:[{}]
+      }],
+      pids:'-135,-136',
+      hps_key:'hpsPromotion',
+      play_id:1005,
+    },
+    // 冠军
+    {
+      title: i18n_t('football_playing_way.champion'),
+      id:30,
+      unfold:0,
+      show_tab:false,
+      hps:[{
+        hl:[{}]
+      }],
+      pids:'136',
+      hps_key:'hpsOutright',
+      play_id:1006,
     },
     // 加时
     {

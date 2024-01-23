@@ -1022,6 +1022,8 @@ onUnmounted(() => {
     >div{
       display: flex;
       flex: 1;
+      flex-shrink: 0;
+      overflow: hidden;
       // gap: 4px;
       >span{
         flex: 1;

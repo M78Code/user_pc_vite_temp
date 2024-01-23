@@ -125,6 +125,7 @@ export default defineComponent({
     const select_second_item = ref({})
     // 更多次要玩法选择
     const on_select_second_play = (item, i) => {
+      if (select_second_item.value.id === item.id) return
       proxy.overtime_tab_handle(item, undefined, 'is-user', i)
       nextTick(() => {
         select_second_item.value = item

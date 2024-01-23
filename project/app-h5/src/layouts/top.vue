@@ -368,6 +368,8 @@ const set_scroll_data_list = (mid, type) => {
 const handle_match_render_data = (type) => {
   // 清除赛事折叠信息
   MatchDataBaseH5.init()
+  // 清除次要玩法折叠信息
+  MatchResponsive.set_secondary_unfold_map({})
   // MatchFold.clear_fold_info()
   if (MenuData.is_collect()) {
     // 电竞收藏

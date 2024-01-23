@@ -97,8 +97,6 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MenuData } from 'src/output/index.js';
 
-const route = useRoute()
-
 // 是否使用 BaseVirtualList 组件  BaseVirtualList 试运行， 稳定后替换其他模板
 const is_scroll_component = computed(() => {
   return MenuData.update_time.value && (is_kemp.value || MenuData.get_mm_is_champion())
@@ -140,7 +138,6 @@ const handlerUpdate = lodash.debounce((data) => {
     flag = true
     mids.push(t.mid)
   })
-  
   if (flag && mids_string.value !== mids.join(',')) {
     // 设置当前激活的赛事
     MatchMeta.set_current_match_mids(mids)
@@ -152,6 +149,11 @@ const handlerUpdate = lodash.debounce((data) => {
     mids_string.value = mids.join(',')
   }
 }, 800)
+
+// 一级菜单改变 重置 当前 mids, 当早盘 和 滚球 前几场赛事相同时  会存在不调用 赔率接口的情况
+watch(() => MenuData.current_lv_1_menu_mi.value, () => {
+  mids_string.value = ''
+})
 
 // BaseVirtualList 组件 所需 end ·············································
 
