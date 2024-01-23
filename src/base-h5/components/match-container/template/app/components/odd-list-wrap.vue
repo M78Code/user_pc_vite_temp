@@ -50,8 +50,8 @@
             <div class="odd-column-w" :class="[{ clounm2: ![1,4,11,14,16].includes(+match.csid) }, {'boxing':match.csid == 12 }]" :key="hp_i_i+''+standard_odd_status"
                 v-for="(hp_item_obj,hp_i_i) in fill_empty_hps(get_hp_list(standard_odd_status))">
               <!-- 足球 1，水球 16， 冰球 4, 手球 11，橄榄球 14 有三行 -->
-              <div class="odd-wrap-min" :class="[`hp-${get_ol_length(hp_item_obj,hp_i_i)}`, { 'is-small': match.csid != 1 }]"
-                  :key="ol_item_i" v-for="(ol_item,ol_item_i) in get_ol_list(hp_item_obj,hp_i_i)">
+              <div :class="['odd-wrap-min 1', `hp-${get_ol_length(hp_item_obj,hp_i_i)}`, { 'is-small': match.csid != 1 }]"
+                :key="ol_item_i" v-for="(ol_item,ol_item_i) in get_ol_list(hp_item_obj,hp_i_i)">
                 <odd-column-item
                   :placeholder="ol_item.placeholder"
                   :n_s="standard_edition"
@@ -147,11 +147,7 @@
       <div class="hps-bold-main-container">
         <div class="hps-bold-container" :key="hp_i+'hp_i_i_bold'" v-for="(hp_item,hp_i) of bold_all_list">
           <div class="hps-bold-other-left" :key="main_i+'main_i_bold'" v-for="(main_item,main_i) of get_bold_ol_list(hp_item,hp_i)">
-            <div class="odd-wrap-hps-bold-other"
-                 :key="ol_item_i+'ol_item_i_bold'"
-                 v-for="(ol_item,ol_item_i) of main_item"
-                 :class="{hold_other:ol_item.otd == -1}"
-            >
+            <div  v-for="(ol_item,ol_item_i) of main_item" :key="ol_item_i+'ol_item_i_bold'" :class="['odd-wrap-hps-bold-other', {hold_other:ol_item.otd == -1}]">
               <odd-column-item
                 :placeholder="ol_item.placeholder"
                 :n_s="standard_edition"
@@ -909,6 +905,7 @@ const get_hl_hs = (hp_item_obj) => {
  * @return Undefined Undefined
  */
 const get_ol_length = (hp_item_obj, hp_i_i) => {
+  const id = lodash.get(props.current_tab_item, 'id')
   let ol_list = [];
   if (lodash.get(hp_item_obj, "hl[0].ol")) {
     ol_list = hp_item_obj.hl[0].ol;
@@ -916,6 +913,8 @@ const get_ol_length = (hp_item_obj, hp_i_i) => {
       return 2;
     }
   } else {
+    // 晋级
+    if (id === 3) return 2
     if ([1, 4, 11, 14, 16].includes(+props.match.csid)) {
       if (props.match.hps && props.match.hps[hp_i_i]) {
         if (props.match.hps[hp_i_i].hpid == 1) {
@@ -1059,6 +1058,7 @@ onUnmounted(() => {
               left: unset;
               right: 0;
               width: 1.76rem;
+              z-index: 1000;
             }
           }
         }
@@ -1069,7 +1069,9 @@ onUnmounted(() => {
           margin-bottom: .02rem;
           background-color: var(--q-color-page-bg-color-9);
           &.hold_other{
+            position: relative;
             width: 1.76rem;
+            z-index: 1000;
           }
           :deep(.odd-column-item){
             width: 100%;
