@@ -18,6 +18,7 @@
   
 <script setup>
 import { ref, watch } from 'vue'
+import tabMove from 'src/core/tab-move/tab-move.js'
 
 const props = defineProps({
     tabList: {
@@ -34,12 +35,11 @@ const props = defineProps({
     },
 })
 const emit = defineEmits(['changeTab'])
-
 const scrollBox = ref(null)
 // 监听 tabIndex 下标变化
 watch(
     () => props.tabIndex,
-    (n, o) => tab_move2(n, scrollBox.value),
+    (n, o) => tabMove.tab_move2(n, scrollBox.value),
     {
         immediate: true,
         deep: true
