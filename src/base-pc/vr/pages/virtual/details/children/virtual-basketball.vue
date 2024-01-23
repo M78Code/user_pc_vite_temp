@@ -4,7 +4,7 @@
  * @Description: 虚拟篮球详情页视频区域.赛事(进行中+完赛)组件
 -->
 <template>
-  <div class="vir-bask">
+  <div class="vir-bask" v-if="current_match">
     <!-- 期数区域 -->
     <div class="vir-bask-head" v-if="current_match.mmp == 'INGAME' && !is_end">
       <div>{{current_match.no}}</div>&nbsp;
