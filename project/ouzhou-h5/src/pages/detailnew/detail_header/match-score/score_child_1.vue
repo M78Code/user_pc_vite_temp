@@ -23,7 +23,7 @@ const scoreObject = computed(()=>{
 </script>
 
 <template>
-    <ul class="score_child_1" v-if="[1,3].includes(+detail_data.ms)">
+    <ul class="score_child_1">
         <li v-for="item in football_score_icon_list" :key="item.msc_key" class="score_item">
             <span>{{ scoreObject[item.msc_key] ? scoreObject[item.msc_key]["home"] : "0" }}</span>
             <span :class="[item.bg_url, 'score-icon']"></span>
