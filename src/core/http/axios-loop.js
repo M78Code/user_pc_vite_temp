@@ -55,7 +55,7 @@ export default async function axios_api_loop(opts = {}) {
     //timer其实没啥用哦 因为下一次进来是已经执行了  也没有缓存
     //又没有取消方法 不知道以前为什么加
     clearTimeout(opts.timer);
-    let code = get(res, "data.code");
+    let code = get(res, "code") || get(res, "data.code") || get(res, "data.data.code") ;
     if (error_codes.includes(code)) {
       if (loop_count >= max_loop) {
         fun_catch && fun_catch(res);
