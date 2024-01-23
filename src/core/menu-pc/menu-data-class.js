@@ -1067,7 +1067,7 @@ class MenuData {
    * 没有传递对比当前菜单
   */
   is_hot(mi) {
-    return this._is_cur_mi(500, mi)
+    return this._is_cur_mi(500, mi) || this._is_cur_mi(5000, mi)
   }
   /**
    * 是否选中了VR 
