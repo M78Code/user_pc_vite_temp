@@ -871,7 +871,8 @@ export default {
     border-bottom: 1px solid var(--q-gb-bd-c-4);
 
     .odd-title-i-w {
-      width: 1.84rem;
+      // width: 1.84rem;
+      width: 50%;
       overflow: hidden;
 
       .odd-t-i-wrapper {
@@ -1015,7 +1016,8 @@ export default {
 
   .right-content-style {
     position: relative;
-    width: 1.84rem;
+    // width: 1.84rem;
+    flex: 1;
     flex-shrink: 0;
   }
 
