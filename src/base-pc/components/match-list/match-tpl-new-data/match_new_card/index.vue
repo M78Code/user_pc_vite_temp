@@ -90,9 +90,7 @@
         }}
       </div>
       <!-- 平局 -->
-      <div
-        v-if="['1', '1001'].includes(match.csid) && handicap_list.length > 2"
-        :class="{
+      <div :class="{
           'odd-detail': true,
           active: betItemActive.detail,
           lift_up:
@@ -104,7 +102,7 @@
         }"
         @click="onMatchNewHandicapClick('betItemDetail')"
       >
-        <span class="common-text mr-8">{{ i18n_t("analysis.draw") }}</span>
+        <!-- <span class="common-text mr-8">{{ i18n_t("analysis.draw") }}</span> -->
         <span class="match-odd">
           <bet-item
             v-if="is_mounted"
@@ -118,7 +116,6 @@
             :ol_data="handicap_list[2]"
         /></span>
       </div>
-      <div v-else style="width: 120px; text-align: center">—</div>
       <!-- 比分 -->
       <div class="match-score">
         {{
@@ -484,7 +481,6 @@ const click_popup = (e) =>{
 }
 /** 监听赔率父节点的click, 调用赔率子节点的click事件处理器完成*/
 const onMatchNewHandicapClick = (refNodeName) => {
-  console.log(betItemLeft, 'betItemLeft.value')
   if (refNodeName == 'betItemLeft') {
     betItemLeft.value.bet_click_ol()
   } else if (refNodeName == 'betItemRight') {
