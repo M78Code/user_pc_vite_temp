@@ -1055,8 +1055,10 @@ onUnmounted(() => {
           margin-right: unset;
           .odd-wrap-hps-bold-other {
             &.hold_other{
+              position: absolute;
               left: unset;
               right: 0;
+              width: 1.76rem;
             }
           }
         }
