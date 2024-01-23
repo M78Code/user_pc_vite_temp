@@ -2,7 +2,7 @@
  * @Description: 投注项列表
 -->
 <template>
-  <div class="odd-list-wrap"
+  <div class="odd-list-wrap app-odd-list"
       :class="{
         standard: !show_newer_edition,
         compose_play: [11].includes(+lodash.get(current_tab_item, 'id')),
@@ -1325,15 +1325,16 @@ onUnmounted(() => {
       transform: translateX(-3.6rem);
     }
     &.featured-combination{
-      width: 7.2rem;
+      width: 200%;
       height: 1.4rem;
       position: relative;
       .odds-content{
         position: absolute;
-        width: 3.6rem;
+        // width: 3.6rem;
+        width: 50%;
         display: grid;
         grid-column-gap: 0.08rem;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 50%);
         grid-template-rows: repeat(1, 1.23rem);
         &.f-child {
           left: 0;
@@ -1364,6 +1365,9 @@ onUnmounted(() => {
             }
           }
         }
+      }
+      &.status3{
+        transform: translateX(-50%);
       }
     }
   }
