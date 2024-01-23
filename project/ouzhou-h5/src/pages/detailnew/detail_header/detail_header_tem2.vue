@@ -67,8 +67,8 @@
       </div>
     </div>
      -->
-    <right_actions @handle-type="handle_type" v-show="right_actions_label != 'score'" :detail="props.get_match_detail"
-                  :status="status" :right-actions-label="right_actions_label" :is-collect="is_collect" />
+    <right_actions @handle-type="handle_type" v-if="right_actions_label != 'score'" :detail="props.get_match_detail"
+                  :status="status" :right-actions-label="right_actions_label" :is-collect="is_collect" :is-video="right_actions_label == 'video'"/>
   </div>
 </template>
   
