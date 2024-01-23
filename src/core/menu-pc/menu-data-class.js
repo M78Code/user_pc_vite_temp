@@ -6,7 +6,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
 import { computed_menu_to_match_templte_ouzhou } from 'src/core/match-list-pc/list-template/ouzhou-pc-menu-match-template.js'
 import PageSource from 'src/core/page-source/page-source.js'
-// import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
+import { project_name } from 'src/output/module/constant-utils.js'
 
 import {
   SessionStorage,
@@ -493,7 +493,7 @@ class MenuData {
     let euid = lodash_.get(this.left_menu_result, 'lv1_mi');
     // 根据当前的菜单id 取到对应的模板id
     let current_template_id;
-    if (PROJECT_NAME == 'ouzhou-pc') {
+    if (project_name == 'ouzhou-pc') {
       current_template_id = computed_menu_to_match_templte_ouzhou(euid)
     } else {
       current_template_id = computed_menu_to_match_templte(euid)    
