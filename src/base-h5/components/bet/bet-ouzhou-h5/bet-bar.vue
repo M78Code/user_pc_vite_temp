@@ -37,8 +37,8 @@ const get_bet_status = ref(true)
 
 // 悬浮条点击 
 const menu_click = () => {
-  get_query_bet_amount_common()
-  set_market_id_to_ws()
+  // get_query_bet_amount_common()
+  // set_market_id_to_ws()
   
   BetData.set_bet_state_show(true)
 
