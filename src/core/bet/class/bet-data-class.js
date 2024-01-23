@@ -622,7 +622,7 @@ this.bet_appoint_ball_head= null */
   // 设置 切换单关/串关切换
   set_is_bet_single(state) {
     // 单关 切换到串关 / 
-    if (this.is_bet_single) {
+    if (this.is_bet_single && !this.is_bet_merge) {
       // 串关数据 == 单关数据 // 同赛事不能大于一个投注项
       if(!this.bet_s_list.length){
         this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
@@ -635,6 +635,25 @@ this.bet_appoint_ball_head= null */
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
         }
       })
+    }
+
+    if (this.is_bet_single && this.is_bet_merge) {
+      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
+      getSeriesCountJointNumber((code, data) => {
+        if (code == 200) {
+            BetViewDataClass.set_bet_special_series(data)
+
+            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+        }
+      })
+    }
+
+    if (!this.is_bet_single && this.is_bet_merge) {
+      this.bet_single_list = lodash_.cloneDeep(this.bet_s_list)
+    }
+
+    if (!this.is_bet_single && !this.is_bet_merge) {
+      this.bet_single_list = [lodash_.cloneDeep(this.bet_s_list).pop()]
     }
 
     let is_bet_single = !this.is_bet_single

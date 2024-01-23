@@ -4,7 +4,7 @@ import { computed_menu_to_match_templte_ouzhou } from './ouzhou-pc-menu-match-te
 import { MATCH_LIST_TEMPLATE_CONFIG } from './index.js'
 import { get } from 'lodash'
 import BaseData from "src/core/base-data/base-data.js";
-import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
+import { project_name } from 'src/output/module/constant-utils.js'
 import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 
 /**
@@ -13,7 +13,7 @@ import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
 function get_match_tpl_number() {
     // 根据当前的菜单id 取到对应的模板id
     let current_template_id;
-    if (PROJECT_NAME == 'ouzhou-pc') {
+    if (project_name == 'ouzhou-pc') {
         let euid = get(MenuData.left_menu_result, 'lv1_mi');
         current_template_id = computed_menu_to_match_templte_ouzhou(euid)
     } else {
@@ -29,7 +29,7 @@ function get_match_tpl_number() {
  * @param {*} d 
  */
 function set_template_width(a, b, c, d) {
-    if (PROJECT_NAME == 'ouzhou-pc') {
+    if (project_name == 'ouzhou-pc') {
         MATCH_LIST_TEMPLATE_CONFIG['template_101_config'].set_template_width(a, b, c, d)
     } else {
         for (const key in MATCH_LIST_TEMPLATE_CONFIG) {
@@ -98,8 +98,8 @@ function get_match_template_id({ csid }) {
             tpl_id = csid_to_tpl_id(csid)
         }
     }
-    tpl_id = Number(tpl_id) + Number(different_version_config[PROJECT_NAME])
-    if ('ouzhou-pc' == PROJECT_NAME) {
+    tpl_id = Number(tpl_id) + Number(different_version_config[project_name])
+    if ('ouzhou-pc' == project_name) {
         // 欧洲版冠军
         if (MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp()) {
             return tpl_id
