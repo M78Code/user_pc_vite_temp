@@ -466,11 +466,14 @@ this.bet_appoint_ball_head= null */
           this.bet_single_list.splice(index_,1)
         }
         this.bet_single_list.push(bet_refer_obj)
+        this.set_active_index( this.bet_single_list.length)
       } else {
         this.bet_single_list = [bet_refer_obj]
+        this.set_active_index(0)
       }
       // 单关数据收集器
       this.single_list_copy.push(bet_refer_obj)
+      
     } else {
       // 串关
       
@@ -622,7 +625,7 @@ this.bet_appoint_ball_head= null */
   // 设置 切换单关/串关切换
   set_is_bet_single(state) {
     // 单关 切换到串关 / 
-    if (this.is_bet_single) {
+    if (this.is_bet_single && !this.is_bet_merge) {
       // 串关数据 == 单关数据 // 同赛事不能大于一个投注项
       if(!this.bet_s_list.length){
         this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
@@ -635,6 +638,25 @@ this.bet_appoint_ball_head= null */
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
         }
       })
+    }
+
+    if (this.is_bet_single && this.is_bet_merge) {
+      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
+      getSeriesCountJointNumber((code, data) => {
+        if (code == 200) {
+            BetViewDataClass.set_bet_special_series(data)
+
+            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+        }
+      })
+    }
+
+    if (!this.is_bet_single && this.is_bet_merge) {
+      this.bet_single_list = lodash_.cloneDeep(this.bet_s_list)
+    }
+
+    if (!this.is_bet_single && !this.is_bet_merge) {
+      this.bet_single_list = [lodash_.cloneDeep(this.bet_s_list).pop()]
     }
 
     let is_bet_single = !this.is_bet_single
@@ -1111,7 +1133,7 @@ this.bet_appoint_ball_head= null */
               return
             }
             if(ws_ol_obj.ov){
-              clearTimeout(time_out)
+              // clearTimeout(time_out)
               // "odds": item.odds,  // 赔率 万位
               // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
               //  红升绿降
@@ -1141,7 +1163,8 @@ this.bet_appoint_ball_head= null */
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
 
               // 5秒后清除 红升绿降
-              time_out = setTimeout(()=>{
+              // time_out = setTimeout(()=>{
+              setTimeout(()=>{
                 ol_obj.red_green = ''
                 this.set_ws_message_bet_info(ol_obj,ol_obj_index)
               },3000)
@@ -1197,18 +1220,22 @@ this.bet_appoint_ball_head= null */
     // console.error('BetViewDataClass.set_bet_c201_change',BetViewDataClass.is_finally)
     // 订单已经完成 不需要去设置 用户点击了 保留选项 或者投注的确定
     if(!BetViewDataClass.is_finally){
-      // 单关 单注 简单 粗暴 其他的后面做
-      if(status == 1){
-        BetViewDataClass.set_bet_before_message({code:200,message:"bet_message.success"})
-        BetViewDataClass.set_bet_order_status(3)
-      }
-      if(status == 2){
-        BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet_message.error"})
-        BetViewDataClass.set_bet_order_status(4)
-      }
+      if(BetData.is_bet_single){
+        // 单关 单注 简单 粗暴 其他的后面做
+        if(status == 1){
+          BetViewDataClass.set_bet_before_message({code:200,message:"bet_message.success"})
+          BetViewDataClass.set_bet_order_status(3)
+        }
+        if(status == 2){
+          BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet_message.error"})
+          BetViewDataClass.set_bet_order_status(4)
+        }
 
-      if(this.is_bet_single && [1,2].includes(status*1)){
-        BetViewDataClass.orderNo_bet_obj_config({orderNo: obj.orderNo,status: obj.status})
+        if(this.is_bet_single && [1,2].includes(status*1)){
+          BetViewDataClass.orderNo_bet_obj_config({orderNo: obj.orderNo,status: obj.status})
+        }
+      } else {
+        BetViewDataClass.orderNo_bet_single_obj({orderNo: obj.orderNo, status: obj.status})
       }
     }
   }

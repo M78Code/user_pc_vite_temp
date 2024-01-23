@@ -158,7 +158,7 @@ export default {
             batchNo:this.match.batchNo
           });
         }
-      },10);
+      },100);
     },
   },
   watch:{

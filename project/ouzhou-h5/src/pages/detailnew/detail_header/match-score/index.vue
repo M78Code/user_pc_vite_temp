@@ -5,7 +5,7 @@
     <div
         class='match_score'
         :class="route.name == 'match_result' ? '' : 'back_mask'"
-        v-if="[1,3].includes(+detail_data.ms)"
+        v-if="[0,1,2,3,4].includes(+detail_data.ms) || detail_data.mo == 1 "
     >
         <!-- component 自定义标签:动态绑定组件,根据数据的不同更换不同的组件 'is' 关键字用来动态切换组件 -->
         <component :is="scoreComponent[`ScoreChild_${detail_data?.csid}`]" :detail_data="detail_data"/>

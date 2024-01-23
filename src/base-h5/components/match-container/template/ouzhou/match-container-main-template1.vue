@@ -173,7 +173,9 @@
                         standard: !show_newer_edition && !is_results,
                         result: is_results
                       }">
-                        <ImageCacheLoad :csid="match.csid" :path="match.mhlu" type="home" ></ImageCacheLoad>
+                        <!-- 网球csid: 5   兵乓球csid: 8-->
+                        <ImageCacheLoad :class="{ 'team_icon2': match.mhlu[1] && [5].includes(+match.csid)}" :csid="match.csid" :path="match.mhlu" type="home" ></ImageCacheLoad>
+                        <ImageCacheLoad v-if="match.mhlu.length > 1 && [5].includes(+match.csid)" :csid="match.csid" :path="match.mhlu[1]" type="home" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
                           <div class="right-content">
                             <!-- 红、黄牌， 发球方绿点 -->
@@ -217,7 +219,9 @@
                       </div>
                       <!--客队图片和名称-->
                       <div class='team-title-container'>
-                        <ImageCacheLoad :csid="match.csid" :path="match.malu" type="away" ></ImageCacheLoad>
+                        <!-- 网球csid: 5   兵乓球csid: 8-->
+                        <ImageCacheLoad :class="{ 'team_icon2': match.mhlu[1] && [5].includes(+match.csid) }" :csid="match.csid" :path="match.malu" type="away" ></ImageCacheLoad>
+                        <ImageCacheLoad v-if="match.malu.length > 1 && [5].includes(+match.csid)" :csid="match.csid" :path="match.malu[1]" type="home" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
                           <div class="right-content">
                             <!-- 红、黄牌， 发球方绿点 -->
@@ -983,6 +987,13 @@ export default {
           display: flex;
           align-items: center;
         }
+        .team_icon2{
+          width: 0.18rem;
+          height: 0.18rem;
+          margin-right:-8px;
+          flex-shrink: 0;
+          justify-content: center;
+        }
 
         &.simple {
           width: 1.72rem;
@@ -1470,7 +1481,7 @@ export default {
   }
 
   .mfo-title {
-    margin-right: .05rem;
+    margin-right: .03rem;
   }
 
   .flag-chuan {

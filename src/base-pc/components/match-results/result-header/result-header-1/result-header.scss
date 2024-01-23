@@ -1,5 +1,5 @@
 .search-header {
-  //background: var(--q-gb-bg-c-4);
+  background: var(--q-gb-bg-c-4);
     // color: var(--q-gb-t-c-18);
     .wrap-select {
       .label {
@@ -139,11 +139,11 @@
           }
           &.active {
             // background-color: var(--q-gb-bg-c-11);
-            background-color:#179CFF;
+            background-color:#ff7000;
             border: none;
             &:before {
               // border-color: #ff7000;
-              border-color: #fff;
+              border-color: var(--q-gb-bd-c-3);
             }
           }
         }

@@ -32,9 +32,9 @@
                     </div>
                 </div>
 
-                <!-- <div class="appoint appoint_cursor" v-if="!ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
+                <div class="appoint appoint_cursor" v-if="IS_FOR_NEIBU_TEST && !ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
                     +{{ `${i18n_t('bet.bet_book2')}` }}
-                </div> -->
+                </div>
             </div>
 
             <div class="fw-e-s bet-right bet-invalid" v-else>
@@ -58,9 +58,9 @@
            
         </div>
 
-        <!-- <div v-if="ref_data.show_appoint">
+        <div v-if="IS_FOR_NEIBU_TEST && ref_data.show_appoint">
             <bet-pro-appoint :item="items" @cancel_operate="cancel_operate" />
-        </div> -->
+        </div>
         
         <div v-if="BetData.is_bet_single">
             <betInput :items="items"></betInput>
@@ -78,6 +78,9 @@ import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import betInput from "./bet-input.vue"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
 import BetProAppoint from "./bet-pre-appoint.vue"
+
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 const props = defineProps({
     items:{},

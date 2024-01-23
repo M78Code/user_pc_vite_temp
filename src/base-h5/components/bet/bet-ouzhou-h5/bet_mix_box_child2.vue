@@ -63,13 +63,14 @@
         </div>
       </div>
       <!-- 输入框 -->
+      <!-- {{ BetData.active_index }}---{{ index }} -->
       <!-- {{ items.bet_amount }} -->
       <bet-input-info2 :item="items" :index="index"></bet-input-info2>
     </div>
    
     <!-- 多项合并 -->
     <template v-if="BetData.bet_single_list.length > 1">
-      <bet-input-multiple @focus_on="handler_focus_on"></bet-input-multiple>
+      <bet-input-multiple></bet-input-multiple>
     </template>
     <!-- 合并单关最下面的多个输入框 -->
 
@@ -82,13 +83,8 @@ import { LOCAL_PROJECT_FILE_PREFIX, compute_value_by_cur_odd_type,UserCtr } from
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 
-
 const set_delete = (items, index) => {
   BetData.set_delete_bet_info(items.playOptionsId, index)
-}
-
-const handler_focus_on = (data)=>{
-  console.log("data===", data)
 }
 
 

@@ -206,4 +206,3 @@ export default {
   }
 }
 </style>
-src/core/vr/mixin/pages/virtual/virtual-sports_part/group_matches_mixin.js

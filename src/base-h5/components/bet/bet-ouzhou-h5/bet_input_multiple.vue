@@ -15,6 +15,7 @@
                 </span>
             </div>
         </div>
+        <!-- {{ BetData.active_index }}---{{ BetData.bet_single_list.length }} -->
         <div class="info_right size_14" @click.stop="input_click($event)" :class="{'active':BetData.active_index == BetData.bet_single_list.length}">
             <div class="content-b">
                 <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
@@ -35,32 +36,21 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 
-const props = defineProps({
-    item: {
-        default: () => { },
-        type: Object,
-    },
-    index: {
-        default: 0,
-    },
-})
-
-const emit = defineEmits(['focus_on'])
-
 const input_click = (event) => {
     // console.error('index', BetData.bet_single_list.length)
     event.preventDefault()
-    let oid = BetData.bet_single_list.map(item => {
-        return item.playOptionsId
-    })
     BetData.set_active_index(BetData.bet_single_list.length)
-    BetData.set_bet_keyboard_config({ids:oid})
+
+    let obj = {
+        playOptionsId:"",
+        merge: "merge",
+        max_money: ref_data.max_money
+    }
+
+    BetData.set_bet_keyboard_config(obj)
     BetData.set_bet_keyboard_show(true)
-    // BetData.set_bet_amount(0)
+    BetData.set_bet_amount(ref_data.money)
 }
-
-
-
 
 // 光标
 const money_span = ref(null)
@@ -79,14 +69,14 @@ const ref_data = reactive({
 
 onMounted(() => {
     cursor_flashing()
-    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
-    //监听键盘金额改变事件
-    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_MERGE, change_money_handle)
+    ref_data.emit_lsit = {
+        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
+        emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_MERGE, change_money_handle).off,
+    }
 })
 
 onUnmounted(() => {
-    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
-    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_MERGE, change_money_handle).off
+    Object.values(ref_data.emit_lsit).map((x) => x());
 })
 
 //监听最高可赢变化
@@ -105,17 +95,12 @@ const winMoney = computed(()=> state =>{
  *@param {Number} new_money 最新金额值
  */
 const change_money_handle = (obj) => {
-    console.log('change_money_handle!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', obj)
-    if(obj.params.playOptionsId) return
-    if(obj.params.ids.length) {
-        let money_ = obj.money
-        BetData.set_bet_amount(money_)
-        obj.params.ids.forEach(oid => {
-            BetData.set_bet_obj_amount(BetData.bet_amount, oid)
-        })
-        ref_data.money = money_
+    BetData.bet_single_list.forEach(item => {
+        BetData.set_bet_amount(obj.money)
+        BetData.set_bet_obj_amount(BetData.bet_amount, item.playOptionsId)
+        ref_data.money = obj.money
         useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
-    }
+    })
 }
 
 
@@ -139,7 +124,16 @@ const set_ref_data_bet_money = () => {
     //设置键盘MAX限额
     // let max_money_obj = {max_money:ref_data.max_money}
     // BetData.set_bet_keyboard_config(Object.assign(BetData.bet_keyboard_config,max_money_obj))
-    console.log('BetData.bet_keyboard_config!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', BetData.bet_keyboard_config)
+    // console.log('BetData.bet_keyboard_config!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', BetData.bet_keyboard_config)
+
+
+    let obj = {
+        playOptionsId: "",
+        merge: "merge",
+        max_money: ref_data.max_money
+    }
+
+    BetData.set_bet_keyboard_config(obj)
 }
 
 /**

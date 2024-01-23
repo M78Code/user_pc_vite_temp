@@ -771,17 +771,19 @@ const submit_handle_lastest_market = () => {
                 set_orderNo_bet_obj(orderDetailRespList)
                 BetViewDataClass.set_orderNo_bet_single_obj(seriesOrderRespList)
 
-                let number_list = []
-                number_list = seriesOrderRespList.filter(item=> item.orderStatusCode == 1)
+                // let number_list = []
+                // number_list = seriesOrderRespList.filter(item=> item.orderStatusCode == 1)
                 
-                if(seriesOrderRespList.length == number_list.length){
-                    // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
-                    BetViewDataClass.set_bet_order_status(3)
+                // if(seriesOrderRespList.length == number_list.length){
+                //     // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
+                //     BetViewDataClass.set_bet_order_status(3)
                     order_state = 3
-                }else{
-                    BetViewDataClass.set_bet_order_status(2)
-                    order_state = 2
-                }
+                // }else{
+                //     BetViewDataClass.set_bet_order_status(2)
+                //     order_state = 2
+                // }
+                // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
+                BetViewDataClass.set_bet_order_status(3)
 
             }
             // 投注成功 更新余额
@@ -800,7 +802,10 @@ const submit_handle_lastest_market = () => {
             // 6 预约确认中 3 投注确认中
             if( [2,6].includes(order_state*1)){
                 let order_no =  lodash_.get(orderDetailRespList,'[0].orderNo', '')
-                set_order_status_info(order_no)
+                // 单关才有
+                if(BetData.is_bet_single){
+                    set_order_status_info(order_no)
+                }
 
                 let obj = {};
                 obj.hid = ''

@@ -80,11 +80,18 @@ export default {
       // 是否全部折叠
       is_expend_all: true,
       // 存储定时器id的映射
-      interval_ids: new Map()
+      interval_ids: new Map(),
+      // 当前联赛的全部轮次
+      match_list_all_batches:[],
     }
   },
   created() {
     this.timer1_ = 0;
+    // 抖动处理 设置当前联赛的全部轮次
+    this.set_match_list_all_batches = lodash.throttle(this.set_match_list_all_batches, 1000, {
+      leading: true,
+      trailing: true,
+      });
   },
   mounted(){
     this.emitters = [
@@ -459,7 +466,21 @@ export default {
       clearInterval(id)
       })
       this.interval_ids.clear()
-     }
+     },
+     // 设置当前联赛的全部轮次
+     set_match_list_all_batches(val){
+      const match_list_all_batches_ = [...val];
+      match_list_all_batches_.forEach(batch=> {
+        this.handle_match_time(batch);
+        this.set_batch_timer(batch);
+      })
+      
+      // 各球种都全部展开
+      match_list_all_batches_.forEach(batch=> {
+        batch.is_expend = true
+      })
+      this.match_list_all_batches = match_list_all_batches_;
+    }
   },
   computed:{
     // 1:新手版 2:专业版
@@ -473,28 +494,28 @@ export default {
     sub_menu_type(){return VR_CTR.state.curr_sub_menu_type},
     is_show_analyse(){return VR_CTR.state.is_show_details_analyse},
     // 当前联赛的全部轮次
-    match_list_all_batches(){
-      const match_list_all_batches = [...this.virtual_match_list];
-      match_list_all_batches.forEach(batch=> {
-        this.handle_match_time(batch);
-        this.set_batch_timer(batch);
-      })
+    // match_list_all_batches(){
+    //   const match_list_all_batches = [...this.virtual_match_list];
+    //   match_list_all_batches.forEach(batch=> {
+    //     this.handle_match_time(batch);
+    //     this.set_batch_timer(batch);
+    //   })
       
-      // 各球种都全部展开
-      match_list_all_batches.forEach(batch=> {
-        batch.is_expend = true
-      })
+    //   // 各球种都全部展开
+    //   match_list_all_batches.forEach(batch=> {
+    //     batch.is_expend = true
+    //   })
 
-      // 足蓝全部展开，赛马类只展开第一个
-      // if(this.sub_menu_type == '1001' || this.sub_menu_type == '1004'){
-      //     match_list_all_batches.forEach(batch=> {
-      //     batch.is_expend = true
-      //   })
-      // }else {
-      //   match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
-      // }
-      return match_list_all_batches
-    },
+    //   // 足蓝全部展开，赛马类只展开第一个
+    //   // if(this.sub_menu_type == '1001' || this.sub_menu_type == '1004'){
+    //   //     match_list_all_batches.forEach(batch=> {
+    //   //     batch.is_expend = true
+    //   //   })
+    //   // }else {
+    //   //   match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
+    //   // }
+    //   return match_list_all_batches
+    // },
 
     //标签页列表
     tab_items(){
@@ -506,6 +527,12 @@ export default {
     }
   },
   watch:{
+    virtual_match_list:{
+      handler(val, o){
+        this.set_match_list_all_batches(val)
+      },
+      deep: true,
+    },
     v_menu_changed(change_str){
       this.tab_item_i = 0;
       this.ranking_list_change = this.is_show_analyse;
@@ -575,6 +602,7 @@ export default {
     for (const key in this.$data) {
       this.$data[key] = null
     }
+    this.set_match_list_all_batches.cancel && this.set_match_list_all_batches.cancel();
   },
   beforeUnmount(){
     this.reset_timers()
