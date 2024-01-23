@@ -63,6 +63,7 @@
         </div>
       </div>
       <!-- 输入框 -->
+      <!-- {{ BetData.active_index }}---{{ index }} -->
       <!-- {{ items.bet_amount }} -->
       <bet-input-info2 :item="items" :index="index"></bet-input-info2>
     </div>
