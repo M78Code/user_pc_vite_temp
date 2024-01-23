@@ -25,9 +25,11 @@
           v-show="is_video_hover"
           :ctr_data={video_type:1}
           :is_video_hover="is_video_hover"
-          :video_fullscreen_disabled="true"
+          :video_fullscreen_disabled="false"
           :match_info="detail_info"
           :is_esports="false"
+          :show_full_screen_wrap="IS_FOR_NEIBU_TEST"
+          :show_xl_full_screen_wrap="IS_FOR_NEIBU_TEST"
       ></video_type_ctr>
       <div class="detail-loading" v-if="iframe_loading">
         <loading></loading>
@@ -46,6 +48,9 @@ import video_type_ctr from "src/core/video/video_type_ctr.vue";
 import loading from "../../../components/loading/index.vue";
 import _ from "lodash";
 import rightIcon from "./right_icon.vue";
+import BUILD_VERSION_CONFIG from "/job/output/version/build-version.js";
+const { IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+// const 
 const props = defineProps({
   detail_info: {
     // 赛事详情
@@ -271,10 +276,10 @@ const video_leave = () => {
 
 // 屏蔽不需要的功能
 .box-bc :deep(.full-screen-wrap) {
-  display: none !important;
+  // display: none !important;
 }
 .box-bc :deep(.xl-screen-wrap) {
-  display: none !important;
+  // display: none !important;
 }
 
 </style>

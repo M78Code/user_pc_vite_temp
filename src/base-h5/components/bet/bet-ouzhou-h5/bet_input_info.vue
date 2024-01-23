@@ -10,7 +10,7 @@
             </span>
         </div>
        </div>
-       {{ BetData.active_index }}--{{ index }}
+       <!-- {{ BetData.active_index }}--{{ index }} -->
        <div class="info_right size_14">
         <div class="content-b" @click.stop="input_click(item,index,$event)" :class="{'active':BetData.active_index == index}">
             <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>

@@ -507,7 +507,7 @@ export default {
     border-radius: 0;
     display: flex;
     height: 36px;
-    padding-left: 25px;
+    padding-left: 20px;
     color: #1a1a1a;
     background: #F1F1F1 !important;
     // padding: 0 0.1rem;
