@@ -1481,7 +1481,7 @@ export default {
   }
 
   .mfo-title {
-    margin-right: .05rem;
+    margin-right: .03rem;
   }
 
   .flag-chuan {
