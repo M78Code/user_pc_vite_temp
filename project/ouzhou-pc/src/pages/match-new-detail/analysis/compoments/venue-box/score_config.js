@@ -830,6 +830,7 @@ export const socre_dict = (csid) => {
 // title 用方法返回解决国际化文字需要刷新才能生效的问题
 // Bug单号：49705
 export const allBallObj = {
+  // 篮球
   2: [
     {
       title: () => `2 ${i18n_t("common.score")}`,
@@ -842,6 +843,17 @@ export const allBallObj = {
     {
       title: () => i18n_t("common.foul"),
       value_key: "S106",
+    },
+  ],
+  // 冰球
+  4: [
+    {
+      title: () => `${i18n_t("common.micro_penalty")}`,
+      value_key: "S4012",
+    },
+    {
+      title: () => `${i18n_t('common.big_penalty')}`,
+      value_key: "S4011",
     },
   ],
   5: [
@@ -858,14 +870,15 @@ export const allBallObj = {
       value_key: "S4",
     },
   ],
+  // 斯诺克
   7: [
     {
-      title: () => `${i18n_t('common.ace')}`,
-      value_key: "S4",
+      title: () => `${i18n_t('common.foul')}`,
+      value_key: "S118",
     },
     {
-      title: () => `${i18n_t('common.sigle_fault')}`,
-      value_key: "S113",
+      title: () => `${i18n_t('common.max_bureau')}`,
+      value_key: "S119",
     }
   ],
   9: [

@@ -74,6 +74,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { reactive, ref, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
 import {compute_value_by_cur_odd_type} from "src/output/index.js"
+import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
 
 export default defineComponent({
   props: ['current_match', 'match_list_by_no', 'switch_match_handle'],
@@ -87,18 +88,23 @@ export default defineComponent({
     // 获取赛马类赔率所需数据
     const item_data = ref({})
     
-    const sub_menu_type = props.current_match.csid;
-
     const match = MatchListData.get_quick_mid_obj_ref(props.current_match.mid)
 
-    onMounted(() => {
-      if(sub_menu_type !== '1001' && sub_menu_type !== '1004'){
+    const sub_menu_type = computed(()=>{
+      return VR_CTR.state.curr_sub_menu_type
+    })
+
+    // 切换菜单时，加载赛马所需数据
+    watch(sub_menu_type, ()=>{
+      console.log('sub_menu_type', sub_menu_type);
+      
+      if(sub_menu_type !== '1001' && sub_menu_type !== '1004' && match?.value){
         item_data.value = {
           team: match.value.teams.map(((item, index)=>{return { teamName: item, teamId: index + 1 }})),
           plays: match.value?.hpsData[0]?.hps
         }
 
-        lodash.each(item_data.value.plays,(item) => {
+        lodash.each(item_data.value.plays, (item) => {
           lodash.each(lodash.get(item,'hl.ol'), (ol_item, index) => {
             ol_item.teamId = index + 1;
           })
@@ -106,8 +112,9 @@ export default defineComponent({
         
         get_odds()
       }
-      
-    });
+    }, {
+      deep: true
+    })
 
     const get_odds = () => {
       // plays集合
