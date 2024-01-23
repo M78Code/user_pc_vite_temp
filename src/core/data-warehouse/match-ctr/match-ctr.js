@@ -453,6 +453,11 @@ get_quick_mid_obj_ref(mid){
         play_name: '5分钟玩法',
         field: "hps5Minutes"
       },
+      // 特色组合 
+      cos5Minutes: {
+        play_name: '特色组合',
+        field: "hpsCompose"
+      },
     };
 
     // 设置历史数据
@@ -925,7 +930,7 @@ get_quick_mid_obj_ref(mid){
       // 快速查询对象mid_obj增加数据
       many_obj.mid_obj[this.get_list_to_obj_key(item.mid,item.mid,'mid')] = item;
       // 需要解析的投注项赛事基础数据的路径
-      const hps_key_arr = ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info"];
+      const hps_key_arr = ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info","hpsCompose"];
       // 角球开关----------------------hpsCorner
       // 罚牌开关----------------------hpsPunish
       // 冠军开关----------------------hpsOutright
@@ -938,6 +943,7 @@ get_quick_mid_obj_ref(mid){
       // 主盘口------------------------hps
       // 副盘口------------------------hpsAdd
       // 赛事详情,所有投注数据----------odds_info
+      // 特色组合----------------------hpsCompose
 
       // 投注项赛事列表数据
       let hps_data_arr = null
@@ -948,6 +954,7 @@ get_quick_mid_obj_ref(mid){
           // 主玩副盘口数据时
           case 'hpsData[0].hpsAdd':
           case 'hps':
+          case 'hpsCompose':
           case 'hpsAdd':
           // 赛事详情所有玩法数据时
           case 'odds_info':
@@ -1138,7 +1145,7 @@ get_quick_mid_obj_ref(mid){
       try {
         // 需要解析的投注项赛事基础数据的路径
         const hps_key_arr =key_arr?key_arr:
-        ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info"];
+        ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info","hpsCompose"];
         // 角球开关----------------------hpsCorner
         // 罚牌开关----------------------hpsPunish
         // 冠军开关----------------------hpsOutright
@@ -1151,6 +1158,7 @@ get_quick_mid_obj_ref(mid){
         // 主盘口------------------------hps
         // 副盘口------------------------hpsAdd
         // 赛事详情,所有投注数据----------odds_info
+        // 特色组合----------------------hpsCompose
 
         // 投注项赛事列表数据
         let hps_data_arr = null
@@ -1161,6 +1169,7 @@ get_quick_mid_obj_ref(mid){
             // 主玩副盘口数据时
             case 'hpsData[0].hpsAdd':
             case 'hps':
+            case 'hpsCompose':
             case 'hpsAdd':
             // 赛事详情所有玩法数据时
             case 'odds_info':

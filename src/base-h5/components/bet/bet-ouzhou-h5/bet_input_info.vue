@@ -43,10 +43,17 @@ const props = defineProps({
 })
 
 const input_click = (item,index,event) => {
-  event.preventDefault()
-  BetData.set_bet_keyboard_config(item)
-  BetData.set_bet_keyboard_show(true)
-  BetData.set_active_index(index)
+    event.preventDefault()
+        
+    let obj_config = lodash_.get(BetViewDataClass,`bet_min_max_money[${item.playOptionsId}]`,{}) || {}
+    let obj = { 
+        playOptionsId:props.item.playOptionsId,
+        max_money:obj_config.max_money
+    }
+    // 设置 限额
+    BetData.set_bet_keyboard_config(obj)
+    BetData.set_bet_keyboard_show(true)
+    BetData.set_active_index(index)
 }
 
 // 光标
@@ -99,8 +106,8 @@ const set_ref_data_bet_money = () => {
     ref_data.seriesOdds = seriesOdds
     // 限额改变 重置投注金额
     ref_data.money = ''
-    // 设置键盘设置的限额和数据
-    BetData.set_bet_keyboard_config({playOptionsId:props.item.playOptionsId})
+    // 设置键盘设置的 限额和数据
+    BetData.set_bet_keyboard_config({playOptionsId:props.item.playOptionsId,max_money})
 }
 
 /**
