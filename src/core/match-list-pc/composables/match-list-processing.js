@@ -59,7 +59,6 @@ const deal_with_list_data = (data) => {
 	let mid_arr = []
 	data.forEach(item => {
 		// mids 为  123,44344,1231232, 格式的mids字符串 转化为 mid层级
-		console.log("jiffy")
 		let mids_ary = item.mids.split(',');
 		mids_ary.forEach(mid => {
 			const match = MatchListData.get_quick_mid_obj(mid) || {}

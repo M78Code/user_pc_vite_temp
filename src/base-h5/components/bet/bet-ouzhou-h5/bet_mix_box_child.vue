@@ -60,7 +60,7 @@
                 <!-- 复式连串过关投注 限额 -->
                 <template v-if="BetData.bet_s_list.length > 1"  >
                   <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
-                    <template v-if="BetData.special_type || !index">
+                    <template v-if="BetData.special_type || !index || BetData.bet_s_list.length > 2">
                       <bet-special-input :items="item" :index="index" />
                     </template>
                   </template>

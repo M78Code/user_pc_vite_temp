@@ -20,7 +20,7 @@
         <div 
           class="play-btn" 
           :style="{background:item_details.halfLg==1?'#EFBB01':'#04C100'}"  
-          v-if="lodash.get(item_details,'halfLg')&& lodash.get(item_details,'hpn2')"
+          v-if="lodash.get(item_details,'halfLg') && lodash.get(item_details,'hpn2')"
           >
           {{item_details.halfLg==1 ? i18n_t('common.half_1') : i18n_t('common.half_2')}}
         </div>

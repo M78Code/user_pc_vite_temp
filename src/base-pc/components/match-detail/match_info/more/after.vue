@@ -609,7 +609,9 @@ export default {
 }
 .more-info {
   overflow: hidden;
-  width: 560px;
+  // width: 560px;
+  // 非内嵌版
+  width: 90%;
   border-radius: 2px;
   color: var(--q-gb-bd-c-13) !important;
   font-size: 12px;
