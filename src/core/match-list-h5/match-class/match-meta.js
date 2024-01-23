@@ -1781,6 +1781,7 @@ class MatchMeta {
   handle_submit_warehouse(config) {
     MatchResponsive.set_is_http_update_info(true)
     let { list = [], warehouse = MatchDataBaseH5, is_again = true } = config
+
     // ws 订阅
     this.set_ws_active_mids({ list: this.match_mids, warehouse })
     warehouse.clear()

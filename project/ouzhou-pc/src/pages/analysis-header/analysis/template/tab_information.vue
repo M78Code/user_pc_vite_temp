@@ -58,6 +58,7 @@ export default {
     get_data(){
       this.get_analysiseData(this.params, (res)=>{
         let data = res.sThirdMatchInformationDTOList
+        console.error('datadatadata',data)
         let lineupData = [[],[],[]] 
         // 0主队中立,1客队中立，2 主队有利，3客队有利,  4主队不利,   5客队不利,  6无用
         data.map(item =>{
@@ -142,6 +143,8 @@ linear-gradient(0deg, #FFFFFF, #FFFFFF);
       // border: 1px solid var(--qq--analysis-bd-color-2);
       border-top: 0 none;
       border-radius: 0 0 8px 8px;
+      background: #ffffff;
+      white-space: pre-line;
     }
   }
 }
