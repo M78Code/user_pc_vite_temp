@@ -942,7 +942,7 @@ export default {
 
       let dict_key = `${this.sub_menu_type}-${this.current_league.menuId}-${this.current_batch.batchNo}`;
       // if(!this.v_match_ended_score_dict[dict_key]){
-      if(lodash.isEmpty(this.v_match_ended_score_dict) || !lodash.get(this.v_match_ended_score_dict, dict_key)){
+      if(!lodash.get(this.v_match_ended_score_dict, dict_key)){
         this.v_match_ended_score_dict[dict_key] = {};
         let mid_str = this.match_list_by_no.map(match => match.mid).join(',');
         if(!mid_str) {
