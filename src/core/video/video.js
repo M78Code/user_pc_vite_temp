@@ -726,6 +726,7 @@ export default {
   */
   full_screen(match,play_type,size,route,router){
     play_type = play_type || 1
+    console.log(play_type, "数据源类型 1 ：源视频 2：动画 ");
     if(play_type == 2){
       this.send_message({
         cmd:'show_controller',

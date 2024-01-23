@@ -116,6 +116,7 @@ function browser_full_screen() {
 const init = async () => {
   const cuid = UserCtr.get_cuid();
   if (route.params.play_type == 2) {
+    console.log(route.params.play_type, "route.params.play_type");
     browser_full_screen();
   }
   try {

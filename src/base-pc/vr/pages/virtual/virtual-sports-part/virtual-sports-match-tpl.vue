@@ -50,7 +50,8 @@
               <q-menu>
                   <div>
                     <!-- 历史战绩页面 -->
-                    <virtual-match-statistic v-if="match" :match="match" row_index="-1" />
+                    <virtual-match-statistic v-if="match" :match="match"
+                    :row_index="match.csid !=1001 ? index : -1"  />
                   </div>
               </q-menu>
           </div>

@@ -844,6 +844,16 @@ export const allBallObj = {
       value_key: "S106",
     },
   ],
+  4: [
+    {
+      title: () => `${i18n_t("common.micro_penalty")}`,
+      value_key: "S4012",
+    },
+    {
+      title: () => `${i18n_t('common.big_penalty')}`,
+      value_key: "S4011",
+    },
+  ],
   5: [
     {
       title: () => `${i18n_t("msc.S114")}`,
