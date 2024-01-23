@@ -253,7 +253,8 @@ class BaseData {
         resolve(obj)
       }).catch(err => {
         // 设置默认值
-        this.set_base_data_init(mi_euid_mapping_default)
+        let obj = { key: 'p1', res: mi_euid_mapping_default }
+        this.set_base_data_init(obj)
         reject(err)
       })
     });
@@ -272,8 +273,9 @@ class BaseData {
         this.set_base_data_init(obj)
         resolve(obj)
       }).catch(err => {
-          // 设置默认值
-        this.set_base_data_init(menu_i18n_default_)
+        // 设置默认值
+        let obj = { key: 'p3', res: menu_i18n_default_ }
+        this.set_base_data_init(obj)
         reject(err)
       })
     });
@@ -293,7 +295,8 @@ class BaseData {
         resolve(obj)
       }).catch(err => {
           // 设置默认值
-        this.set_base_data_init(menu_list_default)
+        let obj = { key: 'p5', res: menu_list_default }
+        this.set_base_data_init(obj)
         reject(err)
       })
     });
