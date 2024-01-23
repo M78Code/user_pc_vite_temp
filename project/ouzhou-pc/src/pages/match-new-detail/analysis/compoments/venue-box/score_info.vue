@@ -341,6 +341,7 @@ const get_score_result = (list, val) => {
 const get_msc_data = (msc_data, current_data) => {
   const detail_info = props.detail_info;
   const score_list = props.score_list;
+ 
   let res = "";
   const list = [
     {
@@ -355,12 +356,13 @@ const get_msc_data = (msc_data, current_data) => {
   if (msc_data.length > 0) {
     //   网球 羽毛球 冰球
     if (['4',"5", "10"].includes(detail_info.csid + "")) {
+    
       res = list.map((item) => {
         return {
           name: item.name,
-          q1: msc_data[0][item.key], //
-          q2: msc_data[1][item.key],
-          q3: msc_data[2][item.key],
+          q1: msc_data[0]?msc_data[0][item.key]:0, //
+          q2: msc_data[1]?msc_data[1][item.key]:0,
+          q3: msc_data[2]?msc_data[2][item.key]:0,
           set: score_list.S1 ? score_list?.S1[item.key] : 0, //
           p: current_data[item.key], //
         };

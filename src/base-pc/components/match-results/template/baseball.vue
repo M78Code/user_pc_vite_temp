@@ -49,7 +49,7 @@
         :style="{height: '100%'}"
       >
         <div class="tbale-body">
-          <template v-for="(item, index) in results_list"  :key="index">
+          <template v-for="(item, index) in results_list"  :key="item.matchId + index">
             <div
               class="table-tr-td"
               :class="{'active':index == activeIndex}"
