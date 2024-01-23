@@ -28,7 +28,7 @@
                     <!-- 单关投注项列表  -->
                     <bet-mix-box-child1 :items="BetData.bet_single_list[0]" :index="0"></bet-mix-box-child1>
                     <!-- 单关的输入框 -->
-                    <bet-input-info :item="BetData.bet_single_list[0]" ></bet-input-info>
+                    <bet-input-info :item="BetData.bet_single_list[0]" :index="0" ></bet-input-info>
                 </template>
               </template>
               <!-- 单关合并 -->

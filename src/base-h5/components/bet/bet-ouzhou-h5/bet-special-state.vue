@@ -4,7 +4,10 @@
           <!-- 备注123 -->
         <div class="info-top row items-center justify-between">
             <p class="left-text"><span>{{items.seriesValue}}  x{{ items.seriesSum }} </span></p>
-            <p class="right-text" v-if="items.orderStatusCode == 1">注单已确认</p>
+            <!-- 订单状态 0:投注失败 1: 投注成功 2: 订单确认中 -->
+            <p class="right-text" v-if="items.orderStatusCode == 1">投注成功</p>
+            <p class="right-text" v-if="items.orderStatusCode == 2">订单确认中</p>
+            <p class="right-text" v-if="items.orderStatusCode == 0">投注失败</p>
         </div>
     </div>
 </template>
