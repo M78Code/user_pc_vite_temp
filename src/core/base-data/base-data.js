@@ -34,6 +34,7 @@ import mi_euid_mapping_default from "./config/mi-euid-mapping.json";
 import menu_list_default from "./config/menu-list.json";
 // 菜单国际化 默认的
 import menu_i18n_default from "./config/menu-i18n.json";
+import menu_i18n_default_ from "./config/menu-i18n_.json";
 // 用户信息 默认的 用于ws模拟
 import ws_user_info from "./config/user_info.json";
 //vr 默认的 用于ws模拟
@@ -145,6 +146,8 @@ class BaseData {
     }
 
     this.base_menu_obj = {}
+
+    this.base_data_init = []
   }
   /**
    * 初始化数据
@@ -245,32 +248,54 @@ class BaseData {
     // 获取 新旧菜单ID对应
     const p1 = new Promise((resolve, reject) => {
       api_base_data.post_base_data_menu_mapping({}).then((res) => {
-        resolve({ key: 'p1', res: res })
-      }).catch(err => reject(err))
+        let obj = { key: 'p1', res: res }
+        this.set_base_data_init(obj)
+        resolve(obj)
+      }).catch(err => {
+        // 设置默认值
+        this.set_base_data_init(mi_euid_mapping_default)
+        reject(err)
+      })
     });
     // 获取 菜单-联赛-赛事
     const p2 = new Promise((resolve, reject) => {
       api_base_data.post_base_data_mi_tid_mids({}).then((res) => {
-        resolve({ key: 'p2', res: res })
+        let obj = { key: 'p2', res: res }
+        this.set_base_data_init(obj)
+        resolve(obj)
       }).catch(err => reject(err))
     });
     // 获取 国际化菜单
     const p3 = new Promise((resolve, reject) => {
       api_base_data.post_base_data_menu_i18n({}).then((res) => {
-        resolve({ key: 'p3', res: res })
-      }).catch(err => reject(err))
+        let obj = { key: 'p3', res: res }
+        this.set_base_data_init(obj)
+        resolve(obj)
+      }).catch(err => {
+          // 设置默认值
+        this.set_base_data_init(menu_i18n_default_)
+        reject(err)
+      })
     });
     // 获取 元数据接口
     const p4 = new Promise((resolve, reject) => {
       api_base_data.get_base_data({}).then((res) => {
-        resolve({ key: 'p4', res: res })
+        let obj = { key: 'p4', res: res }
+        this.set_base_data_init(obj)
+        resolve(obj)
       }).catch(err => reject(err))
     });
     //  获取 菜单数量统计
     const p5 = new Promise((resolve, reject) => {
       api_base_data.get_base_data_menu_init({}).then((res) => {
-        resolve({ key: 'p5', res: res })
-      }).catch(err => reject(err))
+        let obj = { key: 'p5', res: res }
+        this.set_base_data_init(obj)
+        resolve(obj)
+      }).catch(err => {
+          // 设置默认值
+        this.set_base_data_init(menu_list_default)
+        reject(err)
+      })
     });
     // 等待以上4个接口同时请求完成再通知列表获取
     return Promise.all([p1, p2, p3, p4, p5]).then((res) => {
@@ -284,6 +309,25 @@ class BaseData {
       this.set_default_base_data()
       console.error('err:', '元数据接口请求超时')
     })
+  }
+
+  // 设置 元数据的缓存数据
+  set_base_data_init(obj) {
+    this.base_data_init.push(obj)
+    
+    let p1 = lodash_.find( this.base_data_init, { key: 'p1' }) || {}
+    let p2 = lodash_.find( this.base_data_init, { key: 'p2' }) || {}
+    let p3 = lodash_.find( this.base_data_init, { key: 'p3' }) || {}
+    let p4 = lodash_.find( this.base_data_init, { key: 'p4' }) || {}
+    let p5 = lodash_.find( this.base_data_init, { key: 'p5' }) || {}
+  
+    let list = [p1,p2,p3,p4,p5]
+
+    let list_ = lodash_.uniqWith(list, lodash_.isEqual);
+
+    let list_1 = list_.filter(item => item.key )
+
+    LocalStorage.set("base_data_key",list_1)
   }
 
   // 从缓存读取默认数据

@@ -6,7 +6,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
 import { computed_menu_to_match_templte_ouzhou } from 'src/core/match-list-pc/list-template/ouzhou-pc-menu-match-template.js'
 import PageSource from 'src/core/page-source/page-source.js'
-import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
+import { project_name } from 'src/output/module/constant-utils.js'
 
 import {
   SessionStorage,
@@ -22,6 +22,9 @@ const menu_key = STANDARD_KEY.get("menu_pc");
 import { menu_default } from "./config/menu-default.js"
 
 import BaseData from "src/core/base-data/base-data.js"
+
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 
 // 热门除了50199-30199  赛事、50101-30101 竞足外，
@@ -237,7 +240,11 @@ class MenuData {
     let basket_index_of = lodash.findIndex(left_list,{mi:'191'})
     // 篮球在足球后面，有篮球就使用篮球当前的位置 没有就用足球 最后使用默认位置
     let e_sports_index = (basket_index_of > 0 ? basket_index_of : foot_index_of > 0 ? foot_index_of : 2 ) + 1
-    left_list.splice(e_sports_index , 0 ,esports_obj)
+
+    // 线上屏蔽
+    if(IS_FOR_NEIBU_TEST){
+      left_list.splice(e_sports_index , 0 ,esports_obj)
+    }
 
     this.kemp_list = kemp_list
     this.hot_list = hot_list
@@ -486,7 +493,7 @@ class MenuData {
     let euid = lodash_.get(this.left_menu_result, 'lv1_mi');
     // 根据当前的菜单id 取到对应的模板id
     let current_template_id;
-    if (PROJECT_NAME == 'ouzhou-pc') {
+    if (project_name == 'ouzhou-pc') {
       current_template_id = computed_menu_to_match_templte_ouzhou(euid)
     } else {
       current_template_id = computed_menu_to_match_templte(euid)    

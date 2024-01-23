@@ -2,6 +2,7 @@
  * @Description 公共设置组件
 -->
 <template>
+<div style="display:none">{{ GlobalSwitchClass.global_switch_version }}</div>
   <div class="g-settings" style="max-width: 350px">
     <q-menu
       v-model="show_g_settings"
@@ -68,42 +69,42 @@
                     v-else-if="settings.id == 4"
                     @click="change_theme"
                   >
-                    全部
+                    {{GlobalSwitchClass.kick_off_time || '全部'}}
                   </div>
                   <!-- 列表附加玩法默认展示 -->
                   <div
                     v-else-if="settings.id == 5"
-                    @click="change_setting_additional_plays"
+                    @click="set_show_additional_plays"
                     class="skin-toggle"
                   >
                     <div
                       class="skin-icon"
-                      :class="{ 'skin-icon-off': get_show_additional_plays }"
+                      :class="{ 'skin-icon-off': GlobalSwitchClass.show_additional_plays }"
                     ></div>
                     <div
                       class="skin-icon"
-                      :class="{ 'skin-icon-night': !get_show_additional_plays }"
+                      :class="{ 'skin-icon-night': !GlobalSwitchClass.show_additional_plays }"
                     ></div>
                   </div>
                   <!-- 附加玩法 -->
                   <div
                     v-else-if="settings.id == 6"
-                    @click="change_setting_additional_plays"
                   >
                     全部行
                   </div>
+                  <!-- 附加盘 -->
                   <div
                     v-else-if="settings.id == 7"
-                    @click="change_setting_additional_plays"
                     class="skin-toggle"
+                    @click="set_show_additional_disk"
                   >
                     <div
                       class="skin-icon"
-                      :class="{ 'skin-icon-off': get_show_additional_plays }"
+                      :class="{ 'skin-icon-off': GlobalSwitchClass.show_additional_disk }"
                     ></div>
                     <div
                       class="skin-icon"
-                      :class="{ 'skin-icon-night': !get_show_additional_plays }"
+                      :class="{ 'skin-icon-night': !GlobalSwitchClass.show_additional_disk }"
                     ></div>
                   </div>
                 </div>
@@ -211,6 +212,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { theme_map } from "src/core/theme/";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import comSelect from "src/base-pc/components/match-results/select/select/index.vue";
+import { GlobalSwitchClass } from "src/output/index.js";
 // import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 
 // import { update_bet_item_info as virtual_common_update_bet_item_info } from 'src/core/common-helper/virtual_common.js'
@@ -258,16 +260,16 @@ const left_menu_toggle = ref(BetData.left_menu_toggle);
 const vx_cur_menu_type = MenuData.cur_menu_type;
 /** 虚拟投注列表对象 */
 const cur_menu_type = ref({});
-// 附加盘配置
-const get_show_additional_disk = "get_show_additional_disk";
-// 附加玩法
-const get_show_additional_plays = "get_show_additional_plays";
-// 附加玩法配置
-const get_additional_plays_list_num = "get_additional_plays_list_num";
-// 附加玩法配置展示更多行数
-const show_more_other_list_obj = {};
-// 近期开赛选择时间
-const time_value = ref('')
+// // 附加盘配置
+// const get_show_additional_disk = ref(GlobalSwitchClass.get_show_additional_disk);
+// // 附加玩法
+// const get_show_additional_plays = ref(GlobalSwitchClass.get_show_additional_plays);
+// // 附加玩法配置
+// const get_additional_plays_list_num = ref(GlobalSwitchClass.get_additional_plays_list_num);
+// // 附加玩法配置展示更多行数
+// const show_more_other_list_obj = ref(GlobalSwitchClass.show_more_other_list_obj);
+// // 近期开赛选择时间
+// const time_value = ref(GlobalSwitchClass.time_value)
 /** stroe仓库 */
 const unsubscribe = store.subscribe(() => {
   cur_menu_type.value = new_state.cur_menu_type;
@@ -336,23 +338,35 @@ function set_user_preference(curr_odd) {
  * 近期开赛筛选
  */
 function select_time_change(item) {
-  time_value.value = item.value;
   //设置session
-  sessionStorage.setItem("is_select_time", time_value.value);
+  sessionStorage.setItem("kick_off_time", item.value);
+  GlobalSwitchClass.set_kick_off_time(item.value)
+  console.error('GlobalSwitchClass.kick_off_time ',GlobalSwitchClass.kick_off_time)
 }
 function  on_click_additional(item) {
-      if (get_additional_plays_list_num.value == item.value) {
+      if (GlobalSwitchClass.additional_plays_list_num == item.value) {
         return;
       }
       //列表附加玩法是否展开状态
-      // this.set_show_more_other_list({ reset: true });
-
+      GlobalSwitchClass.set_show_more_other_list({ reset: true });
       // this.additional_plays_id = item.id;
       localStorage.setItem("additional_plays_num", item.value);
       // this.set_additional_plays_list_num(item.value);
       // 刷新列表重新计算
       // this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
+      GlobalSwitchClass.set_additional_plays_list_num(item.value); 
+      console.error('列表附加玩法是否展开状态',GlobalSwitchClass.additional_plays_list_num)
   }
+   //设置附加玩法开关
+function  set_show_additional_plays() {
+      GlobalSwitchClass.set_show_additional_plays(!GlobalSwitchClass.show_additional_plays); 
+      console.error('设置附加玩法开关',GlobalSwitchClass.show_additional_plays)
+    }
+   //设置附加盘开关
+function  set_show_additional_disk() {
+      GlobalSwitchClass.set_show_additional_disk(!GlobalSwitchClass.show_additional_disk); 
+      console.error('设置附加盘开关',GlobalSwitchClass.show_additional_disk)
+    }
 /**
  * @Description:切换语言
  * @param {string} lang_ 语言
@@ -634,7 +648,8 @@ function change_theme() {
   .skin-icon-night {
     width: 12px;
     height: 12px;
-    background-color: var(--qq--theme-bg-bet-text-delete);
+    background-color: #179cff;
+    //background-color: var(--qq--theme-bg-bet-text-delete);
     border-radius: 50%;
   }
 </style>

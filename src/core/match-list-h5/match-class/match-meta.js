@@ -744,6 +744,8 @@ class MatchMeta {
     MatchCollect.get_collect_match_data(list)
     // 复刻版下的新手版 和 赛果 不需要  虚拟计算
     const is_virtual = !(project_name === 'app-h5' && (MenuData.is_results() || UserCtr.standard_edition == 1))
+    // 时间 热门相互切换 会导致 is_show_league 不对 需要 清一下 仓库
+    if (!is_virtual) MatchDataBaseH5.clear()
     this.handler_match_list_data({ list: list, scroll_top, is_virtual, type: !is_virtual ? 2 : 1 })
 
     // 模拟删除赛事
@@ -1067,6 +1069,7 @@ class MatchMeta {
   set_page_match_empty_status(obj) {
     this.set_show_skeleton_state(false)
     const { state = false, type = 'noMatch' } = obj
+    useMittEmit(MITT_TYPES.EMIT_IS_SHOW_MASK, false);
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: state, type: type });
   }
   /**
@@ -1778,7 +1781,6 @@ class MatchMeta {
   handle_submit_warehouse(config) {
     MatchResponsive.set_is_http_update_info(true)
     let { list = [], warehouse = MatchDataBaseH5, is_again = true } = config
-
     // ws 订阅
     this.set_ws_active_mids({ list: this.match_mids, warehouse })
     warehouse.clear()

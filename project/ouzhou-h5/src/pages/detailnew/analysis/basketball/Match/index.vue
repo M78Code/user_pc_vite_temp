@@ -5,7 +5,10 @@ import statistics from "./statistics.vue"       // 统计
 
 <template>
     <div class="Match">
-        <statistics></statistics>
+        <!-- 统计 -->
+        <statistics></statistics>       
+        <!-- 事件 -->
+        
     </div>
 </template>
 

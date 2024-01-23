@@ -129,9 +129,9 @@ class MenuData {
     // const session_info = SessionStorage.get(menu_h5);
     let session_info = LocalStorage.get(menu_h5);
     //常规球种
-    // menu_list = IS_FOR_NEIBU_TEST?[...BaseData.left_menu_base_mi,{mi:400,ct:1},{mi:2000,ct:0},{mi:300,ct:0}]:[...BaseData.left_menu_base_mi,{mi:400,ct:1}];
+    menu_list = IS_FOR_NEIBU_TEST?[...BaseData.left_menu_base_mi,{mi:400,ct:1},{mi:2000,ct:0},{mi:300,ct:0}]:[...BaseData.left_menu_base_mi,{mi:400,ct:1}];
     //二期测试环境全放开
-    menu_list = [...BaseData.left_menu_base_mi,{mi:400,ct:1},{mi:2000,ct:0},{mi:300,ct:0}];
+    // menu_list = [...BaseData.left_menu_base_mi,{mi:400,ct:1},{mi:2000,ct:0},{mi:300,ct:0}];
     menu_arr = menu_list.map((item)=>{return +item.mi});
     //热门球种
     let events_list = data.find((item)=>{return item.mi==5000}) || {}

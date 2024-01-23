@@ -37,7 +37,10 @@
       <!-- 比分板 -->
       <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
       :style="`width:${match_list_tpl_size.media_width}px !important;`">
-      <img class="vr-video" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr_video.png`"/>
+      <!-- 视频按钮 -->
+      <img class="vr-video" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr_video.png`"
+      :class="get_play_btn_class(match_item, index)"
+      @click="switch_match_handle(index, match)" />
       <!-- 统计分析 -->
       <div class="item">   
           <!-- 统计图标 -->

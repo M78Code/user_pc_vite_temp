@@ -123,6 +123,9 @@ import searchCom from 'src/components/search/search-2/index.vue';
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import BaseData from 'src/core/base-data/base-data.js'
 
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+
 export default defineComponent({
   name: "RightHead",
   components: {
@@ -137,42 +140,50 @@ export default defineComponent({
     const is_focus = ref(false);
     //语言设置
     const lang = ref(UserCtr.lang)
-    const languages = [{
+    let languages = [{
       key: 'zh',
       language: '简体中文',
     }, {
       key: 'en',
       language: 'English',
     },
-      // {
-      //   key: 'tw',
-      //   language: '繁體中文',
-      // }, {
-      //   key: 'vi',
-      //   language: 'Tiếng Việt',
-      // }, {
-      //   key: 'th',
-      //   language: 'ไทย',
-      // }, {
-      //   key: 'ms',
-      //   language: 'Melayu',
-      // }, {
-      //   key: 'ad',
-      //   language: 'Indonesia',
-      // }, {
-      //   key: 'md',
-      //   language: 'Burmese',
-      // }, {
-      //   key: 'ry',
-      //   language: 'Japanese',
-      // }, {
-      //   key: 'pty',
-      //   language: 'Portuguese',
-      // }, {
-      //   key: 'hy',
-      //   language: 'Korean',
-      // }
+     
     ]
+
+    const languages_ = [ {
+        key: 'tw',
+        language: '繁體中文',
+      }, {
+        key: 'vi',
+        language: 'Tiếng Việt',
+      }, {
+        key: 'th',
+        language: 'ไทย',
+      }, {
+        key: 'ms',
+        language: 'Melayu',
+      }, {
+        key: 'ad',
+        language: 'Indonesia',
+      }, {
+        key: 'md',
+        language: 'Burmese',
+      }, {
+        key: 'ry',
+        language: 'Japanese',
+      }, {
+        key: 'pty',
+        language: 'Portuguese',
+      }, {
+        key: 'hy',
+        language: 'Korean',
+      }]
+      console.error('IS_FOR_NEIBU_TEST',IS_FOR_NEIBU_TEST)
+      if(IS_FOR_NEIBU_TEST){
+       languages = lodash.concat(languages,languages_)
+      }
+
+
     const settingData = ref([{
       title: "ouzhou.setting_menu.odds_display",
       index: 'DEC',
@@ -348,7 +359,7 @@ export default defineComponent({
       close,
       compute_local_project_file_path,
       clear_keyword,
-      compute_css_obj
+      compute_css_obj,
     };
 
   }

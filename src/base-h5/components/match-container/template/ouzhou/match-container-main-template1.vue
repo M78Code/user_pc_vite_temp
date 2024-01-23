@@ -16,16 +16,9 @@
         <div class="select_time">
           <span @click.stop>
             <q-btn-dropdown flat outline style="color: #FF7000"  padding="0" :label="select_label"
-              dropdown-icon="expand_more" content-class="select_time_style" v-model="showDropdown">
-              <!-- <q-list>
-                  <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
-                      :class="{active: select_play === item.hpid}"
-                      >
-                    <q-item-section>
-                      <q-item-label>{{ item.label || i18n_t(`ouzhou.match.play_map.${item.hpid}`)}}</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </q-list> -->
+              dropdown-icon="expand_more" content-class="select_time_style" v-model="showDropdown"
+              :persistent="true"
+            >
             </q-btn-dropdown>
             <!-- <span>{{ select_label }}</span>
             <q-icon name="expand_more"></q-icon> -->
@@ -35,7 +28,7 @@
                   <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
                       :class="{active: select_play === item.hpid}"
                       >
-                    <q-item-section>
+                    <q-item-section @click.stop="on_select_play(item)">
                       <q-item-label>{{ item.label || i18n_t(`ouzhou.match.play_map.${item.hpid}`)}}</q-item-label>
                     </q-item-section>
                   </q-item>
@@ -397,6 +390,7 @@ export default {
       // select_play.value = item.hpid
       select_label.value = item.label
       MatchResponsive.set_match_hpid(item.hpid, csid)
+      showDropdown.value = false;
     }
     const showDropdown = ref(false)
 

@@ -1,52 +1,46 @@
 <template>
-  <div>
+  <div class="bet-pre-appoint">
     <div class="row yb-flex-center book-content">
       <!--预-->
       <div class="col-2 center yb-fontsize12">{{ i18n_t('bet.bet_dish') }}</div>
       <!--此处为盘口区域，-->
-      <div class="col-9 input-number" :class="{'m-b-8': item.sportId == 1 }">
+      <div class="input-number">
         <!-- 盘口减- -->
         <div @click="sub_handle('ball_head')" class="sub-number" :class="{ 'disabled': head_sub_style }">-</div>
-        <input class="pre-input" v-model=" ref_data.computed_appoint_ball_head" v-if="item.sportId == 1" readonly>
-        <input class="pre-input" ref="ball-head-input" v-model=" ref_data.computed_appoint_ball_head" @blur="appoint_odds_head_handle"
-          v-if="item.sportId == 2">
+        <input class="pre-input" v-model="ref_data.computed_appoint_ball_head" v-if="item.sportId == 1" readonly>
+        <input class="pre-input" ref="ball-head-input" v-model="ref_data.computed_appoint_ball_head"
+          @blur="appoint_odds_head_handle" v-if="item.sportId == 2">
         <!-- 盘口加+-->
         <div class="add-number" :class="{ 'disabled': head_add_style }" @click="add_handle('ball_head')">+</div>
-      </div>
-      <!--取消-->
-      <div class="col-1" @click="cancel_operate">
-        <icon-wapper size="13px" name="icon-delete" />
       </div>
     </div>
     <div class="row yb-flex-center book-content">
       <div class="col-2 mt5 center yb-fontsize12">{{ i18n_t('bet.bet_odds') }}</div>
       <!--减号 赔率输入框 加号-->
-      <div class="col-9 input-number mt5">
-        <div 
-          class="sub-number"
-          :class="{ 'disabled': ref_data.min_odds_value == ref_data.appoint_odds_value }" 
-          v-touch-repeat:0:300.mouse.enter.space="()=>{
+      <div class="input-number mt5">
+        <div class="sub-number" :class="{ 'disabled': ref_data.min_odds_value == ref_data.appoint_odds_value }"
+          v-touch-repeat:0:300.mouse.enter.space="() => {
             sub_handle('odds_value')
-          }"
-        >-</div>
-        
+          }">-</div>
+
         <input class="pre-input" v-model="ref_data.appoint_odds_value" ref="currency_input">
 
-        <div 
-          class="add-number" 
-          :class="{ 'disabled': ref_data.appoint_odds_value >= 355 }"
-          v-touch-repeat:0:300.mouse.enter.space="()=>{
+        <div class="add-number" :class="{ 'disabled': ref_data.appoint_odds_value >= 355 }"
+          v-touch-repeat:0:300.mouse.enter.space="() => {
             add_handle('odds_value')
-          }"
-        >+</div>
+          }">+</div>
       </div>
       <div class="col-1"></div>
+    </div>
+    <!--取消-->
+    <div class="col-1 cancel" @click="cancel_operate">
+      <icon-wapper size="13px" name="icon-delete" />
     </div>
   </div>
 </template>
 
 <script setup>
-import {ref, computed, reactive,nextTick,onMounted } from "vue";
+import { ref, computed, reactive, nextTick, onMounted } from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { i18n_t } from "src/boot/i18n.js"
 import { FOOTBALL_PLAY_LET_BALL, MARKET_BIG_SMALL_PLAY_LIST, MARKET_RANG_FLAG_LIST, MARKET_HOME_PLAY_LIST, MARKET_AWAY_PLAY_LIST, BASKETBALL_BY_APPOINTMENT_let, BASKETBALL_BY_APPOINTMENT_total } from "src/output/index.js";
@@ -87,21 +81,21 @@ const cancel_operate = () => {
   emit("cancel_operate");
 }
 
-onMounted(()=>{
+onMounted(() => {
   // 获取投注项 盘口信息
-  let market_info = lodash_.get(BetData.bet_read_write_refer_obj,`${props.item.playOptionsId}`,{})
+  let market_info = lodash_.get(BetData.bet_read_write_refer_obj, `${props.item.playOptionsId}`, {})
   // 球头处理
   let handicap = lodash_.toString(market_info.marketValue);
   let init_ball_head = 0
-      if(handicap && handicap.includes('/')) {
-        let arr = handicap.split('/');
-       init_ball_head = (Math.abs(Number(arr[0])) + Math.abs(Number(arr[1])))/2;
-        if(handicap.startsWith('-')) {
-         init_ball_head *= -1;
-        }
-      } else if(handicap || handicap == '0') {
-       init_ball_head = Number(handicap);          
-      }
+  if (handicap && handicap.includes('/')) {
+    let arr = handicap.split('/');
+    init_ball_head = (Math.abs(Number(arr[0])) + Math.abs(Number(arr[1]))) / 2;
+    if (handicap.startsWith('-')) {
+      init_ball_head *= -1;
+    }
+  } else if (handicap || handicap == '0') {
+    init_ball_head = Number(handicap);
+  }
   // 球头 显示
   ref_data.computed_appoint_ball_head = market_info.marketValue
   // 球头 计算
@@ -158,7 +152,7 @@ const head_sub_style = computed(() => {
  */
 const head_add_style = computed(() => {
   let sty = false;
-  if ( 1 == props.item.sportId) {
+  if (1 == props.item.sportId) {
     if (FOOTBALL_PLAY_LET_BALL.includes(props.item.playId)) {
       if (ref_data.appoint_ball_head >= 10) {
         sty = true;
@@ -198,14 +192,14 @@ const appoint_odds_head_handle = (event) => {
     ref_data.appoint_ball_head = ref_data.max_head_value
     //预约赔率可输入最大值
     if (lodash_.isNaN(ref_data.appoint_odds_value)) {
-      ref_data.appoint_odds_value = max_head_value 
+      ref_data.appoint_odds_value = max_head_value
     }
   }
   if (new_value < ref_data.min_head_value) {
     ref_data.appoint_ball_head = ref_data.min_head_value
     if (lodash_.isNaN(ref_data.appoint_odds_value)) {
       //预约赔率可输入最大值
-      ref_data.appoint_odds_value = min_head_value 
+      ref_data.appoint_odds_value = min_head_value
     }
   }
 }
@@ -227,7 +221,7 @@ const appoint_odds_value_handle = (event) => {
 }
 //  49381 【生产】【产品】【三端】预约投注-增减赔率优化
 // 赔率列表 根据赔率判断点击增加或减少对应的赔率数值
-const odd_list = [ 
+const odd_list = [
   {
     oddsRange: 3, // 范围
     add_odd: 0.01 // 增减赔率
@@ -250,7 +244,7 @@ const odd_list = [
   },
 ]
 
-    // 格式化预约赔率
+// 格式化预约赔率
 const format_pre_odds = (appoint_odds_value) => {
   /**
     // 49381 【生产】【产品】【三端】预约投注-增减赔率优化
@@ -271,13 +265,13 @@ const format_pre_odds = (appoint_odds_value) => {
   */
   let decimal_digits = lodash_.split(appoint_odds_value, '.', 2);
   let decimal_digits_1 = decimal_digits[1] || '';
-  if(+(decimal_digits[0]) >= 20) {
+  if (+(decimal_digits[0]) >= 20) {
     appoint_odds_value = decimal_digits[0]
-  } else if( decimal_digits_1[0] == undefined && decimal_digits_1[1] == undefined && +(decimal_digits[0]) < 10){
+  } else if (decimal_digits_1[0] == undefined && decimal_digits_1[1] == undefined && +(decimal_digits[0]) < 10) {
     appoint_odds_value = decimal_digits[0] + '.00'
-  } else if(+(decimal_digits[0]) != 0 && decimal_digits_1[0] != undefined && decimal_digits_1[1] == undefined && +(decimal_digits[0]) < 10) {
+  } else if (+(decimal_digits[0]) != 0 && decimal_digits_1[0] != undefined && decimal_digits_1[1] == undefined && +(decimal_digits[0]) < 10) {
     appoint_odds_value = decimal_digits[0] + '.' + decimal_digits_1 + '0'
-  } else if(+(decimal_digits[0]) >= 10 && decimal_digits_1[0] == undefined && decimal_digits_1[1] == undefined) {
+  } else if (+(decimal_digits[0]) >= 10 && decimal_digits_1[0] == undefined && decimal_digits_1[1] == undefined) {
     appoint_odds_value = decimal_digits[0] + '.0'
   } else {
     return appoint_odds_value ? appoint_odds_value : ''
@@ -299,7 +293,7 @@ const add_handle = (type, index = 1) => {
       return aov < item.oddsRange
     });
 
-    ref_data.appoint_odds_value = format_pre_odds(mathJs.add(aov,list.add_odd));
+    ref_data.appoint_odds_value = format_pre_odds(mathJs.add(aov, list.add_odd));
     //获取当前需要添加焦点的输入框，如果存在输入框，则获取焦点
     let input = index == 0 ? currency_input : ''
     if (input) input.focus();
@@ -307,7 +301,7 @@ const add_handle = (type, index = 1) => {
   //球头加
   if (type == 'ball_head') {
     let step = props.item.sportId == '1' ? 0.25 : 0.5;
-    ref_data.appoint_ball_head = mathJs.add( ref_data.appoint_ball_head,step) ;
+    ref_data.appoint_ball_head = mathJs.add(ref_data.appoint_ball_head, step);
     console.error('球头加', ref_data.appoint_ball_head);
     const max_rang = 10;
     const max_big = 30;
@@ -318,14 +312,14 @@ const add_handle = (type, index = 1) => {
         if (ref_data.appoint_ball_head >= max_rang) {
           ref_data.appoint_ball_head = max_rang
           //给出弹框提示（已为最高预约盘口值，请重新调整）
-          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_hight_adjust')}`)
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_hight_adjust')}`)
         }
         //大小球
       } else {
         if (ref_data.appoint_ball_head >= max_big) {
           ref_data.appoint_ball_head = max_big
           //给出弹框提示（已为最高预约盘口值，请重新调整）
-          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_hight_adjust')}`)
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_hight_adjust')}`)
         }
       }
       //篮球
@@ -337,13 +331,13 @@ const add_handle = (type, index = 1) => {
         if (ref_data.appoint_ball_head >= max_let) {
           ref_data.appoint_ball_head = max_let
           //给出弹框提示（已为最高预约盘口值，请重新调整）
-          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_hight_adjust')}`)
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_hight_adjust')}`)
         }
       } else {
         if (ref_data.appoint_ball_head >= max_small) {
           ref_data.appoint_ball_head = max_small
           //给出弹框提示（已为最高预约盘口值，请重新调整）
-          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_hight_adjust')}`)
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_hight_adjust')}`)
         }
       }
     }
@@ -380,14 +374,14 @@ const sub_handle = (type, index = 1) => {
       if (input) input.focus();
     } else {
       //给出弹框提示（已为最低预约盘口值，请重新调整）
-      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('error_msg_info.0400540.client_msg1')}`)
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('error_msg_info.0400540.client_msg1')}`)
     }
   }
   // this.$root.$emit(this.emit_cmd.EMIT_BET_SINGLE_RECALL_MONEY_CMD, this.id);
   if (type == 'ball_head') {
     let new_num = ref_data.appoint_ball_head;
     let step = props.item.sportId == 1 ? 0.25 : 0.5;
-    ref_data.appoint_ball_head = mathJs.subtract(ref_data.appoint_ball_head,step);
+    ref_data.appoint_ball_head = mathJs.subtract(ref_data.appoint_ball_head, step);
     // console.error('market_type===', this.market_type);
     // console.error('basic_score===', ref_data.basic_score);
     console.error('timerly_basic_score===', ref_data.timerly_basic_score);
@@ -397,7 +391,7 @@ const sub_handle = (type, index = 1) => {
       //规则又改了，全场是主客队分数相加再加0.5， 非全场是主客队对应得分数加0.5，这里有三种情况，全场， 主队和客队
       let arr = ref_data.timerly_basic_score.split('-');
       if (MARKET_BIG_SMALL_PLAY_LIST.includes(props.item.playId)) {
-        ref_data.ball_score = ref_data.timerly_basic_score ? mathJs.add(parseInt(arr[0]),parseInt(arr[1]), 0.5) : 0.5;
+        ref_data.ball_score = ref_data.timerly_basic_score ? mathJs.add(parseInt(arr[0]), parseInt(arr[1]), 0.5) : 0.5;
       } else if (MARKET_HOME_PLAY_LIST.includes(props.item.playId)) {
         ref_data.ball_score = ref_data.timerly_basic_score ? mathJs.add(parseInt(arr[0]), 0.5) : 0.5;
       } else if (MARKET_AWAY_PLAY_LIST.includes(props.item.playId)) {
@@ -422,11 +416,11 @@ const sub_handle = (type, index = 1) => {
         console.error('ref_data.appoint_ball_head====', ref_data.appoint_ball_head);
         console.error('basic_score===', ref_data.basic_score);
         //给出弹框提示（已为最低预约盘口值，请重新调整）
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_adjust')}`)
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_adjust')}`)
       } else if (FOOTBALL_PLAY_LET_BALL.includes(props.item.playId)) {
         if (ref_data.appoint_ball_head <= mix_rang) {
           ref_data.appoint_ball_head = mix_rang
-          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_adjust')}`)
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_adjust')}`)
         }
       }
       else
@@ -440,13 +434,13 @@ const sub_handle = (type, index = 1) => {
         if (ref_data.appoint_ball_head < mix_let) {
           ref_data.appoint_ball_head = mix_let
           //给出弹框提示（已为最低预约盘口值，请重新调整）
-          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_adjust')}`)
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_adjust')}`)
         }
       } else {
         if (ref_data.appoint_ball_head < mix_small) {
           ref_data.appoint_ball_head = mix_small
           //给出弹框提示（已为最低预约盘口值，请重新调整）
-          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_adjust')}`)
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.bet_header_adjust')}`)
         }
       }
     }
@@ -463,9 +457,9 @@ const sub_handle = (type, index = 1) => {
  * @return {undefined} undefined
  */
 const search_odds_value_by_ball_head = () => {
-  
+
   let head = ref_data.computed_appoint_ball_head;
-  let appoint_ob = lodash_.get(BetData,'bet_appoint_obj');
+  let appoint_ob = lodash_.get(BetData, 'bet_appoint_obj');
   if (!appoint_ob || lodash_.isNull(appoint_ob.marketList)) return;
   let playOptionsId = '';
   let marketId = ''
@@ -547,7 +541,7 @@ const search_odds_value_by_ball_head = () => {
   // console.error('当前最小值等于4', ref_data.min_odds_value);
 }
 
-const set_computed_appoint_ball_head = ()=>{
+const set_computed_appoint_ball_head = () => {
   let ball_head = '';
   if (props.item.sportId == 1) {
     if (!lodash_.isNull(ref_data.appoint_ball_head)) {
@@ -591,14 +585,88 @@ const set_computed_appoint_ball_head = ()=>{
 </script>
 
 <style lang="scss" scoped>
-.pre-input{
+.pre-input {
   border: 1px solid var(--q-gb-bd-c-8);
 }
+
 .m-b-8 {
   margin-bottom: 8px;
 }
-.center {
-  height: 26px;
-  line-height: 23px;
+
+// .center {
+//   height: 26px;
+//   line-height: 23px;
+// }
+
+.bet-pre-appoint {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 34px;
+  justify-content: space-between;
+  position: relative;
+  .cancel {
+    position: absolute;
+    right: 22px;
+  }
+}
+
+//预约投注内容
+.book-content {
+  color: var(--q-gb-t-c-8);
+  flex-wrap: nowrap;
+
+  .input-number {
+    display: flex;
+
+    //预约加
+    .sub-number {
+      font-size: 16px;
+      color: var(--q-gb-t-c-1);
+      text-align: center;
+      width: 24px;
+      height: 24px;
+      line-height: 26px;
+      margin-left: 6px;
+      background: var(--q-gb-bg-c-1);
+      // border: 0.5px solid var(--q-gb-bd-c-7);
+      border-radius: 4px 0px 0px 4px;
+    }
+
+    //预约投注输入框样式
+    input {
+      color: var(--q-gb-t-c-5);
+      border-radius: 0;
+      background-color: var(--q-gb-bg-c-21);
+      // border: 0.5px solid var(--q-gb-bd-c-7);
+      border-left: 0;
+      border-right: 0;
+      width: 74px;
+      height: 24px;
+      text-align: center;
+      outline: none;
+      font-weight: bold;
+    }
+
+    //预约减
+    .add-number {
+      font-size: 16px;
+      color: var(--q-gb-t-c-1);
+      text-align: center;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      background: var(--q-gb-bg-c-1);
+      // border: 0.5px solid var(--q-gb-bd-c-7);
+      border-radius: 0px 2px 2px 0px;
+      cursor: pointer;
+    }
+  }
+
+  //预约删除图标样式
+  .icon-delete {
+    margin-top: 5px;
+    color: #999999;
+  }
 }
 </style>
