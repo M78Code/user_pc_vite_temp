@@ -11,7 +11,7 @@ import "quasar/src/css/index.sass";
 // 引入 当前 计算出的植入配置
 
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
-
+import { main_js_common_fun } from "src/core/main-js-common-fun/index.js";
 window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 
 
@@ -34,5 +34,7 @@ app.use(router);
 app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
+// app文件配置
+main_js_common_fun(app);
 // 引入 当前 计算出的植入配置
 app.mount("#ty-app");
