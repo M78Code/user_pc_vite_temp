@@ -10,20 +10,28 @@
         <!-- 详情页面包屑 -->
         <breadcrumbs :detail_info="match || {}" v-if="match" />
         <div class="bread-right">
-          <img
+          <q-img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
             alt=""
             srcset=""
             class="signal"
-            @click="()=>{}"
-          />
-          <img
+            @click="go_analyse"
+          >
+            <q-tooltip
+              anchor="bottom middle"
+              self="top middle"
+              :offset="[40, 10]"
+            >
+              {{ i18n_t("common.analysis") }}
+            </q-tooltip>
+          </q-img>
+          <q-img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`"
             alt=""
             srcset=""
             :class="['refresh', refreshing && 'refreshing']"
             @click="vir_refresh"
-          />
+          ></q-img>
         </div>
       </div>
       <div class="match-detail-head" v-if="match">
@@ -77,7 +85,7 @@
     <div>
       <div class="detail-header">
         <div class="title">
-           {{ current_match.no }}
+          {{ match.tn }} {{ match.no }}
         </div>
         <!--视频区域-->
         <div class="stage-wrapper">
@@ -131,6 +139,7 @@ import { MatchProcessFullVersionWapper as matchProcess } from "src/components/ma
 import virtual_sports_right from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-right.vue"
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
 import {api_v_sports} from "src/api/index.js";
+import details from "src/core/match-list-pc/details-class/details.js";
 
 export default {
   mixins:[virtual_sports_details_mixin],
@@ -194,6 +203,10 @@ export default {
       }).catch((e) => {
      
       });
+    },
+    //  打开赛事分析
+    go_analyse() {
+      details.sr_click_handle(this.current_match);
     }
   },
   computed:{
@@ -308,8 +321,8 @@ export default {
   .signal,.refresh {
     display: inline-block;
     cursor: pointer;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     margin-right: 15px;
   }
   
@@ -425,11 +438,7 @@ export default {
 }
 
 .detail-header {
-  position: sticky;
   width: 100%;
-  top: 0;
-  right: 0;
-  z-index: 99;
 
   .title {
     height: 40px;
