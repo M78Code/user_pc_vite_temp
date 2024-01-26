@@ -1062,7 +1062,10 @@ this.bet_appoint_ball_head= null */
         get_query_bet_amount_common()
       }
     }
-
+    //如果只有一条数据时 设置投注输入框激活index为0 
+    if (this.bet_single_list.length === 1){
+      this.set_active_index(0) 
+    }
     this.set_options_state()
     
   }

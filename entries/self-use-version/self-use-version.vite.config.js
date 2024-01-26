@@ -12,7 +12,7 @@ const {BUILD_VERSION ,PROJECT_NAME} =  BUILDIN_CONFIG
 const port = 28300
 console.log("---------启动文件入口目录-------------", __dirname);
 
-import COMPUTE_ENTRY_CONFIG from "../../job/entry-config.js";
+import COMPUTE_ENTRY_CONFIG from "../../job/entry/entry-config.js";
 //入口配置
 const  { project, outDir, base} = COMPUTE_ENTRY_CONFIG({port})
  

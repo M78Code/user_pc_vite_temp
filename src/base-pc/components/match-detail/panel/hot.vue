@@ -222,7 +222,7 @@
 import ZHUGE from "src/core/http/zhuge-tag.js";
 
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
-import { api_details, api_match } from "src/api/index";
+import { api_details, api_match,api_common } from "src/api/index";
 import { MatchProcessFullVersionWapper } from "src/components/match-process/index.js";
 import { IconWapper } from 'src/components/icon/index.js'
 import bet_item from "src/base-pc/components/bet-item/bet_item.vue";
@@ -514,7 +514,7 @@ export default {
         cuid: this.uid,
         cf: mf ? 0 : 1,
       };
-      api_match.post_collect_match(params).then((res) => {
+      api_common.add_or_cancel_match(params).then((res) => {
         let code = lodash.get(res, "data.code");
         let data = lodash.get(res, "data.data");
         if (code == 200 && data == 1) {

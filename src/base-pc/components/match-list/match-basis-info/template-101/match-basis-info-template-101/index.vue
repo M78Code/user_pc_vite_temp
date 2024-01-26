@@ -48,7 +48,7 @@
             :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S11.home') }}</span>
           <!-- 黄牌数 -->
           <span class="red-ball yellow"
-            v-show="lodash.get(match, 'msc_obj.S12.home', 0) > 0 && lodash.get(match, 'msc_obj.S11.home', 0) < 0"
+            v-show="lodash.get(match, 'msc_obj.S12.home', 0) > 0 && lodash.get(match, 'msc_obj.S11.home', 0) <= 0"
             :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S12.home') }}</span>
         </div>
       </div>
@@ -85,7 +85,7 @@
             lodash.get(match, 'msc_obj.S11.away') }}</span>
           <!-- 黄牌数 -->
           <span class="red-ball yellow"
-            v-show="lodash.get(match, 'msc_obj.S12.away', 0) > 0 && lodash.get(match, 'msc_obj.S11.away', 0) < 0"
+            v-show="lodash.get(match, 'msc_obj.S12.away', 0) > 0 && lodash.get(match, 'msc_obj.S11.away', 0) <= 0"
             :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S12.away') }}</span>
         </div>
       </div>
