@@ -113,7 +113,6 @@ const matchBgImage = [{
  * @description 赛事信息
  */
 const get_item_hps = (item) => {
-  console.log("//////",item)
   const hpsData = lodash.get(item, 'hpsData', [])
   const length = lodash.get(hpsData, 'length', 0)
   if (length < 1) return []
