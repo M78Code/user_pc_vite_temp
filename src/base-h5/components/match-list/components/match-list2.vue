@@ -123,8 +123,9 @@ const matchs_data = computed(() =>{
 
 //获取数据仓库赛事数据
 const get_match_item = (item) => {
+  const { source_index = '', is_show_ball_title = false, start_flag = '3' } = item
   const match = MatchDataBaseH5.get_quick_mid_obj(item.mid) || item
-  return { ...match, source_index: item.source_index, is_show_ball_title: item.is_show_ball_title }
+  return { ...match, source_index, is_show_ball_title, start_flag }
 }
 
 // 当前可视区数据更新回调
@@ -142,8 +143,8 @@ const handlerUpdate = lodash.debounce((data) => {
   if (flag && mids_string.value !== mids.join(',')) {
     // 设置当前激活的赛事
     MatchMeta.set_current_match_mids(mids)
-    // 更新仓库赛事数据
-    MatchMeta.handle_update_match_info({ list: data, merge: 'cover' })
+    // 更新仓库赛事数据 , merge: 'cover'
+    MatchMeta.handle_update_match_info({ list: data })
     // // 根据当前可视区 mids 获取赛事赔率
     MatchMeta.get_match_base_hps_by_mids({mids: mids.join(',')})
     
