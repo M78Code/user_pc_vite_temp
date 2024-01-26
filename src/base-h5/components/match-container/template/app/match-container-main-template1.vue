@@ -73,7 +73,9 @@
                 </span>
               </span>
              <span class="league-right">
-                <span> {{ get_ball_seed_league_count }} </span>
+                <template v-if="!collapsed">
+                  <span> {{ get_ball_seed_league_count }} </span>
+                </template>
                 <IconWapper color="#c9c9c9" name="icon-arrow" size="14px"  :class="['icon-wapper', {'close': collapsed}]" />
              </span>
             </span>
@@ -978,11 +980,12 @@ export default {
       display: flex;
       align-items: center;
       > span {
+        color: #c9c9c9;
         padding-right: 3px;
       }
       > i {
-        position: relative;
-        top: -1px;
+        // position: relative;
+        // top: -1px;
       }
     }
   }
