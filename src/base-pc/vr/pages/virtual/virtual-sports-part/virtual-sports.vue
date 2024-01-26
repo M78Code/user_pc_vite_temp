@@ -68,7 +68,7 @@
             <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
         </template>
       </div>
-      <template v-if="lodash.get(match_list_all_batches,'length')">
+      <template v-if="lodash.get(match_list_all_batches,'length') && (sub_menu_type+'' == lodash.get(match_list_all_batches,'[0].matchs[0].csid'))">
       <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
        <div v-if="match_item_batch.remaining_time > 0" class="virtual-sports-card-content" :class="{'virtual-sports-card-simple': standard_edition === 1}">
         <template v-if="match_item_batch.is_expend">
@@ -90,7 +90,7 @@
               <v-s-match-list2 v-if="sub_menu_type && ![1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
                 :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
                 :match_item_batch="match_item_batch"
-                :key="i"
+                :key="`${sub_menu_type}_${i}`"
                 @switch_match="switch_match_handle"  @start="match_start_handle">
               </v-s-match-list2>
             </div>
