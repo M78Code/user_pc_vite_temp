@@ -12,7 +12,7 @@ import { match_state_convert_score_dict, history_score_dict } from 'src/core/con
 import { get_match_template_id } from './list-template/match-list-tpl'
 import { get_21_bold_template, get_template_data, switch_other_play, set_min15 } from './composables/match-list-other'
 import { has_cur_handicap_tpl_ids } from 'src/core/constant/project/module/data-class-ctr/play-tpl-id.js'
-import { MenuData } from 'src/output';
+import { MenuData,GlobalSwitchClass } from 'src/output';
 export * from './list-template/match-list-tpl'
 
 /**
@@ -597,15 +597,22 @@ export function compute_match_all_handicap_data(match) {
     //足球 让球与大小 模板
     if (csid == 1 && [1, 13].includes(+tpl_id) && !is_corner_menu) {
         // 计算角球、罚牌等其他玩法数据
-        Object.assign(match_assign, {
-            play_current_play: get_play_current_play(match),
-            other_handicap_list: get_compute_other_play_data(match)
-        }, get_match_add_handicap_data(match))// 设置赛事附加盘盘口数据
+        // 根据个人设置的全局配置的附加盘口是否展示
+        console.error('GlobalSwitchClass.show_additional_disk',GlobalSwitchClass.show_additional_disk)
+        if (GlobalSwitchClass.show_additional_disk){
+            Object.assign(match_assign, { 
+                play_current_play: get_play_current_play(match),
+                other_handicap_list: get_compute_other_play_data(match)
+            }, get_match_add_handicap_data(match))// 设置赛事附加盘盘口数据
+        }
     }
     // 篮球让球与大小
     if (tpl_id == 7) {
         // 设置赛事附加盘盘口数据
-        Object.assign(match_assign, get_match_add_handicap_data(match))
+        // 根据个人设置的全局配置的附加盘口是否展示
+        if (GlobalSwitchClass.show_additional_disk){
+            Object.assign(match_assign, get_match_add_handicap_data(match))
+        }
     }
     // 有当前局玩法的模板  设置当前局盘口数据   沙滩排球13没有当前局
     if (has_cur_handicap_tpl_ids.includes(+tpl_id) && csid != 13) {
