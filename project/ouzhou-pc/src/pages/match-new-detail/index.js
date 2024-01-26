@@ -196,6 +196,11 @@ export function usedetailData(route) {
         tId: data.tid,
         t: new Date().getTime(),
       };
+  //  电竞需加isESport参数
+      if (MenuData.is_esports()) {
+        params.isESport = 1
+        
+      }
 
       const res = await getMatchDetailByTournamentId(params)
       if (res.code=='0401038') {
