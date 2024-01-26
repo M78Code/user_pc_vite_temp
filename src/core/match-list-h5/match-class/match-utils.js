@@ -429,23 +429,24 @@ class MatchUtils {
    */
   get_handicap_index_by (match) {
     let result = 0;
-    if (match && match.hps) {
+    const hps = lodash.get(match, 'hps') || lodash.get(match, 'hpsData[0].hps')
+    if (match && hps) {
       let hpid = this.get_handicap_w_id(match.csid);
-      let hp_item = match.hps.filter((item) => item.hpid == hpid)[0];
+      let hp_item = hps.filter((item) => item.hpid == hpid)[0];
       if (hp_item) {
-        let hl_item = hp_item.hl[0];
+        let hl_item = lodash.get(hp_item, 'hl[0]') || lodash.get(hp_item, 'hl')
 
         // 网球csid 5  让盘hpid 154
         if (!hl_item || !hl_item.ol) {
           if (match.csid == 5) {
-            hp_item = match.hps.filter((item) => item.hpid == 154)[0];
+            hp_item = hps.filter((item) => item.hpid == 154)[0];
             if (hp_item) {
               hl_item = hp_item.hl[0];
             }
           }
         }
-
-        if (hl_item && hl_item.ol) {
+        let ol = lodash.get(hp_item, 'hl[0].ol') || lodash.get(hp_item, 'hl.ol')
+        if (hl_item && ol) {
           let found_i = 0;
           hl_item.ol.forEach((ol_item, i) => {
             if (ol_item.on) {
