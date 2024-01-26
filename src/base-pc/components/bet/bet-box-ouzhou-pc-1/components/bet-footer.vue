@@ -172,7 +172,7 @@ const set_special_state = computed(()=> status => {
   for(let item of  bet_list) {
     // 盘口已关闭 盘口关闭不允许投注
     if(item.ol_os != 1 || item.hl_hs != 0 || item.mid_mhs != 0){
-      ref_data.show_title = i18n_t('bet.close')
+    //   ref_data.show_title = i18n_t('bet.close')
       // 不允许投注
       is_bet_single = false
       return true
