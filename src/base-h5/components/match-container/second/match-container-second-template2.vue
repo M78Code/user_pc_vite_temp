@@ -158,7 +158,8 @@ export default defineComponent({
       white-space: nowrap;
       flex-shrink: 0;
       font-size: 0.1rem;
-      background: #fff;
+      background: var(--q-gb-bg-c-28);
+      color: var(--q-gb-t-c-18);
       display: flex;
       align-items: center;
       padding: 0 0.01rem 0 0.03rem;
