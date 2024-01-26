@@ -179,8 +179,8 @@ function set_sports_list() {
       const list = lodash.get(res, 'data') || []
       // 内部测试展示所有球种，线上只放开足、篮 网 电足 电篮
       const ls = ["1", "2","5","90","91"];
-      // sports_list = IS_FOR_NEIBU_TEST ? list : list.filter(item => ls.includes(item.id))
-      sports_list = list;
+      sports_list = IS_FOR_NEIBU_TEST ? list : list.filter(item => item.id != 100)
+      // sports_list = list // .filter(item => item.id != 100);
       // 默认第一个 足球被禁用后 默认值不是1
       search_csid.value = (list[0] || {}).id
       if (csid) {
