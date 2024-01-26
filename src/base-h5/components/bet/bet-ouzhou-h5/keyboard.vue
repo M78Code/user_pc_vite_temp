@@ -165,7 +165,7 @@ const _handleKeyPress = (e) => {
       emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
     }
   }
-  useMittEmit(MITT_TYPES[emit_name], { params:BetData.bet_keyboard_config, money:money.value*1 } )
+  useMittEmit(MITT_TYPES[emit_name], { params:BetData.bet_keyboard_config, money:money.value } )
 }
 
 // 小数点 .
