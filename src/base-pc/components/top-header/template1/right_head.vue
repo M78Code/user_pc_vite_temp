@@ -10,7 +10,7 @@
       <div class="s-input s-input-click">
         <div style="display: flex; position: relative;">
           <input class="search-input" :class="is_focus ? 'change_width' : ''" @focus="show_search" :value="keyword"
-            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" @input="e=>get_search_data(e.target.value)" @keyup.enter="e=>get_search_data(e.target.value)" />
+            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" @input="e=>change_txt(e.target.value)" @keyup.enter="e=>get_search_data(e.target.value)" />
           <img class="icon-search" :src="compute_local_project_file_path('image/svg/search_white.svg')" alt="">
           <img v-show="keyword" @click="clear_keyword" class="icon-close"
             :src="compute_local_project_file_path('image/svg/close.svg')" alt="">
@@ -218,6 +218,16 @@ export default defineComponent({
         }
       })
     },{immediate:true})
+    
+
+    /**
+    * @Description:替换输入框非法字符为空串
+    * @return {undefined} undefined
+    */
+    const change_txt = (val) => {
+      keyword.value = keyword.value.replace(/#/g, "");
+      if (keyword.value.length > 20) keyword.value = keyword.value.slice(0, 20);
+    }
     // 传递搜索状态
     const get_search_data =lodash.throttle( (val) => {
       useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
@@ -335,6 +345,10 @@ export default defineComponent({
       document.removeEventListener('click', hide_search)
       emit_list.map(i=>i())
     })
+    //监听输入框内容改变
+    watch(() => keyword.value, (val) => {
+      get_search_data(val)
+    })
     return {
       keyword,
       SearchPCClass,
@@ -360,6 +374,7 @@ export default defineComponent({
       compute_local_project_file_path,
       clear_keyword,
       compute_css_obj,
+      change_txt,
     };
 
   }
