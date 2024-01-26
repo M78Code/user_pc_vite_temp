@@ -412,10 +412,16 @@ const render_match_results_list = (res) => {
 	// MatchMeta.match_mids = []
 	if (+res.code !== 200) return MatchMeta.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
     // 避免接口慢导致的数据错乱
-    const list = lodash.get(res.data.data, 'teamH5', [])
-    const length = lodash.get(list, 'length', 0)
+    const teamH5 = lodash.get(res.data.data, 'teamH5', [])
+    const league = lodash.get(res.data.data, 'league', [])
+    const team = lodash.get(res.data.data, 'team', [])
+    const bowling = lodash.get(res.data.data, 'bowling', [])
+
+	const merge = league.map(item => item.matchList).concat(team.map(item => item.matchList))
+	const results = [].concat(...merge, teamH5, bowling)
+    const length = lodash.get(results, 'length', 0)
     if (length < 1) return MatchMeta.set_page_match_empty_status({ state: true });
-    MatchMeta.handler_match_list_data({ list: list, type: 1 })
+    MatchMeta.handler_match_list_data({ list: results, type: 1 })
 }
 
 
