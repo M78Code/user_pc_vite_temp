@@ -66,6 +66,11 @@ class MenuData {
     this.menu_lv_mi_lsit = []
     // 赛果 日期/赛中
     this.result_menu_api_params = {}
+    this.match_tab_list = [//赛事列表tab
+      'Matches',
+      'League',
+      'Outrights'
+    ];
     //赛事列表 日期
     // this.menu_match_date_params= {}
     this.menu_list = []; //常规球种 101...
@@ -243,6 +248,11 @@ class MenuData {
       }
     })
     return menu_lv_mi_lsit
+  }
+  //设置赛事列表tab缓存
+  set_match_tab_list(arr){
+    this.match_tab_list = arr;
+    this.update();
   }
   //设置赛果参数
   set_result_menu_api_params(val){

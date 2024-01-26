@@ -388,7 +388,13 @@ export const useGetResultConfig = () => {
           }
           // 添加【全部】选项
           state.champion_sport_type.unshift(i18n_t("select.all"));
-          state.api_sport_type = data;
+          //欧洲版屏蔽4期电竞vr
+          if(!IS_FOR_NEIBU_TEST){
+            state.api_sport_type = data.filter((n)=>{return +n.id < 100});
+          }else{
+            state.api_sport_type = data;
+          }
+          // state.api_sport_type = data;
           // console.log(state.api_sport_type,'state.api_sport_type');
           const _name = i18n_t("select.all");
           // 如果求种id存在，则显示对应的求种id

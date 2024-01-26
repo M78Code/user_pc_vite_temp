@@ -15,7 +15,7 @@ console.log("---------启动文件入口目录-------------", __dirname);
 let workspace_root =  (__dirname).split('entries')[0].replaceAll("\\",'/')
 
 console.log("---------项目根目录-------------", workspace_root);
-import COMPUTE_ENTRY_CONFIG from "../../job/entry-config.js";
+import COMPUTE_ENTRY_CONFIG from "../../job/entry/entry-config.js";
 //入口配置
 const  { project, outDir, base} = COMPUTE_ENTRY_CONFIG({port})
 const  randomstring=(n=16)=>{
