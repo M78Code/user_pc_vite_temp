@@ -260,6 +260,7 @@ const expand_team = ref(true)
  function bowling_top_click(match) {
 	update_show_type('none')
 	const { csid, tn } = match;
+	const { tid } = match.children[0];
 	//设置左侧菜单联动
 	MenuData.set_left_menu_result({
 		...MenuData.left_menu_result,
@@ -268,7 +269,9 @@ const expand_team = ref(true)
 	})
 	MenuData.set_current_ball_type(csid);
 	// MenuData.set_menu_current_mi(`${+csid+100}2`)
-	router.push(`/search/${tn}/${csid}`)
+	// router.push(`/search/${tn}/${csid}`)
+	localStorage.setItem('league_name', tn)
+	router.push(`/league/${csid}/${tid}/3`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,
