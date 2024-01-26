@@ -50,9 +50,8 @@ export default {
       LayOutMain_pc.set_oz_show_left(true);
       MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
     })
-    watch(() => route.params.type, () => {
-      fetch_league_match_list()
-    }, { immediate: true })
+   
+    fetch_league_match_list()
     function MatchListCardDataClass_match_list_card_key_arr() {
       match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
     }
@@ -81,9 +80,7 @@ export default {
       });
     }
     mounted_fn(fetch_league_match_list)
-    onUnmounted(() => {
-      handle_destroyed()
-    })
+
     return {
       match_list_card_key_arr,
       MatchListCardDataClass,

@@ -1,5 +1,5 @@
 import {
-	ref, onUnmounted, nextTick
+	ref, nextTick,  onBeforeUnmount
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
@@ -306,9 +306,9 @@ function mounted_fn(fun) {
 		check_match_last_update_time,
 		30000
 	);
-	onUnmounted(() => {
+	onBeforeUnmount(()=>{
 		handle_destroyed()
-	});
+	})
 	// load_video_resources();
 }
 // watch(MenuData.match_list_api_config.version, (cur) => {
