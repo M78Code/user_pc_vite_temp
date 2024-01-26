@@ -293,6 +293,7 @@ const expand_team = ref(true)
 	MenuData.set_current_ball_type(csid);
 	// MenuData.set_menu_current_mi(`${+csid+100}2`)
 	// router.push(`/search/${match.leagueName}/${csid}`)
+	localStorage.setItem('league_name', match.leagueName)
 	router.push(`/league/${csid}/${tid}/3`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {

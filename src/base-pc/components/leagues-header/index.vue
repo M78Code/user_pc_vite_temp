@@ -84,6 +84,7 @@ watch(() => route.params.type, async () => {
 
 const set_active_league = (item) => {
 	active_league.value = item.id
+	localStorage.setItem('league_name', item.nameText)
 	router.push(`/league/${route.params.sportId}/${item.id}/${route.params.type}`)
 }
 onUnmounted(()=>{
