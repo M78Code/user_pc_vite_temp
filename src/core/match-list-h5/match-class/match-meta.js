@@ -1564,22 +1564,16 @@ class MatchMeta {
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
       // match_mids是可视区域id
       const active_index = this.match_mids.findIndex(t => t === mid)
-      active_index>-1&& this.match_mids.splice(active_index,1)
+      // active_index>-1&& this.match_mids.splice(active_index,1)
       const index = this.complete_matchs.findIndex(t => t.mid == mid)
       index > -1 && this.complete_matchs.splice(index, 1)
-      if (index > -1) {
+      if (active_index > -1) {
         if (this.debounce_timer) return
         this.debounce_timer = setTimeout(() => {
           this.is_ws_trigger = true
-          if (MenuData.is_kemp()) {
-            // 冠军不走虚拟计算 全量渲染
-            // this.handle_custom_matchs({ list: this.complete_matchs })
-          } else {
-            // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
-            // this.compute_current_matchs()
-            this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
-            // this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
-          }
+          // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
+          this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+          // this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
           clearTimeout(this.debounce_timer)
           this.debounce_timer = null
         }, 1000)
