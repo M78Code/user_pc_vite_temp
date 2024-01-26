@@ -395,7 +395,7 @@ class MatchUtils {
     let estimateHeight;
     if (is_show_league && show_card) {           // 显示联赛  显示卡片
       estimateHeight = show_tab ? standard_config['4'] : standard_config['1'] // 4 显示次要玩法  1 不显示次要玩法
-    } else if (is_show_league && !show_card) {   // 显示卡片 不显示联赛
+    } else if (is_show_league && !show_card) {   // 不显示联赛 显示卡片 
       estimateHeight = show_tab ? standard_config['5'] : standard_config['2'] // 5 显示次要玩法  2 不显示次要玩法
     } else if (!is_show_league && show_card)  {  // 显示联赛  不显示卡片
       estimateHeight = standard_config['3']
