@@ -44,7 +44,7 @@
     <template v-if="![18,19].includes(+lodash.get(current_tab_item, 'id'))">
       <template v-if="![11].includes(+lodash.get(current_tab_item, 'id'))">
         <div v-if="(!show_newer_edition && get_n_s_changed_loaded ) || selected_list"
-          :class="['standard-odd-l-w',{'status2':standard_odd_status == 1}]" v-touch-swipe.mouse.right.left="odd_wrapper_pan">
+          :class="['standard-odd-l-w',{'status2': standard_odd_status == 1}, { 'is_no_scroll': is_scroll_page }]" v-touch-swipe.mouse.right.left="odd_wrapper_pan">
           <!--标准版-->
           <div class="standard-odd-list row" v-if="!selected_list" :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
             <div class="odd-column-w" :class="[{ clounm2: ![1,4,11,14,16].includes(+match.csid) }, {'boxing':match.csid == 12 }]" 
@@ -114,12 +114,12 @@
 
       <!--标准版 才有的样式 下划线 -->
       <div :class="['dir-standard row justify-center items-center', {'max-width': [11].includes(+lodash.get(current_tab_item, 'id'))} ]"
-        v-show="get_hp_list(1).length && !show_newer_edition">
+        v-show="get_hp_list(1).length && !show_newer_edition && !is_scroll_page">
         <div class="block" :class="{selected:standard_odd_status == 0}"></div>
         <div class="block" :class="{selected:standard_odd_status == 1}"></div>
       </div>
       <!--标准版 才有的样式  动态图方向箭头-->
-      <template v-if="get_hp_list(1).length > 0">
+      <template v-if="get_hp_list(1).length > 0 && !is_scroll_page">
         <img class="slide_icon slide_icon_l animate-effect" :src="slide_icon_0" alt="" v-if="is_show_scroll_dir(0)">
         <img class="slide_icon slide_icon_r animate-effect-r" :src="slide_icon_0" alt="" v-if="is_show_scroll_dir(1)">
       </template>
@@ -303,6 +303,11 @@ const minutes_of_the_Xth_goal = computed(() => {
 const show_newer_edition = computed(() => {
   return standard_edition.value == 1 || PageSourceData.page_source == "detail_match_list"
 });
+
+// 是否主动 滑动
+const is_scroll_page = computed(() => {
+  return [30].includes(props.current_tab_item.id)
+})
 
 // 特色组合玩法
 const hps_compose_data = () => {
@@ -804,7 +809,7 @@ const odd_wrapper_pan = ({ direction }) => {
  */
 const get_hp_list = (type) => {
   let hps = [];
-  if (type == 0) {
+  if (type == 0 || is_scroll_page) {
     if (props.match && finally_ol_list.value) {
       if (props.match.csid == 12) {
         hps = finally_ol_list.value.slice(0, 2);
@@ -914,7 +919,7 @@ const get_ol_length = (hp_item_obj, hp_i_i) => {
     }
   } else {
     // 晋级
-    if (id === 3) return 2
+    if ([3, 30].includes(id)) return 2
     if ([1, 4, 11, 14, 16].includes(+props.match.csid)) {
       if (props.match.hps && props.match.hps[hp_i_i]) {
         if (props.match.hps[hp_i_i].hpid == 1) {
@@ -1370,6 +1375,12 @@ onUnmounted(() => {
       }
       &.status3{
         transform: translateX(-50%);
+      }
+    }
+    &.is_no_scroll{
+      transform: translateX(0) !important;
+      .r-child{
+        left: 0
       }
     }
   }

@@ -110,7 +110,6 @@ export default defineComponent({
 
     // 当前总的要显示的次要玩法
     const show_second_data = computed(() => {
-      if (proxy.match.mid === '3647037') console.log(proxy.tab_list.filter((t) => t.show_tab))
       return proxy.tab_list.filter((t) => t.show_tab)
     })
     // 当前显示的 次要玩法
