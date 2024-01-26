@@ -51,9 +51,9 @@ export default {
       MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
     })
    const off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,fetch_league_match_list).off
-    watch(() => route.params, () => {
+    watch(() => route.params.type, () => {
       fetch_league_match_list()
-    }, { immediate: true, deep: true })
+    }, { immediate: true })
 
     mounted_fn()
     
