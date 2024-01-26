@@ -1,5 +1,5 @@
 import {
-	ref, onUnmounted, nextTick
+	ref, nextTick,  onBeforeUnmount
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
@@ -295,7 +295,7 @@ function mounted_fn(fun) {
 	//如果创建后 菜单没有触发数据拉去
 	//菜单没有触发请求数据 仍然没有请求数据 自身触发一次
 	//防止一直loading
-	setTimeout(() => {
+	!fun&&setTimeout(() => {
 		if (load_data_state.value == 'loading') {
 			useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
 			useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {})
@@ -306,9 +306,9 @@ function mounted_fn(fun) {
 		check_match_last_update_time,
 		30000
 	);
-	onUnmounted(() => {
+	onBeforeUnmount(()=>{
 		handle_destroyed()
-	});
+	})
 	// load_video_resources();
 }
 // watch(MenuData.match_list_api_config.version, (cur) => {
