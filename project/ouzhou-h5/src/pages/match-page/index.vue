@@ -72,7 +72,29 @@ onMounted(() => {
         MatchMeta.set_origin_match_data()
       }
     }).off,
-    emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
+    emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, (obj) => {
+      //早盘串关数量为0  隐藏赛事 切换冠军
+      if(!obj.ct){
+        store.tabActive = 'Outrights';
+        MenuData.set_match_tab_list([
+          'Outrights'
+        ]);
+        // store.tabOptions = [
+        //   'Outrights'
+        // ]
+      }else{
+        store.tabActive = 'Matches';
+        MenuData.set_match_tab_list([
+          'Matches',
+          'League',
+          'Outrights'
+        ]);
+        // store.tabOptions = [
+        //   'Matches',
+        //   'League',
+        //   'Outrights'
+        // ]
+      }
       store.isLeagueDetail = false
       MatchResponsive.set_is_league_detail(false)
       onTabChange()
@@ -173,7 +195,7 @@ const onChangeArea = (obj) => {
 }
 // 初始化matchpage页面
 const initMatchPage = () => {
-  // store.tabActive = 'Matches'
+  store.tabActive = MenuData.match_tab_list[0];
   store.isLeagueDetail = false
   MatchResponsive.set_is_league_detail(false)
 

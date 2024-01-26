@@ -136,23 +136,23 @@
           "4": "Handicap"
         },
         "100": {
-          "30001": "Map Handicap",
-          "30002": "Match Winner",
+          "30001": "Match Winner",
+          "30002": "Map Handicap",
           "30003": "Total Maps"
         },
         "101": {
-          "30001": "Map Handicap",
-          "30002": "Match Winner",
+          "30001": "Match Winner",
+          "30002": "Map Handicap",
           "30003": "Total Maps"
         },
         "102": {
-          "30001": "Map Handicap",
-          "30002": "Match Winner",
+          "30001": "Match Winner",
+          "30002": "Map Handicap",
           "30003": "Total Maps"
         },
         "103": {
-          "30001": "Map Handicap",
-          "30002": "Match Winner",
+          "30001": "Match Winner",
+          "30002": "Map Handicap",
           "30003": "Total Maps"
         }
       }
@@ -291,11 +291,11 @@
         "bet_col_1": "HDP",
         "bet_col_2": "HDP"
       },
-      "bet_col_30002": {
+      "bet_col_30001": {
         "bet_col_T1": "1",
         "bet_col_T2": "2"
       },
-      "bet_col_30001": {
+      "bet_col_30002": {
         "bet_col_T1": "HDP",
         "bet_col_T2": "HDP"
       },
