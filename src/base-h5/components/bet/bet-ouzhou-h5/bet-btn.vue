@@ -41,15 +41,20 @@ const place_bet = () => {
 
 // 单串关切换
 const set_bet_single_change = () => {
-  BetData.set_is_bet_single()
 
-  // 判断获取限额接口类型
-  if(MenuData.is_esports() || MenuData.is_vr()){
-    // C01/B03/O01  电竞/电竞冠军/VR体育
-    get_query_bet_amount_esports_or_vr()
-  }else{
-    // 获取限额 常规
-    get_query_bet_amount_common()
+  // 冠军不能串
+  if(!MenuData.is_kemp()) {
+    BetData.set_is_bet_single()
+
+    // 判断获取限额接口类型
+    if(MenuData.is_esports() || MenuData.is_vr()){
+      // C01/B03/O01  电竞/电竞冠军/VR体育
+      get_query_bet_amount_esports_or_vr()
+    }else{
+      // 获取限额 常规
+      get_query_bet_amount_common()
+    }
+
   }
 }
 

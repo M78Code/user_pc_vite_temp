@@ -65,6 +65,7 @@ export default {
       * 搜索相关列表数据
       * @return {undefined} undefined
       */
+	// 搜索进来查询7天数据 详情进来查询 12小时
     function fetch_league_match_list(is_socket = false) {
       // 更新列表模板编号 和请求参数
       // $menu.set_match_list_api_params()
@@ -72,7 +73,7 @@ export default {
       let params = {
         sportId,
         tid: route.params.tid,
-        selectionHour: route.params.type == 1 ? localStorage.getItem('league_hours') : 12
+        selectionHour: route.params.type == 1 ? localStorage.getItem('league_hours') : route.params.type == 2 ? 12 : 168
       };
       set_load_data_state("loading")
       api_match_list.get_leagues_list_match(params).then((res) => {

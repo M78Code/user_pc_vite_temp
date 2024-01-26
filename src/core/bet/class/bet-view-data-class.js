@@ -521,8 +521,8 @@ class BetViewData {
     this.set_bet_view_version()
   }
 
-  orderNo_bet_single_obj(obj) {
-    console.error('orderNo_bet_single_obj',obj)
+  set_orderNo_bet_single_obj_item(obj) {
+    // console.error('orderNo_bet_single_obj',obj)
     this.orderNo_bet_single_obj = this.orderNo_bet_single_obj.map(item => {
       if(item.orderNo == obj.orderNo){
         item.orderStatusCode = obj.status

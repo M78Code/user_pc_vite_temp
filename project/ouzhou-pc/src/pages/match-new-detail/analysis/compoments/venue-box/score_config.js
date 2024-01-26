@@ -307,6 +307,68 @@ export const sport_columns = {
       headerStyle: { width: "33px", color: "#ff7000" },
     },
   ],
+//  美式足球
+  6: [
+    {
+      name: "name",
+      label: "Q4 07:31",
+      align: "left",
+      field: "name",
+      headerStyle: {
+        "margin-left": "15px",
+        display: "block",
+        height: "30px",
+        "line-height": "30px",
+      },
+    },
+    {
+      name: "q1",
+      align: "left",
+      label: "1",
+      field: "q1",
+      headerStyle: "width: 33px",
+    },
+    {
+      name: "q2",
+      align: "left",
+      label: "2",
+      field: "q2",
+      // 48360 【SIT】【欧洲版二期】【PC】足球，比分板，黄牌和红牌的图标位置，需要对调
+      // icon: "red_card",
+      headerStyle: "width: 33px",
+    },
+    {
+      name: "ht",
+      align: "left",
+      label: "HT",
+      field: "ht",
+      //48360 【SIT】【欧洲版二期】【PC】足球，比分板，黄牌和红牌的图标位置，需要对调
+      // icon: "y_card",
+      headerStyle: "width: 33px",
+    },
+    {
+      name: "q3",
+      align: "left",
+      label: "3",
+      field: "q3",
+      headerStyle: "width: 33px",
+    },
+    {
+      name: "q4",
+      align: "left",
+      label: "4",
+      field: "q4",
+      headerStyle: "width: 33px",
+    },
+    {
+      name: "t",
+      align: "left",
+      label: "T",
+      field: "t",
+      headerStyle: { width: "33px", color: "#ff7000" },
+    },
+  ],
+
   8: [
     {
       name: "name",
@@ -868,6 +930,17 @@ export const allBallObj = {
     {
       title: () => `${i18n_t('common.ace')}`,
       value_key: "S4",
+    },
+  ],
+  // 美式足球
+  6: [
+    {
+      title: () => `${i18n_t("common.shot_num")}`,
+      value_key: "S6012",
+    },
+    {
+      title: () => `${i18n_t('common.touchdown')}`,
+      value_key: "S6014",
     },
   ],
   // 斯诺克
