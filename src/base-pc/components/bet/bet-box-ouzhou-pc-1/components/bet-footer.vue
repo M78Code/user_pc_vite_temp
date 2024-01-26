@@ -21,7 +21,7 @@
 
     <div class="bet-footer">
 
-        <div class="bet-state" v-if="set_special_state(BetData.bet_data_class_version)">
+        <div class="bet-state" v-if="!BetData.is_bet_single && set_special_state(BetData.bet_data_class_version)">
             <div class="w-100 f-c-c bet-title bet-error">
                 {{i18n_t("error_msg_info.0400477.client_msg1")}}
             </div>
