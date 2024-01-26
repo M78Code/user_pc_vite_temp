@@ -122,7 +122,8 @@ const total = computed(()=> state =>{
     let sum = 0
     if (BetViewDataClass.bet_order_status === 1) {
         BetViewDataClass.bet_special_series.forEach((item)=>{
-            sum = mathJs.add((item.bet_amount ? item.bet_amount : 0), sum)
+            console.log('这这这这这这这这这这这这这这这这这这这', item)
+            sum = mathJs.add(mathJs.multiply((item.bet_amount ? item.bet_amount : 0), item.count), sum)
         })
     } else {
         BetViewDataClass.orderNo_bet_single_obj.forEach((item)=>{
