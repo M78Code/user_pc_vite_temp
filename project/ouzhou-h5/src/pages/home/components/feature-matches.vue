@@ -46,8 +46,14 @@
         </div>
         <!-- 赛事名称 -->
         <div class="game-name">
-          <div> <span>{{ item.mhn }}</span> <span class="span">{{ item.home_score }}</span> </div>
-          <div> <span>{{ item.man }}</span> <span class="span">{{ item.away_score }}</span> </div>
+          <div> 
+            <span :class="{'is-handicap': item.handicap_index == 1}">{{ item.mhn }}</span> 
+            <span class="span">{{ item.home_score }}</span> 
+          </div>
+          <div> 
+            <span :class="{'is-handicap': item.handicap_index == 2}">{{ item.man }}</span> 
+            <span class="span">{{ item.away_score }}</span> 
+          </div>
         </div>
       </div>
       <template v-if="item">
@@ -107,6 +113,7 @@ const matchBgImage = [{
  * @description 赛事信息
  */
 const get_item_hps = (item) => {
+  console.log("//////",item)
   const hpsData = lodash.get(item, 'hpsData', [])
   const length = lodash.get(hpsData, 'length', 0)
   if (length < 1) return []
@@ -260,6 +267,9 @@ function toDetails(item){
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+        }
+        .is-handicap{
+          color: #7A0F25 !important;
         }
         .span{
           font-weight: 500;

@@ -12,8 +12,8 @@
     </div>
     <!-- 赛事名称 -->
     <div class="game-name">
-      <div>{{ item.mhn }}</div>
-      <div>{{ item.man}}</div>
+      <div :class="{'is-handicap': item.handicap_index == 1}">{{ item.mhn }}</div>
+      <div :class="{'is-handicap': item.handicap_index == 2}">{{ item.man}}</div>
     </div>
   </div>
   <template v-if="item">
@@ -75,5 +75,9 @@ const toDetails = () => {
 </script>
 
 <style scoped lang="scss">
+
+.is-handicap{
+  color: #7A0F25;
+}
 
 </style>
