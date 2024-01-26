@@ -2,6 +2,7 @@ import { useMittEmit, MITT_TYPES} from 'src/core/mitt/index.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { MenuData } from 'src/output/project/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
+import GlobalSwitchClass from 'src/core/global/global.js'
 import BaseData from "src/core/base-data/base-data.js";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 import {LayOutMain_pc} from 'src/output'
@@ -109,6 +110,7 @@ function match_list_all_params() {
             params: {
                 "cuid": UserCtr.get_uid() || '',
                 "sort": UserCtr.sort_type,
+                selectionHour:GlobalSwitchClass.kick_off_time || null
                 // "selectionHour": filterHeader.open_select_time, // 需要的自己在下面加
             },
         }

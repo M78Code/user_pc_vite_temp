@@ -1564,10 +1564,10 @@ class MatchMeta {
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
       // match_mids是可视区域id
       const active_index = this.match_mids.findIndex(t => t === mid)
-      // active_index>-1&& this.match_mids.splice(active_index,1)
+      active_index>-1&& this.match_mids.splice(active_index,1)
       const index = this.complete_matchs.findIndex(t => t.mid == mid)
       index > -1 && this.complete_matchs.splice(index, 1)
-      if (active_index > -1) {
+      if (index > -1) {
         if (this.debounce_timer) return
         this.debounce_timer = setTimeout(() => {
           this.is_ws_trigger = true
