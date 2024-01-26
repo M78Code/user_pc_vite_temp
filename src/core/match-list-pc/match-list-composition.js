@@ -295,7 +295,7 @@ function mounted_fn(fun) {
 	//如果创建后 菜单没有触发数据拉去
 	//菜单没有触发请求数据 仍然没有请求数据 自身触发一次
 	//防止一直loading
-	setTimeout(() => {
+	!fun&&setTimeout(() => {
 		if (load_data_state.value == 'loading') {
 			useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
 			useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {})
