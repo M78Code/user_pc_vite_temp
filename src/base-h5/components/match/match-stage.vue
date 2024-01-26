@@ -8,27 +8,27 @@
     <span v-if="!['result_details', 'match_result'].includes($route.name)">
       <!-- 赛事未开赛 -->
       <span v-if="detail_data.ms == 0">
-<!--        Bug: 52532-->
-<!--        即将开赛的赛事不显示日期-->
-<!--        所以加了 v-if="!one_hour"-->
-<!--        这个组件是所有公用的，这里会影响其他项目，要加prop变量控制 -->
+        <!--Bug: 52532-->
+        <!--即将开赛的赛事不显示日期-->
+        <!--所以加了 v-if="!one_hour"-->
+        <!--这个组件是所有公用的，这里会影响其他项目，要加prop变量控制 -->
         <span v-if="!is_show_time && !one_hour">
           <!-- 距离开赛时间大于1小时 显示月和日 .Format(i18n_t('time3'))-->
            {{(new Date(+detail_data.mgt)).Format(i18n_t('time11'))}}
-<!--          {{ formatTime(+detail_data.mgt, "DD/mm hh:MM") }}-->
+          <!--{{ formatTime(+detail_data.mgt, "DD/mm hh:MM") }}-->
         </span>
 
-<!--    Bug: 52634-->
+        <!--Bug: 52634-->
         <span v-if="!is_change_header && is_show_time">
           {{(new Date(+detail_data.mgt)).Format(i18n_t('time11'))}}
         </span>
 
-        <!-- Bug: 52782-->
+        <!--Bug: 52782-->
         <show-start-time v-if="is_change_header && one_hour" :detail_data="detail_data"></show-start-time>
 
       </span>
 
-      <span v-else-if="detail_data.ms == 3">
+      <span v-else-if="detail_data.ms == 3 || detail_data.mo == 1">
         <span v-if="detail_data.csid == 1 || detail_data.csid == 2">
           {{ i18n_t('match_info.match_over') }}
         </span>

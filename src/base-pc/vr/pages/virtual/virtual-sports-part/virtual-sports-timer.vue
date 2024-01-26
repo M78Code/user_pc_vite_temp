@@ -40,7 +40,7 @@ export default {
   margin-bottom: 0.38rem;
   z-index:555;
   .circle-time-wrapper svg path{
-    stroke: var(--q-gb-t-c-35);
+    stroke: var(--q-gb-t-c-2);
   }
   .final-circle {
       svg path {
@@ -61,7 +61,7 @@ export default {
       // color: #ffb001;
       font-size: 0.3rem;
       font-weight: 500;
-      color: var(--q-gb-t-c-35) !important;
+      color: var(--q-gb-t-c-2) !important;
       &.last {
         // color: #E23E3E;
         color: var(--q-gb-bd-c-8) !important;

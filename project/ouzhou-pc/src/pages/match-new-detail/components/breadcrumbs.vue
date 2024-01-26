@@ -45,9 +45,10 @@ const last_label = computed(() => {
 * 页面刷新路由重复添加一次，解决该问题
 * 48448 【SIT】【欧洲版二期】【PC】经常访问，足球，详情页面，没有菜单导航
 * */
+let firstOneName = ref('')
 const breadCrumbs_firstOne = computed(()=>{
     const { lv1_mi = void (0) } = MenuData.left_menu_result
-    let firstOneName = ''
+   
     // 经常访问菜单类型为0
     /*
     * 经常访问菜单类型为0
@@ -67,10 +68,13 @@ const breadCrumbs_firstOne = computed(()=>{
 const jumpTo = ()=>{
   // router.go(-1)
   let route_name = lodash_.get(MenuData.router_info,'pre_route') || 'home'
+
+  let history = JSON.parse(window.sessionStorage.getItem('RouteHistory'))
+
   if (route_name == 'league') {
     jumpToLeagues()
   } else {
-    router.push({name:route_name})
+    router.push({name:history[1]?.name})
   }
 }
 const jumpToLeagues  = () => {

@@ -283,7 +283,7 @@ const expand_team = ref(true)
  function league_click(match) {
 	if(!match) return;
 	search.insert_history(match.leagueName)
-	const { csid } = match.matchList[0];
+	const { csid, tid } = match.matchList[0];
 	//设置左侧菜单联动
 	MenuData.set_left_menu_result({
 		...MenuData.left_menu_result,
@@ -292,7 +292,9 @@ const expand_team = ref(true)
 	})
 	MenuData.set_current_ball_type(csid);
 	// MenuData.set_menu_current_mi(`${+csid+100}2`)
-	router.push(`/search/${match.leagueName}/${csid}`)
+	// router.push(`/search/${match.leagueName}/${csid}`)
+	localStorage.setItem('league_name', match.leagueName)
+	router.push(`/league/${csid}/${tid}/3`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,

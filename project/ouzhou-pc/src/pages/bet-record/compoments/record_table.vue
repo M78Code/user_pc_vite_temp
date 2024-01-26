@@ -559,7 +559,9 @@ const goPageChange = (v) => {
 }
 const pageSizeChange = (v) => {
   pageSize.value = v.value
+  pageCurrent.value = '1'
   emit('itemFilter', {
+    page: 1,
     size: v.value,
     timeType: props.timeType
   })

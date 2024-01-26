@@ -1062,7 +1062,10 @@ this.bet_appoint_ball_head= null */
         get_query_bet_amount_common()
       }
     }
-
+    //如果只有一条数据时 设置投注输入框激活index为0 
+    if (this.bet_single_list.length === 1){
+      this.set_active_index(0) 
+    }
     this.set_options_state()
     
   }
@@ -1220,7 +1223,7 @@ this.bet_appoint_ball_head= null */
     // console.error('BetViewDataClass.set_bet_c201_change',BetViewDataClass.is_finally)
     // 订单已经完成 不需要去设置 用户点击了 保留选项 或者投注的确定
     if(!BetViewDataClass.is_finally){
-      if(BetData.is_bet_single){
+      if(this.is_bet_single){
         // 单关 单注 简单 粗暴 其他的后面做
         if(status == 1){
           BetViewDataClass.set_bet_before_message({code:200,message:"bet_message.success"})
@@ -1235,7 +1238,7 @@ this.bet_appoint_ball_head= null */
           BetViewDataClass.orderNo_bet_obj_config({orderNo: obj.orderNo,status: obj.status})
         }
       } else {
-        BetViewDataClass.orderNo_bet_single_obj({orderNo: obj.orderNo, status: obj.status})
+        BetViewDataClass.set_orderNo_bet_single_obj_item({orderNo: obj.orderNo, status: obj.status})
       }
     }
   }

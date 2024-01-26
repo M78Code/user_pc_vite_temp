@@ -29,7 +29,7 @@
       <div v-if="!lodash_.isEmpty(score_list) && detail_info.ms > 0 && !((detail_info.csid == 1 || detail_info.csid == 2 ) && ([2,4].includes(detail_info.mbmty)))">
         <div
           class="tabs-wrap"
-          v-if="['1', '2','4' ,'5', '9','7', '10'].includes(String(detail_info.csid))"
+          v-if="['1', '2','4' ,'5','6', '9','7', '10'].includes(String(detail_info.csid))"
         >
           <span
             v-for="item in tabList"
@@ -48,7 +48,7 @@
         />
         <!-- 2篮球、5网、7,斯诺克， 9排球、10羽毛球 -->
         <basket-ball-stats
-          v-if="['2','4', '5', '7','9', '10'].includes(String(detail_info.csid))"
+          v-if="['2','4', '5','6', '7','9', '10'].includes(String(detail_info.csid))"
           :detail_info="detail_info"
           :score_list="score_list"
         />

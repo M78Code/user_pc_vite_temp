@@ -51,7 +51,8 @@ const set_show_leagues = () => {
 	}
 }
 async function get_league(){
-	let date = route.params.type == 1 ? localStorage.getItem('league_hours') : 12
+	// 搜索进来查询7天数据 详情进来查询 12小时
+	let date = route.params.type == 1 ? localStorage.getItem('league_hours') : route.params.type == 2 ? 12 : 168
   	const list = await get_ouzhou_leagues_data(date, route.params.sportId)
 	league_list.value=[]
 	list?.map(item => {
@@ -83,6 +84,7 @@ watch(() => route.params.type, async () => {
 
 const set_active_league = (item) => {
 	active_league.value = item.id
+	localStorage.setItem('league_name', item.nameText)
 	router.push(`/league/${route.params.sportId}/${item.id}/${route.params.type}`)
 }
 onUnmounted(()=>{

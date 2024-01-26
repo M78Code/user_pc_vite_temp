@@ -32,6 +32,7 @@ import lodash from "lodash";
 import { get_match_template_id } from '../../match-handle-data.js'
 import { update_match_parent_card_style } from "src/core/match-list-pc/match-card/module/utils.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import GlobalSwitchClass from 'src/core/global/global.js'
 import { league_title_card_template, ouzhou_league_title_template } from "../config/card-template-config.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "../../list-template/index.js";
 /**
@@ -110,11 +111,16 @@ const compute_style_template_by_matchinfo_template0_zuqiu = (
 	// 是否显示角球、罚牌、点球大战等玩法
 	let is_show_tab_play = match.has_other_play;
 	// 角球、罚牌、点球大战等玩法 是否折叠
+	// let is_fold_tab_play = lodash.get(
+	// 	MatchListCardData.get_card_obj_bymid(match.mid),
+	// 	"is_fold_tab_play",
+	// 	false
+	// );
 	let is_fold_tab_play = lodash.get(
 		MatchListCardData.get_card_obj_bymid(match.mid),
 		"is_fold_tab_play",
 		false
-	);
+	) && GlobalSwitchClass.show_additional_disk ? true : false;
 	let tab_play_total_height = 0;
 	if (is_show_tab_play && !is_fold_tab_play) {
 		// 如果有角球玩法并且未折叠  角球区域总高度 等于角球标题高度加角球盘口高度
