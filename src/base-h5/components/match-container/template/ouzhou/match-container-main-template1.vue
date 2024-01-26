@@ -174,8 +174,8 @@
                         result: is_results
                       }">
                         <!-- 网球csid: 5   兵乓球csid: 8-->
-                        <ImageCacheLoad :class="{ 'team_icon2': match.mhlu[1] && [5].includes(+match.csid)}" :csid="match.csid" :path="match.mhlu" type="home" ></ImageCacheLoad>
-                        <ImageCacheLoad v-if="match.mhlu.length > 1 && [5].includes(+match.csid)" :csid="match.csid" :path="match.mhlu[1]" type="home" ></ImageCacheLoad>
+                        <ImageCacheLoad :class="{ 'team_icon2': match.mhlu && match.mhlu.length > 1 && [5].includes(+match.csid)}" :csid="match.csid" :path="match.mhlu" type="home" ></ImageCacheLoad>
+                        <ImageCacheLoad v-if="match.mhlu && match.mhlu.length > 1 && [5].includes(+match.csid)" :csid="match.csid" :path="match.mhlu[1]" type="home" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
                           <div class="right-content">
                             <!-- 红、黄牌， 发球方绿点 -->
@@ -220,8 +220,8 @@
                       <!--客队图片和名称-->
                       <div class='team-title-container'>
                         <!-- 网球csid: 5   兵乓球csid: 8-->
-                        <ImageCacheLoad :class="{ 'team_icon2': match.mhlu[1] && [5].includes(+match.csid) }" :csid="match.csid" :path="match.malu" type="away" ></ImageCacheLoad>
-                        <ImageCacheLoad v-if="match.malu.length > 1 && [5].includes(+match.csid)" :csid="match.csid" :path="match.malu[1]" type="home" ></ImageCacheLoad>
+                        <ImageCacheLoad :class="{ 'team_icon2': match.malu && match.malu.length > 1 && [5].includes(+match.csid) }" :csid="match.csid" :path="match.malu" type="away" ></ImageCacheLoad>
+                        <ImageCacheLoad v-if="match.malu && match.malu.length > 1 && [5].includes(+match.csid)" :csid="match.csid" :path="match.malu[1]" type="home" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
                           <div class="right-content">
                             <!-- 红、黄牌， 发球方绿点 -->
