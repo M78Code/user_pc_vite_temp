@@ -92,7 +92,7 @@ import { ref, computed } from 'vue';
 import comSelect from "src/base-pc/components/match-results/select/select/index.vue"; 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { PageSourceData, GlobalSwitchClass,MenuData } from "src/output/index.js";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 // import UserCtr from 'src/core/user-config/user-ctr.js'
 // //import store from 'src/store-redux/index.js';

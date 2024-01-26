@@ -1,6 +1,6 @@
 import NODE_ENV_CONFIG from "./output/node-env/index.js"
 import {format_date  } from "./util.js"
-import {PROJECT_MAP_WITH_DESCRIPTION} from  "./config.js"
+import {PROJECT_ENTRY_CONFIG} from  "./config.js"
 
 
 let DEV_TARGET_ENV_CONFIG={} 
@@ -70,11 +70,11 @@ let IS_FOR_NEIBU_TEST =    false
  let  PROJECT_MAP = {}
 //客户端主要项目
  let MAIN_PROJECT_ARR=[]
-for(let key in PROJECT_MAP_WITH_DESCRIPTION){
-  let pm = PROJECT_MAP_WITH_DESCRIPTION[key]['value']
+for(let key in PROJECT_ENTRY_CONFIG){
+  let pm = PROJECT_ENTRY_CONFIG[key]['value']
   PROJECT_MAP[key] = pm
 
-  if(PROJECT_MAP_WITH_DESCRIPTION[key]['main_project']){
+  if(PROJECT_ENTRY_CONFIG[key]['main_project']){
     MAIN_PROJECT_ARR.push(pm)
   }
 }
@@ -82,11 +82,12 @@ for(let key in PROJECT_MAP_WITH_DESCRIPTION){
 
 
   const RESOLVE_PROJECT_FN = (PROJECT) => {
-    
+  //项目 描述和配置 键  
+  const PROJECT_ENTRY_CONFIG_KEY = PROJECT
   //布局名字
   const PROJECT_NAME = PROJECT_MAP[PROJECT];
   //布局元信息关键字
-  const LAYOUT_META =  PROJECT_MAP_WITH_DESCRIPTION[PROJECT]['layout_meta'];
+  const LAYOUT_META =  PROJECT_ENTRY_CONFIG[PROJECT]['layout_meta'];
   //所有资源项目级别目录
   const ALL_PROJECT = Object.values(PROJECT_MAP);
   //删除布局资源数组
@@ -102,6 +103,7 @@ for(let key in PROJECT_MAP_WITH_DESCRIPTION){
   //是否是客户端主要项目 的 h5 
   const IS_MAIN_PROJECT_H5 = IS_MAIN_PROJECT &&( PROJECT_NAME.includes('h5'))
   return {
+    PROJECT_ENTRY_CONFIG_KEY,
     PROJECT_NAME,
     LAYOUT_META,
     DEFAULT_VERSION_NAME,

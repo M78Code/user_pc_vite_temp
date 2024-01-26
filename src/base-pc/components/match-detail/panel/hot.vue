@@ -239,7 +239,7 @@ import {
   MITT_TYPES,
   useMittEmitterGenerator,
 } from "src/output/index.js";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, onUnmounted } from "vue";

@@ -6,17 +6,42 @@ export const placeholder_const = {
   script2: "script2_html_placeholder",
 };
 
-// 默认所有占位符  对象
-let all_placeholder_obj = {};
+ 
+ 
 
-for (let i in placeholder_const) {
-  all_placeholder_obj[i] = {
-    placeholder: placeholder_const[i],
-    content: "",
-  };
+
+/**
+ *  html 配置 标准化方法
+ * @param {*} config 
+ */
+
+export const  normalize_html_config  =(config={})=>{
+
+  let obj ={}
+
+  for (let i  in placeholder_const) {
+
+    if(config[i]){
+      obj[i] = config[i]
+    }else{
+      obj[i] = {
+        placeholder: placeholder_const[i]  ,
+        content: "",
+      };
+    }
+  
+  }
+
+  return  obj
+
+   
+
 }
-// 默认所有占位符  占位对象
-export const default_all_placeholder_obj = all_placeholder_obj;
+
+
+
+
+
 // 默认内容
 export const default_content = {
   meta1: `
