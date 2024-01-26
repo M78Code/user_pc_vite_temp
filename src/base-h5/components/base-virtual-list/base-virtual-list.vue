@@ -105,7 +105,7 @@ let isPositive = true
  * 当前视口最后一个数据在positionDataArr数组的索引位置
  */
 const end = computed(() => {
-  if (!allData.value || allData.value.length <= 0) return 10
+  if (!allData.value || allData.value.length <= 0) return 15
 
   // 将start.value作为遍历positionDataArr的开始位置
   let endPos = start.value
