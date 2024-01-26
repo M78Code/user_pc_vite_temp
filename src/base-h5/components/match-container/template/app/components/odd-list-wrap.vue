@@ -32,6 +32,7 @@
         :match="match"
         :odd_field="hp_item"
         :hl_hs="hl_hs"
+        :invoke_source="invoke_source"
       />
       <template v-if="!ol_list || !ol_list.length">
         <odd-column-item :placeholder="1" :odd_item_i="0"/>
@@ -60,6 +61,7 @@
                   :match="match"
                   :odd_field="hp_item_obj"
                   :hl_hs="get_hl_hs(hp_item_obj)"
+                  :invoke_source="invoke_source"
                 />
               </div>
             </div>
@@ -79,6 +81,7 @@
                   :match="match"
                   :odd_field="hp_item_obj"
                   :hl_hs="get_hl_hs(hp_item_obj)"
+                  :invoke_source="invoke_source"
                 />
               </div>
             </div>
@@ -104,6 +107,7 @@
                     :odd_field="compose_data"
                     :hl_hs="get_hl_hs(compose_data)"
                     :current_tab_item="current_tab_item"
+                    :invoke_source="invoke_source"
                   />
                 </div>
               </div>
@@ -156,6 +160,7 @@
                 :odd_field="hp_item"
                 :hl_hs="get_hl_hs(hp_item)"
                 :current_tab_item="current_tab_item"
+                :invoke_source="invoke_source"
               />
             </div>
           </div>
@@ -182,6 +187,7 @@
           :odd_field="five_minutes_all_list"
           :hl_hs="get_hl_hs(five_minutes_all_list)"
           :current_tab_item="current_tab_item"
+          :invoke_source="invoke_source"
         />
       </div>
       <!--  5分钟 图标  -->

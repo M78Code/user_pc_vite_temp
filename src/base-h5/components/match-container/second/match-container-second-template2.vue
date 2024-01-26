@@ -254,15 +254,25 @@ export default defineComponent({
       }
 
       .team-title {
-        white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsis;
+        display: flex;
+        font-size: 0.12rem;
+        flex-shrink: 0;
+        flex: 1;
+        display: -webkit-box;
         color: var(--q-gb-t-c-18);
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        word-break: break-all;
       }
 
       .way-score {
-        position: absolute;
-        right: 8px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        margin: 0 8px;
       }
     }
   }
@@ -281,9 +291,15 @@ export default defineComponent({
     font-size: 0.1rem;
     max-height: 0;
     margin-top: 5px;
+    
     &.expanded {
       height: auto;
       max-height: none;
+    }
+    .content{
+      .team-title-container{
+        width: calc(100% - 1.84rem);
+      }
     }
   }
 }

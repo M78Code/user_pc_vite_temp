@@ -87,6 +87,7 @@ const props = defineProps({
   odd_item_i:Number,
   match:Object,
   odd_field:Object,
+  invoke_source:String,
   hl_hs:Number,  // 0.开盘，1封盘，2关盘 ，3 锁盘    和 match.mhs   是一样的意思
   placeholder:Number,// 是否为占位
   n_s:Number,    // 1新手版 2标准版
@@ -482,6 +483,7 @@ const is_close = (odd_s) => {
 const item_click3 = lodash.debounce(() => {
   if (!odd_item.value.ov || odd_item.value.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
   if(virtual_odds_state.value == 1) return; //VR倒计时10s时封盘不能点击
+  
   let flag = get_odds_active(props.match.mhs, props.hl_hs, odd_item.value.os);
   let bet_type = 'common_bet'
   if (MenuData.is_esports()) {
@@ -491,6 +493,8 @@ const item_click3 = lodash.debounce(() => {
   } else if (MenuData.is_vr()) {
     bet_type = 'vr_bet'
   }
+  const secondary_paly = props?.invoke_source === 'attached'
+  console.log(secondary_paly)
   if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
     if (MenuData.get_menu_type() == 900 && $route.name == 'virtual_sports') { //虚拟体育走这里逻辑
       if (props.match.match_status) return
@@ -508,11 +512,12 @@ const item_click3 = lodash.debounce(() => {
         // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
         // 根据赛事纬度判断当前赛事属于 那种投注类型
         bet_type,
+        // 是否次要玩法
+        secondary_paly,
         // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
         device_type: 1,  
         // 数据仓库类型
         match_data_type: "h5_list",
-
     }
       set_bet_obj_config(params,other)
     }
