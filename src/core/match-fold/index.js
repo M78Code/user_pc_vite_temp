@@ -196,7 +196,8 @@ class MatchFold {
    */
   get_match_fold_key (match) {
     const { mid, custom_tid, warehouse_type = '', start_flag = '' } = match
-    return warehouse_type ? `${warehouse_type}_${custom_tid}_${mid}_${start_flag}` : `${custom_tid}_${mid}_${start_flag}`
+    return warehouse_type ? `${warehouse_type}_${custom_tid}_${mid}` : `${custom_tid}_${mid}`
+    // return warehouse_type ? `${warehouse_type}_${custom_tid}_${mid}_${start_flag}` : `${custom_tid}_${mid}_${start_flag}`
   } 
   /**
    * @description 设置赛事折叠
