@@ -157,7 +157,8 @@ onMounted(async () => {
     if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
       const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
       if (mhs == 2 || mmp == '999' || !MatchMeta.is_valid_match(ms)) {
-        handler_remove()
+        const index = MatchMeta.match_mids.findIndex(t => t === mid)
+        index > -1 && handler_remove()
       }
     } else {
       handler_func({ cmd, data })
