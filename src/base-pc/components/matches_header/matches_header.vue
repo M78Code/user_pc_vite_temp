@@ -10,7 +10,7 @@
 					<template v-if="tab_list.length">
 						<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item,'change')"
 							:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
-							{{ i18n_t(item.label) }}
+							{{ item.not_i18n_t?item.label:i18n_t(item.label) }}
 							<!-- 点击联赛后出现的时间筛选 -->
 							<div 
 								v-if="MenuData.is_leagues() && item.value === 4002"
@@ -66,7 +66,6 @@ const is_left_sports = ref(false)
 const matches_header_title = ref("ouzhou.match.matches");
 
 let mitt_list = null
-
 const ref_data = reactive({
 	ouzhou_filter_config :{
 		// 首页   i18n_t('ouzhou.match.featured')    i18n_t('ouzhou.match.top_events')
@@ -86,7 +85,8 @@ const ref_data = reactive({
 			{ label: ('ouzhou.match.inplay'), value: 3001 },
 			{ label: ('ouzhou.match.today'), value: 3002 },
 			{ label: ('ouzhou.match.early'), value: 3003 },
-			{ label: ('menu.match_winner'), value: 3004 }
+			{ label: ('menu.match_winner'), value: 3004 },
+			{ label: (BaseData.menus_i18n_map || {})[2000] || "" , value: 2000,not_i18n_t:true }
 		],
 		// i18n_t('ouzhou.match.inplay')   i18n_t('ouzhou.match.all_matches')
 		inplay:{
@@ -304,6 +304,10 @@ const checked_current_tab = (payload,type) => {
 		if( payload.value == 3003){
 			obj.current_mi = 1013
 		}
+		if( payload.value == 2000){
+			obj.current_mi = 2100
+			obj.current_ball_type = 100;
+		}
 		if( payload.value == 3004){
 			obj.current_mi = 401
 			root = 400
@@ -312,7 +316,7 @@ const checked_current_tab = (payload,type) => {
 		}
 
 		if(type){
-			MenuData.set_current_ball_type(1)
+			MenuData.set_current_ball_type(obj.current_ball_type || 1)
 			MenuData.set_menu_current_mi(obj.current_mi)
 		}else{
 			MenuData.set_current_ball_type(MenuData.current_ball_type || 1)

@@ -168,7 +168,7 @@ const set_ref_base_menu = (list=[] ) => {
  
 const choose_filter_tab = (item) => {
   // 获取最新的 数据
-  const current_ball_type=BaseData.compute_sport_id(item.mif)
+  const current_ball_type=BaseData.compute_sport_id(item.mif||item.mi)
   if(MenuData.is_kemp()){
     handle_click_menu_mi_400(item)
     MenuData.set_current_ball_type(current_ball_type||(item.mif-400))
