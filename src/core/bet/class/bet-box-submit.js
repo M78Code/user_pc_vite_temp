@@ -480,12 +480,12 @@ const get_query_bet_amount_pre = () => {
     // 获取额度接口合并
     api_betting.query_pre_bet_amount(params).then((res = {}) => {
         if (res.code == 200) {
-           
             BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
             // 获取盘口值 
             const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo[0]')
+
             // 获取预约投注项
             BetData.set_bet_appoint_obj(latestMarketInfo)
 
@@ -573,6 +573,7 @@ const pre_bet_comparison = () => {
 
 // 提交投注信息 
 const submit_handle = () => {
+    // debugger
     
     // 预约需要更新赔率
     if(BetData.is_bet_pre){
@@ -893,6 +894,20 @@ const set_error_message_config = (res ={},type,order_state) => {
                         message: "bet_message.error"
                     }
                     break
+                case 7:
+                    // 预约成功
+                    obj = {
+                        code: '200',
+                        message: "bet.bet_booking"
+                    }
+                    break;
+                case 8: 
+                    // 预约失败
+                    obj = {
+                        code: '500',
+                        message: "bet.bet_book_failed"
+                    }
+                    break;
             }
            
         }else{

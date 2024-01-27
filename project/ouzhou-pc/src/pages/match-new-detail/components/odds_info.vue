@@ -14,7 +14,7 @@
       <q-expansion-item
         v-if="item.hl[0].hs != 2"
         v-model="item.expanded"
-        :expand-icon-toggle="false"
+        :expand-icon-toggle="true"
         :hide-expand-icon="true"
         expand-separator
         :default-opened="true"
@@ -28,15 +28,15 @@
               ({{ item.hps.split("|")[1] }})
             </span>
             <!-- 一键置顶 -->
-            <img
+            <!-- <img
               :src="parseInt(item.hton) > 0 ? set_top__active_png : set_top_png"
               alt=""
               @click.stop="set_top(item)"
               srcset=""
               class="set-icon"
-            />
+            /> -->
             <!-- 折叠 -->
-            <img
+            <!-- <img
               :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
               alt=""
               srcset=""
@@ -44,7 +44,7 @@
               :style="{
                 transform: item.expanded ? 'rotate(0deg)' : 'rotate(180deg)',
               }"
-            />
+            /> -->
           </div>
         </template>
         <q-card v-if="item.hl[0].hs != 2">
@@ -273,6 +273,7 @@ const sun_ol = (ol, item) => {
 };
 // 一键置顶
 const set_top = (item) => {
+  return
   useMittEmit(MITT_TYPES.EMIT_SET_PLAT_TOP, item);
 };
 // 获取图片

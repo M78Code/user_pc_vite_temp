@@ -2986,17 +2986,6 @@
       "morning_session":"赛前",
       "list_today_play_title":"滚球",
       "match_winner":"冠军"
-    },
-    "en":{ 
-      "EU": "DEC",
-      "GB": "Fractional",
-      "HK": "HK",
-      "ID": "Indonesian",
-      "MY": "Malaysian",
-      "US": "American",
-      "morning_session":"Prematch",  
-      "list_today_play_title":"IN-PLAY",
-      "match_winner":"Outrights"
     }
   },
   "results": {

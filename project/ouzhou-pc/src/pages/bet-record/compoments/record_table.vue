@@ -1,8 +1,7 @@
 <template>
   <div class="record-table">
     <div>
-
-      <q-table :rows="tableData" style="max-height:calc(100vh - 270px)" :rows-per-page-options="[0]" :columns="columns"
+      <q-table :rows="tableData" style="max-height:calc(100vh - 270px)" :rows-per-page-options="[0]" :columns="tableColumns"
                row-key="orderNo" separator="cell" hide-pagination :class="current_tab === 'settled' ? 'settled' : 'unsettled'"
           :table-header-style="{
           backgroundColor: '#F1F1F1',
@@ -281,14 +280,12 @@ const props = defineProps({
   }
 })
 
-console.error('sss',props)
-
 const match_type = {
   1: i18n_t("bet.morning_session"),
   2: i18n_t("list.list_today_play_title"),
   3: i18n_t("menu.match_winner")
 }
-const { columns, tableData, loading, handle_fetch_order_list,records } = useGetOrderList()
+let { columns, tableData, loading, handle_fetch_order_list,records } = useGetOrderList()
 const labelClick = (row) => {
   console.log(row)
 }
@@ -296,24 +293,27 @@ watch(() => props.timeType, (newVal) => {
   pageCurrent.value = '1'
 })
 // 监听tab 切换表格头数据
+const tableColumns = ref([])
 watch(() => props.current_tab, (newVal) => {  
   tableData.value = []
   if (newVal == 'settled') {
-    columns.value[5] = {
+    columns[5] = {
       name: 'return',
-      label: i18n_t("common.donate_win"),
+      label: computed(()=>{ return i18n_t("common.donate_win") } ),
       align: 'center',
       field: 'return'
     }
+    tableColumns.value = columns
     handle_fetch_order_list({ orderStatus: 1, timeType: 1 })
     console.log(tableData)
   } else {
-    columns.value[5] = {
+    columns[5] = {
       name: 'highestWin',
-      label: i18n_t("common.maxn_amount_val"),
+      label: computed(()=>{ return i18n_t("common.maxn_amount_val") }),
       align: 'center',
       field: 'highestWin'
     }
+    tableColumns.value = columns
     handle_fetch_order_list({ orderStatus: 0 })
     console.log(tableData)
   }
@@ -460,6 +460,7 @@ const item_status =(type) => {
  */
 const marketType = (type, langCode='zh') => {
   var res = "";
+    langCode = UserCtr.lang;
     if(type && langCode) {
     switch (type) {
       case "EU":
@@ -485,6 +486,7 @@ const marketType = (type, langCode='zh') => {
         break;
     }
   }
+  // console.log("`odds.${langCode}.EU`", `odds.${langCode}.EU`)
   return res;
 }
 /**

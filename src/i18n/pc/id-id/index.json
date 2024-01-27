@@ -2719,7 +2719,18 @@
 		"HK": "Hong Kong",
 		"ID": "Indonesia",
 		"MY": "Malaysia",
-		"US": "Amerika"
+		"US": "Amerika",
+		"ad": {
+			"EU": "Desimal",
+			"GB": "Pecahan",
+			"HK": "Hong Kong",
+			"ID": "Indonesia",
+			"MY": "Malaysia",
+			"US": "Amerika",
+			"morning_session":"Sebelum kompetisi",  
+			"list_today_play_title":"Bola berguling",
+			"match_winner":"juara"
+		}
 	},
 	"results": {
 		"": "Laga",
