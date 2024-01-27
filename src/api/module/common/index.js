@@ -243,7 +243,12 @@ http.post(`${prefix}${url}`,params,config);
  * @returns {API.Result}
  */
 export const getArticle = (params, config, url="/v1/art/getArticle") => http.get(`${prefix}${url}`,params, config)
-// 获取赛事文章猜你喜欢接口(Jeffrey)
+/** 获取赛事文章猜你喜欢接口(Jeffrey) 
+ * @param {Object} params
+ * @param {Number} params.id 文章id
+ * @param {Number} params.matchId 赛事id;mid
+ * @returns {API.Result}
+ */
 export const getFavoriteArticle = (params, config, url="/v1/art/getFavoriteArticle") => http.get(`${prefix}${url}`,params, config)
 // 更新赛事文章浏览记录(Jeffrey)
 export const  addArticleCount = (params, config, url="/v1/art/addArticleCount") => http.post(`${prefix}${url}`,params, config)
