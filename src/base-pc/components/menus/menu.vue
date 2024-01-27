@@ -46,7 +46,7 @@
           <sport-icon :sport_id="BaseData.compute_sport_id(400)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
-        <li class="f-s-c" @click="vrClick()"  :class="{ 'menu_checked': MenuData.is_vr()}">
+        <li class="f-s-c" @click="vrClick()" v-if="IS_FOR_NEIBU_TEST" :class="{ 'menu_checked': MenuData.is_vr()}">
           <sport-icon :sport_id="BaseData.compute_sport_id(300)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[300] || "" }}
         </li>
