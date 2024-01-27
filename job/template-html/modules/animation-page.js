@@ -68,7 +68,8 @@ let config =  {
         
      </script>
         `
-     }
+     },
+   
 
 
 

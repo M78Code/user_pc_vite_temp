@@ -5,10 +5,7 @@ import {placeholder_const , default_content,normalize_html_config} from  "../com
 
  let config ={
      
-    meta1:{
-        placeholder: placeholder_const.meta1,
-        content:    default_content.meta1
-     },
+ 
      style1:{
         placeholder: placeholder_const.style1,
         content:`      .theme-1-root-loading #loading-root-main {
@@ -33,9 +30,8 @@ import {placeholder_const , default_content,normalize_html_config} from  "../com
         placeholder: placeholder_const.script1,
         // 动态计算rem
         content: '<script src="%VITE_APP_LOCAL_COMMON_FILE_PREFIX%/other-assets/lib/js/rem_375.js"></script>'
-     }
-
-
+      },
+   
 
 
 

@@ -31,8 +31,14 @@ const BUILD_VERSION_COMMON = RESOLVE_BUILD_VERSION_COMMON_FN({PROJECT,ENVSTR,BUI
   };
   // console.log(config);
 let str = `export default  ${JSON.stringify(config)} `;
+ 
+
 // 输出目录
 let write_folder = "./job/output/version";
  
 let full_path = `${write_folder}/build-version.js`;
 write_file(full_path, str);
+
+
+
+ 

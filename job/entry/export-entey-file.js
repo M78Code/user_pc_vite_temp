@@ -7,6 +7,7 @@ import * as fs from "node:fs";
 import path from "node:path";
 import colors from "colors";
 import {PROJECT_ENTRY_CONFIG} from "../util-and-config/config.js"
+import * as ALL_PROJECT_HTML_CONFIG from "../template-html/index.js"
 import {
 
   write_file,
@@ -111,7 +112,7 @@ const export_api_index_file = () => {
 const export_html_index_file = () => {
 
  
-  let project_html_config = html_config
+  let project_html_config =   ALL_PROJECT_HTML_CONFIG[html_config]
   let all_placeholder = [];
 
   all_placeholder = Array.from(new Set(all_placeholder));
