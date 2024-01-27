@@ -97,6 +97,7 @@ import { reactive } from "vue";
   const set_show_appoint = () =>{
     ref_data.show_appoint = true
     ref_data.odds_value_edit = props.items.oddFinally
+    BetData.set_is_bet_merge("merge")
   }
 
   const btn_reduce_click = (obj)=>{
