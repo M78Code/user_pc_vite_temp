@@ -20,7 +20,9 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { debounce } from "lodash";
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
 import {MatchDataWarehouse_H5_Detail_Common, MatchDataWarehouse_PC_Detail_Common} from "src/output/index.js"
-const MatchDataWarehouseInstance = window.BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_Detail_Common:MatchDataWarehouse_H5_Detail_Common;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+
+const MatchDataWarehouseInstance = BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_Detail_Common:MatchDataWarehouse_H5_Detail_Common;
 const { height, width, css} = dom
 
 export default {
@@ -637,7 +639,7 @@ export default {
       // 获取缓存数据，将参数params传进去
       this.getdetail_cache_session(params);
       axios_api_loop({
-        axios_api: window.BUILDIN_CONFIG.IS_PC ? api_common.get_matchDetail_getVirtualMatchOddsInfo_pc : api_common.get_matchDetail_getVirtualMatchOddsInfo,
+        axios_api: BUILDIN_CONFIG.IS_PC ? api_common.get_matchDetail_getVirtualMatchOddsInfo_pc : api_common.get_matchDetail_getVirtualMatchOddsInfo,
         params,
         error_codes: ["0401038"], //此状态码会重新循环执行一次
         fun_then:(res)=>{

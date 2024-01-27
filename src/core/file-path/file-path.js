@@ -69,7 +69,7 @@ const get_server_file_path = (path, csid = 0) => {
     }
   }
   //新配置是 数组
-  let DOMAIN_RESULT_ = lodash.get(window.BUILDIN_CONFIG,'DOMAIN_RESULT') 
+  let DOMAIN_RESULT_ = lodash.get(BUILDIN_CONFIG,'DOMAIN_RESULT') 
   const domain_img_str = DOMAIN_RESULT_.img_domains[0];
   if (!lodash.isEmpty(domain_img_str)) {
     return `${domain_img_str}/${path}`;

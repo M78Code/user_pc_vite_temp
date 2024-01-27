@@ -1,6 +1,7 @@
 import { UserCtr ,MatchDetailCalss,MITT_TYPES,useMittOn} from "src/output/index";
 import { api_details, api_analysis } from "src/api/index";
 import { useMittEmit } from "src/output";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 
 // components
 import SliderX from "src/base-pc/components/match-detail/match_info/slider_x.vue"
@@ -138,7 +139,7 @@ const change_event_video = function(item) {
 
   // mp4 拼接格式
   // http://lsprelivepc.sportxxx13ky.com/videoReplay.html?src=http://test-playback.d965r6f.com/video/8045e066c41cdb269e126a892c648ffe.mp4
-  let live_domains = lodash.get(window.BUILDIN_CONFIG.DOMAIN_RESULT,"live_domains[0]") || lodash.get(State.vx_get_user,'oss.live_pc');
+  let live_domains = lodash.get(BUILDIN_CONFIG.DOMAIN_RESULT,"live_domains[0]") || lodash.get(State.vx_get_user,'oss.live_pc');
   // 显示返回按钮
   const back_but = route.params.video_size != 1 ? 1 : 0
   // 隐藏全屏按钮

@@ -3,6 +3,8 @@ import { api_common } from "src/api/index.js";
 import video from "src/core/video/video.js"; // 视频相关公共方法
 import { MatchDetailCalss, useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX ,into_video_anima_event } from "src/output/index.js"
 import uid from "src/core/uuid/index.js"
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+
 export function useIconInfo(get_detail_data, match_id) {
 
 const timer1_ = ref(null)
@@ -82,7 +84,7 @@ onUnmounted(clear_timer1_)
         // 判断用户是否登录
         if (res && res.code == 200 && res.data.isLogin) {
           let referUrl = lodash.get(
-            window.BUILDIN_CONFIG,
+            BUILDIN_CONFIG,
             "DOMAIN_RESULT.live_domains[0]"
           );
           let media_src;
