@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="appoint appoint_cursor" v-if="IS_FOR_NEIBU_TEST && !ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
+                <div class="appoint appoint_cursor" v-if="!ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
                     +{{ `${i18n_t('bet.bet_book2')}` }}
                 </div>
             </div>
@@ -65,7 +65,7 @@
            
         </div>
 
-        <div v-if="IS_FOR_NEIBU_TEST && ref_data.show_appoint">
+        <div v-if="ref_data.show_appoint">
             <bet-pro-appoint :item="items" @cancel_operate="cancel_operate" />
         </div>
         
@@ -110,11 +110,12 @@ const set_show_appoint = () =>{
   }
   // 显示预约投注内容
   ref_data.show_appoint = !ref_data.show_appoint
- 
+  BetData.set_is_bet_pre(true)
 }
 
 const cancel_operate = () =>{
   ref_data.show_appoint = !ref_data.show_appoint
+  BetData.set_is_bet_pre(false)
 }
 
 </script>

@@ -1210,6 +1210,8 @@ this.bet_appoint_ball_head= null */
 
       this[single_name] = array_list
 
+      this.set_bet_oid_list()
+
       this.set_options_state()
 
     }
