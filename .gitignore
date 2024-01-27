@@ -65,3 +65,6 @@ git-console.md
 ./index.html
 index.html
 src/api/index.js
+
+/git-console-*.json
+git-console-*.md
