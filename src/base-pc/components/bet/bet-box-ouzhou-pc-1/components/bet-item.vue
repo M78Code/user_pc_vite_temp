@@ -5,7 +5,14 @@
         <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 ">
-                    <span class="text-flow-none">{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></span> 
+                     <!-- vr 单独处理 -->
+                     <div class="text-flow-none" v-if="items.bet_type== 'vr_bet' && ['1002','1011','1009','1010'].includes(items.sportId) && [20033,20034,20035,20036,20037,20038].includes(items.playId*1)">
+                        <div v-for="page in items.handicap" :key="page" class="f-s-c">
+                            <span class="virtual-count" :class="`virtual-num-${page.hv} csid-${items.sportId}`" ></span> {{page.text}} 
+                        </div>
+                    </div>
+                    <div class="text-flow-none" v-else>{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></div> 
+
                 </div>
                 <div class="w-100 handicap my-4">
                     <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
