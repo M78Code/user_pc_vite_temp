@@ -5,7 +5,7 @@
     <!-- 当热门赛事超过四条 展示右侧滚动按钮 -->
     <template2 :is_show_btn="matches_featured_list.length >= 4">
       <div @click="toJump(item)" class="featured-matched-card" v-for="(item, index) in matches_featured_list"
-        :key="item.tid" :class="{ 'margin-box': index != matches_featured_list.length - 1 }">
+        :key="item.tid" :class="{ 'margin-box': index != 0 }">
         <div class="right-top-img" :style="compute_css_obj({ key: 'pc-home-icon-sport-top', position: item.csid })"></div>
         <div class="matches_description">
           <div class="matches_type">{{ get_match_item(item.mid)?.tn }}</div>
@@ -282,7 +282,7 @@ get_featurd_list()
         left: 0;
         height: 0.5px;
         background: #000000;
-        width: 300px;
+        width: 288px;
         opacity: 0.05;
       }
 
@@ -338,7 +338,7 @@ get_featurd_list()
   }
 
   .margin-box {
-    margin-right: 10px;
+    margin-left: 10px;
   }
 }
 </style>
