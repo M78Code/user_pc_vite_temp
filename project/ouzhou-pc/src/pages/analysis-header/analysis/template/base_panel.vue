@@ -676,7 +676,7 @@ import mSelect from "./m_select.vue";
 export default {
   data() {
     return {
-      vs_info_data: [], //杯赛数据
+      // vs_info_data: [], //杯赛数据
       //默认：空，  flag= 0  排名榜全量展示
       flag: false,
       unfold: false,
@@ -710,7 +710,6 @@ export default {
      * @description: 历史交战、近期战绩下拉框
      */
     selectedFn(data) {
-      console.error('37288373',data)
       this.$emit("selectedFn", data);
     },
     /**
@@ -728,9 +727,9 @@ export default {
       this.$emit("get_all_vsInfo", this.unfold);
     },
   },
-  destroyed() {
-    this.vs_info_data = null;
-  },
+  // destroyed() {
+  //   this.vs_info_data = null;
+  // },
 };
 </script>
 
