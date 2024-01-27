@@ -247,9 +247,9 @@ class MenuData {
     let e_sports_index = (basket_index_of > 0 ? basket_index_of : foot_index_of > 0 ? foot_index_of : 2 ) + 1
 
     // 线上屏蔽
-    // if(IS_FOR_NEIBU_TEST){
+    if(IS_FOR_NEIBU_TEST){
       left_list.splice(e_sports_index , 0 ,esports_obj)
-    // }
+    }
 
     this.kemp_list = kemp_list
     this.hot_list = hot_list
