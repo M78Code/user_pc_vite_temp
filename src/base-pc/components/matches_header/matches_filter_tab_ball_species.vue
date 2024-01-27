@@ -130,15 +130,18 @@ onMounted(() => {
   un_mounted()
 })
 
-watch(() => mi_100_arr.value , () => {
-  nextTick(() => {
+const set_show_btn = () => {
+  setTimeout(() => {
     if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
       show_right_btn.value = true;
     } else {
       show_right_btn.value = false;
     }
-  })
-}, { immediate: true })
+  }, 1000);
+}
+set_show_btn()
+
+const off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, set_show_btn).off
 
 // 菜单数量修改
 const set_ref_base_menu = (list=[] ) => {
@@ -221,6 +224,7 @@ const filter_tab_scroll = payload => {
 onBeforeUnmount(() => {
   clearInterval(interval_id);
   interval_id = null;
+	off()
 })
 </script>
 
