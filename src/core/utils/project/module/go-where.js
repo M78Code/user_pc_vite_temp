@@ -102,7 +102,7 @@ const go_back_from_activity = ({back_to, route_name, route, router}) => {
   // 如果是 场馆进来
   if(act){
     if (!location.search.includes('keep_url')) {
-      history.replaceState(null,'',`{location.pathname}{location.hash}`)
+      history.replaceState(window.history.state,'',`{location.pathname}{location.hash}`)
     }
     // 设置 replace 属性（默认值: false）的话，当点击时，会调用 router.replace() 而不是 router.push()，于是导航后不会留下 history 记录,即使点击返回按钮也不会回到这个页面
     // 便于点击返回 到商户的 原来的 banner 页面
