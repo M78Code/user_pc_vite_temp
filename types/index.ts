@@ -74,6 +74,11 @@ declare namespace TYPES {
 
   /** 详情赛事分析资讯 文章 */ interface Article {
     /** 文章/资讯id */ id:number,
+    /** 文章标题 */ articleTittle: string,
+    /** 文章类别 */ categoryName: string,
+    /** 阅读数量 */ readCounts: number,
+    /** 更新时间 */ updateTime: string,
+    /** 文章内容 */ articleContent: string,
   }
 
   /**  */ interface S {
