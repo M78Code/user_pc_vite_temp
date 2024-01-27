@@ -60,6 +60,14 @@
             </div> 
           </template> 
         </collapse> 
+        <!-- 排序 -->
+        <div class="setting_item" v-for="(setting,idx) in sortData" :key="setting.title">
+          <span>{{ i18n_t(setting.title) }}</span>
+          <div class="switch"> 
+            <span class="bg" :style="{left: UserCtr.sort_type == setting.options[0].value ? 0 : '50px'}"></span>
+            <span v-for="s in setting.options" :key="s" @click="handel_sort(s,idx)" :class="{active: UserCtr.sort_type == s.value}">{{ i18n_t(`${s.title}`) }}</span>
+          </div>  
+        </div> 
       </section> 
     </q-scroll-area> 
   </div>
@@ -85,6 +93,7 @@ const showMount = ref(mount)
 const l_visible = ref(false)
 const s_visible = ref(true)
 const show = ref()
+const sort = ref(1)
 const marqueeRef = ref(null)
 // 用户信息
 const languages = [{
@@ -141,12 +150,36 @@ const settingData = ref([{
 //   params: [i18n_t("ouzhou.setting_menu.euro"), i18n_t("ouzhou.setting_menu.asia")]
 // }
 ])
+
+const sortData = ref([{
+  title: "ouzhou.setting_menu.sort",
+  index: sort.value, //用户已选中值
+  options:[{
+    title: "ouzhou.setting_menu.hot",
+    value: 1
+  }, {
+    title: "ouzhou.setting_menu.time",
+    value: 2
+  }],
+}])
+
 function handel_change(s,idx){
   // 冠军不能切换 默认为欧赔
   if(MenuData.is_kemp()){
     return
   }
   UserCtr.set_cur_odds(s) //HK/EU
+}
+
+const handel_sort = (s, idx) => {
+  sort.value = s.value
+  //电竞 不需要热门排序 和 盘口
+  if(s.value === 1 && MenuData.is_esports()) return;
+  UserCtr.set_sort_type(s.value);
+  const param = {
+    sort: s.value
+  }
+  api_account.get_remember_select(param)
 }
 
 
@@ -330,51 +363,50 @@ const goto_announcement = () => {
             height: 9px;
           }
         }
-        .setting_item{
-          height: 50px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0 30px 0 30px;
-          font-size: 14px;
-          font-weight: 400;
-          background: #F5F5F5;
-          > span {
-            height: 26px;
-          }
-          .switch{
-            position: relative;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            background: #E2E2E2;
-            border-radius: 20px;
-            justify-content: space-between;
-            > span {
-              width: 50px;
-              height: 100%;
-              font-size: 12px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              transition: all 0.25s;
-              color: #8A8986;
-              &.active{
-                color: #000;
-                background: #fff;
-                border-radius: 20px;
-              }
-            }
-            .bg{
-              position: absolute;
-              top: 0;
-              border-radius: 20px;
-              border: 1px solid #FF7000;
-              transition: all 0.25s;
-            }
-          }
+    }
+  }
+  .setting_item{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px 0 30px;
+    font-size: 14px;
+    font-weight: 400;
+    background: #F5F5F5;
+    > span {
+      height: 26px;
+    }
+    .switch{
+      position: relative;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      background: #E2E2E2;
+      border-radius: 20px;
+      justify-content: space-between;
+      > span {
+        width: 50px;
+        height: 100%;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s;
+        color: #8A8986;
+        &.active{
+          color: #000;
+          background: #fff;
+          border-radius: 20px;
         }
-      
+      }
+      .bg{
+        position: absolute;
+        top: 0;
+        border-radius: 20px;
+        border: 1px solid #FF7000;
+        transition: all 0.25s;
+      }
     }
   }
 }
