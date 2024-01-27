@@ -12,7 +12,7 @@ import "quasar/src/css/index.sass";
 
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 import { main_js_common_fun } from "src/core/main-js-common-fun/index.js";
-window.BUILDIN_CONFIG = BUILDIN_CONFIG;
+
 
 
 // http://doc-web.sportxxxkd1.com/#/main/detail?type=doc&id=65892329ade8da4fba3089c5

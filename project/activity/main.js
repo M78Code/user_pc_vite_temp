@@ -12,7 +12,7 @@ import { i18n, loadLanguageAsync, i18n_t, i18n_tc } from "./src/boot/i18n.js";
 import global from './src/boot/globals';
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 import { main_js_common_fun } from "src/core/main-js-common-fun/index.js";
-window.BUILDIN_CONFIG = BUILDIN_CONFIG;
+
 
 // 兼容旧项目里面的 lodash
 window._ = _;

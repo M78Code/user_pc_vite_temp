@@ -12,7 +12,7 @@ import "quasar/src/css/index.sass";
 
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 import { main_js_common_fun } from "src/core/main-js-common-fun/index.js";
-window.BUILDIN_CONFIG = BUILDIN_CONFIG;
+
 
 // Assumes your root component is App.vue
 // and placed in same folder as main.js

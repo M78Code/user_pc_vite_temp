@@ -5,7 +5,7 @@ import "./src/css/app.scss"
 import router from 'project/animation/src/router/index.js'
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 console.log("BUILDIN_CONFIG-----------pc---", BUILDIN_CONFIG);
-window.BUILDIN_CONFIG = BUILDIN_CONFIG;
+
 import _ from 'lodash';
 // import { HackError } from './hack-error';
 // import { i18n, loadLanguageAsync } from "./src/boot/i18n.js";
