@@ -2588,7 +2588,18 @@
     "HK": "香港盤",
     "ID": "印尼盤",
     "MY": "馬來盤",
-    "US": "美式盤"
+    "US": "美式盤",
+    "tw":{
+        "EU": "歐洲盤",
+        "GB": "英式盤",
+        "HK": "香港盤",
+        "ID": "印尼盤",
+        "MY": "馬來盤",
+        "US": "美式盤",
+        "morning_session":"賽前",
+        "list_today_play_title":"滾球",
+        "match_winner":"冠軍"
+    }
   },
   "results": {
     "all_score": "全場比分",

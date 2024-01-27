@@ -21,11 +21,11 @@
 
     <div class="bet-footer">
 
-        <div class="bet-state" v-if="!BetData.is_bet_single && set_special_state(BetData.bet_data_class_version)">
+        <!-- <div class="bet-state" v-if="!BetData.is_bet_single && set_special_state(BetData.bet_data_class_version)">
             <div class="w-100 f-c-c bet-title bet-error">
                 {{i18n_t("error_msg_info.0400477.client_msg1")}}
             </div>
-        </div>
+        </div> -->
         <div class="bet-state" v-if="!BetData.is_bet_single && BetData.bet_s_list.length < BetData.mix_min_count">
             <div class="w-100 f-c-c bet-title bet-error">
                 {{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}

@@ -460,6 +460,7 @@ const item_status =(type) => {
  */
 const marketType = (type, langCode='zh') => {
   var res = "";
+    langCode = UserCtr.lang;
     if(type && langCode) {
     switch (type) {
       case "EU":
@@ -485,6 +486,7 @@ const marketType = (type, langCode='zh') => {
         break;
     }
   }
+  // console.log("`odds.${langCode}.EU`", `odds.${langCode}.EU`)
   return res;
 }
 /**
@@ -496,22 +498,22 @@ const matchType = (type, langCode=UserCtr.lang) => {
   // if(type && langCode) {
   //   res = match_type[type]
   // }
-
+  // console.log('type===langCode===', type,  langCode)
+  // console.log('type===langCode=ccc==', `odds.${langCode}.morning_session`)
   if(type && langCode) {
         switch (parseInt(type)) {
           case 1:
-            res = i18n_t(`odds.${langCode}.morning_session`); //"赛前";
+            res = i18n_t(`odds.${UserCtr.lang}.morning_session`); //"赛前";
             break;
           case 2:
-            res = i18n_t(`odds.${langCode}.list_today_play_title`);//"滚球";
+            res = i18n_t(`odds.${UserCtr.lang}.list_today_play_title`);//"滚球";
             break;
           case 3:
-            res =i18n_t(`odds.${langCode}.match_winner`); //"冠军";
+            res =i18n_t(`odds.${UserCtr.lang}.match_winner`); //"冠军";
             break;
         }
       }
       return res;
-
 }
 /**
  * 投注状态
