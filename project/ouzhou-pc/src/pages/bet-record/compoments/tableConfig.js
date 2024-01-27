@@ -20,7 +20,7 @@ export function useGetOrderList () {
   const records = ref({})
   const total = ref(0)
   const loading = ref(false)
-  const columns = ref([
+  const columns = [
     {
       name: 'sn',
       label: computed(()=>{ return i18n_t("bet_record.number")}),
@@ -67,7 +67,7 @@ export function useGetOrderList () {
       field: 'status'
       // sortable: true,
     }
-  ])
+  ]
   /**
    * 获取数据
    */
