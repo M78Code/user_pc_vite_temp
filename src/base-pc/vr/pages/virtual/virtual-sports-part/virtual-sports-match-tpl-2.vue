@@ -4,7 +4,7 @@
         <horse-template :item_data="item_data" :csid="match.csid" v-if="match" />
     </div>
     <div class="row justify-end to-detail"  @click="goto_details(match)">
-      All Markets &nbsp;>
+      {{ i18n_t("list.show_more_handicap") }} &nbsp;>
     </div>
   </div>
 </template>

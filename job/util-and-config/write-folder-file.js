@@ -32,6 +32,28 @@ export const compute_full_path =( subpath)=>{
  
  }
  
+/**
+ *  带工作空间的全路径  带 file:// 协议前缀的 
+ * @param {*} subpath 
+ * @returns 
+ */
+ export const compute_full_file_href =( subpath)=>{
+  
+
+  let full_file_href=    pathToFileURL(  compute_full_path(subpath)  ).href 
+ 
+  console.log("计算所得： 全路径：  ",full_file_href);
+  
+
+  
+   return  full_file_href
+ 
+ }
+ 
+
+
+
+
 
  
 
@@ -202,15 +224,15 @@ export const read_file=(file_path)=>{
 
 
 
-export const import_json_data =  (json_data_path) => {
-  // const  { default:json_data} = await import( json_data_path, { assert: { type: "json" }, } );
+export const import_json_data =  (subpath) => {
+  // const  { default:json_data} = await import( subpath, { assert: { type: "json" }, } );
   //  return json_data
 
 
      //带工作空间的全路径
-     let full_path = compute_full_path(json_data_path)
+     let full_path = compute_full_path(subpath)
 
-  // const json_data = JSON.parse( await readFile(new URL(json_data_path, import.meta.url)) );
+  // const json_data = JSON.parse( await readFile(new URL(subpath, import.meta.url)) );
   // const json_data = JSON.parse( await fs.readFile(  new URL(pathToFileURL(file_path ) )  ) );
 
   // console.log(' pathToFileURL(file_path ) ----', pathToFileURL(file_path ) );
@@ -224,3 +246,25 @@ export const import_json_data =  (json_data_path) => {
   return json_data;
 };
 
+
+
+
+
+export const import_js_data = async (subpath)=>{
+
+   //带工作空间的全路径
+   let full_file_href =   compute_full_file_href(subpath)
+
+  //  const { default: barData } =
+  //  await import('./bar.json', { assert: { type: 'json' } });
+   let result={} 
+try {
+  result = await import(  full_file_href  );
+} catch (error) {
+  // result = error
+}
+
+// console.log( 'import_js_data-------', result );
+return result
+
+}

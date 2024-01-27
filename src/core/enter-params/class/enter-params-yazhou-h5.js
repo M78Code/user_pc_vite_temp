@@ -123,7 +123,7 @@ class EnterParamsYazhouH5 {
     // 删除参数
     url = this.remove_url_param(["mt1", "m", "s", "mt2"]);
     // 设置最新url地址
-    history.replaceState(null, null, url);
+    history.replaceState(window.history.state, null, url);
   }
   /**
    * @description: 移除url地址中指定参数数据
