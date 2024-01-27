@@ -8,13 +8,12 @@
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div class="temp-simple">
     <div
-      v-for="(item, i) in props.match_info?.hl"
-      :key="item.hv"
+      v-for="(value, key) in matchInfo"
+      :key="key"
       class="temp_grid"
       :class="{ temp_grid: true }"
     >
-    {{ void(value = matchInfo[item.hv]) }}
-    {{ void(key=item.hv) }}
+  
       <div class="temp5-hv">{{ key > 0 && hpid == 39 ? "+" + key : key }}</div>
       <div
         v-if="
@@ -41,6 +40,7 @@
         </div>
       </div>
       <template v-else>
+       
         <div
           v-for="o in value"
           :class="{
@@ -60,13 +60,7 @@
             >
             </bet-item>
           </span>
-          <!-- <div style="text-align: center; width: 100%" v-show="o.hs">
-            <img
-              class="vector"
-              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
-              alt=""
-            />
-          </div> -->
+         
         </div>
       </template>
     </div>
@@ -113,6 +107,14 @@ const matchInfo = computed(() => {
       });
     }
   });
+  // if (props.match_info.hpid==340) {
+  //   console.log(111111144,props.match_info)
+  //   console.log(1111111111,obj)
+  // }
+  // if (props.match_info.hpid==26) {
+  //   console.log(111111144,props.match_info)
+  //   console.log(1111111111,obj)
+  // }
 
   return obj;
 });
