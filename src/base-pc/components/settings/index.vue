@@ -356,6 +356,7 @@ function  on_click_additional(item) {
       // 刷新列表重新计算
       // this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
       GlobalSwitchClass.set_additional_plays_list_num(item.value); 
+      on_refresh()
       console.error('列表附加玩法是否展开状态',GlobalSwitchClass.additional_plays_list_num)
   }
    //设置附加玩法开关

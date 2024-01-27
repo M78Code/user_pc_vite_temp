@@ -53,7 +53,9 @@ const get_tab_play_height = (mid) => {
     //组合玩法 TODO 未玩 show_more_other_list获取方式补一样
     if (['hpsCompose'].includes(play_current_key)) {
 		// 获取展示的附加玩法配置 TODO
-		let show_more_other_list=false
+		// let show_more_other_list=false 
+		let show_more_other_list = GlobalSwitchClass.additional_plays_list_num==3?false:true
+		// let show_more_other_list=false 
 		const num = show_more_other_list?2:1
 		// 计算0号模板次要玩法 盘口+玩法标题高度+更多一行高度35
 		handicap_height = length * num * 35 + ((40 - (!['en','ad','ms'].includes(UserCtr.lang) ? 16 : 0)) * num)+(num==2?0:35)
@@ -116,11 +118,11 @@ const compute_style_template_by_matchinfo_template0_zuqiu = (
 	// 	"is_fold_tab_play",
 	// 	false
 	// );
-	let is_fold_tab_play = lodash.get(
+	let is_fold_tab_play = (lodash.get(
 		MatchListCardData.get_card_obj_bymid(match.mid),
 		"is_fold_tab_play",
 		false
-	) && GlobalSwitchClass.show_additional_disk ? true : false;
+	) || GlobalSwitchClass.show_additional_disk) ? true : false;
 	let tab_play_total_height = 0;
 	if (is_show_tab_play && !is_fold_tab_play) {
 		// 如果有角球玩法并且未折叠  角球区域总高度 等于角球标题高度加角球盘口高度
