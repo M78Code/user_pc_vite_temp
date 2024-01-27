@@ -44,8 +44,12 @@ const common = {
       state.active = +ol.oid
     }
     // console.log("other===ttt", MenuData.is_vr())
-    if (MenuData.is_vr()) {
-      other.bet_type = 'vr_bet'
+    if(MenuData.is_esports()){
+      other.bet_type ="esports_bet"
+    }else if(MenuData.is_kemp()){
+        other.bet_type ="guanjun_bet"
+    }else if(MenuData.is_vr()){
+        other.bet_type ="vr_bet"
     }
     // console.log("other===ccc", other)
     const { oid, _hid, _hn, _mid } = ol

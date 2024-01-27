@@ -317,7 +317,7 @@ watch(() => props.current_tab, (newVal) => {
     handle_fetch_order_list({ orderStatus: 0 })
     console.log(tableData)
   }
-})
+}, { immediate: true })
 const getTableData = (params) => {
   handle_fetch_order_list(params)
 }
