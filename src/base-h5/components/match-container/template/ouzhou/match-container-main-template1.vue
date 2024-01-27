@@ -50,17 +50,17 @@
             <!-- <div class="league-t-tubiao"></div> -->
             <div :class="['league-title']">
               <!-- 联赛收藏 -->
-              <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
+              <div v-if="![3000, 900].includes(menu_type) && !is_esports" class="favorited-icon" @click.stop="handle_league_collect">
                 <!-- 未收藏 compute_img_url('icon-favorite')-->
                 <img v-if="!league_collect_state" :src="no_collect_ouzhou" alt="">
                 <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
                 <img v-if='league_collect_state' :src="have_collect_ouzhou">
               </div>
               <!-- 电竞图标 写死 -->
-              <div v-if="match.csid == 101" class="league-icon-mini league-icon-mini2" style="--num:39"></div>
+              <!-- <div v-if="match.csid == 101" class="league-icon-mini league-icon-mini2" style="--num:39"></div>
               <div v-else-if="match.csid == 103" class="league-icon-mini league-icon-mini2" style="--num:40"></div>
               <div v-else-if="match.csid == 102" class="league-icon-mini league-icon-mini2" style="--num:41"></div>
-              <div v-else-if="match.csid == 100" class="league-icon-mini league-icon-mini2" style="--num:42"></div>
+              <div v-else-if="match.csid == 100" class="league-icon-mini league-icon-mini2" style="--num:42"></div> -->
               <div v-else :class="['league-icon-mini']">
                 <ImageCacheLoad :csid="match.csid" :path="match.lurl" type="league" ></ImageCacheLoad>
               </div>

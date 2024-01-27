@@ -154,7 +154,14 @@ const changeMenu = (item) =>{
   if(!item?.mi)return;
   state.current_mi = item.mi;
   MenuData.set_menu_mi(item.mi)
-  MatchMeta.get_collect_match()
+  // 收藏页
+  if (MenuData.is_esports()) {
+    // 电竞收藏
+    MatchMeta.get_esports_collect_match()
+  } else {
+    // 常规收藏
+    MatchMeta.get_collect_match()
+  }
 }
 const mitt_list=[]
 onMounted(()=>{

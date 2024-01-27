@@ -949,17 +949,30 @@ class MatchMeta {
    */
   async get_esports_collect_match() {
     this.clear_match_info()
-    const dianjing_list = lodash.get(BaseData, 'dianjing_sublist', [])
-    const csids = dianjing_list.map(item => item.csid).join(',')
-    const euid_arr = dianjing_list.map(item => item.mi && MenuData.get_euid(item.mi + '')).join(',')
+    
     const params = this.get_base_params()
-    const md = String(MenuData.data_time)
+    const md = MenuData.data_time && String(MenuData.data_time)
+
+    let csids = ''
+    let euid_arr = ''
+
+    // 复刻版获取全部
+    if (project_name === 'app-h5') {
+      const dianjing_list = lodash.get(BaseData, 'dianjing_sublist', [])
+      csids = dianjing_list.map(item => item.csid).join(',')
+      euid_arr = dianjing_list.map(item => item.mi && MenuData.get_euid(item.mi + '')).join(',')
+    } else {
+      csids = MenuData.menu_csid
+      euid_arr = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
+    }
+
     const target_params = {
       ...params,
       type: 3000,
       csid: csids,
       euid: euid_arr,
-      md: md
+      md: md,
+      sort: 1
     }
     const http_key = `esport_collect_${euid_arr}_${md}`
     this.set_current_http_key(http_key)
