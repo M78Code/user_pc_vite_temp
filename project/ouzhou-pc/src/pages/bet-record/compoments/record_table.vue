@@ -460,6 +460,7 @@ const item_status =(type) => {
  */
 const marketType = (type, langCode='zh') => {
   var res = "";
+    langCode = UserCtr.lang;
     if(type && langCode) {
     switch (type) {
       case "EU":
@@ -485,6 +486,7 @@ const marketType = (type, langCode='zh') => {
         break;
     }
   }
+  // console.log("`odds.${langCode}.EU`", `odds.${langCode}.EU`)
   return res;
 }
 /**
