@@ -50,6 +50,12 @@
                 </div>
             </div>
 
+            <div class="fw-e-s bet-right bet-invalid" v-if="!BetData.is_bet_single && items.is_serial ">
+                <div class="bet-serial bet-disabled">
+                    <span>不支持串关</span>
+                </div>
+            </div>
+
             <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1" @click="set_delete">
                 <span class="icon-delete"></span>
             </div>
@@ -78,7 +84,7 @@
 
 <script setup>
 
-import { onMounted, onUnmounted, reactive } from "vue"
+import { nextTick, onMounted, onUnmounted, reactive } from "vue"
 import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,formatMoney,only_win } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
@@ -100,6 +106,10 @@ const ref_data = reactive({
 
 const set_delete = () => {
     BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
+    // 删除后 重新计算是否可以 串关的数据
+    if(!BetData.is_bet_single){
+        BetData.check_bet_s_list_special()
+    }
 }
 
 // 预约投注
@@ -140,7 +150,7 @@ const cancel_operate = () =>{
         }
 
         .bet-money {
-            height: 34px;
+            height: 26px;
         }
 
         .bet-delete {
@@ -164,7 +174,7 @@ const cancel_operate = () =>{
         }
 
         .bet-right {
-            width: 160px;
+           // width: 160px;
 
             .appoint {
                 display: flex;
@@ -190,7 +200,7 @@ const cancel_operate = () =>{
                     align-items: center;
                     span{
                         display: inline-block;
-                        padding: 0 20px;
+                        padding: 0 12px;
                         height: 26px;
                         display: inline-block;
                         border-radius: 2px;
@@ -201,7 +211,15 @@ const cancel_operate = () =>{
                         letter-spacing: 0px;
                         color: var(--q-gb-t-c-8);
                     }
+                    &.bet-serial{
+                        span{
+                            padding: 0 12px;
+                            background: var(--q-gb-bg-c-16);
+                            color: var(--q-gb-t-c-7);
+                        }
+                    }
                 }
+                
             }
         }
 

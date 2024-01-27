@@ -331,6 +331,9 @@ class MenuData {
         case 3004:
           menu_list = this.kemp_list
           break
+        case 2000:
+          menu_list = BaseData.dianjing_sublist;
+          break
       }
     }
     this.top_menu_list = menu_list

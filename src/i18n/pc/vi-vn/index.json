@@ -2611,7 +2611,18 @@
     "HK": "Hồng Kông",
     "ID": "Tỉ lệ cược Indo",
     "MY": "Tỉ lệ cược Malay",
-    "US": "Tỉ lệ cược Mỹ"
+    "US": "Tỉ lệ cược Mỹ",
+    "vi":{ 
+      "EU": "Thập phân",
+      "GB": "Tỉ lệ cược Anh",
+      "HK": "Hồng Kông",
+      "ID": "Tỉ lệ cược Indo",
+      "MY": "Tỉ lệ cược Malay",
+      "US": "Tỉ lệ cược Mỹ",
+      "morning_session":"Trước trận đấu",  
+      "list_today_play_title":"Bóng lăn",
+      "match_winner":"Vô địch"
+    }
   },
   "results": {
     "all_score": "Toàn trận",

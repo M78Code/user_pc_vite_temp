@@ -437,20 +437,14 @@ this.bet_appoint_ball_head= null */
         bet_refer_obj.is_dianjing = true
         break;
     }
-
     this.set_bet_single_special_list()
     // 设置是否为 虚拟投注
     this.is_virtual_bet = is_virtual_bet
     // 设置 投注内容
     this.bet_read_write_refer_obj[custom_id] = bet_refer_obj
 
-    // 串关逻辑 不支持串关的数据 增加标识 ，在页面上做提示
-    // mbmty 2 or 4 为电子赛事  足球 篮球
-    // 电竞 ispo == 0 不支持串关
-    if([1,2].includes(Number(obj.sportId)) && [2,4].includes(Number(obj.mbmty)) || (obj.bet_type == 'esports_bet' && obj.ispo == 0)){
-      // 串关投注中 有这个需要显示不支持串关投注 
-      bet_refer_obj.is_serial = true
-    }
+    // 串关投注中 有这个需要显示不支持串关投注 
+    bet_refer_obj.is_serial = this.check_bet_option_special(bet_refer_obj)
 
     // 单关/串关 投注
     if (this.is_bet_single) {
@@ -476,7 +470,6 @@ this.bet_appoint_ball_head= null */
       
     } else {
       // 串关
-      
       // 同场赛事不能串 部分数据源赛事不能串 
       if (this.bet_s_list.length) {
         let obj = this.bet_s_list.find(item => item.matchId == bet_refer_obj.matchId) || {}
@@ -622,31 +615,79 @@ this.bet_appoint_ball_head= null */
     this.set_bet_flag()
   }
 
+  // 获取 赛事重复数量
+  get_match_count(match_id_list){
+    let obj = {}
+    for(let id of match_id_list){
+      obj[id] = (obj[id] +1 ) || 1
+    }
+    return obj
+  }
+
+  check_bet_option_special(obj){
+    let is_serial = false
+    // 串关逻辑 不支持串关的数据 增加标识 ，在页面上做提示
+    // mbmty 2 or 4 为电子赛事  足球 篮球 C01 O01 不支持串关
+    let foot_or_mbmty = [1,2].includes(Number(obj.sportId)) && [2,4].includes(Number(obj.mbmty)) && ['C01','O01'].includes(obj.dataSource) 
+    // 电竞 ispo == 0 不支持串关
+    let esports_bet_state = (obj.bet_type == 'esports_bet' && obj.ispo == 0)
+    // 
+    if( foot_or_mbmty || esports_bet_state ){
+      // 串关投注中 有这个需要显示不支持串关投注 
+      is_serial = true
+    }
+
+    return is_serial
+  }
+
+  // 检查串关中 是否可以 串关的数据
+  check_bet_s_list_special(){
+    let bet_s_list = lodash_.cloneDeep(this.bet_single_list)
+    // 获取投注项中 有哪些赛事id是重复的 
+    // 对重复的赛事id 加入不能串关的字段 
+    let match_id_list = bet_s_list.map(item => item.matchId)
+    let match_obj = this.get_match_count(match_id_list)
+
+    let match_list = []
+    for(let obj in match_obj){
+      if(match_obj[obj] > 1){
+        match_list.push(obj)
+      }
+    }
+
+    bet_s_list.filter(item=> {
+      // 重复的赛事不能串关 
+      if(match_list.includes(item.matchId) || this.check_bet_option_special(item)){
+        item.is_serial = true
+      }
+    })
+
+    this.bet_s_list = lodash_.cloneDeep(bet_s_list)
+  }
+
   // 设置 切换单关/串关切换
   set_is_bet_single(state) {
-    // 单关 切换到串关 / 
+    // 单关 切换到串关  
     if (this.is_bet_single && !this.is_bet_merge) {
       // 串关数据 == 单关数据 // 同赛事不能大于一个投注项
-      if(!this.bet_s_list.length){
-        this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
-      }
+      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
       // 获取串关 参数显示
       getSeriesCountJointNumber((code, data) => {
         if (code == 200) {
-            BetViewDataClass.set_bet_special_series(data)
-
-            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+          BetViewDataClass.set_bet_special_series(data)
+          useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
         }
       })
     }
     // 合并 切换到 串关
     if (this.is_bet_single && this.is_bet_merge) {
-      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
+      // 检查并设置不能串关的数据
+      this.check_bet_s_list_special()
+
       getSeriesCountJointNumber((code, data) => {
         if (code == 200) {
-            BetViewDataClass.set_bet_special_series(data)
-
-            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+          BetViewDataClass.set_bet_special_series(data)
+          useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
         }
       })
     }
