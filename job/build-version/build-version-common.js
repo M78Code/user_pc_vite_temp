@@ -1,13 +1,9 @@
 import NODE_ENV_CONFIG from "../output/node-env/index.js"
 import {format_date  } from "../util-and-config/util.js"
 import {PROJECT_ENTRY_CONFIG} from  "../util-and-config/config.js"
-
-
-let DEV_TARGET_ENV_CONFIG={} 
-try {
-  DEV_TARGET_ENV_CONFIG = await import( "../../dev-target-env.jsjs"  );
-} catch (error) {
-}
+import {import_js_data} from  "../util-and-config/write-folder-file.js"
+const  DEV_TARGET_ENV_CONFIG= await import_js_data("./dev-target-env.js")
+ 
 const {   DEV_IS_FOR_NEIBU_TEST } = DEV_TARGET_ENV_CONFIG
 
 
