@@ -898,7 +898,7 @@ const set_error_message_config = (res ={},type,order_state) => {
                     // 预约成功
                     obj = {
                         code: '200',
-                        message: "bet.bet_booking"
+                        message: "bet.bet_booked"
                     }
                     break;
                 case 8: 

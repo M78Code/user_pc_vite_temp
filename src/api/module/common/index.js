@@ -6,7 +6,7 @@
 
 
 import {http} from "src/core/http/index.js";
-import lodash from "lodash"
+import lodash, { escapeRegExp } from "lodash"
 
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 const { API_PREFIX } = BUILDIN_CONFIG ;
@@ -158,7 +158,7 @@ export const get_virtual_matchResult = (params,config, url = "/v1/m/matchDetail/
  * @param {1|Number} [params.type] 1:赛果
  * @param {*} [config]
  * @param {*} [url]
- * @returns {Promise<API.MatchDetails>}
+ * @returns {API.MatchDetails}
  */
 export const get_matchDetail_getMatchDetailByTournamentId = (params, config, url = "/v1/m/matchDetail/getMatchDetailByTournamentIdPB") => http.get(`${prefix}${url}`, params, config)
 
@@ -166,7 +166,7 @@ export const get_matchDetail_getMatchDetailByTournamentId = (params, config, url
 export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetailPB") => http.get(`${prefix}${url}`, params, config)
 /** 
  * 赛果详情页面接口（christion）
- * @returns {Promise<API.MatchDetails>}
+ * @returns {API.MatchDetails}
  */
 export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getResultMatchDetailPB") => http.get(`${prefix}${url}`, params, config)
 
@@ -236,9 +236,19 @@ export const existMatchResult = (params, config, url="/order/betRecord/existMatc
 //获取虚拟体育赛果
 export const get_virtual_result = (params, config, url="/v1/orderScoreResult/queryTournamentScoreResult") =>
 http.post(`${prefix}${url}`,params,config);
-// 获取赛事文章详情(Jeffrey)
+/** 获取赛事文章详情(Jeffrey)
+ * @param {Object} params
+ * @param {1|2} params.type 
+ * @param {Number} params.matchId type 1-matchId是赛事id 2-matchId是文章id
+ * @returns {API.Result}
+ */
 export const getArticle = (params, config, url="/v1/art/getArticle") => http.get(`${prefix}${url}`,params, config)
-// 获取赛事文章猜你喜欢接口(Jeffrey)
+/** 获取赛事文章猜你喜欢接口(Jeffrey) 
+ * @param {Object} params
+ * @param {Number} params.id 文章id
+ * @param {Number} params.matchId 赛事id;mid
+ * @returns {API.Result}
+ */
 export const getFavoriteArticle = (params, config, url="/v1/art/getFavoriteArticle") => http.get(`${prefix}${url}`,params, config)
 // 更新赛事文章浏览记录(Jeffrey)
 export const  addArticleCount = (params, config, url="/v1/art/addArticleCount") => http.post(`${prefix}${url}`,params, config)
