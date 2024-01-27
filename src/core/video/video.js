@@ -13,6 +13,8 @@ import { get_media_icon_index,get_match_status, is_eports_csid } from 'src/outpu
 import { MatchDetailCalss }  from "src/output/module/project-single.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MenuData } from "src/output/index.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+
 export default {
 
   /**
@@ -796,7 +798,7 @@ export default {
     if(refer_url){
       // refer_url = refer_url.replace(/https?:/, "");
       // refer_url = 'http://localhost:16677' ;
-      let request_domain = lodash.get(window.BUILDIN_CONFIG,"DOMAIN_RESULT.first_one");
+      let request_domain = lodash.get(BUILDIN_CONFIG,"DOMAIN_RESULT.first_one");
       let random = Math.random()
       let _token = User.get_user_token();
       media_src = `${refer_url}?live_type=${live_type}&hd_sd=${hd_sd}&random=${random}&mid=${mid}&domain=${request_domain}&is_client=1&load_error=${i18n_t('video.sorry')}&refresh=${i18n_t('footer_menu.refresh')}&token=${_token}`;
@@ -855,7 +857,7 @@ export default {
         }
         //校验url是否可以打开
         this.check_url(url, res => {
-          if(res || window.BUILDIN_CONFIG.NODE_ENV == "development"){
+          if(res || BUILDIN_CONFIG.NODE_ENV == "development"){
             callback('play-video',url)
           } else {
             // 本地开发时不进行视频地址检测
@@ -872,7 +874,7 @@ export default {
   * @param {function} callback  回调函数
   */
   get_video_refer(mid,callback){
-    let refer_url = lodash.get(window.BUILDIN_CONFIG.DOMAIN_RESULT,"live_domains[0]")
+    let refer_url = lodash.get(BUILDIN_CONFIG.DOMAIN_RESULT,"live_domains[0]")
    
     // let refer_url = "https://prolivepc.sportxxx13ky.com"
     // if(refer_url){
@@ -899,8 +901,8 @@ export default {
   join_video_url(mid,refer_url){
     // 移除 http(s)
     refer_url = refer_url.replace(/https?:/, "")
-    // let request_domain = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV][0]; todo
-    let request_domain =lodash.get(window.BUILDIN_CONFIG, 'DOMAIN_RESULT.first_one')
+    // let request_domain = BUILDIN_CONFIG.domain[BUILDIN_CONFIG.CURRENT_ENV][0]; todo
+    let request_domain =lodash.get(BUILDIN_CONFIG, 'DOMAIN_RESULT.first_one')
     let url = ''
     // if (window.env.NODE_ENV == "development" && (refer_url.indexOf('//prolivepc') == 0)) {
     //   // 生产环境使用代理进行播放视频连接操作

@@ -12,7 +12,9 @@ import { api_common } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDataWarehouse_H5_List_Common, MatchDataWarehouse_PC_List_Common, LOCAL_PROJECT_FILE_PREFIX,compute_css_obj } from "src/output/index.js"
 import { ref } from "vue";
-const MatchDataBaseH5 = window.BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_List_Common:MatchDataWarehouse_H5_List_Common;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+
+const MatchDataBaseH5 = BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_List_Common:MatchDataWarehouse_H5_List_Common;
 export default {
   mixins:[virtual_sports_mixin],
   props:{

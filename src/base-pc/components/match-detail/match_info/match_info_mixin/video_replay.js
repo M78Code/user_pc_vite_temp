@@ -4,6 +4,7 @@
   import { api_details, api_analysis } from "src/api/index";
 import { useMittEmit } from "src/output";
 
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
  
   export default {
       components: {
@@ -173,7 +174,7 @@ import { useMittEmit } from "src/output";
 
           // mp4 拼接格式
           // http://lsprelivepc.sportxxx13ky.com/videoReplay.html?src=http://test-playback.d965r6f.com/video/8045e066c41cdb269e126a892c648ffe.mp4
-          let live_domains = lodash.get(window.BUILDIN_CONFIG.DOMAIN_RESULT,"live_domains[0]") || lodash.get(this.vx_get_user,'oss.live_pc');
+          let live_domains = lodash.get(BUILDIN_CONFIG.DOMAIN_RESULT,"live_domains[0]") || lodash.get(this.vx_get_user,'oss.live_pc');
           // 显示返回按钮
           const back_but = this.$route.params.video_size !=1 ? 1 : 0
           // 隐藏全屏按钮

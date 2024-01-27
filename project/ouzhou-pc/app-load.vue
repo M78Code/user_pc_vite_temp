@@ -19,7 +19,9 @@ import { useRouter,useRoute } from "vue-router";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 import Toast from "src/components/toast/index.vue"
-const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+
+const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = BUILDIN_CONFIG;
 const router = useRouter();
 const route= useRoute();
 const _data = reactive({

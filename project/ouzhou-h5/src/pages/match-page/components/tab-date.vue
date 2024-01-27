@@ -90,7 +90,12 @@ const dateOptionsRef = ref(null);
 // const week = dateWeekMatchesFormat();
 const week = ref([]);
 const tabList = computed(()=>{
-    const list = MenuData.match_tab_list;
+    //赛事列表tab
+    const list = MenuData.match_tab_list || [
+      'Matches',
+      'League',
+      'Outrights'
+    ];
     const menu_list = MenuData.menu_list.map((item)=>{return +item.mi});
     const matches = list.filter(n=>{return n ==='Matches'});//电足电篮不展示冠军和联赛
     const not_outrights = list.filter(n=>{return n !=='Outrights'});
