@@ -10,11 +10,16 @@
     <div class="ctrl-wrap row items-center justify-between">
       <div
         class="unfold"
+        v-if="vx_get_is_fold_status"
+        @click="$emit('setfoldStatus')"
+        :style="compute_css_obj({key: 'pc-img-match-info-unfold-open'})"
+      ></div>
+      <div
+        class="unfold"
+        v-else
         :class="{ open: vx_get_is_fold_status }"
         @click="$emit('setfoldStatus')"
-        :style="compute_css_obj({key:'pc-img-match-info-unfold-open'})"
       ></div>
-      
 
       <div class="col-center row full-height">
         <!-- 媒体图标 -->
@@ -531,7 +536,7 @@ onUnmounted(() => {
     cursor: pointer;
     background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/unfold_close_thme01.svg");
     &.open {
-      background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/unfold_open_them01_copy.svg"); // TODO:  unfold_open_them01.svg
+      background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/unfold_close_thme01.svg"); // TODO:  unfold_open_them01.svg
     }
   }
   .col-center {
