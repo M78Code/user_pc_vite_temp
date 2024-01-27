@@ -8,13 +8,13 @@
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div class="temp-simple">
     <div
-      v-for="(value, key) in matchInfo"
-      :key="key"
+      v-for="[key, value] in matchInfo"
+      :key="value[0]"
       class="temp_grid"
       :class="{ temp_grid: true }"
     >
-  
-      <div class="temp5-hv">{{ key > 0 && hpid == 39 ? "+" + key : key }}</div>
+     
+      <div class="temp5-hv">{{ key > 0 && hpid == 39 ? "+" + key : key}}</div>
       <div
         v-if="
           lodash.get(value,'length') == 1 &&
@@ -90,6 +90,7 @@ const props = defineProps({
 const hpidList = ["340","339", "359", "383","200","209","211","212",'238','20024']
 const matchInfo = computed(() => {
   let obj = {};
+  const obj1 = new Map();  // 使用Map  obj 会影响玩法排序
   props.match_info.hl.forEach((item) => {
     if (item && item.ol.length > 0) {
       item.ol.forEach((i) => {
@@ -101,22 +102,16 @@ const matchInfo = computed(() => {
         if (!obj[i.on]) {
           obj[i.on] = [];
           obj[i.on] = [i];
+          obj1.set(i.on, [i]);
         } else {
-          obj[i.on] = [...obj[i.on], i];
+          // obj[i.on] = [...obj[i.on], i];
+          obj1.set(i.on,[...obj[i.on], i]);
         }
       });
     }
   });
-  // if (props.match_info.hpid==340) {
-  //   console.log(111111144,props.match_info)
-  //   console.log(1111111111,obj)
-  // }
-  // if (props.match_info.hpid==26) {
-  //   console.log(111111144,props.match_info)
-  //   console.log(1111111111,obj)
-  // }
 
-  return obj;
+  return obj1;
 });
 const emit = defineEmits(["betItemClick"]);
 
