@@ -1,13 +1,12 @@
 /**
  * 创建 本次打包的  版本配置相关信息
  */
-let DEV_TARGET_ENV_CONFIG={} 
-try {
-    DEV_TARGET_ENV_CONFIG = await import( "../../dev-target-env.js"  );
-} catch (error) {
-}
+ 
+import {import_js_data ,write_file} from  "../util-and-config/write-folder-file.js"
+const  DEV_TARGET_ENV_CONFIG= await import_js_data("./dev-target-env.js")
+
 const {DEV_TARGET_ENV} = DEV_TARGET_ENV_CONFIG
-import {  write_file } from "../util-and-config/write-folder-file.js";
+ 
 import { RESOLVE_BUILD_VERSION_COMMON_FN } from "./build-version-common.js";
 // jenkins env 变量  配置的      
 let ENV_TARGET_ENV = (process.env.TARGET_ENV || "").trim();
