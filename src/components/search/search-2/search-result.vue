@@ -37,7 +37,7 @@
 												<p class="flex"> 
 													<!-- 比赛时间 -->
 													<match-process style="cursor:pointer" v-if="item" :match="item" :rows="1" :date_rows="1" date_show_type="inline" periodColor="gray" />
-													<span class="red">{{ get_match_score_result(item).home_score }}-{{ get_match_score_result(item).away_score }}</span> 
+													<!-- <span class="red">{{ get_match_score_result(item).home_score }}-{{ get_match_score_result(item).away_score }}</span>  -->
 												</p>
 											</div>
 											<div style="display: flex;flex-direction: row; flex: 1">
@@ -561,6 +561,7 @@ function show_bowling_list(search_data_bowling=[]) {
 			obj[tn].children.push(item)
 		}
 	})
+	console.error('378832783827',obj)
 	return obj;
 }
 
