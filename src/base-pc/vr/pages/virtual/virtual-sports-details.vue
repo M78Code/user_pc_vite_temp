@@ -10,7 +10,8 @@
         <!-- 详情页面包屑 -->
         <breadcrumbs :detail_info="match || {}" v-if="match" />
         <div class="bread-right">
-          <q-img
+        <!-- // vr 没有赛事分析 -->
+          <!-- <q-img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
             alt=""
             srcset=""
@@ -24,7 +25,7 @@
             >
               {{ i18n_t("common.analysis") }}
             </q-tooltip>
-          </q-img>
+          </q-img> -->
           <q-img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`"
             alt=""
