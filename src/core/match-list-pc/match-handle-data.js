@@ -480,6 +480,8 @@ export const get_match_score = (match) => {
 export const get_match_score_result = (match) => {
     if (!match) return { home_score: '0', away_score: '0' }
     let msc_obj = {}
+    match.msc = match.msc.split('')
+    console.error(' match.msc match.msc', match.msc)
     match.msc.forEach(item => {
         let format = item.split("|");
         msc_obj[format[0]] = {
@@ -598,7 +600,6 @@ export function compute_match_all_handicap_data(match) {
     if (csid == 1 && [1, 13].includes(+tpl_id) && !is_corner_menu) {
         // 计算角球、罚牌等其他玩法数据
         // 根据个人设置的全局配置的附加盘口是否展示
-        console.error('GlobalSwitchClass.show_additional_disk',GlobalSwitchClass.show_additional_disk)
         if (GlobalSwitchClass.show_additional_disk){
             Object.assign(match_assign, { 
                 play_current_play: get_play_current_play(match),
