@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="appoint appoint_cursor" v-if="IS_FOR_NEIBU_TEST && !ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
+                <div class="appoint appoint_cursor" v-if="!ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
                     +{{ `${i18n_t('bet.bet_book2')}` }}
                 </div>
             </div>
@@ -47,6 +47,12 @@
             <div class="fw-e-s bet-right bet-invalid" v-else>
                 <div class="bet-disabled">
                     <span>{{ i18n_t('bet.bet_invalid') }}</span>
+                </div>
+            </div>
+
+            <div class="fw-e-s bet-right bet-invalid" v-if="!BetData.is_bet_single && items.is_serial ">
+                <div class="bet-serial bet-disabled">
+                    <span>不支持串关</span>
                 </div>
             </div>
 
@@ -65,7 +71,7 @@
            
         </div>
 
-        <div v-if="IS_FOR_NEIBU_TEST && ref_data.show_appoint">
+        <div v-if="ref_data.show_appoint">
             <bet-pro-appoint :item="items" @cancel_operate="cancel_operate" />
         </div>
         
@@ -78,7 +84,7 @@
 
 <script setup>
 
-import { onMounted, onUnmounted, reactive } from "vue"
+import { nextTick, onMounted, onUnmounted, reactive } from "vue"
 import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,formatMoney,only_win } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
@@ -100,6 +106,10 @@ const ref_data = reactive({
 
 const set_delete = () => {
     BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
+    // 删除后 重新计算是否可以 串关的数据
+    if(!BetData.is_bet_single){
+        BetData.check_bet_s_list_special()
+    }
 }
 
 // 预约投注
@@ -110,11 +120,12 @@ const set_show_appoint = () =>{
   }
   // 显示预约投注内容
   ref_data.show_appoint = !ref_data.show_appoint
- 
+  BetData.set_is_bet_pre(true)
 }
 
 const cancel_operate = () =>{
   ref_data.show_appoint = !ref_data.show_appoint
+  BetData.set_is_bet_pre(false)
 }
 
 </script>
@@ -139,7 +150,7 @@ const cancel_operate = () =>{
         }
 
         .bet-money {
-            height: 34px;
+            height: 26px;
         }
 
         .bet-delete {
@@ -163,7 +174,7 @@ const cancel_operate = () =>{
         }
 
         .bet-right {
-            width: 160px;
+           // width: 160px;
 
             .appoint {
                 display: flex;
@@ -189,7 +200,7 @@ const cancel_operate = () =>{
                     align-items: center;
                     span{
                         display: inline-block;
-                        padding: 0 20px;
+                        padding: 0 12px;
                         height: 26px;
                         display: inline-block;
                         border-radius: 2px;
@@ -200,7 +211,15 @@ const cancel_operate = () =>{
                         letter-spacing: 0px;
                         color: var(--q-gb-t-c-8);
                     }
+                    &.bet-serial{
+                        span{
+                            padding: 0 12px;
+                            background: var(--q-gb-bg-c-16);
+                            color: var(--q-gb-t-c-7);
+                        }
+                    }
                 }
+                
             }
         }
 

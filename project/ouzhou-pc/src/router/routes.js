@@ -77,14 +77,15 @@ const routes = [
         name: "virtual_sports_details",
         component: () => import("src/base-pc/vr/pages/virtual/virtual-sports-details.vue"),
       },
+      // 视频全屏
+      {
+        path: "/video/:mid/:csid/:tid/:play_type/:video_size",
+        name: "video",
+        component: () => import("../pages/video/video.vue")
+      },
     ],
   },
-  // 视频全屏
-  {
-    path: "/video/:mid/:csid/:tid/:play_type/:video_size",
-    name: "video",
-    component: () => import("../pages/video/video.vue")
-  },
+  
   //赛事分析
   {
     path: "/analysis_header/:csid/:mid",

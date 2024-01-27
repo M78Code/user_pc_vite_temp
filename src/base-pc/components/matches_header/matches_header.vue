@@ -10,7 +10,7 @@
 					<template v-if="tab_list.length">
 						<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item,'change')"
 							:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
-							{{ i18n_t(item.label) }}
+							{{ item.not_i18n_t?item.label:i18n_t(item.label) }}
 							<!-- 点击联赛后出现的时间筛选 -->
 							<div 
 								v-if="MenuData.is_leagues() && item.value === 4002"
@@ -66,7 +66,6 @@ const is_left_sports = ref(false)
 const matches_header_title = ref("ouzhou.match.matches");
 
 let mitt_list = null
-
 const ref_data = reactive({
 	ouzhou_filter_config :{
 		// 首页   i18n_t('ouzhou.match.featured')    i18n_t('ouzhou.match.top_events')
@@ -86,7 +85,8 @@ const ref_data = reactive({
 			{ label: ('ouzhou.match.inplay'), value: 3001 },
 			{ label: ('ouzhou.match.today'), value: 3002 },
 			{ label: ('ouzhou.match.early'), value: 3003 },
-			{ label: ('menu.match_winner'), value: 3004 }
+			{ label: ('menu.match_winner'), value: 3004 },
+			{ label: (BaseData.menus_i18n_map || {})[2000] || "" , value: 2000,not_i18n_t:true }
 		],
 		// i18n_t('ouzhou.match.inplay')   i18n_t('ouzhou.match.all_matches')
 		inplay:{
@@ -206,7 +206,7 @@ const set_tab_list = (news_) =>{
 		resolve_mew_menu_res()
 	}
 	// 电竞
-	if (MenuData.is_esports()) {
+	if (MenuData.is_esports() && !MenuData.is_collect) {
 		is_left_sports.value = true
 		// matches_header_title.value = BaseData.menus_i18n_map[2000]
 		match_list_top.value = '134px'
@@ -296,23 +296,29 @@ const checked_current_tab = (payload,type) => {
 	 	// MenuData.set_current_ball_type(1)
 	 	// MenuData.set_current_ball_type(MenuData.menu_current_mi - 400 || 1)
 		if( payload.value == 3001){
-			obj.current_mi = 1011
+			obj.current_mi = 1011;
+			root = 2;
 		}
 		if( payload.value == 3002){
-			obj.current_mi = 1012
+			obj.current_mi = 1012;
+			root = 2;
 		}
 		if( payload.value == 3003){
-			obj.current_mi = 1013
+			obj.current_mi = 1013;
+			root = 2;
+		}
+		if( payload.value == 2000){
+			obj.current_mi = 2100
+			obj.current_ball_type = 100;
+			root = 2000
 		}
 		if( payload.value == 3004){
-			obj.current_mi = 401
-			root = 400
-		}else{
-			root = 2
+			obj.current_mi = 401;
+			root = 400;
 		}
 
 		if(type){
-			MenuData.set_current_ball_type(1)
+			MenuData.set_current_ball_type(obj.current_ball_type || 1)
 			MenuData.set_menu_current_mi(obj.current_mi)
 		}else{
 			MenuData.set_current_ball_type(MenuData.current_ball_type || 1)
@@ -326,11 +332,10 @@ const checked_current_tab = (payload,type) => {
 	}
 
 	MenuData.set_mid_menu_result(obj)
-
 	MenuData.set_menu_root(root)
 
 	// 电子竞技
-	if (MenuData.is_esports()) {
+	if (MenuData.is_esports() && !MenuData.is_collect) {
 		obj.current_mi = payload.value*1
 		MenuData.set_menu_current_mi(obj.current_mi)
 		MenuData.set_current_ball_type(obj.current_mi)

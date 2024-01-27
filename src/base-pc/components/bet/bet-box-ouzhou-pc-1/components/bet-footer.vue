@@ -21,11 +21,11 @@
 
     <div class="bet-footer">
 
-        <div class="bet-state" v-if="!BetData.is_bet_single && set_special_state(BetData.bet_data_class_version)">
+        <!-- <div class="bet-state" v-if="!BetData.is_bet_single && set_special_state(BetData.bet_data_class_version)">
             <div class="w-100 f-c-c bet-title bet-error">
                 {{i18n_t("error_msg_info.0400477.client_msg1")}}
             </div>
-        </div>
+        </div> -->
         <div class="bet-state" v-if="!BetData.is_bet_single && BetData.bet_s_list.length < BetData.mix_min_count">
             <div class="w-100 f-c-c bet-title bet-error">
                 {{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}
@@ -44,10 +44,9 @@
             <div class="font16 font400 f-c-c bet-bet-cancel" @click="set_retain_selection">{{ i18n_t("bet.save_item") }}</div>
             <div class="font16 font600 f-c-c bet-place-bet" @click="set_confirm">{{ i18n_t("common.confirm") }}</div>
         </div>
-        <template v-if="BetData.bet_s_list.length < BetData.mix_min_count">
+        <!-- <template v-if="BetData.bet_s_list.length < BetData.mix_min_count"> -->
             <!--至少选择2场比赛-->
-            
-        </template>
+        <!-- </template> -->
     </div>
 </template>
 
@@ -122,7 +121,7 @@ const total = computed(()=> state =>{
     let sum = 0
     if (BetViewDataClass.bet_order_status === 1) {
         BetViewDataClass.bet_special_series.forEach((item)=>{
-            console.log('这这这这这这这这这这这这这这这这这这这', item)
+            // console.log('这这这这这这这这这这这这这这这这这这这', item)
             sum = mathJs.add(mathJs.multiply((item.bet_amount ? item.bet_amount : 0), item.count), sum)
         })
     } else {

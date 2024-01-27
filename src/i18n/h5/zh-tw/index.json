@@ -1,4 +1,227 @@
 {
+  "ouzhou": {
+    "record": {
+      "my_bet": "注單曆史",
+      "unsettled": "未結算",
+      "settled": "已結算",
+      "unpaid_bets": "該記錄將顯示所有未支付的投注",
+      "settled_time": "結算時間",
+      "bet_time": "投注時間",
+      "match_time": "比賽時間",
+      "today": "今天",
+      "yesterday": "昨天",
+      "7_days": "七天內",
+      "30_days": "30天內",
+      "datails": "投注詳情"
+    },
+    "detail": {
+      "which_team": "哪支球隊",
+      "keno_lottery": "基諾彩票",
+      "exciting_different": "令人興奮且與衆不同",
+      "close_handicap": "關閉讓分盤",
+      "betting":"投注",
+      "assault": "進攻",
+      "possession_ball": "球權",
+      "shot_wide_goal": "射偏球門",
+      "shots_on_goal": "射正球門",
+      "event_analysis":"賽事分析",
+      "foul": "犯規",
+      "point": "分",
+      "penalty": "罰球",
+      "pause": "暫停"
+     },
+     "bet": {
+         "place_bet": "下注"
+     },
+     "menu": {
+         "collect": "收藏",
+         "popular": "熱門",
+         "all_sports": "全部",
+         "my_bets": "注單記錄"
+     },
+     "match": {
+      "league": "聯賽",
+      "outrights": "冠軍",
+      "favorites": "收藏",
+      "matches": "賽事",
+      "featured": "特色",
+      "featured_events": "特色賽事",
+      "top_events": "熱門賽事",
+      "top_leagues": "熱門聯賽",
+      "all_matches": "所有賽事",
+      "15_mins": "15分鍾",
+      "inplay": "滾球",
+      "home": "體育投注",
+      "today": "今日",
+      "early": "早盤",
+      "bet_col_Over": "大于",
+      "bet_col_Under": "小于",
+      "home_handicap": "主隊讓分",
+      "away_handicap": "客隊讓分",
+      "tomorrow": "明天",
+      "select_time": {
+        "12h": "12小時以內",
+        "24h": "24小時以內",
+        "72h": "三天以內",
+        "168h": "七天以內"
+      },
+      "play_map": {
+        "1": "全場獨贏",
+        "2": "全場大小",
+        "4": "全場讓球",
+        "17": "半場獨贏",
+        "18": "半場大小",
+        "19": "半場讓球",
+        "37": "全場獨贏",
+        "38": "全场总分",
+        "39": "全場總分",
+        "153": "全場獨贏",
+        "154": "全場讓盤",
+        "155": "全場讓局",
+        "172": "全場讓分", 
+        "173": "全場總分", 
+        "181": "全場讓局", 
+        "182": "總局數", 
+        "242": "全場獨贏",
+        "243": "場讓球球",
+        "244": "全場大小",
+        "30001": "全局獲勝",
+        "30002": "地圖讓分",
+        "30003": "地圖總數",
+        "12_2":"總回合數"
+      }
+    },
+    "setting_menu": {
+      "personal": "個人",
+      "back": "返回",
+      "money": "余額",
+      "language": "語言",
+      "odds_setting": "賠率設置",
+      "odds_display": "賠率盤口",
+      "dec": "歐洲盤",
+      "hk": "香港盤",
+      "any": "任何賠率",
+      "hig": "最佳賠率",
+      "version": "版本",
+      "euro": "歐洲版",
+      "asia": "亞洲版",
+      "hot": "熱門",
+      "time": "時間",
+      "sort": "排序"
+    },
+     "no_data": {
+        "coming_soon": "即將推出"
+     },
+     "search": {
+        "change": "換壹換",
+        "clear_search_history": "清除搜索曆史",
+        "league": "聯賽",
+        "null1": "搜索結果爲空",
+        "null2": "換個詞搜索試試吧",
+        "other": "其他搜索",
+        "search_hot": "熱門搜索",
+        "search_play": "搜玩法",
+        "search_record": "搜索曆史",
+        "search_sports": "搜球類",
+        "team": "球隊",
+        "placeholder": "請輸入聯賽名或球隊名",
+        "close": "關閉",
+        "view_all_match": "查看所有比賽",
+        "underway": "進行中",
+        "no_search_rezult": "沒有發現結果。請嘗試另壹個搜索詞。",
+        "dogfall": "平局",
+        "search_history": "搜索曆史",
+        "No results": "無搜索結果"
+     },
+     "bet_col": {
+      "bet_col_1": {
+        "bet_col_1": "主勝",
+        "bet_col_X": "平局",
+        "bet_col_2": "客勝"
+      },
+      "bet_col_2": {
+        "bet_col_Over": "全場大小",
+        "bet_col_Under": "全場大小"
+      },
+      "bet_col_4": {
+        "bet_col_1": "主隊",
+        "bet_col_2": "客隊"
+      },
+      "bet_col_37": {
+        "bet_col_1": "主勝",
+        "bet_col_2": "客勝"
+      },
+      "bet_col_38": {
+        "bet_col_1": "總分",
+        "bet_col_2": "總分"
+      },
+      "bet_col_39": {
+        "bet_col_1": "讓分",
+        "bet_col_2": "讓分"
+      },
+      "bet_col_153": {
+        "bet_col_1": "主勝",
+        "bet_col_2": "客勝"
+      },
+      "bet_col_154": {
+        "bet_col_1": "讓盤",
+        "bet_col_2": "讓盤"
+      },
+      "bet_col_155": {
+        "bet_col_1": "讓局",
+        "bet_col_2": "讓局"
+      },
+      "bet_col_172": {
+        "bet_col_1": "讓分",
+        "bet_col_2": "讓分"
+      },
+      "bet_col_173": {
+        "bet_col_1": "總分",
+        "bet_col_2": "總分"
+      },
+      "bet_col_181": {
+        "bet_col_1": "讓局",
+        "bet_col_2": "讓局"
+      },
+      "bet_col_182": {
+        "bet_col_1": "大于",
+        "bet_col_2": "小于"
+      },
+      "bet_col_242": {
+        "bet_col_1": "全場獨贏",
+        "bet_col_2": "全場獨贏"
+      },
+      "bet_col_243": {
+        "bet_col_1": "主隊",
+        "bet_col_2": "客隊"
+      },
+      "bet_col_244": {
+        "bet_col_1": "大于",
+        "bet_col_2": "小于"
+      },
+      "bet_col_30001": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_30002": {
+        "bet_col_1": "讓分",
+        "bet_col_2": "讓分"
+      },
+      "bet_col_30003": {
+        "bet_col_1": "總數",
+        "bet_col_2": "總數"
+      }
+    },
+    "15minutes_bet_col": [
+      "開場~14:59",
+      "上半場 15:00~29:59",
+      "上半場 30:00~半场",
+      "下半場 开始~59:59",
+      "下半場 60:00~74:59",
+      "下半場 75:00~全场"
+    ]
+  },
+
   "ac_rules": {
     "auto": "自動接受更好賠率",
     "understand": "我知道了"
@@ -838,6 +1061,17 @@
     "msg1": "當前操作頻繁，請稍後再試"
   },
   "list": {
+    "win1": "主勝",
+    "win2": "客勝",
+    "play": "玩法",
+    "play1": "全場獨贏",
+    "play2": "全場讓球",
+    "play3": "全場大小",
+    "dogfall": "平局",
+    "home_hdp": "主隊讓球",
+    "away_hdp": "客隊讓球",
+    "over": "全場大",
+    "under": "全場小",
     "after_time_start": "{0}分鐘後開賽",
     "after_time_start2": "{0}分鐘後開始",
     "go_to_details": "詳情",
