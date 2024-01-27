@@ -127,7 +127,7 @@
       <div class="panel-title">
         <!-- 历史交战 -->
         <span>{{ i18n_t("analysis.historical_war") }}</span>
-        <m-select name="vs" @click="selectedFn(arguments)" />
+        <m-select name="vs" @click="selectedFn" />
       </div>
       <div class="content">
         <div class="title">
@@ -245,7 +245,7 @@
       <div class="panel-title">
         <!-- 近期战绩 -->
         <span>{{ i18n_t("analysis.recent_record") }}</span>
-        <m-select name="other" @click="selectedFn(arguments)" />
+        <m-select name="other" @click="selectedFn" />
       </div>
       <div class="content">
         <div class="title">
@@ -710,6 +710,7 @@ export default {
      * @description: 历史交战、近期战绩下拉框
      */
     selectedFn(data) {
+      console.error('37288373',data)
       this.$emit("selectedFn", data);
     },
     /**

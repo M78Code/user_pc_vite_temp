@@ -181,7 +181,7 @@ const jump_func = (payload ={},type) => {
  */
 const esportsClick = ()=>{
    // 点击菜单的时候如果在详情页应跳转出来先
-  if (['league','details','search'].includes(route.name)) {
+  if (['league','details','search','virtual_sports_details'].includes(route.name)) {
     router.push('/home')
   }
   let obj = {
@@ -213,7 +213,7 @@ const esportsClick = ()=>{
  */
  const vrClick = ()=>{
    // 点击菜单的时候如果在详情页应跳转出来先
-  if (['league','details','search'].includes(route.name)) {
+  if (['league','details','search','virtual_sports_details'].includes(route.name)) {
     router.push('/home')
   }
   let obj = {
@@ -244,7 +244,7 @@ const esportsClick = ()=>{
 const outrights = () => {
   // if(!MenuData.is_common_kemp() && !MenuData.is_collect_kemp() && MenuData.is_kemp())return
  // 点击菜单的时候如果在详情页应跳转出来先
- if (['league','details'].includes(route.name)) {
+ if (['league','details','search','virtual_sports_details'].includes(route.name)) {
     router.push('/home')
   }
   let obj = {
