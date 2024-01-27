@@ -104,7 +104,10 @@
       "hig": "最佳赔率",
       "version": "版本",
       "euro": "欧洲版",
-      "asia": "亚洲版"
+      "asia": "亚洲版",
+      "hot": "热门",
+      "time": "时间",
+      "sort": "排序"
     },
      "no_data": {
         "coming_soon": "即将推出"
@@ -2444,6 +2447,7 @@
     "odd_optimal2": "最佳赔率",
     "prize": "兑奖记录",
     "rule_description": "规则说明",
+    "sort": "排序",
     "skin": "换肤",
     "standard": "标准",
     "time": "时间",
