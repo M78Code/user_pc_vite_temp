@@ -163,7 +163,6 @@ export default {
   },
   watch:{
     mid(){
-      console.error("this.mid====>", this.mid);
       this.start = null;
       this.draw_timer_by_second();
       VR_CTR.state.current_match_mid = this.mid;

@@ -33,7 +33,7 @@ export const get_matches_list = (params, config={}, url = "/v1/m/matches") => ht
  *  @param {{type:"Animation"|"Video"}|K.mid} params type的其他可选值暂不清楚,可自行补充(type:"Animation"|"Video")
  */
 export const post_video_url = (params, config={}, url = "/v1/w/videoAnimationUrl") => {
-    params.imgDm =lodash.get(window.BUILDIN_CONFIG,'DOMAIN_RESULT.img_domains[0]');
+    params.imgDm =lodash.get(BUILDIN_CONFIG,'DOMAIN_RESULT.img_domains[0]');
     return http.post(`${prefix_11}${url}`, params);
     }
 
