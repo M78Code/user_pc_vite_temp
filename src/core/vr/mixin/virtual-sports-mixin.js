@@ -736,7 +736,7 @@ export default {
 
       //检查第一批赛事是否结束
       let check = () => {
-        let first_t_item = this.no_title_list[0];
+        let first_t_item = lodash.get(this.no_title_list,'[0]');
         if(first_t_item){
           let first_m_item = first_t_item.match[0];
           if(first_m_item){
