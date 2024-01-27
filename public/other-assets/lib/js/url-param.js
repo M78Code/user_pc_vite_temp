@@ -153,4 +153,4 @@ window.SEARCH_PARAMS = search_params_obj;
 // 获取清除参数的url
 // let url = get_url_no_param();
 // 清除页面url参数
-// window.history.replaceState('', '', url);
+// window.history.replaceState(window.history.state, '', url);
