@@ -206,7 +206,7 @@ const set_tab_list = (news_) =>{
 		resolve_mew_menu_res()
 	}
 	// 电竞
-	if (MenuData.is_esports()) {
+	if (MenuData.is_esports() && !MenuData.is_collect) {
 		is_left_sports.value = true
 		// matches_header_title.value = BaseData.menus_i18n_map[2000]
 		match_list_top.value = '134px'
@@ -296,23 +296,25 @@ const checked_current_tab = (payload,type) => {
 	 	// MenuData.set_current_ball_type(1)
 	 	// MenuData.set_current_ball_type(MenuData.menu_current_mi - 400 || 1)
 		if( payload.value == 3001){
-			obj.current_mi = 1011
+			obj.current_mi = 1011;
+			root = 2;
 		}
 		if( payload.value == 3002){
-			obj.current_mi = 1012
+			obj.current_mi = 1012;
+			root = 2;
 		}
 		if( payload.value == 3003){
-			obj.current_mi = 1013
+			obj.current_mi = 1013;
+			root = 2;
 		}
 		if( payload.value == 2000){
 			obj.current_mi = 2100
 			obj.current_ball_type = 100;
+			root = 2000
 		}
 		if( payload.value == 3004){
-			obj.current_mi = 401
-			root = 400
-		}else{
-			root = 2
+			obj.current_mi = 401;
+			root = 400;
 		}
 
 		if(type){
@@ -330,11 +332,10 @@ const checked_current_tab = (payload,type) => {
 	}
 
 	MenuData.set_mid_menu_result(obj)
-
 	MenuData.set_menu_root(root)
 
 	// 电子竞技
-	if (MenuData.is_esports()) {
+	if (MenuData.is_esports() && !MenuData.is_collect) {
 		obj.current_mi = payload.value*1
 		MenuData.set_menu_current_mi(obj.current_mi)
 		MenuData.set_current_ball_type(obj.current_mi)
