@@ -305,30 +305,30 @@ const url_param_ctr_init = (vue_that)=>{
   // window.history.replaceState('', '', url);
   switch (PROJECT_NAME) {
     case 'yazhou-h5':
-      window.history.replaceState('', '', url);
+      window.history.replaceState(window.history.state, '', url);
       to_corresponding_router_yazhou_h5(vue_that, search_params);
       break;
     case 'app-h5':
-      window.history.replaceState('', '', url);
+      window.history.replaceState(window.history.state, '', url);
       to_corresponding_router_app_h5(vue_that, search_params);
       break;
     case 'ouzhou-h5':
-      window.history.replaceState('', '', url);
+      window.history.replaceState(window.history.state, '', url);
       to_corresponding_router_ouzhou_h5(vue_that, search_params);
       break;
     case 'yazhou-pc':
-      window.history.replaceState('', '', url);
+      window.history.replaceState(window.history.state, '', url);
       to_corresponding_router_yazhou_pc(vue_that, search_params);
       break;
     case 'new-pc':
     
       break;
     case 'ouzhou-pc':
-      window.history.replaceState('', '', url);
+      window.history.replaceState(window.history.state, '', url);
       to_corresponding_router_ouzhou_pc(vue_that, search_params);
       break;
     case 'activity':
-      window.history.replaceState('', '', url);
+      window.history.replaceState(window.history.state, '', url);
       break;
     default:
       break;

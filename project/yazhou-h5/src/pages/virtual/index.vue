@@ -119,7 +119,7 @@ onMounted(() => {
   }
   // 虚拟体育页更改语言
   if (!location.search.includes('keep_url')) {
-    history.replaceState(null,'',`${location.pathname}${location.hash}`)
+    history.replaceState(window.history.state,'',`${location.pathname}${location.hash}`)
   }
 })
 

@@ -51,7 +51,7 @@ const router = useRouter()
       // 更新浏览器url
       let url = window.location.href
       setTimeout(() => {
-        window.history.replaceState(null, '', url);
+        window.history.replaceState(window.history.state, '', url);
       }, 0);
 
     }

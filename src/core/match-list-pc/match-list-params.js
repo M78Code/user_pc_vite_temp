@@ -257,7 +257,8 @@ function match_list_all_params() {
         lv2_mi_info = {
             euid: "30199",
             orpt: -1,
-            csid: current_mi - 5000
+            csid: current_mi - 5000,
+            apiType
         };
     }
     else if (menu_root == 1) {

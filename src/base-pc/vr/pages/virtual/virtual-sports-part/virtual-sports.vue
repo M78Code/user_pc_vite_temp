@@ -178,7 +178,7 @@ export default {
   height: 44px;
   display: flex;
   flex-wrap: nowrap;
-  overflow: auto;
+  overflow: hidden;
   align-items: center;
   background-color: var(--q-gb-bg-c-27);
 
