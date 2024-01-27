@@ -146,7 +146,7 @@ const jump_func = (payload ={},type) => {
     return esportsClick()
   }
   // 点击菜单的时候如果在详情页应跳转出来先
-  if (['league','details','search'].includes(route.name)) {
+  if (['league','details','search','virtual_sports_details'].includes(route.name)) {
     router.push('/home')
   }
   let obj = {
