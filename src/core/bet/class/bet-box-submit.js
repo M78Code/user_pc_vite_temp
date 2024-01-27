@@ -1175,26 +1175,32 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,other}) => {
     let hpid = ol_obj._chpid ?  ol_obj._chpid : ol_obj._hpid
      //玩法名称
     let play_name = ALL_SPORT_PLAY[ol_obj]
-    // 详情 并且本地没有配置玩法
-    if(other.is_detail){
-        play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+
+    // 次要玩法
+    if(other.secondary_paly){
+        play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpnb`,'')
     }else{
-        let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,play_name)
-          // 冠军玩法 部分玩法hpid相同 
-        if(other.bet_type == 'guanjun_bet'){
-            let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])
-            if(hpn_list.length < 1){
-                hpn_list = lodash_.get(mid_obj,`hps`,[])
+        // 详情 并且本地没有配置玩法
+        if(other.is_detail){
+            play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+        }else{
+            let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,play_name)
+            // 冠军玩法 部分玩法hpid相同 
+            if(other.bet_type == 'guanjun_bet'){
+                let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])
+                if(hpn_list.length < 1){
+                    hpn_list = lodash_.get(mid_obj,`hps`,[])
+                }
+                let hpn_obj = hpn_list.find(item => item.hid == ol_obj._hid) || {}
+                if(hpn_obj.hid){
+                    hpn = hpn_obj.hpn || hpn_obj.hps
+                }else{
+                    hpn = i18n_t('bet.bet_winner')
+                }
             }
-            let hpn_obj = hpn_list.find(item => item.hid == ol_obj._hid) || {}
-            if(hpn_obj.hid){
-                hpn = hpn_obj.hpn || hpn_obj.hps
-            }else{
-                hpn = i18n_t('bet.bet_winner')
+            if(hpn){
+                play_name = hpn
             }
-        }
-        if(hpn){
-            play_name = hpn
         }
     }
     return play_name
@@ -1351,8 +1357,8 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
             text = ol_obj.ot
             hv = ''
         }else
-        // 罚牌玩法
-        if(ol_obj._hpid == '310' ) {
+        // 罚牌玩法 / 加时赛 / 冠军
+        if( [126,136,310].includes(ol_obj._hpid*1)) {
             if(ol_obj.ots == 'T1'){
                 text = mid_obj.mhn 
             }
