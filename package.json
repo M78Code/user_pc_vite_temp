@@ -27,7 +27,7 @@
         "export-entey-file": "node ./job/entry/export-entey-file.js",
         "chcp-utf8": "chcp 65001",
         "common-process-base": "run-s  copy-oss-backup   copy-oss-output  export-build-in-config   ",
-        "common-process": "run-s export-entey-file  common-process-base     ",
+        "common-process": "run-s  common-process-base    export-entey-file   ",
         "common-process-merchant": "run-s export-merchant-config resolve-merchant-config   export-full-version-close",
         "divider--1--2": "echo  -------------------------通用基础命令  结束----------------------------- ",
         "divider--2--1": "echo  -------------------------服务端配置拆分命令  开始----------------------------- ",

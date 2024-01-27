@@ -27,12 +27,8 @@ import {placeholder_const , default_content,normalize_html_config} from  "../com
      },
  
  
-     script1:{
-        placeholder: placeholder_const.script1,
-        content: ''
-     }
-
-
+   
+ 
 
 
 }

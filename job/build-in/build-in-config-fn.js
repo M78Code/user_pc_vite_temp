@@ -73,9 +73,7 @@ const AUTO_API = process.env.AUTO_API || false;
     LOCAL_COMMON_FILE_PREFIX,
     IS_PROD  ,
     NODE_ENV,
-    current_env_build_in_oss: encodeURIComponent(
-      JSON.stringify(current_env_build_in_oss.data)
-    ),
+  
   };
   // 合并 所有内容
   final_config = {
@@ -84,6 +82,9 @@ const AUTO_API = process.env.AUTO_API || false;
     SERVER_GLOBAL_SWITCH:{},
     
     API_PREFIX,
+    CURRENT_ENV_BUILD_IN_OSS: encodeURIComponent(
+      JSON.stringify(current_env_build_in_oss.data)
+    ),
     OSS_FILE_ARR:compute_oss_file_path_arr(current_env),
     OSS_FILE_NAME: current_env_build_in_oss.file,
     ...BUILD_VERSION_CONFIG,

@@ -541,12 +541,15 @@ class AllDomain {
    * 解析 html 内打包进来的  CURRENT_ENV_BUILD_IN_OSS
    */
   jixi_build_in_current_env_build_in_oss() {
-    if (!window.CURRENT_ENV_BUILD_IN_OSS) {
+
+    const  CURRENT_ENV_BUILD_IN_OSS = lodash.get(window,'BUILDIN_CONFIG.CURRENT_ENV_BUILD_IN_OSS')
+
+    if (!CURRENT_ENV_BUILD_IN_OSS) {
       return false;
     }
     try {
       let build_in_file = JSON.parse(
-        decodeURIComponent(window.CURRENT_ENV_BUILD_IN_OSS)
+        decodeURIComponent( CURRENT_ENV_BUILD_IN_OSS)
       );
       if (!build_in_file) {
         return false;
