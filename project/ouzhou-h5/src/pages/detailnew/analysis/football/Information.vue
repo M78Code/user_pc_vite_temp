@@ -1,7 +1,8 @@
 <template>
   <div class="component information">
     <template v-if="article">
-
+      {{ console.log(article) }}
+      <ArticleContent :data="article"></ArticleContent>
     </template>
     <NoData v-else></NoData>
   </div>
@@ -12,6 +13,14 @@ import { ref } from 'vue'
 import { api_common } from "src/api/index";
 import NoData from "../NoData.vue"
 import { useRoute } from "vue-router";
+import ArticleContent from '../components/ArticleContent.vue';
+
+/** @type {{match_detail:TYPES.MatchDetail}} */
+const props = defineProps({
+  match_detail:{
+    type: Object,
+  }
+})
 
 const route = useRoute()
 const matchId = route.params?.mid
