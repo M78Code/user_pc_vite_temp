@@ -9,19 +9,17 @@ import { MenuData } from "src/output/index.js"
 const hideTitle = [0,18]
 const innerTitle = [12,14]
 const templates = new Map([[4,TemplateColumn],[6,TemplateColumn],[14,TemplateColumn],[18,Template18]])
-
+/** @type  */
 const rowHpid = '106,107'
 
 const other = {
   is_detail: true,
-  // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
-  // 根据赛事纬度判断当前赛事属于 那种投注类型
+  /** @type {'common_bet','vr_bet','guanjun_bet','esports_bet'} 根据赛事纬度判断当前赛事属于 哪种投注类型 */
   bet_type: 'common_bet',
-  // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+  /** @type {1|2|3|4|5} 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备 */
   device_type: 1,
-  // 数据仓库类型
+  /** @type {'h5_detail'|'h5_list'} 数据仓库类型 */
   match_data_type: "h5_detail", // h5_detail
-  // match_data_type: "h5_list", // h5_detail
   play_name: ''
 }
 
