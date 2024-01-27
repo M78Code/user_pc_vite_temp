@@ -70,6 +70,7 @@
                         <sport-icon :sport_id="cts_mid.includes(props.row.managerCode*1) ? item.sportId == 1 ? '90': 91  : item.sportId" key_name="pc-left-menu-bg-image" size="18" class="icon"  style="margin:0 10px"/>
                       </div>
                       <span> {{ item.matchName }}</span>
+                      <span v-if="item.matchDay">{{ item.matchDay }} {{ item.batchNo }}</span>
                       <span v-if="item.matchType !=3" style="color:#8A8986">{{ item.matchInfo }}</span>
                       <span>
                           <span v-if="item.matchType != 3 && ![1001,1002,1009,1010,1011].includes(item.sportId*1)">{{matchType(item.matchType, props.row.langCode)}}</span>
@@ -317,7 +318,7 @@ watch(() => props.current_tab, (newVal) => {
     handle_fetch_order_list({ orderStatus: 0 })
     console.log(tableData)
   }
-})
+}, { immediate: true })
 const getTableData = (params) => {
   handle_fetch_order_list(params)
 }
