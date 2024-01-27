@@ -239,15 +239,15 @@ http.post(`${prefix}${url}`,params,config);
 /** 获取赛事文章详情(Jeffrey)
  * @param {Object} params
  * @param {1|2} params.type 
- * @param {Number} params.matchId type 1-matchId是赛事id 2-matchId是文章id
- * @returns {API.Result}
+ * @param {Number|String} params.matchId type 1-matchId是赛事id 2-matchId是文章id
+ * @returns {API.Result<TYPES.Article>}
  */
 export const getArticle = (params, config, url="/v1/art/getArticle") => http.get(`${prefix}${url}`,params, config)
 /** 获取赛事文章猜你喜欢接口(Jeffrey) 
  * @param {Object} params
- * @param {Number} params.id 文章id
- * @param {Number} params.matchId 赛事id;mid
- * @returns {API.Result}
+ * @param {Number|String} params.id 文章id
+ * @param {Number|String} params.matchId 赛事id;mid
+ * @returns {API.Result<TYPES.Article>}
  */
 export const getFavoriteArticle = (params, config, url="/v1/art/getFavoriteArticle") => http.get(`${prefix}${url}`,params, config)
 // 更新赛事文章浏览记录(Jeffrey)
