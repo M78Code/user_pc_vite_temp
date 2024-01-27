@@ -40,7 +40,7 @@ const tab_list = ref([
 const get_route_path = computed(() => {
   return  router.currentRoute.value.path;
 })
-const tab_active = ref(get_route_path);
+const tab_active = ref(get_route_path.value);
 
 const jump_page = (item) => {
 
