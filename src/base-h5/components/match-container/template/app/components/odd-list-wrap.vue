@@ -815,7 +815,7 @@ const odd_wrapper_pan = ({ direction }) => {
  */
 const get_hp_list = (type) => {
   let hps = [];
-  if (type == 0 || is_scroll_page) {
+  if (type == 0) {
     if (props.match && finally_ol_list.value) {
       if (props.match.csid == 12) {
         hps = finally_ol_list.value.slice(0, 2);
