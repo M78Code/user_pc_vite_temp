@@ -598,7 +598,6 @@ export function compute_match_all_handicap_data(match) {
     if (csid == 1 && [1, 13].includes(+tpl_id) && !is_corner_menu) {
         // 计算角球、罚牌等其他玩法数据
         // 根据个人设置的全局配置的附加盘口是否展示
-        console.error('GlobalSwitchClass.show_additional_disk',GlobalSwitchClass.show_additional_disk)
         if (GlobalSwitchClass.show_additional_disk){
             Object.assign(match_assign, { 
                 play_current_play: get_play_current_play(match),
