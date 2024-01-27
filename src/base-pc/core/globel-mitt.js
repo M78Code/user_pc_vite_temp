@@ -89,7 +89,7 @@ const send_user_pro_info = () => {
  
   // 拼装需要提交的数据
   let data = {
-    config: window.BUILDIN_CONFIGg, // 所有配置信息
+    config: BUILDIN_CONFIGg, // 所有配置信息
     env: CURRENT_ENV, // 环境信息 ，  可选值： local_dev  ，local_test，local_ylcs，idc_pre，idc_sandbox，idc_lspre，idc_online
     projectHref: location.href, // 当前项目的 url  , 例如 https://user-pc.35ri3g.com/#/home  ，有什么 拿什么 不一定带token ,页面的 哈希路径一定 要带上  location.href
     projectInfo: { final_type: project_name }, // 项目信息对象内 必须有一个字段 final_type :  取值范围 ： [  'pc-zhuanye',  'h5-xinban', 'h5-jiuban' ]
@@ -173,7 +173,7 @@ const send_api_error_data = throttle(
       tag: TAG, // git tag
       projectHref: location.href, // 当前项目的 url  , 例如 https://user-pc.35ri3g.com/#/home  ，有什么 拿什么 不一定带token ,页面的 哈希路径一定 要带上  location.href
       projectInfo: PRO_ARR, // 项目信息 对象
-      config: window.BUILDIN_CONFIG, // 所有配置信息
+      config: BUILDIN_CONFIG, // 所有配置信息
       userInfo: userInfo, // 用户信息 对象  ，  //  user/getUserInfo  这个接口返回的 对象  ，包含商户的一些配置
       userToken: SessionStorage.get("pc_token"), //用户 的  token
       apiStatus: apiStatus, // 目前页面上 允许的请求 域对象  以及   各自目前的  状态 延迟信息

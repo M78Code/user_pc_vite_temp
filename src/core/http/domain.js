@@ -237,18 +237,18 @@ class AllDomain {
     	//更新图片域名
       BUILDIN_CONFIG.DOMAIN_RESULT.img_domains = obj.img;
     }
-    if(window.BUILDIN_CONFIG.IS_PC){
+    if(BUILDIN_CONFIG.IS_PC){
       if(obj.live_pc){
         // //更新视频项目域名
-        window.BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0] = obj.live_pc;
+        BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0] = obj.live_pc;
       }
     } else {
       if(obj.live_h5){
         //更新视频项目域名
-        window.BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0] = obj.live_h5;
+        BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0] = obj.live_h5;
       }
     }
-    // window.BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0]
+    // BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0]
   }
 
   /**
@@ -584,7 +584,7 @@ class AllDomain {
     // 设置 oss文件中的数据到全局配置文件中
     this.set_all_config_from_oss_file_data_2(obj);
     // 全局变量可视化设置
-    window.BUILDIN_CONFIG.OSS_JSON = obj;
+    BUILDIN_CONFIG.OSS_JSON = obj;
   }
 
   /**
@@ -1255,7 +1255,7 @@ class AllDomain {
       // 路径规则：最优域名/sports-rules/布局/内容 （内容字段需要接口下发，默认common）
       // 比如 https://test-topic.sportxxxifbdxm2.com/sports-rules/common/common
       // 获取项目信息
-      const PROJECT_NAME = window.BUILDIN_CONFIG.PROJECT_NAME;
+      const PROJECT_NAME = BUILDIN_CONFIG.PROJECT_NAME;
       obj_.domain = c_url;
       window.SEARCH_PARAMS.init_param_set({topic:obj_.domain});
       obj_.activity = `${c_url}/activity/common/common/`;

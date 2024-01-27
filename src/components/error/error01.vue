@@ -25,6 +25,7 @@ import UserCtr from 'src/core/user-config/user-ctr.js'
 import { LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js";
 import GoBackSvg from 'src/components/go_back/index.vue'
 import { useRouter, useRoute } from "vue-router";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 const { IS_PC } = BUILDIN_CONFIG 
 export default {
   components: {
