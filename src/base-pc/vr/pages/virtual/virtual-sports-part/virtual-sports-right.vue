@@ -40,7 +40,10 @@
                         {{ team.teamName }}
                     </div>
 
-                    <div class="row team justify-between" style="width: 361px">
+                    <div class="row team justify-between odds-layout" v-if="sub_menu_type == lodash.get(current_match,'csid')">
+                      <div class="col-4 team-odds" v-if="'1009' == sub_menu_type">
+                        <div></div>
+                      </div>
                       <div class="col-4 team-odds">
                         <div v-if="lodash.get(play_obj,`20033${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
                         <div v-else>
@@ -152,6 +155,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.team-odds{
+  text-align: center;
+}
+.odds-layout{
+  width: 297px;
+  padding-right: 5px;
+}
 .virtual-video-play-team {
     padding-bottom: 0;
     background: var(--q-gb-bg-c-28);

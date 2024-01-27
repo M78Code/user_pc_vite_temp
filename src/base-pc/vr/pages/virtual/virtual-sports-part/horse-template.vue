@@ -258,7 +258,7 @@ export default defineComponent({
 }
 
 .team-odds2 {
-  background: var(--q-gb-bg-c-37) !important
+  background: var(--q-gb-t-c-4) !important
 }
 
 div[class*="virtual-num"] {

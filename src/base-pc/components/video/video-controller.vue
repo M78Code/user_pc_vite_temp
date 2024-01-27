@@ -1,5 +1,7 @@
 <template>
-    <div></div>
+    <div>
+        
+    </div>
 </template>
 
 <script setup>
@@ -11,8 +13,15 @@ const props = defineProps({
         default: () => ({
             play_type: null,
         })
+    },
+    // 赛事信息
+    macth_info: {
+        type: Object,
+        default: () => ({})
     }
 });
+
+
 /** true 大屏 false 中屏 */
 const is_full_screen = computed(() => props.params.play_type == 2);
 

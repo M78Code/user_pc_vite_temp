@@ -81,7 +81,7 @@ import lodash from "lodash";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js";
 import { component_symbol, need_register_props } from "../config/index.js";
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 const props = defineProps({
   //tab列表
   list: {
@@ -149,7 +149,7 @@ const wrap = ref(null); //获取组件实例
 const item_wrap = ref(null); //获取组件实例
 const emit = defineEmits(["onclick"]);
 // 显示部分dom ID
-const DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
+const DOM_ID_SHOW = BUILDIN_CONFIG.DOM_ID_SHOW;
 // 鼠标是否按下
 const is_mousedown = ref(false);
 const clientX = ref("");

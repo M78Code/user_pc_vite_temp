@@ -83,7 +83,8 @@ import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/output/index.js";
 import {LOCAL_PROJECT_FILE_PREFIX,format_money2,MenuData } from "src/output/index.js";
 import VMarquee from 'src/base-h5/components/marquee/marquee.vue'
 import BaseData from "src/core/base-data/base-data.js";
-
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG;
 //语言设置
 const lang = ref(UserCtr.lang)
 const router = useRouter();
@@ -96,42 +97,48 @@ const show = ref()
 const sort = ref(1)
 const marqueeRef = ref(null)
 // 用户信息
-const languages = [{
-  key: 'zh',
-  language: '简体中文',
-}, {
-  key: 'en',
-  language: 'English',
-},
-//  {
-//   key: 'tw',
-//   language: '繁體中文',
-// }, {
-//   key: 'vi',
-//   language: 'Tiếng Việt',
-// }, {
-//   key: 'th',
-//   language: 'ไทย',
-// }, {
-//   key: 'ms',
-//   language: 'Melayu',
-// }, {
-//   key: 'ad',
-//   language: 'Indonesia',
-// }, {
-//   key: 'md',
-//   language: 'Burmese',
-// }, {
-//   key: 'ry',
-//   language: 'Japanese',
-// }, {
-//   key: 'pty',
-//   language: 'Portuguese',
-// }, {
-//   key: 'hy',
-//   language: 'Korean',
-// }
-]
+let languages = [{
+      key: 'zh',
+      language: '简体中文',
+    }, {
+      key: 'en',
+      language: 'English',
+    },
+     
+    ]
+
+    const languages_ = [ {
+        key: 'tw',
+        language: '繁體中文',
+      }, {
+        key: 'vi',
+        language: 'Tiếng Việt',
+      }, {
+        key: 'th',
+        language: 'ไทย',
+      }, {
+        key: 'ms',
+        language: 'Melayu',
+      }, {
+        key: 'ad',
+        language: 'Indonesia',
+      }, {
+        key: 'md',
+        language: 'Burmese',
+      }, {
+        key: 'ry',
+        language: 'Japanese',
+      }, {
+        key: 'pty',
+        language: 'Portuguese',
+      }, {
+        key: 'hy',
+        language: 'Korean',
+      }]
+      console.error('IS_FOR_NEIBU_TEST',IS_FOR_NEIBU_TEST)
+      if(IS_FOR_NEIBU_TEST){
+       languages = lodash.concat(languages,languages_)
+      }
 const settingData = ref([{
   title:"ouzhou.setting_menu.odds_display",
   index: UserCtr.odds.cur_odds, //用户已选中值

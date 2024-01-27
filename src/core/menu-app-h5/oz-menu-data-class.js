@@ -311,6 +311,12 @@ class MenuData {
     this.update()
   }
   /**
+   *  设置 menu_type
+   */
+  set_menu_type(mi) {
+    this.menu_type.value = mi
+  }
+  /**
    * 重置2级菜单 csid
    * @param {*} menu_type 
    * @param {*} mi 
