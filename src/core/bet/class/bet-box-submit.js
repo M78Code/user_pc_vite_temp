@@ -898,14 +898,14 @@ const set_error_message_config = (res ={},type,order_state) => {
                     // 预约成功
                     obj = {
                         code: '200',
-                        message: "pre_record.booked"
+                        message: "bet.bet_booking"
                     }
                     break;
                 case 8: 
                     // 预约失败
                     obj = {
                         code: '500',
-                        message: "pre_record.booked_fail"
+                        message: "bet.bet_book_failed"
                     }
                     break;
             }

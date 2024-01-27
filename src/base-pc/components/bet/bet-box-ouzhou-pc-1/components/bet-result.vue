@@ -25,9 +25,9 @@
                     <span class="font14 font700 mr-10">@{{ items.oddsValues }}</span>
                 </div>
                 <template v-if="BetData.is_bet_pre">
-                    <div class="bet-failure mr-10" v-if="items.preOrderDetailStatus == 0">{{i18n_t("pre_record.booking")}}</div>
-                    <div class="bet-success mr-10" v-if="items.preOrderDetailStatus == 1">{{i18n_t("pre_record.booked")}}</div>
-                    <div class="bet-loading mr-10" v-if="items.preOrderDetailStatus == 2">{{i18n_t("pre_record.booked_fail")}}</div>  
+                    <div class="bet-failure mr-10" v-if="items.preOrderDetailStatus == 0">{{i18n_t("bet.bet_booking")}}</div>
+                    <div class="bet-success mr-10" v-if="items.preOrderDetailStatus == 1">{{i18n_t("bet.bet_booked")}}</div>
+                    <div class="bet-loading mr-10" v-if="items.preOrderDetailStatus == 2">{{i18n_t("bet.bet_book_failed")}}</div>  
                 </template>
                 <template v-else>
                     <div class="bet-failure mr-10" v-if="items.orderStatusCode == 0">{{i18n_t("bet.bet_order_info3")}}</div>

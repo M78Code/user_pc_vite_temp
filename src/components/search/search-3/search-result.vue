@@ -159,7 +159,6 @@ watch(
     () => {
         if (store.keyword) {
             get_search_result()
-            console.log('jhkjksajk')
         }
     }
 )
