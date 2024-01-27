@@ -123,8 +123,8 @@ import searchCom from 'src/components/search/search-2/index.vue';
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import BaseData from 'src/core/base-data/base-data.js'
 
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG;
 
 export default defineComponent({
   name: "RightHead",
