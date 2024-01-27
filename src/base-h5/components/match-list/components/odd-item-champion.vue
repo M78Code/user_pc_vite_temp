@@ -44,7 +44,7 @@ const DOM_ID_SHOW = ref(null)
 
 onMounted(() => {
   // 设置是否显示投注项dom的id属性值
-  DOM_ID_SHOW.value =  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
+  DOM_ID_SHOW.value =  window?.BUILDIN_CONFIG?.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
 })
 
 watch(() => props.ol_item.ov, (v1,v0) => {

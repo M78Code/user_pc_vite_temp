@@ -224,10 +224,11 @@ export default defineComponent({
     * @Description:替换输入框非法字符为空串
     * @return {undefined} undefined
     */
-    const change_txt = (val) => {
-      keyword.value = keyword.value.replace(/#/g, "");
+    const change_txt = lodash.debounce((val) => {
+      keyword.value = val.replace(/#/g, "");
       if (keyword.value.length > 20) keyword.value = keyword.value.slice(0, 20);
-    }
+      get_search_data(keyword.value)
+    }, 500)
     // 传递搜索状态
     const get_search_data =lodash.throttle( (val) => {
       useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
@@ -313,10 +314,11 @@ export default defineComponent({
     // 清空输入框
     const clear_keyword = () => {
       keyword.value = ''
-      useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
-        type: 'init',
-        text: keyword.value
-      })
+      get_search_data(keyword.value)
+      // useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
+      //   type: 'init',
+      //   text: keyword.value
+      // })
     }
     // 关闭搜索状态清空值
     const close = () => {
@@ -346,9 +348,10 @@ export default defineComponent({
       emit_list.map(i=>i())
     })
     //监听输入框内容改变
-    watch(() => keyword.value, (val) => {
-      get_search_data(val)
-    })
+    // watch(() => keyword.value, (val) => {
+    //   console.log('watchxxxxxxx')
+    //   get_search_data(val)
+    // })
     return {
       keyword,
       SearchPCClass,
