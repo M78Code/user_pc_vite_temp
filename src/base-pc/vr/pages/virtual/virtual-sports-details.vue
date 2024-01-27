@@ -82,7 +82,7 @@
     </div>
 
     <!--视频，tab和玩法集部分-->
-    <div>
+    <div v-if="match">
       <div class="detail-header">
         <div class="title">
           {{ match.tn }} {{ match.no }}
