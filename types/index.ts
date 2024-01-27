@@ -72,6 +72,10 @@ declare namespace TYPES {
     /** 赔率集合? 投注项集合? */ ol: Array<Ol>
   }
 
+  /** 详情赛事分析资讯 文章 */ interface Article {
+    /** 文章/资讯id */ id:number,
+  }
+
   /**  */ interface S {
 
   }
