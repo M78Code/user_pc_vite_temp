@@ -236,7 +236,11 @@ export const existMatchResult = (params, config, url="/order/betRecord/existMatc
 //获取虚拟体育赛果
 export const get_virtual_result = (params, config, url="/v1/orderScoreResult/queryTournamentScoreResult") =>
 http.post(`${prefix}${url}`,params,config);
-// 获取赛事文章详情(Jeffrey)
+/** 获取赛事文章详情(Jeffrey)
+ * @param {Object} params
+ * @param {1|2} params.type 
+ * @param {Number} params.matchId type 1-matchId是赛事id 2-matchId是文章id
+ */
 export const getArticle = (params, config, url="/v1/art/getArticle") => http.get(`${prefix}${url}`,params, config)
 // 获取赛事文章猜你喜欢接口(Jeffrey)
 export const getFavoriteArticle = (params, config, url="/v1/art/getFavoriteArticle") => http.get(`${prefix}${url}`,params, config)
