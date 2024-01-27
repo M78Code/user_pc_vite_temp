@@ -19,6 +19,7 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common, re
 		return ws_keys_map[MatchListData.name_code]
 	}
 	let remove_fun = [];
+	window.MenuData=MenuData
 	const ws_obj = {
 		mids: [],
 		set_inactive_mids(_mids = []) {
@@ -46,7 +47,12 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common, re
 				if (["C109"].includes(cmd)) {
 					const { cd = [] } = data;
 					if (cd.length < 1) return;
-					const item = cd.find((t) => t.csid == MenuData.current_ball_type);
+					let csid_map={
+						90:1,//电子足球
+						91:2//电子篮球
+					}
+					let csid=csid_map[MenuData.current_ball_type]||MenuData.current_ball_type
+					const item = cd.find((t) => t.csid ==csid);
 					if (MenuData.is_home()) {
 						// useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES)
 					} else {

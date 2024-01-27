@@ -3,10 +3,11 @@
   <div class="current-filter-wrap">
     <div class="current-filter-list" @scroll="on_scroll">
       <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="index">
-        <div class="filter-label" @click="choose_filter_tab(item, index)" :class="{ 'checked': MenuData.mid_menu_result.md == item.label }">
+        <div class="filter-label" @click="choose_filter_tab(item, index)" :class="{ 'checked': MenuData.mid_menu_result.md == item.label && mid_index == index }">
           {{item.name}}
           <!-- {{ i18n_t(item.value, {month: i18n_t(`ouzhou.time.month_` + item.month), day: item.day}) }} -->
-          <div class="current-mark" :class="{'show-mark':  MenuData.mid_menu_result.md == item.label}"></div>
+          <div class="current-mark" :class="{'show-mark':  MenuData.mid_menu_result.md == item.label && mid_index == index }"></div>
+        
         </div>
         <div class="filter-tab-split-line" v-show="index != current_filter_list.length - 1"></div>
       </div>
@@ -45,6 +46,7 @@
   let area_obj = null;
   let area_obj_wrap = null;
   let mitt_list = null;//监听菜单变化
+  let mid_index = ref(0)
   let time = ''
   onMounted(()=>{
     update_time()
@@ -112,6 +114,7 @@
   // };
 
   const update_time = async (time) => {
+    mid_index.value = 0
     if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_esports()){
       let arr = [{label:'',name: i18n_t('ouzhou.match.today'),type:2}]
       // 电子赛事 没有早盘日期
@@ -145,6 +148,7 @@
   // )
  
  const choose_filter_tab = (item ,index) => {
+  mid_index.value = index
   handle_click_menu_mi_3_date(item)
  }
 
