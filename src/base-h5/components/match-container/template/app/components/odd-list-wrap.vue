@@ -32,6 +32,7 @@
         :match="match"
         :odd_field="hp_item"
         :hl_hs="hl_hs"
+        :current_tab_item="current_tab_item"
         :invoke_source="invoke_source"
       />
       <template v-if="!ol_list || !ol_list.length">
@@ -61,6 +62,7 @@
                   :match="match"
                   :odd_field="hp_item_obj"
                   :hl_hs="get_hl_hs(hp_item_obj)"
+                  :current_tab_item="current_tab_item"
                   :invoke_source="invoke_source"
                 />
               </div>
@@ -81,6 +83,7 @@
                   :match="match"
                   :odd_field="hp_item_obj"
                   :hl_hs="get_hl_hs(hp_item_obj)"
+                  :current_tab_item="current_tab_item"
                   :invoke_source="invoke_source"
                 />
               </div>
@@ -309,11 +312,6 @@ const minutes_of_the_Xth_goal = computed(() => {
 const show_newer_edition = computed(() => {
   return standard_edition.value == 1 || PageSourceData.page_source == "detail_match_list"
 });
-
-// 是否主动 滑动
-const is_scroll_page = computed(() => {
-  return [30].includes(props.current_tab_item.id)
-})
 
 // 特色组合玩法
 const hps_compose_data = () => {
@@ -809,13 +807,19 @@ const odd_wrapper_pan = ({ direction }) => {
     }, 2000)
   }
 };
+
+// 是否主动 滑动
+const is_scroll_page = computed(() => {
+  return [30].includes(props.current_tab_item.id)
+})
+
 /**
  * 获取hp指定部分
  * @param {Number} type 0 第一部分; 1 第二部分
  */
 const get_hp_list = (type) => {
   let hps = [];
-  if (type == 0) {
+  if (type == 0 || is_scroll_page.value) {
     if (props.match && finally_ol_list.value) {
       if (props.match.csid == 12) {
         hps = finally_ol_list.value.slice(0, 2);

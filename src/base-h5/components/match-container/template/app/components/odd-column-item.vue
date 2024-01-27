@@ -346,19 +346,27 @@ const get_odd_status = () => {
 // on转换html
 const transfer_on = (odd_item) => {
 
-  const current_tab_item_id = +lodash.get(props.current_tab_item, 'id')
-
-  // 5分钟玩法
-  if(props.match.csid == 1 && [19].includes(current_tab_item_id) ){
-    return odd_item.onb || odd_item.on;
-  }
-  // 波胆
+  const current_tab_item_id = lodash.get(props.current_tab_item, 'id')
+  
   let on = odd_item.onb || odd_item.on;
-  if(props.match.csid == 1 && [18].includes(current_tab_item_id) ){
-    on = odd_item.ot
-    
-    if(odd_item.ot == 'Other' && ['zh', 'tw'].includes(lang.value)){
-      on = '其他'
+
+  if (props.match.csid == 1) {
+    // 5分钟玩法
+    if ([19].includes(current_tab_item_id) ){
+      return odd_item.onb || odd_item.on;
+    }
+    // 15分钟玩法
+    if([17].includes(current_tab_item_id) ){
+      if (['Over', 'Under'].includes(odd_item.ot)) return odd_item.on || odd_item.onb;
+      return odd_item.onb || odd_item.on;
+    }
+    // 波胆
+
+    if([18].includes(current_tab_item_id) ){
+      on = odd_item.ot
+      if(odd_item.ot == 'Other' && ['zh', 'tw'].includes(lang.value)){
+        on = '其他'
+      }
     }
   }
 
