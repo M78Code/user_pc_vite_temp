@@ -108,7 +108,10 @@
       "hig": "HIG",
       "version": "Version",
       "euro": "EURO",
-      "asia": "ASIA"
+      "asia": "ASIA",
+      "sort": "Sort",
+      "hot": "Hot",
+      "time": "Time"
     },
     "no_data": {
       "coming_soon": "Coming Soon"
