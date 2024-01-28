@@ -29,6 +29,7 @@
 }
 .select-play-style{
   padding: 5px 0;
+  background-color: var(--q-gb-bg-c-23);
   .q-item{
     width: 80px;
     padding: 3px 12px;
@@ -42,6 +43,7 @@
     .q-item__label{
       display: flex;
       align-items: center;
+      color: var(--q-gb-t-c-18);
       justify-content: space-between;
       > img {
         width: 11px;

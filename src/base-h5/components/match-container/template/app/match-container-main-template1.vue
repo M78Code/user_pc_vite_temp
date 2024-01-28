@@ -664,6 +664,7 @@ export default {
     .score-inner-span {
       width: 100%;
       //transform: translateY(-3px);
+      color: var(--q-gb-t-c-24);
     }
 
     &.home_hot_page {
@@ -1334,6 +1335,7 @@ export default {
           // bottom: 0;
           font-weight: 600;
           margin: 0 8px;
+          color: var(--q-gb-t-c-18);
 
           &.simple {
             right: 0.08rem;

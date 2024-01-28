@@ -54,14 +54,14 @@
       <div class="content row justify-between" v-if="any_unfold">
         <!--次要玩法标 队名 和 比分  次要玩法 左边的 区域    波胆，5分钟玩法  不显示-->
         <div class="team-title-container" v-if="![18, 19, 11].includes(+ lodash.get(current_tab_item, 'id'))">
-          <!--主队名 和 比分-->
-          <div :class="['team-t-title-w', { 'is-handicap': current_tab_handicap_index == 1, 'is-handicap-1': current_tab_handicap_index == 2, }]">
+          <!--主队名 和 比分 { 'is-handicap': current_tab_handicap_index == 1, 'is-handicap-1': current_tab_handicap_index == 2, } -->
+          <div :class="['team-t-title-w']">
             <div class='team-title'> {{ match.mhn }}  </div>
             <!--显示次要玩法比分 7,8,9 网,乒,斯-->
             <div class="way-score" v-if="[1, 5, 7, 8, 9].includes(+current_tab_item.id) && match.ms == 1"> {{ home_score }} </div>
           </div>
-          <!--副队名 和 比分-->
-          <div :class="['team-t-title-w', { 'is-handicap': current_tab_handicap_index == 2, 'is-handicap-1': current_tab_handicap_index == 1, }]">
+          <!--副队名 和 比分 , { 'is-handicap': current_tab_handicap_index == 2, 'is-handicap-1': current_tab_handicap_index == 1, } -->
+          <div :class="['team-t-title-w']">
             <div class='team-title'> {{ match.man }} </div>
             <!--显示次要玩法比分 7,8,9 网,乒,斯-->
             <div class="way-score" v-if="[1, 5, 7, 8, 9].includes(+current_tab_item.id) && match.ms == 1"> {{ away_score }}</div>
