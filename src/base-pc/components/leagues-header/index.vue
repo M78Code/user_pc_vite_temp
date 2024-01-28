@@ -5,7 +5,7 @@
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: route.params.sportId })"></div>
 			<div class="matches-title">
 				<div class="match_all_matches">
-					<span class="sports" @click="jumpTo()">{{ BaseData.menus_i18n_map[+route.params.sportId + 100] || "" }}</span>
+					<span class="sports" @click="jumpTo()">{{ BaseData.menus_i18n_map[get_sportId] || "" }}</span>
 					<img class="t_left" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/t_left.png`" alt="">
 					<span class="leagues_name">{{ getName() }}</span>
 				</div>
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref,onMounted,onUnmounted, watch } from 'vue';
+import { ref,onMounted,onUnmounted, watch, computed } from 'vue';
 import lodash_ from "lodash"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MenuData,useMittOn,MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
@@ -34,7 +34,6 @@ import { useRoute, useRouter } from 'vue-router';
 import { get_ouzhou_leagues_data, un_mounted } from "src/base-pc/components/match-list/list-filter/index.js"
 
 // route.params.type  1 从联赛列表进入 2 从普通赛事详情进入
-
 const route = useRoute();
 const router = useRouter()
 const show_leagues = ref (false)
@@ -50,6 +49,17 @@ const set_show_leagues = () => {
 		}, { once: true })
 	}
 }
+
+const get_sportId = computed(() => {
+	let sportId = 1
+	if ([100, 101, 102, 103].includes(+route.params.sportId)) {
+		sportId = 2000
+	} else {
+		sportId = +route.params.sportId + 100
+	}
+	return sportId
+})
+
 async function get_league(){
 	// 搜索进来查询7天数据 详情进来查询 12小时
 	let date = route.params.type == 1 ? localStorage.getItem('league_hours') : route.params.type == 2 ? 12 : 168
