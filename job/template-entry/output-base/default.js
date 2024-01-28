@@ -16,7 +16,7 @@
  */
 
  // 本次打包的 客户端版本
- import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+ export { default as  BUILDIN_CONFIG }  from "app/job/output/env/index.js";;
  
  
  //所有项目通用： 业务逻辑  无关  ： 常量，工具函数 ，国际化 ，顶层通信用的 全局常量和 MITT
@@ -31,7 +31,6 @@
  
  
  //体育客户端通用： 非数据仓库的其他业务逻辑
- export * from "./module/menu-data.js";
  
  export * from "./module/match-list-card.js"
  export * from "./module/match-list-card-data.js"
@@ -40,5 +39,6 @@
  
  // 埋点相关
  export * from "./module/hide-api.js"
+ 
  
  

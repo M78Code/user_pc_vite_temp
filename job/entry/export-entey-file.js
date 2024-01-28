@@ -74,8 +74,8 @@ const export_src_output_index_file = () => {
   } 
   if(output_project){
     index_file_str+=  `
-    //当前项目专用的  
-    export * from "./project/index.js"  
+//当前项目专用的  
+export * from "./project/index.js"  
     ` 
   }
   index_file_str= index_file_str.trim()
