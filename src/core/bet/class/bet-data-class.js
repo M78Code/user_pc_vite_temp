@@ -1259,6 +1259,78 @@ this.bet_appoint_ball_head= null */
     }
   }
 
+  /**
+   * C101 数据
+   * `mid` 赛事Id
+   * `ms` 赛事状态 0:未开赛 1:赛事进行中  2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
+   * @description: 赛事状态
+   * @param {Object} obj socket推送的消息体
+   * @return {undefined} undefined
+   */
+  set_bet_c101_change( obj={} ) {
+    let ms = lodash_.get(obj,'ms', '')
+
+    // 赛事状态为 3:结束 4:关闭 5:取消 6:比赛放弃 8:未知 赛事进行关盘处理
+    if(![3,4,5,6,8].includes(ms*1)){
+      return
+    }
+    let mid = lodash_.get(obj,'mid', '')
+    this.set_bet_list_deactivated(mid)
+  }
+
+  /**
+   * C102 数据
+   * `mid` 赛事Id
+   * `mmp` 赛事阶段 999 结束
+   * @description: 赛事状态
+   * @param {Object} obj socket推送的消息体
+   * @return {undefined} undefined
+   */
+  set_bet_c102_change( obj={} ) {
+    let mmp = lodash_.get(obj,'mmp', '')
+
+    // 赛事阶段 999 结束
+    if(mmp != '999'){
+      return
+    }
+    let mid = lodash_.get(obj,'mid', '')
+    this.set_bet_list_deactivated(mid)
+  }
+
+  // 设置投注的赛事 进行关盘处理
+  set_bet_list_deactivated(mid){
+    // 单关/串关 属性名
+    let single_name = ''
+    // 单关/串关 属性值
+    let array_list = []
+    // 单关/串关 赛事列表
+    let mid_list = []
+    if(this.is_bet_single){
+      single_name = 'bet_single_list'
+    } else {
+      single_name = 'bet_s_list'
+    }
+    array_list = lodash_.cloneDeep(lodash_.get(this,single_name))
+    // 获取单关下的赛事id 多个（单关合并）
+    mid_list = array_list.map(item => item.matchId) || []
+
+    // 判断赛事级别盘口状态 中是否包含 投注项中的赛事
+    if(mid_list.includes(mid)){
+      array_list.filter(item => {
+        // 在赛事盘口状态下的 投注项 设置 对应的赛事级别 用于 失效投注项
+        if(item.matchId == mid){
+          // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
+          item.mid_mhs = 2 
+        }
+      })
+      this[single_name] = array_list
+
+      this.set_bet_oid_list()
+
+      this.set_options_state()
+    }
+  }
+
   // 订单状态
   set_bet_c201_change( obj={} ) {
     // 订单id

@@ -28,9 +28,9 @@
 
                     <ul>
                         <li v-for="(item, i) in  data.filter_list" :key="i"
-                            :class="['item', i == data.list_data.length - 1 ? 'border-none' : '']">
+                            :class="['item', i == data.filter_list.length - 1 ? 'border-none' : '']">
                             <div class="item-header">
-                                <check_icon @change_checked="(status) => handle_select(i)" :is_checked="item.status" />
+                                <check_icon @change_checked="(status) => handle_select(item.id)" :is_checked="item.status" />
                                 <span class="title">{{ item.introduction }}</span>
                             </div>
                             <ul class="child">
@@ -38,7 +38,7 @@
                                     <ul class="flex">
                                         <li v-for="(_current, _index) in e.tournamentList" :key="_index"
                                             class="flex mt-16  items-center w-25 children">
-                                            <check_icon @change_checked="(status) => handle_select(i, index, _index)" class="mr-6"
+                                            <check_icon @change_checked="(status) => handle_select(_current.id)" class="mr-6"
                                                 :is_checked="_current.status" />
                                             <span class="mr-6 name-text">{{ _current.nameText }}</span>
                                             <span class="mr-6 active">{{ _current.num }}</span>
@@ -190,36 +190,41 @@ function back() {
 }
 
 /**
- * 
- * @param {number} parent 最外层
- * @param {number} child  子级
- * @param {number} current 第三层
+ * 选中/取消选中
+ * @param {string} id 
  */
-function handle_select(parent, child, current) {
-    console.log(parent, child, current, "第三层");
-    if (child != undefined && current != undefined) {
-        // 子类选择
-        const _data = _.clone(data.list_data);
-        _data[parent].sportVOs[child].tournamentList[current].status = !_data[parent].sportVOs[child].tournamentList[current].status;
-
-        data.list_data = _data.map((e, i) => {
-            const can_select_all = e.sportVOs.every(item => item.tournamentList.every(q => q.status));
-            e.status = can_select_all;
-            return e;
-        })
-    }else {
-        data.list_data = data.list_data.map((e, i) => {
-            if (i == parent) {
-                e.status =  !e.status ;
-                e.sportVOs = (e.sportVOs || []).map(p => {
-                    p.tournamentList = (p.tournamentList || []).map(q => ({ ...q, status: e.status }))
-                    return p;
+function handle_select(id) {
+    console.log(id, "第三层");
+    data.filter_list = data.filter_list.map((item) => {
+        // 选中最外层
+        if(id == item.id) {
+            item.status = !item.status;
+            item.sportVOs = item.sportVOs.map((sportVos) => {
+                sportVos.tournamentList = sportVos.tournamentList.map(e => {
+                    e.status = item.status;
+                    return e;
                 })
-            }
-            return e;
-        })
-    }
+                return sportVos;
+            })
+        }else {
+            // 选中里面的层数
+            item.sportVOs = item.sportVOs.map((sportVOs) => {
+                sportVOs.tournamentList = sportVOs.tournamentList.map(e => {
+                    if (e.id == id) {
+                        e.status = !e.status;
+                    }
+                    return e;
+                })
+                item.status = sportVOs.tournamentList.every(q => q.status);
+                return sportVOs;
+            })
+        }
+        return item;
+    });
+
+    // if (data.list_data.every(e => e.status));
     data.all_select = data.list_data.every(e => e.status);
+
 }
 
 async function submit() {
