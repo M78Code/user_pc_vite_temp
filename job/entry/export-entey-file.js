@@ -42,19 +42,54 @@ const CURRENT_PROJECT_ENTRY_CONFIG =  PROJECT_ENTRY_CONFIG[PROJECT_ENTRY_CONFIG_
 
 const {output_project ,output_base ,api_index ,html_config} = CURRENT_PROJECT_ENTRY_CONFIG
 
+
+// 基础头部警告 
+
+let jichu_head_notice =`
+
+
+  /**
+   * 
+   * 重要事情说三遍：
+   * 
+   * 此文件为脚本自动生成文件 ，更改此文件无任何意义！！！
+   * 此文件为脚本自动生成文件 ，更改此文件无任何意义！！！
+   * 此文件为脚本自动生成文件 ，更改此文件无任何意义！！！
+   * 
+   * 需要支持找主管协助！！！
+   * 需要支持找主管协助！！！
+   * 需要支持找主管协助！！！
+   * 
+   */ 
+
+
+`
 /**
  * 
  * 产出  ./src/output/project/index.js
  */
 const export_src_output_project_index_file = () => {
   if( output_project){
+    let index_file_str = `
+    ${jichu_head_notice}`
+
 
     let src_path = `./job/template-entry/output-project/${output_project}.js`;
     let target_path =  "./src/output/project/index.js"
+
+    let file_str_index = read_file(src_path);
+    index_file_str  += `${file_str_index}`;
  
-    copy_file( src_path, target_path);
+    // copy_file( src_path, target_path);
+
+    index_file_str= index_file_str.trim()
+    if(index_file_str){
+      write_file( target_path,index_file_str );
+    }
   }
 };
+
+
 
 
 /**
@@ -65,12 +100,14 @@ const export_src_output_index_file = () => {
   // remove_file(`${BUILD_STATIC_DIR_PATH}project/`)
   // console.log('删除原 html 文件 完成');
   // job/template-entry/output-base/template.js
-  let index_file_str = ''
+  let index_file_str = `
+${jichu_head_notice}`
+  
   let target_path =  "./src/output/index.js"
   if( output_base){
     let index_base_file_path = `./job/template-entry/output-base/${output_base}.js`;
     let file_str_index = read_file(index_base_file_path);
-      index_file_str  = `${file_str_index}`;
+      index_file_str  += `${file_str_index}`;
   } 
   if(output_project){
     index_file_str+=  `
@@ -93,9 +130,22 @@ export * from "./project/index.js"
 
 const export_api_index_file = () => {
   if( api_index){
+    let index_file_str = `
+    ${jichu_head_notice}`
+      
+
     let src_path = `./job/template-entry/api-index/${api_index}.js`;
     let target_path =  "./src/api/index.js"
-    copy_file( src_path, target_path);
+
+    let file_str_index = read_file(src_path);
+    index_file_str  += `${file_str_index}`;
+ 
+    // copy_file( src_path, target_path);
+
+    index_file_str= index_file_str.trim()
+    if(index_file_str){
+      write_file( target_path,index_file_str );
+    }
   }
 }
 
