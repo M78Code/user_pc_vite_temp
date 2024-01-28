@@ -1363,7 +1363,7 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
             hv = ''
         }else
         // 罚牌玩法 / 加时赛 / 冠军
-        if( [126,136,310].includes(ol_obj._hpid*1)) {
+        if( [126,136,310,111].includes(ol_obj._hpid*1)) {
             if(ol_obj.ots == 'T1'){
                 text = mid_obj.mhn 
             }
