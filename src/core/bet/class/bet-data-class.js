@@ -48,6 +48,7 @@ class BetData {
     this.bet_record_count = 0
     // 是否勾选常用金额
     this.is_regular_amount = true
+    this.regular_amount = 0
 
     // 是否为合并模式
     this.is_bet_merge = false;
@@ -304,6 +305,7 @@ this.bet_appoint_ball_head= null */
    */
   set_regular_amount() {
     this.is_regular_amount = !this.is_regular_amount
+    useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
     this.set_bet_data_class_version()
   }
 
@@ -805,8 +807,12 @@ this.bet_appoint_ball_head= null */
   // 设置投注金额
   set_bet_amount(val) {
     this.bet_amount = val;
+    
+    // 设置常用投注金额
+    if(val>0){
+      this.regular_amount = this.bet_amount
+    }
     this.set_bet_data_class_version()
-    // console.error("投注金额", val)
   }
 
   // 设置投注项的投注金额

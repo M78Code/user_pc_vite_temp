@@ -8,12 +8,19 @@
   <!-- 矩形框中部 -->
   <div class="item-body yb_fontsize14">
     <div class="item-header">
-      <template v-if="data_b.seriesType == '1'">
-        {{ data_b.orderVOS[0]?.matchName }}
-      </template>
-      <template v-else>
-        {{ data_b.seriesValue }}
-      </template>
+      <div>
+        <template v-if="data_b.seriesType == '1'"> {{ data_b.orderVOS[0]?.matchName }} </template>
+        <template v-else>  {{ data_b.seriesValue }}  </template>
+      </div>
+      <!-- 预约 -->
+      <div class="header-right" v-if="BetRecordClass.selected === 2">
+        <span v-if="[2,3].includes(data_b.preOrderStatus)">{{i18n_t('pre_record.booked_fail')}}</span>
+        <!-- <span v-else-if="data_b.preOrderStatus == 4">{{i18n_t('pre_record.canceled')}}</span> -->
+        <span v-else class="pre-button">
+          {{i18n_t('pre_record.booking')}}
+          <span class="pre-cancle-button" @click.stop="cancelPre(data_b)"> {{i18n_t('common.cancel')}} </span>
+        </span>
+      </div>
     </div>
     <div class="item-main three-more">
       <template v-for="(item, index) in show_data_orderVOS" :key="item.betTime">
@@ -93,6 +100,13 @@
     </div>
     
   </div>
+  <!-- 取消预约 -->
+  <cancle-confirm-pop 
+    v-if="show_pop" 
+    :orderNo="cancle_order_no"
+    @cancel="show_pop=false;"
+    @success="canceleSucess">
+  </cancle-confirm-pop>
 </template>
 
 <script setup>
@@ -102,7 +116,7 @@ import BetRecordClass from "src/core/bet-record/h5/bet-record.js";
 import { bet_result } from "src/core/bet-record/h5/util.js";
 import { i18n_t, project_name } from 'src/output/index.js'
 import { IconWapper } from 'src/components/icon'
-import { itemFooter, itemOrder, earlySettle, earlySettledDetail } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
+import { itemFooter, itemOrder, earlySettle, earlySettledDetail, cancleConfirmPop } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
 import { formatTime, format_odds } from 'src/output/index.js'
 
 //按钮名字
@@ -167,6 +181,18 @@ const calc_text_item = (item) => {
   return { color, text }
 }
 
+// 预约投注取消
+let show_pop = ref(false)
+let cancle_order_no = ref('')
+const cancelPre = (data_b) => {
+  cancle_order_no = lodash.get(data_b, 'orderNo', '')
+  show_pop.value = true
+}
+const emit = defineEmits(['canceled'])
+const canceleSucess = () => {
+  show_pop.value = false
+  emit('canceled')
+}
 </script>
 
 <style lang="scss" scoped>
@@ -180,6 +206,22 @@ template {
     font-size: 0.16rem;
     border-bottom: 1px solid var(--q-gb-bg-c-9);
     color: var(--q-gb-bg-c-13);
+    display: flex;
+    justify-content: space-between;
+    .header-right {
+      font-size: 0.12rem;
+      padding-right: 0.1rem;
+      color: var(--q-gb-bg-c-1);
+      .pre-button {
+        .pre-cancle-button {
+          padding: 0.02rem 0.1rem;
+          border-radius: 0.1rem;
+          color: var(--q-gb-t-c-3);
+          border: 1px solid var(--q-gb-t-c-3);
+          margin-left: 0.06rem;
+        }
+      }
+    }
   }
 
   .item-main {
