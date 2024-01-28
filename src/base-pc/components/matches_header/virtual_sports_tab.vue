@@ -2,22 +2,24 @@
   <div class="virtual-tab matches_tab">
     <div  v-for="(item, i) in sub_menu_list" :class="[sub_menu_i == i ? 'checked' : '']" 
     :key="i" @click="virtual_menu_changed(i)">
-      {{ item.name }}
+      {{ lang == 'zh' ? '' : "VR-" }}{{ item.name }}
     </div>
   </div>
 </template>
 
 <script>
 import lodash from 'lodash';
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX, UserCtr } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { api_v_sports } from "src/api/index.js";
 import axios_api_loop from "src/core/http/axios-loop.js"
 import { debounce_throttle_cancel } from "src/core/utils/common/module/other.js";
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
-import {  compute_css_obj, MenuData, MITT_TYPES, useMittEmit } from "src/output/index.js";
+import {  compute_css_obj, MenuData, MITT_TYPES, useMittEmit, useMittOn } from "src/output/index.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
+
+let off = ''
 export default {
   name: 'match_main',
   data() {
@@ -46,7 +48,8 @@ export default {
       router: useRouter(),
       route: useRoute(),
       BetViewDataClass,
-      LOCAL_PROJECT_FILE_PREFIX
+      LOCAL_PROJECT_FILE_PREFIX,
+      lang: UserCtr.lang
     };
   },
   props: {
@@ -69,6 +72,10 @@ export default {
     if (!location.search.includes('keep_url')) {
       history.replaceState(window.history.state, '', `${location.pathname}${location.hash}`)    //地址栏优化
     }
+    off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=> {
+      this.get_virtual_menus()
+      this.lang= UserCtr.lang
+    }).off
   },
   /**
    * @description: 触发路由进入之前事件 详情页返回记住上次选中的体育类型
@@ -103,6 +110,9 @@ export default {
       }
     }
     clearTimeout(this.timer_super27);
+    if (off) {
+      off()
+    }
   },
   methods: {
     // 设置当前选中的二级菜单id
