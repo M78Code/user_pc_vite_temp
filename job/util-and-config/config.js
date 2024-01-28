@@ -63,7 +63,7 @@ export const ALL_ENV_ARR = [
       description:"2023亚洲-H5  复刻版 H5  - KYAPP ",
       html_config: "html_config_app_h5_config",
       output_base:"default",
-      output_project:"yazhou-pc",
+      output_project:"app-h5",
       api_index:"default"
      },   
      project_6: {

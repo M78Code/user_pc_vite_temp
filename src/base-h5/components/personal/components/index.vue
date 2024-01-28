@@ -107,37 +107,37 @@ let languages = [{
      
     ]
 
-    const languages_ = [ {
-        key: 'tw',
-        language: '繁體中文',
-      }, {
-        key: 'vi',
-        language: 'Tiếng Việt',
-      }, {
-        key: 'th',
-        language: 'ไทย',
-      }, {
-        key: 'ms',
-        language: 'Melayu',
-      }, {
-        key: 'ad',
-        language: 'Indonesia',
-      }, {
-        key: 'md',
-        language: 'Burmese',
-      }, {
-        key: 'ry',
-        language: 'Japanese',
-      }, {
-        key: 'pty',
-        language: 'Portuguese',
-      }, {
-        key: 'hy',
-        language: 'Korean',
-      }]
+    // const languages_ = [ {
+    //     key: 'tw',
+    //     language: '繁體中文',
+    //   }, {
+    //     key: 'vi',
+    //     language: 'Tiếng Việt',
+    //   }, {
+    //     key: 'th',
+    //     language: 'ไทย',
+    //   }, {
+    //     key: 'ms',
+    //     language: 'Melayu',
+    //   }, {
+    //     key: 'ad',
+    //     language: 'Indonesia',
+    //   }, {
+    //     key: 'md',
+    //     language: 'Burmese',
+    //   }, {
+    //     key: 'ry',
+    //     language: 'Japanese',
+    //   }, {
+    //     key: 'pty',
+    //     language: 'Portuguese',
+    //   }, {
+    //     key: 'hy',
+    //     language: 'Korean',
+    //   }]
       console.error('IS_FOR_NEIBU_TEST',IS_FOR_NEIBU_TEST)
       if(IS_FOR_NEIBU_TEST){
-       languages = lodash.concat(languages,languages_)
+       languages = lodash.concat(languages,[])
       }
 const settingData = ref([{
   title:"ouzhou.setting_menu.odds_display",
@@ -178,15 +178,19 @@ function handel_change(s,idx){
   UserCtr.set_cur_odds(s) //HK/EU
 }
 
-const handel_sort = (s, idx) => {
+const handel_sort = async(s, idx) => {
   sort.value = s.value
   //电竞 不需要热门排序 和 盘口
   if(s.value === 1 && MenuData.is_esports()) return;
-  UserCtr.set_sort_type(s.value);
-  const param = {
+  if (BUILDIN_CONFIG?.CURRENT_ENV == "local_test") {
+    const param = {
     sort: s.value
   }
-  api_account.get_remember_select(param)
+  await api_account.get_remember_select(param).then().catch(err => {
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('msg.msg_nodata_07'))
+    })
+  }
+  UserCtr.set_sort_type(s.value);
 }
 
 

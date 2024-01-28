@@ -73,11 +73,12 @@
     </div>
   </template>
   <script setup>
-  import { compute_value_by_cur_odd_type } from "src/output/index.js"
   import BetData from "src/core/bet/class/bet-data-class.js";
   import { btn_reduce, btn_add } from "src/core/bet/common/appoint-data.js"
-  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr,only_win } from "src/output/index.js";
-import { reactive } from "vue";
+  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr,only_win,compute_value_by_cur_odd_type } from "src/output/index.js";
+  import { reactive } from "vue";
+  import lodash_ from "lodash"
+  import mathjs from "src/core/bet/common/mathjs.js"
 
   const props = defineProps({
     items:{},
@@ -97,17 +98,32 @@ import { reactive } from "vue";
   const set_show_appoint = () =>{
     ref_data.show_appoint = true
     ref_data.odds_value_edit = props.items.oddFinally
-    BetData.set_is_bet_merge("merge")
+    BetData.set_is_bet_pre(true)
   }
 
   const btn_reduce_click = (obj)=>{
     obj.min = props.items.oddFinally
     ref_data.odds_value_edit = btn_reduce(obj)
+
+    // 设置预约投注数据
+		let pre_data = {
+			oid: props.items.playOptionsId,
+			pre_odds: mathjs.multiply(ref_data.odds_value_edit,100000),
+			pre_oddFinally: ref_data.odds_value_edit,
+		}
+    BetData.set_bet_single_list_obj(pre_data)
   }
 
 
   const  btn_add_click = (odds)=>{
     ref_data.odds_value_edit = btn_add(odds)
+    // 设置预约投注数据
+		let pre_data = {
+			oid: props.items.playOptionsId,
+			pre_odds: mathjs.multiply(ref_data.odds_value_edit,100000),
+			pre_oddFinally: ref_data.odds_value_edit,
+		}
+    BetData.set_bet_single_list_obj(pre_data)
 }
 
 

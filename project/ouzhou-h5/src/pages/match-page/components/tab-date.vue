@@ -324,6 +324,7 @@ const areaListChange = (item) => {
             align-items: center;
         }
         .tabs-item-text {
+            z-index: 1;
             height: .5rem;
             display: flex;
             align-items: center;

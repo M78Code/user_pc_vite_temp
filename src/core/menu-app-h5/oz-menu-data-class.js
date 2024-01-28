@@ -322,7 +322,6 @@ class MenuData {
    * @param {*} mi 
    */
   set_menu_mi_format(menu_type,mi){
-    console.log(menu_type)
           //   this.current_lv_2_menu_mi.value = session_info.menu_mi;
       //   this.current_lv_2_menu_i = session_info.menu_mi;
       //   this.menu_mi.value = session_info.menu_mi;
