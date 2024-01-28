@@ -1353,12 +1353,17 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
 
     // 列表的 次要玩法
     if(other.secondary_paly){
+        if(["Under",'Over'].includes(ol_obj.ot)){
+            text = ol_obj.on.split(' ')[0] || ''
+            hv = ol_obj.on.split(' ')[1] || ''
+        }else
+        // 波胆 玩法 其他
         if(ol_obj.ot == "Other"){
-            text = ol_obj.ot
+            text = i18n_t('list.other')
             hv = ''
         }else
-        // 罚牌玩法 / 加时赛 / 冠军
-        if( [126,136,310].includes(ol_obj._hpid*1)) {
+        // 独赢 罚牌玩法 / 加时赛 / 冠军
+        if( [126,136,310,111].includes(ol_obj._hpid*1)) {
             if(ol_obj.ots == 'T1'){
                 text = mid_obj.mhn 
             }
@@ -1368,6 +1373,16 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
             if(ol_obj.ots == ''){
                 text = ol_obj.onb
             }
+        }else
+        // 让球 
+        if([33,113,306].includes(ol_obj._hpid*1)) {
+            if(ol_obj.ots == 'T1'){
+                text = mid_obj.mhn 
+            }
+            if(ol_obj.ots == 'T2'){
+                text = mid_obj.man
+            }
+            hv = ol_obj.on
         }else
         // 特色玩法 拼接
         if(ol_obj.ot.includes('And')) {
