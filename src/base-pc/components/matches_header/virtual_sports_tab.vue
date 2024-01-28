@@ -110,7 +110,9 @@ export default {
       }
     }
     clearTimeout(this.timer_super27);
-    off && off()
+    if (off) {
+      off()
+    }
   },
   methods: {
     // 设置当前选中的二级菜单id
