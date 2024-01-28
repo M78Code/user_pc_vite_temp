@@ -294,7 +294,7 @@ const set_bet_obj_config = () => {
     }
     // ref_custom.odds = mathJs.multiply(ref_custom.oddFinally,100000)
     BetData.set_bet_pre_obj(obj)
-    // console.log('这这这', obj)
+    console.log('这这这', obj)
 }
 
 /**
@@ -361,6 +361,7 @@ const add_handle = (type, index = 1) => {
       }
     }
     set_computed_appoint_ball_head()
+    set_bet_obj_config()
     nextTick(() => {
       search_odds_value_by_ball_head();
     })
@@ -593,11 +594,11 @@ const set_computed_appoint_ball_head = () => {
       // }
       ball_head = ref_data.appoint_ball_head;
     }
-    if (!(tball_head_input && ball_head_input == document.activeElement)) {
-      if (BASKETBALL_BY_APPOINTMENT_let.includes(props.item.playId) && !lodash_.startsWith(ball_head, '-') && !lodash_.startsWith(ball_head, '+') && ball_head != 0) {
-        ball_head = '+' + ball_head
-      }
+    // if (!(tball_head_input && ball_head_input == document.activeElement)) {
+    if (BASKETBALL_BY_APPOINTMENT_let.includes(props.item.playId) && !lodash_.startsWith(ball_head, '-') && !lodash_.startsWith(ball_head, '+') && ball_head != 0) {
+      ball_head = '+' + ball_head
     }
+    // }
   }
   ref_data.computed_appoint_ball_head = ball_head;
 }

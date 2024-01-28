@@ -215,12 +215,13 @@ const set_tab_list = (news_) =>{
 	}
 
 	// vr体育
-	// if (MenuData.is_vr()) {
-	// 	matches_header_title.value = 'VR体育'
-	// 	match_list_top.value = '134px'
-	// 	let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'vr_sports', [])  
-	// 	tab_list.value = ouzhou_filter_config
-	// }
+	if (MenuData.is_vr()) {
+		// matches_header_title.value = 'VR体育'
+		is_left_sports.value = true
+		match_list_top.value = '134px'
+		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'vr_sports', [])  
+		tab_list.value = ouzhou_filter_config
+	}
 
 	if (tab_list.value.length) {
 		if(MenuData.mid_menu_result.filter_tab){
@@ -385,6 +386,7 @@ const checked_current_tab = (payload,type) => {
 
 	.matches-title {
 		padding-left: 20px;
+		min-height: 80px;
 	}
 
 	.current_match_title {
