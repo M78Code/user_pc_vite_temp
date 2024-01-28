@@ -109,12 +109,13 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "sportId": item.sportId,   // 赛种id
                     "matchId": item.matchId,   // 赛事id
                     "tournamentId": item.tournamentId,   // 联赛id
-                    "scoreBenchmark": "",    // 基准分
+                    // "scoreBenchmark": "",    // 基准分
                     "betAmount": obj.bet_amount,  //投注金额         
-                    "placeNum": item.placeNum, //盘口坑位
+                    // "placeNum": item.placeNum, //盘口坑位
                     "marketId": item.marketId,  //盘口id
                     "playOptionsId": item.playOptionsId,   // 投注项id
                     "marketTypeFinally": UserCtr.odds.cur_odds,     // 欧洲版默认是欧洲盘 HK代表香港盘
+                    "marketValue": item.marketValue,
                     "odds": item.odds,  // 赔率 万位
                     "oddFinally": compute_value_by_cur_odd_type(item.odds, item.playId, item.odds_hsw, item.sportId),  //赔率
                     "playName": item.playName, //玩法名称
@@ -123,9 +124,17 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "matchName": item.matchName,   //赛事名称
                     "playOptionName": item.playOptionName,   // 投注项名称
                     "playOptions": item.playOptions,   // 投注项配置项
-                    "tournamentLevel": item.tournamentLevel,   // 联赛级别
+                    // "tournamentLevel": item.tournamentLevel,   // 联赛级别
                     "playId": item.playId,   // 玩法id
-                    "dataSource": item.dataSource,   // 数据源
+                    // "dataSource": item.dataSource,   // 数据源
+                }
+                
+                // 电竞 vr 投注不需要一下数据
+                if(item.bet_type == 'common_bet'){
+                    bet_s_obj.scoreBenchmark = ''
+                    bet_s_obj.placeNum = item.placeNum //盘口坑位
+                    bet_s_obj.tournamentLevel = item.tournamentLevel   // 联赛级别
+                    bet_s_obj.dataSource = item.dataSource  // 数据源
                 }
                 
                 // 获取当前的盘口赔率
@@ -731,6 +740,7 @@ const submit_handle_lastest_market = () => {
         seriesOrders = set_bet_order_list(BetData.bet_s_list, false)
         // 串关 没有单关字段
         delete params.openMiltSingle
+        delete params.preBet
     }
     // 投注内容
     params.seriesOrders = seriesOrders
