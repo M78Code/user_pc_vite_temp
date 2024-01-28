@@ -3,6 +3,7 @@
     <template v-if="article">
       {{ console.log(article) }}
       <ArticleContent :data="article"></ArticleContent>
+      <ArticleMaylike :list="favoriteArticle" :activeId="activeId"></ArticleMaylike>
     </template>
     <NoData v-else></NoData>
   </div>
@@ -14,6 +15,7 @@ import { api_common } from "src/api/index";
 import NoData from "../NoData.vue"
 import { useRoute } from "vue-router";
 import ArticleContent from '../components/ArticleContent.vue';
+import ArticleMaylike from '../components/ArticleMaylike.vue';
 
 /** @type {{match_detail:TYPES.MatchDetail}} */
 const props = defineProps({
@@ -25,7 +27,8 @@ const props = defineProps({
 const route = useRoute()
 const matchId = route.params?.mid
 /** @type {Ref<TYPES.Article>} 资讯文章 */ const article = ref()
-/** @type {Ref<Array<Any>>} */ const favoriteArtivle = ref([])
+/** @type {Ref<Array<Any>>} 猜你喜欢 */ const favoriteArticle = ref([])
+/** @type {Ref<>} */ const activeId = ref()
 
 ;(function initial(){
   getArticle().then(()=>{
@@ -48,7 +51,7 @@ function getFavoriteArticle(){
     id: article.value.id,
     matchId
   }).then((res)=>{
-    return favoriteArtivle.value = res.data
+    return favoriteArticle.value = res.data
   })
 }
 
