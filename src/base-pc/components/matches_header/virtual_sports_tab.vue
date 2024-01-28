@@ -19,7 +19,7 @@ import {  compute_css_obj, MenuData, MITT_TYPES, useMittEmit, useMittOn } from "
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 
-let off = null
+let off = ''
 export default {
   name: 'match_main',
   data() {
@@ -110,7 +110,7 @@ export default {
       }
     }
     clearTimeout(this.timer_super27);
-    off()
+    off && off()
   },
   methods: {
     // 设置当前选中的二级菜单id
