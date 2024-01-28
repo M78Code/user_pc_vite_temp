@@ -266,6 +266,7 @@ this.bet_appoint_ball_head= null */
         item.pre_odds = obj.pre_odds
         item.pre_oddFinally = obj.pre_oddFinally
         item.pre_marketValue = obj.pre_marketValue
+        item.pre_handicap = obj.pre_handicap
       }
     })
   }

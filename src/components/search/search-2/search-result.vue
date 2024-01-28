@@ -396,6 +396,10 @@ function league_item_click(match) {
 	})
 	MenuData.set_current_ball_type(csid);
 	// MenuData.set_menu_current_mi(`${+csid+100}2`)
+	//如果是电竞的子菜单手动设置 左侧菜单 电子竞技固定编码2000
+	if(['100','101','102','103'].includes(csid)){
+		MenuData.set_menu_root(2000)
+	}
 	router.push(`/details/${mid}/${csid}/${tid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
@@ -561,7 +565,6 @@ function show_bowling_list(search_data_bowling=[]) {
 			obj[tn].children.push(item)
 		}
 	})
-	console.error('378832783827',obj)
 	return obj;
 }
 
