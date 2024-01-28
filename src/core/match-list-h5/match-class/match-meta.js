@@ -737,13 +737,16 @@ class MatchMeta {
     const http_key = `${euid}_${md}_${tid}`
     if (!is_error) this.set_current_http_key(http_key)
     const other_params = { category: 1 }
+    // tid 有值 则 加上 tid
+    params_tid &&  Object.assign(other_params, { tid: params_tid })
+    tid &&  Object.assign(other_params, { tid })
     // data_time 有值 则 加上 md
     data_time && Object.assign(other_params, { md: data_time })
     const target_params = {
       ...params,
       ...other_params
     }
-    // if (params_tid) this.set_show_skeleton_state(true)
+    if (params_tid) this.set_show_skeleton_state(true)
     const res = await this.handler_axios_loop_func({ http: api_common.post_match_full_list, params: target_params, key: 'post_match_full_list' })
     if (!this.is_current_http_key(http_key) || MenuData.is_collect() || MenuData.is_esports()) return
     const code = lodash.get(res, 'code', 0)
