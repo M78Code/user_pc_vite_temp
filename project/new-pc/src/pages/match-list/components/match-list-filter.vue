@@ -216,12 +216,15 @@ function handle_select(id) {
                     return e;
                 })
                 item.status = sportVOs.tournamentList.every(q => q.status);
-
                 return sportVOs;
             })
         }
         return item;
     });
+
+    // if (data.list_data.every(e => e.status));
+    data.all_select = data.list_data.every(e => e.status);
+
 }
 
 async function submit() {

@@ -33,13 +33,12 @@ import BaseData from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from 'vue-router';
 import { get_ouzhou_leagues_data, un_mounted } from "src/base-pc/components/match-list/list-filter/index.js"
 
-// route.params.type  1 从联赛列表进入 2 从普通赛事详情进入
+// route.params.type  1 从联赛列表进入 2 从普通赛事详情进入 3 从搜索点击联赛进入
 const route = useRoute();
 const router = useRouter()
 const show_leagues = ref (false)
 const active_league = ref(route.params.tid)
 const league_list = ref([])
-// const league_list2 = ref([]) // for fix 49882
 const set_show_leagues = () => {
 	if (!league_list.value.length) return;
 	show_leagues.value = !show_leagues.value
@@ -68,7 +67,7 @@ async function get_league(){
 	list?.map(item => {
 		if (route.params.type == 1) {
 			if (item.id == localStorage.getItem('league_id')) {
-				league_list.value = item.tournamentList
+				league_list.value = item.tournamentList || []
 			}
 		} else {
 			item.tournamentList?.map(leagues => {
@@ -76,16 +75,6 @@ async function get_league(){
 			})
 		}
 	})
-
-  // for fix 49882
-//   const list2 = await get_ouzhou_leagues_data(120, route.params.sportId)
-//   league_list2.value=[]
-//   list2?.map(item => {
-//     item.tournamentList?.map(leagues => {
-//       league_list2.value.push(leagues)
-//     })
-//   })
-
 }
 const off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=>get_league()).off
 watch(() => route.params.type, async () => {
@@ -111,8 +100,6 @@ const getName = () => {
 	return name || localStorage.getItem('league_name')
 }
 const jumpTo = ()=>{
-	// let route_name = lodash_.get(MenuData.router_info,'pre_route') || 'home'
-	// console.log(route_name, 'route_name')
 		let obj = {
 			lv1_mi : route.params.sportId*1 +100,
 			has_mid_menu: true, // 有中间菜单

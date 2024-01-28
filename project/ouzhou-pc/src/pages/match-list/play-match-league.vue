@@ -12,7 +12,7 @@
         </div> -->
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
-          <img :src="leagueIcon" @error="handle_error" />
+          <img :src="leagueIcon" />
         </div>
         <!-- 联赛名称 -->
         <div class="ellipsis-wrap">
@@ -64,6 +64,7 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
 
   function jump_to_league_list() {
     const { id, sportId, nameText } = props.league_obj
+	  localStorage.setItem('league_name', nameText)
     router.push(`/league/${sportId}/${id}/1`)
     let obj = {
       pre_route : route.name
@@ -71,8 +72,6 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
     MenuData.set_router_info(obj)
   }
 
-  const handle_error = ()=>{
-  }
 </script>
 
 <style lang="scss" scoped>

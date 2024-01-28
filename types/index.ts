@@ -70,6 +70,7 @@ declare namespace TYPES {
     /** ? */ hmt: number,
     /** ? */ hn: number,
     /** 赔率集合? 投注项集合? */ ol: Array<Ol>
+    /** 1:上半场玩法; 2:下半场玩法; 10:第一节; 20:第二节; 30:第三节; 40:第四节 */ halfLg?: 1|2|10|20|30|40
   }
 
   /** 详情赛事分析资讯 文章 */ interface Article {

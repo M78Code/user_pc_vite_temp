@@ -291,10 +291,11 @@ const set_bet_obj_config = () => {
       oddFinally: lodash_.get(props.item,'oddFinally'), // 当前赔率
       custom_id: lodash_.get(props.item,'playOptionsId'), // 投注项id
       odds: mathJs.multiply(ref_data.appoint_odds_value, 100000), // 投注项赔率
+      handicap: lodash_.get(props.item,'handicap')
     }
     // ref_custom.odds = mathJs.multiply(ref_custom.oddFinally,100000)
     BetData.set_bet_pre_obj(obj)
-    // console.log('这这这', obj)
+    // console.log('这这这', ref_data , props.item.handicap)
 }
 
 /**
@@ -361,6 +362,7 @@ const add_handle = (type, index = 1) => {
       }
     }
     set_computed_appoint_ball_head()
+    set_bet_obj_config()
     nextTick(() => {
       search_odds_value_by_ball_head();
     })
