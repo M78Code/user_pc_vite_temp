@@ -131,6 +131,10 @@ const get_match_item1 = (item) => {
 }
 
 const get_match_item = (item) => {
+  // if (item.mid === '3648314') {
+  //   debugger
+  //   console.error(MatchDataBaseH5.get_quick_mid_obj(item.mid) || item)
+  // }
   // const { source_index = '', is_show_ball_title = false, start_flag = '3' } = item
   // const match = MatchDataBaseH5.get_quick_mid_obj(item.mid) || item
   return MatchDataBaseH5.get_quick_mid_obj(item.mid) || item
@@ -140,19 +144,22 @@ const get_match_item = (item) => {
 const handlerUpdate = lodash.debounce((data) => {
   const length = lodash.get(data, 'length', 0)
   if (length < 1) return
-  console.log('当前可视区数据更新数据', data)
   let flag = false
   const mids = []
+  const list = []
   data.forEach(t => {
     if (t.is_meta) return
+    const item = matchs_data.value.find(m => m.mid === t.mid)
+    list.push(item)
     flag = true
     mids.push(t.mid)
   })
+  console.log('当前可视区数据更新数据', list)
   if (flag && mids_string.value !== mids.join(',')) {
     // 设置当前激活的赛事
     MatchMeta.set_current_match_mids(mids)
     // 更新仓库赛事数据 , merge: 'cover'
-    MatchMeta.handle_update_match_info({ list: data })
+    MatchMeta.handle_update_match_info({ list: list, merge: 'cover' })
     // // 根据当前可视区 mids 获取赛事赔率
     MatchMeta.get_match_base_hps_by_mids({mids: mids.join(',')})
     
