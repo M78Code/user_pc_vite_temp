@@ -126,12 +126,6 @@ onMounted(() => {
   }
 })
 
-// 是否显示 -
-const is_show_lock = computed(() => {
-  const ol = lodash.get(props.odd_field, 'hl[0].ol', "")
-  return lodash.isEmpty(ol)
-})
-
 // 当前玩法ID
 const hpid = computed(() => {
   return lodash.get(props.odd_field,'hpid');
@@ -155,6 +149,13 @@ const is_show_fenpan = computed(() => {
 // 是否 显示 - 或者 锁
 const is_show = computed(() => {
   return props.placeholder == 1 || is_close(get_odd_status()) || (MenuData.get_footer_sub_menu_id == 114 && lodash.get(props.match,'csid') != 1)
+})
+
+// 是否显示 -
+const is_show_lock = computed(() => {
+  const ol = lodash.get(props.odd_field, 'hl[0].ol', "")
+  const hs = lodash.get(props.odd_field, 'hl[0].hs', 0)
+  return lodash.isEmpty(ol) || hs == 2
 })
 
 // 是否 接口 导致的数据变化
