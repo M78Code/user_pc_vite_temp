@@ -107,37 +107,37 @@ let languages = [{
      
     ]
 
-    const languages_ = [ {
-        key: 'tw',
-        language: '繁體中文',
-      }, {
-        key: 'vi',
-        language: 'Tiếng Việt',
-      }, {
-        key: 'th',
-        language: 'ไทย',
-      }, {
-        key: 'ms',
-        language: 'Melayu',
-      }, {
-        key: 'ad',
-        language: 'Indonesia',
-      }, {
-        key: 'md',
-        language: 'Burmese',
-      }, {
-        key: 'ry',
-        language: 'Japanese',
-      }, {
-        key: 'pty',
-        language: 'Portuguese',
-      }, {
-        key: 'hy',
-        language: 'Korean',
-      }]
+    // const languages_ = [ {
+    //     key: 'tw',
+    //     language: '繁體中文',
+    //   }, {
+    //     key: 'vi',
+    //     language: 'Tiếng Việt',
+    //   }, {
+    //     key: 'th',
+    //     language: 'ไทย',
+    //   }, {
+    //     key: 'ms',
+    //     language: 'Melayu',
+    //   }, {
+    //     key: 'ad',
+    //     language: 'Indonesia',
+    //   }, {
+    //     key: 'md',
+    //     language: 'Burmese',
+    //   }, {
+    //     key: 'ry',
+    //     language: 'Japanese',
+    //   }, {
+    //     key: 'pty',
+    //     language: 'Portuguese',
+    //   }, {
+    //     key: 'hy',
+    //     language: 'Korean',
+    //   }]
       console.error('IS_FOR_NEIBU_TEST',IS_FOR_NEIBU_TEST)
       if(IS_FOR_NEIBU_TEST){
-       languages = lodash.concat(languages,languages_)
+       languages = lodash.concat(languages,[])
       }
 const settingData = ref([{
   title:"ouzhou.setting_menu.odds_display",
