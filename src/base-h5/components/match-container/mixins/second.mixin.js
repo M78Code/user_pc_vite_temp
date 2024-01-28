@@ -271,7 +271,7 @@ export default defineComponent({
       if(this.match[o_hps_key]){
         // 根据业务需求，修改冠军小节玩法  1585 单对应
         const hps = lodash.get(this.match, `${o_hps_key}`)
-        const id = +lodash.get(this.current_tab_item, 'id')
+        const id = +lodash.get(this.current_tab_item, 'id', 0)
         this.current_tab_item.hps = hps
         if([18].includes(id)){
           // 波胆玩法 数据加工处理
@@ -394,21 +394,13 @@ export default defineComponent({
           }
           this.tab_list[i].show_tab = id_show_map[tab.id];
         });
-      }else
-      //篮球
-      if(match.csid == 2){
+      }else if(match.csid == 2){ //篮球
         this.tab_list.filter(t => t.id == 6)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
-      }else
-      //网球
-      if(match.csid == 5){
+      }else if(match.csid == 5){ //网球
         this.tab_list.filter(t => t.id == 7)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
-      }else
-      //乒乓球
-      if(match.csid == 8){
+      }else if(match.csid == 8){ //乒乓球
         this.tab_list.filter(t => t.id == 8)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
-      }else
-      //斯诺克
-      if(match.csid == 7){
+      }else if(match.csid == 7){ //斯诺克
         this.tab_list.filter(t => t.id == 9)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
       }
       this.update_mmp_map_title();
@@ -696,19 +688,24 @@ export default defineComponent({
     get_secondary_unfold_map () {
       return MatchResponsive.secondary_unfold_map.value;
     },
+    // 是否显示次要玩法标题  角球不显示
+    is_show_title () {
+      const id = +lodash.get(this.current_tab_item, 'id', 0)
+      return ![1].includes(id)
+    },
     // 判断是否显示tab栏
     show_tab_by_data(){
       
-      const key = MatchFold.get_match_fold_key(this.match)
-      const flag = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_tab`, true)
+      // const key = MatchFold.get_match_fold_key(this.match)
+      // const flag = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_tab`, true)
 
-      // let{cosCorner,cosOvertime,cosBold,cosPenalty,cosPromotion, cosOutright ,cosPunish,hpsAdd,cos15Minutes,compose,cds,mbmty} = this.match;
-      // let flag = cos15Minutes || cosCorner || cosOvertime|| cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || compose || (hpsAdd && hpsAdd.length > 0)
+      let{cosCorner,cosOvertime,cosBold,cosPenalty,cosPromotion, cosOutright ,cosPunish,hpsAdd,cos15Minutes,compose,cds,mbmty} = this.match;
+      let flag = cos15Minutes || cosCorner || cosOvertime|| cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || compose || (hpsAdd && hpsAdd.length > 0)
 
       // 电子篮球 不显示次要玩法 对应 BUG 44554
-      // if (['B03', 'BE'].includes(cds) && mbmty === 2) {
-      //   flag = false
-      // }
+      if (['B03', 'BE'].includes(cds) && mbmty === 2) {
+        flag = false
+      }
       // 如果没有 玩法时
       if(!flag ){
         let unfold_map = _.cloneDeep(this.get_secondary_unfold_map);
@@ -766,7 +763,7 @@ export default defineComponent({
     match(c_m,o_m){
       this.init_tab_async_show()
       if(this.current_hps_key){
-        const id = +lodash.get(this.current_tab_item, 'id')
+        const id = +lodash.get(this.current_tab_item, 'id', 0)
         const hps = lodash.get(this.current_tab_item, 'hps')
         // 如果是波胆 和 5分钟玩法
         if([18].includes(id)){

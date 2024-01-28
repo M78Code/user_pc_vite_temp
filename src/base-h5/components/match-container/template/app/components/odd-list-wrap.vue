@@ -808,9 +808,9 @@ const odd_wrapper_pan = ({ direction }) => {
   }
 };
 
-// 是否主动 滑动
+// 是否主动 滑动  晋级 和 冠军 不需要
 const is_scroll_page = computed(() => {
-  return [30].includes(props.current_tab_item.id)
+  return [3,30].includes(props.current_tab_item.id)
 })
 
 /**
