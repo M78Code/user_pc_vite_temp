@@ -449,7 +449,14 @@
     "wan": "Diez mil",
     "wanyi": "Trillones",
     "msg12": "The disc mouth has failed",
-    "msg13": "Go to Betting History"
+    "msg13": "Go to Betting History",
+    "bet_booked": "Booked",
+    "bet_book_failed": "Book failed",
+    "bet_booking": "Booking",
+    "bet_process": "Processing",
+    "bet_book_valid": "Expired",
+    "bet_book_confirm": "Book",
+    "bet_book_canceled": "Cancelled"
   },
   "bet_record": {
     "30day": "30 días",
