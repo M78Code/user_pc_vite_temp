@@ -1,5 +1,5 @@
 <template>
-  <div class="article-content article icontainer yb_px16 yb_pb4">
+  <div class="component article-content article icontainer yb_px16 yb_pb4">
     <!-- 标题 -->
     <div class="title">
       {{ data.articleTittle }}
@@ -9,7 +9,7 @@
       <span class="category-name ellipsis">{{ data.categoryName }}</span>
       <span class="yb_ml12">{{ data.readCounts }}阅读</span>
       <!-- <span style="margin-left: auto">{{ data.updateTime | formete_date }}</span> -->
-      <span style="margin-left: auto">{{ data.updateTime }}</span>
+      <span style="margin-left: auto">{{ formete_date(data.updateTime) }}</span>
     </div>
     <hr />
     <!-- 内容 -->
@@ -18,6 +18,7 @@
 </template>
 
 <script setup lang="ts">
+import { formete_date } from 'src/output/index';
 
 type Props = {
   data:TYPES.Article
