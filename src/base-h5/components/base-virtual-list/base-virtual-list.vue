@@ -9,7 +9,8 @@
     <div class="scrollerContainer" ref="scrollerContainerRef" @scroll="onScroll">
       <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
       <div class="contentList" :style="styleTranslate" ref="contentListRef">
-        <div class="item" v-for="item, index in renderData" :key="get_match_key(item)" :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index">
+        <!-- :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index" -->
+        <div class="item" v-for="item, index in renderData" :key="get_match_key(item)">
           <slot name="default" :item="item" :index="index"></slot>
         </div>
         <!-- 到底了容器-->
