@@ -132,8 +132,8 @@ export default {
     //监听详情类的版本号
     "details_data_version.version": {
       handler(res) {
-      
         this.play_media = MatchDetailCalss.play_media
+        debugger
         this.vx_is_pause_video = MatchDetailCalss.is_pause_video
         // this.show_type =MatchDetailCalss.params.media_type
         let cur = MatchDetailCalss.play_media.time
@@ -275,10 +275,7 @@ export default {
     // 设置直播类型 && 获取直播地址
     "play_media.time": {
       handler(cur) {
-        // this.match_info =MatchDetailsData.get_quick_mid_obj(this.mid)
         if (!cur  ) return
-        console.log(MatchDetailsData.get_quick_mid_obj(this.mid),'MatchDetailsData.get_quick_mid_obj(this.mid)');
-        let ini_info = MatchDetailsData.get_quick_mid_obj(this.mid)
         this.show_loading = true
         // 10秒后隐藏loading图片
         clearTimeout(this.timer_id_1)
@@ -288,10 +285,10 @@ export default {
         
         this.callback_id++
         let callback_id = this.callback_id
-        let { media_type } = this.play_media
-      
+        let { media_type="auto" } = this.play_media
+        console.log(media_type,'media_type');
         let  mid="" ; let mms="" ;let mvs=""; let varl="" ;let vurl=""; let  csid=""; let lvs=""
-        if( this.match_info ) {
+        if( !lodash.isEmpty(this.match_info) ) {
           mid= this.match_info.mid
           mms=this.match_info.mms
           mvs = this.match_info.mvs
