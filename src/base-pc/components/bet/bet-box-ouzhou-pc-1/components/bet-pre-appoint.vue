@@ -294,7 +294,7 @@ const set_bet_obj_config = () => {
     }
     // ref_custom.odds = mathJs.multiply(ref_custom.oddFinally,100000)
     BetData.set_bet_pre_obj(obj)
-    // console.log('这这这', obj)
+    console.log('这这这', obj)
 }
 
 /**
@@ -361,6 +361,7 @@ const add_handle = (type, index = 1) => {
       }
     }
     set_computed_appoint_ball_head()
+    set_bet_obj_config()
     nextTick(() => {
       search_odds_value_by_ball_head();
     })
