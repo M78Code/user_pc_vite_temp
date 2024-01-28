@@ -77,7 +77,7 @@ const toDetails = () => {
 <style scoped lang="scss">
 
 .is-handicap{
-  color: #7A0F25;
+  color: #FF7000;
 }
 
 </style>

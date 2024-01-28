@@ -61,7 +61,8 @@
           </template> 
         </collapse> 
         <!-- 排序 -->
-        <div class="setting_item" v-for="(setting,idx) in sortData" :key="setting.title">
+        <div class="sort_item" v-for="(setting,idx) in sortData" :key="setting.title">
+          <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/sort.png`" alt="" />
           <span>{{ i18n_t(setting.title) }}</span>
           <div class="switch"> 
             <span class="bg" :style="{left: UserCtr.sort_type == setting.options[0].value ? 0 : '50px'}"></span>
@@ -178,15 +179,19 @@ function handel_change(s,idx){
   UserCtr.set_cur_odds(s) //HK/EU
 }
 
-const handel_sort = (s, idx) => {
+const handel_sort = async(s, idx) => {
   sort.value = s.value
   //电竞 不需要热门排序 和 盘口
   if(s.value === 1 && MenuData.is_esports()) return;
-  UserCtr.set_sort_type(s.value);
-  const param = {
+  if (BUILDIN_CONFIG?.CURRENT_ENV == "local_test") {
+    const param = {
     sort: s.value
   }
-  api_account.get_remember_select(param)
+  await api_account.get_remember_select(param).then().catch(err => {
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('msg.msg_nodata_07'))
+    })
+  }
+  UserCtr.set_sort_type(s.value);
 }
 
 
@@ -383,6 +388,54 @@ const goto_announcement = () => {
     background: #F5F5F5;
     > span {
       height: 26px;
+    }
+    .switch{
+      position: relative;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      background: #E2E2E2;
+      border-radius: 20px;
+      justify-content: space-between;
+      > span {
+        width: 50px;
+        height: 100%;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s;
+        color: #8A8986;
+        &.active{
+          color: #000;
+          background: #fff;
+          border-radius: 20px;
+        }
+      }
+      .bg{
+        position: absolute;
+        top: 0;
+        border-radius: 20px;
+        border: 1px solid #FF7000;
+        transition: all 0.25s;
+      }
+    }
+  }
+  .sort_item{
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 26px 0 26px;
+    font-size: 16px;
+    font-weight: 400;
+    > img{
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+    > span {
+      height: 26px;
+      margin-right: 160px;
     }
     .switch{
       position: relative;

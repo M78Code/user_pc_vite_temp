@@ -27,10 +27,10 @@
                 <div class="content">
 
                     <ul>
-                        <li v-for="(item, i) in  data.list_data" :key="i"
-                            :class="['item', i == data.list_data.length - 1 ? 'border-none' : '']">
+                        <li v-for="(item, i) in  data.filter_list" :key="i"
+                            :class="['item', i == data.filter_list.length - 1 ? 'border-none' : '']">
                             <div class="item-header">
-                                <check_icon @change_checked="(status) => handle_select(i)" :is_checked="item.status" />
+                                <check_icon @change_checked="(status) => handle_select(item.id)" :is_checked="item.status" />
                                 <span class="title">{{ item.introduction }}</span>
                             </div>
                             <ul class="child">
@@ -38,7 +38,7 @@
                                     <ul class="flex">
                                         <li v-for="(_current, _index) in e.tournamentList" :key="_index"
                                             class="flex mt-16  items-center w-25 children">
-                                            <check_icon @change_checked="(status) => handle_select(i, index, _index)" class="mr-6"
+                                            <check_icon @change_checked="(status) => handle_select(_current.id)" class="mr-6"
                                                 :is_checked="_current.status" />
                                             <span class="mr-6 name-text">{{ _current.nameText }}</span>
                                             <span class="mr-6 active">{{ _current.num }}</span>
@@ -98,18 +98,16 @@ const data = reactive({
 const loading = ref(false);
 
 watch(() => data.search_val, (value) => {
-    console.log(value);
-    data.filter_list = data.list_data.reduce((p, c) => {
-        
-        return p;
-    },[])
+    console.log(value, "222222");
+    
     // data.filter_list = data.list_data.filter(e => {
     //     return ( e.sportVOs||[]).filter(q => {
     //         return (q.tournamentList||[]).filter(w => w.nameText.includes(value) || w.id == value)
     //     })
         
     // })
-    console.log(JSON.stringify(data.list_data) , "data.filter_list");
+    data.filter_list = search(value);
+    console.log(search(value), "data.filter_list");
     
 })
 
@@ -147,6 +145,27 @@ watch(tid, (value)=> {
     console.log(value, "values===");
 })
 
+/**
+ * 搜索
+ * @param {string} params 
+ */
+function search(params) {
+   return data.list_data.reduce((p, c) => {
+    c.res = [];
+    for(let i=0;i<c.sportVOs.length;i++) {
+        const tem = c.sportVOs[i];
+        const res = tem.tournamentList.filter(e => e.nameText.includes(params));
+        if (res.length > 0) {
+            tem.tournamentList = res;
+            c.res.push(tem);
+        }
+    }
+    if (c.res.length > 0) {
+      p.push(c)
+    } 
+    return p;
+   },[])
+}
 
 function handle_checked_all() {
     data.all_select = !data.all_select;
@@ -171,36 +190,38 @@ function back() {
 }
 
 /**
- * 
- * @param {number} parent 最外层
- * @param {number} child  子级
- * @param {number} current 第三层
+ * 选中/取消选中
+ * @param {string} id 
  */
-function handle_select(parent, child, current) {
-    console.log(parent, child, current, "第三层");
-    if (child != undefined && current != undefined) {
-        // 子类选择
-        const _data = _.clone(data.list_data);
-        _data[parent].sportVOs[child].tournamentList[current].status = !_data[parent].sportVOs[child].tournamentList[current].status;
-
-        data.list_data = _data.map((e, i) => {
-            const can_select_all = e.sportVOs.every(item => item.tournamentList.every(q => q.status));
-            e.status = can_select_all;
-            return e;
-        })
-    }else {
-        data.list_data = data.list_data.map((e, i) => {
-            if (i == parent) {
-                e.status =  !e.status ;
-                e.sportVOs = (e.sportVOs || []).map(p => {
-                    p.tournamentList = (p.tournamentList || []).map(q => ({ ...q, status: e.status }))
-                    return p;
+function handle_select(id) {
+    console.log(id, "第三层");
+    data.filter_list = data.filter_list.map((item) => {
+        // 选中最外层
+        if(id == item.id) {
+            item.status = !item.status;
+            item.sportVOs = item.sportVOs.map((sportVos) => {
+                sportVos.tournamentList = sportVos.tournamentList.map(e => {
+                    e.status = item.status;
+                    return e;
                 })
-            }
-            return e;
-        })
-    }
-    data.all_select = data.list_data.every(e => e.status);
+                return sportVos;
+            })
+        }else {
+            // 选中里面的层数
+            item.sportVOs = item.sportVOs.map((sportVOs) => {
+                sportVOs.tournamentList = sportVOs.tournamentList.map(e => {
+                    if (e.id == id) {
+                        e.status = !e.status;
+                    }
+                    return e;
+                })
+                item.status = sportVOs.tournamentList.every(q => q.status);
+
+                return sportVOs;
+            })
+        }
+        return item;
+    });
 }
 
 async function submit() {

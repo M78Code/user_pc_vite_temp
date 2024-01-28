@@ -227,7 +227,7 @@ const esportsClick = ()=>{
   MenuData.set_is_collect(false)
   MenuData.set_left_menu_result(obj)
   MenuData.set_menu_current_mi(obj.lv2_mi)
-  MenuData.set_current_ball_type(31001)
+  MenuData.set_current_ball_type(1001)
 
   let mid_config = {
     ...MenuData.mid_menu_result,
