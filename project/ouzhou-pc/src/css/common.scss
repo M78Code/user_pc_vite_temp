@@ -6,6 +6,11 @@
 .fullscreen {
   z-index: 10010 !important;
 }
+
+.q-dialog {
+  z-index: 30001 !important;
+}
+
 .q-tooltip {
   z-index: 10003 !important;
 }

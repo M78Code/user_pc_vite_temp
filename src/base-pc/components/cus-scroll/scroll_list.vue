@@ -187,7 +187,7 @@ const setScrollPosition = (top) => {
     overflow-y: scroll;
     overflow-x: hidden;
     padding-right: 3px;
-    scrollbar-width: thin; /* 火狐滚动条无法自定义宽度，只能通过此属性使滚动条宽度变细 */
+    -moz-scrollbar-width: thin; /* 火狐滚动条无法自定义宽度，只能通过此属性使滚动条宽度变细 */
     &::-webkit-scrollbar {
       width: 7px;
     }
