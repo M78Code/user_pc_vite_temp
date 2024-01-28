@@ -16,10 +16,6 @@ import MatchFold from 'src/core/match-fold/index.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
 export default defineComponent({
-  props:{
-    match: Object,  // 赛事数据
-    i: Number, // 所在位置
-  },
   data(){
     return{
       is_show_tree_line:'all',
@@ -267,31 +263,34 @@ export default defineComponent({
      * @description 更新赛事数据
      */
     update_match_data (item) {
-      let o_hps_key = this.get_hps_key_by(this.current_tab_item);
-      if(this.match[o_hps_key]){
-        // 根据业务需求，修改冠军小节玩法  1585 单对应
-        const hps = lodash.get(this.match, `${o_hps_key}`)
-        const id = +lodash.get(this.current_tab_item, 'id')
-        this.current_tab_item.hps = hps
-        if([18].includes(id)){
-          // 波胆玩法 数据加工处理
-          this.bold_all_list = this.corrective_action_data_processing(hps, this.match )
-        }else if([19].includes(id)){
-          // 5分钟 玩法 数据加工处理
-          this.five_minutes_all_list = this.five_minutes_gameplay_data_processing(hps, this.match )
-        } else if ([17].includes(id)) {
-          // 15分钟 数据处理
-          if (!hps || hps.length < 1) return
-          const hps_data = lodash.cloneDeep(hps).sort((a, b) => +a.hSpecial - +b.hSpecial)
-          this.current_tab_item.hps = hps_data
-        }
-        this.current_hps_key = o_hps_key;
-      }
+      this.compute_secondart_play()
       //次要玩法展开或者关闭通知列表页重新计算dom高度
       this.save_second_play_mid_map_unfold_status(item, this.bold_all_list, this.five_minutes_all_list);
       if(item.id==17){
         this.apply_15min_title(); // 15分钟 次要玩法模块  左下角的 小标题
       }
+    },
+    // 重新计算次要玩法数据
+    compute_secondart_play () {
+      const o_hps_key = this.get_hps_key_by(this.current_tab_item);
+      const hps = lodash.get(this.match, `${o_hps_key}`, [])
+      if (hps.length < 1) return
+      this.current_hps_key = o_hps_key;
+      // 根据业务需求，修改冠军小节玩法  1585 单对应
+      const id = +lodash.get(this.current_tab_item, 'id', 0)
+      this.current_tab_item.hps = hps
+      if([18].includes(id)){
+        // 波胆玩法 数据加工处理
+        this.bold_all_list = this.corrective_action_data_processing(hps, this.match )
+      }else if([19].includes(id)){
+        // 5分钟 玩法 数据加工处理
+        this.five_minutes_all_list = this.five_minutes_gameplay_data_processing(hps, this.match )
+      } else if ([17].includes(id)) {
+        // 15分钟 数据处理
+        const hps_data = lodash.cloneDeep(hps).sort((a, b) => +a.hSpecial - +b.hSpecial)
+        this.current_tab_item.hps = hps_data
+      }
+      
     },
     //玩法说明图标点击
     // $event 时间对象 mid 赛事id
@@ -392,25 +391,22 @@ export default defineComponent({
               this.tab_list[i].title = i18n_t('football_playing_way.hps5Minutes')
             }
           }
+          // 当前玩法已关闭 则收起
+          if (!id_show_map[tab.id]) {
+            this.tab_list[i].unfold = 0
+          }
           this.tab_list[i].show_tab = id_show_map[tab.id];
         });
-      }else
-      //篮球
-      if(match.csid == 2){
-        this.tab_list.filter(t => t.id == 6)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
-      }else
-      //网球
-      if(match.csid == 5){
-        this.tab_list.filter(t => t.id == 7)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
-      }else
-      //乒乓球
-      if(match.csid == 8){
-        this.tab_list.filter(t => t.id == 8)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
-      }else
-      //斯诺克
-      if(match.csid == 7){
-        this.tab_list.filter(t => t.id == 9)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
       }
+      // else if(match.csid == 2){ //篮球
+      //   this.tab_list.filter(t => t.id == 6)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
+      // }else if(match.csid == 5){ //网球
+      //   this.tab_list.filter(t => t.id == 7)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
+      // }else if(match.csid == 8){ //乒乓球
+      //   this.tab_list.filter(t => t.id == 8)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
+      // }else if(match.csid == 7){ //斯诺克
+      //   this.tab_list.filter(t => t.id == 9)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
+      // }
       this.update_mmp_map_title();
       if(match.csid != 1){
         this.tab_list.forEach(tab => {
@@ -696,19 +692,27 @@ export default defineComponent({
     get_secondary_unfold_map () {
       return MatchResponsive.secondary_unfold_map.value;
     },
+    // 是否显示次要玩法标题  角球 晋级 冠军 不显示
+    is_show_title () {
+      const id = +lodash.get(this.current_tab_item, 'id', 0)
+      return ![1, 3, 30 ].includes(id)
+    },
     // 判断是否显示tab栏
     show_tab_by_data(){
       
-      const key = MatchFold.get_match_fold_key(this.match)
-      const flag = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_tab`, true)
+      // const key = MatchFold.get_match_fold_key(this.match)
+      // const flag = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_tab`, true)
 
-      // let{cosCorner,cosOvertime,cosBold,cosPenalty,cosPromotion, cosOutright ,cosPunish,hpsAdd,cos15Minutes,compose,cds,mbmty} = this.match;
-      // let flag = cos15Minutes || cosCorner || cosOvertime|| cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || compose || (hpsAdd && hpsAdd.length > 0)
+      // 复刻版 3184 需求 只做足球
+      if (this.match.csid != 1) return false
+
+      let{cosCorner,cosOvertime,cosBold,cosPenalty,cosPromotion, cosOutright ,cosPunish,cos15Minutes,compose,cds,mbmty} = this.match;
+      let flag = cos15Minutes || cosCorner || cosOvertime|| cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || compose
 
       // 电子篮球 不显示次要玩法 对应 BUG 44554
-      // if (['B03', 'BE'].includes(cds) && mbmty === 2) {
-      //   flag = false
-      // }
+      if (['B03', 'BE'].includes(cds) && mbmty === 2) {
+        flag = false
+      }
       // 如果没有 玩法时
       if(!flag ){
         let unfold_map = _.cloneDeep(this.get_secondary_unfold_map);
@@ -744,7 +748,7 @@ export default defineComponent({
       if(this.match && hps_add && hps_add[1]){
         let hp_item =hps_add[1];// 小节 或者角球等玩法 永远取第二个值 是让球数据
         if(hp_item){
-            let hl_item = hp_item.hl[0];
+          let hl_item = lodash.get(hp_item, 'hl[0]')
           if(hl_item && hl_item.ol){
             let found_i = 0;
             hl_item.ol.forEach((ol_item,i) => {
@@ -763,24 +767,29 @@ export default defineComponent({
     },
   },
   watch:{
-    match(c_m,o_m){
-      this.init_tab_async_show()
-      if(this.current_hps_key){
-        const id = +lodash.get(this.current_tab_item, 'id')
-        const hps = lodash.get(this.current_tab_item, 'hps')
-        // 如果是波胆 和 5分钟玩法
-        if([18].includes(id)){
-          // 波胆玩法 数据加工处理
-          this.bold_all_list = this.corrective_action_data_processing(hps, this.match )
-        }else if([19].includes(id)){
-          // 5分钟 玩法 数据加工处理
-          this.five_minutes_all_list = this.five_minutes_gameplay_data_processing(hps, this.match )
-        } else if ([17].includes(id)) {
-          // 15分钟 数据处理
-          if (!hps || hps.length < 1) return
-          const hps_data = lodash.cloneDeep(hps).sort((a, b) => +a.hSpecial - +b.hSpecial)
-          this.current_tab_item.hps = hps_data
-        }
+    match: {
+      deep: true,
+      handler () {
+        this.init_tab_async_show()
+        this.compute_secondart_play()
+        // if(this.current_hps_key){
+        //   const id = +lodash.get(this.current_tab_item, 'id', 0)
+        //   const hps = lodash.get(this.match, this.current_hps_key, [])
+        //   if (hps.length < 1) return
+        //   // 如果是波胆 和 5分钟玩法
+        //   if([18].includes(id)){
+        //     // 波胆玩法 数据加工处理
+        //     this.bold_all_list = this.corrective_action_data_processing(hps, this.match )
+        //   }else if([19].includes(id)){
+        //     // 5分钟 玩法 数据加工处理
+        //     this.five_minutes_all_list = this.five_minutes_gameplay_data_processing(hps, this.match )
+        //   } else if ([17].includes(id)) {
+        //     // 15分钟 数据处理
+        //     if (!hps || hps.length < 1) return
+        //     const hps_data = lodash.cloneDeep(hps).sort((a, b) => +a.hSpecial - +b.hSpecial)
+        //     this.current_tab_item.hps = hps_data
+        //   }
+        // }
       }
     },
     // 是否至少存在一个展开tab状态变化,tab展开 属于唯一有用的方法之一

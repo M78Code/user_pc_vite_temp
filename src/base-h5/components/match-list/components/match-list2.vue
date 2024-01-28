@@ -123,9 +123,11 @@ const matchs_data = computed(() =>{
 
 //获取数据仓库赛事数据
 const get_match_item1 = (item) => {
-  const { source_index = '', is_show_ball_title = false, start_flag = '3' } = item
-  const match = MatchDataBaseH5.get_quick_mid_obj(item.mid) || item
-  return { ...match, source_index, is_show_ball_title, start_flag }
+  const target = lodash.cloneDeep(item)
+  const { source_index = '', is_show_ball_title = false, start_flag = '3' } = target
+  const match = MatchDataBaseH5.get_quick_mid_obj(target.mid) || item
+  // return { ...match, source_index, is_show_ball_title, start_flag }
+  // return Object.assign(match, { source_index, is_show_ball_title, start_flag })
 }
 
 const get_match_item = (item) => {
@@ -133,13 +135,6 @@ const get_match_item = (item) => {
   // const match = MatchDataBaseH5.get_quick_mid_obj(item.mid) || item
   return MatchDataBaseH5.get_quick_mid_obj(item.mid) || item
 }
-
-const get_match_item3 = computed(() => {
-  return (item) => {
-    return  MatchDataBaseH5.get_quick_mid_obj(item.mid) || item
-  }
-})
-
 
 // 当前可视区数据更新回调
 const handlerUpdate = lodash.debounce((data) => {

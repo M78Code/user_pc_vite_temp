@@ -502,7 +502,6 @@ const item_click3 = lodash.debounce(() => {
     bet_type = 'vr_bet'
   }
   const secondary_paly = props?.invoke_source === 'attached'
-  console.log(secondary_paly)
   if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
     if (MenuData.get_menu_type() == 900 && $route.name == 'virtual_sports') { //虚拟体育走这里逻辑
       if (props.match.match_status) return
