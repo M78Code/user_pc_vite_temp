@@ -32,7 +32,7 @@ import * as ws_message_listener from "src/core/utils/common/module/ws-message.js
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 let message_fun = null
-let handler_func = null
+let timer = null
 const emitters = ref({})
 
 onMounted(() => {
@@ -48,18 +48,18 @@ onMounted(() => {
     initMatchPage()
     onTabChange()
     // BaseData.is_emit && MatchMeta.set_origin_match_data()
-    // 接口请求防抖
-    handler_func = lodash.debounce(({ cmd, data }) => {
-      MatchMeta.handle_ws_directive({ cmd, data })
-    }, 1000)
 
     // 增加监听接受返回的监听函数
     message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
-      handler_func({ cmd, data })
       if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
         MatchMeta.handle_remove_match(data)
       } else {
-        handler_func({ cmd, data })
+        if (timer) clearTimeout(timer)
+        timer = setTimeout(() => {
+          MatchMeta.handle_ws_directive({ cmd, data })
+          clearTimeout(null)
+          timer = null
+        }, 1500)
       }
     })
   }
