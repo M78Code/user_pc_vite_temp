@@ -147,6 +147,27 @@ watch(tid, (value)=> {
     console.log(value, "values===");
 })
 
+/**
+ * 搜索
+ * @param {string} params 
+ */
+function search(params) {
+   return obj.reduce((p, c) => {
+    c.res = [];
+    for(let i=0;i<c.sportVOs.length;i++) {
+        const tem = c.sportVOs[i];
+        const res = tem.tournamentList.filter(e => e.nameText.includes(params));
+        if (res.length > 0) {
+            tem.tournamentList = res;
+            c.res.push(tem);
+        }
+    }
+    if (c.res.length > 0) {
+      p.push(c)
+    } 
+    return p;
+   },[])
+}
 
 function handle_checked_all() {
     data.all_select = !data.all_select;
