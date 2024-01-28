@@ -246,6 +246,10 @@ class MatchFold {
    * @param {match} 赛事对象 
    */
   compute_show_tab_play = (match) => {
+
+    // 复刻版 3184 需求 只做足球
+    if (match.csid != 1) return false
+
     const { compose = false, cos15Minutes = false, cosBold = false, cosCorner = false, cosOutright = false, cosOvertime = false, cosPenalty = false, 
       cosPromotion = false, cosPunish = false, hpsAdd = [], cds = '', mbmty = '' } = match;
     

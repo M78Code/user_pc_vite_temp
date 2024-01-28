@@ -136,16 +136,6 @@ const get_match_item = (item) => {
   return MatchDataBaseH5.get_quick_mid_obj(item.mid) || item
 }
 
-const get_match_item2 = computed((a) => {
-  console.log(a)
-  return (item) => {
-    const match = MatchDataBaseH5.get_quick_mid_obj(item.mid)
-    const { source_index = '', is_show_ball_title = false, start_flag = '3' } = item
-    return { ...match, source_index, is_show_ball_title, start_flag }
-  }
-})
-
-
 // 当前可视区数据更新回调
 const handlerUpdate = lodash.debounce((data) => {
   const length = lodash.get(data, 'length', 0)

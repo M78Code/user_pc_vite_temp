@@ -78,9 +78,9 @@
         <!--次要玩法 盘口 右边的 区域-->
         <OddListWrap 
           :match="match"
+          invoke_source="attached"
           :hps="current_tab_item.hps"
           :current_tab_item="current_tab_item"
-          invoke_source="attached"
           :bold_all_list="bold_all_list"
           :five_minutes_all_list="five_minutes_all_list"
           @on_update_standard="on_update_standard" />
@@ -101,6 +101,10 @@ import { select_check, information_icon } from 'src/base-h5/core/utils/local-ima
 export default defineComponent({
   name: "match-container-second-template2",
   mixins: [second_mixin],
+  props:{
+    match: Object,  // 赛事数据
+    i: Number, // 所在位置
+  },
   components: {
     IconWapper,
     OddListWrap
