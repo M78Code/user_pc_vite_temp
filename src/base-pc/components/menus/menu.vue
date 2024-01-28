@@ -169,6 +169,8 @@ const jump_func = (payload ={},type) => {
   }
   MenuData.set_mid_menu_result(mid_config)
 
+  BetData.set_clear_bet_info()
+
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload.mi)
 
