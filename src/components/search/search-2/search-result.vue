@@ -107,7 +107,7 @@
 											<template v-if="!sports_id.includes(i.csid)">
 												<div class="flex_1"
 													v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
-													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
+													<div v-if="get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[2].ov', ''))">{{ i18n_t('ouzhou.search.dogfall') }}</div>
 													<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[2].ov', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
@@ -166,7 +166,7 @@
 											<template v-if="!sports_id.includes(list.csid)">
 												<div class="flex_1"
 													v-if="lodash.get(list, 'hps[0].hl.length', 0) > 0 && lodash.get(list, 'hps[0].hl[0].ol[2].ov', '') && lodash.get(list, 'hps[0].hl[0].ol[1].os', '') === 1">
-													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
+													<div v-if="get_odd_os(lodash.get(list, 'hps[0].hl[0].ol[2].ov', ''))">{{ i18n_t('ouzhou.search.dogfall') }}</div>
 													<div class="red">{{ get_odd_os(lodash.get(list, 'hps[0].hl[0].ol[2].ov', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
