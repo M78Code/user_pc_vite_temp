@@ -129,6 +129,14 @@ const set_bet_order_list = (bet_list, is_single) => {
                     // "dataSource": item.dataSource,   // 数据源
                 }
                 
+                // 电竞 vr 投注不需要一下数据
+                if(item.bet_type == 'common_bet'){
+                    bet_s_obj.scoreBenchmark = ''
+                    bet_s_obj.placeNum = item.placeNum //盘口坑位
+                    bet_s_obj.tournamentLevel = item.tournamentLevel   // 联赛级别
+                    bet_s_obj.dataSource = item.dataSource  // 数据源
+                }
+                
                 // 获取当前的盘口赔率
                 let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
                 // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
