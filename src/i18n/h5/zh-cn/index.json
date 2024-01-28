@@ -1373,7 +1373,8 @@
     "score-disparity": "分差",
     "total_play_count": "总局数",
     "total_pp_score_count": "总分",
-    "water_polo_countdown": "小于S%分钟"
+    "water_polo_countdown": "小于S%分钟",
+    "other": "其他"
   },
   "match_results_title": {
     "1": {

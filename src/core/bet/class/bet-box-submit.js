@@ -1353,8 +1353,13 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,other) => {
 
     // 列表的 次要玩法
     if(other.secondary_paly){
+        if(["Under",'Over'].includes(ol_obj.ot)){
+            text = ol_obj.on.split(' ')[0] || ''
+            hv = ol_obj.on.split(' ')[1] || ''
+        }else
+        // 波胆 玩法 其他
         if(ol_obj.ot == "Other"){
-            text = ol_obj.ot
+            text = i18n_t('list.other')
             hv = ''
         }else
         // 罚牌玩法 / 加时赛 / 冠军
