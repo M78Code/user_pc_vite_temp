@@ -593,11 +593,11 @@ const set_computed_appoint_ball_head = () => {
       // }
       ball_head = ref_data.appoint_ball_head;
     }
-    if (!(tball_head_input && ball_head_input == document.activeElement)) {
-      if (BASKETBALL_BY_APPOINTMENT_let.includes(props.item.playId) && !lodash_.startsWith(ball_head, '-') && !lodash_.startsWith(ball_head, '+') && ball_head != 0) {
-        ball_head = '+' + ball_head
-      }
+    // if (!(tball_head_input && ball_head_input == document.activeElement)) {
+    if (BASKETBALL_BY_APPOINTMENT_let.includes(props.item.playId) && !lodash_.startsWith(ball_head, '-') && !lodash_.startsWith(ball_head, '+') && ball_head != 0) {
+      ball_head = '+' + ball_head
     }
+    // }
   }
   ref_data.computed_appoint_ball_head = ball_head;
 }
