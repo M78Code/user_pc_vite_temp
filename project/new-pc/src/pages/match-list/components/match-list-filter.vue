@@ -27,7 +27,7 @@
                 <div class="content">
 
                     <ul>
-                        <li v-for="(item, i) in  data.list_data" :key="i"
+                        <li v-for="(item, i) in  data.filter_list" :key="i"
                             :class="['item', i == data.list_data.length - 1 ? 'border-none' : '']">
                             <div class="item-header">
                                 <check_icon @change_checked="(status) => handle_select(i)" :is_checked="item.status" />
@@ -98,18 +98,16 @@ const data = reactive({
 const loading = ref(false);
 
 watch(() => data.search_val, (value) => {
-    console.log(value);
-    data.filter_list = data.list_data.reduce((p, c) => {
-        
-        return p;
-    },[])
+    console.log(value, "222222");
+    
     // data.filter_list = data.list_data.filter(e => {
     //     return ( e.sportVOs||[]).filter(q => {
     //         return (q.tournamentList||[]).filter(w => w.nameText.includes(value) || w.id == value)
     //     })
         
     // })
-    console.log(JSON.stringify(data.list_data) , "data.filter_list");
+    data.filter_list = search(value);
+    console.log(search(value), "data.filter_list");
     
 })
 
@@ -147,6 +145,27 @@ watch(tid, (value)=> {
     console.log(value, "values===");
 })
 
+/**
+ * 搜索
+ * @param {string} params 
+ */
+function search(params) {
+   return data.list_data.reduce((p, c) => {
+    c.res = [];
+    for(let i=0;i<c.sportVOs.length;i++) {
+        const tem = c.sportVOs[i];
+        const res = tem.tournamentList.filter(e => e.nameText.includes(params));
+        if (res.length > 0) {
+            tem.tournamentList = res;
+            c.res.push(tem);
+        }
+    }
+    if (c.res.length > 0) {
+      p.push(c)
+    } 
+    return p;
+   },[])
+}
 
 function handle_checked_all() {
     data.all_select = !data.all_select;

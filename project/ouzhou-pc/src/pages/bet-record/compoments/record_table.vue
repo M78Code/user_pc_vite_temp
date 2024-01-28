@@ -65,11 +65,10 @@
                 <div class="record-detail-list">
                   <div v-for="(item, index) in props.row.orderVOS" :key="index" class="record-detail">
                     <div class="record-detail-item">
-                      <div class="record-detail-icon">
-                       
+                      <!-- <div class="record-detail-icon">
                         <sport-icon :sport_id="cts_mid.includes(props.row.managerCode*1) ? item.sportId == 1 ? '90': 91  : item.sportId" key_name="pc-left-menu-bg-image" size="18" class="icon"  style="margin:0 10px"/>
-                      </div>
-                      <span> {{ item.matchName }}</span>
+                      </div> -->
+                      <span>[{{item.sportName}}] {{ item.matchName }}</span>
                       <span v-if="item.matchDay">{{ item.matchDay }} {{ item.batchNo }}</span>
                       <span v-if="item.matchType !=3" style="color:#8A8986">{{ item.matchInfo }}</span>
                       <span>
