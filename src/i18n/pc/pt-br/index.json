@@ -2685,7 +2685,18 @@
     "HK": "Hong Kong",
     "MY": "Deficiência Malaia",
     "US": "Americano",
-    "ID": "Indonésia"
+    "ID": "Indonésia",
+    "pty":{ 
+      "EU": "Handicap Europeu",
+      "GB": "Handicap Inglês",
+      "HK": "Hong Kong",
+      "MY": "Deficiência Malaia",
+      "US": "Americano",
+      "ID": "Indonésia",
+      "morning_session":"Antes da competição",  
+      "list_today_play_title":"Bola rolante",
+      "match_winner":"campeão"
+    }
   },
   "nodata_msg": {
     "no_data_msg_1": "Partida não encontrada"

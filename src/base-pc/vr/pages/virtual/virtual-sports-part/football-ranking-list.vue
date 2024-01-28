@@ -5,7 +5,10 @@
   <div class="ranking_list hairline-border">
     <!-- <span class="navigation-title">{{ i18n_t('virtual_sports.leaderboard') }}</span> -->
     <!-- header -->
-    <div class="leaderboard">Leaderboard</div>
+    <div class="leaderboard row items-center">
+      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/leader_board.png`"/>
+      <span> {{ i18n_t("vsport.rank") }} </span>
+      </div>
     <div class="header">
       <div class="col1 col-label"></div>
       <div class="col2 col-label">{{ i18n_t('virtual_sports.team') }}</div>
@@ -72,7 +75,7 @@ export default {
 
   .col-label{
     font-size: 0.1rem;
-    color: var(--q-gb-t-c-8);
+    color: #8A8986;
   }
 
   .col1 {
@@ -82,39 +85,36 @@ export default {
   }
 
   .col2 {
-    width: 0.94rem;
+    flex: 1;
     text-align: left;
     padding-left: 12px;
     display: unset !important; /*  避免flex 没有显示省略号 */
   }
   /*  3~8 总宽度220px */
   .col3 {
-    width: 0.5rem;
+    width: 40px;
   }
 
   .col4 {
-    width: 1rem;
+    width: 50px;
   }
 
   .col5 {
-    flex: 1;
+    width: 50px;
   }
-
-  .col6 {
-    flex: 1;
-    height: 100%;
-    text-align: center;
-  }
-
   /*  头部 */
   .leaderboard {
     height: 40px;
     background: #fff;
-    line-height: 40px;
     font-weight: 500;
     padding-left: 20px;
+    margin-top: 20px;
     border-top: 1px solid var(--q-gb-bd-c-1);
-    margin-top: 10px;
+    img {
+      width: 14px;
+      height: 14px;
+      margin-right: 16px;;
+    }
   }
   .header {
     height: 0.32rem;
@@ -176,6 +176,9 @@ export default {
       font-size: 0.12rem;
       font-weight: 500;
       color: var(--q-gb-t-c-5);
+      &.col3, &.col4, &.col5 {
+        color: #8A8986;
+      }
     }
 
     /*  .field{} */

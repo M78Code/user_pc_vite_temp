@@ -1,4 +1,228 @@
 {
+  "ouzhou": {
+    "record": {
+        "my_bet": "My Bets",
+        "unsettled": "Unsettled",
+        "settled": "settled",
+        "unpaid_bets": "This record will show all unpaid bets",
+        "settled_time": "Settled time",
+        "bet_time": "Bet time",
+        "match_time": "Match time",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "7_days": "Last 7 Days",
+        "30_days": "In 30 Days",
+        "datails": "Datails"
+    },
+    "detail": {
+        "which_team": "Which team will",
+        "keno_lottery": "keno lottery",
+        "exciting_different": "Exciting and different",
+        "close_handicap": "Close the Handicap",
+        "betting":"Betting",
+        "assault": "Assault",
+        "possession_ball": "Ball Right",
+        "shot_wide_goal": "Shot Wide Goal",
+        "shots_on_goal": "Shot On Goal",
+        "event_analysis":"Event Analysis",
+        "foul": "Foul",
+        "point": "Point",
+        "penalty": "Free Throw",
+        "pause": "Time Out"
+    },
+    "bet": {
+        "place_bet": "Place Bet"
+    },
+    "menu": {
+        "collect": "Favourites",
+        "popular": "POPULAR",
+        "all_sports": "ALL SPORTS",
+        "my_bets": "MyBets"
+    },
+    "match": {
+        "favorites": "Favorites",
+        "matches": "Matches",
+        "featured": "Featured",
+        "featured_events": "Featured Matches",
+        "top_events": "Top Events",
+        "top_leagues": "Top Leagues",
+        "league": "League",
+        "outrights": "Outrights",
+        "15_mins": "15 mins",
+        "inplay": "InPlay",
+        "home": "Home",
+        "today": "Today",
+        "tomorrow": "Tomorrow",
+        "all_matches": "All Matches",
+        "bet_col_Over": "Over",
+        "bet_col_Under": "Under",
+        "home_handicap": "1",
+        "away_handicap": "2",
+        "select_time": {
+          "3h": "Within 3 hrs",
+          "6h": "Within 6 hrs",
+          "9h": "Within 9 hrs",
+          "12h": "Next 12 Hours",
+          "24h": "Next 24 Hours",
+          "72h": "3 Days",
+          "168h": "7 Days"
+        },
+        
+        "play_map": {
+            "1": "1 X 2",
+            "2": "O / U",
+            "4": "HDP",
+            "17": "1st Half - 1x2",
+            "18": "1st Half - O/U",
+            "19": "1st Half - O/U",
+            "37": "Money Line",
+            "38": "Total Points",
+            "39": "Handicap",
+            "153": "Winner",
+            "154": "Set Handicap",
+            "155": "Game Handicap",
+            "172": "HDP", 
+            "173": "Total Points", 
+            "181": "HDP", 
+            "182": "Total Frames", 
+            "202": "Total Frames",
+            "242": "Winner",
+            "243": "HDP",
+            "244": "Total Goals",
+            "30001": "Match Winner",
+            "30002": "Map Handicap",
+            "30003": "Total Maps",
+            "12_2": "Total Rounds"
+          }
+    },
+    "setting_menu": {
+      "personal": "Personal",
+      "back": "Back",
+      "money": "Money",
+      "language": "Language",
+      "odds_setting": "Odds Settings",
+      "odds_display": "Odds Display",
+      "dec": "DEC",
+      "hk": "HK",
+      "any": "ANY",
+      "hig": "HIG",
+      "version": "Version",
+      "euro": "EURO",
+      "asia": "ASIA"
+    },
+    "no_data": {
+      "coming_soon": "Coming Soon"
+    },
+    "bet_col": {
+      "bet_col_1": {
+        "bet_col_1": "Home",
+        "bet_col_X": "Draw",
+        "bet_col_2": "Away"
+      },
+      "bet_col_2": {
+        "bet_col_Over": "Over",
+        "bet_col_Under": "Under"
+      },
+      "bet_col_4": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_37": {
+        "bet_col_1": "Home",
+        "bet_col_2": "Away"
+      },
+      "bet_col_38": {
+        "bet_col_1": "Total",
+        "bet_col_2": "Total"
+      },
+      "bet_col_39": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_153": {
+        "bet_col_1": "Home",
+        "bet_col_2": "Away"
+      },
+      "bet_col_154": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_155": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_172": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_173": {
+        "bet_col_1": "Total",
+        "bet_col_2": "Total"
+      },
+      "bet_col_181": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_182": {
+        "bet_col_1": "Over",
+        "bet_col_2": "Under"
+      },
+      "bet_col_242": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_243": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_244": {
+        "bet_col_1": "Over",
+        "bet_col_2": "Under"
+      },
+      "bet_col_30001": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_30002": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_30003": {
+        "bet_col_1": "Over",
+        "bet_col_2": "Under"
+      }
+    },
+    "search": {
+      "change": "Change",
+      "clear_search_history": "Clear search history",
+      "league": "League",
+      "null1": "Search results are empty",
+      "null2": "Try a different term search",
+      "other": "Other search",
+      "search_hot": "Hot search",
+      "search_play": "Search mode",
+      "search_record": "Search history",
+      "search_sports": "Ball searching",
+      "team": "Team",
+      "placeholder": "Please enter the league name or team name",
+      "close": "Close",
+      "view_all_match": "View all matches",
+      "underway": "Underway",
+      "no_search_rezult": "No results found. Please try another search term.",
+      "dogfall": "Draw",
+      "search_history": "Search history",
+      "No results": "No results"
+    },
+    "15minutes_bet_col": [
+      "Start~14:59",
+      "15:00~29:59",
+      "30:00~1H",
+      "2H Start~59:59",
+      "2H 60:00~74:59",
+      "2H 75:00~FT"
+    ]
+  },
+
   "ac_rules": {
     "auto": "ပိုများသောပေါက်ကြေးများကို အလိုအလျောက်လက်ခံသည်",
     "rules": {
@@ -873,6 +1097,17 @@
     "msg2": "တည်တည်ငြိမ်ငြိမ်နေပါ။ ပြန်လည်ရယူရန် ~ ပြန်လည်စတင်ပါ။"
   },
   "list": {
+    "win1": "1",
+    "win2": "2",
+    "dogfall": "X",
+    "play": "Market",
+    "play1": "1x2",
+    "play2": "Handicap",
+    "play3": "Total Goals",
+    "home_hdp": "1",
+    "away_hdp": "2",
+    "over": "Over",
+    "under": "Under",
     "after_time_start2": "{0} မိနစ်အတွင်း စတင်ပါမည်။",
     "match_end": "ပြီးပါပြီ။",
     "go_to_details": "အသေးစိတ်အချက်အလက်များ",

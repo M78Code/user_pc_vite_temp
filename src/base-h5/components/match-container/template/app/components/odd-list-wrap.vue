@@ -1366,9 +1366,7 @@ onUnmounted(() => {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            &.blue-color{
-              color: var(--q-color-fs-color-135);
-            }
+            color: var(--q-gb-t-c-18);
           }
           .odds-info{
             display: grid;

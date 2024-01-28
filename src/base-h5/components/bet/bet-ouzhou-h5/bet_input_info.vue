@@ -10,7 +10,7 @@
             </span>
         </div>
        </div>
-       {{ BetData.active_index }}--{{ index }}
+       <!-- {{ BetData.active_index }}--{{ index }} -->
        <div class="info_right size_14">
         <div class="content-b" @click.stop="input_click(item,index,$event)" :class="{'active':BetData.active_index == index}">
             <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
@@ -43,10 +43,17 @@ const props = defineProps({
 })
 
 const input_click = (item,index,event) => {
-  event.preventDefault()
-  BetData.set_bet_keyboard_config(item)
-  BetData.set_bet_keyboard_show(true)
-  BetData.set_active_index(index)
+    event.preventDefault()
+        
+    let obj_config = lodash_.get(BetViewDataClass,`bet_min_max_money[${item.playOptionsId}]`,{}) || {}
+    let obj = { 
+        playOptionsId:props.item.playOptionsId,
+        max_money:obj_config.max_money
+    }
+    // 设置 限额
+    BetData.set_bet_keyboard_config(obj)
+    BetData.set_bet_keyboard_show(true)
+    BetData.set_active_index(index)
 }
 
 // 光标
@@ -99,8 +106,14 @@ const set_ref_data_bet_money = () => {
     ref_data.seriesOdds = seriesOdds
     // 限额改变 重置投注金额
     ref_data.money = ''
-    // 设置键盘设置的限额和数据
-    BetData.set_bet_keyboard_config({playOptionsId:props.item.playOptionsId})
+
+    //如果勾选了常用金额则设置给常用金额属性设置 回显金额数值
+    if(BetData.is_regular_amount){
+        ref_data.money = BetData.regular_amount
+    }
+
+    // 设置键盘设置的 限额和数据
+    BetData.set_bet_keyboard_config({playOptionsId:props.item.playOptionsId,max_money})
 }
 
 /**

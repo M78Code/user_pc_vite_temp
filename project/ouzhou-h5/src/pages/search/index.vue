@@ -361,6 +361,10 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	sport_kind_id.value = sport_id;
 	// tab 默认居中及移动动画
 	tabMove.tab_move2(index, tab_growp.value);
+	// 如果是电竞需要设置menu_type==2000 match-stage组件走电竞详情组件
+	if (sport_id == 100) {
+		MenuData.set_menu_type(2000)
+	}
 	if (keyword) {
 		input_value.value = keyword
 	}
@@ -412,10 +416,16 @@ const render_match_results_list = (res) => {
 	// MatchMeta.match_mids = []
 	if (+res.code !== 200) return MatchMeta.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
     // 避免接口慢导致的数据错乱
-    const list = lodash.get(res.data.data, 'teamH5', [])
-    const length = lodash.get(list, 'length', 0)
+    const teamH5 = lodash.get(res.data.data, 'teamH5', [])
+    const league = lodash.get(res.data.data, 'league', [])
+    const team = lodash.get(res.data.data, 'team', [])
+    const bowling = lodash.get(res.data.data, 'bowling', [])
+
+	const merge = league.map(item => item.matchList).concat(team.map(item => item.matchList))
+	const results = [].concat(...merge, teamH5, bowling)
+    const length = lodash.get(results, 'length', 0)
     if (length < 1) return MatchMeta.set_page_match_empty_status({ state: true });
-    MatchMeta.handler_match_list_data({ list: list, type: 1 })
+    MatchMeta.handler_match_list_data({ list: results, type: 1 })
 }
 
 
@@ -444,7 +454,12 @@ const get_sport_kind = () => {
 	get_search_sport().then(res => {
 		let data = lodash.get(res, "data") || [];
 		if (data.length > 0) {
-			sport_kind_data.value = data.filter(item => MenuData.menu_list.map((item)=>{return +item.mi}).includes(+item.id + 100))
+			// sport_kind_data.value = data.filter(item => MenuData.menu_list.map((item)=>{return +item.mi}).includes(+item.id + 100))
+			//放开限制球种 电子竞技100
+			sport_kind_data.value = data;
+			// .filter(n => {
+			// 	MenuData.menu_list.map((item)=>{return +item.mi}).includes(+n.id + 100)
+			// })
 		}
 	});
 }
@@ -538,17 +553,20 @@ const get_match_base_hps_by_mids = async () => {
 	if (!is_empty_data()) return;
 	// 拿到所有滚球，联赛，队伍 mid
 	match_mid_Arr = []
-	search_data.value?.teamH5.forEach((item, index) => {
-		match_mid_Arr.push(item.mid)
-	})
-	search_data.value?.league.forEach((item, index) => {
-		item.matchList.forEach((i, idx) => {
-			match_mid_Arr.push(i.mid)
+	if (search_data.value.length > 0) {
+		search_data.value?.teamH5.forEach((item, index) => {
+			match_mid_Arr.push(item.mid)
 		})
-	})
-	search_data.value?.bowling.forEach((item, index) => {
-		match_mid_Arr.push(item.mid)
-	})
+		search_data.value?.league.forEach((item, index) => {
+			item.matchList.forEach((i, idx) => {
+				match_mid_Arr.push(i.mid)
+			})
+		})
+		search_data.value?.bowling.forEach((item, index) => {
+			match_mid_Arr.push(item.mid)
+		})
+	}
+	
 	// console.log('match_mid_Arr', match_mid_Arr);
 	if (match_mid_Arr.length < 1) return;
 	// match_mid_Arr 数组去重

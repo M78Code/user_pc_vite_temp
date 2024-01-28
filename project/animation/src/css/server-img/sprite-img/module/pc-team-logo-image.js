@@ -3,6 +3,7 @@
 // 
 // const server_resource = {}
 import lodash from "lodash";
+
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 const { CURRENT_ENV } = BUILDIN_CONFIG;
 const config = {
@@ -33,7 +34,7 @@ const get_server_file_path = (path, csid = 0) => {
     return `${GLOBAL_CONSTANT.E_SPORTS_DOMAIN_IMG}/${path}`;
   }
   //新配置是 数组
-  let DOMAIN_RESULT_ = lodash.get(window.BUILDIN_CONFIG,'DOMAIN_RESULT') 
+  let DOMAIN_RESULT_ = lodash.get(BUILDIN_CONFIG,'DOMAIN_RESULT') 
   const domain_img_str ="https://image.bricblogy.com";
   if (!lodash.isEmpty(domain_img_str)) {
     return `${domain_img_str}/${path}`;

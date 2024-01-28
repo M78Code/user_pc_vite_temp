@@ -33,7 +33,7 @@
 import { get_remote_time,utc_to_gmt_no_8_ms2,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js" 
 import refresh from "src/components/refresh/refresh.vue"
 import { compute_img_url } from 'src/core/server-img/index.js'
-
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 export default {
   name: "rule",
   data() {
@@ -58,7 +58,7 @@ export default {
   },
   created() {
    
-    const {PROJECT_NAME} = window.BUILDIN_CONFIG
+    const {PROJECT_NAME} = BUILDIN_CONFIG
     // if (PROJECT_NAME=='ouzhou-pc') {
     //  this.logo = 'pc-home-logo-en'
     // }

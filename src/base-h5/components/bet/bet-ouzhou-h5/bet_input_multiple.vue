@@ -36,32 +36,21 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 
-const props = defineProps({
-    item: {
-        default: () => { },
-        type: Object,
-    },
-    index: {
-        default: 0,
-    },
-})
-
-const emit = defineEmits(['focus_on'])
-
 const input_click = (event) => {
     // console.error('index', BetData.bet_single_list.length)
     event.preventDefault()
-    let oid = BetData.bet_single_list.map(item => {
-        return item.playOptionsId
-    })
     BetData.set_active_index(BetData.bet_single_list.length)
-    BetData.set_bet_keyboard_config({ids:oid})
+
+    let obj = {
+        playOptionsId:"",
+        merge: "merge",
+        max_money: ref_data.max_money
+    }
+
+    BetData.set_bet_keyboard_config(obj)
     BetData.set_bet_keyboard_show(true)
-    // BetData.set_bet_amount(0)
+    BetData.set_bet_amount(ref_data.money)
 }
-
-
-
 
 // 光标
 const money_span = ref(null)
@@ -136,6 +125,15 @@ const set_ref_data_bet_money = () => {
     // let max_money_obj = {max_money:ref_data.max_money}
     // BetData.set_bet_keyboard_config(Object.assign(BetData.bet_keyboard_config,max_money_obj))
     // console.log('BetData.bet_keyboard_config!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', BetData.bet_keyboard_config)
+
+
+    let obj = {
+        playOptionsId: "",
+        merge: "merge",
+        max_money: ref_data.max_money
+    }
+
+    BetData.set_bet_keyboard_config(obj)
 }
 
 /**

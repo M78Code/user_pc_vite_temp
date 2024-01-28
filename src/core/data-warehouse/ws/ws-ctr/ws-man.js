@@ -4,7 +4,7 @@
  */
 import Ws from "./ws.js";
 import WsCmd from "./ws-cmd.js";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 export default class WsMan {
   // WS对象
   static ws = null;

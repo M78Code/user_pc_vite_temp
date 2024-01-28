@@ -40,7 +40,10 @@
                         {{ team.teamName }}
                     </div>
 
-                    <div class="row team justify-between" style="width: 361px">
+                    <div class="row team justify-between odds-layout" v-if="sub_menu_type == lodash.get(current_match,'csid')">
+                      <div class="col-4 team-odds" v-if="'1009' == sub_menu_type">
+                        <div></div>
+                      </div>
                       <div class="col-4 team-odds">
                         <div v-if="lodash.get(play_obj,`20033${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
                         <div v-else>
@@ -74,6 +77,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { reactive, ref, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
 import {compute_value_by_cur_odd_type} from "src/output/index.js"
+import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
 
 export default defineComponent({
   props: ['current_match', 'match_list_by_no', 'switch_match_handle'],
@@ -87,27 +91,11 @@ export default defineComponent({
     // 获取赛马类赔率所需数据
     const item_data = ref({})
     
-    const sub_menu_type = props.current_match.csid;
-
-    const match = MatchListData.get_quick_mid_obj_ref(props.current_match.mid)
-
-    onMounted(() => {
-      if(sub_menu_type !== '1001' && sub_menu_type !== '1004'){
-        item_data.value = {
-          team: match.value.teams.map(((item, index)=>{return { teamName: item, teamId: index + 1 }})),
-          plays: match.value?.hpsData[0]?.hps
-        }
-
-        lodash.each(item_data.value.plays,(item) => {
-          lodash.each(lodash.get(item,'hl.ol'), (ol_item, index) => {
-            ol_item.teamId = index + 1;
-          })
-        })
-        
-        get_odds()
-      }
-      
-    });
+    const match = ref({})
+    
+    const sub_menu_type = computed(()=>{
+      return VR_CTR.state.curr_sub_menu_type
+    })
 
     const get_odds = () => {
       // plays集合
@@ -125,7 +113,31 @@ export default defineComponent({
       })
       play_obj.value = play_obj1
     };
-    
+
+    // 切换菜单时，加载赛马所需数据
+    watch(() => props.current_match.mid, ()=>{
+      match.value = MatchListData.get_quick_mid_obj_ref(props.current_match.mid)?.value;
+      console.log('sub_menu_type', match.value, sub_menu_type.value);
+      
+      if(sub_menu_type.value != '1001' && sub_menu_type.value != '1004' && match?.value){
+        item_data.value = {
+          team: match.value.teams.map(((item, index)=>{return { teamName: item, teamId: index + 1 }})),
+          plays: match.value?.hpsData[0]?.hps
+        }
+
+        lodash.each(item_data.value.plays, (item) => {
+          lodash.each(lodash.get(item,'hl.ol'), (ol_item, index) => {
+            ol_item.teamId = index + 1;
+          })
+        })
+        
+        get_odds()
+      }
+    }, {
+      deep: true,
+      immediate: true
+    })
+
     return {
       hsw_obj,
       play_obj2,
@@ -143,6 +155,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.team-odds{
+  text-align: center;
+}
+.odds-layout{
+  width: 297px;
+  padding-right: 5px;
+}
 .virtual-video-play-team {
     padding-bottom: 0;
     background: var(--q-gb-bg-c-28);

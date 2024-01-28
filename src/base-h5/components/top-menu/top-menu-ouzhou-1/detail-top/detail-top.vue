@@ -49,6 +49,7 @@ import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive
 import DetailTopMsOptions from "./detail-top-ms-options.vue";
 import NavbarSubscribe from "./nav-bar-subscribe";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+
 const route = useRoute()
 const router = useRouter();
 const refresh_is_active = ref(false);
@@ -87,11 +88,19 @@ function getDropDownList(tid='') {
     let date_ = new Date(mgt).toLocaleDateString()
     time_ = new Date(date_).getTime()
   }
-  tid && api_common.get_matchDetail_getMatchDetailByTournamentId({
+  let params = {
     tId: tid,
     type: isMatchResultRoute? 1 : (void 0),
-    dateTime: time_
-  }).then(res => {
+    dateTime: time_,
+  }
+
+  // if(this.get_menu_type == 3000 || this.get_filter_electronic_show){
+  //   params.isESpor = 1
+  // }
+  if(MenuData.is_esports()){
+    params.isESport = 1
+  }
+  tid && api_common.get_matchDetail_getMatchDetailByTournamentId(params).then(res => {
     if(res.code == '200'){
       return drop_down_list.value = res.data
     }else {

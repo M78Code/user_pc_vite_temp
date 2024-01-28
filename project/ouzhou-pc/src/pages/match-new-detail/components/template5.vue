@@ -8,15 +8,16 @@
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div class="temp-simple">
     <div
-      v-for="(value, key) in matchInfo"
-      :key="key"
+      v-for="[key, value] in matchInfo"
+      :key="value[0]"
       class="temp_grid"
       :class="{ temp_grid: true }"
     >
-      <div class="temp5-hv">{{ key > 0 && hpid == 39 ? "+" + key : key }}</div>
+     
+      <div class="temp5-hv">{{ key > 0 && hpid == 39 ? "+" + key : key}}</div>
       <div
         v-if="
-          value.length == 1 &&
+          lodash.get(value,'length') == 1 &&
           !hpidList.includes(props.match_info.hpid)
         "
         style="width: 200%"
@@ -39,6 +40,7 @@
         </div>
       </div>
       <template v-else>
+       
         <div
           v-for="o in value"
           :class="{
@@ -58,13 +60,7 @@
             >
             </bet-item>
           </span>
-          <!-- <div style="text-align: center; width: 100%" v-show="o.hs">
-            <img
-              class="vector"
-              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
-              alt=""
-            />
-          </div> -->
+         
         </div>
       </template>
     </div>
@@ -94,6 +90,7 @@ const props = defineProps({
 const hpidList = ["340","339", "359", "383","200","209","211","212",'238','20024']
 const matchInfo = computed(() => {
   let obj = {};
+  const obj1 = new Map();  // 使用Map  obj 会影响玩法排序
   props.match_info.hl.forEach((item) => {
     if (item && item.ol.length > 0) {
       item.ol.forEach((i) => {
@@ -105,14 +102,16 @@ const matchInfo = computed(() => {
         if (!obj[i.on]) {
           obj[i.on] = [];
           obj[i.on] = [i];
+          obj1.set(i.on, [i]);
         } else {
-          obj[i.on] = [...obj[i.on], i];
+          // obj[i.on] = [...obj[i.on], i];
+          obj1.set(i.on,[...obj[i.on], i]);
         }
       });
     }
   });
 
-  return obj;
+  return obj1;
 });
 const emit = defineEmits(["betItemClick"]);
 

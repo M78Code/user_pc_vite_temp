@@ -2,6 +2,7 @@ import { useMittEmit, MITT_TYPES} from 'src/core/mitt/index.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { MenuData } from 'src/output/project/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
+import GlobalSwitchClass from 'src/core/global/global.js'
 import BaseData from "src/core/base-data/base-data.js";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";;
 import {LayOutMain_pc} from 'src/output'
@@ -83,7 +84,6 @@ function match_list_all_params() {
         euid = MenuData.get_mid_for_euid(lv1_mi)
     }
     let api_name = api_params[menu_root]?.match || api_params[lv1_mi]?.match || api_params.other.match;
-    
     // type === "collect"
     if (is_collect) {
         // 前端控制是否禁用收藏功能
@@ -109,6 +109,7 @@ function match_list_all_params() {
             params: {
                 "cuid": UserCtr.get_uid() || '',
                 "sort": UserCtr.sort_type,
+                selectionHour:GlobalSwitchClass.kick_off_time || null
                 // "selectionHour": filterHeader.open_select_time, // 需要的自己在下面加
             },
         }
@@ -121,7 +122,7 @@ function match_list_all_params() {
         // 电子竞技
         lv2_mi_info = {
             "category": 1,
-            "csid": filter_tab ? (filter_tab - 2000) : csid,
+            "csid": filter_tab && !is_collect ? (filter_tab - 2000) :is_collect?current_ball_type: csid,
             "collect": 1,
             "selectionHour": null,
             "tid": "",
@@ -255,7 +256,8 @@ function match_list_all_params() {
         lv2_mi_info = {
             euid: "30199",
             orpt: -1,
-            csid: current_mi - 5000
+            csid: current_mi - 5000,
+            apiType
         };
     }
     else if (menu_root == 1) {

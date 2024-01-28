@@ -10,7 +10,7 @@
       <div v-for="(team,index) in item_data.team" :key="index" :style="{'margin-top':index > 0 ? '0.04rem':''}" class="hairline-border">
         <div class="row special items-center justify-between" >
           <div class="row items-center" style="width: 338px">
-            <div class="virtual-count" :class="`virtual-num-${index+1} csid-${[1010].includes(sub_menu_type)?'1002':sub_menu_type} ${[1010].includes(sub_menu_type) ? `motorcycle-${index+1}` : ''}`"></div>
+            <div :class="`ranking-icon ranking-bg-style1-${index + 1} csid-${csid}`"></div>
             <div class="team-name">{{team.teamName}}</div>
           </div>
           <!-- 竖线 -->
@@ -258,7 +258,7 @@ export default defineComponent({
 }
 
 .team-odds2 {
-  background: var(--q-gb-bg-c-37) !important
+  background: var(--q-gb-t-c-4) !important
 }
 
 div[class*="virtual-num"] {
@@ -324,4 +324,73 @@ div[class*="virtual-num"] {
     background-position-y: calc(var(--per) * 5);
   }
 }
+
+// 欧洲版赛马赛狗排名背景图
+.ranking-icon {
+    margin: 0 22px 0 24px;
+    width: 24px;
+    height: 24px;
+    background-size: 100% 100%;
+}
+.ranking-bg-style1-1 {
+  background-image: url($SCSSPROJECTPATH+"/image/png/ranking/style1_1.svg");
+  &.csid-1002,
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1002_1.svg");
+  }
+  &.csid-1009 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1009_1.svg");
+  }
+}
+
+.ranking-bg-style1-2 {
+  background-image: url($SCSSPROJECTPATH+"/image/png/ranking/style1_2.svg");
+  &.csid-1002,
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1002_2.svg");
+  }
+  &.csid-1009 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1009_2.svg");
+  }
+}
+.ranking-bg-style1-3 {
+  background-image: url($SCSSPROJECTPATH+"/image/png/ranking/style1_3.svg");
+  &.csid-1002,
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1002_3.svg");
+  }
+  &.csid-1009 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1009_3.svg");
+  }
+}
+.ranking-bg-style1-4 {
+  background-image: url($SCSSPROJECTPATH+"/image/png/ranking/style1_4.svg");
+  &.csid-1002,
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1002_4.svg");
+  }
+  &.csid-1009 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1009_4.svg");
+  }
+}
+.ranking-bg-style1-5 {
+  background-image: url($SCSSPROJECTPATH+"/image/png/ranking/style1_5.svg");
+  &.csid-1002 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1002_5.svg");
+  }
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1010_5.svg");
+  }
+}
+.ranking-bg-style1-6 {
+  background-image: url($SCSSPROJECTPATH+"/image/png/ranking/style1_6.svg");
+  &.csid-1002 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1002_6.svg");
+  }
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1010_6.svg");
+  }
+}
+
+
 </style>

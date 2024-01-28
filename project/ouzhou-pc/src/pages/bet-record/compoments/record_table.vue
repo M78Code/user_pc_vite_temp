@@ -1,8 +1,7 @@
 <template>
   <div class="record-table">
     <div>
-
-      <q-table :rows="tableData" style="max-height:calc(100vh - 270px)" :rows-per-page-options="[0]" :columns="columns"
+      <q-table :rows="tableData" style="max-height:calc(100vh - 270px)" :rows-per-page-options="[0]" :columns="tableColumns"
                row-key="orderNo" separator="cell" hide-pagination :class="current_tab === 'settled' ? 'settled' : 'unsettled'"
           :table-header-style="{
           backgroundColor: '#F1F1F1',
@@ -66,11 +65,11 @@
                 <div class="record-detail-list">
                   <div v-for="(item, index) in props.row.orderVOS" :key="index" class="record-detail">
                     <div class="record-detail-item">
-                      <div class="record-detail-icon">
-                       
+                      <!-- <div class="record-detail-icon">
                         <sport-icon :sport_id="cts_mid.includes(props.row.managerCode*1) ? item.sportId == 1 ? '90': 91  : item.sportId" key_name="pc-left-menu-bg-image" size="18" class="icon"  style="margin:0 10px"/>
-                      </div>
-                      <span> {{ item.matchName }}</span>
+                      </div> -->
+                      <span>[{{item.sportName}}] {{ item.matchName }}</span>
+                      <span v-if="item.matchDay">{{ item.matchDay }} {{ item.batchNo }}</span>
                       <span v-if="item.matchType !=3" style="color:#8A8986">{{ item.matchInfo }}</span>
                       <span>
                           <span v-if="item.matchType != 3 && ![1001,1002,1009,1010,1011].includes(item.sportId*1)">{{matchType(item.matchType, props.row.langCode)}}</span>
@@ -281,14 +280,12 @@ const props = defineProps({
   }
 })
 
-console.error('sss',props)
-
 const match_type = {
   1: i18n_t("bet.morning_session"),
   2: i18n_t("list.list_today_play_title"),
   3: i18n_t("menu.match_winner")
 }
-const { columns, tableData, loading, handle_fetch_order_list,records } = useGetOrderList()
+let { columns, tableData, loading, handle_fetch_order_list,records } = useGetOrderList()
 const labelClick = (row) => {
   console.log(row)
 }
@@ -296,28 +293,31 @@ watch(() => props.timeType, (newVal) => {
   pageCurrent.value = '1'
 })
 // 监听tab 切换表格头数据
+const tableColumns = ref([])
 watch(() => props.current_tab, (newVal) => {  
   tableData.value = []
   if (newVal == 'settled') {
-    columns.value[5] = {
+    columns[5] = {
       name: 'return',
-      label: i18n_t("common.donate_win"),
+      label: computed(()=>{ return i18n_t("common.donate_win") } ),
       align: 'center',
       field: 'return'
     }
+    tableColumns.value = columns
     handle_fetch_order_list({ orderStatus: 1, timeType: 1 })
     console.log(tableData)
   } else {
-    columns.value[5] = {
+    columns[5] = {
       name: 'highestWin',
-      label: i18n_t("common.maxn_amount_val"),
+      label: computed(()=>{ return i18n_t("common.maxn_amount_val") }),
       align: 'center',
       field: 'highestWin'
     }
+    tableColumns.value = columns
     handle_fetch_order_list({ orderStatus: 0 })
     console.log(tableData)
   }
-})
+}, { immediate: true })
 const getTableData = (params) => {
   handle_fetch_order_list(params)
 }
@@ -460,6 +460,7 @@ const item_status =(type) => {
  */
 const marketType = (type, langCode='zh') => {
   var res = "";
+    langCode = UserCtr.lang;
     if(type && langCode) {
     switch (type) {
       case "EU":
@@ -485,6 +486,7 @@ const marketType = (type, langCode='zh') => {
         break;
     }
   }
+  // console.log("`odds.${langCode}.EU`", `odds.${langCode}.EU`)
   return res;
 }
 /**
@@ -496,22 +498,22 @@ const matchType = (type, langCode=UserCtr.lang) => {
   // if(type && langCode) {
   //   res = match_type[type]
   // }
-
+  // console.log('type===langCode===', type,  langCode)
+  // console.log('type===langCode=ccc==', `odds.${langCode}.morning_session`)
   if(type && langCode) {
         switch (parseInt(type)) {
           case 1:
-            res = i18n_t(`odds.${langCode}.morning_session`); //"赛前";
+            res = i18n_t(`odds.${UserCtr.lang}.morning_session`); //"赛前";
             break;
           case 2:
-            res = i18n_t(`odds.${langCode}.list_today_play_title`);//"滚球";
+            res = i18n_t(`odds.${UserCtr.lang}.list_today_play_title`);//"滚球";
             break;
           case 3:
-            res =i18n_t(`odds.${langCode}.match_winner`); //"冠军";
+            res =i18n_t(`odds.${UserCtr.lang}.match_winner`); //"冠军";
             break;
         }
       }
       return res;
-
 }
 /**
  * 投注状态
@@ -559,7 +561,9 @@ const goPageChange = (v) => {
 }
 const pageSizeChange = (v) => {
   pageSize.value = v.value
+  pageCurrent.value = '1'
   emit('itemFilter', {
+    page: 1,
     size: v.value,
     timeType: props.timeType
   })

@@ -30,7 +30,7 @@ import { ref,onBeforeUnmount } from "vue";
 ////import store from "src/store-redux/index.js";
 import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
 
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 
 import { useRoute, useRouter } from "vue-router"
 // import virtualRight from "src/base-pc/components/virtual-right/virtual-right.vue";

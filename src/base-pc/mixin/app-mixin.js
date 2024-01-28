@@ -10,6 +10,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
+import PageSourceData  from  "src/core/page-source/page-source.js";
 const { DEFAULT_VERSION_NAME } = BUILDIN_CONFIG;
 export default {
     data() {
@@ -40,6 +41,8 @@ export default {
     },
     watch: {
       '$route'(to, from) {
+        PageSourceData && PageSourceData.set_from_page(from.name);
+        PageSourceData && PageSourceData.set_route_name(to.name);
         watch_route_fun(to, from, this);
       },
       init_load(val){

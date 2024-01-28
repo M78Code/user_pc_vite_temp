@@ -139,7 +139,7 @@ export default {
     //   }
     // })
     function jump_to_details(type) {
-      const { tid, csid, mid } = match.value;
+      const { tid, csid, mid,ms } = match.value;
       MatchListCardDataClass.set_current_mid(mid);
       if (MenuData.is_scroll_ball()) {
         // 控制右侧比分板
@@ -155,7 +155,8 @@ export default {
             tid: tid,
             csid: csid,
             type: type
-          }
+          },
+          query:{ms}  // 传多个ms  提前判断是否需要显示右侧
         })
       }
     }

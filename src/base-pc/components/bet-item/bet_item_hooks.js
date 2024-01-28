@@ -19,7 +19,7 @@ import {  MenuData } from "src/output/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
 import { i18n_t, is_eports_csid,compute_value_by_cur_odd_type, get_odds_active } from "src/output/index.js";
 import math  from "src/core/bet/common/mathjs.js"
-
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 import ZHUGE from "src/core/http/zhuge-tag";
 // import { useGetStore } from "src/core/match-detail-pc/use_get_store.js";
 import { useRoute, useRouter } from "vue-router";
@@ -670,9 +670,9 @@ export const useGetItem = ({ props }) => {
     set_match();
     score_format();
     format_odds(state.ol_data_item.ov, 1);
-    state .DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
-    // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW
-    // this.version_name = window.BUILDIN_CONFIG.DEFAULT_VERSION_NAME
+    state .DOM_ID_SHOW = BUILDIN_CONFIG.DOM_ID_SHOW;
+    // this.DOM_ID_SHOW = BUILDIN_CONFIG.DOM_ID_SHOW
+    // this.version_name = BUILDIN_CONFIG.DEFAULT_VERSION_NAME
     // this.DOM_ID_SHOW = lodash.get(window, "env.config.DOM_ID_SHOW", false);
     state.version_name = lodash.get(
       window,

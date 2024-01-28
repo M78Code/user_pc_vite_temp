@@ -126,11 +126,12 @@ const score_point = computed(() => {
 
 // 是否时视频
 const is_video = ref(props.isVideo);
+
 // 选择的item
 
 const list = computed(() => {
     const res = [
-        {label: 'animation', img: is_video.value ? `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video.png` :  `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/animation.png`, value: 0},
+        {label: 'animation', img: !is_video.value ? `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video.png` :  `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/animation.png`, value: 0},
         // {label: 'score',  value: 1, score: [  scoew_icon_list.value['S1']?.home, scoew_icon_list.value['S1']?.away]},
         {label: 'score',  value: 1, img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/score.png`,score: [point.value[0], point.value[1]]},
         {label: 'collect', img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collect_gray.png`, active: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`, value: 2},

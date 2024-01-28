@@ -59,7 +59,7 @@ import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import { use_bet_item } from 'src/base-pc/mixin/bet-item.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { inject } from "vue";
-import { onMounted } from 'vue';
+import { onMounted, defineExpose } from 'vue';
 
 const props = defineProps({
   ol_data: {
@@ -88,6 +88,10 @@ const emit = defineEmits(['oddsChange', 'stateChage'])
 const {
   bet_click_ol, disk_text_replace, bet_item_select, score, odds_state, odds_lift, is_mounted
 } = use_bet_item(props, emit)
+
+defineExpose({
+  bet_click_ol
+})
 
 onMounted(() => {
   // 异步设置组件是否挂载完成

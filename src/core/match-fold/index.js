@@ -28,12 +28,12 @@ class MatchFold {
    */
   set_match_mid_fold_obj (match) {
     if (!match) return
-    const { custom_tid = '', start_flag = '' } = match
+    const { custom_tid = '' } = match
     const key = this.get_match_fold_key(match)
     // 次要玩法头部是否显示
     const show_tab = this.compute_show_tab_play(match)
-    // 当前赛事折叠状态， 需要根据 当前联赛 的状态来确定
-    const show_card = lodash.get(this.custom_tid_fold_info.value, `${start_flag}_${custom_tid}`, true)
+    // 当前赛事折叠状态， 需要根据 当前联赛 的状态来确定 `${start_flag}_${custom_tid}`
+    const show_card = lodash.get(this.custom_tid_fold_info.value, `${custom_tid}`, true)
     Object.assign(this.match_mid_fold_obj.value, {
       [key]: {
         show_tab,
@@ -48,10 +48,10 @@ class MatchFold {
    * @description 获取 通个联赛 的折叠状态
    */
   set_custom_tid_fold_info (match, value) {
-    const { custom_tid = '', start_flag = '' } = match
+    const { custom_tid = '' } = match
     if (!custom_tid) return
     Object.assign(this.custom_tid_fold_info.value, {
-      [`${start_flag}_${custom_tid}`]: value
+      [`${custom_tid}`]: value
     })
   }
   /**

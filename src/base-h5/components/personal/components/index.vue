@@ -60,6 +60,15 @@
             </div> 
           </template> 
         </collapse> 
+        <!-- 排序 -->
+        <div class="sort_item" v-for="(setting,idx) in sortData" :key="setting.title">
+          <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/sort.png`" alt="" />
+          <span>{{ i18n_t(setting.title) }}</span>
+          <div class="switch"> 
+            <span class="bg" :style="{left: UserCtr.sort_type == setting.options[0].value ? 0 : '50px'}"></span>
+            <span v-for="s in setting.options" :key="s" @click="handel_sort(s,idx)" :class="{active: UserCtr.sort_type == s.value}">{{ i18n_t(`${s.title}`) }}</span>
+          </div>  
+        </div> 
       </section> 
     </q-scroll-area> 
   </div>
@@ -75,7 +84,8 @@ import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/output/index.js";
 import {LOCAL_PROJECT_FILE_PREFIX,format_money2,MenuData } from "src/output/index.js";
 import VMarquee from 'src/base-h5/components/marquee/marquee.vue'
 import BaseData from "src/core/base-data/base-data.js";
-
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG;
 //语言设置
 const lang = ref(UserCtr.lang)
 const router = useRouter();
@@ -85,44 +95,51 @@ const showMount = ref(mount)
 const l_visible = ref(false)
 const s_visible = ref(true)
 const show = ref()
+const sort = ref(1)
 const marqueeRef = ref(null)
 // 用户信息
-const languages = [{
-  key: 'zh',
-  language: '简体中文',
-}, {
-  key: 'en',
-  language: 'English',
-},
-//  {
-//   key: 'tw',
-//   language: '繁體中文',
-// }, {
-//   key: 'vi',
-//   language: 'Tiếng Việt',
-// }, {
-//   key: 'th',
-//   language: 'ไทย',
-// }, {
-//   key: 'ms',
-//   language: 'Melayu',
-// }, {
-//   key: 'ad',
-//   language: 'Indonesia',
-// }, {
-//   key: 'md',
-//   language: 'Burmese',
-// }, {
-//   key: 'ry',
-//   language: 'Japanese',
-// }, {
-//   key: 'pty',
-//   language: 'Portuguese',
-// }, {
-//   key: 'hy',
-//   language: 'Korean',
-// }
-]
+let languages = [{
+      key: 'zh',
+      language: '简体中文',
+    }, {
+      key: 'en',
+      language: 'English',
+    },
+     
+    ]
+
+    // const languages_ = [ {
+    //     key: 'tw',
+    //     language: '繁體中文',
+    //   }, {
+    //     key: 'vi',
+    //     language: 'Tiếng Việt',
+    //   }, {
+    //     key: 'th',
+    //     language: 'ไทย',
+    //   }, {
+    //     key: 'ms',
+    //     language: 'Melayu',
+    //   }, {
+    //     key: 'ad',
+    //     language: 'Indonesia',
+    //   }, {
+    //     key: 'md',
+    //     language: 'Burmese',
+    //   }, {
+    //     key: 'ry',
+    //     language: 'Japanese',
+    //   }, {
+    //     key: 'pty',
+    //     language: 'Portuguese',
+    //   }, {
+    //     key: 'hy',
+    //     language: 'Korean',
+    //   }]
+      console.error('IS_FOR_NEIBU_TEST',IS_FOR_NEIBU_TEST)
+      if(IS_FOR_NEIBU_TEST){
+       languages = lodash.concat(languages,[])
+      }
 const settingData = ref([{
   title:"ouzhou.setting_menu.odds_display",
   index: UserCtr.odds.cur_odds, //用户已选中值
@@ -141,12 +158,40 @@ const settingData = ref([{
 //   params: [i18n_t("ouzhou.setting_menu.euro"), i18n_t("ouzhou.setting_menu.asia")]
 // }
 ])
+
+const sortData = ref([{
+  title: "ouzhou.setting_menu.sort",
+  index: sort.value, //用户已选中值
+  options:[{
+    title: "ouzhou.setting_menu.hot",
+    value: 1
+  }, {
+    title: "ouzhou.setting_menu.time",
+    value: 2
+  }],
+}])
+
 function handel_change(s,idx){
   // 冠军不能切换 默认为欧赔
   if(MenuData.is_kemp()){
     return
   }
   UserCtr.set_cur_odds(s) //HK/EU
+}
+
+const handel_sort = async(s, idx) => {
+  sort.value = s.value
+  //电竞 不需要热门排序 和 盘口
+  if(s.value === 1 && MenuData.is_esports()) return;
+  if (BUILDIN_CONFIG?.CURRENT_ENV == "local_test") {
+    const param = {
+    sort: s.value
+  }
+  await api_account.get_remember_select(param).then().catch(err => {
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('msg.msg_nodata_07'))
+    })
+  }
+  UserCtr.set_sort_type(s.value);
 }
 
 
@@ -330,51 +375,98 @@ const goto_announcement = () => {
             height: 9px;
           }
         }
-        .setting_item{
-          height: 50px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0 30px 0 30px;
-          font-size: 14px;
-          font-weight: 400;
-          background: #F5F5F5;
-          > span {
-            height: 26px;
-          }
-          .switch{
-            position: relative;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            background: #E2E2E2;
-            border-radius: 20px;
-            justify-content: space-between;
-            > span {
-              width: 50px;
-              height: 100%;
-              font-size: 12px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              transition: all 0.25s;
-              color: #8A8986;
-              &.active{
-                color: #000;
-                background: #fff;
-                border-radius: 20px;
-              }
-            }
-            .bg{
-              position: absolute;
-              top: 0;
-              border-radius: 20px;
-              border: 1px solid #FF7000;
-              transition: all 0.25s;
-            }
-          }
+    }
+  }
+  .setting_item{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px 0 30px;
+    font-size: 14px;
+    font-weight: 400;
+    background: #F5F5F5;
+    > span {
+      height: 26px;
+    }
+    .switch{
+      position: relative;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      background: #E2E2E2;
+      border-radius: 20px;
+      justify-content: space-between;
+      > span {
+        width: 50px;
+        height: 100%;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s;
+        color: #8A8986;
+        &.active{
+          color: #000;
+          background: #fff;
+          border-radius: 20px;
         }
-      
+      }
+      .bg{
+        position: absolute;
+        top: 0;
+        border-radius: 20px;
+        border: 1px solid #FF7000;
+        transition: all 0.25s;
+      }
+    }
+  }
+  .sort_item{
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 26px 0 26px;
+    font-size: 16px;
+    font-weight: 400;
+    > img{
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+    > span {
+      height: 26px;
+      margin-right: 160px;
+    }
+    .switch{
+      position: relative;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      background: #E2E2E2;
+      border-radius: 20px;
+      justify-content: space-between;
+      > span {
+        width: 50px;
+        height: 100%;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s;
+        color: #8A8986;
+        &.active{
+          color: #000;
+          background: #fff;
+          border-radius: 20px;
+        }
+      }
+      .bg{
+        position: absolute;
+        top: 0;
+        border-radius: 20px;
+        border: 1px solid #FF7000;
+        transition: all 0.25s;
+      }
     }
   }
 }

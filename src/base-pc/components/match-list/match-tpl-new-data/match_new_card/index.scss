@@ -63,10 +63,19 @@
             border-radius: 3px;
             &:hover{
                 background-color: var(--q-gb-bg-c-31);
+                :deep(.c-bet-item) {
+                    background-color: var(--q-gb-bg-c-31) !important;
+                }
             }
             &.active{
                 color: var(--q-gb-t-c-18) !important;
                 background: var(--q-gb-t-c-16) !important;
+                :deep(.c-bet-item) {
+                    background-color: var(--q-gb-t-c-16) !important;
+                    .handicap-value-text {
+                        color: var(--q-gb-t-c-18) !important;
+                    }
+                }
             }
             &.is_iframe {
                 width: 200px;
@@ -123,18 +132,26 @@
         width: 120px;
         height: 52px;
         background-color: var(--q-gb-bg-c-27);
-        &:hover{
-            background-color: var(--q-gb-bg-c-31);
-        }
-        &.active{
-            color: var(--q-gb-t-c-18) !important;
-            background: var(--q-gb-t-c-16) !important;
-        }
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 3px;
-
+        &:hover{
+            background-color: var(--q-gb-bg-c-31);
+            :deep(.c-bet-item) {
+                background-color: var(--q-gb-bg-c-31) !important;
+            }
+        }
+        &.active{
+            color: var(--q-gb-t-c-18) !important;
+            background: var(--q-gb-t-c-16) !important;
+            :deep(.c-bet-item) {
+                background-color: var(--q-gb-t-c-16) !important;
+                .handicap-value-text {
+                    color: var(--q-gb-t-c-18) !important;
+                }
+            }
+        }
     }
     .active .common-text{
         color: var(--qq--match-text-color2);
@@ -154,13 +171,17 @@
     }
 
     .lift_up {
-        // opacity: .1;
         background-color: var(--q-gb-bg-c-28) !important;
+        :deep(.c-bet-item) {
+            background-color: rgba(255,255,255,0.1) !important;
+        }
     }
 
     .lift_down {
-        // opacity: .1;
         background-color: var(--q-gb-bg-c-29) !important;
+        :deep(.c-bet-item) {
+            background-color: rgba(255,255,255,0.1) !important;
+        }
     }
 
 
@@ -171,11 +192,11 @@
         margin-left: auto;
         margin-right: auto;
         padding: 1px 3px 1px 3px;
-        color: var(--qq--theme-color-bet-keyboard_2);
+        color: var(--q-gb-t-c-6);
         border-radius: 2px;
         font-size: 12px;
         line-height: 14px;
-        border: 1px solid var(--qq--theme-color-bet-keyboard_2);
+        border: 1px solid var(--q-gb-bd-c-8);
         margin-bottom: 4px;
     }
 

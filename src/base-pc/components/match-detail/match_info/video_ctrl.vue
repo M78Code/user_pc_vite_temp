@@ -10,11 +10,16 @@
     <div class="ctrl-wrap row items-center justify-between">
       <div
         class="unfold"
+        v-if="vx_get_is_fold_status"
+        @click="$emit('setfoldStatus')"
+        :style="compute_css_obj({key: 'pc-img-match-info-unfold-open'})"
+      ></div>
+      <div
+        class="unfold"
+        v-else
         :class="{ open: vx_get_is_fold_status }"
         @click="$emit('setfoldStatus')"
-        :style="compute_css_obj({key:'pc-img-match-info-unfold-open'})"
       ></div>
-      
 
       <div class="col-center row full-height">
         <!-- 媒体图标 -->
@@ -167,7 +172,7 @@ import details from "src/core/match-list-pc/details-class/details.js";
 import { computed, onMounted, onUnmounted, ref, watch,nextTick } from "vue";
 import { IconWapper } from "src/components/icon";
 import refresh from "src/components/refresh/refresh.vue";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import { get_match_status,UserCtr ,GlobalSwitchClass,MatchDetailCalss,get_media_icon_index,MenuData} from "src/output/index.js";
 import { compute_css_obj } from "src/core/server-img/index.js";
 import filterHeader from "src/core/filter-header/filter-header.js";
@@ -531,7 +536,7 @@ onUnmounted(() => {
     cursor: pointer;
     background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/unfold_close_thme01.svg");
     &.open {
-      background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/unfold_open_them01_copy.svg"); // TODO:  unfold_open_them01.svg
+      background-image:url($SCSSPROJECTPATH+"/image/theme01/img/svg/unfold_close_thme01.svg"); // TODO:  unfold_open_them01.svg
     }
   }
   .col-center {

@@ -6,7 +6,7 @@
 <template>
   <div class="team-img" :class="size == 22? 'team-img-s': ''">
     <!-- 字母图标 -->
-    <img class="img-style" v-img="([url, fr, csid])" :class="[size == 22 && `img-style-s`]" alt />
+    <img class="img-style" v-img="([(lodash.isArray(url)?url[0]:url), fr, csid])" :class="[size == 22 && `img-style-s`]" alt />
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
       type: Number
     },
     url: {
-      type: String,
+      type: String || Array,
       default: ""
     },
     size: {

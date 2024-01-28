@@ -181,6 +181,7 @@
           </div>
           <!-- 撑起盘口关闭高度的 -->
           <div
+            v-if="get_version != 2"
             :style="{
               'margin-top':
                 (!is_show_margin ||
@@ -272,7 +273,7 @@ import {
   
   UserCtr
 } from "src/output/index.js";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import  videoHistoryLine  from "src/base-pc/components/video-replay/video-history-line.vue";
 import matchHandicap from "src/base-pc/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
@@ -289,8 +290,10 @@ const route = useRoute();
 import LoadData from "src/base-pc/components/load-data/load-data.vue";
 import lodash from "lodash";
 import BetData from "src/core/bet/class/bet-data-class.js";
-
 const bet_item_lock  = ref(BetData.bet_item_lock) 
+
+// 2专业/1新手
+const get_version = ref(UserCtr.standard_edition)
 //获取用户信息
 const vx_get_user = ref(UserCtr.get_user())
 //获取参数信息

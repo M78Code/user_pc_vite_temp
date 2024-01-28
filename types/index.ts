@@ -38,23 +38,23 @@ declare namespace TYPES {
     mearlys: number,
     mft: number,
   }
-  /** 盘口信息 */ interface OddInfo<T extends Ol|OlResult=Ol> extends K.hid,K.hpid,K.mid,K.hpn,K.hpt,K.hotName {
-    hv:any,
-    /** @deprecated 貌似没有这个属性 */ ol:T[]
-    hl:Hl[]
+  /** 盘口信息 */ interface OddInfo<T extends Ol | OlResult = Ol> extends K.hid, K.hpid, K.mid, K.hpn, K.hpt, K.hotName {
+    hv: any,
+    /** @deprecated 貌似没有这个属性 */ ol: T[]
+    hl: Hl[]
     /** 置顶时间戳 */ hton: string
     /** 用于玩法置顶的key */ topKey: string
-    /**  */ title:OddTitle[]
+    /**  */ title: OddTitle[]
   }
 
   /** 玩法标题 */ interface OddTitle {
-    /** 标题名字 */ osn:string
+    /** 标题名字 */ osn: string
     /** ? */ otd: number
   }
 
-  /** ol玩法投注项 */ interface Ol extends K.ot,K.on, K.ov, K.oid, K.obv, K.os,K.ott,K.otd,K.otv {
+  /** ol玩法投注项 */ interface Ol extends K.ot, K.on, K.ov, K.oid, K.obv, K.os, K.ott, K.otd, K.otv {
   }
-  /** Ol投注项 结果 */ interface OlResult extends Ol,K.result{
+  /** Ol投注项 结果 */ interface OlResult extends Ol, K.result {
   }
 
   /** 非足球活力值排名 */ interface Rank {
@@ -65,11 +65,33 @@ declare namespace TYPES {
     /** 综合评分 */ star: String
   }
 
-  /** hl 盘口? */ interface Hl extends K.mid, K.t, K.hpid,K.hs {
+  /** hl 盘口? */ interface Hl extends K.mid, K.t, K.hpid, K.hs {
     /** 盘口ID */ hid: string,
     /** ? */ hmt: number,
     /** ? */ hn: number,
     /** 赔率集合? 投注项集合? */ ol: Array<Ol>
+    /** 1:上半场玩法; 2:下半场玩法; 10:第一节; 20:第二节; 30:第三节; 40:第四节 */ halfLg?: 1|2|10|20|30|40
+  }
+
+  /** 详情赛事分析资讯 文章 */ interface Article {
+    /** 文章/资讯id */ id: number,
+    /** 文章标题 */ articleTittle: string,
+    /** 文章类别 */ categoryName: string,
+    /** 阅读数量 */ readCounts: number,
+    /** 更新时间 */ updateTime: string,
+    /** 文章内容 */ articleContent: string,
+    /** 文章ID */articleId: string,
+    /** 文章作者 */ authorName: string,
+    /** 计数 */ count: number,
+    /** 排除? */ excludeIds: string,
+    /** 比赛详情? */ matchDetail: string,
+    /** 比赛ID */ matchId: string,
+    /** 显示时间 */ showTime: string,
+    /** 球种ID */ sportId: string,
+    /** 评论? */ summary: string,
+    /** 标签颜色 */ tagColor: string,
+    /** 标签名字 */ tagName: string,
+    /** */ thumbnails: string,
   }
 
   /**  */ interface S {
@@ -83,10 +105,10 @@ declare namespace TYPES {
       /** 时间戳 */ time: string
     }
   }
-  type OlResultArray =  ['r-unkown','r-unkown2','r-tie','r-lose','r-win','r-win-half','r-lose-half']
-  type OlResultState= OlResultArray[K.result[keyof K.result]]
+  type OlResultArray = ['r-unkown', 'r-unkown2', 'r-tie', 'r-lose', 'r-win', 'r-win-half', 'r-lose-half']
+  type OlResultState = OlResultArray[K.result[keyof K.result]]
 
-  export type OlItemType =  'default' | 'fill' | 'auto' | 'column'
+  export type OlItemType = 'default' | 'fill' | 'auto' | 'column'
 }
 
 /** 属性字段复用注释 */
@@ -213,14 +235,14 @@ declare namespace K {
     /** 用户ID */ cuid: number,
   };
   /** 投注项结果:0?,1?,2走水,3输,4赢,5赢半,6输半 */ type result = {
-    /** 投注项结果:0?,1?,2走水,3输,4赢,5赢半,6输半 */ result: 0|1|2|3|4|5|6,
+    /** 投注项结果:0?,1?,2走水,3输,4赢,5赢半,6输半 */ result: 0 | 1 | 2 | 3 | 4 | 5 | 6,
   };
 
   /** 盘口ID? */ type hid = {
     /** 盘口ID? */ hid: number,
   };
 
-  /** 虚拟体育热门玩法 */ type  hotName = {
+  /** 虚拟体育热门玩法 */ type hotName = {
     /** 盘口ID? */ hotName: string,
   };
 
@@ -231,4 +253,4 @@ declare namespace K {
 
 /** annotation */ type template = {
     /** annotation */ template: number,
-  };
+};

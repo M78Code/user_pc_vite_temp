@@ -11,8 +11,8 @@ import "quasar/src/css/index.sass";
 // 引入 当前 计算出的植入配置
 
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
+import { main_js_common_fun } from "src/core/main-js-common-fun/index.js";
 
-window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 
 
 // http://doc-web.sportxxxkd1.com/#/main/detail?type=doc&id=65892329ade8da4fba3089c5
@@ -33,10 +33,11 @@ window.i18n_tc = i18n_tc;
 import { i18n } from "src/boot/i18n.js";
 app.use(i18n);
 app.use(router);
-app.use(router);
 app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
+// app文件配置
+main_js_common_fun(app);
 // 引入 当前 计算出的植入配置
 app.mount("#ty-app");
 

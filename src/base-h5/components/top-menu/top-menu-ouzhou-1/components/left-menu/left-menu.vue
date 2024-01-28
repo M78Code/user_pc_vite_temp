@@ -109,6 +109,10 @@ const popularList = ref([]);//点击排序
 
 const current_mi = ref('')
 
+const ref_data = reactive({
+    emit_lsit:{}
+})
+
 /**
  * 排序
  * @param {*} arr 
@@ -162,7 +166,6 @@ const change_current_menu = (item) => {
   if (['matchList', 'champion'].includes(route.name) && current_mi.value && current_mi.value === item.mi) return emits('isLeftDrawer');
   useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
   current_mi.value = item.mi
-  MenuData.set_menu_mi(item.mi);
   setPopularSort(item.mi);
   // 设置菜单对应源数据
   emits('isLeftDrawer');
@@ -183,8 +186,15 @@ const change_current_menu = (item) => {
     BaseData.set_is_emit(false)
     // 重置所选 球种默认玩法 hpid
     MenuData.set_current_lv1_menu('2');
+    MenuData.set_menu_mi(item.mi);
     MatchResponsive.reset_match_hpid_by_csid()
-    useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,item.mi);
+    // useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,item.mi,0);
+    //增加早盘今日数量
+    useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,{
+      mi:item.mi,
+      type:0,
+      ct:item.sl?.[2]?.ct || item.sl?.[3]?.ct
+    });
   }
   if(route.name != "matchList"){
     //跳转今日列表
@@ -200,12 +210,34 @@ const get_init_data = (val) =>{
   const popularSortListH5 = LocalStorage.get("popularSortListH5") ||[];
   popularList.value = popularListSort(popularSortListH5);
 }
+/**
+ * ws推送球种数量
+ * @param {*} list 
+ */
+ const get_menu_ws_list = (list) =>{
+    list = list.filter((item)=>{return item.mi});
+    leftDataList.value = leftDataList.value.map((item)=>{
+        item.ct = item.ct || 0;
+        list.forEach((n)=>{
+            if(item.mi == n.mi.slice(0,3)){
+                let index = item.sl?.findIndex((k)=>{return k.mi == n.mi});
+                if(index !== -1)item.sl[index].ct = n.count;
+            }
+        })
+        return item;
+    })
+}
 onMounted(()=>{
   get_init_data();
-  useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data)
+  ref_data.emit_lsit = {
+      emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data).off,
+      emitter_2: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, get_menu_ws_list).off,
+  }
+  // useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data)
 })
 onUnmounted(()=>{
-  useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA).off
+  // useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA).off
+  Object.values(ref_data.emit_lsit).map((x) => x());
 })
 </script>
 <style lang="scss" scoped>

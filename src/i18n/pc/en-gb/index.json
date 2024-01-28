@@ -136,23 +136,23 @@
           "4": "Handicap"
         },
         "100": {
-          "30001": "Map Handicap",
-          "30002": "Match Winner",
+          "30001": "Match Winner",
+          "30002": "Map Handicap",
           "30003": "Total Maps"
         },
         "101": {
-          "30001": "Map Handicap",
-          "30002": "Match Winner",
+          "30001": "Match Winner",
+          "30002": "Map Handicap",
           "30003": "Total Maps"
         },
         "102": {
-          "30001": "Map Handicap",
-          "30002": "Match Winner",
+          "30001": "Match Winner",
+          "30002": "Map Handicap",
           "30003": "Total Maps"
         },
         "103": {
-          "30001": "Map Handicap",
-          "30002": "Match Winner",
+          "30001": "Match Winner",
+          "30002": "Map Handicap",
           "30003": "Total Maps"
         }
       }
@@ -291,11 +291,11 @@
         "bet_col_1": "HDP",
         "bet_col_2": "HDP"
       },
-      "bet_col_30002": {
+      "bet_col_30001": {
         "bet_col_T1": "1",
         "bet_col_T2": "2"
       },
-      "bet_col_30001": {
+      "bet_col_30002": {
         "bet_col_T1": "HDP",
         "bet_col_T2": "HDP"
       },
@@ -2976,17 +2976,6 @@
       "morning_session":"Prematch",  
       "list_today_play_title":"IN-PLAY",
       "match_winner":"Outrights"
-    },
-    "zh":{
-        "EU": "欧洲盘",
-        "GB": "英式盘",
-        "HK": "香港盘",
-        "ID": "印尼盘",
-        "MY": "马来盘",
-        "US": "美式盘",
-        "morning_session":"赛前",
-        "list_today_play_title":"滚球",
-        "match_winner":"冠军"
     }
   },
   "results": {
@@ -3147,6 +3136,9 @@
   },
   "video": {
     "animation": "Anime",
+    "icon_animation": "Anime",
+    "icon_video": "Video",
+    "icon_score": "Score",
     "cancel_mute": "Unmute",
     "data": "Field data",
     "flv": "HD1",

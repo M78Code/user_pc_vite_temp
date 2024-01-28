@@ -2581,7 +2581,18 @@
     "HK": "Hong Kong",
     "ID": "Indonesian",
     "MY": "Malaysian",
-    "US": "American"
+    "US": "American",
+    "ry": {
+      "EU": "Decimal",
+      "GB": "Fractional",
+      "HK": "Hong Kong",
+      "ID": "Indonesian",
+      "MY": "Malaysian",
+      "US": "American",
+      "morning_session":"Prematch",  
+      "list_today_play_title":"IN-PLAY",
+      "match_winner":"Outrights"
+		}
   },
   "results": {
     "all_score": "FT",
@@ -2741,6 +2752,9 @@
   },
   "video": {
     "animation": "Anime",
+    "icon_animation": "Anime",
+    "icon_video": "Video",
+    "icon_score": "Score",
     "cancel_mute": "Unmute",
     "data": "Field data",
     "flv": "HD1",

@@ -79,11 +79,11 @@
                   >
                     <div
                       class="skin-icon"
-                      :class="{ 'skin-icon-off': GlobalSwitchClass.show_additional_plays }"
+                      :class="{ 'skin-icon-off': !GlobalSwitchClass.show_additional_plays }"
                     ></div>
                     <div
                       class="skin-icon"
-                      :class="{ 'skin-icon-night': !GlobalSwitchClass.show_additional_plays }"
+                      :class="{ 'skin-icon-night': GlobalSwitchClass.show_additional_plays }"
                     ></div>
                   </div>
                   <!-- 附加玩法 -->
@@ -100,11 +100,11 @@
                   >
                     <div
                       class="skin-icon"
-                      :class="{ 'skin-icon-off': GlobalSwitchClass.show_additional_disk }"
+                      :class="{ 'skin-icon-off': !GlobalSwitchClass.show_additional_disk }"
                     ></div>
                     <div
                       class="skin-icon"
-                      :class="{ 'skin-icon-night': !GlobalSwitchClass.show_additional_disk }"
+                      :class="{ 'skin-icon-night': GlobalSwitchClass.show_additional_disk }"
                     ></div>
                   </div>
                 </div>
@@ -213,6 +213,7 @@ import { theme_map } from "src/core/theme/";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import comSelect from "src/base-pc/components/match-results/select/select/index.vue";
 import { GlobalSwitchClass } from "src/output/index.js";
+import { on_refresh } from "src/core/match-list-pc/match-list-composition.js";
 // import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 
 // import { update_bet_item_info as virtual_common_update_bet_item_info } from 'src/core/common-helper/virtual_common.js'
@@ -341,7 +342,7 @@ function select_time_change(item) {
   //设置session
   sessionStorage.setItem("kick_off_time", item.value);
   GlobalSwitchClass.set_kick_off_time(item.value)
-  console.error('GlobalSwitchClass.kick_off_time ',GlobalSwitchClass.kick_off_time)
+  on_refresh()
 }
 function  on_click_additional(item) {
       if (GlobalSwitchClass.additional_plays_list_num == item.value) {
@@ -355,16 +356,19 @@ function  on_click_additional(item) {
       // 刷新列表重新计算
       // this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
       GlobalSwitchClass.set_additional_plays_list_num(item.value); 
+      on_refresh()
       console.error('列表附加玩法是否展开状态',GlobalSwitchClass.additional_plays_list_num)
   }
    //设置附加玩法开关
 function  set_show_additional_plays() {
       GlobalSwitchClass.set_show_additional_plays(!GlobalSwitchClass.show_additional_plays); 
       console.error('设置附加玩法开关',GlobalSwitchClass.show_additional_plays)
+      on_refresh()
     }
    //设置附加盘开关
 function  set_show_additional_disk() {
       GlobalSwitchClass.set_show_additional_disk(!GlobalSwitchClass.show_additional_disk); 
+      on_refresh()
       console.error('设置附加盘开关',GlobalSwitchClass.show_additional_disk)
     }
 /**

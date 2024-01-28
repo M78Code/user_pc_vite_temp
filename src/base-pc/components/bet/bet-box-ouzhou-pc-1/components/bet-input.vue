@@ -229,12 +229,9 @@ const show_quick_amount = state => {
 }
 
 const placeholder = computed(() => {
-    console.log('--------------------------------1111-----------------------------------', ref_data.min_money , ref_data.max_money)
-    if(ref_data.min_money && ref_data.max_money) {
-        return `${i18n_t('bet.money_range')} ${format_money3(ref_data.min_money)}~${format_money3(ref_data.max_money)}`
-    } else {
-        return ''
-    }
+   
+        return `${i18n_t('bet.money_range')} ${ref_data.min_money ? format_money3(ref_data.min_money):''}~${ref_data.max_money ? format_money3(ref_data.max_money) : ''}`
+   
 })
 
 </script>

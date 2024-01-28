@@ -90,10 +90,16 @@ const dateOptionsRef = ref(null);
 // const week = dateWeekMatchesFormat();
 const week = ref([]);
 const tabList = computed(()=>{
+    //赛事列表tab
+    const list = MenuData.match_tab_list || [
+      'Matches',
+      'League',
+      'Outrights'
+    ];
     const menu_list = MenuData.menu_list.map((item)=>{return +item.mi});
-    const matches = store.tabOptions.filter(n=>{return n ==='Matches'});//电足电篮不展示冠军和联赛
-    const not_outrights = store.tabOptions.filter(n=>{return n !=='Outrights'});
-    return [190,191].includes(+store.current_menu_mi)?matches:menu_list.includes(400)?store.tabOptions:not_outrights;
+    const matches = list.filter(n=>{return n ==='Matches'});//电足电篮不展示冠军和联赛
+    const not_outrights = list.filter(n=>{return n !=='Outrights'});
+    return [190,191].includes(+store.current_menu_mi)?matches:menu_list.includes(400)?list:not_outrights;
 })
 const DateOptionsOffset = computed(() => {
     const domWidth = document.body.clientWidth || document.documentElement.clientWidth
@@ -218,7 +224,9 @@ const changeDatetab = (item, index) => {
  * 默认请求数据
  * @param {*} val 
  */
-const setDefaultData = async (val,type) => {
+const setDefaultData = async (obj) => {
+    const val = obj.mi || "";
+    const type = obj.type ||0;
     // 刷新or更换球种 重置
     if(!type){
         MenuData.set_current_lv1_menu(2);
@@ -243,7 +251,10 @@ const click_tabs = ()=> {
 onMounted(async () => {
     //当前激活球种id  如果本地有存储值就取本地存储的值
     const session_info = LocalStorage.get(menu_h5);
-    setDefaultData(session_info?.menu_mi || MenuData.menu_mi.value || '101',1);//默认足球
+    setDefaultData({
+        mi:session_info?.menu_mi || MenuData.menu_mi.value || '101',
+        type:1
+    });//默认足球
     store.curSelectedOption = store.selectOptions[0]
     // week.value = await getDateList();
     emitters.value = {
@@ -313,6 +324,7 @@ const areaListChange = (item) => {
             align-items: center;
         }
         .tabs-item-text {
+            z-index: 1;
             height: .5rem;
             display: flex;
             align-items: center;

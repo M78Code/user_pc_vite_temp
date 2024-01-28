@@ -7,7 +7,7 @@
     <div class="odd-finnally" v-if="show_appoint">
       <span v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(1)">—</span>
       @ {{ odds_value_edit }}
-      <span v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(2)">+</span>
+      <span class="plus" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(2)">+</span>
     </div>
     <div class="cancel-warp">
       <template v-if="show_appoint">
@@ -18,8 +18,9 @@
         <div class="cancel-btn" @click="alertTips=true;">{{i18n_t('app_h5.bet.cancel_appoint')}}</div>
         <div class="change-btn" @click.stop="change_show_appoint(true)">{{i18n_t('common.edit')}}</div>
       </template>
-      
     </div>
+    <!--复制样式 已复制-->
+    <div class="toast fit-center" v-if="toast">{{toast_msg}}</div>
     <!-- 取消预约弹框 -->
     <q-dialog v-model="alertTips">
       <div class="tips-main">
@@ -114,7 +115,7 @@ const reduce_odd = () => {
     if(parseFloat(odds_value_edit.value) <= 0 ){
         return
       }
-    odds_value_edit.value = acc_sub(odds_value_edit.value, num)
+    odds_value_edit.value = format_money(acc_sub(odds_value_edit.value, num))
 }
 /**
 * @description 预约投注点击加号增加赔率
@@ -126,7 +127,7 @@ const add_odd = () => {
     if( parseFloat(odds_value_edit.value) >= max_odds ){
       return
     }
-    odds_value_edit.value = acc_add(odds_value_edit.value, num)
+    odds_value_edit.value = format_money(acc_add(odds_value_edit.value, num))
 }
 
 
@@ -138,11 +139,12 @@ const sure = () => {
   }
   api_betting.set_update_pre_bet_odds(params).then(res=>{
     let code = lodash.get(res,'code')
-    let msg = lodash.get(res,'message')
     if(code == 200){
-        emit('success')
-      }
-    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, msg)
+      emit('success')
+      toast_tips(i18n_t('bet.edit_success'))
+    } else {
+      toast_tips(i18n_t('bet.edit_fail'))
+    }
   })
 }
 
@@ -165,6 +167,43 @@ const step = (val) => {
   }
   return num
 }
+
+/**
+ *@description 将金额转化为千位符格式保留2位小数
+ *@param {Number} num 待格式化的金额
+ *@return {String} 转化后的金额 比如 '64,464.95'
+ */
+ const format_money = (num) => {
+  let number = 2
+
+  if(  num < 10 ){
+    number = 2
+  }else if ( num >= 10 && num < 20 ){
+    number = 1
+  }else if (num >= 20){
+    number = 0
+  }
+
+  try {
+    if (num && num < 0) {
+      num = 0;
+    }
+    num = (num || 0).toString();
+    let result = "";
+    let [num1, num2 = "00"] = num.split(".");
+    num2 = num2.padEnd(number, "0").slice(0,number);
+  
+    if (num1) {
+      num1 = num1 + result;
+    }
+    let count = num1 + (num2 ? ( "." + num2) : "");
+
+    return count
+  } catch (error) {
+    console.error(error);
+    return "";
+  }
+};
 
 // 两个浮点数求和
 const acc_add = (num1, num2) => {
@@ -208,6 +247,19 @@ const acc_sub = (num1, num2 = num1) => {
   return (Math.round(num1 * m - num2 * m) / m).toFixed(n);
 }
 
+// 提示弹出窗
+let toast_msg = ref('')
+let toast = ref(false)
+let timeout_toast = null
+const toast_tips = (msg) => {
+  toast_msg.value = msg
+  toast.value = true;
+  clearTimeout(timeout_toast);
+  timeout_toast = setTimeout(() => {
+    toast.value = false;
+  }, 1500);
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -227,7 +279,24 @@ const acc_sub = (num1, num2 = num1) => {
     text-align: center;
     font-size: 0.16rem;
     color: var(--q-gb-bg-c-6);
+    &.plus {
+      font-size: 0.18rem;
+    }
   }
+}
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 0 6px 0 12px;
+  height: 38px;
+  border-radius: 6px;
+  text-align: center;
+  line-height: 38px;
+  font-size: 0.15rem;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  background-color: rgba(0,0,0,.6);
 }
 .cancel-warp {
   margin: 0 0.14rem;

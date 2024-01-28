@@ -36,7 +36,14 @@ const props = defineProps({
 
 const input_click = (item,index,evnet) => {
   event.preventDefault()
-  BetData.set_bet_keyboard_config(item)
+  let obj_config = lodash_.get(BetViewDataClass,`bet_min_max_money[${item.playOptionsId}]`,{}) || {}
+    let obj = { 
+        playOptionsId:props.item.playOptionsId,
+        max_money:obj_config.max_money
+    }
+    // 设置 限额
+    BetData.set_bet_keyboard_config(obj)
+
   BetData.set_bet_keyboard_show(true)
   BetData.set_active_index(index)
 }

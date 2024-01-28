@@ -286,14 +286,16 @@ onUnmounted(()=>{
     color: #fff;
   }
 }
+.top_header_rule{
+  background: url($SCSSPROJECTPATH+'/image/menu/top-menu/top_bg_rule.jpg') no-repeat;
+  background-size: cover;
+}
 // 欧洲版体育规则头部样式调整
 .rules-page.top_header_rule{
   position: fixed;
   top: 0;
   z-index: 999;
   width: 100%;
-  background: url($SCSSPROJECTPATH+'/image/menu/top-menu/top_bg_rule.jpg') no-repeat;
-  background-size: cover;
 }
 :deep(.fullscreen) {
   -webkit-backdrop-filter: blur(2px);

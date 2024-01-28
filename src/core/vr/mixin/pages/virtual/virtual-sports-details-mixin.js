@@ -11,8 +11,9 @@ import { go_where } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { MatchDataWarehouse_H5_Detail_Common, MatchDataWarehouse_PC_Detail_Common} from "src/output/index.js"
 import { get_now_server, debounce_throttle_cancel } from 'src/core/utils/common/module/other.js'
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 
-const MatchDataWarehouseInstance = window.BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_Detail_Common:MatchDataWarehouse_H5_Detail_Common;
+const MatchDataWarehouseInstance = BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_Detail_Common:MatchDataWarehouse_H5_Detail_Common;
 export default {
   mixins:[virtual_sports_mixin],
   name:'virtual_sports_details',

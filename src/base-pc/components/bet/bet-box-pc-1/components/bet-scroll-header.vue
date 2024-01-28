@@ -50,7 +50,7 @@
 
 <script setup>
 import { computed, onMounted } from "vue"
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 

@@ -108,7 +108,10 @@
       "hig": "HIG",
       "version": "Version",
       "euro": "EURO",
-      "asia": "ASIA"
+      "asia": "ASIA",
+      "sort": "Sort",
+      "hot": "Hot",
+      "time": "Time"
     },
     "no_data": {
       "coming_soon": "Coming Soon"
@@ -179,11 +182,11 @@
         "bet_col_1": "Over",
         "bet_col_2": "Under"
       },
-      "bet_col_30002": {
+      "bet_col_30001": {
         "bet_col_1": "1",
         "bet_col_2": "2"
       },
-      "bet_col_30001": {
+      "bet_col_30002": {
         "bet_col_1": "HDP",
         "bet_col_2": "HDP"
       },
@@ -221,7 +224,7 @@
       "2H 60:00~74:59",
       "2H 75:00~FT"
     ]
-},
+  },
 "app_h5": {
   "bet":{"bet_win": "可赢{total}"},
   "detail": {

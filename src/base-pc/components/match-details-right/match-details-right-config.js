@@ -20,7 +20,7 @@ import {
   GlobalSwitchClass,
   computed_background,
 } from "src/output/index.js";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 import { reactive, toRefs, ref, onMounted, onUnmounted, computed, watch } from "vue";
 import { useRouter } from "vue-router";
@@ -468,12 +468,13 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
                   }
                 }
                 // 同步数据到详情
-                // let msc = detailUtils.build_msc(match_obj);
-                // match_obj.msc = msc;
-                // Object.assign(
-                //   MatchDataWarehouseInstance.match_obj,
-                //   match_obj
-                // );
+                if(match_info.csid !=1 && match_info.csid !=2 ){
+                  match_obj.msc = detailUtils.build_msc(match_obj);
+                }
+                Object.assign(
+                  allData.match_infoData,
+                  match_obj
+                );
               }
               // 是否是从详情页返回列表页
               allData.is_go_match_list = true;

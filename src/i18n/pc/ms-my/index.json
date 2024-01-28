@@ -2586,7 +2586,18 @@
     "HK": "HongKong",
     "ID": "Indonesian",
     "MY": "Malaysian",
-    "US": "American"
+    "US": "American",
+    "ms": {
+      "EU": "Decimal",
+      "GB": "British",
+      "HK": "HongKong",
+      "ID": "Indonesian",
+      "MY": "Malaysian",
+      "US": "American",
+      "morning_session":"Sebelum pertandingan",  
+      "list_today_play_title":"Bola berguling",
+      "match_winner":"juara"
+    }
   },
   "results": {
     "all_score": "Skor",

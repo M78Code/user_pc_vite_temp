@@ -8,7 +8,7 @@ import {
   useMittEmit,
   MITT_TYPES,
 } from "src/core/mitt/index.js";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 import {set_template_width,get_match_tpl_number} from 'src/core/match-list-pc/list-template/match-list-tpl.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_common } from "src/api/index.js"

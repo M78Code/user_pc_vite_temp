@@ -27,6 +27,7 @@ import { i18n_t, MenuData } from "src/output/index.js";
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+import BaseData from 'src/core/base-data/base-data.js'
 import { api_common } from "src/api/index.js";
 // import PageSourceData from "src/core/page-source/page-source.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -59,6 +60,11 @@ const tabData = ref([
     name:"outrights",
     label: i18n_t("menu_itme_name.champion"),
     val:400
+  },
+  {
+    name:"esports",
+    label: i18n_t("menu_itme_name.esports"),
+    val:2000
   }
 ]);
 /**
@@ -67,9 +73,22 @@ const tabData = ref([
  */
 const on_update = async (val,type) => {
   val = val || tabValue.value;
+  switch (val) {
+    //冠军
+    case 400:
+    state.slideMenu_sport = MenuData.champion_list;
+      break;
+    //电竞
+    case 2000:
+    state.slideMenu_sport = BaseData.dianjing_sublist;
+      break;
+    default:
+    state.slideMenu_sport = MenuData.get_menu_lvmi_list_only(val);
+      break;
+  }
   // timer.value && clearTimeout(timer.value);
   // state.slideMenu_sport = await getListCount(val == 400?MenuData.champion_list:MenuData.get_menu_lvmi_list_only(val),val);
-  state.slideMenu_sport =val == 400?MenuData.champion_list:MenuData.get_menu_lvmi_list_only(val);
+  // state.slideMenu_sport =val == 400?MenuData.champion_list:MenuData.get_menu_lvmi_list_only(val);
   // state.slideMenu_sport= MenuData.get_menu_lvmi_list_only(val);
   MenuData.set_current_lv1_menu(val);
   const index = MenuData.collect_menu?state.slideMenu_sport?.findIndex(n=>{return n.mi == MenuData.menu_mi.value}):0;
@@ -135,7 +154,14 @@ const changeMenu = (item) =>{
   if(!item?.mi)return;
   state.current_mi = item.mi;
   MenuData.set_menu_mi(item.mi)
-  MatchMeta.get_collect_match()
+  // 收藏页
+  if (MenuData.is_esports()) {
+    // 电竞收藏
+    MatchMeta.get_esports_collect_match()
+  } else {
+    // 常规收藏
+    MatchMeta.get_collect_match()
+  }
 }
 const mitt_list=[]
 onMounted(()=>{

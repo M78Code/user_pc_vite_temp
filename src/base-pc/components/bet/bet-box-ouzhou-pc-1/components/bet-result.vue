@@ -24,21 +24,37 @@
                 <div class="bet-odds">
                     <span class="font14 font700 mr-10">@{{ items.oddsValues }}</span>
                 </div>
-                <div class="bet-loading mr-10" v-if="items.orderStatusCode == 2">{{i18n_t("bet.bet_betting")}}</div>  
-                <div class="bet-failure mr-10" v-if="items.orderStatusCode == 0">{{i18n_t("bet.bet_order_info3")}}</div>
-                <div class="bet-success mr-10" v-if="items.orderStatusCode == 1">{{i18n_t("bet.bet_suc")}}</div>
-              
+                <template v-if="BetData.is_bet_pre">
+                    <div class="bet-failure mr-10" v-if="items.preOrderDetailStatus == 0">{{i18n_t("bet.bet_booking")}}</div>
+                    <div class="bet-success mr-10" v-if="items.preOrderDetailStatus == 1">{{i18n_t("bet.bet_booked")}}</div>
+                    <div class="bet-loading mr-10" v-if="items.preOrderDetailStatus == 2">{{i18n_t("bet.bet_book_failed")}}</div>  
+                </template>
+                <template v-else>
+                    <div class="bet-failure mr-10" v-if="items.orderStatusCode == 0">{{i18n_t("bet.bet_order_info3")}}</div>
+                    <div class="bet-success mr-10" v-if="items.orderStatusCode == 1">{{i18n_t("bet.bet_suc")}}</div>
+                    <div class="bet-loading mr-10" v-if="items.orderStatusCode == 2">{{i18n_t("bet.bet_betting")}}</div>  
+                </template>
             </div>
-            <div class="bet-delete bet-icon">
-                <!-- 投注确认中 -->
-                <img class="icon_loading" v-if="items.orderStatusCode == 2" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt="" />
-                <!-- <icon-wapper v-if="BetViewDataClass.bet_order_status == 3" class="icon-loading-no" size="12px" color="#FF7000" /> -->
-                <!-- 投注失败 -->
-                <icon-wapper v-if="items.orderStatusCode == 0" name="icon-failure" size="12px" color="#FF4646" />
-                <!-- 投注成功 -->
-                <icon-wapper v-if="items.orderStatusCode == 1" name="icon-success" size="12px" color="#4FC140" />
-            </div>
-           
+            <template v-if="BetData.is_bet_pre">
+                <div class="bet-delete bet-icon">
+                    <!-- <icon-wapper v-if="BetViewDataClass.bet_order_status == 3" class="icon-loading-no" size="12px" color="#FF7000" /> -->
+                    <!-- 投注失败 -->
+                    <icon-wapper v-if="items.preOrderDetailStatus == 2" name="icon-failure" size="12px" color="#FF4646" />
+                    <!-- 投注成功 -->
+                    <icon-wapper v-if="items.preOrderDetailStatus == 1" name="icon-success" size="12px" color="#4FC140" />
+                </div>
+            </template>
+            <template v-else>
+                <div class="bet-delete bet-icon">
+                    <!-- 投注确认中 -->
+                    <img class="icon_loading" v-if="items.orderStatusCode == 2" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt="" />
+                    <!-- <icon-wapper v-if="BetViewDataClass.bet_order_status == 3" class="icon-loading-no" size="12px" color="#FF7000" /> -->
+                    <!-- 投注失败 -->
+                    <icon-wapper v-if="items.orderStatusCode == 0" name="icon-failure" size="12px" color="#FF4646" />
+                    <!-- 投注成功 -->
+                    <icon-wapper v-if="items.orderStatusCode == 1" name="icon-success" size="12px" color="#4FC140" />
+                </div>
+            </template>
         </div>
 
         <div v-if="BetData.is_bet_single" class="bet-result f-b-c" >

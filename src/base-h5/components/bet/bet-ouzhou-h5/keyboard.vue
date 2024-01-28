@@ -156,19 +156,22 @@ const _handleKeyPress = (e) => {
   let emit_name = 'EMIT_INPUT_BET_MONEY'
   if(BetData.is_bet_single){
     if (BetData.is_bet_merge) {
-      emit_name = 'EMIT_INPUT_BET_MONEY_MERGE'
+      if(BetData.bet_keyboard_config.merge || BetData.active_index == BetData.bet_single_list.length){
+        emit_name = 'EMIT_INPUT_BET_MONEY_MERGE'
+      }else{
+        emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
+      }
     } else {
       emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
     }
   }
-  useMittEmit(MITT_TYPES[emit_name], { params:BetData.bet_keyboard_config, money:money.value*1 } )
+  useMittEmit(MITT_TYPES[emit_name], { params:BetData.bet_keyboard_config, money:money.value } )
 }
 
 // 小数点 .
 const _handleDecimalPoint = () => {   
   //超过最大金额  显示最大金额 
-  let old = BetData.bet_keyboard_config.playOptionsId
-  let max_money = BetViewDataClass.bet_min_max_money[old].max_money
+  let max_money = BetData.bet_keyboard_config.max_money
   let money_ = BetData.bet_amount.toString()
 
   //超过最大金额时不让输入
@@ -189,8 +192,8 @@ const _handleDecimalPoint = () => {
 
 // MAX键
 const _handmaxKey = () => {
-  let ol_id = BetData.bet_keyboard_config.playOptionsId
-  money.value = lodash_.get(BetViewDataClass.bet_min_max_money,`${ol_id}.max_money`,8888) 
+
+  money.value = lodash_.get(BetData.bet_keyboard_config,`max_money`,8888) 
 
   // 这个有问题 用户没有余额的情况下 键盘不能使用 我们要让他可以使用 只是点投注的时候提示他 余额不足
   //超过用户余额显示用户余额
@@ -245,7 +248,7 @@ const _handleNumberKey = (num) => {
   }
   ol_id = lodash_.get(BetData.bet_keyboard_config,ol_type)
   // let max_money = lodash_.get(BetViewDataClass,'bet_min_max_money[ol_id].max_money')
-  let max_money = lodash_.get(BetViewDataClass.bet_min_max_money,`${ol_id}.max_money`,8888)
+  let max_money = lodash_.get(BetData.bet_keyboard_config,`max_money`,8888)
   // 显示最大金额
   if (money_ && +money_ >= +max_money) {
     money_ = max_money

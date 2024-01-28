@@ -68,7 +68,7 @@ class UseGlobal {
     //近期开赛
     this.kick_off_time = localStorage.getItem('kick_off_time')?JSON.parse (localStorage.getItem('kick_off_time')) :'';
     // 附加盘开关
-    this.show_additional_disk = localStorage.getItem('additional_disk')?JSON.parse (localStorage.getItem('additional_disk')) :true;
+    this.show_additional_disk = localStorage.getItem('additional_disk')?JSON.parse (localStorage.getItem('additional_disk')) : true;
     // 附加玩法开关
     this.show_additional_plays = localStorage.getItem('additional_plays')?JSON.parse (localStorage.getItem('additional_plays')) :true;
     // 附加玩法配置展示行数

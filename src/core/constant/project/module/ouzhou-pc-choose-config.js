@@ -88,24 +88,24 @@ export  const  choose_config= {
       {first_hpid: "153", second_hpid: "2"},
     ],
     "100": [
-      {first_hpid: "30002", second_hpid: "30001"},
+      {first_hpid: "30001", second_hpid: "30002"},
       {first_hpid: "30002", second_hpid: "30003"},
-      {first_hpid: "30003", second_hpid: "30001"},
+      {first_hpid: "30001", second_hpid: "30003"},
     ],
     "101": [
-      {first_hpid: "30002", second_hpid: "30001"},
+      {first_hpid: "30001", second_hpid: "30002"},
       {first_hpid: "30002", second_hpid: "30003"},
-      {first_hpid: "30003", second_hpid: "30001"},
+      {first_hpid: "30001", second_hpid: "30003"},
     ],
     "102": [
-      {first_hpid: "30002", second_hpid: "30001"},
+      {first_hpid: "30001", second_hpid: "30002"},
       {first_hpid: "30002", second_hpid: "30003"},
-      {first_hpid: "30003", second_hpid: "30001"},
+      {first_hpid: "30001", second_hpid: "30003"},
     ],
     "103": [
-      {first_hpid: "30002", second_hpid: "30001"},
+      {first_hpid: "30001", second_hpid: "30002"},
       {first_hpid: "30002", second_hpid: "30003"},
-      {first_hpid: "30003", second_hpid: "30001"},
+      {first_hpid: "30001", second_hpid: "30003"},
     ],
     // 虚拟足球
     "1001": [

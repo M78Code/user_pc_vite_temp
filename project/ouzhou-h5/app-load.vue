@@ -29,7 +29,7 @@ import './src/css/common/common.scss'
 
 window.wslog = wslog;
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
-const { CURRENT_ENV } = BUILDIN_CONFIG;
+// const { CURRENT_ENV } = BUILDIN_CONFIG;
 
 const time_str = ref('');
  

@@ -130,15 +130,18 @@ onMounted(() => {
   un_mounted()
 })
 
-watch(() => mi_100_arr.value , () => {
-  nextTick(() => {
+const set_show_btn = () => {
+  setTimeout(() => {
     if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
       show_right_btn.value = true;
     } else {
       show_right_btn.value = false;
     }
-  })
-}, { immediate: true })
+  }, 1000);
+}
+set_show_btn()
+
+const off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, set_show_btn).off
 
 // 菜单数量修改
 const set_ref_base_menu = (list=[] ) => {
@@ -165,7 +168,7 @@ const set_ref_base_menu = (list=[] ) => {
  
 const choose_filter_tab = (item) => {
   // 获取最新的 数据
-  const current_ball_type=BaseData.compute_sport_id(item.mif)
+  const current_ball_type=BaseData.compute_sport_id(item.mif||item.mi)
   if(MenuData.is_kemp()){
     handle_click_menu_mi_400(item)
     MenuData.set_current_ball_type(current_ball_type||(item.mif-400))
@@ -221,6 +224,7 @@ const filter_tab_scroll = payload => {
 onBeforeUnmount(() => {
   clearInterval(interval_id);
   interval_id = null;
+	off()
 })
 </script>
 

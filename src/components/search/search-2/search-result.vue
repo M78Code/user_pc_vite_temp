@@ -37,7 +37,7 @@
 												<p class="flex"> 
 													<!-- 比赛时间 -->
 													<match-process style="cursor:pointer" v-if="item" :match="item" :rows="1" :date_rows="1" date_show_type="inline" periodColor="gray" />
-													<span class="red">{{ get_match_score_result(item).home_score }}-{{ get_match_score_result(item).away_score }}</span> 
+													<!-- <span class="red">{{ get_match_score_result(item).home_score }}-{{ get_match_score_result(item).away_score }}</span>  -->
 												</p>
 											</div>
 											<div style="display: flex;flex-direction: row; flex: 1">
@@ -107,7 +107,7 @@
 											<template v-if="!sports_id.includes(i.csid)">
 												<div class="flex_1"
 													v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
-													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
+													<div v-if="get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[2].ov', ''))">{{ i18n_t('ouzhou.search.dogfall') }}</div>
 													<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[2].ov', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
@@ -145,7 +145,7 @@
 									<div class="list_top">
 											<span v-html="red_color(item.teamName)"></span>
 										</div>
-									<div class="list_bottom"  v-for="(list, i) in item?.matchList" @click="match_click(item)">
+									<div class="list_bottom"  v-for="(list, i) in item?.matchList" @click.stop="match_click(item)">
 										<div style="width: 60%; word-break: break-all">
 											<p>
 												<span class="home" v-html="red_color(list.mhn)"></span>
@@ -166,7 +166,7 @@
 											<template v-if="!sports_id.includes(list.csid)">
 												<div class="flex_1"
 													v-if="lodash.get(list, 'hps[0].hl.length', 0) > 0 && lodash.get(list, 'hps[0].hl[0].ol[2].ov', '') && lodash.get(list, 'hps[0].hl[0].ol[1].os', '') === 1">
-													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
+													<div v-if="get_odd_os(lodash.get(list, 'hps[0].hl[0].ol[2].ov', ''))">{{ i18n_t('ouzhou.search.dogfall') }}</div>
 													<div class="red">{{ get_odd_os(lodash.get(list, 'hps[0].hl[0].ol[2].ov', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
@@ -210,7 +210,7 @@ import lodash from 'lodash'
 
 import search from "src/core/search-class/search.js"
 import { get_search_result } from "src/api/module/search/index.js";
-import { compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/output/index.js";
+import { MenuData,compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js';
@@ -218,7 +218,6 @@ import { api_common, api_match_list } from "src/api/index.js";
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import { get_match_score_result } from 'src/core/match-list-pc/match-handle-data.js'
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-
 const props = defineProps({
 	show_type: {
 		type: String,
@@ -261,7 +260,18 @@ const expand_team = ref(true)
  function bowling_top_click(match) {
 	update_show_type('none')
 	const { csid, tn } = match;
-	router.push(`/search/${tn}/${csid}`)
+	const { tid } = match.children[0];
+	//设置左侧菜单联动
+	MenuData.set_left_menu_result({
+		...MenuData.left_menu_result,
+		lv1_mi: `${+csid+100}`,
+		lv2_mi: `${+csid+100}1`
+	})
+	MenuData.set_current_ball_type(csid);
+	// MenuData.set_menu_current_mi(`${+csid+100}2`)
+	// router.push(`/search/${tn}/${csid}`)
+	localStorage.setItem('league_name', tn)
+	router.push(`/league/${csid}/${tid}/3`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,
@@ -276,8 +286,18 @@ const expand_team = ref(true)
  function league_click(match) {
 	if(!match) return;
 	search.insert_history(match.leagueName)
-	const { csid } = match.matchList[0]
-	router.push(`/search/${match.leagueName}/${csid}`)
+	const { csid, tid } = match.matchList[0];
+	//设置左侧菜单联动
+	MenuData.set_left_menu_result({
+		...MenuData.left_menu_result,
+		lv1_mi: `${+csid+100}`,
+		lv2_mi: `${+csid+100}2`
+	})
+	MenuData.set_current_ball_type(csid);
+	// MenuData.set_menu_current_mi(`${+csid+100}2`)
+	// router.push(`/search/${match.leagueName}/${csid}`)
+	localStorage.setItem('league_name', match.leagueName)
+	router.push(`/league/${csid}/${tid}/3`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,
@@ -310,8 +330,17 @@ const expand_team = ref(true)
 function bowling_click(match) {
 	search.insert_history(match.mhn + 'vs' + match.man)
 	update_show_type('none')
-	const { mid, tid, csid } = match
-	router.push(`/details/${mid}/${csid}/${tid}`)
+	const { mid, tid, csid,ms } = match
+	router.push({
+      name: 'details',
+      params: {
+        mid,
+        tid,
+        csid
+      },
+      query: {ms}  // 传多个ms  提前判断是否需要显示右侧
+    });
+	// router.push(`/details/${mid}/${csid}/${tid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,
@@ -327,8 +356,24 @@ const scrollRef = ref(null)
 function match_click(match) {
 	if(!match) return;
 	search.insert_history(match.name)
-	const { mid, tid, csid } = match.matchList[0]
-	router.push(`/details/${mid}/${csid}/${tid}`)
+	const { mid, tid, csid } = match.matchList[0];
+	//设置左侧菜单联动
+	MenuData.set_left_menu_result({
+		...MenuData.left_menu_result,
+		lv1_mi: `${+csid+100}`,
+		lv2_mi: `${+csid+100}2`
+	})
+	MenuData.set_current_ball_type(csid);
+	// MenuData.set_menu_current_mi(`${+csid+100}2`)
+	router.push({
+      name: 'details',
+      params: {
+        mid,
+        tid,
+        csid
+      },
+      query: {ms}  // 传多个ms  提前判断是否需要显示右侧
+    });
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,
@@ -342,7 +387,19 @@ function match_click(match) {
  */
 function league_item_click(match) {
 	if(!match) return;
-	const { mid, tid, csid } = match
+	const { mid, tid, csid } = match;
+	//设置左侧菜单联动
+	MenuData.set_left_menu_result({
+		...MenuData.left_menu_result,
+		lv1_mi: `${+csid+100}`,
+		lv2_mi: `${+csid+100}2`
+	})
+	MenuData.set_current_ball_type(csid);
+	// MenuData.set_menu_current_mi(`${+csid+100}2`)
+	//如果是电竞的子菜单手动设置 左侧菜单 电子竞技固定编码2000
+	if(['100','101','102','103'].includes(csid)){
+		MenuData.set_menu_root(2000)
+	}
 	router.push(`/details/${mid}/${csid}/${tid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {

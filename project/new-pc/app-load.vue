@@ -16,12 +16,12 @@ import { wslog, httplog } from "src/core/log/";
 import {get_query_string as urlparams } from "src/output/index.js";
 import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
-
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 // import { set_remote_server_time } from "./src/store/module/global";
 import { useRouter,useRoute } from "vue-router";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
-const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
+const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = BUILDIN_CONFIG;
 const router = useRouter();
 const route= useRoute();
 const _data = reactive({
@@ -205,7 +205,7 @@ onUnmounted(() => {
 });
 </script>
 <script>
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 export default {
   watch: {
   // 监听路由变化 并记录到layout类中

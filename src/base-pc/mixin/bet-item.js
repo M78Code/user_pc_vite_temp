@@ -233,6 +233,7 @@ export function use_bet_item(props, emit) {
         // }
         set_bet_obj_config(params, other)
         BetData.set_bet_state_show(true)
+        emit('stateChage', BetData.bet_oid_list.includes(props.ol_data.oid) ? 'active' : '')
     };
 
     onUnmounted(() => {

@@ -5,6 +5,7 @@
  */
 import { into_home_event } from "src/core/hide-api/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 // 获取sessionStorage中的location_search数据
 const get_session_storage_location_search = () =>
 {
@@ -271,6 +272,13 @@ const watch_route_fun = (to, from, that)=>{
   if(location.href.indexOf('token') == -1){
     return;
   }
+  // 发送进入首页埋点消息
+  if(that && ['matchList','home'].includes(to.name)){
+    clearTimeout(that.timer);
+    that.timer = setTimeout(() => {
+      lodash.get(UserCtr,'user_info.userId') && into_home_event();
+    }, 2000);
+  }
   timer = setTimeout(() => {
     // 删除所有url参数
     let hash = location.hash;
@@ -286,7 +294,7 @@ const watch_route_fun = (to, from, that)=>{
 // 同步局部参数到sessionStorage中location.search参数字符串中,并进行参数获取分流操作
 const url_param_ctr_init = (vue_that)=>{
   // 获取项目信息
-  const PROJECT_NAME = window.BUILDIN_CONFIG.PROJECT_NAME;
+  const PROJECT_NAME = BUILDIN_CONFIG.PROJECT_NAME;
   // 全局获取url参数值使用
   const search_params= window.SEARCH_PARAMS.init_param;
   if(!sessionStorage.getItem('LOCATION_SEARCH')){
@@ -297,30 +305,30 @@ const url_param_ctr_init = (vue_that)=>{
   // window.history.replaceState('', '', url);
   switch (PROJECT_NAME) {
     case 'yazhou-h5':
-      window.history.replaceState('', '', url);
+      window.history.replaceState(window.history.state, '', url);
       to_corresponding_router_yazhou_h5(vue_that, search_params);
       break;
     case 'app-h5':
-      window.history.replaceState('', '', url);
+      window.history.replaceState(window.history.state, '', url);
       to_corresponding_router_app_h5(vue_that, search_params);
       break;
     case 'ouzhou-h5':
-      window.history.replaceState('', '', url);
+      window.history.replaceState(window.history.state, '', url);
       to_corresponding_router_ouzhou_h5(vue_that, search_params);
       break;
     case 'yazhou-pc':
-      window.history.replaceState('', '', url);
+      window.history.replaceState(window.history.state, '', url);
       to_corresponding_router_yazhou_pc(vue_that, search_params);
       break;
     case 'new-pc':
     
       break;
     case 'ouzhou-pc':
-      window.history.replaceState('', '', url);
+      window.history.replaceState(window.history.state, '', url);
       to_corresponding_router_ouzhou_pc(vue_that, search_params);
       break;
     case 'activity':
-      window.history.replaceState('', '', url);
+      window.history.replaceState(window.history.state, '', url);
       break;
     default:
       break;
