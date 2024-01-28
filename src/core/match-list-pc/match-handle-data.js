@@ -480,8 +480,9 @@ export const get_match_score = (match) => {
 export const get_match_score_result = (match) => {
     if (!match) return { home_score: '0', away_score: '0' }
     let msc_obj = {}
-    match.msc = match.msc.split('')
-    console.error(' match.msc match.msc', match.msc)
+    if (typeof(match.msc) == 'string'){
+        match.msc = JSON.parse(match.msc)
+    }
     match.msc.forEach(item => {
         let format = item.split("|");
         msc_obj[format[0]] = {
