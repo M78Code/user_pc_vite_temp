@@ -386,6 +386,7 @@ const checked_current_tab = (payload,type) => {
 
 	.matches-title {
 		padding-left: 20px;
+		min-height: 80px;
 	}
 
 	.current_match_title {

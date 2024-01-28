@@ -150,12 +150,15 @@ const set_bet_order_list = (bet_list, is_single) => {
 
     } else {
         let pre_odds = ''
+        let pre_marketValue = ''
         bet_list.forEach((item, index) => {
             // 预约投注 设置预约投注赔率
             if(BetData.is_bet_pre){
                 pre_odds = item.pre_odds
+                pre_marketValue = item.pre_marketValue
             }
             let odds = pre_odds || item.odds
+            let marketValue = pre_marketValue || item.marketValue
             let odd_finally = compute_value_by_cur_odd_type(odds, item.playId, item.odds_hsw, item.sportId)
             let bet_s_obj = {
                 "sportId": item.sportId,   // 赛种id
@@ -167,6 +170,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "marketId": item.marketId,  //盘口id
                 "playOptionsId": item.playOptionsId,   // 投注项id
                 "marketTypeFinally": UserCtr.odds.cur_odds,     // 欧洲版默认是欧洲盘 HK代表香港盘
+                "marketValue": marketValue,
                 "odds": odds,  // 赔率 万位
                 "oddFinally": odd_finally,  //赔率
                 "playName": item.playName, //玩法名称
@@ -188,9 +192,9 @@ const set_bet_order_list = (bet_list, is_single) => {
                 bet_s_obj.marketTypeFinally = 'EU'
             }
             // 预约投注 设置预约盘口值
-            if(BetData.is_bet_pre){
-                bet_s_obj.marketValue = item.marketValue
-            }
+            // if(BetData.is_bet_pre){
+            //     bet_s_obj.marketValue = item.marketValue
+            // }
 
             // 预约投注
             // 需要用对应的数据 对投注数据进行覆盖
@@ -548,7 +552,9 @@ const pre_bet_comparison = () => {
 		let pre_data = {
 			oid: pre_obj.custom_id,
 			pre_odds: pre_obj.odds,
-			pre_oddFinally: pre_obj.oddFinally
+			pre_oddFinally: pre_obj.oddFinally,
+            pre_marketValue: pre_obj.marketValue
+
 		}
 		BetData.set_bet_single_list_obj(pre_data)
 		BetData.set_is_bet_pre(true)
@@ -560,7 +566,8 @@ const pre_bet_comparison = () => {
 						old_oid: oid,
 						oid: item.id,
 						pre_odds: pre_obj.odds,
-						pre_oddFinally: pre_obj.oddFinally
+						pre_oddFinally: pre_obj.oddFinally,
+                        pre_marketValue: pre_obj.marketValue
 					}
 					BetData.set_bet_single_list_obj(obj)
 					BetData.set_is_bet_pre(false)
