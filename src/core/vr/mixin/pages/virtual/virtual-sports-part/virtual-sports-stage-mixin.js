@@ -329,6 +329,7 @@ export default {
         //展示下一轮号
         if(n_no){
           if(this.next_batch_no){
+            console.log(this.next_batch_no, 'xxx')
             result = this.next_batch_no.replace('%s',this.video_process_data.nextNo);
           } 
         }

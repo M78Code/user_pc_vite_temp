@@ -3,7 +3,7 @@ import {computed, defineProps} from "vue";
 import Match from "./Match/index.vue"     // 赛况
 import Figures from "./Figures/index.vue"     // 数据
 import Lineup from "./Lineup/index.vue"     // 阵容
-import Information from "./Information.vue"     // 资讯
+import Information from "../Information/index.vue"     // 资讯
 import Odds from "./Odds/index.vue"     // 赔率
 import Intelligence from "./Intelligence.vue"     // 情报
 

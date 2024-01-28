@@ -4,7 +4,7 @@ import { api_analysis, api_common } from "src/api/index";
 import { onBeforeMount, reactive, inject } from "vue";
 import articleContent from "./content.vue";
 import maylike from "./maylike.vue";
-import NoData from "../../NoData.vue";
+import NoData from "../NoData.vue";
 
 /* match_detail 来自 project/ouzhou-h5/src/pages/detailnew/index.vue */
 const match_detail = inject("match_detail");
