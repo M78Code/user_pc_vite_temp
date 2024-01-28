@@ -66,7 +66,7 @@
             <!--显示次要玩法比分 7,8,9 网,乒,斯-->
             <div class="way-score" v-if="[1, 5, 7, 8, 9].includes(+current_tab_item.id) && match.ms == 1"> {{ away_score }}</div>
           </div>
-          <!--  玩法描述图标显示  -->
+          <!--  玩法描述图标显示  玩法id: 角球 1  15分钟 17  波胆 18  特色 11  罚牌 5  晋级  3  冠军  30-->
           <div class="team-t-title-w fight-type" v-if="[1, 3, 5, 7, 8, 9].includes(+match.csid) && is_show_title">
             <!-- :style="compute_css_obj(show_tips?'icon-tips':'icon-tips-d')" -->
             <span v-if="[2, 5, 17].includes(+current_tab_item.id)" @click="info_icon_click($event, match.mid)">
