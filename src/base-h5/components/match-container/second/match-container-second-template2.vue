@@ -278,6 +278,7 @@ export default defineComponent({
         align-items: center;
         font-weight: 600;
         margin: 0 8px;
+        color: var(--q-gb-t-c-18);
       }
     }
   }
