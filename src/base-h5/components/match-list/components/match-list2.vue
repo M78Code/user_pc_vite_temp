@@ -123,10 +123,12 @@ const matchs_data = computed(() =>{
 
 //获取数据仓库赛事数据
 const get_match_item1 = (item) => {
-  const target = lodash.cloneDeep(item)
-  const { source_index = '', is_show_ball_title = false, start_flag = '3' } = target
-  const match = MatchDataBaseH5.get_quick_mid_obj(target.mid) || item
-  // return { ...match, source_index, is_show_ball_title, start_flag }
+  const { source_index = '', is_show_ball_title = false, start_flag = '' } = item
+  const match = MatchDataBaseH5.get_quick_mid_obj(item.mid) || item
+  match.source_index = source_index
+  match.is_show_ball_title = is_show_ball_title
+  match.start_flag = start_flag
+  return match
   // return Object.assign(match, { source_index, is_show_ball_title, start_flag })
 }
 

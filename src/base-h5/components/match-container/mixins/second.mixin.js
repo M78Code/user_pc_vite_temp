@@ -685,7 +685,11 @@ export default defineComponent({
       Object.values(this.emitters).map((x) => x());
     },
     on_update_standard (val) {
-      this.apply_15min_title();// 15分钟 次要玩法模块  左下角的 小标题
+      // this.apply_15min_title();// 15分钟 次要玩法模块  左下角的 小标题
+    },
+    get_current_title (val) {
+      this.apply_15min_title()
+      return this.match.csid == 1 ? this.current_tab_item.title : this.mmp_map_title
     }
   },
   computed:{

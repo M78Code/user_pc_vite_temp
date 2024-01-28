@@ -72,7 +72,8 @@
             <span v-if="[2, 5, 17].includes(+current_tab_item.id)" @click="info_icon_click($event, match.mid)">
               <img :src="information_icon" alt="">
             </span>
-            {{ match.csid == 1 ? current_tab_item.title : mmp_map_title }}
+            <!-- {{ match.csid == 1 ? current_tab_item.title : mmp_map_title }} -->
+            {{  get_current_title(standard_odd_status)  }}
           </div>
         </div>
         <!--次要玩法 盘口 右边的 区域-->
