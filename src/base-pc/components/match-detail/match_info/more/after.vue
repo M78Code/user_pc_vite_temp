@@ -59,10 +59,10 @@
         </span>
 
         <!-- 11手球，16水球、15曲棍球、14橄榄球 -->
-        <div class="add-stage" v-if="['11','16','15','14'].includes(lodash.get(match_info, 'csid'))">{{ i18n_t('common.half_')}}</div>
+        <div class="add-stage" v-if="['11','16','15','14'].includes(lodash.get(match_info, 'csid').toString())">{{ i18n_t('common.half_')}}</div>
         <!-- 半场 -->
         <!-- 4冰球、11手球16水球、15曲棍球、14橄榄球 加时赛、点球大战 -->
-        <div class="hockey_add" v-if="['4','11','16','15','14'].includes(lodash.get(match_info, 'csid'))">
+        <div class="hockey_add" v-if="['4','11','16','15','14'].includes(lodash.get(match_info, 'csid').toString())">
           <!-- 加时 -->
           <span v-if="lodash.get(match_info,'msc.S7')">{{ i18n_t('common.add_time')}}</span>
           <!-- 点球 -->
@@ -73,7 +73,7 @@
          <!-- 4冰、5网、7斯诺克、8乒乓、9排球、10羽毛球、12拳击、13沙滩排球  -->
         <div
           :class="lodash.get(match_info, 'csid')=='7'?'score':'add-stage'"
-          v-if="['5','7','10','8','9','12','13'].includes(lodash.get(match_info, 'csid'))">
+          v-if="['5','7','10','8','9','12','13'].includes(lodash.get(match_info, 'csid').toString())">
           <!-- "赛盘":"局" -->
           {{stage_name}}
         </div>
@@ -147,7 +147,7 @@
 
           <!-- 4冰、5网、6美足、7斯诺克、8乒乓、9排球、10羽毛球、13沙滩排球 -->
           <!-- 5网、8乒乓、9排球、10羽毛球、13沙滩排球 -->
-          <template v-if="['5','8','9','10','13'].includes(lodash.get(match_info, 'csid'))">
+          <template v-if="['5','8','9','10','13'].includes(lodash.get(match_info, 'csid').toString())">
             <div class="add-stage">{{lodash.get(match_info,'msc.S1.home') || 0}}</div>
             <div class="score">{{current_data.home}}</div>
           </template>
@@ -158,7 +158,7 @@
           </template>
 
           <!-- 4冰、7斯诺克、11手球、12拳击,16水球、15曲棍球、14橄榄球 -->
-          <template v-else-if="['4','7','11','12','16','15','14'].includes(lodash.get(match_info, 'csid'))">
+          <template v-else-if="['4','7','11','12','16','15','14'].includes(lodash.get(match_info, 'csid').toString())">
             <div class="score">{{lodash.get(match_info,'msc.S1.home')}}</div>
           </template>
         </div>
@@ -197,7 +197,7 @@
              v-if="lodash.get(match_info, 'csid')!='14'"
           >
             <!-- 16水球、15曲棍球 -->
-            <template v-if="['16','15'].includes(lodash.get(match_info, 'csid'))">
+            <template v-if="['16','15'].includes(lodash.get(match_info, 'csid').toString())">
               <!-- 第一节比分 -->
               <span>{{lodash.get(match_info, 'msc.S19.away')}}</span>
               <!-- 第二节比分 -->
@@ -217,10 +217,10 @@
           </div>
 
           <!-- 11手球,16水球、15曲棍球、14橄榄球 -->
-          <div class="add-stage" v-if="['11','16','15','14'].includes(lodash.get(match_info, 'csid'))">{{lodash.get(match_info,'msc.S2.away')}}</div>
+          <div class="add-stage" v-if="['11','16','15','14'].includes(lodash.get(match_info, 'csid').toString())">{{lodash.get(match_info,'msc.S2.away')}}</div>
 
           <!-- 4冰球、11手球16水球、15曲棍球、14橄榄球 加时赛、点球大战 -->
-          <div class="hockey_add" v-if="['4','11','16','15','14'].includes(lodash.get(match_info, 'csid'))">
+          <div class="hockey_add" v-if="['4','11','16','15','14'].includes(lodash.get(match_info, 'csid').toString())">
             <!-- 加时 -->
             <span v-if="lodash.get(match_info,'msc.S7')">{{lodash.get(match_info,'msc.S7.away')}}</span>
             <!-- 点球 -->
@@ -229,7 +229,7 @@
 
           <!-- 4冰、5网、6美足、7斯诺克、8乒乓、9排球、10羽毛球、13沙滩排球 -->
           <!-- 5网、8乒乓、9排球、10羽毛球、13沙滩排球 -->
-          <template v-if="['5','8','9','10','13'].includes(lodash.get(match_info, 'csid'))">
+          <template v-if="['5','8','9','10','13'].includes(lodash.get(match_info, 'csid').toString())">
             <!-- 全场比分 -->
             <div class="add-stage">{{lodash.get(match_info,'msc.S1.away') || 0}}</div>
             <div class="score">{{current_data.away}}</div>
@@ -241,7 +241,7 @@
           </template>
 
           <!-- 4冰、7斯诺克、11手球、12拳击,16水球、15曲棍球、14橄榄球 -->
-          <template v-else-if="['4','7','11','12','16','15','14'].includes(lodash.get(match_info, 'csid'))">
+          <template v-else-if="['4','7','11','12','16','15','14'].includes(lodash.get(match_info, 'csid').toString())">
             <!-- 全场比分 -->
             <div class="score">{{lodash.get(match_info,'msc.S1.away')}}</div>
           </template>
@@ -258,6 +258,7 @@ import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { IconWapper } from 'src/components/icon'
 import { nextTick } from "vue";
 import { socre_dict,stage_dict} from "src/output/index.js";
+import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 export default {
   components: {
     "match-date": MatchProcessFullVersionWapper,
@@ -349,6 +350,7 @@ export default {
        * mat 发球方
        */
       let {csid, msc, mmp, mft, mct, mat} = detials
+      if(lodash.isArray(detials.msc)) { msc = detailUtils.build_msc(detials)}
       csid == '4' && (mft = mft || 3)
       let dict = socre_dict(csid);
       //斯诺比赛阶段字段为mct，其他球种为mmp
@@ -418,6 +420,9 @@ export default {
     */
    computed_score(res){
      let score = res.msc;
+     if(lodash.isArray(res.msc)) { score = detailUtils.build_msc(res)}
+       
+     
      if(!Object.keys(score).length) {
        this.current_data = {
         home: 0,
@@ -461,7 +466,13 @@ export default {
         }
         if (res.csid == "5") {//网球
           let dict = socre_dict(5);
-          let msc = res.msc;
+        
+          let msc = null
+          //ws推送过来的比分没有处理msc 
+          if(lodash.isArray(res.msc)) { msc = detailUtils.build_msc(res)}else{
+            msc = res.msc;
+          }
+          console.log(res.msc,'res.msc',lodash.isArray(res.msc),res.msc_obj);
           for (var k in dict) {
             if (msc[dict[k]]) {
               this.msc_data.push(msc[dict[k]]);
