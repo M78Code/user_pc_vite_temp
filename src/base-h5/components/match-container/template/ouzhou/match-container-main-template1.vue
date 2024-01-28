@@ -1090,7 +1090,7 @@ export default {
               // color: #8a8986;
             }
             &.is-handicap {
-              color: #7A0F25 !important;
+              color: #FF7000 !important;
             }
           }
         }
