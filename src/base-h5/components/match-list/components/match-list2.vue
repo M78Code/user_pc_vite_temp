@@ -121,18 +121,17 @@ const matchs_data = computed(() =>{
 //   MatchMeta.get_match_base_hps_by_mids({mids: mids_string.value})
 // })
 
-//获取数据仓库赛事数据
-const get_match_item1 = (item) => {
-  const { source_index = '', is_show_ball_title = false, start_flag = '' } = item
+//获取数据仓库赛事数据  TODO: 改动这里需关注CPU使用情况 类似 Object.assign(match, { source_index, is_show_ball_title, start_flag }) 会导致 该方法一直触发
+const get_match_item = (item) => {
   const match = MatchDataBaseH5.get_quick_mid_obj(item.mid) || item
-  match.source_index = source_index
-  match.is_show_ball_title = is_show_ball_title
-  match.start_flag = start_flag
+  match.source_index = item.source_index
+  match.is_show_ball_title = item.is_show_ball_title
+  match.start_flag = item.start_flag
   return match
   // return Object.assign(match, { source_index, is_show_ball_title, start_flag })
 }
 
-const get_match_item = (item) => {
+const get_match_item1 = (item) => {
   // if (item.mid === '3648314') {
   //   debugger
   //   console.error(MatchDataBaseH5.get_quick_mid_obj(item.mid) || item)
