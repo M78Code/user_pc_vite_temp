@@ -204,6 +204,8 @@ const esportsClick = ()=>{
   }
   MenuData.set_mid_menu_result(mid_config)
 
+  BetData.set_clear_bet_info()
+
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, 2100)
   })
@@ -235,6 +237,8 @@ const esportsClick = ()=>{
     filter_tab: 31001
   }
   MenuData.set_mid_menu_result(mid_config)
+
+  BetData.set_clear_bet_info()
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, 31001)
