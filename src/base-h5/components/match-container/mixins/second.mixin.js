@@ -688,10 +688,10 @@ export default defineComponent({
     get_secondary_unfold_map () {
       return MatchResponsive.secondary_unfold_map.value;
     },
-    // 是否显示次要玩法标题  角球不显示
+    // 是否显示次要玩法标题  角球 晋级 冠军 不显示
     is_show_title () {
       const id = +lodash.get(this.current_tab_item, 'id', 0)
-      return ![1].includes(id)
+      return ![1, 3, 30 ].includes(id)
     },
     // 判断是否显示tab栏
     show_tab_by_data(){
