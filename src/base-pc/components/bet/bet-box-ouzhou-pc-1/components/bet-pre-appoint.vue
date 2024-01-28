@@ -295,7 +295,7 @@ const set_bet_obj_config = () => {
     }
     // ref_custom.odds = mathJs.multiply(ref_custom.oddFinally,100000)
     BetData.set_bet_pre_obj(obj)
-    console.log('这这这', ref_data , props.item.handicap)
+    // console.log('这这这', ref_data , props.item.handicap)
 }
 
 /**

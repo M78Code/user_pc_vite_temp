@@ -881,6 +881,9 @@ const set_error_message_config = (res ={},type,order_state) => {
         code: res.code,
         message: res.message
     }
+    // console.log('---!这!---', res)
+    let matchInfo = lodash_.get(res, 'data.orderDetailRespList[0].matchInfo', '')
+    let playName = lodash_.get(res, 'data.orderDetailRespList[0].playName', '')
     // 是否需求清除投注信息
     let clear_time = true
 
@@ -911,11 +914,13 @@ const set_error_message_config = (res ={},type,order_state) => {
                     }
                     break
                 case 7:
-                    // 预约成功
+                    // 预约订单确认
                     obj = {
                         code: '200',
-                        message: "bet.bet_booked"
+                        message: "bet.bet_order_info2"
                     }
+                    // matchInfo + playName + i18
+                    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${matchInfo} ${playName} ${i18n_t('bet.bet_booked')}`);
                     break;
                 case 8: 
                     // 预约失败
