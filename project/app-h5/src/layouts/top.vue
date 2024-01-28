@@ -8,18 +8,25 @@
 <template>
   <template v-if="['matchList', 'sport_menu', 'esports_sports'].includes(route.name)">
     <!--  顶部菜单 -->
-    <TopMenu />
-    <div v-show="[3, 6].includes(MenuData.current_lv_1_menu_mi.value)">
-      <DateTab @changeDate="setDate" ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]" />
+    <div class="long3_icon">
+      <img :src="h5_long_bg"  alt="">
+      <img :src="h5_long_gb2"  alt="">
+
+      <TopMenu />
+      <div v-show="[3, 6].includes(MenuData.current_lv_1_menu_mi.value)">
+        <DateTab @changeDate="setDate" ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]" />
+      </div>
+
+      <!-- <div v-if="+MenuData.get_menu_type_special() == 2000"> -->
+      <div v-show="[2000].includes(MenuData.top_menu_title?.mi)">
+        <!-- dataList[2000] -->
+        <DateTab @changeDate="setDate" ref="dJdateTabMenu" :dataList="dataListEsports" />
+      </div>
+      <!-- 滑动菜单组件 -->
+      <ScrollMenu ref="scrollTabMenu" :is_kemp_esports="is_kemp_esports" :scrollDataList="ref_data.scroll_data_list"
+        @changeList="changeList" @changeMenu="set_scroll_current" :current_mi="ref_data.current_mi" />
     </div>
-    <!-- <div v-if="+MenuData.get_menu_type_special() == 2000"> -->
-    <div v-show="[2000].includes(MenuData.top_menu_title?.mi)">
-      <!-- dataList[2000] -->
-      <DateTab @changeDate="setDate" ref="dJdateTabMenu" :dataList="dataListEsports" />
-    </div>
-    <!-- 滑动菜单组件 -->
-    <ScrollMenu ref="scrollTabMenu" :is_kemp_esports="is_kemp_esports" :scrollDataList="ref_data.scroll_data_list"
-      @changeList="changeList" @changeMenu="set_scroll_current" :current_mi="ref_data.current_mi" />
+
     <!--  -->
     <SwitchWap v-if="is_show_switch_wap" />
     <!--  -->
@@ -53,7 +60,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
 import { TopMenu, ScrollMenu, SearchTab, DateTab, SwitchWap } from 'src/base-h5/components/menu/app-h5-menu/index'
-
+import { h5_long3, h5_long_bg, h5_long_gb2 } from 'src/base-h5/core/utils/local-image.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
@@ -396,6 +403,12 @@ const handle_match_render_data = (type) => {
 
 </script>
 <style lang="scss" scoped>
+.long3_icon{
+  // background-image: url($SCSSPROJECTPATH+"/image/home/h5_long3.png") !important;
+  > img{
+    position: absolute;
+  }
+}
 .select-mask {
   position: fixed;
   width: 100vw;

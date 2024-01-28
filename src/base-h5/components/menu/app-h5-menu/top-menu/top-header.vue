@@ -72,7 +72,7 @@ const router = useRouter()
     .detail-back {
         width: 0.3rem;
         height: 100%;
-       
+        z-index: 0;
         background-size: 0.1rem auto;
         margin-left: 0.05rem;
        background-position: center;
