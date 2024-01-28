@@ -50,17 +50,17 @@
             <!-- <div class="league-t-tubiao"></div> -->
             <div :class="['league-title']">
               <!-- 联赛收藏 -->
-              <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
+              <div v-if="![3000, 900].includes(menu_type) && !is_esports" class="favorited-icon" @click.stop="handle_league_collect">
                 <!-- 未收藏 compute_img_url('icon-favorite')-->
                 <img v-if="!league_collect_state" :src="no_collect_ouzhou" alt="">
                 <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
                 <img v-if='league_collect_state' :src="have_collect_ouzhou">
               </div>
               <!-- 电竞图标 写死 -->
-              <div v-if="match.csid == 101" class="league-icon-mini league-icon-mini2" style="--num:39"></div>
+              <!-- <div v-if="match.csid == 101" class="league-icon-mini league-icon-mini2" style="--num:39"></div>
               <div v-else-if="match.csid == 103" class="league-icon-mini league-icon-mini2" style="--num:40"></div>
               <div v-else-if="match.csid == 102" class="league-icon-mini league-icon-mini2" style="--num:41"></div>
-              <div v-else-if="match.csid == 100" class="league-icon-mini league-icon-mini2" style="--num:42"></div>
+              <div v-else-if="match.csid == 100" class="league-icon-mini league-icon-mini2" style="--num:42"></div> -->
               <div v-else :class="['league-icon-mini']">
                 <ImageCacheLoad :csid="match.csid" :path="match.lurl" type="league" ></ImageCacheLoad>
               </div>
@@ -80,7 +80,7 @@
                 </div>
               </template>
               <template v-else>
-                <span class="number">{{ get_ball_seed_league_count }}</span>
+                <span v-if="!is_compute_origin" class="number">{{ get_ball_seed_league_count }}</span>
               </template>
             </div>
           </div>
@@ -146,8 +146,8 @@
                           </div>
 
                           <!-- 电竞串关标识 -->
-                          <div v-if="menu_type == 3000 && match.ispo" class="flag-chuan"
-                            :class="{ 'special-lang': ['zh', 'tw', 'hk'].includes(get_lang) }">{{ i18n_t('match_info.match_parlay') }}
+                          <div v-if="is_esports && match.ispo" class="flag-chuan"
+                            :class="{ 'special-lang': ['zh', 'tw', 'hk'].includes(lang) }">{{ i18n_t('match_info.match_parlay') }}
                           </div>
                           <!--中立场图标-->
                           <div class="live-i-b-wrap newer" v-show="match.mng * 1 && ![5, 10, 7, 8].includes(Number(match.csid))">
@@ -174,8 +174,8 @@
                         result: is_results
                       }">
                         <!-- 网球csid: 5   兵乓球csid: 8-->
-                        <ImageCacheLoad :class="{ 'team_icon2': match.mhlu[1] && [5].includes(+match.csid)}" :csid="match.csid" :path="match.mhlu" type="home" ></ImageCacheLoad>
-                        <ImageCacheLoad v-if="match.mhlu.length > 1 && [5].includes(+match.csid)" :csid="match.csid" :path="match.mhlu[1]" type="home" ></ImageCacheLoad>
+                        <ImageCacheLoad :class="{ 'team_icon2': match.mhlu && match.mhlu.length > 1 && [5].includes(+match.csid)}" :csid="match.csid" :path="match.mhlu" type="home" ></ImageCacheLoad>
+                        <ImageCacheLoad v-if="match.mhlu && match.mhlu.length > 1 && [5].includes(+match.csid)" :csid="match.csid" :path="match.mhlu[1]" type="home" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
                           <div class="right-content">
                             <!-- 红、黄牌， 发球方绿点 -->
@@ -220,8 +220,8 @@
                       <!--客队图片和名称-->
                       <div class='team-title-container'>
                         <!-- 网球csid: 5   兵乓球csid: 8-->
-                        <ImageCacheLoad :class="{ 'team_icon2': match.mhlu[1] && [5].includes(+match.csid) }" :csid="match.csid" :path="match.malu" type="away" ></ImageCacheLoad>
-                        <ImageCacheLoad v-if="match.malu.length > 1 && [5].includes(+match.csid)" :csid="match.csid" :path="match.malu[1]" type="home" ></ImageCacheLoad>
+                        <ImageCacheLoad :class="{ 'team_icon2': match.malu && match.malu.length > 1 && [5].includes(+match.csid) }" :csid="match.csid" :path="match.malu" type="away" ></ImageCacheLoad>
+                        <ImageCacheLoad v-if="match.malu && match.malu.length > 1 && [5].includes(+match.csid)" :csid="match.csid" :path="match.malu[1]" type="home" ></ImageCacheLoad>
                         <div class="team-title-inner-con">
                           <div class="right-content">
                             <!-- 红、黄牌， 发球方绿点 -->
@@ -401,9 +401,8 @@ export default {
 
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
-      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
+      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou, showDropdown,
       PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site, MenuData, is_compute_origin, select_label,
-      showDropdown,
     }
   }
 }
@@ -1093,7 +1092,7 @@ export default {
               // color: #8a8986;
             }
             &.is-handicap {
-              color: #7A0F25 !important;
+              color: #FF7000 !important;
             }
           }
         }
@@ -1487,14 +1486,15 @@ export default {
   }
 
   .flag-chuan {
-    margin-left: .1rem;
     padding: 0 .01rem;
     height: 0.16rem;
     line-height: .16rem;
     border-radius: .03rem;
+    font-size: 0.12rem;
+
 
     &.special-lang {
-      margin-left: .06rem;
+      margin: 0 .01rem;
     }
   }
 }

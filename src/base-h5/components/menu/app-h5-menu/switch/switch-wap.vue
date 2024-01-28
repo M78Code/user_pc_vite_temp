@@ -27,6 +27,7 @@ import { set_menu_init,sort_type,standard_edition } from 'src/base-h5/mixin/user
 import { is_esports } from 'src/base-h5/mixin/menu.js'
 import MatchFold from 'src/core/match-fold/index.js'
 import { api_account } from "src/api/index.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 
 /**
  * 首页switch wap
@@ -117,15 +118,27 @@ const handler_version_change = (val = 2) => {
 
 // 排序切换
 const handler_sort_change = async(val) => {
+    console.error();
     //电竞 不会热门排序 和 盘口
     if(val === 1 && is_esports.value) return;
     change_is_show_mask(true)
     const param = {
         sort: val
     }
+    await api_account.get_remember_select(param).then().catch(err => {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('msg.msg_nodata_07'))
+    })
+    if (BUILDIN_CONFIG?.CURRENT_ENV == "local_test") {
+        const param = {
+            sort: val
+        }
+        await api_account.get_remember_select(param).then().catch(err => {
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('msg.msg_nodata_07'))
+        })
+    }
     UserCtr.set_sort_type(val);
     reset_is_show_mask()
-    api_account.get_remember_select(param)
+
 }
 
 // 是否显示蒙层

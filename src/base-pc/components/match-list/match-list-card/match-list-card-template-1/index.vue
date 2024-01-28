@@ -47,7 +47,7 @@ import LoadData from "src/base-pc/components/load-data/load-data.vue";
 import MatchListCardData from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { compute_local_project_file_path, MatchDataWarehouse_PC_List_Common } from "src/output/index.js";
-import { LayOutMain_pc } from "src/output/project/common/pc-common.js";
+import { LayOutMain_pc } from "src/output/project/index.js";
 
 const props = defineProps({
   card_key: String,

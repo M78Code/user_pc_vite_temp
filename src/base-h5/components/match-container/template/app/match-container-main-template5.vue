@@ -69,7 +69,7 @@
             <span :class="['league-title-text row justify-between', { 'no-favorited': is_mix }]">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
-                  {{ match.tn }}
+                  {{ match.tn }} 
                 </span>
               </span>
               <span class="league-right">
@@ -950,7 +950,19 @@ export default {
       &.no-favorited{
         padding-left: 15px;
       }
-
+      .league-right{
+      height: 100%;
+      display: flex;
+      align-items: center;
+      > span {
+        padding-right: 3px;
+        color: #c9c9c9;
+      }
+      > i {
+        position: relative;
+        top: -1px;
+      }
+    }
       .icon-wapper {
         margin-right: 6px;
         transform: rotate(90deg);

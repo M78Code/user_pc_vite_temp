@@ -118,7 +118,7 @@ export default {
     if (act) {
       // 返回到场馆的 历史记录
       if (!location.search.includes("keep_url")) {
-        history.replaceState(null, "", `${location.pathname}${location.hash}`);
+        history.replaceState(window.history.state, "", `${location.pathname}${location.hash}`);
       }
       this.first_timer1 = setTimeout(async () => {
         // 检测近3s内是否更新过用户数据

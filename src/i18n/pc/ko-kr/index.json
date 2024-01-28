@@ -2646,7 +2646,18 @@
 		"HK": "홍콩",
 		"MY": "말레시아",
 		"US": "미국",
-		"ID": "인도네시아"
+		"ID": "인도네시아",
+		"hy": {
+			"EU": "유럽",
+			"GB": "영국",
+			"HK": "홍콩",
+			"MY": "말레시아",
+			"US": "미국",
+			"ID": "인도네시아",
+			"morning_session":"경기 전",  
+			"list_today_play_title":"롤러",
+			"match_winner":"챔피언"
+		}
 	},
 	"nodata_msg": {
 		"no_data_msg_1": "찾을 수 없습니다."

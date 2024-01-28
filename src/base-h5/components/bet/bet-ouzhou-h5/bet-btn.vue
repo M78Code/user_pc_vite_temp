@@ -26,9 +26,9 @@
 
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { submit_handle } from "src/core/bet/class/bet-box-submit.js" 
+import { submit_handle,get_query_bet_amount_esports_or_vr,get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js" 
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { useMittEmit, MITT_TYPES,i18n_t,UserCtr  } from "src/output/index.js";
+import { useMittEmit, MITT_TYPES,i18n_t,UserCtr, MenuData  } from "src/output/index.js";
 import {computed} from "vue"
 import mathJs from 'src/core/bet/common/mathjs.js'
 
@@ -41,7 +41,21 @@ const place_bet = () => {
 
 // 单串关切换
 const set_bet_single_change = () => {
-  BetData.set_is_bet_single()
+
+  // 冠军不能串
+  if(!MenuData.is_kemp()) {
+    BetData.set_is_bet_single()
+
+    // 判断获取限额接口类型
+    if(MenuData.is_esports() || MenuData.is_vr()){
+      // C01/B03/O01  电竞/电竞冠军/VR体育
+      get_query_bet_amount_esports_or_vr()
+    }else{
+      // 获取限额 常规
+      get_query_bet_amount_common()
+    }
+
+  }
 }
 
 const bet_total = computed(()=> state =>{

@@ -127,7 +127,7 @@
       <div class="panel-title">
         <!-- 历史交战 -->
         <span>{{ i18n_t("analysis.historical_war") }}</span>
-        <m-select name="vs" @click="selectedFn(arguments)" />
+        <m-select name="vs" @click="selectedFn" />
       </div>
       <div class="content">
         <div class="title">
@@ -245,7 +245,7 @@
       <div class="panel-title">
         <!-- 近期战绩 -->
         <span>{{ i18n_t("analysis.recent_record") }}</span>
-        <m-select name="other" @click="selectedFn(arguments)" />
+        <m-select name="other" @click="selectedFn" />
       </div>
       <div class="content">
         <div class="title">
@@ -676,7 +676,7 @@ import mSelect from "./m_select.vue";
 export default {
   data() {
     return {
-      vs_info_data: [], //杯赛数据
+      // vs_info_data: [], //杯赛数据
       //默认：空，  flag= 0  排名榜全量展示
       flag: false,
       unfold: false,
@@ -727,9 +727,9 @@ export default {
       this.$emit("get_all_vsInfo", this.unfold);
     },
   },
-  destroyed() {
-    this.vs_info_data = null;
-  },
+  // destroyed() {
+  //   this.vs_info_data = null;
+  // },
 };
 </script>
 

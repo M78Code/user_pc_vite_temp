@@ -89,6 +89,7 @@ const winMoney = computed(()=> state =>{
 onMounted(() => {
     nextTick(() => {
         // set_ref_data_bet_money()
+        BetData.set_bet_amount(0)
         // 监听 限额变化
         ref_data.emit_lsit = {
             emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
@@ -108,8 +109,9 @@ onUnmounted(() => {
 
 
  const change_money_handle = obj => {
-    // debugger
-    if(obj.ids.length) {
+    let arr = BetData.bet_single_list.map(i => i.playOptionsId)
+    console.log(arr)
+    if(!arr.includes(undefined)) {
         // 获取当前投注金额
         let money = BetData.bet_amount
         let money_ = obj.money
@@ -117,13 +119,13 @@ onUnmounted(() => {
         if(obj.money == "MAX"){
             money_ = ref_data.max_money
         }
-        if (money >= UserCtr.balance) return
+        // if (money*1 >= UserCtr.balance) return
         // 计算投注金额
         let money_amount = mathJs.add(money,money_)
          // 投注金额 不能大于最大投注金额 也不能大于用户余额
          if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
                 BetData.set_bet_amount(mathJs.add(money,money_))
-                obj.ids.forEach(oid => {
+                arr.forEach(oid => {
                     BetData.set_bet_obj_amount(BetData.bet_amount, oid)
                 })
                 ref_data.money = money_amount
@@ -135,7 +137,7 @@ onUnmounted(() => {
                 }  
                 BetData.set_bet_amount(mathJs.add(money,money_a))
                 // let ratio_amount = mathJs.divide(money_a, obj.ids.length)
-                obj.ids.forEach(oid => {
+                arr.forEach(oid => {
                     BetData.set_bet_obj_amount(money_a, oid)
                 })
                 ref_data.money = money_a
@@ -174,12 +176,10 @@ const set_ref_data_bet_money = () => {
         ref_data.oid.push(item.playOptionsId)
         ref_data.oddFinallyArr.push(item.oddFinally)
     })
-    console.log('!!max_money_arrmax_money_arrmax_money_arrmax_money_arrmax_money_arrmax_money_arr!!', max_money_arr, lodash_.min(max_money_arr))
     //多项单注限额最小值取多项里最大的
     ref_data.min_money = lodash_.max(min_money_arr) 
     //多项单注限额最大值取多项里最小的
     ref_data.max_money = lodash_.min(max_money_arr)
-    // console.log('----------------------------------------ref_data.max_money ---------------------------------------', ref_data.max_money)
     ref_data.money = ""
     //设置键盘MAX限额
     let max_money_obj = {max_money:ref_data.max_money}

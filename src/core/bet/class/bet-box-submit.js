@@ -150,12 +150,18 @@ const set_bet_order_list = (bet_list, is_single) => {
 
     } else {
         let pre_odds = ''
+        let pre_marketValue = ''
+        let pre_handicap = ''
         bet_list.forEach((item, index) => {
             // 预约投注 设置预约投注赔率
             if(BetData.is_bet_pre){
                 pre_odds = item.pre_odds
+                pre_marketValue = item.pre_marketValue
+                pre_handicap = item.pre_handicap
             }
             let odds = pre_odds || item.odds
+            let marketValue = pre_marketValue || item.marketValue
+            let playOptionName = pre_handicap ? `${pre_handicap} ${marketValue}` : item.playOptionName
             let odd_finally = compute_value_by_cur_odd_type(odds, item.playId, item.odds_hsw, item.sportId)
             let bet_s_obj = {
                 "sportId": item.sportId,   // 赛种id
@@ -167,13 +173,14 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "marketId": item.marketId,  //盘口id
                 "playOptionsId": item.playOptionsId,   // 投注项id
                 "marketTypeFinally": UserCtr.odds.cur_odds,     // 欧洲版默认是欧洲盘 HK代表香港盘
+                "marketValue": marketValue,
                 "odds": odds,  // 赔率 万位
                 "oddFinally": odd_finally,  //赔率
                 "playName": item.playName, //玩法名称
                 "sportName": item.sportName,  // 球种名称
                 "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
                 "matchName": item.matchName,   //赛事名称
-                "playOptionName": item.playOptionName,   // 投注项名称
+                "playOptionName": playOptionName,   // 投注项名称
                 "playOptions": item.playOptions,   // 投注项配置项
                 "tournamentLevel": item.tournamentLevel,   // 联赛级别
                 "playId": item.playId,   // 玩法id
@@ -189,7 +196,11 @@ const set_bet_order_list = (bet_list, is_single) => {
             }
             // 预约投注 设置预约盘口值
             if(BetData.is_bet_pre){
-                bet_s_obj.marketValue = item.marketValue
+                if(bet_s_obj.marketValue) {
+                    bet_s_obj.playOptionsId = ''
+                    bet_s_obj.marketId = ''
+                    bet_s_obj.placeNum = ''
+                }
             }
 
             // 预约投注
@@ -198,13 +209,18 @@ const set_bet_order_list = (bet_list, is_single) => {
             //     ...bet_s_obj,
             //     ...BetData.bet_pre_obj[item.playOptionsId]
             // }
-            order_list.push({
-                "seriesSum": 1,   // 串关数量
-                "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
-                "seriesValues": "单关",  // 串关值 2串1 3串1...
-                "fullBet": 0,   // 是否满额投注，1：是，0：否
-                "orderDetailList": [bet_s_obj] 
-            })
+            console.error('item',item)
+            // 在前面就有判断 是否有金额 
+            if(item.bet_amount){
+                order_list.push({
+                    "seriesSum": 1,   // 串关数量
+                    "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
+                    "seriesValues": "单关",  // 串关值 2串1 3串1...
+                    "fullBet": 0,   // 是否满额投注，1：是，0：否
+                    "orderDetailList": [bet_s_obj] 
+                })
+            }
+           
         }) 
         
     }
@@ -475,12 +491,12 @@ const get_query_bet_amount_pre = () => {
     // 获取额度接口合并
     api_betting.query_pre_bet_amount(params).then((res = {}) => {
         if (res.code == 200) {
-           
             BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
             // 获取盘口值 
             const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo[0]')
+
             // 获取预约投注项
             BetData.set_bet_appoint_obj(latestMarketInfo)
 
@@ -543,7 +559,10 @@ const pre_bet_comparison = () => {
 		let pre_data = {
 			oid: pre_obj.custom_id,
 			pre_odds: pre_obj.odds,
-			pre_oddFinally: pre_obj.oddFinally
+			pre_oddFinally: pre_obj.oddFinally,
+            pre_marketValue: pre_obj.marketValue,
+            pre_handicap: pre_obj.handicap
+
 		}
 		BetData.set_bet_single_list_obj(pre_data)
 		BetData.set_is_bet_pre(true)
@@ -555,7 +574,9 @@ const pre_bet_comparison = () => {
 						old_oid: oid,
 						oid: item.id,
 						pre_odds: pre_obj.odds,
-						pre_oddFinally: pre_obj.oddFinally
+						pre_oddFinally: pre_obj.oddFinally,
+                        pre_marketValue: pre_obj.marketValue,
+                        pre_handicap: pre_obj.handicap
 					}
 					BetData.set_bet_single_list_obj(obj)
 					BetData.set_is_bet_pre(false)
@@ -568,6 +589,7 @@ const pre_bet_comparison = () => {
 
 // 提交投注信息 
 const submit_handle = () => {
+    // debugger
     
     // 预约需要更新赔率
     if(BetData.is_bet_pre){
@@ -593,34 +615,38 @@ const submit_handle_lastest_market = () => {
     // 是否投注中遇到了问题 
     let is_bet_error = false
     if(BetData.is_bet_single){
-        let ol_obj = lodash_.get(BetData.bet_single_list,'[0]','')
-        // 投注项状态 1：开 2：封 3：关 4：锁
-        // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
-        // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
-        if(ol_obj.ol_os != 1 || ol_obj.hl_hs != 0 || ol_obj.mid_mhs != 0){
-            set_submit_btn()
-            return set_error_message_config({code:"0402001"},'bet')
-        }
-        // 投注金额未达最低限额
-        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${ol_obj.playOptionsId}`, {})
-    
-        // 投注金额未达最低限额
-        if(ol_obj.bet_amount*1 < min_max.min_money*1 ){
-            set_submit_btn()
-            // 已失效
-            return set_error_message_config({code:"M400010"},'bet')
+        for(let ol_obj of BetData.bet_single_list) {
+            // 投注项状态 1：开 2：封 3：关 4：锁
+            // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+            // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
+            if(ol_obj.ol_os != 1 || ol_obj.hl_hs != 0 || ol_obj.mid_mhs != 0){
+                set_submit_btn()
+                return set_error_message_config({code:"0402001"},'bet')
+            }
         }
         
-        // 投注金额 验证
-        if(!ol_obj.bet_amount){
-            is_bet_error = true
+        // 串关投注 有且至少有一个投注金额 就可以投注
+        const count = BetData.bet_single_list.reduce((pre, cur) => {
+            return pre + (cur.bet_amount || 0 );
+        }, 0)
+
+        // 请输入投注金额
+        if( count == 0 ) {
             set_submit_btn()
-            // 请您输入投注金额
             return set_error_message_config({code:"M400005"},'bet')
+        }
+        
+        // 有金额的情况下 判断限额
+        for ( let item of BetData.bet_single_list ) {
+            // 投注金额 小于最小限额
+            if( item.bet_amount && (item.bet_amount*1 < item.min_money*1) ) {
+                set_submit_btn()
+                return set_error_message_config({code:"M400010"},'bet')
+            }
         }
 
         pre_type = BetData.is_bet_pre ? 1 : 0
-        milt_single = BetData.bet_single_list.length > 1 ? 1 : 0
+        milt_single = BetData.bet_single_list.length 
     } else {
         // 未满足串关条件 不允许投注
         if(!bet_special_series_change()){
@@ -777,7 +803,7 @@ const submit_handle_lastest_market = () => {
                 // if(seriesOrderRespList.length == number_list.length){
                 //     // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
                 //     BetViewDataClass.set_bet_order_status(3)
-                //     order_state = 3
+                    order_state = 3
                 // }else{
                 //     BetViewDataClass.set_bet_order_status(2)
                 //     order_state = 2
@@ -855,6 +881,9 @@ const set_error_message_config = (res ={},type,order_state) => {
         code: res.code,
         message: res.message
     }
+    // console.log('---!这!---', res)
+    let matchInfo = lodash_.get(res, 'data.orderDetailRespList[0].matchInfo', '')
+    let playName = lodash_.get(res, 'data.orderDetailRespList[0].playName', '')
     // 是否需求清除投注信息
     let clear_time = true
 
@@ -884,6 +913,22 @@ const set_error_message_config = (res ={},type,order_state) => {
                         message: "bet_message.error"
                     }
                     break
+                case 7:
+                    // 预约订单确认
+                    obj = {
+                        code: '200',
+                        message: "bet.bet_order_info2"
+                    }
+                    // matchInfo + playName + i18
+                    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${matchInfo} ${playName} ${i18n_t('bet.bet_booked')}`);
+                    break;
+                case 8: 
+                    // 预约失败
+                    obj = {
+                        code: '500',
+                        message: "bet.bet_book_failed"
+                    }
+                    break;
             }
            
         }else{

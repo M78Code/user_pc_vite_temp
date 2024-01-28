@@ -157,7 +157,8 @@ onMounted(async () => {
     if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
       const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
       if (mhs == 2 || mmp == '999' || !MatchMeta.is_valid_match(ms)) {
-        handler_remove()
+        const index = MatchMeta.match_mids.findIndex(t => t === mid)
+        index > -1 && handler_remove()
       }
     } else {
       handler_func({ cmd, data })
@@ -217,7 +218,8 @@ const handle_ouzhou_home_data = (res) => {
   if (p15_list.length > 0) {
     const arr_p15 = p15_list.map(t => {
       const match = MatchDataBasel5minsH5.get_quick_mid_obj(t?.mid)
-      return match
+      const handicap_index = MatchUtils.get_handicap_index_by(t);
+      return { ...match, handicap_index }
     })
     time_events.value = arr_p15.filter(t => t?.mid)
   }
@@ -251,10 +253,12 @@ const handle_ouzhou_home_hots = async (data) => {
     const arr_data = data.map(t => {
       const match = MatchDataBaseHotsH5.get_quick_mid_obj(t?.mid)
       const { home_score, away_score } = MatchUtils.get_match_score(match)
+      const handicap_index = MatchUtils.get_handicap_index_by(match);
       return {
         ...match,
         home_score, 
-        away_score
+        away_score,
+        handicap_index
       }
     })
     featured_matches.value = arr_data.filter(t => t?.mid)

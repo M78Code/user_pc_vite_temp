@@ -21,7 +21,7 @@
                             :class="[sub_menu_i == i ? 'item-active' : '']"
                             :key="i" @click="virtual_menu_changed(i)">
                                 <q-item-section>
-                                    <q-item-label>{{ item.name }}</q-item-label>
+                                    <q-item-label>VR-{{ item.name }}</q-item-label>
                                 </q-item-section>
                             </q-item>
                         </q-list>
@@ -106,7 +106,7 @@ export default {
     }
     //虚拟体育页更改语言
     if (!location.search.includes('keep_url')) {
-      history.replaceState(null,'',`${location.pathname}${location.hash}`)    //地址栏优化
+      history.replaceState(window.history.state,'',`${location.pathname}${location.hash}`)    //地址栏优化
     }
   },
   /**

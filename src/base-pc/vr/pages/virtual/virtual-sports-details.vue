@@ -5,24 +5,34 @@
   <div class="virtual-detail row justify-between" ref="virtual_detail_box">
 
     <div class="virtual-detail-wrap">
+      <!-- 头部 -->
       <div class="match-detail-bread">
         <!-- 详情页面包屑 -->
         <breadcrumbs :detail_info="match || {}" v-if="match" />
         <div class="bread-right">
-          <img
+        <!-- // vr 没有赛事分析 -->
+          <!-- <q-img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
             alt=""
             srcset=""
             class="signal"
-            @click="()=>{}"
-          />
-          <img
+            @click="go_analyse"
+          >
+            <q-tooltip
+              anchor="bottom middle"
+              self="top middle"
+              :offset="[40, 10]"
+            >
+              {{ i18n_t("common.analysis") }}
+            </q-tooltip>
+          </q-img> -->
+          <q-img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`"
             alt=""
             srcset=""
-            :class="{ balance_refresh: true}"
+            :class="['refresh', refreshing && 'refreshing']"
             @click="vir_refresh"
-          />
+          ></q-img>
         </div>
       </div>
       <div class="match-detail-head" v-if="match">
@@ -60,20 +70,6 @@
           :style="`background-position:0 -${sport_ball_type[1]}px`"
         ></div>
       </div>
-      <!-- 头部 -->
-      <div class="virtual-head" v-if="0">
-        <div class="type-bg bg1001">
-          <div class="back-wrap">
-            <!-- 返回按钮 -->
-            <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div>
-            <!-- 虚拟体育 -->
-            <div class="col">{{current_league.name}}</div>
-            <!--刷新按钮-->
-            <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
-          </div>
-        </div>
-      </div>
-    
       <!--玩法集区域 -->
       <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
         <!-- 赔率列表页面 -->
@@ -87,10 +83,10 @@
     </div>
 
     <!--视频，tab和玩法集部分-->
-    <div>
+    <div v-if="match">
       <div class="detail-header">
         <div class="title">
-           {{ current_match.no }}
+          {{ match.tn }} {{ match.no }}
         </div>
         <!--视频区域-->
         <div class="stage-wrapper">
@@ -144,6 +140,7 @@ import { MatchProcessFullVersionWapper as matchProcess } from "src/components/ma
 import virtual_sports_right from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-right.vue"
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
 import {api_v_sports} from "src/api/index.js";
+import details from "src/core/match-list-pc/details-class/details.js";
 
 export default {
   mixins:[virtual_sports_details_mixin],
@@ -207,6 +204,10 @@ export default {
       }).catch((e) => {
      
       });
+    },
+    //  打开赛事分析
+    go_analyse() {
+      details.sr_click_handle(this.current_match);
     }
   },
   computed:{
@@ -245,6 +246,9 @@ export default {
         top: 9px;
         background-color: var(--q-gb-bg-c-10);
       }
+      .refreshing {
+          animation: 0.7s loading-ring-animate linear;
+        }
     }
   }
 
@@ -315,11 +319,11 @@ export default {
   }
 
   
-  .signal,.balance_refresh {
+  .signal,.refresh {
     display: inline-block;
     cursor: pointer;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     margin-right: 15px;
   }
   
@@ -340,6 +344,15 @@ export default {
     width: 400px;
   }
 }
+/*  刷新按钮 */
+@keyframes loading-ring-animate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 /*  头部 */
 .virtual-head {
   width: 100%;
@@ -373,15 +386,6 @@ export default {
       }
     }
 
-    /*  刷新按钮 */
-    @keyframes loading-ring-animate {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
 
     .virtual-ref {
       width: 0.4rem;
@@ -435,11 +439,7 @@ export default {
 }
 
 .detail-header {
-  position: sticky;
   width: 100%;
-  top: 0;
-  right: 0;
-  z-index: 99;
 
   .title {
     height: 40px;

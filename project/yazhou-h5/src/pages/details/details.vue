@@ -432,7 +432,7 @@ export default defineComponent({
     //   set_zhiding_info( false );
     //   set_video_zhiding( false );
       if (!location.search.includes('keep_url')) {
-        history.replaceState(null,'',`${location.pathname}${location.hash}`)     //地址栏优化
+        history.replaceState(window.history.state,'',`${location.pathname}${location.hash}`)     //地址栏优化
       }
 
       // 进入详情页直接展示赛事分析

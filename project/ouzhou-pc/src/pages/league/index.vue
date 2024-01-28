@@ -50,21 +50,16 @@ export default {
       LayOutMain_pc.set_oz_show_left(true);
       MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
     })
-   const off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,fetch_league_match_list).off
-    watch(() => route.params, () => {
-      fetch_league_match_list()
-    }, { immediate: true, deep: true })
-
-    mounted_fn()
-    
+   
+    fetch_league_match_list()
     function MatchListCardDataClass_match_list_card_key_arr() {
       match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
     }
-
     /**
       * 搜索相关列表数据
       * @return {undefined} undefined
       */
+	// 搜索进来查询7天数据 详情进来查询 12小时
     function fetch_league_match_list(is_socket = false) {
       // 更新列表模板编号 和请求参数
       // $menu.set_match_list_api_params()
@@ -72,7 +67,7 @@ export default {
       let params = {
         sportId,
         tid: route.params.tid,
-        selectionHour: route.params.type == 1 ? localStorage.getItem('league_hours') : 12
+        selectionHour: route.params.type == 1 ? localStorage.getItem('league_hours') : route.params.type == 2 ? 12 : 168
       };
       set_load_data_state("loading")
       api_match_list.get_leagues_list_match(params).then((res) => {
@@ -84,10 +79,8 @@ export default {
         set_load_data_state('refresh')
       });
     }
-    onUnmounted(() => {
-      handle_destroyed()
-      off()
-    })
+    mounted_fn(fetch_league_match_list)
+
     return {
       match_list_card_key_arr,
       MatchListCardDataClass,

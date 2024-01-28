@@ -19,7 +19,8 @@ import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll
 import dateTab from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/date-tab/date-tab.vue';
 import { api_analysis } from "src/api/"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt";
-
+import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+const { IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG ;
 const matchs_data = ref([])
 const inner_height = window.innerHeight;  // 视口高度
 const props = defineProps({})
@@ -86,7 +87,8 @@ const switchHandle = async ()=> {
     //获取 赛果菜单
     // api_analysis.get_match_result_menu( {menuType:0} ).then( ( res = {} ) => {
         if(res?.code == 200){
-            let scroll_data = res.data.filter((n)=>{return n.sportId != '0'}).map( item => {
+            //四期没有电竞vr 生产屏蔽
+            let scroll_data = res.data.filter((n)=>{return IS_FOR_NEIBU_TEST?n.sportId != '0':n.sportId != '0' && +n.menuType<=100}).map( item => {
                 const subList = item.subList.sort((a,b) => Number(b.field1) - Number(a.field1))
                 return {
                     mi: menuTypeFormat(item),

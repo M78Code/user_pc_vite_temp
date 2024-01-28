@@ -1,6 +1,6 @@
 <template>
   <div class="bet-pre-appoint">
-    <div class="row yb-flex-center book-content">
+    <div v-if="ref_data.computed_appoint_ball_head !== ''" class="row yb-flex-center book-content">
       <!--预-->
       <div class="col-2 center yb-fontsize12">{{ i18n_t('bet.bet_dish') }}</div>
       <!--此处为盘口区域，-->
@@ -23,7 +23,7 @@
             sub_handle('odds_value')
           }">-</div>
 
-        <input class="pre-input" v-model="ref_data.appoint_odds_value" ref="currency_input">
+        <input class="pre-input" v-model="ref_data.appoint_odds_value" @input="pre_input_handle"  ref="currency_input">
 
         <div class="add-number" :class="{ 'disabled': ref_data.appoint_odds_value >= 355 }"
           v-touch-repeat:0:300.mouse.enter.space="() => {
@@ -279,6 +279,25 @@ const format_pre_odds = (appoint_odds_value) => {
   return appoint_odds_value
 }
 
+const pre_input_handle = (val) => {
+  console.log('这这这这这这', val)
+  set_bet_obj_config()
+}
+
+// 设置投注信息
+const set_bet_obj_config = () => {
+  const obj = {
+      marketValue: ref_data.computed_appoint_ball_head, // 盘口值
+      oddFinally: lodash_.get(props.item,'oddFinally'), // 当前赔率
+      custom_id: lodash_.get(props.item,'playOptionsId'), // 投注项id
+      odds: mathJs.multiply(ref_data.appoint_odds_value, 100000), // 投注项赔率
+      handicap: lodash_.get(props.item,'handicap')
+    }
+    // ref_custom.odds = mathJs.multiply(ref_custom.oddFinally,100000)
+    BetData.set_bet_pre_obj(obj)
+    // console.log('这这这', ref_data , props.item.handicap)
+}
+
 /**
  * @description:点击加号(球头或者赔率)的修改逻辑
  * @param {string} type  赔率还是球头
@@ -297,6 +316,7 @@ const add_handle = (type, index = 1) => {
     //获取当前需要添加焦点的输入框，如果存在输入框，则获取焦点
     let input = index == 0 ? currency_input : ''
     if (input) input.focus();
+    set_bet_obj_config()
   }
   //球头加
   if (type == 'ball_head') {
@@ -342,6 +362,7 @@ const add_handle = (type, index = 1) => {
       }
     }
     set_computed_appoint_ball_head()
+    set_bet_obj_config()
     nextTick(() => {
       search_odds_value_by_ball_head();
     })
@@ -574,11 +595,11 @@ const set_computed_appoint_ball_head = () => {
       // }
       ball_head = ref_data.appoint_ball_head;
     }
-    if (!(tball_head_input && ball_head_input == document.activeElement)) {
-      if (BASKETBALL_BY_APPOINTMENT_let.includes(props.item.playId) && !lodash_.startsWith(ball_head, '-') && !lodash_.startsWith(ball_head, '+') && ball_head != 0) {
-        ball_head = '+' + ball_head
-      }
+    // if (!(tball_head_input && ball_head_input == document.activeElement)) {
+    if (BASKETBALL_BY_APPOINTMENT_let.includes(props.item.playId) && !lodash_.startsWith(ball_head, '-') && !lodash_.startsWith(ball_head, '+') && ball_head != 0) {
+      ball_head = '+' + ball_head
     }
+    // }
   }
   ref_data.computed_appoint_ball_head = ball_head;
 }

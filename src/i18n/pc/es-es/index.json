@@ -2666,7 +2666,18 @@
 		"HK": "Hong Kong",
 		"MY": "Malasia",
 		"US": "Americano",
-		"ID": "Indonesia"
+		"ID": "Indonesia",
+		"es": {
+			"EU": "Decimal",
+			"GB": "Fraccionario",
+			"HK": "Hong Kong",
+			"MY": "Malasia",
+			"US": "Americano",
+			"ID": "Indonesia",
+			"morning_session":"Antes del partido",  
+			"list_today_play_title":"Bola rodante",
+			"match_winner":"Campeón"
+		}
 	},
 	"nodata_msg": {
 		"no_data_msg_1": "no encontrado"
@@ -2846,6 +2857,9 @@
 	},
 	"video": {
 		"animation": "Anime",
+		"icon_animation": "Anime",
+		"icon_video": "Video",
+		"icon_score": "Score",
 		"cancel_mute": "Desactivar",
 		"clarity1": "HD",
 		"big_screen_mode": "Modo de pantalla grande",

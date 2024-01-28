@@ -67,8 +67,6 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 
-// 定时器对象
-let timer_obj = {};
 const props = defineProps({
   ol_data: {
     type: [Object, Array],
@@ -87,7 +85,7 @@ const props = defineProps({
     default: () => false
   },
   csid: {
-    type: String,
+    type: [String, Number],
     default: () => ''
   },
 });

@@ -22,7 +22,7 @@ import {
   UserCtr,
   MenuData
 } from "src/output/index.js";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 export default {
   components: {
     "match-video": match_video,

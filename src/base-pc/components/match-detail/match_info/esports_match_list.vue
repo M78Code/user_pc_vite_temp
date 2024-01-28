@@ -29,7 +29,7 @@ import {
   MatchDetailCalss,
   MenuData
 } from "src/output/index.js";
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 // import skt_data_esports_score from "/mixins/websocket/data/skt_data_esports_score.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import { useRouter } from "vue-router";

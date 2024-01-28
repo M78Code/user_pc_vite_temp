@@ -55,7 +55,7 @@ const set_match_list_mapping_relation_obj_type = () => {
       (MenuData.is_hot() && MenuData.menu_current_mi != 50199) ||
       [MenuData.is_today(), MenuData.is_zaopan(), MenuData.is_mix()].includes(true)
       || ['match-play-common', 'match-collect'].includes(page_source)
-      || route_name == 'search' || MenuData.is_top_events() || MenuData.is_leagues()
+      ||['league','search'].includes(route_name) || MenuData.is_top_events() || MenuData.is_leagues()
       // || lodash.isUndefined(MenuData.menu_root)|| lodash.isNull(MenuData.menu_root)
       || !MenuData.menu_root
     ) {

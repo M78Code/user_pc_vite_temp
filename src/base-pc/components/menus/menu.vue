@@ -146,7 +146,7 @@ const jump_func = (payload ={},type) => {
     return esportsClick()
   }
   // 点击菜单的时候如果在详情页应跳转出来先
-  if (['league','details','search'].includes(route.name)) {
+  if (['league','details','search','virtual_sports_details'].includes(route.name)) {
     router.push('/home')
   }
   let obj = {
@@ -181,7 +181,7 @@ const jump_func = (payload ={},type) => {
  */
 const esportsClick = ()=>{
    // 点击菜单的时候如果在详情页应跳转出来先
-  if (['league','details','search'].includes(route.name)) {
+  if (['league','details','search','virtual_sports_details'].includes(route.name)) {
     router.push('/home')
   }
   let obj = {
@@ -213,7 +213,7 @@ const esportsClick = ()=>{
  */
  const vrClick = ()=>{
    // 点击菜单的时候如果在详情页应跳转出来先
-  if (['league','details','search'].includes(route.name)) {
+  if (['league','details','search','virtual_sports_details'].includes(route.name)) {
     router.push('/home')
   }
   let obj = {
@@ -227,7 +227,7 @@ const esportsClick = ()=>{
   MenuData.set_is_collect(false)
   MenuData.set_left_menu_result(obj)
   MenuData.set_menu_current_mi(obj.lv2_mi)
-  MenuData.set_current_ball_type(31001)
+  MenuData.set_current_ball_type(1001)
 
   let mid_config = {
     ...MenuData.mid_menu_result,
@@ -244,7 +244,7 @@ const esportsClick = ()=>{
 const outrights = () => {
   // if(!MenuData.is_common_kemp() && !MenuData.is_collect_kemp() && MenuData.is_kemp())return
  // 点击菜单的时候如果在详情页应跳转出来先
- if (['league','details'].includes(route.name)) {
+ if (['league','details','search','virtual_sports_details'].includes(route.name)) {
     router.push('/home')
   }
   let obj = {

@@ -428,7 +428,8 @@ export default {
     * @description: 切换下拉菜单
     */
     selectedFn(data){
-      let { name, cps , flag } = data[0]
+      let { name, cps , flag } = data
+      // let { name, cps , flag } = data[0]
       this.params.cps = cps
       this.params.flag = flag
       if(name == "vs"){//历史交战

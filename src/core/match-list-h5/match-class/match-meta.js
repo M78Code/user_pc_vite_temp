@@ -964,17 +964,30 @@ class MatchMeta {
    */
   async get_esports_collect_match() {
     this.clear_match_info()
-    const dianjing_list = lodash.get(BaseData, 'dianjing_sublist', [])
-    const csids = dianjing_list.map(item => item.csid).join(',')
-    const euid_arr = dianjing_list.map(item => item.mi && MenuData.get_euid(item.mi + '')).join(',')
+    
     const params = this.get_base_params()
-    const md = String(MenuData.data_time)
+    const md = MenuData.data_time && String(MenuData.data_time)
+
+    let csids = ''
+    let euid_arr = ''
+
+    // 复刻版获取全部
+    if (project_name === 'app-h5') {
+      const dianjing_list = lodash.get(BaseData, 'dianjing_sublist', [])
+      csids = dianjing_list.map(item => item.csid).join(',')
+      euid_arr = dianjing_list.map(item => item.mi && MenuData.get_euid(item.mi + '')).join(',')
+    } else {
+      csids = MenuData.menu_csid
+      euid_arr = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
+    }
+
     const target_params = {
       ...params,
       type: 3000,
       csid: csids,
       euid: euid_arr,
-      md: md
+      md: md,
+      sort: 1
     }
     const http_key = `esport_collect_${euid_arr}_${md}`
     this.set_current_http_key(http_key)
@@ -1592,22 +1605,16 @@ class MatchMeta {
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
       // match_mids是可视区域id
       const active_index = this.match_mids.findIndex(t => t === mid)
-      active_index>-1&& this.match_mids.splice(active_index,1)
+      // active_index>-1&& this.match_mids.splice(active_index,1)
       const index = this.complete_matchs.findIndex(t => t.mid == mid)
       index > -1 && this.complete_matchs.splice(index, 1)
-      if (index > -1) {
+      if (active_index > -1) {
         if (this.debounce_timer) return
         this.debounce_timer = setTimeout(() => {
           this.is_ws_trigger = true
-          if (MenuData.is_kemp()) {
-            // 冠军不走虚拟计算 全量渲染
-            // this.handle_custom_matchs({ list: this.complete_matchs })
-          } else {
-            // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
-            // this.compute_current_matchs()
-            this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
-            // this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
-          }
+          // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
+          this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+          // this.get_target_match_data({ scroll_top: this.prev_scroll, md: this.http_params.md })
           clearTimeout(this.debounce_timer)
           this.debounce_timer = null
         }, 1000)

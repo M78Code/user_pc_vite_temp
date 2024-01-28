@@ -46,8 +46,14 @@
         </div>
         <!-- 赛事名称 -->
         <div class="game-name">
-          <div> <span>{{ item.mhn }}</span> <span class="span">{{ item.home_score }}</span> </div>
-          <div> <span>{{ item.man }}</span> <span class="span">{{ item.away_score }}</span> </div>
+          <div> 
+            <span :class="{'is-handicap': item.handicap_index == 1}">{{ item.mhn }}</span> 
+            <span class="span">{{ item.home_score }}</span> 
+          </div>
+          <div> 
+            <span :class="{'is-handicap': item.handicap_index == 2}">{{ item.man }}</span> 
+            <span class="span">{{ item.away_score }}</span> 
+          </div>
         </div>
       </div>
       <template v-if="item">
@@ -260,6 +266,9 @@ function toDetails(item){
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+        }
+        .is-handicap{
+          color: #FF7000 !important;
         }
         .span{
           font-weight: 500;

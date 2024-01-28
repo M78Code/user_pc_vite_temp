@@ -66,6 +66,11 @@ class MenuData {
     this.menu_lv_mi_lsit = []
     // 赛果 日期/赛中
     this.result_menu_api_params = {}
+    this.match_tab_list = [//赛事列表tab
+      'Matches',
+      'League',
+      'Outrights'
+    ];
     //赛事列表 日期
     // this.menu_match_date_params= {}
     this.menu_list = []; //常规球种 101...
@@ -244,6 +249,11 @@ class MenuData {
     })
     return menu_lv_mi_lsit
   }
+  //设置赛事列表tab缓存
+  set_match_tab_list(arr){
+    this.match_tab_list = arr;
+    this.update();
+  }
   //设置赛果参数
   set_result_menu_api_params(val){
     this.result_menu_api_params = val
@@ -301,12 +311,17 @@ class MenuData {
     this.update()
   }
   /**
+   *  设置 menu_type
+   */
+  set_menu_type(mi) {
+    this.menu_type.value = mi
+  }
+  /**
    * 重置2级菜单 csid
    * @param {*} menu_type 
    * @param {*} mi 
    */
   set_menu_mi_format(menu_type,mi){
-    console.log(menu_type)
           //   this.current_lv_2_menu_mi.value = session_info.menu_mi;
       //   this.current_lv_2_menu_i = session_info.menu_mi;
       //   this.menu_mi.value = session_info.menu_mi;

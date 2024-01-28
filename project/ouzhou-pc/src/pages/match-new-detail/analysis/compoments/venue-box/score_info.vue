@@ -338,9 +338,12 @@ const get_score_result = (list, val) => {
   return result;
 };
 
+// 获取各球种比分榜数据
 const get_msc_data = (msc_data, current_data) => {
+
   const detail_info = props.detail_info;
   const score_list = props.score_list;
+ 
   let res = "";
   const list = [
     {
@@ -353,14 +356,16 @@ const get_msc_data = (msc_data, current_data) => {
     },
   ];
   if (msc_data.length > 0) {
+    
     //   网球 羽毛球 冰球
     if (['4',"5", "10"].includes(detail_info.csid + "")) {
+    
       res = list.map((item) => {
         return {
           name: item.name,
-          q1: msc_data[0][item.key], //
-          q2: msc_data[1][item.key],
-          q3: msc_data[2][item.key],
+          q1: msc_data[0]?msc_data[0][item.key]:0, //
+          q2: msc_data[1]?msc_data[1][item.key]:0,
+          q3: msc_data[2]?msc_data[2][item.key]:0,
           set: score_list.S1 ? score_list?.S1[item.key] : 0, //
           p: current_data[item.key], //
         };
@@ -384,7 +389,23 @@ const get_msc_data = (msc_data, current_data) => {
       });
     }
   }
+      //  美足
+      if (["6"].includes(detail_info.csid + "")) {
+      res = list.map((item) => {
+        return {
+          name: item.name,
+          q1: msc_data['S19'] ? msc_data['S19'][item.key] : "", //
+          q2: msc_data['S20'] ? msc_data['S20'][item.key] : "",
+          ht: msc_data['S1111'] ? msc_data['S1111'][item.key] : "",
+          q3: msc_data['S21'] ? msc_data['S21'][item.key] : "",
+          q4: msc_data['S22'] ? msc_data['S22'][item.key] : "",
+          t:  msc_data['S1'] ? msc_data['S1'][item.key] : "",
+        };
+      });
+    }
+  // console.log(1111166,detail_info)
   data.value = res || [];
+ 
 };
 
 /**
@@ -446,8 +467,8 @@ const format_msc = (detials) => {
       }
     }
   }
+   msc_data = both_data;
 
-  msc_data = both_data;
   get_msc_data(msc_data, current_data);
 };
 

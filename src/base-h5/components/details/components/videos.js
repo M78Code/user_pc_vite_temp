@@ -9,6 +9,7 @@ import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, wa
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { nextTick } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX} from "src/output";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 
 export const video_info = () => {
   const router = useRouter();
@@ -162,7 +163,7 @@ export const video_info = () => {
   });
   // 鉴权域名 + 回放视频url（拼接后的最终url）
   const replay_video_src = computed(() => {
-    const host_url = window.BUILDIN_CONFIG.live_domains[0] || _.get(this.UserCtr, 'user_info.oss.live_h5')
+    const host_url = BUILDIN_CONFIG.live_domains[0] || _.get(this.UserCtr, 'user_info.oss.live_h5')
     return `${host_url}/videoReplay.html?src=${this.replay_url}&lang=${this.get_lang}&volume=${this.is_user_voice ? 1 : 0}`
 
     // const host_url = 'http://localhost:4000/videoReplay.html?'
@@ -744,7 +745,7 @@ export const video_info = () => {
     this.is_show_no_handle = false
     api_common.getMatchUserIsLogin().then(res => {
       if (res && res.code == 200 && res.data.isLogin) {
-        let referUrl = window.BUILDIN_CONFIG.live_domains[0];
+        let referUrl = BUILDIN_CONFIG.live_domains[0];
         let media_src
         if (referUrl) {
           media_src = video.get_video_url({ data: { referUrl } }, params.mid, 1);

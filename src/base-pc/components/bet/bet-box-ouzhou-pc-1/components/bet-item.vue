@@ -5,7 +5,14 @@
         <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 ">
-                    <span class="text-flow-none">{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></span> 
+                     <!-- vr 单独处理 -->
+                     <div class="text-flow-none" v-if="items.bet_type== 'vr_bet' && ['1002','1011','1009','1010'].includes(items.sportId) && [20033,20034,20035,20036,20037,20038].includes(items.playId*1)">
+                        <div v-for="page in items.handicap" :key="page" class="f-s-c">
+                            <span class="virtual-count" :class="`virtual-num-${page.hv} csid-${items.sportId}`" ></span> {{page.text}} 
+                        </div>
+                    </div>
+                    <div class="text-flow-none" v-else>{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></div> 
+
                 </div>
                 <div class="w-100 handicap my-4">
                     <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
@@ -32,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="appoint appoint_cursor" v-if="IS_FOR_NEIBU_TEST && !ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
+                <div class="appoint appoint_cursor" v-if="!ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
                     +{{ `${i18n_t('bet.bet_book2')}` }}
                 </div>
             </div>
@@ -40,6 +47,12 @@
             <div class="fw-e-s bet-right bet-invalid" v-else>
                 <div class="bet-disabled">
                     <span>{{ i18n_t('bet.bet_invalid') }}</span>
+                </div>
+            </div>
+
+            <div class="fw-e-s bet-right bet-invalid" v-if="!BetData.is_bet_single && items.is_serial ">
+                <div class="bet-serial bet-disabled">
+                    <span>不支持串关</span>
                 </div>
             </div>
 
@@ -58,7 +71,7 @@
            
         </div>
 
-        <div v-if="IS_FOR_NEIBU_TEST && ref_data.show_appoint">
+        <div v-if="ref_data.show_appoint">
             <bet-pro-appoint :item="items" @cancel_operate="cancel_operate" />
         </div>
         
@@ -71,7 +84,7 @@
 
 <script setup>
 
-import { onMounted, onUnmounted, reactive } from "vue"
+import { nextTick, onMounted, onUnmounted, reactive } from "vue"
 import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,formatMoney,only_win } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
@@ -93,6 +106,10 @@ const ref_data = reactive({
 
 const set_delete = () => {
     BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
+    // 删除后 重新计算是否可以 串关的数据
+    if(!BetData.is_bet_single){
+        BetData.check_bet_s_list_special()
+    }
 }
 
 // 预约投注
@@ -103,11 +120,12 @@ const set_show_appoint = () =>{
   }
   // 显示预约投注内容
   ref_data.show_appoint = !ref_data.show_appoint
- 
+  BetData.set_is_bet_pre(true)
 }
 
 const cancel_operate = () =>{
   ref_data.show_appoint = !ref_data.show_appoint
+  BetData.set_is_bet_pre(false)
 }
 
 </script>
@@ -132,7 +150,7 @@ const cancel_operate = () =>{
         }
 
         .bet-money {
-            height: 34px;
+            height: 26px;
         }
 
         .bet-delete {
@@ -156,7 +174,7 @@ const cancel_operate = () =>{
         }
 
         .bet-right {
-            width: 160px;
+           // width: 160px;
 
             .appoint {
                 display: flex;
@@ -182,7 +200,7 @@ const cancel_operate = () =>{
                     align-items: center;
                     span{
                         display: inline-block;
-                        padding: 0 20px;
+                        padding: 0 12px;
                         height: 26px;
                         display: inline-block;
                         border-radius: 2px;
@@ -193,7 +211,15 @@ const cancel_operate = () =>{
                         letter-spacing: 0px;
                         color: var(--q-gb-t-c-8);
                     }
+                    &.bet-serial{
+                        span{
+                            padding: 0 12px;
+                            background: var(--q-gb-bg-c-16);
+                            color: var(--q-gb-t-c-7);
+                        }
+                    }
                 }
+                
             }
         }
 

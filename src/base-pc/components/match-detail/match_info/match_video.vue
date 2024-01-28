@@ -136,7 +136,7 @@ import videoReplayError from "src/base-pc/components/video-replay/video-replay-e
 import { IconWapper } from 'src/components/icon'
 import info from "src/base-pc/components/match-detail/match_info/info.vue";
 import { i18n_t,format_second_ms,compute_css_obj} from "src/output/index.js"
-import {LayOutMain_pc} from "src/output/project/common/pc-common.js";
+import {LayOutMain_pc} from "src/output/project/index.js";
 export default {
   mixins: [match_video],
   components: {

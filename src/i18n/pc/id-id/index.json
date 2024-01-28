@@ -2719,7 +2719,18 @@
 		"HK": "Hong Kong",
 		"ID": "Indonesia",
 		"MY": "Malaysia",
-		"US": "Amerika"
+		"US": "Amerika",
+		"ad": {
+			"EU": "Desimal",
+			"GB": "Pecahan",
+			"HK": "Hong Kong",
+			"ID": "Indonesia",
+			"MY": "Malaysia",
+			"US": "Amerika",
+			"morning_session":"Sebelum kompetisi",  
+			"list_today_play_title":"Bola berguling",
+			"match_winner":"juara"
+		}
 	},
 	"results": {
 		"": "Laga",
@@ -2917,6 +2928,9 @@
     },
 	"video": {
 		"animation": "Animasi",
+		"icon_animation": "Anime",
+		"icon_video": "Video",
+		"icon_score": "Score",
 		"big_screen_mode": "Big picture mode",
 		"cancel_mute": "Unmute",
 		"clarity1": "HD",

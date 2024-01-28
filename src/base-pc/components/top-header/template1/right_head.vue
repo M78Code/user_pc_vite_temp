@@ -10,7 +10,7 @@
       <div class="s-input s-input-click">
         <div style="display: flex; position: relative;">
           <input class="search-input" :class="is_focus ? 'change_width' : ''" @focus="show_search" :value="keyword"
-            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" @input="e=>get_search_data(e.target.value)" @keyup.enter="e=>get_search_data(e.target.value)" />
+            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" @input="e=>change_txt(e.target.value)" @keyup.enter="e=>get_search_data(e.target.value)" />
           <img class="icon-search" :src="compute_local_project_file_path('image/svg/search_white.svg')" alt="">
           <img v-show="keyword" @click="clear_keyword" class="icon-close"
             :src="compute_local_project_file_path('image/svg/close.svg')" alt="">
@@ -123,8 +123,8 @@ import searchCom from 'src/components/search/search-2/index.vue';
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import BaseData from 'src/core/base-data/base-data.js'
 
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG;
 
 export default defineComponent({
   name: "RightHead",
@@ -150,37 +150,37 @@ export default defineComponent({
      
     ]
 
-    const languages_ = [ {
-        key: 'tw',
-        language: '繁體中文',
-      }, {
-        key: 'vi',
-        language: 'Tiếng Việt',
-      }, {
-        key: 'th',
-        language: 'ไทย',
-      }, {
-        key: 'ms',
-        language: 'Melayu',
-      }, {
-        key: 'ad',
-        language: 'Indonesia',
-      }, {
-        key: 'md',
-        language: 'Burmese',
-      }, {
-        key: 'ry',
-        language: 'Japanese',
-      }, {
-        key: 'pty',
-        language: 'Portuguese',
-      }, {
-        key: 'hy',
-        language: 'Korean',
-      }]
+    // const languages_ = [ {
+    //     key: 'tw',
+    //     language: '繁體中文',
+    //   }, {
+    //     key: 'vi',
+    //     language: 'Tiếng Việt',
+    //   }, {
+    //     key: 'th',
+    //     language: 'ไทย',
+    //   }, {
+    //     key: 'ms',
+    //     language: 'Melayu',
+    //   }, {
+    //     key: 'ad',
+    //     language: 'Indonesia',
+    //   }, {
+    //     key: 'md',
+    //     language: 'Burmese',
+    //   }, {
+    //     key: 'ry',
+    //     language: 'Japanese',
+    //   }, {
+    //     key: 'pty',
+    //     language: 'Portuguese',
+    //   }, {
+    //     key: 'hy',
+    //     language: 'Korean',
+    //   }]
       console.error('IS_FOR_NEIBU_TEST',IS_FOR_NEIBU_TEST)
       if(IS_FOR_NEIBU_TEST){
-       languages = lodash.concat(languages,languages_)
+       languages = lodash.concat(languages,[])
       }
 
 
@@ -218,6 +218,17 @@ export default defineComponent({
         }
       })
     },{immediate:true})
+    
+
+    /**
+    * @Description:替换输入框非法字符为空串
+    * @return {undefined} undefined
+    */
+    const change_txt = lodash.debounce((val) => {
+      keyword.value = val.replace(/#/g, "");
+      if (keyword.value.length > 20) keyword.value = keyword.value.slice(0, 20);
+      get_search_data(keyword.value)
+    }, 500)
     // 传递搜索状态
     const get_search_data =lodash.throttle( (val) => {
       useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
@@ -303,10 +314,11 @@ export default defineComponent({
     // 清空输入框
     const clear_keyword = () => {
       keyword.value = ''
-      useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
-        type: 'init',
-        text: keyword.value
-      })
+      get_search_data(keyword.value)
+      // useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
+      //   type: 'init',
+      //   text: keyword.value
+      // })
     }
     // 关闭搜索状态清空值
     const close = () => {
@@ -335,6 +347,11 @@ export default defineComponent({
       document.removeEventListener('click', hide_search)
       emit_list.map(i=>i())
     })
+    //监听输入框内容改变
+    // watch(() => keyword.value, (val) => {
+    //   console.log('watchxxxxxxx')
+    //   get_search_data(val)
+    // })
     return {
       keyword,
       SearchPCClass,
@@ -360,6 +377,7 @@ export default defineComponent({
       compute_local_project_file_path,
       clear_keyword,
       compute_css_obj,
+      change_txt,
     };
 
   }

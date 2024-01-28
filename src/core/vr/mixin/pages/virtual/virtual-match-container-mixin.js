@@ -3,7 +3,9 @@
  */
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import UserCtr from "src/core/user-config/user-ctr.js"; 
-const static_serve = lodash.get(window.BUILDIN_CONFIG,'OSS_JSON.static[0]');
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+
+const static_serve = lodash.get(BUILDIN_CONFIG,'OSS_JSON.static[0]');
 export default {
   name:'virtual_match_container',
   props:{

@@ -25,7 +25,7 @@
       <div class="result-wrap row">
         <div class="home item column items-center">
           <!-- 主队进球比例 -->
-          <div class="win-percent">{{ datas.win_home }}%</div>
+          <!-- <div class="win-percent">{{ datas.win_home }}%</div> -->
           <div class="result-list row">
             <!-- 主队近10场输赢结果 -->
             <div v-for="(item, index) in datas.result_home" :key="index" :class="['result-item yb-flex-center', 'item-' + item]">
@@ -36,7 +36,7 @@
 
         <div class="away item column items-center">
           <!-- 客队进球比例 -->
-          <div class="win-percent">{{ datas.win_away }}%</div>
+          <!-- <div class="win-percent">{{ datas.win_away }}%</div> -->
           <!-- 客队近10场输赢结果 -->
           <div class="result-list row">
             <div v-for="(item, index) in datas.result_away" :key="index" :class="['result-item yb-flex-center', 'item-' + item]">
@@ -51,13 +51,13 @@
     <template v-else>
       <div class="item">
         <!-- 上期结果 -->
-        <span class="name">{{$root.$t("list.virtual_last_result")}}</span>
+        <span class="name">{{i18n_t("list.virtual_last_result")}}</span>
         <span v-for="(num,index) in datas.forecast" :key="index" class="rs-number">{{ num ? num :'X' }}</span>
       </div>
 
       <div class="item">
         <!-- 活力表现 -->
-        <span class="name">{{$root.$t("list.virtual_vitality")}}</span>
+        <span class="name">{{i18n_t("list.virtual_vitality")}}</span>
         <span class="percent-line row">
           <span class="proccss" :style="`width:${datas.form}%`"></span>
         </span>
@@ -66,9 +66,9 @@
 
       <div class="item">
         <!-- 综合评级 -->
-        <span class="name">{{$root.$t("list.virtual_star")}}</span>
+        <span class="name">{{i18n_t("list.virtual_star")}}</span>
         <template v-for="item in 5" :key="item">
-          <icon name="icon-star" :class="item<=datas.star && 'active'"/>
+          <icon-wapper name="icon-star" :class="item<=datas.star && 'active'"/>
         </template>
       </div>
     </template>
@@ -76,6 +76,8 @@
 </template>
  
 <script>
+import { IconWapper } from 'src/components/icon/index.js';
+
 export default {
   props: {
     // 单场赛事信息
@@ -88,6 +90,10 @@ export default {
       datas: null,//赛事统计信息
       show_style: "style1",//展示样式几?
     };
+  },
+
+  components: {
+    IconWapper
   },
 
   created() {

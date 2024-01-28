@@ -11,7 +11,14 @@
           :video_fullscreen_disabled="false" :match_info="match_info" :is_esports="false"></video_type_ctr> -->
       </div>
     </load-data>
-
+    <video_type_ctr
+          v-show="is_video_hover"
+          :ctr_data={video_type:1}
+          :is_video_hover="is_video_hover"
+          :video_fullscreen_disabled="false"
+          :match_info="match_info"
+          :is_esports="false"
+      ></video_type_ctr>
     <!-- <video-header v-if="route.params.video_size != 1" :refresh_loading="refresh_loading" :match_info="match_info"
           @refresh="refresh_data" /> -->
     <!-- <iframe
@@ -54,6 +61,7 @@ const params = computed(() => route.params);
 const media_src = ref("");
 const iframe_loading = ref(true);
 const is_full_screen = ref(false);
+const is_video_hover = ref(true);
 /**
  * @Description:获取视频播放地址
  * @Author Cable
@@ -116,6 +124,7 @@ function browser_full_screen() {
 const init = async () => {
   const cuid = UserCtr.get_cuid();
   if (route.params.play_type == 2) {
+    console.log(route.params.play_type, "route.params.play_type");
     browser_full_screen();
   }
   try {

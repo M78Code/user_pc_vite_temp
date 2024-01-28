@@ -982,6 +982,7 @@ export default {
       > span {
         color: #c9c9c9;
         padding-right: 3px;
+        color: #c9c9c9;
       }
       > i {
         // position: relative;

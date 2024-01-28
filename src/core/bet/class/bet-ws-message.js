@@ -103,6 +103,15 @@ class BetWsMessage {
         // ws推送消息分流
         const ws_cmd = lodash_.get(data,'cmd')
         switch (ws_cmd) {
+          // 赛事状态
+          case 'C101':
+          case 'C901':
+            this.MSG_C101(data)
+            break;
+          // 赛事阶段
+          case 'C102':
+            this.MSG_C102(data)
+            break;
           // 赛事级别盘口状态  赛事移除或结束 投注项需要失效
           case 'C104':
             this.MSG_C104(data);
@@ -125,6 +134,14 @@ class BetWsMessage {
         }
       }
     }
+  }
+  // 赛事状态
+  MSG_C101(obj) {
+    BetData.set_bet_c101_change(obj.cd)
+  }
+  // 赛事阶段
+  MSG_C102(obj) {
+    BetData.set_bet_c102_change(obj.cd)
   }
   // 赛事级别盘口状态
   MSG_C104(obj) {

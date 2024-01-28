@@ -28,6 +28,8 @@ import {
   formatTime,
   MITT_TYPES,
 } from "src/output/index.js";
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 export const useGetResultConfig = () => {
   const route = useRoute();
   const router = useRouter();
@@ -363,7 +365,11 @@ export const useGetResultConfig = () => {
               if ([18, 28, 29, 33].includes(data[i].id * 1)) {
                 state.sport_type.push(""); //撑住位置,保证数据长度不变
               } else {
-                state.sport_type.push(data[i].name);
+                //欧洲版屏蔽4期电竞vr
+                if(IS_FOR_NEIBU_TEST || (!IS_FOR_NEIBU_TEST && +data[i].id < 100)){
+                  state.sport_type.push(data[i].name);
+                }
+                // state.sport_type.push(data[i].name);
               }
               // 冠军球种剔除【冠军】选项,增加[全部球种],剔除虚拟赛种
               if (
@@ -382,7 +388,13 @@ export const useGetResultConfig = () => {
           }
           // 添加【全部】选项
           state.champion_sport_type.unshift(i18n_t("select.all"));
-          state.api_sport_type = data;
+          //欧洲版屏蔽4期电竞vr
+          if(!IS_FOR_NEIBU_TEST){
+            state.api_sport_type = data.filter((n)=>{return +n.id < 100});
+          }else{
+            state.api_sport_type = data;
+          }
+          // state.api_sport_type = data;
           // console.log(state.api_sport_type,'state.api_sport_type');
           const _name = i18n_t("select.all");
           // 如果求种id存在，则显示对应的求种id

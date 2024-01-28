@@ -3,11 +3,11 @@
 -->
 
 <template>
-  <div class="match-list-wrapper" :class="{standard: standard_edition == 2}">
+  <div class="match-list-wrapper" v-if="lodash.get(virtual_match_list, 'length')" :class="{standard: standard_edition == 2}">
     <div>
       <v-sports-play-name :match_item_batch="match_item_batch" :csid="csid" />
-      <template v-for="(match_item, index) in virtual_match_list" :key="index">
-        <v-sports-tpl v-if="match_item.mid" :match_item="match_item" :index="index" 
+      <template v-for="(match_item, index) in virtual_match_list">
+        <v-sports-tpl v-if="MatchListData.get_quick_mid_obj_ref(match_item.mid)" :match_item="match_item" :index="index" :key="index"
         :mid="match_item.mid"  @switch_match="switch_match_handle"></v-sports-tpl>
         <!-- <v-sports-match-item :match_selected_i="selected_match_i" v-if="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)"
           :i="i" :match_item="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)" @switch_match="switch_match_handle"
@@ -23,6 +23,7 @@ import v_s_match_timer from "src/base-pc/vr/pages/virtual/virtual-sports-part/vi
 // import virtual_sports_match_item from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-item.vue";
 import virtual_sports_match_tpl from 'src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-match-tpl.vue'
 import virtual_sports_play_name from 'src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-play-name.vue'
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
 
 export default {
   mixins:[virtual_sports_match_list_mixin],
@@ -31,7 +32,12 @@ export default {
     'v-sports-tpl': virtual_sports_match_tpl,
     'v-sports-play-name': virtual_sports_play_name
   },
-  props: ['match_item_batch', 'csid']
+  props: ['match_item_batch', 'csid'],
+  data(){
+    return {
+      MatchListData
+    }
+  }
 }
 </script>
 

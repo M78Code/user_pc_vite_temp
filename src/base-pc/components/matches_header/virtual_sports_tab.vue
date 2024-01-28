@@ -2,23 +2,24 @@
   <div class="virtual-tab matches_tab">
     <div  v-for="(item, i) in sub_menu_list" :class="[sub_menu_i == i ? 'checked' : '']" 
     :key="i" @click="virtual_menu_changed(i)">
-      {{ item.name }}
+      {{ lang == 'zh' ? '' : "VR-" }}{{ item.name }}
     </div>
   </div>
 </template>
 
 <script>
 import lodash from 'lodash';
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX, UserCtr } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { api_v_sports } from "src/api/index.js";
 import axios_api_loop from "src/core/http/axios-loop.js"
 import { debounce_throttle_cancel } from "src/core/utils/common/module/other.js";
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
-import {  compute_css_obj, MenuData, MITT_TYPES, useMittEmit } from "src/output/index.js";
+import {  compute_css_obj, MenuData, MITT_TYPES, useMittEmit, useMittOn } from "src/output/index.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 
+let off = ''
 export default {
   name: 'match_main',
   data() {
@@ -47,7 +48,8 @@ export default {
       router: useRouter(),
       route: useRoute(),
       BetViewDataClass,
-      LOCAL_PROJECT_FILE_PREFIX
+      LOCAL_PROJECT_FILE_PREFIX,
+      lang: UserCtr.lang
     };
   },
   props: {
@@ -68,8 +70,12 @@ export default {
     }
     //虚拟体育页更改语言
     if (!location.search.includes('keep_url')) {
-      history.replaceState(null, '', `${location.pathname}${location.hash}`)    //地址栏优化
+      history.replaceState(window.history.state, '', `${location.pathname}${location.hash}`)    //地址栏优化
     }
+    off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=> {
+      this.get_virtual_menus()
+      this.lang= UserCtr.lang
+    }).off
   },
   /**
    * @description: 触发路由进入之前事件 详情页返回记住上次选中的体育类型
@@ -104,6 +110,9 @@ export default {
       }
     }
     clearTimeout(this.timer_super27);
+    if (off) {
+      off()
+    }
   },
   methods: {
     // 设置当前选中的二级菜单id
@@ -122,12 +131,11 @@ export default {
       this.sub_menu_i = i;
       this.current_sub_menu = this.sub_menu_list[i];
       this.virtual_sports_params.csid = this.current_sub_menu.menuId;
+      MenuData.set_current_ball_type(this.current_sub_menu.menuId)
       // 足蓝跳转到其他虚拟赛种前， 给状态一个标识
       this.v_menu_changed = ([1001, 1004].includes(this.get_curr_sub_menu_type) ? 'zu_lan_' : '') + Math.random();
-      console.log(this.get_curr_sub_menu_type, 'this.get_curr_sub_menu_type')
       this.set_virtual_current_sub_menuid(this.current_sub_menu.menuId);
       this.set_curr_sub_menu_type(this.current_sub_menu.menuType || this.current_sub_menu.menuId)
-      console.log('ress', 222);
       useMittEmit(MITT_TYPES.EMIT_VR_MENU_CLICK, {
         virtual_sports_params: this.virtual_sports_params,
         current_sub_menu: this.current_sub_menu,
@@ -166,6 +174,9 @@ export default {
             this.sub_menu_list = lodash.cloneDeep(res.data);
 
             this.sub_menu_i = this.get_sub_menu_c_index();
+
+            this.virtual_menu_changed(this.sub_menu_i)
+            
             if (this.sub_menu_list.length) {
               if (this.sub_menu_id_f_detail) {
                 let index = lodash.findIndex(this.sub_menu_list, item => item.menuId == this.sub_menu_id_f_detail);
@@ -206,6 +217,7 @@ export default {
         return;
       }
       this.virtual_sports_params.csid = menues[this.sub_menu_i].menuId;
+      MenuData.set_current_ball_type(this.virtual_sports_params.csid)
       if (menues.length) {
         this.set_virtual_current_sub_menuid(menues[this.sub_menu_i].menuId);
         this.set_curr_sub_menu_type(menues[this.sub_menu_i].menuId);

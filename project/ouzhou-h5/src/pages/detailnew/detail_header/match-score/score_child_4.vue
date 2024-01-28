@@ -89,6 +89,7 @@ const penaltyScore = computed(() => {
     return get_penalty_score();
 })
 const is_match_result = computed(() => {
+    return route.name == 'result'
     return ['result_details', 'match_result'].includes(route.name)
 })
 
