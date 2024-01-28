@@ -18,7 +18,6 @@ import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
 import {  compute_css_obj, MenuData, MITT_TYPES, useMittEmit } from "src/output/index.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
-
 export default {
   name: 'match_main',
   data() {
@@ -122,6 +121,7 @@ export default {
       this.sub_menu_i = i;
       this.current_sub_menu = this.sub_menu_list[i];
       this.virtual_sports_params.csid = this.current_sub_menu.menuId;
+      MenuData.set_current_ball_type(this.current_sub_menu.menuId)
       // 足蓝跳转到其他虚拟赛种前， 给状态一个标识
       this.v_menu_changed = ([1001, 1004].includes(this.get_curr_sub_menu_type) ? 'zu_lan_' : '') + Math.random();
       this.set_virtual_current_sub_menuid(this.current_sub_menu.menuId);
@@ -204,6 +204,7 @@ export default {
         return;
       }
       this.virtual_sports_params.csid = menues[this.sub_menu_i].menuId;
+      MenuData.set_current_ball_type(this.virtual_sports_params.csid)
       if (menues.length) {
         this.set_virtual_current_sub_menuid(menues[this.sub_menu_i].menuId);
         this.set_curr_sub_menu_type(menues[this.sub_menu_i].menuId);

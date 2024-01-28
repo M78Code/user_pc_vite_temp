@@ -29,6 +29,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
 import { details_ws } from "src/core/match-detail/details-ws.js";
+import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 export const useGetConfig = (router,cur_menu_type,details_params,play_media) => {
   const route = useRoute();
   // const router = useRouter();
@@ -283,6 +284,9 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
               mx_autoset_active_match({ mid: data.mid });
             }
             // 设置赛事信息
+            if(data.csid !=1 && data.csid !=2 ){
+              data.msc = detailUtils.build_msc(data);
+            }
             MatchDataWarehouseInstance.set_match_details(data,[])  
             match_infoData.value = MatchDataWarehouseInstance.get_quick_mid_obj(state.mid)
           } else {

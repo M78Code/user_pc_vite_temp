@@ -146,8 +146,8 @@
                           </div>
 
                           <!-- 电竞串关标识 -->
-                          <div v-if="menu_type == 3000 && match.ispo" class="flag-chuan"
-                            :class="{ 'special-lang': ['zh', 'tw', 'hk'].includes(get_lang) }">{{ i18n_t('match_info.match_parlay') }}
+                          <div v-if="is_esports && match.ispo" class="flag-chuan"
+                            :class="{ 'special-lang': ['zh', 'tw', 'hk'].includes(lang) }">{{ i18n_t('match_info.match_parlay') }}
                           </div>
                           <!--中立场图标-->
                           <div class="live-i-b-wrap newer" v-show="match.mng * 1 && ![5, 10, 7, 8].includes(Number(match.csid))">
@@ -1090,7 +1090,7 @@ export default {
               // color: #8a8986;
             }
             &.is-handicap {
-              color: #7A0F25 !important;
+              color: #FF7000 !important;
             }
           }
         }
@@ -1484,14 +1484,15 @@ export default {
   }
 
   .flag-chuan {
-    margin-left: .1rem;
     padding: 0 .01rem;
     height: 0.16rem;
     line-height: .16rem;
     border-radius: .03rem;
+    font-size: 0.12rem;
+
 
     &.special-lang {
-      margin-left: .06rem;
+      margin: 0 .01rem;
     }
   }
 }

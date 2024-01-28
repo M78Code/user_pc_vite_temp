@@ -1,6 +1,10 @@
 <template>
   <div class="component information">
-    <template v-if="article"> </template>
+    <template v-if="article">
+      {{ console.log(article) }}
+      <ArticleContent :data="article"></ArticleContent>
+      <ArticleMaylike :list="favoriteArticle" :activeId="activeId"></ArticleMaylike>
+    </template>
     <NoData v-else></NoData>
   </div>
 </template>
