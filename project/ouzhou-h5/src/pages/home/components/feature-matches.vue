@@ -268,7 +268,7 @@ function toDetails(item){
           white-space: nowrap;
         }
         .is-handicap{
-          color: #7A0F25 !important;
+          color: #FF7000 !important;
         }
         .span{
           font-weight: 500;
