@@ -304,6 +304,7 @@ this.bet_appoint_ball_head= null */
    */
   set_regular_amount() {
     this.is_regular_amount = !this.is_regular_amount
+    useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
     this.set_bet_data_class_version()
   }
 
@@ -807,9 +808,10 @@ this.bet_appoint_ball_head= null */
     this.bet_amount = val;
     
     // 设置常用投注金额
-    this.regular_amount = this.bet_amount
+    if(val>0){
+      this.regular_amount = this.bet_amount
+    }
     this.set_bet_data_class_version()
-    // console.error("投注金额", val)
   }
 
   // 设置投注项的投注金额
