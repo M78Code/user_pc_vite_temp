@@ -962,7 +962,7 @@ export default {
       if(!lodash.get(this.v_match_ended_score_dict, dict_key)){
         // this.v_match_ended_score_dict[dict_key] = {};
         lodash.set(this.v_match_ended_score_dict,`[${dict_key}]`, {});
-        let mid_str = this.match_list_by_no.map(match => match.mid).join(',');
+        let mid_str = this.match_list_by_no?.map(match => match.mid).join(',');
         if(!mid_str) {
           delete this.v_match_ended_score_dict[dict_key];
           return;
