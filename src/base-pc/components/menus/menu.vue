@@ -81,11 +81,33 @@ let popular_list = [{mi:101,ct:1},{mi:102,ct:1},{mi:105,ct:1}]
 const router = useRouter();
 const route = useRoute();
 
+/**
+ * 菜单数量修改
+ * @param {*} list 
+ */
+const set_ref_base_menu = (list=[] ) => {
+  let left_menu_list = lodash_.cloneDeep(MenuData.left_menu_list);
+  list = list.filter((item)=>{return item.mi});
+  left_menu_list = left_menu_list.map((item)=>{
+      item.ct = item.ct || 0;//综合暂时没用
+      list.forEach((n)=>{
+          if(item.mi == n.mi.slice(0,3)){
+              let index = item.sl?.findIndex((k)=>{return k.mi == n.mi});
+              if(index !== -1)item.sl[index].ct = n.count;
+          }
+      })
+      return item;
+  })
+  //设置左侧菜单数量
+  MenuData.set_left_menu_list_init(left_menu_list)
+}
+
 onMounted(()=>{
   get_visit_sports_list()
 
   ref_data.emit_lsit = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_SET_VISIT_SPORTS_LIST, set_get_visit_sports_list).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, set_ref_base_menu).off,
   }
 })
 
@@ -169,6 +191,8 @@ const jump_func = (payload ={},type) => {
   }
   MenuData.set_mid_menu_result(mid_config)
 
+  BetData.set_clear_bet_info()
+
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload.mi)
 
@@ -204,6 +228,8 @@ const esportsClick = ()=>{
   }
   MenuData.set_mid_menu_result(mid_config)
 
+  BetData.set_clear_bet_info()
+
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, 2100)
   })
@@ -235,6 +261,8 @@ const esportsClick = ()=>{
     filter_tab: 31001
   }
   MenuData.set_mid_menu_result(mid_config)
+
+  BetData.set_clear_bet_info()
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, 31001)

@@ -3,7 +3,7 @@ import {inject, onBeforeMount, reactive} from "vue";
 import figuresStandings from "./figures-standings.vue"
 import figuresHistoryEngagement from "./figures-history-engagement.vue"
 import figuresRecentResults from "./figures-recent-results.vue"     // 近期战绩
-import figuresFutureSchedule from "./figures-future-schedule.vue"
+import figuresFutureSchedule from "./figures-future-schedule.vue"   // 未来赛程
 import figuresInjurySituation from "./figures-injury-situation.vue"
 import figuresMarketSituation from "./figures-market-situation.vue"     // 盘面
 import figuresTechnicalInterview from "./figures-technical-interview.vue"
@@ -81,9 +81,9 @@ onBeforeMount(() => {
             <!-- 近期战绩 -->
             <figuresRecentResults />
             <!-- 未来赛程  只有 足球才有-->
-            <figuresFutureSchedule :futureScheduleData="State.futureScheduleData" />
+            <figuresFutureSchedule :futureScheduleData="State.futureScheduleData" v-if="match_detail.csid == 1" />
             <!-- 伤停情况 只有 足球才有 -->
-            <figuresInjurySituation :injurySituationData="State.injurySituationData" />
+            <figuresInjurySituation :injurySituationData="State.injurySituationData" v-if="match_detail.csid == 1" />
         </template>
         <!-- 盘面 -->
         <figuresMarketSituation

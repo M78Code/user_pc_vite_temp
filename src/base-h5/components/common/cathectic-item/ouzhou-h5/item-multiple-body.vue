@@ -104,8 +104,7 @@
   <cancle-confirm-pop 
     v-if="show_pop" 
     :orderNo="cancle_order_no"
-    @cancel="show_pop=false;"
-    @success="canceleSucess">
+    @cancel="show_pop=false;">
   </cancle-confirm-pop>
 </template>
 
@@ -188,11 +187,6 @@ const cancelPre = (data_b) => {
   cancle_order_no = lodash.get(data_b, 'orderNo', '')
   show_pop.value = true
 }
-const emit = defineEmits(['canceled'])
-const canceleSucess = () => {
-  show_pop.value = false
-  emit('canceled')
-}
 </script>
 
 <style lang="scss" scoped>
@@ -216,8 +210,8 @@ template {
         .pre-cancle-button {
           padding: 0.02rem 0.1rem;
           border-radius: 0.1rem;
-          color: var(--q-gb-t-c-3);
-          border: 1px solid var(--q-gb-t-c-3);
+          color: var(--q-gb-t-c-4);
+          border: 1px solid var(--q-gb-t-c-4);
           margin-left: 0.06rem;
         }
       }

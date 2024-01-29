@@ -50,7 +50,9 @@
           <!-- 串关 -->
           <template v-if="!BetData.is_bet_single">
             <!-- 串关投注项列表  -->
-            <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${ref_min_height_max}rem` }">
+            <!-- <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${ref_min_height_max}rem` }"> -->
+            <q-scroll-area ref="scrollAreaRef" :visible="false" :style="{ 'height': `${ref_min_height_max}rem` }" :thumb-style="{ opacity: 0}">
+
               <template v-if="BetViewDataClass.bet_order_status == 1">
                 <template v-for="(item, index) in BetData.bet_s_list" :key="index">
                   <bet-mix-box-child1 :items="item" :index="index"></bet-mix-box-child1>
@@ -59,8 +61,8 @@
                 <!-- 串关投注 限额 -->
                 <!-- 复式连串过关投注 限额 -->
                 <template v-if="BetData.bet_s_list.length > 1"  >
-                  <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
-                    <template v-if="BetData.special_type || !index || BetData.bet_s_list.length > 2">
+                  <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index" >
+                    <template v-if="(BetData.special_type || !index || BetData.bet_s_list.length > 2) && BetData.special_type || !index">
                       <bet-special-input :items="item" :index="index" />
                     </template>
                   </template>
@@ -81,7 +83,7 @@
                   <bet-special-state :items="item" :index="index" />
                 </template>
               </template>
-            </div>
+            </q-scroll-area>
 
             <!-- 串关最高可赢金额 合计投注金额 -->
             <bet-special-winning />
@@ -119,13 +121,14 @@ import betBar from "./bet-bar.vue";
 //import betInputInfo from "//bet_input_info";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { ref, onMounted, reactive } from 'vue';
-
+import { ref, onMounted, reactive ,onUnmounted ,watch,computed} from 'vue';
+import {MITT_TYPES,useMittOn,formatMoney,UserCtr } from "src/output/index.js"
+import lodash from "lodash";
 // 键盘收起的高度
 let ref_min_height_max = ref('3.6') // rem 高长屏幕
-onMounted(()=>{
-  ref_min_height_max.value = document.body.clientHeight > 600 ? '2.5' : '2'
-})
+
+//串单列表定位高度
+const scrollAreaRef = ref(0)
 
 //串关的按钮
 const scroll_box = ref()
@@ -142,12 +145,38 @@ const pack_up = (val) => {
   BetData.set_bet_state_show(false)
   is_dropdown.value = false
 }
+const ref_data = reactive({
+  emit_lsit: {}
+})
+
+const scrollAreaPo = () => {
+
+  if(!BetData.is_bet_single){
+    scrollAreaRef.value.setScrollPercentage('vertical', 0.77)
+  }
+
+}
+
+
 
 
 onMounted(() => {
-  
+
+  ref_min_height_max.value = document.body.clientHeight > 600 ? '2.5' : '2'
+  scrollAreaPo();
+  ref_data.emit_lsit = {
+
+    emitter_1: useMittOn(MITT_TYPES.EMIT_SET_NOTSINGLE_SHOW_LIST,scrollAreaPo).off,
+    
+  }
+
 })
 
+onUnmounted(()=>{
+
+  Object.values(ref_data.emit_lsit).map((x) => x());
+
+})
 
 </script>
 <style lang="scss" scoped>

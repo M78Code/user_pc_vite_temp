@@ -1,16 +1,18 @@
 <template>
   <div class="record-table">
+    <div style="display: none;">{{ BetRecordHistory.bet_record_version }}</div>
     <div>
-      <q-table :rows="tableData" style="max-height:calc(100vh - 270px)" :rows-per-page-options="[0]" :columns="tableColumns"
-               row-key="orderNo" separator="cell" hide-pagination :class="current_tab === 'settled' ? 'settled' : 'unsettled'"
-          :table-header-style="{
-          backgroundColor: '#F1F1F1',
-          height: '28px',
-          color: '#2A2925',
-          fontSize: '12px',
-        }">
+      <q-table 
+        :rows="BetRecordHistory.table_data" 
+        style="max-height:calc(100vh - 270px)" 
+        :rows-per-page-options="[0]" 
+        :columns="BetRecordHistory.columns"
+        row-key="orderNo" 
+        separator="cell" 
+        hide-pagination
+        bordered>
         <template v-slot:no-data>
-          <div class="detail-loading" v-if="loading">
+          <div class="detail-loading" v-if="BetRecordHistory.loading">
             <loading-ing />
           </div>
           <div class="no-data" style="height:calc(100vh - 270px)" v-else>
@@ -63,7 +65,7 @@
             <q-td key="detail" :props="props">
               <div class="detail-options">
                 <div class="record-detail-list">
-                  <div v-for="(item, index) in props.row.orderVOS" :key="index" class="record-detail">
+                  <div v-for="(item, index) in data_list(props.row)" :key="index" class="record-detail">
                     <div class="record-detail-item">
                       <!-- <div class="record-detail-icon">
                         <sport-icon :sport_id="cts_mid.includes(props.row.managerCode*1) ? item.sportId == 1 ? '90': 91  : item.sportId" key_name="pc-left-menu-bg-image" size="18" class="icon"  style="margin:0 10px"/>
@@ -83,7 +85,7 @@
                         <span style="margin-left:15px;color:#ff7000">@{{ item.oddFinally }}</span>
                       </div>
 
-                      <div class="play-type settle-score" v-if="current_tab === 'settled' && item.settleScore">
+                      <div class="play-type settle-score" v-if="BetRecordHistory.selected === 1 && item.settleScore">
                         <!-- 赛果比分 -->
                         <span>{{item.settleScore}}</span>
                       </div>
@@ -93,10 +95,8 @@
                         v-if="!props.row.acCode && item.beginTime&&props.row.seriesType!=3"
                       >{{formatTime(item.beginTime, lang=='vi'?'hh:MM dd/mm':'mm/dd hh:MM')}}</span>
 
-                      <!-- <span style="color:#8A8986">bet closed:{{
-                        formatTime(item.beginTime, "yyyy-mm-dd hh:MM:ss")
-                      }}
-                      </span> -->
+                      <!-- 提前结算 -->
+                      <bet-early-settle v-if="BetRecordHistory.selected === 0" :item="props.row"></bet-early-settle>
                     </div>
                     <!-- 赢 -->
                     <!-- 投注项结算状态展示条件，未处理，已处理，注单无效
@@ -106,14 +106,6 @@
                     v-if="data.outcome"如果outcome等于null或者undefined就不显示
                     -->
                     <div class="item-result" v-if="props.row.outcome">
-<!--                    <span-->
-<!--                      class="bet-result"-->
-<!--                      :class="{-->
-<!--                        'win-color': 0-->
-<!--                      }"-->
-<!--                    >-->
-<!--                      win-->
-<!--                    </span>-->
                       <!-- 未结算串关、已结算串关 -->
                       <template v-if="['0','1'].includes(props.row.orderStatus) && props.row.seriesType != '1'">
                         <!-- betstatus无效 -->
@@ -194,9 +186,8 @@
                <span
                  :class="{'win-color': [4,5].includes(props.row.outcome)}"
                >
-                 {{ format_balance(current_tab === 'unsettled' ? props.row.maxWinAmount : props.row.backAmount) }}
+                 {{ format_balance(BetRecordHistory.selected === 1 ? props.row.backAmount : props.row.maxWinAmount ) }}
                </span>
-<!--              <span v-else>- -</span>-->
             </q-td>
             <!-- 状态 -->
             <q-td key="status" :props="props">
@@ -206,44 +197,26 @@
                    1、2、4已结算
                  -->
               <span :class="status_class(props.row.orderStatus)">{{ order_status(props.row.orderStatus) }}</span>
-              <!--显示部分提前结算或者全额提前结算-->
-              <!--              <span v-if="current_tab=='settled'" class="bet-pre-color">-->
-              <!--                      <template v-if="props.row.settleType==4">{{i18n_t('bet_record.settlement_pre_part2')}}</template>-->
-              <!--                      <template v-else-if="props.row.settleType==5">{{i18n_t('bet_record.settlement_pre_all2')}}</template>-->
-              <!--                    </span>-->
             </q-td>
           </q-tr>
         </template>
       </q-table>
       <!--分页组件-->
 
-      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="records.total" 
-                  :betTotalAmount="records.betTotalAmount"
+      <Pagination v-if="BetRecordHistory.table_data.length > 0" 
+                  class="record-pagination" 
+                  :count="BetRecordHistory.records.total" 
                   @pageChange="changePage"
                   @pageSizeChange="pageSizeChange"
                   @goPageChange="goPageChange"
-                  :profit="records.profit"
-                  :reset_pagination="pageCurrent"
-                  :is_bet_record="true"
-                  :isUnsettled="current_tab === 'unsettled'"
-      >
+                  :reset_pagination="BetRecordHistory.params.page">
       </Pagination>
-      <!--      <pagination-wrapper-->
-      <!--        v-if="tableData.length > 0"-->
-      <!--        class="record-pagination"-->
-      <!--        :count="500"-->
-      <!--        @pageChange="changePage"-->
-      <!--        :is_bet_record="false"-->
-      <!--      ></pagination-wrapper>-->
-
-
     </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref, reactive, watch, computed } from 'vue'
-import { useGetOrderList } from './tableConfig'
 import { formatTime } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { format_balance, LOCAL_PROJECT_FILE_PREFIX,i18n_t } from 'src/output/index.js'
@@ -251,7 +224,8 @@ import Pagination from 'project_path/src/components/Pagination.vue'
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
 // 引入加载中的组件
 import LoadingIng from "src/components/loading/loading.vue"
-
+import betEarlySettle from "src/base-pc/components/bet-record/ouzhou-pc/bet-early-settle.vue"
+import BetRecordHistory from "src/core/bet-record/pc/bet-record-history.js"
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 import sport_icon from './sport_icon.vue'
 // import football_icon from 'src/assets/images/football_icon.png'
@@ -260,68 +234,11 @@ import GlobalSwitchClass from 'src/core/global/global.js'
 const lang = computed(() => {
   return UserCtr.lang;
 })
-const pageSize = ref('50')
-const pageCurrent = ref('1')
+
 const getRowIndex = (rowIndex) => {
-  return (pageCurrent.value - 1) * pageSize.value + rowIndex + 1;
+  return (BetRecordHistory.params.page - 1) * BetRecordHistory.params.size + rowIndex + 1;
 }
 
-const cts_mid = ref([15,27,28,23,31,32,24,33,34])
-
-const emit = defineEmits(['itemFilter'])
-const props = defineProps({
-  current_tab: {
-    type: String,
-    default: ''
-  },
-  timeType: {
-    type: [ String, Number ],
-    default: ''
-  }
-})
-
-const match_type = {
-  1: i18n_t("bet.morning_session"),
-  2: i18n_t("list.list_today_play_title"),
-  3: i18n_t("menu.match_winner")
-}
-let { columns, tableData, loading, handle_fetch_order_list,records } = useGetOrderList()
-const labelClick = (row) => {
-  console.log(row)
-}
-watch(() => props.timeType, (newVal) => {
-  pageCurrent.value = '1'
-})
-// 监听tab 切换表格头数据
-const tableColumns = ref([])
-watch(() => props.current_tab, (newVal) => {  
-  tableData.value = []
-  if (newVal == 'settled') {
-    columns[5] = {
-      name: 'return',
-      label: computed(()=>{ return i18n_t("common.donate_win") } ),
-      align: 'center',
-      field: 'return'
-    }
-    tableColumns.value = columns
-    handle_fetch_order_list({ orderStatus: 1, timeType: 1 })
-    console.log(tableData)
-  } else {
-    columns[5] = {
-      name: 'highestWin',
-      label: computed(()=>{ return i18n_t("common.maxn_amount_val") }),
-      align: 'center',
-      field: 'highestWin'
-    }
-    tableColumns.value = columns
-    handle_fetch_order_list({ orderStatus: 0 })
-    console.log(tableData)
-  }
-}, { immediate: true })
-const getTableData = (params) => {
-  handle_fetch_order_list(params)
-}
-defineExpose({ getTableData })
 const status_class = (orderStatus) => {
   let str = ''
   switch (parseInt(orderStatus)) {
@@ -495,11 +412,6 @@ const marketType = (type, langCode='zh') => {
  */
 const matchType = (type, langCode=UserCtr.lang) => {
   let res = "";
-  // if(type && langCode) {
-  //   res = match_type[type]
-  // }
-  // console.log('type===langCode===', type,  langCode)
-  // console.log('type===langCode=ccc==', `odds.${langCode}.morning_session`)
   if(type && langCode) {
         switch (parseInt(type)) {
           case 1:
@@ -541,33 +453,28 @@ const order_status = (orderStatus) => {
   }
   return str
 }
+
 // 页码变化
 const changePage = (arv) => {
   const { current } = arv
-  pageCurrent.value = current
-  emit('itemFilter', {
-    page: current,
-    size: +pageSize.value,
-    timeType: props.timeType
+  Object.assign(BetRecordHistory.params, {
+    page: current
   })
+  BetRecordHistory.handle_fetch_order_list()
 }
 const goPageChange = (v) => {
-  pageCurrent.value = v
-  emit('itemFilter', {
-    page: v,
-    size: +pageSize.value,
-    timeType: props.timeType
+  Object.assign(BetRecordHistory.params, {
+    page: v
   })
+  BetRecordHistory.handle_fetch_order_list()
 }
 const pageSizeChange = (v) => {
-  pageSize.value = v.value
-  pageCurrent.value = '1'
-  emit('itemFilter', {
-    page: 1,
-    size: v.value,
-    timeType: props.timeType
+  Object.assign(BetRecordHistory.params, {
+    size: v.value
   })
+  BetRecordHistory.handle_fetch_order_list()
 }
+
 /**
  * 复制id
  * @param data
@@ -578,6 +485,29 @@ const hand_copy = (data) => {
     text: i18n_t('bet_record.copyed')
   })
 }
+
+/**
+ *  0:未结算 1:已结算 数据源 orderVOS
+ *  2: 预约 数据源 detailList
+ * @param {*} item 
+ */
+ const data_list = (item) => {
+  // 0:未结算 1:已结算 2: 预约
+  if([0, 1].includes(BetRecordHistory.selected)) {
+    return item.orderVOS
+  } else {
+    return item.detailList
+  }
+}
+/**
+ * 取消预约成功
+ */
+const cancelSuccess = () => {
+  Object.assign(BetRecordHistory.params, {
+    page: 1
+  })
+  BetRecordHistory.handle_fetch_order_list()
+}
 </script>
 
 <style lang="scss" scoped>
@@ -586,10 +516,6 @@ const hand_copy = (data) => {
 }
 .detail-options {
   width: 100%;
-
-  .record-detail-list {
-  }
-
   .record-detail-item {
     flex: 1;
     display: flex;
@@ -634,7 +560,6 @@ const hand_copy = (data) => {
 
 .record-table {
   position: relative;
-  margin-top: 10px;
 
   .unsettled {
     padding-bottom: 50px;
