@@ -607,7 +607,7 @@ const set_computed_appoint_ball_head = () => {
 
 <style lang="scss" scoped>
 .pre-input {
-  border: 1px solid var(--q-gb-bd-c-8);
+  border: 1px solid var(--q-gb-bd-c-5);
 }
 
 .m-b-8 {
@@ -643,15 +643,17 @@ const set_computed_appoint_ball_head = () => {
     //预约加
     .sub-number {
       font-size: 16px;
-      color: var(--q-gb-t-c-1);
+      color: var(--q-gb-bd-c-5);
       text-align: center;
       width: 24px;
-      height: 24px;
-      line-height: 26px;
+      height: 28px;
+      line-height: 28px;
       margin-left: 6px;
-      background: var(--q-gb-bg-c-1);
+      background: var(--q-gb-bg-c-15);
       // border: 0.5px solid var(--q-gb-bd-c-7);
       border-radius: 4px 0px 0px 4px;
+      border: 1px solid var(--q-gb-bd-c-5);
+      border-right: 0;
     }
 
     //预约投注输入框样式
@@ -663,7 +665,7 @@ const set_computed_appoint_ball_head = () => {
       border-left: 0;
       border-right: 0;
       width: 74px;
-      height: 24px;
+      height: 28px;
       text-align: center;
       outline: none;
       font-weight: bold;
@@ -672,15 +674,17 @@ const set_computed_appoint_ball_head = () => {
     //预约减
     .add-number {
       font-size: 16px;
-      color: var(--q-gb-t-c-1);
+      color: var(--q-gb-bd-c-5);
       text-align: center;
       width: 24px;
-      height: 24px;
-      line-height: 24px;
-      background: var(--q-gb-bg-c-1);
+      height: 28px;
+      line-height: 28px;
+      background: var(--q-gb-bg-c-15);
       // border: 0.5px solid var(--q-gb-bd-c-7);
-      border-radius: 0px 2px 2px 0px;
+      border-radius: 0px 4px 4px 0px;
       cursor: pointer;
+      border: 1px solid var(--q-gb-bd-c-5);
+      border-left: 0;
     }
   }
 

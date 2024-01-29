@@ -553,7 +553,8 @@ const get_match_base_hps_by_mids = async () => {
 	if (!is_empty_data()) return;
 	// 拿到所有滚球，联赛，队伍 mid
 	match_mid_Arr = []
-	if (search_data.value.length > 0) {
+	if (search_data.value) {
+	// if (search_data.value.length > 0) {
 		search_data.value?.teamH5.forEach((item, index) => {
 			match_mid_Arr.push(item.mid)
 		})

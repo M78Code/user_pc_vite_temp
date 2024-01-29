@@ -314,6 +314,10 @@ const expand_team = ref(true)
 	if(!match) return;
 	search.insert_history(match.name)
 	const { tn, csid } = match.matchList[0]
+	//如果是电竞的子菜单手动设置 左侧菜单 电子竞技固定编码2000
+	if(['100','101','102','103'].includes(csid)){
+		MenuData.set_menu_root(2000)
+	}
 	router.push(`/search/${tn}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
@@ -331,6 +335,10 @@ function bowling_click(match) {
 	search.insert_history(match.mhn + 'vs' + match.man)
 	update_show_type('none')
 	const { mid, tid, csid,ms } = match
+	//如果是电竞的子菜单手动设置 左侧菜单 电子竞技固定编码2000
+	if(['100','101','102','103'].includes(csid)){
+		MenuData.set_menu_root(2000)
+	}
 	router.push({
       name: 'details',
       params: {
@@ -365,6 +373,10 @@ function match_click(match) {
 	})
 	MenuData.set_current_ball_type(csid);
 	// MenuData.set_menu_current_mi(`${+csid+100}2`)
+	//如果是电竞的子菜单手动设置 左侧菜单 电子竞技固定编码2000
+	if(['100','101','102','103'].includes(csid)){
+		MenuData.set_menu_root(2000)
+	}
 	router.push({
       name: 'details',
       params: {

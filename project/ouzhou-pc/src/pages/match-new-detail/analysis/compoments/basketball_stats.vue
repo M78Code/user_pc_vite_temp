@@ -216,8 +216,8 @@ const stop_obj = computed(() => {
   let { mmp } = props.detail_info;
   const stop_key = dict[mmp].stop;
   let obj = {
-    home: props.score_list[stop_key].home,
-    away: props.score_list[stop_key].away,
+    home: props.score_list[stop_key]?.home,
+    away: props.score_list[stop_key]?.away,
   };
   return obj;
 });
