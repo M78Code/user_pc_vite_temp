@@ -1,4 +1,5 @@
 <script setup name="head-wrapper">
+import { ref } from "vue"
 const props = defineProps({
     tab_list: {
         type: Array,
@@ -11,34 +12,28 @@ const props = defineProps({
     tab_key: {
         type: String,
         default: 'name'
+    },
+    start_value:{
+        type: [String,Number],
+        default: 1
     }
 })
-const emit = defineEmits(['change'])
+const emit = defineEmits()
 
-const selected = ref(null)
+const use_index_as_key = props.active_key === 'index'
 
 const set_userset_key = function (item, index) {
-    if (props.active_key === 'index') {
-        return index
-    } else {
-        return item[props.active_key]
-    }
+    return use_index_as_key ? index : item[props.active_key]
 }
 
 const is_active = function (item, index) {
-    let selected_key;
-    if (props.active_key === 'index') {
-        selected_key = index
-    } else {
-        selected_key = item[props.active_key]
-    }
-    return selected.value == selected_key ? 'active' : ''
+    return props.start_value == set_userset_key(item, index) ? 'active' : ''
 }
 
 const ChangeSelectedTabId = function (event) {
-    const {userset} = event.target.dataset;
-    selected.value = userset
-    emit('change', selected.value)
+    const { userset } = event.target.dataset;
+    emit('change',userset)
+    // emit('update:start_value', userset);
 }
 </script>
 

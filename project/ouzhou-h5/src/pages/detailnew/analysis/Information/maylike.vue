@@ -1,6 +1,7 @@
 <script setup name="maylike">
 import AnalysisCard from "../AnalysisCard.vue"
-import { compute_image_src } from "src/core/utils/common"
+import { get_server_file_path } from "src/core/file-path/file-path.js"
+import { formete_date } from 'src/output/index';
 
 const props = defineProps({
     favorite_article_data: {
@@ -14,48 +15,20 @@ const props = defineProps({
     }
 })
 
-const formete_date = (val) => {
-    val = Number(val)
-    let difference = Date.now() - val, str = ''
-    if (difference > 1000 * 60 * 60 * 24) {
-        str = new Date(val).getMonth() + 1 + '月' + new Date(val).getDate() + '日'
-    } else if (difference > 1000 * 60 * 60) {
-        str = Math.ceil(difference / (1000 * 60 * 60)) + '小时前'
-    } else {
-        str = Math.ceil(difference / (1000 * 60)) + '分钟前'
-    }
-    return str
-}
-
 const img_src = function(val) {
     let src = (val || '').split(';')[0]
-    return compute_image_src(src)
+    return get_server_file_path(src)
 }
 const handle_img_load_error = function(e) {
     e.target.hidden = true
     e.target.onerror = null
 }
-
 </script>
 
 <template>
-    <AnalysisCard title="猜你喜欢">
+    <AnalysisCard :title="i18n_t('home_popular.you_may_also_like')">
         <template #body>
             <div class="maylike" v-for="(item,index) of favorite_article_data" :key="index">
-                <!-- <div class="content row justify-between yb_pt12 yb_pb10" :key="index" @click="show_details(index)" v-if="item.id != dialog_article_id">
-                    <div class="column justify-between col">
-                        <div class="detail ellipsis-2-lines yb_fontsize14">
-                            <span class="label yb_mr4 yb_px4 yb_pt2" v-if="item.tagName" :style="{'background-color': item.tagColor}">{{item.tagName}}</span>
-                            <span>{{item.articleTittle}}</span>
-                        </div>
-                        <div class="detail2 row">
-                            <span class="author-name ellipsis">{{item.authorName}}</span>
-                            <span class="yb_ml6">{{item.readCounts}}阅读</span>
-                            <span style="margin-left: auto;">{{ formete_date(item.updateTime) }}</span>
-                        </div>
-                    </div>
-                    <img :src="item.thumbnails" alt="" @error="handle_img_load_error" class="yb_ml12" />
-                </div> -->
                 <div class="maylike--left">
                     <p class="top">
                         <span class="label" v-if="item.tagName" :style="{'background-color': item.tagColor}">{{item.tagName}}</span>
@@ -63,12 +36,12 @@ const handle_img_load_error = function(e) {
                     </p>
                     <p class="bottom">
                         <span class="author-name ellipsis">{{item.authorName}}</span>
-                        <span class="yb_ml6">{{item.readCounts}}阅读</span>
+                        <span class="yb_ml6">{{item.readCounts}}{{ i18n_t('ouzhou.detail.read') }}</span>
                         <span style="margin-left: auto;">{{ formete_date(item.updateTime) }}</span>
                     </p>
                 </div>
                 <div class="maylike--right">
-                    <img :src="item.thumbnails" alt="" @error="handle_img_load_error">
+                    <img :src="img_src(item.thumbnails)" alt="" @error="handle_img_load_error">
                 </div>
             </div>
         </template>

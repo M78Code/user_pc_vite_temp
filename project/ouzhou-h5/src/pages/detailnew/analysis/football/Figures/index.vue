@@ -6,7 +6,8 @@ import figuresRecentResults from "./figures-recent-results.vue"     // 近期战
 import figuresFutureSchedule from "./figures-future-schedule.vue"   // 未来赛程
 import figuresInjurySituation from "./figures-injury-situation.vue"
 import figuresMarketSituation from "./figures-market-situation.vue"     // 盘面
-import figuresTechnicalInterview from "./figures-technical-interview.vue"
+import figuresTechnicalInterview from "./figures-technical-interview.vue"   // 技术面
+import HeadWrapper from "../../HeadWrapper.vue"
 
 import {api_analysis} from "src/api/index.js";      // 赛事分析接口文件
 
@@ -28,8 +29,7 @@ const State = reactive({
     loading: false,
 })
 const ChangeSelectedTabId = function (event) {
-    const {id} = event.target.dataset;
-    if (id) State.selectedTabId = id
+    if (event) State.selectedTabId = event
     _getDataList()
 }
 
@@ -64,14 +64,7 @@ onBeforeMount(() => {
 
 <template>
     <section class="Figures">
-        <nav class="head-wrapper">
-            <ul class="head-tab" @click="ChangeSelectedTabId($event)">
-                <li class="head-tab-item" :class="{'active':State.selectedTabId == item.id}"
-                    v-for="item of State.tabList" :key="item.id" :data-id="item.id">
-                    {{ item.name }}
-                </li>
-            </ul>
-        </nav>
+        <HeadWrapper :tab_list="State.tabList" active_key="id" v-model:start_value="State.selectedTabId" @change="ChangeSelectedTabId"></HeadWrapper>
         <!-- 基本面 -->
         <template v-if="State.selectedTabId == 1">
             <!-- 杯赛积分 或者 联赛积分 -->
