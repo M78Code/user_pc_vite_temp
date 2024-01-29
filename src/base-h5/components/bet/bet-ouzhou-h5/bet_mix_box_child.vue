@@ -61,8 +61,8 @@
                 <!-- 串关投注 限额 -->
                 <!-- 复式连串过关投注 限额 -->
                 <template v-if="BetData.bet_s_list.length > 1"  >
-                  <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
-                    <template v-if="BetData.special_type || !index || BetData.bet_s_list.length > 2">
+                  <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index" >
+                    <template v-if="(BetData.special_type || !index || BetData.bet_s_list.length > 2) && BetData.special_type || !index">
                       <bet-special-input :items="item" :index="index" />
                     </template>
                   </template>
@@ -152,7 +152,7 @@ const ref_data = reactive({
 const scrollAreaPo = () => {
 
   if(!BetData.is_bet_single){
-      scrollAreaRef.value.setScrollPosition('vertical', BetData.bet_s_list.length * 119)
+    scrollAreaRef.value.setScrollPercentage('vertical', 0.77)
   }
 
 }
