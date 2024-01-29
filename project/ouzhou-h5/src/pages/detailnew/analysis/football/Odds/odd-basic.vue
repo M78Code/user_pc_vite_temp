@@ -22,7 +22,7 @@ const props = defineProps({
 
 <template>
     <ul class="table">
-        <li class="table-header table-item table-bottom-border">
+        <li class="table-header table-item table-bottom-border" v-if="selectedTabIndex == 1">
             <div class="t1">
                 <div class="ellipsis">
                     {{ i18n_t('analysis_football_matches.company') }}
