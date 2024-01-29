@@ -5,7 +5,7 @@ import virtual_sports_mixin from "src/core/vr/mixin/virtual-sports-mixin.js"
 import {api_v_sports} from "src/api/index.js";
 import VSport from 'src/core/vr/vr-sports/vsport.js';
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/"
 import { debounce } from "lodash";
 import { go_where } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
@@ -13,6 +13,7 @@ import { MatchDataWarehouse_H5_Detail_Common, MatchDataWarehouse_PC_Detail_Commo
 import { get_now_server, debounce_throttle_cancel } from 'src/core/utils/common/module/other.js'
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 
+let off = ''
 const MatchDataWarehouseInstance = BUILDIN_CONFIG.IS_PC ? MatchDataWarehouse_PC_Detail_Common:MatchDataWarehouse_H5_Detail_Common;
 export default {
   mixins:[virtual_sports_mixin],
@@ -67,44 +68,14 @@ export default {
         this.get_local_match_process_data();
       }
     }
-
-    //获取赛事详情数据
-    let mid_ = this.$route.query && this.$route.query.mid || this.mid;
-    this.mid = mid_;
-    if(mid_) this.set_goto_detail_matchid(mid_);
-    let parma = {
-       mid: this.matchid || mid_,
-    }
-    console.log(mid_, parma.mid, 'mid_')
-    api_v_sports.get_virtual_match_detail(parma).then(res => {
-      let code = lodash.get(res,'code');
-      let data = lodash.get(res,'data');
-      if(code == 200 && data){
-        this.init_match_fields(data);
-        this.match = data;
-        if(!this.current_match){
-          this.current_match = JSON.parse(JSON.stringify(data));
-          this.init_match_fields(this.current_match);
-        }
-        else{
-          Object.assign(this.current_match,data);
-        }
-        MatchDataWarehouseInstance.clear(); 
-        MatchDataWarehouseInstance.set_match_details(this.current_match);
-        let now_se = get_now_server();
-        let mgt_n = Number(data.mgt);
-        if(now_se > mgt_n){
-          this.get_video_process_by_api(() => {
-            this.init_video_play_status(this.video_process_data);
-          });
-        }
-        this.set_detail_data(data)
-      }
-    })
-    .catch(err => {
-      console.error(err)
-    });
-    this.cancel_ref = debounce(this.cancel_ref,200)
+  },
+  mounted() {
+   //获取赛事详情数据
+   this.get_match_detail()
+   this.cancel_ref = debounce(this.cancel_ref,200)
+   off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=> {
+     this.get_match_detail()
+   }).off
   },
   unmounted() {
     debounce_throttle_cancel(this.cancel_ref);
@@ -113,8 +84,48 @@ export default {
     clearTimeout(this.timer_super28);
     this.timer_super28 = null
     // this.set_detail_data('')
+    if (off) {
+      off()
+    }
   },
   methods: {
+    get_match_detail() {
+      //获取赛事详情数据
+      let mid_ = this.$route.query && this.$route.query.mid || this.mid;
+      this.mid = mid_;
+      if(mid_) this.set_goto_detail_matchid(mid_);
+      let parma = {
+        mid: this.matchid || mid_,
+      }
+      api_v_sports.get_virtual_match_detail(parma).then(res => {
+        let code = lodash.get(res,'code');
+        let data = lodash.get(res,'data');
+        if(code == 200 && data){
+          this.init_match_fields(data);
+          this.match = data;
+          if(!this.current_match){
+            this.current_match = JSON.parse(JSON.stringify(data));
+            this.init_match_fields(this.current_match);
+          }
+          else{
+            Object.assign(this.current_match,data);
+          }
+          MatchDataWarehouseInstance.clear(); 
+          MatchDataWarehouseInstance.set_match_details(this.current_match);
+          let now_se = get_now_server();
+          let mgt_n = Number(data.mgt);
+          if(now_se > mgt_n){
+            this.get_video_process_by_api(() => {
+              this.init_video_play_status(this.video_process_data);
+            });
+          }
+          this.set_detail_data(data)
+        }
+      })
+      .catch(err => {
+        console.error(err)
+      });
+    },
     // ...mapMutations([
     //   'set_menu_type',
     //   'set_goto_detail_matchid',

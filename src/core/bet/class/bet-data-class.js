@@ -227,6 +227,7 @@ this.bet_appoint_ball_head= null */
   // 复合串关类型 
   set_special_type(val){
     this.special_type = val
+
     this.set_bet_data_class_version()
   }
 
@@ -702,7 +703,7 @@ this.bet_appoint_ball_head= null */
     }
     // 串关 切换到 单关
     if (!this.is_bet_single && !this.is_bet_merge) {
-      this.bet_single_list = [lodash_.cloneDeep(this.bet_s_list).pop()]
+      this.bet_single_list = [lodash_.cloneDeep(this.bet_s_list)[0]]
     }
 
     let is_bet_single = !this.is_bet_single

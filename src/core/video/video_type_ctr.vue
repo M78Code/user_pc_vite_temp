@@ -35,6 +35,7 @@
         anchor="top middle"
         self="center middle"
         :content-style="tooltip_style + ';white-space: nowrap;'"
+        class="bg-black"
       >{{ i18n_t($route.name == 'video' ? 'common.back' : 'video.big_screen_mode')}}</q-tooltip>
     </div>
     <!-- 全屏 -->
@@ -47,6 +48,7 @@
         anchor="top middle"
         self="center middle"
         :content-style="tooltip_style + ';white-space: nowrap;'"
+        class="bg-black"
       >{{ i18n_t(($route.name == 'video') && ($route.params.video_size == 1 || is_esports) ? 'common.back' : 'video.full_screen_mode')}}</q-tooltip>
     </div>
   </div>

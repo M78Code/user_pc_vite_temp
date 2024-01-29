@@ -106,17 +106,24 @@ const jumpTo = ()=>{
 			lv2_mi: route.params.sportId*1 +100 +''+ 2, // 二级菜单id
 			menu_type: 1, // 左侧热门或者赛种
 		}
-
 		let mid_config = {
 			...MenuData.mid_menu_result,
 			md: '',
 			filter_tab: 4001
 		}
-  
-		MenuData.set_menu_root(202, true)
+		let current_mi = route.params.sportId*1 +100
+		let menu_root = 202
+		if ([100, 101, 102, 103].includes(+route.params.sportId)) {
+			obj.lv1_mi = 2000
+			obj.lv2_mi = 2100
+			current_mi = 2100
+			menu_root = 2000
+			mid_config.filter_tab = 2100
+		}
+		MenuData.set_menu_root(menu_root, true)
 		MenuData.set_left_menu_result(obj)
-		MenuData.set_menu_current_mi(route.params.sportId*1 +100)
-  	MenuData.set_current_ball_type(route.params.sportId)
+		MenuData.set_menu_current_mi(current_mi)
+  		MenuData.set_current_ball_type(mid_config.lv2_mi)
 		MenuData.set_mid_menu_result(mid_config)
 		
 		router.push({name:'home'})

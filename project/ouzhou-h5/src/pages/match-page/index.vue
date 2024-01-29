@@ -27,7 +27,7 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import { IconWapper } from 'src/components/icon'
 import BaseData from 'src/core/base-data/base-data.js'
 import { MenuData } from "src/output/index.js";
-import NoData from "src/base-h5/components/common/no-data.vue";
+// import NoData from "src/base-h5/components/common/no-data.vue";
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
@@ -46,7 +46,7 @@ onMounted(() => {
 	} else {
     MatchMeta.set_prev_scroll(0)
     initMatchPage()
-    onTabChange()
+    onTabChange(MenuData.match_menu)
     // BaseData.is_emit && MatchMeta.set_origin_match_data()
     // 接口请求防抖
     handler_func = lodash.debounce(({ cmd, data }) => {
@@ -74,27 +74,27 @@ onMounted(() => {
     }).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, (obj) => {
       //早盘串关数量为0  隐藏赛事 切换冠军
-      if(!obj.ct){
-        store.tabActive = 'Outrights';
-        MenuData.set_match_tab_list([
-          'Outrights'
-        ]);
-        // store.tabOptions = [
-        //   'Outrights'
-        // ]
-      }else{
-        store.tabActive = 'Matches';
-        MenuData.set_match_tab_list([
-          'Matches',
-          'League',
-          'Outrights'
-        ]);
-        // store.tabOptions = [
-        //   'Matches',
-        //   'League',
-        //   'Outrights'
-        // ]
-      }
+      // if(!obj.ct){
+      //   store.tabActive = 'Outrights';
+      //   MenuData.set_match_tab_list([
+      //     'Outrights'
+      //   ]);
+      //   // store.tabOptions = [
+      //   //   'Outrights'
+      //   // ]
+      // }else{
+      //   store.tabActive = 'Matches';
+      //   MenuData.set_match_tab_list([
+      //     'Matches',
+      //     'League',
+      //     'Outrights'
+      //   ]);
+      //   // store.tabOptions = [
+      //   //   'Matches',
+      //   //   'League',
+      //   //   'Outrights'
+      //   // ]
+      // }
       store.isLeagueDetail = false
       MatchResponsive.set_is_league_detail(false)
       onTabChange()
@@ -118,8 +118,27 @@ onUnmounted(() => {
 const cacheStoreData = () => {
   sessionStorage.setItem('match_list_params', JSON.stringify(store));
 }
-
-const onTabChange = e => {
+const onTabChange = (val) => {
+  //早盘串关数量为0  隐藏赛事 切换冠军
+  let num = 1;
+  const index = MenuData.menu_list.findIndex(n=>{return n.mi == MenuData.menu_mi.value});
+  if(index !== -1){
+    num = (MenuData.menu_list[index]?.sl?.[2]?.ct || 0)+(MenuData.menu_list[index]?.sl?.[3]?.ct || 0);
+  }
+  if(num){
+    store.tabActive = val || 'Matches';
+    store.tabOptions = [
+      'Matches',
+      'League',
+      'Outrights'
+    ]
+  }else{
+    store.tabActive = 'Outrights';
+    store.tabOptions = [
+      'Outrights'
+    ]
+  };
+  MenuData.set_match_menu(store.tabActive);
   switch (store.tabActive) {
     case 'Matches':
       clearSessionStorageData()
@@ -195,7 +214,7 @@ const onChangeArea = (obj) => {
 }
 // 初始化matchpage页面
 const initMatchPage = () => {
-  store.tabActive = MenuData.match_tab_list[0];
+  // store.tabActive = MenuData.match_menu || store.tabOptions[0];
   store.isLeagueDetail = false
   MatchResponsive.set_is_league_detail(false)
 
@@ -205,7 +224,7 @@ const goBackToLeague = () => {
   store.tabActive = 'League'
   store.isLeagueDetail = false
   MatchResponsive.set_is_league_detail(false)
-  onTabChange()
+  onTabChange('League')
 }
 
 </script>

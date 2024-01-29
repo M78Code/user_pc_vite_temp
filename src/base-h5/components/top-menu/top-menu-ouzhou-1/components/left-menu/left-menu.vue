@@ -80,7 +80,7 @@ const leftDataList = ref([]);
  * vr 电竞
  */
 const sportsGenre = reactive([
-  { name: i18n_t("common.esports"), className: "esports", mi: "2000",route: '/esports'},
+  { name: i18n_t("common.e_sports"), className: "esports", mi: "2000",route: '/esports'},
   { name: i18n_t("common.virtual_sports"), className: "vr-sports", mi: "300",route: '/virtual' },
 ])
 /**
@@ -159,8 +159,9 @@ const set_menu_obj = (data) => {
     MenuData.set_menu_mi('2100');
   }
   //清除投注项
-  BetData.set_clear_bet_info()
-  router.push(data.route)
+  BetData.set_clear_bet_info();
+  emits('isLeftDrawer');
+  router.push(data.route);
 }
 /**
  * 球类点击
@@ -235,6 +236,7 @@ const get_init_data = (val) =>{
         })
         return item;
     })
+    MenuData.set_ws_menu_list(leftDataList.value);
 }
 onMounted(()=>{
   get_init_data();
