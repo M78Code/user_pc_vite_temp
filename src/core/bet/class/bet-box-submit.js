@@ -1316,8 +1316,10 @@ const set_market_id_to_ws = () => {
     // 获取赛事id
     mid = bet_list.map(item => item.matchId)
 
+
     obj.hid = hid.join(',')
     obj.mid = mid.join(',')
+
     // 用户赔率分组
     obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
     BetWsMessage.set_bet_c2_message(obj);
