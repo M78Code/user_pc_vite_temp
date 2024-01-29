@@ -166,15 +166,27 @@ const set_tab_list = (news_) =>{
 		resolve_mew_menu_res()
 		MenuData.set_menu_root(1)
 	}
-	
 	// 左侧菜单
 	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp()){
-		let sport_tab = lodash_.get( ref_data.ouzhou_filter_config,'sport_tab', [])  
+		let sport_tab = lodash_.get( ref_data.ouzhou_filter_config,'sport_tab', [])
+		//电足电篮不展示联赛和冠军  
 		if ([90, 91].includes(+MenuData.current_ball_type)) {
 			sport_tab = sport_tab.filter((n)=>{return n.value != 4003 && n.value != 4002})
 		}
-		// if(IS_FOR_NEIBU_TEST){
+		const index = MenuData.left_menu_list.findIndex(n=>{return news_ == n.mi || MenuData.left_menu_result.lv1_mi == n.mi});
+		let num = 1;//默认展示全部
+		if(index !== -1){
+			//早盘和今日 实时数量总和
+			num = (MenuData.left_menu_list[index]?.sl?.[2]?.ct || 0 )+(MenuData.left_menu_list[index]?.sl?.[3]?.ct || 0);
+		}
+		if(num){
 			tab_list.value = sport_tab; 
+		}else{
+			//早盘和今日无数据 则只展示冠军
+			tab_list.value = sport_tab.filter((n)=>{return n.value == 4003}); 
+		}
+		// if(IS_FOR_NEIBU_TEST){
+			// tab_list.value = sport_tab; 
 		// }else{
 		// 	sport_tab = sport_tab.filter((n)=>{return n.value != 4003})
 		// 	tab_list.value = sport_tab
@@ -224,7 +236,8 @@ const set_tab_list = (news_) =>{
 	}
 
 	if (tab_list.value.length) {
-		if(MenuData.mid_menu_result.filter_tab){
+		//冠军切换
+		if(MenuData.mid_menu_result.filter_tab && MenuData.is_kemp()){
 			checked_current_tab({value:MenuData.mid_menu_result.filter_tab})
 		}else{
 			checked_current_tab(tab_list.value[0])
