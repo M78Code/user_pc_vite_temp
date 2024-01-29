@@ -10,7 +10,7 @@
       <div class="pillarDom" :style="{ height: `${pillarDomHeight}px` }"></div>
       <div class="contentList" :style="styleTranslate" ref="contentListRef">
         <!-- :data-mid="item.mid" :data-index="index" :data-source-index="item.source_index" -->
-        <div class="item" v-for="item, index in renderData" :key="get_match_key(item)" :data-mid="item.mid">
+        <div class="item" v-for="item, index in renderData" :key="item.mid" :data-mid="item.mid">
           <slot name="default" :item="item" :index="index"></slot>
         </div>
         <!-- 到底了容器-->
@@ -30,7 +30,7 @@
 <script setup>
 import { computed, markRaw, nextTick, onMounted, onUnmounted, onUpdated, ref, toRefs, watch } from 'vue'
 
-import { useMittOn, MITT_TYPES, MenuData } from "src/output"
+import { useMittEmit, useMittOn, MITT_TYPES, MenuData } from "src/output"
 
 import SList from "src/base-h5/components/skeleton/skeleton-list.vue" 
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
@@ -294,6 +294,8 @@ const onScroll = (evt) => {
   const { scrollTop } = scrollerContainerDom
 
   handler_render_data(scrollTop)
+
+  useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING);
 
 }
 

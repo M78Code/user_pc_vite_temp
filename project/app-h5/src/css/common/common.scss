@@ -28,7 +28,7 @@
   }
 }
 .select-play-style{
-  padding: 5px 0;
+  // padding: 5px 0;
   background-color: var(--q-gb-bg-c-23);
   .q-item{
     width: 80px;
@@ -37,7 +37,7 @@
     min-height: 35px;
     &.active{
       font-weight: 600;
-      background: #ECEDF1;
+      background: var(--q-gb-bg-c-48);
       color: var(--q-gb-t-c-18);
     }
     .q-item__label{

@@ -13,34 +13,36 @@
         <IconWapper name="icon-triangle1" size="14px" class="league-collapse-dir" />
       </div>
       <!--更多玩法-->
-      <div class="select-play" v-if="second_play_data.length > 0">
-        <span @click.stop>
-          <q-btn-dropdown menu-self="top middle" flat outline padding="0" dropdown-icon="expand_more" content-class="select-play-style">
-            <template v-slot:label>
-              <template v-if="!select_second_item?.id">
-                <IconWapper name="icon-close" size="7px" color="#C9CDDB" class="icon-del" />
-                <span class="label"> 更多玩法 </span>
-              </template>
-              <template v-else>
-                <div class="active-item">
-                  <span class="label"> {{ select_second_item.title }} </span>
-                  <IconWapper name="icon-triangle1" size="14px" />
-                </div>
-              </template>
+      <div class="select-play" v-if="second_play_data.length > 0" @click.stop>
+        <q-btn-dropdown
+          :auto-close="true"
+          ref="more_dropdown"
+          menu-self="bottom middle" :menu-offset="[0, -30]" 
+          flat outline padding="0" dropdown-icon="expand_more" content-class="select-play-style">
+          <template v-slot:label>
+            <template v-if="!select_second_item?.id">
+              <IconWapper name="icon-close" size="7px" color="#C9CDDB" class="icon-del" />
+              <span class="label"> 更多玩法 </span>
             </template>
-            <q-list>
-              <q-item v-for="item, i in second_play_data" :key="item.hps_key" @click.stop="on_select_second_play(item, i)"
-                  :class="{active: select_second_item.id === item.id}" clickable v-close-popup >
-                <q-item-section>
-                  <q-item-label> 
-                    <span>{{ item.title }}</span> 
-                    <img v-if="select_second_item.id === item.id" :src="select_check" alt="select check" /> 
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-btn-dropdown>
-        </span>
+            <template v-else>
+              <div class="active-item">
+                <span class="label"> {{ select_second_item.title }} </span>
+                <IconWapper name="icon-triangle1" size="14px" />
+              </div>
+            </template>
+          </template>
+          <q-list>
+            <q-item v-for="item, i in second_play_data" :key="item.hps_key" @click.stop="on_select_second_play(item, i)"
+                :class="{active: select_second_item.id === item.id}" clickable v-close-popup >
+              <q-item-section>
+                <q-item-label> 
+                  <span>{{ item.title }}</span> 
+                  <img v-if="select_second_item.id === item.id" :src="select_check" alt="select check" /> 
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </div>
     </div>
     <!-- 次要玩法   1. 左边队伍名标题   2. 右边 盘口组件  模块 -->
@@ -92,12 +94,13 @@
 
 <script>
 import lodash from 'lodash'
-import { ref, computed, defineComponent, getCurrentInstance, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, defineComponent, getCurrentInstance, nextTick } from 'vue'
 import second_mixin from '../mixins/second.mixin.js';
 import { IconWapper } from 'src/components/icon'
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
-import { compute_css_obj } from "src/output/index.js"
+import { compute_css_obj, useMittOn, MITT_TYPES } from "src/output/index.js"
 import { select_check, information_icon } from 'src/base-h5/core/utils/local-image.js'
+
 
 export default defineComponent({
   name: "match-container-second-template2",
@@ -111,7 +114,9 @@ export default defineComponent({
     OddListWrap
   },
   setup () {
+    const more_dropdown = ref(null)
     const { proxy } = getCurrentInstance()
+    let emitters = {}
 
     // 当前总的要显示的次要玩法
     const show_second_data = computed(() => {
@@ -119,12 +124,12 @@ export default defineComponent({
     })
     // 当前显示的 次要玩法
     const current_second_data = computed(() => {
-      return show_second_data.value.slice(0, 5)
+      return show_second_data.value.slice(0, 1)
     })
     // 更多次要玩法数据
     const second_play_data = computed(() => {
       const length = lodash.get(show_second_data.value, 'length', 0)
-      return show_second_data.value.slice(5, length)
+      return show_second_data.value.slice(1, length)
     })
     // 更多次要玩法 当前所选玩法
     const select_second_item = ref({})
@@ -136,8 +141,18 @@ export default defineComponent({
         select_second_item.value = item
       })
     }
+    onMounted(() => {
+      emitters = {
+        emitter_1: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, (v) => {
+          more_dropdown.value && more_dropdown.value.hide()
+        }).off
+      }
+    })
+    onUnmounted(() => {
+      Object.values(emitters).map((x) => x());
+    })
     return { 
-      compute_css_obj, on_select_second_play, select_second_item, second_play_data, current_second_data, select_check, information_icon
+      compute_css_obj, on_select_second_play, select_second_item, second_play_data, current_second_data, select_check, information_icon, more_dropdown
     }
   }
 })
