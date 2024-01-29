@@ -1,4 +1,13 @@
 <script setup name="odd-basic">
+// import {
+//   odd_lock_ouzhou,
+//   ouzhou_hps_up,
+//   ouzhou_hps_down,
+//   ouzhou_white_down,
+//   ouzhou_white_up
+// } from "src/base-h5/core/utils/local-image.js";
+// <img class="odd-image" v-show="status != 'none'"
+//             :src="oddUp ? ouzhou_hps_up : ouzhou_hps_down" />
 const props = defineProps({
     tableData:{
         type: Array,
@@ -13,7 +22,7 @@ const props = defineProps({
 
 <template>
     <ul class="table">
-        <li class="table-header table-item table-bottom-border">
+        <li class="table-header table-item table-bottom-border" v-if="selectedTabIndex == 1">
             <div class="t1">
                 <div class="ellipsis">
                     {{ i18n_t('analysis_football_matches.company') }}
@@ -34,17 +43,9 @@ const props = defineProps({
         </li>
         <li class="table-header table-item table-bottom-border" v-else>
             <span class="t1">{{ i18n_t('analysis_football_matches.company') }}</span>
-            <span class="t2">
-                            {{
-                    selectedTabIndex == 2 ? i18n_t('analysis_football_matches.big') : i18n_t('analysis_football_matches.Main_win')
-                }}
-                        </span>
+            <span class="t2"> {{selectedTabIndex == 2 ? i18n_t('analysis_football_matches.big') : i18n_t('analysis_football_matches.Main_win')}}</span>
             <span class="t3">{{ i18n_t('analysis_football_matches.handicap') }}</span>
-            <span class="t4">
-                            {{
-                    selectedTabIndex == 2 ? i18n_t('analysis_football_matches.small') : i18n_t('analysis_football_matches.away_win')
-                }}
-                        </span>
+            <span class="t4">{{selectedTabIndex == 2 ? i18n_t('analysis_football_matches.small') : i18n_t('analysis_football_matches.away_win') }}</span>
         </li>
         <template v-if="tableData.length">
             <li class="table-body table-item table-bottom-border" v-for="(item,index) in tableData" :key="index">

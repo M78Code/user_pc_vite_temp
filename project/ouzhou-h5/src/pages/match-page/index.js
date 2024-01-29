@@ -1,5 +1,4 @@
 import { reactive } from "vue"
-import { MenuData } from "src/output";
 export const store = reactive({
     tabModel: false, //下拉框
     dateIndex: 0, //下拉框选择
@@ -20,7 +19,7 @@ export const store = reactive({
         { label: 'ouzhou.match.select_time.72h', time: "3day", timestamp: 72 },
         { label: 'ouzhou.match.select_time.168h', time: "7day", timestamp: 168 },
     ],
-    tabOptions: MenuData.match_tab_list?.length ? MenuData.match_tab_list : [
+    tabOptions: [
         'Matches',
         'League',
         'Outrights'

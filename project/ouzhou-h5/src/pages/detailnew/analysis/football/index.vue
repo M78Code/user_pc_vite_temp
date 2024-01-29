@@ -17,7 +17,7 @@ const ActiveTabCom = computed(() => {
 <template>
     <article class="analysisFootball">
         <!-- 资讯 -->
-        <Information v-if="ActiveTabCom == 'Information'" :match_detail="match_detail"/>
+        <Information v-if="ActiveTabCom == 'Information'" />
         <!-- 赛况 -->
         <Match v-if="ActiveTabCom == 'Match'" :match_detail="match_detail" :match_odds_info="match_odds_info"/>
         <!-- 数据 -->
@@ -30,3 +30,12 @@ const ActiveTabCom = computed(() => {
         <Intelligence v-if="ActiveTabCom == 'Intelligence'" :match_detail="match_detail"/>
     </article>
 </template>
+
+<style lang="scss" scoped>
+.analysisFootball{
+    /* 兼容 iOS < 11.2 */
+    padding-bottom: calc( 56px +  constant(safe-area-inset-bottom) );
+    /* 兼容 iOS >= 11.2 */
+    padding-bottom: calc( 56px +  env(safe-area-inset-bottom) );
+}
+</style>

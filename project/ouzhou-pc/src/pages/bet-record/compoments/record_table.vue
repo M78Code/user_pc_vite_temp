@@ -93,10 +93,8 @@
                         v-if="!props.row.acCode && item.beginTime&&props.row.seriesType!=3"
                       >{{formatTime(item.beginTime, lang=='vi'?'hh:MM dd/mm':'mm/dd hh:MM')}}</span>
 
-                      <!-- <span style="color:#8A8986">bet closed:{{
-                        formatTime(item.beginTime, "yyyy-mm-dd hh:MM:ss")
-                      }}
-                      </span> -->
+                      <!-- 提前结算 -->
+                      <bet-early-settle v-if="current_tab === 'unsettled'" :item="props.row"></bet-early-settle>
                     </div>
                     <!-- 赢 -->
                     <!-- 投注项结算状态展示条件，未处理，已处理，注单无效
@@ -106,14 +104,6 @@
                     v-if="data.outcome"如果outcome等于null或者undefined就不显示
                     -->
                     <div class="item-result" v-if="props.row.outcome">
-<!--                    <span-->
-<!--                      class="bet-result"-->
-<!--                      :class="{-->
-<!--                        'win-color': 0-->
-<!--                      }"-->
-<!--                    >-->
-<!--                      win-->
-<!--                    </span>-->
                       <!-- 未结算串关、已结算串关 -->
                       <template v-if="['0','1'].includes(props.row.orderStatus) && props.row.seriesType != '1'">
                         <!-- betstatus无效 -->
@@ -251,6 +241,7 @@ import Pagination from 'project_path/src/components/Pagination.vue'
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
 // 引入加载中的组件
 import LoadingIng from "src/components/loading/loading.vue"
+import betEarlySettle from "src/base-pc/components/bet-record/ouzhou-pc/bet-early-settle.vue"
 
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 import sport_icon from './sport_icon.vue'

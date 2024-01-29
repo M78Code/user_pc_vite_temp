@@ -1,4 +1,6 @@
 import math_js from "src/core/bet/common/mathjs.js"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import { i18n_t } from "src/boot/i18n.js"
 
 /*
 赔率 减 
@@ -34,6 +36,7 @@ const btn_add = ( odds ) => {
 
   // 最大值
   if( odds_val >= max_odds ){
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('bet.bet_max_booked_odds'));
     return max_odds
   }
   // 获取 修改幅度值
@@ -43,6 +46,7 @@ const btn_add = ( odds ) => {
   // 最后的数据不能大于最大值
   if(odds_new_ > max_odds ){
     odds_new_ = max_odds
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('bet.bet_max_booked_odds'));
   }
 
   return format_money(odds_new_)
