@@ -14,7 +14,8 @@ const match_detail = inject('match_detail')
 <template>
     <AnalysisCard :title="i18n_t('analysis_football_matches.Future_schedule')">
         <template #body>
-            <div class="information" v-if="lodash.isEmpty(futureScheduleData)">
+            <div class="no-data" v-if="lodash.isEmpty(futureScheduleData)">{{i18n_t('analysis_football_matches.no_data')}}</div>
+            <div class="information" v-else>
                 <ul v-for="(item,index) in futureScheduleData" :key="index" class="table">
                     <li class="table-team">
                         <div class="table-team--left">
@@ -69,7 +70,6 @@ const match_detail = inject('match_detail')
                     />
                 </ul>
             </div>
-            <div class="no-data" v-else>{{i18n_t('analysis_football_matches.no_data')}}</div>
         </template>
     </AnalysisCard>
 </template>
