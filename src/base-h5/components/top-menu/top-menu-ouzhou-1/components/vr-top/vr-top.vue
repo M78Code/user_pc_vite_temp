@@ -13,7 +13,7 @@
                 <img :src="`${LOCAL_PROJECT_FILE_PREFIX }/image/menu/top-menu/back.png`" alt="">
             </div>
             <div class="drop_menulist">
-                {{ current_sub_menu.name }}
+                VR-{{ current_sub_menu.name }}
                 <q-menu class="vr-menu-wrap">
                     <div>
                         <q-list>
