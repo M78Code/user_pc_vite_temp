@@ -120,7 +120,7 @@ const video_enter = () => {
  * 控制器回调事件
  * @param {'live'|'speed'|'video'|'animation'|'exit_full_screen'|'refresh'} value 
  */
-const handle_type = (type, clarity) => {
+const handle_type = (type, value) => {
   switch (type) {
     case "live":
       // 不知道什么功能
@@ -146,11 +146,11 @@ const handle_type = (type, clarity) => {
       })
       break;
     case "clarity":
-      clarity_type
+      clarity_type.value = value;
       // 1:高清flv, 2:流畅m3u8
       video.send_message({
           cmd:'switch_type',
-          val:type
+          val:value
       })
       break;
     default:
@@ -216,6 +216,15 @@ onMounted(() => {
    * @return {boolean} type
    */
 function exit_full_screen(type) {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) { // Firefox
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { // IE/Edge
+    document.msExitFullscreen();
+  }
   const { mid, tid, csid } = match_info.value;
   // 如果是从详情页进入大屏返回详情页
   if (is_full_screen.value) {
