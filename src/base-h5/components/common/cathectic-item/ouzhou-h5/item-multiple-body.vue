@@ -104,8 +104,7 @@
   <cancle-confirm-pop 
     v-if="show_pop" 
     :orderNo="cancle_order_no"
-    @cancel="show_pop=false;"
-    @success="canceleSucess">
+    @cancel="show_pop=false;">
   </cancle-confirm-pop>
 </template>
 
@@ -187,11 +186,6 @@ let cancle_order_no = ref('')
 const cancelPre = (data_b) => {
   cancle_order_no = lodash.get(data_b, 'orderNo', '')
   show_pop.value = true
-}
-const emit = defineEmits(['canceled'])
-const canceleSucess = () => {
-  show_pop.value = false
-  emit('canceled')
 }
 </script>
 

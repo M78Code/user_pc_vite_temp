@@ -43,7 +43,7 @@
                 </div>
               </div>
               <div v-for="(item2, key) in value.data" :key="item2.betTime" class="cathectic-item">
-                <item-multiple-body :data_b="item2" @canceled="cancelSuccess"></item-multiple-body>
+                <item-multiple-body :data_b="item2"></item-multiple-body>
               </div>
             </template>
           </q-slide-transition>
@@ -184,14 +184,6 @@ const onPull = () => {
   let ele = myScroll.value
   const { params, url_api } = init_params_api(BetRecordClass.selected, true)
   BetRecordClass.onPull(params, url_api, ele)
-}
-
-
-const cancelSuccess = () => {
-    setTimeout( () => {
-      BetRecordClass.last_record = ''
-      init_data(2)
-    }, 1000)
 }
 
 defineExpose({
