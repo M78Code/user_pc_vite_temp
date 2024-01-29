@@ -136,6 +136,7 @@ const handle_type = (type, clarity) => {
       break;
     case "exit_full_screen":
       // 退出全屏
+      exit_full_screen();
       break;
     case "refresh":
       // 刷新
@@ -212,9 +213,9 @@ onMounted(() => {
 
 /**
    * @Description:退出全屏  返回上一个页面
-   * @return {undefined} undefined
+   * @return {boolean} type
    */
-function exit_full_screen(size) {
+function exit_full_screen(type) {
   const { mid, tid, csid } = match_info.value;
   // 如果是从详情页进入大屏返回详情页
   if (is_full_screen.value) {

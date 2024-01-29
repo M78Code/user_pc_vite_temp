@@ -11,9 +11,9 @@
                 <!-- 线路列表 -->
                 <div class="type-list">
                     <!-- 高清 -->
-                    <div class="video-type-but" :class="{'video-type-but-action':ctr_data.video_type==1}" @click="send_video_type_click(1)">{{get_video_clarity_name2(1)}}</div>
+                    <div class="video-type-but"  @click="send_video_type_click(1)">{{get_video_clarity_name2(1)}}</div>
                     <!-- 流畅 -->
-                    <div class="video-type-but" :class="{'video-type-but-action':ctr_data.video_type==2}" @click="send_video_type_click(2)">{{get_video_clarity_name2(2)}}</div>
+                    <div class="video-type-but" @click="send_video_type_click(2)">{{get_video_clarity_name2(2)}}</div>
                 </div>
                 <img class="close-btn" @click="is_show_type_list = false" src="~public/image/common/png/close_white.png">
                 </div>
@@ -35,8 +35,9 @@
 
 <script setup>
 // 视频控制器，只做公共组件video页面的控制器
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/output";
+import { LOCAL_PROJECT_FILE_PREFIX, MatchDetailCalss, get_media_icon_index } from "src/output";
 import { computed, ref, watch } from "vue";
+import lodash from "lodash";
 const emits = defineEmits(['handleType'])
 const props = defineProps({
     params: {
@@ -51,6 +52,25 @@ const props = defineProps({
         default: () => ({})
     }
 });
+const vx_play_media = MatchDetailCalss.play_media;
+const get_video_clarity_name2 = (num) => {
+      let  type  = lodash.get('$route.params.play_type')  || get_media_icon_index(vx_play_media.media_type)
+      let text = ""
+    if(type == 1){
+        if(num == 1){
+        text = i18n_t('video.flv')
+        }else{
+        text = i18n_t('video.m3u8')
+        }
+    }else{
+        if(num == 1){
+        text = i18n_t('video.clarity1')
+        }else{
+        text = i18n_t('video.clarity2') 
+        }
+    }
+    return text
+};
 // 是否显示鼠标移入控制器
 const show = ref(false);
 /**@type {import('vue').Ref<"video"|"animation">} */
@@ -72,7 +92,7 @@ const handleEmit = (value) => {
     if (value == "animation" || value == "video") {
         type.value = value;
     }
-    emits.handleType(value)
+    emits('handleType',value)
 }
 
 /**
@@ -115,6 +135,7 @@ const send_video_type_click = (type) => {
         white-space: nowrap;
         padding-right: 20px;
         .clarity{
+            cursor: pointer;
             font-size: 12px;
             padding: 4px 6px;
             border-radius: 4px;
@@ -125,9 +146,12 @@ const send_video_type_click = (type) => {
             margin-left: 16px;
             width: 24px;
             height: 24px;
+            cursor: pointer;
         }
 
         .switch {
+            cursor: pointer;
+
             margin-left: 16px;
             font-size: 12px;
             display: flex;
