@@ -16,6 +16,15 @@ export const ALL_ENV_ARR = [
   
 
 
+
+  /**
+   * 
+   * 
+   * 
+   * 
+   * bd_duijie:false, 真人体育对接  开启开关 
+   */
+
   // 项目  入口配置   
   export const PROJECT_ENTRY_CONFIG = {
     project_1: {
@@ -25,7 +34,9 @@ export const ALL_ENV_ARR = [
      html_config: "html_config_default_config",
      output_base:"default",
      output_project:"default-h5",
+     bd_duijie:false,
      api_index:"default"
+    
     }, 
     project_2: {
       value:  "project_2",
@@ -34,6 +45,7 @@ export const ALL_ENV_ARR = [
       html_config: "html_config_default_config",
       output_base:"default",
       output_project:"default-pc",
+      bd_duijie:false,
       api_index:"default"
      },     
      project_3: {
@@ -44,6 +56,7 @@ export const ALL_ENV_ARR = [
       html_config: "html_config_default_config",
       output_base:"default",
       output_project:"yazhou-h5",
+      bd_duijie:false,
       api_index:"default"
      },        
      project_4: {
@@ -54,6 +67,7 @@ export const ALL_ENV_ARR = [
       html_config: "html_config_default_config",
       output_base:"default",
       output_project:"yazhou-pc",
+      bd_duijie:false,
       api_index:"default"
      },   
      project_5: {
@@ -64,6 +78,7 @@ export const ALL_ENV_ARR = [
       html_config: "html_config_app_h5_config",
       output_base:"default",
       output_project:"app-h5",
+      bd_duijie:true,
       api_index:"default"
      },   
      project_6: {
@@ -74,6 +89,7 @@ export const ALL_ENV_ARR = [
       html_config: "html_config_new_pc_config",
       output_base:"default",
       output_project:"new-pc",
+      bd_duijie:true,
       api_index:"default"
      },   
      project_7: {
@@ -84,6 +100,7 @@ export const ALL_ENV_ARR = [
       html_config: "html_config_ouzhou_pc_config",
       output_base:"default",
       output_project:"ouzhou-pc",
+      bd_duijie:false,
       api_index:"default"
      },   
      project_8: {
@@ -94,6 +111,7 @@ export const ALL_ENV_ARR = [
       html_config: "html_config_ouzhou_h5_config",
       output_base:"default",
       output_project:"ouzhou-h5",
+      bd_duijie:false,
       api_index:"default"
      },   
    
@@ -104,6 +122,7 @@ export const ALL_ENV_ARR = [
       html_config: "html_config_activity_config",
       output_base:"",
       output_project:"",
+      bd_duijie:false,
       api_index:"default"
      },   
      animation: {
@@ -112,6 +131,7 @@ export const ALL_ENV_ARR = [
       description:"自研动画   ",
       output_base:"",
       output_project:"",
+      bd_duijie:false,
       api_index:"default"
      },  
      'animation-page': {
@@ -121,6 +141,7 @@ export const ALL_ENV_ARR = [
       html_config: "html_config_animation_page_config",
       output_base:"",
       output_project:"",
+      bd_duijie:false,
       api_index:"default"
      },   
    
@@ -133,6 +154,7 @@ export const ALL_ENV_ARR = [
       html_config: "html_config_default_config",
       output_base:"",
       output_project:"",
+      bd_duijie:false,
       api_index:"default"
      },   
      "client-sdk-build": {
@@ -142,6 +164,7 @@ export const ALL_ENV_ARR = [
       html_config: "html_config_default_config",
       output_base:"",
       output_project:"",
+      bd_duijie:false,
       api_index:"default"
      },   
      "template-project": {
@@ -151,6 +174,7 @@ export const ALL_ENV_ARR = [
       html_config: "html_config_default_config",
       output_base:"",
       output_project:"",
+      bd_duijie:false,
       api_index:"default"
      },   
    

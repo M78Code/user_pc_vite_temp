@@ -155,7 +155,6 @@ class MenuData {
 
     this.left_menu_list = []
     this.top_menu_list = []
-
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
   }
 
@@ -267,7 +266,6 @@ class MenuData {
     this.left_menu_list = list.length ? list : menu_default
     this.set_menu_data_version()
   }
-
   // 设置终极菜单id
   set_menu_current_mi(mi) {
     this.menu_current_mi = mi

@@ -129,6 +129,14 @@ const set_bet_order_list = (bet_list, is_single) => {
                     // "dataSource": item.dataSource,   // 数据源
                 }
                 
+                // 电竞 vr 投注不需要一下数据
+                if(item.bet_type == 'common_bet'){
+                    bet_s_obj.scoreBenchmark = ''
+                    bet_s_obj.placeNum = item.placeNum //盘口坑位
+                    bet_s_obj.tournamentLevel = item.tournamentLevel   // 联赛级别
+                    bet_s_obj.dataSource = item.dataSource  // 数据源
+                }
+                
                 // 获取当前的盘口赔率
                 let cur_odds = lodash_.get(odds_table,`${UserCtr.odds.cur_odds}`, '1' )
                 // 获取当前投注项 如果不支持当前的赔率 就使用欧赔
@@ -1012,6 +1020,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         }
         return BetData.set_delete_bet_info(oid,index_)
     }
+
+    
     // 点击投注项 展开投注栏
     BetData.set_bet_state_show(true)
      // 列表数据仓库
@@ -1026,8 +1036,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
             // 点击投注项 显示投注栏
             BetData.set_bet_box_h5_show(true)
         }
-        // 欧洲版 串关数量大于1的情况下 点击 投注项 默认收起
-        if( PROJECT_NAME == 'ouzhou-h5' && !BetData.is_bet_single ){
+        // 欧洲版 串关数量大于1的情况下 或 选中合并单关 点击 投注项 默认收起
+        if( PROJECT_NAME == 'ouzhou-h5' && (!BetData.is_bet_single || BetData.is_bet_merge)){
             BetData.set_bet_box_h5_show(true)
             BetData.set_bet_state_show(false)
         }
@@ -1330,8 +1340,10 @@ const set_market_id_to_ws = () => {
     // 获取赛事id
     mid = bet_list.map(item => item.matchId)
 
+
     obj.hid = hid.join(',')
     obj.mid = mid.join(',')
+
     // 用户赔率分组
     obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
     BetWsMessage.set_bet_c2_message(obj);

@@ -329,6 +329,7 @@ this.bet_appoint_ball_head= null */
   // 设置投注弹窗 开启 关闭
   set_bet_state_show(val) {
     this.bet_state_show = val
+    this.bet_keyboard_show = true;
     this.set_bet_data_class_version()
   }
 

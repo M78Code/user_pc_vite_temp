@@ -38,6 +38,7 @@
    * @param {boolean} is_ws_call 是否ws调用
   */
   export const compute_match_list_style_obj_and_match_list_mapping_relation_obj_type4=(match_list,is_ws_call)=>{
+    if(!Array.isArray(match_list))return;//补偿逻辑 如果数据不对 就不做处理避免列表错误
     // 已开赛 到卡片key的 映射对象
     let play_to_card_key_arr = ['play_title']
     // 未开赛 到卡片key的 映射对象

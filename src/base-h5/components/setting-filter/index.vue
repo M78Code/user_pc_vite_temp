@@ -269,15 +269,23 @@ const version_handle = item => {
  */
 const sort_handle = async(item) => {
   const status = item.switchValue === "rightVal" ? 2 : 1;
+  //待接口上线后调整
   if (BUILDIN_CONFIG?.CURRENT_ENV == "local_test") {
     const param = {
-    sort: status
-  }
-  await api_account.get_remember_select(param).then().catch(err => {
-      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('msg.msg_nodata_07'))
+      sort: status
+    }
+    await api_account.get_remember_select(param).then(res => {
+        const {code} = res.data
+        if (code == 200) {
+          UserCtr.set_sort_type(status);
+        } else {
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('msg.msg_nodata_07'))
+        }
+    }).catch(err => {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('msg.msg_nodata_07'))
     })
   }
-  UserCtr.set_sort_type(status);
+  
 };
 /**
  *@description 处理盘口设置
