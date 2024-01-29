@@ -328,8 +328,7 @@ export default {
         let n_no = Number(this.video_process_data.nextNo);
         //展示下一轮号
         if(n_no){
-          if(this.next_batch_no){
-            console.log(this.next_batch_no, 'xxx')
+          if(this.next_batch_no && typeof this.next_batch_no == "string"){
             result = this.next_batch_no.replace('%s',this.video_process_data.nextNo);
           } 
         }
