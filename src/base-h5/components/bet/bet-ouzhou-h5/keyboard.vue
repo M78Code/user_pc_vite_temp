@@ -270,7 +270,7 @@ const _handleNumberKey = (num) => {
 <style lang="scss" scoped>
 .key-row{
   height: 0.46rem;
-  border-bottom: .01rem solid var(--q-gb-bd-c-1);
+  -border-bottom: .01rem solid var(--q-gb-bd-c-1);
 }
 .key-cell{
   border-right: .01rem solid var(--q-gb-bd-c-1);
@@ -282,7 +282,7 @@ const _handleNumberKey = (num) => {
   font-weight: 600;
   color: var(--q-gb-bg-c-13);
   font-family: "DIN";
-  border-top: 1px solid var(--q-gb-bd-c-1)
+  border-bottom: .01rem solid var(--q-gb-bd-c-1);
 }
 .key-cell {
   flex: 1;
@@ -292,6 +292,7 @@ const _handleNumberKey = (num) => {
   background: var(--q-bg-c-2);
   font-size: .22rem;
   font-weight: 500;
+  border-top: 1px solid var(--q-gb-bd-c-1)
 }
 .key-cell {
   &:first-child { // 左侧第一排MAX的样式

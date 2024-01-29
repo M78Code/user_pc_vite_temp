@@ -14,7 +14,7 @@
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one">
                         <div class="nonebox4-content-left-content-text-one-tit">
-                          <!-- vr 单独处理 -->
+                          <!-- vr 单独处理 222-->
                           <div class="text-flow-none" v-if="items.bet_type== 'vr_bet' && ['1002','1011','1009','1010'].includes(items.sportId) && [20033,20034,20035,20036,20037,20038].includes(items.playId*1)">
                             <div v-for="page in items.handicap" :key="page" class="f-s-c">
                               <span class="virtual-count" :class="`virtual-num-${page.hv} csid-${items.sportId}`" ></span> {{page.text}} 
@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="appoint-cursor" v-if="!ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
-                      +预约
+                      <span>+预约</span>
                     </div>
                     
                   </div>
@@ -190,6 +190,7 @@
     padding-left: 0.08rem;
   }
   .nonebox4-content-left-content-text-one-tit {
+    display: flex;
     :deep(.ty-span) {
       margin-left: 4px;
       color: var(--q-gb-bg-c-1);
@@ -198,8 +199,20 @@
 
   .appoint-cursor{
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: 0.2rem;
+    right: 0.2rem;
+    border-radius: 0.2rem;
+    border: 0.5px solid var(--q-gb-bd-c-16);
+    width: 0.51rem;
+    color: var(--q-gb-t-c-1);
+    span{
+      display: block;
+      border-radius: 0.2rem;
+      background: rgba(255,236,26);
+      width: 0.31rem;
+      transform: translate(0.1rem);
+      text-align: center;
+    }
   }
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;

@@ -86,6 +86,7 @@ import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { is_up_app, is_down_app } from 'src/base-h5/core/utils/local-image.js'
 import betSingleInput from "./bet-single-input.vue"
+import { watch } from "vue";
 
 const props = defineProps({
     items:{
@@ -97,6 +98,17 @@ const props = defineProps({
 const set_delete = () => {
     BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
 }
+// 修改bug 54961 同测试沟通 要求在锁盘 hs = 11 时 提示弹出框 赔率更新中
+// 为不影响其他版本 估写watch于此处
+watch(
+  () => props.items,
+  (val) => {
+    // console.log('！！！这里！！！', val)
+    if (val.mid_mhs == 11 || val.hl_hs == 11 || val.ol_os == 4) {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${i18n_t('bet.odd_upd')}`);
+    }
+  }
+);
 
 
 </script>

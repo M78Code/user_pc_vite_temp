@@ -17,7 +17,7 @@
         
         <div class="cursor re f-e-c bet-text">
            <!--  单关 合并 切换 -->
-          <div class="f-e-c" @click.prevent="show_merge_change()" v-if="BetData.is_bet_single">
+          <div class="f-e-c" @click.prevent="show_merge_change()" v-if="BetData.is_bet_single&&!MenuData.is_vr()">
             {{ i18n_t('bet.merge') }} 
             <span v-if="BetData.is_bet_merge" class="icon-arrow icon-arrow-merge ml-4"></span>
             <span v-else class="merge-checkbox ml-4"></span> 

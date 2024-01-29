@@ -100,7 +100,8 @@ onBeforeMount(() => {
             <RecordMenu @ChangeCheckbox="ChangeFlag" @ChangeRadio="ChangeCps"></RecordMenu>
         </template>
         <template #body>
-            <div class="information">
+            <div class="no-data" v-if="lodash.isEmpty(State.recentRecordData)">{{i18n_t('analysis_football_matches.no_data')}}</div>
+            <div class="information" v-else>
                 <ul v-for="(item,index) of State.recentRecordData" :key="index" class="table">
                     <li class="table-team">
                         <div class="table-team--left">
@@ -187,5 +188,14 @@ onBeforeMount(() => {
             weight: 600;
         };
     }
+}
+
+.no-data{
+    width: 100%;
+    height: .56rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #E2E2E2;
 }
 </style>
