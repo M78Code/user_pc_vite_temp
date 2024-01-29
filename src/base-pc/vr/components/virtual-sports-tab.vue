@@ -88,6 +88,7 @@ export default {
     this.emitters = [
       useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, this.initEvent).off,
       useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, this.initEvent).off,
+      useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,this.play_list).off
     ]
     this.initEvent();
     this.play_list()

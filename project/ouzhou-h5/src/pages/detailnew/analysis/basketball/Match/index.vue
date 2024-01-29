@@ -8,7 +8,6 @@ import statistics from "./statistics.vue"       // 统计
         <!-- 统计 -->
         <statistics></statistics>       
         <!-- 事件 -->
-        
     </div>
 </template>
 

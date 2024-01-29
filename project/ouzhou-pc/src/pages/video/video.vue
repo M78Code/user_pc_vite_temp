@@ -63,6 +63,8 @@ const media_src = ref("");
 const iframe_loading = ref(true);
 const is_full_screen = ref(false);
 const is_video_hover = ref(true);
+const clarity_type = ref(1);
+
 /**
  * @Description:获取视频播放地址
  * @Author Cable
@@ -112,11 +114,13 @@ const video_enter = () => {
 
 }
 
+
+
 /**
  * 控制器回调事件
  * @param {'live'|'speed'|'video'|'animation'|'exit_full_screen'|'refresh'} value 
  */
-const handle_type = (type) => {
+const handle_type = (type, clarity) => {
   switch (type) {
     case "live":
       // 不知道什么功能
@@ -138,6 +142,14 @@ const handle_type = (type) => {
       video.send_message({
         cmd:'refresh_video',
         val:''
+      })
+      break;
+    case "clarity":
+      clarity_type
+      // 1:高清flv, 2:流畅m3u8
+      video.send_message({
+          cmd:'switch_type',
+          val:type
       })
       break;
     default:
