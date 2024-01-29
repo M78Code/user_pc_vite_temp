@@ -210,8 +210,8 @@ template {
         .pre-cancle-button {
           padding: 0.02rem 0.1rem;
           border-radius: 0.1rem;
-          color: var(--q-gb-t-c-3);
-          border: 1px solid var(--q-gb-t-c-3);
+          color: var(--q-gb-t-c-4);
+          border: 1px solid var(--q-gb-t-c-4);
           margin-left: 0.06rem;
         }
       }
