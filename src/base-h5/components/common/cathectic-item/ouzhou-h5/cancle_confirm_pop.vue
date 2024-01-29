@@ -16,6 +16,8 @@
 <script setup>
 import { api_betting } from "src/api/index.js";
 import { i18n_t } from 'src/output/index.js'
+import { useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
+import BetRecordClass from "src/core/bet-record/h5/bet-record.js";
 const props = defineProps({
     orderNo: {
         type: String,
@@ -27,14 +29,16 @@ const props = defineProps({
  *@descript 取消预约投注项
 *@param {String} orderNumer 订单号
 */
-const emit = defineEmits(['success', 'cancel'])
+const emit = defineEmits(['cancel'])
 const cancle_pre_order = () => {
     api_betting.cancle_pre_order({ orderNo: props.orderNo }).then((result) => {
         let res = result.status ? result.data : result;
         if (res.code == 200) {
-            emit('success')
+            emit('cancel')
+            // 通知 cathectic-item-all, 重新获取预约数据 
+            BetRecordClass.last_record = ''
+            useMittEmit(MITT_TYPES.EMIT_BET_RECORD_SELECTED_CHANGE, 2)
         } else {
-            emit('success')
 
         }
     }).catch(() => {})

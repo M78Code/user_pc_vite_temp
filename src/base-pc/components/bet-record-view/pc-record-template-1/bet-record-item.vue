@@ -227,7 +227,7 @@ import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
 import { formatTime } from 'src/output/index.js'
-import betCancelPre from "src/base-pc/components/bet-record/record-table/bet-cancel-pre.vue"
+import betCancelPre from "src/base-pc/components/bet-record/bet-cancel-pre.vue"
 
 import lodash_ from "lodash"
 const props = defineProps({

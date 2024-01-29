@@ -58,7 +58,7 @@
             class="expansion_ref_slotHeader expansion-vs"
             @click.stop="show_item"
           >
-            <div style="display: flex;align-items: center;">
+            <div style="display: flex;align-items: center;" v-if="match.teams">
               <span class="home-vs-away" :title="match.mhn">{{ match.teams[0] }} </span>
               <span class="match-detail-head-name m-10">v</span>
               <span class="home-vs-away" :title="match.man">{{ match.teams[1] }}</span>
@@ -135,13 +135,14 @@ import football_ranking_list from "src/base-pc/vr/pages/virtual/virtual-sports-p
 import group_knockout from "src/base-pc/vr/pages/virtual/virtual-sports-part/group-knockout.vue"
 import virtual_match_statistic from 'src/base-pc/vr/components/virtual-match-statistic.vue'
 import breadcrumbs from "src/base-pc/vr/pages/virtual/details/children/breadcrumbs.vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX, useMittOn, MITT_TYPES } from "src/output/index.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 import virtual_sports_right from "src/base-pc/vr/pages/virtual/virtual-sports-part/virtual-sports-right.vue"
 import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
 import {api_v_sports} from "src/api/index.js";
 import details from "src/core/match-list-pc/details-class/details.js";
 
+let off = ''
 export default {
   mixins:[virtual_sports_details_mixin],
   name:'virtual_sports_details',
@@ -181,6 +182,14 @@ export default {
   mounted(){
     // 获取队伍列表
     this.get_virtual_sport_local()
+    off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=> {
+      this.get_virtual_sport_local()
+    }).off
+  },
+  unmounted() {
+    if (off) {
+      off()
+    }
   },
   methods: {
     /**

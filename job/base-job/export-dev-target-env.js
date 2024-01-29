@@ -120,12 +120,23 @@ let DEV_IS_FOR_NEIBU_TEST= true
 
 
 //  DEV_IS_FOR_NEIBU_TEST= false
+
+//是否开启BD对接  是：true ，否：false
+
+let DEV_IS_FOR_BD_DUIJIE= true
+
+
+//  DEV_IS_FOR_BD_DUIJIE= false
+
+
+
 export {
  
  
   DEV_TARGET_VERSION,
   DEV_TARGET_ENV,
-  DEV_IS_FOR_NEIBU_TEST
+  DEV_IS_FOR_NEIBU_TEST,
+  DEV_IS_FOR_BD_DUIJIE
  
  
 };

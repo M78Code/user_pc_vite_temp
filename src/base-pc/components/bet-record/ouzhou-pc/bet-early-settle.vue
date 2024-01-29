@@ -1,51 +1,53 @@
 <!--
 
- * @Description: 投注记录，投注结果部分
+ * @Description: 投注记录，提前结算部分
 -->
 <template>
-  <div>
-    <div class="row">
-      <div style="display: none;">{{ BetRecordLeft.bet_record_version }}</div>
-      <div class="col bet-money">
-        {{i18n_t('common.bets_val')}}
-        <!-- 投注额 -->
-      </div>
-      <div class="col-auto bet-money">
-        <!--最高可赢-->
-        <template v-if="[0,2].includes(BetRecordLeft.selected)">{{i18n_t('common.maxn_amount_val')}}</template>
-        <!--返还金额-->
-        <template v-if="BetRecordLeft.selected==1">{{i18n_t('common.donate_win')}}</template>
-        <!-- 可赢额 -->
-      </div>
-    </div>
-    <div class="row bet-win-input">
-      <div class="col bet-value">
-       {{ format_currency(item.orderAmountTotal) }}
-      </div>
-      <!-- <div class="col-auto bet-value" :class="{'red-text':(item.outcome=='4' || item.outcome=='5')}"> -->
-      <div class="col-auto bet-value red-text">
-        <template v-if="[0,2].includes(BetRecordLeft.selected)">
-          {{  format_currency(item.maxWinAmount) }}
-        </template>
-        <template v-if="BetRecordLeft.selected==1">
-          {{ format_currency(item.backAmount) }}
-        </template>
-      </div>
-    </div>
-    <template v-if="item.addition!= '0.00'">
-      <div class="row bet-win-money yb-fontsize12">
-        <div class="col">
-          <div class="bet-addition">
-            [{{item.addition}}]
-          </div>
-        </div>
-        <!--¥300.00-->
-        <div class="col-auto"></div>
-      </div>
-    </template>
     <!-- 专业版单关 未结算 可以提前结算 -->
-    <bet-early-settle v-if="BetRecordLeft.selected == 0" :item="item"></bet-early-settle>
-  </div>
+    <div class="info-wrap" v-if="calc_show">
+      <!--提前结算提示语-->
+      <div class="bet-pre-title">
+        <template v-if="unSuccessTips">
+          <span style="color:red">
+            <template v-if="bet_pre_code=='0400527'">
+              <!--功能暂停中，请稍后再试-->
+              {{i18n_t('bet_record.pre_suspend')}}
+            </template>
+            <template v-else-if="bet_pre_code=='0400537'">
+              <!--提前结算金额调整中，请再试一次-->
+              {{i18n_t('bet_record.pre_amount_change')}}
+            </template>
+            <template v-else>
+              <!--提前结算申请未通过-->
+              {{i18n_t('bet_record.pre_not_approved')}}
+            </template>
+          </span>
+        </template>
+        <template v-else>
+          <!--提前结算金额已包含本金-->
+          <span>{{i18n_t('bet_record.pre_bet_include_money')}}</span>
+        </template>
+      </div>
+      <div class="bet-pre-wrap">
+        <!-- 提前结算按钮-->
+        <div class="bet-pre-btn" @click="submit_click">
+          <!-- 提前结算-->
+          <div class="bet-row-1">
+            <!-- 提前结算 -->
+            <template v-if="status == 1 || status == 6">{{i18n_t("bet_record.settlement_pre")}} </template>
+            <!-- 确认提前结算 -->
+            <template v-if="status == 2">{{i18n_t("bet_record.confirm_bet_pre")}} </template>
+            <!-- 确认中... -->
+            <template v-if="status == 3">{{i18n_t("bet_record.confirm")}} </template>
+            <!-- 已提前结算 -->
+            <template v-if="status == 4">{{i18n_t("bet_record.finish_bet_pre")}} </template>
+          </div>
+          <div class="bet-row-2" v-if="(Number(front_settle_amount) || expected_profit)">￥{{ betting_amount }}</div>
+        </div>
+        <img v-if="status == 3" class="roll" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/suring.png`" alt="">
+        <img v-if="status == 4" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/success.png`" alt="">
+      </div>
+    </div>
 </template>
 <script setup>
 import { reactive, ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue"
@@ -53,25 +55,9 @@ import lodash from 'lodash'
 import { format_odds, format_currency, formatTime, useMittEmit, useMittOn,  MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
-import  BetRecordLeft  from "src/core/bet-record/pc/bet-record-left.js"
-import betEarlySettle from "src/base-pc/components/bet-record/bet-early-settle.vue"
 
 const props = defineProps({
-  index: {
-    type: Number,
-    default: 0
-  },
   item: {},
-  order: {},
-})
-
-const toast = ref(false)
-
-const ref_data = reactive({
- bet_pre_code: 0, // 提前结算编码 0 未结算 1 结算成功 其他结算失败 0400524(提示结算为通过审核) 0400500(按钮置灰)
- amount: 1.00, // 按钮上的显示金额
- cur_bet_pre: {},
- more_index: -1,//查看更多按钮index
 })
 
 
@@ -153,8 +139,9 @@ watch(() => expected_profit.value, (_new, _old) => {
 
 onMounted(() => {
   // 计算提前结算按钮是否显示
-  calc_show.value = (BetRecordLeft.selected === 0 && props.item.seriesType === '1' && props.item.enablePreSettle)
-  //  /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordLeft.selected + props.item.enablePreSettle + status.value);
+  // calc_show.value = (props.item.seriesType === '1' && props.item.enablePreSettle)
+  calc_show.value = true
+  //  /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch')  + props.item.enablePreSettle + status.value);
 
 
   if (is_only_fullbet.value) {
@@ -332,12 +319,6 @@ const clear_timer = () => {
 
 </script>
 <style lang="scss" scoped>
-.pt10 {
-  padding-top: 10px;
-}
-.mt0 {
-  margin-top: 0;
-}
 .info-wrap {
   text-align: center;
   .bet-pre-title {
@@ -371,24 +352,6 @@ const clear_timer = () => {
       }
     }
   }
-}
-.toast {
-  position: fixed;
-  top: 50%;
-  left: 110px;
-  padding: 0 20px;
-  height: 36px;
-  border-radius: 2px;
-  text-align: center;
-  line-height: 36px;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-}
-.bet-pre-stop-tip{
-  text-align: center;
-  color: #f00;
-  margin-right: 15px;
-  padding: 10px 0 0px 0;
 }
 
 @keyframes loading-roll {
