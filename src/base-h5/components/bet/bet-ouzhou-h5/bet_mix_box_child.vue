@@ -61,8 +61,8 @@
                 <!-- 串关投注 限额 -->
                 <!-- 复式连串过关投注 限额 -->
                 <template v-if="BetData.bet_s_list.length > 1"  >
-                  <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
-                    <template v-if="BetData.special_type || !index || BetData.bet_s_list.length > 2">
+                  <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index" >
+                    <template v-if="(BetData.special_type || !index || BetData.bet_s_list.length > 2) && BetData.special_type || !index">
                       <bet-special-input :items="item" :index="index" />
                     </template>
                   </template>
@@ -121,7 +121,7 @@ import betBar from "./bet-bar.vue";
 //import betInputInfo from "//bet_input_info";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { ref, onMounted, reactive ,onUnmounted } from 'vue';
+import { ref, onMounted, reactive ,onUnmounted ,watch,computed} from 'vue';
 import {MITT_TYPES,useMittOn,formatMoney,UserCtr } from "src/output/index.js"
 import lodash from "lodash";
 // 键盘收起的高度
@@ -152,10 +152,13 @@ const ref_data = reactive({
 const scrollAreaPo = () => {
 
   if(!BetData.is_bet_single){
-      scrollAreaRef.value.setScrollPosition('vertical', BetData.bet_s_list.length * 119)
+    scrollAreaRef.value.setScrollPercentage('vertical', 0.77)
   }
 
 }
+
+
+
 
 onMounted(() => {
 
@@ -174,8 +177,6 @@ onUnmounted(()=>{
   Object.values(ref_data.emit_lsit).map((x) => x());
 
 })
-
-
 
 </script>
 <style lang="scss" scoped>

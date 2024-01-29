@@ -408,6 +408,11 @@ onMounted(() => {});
   }
   :deep(.temp-simple) {
   .oid-width {
+    // background-color: red;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     min-width: 35px;
   }
 }
