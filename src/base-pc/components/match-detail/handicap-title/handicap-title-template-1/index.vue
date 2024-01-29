@@ -15,7 +15,6 @@
     <div class="play-name col">
       <span class="ellipsis">
         <!-- 玩法名称 -->
-        <!-- {{ lodash.get(item_details, "hpn") }} -->
         <!-- 上半场下半场tag -->
         <div 
           class="play-btn" 
