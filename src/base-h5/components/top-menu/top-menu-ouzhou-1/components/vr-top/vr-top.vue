@@ -9,11 +9,11 @@
             </div>
             <!-- <div class="detail-back" v-if="['/virtual_sports_details', '/virtual_sports_details/'].includes(router.currentRoute.value.path)" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div> -->
             <div class="vr_name">
-                <span style="margin-left: 0.01rem;">VR Sports</span>
+                <span style="margin-left: 0.01rem;">{{ i18n_t("common.virtual_sports") }}</span>
                 <img :src="`${LOCAL_PROJECT_FILE_PREFIX }/image/menu/top-menu/back.png`" alt="">
             </div>
             <div class="drop_menulist">
-                {{ current_sub_menu.name }}
+                VR-{{ current_sub_menu.name }}
                 <q-menu class="vr-menu-wrap">
                     <div>
                         <q-list>
