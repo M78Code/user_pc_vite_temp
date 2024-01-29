@@ -277,8 +277,8 @@ import sport_icon from './sport_icon.vue'
 import { copyToClipboard } from 'quasar'
 import GlobalSwitchClass from 'src/core/global/global.js'
 import BetRecordHistory from "src/core/bet-record/pc/bet-record-history.js"
-import betEarlySettle from "src/base-pc/components/bet-record/record-table/bet-early-settle.vue"
-import betCancelPre from "src/base-pc/components/bet-record/record-table/bet-cancel-pre.vue"
+import betEarlySettle from "src/base-pc/components/bet-record/bet-early-settle.vue"
+import betCancelPre from "src/base-pc/components/bet-record/bet-cancel-pre.vue"
 
 const lang = computed(() => {
   return UserCtr.lang;

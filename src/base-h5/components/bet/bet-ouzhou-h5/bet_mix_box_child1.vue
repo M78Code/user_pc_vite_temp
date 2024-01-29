@@ -265,7 +265,7 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: 700;
-      color: var(--q-gb-t-c-4);
+      color: var(--q-gb-t-c-1);
       &.red-up{
           color: var(--q-gb-t-c-17);
       }

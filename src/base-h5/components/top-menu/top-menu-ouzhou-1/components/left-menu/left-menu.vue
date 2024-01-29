@@ -80,7 +80,7 @@ const leftDataList = ref([]);
  * vr 电竞
  */
 const sportsGenre = reactive([
-  { name: i18n_t("common.esports"), className: "esports", mi: "2000",route: '/esports'},
+  { name: i18n_t("common.e_sports"), className: "esports", mi: "2000",route: '/esports'},
   { name: i18n_t("common.virtual_sports"), className: "vr-sports", mi: "300",route: '/virtual' },
 ])
 /**

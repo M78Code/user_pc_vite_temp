@@ -38,13 +38,15 @@ declare namespace TYPES {
     mearlys: number,
     mft: number,
   }
-  /** 盘口信息 */ interface OddInfo<T extends Ol | OlResult = Ol> extends K.hid, K.hpid, K.mid, K.hpn, K.hpt, K.hotName {
-    hv: any,
-    /** @deprecated 貌似没有这个属性 */ ol: T[]
-    hl: Hl[]
+  /** 盘口信息 */ interface OddInfo extends K.hid, K.hpid, K.mid, K.hpn,K.hpn2, K.hpt, K.hotName {
+    hpon: number,
+    hlid: string,
+    hsw: string,
+    /** 投注项列表 */ hl: Hl[]
     /** 置顶时间戳 */ hton: string
-    /** 用于玩法置顶的key */ topKey: string
-    /**  */ title: OddTitle[]
+    /** 用于玩法排序的key */ topKey: string
+    /** 玩法标题 */ title: OddTitle[]
+    /** 1:上半场玩法; 2:下半场玩法; 10:第一节; 20:第二节; 30:第三节; 40:第四节 */ halfLg?: 1|2|10|20|30|40
   }
 
   /** 玩法标题 */ interface OddTitle {
@@ -70,7 +72,9 @@ declare namespace TYPES {
     /** ? */ hmt: number,
     /** ? */ hn: number,
     /** 赔率集合? 投注项集合? */ ol: Array<Ol>
-    /** 1:上半场玩法; 2:下半场玩法; 10:第一节; 20:第二节; 30:第三节; 40:第四节 */ halfLg?: 1|2|10|20|30|40
+    /** ? */ hv:number,
+    /** ? */ ad1: string,
+    /** ? */ ad2: string,
   }
 
   /** 详情赛事分析资讯 文章 */ interface Article {
@@ -174,6 +178,9 @@ declare namespace K {
   };
   /** 玩法名称 */ type hpn = {
     /** 玩法名称 */ hpn: string
+  };
+  /** 特殊玩法名称 */ type hpn2 = {
+    /** 特殊玩法名称 */ hpn: string
   };
   /** 时间戳 */ type t = {
     /** 时间戳 */ t: string

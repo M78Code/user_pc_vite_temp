@@ -141,9 +141,9 @@ const set_ref_data_bet_money = () => {
         width: 162px;
         height: 42px;
         box-shadow: 0px 1px 4px 0px rgba(255, 112, 0, 0.10);
-        border: 1px solid var(--q-gb-bg-c-1);
+        border: 1px solid var(--q-gb-bg-c-14);
         padding-left: 6px;
-        background: #FFF6F0;
+        background: linear-gradient(0deg,#ffffff,#ffffff);
         caret-color: var(--q-gb-bd-c-1);
         font-family: DIN;
         font-size: 20px;
