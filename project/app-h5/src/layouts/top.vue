@@ -9,8 +9,10 @@
   <template v-if="['matchList', 'sport_menu', 'esports_sports'].includes(route.name)">
     <!--  顶部菜单 -->
     <div class="long3_icon">
-      <img :src="h5_long_bg"  alt="">
-      <img :src="h5_long_gb2"  alt="">
+
+      <!-- 主题换肤 龙年元素 日间：theme-2   夜间：theme-1 -->
+      <img v-if="UserCtr.theme == 'theme-2'" :src="h5_long_bg"  alt="">
+      <img v-if="UserCtr.theme == 'theme-1'" :src="h5_long_gb2"  alt="">
 
       <TopMenu />
       <div v-show="[3, 6].includes(MenuData.current_lv_1_menu_mi.value)">
@@ -60,7 +62,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
 import { TopMenu, ScrollMenu, SearchTab, DateTab, SwitchWap } from 'src/base-h5/components/menu/app-h5-menu/index'
-import { h5_long3, h5_long_bg, h5_long_gb2 } from 'src/base-h5/core/utils/local-image.js'
+import { h5_long_bg, h5_long_gb2 } from 'src/base-h5/core/utils/local-image.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
