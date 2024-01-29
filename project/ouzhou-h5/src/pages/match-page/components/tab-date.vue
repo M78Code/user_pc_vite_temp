@@ -91,15 +91,15 @@ const dateOptionsRef = ref(null);
 const week = ref([]);
 const tabList = computed(()=>{
     //赛事列表tab
-    const list = MenuData.match_tab_list || [
-      'Matches',
-      'League',
-      'Outrights'
-    ];
+    // const list = MenuData.match_tab_list || [
+    //   'Matches',MenuData.set_match_tab_list
+    //   'League',
+    //   'Outrights'
+    // ];
     const menu_list = MenuData.menu_list.map((item)=>{return +item.mi});
-    const matches = list.filter(n=>{return n ==='Matches'});//电足电篮不展示冠军和联赛
-    const not_outrights = list.filter(n=>{return n !=='Outrights'});
-    return [190,191].includes(+store.current_menu_mi)?matches:menu_list.includes(400)?list:not_outrights;
+    const matches = store.tabOptions.filter(n=>{return n ==='Matches'});//电足电篮不展示冠军和联赛
+    const not_outrights = store.tabOptions.filter(n=>{return n !=='Outrights'});
+    return [190,191].includes(+store.current_menu_mi)?matches:menu_list.includes(400)?store.tabOptions:not_outrights;
 })
 const DateOptionsOffset = computed(() => {
     const domWidth = document.body.clientWidth || document.documentElement.clientWidth
@@ -152,7 +152,7 @@ const getDateList = async () =>{
  * @param {*} name 
  */
 const changeTab = (name, index) => {
-    store.tabActive = name;
+    // store.tabActive = name;
     store.tabModel = false;
     store.curSelectedOption = store.selectOptions[0]
     store.dateIndex = 0

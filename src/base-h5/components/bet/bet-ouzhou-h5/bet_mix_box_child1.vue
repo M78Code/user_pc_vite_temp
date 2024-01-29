@@ -14,7 +14,7 @@
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one">
                         <div class="nonebox4-content-left-content-text-one-tit">
-                          <!-- vr 单独处理 -->
+                          <!-- vr 单独处理 222-->
                           <div class="text-flow-none" v-if="items.bet_type== 'vr_bet' && ['1002','1011','1009','1010'].includes(items.sportId) && [20033,20034,20035,20036,20037,20038].includes(items.playId*1)">
                             <div v-for="page in items.handicap" :key="page" class="f-s-c">
                               <span class="virtual-count" :class="`virtual-num-${page.hv} csid-${items.sportId}`" ></span> {{page.text}} 
@@ -190,6 +190,7 @@
     padding-left: 0.08rem;
   }
   .nonebox4-content-left-content-text-one-tit {
+    display: flex;
     :deep(.ty-span) {
       margin-left: 4px;
       color: var(--q-gb-bg-c-1);
