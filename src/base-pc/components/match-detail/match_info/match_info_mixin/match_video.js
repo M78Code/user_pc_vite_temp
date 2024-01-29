@@ -133,7 +133,6 @@ export default {
     "details_data_version.version": {
       handler(res) {
         this.play_media = MatchDetailCalss.play_media
-        debugger
         this.vx_is_pause_video = MatchDetailCalss.is_pause_video
         // this.show_type =MatchDetailCalss.params.media_type
         let cur = MatchDetailCalss.play_media.time
