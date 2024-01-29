@@ -43,7 +43,7 @@
                 </div>
               </div>
               <div v-for="(item2, key) in value.data" :key="item2.betTime" class="cathectic-item">
-                <item-multiple-body :data_b="item2"></item-multiple-body>
+                <item-multiple-body :data_b="item2" @canceled="cancelSuccess"></item-multiple-body>
               </div>
             </template>
           </q-slide-transition>
@@ -114,7 +114,9 @@ onUnmounted(() => {
 const init_data = (_index) => {
   const { params, url_api } = init_params_api(_index)
   // 请求注单记录接口
-  BetRecordClass.get_order_list(params, url_api)
+  // 预约(数据需加工)
+  const prevData = _index === 2
+  BetRecordClass.get_order_list(params, url_api, prevData)
 
   // 未结算时，轮询获取提前结算列表金额
   timer && clearInterval(timer)
@@ -136,14 +138,14 @@ const init_params_api = (_index, _isOnPull=false) => {
   let params = {}
   let url_api = Promise.resolve();
   switch (_index) {
-    case 0:
+    case 0:  //未结算
       params = {
         searchAfter: (_isOnPull && BetRecordClass.last_record) || undefined,
         orderStatus: '0',
       }
       url_api = api_betting.post_getH5OrderList      
       break;
-    case 1:
+    case 1:  //已结算
       params = {
         searchAfter: (_isOnPull && BetRecordClass.last_record) || undefined,
         orderStatus: '1',
@@ -151,6 +153,13 @@ const init_params_api = (_index, _isOnPull=false) => {
         timeType: timeType.value
       }
       url_api = api_betting.post_getH5OrderList
+      break;
+    case 2: // 预约
+      params = {
+        searchAfter: (_isOnPull && BetRecordClass.last_record) || undefined,
+        preOrderStatusList: [0, 2, 3, 4],
+      }
+      url_api = api_betting.get_preOrderList_news
       break;
   }
   return {
@@ -175,6 +184,14 @@ const onPull = () => {
   let ele = myScroll.value
   const { params, url_api } = init_params_api(BetRecordClass.selected, true)
   BetRecordClass.onPull(params, url_api, ele)
+}
+
+
+const cancelSuccess = () => {
+    setTimeout( () => {
+      BetRecordClass.last_record = ''
+      init_data(2)
+    }, 1000)
 }
 
 defineExpose({

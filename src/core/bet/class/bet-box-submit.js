@@ -109,12 +109,13 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "sportId": item.sportId,   // 赛种id
                     "matchId": item.matchId,   // 赛事id
                     "tournamentId": item.tournamentId,   // 联赛id
-                    "scoreBenchmark": "",    // 基准分
+                    // "scoreBenchmark": "",    // 基准分
                     "betAmount": obj.bet_amount,  //投注金额         
-                    "placeNum": item.placeNum, //盘口坑位
+                    // "placeNum": item.placeNum, //盘口坑位
                     "marketId": item.marketId,  //盘口id
                     "playOptionsId": item.playOptionsId,   // 投注项id
                     "marketTypeFinally": UserCtr.odds.cur_odds,     // 欧洲版默认是欧洲盘 HK代表香港盘
+                    "marketValue": item.marketValue,
                     "odds": item.odds,  // 赔率 万位
                     "oddFinally": compute_value_by_cur_odd_type(item.odds, item.playId, item.odds_hsw, item.sportId),  //赔率
                     "playName": item.playName, //玩法名称
@@ -123,9 +124,17 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "matchName": item.matchName,   //赛事名称
                     "playOptionName": item.playOptionName,   // 投注项名称
                     "playOptions": item.playOptions,   // 投注项配置项
-                    "tournamentLevel": item.tournamentLevel,   // 联赛级别
+                    // "tournamentLevel": item.tournamentLevel,   // 联赛级别
                     "playId": item.playId,   // 玩法id
-                    "dataSource": item.dataSource,   // 数据源
+                    // "dataSource": item.dataSource,   // 数据源
+                }
+                
+                // 电竞 vr 投注不需要一下数据
+                if(item.bet_type == 'common_bet'){
+                    bet_s_obj.scoreBenchmark = ''
+                    bet_s_obj.placeNum = item.placeNum //盘口坑位
+                    bet_s_obj.tournamentLevel = item.tournamentLevel   // 联赛级别
+                    bet_s_obj.dataSource = item.dataSource  // 数据源
                 }
                 
                 // 获取当前的盘口赔率
@@ -151,14 +160,17 @@ const set_bet_order_list = (bet_list, is_single) => {
     } else {
         let pre_odds = ''
         let pre_marketValue = ''
+        let pre_handicap = ''
         bet_list.forEach((item, index) => {
             // 预约投注 设置预约投注赔率
             if(BetData.is_bet_pre){
                 pre_odds = item.pre_odds
                 pre_marketValue = item.pre_marketValue
+                pre_handicap = item.pre_handicap
             }
             let odds = pre_odds || item.odds
             let marketValue = pre_marketValue || item.marketValue
+            let playOptionName = pre_handicap ? `${pre_handicap} ${marketValue}` : item.playOptionName
             let odd_finally = compute_value_by_cur_odd_type(odds, item.playId, item.odds_hsw, item.sportId)
             let bet_s_obj = {
                 "sportId": item.sportId,   // 赛种id
@@ -177,7 +189,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "sportName": item.sportName,  // 球种名称
                 "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
                 "matchName": item.matchName,   //赛事名称
-                "playOptionName": item.playOptionName,   // 投注项名称
+                "playOptionName": playOptionName,   // 投注项名称
                 "playOptions": item.playOptions,   // 投注项配置项
                 "tournamentLevel": item.tournamentLevel,   // 联赛级别
                 "playId": item.playId,   // 玩法id
@@ -192,9 +204,13 @@ const set_bet_order_list = (bet_list, is_single) => {
                 bet_s_obj.marketTypeFinally = 'EU'
             }
             // 预约投注 设置预约盘口值
-            // if(BetData.is_bet_pre){
-            //     bet_s_obj.marketValue = item.marketValue
-            // }
+            if(BetData.is_bet_pre){
+                if(bet_s_obj.marketValue) {
+                    bet_s_obj.playOptionsId = ''
+                    bet_s_obj.marketId = ''
+                    bet_s_obj.placeNum = ''
+                }
+            }
 
             // 预约投注
             // 需要用对应的数据 对投注数据进行覆盖
@@ -553,7 +569,8 @@ const pre_bet_comparison = () => {
 			oid: pre_obj.custom_id,
 			pre_odds: pre_obj.odds,
 			pre_oddFinally: pre_obj.oddFinally,
-            pre_marketValue: pre_obj.marketValue
+            pre_marketValue: pre_obj.marketValue,
+            pre_handicap: pre_obj.handicap
 
 		}
 		BetData.set_bet_single_list_obj(pre_data)
@@ -567,7 +584,8 @@ const pre_bet_comparison = () => {
 						oid: item.id,
 						pre_odds: pre_obj.odds,
 						pre_oddFinally: pre_obj.oddFinally,
-                        pre_marketValue: pre_obj.marketValue
+                        pre_marketValue: pre_obj.marketValue,
+                        pre_handicap: pre_obj.handicap
 					}
 					BetData.set_bet_single_list_obj(obj)
 					BetData.set_is_bet_pre(false)
@@ -722,6 +740,7 @@ const submit_handle_lastest_market = () => {
         seriesOrders = set_bet_order_list(BetData.bet_s_list, false)
         // 串关 没有单关字段
         delete params.openMiltSingle
+        delete params.preBet
     }
     // 投注内容
     params.seriesOrders = seriesOrders
@@ -872,6 +891,9 @@ const set_error_message_config = (res ={},type,order_state) => {
         code: res.code,
         message: res.message
     }
+    // console.log('---!这!---', res)
+    let matchInfo = lodash_.get(res, 'data.orderDetailRespList[0].matchInfo', '')
+    let playName = lodash_.get(res, 'data.orderDetailRespList[0].playName', '')
     // 是否需求清除投注信息
     let clear_time = true
 
@@ -902,11 +924,13 @@ const set_error_message_config = (res ={},type,order_state) => {
                     }
                     break
                 case 7:
-                    // 预约成功
+                    // 预约订单确认
                     obj = {
                         code: '200',
-                        message: "bet.bet_booked"
+                        message: "bet.bet_order_info2"
                     }
+                    // matchInfo + playName + i18
+                    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${matchInfo} ${playName} ${i18n_t('bet.bet_booked')}`);
                     break;
                 case 8: 
                     // 预约失败

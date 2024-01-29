@@ -23,9 +23,7 @@
     <div v-if="is_details || whitchDetail == 'rightDetails'" class="row">
       <div class="right-icons" @click="handicap_this.toggle_panel">
         <icon-wapper
-          :name="
-            handicap_this.panel_status == 'hide' ? 'icon-open' : 'icon-hide'
-          "
+          :name="handicap_this.panel_status == 'hide' ? 'icon-open' : 'icon-hide'"
           color="#5A6074"
           size="14px"
         />
@@ -33,12 +31,9 @@
           anchor="top middle"
           self="center middle"
           :content-style="tooltip_style"
-          >{{
-            handicap_this.panel_status == "hide"
-              ? i18n_t("icon_tips.unfold")
-              : i18n_t("icon_tips.fold")
-          }}</q-tooltip
         >
+          {{handicap_this.panel_status == "hide" ? i18n_t("icon_tips.unfold") : i18n_t("icon_tips.fold") }}
+        </q-tooltip>
         <!-- 展开：收起 -->
       </div>
       <!-- 一栏/两栏布局按钮在页面宽度 < 1680 的时候和内嵌版里不展示 -->
