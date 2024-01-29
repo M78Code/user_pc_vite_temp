@@ -14,7 +14,6 @@
       limit_height: limit_height,
     }"
   >
-  <!-- {{ cur_state}} -->
     <div
       v-if="cur_state == 'data' || limit_height"
       class="fit"
@@ -53,7 +52,7 @@
       <div
         v-if="cur_state == 'right_details_loading'"
         class="loading-wrap right_details_loading"
-      >
+        >
         <div class="img-loading custom-format-img-loading" :style="compute_css_obj({key:'pc-loading'})"></div>
         <div class="text-center loading-text flex items-end justify-center">
           <span>{{i18n_t("common.loading") }}</span>
@@ -62,7 +61,7 @@
         
       </div>
       
-      <no-data-wapper
+      <no-data
         v-else-if="['empty', 'notice-empty', 'code_empty'].includes(cur_state)"
         :msg="
           no_data_msg
@@ -83,8 +82,8 @@
         which="noMatch"
         :url="compute_local_project_file_path('/image/png/no_data_01.png')"
       >
-      </no-data-wapper>
-      <no-data-wapper
+      </no-data>
+      <no-data
         v-else-if="['all_empty', 'new_empty'].includes(cur_state) && is_eports"
         :msg="i18n_t('common.no_data')"
         :type_name="'esports-size'"
@@ -95,17 +94,17 @@
         class="empty-wrap esports"
         which="noMatch"
       >
-        <!-- <div class="empty-btn-wrap" >
+        <div class="empty-btn-wrap" >
           <div class="empty-btn" @click="journey">
             {{ i18n_t('common.go_now')}}
            </div>
-        </div> -->
-      </no-data-wapper>
+        </div>
+      </no-data>
       <div
         class="list_right_empty"
         v-else-if="['all_empty', 'new_empty'].includes(cur_state)"
       >
-        <div class="img" :style="compute_css_obj('pc-lock-img-details')"></div>
+        <div class="img" :style="compute_css_obj({key:'pc-lock-img-details'})"></div>
         <span>{{i18n_t(`common.${cur_state}`) }}</span>
       </div>
     </div>
@@ -179,7 +178,7 @@
 </template>
 
 <script setup>
-import { NoDataWapper} from "src/components/common/no-data/index";
+import noData from "src/components/no_data/no_data.vue";
 import { onMounted,computed,ref,onUnmounted, watch } from 'vue'
 import store from "src/store-redux/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
@@ -188,7 +187,6 @@ import filterHeader from "src/core/filter-header/filter-header.js";
 import { i18n_t,is_eports_csid, compute_local_project_file_path ,compute_css_obj} from "src/output/index.js"
 import { useRoute } from "vue-router";
 const {route} = useRoute()
-const noData = NoDataWapper
 const props = defineProps({
   // 是详情时 loading 与 empty 不居中
   is_detail: {
