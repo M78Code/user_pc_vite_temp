@@ -2,9 +2,11 @@
 import NoData from "../../NoData.vue"
 import AnalysisCard from "../../AnalysisCard.vue"
 import LineupTable from "./line-up-table.vue"
-import PlayerDistribution from "./player-distribution.vue"
+import footballPlayerDistribution from "./football-player-distribution.vue"
+import basketPlayerDistribution from "./basket-player-distribution.vue"
 
 import {api_analysis} from "src/api/index.js";      // 赛事分析接口文件
+import { compute_image_src } from "src/core/utils/common"
 import {inject, onBeforeMount, reactive} from "vue";
 /* match_detail 来自 project/ouzhou-h5/src/pages/detailnew/index.vue */
 const match_detail = inject('match_detail')
@@ -36,8 +38,6 @@ const ChangeSelectedTabId = function (event) {
     State.selectedTabId = id
 }
 
-const get_file_path = function () {
-}
 const league_icon_error = function ($event) {
     $event.target.src = State.defaultUrl;
     $event.target.onerror = null
@@ -62,14 +62,14 @@ const _getList = async function () {
 
     if(lodash.isEmpty(State.lineUpData)) State.noData = true
     try {
+        const {csid, mid} = match_detail.value
         const parameter = {
-            matchInfoId: match_detail.value.mid, // 2079863足球测试id  2185843篮球测试id
+            matchInfoId: mid, // 2079863足球测试id  2185843篮球测试id
             homeAway: State.selectedTabId // 主客队标识(1主队，2客队)
         }
-        const {csid} = match_detail.value
+
         let {code, data} = await api_analysis.get_match_lineup_list(parameter)
         if (code != 200 || Object.keys(data).length < 1) throw new Error('暂无数据')
-        console.log(data, "State.lineUpData==data")
 
         State.lineUpData = data
         // 如果是足球赛事
@@ -82,7 +82,6 @@ const _getList = async function () {
         } else if (csid == 2) {//  如果是 篮球赛事
             State.basketballData = data.up
         }
-        console.log(State.lineUpData, "State.lineUpData")
         State.noData = false
     } catch (error) {
         State.noData = true
@@ -110,11 +109,17 @@ onBeforeMount(() => {
             </ul>
         </nav>
         <!-- 足球场地 -->
-        <PlayerDistribution
+        <footballPlayerDistribution
             :up_data="State.lineUpData?.up"
             :lastNumber="State.number"
             :football_filtered_data="State.footballFilteredData"
             :number_columns="State.numberColumns"
+            v-if="match_detail.csid == 1"
+        />
+        <!-- 篮球场地 -->
+        <basketPlayerDistribution 
+            :basketball_data="State.basketballData" 
+            v-if="match_detail.csid == 2" 
         />
         <NoData v-if="State.noData"></NoData>
         <template v-else>

@@ -25,7 +25,7 @@
         </template>
         <template v-else>
           <!--提前结算金额已包含本金-->
-          <span>{{i18n_t('bet_record.pre_bet_include_money')}}</span>
+          <span class="bet-include-money">* {{i18n_t('bet_record.pre_bet_include_money')}}</span>
         </template>
       </div>
       <div class="bet-pre-wrap">
@@ -42,7 +42,8 @@
             <!-- 已提前结算 -->
             <template v-if="status == 4">{{i18n_t("bet_record.finish_bet_pre")}} </template>
           </div>
-          <div class="bet-row-2" v-if="(Number(front_settle_amount) || expected_profit)">￥{{ betting_amount }}</div>
+          <!-- <div class="bet-row-2" v-if="(Number(front_settle_amount) || expected_profit)">￥{{ betting_amount }}</div> -->
+          <div class="bet-row-2">￥80.00</div>
         </div>
         <img v-if="status == 3" class="roll" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/suring.png`" alt="">
         <img v-if="status == 4" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/success.png`" alt="">
@@ -291,24 +292,28 @@ onUnmounted(() => {
   .bet-pre-title {
     font-size: 12px;
     line-height: 30px;
+    .bet-include-money {
+      color: var(--q-gb-bd-c-1)
+    }
   }
   .bet-pre-wrap {
     width: 200px;
     height: 38px;
-    background: var(--q-gb-bd-c-4);
+    background: var(--q-gb-bd-c-1);
     border-radius: 50px;
     position: relative;
-    border: 1px solid var(--q-gb-bg-c-1);
     cursor: pointer;
     .bet-pre-btn {
       font-size: 12px;
       color: var(--q-gb-t-c-18);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100%;
       line-height: 1.2;
+      .bet-row-2 {
+        margin-left: 6px;
+      }
     }
     img {
       position: absolute;
