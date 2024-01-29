@@ -28,7 +28,8 @@
       "foul": "犯规",
       "point": "分",
       "penalty": "罚球",
-      "pause": "暂停"
+      "pause": "暂停",
+      "read": "阅读"
      },
      "bet": {
          "place_bet": "下注"

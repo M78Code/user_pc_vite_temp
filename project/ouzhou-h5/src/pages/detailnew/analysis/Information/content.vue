@@ -1,24 +1,12 @@
 <script setup name="information-content">
+import { formete_date } from 'src/output/index';
 
 const props = defineProps({
     article_detail:{
         type: Object,
-      default: () => ({}),
+        default: () => ({}),
     }
 })
-
-const formete_date = (val) => {
-    val = Number(val)
-    let difference = Date.now() - val, str = ''
-    if (difference > 1000 * 60 * 60 * 24) {
-        str = new Date(val).getMonth() + 1 + '月' + new Date(val).getDate() + '日'
-    } else if (difference > 1000 * 60 * 60) {
-        str = Math.ceil(difference / (1000 * 60 * 60)) + '小时前'
-    } else {
-        str = Math.ceil(difference / (1000 * 60)) + '分钟前'
-    }
-    return str
-}
 
 </script>
 
@@ -31,7 +19,7 @@ const formete_date = (val) => {
         <div class="row yb_mb18 yb_mt8">
             <img  src="image/bw3/svg/touxiang.svg" alt="" class="touxiang yb_mr4" />
             <span class="category-name ellipsis">{{article_detail?.categoryName}}</span>
-            <span class="yb_ml12">{{article_detail?.readCounts}}阅读</span>
+            <span class="yb_ml12">{{article_detail?.readCounts}}{{ i18n_t('ouzhou.detail.read') }}</span>
             <span style="margin-left: auto">{{ formete_date(article_detail?.updateTime) }}</span>
         </div>
         <hr />

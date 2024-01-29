@@ -4,6 +4,9 @@ import AnalysisCard from "../../AnalysisCard.vue"
 
 import {api_analysis} from "src/api/index.js";      // 赛事分析接口文件
 import {computed, inject, onBeforeMount, reactive} from "vue";
+
+import {ouzhou_hps_up,ouzhou_hps_down,} from "src/base-h5/core/utils/local-image.js";
+
 /* match_detail 来自 project/ouzhou-h5/src/pages/detailnew/index.vue */
 const match_detail = inject('match_detail')
 
@@ -18,6 +21,23 @@ const State = reactive({
     dataList: [], //详细赔率数据
     noData: false,  // 数据加载完成
 })
+
+const oddImage = function(value){
+    if(value == 1){
+        return ouzhou_hps_up
+    }
+    if(value == -1){
+        return ouzhou_hps_down
+    }
+}
+const oddClass = function(value){
+    if(value == 1){
+        return 'red'
+    }
+    if(value == -1){
+        return 'green'
+    }
+}
 
 const get_list = async function () {
     try {
@@ -78,21 +98,21 @@ onBeforeMount(() => {
                             <div class="ellipsis">
                                 {{ i18n_t('analysis_football_matches.company') }}
                             </div>
-<!--                            <div class="yb_ml6" style="visibility: hidden">-->
-<!--                                <span>{{ i18n_t('analysis_football_matches.Initial_offer') }}</span>-->
-<!--                                <span>1</span>-->
-<!--                            </div>-->
+                            <!-- <div class="yb_ml6" style="visibility: hidden">
+                                <span>{{ i18n_t('analysis_football_matches.Initial_offer') }}</span>
+                                <span>1</span>
+                            </div> -->
                         </div>
                         <div class="t2">
-                            <i >{{ i18n_t('analysis_football_matches.home_win1') }}</i>
-                            <i >{{ i18n_t('analysis_football_matches.flat') }}</i>
+                            <i>{{ i18n_t('analysis_football_matches.home_win1') }}</i>
+                            <i>{{ i18n_t('analysis_football_matches.flat') }}</i>
                         </div>
                         <div class="t3">
                             <i class="t4">{{ i18n_t('analysis_football_matches.away_win') }}</i>
                             <i class="t4">{{ i18n_t('analysis_football_matches.Main_win_rate') }}</i>
                         </div>
                         <div class="t4">
-                            <i >{{ i18n_t('analysis_football_matches.Customer_win_rate') }}</i>
+                            <i>{{ i18n_t('analysis_football_matches.Customer_win_rate') }}</i>
                             <i class="t4">{{ i18n_t('analysis_football_matches.Return_rate') }}</i>
                         </div>
                     </li>
@@ -121,29 +141,23 @@ onBeforeMount(() => {
                             </div>
                             <div class="t2 basic table-right-border">
                                 <div class="basic-item table-bottom-border">{{ item.handicapOddsDTOList[0].value0 }}</div>
-                                <div
-                                    class="basic-item"
-                                    :class="{'red':item.handicapOddsDTOList[1].directions.value0 == 1,'green':item.handicapOddsDTOList[1].directions.value0 == -1}">
+                                <div class="basic-item" :class="oddClass(item.handicapOddsDTOList[1].directions.value0)">
                                         {{ item.handicapOddsDTOList[1].value0 }}
-                                    <i class="odd yb_ml4"></i>
+                                    <img class="odd-image" :src="oddImage(item.handicapOddsDTOList[1].directions.value0)" />
                                 </div>
                             </div>
                             <div class="t3 basic table-right-border">
                                 <div class="basic-item table-bottom-border">{{ item.handicapOddsDTOList[0].handicapVal }}</div>
-                                <div
-                                    class="basic-item table-bottom-border"
-                                    :class="{'red':item.handicapOddsDTOList[1].directions.handicapVal == 1,'green':item.handicapOddsDTOList[1].directions.handicapVal == -1}">
-                                  {{ item.handicapOddsDTOList[1].handicapVal }}
-                                  <i class="odd yb_ml4"></i>
+                                <div class="basic-item table-bottom-border" :class="oddClass(item.handicapOddsDTOList[1].directions.handicapVal)">
+                                    {{ item.handicapOddsDTOList[1].handicapVal }}
+                                    <img class="odd-image" :src="oddImage(item.handicapOddsDTOList[1].directions.handicapVal)" />
                                 </div>
                             </div>
                             <div class="t4 basic table-right-border">
                                 <div class="basic-item table-bottom-border">{{ item.handicapOddsDTOList[0].value }}</div>
-                                <div
-                                    class="basic-item table-bottom-border"
-                                    :class="{'red':item.handicapOddsDTOList[1].directions.value == 1,'green':item.handicapOddsDTOList[1].directions.value == -1}">
+                                <div class="basic-item table-bottom-border" :class="oddClass(item.handicapOddsDTOList[1].directions.value)">
                                   {{ item.handicapOddsDTOList[1].value }}
-                                  <i class="odd yb_ml4"></i>
+                                  <img class="odd-image" :src="oddImage(item.handicapOddsDTOList[1].directions.value)" />
                                 </div>
                             </div>
                         </li>
@@ -424,5 +438,23 @@ onBeforeMount(() => {
 
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+.odd-image {
+    width: .08rem;
+    margin-left: .04rem;
+
+    // display: flex;
+    // --private-local-odd-image-size: 14px;
+    // width: var(--private-local-odd-image-size);
+    // height: var(--private-local-odd-image-size);
+    // position: absolute;
+    // object-fit: contain;
+    // left: 100%;
+}
+.basic-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>
