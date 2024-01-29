@@ -235,6 +235,7 @@ const get_init_data = (val) =>{
         })
         return item;
     })
+    MenuData.set_ws_menu_list(leftDataList.value);
 }
 onMounted(()=>{
   get_init_data();
