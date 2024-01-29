@@ -87,7 +87,11 @@ const get_video_url = () => {
 
       // let live_type = this.$get_media_icon_index(media_type)
       let live_type = 1;
-
+      if (!url_add_param(url_src, "video_type", 1)) {
+        // 视频结束，播放错误
+        router.back();
+        return;
+      }
       // 此处为最终处理后的视频url
       media_src.value =
         url_add_param(url_src, "video_type", 1) +
@@ -141,6 +145,12 @@ const init = async () => {
   }
 }
 
+function handle_message(e) {
+  // 视频加载错误
+  if(e.data.cmd == 'load_error'){
+  }
+}
+
 
 onMounted(() => {
   // csid: "1"
@@ -149,6 +159,8 @@ onMounted(() => {
   // tid: "1682748461414224369"
   // video_size: "0"
   init();
+  window.addEventListener("message", handle_message);
+
   console.log(params.value, "route.params.video_size");
 })
 

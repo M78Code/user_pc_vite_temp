@@ -161,7 +161,7 @@ onMounted(()=>{
     get_init_data();
     ref_data.emit_lsit = {
         emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data).off,
-        emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, get_menu_ws_list).off,
+        emitter_2: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, get_menu_ws_list).off,
     }
    
 })

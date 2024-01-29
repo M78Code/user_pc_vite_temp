@@ -69,11 +69,13 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { useMittOn,useMittEmit,MITT_TYPES } from "src/core/mitt/index.js" 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+import BetData from "src/core/bet/class/bet-data-class.js"
 const router = useRouter();
 const route = useRoute();
 
 const emits = defineEmits(['isLeftDrawer']);
 const leftDataList = ref([]);
+
 /**
  * vr 电竞
  */
@@ -156,6 +158,8 @@ const set_menu_obj = (data) => {
     MenuData.set_current_lv1_menu(2000);
     MenuData.set_menu_mi('2100');
   }
+  //清除投注项
+  BetData.set_clear_bet_info()
   router.push(data.route)
 }
 /**
@@ -164,6 +168,11 @@ const set_menu_obj = (data) => {
  */
 const change_current_menu = (item) => {
   if (['matchList', 'champion'].includes(route.name) && current_mi.value && current_mi.value === item.mi) return emits('isLeftDrawer');
+  //电竞vr切常规  清除投注
+  if(MenuData.is_esports() || MenuData.is_vr()){
+    //清除投注项
+    BetData.set_clear_bet_info()
+  }
   useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP)
   current_mi.value = item.mi
   setPopularSort(item.mi);

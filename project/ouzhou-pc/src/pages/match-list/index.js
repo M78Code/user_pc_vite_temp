@@ -150,6 +150,8 @@ export const init_home_matches = async (is_socket=true) => {
     sort: 2,
     // hasFlag: 0
   };
+  MatchListScrollClass.fetch_match_list_time=Date.now()
+  !is_socket&&set_load_data_state("loading")
   const match_list = []
   const get_home_matches = LocalStorage.get('get_home_matches', [])
   const get_five_leagues_list = LocalStorage.get('get_five_leagues_list', [])
@@ -167,6 +169,7 @@ export const init_home_matches = async (is_socket=true) => {
     params,
     fun_then: function ({ data }) {
       try {
+        if(!MenuData.is_home())return;
         set_load_data_state("data")
         MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
         // 处理返回数据 将扁平化数组更改为页面适用数据
@@ -204,7 +207,7 @@ export const init_home_matches = async (is_socket=true) => {
   axios_loop({
     axios_api: get_five_leagues_list_api,
     fun_then: function (res) {
-
+      if(!MenuData.is_home())return
       try {
         //五大联赛，只显示滚球数据
         // if (res?.length) {

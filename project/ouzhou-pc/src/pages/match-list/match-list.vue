@@ -167,9 +167,9 @@ export default {
       LayOutMain_pc.set_oz_show_left(true);
       MenuData.is_home() && get_data_info({ is_socket: false })//欧洲版只有首页才执行  其他是由菜单驱动列表的
       mitt_list = [
-        useMittOn(MITT_TYPES.EMIT_SET_HOME_MATCHES, (type) => [
-          get_data_info({ is_socket: true, type })
-        ]).off, // 15分钟赛事数据
+        useMittOn(MITT_TYPES.EMIT_SET_HOME_MATCHES, (type) => {
+          get_data_info({ is_socket: type!=1001, type })
+        }).off, // 15分钟赛事数据
       ]
       MatchListCardDataClass_match_list_card_key_arr();
     });
