@@ -36,6 +36,7 @@ const olName = `'${props.data.ol[0].on}'`
   .odd-ol-wrap{
     display: flex;
     flex-wrap: wrap;
+    padding-bottom: 30px;
   }
   &.fill{
     .odd-ol-wrap{
