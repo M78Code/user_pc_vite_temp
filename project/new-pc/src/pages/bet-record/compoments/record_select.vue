@@ -226,7 +226,6 @@ const init_data = (_index) => {
   }
   //请求注单记录接口
   // 预约中、已失效(数据需加工)
-  const prevData = (_index === 1 || _index === 2)
   BetRecordHistory.handle_fetch_order_list()
 
   // 未结算时，轮询获取提前结算列表金额
