@@ -1020,6 +1020,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         }
         return BetData.set_delete_bet_info(oid,index_)
     }
+
+    
     // 点击投注项 展开投注栏
     BetData.set_bet_state_show(true)
      // 列表数据仓库
@@ -1034,8 +1036,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
             // 点击投注项 显示投注栏
             BetData.set_bet_box_h5_show(true)
         }
-        // 欧洲版 串关数量大于1的情况下 点击 投注项 默认收起
-        if( PROJECT_NAME == 'ouzhou-h5' && !BetData.is_bet_single ){
+        // 欧洲版 串关数量大于1的情况下 或 选中合并单关 点击 投注项 默认收起
+        if( PROJECT_NAME == 'ouzhou-h5' && (!BetData.is_bet_single || BetData.is_bet_merge)){
             BetData.set_bet_box_h5_show(true)
             BetData.set_bet_state_show(false)
         }
@@ -1338,8 +1340,10 @@ const set_market_id_to_ws = () => {
     // 获取赛事id
     mid = bet_list.map(item => item.matchId)
 
+
     obj.hid = hid.join(',')
     obj.mid = mid.join(',')
+
     // 用户赔率分组
     obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
     BetWsMessage.set_bet_c2_message(obj);

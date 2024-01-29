@@ -3,7 +3,7 @@
 -->
 <template>
   <div>
-    <q-dialog v-model="is_show" seamless>
+    <q-dialog v-model="is_show" seamless >
       <q-card class="dialog_content">
         <q-card-section>
           <div class="toast-text-content">
@@ -11,7 +11,7 @@
               <img :src="compute_local_project_file_path('/image/svg/warn.svg')" />
             </slot>
           </div>
-          <slot name="msg">{{ text }}</slot>
+          <slot name="msg">'{{ text }} '''</slot>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -62,6 +62,9 @@ const show_toast = (msg, delay = 2000) => {
 </script>
 
 <style lang="scss" scoped>
+:deep(.q-dialog-F){
+  z-index:9999999;
+}
 .q-card-section {
   padding: 8px 8px;
 }
