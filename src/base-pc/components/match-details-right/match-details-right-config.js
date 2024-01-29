@@ -210,15 +210,15 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
   onUnmounted(emitters_off);
    //多语言触发
   const {off}  = useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, ()=>{
-            // 其他情况只调用一次
-            get_matchInfo();
-            // 获取玩法集数据
-            get_category_list(() => {
-              set_cur_match_plays_list();
-                allData.handicap_state = "loading";
-              //玩法投注项列表
-              get_match_detail(false);
-            }, false);
+     // 其他情况只调用一次
+     get_matchInfo();
+     // 获取玩法集数据
+     get_category_list(() => {
+       set_cur_match_plays_list();
+         allData.handicap_state = "loading";
+       //玩法投注项列表
+      //  get_match_detail(false);
+     }, false);
   }) //语言切换
   onUnmounted(off)
   const  match_details = ref([]); //详情盘口
