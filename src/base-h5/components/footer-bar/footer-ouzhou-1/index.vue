@@ -37,10 +37,16 @@ const tab_list = ref([
   { label: "menu_itme_name.results", value: 'results', route: '/matchResults', type: 28 },
   { label: "ouzhou.match.favorites", value: 'favorites', route: '/collect', type: 50000 },
 ])
-const get_route_path = computed(() => {
-  return  router.currentRoute.value.path;
+// const get_route_path = computed(() => {
+//   return  router.currentRoute.value.path;
+// })
+const tab_active = ref(router.currentRoute.value.path);
+
+watch(router.currentRoute, (newRouter, oldRouter) => {
+  if(!['category','result'].includes(newRouter.name)){
+    tab_active.value = newRouter.path;
+  }
 })
-const tab_active = ref(get_route_path.value);
 
 const jump_page = (item) => {
 

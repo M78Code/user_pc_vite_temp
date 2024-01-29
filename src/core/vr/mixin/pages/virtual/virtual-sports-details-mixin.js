@@ -68,13 +68,14 @@ export default {
         this.get_local_match_process_data();
       }
     }
-
-    //获取赛事详情数据
-    this.get_match_detail()
-    this.cancel_ref = debounce(this.cancel_ref,200)
-    off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=> {
-      this.get_match_detail()
-    }).off
+  },
+  mounted() {
+   //获取赛事详情数据
+   this.get_match_detail()
+   this.cancel_ref = debounce(this.cancel_ref,200)
+   off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=> {
+     this.get_match_detail()
+   }).off
   },
   unmounted() {
     debounce_throttle_cancel(this.cancel_ref);
@@ -88,7 +89,7 @@ export default {
     }
   },
   methods: {
-    get_match_detail () {
+    get_match_detail() {
       //获取赛事详情数据
       let mid_ = this.$route.query && this.$route.query.mid || this.mid;
       this.mid = mid_;

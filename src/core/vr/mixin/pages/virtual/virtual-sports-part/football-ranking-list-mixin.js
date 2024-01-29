@@ -2,8 +2,9 @@
  * @Description: 球类 排行榜页面 只需要传个 tid 联赛id进来
  */
 import {api_v_sports} from "src/api/index.js";
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
+import { LOCAL_PROJECT_FILE_PREFIX, useMittOn, MITT_TYPES } from 'src/output/index.js'
 
+let off = ''
 export default {
   name: "ranking_list",
   props:{
@@ -17,6 +18,9 @@ export default {
     }
   },
   mounted() {
+    off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=> {
+      this.get_list()
+    }).off
   },
   watch: {
     tid: {
@@ -44,6 +48,9 @@ export default {
   unmounted () {
     for (const key in this.$data) {
       this.$data[key] = null
+    }
+    if (off) {
+      off()
     }
   },
 
