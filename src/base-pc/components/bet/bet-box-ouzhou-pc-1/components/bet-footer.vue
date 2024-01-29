@@ -31,11 +31,13 @@
                 {{i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)}}
             </div>
         </div>
-        <div class="bet-state" v-if="BetViewDataClass.error_message">
+        
+        <div class="bet-state" v-if="BetViewDataClass.error_message && BetViewDataClass.error_message != computeErrorMessage()">
             <div class="w-100 f-c-c bet-title" :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
                 {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
             </div>
         </div>
+        
         <div class="f-b-c bet-content" v-if="BetViewDataClass.bet_order_status == 1" >
             <div class="font16 font400 f-c-c bet-bet-cancel" @click="set_bet_cancel">{{ i18n_t("bet.bet_cancel") }}</div>
             <div class="font16 font600 f-c-c bet-place-bet" @click="set_bet_submit" :class="{ 'bet-expired': BetViewDataClass.bet_expired, 'disabled': set_special_state(BetData.bet_data_class_version)}" >{{ i18n_t("ouzhou.bet.place_bet") }}</div>
@@ -65,6 +67,9 @@ let is_bet_single = true
 // 是否支持串关
 let is_bet_special = true
 
+const computeErrorMessage = ()=>{
+    return i18n_t("bet.bet_min_item").replace('{num}',BetData.mix_min_count)
+}
 
 // 提交投注信息
 const set_bet_submit = () => {
