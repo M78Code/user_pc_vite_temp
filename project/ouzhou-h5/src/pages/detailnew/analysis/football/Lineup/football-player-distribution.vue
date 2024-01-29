@@ -1,5 +1,6 @@
 <script setup name="player-distribution">
 const props = defineProps(['up_data','lastNumber','football_filtered_data','number_columns'])
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 
 const shouldShowItem = function (position){
     const lastNumber = props?.lastNumber
@@ -29,17 +30,17 @@ const calculationLast = function (item) {
 </script>
 
 <template>
-    <div class="football_field">
+    <div class="football_field" :style="'background-image: url(' + `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/football_squad_background.png` + ');'">
         <!-- 加载第一项 和 最后一项-->
         <div class="first_and_last"
-             v-for="(item, index) of up_data"
-             :key="index + 'f_l'"
-             :class="[
-                     `location${item.position}`,
-                     (lastNumber == 3 && item.position > 8) ? calculationLast(item) : '',
-                     (lastNumber == 2 && item.position > 9) ? calculationLast(item) : '',
-                     (lastNumber == 1 && item.position > 10 && item.position <=11) ? calculationLast(item) : '',
-                 ]"
+            v-for="(item, index) of up_data"
+            :key="index + 'f_l'"
+            :class="[
+                `location${item.position}`,
+                (lastNumber == 3 && item.position > 8) ? calculationLast(item) : '',
+                (lastNumber == 2 && item.position > 9) ? calculationLast(item) : '',
+                (lastNumber == 1 && item.position > 10 && item.position <=11) ? calculationLast(item) : '',
+            ]"
         >
             <template v-if="shouldShowItem(item.position)">
                 <div>
@@ -87,7 +88,7 @@ const calculationLast = function (item) {
 .football_field {
     width: 100%;
     height: 3.45rem;
-    background-image: url("./football_squad_background.png");
+    // background-image: url("./football_squad_background.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
