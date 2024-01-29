@@ -14,15 +14,18 @@
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one">
                         <div class="nonebox4-content-left-content-text-one-tit">
-                          <span class="text-flow-none">{{items.handicap}}  
-                            
-                            <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em>
-                            
-                            <span v-if="UserCtr.is_cur_odds(items.odds_hsw)">
-                              [{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]
-                            </span>
-                            <span v-else>[{{ i18n_t(`odds.EU`) }}]</span>
-                          </span> 
+                          <!-- vr 单独处理 -->
+                          <div class="text-flow-none" v-if="items.bet_type== 'vr_bet' && ['1002','1011','1009','1010'].includes(items.sportId) && [20033,20034,20035,20036,20037,20038].includes(items.playId*1)">
+                            <div v-for="page in items.handicap" :key="page" class="f-s-c">
+                              <span class="virtual-count" :class="`virtual-num-${page.hv} csid-${items.sportId}`" ></span> {{page.text}} 
+                            </div>
+                          </div>
+                          <div class="text-flow-none" v-else>{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></div> 
+
+                          <span v-if="UserCtr.is_cur_odds(items.odds_hsw)">
+                            [{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]
+                          </span>
+                          <span v-else>[{{ i18n_t(`odds.EU`) }}]</span>
                         </div>
                         <div>
                             <div class="nonebox4-content-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">

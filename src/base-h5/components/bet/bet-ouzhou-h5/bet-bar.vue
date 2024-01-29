@@ -27,24 +27,28 @@
 import lodash from "lodash"
 import { format_money2 } from 'src/output/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { ref,computed,onUnmounted } from 'vue';
+import { ref,nextTick,computed,onUnmounted } from 'vue';
 import userData from "src/core/user-config/user-ctr.js"
 import { get_query_bet_amount_common,set_market_id_to_ws } from "src/core/bet/class/bet-box-submit.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-
+import {useMittEmit, MITT_TYPES,useMittOn,formatMoney,UserCtr } from "src/output/index.js"
 
 const get_bet_status = ref(true)
 
 // 悬浮条点击 
 const menu_click = () => {
   if(!BetData.is_bet_single){
+    
     get_query_bet_amount_common()
-  set_market_id_to_ws()
+    set_market_id_to_ws()
+    
   }
- 
-  
   BetData.set_bet_state_show(true)
-
+  
+  nextTick(() => {
+    useMittEmit(MITT_TYPES.EMIT_SET_NOTSINGLE_SHOW_LIST)
+  });
+  
 }
 
 

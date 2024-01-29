@@ -4,11 +4,19 @@ import {PROJECT_ENTRY_CONFIG} from  "../util-and-config/config.js"
 import {import_js_data} from  "../util-and-config/write-folder-file.js"
 const  DEV_TARGET_ENV_CONFIG= await import_js_data("./dev-target-env.js")
  
-const {   DEV_IS_FOR_NEIBU_TEST } = DEV_TARGET_ENV_CONFIG
+const {   DEV_IS_FOR_NEIBU_TEST ,DEV_IS_FOR_BD_DUIJIE } = DEV_TARGET_ENV_CONFIG
 
 
 //jenkins env 变量  配置的  是否是用于内部测试  是：1 ，否：-1 
 let ENV_IS_FOR_NEIBU_TEST= ( process.env.IS_FOR_NEIBU_TEST || "").trim();
+
+
+
+//jenkins env 变量  配置的  是否开启BD对接   是：1 ，否：-1 
+let ENV_IS_FOR_BD_DUIJIE= ( process.env.IS_FOR_BD_DUIJIE || "").trim();
+
+
+
 //解析topic 项目配置 
 import {resolve_topic_project_build_type} from "./resolve-topic-project-build-type.js"
 
@@ -76,7 +84,11 @@ for(let key in PROJECT_ENTRY_CONFIG){
 }
 
 
-
+/**
+ * 项目标识解析
+ * @param {*} ENVSTR 
+ * @returns 
+ */
   const RESOLVE_PROJECT_FN = (PROJECT) => {
   //项目 描述和配置 键  
   const PROJECT_ENTRY_CONFIG_KEY = PROJECT
@@ -113,7 +125,11 @@ for(let key in PROJECT_ENTRY_CONFIG){
 };
 
 
-
+/**
+ * 环境解析
+ * @param {*} ENVSTR 
+ * @returns 
+ */
   const  RESOLVE_ENV_FN =(ENVSTR)=>{
 //参数内环境和代码内环境映射
 const ENVSTR_MAP = {
@@ -146,6 +162,81 @@ const ENVSTR_MAP = {
 
  
 
+
+/**
+ * 计算是否启用 BD对接
+ * @param {*} ENVSTR 
+ * @returns 
+ */
+const  COMPUTE_IS_FOR_BD_DUIJIE_FN=( PROJECT , ENVSTR)=>{
+
+   // 项目判断 
+
+
+
+    //BD对接  配置
+  let  project_bd_duijie=  PROJECT_ENTRY_CONFIG[PROJECT]['bd_duijie'] ;
+
+  
+  if(!project_bd_duijie){ return  false }   
+
+
+  // 以下 情况 是项目 开启了 BD对接 则 执行环境判断 
+
+
+  // 环境判断 
+
+    // 是否开启BD对接  是：true ，否：false
+    let IS_FOR_BD_DUIJIE =    false 
+
+
+    
+ 
+
+  //默认 环境 BD对接开关
+  const FOR_BD_DUIJIE_MAP = {
+    dev: false,
+    test: false,
+    geli: false,
+    mini: false,
+    shiwan: true,
+    online: false,
+  };
+  //代码内预设的环境BD对接启用情况
+   
+
+   
+  //如果构建参数内有BD对接参数 并且 值为1 则开启BD对接
+   if(ENV_IS_FOR_BD_DUIJIE==1){
+    IS_FOR_BD_DUIJIE =true
+   }else{
+    //如果构建参数内没有有BD对接参数
+    if(NODE_ENV_CONFIG.IS_DEV){
+      //本地开发
+      IS_FOR_BD_DUIJIE =  DEV_IS_FOR_BD_DUIJIE   
+    }else{
+      //如果构建参数内有BD对接参数 并且 值不为1 则关闭BD对接
+      if(ENV_IS_FOR_BD_DUIJIE){
+        IS_FOR_BD_DUIJIE = false
+      }else{
+      //如果构建参数内没有有BD对接参数 , 则 使用 代码内预设的环境BD对接设置
+      IS_FOR_BD_DUIJIE =FOR_BD_DUIJIE_MAP[ENVSTR]
+      }
+  
+    }
+  
+   }
+
+
+
+  
+   return IS_FOR_BD_DUIJIE
+
+
+
+
+}
+
   
 
 export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
@@ -165,6 +256,9 @@ export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
     const BUILD_DIR_NAME =config.BUILD_DIR_NAME
     //是否是用于内部测试
     const IS_FOR_NEIBU_TEST  = COMPUTE_IS_FOR_NEIBU_TEST_FN(config.ENVSTR)
+    //是否启用 BD对接
+    const IS_FOR_BD_DUIJIE =  COMPUTE_IS_FOR_BD_DUIJIE_FN(config.PROJECT,config.ENVSTR)
+
 
      
     //打包构建输出目录
@@ -263,6 +357,7 @@ const   BUILD_STATIC_DIR_NEED_CHANGE =  BUILD_STATIC_DIR_PATH != BUILD_STATIC_DI
         ...RESOLVE_PROJECT_OBJ,
         IS_TOPIC_PROJECT,
         IS_FOR_NEIBU_TEST,
+        IS_FOR_BD_DUIJIE,
         BUILD_DIR_NAME,
         BUILD_VERSION,
         BUILD_OUTDIR ,

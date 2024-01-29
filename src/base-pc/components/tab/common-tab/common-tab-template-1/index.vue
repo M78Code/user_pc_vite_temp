@@ -18,29 +18,19 @@
         @mouseleave="tabs_leave(index)"
         :id="DOM_ID_SHOW && `top-menu-ids-${val.id}`"
       >
-        <img
-          v-if="val.img_src"
-          v-check-img="{
-            src: val.img_src,
-            default: `/image/common/activity_banner/gift_package.png`,
-          }"
-        />
+        <img v-if="val.img_src" v-check-img="{src: val.img_src,default: `/image/common/activity_banner/gift_package.png`,}"/>
         {{ val[tab_name_key] }}
         <!-- 早盘||串关 主列表顶部日期后显示赛事数量 -->
-        <span v-if="is_list_top_menu" class="match-count"
-          >({{ val.count }})</span
-        >
-        <template v-if="val.tab_name2"> <br />{{ val.tab_name2 }} </template>
+        <span v-if="is_list_top_menu" class="match-count">({{ val.count }})</span>
+        <template v-if="val.tab_name2">
+          <br />{{ val.tab_name2 }}
+        </template>
+
+        <div ref="details_tab_tag" class="tab-icon" v-if="val.label">{{ val.label }}</div>
       </div>
       <template v-if="currentIndex !== -1 && width > 0 && is_show_line">
         <div :class="['line-wrap', { pseudo: line_width }]">
-          <div
-            class="line"
-            :style="{
-              transform: 'translateX(' + left + 'px)',
-              width: width + 'px',
-            }"
-          ></div>
+          <div class="line" :style="{ transform: 'translateX(' + left + 'px)', width: width + 'px'}"></div>
         </div>
       </template>
     </div>
@@ -468,6 +458,7 @@ onBeforeUnmount(() => {
       line-height: 24px;
       border-radius: 15px;
       color: var(--q-gb-t-c-5);
+      position: relative;
       &.active {
         font-weight: 600;
         line-height: 24px;
@@ -528,6 +519,59 @@ onBeforeUnmount(() => {
         bottom: 4px !important;
       }
     }
+  }
+}
+
+.tab-icon{
+  // width: 22px;
+  // height: 10px;
+  position: absolute;
+  right: -5px;
+  top: -10px;
+  font-size: 12px;
+  scale: 0.62;
+  color: #ffffff;
+  font-weight: 700;
+  display: inline;
+  line-height: 10px;
+  text-align: center;
+  background: linear-gradient(135deg, #FF0000 0%, #FF7000 100%);
+  padding: 3px 5px;
+  border-radius: 7px 7px 7px 0;
+  overflow: hidden;
+  &::after{
+    content: '';
+    display: block;
+    width: 4px;
+    height: 35px;
+    background-image: linear-gradient(rgba(201, 196, 196, 0), rgba(255, 255, 255, 0.8), rgba(216, 208, 208, 0));
+    //  backdrop-filter: 10px;
+    position: absolute;
+    left: 10px;
+    top:0;
+    // box-shadow: 3px 2px 5px #ffffff;
+    transform: rotate(135deg);
+    overflow: hidden;
+    animation: bg_image 1.3s linear infinite;
+  }
+  // animation: bg_image 1.3s linear infinite;
+}
+
+@keyframes bg_image {
+  0% {
+    left: -10px;
+  }
+  40% {
+    left: 30%;
+    top:-5px;
+  }
+  70% {
+    left: 70%;
+    top:-15px;
+  }
+  100% {
+    left: 40px;
+    top:-25px
   }
 }
 </style>

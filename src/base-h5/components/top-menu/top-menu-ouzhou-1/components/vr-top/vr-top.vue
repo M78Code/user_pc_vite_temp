@@ -9,11 +9,11 @@
             </div>
             <!-- <div class="detail-back" v-if="['/virtual_sports_details', '/virtual_sports_details/'].includes(router.currentRoute.value.path)" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div> -->
             <div class="vr_name">
-                <span style="margin-left: 0.01rem;">VR Sports</span>
+                <span style="margin-left: 0.01rem;">{{ i18n_t("common.virtual_sports") }}</span>
                 <img :src="`${LOCAL_PROJECT_FILE_PREFIX }/image/menu/top-menu/back.png`" alt="">
             </div>
             <div class="drop_menulist">
-                {{ current_sub_menu.name }}
+                VR-{{ current_sub_menu.name }}
                 <q-menu class="vr-menu-wrap">
                     <div>
                         <q-list>
@@ -21,7 +21,10 @@
                             :class="[sub_menu_i == i ? 'item-active' : '']"
                             :key="i" @click="virtual_menu_changed(i)">
                                 <q-item-section>
-                                    <q-item-label>VR-{{ item.name }}</q-item-label>
+                                    <q-item-label class="item-label">
+                                      <img :src="getMenuIcon(item.name)" alt="">
+                                      <span>VR-{{ item.name }}</span>
+                                    </q-item-label>
                                 </q-item-section>
                             </q-item>
                         </q-list>
@@ -247,7 +250,23 @@ export default {
         v_match_router_ente: this.v_match_router_ente,
         v_menu_changed: this.v_menu_changed,
       });
-      
+    },
+    getMenuIcon(menu_name){
+      let icon_url = '';
+      if(lodash.includes(['足球', 'Football'], menu_name)){
+        icon_url = `${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/football.png`;
+      }else if(lodash.includes(['篮球', 'Basketball'], menu_name)){
+        icon_url = `${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/basketball.png`;
+      }else if(lodash.includes(['赛马', 'Horse Racing'], menu_name)){
+        icon_url = `${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/horse_racing.png`;
+      }else if(lodash.includes(['赛狗', 'Greyhounds'], menu_name)){
+        icon_url = `${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/greyhounds.png`;
+      }else if(lodash.includes(['摩托车', 'Motorbike'], menu_name)){
+        icon_url = `${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/motorbike.png`;
+      }else if(lodash.includes(['泥地摩托车', 'Speedway'], menu_name)){
+        icon_url = `${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/speedway.png`;
+      }
+      return icon_url;
     },
     get_sub_menu_c_index(){
       let r = 0;
@@ -461,6 +480,16 @@ export default {
                 color: #FF7000;
             }
         }
+        .q-item__label{
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          span{
+            padding-left: 15px;
+          }
+        }
+
     }
 }
 </style>
