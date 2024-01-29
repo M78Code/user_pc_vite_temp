@@ -10,6 +10,11 @@ import { HandicapTitle } from "src/base-pc/components/match-detail/handicap-titl
 import betItem from "src/base-pc/components/bet-item/bet_item.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { api_details } from "src/api/index";
+import {
+  useMittEmit,
+  MITT_TYPES,
+  useMittEmitterGenerator,
+} from "src/output/index.js";
 export const useCommon = ({ emit, props }) => {
   /** 主盘折叠 */
   const isShow = ref(true);
@@ -172,7 +177,7 @@ export const useCommon = ({ emit, props }) => {
       props.item_details.is_show = isShow.value;
     }
     // 用户点击了玩法就发送一次数据(需要改造)
-    useMittEmit("set_panel_status", { handle: this.item_details });
+    useMittEmit(MITT_TYPES.EMIT_SET_PANEL_STATUS, this.item_details );
   };
 
   /**

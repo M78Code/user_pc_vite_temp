@@ -251,7 +251,6 @@ export default {
           csid
         }
       })
-      this.save_match_info(item)
     },
   },
   created(){

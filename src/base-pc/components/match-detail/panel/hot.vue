@@ -571,7 +571,6 @@ export default {
           csid: item.csid,
         },
       });
-      this.save_match_info(item);
     },
 
     /**
