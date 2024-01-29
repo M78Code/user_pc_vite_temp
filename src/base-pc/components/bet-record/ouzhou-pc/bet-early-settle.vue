@@ -55,12 +55,11 @@ import lodash from 'lodash'
 import { format_odds, format_currency, formatTime, useMittEmit, useMittOn,  MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
+import { api_betting } from 'src/api/index';
 
 const props = defineProps({
   item: {},
 })
-
-
 // 1 - 初始状态，2 - 确认提前结算， 3 - 确认中..., 4 - 已提前结算, 5 - 暂停提前结算(置灰), 6 - 仅支持全额结算, 7 - 按钮不显示
 let status = ref(1)
 // 是否展示提前结算
@@ -68,10 +67,7 @@ let calc_show = ref(false)
 // 提前结算申请未通过提示
 let unSuccessTips = ref(false)
 let bet_pre_code = ref('')
-// 滑块是否显示
-let slider_show = ref(false)
-// 0  100
-let percentage = ref(100)
+
 // 接口返回的正在确认中的金额，当 [2, 3, 4, 6] 4种情况时，也用于赋值锁定金额
 let front_settle_amount = ref('')
 // 根据轮询获取的最新预计返还金额
@@ -82,8 +78,6 @@ let expected_profit = ref(0)
 // 延时器
 let timer = null
 let timer2 = null
-let timer3 = null
-let timer4 = null
 
 let mitt_c201_handle = null
 let mitt_expected_profit = null
@@ -109,15 +103,7 @@ const is_only_fullbet = computed(() => {
 // 提前结算投注额,四舍五入取整
 const cashout_stake = computed(() => {
   let pba = props.item.preSettleBetAmount || 0
-  let _money = Math.round(pba * (percentage.value / 100));
-  if (percentage.value == 100) {
-    _money = pba;
-  }
-  if (pba > min_bet_money) {
-    return _money < min_bet_money ? +min_bet_money : +_money;
-  } else {
-    return _money
-  }
+  return pba < min_bet_money ? +min_bet_money : +pba;
 })
 
 // 单关最低投注金额
@@ -139,8 +125,7 @@ watch(() => expected_profit.value, (_new, _old) => {
 
 onMounted(() => {
   // 计算提前结算按钮是否显示
-  // calc_show.value = (props.item.seriesType === '1' && props.item.enablePreSettle)
-  calc_show.value = true
+  calc_show.value = (props.item.seriesType === '1' && props.item.enablePreSettle)
   //  /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch')  + props.item.enablePreSettle + status.value);
 
 
@@ -183,14 +168,7 @@ onMounted(() => {
   // 处理ws订单状态推送
   mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE_BET_RECORD, c201_handle).off;
 })
-onUnmounted(() => {
-  // 清除定时器 和 ws推送
-  clear_timer()
-  mitt_c201_handle()
-  mitt_expected_profit()
-})
 
-// ...mapMutations(["set_toast","set_early_moey_data"]),
 /**
  *@description 处理ws订单状态推送
  *@param {Object} · orderNo - 订单号, orderStatus - 订单状态
@@ -210,21 +188,6 @@ const c201_handle = ({ orderNo, orderStatus }) => {
   // console.log("qwe", orderStatus, orderNo);
 }
 
-/**
- *@description 滑块是否显示
- */
-const change_slider_show = () => {
-  if (status.value == 5 || status.value == 6) return;
-  slider_show = !slider_show;
-}
-/**
- *@description 改变滑块百分比
- *@param {Number} val 滑块值
- */
-const change_percentage = (val) => {
-  front_settle_amount.value = ''
-  percentage.value = val;
-}
 
 /**
  *@description 提前结算提交事件
@@ -284,7 +247,6 @@ const submit_early_settle = () => {
  */
 const submit_click = () => {
   if (status.value == 1 || status.value == 6) {
-    slider_show = false;
     status.value = 2;
     // 提示5秒后消失
     clearTimeout(timer);
@@ -313,9 +275,14 @@ const showUnSuccessTips = () => {
 const clear_timer = () => {
   clearTimeout(timer)
   clearTimeout(timer2)
-  clearTimeout(timer3)
-  clearTimeout(timer4)
 }
+
+onUnmounted(() => {
+  // 清除定时器 和 ws推送
+  clear_timer()
+  mitt_c201_handle()
+  mitt_expected_profit()
+})
 
 </script>
 <style lang="scss" scoped>
@@ -328,9 +295,11 @@ const clear_timer = () => {
   .bet-pre-wrap {
     width: 200px;
     height: 38px;
-    background: var(--q-gb-bg-c-4);
+    background: var(--q-gb-bd-c-4);
     border-radius: 50px;
     position: relative;
+    border: 1px solid var(--q-gb-bg-c-1);
+    cursor: pointer;
     .bet-pre-btn {
       font-size: 12px;
       color: var(--q-gb-t-c-18);
