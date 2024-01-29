@@ -124,12 +124,12 @@ export default defineComponent({
     })
     // 当前显示的 次要玩法
     const current_second_data = computed(() => {
-      return show_second_data.value.slice(0, 1)
+      return show_second_data.value.slice(0, 5)
     })
     // 更多次要玩法数据
     const second_play_data = computed(() => {
       const length = lodash.get(show_second_data.value, 'length', 0)
-      return show_second_data.value.slice(1, length)
+      return show_second_data.value.slice(5, length)
     })
     // 更多次要玩法 当前所选玩法
     const select_second_item = ref({})
