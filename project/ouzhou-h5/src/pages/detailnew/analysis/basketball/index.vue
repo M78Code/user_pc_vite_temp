@@ -26,7 +26,7 @@ const ActiveTabCom = computed(() => {
         <!-- 赛况 -->
         <Match v-if="ActiveTabCom == 'Match'" :match_odds_info="match_odds_info"/>
         <!-- 数据 -->
-       <Figures v-if="ActiveTabCom == 'Figures'" />
+        <Figures v-if="ActiveTabCom == 'Figures'" />
         <!-- 阵容 -->
        <Lineup v-if="ActiveTabCom == 'Lineup'" />
     </article>
