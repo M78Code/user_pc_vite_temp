@@ -41,7 +41,8 @@
 
   const tabs = ref([
     { title: i18n_t('bet_record.no_account') },
-    { title: i18n_t('bet_record.account') }
+    { title: i18n_t('bet_record.account') },
+    { title: i18n_t('pre_record.book') }
   ])
 
   // 已结算页面切换时间，获取新列表
@@ -59,8 +60,8 @@
   const change_record = (key) => {
     //已选中状态下不能点击
     if (BetRecordClass.selected === key) return;
-    // 已结算页面切换=>未结算页面，重置未结算页面筛选条件
-    if(key === 0) {
+    // 非未结算页面，重置未结算页面筛选条件
+    if(key !== 1) {
       const $el = cathecticItem.value
       $el.timeType = enum_time_type[0]
       $el.sortChange(enum_order_by[1], true)

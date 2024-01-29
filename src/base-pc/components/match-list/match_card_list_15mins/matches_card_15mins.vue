@@ -81,7 +81,7 @@ const ols_data = computed(() => {
 watch(() => match.value.hSpecial, (v, o) => {
   if (v != o && v != undefined && o != undefined) {
     // 15分钟玩法阶段改变
-    useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES)
+    useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,true)
   }
 })
 // // 监听 当前投注项ID的变化

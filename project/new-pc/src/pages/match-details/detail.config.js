@@ -12,8 +12,7 @@ import { api_details } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES ,useMittEmitterGenerator} from "src/core/mitt/";
 import { useGetGlobal } from  "src/core/global/mixin/global_mixin.js"
 import lodash from "lodash";
-import details from "src/core/match-detail/match-detail-pc/match-detail";
-import  { computed_background } from  "src/output/index.js"
+import  { PageSourceData, computed_background } from  "src/output/index.js"
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache";
@@ -29,6 +28,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
 import { details_ws } from "src/core/match-detail/details-ws.js";
+import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 export const useGetConfig = (router,cur_menu_type,details_params,play_media) => {
   const route = useRoute();
   // const router = useRouter();
@@ -283,8 +283,21 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
               mx_autoset_active_match({ mid: data.mid });
             }
             // 设置赛事信息
+            if(data.csid !=1 && data.csid !=2 ){
+              data.msc = detailUtils.build_msc(data);
+            }
             MatchDataWarehouseInstance.set_match_details(data,[])  
             match_infoData.value = MatchDataWarehouseInstance.get_quick_mid_obj(state.mid)
+                //如果为假 说明是刷新当前页面  需要设置动画参数
+            if(!PageSourceData.from_page_source){
+              let { media_type, play_id } = details_params.value;
+              MatchDetailCalss.set_play_media({
+                mid: state.mid,
+                media_type:media_type || 'auto',
+                play_id,
+                time: new Date() * 1,
+              })
+            }
           } else {
             // 处理报错，置换替补数据
             countMatchDetail();
@@ -875,6 +888,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
 
     // 初始化进入详情的加载时间
     init_details_loading_time_record();
+
 
     message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
       if (lodash.get(data, "cd.mid") != state.mid || cmd == "C105") return;

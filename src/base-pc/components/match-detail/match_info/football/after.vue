@@ -128,7 +128,6 @@
           <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" :src="compute_local_project_file_path('/image/svg/rs_hong.svg')">
         </div>
         <div class="info-data">
-        
           <!-- 角球总比分 111-->
           <span v-show="match_info.cds!=='C01'">{{lodash.get(match_info, 'msc_obj.S5.home')}}</span>
           <!-- 黄牌比分 -->

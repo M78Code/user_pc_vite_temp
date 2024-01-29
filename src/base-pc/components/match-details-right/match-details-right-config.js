@@ -127,6 +127,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     let mid =null
     let is_ws = false
     if(lodash.isObject(param)){
+      
        mid  = param.mid;
        is_ws  = param.is_ws;
     }else{
@@ -204,9 +205,22 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     // 隐藏tips
     { type: MITT_TYPES.EMIT_SET_CLOSE_TIPS, callback: close_tips },
     //mid更新触发
-    { type: MITT_TYPES.EMIT_SHOW_DETAILS, callback: m_init },
+    { type: MITT_TYPES.EMIT_SHOW_DETAILS, callback: m_init }
   ]);
   onUnmounted(emitters_off);
+   //多语言触发
+  const {off}  = useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, ()=>{
+     // 其他情况只调用一次
+     get_matchInfo();
+     // 获取玩法集数据
+     get_category_list(() => {
+       set_cur_match_plays_list();
+         allData.handicap_state = "loading";
+       //玩法投注项列表
+      //  get_match_detail(false);
+     }, false);
+  }) //语言切换
+  onUnmounted(off)
   const  match_details = ref([]); //详情盘口
   const allData = reactive({
     handicap_this: null,
@@ -468,12 +482,13 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
                   }
                 }
                 // 同步数据到详情
-                // let msc = detailUtils.build_msc(match_obj);
-                // match_obj.msc = msc;
-                // Object.assign(
-                //   MatchDataWarehouseInstance.match_obj,
-                //   match_obj
-                // );
+                if(match_info.csid !=1 && match_info.csid !=2 ){
+                  match_obj.msc = detailUtils.build_msc(match_obj);
+                }
+                Object.assign(
+                  allData.match_infoData,
+                  match_obj
+                );
               }
               // 是否是从详情页返回列表页
               allData.is_go_match_list = true;

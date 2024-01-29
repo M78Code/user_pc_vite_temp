@@ -106,6 +106,12 @@ const set_ref_data_bet_money = () => {
     ref_data.seriesOdds = seriesOdds
     // 限额改变 重置投注金额
     ref_data.money = ''
+
+    //如果勾选了常用金额则设置给常用金额属性设置 回显金额数值
+    if(BetData.is_regular_amount){
+        ref_data.money = BetData.regular_amount
+    }
+
     // 设置键盘设置的 限额和数据
     BetData.set_bet_keyboard_config({playOptionsId:props.item.playOptionsId,max_money})
 }

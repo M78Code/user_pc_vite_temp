@@ -10,7 +10,7 @@
 					<template v-if="tab_list.length">
 						<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item,'change')"
 							:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
-							{{ item.not_i18n_t?item.label:i18n_t(item.label) }}
+							{{ i18n_t(item.label) }}
 							<!-- 点击联赛后出现的时间筛选 -->
 							<div 
 								v-if="MenuData.is_leagues() && item.value === 4002"
@@ -86,7 +86,7 @@ const ref_data = reactive({
 			{ label: ('ouzhou.match.today'), value: 3002 },
 			{ label: ('ouzhou.match.early'), value: 3003 },
 			{ label: ('menu.match_winner'), value: 3004 },
-			{ label: (BaseData.menus_i18n_map || {})[2000] || "" , value: 2000,not_i18n_t:true }
+			{ label: ('common.e_sports'), value: 2000 }
 		],
 		// i18n_t('ouzhou.match.inplay')   i18n_t('ouzhou.match.all_matches')
 		inplay:{
@@ -386,6 +386,7 @@ const checked_current_tab = (payload,type) => {
 
 	.matches-title {
 		padding-left: 20px;
+		min-height: 80px;
 	}
 
 	.current_match_title {
