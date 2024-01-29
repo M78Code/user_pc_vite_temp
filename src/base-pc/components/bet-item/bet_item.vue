@@ -201,9 +201,13 @@ const {
   if (!MenuData.is_mix()) {
     BetData.bet_oid_list = []
   }
-
-  const {oid,_hid,_hn,_mid } = ol_data_item.value
-
+  const {oid,_hid,_hn,_mid,_mhs,_hs,os } = ol_data_item.value
+  if ( (_mhs > 0 && _mhs != 11) || (_hs > 0&& _hs != 11)) {
+    return;
+  }
+  if (os != 1) {
+      return;
+  }
   let bet_type = 'common_bet'
     if(MenuData.is_esports()){
         bet_type ="esports_bet"

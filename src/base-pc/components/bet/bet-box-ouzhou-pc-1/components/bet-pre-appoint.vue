@@ -47,6 +47,7 @@ import { FOOTBALL_PLAY_LET_BALL, MARKET_BIG_SMALL_PLAY_LIST, MARKET_RANG_FLAG_LI
 import mathJs from 'src/core/bet/common/mathjs.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import lodash_ from 'lodash'
+import { btn_reduce, btn_add } from "src/core/bet/common/appoint-data.js"
 import BetInput from "./bet-input.vue"
 import { IconWapper } from 'src/components/icon'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
@@ -279,8 +280,16 @@ const format_pre_odds = (appoint_odds_value) => {
   return appoint_odds_value
 }
 
-const pre_input_handle = (val) => {
-  console.log('这这这这这这', val)
+const pre_input_handle = () => {
+  console.log(ref_data.appoint_odds_value)
+  let max_odds = 355
+  let odds_val = parseFloat(ref_data.appoint_odds_value || 0)
+  if (odds_val >= max_odds) {
+    ref_data.appoint_odds_value = max_odds
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('bet.bet_max_booked_odds'));
+  } else {
+    ref_data.appoint_odds_value = odds_val
+  }
   set_bet_obj_config()
 }
 
@@ -307,12 +316,12 @@ const set_bet_obj_config = () => {
 const add_handle = (type, index = 1) => {
   //赔率加
   if (type == 'odds_value') {
-    let aov = ref_data.appoint_odds_value;
-    const list = odd_list.find(item => {
-      return aov < item.oddsRange
-    });
+    // let aov = ref_data.appoint_odds_value;
+    // const list = odd_list.find(item => {
+    //   return aov < item.oddsRange
+    // });
 
-    ref_data.appoint_odds_value = format_pre_odds(mathJs.add(aov, list.add_odd));
+    ref_data.appoint_odds_value = btn_add(ref_data.appoint_odds_value);
     //获取当前需要添加焦点的输入框，如果存在输入框，则获取焦点
     let input = index == 0 ? currency_input : ''
     if (input) input.focus();

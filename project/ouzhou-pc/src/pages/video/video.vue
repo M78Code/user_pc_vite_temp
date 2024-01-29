@@ -11,14 +11,15 @@
           :video_fullscreen_disabled="false" :match_info="match_info" :is_esports="false"></video_type_ctr> -->
       </div>
     </load-data>
-    <video_type_ctr
+    <video_controller :params="params" @handle-type="handle_type"/>
+    <!-- <video_type_ctr
           v-show="is_video_hover"
           :ctr_data={video_type:1}
           :is_video_hover="is_video_hover"
           :video_fullscreen_disabled="false"
           :match_info="match_info"
           :is_esports="false"
-      ></video_type_ctr>
+      ></video_type_ctr> -->
     <!-- <video-header v-if="route.params.video_size != 1" :refresh_loading="refresh_loading" :match_info="match_info"
           @refresh="refresh_data" /> -->
     <!-- <iframe
@@ -51,7 +52,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import { api_match_list } from "src/api/index";
 import url_add_param from "src/core/enter-params/util";
 import video_type_ctr from "src/core/video/video_type_ctr.vue";
-
+import video_controller from "src/base-pc/components/video/video-controller.vue"
 const route = useRoute();
 const router = useRouter();
 const load_data_state = ref('loading');
@@ -89,7 +90,7 @@ const get_video_url = () => {
       let live_type = 1;
       if (!url_add_param(url_src, "video_type", 1)) {
         // 视频结束，播放错误
-        router.back();
+        // router.back();
         return;
       }
       // 此处为最终处理后的视频url
@@ -111,6 +112,38 @@ const video_enter = () => {
 
 }
 
+/**
+ * 控制器回调事件
+ * @param {'live'|'speed'|'video'|'animation'|'exit_full_screen'|'refresh'} value 
+ */
+const handle_type = (type) => {
+  switch (type) {
+    case "live":
+      // 不知道什么功能
+      break;
+    case "speed":
+      // 好像是倍速
+      break;
+    case "video":
+      // 切换视频
+      break;
+    case "animation":
+      // 切换动画
+      break;
+    case "exit_full_screen":
+      // 退出全屏
+      break;
+    case "refresh":
+      // 刷新
+      video.send_message({
+        cmd:'refresh_video',
+        val:''
+      })
+      break;
+    default:
+      break;
+  }
+}
 
 /**
  * @Description 浏览器全屏
