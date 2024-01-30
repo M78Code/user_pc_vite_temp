@@ -10,9 +10,9 @@
     <!--  顶部菜单 -->
     <div class="long3_icon">
 
-      <!-- 主题换肤 龙年元素 日间：theme-2   夜间：theme-1 -->
-      <img v-if="UserCtr.theme == 'theme-2'" :src="h5_long_bg"  alt="">
-      <img v-if="UserCtr.theme == 'theme-1'" :src="h5_long_gb2"  alt="">
+      <!-- 主题换肤 龙年元素 日间：theme-2   夜间：theme-1  电竞不显示-->
+      <img v-if="UserCtr.theme == 'theme-2' && !is_esports" :src="h5_long_bg"  alt="">
+      <img v-if="UserCtr.theme == 'theme-1' && !is_esports" :src="h5_long_gb2"  alt="">
 
       <TopMenu />
       <div v-show="[3, 6].includes(MenuData.current_lv_1_menu_mi.value)">
