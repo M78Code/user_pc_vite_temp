@@ -66,7 +66,7 @@
                     </div>
 
                     <div class="appoint-cursor" v-if="!ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
-                      <span>+{{ i18n_t('analysis_football_matches.Odds') }}</span>
+                      <span>+{{ i18n_t('bet.bet_book_confirm') }}</span>
                     </div>
                     
                   </div>
@@ -209,7 +209,6 @@
     span{
       display: block;
       border-radius: 0.2rem;
-      background: rgba(255,236,26);
       width: 0.31rem;
       transform: translate(0.1rem);
       text-align: center;

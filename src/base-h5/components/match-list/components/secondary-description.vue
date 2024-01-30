@@ -7,15 +7,15 @@
   <div class="pg-wrapper" v-show="other_way_info_show" @click="close_other_w_info" ref="other_way_info">
     <div class="other-way-info-wrapper" :class="arr_top_down"
       :style="{ left: `${other_way_style.left}px`, top: `${other_way_style.top}px` }">
-      <div class="row justify-between info-head">
+      <!-- <div class="row justify-between info-head">
         <div class="o-title">
           {{ current_way_name }}
         </div>
         <img class='close-o-info-icon' @click="close_other_w_info"
           :src="compute_img_url('icon-close')" />
-      </div>
+      </div> -->
       <!-- 次要玩法如果是数组 例如15分钟展开 -->
-      <div v-if="Array.isArray(play_way_info)">
+      <div class="content" v-if="Array.isArray(play_way_info)">
         <template v-if="!(show_Xth_title && index === 5)">
           <div class="s-table" v-for="(item, index) in play_way_info" :key="index">
             <template v-if="item.title == '5min-icon'">
@@ -63,6 +63,7 @@ const other_way_style = ref({
   top: 0,
 })
 const pre_info_clicked_mid = ref('')
+const show_15min_data = ref('')
 const play_way_info = ref('')
 const current_way_name = ref('')
 // 次要玩法info tips----当前展开的次要玩法tab信息
@@ -101,7 +102,9 @@ const close_other_w_info = () => {
 /**
  * 玩法信息图标点击
  */
-const info_icon_click_h = (e, mid, menu, match) => {
+const info_icon_click_h = (params = {}) => {
+  if (!params) return
+  const { e = null, mid = '', item = '', match = {} } = params
   if (!e) {
     other_way_info_show.value = false;
     return;
@@ -110,17 +113,16 @@ const info_icon_click_h = (e, mid, menu, match) => {
   // 获取当前赛事状态
   curr_play_info.value = {
     ms: lodash.get(match, 'ms', 1),
-    menu_id: menu.id
+    menu_id: item.id
   }
 
-  current_way_name.value = menu.title;
-  let menu_id = menu.id;
-  other_way_style.value.left = rem(0.1);
+  current_way_name.value = item.title;
+  let menu_id = item.id;
+  other_way_style.value.left = rem(0.15);
   other_way_style.value.top = e.clientY + rem(.16);
   if (mid != pre_info_clicked_mid.value) {
     other_way_info_show.value = true;
-  }
-  else {
+  } else {
     other_way_info_show.value = !other_way_info_show.value;
   }
 
@@ -130,12 +132,12 @@ const info_icon_click_h = (e, mid, menu, match) => {
     // 5分钟
     if (19 == menu_id) {
       arr_top_off_set = 2 // 单位rem
-      show_15min_data = false
+      show_15min_data.value = false
     }
     // 15分钟
     else if (17 == menu_id) {
       arr_top_off_set = 1.8 // 单位rem
-      show_15min_data = true
+      show_15min_data.value = true
     }
     // 罚牌
     else if (5 == menu_id) {
@@ -144,7 +146,7 @@ const info_icon_click_h = (e, mid, menu, match) => {
 
     if (document.body.offsetHeight - e.clientY < rem(arr_top_off_set) + rem(0.1)) {
       // 如果当前点击的位置超过 弹框本身的大小 则变成向上显示
-      other_way_style.value.top = e.clientY - rem(.16) - rem(arr_top_off_set);
+      other_way_style.value.top = e.clientY - rem(.16) - rem(arr_top_off_set) + 30;
       arr_to_down = true;
     }
   }
@@ -154,15 +156,178 @@ const info_icon_click_h = (e, mid, menu, match) => {
   pre_info_clicked_mid.value = mid;
 }
 
-onMounted(() => {
-  Object.values(emitters.value).map((x) => x())
-})
+const rem = (value) => {
+  let font_size = window.innerWidth * 100 / 375;
+  return Math.ceil(value * font_size);
+}
 
-onUnmounted(() => {
+onMounted(() => {
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_INFO_ICON_CLICK, info_icon_click_h).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING, tab_changing_handle).off,
   }
 })
 
-</script>src/output/index.js
+onUnmounted(() => {
+  Object.values(emitters.value).map((x) => x())
+})
+
+</script>
+
+<style scoped lang="scss">
+  .pg-wrapper{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    position: fixed;
+    z-index: 502;
+    background-color: rgba(0,0,0,0.3);
+    .arr-top{
+      &:before{
+        content: "";
+        width: 0px;
+        height: 0px;
+        border-left: 0.1rem solid transparent;
+        border-right: 0.1rem solid transparent;
+        border-bottom: 0.1rem solid #fff;
+        position: absolute;
+        top: -9px;
+        left: 10px;
+      }
+
+      &:after{
+        content: "";
+        width: 0px;
+        height: 0px;
+        border-left: 0.095rem solid transparent;
+        border-right: 0.095rem solid transparent;
+        border-bottom: 0.095rem solid #fff;
+        position: absolute;
+        top: -9px;
+        left: 10px;
+      }
+    }
+
+    .arr-down{
+      &:before{
+        content: "";
+        width: 0px;
+        height: 0px;
+        border-left: 0.1rem solid transparent;
+        border-right: 0.1rem solid transparent;
+        border-top: 0.1rem solid #fff;
+        position: absolute;
+        bottom: -9px;
+        left: 10px;
+      }
+
+      &:after{
+        content: "";
+        width: 0px;
+        height: 0px;
+        border-left: 0.095rem solid transparent;
+        border-right: 0.095rem solid transparent;
+        border-top: 0.095rem solid #fff;
+        position: absolute;
+        bottom: -9px;
+        left: 10px;
+      }
+    }
+  }
+
+  .other-way-info-wrapper {
+    position: fixed;
+    min-width: 2.5rem;
+    max-width: 94vw;
+    height: auto;
+    background-color: #fff;
+    border-radius: 0.04rem;
+    padding: 10px 5px;
+    z-index: 1000;
+    color: #7981a4;
+
+    .triangle-icon {
+      width: 0.1rem;
+      height: 0.06rem;
+      background-image: var(--q-color-com-img-bg-14);
+      position: absolute;
+      top: -0.06rem;
+      left: 0.13rem;
+    }
+
+    .info-head {
+      margin-bottom: 0.1rem;
+    }
+
+    .o-title {
+      font-size: 0.10rem;
+    }
+
+    .close-o-info-icon {
+      width: 0.1rem;
+      height: 0.1rem;
+    }
+    .content{
+      border: 1px solid #f2f2f6;
+      .s-table:last-child{
+        border-bottom: none;
+      }
+    }
+    .s-table {
+      color: #7981a4;
+      font-size: 0.11rem;
+      border-bottom: 1px solid #f2f2f6;
+      .wrap-box{
+        flex: 1;
+        padding: .1rem 0;
+        .item-content{
+          margin: 0 .08rem;
+        }
+        .item-icon {
+          border-radius: 50%;
+          background-color: var(--q-color-fs-color-6);
+          margin:0 .03rem;
+          &.item-icon-1 {
+            width: .04rem;
+            height: .04rem;
+          }
+          &.item-icon-2 {
+            width: .06rem;
+            height: .06rem;
+          }
+          &.item-icon-3 {
+            width: .075rem;
+            height: .075rem;
+          }
+          &.item-icon-4 {
+            width: .082rem;
+            height: .082rem;
+          }
+        }
+      }
+      >div{
+        width: 100%;
+        display: flex;
+        border-bottom: none;
+        padding: 2px 0;
+        >div{
+          text-align: center;
+          border-bottom: none;
+          &:first-child{
+            width: 47.5%;
+            background: var(--q-color-page-bg-color-9);
+          }
+          &:nth-child(2){
+            width: 52.5%;
+            background: var(--q-color-page-bg-color-9);
+          }
+        }
+      }
+
+      .full-width {
+        width: 100% !important;
+      }
+    }
+  }
+  
+</style>

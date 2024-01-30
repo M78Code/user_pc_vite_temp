@@ -15,7 +15,7 @@
       <!-- 预约 -->
       <div class="header-right" v-if="BetRecordClass.selected === 2">
         <span v-if="[2,3].includes(data_b.preOrderStatus)">{{i18n_t('pre_record.booked_fail')}}</span>
-        <!-- <span v-else-if="data_b.preOrderStatus == 4">{{i18n_t('pre_record.canceled')}}</span> -->
+        <span v-else-if="data_b.preOrderStatus == 4">{{i18n_t('pre_record.canceled')}}</span>
         <span v-else class="pre-button">
           {{i18n_t('pre_record.booking')}}
           <span class="pre-cancle-button" @click.stop="cancelPre(data_b)"> {{i18n_t('common.cancel')}} </span>
@@ -101,11 +101,14 @@
     
   </div>
   <!-- 取消预约 -->
-  <cancle-confirm-pop 
-    v-if="show_pop" 
-    :orderNo="cancle_order_no"
-    @cancel="show_pop=false;">
-  </cancle-confirm-pop>
+  <q-dialog v-model="show_pop">
+    <cancle-confirm-pop 
+      v-if="show_pop" 
+      :orderNo="cancle_order_no"
+      :matchInfo="matchInfo"
+      @cancel="show_pop=false;">
+    </cancle-confirm-pop>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -183,8 +186,10 @@ const calc_text_item = (item) => {
 // 预约投注取消
 let show_pop = ref(false)
 let cancle_order_no = ref('')
+let matchInfo = ref('')
 const cancelPre = (data_b) => {
   cancle_order_no = lodash.get(data_b, 'orderNo', '')
+  matchInfo = lodash.get(data_b, 'detailList[0].matchInfo', '')
   show_pop.value = true
 }
 </script>

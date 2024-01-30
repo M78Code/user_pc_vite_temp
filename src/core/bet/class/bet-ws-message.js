@@ -112,6 +112,10 @@ class BetWsMessage {
           case 'C102':
             this.MSG_C102(data)
             break;
+          // 赛事比分
+          case 'C103':
+            this.MSG_C103(data)
+            break;
           // 赛事级别盘口状态  赛事移除或结束 投注项需要失效
           case 'C104':
             this.MSG_C104(data);
@@ -142,6 +146,13 @@ class BetWsMessage {
   // 赛事阶段
   MSG_C102(obj) {
     BetData.set_bet_c102_change(obj.cd)
+  }
+  // 赛事比分 
+  MSG_C103(obj) {
+    // 赛事比分 异步更新 需要从数据仓库中取值 异步等待数据仓库 数据写入
+    nextTick(()=>{
+      BetData.set_bet_c103_change(obj.cd)
+    })
   }
   // 赛事级别盘口状态
   MSG_C104(obj) {
