@@ -5,8 +5,8 @@
 -->
 <template>
   <div class="team-text">
-    <!-- mng 是否中立场 1:是中立场，0:非中立场 --- 仅足球 -->
-    <span class="style_icon" v-if="detail_data.mng == 1">
+    <!-- mng 是否中立场 1:是中立场，0:非中立场 --- 仅足球, 复刻版不需要这个中立图标 -->
+    <span class="style_icon" v-if="detail_data.mng == 1&&project_name!='app-h5'">
       <img :src="`${project_name}/image/svg/zhonglichang.svg`" alt />
     </span>
     <span v-if="detail_data.ms != 110" class="base-header-font">
