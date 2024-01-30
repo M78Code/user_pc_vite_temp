@@ -12,7 +12,7 @@
       <div class="scroll" style="margin-top: 0.44rem; max-width: 600px;min-height:.35rem; max-height:520px;"
         ref="details_dialog_content">
         <div v-for="(item, index) in math_list_data" :key="index" @click="change_active(item)">
-          <!-- 赛事列表里面每一项赛事 -->
+          <!-- 赛事列表里面每一项赛事22 -->
           <div class="mx-12 new-dialog-item" :data-mid="item.mid">
             <!-- 灰色背景部分 -->
             <div class="row text-center new-dialog-item-main"
