@@ -49,7 +49,7 @@
               <template v-if="props.row.seriesType != '1' || props.row.seriesType == '3'">{{props.row.seriesValue}}</template>
               <!-- 单关 -->
               <template v-else>
-                <template v-for="(item, index) in props.row.orderVOS" :key="index">
+                <template v-for="(item, index) in data_list(props.row)" :key="index">
                   <div>{{matchType(item.matchType, props.row.langCode)}}</div>
                   <span>
                   {{ item.playName }}
