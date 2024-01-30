@@ -1073,7 +1073,8 @@ export const details_main = () => {
     off_listeners,
     clear_timer,
     LOCAL_PROJECT_FILE_PREFIX,
-    change_fullscreen
+    change_fullscreen,
+    MatchDataWarehouseInstance
   };
 };
 
