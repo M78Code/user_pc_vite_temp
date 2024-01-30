@@ -10,10 +10,14 @@
       {{i18n_t('match_info.match_over')}}
     </span>
     <span v-else>
-      {{i18n_t('mmp')[1][detail_data.mmp]}}
-      <!-- 计时器 -->
-      <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime != 0">&nbsp;{{ counting_time_ctr_show_format_ouzhou(detail_data, format_mgt_time(showTime)) }}</span>
-      <span  v-if="detail_data.mmp == '0'">&nbsp;&nbsp;{{ counting_time_ctr_show_format_ouzhou(detail_data, '00:00')}}</span>
+      <!-- {{i18n_t('mmp')[1][detail_data.mmp]}} -->
+      <!-- 计时器 222-->
+      <CountingDown ref="counting-down-second" :title="mmp_map_title" :mmp="detail_data.mmp"
+        :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+detail_data.csid)" :m_id="detail_data.mid"
+        :second="detail_data.mst" :match="detail_data">
+      </CountingDown>
+      <!-- <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime != 0">&nbsp;{{ counting_time_ctr_show_format_ouzhou(detail_data, format_mgt_time(showTime)) }}</span>
+      <span  v-if="detail_data.mmp == '0'">&nbsp;&nbsp;{{ counting_time_ctr_show_format_ouzhou(detail_data, '00:00')}}</span> -->
     </span>
   </span>
 </template>
@@ -24,6 +28,8 @@
   import { counting_time_ctr_show_format_ouzhou } from 'src/core/format/common/index.js'
   import { format_mgt_time } from "src/output/index.js"
   import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+  import CountingDown from 'src/base-h5/components/common/counting-down.vue';
+  import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 // import { format_mgt_time } from "src/output/index.js";
   const props = defineProps({
     detail_data: {
@@ -46,7 +52,10 @@
     // 延时器
     const showTimeInterval = ref(null)
 
+    const mmp_map_title = ref('')
+
   watch(() => props.detail_data, (n, o) => {
+    mmp_map_title.value = matchListClass.match_period_map(props.detail_data);
     if(mmp_arr.includes(n.mmp) ){ // 比赛的时候，更新mst时间;
       let num = 0;
       if(n.c_time){ num = (new Date().getTime() - n.c_time) / 1000 }
@@ -140,5 +149,17 @@ onUnmounted(() => {
 
 
 <style lang="scss" scoped>
+:deep(){
+  .title-space-1{
+    color:var(--q-gb-t-c-14) !important
+  }
+  .counting{
+    color:var(--q-gb-t-c-14) !important
+  }
+  .counting-down-wrap{
+    margin-left: -0.28rem;
+  }
+}
+
 // src/core/utils/common/index.jssrc/output/index.js
 </style>
