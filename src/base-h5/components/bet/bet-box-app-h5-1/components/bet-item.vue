@@ -21,7 +21,8 @@
                             <span class="virtual-count" :class="`virtual-num-${page.hv} csid-${items.sportId}`" ></span> {{page.text}} 
                         </div>
                     </div>
-                    <div class="text-flow-none" v-else>{{items.handicap}} <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em></div> 
+                    
+                    <div class="text-flow-none" v-else>{{items.handicap}} <em v-if="items.handicap_hv && !items.is_guanjun" class="ty-span">{{items.handicap_hv}}</em></div> 
                 </div>
                 <div class="my-left">
                     <div class="w-100 handicap">
