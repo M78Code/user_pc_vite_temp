@@ -13,7 +13,7 @@
                 <img :src="`${LOCAL_PROJECT_FILE_PREFIX }/image/menu/top-menu/back.png`" alt="">
             </div>
             <div class="drop_menulist">
-                VR-{{ current_sub_menu.name }}
+                <span>VR-{{ current_sub_menu.name }}</span>
                 <q-menu class="vr-menu-wrap">
                     <div>
                         <q-list>
@@ -440,8 +440,12 @@ export default {
                 margin-left: 0.08rem;
                 }
             }
-            .dropmenulist{
+            .drop_menulist{
                 margin-left: 0.08rem;
+                line-height: normal;
+                span{
+                  color: #fff;
+                }
             }
         }
 

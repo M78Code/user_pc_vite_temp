@@ -735,7 +735,7 @@ export const category_info = (category_arr=[]) => {
     params.cuid = component_data.send_gcuuid;
     http(params)
       .then((res) => {
-        if (component_data.send_gcuuid != res.gcuuid) return;
+        // if (component_data.send_gcuuid != res.gcuuid) return;
         component_data.is_loading = false;
         if (!res.data || res.data.length == 0) {
           if (callback) callback();

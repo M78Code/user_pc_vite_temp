@@ -10,7 +10,7 @@
     <!--  顶部菜单 -->
     <div class="long3_icon">
 
-      <!-- 主题换肤 龙年元素 日间：theme-2   夜间：theme-1 -->
+      <!-- 主题换肤 龙年元素 日间：theme-2   夜间：theme-1  -->
       <img v-if="UserCtr.theme == 'theme-2'" :src="h5_long_bg"  alt="">
       <img v-if="UserCtr.theme == 'theme-1'" :src="h5_long_gb2"  alt="">
 
@@ -71,7 +71,7 @@ import { is_esports, is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
 import { get_collect_count } from 'src/core/collect/collect-class.js'
 const route = useRoute();
 const router = useRouter()
-const inner_height = window.innerHeight;  // 视口高度
+const inner_height = ref(0);  // 视口高度
 const select_dialog = ref(false);//暂时筛选窗口dJ
 const dateTabMenu = ref(null);//时间dom
 const dJdateTabMenu = ref(null);//电竞时间dom
@@ -88,8 +88,8 @@ const emitters = ref({});
  * 早盘串关日期格式
  */
 const dataList = reactive({
-  3: dateTabList(new Date(new Date().getTime() + 24 * 60 * 60 * 1000)), //早盘下一天开始
-  6: dateTabList(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), [{ name: "今日", val: '0' }]),
+  3: dateTabList(new Date().getHours()<12?new Date(new Date().getTime()):new Date(new Date().getTime() + 24 * 60 * 60 * 1000)), //早盘下一天开始
+  6: dateTabList(new Date().getHours()<12?new Date(new Date().getTime()):new Date(new Date().getTime() + 24 * 60 * 60 * 1000), [{ name: "今日", val: '0' }]),
   // 2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"所有日期",val:''},{name:"今日",val:new Date().getTime()}])
 });
 const dataListEsports = ref([]);
@@ -100,6 +100,10 @@ const ref_data = reactive({
   current_mi: '',
 })
 onMounted(() => {
+  inner_height.value = window.innerHeight
+  window.onresize = lodash.debounce((e) => {
+    inner_height.value = window.innerHeight
+  }, 500)
   // set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,1)
   init_data(MenuData.current_lv_1_menu_mi.value, 1)
   // mitt_list.push(useMittOn(MITT_TYPES.EMIT_MENU_GO_BACK, menu_go_back).off)

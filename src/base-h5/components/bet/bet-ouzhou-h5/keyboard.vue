@@ -31,7 +31,7 @@
       <div class="key-cell" data-num="9">9</div>
     </div>
     <div class="key-row row">
-      <div class="key-cell" data-num="max">
+      <div class="key-cell max_text" data-num="max">
         MAX
       </div>
       <div class="key-cell" data-num=".">.</div>
@@ -316,8 +316,11 @@ const _handleNumberKey = (num) => {
 .is_max_money{
   .key-cell {
   &:first-child { // 左侧第一排MAX的样式
-    background: var(--q-gb-bg-c-33);
+    color: var(--q-gb-bg-c-33);
+    }
   }
-}
+  .max_text{// max样式
+    color: var(--q-gb-t-c-4) !important;
+  }
 }
 </style>
