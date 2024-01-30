@@ -153,7 +153,7 @@ onMounted(() => {
     //   return
     // }
     // 有当前单号
-    calc_show.value = true
+    // calc_show.value = true
     let _maxCashout = props.item.maxCashout
     if (moneyData && moneyData.orderStatus === 0) {
       if (moneyData.preSettleMaxWin !=  props.item.maxCashout) {
