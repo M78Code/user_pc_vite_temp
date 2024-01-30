@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-page" v-if="!detail_loading">
+  <div class="page detail-page" v-if="!detail_loading">
     <div class="match-detail-container">
       <div class="match-detail-bread">
         <!-- 详情页面包屑 -->
