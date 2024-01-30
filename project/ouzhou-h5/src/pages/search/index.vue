@@ -33,7 +33,7 @@
 				</li>
 				<li class="del" @click="_delete_history_search('')">{{ i18n_t('ouzhou.search.clear_search_history') }}</li>
 			</ul>
-
+ 
 			<!-- 热门搜索 -->
 			<div class='searchHot' v-if="hot_list && hot_list.length > 0">
 				<div>
@@ -580,8 +580,15 @@ const get_match_base_hps_by_mids = async () => {
 		sort: 1,
 		device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
 	};
+	let api_name = null
+	//电竞走电竞查询
+	if (MenuData.is_esports()) {
+     api_name = api_common.get_esports_match_by_mids
+    }else { 
+		api_name = api_common.get_match_base_info_by_mids
+	}
 	// 获取所有搜索结果的赔率信息
-	await api_common.get_match_base_info_by_mids(params).then((res) => {
+	await api_name(params).then((res) => {
 		if (res.code === '200') {
 			const { data } = res;
 			// 使用获得比分的 mid 和搜索结果的 mid 做比较，将赔率信息返回给搜索结果
@@ -826,7 +833,7 @@ li {
 	.list_bottom {
 		display: flex;
 		margin-bottom: 16px;
-
+ 
 		div p:first-child {
 			font-size: 14px;
 			margin-right: 10px;

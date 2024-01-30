@@ -69,7 +69,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
-import  { MenuData, i18n_t, get_odds_active, compute_value_by_cur_odd_type,LOCAL_PROJECT_FILE_PREFIX ,BUILDIN_CONFIG} from "src/output/index.js"
+import  { MenuData, i18n_t, get_odds_active, compute_value_by_cur_odd_type,LOCAL_PROJECT_FILE_PREFIX, BUILDIN_CONFIG } from "src/output/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
@@ -130,6 +130,7 @@ const unsubscribe = store.subscribe(() => {
 
 onMounted(() => {
   // 设置是否显示投注项dom的id属性值
+  // dom_id_show.value =  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
   dom_id_show.value =  BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
   get_odd_data();
   emitters.value = {
