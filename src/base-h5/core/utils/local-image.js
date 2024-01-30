@@ -57,6 +57,12 @@ export const polular_spirite_theme02 = compute_local_project_file_path('/image/p
 export const in_progress = compute_local_project_file_path('/image/list/in_progress.png')
 // 未开赛
 export const not_begin = compute_local_project_file_path('/image/list/not_begin.png')
+// 龙年 头部图片
+export const h5_long3 = compute_local_project_file_path('/image/home/h5_long3.png')
+export const h5_long_bg = compute_local_project_file_path('/image/home/h5_long_bg.png')
+export const h5_long_gb2 = compute_local_project_file_path('/image/home/h5_long_gb2.png')
+
+
 
 // 动画icon
 export const animation_icon = compute_local_project_file_path('/image/list/animate_icon-s.svg')
