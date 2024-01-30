@@ -268,10 +268,13 @@ const props = defineProps({
       }
       .btn_style {
         // background: var(--q-analysis-text-color-13);
-  background-color: var(--q-gb-bg-c-23);
-  color: var(--q-analysis-text-color-20);
+        background-color: var(--q-gb-bg-c-23);
+        
 
         border: 1px solid var(--q-analysis-text-color-23);
+        .text_c{
+          color: var(--q-analysis-text-color-20) !important;
+        }
       }
     }
 
