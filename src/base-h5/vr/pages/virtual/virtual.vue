@@ -7,6 +7,10 @@
       <!-- 头部 -->
       <div class="virtual-head">
         <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
+          <!-- 主题换肤 龙年元素 日间：theme-2   夜间：theme-1 -->
+          <img v-if="UserCtr.theme == 'theme-2'" :src="compute_local_project_file_path('/image/home/h5_long_bg.png')" alt="">
+          <img v-if="UserCtr.theme == 'theme-1'" :src="compute_local_project_file_path('/image/home/h5_long_gb2.png')" alt="">
+
           <!-- 返回按钮 及 刷新 注单  设置 按钮 -->
           <div class="title-wrap">
             <div class="detail-back-a">
@@ -59,6 +63,8 @@
   </div>
 </template>
 <script>
+import { UserCtr } from "src/output/index.js";
+import { h5_long_bg, h5_long_gb2 } from 'src/base-h5/core/utils/local-image.js'
 import virtual_mixin from "src/core/vr/mixin/pages/virtual/virtual-mixin.js";
 import virtualSports from "src/base-h5/vr/pages/virtual/virtual-sports-part/virtual-sports.vue";    // 虚拟体育
 export default {
@@ -96,6 +102,10 @@ export default {
     background: var(--q-gb-bg-c-27) !important;
     .type-bg {
       background-size: 100% auto;
+      > img{
+        position: absolute;
+
+      }
     }
 
     .title-wrap {
@@ -104,7 +114,7 @@ export default {
       justify-content: space-between;
       font-size: 0.16rem;
       height: 0.44rem;
-      background-color: var(--q-gb-bg-c-27);
+      // background-color: var(--q-gb-bg-c-27);
       position: relative;
       .detail-back-a{
         width: 0.3rem;
@@ -215,7 +225,8 @@ export default {
     flex-wrap: nowrap;
     overflow: auto;
     font-size: 0.12rem;
-    background-color: var(--q-gb-bg-c-27);
+    // background-color: var(--q-gb-bg-c-27);
+    position: relative;
     .tabs-bar {
       width: 100%;
 

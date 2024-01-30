@@ -46,6 +46,7 @@ const router = useRouter()
         display: flex;
         white-space: nowrap;
         padding: 0 0.14rem 0 0 ;
+        position: relative;
         .top-header-left{
             height: 100%;
             padding-left: 0.09em;
@@ -72,7 +73,7 @@ const router = useRouter()
     .detail-back {
         width: 0.3rem;
         height: 100%;
-       
+        z-index: 0;
         background-size: 0.1rem auto;
         margin-left: 0.05rem;
        background-position: center;

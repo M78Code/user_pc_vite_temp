@@ -209,15 +209,17 @@ const get_page_title = () => {
   };
   let _page_title = ""
   let _menu_type = MenuData.menu_root
+  console.log(MenuData.menu_current_mif, 'MenuData.menu_current_mif', _menu_type)
   if (is_search_page) {
     _page_title = i18n_t("common.search_title")
     // 今日|早盘|串关
   } else if ([2, 3].includes(+_menu_type)) {
-    if (MenuData.menu_current_mif) {
-      _page_title = `${TITLE[_menu_type]}（${BaseData.menus_i18n_map[MenuData.menu_current_mif]}）`
-    } else {
-      _page_title = TITLE[_menu_type]
-    }
+    // if (MenuData.menu_current_mif) {
+    //   _page_title = `${TITLE[_menu_type]}（${BaseData.menus_i18n_map[MenuData.menu_current_mif]}）`
+    // } else {
+    //   _page_title = TITLE[_menu_type]
+    // }
+    _page_title = `${TITLE[_menu_type]}（${BaseData.menus_i18n_map[MenuData.menu_current_mif || 101]}）`
   } else if ([1, 500].includes(+_menu_type)) {
     _page_title = TITLE[_menu_type]
   } else if (_menu_type == 400) {
@@ -235,7 +237,7 @@ const get_page_title = () => {
 
 watch(() =>MenuData.menu_data_version.value, () => {
   get_page_title()
-})
+}, { immediate: true })
 
 
 /**
