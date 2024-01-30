@@ -723,6 +723,9 @@ class MatchMeta {
     const http_key = `${euid}_${md}_${tid}`
     if (!is_error) this.set_current_http_key(http_key)
     const other_params = { category: 1 }
+    // tid 有值 则 加上 tid
+    params_tid &&  Object.assign(other_params, { tid: params_tid })
+    tid &&  Object.assign(other_params, { tid })
     // data_time 有值 则 加上 md
     data_time && Object.assign(other_params, { md: data_time })
     const target_params = {
