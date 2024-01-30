@@ -64,11 +64,14 @@ const check = (item) => {
       span {
         width: 14px;
         height: 14px;
-        background-color: var(--q-gb-bg-c-1);
+        background-color: transparent;
+        border: 1px solid var(--q-gb-bg-c-2);
         border-radius: 2px;
         position: relative;
         &.active {
           border: none;
+          background-color: var(--q-gb-bg-c-1);
+          border-color: var(--q-gb-bg-c-1);
           &:after {
             position: absolute;
             content: "";
