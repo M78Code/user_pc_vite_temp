@@ -14,11 +14,7 @@ import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { SessionStorage } from "src/output/module/constant-utils.js";
-import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
-import { details_ws } from "src/core/match-detail/details-ws.js";
 export const category_info = (category_arr=[]) => {
-    /* 引入ws处理指令 */
-  const { handler_ws_cmd } = details_ws();
   const router = useRouter();
   const route = useRoute();
   let emitters = []
@@ -179,12 +175,6 @@ export const category_info = (category_arr=[]) => {
     // 获取非置顶列表数据
     match_list_normal()
     on_listeners()
-    message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
-      if (lodash.get(data, "cd.mid") != match_id.value || cmd == "C105") return;
-      handler_ws_cmd(cmd, data,match_id.value);
-      // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
-      // console.error('flag','cmd:',cmd,data);
-    })
   })
   // #TODO VUEX
   // methods: {
@@ -736,13 +726,16 @@ export const category_info = (category_arr=[]) => {
     http(params)
       .then((res) => {
         // if (component_data.send_gcuuid != res.gcuuid) return;
+       
         component_data.is_loading = false;
         if (!res.data || res.data.length == 0) {
+          console.error(res.data,'res.data.length == 0');
           if (callback) callback();
           return;
         }
         component_data.is_no_data = false;
         var temp = lodash.get(res, "data");
+        console.error(temp,'aa-temp处理前1');
         //getMatchOddsInfo 接口拉取时，联动跟新投注框的数据
         if (get_bet_status.value == 1 || get_bet_status.value == 7 || get_bet_status.value == 5) {
           update_ol(null, temp);
@@ -767,7 +760,7 @@ export const category_info = (category_arr=[]) => {
             listItemAddCustomAttr(item);
           });
         }
-
+        console.log(temp,'aa-temp处理前2');
         temp = save_hshow(temp); // 保存当前相关hshow状态;
         // 当前玩法集下数据缓存
         const details_data_cache = {
@@ -923,9 +916,6 @@ const get_is_exports=()=>{
 }
   onUnmounted(() => {
     off_listeners()
-    // 组件销毁时销毁监听函数
-    ws_message_listener.ws_remove_message_listener(message_fun);
-    message_fun = null;
   })
   return {
     component_data,
