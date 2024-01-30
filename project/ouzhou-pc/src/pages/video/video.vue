@@ -91,8 +91,8 @@ const get_video_url = () => {
       // let live_type = this.$get_media_icon_index(media_type)
       let live_type = 1;
       if (!url_add_param(url_src, "video_type", 1)) {
-        // 视频结束，播放错误
-        // router.back();
+        // TODO: 视频结束，播放错误返回上一页
+        router.back();
         return;
       }
       // 此处为最终处理后的视频url

@@ -26,11 +26,11 @@
     <!-- 画中画提示框 -->
       <div v-show="pip_mouseover&&$route.name == 'home'" class="pip_mouseover">{{ i18n_t('video.open_pip')}}</div>
     <div id="vide_size">{{ $route.params.video_size  }}</div> 
-    <div class="full-screen-wrap" :class="{esports:is_esports}" v-if="$route.params.video_size !=1 && !is_esports">
+    <div class="full-screen-wrap" :class="{esports:is_esports}" v-if="$route.params.video_size !=1 && !is_esports && show_full_screen_wrap">
       <!-- 退出中屏 -->
       <icon-wapper v-if="$route.name == 'video'" size="14px" src="" color="#FFFFFF" name="icon-small"  @click="exit_full_screen" />
       <!-- 进入中屏 -->
-      <icon-wapper v-else size="14px" color="#FFFFFF" :name="`img:${LOCAL_PROJECT_FILE_PREFIX}/image/common/svg/big_screen.svg`" @click="full_screen()" />
+      <icon-wapper v-if="show_full_screen_wrap && $route.name != 'video'" size="14px" color="#FFFFFF" :name="`img:${LOCAL_PROJECT_FILE_PREFIX}/image/common/svg/big_screen.svg`" @click="full_screen()" />
       <q-tooltip
         anchor="top middle"
         self="center middle"
@@ -39,7 +39,10 @@
       >{{ i18n_t($route.name == 'video' ? 'common.back' : 'video.big_screen_mode')}}</q-tooltip>
     </div>
     <!-- 全屏 -->
-    <div class="xl-screen-wrap" v-if="$route.params.play_type != 2" :class="{esports:is_esports, disabled: video_fullscreen_disabled}">
+    <div class="xl-screen-wrap" v-if="$route.params.play_type != 2" :class="{
+      esports:is_esports, disabled: video_fullscreen_disabled,
+      'right-40': !show_full_screen_wrap
+    }">
       <!-- 退出全屏 -->
       <icon-wapper v-if="$route.name == 'video' && ($route.params.video_size === '1' || is_esports)" size="14px" color="#FFFFFF" name="icon-small" @click="exit_full_screen('xl')" />
       <!-- 进入全屏 -->
@@ -371,6 +374,10 @@ export default {
   i {
     cursor: pointer;
   }
+}
+
+.right-40 {
+  right: 40px!important;
 }
 .xl-screen-wrap {
   position: absolute;
