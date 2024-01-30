@@ -12,7 +12,7 @@
     <template v-if="match" >
       <!-- 开赛标题  -->
       <div v-if="is_show_opening_title && !is_mix_no_today" @click.stop="handle_ball_seed_fold"
-        :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
+        :class="['match-status-fixed', { progress: +match.start_flag == 1, not_begin: +match.start_flag == 2 }]" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
           <div class="match-status-title">

@@ -234,7 +234,7 @@ export default defineComponent({
       const { csid, start_flag } = this.match_of_list
       let key = ''
       if ([1,2].includes(+start_flag)) {
-        key = start_flag === 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
+        key = start_flag == 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
       } else {
         key = `default_csid_${csid}`
       }
