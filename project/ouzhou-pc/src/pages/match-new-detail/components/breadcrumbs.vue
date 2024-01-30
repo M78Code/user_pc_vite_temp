@@ -86,6 +86,7 @@ const jumpToLeagues  = () => {
   }
   localStorage.setItem('league_name', props.detail_info.tn)
   MenuData.set_mid_menu_result(mid_config)
+  console.log("--------------------------------",MenuData.is_esports())
   router.push(`/league/${csid}/${tid}/2`)
 }
 
