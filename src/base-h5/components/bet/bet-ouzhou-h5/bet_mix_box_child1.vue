@@ -48,13 +48,14 @@
                         <span>{{items.playName}} </span>
                         {{ items.matchType == 2 && [1,2,3,8,9].includes(items.sportId *1) ? items.mark_score : '' }}
                         </span>
+                        <span class="has-book" v-show="ref_data.show_appoint"  >[{{ i18n_t('pre_record.book') }}]</span>
                       </div>
 
                       <div class="nonebox4-content-left-content-text-three">{{items.tid_name}}</div>
                       <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{items.matchType == 2? items.mark_score : ''}}</div>
 
                       <div v-if="ref_data.show_appoint" class="bet-odds">
-                        <div class="bet-odds-name">赔率</div>
+                        <div class="bet-odds-name">{{ i18n_t('analysis_football_matches.Odds') }}</div>
                         <div class="bet-odds-edit">
                           <span class="bet-odds-reduce" @click="btn_reduce_click({odds:ref_data.odds_value_edit})">-</span>
                           <input class="bet-odds-number" type="number" v-model="ref_data.odds_value_edit" />
@@ -65,7 +66,7 @@
                     </div>
 
                     <div class="appoint-cursor" v-if="!ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
-                      <span>+预约</span>
+                      <span>+{{ i18n_t('analysis_football_matches.Odds') }}</span>
                     </div>
                     
                   </div>
@@ -227,6 +228,10 @@
     margin: .08rem 0;
     font-weight: 500;
     word-break: keep-all;
+
+    .has-book{
+      color: var(--q-gb-bg-c-1);
+    }
   }
   .text-two-span{
     color: var(--q-gb-bg-c-4);

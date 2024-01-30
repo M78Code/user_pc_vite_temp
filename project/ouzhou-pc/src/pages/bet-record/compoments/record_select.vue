@@ -60,11 +60,12 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, watch, computed } from 'vue'
+import { onMounted, onUnmounted, ref, watch, computed, nextTick } from 'vue'
 import { formatTime } from 'src/output/index.js'
 import BetRecordHistory from "src/core/bet-record/pc/bet-record-history.js"
 import checkBoxWarp from './check_box_warp.vue'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import BetRecordWs from "src/core/bet-record/bet-record-ws.js";
 import dayjs from 'dayjs'
 const _dayjs = dayjs()
 
@@ -181,6 +182,8 @@ const search = () => {
 
 
 let useMitt = null
+let timer = null
+let wsObj = null
 onMounted(() => {
   // 初始化日期时间
   const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
@@ -193,6 +196,9 @@ onMounted(() => {
   useMitt = useMittOn(MITT_TYPES.EMIT_BET_RECORD_SELECTED_CHANGE, function (val) {
     init_data(val)
   }).off;
+
+  // ws监听
+  wsObj = new BetRecordWs()
 })
 
 /**
@@ -229,18 +235,22 @@ const init_data = (_index) => {
   BetRecordHistory.handle_fetch_order_list()
 
   // 未结算时，轮询获取提前结算列表金额
-  // timer && clearInterval(timer)
-  // if(_index === 0) {
-  //   timer = setInterval(() => {
-  //     if (document.visibilityState == 'visible') {
-  //       BetRecordClass.check_early_order()
-  //     }
-  //   }, 5000)
-  // }
+  timer && clearInterval(timer)
+  if(_index === 0) {
+    timer = setInterval(() => {
+      if (document.visibilityState == 'visible') {
+        BetRecordHistory.check_early_order()
+      }
+    }, 5000)
+  }
 }
 
 onUnmounted(() => {
   useMitt && useMitt()
+  timer && clearInterval(timer)
+  // 取消ws监听
+  wsObj && wsObj.destroy()
+  wsObj = null
 })
 </script>
 

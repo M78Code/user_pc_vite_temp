@@ -31,7 +31,7 @@
       <div class="key-cell" data-num="9">9</div>
     </div>
     <div class="key-row row">
-      <div class="key-cell" data-num="max">
+      <div class="key-cell max_text" data-num="max">
         MAX
       </div>
       <div class="key-cell" data-num=".">.</div>
@@ -166,7 +166,7 @@ const _handleKeyPress = (e) => {
   }
   useMittEmit(MITT_TYPES[emit_name], { params:BetData.bet_keyboard_config, money:money.value } )
 
-//是否为最大金额
+//是否为最大金额 判断最大值和限额
   if (money.value == BetData.bet_keyboard_config.max_money || money.value == UserCtr.balance){
     is_max_money.value = true
   }else {
@@ -316,8 +316,11 @@ const _handleNumberKey = (num) => {
 .is_max_money{
   .key-cell {
   &:first-child { // 左侧第一排MAX的样式
-    background: var(--q-gb-bg-c-33);
+    color: var(--q-gb-bg-c-33);
+    }
   }
-}
+  .max_text{// max样式
+    color: var(--q-gb-t-c-4) !important;
+  }
 }
 </style>

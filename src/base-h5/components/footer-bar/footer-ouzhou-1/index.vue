@@ -42,7 +42,8 @@ const tab_list = ref([
 // })
 const tab_active = ref(router.currentRoute.value.path);
 
-watch(router.currentRoute, (newRouter, oldRouter) => {
+watch(router.currentRoute, (newRouter) => {
+  //主页面详情 不改变tab
   if(!['category','result'].includes(newRouter.name)){
     tab_active.value = newRouter.path;
   }

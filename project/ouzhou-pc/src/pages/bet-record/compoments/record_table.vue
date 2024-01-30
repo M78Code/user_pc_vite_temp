@@ -49,7 +49,7 @@
               <template v-if="props.row.seriesType != '1' || props.row.seriesType == '3'">{{props.row.seriesValue}}</template>
               <!-- 单关 -->
               <template v-else>
-                <template v-for="(item, index) in props.row.orderVOS" :key="index">
+                <template v-for="(item, index) in data_list(props.row)" :key="index">
                   <div>{{matchType(item.matchType, props.row.langCode)}}</div>
                   <span>
                   {{ item.playName }}
@@ -191,12 +191,23 @@
             </q-td>
             <!-- 状态 -->
             <q-td key="status" :props="props">
-              <!--
-                   0:待处理,1:已处理,2:取消交易,3:待确认,4:已拒绝
-                   0、3未结算
-                   1、2、4已结算
-                 -->
-              <span :class="status_class(props.row.orderStatus)">{{ order_status(props.row.orderStatus) }}</span>
+              <!-- 预约 -->
+              <div class="pre-status" v-if="BetRecordHistory.selected === 2">
+                <template v-if="props.row.preOrderStatus==0">
+                  <span class="book_status">
+                    {{i18n_t('bet.bet_booking')}}
+                  </span>
+                  <bet-cancel-pre :item="props.row" @success="cancelSuccess"></bet-cancel-pre>
+                </template>
+                <span v-if="[2, 3].includes(props.row.preOrderStatus)" class="book_status book_failed">
+                  {{i18n_t('bet.bet_book_failed')}}
+                </span>
+                <span v-if="props.row.preOrderStatus==4" class="book_status">
+                  {{i18n_t('bet.bet_book_canceled')}}
+                </span>
+              </div>
+              <!-- 未结算、已结算 -->
+              <span v-else :class="status_class(props.row.orderStatus)">{{ order_status(props.row.orderStatus) }}</span>
             </q-td>
           </q-tr>
         </template>
@@ -228,7 +239,7 @@ import betEarlySettle from "src/base-pc/components/bet-record/ouzhou-pc/bet-earl
 import BetRecordHistory from "src/core/bet-record/pc/bet-record-history.js"
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 import sport_icon from './sport_icon.vue'
-// import football_icon from 'src/assets/images/football_icon.png'
+import betCancelPre from "src/base-pc/components/bet-record/ouzhou-pc/bet-cancel-pre.vue"
 import { copyToClipboard } from 'quasar'
 import GlobalSwitchClass from 'src/core/global/global.js'
 const lang = computed(() => {
@@ -589,7 +600,8 @@ const cancelSuccess = () => {
 
   &:deep(thead tr th) {
     position: sticky;
-    z-index: 1
+    z-index: 1;
+    background-color: var(--q-gb-bg-c-4);
   }
 
   &:deep(thead tr:first-child th) {
@@ -666,17 +678,13 @@ const cancelSuccess = () => {
   }
 }
 
-// .my-sticky-header-table{
-
-//   thead tr th{
-//     position: sticky;
-//     z-index: 1
-//   }
-//   thead tr:first-child th{
-//     top: 0
-//   }
-//   //   position: sticky
-//   //   z-index: 1
-//   // thead tr:first-child th
-//   //   top: 0
-// }</style>
+.pre-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50px;
+  .book_status {
+    color: var(--q-gb-t-c-2);
+  }
+}
+</style>

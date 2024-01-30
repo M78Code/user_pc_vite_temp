@@ -142,11 +142,37 @@ class BetRecord {
       }
       this.records = res.data || {}
       this.set_table_data(res.data?.records || [])
+      // 未结算查找提前结算订单号
+      this.selected === 0 && this.check_early_order()
     } catch (error) {
       console.error(error)
     } finally {
       this.loading = false
     }
+  }
+
+  /**
+   * @description 检查订单中是否存在符合条件的提前结算订单号
+   * @description 如果存在， 则接口获取提前结算金额
+   */
+  check_early_order()  {
+    // 如果用户未开启提前结算
+    if (!UserCtr.user_info.settleSwitch) return;
+    // 循环列表查询需要提前结算的单号
+    let tempList = []
+    lodash.forEach(this.table_data, (item) => {
+      // if (item.enablePreSettle) {
+          tempList.push(item.orderNo)
+        // }
+    })
+    if (tempList.length === 0) return;
+    // 如果有需要提前结算的订单，获取提前结算的金额
+    let params = { orderNo: tempList.join(',') }
+    api_betting.get_cashout_max_amount_list(params).then(reslut => {
+      let res = reslut.status ? reslut.data : reslut
+      // 通知提前结算组件 => 数据金额变化
+      useMittEmit(MITT_TYPES.EMIT_EARLY_MONEY_LIST_CHANGE, res.data)
+    })
   }
 
   // 初始化数据

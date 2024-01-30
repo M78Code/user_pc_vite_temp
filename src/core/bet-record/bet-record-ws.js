@@ -9,7 +9,6 @@ export default class BetRecordWs {
         // ws调用次数
         this.count = 0
         this.message_fun = null
-
         this.run()
         setTimeout(()=>{
             this.set_bet_c3_message()

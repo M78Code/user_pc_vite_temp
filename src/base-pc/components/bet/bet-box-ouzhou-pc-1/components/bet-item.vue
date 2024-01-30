@@ -2,6 +2,10 @@
 <template>
     <div class="bet-list bor-b">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
+
+         <!--这个地方是个遮罩层，单关合并只能有一个能预约，其余用遮罩遮住-->
+        <div v-if="BetData.is_bet_pre && !is_bet_appoint_disable" class="cathectic-appoint"></div>
+
         <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 ">
@@ -84,15 +88,16 @@
 
 <script setup>
 
-import { nextTick, onMounted, onUnmounted, reactive } from "vue"
+import { reactive, computed } from "vue"
 import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,formatMoney,only_win } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import betInput from "./bet-input.vue"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
 import BetProAppoint from "./bet-pre-appoint.vue"
-
+import lodash_ from 'lodash'
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import betDataClass from "src/core/bet/class/bet-data-class.js"
 const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 const props = defineProps({
@@ -121,12 +126,20 @@ const set_show_appoint = () =>{
   // 显示预约投注内容
   ref_data.show_appoint = !ref_data.show_appoint
   BetData.set_is_bet_pre(true)
+  BetData.set_bet_appoint_obj_playOptionId(props.items.playOptionsId)
+//   console.log(props.items, BetData.bet_appoint_obj, BetData.bet_pre_list)
 }
 
 const cancel_operate = () =>{
   ref_data.show_appoint = !ref_data.show_appoint
   BetData.set_is_bet_pre(false)
 }
+
+const is_bet_appoint_disable = computed(() => {
+    // 玩法id
+    console.log(props.items.playOptionsId, BetData.bet_pre_appoint_id)
+    return BetData.bet_pre_appoint_id == props.items.playOptionsId
+})
 
 </script>
 
@@ -136,6 +149,18 @@ const cancel_operate = () =>{
 
 <style scoped lang="scss">
 .bet-list {
+    position: relative;
+
+    .cathectic-appoint {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 10;
+        background: rgba(225,225,225,0.5)
+    }
     
     .bet-content {
         min-height: 76px;
@@ -158,6 +183,7 @@ const cancel_operate = () =>{
             top: 11px;
             left: 12px;
             cursor: pointer;
+            z-index: 11;
 
             img {
                 width: 12px;

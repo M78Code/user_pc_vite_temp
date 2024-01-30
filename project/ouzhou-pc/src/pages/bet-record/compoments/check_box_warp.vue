@@ -64,11 +64,14 @@ const check = (item) => {
       span {
         width: 14px;
         height: 14px;
-        background-color: var(--q-gb-bg-c-1);
+        background-color: transparent;
         border-radius: 2px;
+        border:1px solid var(--q-gb-t-c-8);
         position: relative;
         &.active {
           border: none;
+          background-color: var(--q-gb-bg-c-1);
+          border-color: var(--q-gb-bg-c-1);
           &:after {
             position: absolute;
             content: "";
@@ -76,6 +79,7 @@ const check = (item) => {
             width: 7px;
             height: 5px;
             top: 3px;
+            // background-color: var(--q-gb-bg-c-1);
             border-top: 2px solid #fff;
             border-right: 2px solid #fff;
             transform: rotate(135deg);
