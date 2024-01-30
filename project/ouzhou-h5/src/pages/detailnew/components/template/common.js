@@ -66,7 +66,7 @@ const common = {
    */
   getOlType(oddInfo){
     const {hpt} = oddInfo
-    if(oddInfo.hpid == '344'){
+    if(oddInfo.hpid == '344'|| oddInfo.hpid == '348'){
       return 'column'
     }
     if(hpt == 0){

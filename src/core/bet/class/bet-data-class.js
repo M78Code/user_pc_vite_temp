@@ -510,7 +510,6 @@ this.bet_appoint_ball_head= null */
 
     this.set_options_state()
 
-    this.set_bet_data_class_version()
   }
 
   // 设置投注项id 页面选中
@@ -1025,10 +1024,18 @@ this.bet_appoint_ball_head= null */
 
   // ws推送 更新赔率数据
   set_ws_message_bet_info(obj,index){
+    let reg_index = 0
+    // console.log('这里！', this.bet_single_list, this.bet_s_list, obj)
     if(this.is_bet_single){
-      this.bet_single_list[index] = obj
+      reg_index = this.bet_single_list.findIndex(i => i.playOptionsId === obj.playOptionsId)
+      if (reg_index > 0) {
+        this.bet_single_list[index] = obj
+      }
     }else{
-      this.bet_s_list[index] = obj
+      reg_index = this.bet_single_list.findIndex(i => i.playOptionsId === obj.playOptionsId)
+      if (reg_index > 0) {
+        this.bet_s_list[index] = obj
+      }
     }
 
     this.set_options_state()
@@ -1061,6 +1068,7 @@ this.bet_appoint_ball_head= null */
         get_query_bet_amount_common()
       }
     }
+    this.set_options_state()
   }
 
   // 删除投注项
@@ -1275,7 +1283,6 @@ this.bet_appoint_ball_head= null */
       this.set_bet_oid_list()
 
       this.set_options_state()
-
     }
   }
 

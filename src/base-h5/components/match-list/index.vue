@@ -25,6 +25,9 @@
       <!-- bevis 修改 46949 【SIT】【H5新版复刻】【H5】虚拟体育列表页无数据返回，页面展示空白 -->
       <NoData class="data-get-empty2" v-else :which='menu_type === 28 ? "noMatch" : "comingSoon"' height='400'></NoData>
     </template>
+
+    <SecondaryDescription />
+
   </div>
 </template>
  
@@ -42,6 +45,7 @@ import { is_collect, menu_type } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
 import SList from "src/base-h5/components/skeleton/skeleton-list.vue" 
+import SecondaryDescription from "src/base-h5/components/match-list/components/secondary-description.vue" 
 
 // yazhou-h5 赛事列表
 import MatchList1 from './components/match-list1.vue'
