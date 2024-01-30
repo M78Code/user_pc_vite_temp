@@ -1024,10 +1024,18 @@ this.bet_appoint_ball_head= null */
 
   // ws推送 更新赔率数据
   set_ws_message_bet_info(obj,index){
+    let reg_index = 0
+    // console.log('这里！', this.bet_single_list, this.bet_s_list, obj)
     if(this.is_bet_single){
-      this.bet_single_list[index] = obj
+      reg_index = this.bet_single_list.findIndex(i => i.playOptionsId === obj.playOptionsId)
+      if (reg_index > 0) {
+        this.bet_single_list[index] = obj
+      }
     }else{
-      this.bet_s_list[index] = obj
+      reg_index = this.bet_single_list.findIndex(i => i.playOptionsId === obj.playOptionsId)
+      if (reg_index > 0) {
+        this.bet_s_list[index] = obj
+      }
     }
 
     this.set_options_state()
