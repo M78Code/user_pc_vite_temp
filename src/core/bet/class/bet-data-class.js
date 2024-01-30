@@ -1067,10 +1067,12 @@ this.bet_appoint_ball_head= null */
     if(this.is_bet_single){
       single = true
       cur_index = this.bet_single_list.findIndex(i => i.playOptionsId == oid)
+      if (cur_index < 0) return
       this.bet_single_list.splice(index,1)
       single_list = this.bet_single_list
     }else{
       cur_index = this.bet_s_list.findIndex(i => i.playOptionsId == oid)
+      if (cur_index < 0) return
       this.bet_s_list.splice(index,1)
       single_list = this.bet_s_list
     }
