@@ -364,7 +364,7 @@ const scrollRef = ref(null)
 function match_click(match) {
 	if(!match) return;
 	search.insert_history(match.name)
-	const { mid, tid, csid } = match.matchList[0];
+	const { mid, tid, csid, ms } = match.matchList[0];
 	//设置左侧菜单联动
 	MenuData.set_left_menu_result({
 		...MenuData.left_menu_result,
