@@ -235,6 +235,9 @@ export default defineComponent({
       callback(item);
     };
     const initEvent = () => {
+      // 赛事切换应切换回所有投注tab
+      current_category_id.value = '0'
+      matchDetailCtr.value.current_category_id = "0"
       try {
         if (data.timer1_) {
           clearTimeout(data.timer1_);
