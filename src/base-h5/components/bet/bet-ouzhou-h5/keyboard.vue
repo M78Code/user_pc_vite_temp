@@ -166,7 +166,7 @@ const _handleKeyPress = (e) => {
   }
   useMittEmit(MITT_TYPES[emit_name], { params:BetData.bet_keyboard_config, money:money.value } )
 
-//是否为最大金额
+//是否为最大金额 判断最大值和限额
   if (money.value == BetData.bet_keyboard_config.max_money || money.value == UserCtr.balance){
     is_max_money.value = true
   }else {

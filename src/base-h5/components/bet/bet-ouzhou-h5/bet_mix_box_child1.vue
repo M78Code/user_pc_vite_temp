@@ -208,7 +208,6 @@
     span{
       display: block;
       border-radius: 0.2rem;
-      background: rgba(255,236,26);
       width: 0.31rem;
       transform: translate(0.1rem);
       text-align: center;
