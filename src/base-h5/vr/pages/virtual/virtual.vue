@@ -80,7 +80,8 @@ export default {
 .virtual-main {
   width: 100%;
   height: calc(var(--vh, 1vh) * 100);
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   background-color: var(--q-gb-bg-c-21) ;
 
   /* ************** 列表上滑箭头图标 **************** -S */
