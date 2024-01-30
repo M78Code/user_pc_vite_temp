@@ -3,15 +3,17 @@
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
         <!-- 单关 盘口关闭状态 -->
-        <!-- {{ BetData.is_bet_single }}-{{ items.ol_os }}-{{ items.hl_hs  }}-{{ items.mid_mhs }} -->
-        <div class="handicap-closed" v-if="BetData.is_bet_single && !(items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0)">
+        <!-- {{ items.ol_os }}-{{ items.hl_hs  }}-{{ items.mid_mhs }} -->
+        <!-- 投注项状态 1：开 2：封 3：关 4：锁 -->
+        <!-- 盘口状态，玩法级别 0：开 1：封 2：关 11：锁 -->
+        <!-- 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态） -->
+        <div class="handicap-closed" v-if="[2,3].includes(items.ol_os*1) || [1,2].includes(items.hl_hs*1) || [1,2].includes(items.mid_mhs*1)">
             <img :src="compute_local_project_file_path('/image/bet/handicap-closed.png')" alt="">
             <p class="font14">{{ i18n_t('bet.close') }}</p>
         </div>
         <!-- 串关 盘口展示 及 盘口关闭状态 -->
         <div v-else class="f-b-s bet-content" :class="[
                 items.is_serial && !BetData.is_bet_single ? 'not-chain-bet' : '',
-                !(items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0) ? 'not-chain-bet' : ''
             ]">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c font14 font500">
@@ -40,7 +42,7 @@
                 </div>
             </div>
             
-            <div class="fw-e-s bet-right" :class="{'width100': items.is_serial && !BetData.is_bet_single}" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
+            <div class="fw-e-s bet-right" :class="{'width100': items.is_serial && !BetData.is_bet_single}" >
                 <div class="f-c-c bet-money">
                     <span class="font14 font700 bet-odds-value f-c-c" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
                        <span class="font14">@</span>
@@ -52,16 +54,17 @@
                         <img v-if="items.red_green == 'green_down'" :src="is_down_app" alt=""/>
                     </div>
                 </div>
-                <div v-if="items.red_green" :class="items.red_green" class="font12 bet-odds-change font500 f-e-c">赔率已变更</div>
+                <!-- 锁盘状态下 提示 赔率已变更  -->
+                <div v-if="items.ol_os == 4 || items.hl_hs == 11 || items.mid_mhs == 11" :class="items.red_green" class="bet-serial font12">赔率已变更</div>
                 <!-- 电子赛事不支持串关 -->
                 <div v-if="items.is_serial && !BetData.is_bet_single" class="bet-serial font12">不支持串关投注</div>
             </div>
 
-            <div class="fw-e-s bet-right bet-invalid" v-else>
+            <!-- <div class="fw-e-s bet-right bet-invalid" v-else>
                 <div class="bet-disabled">
                     <span>{{ i18n_t('bet.close') }}</span>
                 </div>
-            </div>
+            </div> -->
 
             <div v-if="items.is_serial && !BetData.is_bet_single" class="bet-layer-serial"></div>
 

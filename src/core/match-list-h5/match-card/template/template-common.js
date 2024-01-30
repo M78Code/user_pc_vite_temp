@@ -230,6 +230,66 @@ const template_config = {
   'ouzhou-h5': match_style_template_ouzhou,
 }
 
+// 复刻版 赛事 默认配置
+const app_default_height = {
+  '1': {          // 新手版
+    '1': 148,     // 显示联赛  显示卡片
+    '2': 31,      // 显示联赛 不显示卡片
+    '3': 103,     // 不显示联赛  显示卡片
+    '4': 170,     // 显示联赛 显示卡片 显示次要玩法
+    '5': 130,      // 不显示联赛  显示卡片
+    'default': 31 // 默认
+  },
+  '2': {          // 专业版
+    '1': 183,     // 显示联赛  显示卡片
+    '2': 31,      // 显示联赛 不显示卡片
+    '3': 134,     // 不显示联赛  显示卡片
+    '4': 210,     // 显示联赛 显示卡片 显示次要玩法
+    '5': 160,      // 不显示联赛  显示卡片
+    'default': 31 // 默认
+  }
+}
+
+// 欧洲版 赛事默认配置
+const oz_default_height = {
+  '1': {          // 新手版
+    '1': 126,     // 显示联赛  显示卡片
+    '2': 36,      // 显示联赛 不显示卡片
+    '3': 90,      // 不显示联赛  显示卡片
+    'default': 36 // 默认
+  },
+  '2': {          // 专业版
+    '1': 126,     // 显示联赛  显示卡片
+    '2': 36,      // 显示联赛 不显示卡片
+    '3': 90,      // 不显示联赛  显示卡片
+    'default': 36 // 默认
+  }
+}
+
+// 亚洲版 赛事默认配置
+const yz_default_height = {
+  '1': {          // 新手版
+    '1': 148,     // 显示联赛  显示卡片
+    '2': 31,      // 显示联赛 不显示卡片
+    '3': 103,     // 不显示联赛  显示卡片
+    'default': 31 // 默认
+  },
+  '2': {          // 专业版
+    '1': 178,     // 显示联赛  显示卡片
+    '2': 31,      // 显示联赛 不显示卡片
+    '3': 134,     // 不显示联赛  显示卡片
+    'default': 31 // 默认
+  }
+}
+
+// H5 base-virtual-list 虚拟列表组件使用的 默认高度， 不需要非常准确，因为会根据页面实时更新高度， 用处是初始渲染避免误差太大
+export const template_default_config = {
+  'app-h5': app_default_height,
+  'yazhou-h5': yz_default_height,
+  'ouzhou-h5': oz_default_height,
+}
+
+
 const { PROJECT_NAME = 'yazhou-h5' } = BUILDIN_CONFIG 
 
 export const match_style_template = template_config[PROJECT_NAME]

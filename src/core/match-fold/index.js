@@ -195,8 +195,9 @@ class MatchFold {
    * @returns string
    */
   get_match_fold_key (match) {
-    const { mid, custom_tid = '', warehouse_type = ''} = match
+    const { mid, custom_tid, warehouse_type = '', start_flag = '' } = match
     return warehouse_type ? `${warehouse_type}_${custom_tid}_${mid}` : `${custom_tid}_${mid}`
+    // return warehouse_type ? `${warehouse_type}_${custom_tid}_${mid}_${start_flag}` : `${custom_tid}_${mid}_${start_flag}`
   } 
   /**
    * @description 设置赛事折叠
@@ -245,9 +246,20 @@ class MatchFold {
    * @param {match} 赛事对象 
    */
   compute_show_tab_play = (match) => {
-    const { compose = false, cos15Minutes = false, cosBold = false, cosCorner = false, cosOutright = false, cosOvertime = false, cosPenalty = false, cosPromotion = false, 
-      cosPunish = false } = match;
-    return compose || cos15Minutes || cosBold || cosCorner || cosOutright || cosOvertime || cosPenalty || cosPromotion || cos15Minutes || cosPunish
+
+    // 复刻版 3184 需求 只做足球
+    if (match.csid != 1) return false
+
+    const { compose = false, cos15Minutes = false, cosBold = false, cosCorner = false, cosOutright = false, cosOvertime = false, cosPenalty = false, 
+      cosPromotion = false, cosPunish = false, hpsAdd = [], cds = '', mbmty = '' } = match;
+    
+    let is_show = compose || cos15Minutes || cosBold || cosCorner || cosOutright || cosOvertime || cosPenalty || cosPromotion || cos15Minutes || 
+    cosPunish || hpsAdd.length > 0
+
+    // 电子篮球 不显示次要玩法 对应 BUG 44554
+    if(['B03', 'BE'].includes(cds) && mbmty === 2) is_show = false
+
+    return is_show
   }
 }
 

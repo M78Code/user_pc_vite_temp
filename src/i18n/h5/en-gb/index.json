@@ -1038,7 +1038,12 @@
     "full_time_draw": "Draw",
     "half_time_draw": "HT Draw",
     "minutes_of_the_Xth_goal": "{goalnr} Goal (5min)",
-    "any_goal": "5 minutes goal"
+    "any_goal": "5 minutes goal",
+    "feature": "Mix markets",
+    "all_both": "1x2 & Both Teams to Score",
+    "all_total_goal": "1x2 & Total Goals",
+    "half_both": "1st half - 1X2 & Both Teams to Score",
+    "half_total_goal": "1st half - 1x2 & Total"
   },
   "footer_menu": {
     "adviser": "Adviser",

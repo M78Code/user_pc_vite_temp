@@ -8,7 +8,7 @@
   <div style="display: none;">{{UserCtr.user_version}}</div>
   <div class="odd-column-item" :class="odds_class_object()" @click.stop="item_click3" :id="dom_id_show && `list-${lodash.get(odd_item, 'oid')}`">
     <!-- 占位  或者  关盘 (列表简单版时非足球赛事角球菜单时设置为关盘)-->
-    <div v-if="placeholder == 1 || is_close(get_odd_status()) || (lodash.get(odds_class_object,'is-jiaoqiu') && _.get(match,'csid') != 1) && PageSourceData.route_name=='matchList'" class="item-inner">
+    <div class="item-inner 1" v-if="is_show" >
       <template  v-if="is_show_lock">
         -
       </template>
@@ -16,7 +16,7 @@
     </div>
 
     <!-- 全封(不显示盘口值) 占位时显示封-->
-    <div v-else-if="is_fengpan(get_odd_status())" class="item-inner">
+    <div v-else-if="is_fengpan(get_odd_status())" class="item-inner 2">
       <!--csid:1足球全封,不显示盘口名-->
       <div class='odd-title'
         :class="{three:column_ceil > 2,standard:n_s == 2}"
@@ -27,11 +27,11 @@
     </div>
 
     <!-- 半封(显示盘口值)与赔率显示 -->
-    <div v-else class="item-inner have-on" :class="{close: is_fengpan(get_odd_status()) || get_obv_is_lock(odd_item)}">
+    <div v-else class="item-inner 3 have-on" :class="{close: is_fengpan(get_odd_status()) || get_obv_is_lock(odd_item)}">
       <!--csid:1足球全封,不显示盘口名-->
       <div class='odd-title number_family'
         :class="{three:column_ceil > 2,standard:n_s == 2}"
-        v-if="(odd_item.on || convert_num(odd_item) === 0 || (!is_fengpan(get_odd_status()) && [18,19].includes(+lodash.get(current_tab_item, 'id'))) ) ||
+        v-if="(odd_item.on || convert_num(odd_item) === 0 || (!is_fengpan(get_odd_status()) && [11,18,19].includes(+lodash.get(current_tab_item, 'id'))) ) ||
               (is_fengpan(get_odd_status())  || get_obv_is_lock(odd_item))
               && match.csid != 1"
         v-html="transfer_on(odd_item)">
@@ -42,7 +42,6 @@
           three:column_ceil > 2,
           red:red_green_status === 1,
           green:red_green_status === -1,
-          orange:(get_cur_odd === 'ID' || get_cur_odd === 'MY') && odds_value < 0,
           focus:odd_item.result == 4 || odd_item.result == 5,
           win:[4,5].includes(+odd_item.result),
           lose:[0,1,2,3,6].includes(+odd_item.result),
@@ -66,7 +65,6 @@
 <script setup>
 // import betting from 'src/project/mixins/betting/betting.js';
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
-import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
 import  { MenuData, i18n_t, get_odds_active, compute_value_by_cur_odd_type,LOCAL_PROJECT_FILE_PREFIX, BUILDIN_CONFIG } from "src/output/index.js"
@@ -77,6 +75,7 @@ import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output
 import { is_up_app, is_down_app } from 'src/base-h5/core/utils/local-image.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 
 // TODO: 其他模块得 store  待添加
@@ -88,6 +87,7 @@ const props = defineProps({
   odd_item_i:Number,
   match:Object,
   odd_field:Object,
+  invoke_source:String,
   hl_hs:Number,  // 0.开盘，1封盘，2关盘 ，3 锁盘    和 match.mhs   是一样的意思
   placeholder:Number,// 是否为占位
   n_s:Number,    // 1新手版 2标准版
@@ -100,7 +100,6 @@ const match_icon_lock = `${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lo
 
 const emits = defineEmits(['select_change'])
 
-const store_state = store.getState()
 const timer_ = ref(null)
 const timer1_ = ref(null)
 const emitters = ref({})
@@ -115,19 +114,6 @@ const ol_dictionary = ref({})
 const is_local_lock = ref(0)
 const dom_id_show = ref('')
 
-const get_bet_list = ref(store_state.get_bet_list)
-const get_cur_odd = ref(store_state.get_cur_odd)
-const get_foot_ball_screen_changing = ref(store_state.get_foot_ball_screen_changing)
-const get_lang = ref(store_state.get_lang)
-
-const unsubscribe = store.subscribe(() => {
-  const new_state = store.getState()
-  get_lang.value = new_state.get_lang
-  get_cur_odd.value = new_state.get_cur_odd
-  get_bet_list.value = new_state.get_bet_list
-  get_foot_ball_screen_changing.value = new_state.get_foot_ball_screen_changing
-})
-
 onMounted(() => {
   // 设置是否显示投注项dom的id属性值
   // dom_id_show.value =  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
@@ -140,12 +126,6 @@ onMounted(() => {
     emitter_2: useMittOn(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED, match_result_data_loaded).off,
   }
 })
-
-// 是否显示 -
-const is_show_lock = () => {
-  const ol = lodash.get(props.odd_field, 'hl[0].ol', "")
-  return lodash.isEmpty(ol)
-}
 
 // 当前玩法ID
 const hpid = computed(() => {
@@ -162,8 +142,21 @@ const is_down = computed(() => {
   return red_green_status.value === -1 && no_lock()
 })
 
+// 是否为封盘
 const is_show_fenpan = computed(() => {
-  return !(is_fengpan(get_odd_status()) && [18,19].includes(+lodash.get(props.current_tab_item, 'id'))) || ((odd_item.value.on || convert_num(odd_item.value) === 0) && props.match.csid != 1)
+  return !(is_fengpan(get_odd_status()) && [11,18,19].includes(+lodash.get(props.current_tab_item, 'id'))) || ((odd_item.value.on || convert_num(odd_item.value) === 0) && props.match.csid != 1)
+})
+
+// 是否 显示 - 或者 锁
+const is_show = computed(() => {
+  return props.placeholder == 1 || is_close(get_odd_status()) || (MenuData.get_footer_sub_menu_id == 114 && lodash.get(props.match,'csid') != 1)
+})
+
+// 是否显示 -
+const is_show_lock = computed(() => {
+  const ol = lodash.get(props.odd_field, 'hl[0].ol', "")
+  const hs = lodash.get(props.odd_field, 'hl[0].hs', 0)
+  return lodash.isEmpty(ol) || hs == 2
 })
 
 // 是否 接口 导致的数据变化
@@ -180,14 +173,14 @@ const odds_class_object = () => {
   }
   let result = {
     'odd-column-item2':is_selected,
-    'is-standard':PageSourceData.get_newer_standard_edition() === 2,
+    'is-standard': standard_edition.value === 2,
     'first-radius': props.odd_item_i === 0,
     'last-radius': props.odd_item_i > 1,
     'is-jiaoqiu': footer_sub_menu_id == 114, 
-    'active': BetData.bet_oid_list.includes(odd_item.value.oid),
+    'active': BetData.bet_oid_list.includes(odd_item.value?.oid),
     'item-lock': is_lock()
   };
-  if(PageSourceData.get_newer_standard_edition() == 2){
+  if(standard_edition.value == 2){
     delete result['first-radius'];
     delete result['last-radius'];
   }
@@ -253,9 +246,9 @@ watch(() => hpid.value, () => {
 
 // 监听赔率变化实现红升绿降
 watch(() => odd_item.value?.ov, (v1,v0) => {
-  if(get_foot_ball_screen_changing.value){
-    return;
-  }
+
+  if (!v1 || !v0) return
+
   let curr = Number(v1);
   let old = Number(v0);
 
@@ -280,7 +273,7 @@ watch(() => odds_value.value, () => {
 watch(() => props.match, () => {
   let ol_list = get_ollist_no_close(props.odd_field);
   if(ol_list.length > 0){
-    if([18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
+    if([11,18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
       odd_item.value = props.ol_list_item
     }else{
       if(odd_item.value) {
@@ -301,13 +294,13 @@ const no_lock = () => {
   if(props.placeholder == 1){
     result = true;
   }
-  else if(is_close(odd_s)){
+  else if(is_close(odd_s.value)){
     result = true;
   }
-  else if(is_fengpan(odd_s) && (!odd_item.value.on || odd_item.value.on == 0)){
+  else if(is_fengpan(odd_s.value) && (!odd_item.value.on || odd_item.value.on == 0)){
     result = true;
   }
-  else if(is_fengpan(odd_s) || get_obv_is_lock(odd_item.value)){
+  else if(is_fengpan(odd_s.value) || get_obv_is_lock(odd_item.value)){
     result = true;
   }
   return !result;
@@ -330,17 +323,6 @@ const match_result_data_loaded = (data) => {
 }
 // 获取赔率或赛果
 const get_odd_append_value = (ol_item) => {
-  // let r = "";
-  // if(ol_item.result === "0" || ol_item.result){
-  //   r = i18n_t(`virtual_sports.result[${ol_item.result}]`);
-  // } else{
-  //   let dict_result = ol_dictionary.value[ol_item.oid];
-  //   if(dict_result === "0" || dict_result){
-  //     r = i18n_t(`virtual_sports.result[${dict_result}]`);
-  //   } else{
-  //     r = odds_value.value;
-  //   }
-  // }
   odd_append_value.value = compute_value_by_cur_odd_type(ol_item.ov,ol_item._hpid,ol_item._hsw,props.match.csid)
   
 }
@@ -349,7 +331,6 @@ const arrived10_handle = () => {
 }
 // 获取 投注项数据，
 const get_odd_status = () => {
-  get_odd_data();
   if(!odd_item.value) return 3;
   if(props.hl_hs == 1 || virtual_odds_state.value == 1){
     return 2
@@ -360,38 +341,62 @@ const get_odd_status = () => {
   else if(props.hl_hs == 3){
     return 4
   }
-  return get_odds_active(odd_item.value.ms,odd_item.value.hs,odd_item.value.os);
+  const { ms, hs, os } = odd_item.value
+  return get_odds_active(ms, hs, os);
 }
+
 // on转换html
 const transfer_on = (odd_item) => {
-  if(props.match.csid == 1 && [19].includes(+lodash.get(props.current_tab_item, 'id')) ){
-    return odd_item.onb || odd_item.on;
-  }
+
+  const current_tab_item_id = lodash.get(props.current_tab_item, 'id')
+  
   let on = odd_item.onb || odd_item.on;
-  if(props.match.csid == 1 && [18].includes(+lodash.get(props.current_tab_item, 'id')) ){
-    on = odd_item.ot
-    if(odd_item.ot == 'Other' && ['zh', 'tw', 'hk'].includes(get_lang)){
-      on = '其他'
+
+  if (props.match.csid == 1) {
+    // 5分钟玩法
+    if ([19].includes(current_tab_item_id) ){
+      return odd_item.onb || odd_item.on;
+    }
+    // 15分钟玩法
+    if([17].includes(current_tab_item_id) ){
+      if (['Over', 'Under'].includes(odd_item.ot)) return odd_item.on || odd_item.onb;
+      return odd_item.onb || odd_item.on;
+    }
+    // 波胆
+
+    if([18].includes(current_tab_item_id) ){
+      on = odd_item.ot
+      if(odd_item.ot == 'Other' && ['zh', 'tw'].includes(lang.value)){
+        on = '其他'
+      }
     }
   }
-  let color = '';
-  if(is_fengpan(odd_s) || get_obv_is_lock(odd_item)){
-    color='var(--qq-gb-t-c-3)'
-    // if(.includes('day')){
-    //   // color = '#d1d1d1';
-    // }
-    // else{
-    //   // color = '#414141';
-    // }
+
+  let color = ''
+  if(is_fengpan(odd_s.value) || get_obv_is_lock(odd_item)){
+  } else{
+    color = 'var(--qq-color-fs-color-13)';
+  }
+  
+  // 特色组合玩法盘口字体颜色
+  let on_value = null
+  if ([11].includes(current_tab_item_id) && odd_item.on) {
+    if (lang.value === 'th') on = on && on.replace(/\s+/g, "")
+    on_value = `<span style="color: var(--q-color-fs-color-135);padding-left: ${lang.value === 'th' ? 0 : '3px'}">${odd_item.on}</span>`
+  }
+  // 特殊组合玩法简化字段
+  if ([11].includes(current_tab_item_id) && ['pt'].includes(lang.value)) {
+    on = on && on.replace('Empate', 'Emp')
   }
   let replaced = on
-  if(![18].includes(+lodash.get(props.current_tab_item, 'id'))){
+  if(![18].includes(current_tab_item_id)){
     replaced = on && on.replace(/[\/0-9\+\-\.]/ig,found => {
       return `<span style="color:${color}">${found}</span>`
     });
   }
-  return replaced;
+  return on_value ? replaced + on_value : replaced;
 }
+
 // on转换为数字
 const convert_num = (odd_item) => {
   let on = odd_item.onb || odd_item.on;
@@ -410,7 +415,7 @@ const convert_num = (odd_item) => {
  * @return boolean 是否显示封盘样式
  */
 const get_obv_is_lock = (odd_item) => {
-  return odd_item.ov < 101000;
+  return odd_item?.ov < 101000;
 }
 //  获取指定下标的投注项数据
 const get_odd_data = () => {
@@ -423,7 +428,7 @@ const get_odd_data = () => {
     console.error(e);
   }
   if(ol && ol.length){
-    if([18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
+    if([11,18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
       odd_item.value = props.ol_list_item
     }else{
       odd_item.value = ol[props.odd_item_i];
@@ -488,6 +493,7 @@ const is_close = (odd_s) => {
 const item_click3 = lodash.debounce(() => {
   if (!odd_item.value.ov || odd_item.value.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
   if(virtual_odds_state.value == 1) return; //VR倒计时10s时封盘不能点击
+  
   let flag = get_odds_active(props.match.mhs, props.hl_hs, odd_item.value.os);
   let bet_type = 'common_bet'
   if (MenuData.is_esports()) {
@@ -497,10 +503,12 @@ const item_click3 = lodash.debounce(() => {
   } else if (MenuData.is_vr()) {
     bet_type = 'vr_bet'
   }
+  const secondary_paly = props?.invoke_source === 'attached'
   if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
     if (MenuData.get_menu_type() == 900 && $route.name == 'virtual_sports') { //虚拟体育走这里逻辑
       if (props.match.match_status) return
     } else { //正常赛事走这里逻辑
+      console.log(odd_item.value)
       const {oid,_hid,_hn,_mid } = odd_item.value
       let params = {
         oid, // 投注项id ol_obj
@@ -513,11 +521,12 @@ const item_click3 = lodash.debounce(() => {
         // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
         // 根据赛事纬度判断当前赛事属于 那种投注类型
         bet_type,
+        // 是否次要玩法
+        secondary_paly,
         // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
         device_type: 1,  
         // 数据仓库类型
         match_data_type: "h5_list",
-
     }
       set_bet_obj_config(params,other)
     }
@@ -525,7 +534,6 @@ const item_click3 = lodash.debounce(() => {
 }, 450, {'leading': true, trailing: false})
 
 onUnmounted(() => {
-  unsubscribe()
   Object.values(emitters.value).map((x) => x())
   clearTimeout(timer_.value);
   timer_.value = null;
@@ -648,8 +656,7 @@ onUnmounted(() => {
   .odd-title {
     word-break: break-all;
     text-align: center;
-    margin-bottom: 0.09rem;
-    font-size: 0.14rem;
+    font-size: 0.1rem;
     line-height: 1;
     color: var(---q-gb-t-c-26);
     span{

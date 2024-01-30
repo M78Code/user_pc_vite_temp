@@ -1,5 +1,5 @@
 <!--
- * @Description: app-h5 赛果
+ * @Description: app-h5 赛果right-box
 -->
 <template>
   <div class="component match-container-main-template3 match-container"
