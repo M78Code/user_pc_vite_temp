@@ -566,6 +566,8 @@
     "quarter": "第一节"
   },
   "bet": {
+    "bet_order_info2": "您的订单已确认",
+    "bet_book_failed": "预约失败",
     "edit_success": "赔率修改成功！",
     "edit_fail": "赔率修改失败！",
     "account_balance": "账户余额",
