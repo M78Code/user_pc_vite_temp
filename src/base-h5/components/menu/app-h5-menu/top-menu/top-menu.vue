@@ -325,6 +325,7 @@ const get_user_balance = _.throttle(() => {
     }
 }
 .main-menu-right {
+        z-index: 0;
         height: 0.22rem;
         line-height: 0.22rem;
         border-radius: 25px;

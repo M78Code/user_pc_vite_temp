@@ -3,7 +3,7 @@
  * @Description: 虚拟小键盘
 -->
 <template>
-  <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
+  <div class="keyboard" :class="{'is_max_money':is_max_money}" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
     <div v-show="false"> {{ UserCtr.user_version }} --
       {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
     <div class="key-row row">
@@ -58,6 +58,7 @@ const active_index = ref(BetData.active_index)
 const money = ref('') //用户输入金额
 const delete_all = ref(false) //键盘出现时，第一次按删除键把金额一次删完
 const pre_odds_value = ref("") //预约输入赔率或者盘口
+const is_max_money = ref(false) //是否达到最大最大金额值
 
 const ref_data = reactive({
   DOM_ID_SHOW: false,
@@ -71,6 +72,7 @@ const ref_data = reactive({
 onMounted(()=>{
   BetData.set_user_max_min_money()
 })
+
 
 // 预约输入赔率或者盘口
 watch(() => pre_odds_value, (new_) => {
@@ -123,11 +125,8 @@ watch(() => pre_odds_value, (new_) => {
 watch(() => active_index, (new_) => {
   if (money.value) delete_all.value = true;
 })
-
-
 // 点击键盘
 const _handleKeyPress = (e) => {
-  console.error('active_index', active_index)
   e.preventDefault();
   if (e.target.className.includes("shadow-show")) { return }; // 置灰的按钮不能再点击
   let num = e.target.dataset.num;
@@ -166,6 +165,13 @@ const _handleKeyPress = (e) => {
     }
   }
   useMittEmit(MITT_TYPES[emit_name], { params:BetData.bet_keyboard_config, money:money.value } )
+
+//是否为最大金额 判断最大值和限额
+  if (money.value == BetData.bet_keyboard_config.max_money || money.value == UserCtr.balance){
+    is_max_money.value = true
+  }else {
+    is_max_money.value = false
+  }
 }
 
 // 小数点 .
@@ -306,5 +312,12 @@ const _handleNumberKey = (num) => {
   &.shadow-show {
     color: #595959!important;
   }
+}
+.is_max_money{
+  .key-cell {
+  &:first-child { // 左侧第一排MAX的样式
+    background: var(--q-gb-bg-c-33);
+  }
+}
 }
 </style>

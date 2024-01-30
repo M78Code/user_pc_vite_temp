@@ -6,6 +6,8 @@ import articleContent from "./content.vue";
 import maylike from "./maylike.vue";
 import NoData from "../NoData.vue";
 
+import { get_server_file_path } from "src/core/file-path/file-path.js"
+
 /* match_detail 来自 project/ouzhou-h5/src/pages/detailnew/index.vue */
 const match_detail = inject("match_detail");
 
@@ -73,11 +75,16 @@ const _getArticle = function () {
         State.loading = true
         if(res.code != 200 || lodash.isEmpty(res.data)) return
         
-        // 替换图片域名
-        // let domain = this.get_file_path("getArticle").replace("getArticle", "");
-        // if (res.data.articleContent) {
-        //     res.data.articleContent = res.data.articleContent.replace(/IMAGE_DOMAIN_YUNYING_PLACEHOLDER/g,domain);
-        // }
+        /*
+            替换富文本返回无用图片域名 
+            IMAGE_DOMAIN_YUNYING_PLACEHOLDER 固定值
+            get_server_file_path 会拼接传入图片地址并且获得完整路径
+            这边随便传入参数然后替换 以获得 图片域名
+        */ 
+        let domain = get_server_file_path("getArticle").replace("getArticle", "");
+        if (res.data.articleContent) {
+            res.data.articleContent = res.data.articleContent.replace(/IMAGE_DOMAIN_YUNYING_PLACEHOLDER/g,domain);
+        }
         State.articleDetail = res.data;
         _getFavoriteArticle();
         if(State.articleDetail?.id){

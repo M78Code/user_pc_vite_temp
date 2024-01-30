@@ -351,7 +351,7 @@ export default {
       } else {
         this.slide = type;
       }
-      this.send_zhuge_event("PC_热门推荐_切换控件点击");
+      ZHUGE.send_zhuge_event("PC_热门推荐_切换控件点击");
     },
     /**
      * 接收列表收藏状态变化
@@ -533,7 +533,7 @@ export default {
       });
       let info = {};
       info["点击状态"] = mf ? "取消收藏" : "收藏";
-      this.send_zhuge_event("PC_热门推荐_收藏点击", info);
+      ZHUGE.send_zhuge_event("PC_热门推荐_收藏点击", info);
     },
 
     /**
@@ -562,7 +562,7 @@ export default {
      * @return {undefined} undefined
      */
     go_detail(item) {
-      this.send_zhuge_event("PC_热门推荐_详情页入口点击");
+      ZHUGE.send_zhuge_event("PC_热门推荐_详情页入口点击");
       this.$router.push({
         name: "details",
         params: {
@@ -571,7 +571,6 @@ export default {
           csid: item.csid,
         },
       });
-      this.save_match_info(item);
     },
 
     /**

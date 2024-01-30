@@ -13,6 +13,7 @@
     @click="toggle_downMenu"
   >
     <div class="play-name col">
+      <div class="title-icon"  :style="compute_css_obj({key:'pc-icon-day-title'})"></div>
       <span class="ellipsis">
         <!-- 玩法名称 -->
         <!-- 上半场下半场tag -->
@@ -85,6 +86,7 @@ import tips1 from "src/base-pc/components/match-detail/tips1/tips1.vue"
 import lodash from "lodash";
 import { computed,ref } from "vue";
 import { IconWapper } from 'src/components/icon'
+import { compute_css_obj } from "src/output/index.js";
 //角球玩法hpid
 const corner_dist = [
   111, 113, 114, 115, 116, 117, 118, 119, 121, 122, 123, 124, 125, 226, 227,
@@ -194,5 +196,12 @@ const toggle_downMenu = () => {
   .play-btn {
     color: #ffffff;
   }
+}
+.title-icon {
+  position: absolute;
+  left: 0;
+  width: 3px;
+  height: 18px;
+  margin-right: 8px;
 }
 </style>

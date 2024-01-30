@@ -99,7 +99,7 @@ defineExpose({ set_active_val, changeTabMenu });
   overflow: hidden;
   padding: 0 0.05rem;
   position: relative;
-  background-color: var(--q-gb-bg-c-27);
+  // background-color: var(--q-gb-bg-c-27);
   .date-tab-content {
     width: 100%;
     height: 0.32rem;

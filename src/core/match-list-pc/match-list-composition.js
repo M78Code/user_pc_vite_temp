@@ -1,5 +1,5 @@
 import {
-	ref, nextTick,  onBeforeUnmount
+	ref, nextTick,  onBeforeUnmount, onUnmounted
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
@@ -70,7 +70,8 @@ export function fetch_match_list(is_socket = false) {
 	// 	is_socket = false;
 	// 	video.is_video_end = false;
 	// }
-	MatchListScrollClass.fetch_match_list_time = new Date().getTime();
+	const last_time= new Date().getTime()
+	MatchListScrollClass.fetch_match_list_time = last_time;
 	// 组件和路由不匹配
 	// if (page_source == "details" && page_source != "details") {
 	// 	return;
@@ -114,6 +115,7 @@ export function fetch_match_list(is_socket = false) {
 		/**返回数据处理************/
 		api && api(_params)
 			.then((res) => {
+				if(MatchListScrollClass.fetch_match_list_time != last_time&&!is_socket)return;
 				try {
 					// 组件和路由不匹配 菜单id不匹配aa
 					// if ((page_source != "details") || _params.euid != match_api.params.euid) return;
@@ -306,7 +308,7 @@ function mounted_fn(fun) {
 		check_match_last_update_time,
 		30000
 	);
-	onBeforeUnmount(()=>{
+	onUnmounted(()=>{
 		handle_destroyed()
 	})
 	// load_video_resources();

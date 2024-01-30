@@ -18,7 +18,11 @@
       </template>
       <div class="item ol-name" :alt="olName">
         <span v-if="txt_ol_name" class="ol-name-span2">{{txt_ol_name}}</span>
-        <span class="ol-name-span">{{ olName }}</span>
+        <span class="ol-name-span" v-if="!lodash.isArray(olName)">{{ olName }}</span>
+        <span class="ol-name-span" v-if="lodash.isArray(olName)">
+          <img v-if="olName.length == 2" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr/${olName[0]}.png`">
+          <img v-if="olName.length == 2" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr/${olName[1]}.png`" style="margin-left: 5px;">
+        </span>
       </div>
       <div class="separate"></div>
       <div class="item ol-content">
@@ -48,7 +52,7 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
 import { ref, computed, watch } from 'vue'
-import { compute_value_by_cur_odd_type, MatchDetailCalss } from "src/output/index.js"
+import { compute_value_by_cur_odd_type, MatchDetailCalss, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import common, { state } from './common.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import {
@@ -60,6 +64,7 @@ import {
 } from "src/base-h5/core/utils/local-image.js";
 import ResultOlItem from '../../result/ResultOlItem.vue';
 import { calcOlResult } from 'src/output/index'
+import VR_CTR from "src/core/vr/vr-sports/virtual-ctr.js"
 
 const route = useRoute();
 const router = useRouter();
@@ -74,14 +79,43 @@ const props = defineProps({
   },
 })
 const sportId = MatchDetailCalss.params.sportId
+
+const getNameBySportMenuId = ()=>{
+  const csid = VR_CTR.state.virtual_current_sub_menuid;
+  let name = ''
+  if(csid == 1011){
+      name = 'horse'
+  }else if(csid == 1002){
+    name = 'dog'
+  }else if(csid == 1010){
+    name = 'motorbike'
+  }else if(csid == 1009){
+    name = 'speedway'
+  }
+  return name;
+}
+
+//用图片替代数字
+const computedOlName = (olName)=>{
+  if(!lodash.includes(olName, '/')){
+    return olName
+  }
+  const olNameArr = lodash.split(olName, '/')
+  return lodash.map(olNameArr, (item)=>`${getNameBySportMenuId()}_${item}`)
+}
+
 // @ts-ignore
 const vif =computed(()=>props.value._mhs == 0||props.value._mhs == 11 || props.value._mhs == 1)
 const olName = (function(){
+  let olName = '';
   if(props.type == 'fill'){
-    return props.value.otv || props.value.on || props.value.ott
+    olName = props.value.otv || props.value.on || props.value.ott
   }
-  return props.value.on || props.value.ott
+  olName = props.value.on || props.value.ott
+  return computedOlName(olName)
 })()
+
+
 // const active = computed(()=> BetData.bet_oid_list.includes(props.value.oid))
 const active = computed(() => state.active == props.value.oid)
 /** @type {Ref<'up' | 'down' | 'none'>} */
