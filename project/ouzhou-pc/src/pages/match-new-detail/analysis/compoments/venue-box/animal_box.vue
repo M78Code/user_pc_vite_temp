@@ -28,7 +28,7 @@
           :video_fullscreen_disabled="false"
           :match_info="detail_info"
           :is_esports="false"
-          :show_full_screen_wrap="IS_FOR_NEIBU_TEST"
+          :show_full_screen_wrap="false"
           :show_xl_full_screen_wrap="IS_FOR_NEIBU_TEST"
       ></video_type_ctr>
       <div class="detail-loading" v-if="iframe_loading">
