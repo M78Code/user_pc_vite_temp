@@ -39,11 +39,16 @@ const place_bet = () => {
   }
 }
 
+// 判断当前投注项内 是否有不允许串关的 有的话把串关按钮干掉
+const is_serial = () => {
+    return BetData.bet_single_list.filter(i => i.is_serial == false).length
+};
+
 // 单串关切换
 const set_bet_single_change = () => {
 
   // 冠军不能串
-  if(!MenuData.is_kemp()) {
+  if(!MenuData.is_kemp() && is_serial()) {
     BetData.set_is_bet_single()
 
     // 判断获取限额接口类型
@@ -57,6 +62,7 @@ const set_bet_single_change = () => {
 
   }
 }
+
 
 const bet_total = computed(()=> state =>{
   let sum = 0
