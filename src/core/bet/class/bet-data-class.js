@@ -704,6 +704,7 @@ this.bet_appoint_ball_head= null */
     // 串关 切换到 单关
     if (!this.is_bet_single && !this.is_bet_merge) {
       this.bet_single_list = [lodash_.cloneDeep(this.bet_s_list)[0]]
+      this.bet_oid_list = [this.bet_oid_list[0]]
     }
 
     let is_bet_single = !this.is_bet_single
