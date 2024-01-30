@@ -65,7 +65,6 @@ const check = (item) => {
         width: 14px;
         height: 14px;
         background-color: transparent;
-        border: 1px solid var(--q-gb-bg-c-2);
         border-radius: 2px;
         border:1px solid var(--q-gb-t-c-8);
         position: relative;
