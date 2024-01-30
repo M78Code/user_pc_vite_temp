@@ -142,6 +142,8 @@ class BetRecord {
       }
       this.records = res.data || {}
       this.set_table_data(res.data?.records || [])
+      // 未结算查找提前结算订单号
+      this.selected === 0 && this.check_early_order()
     } catch (error) {
       console.error(error)
     } finally {
