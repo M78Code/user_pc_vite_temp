@@ -28,7 +28,7 @@
         {{ score }}
         <span
           v-show="(!['1', '32'].includes(ol_data._hpid) || !['MatchDataWarehouse_PC_List_Common', 'pc_list'].includes(match_data_type))">
-          {{ disk_text_replace(UserCtr.lang, ol_data.onb) }}
+          {{ disk_text_replace(UserCtr.lang, ol_data.onb||ol_data.otb) }}
         </span>
       </div>
     </div>

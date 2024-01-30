@@ -129,7 +129,8 @@ function get_col_ols_data(_mid) {
     // 获取投注项内容 
     let ols_data = lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
     // 15mins 和 featured赛事展示的投注项名称
-    return ols_data;
+    Object.assign(item,ols_data)
+    return item;
   })
 }
 // // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
