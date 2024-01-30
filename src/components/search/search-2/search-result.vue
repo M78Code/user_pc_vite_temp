@@ -532,8 +532,15 @@ const get_match_base_hps_by_mids = async () => {
 		cuid: UserCtr.get_uid(),
 		sort: 1,
 	};
+	let api_name = null
+	//电竞走电竞查询
+	if (MenuData.is_esports()) {
+     api_name = api_common.get_esports_match_by_mids
+    }else {
+		api_name = api_common.get_match_base_info_by_mids
+	}
 	// 获取所有搜索结果的赔率信息
-	await api_common.get_match_base_info_by_mids(params).then((res) => {
+	await api_name(params).then((res) => {
 		if (res.code === '200') {
 			const { data } = res;
 			// 使用获得比分的 mid 和搜索结果的 mid 做比较，将赔率信息返回给搜索结果
