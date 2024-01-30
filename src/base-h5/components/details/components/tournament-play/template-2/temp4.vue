@@ -559,6 +559,7 @@ export default defineComponent({
 
   max-width: 1rem;
   margin: 0 auto;
+  color: var(--q-gb-t-c-19);
 }
 
 .lock-margin {
