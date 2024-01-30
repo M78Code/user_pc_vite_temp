@@ -88,8 +88,8 @@ const emitters = ref({});
  * 早盘串关日期格式
  */
 const dataList = reactive({
-  3: dateTabList(new Date(new Date().getTime() + 24 * 60 * 60 * 1000)), //早盘下一天开始
-  6: dateTabList(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), [{ name: "今日", val: '0' }]),
+  3: dateTabList(new Date().getHours()<12?new Date(new Date().getTime()):new Date(new Date().getTime() + 24 * 60 * 60 * 1000)), //早盘下一天开始
+  6: dateTabList(new Date().getHours()<12?new Date(new Date().getTime()):new Date(new Date().getTime() + 24 * 60 * 60 * 1000), [{ name: "今日", val: '0' }]),
   // 2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"所有日期",val:''},{name:"今日",val:new Date().getTime()}])
 });
 const dataListEsports = ref([]);
