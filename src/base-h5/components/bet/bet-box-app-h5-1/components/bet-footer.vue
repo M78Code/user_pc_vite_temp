@@ -221,6 +221,7 @@ const set_special_state = computed(()=> status => {
   is_bet_single = true
   is_bet_special = true
   let bet_list = []
+  let is_repeat_match = false
   if( BetData.is_bet_single ) {
     bet_list = lodash_.cloneDeep(BetData.bet_single_list)
     let bet_obj = lodash_.get(bet_list,'[0]', {})

@@ -22,7 +22,7 @@ import iframeBeforeLoading from "src/components/iframe-before-loading/iframe-bef
 import { wslog } from "src/core/log/";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
-import { PageSourceData, GlobalAccessConfig, ServerTime,set_css ,set_theme_style_sheet_by_css_obj,pre_load_img} from "src/output/index.js";
+import { PageSourceData, GlobalAccessConfig, ServerTime,set_css ,set_theme_style_sheet_by_css_obj,pre_load_img, BUILDIN_CONFIG} from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch, nextTick } from "vue";
 import { useRoute } from "vue-router";
@@ -33,7 +33,7 @@ import './src/css/common/common.scss'
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 
 window.wslog = wslog;
-const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
+// const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 const { CURRENT_ENV } = BUILDIN_CONFIG;
 
 const time_str = ref('');

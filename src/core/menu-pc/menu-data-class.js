@@ -869,7 +869,6 @@ class MenuData {
    * 定义  设置 请求  列表结构  API 参数的   值
    */
   set_match_list_api_config() {
-   
     // 更新列表数据类型
     this.set_match_list_api_type(this.mid_menu_result);
 
