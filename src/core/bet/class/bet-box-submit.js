@@ -29,6 +29,7 @@ import { currency_code } from "src/core/constant/common/module/keyword.js"
 import { MenuData } from 'src/output/project/index.js'
 import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import { calc_bifen } from "src/core/bet/common-helper/module/common-sport.js"
+import { nextTick } from "vue"
 
 const { PROJECT_NAME } = BUILDIN_CONFIG ;
 
@@ -377,6 +378,16 @@ const get_lastest_market_info = (type) => {
                             bet_item.hl_hs = market.status
                             // 盘口id
                             bet_item.marketId = market.id
+
+                            // ws断连后 需要对比数据 进行投注
+                            // 坑位变更 赔率也变 进行锁盘处理
+                            if( type == 'submit_bet' && bet_item.odds != odds.oddsValue){
+                                bet_item.ol_os = 4
+                            }
+                            // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+                            if(type == 'submit_bet' && bet_item.ot != odds.oddsType){
+                                bet_item.hl_hs = 11
+                            }
                             // 赔率 10w位
                             bet_item.odds = odds.oddsValue
                             //最终赔率
@@ -389,7 +400,6 @@ const get_lastest_market_info = (type) => {
                             // bet_item.mark_score = 
                             // 盘口值
                             bet_item.marketValue = market.marketValue
-
                             // 球头
                             bet_item.handicap_hv = odds.playOptions || market.marketValue
                             let play_option_name = ''
@@ -422,9 +432,16 @@ const get_lastest_market_info = (type) => {
             })
             // 重新设置投注项内容
             BetData.set_bet_single_special(bet_list)
-            // 重新订阅ws
-            set_market_id_to_ws()
-           
+
+            nextTick(()=>{
+                 // 坑位变化 重新获取限额
+                if(type != 'submit_bet'){
+                    get_query_bet_amount_common()
+                }
+                
+                // 重新订阅ws
+                set_market_id_to_ws()
+            })
         }
     }).finally(()=>{
         // 不管接口拿到数据没 都去进行投注

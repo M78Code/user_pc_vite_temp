@@ -71,7 +71,7 @@ import { is_esports, is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
 import { get_collect_count } from 'src/core/collect/collect-class.js'
 const route = useRoute();
 const router = useRouter()
-const inner_height = window.innerHeight;  // 视口高度
+const inner_height = ref(0);  // 视口高度
 const select_dialog = ref(false);//暂时筛选窗口dJ
 const dateTabMenu = ref(null);//时间dom
 const dJdateTabMenu = ref(null);//电竞时间dom
@@ -100,6 +100,10 @@ const ref_data = reactive({
   current_mi: '',
 })
 onMounted(() => {
+  inner_height.value = window.innerHeight
+  window.onresize = lodash.debounce((e) => {
+    inner_height.value = window.innerHeight
+  }, 500)
   // set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,1)
   init_data(MenuData.current_lv_1_menu_mi.value, 1)
   // mitt_list.push(useMittOn(MITT_TYPES.EMIT_MENU_GO_BACK, menu_go_back).off)
