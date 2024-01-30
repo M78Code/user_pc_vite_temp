@@ -223,7 +223,7 @@ onUnmounted(()=>{
             //color: var(--q-gb-bd-c-2);
             color: var(--q-gb-t-c-18);
             position: -webkit-sticky;
-            // position: sticky;
+            position: sticky;
             right: -1px;
             left: -1px;
             z-index: 130;
