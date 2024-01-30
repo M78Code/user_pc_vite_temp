@@ -1410,7 +1410,7 @@ export default {
   bottom: 5px;
   width: 100%;
   height: 25px;
-  z-index: 100;
+  z-index: 99;
   display: flex;
   align-items: center;
   justify-content: space-between;
