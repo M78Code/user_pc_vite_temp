@@ -510,7 +510,6 @@ this.bet_appoint_ball_head= null */
 
     this.set_options_state()
 
-    this.set_bet_data_class_version()
   }
 
   // 设置投注项id 页面选中
@@ -1061,6 +1060,7 @@ this.bet_appoint_ball_head= null */
         get_query_bet_amount_common()
       }
     }
+    this.set_options_state()
   }
 
   // 删除投注项
@@ -1275,7 +1275,6 @@ this.bet_appoint_ball_head= null */
       this.set_bet_oid_list()
 
       this.set_options_state()
-
     }
   }
 
