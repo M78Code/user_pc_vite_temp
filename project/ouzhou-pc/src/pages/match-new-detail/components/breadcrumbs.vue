@@ -70,7 +70,6 @@ const jumpTo = ()=>{
   let route_name = lodash_.get(MenuData.router_info,'pre_route') || 'home'
 
   let history = JSON.parse(window.sessionStorage.getItem('RouteHistory'))
-
   if (route_name == 'league') {
     jumpToLeagues()
   } else {
@@ -87,7 +86,11 @@ const jumpToLeagues  = () => {
   localStorage.setItem('league_name', props.detail_info.tn)
   MenuData.set_mid_menu_result(mid_config)
   console.log("--------------------------------",MenuData.is_esports())
-  router.push(`/league/${csid}/${tid}/2`)
+  if(MenuData.is_esports()){
+    jumpTo()
+  }else{
+    router.push(`/league/${csid}/${tid}/2`)
+  }
 }
 
 

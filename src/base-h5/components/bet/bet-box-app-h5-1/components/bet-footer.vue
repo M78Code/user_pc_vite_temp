@@ -303,6 +303,7 @@ const set_bet_single = () => {
       menu_id = 6
     }
     MenuData.set_current_lv1_menu(menu_id);
+    MenuData.search_data_tab_index();//清除足球联赛缓存
     // 详情里面切换投注类型 
     router.push({ name: "matchList" });
     
