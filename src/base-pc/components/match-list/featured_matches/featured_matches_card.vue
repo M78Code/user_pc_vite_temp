@@ -129,6 +129,9 @@ function get_col_ols_data(_mid) {
     // 获取投注项内容 
     let ols_data = lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
     // 15mins 和 featured赛事展示的投注项名称
+    if (!ols_data.onb) {
+      ols_data.onb = i18n_t(`ouzhou.bet_col.bet_col_${ols_data._hpid}.bet_col_${ols_data.ot}`)
+    }
     return ols_data;
   })
 }
