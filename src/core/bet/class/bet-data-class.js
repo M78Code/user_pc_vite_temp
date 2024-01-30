@@ -977,6 +977,11 @@ this.bet_appoint_ball_head= null */
     this.is_bet_pre = val
     this.set_bet_data_class_version()
   }
+  
+  set_bet_appoint_obj_playOptionId(val) {
+    this.bet_pre_appoint_id = val
+    this.set_bet_data_class_version()
+  }
 
    //设置输入框最小值
   set_pre_min_odd_value(val){
