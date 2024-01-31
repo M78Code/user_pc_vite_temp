@@ -508,3 +508,6 @@ export const EMIT_VR_MENU_CLICK = "EMIT_VR_MENU_CLICK";
 
 // 提前结算
 export const EMIT_C201_HANDLE_BET_RECORD = "EMIT_C201_HANDLE_BET_RECORD";
+
+//移除玩法缓存remove_session_storage
+export const EMIT_SET_REMOVE_SESSION_STORAGE= "EMIT_SET_REMOVE_SESSION_STORAGE"

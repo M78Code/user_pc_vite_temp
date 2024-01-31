@@ -92,7 +92,8 @@
   <script setup>
   import BetData from "src/core/bet/class/bet-data-class.js";
   import { btn_reduce, btn_add, ref_pre_book,add_handle,sub_handle,set_ref_data } from "src/core/bet/common/appoint-data.js"
-  import { LOCAL_PROJECT_FILE_PREFIX,MARKET_RANG_FLAG_LIST,i18n_t ,UserCtr,compute_value_by_cur_odd_type } from "src/output/index.js";
+  import { LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr,compute_value_by_cur_odd_type } from "src/output/index.js";
+  import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
   import { reactive } from "vue";
 
   const props = defineProps({
@@ -122,6 +123,7 @@
 
   // 显示预约投注
   const set_show_appoint = () =>{
+    get_query_bet_amount_pre()
     ref_data.show_appoint = true
     ref_data.odds_value_edit = props.items.oddFinally
     BetData.set_is_bet_pre(true)

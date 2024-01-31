@@ -74,8 +74,6 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .fliter {
     margin-right: 0.1rem;
-    line-height: 0.46rem;
-    height: 0.5rem;
     font-size: 0.14rem;
     position: relative;
     .show-val {
@@ -91,7 +89,7 @@ onUnmounted(() => {
         position: absolute;
         z-index: 10;
         left: 0;
-        top: 0.5rem;
+        top: 0.34rem;
         background: #fff;
         padding: 0 0.1rem;
         box-shadow: 2px 2px 4px var(--q-gb-bg-c-9);

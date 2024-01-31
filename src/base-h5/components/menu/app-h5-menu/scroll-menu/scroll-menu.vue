@@ -150,9 +150,9 @@ const format_type = ( item = {} ) => {
 const get_menu_ws_list = (list) =>{
     list = list.filter((item)=>{return item.mi});
     let wsList = props.scrollDataList?.map((item)=>{
-        list.forEach((n)=>{
+      list.length && list.forEach((n)=>{
             if(item.mi == n.mi){
-                item.ct = n.count;
+                item.ct = n?.count || 0;
             }
         })
         return item;

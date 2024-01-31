@@ -23,7 +23,7 @@ import { pre_load_video } from "src/core/pre-load/index";
 // import { format_plays, format_sort_data } from "src/core/format/index";
 import { formatTime } from "src/core/format/common/index.js"
 import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data ,is_eports_csid,MatchDetailCalss,SearchPCClass,GlobalSwitchClass,LayOutMain_pc} from "src/output/index"; 
-import uid from "src/core/uuid/index.js";
+import { create_gcuuid } from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
@@ -363,7 +363,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
       // 常规赛事详情页玩法投注项
       api_ = api_details.get_match_odds_info;
     }
-    state.send_gcuuid = params.gcuuid = uid();
+    state.send_gcuuid = params.gcuuid = create_gcuuid();
     let obj_ = {
       // axios api对象
       axios_api: api_,

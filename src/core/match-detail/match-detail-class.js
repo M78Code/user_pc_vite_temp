@@ -110,6 +110,8 @@ class MatchDetailCtr {
     this.first_details_item = '0';
     //赛果详情我的注单
     this.note_sheet_records_data ={}
+    // 模板6 最后进球的队员
+    this.ol_list1_flag =  0
     /* =========H5 */
   }
 
@@ -477,6 +479,23 @@ class MatchDetailCtr {
    */
   get_my_sheet(){
     return this.note_sheet_records_data 
+  }
+  /**
+   * @description: 设置ol状态
+   * @param {*} value
+   * @return {*}
+   */
+  set_flag_get_ol_list( value) {
+    this.ol_list1_flag = value;
+    this.set_details_data_version()  
+  }
+  /**
+   * @description: 获取ol状态
+   * @param {*} value
+   * @return {*}
+   */
+  get_flag_get_ol_list( value) {
+    return this.ol_list1_flag ;
   }
 }
 
