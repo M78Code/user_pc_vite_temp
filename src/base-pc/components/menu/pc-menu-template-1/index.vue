@@ -476,15 +476,15 @@ const get_lv_1_lv_2_mi = (mi) => {
   console.log("list",list)
     list = list.filter((item)=>{return item.mi});
     let wsList = left_menu_list.value.map((item)=>{
-        list.forEach((n)=>{
+      list.length && list.forEach((n)=>{
             if(item.mi == n.mi){
-                item.ct = n.count;
+                item.ct = n?.count || 0;
             }
             const index = item.sl?.findIndex((k)=>{
               return k.mi == n.mi;
             })
             if(index !== -1){
-              item.sl[index].ct = n.count;
+              item.sl[index].ct = n?.count || 0;
             }
         })
         return item;
