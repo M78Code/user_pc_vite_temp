@@ -510,6 +510,14 @@ function go_detail_or_reslut(item, index) {
 		keyword: input_value.value,
 		csid: item.csid
 	}));
+	//>=100 电竞
+	if(+item.csid >= 100){
+		MenuData.set_current_lv1_menu(2000)
+		MenuData.set_menu_mi(`2${item.csid}`)
+	}else{
+		MenuData.set_current_lv1_menu(1)
+		MenuData.set_menu_mi(+item.csid+100)
+	}
 	const query = get_search_txt ? { search_term: get_search_txt } : {}
 	if (get_menu_type.value == 28) {
 		router.push({
@@ -555,15 +563,15 @@ const get_match_base_hps_by_mids = async () => {
 	match_mid_Arr = []
 	if (search_data.value) {
 	// if (search_data.value.length > 0) {
-		search_data.value?.teamH5.forEach((item, index) => {
+		search_data.value?.teamH5?.forEach((item, index) => {
 			match_mid_Arr.push(item.mid)
 		})
-		search_data.value?.league.forEach((item, index) => {
+		search_data.value?.league?.forEach((item, index) => {
 			item.matchList.forEach((i, idx) => {
 				match_mid_Arr.push(i.mid)
 			})
 		})
-		search_data.value?.bowling.forEach((item, index) => {
+		search_data.value?.bowling?.forEach((item, index) => {
 			match_mid_Arr.push(item.mid)
 		})
 	}
