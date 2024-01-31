@@ -1428,7 +1428,6 @@ this.bet_appoint_ball_head= null */
 
   // 设置投注项状态
   set_options_state() {
-    console.log('这里！', betViewDataClass.bet_order_status)
     // 需要筛选出 某些状态不需要再去做投注项状态的改版
     // 目前 7 8 为预约投注后
     if ([7, 8].includes(betViewDataClass.bet_order_status)) {
@@ -1476,6 +1475,8 @@ this.bet_appoint_ball_head= null */
       BetViewDataClass.set_bet_before_message({})
       this[single_name] = array_list
       this.set_bet_data_class_version()
+      // 投注项更新后 需要通知页面
+      useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
       return
     }
   }
