@@ -1,6 +1,6 @@
 import { api_common, api_analysis } from 'src/project/api/index.js';
 import video from "src/base-h5/utils/video/video.js"   // 视频相关公共方法`
-import uid from "src/core/uuid/index.js"
+import { create_gcuuid } from "src/core/uuid/index.js";
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
@@ -761,7 +761,7 @@ export const video_info = () => {
           this.set_show_video(true);
         } else {
           let param = {}
-          this.send_gcuuid = uid();
+          this.send_gcuuid = create_gcuuid();
           param.gcuuid = this.send_gcuuid;
           api_common.getVideoReferurl(param).then(res => {
             if (this.send_gcuuid != res.gcuuid) return;
@@ -796,7 +796,7 @@ export const video_info = () => {
       mid: this.match_id,
       type: 'Animation'
     };
-    this.send_gcuuid = uid();
+    this.send_gcuuid = create_gcuuid();
     params.gcuuid = this.send_gcuuid;
     this.is_show_no_handle = false
     api_common.videoAnimationUrl(params).then((res) => {

@@ -86,12 +86,19 @@ export const scrollMenuEvent = (event, parentClass, childClass) => {
         spanRight = 0, // 元素的右边距离
         scrollL = scrollBox.scrollLeft || 0; // 滚动条滚动的距离
     // 当元素左边距离 或者 右边距离小于总宽一半
-    
+   
     if (event instanceof Event) {spanLeft = event?.clientX} // 当前点击的元素左边距离
-    if (event instanceof Element) {spanLeft = event?.offsetLeft} // 当前元素左边距离
-
+    if (event instanceof Element) {
+        //dom元素右边的距离
+        let num = scrollBox.scrollWidth-event?.offsetLeft-divBox;
+        if(scrollL){//滚动存在取左边距离
+            spanLeft = totalWidths- num; //dom元素左边的距离
+        }else{
+            spanLeft = event?.offsetLeft;
+        }
+    } 
+     // 当前元素右边距离
     spanRight = totalWidths - spanLeft
-
     if(!scrollBoxNav)return;
     if (spanRight < widths || spanLeft < widths) {
         let n = scrollL + (spanLeft - widths) + divBox;

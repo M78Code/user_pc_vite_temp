@@ -553,10 +553,12 @@ const get_query_bet_amount_pre = () => {
             // 通知页面更新 
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
             // 获取盘口值 
-            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo[0]')
-
-            // 获取预约投注项
-            BetData.set_bet_appoint_obj(latestMarketInfo)
+            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo[0]', {})
+            
+            if(latestMarketInfo){
+                // 获取预约投注项
+                BetData.set_bet_appoint_obj(latestMarketInfo)
+            }
 
         } else {
             set_catch_error_query_bet_max(params)
