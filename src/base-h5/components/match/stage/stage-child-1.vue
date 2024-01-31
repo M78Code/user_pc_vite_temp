@@ -5,12 +5,12 @@
 -->
 <template>
   <!-- 足球 -->
-  <span class='stage_child_1'>
+  <div class='stage_child_1'>
     <span v-if="match_result_state">
       {{i18n_t('match_info.match_over')}}
     </span>
-    <span v-else>
-      <!-- {{i18n_t('mmp')[1][detail_data.mmp]}} -->
+    <div v-else style="margin-left: -0.18rem;">
+       <span>{{i18n_t('mmp')[1][detail_data.mmp]}}</span> 
       <!-- 计时器 222-->
       <CountingDown ref="counting-down-second" :title="mmp_map_title" :mmp="detail_data.mmp"
         :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+detail_data.csid)" :m_id="detail_data.mid"
@@ -18,14 +18,10 @@
       </CountingDown>
       <!-- <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime != 0">&nbsp;{{ counting_time_ctr_show_format_ouzhou(detail_data, format_mgt_time(showTime)) }}</span>
       <span  v-if="detail_data.mmp == '0'">&nbsp;&nbsp;{{ counting_time_ctr_show_format_ouzhou(detail_data, '00:00')}}</span> -->
-    </span>
-  </span>
+      </div>
+  </div>
 </template>
-
 <script setup>
-  import lodash from 'lodash';
-  import { computed, onMounted, onUnmounted, ref, watch } from "vue"
-  import { counting_time_ctr_show_format_ouzhou } from 'src/core/format/common/index.js'
   import { format_mgt_time } from "src/output/index.js"
   import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
   import CountingDown from 'src/base-h5/components/common/counting-down.vue';
@@ -149,16 +145,28 @@ onUnmounted(() => {
 
 
 <style lang="scss" scoped>
+.stage_child_1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 :deep(){
   .title-space-1{
+    display: none;
     color:var(--q-gb-t-c-14) !important
   }
   .counting{
     color:var(--q-gb-t-c-14) !important
   }
   .counting-down-wrap{
-    margin-left: -0.28rem;
+     margin-left: 0.1rem;
+    //  margin-left: 0.2rem;
+    // position: relative;
   }
+}
+.counting-main{
+  margin-left: -0.3rem;
+
 }
 
 // src/core/utils/common/index.jssrc/output/index.js

@@ -155,6 +155,9 @@ const set_scroll_current = async (val, type) => {
   handler_go_to_top()
   if (MenuData.is_esports() && !type) {
     const data_list_esports = await MenuData.getDateList(val?.csid);
+    const index = ref_data.scroll_data_list.findIndex(n=>{return n.mi == val.mi});
+    //获取接口数量赋值给电竞菜单
+    if(index !== -1)ref_data.scroll_data_list[index||0].ct = data_list_esports[0].count || 0;
     dataListEsports.value = data_list_esports;
     ref_data.current_mi = val.mi;
     val.old_csid = val.csid || MenuData.current_lv_2_menu?.csid;
@@ -184,6 +187,9 @@ const set_scroll_current = async (val, type) => {
       !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i ? MenuData.current_lv_2_menu : obj)
       const data_list_esports = await MenuData.getDateList(val?.csid || MenuData.current_lv_2_menu?.old_csid || BaseData.dianjing_sublist[0].csid);
       dataListEsports.value = data_list_esports;
+      //获取接口数量赋值给电竞菜单
+      const index = ref_data.scroll_data_list.findIndex(n=>{return n.mi == ref_data.current_mi })
+      if(index !== -1)ref_data.scroll_data_list[index||0].ct = data_list_esports[0].count || 0;
       get_collect_count();
       nextTick(() => {
         dJdateTabMenu.value.set_active_val();
@@ -415,6 +421,7 @@ const handle_match_render_data = (type) => {
   // background-image: url($SCSSPROJECTPATH+"/image/home/h5_long3.png") !important;
   > img{
     position: absolute;
+    width: 100%;
   }
 }
 .select-mask {

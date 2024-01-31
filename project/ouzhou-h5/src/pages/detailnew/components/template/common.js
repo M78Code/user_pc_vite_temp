@@ -79,7 +79,9 @@ const common = {
       }
     }else if(hpt == 18){
       return 'fill'
-    }else if(hpt == 51||hpt == 6){
+    }else if(hpt == 6){
+      return 'column'
+    }else if(hpt == 51){
       return 'column'
     }
     return 'default'
