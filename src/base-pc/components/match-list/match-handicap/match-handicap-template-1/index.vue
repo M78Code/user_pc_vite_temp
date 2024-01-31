@@ -82,17 +82,39 @@ onMounted(() => {
 })
 
 //坑位对象
-const hn_obj = toRef(MatchListData.list_to_obj,'hn_obj')
+// const hn_obj = toRef(MatchListData.list_to_obj,'hn_obj')
+// const col_ols_data = computed(() => {
+//   try {
+//     let { mid, csid } =match.value
+//     let handicap_type = props.add_type
+//     return lodash.cloneDeep(props.handicap_list || []).map(col => {
+//       col.ols = col.ols.map(item => {
+//         if (item.empty) { return }
+//         // 投注项数据拼接
+//         let hn_obj_config = MatchListData.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
+//         return Object.assign({other_class:item.other_class},lodash.get(hn_obj.value, hn_obj_config) || not_hn_obj_map.value[hn_obj_config] || {}) 
+//       })
+//       col.csid = csid;
+//       return col
+//     })
+//   } catch (e) {
+//     console.error('deal_width_handicap_ols', e)
+//     return []
+//   }
+// })
 const col_ols_data = computed(() => {
   try {
-    let { mid, csid } =match.value
-    let handicap_type = props.add_type
+    let { hn, mid, csid } = match.value
+    let handicap_type = hn || 1
+    const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
     return lodash.cloneDeep(props.handicap_list || []).map(col => {
       col.ols = col.ols.map(item => {
         if (item.empty) { return }
         // 投注项数据拼接
         let hn_obj_config = MatchListData.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
-        return Object.assign({other_class:item.other_class},lodash.get(hn_obj.value, hn_obj_config) || not_hn_obj_map.value[hn_obj_config] || {}) 
+        // 获取投注项内容 
+        console.log(lodash.get(hn_obj, hn_obj_config), hn_obj_config)
+        return lodash.get(hn_obj, hn_obj_config) || not_hn_obj_map.value[hn_obj_config] || {};
       })
       col.csid = csid;
       return col
@@ -102,7 +124,6 @@ const col_ols_data = computed(() => {
     return []
   }
 })
-
 /**
  * @description 获取5分钟玩法时的类名，滚球时不需要背景色，早盘时需要背景色
  */
