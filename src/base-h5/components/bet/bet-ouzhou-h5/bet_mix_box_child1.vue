@@ -60,7 +60,7 @@
                           <div class="bet-odds-name">{{i18n_t('pre_record.handicap')}}</div>
                           <div class="bet-odds-edit">
                             <span class="bet-odds-reduce" :class="{begray:ref_pre_book.appoint_ball_value <= 0}" v-touch-repeat:0:300.mouse.enter.space="() => {sub_handle(items)}">-</span>
-                            <input class="bet-odds-number" type="number" v-model="ref_pre_book.appoint_ball_value" />
+                            <input class="bet-odds-number" v-model="ref_pre_book.appoint_ball_value" />
                             <span class="bet-odds-add" :class="{begray:ref_pre_book.appoint_ball_value >= check_ball_maxmin(items)}" v-touch-repeat:0:300.mouse.enter.space="() => {add_handle(items)}">+</span> 
                           </div>
                         </div>                                     
