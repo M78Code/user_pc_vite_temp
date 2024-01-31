@@ -1,4 +1,4 @@
-/**
+qwe123../**
  * 合并输出商户配置
  */
 import axios from "axios";
@@ -54,6 +54,10 @@ for(let theme_key in  final_assets_config){
  
       }
      
+//这里的 同步加载  不能改异步
+//批量的异步  等于 并发 ，对服务器 造成影响  
+// 如果 改  必定追究责任 
+
     if(url){
       try {
         const filename = url.split("/").pop();//文件名称

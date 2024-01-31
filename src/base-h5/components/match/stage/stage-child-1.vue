@@ -9,8 +9,8 @@
     <span v-if="match_result_state">
       {{i18n_t('match_info.match_over')}}
     </span>
-    <span v-else>
-      <!-- {{i18n_t('mmp')[1][detail_data.mmp]}} -->
+    <span v-else style="margin-left: -0.18rem;">
+      {{i18n_t('mmp')[1][detail_data.mmp]}}
       <!-- 计时器 222-->
       <CountingDown ref="counting-down-second" :title="mmp_map_title" :mmp="detail_data.mmp"
         :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+detail_data.csid)" :m_id="detail_data.mid"
@@ -151,13 +151,14 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 :deep(){
   .title-space-1{
+    display: none;
     color:var(--q-gb-t-c-14) !important
   }
   .counting{
     color:var(--q-gb-t-c-14) !important
   }
   .counting-down-wrap{
-    margin-left: -0.28rem;
+     margin-left: 0.2rem;
   }
 }
 
