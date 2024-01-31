@@ -276,10 +276,10 @@ const sub_handle = (item, index = 1) => {
  * @return {undefined} undefined
  */
 const search_odds_value_by_ball_head = (item) => {
-
+  console.error('sssssss')
   let head = ref_pre_book.appoint_ball_value;
-  let appoint_ob = lodash_.get(BetData, 'bet_appoint_obj');
-  if (!appoint_ob || lodash_.isNull(appoint_ob.marketList)) return;
+  let appoint_ob = lodash_.get(BetData, 'bet_appoint_obj', {}) || {};
+  if (!Object.keys(appoint_ob).length || lodash_.isNull(appoint_ob.marketList)) return;
   let playOptionsId = '';
   let marketId = ''
   // console.error('外围数据vx_get_pre_bet_list===', list);
