@@ -294,21 +294,12 @@ export default defineComponent({
     })
     // 附加盘投注项集合
     const append_single_list = computed(() => {
-      if(props.item_data.hpid ==2){
-        console.log( props.item_data.hl,' result--1');
-      }
-     
       let result = [];
       for (let i = 0; i < props.item_data.hl.length; i++) {
         for (let i_ = 0; i_ < props.item_data.hl[i].ol.length; i_++) {
-          console.log(props.item_data.hl[i].hn,'props.item_data.hl[i].hn');
           result.push({...props.item_data.hl[i].ol[i_],hn:props.item_data.hl[i].hn});
         }
       }
-      if(props.item_data.hpid ==2){
-        console.log(result,'result');
-      }
-      
       return result;
     })
     // 空白盒子个数
