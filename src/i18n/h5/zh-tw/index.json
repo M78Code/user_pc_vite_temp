@@ -1261,7 +1261,8 @@
     "video": "視頻",
     "video_info": "視訊訊息",
     "yes": "是",
-    "match_parlay": "串"
+    "match_parlay": "串",
+    "match_cancellation": "比賽取消"
   },
   "match_main": {
     "cut_off": "截止",
