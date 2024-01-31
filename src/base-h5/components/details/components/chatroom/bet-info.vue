@@ -69,14 +69,10 @@
 </template>
 
 <script>
-// import betting from 'src/project/mixins/betting/betting.js';
+
 import { api_chatroom } from "src/project/api/index.js";
 import { api_common } from 'src/project/api/index.js'
-// #TODO vuex
-// import { mapGetters, mapMutations } from "vuex";
-// import chatroom_mixin from 'src/base-h5/components/details/components/chatroom/chatroom_mixin'
-import { create_gcuuid } from "src/core/uuid/index.js";
-import { format_currency, format_odds,  } from "src/output/index.js"
+
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 ;
 //国际化

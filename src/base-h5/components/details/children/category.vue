@@ -91,8 +91,7 @@ import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } fro
 import loading from "src/components/loading/loading.vue"
 // 精选赛事
 import detailMatchList from 'src/base-h5/components/details/components/detail-match-list.vue';
-import { create_gcuuid } from "src/core/uuid/index.js";
-import lodash from "lodash";
+
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"

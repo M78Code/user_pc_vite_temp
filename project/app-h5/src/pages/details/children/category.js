@@ -2,11 +2,7 @@ import { reactive, computed, ref, onMounted, onUnmounted, watch } from "vue";
 // 引入接口封装文件
 import { api_common, api_analysis } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-// #TODO mixins
-// 引入skt_data_info
-// import websocket_data from "src/base-h5/mixins/websocket/data/skt_data_info.js";
-// 引入投注逻辑mixin
-// import betting from "src/base-h5/mixins/betting/betting.js";
+import { create_gcuuid } from "src/core/uuid/index.js";
 import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss,MenuData,axios_loop as axios_api_loop} from "src/output/index"; 
 
 // import { Level_one_detail_odd_info } from "../category-list.js";

@@ -1,12 +1,7 @@
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewData from "src/core/bet/class/bet-view-data-class.js";
 
-// import { get_bet_amount_param } from "./bet-amount.js";
-// import { http_upd_data } from "./upd_data.js";
-// import mathjs from "src/core/utils/mathjs.js";
-// import yabo_common from "src/core/common-helper/common.js";
-import { create_gcuuid } from "src/core/uuid/index.js";
-import { ref } from "vue";
+
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { PLAY_LET_BALL,PLAY_GOAL,PLAY_TODAY_SCORE,PLAY_ALL_KINDS,PLAY_RESULT } from "src/output/module/constant-utils.js";
 import { play_name_mapping_csid } from "src/output/module/constant-utils.js";

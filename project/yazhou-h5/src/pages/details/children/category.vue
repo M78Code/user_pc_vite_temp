@@ -91,11 +91,6 @@ import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,LOCAL
 import loading from "src/components/loading/loading.vue"
 // 精选赛事
 import detailMatchList from 'src/base-h5/components/details/components/detail-match-list.vue';
-import { create_gcuuid } from "src/core/uuid/index.js";
-import lodash from "lodash";
-import { useRouter, useRoute } from "vue-router";
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-// import { Level_one_detail_odd_info } from "../category-list.js";
 import { category_info } from "./category.js"
 import { reactive, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({

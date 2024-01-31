@@ -9,8 +9,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // import betting from "src/base-h5/mixins/betting/betting.js";
 import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss} from "src/output/index"; 
 
-// import { Level_one_detail_odd_info } from "../category-list.js";
-import { create_gcuuid } from "src/core/uuid/index.js";
+
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
@@ -367,27 +366,19 @@ export const category_info = (category_arr=[]) => {
     // temp.length === 0 在这里更新所有投注得信息
     if (temp.length == 0) {
       try {
-        function req(){
-          return new Promise((resolve,reject)=>{
-           axios_api_loop( {
-             // axios api对象
-             axios_api: http,
-             // axios api对象参数
-             params: params,
-             max_loop: init_req ? 3 : 1,
-             func_then:(res)=>{
-               resolve(res)
-             },
-             fun_catch: (err) => {
-               component_data.is_loading = false;
-               component_data.is_no_data = true;
-               reject(err)
-             },
-           })
-          }) 
-        }
+        const _obj = {
+          // axios api对象
+          axios_api: http,
+          // axios api对象参数
+          params: params,
+          max_loop: init_req ? 3 : 1,
+          fun_catch: (err) => {
+            component_data.is_loading = false;
+            component_data.is_no_data = true;
+          },
+        };
         /************** 响应成功则继续往下走，失败则执行fun_catch **************/
-        const res = await req();
+        const res = await axios_api_loop(_obj);
         // 数据存入数据仓库
         MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(params.mid) ,res.data)
         // if (component_data.send_gcuuid != res.gcuuid) {
