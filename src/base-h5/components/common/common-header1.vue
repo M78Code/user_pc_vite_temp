@@ -18,7 +18,9 @@
       <div class="row common-header-right">
         <div class="collect-icon" :class="{ active: get_detail_data.mf }"
           v-if="GlobalAccessConfig.get_collectSwitch() && is_DJ_show && MenuData.get_menu_type() !== 28"
-          @click="details_collect(get_detail_data)"></div>
+          @click="details_collect(get_detail_data)">
+          <slot name="right"></slot>
+        </div>
         <!-- todo 后面判断项目名称 -->
         <!-- <div class="det-ref" :class="{ 'refreshing': refreshing, 'refreshing-common': MenuData.get_menu_type() !== 3000 }"
           @click="details_refresh"></div> -->

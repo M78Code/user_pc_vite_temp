@@ -149,6 +149,11 @@ onUnmounted(() => {
 
 
 <style lang="scss" scoped>
+.stage_child_1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 :deep(){
   .title-space-1{
     color:var(--q-gb-t-c-14) !important
@@ -158,6 +163,7 @@ onUnmounted(() => {
   }
   .counting-down-wrap{
     margin-left: -0.28rem;
+    position: relative!important;
   }
 }
 
