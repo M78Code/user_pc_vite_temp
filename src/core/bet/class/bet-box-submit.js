@@ -1294,7 +1294,7 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,other}) => {
         }else{
             let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,play_name)
             // 冠军玩法 部分玩法hpid相同 
-            if(other.bet_type == 'guanjun_bet'){
+            if(other.bet_type == 'guanjun_bet' || other.is_kemp){
                 let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])
                 if(hpn_list.length < 1){
                     hpn_list = lodash_.get(mid_obj,`hps`,[])
