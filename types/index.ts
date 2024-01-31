@@ -242,7 +242,7 @@ declare namespace K {
     /** 玩法ID */ hpid: string
   };
   /** 包含子集的玩法ID */ type chpid = {
-    /** 包含子集的玩法ID */ hpid: string
+    /** 包含子集的玩法ID */ chpid: string
   };
   /** 玩法模板 */ type hpt = {
     /** 玩法模板 */ hpt: number
