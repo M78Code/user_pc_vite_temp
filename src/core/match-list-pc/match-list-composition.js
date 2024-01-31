@@ -315,26 +315,7 @@ function mounted_fn(fun) {
 	onUnmounted(()=>{
 		handle_destroyed()
 	})
-	// load_video_resources();
 }
-// watch(MenuData.match_list_api_config.version, (cur) => {
-// 		// bug 版本没有变化 也可以进入
-// 		if (MenuData.api_config_version != cur) {
-// 			MenuData.set_api_config_version(cur);
-// 			// is_loading.value = false
-// 			// 清除过滤条件
-// 			// this.vx_set_remove_filter_condition()
-// 			// 获取赛事列表数据、check_match_last_update_timer_id = setInterval(
-// 			fetch_match_list();
-// 			// 设置联赛吸顶高度
-// 			set_sticky_top();
-// 			// setTimeout(()=>{
-// 			//   is_loading.value = true
-// 			// },100)
-// 		}
-// 	},
-// 	{ deep: true }
-// );
 /**
  * @description 获取强力推荐赛事
  * @param  {boolean} backend_run 是否后台 调用
@@ -354,9 +335,6 @@ function get_hot_match_list(backend_run = false) {
 			if (page_source == "details" && page_source != "details") {
 				return;
 			}
-			// if (handle_destroyed()) {
-			// 	return;
-			// }
 			show_refresh_mask.value = false;
 			let code = lodash.get(res, "data.code");
 			// 赛事列表
