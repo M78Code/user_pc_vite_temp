@@ -53,7 +53,7 @@ import { FOOTBALL_PLAY_LET_BALL, MARKET_BIG_SMALL_PLAY_LIST, MARKET_RANG_FLAG_LI
 import mathJs from 'src/core/bet/common/mathjs.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import lodash_ from 'lodash'
-import { btn_reduce, btn_add } from "src/core/bet/common/appoint-data.js"
+import { btn_reduce, btn_add, ref_pre_book } from "src/core/bet/common/appoint-data.js"
 import BetInput from "./bet-input.vue"
 import { IconWapper } from 'src/components/icon'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
@@ -326,8 +326,8 @@ const add_handle = (type, index = 1) => {
     // const list = odd_list.find(item => {
     //   return aov < item.oddsRange
     // });
-
-    ref_data.appoint_odds_value = btn_add(ref_data.appoint_odds_value);
+    ref_pre_book.appoint_odds_value = ref_data.appoint_odds_value
+    ref_data.appoint_odds_value = btn_add();
     //获取当前需要添加焦点的输入框，如果存在输入框，则获取焦点
     let input = index == 0 ? currency_input : ''
     if (input) input.focus();
@@ -378,9 +378,9 @@ const add_handle = (type, index = 1) => {
     }
     set_computed_appoint_ball_head()
     set_bet_obj_config()
-    nextTick(() => {
-      search_odds_value_by_ball_head();
-    })
+    // nextTick(() => {
+    //   search_odds_value_by_ball_head();
+    // })
   }
 }
 /**
@@ -481,9 +481,9 @@ const sub_handle = (type, index = 1) => {
     }
     set_computed_appoint_ball_head()
     console.error('球头减');
-    nextTick(() => {
-      search_odds_value_by_ball_head();
-    })
+    // nextTick(() => {
+    //   search_odds_value_by_ball_head();
+    // })
   }
 }
 /**

@@ -454,7 +454,7 @@ if (UserCtr.get_user_token()) {
     position: fixed;
     left: 10%;
     top: 10vh;
-    z-index: 600;
+    z-index: 1000;
   }
 
   .match-main-menu {
@@ -474,7 +474,7 @@ if (UserCtr.get_user_token()) {
     left: 0;
     bottom: 0;
     right: 0;
-    z-index: 550;
+    z-index: 999;
     transition: opacity 0.3s;
     background-image: url("");
   }

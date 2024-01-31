@@ -292,7 +292,6 @@ import matchScore from 'src/project/components/match/match_score.vue' // 比分�
 import footballEvents from "src/base-h5/components/details/football_events.vue";
 import analysis_football_matches from "src/base-h5/components/details/analysis-matches/football_match_analysis/analysis_football_matches.vue"; // 详情页  足球赛事分析
 import basketball_match_analysis from "src/base-h5/components/details/analysis-matches/basketball_match_analysis/basketball_match_analysis";  // 详情页 或者 赛果  篮球赛事分析
-import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 
 import { useRouter, useRoute } from "vue-router";

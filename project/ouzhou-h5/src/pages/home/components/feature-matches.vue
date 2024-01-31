@@ -213,6 +213,7 @@ function toDetails(item){
       align-items: center;
       font-size: 12px;
       color: var(--q-gb-t-c-3);
+      white-space: nowrap;
       .name{
         width: 140px;
         white-space: nowrap;

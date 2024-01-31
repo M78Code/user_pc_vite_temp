@@ -39,8 +39,8 @@
     <!-- 详情玩法投注项有数据 -->
     <!-- <div style="position: fixed; top: 0;color: red">11{{ is_no_data }}</div> -->
     <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;padding-bottom: 0.18rem;">
-      <!-- <div slot="scrollList"> -->
-      <div slot="scrollList">
+      <!-- <div #scrollList> -->
+      <template #scrollList>
         <!-- 置顶操作时增加动画 -->
         <TransitionGroup tag="div" class="transition-zhiding">
           <!-- 置顶 -->
@@ -62,7 +62,7 @@
           </template>
         </TransitionGroup>
       <!-- </div> -->
-      </div>
+      </template>
     </div>
     <!-- 详情玩法投注项无数据 -->
     <div v-if="!is_loading && is_no_data && !show_recommend" class="no-data-style">
@@ -93,7 +93,6 @@ import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } fro
 import loading from "src/components/loading/loading.vue"
 // 精选赛事
 import detailMatchList from 'src/base-h5/components/details/components/detail-match-list.vue';
-import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path, compute_img_url } from  "src/output/index.js"

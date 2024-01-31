@@ -369,6 +369,8 @@ const get_lastest_market_info = (type) => {
                         let odds = market_odds_list.find(page=> page.oddsType == item.ot) || {}
 
                         if( odds.id ) {
+                            // 替换新id
+                            BetData.set_bet_oid_obj(item.playOptionsId,odds.id)
                             // let oddss = market.filter(i => ot == oddsType)
                             // 赛事状态
                             bet_item.mid_mhs = obj.matchHandicapStatus
@@ -388,10 +390,21 @@ const get_lastest_market_info = (type) => {
                             if(type == 'submit_bet' && bet_item.ot != odds.oddsType){
                                 bet_item.hl_hs = 11
                             }
+
+                            // 红绿升降
+                            bet_item.red_green = ''
+                            if(bet_item.odds == odds.oddsValue ){
+                                bet_item.red_green = 'red_up'
+                            }else
+                            if(bet_item.odds > odds.oddsValue ){
+                                bet_item.red_green = 'green_down'
+                            }
+
                             // 赔率 10w位
                             bet_item.odds = odds.oddsValue
                             //最终赔率
                             bet_item.oddFinally = compute_value_by_cur_odd_type(odds.oddsValue,obj.playId, item.odds_hsw, item.csisportIdd)
+
                             // 投注项类型
                             bet_item.ot = odds.oddsType
                             // 投注项id
@@ -424,6 +437,25 @@ const get_lastest_market_info = (type) => {
                                 if(obj.matchStatus == 1 ){
                                     bet_item.matchType = 2
                                 }
+                            }
+
+                            if(bet_item.red_green){
+                                // 有值才去清理
+                                setTimeout(() => {
+                                    // 清除红绿升降
+                                    let single_list = []
+                                    // 单关 切 有投注项
+                                    if(BetData.is_bet_single){
+                                    single_list = BetData.bet_single_list || []
+                                    } else {
+                                    single_list = BetData.bet_s_list || []
+                                    }
+                                    let ol_obj_index = single_list.findIndex(obj_ => obj_.playOptionsId == odds.id )
+                                    if(ol_obj_index || ol_obj_index == 0 ){
+                                        bet_item.red_green = ''
+                                        BetData.set_ws_message_bet_info(bet_item,ol_obj_index)
+                                    }
+                                }, 3000);
                             }
                         }
                     }
@@ -521,10 +553,12 @@ const get_query_bet_amount_pre = () => {
             // 通知页面更新 
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
             // 获取盘口值 
-            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo[0]')
-
-            // 获取预约投注项
-            BetData.set_bet_appoint_obj(latestMarketInfo)
+            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo[0]', {})
+            
+            if(latestMarketInfo){
+                // 获取预约投注项
+                BetData.set_bet_appoint_obj(latestMarketInfo)
+            }
 
         } else {
             set_catch_error_query_bet_max(params)
@@ -576,7 +610,7 @@ const set_bet_pre_list = (bet_appoint = []) => {
 const pre_bet_comparison = () => {
 	// 如果点击预约判断所选赔率和盘口赔率是否一致，一致说明不是预约，切换到对应的盘口id;否则就设置为预约
 	if(BetData.is_bet_pre) {
-		let oid = lodash_.get(BetData,'bet_single_list[0].playOptionsId','')
+		let oid = BetData.bet_pre_appoint_id
 		let pre_obj = lodash_.get(BetData,`bet_pre_obj[${oid}]`,{})
 		
 		let pre_list = lodash_.get(	BetData,'bet_appoint_obj.marketList[0].marketOddsList',[])

@@ -157,6 +157,7 @@ function confirm() {
 /** 弹窗样式 -S*/
 .dialog_content {
   box-shadow: none !important;
+  background-color: #fff;
 }
 
 .alert-wrap {

@@ -25,8 +25,11 @@ import { addWsMessageListener } from "src/core/utils/common/module/ws-message.js
 import axios_api_loop from "src/core/http/axios-loop.js"
 export function usedetailData(route) {
   const router = useRouter();
+  /** @type {Ref<Array<TYPES.DetailCategory>>} */
   const category_list = ref([]); //分类数据
+  /** @type {Ref<Array<TYPES.OddInfo>>} */
   const detail_list = ref([]); //玩法数据
+  /** @type {Ref<Array<TYPES.OddInfo>>} */
   const all_list = ref([]); //  所有玩法数据
   let all_list_toggle = {}; //  所有玩法数据展开关闭记录
 
@@ -80,6 +83,9 @@ export function usedetailData(route) {
     const plays = category_list.value.find(
       (item) => item.orderNo == value
     )?.plays;
+    /** @type {TYPES.DetailCategory} */ const category = category_list.value.find(
+      (item) => item.orderNo == value
+    )
     if (detail_list.value?.length > 0) {
       for (const i of detail_list.value) {
         all_list_toggle[i.hpid] = i.expanded === undefined ? true : i.expanded;
@@ -91,7 +97,13 @@ export function usedetailData(route) {
     }
     let list;
     if (plays) {
-      list = all_list.value.filter((item) => plays.includes(Number(item.hpid)));
+      list = all_list.value.filter((item) =>{
+        if(category.round){
+          let [hpid, round] = item.chpid.split("-")
+        }else{
+          plays.includes(Number(item.hpid))
+        }
+      });
     } else {
       list = all_list.value;
     }
@@ -235,6 +247,7 @@ export function usedetailData(route) {
       const list = res.data?.filter((i) => i.marketName);
       if (list) {
         tabList.value = list.map((item) => ({
+          ...item,
           label: item.marketName,
           value: item.orderNo,
         }));

@@ -14,7 +14,8 @@
       </div>
     </slot>
     <slot>
-      <div class="middle" slot="middle">6P</div>
+      <template #middle>  <div class="middle"  >6P</div>   </template>
+    
     </slot>
     <slot name="right">
       <div class="right" style="opacity: 0">

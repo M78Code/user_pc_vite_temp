@@ -21,7 +21,6 @@
  *            一种前端主动取消的请求 一般很快单不一定 总之 一定小于 第一种的时长
  */
 
-import uid from "src/core/uuid/index.js";
 import menu_init from "./menu_init.js";
 import match_odds_Info2 from "./match_odds_Info2.js";
 import get_match_base_info_by_mids from "./get_match_base_info_by_mids.js";
@@ -31,6 +30,7 @@ import get_category_list from "./get_category_list.js";
 import post_date_menu from "./post_date_menu.js";
 import get_home_matches from "./get_home_matches.js";
 import get_matches_list from "./get_matches_list.js";
+import { uid } from 'quasar';
 
 // 定义挂载点
 const axios_debounce_cache = {
