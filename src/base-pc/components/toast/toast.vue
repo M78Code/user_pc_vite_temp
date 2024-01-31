@@ -11,7 +11,7 @@
               <img :src="compute_local_project_file_path('/image/svg/warn.svg')" />
             </slot>
           </div>
-          <slot name="msg">'{{ text }} '''</slot>
+          <slot name="msg">{{ text }}</slot>
         </q-card-section>
       </q-card>
     </q-dialog>

@@ -33,6 +33,8 @@ const is_show_hot = ref(false);
 const is_loading = ref(true);
 // 请求加载动画
 const loading = ref(false);
+// 刷新按钮loding
+const btn_loading = ref(false)
 
 let show_refresh_mask = ref(false);
 const timer_obj = ref({});
@@ -162,6 +164,7 @@ export function fetch_match_list(is_socket = false) {
 					console.log('error', error);
 				} finally {
 					loading.value = false;
+					btn_loading.value = false
 				}
 			})
 			.catch((err) => {
@@ -181,6 +184,7 @@ export function fetch_match_list(is_socket = false) {
 				}
 			}).finally(() => {
 				loading.value = false;
+				btn_loading.value = false
 			});
 
 	};
@@ -411,6 +415,7 @@ function get_hot_match_list(backend_run = false) {
 function on_refresh() {
 	fetch_match_list(true);
 	show_refresh_mask.value = true;
+	btn_loading.value = true
 };
 /**
  * @Description:移除赛事
@@ -488,5 +493,6 @@ export {
 	check_match_last_update_time,
 	mounted_fn,
 	handle_destroyed,
-	loading
+	loading,
+	btn_loading
 }

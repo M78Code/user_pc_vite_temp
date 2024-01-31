@@ -3,22 +3,24 @@ import lodash from 'lodash'
 import { defineComponent } from 'vue'
 import { api_common } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES, UserCtr, project_name } from  "src/output"
-import MatchFold from 'src/core/match-fold'
-import MatchCollect from 'src/core/match-collect'
-import PageSourceData from "src/core/page-source/page-source.js";
+
+import MatchFold from 'src/core/match-fold/index.js'
+import MatchCollect from 'src/core/match-collect/index.js'
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
-import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+
+import MatchListClass from 'src/core/match-list-h5/match-class/match-list.js'
+import BaseData from "src/core/base-data/base-data.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/output/index.js"
 import { format_how_many_days, format_week } from "src/core/format/common/index.js"
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0 } from 'src/base-h5/core/utils/local-image.js'
 
-import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, is_detail, is_results, menu_lv1 } from 'src/base-h5/mixin/menu.js'
-import BaseData from "src/core/base-data/base-data.js";
 import { get_collect_count } from 'src/core/collect/collect-class.js'
 
 // i: 每个组件的 props 赛事下标， 来源 === 组件
@@ -145,7 +147,7 @@ export default defineComponent({
       return r;
     },
     show_newer_edition () {
-      return standard_edition.value == 1 || this.main_source == 'detail_match_list';
+      return standard_edition.value == 1
     },
     // 是否显示进球动画
     is_show_goal_event () {
@@ -234,7 +236,7 @@ export default defineComponent({
       const { csid, start_flag } = this.match_of_list
       let key = ''
       if ([1,2].includes(+start_flag)) {
-        key = start_flag === 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
+        key = start_flag == 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
       } else {
         key = `default_csid_${csid}`
       }
@@ -303,7 +305,7 @@ export default defineComponent({
       deep: true,
       handler (c_match) {
         this.media_button_button_type_check()
-        this.mmp_map_title = matchListClass.match_period_map(c_match);
+        this.mmp_map_title = MatchListClass.match_period_map(c_match);
       }
     },
     'match_of_list.msc': {
@@ -311,12 +313,12 @@ export default defineComponent({
       deep: true,
       handler () {
         this.score_value();
-        this.mmp_map_title = matchListClass.match_period_map(this.match_of_list);
+        this.mmp_map_title = MatchListClass.match_period_map(this.match_of_list);
       }
     },
     'match_of_list.mmp': {
       handler () {
-        this.mmp_map_title = matchListClass.match_period_map(this.match_of_list);
+        this.mmp_map_title = MatchListClass.match_period_map(this.match_of_list);
       }
     },
     // 监听主队比分变化
@@ -468,6 +470,10 @@ export default defineComponent({
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false})
       // 赛事个数小于18 不需要继续获取赔率
       if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
+    },
+    // 获取仓库赛事数据
+    get_match_item (item) {
+      return MatchDataBaseH5.get_quick_mid_obj(item.mid)
     },
     /**
      *启动 组件新初始化后 ，判定组件是否是刚刚新初始化的 定时器

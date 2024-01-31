@@ -1023,9 +1023,11 @@ export default {
             flex: 1;
             display: flex;
             align-items: center;
+            background: transparent !important;
             .yb-flex-center{
               justify-content: start;
             }
+           
           }
           .yb-goal-gif{
             background-image: url($SCSSPROJECTPATH+"/image/common/goal_gif.png");

@@ -1,5 +1,7 @@
 <template>
-    <div class="q-card__section">
+    <div class="q-card__section bet-multiple">
+         <!--这个地方是个遮罩层，单关合并只能有一个能预约，其余用遮罩遮住-->
+         <div v-if="BetData.is_bet_pre" class="cathectic-appoint"></div>
         <!--金额输入区域包括键盘 -->
         <div class="row bet-multiple-input background-color-bet-box ">
             <div class="col bet-win">
@@ -228,6 +230,20 @@ const placeholder = computed(() => {
 
 <style scoped lang="scss">
 @import "../css/bet.scss";
+
+.bet-multiple {
+    position: relative;
+    .cathectic-appoint {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 10;
+        background: rgba(225,225,225,0.5)
+    }
+}
 .text-color-max-win {
     color: var(--q-gb-t-c-8) !important
 }

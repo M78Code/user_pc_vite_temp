@@ -12,7 +12,7 @@
     <template v-if="match" >
       <!-- 开赛标题  -->
       <div v-if="is_show_opening_title && !is_mix_no_today" @click.stop="handle_ball_seed_fold"
-        :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
+        :class="['match-status-fixed', { progress: +match.start_flag == 1, not_begin: +match.start_flag == 2 }]" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
           <div class="match-status-title">
@@ -72,12 +72,12 @@
                   {{ match.tn }}
                 </span>
               </span>
-             <span class="league-right">
-                <template v-if="!collapsed">
-                  <span> {{ get_ball_seed_league_count }} </span>
-                </template>
-                <IconWapper color="#c9c9c9" name="icon-arrow" size="14px"  :class="['icon-wapper', {'close': collapsed}]" />
-             </span>
+              <span class="league-right">
+                  <!-- <template v-if="!collapsed">
+                    <span> {{ get_ball_seed_league_count }} </span>
+                  </template> -->
+                  <IconWapper color="#c9c9c9" name="icon-arrow" size="14px"  :class="['icon-wapper', {'close': collapsed}]" />
+              </span>
             </span>
           </div>
 
@@ -92,9 +92,7 @@
                 :class="{ 'status2': PageSourceData.standard_odd_status.value == 1 && i18n_t('list_title.' + match.csid + '.title').length > 3 }">
                 <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
                   :key="i" v-for="(hpl_title, i) of i18n_t('list_title.' + match.csid + '.title')">
-                  <div class="hpl-t-inner">
-                    {{ hpl_title }}
-                  </div>
+                  <div class="hpl-t-inner"> {{ hpl_title }} </div>
                 </div>
               </div>
             </div>
@@ -257,7 +255,7 @@
                 <!--  -->
                 <div class="right-content-style">
                   <!-- 右边盘口组件 -->
-                  <OddListWrap :main_source="main_source" :match="match_of_list" />
+                  <OddListWrap :match="match_of_list" />
                 </div>
                 </div>
               </div>
@@ -295,12 +293,19 @@
                 <!-- 展示三行的不展示比分 -->
                 <template v-if="![1, 4, 11, 14, 15, 16].includes(+match.csid)">
                   <div class="score-content">
-                    <ScoreList :class="[[7, 9].includes(+match.csid) && 'score-content-snooker']" :main_source="main_source" :match="match_of_list" />
+                    <ScoreList :class="[[7, 9].includes(+match.csid) && 'score-content-snooker']" :match="match_of_list" />
                   </div>
                 </template>
               </div>
             </div>
           </div>
+          <!-- 次要玩法 DOM -->
+          <!-- <div class="secondary-game-play" v-if="[1,2,5,7,8].includes(+match.csid) && standard_edition != 1" @click.stop>
+            <MatchContainerSecondTemplate2
+              :i="i"
+              :match="match_of_list"
+            ></MatchContainerSecondTemplate2>
+          </div> -->
         </div>
       </div>
     </template>
@@ -317,6 +322,7 @@ import ScoreList from 'src/base-h5/components/match-container/template/app/compo
 import ImageCacheLoad from "src/core/public-cache-image/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/odd-list-wrap.vue';
+import MatchContainerSecondTemplate2 from 'src/base-h5/components/match-container/second/match-container-second-template2.vue'
 import { i18n_t,format_M_D, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData, format_time_zone, UserCtr } from "src/output/index.js"
 import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
@@ -334,9 +340,6 @@ export default {
     match_of_list: Object,
     // 赛事处于列表中的下标
     i: Number,
-    // 赛事列表相关操作的类型封装对象
-    matchCtr: Object,
-    main_source:String,
   },
   components: {
     ScoreList,
@@ -345,6 +348,7 @@ export default {
     ImageCacheLoad,
     CountingDownStart,
     CountingDownSecond,
+    MatchContainerSecondTemplate2,
   },
   setup (ctx) {
     // 是否显示球种标题
@@ -352,7 +356,7 @@ export default {
       const { is_show_ball_title } = ctx.match_of_list
       return is_show_ball_title
     })
-    const get_date_time =computed(() => {
+    const get_date_time = computed(() => {
       return is_zaopan.value&&Number(date_time.value)>0?format_M_D(date_time.value):i18n_t("filter.all_leagues")
     })
 
@@ -523,6 +527,9 @@ export default {
         border: 1px solid var(--q-gb-bd-c-15);
       }
     }
+    .secondary-game-play{
+      position: relative;
+    }
   }
 
   &.started_and_un_started {
@@ -657,6 +664,7 @@ export default {
     .score-inner-span {
       width: 100%;
       //transform: translateY(-3px);
+      color: var(--q-gb-t-c-24);
     }
 
     &.home_hot_page {
@@ -866,7 +874,8 @@ export default {
     border-bottom: 1px solid var(--q-gb-bd-c-4);
 
     .odd-title-i-w {
-      width: 1.84rem;
+      // width: 1.84rem;
+      width: 50%;
       overflow: hidden;
 
       .odd-t-i-wrapper {
@@ -1012,7 +1021,8 @@ export default {
 
   .right-content-style {
     position: relative;
-    width: 1.8rem;
+    // width: 1.84rem;
+    flex: 1;
     flex-shrink: 0;
   }
 
@@ -1325,6 +1335,7 @@ export default {
           // bottom: 0;
           font-weight: 600;
           margin: 0 8px;
+          color: var(--q-gb-t-c-18);
 
           &.simple {
             right: 0.08rem;
@@ -1407,10 +1418,10 @@ export default {
 
 .card-footer{
   position: absolute;
-  bottom: 5px;
+  bottom: 2px;
   width: 100%;
   height: 25px;
-  z-index: 100;
+  z-index: 99;
   display: flex;
   align-items: center;
   justify-content: space-between;

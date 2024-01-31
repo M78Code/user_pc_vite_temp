@@ -1,14 +1,17 @@
 <template>
-  <div v-show="false">{{ BetData.bet_data_class_version }}{{UserCtr.user_version}}</div>
-  <div v-if="is_mounted && odds_state != 'close'" class="c-bet-item yb-flex-center relative-position yb-family-odds"
-    :class="[
-      ol_data.class,
-      `csid${csid || match?.csid}`,
-      odds_lift,
-      BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : '',
-      odds_state != 'seal' && odds_state !== 'lock' && (ol_data.ov || score) && 'can-hover',
-      is_scroll_ball && 'scroll-ball-bet-item'
-    ]" @click.stop="bet_click_ol" :id="`list-${ol_data.oid}`">
+  <div v-show="false">{{ BetData.bet_data_class_version }}{{ UserCtr.user_version }}</div>
+  <div v-if="(!BetData.is_bet_single && MenuData.is_esports() && !match.ispo) || odds_state == 'close'">
+    -
+    <!-- 电竞并且是串关状态并且不支持串关就显示 - -->
+  </div>
+  <div v-else class="c-bet-item yb-flex-center relative-position yb-family-odds" :class="[
+    ol_data.class,
+    `csid${csid || match?.csid}`,
+    odds_lift,
+    BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : '',
+    odds_state != 'seal' && odds_state !== 'lock' && (ol_data.ov || score) && 'can-hover',
+    is_scroll_ball && 'scroll-ball-bet-item'
+  ]" @click.stop="bet_click_ol" :id="`list-${ol_data.oid}`">
     <!-- 盘口 -->
     <div v-if="odds_state != 'seal'" :class="[
       'handicap-value',
@@ -21,19 +24,20 @@
       },
     ]">
       <span class="handicap-more" v-show="ol_data.onbl">{{ ol_data.onbl }}&nbsp;</span>
-      <div class="handicap-value-text" :class="{ mvr:score||!['1', '32'].includes(ol_data._hpid)}">
-        {{ score }} 
-        <span v-show="(!['1', '32'].includes(ol_data._hpid) || !['MatchDataWarehouse_PC_List_Common', 'pc_list'].includes(match_data_type))">
-          {{ disk_text_replace(UserCtr.lang, ol_data.onb) }}
+      <div class="handicap-value-text" :class="{ mvr: score || !['1', '32'].includes(ol_data._hpid) }">
+        {{ score }}
+        <span
+          v-show="(!['1', '32'].includes(ol_data._hpid) || !['MatchDataWarehouse_PC_List_Common', 'pc_list'].includes(match_data_type))">
+          {{ disk_text_replace(UserCtr.lang, ol_data.onb||ol_data.otb) }}
         </span>
       </div>
     </div>
     <!-- 赔率 -->
     <div class="odds" :class="[odds_lift]" :style="[1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
-        +ol_data._hpid
-      ) && utils_info.is_iframe
-        ? 'flex:1.5'
-        : ''
+      +ol_data._hpid
+    ) && utils_info.is_iframe
+      ? 'flex:1.5'
+      : ''
       ">
       <div v-if="['seal'].includes(odds_state)" class="lock" :style="compute_css_obj({ key: 'pc-home-lock' })">
       </div>
@@ -45,7 +49,8 @@
           ol_data._hsw,
           csid || match?.csid
         ) }}
-      </span><div v-else>-</div>
+      </span>
+      <div v-else>-</div>
       <div class="odds-arrows-wrap">
         <!-- 红升、绿降 -->
         <div class="odds-icon" v-if="odds_lift == 'up'" :style="compute_css_obj({ key: 'pc-home-arrow-up' })"></div>
@@ -53,7 +58,6 @@
       </div>
     </div>
   </div>
-  <div v-else>-</div>
 </template>
 
 <script setup>
@@ -128,7 +132,7 @@ onMounted(() => {
 // 监听oid 取消赔率升降
 // 监听玩法ID变化 取消赔率升降 
 watch(() => [props.ol_data._hpid, props.ol_data.oid], (v, o) => {
-  if (v[0] != o[0] || v[1] != o[1]){ //地址可能会变  但是oid不一定
+  if (v[0] != o[0] || v[1] != o[1]) { //地址可能会变  但是oid不一定
     clear_odds_lift()
   }
 })
@@ -186,8 +190,8 @@ function is_odds_seal() {
    * @return {Boolean} 是否包含
    */
 function bet_item_select(id) {
-   // 检查串关是否选中
-   return BetData.bet_oid_list.includes(id);
+  // 检查串关是否选中
+  return BetData.bet_oid_list.includes(id);
 };
 
 /**
@@ -278,28 +282,28 @@ const bet_click_ol = () => {
   }
   let bet_type = 'common_bet'
   // 冠军
-  if(MenuData.is_kemp()){
+  if (MenuData.is_kemp()) {
     bet_type = 'guanjun_bet'
   }
   // 电竞
-  if(MenuData.is_esports()){
+  if (MenuData.is_esports()) {
     bet_type = 'esports_bet'
   }
   // vr体育
-  if(MenuData.is_vr()){
+  if (MenuData.is_vr()) {
     bet_type = 'vr_bet'
   }
   let other = {
-        is_detail: false,
-        // 投注类型 "vr_bet", "common_bet", "guanjun_bet", "esports_bet"
-        // 根据赛事纬度判断当前赛事属于 那种投注类型
-        bet_type,
-        // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
-        device_type: 2,
-        // 数据仓库类型
-        match_data_type: props.match_data_type, // h5_detail
-        // match_data_type: "h5_list", // h5_detail
-    }
+    is_detail: false,
+    // 投注类型 "vr_bet", "common_bet", "guanjun_bet", "esports_bet"
+    // 根据赛事纬度判断当前赛事属于 那种投注类型
+    bet_type,
+    // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+    device_type: 2,
+    // 数据仓库类型
+    match_data_type: props.match_data_type, // h5_detail
+    // match_data_type: "h5_list", // h5_detail
+  }
   // //点击后再次点击，取消选中状态
   // const current_id = `${_mid}${oid}`;
   // if (props.active_score === current_id) {
@@ -307,7 +311,7 @@ const bet_click_ol = () => {
   // } else {
   //   emit('update_score', current_id)
   // }
-  set_bet_obj_config(params, other )
+  set_bet_obj_config(params, other)
   BetData.set_bet_state_show(true)
 };
 
@@ -426,9 +430,11 @@ onUnmounted(() => {
 .handicap-value-text {
   font-weight: 500;
   white-space: nowrap;
-  &.mvr{
+
+  &.mvr {
     margin-right: 4px;
   }
+
   span {
     margin-right: 5px;
   }

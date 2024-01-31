@@ -2,14 +2,14 @@
   <div class="virtual-tab matches_tab">
     <div  v-for="(item, i) in sub_menu_list" :class="[sub_menu_i == i ? 'checked' : '']" 
     :key="i" @click="virtual_menu_changed(i)">
-      {{ lang == 'zh' ? '' : "VR-" }}{{ item.name }}
+      VR-{{ item.name }}
     </div>
   </div>
 </template>
 
 <script>
 import lodash from 'lodash';
-import { LOCAL_PROJECT_FILE_PREFIX, UserCtr } from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { api_v_sports } from "src/api/index.js";
 import axios_api_loop from "src/core/http/axios-loop.js"
@@ -49,7 +49,6 @@ export default {
       route: useRoute(),
       BetViewDataClass,
       LOCAL_PROJECT_FILE_PREFIX,
-      lang: UserCtr.lang
     };
   },
   props: {
@@ -74,7 +73,6 @@ export default {
     }
     off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=> {
       this.get_virtual_menus()
-      this.lang= UserCtr.lang
     }).off
   },
   /**

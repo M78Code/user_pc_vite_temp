@@ -5,24 +5,23 @@
 -->
 
 <template>
-      
-  <!-- high_scrolling: set_is_high_scrolling && menu_type !== 100 && !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100, -->
   <div class="scroll-wrapper" ref="container" @scroll.passive="handler_match_container_scroll">
     <div  :class="['scroll-i-con', { detail_list: is_detail, simple: standard_edition == 1, 'static': is_static }]"
       :style="get_container_style">
       <template v-if="MatchMeta.match_mids.length > 0">
-        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
+        <!--  :data-mid="match_mid" :index="index"  -->
+        <div v-for="(match_mid, index) in MatchMeta.match_mids" :key="match_mid"
           class='s-w-item'
           :class="[{last: index == MatchMeta.match_mids.length - 1 }]" 
           :style="{ transform: `translateY(${get_match_top_by_mid(match_mid)}px)`, zIndex: `${100 + index}` }">
           <!-- 调试用 -->
-          <div v-if="test" class="debug-head data_mid" :data-mid="match_mid" :class="{ first: index === 0 }">
+          <!-- <div v-if="test" class="debug-head data_mid" :data-mid="match_mid" :class="{ first: index === 0 }">
             <span> {{ get_index_f_data_source(match_mid) + '-' + index }} </span>
             <span> key={{match_mid }}-----{{ match_mid }}-{{ 'mid: ' + match_mid }}
               <span> {{ get_match_top_by_mid(match_mid) ? "-" + get_match_top_by_mid(match_mid) : 'none!' }} </span>
               <span>ms: {{ match_item?.ms }}</span>
             </span>
-          </div>
+          </div> -->
           <!-- 赛事渲染信息 -->
           <div class="s-w-i-inner" v-if="defer_render(index)">
             <slot :match_item="get_match_item(match_mid)" :mid="match_mid" :index="index"></slot>

@@ -19,11 +19,13 @@ import {SessionStorage,
   } from "src/output/index.js";
   import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import matchDetailClass from "src/core/match-detail/match-detail-class";
+import { details_ws } from "src/core/match-detail/details-ws.js";
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
 export const details_main = () => {
   const router = useRouter();
   const route = useRoute();
   // 详情初始化接口数据处理
-
+  const { handler_ws_cmd } = details_ws();
   const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
   // console.log("Store", store)
   // const state = store.getState()
@@ -235,13 +237,19 @@ export const details_main = () => {
   const change_fullscreen = (value) => {
     state_data.get_is_dp_video_full_screen = value;
   }
-  
+  let message_fun = null
   // // 刷新页面时获取当前玩法集ID
   onMounted(() => {
     // useMittOn(MITT_TYPES.EMIT_SET_SHOW_VIDEO, full_screen_callback),
     // LocalStorage.get("YUAN_MATCH_DETAIL_DATA")
     MatchDataWarehouseInstance.set_match_details(LocalStorage.get("YUAN_MATCH_DETAIL_DATA"),[])
     state_data.detail_data = MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value);
+    message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+      if (lodash.get(data, "cd.mid") != matchid.value) return;
+      handler_ws_cmd(cmd, data,matchid.value);
+      // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
+      // console.error('flag','cmd:',cmd,data);
+    })
   })
   /**
    *@description: 点击详情任意地方显示视频对阵信息
@@ -964,6 +972,9 @@ export const details_main = () => {
     MatchDataWarehouseInstance.remove_match(lodash.get(route, 'params.mid'))
     MatchDetailCalss.set_match_details_params({})
     LocalStorage.remove("YUAN_MATCH_DETAIL_DATA")
+     // 组件销毁时销毁监听函数
+     ws_message_listener.ws_remove_message_listener(message_fun);
+     message_fun = null;
   })
   const on_listeners = () => {
     // #TODO: IMIT
@@ -1073,7 +1084,8 @@ export const details_main = () => {
     off_listeners,
     clear_timer,
     LOCAL_PROJECT_FILE_PREFIX,
-    change_fullscreen
+    change_fullscreen,
+    MatchDataWarehouseInstance
   };
 };
 

@@ -41,7 +41,7 @@
         <template #refresh>
           <div class="refreh-container">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/refresh_header.svg`" 
-                 alt="" :class="['refresh-icon',  loading ?'rotate-ani' :'']"  @click="on_refresh"/>
+                 alt="" :class="['refresh-icon',  btn_loading ?'rotate-ani' :'']"  @click="on_refresh"/>
           </div>
         </template>
       </match-detail-header>
@@ -140,7 +140,7 @@ import MatchDetailHeader from "./match-detail-header.vue";
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
 import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
-import { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh, handle_destroyed, loading } from "src/core/match-list-pc/match-list-composition.js";
+import { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh, handle_destroyed, loading, btn_loading } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 

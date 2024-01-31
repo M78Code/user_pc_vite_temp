@@ -413,6 +413,7 @@
 
     .basic-score {
       padding-left: 0;
+      color: var((--q-gb-t-c-19))
     }
 
     :deep([class^=temp]) {
@@ -451,6 +452,7 @@
         line-height: 0.35rem;
         margin-bottom: 0;
         background-color: var(--q-match-page-bg-color-105);
+        color: var(--q-gb-t-c-19);
       }
 
       .fam {

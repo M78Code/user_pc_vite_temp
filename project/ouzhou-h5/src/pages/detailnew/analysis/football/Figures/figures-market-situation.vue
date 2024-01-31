@@ -192,6 +192,7 @@ const title_calculation = (main, name) => {
             display: flex;
             align-items: center;
             padding-left: 0.1rem;
+            justify-content: space-between;
 
             :deep(.TeamImg) {
                 width: 0.2rem;

@@ -42,8 +42,7 @@
             <!-- 已提前结算 -->
             <template v-if="status == 4">{{i18n_t("bet_record.finish_bet_pre")}} </template>
           </div>
-          <!-- <div class="bet-row-2" v-if="(Number(front_settle_amount) || expected_profit)">￥{{ betting_amount }}</div> -->
-          <div class="bet-row-2">￥80.00</div>
+          <div class="bet-row-2" v-if="(Number(front_settle_amount) || expected_profit)">￥{{ betting_amount }}</div>
         </div>
         <img v-if="status == 3" class="roll" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/suring.png`" alt="">
         <img v-if="status == 4" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/success.png`" alt="">

@@ -510,7 +510,6 @@ this.bet_appoint_ball_head= null */
 
     this.set_options_state()
 
-    this.set_bet_data_class_version()
   }
 
   // 设置投注项id 页面选中
@@ -704,6 +703,7 @@ this.bet_appoint_ball_head= null */
     // 串关 切换到 单关
     if (!this.is_bet_single && !this.is_bet_merge) {
       this.bet_single_list = [lodash_.cloneDeep(this.bet_s_list)[0]]
+      this.bet_oid_list = [this.bet_oid_list[0]]
     }
 
     let is_bet_single = !this.is_bet_single
@@ -977,6 +977,11 @@ this.bet_appoint_ball_head= null */
     this.is_bet_pre = val
     this.set_bet_data_class_version()
   }
+  
+  set_bet_appoint_obj_playOptionId(val) {
+    this.bet_pre_appoint_id = val
+    this.set_bet_data_class_version()
+  }
 
    //设置输入框最小值
   set_pre_min_odd_value(val){
@@ -1019,10 +1024,18 @@ this.bet_appoint_ball_head= null */
 
   // ws推送 更新赔率数据
   set_ws_message_bet_info(obj,index){
+    let reg_index = 0
+    // console.log('这里！', this.bet_single_list, this.bet_s_list, obj)
     if(this.is_bet_single){
-      this.bet_single_list[index] = obj
+      reg_index = this.bet_single_list.findIndex(i => i.playOptionsId === obj.playOptionsId)
+      if (reg_index > 0) {
+        this.bet_single_list[index] = obj
+      }
     }else{
-      this.bet_s_list[index] = obj
+      reg_index = this.bet_single_list.findIndex(i => i.playOptionsId === obj.playOptionsId)
+      if (reg_index > 0) {
+        this.bet_s_list[index] = obj
+      }
     }
 
     this.set_options_state()
@@ -1055,6 +1068,7 @@ this.bet_appoint_ball_head= null */
         get_query_bet_amount_common()
       }
     }
+    this.set_options_state()
   }
 
   // 删除投注项
@@ -1062,12 +1076,17 @@ this.bet_appoint_ball_head= null */
   set_delete_bet_info(oid,index) {
     let single = false
     let single_list = []
+    let cur_index = 0
     // 删除投注项中的数据
     if(this.is_bet_single){
       single = true
+      cur_index = this.bet_single_list.findIndex(i => i.playOptionsId == oid)
+      if (cur_index < 0) return
       this.bet_single_list.splice(index,1)
       single_list = this.bet_single_list
     }else{
+      cur_index = this.bet_s_list.findIndex(i => i.playOptionsId == oid)
+      if (cur_index < 0) return
       this.bet_s_list.splice(index,1)
       single_list = this.bet_s_list
     }
@@ -1264,7 +1283,6 @@ this.bet_appoint_ball_head= null */
       this.set_bet_oid_list()
 
       this.set_options_state()
-
     }
   }
 
@@ -1414,6 +1432,48 @@ this.bet_appoint_ball_head= null */
       this.set_bet_data_class_version()
       return
     }
+  }
+
+  set_bet_c103_change(obj) {
+    let msc = lodash_.get(obj,'msc', '')
+
+    // 没有比分 
+    if(!msc.length){
+      return
+    }
+    let mid = lodash_.get(obj,'mid', '')
+
+    // 单关/串关 属性名
+    let single_name = ''
+    // 单关/串关 属性值
+    let array_list = []
+    // 单关/串关 赛事列表
+    let mid_list = []
+    if(this.is_bet_single){
+      single_name = 'bet_single_list'
+    } else {
+      single_name = 'bet_s_list'
+    }
+    array_list = lodash_.cloneDeep(lodash_.get(this,single_name))
+    // 获取单关下的赛事id 多个（单关合并）
+    mid_list = array_list.map(item => item.matchId) || []
+
+    // 判断赛事级别盘口状态 中是否包含 投注项中的赛事
+    if(mid_list.includes(mid)){
+      array_list.filter(item => {
+        // 在赛事盘口状态下的 投注项 设置 对应的赛事级别 用于 更新比分
+        if(item.matchId == mid){
+          // 更新 基准分
+          item.mark_score = get_score_config(item)
+        }
+      })
+      this[single_name] = array_list
+
+      this.set_bet_oid_list()
+
+      this.set_options_state()
+    }
+    
   }
 }
 export default new BetData();

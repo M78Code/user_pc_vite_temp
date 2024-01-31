@@ -57,6 +57,12 @@ export const polular_spirite_theme02 = compute_local_project_file_path('/image/p
 export const in_progress = compute_local_project_file_path('/image/list/in_progress.png')
 // 未开赛
 export const not_begin = compute_local_project_file_path('/image/list/not_begin.png')
+// 龙年 头部图片
+export const h5_long3 = compute_local_project_file_path('/image/home/h5_long3.png')
+export const h5_long_bg = compute_local_project_file_path('/image/home/h5_long_bg.png')
+export const h5_long_gb2 = compute_local_project_file_path('/image/home/h5_long_gb2.png')
+
+
 
 // 动画icon
 export const animation_icon = compute_local_project_file_path('/image/list/animate_icon-s.svg')
@@ -108,6 +114,7 @@ export const no_collect_ouzhou = compute_local_project_file_path('/image/list/co
 export const have_collect_ouzhou = compute_local_project_file_path('/image/list/collect-y.svg')
 // 投注项锁
 export const odd_lock_ouzhou = compute_local_project_file_path('/image/list/lock.png')
+export const select_check = compute_local_project_file_path('/image/list/select.png')
 
 //欧洲h5 token 失效图片
 export const ouzhou_token_bg = compute_local_project_file_path('/image/list/ouzhou_token_bg.png')
@@ -142,6 +149,8 @@ export const baseball_bg = compute_local_project_file_path('/image/featured/base
 // app-h5 token 失效提示
 export const app_token_tips = compute_local_project_file_path('/image/login/tips.png')
 export const app_token_center = compute_local_project_file_path('/image/login/center.png')
+
+export const information_icon = compute_local_project_file_path('/image/svg/match-list/information-icon_y0.svg')
 
 // 无token页面
 export const friendly_reminder_zh = compute_local_project_file_path('/image/common/friendly_reminder_zh.jpg')

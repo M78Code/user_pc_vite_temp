@@ -8,18 +8,27 @@
 <template>
   <template v-if="['matchList', 'sport_menu', 'esports_sports'].includes(route.name)">
     <!--  顶部菜单 -->
-    <TopMenu />
-    <div v-show="[3, 6].includes(MenuData.current_lv_1_menu_mi.value)">
-      <DateTab @changeDate="setDate" ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]" />
+    <div class="long3_icon">
+
+      <!-- 主题换肤 龙年元素 日间：theme-2   夜间：theme-1  -->
+      <img v-if="UserCtr.theme == 'theme-2'" :src="h5_long_bg"  alt="">
+      <img v-if="UserCtr.theme == 'theme-1'" :src="h5_long_gb2"  alt="">
+
+      <TopMenu />
+      <div v-show="[3, 6].includes(MenuData.current_lv_1_menu_mi.value)">
+        <DateTab @changeDate="setDate" ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]" />
+      </div>
+
+      <!-- <div v-if="+MenuData.get_menu_type_special() == 2000"> -->
+      <div v-show="[2000].includes(MenuData.top_menu_title?.mi)">
+        <!-- dataList[2000] -->
+        <DateTab @changeDate="setDate" ref="dJdateTabMenu" :dataList="dataListEsports" />
+      </div>
+      <!-- 滑动菜单组件 -->
+      <ScrollMenu ref="scrollTabMenu" :is_kemp_esports="is_kemp_esports" :scrollDataList="ref_data.scroll_data_list"
+        @changeList="changeList" @changeMenu="set_scroll_current" :current_mi="ref_data.current_mi" />
     </div>
-    <!-- <div v-if="+MenuData.get_menu_type_special() == 2000"> -->
-    <div v-show="[2000].includes(MenuData.top_menu_title?.mi)">
-      <!-- dataList[2000] -->
-      <DateTab @changeDate="setDate" ref="dJdateTabMenu" :dataList="dataListEsports" />
-    </div>
-    <!-- 滑动菜单组件 -->
-    <ScrollMenu ref="scrollTabMenu" :is_kemp_esports="is_kemp_esports" :scrollDataList="ref_data.scroll_data_list"
-      @changeList="changeList" @changeMenu="set_scroll_current" :current_mi="ref_data.current_mi" />
+
     <!--  -->
     <SwitchWap v-if="is_show_switch_wap" />
     <!--  -->
@@ -53,7 +62,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
 import { TopMenu, ScrollMenu, SearchTab, DateTab, SwitchWap } from 'src/base-h5/components/menu/app-h5-menu/index'
-
+import { h5_long_bg, h5_long_gb2 } from 'src/base-h5/core/utils/local-image.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
@@ -62,7 +71,7 @@ import { is_esports, is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
 import { get_collect_count } from 'src/core/collect/collect-class.js'
 const route = useRoute();
 const router = useRouter()
-const inner_height = window.innerHeight;  // 视口高度
+const inner_height = ref(0);  // 视口高度
 const select_dialog = ref(false);//暂时筛选窗口dJ
 const dateTabMenu = ref(null);//时间dom
 const dJdateTabMenu = ref(null);//电竞时间dom
@@ -79,8 +88,8 @@ const emitters = ref({});
  * 早盘串关日期格式
  */
 const dataList = reactive({
-  3: dateTabList(new Date(new Date().getTime() + 24 * 60 * 60 * 1000)), //早盘下一天开始
-  6: dateTabList(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), [{ name: "今日", val: '0' }]),
+  3: dateTabList(new Date().getHours()<12?new Date(new Date().getTime()):new Date(new Date().getTime() + 24 * 60 * 60 * 1000)), //早盘下一天开始
+  6: dateTabList(new Date().getHours()<12?new Date(new Date().getTime()):new Date(new Date().getTime() + 24 * 60 * 60 * 1000), [{ name: "今日", val: '0' }]),
   // 2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),[{name:"所有日期",val:''},{name:"今日",val:new Date().getTime()}])
 });
 const dataListEsports = ref([]);
@@ -91,6 +100,10 @@ const ref_data = reactive({
   current_mi: '',
 })
 onMounted(() => {
+  inner_height.value = window.innerHeight
+  window.onresize = lodash.debounce((e) => {
+    inner_height.value = window.innerHeight
+  }, 500)
   // set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,1)
   init_data(MenuData.current_lv_1_menu_mi.value, 1)
   // mitt_list.push(useMittOn(MITT_TYPES.EMIT_MENU_GO_BACK, menu_go_back).off)
@@ -368,6 +381,8 @@ const set_scroll_data_list = (mid, type) => {
 const handle_match_render_data = (type) => {
   // 清除赛事折叠信息
   MatchDataBaseH5.init()
+  // 清除次要玩法折叠信息
+  MatchResponsive.set_secondary_unfold_map({})
   // MatchFold.clear_fold_info()
   if (MenuData.is_collect()) {
     // 电竞收藏
@@ -396,6 +411,12 @@ const handle_match_render_data = (type) => {
 
 </script>
 <style lang="scss" scoped>
+.long3_icon{
+  // background-image: url($SCSSPROJECTPATH+"/image/home/h5_long3.png") !important;
+  > img{
+    position: absolute;
+  }
+}
 .select-mask {
   position: fixed;
   width: 100vw;
