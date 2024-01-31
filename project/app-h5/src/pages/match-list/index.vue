@@ -70,32 +70,25 @@ const list_scroll_top = ref(0);
 const timer_super6 = ref(null);
 const subscription_timer1 = ref(null);
 
-let message_fun = null
-let handler_func = null
 let timer = null
+let message_fun = null
 
 onMounted(() => {
   // get_page_match_data()
 
   // 接口请求防抖
-  handler_func = lodash.debounce(({ cmd, data }) => {
-    MatchMeta.handle_ws_directive({ cmd, data })
-  }, 1000)
 
   // 增加监听接受返回的监听函数
   message_fun = ws_message_listener.addWsMessageListener((cmd, data) => {
     if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
       MatchMeta.handle_remove_match(data)
     } else {
-      if (cmd === 'C109') {
-        timer = setTimeout(() => {
-          MatchMeta.handle_ws_directive({ cmd, data })
-          clearTimeout(null)
-          timer = null
-        }, 1500)
-      } else {
-        handler_func({ cmd, data })
-      }
+      if (timer) clearTimeout(timer)
+      timer = setTimeout(() => {
+        MatchMeta.handle_ws_directive({ cmd, data })
+        clearTimeout(null)
+        timer = null
+      }, 1500)
     }
   })
 
@@ -228,7 +221,7 @@ const on_listeners = () => {
       MatchMeta.footer_event(v)
     }, 500)).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_MAIN_MENU_CHANGE, (v)=>MatchPage.main_menu_change(v)).off,
-    emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, (v)=> MatchListCard.match_list_scroll_handle(v)).off,
+    // emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, (v)=> MatchListCard.match_list_scroll_handle(v)).off,
     // emitter_11: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_match_callback).off,
     emitter_12: useMittOn(MITT_TYPES.EMIT_MENU_ANIMATION, handle_menu_change).off,
   };

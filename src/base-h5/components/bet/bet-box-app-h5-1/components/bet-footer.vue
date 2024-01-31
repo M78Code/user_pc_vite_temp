@@ -251,7 +251,10 @@ const set_special_state = computed(()=> status => {
 
   for(let item of  bet_list) {
     // 盘口已关闭 盘口关闭不允许投注
-    if(item.ol_os != 1 || item.hl_hs != 0 || item.mid_mhs != 0){
+    // <!-- 投注项状态 1：开 2：封 3：关 4：锁 -->
+    // <!-- 盘口状态，玩法级别 0：开 1：封 2：关 11：锁 -->
+    // <!-- 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态） -->
+    if([2,3].includes(item.ol_os*1) || [1,2].includes(item.hl_hs*1) || [1,2].includes(item.mid_mhs*1)){
       ref_data.show_title = i18n_t('bet.close')
       // 不允许投注
       is_bet_single = false
@@ -303,6 +306,7 @@ const set_bet_single = () => {
       menu_id = 6
     }
     MenuData.set_current_lv1_menu(menu_id);
+    MenuData.search_data_tab_index();//清除足球联赛缓存
     // 详情里面切换投注类型 
     router.push({ name: "matchList" });
     

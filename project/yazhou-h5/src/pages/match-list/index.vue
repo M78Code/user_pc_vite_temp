@@ -191,7 +191,7 @@ const on_listeners = () => {
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD,(v)=> MatchPage.footer_event(v)).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_MAIN_MENU_CHANGE, (v)=>MatchPage.main_menu_change(v)).off,
-    emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, (v)=> MatchListCard.match_list_scroll_handle(v)).off,
+    // emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, (v)=> MatchListCard.match_list_scroll_handle(v)).off,
     // emitter_11: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_match_callback).off,
     emitter_12: useMittOn(MITT_TYPES.EMIT_MENU_ANIMATION, handle_menu_change).off,
   };

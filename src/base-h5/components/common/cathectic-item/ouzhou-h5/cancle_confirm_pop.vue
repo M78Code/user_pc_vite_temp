@@ -4,8 +4,8 @@
  * @Description: 
 -->
 <template>
-    <div class="main-box fixed-center text-center">
-        <p class="text-left yb_fontsize14">{{ i18n_t("app_h5.cathectic.confirm_cancel_reservation") }}</p>
+    <div class="tips-main">
+        <p class="text-left yb_fontsize14">{{ cancel_book_msg(matchInfo, i18n_t('pre_record.confirm_matchinfo')) }}</p>
         <footer class="yb_fontsize16">
             <span class="cancle-button button" @click.self="emit('cancel')">{{ i18n_t("common.cancel") }}</span>
             <span class="confirm-button button" @click.self="cancle_pre_order">{{ i18n_t("common.ok") }}</span>
@@ -16,15 +16,19 @@
 <script setup>
 import { api_betting } from "src/api/index.js";
 import { i18n_t } from 'src/output/index.js'
+import { ref, onMounted, computed } from 'vue'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import BetRecordClass from "src/core/bet-record/h5/bet-record.js";
 const props = defineProps({
+    matchInfo: {
+        type: String,
+        default: ''
+    },
     orderNo: {
         type: String,
         default: ''
     },
 })
-
 /**
  *@descript 取消预约投注项
 *@param {String} orderNumer 订单号
@@ -43,11 +47,19 @@ const cancle_pre_order = () => {
         }
     }).catch(() => {})
 }
+
+const cancel_book_msg = (match, msg) => {
+  if(match) {
+    let match_ = match.replace(/ v /i, ' VS ')
+    const arr = msg.split('{0}')
+    return arr[0] + match_ + arr[1];
+  }
+}
 </script>
 <style lang="scss" scoped>
-.main-box {
+
+.tips-main {
     width: 3.2rem;
-    box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.1);
     border-radius: 0.1rem;
     padding: 0.42rem 0.2rem 0;
     background-color: var(--q-gb-bg-c-2);
@@ -74,6 +86,11 @@ const cancle_pre_order = () => {
 
         .cancle-button {
             margin-right: 0.2rem;
+            border: 1px solid var(--q-gb-bg-c-14);
+        }
+        .confirm-button {
+            background-color: var(--q-gb-bg-c-1);
+            color: var(--q-gb-t-c-2);
         }
     }
 }

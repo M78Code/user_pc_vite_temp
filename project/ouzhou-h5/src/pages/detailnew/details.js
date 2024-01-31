@@ -122,7 +122,13 @@ export const details_main = (router, route) => {
       let play = item.topKey;
       let topKeyArr = item.topKey.split("-");
       if (topKeyArr.length > 0) {
-        play = topKeyArr[0];
+        if(tab_item.round){
+          if(tab_item.round == topKeyArr[1]){
+            play = topKeyArr[0]
+          }
+        }else {
+          play = topKeyArr[0];
+        }
       }
       m_plays.push(Number(play));
       return plays && plays.includes(Number(play));

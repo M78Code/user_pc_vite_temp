@@ -69,10 +69,7 @@ onMounted(()=>{
     ).off
   };
 
-  nextTick(()=>{
-    // 复刻版默认设置中文
-    LocalStorage.set('lang','zh')
-  })
+  
 })
 
 watch(
@@ -137,6 +134,9 @@ onBeforeMount(() => {
     };
     document.head.appendChild(script);
   }
+
+  // 复刻版默认设置中文
+  LocalStorage.set('lang','zh')
 });
 
 
