@@ -97,6 +97,8 @@
                       </div>
                       <div class="title-time">
                         <span>{{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} </span>
+                        <!-- 比赛取消： match.ms == 5 -->
+                        <span class="title_cancel" v-if="match.ms == 5">{{ i18n_t('match_info.match_cancellation') }}</span>
                       </div>
                       <!--主队图片和名称-->
                       <div class='team-title-container' :class="{
@@ -826,6 +828,11 @@ export default {
         color: #8a8986;
         font-size: 14px;
         padding-left: 20px;
+        .title_cancel{
+          font-size: 14px;
+          margin-left: 10px;
+          color: #ff4646;
+        }
       }
 
       &.team_title {
