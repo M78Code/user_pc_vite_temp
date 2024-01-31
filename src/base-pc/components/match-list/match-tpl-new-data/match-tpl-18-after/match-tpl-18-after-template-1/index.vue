@@ -1,5 +1,5 @@
 <template>
-  <div class="c-match-item tpl-18">
+  <div class="tpl-18">
     <!-- ++++ 玩法 loop ------>
     <template v-for="(hl_data, hl_index) in compute_match_all_handicap_data_champion(match)">
       <div v-if="hl_data.hid && hl_data.hs != 2" :key="hl_index" class="play-wrap">
@@ -41,13 +41,31 @@ const vx_main_menu_toggle = ref('mini')
 .c-match-item {
   display: block !important;
 }
-
+.play-wrap {
+  margin-bottom: 6px;
+  border-radius: 6px;
+  border: 1px solid var(--q-gb-bg-c-9);
+  background-color: var(--q-gb-bd-c-13);
+  overflow: hidden;
+}
 .play-info {
   height: 32px;
   line-height: 32px;
-  padding: 0 15px;
+  padding: 0 12px;
   background: var(--q-gb-bg-c-30) !important;
   border-bottom: 0.5px solid var(--q-gb-bg-c-23);
+  position: relative;
+  ::before {
+    content: "";
+    height: 16px;
+    width: 10px;
+    border-radius: 16px;
+    background: var(--q-gb-t-c-16);
+    display: block;
+    position: absolute;
+    left: -7px;
+    top: 8px;
+  }
   .ellipsis {
     font-size: 13px;
     color: var(--q-gb-t-c-3);
@@ -66,7 +84,7 @@ const vx_main_menu_toggle = ref('mini')
   width: 50%;
   .c-bet-item {
     justify-content: space-between;
-    padding: 0 15px;
+    padding: 0 12px;
     .handicap-value {
       justify-content: flex-start !important;
     }
