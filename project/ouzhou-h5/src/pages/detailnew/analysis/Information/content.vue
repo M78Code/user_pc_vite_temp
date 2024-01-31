@@ -32,7 +32,7 @@ const props = defineProps({
 <style scoped lang="scss">
 .article-content {
   /* ************** 富文本框 quill 样式 ************** -S */
-  ::v-deep {
+  :deep {
     * {
       color: unset;
       line-height: inherit;

@@ -15,6 +15,10 @@ const props = defineProps({
     }
 })
 
+const show_details = function(index){
+    this.$emit('maylike_click', index)
+}
+
 const img_src = function(val) {
     let src = (val || '').split(';')[0]
     return get_server_file_path(src)
@@ -28,7 +32,7 @@ const handle_img_load_error = function(e) {
 <template>
     <AnalysisCard :title="i18n_t('home_popular.you_may_also_like')">
         <template #body>
-            <div class="maylike" v-for="(item,index) of favorite_article_data" :key="index">
+            <div class="maylike" v-for="(item,index) of favorite_article_data" :key="index" @click="show_details(index)">
                 <div class="maylike--left">
                     <p class="top">
                         <span class="label" v-if="item.tagName" :style="{'background-color': item.tagColor}">{{item.tagName}}</span>
