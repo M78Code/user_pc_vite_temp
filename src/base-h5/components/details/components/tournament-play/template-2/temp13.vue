@@ -373,6 +373,7 @@ export default defineComponent({
         return
       }
       if (e?.direction == 'left') {
+        console.log(1111111)
     //  滑动次数++
         init_data.index =  init_data.index+1
         // 左滑
@@ -393,7 +394,7 @@ export default defineComponent({
         }
         init_data.left -= dom_width
          // init_data.left 左滑距离+13   以免右侧留白
-          init_data.left =  init_data.left - rem (init_data.index* 0.04)
+          init_data.left =  init_data.left - rem (init_data.index* 0.05)
           init_data.prev_left -= dom_width
       } else {
         init_data.index =  init_data.index-1
@@ -404,7 +405,7 @@ export default defineComponent({
           return
         }
         init_data.left += dom_width
-         init_data.left = init_data.left-rem (init_data.index* 0.04)
+         init_data.left = init_data.left-rem (init_data.index* 0.05)
          init_data.prev_left+= dom_width
       }
     }, 50);
