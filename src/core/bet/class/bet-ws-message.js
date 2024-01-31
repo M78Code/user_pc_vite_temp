@@ -132,6 +132,10 @@ class BetWsMessage {
           case 'C201':
             this.MSG_C201(data);
             break;
+          // 注单状态
+          case 'C203':
+            this.MSG_C203(data);
+            break;
           
           default:
             break;
@@ -182,6 +186,10 @@ class BetWsMessage {
    ***/
   MSG_C201(obj) {
     BetData.set_bet_c201_change(obj.cd)
+  }
+  // 投注项变更
+  MSG_C1023(obj) {
+    UserCtr.get_balance()
   }
 }
 
