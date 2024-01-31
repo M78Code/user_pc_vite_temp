@@ -174,6 +174,7 @@ import {is_esports } from "src/base-h5/mixin/menu";
 // 详情页中部玩法集tab
 import detailsTab from "src/base-h5/components/details/components/details-tab-2.vue";
 import  no_data  from "src/base-h5/components/common/no-data.vue";
+import CommonHeader1Subscribe from "src/base-h5/components/common/common-header1-subscribe/common-header1-subscribe";
 export default defineComponent({
   name: "match-details",
   // mixins: [websocket_data,common],
@@ -260,6 +261,28 @@ export default defineComponent({
       change_fullscreen,
       MatchDataWarehouseInstance
     } = details_main();
+
+    /**
+     * 监听顶部单例状态
+     * @param {'refresh_status'|'show_refresh'} key 
+     */
+    const common_listener = async (key, value) => {
+      switch (key) {
+        case "refresh_status":
+          if (value) {
+            // await details_refresh();
+            initEvent({refresh: true})
+            CommonHeader1Subscribe.instance.change_status(false);
+          }
+          break;
+      
+        default:
+          break;
+      }
+    }
+
+
+    CommonHeader1Subscribe.instance.init(common_listener);
     watch(
       () => state_data.data_list,
       (data) => {
@@ -410,6 +433,8 @@ export default defineComponent({
 
     
     onMounted(() => {
+      // TODO: 未和产品确认
+      // CommonHeader1Subscribe.instance.change_show_status(true);
       // 原created
       state_data.init_event_timer_count = 0;
     //   cancel_ref = debounce(cancel_ref,200)
@@ -460,6 +485,8 @@ export default defineComponent({
       }
     });
     onUnmounted(() => {
+      CommonHeader1Subscribe.instance.dispose();
+
       // debounce_throttle_cancel(cancel_ref);
       // 组件销毁时,不显示视频
       // set_play_video(false)

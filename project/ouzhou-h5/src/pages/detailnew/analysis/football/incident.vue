@@ -18,7 +18,8 @@
                     <span v-html="title_calculation(item)" :class="{midfield: item.matchPeriodId == 31}"></span>
                 </div>
                 <match-results-stage v-else>
-                    <div slot="left" class="left" v-if="item.home">
+                    <template #left>    
+                    <div   class="left" v-if="item.home">
                         <div class="substitution">
                             <p>
                                 <span v-if="item.eventCode == 'corner'"  v-html="translation_switch(item)"></span>
@@ -34,7 +35,9 @@
                         <template v-if="item.matchPeriodId == 50">{{item.numPlace}}p</template>
                         <img v-else :src="picture_conversion(item)" :class="imgWidth(item)">
                     </div>
-                    <div slot="right" class="right" v-if="item.away">
+                </template>
+                    <template #right>   
+                    <div   class="right" v-if="item.away">
                         <img v-if="item.matchPeriodId == 50" :src="item.away.eventCode == 'goal_penalty' ? penalty_img : penalty_missed_img">
                         <span v-else>{{item.away.secondsFromStart}}</span>
                         <div class="substitution">
@@ -46,6 +49,8 @@
                             <span v-if="item.away.playChangedName" style="margin-top: .03rem">{{ item.away.playChangedName }}</span>
                         </div>
                     </div>
+                </template>
+
                 </match-results-stage>
             </div>
             <!-- 底部图片文字说明 -->

@@ -179,7 +179,7 @@ export default defineComponent({
     }
     .counting-down-wrap{
       // margin-left: 0.7rem;
-      transform: translateX(130%);
+      transform: translateX(80%);
     }
   }
 }
