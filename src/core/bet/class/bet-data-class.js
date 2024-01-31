@@ -207,6 +207,8 @@ this.bet_appoint_ball_head= null */
     this.bet_keyboard_config = {}
     // 键盘状态
     this.bet_keyboard_show = true;
+    // 投注项 ID + 坑位
+    this.bet_oid_obj = {}
 
     // 获取缓存信息
     this.set_loacl_config()
@@ -515,12 +517,31 @@ this.bet_appoint_ball_head= null */
   // 设置投注项id 页面选中
   set_bet_oid_list(){
     let list_query = []
+    let bet_oid_obj = {}
+
+    let bet_list = []
     if(this.is_bet_single){
-      list_query = this.bet_single_list.map(item => item.playOptionsId)
+      bet_list = lodash_.cloneDeep(this.bet_single_list)
+     
     }else{
-      list_query = this.bet_s_list.map(item => item.playOptionsId)
+      bet_list = lodash_.cloneDeep(this.bet_s_list)
     }
+
+    list_query = bet_list.map(item => {
+      if(item.playOptionsId){
+        if(item.placeNum){
+          // 坑位 + 投注项id
+          bet_oid_obj[`${item.playOptionsId}_${item.placeNum}`] = {
+            oid: item.playOptionsId,
+            hn: item.placeNum,
+          }
+        }
+        return item.playOptionsId
+      }
+    })
+
     this.bet_oid_list = list_query
+    this.bet_oid_obj = bet_oid_obj
   }
 
   // 替换投注项id
@@ -1030,6 +1051,9 @@ this.bet_appoint_ball_head= null */
     }else{
       this.bet_s_list = lodash_.cloneDeep(list)
     }
+    // 重新设置投注项
+    this.set_bet_oid_list()
+
     this.set_bet_data_class_version()
   }
 
