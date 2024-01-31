@@ -409,6 +409,7 @@ const handle_match_render_data = (type) => {
   // background-image: url($SCSSPROJECTPATH+"/image/home/h5_long3.png") !important;
   > img{
     position: absolute;
+    width: 100%;
   }
 }
 .select-mask {
