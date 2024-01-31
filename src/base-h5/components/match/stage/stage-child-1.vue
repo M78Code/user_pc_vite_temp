@@ -160,13 +160,15 @@ onUnmounted(() => {
     color:var(--q-gb-t-c-14) !important
   }
   .counting-down-wrap{
-     margin-left: 0.1rem;
+     margin-left: 0.05rem;
+     width:0.4rem !important;
     //  margin-left: 0.2rem;
-    // position: relative;
+     position: relative !important;
   }
 }
 .counting-main{
-  margin-left: -0.3rem;
+  // margin-left: -0.3rem;
+  display: flex;
 
 }
 

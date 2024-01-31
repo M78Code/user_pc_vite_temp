@@ -39,8 +39,8 @@
     <!-- 详情玩法投注项有数据 -->
     <!-- <div style="position: fixed; top: 0;color: red">11{{ is_no_data }}</div> -->
     <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;padding-bottom: 0.18rem;">
-      <!-- <div slot="scrollList"> -->
-      <div>
+      <!-- <div #scrollList> -->
+      
         <!-- 置顶操作时增加动画 -->
         <TransitionGroup tag="div" class="transition-zhiding">
           <!-- 置顶 -->
@@ -62,7 +62,7 @@
           </template>
         </TransitionGroup>
       <!-- </div> -->
-      </div>
+    
     </div>
     <!-- 详情玩法投注项无数据 -->
     <div v-if="!is_loading && is_no_data && !show_recommend" class="no-data-style">
