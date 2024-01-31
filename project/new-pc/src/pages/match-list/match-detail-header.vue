@@ -350,6 +350,7 @@ onMounted(() => {
   border: 1px solid var(--q-gb-bg-c-9);
   border-radius: 6px 6px 0 0;
   overflow: hidden;
+  height: 100%;
 }
 .all-collect {
   width: 96px;
