@@ -753,7 +753,6 @@ export const category_info = (category_arr=[]) => {
             listItemAddCustomAttr(item);
           });
         }
-        console.log(temp,'aa-temp处理前2');
         temp = save_hshow(temp); // 保存当前相关hshow状态;
         // 当前玩法集下数据缓存
         const details_data_cache = {
@@ -762,7 +761,6 @@ export const category_info = (category_arr=[]) => {
         SessionStorage.set("DETAILS_DATA_CACHE", details_data_cache)
         
         // 切换tab时变更mid_obj里面的odds_info对象数据
-        console.log(temp,'aa-temp');
       MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(params.mid) ,temp)
         if (callback) callback();
       })
