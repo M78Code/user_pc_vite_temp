@@ -7,7 +7,7 @@
             <div class="item-img-wrapper c-refresh">
               <!-- <img class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading,'not_title':!item.title}" :src="item.icon" alt="" /> -->
               <template v-if="item.id === 3" class="long3">
-                <img :src="item.icon" alt="">
+                <img :src="item.icon" alt="" style="width: 34px; height: 24px;">
               </template>
               <template v-else>
                 <div class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading,'not_title':!item.title}" :style="item.icon_ ? item.icon : compute_css_obj({key: item.icon}) "></div>
@@ -57,7 +57,7 @@ const footer_list = ref([
   {
     title: i18n_t('footer_menu.open_bets'),
     // icon: 'h5-footer-yjzd', // 暂时换成下面的皮肤
-    icon: `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/h5_long_3.png`,
+    icon: `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/h5_long_4.png`,
     settle: false,
     id: 3
   },

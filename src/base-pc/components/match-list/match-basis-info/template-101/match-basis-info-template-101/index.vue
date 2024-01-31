@@ -8,9 +8,14 @@
           <div class="collect-start"
             :style="compute_css_obj({ key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty' })"></div>
         </div>
+        <div class="esports-mfo" v-if="MenuData.is_esports() && match.mfo">
+          <em>P</em>
+          <span>{{ match.mfo }}</span>
+        </div>
         <!-- 比赛进程 -->
         <match-process style="cursor:pointer" v-if="match" :match="match" source='match_list' show_page="match-list"
           :rows="1" :date_rows="1" date_show_type="inline" periodColor="gray" />
+         <span class="mix-chuan" v-if="MenuData.is_esports() && !!match.ispo">{{ i18n_t('match_info.match_parlay')}}</span>
       </div>
       <!-- 玩法数量 -->
       <div class="right-handle-box flex flex-start items-center" v-if="lodash.get(match, 'mhn')">
@@ -329,6 +334,21 @@ onUnmounted(() => {
 </script>
 <style lang="scss" scoped>
 .basic-wrap {
+  .esports-mfo{
+    color: var(--q-gb-t-c-2);
+    span{
+      color: var(--q-gb-t-c-9);
+      margin: 0 4px;
+    }
+  }
+  .mix-chuan{
+      background-color:var(--q-gb-bg-c-1);
+      color: var(--q-gb-t-c-1);
+      border-radius: 2px;
+      padding: 0 2px;
+      font-size: 12px;
+      line-height: 1.4;
+  }
   padding: 10px 10px;
   .team-logo {
     display: flex;
