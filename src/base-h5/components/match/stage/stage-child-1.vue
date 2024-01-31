@@ -9,8 +9,9 @@
     <span v-if="match_result_state">
       {{i18n_t('match_info.match_over')}}
     </span>
-    <span v-else style="margin-left: -0.18rem;">
-      {{i18n_t('mmp')[1][detail_data.mmp]}}
+    <div v-else class="counting-main" >
+      <span class="counting-title">{{i18n_t('mmp')[1][detail_data.mmp]}}</span>
+      
       <!-- 计时器 222-->
       <CountingDown ref="counting-down-second" :title="mmp_map_title" :mmp="detail_data.mmp"
         :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+detail_data.csid)" :m_id="detail_data.mid"
@@ -18,7 +19,7 @@
       </CountingDown>
       <!-- <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime != 0">&nbsp;{{ counting_time_ctr_show_format_ouzhou(detail_data, format_mgt_time(showTime)) }}</span>
       <span  v-if="detail_data.mmp == '0'">&nbsp;&nbsp;{{ counting_time_ctr_show_format_ouzhou(detail_data, '00:00')}}</span> -->
-    </span>
+      </div>
   </span>
 </template>
 
@@ -160,6 +161,9 @@ onUnmounted(() => {
   .counting-down-wrap{
      margin-left: 0.2rem;
   }
+}
+.counting-main{
+  margin-left: -0.18rem;
 }
 
 // src/core/utils/common/index.jssrc/output/index.js

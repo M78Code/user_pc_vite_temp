@@ -173,6 +173,14 @@ export default defineComponent({
   font-size: 0.12rem;
   color: var(--q-gb-t-c-14);
   letter-spacing: 0;
+  &:deep(){
+    .counting-title{
+      margin-left: -0.15rem;
+    }
+    .counting-down-wrap{
+      margin-left: 0.7rem;
+    }
+  }
 }
 
 .header-font {
