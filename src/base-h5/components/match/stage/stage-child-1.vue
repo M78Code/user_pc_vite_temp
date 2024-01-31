@@ -21,11 +21,7 @@
       </div>
   </div>
 </template>
-
 <script setup>
-  import lodash from 'lodash';
-  import { computed, onMounted, onUnmounted, ref, watch } from "vue"
-  import { counting_time_ctr_show_format_ouzhou } from 'src/core/format/common/index.js'
   import { format_mgt_time } from "src/output/index.js"
   import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
   import CountingDown from 'src/base-h5/components/common/counting-down.vue';
@@ -166,6 +162,9 @@ onUnmounted(() => {
     //  margin-left: 0.2rem;
     // position: relative;
   }
+}
+.counting-main{
+  margin-left: -0.18rem;
 }
 
 // src/core/utils/common/index.jssrc/output/index.js
