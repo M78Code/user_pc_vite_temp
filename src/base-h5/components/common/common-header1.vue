@@ -3,7 +3,7 @@
 -->
 <template>
   <div ref="common_header" class="common-header" @touchmove.prevent>
-    <div class="row justify-between full-height ">
+    <div class="row justify-between full-height items-center">
       <!-- 返回上一页 -->
       <div class="go-back-btn-wrap" @click="go_to_back" >
         <GoBackSvg class="go-back" />
@@ -19,8 +19,10 @@
         <div class="collect-icon" :class="{ active: get_detail_data.mf }"
           v-if="GlobalAccessConfig.get_collectSwitch() && is_DJ_show && MenuData.get_menu_type() !== 28"
           @click="details_collect(get_detail_data)">
-          <slot name="right"></slot>
         </div>
+        <img v-if="status" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/refresh.png`" alt="" 
+              class="refresh" :class="[status ? 'ani-rotate':'' ]">
+
         <!-- todo 后面判断项目名称 -->
         <!-- <div class="det-ref" :class="{ 'refreshing': refreshing, 'refreshing-common': MenuData.get_menu_type() !== 3000 }"
           @click="details_refresh"></div> -->
@@ -44,7 +46,7 @@ import { i18n_t } from "src/boot/i18n.js";
 import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData,compute_css_obj } from "src/output/index.js";
 import { create_gcuuid } from "src/core/uuid/index.js";
 import BetData from 'src/core/bet/class/bet-data-class.js'
-
+import CommonHeader1Subscribe from "./common-header1-subscribe/common-header1-subscribe";
 const props = defineProps({
   // 联赛名
   title: {
@@ -57,7 +59,8 @@ const props = defineProps({
     default: 'bet'
   }
 })
-
+// 是否显示刷新状态
+const status = ref(CommonHeader1Subscribe.instance.refresh_status);
 const route = useRoute()
 const router = useRouter()
 // 获取详情数据
@@ -69,6 +72,15 @@ const position = ref('top')
 const favorite_loading = ref(false)
 // 延时器
 const timer1_ = ref(null)
+
+/**
+ * 监听刷新结束，终止刷新动画
+ */
+const listener = (value) => {
+  status.value = value;
+}
+CommonHeader1Subscribe.instance.init(listener);
+
 const clear_timer1_ = () => {
   if (timer1_.value) {
     clearTimeout(timer1_.value)
@@ -371,5 +383,27 @@ export default {
   position: absolute;
   left: 0.1rem;
   top: 0.13rem;
+}
+.items-center {
+  align-items: center;
+}
+
+.refresh {
+  width: 16px;
+  height: 16px;
+  margin-right: 16px;
+}
+
+.ani-rotate {
+  animation: 3s ease-in  infinite reverse both running rotate;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(3600deg);
+  }
 }
 </style>
