@@ -23,6 +23,7 @@ import {
   useMitt,
   MITT_TYPES,
   useMittEmit,
+  is_eports_csid
 } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { ref, toRaw } from "vue";
@@ -43,14 +44,18 @@ const matchDetail = ref({})
 const matchResults = ref([])
 
 //#region 初始化
-initial({mid})
+initial({mid,csid})
 useMitt(MITT_TYPES.EMIT_REFRESH_DETAILS,initial)
 //#endregion
 
-function initial({mid}){
+function initial({mid, csid}){
   loading.value = true
-  getMatchDetail({ mid, cuid })
-  api_analysis.get_match_result({mid,cuid}).then(res=>{
+  const params = {mid,cuid}
+  if(is_eports_csid(csid)){
+    params.isESport = 1
+  }
+  getMatchDetail(params)
+  api_analysis.get_match_result(params).then(res=>{
     if(res.code == '200'){
       matchResults.value = res.data
     }else {
@@ -65,17 +70,16 @@ function getMatchDetail(params) {
     (res) =>{
       // 补偿赛事状态110情况下mmp不是999
       if(!(['90','80','61'].includes(res.data.mmp+''))){
-            res.data.mmp = '999'
-          }
-          if(['result_details', 'match_result'].includes(route.name) && res.data.mo == 1){
-            // 61-比赛延迟,80-比赛中断,90-比赛放弃
-            if(!(['90','80','61'].includes(res.data.mmp+''))){
-              res.data.mmp = '999'
-            }
-          }
-          MatchDataWarehouseInstance.set_match_details(toRaw(matchDetail.value = res.data), [])    
+        res.data.mmp = '999'
+      }
+      if(['result_details', 'match_result'].includes(route.name) && res.data.mo == 1){
+        // 61-比赛延迟,80-比赛中断,90-比赛放弃
+        if(!(['90','80','61'].includes(res.data.mmp+''))){
+          res.data.mmp = '999'
+        }
+      }
+      MatchDataWarehouseInstance.set_match_details(toRaw(matchDetail.value = res.data), [])    
     } 
-    
   );
 }
 
