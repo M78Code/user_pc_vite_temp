@@ -12,7 +12,7 @@ import { match_state_convert_score_dict, history_score_dict } from 'src/core/con
 import { get_match_template_id } from './list-template/match-list-tpl'
 import { get_21_bold_template, get_template_data, switch_other_play, set_min15 } from './composables/match-list-other'
 import { has_cur_handicap_tpl_ids } from 'src/core/constant/project/module/data-class-ctr/play-tpl-id.js'
-import { MenuData,GlobalSwitchClass } from 'src/output';
+import { MenuData, GlobalSwitchClass } from 'src/output';
 export * from './list-template/match-list-tpl'
 
 /**
@@ -62,7 +62,7 @@ export function match_list_handle_set(match_list) {
                 tpl_id: match.tpl_id,
                 hSpecial: match.hSpecial,
                 hSpecial5min: match.hSpecial5min,
-                play_current_key:match.play_current_key,
+                play_current_key: match.play_current_key,
                 tab_play_keys: match.tab_play_keys,
                 has_other_play: match.has_other_play,
                 up_half_text: match.up_half_text
@@ -480,7 +480,7 @@ export const get_match_score = (match) => {
 export const get_match_score_result = (match) => {
     if (!match) return { home_score: '0', away_score: '0' }
     let msc_obj = {}
-    if (typeof(match.msc) == 'string'){
+    if (typeof (match.msc) == 'string') {
         match.msc = JSON.parse(match.msc)
     }
     match.msc.forEach(item => {
@@ -600,21 +600,15 @@ export function compute_match_all_handicap_data(match) {
     //足球 让球与大小 模板
     if (csid == 1 && [1, 13].includes(+tpl_id) && !is_corner_menu) {
         // 计算角球、罚牌等其他玩法数据
-        // 根据个人设置的全局配置的附加盘口是否展示
-        if (GlobalSwitchClass.show_additional_disk){
-            Object.assign(match_assign, { 
-                play_current_play: get_play_current_play(match),
-                other_handicap_list: get_compute_other_play_data(match)
-            }, get_match_add_handicap_data(match))// 设置赛事附加盘盘口数据
-        }
+        Object.assign(match_assign, {
+            play_current_play: get_play_current_play(match),
+            other_handicap_list: get_compute_other_play_data(match)
+        }, get_match_add_handicap_data(match))// 设置赛事附加盘盘口数据
     }
     // 篮球让球与大小
     if (tpl_id == 7) {
         // 设置赛事附加盘盘口数据
-        // 根据个人设置的全局配置的附加盘口是否展示
-        if (GlobalSwitchClass.show_additional_disk){
             Object.assign(match_assign, get_match_add_handicap_data(match))
-        }
     }
     // 有当前局玩法的模板  设置当前局盘口数据   沙滩排球13没有当前局
     if (has_cur_handicap_tpl_ids.includes(+tpl_id) && csid != 13) {
@@ -629,6 +623,15 @@ export function compute_match_all_handicap_data(match) {
   */
 function get_match_add_handicap_data(match) {
     const { tpl_id } = match
+    // 根据个人设置的全局配置的附加盘口是否展示
+    if (!GlobalSwitchClass.show_additional_disk) {
+        return { 
+            has_add1: false,
+            has_add2: false,
+            add1_handicap_list:[], add2_handicap_list:[]
+        }
+    }
+    //角球没有附加盘口 和 其他玩法 因为在数仓里可能设置了true值 这里重置false
     // 附加盘1盘口列表
     let add1_handicap_list = clone_arr(lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${tpl_id}_config.template_${tpl_id}.add_handicap_list`, []))
     // 附加盘2盘口列表
@@ -711,7 +714,7 @@ function get_match_cur_handicap_data(match, is_ws_call) {
     // 设置是否显示当前局玩法
     return {
         cur_handicap_list: match.cur_handicap_list,
-        is_show_cur_handicap:get_is_show_cur_handicap(match)
+        is_show_cur_handicap: get_is_show_cur_handicap(match)
     }
 }
 /**
@@ -780,58 +783,58 @@ function get_basketball_is_show_cur_handicap(match) {
     return is_show_cur_handicap
 }
 
-  // 获取比赛阶段是否需要查询接口
- export function get_phase_result(csid, mmp) {
+// 获取比赛阶段是否需要查询接口
+export function get_phase_result(csid, mmp) {
     let check_result = false;
-    if(csid == 2) {  // 篮球
-      if(mmp > 0 && mmp < 3) { // 上下半场
-        check_result = true;
-      } else if(mmp > 12 && mmp < 17) { // 第一节~第四节
-        check_result = true;
-      } else if(mmp == 40) { // 加时赛
-        check_result = true;
-      } else if(mmp == 303) { // 第三节休息
-        check_result = true;
-      }
+    if (csid == 2) {  // 篮球
+        if (mmp > 0 && mmp < 3) { // 上下半场
+            check_result = true;
+        } else if (mmp > 12 && mmp < 17) { // 第一节~第四节
+            check_result = true;
+        } else if (mmp == 40) { // 加时赛
+            check_result = true;
+        } else if (mmp == 303) { // 第三节休息
+            check_result = true;
+        }
     } else if (csid == 3) { // 棒球
-      if(mmp > 400 && mmp < 421) { // 第一局上,第一局下~加时上,加时下
-        check_result = true;
-      }
+        if (mmp > 400 && mmp < 421) { // 第一局上,第一局下~加时上,加时下
+            check_result = true;
+        }
     } else if (csid == 4) { // 冰球
-      if(mmp > 0 && mmp < 4) { // 第一节~第三节
-        check_result = true;
-      } else if(mmp == 40) { // 加时赛
-        check_result = true;
-      }
+        if (mmp > 0 && mmp < 4) { // 第一节~第三节
+            check_result = true;
+        } else if (mmp == 40) { // 加时赛
+            check_result = true;
+        }
     } else if (csid == 5) { // 网球
-      if(mmp > 7 && mmp < 13) { // 第一盘~第五盘
-        check_result = true;
-      }
+        if (mmp > 7 && mmp < 13) { // 第一盘~第五盘
+            check_result = true;
+        }
     } else if (csid == 6) { // 美式足球
-      if(mmp > 12 && mmp < 17) { // 第一节~ 第四节 加时赛
-        check_result = true;
-      } else if(mmp == 40) { // 加时赛
-        check_result = true;
-      }
+        if (mmp > 12 && mmp < 17) { // 第一节~ 第四节 加时赛
+            check_result = true;
+        } else if (mmp == 40) { // 加时赛
+            check_result = true;
+        }
     } else if (csid == 7) { // 斯洛克
-      if(mmp == 21) {    // 进行中
-        check_result = true;
-      }
+        if (mmp == 21) {    // 进行中
+            check_result = true;
+        }
     } else if (csid == 8) { // 乒乓球
-      if((mmp > 7 && mmp < 13) || (mmp > 440 && mmp < 443)) { // 第一局~第七局
-        check_result = true;
-      }
+        if ((mmp > 7 && mmp < 13) || (mmp > 440 && mmp < 443)) { // 第一局~第七局
+            check_result = true;
+        }
     } else if (csid == 9) { // 排球
-      if((mmp > 7 && mmp < 13) || mmp==17 || (mmp > 440 && mmp < 443)) { // 第一局~第七局
-        check_result = true;
-      } else if(mmp==17) { // 第五局
-        check_result = true;
-      }
+        if ((mmp > 7 && mmp < 13) || mmp == 17 || (mmp > 440 && mmp < 443)) { // 第一局~第七局
+            check_result = true;
+        } else if (mmp == 17) { // 第五局
+            check_result = true;
+        }
     } else if (csid == 10) { // 羽毛球
-      if((mmp > 7 && mmp < 13)) { // 第一局~第五局
-        check_result = true;
-      }
+        if ((mmp > 7 && mmp < 13)) { // 第一局~第五局
+            check_result = true;
+        }
     }
     return check_result;
-  }
+}
 

@@ -793,7 +793,8 @@
     "result_score": "赛果比分",
     "number": "注单数",
     "bet": "投注额",
-    "l/w": "输/赢"
+    "l/w": "输/赢",
+    "score_result": "结果比分"
   },
   "pre_record": {
     "book_one": "预",

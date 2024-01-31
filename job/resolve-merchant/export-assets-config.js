@@ -1,4 +1,4 @@
-qwe123../**
+/**
  * 合并输出商户配置
  */
 import axios from "axios";

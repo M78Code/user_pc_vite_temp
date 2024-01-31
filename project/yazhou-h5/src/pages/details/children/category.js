@@ -369,19 +369,27 @@ export const category_info = (category_arr=[]) => {
     // temp.length === 0 在这里更新所有投注得信息
     if (temp.length == 0) {
       try {
-        const _obj = {
-          // axios api对象
-          axios_api: http,
-          // axios api对象参数
-          params: params,
-          max_loop: init_req ? 3 : 1,
-          fun_catch: (err) => {
-            component_data.is_loading = false;
-            component_data.is_no_data = true;
-          },
-        };
+        function req(){
+         return new Promise((resolve,reject)=>{
+          axios_api_loop( {
+            // axios api对象
+            axios_api: http,
+            // axios api对象参数
+            params: params,
+            max_loop: init_req ? 3 : 1,
+            func_then:(res)=>{
+              resolve(res)
+            },
+            fun_catch: (err) => {
+              component_data.is_loading = false;
+              component_data.is_no_data = true;
+              reject(err)
+            },
+          })
+         }) 
+        }
         /************** 响应成功则继续往下走，失败则执行fun_catch **************/
-        const res = await axios_api_loop(_obj);
+        const res = await req();
         // 数据存入数据仓库
         MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(params.mid) ,res.data)
         // if (component_data.send_gcuuid != res.gcuuid) {
