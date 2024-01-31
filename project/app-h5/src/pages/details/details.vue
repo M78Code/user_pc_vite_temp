@@ -258,6 +258,7 @@ export default defineComponent({
       clear_timer,
       new_match_detail_ctr,
       change_fullscreen,
+      MatchDataWarehouseInstance
     } = details_main();
     watch(
       () => state_data.data_list,
@@ -620,7 +621,8 @@ export default defineComponent({
       new_match_detail_ctr,
       page_style,
       is_esports,
-      videosRef
+      videosRef,
+      MatchDataWarehouseInstance
     }
   }
 })

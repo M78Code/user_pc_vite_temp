@@ -28,12 +28,15 @@ export const details_ws = () => {
    * "C303"  获取盘口信息 新增玩法/新增盘口/主主盘变更
    */
   const handler_ws_cmd = (cmd, data,mid) => {
-    // 如果mid与我们的赛事id不一致 不处理  C105在数据仓库处理
-    if (lodash.get(data, "cd.mid") != mid || cmd == "C105") return;
+    // 如果mid与我们的赛事id不一致 不处理  
+    if (lodash.get(data, "cd.mid") != mid ) return;
     // console.log(cmd, data, "datacmd");
     switch (cmd) {
       // 赛事订阅(C8)-新增玩法/新增盘口(C303)
       case "C303":
+        if(PROJECT_NAME == 'app-h5'){
+          useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
+        }
         useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET)
         break;
        // 赛事开赛状态(C302)  
@@ -49,6 +52,9 @@ export const details_ws = () => {
         break;
        //  玩法集变更(C112)    
       case "C112":
+        if(PROJECT_NAME == 'app-h5'){
+          useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
+        }
         useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET)
         break; 
        case "C102":
@@ -56,10 +62,29 @@ export const details_ws = () => {
           break;
        case "C110":
          RCMD_C110(data);
-         break;     
+         break;  
+       case "C105":
+          RCMD_C105(data);
+          break;        
       default:
         break;
     }
+  }
+  /**
+   * @description: 处理玩法更新
+   * @param {*} obj
+   * @return {*}
+   */
+  function RCMD_C105(obj){
+     // 足球赛事投注玩法，基准分的动态更新
+     try {
+        if(Array.isArray(obj.cd.hls) && obj.cd.hls.length){
+          useMittEmit(MITT_TYPES.EMIT_CHANGE_BASE_SCORE, obj.cd.hls)
+        };
+      } catch (err) {
+        console.error(err);
+      }
+  
   }
     /**
    * @description: RCMD_C109

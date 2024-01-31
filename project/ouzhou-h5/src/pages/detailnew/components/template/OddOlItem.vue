@@ -17,8 +17,10 @@
         </div>
       </template>
       <div class="item ol-name" :alt="olName">
-        <span v-if="txt_ol_name" class="ol-name-span2">{{txt_ol_name}}</span>
-        <span class="ol-name-span" v-if="!lodash.isArray(olName)">{{ olName }}</span>
+        <span class="ol-name-span" v-if="!lodash.isArray(olName)">
+          <span v-if="txt_ol_name" class="ol-name-span2">{{ txt_ol_name }}</span>
+          {{ olName }}
+        </span>
         <span class="ol-name-span" v-if="lodash.isArray(olName)">
           <img v-if="olName.length == 2" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr/${olName[0]}.png`">
           <img v-if="olName.length == 2" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vr/${olName[1]}.png`" style="margin-left: 5px;">

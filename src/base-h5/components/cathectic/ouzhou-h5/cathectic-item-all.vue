@@ -15,9 +15,9 @@
       <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
       <!-- 已结算筛选、提前结算按钮 -->
       <div class="settled-select flex" v-if="BetRecordClass.selected === 1">
-          <div class="select flex"> 
-            <span :class="{'active': sort_active === 2}" @click="sortChange(2)">{{ i18n_t('bet_record.settle_time') }}</span>
-            <span :class="{'active': sort_active === 1}" @click="sortChange(1)">{{ i18n_t('bet_record.bet_time') }}</span>
+          <div class="select-item">
+            <custom-select type="date" :init_index="2" @changeSelect="(val) => changeSelect('date', val)"></custom-select>
+            <custom-select init_type="order" :init_index="0" @changeSelect="(val) => changeSelect('order', val)"></custom-select>
           </div>
           <!-- 未结算 提前结算按钮 1期隐藏 -->
           <!-- <div :class="['cashout', BetRecordClass.is_early ? 'active': '']" 
@@ -70,10 +70,12 @@ import {useMittEmit, useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
 import { formatTime } from 'src/output/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 import loading from "src/components/loading/loading.vue"
+import customSelect from "src/base-h5/components/cathectic/ouzhou-h5/custom-select.vue"
 //语言设置
 const lang = ref(UserCtr.lang)
 // 锚点
 const myScroll = ref(null)
+
 // 按什么排序  [1, 2, 3]
 const sort_active = ref(enum_order_by[1])
 // 展示多长时间的注单记录  [1, 2, 3, 4]
@@ -169,10 +171,16 @@ const init_params_api = (_index, _isOnPull=false) => {
 }
 
 // 已结算页面，排序改变  2-默认排序（结算时间） 1-投注时间
-const sortChange = (index, reset) => {
-  if(index === sort_active.value) return
-  sort_active.value = index
-  !reset && init_data(1)
+const changeSelect = (type, value) => {
+  if(type === 'date') {
+    if(value === timeType.value) return //点击当前项
+    timeType.value = value
+  }
+  if(type === 'order') {
+    if(value === sort_active.value) return //点击当前项
+    sort_active.value = value
+  }
+  init_data(1)
 }
 
 /**
@@ -186,11 +194,6 @@ const onPull = () => {
   BetRecordClass.onPull(params, url_api, ele)
 }
 
-defineExpose({
-  timeType,
-  init_data,
-  sortChange
-  })
 </script>
     
 <style lang="scss" scoped>
@@ -205,11 +208,14 @@ template {
   padding-bottom: 0.2rem;
 }
 .settled-select {
-  height: 0.7rem;
+  height: 0.6rem;
   align-items: center;
   justify-content: space-between;
   padding: 0 0.14rem;
   background: #fff;
+  .select-item {
+    display: flex;
+  }
   .select {
     height: 0.46rem;
     padding: 0.04rem;

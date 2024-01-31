@@ -14,10 +14,9 @@
           :class="BetRecordClass.selected == index && 'active-p'"
           > {{ item.title }}
         </p>
-        <days-select v-if="BetRecordClass.selected == 1" @changeDays="changeDays" />
       </div>
       <div class="content-m">
-        <cathectic-item-all ref="cathecticItem" />
+        <cathectic-item-all />
       </div>
     </div>
   </template>
@@ -27,7 +26,6 @@
   import { enum_order_by, enum_time_type } from "src/core/bet-record/h5/util.js";
   import { api_betting } from "src/api/index.js";
   import cathecticItemAll from "src/base-h5/components/cathectic/ouzhou-h5/cathectic-item-all.vue"
-  import daysSelect from "src/base-h5/components/cathectic/ouzhou-h5/days-select.vue"
   import { onMounted, onUnmounted,  ref, provide } from 'vue'
   import { i18n_t } from "src/boot/i18n.js";
   import {compute_local_project_file_path} from "src/output/index.js"
@@ -45,27 +43,11 @@
     { title: i18n_t('pre_record.book') }
   ])
 
-  // 已结算页面切换时间，获取新列表
-  const cathecticItem = ref(null)
-
-  // 时间切换 (今天、昨日、七日内、一月内)
-  const changeDays = (dayValue) => {
-    const $el = cathecticItem.value
-    if($el.timeType === dayValue) return
-    $el.timeType = dayValue
-    $el.init_data(1)
-  }
 
   // 已结算、未结算切换
   const change_record = (key) => {
     //已选中状态下不能点击
     if (BetRecordClass.selected === key) return;
-    // 非未结算页面，重置未结算页面筛选条件
-    if(key !== 1) {
-      const $el = cathecticItem.value
-      $el.timeType = enum_time_type[0]
-      $el.sortChange(enum_order_by[1], true)
-    }
     BetRecordClass.set_selected(key);  
   }
 
