@@ -42,11 +42,12 @@
         <odd-column-item :placeholder="1" :odd_item_i="2"/>
       </template>
     </div>
-    <!--标准版赔率容器  波胆 5分钟  玩法除外-->
+    <!--标准版赔率容器  波胆 5分钟  玩法除外 @touchstart="handleTouchStart" @touchend="handleTouchEnd"-->
     <template v-if="![18,19].includes(+lodash.get(current_tab_item, 'id'))">
       <template v-if="![11].includes(+lodash.get(current_tab_item, 'id'))">
-        <div v-if="(!show_newer_edition && get_n_s_changed_loaded ) || selected_list"
-          :class="['standard-odd-l-w',{'status2': standard_odd_status == 1}, { 'is_no_scroll': is_scroll_page }]" v-touch-swipe.mouse.right.left="odd_wrapper_pan">
+        <div v-if="(!show_newer_edition ) || selected_list"
+          v-touch-swipe.mouse.right.left="odd_wrapper_pan"
+          :class="['standard-odd-l-w',{'status2': standard_odd_status == 1}, { 'is_no_scroll': is_scroll_page }]">
           <!--标准版-->
           <div class="standard-odd-list row" v-if="!selected_list" :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
             <div class="odd-column-w" :class="[{ clounm2: ![1,4,11,14,16].includes(+match.csid) }, {'boxing':match.csid == 12 }]" 
@@ -261,8 +262,6 @@ const standard_odd_status = ref(PageSourceData.standard_odd_status);
 const show_lock_selected = ref(false);
 // 简版投注项选中时角球标志
 const index_show_map = ref({});
-
-const get_n_s_changed_loaded = ref(true)
 
 onMounted(() => {
   emitters.value = {
@@ -783,12 +782,38 @@ const is_show_scroll_dir = (dir) => {
     return standard_odd_status.value === 1 && !show_newer_edition.value && [1, 7, 11, 16, 14].includes(+props.match.csid)
   }
 };
+
+// const startX = ref(0)
+// const endX = ref(0)
+// const handleTouchStart = (event) => {
+//   startX.value = event.touches[0].clientX;
+// }
+
+// const handleTouchEnd = (event) => {
+//   endX.value = event.changedTouches[0].clientX;
+//   const deltaX = endX.value - startX.value;
+//   if (deltaX > 0) {
+//     // Right swipe
+//     console.log('Right swipe');
+//     odd_wrapper_pan({ direction: 'right' })
+//     event.preventDefault()
+//     return true
+//   } else {
+//     // Left swipe
+//     console.log('Left swipe');
+//     odd_wrapper_pan({ direction: 'left' })
+//     event.preventDefault()
+//     return true
+//   }
+// }
+
 /**
  * 滑动赔率容器
  * @param {Number} type 0 第一部分; 1 第二部分
  * @return Undefined Undefined
  */
 const odd_wrapper_pan = ({ direction }) => {
+  console.log(111111111111)
   if(!['left', 'right'].includes(direction)) return ;
   let status = 0;
   if (get_hp_list(1).length) {
@@ -1435,9 +1460,10 @@ onUnmounted(() => {
       width: 0.6rem;
       height: 0.32rem;
       overflow: hidden;
-      border-radius: 0.02rem;
+      border-radius: 0.04rem;
       margin-bottom: 0.02rem;
       color: var(--q-gb-t-c-18);
+      box-shadow: 0 2px 6px 0 rgba(0,0,0,.04);
 
       &.hp-2, &.hp-0 {
         height: 0.49rem;

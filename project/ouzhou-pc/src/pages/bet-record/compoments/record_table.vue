@@ -217,7 +217,11 @@
 
       <Pagination v-if="BetRecordHistory.table_data.length > 0" 
                   class="record-pagination" 
+                  :is_bet_record="true"
                   :count="BetRecordHistory.records.total" 
+                  :betTotalAmount="BetRecordHistory.records.betTotalAmount"
+                  :profit="BetRecordHistory.records.profit"
+                  :toolSelected="BetRecordHistory.selected"
                   @pageChange="changePage"
                   @pageSizeChange="pageSizeChange"
                   @goPageChange="goPageChange"
