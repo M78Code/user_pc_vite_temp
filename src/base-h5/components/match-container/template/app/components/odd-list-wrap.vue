@@ -1460,9 +1460,10 @@ onUnmounted(() => {
       width: 0.6rem;
       height: 0.32rem;
       overflow: hidden;
-      border-radius: 0.02rem;
+      border-radius: 0.04rem;
       margin-bottom: 0.02rem;
       color: var(--q-gb-t-c-18);
+      box-shadow: 0 2px 6px 0 rgba(0,0,0,.04);
 
       &.hp-2, &.hp-0 {
         height: 0.49rem;
