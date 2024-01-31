@@ -178,7 +178,8 @@ export default defineComponent({
       margin-left: -0.15rem;
     }
     .counting-down-wrap{
-      margin-left: 0.7rem;
+      // margin-left: 0.7rem;
+      transform: translateX(130%);
     }
   }
 }

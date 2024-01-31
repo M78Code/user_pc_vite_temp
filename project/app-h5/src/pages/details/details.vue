@@ -663,4 +663,7 @@ export default defineComponent({
 .detail-top-pop .q-dialog__inner--minimized {
   padding: 0;
 }
+:deep(.counting-down-wrap) {
+  
+}
 </style>
