@@ -279,7 +279,6 @@ watch(MatchListCardDataClass.list_version,
 .scroll-fixed-header {
   height: 36px;
   background: var(--q-site-header-color-7);
-  border: 1px solid var(--q-gb-bg-c-23);
   z-index: 99;
   // background-color: rgba(255,255,255,0.05);
 }

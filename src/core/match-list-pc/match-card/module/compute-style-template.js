@@ -121,7 +121,8 @@ const compute_style_template_by_matchinfo_template0_zuqiu = (
 	let is_fold_tab_play = lodash.get(
 		MatchListCardData.get_card_obj_bymid(match.mid),
 		"is_fold_tab_play",
-		!!GlobalSwitchClass.show_additional_disk
+		!!GlobalSwitchClass.show_additional_plays 
+		//是否默认z折叠 次要玩法盘口
 	)
 	let tab_play_total_height = 0;
 	if (is_show_tab_play && !is_fold_tab_play) {

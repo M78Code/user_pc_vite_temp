@@ -553,10 +553,12 @@ const get_query_bet_amount_pre = () => {
             // 通知页面更新 
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
             // 获取盘口值 
-            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo[0]')
-
-            // 获取预约投注项
-            BetData.set_bet_appoint_obj(latestMarketInfo)
+            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo[0]', {})
+            
+            if(latestMarketInfo){
+                // 获取预约投注项
+                BetData.set_bet_appoint_obj(latestMarketInfo)
+            }
 
         } else {
             set_catch_error_query_bet_max(params)
@@ -608,7 +610,7 @@ const set_bet_pre_list = (bet_appoint = []) => {
 const pre_bet_comparison = () => {
 	// 如果点击预约判断所选赔率和盘口赔率是否一致，一致说明不是预约，切换到对应的盘口id;否则就设置为预约
 	if(BetData.is_bet_pre) {
-		let oid = lodash_.get(BetData,'bet_single_list[0].playOptionsId','')
+		let oid = BetData.bet_pre_appoint_id
 		let pre_obj = lodash_.get(BetData,`bet_pre_obj[${oid}]`,{})
 		
 		let pre_list = lodash_.get(	BetData,'bet_appoint_obj.marketList[0].marketOddsList',[])

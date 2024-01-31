@@ -103,6 +103,6 @@
   .content-m {
     flex: 1;
     height: 0;
-    background-color: var(--q-gb-bg-c-10);
+    background-color: var(--q-gb-bg-c-19);
   }
   </style>

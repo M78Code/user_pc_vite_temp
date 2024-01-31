@@ -228,10 +228,10 @@ const get_init_data = (val) =>{
     list = list.filter((item)=>{return item.mi});
     leftDataList.value = leftDataList.value.map((item)=>{
         item.ct = item.ct || 0;
-        list.forEach((n)=>{
+        list.length && list.forEach((n)=>{
             if(item.mi == n.mi.slice(0,3)){
                 let index = item.sl?.findIndex((k)=>{return k.mi == n.mi});
-                if(index !== -1)item.sl[index].ct = n.count;
+                if(index !== -1)item.sl[index].ct = n?.count || 0;
             }
         })
         return item;

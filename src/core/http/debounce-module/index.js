@@ -30,6 +30,7 @@ import get_category_list from "./get_category_list.js";
 import post_date_menu from "./post_date_menu.js";
 import get_home_matches from "./get_home_matches.js";
 import get_matches_list from "./get_matches_list.js";
+import { uid } from 'quasar';
 
 // 定义挂载点
 const axios_debounce_cache = {

@@ -254,12 +254,13 @@ template {
   top: 0.15rem;
   right: 0.1rem;
   font-size: 0.14rem;
+  color: var(--q-gb-t-c-3);
   span {
         width: 0.17rem;
         height: 0.17rem;
         background-color: transparent;
         border-radius: 2px;
-        border:1px solid var(--q-gb-t-c-8);
+        border:1px solid var(--q-gb-t-c-3);
         position: relative;
         margin-left: 0.04rem;
         &.active {
