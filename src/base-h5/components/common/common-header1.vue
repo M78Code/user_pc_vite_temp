@@ -42,7 +42,7 @@ import { api_common } from "src/api/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
 import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData,compute_css_obj } from "src/output/index.js";
-import uid from "src/core/uuid/index.js";
+import { create_gcuuid } from "src/core/uuid/index.js";
 import BetData from 'src/core/bet/class/bet-data-class.js'
 
 const props = defineProps({
