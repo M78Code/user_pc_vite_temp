@@ -5,7 +5,7 @@ import { uid as quid } from "quasar";
  * @returns string
  */
 
-function uid(num = 18) {
+export const  uid=(num = 18)=> {
   let StrAry =
     "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   const len = StrAry.length;
@@ -16,5 +16,9 @@ function uid(num = 18) {
   return uuid;
 }
 
-export default uid;
+
+
+
+
+  uid;
 export { quid };

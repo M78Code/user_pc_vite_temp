@@ -75,7 +75,7 @@ import { api_common } from 'src/project/api/index.js'
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex";
 // import chatroom_mixin from 'src/base-h5/components/details/components/chatroom/chatroom_mixin'
-import uid from "src/core/uuid/index.js";
+import { create_gcuuid } from "src/core/uuid/index.js";
 import { format_currency, format_odds,  } from "src/output/index.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 ;

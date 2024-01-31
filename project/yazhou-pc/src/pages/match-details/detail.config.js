@@ -26,7 +26,7 @@ import { formatTime } from "src/core/format/common/index.js"
 import {SearchPCClass,LayOutMain_pc} from "src/output/project/index.js";
 
 import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data ,is_eports_csid,MatchDetailCalss,GlobalSwitchClass} from "src/output/index"; 
-import uid from "src/core/uuid/index.js";
+import { create_gcuuid } from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 export const useGetConfig = (router,cur_menu_type,details_params,play_media) => {

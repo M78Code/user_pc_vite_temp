@@ -47,7 +47,7 @@ import { useRoute } from 'vue-router';
 import { project_name } from "src/output/index.js";
 import { api_common } from 'src/api/index.js';
 import video from "src/core/video/video.js"   // 视频相关公共方法
-import uid from "src/core/uuid/index.js"
+import { create_gcuuid } from "src/core/uuid/index.js";
 import { i18n_t } from "src/boot/i18n.js";
 import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";

@@ -322,7 +322,7 @@ import matchScore from 'src/base-h5/components/match/match-score.vue' // 比分�
 import footballEvents from "src/base-h5/components/details/football-events.vue";
 import analysis_football_matches from "src/base-h5/components/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"; // 详情页  足球赛事分析
 import basketball_match_analysis from "src/base-h5/components/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue";  // 详情页 或者 赛果  篮球赛事分析
-// import uid from "src/core/uuid/index.js"
+// import { create_gcuuid } from "src/core/uuid/index.js";
 import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"

@@ -1,6 +1,6 @@
 import { api_common, api_analysis } from 'src/project/api/index.js';
 import video from "src/base-h5/utils/video/video.js"   // 视频相关公共方法`
-import uid from "src/core/uuid/index.js"
+import { create_gcuuid } from "src/core/uuid/index.js";
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
