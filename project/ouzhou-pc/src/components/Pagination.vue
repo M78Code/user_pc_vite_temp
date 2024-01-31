@@ -18,21 +18,12 @@
         {{ toolSelected == '2' ? i18n_t('bet.bet_book_total') : i18n_t('bet_record.total_v') }}
         <!-- 总投注额/预约总投资额 -->
         ：
-        <span class="footer-text">{{ betTotalAmount }}</span>
-        <!-- <span class="footer-text">{{ format_balance(betTotalAmount) }}</span> -->
+        <span class="footer-text">{{ format_balance(betTotalAmount)  }}</span>
       </span>
       <div>
-        <!-- 目前屏蔽有效流水展示 -->
-        <span v-if="0">
-          {{ i18n_t('bet_record.effective_water') }}
-          <!-- 有效流水 -->
-          ：{{ effectiveFlow }}
-        </span>
-        <span v-if="!isUnsettled">
+        <span v-if="toolSelected == 1">
           {{ profit.indexOf("-") != -1 ? i18n_t('bet_record.lose') : i18n_t('bet_record.win') }}：
-          <span
-            class="footer-text"
-          >{{ profit }}</span>
+          <span class="footer-text">{{ profit }}</span>
         </span>
         <!-- <span>{{profit.indexOf("-")!=-1?'输':'赢'}}：{{profit}}</span> -->
       </div>
@@ -130,20 +121,6 @@ export default defineComponent({
       default: ()=>{},
     },
   },
-  filters: {
-    format_balance(num) {
-  		if(num) {
-  			let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/)
-
-  			// 保留两位小数
-  			let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00"
-
-  			let _num = _split[1] + '.' + decimal
-  			return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
-  		}
-  		return '';
-    },
-  },
   setup(props, context) {
     const state = reactive({
       goPage: 1,
@@ -227,6 +204,19 @@ export default defineComponent({
    
     }
 
+    const format_balance = (num) => {
+  		if(num) {
+  			let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/)
+
+  			// 保留两位小数
+  			let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00"
+
+  			let _num = _split[1] + '.' + decimal
+  			return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+  		}
+  		return '';
+    }
+
     onMounted(() => {
     })
     return {
@@ -235,7 +225,7 @@ export default defineComponent({
       goToPage,
       // page,
       max,
-      
+      format_balance
     }
   }
 

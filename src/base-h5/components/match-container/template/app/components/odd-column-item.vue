@@ -553,7 +553,6 @@ onUnmounted(() => {
   justify-content: center;
   align-items: center;
   position: relative;
-
   &.first-radius {
     // border-radius: 0.03rem 0 0 0.03rem;
   }

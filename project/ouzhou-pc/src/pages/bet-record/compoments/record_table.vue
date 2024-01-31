@@ -71,7 +71,8 @@
                         <sport-icon :sport_id="cts_mid.includes(props.row.managerCode*1) ? item.sportId == 1 ? '90': 91  : item.sportId" key_name="pc-left-menu-bg-image" size="18" class="icon"  style="margin:0 10px"/>
                       </div> -->
                       <span>[{{item.sportName}}] {{ item.matchName }}</span>
-                      <span v-if="item.matchDay">{{ item.matchDay }} {{ item.batchNo }}</span>
+                      <span v-if="[1001,1004].includes(item.sportId*1)">{{ item.matchDay }} {{ item.batchNo }}</span>
+                      <span v-if="[1011,1002,1009,1010].includes(item.sportId*1)">{{ item.batchNo }}</span>
                       <span v-if="item.matchType !=3" style="color:#8A8986">{{ item.matchInfo }}</span>
                       <span>
                           <span v-if="item.matchType != 3 && ![1001,1002,1009,1010,1011].includes(item.sportId*1)">{{matchType(item.matchType, props.row.langCode)}}</span>
@@ -216,7 +217,11 @@
 
       <Pagination v-if="BetRecordHistory.table_data.length > 0" 
                   class="record-pagination" 
+                  :is_bet_record="true"
                   :count="BetRecordHistory.records.total" 
+                  :betTotalAmount="BetRecordHistory.records.betTotalAmount"
+                  :profit="BetRecordHistory.records.profit"
+                  :toolSelected="BetRecordHistory.selected"
                   @pageChange="changePage"
                   @pageSizeChange="pageSizeChange"
                   @goPageChange="goPageChange"

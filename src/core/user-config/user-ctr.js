@@ -92,7 +92,7 @@ class UserCtr {
 
     this.test=1;
     //排序	 int 类型 1 按热门排序 2 按时间排序 欧洲版默认时间排序
-    this.sort_type = 2;
+    this.sort_type = PROJECT_NAME === 'app-h5' ? 1 : 2;
      //每日活动	 Boolean 类型 ture 开启 false 关闭
      this.daily_activities =  LocalStorage.get("daily_activities",false);
     //收藏/关注	true/false

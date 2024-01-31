@@ -4,12 +4,12 @@
 
 <template>
   <div v-show="show_score_match_line(match)" class="score-section"
-    :class="{ 'flex-star': [3].includes(+match.csid), standard: get_newer_standard_edition == 2, result: get_menu_type == 28 }">
+    :class="{ 'flex-star': [3].includes(+match.csid), standard: standard_edition == 2, result: get_menu_type == 28 }">
     <div class="scroll-container-w" :class="{ 'left_scroll': show_left_triangle, 'right_scroll': show_right_triangle,'bq-ball': match.csid == 3, }"
       :ref="`match_score_scroll_w_${match.mid}`">
       <!-- 需求：棒球3，斯诺克7，拳击12 不显示比分  -->
       <div class="score-se-inner" ref='scoreWrapScroller' v-if="![3].includes(+match.csid)" :class="{
-        standard: get_newer_standard_edition == 2 && get_menu_type != 28,
+        standard: standard_edition == 2 && get_menu_type != 28,
         result: get_menu_type == 28,
         'is-foot-ball': match.csid == 1 || match.csid == 11,
         'is-basket-ball': match.csid == 2,
@@ -22,7 +22,7 @@
         <div class="score-se-inner2" :ref="`score_se_inner2_${match.mid}`">
           <!-- 比分 -->
           <div class="row items-center score-fle-container-1"
-            :class="{ result: get_menu_type == 28 && main_source !== 'detail_match_list', }">
+            :class="{ result: get_menu_type == 28 && PageSourceData.page_source !== 'detail_match_list', }">
             <template v-for="(score, i) of msc_converted">
               <div v-if="is_show_score(match, score)" class="score row items-start"
                 :class="{
@@ -130,18 +130,17 @@
  
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue";
-import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { MenuData, score_switch_handle, score_format } from "src/output/index.js"
+import { standard_edition} from 'src/base-h5/mixin/userctr.js'
+import PageSourceData  from  "src/core/page-source/page-source.js";
 
 const props = defineProps({
   match: Object,
-  main_source: String,
 })
 
 const scoreWrapScroller = ref(null)
-const store_state = store.getState()
 const timer_1 = ref(null)
 const timer_2 = ref(null)
 //斯诺克比分编号为S1的结果
@@ -154,40 +153,13 @@ const show_left_triangle = ref(false)
 const show_right_triangle = ref(false)
 const get_menu_type = ref(MenuData.get_menu_type())
 
-const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
-
-const unsubscribe = store.subscribe(() => {
-  const new_state = store.getState()
-  get_newer_standard_edition.value = new_state.get_newer_standard_edition
-})
-
-
 onMounted(() => {
-  get_last_list_score();
-  //获取最新比分延迟时钟对象
-  timer_1.value = setTimeout(() => {
-    get_last_list_score();
-  }, 100);
-
-  //比分区域div布局延迟，以使其刚打开页面就能左右滚动
-  timer_2.value = setTimeout(() => {
-    score_layout_init();
-  }, 300);
-})
-
-watch(() => props.match.msc, () => {
-  get_msc_converted();
-})
-
-// 监听赛事比分变化
-watch(() => props.match.ms, () => {
-  get_last_list_score()
-})
-
-// 监听赛事阶段变化
-watch(() => props.match.mmp, () => {
-  get_msc_converted();
-  get_last_list_score();
+  // get_last_list_score();
+  // //获取最新比分延迟时钟对象
+  // timer_1.value = setTimeout(() => {
+  //   get_last_list_score();
+  //   score_layout_init();
+  // }, 300);
 })
 
 /**
@@ -213,22 +185,6 @@ const all_s1 = computed(() => {
     return '[0:0]'
   }
 })
-
-// 胜者与输者分数差
-const score_sub_win_faild = computed(() => {
-  let r = 0;
-  let scores = get_total_scores;
-  if (scores.value) {
-    if (typeof scores.value.score_sub != 'undefined') {
-      r = scores.value.score_sub;
-    }
-    else {
-      r = scores.value;
-    }
-  }
-  return scores.value;
-})
-
 
 // 所有盘/局加起来的总比分
 const get_total_scores = computed(() => {
@@ -445,13 +401,25 @@ const get_snooker_score_space_data = () => {
   return result;
 }
 
+
+watch(() => props.match.msc, () => {
+  get_msc_converted();
+}, { immediate: true })
+
+// 监听赛事比分变化
+watch(() => props.match.ms, () => {
+  get_last_list_score()
+}, { immediate: true })
+
+// 监听赛事阶段变化
+watch(() => props.match.mmp, () => {
+  get_msc_converted();
+  get_last_list_score();
+}, { immediate: true })
+
 onUnmounted(() => {
-  unsubscribe()
   clearTimeout(timer_1.value);
   timer_1.value = null;
-
-  clearTimeout(timer_2.value);
-  timer_2.value = null;
 })
 </script>
  
