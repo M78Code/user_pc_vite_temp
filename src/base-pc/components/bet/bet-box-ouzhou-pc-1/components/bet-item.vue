@@ -4,7 +4,7 @@
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
 
          <!--这个地方是个遮罩层，单关合并只能有一个能预约，其余用遮罩遮住-->
-        <div v-if="BetData.is_bet_pre && !is_bet_appoint_disable" class="cathectic-appoint"></div>
+        <div v-if="BetData.is_bet_pre && !is_bet_appoint_disable()" class="cathectic-appoint"></div>
 
         <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
             <div class="fw-s-s bet-left">
@@ -135,9 +135,9 @@ const cancel_operate = () =>{
   BetData.set_is_bet_pre(false)
 }
 
-const is_bet_appoint_disable = computed(() => {
+const is_bet_appoint_disable = computed(() => state => {
     // 玩法id
-    console.log(props.items.playOptionsId, BetData.bet_pre_appoint_id)
+    console.log('这里', props.items.playOptionsId, BetData.bet_pre_appoint_id)
     return BetData.bet_pre_appoint_id == props.items.playOptionsId
 })
 
