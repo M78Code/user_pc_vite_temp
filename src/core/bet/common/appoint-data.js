@@ -5,6 +5,7 @@ import { i18n_t } from "src/boot/i18n.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import { FOOTBALL_PLAY_LET_BALL, MARKET_BIG_SMALL_PLAY_LIST, MARKET_RANG_FLAG_LIST, MARKET_HOME_PLAY_LIST, MARKET_AWAY_PLAY_LIST, BASKETBALL_BY_APPOINTMENT_let, BASKETBALL_BY_APPOINTMENT_total } from "src/output/index.js";
 import lodash_ from "lodash"
+import UserCtr from "src/core/user-config/user-ctr.js"
 
 const ref_pre_book = reactive({
   min_odds_value: null, //最小赔率
@@ -158,7 +159,6 @@ const reduce_change_val = (val) => {
  * @return {undefined} undefined
  */
 const add_handle = (item, index = 1) => {
-  set_ref_data(item)
   //球头加
   let step = item.sportId == '1' ? 0.25 : 0.5;
   ref_pre_book.appoint_ball_head = math_js.add(ref_pre_book.appoint_ball_head, step);
@@ -214,7 +214,6 @@ const add_handle = (item, index = 1) => {
  * @return {undefined} undefined
  */
 const sub_handle = (item, index = 1) => {
-  set_ref_data(item)
   let step = item.sportId == 1 ? 0.25 : 0.5;
   ref_pre_book.appoint_ball_head = math_js.subtract(ref_pre_book.appoint_ball_head, step);
   // console.error('market_type===', this.market_type);
