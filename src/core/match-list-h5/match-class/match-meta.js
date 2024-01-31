@@ -29,6 +29,8 @@ class MatchMeta {
     this.init()
     // 联赛 id 对应的 mids
     this.tid_map_mids = {}
+    // 接口取消标识
+    this.axios_cancel = {}
   }
 
   init() {
@@ -747,7 +749,9 @@ class MatchMeta {
       ...other_params
     }
     if (params_tid) this.set_show_skeleton_state(true)
-    const res = await this.handler_axios_loop_func({ http: api_common.post_match_full_list, params: target_params, key: 'post_match_full_list' })
+    // 取消上一次的  限频重新请求逻辑
+    this.axios_cancel['match'] && this.axios_cancel['match']()
+    const res = await this.handler_axios_loop_func({ http: api_common.post_match_full_list, params: target_params, key: 'post_match_full_list', axios_key: "match"  })
     if (!this.is_current_http_key(http_key) || MenuData.is_collect() || MenuData.is_esports()) return
     const code = lodash.get(res, 'code', 0)
     const list = lodash.get(res, 'data', [])
@@ -1277,7 +1281,7 @@ class MatchMeta {
     this.compute_current_matchs()
 
     // 复刻版 base-virtual-list 组件 不需要走下面的逻辑
-    if (project_name !== 'app-h5') {
+    // if (project_name !== 'app-h5') {
       if (!is_virtual) {
         // 清除虚拟计算信息
         VirtualList.clear_virtual_info()
@@ -1293,7 +1297,7 @@ class MatchMeta {
         // 计算所需渲染数据
         this.compute_page_render_list({ scrollTop: scroll_top, merge, type })
       }
-    }
+    // }
 
     // 重置数据为空状态
     this.set_page_match_empty_status({ state: false })
@@ -1488,7 +1492,7 @@ class MatchMeta {
    * @returns 
    */
   handler_axios_loop_func (axios_params = {}) {
-    const { http = '', params = '', key = '', code = ["0401038"], timers = 2500 } = axios_params
+    const { http = '', params = '', key = '', axios_key = 'match', code = ["0401038"], timers = 2500 } = axios_params
     if (!http) return
     return new Promise((resolve, reject) => {
       const http_info = {
@@ -1516,7 +1520,11 @@ class MatchMeta {
         timers: timers,
       };
       // 执行
-      axios_loop(http_info);
+      // axios_loop(http_info);
+      // axios_loop(http_info);
+      Object.assign(this.axios_cancel, {
+        [axios_key]: axios_loop(http_info)
+      })
     })
   }
 
@@ -1683,11 +1691,12 @@ class MatchMeta {
       params.sort = 1;
     }
     let res = ''
-    // 赛果
+    // 取消上一次的  限频重新请求逻辑
+    this.axios_cancel['mids'] && this.axios_cancel['mids']()
     if (MenuData.is_esports()) {
-      res = await this.handler_axios_loop_func({ http: api_common.get_esports_match_by_mids, params, key: 'get_esports_match_by_mids' })
+      res = await this.handler_axios_loop_func({ http: api_common.get_esports_match_by_mids, params, key: 'get_esports_match_by_mids', axios_key: "mids" })
     } else {
-      res = await this.handler_axios_loop_func({ http: api_common.get_match_base_info_by_mids, params, key: 'get_match_base_info_by_mids' })
+      res = await this.handler_axios_loop_func({ http: api_common.get_match_base_info_by_mids, params, key: 'get_match_base_info_by_mids', axios_key: "mids" })
     }
     const code = lodash.get(res, 'code', 0)
     const data = lodash.get(res, 'data', [])

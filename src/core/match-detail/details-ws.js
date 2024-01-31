@@ -78,8 +78,8 @@ export const details_ws = () => {
   function RCMD_C105(obj){
      // 足球赛事投注玩法，基准分的动态更新
      try {
-        if(Array.isArray(obj.hls) && obj.hls.length){
-          useMittEmit(MITT_TYPES.EMIT_CHANGE_BASE_SCORE, obj.hls)
+        if(Array.isArray(obj.cd.hls) && obj.cd.hls.length){
+          useMittEmit(MITT_TYPES.EMIT_CHANGE_BASE_SCORE, obj.cd.hls)
         };
       } catch (err) {
         console.error(err);

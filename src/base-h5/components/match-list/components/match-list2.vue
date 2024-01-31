@@ -3,7 +3,7 @@
 -->
 
 <template>
-  <template v-if="!is_scroll_component">
+  <template v-if="is_base_virtual_list">
     <BaseVirtualList :dataList="matchs_data" @onUpdate="handlerUpdate">
       <template #default="{ item, index }">
         <!-- 赛果详情精选赛事 -->
@@ -34,33 +34,42 @@
         </template>
         <!-- 常规赛事 -->
         <template v-else>
-          <template v-if="standard_edition == 1">
-            <MatchContainerMainTemplate5
-              :i="index"
-              :match_of_list="get_match_item(item)">
-            </MatchContainerMainTemplate5>
-          </template>
-          <template v-else>
-            <MatchContainerMainTemplate1
-              :i="index"
-              :match_of_list="get_match_item(item)">
-            </MatchContainerMainTemplate1>
-          </template>
+          <MatchContainerMainTemplate5
+            :i="index"
+            :match_of_list="get_match_item(item)">
+          </MatchContainerMainTemplate5>
         </template>
       </template>
     </BaseVirtualList>
   </template>
   <template v-else>
     <div class="refresh-container">
-      <!--冠军玩法 列表页 -->
+      <!--列表页 -->
       <ScrollWrapper>
         <template v-slot="{ match_item, index }">
           <!--此data-mid用于分频订阅赛事,请勿修改-->
           <div class="data_mid" v-if="match_item"> 
-            <MatchContainerMainTemplate2
-              :i="index"
-              :match_of_list="get_match_item(match_item)">
-            </MatchContainerMainTemplate2>
+            <!-- 冠军玩法 -->
+            <template v-if="is_kemp || MenuData.get_mm_is_champion()">
+              <MatchContainerMainTemplate2
+                :i="index"
+                :match_of_list="match_item">
+              </MatchContainerMainTemplate2>
+            </template>
+            <!-- 常规赛果 -->
+            <template v-else-if="is_results">
+              <MatchContainerMainTemplate3
+                :i="index"
+                :match_of_list="match_item">
+              </MatchContainerMainTemplate3>
+            </template>
+            <!-- 真实体育玩法 -->
+            <template v-else>
+              <MatchContainerMainTemplate1
+                :i="index"
+                :match_of_list="match_item">
+              </MatchContainerMainTemplate1>
+            </template>
           </div>
         </template>
       </ScrollWrapper>
@@ -97,10 +106,11 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MenuData } from 'src/output/index.js';
 
+const route = useRoute()
+
 // 是否使用 BaseVirtualList 组件  BaseVirtualList 试运行， 稳定后替换其他模板
-const is_scroll_component = computed(() => {
-  return MenuData.update_time.value && (is_kemp.value || MenuData.get_mm_is_champion())
-  // return MenuData.update_time.value && !MenuData.get_mm_is_champion() && (is_results.value || (standard_edition.value == 1 && !is_kemp.value && route.name !== 'match_result'))
+const is_base_virtual_list = computed(() => {
+  return MenuData.update_time.value && !MenuData.get_mm_is_champion() && (is_results.value || (standard_edition.value == 1 && !is_kemp.value && route.name !== 'match_result'))
   // return is_results.value || (standard_edition.value == 1 && !is_kemp.value && route.name !== 'match_result')
   // return standard_edition.value == 1 && ! is_results.value && !is_kemp.value && route.name !== 'match_result'
 })
@@ -116,28 +126,12 @@ const matchs_data = computed(() =>{
 })
 
 // 根据当前可视区 mids 获取赛事赔率
-// watch(() => mids_string.value, (n,o) => {
-//   if (n === o) return
-//   MatchMeta.get_match_base_hps_by_mids({mids: mids_string.value})
-// })
+watch(() => mids_string.value, () => {
+  MatchMeta.get_match_base_hps_by_mids({mids: mids_string.value})
+})
 
-//获取数据仓库赛事数据  TODO: 改动这里需关注CPU使用情况 类似 Object.assign(match, { source_index, is_show_ball_title, start_flag }) 会导致 该方法一直触发
+//获取数据仓库赛事数据
 const get_match_item = (item) => {
-  const match = MatchDataBaseH5.get_quick_mid_obj(item.mid) || item
-  match.source_index = item.source_index
-  match.is_show_ball_title = item.is_show_ball_title
-  match.start_flag = item.start_flag
-  return match
-  // return Object.assign(match, { source_index, is_show_ball_title, start_flag })
-}
-
-const get_match_item1 = (item) => {
-  // if (item.mid === '3648314') {
-  //   debugger
-  //   console.error(MatchDataBaseH5.get_quick_mid_obj(item.mid) || item)
-  // }
-  // const { source_index = '', is_show_ball_title = false, start_flag = '3' } = item
-  // const match = MatchDataBaseH5.get_quick_mid_obj(item.mid) || item
   return MatchDataBaseH5.get_quick_mid_obj(item.mid) || item
 }
 
@@ -145,35 +139,26 @@ const get_match_item1 = (item) => {
 const handlerUpdate = lodash.debounce((data) => {
   const length = lodash.get(data, 'length', 0)
   if (length < 1) return
-  let flag = false
-  const mids = []
-  const list = []
-  data.forEach(t => {
-    if (t.is_meta) return
-    const item = matchs_data.value.find(m => m.mid === t.mid)
-    list.push(item)
-    flag = true
-    mids.push(t.mid)
-  })
-  console.log('当前可视区数据更新数据', list)
-  if (flag && mids_string.value !== mids.join(',')) {
-    // 设置当前激活的赛事
-    MatchMeta.set_current_match_mids(mids)
-    // 更新仓库赛事数据 , merge: 'cover'
-    MatchMeta.handle_update_match_info({ list: list, merge: 'cover' })
-    // // 根据当前可视区 mids 获取赛事赔率
-    MatchMeta.get_match_base_hps_by_mids({mids: mids.join(',')})
-    
-    mids_string.value = mids.join(',')
-  }
-}, 800)
-
-// 一级菜单改变 重置 当前 mids, 当早盘 和 滚球 前几场赛事相同时  会存在不调用 赔率接口的情况
-watch(() => MenuData.current_lv_1_menu_mi.value, () => {
-  mids_string.value = ''
-})
+  // 更新仓库
+  MatchMeta.handle_update_match_info({ list: data, merge: 'cover' })
+  const mids = data.map(t => t.mid)
+  mids_string.value = mids.join(',')
+}, 1000)
 
 // BaseVirtualList 组件 所需 end ·············································
+
+// 赛果的判断
+const is_match_results_kemp = computed(() => {
+ return MenuData.is_results_type === 3
+})
+
+const is_match_results_virtual = computed(() => {
+ return MenuData.is_results_type === 2
+})
+
+const is_match_results_game = computed(() => {
+ return MenuData.is_results_type === 1
+})
 
 </script>
  

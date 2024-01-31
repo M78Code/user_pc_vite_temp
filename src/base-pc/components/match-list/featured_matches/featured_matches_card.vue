@@ -117,8 +117,7 @@ function get_col_ols_data(_mid) {
   const tpl_id = get_ouzhou_data_tpl_id(csid)
   //101 视图模板 却是对应不同的数据模板ID 所以要重新取
   const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`]
-  const hots_odds_list = match_tpl_info.get_hots_odds_list()
-
+  const hots_odds_list = lodash.cloneDeep(match_tpl_info.get_hots_odds_list())
   let handicap_type = hn || 1
   const many_obj = get_match_to_map_obj(match); //非坑位对象
   const hn_obj = lodash.get(MatchDataWarehouse_ouzhou_PC_hots_List_Common, "list_to_obj.hn_obj", {})
@@ -129,8 +128,7 @@ function get_col_ols_data(_mid) {
     // 获取投注项内容 
     let ols_data = lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
     // 15mins 和 featured赛事展示的投注项名称
-    Object.assign(item,ols_data)
-    return item;
+    return Object.assign({},item,ols_data);
   })
 }
 // // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
