@@ -188,7 +188,7 @@ class BetWsMessage {
     BetData.set_bet_c201_change(obj.cd)
   }
   // 投注项变更
-  MSG_C1023(obj) {
+  MSG_C203(obj) {
     UserCtr.get_balance()
   }
 }
