@@ -99,7 +99,7 @@ export function usedetailData(route) {
     if (plays) {
       list = all_list.value.filter((item) =>{
         if(category.round){
-          let [hpid, round] = item.
+          let [hpid, round] = item.chpid.split("-")
         }else{
           plays.includes(Number(item.hpid))
         }
