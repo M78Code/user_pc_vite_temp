@@ -43,7 +43,7 @@ import { compute_local_project_file_path } from "src/output/index.js";
 // import icon_success from "src/assets/images/icon_success.png";
 // import icon_success from "src/assets/images/icon_success.png";
 // import { mapActions } from "vuex";
-// import vScrollArea from "src/public/components/v_scroll_area/v_scroll_area.vue"; // 通屏垂直滚动
+import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue"; // 通屏垂直滚动
 // import sports_menu_mixin from  "src/public/components/main_menu/sports-menu.mixin.js"
 
 // export default {

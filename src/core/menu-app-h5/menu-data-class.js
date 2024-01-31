@@ -364,6 +364,7 @@ class MenuData {
     if(res?.code == '200'){
         const data = res?.data?.map((item)=>{
             return {
+                count:item.count,
                 name: item.menuName,
                 val: item.field1,
                 menuType:item.menuType

@@ -67,6 +67,7 @@ const btn_add = ( obj ) => {
   }
 
   ref_pre_book.appoint_odds_value = format_money(odds_new_) 
+  return ref_pre_book.appoint_odds_value
 }
 
 

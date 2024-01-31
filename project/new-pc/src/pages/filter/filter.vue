@@ -83,7 +83,7 @@ import { onMounted, ref, onUnmounted, watch,nextTick } from "vue";
 // import global_mixin from "src/core/global/mixin/global_mixin.js"; 需替换
 // import { mapGetters, mapActions } from "vuex"; 需替换
 // import LoadData from "src/public/components/load_data/load_data.vue";
-// import VScrollArea from "src/public/components/v_scroll_area/v_scroll_area.vue";
+import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue";
 //赛事总数
 const total = ref()
 const total_league = ref()
