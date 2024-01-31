@@ -373,6 +373,7 @@ export default defineComponent({
         return
       }
       if (e?.direction == 'left') {
+        console.log(1111111)
     //  滑动次数++
         init_data.index =  init_data.index+1
         // 左滑
