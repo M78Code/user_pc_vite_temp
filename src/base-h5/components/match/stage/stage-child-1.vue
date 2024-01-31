@@ -27,6 +27,7 @@
   import CountingDown from 'src/base-h5/components/common/counting-down.vue';
   import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 // import { format_mgt_time } from "src/output/index.js";
+  import { ref } from "vue";
   const props = defineProps({
     detail_data: {
       type: Object,
@@ -159,12 +160,14 @@ onUnmounted(() => {
     color:var(--q-gb-t-c-14) !important
   }
   .counting-down-wrap{
+     margin-left: 0.1rem;
     //  margin-left: 0.2rem;
     // position: relative;
   }
 }
 .counting-main{
-  margin-left: -0.18rem;
+  margin-left: -0.3rem;
+
 }
 
 // src/core/utils/common/index.jssrc/output/index.js
