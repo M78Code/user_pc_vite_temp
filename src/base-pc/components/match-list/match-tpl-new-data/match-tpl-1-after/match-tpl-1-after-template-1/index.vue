@@ -381,6 +381,10 @@ function play_tab_click(obj) {
   if (match.value.play_current_index == obj.index) {
     return
   }
+  //如果是折叠状态 先展开
+  if (match_style_obj.is_fold_tab_play) {
+      fold_tab_play()
+  }
   let play_key = play_name_list.value[obj.index].field
   // 切换玩法
   switch_other_play(match.value.mid, play_key)

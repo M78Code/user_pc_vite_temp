@@ -46,7 +46,13 @@ const vx_main_menu_toggle = ref('mini')
   height: 32px;
   line-height: 32px;
   padding: 0 15px;
-
+  background: var(--q-gb-bg-c-30) !important;
+  border-bottom: 0.5px solid var(--q-gb-bg-c-23);
+  .ellipsis {
+    font-size: 13px;
+    color: var(--q-gb-t-c-3);
+    font-weight: 500;
+  }
   .max1 {
     max-width: 530px;
   }
