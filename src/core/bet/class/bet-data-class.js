@@ -207,6 +207,8 @@ this.bet_appoint_ball_head= null */
     this.bet_keyboard_config = {}
     // 键盘状态
     this.bet_keyboard_show = true;
+    // 投注项 ID + 坑位
+    this.bet_oid_obj = {}
 
     // 获取缓存信息
     this.set_loacl_config()
@@ -515,12 +517,42 @@ this.bet_appoint_ball_head= null */
   // 设置投注项id 页面选中
   set_bet_oid_list(){
     let list_query = []
+    let bet_oid_obj = {}
+
+    let bet_list = []
     if(this.is_bet_single){
-      list_query = this.bet_single_list.map(item => item.playOptionsId)
+      bet_list = lodash_.cloneDeep(this.bet_single_list)
+     
     }else{
-      list_query = this.bet_s_list.map(item => item.playOptionsId)
+      bet_list = lodash_.cloneDeep(this.bet_s_list)
     }
+
+    list_query = bet_list.map(item => {
+      if(item.playOptionsId){
+        if(item.placeNum){
+          // 坑位 + 投注项id
+          bet_oid_obj[`${item.playOptionsId}_${item.placeNum}`] = {
+            oid: item.playOptionsId,
+            hn: item.placeNum,
+          }
+        }
+        return item.playOptionsId
+      }
+    })
+
     this.bet_oid_list = list_query
+    this.bet_oid_obj = bet_oid_obj
+  }
+
+  // 替换投注项id
+  set_bet_oid_obj(old_,new_) {
+    // 获取oid在投注项id集合中的位置
+    let index_ = this.bet_oid_list.findIndex(item => item == old_)
+    if(index_ != -1){
+      this.bet_oid_list.splice(index_,1)
+      this.bet_oid_list.push(new_)
+    }
+    this.set_bet_data_class_version()
   }
 
   /*
@@ -1019,6 +1051,9 @@ this.bet_appoint_ball_head= null */
     }else{
       this.bet_s_list = lodash_.cloneDeep(list)
     }
+    // 重新设置投注项
+    this.set_bet_oid_list()
+
     this.set_bet_data_class_version()
   }
 
@@ -1026,17 +1061,20 @@ this.bet_appoint_ball_head= null */
   set_ws_message_bet_info(obj,index){
     let reg_index = 0
     // console.log('这里！', this.bet_single_list, this.bet_s_list, obj)
+    let single_list = []
+    let single_name = ''
+    // 单关 切 有投注项
     if(this.is_bet_single){
-      reg_index = this.bet_single_list.findIndex(i => i.playOptionsId === obj.playOptionsId)
-      if (reg_index > 0) {
-        this.bet_single_list[index] = obj
-      }
-    }else{
-      reg_index = this.bet_single_list.findIndex(i => i.playOptionsId === obj.playOptionsId)
-      if (reg_index > 0) {
-        this.bet_s_list[index] = obj
-      }
+      single_list = this.bet_single_list || []
+      single_name = 'bet_single_list'
+    } else {
+      single_list = this.bet_s_list || []
+      single_name = 'bet_s_list'
     }
+
+    reg_index = single_list.findIndex(i => i.playOptionsId === obj.playOptionsId)
+    single_list[index] = obj
+    this[single_name] = single_list
 
     this.set_options_state()
   }
@@ -1191,7 +1229,6 @@ this.bet_appoint_ball_head= null */
             // 查询ws投注项 中 匹配到的投注项id 
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
-            // console.error('ol_obj', item.hs ,ws_ol_obj.os,item.hn, ol_obj.placeNum)
             // 有坑位 并且 坑位变更 
             if(item.hn != ol_obj.placeNum && ol_obj.placeNum){
               // 获取最新的盘口值
@@ -1202,11 +1239,11 @@ this.bet_appoint_ball_head= null */
             if(item.hs != 0 ) {
               // 直接更新状态 设置关盘
               ol_obj.hl_hs = item.hs
+              ol_obj.red_green = ''
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
               return
             }
             if(ws_ol_obj.ov){
-              // clearTimeout(time_out)
               // "odds": item.odds,  // 赔率 万位
               // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
               //  红升绿降
@@ -1215,9 +1252,10 @@ this.bet_appoint_ball_head= null */
                 ol_obj.red_green = 'green_down'
               }
 
-              // console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
               // 投注项和状态一致不更新数据 
               if(ol_obj.odds == ws_ol_obj.ov && ws_ol_obj.os == ol_obj.ol_os && item.hs == ol_obj.hl_hs ){
+                ol_obj.red_green = ''
+                this.set_ws_message_bet_info(ol_obj,ol_obj_index)
                return
               }
               // 重新设置赔率
@@ -1235,7 +1273,7 @@ this.bet_appoint_ball_head= null */
               // 更新投注项内容
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
 
-              // 5秒后清除 红升绿降
+              // 3秒后清除 红升绿降
               // time_out = setTimeout(()=>{
               setTimeout(()=>{
                 ol_obj.red_green = ''

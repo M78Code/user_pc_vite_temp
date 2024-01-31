@@ -7,12 +7,14 @@
     <!-- 加载中 -->
     <!-- <loading v-if="BetRecordClass.is_loading" /> -->
     <scroll ref="myScroll" :on-pull="onPull">
-      <!-- 未结算 提前结算按钮 1期隐藏 -->
-      <!-- <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0 && !lodash.isEmpty(BetRecordClass.list_data)" 
-      :class="['cashout', 'unsellteCashout', BetRecordClass.is_early ? 'active': '']"
-      @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)"
-      >{{ i18n_t('early.btn2') }}</div> -->
+      <!-- 未结算 -->
+      <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0 && !lodash.isEmpty(BetRecordClass.list_data)" 
+        :class="['cashout', 'unsellteCashout', BetRecordClass.is_early ? 'active': '']"
+        @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)"
+      >{{ i18n_t('early.btn2') }}</div>
+
       <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
+
       <!-- 已结算筛选、提前结算按钮 -->
       <div class="settled-select flex" v-if="BetRecordClass.selected === 1">
           <div class="select-item">
@@ -20,10 +22,16 @@
             <custom-select init_type="order" :init_index="0" @changeSelect="(val) => changeSelect('order', val)"></custom-select>
           </div>
           <!-- 未结算 提前结算按钮 1期隐藏 -->
-          <!-- <div :class="['cashout', BetRecordClass.is_early ? 'active': '']" 
+          <div :class="['cashout', BetRecordClass.is_early ? 'active': '']" 
             @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)"
             v-if="UserCtr.user_info.settleSwitch == 1 && !lodash.isEmpty(BetRecordClass.list_data)"
-            >{{ i18n_t('early.btn2') }}</div> -->
+            >{{ i18n_t('early.btn2') }}</div>
+      </div>
+
+      <!-- 预约 -->
+      <div v-if="BetRecordClass.selected === 2" class="is_invalid" 
+        @click="BetRecordClass.set_is_invalid(!BetRecordClass.is_invalid)">
+        {{ i18n_t('bet.disabled') }} <span :class="{'active': BetRecordClass.is_invalid }"></span> 
       </div>
       <template v-if="!lodash.isEmpty(BetRecordClass.early_money_list)">
         <!-- 订单内容 -->
@@ -238,6 +246,41 @@ template {
     }
   }
 }
+.is_invalid {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  z-index: 999;
+  top: 0.15rem;
+  right: 0.1rem;
+  font-size: 0.14rem;
+  color: var(--q-gb-t-c-3);
+  span {
+        width: 0.17rem;
+        height: 0.17rem;
+        background-color: transparent;
+        border-radius: 2px;
+        border:1px solid var(--q-gb-t-c-3);
+        position: relative;
+        margin-left: 0.04rem;
+        &.active {
+          border: none;
+          background-color: var(--q-gb-bg-c-1);
+          border-color: var(--q-gb-bg-c-1);
+          &:after {
+            position: absolute;
+            content: "";
+            left: 0.04rem;
+            width: 0.08rem;
+            height: 0.06rem;
+            top: 0.04rem;
+            border-top: 2px solid #fff;
+            border-right: 2px solid #fff;
+            transform: rotate(135deg);
+          }
+        }
+      }
+}
 .date-header {
   margin-top: 0.1rem;
   height: 0.3rem;
@@ -263,10 +306,10 @@ template {
   }
 }
 .cashout {
-    font-size: 0.15rem;
+    font-size: 0.14rem;
     background-color: #fff;
-    height: 0.36rem;
-    line-height: 0.36rem;
+    height: 0.34rem;
+    line-height: 0.34rem;
     width: 1rem;
     text-align: center;
     border-radius: 0.5rem;
@@ -278,7 +321,8 @@ template {
     }
     &.unsellteCashout {
       position: absolute;
-      top: 0.12rem;
+      z-index: 999;
+      top: 0.08rem;
       right: 0.1rem;
     }
 }

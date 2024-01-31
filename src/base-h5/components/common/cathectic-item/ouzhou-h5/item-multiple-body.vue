@@ -33,16 +33,7 @@
             </template>
             <div class="top-info flex">
               <p>
-                <!-- 冠军趣味玩法特殊对应 -->
-                <!-- managerCode=4 代表电竞  -->
-                <!-- matchType=3 是冠军  -->
-                <!-- managerCode=3 代表虚拟体育 -->
-                <!-- seriesType = 3 表示冠军 -->
-                <!-- matchType= 4 表示虚拟体育(尽量不要用这个字段) -->
-                <template v-if="data_b.seriesType == '3' && item.sportId == 50">{{item.sportName}}</template>
-                <template v-else-if="[1011, 1002, 1010, 1009].includes(+item.sportId)">{{item.batchNo}}</template>
-                <template  v-else-if="data_b.seriesType == '3'">{{item.matchName}}</template>
-                <template v-else>{{item.matchInfo}}</template>
+                {{BetRecordClass.selected === 2 ? item.playOptionName: item.marketValue}}
               </p>
               <span>{{formatTime(+item.beginTime, 'mm/DD HH:MM')}}</span>
             </div>
@@ -51,12 +42,8 @@
                 'gray-icon': BetRecordClass.selected === 1, 'error': data_b.orderStatus == '2' || data_b.orderStatus == '4'}">
             <div class="list">
               <p class="col-9">
-              <span>
-                <template v-if="!([1011, 1002, 1010, 1009].includes(+item.sportId) && calc_num && calc_num.length > 1)">
-                  <!-- {{is_pre ? item.playOptionName: item.marketValue}} -->
-                  {{item.marketValue}}
-                </template>
-              </span>
+                [<span v-if="data_b.seriesType != '3' && item.matchType != 4" v-html="i18n_t(`matchtype.${item.matchType}`)"></span>]
+                {{item.playName}}
               <!-- 优化后的赔率 -->
               <span class="oddfinally" v-if="!data_b.acCode"><span>&nbsp;@&thinsp;{{format_odds(item.oddFinally, item.sportId)}}</span></span>
             </p>
@@ -69,14 +56,18 @@
             <!--球类名称 赛前还是滚球 玩法名称 基准分 赔率类型-->
             <span class="info flex">
               <div>
-                {{item.sportName}}
+                <!-- {{item.sportName}}
                 <span v-if="data_b.seriesType != '3' && item.matchType != 4" v-html="i18n_t(`matchtype.${item.matchType}`)"></span>
                 &ensp;{{item.playName}}
                 <template v-if="item.scoreBenchmark"> ({{item.scoreBenchmark}}) </template>
-                &ensp;[{{i18n_t(`odds.${item.marketType}`)}}]
+                &ensp;[{{i18n_t(`odds.${item.marketType}`)}}] -->
+                <template v-if="data_b.seriesType == '3' && item.sportId == 50">{{item.sportName}}</template>
+                <template v-else-if="[1011, 1002, 1010, 1009].includes(+item.sportId)">{{item.batchNo}}</template>
+                <template  v-else-if="data_b.seriesType == '3'">{{item.matchName}}</template>
+                <template v-else>{{item.matchInfo}}</template>
               </div>
               <!-- 已结算显示输赢 -->
-              <span v-if="data_b.seriesType != '1'" class="result" :class="calc_text_item(item).color">
+              <span v-if="!['1', '3'].includes(data_b.seriesType)" class="result" :class="calc_text_item(item).color">
                 {{ calc_text_item(item).text }} 
               </span>
             </span>
@@ -298,7 +289,7 @@ template {
       .info {
         font-size: 0.12rem;
         color: var(--q-gb-bg-c-14);
-        padding-bottom: 0.1rem;
+        // padding-bottom: 0.1rem;
         justify-content: space-between;
         align-items: center;
         .result {

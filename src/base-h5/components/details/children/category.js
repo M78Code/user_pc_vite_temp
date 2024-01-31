@@ -9,8 +9,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // import betting from "src/base-h5/mixins/betting/betting.js";
 import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss} from "src/output/index"; 
 
-// import { Level_one_detail_odd_info } from "../category-list.js";
-import uid from "src/core/uuid/index.js";
+
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
