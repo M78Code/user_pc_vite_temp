@@ -45,7 +45,8 @@
                       <div class="nonebox4-content-left-content-text-two">
                        {{items.matchType == 2? '['+i18n_t("bet.bet_inplay")+']' :''}} 
                        <span class="text-two-span">
-                        <span>{{items.playName}} </span>
+                        <span>{{items.playName}} <span v-if="ref_data.show_appoint" class="bet-book-">[{{i18n_t('pre_record.book')}}]</span>
+                        </span>
                         {{ items.matchType == 2 && [1,2,3,8,9].includes(items.sportId *1) ? items.mark_score : '' }}
                         </span>
                         <span class="has-book" v-show="ref_data.show_appoint"  >[{{ i18n_t('pre_record.book') }}]</span>
@@ -55,18 +56,31 @@
                       <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{items.matchType == 2? items.mark_score : ''}}</div>
 
                       <div v-if="ref_data.show_appoint" class="bet-odds">
-                        <div class="bet-odds-name">{{ i18n_t('analysis_football_matches.Odds') }}</div>
-                        <div class="bet-odds-edit">
-                          <span class="bet-odds-reduce" @click="btn_reduce_click({odds:ref_data.odds_value_edit})">-</span>
-                          <input class="bet-odds-number" type="number" v-model="ref_data.odds_value_edit" />
-                          <span class="bet-odds-add" @click="btn_add_click(ref_data.odds_value_edit)">+</span> 
+                        <div class="bet-appoint-box" v-if="items.marketValue">
+                          <!-- 盘口 -->
+                          <div class="bet-odds-name">{{i18n_t('pre_record.handicap')}}</div>
+                          <div class="bet-odds-edit">
+                            <span class="bet-odds-reduce" v-touch-repeat:0:300.mouse.enter.space="() => {sub_handle(items)}">-</span>
+                            <input class="bet-odds-number" type="number" v-model="ref_pre_book.appoint_ball_value" />
+                            <span class="bet-odds-add" v-touch-repeat:0:300.mouse.enter.space="() => {add_handle(items)}">+</span> 
+                          </div>
+                        </div>
+                        <div class="bet-appoint-box">
+                          <!-- 赔率 -->
+                          <div class="bet-odds-name">{{i18n_t('pre_record.odds')}}</div>
+                          <div class="bet-odds-edit">
+                            <span class="bet-odds-reduce" v-touch-repeat:0:300.mouse.enter.space="() => {btn_reduce(items)}">-</span>
+                            <input class="bet-odds-number" type="number" v-model="ref_pre_book.appoint_odds_value" />
+                            <span class="bet-odds-add" v-touch-repeat:0:300.mouse.enter.space="() => {btn_add(items)}">+</span> 
+                          </div>
+                          <span class="delete-appoint icon-delete" @click="ref_data.show_appoint=false"></span>
                         </div>
                       </div>
                   
                     </div>
 
                     <div class="appoint-cursor" v-if="!ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
-                      <span>+{{ i18n_t('analysis_football_matches.Odds') }}</span>
+                     +{{i18n_t('pre_record.book')}}
                     </div>
                     
                   </div>
@@ -78,11 +92,9 @@
   </template>
   <script setup>
   import BetData from "src/core/bet/class/bet-data-class.js";
-  import { btn_reduce, btn_add } from "src/core/bet/common/appoint-data.js"
-  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr,only_win,compute_value_by_cur_odd_type } from "src/output/index.js";
+  import { btn_reduce, btn_add, ref_pre_book,add_handle,sub_handle,set_ref_data } from "src/core/bet/common/appoint-data.js"
+  import { LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr,compute_value_by_cur_odd_type } from "src/output/index.js";
   import { reactive } from "vue";
-  import lodash_ from "lodash"
-  import mathjs from "src/core/bet/common/mathjs.js"
 
   const props = defineProps({
     items:{},
@@ -90,46 +102,23 @@
   })
   
   const ref_data = reactive({
-    show_appoint:false,
-    odds_value_edit:""
+    show_appoint: false,
+    odds_value_edit: "",
+    ball_value_edit: ""
   })
 
+  // 删除投注项
   const del_bet_options = () =>{
     BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
   }
 
-
+  // 显示预约投注
   const set_show_appoint = () =>{
     ref_data.show_appoint = true
     ref_data.odds_value_edit = props.items.oddFinally
     BetData.set_is_bet_pre(true)
+    set_ref_data(props.items)
   }
-
-  const btn_reduce_click = (obj)=>{
-    obj.min = props.items.oddFinally
-    ref_data.odds_value_edit = btn_reduce(obj)
-
-    // 设置预约投注数据
-		let pre_data = {
-			oid: props.items.playOptionsId,
-			pre_odds: mathjs.multiply(ref_data.odds_value_edit,100000),
-			pre_oddFinally: ref_data.odds_value_edit,
-		}
-    BetData.set_bet_single_list_obj(pre_data)
-  }
-
-
-  const  btn_add_click = (odds)=>{
-    ref_data.odds_value_edit = btn_add(odds)
-    // 设置预约投注数据
-		let pre_data = {
-			oid: props.items.playOptionsId,
-			pre_odds: mathjs.multiply(ref_data.odds_value_edit,100000),
-			pre_oddFinally: ref_data.odds_value_edit,
-		}
-    BetData.set_bet_single_list_obj(pre_data)
-}
-
 
   </script>
   
@@ -200,20 +189,15 @@
 
   .appoint-cursor{
     position: absolute;
-    bottom: 0.2rem;
+    top: 0.5rem;
     right: 0.2rem;
     border-radius: 0.2rem;
+    padding: 0 .1rem;
     border: 0.5px solid var(--q-gb-bd-c-16);
-    width: 0.51rem;
     color: var(--q-gb-t-c-1);
-    span{
-      display: block;
-      border-radius: 0.2rem;
-      background: rgba(255,236,26);
-      width: 0.31rem;
-      transform: translate(0.1rem);
-      text-align: center;
-    }
+    text-align: center;
+    cursor: pointer;
+    line-height: .24rem;
   }
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
@@ -323,19 +307,28 @@
     }
   }
 
+  .bet-appoint-box{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
   .bet-mix-show{
     position: relative;
   }
-  
+  .delete-appoint{
+    margin-left: 0.08rem;
+  }
   .bet-odds{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 38px;
-    width: 200px;
+    height: .28rem;
+    margin-top: .13rem;
+    padding-right: .1rem;
     .bet-odds-name{
-      font-size: 12px;
+      font-size: .12rem;
       color: var(--qq--yb-text-color4);
+      margin-right: 0.08rem;
     }
     .bet-odds-edit{
       display: flex;
@@ -343,25 +336,26 @@
       border-radius: 4px;
      
       .bet-odds-reduce{
-        padding: 0 14px;
-        height: 26px;
+        padding: 0 .14rem;
+        height: .28rem;
+        width: .24rem;
         background: var(--q-gb-bg-c-10);
         color: var(--qq--yb-text-color4);
-        font-size: 16px;
+        font-size: .16rem;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 4px 0 0 4px;
+        border-radius: .04rem 0 0 .04rem;
       }
       .bet-odds-number{
-        width: 70px;
+        width: .52rem;
         color: var(--qq--theme-text-color-handicap);
         border: 0.5px solid var(--qq--theme-bd-bet-pre-input);
         background: var(--qq--theme-bg-bet-pre-input);
-        height: 26px;
-        line-height: 18px;
+        height: .28rem;
+        line-height: .18rem;
         display: flex;
-        font-size: 12px;
+        font-size: .12rem;
         justify-content: center;
         align-items: center;
         text-align: center;
@@ -376,15 +370,16 @@
         
       }
       .bet-odds-add{
-        padding: 0 14px;
-        height: 26px;
+        padding: 0 .14rem;
+        width: .24rem;
+        height: .28rem;
         background: var(--q-gb-bg-c-10);
         color: var(--qq--yb-text-color4);
-        font-size: 16px;
+        font-size: .16rem;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 0 4px 4px 0 ;
+        border-radius: 0 .04rem .04rem 0 ;
       }
     }
   

@@ -566,6 +566,8 @@
     "quarter": "第一节"
   },
   "bet": {
+    "bet_order_info2": "您的订单已确认",
+    "bet_book_failed": "预约失败",
     "edit_success": "赔率修改成功！",
     "edit_fail": "赔率修改失败！",
     "account_balance": "账户余额",
@@ -791,7 +793,8 @@
     "result_score": "赛果比分",
     "number": "注单数",
     "bet": "投注额",
-    "l/w": "输/赢"
+    "l/w": "输/赢",
+    "score_result": "结果比分"
   },
   "pre_record": {
     "book_one": "预",
@@ -1266,7 +1269,12 @@
     "full_time_draw": "全场平局",
     "half_time_draw": "半场平局",
     "minutes_of_the_Xth_goal": "第{goalnr}个进球时分",
-    "any_goal": "5分钟时段进球"
+    "any_goal": "5分钟时段进球",
+    "feature": "特色组合",
+    "all_both": "全场独赢 & 两队都进球",
+    "all_total_goal": "全场独赢 & 进球大小",
+    "half_both": "半场独赢 & 两队都进球",
+    "half_total_goal": "半场独赢 & 进球大小"
   },
   "footer_menu": {
     "adviser": "投注教程",
@@ -1379,7 +1387,8 @@
     "score-disparity": "分差",
     "total_play_count": "总局数",
     "total_pp_score_count": "总分",
-    "water_polo_countdown": "小于S%分钟"
+    "water_polo_countdown": "小于S%分钟",
+    "other": "其他"
   },
   "match_results_title": {
     "1": {

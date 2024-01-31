@@ -473,6 +473,8 @@ class UserCtr {
         }
       })
       .catch((err) => {
+        //添加错误补偿逻辑
+        this.get_balance()//走一次补偿逻辑
         console.error(err);
       });
   }

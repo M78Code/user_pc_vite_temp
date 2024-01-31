@@ -183,22 +183,15 @@ const handel_sort = async(s, idx) => {
   sort.value = s.value
   //电竞 不需要热门排序 和 盘口
   if(s.value === 1 && MenuData.is_esports()) return;
-  //待接口上线后调整
-  if (BUILDIN_CONFIG?.CURRENT_ENV == "local_test") {
-    const param = {
-    sort: s.value
-  }
-  await api_account.get_remember_select(param).then(res => {
-    const {code} = res.data
-    if (code == 200) {
-      UserCtr.set_sort_type(s.value);
-    } else {
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('msg.msg_nodata_07'))
-    }
-  }).catch(err => {
-      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('msg.msg_nodata_07'))
-    })
-  }
+  // if (BUILDIN_CONFIG?.CURRENT_ENV == "local_test") {
+  //   const param = {
+  //   sort: s.value
+  // }
+  // await api_account.get_remember_select(param).then().catch(err => {
+  //     useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('msg.msg_nodata_07'))
+  //   })
+  // }
+  UserCtr.set_sort_type(s.value);
 }
 
 

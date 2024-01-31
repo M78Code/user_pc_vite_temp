@@ -70,7 +70,7 @@
 
 <script>
 import lodash from "lodash"
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
+import { LOCAL_PROJECT_FILE_PREFIX ,BUILDIN_CONFIG} from 'src/output/index.js'
 import {project_name } from 'src/output/module/constant-utils-common.js'
 
 export default {
@@ -182,7 +182,7 @@ export default {
       })
 
       // 复刻版的话角球，红牌，黄牌 都显示
-      const {PROJECT_NAME} = window.BUILDIN_CONFIG
+      const {PROJECT_NAME} = BUILDIN_CONFIG
       if (PROJECT_NAME=='app-h5') {
         this.red_flag = this.red_card = this.yellow_card = true
       }else{
