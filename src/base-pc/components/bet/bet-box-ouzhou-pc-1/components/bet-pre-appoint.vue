@@ -378,9 +378,9 @@ const add_handle = (type, index = 1) => {
     }
     set_computed_appoint_ball_head()
     set_bet_obj_config()
-    nextTick(() => {
-      search_odds_value_by_ball_head();
-    })
+    // nextTick(() => {
+    //   search_odds_value_by_ball_head();
+    // })
   }
 }
 /**
@@ -481,9 +481,9 @@ const sub_handle = (type, index = 1) => {
     }
     set_computed_appoint_ball_head()
     console.error('球头减');
-    nextTick(() => {
-      search_odds_value_by_ball_head();
-    })
+    // nextTick(() => {
+    //   search_odds_value_by_ball_head();
+    // })
   }
 }
 /**

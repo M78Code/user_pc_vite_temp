@@ -137,7 +137,7 @@ const cancel_operate = () =>{
 
 const is_bet_appoint_disable = computed(() => state => {
     // 玩法id
-    console.log('这里', props.items.playOptionsId, BetData.bet_pre_appoint_id)
+    // console.log('这里', props.items.playOptionsId, BetData.bet_pre_appoint_id)
     return BetData.bet_pre_appoint_id == props.items.playOptionsId
 })
 
