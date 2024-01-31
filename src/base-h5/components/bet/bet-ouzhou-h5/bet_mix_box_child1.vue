@@ -45,11 +45,10 @@
                       <div class="nonebox4-content-left-content-text-two">
                        {{items.matchType == 2? '['+i18n_t("bet.bet_inplay")+']' :''}} 
                        <span class="text-two-span">
-                        <span>{{items.playName}} <span v-if="ref_data.show_appoint" class="bet-book-">[{{i18n_t('pre_record.book')}}]</span>
+                        <span>{{items.playName}} <span v-if="ref_data.show_appoint" class="has-book">[{{i18n_t('pre_record.book')}}]</span>
                         </span>
                         {{ items.matchType == 2 && [1,2,3,8,9].includes(items.sportId *1) ? items.mark_score : '' }}
                         </span>
-                        <span class="has-book" v-show="ref_data.show_appoint"  >[{{ i18n_t('pre_record.book') }}]</span>
                       </div>
 
                       <div class="nonebox4-content-left-content-text-three">{{items.tid_name}}</div>
@@ -60,18 +59,18 @@
                           <!-- 盘口 -->
                           <div class="bet-odds-name">{{i18n_t('pre_record.handicap')}}</div>
                           <div class="bet-odds-edit">
-                            <span class="bet-odds-reduce" v-touch-repeat:0:300.mouse.enter.space="() => {sub_handle(items)}">-</span>
+                            <span class="bet-odds-reduce" :class="{begray:ref_pre_book.appoint_ball_value <= 0}" v-touch-repeat:0:300.mouse.enter.space="() => {sub_handle(items)}">-</span>
                             <input class="bet-odds-number" type="number" v-model="ref_pre_book.appoint_ball_value" />
-                            <span class="bet-odds-add" v-touch-repeat:0:300.mouse.enter.space="() => {add_handle(items)}">+</span> 
+                            <span class="bet-odds-add" :class="{begray:ref_pre_book.appoint_ball_value >= check_ball_maxmin(items)}" v-touch-repeat:0:300.mouse.enter.space="() => {add_handle(items)}">+</span> 
                           </div>
-                        </div>
+                        </div>                                     
                         <div class="bet-appoint-box">
                           <!-- 赔率 -->
                           <div class="bet-odds-name">{{i18n_t('pre_record.odds')}}</div>
                           <div class="bet-odds-edit">
-                            <span class="bet-odds-reduce" v-touch-repeat:0:300.mouse.enter.space="() => {btn_reduce(items)}">-</span>
+                            <span class="bet-odds-reduce" :class="{begray:ref_pre_book.appoint_odds_value == ref_pre_book.min_odds_value}" v-touch-repeat:0:300.mouse.enter.space="() => {btn_reduce(items)}">-</span>
                             <input class="bet-odds-number" type="number" v-model="ref_pre_book.appoint_odds_value" />
-                            <span class="bet-odds-add" v-touch-repeat:0:300.mouse.enter.space="() => {btn_add(items)}">+</span> 
+                            <span class="bet-odds-add" :class="{begray:ref_pre_book.appoint_odds_value >= 355}" v-touch-repeat:0:300.mouse.enter.space="() => {btn_add(items)}">+</span> 
                           </div>
                           <span class="delete-appoint icon-delete" @click="ref_data.show_appoint=false"></span>
                         </div>
@@ -93,7 +92,7 @@
   <script setup>
   import BetData from "src/core/bet/class/bet-data-class.js";
   import { btn_reduce, btn_add, ref_pre_book,add_handle,sub_handle,set_ref_data } from "src/core/bet/common/appoint-data.js"
-  import { LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr,compute_value_by_cur_odd_type } from "src/output/index.js";
+  import { LOCAL_PROJECT_FILE_PREFIX,i18n_t ,MARKET_RANG_FLAG_LIST,UserCtr,compute_value_by_cur_odd_type } from "src/output/index.js";
   import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
   import { reactive } from "vue";
 
@@ -111,6 +110,15 @@
   // 删除投注项
   const del_bet_options = () =>{
     BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
+  }
+
+  //
+  const check_ball_maxmin = (_item) =>{
+    if(MARKET_RANG_FLAG_LIST.includes(_item.playId)){
+      return 10
+    }else{
+      return 30
+    }
   }
 
   // 显示预约投注
@@ -336,7 +344,9 @@
       display: flex;
       border: 1px solid #ccc;
       border-radius: 4px;
-     
+      .begray{
+        color: #E4E4E4!important;
+      }
       .bet-odds-reduce{
         padding: 0 .14rem;
         height: .28rem;

@@ -24,27 +24,30 @@
         </p>
       </template>
       <template v-else>
-        <p class="top-p" v-if="[2,3].includes(data_f.preOrderStatus)||data_f.preOrderStatus == 4">
-          <!-- {{i18n_t('bet_record.bet_refund')}} -->
-        </p>
-        <p class="top-p" v-else>{{i18n_t('bet_record.bet_max_win')}}</p>
-        <p class="yb_fontsize14 money-p fw_700" v-if="[2,3].includes(data_f.preOrderStatus)||data_f.preOrderStatus == 4">
-          <!-- 留空处理 -->
-          <!-- <template v-if="data_f.acCode">- -</template> -->
-          <!-- 返还金额 -->
-          <!-- <template v-else>{{format_money2(data_f.backAmount)}}</template> -->
-        </p>
-        <p class="yb_fontsize14 money-p fw_700" v-else>
-          <!-- 留空处理 -->
-          <template v-if="data_f.acCode">- -</template>
-          <!-- 最高金额 -->
-          <template v-else>{{format_money2(data_f.maxWinAmount)}}</template>
-        </p>
+        <!-- 预约失效 -->
+        <template v-if="[2,3,4].includes(data_f.preOrderStatus)">
+          <p class="top-p"> {{i18n_t('bet_record.bet_refund')}} </p>
+          <p class="yb_fontsize14 money-p fw_700">
+            <!-- 留空处理 -->
+            <template v-if="data_f.acCode">- -</template>
+            <!-- 返还金额 -->
+            <template v-else>{{format_money2(data_f.backAmount)}}</template>
+          </p>
+        </template>
+        <template v-else>
+          <p class="top-p">{{i18n_t('bet_record.bet_max_win')}}</p>
+          <p class="yb_fontsize14 money-p fw_700">
+            <!-- 留空处理 -->
+            <template v-if="data_f.acCode">- -</template>
+            <!-- 最高金额 -->
+            <template v-else>{{format_money2(data_f.maxWinAmount)}}</template>
+          </p>
+        </template>
       </template>
     </div>
 
     <!-- 右 -->
-    <div class="text-right" style="margin-left:auto">
+    <div class="text-right" style="margin-left:auto" v-if='BetRecordClass.selected !== 2'>
       <!-- 订单状态(确认中。。) -->
       <p v-if="data_f.orderStatus == '3'" :class="confirming.color" class="yb_fontsize14 fw_700">
         {{confirming.text}}
@@ -110,7 +113,7 @@ import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 <style lang="scss" scoped>
 .item-footer {
   height: 0.5rem;
-  background: var(--q-gb-bg-c-5);
+  background: var(--q-gb-bg-c-10);
   .result-p {
     line-height: 0.12rem;
   }

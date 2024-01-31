@@ -31,13 +31,13 @@
                                 class="play-box-style details_color warp"
                                 @click="go_to_bet(ol_list_0[ol_index0 - 1])"
                                 :class="{
-                                  'details-bg5 first-rad': BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_),
+                                  'details-bg5 first-rad': BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].oid),
                                   'bor-style': ol_index != max_count_ol-1,
                                   'win': calc_win(ol_list_0[ol_index0 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }">
                               <div class="size-color ellipsis remark details_t_color7  fz_12">{{['367','368','369'].includes(item_data.hpid)?i18n_t('detail.non') : ''}}</div>
-                              <div class="size-color ellipsis remark details_t_color6  fz_12" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)}]">
+                              <div class="size-color ellipsis remark details_t_color6  fz_12" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].oid)}]">
                                 {{ol_list_0[ol_index0 - 1].on}}
                               </div>
                               <div class="odds-wrap" :class="{'text-right': !['344'].includes(item_data.hpid)}">
@@ -115,14 +115,14 @@
                                 class="play-box-style details_color warp"
                                 @click="go_to_bet(ol_list_1[ol_index1 - 1])"
                                 :class="{
-                                  'details-bg5 first-rad': BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_),
+                                  'details-bg5 first-rad': BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].oid),
                                   'bor-style': ol_index != max_count_ol-1,
                                   'win': calc_win(ol_list_1[ol_index1 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }"
                             >
                               <div class="size-color ellipsis remark details_t_color7  fz_12">{{['367','368','369'].includes(item_data.hpid)?i18n_t('detail.non') : ''}}</div>
-                              <div class="size-color ellipsis remark details_t_color6  fz_12" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)}]">
+                              <div class="size-color ellipsis remark details_t_color6  fz_12" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].oid)}]">
                                 {{ol_list_1[ol_index1 - 1].on}}
                               </div>
                               <div class="odds-wrap" :class="{'text-right': !['344'].includes(item_data.hpid)}">
@@ -198,14 +198,14 @@
                                 class="play-box-style details_color"
                                 @click="go_to_bet(ol_list_2[ol_index2 - 1])"
                                 :class="{
-                                  'details-bg5 first-rad': BetData.bet_oid_list.includes(ol_list_2[ol_index2 - 1].id_),
+                                  'details-bg5 first-rad': BetData.bet_oid_list.includes(ol_list_2[ol_index2 - 1].oid),
                                   'bor-style': ol_index != max_count_ol-1,
                                   'win': calc_win(ol_list_2[ol_index2 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }"
                             >
                               <div class="size-color ellipsis remark details_t_color7  fz_12">{{['367','368','369'].includes(item_data.hpid)?i18n_t('detail.non') : ''}}</div>
-                              <div class="size-color ellipsis remark details_t_color6  fz_12" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_2[ol_index2 - 1].id_)}]">
+                              <div class="size-color ellipsis remark details_t_color6  fz_12" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_2[ol_index2 - 1].oid)}]">
                                 {{ol_list_2[ol_index2 - 1].on}}
                               </div>
                               <div class="odds-wrap" :class="{'text-right': !['344'].includes(item_data.hpid)}">
@@ -279,9 +279,9 @@
                     <div
                         class="play-box-style details_color"
                         @click="go_to_bet(ol_item)"
-                        :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result)}]">
+                        :class="[BetData.bet_oid_list.includes(ol_item.oid)?'details-bg5':'',{'win':calc_win(ol_item.result)}]">
                       <div class="ellipsis details_t_color6 fz_12" :class="{'text-right': !['344'].includes(item_data.hpid)}">
-                        <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
+                        <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.oid)}]">
                           {{ol_item.on}}
                         </span>
                       </div>
@@ -359,6 +359,7 @@
 import oddsNew from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import {LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance ,calc_win } from 'src/output/index.js';
+import matchDetailClass from "src/core/match-detail/match-detail-class";
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -405,12 +406,11 @@ export default defineComponent({
     const change_ms = computed(() => {
       return lodash.get(props.item_data,'hl[0].ol[0].os')
     });
-    watch(
-      () => get_flag_get_ol_list,
-      () => {
-        max_count_ol.value = get_ol_list();
-      }
-    );
+    // watch(
+    //   () =>matchDetailClass.details_data_version.version, () => {
+    //     max_count_ol.value = get_ol_list();
+    //   }
+    // );
     watch(
       () => change_ms,
       (new_) => {

@@ -35,10 +35,10 @@
                               <div
                                   class="play-box-style details_color warp bor-style"
                                   @click="go_to_bet(ol_list_0[ol_index0 - 1])"
-                                  :class="[BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)?['details-bg5','first-rad']:'',{'win':calc_win(ol_list_0[ol_index0 - 1].result)}]"
+                                  :class="[BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].oid)?['details-bg5','first-rad']:'',{'win':calc_win(ol_list_0[ol_index0 - 1].result)}]"
                               >
                                 <div class="ellipsis-t remark details_t_color6 fz_12">
-                                <span :class="[{'is-score':check_score(ol_list_0[ol_index0 - 1].on),'white_text':BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)},'size-color']">
+                                <span :class="[{'is-score':check_score(ol_list_0[ol_index0 - 1].on),'white_text':BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].oid)},'size-color']">
                                   {{ ol_list_0[ol_index0 - 1].on }}
                                 </span>
                                 </div>
@@ -118,9 +118,9 @@
                               <div
                                   class="play-box-style details_color bor-style"
                                   @click="go_to_bet(ol_list_1[ol_index1 - 1])"
-                                  :class="[BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)?'details-bg5':'',{'win':calc_win(ol_list_1[ol_index1 - 1].result)}]">
+                                  :class="[BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].oid)?'details-bg5':'',{'win':calc_win(ol_list_1[ol_index1 - 1].result)}]">
                                 <div class="ellipsis-t remark details_t_color6 fz_12">
-                                <span :class="[{'is-score':check_score(ol_list_1[ol_index1 - 1].on),'white_text':BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)},'size-color']">
+                                <span :class="[{'is-score':check_score(ol_list_1[ol_index1 - 1].on),'white_text':BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].oid)},'size-color']">
                                   {{ ol_list_1[ol_index1 - 1].on }}
                                 </span>
                                 </div>
@@ -201,9 +201,9 @@
                             <div
                                 class="play-box-style details_color"
                                 @click="go_to_bet(ol_item)"
-                                :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result)}]">
+                                :class="[BetData.bet_oid_list.includes(ol_item.oid)?'details-bg5':'',{'win':calc_win(ol_item.result)}]">
                               <div class="ellipsis-t remark details_t_color6 fz_12">
-                              <span :class="[{'is-score':check_score(ol_item.on),'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
+                              <span :class="[{'is-score':check_score(ol_item.on),'white_text':BetData.bet_oid_list.includes(ol_item.oid)}]">
                                 {{ ol_item.on }}
                               </span>
                               </div>
