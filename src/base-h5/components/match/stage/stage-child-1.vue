@@ -9,8 +9,8 @@
     <span v-if="match_result_state">
       {{i18n_t('match_info.match_over')}}
     </span>
-    <div v-else style="margin-left: -0.18rem;">
-       <span>{{i18n_t('mmp')[1][detail_data.mmp]}}</span> 
+    <div v-else class="counting-main" >
+       <span class="counting-title">{{i18n_t('mmp')[1][detail_data.mmp]}}</span> 
       <!-- 计时器 222-->
       <CountingDown ref="counting-down-second" :title="mmp_map_title" :mmp="detail_data.mmp"
         :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+detail_data.csid)" :m_id="detail_data.mid"
@@ -27,7 +27,7 @@
   import CountingDown from 'src/base-h5/components/common/counting-down.vue';
   import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 // import { format_mgt_time } from "src/output/index.js";
-  import { ref } from "vue";
+  import { ref,watch,computed,onMounted ,onUnmounted } from "vue";
   const props = defineProps({
     detail_data: {
       type: Object,
