@@ -39,13 +39,12 @@
 import play_match from "/ouzhou-pc/image/png/play-match.png";
 import hot_svg from "/ouzhou-pc/image/svg/hot.svg"
 import menu_mini_bet_svg from "/ouzhou-pc/image/svg/menu_mini_bet.svg"
-
-
+import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue";
 // import icon_success from "src/assets/images/icon_success.png";
 // import icon_success from "src/assets/images/icon_success.png";
 // import icon_success from "src/assets/images/icon_success.png";
 // import { mapActions } from "vuex";
-// import vScrollArea from "src/public/components/v_scroll_area/v_scroll_area.vue"; // 通屏垂直滚动
+import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue"; // 通屏垂直滚动
 // import sports_menu_mixin from  "src/public/components/main_menu/sports-menu.mixin.js"
 
 // export default {
