@@ -25,7 +25,7 @@
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':calc_win(ol_item.result),'active':BetData.bet_oid_list.includes(ol_item.id_)}">
+                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':calc_win(ol_item.result),'active':BetData.bet_oid_list.includes(ol_item.oid)}">
                         <div class="ellipsis remark">
                         <span class="item-fat">
                           {{ol_item.on.trim().split(" ")[0]}}
@@ -85,7 +85,7 @@
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':calc_win(ol_item.result),'active':BetData.bet_oid_list.includes(ol_item.id_)}">
+                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':calc_win(ol_item.result),'active':BetData.bet_oid_list.includes(ol_item.oid)}">
                         <div class="ellipsis remark">
                         <span class="item-fat">
                           {{ol_item.on.trim().split(" ")[0]}}
@@ -136,7 +136,7 @@
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':calc_win(ol_item.result),'active':BetData.bet_oid_list.includes(ol_item.id_)}">
+                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':calc_win(ol_item.result),'active':BetData.bet_oid_list.includes(ol_item.oid)}">
                         <div class="ellipsis remark">
                         <span class="item-fat">
                           {{ol_item.on.trim().split(" ")[0]}}

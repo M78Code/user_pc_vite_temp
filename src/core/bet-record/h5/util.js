@@ -161,3 +161,19 @@ export const filter_early_list = (list_data, bol) => {
     return all_list
 }
 
+// 根据状态过滤，显示已失效的列表
+export const filter_invalid_list = (list_data, bol) => {
+    let all_list = lodash.cloneDeep(list_data)
+    if (bol) {
+        lodash.forEach(all_list, (list_data, key) => {
+            list_data.data = lodash.filter(list_data.data, item => {
+                return [2,3,4].includes(item.preOrderStatus)
+            })
+            if (!list_data.data.length) {
+                delete all_list[key]
+            }
+        })
+    }
+    return all_list
+}
+

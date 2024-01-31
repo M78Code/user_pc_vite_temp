@@ -2,11 +2,7 @@ import { reactive, computed, ref, onMounted, onUnmounted, watch } from "vue";
 // 引入接口封装文件
 import { api_common, api_analysis } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-// #TODO mixins
-// 引入skt_data_info
-// import websocket_data from "src/base-h5/mixins/websocket/data/skt_data_info.js";
-// 引入投注逻辑mixin
-// import betting from "src/base-h5/mixins/betting/betting.js";
+import { create_gcuuid } from "src/core/uuid/index.js";
 import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss,MenuData,axios_loop as axios_api_loop} from "src/output/index"; 
 
 // import { Level_one_detail_odd_info } from "../category-list.js";
@@ -686,7 +682,7 @@ export const category_info = (category_arr=[]) => {
     });
   };
   // 调用:/v1/m/matchDetail/getMatchOddsInfoPB接口
-  const socket_upd_list =lodash.throttle((skt_data, callback) => {
+  const socket_upd_list =lodash.throttle(( callback) => {
     // 调用接口的参数
     let params = {
       // 当前选中玩法项的id
@@ -725,11 +721,12 @@ export const category_info = (category_arr=[]) => {
     params.cuid = component_data.send_gcuuid;
     http(params)
       .then((res) => {
+        console.log(res,'res');
         // if (component_data.send_gcuuid != res.gcuuid) return;
        
         component_data.is_loading = false;
         if (!res.data || res.data.length == 0) {
-          console.error(res.data,'res.data.length == 0');
+          console.error(res.data,'res.data.length == 0',callback);
           if (callback) callback();
           return;
         }
@@ -888,7 +885,15 @@ export const category_info = (category_arr=[]) => {
         sessionStorage.removeItem(cach_key);
       });
   };
-
+  // 监听ws断连
+ const {off} = useMittOn(MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT,(ws_status)=>{
+   // ws_status 链接状态变化 (0-断开,1-连接,2-断网续连状态)
+   if(ws_status.ws_status != 1){
+     MatchDataWarehouseInstance.value.scmd_c8_ws_reconnect()
+     socket_upd_list()
+   }
+ });
+  onUnmounted(off)
 const on_listeners = () => {
   // #TODO: IMIT
   emitters =[
@@ -896,6 +901,8 @@ const on_listeners = () => {
    useMittOn( MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list),
    //ws调取oddinfo接口
    useMittOn( MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET, socket_upd_list),
+   //移除缓存
+   useMittOn( MITT_TYPES.EMIT_SET_REMOVE_SESSION_STORAGE, remove_session_storage),
   ]
 };
 const off_listeners = () => {

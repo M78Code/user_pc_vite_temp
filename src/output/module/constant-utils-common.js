@@ -20,7 +20,7 @@ export * from "src/core/file-path/file-path";
 
 export { default as STANDARD_KEY } from "src/core/standard-key";
 
-export { default as uid } from "src/core/uuid/index.js";
+export {  uid, create_gcuuid } from "src/core/uuid/index.js";
 export { i18n, loadLanguageAsync, map_lang,  i18n_t } from "src/boot/i18n.js";
 
 //模块之间通信 ，去耦合化的一个 键值对 仓库

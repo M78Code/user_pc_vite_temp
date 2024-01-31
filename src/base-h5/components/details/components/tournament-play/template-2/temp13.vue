@@ -37,11 +37,11 @@
                       <template v-if="append_single._hs == 0 || append_single._hs == 11">
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_fun(append_single)"
-                               :class="[BetData.bet_oid_list.includes(append_single.oid)?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
-                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':BetData.bet_oid_list.includes(append_single.oid)}]">
+                               :class="[lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn &&  lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.oid`)== append_single.oid ?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
+                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn &&  lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.oid`)== append_single.oid}]">
                               <div class="single-name">
                                 <!-- <span class="fz_12 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
-                                <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_12">
+                                <span :class="lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn &&  lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.oid`)== append_single.oid ? 'size-color-wit':'size-color'" class="fz_12">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -143,11 +143,11 @@
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_fun(append_single)"
-                               :class="[BetData.bet_oid_list.includes(append_single.oid)?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
-                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':BetData.bet_oid_list.includes(append_single.oid)}]" >
+                               :class="[lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn &&  lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.oid`)== append_single.oid?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
+                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn &&  lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.oid`)== append_single.oid}]" >
                               <div class="single-name">
                                 <!-- <span class="fz_12 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
-                                <span :class="BetData.bet_oid_list.includes(append_single.oid) ? 'size-color-wit':'size-color'" class="fz_12">
+                                <span :class="lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn &&  lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.oid`)== append_single.oid ? 'size-color-wit':'size-color'" class="fz_12">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -294,12 +294,21 @@ export default defineComponent({
     })
     // 附加盘投注项集合
     const append_single_list = computed(() => {
+      if(props.item_data.hpid ==2){
+        console.log( props.item_data.hl,' result--1');
+      }
+     
       let result = [];
       for (let i = 0; i < props.item_data.hl.length; i++) {
         for (let i_ = 0; i_ < props.item_data.hl[i].ol.length; i_++) {
-          result.push(props.item_data.hl[i].ol[i_]);
+          console.log(props.item_data.hl[i].hn,'props.item_data.hl[i].hn');
+          result.push({...props.item_data.hl[i].ol[i_],hn:props.item_data.hl[i].hn});
         }
       }
+      if(props.item_data.hpid ==2){
+        console.log(result,'result');
+      }
+      
       return result;
     })
     // 空白盒子个数
@@ -373,6 +382,7 @@ export default defineComponent({
         return
       }
       if (e?.direction == 'left') {
+        console.log(1111111)
     //  滑动次数++
         init_data.index =  init_data.index+1
         // 左滑

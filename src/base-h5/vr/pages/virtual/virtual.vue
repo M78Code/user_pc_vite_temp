@@ -105,7 +105,7 @@ export default {
       background-size: 100% auto;
       > img{
         position: absolute;
-
+        width: 100%;
       }
     }
 

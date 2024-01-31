@@ -1,5 +1,9 @@
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
+  <!-- 结果比分 -->
+  <p v-if="BetRecordClass.selected === 3 && calc_settle_score()">
+    <label>{{i18n_t('bet_record.score_result')}}({{ calc_settle_score() }})</label>
+  </p>
   <!-- 投注额 -->
   <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span class="font500">{{format_money2(data_f.orderAmountTotal)}} {{ currency_code[UserCtr.currency] }}</span></p>
   
@@ -115,6 +119,44 @@ const showText = (data_f) => {
   if(data_f.profitAmount < 0) {
     return i18n_t('bet_record.bet_no_status03')
   }
+}
+
+const bet_result_1 = {
+  "7": i18n_t("bet_record.bet_no_status07"),
+  "8": i18n_t("bet_record.bet_no_status08"),
+  "11": i18n_t("bet_record.bet_no_status11"),
+  "12": i18n_t("bet_record.bet_no_status12"),
+  "15": i18n_t("bet_record.bet_no_status15")
+}
+const bet_result_3 = {
+  "1": i18n_t("bet_record.cancel_type_1"),
+  "2": i18n_t("bet_record.cancel_type_2"),
+  "3": i18n_t("bet_record.cancel_type_3"),
+  "4": i18n_t("bet_record.cancel_type_4"),
+  "5": i18n_t("bet_record.cancel_type_5"),
+  "6": i18n_t("bet_record.cancel_type_6"),
+  "17": i18n_t("bet_record.cancel_type_17"),
+  "20": i18n_t("bet_record.cancel_type_20"),
+}
+//单关已结算投注成功状态（orderStatus == 1）此位置需要返回结算比分
+//单关注单无效状态（orderStatus == 2）此位置需要返回无效原因
+const calc_settle_score = () => {
+  let result = ''
+  if (props.data_f.seriesType == '1' && props.data_f.orderVOS[0]) {
+    if (props.data_f.orderStatus == '1') {
+      result = props.data_f.orderVOS[0].settleScore
+    } else if (props.data_f.orderStatus == '2') {
+      let betstatus = props.data_f.orderVOS[0].betStatus;
+      let betresult = props.data_f.orderVOS[0].betResult;
+      let canceltype = props.data_f.orderVOS[0].cancelType;
+      if (betstatus == 1) {
+        result = bet_result_1[betresult] || '';
+      } else if (betstatus == 3 || betstatus == 4) {
+        result = bet_result_3[canceltype] || '';
+      }
+    }
+  }
+  return result
 }
 
   /**
