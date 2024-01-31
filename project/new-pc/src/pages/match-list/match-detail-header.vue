@@ -346,6 +346,10 @@ onMounted(() => {
 }
 .header {
   padding: 3px 20px;
+  background-color: var(--q-gb-bg-c-11);
+  border: 1px solid var(--q-gb-bg-c-9);
+  border-radius: 6px 6px 0 0;
+  overflow: hidden;
 }
 .all-collect {
   width: 96px;
