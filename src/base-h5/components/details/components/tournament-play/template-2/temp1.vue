@@ -27,7 +27,7 @@
                         class="play-box-style details_color first-radius warp"
                         @click="go_to_bet(ol_item)"
                         :class="[
-                          BetData.bet_oid_list.includes(ol_item.id_)
+                          BetData.bet_oid_list.includes(ol_item.oid)
                             ? ['details-bg5', 'white_text', 'first-rad']
                             : '',
                           { win: calc_win(ol_item.result) },
@@ -134,7 +134,7 @@
                           class="play-box-style details_color first-radius warp"
                           @click="go_to_bet(ol_item)"
                           :class="[
-                            BetData.bet_oid_list.includes(ol_item.id_)
+                            BetData.bet_oid_list.includes(ol_item.oid)
                               ? ['details-bg5', 'white_text', 'first-rad']
                               : '',
                             { win: calc_win(ol_item.result) },
@@ -254,7 +254,7 @@
                           class="play-box-style details_color warp"
                           @click="go_to_bet(ol_item)"
                           :class="[
-                            BetData.bet_oid_list.includes(ol_item.id_)
+                            BetData.bet_oid_list.includes(ol_item.oid)
                               ? ['details-bg5', 'white_text', 'first-rad']
                               : '',
                             ,
@@ -377,7 +377,7 @@
                           class="play-box-style details_color last-radius"
                           @click="go_to_bet(ol_item)"
                           :class="[
-                            BetData.bet_oid_list.includes(ol_item.id_)
+                            BetData.bet_oid_list.includes(ol_item.oid)
                               ? ['details-bg5', 'white_text']
                               : '',
                             { win: calc_win(ol_item.result) },

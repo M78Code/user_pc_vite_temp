@@ -38,7 +38,7 @@ declare namespace TYPES {
     mearlys: number,
     mft: number,
   }
-  /** 盘口信息 */ interface OddInfo extends K.hid, K.hpid, K.mid, K.hpn,K.hpn2, K.hpt, K.hotName {
+  /** 盘口信息 */ interface OddInfo extends K.hid, K.hpid, K.chpid, K.mid, K.hpn, K.hpn2, K.hpt, K.hotName {
     hpon: number,
     hlid: string,
     hsw: string,
@@ -46,7 +46,7 @@ declare namespace TYPES {
     /** 置顶时间戳 */ hton: string
     /** 用于玩法排序的key */ topKey: string
     /** 玩法标题 */ title: OddTitle[]
-    /** 1:上半场玩法; 2:下半场玩法; 10:第一节; 20:第二节; 30:第三节; 40:第四节 */ halfLg?: 1|2|10|20|30|40
+    /** 1:上半场玩法; 2:下半场玩法; 10:第一节; 20:第二节; 30:第三节; 40:第四节 */ halfLg?: 1 | 2 | 10 | 20 | 30 | 40
   }
 
   /** 玩法标题 */ interface OddTitle {
@@ -72,7 +72,7 @@ declare namespace TYPES {
     /** ? */ hmt: number,
     /** ? */ hn: number,
     /** 赔率集合? 投注项集合? */ ol: Array<Ol>
-    /** ? */ hv:number,
+    /** ? */ hv: number,
     /** ? */ ad1: string,
     /** ? */ ad2: string,
   }
@@ -96,6 +96,15 @@ declare namespace TYPES {
     /** 标签颜色 */ tagColor: string,
     /** 标签名字 */ tagName: string,
     /** */ thumbnails: string,
+  }
+
+  /** 详情玩法分类 */ interface DetailCategory {
+    /** 显示的玩法分类名 */ marketName: string,
+    /** 排序 */ orderNo: number,
+    /** 玩法集topKeys 集合 */ plays: Array<Number>,
+    /** 回合数,小节数 某些与小节/回合关联的玩法分类有该字段, 否则为空 */ round: number,
+    /** 分类id */ id: string,
+    /** 标签? */ label: string,
   }
 
   /**  */ interface S {
@@ -231,6 +240,9 @@ declare namespace K {
   };
   /** 玩法ID */ type hpid = {
     /** 玩法ID */ hpid: string
+  };
+  /** 包含子集的玩法ID */ type chpid = {
+    /** 包含子集的玩法ID */ chpid: string
   };
   /** 玩法模板 */ type hpt = {
     /** 玩法模板 */ hpt: number

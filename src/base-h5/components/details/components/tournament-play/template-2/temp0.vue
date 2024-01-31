@@ -27,10 +27,10 @@
                           <div
                             class="play-box-style details_color"
                             @click="go_to_bet(ol_item)"
-                            :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                            :class="[BetData.bet_oid_list.includes(ol_item.oid)?'details-bg5':'',{'win':calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_12 odds-on">
-                              <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
+                              <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.oid)}]">
                                 <!-- {{ol_item.on || ol_item.otv || ol_item.ott}} -->
                                 <!-- 修改为: ott+on的值 来显示  下面的用法相同 -->
                                 {{ol_item.ott}}{{ol_item.on}}
@@ -108,10 +108,10 @@
                     <div
                       class="play-box-style details_color"
                       @click="go_to_bet(ol_item)"
-                      :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                      :class="[BetData.bet_oid_list.includes(ol_item.oid)?'details-bg5':'',{'win':calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                     >
                       <div class="ellipsis remark details_t_color6 fz_12">
-                        <span class="size-color" :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
+                        <span class="size-color" :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.oid)}]">
                           {{ol_item.ott}}{{ol_item.on}}
                         </span>
                       </div>

@@ -682,7 +682,7 @@ export const category_info = (category_arr=[]) => {
     });
   };
   // 调用:/v1/m/matchDetail/getMatchOddsInfoPB接口
-  const socket_upd_list =lodash.throttle((skt_data, callback) => {
+  const socket_upd_list =lodash.throttle(( callback) => {
     // 调用接口的参数
     let params = {
       // 当前选中玩法项的id
@@ -901,6 +901,8 @@ const on_listeners = () => {
    useMittOn( MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list),
    //ws调取oddinfo接口
    useMittOn( MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET, socket_upd_list),
+   //移除缓存
+   useMittOn( MITT_TYPES.EMIT_SET_REMOVE_SESSION_STORAGE, remove_session_storage),
   ]
 };
 const off_listeners = () => {

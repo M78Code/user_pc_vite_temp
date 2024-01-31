@@ -20,8 +20,8 @@
           v-if="GlobalAccessConfig.get_collectSwitch() && is_DJ_show && MenuData.get_menu_type() !== 28"
           @click="details_collect(get_detail_data)">
         </div>
-        <img v-if="status" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/refresh.png`" alt="" 
-              class="refresh" :class="[status ? 'ani-rotate':'' ]">
+        <img v-if="show" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/refresh.png`" alt="" 
+              class="refresh" :class="[status ? 'ani-rotate':'' ]" @click="handle_refresh">
 
         <!-- todo 后面判断项目名称 -->
         <!-- <div class="det-ref" :class="{ 'refreshing': refreshing, 'refreshing-common': MenuData.get_menu_type() !== 3000 }"
@@ -59,7 +59,9 @@ const props = defineProps({
     default: 'bet'
   }
 })
-// 是否显示刷新状态
+// 是否显示刷新按钮
+const show = ref(CommonHeader1Subscribe.instance.show_refresh)
+// 控制刷新动画状态
 const status = ref(CommonHeader1Subscribe.instance.refresh_status);
 const route = useRoute()
 const router = useRouter()
@@ -73,10 +75,26 @@ const favorite_loading = ref(false)
 // 延时器
 const timer1_ = ref(null)
 
+const handle_refresh = () => {
+  CommonHeader1Subscribe.instance.change_status(true);
+}
+
 /**
- * 监听刷新结束，终止刷新动画
+ * 
+ * @param {'refresh_status'|'show_refresh'} key 
  */
-const listener = (value) => {
+const listener = (key, value) => {
+  console.log(key, value, 'listener__');
+  switch (key) {
+    case "refresh_status":
+      status.value = value;
+      break;
+    case "show_refresh":
+      show.value = value;
+      break;
+    default:
+      break;
+  }
   status.value = value;
 }
 CommonHeader1Subscribe.instance.init(listener);

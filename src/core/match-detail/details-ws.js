@@ -7,7 +7,8 @@ useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)    触发玩法集接口     cateragy
 
 import {  useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { MatchDataWarehouse_H5_Detail_Common,MatchDataWarehouse_PC_Detail_Common } from "src/output/module/match-data-base.js";
-import BUILDIN_CONFIG from "app/job/output/env/index.js";;
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
+import matchDetailClass from "src/core/match-detail/match-detail-class.js";
 const { PROJECT_NAME } = BUILDIN_CONFIG ;
 console.log(PROJECT_NAME,'PROJECT_NAME');
 export const details_ws = () => {
@@ -36,13 +37,16 @@ export const details_ws = () => {
       case "C303":
         if(PROJECT_NAME == 'app-h5'){
           useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
+          useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET,() => {
+            matchDetailClass.set_flag_get_ol_list(Math.random());
+          })
         }
         useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET)
         break;
        // 赛事开赛状态(C302)  
       case "C302":
         // 赛事状态变化
-        useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
+        RCMD_C302()
         break;
       case "C104":
         RCMD_C104(data);
@@ -70,12 +74,25 @@ export const details_ws = () => {
         break;
     }
   }
+   /**
+  * @description: 赛事开赛状态(C302) 
+  * @param {*} obj
+  * @return {*}
+  */
+   function RCMD_C302(obj){
+     if(obj.cd.mmp == 999 || obj.cd.mmp == 3) useMittEmit(MITT_TYPES.EMIT_SET_REMOVE_SESSION_STORAGE);
+     useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
+     matchDetailClass.set_flag_get_ol_list(Math.random());
+   }
   /**
    * @description: 处理玩法更新
    * @param {*} obj
    * @return {*}
    */
   function RCMD_C105(obj){
+    if(obj.cd.hls && obj.cd.hls.length){
+      matchDetailClass.set_flag_get_ol_list(Math.random());
+    }
      // 足球赛事投注玩法，基准分的动态更新
      try {
         if(Array.isArray(obj.cd.hls) && obj.cd.hls.length){
