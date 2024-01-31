@@ -175,11 +175,11 @@ export default defineComponent({
   letter-spacing: 0;
   &:deep(){
     .counting-title{
-      margin-left: -0.15rem;
+      // margin-left: -0.35rem;
     }
     .counting-down-wrap{
       // margin-left: 0.7rem;
-      transform: translateX(80%);
+      // transform: translateX(80%);
     }
   }
 }
