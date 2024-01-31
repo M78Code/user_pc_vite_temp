@@ -35,13 +35,7 @@ export const details_ws = () => {
     switch (cmd) {
       // 赛事订阅(C8)-新增玩法/新增盘口(C303)
       case "C303":
-        if(PROJECT_NAME == 'app-h5'){
-          useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
-          useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET,() => {
-            matchDetailClass.set_flag_get_ol_list(Math.random());
-          })
-        }
-        useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET)
+        RCMD_C303()
         break;
        // 赛事开赛状态(C302)  
       case "C302":
@@ -72,6 +66,16 @@ export const details_ws = () => {
           break;        
       default:
         break;
+    }
+  }
+  function RCMD_C303(){
+    if(PROJECT_NAME == 'app-h5'){
+      useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
+      useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET,() => {
+        matchDetailClass.set_flag_get_ol_list(Math.random());
+      })
+    }else{
+      useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET)
     }
   }
    /**
