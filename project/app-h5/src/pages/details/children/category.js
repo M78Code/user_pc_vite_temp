@@ -721,18 +721,14 @@ export const category_info = (category_arr=[]) => {
     params.cuid = component_data.send_gcuuid;
     http(params)
       .then((res) => {
-        console.log(res,'res');
         // if (component_data.send_gcuuid != res.gcuuid) return;
-       
         component_data.is_loading = false;
         if (!res.data || res.data.length == 0) {
-          console.error(res.data,'res.data.length == 0',callback);
           if (callback) callback();
           return;
         }
         component_data.is_no_data = false;
         var temp = lodash.get(res, "data");
-        console.error(temp,'aa-temp处理前1');
         //getMatchOddsInfo 接口拉取时，联动跟新投注框的数据
         if (get_bet_status.value == 1 || get_bet_status.value == 7 || get_bet_status.value == 5) {
           update_ol(null, temp);

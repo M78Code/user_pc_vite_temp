@@ -37,11 +37,11 @@
                       <template v-if="append_single._hs == 0 || append_single._hs == 11">
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_fun(append_single)"
-                               :class="[lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn &&  lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.oid`)== append_single.oid ?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
-                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn &&  lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.oid`)== append_single.oid}]">
+                               :class="[lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn  ?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
+                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn }]">
                               <div class="single-name">
                                 <!-- <span class="fz_12 ver-ali-top">{{devote_value_d(append_single.ot)}}</span> -->
-                                <span :class="lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn &&  lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.oid`)== append_single.oid ? 'size-color-wit':'size-color'" class="fz_12">
+                                <span :class="lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn  ? 'size-color-wit':'size-color'" class="fz_12">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -143,11 +143,11 @@
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_fun(append_single)"
-                               :class="[lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn &&  lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.oid`)== append_single.oid?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
-                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn &&  lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.oid`)== append_single.oid}]" >
+                               :class="[lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn ?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
+                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn }]" >
                               <div class="single-name">
                                 <!-- <span class="fz_12 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
-                                <span :class="lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn &&  lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.oid`)== append_single.oid ? 'size-color-wit':'size-color'" class="fz_12">
+                                <span :class="lodash.get(BetData.bet_oid_obj, `${append_single.oid}_${append_single.hn}.hn`)== append_single.hn  ? 'size-color-wit':'size-color'" class="fz_12">
                                 {{append_single.on}}
                               </span>
                               </div>
