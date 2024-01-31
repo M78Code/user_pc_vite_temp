@@ -1138,6 +1138,7 @@ export default {
           bottom: 0;
           height: 24px;
           font-weight: 600;
+          color: #414655 !important;
 
           &.simple {
             right: 0.08rem;
