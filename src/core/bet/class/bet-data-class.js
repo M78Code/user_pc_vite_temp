@@ -799,6 +799,8 @@ this.bet_appoint_ball_head= null */
     this.bet_oid_list = []
     this.set_bet_amount(0)
     this.set_bet_data_class_version()
+    this.set_is_bet_pre(false)
+    this.set_bet_appoint_obj_playOptionId(0)
   }
 
   /**
