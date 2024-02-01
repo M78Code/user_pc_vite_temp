@@ -392,18 +392,18 @@ const get_lastest_market_info = (type) => {
                             }
 
                             // 红绿升降
-                            bet_item.red_green = ''
-                            if(bet_item.odds == odds.oddsValue ){
-                                bet_item.red_green = 'red_up'
-                            }else
-                            if(bet_item.odds > odds.oddsValue ){
-                                bet_item.red_green = 'green_down'
-                            }
+                            // bet_item.red_green = ''
+                            // if(bet_item.odds == odds.oddsValue ){
+                            //     bet_item.red_green = 'red_up'
+                            // }else
+                            // if(bet_item.odds > odds.oddsValue ){
+                            //     bet_item.red_green = 'green_down'
+                            // }
 
                             // 赔率 10w位
-                            bet_item.odds = odds.oddsValue
+                            // bet_item.odds = odds.oddsValue
                             //最终赔率
-                            bet_item.oddFinally = compute_value_by_cur_odd_type(odds.oddsValue,obj.playId, item.odds_hsw, item.csisportIdd)
+                            // bet_item.oddFinally = compute_value_by_cur_odd_type(odds.oddsValue,obj.playId, item.odds_hsw, item.csisportIdd)
 
                             // 投注项类型
                             bet_item.ot = odds.oddsType
@@ -439,24 +439,24 @@ const get_lastest_market_info = (type) => {
                                 }
                             }
 
-                            if(bet_item.red_green){
-                                // 有值才去清理
-                                setTimeout(() => {
-                                    // 清除红绿升降
-                                    let single_list = []
-                                    // 单关 切 有投注项
-                                    if(BetData.is_bet_single){
-                                    single_list = BetData.bet_single_list || []
-                                    } else {
-                                    single_list = BetData.bet_s_list || []
-                                    }
-                                    let ol_obj_index = single_list.findIndex(obj_ => obj_.playOptionsId == odds.id )
-                                    if(ol_obj_index || ol_obj_index == 0 ){
-                                        bet_item.red_green = ''
-                                        BetData.set_ws_message_bet_info(bet_item,ol_obj_index)
-                                    }
-                                }, 3000);
-                            }
+                            // if(bet_item.red_green){
+                            //     // 有值才去清理
+                            //     setTimeout(() => {
+                            //         // 清除红绿升降
+                            //         let single_list = []
+                            //         // 单关 切 有投注项
+                            //         if(BetData.is_bet_single){
+                            //         single_list = BetData.bet_single_list || []
+                            //         } else {
+                            //         single_list = BetData.bet_s_list || []
+                            //         }
+                            //         let ol_obj_index = single_list.findIndex(obj_ => obj_.playOptionsId == odds.id )
+                            //         if(ol_obj_index || ol_obj_index == 0 ){
+                            //             bet_item.red_green = ''
+                            //             BetData.set_ws_message_bet_info(bet_item,ol_obj_index)
+                            //         }
+                            //     }, 3000);
+                            // }
                         }
                     }
                 })
@@ -1210,6 +1210,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if(!hsw.includes(cur_odds)){
         bet_obj.marketTypeFinally = 'EU'
     }
+
+    console.error('投注项内容：',bet_obj)
 
     // 冠军 
     if(bet_obj.bet_type == 'guanjun_bet'){
