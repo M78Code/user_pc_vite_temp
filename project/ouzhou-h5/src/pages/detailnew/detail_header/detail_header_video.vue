@@ -18,6 +18,7 @@ import { useRoute } from 'vue-router';
 import { ref, onMounted, computed, watch, onUnmounted } from "vue";
 import { api_common } from 'src/api';
 import OrientationSubscribe from 'src/base-h5/components/common/orientation/orientation-subscribe';
+import { uid } from "quasar";
 const props = defineProps({
     get_detail_data: {
         type: Object,
@@ -126,10 +127,10 @@ const check_url = (url, which) => {
         check_url(media_src);
       } else {
         let param = {}
-        send_gcuuid = uid();
-        param.gcuuid = send_gcuuid;
+        // send_gcuuid = uid();
+        // param.gcuuid = send_gcuuid;
         api_common.getVideoReferurl(param).then(res => {
-          if (send_gcuuid != res.gcuuid) return;
+          // if (send_gcuuid != res.gcuuid) return;
           media_src = video.get_video_url_h5(res, params.mid, 1);
           check_url(media_src);
         });
