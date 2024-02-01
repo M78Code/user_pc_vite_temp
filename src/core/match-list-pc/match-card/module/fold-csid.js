@@ -98,6 +98,5 @@ export function recompute_match_list_style_obj_and_match_list_mapping_relation_o
       }
     }
   })
-  console.log('jiffy2',Date.now(),count)
   conpute_match_list_card_offset()
 }

@@ -64,10 +64,6 @@
       </template>
       <!-- </template> -->
     </div>
-    <!-- 详情玩法投注项无数据 -->
-    <div v-if="!is_loading && is_no_data && !show_recommend" class="no-data-style">
-      <NoData which='noMatch' height='500'></NoData>
-    </div>
   </div>
 </template>
 

@@ -11,9 +11,7 @@ import { match_list_handle_set } from '../match-handle-data.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import BaseData from 'src/core/base-data/base-data.js';
 const vx_filter_select_obj = ref([])
-let vx_layout_list_type = 'match'
 const { route_name } = PageSourceData;
-let is_search = PageSourceData.is_search();
 let is_show_hot = ref(false);
 const league_list_obj = ref({})
 let vx_pre_filter_select_obj = []
@@ -229,12 +227,9 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
 		backend_run
 	);
 	if (!backend_run) {
-		if (!MenuData.is_vr() || is_search) {
+		if (!MenuData.is_vr() || PageSourceData.is_search()) {
 			// 非虚拟体育——设置赛事列表选中赛事
-			if (
-				MenuData.is_kemp() ||
-				MenuData.menu_root == 400
-			) {
+			if (MenuData.is_kemp()) {
 				// this.mx_autoset_active_match();
 			}
 			// 非详情页 切换右侧为列表第一场赛事
@@ -257,7 +252,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
 	}
 	// 首次拉列表调用bymids 拉取所有赛事盘口数据
 	if (
-		vx_layout_list_type == "match" &&
+		MenuData.is_collect == false &&
 		[1, 500].includes(MenuData.menu_root) &&
 		!backend_run && !is_base_data
 	) {
@@ -269,7 +264,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backen
  * 当接口状态为异常状态时  调用此方法
  */
 const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, backend_run }) => {
-	if (MenuData.is_vr() && !is_search) {
+	if (MenuData.is_vr() && PageSourceData.is_search()) {
 		// 右侧切换
 		// MatchListDetailMiddleware.set_vsport_params({
 		// 	csid: 0,
@@ -292,16 +287,16 @@ const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, backend_
 		let match_list_api_config = MenuData.match_list_api_config;
 		if (
 			route_name == "home" &&
-			MenuData.menu_root == "1" &&
+			MenuData.is_scroll_ball() &&
 			match_list_api_config.sports != "quanbu-gunqiu"
 		) {
 			MenuData.set_current_mi_0_and_change_menu();
 		} else if (
 			route_name == "home" &&
-			MenuData.menu_root != "500" &&
-			vx_layout_list_type !== "collect"
+			MenuData.is_hot() &&
+			!MenuData.is_collect
 		) {
-			get_hot_match_list();
+			// get_hot_match_list();
 		}
 	} else {
 		// 设置列表数据仓库
@@ -332,11 +327,6 @@ const mx_use_list_res = (data, backend_run, is_base_data) => {
 		match_list = lodash.get(data, "data", []);
 	}
 	set_league_list_obj(match_list)
-	//虚拟体育 接口数据结构转换
-	// if (MenuData.is_vr() && !is_search && false) {
-	// 	// 格式化
-	// 	match_list = virtual_sport_format(match_list);
-	// }
 	if (code == 200 && match_list) {
 		mx_use_list_res_when_code_200_and_list_length_gt_0({ match_list, backend_run, is_base_data });
 	} else {

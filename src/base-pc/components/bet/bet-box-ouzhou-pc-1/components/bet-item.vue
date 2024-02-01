@@ -2,9 +2,8 @@
 <template>
     <div class="bet-list bor-b">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
-
          <!--这个地方是个遮罩层，单关合并只能有一个能预约，其余用遮罩遮住-->
-        <div v-if="BetData.is_bet_pre && !is_bet_appoint_disable()" class="cathectic-appoint"></div>
+        <div v-if="!is_bet_appoint_disable()" class="cathectic-appoint"></div>
 
         <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
             <div class="fw-s-s bet-left">
@@ -115,6 +114,10 @@ const set_delete = () => {
     if(!BetData.is_bet_single){
         BetData.check_bet_s_list_special()
     }
+    // 如果删除的刚好是开启预约的投注项 
+    if(props.items.playOptionsId == BetData.bet_pre_appoint_id) {
+        BetData.set_is_bet_pre(false)
+    }
 }
 
 // 预约投注
@@ -136,9 +139,13 @@ const cancel_operate = () =>{
 }
 
 const is_bet_appoint_disable = computed(() => state => {
-    // 玩法id
-    // console.log('这里', props.items.playOptionsId, BetData.bet_pre_appoint_id)
-    return BetData.bet_pre_appoint_id == props.items.playOptionsId
+    // 是否进入了预约 是否当前投注项为进入预约的投注项
+    if (BetData.is_bet_pre && BetData.bet_pre_appoint_id) {
+        return BetData.bet_pre_appoint_id == props.items.playOptionsId
+    }
+    if(!BetData.is_bet_pre) {
+        return true
+    }
 })
 
 </script>
