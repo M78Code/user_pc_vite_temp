@@ -356,11 +356,12 @@ function compute_mi_400_sl_mi_csid(mi) {
  */
 function handle_click_menu_mi_1(detail = {}) {
     console.error('detail',detail)
+    const csid = detail.mi*1 > 2000 && detail.mi*1 < 3000?detail.mi*1 - 2000:detail.mi*1 - 100;
     let obj = {
         // 当前赛种 菜单id
         mid_menu_mi: detail.mi,  
         // 当前菜单的赛种id
-        csid: (detail.mi*1 - 100), 
+        csid: csid,
         current_mi: detail.mi,  
     } 
     set_menu_config(obj)
