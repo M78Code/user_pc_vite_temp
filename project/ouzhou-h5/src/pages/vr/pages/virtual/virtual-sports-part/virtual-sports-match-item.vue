@@ -25,24 +25,25 @@
                 {{match_item.show_time}}'
               </div>
             </div>
-            <!-- 固定60秒 -->
-            <div v-if="match_item.csid == 1004 && match_item.mmp != 'PREGAME'" class="time-wrap icon-s-wrap"
-              :class="{whistle:[2,11].includes(+match_item.match_status)}"
-              v-show="match_item.match_status == 0 && !is_basketball_score">
-              <div class="time">
-                60
-              </div>
-            </div>
-            <!-- live -->
-            <div v-if="match_item.csid == 1004" class="live-icon-pre icon-s-wrap"
-              v-show="match_item.match_status == 1 || is_basketball_score">
-              live
-            </div>
-            <!-- 结束 -->
-            <div v-if="match_item.csid == 1004" class="finally icon-s-wrap"
-              v-show="match_item.match_status == 2">
-              Fin.
-            </div>
+            <template v-if="match_item.csid == 1004">
+                <!-- 固定60秒 -->
+                <div v-if="match_item.mmp != 'PREGAME'"
+                     class="time-wrap icon-s-wrap"
+                    :class="{whistle:[2,11].includes(+match_item.match_status)}"
+                    v-show="match_item.match_status == 0 && !is_basketball_score">
+                  <div class="time">
+                    60
+                  </div>
+                </div>
+                <!-- live -->
+                <div class="live-icon-pre icon-s-wrap" v-show="match_item.match_status == 1 || is_basketball_score">
+                  live
+                </div>
+                <!-- 结束 -->
+                <div class="finally icon-s-wrap" v-show="match_item.match_status == 2">
+                  Fin.
+                </div>
+            </template>
             <!-- 视频icon -->
             <div class="play-icon-wrapper yb-flex-center"
               @click="switch_match_handle(i,match_item)">
@@ -189,6 +190,23 @@ export default {
 
   &.vr_basketball_match_item_wrap{
     height: 100%;
+    padding: 0px 0 0px 0px;
+    width: 100%;
+    // background-color: pink;
+    display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+    .match-data-item{
+      width: 100%;
+      // background-color: orange;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    // background-color: red;
+    }
   }
 
   .test-line {
@@ -223,6 +241,13 @@ export default {
 
     .vr_basketball_team_w_container{
       width: 40%;
+      padding-top: 0px;
+      padding-left: 10px;
+      // display: flex;
+      // flex-direction: column;
+      // justify-content: center;
+      // align-items: center;
+      // background-color: red;
     }
 
     .team-wrapper {
@@ -333,6 +358,10 @@ export default {
       &.standard {
         width: 60%;
         height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
       }
     }
 
@@ -529,7 +558,7 @@ export default {
     border-radius: 0.1rem;
     // background-color: #FFB001;
     font-size: 0.11rem;
-    color: #ffffff;
+    // color: #ffffff;
     text-align: center;
     font-style: italic;
   }

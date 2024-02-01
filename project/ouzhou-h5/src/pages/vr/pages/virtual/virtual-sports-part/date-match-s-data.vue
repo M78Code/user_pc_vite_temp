@@ -93,9 +93,14 @@ export default {
         line-height: 0.18rem;
         text-align: center;
 
-        color: #000000;
+        border-top-left-radius: 0.1rem;
+        border-top-right-radius: 0.1rem;
+
+        // color: #000000;
+        color: var(--q-gb-t-c-2);
         font-size: 0.12rem;
-        background-color: #E95B5B;
+        // background-color: #E95B5B;
+        background-color: var(--q-gb-bg-c-1);
       }
     }
 
