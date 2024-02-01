@@ -4,6 +4,7 @@ import lodash_ from "lodash"
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 import { nextTick } from "vue";
 
+let time_out = null
 
 class BetWsMessage {
   constructor(){
@@ -122,11 +123,12 @@ class BetWsMessage {
             break;
           // 赛事 盘口赔率推送
           case 'C105':
-            this.MSG_C105(data);
-            break;
           // 投注项 盘口赔率推送
           case 'C106':
-            this.MSG_C106(data);
+            clearTimeout(time_out)
+            time_out = setTimeout(() => {
+              this.MSG_C106(data)
+            }, 10);
             break;
           // 注单状态
           case 'C201':
@@ -163,12 +165,12 @@ class BetWsMessage {
     BetData.set_bet_c104_change(obj.cd)
   }
   // 赛事订阅盘口赔率变更 修改投注项变更
-  MSG_C105(obj) {
-    BetData.set_bet_c106_change(obj.cd)
-  }
   // 投注项变更
   MSG_C106(obj) {
-    BetData.set_bet_c106_change(obj.cd)
+    console.error('obj.cmd',obj.cmd)
+    let config = obj.cd
+    config.cmd = obj.cmd
+    BetData.set_bet_c106_change(config)
   }
   /**
    *  C201推动数据

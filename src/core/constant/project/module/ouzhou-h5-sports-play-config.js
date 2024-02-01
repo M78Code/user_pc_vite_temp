@@ -947,5 +947,41 @@ export const use_sports_play_title = () => {
         ]
       },
     ],
+    // 虚拟蓝球的
+    "1004": [
+      {
+        hpid: '20043',
+        label: i18n_t('ouzhou.match.play_map.20043'), //'全场独赢',
+        ol: [
+          { ot: '1', title: i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') }, //"主胜"
+          // { ot: 'X', title: i18n_t('list.dogfall') }, // "平局"
+          { ot: '2', title: i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2')} // "客胜"
+        ]
+      },
+      {
+        hpid: '20045',
+        label: i18n_t('ouzhou.match.play_map.20045'), // '让分',
+        ol: [
+          { ot: '1', title: i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') }, // "全场大"
+          { ot: '2', title: i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') }, // "全场小"
+        ]
+      },
+      {
+        hpid: '20044',
+        label: i18n_t('ouzhou.match.play_map.20044'), // '总分',
+        ol: [
+          { ot: 'Over', title: i18n_t('ouzhou.match.bet_col_Over') }, // "主队让球"
+          { ot: 'Under', title: i18n_t('ouzhou.match.bet_col_Under') }, // "客队让球"
+        ]
+      },
+      {
+        hpid: '20046',
+        label: i18n_t('ouzhou.match.play_map.20046'), // '达到21分',
+        ol: [
+          { ot: 'Yes', title: i18n_t('ouzhou.bet_col.bet_col_4.bet_col_1') }, // "主队让球"
+          { ot: 'No', title: i18n_t('ouzhou.bet_col.bet_col_4.bet_col_2') }, // "客队让球"
+        ]
+      },
+    ],
   }
 }
