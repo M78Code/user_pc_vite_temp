@@ -93,7 +93,7 @@
   import { btn_reduce, btn_add, ref_pre_book,add_handle,sub_handle,set_ref_data } from "src/core/bet/common/appoint-data.js"
   import { LOCAL_PROJECT_FILE_PREFIX,i18n_t ,MARKET_RANG_FLAG_LIST,UserCtr,compute_value_by_cur_odd_type } from "src/output/index.js";
   import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
-  import { reactive } from "vue";
+  import { reactive, watch } from "vue";
 
   const props = defineProps({
     items:{},
@@ -104,6 +104,11 @@
     show_appoint: false,
     odds_value_edit: "",
     ball_value_edit: ""
+  })
+  
+  // 投注项变更后 重置预约编辑
+  watch(()=> props.items.playOptionsId ,()=>{
+    ref_data.show_appoint = false
   })
 
   // 删除投注项
