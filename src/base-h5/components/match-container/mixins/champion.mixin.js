@@ -231,7 +231,9 @@ export default {
           // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
           device_type: 1,  
           // 数据仓库类型
-          match_data_type: match_data_type
+          match_data_type: match_data_type,
+          // 是不是 电竞冠军
+          is_kemp: MenuData.get_mm_is_champion(),
         }
         console.log('score-list.vue ',params)
         set_bet_obj_config(params,other)

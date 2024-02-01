@@ -1566,7 +1566,8 @@
     "match_parlay": "串",
     "no_score_data": "暂无比分数据",
     "video_live": "视频直播",
-    "animation_live": "动画直播"
+    "animation_live": "动画直播",
+    "match_cancellation": "比赛取消"
   },
   "match_main": {
     "cut_off": "截止",

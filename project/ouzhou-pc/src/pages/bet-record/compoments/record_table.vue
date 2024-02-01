@@ -74,7 +74,8 @@
                         <span>[{{item.sportName}}] {{ item.matchName }}</span>
                         <span v-if="props.row.preOrder" class="pre_text">{{ i18n_t('bet.bet_book_confirm') }}</span>
                       </div>
-                      <span v-if="item.matchDay">{{ item.matchDay }} {{ item.batchNo }}</span>
+                      <span v-if="[1001,1004].includes(item.sportId*1)">{{ item.matchDay }} {{ item.batchNo }}</span>
+                      <span v-if="[1011,1002,1009,1010].includes(item.sportId*1)">{{ item.batchNo }}</span>
                       <span v-if="item.matchType !=3" style="color:#8A8986">{{ item.matchInfo }}</span>
                       <span>
                           <span v-if="item.matchType != 3 && ![1001,1002,1009,1010,1011].includes(item.sportId*1)">{{matchType(item.matchType, props.row.langCode)}}</span>

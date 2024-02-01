@@ -99,9 +99,16 @@ export function usedetailData(route) {
     if (plays) {
       list = all_list.value.filter((item) =>{
         if(category.round){
-          let [hpid, round] = item.chpid.split("-")
+          if(plays.includes(Number(item.hpid))){
+            let [hpid, round] = item.chpid.split("-")
+            if(round == category.round){
+              return true
+            }else {
+              return false
+            }
+          }
         }else{
-          plays.includes(Number(item.hpid))
+          return plays.includes(Number(item.hpid))
         }
       });
     } else {

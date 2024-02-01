@@ -11,6 +11,7 @@ import { nextTick, ref } from "vue"
 import lodash_ from "lodash"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
+import betViewDataClass from "./bet-view-data-class.js";
 
 
 class BetData {
@@ -749,6 +750,7 @@ this.bet_appoint_ball_head= null */
     }
     // true 单关 false 串关
     this.is_bet_single = is_bet_single
+    this.set_is_bet_pre(false)
     // this.switch_bet_query_bet_amount()
     // this.set_bet_oid_list()
     this.set_bet_data_class_version()
@@ -1426,6 +1428,11 @@ this.bet_appoint_ball_head= null */
 
   // 设置投注项状态
   set_options_state() {
+    // 需要筛选出 某些状态不需要再去做投注项状态的改版
+    // 目前 7 8 为预约投注后
+    if ([7, 8].includes(betViewDataClass.bet_order_status)) {
+      return
+    }
     let single_name = ''
     if(this.is_bet_single){
       single_name = 'bet_single_list'
@@ -1468,6 +1475,8 @@ this.bet_appoint_ball_head= null */
       BetViewDataClass.set_bet_before_message({})
       this[single_name] = array_list
       this.set_bet_data_class_version()
+      // 投注项更新后 需要通知页面
+      useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY_UPDATE)
       return
     }
   }

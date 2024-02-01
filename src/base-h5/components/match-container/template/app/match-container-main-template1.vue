@@ -1781,7 +1781,7 @@ export default {
     width: 0.2rem;
     line-height: .16rem;
     border-radius: .03rem;
-    margin-top: 0.6rem;
+    // margin-top: 0.6rem;
     background: cover;
     &.special-lang {
       margin-left: .06rem;
