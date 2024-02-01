@@ -7,7 +7,7 @@
     <div>
       <div class="title-wrap-standard row justify-between items-center" v-if=" virtual_match_list?.length ">
         <div class="lengue-name">{{ lengue_name }}</div>
-        <div class="odd-title-wrapper row">
+        <div class="odd-title-wrapper row" :class="{vr_basketball: is_vr_basketball}">
           <div class="odd-t-w-inner row items-center" :class="{status2:standard_odd_status}">
             <div v-for="(hpl_title, hp_i) of i18n_t('list_title.'+csid+'.title')" :key="hp_i">
               {{hpl_title}}
@@ -28,11 +28,29 @@
 import virtual_sports_match_list_mixin from "src/core/vr/mixin/pages/virtual/virtual-sports-part/virtual-sports-match-list-mixin.js";
 import v_s_match_timer from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/virtual-sports-match-timer.vue";
 import virtual_sports_match_item from "project_path/src/pages/vr/pages/virtual/virtual-sports-part/virtual-sports-match-item.vue";
+import { useRouter,useRoute } from "vue-router";
+import VR_CTR from 'src/core/vr/vr-sports/virtual-ctr'
+
+
+
 export default {
   mixins:[virtual_sports_match_list_mixin],
   components:{
     'v-s-match-timer':v_s_match_timer,
     'v-sports-match-item':virtual_sports_match_item,
+  },
+  computed: {
+    is_vr_basketball(){
+      return VR_CTR.state.virtual_current_sub_menuid == 1004
+    }
+  },
+  setup(){
+    const route = useRoute()
+    const router = useRouter()
+    return {
+      route,
+      router
+    }
   }
 }
 </script>
@@ -59,6 +77,10 @@ export default {
       width: 1.92rem;
       height: 100%;
       overflow: hidden;
+    }
+
+    .vr_basketball{
+      width: 60%;
     }
 
     .odd-t-w-inner {
