@@ -654,6 +654,7 @@ class BaseData {
         if (obj.mi) {
           //电竞总数量 取今日 早盘下数量
           obj.ct = item.sl?.filter(n=>{return [2,3].includes(n.st)})?.map((n)=>{return n.ct||0})?.reduce((n1,n2)=>{return n1+n2}) || 0;
+          obj.sl = item.sl;
           // mid
           sports_mi.push(Number(obj.mi));
           // 电子竞技 菜单数据

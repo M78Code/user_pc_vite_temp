@@ -1052,7 +1052,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     BetData.set_bet_mode(-1)
     // 重置金额为 0
     BetData.set_bet_amount(0)
-    BetData.set_is_bet_pre(false)
+    // BetData.set_is_bet_pre(false)
     BetViewDataClass.set_bet_before_message({})
 
     // 没有走数据仓库 提示数据失效
