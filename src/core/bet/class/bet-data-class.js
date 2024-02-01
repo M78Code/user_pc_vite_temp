@@ -308,10 +308,13 @@ this.bet_appoint_ball_head= null */
   /**
    * 设置 是否使用常用金额
    */
-  set_regular_amount() {
+  set_is_regular_amount() {
     this.is_regular_amount = !this.is_regular_amount
-    useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
     this.set_bet_data_class_version()
+  }
+
+  set_regular_amount(val) {
+    this.regular_amount = val
   }
 
   /**
@@ -847,11 +850,6 @@ this.bet_appoint_ball_head= null */
   // 设置投注金额
   set_bet_amount(val) {
     this.bet_amount = val;
-    
-    // 设置常用投注金额
-    if(val>0){
-      this.regular_amount = this.bet_amount
-    }
     this.set_bet_data_class_version()
   }
 
@@ -1498,7 +1496,7 @@ this.bet_appoint_ball_head= null */
 
     // 锁盘
     let obj = array_list.find( item => item.mid_mhs == 11 || item.hl_hs == 11 || item.ol_os == 4 ) || {}
-    console.error('锁盘---------',obj.mid_mhs,obj.hl_hs,obj.ol_os)
+    // console.error('锁盘---------',obj.mid_mhs,obj.hl_hs,obj.ol_os)
     if(obj.playOptionsId){
       BetViewDataClass.set_bet_expired(false)
       BetViewDataClass.set_bet_before_message({code:200, message:"bet.bet_upd"})
@@ -1509,7 +1507,7 @@ this.bet_appoint_ball_head= null */
 
     // 封盘 关盘
     let obj_ = array_list.find( item => [1,2].includes(item.mid_mhs *1) || [1,2].includes(item.hl_hs *1) || [2,3].includes(item.ol_os *1) ) || {}
-    console.error('封盘 关盘---------',obj_.mid_mhs,obj_.hl_hs,obj_.ol_os)
+    // console.error('封盘 关盘---------',obj_.mid_mhs,obj_.hl_hs,obj_.ol_os)
     if(obj_.playOptionsId){
       BetViewDataClass.set_bet_expired(true)
       BetViewDataClass.set_bet_before_message({code:"0402001", message:"bet_message.m_0402001"})
@@ -1520,7 +1518,7 @@ this.bet_appoint_ball_head= null */
 
     // 开盘
     let obj_o = array_list.find( item => item.mid_mhs == 0 && item.hl_hs == 0 && item.ol_os == 1 ) || {}
-    console.error('开盘---------',obj_o.mid_mhs,obj_o.hl_hs,obj_o.ol_os)
+    // console.error('开盘---------',obj_o.mid_mhs,obj_o.hl_hs,obj_o.ol_os)
     if(obj_o.playOptionsId){
       BetViewDataClass.set_bet_expired(false)
       BetViewDataClass.set_bet_before_message({})

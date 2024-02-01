@@ -171,7 +171,8 @@ export default {
             align-items: flex-end;
 
             &.focus {
-              color: #E95B5B;
+              // color: #E95B5B;
+              color: var(--q-gb-bg-c-1);
               // background-color:#FFB001;
             }
           }
@@ -195,7 +196,8 @@ export default {
             background-color: #999999;
 
             &.active {
-              background-color: #E95B5B;
+              // background-color: #E95B5B;
+              background-color: var(--q-gb-bg-c-1);
             }
           }
 
@@ -206,7 +208,8 @@ export default {
 
             .inner-line {
               height: 100%;
-              background-color: #E95B5B;
+              // background-color: #E95B5B;
+              background-color: var(--q-gb-bg-c-1);
             }
           }
         }

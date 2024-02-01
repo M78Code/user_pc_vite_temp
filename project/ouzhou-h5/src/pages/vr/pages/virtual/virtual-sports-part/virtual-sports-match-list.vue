@@ -3,7 +3,7 @@
 -->
 
 <template>
-  <div class="match-list-wrapper">
+  <div class="match-list-wrapper" :class="{vr_basketball_match_list_wrapper: is_vr_basketball}">
     <div>
       <div class="title-wrap-standard row justify-between items-center" v-if=" virtual_match_list?.length ">
         <div class="lengue-name">{{ lengue_name }}</div>
@@ -60,6 +60,10 @@ export default {
   position: relative;
   width: 100%;
   height: auto;
+
+  &.vr_basketball_match_list_wrapper{
+    // background-color: red;
+  }
 
   .title-wrap-standard {
     // width: 3.61rem;
