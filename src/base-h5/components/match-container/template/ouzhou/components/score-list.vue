@@ -180,7 +180,7 @@ const computeVrBasketOdd = ()=>{
         }
       })
     }
-    console.log("finallyTarget------------------------>", finallyTarget)
+    // console.log("finallyTarget------------------------>", finallyTarget)
     return finallyTarget
 }
 
@@ -223,7 +223,7 @@ const get_time_hps = (hps) => {
       width: 24%;
       height: 100%;
       // background-color: red;
-      
+
       display: flex; 
       flex-direction: column; 
       justify-content: space-between;
