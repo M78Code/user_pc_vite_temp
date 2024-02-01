@@ -180,7 +180,7 @@ const computeVrBasketOdd = ()=>{
         }
       })
     }
-    // console.log("finallyTarget------------------------>", finallyTarget)
+    console.log("finallyTarget------------------------>", finallyTarget)
     return finallyTarget
 }
 

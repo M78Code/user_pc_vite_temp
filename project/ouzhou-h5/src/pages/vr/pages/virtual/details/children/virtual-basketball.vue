@@ -83,7 +83,7 @@ export default {
   width: 1.2rem;
   height: 0.18rem;
   margin: 4px auto;
-  background-color: #D4080B;
+  background-color: var(--q-gb-bg-c-1);
   border-radius: 8px;
   font-size: 0.1rem;
   // color: var(--q-color-com-fs-color-8);
@@ -91,7 +91,7 @@ export default {
 
   &.vir-end {
     // background-color: #5E88A7;
-    background-color: var(--q-gb-bg-c-35);
+    background-color: var(--q-gb-bg-c-1);
   }
 }
 
@@ -112,7 +112,8 @@ export default {
   font-size: 12px;
   margin-top: 0.52rem;
   // color: var(--q-color-com-fs-color-8);
-  color: var(--q-gb-t-c-2);
+  // color: var(--q-gb-t-c-2);
+  color: var(--q-gb-t-c-1);
   font-weight: 600;
 
   background-size: 100% 100%;
@@ -145,7 +146,7 @@ export default {
 
     &.active {
       // background-color: var(--q-color-page-bg-color-50);
-      background-color: var(--q-gb-bg-c-35);
+      background-color: var(--q-gb-bg-c-1);
     }
   }
 
@@ -157,7 +158,7 @@ export default {
     .inner-line {
       height: 100%;
       // background-color: var(--q-color-page-bg-color-50);
-      background-color: var(--q-gb-bg-c-35);
+      background-color: var(--q-gb-bg-c-1);
     }
   }
 }
