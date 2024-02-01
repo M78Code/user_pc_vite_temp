@@ -77,7 +77,6 @@
                       </div>
                   
                     </div>
-
                     <div class="appoint-cursor" v-if="!ref_data.show_appoint && BetData.is_bet_single && BetData.bet_pre_list.includes(items.playOptionsId)" @click="set_show_appoint">
                      +{{i18n_t('pre_record.book')}}
                     </div>

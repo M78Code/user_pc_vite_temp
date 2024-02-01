@@ -35,7 +35,15 @@
               <template v-else>
                   <!-- 合并单关  -->
                   <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${ref_min_height_max}rem` }">
-                      <bet-mix-box-child2></bet-mix-box-child2>
+                    <template v-if="BetData.is_bet_single && BetData.bet_single_list.length">
+                      <div v-for="(items,index) in BetData.bet_single_list" :key="items.playOptionsId">
+                        <bet-mix-box-child1 :items="items" :index="index"></bet-mix-box-child1>
+                        <bet-input-info2 :item="items" :index="index"></bet-input-info2>
+                      </div>
+                      <div v-if="BetData.bet_single_list.length > 1">
+                        <bet-input-multiple></bet-input-multiple>
+                      </div>
+                    </template>
                   </div>
               </template>
               <!-- 合并投注 常用金额 -->
@@ -107,13 +115,15 @@ import betBtn1 from './bet-btn1.vue';
 import keyBoard from './keyboard.vue';
 import betInputInfo from "./bet_input_info.vue";
 import betMixBoxChild1 from "./bet_mix_box_child1.vue";
-import betMixBoxChild2 from "./bet_mix_box_child2.vue";
 import betMixBoxChild4 from "./bet_mix_box_child4.vue";
 
 import betSpecialInput from "./bet-special-input.vue";
 import betSpecialState from "./bet-special-state.vue";
 import betSpecialResult from "./bet-special-result.vue";
 import betSpecialWinning from "./bet-special-winning.vue";
+
+import betInputInfo2 from "./bet_input_info2.vue";
+import betInputMultiple from "./bet_input_multiple.vue";
 import betMerge from "./bet-merge.vue"
 
 import betAllDetele from "./bet_all_detele.vue";
