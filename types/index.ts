@@ -1,7 +1,7 @@
 declare namespace TYPES {
   /** 比赛详情 */ interface MatchDetail extends K.mid, K.csid, K.tid, K.csna
     , K.man, K.mhn, K.cds, K.tn, K.tnjc, K.tlev, K.mo
-    , K.mp, K.ms, K.msc
+    , K.mp, K.ms, K.msc, K.mhs
     , K.mgt, K.srid {
     mst: string,
     mcg: number,
@@ -18,7 +18,6 @@ declare namespace TYPES {
     lurl: string,
     mprmc: string,
     frmhn: Array<"R" | String>,
-    mhs: number,
     mlet: string,
     mhid: string,
     mrmc: string,
@@ -161,7 +160,7 @@ declare namespace K {
     /** 投注项id */ oid: any
   };
   /** 投注项状态 */ type os = {
-    /** 投注项状态:0开,1封,3隐藏 */ os: number
+    /** 投注项状态 1：开 2：封 3：关 4：锁 */ os: number
   };
   /** 赔率 */ type ov = {
     /** 赔率 */ ov: string
@@ -248,7 +247,10 @@ declare namespace K {
     /** 玩法模板 */ hpt: number
   };
   /** 盘口状态 */ type hs = {
-    /** 盘口状态:0开,1封,2关,11锁 */ hs: number,
+    /** 盘口状态，玩法级别 0：开 1：封 2：关 11：锁 */ hs: number,
+  };
+  /** 赛事级别盘口状态 */ type mhs = {
+    /** 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态） */ mhs: number,
   };
   /** 用户ID */ type cuid = {
     /** 用户ID */ cuid: number,
