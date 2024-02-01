@@ -13,7 +13,7 @@
     </div>
     
     <!-- 常用金额 -->
-    <div class="del-info-select" @click.stop="set_is_regular_amount()">
+    <div class="del-info-select" @click.stop="set_is_regular_amount()" v-if="BetData.bet_single_list.length == 1">
       <span class="del-info-name">{{ i18n_t('bet.used_money2') }}</span>
       <img class="" v-if="BetData.is_regular_amount" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
       <img class="" v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_b.svg`" alt="" />
@@ -27,7 +27,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 
 // 常用金额
 const set_is_regular_amount = () => {
-  BetData.set_regular_amount()
+  BetData.set_is_regular_amount()
 }
 
 // 合并单关

@@ -308,10 +308,13 @@ this.bet_appoint_ball_head= null */
   /**
    * 设置 是否使用常用金额
    */
-  set_regular_amount() {
+  set_is_regular_amount() {
     this.is_regular_amount = !this.is_regular_amount
-    useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
     this.set_bet_data_class_version()
+  }
+
+  set_regular_amount(val) {
+    this.regular_amount = val
   }
 
   /**
@@ -847,11 +850,6 @@ this.bet_appoint_ball_head= null */
   // 设置投注金额
   set_bet_amount(val) {
     this.bet_amount = val;
-    
-    // 设置常用投注金额
-    if(val>0){
-      this.regular_amount = this.bet_amount
-    }
     this.set_bet_data_class_version()
   }
 
