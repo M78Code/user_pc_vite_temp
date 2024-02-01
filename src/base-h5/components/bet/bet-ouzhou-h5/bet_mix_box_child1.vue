@@ -12,6 +12,7 @@
                   <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="del_bet_options"></span>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
+                      
                       <div class="nonebox4-content-left-content-text-one">
                         <div class="nonebox4-content-left-content-text-one-tit">
                           <!-- vr 单独处理 222-->
@@ -60,16 +61,18 @@
                           <div class="bet-odds-name">{{i18n_t('pre_record.handicap')}}</div>
                           <div class="bet-odds-edit">
                             <span class="bet-odds-reduce" :class="{begray:ref_pre_book.appoint_ball_value <= 0}" v-touch-repeat:0:300.mouse.enter.space="() => {sub_handle(items)}">-</span>
-                            <input class="bet-odds-number" v-model="ref_pre_book.appoint_ball_value" />
+                            <bet-input-info3 :items="items" :valueModel="ref_pre_book.appoint_ball_value" :index="'pre_handicap' + index"></bet-input-info3>
+                            <!-- <input class="bet-odds-number" v-model="ref_pre_book.appoint_ball_value" /> -->
                             <span class="bet-odds-add" :class="{begray:ref_pre_book.appoint_ball_value >= check_ball_maxmin(items)}" v-touch-repeat:0:300.mouse.enter.space="() => {add_handle(items)}">+</span> 
                           </div>
-                        </div>                                     
+                        </div>                    
                         <div class="bet-appoint-box">
                           <!-- 赔率 -->
                           <div class="bet-odds-name">{{i18n_t('pre_record.odds')}}</div>
                           <div class="bet-odds-edit">
                             <span class="bet-odds-reduce" :class="{begray:ref_pre_book.appoint_odds_value == ref_pre_book.min_odds_value}" v-touch-repeat:0:300.mouse.enter.space="() => {btn_reduce(items)}">-</span>
-                            <input class="bet-odds-number" type="number" v-model="ref_pre_book.appoint_odds_value" />
+                            <bet-input-info3 :items="items" :valueModel="ref_pre_book.appoint_odds_value" :index="'pre_odds' + index"></bet-input-info3>
+                            <!-- <input class="bet-odds-number" type="number" v-model="ref_pre_book.appoint_odds_value" /> -->
                             <span class="bet-odds-add" :class="{begray:ref_pre_book.appoint_odds_value >= 355}" v-touch-repeat:0:300.mouse.enter.space="() => {btn_add(items)}">+</span> 
                           </div>
                           <span class="delete-appoint icon-delete" @click="ref_data.show_appoint=false"></span>
@@ -94,6 +97,8 @@
   import { LOCAL_PROJECT_FILE_PREFIX,i18n_t ,MARKET_RANG_FLAG_LIST,UserCtr,compute_value_by_cur_odd_type } from "src/output/index.js";
   import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
   import { reactive } from "vue";
+  import betInputInfo3 from "./bet_input_info3.vue";
+
 
   const props = defineProps({
     items:{},
@@ -244,8 +249,8 @@
   .nonebox4-content{
       width: 100%;
       background: var(--q-gb-bd-c-2);
-      padding: 0.05rem 0.15rem;
-      padding-right: 0;
+      padding: 0.05rem 0rem .1rem 0.40rem;
+      position: relative;
       //border-bottom: 1px solid #ccc;
   }
   .nonebox4-content-left-title{
@@ -259,10 +264,11 @@
       width: 100%;
   }
   .nonebox4-content-left-content-xian{
+      position: absolute;
       color: var(--q-gb-t-c-4);
       margin-right: 0.16rem;
-      margin-top: 0.08rem;
-      font-size: 0.12rem;
+      left: .15rem;
+      top: .16rem;
       &::before{
        font-size: 0.14rem;
       }
@@ -333,11 +339,13 @@
     align-items: center;
     height: .28rem;
     margin-top: .13rem;
-    padding-right: .1rem;
+    margin-left: -.3rem;
+    width: calc(100% + .4rem);
     .bet-odds-name{
       font-size: .12rem;
       color: var(--qq--yb-text-color4);
       margin-right: 0.08rem;
+      white-space: nowrap;
     }
     .bet-odds-edit{
       display: flex;

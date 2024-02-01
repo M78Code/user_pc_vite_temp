@@ -1,122 +1,64 @@
 <!-- 单关，串关，投注金额输入框 -->
 <template>
-    <div class="bet_input_info flex_input component bet-input-info">
+    <div class="component bet-input-info1">
         <div v-show="false"> {{ UserCtr.user_version }} --
       {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
-       <div class="info_left">
-       <div class="size_16 color_a1a1">{{i18n_t('bet.bet')}}</div>
-        <div class="size_14">
+        <div class="bet_input_info flex_input">
+       <!-- <div class="info_left"> -->
+       <!-- <div class="size_16 color_a1a1">{{i18n_t('bet.bet')}}</div> -->
+        <!-- <div class="size_14">
             <span>{{i18n_t('bet.total_win2')}}</span>
-            <span class="margin_left_4">
-                {{ formatMoney(mathJs.subtract(mathJs.multiply(item.bet_amount,item.oddFinally), item.bet_amount)) }}
-            </span>
-        </div>
-       </div>
-       <!-- {{ BetData.active_index }}--{{ index }} -->
-       <div class="info_right size_14">
-        <div class="content-b" @click.stop="input_click(item,index,$event)" :class="{'active':BetData.active_index == index}">
-            <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
-  
+            <span class="margin_left_4">{{}}</span>
+        </div> -->
+       <!-- </div> -->
+       <div class="info_right size_14" @click.stop="input_click(items, index, $event)">
+        <div class="content-b " :class="{'active':BetData.active_index == index}">
+            <span v-if="valueModel" class="yb_fontsize20 money-number">{{ valueModel }}</span>
             <span class="money-span" ref="money_span" v-if="BetData.active_index == index" :style="{ opacity:  '1' }"></span>
-            
-            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('bet.money_range')}} {{ ref_data.min_money }}~{{formatMoney(ref_data.max_money) }}</span>
+            <!-- <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}} {{ format_money(ref_data.min_money) }}~{{format_money(ref_data.max_money) }}</span> -->
           </div>
           
        </div>
+    </div>
     </div>
 </template>
 
 <script setup>
 import lodash_ from "lodash"
-import { onMounted, onUnmounted, reactive,ref } from "vue"
+import { onMounted, computed, reactive,ref, nextTick } from "vue"
 import {MITT_TYPES,useMittOn,formatMoney,UserCtr } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 
 const props = defineProps({
-    item: {
+    items: {
         default:()=>{},
         type:Object,
     },
     index: {
         default:0,
+    },
+    valueModel: {
+        default: 0,
+        type: Number || String
     }
 })
 
-const input_click = (item,index,event) => {
-    event.preventDefault()
-        
-    let obj_config = lodash_.get(BetViewDataClass,`bet_min_max_money[${item.playOptionsId}]`,{}) || {}
-    let obj = { 
-        playOptionsId:props.item.playOptionsId,
-        max_money:obj_config.max_money
-    }
-    // 设置 限额
-    BetData.set_bet_keyboard_config(obj)
-    BetData.set_bet_keyboard_show(true)
+const input_click = (items, index, evnet) => {
     BetData.set_active_index(index)
+    nextTick(() => {
+        BetData.set_bet_keyboard_show(true)
+    })
 }
 
 // 光标
 const money_span = ref(null)
 let flicker_timer = null
 
-const ref_data = reactive({
-    min_money: '',  // 最小投注金额
-    max_money: '', // 最大投注金额
-    seriesOdds: '', // 串关复式投注赔率
-    money: '', // 投注金额
-    emit_lsit: {}
-
-})
-
 onMounted(()=>{
     cursor_flashing()
-    set_ref_data_bet_money()
-    ref_data.emit_lsit = {
-        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
-        emitter_2: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle).off,
-    }
 })
-
-onUnmounted(()=>{
-    Object.values(ref_data.emit_lsit).map((x) => x());
-})
-
-/**
- *@description 金额改变事件
- *@param {Number} new_money 最新金额值
- */
- const change_money_handle = (new_money = {}) => {
-  ref_data.money = new_money.money
-  BetData.set_bet_obj_amount(ref_data.money,props.item.playOptionsId)
-  BetData.set_bet_amount(ref_data.money)
-}
-
-// 限额改变 修改限额内容
-const set_ref_data_bet_money = () => {
-    console.error('set_ref_data_bet_money')
-    let value = props.item.playOptionsId
-   
-    const { min_money = 10, max_money = 8888, seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
-    // 最小限额
-    ref_data.min_money = min_money
-    // 最大限额
-    ref_data.max_money = max_money
-    // 复试串关赔率
-    ref_data.seriesOdds = seriesOdds
-    // 限额改变 重置投注金额
-    ref_data.money = ''
-
-    //如果勾选了常用金额则设置给常用金额属性设置 回显金额数值
-    if(BetData.is_regular_amount){
-        ref_data.money = BetData.regular_amount
-    }
-
-    // 设置键盘设置的 限额和数据
-    BetData.set_bet_keyboard_config({playOptionsId:props.item.playOptionsId,max_money})
-}
 
 /**
  *@description 光标闪动，animation有兼容问题，用函数替代
@@ -134,14 +76,14 @@ const set_ref_data_bet_money = () => {
 
 <style lang="scss" scoped>
 .bet_input_info{
-    height: 68px;
-    padding-left: 0.7rem;
+    height: 28px;
+    // padding-left: 0.7rem;
     background: var(--q-gb-bg-c-10);
-    padding: 0 0.15rem;
+    // padding: 0 0.15rem;
 
     .info_right{
-        width: 162px;
-        height: 42px;
+        width: 80px;
+        height: 30px;
         box-shadow: 0px 1px 4px 0px rgba(255, 112, 0, 0.10);
         border: 1px solid var(--q-gb-bg-c-14);
         padding-left: 6px;
