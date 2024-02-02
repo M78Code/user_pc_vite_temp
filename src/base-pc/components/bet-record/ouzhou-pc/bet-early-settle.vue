@@ -115,10 +115,6 @@ const min_bet_money = computed(() => {
 })
 
 watch(() => expected_profit.value, (_new, _old) => {
-  // 小于 1 时暂停提前结算
-  if (_new < 1) {
-    status.value = 5;
-  }
   // 这4种情况时，不接受按钮中的金额变动
   let flag = [2, 3, 4, 6].includes(status.value)
   if (flag && !front_settle_amount.value) {
@@ -225,7 +221,7 @@ const submit_early_settle = () => {
       // 等到ws推送，c201_handle处理后续注单状态
     } else if (res.code == "0400527") {
       // 不支持提前结算或者暂停
-      status.value = 5;
+      status.value = 1;
       bet_pre_code.value = '0400527'
     } else if (res.code == "0400537") {
       // 金额有变动，需要更新按钮上的金额

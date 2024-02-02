@@ -53,7 +53,7 @@ let tid_match_list;
 * @param  {boolean} is_socket   是否 socket 调用
 * @param {Object} params 其他参数
 */
-export function fetch_match_list(is_socket = false) {
+export function fetch_match_list({is_socket = false,show_loading=false}) {
 	clearTimeout(axios_debounce_timer2); //取消上一次请求
 	loading.value = true;
 	const match_list_params = get_match_list_params();
@@ -90,7 +90,7 @@ export function fetch_match_list(is_socket = false) {
 		return false;
 	}
 	//不是 w 并且没有 元数据列表 启动loading
-	if (!is_socket && !is_has_base_data) {
+	if ((!is_socket && !is_has_base_data) || show_loading) {
 		set_load_data_state('loading')
 		// 设置列表滚动条scrollTop
 		MatchListScrollClass.set_scroll_top(0);
@@ -176,7 +176,7 @@ export function fetch_match_list(is_socket = false) {
 					// 重复拉列表的次数小于5   3秒后再次拉接口
 					if (api_error_count < 5) {
 						get_match_list_timeid = setTimeout(() => {
-							fetch_match_list(is_socket);
+							fetch_match_list({is_socket});
 						}, 3000);
 					} else {
 						set_load_data_state("refresh")
@@ -283,11 +283,11 @@ function mounted_fn(fun) {
 		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, default_fun).off,
 		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, default_fun).off, //语言切换
 		// 调用列表接口
-		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({ is_socket = undefined }) => {
+		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, (params={ is_socket : false }) => {
 			clearTimeout(tid_match_list)
 			tid_match_list = setTimeout(() => {
 				api_error_count = 0; //重新计算错误次数
-				fetch_match_list(is_socket)//请求接口
+				fetch_match_list(params)//请求接口
 			}, 80);
 		}).off,
 		//请求元数据
@@ -391,7 +391,7 @@ function get_hot_match_list(backend_run = false) {
  * @return {undefined} undefined
  */
 function on_refresh() {
-	fetch_match_list(true);
+	fetch_match_list({is_socket:false});
 	show_refresh_mask.value = true;
 	btn_loading.value = true
 };

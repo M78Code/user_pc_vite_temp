@@ -396,7 +396,14 @@ const get_lastest_market_info = (type) => {
                             if(type == 'submit_bet' && bet_item.ot != odds.oddsType){
                                 bet_item.hl_hs = 11
                             }
-
+                            // 预约投注编辑中 盘口赔率发生变化
+                            if( BetData.bet_pre_appoint_id == bet_item.playOptionsId ){
+                                BetData.set_bet_appoint_obj_playOptionId(odds.id)
+                                let pre_id = lodash_.get(BetData.bet_pre_obj,'custom_id','')
+                                if(pre_id == bet_item.playOptionsId){
+                                    BetData.bet_pre_obj.custom_id = odds.id
+                                }
+                            }
                             // 红绿升降
                             // bet_item.red_green = ''
                             // if(bet_item.odds == odds.oddsValue ){
@@ -1199,8 +1206,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
         playName: set_play_name(play_config), //玩法名称
         dataSource: mid_obj.cds, //数据源
-        home: mid_obj.mhn || '', //主队名称
-        away: mid_obj.man || '', //客队名称
+        home: mid_obj.mhn || (mid_obj.teams.length>0?mid_obj.teams[0]:''), //主队名称
+        away: mid_obj.man || (mid_obj.teams.length>1?mid_obj.teams[1]:''), //客队名称
         ot: ol_obj.ot, //投注項类型
         placeNum: hl_obj.hn || '', //盘口坑位
         // 以下为 投注显示或者逻辑计算用到的参数
@@ -1242,7 +1249,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
             })
         }
     }
-    // console.error('投注项内容：',bet_obj)
+    console.error('投注项内容：',bet_obj)
 
     // 冠军 
     if(bet_obj.bet_type == 'guanjun_bet'){
@@ -1427,9 +1434,10 @@ const set_market_id_to_ws = () => {
     }
     // 获取盘口id
     hid = bet_list.map(item => item.marketId)
+    hid = lodash_.uniq(hid);
     // 获取赛事id
     mid = bet_list.map(item => item.matchId)
-
+    mid = lodash_.uniq(mid);
 
     obj.hid = hid.join(',')
     obj.mid = mid.join(',')

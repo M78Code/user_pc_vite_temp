@@ -37,11 +37,14 @@
           }">+</div>
       </div>
       <div class="col-1"></div>
-    </div>
-    <!--取消-->
-    <div class="col-1 cancel" @click="cancel_operate">
+      <div class="col-1 cancel" @click="cancel_operate">
       <icon-wapper size="13px" name="icon-delete" />
     </div>
+    </div>
+    <!--取消-->
+    <!-- <div class="col-1 cancel" @click="cancel_operate">
+      <icon-wapper size="13px" name="icon-delete" />
+    </div> -->
   </div>
 </template>
 
@@ -648,8 +651,8 @@ const set_computed_appoint_ball_head = () => {
   justify-content: space-between;
   position: relative;
   .cancel {
-    position: absolute;
-    right: 22px;
+    // position: absolute;
+    // right: 22px;
   }
 }
 
