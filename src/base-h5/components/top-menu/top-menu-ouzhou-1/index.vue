@@ -47,7 +47,8 @@
               <!-- <span class="badge"></span> -->
               <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/top_avatar.png`" alt="" />
             </span>
-            <span class="info_amount">{{ format_money2(amount) }}</span>
+            <span class="info_amount" v-if="UserCtr.show_balance">{{ format_money2(amount) }}</span>
+            <span class="info_amount" v-else>{{ format_money2(amount).replace(/[\d.,]/g, '*') }}</span>
           </div>
         </template>
     </div>
