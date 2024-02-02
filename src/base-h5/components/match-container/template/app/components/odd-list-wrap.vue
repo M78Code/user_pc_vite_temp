@@ -51,7 +51,7 @@
           <!--标准版-->
           <div class="standard-odd-list row" v-if="!selected_list" :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
             <div class="odd-column-w" :class="[{ clounm2: ![1,4,11,14,16].includes(+match.csid) }, {'boxing':match.csid == 12 }]" 
-                v-for="(hp_item_obj,hp_i_i) in fill_empty_hps(get_hp_list(standard_odd_status))" :key="hp_i_i+''+standard_odd_status">
+                v-for="(hp_item_obj,hp_i_i) in current_odds_data" :key="hp_i_i+''+standard_odd_status">
               <!-- 足球 1，水球 16， 冰球 4, 手球 11，橄榄球 14 有三行 -->
               <div :class="['odd-wrap-min 1', `hp-${get_ol_length(hp_item_obj,hp_i_i)}`, { 'is-small': match.csid != 1 }]"
                 :key="ol_item_i" v-for="(ol_item,ol_item_i) in get_ol_list(hp_item_obj,hp_i_i)">
@@ -813,7 +813,6 @@ const is_show_scroll_dir = (dir) => {
  * @return Undefined Undefined
  */
 const odd_wrapper_pan = ({ direction }) => {
-  console.log(111111111111)
   if(!['left', 'right'].includes(direction)) return ;
   let status = 0;
   if (get_hp_list(1).length) {
@@ -838,6 +837,17 @@ const is_scroll_page = computed(() => {
   return [3,30].includes(props.current_tab_item.id)
 })
 
+// 当前主赔率
+const current_odds_data = computed(() => {
+  const hps = get_hp_list(standard_odd_status.value)
+  const length = lodash.get(hps, 'length', 0)
+  let result = hps
+  if (length < 1) {
+    result = [{ hl: [{}] }, { hl: [{}] }, { hl: [{}] }];
+  }
+  return result;
+})
+
 /**
  * 获取hp指定部分
  * @param {Number} type 0 第一部分; 1 第二部分
@@ -851,9 +861,7 @@ const get_hp_list = (type) => {
       } else {
         hps = finally_ol_list.value.slice(0, 3);
         for (let i = 3 - hps.length; i > 0; i--) {
-          hps.push({
-            hl: [{}],
-          });
+          hps.push({ hl: [{}], });
         }
       }
     }
@@ -975,6 +983,7 @@ const get_ol_length = (hp_item_obj, hp_i_i) => {
  * @return Undefined Undefined
  */
 const get_ol_list = (hp_item, hp_i_i) => {
+  // console.log(22222)
   // let ol_list = props.match.csid == 1 ? [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }] : [{ placeholder: 1 }, { placeholder: 1 }];
   let ol_list = [1, 4, 11, 16,14].includes(+props.match.csid) ? [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }] : [{ placeholder: 1 }, { placeholder: 1 }];
   if (lodash.get(hp_item, "hl[0].ol")) {
