@@ -573,6 +573,7 @@
   "bet": {
     "bet_order_info2": "您的订单已确认",
     "bet_order_book_info2": "预约投注成功", 
+    "bet_book_amount": "预约投注额",
     "bet_book_failed": "预约失败",
     "edit_success": "赔率修改成功！",
     "edit_fail": "赔率修改失败！",
