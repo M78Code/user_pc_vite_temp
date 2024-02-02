@@ -150,12 +150,13 @@ const set_ref_base_menu = (list=[] ) => {
     let top_menu_list = lodash_.cloneDeep(MenuData.top_menu_list)
     list.forEach(item=>{
       top_menu_list.filter(obj=>{
-        if(item.mi == obj.mi){
-          obj.ct = item.count
+        //电竞vr 取滚球 2100 => 21001
+        const mi = +obj.mi > 2000?`${obj.mi}${MenuData.menu_root == 400?4:1}`:obj.mi;
+        if(item.mi == mi){
+          obj.ct = item.count;
         }
       })
     })
-
     MenuData.set_top_menu_list(top_menu_list)
   }
 }

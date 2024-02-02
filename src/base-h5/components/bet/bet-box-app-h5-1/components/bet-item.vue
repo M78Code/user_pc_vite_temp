@@ -10,6 +10,11 @@
         <div class="handicap-closed" v-if="[2,3].includes(items.ol_os*1) || [1,2].includes(items.hl_hs*1) || [1,2].includes(items.mid_mhs*1)">
             <img :src="compute_local_project_file_path('/image/bet/handicap-closed.png')" alt="">
             <p class="font14">{{ i18n_t('bet.close') }}</p>
+
+            <!--  串关 投注 删除投注项 -->
+            <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1 && !BetData.is_bet_single" @click="set_delete">
+                <img :src="compute_local_project_file_path('/image/svg/delete4.svg')" alt="">
+            </div>
         </div>
         <!-- 串关 盘口展示 及 盘口关闭状态 -->
         <div v-else class="f-b-s bet-content" :class="[
@@ -154,30 +159,6 @@ watch(
             margin-bottom: .06rem;
         }
 
-        .bet-delete {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            cursor: pointer;
-            width: 0.3rem;
-            height: 0.2rem;
-            background-color: var(--q-gb-bg-c-19);
-            border-radius: .16rem 0 .12rem 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-
-            img {
-                width: .1rem;
-                height: .1rem;
-            }
-
-            &.bet-icon {
-                cursor: auto;
-            }
-        }
-
         .bet-odds {
             height: .34rem;
         }
@@ -244,6 +225,30 @@ watch(
        
     }
 
+    .bet-delete {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        cursor: pointer;
+        width: 0.3rem;
+        height: 0.2rem;
+        background-color: var(--q-gb-bg-c-19);
+        border-radius: .16rem 0 .12rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+
+        img {
+            width: .1rem;
+            height: .1rem;
+        }
+
+        &.bet-icon {
+            cursor: auto;
+        }
+    }
+
     .bet-market{
         font-size: .13rem;
         font-weight: 500;
@@ -303,6 +308,7 @@ watch(
     border-radius: 0.12rem;
     color: var(--q-gb-t-c-10);
     padding: .12rem;
+    position: relative;
     img {
         width: 0.74rem;
         height: 0.74rem;

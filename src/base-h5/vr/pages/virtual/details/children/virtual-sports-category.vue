@@ -1,12 +1,15 @@
- 
+<!--
+ * @Author: Supermark
+ * @Date: 2020-12-23 20:19:33
+ * @Description: 虚拟体育玩法投注项区域
+-->
 <template>
   <div class='category virtual-sport'>
     <!-- loading效果 -->
     <loading v-if="is_loading" :top="$route.name == 'virtual_sports' ? '76%' : '64%'"></loading>
       <!-- 详情玩法投注项有数据 -->
     <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;">
-      <template #scrollList>  
-      <div   class="scrollList">
+      <div  class="scrollList">
         <!-- 置顶操作时增加动画 -->
         <transition-group name="transition-play-list">
           <!-- 置顶 -->
@@ -28,7 +31,6 @@
           </template>
         </transition-group>
       </div>
-     </template>
       <div class="empty-box"></div>
     </div>
   </div>

@@ -235,13 +235,15 @@ const set_tab_list = (news_) =>{
 		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'vr_sports', [])  
 		tab_list.value = ouzhou_filter_config
 	}
-
 	if (tab_list.value.length) {
 		//冠军切换
 		if(MenuData.mid_menu_result.filter_tab && MenuData.is_kemp()){
 			checked_current_tab({value:MenuData.mid_menu_result.filter_tab})
 		}else{
-			checked_current_tab(store.filterTab || tab_list.value[0])
+			let index = tab_list.value.findIndex(val=>{
+				return val.value == store.filterTab?.value
+			})
+			checked_current_tab(tab_list.value[index == -1? 0 : index])
 		}
 	}
 }

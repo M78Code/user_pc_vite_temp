@@ -55,20 +55,14 @@ const NowScore = computed(()=>{
                 <p>{{ detail_data?.man }}</p>
             </li>
         </ul>
-        <ul class="right" v-if="detail_data?.ms == 1">
+        <ul class="right" v-if="[1,2,3,4].includes(+detail_data?.ms)">
             <li class="total-score flex justify-between">
                 <p>{{ TotalScore?.home }}</p>
                 <p>{{ TotalScore?.away }}</p>
             </li>
-            <li class="now-score flex justify-between" v-if="!lodash.isEmpty(NowScore)">
+            <li class="now-score flex justify-between" v-if="!lodash.isEmpty(NowScore) && +detail_data?.ms == 1">
                 <p>{{ NowScore?.home }}</p>
                 <p>{{ NowScore?.away }}</p>
-            </li>
-        </ul>
-        <ul class="right" v-else>
-            <li class="total-score flex justify-between">
-                <p>{{ TotalScore?.home }}</p>
-                <p>{{ TotalScore?.away }}</p>
             </li>
         </ul>
     </div>
