@@ -197,6 +197,8 @@ const change_current_menu = (item) => {
     // 重置所选 球种默认玩法 hpid
     MenuData.set_current_lv1_menu('2');
     MenuData.set_menu_mi(item.mi);
+    //常规日期请求参数
+    MenuData.set_match_date_tab({});
     MatchResponsive.reset_match_hpid_by_csid()
     // useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,item.mi,0);
     //增加早盘今日数量

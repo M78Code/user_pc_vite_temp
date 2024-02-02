@@ -57,6 +57,9 @@ class MenuData {
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = '';
     this.current_lv_2_menu_mi = ref('0');
+    //常规日期请求参数
+    this.match_date_tab_index = 0;
+    this.match_date_tab_md = "";
     //电竞日期
     this.current_lv_3_menu = {
       field1:"",
@@ -215,7 +218,7 @@ class MenuData {
     this.update();
   }
   /**
-   * 
+   * 电竞日期请求参数
    * @param {*} mi 
    * @returns 
    */
@@ -225,6 +228,16 @@ class MenuData {
       ...(item || {})
     }
     this.date_tab_index = item.index || 0;
+    this.update();
+  }
+  /**
+   * 常规请求参数
+   * @param {*} mi 
+   * @returns 
+   */
+  set_match_date_tab(obj){
+    this.match_date_tab_index = obj.index || 0;
+    this.match_date_tab_md = obj.md || "";
     this.update();
   }
   // 根据菜单id 获取对应的euid
@@ -423,6 +436,8 @@ class MenuData {
     this.collect_id = "";
     this.home_menu = 'featured';
     this.match_menu = 'Matches';
+    this.match_date_tab_index = 0;
+    this.match_date_tab_md = "";
     this.collect_menu = '';
     this.result_menu =  0;
     this.date_tab_index = 0;
