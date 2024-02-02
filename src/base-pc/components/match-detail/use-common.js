@@ -177,7 +177,7 @@ export const useCommon = ({ emit, props }) => {
       props.item_details.is_show = isShow.value;
     }
     // 用户点击了玩法就发送一次数据(需要改造)
-    useMittEmit(MITT_TYPES.EMIT_SET_PANEL_STATUS, this.item_details );
+    useMittEmit(MITT_TYPES.EMIT_SET_PANEL_STATUS, props.item_details );
   };
 
   /**

@@ -5,7 +5,12 @@
  */
 import { api_details } from "src/api/index";
 import UserCtr from "src/core/user-config/user-ctr.js";
+
 import { MenuData } from 'src/output/project/index.js'
+import {
+  useMittEmit,
+  MITT_TYPES,
+} from "src/core/mitt/index.js";
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
 import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData } from 'src/output/module/match-data-base.js'
 import { MatchDetailCalss } from 'src/output/module/project-single.js'
@@ -109,12 +114,19 @@ export default {
       media_type: media_type || "",
       play_id
     })
-
+    
     //如果是同场赛事切换 播放类型
-    if((old_mid == mid && old_media_type != media_type) || media_type == 'auto'){
+    if((old_mid == mid && old_media_type != media_type) && media_type == 'auto'){
       setTimeout(() => {
         MatchDetailCalss.set_play_media({ media_type, mid, time: Date.now()})
       })
+    }else{
+      
+      useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, MatchDetailCalss.params);
+      setTimeout(() => {
+        MatchDetailCalss.set_play_media({ media_type, mid, time: Date.now()})
+      })
+      
     }
   },
   /**
