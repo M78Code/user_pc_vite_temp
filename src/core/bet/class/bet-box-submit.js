@@ -1005,7 +1005,7 @@ const set_error_message_config = (res ={},type,order_state) => {
                     // 预约订单确认
                     obj = {
                         code: '200',
-                        message: "bet.bet_order_book_info2"
+                        message: "bet.bet_booked"
                     }
                     // matchInfo + playName + i18
                     useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${matchInfo} ${playName} ${i18n_t('bet.bet_booked')}`);
