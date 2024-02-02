@@ -10,7 +10,8 @@
       <div class="s-input s-input-click">
         <div style="display: flex; position: relative;">
           <input class="search-input" :class="is_focus ? 'change_width' : ''" @focus="show_search" :value="keyword"
-            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" @input="e=>change_txt(e.target.value)" @keyup.enter="e=>get_search_data(e.target.value)" />
+            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" @input="e => change_txt(e.target.value)"
+            @keyup.enter="e => get_search_data(e.target.value)" />
           <img class="icon-search" :src="compute_local_project_file_path('image/svg/search_white.svg')" alt="">
           <img v-show="keyword" @click="clear_keyword" class="icon-close"
             :src="compute_local_project_file_path('image/svg/close.svg')" alt="">
@@ -29,7 +30,8 @@
     <div class="h-right">
       <div class="user-info">
         <span class="user-balance"> {{ format_balance(UserCtr.balance) }}</span>
-        <span class="user-name">{{ lodash.get(UserCtr.get_user(), "nickName") || lodash.get(UserCtr.get_user(), "userName") }}</span>
+        <span class="user-name">{{ lodash.get(UserCtr.get_user(), "nickName") || lodash.get(UserCtr.get_user(),
+          "userName") }}</span>
       </div>
       <q-avatar size="40px" @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
@@ -96,9 +98,10 @@
               <div class="setting_item" v-for="setting in settingData" :key="setting.title">
                 <span class="title">{{ i18n_t(setting.title) }}</span>
                 <div class="switch">
-                  <span class="bg" :style="{ left: UserCtr.odds.cur_odds === setting.params[0] ? 0 : '50px' }"></span>
-                  <span v-for="s in setting.params" :key="s" @click="settingclick(s, setting.index)"
-                    :class="{ active: UserCtr.odds.cur_odds == s }">{{ i18n_t(`odds.${s}`) }}</span>
+                  <span v-for="(s, i) in setting.params" :key="s" @click="settingclick(setting, s)"
+                    :class="{ active: s == setting.index }">{{ i18n_t(setting.i18n[i]) }}
+                    <em class="bg" :style="{ left: s === setting.index ? 0 : '50px' }"></em>
+                  </span>
                 </div>
               </div>
             </q-item-section>
@@ -124,7 +127,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import BaseData from 'src/core/base-data/base-data.js'
 
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
-const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG;
+const { PROJECT_NAME, IS_FOR_NEIBU_TEST } = BUILDIN_CONFIG;
 
 export default defineComponent({
   name: "RightHead",
@@ -147,7 +150,7 @@ export default defineComponent({
       key: 'en',
       language: 'English',
     },
-     
+
     ]
 
     // const languages_ = [ {
@@ -178,17 +181,26 @@ export default defineComponent({
     //     key: 'hy',
     //     language: 'Korean',
     //   }]
-      console.error('IS_FOR_NEIBU_TEST',IS_FOR_NEIBU_TEST)
-      if(IS_FOR_NEIBU_TEST){
-       languages = lodash.concat(languages,[])
-      }
+    console.error('IS_FOR_NEIBU_TEST', IS_FOR_NEIBU_TEST)
+    if (IS_FOR_NEIBU_TEST) {
+      languages = lodash.concat(languages, [])
+    }
 
 
     const settingData = ref([{
+      type: "odds",
       title: "ouzhou.setting_menu.odds_display",
-      index: 'DEC',
+      index: UserCtr.odds.cur_odds,
+      i18n: ['odds.EU', 'odds.HK'],
       params: ['EU', 'HK']
     },
+    {
+      type: "sort",
+      title: "bet_record.settled_time",
+      index: UserCtr.sort_type || 1,// footer_menu.hot time
+      i18n: ['set.match_sort', 'set.time_sort'],
+      params: [1, 2]
+    }
       // {
       //   title: 'Bet Slip',
       //   index: 'ANY',
@@ -217,8 +229,8 @@ export default defineComponent({
           }
         }
       })
-    },{immediate:true})
-    
+    }, { immediate: true })
+
 
     /**
     * @Description:替换输入框非法字符为空串
@@ -230,12 +242,12 @@ export default defineComponent({
       get_search_data(keyword.value)
     }, 500)
     // 传递搜索状态
-    const get_search_data =lodash.throttle( (val) => {
+    const get_search_data = lodash.throttle((val) => {
       useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
         type: 'result',
-        text:String(val).trim()
+        text: String(val).trim()
       })
-    },1000)
+    }, 1000)
     /**
      * 是否显示搜索组件 default: false
      * 路径: project_path\src\store\module\search.js
@@ -266,9 +278,17 @@ export default defineComponent({
       visible.value = !visible.value
     }
 
-    const settingclick = (s) => {
-
-      UserCtr.set_cur_odds(s)
+    const settingclick = (setting, s) => {
+      setting.index = s
+      switch (setting.type) {
+        case "odds":
+          UserCtr.set_cur_odds(s)
+          break;
+        case "sort":
+          UserCtr.set_sort_type(s)
+          useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {is_socket:false,show_loading:true})
+          break;
+      }
     }
 
     // 切换语言
@@ -282,7 +302,7 @@ export default defineComponent({
       api_account.set_user_lang({ languageName: key }).then(res => {
         let code = lodash.get(res, 'code');
         if (code == 200) {
-         
+
         } else if (code == '0401038') {
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
         }
@@ -322,14 +342,14 @@ export default defineComponent({
       keyword.value = ''
       userRouter.push('/')
     }
-    const get_props = (props)=>{
+    const get_props = (props) => {
       keyword.value = props.text
     }
     const get_width = (props) => {
       is_focus.value = props.focus
       keyword.value = props.text
     }
-    const emit_list=[
+    const emit_list = [
       useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off,
       useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, get_width).off
     ]
@@ -340,7 +360,7 @@ export default defineComponent({
     });
     onUnmounted(() => {
       document.removeEventListener('click', hide_search)
-      emit_list.map(i=>i())
+      emit_list.map(i => i())
     })
     return {
       keyword,
@@ -427,6 +447,7 @@ export default defineComponent({
 .q-item:hover {
   background: #fff1e6 !important;
 }
+
 .q-item.language_li:hover {
   background: transparent !important;
 }
@@ -529,6 +550,7 @@ export default defineComponent({
     justify-content: space-between;
     margin-right: 16px;
     cursor: pointer;
+    border-radius: 20px;
 
     >span {
       width: 50px;
@@ -540,12 +562,12 @@ export default defineComponent({
       transition: all 0.25s;
       // color: var(--q-gb-t-c-8);
       color: #8A8986;
-
+      border-radius: 20px;
       &.active {
         color: #000;
+        border: 1px solid #ff7000;
         // background: var(--q-gb-bg-c-4);
         background: #ffffff;
-        border-radius: 20px;
       }
     }
 
@@ -554,7 +576,6 @@ export default defineComponent({
       top: 0;
       border-radius: 20px;
       // border: 1px solid var(--q-gb-bd-c-1);
-      border: 1px solid #ff7000;
       transition: all 0.25s;
     }
   }
