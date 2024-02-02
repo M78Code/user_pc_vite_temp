@@ -52,8 +52,9 @@ const requestHook = {
     const requestId = SessionStorage.get(token_key) || SessionStorage.get("token") ||get_query_string.token || "";
     config.headers["requestId"] = requestId;
     //请求语言
-    
-    config.headers["lang"] = LocalStorage.get(lang_key,LocalStorage.get('lang')); // 语言调整
+    // 兼容hk时接口获取不到数据
+    let lang_ = config.lang && config.lang == 'hk' ? 'zh' : LocalStorage.get(lang_key,LocalStorage.get('lang')); // 语言调整
+    config.headers["lang"] = lang_
     config.headers["checkId"] = `pc-${requestId}-${(UserCtr.get_uid()).replace(/-/g, "")}-${Date.now()}`;
     config.time = new Date().getTime();
     // config.url 后面是不带 ？的  会被 axios 解析掉参数放在其他地方
