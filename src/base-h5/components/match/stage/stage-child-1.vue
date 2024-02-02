@@ -12,7 +12,7 @@
     <div v-else class="counting-main" >
        <span class="counting-title">{{i18n_t('mmp')[1][detail_data.mmp]}}</span> 
       <!-- 计时器 222-->
-      <CountingDown ref="counting-down-second" :title="mmp_map_title" :mmp="detail_data.mmp"
+      <CountingDown v-if="![31].includes(+detail_data.mmp)" ref="counting-down-second" :title="mmp_map_title" :mmp="detail_data.mmp"
         :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+detail_data.csid)" :m_id="detail_data.mid"
         :second="detail_data.mst" :match="detail_data">
       </CountingDown>
@@ -157,7 +157,7 @@ onUnmounted(() => {
     color:var(--q-gb-t-c-14) !important
   }
   .counting{
-    color:var(--q-gb-t-c-14) !important
+    color:var(--q-gb-t-c-14) 
   }
   .counting-down-wrap{
      margin-left: 0.05rem;
