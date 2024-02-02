@@ -219,7 +219,7 @@ const api_bymids = (
   }
   let api;
   // 电竞
-  if (MenuData.is_esports() && PageSourceData.page_source !== "search") {
+  if ((MenuData.is_esports()||MenuData.is_eports_csid(_params.csid)) && PageSourceData.page_source !== "search") {
     api = api_websocket.get_esports_by_mids;
     params = {
       mids: mids.join(","),
