@@ -32,7 +32,8 @@
       "read": "阅读"
      },
      "bet": {
-         "place_bet": "下注"
+         "place_bet": "下注",
+         "limit":"限额"
      },
      "menu": {
          "collect": "收藏",

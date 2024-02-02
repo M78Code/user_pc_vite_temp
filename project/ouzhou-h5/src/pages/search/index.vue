@@ -362,8 +362,8 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	// tab 默认居中及移动动画
 	tabMove.tab_move2(index, tab_growp.value);
 	// 如果是电竞需要设置menu_type==2000 match-stage组件走电竞详情组件
-	if (sport_id == 100) {
-		MenuData.set_menu_type(2000)
+		if (sport_id == 100) {
+			MenuData.set_menu_type(2000)
 	}
 	if (keyword) {
 		input_value.value = keyword

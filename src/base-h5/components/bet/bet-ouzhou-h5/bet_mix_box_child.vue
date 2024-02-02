@@ -26,9 +26,9 @@
               <template v-if="!BetData.is_bet_merge">
                 <template v-if="BetViewDataClass.bet_order_status == 1 && BetData.bet_single_list.length ">
                     <!-- 单关投注项列表  -->
-                    <bet-mix-box-child1 :items="BetData.bet_single_list[0]" :index="0"></bet-mix-box-child1>
+                    <bet-mix-box-child1 :items="BetData.bet_single_list[0]" :index="1"></bet-mix-box-child1>
                     <!-- 单关的输入框 -->
-                    <bet-input-info :item="BetData.bet_single_list[0]" :index="0" ></bet-input-info>
+                    <bet-input-info :item="BetData.bet_single_list[0]" :index="1" ></bet-input-info>
                 </template>
               </template>
               <!-- 单关合并 -->
@@ -171,12 +171,10 @@ const scrollAreaPo = () => {
 }
 
 const set_W_H = () => {
-  ref_min_height_max.value = document.body.clientHeight > 580 ? '2.5' : '2'
-  ref_min_height_max.value = document.body.clientHeight > 650 ? '2.4' : '1.9'
+
   ref_min_height_max.value = document.body.clientHeight > 700 ? '2.3' : '1.8'
-  ref_min_height_max.value = document.body.clientHeight > 750 ? '2.2' : '1.7'
-  ref_min_height_max.value = document.body.clientHeight > 800 ? '2.1' : '1.6'
-  ref_min_height_max.value = document.body.clientHeight > 850 ? '2' : '1.5'
+
+
 }
 
 
