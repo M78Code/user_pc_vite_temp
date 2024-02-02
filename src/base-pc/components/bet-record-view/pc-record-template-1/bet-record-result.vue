@@ -79,6 +79,8 @@ const ref_data = reactive({
 let status = ref(1)
 // 是否展示提前结算
 let calc_show = ref(false)
+// 是否已经成功发生过提前结算
+let has_early_settled = ref(false)
 // 提前结算申请未通过提示
 let unSuccessTips = ref(false)
 let bet_pre_code = ref('')
@@ -153,7 +155,7 @@ watch(() => expected_profit.value, (_new, _old) => {
 
 onMounted(() => {
   // 计算提前结算按钮是否显示
-  calc_show.value = (BetRecordLeft.selected === 0 && props.item.seriesType === '1' && props.item.enablePreSettle)
+  // calc_show.value = (BetRecordLeft.selected === 0 && props.item.seriesType === '1' && props.item.enablePreSettle)
   //  /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordLeft.selected + props.item.enablePreSettle + status.value);
 
 
@@ -175,13 +177,14 @@ onMounted(() => {
     const moneyData = lodash.find(early_money_list_data, (item) => {
       return props.item.orderNo == item.orderNo
     })
-    // 如果没有当前单号
-    // if(!moneyData) {
-    //   calc_show.value = false
-    //   return
-    // }
+    // 如果没有当前单号并没有提前结算
+    // 提前结算成功的一直显示
+    if(!moneyData && !has_early_settled.value) {
+      calc_show.value = false
+      return
+    }
     // 有当前单号
-    // calc_show.value = true
+    calc_show.value = true
     let _maxCashout = props.item.maxCashout
     if (moneyData && moneyData.orderStatus === 0) {
       if (moneyData.preSettleMaxWin !=  props.item.maxCashout) {
@@ -213,6 +216,8 @@ const c201_handle = ({ orderNo, orderStatus }) => {
     if (orderStatus == 1) {
       // 成功
       status.value = 4;
+      // 发生过提前结算
+      has_early_settled.value = true
     } else if (orderStatus == 2) {
       // 失败
       // 提示未通过
@@ -262,6 +267,8 @@ const submit_early_settle = () => {
     let res = reslut.status ? reslut.data : reslut
     if (res.code == 200) {
       status.value = 4;
+      // 发生过提前结算
+      has_early_settled.value = true
     } else if (res.code == "0400524") {
       // 注单确认中···
       // 等到ws推送，c201_handle处理后续注单状态
