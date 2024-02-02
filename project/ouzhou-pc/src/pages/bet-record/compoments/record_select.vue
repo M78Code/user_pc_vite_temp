@@ -70,11 +70,11 @@ import dayjs from 'dayjs'
 const _dayjs = dayjs()
 
 // 提前结算、 进行中、已取消、预约失败 筛选按钮
-const options = [{ label: i18n_t("bet_record.settlement_pre"), value: true }]
+const options = [{ label: "bet_record.settlement_pre", value: true }]
 const pre_options = [
-  { label: i18n_t("bet.bet_process"), value: '0' },
-  { label: i18n_t("bet.bet_book_canceled"), value: '4' },
-  { label: i18n_t("bet.bet_book_failed"), value: '2,3' }
+  { label: "bet.bet_process", value: '0' },
+  { label: "bet.bet_book_canceled", value: '4' },
+  { label: "bet.bet_book_failed", value: '2,3' }
 ]
 const emit_value = (value) => {
   // 提前结算  value: true / false
