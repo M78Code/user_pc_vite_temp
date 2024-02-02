@@ -763,6 +763,10 @@ class MatchMeta {
     }
     // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
     if (length < 1) return this.set_page_match_empty_status({ state: true });
+    // 处理足球下的热门联赛
+    this.handler_popular_leagues_by_all(list)
+    // 处理收藏赛事
+    MatchCollect.get_collect_match_data(list)
     MatchCollect.get_collect_match_data(list)
     // 复刻版下的新手版 和 赛果 不需要  虚拟计算
     const is_virtual = !(project_name === 'app-h5' && (MenuData.is_results() || UserCtr.standard_edition == 1))
@@ -1610,7 +1614,6 @@ class MatchMeta {
    * @description 删除赛事不能防抖， 删除赛事会同时同事多个 C102 , 但只有一个状态 为 999 
    */
   handle_remove_match(data) {
-
     // mhs === 2  || mmp === 999 为关盘 则移除赛事
     const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
     if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {

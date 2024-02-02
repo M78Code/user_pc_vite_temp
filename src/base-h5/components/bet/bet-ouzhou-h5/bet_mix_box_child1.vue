@@ -216,7 +216,7 @@
 
   .appoint-cursor{
     position: absolute;
-    top: 0.5rem;
+    top: 0.78rem;
     right: 0.2rem;
     border-radius: 0.2rem;
     padding: 0 .1rem;

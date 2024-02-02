@@ -424,7 +424,7 @@ export default {
 }
 .match-content-line {
   width: 100%;
-  height: 0.005rem;
+  height: 1px;
   background: var(--q-gb-bd-c-4);
 }
 .match-container {

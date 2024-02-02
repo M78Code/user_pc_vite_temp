@@ -3,10 +3,9 @@
 -->
 <template>
   <div class="bet-all-detele">
-    <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-    
+    <div v-show="false">{{ BetData.bet_data_class_version }}-{{MenuData.menu_data_version}}</div>
     <!-- 合并单关 -->
-    <div class="del-info-select" @click.stop="set_is_bet_merge()" v-if="MenuData.is_esports()">
+    <div class="del-info-select" @click.stop="set_is_bet_merge()" v-if="!MenuData.is_esports() && !MenuData.is_vr()">
       <img class="" v-if="BetData.is_bet_merge" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
       <img class="" v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_b.svg`" alt="" />
       <span class="del-info-name">{{ i18n_t('bet.bet_merge') }}</span>
