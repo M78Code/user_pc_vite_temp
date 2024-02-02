@@ -58,6 +58,8 @@ let queryorderpresettleconfirm_data = inject('queryorderpresettleconfirm_data')
 let status = ref(1)
 // 是否展示提前结算
 let calc_show = ref(false)
+// 是否已经成功发生过提前结算
+let has_early_settled = ref(false)
 // 滑块是否显示
 let slider_show = ref(false)
 // 0  100
@@ -146,7 +148,7 @@ watch(() => queryorderpresettleconfirm_data.value, (_new) => {
 
 onMounted(() => {
   // 计算提前结算按钮是否显示
-  calc_show.value = (BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle)
+  // calc_show.value = (BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle)
   //  /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordClass.selected + props.item_data.enablePreSettle + status.value);
 
   // 接口：当 enablePreSettle=true && hs = 0  提前结算显示高亮， 当 enablePreSettle=true && hs != 0  显示置灰， 当 enablePreSettle=false 不显示
@@ -170,11 +172,19 @@ onMounted(() => {
       calc_show.value = false
       return
     }
-    // 获取当前订单的最新结算值
-    let _maxCashout = props.item_data.maxCashout
+    // 当前单号
     const moneyData = lodash.find(early_money_list_data, (item) => {
-      return props.item_data.orderNo == item.orderNo
+      return props.item.orderNo == item.orderNo
     })
+    // 如果没有当前单号并没有提前结算
+    // 提前结算成功的一直显示
+    if(!moneyData && !has_early_settled.value) {
+      calc_show.value = false
+      return
+    }
+    // 有当前单号
+    calc_show.value = true
+    let _maxCashout = props.item_data.maxCashout
     if (moneyData && moneyData.orderStatus === 0) {
       if (moneyData.preSettleMaxWin !=  props.item_data.maxCashout) {
         _maxCashout = moneyData.preSettleMaxWin
@@ -207,6 +217,8 @@ const c201_handle = ({ orderNo, orderStatus }) => {
     if (orderStatus == 1) {
       // 成功
       status.value = 4;
+      // 发生过提前结算
+      has_early_settled.value = true
     } else if (orderStatus == 2) {
       // 失败
       status.value = 1;
@@ -284,6 +296,8 @@ const submit_early_settle = () => {
     if (res.code == 200) {
       status.value = 4;
       message = i18n_t('early.info10');
+      // 发生过提前结算
+      has_early_settled.value = true
     } else if (res.code == "0400524") {
       // 注单确认中···
       status.value = 4;
