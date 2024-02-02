@@ -208,7 +208,6 @@ const set_bet_order_list = (bet_list, is_single) => {
             // 单关 非合并 并且勾选了常用金额 需要保存金额
             if( BetData.is_regular_amount && !BetData.is_bet_merge){
                 BetData.set_regular_amount(item.bet_amount)
-                BetData.set_bet_amount(item.bet_amount)
             }
 
             // 预约投注 设置预约盘口值
@@ -999,7 +998,7 @@ const set_error_message_config = (res ={},type,order_state) => {
                     // 预约订单确认
                     obj = {
                         code: '200',
-                        message: "bet.bet_order_info2"
+                        message: "bet.bet_order_book_info2"
                     }
                     // matchInfo + playName + i18
                     useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${matchInfo} ${playName} ${i18n_t('bet.bet_booked')}`);
