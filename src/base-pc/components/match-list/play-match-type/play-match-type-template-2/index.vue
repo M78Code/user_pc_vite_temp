@@ -1,6 +1,5 @@
 <template>
   <!-- 滚球盘 标题-->
-  
   <div class="play-match-type-2" @click="cur_title_info.func_name(card_style_obj)">
     <div class="left-box">
       <sport-icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
@@ -71,7 +70,7 @@ const get_card_csid = () => {
   let csid = 1
   if (!MenuData.is_home()) {
     csid = Number(MenuData.current_ball_type) + 100
-    if (MenuData.is_esports()) {
+    if (MenuData.is_esports()||MenuData.is_eports_csid(props.card_style_obj?.csid)) {
       csid = Number(props.card_style_obj?.csid) + 2000
     }
     if (MenuData.is_kemp()) {

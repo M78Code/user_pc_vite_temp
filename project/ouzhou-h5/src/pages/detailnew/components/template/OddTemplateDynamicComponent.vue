@@ -57,6 +57,11 @@ function onClick(){
       flex-basis: calc(100%/3);
     }
   }
+  &13{
+    .ol-name-ou{
+      display: inline;
+    }
+  }
   &14{
     .component.odd-ol-item{
       flex-basis: calc(100%/var(--odd-template-ol-item-flex-basis-count));
