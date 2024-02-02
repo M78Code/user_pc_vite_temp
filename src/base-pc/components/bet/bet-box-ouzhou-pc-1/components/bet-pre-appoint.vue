@@ -10,8 +10,8 @@
         v-touch-repeat:0:300.mouse.enter.space="() => {
             sub_handle('ball_head')
           }">-</div>
-        <input class="pre-input" v-model="ref_data.computed_appoint_ball_head" v-if="item.sportId == 1" readonly>
-        <input class="pre-input" ref="ball-head-input" v-model="ref_data.computed_appoint_ball_head"
+        <input class="pre-input" v-model="ref_data.computed_appoint_ball_head" v-if="item.sportId == 1" readonly  @mousedown.stop="">
+        <input class="pre-input" ref="ball-head-input" v-model="ref_data.computed_appoint_ball_head"  @mousedown.stop=""
           @blur="appoint_odds_head_handle" v-if="item.sportId == 2">
         <!-- 盘口加+-->
         <div class="add-number" :class="{ 'disabled': head_add_style }"
@@ -29,7 +29,7 @@
             sub_handle('odds_value')
           }">-</div>
 
-        <input class="pre-input" v-model="ref_data.appoint_odds_value" @input="pre_input_handle"  ref="currency_input">
+        <input class="pre-input" v-model="ref_data.appoint_odds_value" @input="pre_input_handle"  @mousedown.stop="" ref="currency_input">
 
         <div class="add-number" :class="{ 'disabled': ref_data.appoint_odds_value >= 355 }"
           v-touch-repeat:0:300.mouse.enter.space="() => {
@@ -37,11 +37,14 @@
           }">+</div>
       </div>
       <div class="col-1"></div>
-    </div>
-    <!--取消-->
-    <div class="col-1 cancel" @click="cancel_operate">
+      <div class="col-1 cancel" @click="cancel_operate">
       <icon-wapper size="13px" name="icon-delete" />
     </div>
+    </div>
+    <!--取消-->
+    <!-- <div class="col-1 cancel" @click="cancel_operate">
+      <icon-wapper size="13px" name="icon-delete" />
+    </div> -->
   </div>
 </template>
 
@@ -648,8 +651,8 @@ const set_computed_appoint_ball_head = () => {
   justify-content: space-between;
   position: relative;
   .cancel {
-    position: absolute;
-    right: 22px;
+    // position: absolute;
+    // right: 22px;
   }
 }
 

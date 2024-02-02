@@ -46,9 +46,8 @@ const is_serial = () => {
 
 // 单串关切换
 const set_bet_single_change = () => {
-
   // 冠军不能串
-  if(!MenuData.is_kemp() && is_serial()) {
+  if(!MenuData.is_kemp()) {
     BetData.set_is_bet_single()
 
     // 判断获取限额接口类型
@@ -85,6 +84,8 @@ const bet_total = computed(()=> state =>{
         return pre*1 + mathJs.divide(item.seriesBetAmount, 100)*1
       }, 0)
     }
+    return sum.toFixed(2).replace(/(\.\d)0$/,'$1')
+
   }
 })
 

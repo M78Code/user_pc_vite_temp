@@ -67,7 +67,6 @@ import {
     watch,
     onMounted,
     onUnmounted,
-    defineEmits,
     computed
 } from "vue";
 import { dateWeekMatchesFormat, farmatSportImg } from '../utils';
@@ -199,10 +198,8 @@ const changeDatetab = (item, index) => {
     store.second_tab_index = index;
     // MenuData.set_date_time(item.val, item.type);
     store.menu_time = item?.val
-
     MenuData.set_current_lv1_menu(item.type ? '3' : '2');
     MenuData.set_menu_mi(store.current_menu_mi);
-
     let time = ''
     if (!item?.val) {
         const cureent_date = new Date()
@@ -212,6 +209,11 @@ const changeDatetab = (item, index) => {
     } else {
       time = item?.val
     }
+    //常规日期请求参数
+    MenuData.set_match_date_tab({
+        index:index,
+        md:time
+    });
     // 设置菜单对应源数据
     // MatchMeta.set_origin_match_data({md: store.menu_time})
     // 根据时间筛选列表
@@ -228,14 +230,17 @@ const setDefaultData = async (obj) => {
     const val = obj.mi || "";
     const type = obj.type ||0;
     // 刷新or更换球种 重置
+    store.current_menu_mi = val;
+    week.value = await getDateList();
     if(!type){
         MenuData.set_current_lv1_menu(2);
         store.tabActive = 'Matches';
         store.second_tab_index = 0;
         store.menu_time = week.value[0].val;
+    }else{
+        store.second_tab_index = MenuData.match_date_tab_index || 0;
+        store.menu_time = week.value[store.second_tab_index]?.val;
     }
-    store.current_menu_mi = val;
-    week.value = await getDateList();
     //滚动到缓存位置
     const index =  week.value.findIndex((item)=>{return item.val === store.menu_time});
     scrollDateRef.value && scrollDateRef.value.scrollTo(index?index-2:0, "start-force");

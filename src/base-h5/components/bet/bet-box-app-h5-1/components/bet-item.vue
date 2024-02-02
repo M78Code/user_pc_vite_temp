@@ -28,8 +28,10 @@
                             <span class="virtual-count" :class="`virtual-num-${page.hv} csid-${items.sportId}`" ></span> {{page.text}} 
                         </div>
                     </div>
-                    
-                    <div class="text-flow-none" v-else>{{items.handicap}} <em v-if="items.handicap_hv && !items.is_guanjun" class="ty-span">{{items.handicap_hv}}</em></div> 
+                    <div class="text-flow-none" v-else>
+                        {{ `${teamsShow(items)} ${items.handicap}` }} 
+                        <em v-if="items.handicap_hv" class="ty-span">{{items.handicap_hv}}</em>
+                    </div> 
                 </div>
                 <div class="my-left">
                     <div class="w-100 handicap">
@@ -95,7 +97,7 @@ import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { is_up_app, is_down_app } from 'src/base-h5/core/utils/local-image.js'
 import betSingleInput from "./bet-single-input.vue"
-import { watch } from "vue";
+import { watch, computed } from "vue"
 
 const props = defineProps({
     items:{
@@ -107,6 +109,16 @@ const props = defineProps({
 const set_delete = () => {
     BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
 }
+
+const teamsShow = computed(()=> state =>{
+    let corner_ball = ["111","114","115","116","117","118","119","122","123","124","226","227","228","229"]
+    let penalty_hpid = ["307","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","125","230"]
+    if (corner_ball.includes(state.playId) || penalty_hpid.includes(state.playId)) {
+        return `${state.home} vs ${state.away}`
+    }
+    return ''
+})
+
 // 修改bug 54961 同测试沟通 要求在锁盘 hs = 11 时 提示弹出框 赔率更新中
 // 为不影响其他版本 估写watch于此处
 watch(

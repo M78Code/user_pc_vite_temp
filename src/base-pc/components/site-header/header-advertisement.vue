@@ -34,6 +34,7 @@
 <script setup>
 import { ref, reactive, watch, onUnmounted } from 'vue'
 import lodash from 'lodash'
+import UserCtr from "src/core/user-config/user-ctr.js";
 ////import store from "src/store-redux/index.js";
 import { i18n_t ,compute_img_url} from "src/output/index.js"
 
@@ -180,7 +181,11 @@ function change(index) {
  */
  function activity_dialog() {
   let token = get(computed_data.get_user, "token");
-  api_account.get_BannersUrl({ type: 5, token }).then((res) => {
+  // 兼容hk时接口获取不到数据
+  let config = {
+    lang: UserCtr.lang
+  }
+  api_account.get_BannersUrl({ type: 5, token }, config).then((res) => {
     let code = get(res, "data.code");
     let data = get(res, "data.data");
     if (code == 200) {

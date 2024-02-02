@@ -210,6 +210,28 @@ const add_handle = (item, index = 1) => {
     search_odds_value_by_ball_head(item);
   })
 }
+
+// h5 keyboard输入判断最大值最小值
+const computed_keyboard_odds = (val) => {
+  let max_odds = 355
+  let min_odds = parseFloat(ref_pre_book.min_odds_value)
+  let res = val
+  if (val <= min_odds) {
+    res = format_money(min_odds)
+  }
+  if (val >= max_odds) {
+    res = format_money(max_odds)
+  }
+  ref_pre_book.appoint_odds_value = res
+  set_bet_obj_config()
+}
+
+const computed_keyboard_handicap = (val) => {
+  let max_rang = 10;
+  let max_big = 30;
+}
+
+
 /**
  * @description:点击减号(球头或者赔率)的修改逻辑
  * @param {string} type  赔率还是球头
@@ -448,4 +470,5 @@ export {
   add_handle,
   ref_pre_book,
   set_ref_data,
+  computed_keyboard_odds
 }

@@ -16,7 +16,8 @@ import { format_money2, compute_local_project_file_path, UserCtr } from "src/out
 import { compute_css_obj, MenuData } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
+import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js';
+import BaseData from "src/core/base-data/base-data.js";
 export default {
   name:'match_main',
   data() {
@@ -45,6 +46,7 @@ export default {
       router: useRouter(),
       route: useRoute(),
       UserCtr,
+      BaseData,
       // 用户余额
       balance: 0,
       // 投注数据

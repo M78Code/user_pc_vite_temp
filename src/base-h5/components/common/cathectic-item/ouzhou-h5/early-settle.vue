@@ -236,13 +236,10 @@ const submit_early_settle = () => {
     let res = reslut.status ? reslut.data : reslut
     if (res.code == 200) {
       status.value = 4;
-      message = i18n_t('early.info10');
       // 发生过提前结算
       has_early_settled.value = true
     } else if (res.code == "0400524") {
-      // 注单确认中···
-      status.value = 4;
-      message = i18n_t('early.info10');
+      // 注单确认中···  等ws推送
     } else if (res.code == "0400527") {
       // 不支持提前结算或者暂停
       message = i18n_t('early.btn1');
