@@ -14,7 +14,7 @@
         <!-- 暂停提前结算 -->
         <template v-if="status == 5">{{ i18n_t('early.btn1') }} </template>
         <!-- 提前结算 -->
-        <template v-if="status == 1 || status == 6">{{ i18n_t('early.btn2') }}</template>
+        <template v-if="status == 1 || status == 6">{{ i18n_t('early.btn2_1') }}</template>
         <!-- 确认提前结算 -->
         <template v-if="status == 2">{{ i18n_t('early.btn3') }}</template>
         <!-- 确认中... -->
@@ -22,7 +22,7 @@
         <!-- 已提前结算 -->
         <template v-if="status == 4">{{ i18n_t('early.btn5') }}</template>
         <!-- 按钮上的金额 -->
-        <template v-if="status !== 5 && (Number(front_settle_amount) || expected_profit)">({{ betting_amount }})</template>
+        <template v-if="(Number(front_settle_amount) || expected_profit)">{{ betting_amount }}{{ i18n_t('early.btn2_2') }}</template>
         <img class="load" v-if="status == 3" :src="compute_local_project_file_path('/image/gif/loding.gif')">
       </button>
       <!-- <button class="change"> 金额有变更 </button>
@@ -211,13 +211,11 @@ onMounted(() => {
 
   // 处理ws订单状态推送
   mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE_BET_RECORD, c201_handle).off;
-  mitt_c210_handle = useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).off;
 })
 onUnmounted(() => {
   // 清除定时器 和 ws推送
   clear_timer()
   mitt_c201_handle()
-  mitt_c210_handle()
   mitt_expected_profit()
 })
 
@@ -242,37 +240,7 @@ const c201_handle = ({ orderNo, orderStatus }) => {
   }
   // console.log("qwe", orderStatus, orderNo);
 }
-/**
- *@description 处理ws订单状态推送, 当 cashOutStatus=1 && hs = 0  提前结算显示高亮，当 cashOutStatus=1 && hs != 0  显示置灰，当cashOutStatus=-1  显示置灰，  当cashOutStatus=-2  不显示
- *@param {Number} hid 盘口id
- *@param {Number} oid 投注项id
- *@param {String} ov 保留2位小数后的欧赔
- *@param {Number} cashOutStatus 1 AVAILABLE(=1才能提前结算), -1 UNAVAILABLE(按钮置灰), -2 CLOSED(按钮隐藏)
- */
-const c210_handle = ({ hid, cashOutStatus, hs }) => {
-  let { marketId, oddFinally } = ordervos_;
-  oddFinally = Number(oddFinally)
-  let flag = cashOutStatus == 1 || cashOutStatus == -1
-  if (hid == marketId) {
-    props.item_data.enablePreSettle = flag
-    if (flag) {
-      if (hs == 0 && cashOutStatus == 1 && (status.value == 5 || status.value == 7)) {
-        if (!props.item_data.maxCashout) {
-          useMittEmit(MITT_TYPES.EMIT_GET_ORDER_LIST)
-        }
-        if (expected_profit.value > 1) {
-          status.value = 1;
-        }
-      }
-      if ((hs != 0 && cashOutStatus == 1 || cashOutStatus == -1) && (status.value == 1 || status.value == 2 || status.value == 6)) {
-        status.value = 5;
-      }
-      front_settle_amount.value = ''
-    } else {
-      status.value = 7;
-    }
-  }
-}
+
 /**
  *@description 滑块是否显示
  */

@@ -8,11 +8,13 @@
 <!-- 矩形框中部 -->
   <div class="item-body yb_fontsize14">
     <div class="body-title">
-      <span>
         <template v-if="data_b.seriesType == '3' && Item.sportName">[{{Item.sportName}}]</template>
         <template v-if="Item.sportId == 1011 || Item.sportId == 1002">{{Item.batchNo}}</template>
-        <template v-else>{{Item.matchInfo}}</template>
-      </span>
+        <template v-else>
+          <span>{{ matchInfo(Item.matchInfo)[0] }}</span>
+          VS
+          <span>{{ matchInfo(Item.matchInfo)[1] }}</span>
+        </template>
     </div>
     <div class="body-info">
       <div>
@@ -34,7 +36,9 @@
           <img :src="compute_local_project_file_path('/image/svg/copy.svg')" alt=""  style="width:0.1rem" />
         </span>
       </p>
-      <p><label>{{i18n_t('bet_record.bet_time')}}：</label> <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span></p>
+      <p><label>{{ [1,2].includes(BetRecordClass.selected) ? i18n_t('bet_record.bet_pre_time') : i18n_t('bet_record.bet_time')}}：</label> 
+        <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span>
+      </p>
       <p><label>[{{Item.sportName}}] {{Item.matchName}}</label></p>
       <!-- 可赢额、结算, 注单状态： -->
       <item-footer :data_f="data_b"></item-footer>
@@ -96,6 +100,9 @@ const copy = (evt) => {
   clipboard.onClick(evt)
 }
 
+const matchInfo = (matchInfo) => {
+  return matchInfo.split(" v ")
+}
 </script>
 
 <style lang="scss" scoped>
