@@ -264,7 +264,7 @@ declare namespace K {
   };
 
   /** 虚拟体育热门玩法 */ type hotName = {
-    /** 盘口ID? */ hotName: string,
+    /** 虚拟体育热门玩法名称 */ hotName: string,
   };
 
   /** 赛事阶段描述 */ type mmp = {
