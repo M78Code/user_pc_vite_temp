@@ -240,7 +240,10 @@ const set_tab_list = (news_) =>{
 		if(MenuData.mid_menu_result.filter_tab && MenuData.is_kemp()){
 			checked_current_tab({value:MenuData.mid_menu_result.filter_tab})
 		}else{
-			checked_current_tab(tab_list.value[0])
+			let index = tab_list.value.findIndex(val=>{
+				return val.value == store.filterTab.value
+			})
+			checked_current_tab(tab_list.value[index == -1? 0 : index])
 		}
 	}
 }
