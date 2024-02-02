@@ -7,6 +7,7 @@
   <div v-show="detail_info&&detail_info.ms>0">
 <!--    <div>{{  }}</div>-->
     <div class="analysis-body">
+      
       <!-- 动画/视频/比分榜 -->
       <venue-box
         :score_list="score_list"
@@ -108,6 +109,8 @@ const get_detail_info = (mid) => {
   // 存入本地，点击大屏视频的时候使用
   sessionStorage.setItem('DETAIL_INFO', JSON.stringify(infomation))
   detail_info.value = infomation
+  console.log(222222112,mid)
+  console.log(22222211,detail_info.value)
  
   // setInterval(function (){
   // },2000)
