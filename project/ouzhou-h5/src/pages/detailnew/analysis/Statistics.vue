@@ -27,8 +27,8 @@ const State = reactive({
             { score_type: 'S111', title: i18n_t('match_result.Free_throw_percentage') }      // S111 罚球命中率
         ],
         card_corner_list: [
-            { score_type: 'S106', title: i18n_t('match_result.Fouls') },                      // 犯规数
-            { score_type: 'S109', title: i18n_t('match_result.Remaining_pause') }             // 剩余暂停
+            { score_type: 'S106', title: i18n_t('match_result.Fouls'), icon: whistle_img },                      // 犯规数
+            { score_type: 'S109', title: i18n_t('match_result.Remaining_pause'), icon: time_out_img }             // 剩余暂停
         ],
         progress_graph: [
             { score_type: 'S108', title: i18n_t('match_result.Three_pointer') },               // 三分球得分
@@ -38,7 +38,7 @@ const State = reactive({
     },
     footeball: {
         ring_statistics: [
-            { score_type: 'S104', title: i18n_t('ouzhou.detail.assault') },              // 进攻
+            // { score_type: 'S104', title: i18n_t('ouzhou.detail.assault') },              // 进攻
             { score_type: 'S8', title: i18n_t('match_result.dangerous_offense') },       // S8 危险进攻
             { score_type: 'S105', title: i18n_t('ouzhou.detail.possession_ball') }       // S105 球权/控球率
         ],
@@ -48,15 +48,15 @@ const State = reactive({
             { score_type: 'S5', title: i18n_t('match_result.corner_kick'), icon: corner_img }              // S5	角球比分
         ],
         progress_graph: [
-            // { score_type: 'S1101', title: i18n_t('match_result.shot') },                 // S1101 射门        
+            { score_type: 'S1101', title: i18n_t('match_result.shot') },                 // S1101 射门        
             { score_type: 'S18', title: i18n_t('ouzhou.detail.shots_on_goal') },         // S18   射正        
             { score_type: 'S17', title: i18n_t('ouzhou.detail.shot_wide_goal') }         // S17   射偏        
         ]
     }
 })
 
-const only_home = ["S8", "S105", "S1088", "S111"]
-const only_away = ["S104", "S1101", "S18", "S17", "S19", "S107", "S110", "S108"]
+const only_away = ["S8", "S105", "S1088", "S111"]
+const only_home = ["S104", "S1101", "S18", "S17", "S19", "S107", "S110", "S108"]
 
 const score_info = computed(() => {
     const { msc_obj } = match_detail.value
@@ -93,6 +93,7 @@ const basic_data = computed(() => {
 const percentage = function(score_type){
     if(only_home.includes(score_type)) return score_info.value[score_type].home_percentage
     if(only_away.includes(score_type)) return score_info.value[score_type].away_percentage
+    return 0
 }
 
 
@@ -106,25 +107,45 @@ const percentage = function(score_type){
                     <li class="statistics-header--item ellipsis">{{ match_detail.mhn }}</li>
                     <li class="statistics-header--item ellipsis">{{ match_detail.man }}</li>
                 </ul>
-                <div class="statistics-circle">
-                    <div class="statistics-col" v-for="item in basic_data.ring_statistics" :key="item">
-                        <div class="circle-part" v-if="score_info[item.score_type]">
+
+                <ul class="circle">
+                    <template v-for="item in basic_data.ring_statistics" :key="item.score_type">
+                        <li class="circle-item" v-if="score_info[item.score_type] && item.score_type == 'S111'">
                             <div class="circle-title">{{ item.title }}</div>
                             <div class="circle-body">
                                 <span class="number">{{ score_info[item.score_type]['home'] }} </span>
                                 <q-knob 
                                     readonly 
                                     :value="percentage(item.score_type)" 
-                                    size="50px"
+                                    size="40px"
                                     :thickness="0.4" 
                                     color="amber-7"
                                     :track-color="percentage(item.score_type) == 0 ? 'grey-5' : 'indigo-12'"
-                                    class="q-ma-md" />
+                                    class="circle-icon"    
+                                />
                                 <span class="number">{{ score_info[item.score_type]['away'] }}</span>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </li>
+                        <li class="circle-item" v-else>
+                            <div class="circle-title">{{ item.title }}</div>
+                            <div class="circle-body">
+                                <span class="number">
+                                    {{ percentage(item.score_type) > 0 ? 100- percentage(item.score_type) : 0 }}
+                                </span>
+                                <q-knob 
+                                    readonly 
+                                    :value="percentage(item.score_type)" 
+                                    size="40px"
+                                    :thickness="0.4" 
+                                    color="amber-7"
+                                    :track-color="percentage(item.score_type) == 0 ? 'grey-5' : 'indigo-12'"
+                                    class="circle-icon"    
+                                />
+                                <span class="number">{{ percentage(item.score_type) }}</span>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
 
                 <ul class="center">
                     <li v-for="item of basic_data.card_corner_list" :key="item.score_type" class="center-item">
@@ -151,7 +172,7 @@ const percentage = function(score_type){
                                     reverse 
                                     v-model="score_info[item.score_type].home_percentage" 
                                     :min="0" 
-                                    :max="50" 
+                                    :max="100" 
                                     track-size="5px" 
                                     color="amber-7" 
                                     thumb-size="0" 
@@ -161,7 +182,7 @@ const percentage = function(score_type){
                                     readonly   
                                     v-model="score_info[item.score_type].away_percentage" 
                                     :min="0" 
-                                    :max="50" 
+                                    :max="100" 
                                     track-size="5px" 
                                     color="indigo-12" 
                                     thumb-size="0" 
@@ -221,20 +242,26 @@ const percentage = function(score_type){
         }
     }
 
-    .statistics-circle {
+    .circle {
         width: 100%;
         display: flex;
-        padding: 8px;
+        padding: .08rem 0;
         box-sizing: border-box;
         align-items: center;
         justify-content: space-between;
         border-bottom: 1px solid #E2E2E2;
 
-        .statistics-col {
+        .circle-item {
             flex: 1;
             display: flex;
             align-items: center;
             flex-direction: column;
+            overflow: hidden;
+            flex-shrink: 0;
+
+            .circle-icon{
+                margin: .08rem;
+            }
         }
     }
 
