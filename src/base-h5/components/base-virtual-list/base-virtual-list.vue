@@ -107,7 +107,6 @@ let isPositive = true
  */
 const end = computed(() => {
   if (!allData.value || allData.value.length <= 0) return 15
-
   // 将start.value作为遍历positionDataArr的开始位置
   let endPos = start.value
   // contentDomTotalHeight存放从start位置开始的dom节点总高度
@@ -179,6 +178,7 @@ const initDataPostion = () => {
   if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
   positionDataArr = allData.value.map((item, idx) => {
+    console.log(item.estimateHeight)
     return {
       arrPos: idx,
       mid: item.mid,
