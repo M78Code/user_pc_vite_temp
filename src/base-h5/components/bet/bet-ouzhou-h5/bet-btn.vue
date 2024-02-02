@@ -46,9 +46,8 @@ const is_serial = () => {
 
 // 单串关切换
 const set_bet_single_change = () => {
-
   // 冠军不能串
-  if(!MenuData.is_kemp() && is_serial()) {
+  if(!MenuData.is_kemp()) {
     BetData.set_is_bet_single()
 
     // 判断获取限额接口类型
