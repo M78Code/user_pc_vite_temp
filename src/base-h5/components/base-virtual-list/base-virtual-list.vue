@@ -178,7 +178,6 @@ const initDataPostion = () => {
   if (dataList.value.length < 1) return
   allData.value = dataList.value.map((item, idx) => markRaw({ ...item, arrPos: idx }))
   positionDataArr = allData.value.map((item, idx) => {
-    console.log(item.estimateHeight)
     return {
       arrPos: idx,
       mid: item.mid,
