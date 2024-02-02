@@ -76,7 +76,7 @@
                       </div>
                       <span v-if="[1001,1004].includes(item.sportId*1)">{{ item.matchDay }} {{ item.batchNo }}</span>
                       <span v-if="[1011,1002,1009,1010].includes(item.sportId*1)">{{ item.batchNo }}</span>
-                      <span v-if="item.matchType !=3" style="color:#8A8986">{{ item.matchInfo }}</span>
+                      <span v-if="item.matchType !=3 && (item.sportId*1 < 1002 || item.sportId == '1004')" style="color:#8A8986">{{ item.matchInfo }}</span>
                       <span>
                           <span v-if="item.matchType != 3 && ![1001,1002,1009,1010,1011].includes(item.sportId*1)">{{matchType(item.matchType, props.row.langCode)}}</span>
                         {{ item.playName }}
@@ -84,8 +84,16 @@
                           <span v-if="item.matchType != 1 && item.scoreBenchmark && item.playId != '334'">({{format_score(item.scoreBenchmark)}})</span>
                         <!-- [欧洲盘]-->
                           <span>[{{marketType(item.marketType, props.row.langCode)}}]</span></span>
-                      <div>
-                        <span>{{ item.marketValue }}</span>
+                      <div class="marketodds">
+                        <span v-if="[1011,1002,1009,1010].includes(item.sportId*1)" class="ranking-bg">
+                          <template v-if="!isNaN(item.playOptions) || item.playOptions.indexOf('/')!=-1">
+                            <div v-for="(list, i) in item.playOptions.split('/')" :key="i" :class="`ranking-bg-style1-${list} csid-${item.sportId} ranking-item `"></div>
+                          </template>
+                          <template v-else>
+                            <span class="market_value">{{item.marketValue}}</span>
+                          </template>
+                        </span>
+                        <span v-else>{{ item.marketValue }}</span>
                         <span style="margin-left:15px;color:#ff7000">@{{ item.oddFinally }}</span>
                       </div>
 
@@ -632,6 +640,83 @@ const columns = reactive({
 <style lang="scss" scoped>
 .time{
   color: var(--q-gb-t-c-8);
+}
+.marketodds {
+  display: flex;
+}
+.ranking-item {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+}
+.ranking-bg-style1-1 {
+  background-image: url($SCSSPROJECTPATH+"/image/png/ranking/style1_1.svg");
+  &.csid-1002,
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1002_1.svg");
+  }
+  &.csid-1009 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1009_1.svg");
+  }
+}
+
+.ranking-bg-style1-2 {
+  background-image: url($SCSSPROJECTPATH+"/image/png/ranking/style1_2.svg");
+  &.csid-1002,
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1002_2.svg");
+  }
+  &.csid-1009 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1009_2.svg");
+  }
+}
+.ranking-bg-style1-3 {
+  background-image: url($SCSSPROJECTPATH+"/image/png/ranking/style1_3.svg");
+  &.csid-1002,
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1002_3.svg");
+  }
+  &.csid-1009 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1009_3.svg");
+  }
+}
+.ranking-bg-style1-4 {
+  background-image: url($SCSSPROJECTPATH+"/image/png/ranking/style1_4.svg");
+  &.csid-1002,
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1002_4.svg");
+  }
+  &.csid-1009 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1009_4.svg");
+  }
+}
+.ranking-bg-style1-5 {
+  background-image: url($SCSSPROJECTPATH+"/image/png/ranking/style1_5.svg");
+  &.csid-1002 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1002_5.svg");
+  }
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1010_5.svg");
+  }
+}
+.ranking-bg-style1-6 {
+  background-image: url($SCSSPROJECTPATH+"/image/png/ranking/style1_6.svg");
+  &.csid-1002 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1002_6.svg");
+  }
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/png/ranking/csid_1010_6.svg");
+  }
+}
+.ranking-bg {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  div {
+    width: 12px;
+    height: 12px;
+    margin-right: 2px;
+  }
 }
 .detail-options {
   width: 100%;

@@ -1,6 +1,6 @@
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}{{ UserCtr.user_version }}</div>
-  <div v-if="(!BetData.is_bet_single && MenuData.is_esports() && !match.ispo) || odds_state == 'close'">
+  <div v-if="(!BetData.is_bet_single && MenuData.is_esports() && !lodash.get(match,'ispo',0)) || odds_state == 'close'">
     -
     <!-- 电竞并且是串关状态并且不支持串关就显示 - -->
   </div>
