@@ -274,7 +274,11 @@ const currentSwipperIndex = ref(0)
 let currentSwipperArr = reactive([])
 /** 节庆资源接口 */
 function getFestivalBanner() {
-    api_common.queryFestivalBanner().then(res => {
+    // 兼容hk时接口获取不到数据
+  let config = {
+    lang: UserCtr.lang
+  }
+    api_common.queryFestivalBanner({}, config).then(res => {
         // const data = lodash.get(res, 'data.data') || {}
     const data  ={
         "img4Type": "0",

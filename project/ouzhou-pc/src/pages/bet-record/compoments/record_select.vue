@@ -22,7 +22,7 @@
       </div>
       <div class="record-settled-l">
         <div style="width:180px;">
-          <q-select outlined v-model="select_value" @update:model-value="selectInput" :options="select_options"
+          <q-select outlined v-model="select_value1" @update:model-value="selectInput" :options="select_options"
                     option-label="value" :dense="false" :options-dense="false" map-options color="orange">
           </q-select>
         </div>
@@ -70,11 +70,11 @@ import dayjs from 'dayjs'
 const _dayjs = dayjs()
 
 // 提前结算、 进行中、已取消、预约失败 筛选按钮
-const options = [{ label: i18n_t("bet_record.settlement_pre"), value: true }]
+const options = [{ label: "bet_record.settlement_pre", value: true }]
 const pre_options = [
-  { label: i18n_t("bet.bet_process"), value: '0' },
-  { label: i18n_t("bet.bet_book_canceled"), value: '4' },
-  { label: i18n_t("bet.bet_book_failed"), value: '2,3' }
+  { label: "bet.bet_process", value: '0' },
+  { label: "bet.bet_book_canceled", value: '4' },
+  { label: "bet.bet_book_failed", value: '2,3' }
 ]
 const emit_value = (value) => {
   // 提前结算  value: true / false
@@ -120,6 +120,7 @@ const time_click = (item) => {
 }
 
 // 排序筛选   默认排序、按投注时间排序、按开赛时间排序
+const select_value1 = ref('')
 const select_value = ref(computed(()=>{ return i18n_t("bet_record.settled_time")}))
 const select_options = ref([
     { value: computed(()=>{ return i18n_t("bet_record.sort_by_settled_time") }), label: computed(()=>{ return i18n_t("bet_record.settled_time")}), id: 2 },
@@ -130,6 +131,7 @@ const selectInput = (v) => {
   Object.assign(BetRecordHistory.params, {
     orderBy: v.id
   })
+  select_value1.value = v.value
   BetRecordHistory.handle_fetch_order_list()
 }
 
@@ -185,6 +187,9 @@ let useMitt = null
 let timer = null
 let wsObj = null
 onMounted(() => {
+  console.log(11111111)
+  select_value1.value = select_value.value
+  console.log(1111112,select_value1.value)
   // 初始化日期时间
   const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
   date_value.value = data + '-' + data

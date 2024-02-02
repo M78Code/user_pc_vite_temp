@@ -1334,6 +1334,8 @@ export default {
     color: #999;
     flex: 1;
     font-size: 12px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     .counting-down-wrap{
       font-size: 12px;
     }
@@ -1421,6 +1423,7 @@ export default {
         width: auto !important;
         .title-space-1{
           font-size: 12px;
+          white-space: nowrap;
         }
         .counting{
           max-width: 60px;

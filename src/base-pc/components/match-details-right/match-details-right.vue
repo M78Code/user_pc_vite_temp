@@ -10,6 +10,7 @@
     class="right_details_wrap relative-position"
     :class="route.params.video_size == 1 && 'full-screen'"
     v-show="route.params.video_size != 1 || get_is_show_full_bet"
+    :style="page_style"
   >
     <!-- 加载数据 -->
     <load-data
@@ -284,6 +285,8 @@ import matchInfo from "src/base-pc/components/match-detail/match_info/match_info
 import handicapTabsBar from "src/base-pc/components/match-detail/match_info/handicap_tabs_bar.vue";
 import chart from "src/base-pc/components/match-detail/match_info/chart.vue";
 import hot from "src/base-pc/components/match-detail/panel/hot.vue"
+//引入组件样式
+import { compute_css_variables } from "src/core/css-var/index.js";
 import { useRoute } from "vue-router";
 import { computed, reactive, ref, watch } from "vue";
 const route = useRoute();
@@ -298,6 +301,12 @@ const get_version = ref(UserCtr.standard_edition)
 const vx_get_user = ref(UserCtr.get_user())
 //获取参数信息
 const details_params =ref(MatchDetailCalss.params)  
+
+const page_style = ref(null);
+page_style.value = compute_css_variables({
+  category: "component",
+  module: "match-details",
+});
 const {
   handicap_this,
   show_load_status,

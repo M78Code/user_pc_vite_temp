@@ -192,7 +192,11 @@ const activity_timer = ref(null)
  */
 function special_page() {
   let token = UserCtr.get_user_token();
-  api_account.get_BannersUrl({ 'type': 7, token }).then(res => {
+  // 兼容hk时接口获取不到数据
+  let config = {
+    lang: UserCtr.lang
+  }
+  api_account.get_BannersUrl({ 'type': 7, token }, config).then(res => {
     let code = lodash.get(res, 'data.code');
     let data = lodash.get(res, 'data.data');
     if (code == 200) {
@@ -233,7 +237,11 @@ const userBannerTimer = ref(i18n_t('common.auto_close').replace('%s', 5))
  */
 function activity_dialog() {
   let token = UserCtr.get_user_token()
-  api_account.get_BannersUrl({ 'type': 5, token }).then(res => {
+  // 兼容hk时接口获取不到数据
+  let config = {
+    lang: UserCtr.lang
+  }
+  api_account.get_BannersUrl({ 'type': 5, token }, config).then(res => {
     let code = lodash.get(res, 'data.code');
     let data = lodash.get(res, 'data.data');
     if (code == 200) {

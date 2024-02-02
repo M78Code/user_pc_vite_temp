@@ -24,6 +24,7 @@
             <div
               v-for="item in list"
               :key="`hpid_${item.hpid}_topKey_${item.topKey}`"
+              v-show="is_component_show(item)"
               class="template"
               :style="{
                 'order': -Number(item.hton?.substring(4))

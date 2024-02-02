@@ -166,7 +166,7 @@ const handlerUpdate = lodash.debounce((data) => {
     
     mids_string.value = mids.join(',')
   }
-}, 800)
+}, 600)
 
 // 一级菜单改变 重置 当前 mids, 当早盘 和 滚球 前几场赛事相同时  会存在不调用 赔率接口的情况
 watch(() => MenuData.current_lv_1_menu_mi.value, () => {
