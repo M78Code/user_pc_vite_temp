@@ -23,7 +23,7 @@
             <span v-else class="merge-checkbox ml-4"></span> 
           </div>
           <!-- 单关 串关 切换 -->
-          <div class="f-e-c ml-16" @click.prevent="show_single_change()" v-if="!MenuData.is_kemp()">
+          <div class="f-e-c ml-16" @click.prevent="show_single_change()" v-if="!MenuData.is_kemp()&&(BetData.is_bet_single&&!lodash.get(BetData.bet_single_list,'[0].is_serial')||!BetData.is_bet_single)">
             <span v-if="BetData.is_bet_single">{{ i18n_t('bet.bet_one_') }}</span>
             <span v-if="!BetData.is_bet_single">{{ i18n_t('bet.bet_series') }}</span>
 

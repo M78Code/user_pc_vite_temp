@@ -3,14 +3,14 @@
 -->
 <template>
   <div class="bet-all-detele">
-    <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-    
+    <div v-show="false">{{ BetData.bet_data_class_version }}-{{MenuData.menu_data_version}}</div>
     <!-- 合并单关 -->
-    <div class="del-info-select" @click.stop="set_is_bet_merge()">
+    <div class="del-info-select" @click.stop="set_is_bet_merge()" v-if="!MenuData.is_esports() && !MenuData.is_vr()">
       <img class="" v-if="BetData.is_bet_merge" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_a.svg`" alt="" />
       <img class="" v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/select_b.svg`" alt="" />
       <span class="del-info-name">{{ i18n_t('bet.bet_merge') }}</span>
     </div>
+    <div class="del-info-select" v-else></div>
     
     <!-- 常用金额 -->
     <div class="del-info-select" @click.stop="set_is_regular_amount()" v-if="BetData.bet_single_list.length == 1">
@@ -23,7 +23,7 @@
 </template>
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js";
 
 // 常用金额
 const set_is_regular_amount = () => {

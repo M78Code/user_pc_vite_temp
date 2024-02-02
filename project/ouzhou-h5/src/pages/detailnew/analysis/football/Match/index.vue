@@ -5,7 +5,7 @@
 import {api_analysis} from "src/api/index.js";
 import {inject, onBeforeMount, reactive} from "vue"
 import AnalysisCard from "../../AnalysisCard.vue"      // 外层卡片壳子
-import statistics from "../../statistics.vue"      // 统计
+import Statistics from "../../Statistics.vue"      // 统计
 import incident from "../incident.vue"       // 事件
 
 /*
@@ -66,11 +66,7 @@ onBeforeMount(() => {
 <template>
     <section>
         <!--统计 环型 线型 进度条统计-->
-        <AnalysisCard :title="i18n_t('match_result.statistics')" v-if="match_detail?.msc?.length">
-            <template #body>
-                <statistics></statistics>
-            </template>
-        </AnalysisCard>
+        <Statistics></Statistics>
         <!--事件 时间轴-->
         <AnalysisCard :title="i18n_t('match_result.event')" v-if="false">
             <template #body>

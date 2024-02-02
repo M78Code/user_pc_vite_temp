@@ -1,6 +1,6 @@
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}{{ UserCtr.user_version }}</div>
-  <div v-if="(!BetData.is_bet_single && MenuData.is_esports() && !lodash.get(match,'ispo',0)) || odds_state == 'close'">
+  <div v-if="(!BetData.is_bet_single && MenuData.is_eports_csid(match.csid) && !lodash.get(match,'ispo',0)) || odds_state == 'close'">
     -
     <!-- 电竞并且是串关状态并且不支持串关就显示 - -->
   </div>
@@ -286,7 +286,7 @@ const bet_click_ol = () => {
     bet_type = 'guanjun_bet'
   }
   // 电竞
-  if (MenuData.is_esports()) {
+  if (MenuData.is_esports()||MenuData.is_eports_csid(match.value?.csid)) {
     bet_type = 'esports_bet'
   }
   // vr体育
