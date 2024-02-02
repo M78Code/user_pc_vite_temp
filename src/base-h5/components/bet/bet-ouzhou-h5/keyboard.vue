@@ -51,7 +51,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr, compute_local_project_file_path } from "src/output/index.js";
-import { btn_reduce, btn_add, ref_pre_book,add_handle,sub_handle,set_ref_data } from "src/core/bet/common/appoint-data.js"
+import { btn_reduce, btn_add, ref_pre_book,add_handle,sub_handle,set_ref_data, computed_keyboard_odds } from "src/core/bet/common/appoint-data.js"
 import lodash_ from 'lodash'
 
 
@@ -265,6 +265,7 @@ const _handleDeleteKey = () => {
 
 // 数字建
 const _handleNumberKey = (num) => {
+  console.log('这里', BetData.bet_pre_obj)
   if (!num) return
   if (typeof BetData.active_index === 'string') {
     // 此处为预约盘口 赔率相关输入
@@ -276,14 +277,15 @@ const _handleNumberKey = (num) => {
         if (odds.includes(".") && s_length > 1) {
           odds = odds.substring(0, odds.indexOf(".") + 3);// 最多只保留小数点两位
         }
-        ref_pre_book.appoint_odds_value = odds*1
+        computed_keyboard_odds(odds*1)
+        // ref_pre_book.appoint_odds_value = 
       } else {
         let ball = !ref_pre_book.appoint_ball_value ? (num === '0' ? '0.' : num) : ref_pre_book.appoint_ball_value + num
         let s_length = ball.substring(ball.indexOf(".") + 1).length // 0. 后面输入的字符长度  最多只保留两位
         if (ball.includes(".") && s_length > 1) {
           ball = ball.substring(0, ball.indexOf(".") + 3);// 最多只保留小数点两位
         }
-        ref_pre_book.appoint_ball_value = odds*1
+        ref_pre_book.appoint_ball_value = ball*1
       }
       return
     }

@@ -210,6 +210,7 @@ onMounted(() => {
 // 金额显示与隐藏
 const on_show_money = (flag) => {
   show.value = flag
+  UserCtr.set_show_balance(flag)
 }
 // 切换语言
 const on_change_lang = (key) => {
