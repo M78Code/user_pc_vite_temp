@@ -84,7 +84,7 @@ const _getList = async function (flag) {
                 toggle_rule_b();
             } else {
                 setInitialState(i18n_t("bet_record.pack_up"), "", false);
-                toggle_rule_a();
+                
             }
         }
     } catch (error) {
@@ -136,7 +136,7 @@ onBeforeMount(() => {
                     <p v-show="match_detail?.csid == 1">{{ item?.pointsTotal }}</p><!-- 积分 -->
                     <p v-show="match_detail?.csid == 2">{{ percentage(item) }}</p>
                 </li>
-                <li class="more-btn" @click="toggle_box" v-if="State.rankingAllData.length > 2">展开</li>
+                <li class="more-btn" @click="toggle_box" v-if="State.rankingAllData.length > 2">{{ State.btnText }}</li>
             </ul>
             <div class="no-data" v-else>{{i18n_t('analysis_football_matches.no_data')}}</div>
         </template>
