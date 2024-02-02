@@ -2411,7 +2411,10 @@
     "msg": "User information has expired,Please log in again!",
     "play_happily": "Hope you have fun",
     "reaccess": "Re-login again",
-    "token_dis": "Invalid information，Please close the page"
+    "token_dis": "Invalid information,Please close the page",
+    "token_landing": "Landing Failure",
+    "token_no": "Your login information is invalid, please close this page, Enter the site again, Wish you a happy life",
+    "relanding": "Relanding"
   },
   "tomorrow": "tomorrow",
   "video": {

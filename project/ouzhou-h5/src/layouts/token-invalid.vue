@@ -6,13 +6,13 @@
         <img :src="ouzhou_login_failure" alt="">
       </div>
     </div>
-    <!-- 暂时写死 token失效 页面内容 -->
-    <span class="Landing">Landing Failure</span>
+    <!--  token失效 页面内容  -->
+    <span class="Landing">{{i18n_t("token_inv.token_landing")}}</span>
     <div class="prompt_relanding">
-      <span class="prompt">Your login information is invalid, please close this page, Enter the site again, Wish you a happy life</span>
+      <span class="prompt">{{i18n_t("token_inv.token_no")}}</span>
     </div>
     <div class="relan_ding" @click="is_go_vender_url(true)">
-      <span class="relanding">Relanding</span>
+      <span class="relanding">{{i18n_t("token_inv.relanding")}}</span>
     </div>
   </div>
 </template>
