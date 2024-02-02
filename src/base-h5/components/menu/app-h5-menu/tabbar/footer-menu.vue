@@ -56,6 +56,7 @@ const footer_list = ref([
   },
   {
     title: i18n_t('footer_menu.open_bets'),
+    // icon: 'h5-footer-wjzd', // 暂时换成下面的皮肤
     // icon: 'h5-footer-yjzd', // 暂时换成下面的皮肤
     icon: `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/h5_long_4.png`,
     settle: false,
@@ -63,7 +64,8 @@ const footer_list = ref([
   },
   {
     title: i18n_t('footer_menu.closed_bets'),
-    icon: 'h5-footer-wjzd' ,
+    // icon: 'h5-footer-wjzd' ,
+    icon: 'h5-footer-yjzd' ,
     settle: true,
     id: 4
   },{
