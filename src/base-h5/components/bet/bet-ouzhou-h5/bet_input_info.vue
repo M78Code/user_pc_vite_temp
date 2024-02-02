@@ -112,6 +112,7 @@ const set_ref_data_bet_money = () => {
     //如果勾选了常用金额则设置给常用金额属性设置 回显金额数值
     if(BetData.is_regular_amount){
         ref_data.money = BetData.regular_amount
+        BetData.set_bet_amount(BetData.regular_amount)
     }
 
     // 设置键盘设置的 限额和数据
