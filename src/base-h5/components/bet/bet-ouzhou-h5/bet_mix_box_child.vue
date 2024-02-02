@@ -171,12 +171,10 @@ const scrollAreaPo = () => {
 }
 
 const set_W_H = () => {
-  ref_min_height_max.value = document.body.clientHeight > 580 ? '2.5' : '2'
-  ref_min_height_max.value = document.body.clientHeight > 650 ? '2.4' : '1.9'
+
   ref_min_height_max.value = document.body.clientHeight > 700 ? '2.3' : '1.8'
-  ref_min_height_max.value = document.body.clientHeight > 750 ? '2.2' : '1.7'
-  ref_min_height_max.value = document.body.clientHeight > 800 ? '2.1' : '1.6'
-  ref_min_height_max.value = document.body.clientHeight > 850 ? '2' : '1.5'
+
+
 }
 
 
