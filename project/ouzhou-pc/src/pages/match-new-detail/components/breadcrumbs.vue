@@ -48,7 +48,11 @@ const last_label = computed(() => {
 let firstOneName = ref('')
 const breadCrumbs_firstOne = computed(()=>{
     const { lv1_mi = void (0) } = MenuData.left_menu_result
-   
+    const { csid = 1 } = props.detail_info
+    // 电子竞技
+    if ([100,101,102,103].includes(+csid)) {
+      return BaseData.menus_i18n_map[2000]
+    }
     // 经常访问菜单类型为0
     /*
     * 经常访问菜单类型为0
