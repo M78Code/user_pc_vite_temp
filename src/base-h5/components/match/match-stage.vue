@@ -14,7 +14,7 @@
         <!--这个组件是所有公用的，这里会影响其他项目，要加prop变量控制 -->
         <span v-if="!is_show_time && !one_hour">
           <!-- 距离开赛时间大于1小时 显示月和日 .Format(i18n_t('time3'))-->
-           {{(new Date(+detail_data.mgt)).Format(i18n_t('time11'))}}
+           {{( new Date(+detail_data.mgt)).Format(i18n_t(project_name == 'app-h5' ? 'time2' : 'time11'))}}
           <!--{{ formatTime(+detail_data.mgt, "DD/mm hh:MM") }}-->
         </span>
 
@@ -57,6 +57,7 @@
 </template>
 
 <script setup>
+import { project_name } from "src/output/index.js"
 import { ref, computed, defineComponent, onUnmounted, watch, defineAsyncComponent,markRaw } from 'vue';
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { MenuData } from "src/output/index.js";
