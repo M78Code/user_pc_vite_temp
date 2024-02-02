@@ -106,15 +106,13 @@ export default {
         function refresh() {
             useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, { is_socket: true })
         }
+        mounted_fn();
         onMounted(() => {
             LayOutMain_pc.set_oz_show_right(true)
             LayOutMain_pc.set_oz_show_left(false)
-            mounted_fn();
-            MatchListCardDataClass_match_list_card_key_arr()
         });
         onUnmounted(() => {
             ws_destroyed()
-            handle_destroyed()
         })
         onActivated(() => {
             LayOutMain_pc.set_oz_show_right(true)
@@ -125,7 +123,7 @@ export default {
         }
         watch(
             MatchListCardDataClass.list_version,
-            (list_version) => {
+            () => {
                 MatchListCardDataClass_match_list_card_key_arr()
                 proxy?.$forceUpdate()
             }

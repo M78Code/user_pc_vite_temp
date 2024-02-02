@@ -216,8 +216,8 @@ class MenuData {
         const all_ct = menu_lv_mi_lsit.map((item)=>{return item.ct||0}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
         menu_lv_mi_lsit.splice(0,0,{mi:0,btn:1, ct:all_ct,title:"全部"})
       }
-      menu_lv_mi_lsit.splice(type,0,{mi:300,btn:1,ct:0,title:"VR体育"})
-      menu_lv_mi_lsit.splice(type+1,0,{mi:2000,btn:1,ct:0,title:"电竞"})
+      BaseData.is_mi_300_open && menu_lv_mi_lsit.splice(type,0,{mi:300,btn:1,ct:0,title:"VR体育"})
+      BaseData.is_mi_2000_open && menu_lv_mi_lsit.splice(type+1,0,{mi:2000,btn:1,ct:0,title:"电竞"})
     }
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
     return menu_lv_mi_lsit

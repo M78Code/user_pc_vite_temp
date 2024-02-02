@@ -338,7 +338,7 @@ export default defineComponent({
     :deep(.counting-down-wrap) {
       .counting {
         font-family: dinMedium;
-        color: rgba(255, 255, 255, 0.8);
+        color:var(--q-gb-t-c-18) !important
       }
     }
   }
