@@ -8,7 +8,7 @@
           <div class="collect-start"
             :style="compute_css_obj({ key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty' })"></div>
         </div>
-        <div class="esports-mfo" v-if="MenuData.is_esports() && match.mfo">
+        <div class="esports-mfo" v-if="MenuData.is_eports_csid(match.csid) && match.mfo">
           <em v-if="match.ispo">{{ i18n_t('match_info.match_parlay')}}</em>
           <span>{{ match.mfo }}</span>
         </div>
