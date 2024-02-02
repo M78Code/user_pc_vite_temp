@@ -67,11 +67,11 @@
                 <div class="record-detail-list">
                   <div v-for="(item, index) in data_list(props.row)" :key="index" class="record-detail">
                     <div class="record-detail-item">
-                      <!-- <div class="record-detail-icon">
+                      <div class="record-detail-icon">
                         <sport-icon :sport_id="cts_mid.includes(props.row.managerCode*1) ? item.sportId == 1 ? '90': 91  : item.sportId" key_name="pc-left-menu-bg-image" size="18" class="icon"  style="margin:0 10px"/>
-                      </div> -->
+                      </div>
                       <div class="flex item_name">
-                        <span>[{{item.sportName}}] {{ item.matchName }}</span>
+                        <span>{{ item.matchName }}</span>
                         <span v-if="props.row.preOrder" class="pre_text">{{ i18n_t('bet.bet_book_confirm') }}</span>
                       </div>
                       <span v-if="[1001,1004].includes(item.sportId*1)">{{ item.matchDay }} {{ item.batchNo }}</span>
@@ -90,11 +90,11 @@
                             <div v-for="(list, i) in item.playOptions.split('/')" :key="i" :class="`ranking-bg-style1-${list} csid-${item.sportId} ranking-item `"></div>
                           </template>
                           <template v-else>
-                            <span class="market_value">{{item.marketValue}}</span>
+                            <span class="market_value">{{BetRecordHistory.selected === 2 ? item.playOptionName : item.marketValue}}</span>
                           </template>
                         </span>
-                        <span v-else>{{ item.marketValue }}</span>
-                        <span style="margin-left:15px;color:#ff7000">@{{ item.oddFinally }}</span>
+                        <span v-else>{{BetRecordHistory.selected === 2 ? item.playOptionName : item.marketValue}}</span>
+                        <span style="margin-left:10px;color:#ff7000">@{{ item.oddFinally }}</span>
                       </div>
 
                       <div class="play-type settle-score" v-if="BetRecordHistory.selected === 1 && item.settleScore">
@@ -265,6 +265,8 @@ const lang = computed(() => {
 const getRowIndex = (rowIndex) => {
   return (BetRecordHistory.params.page - 1) * BetRecordHistory.params.size + rowIndex + 1;
 }
+
+const cts_mid = ref([15,27,28,23,31,32,24,33,34])
 
 const status_class = (orderStatus) => {
   let str = ''
