@@ -19,6 +19,7 @@
       <div class="item ol-name" :alt="olName">
         <span class="ol-name-span" v-if="route.name != 'virtual_sports' && !lodash.isArray(olName)">
           <span v-if="txt_ol_name" class="ol-name-span2">{{ txt_ol_name }}</span>
+          <span v-else-if="textOlOU" class="ol-name-ou">{{ textOlOU }}</span>
           {{ olName }}
         </span>
         <span class="ol-name-span" v-if="route.name == 'virtual_sports' && lodash.isArray(olName)">
@@ -138,15 +139,19 @@ const ov = (() => {
   // @ts-ignore
   return compute_value_by_cur_odd_type(props.value.ov, props.value._hpid, props.value._hsw, sportId)
 })()
-/** Over|Under 添加 O|U;  反波胆玩法增加'非' */
+/** 反波胆玩法增加'非' */
 const txt_ol_name = (function(){
+  let res = (['367','368','369'].includes(props.value._hpid) && (props.value.ot != 'Other'))?i18n_t('detail.non') : '';
+  return res;
+})()
+
+/** Over|Under 添加 O|U; */
+const textOlOU = (function(){
   if(props.value.ot == 'Over'){
     return 'O  '
   }else if(props.value.ot == 'Under'){
     return 'U  '
   }
-  let res = (['367','368','369'].includes(props.value._hpid) && (props.value.ot != 'Other'))?i18n_t('detail.non') : '';
-  return res;
 })()
 
 const isLock = computed(() => {
@@ -189,6 +194,11 @@ function resetStatus() {
 .ol-name-span2{
   margin-right: 2px;
   white-space: pre;
+}
+.ol-name-ou{
+  margin-right: 2px;
+  white-space: pre;
+  display: none;
 }
 .overflow {
   flex: 1;
