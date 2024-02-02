@@ -136,6 +136,8 @@
     ref_data.odds_value_edit = props.items.oddFinally
     BetData.set_is_bet_pre(true)
     set_ref_data(props.items)
+    // 设置预约投注id
+    BetData.set_bet_appoint_obj_playOptionId(props.items.playOptionsId)
   }
 
   </script>
@@ -299,7 +301,7 @@
     //flex-direction: row-reverse;
     height: 0.26rem;
     list-style: 0.26rem;
-    margin-right:0.15rem ;
+    //margin-right:0.15rem ;
     
     .show_img{
       display: flex;
@@ -406,6 +408,10 @@
       }
     }
   
+  }
+
+  .text-flow-none {
+    margin-right: 0.1rem;
   }
   </style>
  

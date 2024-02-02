@@ -5,7 +5,7 @@
 <template>
   <div class="keyboard" :class="{'is_max_money':is_max_money}" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
     <div v-show="false"> {{ UserCtr.user_version }} --
-      {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
+      {{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }} - {{ BetData.active_index }}</div>
     <div class="key-row row">
       <div class="key-cell" data-num="qon">
         <span>+</span>{{BetData.user_max_min_money.qon}}
@@ -51,6 +51,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr, compute_local_project_file_path } from "src/output/index.js";
+import { btn_reduce, btn_add, ref_pre_book,add_handle,sub_handle,set_ref_data } from "src/core/bet/common/appoint-data.js"
 import lodash_ from 'lodash'
 
 
@@ -176,7 +177,28 @@ const _handleKeyPress = (e) => {
 }
 
 // 小数点 .
-const _handleDecimalPoint = () => {   
+const _handleDecimalPoint = () => {
+  // 此处为预约盘口 赔率相关输入
+  if (typeof BetData.active_index === 'string') {
+
+    if (BetData.is_bet_pre && BetData.active_index.includes('odds') || BetData.active_index.includes('handicap')) {
+
+      if(BetData.active_index.includes('odds')) {
+        let odds = ref_pre_book.appoint_odds_value.toString()
+        if (odds && odds.includes(".")) return
+        odds = !odds ? '0.' : odds + '.'
+        ref_pre_book.appoint_odds_value = odds
+      } else {
+        let ball = ref_pre_book.appoint_ball_value.toString()
+        if (ball && ball.includes(".")) return
+        ball = !ball ? '0.' : ball + '.'
+        ref_pre_book.appoint_ball_value = ball
+      }
+      return
+    }
+    return
+  }
+
   //超过最大金额  显示最大金额 
   let max_money = BetData.bet_keyboard_config.max_money
   let money_ = BetData.bet_amount.toString()
@@ -212,6 +234,26 @@ const _handmaxKey = () => {
 }
 // 删除键
 const _handleDeleteKey = () => {
+
+  // 此处为预约盘口 赔率相关输入
+  if (typeof BetData.active_index === 'string') {
+
+    if (BetData.is_bet_pre && BetData.active_index.includes('odds') || BetData.active_index.includes('handicap')) {
+
+      if(BetData.active_index.includes('odds')) {
+        let odds = ref_pre_book.appoint_odds_value.toString()
+        odds = odds ? odds.substring(0, odds.length - 1) : 0
+        ref_pre_book.appoint_odds_value = odds ? odds*1 : 0
+      } else {
+        let ball = ref_pre_book.appoint_ball_value.toString()
+        ball = ball ? ball.substring(0, ball.length - 1) : 0
+        ref_pre_book.appoint_ball_value = ball ? ball*1 : 0
+      }
+      return
+    }
+    return
+  }
+
   let money_ = BetData.bet_amount.toString()
   if (!money_) return   
   //删除最后一个
@@ -223,8 +265,32 @@ const _handleDeleteKey = () => {
 
 // 数字建
 const _handleNumberKey = (num) => {
-  
   if (!num) return
+  if (typeof BetData.active_index === 'string') {
+    // 此处为预约盘口 赔率相关输入
+    if(BetData.is_bet_pre && BetData.active_index.includes('odds') || BetData.active_index.includes('handicap')) {
+      
+      if(BetData.active_index.includes('odds')) {
+        let odds = !ref_pre_book.appoint_odds_value ? (num === '0' ? '0.' : num) : ref_pre_book.appoint_odds_value + num
+        let s_length = odds.substring(odds.indexOf(".") + 1).length // 0. 后面输入的字符长度  最多只保留两位
+        if (odds.includes(".") && s_length > 1) {
+          odds = odds.substring(0, odds.indexOf(".") + 3);// 最多只保留小数点两位
+        }
+        ref_pre_book.appoint_odds_value = odds*1
+      } else {
+        let ball = !ref_pre_book.appoint_ball_value ? (num === '0' ? '0.' : num) : ref_pre_book.appoint_ball_value + num
+        let s_length = ball.substring(ball.indexOf(".") + 1).length // 0. 后面输入的字符长度  最多只保留两位
+        if (ball.includes(".") && s_length > 1) {
+          ball = ball.substring(0, ball.indexOf(".") + 3);// 最多只保留小数点两位
+        }
+        ref_pre_book.appoint_ball_value = odds*1
+      }
+      return
+    }
+    return
+  }
+
+
   let money_ = BetData.bet_amount || 0
   if (['qon', 'qtw', 'qth','qfo','qfi'].includes(num)) {
     if (!money_) {

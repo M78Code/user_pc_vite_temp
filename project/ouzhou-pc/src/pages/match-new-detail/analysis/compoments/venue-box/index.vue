@@ -5,7 +5,7 @@
 -->
 <template>
   <div>
-    <div class="component analysis-body">
+    <div class="component analysis-body" v-if="detail_info">
       <div class="analysis-top">
         <div class="analysis-top-l">
           <!-- <div class="v-icon switch-icon"></div> -->
@@ -23,16 +23,17 @@
           />
 
           <!--<span class="analysis-top-txt">{{ detail_info.tn }}</span>-->
-          <span class="home-vs-away" :title="detail_info.mhn"
-            >{{ detail_info.mhn }}
+          <span class="home-vs-away" :title="detail_info?.mhn"
+            >{{ detail_info?.mhn }}
           </span>
           <span class="match-detail-head-name m-10">v</span>
-          <span class="home-vs-away" :title="detail_info.man">{{
-            detail_info.man
-          }}</span>
+          <span class="home-vs-away" :title="detail_info?.man">{{
+            detail_info?.man
+          }}{{ detail_info?.csid }}</span>
         </div>
-        <div class="analysis-top-right" v-if="!MenuData.is_esports()">
+        <div class="analysis-top-right" v-if="!MenuData.is_esports()&&![101,102,100,103].includes(Number(detail_info?.csid))">
           <!-- 视频图标 -->
+          {{ detail_info?.csid }}+++
           <img
             v-if="cur_video_icon.type"
             :src="show_type && show_type != 'animal' ? video_active : video"
@@ -122,10 +123,9 @@ const show_type = ref("");
 watch(
   () => props.detail_info,
   (val) => {
+
     if (val) {
-     
-      console.log(route.params, "params");
-      if (MenuData.is_esports()) {
+      if (MenuData.is_esports()||[101,102,100,103].includes(Number(props.detail_info?.csid))) {
         tab_click("video");
         return;
       }
@@ -158,7 +158,9 @@ watch(
  * @return {Object}
  */
 const cur_video_icon = computed(() => {
-  let {
+  // 电竞不需要显示图标
+  if (![101,102,100,103].includes(Number(props.detail_info?.csid))&&props.detail_info) {
+    let {
     lvs = -1,
     mms = -1,
     lss = -1,
@@ -205,6 +207,10 @@ const cur_video_icon = computed(() => {
     };
   }
   return cur_video_icon;
+  }else{
+    return "video"
+  }
+
 });
 
 const tab_click = (type) => {

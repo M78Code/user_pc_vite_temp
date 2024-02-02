@@ -26,9 +26,16 @@
       <template v-for="(item, index) in show_data_orderVOS" :key="item.betTime">
         <div class="items" v-if="item.isBoolean">
           <div class="top" :class="{ 'gray-icon':BetRecordClass.selected === 1 }">
-            <template>
+            <!-- 预约 -->
+            <template v-if="BetRecordClass.selected === 2">
+              <!-- preOrderStatus(2,3,4) -->
+              <icon-wapper name="icon-failure" v-if="[2,3,4].includes(data_b.preOrderStatus)" />
+              <icon-wapper name="icon-success" v-else />
+            </template>
+            <!-- 已结算、未结算 -->
+            <template v-else>
               <!-- orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
-              <icon-wapper name="icon-failure" v-if="data_b.orderStatus == '2' || data_b.orderStatus == '4'" />
+              <icon-wapper name="icon-failure" v-if="['2','4'].includes(data_b.orderStatus)" />
               <icon-wapper name="icon-success" v-else />
             </template>
             <div class="top-info flex">
@@ -45,7 +52,7 @@
                 [<span v-if="data_b.seriesType != '3' && item.matchType != 4" v-html="i18n_t(`matchtype.${item.matchType}`)"></span>]
                 {{item.playName}}
               <!-- 优化后的赔率 -->
-              <span class="oddfinally" v-if="!data_b.acCode"><span>&nbsp;@&thinsp;{{format_odds(item.oddFinally, item.sportId)}}</span></span>
+              <span class="oddfinally" v-if="!data_b.acCode"><span>&thinsp;{{format_odds(item.oddFinally, item.sportId)}}</span></span>
             </p>
             <!-- managerCode=4 代表电竞 orderStatus=1 是已结算 -->
             <p class="col-8 text-left yb_fontsize10 item-order" v-if="data_b.managerCode == 4&&data_b.orderStatus == 1">

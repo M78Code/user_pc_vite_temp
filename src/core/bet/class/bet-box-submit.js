@@ -614,42 +614,56 @@ const set_bet_pre_list = (bet_appoint = []) => {
 
 // 对比赔率，判断是否是预约投注
 const pre_bet_comparison = () => {
-	// 如果点击预约判断所选赔率和盘口赔率是否一致，一致说明不是预约，切换到对应的盘口id;否则就设置为预约
+	// 判断是否是预约投注
+    // 在当前预约盘口下检查  1.预约的盘口是否存在。存在的话：需要判断是否有相同的赔率。盘口和赔率都有的话 走正常逻辑； 不存在走预约逻辑
 	if(BetData.is_bet_pre) {
 		let oid = BetData.bet_pre_appoint_id
-		let pre_obj = lodash_.get(BetData,`bet_pre_obj[${oid}]`,{})
-		
-		let pre_list = lodash_.get(	BetData,'bet_appoint_obj.marketList[0].marketOddsList',[])
+        // 预约的赔率 和盘口 还有 投注项id
+		let pre_obj = lodash_.get(BetData,`bet_pre_obj`,{}) || {}
+        // 当前预约盘口下 可以直接投注的盘口和投注项
+		let pre_list = lodash_.get(	BetData,'bet_appoint_obj.marketList',[]) || []
+        // 当前的投注项
+        let bet_obj_ = lodash_.get(BetData,`bet_read_write_refer_obj[${pre_obj.custom_id}]`,{})
+        // 开启预约模式
+        let pre_bet = true
 
 		// 设置预约投注数据
 		let pre_data = {
-			oid: pre_obj.custom_id,
-			pre_odds: pre_obj.odds,
-			pre_oddFinally: pre_obj.oddFinally,
-            pre_marketValue: pre_obj.marketValue,
-            pre_handicap: pre_obj.handicap
-
+			oid: pre_obj.custom_id, // 投注项id 预约没有投注项id和盘口id 这里只是用到后面做数据匹配
+			pre_odds: pre_obj.odds, // 预约赔率 10w位
+			pre_oddFinally: pre_obj.oddFinally, // 预约赔率
+            pre_marketValue: pre_obj.marketValue, // 盘口值
+            pre_handicap: bet_obj_.handicap, // 投注项名称
 		}
-		BetData.set_bet_single_list_obj(pre_data)
-		BetData.set_is_bet_pre(true)
 
+        // 判断有没有 直接投注的盘口和投注项
 		if(pre_list.length) {
-			for(let item of pre_list){
-				if(item.oddsValue == pre_obj.odds){
-					let obj = {
-						old_oid: oid,
-						oid: item.id,
-						pre_odds: pre_obj.odds,
-						pre_oddFinally: pre_obj.oddFinally,
-                        pre_marketValue: pre_obj.marketValue,
-                        pre_handicap: pre_obj.handicap
-					}
-					BetData.set_bet_single_list_obj(obj)
-					BetData.set_is_bet_pre(false)
-					return
-				}
-			}
+            pre_list.forEach(item => {
+                // 1.预约的盘口是否存在。存在的话：需要判断是否有相同的赔率。盘口和赔率都有的话 走正常逻辑； 不存在走预约逻辑
+                if(item.marketValue == pre_obj.marketValue){
+                    if(item.marketOddsList && item.marketOddsList.length){
+                        item.marketOddsList.forEach( obj => {
+                            if(obj.oddsValue == pre_obj.odds){
+                                
+                                pre_data = {
+                                    old_oid: pre_obj.custom_id,
+                                    oid: obj.id,
+                                    pre_odds: obj.odds,
+                                    pre_marketValue: item.marketValue,
+                                    pre_oddFinally: compute_value_by_cur_odd_type(obj.odds, bet_obj_.playId, bet_obj_.odds_hsw, bet_obj_.sportId), //赔率
+                                    pre_handicap: item.handicap
+                                }
+                                // 取消 预约投注
+                                pre_bet = false
+                            }
+                        })
+                    }
+                }
+            })
 		}
+
+        BetData.set_bet_single_list_obj(pre_data)
+		BetData.set_is_bet_pre(pre_bet)
 	}
 }
 
@@ -984,7 +998,7 @@ const set_error_message_config = (res ={},type,order_state) => {
                     // 预约订单确认
                     obj = {
                         code: '200',
-                        message: "bet.bet_order_info2"
+                        message: "bet.bet_order_book_info2"
                     }
                     // matchInfo + playName + i18
                     useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${matchInfo} ${playName} ${i18n_t('bet.bet_booked')}`);
