@@ -71,4 +71,9 @@ export default defineComponent({
   margin-bottom:  0.02rem;
   border-radius: 0.04rem;;
 }
+:deep(){
+  .counting{
+    color:var(--q-gb-t-c-14) !important
+  }
+ }
 </style>
