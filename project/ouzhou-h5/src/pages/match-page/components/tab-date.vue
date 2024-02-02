@@ -67,7 +67,6 @@ import {
     watch,
     onMounted,
     onUnmounted,
-    defineEmits,
     computed
 } from "vue";
 import { dateWeekMatchesFormat, farmatSportImg } from '../utils';

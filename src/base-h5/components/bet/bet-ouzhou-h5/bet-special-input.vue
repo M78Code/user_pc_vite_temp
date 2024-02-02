@@ -20,7 +20,7 @@
     <div class="bet_single_detail f-b-c">
       <div class="content-b" @click="input_click">
         <span v-if="items.bet_amount" class="yb_fontsize20 money-number">{{ items.bet_amount }}</span>
-        <span class="yb_fontsize14 limit-txt" v-show="!items.bet_amount">{{ i18n_t('app_h5.bet.limit')}}<em class="number_family">{{ items.min_money }}-{{ format_money3(items.max_money) }}</em></span>
+        <span class="yb_fontsize14 limit-txt" v-show="!items.bet_amount">{{ i18n_t('ouzhou.bet.limit')}}<em class="number_family">{{ items.min_money }}-{{ format_money3(items.max_money) }}</em></span>
         <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
       </div>
     </div>
