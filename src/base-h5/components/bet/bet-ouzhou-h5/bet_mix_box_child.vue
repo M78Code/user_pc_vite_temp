@@ -149,7 +149,7 @@ const btn_show = ref(0) // 投注状态2
 const max_height1 = ref(2.5) // 投注赛事高度
 const max_height2 = ref(3.5)
 const is_dropdown = ref(false)
-
+const aclientHeight = document.body.clientHeight
 // 蒙版点击 收起投注栏 事件
 const pack_up = (val) => {
   BetData.set_bet_state_show(false)
@@ -162,24 +162,34 @@ const ref_data = reactive({
 const scrollAreaPo = () => {
 
   if(!BetData.is_bet_single){
-    scrollAreaRef.value.setScrollPercentage('vertical', 0.77)
+    if(!BetData.special_type){
+      scrollAreaRef.value.setScrollPercentage ('vertical',1)
+    }else{
+      scrollAreaRef.value.setScrollPosition('vertical', BetData.bet_s_list.length * 139 + 100)
+    }
   }
-
 }
 
-
+const set_W_H = () => {
+  ref_min_height_max.value = document.body.clientHeight > 580 ? '2.5' : '2'
+  ref_min_height_max.value = document.body.clientHeight > 650 ? '2.4' : '1.9'
+  ref_min_height_max.value = document.body.clientHeight > 700 ? '2.3' : '1.8'
+  ref_min_height_max.value = document.body.clientHeight > 750 ? '2.2' : '1.7'
+  ref_min_height_max.value = document.body.clientHeight > 800 ? '2.1' : '1.6'
+  ref_min_height_max.value = document.body.clientHeight > 850 ? '2' : '1.5'
+}
 
 
 onMounted(() => {
 
-  ref_min_height_max.value = document.body.clientHeight > 600 ? '2.5' : '2'
+  set_W_H();
+
   scrollAreaPo();
+
   ref_data.emit_lsit = {
-
     emitter_1: useMittOn(MITT_TYPES.EMIT_SET_NOTSINGLE_SHOW_LIST,scrollAreaPo).off,
-    
   }
-
+  
 })
 
 onUnmounted(()=>{

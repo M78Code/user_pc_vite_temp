@@ -70,6 +70,9 @@ const bet_total = computed(()=> state =>{
     sum = BetData.bet_single_list.reduce((pre, cur) => {
       return pre*1 + cur.bet_amount*1;
     }, 0)
+    //保留两位小数
+     sum = sum.toFixed(2)
+     sum = sum.replace(/(\.\d)0$/,'$1')
     return sum
   }
   if (!BetData.is_bet_single) {

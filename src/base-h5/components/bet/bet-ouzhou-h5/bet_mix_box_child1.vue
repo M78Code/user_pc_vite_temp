@@ -306,7 +306,7 @@
     //flex-direction: row-reverse;
     height: 0.26rem;
     list-style: 0.26rem;
-    margin-right:0.15rem ;
+    //margin-right:0.15rem ;
     
     .show_img{
       display: flex;
@@ -413,6 +413,10 @@
       }
     }
   
+  }
+
+  .text-flow-none {
+    margin-right: 0.1rem;
   }
   </style>
  

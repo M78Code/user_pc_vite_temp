@@ -26,9 +26,16 @@
       <template v-for="(item, index) in show_data_orderVOS" :key="item.betTime">
         <div class="items" v-if="item.isBoolean">
           <div class="top" :class="{ 'gray-icon':BetRecordClass.selected === 1 }">
-            <template>
+            <!-- 预约 -->
+            <template v-if="BetRecordClass.selected === 2">
+              <!-- preOrderStatus(2,3,4) -->
+              <icon-wapper name="icon-failure" v-if="[2,3,4].includes(data_b.preOrderStatus)" />
+              <icon-wapper name="icon-success" v-else />
+            </template>
+            <!-- 已结算、未结算 -->
+            <template v-else>
               <!-- orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
-              <icon-wapper name="icon-failure" v-if="data_b.orderStatus == '2' || data_b.orderStatus == '4'" />
+              <icon-wapper name="icon-failure" v-if="['2','4'].includes(data_b.orderStatus)" />
               <icon-wapper name="icon-success" v-else />
             </template>
             <div class="top-info flex">
