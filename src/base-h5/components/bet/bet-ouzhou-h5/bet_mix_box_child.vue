@@ -26,9 +26,9 @@
               <template v-if="!BetData.is_bet_merge">
                 <template v-if="BetViewDataClass.bet_order_status == 1 && BetData.bet_single_list.length ">
                     <!-- 单关投注项列表  -->
-                    <bet-mix-box-child1 :items="BetData.bet_single_list[0]" :index="1"></bet-mix-box-child1>
+                    <bet-mix-box-child1 :items="BetData.bet_single_list[0]" :index="0"></bet-mix-box-child1>
                     <!-- 单关的输入框 -->
-                    <bet-input-info :item="BetData.bet_single_list[0]" :index="1" ></bet-input-info>
+                    <bet-input-info :item="BetData.bet_single_list[0]" :index="0" ></bet-input-info>
                 </template>
               </template>
               <!-- 单关合并 -->

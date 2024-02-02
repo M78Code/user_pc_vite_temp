@@ -75,7 +75,7 @@
                             <!-- <input class="bet-odds-number" type="number" v-model="ref_pre_book.appoint_odds_value" /> -->
                             <span class="bet-odds-add" :class="{begray:ref_pre_book.appoint_odds_value >= 355}" v-touch-repeat:0:300.mouse.enter.space="() => {btn_add(items)}">+</span> 
                           </div>
-                          <span class="delete-appoint icon-delete" @click="ref_data.show_appoint=false"></span>
+                          <span class="delete-appoint icon-delete" @click="set_no_show_appoint()"></span>
                         </div>
                       </div>
                   
@@ -138,6 +138,11 @@
     set_ref_data(props.items)
     // 设置预约投注id
     BetData.set_bet_appoint_obj_playOptionId(props.items.playOptionsId)
+  }
+
+  const set_no_show_appoint = () => {
+    ref_data.show_appoint = false
+    BetData.set_is_bet_pre(false)
   }
 
   </script>
