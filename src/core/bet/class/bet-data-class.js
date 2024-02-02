@@ -704,27 +704,37 @@ this.bet_appoint_ball_head= null */
 
   // 检查串关中 是否可以 串关的数据
   check_bet_s_list_special(){
-    let bet_s_list = lodash_.cloneDeep(this.bet_single_list)
+    let single_list = []
+    let single_name = []
+    // 单关 切 有投注项
+    if(this.is_bet_single){
+      single_list = lodash_.cloneDeep(this.bet_single_list) || []
+      single_name = 'bet_single_list'
+    } else {
+      single_list = lodash_.cloneDeep(this.bet_s_list) || []
+      single_name = 'bet_s_list'
+    }
+
     // 获取投注项中 有哪些赛事id是重复的 
-    // 对重复的赛事id 加入不能串关的字段 
-    let match_id_list = bet_s_list.map(item => item.matchId)
+    let match_id_list = single_list.map(item => item.matchId)
     let match_obj = this.get_match_count(match_id_list)
 
     let match_list = []
+    // 对重复的赛事id 加入不能串关的字段 
     for(let obj in match_obj){
       if(match_obj[obj] > 1){
         match_list.push(obj)
       }
     }
 
-    bet_s_list.filter(item=> {
+    single_list.filter( item => {
       // 重复的赛事不能串关 
       if(match_list.includes(item.matchId) || this.check_bet_option_special(item)){
         item.is_serial = true
       }
     })
 
-    this.bet_s_list = lodash_.cloneDeep(bet_s_list)
+    this[single_name] = lodash_.cloneDeep(single_list)
   }
 
   // 设置 切换单关/串关切换
@@ -1131,29 +1141,29 @@ this.bet_appoint_ball_head= null */
   // 删除投注项
   // oid 投注项id  index 投注项下标
   set_delete_bet_info(oid,index) {
+    console.error('删除投注项')
     let single = false
     let single_list = []
     let cur_index = 0
+    let single_name = ''
     // 删除投注项中的数据
     if(this.is_bet_single){
-      single = true
-      cur_index = this.bet_single_list.findIndex(i => i.playOptionsId == oid)
-      if (cur_index < 0) return
-      this.bet_single_list.splice(index,1)
-      single_list = this.bet_single_list
-    }else{
-      cur_index = this.bet_s_list.findIndex(i => i.playOptionsId == oid)
-      if (cur_index < 0) return
-      this.bet_s_list.splice(index,1)
-      single_list = this.bet_s_list
+      single_list = this.bet_single_list || []
+      single_name = 'bet_single_list'
+    } else {
+      single_list = this.bet_s_list || []
+      single_name = 'bet_s_list'
     }
-    
-    // 获取oid在投注项id集合中的位置
-    let index_ = this.bet_oid_list.findIndex(item => item == oid)
-    if(index_ != -1){
-      this.bet_oid_list.splice(index_,1)
+
+    // 获取需要删除的投注项id 在列表做的下标
+    cur_index = single_list.findIndex(i => i.playOptionsId == oid )
+
+    if ( cur_index >= 0 ) {
+      single_list.splice(index,1)
     }
-    this.set_bet_data_class_version()
+
+    this[single_name] = single_list
+  
     // 删除后的数据 是否可以去获取限额
     let single_length = single_list.length
     
