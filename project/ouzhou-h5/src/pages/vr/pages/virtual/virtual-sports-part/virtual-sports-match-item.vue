@@ -26,22 +26,30 @@
               </div>
             </div>
             <template v-if="match_item.csid == 1004">
+              <!-- {{ match_item }} --- {{is_basketball_score}}---cc -->
                 <!-- 固定60秒 -->
-                <div v-if="match_item.mmp != 'PREGAME'"
+                <div v-if="match_item.mmp == 'PREGAME'"
                      class="time-wrap icon-s-wrap"
                     :class="{whistle:[2,11].includes(+match_item.match_status)}"
-                    v-show="match_item.match_status == 0 && !is_basketball_score">
-                  <div class="time">
-                    60
+                    v-show="match_item.mmp == 0 && !is_basketball_score">
+
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/vr/countdown.png`" alt="">
+                  <div class="time" v-show="match_item.show_time">
+                    {{match_item.show_time}}'
                   </div>
+
                 </div>
+
                 <!-- live -->
                 <div class="live-icon-pre icon-s-wrap" v-show="match_item.match_status == 1 || is_basketball_score">
-                  live
+                  <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/vr/live.png`" alt=""> -->
+                  <span class="span_live">LIVE</span>
+                  <span class="span_show_time" v-show="match_item.show_time">{{match_item.show_time}}'</span>
                 </div>
                 <!-- 结束 -->
                 <div class="finally icon-s-wrap" v-show="match_item.match_status == 2">
-                  Fin.
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/vr/referee.png`" alt="">
+                  <span>{{match_item.show_time}}'</span>
                 </div>
             </template>
             <!-- 视频icon -->
@@ -165,7 +173,8 @@ export default {
     return {
       VR_CTR
     }
-  }
+  },
+  
 }
 </script>
 
@@ -605,15 +614,53 @@ export default {
   }
 
   .live-icon-pre {
-    width: 0.27rem;
-    height: 0.12rem;
-    line-height: 1;
-    border-radius: 0.1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    // background-color: yellowgreen;
+
+    // width: 0.27rem;
+    height: 0.15rem;
+    line-height:  0.15rem;
+    // border-radius: 0.1rem;
     // background-color: #FFB001;
-    font-size: 0.11rem;
+    font-size: 0.14rem;
     // color: #ffffff;
     text-align: center;
     font-style: italic;
+    color: var(--q-gb-t-c-1);
+    // img{
+    //   width: .138rem;
+    //   height: .0564rem;
+    // }
+    span{
+      display: block;
+      height: 100%;
+    }
+    .span_live{
+      // height: 0.12rem;
+      font-size: .09rem;
+      // background-color: red;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+    .span_show_time{
+
+      // height: 0.12rem;
+      margin-left: 0.05rem;
+      font-size: .12rem;
+      // background-color: blue;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+    
   }
 
   .finally {
